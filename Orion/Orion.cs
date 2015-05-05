@@ -18,25 +18,61 @@ namespace Orion
 	{
 		internal static Orion instance;
 		
+		/// <summary>
+		/// Relative path to the Orion folder
+		/// </summary>
+		[Temporary("Placeholder value so that it actually runs with TerrariaServer")]
 		public static string SavePath = "orion";
+
+		/// <summary>
+		/// Relative path to the log file
+		/// </summary>
+		[Temporary("Placeholder value so that it actually runs with TerrariaServer")]
+		public static string LogPath = Path.Combine(SavePath, "OrionLog.txt");
+
+		/// <summary>
+		/// Relative path to the config file
+		/// </summary>
+		[Temporary("Placeholder value so that it actually runs with TerrariaServer")]
 		public static string ConfigPath { get { return Path.Combine(SavePath, "OrionConfig.json"); } }
+		
+		/// <summary>
+		/// Config file. Use this to get data from the config
+		/// </summary>
 		public static ConfigFile Config { get; private set; }
 
+		/// <summary>
+		/// Database connection to the Orion database
+		/// </summary>
+		public static IDbConnection database;
+		/// <summary>
+		/// User manager object for getting users and setting values
+		/// </summary>
+		public static UserManager Users { get; private set; }
+		/// <summary>
+		/// Log manager. Use this to write data to the log
+		/// </summary>
 		public static ILog Log { get; set; }
 
-		public static IDbConnection database;
-		public static UserManager Users { get; private set; }
-
+		/// <summary>
+		/// Plugin author(s)
+		/// </summary>
 		public override string Author
 		{
 			get { return "Neex Stoodyos"; }
 		}
 
+		/// <summary>
+		/// Plugin name
+		/// </summary>
 		public override string Name
 		{
 			get { return "Orion"; }
 		}
 
+		/// <summary>
+		/// Plugin version
+		/// </summary>
 		public override Version Version
 		{
 			get { return Assembly.GetExecutingAssembly().GetName().Version; }
@@ -49,6 +85,9 @@ namespace Orion
 			instance = this;
 		}
 
+		/// <summary>
+		/// Called by the Server API when this plugin is initialized
+		/// </summary>
 		public override void Initialize()
 		{
 			if (!Directory.Exists(SavePath))
@@ -96,11 +135,11 @@ namespace Orion
 
 			if (Config.UseSqlLogging)
 			{
-				Log = new SqlLog(database, Path.Combine(SavePath, "OrionLog.txt"), false);
+				Log = new SqlLog(database, LogPath, false);
 			}
 			else
 			{
-				Log = new TextLog(Path.Combine(SavePath, "OrionLog.txt"), false);
+				Log = new TextLog(LogPath, false);
 			}
 
 			Users = new UserManager(database);
@@ -112,6 +151,10 @@ namespace Orion
 		{
 		}
 
+		/// <summary>
+		/// Called by the Server API. If <see cref="disposing"/> is true, the plugin should release its resources
+		/// </summary>
+		/// <param name="disposing"></param>
 		protected override void Dispose(bool disposing)
 		{
 			if (disposing)
