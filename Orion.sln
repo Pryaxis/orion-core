@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2013
+VisualStudioVersion = 12.0.31101.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Orion", "Orion\Orion.csproj", "{CCF7FA67-80AB-4B99-8249-1875EBFF9F4D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnitTests", "UnitTests\UnitTests.csproj", "{3E2E2EAA-1E96-4C8E-9454-0F6AD883427D}"
+	ProjectSection(ProjectDependencies) = postProject
+		{CCF7FA67-80AB-4B99-8249-1875EBFF9F4D} = {CCF7FA67-80AB-4B99-8249-1875EBFF9F4D}
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{CCF7FA67-80AB-4B99-8249-1875EBFF9F4D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CCF7FA67-80AB-4B99-8249-1875EBFF9F4D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CCF7FA67-80AB-4B99-8249-1875EBFF9F4D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CCF7FA67-80AB-4B99-8249-1875EBFF9F4D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3E2E2EAA-1E96-4C8E-9454-0F6AD883427D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3E2E2EAA-1E96-4C8E-9454-0F6AD883427D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3E2E2EAA-1E96-4C8E-9454-0F6AD883427D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3E2E2EAA-1E96-4C8E-9454-0F6AD883427D}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
