@@ -1,17 +1,13 @@
-﻿using log4net.Appender;
-using log4net.Config;
+﻿using System;
+using log4net;
 
 namespace Orion.Logging
 {
-	public sealed class LogAppender : RollingFileAppender
-	{
-	}
-
 	public sealed class Log
 	{
-		public Log()
+		public void Info(Type type, string msg)
 		{
-			XmlConfigurator.Configure();
+			LogManager.GetLogger(type).Info(msg);
 		}
 	}
 }
