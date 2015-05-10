@@ -38,7 +38,7 @@ namespace Orion.Logging
 
 		public override string ToString()
 		{
-			return string.Format("Message: {0}: {1}: {2}",
+			return String.Format("Message: {0}: {1}: {2}",
 				caller, logLevel.ToString().ToUpper(), message);
 		}
 	}
@@ -50,22 +50,26 @@ namespace Orion.Logging
 	{
 		private readonly IDbConnection _database;
 		private readonly TextLog _backupLog;
-		private readonly List<LogInfo> _failures = new List<LogInfo>(Orion.Config.MaxSqlLogFailureCount);
+		private readonly List<LogInfo> _failures;
 		private bool _useTextLog;
+		private readonly Orion _orion;
 
 		public string FileName { get; set; }
 
 		/// <summary>
 		/// Sets the database connection and the initial log level.
 		/// </summary>
-		/// <param name="db">Database connection</param>
+		/// <param name="orion">Orion</param>
 		/// <param name="textlogFilepath">File path to a backup text log in case the SQL log fails</param>
 		/// <param name="clearTextLog"></param>
-		public SqlLog(IDbConnection db, string textlogFilepath, bool clearTextLog)
+		public SqlLog(Orion orion, string textlogFilepath, bool clearTextLog)
 		{
-			FileName = string.Format("{0}://database", db.GetSqlType());
-			_database = db;
-			_backupLog = new TextLog(textlogFilepath, clearTextLog);
+			_orion = orion;
+			_failures = new List<LogInfo>(orion.Config.MaxSqlLogFailureCount);
+
+			_database = orion.Database;
+			FileName = String.Format("{0}://database", _database.GetSqlType());
+			_backupLog = new TextLog(orion, textlogFilepath, clearTextLog);
 
 			SqlTable table = new SqlTable("Logs",
 				new SqlColumn("ID", MySqlDbType.Int32) { AutoIncrement = true, Primary = true },
@@ -75,8 +79,8 @@ namespace Orion.Logging
 				new SqlColumn("Message", MySqlDbType.Text)
 				);
 
-			SqlTableCreator creator = new SqlTableCreator(db,
-				db.GetSqlType() == SqlType.Sqlite
+			SqlTableCreator creator = new SqlTableCreator(_database,
+				_database.GetSqlType() == SqlType.Sqlite
 					? (IQueryBuilder)new SqliteQueryCreator()
 					: new MysqlQueryCreator());
 			creator.EnsureTableStructure(table);
@@ -103,7 +107,7 @@ namespace Orion.Logging
 		/// <param name="args">The format arguments.</param>
 		public void Data(string format, params object[] args)
 		{
-			Data(string.Format(format, args));
+			Data(String.Format(format, args));
 		}
 
 		/// <summary>
@@ -122,7 +126,7 @@ namespace Orion.Logging
 		/// <param name="args">The format arguments.</param>
 		public void Error(string format, params object[] args)
 		{
-			Error(string.Format(format, args));
+			Error(String.Format(format, args));
 		}
 
 		/// <summary>
@@ -144,7 +148,7 @@ namespace Orion.Logging
 		/// <param name="args">The format arguments.</param>
 		public void ConsoleError(string format, params object[] args)
 		{
-			ConsoleError(string.Format(format, args));
+			ConsoleError(String.Format(format, args));
 		}
 
 		/// <summary>
@@ -163,7 +167,7 @@ namespace Orion.Logging
 		/// <param name="args">The format arguments.</param>
 		public void Warn(string format, params object[] args)
 		{
-			Warn(string.Format(format, args));
+			Warn(String.Format(format, args));
 		}
 
 		/// <summary>
@@ -182,7 +186,7 @@ namespace Orion.Logging
 		/// <param name="args">The format arguments.</param>
 		public void Info(string format, params object[] args)
 		{
-			Info(string.Format(format, args));
+			Info(String.Format(format, args));
 		}
 
 		/// <summary>
@@ -204,7 +208,7 @@ namespace Orion.Logging
 		/// <param name="args">The format arguments.</param>
 		public void ConsoleInfo(string format, params object[] args)
 		{
-			ConsoleInfo(string.Format(format, args));
+			ConsoleInfo(String.Format(format, args));
 		}
 
 		/// <summary>
@@ -226,7 +230,7 @@ namespace Orion.Logging
 		public void Debug(string format, params object[] args)
 		{
 #if DEBUG
-			Debug(string.Format(format, args));
+			Debug(String.Format(format, args));
 #endif
 		}
 
@@ -273,7 +277,7 @@ namespace Orion.Logging
 						{
 							caller = "TShock",
 							logLevel = TraceLevel.Error,
-							message = string.Format("SQL Log insert query failed: {0}", ex),
+							message = String.Format("SQL Log insert query failed: {0}", ex),
 							timestamp = DateTime.UtcNow.ToString("yyyy-MM-dd HH:mm:ss", CultureInfo.InvariantCulture)
 						});
 					}
@@ -295,14 +299,14 @@ namespace Orion.Logging
 				});
 			}
 
-			if (_failures.Count >= Orion.Config.MaxSqlLogFailureCount)
+			if (_failures.Count >= _orion.Config.MaxSqlLogFailureCount)
 			{
 				_useTextLog = true;
 				_backupLog.ConsoleError("SQL Logging disabled due to errors. Reverting to text logging.");
 
 				foreach (LogInfo logInfo in _failures)
 				{
-					_backupLog.Write(string.Format("SQL log failed at: {0}. {1}", logInfo.timestamp, logInfo),
+					_backupLog.Write(String.Format("SQL log failed at: {0}. {1}", logInfo.timestamp, logInfo),
 						TraceLevel.Error);
 				}
 				_failures.Clear();

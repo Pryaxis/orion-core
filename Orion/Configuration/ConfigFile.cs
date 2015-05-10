@@ -7,8 +7,13 @@ namespace Orion.Configuration
 {
 	public class ConfigFile
 	{
-		[Description("Valid types are \"sqlite\" and \"mysql\"")] public string StorageType = "sqlite";
+		[Description("Folder path to Orion logs")]
+		public string LogPath = "orion/logs";
+		[Description("Folder path to orion plugins")]
+		public string PluginsPath = "orion/plugins";
 
+		[Description("Valid types are \"sqlite\" and \"mysql\"")]
+		public string StorageType = "sqlite";
 		[Description("The MySQL hostname and port to direct connections to")] 
 		public string MySqlHost = "localhost:3306";
 		[Description("Database name to connect to")]

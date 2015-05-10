@@ -30,6 +30,8 @@ namespace Orion.Logging
 	/// </summary>
 	public sealed class TextLog : ILog, IDisposable
 	{
+		private readonly Orion _orion;
+
 		private readonly StreamWriter _logWriter;
 
 		/// <summary>
@@ -38,12 +40,14 @@ namespace Orion.Logging
 		public string FileName { get; set; }
 
 		/// <summary>
-		/// Creates the log file stream and sets the initial log level.
+		/// Creates the log file stream
 		/// </summary>
+		/// <param name="orion"></param>
 		/// <param name="filename">The output filename. This file will be overwritten if 'clear' is set.</param>
 		/// <param name="clear">Whether or not to clear the log file on initialization.</param>
-		public TextLog(string filename, bool clear)
+		public TextLog(Orion orion, string filename, bool clear)
 		{
+			_orion = orion;
 			FileName = filename;
 			_logWriter = new StreamWriter(filename, !clear);
 		}
@@ -69,7 +73,7 @@ namespace Orion.Logging
 		/// <param name="args">The format arguments.</param>
 		public void Data(string format, params object[] args)
 		{
-			Data(string.Format(format, args));
+			Data(String.Format(format, args));
 		}
 
 		/// <summary>
@@ -88,7 +92,7 @@ namespace Orion.Logging
 		/// <param name="args">The format arguments.</param>
 		public void Error(string format, params object[] args)
 		{
-			Error(string.Format(format, args));
+			Error(String.Format(format, args));
 		}
 
 		/// <summary>
@@ -110,7 +114,7 @@ namespace Orion.Logging
 		/// <param name="args">The format arguments.</param>
 		public void ConsoleError(string format, params object[] args)
 		{
-			ConsoleError(string.Format(format, args));
+			ConsoleError(String.Format(format, args));
 		}
 
 		/// <summary>
@@ -129,7 +133,7 @@ namespace Orion.Logging
 		/// <param name="args">The format arguments.</param>
 		public void Warn(string format, params object[] args)
 		{
-			Warn(string.Format(format, args));
+			Warn(String.Format(format, args));
 		}
 
 		/// <summary>
@@ -148,7 +152,7 @@ namespace Orion.Logging
 		/// <param name="args">The format arguments.</param>
 		public void Info(string format, params object[] args)
 		{
-			Info(string.Format(format, args));
+			Info(String.Format(format, args));
 		}
 
 		/// <summary>
@@ -170,7 +174,7 @@ namespace Orion.Logging
 		/// <param name="args">The format arguments.</param>
 		public void ConsoleInfo(string format, params object[] args)
 		{
-			ConsoleInfo(string.Format(format, args));
+			ConsoleInfo(String.Format(format, args));
 		}
 
 		/// <summary>
@@ -192,7 +196,7 @@ namespace Orion.Logging
 		public void Debug(string format, params object[] args)
 		{
 #if DEBUG
-			Debug(string.Format(format, args));
+			Debug(String.Format(format, args));
 #endif
 		}
 
@@ -216,7 +220,7 @@ namespace Orion.Logging
 					caller = meth.DeclaringType.Name;
 			}
 
-			string logEntry = string.Format("{0} - {1}: {2}: {3}",
+			string logEntry = String.Format("{0} - {1}: {2}: {3}",
 					DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss", CultureInfo.InvariantCulture),
 					caller, level.ToString().ToUpper(), message);
 			try
@@ -226,7 +230,7 @@ namespace Orion.Logging
 			}
 			catch (ObjectDisposedException)
 			{
-				ServerApi.LogWriter.PluginWriteLine(Orion.instance, logEntry, TraceLevel.Error);
+				ServerApi.LogWriter.PluginWriteLine(_orion, logEntry, TraceLevel.Error);
 				Console.WriteLine("Unable to write to log as log has been disposed.");
 				Console.WriteLine("{0} - {1}: {2}: {3}",
 					DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss", CultureInfo.InvariantCulture),
@@ -236,7 +240,10 @@ namespace Orion.Logging
 
 		public void Dispose()
 		{
-			_logWriter.Dispose();
+			if (_logWriter != null)
+			{
+				_logWriter.Dispose();
+			}
 		}
 	}
 }

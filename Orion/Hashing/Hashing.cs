@@ -7,23 +7,31 @@ using BCrypt.Net;
 
 namespace Orion.Hashing
 {
-	public sealed class Hashing
+	public sealed class Hasher
 	{
+		private readonly Orion _orion;
+
+		public Hasher(Orion orion)
+		{
+			_orion = orion;
+		}
+
 		/// <summary>
 		/// Verifies that the given input matches the given hash. 
 		/// If the given hash is not BCrypt, it is updated to be a BCrypt hash
 		/// </summary>
 		/// <param name="input">Unhashed string</param>
 		/// <param name="hash">Hashed string</param>
+		/// <param name="workFactor">BCrypt workfactor to use for hash upgrades</param>
 		/// <returns>true if the input matches the hash</returns>
-		public static bool VerifyHash(string input, ref string hash)
+		public bool VerifyHash(string input, ref string hash, int workFactor)
 		{
 			try
 			{
 				if (BCrypt.Net.BCrypt.Verify(input, hash))
 				{
 					// If necessary, perform an upgrade to the highest work factor.
-					UpgradeHashWorkFactor(input, ref hash);
+					UpgradeHashWorkFactor(input, ref hash, workFactor);
 					return true;
 				}
 			}
@@ -37,7 +45,7 @@ namespace Orion.Hashing
 						return true;
 					}
 					// The password is not stored using BCrypt; upgrade it to BCrypt immediately
-					UpgradeInputToBCrypt(input, ref hash);
+					UpgradeInputToBCrypt(input, ref hash, workFactor);
 					return true;
 				}
 				return false;
@@ -49,7 +57,7 @@ namespace Orion.Hashing
 		/// <param name="text">The plain text string to hash</param>
 		/// <param name="minLength">The minimum required length of the input text</param>
 		/// <param name="workFactor">BCrypt work factor</param>
-		public static string CreateBCryptHash(string text, int minLength, int workFactor = 7)
+		public string CreateBCryptHash(string text, int minLength, int workFactor = 7)
 		{
 			string ret;
 
@@ -63,7 +71,7 @@ namespace Orion.Hashing
 			}
 			catch (ArgumentOutOfRangeException)
 			{
-				//TShock.Log.ConsoleError("Invalid BCrypt work factor in config file! Creating new hash using default work factor.");
+				Orion.Log.ConsoleError("Invalid BCrypt work factor provided! Creating new hash using default work factor.");
 				ret = BCrypt.Net.BCrypt.HashPassword(text.Trim());
 			}
 
@@ -75,36 +83,27 @@ namespace Orion.Hashing
 		/// </summary>
 		/// <param name="input">input text</param>
 		/// <param name="hash">old hash to be updated</param>
-		private static void UpgradeInputToBCrypt(string input, ref string hash)
+		/// <param name="workFactor">BCrypt workfactor to be applied to the hash</param>
+		private void UpgradeInputToBCrypt(string input, ref string hash, int workFactor)
 		{
 			string oldPassword = hash;
 
 			try
 			{
-				hash = BCrypt.Net.BCrypt.HashPassword(input, Orion.Config.BCryptWorkFactor);
+				hash = BCrypt.Net.BCrypt.HashPassword(input, workFactor);
 			}
 			catch (ArgumentOutOfRangeException)
 			{
-				//TShock.Log.ConsoleError("Invalid BCrypt work factor in config file! Upgrading user password to BCrypt using default work factor.");
+				Orion.Log.ConsoleError("Invalid BCrypt work factor provided! Upgrading input to BCrypt using default work factor.");
 				hash = BCrypt.Net.BCrypt.HashPassword(input);
-			}
-
-			//TODO: fix this
-			try
-			{
-				//TShock.Users.SetUserPassword(this, Password);
-			}
-			catch /*(UserManagerException e)*/
-			{
-				//TShock.Log.ConsoleError(e.ToString());
-				hash = oldPassword; // Revert changes
 			}
 		}
 
 		/// <summary>Upgrades a password to the highest work factor available in the config.</summary>
 		/// <param name="password">The raw user password (unhashed) to upgrade</param>
 		/// <param name="hash">Currently hashed password to upgrade</param>
-		private static void UpgradeHashWorkFactor(string password, ref string hash)
+		/// <param name="workFactor">BCrypt workfactor to check against and update to</param>
+		private void UpgradeHashWorkFactor(string password, ref string hash, int workFactor)
 		{
 			// If the destination work factor is not greater, we won't upgrade it or re-hash it
 			int currentWorkFactor;
@@ -114,29 +113,19 @@ namespace Orion.Hashing
 			}
 			catch (FormatException)
 			{
-				//TShock.Log.ConsoleError("Warning: Not upgrading work factor because bcrypt hash in an invalid format.");
+				Orion.Log.ConsoleError("Warning: Not upgrading work factor because bcrypt hash in an invalid format.");
 				return;
 			}
 
-			if (currentWorkFactor < Orion.Config.BCryptWorkFactor)
+			if (currentWorkFactor < workFactor)
 			{
 				try
 				{
-					hash = BCrypt.Net.BCrypt.HashPassword(password, Orion.Config.BCryptWorkFactor);
+					hash = BCrypt.Net.BCrypt.HashPassword(password, workFactor);
 				}
 				catch (ArgumentOutOfRangeException)
 				{
-					//TShock.Log.ConsoleError("Invalid BCrypt work factor in config file! Refusing to change work-factor on exsting password.");
-				}
-
-				//TODO: fix this
-				try
-				{
-					//TShock.Users.SetUserPassword(this, Password);
-				}
-				catch /*(UserManagerException e)*/
-				{
-					//TShock.Log.ConsoleError(e.ToString());
+					Orion.Log.ConsoleError("Invalid BCrypt work factor provided! Refusing to change work-factor on exsting hash.");
 				}
 			}
 		}
@@ -144,7 +133,7 @@ namespace Orion.Hashing
 		/// <summary>
 		/// A dictionary of hashing algorithms and an implementation object.
 		/// </summary>
-		private static readonly Dictionary<string, Func<HashAlgorithm>> HashTypes = new Dictionary
+		private readonly Dictionary<string, Func<HashAlgorithm>> HashTypes = new Dictionary
 			<string, Func<HashAlgorithm>>
 		{
 			{"sha512", () => new SHA512Managed()},
@@ -160,13 +149,13 @@ namespace Orion.Hashing
 		/// </summary>
 		/// <param name="bytes">bytes to hash</param>
 		/// <returns>string hash</returns>
-		private static string HashString(byte[] bytes)
+		private string HashString(byte[] bytes)
 		{
 			if (bytes == null)
 				throw new NullReferenceException("bytes");
 			Func<HashAlgorithm> func;
-			if (!HashTypes.TryGetValue(Orion.Config.HashAlgorithm.ToLower(), out func))
-				throw new NotSupportedException(String.Format("Hashing algorithm {0} is not supported", Orion.Config.HashAlgorithm.ToLower()));
+			if (!HashTypes.TryGetValue(_orion.Config.HashAlgorithm.ToLower(), out func))
+				throw new NotSupportedException(String.Format("Hashing algorithm {0} is not supported", _orion.Config.HashAlgorithm.ToLower()));
 
 			using (HashAlgorithm hash = func())
 			{
@@ -181,7 +170,7 @@ namespace Orion.Hashing
 		/// <param name="input">string to hash</param>
 		/// <param name="hashed">current hashed password</param>
 		/// <returns>string hash</returns>
-		private static string HashString(string input, string hashed)
+		private string HashString(string input, string hashed)
 		{
 			if (string.IsNullOrEmpty(input) && hashed == "non-existant password")
 				return "non-existant password";

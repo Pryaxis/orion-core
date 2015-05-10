@@ -15,9 +15,9 @@ namespace Orion.Users
 		public readonly IDbConnection database;
 		public OrderedCache<User> UserCache { get; private set; } 
 
-		public UserManager(IDbConnection db)
+		public UserManager(Orion orion)
 		{
-			database = db;
+			database = orion.Database;
 
 			SqlTable table = new SqlTable("Users",
 				new SqlColumn("ID", MySqlDbType.Int32) {Primary = true, AutoIncrement = true},
@@ -36,7 +36,7 @@ namespace Orion.Users
 					: new MysqlQueryCreator());
 			creator.EnsureTableStructure(table);
 
-			UserCache = new OrderedCache<User>(Orion.Config.MaxUserCacheSize);
+			UserCache = new OrderedCache<User>(orion.Config.MaxUserCacheSize);
 			UserCache.FlushEvent += OnFlush;
 		}
 
