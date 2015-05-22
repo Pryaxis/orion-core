@@ -134,7 +134,8 @@
     <comment>Used in an exception if Orion's MySQL configuration is invalid on startup</comment>
   </data>
   <data name="PluginDisposedOutput" xml:space="preserve">
-    <value>Orion plugin \"{0}\" has thrown an exception while being disposed:\n{1}</value>
+    <value>Orion plugin \"{0}\" has thrown an exception while being disposed: 
+{1}</value>
     <comment>Output when a plugin throws an exception while disposing</comment>
   </data>
   <data name="PluginIgnoredOutput" xml:space="preserve">
@@ -150,7 +151,8 @@
     <comment>Used in an exception when an instance of a plugin cannot be created during plugin loading</comment>
   </data>
   <data name="PluginsLoadedOutput" xml:space="preserve">
-    <value>Orion has successfully loaded the following plugins: \n {\n    {0}\n }</value>
+    <value>Orion has successfully loaded the following plugins: 
+{0}</value>
     <comment>Output when Orion has finished loading plugins</comment>
   </data>
   <data name="SavePathCmdLineOutput" xml:space="preserve">
