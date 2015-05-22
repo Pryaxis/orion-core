@@ -2,6 +2,9 @@
 
 namespace Orion
 {
+	/// <summary>
+	/// Attribute for determining which version of Orion the plugin is compiled for
+	/// </summary>
 	public sealed class OrionVersionAttribute : Attribute
 	{
 		public Version version;

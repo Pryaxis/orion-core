@@ -7,12 +7,14 @@ using System.Linq;
 using System.Reflection;
 using Mono.Data.Sqlite;
 using MySql.Data.MySqlClient;
+using Orion.Bans;
 using Orion.Configuration;
 using Orion.Hashing;
 using Orion.Logging;
 using Orion.Users;
 using Terraria;
 using TerrariaApi.Server;
+using Utils = Orion.Utilities.Utils;
 
 namespace Orion
 {
@@ -22,13 +24,11 @@ namespace Orion
 		/// <summary>
 		/// Relative path to the Orion folder
 		/// </summary>
-		[Temporary("Placeholder value so that it actually runs with TerrariaServer")]
 		public string SavePath { get; private set; }
 
 		/// <summary>
 		/// Relative path to the log file
 		/// </summary>
-		[Temporary("Placeholder value so that it actually runs with TerrariaServer")]
 		public string LogPath { get; private set; }
 
 		private string PluginPath { get; set; }
@@ -36,7 +36,6 @@ namespace Orion
 		/// <summary>
 		/// Relative path to the config file
 		/// </summary>
-		[Temporary("Placeholder value so that it actually runs with TerrariaServer")]
 		public string ConfigPath { get; private set; }
 		
 		/// <summary>
@@ -49,18 +48,27 @@ namespace Orion
 		/// </summary>
 		internal IDbConnection Database { get; private set; }
 		/// <summary>
-		/// User manager object for getting users and setting values
+		/// User handling object for getting users and setting values
 		/// </summary>
-		public UserManager Users { get; private set; }
+		public UserHandler Users { get; private set; }
+		/// <summary>
+		/// Ban handling object for retrieving and creating bans
+		/// </summary>
+		public BanHandler Bans { get; private set; }
+		/// <summary>
+		/// Hash handling object for creating and upgrading hashes
+		/// </summary>
+		public Hasher HashHandler { get; private set; }
+
+		public Utils Utils { get; private set; }
+
 		/// <summary>
 		/// Log manager. Use this to write data to the log
 		/// </summary>
 		public static ILog Log { get; private set; }
 
-		public Hasher HashManager { get; private set; }
-
 		private readonly Dictionary<string, Assembly> _loadedAssemblies = new Dictionary<string, Assembly>(); 
-		private readonly List<OrionPlugin> _loadedPlugins = new List<OrionPlugin>(); 
+		public readonly List<OrionPlugin> loadedPlugins = new List<OrionPlugin>();
 
 		/// <summary>
 		/// Plugin author(s)
@@ -150,12 +158,12 @@ namespace Orion
 					catch (MySqlException ex)
 					{
 						ServerApi.LogWriter.PluginWriteLine(this, ex.ToString(), TraceLevel.Error);
-						throw new Exception("MySql not setup correctly");
+						throw new Exception(Strings.MySqlException);
 					}
 				}
 				else
 				{
-					throw new Exception("Invalid storage type");
+					throw new Exception(Strings.InvalidDbTypeException);
 				}
 
 				if (Config.UseSqlLogging)
@@ -167,20 +175,24 @@ namespace Orion
 					Log = new TextLog(this, Path.Combine(LogPath, "log.log"), false);
 				}
 
-				Users = new UserManager(this);
-				HashManager = new Hasher(this);
+				Users = new UserHandler(this);
+				Bans = new BanHandler(this);
+				Utils = new Utils();
+				HashHandler = new Hasher(this);
 
 				LoadPlugins();
 			}
 			catch (Exception ex)
 			{
-				Log.Error("Fatal Startup Exception");
+				Log.Error(Strings.StartupException);
 				Log.Error(ex.ToString());
 				Environment.Exit(1);
 			}
 		}
 
-		/// <summary>Fired when the config file has been read.</summary>
+		/// <summary>
+		/// Fired when the config file has been read.
+		/// </summary>
 		/// <param name="file">The config file object.</param>
 		private void OnConfigRead(ConfigFile file)
 		{
@@ -188,6 +200,10 @@ namespace Orion
 			PluginPath = file.PluginsPath;
 		}
 
+		/// <summary>
+		/// Handles command-line parameters
+		/// </summary>
+		/// <param name="args"></param>
 		private void HandleCommandLine(string[] args)
 		{
 			for (int i = 0; i < args.Length; i++)
@@ -200,7 +216,7 @@ namespace Orion
 						if (path.IndexOfAny(Path.GetInvalidPathChars()) == -1)
 						{
 							SavePath = path;
-							ServerApi.LogWriter.PluginWriteLine(this, "Save path has been set to " + path, TraceLevel.Info);
+							ServerApi.LogWriter.PluginWriteLine(this, String.Format(Strings.SavePathCmdLineOutput, path), TraceLevel.Info);
 						}
 						break;
 
@@ -209,24 +225,19 @@ namespace Orion
 						if (path.IndexOfAny(Path.GetInvalidPathChars()) == -1)
 						{
 							ConfigPath = path;
-							ServerApi.LogWriter.PluginWriteLine(this, "Config path has been set to " + path, TraceLevel.Info);
-						}
-						break;
-
-					case "-logpath":
-						path = args[i++];
-						if (path.IndexOfAny(Path.GetInvalidPathChars()) == -1)
-						{
-							LogPath = path;
-							ServerApi.LogWriter.PluginWriteLine(this, "Log path has been set to " + path, TraceLevel.Info);
+							ServerApi.LogWriter.PluginWriteLine(this, String.Format(Strings.ConfigPathCmdLineOutput, path), TraceLevel.Info);
 						}
 						break;
 				}
 			}
 		}
 
+		/// <summary>
+		/// Loads dll plugins from the <see cref="PluginPath"/>
+		/// </summary>
 		private void LoadPlugins()
 		{
+			//Get a list of FileInfo for every file in the plugin directory
 			List<FileInfo> fileInfos = new DirectoryInfo(PluginPath).GetFiles("*.dll").ToList();
 
 			foreach (FileInfo fileInfo in fileInfos)
@@ -235,6 +246,7 @@ namespace Orion
 
 				try
 				{
+					//attempt to load the file
 					Assembly assembly;
 					if (!_loadedAssemblies.TryGetValue(fileNameWithoutExtension, out assembly))
 					{
@@ -242,26 +254,32 @@ namespace Orion
 						_loadedAssemblies.Add(fileNameWithoutExtension, assembly);
 					}
 
+					//iterate over the Types in the assembly
 					foreach (Type type in assembly.GetExportedTypes())
 					{
+						//if it's not inheriting OrionPlugin, ignore
 						if (!type.IsSubclassOf(typeof (OrionPlugin)) || !type.IsPublic || type.IsAbstract)
 							continue;
 
+						//Get the attributes the Type is using
 						object[] customAttributes = type.GetCustomAttributes(typeof (OrionVersionAttribute), false);
+						//if there's no attributes, ignore
 						if (customAttributes.Length == 0)
 							continue;
 
+						//Assume that the first attribute will always be the OrionVersionAttribute
 						OrionVersionAttribute orionVersionAttribute = (OrionVersionAttribute) customAttributes[0];
 						Version orionVersion = orionVersionAttribute.version;
+						//Make sure the plugin's major version matches our major version.
 						if (Version.Major != orionVersion.Major)
 						{
 							ServerApi.LogWriter.PluginWriteLine(this,
-								String.Format("Orion plugin \"{0}\" is designed for a different Orion version ({1}) and was ignored.",
-									type.FullName, orionVersion.ToString(2)), TraceLevel.Warning);
+								String.Format(Strings.PluginIgnoredOutput, type.FullName, orionVersion.ToString(2)), TraceLevel.Warning);
 
 							continue;
 						}
 
+						//try and create an instance of the plugin
 						OrionPlugin pluginInstance;
 						try
 						{
@@ -271,26 +289,29 @@ namespace Orion
 						{
 							// Broken plugins better stop the entire server init.
 							throw new InvalidOperationException(
-								String.Format("Could not create an instance of orion plugin class \"{0}\".", type.FullName), ex);
+								String.Format(Strings.PluginInstanceFailedException, type.FullName), ex);
 						}
 
-						_loadedPlugins.Add(pluginInstance);
+						loadedPlugins.Add(pluginInstance);
 					}
 				}
 				catch (Exception ex)
 				{
 					// Broken assemblies / plugins better stop the entire server init.
 					throw new InvalidOperationException(
-						String.Format("Failed to load assembly \"{0}\".", fileInfo.Name), ex);
+						String.Format(Strings.AssemblyLoadFailedException, fileInfo.Name), ex);
 				}
 
+				//order plugins by their order
 				IOrderedEnumerable<OrionPlugin> orderedPlugins =
-					from plugin in _loadedPlugins
+					from plugin in loadedPlugins
 					orderby plugin.Order
 					select plugin;
 
+				//list of strings for loaded output
 				List<string> loaded = new List<string>(orderedPlugins.Count());
 
+				//iterate over the ordered plugins and try and initialize them
 				foreach (OrionPlugin plugin in orderedPlugins)
 				{
 					try
@@ -300,23 +321,24 @@ namespace Orion
 					catch (Exception ex)
 					{
 						throw new InvalidOperationException(String.Format(
-							"Orion plugin \"{0}\" has thrown an exception during initialization.", plugin.Name), ex);
+							Strings.PluginInitializeException, plugin.Name), ex);
 					}
 					loaded.Add(String.Format("{0} v{1} ({2})", plugin.Name, plugin.Version, plugin.Author));
 				}
 
 				ServerApi.LogWriter.PluginWriteLine(this,
-					"Orion has successfully loaded the following plugins: " +
-					"\n {" +
-					"\n    " + String.Join("\n    ", loaded) +
-					"\n }",
+					String.Format(Strings.PluginsLoadedOutput, String.Join("\n    ", loaded)),
 					TraceLevel.Info);
 			}
 		}
 
+		/// <summary>
+		/// Unloads loaded plugins
+		/// </summary>
 		private void UnloadPlugins()
 		{
-			foreach (OrionPlugin plugin in _loadedPlugins)
+			//iterate over loaded plugins and try to dispose them
+			foreach (OrionPlugin plugin in loadedPlugins)
 			{
 				try
 				{
@@ -325,7 +347,7 @@ namespace Orion
 				catch (Exception ex)
 				{
 					ServerApi.LogWriter.PluginWriteLine(this, String.Format(
-						"Orion plugin \"{0}\" has thrown an exception while being disposed:\n{1}", plugin.Name, ex),
+						Strings.PluginDisposedOutput, plugin.Name, ex),
 						TraceLevel.Error);
 				}
 			}

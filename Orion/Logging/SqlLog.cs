@@ -258,7 +258,7 @@ namespace Orion.Logging
 				}
 
 				_database.Query("INSERT INTO Logs (TimeStamp, Caller, LogLevel, Message) VALUES (@0, @1, @2, @3)",
-					DateTime.UtcNow.ToString("yyyy-MM-dd HH:mm:ss", CultureInfo.InvariantCulture), caller, (int)level, message);
+					DateTime.UtcNow.ToString("yyyy-MM-dd HH:mm:ss"), caller, (int)level, message);
 
 				bool success = true;
 				while (_failures.Count > 0 && success)
@@ -278,7 +278,7 @@ namespace Orion.Logging
 							caller = "TShock",
 							logLevel = TraceLevel.Error,
 							message = String.Format("SQL Log insert query failed: {0}", ex),
-							timestamp = DateTime.UtcNow.ToString("yyyy-MM-dd HH:mm:ss", CultureInfo.InvariantCulture)
+							timestamp = DateTime.UtcNow.ToString("yyyy-MM-dd HH:mm:ss")
 						});
 					}
 
@@ -295,7 +295,7 @@ namespace Orion.Logging
 					logLevel = level,
 					message = message,
 					caller = caller,
-					timestamp = DateTime.UtcNow.ToString("yyyy-MM-dd HH:mm:ss", CultureInfo.InvariantCulture)
+					timestamp = DateTime.UtcNow.ToString("yyyy-MM-dd HH:mm:ss")
 				});
 			}
 

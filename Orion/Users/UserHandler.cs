@@ -10,12 +10,12 @@ using Orion.Utilities;
 
 namespace Orion.Users
 {
-	public sealed class UserManager
+	public sealed class UserHandler
 	{
 		public readonly IDbConnection database;
 		public OrderedCache<User> UserCache { get; private set; } 
 
-		public UserManager(Orion orion)
+		public UserHandler(Orion orion)
 		{
 			database = orion.Database;
 
@@ -56,7 +56,7 @@ namespace Orion.Users
 		/// <param name="user">user object to sync</param>
 		/// <returns>true if successfully syncd</returns>
 		/// <exception cref="UserNotFoundException">Thrown if the user does not exist in the database</exception>
-		/// <exception cref="UserManagerException">Thrown if an unexpected exception occurs</exception>
+		/// <exception cref="UserHandlerException">Thrown if an unexpected exception occurs</exception>
 		public bool Sync(User user)
 		{
 			try
@@ -71,8 +71,8 @@ namespace Orion.Users
 			}
 			catch (Exception ex)
 			{
-				throw new UserManagerException(
-					String.Format("UserManager.Sync returned an error for user {0} ({1})", user.Name, user.ID), ex);
+				throw new UserHandlerException(
+					String.Format("UserHandler.Sync returned an error for user {0} ({1})", user.Name, user.ID), ex);
 			}
 		}
 
@@ -94,8 +94,8 @@ namespace Orion.Users
 			//Don't want people setting everything to null
 			if (string.IsNullOrEmpty(password) && string.IsNullOrEmpty(group) && string.IsNullOrEmpty(uuid))
 			{
-				throw new UserManagerException(
-					"Invalid arguments in UserManager.SetParameters: password, group and uuid may not all be null.");
+				throw new UserHandlerException(
+					"Invalid arguments in UserHandler.SetParameters: password, group and uuid may not all be null.");
 			}
 
 			//If we can find the user in the cache, we can simply update that object and let it sync when the cache flushes.
@@ -144,8 +144,8 @@ namespace Orion.Users
 			}
 			catch (Exception ex)
 			{
-				throw new UserManagerException(
-					String.Format("UserManager.SetParameter returned an error for User ID {0}", id), ex);
+				throw new UserHandlerException(
+					String.Format("UserHandler.SetParameter returned an error for User ID {0}", id), ex);
 			}
 		}
 

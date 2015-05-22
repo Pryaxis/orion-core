@@ -2,6 +2,9 @@
 
 namespace Orion
 {
+	/// <summary>
+	/// Inheritable class for utilizing Orion.
+	/// </summary>
 	public abstract class OrionPlugin : IDisposable
 	{
 		public abstract Version Version { get; }

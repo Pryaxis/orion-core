@@ -220,9 +220,8 @@ namespace Orion.Logging
 					caller = meth.DeclaringType.Name;
 			}
 
-			string logEntry = String.Format("{0} - {1}: {2}: {3}",
-					DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss", CultureInfo.InvariantCulture),
-					caller, level.ToString().ToUpper(), message);
+			string logEntry = String.Format("{0} - {1}: {2}: {3}", 
+				DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss"), caller, level.ToString().ToUpper(), message);
 			try
 			{
 				_logWriter.WriteLine(logEntry);
@@ -231,7 +230,7 @@ namespace Orion.Logging
 			catch (ObjectDisposedException)
 			{
 				ServerApi.LogWriter.PluginWriteLine(_orion, logEntry, TraceLevel.Error);
-				Console.WriteLine("Unable to write to log as log has been disposed.");
+				Console.WriteLine(Strings.TextLogDisposedOutput);
 				Console.WriteLine("{0} - {1}: {2}: {3}",
 					DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss", CultureInfo.InvariantCulture),
 					caller, level.ToString().ToUpper(), message);
