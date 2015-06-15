@@ -173,7 +173,7 @@ namespace Orion
 				else
 				{
 					//Log = new TextLog(this, Path.Combine(LogPath, "log.log"), false);
-                    Log = new Log();
+                    Log = new Log(Path.Combine(SavePath, "log4net.config"));
 				}
 
 				Users = new UserHandler(this);

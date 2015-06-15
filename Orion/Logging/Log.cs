@@ -15,11 +15,11 @@ namespace Orion.Logging
 	    private log4net.ILog _log;
 	    private log4net.ILog _fileLog;
 
-	    public Log()
+	    public Log(string configPath)
 	    {
-            XmlConfigurator.Configure(new FileInfo("./log4net.config"));
+            XmlConfigurator.Configure(new FileInfo(configPath));
 
-	        _log = LogManager.GetLogger(typeof (Orion));
+	        _log = LogManager.GetLogger("OrionConsoleAndFile");
 	        _fileLog = LogManager.GetLogger("OrionFile");
 	    }
 
