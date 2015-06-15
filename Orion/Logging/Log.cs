@@ -23,24 +23,6 @@ namespace Orion.Logging
 	        _fileLog = LogManager.GetLogger("OrionFile");
 	    }
 
-		public void Info(Type type, string msg)
-		{
-			LogManager.GetLogger(type).Info(msg);
-		}
-
-	    public string FileName
-	    {
-            get
-            {
-                return _log.Logger.Repository.GetAppenders()
-                    .Where(x => x is RollingFileAppender)
-                    .Cast<RollingFileAppender>()
-                    .Select(x => x.File)
-                    .First();
-            }
-	        set { throw new NotImplementedException(); }
-	    }
-
         public bool MayWriteType(LogLevel type)
 	    {
 	        switch (type)
