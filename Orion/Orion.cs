@@ -68,7 +68,7 @@ namespace Orion
 		public static ILog Log { get; private set; }
 
 		private readonly Dictionary<string, Assembly> _loadedAssemblies = new Dictionary<string, Assembly>(); 
-		public readonly List<OrionPlugin> loadedPlugins = new List<OrionPlugin>();
+		private readonly List<OrionPlugin> _loadedPlugins = new List<OrionPlugin>();
 
 		/// <summary>
 		/// Plugin author(s)
@@ -172,7 +172,8 @@ namespace Orion
 				}
 				else
 				{
-					Log = new TextLog(this, Path.Combine(LogPath, "log.log"), false);
+					//Log = new TextLog(this, Path.Combine(LogPath, "log.log"), false);
+                    Log = new Log();
 				}
 
 				Users = new UserHandler(this);
@@ -292,7 +293,7 @@ namespace Orion
 								String.Format(Strings.PluginInstanceFailedException, type.FullName), ex);
 						}
 
-						loadedPlugins.Add(pluginInstance);
+						_loadedPlugins.Add(pluginInstance);
 					}
 				}
 				catch (Exception ex)
@@ -304,7 +305,7 @@ namespace Orion
 
 				//order plugins by their order
 				IOrderedEnumerable<OrionPlugin> orderedPlugins =
-					from plugin in loadedPlugins
+					from plugin in _loadedPlugins
 					orderby plugin.Order
 					select plugin;
 
@@ -338,7 +339,7 @@ namespace Orion
 		private void UnloadPlugins()
 		{
 			//iterate over loaded plugins and try to dispose them
-			foreach (OrionPlugin plugin in loadedPlugins)
+			foreach (OrionPlugin plugin in _loadedPlugins)
 			{
 				try
 				{
