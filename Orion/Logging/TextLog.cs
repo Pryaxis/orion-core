@@ -52,28 +52,9 @@ namespace Orion.Logging
 			_logWriter = new StreamWriter(filename, !clear);
 		}
 
-		public bool MayWriteType(TraceLevel type)
+		public bool MayWriteType(LogLevel type)
 		{
-			return type != TraceLevel.Off;
-		}
-
-		/// <summary>
-		/// Writes data to the log file.
-		/// </summary>
-		/// <param name="message">The message to be written.</param>
-		public void Data(string message)
-		{
-			Write(message, TraceLevel.Verbose);
-		}
-
-		/// <summary>
-		/// Writes data to the log file.
-		/// </summary>
-		/// <param name="format">The format of the message to be written.</param>
-		/// <param name="args">The format arguments.</param>
-		public void Data(string format, params object[] args)
-		{
-			Data(String.Format(format, args));
+		    return true;
 		}
 
 		/// <summary>
@@ -82,7 +63,7 @@ namespace Orion.Logging
 		/// <param name="message">The message to be written.</param>
 		public void Error(string message)
 		{
-			Write(message, TraceLevel.Error);
+            Write(message, LogLevel.Error);
 		}
 
 		/// <summary>
@@ -104,7 +85,7 @@ namespace Orion.Logging
 			Console.ForegroundColor = ConsoleColor.Red;
 			Console.WriteLine(message);
 			Console.ForegroundColor = ConsoleColor.Gray;
-			Write(message, TraceLevel.Error);
+            Write(message, LogLevel.Error);
 		}
 
 		/// <summary>
@@ -123,7 +104,7 @@ namespace Orion.Logging
 		/// <param name="message">The message to be written.</param>
 		public void Warn(string message)
 		{
-			Write(message, TraceLevel.Warning);
+            Write(message, LogLevel.Warning);
 		}
 
 		/// <summary>
@@ -142,7 +123,7 @@ namespace Orion.Logging
 		/// <param name="message">The message to be written.</param>
 		public void Info(string message)
 		{
-			Write(message, TraceLevel.Info);
+            Write(message, LogLevel.Info);
 		}
 
 		/// <summary>
@@ -164,7 +145,7 @@ namespace Orion.Logging
 			Console.ForegroundColor = ConsoleColor.Yellow;
 			Console.WriteLine(message);
 			Console.ForegroundColor = ConsoleColor.Gray;
-			Write(message, TraceLevel.Info);
+            Write(message, LogLevel.Info);
 		}
 
 		/// <summary>
@@ -183,9 +164,7 @@ namespace Orion.Logging
 		/// <param name="message">The message to be written.</param>
 		public void Debug(string message)
 		{
-#if DEBUG
-			Write(message, TraceLevel.Verbose);
-#endif
+            Write(message, LogLevel.Debug);
 		}
 
 		/// <summary>
@@ -195,9 +174,7 @@ namespace Orion.Logging
 		/// <param name="args">The format arguments.</param>
 		public void Debug(string format, params object[] args)
 		{
-#if DEBUG
 			Debug(String.Format(format, args));
-#endif
 		}
 
 		/// <summary>
@@ -205,7 +182,7 @@ namespace Orion.Logging
 		/// </summary>
 		/// <param name="message"></param>
 		/// <param name="level"></param>
-		public void Write(string message, TraceLevel level)
+        public void Write(string message, LogLevel level)
 		{
 			if (!MayWriteType(level))
 				return;

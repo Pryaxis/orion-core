@@ -72,6 +72,7 @@
     <Compile Include="Extensions\StringEx.cs" />
     <Compile Include="Logging\ILog.cs" />
     <Compile Include="Logging\Log.cs" />
+    <Compile Include="Logging\LogLevel.cs" />
     <Compile Include="Logging\SqlLog.cs" />
     <Compile Include="Logging\TextLog.cs" />
     <Compile Include="Orion.cs" />

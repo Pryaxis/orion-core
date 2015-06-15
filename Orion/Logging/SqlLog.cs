@@ -34,7 +34,7 @@ namespace Orion.Logging
 		public string timestamp;
 		public string message;
 		public string caller;
-		public TraceLevel logLevel;
+        public LogLevel logLevel;
 
 		public override string ToString()
 		{
@@ -54,8 +54,6 @@ namespace Orion.Logging
 		private bool _useTextLog;
 		private readonly Orion _orion;
 
-		public string FileName { get; set; }
-
 		/// <summary>
 		/// Sets the database connection and the initial log level.
 		/// </summary>
@@ -68,7 +66,7 @@ namespace Orion.Logging
 			_failures = new List<LogInfo>(orion.Config.MaxSqlLogFailureCount);
 
 			_database = orion.Database;
-			FileName = String.Format("{0}://database", _database.GetSqlType());
+			//FileName = String.Format("{0}://database", _database.GetSqlType());
 			_backupLog = new TextLog(orion, textlogFilepath, clearTextLog);
 
 			SqlTable table = new SqlTable("Logs",
@@ -86,29 +84,10 @@ namespace Orion.Logging
 			creator.EnsureTableStructure(table);
 		}
 
-		public bool MayWriteType(TraceLevel type)
-		{
-			return type != TraceLevel.Off;
-		}
-
-		/// <summary>
-		/// Writes data to the log file.
-		/// </summary>
-		/// <param name="message">The message to be written.</param>
-		public void Data(string message)
-		{
-			Write(message, TraceLevel.Verbose);
-		}
-
-		/// <summary>
-		/// Writes data to the log file.
-		/// </summary>
-		/// <param name="format">The format of the message to be written.</param>
-		/// <param name="args">The format arguments.</param>
-		public void Data(string format, params object[] args)
-		{
-			Data(String.Format(format, args));
-		}
+        public bool MayWriteType(LogLevel type)
+        {
+            return true;
+        }
 
 		/// <summary>
 		/// Writes an error to the log file.
@@ -116,7 +95,7 @@ namespace Orion.Logging
 		/// <param name="message">The message to be written.</param>
 		public void Error(string message)
 		{
-			Write(message, TraceLevel.Error);
+            Write(message, LogLevel.Error);
 		}
 
 		/// <summary>
@@ -138,7 +117,7 @@ namespace Orion.Logging
 			Console.ForegroundColor = ConsoleColor.Red;
 			Console.WriteLine(message);
 			Console.ForegroundColor = ConsoleColor.Gray;
-			Write(message, TraceLevel.Error);
+            Write(message, LogLevel.Error);
 		}
 
 		/// <summary>
@@ -157,7 +136,7 @@ namespace Orion.Logging
 		/// <param name="message">The message to be written.</param>
 		public void Warn(string message)
 		{
-			Write(message, TraceLevel.Warning);
+            Write(message, LogLevel.Warning);
 		}
 
 		/// <summary>
@@ -176,7 +155,7 @@ namespace Orion.Logging
 		/// <param name="message">The message to be written.</param>
 		public void Info(string message)
 		{
-			Write(message, TraceLevel.Info);
+            Write(message, LogLevel.Info);
 		}
 
 		/// <summary>
@@ -198,7 +177,7 @@ namespace Orion.Logging
 			Console.ForegroundColor = ConsoleColor.Yellow;
 			Console.WriteLine(message);
 			Console.ForegroundColor = ConsoleColor.Gray;
-			Write(message, TraceLevel.Info);
+            Write(message, LogLevel.Info);
 		}
 
 		/// <summary>
@@ -217,9 +196,7 @@ namespace Orion.Logging
 		/// <param name="message">The message to be written.</param>
 		public void Debug(string message)
 		{
-#if DEBUG
-			Write(message, TraceLevel.Verbose);
-#endif
+            Write(message, LogLevel.Debug);
 		}
 
 		/// <summary>
@@ -229,12 +206,10 @@ namespace Orion.Logging
 		/// <param name="args">The format arguments.</param>
 		public void Debug(string format, params object[] args)
 		{
-#if DEBUG
 			Debug(String.Format(format, args));
-#endif
 		}
 
-		public void Write(string message, TraceLevel level)
+        public void Write(string message, LogLevel level)
 		{
 			if (!MayWriteType(level))
 				return;
@@ -276,7 +251,7 @@ namespace Orion.Logging
 						_failures.Add(new LogInfo
 						{
 							caller = "TShock",
-							logLevel = TraceLevel.Error,
+                            logLevel = LogLevel.Error,
 							message = String.Format("SQL Log insert query failed: {0}", ex),
 							timestamp = DateTime.UtcNow.ToString("yyyy-MM-dd HH:mm:ss")
 						});
@@ -307,7 +282,7 @@ namespace Orion.Logging
 				foreach (LogInfo logInfo in _failures)
 				{
 					_backupLog.Write(String.Format("SQL log failed at: {0}. {1}", logInfo.timestamp, logInfo),
-						TraceLevel.Error);
+                        LogLevel.Error);
 				}
 				_failures.Clear();
 			}
