@@ -29,20 +29,6 @@ using Orion.SQL;
 
 namespace Orion.Logging
 {
-	struct LogInfo
-	{
-		public string timestamp;
-		public string message;
-		public string caller;
-        public LogLevel logLevel;
-
-		public override string ToString()
-		{
-			return String.Format("Message: {0}: {1}: {2}",
-				caller, logLevel.ToString().ToUpper(), message);
-		}
-	}
-
 	/// <summary>
 	/// Class inheriting ILog for writing logs to TShock's SQL database
 	/// </summary>
@@ -53,6 +39,20 @@ namespace Orion.Logging
 		private readonly List<LogInfo> _failures;
 		private bool _useTextLog;
 		private readonly Orion _orion;
+
+	    private class LogInfo
+        {
+            public string Timestamp { get; set; }
+            public string Message { get; set; }
+            public string Caller { get; set; }
+            public LogLevel LogLevel { get; set; }
+
+            public override string ToString()
+            {
+                return String.Format("Message: {0}: {1}: {2}",
+                    Caller, LogLevel.ToString().ToUpper(), Message);
+            }
+        }
 
 		/// <summary>
 		/// Sets the database connection and the initial log level.
@@ -243,17 +243,17 @@ namespace Orion.Logging
 					try
 					{
 						_database.Query("INSERT INTO Logs (TimeStamp, Caller, LogLevel, Message) VALUES (@0, @1, @2, @3)",
-							info.timestamp, info.caller, (int)info.logLevel, info.message);
+							info.Timestamp, info.Caller, (int)info.LogLevel, info.Message);
 					}
 					catch (Exception ex)
 					{
 						success = false;
 						_failures.Add(new LogInfo
 						{
-							caller = "TShock",
-                            logLevel = LogLevel.Error,
-							message = String.Format("SQL Log insert query failed: {0}", ex),
-							timestamp = DateTime.UtcNow.ToString("yyyy-MM-dd HH:mm:ss")
+							Caller = "TShock",
+                            LogLevel = LogLevel.Error,
+							Message = String.Format("SQL Log insert query failed: {0}", ex),
+							Timestamp = DateTime.UtcNow.ToString("yyyy-MM-dd HH:mm:ss")
 						});
 					}
 
@@ -267,10 +267,10 @@ namespace Orion.Logging
 
 				_failures.Add(new LogInfo
 				{
-					logLevel = level,
-					message = message,
-					caller = caller,
-					timestamp = DateTime.UtcNow.ToString("yyyy-MM-dd HH:mm:ss")
+					LogLevel = level,
+					Message = message,
+					Caller = caller,
+					Timestamp = DateTime.UtcNow.ToString("yyyy-MM-dd HH:mm:ss")
 				});
 			}
 
@@ -281,7 +281,7 @@ namespace Orion.Logging
 
 				foreach (LogInfo logInfo in _failures)
 				{
-					_backupLog.Write(String.Format("SQL log failed at: {0}. {1}", logInfo.timestamp, logInfo),
+					_backupLog.Write(String.Format("SQL log failed at: {0}. {1}", logInfo.Timestamp, logInfo),
                         LogLevel.Error);
 				}
 				_failures.Clear();
