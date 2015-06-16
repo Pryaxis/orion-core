@@ -12,13 +12,13 @@ namespace Orion
 		public abstract string Author { get; }
 		public abstract int Order { get; }
 
-		protected Orion Orion { get; private set; }
+		protected Orion OrionInstance { get; private set; }
 
 		public abstract void Initialize();
 
-		protected OrionPlugin(Orion orion)
+		protected OrionPlugin(Orion orionInstance)
 		{
-			Orion = orion;
+			OrionInstance = orionInstance;
 		}
 
 		~OrionPlugin()

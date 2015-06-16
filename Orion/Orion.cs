@@ -240,6 +240,7 @@ namespace Orion
 		{
 			//Get a list of FileInfo for every file in the plugin directory
 			List<FileInfo> fileInfos = new DirectoryInfo(PluginPath).GetFiles("*.dll").ToList();
+		    var loaded = new List<string>();
 
 			foreach (FileInfo fileInfo in fileInfos)
 			{
@@ -309,9 +310,6 @@ namespace Orion
 					orderby plugin.Order
 					select plugin;
 
-				//list of strings for loaded output
-				List<string> loaded = new List<string>(orderedPlugins.Count());
-
 				//iterate over the ordered plugins and try and initialize them
 				foreach (OrionPlugin plugin in orderedPlugins)
 				{
@@ -326,11 +324,11 @@ namespace Orion
 					}
 					loaded.Add(String.Format("{0} v{1} ({2})", plugin.Name, plugin.Version, plugin.Author));
 				}
-
-				ServerApi.LogWriter.PluginWriteLine(this,
-					String.Format(Strings.PluginsLoadedOutput, String.Join("\n    ", loaded)),
-					TraceLevel.Info);
 			}
+
+            ServerApi.LogWriter.PluginWriteLine(this,
+                    String.Format(Strings.PluginsLoadedOutput, String.Join("\n    ", loaded)),
+                    TraceLevel.Info);
 		}
 
 		/// <summary>
