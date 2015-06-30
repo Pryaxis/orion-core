@@ -26,15 +26,10 @@ namespace Orion.Logging
 	public interface ILog
 	{
 		/// <summary>
-		/// Log file name
-		/// </summary>
-		string FileName { get; set; }
-
-		/// <summary>
 		/// Checks whether the log level contains the specified flag.
 		/// </summary>
 		/// <param name="type">The <see cref="TraceLevel" /> value to check.</param>
-		bool MayWriteType(TraceLevel type);
+        bool MayWriteType(LogLevel type);
 
 		/// <summary>
 		/// Writes an informative string to the log and to the console.
@@ -102,33 +97,20 @@ namespace Orion.Logging
 		void Info(string format, params object[] args);
 
 		/// <summary>
-		/// Writes data to the log.
-		/// </summary>
-		/// <param name="message">The message to be written.</param>
-		void Data(string message);
-
-		/// <summary>
-		/// Writes data to the log.
-		/// </summary>
-		/// <param name="format">The format of the message to be written.</param>
-		/// <param name="args">The format arguments.</param>
-		void Data(string format, params object[] args);
-
-		/// <summary>
 		/// Writes a message to the log
 		/// </summary>
 		/// <param name="message">Message to write</param>
 		/// <param name="level">LogLevel assosciated with the message</param>
-		void Write(string message, TraceLevel level);
+		void Write(string message, LogLevel level);
 
 		/// <summary>
-		/// Writes a debug string to the log file. Only works if the DEBUG preprocessor conditional is set.
+		/// Writes a debug string to the log file.
 		/// </summary>
 		/// <param name="message">The message to be written.</param>
 		void Debug(string message);
 
 		/// <summary>
-		/// Writes a debug string to the log file. Only works if the DEBUG preprocessor conditional is set.
+		/// Writes a debug string to the log file.
 		/// </summary>
 		/// <param name="format">The format of the message to be written.</param>
 		/// <param name="args">The format arguments.</param>

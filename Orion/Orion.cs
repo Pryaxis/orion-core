@@ -68,7 +68,7 @@ namespace Orion
 		public static ILog Log { get; private set; }
 
 		private readonly Dictionary<string, Assembly> _loadedAssemblies = new Dictionary<string, Assembly>(); 
-		public readonly List<OrionPlugin> loadedPlugins = new List<OrionPlugin>();
+		private readonly List<OrionPlugin> _loadedPlugins = new List<OrionPlugin>();
 
 		/// <summary>
 		/// Plugin author(s)
@@ -172,7 +172,8 @@ namespace Orion
 				}
 				else
 				{
-					Log = new TextLog(this, Path.Combine(LogPath, "log.log"), false);
+					//Log = new TextLog(this, Path.Combine(LogPath, "log.log"), false);
+                    Log = new Log(Path.Combine(SavePath, "log4net.config"));
 				}
 
 				Users = new UserHandler(this);
@@ -239,6 +240,7 @@ namespace Orion
 		{
 			//Get a list of FileInfo for every file in the plugin directory
 			List<FileInfo> fileInfos = new DirectoryInfo(PluginPath).GetFiles("*.dll").ToList();
+		    var loaded = new List<string>();
 
 			foreach (FileInfo fileInfo in fileInfos)
 			{
@@ -292,7 +294,7 @@ namespace Orion
 								String.Format(Strings.PluginInstanceFailedException, type.FullName), ex);
 						}
 
-						loadedPlugins.Add(pluginInstance);
+						_loadedPlugins.Add(pluginInstance);
 					}
 				}
 				catch (Exception ex)
@@ -304,12 +306,9 @@ namespace Orion
 
 				//order plugins by their order
 				IOrderedEnumerable<OrionPlugin> orderedPlugins =
-					from plugin in loadedPlugins
+					from plugin in _loadedPlugins
 					orderby plugin.Order
 					select plugin;
-
-				//list of strings for loaded output
-				List<string> loaded = new List<string>(orderedPlugins.Count());
 
 				//iterate over the ordered plugins and try and initialize them
 				foreach (OrionPlugin plugin in orderedPlugins)
@@ -325,11 +324,11 @@ namespace Orion
 					}
 					loaded.Add(String.Format("{0} v{1} ({2})", plugin.Name, plugin.Version, plugin.Author));
 				}
-
-				ServerApi.LogWriter.PluginWriteLine(this,
-					String.Format(Strings.PluginsLoadedOutput, String.Join("\n    ", loaded)),
-					TraceLevel.Info);
 			}
+
+            ServerApi.LogWriter.PluginWriteLine(this,
+                    String.Format(Strings.PluginsLoadedOutput, String.Join("\n    ", loaded)),
+                    TraceLevel.Info);
 		}
 
 		/// <summary>
@@ -338,7 +337,7 @@ namespace Orion
 		private void UnloadPlugins()
 		{
 			//iterate over loaded plugins and try to dispose them
-			foreach (OrionPlugin plugin in loadedPlugins)
+			foreach (OrionPlugin plugin in _loadedPlugins)
 			{
 				try
 				{
