@@ -32,7 +32,7 @@ namespace Orion.Exceptions
 		/// <param name="name">The name of the user that already exists.</param>
 		/// <returns>A UserCollisionException object with the user's name passed in the message.</returns>
 		public UserCollisionException(string name)
-			: base("User '" + name + "' already exists")
+			: base(String.Format(Strings.UserCollision, name))
 		{
 		}
 	}
@@ -45,7 +45,7 @@ namespace Orion.Exceptions
 		/// <param name="name">The user's name to be pasesd in the message.</param>
 		/// <returns>A new UserNotFoundException object with a message containing the user's name that does not exist.</returns>
 		public UserNotFoundException(string name)
-			: base("User '" + name + "' does not exist")
+			: base(String.Format(Strings.UserNotFound, name))
 		{
 		}
 	}

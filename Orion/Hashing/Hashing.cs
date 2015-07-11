@@ -9,11 +9,11 @@ namespace Orion.Hashing
 {
 	public sealed class Hasher
 	{
-		private readonly Orion _orion;
+		private readonly Orion _core;
 
 		public Hasher(Orion orion)
 		{
-			_orion = orion;
+			_core = orion;
 		}
 
 		/// <summary>
@@ -37,14 +37,8 @@ namespace Orion.Hashing
 			}
 			catch (SaltParseException)
 			{
-				if (String.Equals(HashString(input, hash), hash, StringComparison.CurrentCulture))
+				if (String.Equals(HashString(input), hash, StringComparison.CurrentCulture))
 				{
-					// Return true to keep blank passwords working but don't convert them to bcrypt.
-					if (hash == "non-existant password")
-					{
-						return true;
-					}
-					// The password is not stored using BCrypt; upgrade it to BCrypt immediately
 					UpgradeInputToBCrypt(input, ref hash, workFactor);
 					return true;
 				}
@@ -63,7 +57,7 @@ namespace Orion.Hashing
 
 			if (text.Trim().Length < Math.Max(4, minLength))
 			{
-				throw new ArgumentOutOfRangeException("text", "String must be > " + minLength + " characters.");
+				throw new ArgumentOutOfRangeException(String.Format(Strings.BCryptHashLengthOutOfRange, minLength));
 			}
 			try
 			{
@@ -71,7 +65,7 @@ namespace Orion.Hashing
 			}
 			catch (ArgumentOutOfRangeException)
 			{
-				Orion.Log.ConsoleError("Invalid BCrypt work factor provided! Creating new hash using default work factor.");
+				Orion.Log.ConsoleError(Strings.BCryptHashWorkFactorOutOfRange);
 				ret = BCrypt.Net.BCrypt.HashPassword(text.Trim());
 			}
 
@@ -86,15 +80,13 @@ namespace Orion.Hashing
 		/// <param name="workFactor">BCrypt workfactor to be applied to the hash</param>
 		private void UpgradeInputToBCrypt(string input, ref string hash, int workFactor)
 		{
-			string oldPassword = hash;
-
 			try
 			{
 				hash = BCrypt.Net.BCrypt.HashPassword(input, workFactor);
 			}
 			catch (ArgumentOutOfRangeException)
 			{
-				Orion.Log.ConsoleError("Invalid BCrypt work factor provided! Upgrading input to BCrypt using default work factor.");
+				Orion.Log.ConsoleError(Strings.BCryptHashWorkFactorOutOfRangeUpgrade);
 				hash = BCrypt.Net.BCrypt.HashPassword(input);
 			}
 		}
@@ -113,7 +105,7 @@ namespace Orion.Hashing
 			}
 			catch (FormatException)
 			{
-				Orion.Log.ConsoleError("Warning: Not upgrading work factor because bcrypt hash in an invalid format.");
+				Orion.Log.ConsoleError(Strings.BCryptInvalidHashFormat);
 				return;
 			}
 
@@ -125,13 +117,14 @@ namespace Orion.Hashing
 				}
 				catch (ArgumentOutOfRangeException)
 				{
-					Orion.Log.ConsoleError("Invalid BCrypt work factor provided! Refusing to change work-factor on exsting hash.");
+					Orion.Log.ConsoleError(Strings.BCryptInvalidWorkFactor);
 				}
 			}
 		}
 
 		/// <summary>
 		/// A dictionary of hashing algorithms and an implementation object.
+		/// This is only here for backwards compatibility.
 		/// </summary>
 		private readonly Dictionary<string, Func<HashAlgorithm>> HashTypes = new Dictionary
 			<string, Func<HashAlgorithm>>
@@ -145,7 +138,8 @@ namespace Orion.Hashing
 		};
 
 		/// <summary>
-		/// Returns a hashed string for a given string based on the config file's hash algo
+		/// Returns a hashed string for a given string based on the config file's hash algo.
+		/// This is only here for backwards compatibility.
 		/// </summary>
 		/// <param name="bytes">bytes to hash</param>
 		/// <returns>string hash</returns>
@@ -154,8 +148,8 @@ namespace Orion.Hashing
 			if (bytes == null)
 				throw new NullReferenceException("bytes");
 			Func<HashAlgorithm> func;
-			if (!HashTypes.TryGetValue(_orion.Config.HashAlgorithm.ToLower(), out func))
-				throw new NotSupportedException(String.Format("Hashing algorithm {0} is not supported", _orion.Config.HashAlgorithm.ToLower()));
+			if (!HashTypes.TryGetValue(_core.Config.HashAlgorithm.ToLower(), out func))
+				throw new NotSupportedException(String.Format(Strings.HashAlgoUnsupported, _core.Config.HashAlgorithm.ToLower()));
 
 			using (HashAlgorithm hash = func())
 			{
@@ -170,10 +164,8 @@ namespace Orion.Hashing
 		/// <param name="input">string to hash</param>
 		/// <param name="hashed">current hashed password</param>
 		/// <returns>string hash</returns>
-		private string HashString(string input, string hashed)
+		private string HashString(string input)
 		{
-			if (string.IsNullOrEmpty(input) && hashed == "non-existant password")
-				return "non-existant password";
 			return HashString(Encoding.UTF8.GetBytes(input));
 		}
 	}

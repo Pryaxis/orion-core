@@ -88,14 +88,13 @@ namespace Orion.Users
 		{
 			if (id < 0)
 			{
-				throw new ArgumentOutOfRangeException("id", "User ID may not be less than 0.");
+				throw new ArgumentOutOfRangeException("id", Strings.UserIDLessThanZero);
 			}
 
 			//Don't want people setting everything to null
 			if (string.IsNullOrEmpty(password) && string.IsNullOrEmpty(group) && string.IsNullOrEmpty(uuid))
 			{
-				throw new UserHandlerException(
-					"Invalid arguments in UserHandler.SetParameters: password, group and uuid may not all be null.");
+				throw new UserHandlerException(Strings.UserHandlerSetParameterInvalidArgs);
 			}
 
 			//If we can find the user in the cache, we can simply update that object and let it sync when the cache flushes.
@@ -144,8 +143,7 @@ namespace Orion.Users
 			}
 			catch (Exception ex)
 			{
-				throw new UserHandlerException(
-					String.Format("UserHandler.SetParameter returned an error for User ID {0}", id), ex);
+				throw new UserHandlerException(String.Format(Strings.UserHandlerSetParameterUserIDError, id), ex);
 			}
 		}
 
@@ -252,7 +250,7 @@ namespace Orion.Users
 		}
 
 		/// <summary>
-		/// Gets all users in group <see cref="group"/>from the database or the cache
+		/// Gets all users in group <see cref="group"/> from the database or the cache
 		/// </summary>
 		/// <param name="group">group that users are in</param>
 		/// <param name="count">number of users to retrieve. 0 for all</param>

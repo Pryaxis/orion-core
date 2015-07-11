@@ -64,13 +64,19 @@ namespace Orion
 		public Utils Utils { get; private set; }
 		public NetUtils NetUtils { get; private set; }
 
+		public delegate void LoadedEventD();
+		public event LoadedEventD OnInitialized;
+
 		/// <summary>
 		/// Log manager. Use this to write data to the log
 		/// </summary>
 		public static ILog Log { get; private set; }
 
 		private readonly Dictionary<string, Assembly> _loadedAssemblies = new Dictionary<string, Assembly>(); 
-		private readonly List<OrionPlugin> _loadedPlugins = new List<OrionPlugin>();
+		/// <summary>
+		/// Loaded plugins
+		/// </summary>
+		public readonly List<OrionPlugin> loadedPlugins = new List<OrionPlugin>();
 
 		/// <summary>
 		/// Plugin author(s)
@@ -138,11 +144,13 @@ namespace Orion
 
 				if (Config.StorageType.ToLower() == "sqlite")
 				{
+					//Connect to SQLite database
 					string sql = Path.Combine(SavePath, "orion.sqlite");
 					Database = new SqliteConnection(String.Format("uri=file://{0},Version=3", sql));
 				}
 				else if (Config.StorageType.ToLower() == "mysql")
 				{
+					//Connect to MySQL database
 					try
 					{
 						string[] hostport = Config.MySqlHost.Split(':');
@@ -184,12 +192,22 @@ namespace Orion
 				HashHandler = new Hasher(this);
 
 				LoadPlugins();
+
+				OrionInitialized();
 			}
 			catch (Exception ex)
 			{
 				Log.Error(Strings.StartupException);
 				Log.Error(ex.ToString());
 				Environment.Exit(1);
+			}
+		}
+
+		private void OrionInitialized()
+		{
+			if (OnInitialized != null)
+			{
+				OnInitialized();
 			}
 		}
 
@@ -296,7 +314,7 @@ namespace Orion
 								String.Format(Strings.PluginInstanceFailedException, type.FullName), ex);
 						}
 
-						_loadedPlugins.Add(pluginInstance);
+						loadedPlugins.Add(pluginInstance);
 					}
 				}
 				catch (Exception ex)
@@ -308,7 +326,7 @@ namespace Orion
 
 				//order plugins by their order
 				IOrderedEnumerable<OrionPlugin> orderedPlugins =
-					from plugin in _loadedPlugins
+					from plugin in loadedPlugins
 					orderby plugin.Order
 					select plugin;
 
@@ -339,7 +357,7 @@ namespace Orion
 		private void UnloadPlugins()
 		{
 			//iterate over loaded plugins and try to dispose them
-			foreach (OrionPlugin plugin in _loadedPlugins)
+			foreach (OrionPlugin plugin in loadedPlugins)
 			{
 				try
 				{

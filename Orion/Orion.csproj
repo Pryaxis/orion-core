@@ -65,6 +65,11 @@
     <Compile Include="Bans\Ban.cs" />
     <Compile Include="Bans\BanHandler.cs" />
     <Compile Include="Configuration\ConfigFile.cs" />
+    <Compile Include="DataHandlers\DataHandler.cs" />
+    <Compile Include="DataHandlers\IncomingPacketHandler.cs" />
+    <Compile Include="DataHandlers\IPacketHandler.cs" />
+    <Compile Include="DataHandlers\OutgoingPacketHandler.cs" />
+    <Compile Include="DataHandlers\Packets\PlayerInfo.cs" />
     <Compile Include="Exceptions\UserExceptions.cs" />
     <Compile Include="Hashing\Hashing.cs" />
     <Compile Include="Extensions\DbEx.cs" />
@@ -116,6 +121,7 @@
       <LastGenOutput>Strings.Designer.cs</LastGenOutput>
     </EmbeddedResource>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

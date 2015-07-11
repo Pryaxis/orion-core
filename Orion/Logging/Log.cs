@@ -1,20 +1,21 @@
-﻿using System;
-using System.Diagnostics;
-using System.IO;
-using System.Linq;
-using System.Security.Cryptography;
+﻿using System.IO;
 using log4net;
-using log4net.Appender;
 using log4net.Config;
-using log4net.Core;
 
 namespace Orion.Logging
 {
+	/// <summary>
+	/// Default Log4Net logger
+	/// </summary>
 	public sealed class Log : ILog
 	{
 	    private log4net.ILog _log;
 	    private log4net.ILog _fileLog;
 
+		/// <summary>
+		/// Creates a new instance of this logger using the config file found in <see cref="configPath"/>
+		/// </summary>
+		/// <param name="configPath">path to the log4net config file</param>
 	    public Log(string configPath)
 	    {
             XmlConfigurator.Configure(new FileInfo(configPath));
