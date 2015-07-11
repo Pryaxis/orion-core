@@ -70,6 +70,62 @@ namespace Orion.Utilities
 		}
 
 		/// <summary>
+		/// Clears NPCs starting at the given Vector coordinate and moving outwards for the given radius
+		/// </summary>
+		/// <param name="start">Start point</param>
+		/// <param name="clearFriendly">Clear friendly NPCs</param>
+		/// <param name="radius">Clearance radius</param>
+		/// <returns>Number of NPCs cleared</returns>
+		public int ClearNpcs(Vector2 start, bool clearFriendly = false, float radius = 50f)
+		{
+			int cleared = 0;
+			for (int i = 0; i < Main.maxNPCs; i++)
+			{
+				if (Main.npc[i].friendly && !clearFriendly)
+				{
+					continue;
+				}
+
+				float dX = Main.npc[i].position.X - start.X;
+				float dY = Main.npc[i].position.Y - start.Y;
+
+				if (Main.npc[i].active && dX * dX + dY * dY <= radius * radius * 256f)
+				{
+					Main.npc[i].active = false;
+					Main.npc[i].type = 0;
+					_core.NetUtils.SendPacketToEveryone(PacketTypes.NpcUpdate, "", i);
+					cleared++;
+				}
+			}
+			return cleared;
+		}
+
+		/// <summary>
+		/// Clears projectiles starting at the given Vector coordinate and moving outwards for the given radius
+		/// </summary>
+		/// <param name="start">Start point</param>
+		/// <param name="radius">Clearance radius</param>
+		/// <returns>Number of projectiles cleared</returns>
+		public int ClearProjectiles(Vector2 start, float radius = 50f)
+		{
+			int cleared = 0;
+			for (int i = 0; i < Main.maxProjectiles; i++)
+			{
+				float dX = Main.projectile[i].position.X - start.X;
+				float dY = Main.projectile[i].position.Y - start.Y;
+
+				if (Main.projectile[i].active && dX * dX + dY * dY <= radius * radius * 256f)
+				{
+					Main.projectile[i].active = false;
+					Main.projectile[i].type = 0;
+					_core.NetUtils.SendPacketToEveryone(PacketTypes.ProjectileNew, "", i);
+					cleared++;
+				}
+			}
+			return cleared;
+		}
+
+		/// <summary>
 		/// Attempts to get a Buff by ID
 		/// </summary>
 		/// <param name="id">Buff ID</param>
