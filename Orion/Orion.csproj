@@ -75,6 +75,8 @@
     <Compile Include="Logging\LogLevel.cs" />
     <Compile Include="Logging\SqlLog.cs" />
     <Compile Include="Logging\TextLog.cs" />
+    <Compile Include="Net\NetUtils.cs" />
+    <Compile Include="Net\PacketData.cs" />
     <Compile Include="Orion.cs" />
     <Compile Include="OrionPlugin.cs" />
     <Compile Include="OrionVersionAttribute.cs" />

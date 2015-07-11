@@ -11,6 +11,7 @@ using Orion.Bans;
 using Orion.Configuration;
 using Orion.Hashing;
 using Orion.Logging;
+using Orion.Net;
 using Orion.Users;
 using Terraria;
 using TerrariaApi.Server;
@@ -61,6 +62,7 @@ namespace Orion
 		public Hasher HashHandler { get; private set; }
 
 		public Utils Utils { get; private set; }
+		public NetUtils NetUtils { get; private set; }
 
 		/// <summary>
 		/// Log manager. Use this to write data to the log
@@ -172,13 +174,13 @@ namespace Orion
 				}
 				else
 				{
-					//Log = new TextLog(this, Path.Combine(LogPath, "log.log"), false);
                     Log = new Log(Path.Combine(SavePath, "log4net.config"));
 				}
 
 				Users = new UserHandler(this);
 				Bans = new BanHandler(this);
-				Utils = new Utils();
+				Utils = new Utils(this);
+				NetUtils = new NetUtils(this);
 				HashHandler = new Hasher(this);
 
 				LoadPlugins();
