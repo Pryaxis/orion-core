@@ -62,7 +62,10 @@ namespace Orion
 		public Hasher HashHandler { get; private set; }
 
 		public Utils Utils { get; private set; }
+
 		public NetUtils NetUtils { get; private set; }
+
+		public PacketRepackager Packets { get; private set; }
 
 		public delegate void LoadedEventD();
 		public event LoadedEventD OnInitialized;
@@ -190,6 +193,10 @@ namespace Orion
 				Utils = new Utils(this);
 				NetUtils = new NetUtils(this);
 				HashHandler = new Hasher(this);
+				Packets = new PacketRepackager(this);
+
+				ServerApi.Hooks.NetGetData.Register(this, Packets.GetAndRepackage);
+				ServerApi.Hooks.NetSendData.Register(this, Packets.SendAndRepackage);
 
 				LoadPlugins();
 
