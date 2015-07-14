@@ -17,12 +17,19 @@ namespace Orion.Net
 
 		public delegate void PacketEventD<in T>(T packet) where T : TerrariaPacket;
 
+		#region Received packet events
+
 		public event PacketEventD<ConnectRequest> OnReceivedConnectRequest;
 
-		public event PacketEventD<ContinueConnecting> OnReceivedContinueConnecting; 
+		public event PacketEventD<ContinueConnecting> OnReceivedContinueConnecting;
+
+		#endregion
+
+		#region Sent packet events
 
 		public event PacketEventD<Disconnect> OnSendDisconnect;
 
+		#endregion
 
 		public PacketRepackager(Orion core)
 		{
@@ -30,7 +37,8 @@ namespace Orion.Net
 			DeserializerMap = new Dictionary<PacketTypes, Func<BinaryReader, TerrariaPacket>>
 			{
 				{PacketTypes.ConnectRequest, br => new ConnectRequest(br)},
-				{PacketTypes.ContinueConnecting, br => new ContinueConnecting(br)}
+				{PacketTypes.ContinueConnecting, br => new ContinueConnecting(br)},
+				{PacketTypes.PlayerInfo, br => new PlayerInfo(br)}
 			};
 		}
 

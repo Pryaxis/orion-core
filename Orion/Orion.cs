@@ -12,6 +12,7 @@ using Orion.Configuration;
 using Orion.Hashing;
 using Orion.Logging;
 using Orion.Net;
+using Orion.Net.Packets;
 using Orion.Users;
 using Terraria;
 using TerrariaApi.Server;
