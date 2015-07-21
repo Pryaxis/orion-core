@@ -1,5 +1,4 @@
 ﻿using System;
-using Orion.Terraria;
 using Terraria;
 
 namespace Orion.Utilities

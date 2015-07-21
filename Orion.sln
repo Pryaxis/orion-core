@@ -1,9 +1,11 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2013
-VisualStudioVersion = 12.0.31101.0
+# Visual Studio 14
+VisualStudioVersion = 14.0.23107.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Orion", "Orion\Orion.csproj", "{CCF7FA67-80AB-4B99-8249-1875EBFF9F4D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Unit Tests", "Unit Tests\Unit Tests.csproj", "{877AB5CB-04A4-4C25-B422-3ECC07392CF0}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +17,10 @@ Global
 		{CCF7FA67-80AB-4B99-8249-1875EBFF9F4D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{CCF7FA67-80AB-4B99-8249-1875EBFF9F4D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{CCF7FA67-80AB-4B99-8249-1875EBFF9F4D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{877AB5CB-04A4-4C25-B422-3ECC07392CF0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{877AB5CB-04A4-4C25-B422-3ECC07392CF0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{877AB5CB-04A4-4C25-B422-3ECC07392CF0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{877AB5CB-04A4-4C25-B422-3ECC07392CF0}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

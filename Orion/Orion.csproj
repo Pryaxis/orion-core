@@ -102,8 +102,8 @@
       <DependentUpon>Strings.resx</DependentUpon>
     </Compile>
     <Compile Include="TempAttribute.cs" />
-    <Compile Include="Terraria\Buff.cs" />
-    <Compile Include="Terraria\Player.cs" />
+    <Compile Include="Buff.cs" />
+    <Compile Include="Player.cs" />
     <Compile Include="Users\User.cs" />
     <Compile Include="Users\UserHandler.cs" />
     <Compile Include="Utilities\OrderedCache.cs" />

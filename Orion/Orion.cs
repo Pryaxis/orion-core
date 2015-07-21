@@ -12,7 +12,6 @@ using Orion.Configuration;
 using Orion.Hashing;
 using Orion.Logging;
 using Orion.Net;
-using Orion.Net.Packets;
 using Orion.Users;
 using Terraria;
 using TerrariaApi.Server;
@@ -20,7 +19,7 @@ using Utils = Orion.Utilities.Utils;
 
 namespace Orion
 {
-	[ApiVersion(1, 17)]
+	[ApiVersion(1, 19)]
 	public class Orion : TerrariaPlugin
 	{
 		/// <summary>

@@ -15,22 +15,46 @@ namespace Orion.Net
 		/// </summary>
 		private Dictionary<PacketTypes, Func<BinaryReader, TerrariaPacket>> DeserializerMap { get; set; }
 
-		public delegate void PacketEventD<in T>(T packet) where T : TerrariaPacket;
+		/// <summary>
+		/// Delegate method for packet events
+		/// </summary>
+		/// <param name="packet">Packet being sent or received</param>
+		public delegate void PacketEventD<TerrariaPacket>(TerrariaPacket packet);
 
 		#region Received packet events
 
+		/// <summary>
+		/// Fired when a ConnectRequest packet is received
+		/// </summary>
 		public event PacketEventD<ConnectRequest> OnReceivedConnectRequest;
-
+		/// <summary>
+		/// Fired when a ContinueConnecting packet is received
+		/// </summary>
 		public event PacketEventD<ContinueConnecting> OnReceivedContinueConnecting;
+		/// <summary>
+		/// Fired when a PlayerInfo packet is received
+		/// </summary>
+		public event PacketEventD<PlayerInfo> OnReceivedPlayerInfo;
 
 		#endregion
 
 		#region Sent packet events
 
+		/// <summary>
+		/// Fired when a Disconnect packet is sent
+		/// </summary>
 		public event PacketEventD<Disconnect> OnSendDisconnect;
+		/// <summary>
+		/// Fired when a PlayerInfo packet is sent
+		/// </summary>
+		public event PacketEventD<PlayerInfo> OnSendPlayerInfo;
 
 		#endregion
 
+		/// <summary>
+		/// Repackages raw packet data into packet objects
+		/// </summary>
+		/// <param name="core"></param>
 		public PacketRepackager(Orion core)
 		{
 			_core = core;
@@ -57,7 +81,15 @@ namespace Orion.Net
 					{
 						packet = new Disconnect(e.MsgId, e.text);
 						OnSendDisconnect((Disconnect)packet);
-						e.text = ((Disconnect) packet).Reason;
+						packet.SetNewData(ref e);
+					}
+					break;
+				case PacketTypes.PlayerInfo:
+					if (OnSendPlayerInfo != null)
+					{
+						packet = new PlayerInfo(e.MsgId, e.number, e.text);
+						OnSendPlayerInfo((PlayerInfo)packet);
+						packet.SetNewData(ref e);
 					}
 					break;
 			}
@@ -68,6 +100,10 @@ namespace Orion.Net
 			}
 		}
 
+		/// <summary>
+		/// Repackages packets caught by the NetGetData hook
+		/// </summary>
+		/// <param name="e"></param>
 		internal void GetAndRepackage(GetDataEventArgs e)
 		{
 			if (!DeserializerMap.ContainsKey(e.MsgID))
@@ -85,8 +121,8 @@ namespace Orion.Net
 
 					if (OnReceivedConnectRequest != null)
 					{
-						packet = DeserializerMap[e.MsgID](e.Msg.binaryReader);
-						OnReceivedConnectRequest((ConnectRequest) packet);
+						packet = DeserializerMap[e.MsgID](e.Msg.reader);
+						OnReceivedConnectRequest((ConnectRequest)packet);
 					}
 					break;
 
@@ -94,8 +130,17 @@ namespace Orion.Net
 
 					if (OnReceivedContinueConnecting != null)
 					{
-						packet = DeserializerMap[e.MsgID](e.Msg.binaryReader);
-						OnReceivedContinueConnecting((ContinueConnecting) packet);
+						packet = DeserializerMap[e.MsgID](e.Msg.reader);
+						OnReceivedContinueConnecting((ContinueConnecting)packet);
+					}
+					break;
+
+				case PacketTypes.PlayerInfo:
+
+					if (OnReceivedPlayerInfo != null)
+					{
+						packet = DeserializerMap[e.MsgID](e.Msg.reader);
+						OnReceivedPlayerInfo((PlayerInfo)packet);
 					}
 					break;
 			}
