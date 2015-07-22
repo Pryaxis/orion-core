@@ -3,6 +3,9 @@ using Terraria;
 
 namespace Orion.Net.Packets
 {
+	/// <summary>
+	/// PlayerInfo packet
+	/// </summary>
 	public class PlayerInfo : TerrariaPacket
 	{
 		/// <summary>

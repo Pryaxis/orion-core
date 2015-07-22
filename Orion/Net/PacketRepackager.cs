@@ -28,13 +28,17 @@ namespace Orion.Net
 		/// </summary>
 		public event PacketEventD<ConnectRequest> OnReceivedConnectRequest;
 		/// <summary>
-		/// Fired when a ContinueConnecting packet is received
-		/// </summary>
-		public event PacketEventD<ContinueConnecting> OnReceivedContinueConnecting;
-		/// <summary>
 		/// Fired when a PlayerInfo packet is received
 		/// </summary>
 		public event PacketEventD<PlayerInfo> OnReceivedPlayerInfo;
+		/// <summary>
+		/// Fired when a PlayerSlot packet is received
+		/// </summary>
+		public event PacketEventD<InventorySlot> OnReceivedPlayerSlot;
+		/// <summary>
+		/// Fired when a ContinueConnecting2 packet is received
+		/// </summary>
+		public event PacketEventD<ContinueConnecting2> OnReceivedContinueConnecting2;
 
 		#endregion
 
@@ -45,9 +49,21 @@ namespace Orion.Net
 		/// </summary>
 		public event PacketEventD<Disconnect> OnSendDisconnect;
 		/// <summary>
+		/// Fired when a ContinueConnecting packet is sent
+		/// </summary>
+		public event PacketEventD<ContinueConnecting> OnSendContinueConnecting;
+		/// <summary>
 		/// Fired when a PlayerInfo packet is sent
 		/// </summary>
 		public event PacketEventD<PlayerInfo> OnSendPlayerInfo;
+		/// <summary>
+		/// Fired when a PlayerSlot packet is sent
+		/// </summary>
+		public event PacketEventD<InventorySlot> OnSendPlayerSlot;
+		/// <summary>
+		/// Fired when a WorldInfo packet is sent
+		/// </summary>
+		public event PacketEventD<WorldInfo> OnSendWorldInfo;
 
 		#endregion
 
@@ -61,8 +77,9 @@ namespace Orion.Net
 			DeserializerMap = new Dictionary<PacketTypes, Func<BinaryReader, TerrariaPacket>>
 			{
 				{PacketTypes.ConnectRequest, br => new ConnectRequest(br)},
-				{PacketTypes.ContinueConnecting, br => new ContinueConnecting(br)},
-				{PacketTypes.PlayerInfo, br => new PlayerInfo(br)}
+				{PacketTypes.PlayerInfo, br => new PlayerInfo(br)},
+				{PacketTypes.PlayerSlot, br => new InventorySlot(br)},
+                {PacketTypes.ContinueConnecting2, br => new ContinueConnecting2(br)}
 			};
 		}
 
@@ -84,11 +101,39 @@ namespace Orion.Net
 						packet.SetNewData(ref e);
 					}
 					break;
+
+				case PacketTypes.ContinueConnecting:
+					if (OnSendContinueConnecting != null)
+					{
+						packet = new ContinueConnecting(e.MsgId, e.remoteClient);
+						OnSendContinueConnecting((ContinueConnecting)packet);
+						packet.SetNewData(ref e);
+					}
+					break;
+
 				case PacketTypes.PlayerInfo:
 					if (OnSendPlayerInfo != null)
 					{
 						packet = new PlayerInfo(e.MsgId, e.number, e.text);
 						OnSendPlayerInfo((PlayerInfo)packet);
+						packet.SetNewData(ref e);
+					}
+					break;
+
+				case PacketTypes.PlayerSlot:
+					if (OnSendPlayerSlot != null)
+					{
+						packet = new InventorySlot(e.MsgId, e.number, e.number2, _core.NetUtils);
+						OnSendPlayerSlot((InventorySlot)packet);
+						packet.SetNewData(ref e);
+					}
+					break;
+
+				case PacketTypes.WorldInfo:
+					if (OnSendWorldInfo != null)
+					{
+						packet = new WorldInfo(e.MsgId);
+						OnSendWorldInfo((WorldInfo)packet);
 						packet.SetNewData(ref e);
 					}
 					break;
@@ -108,7 +153,6 @@ namespace Orion.Net
 		{
 			if (!DeserializerMap.ContainsKey(e.MsgID))
 			{
-				//Do... something
 				return;
 			}
 
@@ -118,7 +162,6 @@ namespace Orion.Net
 			switch (e.MsgID)
 			{
 				case PacketTypes.ConnectRequest:
-
 					if (OnReceivedConnectRequest != null)
 					{
 						packet = DeserializerMap[e.MsgID](e.Msg.reader);
@@ -126,21 +169,27 @@ namespace Orion.Net
 					}
 					break;
 
-				case PacketTypes.ContinueConnecting:
-
-					if (OnReceivedContinueConnecting != null)
-					{
-						packet = DeserializerMap[e.MsgID](e.Msg.reader);
-						OnReceivedContinueConnecting((ContinueConnecting)packet);
-					}
-					break;
-
 				case PacketTypes.PlayerInfo:
-
 					if (OnReceivedPlayerInfo != null)
 					{
 						packet = DeserializerMap[e.MsgID](e.Msg.reader);
 						OnReceivedPlayerInfo((PlayerInfo)packet);
+					}
+					break;
+
+				case PacketTypes.PlayerSlot:
+					if (OnReceivedPlayerSlot != null)
+					{
+						packet = DeserializerMap[e.MsgID](e.Msg.reader);
+						OnReceivedPlayerSlot((InventorySlot)packet);
+					}
+					break;
+
+				case PacketTypes.ContinueConnecting2:
+					if (OnReceivedContinueConnecting2 != null)
+					{
+						packet = DeserializerMap[e.MsgID](e.Msg.reader);
+						OnReceivedContinueConnecting2((ContinueConnecting2)packet);
 					}
 					break;
 			}

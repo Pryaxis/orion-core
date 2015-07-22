@@ -1,5 +1,8 @@
 ﻿namespace Orion.Net.Packets
 {
+	/// <summary>
+	/// Disconnect packet
+	/// </summary>
 	public class Disconnect : TerrariaPacket
 	{
 		/// <summary>

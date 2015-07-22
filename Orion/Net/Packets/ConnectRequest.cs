@@ -2,6 +2,9 @@
 
 namespace Orion.Net.Packets
 {
+	/// <summary>
+	/// ConnectRequest packet
+	/// </summary>
 	public class ConnectRequest : TerrariaPacket
 	{
 		/// <summary>

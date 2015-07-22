@@ -2,6 +2,9 @@
 
 namespace Orion.Net.Packets
 {
+	/// <summary>
+	/// Base class from which all packet types should inherit
+	/// </summary>
 	public class TerrariaPacket
 	{
 		/// <summary>

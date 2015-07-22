@@ -1,26 +1,29 @@
-﻿using System.IO;
+﻿
+using TerrariaApi.Server;
 
 namespace Orion.Net.Packets
 {
+	/// <summary>
+	/// ContinueConnecting packet
+	/// </summary>
 	public class ContinueConnecting : TerrariaPacket
 	{
-		/// <summary>
-		/// Used when the packet is read
-		/// </summary>
-		/// <param name="reader"></param>
-		internal ContinueConnecting(BinaryReader reader)
-			: base(reader)
+		byte Player { get; set; }
+
+		internal ContinueConnecting(byte id, int player) 
+			: base(id)
+		{
+			Player = (byte)player;
+		}
+
+		internal ContinueConnecting(PacketTypes id, int player) 
+			: this((byte)id, player)
 		{
 		}
 
-		internal ContinueConnecting(byte id) 
-			: base(id)
+		internal override void SetNewData(ref SendDataEventArgs e)
 		{
-		}
-
-		internal ContinueConnecting(PacketTypes id) 
-			: base(id)
-		{
+			e.remoteClient = Player;
 		}
 	}
 }
