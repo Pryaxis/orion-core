@@ -8,14 +8,14 @@ using Orion.Extensions;
 using Orion.SQL;
 using Orion.Utilities;
 
-namespace Orion.Users
+namespace Orion.UserAccounts
 {
-	public sealed class UserHandler
+	public sealed class UserAccountHandler
 	{
 		public readonly IDbConnection database;
-		public OrderedCache<User> UserCache { get; private set; } 
+		public OrderedCache<UserAccount> UserCache { get; private set; } 
 
-		public UserHandler(Orion orion)
+		public UserAccountHandler(Orion orion)
 		{
 			database = orion.Database;
 
@@ -36,13 +36,13 @@ namespace Orion.Users
 					: new MysqlQueryCreator());
 			creator.EnsureTableStructure(table);
 
-			UserCache = new OrderedCache<User>(orion.Config.MaxUserCacheSize);
+			UserCache = new OrderedCache<UserAccount>(orion.Config.MaxUserCacheSize);
 			UserCache.FlushEvent += OnFlush;
 		}
 
-		private bool OnFlush(IEnumerable<User> users)
+		private bool OnFlush(IEnumerable<UserAccount> users)
 		{
-			foreach (User user in users)
+			foreach (UserAccount user in users)
 			{
 				Sync(user);
 			}
@@ -57,7 +57,7 @@ namespace Orion.Users
 		/// <returns>true if successfully syncd</returns>
 		/// <exception cref="UserNotFoundException">Thrown if the user does not exist in the database</exception>
 		/// <exception cref="UserHandlerException">Thrown if an unexpected exception occurs</exception>
-		public bool Sync(User user)
+		public bool Sync(UserAccount user)
 		{
 			try
 			{
@@ -98,7 +98,7 @@ namespace Orion.Users
 			}
 
 			//If we can find the user in the cache, we can simply update that object and let it sync when the cache flushes.
-			User cacheUser = UserCache.FirstOrDefault(o => o.ID == id);
+			UserAccount cacheUser = UserCache.FirstOrDefault(o => o.ID == id);
 			if (cacheUser != null)
 			{
 				if (!string.IsNullOrEmpty(password))
@@ -157,7 +157,7 @@ namespace Orion.Users
 		/// <param name="count">number of users to retrieve. 0 for all</param>
 		/// <param name="offset">number of users to skip. 0 for none</param>
 		/// <returns>List of users</returns>
-		public List<User> GetUsers(string name = null, string group = null, 
+		public List<UserAccount> GetUsers(string name = null, string group = null, 
 			bool useCache = true, int count = 0, int offset = 0)
 		{
 			if (offset < 0)
@@ -165,7 +165,7 @@ namespace Orion.Users
 				throw new ArgumentOutOfRangeException("offset");
 			}
 
-			List<User> ret = new List<User>();
+			List<UserAccount> ret = new List<UserAccount>();
 
 			if (useCache)
 			{
@@ -183,14 +183,14 @@ namespace Orion.Users
 				}
 				else if (string.IsNullOrEmpty(group))
 				{
-					User user = UserCache.Skip(offset).FirstOrDefault(u => u.Name == name);
+					UserAccount user = UserCache.Skip(offset).FirstOrDefault(u => u.Name == name);
 					if (user == null)
 					{
 						ret = UserCache.Skip(offset).Where(u => u.Name.Contains(name)).ToList();
 					}
 					else
 					{
-						ret =  new List<User>{user};
+						ret =  new List<UserAccount>{user};
 					}
 				}
 
@@ -227,7 +227,7 @@ namespace Orion.Users
 			{
 				while (result.Read())
 				{
-					User user = User.LoadFromQuery(result);
+					UserAccount user = UserAccount.LoadFromQuery(result);
 					UserCache.Push(user);
 					ret.Add(user);
 				}
@@ -244,7 +244,7 @@ namespace Orion.Users
 		/// <param name="count">number of users to retrieve. 0 for all</param>
 		/// <param name="offset">number of users to skip. 0 for none</param>
 		/// <returns>List of users</returns>
-		public List<User> GetUsersByName(string name, int count = 0, int offset = 0)
+		public List<UserAccount> GetUsersByName(string name, int count = 0, int offset = 0)
 		{
 			return GetUsers(name, null, true, count, offset);
 		}
@@ -256,7 +256,7 @@ namespace Orion.Users
 		/// <param name="count">number of users to retrieve. 0 for all</param>
 		/// <param name="offset">number of users to skip. 0 for none</param>
 		/// <returns>List of users</returns>
-		public List<User> GetUsersByGroup(string group, int count = 0, int offset = 0)
+		public List<UserAccount> GetUsersByGroup(string group, int count = 0, int offset = 0)
 		{
 			return GetUsers(null, group, true, count, offset);
 		}
@@ -266,13 +266,13 @@ namespace Orion.Users
 		/// </summary>
 		/// <param name="id">User ID</param>
 		/// <returns>User</returns>
-		public User GetUserById(int id)
+		public UserAccount GetUserById(int id)
 		{
 			using (QueryResult result = database.QueryReader("SELECT * FROM Users WHERE ID = @0", id))
 			{
 				if (result.Read())
 				{
-					User user = User.LoadFromQuery(result);
+					UserAccount user = UserAccount.LoadFromQuery(result);
 					UserCache.Push(user);
 					return user;
 				}

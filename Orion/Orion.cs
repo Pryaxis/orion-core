@@ -12,7 +12,7 @@ using Orion.Configuration;
 using Orion.Hashing;
 using Orion.Logging;
 using Orion.Net;
-using Orion.Users;
+using Orion.UserAccounts;
 using Terraria;
 using TerrariaApi.Server;
 using Utils = Orion.Utilities.Utils;
@@ -51,7 +51,7 @@ namespace Orion
 		/// <summary>
 		/// User handling object for getting users and setting values
 		/// </summary>
-		public UserHandler Users { get; private set; }
+		public UserAccountHandler Users { get; private set; }
 		/// <summary>
 		/// Ban handling object for retrieving and creating bans
 		/// </summary>
@@ -188,7 +188,7 @@ namespace Orion
                     Log = new Log(Path.Combine(SavePath, "log4net.config"));
 				}
 
-				Users = new UserHandler(this);
+				Users = new UserAccountHandler(this);
 				Bans = new BanHandler(this);
 				Utils = new Utils(this);
 				NetUtils = new NetUtils(this);

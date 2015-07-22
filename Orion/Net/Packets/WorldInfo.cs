@@ -8,7 +8,13 @@ namespace Orion.Net.Packets
 	/// </summary>
 	public class WorldInfo : TerrariaPacket
 	{
+		/// <summary>
+		/// Current game time
+		/// </summary>
 		public int Time { get; set; }
+		/// <summary>
+		/// Day = true, night = false
+		/// </summary>
 		public bool DayTime { get; set; }
 		public bool BloodMoon { get; set; }
 		public bool Eclipse { get; set; }

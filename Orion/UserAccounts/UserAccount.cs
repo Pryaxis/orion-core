@@ -1,9 +1,11 @@
 ﻿using System.Dynamic;
+using System.Collections.Generic;
 using Orion.SQL;
+using Orion.Permissions;
 
-namespace Orion.Users
+namespace Orion.UserAccounts
 {
-	public sealed class User
+	public sealed class UserAccount
 	{
 		/// <summary>The database ID of the user.</summary>
 		public int ID { get; set; }
@@ -19,6 +21,8 @@ namespace Orion.Users
 
 		/// <summary>The group object that the user is a part of.</summary>
 		public string Group { get; set; }
+
+		public PermissionCollection Permissions { get; set; }
 
 		/// <summary>The unix epoch corresponding to the registration date of the user.</summary>
 		public string Registered { get; set; }
@@ -40,12 +44,13 @@ namespace Orion.Users
 		/// <param name="last">The unix epoch for the last access date.</param>
 		/// <param name="known">The known IPs for the user, serialized as a JSON object</param>
 		/// <returns>A completed user object.</returns>
-		public User(string name, string pass, string uuid, string group, string registered, string last, string known)
+		public UserAccount(string name, string pass, string uuid, string group, PermissionCollection permissions, string registered, string last, string known)
 		{
 			Name = name;
 			Password = pass;
 			UUID = uuid;
 			Group = group;
+			Permissions = permissions;
 			Registered = registered;
 			LastAccessed = last;
 			KnownIps = known;
@@ -54,20 +59,21 @@ namespace Orion.Users
 
 		/// <summary>Default constructor for a user object; holds no data.</summary>
 		/// <returns>A user object.</returns>
-		public User()
+		public UserAccount()
 		{
 			Name = "";
 			Password = "";
 			UUID = "";
 			Group = "";
+			Permissions = new PermissionCollection();
 			Registered = "";
 			LastAccessed = "";
 			KnownIps = "";
 		}
 
-		public static User LoadFromQuery(QueryResult result)
+		public static UserAccount LoadFromQuery(QueryResult result)
 		{
-			User user = new User
+			UserAccount user = new UserAccount
 			{
 				ID = result.Get<int>("ID"),
 				Group = result.Get<string>("Usergroup"),
