@@ -19,26 +19,26 @@ namespace Orion.Net
 		/// Delegate method for packet events
 		/// </summary>
 		/// <param name="packet">Packet being sent or received</param>
-		public delegate void PacketEventD<TerrariaPacket>(TerrariaPacket packet);
+		public delegate void PacketEvent<TerrariaPacket>(TerrariaPacket packet);
 
 		#region Received packet events
 
 		/// <summary>
 		/// Fired when a ConnectRequest packet is received
 		/// </summary>
-		public event PacketEventD<ConnectRequest> OnReceivedConnectRequest;
+		public event PacketEvent<ConnectRequest> OnReceivedConnectRequest;
 		/// <summary>
 		/// Fired when a PlayerInfo packet is received
 		/// </summary>
-		public event PacketEventD<PlayerInfo> OnReceivedPlayerInfo;
+		public event PacketEvent<PlayerInfo> OnReceivedPlayerInfo;
 		/// <summary>
 		/// Fired when a PlayerSlot packet is received
 		/// </summary>
-		public event PacketEventD<InventorySlot> OnReceivedPlayerSlot;
+		public event PacketEvent<InventorySlot> OnReceivedPlayerSlot;
 		/// <summary>
 		/// Fired when a ContinueConnecting2 packet is received
 		/// </summary>
-		public event PacketEventD<ContinueConnecting2> OnReceivedContinueConnecting2;
+		public event PacketEvent<ContinueConnecting2> OnReceivedContinueConnecting2;
 
 		#endregion
 
@@ -47,23 +47,23 @@ namespace Orion.Net
 		/// <summary>
 		/// Fired when a Disconnect packet is sent
 		/// </summary>
-		public event PacketEventD<Disconnect> OnSendDisconnect;
+		public event PacketEvent<Disconnect> OnSendDisconnect;
 		/// <summary>
 		/// Fired when a ContinueConnecting packet is sent
 		/// </summary>
-		public event PacketEventD<ContinueConnecting> OnSendContinueConnecting;
+		public event PacketEvent<ContinueConnecting> OnSendContinueConnecting;
 		/// <summary>
 		/// Fired when a PlayerInfo packet is sent
 		/// </summary>
-		public event PacketEventD<PlayerInfo> OnSendPlayerInfo;
+		public event PacketEvent<PlayerInfo> OnSendPlayerInfo;
 		/// <summary>
 		/// Fired when a PlayerSlot packet is sent
 		/// </summary>
-		public event PacketEventD<InventorySlot> OnSendPlayerSlot;
+		public event PacketEvent<InventorySlot> OnSendPlayerSlot;
 		/// <summary>
 		/// Fired when a WorldInfo packet is sent
 		/// </summary>
-		public event PacketEventD<WorldInfo> OnSendWorldInfo;
+		public event PacketEvent<WorldInfo> OnSendWorldInfo;
 
 		#endregion
 
