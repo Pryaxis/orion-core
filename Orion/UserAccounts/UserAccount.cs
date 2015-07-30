@@ -1,6 +1,6 @@
 ﻿using System.Dynamic;
-using System.Collections.Generic;
 using Orion.SQL;
+using Orion.Grouping;
 using Orion.Permissions;
 
 namespace Orion.UserAccounts
@@ -20,7 +20,17 @@ namespace Orion.UserAccounts
 		public string UUID { get; set; }
 
 		/// <summary>The group object that the user is a part of.</summary>
-		public string Group { get; set; }
+		public Group Group { get; set; }
+
+		public string GroupName
+		{
+			get { return Group?.Name; }
+
+			private set
+			{
+				GroupName = value;
+			}
+		}
 
 		public PermissionCollection Permissions { get; set; }
 
@@ -33,8 +43,6 @@ namespace Orion.UserAccounts
 		/// <summary>A JSON serialized list of known IP addresses for a user.</summary>
 		public string KnownIps { get; set; }
 
-		public dynamic Extensions { get; private set; }
-
 		/// <summary>Constructor for the user object, assuming you define everything yourself.</summary>
 		/// <param name="name">The user's name.</param>
 		/// <param name="pass">The user's password hash.</param>
@@ -44,47 +52,72 @@ namespace Orion.UserAccounts
 		/// <param name="last">The unix epoch for the last access date.</param>
 		/// <param name="known">The known IPs for the user, serialized as a JSON object</param>
 		/// <returns>A completed user object.</returns>
-		public UserAccount(string name, string pass, string uuid, string group, PermissionCollection permissions, string registered, string last, string known)
+		public UserAccount(string name, string pass, string uuid, Group group, PermissionCollection permissions, string registered, string last, string known)
 		{
 			Name = name;
 			Password = pass;
 			UUID = uuid;
 			Group = group;
+			GroupName = group.Name;
 			Permissions = permissions;
 			Registered = registered;
 			LastAccessed = last;
 			KnownIps = known;
-			Extensions = new ExpandoObject();
 		}
 
-		/// <summary>Default constructor for a user object; holds no data.</summary>
-		/// <returns>A user object.</returns>
+		/// <summary>Default constructor for a UserAccount object; holds no data.</summary>
+		/// <returns>A UserAccount object.</returns>
 		public UserAccount()
 		{
 			Name = "";
 			Password = "";
 			UUID = "";
-			Group = "";
+			Group = new Group();
+			GroupName = "";
 			Permissions = new PermissionCollection();
 			Registered = "";
 			LastAccessed = "";
 			KnownIps = "";
 		}
 
-		public static UserAccount LoadFromQuery(QueryResult result)
+		/// <summary>
+		/// Checks if this user's permissions contains the given permission.
+		/// </summary>
+		/// <param name="permission"></param>
+		/// <returns></returns>
+		public bool HasPermission(string permission)
 		{
-			UserAccount user = new UserAccount
+			//User negation overrides all
+			if (Permissions.Negated(permission))
 			{
-				ID = result.Get<int>("ID"),
-				Group = result.Get<string>("Usergroup"),
-				Password = result.Get<string>("Password"),
-				UUID = result.Get<string>("UUID"),
-				Name = result.Get<string>("Username"),
-				Registered = result.Get<string>("Registered"),
-				LastAccessed = result.Get<string>("LastAccessed"),
-				KnownIps = result.Get<string>("KnownIps")
-			};
-			return user;
+				return false;
+			}
+			//User permission overrides group negation
+			if (Permissions.Contains(permission))
+			{
+				return true;
+			}
+			if (!Group.HasPermission(permission))
+			{
+				return false;
+			}
+			return true;
+		}
+
+		/// <summary>
+		/// Used internally to load a User Account from a database query
+		/// </summary>
+		/// <param name="result"></param>
+		internal void LoadFromQuery(QueryResult result)
+		{
+			ID = result.Get<int>("ID");
+			GroupName = result.Get<string>("Usergroup");
+			Password = result.Get<string>("Password");
+			UUID = result.Get<string>("UUID");
+			Name = result.Get<string>("Username");
+			Registered = result.Get<string>("Registered");
+			LastAccessed = result.Get<string>("LastAccessed");
+			KnownIps = result.Get<string>("KnownIps");
 		}
 	}
 }

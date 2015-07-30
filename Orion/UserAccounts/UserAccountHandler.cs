@@ -12,12 +12,18 @@ namespace Orion.UserAccounts
 {
 	public sealed class UserAccountHandler
 	{
+		private Orion _core;
+
 		public readonly IDbConnection database;
+		/// <summary>
+		/// Ordered cache of user accounts
+		/// </summary>
 		public OrderedCache<UserAccount> UserCache { get; private set; } 
 
-		public UserAccountHandler(Orion orion)
+		public UserAccountHandler(Orion core)
 		{
-			database = orion.Database;
+			_core = core;
+			database = core.Database;
 
 			SqlTable table = new SqlTable("Users",
 				new SqlColumn("ID", MySqlDbType.Int32) {Primary = true, AutoIncrement = true},
@@ -36,8 +42,14 @@ namespace Orion.UserAccounts
 					: new MysqlQueryCreator());
 			creator.EnsureTableStructure(table);
 
-			UserCache = new OrderedCache<UserAccount>(orion.Config.MaxUserCacheSize);
+			UserCache = new OrderedCache<UserAccount>(core.Config.MaxUserCacheSize);
 			UserCache.FlushEvent += OnFlush;
+			UserCache.RemoveEvent += OnRemove;
+		}
+
+		private void OnRemove(UserAccount user)
+		{
+			Sync(user);
 		}
 
 		private bool OnFlush(IEnumerable<UserAccount> users)
@@ -62,7 +74,7 @@ namespace Orion.UserAccounts
 			try
 			{
 				if (database.Query("UPDATE Users SET Password = @0, Usergroup = @1, UUID = @2 WHERE ID = @3",
-					user.Password, user.Group, user.UUID, user.ID) == 0)
+					user.Password, user.Group.Name, user.UUID, user.ID) == 0)
 				{
 					throw new UserNotFoundException(user.Name);
 				}
@@ -107,7 +119,7 @@ namespace Orion.UserAccounts
 				}
 				if (!string.IsNullOrEmpty(group))
 				{
-					cacheUser.Group = group;
+					_core.Groups.SetAccountGroup(cacheUser, group);
 				}
 				if (!string.IsNullOrEmpty(uuid))
 				{
@@ -116,8 +128,7 @@ namespace Orion.UserAccounts
 
 				return true;
 			}
-
-			//Otherwise we modify the database directly
+			
 			Dictionary<string, string> data = new Dictionary<string, string>();
 			if (!string.IsNullOrEmpty(password))
 			{
@@ -178,7 +189,7 @@ namespace Orion.UserAccounts
 					else
 					{
 						ret = UserCache.Skip(offset).Where(u =>
-							string.Equals(u.Group, group, StringComparison.InvariantCultureIgnoreCase)).ToList();
+							string.Equals(u.GroupName, group, StringComparison.InvariantCultureIgnoreCase)).ToList();
 					}
 				}
 				else if (string.IsNullOrEmpty(group))
@@ -227,7 +238,9 @@ namespace Orion.UserAccounts
 			{
 				while (result.Read())
 				{
-					UserAccount user = UserAccount.LoadFromQuery(result);
+					UserAccount user = new UserAccount();
+					user.LoadFromQuery(result);
+					user.Group = _core.Groups.GetGroupFromName(user.GroupName);
 					UserCache.Push(user);
 					ret.Add(user);
 				}
@@ -268,17 +281,23 @@ namespace Orion.UserAccounts
 		/// <returns>User</returns>
 		public UserAccount GetUserById(int id)
 		{
+			UserAccount user = null;
 			using (QueryResult result = database.QueryReader("SELECT * FROM Users WHERE ID = @0", id))
 			{
 				if (result.Read())
 				{
-					UserAccount user = UserAccount.LoadFromQuery(result);
+					user = new UserAccount();
+					user.LoadFromQuery(result);
 					UserCache.Push(user);
-					return user;
 				}
 			}
 
-			return null;
+			if (user != null)
+			{
+				user.Group = _core.Groups.GetGroupFromName(user.GroupName);
+			}
+
+			return user;
 		}
 	}
 }
