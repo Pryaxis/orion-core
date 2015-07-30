@@ -4,16 +4,16 @@ using TerrariaApi.Server;
 namespace Orion.Net.Packets
 {
 	/// <summary>
-	/// WorldInfo packet
+	/// World Info [7] packet. Sent from the server to the client.
 	/// </summary>
 	public class WorldInfo : TerrariaPacket
 	{
 		/// <summary>
-		/// Current game time
+		/// Current game time.
 		/// </summary>
 		public int Time { get; set; }
 		/// <summary>
-		/// Day = true, night = false
+		/// Day = true, Night = false.
 		/// </summary>
 		public bool DayTime { get; set; }
 		public bool BloodMoon { get; set; }
@@ -80,8 +80,11 @@ namespace Orion.Net.Packets
 		public sbyte CurrentInvasionType { get; set; }
 		public ulong SteamLobbyID { get; set; }
 
-		public WorldInfo(byte id)
-			: base(id)
+		/// <summary>
+		/// Creates a new World Info packet with the current world info.
+		/// </summary>
+		public WorldInfo()
+			: base(PacketTypes.WorldInfo)
 		{
 			Time = (int)Main.time;
 			DayTime = Main.dayTime;
@@ -176,12 +179,10 @@ namespace Orion.Net.Packets
 			SteamLobbyID = Main.LobbyId;
 		}
 
-		public WorldInfo(PacketTypes id)
-			: this((byte)id)
-		{
-
-		}
-
+		/// <summary>
+		/// Sets the actual world data to the data contained in this packet.
+		/// </summary>
+		/// <param name="e">The <see cref="SendDataEventArgs"/> to set.</param>
 		internal override void SetNewData(ref SendDataEventArgs e)
 		{
 			Main.time = Time;

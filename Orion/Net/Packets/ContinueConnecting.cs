@@ -1,29 +1,34 @@
-﻿
-using TerrariaApi.Server;
+﻿using TerrariaApi.Server;
 
 namespace Orion.Net.Packets
 {
 	/// <summary>
-	/// ContinueConnecting packet
+	/// Continue Connecting [3] packet. Sent from the server to the client.
 	/// </summary>
 	public class ContinueConnecting : TerrariaPacket
 	{
-		byte Player { get; set; }
+		/// <summary>
+		/// The player index.
+		/// </summary>
+		byte PlayerID { get; set; }
 
-		internal ContinueConnecting(byte id, int player) 
-			: base(id)
+		/// <summary>
+		/// Creates a new Continue Connecting packet.
+		/// </summary>
+		/// <param name="playerID">The player index.</param>
+		internal ContinueConnecting(int playerID) 
+			: base(PacketTypes.ContinueConnecting)
 		{
-			Player = (byte)player;
+			PlayerID = (byte)playerID;
 		}
 
-		internal ContinueConnecting(PacketTypes id, int player) 
-			: this((byte)id, player)
-		{
-		}
-
+		/// <summary>
+		/// Sets the remote client in <paramref name="e"/> to <see cref="PlayerID"/>.
+		/// </summary>
+		/// <param name="e">The <see cref="SendDataEventArgs"/> to be set.</param>
 		internal override void SetNewData(ref SendDataEventArgs e)
 		{
-			e.remoteClient = Player;
+			e.remoteClient = PlayerID;
 		}
 	}
 }

@@ -3,20 +3,20 @@
 namespace Orion.Net.Packets
 {
 	/// <summary>
-	/// ConnectRequest packet
+	/// Connect Request [1] packet. Sent from the client to the server.
 	/// </summary>
 	public class ConnectRequest : TerrariaPacket
 	{
 		/// <summary>
 		/// Terraria version sent by the client.
-		/// Should be "Terraria" + <see cref="Terraria.Main.curRelease"/>
+		/// Should be "Terraria" + <see cref="Terraria.Main.curRelease"/>.
 		/// </summary>
 		public string Version { get; private set; }
 
 		/// <summary>
-		/// Used when packet is received
+		/// Creates a new Connect Request packet by reading data from <paramref name="reader"/>.
 		/// </summary>
-		/// <param name="reader"></param>
+		/// <param name="reader">The <see cref="BinaryReader"/> object with the data to be read.</param>
 		internal ConnectRequest(BinaryReader reader) 
 			: base(reader)
 		{

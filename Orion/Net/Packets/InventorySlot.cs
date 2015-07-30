@@ -1,11 +1,10 @@
 ﻿using System.IO;
-
 using Terraria;
 
 namespace Orion.Net.Packets
 {
 	/// <summary>
-	/// Inventory Slot packet
+	/// Inventory Slot [5] packet. Sent by both ends (sync).
 	/// </summary>
 	public class InventorySlot : TerrariaPacket
 	{
@@ -16,9 +15,9 @@ namespace Orion.Net.Packets
 		public short NetID { get; set; }
 
 		/// <summary>
-		/// Used when the packet is received
+		/// Creates a new Inventory Slot packet by reading data from <paramref name="reader"/>.
 		/// </summary>
-		/// <param name="reader"></param>
+		/// <param name="reader">The <see cref="BinaryReader"/> object with the data to be read.</param>
 		internal InventorySlot(BinaryReader reader)
 			: base(reader)
 		{
@@ -30,72 +29,57 @@ namespace Orion.Net.Packets
 		}
 
 		/// <summary>
-		/// Used when the packet is sent
+		/// Creates a new Inventory Slot packet.
 		/// </summary>
-		/// <param name="id"></param>
-		/// <param name="player"></param>
-		/// <param name="slot"></param>
-		/// <param name="utils"></param>
-		internal InventorySlot(byte id, int player, float slot, NetUtils utils)
-			: base(id)
+		/// <param name="player">The player index.</param>
+		/// <param name="slot">The slot index.</param>
+		internal InventorySlot(int player, int slot)
+			: base(PacketTypes.PlayerSlot)
 		{
 			Player = (byte)player;
 			SlotID = (byte)slot;
 			Player ply = Main.player[Player];
 			Item item;
-			if (SlotID == utils.TotalSlots - 1) //179
+			if (SlotID == NetUtils.TotalSlots - 1) //179
 			{
 				item = ply.trashItem;
 			}
-			else if (SlotID >= utils.TotalSlots - 1 - utils.SafeSlots) //139
+			else if (SlotID >= NetUtils.TotalSlots - 1 - NetUtils.SafeSlots) //139
 			{
-				item = ply.bank2.item[SlotID - (utils.TotalSlots - 1 - utils.SafeSlots)];
+				item = ply.bank2.item[SlotID - (NetUtils.TotalSlots - 1 - NetUtils.SafeSlots)];
 			}
-			else if (SlotID >= utils.TotalSlots - 1 - utils.SafeSlots - utils.PiggyBankSlots) //99
+			else if (SlotID >= NetUtils.TotalSlots - 1 - NetUtils.SafeSlots - NetUtils.PiggyBankSlots) //99
 			{
-				item = ply.bank.item[SlotID - (utils.TotalSlots - 1 - utils.SafeSlots - utils.PiggyBankSlots)];
+				item = ply.bank.item[SlotID - (NetUtils.TotalSlots - 1 - NetUtils.SafeSlots - NetUtils.PiggyBankSlots)];
 			}
-			else if (SlotID >= utils.TotalSlots - 1 - utils.SafeSlots - utils.PiggyBankSlots
-				- utils.MiscDyeSlots) //94
+			else if (SlotID >= NetUtils.TotalSlots - 1 - NetUtils.SafeSlots - NetUtils.PiggyBankSlots
+				- NetUtils.MiscDyeSlots) //94
 			{
-				item = ply.miscDyes[SlotID - (utils.TotalSlots - 1 - utils.SafeSlots - utils.PiggyBankSlots
-					- utils.MiscDyeSlots)];
+				item = ply.miscDyes[SlotID - (NetUtils.TotalSlots - 1 - NetUtils.SafeSlots - NetUtils.PiggyBankSlots
+						- NetUtils.MiscDyeSlots)];
 			}
-			else if (SlotID >= utils.TotalSlots - 1 - utils.SafeSlots - utils.PiggyBankSlots
-				- utils.MiscDyeSlots - utils.MiscEquipSlots) //89
+			else if (SlotID >= NetUtils.TotalSlots - 1 - NetUtils.SafeSlots - NetUtils.PiggyBankSlots
+				- NetUtils.MiscDyeSlots - NetUtils.MiscEquipSlots) //89
 			{
-				item = ply.miscEquips[SlotID - (utils.TotalSlots - 1 - utils.SafeSlots - utils.PiggyBankSlots
-					   - utils.MiscDyeSlots - utils.MiscEquipSlots)];
+				item = ply.miscEquips[SlotID - (NetUtils.TotalSlots - 1 - NetUtils.SafeSlots - NetUtils.PiggyBankSlots
+						- NetUtils.MiscDyeSlots - NetUtils.MiscEquipSlots)];
 			}
-			else if (SlotID >= utils.TotalSlots - 1 - utils.SafeSlots - utils.PiggyBankSlots
-				- utils.MiscDyeSlots - utils.MiscEquipSlots - utils.DyeSlots) //79
+			else if (SlotID >= NetUtils.TotalSlots - 1 - NetUtils.SafeSlots - NetUtils.PiggyBankSlots
+				- NetUtils.MiscDyeSlots - NetUtils.MiscEquipSlots - NetUtils.DyeSlots) //79
 			{
-				item = ply.dye[SlotID - (utils.TotalSlots - 1 - utils.SafeSlots - utils.PiggyBankSlots
-					   - utils.MiscDyeSlots - utils.MiscEquipSlots - utils.DyeSlots)];
+				item = ply.dye[SlotID - (NetUtils.TotalSlots - 1 - NetUtils.SafeSlots - NetUtils.PiggyBankSlots
+						- NetUtils.MiscDyeSlots - NetUtils.MiscEquipSlots - NetUtils.DyeSlots)];
 			}
-			else if (SlotID >= utils.TotalSlots - 1 - utils.SafeSlots - utils.PiggyBankSlots
-				- utils.MiscDyeSlots - utils.MiscEquipSlots - utils.DyeSlots - utils.ArmorSlots) //59
+			else if (SlotID >= NetUtils.TotalSlots - 1 - NetUtils.SafeSlots - NetUtils.PiggyBankSlots
+				- NetUtils.MiscDyeSlots - NetUtils.MiscEquipSlots - NetUtils.DyeSlots - NetUtils.ArmorSlots) //59
 			{
-				item = ply.armor[SlotID - (utils.TotalSlots - 1 - utils.SafeSlots - utils.PiggyBankSlots
-					   - utils.MiscDyeSlots - utils.MiscEquipSlots - utils.DyeSlots - utils.ArmorSlots)];
+				item = ply.armor[SlotID - (NetUtils.TotalSlots - 1 - NetUtils.SafeSlots - NetUtils.PiggyBankSlots
+						- NetUtils.MiscDyeSlots - NetUtils.MiscEquipSlots - NetUtils.DyeSlots - NetUtils.ArmorSlots)];
 			}
 			else //0
 			{
 				item = ply.inventory[SlotID];
 			}
-		}
-
-		/// <summary>
-		/// Used when the packet is sent
-		/// </summary>
-		/// <param name="id"></param>
-		/// <param name="player"></param>
-		/// <param name="slot"></param>
-		/// <param name="utils"></param>
-		internal InventorySlot(PacketTypes id, int player, float slot, NetUtils utils)
-			: this((byte)id, player, slot, utils)
-		{
-
 		}
 	}
 }

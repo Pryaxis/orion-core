@@ -1,10 +1,11 @@
 ﻿using System.IO;
 using Terraria;
+using TerrariaApi.Server;
 
 namespace Orion.Net.Packets
 {
 	/// <summary>
-	/// PlayerInfo packet
+	/// Player Info [4] packet. Sent by both ends (sync).
 	/// </summary>
 	public class PlayerInfo : TerrariaPacket
 	{
@@ -84,9 +85,9 @@ namespace Orion.Net.Packets
 		private bool _isReadyForSend;
 
 		/// <summary>
-		/// Used when packet is received
+		/// Creates a new Player Info packet by reading data from <paramref name="reader"/>.
 		/// </summary>
-		/// <param name="reader"></param>
+		/// <param name="reader">The <see cref="BinaryReader"/> object with the data to be read.</param>
 		internal PlayerInfo(BinaryReader reader)
 			: base(reader)
 		{
@@ -124,22 +125,24 @@ namespace Orion.Net.Packets
 		}
 
 		/// <summary>
-		/// Used when packet is sent
+		/// Creates a new PlayerInfo packet and populates it with info from the player
+		/// whose's index is <paramref name="playerID"/>.
 		/// </summary>
-		/// <param name="id"></param>
-		internal PlayerInfo(byte id, int playerId, string text)
-			: base(id)
+		/// <param name="playerID">The player index.</param>
+		/// <param name="playerName">The player name.</param>
+		internal PlayerInfo(int playerID, string playerName)
+			: base(PacketTypes.PlayerInfo)
 		{
-			if (playerId < 0 || playerId > Main.maxNetPlayers)
+			if (playerID < 0 || playerID > Main.maxNetPlayers)
 			{
 				return;
 			}
 
-			Player = (byte)playerId;
+			Player = (byte)playerID;
 			Player player = Main.player[Player];
 			SkinVariant = (byte)player.skinVariant;
 			Hair = (byte)player.hair;
-			Name = text;
+			Name = playerName;
 			HairDye = player.hairDye;
 			HideVisuals = 0;
 			for (int i = 0; i < 8; i++)
@@ -166,19 +169,10 @@ namespace Orion.Net.Packets
 		}
 
 		/// <summary>
-		/// Used when packet is sent
+		/// Sets new Player Info data and updates <paramref name="e"/>.
 		/// </summary>
-		/// <param name="id"></param>
-		internal PlayerInfo(PacketTypes id, int playerId, string text)
-			: this((byte)id, playerId, text)
-		{
-		}
-
-		/// <summary>
-		/// Sets new PlayerInfo data and updates the SenDataEvent args
-		/// </summary>
-		/// <param name="e"></param>
-		internal override void SetNewData(ref TerrariaApi.Server.SendDataEventArgs e)
+		/// <param name="e">The <see cref="SendDataEventArgs"/> to set.</param>
+		internal override void SetNewData(ref SendDataEventArgs e)
 		{
 			if (!_isReadyForSend)
 			{

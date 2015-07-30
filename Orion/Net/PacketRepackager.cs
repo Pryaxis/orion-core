@@ -96,7 +96,7 @@ namespace Orion.Net
 				case PacketTypes.Disconnect:
 					if (OnSendDisconnect != null)
 					{
-						packet = new Disconnect(e.MsgId, e.text);
+						packet = new Disconnect(e.text);
 						OnSendDisconnect((Disconnect)packet);
 						packet.SetNewData(ref e);
 					}
@@ -105,7 +105,7 @@ namespace Orion.Net
 				case PacketTypes.ContinueConnecting:
 					if (OnSendContinueConnecting != null)
 					{
-						packet = new ContinueConnecting(e.MsgId, e.remoteClient);
+						packet = new ContinueConnecting(e.remoteClient);
 						OnSendContinueConnecting((ContinueConnecting)packet);
 						packet.SetNewData(ref e);
 					}
@@ -114,7 +114,7 @@ namespace Orion.Net
 				case PacketTypes.PlayerInfo:
 					if (OnSendPlayerInfo != null)
 					{
-						packet = new PlayerInfo(e.MsgId, e.number, e.text);
+						packet = new PlayerInfo(e.number, e.text);
 						OnSendPlayerInfo((PlayerInfo)packet);
 						packet.SetNewData(ref e);
 					}
@@ -123,7 +123,7 @@ namespace Orion.Net
 				case PacketTypes.PlayerSlot:
 					if (OnSendPlayerSlot != null)
 					{
-						packet = new InventorySlot(e.MsgId, e.number, e.number2, _core.NetUtils);
+						packet = new InventorySlot(e.number, (int)e.number2);
 						OnSendPlayerSlot((InventorySlot)packet);
 						packet.SetNewData(ref e);
 					}
@@ -132,7 +132,7 @@ namespace Orion.Net
 				case PacketTypes.WorldInfo:
 					if (OnSendWorldInfo != null)
 					{
-						packet = new WorldInfo(e.MsgId);
+						packet = new WorldInfo();
 						OnSendWorldInfo((WorldInfo)packet);
 						packet.SetNewData(ref e);
 					}

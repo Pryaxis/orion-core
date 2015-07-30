@@ -89,6 +89,7 @@
     <Compile Include="Net\Packets\InventorySlot.cs" />
     <Compile Include="Net\Packets\PlayerInfo.cs" />
     <Compile Include="Net\Packets\TerrariaPacket.cs" />
+    <Compile Include="Net\Packets\TileGetSection.cs" />
     <Compile Include="Net\Packets\WorldInfo.cs" />
     <Compile Include="Orion.cs" />
     <Compile Include="OrionPlugin.cs" />
