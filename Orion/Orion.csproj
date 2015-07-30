@@ -65,7 +65,10 @@
     <Compile Include="Bans\Ban.cs" />
     <Compile Include="Bans\BanHandler.cs" />
     <Compile Include="Configuration\ConfigFile.cs" />
+    <Compile Include="Exceptions\GroupExceptions.cs" />
     <Compile Include="Exceptions\UserExceptions.cs" />
+    <Compile Include="Grouping\Group.cs" />
+    <Compile Include="Grouping\GroupHandler.cs" />
     <Compile Include="Hashing\Hashing.cs" />
     <Compile Include="Extensions\DbEx.cs" />
     <Compile Include="Extensions\RandomEx.cs" />
@@ -112,6 +115,7 @@
     <Compile Include="Player.cs" />
     <Compile Include="UserAccounts\UserAccount.cs" />
     <Compile Include="UserAccounts\UserAccountHandler.cs" />
+    <Compile Include="Utilities\ColoredString.cs" />
     <Compile Include="Utilities\OrderedCache.cs" />
     <Compile Include="Utilities\Sorting.cs" />
     <Compile Include="Utilities\Utils.cs" />
