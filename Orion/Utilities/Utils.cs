@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Text;
 using Terraria;
 
 namespace Orion.Utilities
@@ -154,7 +156,78 @@ namespace Orion.Utilities
 				}
 			}
 
+			ColorStrings(new ColoredString("Test", Color.White));
+
 			return null;
+		}
+
+		/// <summary>
+		/// Colors a string using Terraria's color tag
+		/// </summary>
+		/// <param name="str">String to color</param>
+		/// <param name="color">Color to color string with</param>
+		/// <returns></returns>
+		public string ColorString(string str, Color color)
+		{
+			return $"[c/{color.Hex3()}:{str}]";
+		}
+
+		/// <summary>
+		/// Colors a string using Terraria's color tag
+		/// </summary>
+		/// <param name="str">ColoredString object to use</param>
+		/// <returns></returns>
+		public string ColorString(ColoredString str)
+		{
+			return str.ToString();
+		}
+
+		/// <summary>
+		/// Colors multiple strings using Terraria's color tag
+		/// </summary>
+		/// <param name="strings">ColoredString objects to use</param>
+		/// <returns></returns>
+		public string ColorStrings(params ColoredString[] strings)
+		{
+			StringBuilder sb = new StringBuilder();
+
+			foreach (ColoredString str in strings)
+			{
+				if (str.Color == null)
+				{
+					sb.Append(str.String);
+				}
+				else
+				{
+					sb.Append(str.ToString());
+				}
+			}
+
+			return sb.ToString();
+		}
+
+		/// <summary>
+		/// Colors multiple strings using Terraria's color tag
+		/// </summary>
+		/// <param name="strings"></param>
+		/// <returns></returns>
+		public string ColorStrings(Dictionary<string, Color> strings)
+		{
+			StringBuilder sb = new StringBuilder();
+
+			foreach (KeyValuePair<string, Color> pair in strings)
+			{
+				if (pair.Value == null)
+				{
+					sb.Append(pair.Key);
+				}
+				else
+				{
+					sb.Append(ColorString(pair.Key, pair.Value));
+				}
+			}
+
+			return sb.ToString();
 		}
 	}
 }
