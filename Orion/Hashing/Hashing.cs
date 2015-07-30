@@ -65,7 +65,7 @@ namespace Orion.Hashing
 			}
 			catch (ArgumentOutOfRangeException)
 			{
-				Orion.Log.ConsoleError(Strings.BCryptHashWorkFactorOutOfRange);
+				_core.Log.ConsoleError(Strings.BCryptHashWorkFactorOutOfRange);
 				ret = BCrypt.Net.BCrypt.HashPassword(text.Trim());
 			}
 
@@ -86,7 +86,7 @@ namespace Orion.Hashing
 			}
 			catch (ArgumentOutOfRangeException)
 			{
-				Orion.Log.ConsoleError(Strings.BCryptHashWorkFactorOutOfRangeUpgrade);
+				_core.Log.ConsoleError(Strings.BCryptHashWorkFactorOutOfRangeUpgrade);
 				hash = BCrypt.Net.BCrypt.HashPassword(input);
 			}
 		}
@@ -105,7 +105,7 @@ namespace Orion.Hashing
 			}
 			catch (FormatException)
 			{
-				Orion.Log.ConsoleError(Strings.BCryptInvalidHashFormat);
+				_core.Log.ConsoleError(Strings.BCryptInvalidHashFormat);
 				return;
 			}
 
@@ -117,7 +117,7 @@ namespace Orion.Hashing
 				}
 				catch (ArgumentOutOfRangeException)
 				{
-					Orion.Log.ConsoleError(Strings.BCryptInvalidWorkFactor);
+					_core.Log.ConsoleError(Strings.BCryptInvalidWorkFactor);
 				}
 			}
 		}
