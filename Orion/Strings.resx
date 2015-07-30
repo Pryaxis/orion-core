@@ -145,6 +145,10 @@
     <value>Config path has been set to {0}.</value>
     <comment>Output when the ConfigPath is set via command line</comment>
   </data>
+  <data name="GroupNotFound" xml:space="preserve">
+    <value>Group '{0}' does not exist.</value>
+    <comment>Used when attempting to set a non-existant group</comment>
+  </data>
   <data name="HashAlgoUnsupported" xml:space="preserve">
     <value>Hashing algorithm {0} is not supported.</value>
     <comment>Used in an exception when the config file attempts to use an unsupported hashing algorithm. This is for legacy hashed values that must be updated to BCrypt</comment>
