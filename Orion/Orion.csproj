@@ -64,6 +64,7 @@
   <ItemGroup>
     <Compile Include="Bans\Ban.cs" />
     <Compile Include="Bans\BanHandler.cs" />
+    <Compile Include="ChatInfo.cs" />
     <Compile Include="Configuration\ConfigFile.cs" />
     <Compile Include="Exceptions\GroupExceptions.cs" />
     <Compile Include="Exceptions\UserExceptions.cs" />

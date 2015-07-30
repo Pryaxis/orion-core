@@ -18,4 +18,14 @@ namespace Orion.Exceptions
 		{
 		}
 	}
+
+	[Serializable]
+	public class SetUserGroupException : ArgumentException
+	{
+		public SetUserGroupException(string exception, string parameter)
+			:base(exception, parameter)
+		{
+
+		}
+	}
 }

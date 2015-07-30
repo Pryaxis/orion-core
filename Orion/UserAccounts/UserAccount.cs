@@ -22,15 +22,7 @@ namespace Orion.UserAccounts
 		/// <summary>The group object that the user is a part of.</summary>
 		public Group Group { get; set; }
 
-		public string GroupName
-		{
-			get { return Group?.Name; }
-
-			private set
-			{
-				GroupName = value;
-			}
-		}
+		internal int GroupID { get; set; }
 
 		public PermissionCollection Permissions { get; set; }
 
@@ -58,7 +50,7 @@ namespace Orion.UserAccounts
 			Password = pass;
 			UUID = uuid;
 			Group = group;
-			GroupName = group.Name;
+			GroupID = group.ID;
 			Permissions = permissions;
 			Registered = registered;
 			LastAccessed = last;
@@ -73,7 +65,7 @@ namespace Orion.UserAccounts
 			Password = "";
 			UUID = "";
 			Group = new Group();
-			GroupName = "";
+			GroupID = -1;
 			Permissions = new PermissionCollection();
 			Registered = "";
 			LastAccessed = "";
@@ -111,7 +103,7 @@ namespace Orion.UserAccounts
 		internal void LoadFromQuery(QueryResult result)
 		{
 			ID = result.Get<int>("ID");
-			GroupName = result.Get<string>("Usergroup");
+			GroupID = result.Get<int>("GroupID");
 			Password = result.Get<string>("Password");
 			UUID = result.Get<string>("UUID");
 			Name = result.Get<string>("Username");

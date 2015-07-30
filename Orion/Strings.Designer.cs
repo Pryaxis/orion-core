@@ -216,6 +216,42 @@ namespace Orion {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to group parameter must be a valid group name, group ID, or Group object.
+        /// </summary>
+        internal static string SetUserGroupException {
+            get {
+                return ResourceManager.GetString("SetUserGroupException", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Provided UserAccount was invalid.
+        /// </summary>
+        internal static string SetUserGroupInvalidAccountException {
+            get {
+                return ResourceManager.GetString("SetUserGroupInvalidAccountException", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Provided group ID was invalid.
+        /// </summary>
+        internal static string SetUserGroupInvalidIDException {
+            get {
+                return ResourceManager.GetString("SetUserGroupInvalidIDException", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Provided group name was invalid.
+        /// </summary>
+        internal static string SetUserGroupInvalidNameException {
+            get {
+                return ResourceManager.GetString("SetUserGroupInvalidNameException", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Fatal startup exception..
         /// </summary>
         internal static string StartupException {
