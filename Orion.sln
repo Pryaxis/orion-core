@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Orion", "Orion\Orion.csproj
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Unit Tests", "Unit Tests\Unit Tests.csproj", "{877AB5CB-04A4-4C25-B422-3ECC07392CF0}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TShock5", "TShock5\TShock5.csproj", "{4C58C629-8955-4748-A9D3-97935B48FEBD}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{877AB5CB-04A4-4C25-B422-3ECC07392CF0}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{877AB5CB-04A4-4C25-B422-3ECC07392CF0}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{877AB5CB-04A4-4C25-B422-3ECC07392CF0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4C58C629-8955-4748-A9D3-97935B48FEBD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4C58C629-8955-4748-A9D3-97935B48FEBD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4C58C629-8955-4748-A9D3-97935B48FEBD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4C58C629-8955-4748-A9D3-97935B48FEBD}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
