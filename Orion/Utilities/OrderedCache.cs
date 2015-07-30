@@ -27,6 +27,19 @@ namespace Orion.Utilities
 
 		private int _clearCount;
 		private int _flushInterval;
+		
+		public delegate void RemoveCallBack(T value);
+		public delegate bool FlushCallBack(IEnumerable<T> values);
+
+		/// <summary>
+		/// Fired when the cache is flushed
+		/// </summary>
+		public event FlushCallBack FlushEvent;
+
+		/// <summary>
+		/// Fired when a CacheObject is removed from the cache due to size constraints
+		/// </summary>
+		public event RemoveCallBack RemoveEvent;
 
 		public int MaxSize { get { return _maxSize; } }
 
@@ -64,25 +77,6 @@ namespace Orion.Utilities
 			}
 		}
 
-		public delegate bool FlushCallBack(IEnumerable<T> values);
-
-		/// <summary>
-		/// Event that is raised when the cache is flushed
-		/// </summary>
-		public event FlushCallBack FlushEvent;
-
-		/// <summary>
-		/// Constructor
-		/// </summary>
-		/// <param name="maxSize">Max size of the cache</param>
-		public OrderedCache(int maxSize)
-		{
-			_maxSize = maxSize;
-			_cache = new List<CacheObject>(maxSize);
-
-			ThreadPool.QueueUserWorkItem(WaitAndFlush);
-		}
-
 		/// <summary>
 		/// Get or set a CacheObject through indexing
 		/// </summary>
@@ -112,6 +106,18 @@ namespace Orion.Utilities
 
 				_cache[index].value = value;
 			}
+		}
+
+		/// <summary>
+		/// Constructor
+		/// </summary>
+		/// <param name="maxSize">Max size of the cache</param>
+		public OrderedCache(int maxSize)
+		{
+			_maxSize = maxSize;
+			_cache = new List<CacheObject>(maxSize);
+
+			ThreadPool.QueueUserWorkItem(WaitAndFlush);
 		}
 
 		/// <summary>
@@ -150,6 +156,11 @@ namespace Orion.Utilities
 
 			if (_cache.Count > _maxSize)
 			{
+				if (RemoveEvent != null)
+				{
+					RemoveEvent(_cache[0].value);
+				}
+
 				_cache.RemoveAt(0);
 			}
 
@@ -164,14 +175,34 @@ namespace Orion.Utilities
 		{
 			Sort();
 
+			//Removes values from the cache if the new additions will overflow the container size
 			if (_cache.Count + values.Count > _maxSize)
 			{
-				_cache.RemoveRange(0, (_cache.Count + values.Count) - _maxSize);
+				//if something is hooked into the RemoveEvent we need to fire it for each removal
+				if (RemoveEvent != null)
+				{
+					for (int i = (_cache.Count + values.Count) - _maxSize - 1; i >= 0; i--)
+					{
+						RemoveEvent(_cache[i].value);
+						_cache.RemoveAt(i);
+					}
+				}
+				//Otherwise we can just remove the range
+				else
+				{
+					_cache.RemoveRange(0, (_cache.Count + values.Count) - _maxSize);
+				}
 			}
 
 			_cache.InsertRange(0, values.Select(val => new CacheObject { value = val, count = 0 }));
 		}
 
+		/// <summary>
+		/// Returns the first element of the sequence that satisfies a condition, or a default value if
+		/// none is found
+		/// </summary>
+		/// <param name="predicate"></param>
+		/// <returns></returns>
 		public T FirstOrDefault(Predicate<T> predicate)
 		{
 			for (int i = 0; i < _cache.Count; i++)
@@ -187,6 +218,11 @@ namespace Orion.Utilities
 			return default(T);
 		}
 
+		/// <summary>
+		/// Filters a sequence of values based on a predicate
+		/// </summary>
+		/// <param name="predicate"></param>
+		/// <returns></returns>
 		public IEnumerable<T> Where(Predicate<T> predicate)
 		{
 			List<T> wheres = new List<T>();
@@ -220,7 +256,7 @@ namespace Orion.Utilities
 
 			if (clear >= _cache.Count)
 			{
-				clear = _cache.Count - 1;
+				clear = _cache.Count;
 			}
 
 			Sort();
@@ -231,6 +267,11 @@ namespace Orion.Utilities
 			}
 		}
 
+		/// <summary>
+		/// Raises the FlushEvent with the given IEnumerable of values
+		/// </summary>
+		/// <param name="values"></param>
+		/// <returns></returns>
 		private bool OnFlush(IEnumerable<T> values)
 		{
 			if (FlushEvent == null)
@@ -251,6 +292,12 @@ namespace Orion.Utilities
 			Flush(ClearCount);
 		}
 
+		/// <summary>
+		/// Compares two cache objects to determine their order
+		/// </summary>
+		/// <param name="o1"></param>
+		/// <param name="o2"></param>
+		/// <returns></returns>
 		private int Comparison(CacheObject o1, CacheObject o2)
 		{
 			if (o1 == null)
@@ -263,22 +310,17 @@ namespace Orion.Utilities
 				return -1;
 			}
 
-			if (o2 == null)
-			{
-				return 1;
-			}
+			return o1.CompareTo(o2);
+		}
 
-			if (o1.count > o2.count)
-			{
-				return 1;
-			}
+		public IEnumerator<T> GetEnumerator()
+		{
+			return _cache.Select(obj => obj.value).GetEnumerator();
+		}
 
-			if (o1.count < o2.count)
-			{
-				return -1;
-			}
-
-			return 0;
+		IEnumerator IEnumerable.GetEnumerator()
+		{
+			return GetEnumerator();
 		}
 
 		/// <summary>
@@ -287,15 +329,14 @@ namespace Orion.Utilities
 		private sealed class CacheObject : IComparable
 		{
 			public T value;
+			/// <summary>
+			/// Number of times this object has been accessed
+			/// </summary>
 			public int count;
 
 			public int CompareTo(object other)
 			{
 				CacheObject obj = other as CacheObject;
-				if (obj == null)
-				{
-					return 0;
-				}
 
 				if (obj.count > count)
 				{
@@ -312,16 +353,6 @@ namespace Orion.Utilities
 
 				return 0;
 			}
-		}
-
-		public IEnumerator<T> GetEnumerator()
-		{
-			return _cache.Select(obj => obj.value).GetEnumerator();
-		}
-
-		IEnumerator IEnumerable.GetEnumerator()
-		{
-			return GetEnumerator();
 		}
 	}
 }
