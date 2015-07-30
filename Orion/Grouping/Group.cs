@@ -6,12 +6,22 @@ namespace Orion.Grouping
 {
 	public class Group
 	{
+		/// <summary>
+		/// Group ID
+		/// </summary>
 		public int ID { get; private set; }
+		/// <summary>
+		/// Group name
+		/// </summary>
 		public string Name { get; private set; }
+		/// <summary>
+		/// Group permissions
+		/// </summary>
 		public PermissionCollection Permissions { get; private set; }
-		public Color ChatColor { get; private set; }
-		public string Prefix { get; private set; }
-		public string Suffix { get; private set; }
+		/// <summary>
+		/// Group chat info
+		/// </summary>
+		public ChatInfo ChatInfo { get; private set; }
 
 		/// <summary>Default constructor for a Group object; holds no data.</summary>
 		/// <returns>A Group object.</returns>
@@ -20,18 +30,14 @@ namespace Orion.Grouping
 			ID = -1;
 			Name = "";
 			Permissions = new PermissionCollection();
-			ChatColor = Color.White;
-			Prefix = "";
-			Suffix = "";
+			ChatInfo = new ChatInfo();
 		}
 
 		public Group(string name, PermissionCollection permissions, Color chatColor, string prefix, string suffix)
 		{
 			Name = name;
 			Permissions = permissions;
-			ChatColor = chatColor;
-			Prefix = prefix;
-			Suffix = suffix;
+			ChatInfo = new ChatInfo(prefix, suffix, chatColor);
 		}
 
 		/// <summary>
@@ -54,9 +60,11 @@ namespace Orion.Grouping
 			ID = result.Get<int>("ID");
 			Name = result.Get<string>("Name");
 			Permissions = new PermissionCollection(result.Get<string>("Permissions"));
-			ChatColor = result.Get<string>("ChatColor").ToColor();
-			Prefix = result.Get<string>("Prefix");
-			Suffix = result.Get<string>("Suffix");
+
+			Color chatColor = result.Get<string>("ChatColor").ToColor();
+			string prefix = result.Get<string>("Prefix");
+			string suffix = result.Get<string>("Suffix");
+			ChatInfo = new ChatInfo(prefix, suffix, chatColor);
 		}
 	}
 }

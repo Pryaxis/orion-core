@@ -187,6 +187,22 @@
     <value>Save path has been set to {0}.</value>
     <comment>Output when the SavePath is set via command line</comment>
   </data>
+  <data name="SetUserGroupException" xml:space="preserve">
+    <value>group parameter must be a valid group name, group ID, or Group object</value>
+    <comment>Used in a SetUserGroup exception</comment>
+  </data>
+  <data name="SetUserGroupInvalidAccountException" xml:space="preserve">
+    <value>Provided UserAccount was invalid</value>
+    <comment>Used in a SetUserGroup exception</comment>
+  </data>
+  <data name="SetUserGroupInvalidIDException" xml:space="preserve">
+    <value>Provided group ID was invalid</value>
+    <comment>Used in a SetUserGroup exception</comment>
+  </data>
+  <data name="SetUserGroupInvalidNameException" xml:space="preserve">
+    <value>Provided group name was invalid</value>
+    <comment>Used in a SetUserGroup exception</comment>
+  </data>
   <data name="StartupException" xml:space="preserve">
     <value>Fatal startup exception.</value>
     <comment>Used in an exception if Orion fails to start for some reason</comment>

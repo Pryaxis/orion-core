@@ -7,6 +7,7 @@ using Orion.Exceptions;
 using Orion.Extensions;
 using Orion.SQL;
 using Orion.Utilities;
+using Orion.Grouping;
 
 namespace Orion.UserAccounts
 {
@@ -30,11 +31,12 @@ namespace Orion.UserAccounts
 				new SqlColumn("Username", MySqlDbType.VarChar, 32) {Unique = true},
 				new SqlColumn("Password", MySqlDbType.VarChar, 128),
 				new SqlColumn("UUID", MySqlDbType.VarChar, 128),
-				new SqlColumn("Usergroup", MySqlDbType.Text),
+				new SqlColumn("Prefix", MySqlDbType.Text),
+				new SqlColumn("Suffix", MySqlDbType.Text),
+                new SqlColumn("GroupID", MySqlDbType.Int32),
 				new SqlColumn("Registered", MySqlDbType.Text),
 				new SqlColumn("LastAccessed", MySqlDbType.Text),
-				new SqlColumn("KnownIPs", MySqlDbType.Text)
-				);
+				new SqlColumn("KnownIPs", MySqlDbType.Text));
 
 			SqlTableCreator creator = new SqlTableCreator(database,
 				database.GetSqlType() == SqlType.Sqlite
@@ -128,7 +130,7 @@ namespace Orion.UserAccounts
 
 				return true;
 			}
-			
+						
 			Dictionary<string, string> data = new Dictionary<string, string>();
 			if (!string.IsNullOrEmpty(password))
 			{
@@ -136,7 +138,11 @@ namespace Orion.UserAccounts
 			}
 			if (!string.IsNullOrEmpty(group))
 			{
-				data.Add("Usergroup", group);
+				int groupID = _core.Groups.GetGroupID(group);
+				if (groupID != -1)
+				{
+					data.Add("GroupID", groupID.ToString());
+				}
 			}
 			if (!string.IsNullOrEmpty(uuid))
 			{
@@ -189,7 +195,7 @@ namespace Orion.UserAccounts
 					else
 					{
 						ret = UserCache.Skip(offset).Where(u =>
-							string.Equals(u.GroupName, group, StringComparison.InvariantCultureIgnoreCase)).ToList();
+							string.Equals(u.Group.Name, group, StringComparison.InvariantCultureIgnoreCase)).ToList();
 					}
 				}
 				else if (string.IsNullOrEmpty(group))
@@ -240,7 +246,7 @@ namespace Orion.UserAccounts
 				{
 					UserAccount user = new UserAccount();
 					user.LoadFromQuery(result);
-					user.Group = _core.Groups.GetGroupFromName(user.GroupName);
+					user.Group = _core.Groups.GetGroupFromID(user.GroupID);
 					UserCache.Push(user);
 					ret.Add(user);
 				}
@@ -294,7 +300,7 @@ namespace Orion.UserAccounts
 
 			if (user != null)
 			{
-				user.Group = _core.Groups.GetGroupFromName(user.GroupName);
+				user.Group = _core.Groups.GetGroupFromID(user.GroupID);
 			}
 
 			return user;
