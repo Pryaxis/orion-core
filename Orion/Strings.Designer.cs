@@ -124,6 +124,15 @@ namespace Orion {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Failed to read Group count from database.
+        /// </summary>
+        internal static string FatalGroupInitializationException {
+            get {
+                return ResourceManager.GetString("FatalGroupInitializationException", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Group &apos;{0}&apos; does not exist..
         /// </summary>
         internal static string GroupNotFound {

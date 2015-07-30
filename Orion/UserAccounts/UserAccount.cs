@@ -1,6 +1,6 @@
-﻿using System.Dynamic;
-using Orion.SQL;
+﻿using Orion.SQL;
 using Orion.Grouping;
+using Orion.Extensions;
 using Orion.Permissions;
 
 namespace Orion.UserAccounts
@@ -22,8 +22,19 @@ namespace Orion.UserAccounts
 		/// <summary>The group object that the user is a part of.</summary>
 		public Group Group { get; set; }
 
+		/// <summary>
+		/// Used internally to load Group
+		/// </summary>
 		internal int GroupID { get; set; }
 
+		/// <summary>
+		/// The user's Chat data
+		/// </summary>
+		public ChatInfo ChatInfo { get; set; }
+
+		/// <summary>
+		/// The user's permissions
+		/// </summary>
 		public PermissionCollection Permissions { get; set; }
 
 		/// <summary>The unix epoch corresponding to the registration date of the user.</summary>
@@ -39,7 +50,7 @@ namespace Orion.UserAccounts
 		/// <param name="name">The user's name.</param>
 		/// <param name="pass">The user's password hash.</param>
 		/// <param name="uuid">The user's UUID.</param>
-		/// <param name="group">The user's group name.</param>
+		/// <param name="group">The user's group.</param>
 		/// <param name="registered">The unix epoch for the registration date.</param>
 		/// <param name="last">The unix epoch for the last access date.</param>
 		/// <param name="known">The known IPs for the user, serialized as a JSON object</param>
@@ -51,6 +62,7 @@ namespace Orion.UserAccounts
 			UUID = uuid;
 			Group = group;
 			GroupID = group.ID;
+			ChatInfo = Group.ChatInfo;
 			Permissions = permissions;
 			Registered = registered;
 			LastAccessed = last;
@@ -66,6 +78,7 @@ namespace Orion.UserAccounts
 			UUID = "";
 			Group = new Group();
 			GroupID = -1;
+			ChatInfo = Group.ChatInfo;
 			Permissions = new PermissionCollection();
 			Registered = "";
 			LastAccessed = "";
@@ -110,6 +123,11 @@ namespace Orion.UserAccounts
 			Registered = result.Get<string>("Registered");
 			LastAccessed = result.Get<string>("LastAccessed");
 			KnownIps = result.Get<string>("KnownIps");
+
+			Color chatColor = result.Get<string>("ChatColor").ToColor();
+			string prefix = result.Get<string>("Prefix");
+			string suffix = result.Get<string>("Suffix");
+			ChatInfo = new ChatInfo(prefix, suffix, chatColor);
 		}
 	}
 }

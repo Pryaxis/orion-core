@@ -1,6 +1,7 @@
 ﻿using Orion.Extensions;
 using Orion.SQL;
 using Orion.Permissions;
+using System.Collections.Generic;
 
 namespace Orion.Grouping
 {
@@ -18,6 +19,10 @@ namespace Orion.Grouping
 		/// Group permissions
 		/// </summary>
 		public PermissionCollection Permissions { get; private set; }
+		/// <summary>
+		/// Group parents
+		/// </summary>
+		public List<string> Parents { get; private set; }
 		/// <summary>
 		/// Group chat info
 		/// </summary>

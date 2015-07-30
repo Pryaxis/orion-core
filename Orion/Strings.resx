@@ -145,6 +145,10 @@
     <value>Config path has been set to {0}.</value>
     <comment>Output when the ConfigPath is set via command line</comment>
   </data>
+  <data name="FatalGroupInitializationException" xml:space="preserve">
+    <value>Failed to read Group count from database</value>
+    <comment>Used in a Fatal exception</comment>
+  </data>
   <data name="GroupNotFound" xml:space="preserve">
     <value>Group '{0}' does not exist.</value>
     <comment>Used when attempting to set a non-existant group</comment>

@@ -31,9 +31,10 @@ namespace Orion.UserAccounts
 				new SqlColumn("Username", MySqlDbType.VarChar, 32) {Unique = true},
 				new SqlColumn("Password", MySqlDbType.VarChar, 128),
 				new SqlColumn("UUID", MySqlDbType.VarChar, 128),
-				new SqlColumn("Prefix", MySqlDbType.Text),
-				new SqlColumn("Suffix", MySqlDbType.Text),
-                new SqlColumn("GroupID", MySqlDbType.Int32),
+				new SqlColumn("Prefix", MySqlDbType.VarChar, 128),
+				new SqlColumn("Suffix", MySqlDbType.VarChar, 128),
+				new SqlColumn("ChatColor", MySqlDbType.VarChar, 128),
+				new SqlColumn("GroupID", MySqlDbType.Int32),
 				new SqlColumn("Registered", MySqlDbType.Text),
 				new SqlColumn("LastAccessed", MySqlDbType.Text),
 				new SqlColumn("KnownIPs", MySqlDbType.Text));

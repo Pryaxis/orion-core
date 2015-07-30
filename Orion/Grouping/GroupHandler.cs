@@ -4,7 +4,6 @@ using Orion.Exceptions;
 using Orion.Extensions;
 using Orion.SQL;
 using Orion.UserAccounts;
-using System;
 
 namespace Orion.Grouping
 {
@@ -19,6 +18,8 @@ namespace Orion.Grouping
 		/// </summary>
 		public readonly IDbConnection database;
 
+		public Group[] Groups;
+
 		/// <summary>
 		/// Creates a new GroupHandler instance and ensures that the database structure is correct
 		/// </summary>
@@ -31,17 +32,43 @@ namespace Orion.Grouping
 			SqlTable table = new SqlTable("Groups",
 				new SqlColumn("ID", MySqlDbType.Int32) { Primary = true, AutoIncrement = true },
 				new SqlColumn("Name", MySqlDbType.VarChar, 32) { Unique = true },
+				new SqlColumn("Parents", MySqlDbType.Text),
 				new SqlColumn("Permissions", MySqlDbType.VarChar, 128),
 				new SqlColumn("ChatColor", MySqlDbType.VarChar, 128),
 				new SqlColumn("Prefix", MySqlDbType.Text),
-				new SqlColumn("Suffix", MySqlDbType.Text)
-				);
+				new SqlColumn("Suffix", MySqlDbType.Text));
 
 			SqlTableCreator creator = new SqlTableCreator(database,
 				database.GetSqlType() == SqlType.Sqlite
 					? (IQueryBuilder)new SqliteQueryCreator()
 					: new MysqlQueryCreator());
 			creator.EnsureTableStructure(table);
+
+			using (QueryResult result = database.QueryReader("SELECT Max(ID) from Groups"))
+			{
+				if (result.Read())
+				{
+					Groups = new Group[result.Get<int>("ID")];
+
+					for (int i = 0; i < Groups.Length; i++)
+					{
+						Groups[i] = new Group();
+					}
+				}
+				else
+				{
+					throw new FatalException(Strings.FatalGroupInitializationException);
+				}
+			}
+
+			using (QueryResult result = database.QueryReader("SELECT * FROM Groups"))
+			{
+				while (result.Read())
+				{
+					int ID = result.Get<int>("ID");
+					Groups[ID].LoadFromQuery(result);
+				}
+			}
 		}
 
 		/// <summary>
