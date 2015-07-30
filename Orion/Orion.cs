@@ -16,12 +16,38 @@ using Orion.UserAccounts;
 using Terraria;
 using TerrariaApi.Server;
 using Utils = Orion.Utilities.Utils;
+using Orion.Grouping;
 
 namespace Orion
 {
-	[ApiVersion(1, 19)]
+	[ApiVersion(1, 20)]
 	public class Orion : TerrariaPlugin
 	{
+		/// <summary>
+		/// Plugin author(s)
+		/// </summary>
+		public override string Author
+		{
+			get { return "Nyx Studios"; }
+		}
+
+		/// <summary>
+		/// Plugin name
+		/// </summary>
+		public override string Name
+		{
+			get { return "Orion"; }
+		}
+
+		/// <summary>
+		/// Plugin version
+		/// </summary>
+		public override Version Version
+		{
+			get { return Assembly.GetExecutingAssembly().GetName().Version; }
+		}
+
+
 		/// <summary>
 		/// Relative path to the Orion folder
 		/// </summary>
@@ -52,6 +78,7 @@ namespace Orion
 		/// User handling object for getting users and setting values
 		/// </summary>
 		public UserAccountHandler Users { get; private set; }
+		public GroupHandler Groups { get; private set; }
 		/// <summary>
 		/// Ban handling object for retrieving and creating bans
 		/// </summary>
@@ -73,37 +100,13 @@ namespace Orion
 		/// <summary>
 		/// Log manager. Use this to write data to the log
 		/// </summary>
-		public static ILog Log { get; private set; }
+		public ILog Log { get; private set; }
 
 		private readonly Dictionary<string, Assembly> _loadedAssemblies = new Dictionary<string, Assembly>(); 
 		/// <summary>
 		/// Loaded plugins
 		/// </summary>
 		public readonly List<OrionPlugin> loadedPlugins = new List<OrionPlugin>();
-
-		/// <summary>
-		/// Plugin author(s)
-		/// </summary>
-		public override string Author
-		{
-			get { return "Nyx Studios"; }
-		}
-
-		/// <summary>
-		/// Plugin name
-		/// </summary>
-		public override string Name
-		{
-			get { return "Orion"; }
-		}
-
-		/// <summary>
-		/// Plugin version
-		/// </summary>
-		public override Version Version
-		{
-			get { return Assembly.GetExecutingAssembly().GetName().Version; }
-		}
 
 		public Orion(Main game) : base(game)
 		{
@@ -137,13 +140,11 @@ namespace Orion
 				{
 					Directory.CreateDirectory(PluginPath);
 				}
-
-				ConfigFile.ConfigRead += OnConfigRead;
-				if (File.Exists(ConfigPath))
+				Config = Config.Read(ConfigPath);
+				if (!File.Exists(ConfigPath))
 				{
-					Config = ConfigFile.Read(ConfigPath);
+					Config.Write(ConfigPath);
 				}
-				Config.Write(ConfigPath);
 
 				if (Config.StorageType.ToLower() == "sqlite")
 				{
@@ -178,17 +179,20 @@ namespace Orion
 				{
 					throw new Exception(Strings.InvalidDbTypeException);
 				}
-
-				if (Config.UseSqlLogging)
+				
+				//Commented until I figure out why it breaks
+				/*if (Config.UseSqlLogging)
 				{
 					Log = new SqlLog(this, Path.Combine(LogPath, "log.log"), false);
 				}
 				else
 				{
                     Log = new Log(Path.Combine(SavePath, "log4net.config"));
-				}
+					Console.WriteLine("Log is not null");
+				}*/
 
 				Users = new UserAccountHandler(this);
+				Groups = new GroupHandler(this);
 				Bans = new BanHandler(this);
 				Utils = new Utils(this);
 				NetUtils = new NetUtils(this);
@@ -292,6 +296,7 @@ namespace Orion
 
 						//Get the attributes the Type is using
 						object[] customAttributes = type.GetCustomAttributes(typeof (OrionVersionAttribute), false);
+												
 						//if there's no attributes, ignore
 						if (customAttributes.Length == 0)
 							continue;
@@ -389,6 +394,7 @@ namespace Orion
 			if (disposing)
 			{
 				UnloadPlugins();
+				Users.UserCache.Flush();
 			}
 
 			base.Dispose(disposing);
