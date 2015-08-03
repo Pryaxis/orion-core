@@ -7,6 +7,7 @@ namespace Orion.Exceptions
 		public FatalException(string message)
 			: base(message)
 		{
+			//Should log message
 			Environment.Exit(1);
 		}
 	}

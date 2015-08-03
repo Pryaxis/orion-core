@@ -1,7 +1,6 @@
 ﻿using Orion.Extensions;
 using Orion.SQL;
 using Orion.Permissions;
-using System.Collections.Generic;
 
 namespace Orion.Grouping
 {
@@ -22,7 +21,7 @@ namespace Orion.Grouping
 		/// <summary>
 		/// Group parents
 		/// </summary>
-		public List<string> Parents { get; private set; }
+		public ParentCollection Parents { get; private set; }
 		/// <summary>
 		/// Group chat info
 		/// </summary>
@@ -35,13 +34,16 @@ namespace Orion.Grouping
 			ID = -1;
 			Name = "";
 			Permissions = new PermissionCollection();
+			Parents = new ParentCollection();
 			ChatInfo = new ChatInfo();
 		}
 
-		public Group(string name, PermissionCollection permissions, Color chatColor, string prefix, string suffix)
+		public Group(string name, PermissionCollection permissions, ParentCollection parents, Color chatColor,
+			string prefix, string suffix)
 		{
 			Name = name;
 			Permissions = permissions;
+			Parents = parents;
 			ChatInfo = new ChatInfo(prefix, suffix, chatColor);
 		}
 
@@ -65,7 +67,7 @@ namespace Orion.Grouping
 			ID = result.Get<int>("ID");
 			Name = result.Get<string>("Name");
 			Permissions = new PermissionCollection(result.Get<string>("Permissions"));
-
+			Parents = new ParentCollection(result.Get<string>("Parents"));
 			Color chatColor = result.Get<string>("ChatColor").ToColor();
 			string prefix = result.Get<string>("Prefix");
 			string suffix = result.Get<string>("Suffix");
