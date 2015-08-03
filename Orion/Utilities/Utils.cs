@@ -5,12 +5,37 @@ using Terraria;
 
 namespace Orion.Utilities
 {
+	[Flags]
+	public enum ClearType
+	{
+		/// <summary>
+		/// Enemy NPCs
+		/// </summary>
+		NPCs = 1,
+		/// <summary>
+		/// Friendly (town) NPCs
+		/// </summary>
+		FriendlyNPCs = 2,
+		/// <summary>
+		/// Live projectiles
+		/// </summary>
+		Projectiles = 4,
+		/// <summary>
+		/// Dropped items
+		/// </summary>
+		Items = 8,
+		/// <summary>
+		/// All NPCs, projectiles, and dropped items
+		/// </summary>
+		All = 15
+	}
+
 	public class Utils
 	{
 		/// <summary>
 		/// DateTime object that represents the start date of the Unix time epoch
 		/// </summary>
-		public static readonly DateTime UnixDateTime = new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc);
+		public readonly DateTime UnixDateTime = new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc);
 
 		/// <summary>
 		/// Orion instance
@@ -47,12 +72,69 @@ namespace Orion.Utilities
 		}
 
 		/// <summary>
+		/// Clears a range of objects based on the given <see cref="ClearType"></see>
+		/// </summary>
+		/// <param name="type">bitflag</param>
+		/// <param name="start"></param>
+		/// <param name="radius"></param>
+		/// <returns></returns>
+		public int Clear(ClearType type, Vector2 start, float radius = 50f)
+		{
+			int cleared = 0;
+
+			if (type.HasFlag(ClearType.NPCs))
+			{
+				cleared += ClearNpcs(start, type.HasFlag(ClearType.FriendlyNPCs), radius);
+			}
+			if (type.HasFlag(ClearType.Projectiles))
+			{
+				cleared += ClearProjectiles(start, radius);
+			}
+			if (type.HasFlag(ClearType.Items))
+			{
+				cleared += ClearItems(start, radius);
+			}
+
+			return cleared;
+		}
+
+		/// <summary>
+		/// Clears a range of objects based on the given <see cref="ClearType"></see>, and returns
+		/// the amount of each object cleared as out parameters
+		/// </summary>
+		/// <param name="type">bitflag</param>
+		/// <param name="start"></param>
+		/// <param name="npcs">number of NPCs (total) cleared</param>
+		/// <param name="projectiles">number of projectiles cleared</param>
+		/// <param name="items">number of items cleared</param>
+		/// <param name="radius"></param>
+		public void Clear(ClearType type, Vector2 start, out int npcs, out int projectiles, out int items, float radius = 50f)
+		{
+			npcs = 0;
+			projectiles = 0;
+			items = 0;
+
+			if (type.HasFlag(ClearType.NPCs))
+			{
+				npcs = ClearNpcs(start, type.HasFlag(ClearType.FriendlyNPCs), radius);
+			}
+			if (type.HasFlag(ClearType.Projectiles))
+			{
+				projectiles = ClearProjectiles(start, radius);
+			}
+			if (type.HasFlag(ClearType.Items))
+			{
+				items = ClearItems(start, radius);
+			}
+		}
+
+		/// <summary>
 		/// Clears items starting at the given Vector coordinate and moving outwards for the given radius
 		/// </summary>
 		/// <param name="start">Start point</param>
 		/// <param name="radius">Clearance radius</param>
 		/// <returns>Number of items cleared</returns>
-		public int ClearItems(Vector2 start, float radius = 50f)
+		internal int ClearItems(Vector2 start, float radius = 50f)
 		{
 			int cleared = 0;
 			for (int i = 0; i < Main.maxItems; i++)
@@ -77,7 +159,7 @@ namespace Orion.Utilities
 		/// <param name="clearFriendly">Clear friendly NPCs</param>
 		/// <param name="radius">Clearance radius</param>
 		/// <returns>Number of NPCs cleared</returns>
-		public int ClearNpcs(Vector2 start, bool clearFriendly = false, float radius = 50f)
+		internal int ClearNpcs(Vector2 start, bool clearFriendly = false, float radius = 50f)
 		{
 			int cleared = 0;
 			for (int i = 0; i < Main.maxNPCs; i++)
@@ -107,7 +189,7 @@ namespace Orion.Utilities
 		/// <param name="start">Start point</param>
 		/// <param name="radius">Clearance radius</param>
 		/// <returns>Number of projectiles cleared</returns>
-		public int ClearProjectiles(Vector2 start, float radius = 50f)
+		internal int ClearProjectiles(Vector2 start, float radius = 50f)
 		{
 			int cleared = 0;
 			for (int i = 0; i < Main.maxProjectiles; i++)
