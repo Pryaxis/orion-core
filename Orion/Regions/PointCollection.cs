@@ -39,11 +39,43 @@ namespace Orion.Regions
 			_points = new List<Point>();
 		}
 
+		public PointCollection(string points)
+		{
+			_points = new List<Point>();
+
+            foreach (string point in points.Split(','))
+			{
+				string[] xy = point.Split('.');
+
+				if (xy.Length != 2)
+				{
+					continue;
+				}
+
+				int x, y;
+				if (!Int32.TryParse(xy[0], out x) || !Int32.TryParse(xy[1], out y))
+				{
+					continue;
+				}
+
+				AddPoint(x, y);
+			}
+		}
+
+		/// <summary>
+		/// Adds a point to the collection
+		/// </summary>
+		/// <param name="x"></param>
+		/// <param name="y"></param>
 		public void AddPoint(int x, int y)
 		{
 			AddPoint(new Point(x, y));
 		}
 
+		/// <summary>
+		/// Adds a point to the collection
+		/// </summary>
+		/// <param name="point"></param>
 		public void AddPoint(Point point)
 		{
 			_points.Add(point);
@@ -68,6 +100,11 @@ namespace Orion.Regions
 			}
 		}
 
+		/// <summary>
+		/// Determines if the given point is in this collection's area
+		/// </summary>
+		/// <param name="p"></param>
+		/// <returns></returns>
 		public bool IsInArea(Point p)
 		{
 			//Return false if the point is blatantly out of range
@@ -116,6 +153,12 @@ namespace Orion.Regions
 			return wn != 0;
 		}
 
+		/// <summary>
+		/// Determines if the given (x, y) point is in this collection's area
+		/// </summary>
+		/// <param name="x"></param>
+		/// <param name="y"></param>
+		/// <returns></returns>
 		public bool IsInArea(int x, int y)
 		{
 			return IsInArea(new Point(x, y));

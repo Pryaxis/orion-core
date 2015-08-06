@@ -5,7 +5,7 @@ using Orion.Regions;
 namespace Unit_Tests
 {
 	[TestClass]
-	public class WindingPointTest
+	public class WindingNumberTest
 	{
 		PointCollection pc;
 

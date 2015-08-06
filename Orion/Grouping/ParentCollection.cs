@@ -1,71 +1,27 @@
 ﻿using Orion.Permissions;
-using System;
-using System.Collections;
+using Orion.Utilities;
 using System.Collections.Generic;
 
 namespace Orion.Grouping
 {
-	public class ParentCollection : ICollection
+	public class ParentCollection : IntCollection
 	{
-		private List<int> _parents;
-
-		public int Count
-		{
-			get
-			{
-				return ((ICollection)_parents).Count;
-			}
-		}
-
-		public bool IsSynchronized
-		{
-			get
-			{
-				return ((ICollection)_parents).IsSynchronized;
-			}
-		}
-
-		public object SyncRoot
-		{
-			get
-			{
-				return ((ICollection)_parents).SyncRoot;
-			}
-		}
-
 		public ParentCollection()
+			:base()
 		{
-			_parents = new List<int>();
+
 		}
 
 		public ParentCollection(string parents)
+			:base(parents)
 		{
-			_parents = new List<int>();
 
-			foreach (string parent in parents.Split(','))
-			{
-				int ID;
-				if (!Int32.TryParse(parent, out ID))
-				{
-					continue;
-				}
-				_parents.Add(ID);
-			}
 		}
 
 		public ParentCollection(List<int> parents)
+			:base(parents)
 		{
-			_parents = parents;
-		}
 
-		public void Add(int parent)
-		{
-			_parents.Add(parent);
-		}
-
-		public void Remove(int parent)
-		{
-			_parents.Remove(parent);
 		}
 
 		/// <summary>
@@ -75,7 +31,7 @@ namespace Orion.Grouping
 		/// <returns></returns>
 		public bool HasPermission(string permission)
 		{
-			foreach (int id in _parents)
+			foreach (int id in _values)
 			{
 				if (GroupHandler.Groups[id].HasPermission(permission))
 				{
@@ -93,7 +49,7 @@ namespace Orion.Grouping
 		/// <returns></returns>
 		public bool HasPermission(Permission permission)
 		{
-			foreach (int id in _parents)
+			foreach (int id in _values)
 			{
 				if (GroupHandler.Groups[id].HasPermission(permission))
 				{
@@ -102,16 +58,6 @@ namespace Orion.Grouping
 			}
 
 			return false;
-		}
-
-		public void CopyTo(Array array, int index)
-		{
-			((ICollection)_parents).CopyTo(array, index);
-		}
-
-		public IEnumerator GetEnumerator()
-		{
-			return ((ICollection)_parents).GetEnumerator();
 		}
 	}
 }

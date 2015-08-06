@@ -75,6 +75,7 @@
     <Compile Include="Grouping\GroupCollection.cs" />
     <Compile Include="Grouping\GroupHandler.cs" />
     <Compile Include="Grouping\ParentCollection.cs" />
+    <Compile Include="Utilities\IntCollection.cs" />
     <Compile Include="Hashing\Hashing.cs" />
     <Compile Include="Extensions\DbEx.cs" />
     <Compile Include="Extensions\RandomEx.cs" />
