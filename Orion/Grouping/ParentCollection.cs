@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Orion.Permissions;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 
@@ -65,6 +66,42 @@ namespace Orion.Grouping
 		public void Remove(int parent)
 		{
 			_parents.Remove(parent);
+		}
+
+		/// <summary>
+		/// Checks if any of the groups in this collection have the given permission
+		/// </summary>
+		/// <param name="permission"></param>
+		/// <returns></returns>
+		public bool HasPermission(string permission)
+		{
+			foreach (int id in _parents)
+			{
+				if (GroupHandler.Groups[id].HasPermission(permission))
+				{
+					return true;
+				}
+			}
+
+			return false;
+		}
+
+		/// <summary>
+		/// Checks if any of the groups in this collection have the given permission
+		/// </summary>
+		/// <param name="permission"></param>
+		/// <returns></returns>
+		public bool HasPermission(Permission permission)
+		{
+			foreach (int id in _parents)
+			{
+				if (GroupHandler.Groups[id].HasPermission(permission))
+				{
+					return true;
+				}
+			}
+
+			return false;
 		}
 
 		public void CopyTo(Array array, int index)

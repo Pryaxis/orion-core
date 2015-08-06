@@ -54,12 +54,40 @@ namespace Orion.Grouping
 		/// <returns></returns>
 		public bool HasPermission(string permission)
 		{
+			//Negation overrides anything else
 			if (Permissions.Negated(permission))
 			{
 				return false;
 			}
 
-			return Permissions.Contains(permission);
+			//This group's permissions have priority over parents
+			if (Permissions.Contains(permission))
+			{
+				return true;
+			}
+
+			//Check parent permissions
+			return Parents.HasPermission(permission);
+		}
+
+		/// <summary>
+		/// Checks if this group's permissions contains the given permission
+		/// </summary>
+		/// <param name="permission"></param>
+		/// <returns></returns>
+		public bool HasPermission(Permission permission)
+		{
+			if (Permissions.Negated(permission))
+			{
+				return false;
+			}
+			
+			if (Permissions.Contains(permission))
+			{
+				return true;
+			}
+
+			return Parents.HasPermission(permission);
 		}
 		
 		public void LoadFromQuery(QueryResult result)

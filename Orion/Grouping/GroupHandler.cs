@@ -18,7 +18,7 @@ namespace Orion.Grouping
 		/// </summary>
 		public readonly IDbConnection database;
 
-		public Group[] Groups;
+		public static Group[] Groups;
 
 		/// <summary>
 		/// Creates a new GroupHandler instance and ensures that the database structure is correct
