@@ -18,7 +18,7 @@ namespace Orion.Grouping
 		/// </summary>
 		public readonly IDbConnection database;
 
-		public static Group[] Groups;
+		public static GroupCollection Groups;
 
 		/// <summary>
 		/// Creates a new GroupHandler instance and ensures that the database structure is correct
@@ -48,12 +48,7 @@ namespace Orion.Grouping
 			{
 				if (result.Read())
 				{
-					Groups = new Group[result.Get<int>("ID")];
-
-					for (int i = 0; i < Groups.Length; i++)
-					{
-						Groups[i] = new Group();
-					}
+					Groups = new GroupCollection(result.Get<int>("ID"));
 				}
 				else
 				{

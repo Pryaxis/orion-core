@@ -4,6 +4,9 @@ using Orion.Permissions;
 
 namespace Orion.Grouping
 {
+	/// <summary>
+	/// Class that assigns information to a set of <see cref="UserAccount"></see>s
+	/// </summary>
 	public class Group
 	{
 		/// <summary>
