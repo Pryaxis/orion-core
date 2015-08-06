@@ -1,12 +1,24 @@
 ﻿using Orion;
 using System;
+using System.Collections.Generic;
+using System.IO;
 using System.Reflection;
+using Terraria;
 
 namespace TShock5
 {
 	[OrionVersion(1, 0)]
 	public class TShock : OrionPlugin
 	{
+		/// <summary>
+		/// TShock's configuration
+		/// </summary>
+		public ConfigFile Config = new ConfigFile();
+		/// <summary>
+		/// Path to TShock's save folder
+		/// </summary>
+		public string SavePath { get { return Path.Combine(Core.SavePath, "TShock"); } }
+
 		public override string Author
 		{
 			get
@@ -27,7 +39,7 @@ namespace TShock5
 		{
 			get
 			{
-				return 1;
+				return 0;
 			}
 		}
 
@@ -38,18 +50,74 @@ namespace TShock5
 				return Assembly.GetExecutingAssembly().GetName().Version;
 			}
 		}
-		protected TShock(Orion.Orion instance) :
+
+		public TShock(Orion.Orion instance) :
 			base(instance)
 		{
+			//nothing yet
 		}
 
 		public override void Initialize()
 		{
+			try
+			{
+				//Creates the config file
+				Core.ConfigCreator.Create(SavePath, "Config.json", out Config);
+
+				AppDomain.CurrentDomain.UnhandledException += CurrentDomain_UnhandledException;
+			}
+			catch (Exception) //Temp
+			{
+
+			}
+		}
+
+		/// <summary>
+		/// Catches exceptions that we don't handle
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void CurrentDomain_UnhandledException(object sender, UnhandledExceptionEventArgs e)
+		{
+
+			if (e.ExceptionObject.ToString().Contains("Terraria.Netplay.ListenForClients") ||
+				e.ExceptionObject.ToString().Contains("Terraria.Netplay.ServerLoop"))
+			{
+				var sb = new List<string>();
+				for (int i = 0; i < Netplay.Clients.Length; i++)
+				{
+					if (Netplay.Clients[i] == null)
+					{
+						sb.Add("Client[" + i + "]");
+					}
+					else if (Netplay.Clients[i].Socket == null)
+					{
+						sb.Add("Tcp[" + i + "]");
+					}
+				}
+
+				Console.WriteLine(sb);
+				//Orion's logging is broken for now
+				//Log.Error(string.Join(", ", sb));
+			}
+
+			if (e.IsTerminating)
+			{
+				//Save world
+				/*if (Main.worldPathName != null && Config.SaveWorldOnCrash)
+				{
+					Main.worldPathName += ".crash";
+					SaveManager.Instance.SaveWorld();
+				}*/
+			}
 		}
 
 		protected override void Dispose(bool disposing)
 		{
-			Dispose();
+			if (disposing)
+			{
+				AppDomain.CurrentDomain.UnhandledException -= CurrentDomain_UnhandledException;
+			}
 		}
 	}
 }
