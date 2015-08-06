@@ -17,6 +17,7 @@ using Terraria;
 using TerrariaApi.Server;
 using Utils = Orion.Utilities.Utils;
 using Orion.Grouping;
+using Orion.SQL;
 
 namespace Orion
 {
@@ -64,7 +65,7 @@ namespace Orion
 		/// Relative path to the config file
 		/// </summary>
 		public string ConfigPath { get; private set; }
-		
+
 		/// <summary>
 		/// Config file. Use this to get data from the config
 		/// </summary>
@@ -74,6 +75,7 @@ namespace Orion
 		/// Database connection to the Orion database
 		/// </summary>
 		internal IDbConnection Database { get; private set; }
+		public ConfigCreator ConfigCreator = new ConfigCreator();
 		/// <summary>
 		/// User handling object for getting users and setting values
 		/// </summary>
@@ -87,27 +89,44 @@ namespace Orion
 		/// Hash handling object for creating and upgrading hashes
 		/// </summary>
 		public Hasher HashHandler { get; private set; }
-
+		/// <summary>
+		/// Collection of handy utility methods
+		/// </summary>
 		public Utils Utils { get; private set; }
-
+		/// <summary>
+		/// Collection of handy utility methods for Terraria networking
+		/// </summary>
 		public NetUtils NetUtils { get; private set; }
-
+		/// <summary>
+		/// Collection of packet hooks
+		/// </summary>
 		public PacketRepackager Packets { get; private set; }
-
-		public delegate void LoadedEventD();
-		public event LoadedEventD OnInitialized;
-
+		/// <summary>
+		/// Delegate method used with the <see cref="OnInitialized"></see> event
+		/// </summary>
+		public delegate void LoadedEvent();
+		/// <summary>
+		/// Event fired when Orion has been initialized
+		/// </summary>
+		public event LoadedEvent OnInitialized;
 		/// <summary>
 		/// Log manager. Use this to write data to the log
 		/// </summary>
 		public ILog Log { get; private set; }
-
+		/// <summary>
+		/// Assemblies loaded during plugin initialization
+		/// </summary>
 		private readonly Dictionary<string, Assembly> _loadedAssemblies = new Dictionary<string, Assembly>(); 
 		/// <summary>
 		/// Loaded plugins
 		/// </summary>
+		/// This is readonly so that plugins may view other plugins that are loaded, but not modify the list
 		public readonly List<OrionPlugin> loadedPlugins = new List<OrionPlugin>();
 
+		/// <summary>
+		/// Constructor. Inherited from <see cref="TerrariaPlugin"></see>
+		/// </summary>
+		/// <param name="game"></param>
 		public Orion(Main game) : base(game)
 		{
 			Config = new ConfigFile();
@@ -140,19 +159,21 @@ namespace Orion
 				{
 					Directory.CreateDirectory(PluginPath);
 				}
-				Config = Config.Read(ConfigPath);
-				if (!File.Exists(ConfigPath))
-				{
-					Config.Write(ConfigPath);
-				}
 
-				if (Config.StorageType.ToLower() == "sqlite")
+				//Gotta do this because we can't out directly to a get/set property
+				//And it's preferable to keep Config as a get/private set so that people can't
+				//re-assign our config file
+				ConfigFile c;
+				ConfigCreator.Create(ConfigPath, out c);
+				Config = c;
+
+				if (Config.StorageType == SqlType.Sqlite)
 				{
 					//Connect to SQLite database
 					string sql = Path.Combine(SavePath, "orion.sqlite");
 					Database = new SqliteConnection(String.Format("uri=file://{0},Version=3", sql));
 				}
-				else if (Config.StorageType.ToLower() == "mysql")
+				else if (Config.StorageType == SqlType.Mysql)
 				{
 					//Connect to MySQL database
 					try
@@ -214,22 +235,15 @@ namespace Orion
 			}
 		}
 
+		/// <summary>
+		/// Calls the OnInitialized event
+		/// </summary>
 		private void OrionInitialized()
 		{
 			if (OnInitialized != null)
 			{
 				OnInitialized();
 			}
-		}
-
-		/// <summary>
-		/// Fired when the config file has been read.
-		/// </summary>
-		/// <param name="file">The config file object.</param>
-		private void OnConfigRead(ConfigFile file)
-		{
-			LogPath = file.LogPath;
-			PluginPath = file.PluginsPath;
 		}
 
 		/// <summary>

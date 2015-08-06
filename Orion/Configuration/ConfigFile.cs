@@ -1,10 +1,9 @@
-﻿using System.ComponentModel;
-using System.IO;
-using Newtonsoft.Json;
+﻿using Orion.SQL;
+using System.ComponentModel;
 
 namespace Orion.Configuration
 {
-	public class ConfigFile
+	public class ConfigFile : BaseConfig
 	{
 		[Description("Folder path to Orion logs")]
 		public string LogPath = "orion/logs";
@@ -12,7 +11,7 @@ namespace Orion.Configuration
 		public string PluginsPath = "orion/plugins";
 
 		[Description("Valid types are \"sqlite\" and \"mysql\"")]
-		public string StorageType = "sqlite";
+		public SqlType StorageType = SqlType.Sqlite;
 		[Description("The MySQL hostname and port to direct connections to")]
 		public string MySqlHost = "localhost:3306";
 		[Description("Database name to connect to")]
@@ -35,15 +34,5 @@ namespace Orion.Configuration
 
 		[Description("Valid types are \"sha512\", \"sha256\", \"md5\", append with \"-xp\" for the xp supported algorithms.")]
 		public string HashAlgorithm = "sha512";
-
-		public void Write(string path)
-		{
-			File.WriteAllText(path, JsonConvert.SerializeObject(this, Formatting.Indented));
-		}
-
-		public ConfigFile Read(string path)
-		{
-			return File.Exists(path) ? JsonConvert.DeserializeObject<ConfigFile>(File.ReadAllText(path)) : new ConfigFile();
-		}
 	}
 }
