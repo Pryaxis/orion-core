@@ -21,7 +21,7 @@ using Orion.SQL;
 
 namespace Orion
 {
-	[ApiVersion(1, 20)]
+	[ApiVersion(1, 21)]
 	public class Orion : TerrariaPlugin
 	{
 		/// <summary>
