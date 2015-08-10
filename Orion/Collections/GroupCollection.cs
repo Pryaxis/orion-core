@@ -1,6 +1,9 @@
 ﻿using System;
 using System.Collections;
-namespace Orion.Grouping
+
+using Orion.Grouping;
+
+namespace Orion.Collections
 {
 	public class GroupCollection : ICollection
 	{

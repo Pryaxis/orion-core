@@ -8,6 +8,7 @@ using Orion.Extensions;
 using Orion.SQL;
 using Orion.Utilities;
 using Orion.Grouping;
+using Orion.Permissions;
 
 namespace Orion.UserAccounts
 {
@@ -63,6 +64,29 @@ namespace Orion.UserAccounts
 			}
 
 			return true;
+		}
+
+		public bool HasPermission(UserAccount account, string permission)
+		{
+			//Negateds have highest priority
+			if (account.Permissions.Negated(permission))
+			{
+				return false;
+			}
+
+			//Then user permissions
+			if (account.Permissions.Contains(permission))
+			{
+				return true;
+			}
+
+			//Then group permissions
+			return _core.Groups.HasPermission(account.Group, permission);
+		}
+
+		public bool HasPermission(UserAccount account, Permission permission)
+		{
+			return HasPermission(account, permission.ToString());
 		}
 
 		/// <summary>

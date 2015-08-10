@@ -1,6 +1,6 @@
 ﻿using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Orion.Regions;
+using Orion.Collections;
 
 namespace Unit_Tests
 {
@@ -23,6 +23,9 @@ namespace Unit_Tests
 			pc.AddPoint(20, 10);
 			pc.AddPoint(15, 5);
 			pc.AddPoint(20, 0);
+
+			//Points can safely be placed in clockwise or anticlockwise order
+			pc.ReverseTest();
 
 			Console.WriteLine(pc.IsInArea(5, 5));
 			Console.WriteLine(pc.IsInArea(10, 10));

@@ -3,7 +3,9 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Orion.Permissions
+using Orion.Permissions;
+
+namespace Orion.Collections
 {
 	/// <summary>
 	/// A collection of <see cref="Permission"></see>s

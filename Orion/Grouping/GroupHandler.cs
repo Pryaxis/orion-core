@@ -4,6 +4,8 @@ using Orion.Exceptions;
 using Orion.Extensions;
 using Orion.SQL;
 using Orion.UserAccounts;
+using Orion.Collections;
+using Orion.Permissions;
 
 namespace Orion.Grouping
 {
@@ -18,7 +20,7 @@ namespace Orion.Grouping
 		/// </summary>
 		public readonly IDbConnection database;
 
-		public static GroupCollection Groups;
+		public GroupCollection Groups;
 
 		/// <summary>
 		/// Creates a new GroupHandler instance and ensures that the database structure is correct
@@ -64,6 +66,43 @@ namespace Orion.Grouping
 					Groups[ID].LoadFromQuery(result);
 				}
 			}
+		}
+
+		public bool HasPermission(Group group, string permission)
+		{
+			//Negated override contains
+			if (group.Permissions.Negated(permission))
+			{
+				return false;
+			}
+
+			//Contains overrides parents
+			if (group.Permissions.Contains(permission))
+			{
+				return true;
+			}
+
+			bool contains = false;
+			foreach (int id in group.Parents)
+			{
+				//Any parent negate overrides any parent contains
+				//So all parents MUST be checked for negated before a true can be returned
+				if (Groups[id].Permissions.Negated(permission))
+				{
+					return false;
+				}
+				if (Groups[id].Permissions.Contains(permission))
+				{
+					contains = true;
+				}
+			}
+
+			return contains;
+		}
+
+		public bool HasPermission(Group group, Permission permission)
+		{
+			return HasPermission(group, permission.ToString());
 		}
 
 		/// <summary>

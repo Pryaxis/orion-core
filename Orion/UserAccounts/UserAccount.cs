@@ -2,6 +2,7 @@
 using Orion.Grouping;
 using Orion.Extensions;
 using Orion.Permissions;
+using Orion.Collections;
 
 namespace Orion.UserAccounts
 {
@@ -83,30 +84,6 @@ namespace Orion.UserAccounts
 			Registered = "";
 			LastAccessed = "";
 			KnownIps = "";
-		}
-
-		/// <summary>
-		/// Checks if this user's permissions contains the given permission.
-		/// </summary>
-		/// <param name="permission"></param>
-		/// <returns></returns>
-		public bool HasPermission(string permission)
-		{
-			//User negation overrides all
-			if (Permissions.Negated(permission))
-			{
-				return false;
-			}
-			//User permission overrides group negation
-			if (Permissions.Contains(permission))
-			{
-				return true;
-			}
-			if (!Group.HasPermission(permission))
-			{
-				return false;
-			}
-			return true;
 		}
 
 		/// <summary>

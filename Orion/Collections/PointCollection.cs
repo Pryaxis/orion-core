@@ -2,7 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 
-namespace Orion.Regions
+namespace Orion.Collections
 {
 	public class PointCollection : ICollection
 	{
@@ -62,6 +62,12 @@ namespace Orion.Regions
 			}
 		}
 
+		[Temporary("This is for unit testing and can be removed safely")]
+		public void ReverseTest()
+		{
+			_points.Reverse();
+		}
+
 		/// <summary>
 		/// Adds a point to the collection
 		/// </summary>
@@ -113,6 +119,18 @@ namespace Orion.Regions
 				return false;
 			}
 
+			//2 points mean the region is a line or a rectangle.
+			//These only need a simple bounds check
+			if (Count == 2)
+			{
+				//Test if point is inside the bounds of the rectangle
+				if (p.X >= _points[0].X && p.Y >= _points[0].Y
+					&& p.X <= _points[1].X && p.Y <= _points[1].Y)
+				{
+					return true;
+				}
+			}
+
 			//This block does a winding number calculation. 
 			//If wn comes out as 0, the point is outside the polygon
 			int wn = 0;
@@ -120,7 +138,7 @@ namespace Orion.Regions
 			{
 				Point p1 = _points[i];
 
-				//if our point is equal to one of the points in the polygon, it can be considered 'inside'
+				//if our point is equal to one of the points defining the polygon, it can be considered 'inside'
 				if (p1.Equals(p))
 				{
 					return true;

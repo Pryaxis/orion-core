@@ -42,7 +42,7 @@
 
 		public override string ToString()
 		{
-			return (Negate ? "!" : "") + Name;
+			return $"{(Negate ? "!" : "")}{Name}";
 		}
 	}
 }

@@ -72,10 +72,10 @@
     <Compile Include="Exceptions\GroupExceptions.cs" />
     <Compile Include="Exceptions\UserExceptions.cs" />
     <Compile Include="Grouping\Group.cs" />
-    <Compile Include="Grouping\GroupCollection.cs" />
+    <Compile Include="Collections\GroupCollection.cs" />
     <Compile Include="Grouping\GroupHandler.cs" />
-    <Compile Include="Grouping\ParentCollection.cs" />
-    <Compile Include="Utilities\IntCollection.cs" />
+    <Compile Include="Collections\ParentCollection.cs" />
+    <Compile Include="Collections\IntCollection.cs" />
     <Compile Include="Hashing\Hashing.cs" />
     <Compile Include="Extensions\DbEx.cs" />
     <Compile Include="Extensions\RandomEx.cs" />
@@ -102,9 +102,9 @@
     <Compile Include="OrionPlugin.cs" />
     <Compile Include="OrionVersionAttribute.cs" />
     <Compile Include="Permissions\Permission.cs" />
-    <Compile Include="Permissions\PermissionCollection.cs" />
+    <Compile Include="Collections\PermissionCollection.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Regions\PointCollection.cs" />
+    <Compile Include="Collections\PointCollection.cs" />
     <Compile Include="Regions\Region.cs" />
     <Compile Include="SQL\IQueryBuilder.cs" />
     <Compile Include="SQL\QueryCreators.cs" />

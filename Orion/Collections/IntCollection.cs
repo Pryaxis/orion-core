@@ -2,7 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 
-namespace Orion.Utilities
+namespace Orion.Collections
 {
 	public class IntCollection : ICollection
 	{
