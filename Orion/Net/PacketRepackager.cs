@@ -39,6 +39,10 @@ namespace Orion.Net
 		/// Fired when a ContinueConnecting2 packet is received
 		/// </summary>
 		public event PacketEvent<ContinueConnecting2> OnReceivedContinueConnecting2;
+		/// <summary>
+		/// Fired when a TileGetSection packet is received
+		/// </summary>
+		public event PacketEvent<TileGetSection> OnReceivedTileGetSection;
 
 		#endregion
 
@@ -79,7 +83,8 @@ namespace Orion.Net
 				{PacketTypes.ConnectRequest, br => new ConnectRequest(br)},
 				{PacketTypes.PlayerInfo, br => new PlayerInfo(br)},
 				{PacketTypes.PlayerSlot, br => new InventorySlot(br)},
-                {PacketTypes.ContinueConnecting2, br => new ContinueConnecting2(br)}
+				{PacketTypes.ContinueConnecting2, br => new ContinueConnecting2(br)},
+				{PacketTypes.TileGetSection, br => new TileGetSection(br)}
 			};
 		}
 
@@ -190,6 +195,14 @@ namespace Orion.Net
 					{
 						packet = DeserializerMap[e.MsgID](e.Msg.reader);
 						OnReceivedContinueConnecting2((ContinueConnecting2)packet);
+					}
+					break;
+
+				case PacketTypes.TileGetSection:
+					if (OnReceivedTileGetSection != null)
+					{
+						packet = DeserializerMap[PacketTypes.TileGetSection](e.Msg.reader);
+						OnReceivedTileGetSection((TileGetSection)packet);
 					}
 					break;
 			}
