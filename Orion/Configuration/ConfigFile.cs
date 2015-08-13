@@ -34,5 +34,22 @@ namespace Orion.Configuration
 
 		[Description("Valid types are \"sha512\", \"sha256\", \"md5\", append with \"-xp\" for the xp supported algorithms.")]
 		public string HashAlgorithm = "sha512";
+
+		public override void OnRead(BaseConfig baseCfg)
+		{
+			ConfigFile config = (ConfigFile)baseCfg;
+			LogPath = config.LogPath;
+			PluginsPath = config.PluginsPath;
+			StorageType = config.StorageType;
+			MySqlHost = config.MySqlHost;
+			MySqlDbName = config.MySqlDbName;
+			MySqlUsername = config.MySqlUsername;
+			MySqlPassword = config.MySqlPassword;
+			UseSqlLogging = config.UseSqlLogging;
+			MaxSqlLogFailureCount = config.MaxSqlLogFailureCount;
+			MaxUserCacheSize = config.MaxUserCacheSize;
+			BCryptWorkFactor = config.BCryptWorkFactor;
+			HashAlgorithm = config.HashAlgorithm;
+		}
 	}
 }

@@ -62,7 +62,7 @@ namespace TShock5
 			try
 			{
 				//Creates the config file
-				Core.ConfigCreator.Create(SavePath, "Config.json", out Config);
+				Core.ConfigCreator.Create("TShock.json", out Config);
 
 				AppDomain.CurrentDomain.UnhandledException += CurrentDomain_UnhandledException;
 			}

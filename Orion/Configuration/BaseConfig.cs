@@ -1,12 +1,13 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Orion.Configuration
 {
-	public class BaseConfig
+	public abstract class BaseConfig
 	{
+		/// <summary>
+		/// Called whenever the config file is read
+		/// </summary>
+		/// <param name="baseCfg"></param>
+		public abstract void OnRead(BaseConfig baseCfg);
 	}
 }

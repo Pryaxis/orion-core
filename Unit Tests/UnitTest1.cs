@@ -1,6 +1,7 @@
 ﻿using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Orion.Collections;
+using System.IO;
 
 namespace Unit_Tests
 {
@@ -10,7 +11,7 @@ namespace Unit_Tests
 		PointCollection pc;
 
 		[TestMethod]
-		public void TestMethod1()
+		public void PointTest()
 		{
 			pc = new PointCollection();
 			pc.AddPoint(0, 0);
@@ -39,6 +40,27 @@ namespace Unit_Tests
 			//true            true
 			//false           false
 			//true            true
+		}
+
+		[TestMethod]
+		public void FileValidtyTest()
+		{
+			string path = @"www.this/is//a\path:to^Nowh*&^//\filename.exe";
+			
+			int index =
+				Math.Max(path.LastIndexOfAny(Path.GetInvalidFileNameChars()), path.LastIndexOfAny(Path.GetInvalidPathChars()));
+			
+			if (index != -1)
+			{
+				path = path.Substring(index + 1, path.Length - (index + 1));
+			}
+
+			path = Path.ChangeExtension(path, ".json");
+
+			Console.WriteLine(path);
+
+			//Expected   |    Received  
+			//filename.json   filename.json
 		}
 	}
 }

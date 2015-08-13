@@ -25,7 +25,7 @@ namespace Orion
 	public class Orion : TerrariaPlugin
 	{
 		/// <summary>
-		/// Plugin author(s)
+		/// Nyx Studios
 		/// </summary>
 		public override string Author
 		{
@@ -33,7 +33,7 @@ namespace Orion
 		}
 
 		/// <summary>
-		/// Plugin name
+		/// Orion
 		/// </summary>
 		public override string Name
 		{
@@ -75,7 +75,7 @@ namespace Orion
 		/// Database connection to the Orion database
 		/// </summary>
 		internal IDbConnection Database { get; private set; }
-		public ConfigCreator ConfigCreator = new ConfigCreator();
+		public ConfigCreator ConfigCreator { get; private set; }
 		/// <summary>
 		/// User handling object for getting users and setting values
 		/// </summary>
@@ -132,7 +132,7 @@ namespace Orion
 			Config = new ConfigFile();
 			Order = 0;
 			SavePath = "Orion";
-			ConfigPath = Path.Combine(SavePath, "Orion.json");
+			ConfigPath = Path.Combine(SavePath, "configs");
 			LogPath = Path.Combine(SavePath, "logs");
 			PluginPath = Path.Combine(SavePath, "plugins");
 		}
@@ -160,11 +160,13 @@ namespace Orion
 					Directory.CreateDirectory(PluginPath);
 				}
 
+				ConfigCreator = new ConfigCreator(this);
+
 				//Gotta do this because we can't out directly to a get/set property
 				//And it's preferable to keep Config as a get/private set so that people can't
 				//re-assign our config file
 				ConfigFile c;
-				ConfigCreator.Create(ConfigPath, out c);
+				ConfigCreator.Create("Orion", out c);
 				Config = c;
 
 				if (Config.StorageType == SqlType.Sqlite)
