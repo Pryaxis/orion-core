@@ -35,6 +35,13 @@ namespace Orion.Configuration
 			Read(Path.Combine(_core.ConfigPath, name), out config);
 		}
 
+		public T Create<T>(string name) where T : BaseConfig
+		{
+			T config;
+			Create(name, out config);
+			return config;
+		}
+
 		/// <summary>
 		/// Write a config file to disk.
 		/// </summary>

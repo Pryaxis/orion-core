@@ -13,7 +13,7 @@ namespace TShock5
 		/// <summary>
 		/// TShock's configuration
 		/// </summary>
-		public ConfigFile Config = new ConfigFile();
+		public ConfigFile Config { get; private set; }
 		/// <summary>
 		/// Path to TShock's save folder
 		/// </summary>
@@ -62,7 +62,7 @@ namespace TShock5
 			try
 			{
 				//Creates the config file
-				Core.ConfigCreator.Create("TShock.json", out Config);
+				Config = Core.ConfigCreator.Create<ConfigFile>("TShock");
 
 				AppDomain.CurrentDomain.UnhandledException += CurrentDomain_UnhandledException;
 			}

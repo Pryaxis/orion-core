@@ -1,23 +1,26 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Data;
-using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using System.Data;
 using System.Reflection;
+using System.Diagnostics;
+using System.Collections.Generic;
+
 using Mono.Data.Sqlite;
 using MySql.Data.MySqlClient;
+
+using Orion.SQL;
+using Orion.Net;
 using Orion.Bans;
-using Orion.Configuration;
 using Orion.Hashing;
 using Orion.Logging;
-using Orion.Net;
+using Orion.Grouping;
 using Orion.UserAccounts;
+using Orion.Configuration;
+using Utils = Orion.Utilities.Utils;
+
 using Terraria;
 using TerrariaApi.Server;
-using Utils = Orion.Utilities.Utils;
-using Orion.Grouping;
-using Orion.SQL;
 
 namespace Orion
 {
@@ -47,6 +50,7 @@ namespace Orion
 		{
 			get { return Assembly.GetExecutingAssembly().GetName().Version; }
 		}
+
 
 
 		/// <summary>
@@ -129,7 +133,6 @@ namespace Orion
 		/// <param name="game"></param>
 		public Orion(Main game) : base(game)
 		{
-			Config = new ConfigFile();
 			Order = 0;
 			SavePath = "Orion";
 			ConfigPath = Path.Combine(SavePath, "configs");
@@ -161,13 +164,8 @@ namespace Orion
 				}
 
 				ConfigCreator = new ConfigCreator(this);
-
-				//Gotta do this because we can't out directly to a get/set property
-				//And it's preferable to keep Config as a get/private set so that people can't
-				//re-assign our config file
-				ConfigFile c;
-				ConfigCreator.Create("Orion", out c);
-				Config = c;
+				//Initialize config file. This will write it if it doesn't exist, or read it if it does.
+				Config = ConfigCreator.Create<ConfigFile>("Orion");
 
 				if (Config.StorageType == SqlType.Sqlite)
 				{
