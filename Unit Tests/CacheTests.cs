@@ -4,27 +4,17 @@ using System.Diagnostics;
 using System.Linq;
 using System.Threading;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Orion.Utilities;
 using Orion.Extensions;
-using Orion.Users;
+using Orion.Grouping;
+using Orion.UserAccounts;
+using Orion.Utilities;
 
-namespace UnitTests
+namespace Unit_Tests
 {
-	[TestClass]
-	public class Class
-	{
-		public string name;
-
-		public override string ToString()
-		{
-			return name;
-		}
-	}
-
 	[TestClass]
 	public class CacheTests
 	{
-		public OrderedCache<User> classCache;
+		public OrderedCache<UserAccount> classCache;
 		public Random r = new Random();
 		public Stopwatch total = new Stopwatch();
 
@@ -34,20 +24,20 @@ namespace UnitTests
 			total.Start();
 			for (var j = 0; j < 10; j++)
 			{
-				classCache = new OrderedCache<User>(100000)
+				classCache = new OrderedCache<UserAccount>(100000)
 				{
 					FlushInterval = 10000,
 					ClearCount = 1
 				};
 				classCache.FlushEvent += FlushCallback;
 
-				List<User> classes = new List<User>(100000);
+				List<UserAccount> classes = new List<UserAccount>(100000);
 				for (int i = 0; i < 100000; i++)
 				{
-					User u = new User
-					{
+                    UserAccount u = new UserAccount
+                    {
 						Name = r.NextString(10),
-						Group = r.NextString(5),
+						Group = new Group(r.NextString(5)),
 						ID = i
 					};
 					classes.Add(u);
@@ -55,9 +45,9 @@ namespace UnitTests
 
 				classCache.PushMany(classes);
 				classCache.Pop();
-				classCache.Push(new User {Name = "name", Group = "group", ID = 100000});
+				classCache.Push(new UserAccount { Name = "name", Group = new Group("group"), ID = 100000});
 				var obj2 = classCache[0];
-				classCache.Push(new User {Name = "name2", Group = "group2", ID = 100001});
+				classCache.Push(new UserAccount { Name = "name2", Group = new Group("group2"), ID = 100001});
 				var obj3 = classCache[0];
 				var users = classCache.Where(u => u.Name.Length > 1).Select(u => u.Name);
 				classCache.Pop();
@@ -70,21 +60,21 @@ namespace UnitTests
 		[TestMethod]
 		public void TestMethod2()
 		{
-			classCache = new OrderedCache<User>(10)
+			classCache = new OrderedCache<UserAccount>(10)
 			{
 				FlushInterval = 5000,
 				ClearCount = 1
 			};
 			classCache.FlushEvent += FlushCallback;
 
-			List<User> classes = new List<User>(10);
+			List<UserAccount> classes = new List<UserAccount>(10);
 
 			for (int i = 0; i < 10; i++)
 			{
-				User u = new User
-				{
+                UserAccount u = new UserAccount
+                {
 					Name = r.NextString(10),
-					Group = r.NextString(7),
+					Group = new Group(r.NextString(7)),
 					ID = i
 				};
 				classes.Add(u);
@@ -93,11 +83,11 @@ namespace UnitTests
 			classCache.PushMany(classes);
 
 			classCache.Sort();
-			classCache.Push(new User { Name = "name" });
+			classCache.Push(new UserAccount { Name = "name" });
 			var user = classCache[0];
-			classCache.Push(new User { Name = "name2" });
+			classCache.Push(new UserAccount { Name = "name2" });
 			user = classCache[0];
-			classCache.Push(new User { Name = "name3" });
+			classCache.Push(new UserAccount { Name = "name3" });
 			user = classCache[0];
 			var newuser = classCache.FirstOrDefault(u => u == user);
 			var user2 = classCache.Pop();
@@ -107,7 +97,7 @@ namespace UnitTests
 			Thread.Sleep(7000);
 		}
 
-		private bool FlushCallback(IEnumerable<User> enumerable)
+		private bool FlushCallback(IEnumerable<UserAccount> enumerable)
 		{
 			return true;
 		}

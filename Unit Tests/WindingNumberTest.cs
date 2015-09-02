@@ -28,11 +28,11 @@ namespace Unit_Tests
 			//Points can safely be placed in clockwise or anticlockwise order
 			pc.ReverseTest();
 
-			Console.WriteLine(pc.IsInArea(5, 5));
-			Console.WriteLine(pc.IsInArea(10, 10));
-			Console.WriteLine(pc.IsInArea(25, 25));
-			Console.WriteLine(pc.IsInArea(15, 16));
-			Console.WriteLine(pc.IsInArea(20, 0));
+			Assert.AreEqual(true, pc.IsInArea(5, 5));
+            Assert.AreEqual(true, pc.IsInArea(10, 10));
+            Assert.AreEqual(true, pc.IsInArea(25, 25));
+            Assert.AreEqual(false, pc.IsInArea(15, 16));
+            Assert.AreEqual(true, pc.IsInArea(20, 0));
 
 			//Expected   |    Received
 			//true            true
@@ -43,7 +43,7 @@ namespace Unit_Tests
 		}
 
 		[TestMethod]
-		public void FileValidtyTest()
+		public void FileValidityTest()
 		{
 			string path = @"www.this/is//a\path:to^Nowh*&^//\filename.exe";
 			
@@ -57,10 +57,16 @@ namespace Unit_Tests
 
 			path = Path.ChangeExtension(path, ".json");
 
-			Console.WriteLine(path);
+			Assert.AreEqual("filename.json", path);
 
 			//Expected   |    Received  
 			//filename.json   filename.json
 		}
+
+	    [TestMethod]
+	    public void Thing()
+	    {
+	        Console.WriteLine(default(Color));
+	    }
 	}
 }

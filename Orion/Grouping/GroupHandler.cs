@@ -63,7 +63,7 @@ namespace Orion.Grouping
 				while (result.Read())
 				{
 					int ID = result.Get<int>("ID");
-					Groups[ID].LoadFromQuery(result);
+					Groups[ID] = Group.LoadFromQuery(result);
 				}
 			}
 		}
@@ -221,9 +221,7 @@ namespace Orion.Grouping
 			{
 				if (result.Read())
 				{
-					Group g = new Group();
-					g.LoadFromQuery(result);
-					return g;
+					return Group.LoadFromQuery(result);
 				}
 			}
 
@@ -242,9 +240,7 @@ namespace Orion.Grouping
 			{
 				if (result.Read())
 				{
-					Group g = new Group();
-					g.LoadFromQuery(result);
-					return g;
+				    Group.LoadFromQuery(result);
 				}
 			}
 
