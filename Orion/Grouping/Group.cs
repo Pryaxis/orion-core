@@ -87,7 +87,7 @@ namespace Orion.Grouping
 			Color chatColor = result.Get<string>("ChatColor").ToColor();
 			string prefix = result.Get<string>("Prefix");
 			string suffix = result.Get<string>("Suffix");
-		    return new Group(name, permissions, parents, chatColor, prefix, suffix);
+		    return new Group(name, permissions, parents, chatColor, prefix, suffix, id);
 		}
 	}
 }

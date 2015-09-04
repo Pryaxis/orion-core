@@ -18,9 +18,9 @@ namespace Orion.Commands
             ExpectedTypes = commMethod.GetParameters().Select(x => x.ParameterType).ToList();
         }
 
-        public void Call(List<ArgumentObject> args)
+        public void Call(List<object> args)
         {
-            CommandMethod.Invoke(null, args.Select(x => x.Value).ToArray());
+            CommandMethod.Invoke(null, args.ToArray());
         }
     }
 }

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 
 namespace Orion.Commands
@@ -9,22 +10,22 @@ namespace Orion.Commands
     {
         private Dictionary<Type, Func<string, object>> Converters = new Dictionary<Type, Func<string, object>>()
     {
-        {typeof(string), (string x) => {return x;}},
-        {typeof(int), (string x) => {return int.Parse(x);}},
-        {typeof(float), (string x) => {return float.Parse(x);}},
-        {typeof(decimal), (string x) => {return decimal.Parse(x);}},
-        {typeof(long), (string x) => {return long.Parse(x);}},
-        {typeof(short), (string x) => {return short.Parse(x);}},
-        {typeof(DateTime), (string x) => {return DateTime.Parse(x);}},
-        {typeof(TimeSpan), (string x) => {return TimeSpan.Parse(x);}}
+        {typeof(string), x => x},
+        {typeof(int), x => int.Parse(x)},
+        {typeof(float), x => float.Parse(x)},
+        {typeof(decimal), x => decimal.Parse(x)},
+        {typeof(long), x => long.Parse(x)},
+        {typeof(short), x => short.Parse(x)},
+        {typeof(DateTime), x => DateTime.Parse(x)},
+        {typeof(TimeSpan), x => TimeSpan.Parse(x)}
     };
 
-        public string GetCommandName(string commandString)
+        public static string GetCommandNameFromCommandString(string commandString)
         {
             return commandString.Split(' ').First().Replace("/", "");
         }
 
-        public List<ArgumentObject> ParseCommand(string command, List<Type> expectedTypes)
+        public List<object> ParseCommand(string command, List<Type> expectedTypes)
         {
             var args = SplitCommandStringIntoArguments(command);
 
@@ -33,17 +34,17 @@ namespace Orion.Commands
                 throw new ArgumentException();
             }
 
-            var returnList = new List<ArgumentObject>();
-            var zipped = args.Zip(expectedTypes, (x, y) => { return new { Value = x, Type = y }; });
+            var returnList = new List<object>();
+            var zipped = args.Zip(expectedTypes, (x, y) => new { Value = x, Type = y });
             foreach (var item in zipped)
             {
-                Func<string, object> converter = null;
+                Func<string, object> converter;
                 if (Converters.TryGetValue(item.Type, out converter))
                 {
                     try
                     {
                         var instance = converter(item.Value);
-                        returnList.Add(new ArgumentObject(instance, item.Type));
+                        returnList.Add(instance);
                     }
                     catch (Exception ex)
                     {
@@ -55,7 +56,7 @@ namespace Orion.Commands
                     try
                     {
                         var instance = CreateInstanceOfUsingImport(item.Value, item.Type);
-                        returnList.Add(new ArgumentObject(instance, item.Type));
+                        returnList.Add(instance);
                     }
                     catch (Exception ex)
                     {
@@ -69,9 +70,16 @@ namespace Orion.Commands
 
         private object CreateInstanceOfUsingImport(string value, Type type)
         {
-            var instance = (type.GetConstructor(Type.EmptyTypes).Invoke(null)) as IImportable;
-            instance.Import(value);
-            return instance;
+            var constructorInfo = type.GetConstructor(Type.EmptyTypes);
+            if (constructorInfo != null)
+            {
+                var instance = (constructorInfo.Invoke(null)) as IImportable;
+                if (instance == null)
+                    return null;
+                instance.Import(value);
+                return instance;
+            }
+            return null;
         }
 
         private List<string> SplitCommandStringIntoArguments(string command)

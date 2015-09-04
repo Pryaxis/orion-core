@@ -11,7 +11,7 @@ namespace Orion.Commands
 
         public void ParseAndCallCommand(string commandString)
         {
-            var name = Parser.GetCommandName(commandString);
+            var name = CommandParser.GetCommandNameFromCommandString(commandString);
             var command = Commands.Single(x => x.CommandName == name);
             var argList = Parser.ParseCommand(commandString, command.ExpectedTypes);
             try

@@ -200,17 +200,6 @@ namespace Orion
 				{
 					throw new Exception(Strings.InvalidDbTypeException);
 				}
-				
-				//Commented until I figure out why it breaks
-				/*if (Config.UseSqlLogging)
-				{
-					Log = new SqlLog(this, Path.Combine(LogPath, "log.log"), false);
-				}
-				else
-				{
-                    Log = new Log(Path.Combine(SavePath, "log4net.config"));
-					Console.WriteLine("Log is not null");
-				}*/
 
 				Users = new UserAccountHandler(this);
 				Groups = new GroupHandler(this);
