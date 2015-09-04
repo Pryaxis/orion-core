@@ -64,6 +64,11 @@
     <Compile Include="Bans\Ban.cs" />
     <Compile Include="Bans\BanHandler.cs" />
     <Compile Include="ChatInfo.cs" />
+    <Compile Include="Commands\ArgumentObject.cs" />
+    <Compile Include="Commands\Command.cs" />
+    <Compile Include="Commands\CommandManager.cs" />
+    <Compile Include="Commands\CommandParser.cs" />
+    <Compile Include="Commands\IImportable.cs" />
     <Compile Include="Configuration\BaseConfig.cs" />
     <Compile Include="Configuration\ConfigCreator.cs" />
     <Compile Include="Configuration\ConfigFile.cs" />
