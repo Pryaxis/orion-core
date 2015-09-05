@@ -65,6 +65,7 @@
     <Compile Include="Bans\BanHandler.cs" />
     <Compile Include="ChatInfo.cs" />
     <Compile Include="Commands\Command.cs" />
+    <Compile Include="Commands\CommandException.cs" />
     <Compile Include="Commands\CommandManager.cs" />
     <Compile Include="Commands\CommandParser.cs" />
     <Compile Include="Commands\IImportable.cs" />
@@ -126,7 +127,7 @@
     </Compile>
     <Compile Include="TempAttribute.cs" />
     <Compile Include="Buff.cs" />
-    <Compile Include="Player.cs" />
+    <Compile Include="OrionPlayer.cs" />
     <Compile Include="UserAccounts\UserAccount.cs" />
     <Compile Include="UserAccounts\UserAccountHandler.cs" />
     <Compile Include="Utilities\ColoredString.cs" />

@@ -57,6 +57,7 @@
   </Choose>
   <ItemGroup>
     <Compile Include="CacheTests.cs" />
+    <Compile Include="CommandTests.cs" />
     <Compile Include="WindingNumberTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

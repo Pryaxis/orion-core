@@ -6,10 +6,11 @@ namespace Orion.Commands
 {
     public class CommandManager
     {
-        private List<Command> Commands = new List<Command>();
+        public List<Command> Commands { get;} = new List<Command>();
+
         private CommandParser Parser = new CommandParser();
 
-        public void ParseAndCallCommand(string commandString)
+        public void ParseAndCallCommand(OrionPlayer player, string commandString)
         {
             var name = CommandParser.GetCommandNameFromCommandString(commandString);
             var command = Commands.Single(x => x.CommandName == name);
@@ -25,47 +26,47 @@ namespace Orion.Commands
             }
         }
 
-        public void AddCommand(string name, Action commandMethod)
+        public void AddCommand(string name, Action commandMethod, object parent)
         {
-            var comm = new Command(name, commandMethod.Method);
+            var comm = new Command(name, commandMethod.Method, parent);
             Commands.Add(comm);
         }
 
         #region AddCommand Overloads
 
-        public void AddCommand<T>(string name, Action<T> commandMethod)
+        public void AddCommand<T>(string name, Action<T> commandMethod, object parent) where T : OrionPlayer
         {
-            var comm = new Command(name, commandMethod.Method);
+            var comm = new Command(name, commandMethod.Method, parent);
             Commands.Add(comm);
         }
 
-        public void AddCommand<T1, T2>(string name, Action<T1, T2> commandMethod)
+        public void AddCommand<T1, T2>(string name, Action<T1, T2> commandMethod, object parent) where T1 : OrionPlayer
         {
-            var comm = new Command(name, commandMethod.Method);
+            var comm = new Command(name, commandMethod.Method, parent);
             Commands.Add(comm);
         }
 
-        public void AddCommand<T1, T2, T3>(string name, Action<T1, T2, T3> commandMethod)
+        public void AddCommand<T1, T2, T3>(string name, Action<T1, T2, T3> commandMethod, object parent) where T1 : OrionPlayer
         {
-            var comm = new Command(name, commandMethod.Method);
+            var comm = new Command(name, commandMethod.Method, parent);
             Commands.Add(comm);
         }
 
-        public void AddCommand<T1, T2, T3, T4>(string name, Action<T1, T2, T3, T4> commandMethod)
+        public void AddCommand<T1, T2, T3, T4>(string name, Action<T1, T2, T3, T4> commandMethod, object parent) where T1 : OrionPlayer
         {
-            var comm = new Command(name, commandMethod.Method);
+            var comm = new Command(name, commandMethod.Method, parent);
             Commands.Add(comm);
         }
 
-        public void AddCommand<T1, T2, T3, T4, T5>(string name, Action<T1, T2, T3, T4, T5> commandMethod)
+        public void AddCommand<T1, T2, T3, T4, T5>(string name, Action<T1, T2, T3, T4, T5> commandMethod, object parent) where T1 : OrionPlayer
         {
-            var comm = new Command(name, commandMethod.Method);
+            var comm = new Command(name, commandMethod.Method, parent);
             Commands.Add(comm);
         }
 
-        public void AddCommand<T1, T2, T3, T4, T5, T6>(string name, Action<T1, T2, T3, T4, T5, T6> commandMethod)
+        public void AddCommand<T1, T2, T3, T4, T5, T6>(string name, Action<T1, T2, T3, T4, T5, T6> commandMethod, object parent) where T1 : OrionPlayer
         {
-            var comm = new Command(name, commandMethod.Method);
+            var comm = new Command(name, commandMethod.Method, parent);
             Commands.Add(comm);
         }
 
