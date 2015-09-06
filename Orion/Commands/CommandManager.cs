@@ -8,15 +8,15 @@ namespace Orion.Commands
     {
         public List<Command> Commands { get;} = new List<Command>();
 
-        private CommandParser Parser = new CommandParser();
+        private CommandStringParser _stringParser = new CommandStringParser();
 
         public void ParseAndCallCommand(OrionPlayer player, string commandString)
         {
-            var name = CommandParser.GetCommandNameFromCommandString(commandString);
+            var name = CommandStringParser.GetCommandNameFromCommandString(commandString);
             var command = Commands.Single(x => x.CommandName == name);
             try
             {
-                var argList = Parser.ParseCommandStringIntoArguments(commandString, command.ExpectedTypes);
+                var argList = _stringParser.ParseCommandStringIntoArguments(commandString, command.ExpectedTypes);
                 command.Call(argList);
             }
             catch (ArgumentParsingException ex)

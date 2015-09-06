@@ -68,8 +68,7 @@
     <Compile Include="Commands\Exceptions\ArgumentParsingException.cs" />
     <Compile Include="Commands\Exceptions\CommandException.cs" />
     <Compile Include="Commands\CommandManager.cs" />
-    <Compile Include="Commands\CommandParser.cs" />
-    <Compile Include="Commands\IImportable.cs" />
+    <Compile Include="Commands\CommandStringParser.cs" />
     <Compile Include="Configuration\BaseConfig.cs" />
     <Compile Include="Configuration\ConfigCreator.cs" />
     <Compile Include="Configuration\ConfigFile.cs" />

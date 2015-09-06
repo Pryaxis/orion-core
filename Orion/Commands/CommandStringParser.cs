@@ -6,7 +6,7 @@ using System.Text;
 
 namespace Orion.Commands
 {
-    public class CommandParser
+    public class CommandStringParser
     {
         private Dictionary<Type, Func<string, object>> Converters = new Dictionary<Type, Func<string, object>>()
     {
@@ -19,6 +19,11 @@ namespace Orion.Commands
         {typeof(DateTime), x => DateTime.Parse(x)},
         {typeof(TimeSpan), x => TimeSpan.Parse(x)}
     };
+
+        public void AddConverter<T>(Func<string, object> converter)
+        {
+            Converters.Add(typeof (T), converter);
+        }
 
         public static string GetCommandNameFromCommandString(string commandString)
         {
@@ -53,33 +58,11 @@ namespace Orion.Commands
                 }
                 else
                 {
-                    try
-                    {
-                        var instance = CreateInstanceOfUsingImport(item.Value, item.Type);
-                        returnList.Add(instance);
-                    }
-                    catch (Exception ex)
-                    {
-                        throw new ArgumentParsingException($"String \"{item.Value}\" could not be imported as type \"{item.Type}\".");
-                    }
+                    throw new ArgumentParsingException($"No convertor exists for type {item.Type}. String value: {item.Value}");
                 }
             }
 
             return returnList;
-        }
-
-        private object CreateInstanceOfUsingImport(string value, Type type)
-        {
-            var constructorInfo = type.GetConstructor(Type.EmptyTypes);
-            if (constructorInfo != null)
-            {
-                var instance = (constructorInfo.Invoke(null)) as IImportable;
-                if (instance == null)
-                    return null;
-                instance.Import(value);
-                return instance;
-            }
-            return null;
         }
 
         private List<string> SplitCommandStringIntoArguments(string command)

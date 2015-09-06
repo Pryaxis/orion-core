@@ -275,17 +275,10 @@ namespace Orion.Utilities
 
 			foreach (ColoredString str in strings)
 			{
-				if (str.Color == null)
-				{
-					sb.Append(str.String);
-				}
-				else
-				{
-					sb.Append(str.ToString());
-				}
+			    sb.Append(str);
 			}
 
-			return sb.ToString();
+		    return sb.ToString();
 		}
 
 		/// <summary>
@@ -299,17 +292,10 @@ namespace Orion.Utilities
 
 			foreach (KeyValuePair<string, Color> pair in strings)
 			{
-				if (pair.Value == null)
-				{
-					sb.Append(pair.Key);
-				}
-				else
-				{
-					sb.Append(ColorString(pair.Key, pair.Value));
-				}
+			    sb.Append(ColorString(pair.Key, pair.Value));
 			}
 
-			return sb.ToString();
+		    return sb.ToString();
 		}
 	}
 }

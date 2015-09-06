@@ -72,18 +72,6 @@ namespace Orion.Regions
 			return Points.IsInArea(p);
 		}
 
-		public void LoadFromQuery(QueryResult result)
-		{
-			if (result.Read())
-			{
-				ID = result.Get<int>("ID");
-				DisplayName = result.Get<string>("DisplayName");
-				AllowedGroups = new IntCollection(result.Get<string>("AllowedGroups"));
-				AllowedUsers = new IntCollection(result.Get<string>("AllowedUsers"));
-				Points = new PointCollection(result.Get<string>("Points"));
-			}
-		}
-
 		public Region()
 		{
 			ID = -1;
@@ -93,5 +81,29 @@ namespace Orion.Regions
 			Protected = false;
 			Points = new PointCollection();
 		}
-	}
+
+	    public Region(int id, string displayName, IntCollection allowedGroups, IntCollection allowedUsers, bool isProtected, PointCollection points)
+	    {
+	        ID = id;
+	        DisplayName = displayName;
+	        AllowedGroups = allowedGroups;
+	        AllowedUsers = allowedUsers;
+	        Protected = isProtected;
+	        Points = points;
+	    }
+
+        public static Region LoadFromQuery(QueryResult result)
+        {
+            if (result.Read())
+            {
+                var id = result.Get<int>("ID");
+                var displayName = result.Get<string>("DisplayName");
+                var allowedGroups = new IntCollection(result.Get<string>("AllowedGroups"));
+                var allowedUsers = new IntCollection(result.Get<string>("AllowedUsers"));
+                var points = new PointCollection(result.Get<string>("Points"));
+                return new Region(id, displayName, allowedGroups, allowedUsers, true, points);
+            }
+            return null;
+        }
+    }
 }
