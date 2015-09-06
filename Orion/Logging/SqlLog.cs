@@ -35,7 +35,7 @@ namespace Orion.Logging
 	public class SqlLog : ILog, IDisposable
 	{
 		private readonly IDbConnection _database;
-		private readonly TextLog _backupLog;
+		private readonly ILog _backupLog;
 		private readonly List<LogInfo> _failures;
 		private bool _useTextLog;
 		private readonly Orion _orion;
@@ -67,7 +67,7 @@ namespace Orion.Logging
 
 			_database = orion.Database;
 			//FileName = String.Format("{0}://database", _database.GetSqlType());
-			_backupLog = new TextLog(orion, textlogFilepath, clearTextLog);
+			_backupLog = new Log(textlogFilepath);
 
 			SqlTable table = new SqlTable("Logs",
 				new SqlColumn("ID", MySqlDbType.Int32) { AutoIncrement = true, Primary = true },

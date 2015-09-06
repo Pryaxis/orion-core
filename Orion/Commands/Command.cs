@@ -43,9 +43,20 @@ namespace Orion.Commands
             else
             {
                 if (Parent.TryGetTarget(out parent))
-                    CommandMethod.Invoke(parent, args.ToArray());
+                {
+                    try
+                    {
+                        CommandMethod.Invoke(parent, args.ToArray());
+                    }
+                    catch (Exception e)
+                    {
+                        throw new CommandException("Command failed.", e);
+                    }
+                }
                 else
+                {
                     throw new CommandException("Parent object has been disposed since registration of this command.");
+                }
             }
         }
     }

@@ -28,6 +28,7 @@ namespace Orion.Logging
 	/// <summary>
 	/// Class inheriting ILog for writing logs to a text file
 	/// </summary>
+	[Obsolete("Deprecated in favor of the Log class, which uses log4net and is more configurable.")]
 	public sealed class TextLog : ILog, IDisposable
 	{
 		private readonly Orion _orion;

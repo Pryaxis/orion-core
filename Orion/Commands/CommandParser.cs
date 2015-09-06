@@ -25,7 +25,7 @@ namespace Orion.Commands
             return commandString.Split(' ').First().Replace("/", "");
         }
 
-        public List<object> ParseCommand(string command, List<Type> expectedTypes)
+        public List<object> ParseCommandStringIntoArguments(string command, List<Type> expectedTypes)
         {
             var args = SplitCommandStringIntoArguments(command);
 
@@ -48,7 +48,7 @@ namespace Orion.Commands
                     }
                     catch (Exception ex)
                     {
-                        throw;
+                        throw new ArgumentParsingException($"String \"{item.Value}\" could not be parsed as type \"{item.Type}\".");
                     }
                 }
                 else
@@ -60,7 +60,7 @@ namespace Orion.Commands
                     }
                     catch (Exception ex)
                     {
-                        throw;
+                        throw new ArgumentParsingException($"String \"{item.Value}\" could not be imported as type \"{item.Type}\".");
                     }
                 }
             }

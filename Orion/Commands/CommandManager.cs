@@ -14,14 +14,19 @@ namespace Orion.Commands
         {
             var name = CommandParser.GetCommandNameFromCommandString(commandString);
             var command = Commands.Single(x => x.CommandName == name);
-            var argList = Parser.ParseCommand(commandString, command.ExpectedTypes);
             try
             {
+                var argList = Parser.ParseCommandStringIntoArguments(commandString, command.ExpectedTypes);
                 command.Call(argList);
             }
-            catch (Exception ex)
+            catch (ArgumentParsingException ex)
             {
-                //TODO: Handle command exceptions here.
+                //TODO: Message player here about error and log it.
+                throw;
+            }
+            catch (CommandException ex)
+            {
+                //TODO: Message player here about error and log it.
                 throw;
             }
         }

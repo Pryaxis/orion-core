@@ -65,7 +65,8 @@
     <Compile Include="Bans\BanHandler.cs" />
     <Compile Include="ChatInfo.cs" />
     <Compile Include="Commands\Command.cs" />
-    <Compile Include="Commands\CommandException.cs" />
+    <Compile Include="Commands\Exceptions\ArgumentParsingException.cs" />
+    <Compile Include="Commands\Exceptions\CommandException.cs" />
     <Compile Include="Commands\CommandManager.cs" />
     <Compile Include="Commands\CommandParser.cs" />
     <Compile Include="Commands\IImportable.cs" />
