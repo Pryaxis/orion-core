@@ -36,7 +36,7 @@ namespace Orion.Commands
 
             if (args.Count != expectedTypes.Count)
             {
-                throw new ArgumentException();
+                throw new ArgumentParsingException("Not all required arguments have been provided.");
             }
 
             var returnList = new List<object>();
