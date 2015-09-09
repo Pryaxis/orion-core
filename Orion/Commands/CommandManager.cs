@@ -31,47 +31,47 @@ namespace Orion.Commands
             }
         }
 
-        public void AddCommand(string name, Action commandMethod, object parent)
+        public void AddCommand(string name, Action commandMethod)
         {
-            var comm = new Command(name, commandMethod.Method, parent);
+            var comm = new Command(name, commandMethod.Method, commandMethod.Target);
             Commands.Add(comm);
         }
 
         #region AddCommand Overloads
 
-        public void AddCommand<T>(string name, Action<T> commandMethod, object parent) where T : OrionPlayer
+        public void AddCommand<T>(string name, Action<T> commandMethod) where T : OrionPlayer
         {
-            var comm = new Command(name, commandMethod.Method, parent);
+            var comm = new Command(name, commandMethod.Method, commandMethod.Target);
             Commands.Add(comm);
         }
 
-        public void AddCommand<T1, T2>(string name, Action<T1, T2> commandMethod, object parent) where T1 : OrionPlayer
+        public void AddCommand<T1, T2>(string name, Action<T1, T2> commandMethod) where T1 : OrionPlayer
         {
-            var comm = new Command(name, commandMethod.Method, parent);
+            var comm = new Command(name, commandMethod.Method, commandMethod.Target);
             Commands.Add(comm);
         }
 
-        public void AddCommand<T1, T2, T3>(string name, Action<T1, T2, T3> commandMethod, object parent) where T1 : OrionPlayer
+        public void AddCommand<T1, T2, T3>(string name, Action<T1, T2, T3> commandMethod) where T1 : OrionPlayer
         {
-            var comm = new Command(name, commandMethod.Method, parent);
+            var comm = new Command(name, commandMethod.Method, commandMethod.Target);
             Commands.Add(comm);
         }
 
-        public void AddCommand<T1, T2, T3, T4>(string name, Action<T1, T2, T3, T4> commandMethod, object parent) where T1 : OrionPlayer
+        public void AddCommand<T1, T2, T3, T4>(string name, Action<T1, T2, T3, T4> commandMethod) where T1 : OrionPlayer
         {
-            var comm = new Command(name, commandMethod.Method, parent);
+            var comm = new Command(name, commandMethod.Method, commandMethod.Target);
             Commands.Add(comm);
         }
 
-        public void AddCommand<T1, T2, T3, T4, T5>(string name, Action<T1, T2, T3, T4, T5> commandMethod, object parent) where T1 : OrionPlayer
+        public void AddCommand<T1, T2, T3, T4, T5>(string name, Action<T1, T2, T3, T4, T5> commandMethod) where T1 : OrionPlayer
         {
-            var comm = new Command(name, commandMethod.Method, parent);
+            var comm = new Command(name, commandMethod.Method, commandMethod.Target);
             Commands.Add(comm);
         }
 
-        public void AddCommand<T1, T2, T3, T4, T5, T6>(string name, Action<T1, T2, T3, T4, T5, T6> commandMethod, object parent) where T1 : OrionPlayer
+        public void AddCommand<T1, T2, T3, T4, T5, T6>(string name, Action<T1, T2, T3, T4, T5, T6> commandMethod) where T1 : OrionPlayer
         {
-            var comm = new Command(name, commandMethod.Method, parent);
+            var comm = new Command(name, commandMethod.Method, commandMethod.Target);
             Commands.Add(comm);
         }
 

@@ -26,14 +26,14 @@ namespace Unit_Tests
         public void TestRegisterCommand()
         {
             Assert.IsTrue(Commands.Commands.Count == 0);
-            Commands.AddCommand("test", TestCommand, this);
+            Commands.AddCommand("test", TestCommand);
             Assert.IsTrue(Commands.Commands.Count == 1);
         }
 
         [TestMethod]
         public void TestRunCommand()
         {
-            Commands.AddCommand("test", TestCommand, this);
+            Commands.AddCommand("test", TestCommand);
             Commands.ParseAndCallCommand(TestPlayer, "/test");
         }
 
