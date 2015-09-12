@@ -84,6 +84,7 @@
     <Compile Include="Logging\LogLevel.cs" />
     <Compile Include="Logging\SqlLog.cs" />
     <Compile Include="Logging\TextLog.cs" />
+    <Compile Include="Net\NetInventory.cs" />
     <Compile Include="Net\NetItem.cs" />
     <Compile Include="Net\NetUtils.cs" />
     <Compile Include="Net\PacketData.cs" />
@@ -143,7 +144,9 @@
       <LastGenOutput>Strings.Designer.cs</LastGenOutput>
     </EmbeddedResource>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="SSC\" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
