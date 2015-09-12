@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿using System;
+using System.IO;
 using Terraria;
 
 namespace Orion.Net.Packets
@@ -8,11 +9,31 @@ namespace Orion.Net.Packets
 	/// </summary>
 	public class InventorySlot : TerrariaPacket
 	{
+		/// <summary>
+		/// Player ID
+		/// </summary>
 		public byte Player { get; set; }
+		/// <summary>
+		/// Item slot index
+		/// </summary>
 		public byte SlotID { get; set; }
+		/// <summary>
+		/// Item stack
+		/// </summary>
 		public short Stack { get; set; }
+		/// <summary>
+		/// Item prefix
+		/// </summary>
 		public byte Prefix { get; set; }
+		/// <summary>
+		/// Item ID
+		/// </summary>
 		public short NetID { get; set; }
+		/// <summary>
+		/// True if item is favorited
+		/// </summary>
+		[Obsolete("Currently not sent by Terraria. This value will always be false.")]
+		public bool Favorited { get; set; }
 
 		/// <summary>
 		/// Creates a new Inventory Slot packet by reading data from <paramref name="reader"/>.
@@ -26,6 +47,7 @@ namespace Orion.Net.Packets
 			Stack = reader.ReadInt16();
 			Prefix = reader.ReadByte();
 			NetID = reader.ReadInt16();
+			Favorited = false;
 		}
 
 		/// <summary>
@@ -39,6 +61,8 @@ namespace Orion.Net.Packets
 			Player = (byte)player;
 			SlotID = (byte)slot;
 			Player ply = Main.player[Player];
+
+			//TODO: Figure out if we actually need the item
 			Item item;
 			if (SlotID == NetUtils.TotalSlots - 1) //179
 			{
@@ -80,6 +104,10 @@ namespace Orion.Net.Packets
 			{
 				item = ply.inventory[SlotID];
 			}
+
+			Prefix = item.prefix;
+			Stack = (short)item.stack;
+			Favorited = item.favorited;
 		}
 	}
 }
