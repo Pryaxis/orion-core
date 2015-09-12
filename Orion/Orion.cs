@@ -106,6 +106,10 @@ namespace Orion
 		/// </summary>
 		public PacketRepackager Packets { get; private set; }
 		/// <summary>
+		/// Used to internally handle packet events
+		/// </summary>
+		internal InternalEventHandler InternalEvents { get; private set; }
+		/// <summary>
 		/// Delegate method used with the <see cref="OnInitialized"></see> event
 		/// </summary>
 		public delegate void LoadedEvent();
@@ -219,9 +223,12 @@ namespace Orion
 				NetUtils = new NetUtils(this);
 				HashHandler = new Hasher(this);
 				Packets = new PacketRepackager(this);
+				InternalEvents = new InternalEventHandler(this);
 
 				ServerApi.Hooks.NetGetData.Register(this, Packets.GetAndRepackage);
 				ServerApi.Hooks.NetSendData.Register(this, Packets.SendAndRepackage);
+
+				Packets.OnReceivedPlayerSlot += InternalEvents.PlayerSlotReceived;
 
 				LoadPlugins();
 

@@ -79,6 +79,7 @@
     <Compile Include="Extensions\DbEx.cs" />
     <Compile Include="Extensions\RandomEx.cs" />
     <Compile Include="Extensions\StringEx.cs" />
+    <Compile Include="InternalEvents.cs" />
     <Compile Include="Logging\ILog.cs" />
     <Compile Include="Logging\Log.cs" />
     <Compile Include="Logging\LogLevel.cs" />
