@@ -145,7 +145,8 @@ namespace Orion.Utilities
 				if (Main.item[i].active && dX * dX + dY * dY <= radius * radius * 256f)
 				{
 					Main.item[i].active = false;
-					_core.NetUtils.SendPacketToEveryone(PacketTypes.ItemDrop, "", i);
+					//TODO: Fix this
+					//_core.NetUtils.SendPacketToEveryone(PacketTypes.ItemDrop, "", i);
 					cleared++;
 				}
 			}
@@ -176,7 +177,8 @@ namespace Orion.Utilities
 				{
 					Main.npc[i].active = false;
 					Main.npc[i].type = 0;
-					_core.NetUtils.SendPacketToEveryone(PacketTypes.NpcUpdate, "", i);
+					//TODO: Fix this
+					//_core.NetUtils.SendPacketToEveryone(PacketTypes.NpcUpdate, "", i);
 					cleared++;
 				}
 			}
@@ -201,7 +203,8 @@ namespace Orion.Utilities
 				{
 					Main.projectile[i].active = false;
 					Main.projectile[i].type = 0;
-					_core.NetUtils.SendPacketToEveryone(PacketTypes.ProjectileNew, "", i);
+					//TODO: Fix this
+					//_core.NetUtils.SendPacketToEveryone(PacketTypes.ProjectileNew, "", i);
 					cleared++;
 				}
 			}
@@ -237,8 +240,6 @@ namespace Orion.Utilities
 					return new Buff(Main.buffName[i], i, Main.buffTip[i]);
 				}
 			}
-
-			ColorStrings(new ColoredString("Test", Color.White));
 
 			return null;
 		}
