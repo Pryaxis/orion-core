@@ -67,6 +67,55 @@ namespace Orion.Net
 
 				return Inventory[index];
 			}
+			internal set
+			{
+				if (index < 0 || index >= NetUtils.TotalSlots)
+				{
+					//TODO: Add to Strings.resx
+					throw new IndexOutOfRangeException("Invalid index.");
+				}
+
+				if (index == NetUtils.TotalSlots - 1)
+				{
+					Trash = value;
+				}
+				else if (index >= NetUtils.TotalSlots - 1 - NetUtils.SafeSlots)
+				{
+					Safe[index - (NetUtils.TotalSlots - 1 - NetUtils.SafeSlots)] = value;
+				}
+				else if (index >= NetUtils.TotalSlots - 1 - NetUtils.SafeSlots - NetUtils.PiggyBankSlots)
+				{
+					PiggyBank[index - (NetUtils.TotalSlots - 1 - NetUtils.SafeSlots - NetUtils.PiggyBankSlots)] = value;
+				}
+				else if (index >= NetUtils.TotalSlots - 1 - NetUtils.SafeSlots - NetUtils.PiggyBankSlots
+				- NetUtils.MiscDyeSlots)
+				{
+					MiscDyes[index - (NetUtils.TotalSlots - 1 - NetUtils.SafeSlots - NetUtils.PiggyBankSlots
+						- NetUtils.MiscDyeSlots)] = value;
+				}
+				else if (index >= NetUtils.TotalSlots - 1 - NetUtils.SafeSlots - NetUtils.PiggyBankSlots
+				- NetUtils.MiscDyeSlots - NetUtils.MiscEquipSlots)
+				{
+					MiscEquips[index - (NetUtils.TotalSlots - 1 - NetUtils.SafeSlots - NetUtils.PiggyBankSlots
+						- NetUtils.MiscDyeSlots - NetUtils.MiscEquipSlots)] = value;
+				}
+				else if (index >= NetUtils.TotalSlots - 1 - NetUtils.SafeSlots - NetUtils.PiggyBankSlots
+				- NetUtils.MiscDyeSlots - NetUtils.MiscEquipSlots - NetUtils.DyeSlots)
+				{
+					Dye[index - (NetUtils.TotalSlots - 1 - NetUtils.SafeSlots - NetUtils.PiggyBankSlots
+						- NetUtils.MiscDyeSlots - NetUtils.MiscEquipSlots - NetUtils.DyeSlots)] = value;
+				}
+				else if (index >= NetUtils.TotalSlots - 1 - NetUtils.SafeSlots - NetUtils.PiggyBankSlots
+				- NetUtils.MiscDyeSlots - NetUtils.MiscEquipSlots - NetUtils.DyeSlots - NetUtils.ArmorSlots)
+				{
+					Armor[index - (NetUtils.TotalSlots - 1 - NetUtils.SafeSlots - NetUtils.PiggyBankSlots
+						- NetUtils.MiscDyeSlots - NetUtils.MiscEquipSlots - NetUtils.DyeSlots - NetUtils.ArmorSlots)] = value;
+				}
+				else
+				{
+					Inventory[index] = value;
+				}
+			}
 		}
 
 		/// <summary>

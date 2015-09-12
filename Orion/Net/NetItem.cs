@@ -2,9 +2,21 @@
 {
 	public class NetItem
 	{
+		/// <summary>
+		/// Item ID
+		/// </summary>
 		public short ID { get; set; }
+		/// <summary>
+		/// Item Prefix
+		/// </summary>
 		public byte Prefix { get; set; }
+		/// <summary>
+		/// Item Stack
+		/// </summary>
 		public short Stack { get; set; }
+		/// <summary>
+		/// Item Favorite status
+		/// </summary>
 		public bool Favorite { get; set; }
 
 		/// <summary>
