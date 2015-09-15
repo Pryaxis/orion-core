@@ -2,6 +2,7 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Orion.Collections;
 using System.IO;
+using Orion;
 
 namespace Unit_Tests
 {
@@ -68,5 +69,11 @@ namespace Unit_Tests
 	    {
 	        Console.WriteLine(default(Color));
 	    }
+
+		[TestMethod]
+		public void TestOrionModule()
+		{
+			CommandProvider prov = new CommandProvider();
+		}
 	}
 }

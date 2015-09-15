@@ -64,6 +64,7 @@
     <Compile Include="Bans\Ban.cs" />
     <Compile Include="Bans\BanHandler.cs" />
     <Compile Include="ChatInfo.cs" />
+    <Compile Include="CommandProvider.cs" />
     <Compile Include="Configuration\BaseConfig.cs" />
     <Compile Include="Configuration\ConfigCreator.cs" />
     <Compile Include="Configuration\ConfigFile.cs" />
@@ -80,6 +81,7 @@
     <Compile Include="Extensions\RandomEx.cs" />
     <Compile Include="Extensions\StringEx.cs" />
     <Compile Include="InternalEvents.cs" />
+    <Compile Include="OrionModuleBase.cs" />
     <Compile Include="Logging\ILog.cs" />
     <Compile Include="Logging\Log.cs" />
     <Compile Include="Logging\LogLevel.cs" />
@@ -101,6 +103,7 @@
     <Compile Include="Net\Packets\TileGetSection.cs" />
     <Compile Include="Net\Packets\WorldInfo.cs" />
     <Compile Include="Orion.cs" />
+    <Compile Include="OrionModuleAttribute.cs" />
     <Compile Include="OrionPlugin.cs" />
     <Compile Include="OrionVersionAttribute.cs" />
     <Compile Include="Permissions\Permission.cs" />
