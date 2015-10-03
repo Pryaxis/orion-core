@@ -8,20 +8,37 @@ using System.Threading.Tasks;
 
 namespace Orion
 {
-    public class OrionPlugin : BasePlugin
+    /// <summary>
+    /// Defines the entry point for orion, and how it interacts with OTAPI
+    /// </summary>
+    public class OTAPIPlugin : BasePlugin
     {
-        public OrionPlugin() 
+        protected Orion orionInstance;
+
+        public OTAPIPlugin() 
             : base()
         {
             Author = "Nyx Studios";
             Description = "Plugin that exposes a comprehensive API for TShock v5+";
             Version = this.GetType().Assembly.GetName().Version.ToString();
+
+            orionInstance = new Orion(this);
         }
 
+        /// <summary>
+        /// Occurs when the plugin is initialized.
+        /// </summary>
+        /// <param name="state"></param>
         protected override void Initialized(object state)
         {
             Version orionVersion = this.GetType().Assembly.GetName().Version;
+            orionInstance.Initialize();
             ProgramLog.Log($"Orion version {orionVersion.ToString()} initialized.");
+        }
+
+        protected override void Disposed(object state)
+        {
+            orionInstance.Dispose();
         }
     }
 }

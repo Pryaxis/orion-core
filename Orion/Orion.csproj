@@ -47,7 +47,11 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="OrionPlugin.cs" />
+    <Compile Include="Framework\ICommandProvider.cs" />
+    <Compile Include="Framework\OrionModuleAttribute.cs" />
+    <Compile Include="Framework\OrionModuleBase.cs" />
+    <Compile Include="Orion.cs" />
+    <Compile Include="OTAPIPlugin.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -59,9 +63,7 @@
       <Name>API</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Framework\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PostBuildEvent>xcopy /y $(TargetPath) $(SolutionDir)\Open-Terraria-API\API\bin\x86\Server\Plugins</PostBuildEvent>
