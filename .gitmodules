@@ -1,0 +1,3 @@
+[submodule ".\\References\\Open-Terraria-API"]
+	path = .\\References\\Open-Terraria-API
+	url = https://github.com/DeathCradle/Open-Terraria-API.git
