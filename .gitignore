@@ -61,3 +61,6 @@ postbuild.bat
 ##################
 *.dotCover
 _ReSharper.*
+
+# NuGet packages
+packages/
