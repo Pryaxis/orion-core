@@ -7,58 +7,37 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Orion", "Orion\Orion.csproj
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "References", "References", "{0EF11824-66E7-4640-ACD1-CD0BCB477A9D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "API", "References\Open-Terraria-API\API\API.csproj", "{A1F792B2-5D80-4DE4-B5DB-7A05DBEABD60}"
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Open-Terraria-API", "Open-Terraria-API", "{A54C11EE-319B-4AD2-8333-A8FE90286E72}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "API", "Open-Terraria-API\API\API.csproj", "{A1F792B2-5D80-4DE4-B5DB-7A05DBEABD60}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
-		Client-Debug|Any CPU = Client-Debug|Any CPU
-		Client-Debug|x86 = Client-Debug|x86
-		Debug|Any CPU = Debug|Any CPU
-		Debug|x86 = Debug|x86
-		Release|Any CPU = Release|Any CPU
-		Release|x86 = Release|x86
-		Server-Debug|Any CPU = Server-Debug|Any CPU
-		Server-Debug|x86 = Server-Debug|x86
+		Debug (Server)|Any CPU = Debug (Server)|Any CPU
+		Debug (Server)|x86 = Debug (Server)|x86
+		Release (Server)|Any CPU = Release (Server)|Any CPU
+		Release (Server)|x86 = Release (Server)|x86
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{99774503-625C-49BC-BB89-D3A2212ED01D}.Client-Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{99774503-625C-49BC-BB89-D3A2212ED01D}.Client-Debug|Any CPU.Build.0 = Debug|Any CPU
-		{99774503-625C-49BC-BB89-D3A2212ED01D}.Client-Debug|x86.ActiveCfg = Debug|Any CPU
-		{99774503-625C-49BC-BB89-D3A2212ED01D}.Client-Debug|x86.Build.0 = Debug|Any CPU
-		{99774503-625C-49BC-BB89-D3A2212ED01D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{99774503-625C-49BC-BB89-D3A2212ED01D}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{99774503-625C-49BC-BB89-D3A2212ED01D}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{99774503-625C-49BC-BB89-D3A2212ED01D}.Debug|x86.Build.0 = Debug|Any CPU
-		{99774503-625C-49BC-BB89-D3A2212ED01D}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{99774503-625C-49BC-BB89-D3A2212ED01D}.Release|Any CPU.Build.0 = Release|Any CPU
-		{99774503-625C-49BC-BB89-D3A2212ED01D}.Release|x86.ActiveCfg = Release|Any CPU
-		{99774503-625C-49BC-BB89-D3A2212ED01D}.Release|x86.Build.0 = Release|Any CPU
-		{99774503-625C-49BC-BB89-D3A2212ED01D}.Server-Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{99774503-625C-49BC-BB89-D3A2212ED01D}.Server-Debug|Any CPU.Build.0 = Debug|Any CPU
-		{99774503-625C-49BC-BB89-D3A2212ED01D}.Server-Debug|x86.ActiveCfg = Debug|Any CPU
-		{99774503-625C-49BC-BB89-D3A2212ED01D}.Server-Debug|x86.Build.0 = Debug|Any CPU
-		{A1F792B2-5D80-4DE4-B5DB-7A05DBEABD60}.Client-Debug|Any CPU.ActiveCfg = Client-Debug|x86
-		{A1F792B2-5D80-4DE4-B5DB-7A05DBEABD60}.Client-Debug|x86.ActiveCfg = Client-Debug|x86
-		{A1F792B2-5D80-4DE4-B5DB-7A05DBEABD60}.Client-Debug|x86.Build.0 = Client-Debug|x86
-		{A1F792B2-5D80-4DE4-B5DB-7A05DBEABD60}.Debug|Any CPU.ActiveCfg = Client-Debug|x86
-		{A1F792B2-5D80-4DE4-B5DB-7A05DBEABD60}.Debug|Any CPU.Build.0 = Client-Debug|x86
-		{A1F792B2-5D80-4DE4-B5DB-7A05DBEABD60}.Debug|x86.ActiveCfg = Client-Debug|x86
-		{A1F792B2-5D80-4DE4-B5DB-7A05DBEABD60}.Debug|x86.Build.0 = Client-Debug|x86
-		{A1F792B2-5D80-4DE4-B5DB-7A05DBEABD60}.Release|Any CPU.ActiveCfg = Client-Debug|x86
-		{A1F792B2-5D80-4DE4-B5DB-7A05DBEABD60}.Release|Any CPU.Build.0 = Client-Debug|x86
-		{A1F792B2-5D80-4DE4-B5DB-7A05DBEABD60}.Release|x86.ActiveCfg = Client-Debug|x86
-		{A1F792B2-5D80-4DE4-B5DB-7A05DBEABD60}.Release|x86.Build.0 = Client-Debug|x86
-		{A1F792B2-5D80-4DE4-B5DB-7A05DBEABD60}.Server-Debug|Any CPU.ActiveCfg = Server-Debug|x86
-		{A1F792B2-5D80-4DE4-B5DB-7A05DBEABD60}.Server-Debug|x86.ActiveCfg = Server-Debug|x86
-		{A1F792B2-5D80-4DE4-B5DB-7A05DBEABD60}.Server-Debug|x86.Build.0 = Server-Debug|x86
+		{99774503-625C-49BC-BB89-D3A2212ED01D}.Debug (Server)|Any CPU.ActiveCfg = Debug|Any CPU
+		{99774503-625C-49BC-BB89-D3A2212ED01D}.Debug (Server)|Any CPU.Build.0 = Debug|Any CPU
+		{99774503-625C-49BC-BB89-D3A2212ED01D}.Debug (Server)|x86.ActiveCfg = Debug|Any CPU
+		{99774503-625C-49BC-BB89-D3A2212ED01D}.Debug (Server)|x86.Build.0 = Debug|Any CPU
+		{99774503-625C-49BC-BB89-D3A2212ED01D}.Release (Server)|Any CPU.ActiveCfg = Release (Server)|Any CPU
+		{99774503-625C-49BC-BB89-D3A2212ED01D}.Release (Server)|Any CPU.Build.0 = Release (Server)|Any CPU
+		{99774503-625C-49BC-BB89-D3A2212ED01D}.Release (Server)|x86.ActiveCfg = Release (Server)|Any CPU
+		{99774503-625C-49BC-BB89-D3A2212ED01D}.Release (Server)|x86.Build.0 = Release (Server)|Any CPU
+		{A1F792B2-5D80-4DE4-B5DB-7A05DBEABD60}.Debug (Server)|Any CPU.ActiveCfg = Server-Debug|x86
+		{A1F792B2-5D80-4DE4-B5DB-7A05DBEABD60}.Debug (Server)|Any CPU.Build.0 = Server-Debug|x86
+		{A1F792B2-5D80-4DE4-B5DB-7A05DBEABD60}.Debug (Server)|x86.ActiveCfg = Server-Debug|x86
+		{A1F792B2-5D80-4DE4-B5DB-7A05DBEABD60}.Debug (Server)|x86.Build.0 = Server-Debug|x86
+		{A1F792B2-5D80-4DE4-B5DB-7A05DBEABD60}.Release (Server)|Any CPU.ActiveCfg = Release (Server)|x86
+		{A1F792B2-5D80-4DE4-B5DB-7A05DBEABD60}.Release (Server)|Any CPU.Build.0 = Release (Server)|x86
+		{A1F792B2-5D80-4DE4-B5DB-7A05DBEABD60}.Release (Server)|x86.ActiveCfg = Release (Server)|x86
+		{A1F792B2-5D80-4DE4-B5DB-7A05DBEABD60}.Release (Server)|x86.Build.0 = Release (Server)|x86
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
-		{A1F792B2-5D80-4DE4-B5DB-7A05DBEABD60} = {A54C11EE-319B-4AD2-8333-A8FE90286E72}
-		{A54C11EE-319B-4AD2-8333-A8FE90286E72} = {0EF11824-66E7-4640-ACD1-CD0BCB477A9D}
+		{A1F792B2-5D80-4DE4-B5DB-7A05DBEABD60} = {0EF11824-66E7-4640-ACD1-CD0BCB477A9D}
 	EndGlobalSection
 EndGlobal
