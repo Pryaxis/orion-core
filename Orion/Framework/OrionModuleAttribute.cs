@@ -36,9 +36,10 @@ namespace Orion.Framework
         public bool Enabled { get; set; } = true;
         
         /// <summary>
-        /// (optional) Gets or sets the module version.  Defaults to v1.0
+        /// (optional) Gets or sets the module version.  Defaults to whatever the Orion
+        /// version is
         /// </summary>
-        public Version ModuleVersion { get; set; } = new Version(1, 0, 0, 0);
+        public Version ModuleVersion { get; set; } = typeof(Orion).Assembly.GetName().Version;
 
 		public OrionModuleAttribute(string name, string author, int order = -1)
 		{

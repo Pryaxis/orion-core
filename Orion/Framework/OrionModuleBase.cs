@@ -59,6 +59,14 @@ namespace Orion.Framework
         }
 
         /// <summary>
+        /// Called after all modules have been loaded, to initalize the module.
+        /// </summary>
+        public virtual void Initialize()
+        {
+
+        }
+
+        /// <summary>
         /// Called when Orion will run the module.
         /// </summary>
 		public abstract void Run();
@@ -94,5 +102,10 @@ namespace Orion.Framework
         }
 
         #endregion
+
+        public override string ToString()
+        {
+            return $"[OrionModule {ModuleName} v{ModuleVersion.ToString()}: Author={Author} Order={moduleAttr.Order}]";
+        }
     }
 }
