@@ -25,8 +25,9 @@ namespace Orion.Hooks
         {
             base.Initialize();
 
-            OTA.Callbacks.MainCallback.UpdateServer += MainCallback_UpdateServer;
+            Core.Plugin.Hook(HookPoints.ServerUpdate, OTAPIHook_ServerUpdate);
         }
+
 
         #region On* Internals
 
@@ -51,7 +52,7 @@ namespace Orion.Hooks
 
         #region OTA Callbacks and Hookpoints
 
-        private void MainCallback_UpdateServer(object sender, EventArgs e)
+        private void OTAPIHook_ServerUpdate(ref HookContext context, ref HookArgs.ServerUpdate argument)
         {
             OnGameUpdate();
         }
@@ -71,7 +72,7 @@ namespace Orion.Hooks
                 GameUpdate = null;
 
                 //Remove all OTAPI callbacks and hooks
-                OTA.Callbacks.MainCallback.UpdateServer -= MainCallback_UpdateServer;
+                Core.Plugin.Unhook(HookPoints.ServerUpdate);
             }
 
             base.Dispose(disposing);

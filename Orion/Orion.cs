@@ -57,6 +57,15 @@ namespace Orion
             LoadModules();
         }
 
+        #region Hard-coded Modules
+
+        /// <summary>
+        /// Gets the hook provider for this orion instance.  All hooks live here.
+        /// </summary>
+        public IHookProvider Hooks => Get<Hooks.OTAPIHookModule>();
+
+        #endregion
+
         /// <summary>
         /// Returns the first orion module matching the type parameter <typeparamref name="TModule"/>
         /// </summary>

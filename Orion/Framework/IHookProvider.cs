@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace Orion.Framework
 {
     /// <summary>
-    /// Defines an Orion hook provider.
+    /// Defines an Orion hook provider.  All Orion hooks are featured here.
     /// </summary>
     public interface IHookProvider
     {
