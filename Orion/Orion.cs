@@ -36,7 +36,15 @@ namespace Orion
         /// </summary>
         internal List<Type> availablePlugins;
 
+        /// <summary>
+        /// Contains references to all the Orion modules loaded inside Orion
+        /// </summary>
         internal readonly List<OrionModuleBase> moduleContainer;
+
+        /// <summary>
+        /// Internal synch root for Orion to lock on when access to a member must be thread-safe.
+        /// </summary>
+        protected readonly object syncRoot = new object();
 
         public Orion(OTAPIPlugin plugin)
         {
@@ -49,6 +57,34 @@ namespace Orion
             LoadModules();
         }
 
+        /// <summary>
+        /// Returns the first orion module matching the type parameter <typeparamref name="TModule"/>
+        /// </summary>
+        /// <typeparam name="TModule">
+        /// TModule is the type of a module
+        /// </typeparam>
+        /// <returns>
+        /// A <typeparamref name="TModule"/> instance if one was found in the module container
+        /// matching the specified type, or null if none could be found.
+        /// </returns>
+        public TModule Get<TModule>()
+            where TModule : OrionModuleBase
+        {
+            TModule module = null;
+
+            lock (syncRoot)
+            {
+                module = moduleContainer.FirstOrDefault(i => i is TModule) as TModule;
+            }
+
+            return module;
+        }
+
+        #region Orion Module Loader
+
+        /// <summary>
+        /// Loads all modules into the module container.
+        /// </summary>
         public void LoadModules()
         {
             /*
@@ -146,6 +182,12 @@ namespace Orion
             return moduleList;
         }
 
+        /// <summary>
+        /// Loads a module type and inserts it into the module container.
+        /// </summary>
+        /// <param name="moduleType">
+        /// A reference to the runtime type of the module to load
+        /// </param>
         protected void LoadModule(Type moduleType)
         {
             OrionModuleBase moduleInstance;
@@ -157,8 +199,13 @@ namespace Orion
 
             moduleInstance = Activator.CreateInstance(moduleType, this) as OrionModuleBase;
 
-            moduleContainer.Add(moduleInstance);
+            lock (syncRoot)
+            {
+                moduleContainer.Add(moduleInstance);
+            }
         }
+
+        #endregion
 
         #region IDisposable Support
 
