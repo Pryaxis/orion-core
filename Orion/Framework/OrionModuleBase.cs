@@ -37,10 +37,14 @@ namespace Orion.Framework
         public bool Enabled => moduleAttr.Enabled;
 
         /// <summary>
-        /// Initializes a new instance of this Orion module
+        /// Initializes a new instance of this Orion module.
+        /// 
+        /// !WARNING!
+        /// DO NOT INTERACT WITH OTHER MODULES INSIDE THIS MODULE CONSTRUCTOR,
+        /// INTERACT WITH OTHER MODULES IN THE INITIALIZE METHOD BELOW. 
         /// </summary>
         /// <param name="core">
-        /// A reference to the Orion core who loaded this module
+        /// A reference to the Orion core who loaded this module.
         /// </param>
 		protected OrionModuleBase(Orion core)
         {

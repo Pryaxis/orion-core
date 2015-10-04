@@ -17,6 +17,16 @@ namespace Orion
         private bool disposedValue = false; // To detect redundant calls
         private readonly OTAPIPlugin plugin;
 
+        /// <summary>
+        /// Gets a reference to the OTAPI plugin container in which this Orion core
+        /// runs inside of
+        /// </summary>
+        /// <remarks>
+        /// Marked as internal, Orion modules should be using hooks from the IHookProvider
+        /// interface Orion provides itself
+        /// </remarks>
+        internal OTAPIPlugin Plugin => plugin;
+
         public Orion(OTAPIPlugin plugin)
         {
             this.plugin = plugin;
@@ -24,22 +34,29 @@ namespace Orion
 
         public void Initialize()
         {
-            plugin.Hook(HookPoints.StartCommandProcessing, HookOrder.FIRST, HookPoint_StartCommandProcessing);
-        }
-
-        private void HookPoint_StartCommandProcessing(ref HookContext context, ref HookArgs.StartCommandProcessing argument)
-        {
-            context.SetResult(HookResult.IGNORE);
         }
 
         protected void LoadModules()
+        {
+            List<Type> internalModules = new List<Type>();
+            List<Type> externalModules = new List<Type>();
+
+            LoadInternalModules(internalModules);
+            LoadExternalModules(externalModules);
+        }
+
+        protected void LoadInternalModules(List<Type> modules)
+        {
+
+        }
+
+        protected void LoadExternalModules(List<Type> modules)
         {
 
         }
 
         protected void LoadModule(OrionModuleBase module)
         {
-
         }
        
         #region IDisposable Support
