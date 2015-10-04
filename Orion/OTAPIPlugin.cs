@@ -33,7 +33,7 @@ namespace Orion
         {
             Version orionVersion = this.GetType().Assembly.GetName().Version;
             orionInstance.Initialize();
-            ProgramLog.Log($"Orion version {orionVersion.ToString()} initialized.");
+            //ProgramLog.Log($"Orion version {orionVersion.ToString()} initialized.");
         }
 
         protected override void Disposed(object state)

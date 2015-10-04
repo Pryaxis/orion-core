@@ -1,8 +1,12 @@
 ﻿using Orion.Framework;
+using OTA.Logging;
 using OTA.Plugin;
 using System;
+using System.Collections;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -27,38 +31,135 @@ namespace Orion
         /// </remarks>
         internal OTAPIPlugin Plugin => plugin;
 
+        /// <summary>
+        /// Contains a cached list of all available Orion modules
+        /// </summary>
+        internal List<Type> availablePlugins;
+
+        internal readonly List<OrionModuleBase> moduleContainer;
+
         public Orion(OTAPIPlugin plugin)
         {
+            this.moduleContainer = new List<OrionModuleBase>();
             this.plugin = plugin;
         }
 
         public void Initialize()
         {
+            LoadModules();
         }
 
-        protected void LoadModules()
+        public void LoadModules()
         {
-            List<Type> internalModules = new List<Type>();
-            List<Type> externalModules = new List<Type>();
+            /*
+             * All OrionModule types inside Orion.dll itself are considered internal.
+             */
+            IEnumerable<Type> internalModuleList = GetOrionModulesFromAssembly(typeof(Orion).Assembly);
 
-            LoadInternalModules(internalModules);
-            LoadExternalModules(externalModules);
+            /*
+             * Note:  Internal modules will load first before all other modules, completely
+             * disregarding the global order.  So the internal module list is *unioned* with
+             * the external module list so that internal ones always get instantiated first.
+             */
+            IEnumerable<Type> externalModuleList = ExternalModules();
+
+            foreach (Type module in internalModuleList.Union(externalModuleList))
+            {
+                OrionModuleAttribute attr = Attribute.GetCustomAttribute(module, typeof(OrionModuleAttribute)) as OrionModuleAttribute;
+
+                if (attr == null)
+                {
+                    continue;
+                }
+
+                try
+                {
+                    LoadModule(module);
+                }
+                catch
+                {
+                    ProgramLog.Log($"orion modules: Could not load module {attr.ModuleName} because of an error", ConsoleColor.Yellow);
+                    continue;
+                }
+            }
         }
 
-        protected void LoadInternalModules(List<Type> modules)
+        /// <summary>
+        /// Scans an entire Assembly definition for Orion modules that are not disabled,
+        /// and returns the types of those modules in OrionModule-qualified order.
+        /// </summary>
+        /// <param name="asm">
+        /// A reference to the assembly to scan for Orion modules in
+        /// </param>
+        /// <returns>
+        /// An array of types of valid orion modules.
+        /// </returns>
+        public IEnumerable<Type> GetOrionModulesFromAssembly(Assembly asm)
         {
-
+            return from i in typeof(Orion).Assembly.GetTypes()
+                   let orionModuleAttr = Attribute.GetCustomAttribute(i, typeof(OrionModuleAttribute)) as OrionModuleAttribute
+                   where orionModuleAttr != null
+                       && orionModuleAttr.Enabled == true
+                       && i.BaseType == typeof(OrionModuleBase)
+                   orderby orionModuleAttr.Order
+                   select i;
         }
 
-        protected void LoadExternalModules(List<Type> modules)
+        /// <summary>
+        /// Enumerates all DLL assemblies in the specified directory, and returns a
+        /// list of all enabled OrionModules in those assemblies.
+        /// </summary>
+        /// <param name="pluginsDirectory">
+        /// (Optional) A reference to the plugins directory to search in.  Defaults to
+        /// OTA's plugins directory.
+        /// </param>
+        public IEnumerable<Type> ExternalModules(string pluginsDirectory = null)
         {
+            Assembly asm;
+            List<Type> moduleList = new List<Type>();
 
+            if (string.IsNullOrEmpty(pluginsDirectory))
+            {
+                pluginsDirectory = OTA.Globals.PluginPath;
+            }
+
+            foreach (string pluginFile in Directory.EnumerateFiles(pluginsDirectory, "*.dll"))
+            {
+                try
+                {
+                    asm = Assembly.LoadFrom(pluginFile);
+                }
+                catch (Exception ex) when (ex is BadImageFormatException || ex is FileLoadException)
+                {
+                    //TODO: Print warning about assembly being ignored because it was invalid
+                    continue;
+                }
+
+                /*
+                 * Important:  Do not do orderby selectors here, as they are re-ordered later
+                 * in the process.
+                 */
+
+                moduleList.AddRange(GetOrionModulesFromAssembly(asm));
+            }
+
+            return moduleList;
         }
 
-        protected void LoadModule(OrionModuleBase module)
+        protected void LoadModule(Type moduleType)
         {
+            OrionModuleBase moduleInstance;
+
+            if (moduleType.BaseType == null || moduleType.BaseType != typeof(OrionModuleBase))
+            {
+                throw new InvalidOperationException($"Module {moduleType.Name} does not inherit from OrionModuleBase");
+            }
+
+            moduleInstance = Activator.CreateInstance(moduleType, this) as OrionModuleBase;
+
+            moduleContainer.Add(moduleInstance);
         }
-       
+
         #region IDisposable Support
 
         protected virtual void Dispose(bool disposing)
@@ -67,8 +168,6 @@ namespace Orion
             {
                 if (disposing)
                 {
-                    plugin.Unhook(HookPoints.StartCommandProcessing);
-
                     // TODO: dispose managed state (managed objects).
                 }
 

@@ -47,9 +47,12 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Framework\Events\OrionEventDelegate.cs" />
     <Compile Include="Framework\ICommandProvider.cs" />
+    <Compile Include="Framework\IHookProvider.cs" />
     <Compile Include="Framework\OrionModuleAttribute.cs" />
     <Compile Include="Framework\OrionModuleBase.cs" />
+    <Compile Include="Hooks\OTAPIHookModule.cs" />
     <Compile Include="Orion.cs" />
     <Compile Include="OTAPIPlugin.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
