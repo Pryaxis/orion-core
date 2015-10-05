@@ -22,11 +22,6 @@ namespace Orion.Commands
             Commands = new CommandManager();
         }
 
-        public override void Run()
-        {
-            
-        }
-
         public void RunCommand(BasePlayer player, string commandString)
         {
             Commands.ParseAndCallCommand(player, commandString);
