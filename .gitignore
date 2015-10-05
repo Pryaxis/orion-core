@@ -64,3 +64,6 @@ _ReSharper.*
 
 # NuGet packages
 packages/
+
+# vim swap files
+*.*~

@@ -63,13 +63,7 @@ namespace Orion.Framework
         /// </summary>
         public virtual void Initialize()
         {
-
         }
-
-        /// <summary>
-        /// Called when Orion will run the module.
-        /// </summary>
-		public abstract void Run();
 
         #region IDisposable support
         ~OrionModuleBase()

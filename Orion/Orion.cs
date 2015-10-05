@@ -137,6 +137,43 @@ namespace Orion
 
         #region Orion Module Loader
 
+        public void RunModules()
+        {
+            List<OrionModuleBase> failedModules = new List<OrionModuleBase>();
+            lock (syncRoot)
+            {
+                foreach (OrionModuleBase module in moduleContainer)
+                {
+                    try
+                    {
+                        module.Initialize();
+                    }
+                    catch
+                    {
+                        /*
+                         * Module init exceptions should not interfere with other 
+                         * module inits
+                         */
+
+                        failedModules.Add(module);
+                        continue;
+                    }
+                }
+
+                if (failedModules.Count > 0) {
+                    ProgramLog.Error.Log($"orion modules:  These following modules failed to initialize and were disabled.");
+
+                    foreach (OrionModuleBase failedModule in failedModules)
+                    {
+                        ProgramLog.Error.Log($" * {failedModule.ModuleName} by {failedModule.Author}");
+                        failedModule.Dispose();
+                    }
+
+                    moduleContainer.RemoveAll(i => failedModules.Contains(i));
+                }
+            }
+        }
+
         /// <summary>
         /// Loads all modules into the module container.
         /// </summary>
@@ -211,7 +248,7 @@ namespace Orion
 
             foreach (string pluginFile in Directory.EnumerateFiles(OrionModulePath, "*.dll"))
             {
-                ProgramLog.Debug.Log($"orion modules: trying {pluginFile}");
+                ProgramLog.Debug.Log($"orion modules: trying assembly {pluginFile}");
                 try
                 {
                     asm = Assembly.LoadFrom(pluginFile);
@@ -249,6 +286,8 @@ namespace Orion
             }
 
             moduleInstance = Activator.CreateInstance(moduleType, this) as OrionModuleBase;
+
+            ProgramLog.Debug.Log($"orion modules: activating {moduleInstance.ModuleName} by {moduleInstance.Author}");
 
             lock (syncRoot)
             {

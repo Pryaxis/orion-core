@@ -31,8 +31,10 @@ namespace Orion.Hooks
 
         #region On* Internals
 
-        internal void OnGameUpdate()
+        internal void OnGameUpdate(ref HookContext context)
         {
+            OrionEventArgs e = null;
+
             if (GameUpdate == null)
             {
                 return;
@@ -40,11 +42,16 @@ namespace Orion.Hooks
 
             try
             {
-                GameUpdate(Core, new OrionEventArgs());
+                GameUpdate(Core, (e = new OrionEventArgs()));
             }
             catch (Exception ex)
             {
                 ProgramLog.Log(ex);
+            }
+
+            if (e.Cancelled == true)
+            {
+                context.Conclude = true;
             }
         }
 
@@ -54,14 +61,10 @@ namespace Orion.Hooks
 
         private void OTAPIHook_ServerUpdate(ref HookContext context, ref HookArgs.ServerUpdate argument)
         {
-            OnGameUpdate();
+            OnGameUpdate(ref context);
         }
 
         #endregion
-
-        public override void Run()
-        {
-        }
 
         protected override void Dispose(bool disposing)
         {
