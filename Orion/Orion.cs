@@ -16,10 +16,12 @@ namespace Orion
     /// The core center piece of Orion. All Orion modules will have a reference
     /// to this Orion core.
     /// </summary>
-    public class Orion : IDisposable
+    public partial class Orion : IDisposable
     {
         private bool disposedValue = false; // To detect redundant calls
         private readonly OTAPIPlugin plugin;
+
+        public const string kOrionBasePath = "Orion";
 
         /// <summary>
         /// Gets a reference to the OTAPI plugin container in which this Orion core
@@ -42,6 +44,26 @@ namespace Orion
         internal readonly List<OrionModuleBase> moduleContainer;
 
         /// <summary>
+        /// Returns the base path for all Orion-based disk information
+        /// </summary>
+        public string OrionBasePath { get; set; } = kOrionBasePath;
+
+        /// <summary>
+        /// Gets the Orion module directory path 
+        /// </summary>
+        public string OrionModulePath => Path.Combine(OrionBasePath, "Modules");
+
+        /// <summary>
+        /// Gets the Orion databse directory path
+        /// </summary>
+        public string OrionDatabasePath => Path.Combine(OrionBasePath, "Database");
+
+        /// <summary>
+        /// Gets the Orion configuration directory path
+        /// </summary>
+        public string OrionConfigurationPath => Path.Combine(OrionBasePath, "Configuration");
+
+        /// <summary>
         /// Internal synch root for Orion to lock on when access to a member must be thread-safe.
         /// </summary>
         protected readonly object syncRoot = new object();
@@ -54,17 +76,41 @@ namespace Orion
 
         public void Initialize()
         {
+            CheckDirectories();
             LoadModules();
         }
 
-        #region Hard-coded Modules
-
         /// <summary>
-        /// Gets the hook provider for this orion instance.  All hooks live here.
+        /// Checks for, and creates Orion's directory structure if it doesn't exist
         /// </summary>
-        public IHookProvider Hooks => Get<Hooks.OTAPIHookModule>();
+        protected void CheckDirectories()
+        {
+            if (Directory.Exists(OrionBasePath) == false)
+            {
+                Directory.CreateDirectory(OrionBasePath);
 
-        #endregion
+                Directory.CreateDirectory(OrionModulePath);
+                Directory.CreateDirectory(OrionConfigurationPath);
+                Directory.CreateDirectory(OrionDatabasePath);
+            }
+            else
+            {
+                if (Directory.Exists(OrionModulePath) == false)
+                {
+                    Directory.CreateDirectory(OrionModulePath);
+                }
+
+                if (Directory.Exists(OrionConfigurationPath) == false)
+                {
+                    Directory.CreateDirectory(OrionConfigurationPath);
+                }
+
+                if (Directory.Exists(OrionDatabasePath) == false)
+                {
+                    Directory.CreateDirectory(OrionDatabasePath);
+                }
+            }
+        }
 
         /// <summary>
         /// Returns the first orion module matching the type parameter <typeparamref name="TModule"/>
@@ -158,18 +204,14 @@ namespace Orion
         /// (Optional) A reference to the plugins directory to search in.  Defaults to
         /// OTA's plugins directory.
         /// </param>
-        public IEnumerable<Type> ExternalModules(string pluginsDirectory = null)
+        public IEnumerable<Type> ExternalModules()
         {
             Assembly asm;
             List<Type> moduleList = new List<Type>();
 
-            if (string.IsNullOrEmpty(pluginsDirectory))
+            foreach (string pluginFile in Directory.EnumerateFiles(OrionModulePath, "*.dll"))
             {
-                pluginsDirectory = OTA.Globals.PluginPath;
-            }
-
-            foreach (string pluginFile in Directory.EnumerateFiles(pluginsDirectory, "*.dll"))
-            {
+                ProgramLog.Debug.Log($"orion modules: trying {pluginFile}");
                 try
                 {
                     asm = Assembly.LoadFrom(pluginFile);
@@ -197,7 +239,7 @@ namespace Orion
         /// <param name="moduleType">
         /// A reference to the runtime type of the module to load
         /// </param>
-        protected void LoadModule(Type moduleType)
+        public void LoadModule(Type moduleType)
         {
             OrionModuleBase moduleInstance;
 
