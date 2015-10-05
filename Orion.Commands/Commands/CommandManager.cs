@@ -3,11 +3,18 @@ using System.Collections.Generic;
 using System.Linq;
 using Orion.Commands.Commands.Exceptions;
 using OTA;
+using OTA.Command;
 
 namespace Orion.Commands.Commands
 {
     public class CommandManager
     {
+        //TODO: Add permission specification to each `AddCommand`
+        /* 
+            TODO: Allow multiple commands of the same name to be registered. Attempt to run the version of the command with the most compliant Action.
+            Should also default to any versions of the command which take `ArgumentList` if available.
+        */
+
         public List<Command> Commands { get;} = new List<Command>();
 
         public CommandStringParser Parser = new CommandStringParser();
@@ -72,6 +79,12 @@ namespace Orion.Commands.Commands
         }
 
         public void AddCommand<T1, T2, T3, T4, T5, T6>(string name, Action<T1, T2, T3, T4, T5, T6> commandMethod) where T1 : BasePlayer
+        {
+            var comm = new Command(name, commandMethod.Method, commandMethod.Target);
+            Commands.Add(comm);
+        }
+
+        public void AddCommand(string name, Action<ArgumentList> commandMethod)
         {
             var comm = new Command(name, commandMethod.Method, commandMethod.Target);
             Commands.Add(comm);
