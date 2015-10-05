@@ -20,5 +20,10 @@ namespace Orion.Framework
         /// Occurs after the game loop finishes
         /// </summary>
         event Events.OrionEventHandler GamePostUpdate;
+
+        /// <summary>
+        /// Occurs when the server will send some data to clients
+        /// </summary>
+        event Events.OrionEventHandler<Events.NetSendDataEventArgs> NetSendData;
     }
 }

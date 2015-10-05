@@ -72,12 +72,15 @@ namespace Orion
         {
             this.moduleContainer = new List<OrionModuleBase>();
             this.plugin = plugin;
+            AppDomain.CurrentDomain.AssemblyResolve += CurrentDomain_AssemblyResolve;
         }
+
 
         public void Initialize()
         {
             CheckDirectories();
             LoadModules();
+            RunModules();
         }
 
         /// <summary>
@@ -224,7 +227,7 @@ namespace Orion
         /// </returns>
         public IEnumerable<Type> GetOrionModulesFromAssembly(Assembly asm)
         {
-            return from i in typeof(Orion).Assembly.GetTypes()
+            return from i in asm.GetTypes()
                    let orionModuleAttr = Attribute.GetCustomAttribute(i, typeof(OrionModuleAttribute)) as OrionModuleAttribute
                    where orionModuleAttr != null
                        && orionModuleAttr.Enabled == true
@@ -295,6 +298,10 @@ namespace Orion
             }
         }
 
+        private Assembly CurrentDomain_AssemblyResolve(object sender, ResolveEventArgs args)
+        {
+            return null;
+        }
         #endregion
 
         #region IDisposable Support
