@@ -11,6 +11,7 @@ namespace Orion
     /// <summary>
     /// Defines the entry point for orion, and how it interacts with OTAPI
     /// </summary>
+    [OTAVersion(1,0)]
     public class OTAPIPlugin : BasePlugin
     {
         protected Orion orionInstance;

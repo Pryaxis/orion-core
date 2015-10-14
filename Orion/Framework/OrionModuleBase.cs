@@ -48,6 +48,8 @@ namespace Orion.Framework
         /// </param>
 		protected OrionModuleBase(Orion core)
         {
+            this.coreRef = core;
+
             OrionModuleAttribute attrib = (OrionModuleAttribute)Attribute.GetCustomAttribute(GetType(), typeof(OrionModuleAttribute));
 
             if (attrib == null)
