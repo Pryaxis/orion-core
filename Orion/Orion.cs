@@ -1,4 +1,5 @@
 ﻿using Orion.Framework;
+using OTA.DebugFramework;
 using OTA.Logging;
 using OTA.Plugin;
 using System;
@@ -151,7 +152,7 @@ namespace Orion
                     {
                         module.Initialize();
                     }
-                    catch
+                    catch (Exception ex) when (!(ex is AssertionException))
                     {
                         /*
                          * Module init exceptions should not interfere with other 

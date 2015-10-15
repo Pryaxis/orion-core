@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using Orion.Framework.Events;
 using OTA.Plugin;
 using OTA.Logging;
+using OTA.DebugFramework;
 
 namespace Orion.Hooks
 {
@@ -24,7 +25,10 @@ namespace Orion.Hooks
 
         public override void Initialize()
         {
+
             base.Initialize();
+
+            Assert.Expression(() => Core == null);
 
             Core.Plugin.Hook(HookPoints.ServerUpdate, OnGameUpdate);
             Core.Plugin.Hook(HookPoints.SendNetMessage, OnNetSendData);
