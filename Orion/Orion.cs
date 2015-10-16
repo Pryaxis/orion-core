@@ -65,6 +65,11 @@ namespace Orion
         public string OrionConfigurationPath => Path.Combine(OrionBasePath, "Configuration");
 
         /// <summary>
+        /// Gets the version of Orion
+        /// </summary>
+        public Version Version => Assembly.GetCallingAssembly().GetName().Version;
+
+        /// <summary>
         /// Internal synch root for Orion to lock on when access to a member must be thread-safe.
         /// </summary>
         protected readonly object syncRoot = new object();

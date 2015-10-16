@@ -42,8 +42,6 @@ namespace Orion.Hooks
             Core.Plugin.Hook(HookPoints.StartCommandProcessing, OnStartCommandProcessing);
         }
 
-
-
         #region On* Internals
 
         private void OnStartCommandProcessing(ref HookContext context, ref HookArgs.StartCommandProcessing argument)
