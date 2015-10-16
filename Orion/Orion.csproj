@@ -52,6 +52,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Framework\Events\DefaultsEventArgs.cs" />
+    <Compile Include="Framework\Events\ServerChatEventArgs.cs" />
     <Compile Include="Framework\Events\NetGetDataEventArgs.cs" />
     <Compile Include="Framework\Events\NetSendDataEventArgs.cs" />
     <Compile Include="Framework\Events\OrionEventDelegate.cs" />
@@ -83,10 +84,6 @@
 		mkdir -p $(SolutionDir)/Open-Terraria-API/API/bin/x86/Server/Plugins
 		cp $(TargetPath) $(SolutionDir)/Open-Terraria-API/API/bin/x86/Server/Plugins
 	</PostBuildEvent>
-  </PropertyGroup>
-  <PropertyGroup>
-    <PostBuildEvent>mkdir $(SolutionDir)\Open-Terraria-API\API\bin\x86\Server\Plugins
-xcopy /y $(TargetPath) $(SolutionDir)\Open-Terraria-API\API\bin\x86\Server\Plugins</PostBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

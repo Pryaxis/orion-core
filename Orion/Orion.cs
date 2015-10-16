@@ -164,7 +164,8 @@ namespace Orion
                     }
                 }
 
-                if (failedModules.Count > 0) {
+                if (failedModules.Count > 0)
+                {
                     ProgramLog.Error.Log($"orion modules:  These following modules failed to initialize and were disabled.");
 
                     foreach (OrionModuleBase failedModule in failedModules)
@@ -301,6 +302,30 @@ namespace Orion
 
         private Assembly CurrentDomain_AssemblyResolve(object sender, ResolveEventArgs args)
         {
+            string asmName = args.Name.Split(',')[0];
+
+            var paths = new[] {
+                Path.Combine(OrionModulePath, asmName + ".dll"),
+                Path.Combine(OrionBasePath, asmName + ".dll"),
+            };
+
+            foreach (string path in paths)
+            {
+                try
+                {
+                    return Assembly.LoadFile(path);
+                }
+                catch (FileNotFoundException)
+                {
+                    ProgramLog.Error.Log($"orion modules: {path} skipped: file not found");   
+                }
+                catch
+                {
+                    ProgramLog.Error.Log($"orion modules: {path} skipped: load error");
+                }
+            }
+
+            ProgramLog.Error.Log($"orion modules: no candidate for assembly {asmName}");
             return null;
         }
         #endregion
