@@ -52,6 +52,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Framework\Events\DefaultsEventArgs.cs" />
+    <Compile Include="Framework\Events\NetGetDataEventArgs.cs" />
     <Compile Include="Framework\Events\NetSendDataEventArgs.cs" />
     <Compile Include="Framework\Events\OrionEventDelegate.cs" />
     <Compile Include="Framework\IHookProvider.cs" />
@@ -61,6 +62,7 @@
     <Compile Include="Orion.cs" />
     <Compile Include="Orion.ModuleProperties.cs" />
     <Compile Include="OTAPIPlugin.cs" />
+    <Compile Include="PacketTypes.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

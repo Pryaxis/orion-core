@@ -8,6 +8,7 @@ using Orion.Framework.Events;
 using OTA.Plugin;
 using OTA.Logging;
 using OTA.DebugFramework;
+using Terraria;
 
 namespace Orion.Hooks
 {
@@ -22,12 +23,11 @@ namespace Orion.Hooks
         public event OrionEventHandler GamePostUpdate;
         public event OrionEventHandler GameUpdate;
         public event OrionEventHandler<NetSendDataEventArgs> NetSendData;
+        public event OrionEventHandler<NetGetDataEventArgs> NetGetData;
         public event OrionEventHandler<DefaultsEventArgs<Terraria.Item, int>> ItemNetDefaults;
-        public event OrionEventHandler NetGetData;
 
         public override void Initialize()
         {
-
             base.Initialize();
 
             Assert.Expression(() => Core == null);
@@ -47,10 +47,25 @@ namespace Orion.Hooks
         internal void OnNetGetData(ref HookContext context, ref HookArgs.ReceiveNetMessage argument)
         {
             HookArgs.ReceiveNetMessage msg = argument; //causes a copy
+            NetGetDataEventArgs e;
 
             try
             {
+                ArraySegment<byte> packetSegment = new ArraySegment<byte>(Netplay.Clients[argument.BufferId].ReadBuffer, argument.Start, argument.Length);
+                short packetLength = BitConverter.ToInt16(packetSegment.Array, packetSegment.Offset);
+                byte type = packetSegment.Array[packetSegment.Offset + 2];
 
+                /*
+                 * Packet sanity checks
+                 */
+                Assert.Expression(() => Enum.IsDefined(typeof(PacketTypes), type));
+                Assert.Expression(() => packetLength > 0);
+
+                if (NetGetData != null)
+                {
+                    NetGetData(Core, (e = new NetGetDataEventArgs((byte)argument.BufferId, type, packetLength)));
+                    context.Conclude = e.Cancelled;
+                }
             }
             catch (Exception ex)
             {
