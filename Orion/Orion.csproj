@@ -51,6 +51,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Framework\Events\DefaultsEventArgs.cs" />
     <Compile Include="Framework\Events\NetSendDataEventArgs.cs" />
     <Compile Include="Framework\Events\OrionEventDelegate.cs" />
     <Compile Include="Framework\IHookProvider.cs" />

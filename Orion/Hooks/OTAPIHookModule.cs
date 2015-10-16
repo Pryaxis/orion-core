@@ -22,6 +22,8 @@ namespace Orion.Hooks
         public event OrionEventHandler GamePostUpdate;
         public event OrionEventHandler GameUpdate;
         public event OrionEventHandler<NetSendDataEventArgs> NetSendData;
+        public event OrionEventHandler<DefaultsEventArgs<Terraria.Item, int>> ItemNetDefaults;
+        public event OrionEventHandler NetGetData;
 
         public override void Initialize()
         {
@@ -32,11 +34,55 @@ namespace Orion.Hooks
 
             Core.Plugin.Hook(HookPoints.ServerUpdate, OnGameUpdate);
             Core.Plugin.Hook(HookPoints.SendNetMessage, OnNetSendData);
+            Core.Plugin.Hook(HookPoints.ItemNetDefaults, OnItemNetDefaults);
+            Core.Plugin.Hook(HookPoints.ReceiveNetMessage, OnNetGetData);
         }
 
 
 
+
+
         #region On* Internals
+
+        internal void OnNetGetData(ref HookContext context, ref HookArgs.ReceiveNetMessage argument)
+        {
+            HookArgs.ReceiveNetMessage msg = argument; //causes a copy
+
+            try
+            {
+
+            }
+            catch (Exception ex)
+            {
+                ProgramLog.Log(ex);
+            }
+        }
+
+        internal void OnItemNetDefaults(ref HookContext context, ref HookArgs.ItemNetDefaults argument)
+        {
+            DefaultsEventArgs<Terraria.Item, int> e;
+            HookArgs.ItemNetDefaults defaults = argument; // causes a copy
+
+            Assert.Expression(() => defaults.Item == null);
+
+            try
+            {
+                if (ItemNetDefaults != null)
+                {
+                    ItemNetDefaults(Core, (e = new DefaultsEventArgs<Terraria.Item, int>()
+                    {
+                        Object = argument.Item,
+                        Info = argument.Type
+                    }));
+
+                    context.Conclude = e.Cancelled;
+                }
+            }
+            catch (Exception ex)
+            {
+                ProgramLog.Log(ex);
+            }
+        }
 
         internal void OnGameUpdate(ref HookContext context, ref HookArgs.ServerUpdate args)
         {
@@ -117,6 +163,8 @@ namespace Orion.Hooks
                 //Remove all OTAPI callbacks and hooks
                 Core.Plugin.Unhook(HookPoints.ServerUpdate);
                 Core.Plugin.Unhook(HookPoints.SendNetMessage);
+                Core.Plugin.Unhook(HookPoints.ItemNetDefaults);
+                Core.Plugin.Unhook(HookPoints.ReceiveNetMessage);
             }
 
             base.Dispose(disposing);
