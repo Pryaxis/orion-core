@@ -26,6 +26,7 @@ namespace Orion.Hooks
         public event OrionEventHandler<NetGetDataEventArgs> NetGetData;
         public event OrionEventHandler<DefaultsEventArgs<Terraria.Item, int>> ItemNetDefaults;
         public event OrionEventHandler<ServerChatEventArgs> ServerChat;
+        public event OrionEventHandler ServerCommandThreadStarting;
 
         public override void Initialize()
         {
@@ -38,28 +39,42 @@ namespace Orion.Hooks
             Core.Plugin.Hook(HookPoints.ItemNetDefaults, OnItemNetDefaults);
             Core.Plugin.Hook(HookPoints.ReceiveNetMessage, OnNetGetData);
             Core.Plugin.Hook(HookPoints.ConsoleMessageReceived, OnConsoleMessageReceived);
+            Core.Plugin.Hook(HookPoints.StartCommandProcessing, OnStartCommandProcessing);
         }
 
+
+
         #region On* Internals
+
+        private void OnStartCommandProcessing(ref HookContext context, ref HookArgs.StartCommandProcessing argument)
+        {
+            context.SetResult(HookResult.IGNORE);
+
+            if (ServerCommandThreadStarting != null)
+            {
+                ServerCommandThreadStarting(Core, new OrionEventArgs());
+            }
+        }
 
         private void OnConsoleMessageReceived(ref HookContext context, ref HookArgs.ConsoleMessageReceived argument)
         {
             ServerChatEventArgs e;
-            
+
             try
             {
                 if (ServerChat != null)
                 {
-                    ServerChat(Core, (e = new ServerChatEventArgs() {
-                       Message = argument.Message 
+                    ServerChat(Core, (e = new ServerChatEventArgs()
+                    {
+                        Message = argument.Message
                     }));
-                    
+
                     context.Conclude = e.Cancelled;
                 }
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
-                ProgramLog.Log(ex);  
+                ProgramLog.Log(ex);
             }
         }
 
@@ -199,6 +214,8 @@ namespace Orion.Hooks
                 Core.Plugin.Unhook(HookPoints.SendNetMessage);
                 Core.Plugin.Unhook(HookPoints.ItemNetDefaults);
                 Core.Plugin.Unhook(HookPoints.ReceiveNetMessage);
+                Core.Plugin.Unhook(HookPoints.ConsoleMessageReceived);
+                Core.Plugin.Unhook(HookPoints.StartCommandProcessing);
             }
 
             base.Dispose(disposing);
