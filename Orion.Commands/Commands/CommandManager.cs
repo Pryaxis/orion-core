@@ -22,21 +22,33 @@ namespace Orion.Commands.Commands
         public void ParseAndCallCommand(BasePlayer player, string commandString)
         {
             var name = CommandStringParser.GetCommandNameFromCommandString(commandString);
-            var command = Commands.Single(x => x.CommandName == name);
-            try
+            var args = CommandStringParser.SplitCommandStringIntoArguments(commandString);
+            var commands = Commands.Where(x => x.CommandName == name).Where(x => x.ExpectedTypes.Count == args.Count);
+
+            if (!commands.Any())
             {
-                var argList = Parser.ParseCommandStringIntoArguments(commandString, command.ExpectedTypes);
-                command.Call(argList);
+                //TODO: Handle possibility of command not found or command variant not found.
             }
-            catch (ArgumentParsingException ex)
+
+
+            foreach (var command in commands)
             {
-                //TODO: Message player here about error and log it.
-                throw;
-            }
-            catch (CommandException ex)
-            {
-                //TODO: Message player here about error and log it.
-                throw;
+                try
+                {
+                    var argList = Parser.ParseCommandStringIntoArguments(commandString, command.ExpectedTypes);
+                    command.Call(argList);
+                    return;
+                }
+                catch (ArgumentParsingException ex)
+                {
+                    //TODO: Message player here about error and log it.
+                    throw;
+                }
+                catch (CommandException ex)
+                {
+                    //TODO: Message player here about error and log it.
+                    throw;
+                }
             }
         }
 

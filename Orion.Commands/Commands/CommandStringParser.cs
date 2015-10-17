@@ -65,7 +65,7 @@ namespace Orion.Commands.Commands
             return returnList;
         }
 
-        private List<string> SplitCommandStringIntoArguments(string command)
+        public static List<string> SplitCommandStringIntoArguments(string command)
         {
             var ret = new List<string>();
             StringBuilder current = new StringBuilder();
