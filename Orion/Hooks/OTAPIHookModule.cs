@@ -7,6 +7,8 @@ using System.Threading.Tasks;
 using Orion.Framework.Events;
 using OTA.Plugin;
 using OTA.Logging;
+using OTA.DebugFramework;
+using Terraria;
 
 namespace Orion.Hooks
 {
@@ -21,18 +23,113 @@ namespace Orion.Hooks
         public event OrionEventHandler GamePostUpdate;
         public event OrionEventHandler GameUpdate;
         public event OrionEventHandler<NetSendDataEventArgs> NetSendData;
+        public event OrionEventHandler<NetGetDataEventArgs> NetGetData;
+        public event OrionEventHandler<DefaultsEventArgs<Terraria.Item, int>> ItemNetDefaults;
+        public event OrionEventHandler<ServerChatEventArgs> ServerChat;
+        public event OrionEventHandler ServerCommandThreadStarting;
 
         public override void Initialize()
         {
             base.Initialize();
 
+            Assert.Expression(() => Core == null);
+
             Core.Plugin.Hook(HookPoints.ServerUpdate, OnGameUpdate);
             Core.Plugin.Hook(HookPoints.SendNetMessage, OnNetSendData);
+            Core.Plugin.Hook(HookPoints.ItemNetDefaults, OnItemNetDefaults);
+            Core.Plugin.Hook(HookPoints.ReceiveNetMessage, OnNetGetData);
+            Core.Plugin.Hook(HookPoints.ConsoleMessageReceived, OnConsoleMessageReceived);
+            Core.Plugin.Hook(HookPoints.StartCommandProcessing, OnStartCommandProcessing);
         }
 
-
-
         #region On* Internals
+
+        private void OnStartCommandProcessing(ref HookContext context, ref HookArgs.StartCommandProcessing argument)
+        {
+            context.SetResult(HookResult.IGNORE);
+
+            if (ServerCommandThreadStarting != null)
+            {
+                ServerCommandThreadStarting(Core, new OrionEventArgs());
+            }
+        }
+
+        private void OnConsoleMessageReceived(ref HookContext context, ref HookArgs.ConsoleMessageReceived argument)
+        {
+            ServerChatEventArgs e;
+
+            try
+            {
+                if (ServerChat != null)
+                {
+                    ServerChat(Core, (e = new ServerChatEventArgs()
+                    {
+                        Message = argument.Message
+                    }));
+
+                    context.Conclude = e.Cancelled;
+                }
+            }
+            catch (Exception ex)
+            {
+                ProgramLog.Log(ex);
+            }
+        }
+
+        internal void OnNetGetData(ref HookContext context, ref HookArgs.ReceiveNetMessage argument)
+        {
+            HookArgs.ReceiveNetMessage msg = argument; //causes a copy
+            NetGetDataEventArgs e;
+
+            try
+            {
+                ArraySegment<byte> packetSegment = new ArraySegment<byte>(Netplay.Clients[argument.BufferId].ReadBuffer, argument.Start, argument.Length);
+                short packetLength = BitConverter.ToInt16(packetSegment.Array, packetSegment.Offset);
+                byte type = packetSegment.Array[packetSegment.Offset + 2];
+
+                /*
+                 * Packet sanity checks
+                 */
+                Assert.Expression(() => Enum.IsDefined(typeof(PacketTypes), type));
+                Assert.Expression(() => packetLength > 0);
+
+                if (NetGetData != null)
+                {
+                    NetGetData(Core, (e = new NetGetDataEventArgs((byte)argument.BufferId, type, packetLength)));
+                    context.Conclude = e.Cancelled;
+                }
+            }
+            catch (Exception ex)
+            {
+                ProgramLog.Log(ex);
+            }
+        }
+
+        internal void OnItemNetDefaults(ref HookContext context, ref HookArgs.ItemNetDefaults argument)
+        {
+            DefaultsEventArgs<Terraria.Item, int> e;
+            HookArgs.ItemNetDefaults defaults = argument; // causes a copy
+
+            Assert.Expression(() => defaults.Item == null);
+
+            try
+            {
+                if (ItemNetDefaults != null)
+                {
+                    ItemNetDefaults(Core, (e = new DefaultsEventArgs<Terraria.Item, int>()
+                    {
+                        Object = argument.Item,
+                        Info = argument.Type
+                    }));
+
+                    context.Conclude = e.Cancelled;
+                }
+            }
+            catch (Exception ex)
+            {
+                ProgramLog.Log(ex);
+            }
+        }
 
         internal void OnGameUpdate(ref HookContext context, ref HookArgs.ServerUpdate args)
         {
@@ -113,6 +210,10 @@ namespace Orion.Hooks
                 //Remove all OTAPI callbacks and hooks
                 Core.Plugin.Unhook(HookPoints.ServerUpdate);
                 Core.Plugin.Unhook(HookPoints.SendNetMessage);
+                Core.Plugin.Unhook(HookPoints.ItemNetDefaults);
+                Core.Plugin.Unhook(HookPoints.ReceiveNetMessage);
+                Core.Plugin.Unhook(HookPoints.ConsoleMessageReceived);
+                Core.Plugin.Unhook(HookPoints.StartCommandProcessing);
             }
 
             base.Dispose(disposing);
