@@ -12,15 +12,14 @@ namespace Orion.Commands
 {
     //TODO: Allow commands to specify permissions.
     //TODO: Logging of exceptions and issues.
+    //TODO: Hook into a chat hook and process command strings.
+    //TODO: Config options such as what the command specifier character is.
     [OrionModule("Command Provider", "Nyx Studios", Description = "Allows for other modules to register commands for use in-game by players.")]
     public class CommandProviderModule : OrionModuleBase
     {
-        protected Thread commandInputThread;
-
-        //TODO: Hook into a chat hook and process command strings.
-        //TODO: Config options such as what the command specifier character is.
-
         public readonly CommandManager Commands;
+        private ConsolePlayer CPlayer { get; set; } = new ConsolePlayer();
+        protected Thread commandInputThread;
 
         public CommandProviderModule(Orion core) : base(core)
         {
@@ -70,7 +69,7 @@ namespace Orion.Commands
                 
                 string line = Console.ReadLine();
                 
-                //TODO: Pass commands off to handler to do its thang
+                RunCommand(CPlayer, line);
             }
         }
 

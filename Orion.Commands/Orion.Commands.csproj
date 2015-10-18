@@ -62,6 +62,7 @@
     <Compile Include="Commands\CommandStringParser.cs" />
     <Compile Include="Commands\Exceptions\ArgumentParsingException.cs" />
     <Compile Include="Commands\Exceptions\CommandException.cs" />
+    <Compile Include="ConsolePlayer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
