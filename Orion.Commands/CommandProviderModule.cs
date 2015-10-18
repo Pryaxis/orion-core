@@ -10,6 +10,8 @@ using OTA;
 
 namespace Orion.Commands
 {
+    //TODO: Allow commands to specify permissions.
+    //TODO: Logging of exceptions and issues.
     [OrionModule("Command Provider", "Nyx Studios", Description = "Allows for other modules to register commands for use in-game by players.")]
     public class CommandProviderModule : OrionModuleBase
     {

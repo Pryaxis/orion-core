@@ -33,6 +33,11 @@ namespace Orion.Commands.Commands
                 Parent = new WeakReference<object>(parent);
         }
 
+        /// <summary>
+        /// Attempt to call the callback function behind this command.
+        /// </summary>
+        /// <param name="args">The arguments to be passed into the callback method.</param>
+        /// <exception cref="CommandException">Thrown if the callback function throws an exception or if the target of the callback has been disposed.</exception>
         public void Call(List<object> args)
         {
             object parent = null;

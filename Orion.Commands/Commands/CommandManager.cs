@@ -10,11 +10,6 @@ namespace Orion.Commands.Commands
 {
     public class CommandManager
     {
-        //TODO: Add permission specification to each `AddCommand`
-        /* 
-            Should also default to any versions of the command which take `ArgumentList` if available.
-        */
-
         public List<Command> Commands { get;} = new List<Command>();
 
         public CommandStringParser Parser = new CommandStringParser();
