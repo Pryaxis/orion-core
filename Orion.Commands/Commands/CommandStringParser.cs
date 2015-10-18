@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Orion.Commands.Commands.Exceptions;
+using OTA;
 
 namespace Orion.Commands.Commands
 {
@@ -33,6 +34,11 @@ namespace Orion.Commands.Commands
         public List<object> ParseCommandStringIntoArguments(string command, List<Type> expectedTypes)
         {
             var args = SplitCommandStringIntoArguments(command);
+
+            if (expectedTypes.First() == typeof (BasePlayer))
+            {
+                expectedTypes = expectedTypes.Skip(1).ToList();
+            }
 
             if (args.Count != expectedTypes.Count)
             {
