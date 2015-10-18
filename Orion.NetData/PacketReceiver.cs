@@ -28,7 +28,15 @@ namespace Orion.NetData
 		/// Fired when a TileGetSection packet is received
 		/// </summary>
 		public event OrionEventHandler<PacketEventArgs<TileGetSection>> TileGetSection;
-		
+		/// <summary>
+		/// TODO: Description
+		/// </summary>
+		public event OrionEventHandler<PacketEventArgs<SpawnPlayer>> SpawnPlayer;
+		/// <summary>
+		/// TODO: Description
+		/// </summary>
+		public event OrionEventHandler<PacketEventArgs<PlayerUpdate>> PlayerUpdate;
+
 		internal PacketReceiver()
 		{
 			DeserializerList = new List<PacketTypes>
@@ -37,7 +45,8 @@ namespace Orion.NetData
 				{PacketTypes.PlayerInfo},
 				{PacketTypes.PlayerSlot},
 				{PacketTypes.ContinueConnecting2},
-				{PacketTypes.TileGetSection}
+				{PacketTypes.TileGetSection},
+				{PacketTypes.PlayerSpawn}
 			};
 		}
 
@@ -94,6 +103,22 @@ namespace Orion.NetData
 						packet = new TileGetSection(e.CreateBinaryReader());
 						TileGetSection(orion,
 							new PacketEventArgs<TileGetSection>((TileGetSection)packet));
+					}
+					break;
+
+				case PacketTypes.PlayerSpawn:
+					if (SpawnPlayer != null)
+					{
+						packet = new SpawnPlayer(e.CreateBinaryReader());
+						SpawnPlayer(orion, new PacketEventArgs<SpawnPlayer>((SpawnPlayer)packet));
+					}
+					break;
+
+				case PacketTypes.PlayerUpdate:
+					if (PlayerUpdate != null)
+					{
+						packet = new PlayerUpdate(e.CreateBinaryReader());
+						PlayerUpdate(orion, new PacketEventArgs<PlayerUpdate>((PlayerUpdate)packet));
 					}
 					break;
 			}

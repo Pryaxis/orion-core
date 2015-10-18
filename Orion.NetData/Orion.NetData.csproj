@@ -55,8 +55,12 @@
     <Compile Include="Packets\Disconnect.cs" />
     <Compile Include="Packets\InventorySlot.cs" />
     <Compile Include="Packets\PlayerInfo.cs" />
+    <Compile Include="Packets\PlayerUpdate.cs" />
+    <Compile Include="Packets\SectionTileFrame.cs" />
+    <Compile Include="Packets\SpawnPlayer.cs" />
     <Compile Include="Packets\Status.cs" />
     <Compile Include="Packets\TileGetSection.cs" />
+    <Compile Include="Packets\TileSendSection.cs" />
     <Compile Include="Packets\WorldInfo.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TerrariaPacketBase.cs" />

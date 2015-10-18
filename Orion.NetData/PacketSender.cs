@@ -25,7 +25,18 @@ namespace Orion.NetData
 		/// Fired when a WorldInfo packet is sent
 		/// </summary>
 		public event OrionEventHandler<PacketEventArgs<WorldInfo>> WorldInfo;
-
+		/// <summary>
+		/// TODO: Description
+		/// </summary>
+		public event OrionEventHandler<PacketEventArgs<TileSendSection>> TileSendSection;
+		/// <summary>
+		/// TODO: Description
+		/// </summary>
+		public event OrionEventHandler<PacketEventArgs<SectionTileFrame>> SectionTileFrame;
+		/// <summary>
+		/// TODO: Description
+		/// </summary>
+		public event OrionEventHandler<PacketEventArgs<PlayerUpdate>> PlayerUpdate;
 
 		public void SendPacket(Orion orion, NetSendDataEventArgs e)
 		{
@@ -71,6 +82,30 @@ namespace Orion.NetData
 					{
 						packet = new WorldInfo();
 						WorldInfo(orion, new PacketEventArgs<WorldInfo>((WorldInfo)packet));
+					}
+					break;
+
+				case PacketTypes.TileSendSection:
+					if (TileSendSection != null)
+					{
+						packet = new TileSendSection(e);
+						TileSendSection(orion, new PacketEventArgs<TileSendSection>((TileSendSection)packet));
+					}
+					break;
+
+				case PacketTypes.TileFrameSection:
+					if (SectionTileFrame != null)
+					{
+						packet = new SectionTileFrame(e);
+						SectionTileFrame(orion, new PacketEventArgs<SectionTileFrame>((SectionTileFrame)packet));
+					}
+					break;
+
+				case PacketTypes.PlayerUpdate:
+					if (PlayerUpdate != null)
+					{
+						packet = new PlayerUpdate((byte)e.Number);
+						PlayerUpdate(orion, new PacketEventArgs<PlayerUpdate>((PlayerUpdate)packet));
 					}
 					break;
 			}
