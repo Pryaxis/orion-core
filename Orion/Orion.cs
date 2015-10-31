@@ -1,4 +1,5 @@
-﻿using Orion.Framework;
+﻿using Orion.Extensions;
+using Orion.Framework;
 using OTA.DebugFramework;
 using OTA.Logging;
 using OTA.Plugin;
@@ -9,6 +10,7 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace Orion
@@ -35,14 +37,9 @@ namespace Orion
         internal OTAPIPlugin Plugin => plugin;
 
         /// <summary>
-        /// Contains a cached list of all available Orion modules
-        /// </summary>
-        internal List<Type> availablePlugins;
-
-        /// <summary>
         /// Contains references to all the Orion modules loaded inside Orion
         /// </summary>
-        internal readonly List<OrionModuleBase> moduleContainer;
+        internal readonly List<ModuleRef> moduleContainer;
 
         /// <summary>
         /// Returns the base path for all Orion-based disk information
@@ -74,9 +71,11 @@ namespace Orion
         /// </summary>
         protected readonly object syncRoot = new object();
 
+        protected int initPercent = 0;
+
         public Orion(OTAPIPlugin plugin)
         {
-            this.moduleContainer = new List<OrionModuleBase>();
+            this.moduleContainer = new List<ModuleRef>();
             this.plugin = plugin;
             AppDomain.CurrentDomain.AssemblyResolve += CurrentDomain_AssemblyResolve;
         }
@@ -84,10 +83,116 @@ namespace Orion
 
         public void Initialize()
         {
+            PrintConsoleHeader();
             CheckDirectories();
+
+            /*
+             * Loads all module types as ModuleRef instances inside the container.
+             */
             LoadModules();
+            
+            /*
+             * Updates the dependency graph, so that modules that have the most
+             * dependencies via the [DependsOn] attribute load first.
+             */
+            UpdateDependencyGraph();
+
+            /*
+             * Runs all modules inside the module container.
+             */
             RunModules();
         }
+
+        /// <summary>
+        /// Prints some mad console shinies to the screen.
+        /// </summary>
+        protected void PrintConsoleHeader()
+        {
+            Console.Clear();
+
+            Console.WriteLine();
+            Console.ForegroundColor = ConsoleColor.Yellow;
+            Console.Write("O");
+            Console.ForegroundColor = ConsoleColor.Red;
+            Console.Write("rion API");
+            Console.ForegroundColor = ConsoleColor.Yellow;
+            Console.Write($"\tv{Version.Major}.{Version.Minor}\tProudly by Nyx Studios");
+            Console.WriteLine();
+            Console.WriteLine();
+            Console.WriteLine("Orion is loading...");
+
+            PrintConsoleProgressBar(4, ++initPercent, "Initializing");
+
+            Console.WriteLine();
+            Console.WriteLine();
+        }
+
+
+        /// <summary>
+        /// Prints a console progress bar at position <paramref name="y"/> with the
+        /// specfied <paramref name="percent"/>.  Optionally contains up to a 15
+        /// character <paramref name="message"/>.
+        /// </summary>
+        /// <param name="y">
+        /// The Y offset position in the console window in which to print 
+        /// the progress bar.
+        /// </param>
+        /// <param name="percent">
+        /// A whole percentage of the progress bar (out of 100%) to fill
+        /// </param>
+        /// <param name="message">
+        /// An optional message to display with the progress bar.
+        /// </param>
+        protected void PrintConsoleProgressBar(int y, int percent, string message = "")
+        {
+            ConsoleColor background = Console.BackgroundColor;
+            int barSize = 0;
+
+            int originalX = Console.CursorLeft;
+            int originalY = Console.CursorTop;
+
+            Console.CursorTop = y;
+            Console.CursorLeft = 0;
+
+            for (int i = 0; i < 15; i++)
+            {
+                char c;
+                if (i >= message.Length)
+                {
+                    c = ' ';
+                }
+                else
+                {
+                    c = message[i];
+                }
+
+                Console.Write(c);
+            }
+
+            Console.Write(" [");
+
+            barSize = Console.WindowWidth - Console.CursorLeft - 3;
+            for (int i = Console.CursorLeft, zeroIndex = 0; i < barSize; i++, zeroIndex++)
+            {
+                decimal size = ((decimal)zeroIndex / barSize) * 100;
+
+                if (percent <= size)
+                {
+                    Console.BackgroundColor = background;
+                }
+                else
+                {
+                    Console.BackgroundColor = ConsoleColor.Yellow;
+                }
+
+                Console.Write(" ");
+            }
+
+            Console.BackgroundColor = background;
+            Console.Write("]");
+            Console.SetCursorPosition(originalX, originalY);
+        }
+
 
         /// <summary>
         /// Checks for, and creates Orion's directory structure if it doesn't exist
@@ -97,7 +202,6 @@ namespace Orion
             if (Directory.Exists(OrionBasePath) == false)
             {
                 Directory.CreateDirectory(OrionBasePath);
-
                 Directory.CreateDirectory(OrionModulePath);
                 Directory.CreateDirectory(OrionConfigurationPath);
                 Directory.CreateDirectory(OrionDatabasePath);
@@ -119,13 +223,15 @@ namespace Orion
                     Directory.CreateDirectory(OrionDatabasePath);
                 }
             }
+
+            PrintConsoleProgressBar(4, ++initPercent, "Checking");
         }
 
         /// <summary>
         /// Returns the first orion module matching the type parameter <typeparamref name="TModule"/>
         /// </summary>
         /// <typeparam name="TModule">
-        /// TModule is the type of a module
+        /// TModule is the type of an Orion module directly inheriting from OrionModuleBase.
         /// </typeparam>
         /// <returns>
         /// A <typeparamref name="TModule"/> instance if one was found in the module container
@@ -138,7 +244,9 @@ namespace Orion
 
             lock (syncRoot)
             {
-                module = moduleContainer.FirstOrDefault(i => i is TModule) as TModule;
+                module = moduleContainer
+                    .FirstOrDefault(i => i.ModuleType == typeof(TModule))
+                    .GetStrongReference<TModule>();
             }
 
             return module;
@@ -146,26 +254,34 @@ namespace Orion
 
         #region Orion Module Loader
 
+        /// <summary>
+        /// Runs all Orion modules in module-dependent order.
+        /// </summary>
         public void RunModules()
         {
             List<OrionModuleBase> failedModules = new List<OrionModuleBase>();
+            OrionModuleBase moduleInstance = null;
+
             lock (syncRoot)
             {
-                foreach (OrionModuleBase module in moduleContainer)
+                int count = 0;
+                foreach (ModuleRef module in moduleContainer.OrderByDescending(i => i.DependencyCount))
                 {
                     try
                     {
-                        module.Initialize();
+                        moduleInstance = module.CreateInstance();
                     }
                     catch (Exception ex) when (!(ex is AssertionException))
                     {
                         /*
-                         * Module init exceptions should not interfere with other 
-                         * module inits
+                         * Module init exceptions should not interfere with other module inits.
                          */
-
-                        failedModules.Add(module);
+                        failedModules.Add(moduleInstance);
                         continue;
+                    }
+                    finally
+                    {
+                        PrintConsoleProgressBar(4, (int)((decimal)++count / moduleContainer.Count) * 100, module.ModuleAttribute.ModuleName.GenerateSlug());
                     }
                 }
 
@@ -178,8 +294,6 @@ namespace Orion
                         ProgramLog.Error.Log($" * {failedModule.ModuleName} by {failedModule.Author}");
                         failedModule.Dispose();
                     }
-
-                    moduleContainer.RemoveAll(i => failedModules.Contains(i));
                 }
             }
         }
@@ -189,10 +303,13 @@ namespace Orion
         /// </summary>
         public void LoadModules()
         {
+            PrintConsoleProgressBar(4, ++initPercent, "loadmod");
+
             /*
              * All OrionModule types inside Orion.dll itself are considered internal.
              */
             IEnumerable<Type> internalModuleList = GetOrionModulesFromAssembly(typeof(Orion).Assembly);
+            PrintConsoleProgressBar(4, ++initPercent, "loadmod-int");
 
             /*
              * Note:  Internal modules will load first before all other modules, completely
@@ -200,6 +317,7 @@ namespace Orion
              * the external module list so that internal ones always get instantiated first.
              */
             IEnumerable<Type> externalModuleList = ExternalModules();
+            PrintConsoleProgressBar(4, ++initPercent, "loadmod-ext");
 
             foreach (Type module in internalModuleList.Union(externalModuleList))
             {
@@ -234,13 +352,19 @@ namespace Orion
         /// </returns>
         public IEnumerable<Type> GetOrionModulesFromAssembly(Assembly asm)
         {
-            return from i in asm.GetTypes()
-                   let orionModuleAttr = Attribute.GetCustomAttribute(i, typeof(OrionModuleAttribute)) as OrionModuleAttribute
-                   where orionModuleAttr != null
-                       && orionModuleAttr.Enabled == true
-                       && i.BaseType == typeof(OrionModuleBase)
-                   orderby orionModuleAttr.Order
-                   select i;
+            foreach (Type t in asm.GetTypes())
+            {
+                OrionModuleAttribute moduleAttr = Attribute.GetCustomAttribute(t, typeof(OrionModuleAttribute)) as OrionModuleAttribute;
+
+                if (moduleAttr == null
+                    || moduleAttr.Enabled == false
+                    || t.BaseType != typeof(OrionModuleBase))
+                {
+                    continue;
+                }
+
+                yield return t;
+            }
         }
 
         /// <summary>
@@ -273,7 +397,6 @@ namespace Orion
                  * Important:  Do not do orderby selectors here, as they are re-ordered later
                  * in the process.
                  */
-
                 moduleList.AddRange(GetOrionModulesFromAssembly(asm));
             }
 
@@ -288,20 +411,65 @@ namespace Orion
         /// </param>
         public void LoadModule(Type moduleType)
         {
-            OrionModuleBase moduleInstance;
-
-            if (moduleType.BaseType == null || moduleType.BaseType != typeof(OrionModuleBase))
+            lock (syncRoot)
             {
-                throw new InvalidOperationException($"Module {moduleType.Name} does not inherit from OrionModuleBase");
+                moduleContainer.Add(new ModuleRef(this, moduleType));
             }
+        }
 
-            moduleInstance = Activator.CreateInstance(moduleType, this) as OrionModuleBase;
+        /// <summary>
+        /// Loops through each module dependency listed in the [DependsOn] attribute
+        /// on each module in the module container, and increments the dependency
+        /// count on the target module.  Must be called after the module container is
+        /// fully loaded with all the module references.
+        /// </summary>
+        internal void UpdateDependencyGraph()
+        {
+            lock (syncRoot)
+            {
+                foreach (ModuleRef mod in moduleContainer)
+                {
+                    if (mod.DependsOnAttribute == null)
+                    {
+                        continue;
+                    }
 
-            ProgramLog.Debug.Log($"orion modules: activating {moduleInstance.ModuleName} by {moduleInstance.Author}");
+                    foreach (Type dependency in mod.DependsOnAttribute.ModuleDependencies)
+                    {
+                        ModuleRef dependencyRef;
+
+                        if (dependency.IsSubclassOf(typeof(OrionModuleBase)) == false)
+                        {
+                            continue;
+                        }
+
+                        dependencyRef = GetModuleRef(dependency);
+                        Assert.Expression(() => dependencyRef == null);
+                        
+                        dependencyRef.IncrementDependencyCount();
+                    }
+                }
+            }
+        }
+
+        /// <summary>
+        /// Retrieves the ModuleRef instance for the specified Orion module type
+        /// from Orion's module container.
+        /// </summary>
+        /// <param name="moduleType">A type of any Orion module that inherits from <see cref="OrionModuleBase"/></param>
+        /// <returns>
+        /// A ModuleRef containing the orion module type if one was found,
+        /// or null if one does not exist.
+        /// </returns>
+        public ModuleRef GetModuleRef(Type moduleType)
+        {
+            Assert.Expression(() => moduleType == null);
+            Assert.Expression(() => moduleType.IsSubclassOf(typeof(OrionModuleBase)) == false);
+            Assert.Expression(() => moduleContainer.FirstOrDefault(i => i.ModuleType == moduleType) == null);
 
             lock (syncRoot)
             {
-                moduleContainer.Add(moduleInstance);
+                return moduleContainer.FirstOrDefault(i => i.ModuleType == moduleType);
             }
         }
 
@@ -322,7 +490,7 @@ namespace Orion
                 }
                 catch (FileNotFoundException)
                 {
-                    ProgramLog.Error.Log($"orion modules: {path} skipped: file not found");   
+                    ProgramLog.Error.Log($"orion modules: {path} skipped: file not found");
                 }
                 catch
                 {

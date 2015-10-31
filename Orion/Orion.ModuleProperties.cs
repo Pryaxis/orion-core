@@ -12,7 +12,11 @@ namespace Orion
         /// <summary>
         /// Gets the hook provider for this orion instance.  All hooks live here.
         /// </summary>
-        public IHookProvider Hooks => Get<Hooks.OTAPIHookModule>();
+        public IHookProvider Hooks => Get<Modules.Hooks.OTAPIHookModule>();
 
+        /// <summary>
+        /// Gets the console provider for this orion instance.
+        /// </summary>
+        public IConsoleProvider ConsoleModule => Get<Modules.Console.ConsoleModule>();
     }
 }

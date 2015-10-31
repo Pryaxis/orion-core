@@ -51,15 +51,21 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Extensions\String.Extensions.cs" />
+    <Compile Include="Framework\ModuleRef.cs" />
+    <Compile Include="Modules\Console\ConsoleModule.cs" />
+    <Compile Include="Framework\Events\ConsoleLineEventArgs.cs" />
     <Compile Include="Framework\Events\DefaultsEventArgs.cs" />
     <Compile Include="Framework\Events\ServerChatEventArgs.cs" />
     <Compile Include="Framework\Events\NetGetDataEventArgs.cs" />
     <Compile Include="Framework\Events\NetSendDataEventArgs.cs" />
     <Compile Include="Framework\Events\OrionEventDelegate.cs" />
+    <Compile Include="Framework\IConsoleProvider.cs" />
     <Compile Include="Framework\IHookProvider.cs" />
+    <Compile Include="Framework\DependsOnAttribute.cs" />
     <Compile Include="Framework\OrionModuleAttribute.cs" />
     <Compile Include="Framework\OrionModuleBase.cs" />
-    <Compile Include="Hooks\OTAPIHookModule.cs" />
+    <Compile Include="Modules\Hooks\OTAPIHookModule.cs" />
     <Compile Include="Orion.cs" />
     <Compile Include="Orion.ModuleProperties.cs" />
     <Compile Include="OTAPIPlugin.cs" />

@@ -19,11 +19,6 @@ namespace Orion.Framework
 		public string Author { get; private set; }
      
         /// <summary>
-        /// Gets or sets the module load order, specify -1 for unspecified.
-        /// </summary>
-		public int Order { get; private set; }
-
-        /// <summary>
         /// (optional) Gets or sets the module description.
         /// </summary>
         public string Description { get; set; }
@@ -41,11 +36,10 @@ namespace Orion.Framework
         /// </summary>
         public Version ModuleVersion { get; set; } = typeof(Orion).Assembly.GetName().Version;
 
-		public OrionModuleAttribute(string name, string author, int order = -1)
+		public OrionModuleAttribute(string name, string author)
 		{
 			ModuleName = name;
 			Author = author;
-			Order = order;
 		}
 	}
 }
