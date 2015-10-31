@@ -34,6 +34,7 @@ namespace Orion
         {
             Version orionVersion = this.GetType().Assembly.GetName().Version;
             orionInstance.Initialize();
+
             //ProgramLog.Log($"Orion version {orionVersion.ToString()} initialized.");
         }
 

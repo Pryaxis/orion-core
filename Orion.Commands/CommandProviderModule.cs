@@ -16,7 +16,7 @@ namespace Orion.Commands
     //TODO: Hook into a chat hook and process command strings.
     //TODO: Config options such as what the command specifier character is.
     [OrionModule("Command Provider", "Nyx Studios", Description = "Allows for other modules to register commands for use in-game by players.")]
-    [OrionDepends(typeof(Modules.Hooks.OTAPIHookModule), typeof(Modules.Console.ConsoleModule))]
+    [DependsOn(typeof(Modules.Hooks.OTAPIHookModule), typeof(Modules.Console.ConsoleModule))]
     public class CommandProviderModule : OrionModuleBase
     {
         public readonly CommandManager Commands;
@@ -25,7 +25,7 @@ namespace Orion.Commands
         public CommandProviderModule(Orion core) : base(core)
         {
             Commands = new CommandManager();
-            Core.Console.ConsoleLine += Console_ConsoleLine;
+            Core.ConsoleModule.ConsoleLine += Console_ConsoleLine;
         }
 
         private void Console_ConsoleLine(object sender, ConsoleLineEventArgs e)

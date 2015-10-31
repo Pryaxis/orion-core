@@ -17,6 +17,6 @@ namespace Orion
         /// <summary>
         /// Gets the console provider for this orion instance.
         /// </summary>
-        public IConsoleProvider Console => Get<Modules.Console.ConsoleModule>();
+        public IConsoleProvider ConsoleModule => Get<Modules.Console.ConsoleModule>();
     }
 }

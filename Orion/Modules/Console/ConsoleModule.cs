@@ -12,8 +12,8 @@ namespace Orion.Modules.Console
     using System.Threading;
     using Console = System.Console;
 
-    [OrionModule("OrionConsole", "Nyx Studios", 2, Description = "Provides console support for Orion")]
-    [OrionDepends(typeof(Hooks.OTAPIHookModule))]
+    [OrionModule("OrionConsole", "Nyx Studios", Description = "Provides console support for Orion")]
+    [DependsOn(typeof(Hooks.OTAPIHookModule))]
     public class ConsoleModule : OrionModuleBase, IConsoleProvider
     {
         protected Thread commandInputThread;

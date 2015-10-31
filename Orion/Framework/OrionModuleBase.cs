@@ -37,6 +37,25 @@ namespace Orion.Framework
         public bool Enabled => moduleAttr.Enabled;
 
         /// <summary>
+        /// Gets a list of Orion module types that have been registered by the [DependsOn]
+        /// attribute on this Orion module instance.
+        /// </summary>
+        public Type[] ModuleDependencies
+        {
+            get
+            {
+                DependsOnAttribute depends = (DependsOnAttribute)Attribute.GetCustomAttribute(GetType(), typeof(DependsOnAttribute));
+
+                if (depends == null)
+                {
+                    return new Type[] { };
+                }
+
+                return depends.ModuleDependencies;
+            }
+        }
+
+        /// <summary>
         /// Initializes a new instance of this Orion module.
         /// 
         /// !WARNING!
@@ -98,10 +117,5 @@ namespace Orion.Framework
         }
 
         #endregion
-
-        public override string ToString()
-        {
-            return $"[OrionModule {ModuleName} v{ModuleVersion.ToString()}: Author={Author} Order={moduleAttr.Order}]";
-        }
     }
 }

@@ -12,7 +12,7 @@ using Terraria;
 
 namespace Orion.Modules.Hooks
 {
-    [OrionModule("OTAPI Hook Provider", "Nyx Studios", 0, Description = "Provides hooks from the OTAPI server to Orion")]
+    [OrionModule("OTAPI Hook Provider", "Nyx Studios", Description = "Provides hooks from the OTAPI server to Orion")]
     public class OTAPIHookModule : OrionModuleBase, Framework.IHookProvider
     {
         public OTAPIHookModule(Orion core)
