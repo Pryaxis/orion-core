@@ -17,26 +17,12 @@ namespace Orion.Commands
     [OrionModule("Command Provider", "Nyx Studios", Description = "Allows for other modules to register commands for use in-game by players.")]
     public class CommandProviderModule : OrionModuleBase
     {
-        public readonly CommandManager Commands;
         private ConsolePlayer CPlayer { get; set; } = new ConsolePlayer();
         protected Thread commandInputThread;
 
         public CommandProviderModule(Orion core) : base(core)
         {
-            Commands = new CommandManager();
             Core.Hooks.ServerCommandThreadStarting += Core_ServerCommandThreadStarting;
-            Commands.AddCommand<BasePlayer, string>("help", HelpCommand);
-            Commands.AddCommand<BasePlayer>("help", HelpCommand);
-        }
-
-        private void HelpCommand(BasePlayer ply, string helpText)
-        {
-            
-        }
-
-        private void HelpCommand(BasePlayer ply)
-        {
-
         }
 
         private void Core_ServerCommandThreadStarting(Orion orion, OrionEventArgs e)
@@ -87,7 +73,7 @@ namespace Orion.Commands
 
         public void RunCommand(BasePlayer player, string commandString)
         {
-            Commands.ParseAndCallCommand(player, commandString);
+            throw new NotImplementedException();
         }
         
         protected override void Dispose(bool disposing)
