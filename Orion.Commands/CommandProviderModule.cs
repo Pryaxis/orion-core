@@ -25,6 +25,18 @@ namespace Orion.Commands
         {
             Commands = new CommandManager();
             Core.Hooks.ServerCommandThreadStarting += Core_ServerCommandThreadStarting;
+            Commands.AddCommand<BasePlayer, string>("help", HelpCommand);
+            Commands.AddCommand<BasePlayer>("help", HelpCommand);
+        }
+
+        private void HelpCommand(BasePlayer ply, string helpText)
+        {
+            
+        }
+
+        private void HelpCommand(BasePlayer ply)
+        {
+
         }
 
         private void Core_ServerCommandThreadStarting(Orion orion, OrionEventArgs e)

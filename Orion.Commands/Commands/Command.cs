@@ -10,6 +10,9 @@ namespace Orion.Commands.Commands
     {
         public string CommandName { get; private set; }
         public List<Type> ExpectedTypes { get; private set; }
+        public bool AllowServer { get; set; }
+        public string HelpText { get; set;}
+        public string LongDescription { get; set; }
         //public List<Permission> Permissions { get; } = new List<Permission>();
         private MethodInfo CommandMethod;
         private WeakReference<object> Parent; 
