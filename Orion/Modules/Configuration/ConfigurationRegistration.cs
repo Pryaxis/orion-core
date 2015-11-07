@@ -3,6 +3,7 @@ using System.Reflection;
 using Orion.Framework;
 using OTA.DebugFramework;
 using OTA.Logging;
+using Orion.Extensions;
 
 namespace Orion.Modules.Configuration
 {
@@ -14,36 +15,50 @@ namespace Orion.Modules.Configuration
     /// </summary>
     public class ConfigurationRegistration
     {
-		/// <summary>
-		/// Contains a weak reference to the target that contains the configuration property.
-		/// </summary>
+        /// <summary>
+        /// Contains a weak reference to the target that contains the configuration property.
+        /// </summary>
         protected WeakReference weakRef;
 
-		/// <summary>
-		/// Gets or sets the type of the target of the object which contains the configuration
-		/// property.
-		/// </summary>
+        /// <summary>
+        /// Gets or sets the type of the target of the object which contains the configuration
+        /// property.
+        /// </summary>
         public Type ModuleType { get; protected set; }
 
-		/// <summary>
-		/// Gets the type of the property pointed to by the ConfigurationProperty lambda
-		/// expression, which points to the object type to be (de)serialized to and from 
-		/// respectively.
-		/// </summary>
+        /// <summary>
+        /// Gets the type of the property pointed to by the ConfigurationProperty lambda
+        /// expression, which points to the object type to be (de)serialized to and from 
+        /// respectively.
+        /// </summary>
         public Type ConfigurationPropertyType => ConfigurationProperty.PropertyType;
 
-		/// <summary>
-		/// Gets or sets the reflection-based PropertyInfo describing the property to be
-		/// get or set in the target object which contains the configuration to be loaded
-		/// or saved.
-		/// </summary>
+        /// <summary>
+        /// Gets or sets the reflection-based PropertyInfo describing the property to be
+        /// get or set in the target object which contains the configuration to be loaded
+        /// or saved.
+        /// </summary>
         public PropertyInfo ConfigurationProperty { get; protected set; }
 
-		/// <summary>
-		/// Gets or sets a value indicating whether the target property for this configuration
-		/// registration gets automatically updated when the file is changed externally.
-		/// </summary>
+        /// <summary>
+        /// Gets or sets a value indicating whether the target property for this configuration
+        /// registration gets automatically updated when the file is changed externally.
+        /// </summary>
         public bool AutoReload { get; set; } = true;
+
+
+        /// <summary>
+        /// Gets the normalized file name that the configuration registration is to read or
+        /// write from.
+        /// </summary>
+        public string FileName
+        {
+            get
+            {
+                string configTypeName = ModuleType.Name.Split(',')[0];
+                return $"{configTypeName.GenerateSlug()}.json";
+            }
+        }
 
         public ConfigurationRegistration(object targetObject, PropertyInfo prop)
         {
@@ -74,25 +89,25 @@ namespace Orion.Modules.Configuration
             ConfigurationProperty.SetValue(weakRef.Target, configurationObj);
         }
 
-		/// <summary>
-		/// Gets the property value for this configuration registration from the
-		/// target object instance.
-		/// </summary>
+        /// <summary>
+        /// Gets the property value for this configuration registration from the
+        /// target object instance.
+        /// </summary>
         public object GetPropertyValue()
         {
             Assert.Expression(() => !weakRef.IsAlive);
             return ConfigurationProperty.GetValue(weakRef.Target);
         }
 
-		/// <summary>
-		/// Gets the property value for this configuration registration from the
-		/// target object instance.
-		/// </summary>
-		/// <typeparam name="TObjectValue">TObjectValue is the type to generically cast the property value as</typeparam>
+        /// <summary>
+        /// Gets the property value for this configuration registration from the
+        /// target object instance.
+        /// </summary>
+        /// <typeparam name="TObjectValue">TObjectValue is the type to generically cast the property value as</typeparam>
         public TObjectValue GetPropertyValue<TObjectValue>()
             where TObjectValue : class, new()
         {
-			return GetPropertyValue() as TObjectValue;
+            return GetPropertyValue() as TObjectValue;
         }
 
         internal void UpdateWeakReference(object instance)
