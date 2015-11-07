@@ -237,7 +237,7 @@ namespace Orion.Modules.Configuration
 
             try
             {
-                serializedValue = JsonConvert.SerializeObject(configValue);
+                serializedValue = JsonConvert.SerializeObject(configValue, Formatting.Indented);
             }
             catch (Exception ex)
             {
