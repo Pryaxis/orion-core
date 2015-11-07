@@ -10,6 +10,8 @@ using OTA.Logging;
 using System.IO;
 
 using Newtonsoft.Json;
+using System.Security.Cryptography;
+using System.Threading.Tasks;
 
 namespace Orion.Modules.Configuration
 {
@@ -23,6 +25,7 @@ namespace Orion.Modules.Configuration
         protected readonly List<ConfigurationRegistration> configurationRegistrations;
 
         protected readonly FileSystemWatcher configFileWatcher;
+
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Orion.Modules.Configuration.ConfigurationModule"/> class.
@@ -39,9 +42,10 @@ namespace Orion.Modules.Configuration
             configFileWatcher.Changed += ConfigFileWatcher_Changed;
         }
 
-        private void ConfigFileWatcher_Changed(object sender, FileSystemEventArgs e)
+        private async void ConfigFileWatcher_Changed(object sender, FileSystemEventArgs e)
         {
             ConfigurationRegistration registration;
+            byte[] shaHash = new byte[0];
 
             if (e.ChangeType != WatcherChangeTypes.Changed
                 || Path.GetFileName(e.FullPath).EndsWith(".json") == false)
@@ -51,8 +55,43 @@ namespace Orion.Modules.Configuration
 
             registration = GetConfigurationRegistration(Path.GetFileName(e.FullPath));
 
+            /*
+             * This is a workaround for the general shittyness that is the windows
+             * File I/O mechanism.  IF you try to access the file in the event too
+             * quickly after the change event fires, you can run into access
+             * violations because the other program hasn't fully released the handle 
+             * on the file yet.
+             *
+             * FileSystemWatcher events also get fired twice for single file changes.
+             *
+             * Just another one of the awesome features of win32 file API.
+             */
+
+            await Task.Delay(100);
+
+            try
+            {
+                using (SHA1Managed shaProvider = new SHA1Managed())
+                using (FileStream fs = new FileStream(e.FullPath, FileMode.Open, FileAccess.Read))
+                {
+                    shaHash = shaProvider.ComputeHash(fs);
+                    fs.Close();
+                }
+            }
+            catch (Exception ex)
+            {
+                ProgramLog.Log(ex);
+            }
+
+            /*
+             * An internal SHA1 hash of the config file from disk is kept
+             * and compared to the last access, to prevent the reload
+             * procedure from firing more than once cause of the shitty
+             * FileSystemWatcher duplicate event issues.
+             */
             if (registration == null
-                || registration.AutoReload == false)
+                || registration.AutoReload == false
+                || registration.sha1Hash.SequenceEqual(shaHash))
             {
                 return;
             }
@@ -60,6 +99,7 @@ namespace Orion.Modules.Configuration
             ProgramLog.Debug.Log($"orion config: Detected config change for {registration.ModuleType.Name} through file {registration.FileName} and was reloaded.");
 
             Load(registration.ModuleType);
+            registration.sha1Hash = shaHash;
         }
 
 

@@ -4,6 +4,7 @@ using Orion.Framework;
 using OTA.DebugFramework;
 using OTA.Logging;
 using Orion.Extensions;
+using System.Text.RegularExpressions;
 
 namespace Orion.Modules.Configuration
 {
@@ -15,6 +16,8 @@ namespace Orion.Modules.Configuration
     /// </summary>
     public class ConfigurationRegistration
     {
+        private static Regex moduleEndRegex = new Regex("[Mm]odule$", RegexOptions.Compiled);
+
         /// <summary>
         /// Contains a weak reference to the target that contains the configuration property.
         /// </summary>
@@ -46,6 +49,7 @@ namespace Orion.Modules.Configuration
         /// </summary>
         public bool AutoReload { get; set; } = true;
 
+        internal byte[] sha1Hash = new byte[0] { };
 
         /// <summary>
         /// Gets the normalized file name that the configuration registration is to read or
@@ -55,7 +59,11 @@ namespace Orion.Modules.Configuration
         {
             get
             {
-                string configTypeName = ModuleType.Name.Split(',')[0];
+                string configTypeName = ModuleType.Name;
+
+                //Removes "Module" at the end of the type name if it exists
+                configTypeName = moduleEndRegex.Replace(configTypeName, "");
+
                 return $"{configTypeName.GenerateSlug()}.json";
             }
         }
