@@ -16,8 +16,15 @@ namespace Orion.Modules.Configuration
     [OrionModule("Orion Configuration Module", "Nyx Studios", Description = "Provides an automatic configuration interface for Orion modules")]
     public class ConfigurationModule : OrionModuleBase, IConfigurationProvider
     {
+		/// <summary>
+		/// Contains a list of all configuration registrations, tieing Orion modules to
+		/// configuration files.
+		/// </summary>
         protected readonly List<ConfigurationRegistration> configurationRegistrations;
 
+		/// <summary>
+		/// Initializes a new instance of the <see cref="Orion.Modules.Configuration.ConfigurationModule"/> class.
+		/// </summary>
         public ConfigurationModule(Orion core)
             : base(core)
         {
@@ -25,6 +32,17 @@ namespace Orion.Modules.Configuration
         }
 
 
+		/// <summary>
+		/// Registers the specified Orion module into the automatic configuration system along with
+		/// a LINQ-style lambda expression pointing to the configuration property that will be updated
+		/// when the configuration is reloaded.
+		/// </summary>
+		/// <typeparam name="TModule">TModule is any Orion module.</typeparam>
+		/// <typeparam name="TConfigurationClass">TConfigurationClass is inferred from the type of the property in the LINQ expression</typeparam>
+		/// <param name="target">A reference to the object instance instance containing the configuration property</param>
+		/// <param name="configurationPropertySelector">A LINQ style lambda expression pointing to the configuration property inside the class that will be updated
+		/// with the deserialized configuration on load, and serialized on save</param>
+		/// <returns>The property.</returns>
         public ConfigurationRegistration RegisterProperty<TModule, TConfigurationClass>(TModule target, Expression<Func<TModule, TConfigurationClass>> configurationPropertySelector)
             where TConfigurationClass : class, new()
             where TModule : OrionModuleBase
@@ -58,6 +76,16 @@ namespace Orion.Modules.Configuration
                 return registration;
             }
 
+		/// <summary>
+		/// Registers the specified object's property into the automatic configuration system along with
+		/// a LINQ-style lambda expression pointing to the configuration property that will be updated
+		/// when the configuration is reloaded.
+		/// </summary>
+		/// <typeparam name="TConfigurationClass">TConfigurationClass is inferred from the type of the property in the LINQ expression</typeparam>
+		/// <param name="target">A reference to the object instance instance containing the configuration property</param>
+		/// <param name="configurationPropertySelector">A LINQ style lambda expression pointing to the configuration property inside the class that will be updated
+		/// with the deserialized configuration on load, and serialized on save</param>
+		/// <returns>The property.</returns>
         public ConfigurationRegistration RegisterProperty<TConfigurationClass>(object target, Expression<Func<TConfigurationClass>> configurationPropertySelector)
             where TConfigurationClass : class, new()
         {
@@ -90,8 +118,12 @@ namespace Orion.Modules.Configuration
             return registration;
         }
 
-
-
+		/// <summary>
+		/// Loads a deserialized configuration object as dictated by the configuration registration
+		/// for the specified type. This method causes the property specified in the configuration
+		/// registration to also be updated with the return value from this call to Load().
+		/// </summary>
+		/// <param name="moduleType">Module type.</param>
         public object Load(Type moduleType)
         {
             string configPath = GetModuleFilePath(moduleType);
@@ -121,12 +153,26 @@ namespace Orion.Modules.Configuration
             return deserializedConfig;
         }
 
+		/// <summary>
+		/// Gets the module file path, derived from the Orion configuration path set in the
+		/// orion core and a slugified version of the type of the Orion module.
+		/// </summary>
+		/// <returns>The module file path.</returns>
+		/// <param name="moduleType">Module type.</param>
         protected string GetModuleFilePath(Type moduleType)
         {
             string configTypeName = moduleType.Name.Split(',')[0];
             return Path.Combine(Core.OrionConfigurationPath, $"{configTypeName.GenerateSlug()}.json");
         }
 
+		/// <summary>
+		/// Loads a deserialized configuration object as dictated by the configuration registration
+		/// for the specified type, casted as a <typeparamref>TConfigurationObject</typeparamref>.
+		/// This method causes the property specified in the registration to also be updated with the 
+		/// return value from this call to Load().
+		/// </summary>
+		/// <param name="moduleType">Module type.</param>
+		/// <typeparam name="TConfigurationObject">The type of the deserialized configuration object</typeparam>
         public TConfigurationObject Load<TConfigurationObject>(Type moduleType)
             where TConfigurationObject : class, new()
         {
@@ -134,6 +180,10 @@ namespace Orion.Modules.Configuration
             return configurationObject as TConfigurationObject;
         }
 
+		/// <summary>
+		/// Saves the contents of the registered configuration property to disk as a serialized object.
+		/// </summary>
+		/// <param name="moduleType">Module type.</param>
         public void Save(Type moduleType)
         {
             ConfigurationRegistration registration = GetConfigurationRegistration(moduleType);
@@ -158,6 +208,12 @@ namespace Orion.Modules.Configuration
             WriteObjectSafe(moduleType, serializedValue);
         }
 
+		/// <summary>
+		/// Loads the default configuration for a configuration registration based on
+		/// a reflection-based new instance of the registration's property type.
+		/// </summary>
+		/// <returns>The default configuration.</returns>
+		/// <param name="moduleType">Module type.</param>
         protected object LoadDefaultConfiguration(Type moduleType)
         {
             ConfigurationRegistration registration = GetConfigurationRegistration(moduleType);
@@ -177,7 +233,7 @@ namespace Orion.Modules.Configuration
 
         /// <summary>
         /// Writes an orion configuration property out to a json file using a temporary
-        /// buffer, eliminating it from corruption.
+        /// buffer, protecting it from disk-based corruption.
         /// </summary>
         protected void WriteObjectSafe(Type moduleType, string contents)
         {
@@ -186,6 +242,10 @@ namespace Orion.Modules.Configuration
             WriteObjectSafe(configPath, contents);
         }
 
+		/// <summary>
+		/// Writes an orion configuration property out to a json file using a temporary
+		/// buffer, eliminating it from corruption.
+		/// </summary>
         protected void WriteObjectSafe(string filePath, string contents)
         {
             string tmpFilePath = Path.GetTempFileName();
@@ -203,11 +263,21 @@ namespace Orion.Modules.Configuration
             File.Move(tmpFilePath, filePath);
         }
 
+		/// <summary>
+		/// Gets the configuration registration registered for the specified type.
+		/// </summary>
+		/// <returns>The configuration registration.</returns>
+		/// <param name="moduleType">Module type.</param>
         protected ConfigurationRegistration GetConfigurationRegistration(Type moduleType)
         {
             return configurationRegistrations.FirstOrDefault(i => i.ModuleType == moduleType);
         }
 
+		/// <summary>
+		/// Assigns the configuration property.
+		/// </summary>
+		/// <param name="moduleType">Module type.</param>
+		/// <param name="deserializedConfig">Deserialized config.</param>
         protected void AssignConfigurationProperty(Type moduleType, object deserializedConfig)
         {
             ConfigurationRegistration configReg = GetConfigurationRegistration(moduleType);
