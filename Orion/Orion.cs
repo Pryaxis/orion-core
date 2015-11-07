@@ -47,7 +47,7 @@ namespace Orion
         public string OrionBasePath { get; set; } = kOrionBasePath;
 
         /// <summary>
-        /// Gets the Orion module directory path 
+        /// Gets the Orion module directory path
         /// </summary>
         public string OrionModulePath => Path.Combine(OrionBasePath, "Modules");
 
@@ -90,7 +90,7 @@ namespace Orion
              * Loads all module types as ModuleRef instances inside the container.
              */
             LoadModules();
-            
+
             /*
              * Updates the dependency graph, so that modules that have the most
              * dependencies via the [DependsOn] attribute load first.
@@ -134,7 +134,7 @@ namespace Orion
         /// character <paramref name="message"/>.
         /// </summary>
         /// <param name="y">
-        /// The Y offset position in the console window in which to print 
+        /// The Y offset position in the console window in which to print
         /// the progress bar.
         /// </param>
         /// <param name="percent">
@@ -439,7 +439,7 @@ namespace Orion
 
                         dependencyRef = GetModuleRef(dependency);
                         Assert.Expression(() => dependencyRef == null);
-                        
+
                         dependencyRef.IncrementDependencyCount();
                     }
                 }
@@ -447,7 +447,7 @@ namespace Orion
         }
 
         /// <summary>
-        /// Retrieves the ModuleRef instance for the specified Orion module type from 
+        /// Retrieves the ModuleRef instance for the specified Orion module type from
         /// Orion's module container.
         /// </summary>
         /// <param name="moduleType">A type of any Orion module that inherits from <see cref="OrionModuleBase"/></param>
@@ -471,9 +471,11 @@ namespace Orion
         {
             string asmName = args.Name.Split(',')[0];
 
+            ProgramLog.Debug.Log($"orion modules: AssemblyResolve called for {args.Name}");
+
             /*
              * WORKAROUND
-             * 
+             *
              * Do not return new copies of Orion itself.  It is not clear why AssemblyResolve
              * gets called on Orion, when Orion is already loaded, and returning new copies of
              * Orion (even though it is the same assembly) will break type equality procedures.

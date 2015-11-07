@@ -1,9 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Linq.Expressions;
-using System.Text;
-using System.Threading.Tasks;
+
+using Orion.Modules.Configuration;
 
 namespace Orion.Framework
 {
@@ -18,12 +16,23 @@ namespace Orion.Framework
         /// when the configuration is reloaded.
         /// </summary>
         /// <typeparam name="TConfigurationClass">TConfigurationClass is inferred from the type of the property in the LINQ expression</typeparam>
-        /// <param name="module">A reference to the Orion module instance containing the configuration property</param>
+        /// <param name="target">A reference to the object instance instance containing the configuration property</param>
         /// <param name="configurationPropertySelector">
-        /// A LINQ style lambda expression pointing to the configuration property inside the Orion module class that will be updated
-        /// with the deserialized configuration, and serialized on save
+        /// A LINQ style lambda expression pointing to the configuration property inside the class that will be updated
+        /// with the deserialized configuration on load, and serialized on save
         /// </param>
-        void Register<TConfigurationClass>(OrionModuleBase module, Expression<Func<TConfigurationClass>> configurationPropertySelector)
+        ConfigurationRegistration RegisterProperty<TConfigurationClass>(object target, Expression<Func<TConfigurationClass>> configurationPropertySelector)
             where TConfigurationClass : class, new();
+            
+        ConfigurationRegistration RegisterProperty<TModule, TConfigurationClass>(TModule target, Expression<Func<TModule, TConfigurationClass>> configurationPropertySelector)
+            where TConfigurationClass : class, new()
+            where TModule : OrionModuleBase;
+            
+        object Load(Type moduleType);
+        
+        TConfigurationObject Load<TConfigurationObject>(Type moduleType)
+            where TConfigurationObject : class, new();   
+        
+        void Save(Type moduleType);
     }
 }

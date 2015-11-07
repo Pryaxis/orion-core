@@ -59,7 +59,7 @@ namespace Orion.Modules.Console
                 return "server";
             }
 
-            return ActivePlayer.Name;
+            return ActivePlayer.SenderName;
         }
 
         private void PrintPrompt()

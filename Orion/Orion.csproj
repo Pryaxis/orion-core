@@ -9,7 +9,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Orion</RootNamespace>
     <AssemblyName>Orion</AssemblyName>
-    <TargetFrameworkVersion>v4.5.1</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
@@ -51,9 +51,12 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Extensions\OrionModuleBase.ConfigurationExtensions.cs" />
     <Compile Include="Extensions\String.Extensions.cs" />
     <Compile Include="Framework\ModuleRef.cs" />
     <Compile Include="Modules\Console\ConsoleModule.cs" />
+    <Compile Include="Modules\Configuration\ConfigurationModule.cs" />
+    <Compile Include="Modules\Configuration\ConfigurationRegistration.cs" />
     <Compile Include="Framework\Events\ConsoleLineEventArgs.cs" />
     <Compile Include="Framework\Events\DefaultsEventArgs.cs" />
     <Compile Include="Framework\Events\ServerChatEventArgs.cs" />
@@ -71,6 +74,7 @@
     <Compile Include="OTAPIPlugin.cs" />
     <Compile Include="PacketTypes.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Framework\IConfigurationProvider.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
@@ -91,7 +95,7 @@
 		cp $(TargetPath) $(SolutionDir)/Open-Terraria-API/API/bin/x86/Server/Plugins
 	</PostBuildEvent>
   </PropertyGroup>
-  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it.
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">
   </Target>
