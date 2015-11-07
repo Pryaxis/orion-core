@@ -73,6 +73,8 @@ namespace Orion.Modules.Configuration
                     registration.UpdateWeakReference(target);
                 }
                 
+                Load(target.GetType());
+                
                 return registration;
             }
 
@@ -114,6 +116,9 @@ namespace Orion.Modules.Configuration
                  */
                 registration.UpdateWeakReference(target);
             }
+           
+            
+            Load(target.GetType());
             
             return registration;
         }
@@ -192,7 +197,8 @@ namespace Orion.Modules.Configuration
 
             if (configValue == null)
             {
-                ProgramLog.Debug.Log($"orion config: Registered property value on {moduleType.Name} was null and cannot be saved");
+                ProgramLog.Error.Log($"orion config: Registered property value on {moduleType.Name} was null and cannot be saved");
+                return;
             }
 
             try
@@ -228,7 +234,10 @@ namespace Orion.Modules.Configuration
              * so these calls should be safe.
              */
 
-            return Activator.CreateInstance(registration.ConfigurationPropertyType);
+            object instance = Activator.CreateInstance(registration.ConfigurationPropertyType);
+            AssignConfigurationProperty(moduleType, instance);
+            
+            return instance;
         }
 
         /// <summary>

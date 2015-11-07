@@ -58,6 +58,7 @@
   <ItemGroup>
     <Compile Include="CommandProviderModule.cs" />
     <Compile Include="Commands\Command.cs" />
+    <Compile Include="CommandConfiguration.cs" />
     <Compile Include="Commands\CommandManager.cs" />
     <Compile Include="Commands\CommandStringParser.cs" />
     <Compile Include="Commands\Exceptions\ArgumentParsingException.cs" />

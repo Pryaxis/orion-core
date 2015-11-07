@@ -80,7 +80,7 @@ namespace Orion.Modules.Configuration
 		/// </summary>
         public object GetPropertyValue()
         {
-            Assert.Expression(() => weakRef.IsAlive);
+            Assert.Expression(() => !weakRef.IsAlive);
             return ConfigurationProperty.GetValue(weakRef.Target);
         }
 

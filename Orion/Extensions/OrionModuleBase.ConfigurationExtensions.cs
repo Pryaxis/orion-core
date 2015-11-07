@@ -6,7 +6,7 @@ namespace Orion.Extensions
 {
 	public static class OrionModuleBaseConfigurationExtensions
 	{
-		public static void RegisterProperty<TModule, TConfigurationClass>(this TModule module, Expression<Func<TModule, TConfigurationClass>> configurationPropertySelector)
+		public static void RegisterConfigurationProperty<TModule, TConfigurationClass>(this TModule module, Expression<Func<TModule, TConfigurationClass>> configurationPropertySelector)
             where TConfigurationClass : class, new()
             where TModule : OrionModuleBase
         {
