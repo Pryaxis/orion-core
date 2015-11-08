@@ -10,7 +10,6 @@ using OTA;
 
 namespace Orion.Commands
 {
-    //TODO: Allow commands to specify permissions.
     //TODO: Logging of exceptions and issues.
     //TODO: Hook into a chat hook and process command strings.
     //TODO: Config options such as what the command specifier character is.

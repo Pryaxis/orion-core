@@ -7,9 +7,9 @@ namespace Orion.Commands.Attributes
         public string Name { get; set; }
         public string[] Permissions { get; set; }
 
-        public CommandAttribute(string Name, params string[] permissions)
+        public CommandAttribute(string name, params string[] permissions)
         {
-            this.Name = Name;
+            Name = name;
             Permissions = permissions;
         }
     }
