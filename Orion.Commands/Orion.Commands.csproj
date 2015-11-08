@@ -61,14 +61,11 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-<<<<<<< HEAD
     <Compile Include="Attributes\CommandAttribute.cs" />
     <Compile Include="Attributes\NamedParameterAttribute.cs" />
     <Compile Include="Attributes\PositionalParameterAttribute.cs" />
     <Compile Include="Attributes\SwitchParameterAttribute.cs" />
-=======
     <Compile Include="CommandConfiguration.cs" />
->>>>>>> 0d923cd250f262f8f4c1ae7944efb86752f9a03d
     <Compile Include="CommandProviderModule.cs" />
     <Compile Include="Commands\CommandManager.cs" />
     <Compile Include="Commands\CommandStringParser.cs" />
