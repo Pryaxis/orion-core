@@ -14,7 +14,13 @@ namespace Orion.Commands.Commands
     {
         public CommandStringParser Parser = new CommandStringParser();
 
-        private List<RegisteredCommand> _registeredCommands = new List<RegisteredCommand>(); 
+        private List<RegisteredCommand> _registeredCommands = new List<RegisteredCommand>();
+        private readonly CommandConfiguration _config;
+
+        public CommandManager(CommandConfiguration config)
+        {
+            _config = config;
+        }
 
         public void RegisterCommand<T>() where T : IOrionCommand, new()
         {
@@ -33,13 +39,13 @@ namespace Orion.Commands.Commands
 
         public void RunCommand(BasePlayer player, string commandString)
         {
-            var commandName = CommandStringParser.GetCommandNameFromCommandString(commandString);
+            var commandName = CommandStringParser.GetCommandNameFromCommandString(commandString, _config.CommandPrefix);
 
             var registeredCommand = _registeredCommands.Single(x => String.Equals(x.Name, commandName, StringComparison.CurrentCultureIgnoreCase));
 
             //Check perms here.
 
-            var commandInstance = Parser.ParseArgumentsIntoCommandClass(registeredCommand.CommandClass, commandString);
+            var commandInstance = Parser.ParseArgumentsIntoCommandClass(registeredCommand.CommandClass, commandString, _config.FlagPrefixs);
 
             try
             {

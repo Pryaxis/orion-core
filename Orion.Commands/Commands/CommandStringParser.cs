@@ -6,7 +6,6 @@ using System.Runtime.InteropServices;
 using System.Text;
 using Orion.Commands.Attributes;
 using Orion.Commands.Commands.Exceptions;
-using Orion.Commands.Extensions;
 using OTA;
 
 namespace Orion.Commands.Commands
@@ -14,16 +13,16 @@ namespace Orion.Commands.Commands
     public class CommandStringParser
     {
         private Dictionary<Type, Func<string, object>> Converters = new Dictionary<Type, Func<string, object>>()
-    {
-        {typeof(string), x => x},
-        {typeof(int), x => int.Parse(x)},
-        {typeof(float), x => float.Parse(x)},
-        {typeof(decimal), x => decimal.Parse(x)},
-        {typeof(long), x => long.Parse(x)},
-        {typeof(short), x => short.Parse(x)},
-        {typeof(DateTime), x => DateTime.Parse(x)},
-        {typeof(TimeSpan), x => TimeSpan.Parse(x)}
-    };
+        {
+            {typeof(string), x => x},
+            {typeof(int), x => int.Parse(x)},
+            {typeof(float), x => float.Parse(x)},
+            {typeof(decimal), x => decimal.Parse(x)},
+            {typeof(long), x => long.Parse(x)},
+            {typeof(short), x => short.Parse(x)},
+            {typeof(DateTime), x => DateTime.Parse(x)},
+            {typeof(TimeSpan), x => TimeSpan.Parse(x)}
+        };
 
         /// <summary>
         /// Add a converter for type `T` to converter's dictionary. 
@@ -42,16 +41,24 @@ namespace Orion.Commands.Commands
         /// </summary>
         /// <param name="commandString">The command string.</param>
         /// <returns>The name of the command called by the command string.</returns>
-        public static string GetCommandNameFromCommandString(string commandString)
+        public static string GetCommandNameFromCommandString(string commandString, string commandSpecifier)
         {
-            return commandString.Split(' ').First().Replace("/", "");
+            return commandString.Split(' ').First().Replace(commandSpecifier, "");
         }
 
-        public IOrionCommand ParseArgumentsIntoCommandClass(Type commandType, string commandString)
+        /// <summary>
+        /// Initializes an object of the given <paramref name="commandType"/> and then fills its properties according to <paramref name="commandString"/>.
+        /// </summary>
+        /// <param name="commandType">Expected output command type.</param>
+        /// <param name="commandString">The command string.</param>
+        /// <param name="flagSpecifiers">The characters which denote a flag or switch.</param>
+        /// <returns>Object of type <paramref name="commandType"/> filled according to <paramref name="commandString"/></returns>
+        public IOrionCommand ParseArgumentsIntoCommandClass(Type commandType, string commandString, List<char> flagSpecifiers)
         {
             //Init instance of command.
             var commandConstructor = commandType.GetConstructor(Type.EmptyTypes);
 
+            //Ensure a parameterless constructor exists.
             if (commandConstructor == null)
             {
                 //TODO: Proper exception.
@@ -60,6 +67,7 @@ namespace Orion.Commands.Commands
 
             var commandInstance = commandConstructor.Invoke(null) as IOrionCommand;
 
+            //Ensure the object was created and cast to an IOrionCommand properly.
             if (commandInstance == null)
             {
                 throw new Exception("Command type was not of IOrionCommand.");
@@ -96,7 +104,7 @@ namespace Orion.Commands.Commands
                 //Look for any args which match this flag, but there can only be one.
                 try
                 {
-                    match = commandArgs.Single(x => String.Equals(name, x.TrimStart('/', '-'), StringComparison.CurrentCultureIgnoreCase)).Any();
+                    match = commandArgs.Single(x => String.Equals(name, x.TrimStart(flagSpecifiers.ToArray()), StringComparison.CurrentCultureIgnoreCase)).Any();
                 }
                 catch (InvalidOperationException)
                 {
@@ -113,7 +121,7 @@ namespace Orion.Commands.Commands
                 {
                     //Get the argument from the command string for this flag.
                     //The argument is always the parameter in the next position in the command string.
-                    var matchIndex = commandArgs.IndexOfFlag(name);
+                    var matchIndex = IndexOfFlag(commandArgs, name, flagSpecifiers);
                     var flagArg = commandArgs[matchIndex + 1];
 
                     //Get the parsed argument.
@@ -125,7 +133,7 @@ namespace Orion.Commands.Commands
             }
 
             //Process positional arguments now.
-            var positionalArgsFromString = commandArgs.Where(x => !x.IsFlagOrSwitch()).ToList();
+            var positionalArgsFromString = commandArgs.Where(x => !IsFlagOrSwitch(x, flagSpecifiers)).ToList();
             var ordered = positional.OrderBy(x => x.GetCustomAttribute<PositionalParameterAttribute>().Position).ToList();
 
             //We're dependent on the positional args in `positionalArgsFromString` being ordered in accordance with the props from `ordered`.
@@ -164,6 +172,48 @@ namespace Orion.Commands.Commands
             }
 
             return commandInstance;
+        }
+
+        /// <summary>
+        /// Returns the index of the flag <paramref name="flagName"/> in the command list <paramref name="list"/>.
+        /// Uses the <paramref name="flagSpecifiers"/> given to determine the flag.
+        /// </summary>
+        /// <param name="list">The command arguments.</param>
+        /// <param name="flagName">The flag being looked for.</param>
+        /// <param name="flagSpecifiers">All prefixes which denote an argument is a flag.</param>
+        /// <returns>An integer index of the provided <paramref name="list"/> or -1 if not found.</returns>
+        public static int IndexOfFlag(List<string> list, string flagName, List<char> flagSpecifiers)
+        {
+            if (!flagSpecifiers.Any())
+            {
+                throw new InvalidOperationException("No flag specifiers provided.");
+            }
+
+            int index = -1;
+            foreach (var fs in flagSpecifiers)
+            {
+                index = list.IndexOf($"{fs}{flagName}");
+                if (index != -1)
+                    return index;
+            }
+            return index;
+        }
+
+        /// <summary>
+        /// Returns whether the given <paramref name="arg"/> is a flag or switch 
+        /// by checking if it starts with any <paramref name="flagSpecifiers"/>.
+        /// </summary>
+        /// <param name="arg">The command argument to be checked.</param>
+        /// <param name="flagSpecifiers">All prefixes which denote an argument is a flag.</param>
+        /// <returns>True if the argument is a flag or switch, false otherwise.</returns>
+        public static bool IsFlagOrSwitch(string arg, List<char> flagSpecifiers)
+        {
+            foreach (var fs in flagSpecifiers)
+            {
+                if (arg.StartsWith(fs.ToString()))
+                    return true;
+            }
+            return false;
         }
 
         private bool PropertyHasAttribute<T>(PropertyInfo prop) where T : Attribute

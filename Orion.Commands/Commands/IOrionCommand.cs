@@ -4,6 +4,6 @@ namespace Orion.Commands.Commands
 {
     public interface IOrionCommand
     {
-        void Run();
+        CommandResult Run();
     }
 }

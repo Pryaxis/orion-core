@@ -18,29 +18,16 @@ namespace Orion.Commands
     [DependsOn(typeof(Modules.Configuration.ConfigurationModule))]
     public class CommandProviderModule : OrionModuleBase
     {
-        private ConsolePlayer CPlayer { get; set; } = new ConsolePlayer();
-
         public CommandConfiguration Configuration { get; set; }
-
         public CommandManager Commands { get; private set; }
 
         public CommandProviderModule(Orion core) : base(core)
         {
-            Core.Hooks.ServerCommandThreadStarting += Core_ServerCommandThreadStarting;
+            Core.ConsoleModule.ConsoleLine += ConsoleModule_ConsoleLine;
             this.RegisterConfigurationProperty(p => p.Configuration);
                         
-            Commands = new CommandManager();
+            Commands = new CommandManager(Configuration);
             Core.ConsoleModule.ConsoleLine += ConsoleModule_ConsoleLine;
-        }
-
-        private void Core_ServerCommandThreadStarting(Orion orion, OrionEventArgs e)
-        {
-            throw new NotImplementedException();
-        }
-
-        public override void Initialize()
-        {
-            base.Initialize();
         }
 
         private void ConsoleModule_ConsoleLine(object sender, ConsoleLineEventArgs e)
@@ -50,7 +37,7 @@ namespace Orion.Commands
 
         public void RunCommand(BasePlayer player, string commandString)
         {
-            throw new NotImplementedException();
+            Commands.RunCommand(player, commandString);
         }
     }
 }

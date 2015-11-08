@@ -68,15 +68,14 @@
     <Compile Include="CommandConfiguration.cs" />
     <Compile Include="CommandProviderModule.cs" />
     <Compile Include="Commands\CommandManager.cs" />
+    <Compile Include="Commands\CommandResult.cs" />
     <Compile Include="Commands\CommandStringParser.cs" />
     <Compile Include="Commands\Exceptions\ArgumentParsingException.cs" />
     <Compile Include="Commands\Exceptions\CommandException.cs" />
-    <Compile Include="Commands\OrionCommandBase.cs" />
+    <Compile Include="Commands\IOrionCommand.cs" />
     <Compile Include="Commands\ParsedCommandArguments.cs" />
     <Compile Include="Commands\RegisteredCommand.cs" />
     <Compile Include="ConsolePlayer.cs" />
-    <Compile Include="Extensions\ListExt.cs" />
-    <Compile Include="Extensions\StringExt.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
