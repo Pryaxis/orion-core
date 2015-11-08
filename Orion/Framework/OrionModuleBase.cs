@@ -14,7 +14,7 @@ namespace Orion.Framework
         /// <summary>
         /// Gets a reference to the Orion core for interacting with other Orion modules
         /// </summary>
-        protected Orion Core => coreRef;
+        public Orion Core => coreRef;
 
         /// <summary>
         /// Gets the author of the module

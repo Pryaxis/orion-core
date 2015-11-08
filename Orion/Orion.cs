@@ -47,7 +47,7 @@ namespace Orion
         public string OrionBasePath { get; set; } = kOrionBasePath;
 
         /// <summary>
-        /// Gets the Orion module directory path 
+        /// Gets the Orion module directory path
         /// </summary>
         public string OrionModulePath => Path.Combine(OrionBasePath, "Modules");
 
@@ -90,7 +90,7 @@ namespace Orion
              * Loads all module types as ModuleRef instances inside the container.
              */
             LoadModules();
-            
+
             /*
              * Updates the dependency graph, so that modules that have the most
              * dependencies via the [DependsOn] attribute load first.
@@ -100,7 +100,7 @@ namespace Orion
             /*
              * Runs all modules inside the module container.
              */
-            RunModules();
+            CreateModuleInstances();
         }
 
         /// <summary>
@@ -134,7 +134,7 @@ namespace Orion
         /// character <paramref name="message"/>.
         /// </summary>
         /// <param name="y">
-        /// The Y offset position in the console window in which to print 
+        /// The Y offset position in the console window in which to print
         /// the progress bar.
         /// </param>
         /// <param name="percent">
@@ -257,7 +257,7 @@ namespace Orion
         /// <summary>
         /// Runs all Orion modules in module-dependent order.
         /// </summary>
-        public void RunModules()
+        public void CreateModuleInstances()
         {
             List<OrionModuleBase> failedModules = new List<OrionModuleBase>();
             OrionModuleBase moduleInstance = null;
@@ -270,6 +270,7 @@ namespace Orion
                     try
                     {
                         moduleInstance = module.CreateInstance();
+                        moduleInstance.Initialize();
                     }
                     catch (Exception ex) when (!(ex is AssertionException))
                     {
@@ -352,19 +353,12 @@ namespace Orion
         /// </returns>
         public IEnumerable<Type> GetOrionModulesFromAssembly(Assembly asm)
         {
-            foreach (Type t in asm.GetTypes())
-            {
-                OrionModuleAttribute moduleAttr = Attribute.GetCustomAttribute(t, typeof(OrionModuleAttribute)) as OrionModuleAttribute;
-
-                if (moduleAttr == null
-                    || moduleAttr.Enabled == false
-                    || t.BaseType != typeof(OrionModuleBase))
-                {
-                    continue;
-                }
-
-                yield return t;
-            }
+            return from i in asm.GetTypes()
+                   let orionModuleAttr = Attribute.GetCustomAttribute(i, typeof(OrionModuleAttribute)) as OrionModuleAttribute
+                   where orionModuleAttr != null
+                       && orionModuleAttr.Enabled == true
+                       && i.BaseType == typeof(OrionModuleBase)
+                   select i;
         }
 
         /// <summary>
@@ -445,7 +439,7 @@ namespace Orion
 
                         dependencyRef = GetModuleRef(dependency);
                         Assert.Expression(() => dependencyRef == null);
-                        
+
                         dependencyRef.IncrementDependencyCount();
                     }
                 }
@@ -453,8 +447,8 @@ namespace Orion
         }
 
         /// <summary>
-        /// Retrieves the ModuleRef instance for the specified Orion module type
-        /// from Orion's module container.
+        /// Retrieves the ModuleRef instance for the specified Orion module type from
+        /// Orion's module container.
         /// </summary>
         /// <param name="moduleType">A type of any Orion module that inherits from <see cref="OrionModuleBase"/></param>
         /// <returns>
@@ -477,6 +471,20 @@ namespace Orion
         {
             string asmName = args.Name.Split(',')[0];
 
+            ProgramLog.Debug.Log($"orion modules: AssemblyResolve called for {args.Name}");
+
+            /*
+             * WORKAROUND
+             *
+             * Do not return new copies of Orion itself.  It is not clear why AssemblyResolve
+             * gets called on Orion, when Orion is already loaded, and returning new copies of
+             * Orion (even though it is the same assembly) will break type equality procedures.
+             */
+            if (asmName == "Orion")
+            {
+                return typeof(Orion).Assembly;
+            }
+
             var paths = new[] {
                 Path.Combine(OrionModulePath, asmName + ".dll"),
                 Path.Combine(OrionBasePath, asmName + ".dll"),
@@ -484,6 +492,11 @@ namespace Orion
 
             foreach (string path in paths)
             {
+                if (File.Exists(path) == false)
+                {
+                    continue;
+                }
+
                 try
                 {
                     return Assembly.LoadFile(path);

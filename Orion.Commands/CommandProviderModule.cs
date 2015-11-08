@@ -6,6 +6,7 @@ using System.Threading;
 using Orion.Commands.Commands;
 using Orion.Framework;
 using Orion.Framework.Events;
+using Orion.Extensions;
 using OTA;
 
 namespace Orion.Commands
@@ -14,75 +15,50 @@ namespace Orion.Commands
     //TODO: Hook into a chat hook and process command strings.
     //TODO: Config options such as what the command specifier character is.
     [OrionModule("Command Provider", "Nyx Studios", Description = "Allows for other modules to register commands for use in-game by players.")]
+    [DependsOn(typeof(Modules.Configuration.ConfigurationModule))]
     public class CommandProviderModule : OrionModuleBase
     {
         private ConsolePlayer CPlayer { get; set; } = new ConsolePlayer();
-        protected Thread commandInputThread;
+
+        public CommandConfiguration Configuration { get; set; }
 
         public CommandProviderModule(Orion core) : base(core)
         {
+<<<<<<< HEAD
             Core.Hooks.ServerCommandThreadStarting += Core_ServerCommandThreadStarting;
+=======
+            this.RegisterConfigurationProperty(p => p.Configuration);
+                        
+            Commands = new CommandManager();
+            Core.ConsoleModule.ConsoleLine += ConsoleModule_ConsoleLine;
+            Commands.AddCommand<BasePlayer, string>("help", HelpCommand);
+            Commands.AddCommand<BasePlayer>("help", HelpCommand);
         }
 
-        private void Core_ServerCommandThreadStarting(Orion orion, OrionEventArgs e)
+        public override void Initialize()
         {
-            /*
-             * If stdin is redirected, there is no point in starting a command
-             * input thread.
-             */
-            if (Console.IsInputRedirected == true)
-            {
-                return;
-            }
+            base.Initialize();
+        }
 
-            if (commandInputThread == null)
-            {
-                commandInputThread = new Thread(ServerInputThread);
-                commandInputThread.IsBackground = true;
-            }
+        private void ConsoleModule_ConsoleLine(object sender, ConsoleLineEventArgs e)
+        {
+            RunCommand(e.Player, e.Line);
+>>>>>>> 0d923cd250f262f8f4c1ae7944efb86752f9a03d
+        }
+
+        private void HelpCommand(BasePlayer ply, string helpText)
+        {
             
-            commandInputThread.Start();
         }
 
-        private void PrintPrompt()
+        private void HelpCommand(BasePlayer ply)
         {
-            var originalColour = Console.ForegroundColor;
-            
-            Console.ForegroundColor = ConsoleColor.Blue;
-            Console.Write("Orion");
-            Console.ForegroundColor = ConsoleColor.Cyan;
-            Console.Write("@");
-            Console.ForegroundColor = ConsoleColor.Green;
-            Console.Write($"{Core.Version.Major}.{Core.Version.Minor}");
-            Console.ForegroundColor = originalColour;
-            Console.Write(" > ");
-        }
 
-        private void ServerInputThread()
-        {
-            while (true)
-            {
-                PrintPrompt();
-                
-                string line = Console.ReadLine();
-                
-                RunCommand(CPlayer, line);
-            }
         }
 
         public void RunCommand(BasePlayer player, string commandString)
         {
             throw new NotImplementedException();
-        }
-        
-        protected override void Dispose(bool disposing)
-        {
-            if (disposing)
-            {
-                commandInputThread.Abort();
-            }
-            
-            base.Dispose(disposing);
         }
     }
 }
