@@ -9,5 +9,6 @@ namespace Orion.Commands
     public class CommandConfiguration
     {
         public string CommandPrefix { get; set; } = "/";
+        public List<string> FlagPrefix { get; set; } = new List<string>{"/","-"};
     }
 }

@@ -22,17 +22,20 @@ namespace Orion.Commands
 
         public CommandConfiguration Configuration { get; set; }
 
+        public CommandManager Commands { get; private set; }
+
         public CommandProviderModule(Orion core) : base(core)
         {
-<<<<<<< HEAD
             Core.Hooks.ServerCommandThreadStarting += Core_ServerCommandThreadStarting;
-=======
             this.RegisterConfigurationProperty(p => p.Configuration);
                         
             Commands = new CommandManager();
             Core.ConsoleModule.ConsoleLine += ConsoleModule_ConsoleLine;
-            Commands.AddCommand<BasePlayer, string>("help", HelpCommand);
-            Commands.AddCommand<BasePlayer>("help", HelpCommand);
+        }
+
+        private void Core_ServerCommandThreadStarting(Orion orion, OrionEventArgs e)
+        {
+            throw new NotImplementedException();
         }
 
         public override void Initialize()
@@ -43,17 +46,6 @@ namespace Orion.Commands
         private void ConsoleModule_ConsoleLine(object sender, ConsoleLineEventArgs e)
         {
             RunCommand(e.Player, e.Line);
->>>>>>> 0d923cd250f262f8f4c1ae7944efb86752f9a03d
-        }
-
-        private void HelpCommand(BasePlayer ply, string helpText)
-        {
-            
-        }
-
-        private void HelpCommand(BasePlayer ply)
-        {
-
         }
 
         public void RunCommand(BasePlayer player, string commandString)
