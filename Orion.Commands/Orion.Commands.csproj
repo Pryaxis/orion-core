@@ -63,6 +63,7 @@
   <ItemGroup>
     <Compile Include="Attributes\CommandAttribute.cs" />
     <Compile Include="Attributes\NamedParameterAttribute.cs" />
+    <Compile Include="Attributes\ParameterAttribute.cs" />
     <Compile Include="Attributes\PositionalParameterAttribute.cs" />
     <Compile Include="Attributes\SwitchParameterAttribute.cs" />
     <Compile Include="CommandConfiguration.cs" />

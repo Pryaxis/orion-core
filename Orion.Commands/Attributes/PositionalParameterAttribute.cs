@@ -2,7 +2,7 @@
 
 namespace Orion.Commands.Attributes
 {
-    public class PositionalParameterAttribute : Attribute
+    public class PositionalParameterAttribute : ParameterAttribute
     {
         public int Position { get; set; }
         public bool Required { get; set; } = false;

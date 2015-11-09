@@ -2,7 +2,7 @@
 
 namespace Orion.Commands.Attributes
 {
-    public class SwitchParameterAttribute : Attribute
+    public class SwitchParameterAttribute : ParameterAttribute
     {
          
     }

@@ -2,7 +2,7 @@
 
 namespace Orion.Commands.Attributes
 {
-    public class NamedParameterAttribute : Attribute
+    public class NamedParameterAttribute : ParameterAttribute
     {
         public string Flag { get; set; }
         public bool Required { get; set; } = true;

@@ -25,8 +25,8 @@ namespace Orion.Commands.Commands
 
         public void RegisterCommand<T>() where T : IOrionCommand, new()
         {
-            var commandType = typeof (T);
-            var commandAttribute = commandType.GetCustomAttribute(typeof (CommandAttribute)) as CommandAttribute;
+            Type commandType = typeof (T);
+            CommandAttribute commandAttribute = commandType.GetCustomAttribute(typeof (CommandAttribute)) as CommandAttribute;
             if (commandAttribute == null)
             {
                 throw new CommandException("CommandAttribute not found.");
@@ -40,13 +40,20 @@ namespace Orion.Commands.Commands
 
         public void RunCommand(BasePlayer player, string commandString)
         {
-            var commandName = CommandStringParser.GetCommandNameFromCommandString(commandString, _config.CommandPrefix);
+            string commandName = CommandStringParser.GetCommandNameFromCommandString(commandString, _config.CommandPrefix);
 
-            var registeredCommand = _registeredCommands.Single(x => String.Equals(x.Name, commandName, StringComparison.CurrentCultureIgnoreCase));
+            if (commandName == "help")
+            {
+                HandleHelpCommand(player, commandString);
+                return;
+            }
+
+            RegisteredCommand registeredCommand = _registeredCommands.Single(x => String.Equals(x.Name, commandName, StringComparison.CurrentCultureIgnoreCase));
 
             //Check perms here.
 
-            var commandInstance = Parser.ParseArgumentsIntoCommandClass(registeredCommand.CommandClass, commandString, _config.FlagPrefixs);
+            IOrionCommand commandInstance = Parser.ParseArgumentsIntoCommandClass(registeredCommand.CommandClass, commandString, _config.FlagPrefixs);
+            commandInstance.Sender = player;
 
             try
             {
@@ -56,6 +63,52 @@ namespace Orion.Commands.Commands
             {
                 //TODO: Proper exception handling and user feedback. Blocked by the possibility of @Wolfje making changes to output. Not filling in until then.
             }
+        }
+
+        private void HandleHelpCommand(BasePlayer player, string commandString)
+        {
+            //Split the help command string into several args.
+            List<string> args = CommandStringParser.SplitCommandStringIntoArguments(commandString);
+            var helpTextList = new List<string>();
+
+            //Split each argument by '.' and provide the requested information.
+            //Work on each argument separately to allow one call to the help command to return
+            //info on multiple things.
+            foreach (var arg in args)
+            {
+                string[] split = arg.Split('.');
+                string commandName = split[0];
+
+                RegisteredCommand command = _registeredCommands.Single(x => string.Equals(commandName, x.Name, StringComparison.CurrentCultureIgnoreCase));
+
+                if (split.Length > 1)
+                {
+                    var subArg = split[1];
+                    PropertyInfo[] props = command.CommandClass.GetProperties();
+                    switch (subArg)
+                    {
+                        case "perms":
+                        case "perm":
+                        case "permissions":
+                        case "permission":
+                            helpTextList.Add($"{commandName} Permissions: {String.Join(", ", command.Permissions)}");
+                            break;
+
+                        default:
+                            PropertyInfo prop = props.Single(x => string.Equals(subArg, x.Name, StringComparison.CurrentCultureIgnoreCase));
+                            var attribute = prop.GetCustomAttributes().First(x => x is ParameterAttribute) as ParameterAttribute;
+                            helpTextList.Add($"{commandName}.{prop.Name} - {attribute?.HelpText}");
+                            break;
+                    }
+                }
+                else
+                {
+                    CommandAttribute commandAttribute = command.CommandClass.GetCustomAttribute<CommandAttribute>();
+                    helpTextList.Add($"{commandName} - {commandAttribute.HelpText}");
+                }
+            }
+
+            //TODO: Output helpTextList to sender. Use pagination.
         }
     }
 }

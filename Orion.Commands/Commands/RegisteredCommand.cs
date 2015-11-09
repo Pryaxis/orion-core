@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace Orion.Commands.Commands
 {
-    internal class RegisteredCommand
+    public class RegisteredCommand
     {
         public string Name { get; private set; }
         public List<string> Permissions { get; private set; }
