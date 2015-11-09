@@ -12,6 +12,8 @@ namespace Orion.Commands.Commands
 {
     public class CommandStringParser
     {
+        private readonly List<char> _flagSpecifiers;
+
         private Dictionary<Type, Func<string, object>> Converters = new Dictionary<Type, Func<string, object>>()
         {
             {typeof(string), x => x},
@@ -23,6 +25,11 @@ namespace Orion.Commands.Commands
             {typeof(DateTime), x => DateTime.Parse(x)},
             {typeof(TimeSpan), x => TimeSpan.Parse(x)}
         };
+
+        public CommandStringParser(List<char> flagSpecifiers)
+        {
+            _flagSpecifiers = flagSpecifiers;
+        }
 
         /// <summary>
         /// Add a converter for type `T` to converter's dictionary. 
@@ -61,8 +68,7 @@ namespace Orion.Commands.Commands
             //Ensure a parameterless constructor exists.
             if (commandConstructor == null)
             {
-                //TODO: Proper exception.
-                throw new Exception("Command type has no paramterless constructors.");
+                throw new CommandProcessingException("Command type has no paramterless constructors.");
             }
 
             var commandInstance = commandConstructor.Invoke(null) as IOrionCommand;
@@ -70,7 +76,7 @@ namespace Orion.Commands.Commands
             //Ensure the object was created and cast to an IOrionCommand properly.
             if (commandInstance == null)
             {
-                throw new Exception("Command type was not of IOrionCommand.");
+                throw new CommandProcessingException("Command type was not of IOrionCommand.");
             }
 
             //Get info about the class properties.
@@ -82,58 +88,20 @@ namespace Orion.Commands.Commands
             var commandArgs = SplitCommandStringIntoArguments(commandString);
             
             //Process switches first.
-            foreach (var prop in switches)
-            {
-                var name = prop.Name;
-                //Only really care if it's declared at least once, so using Any.
-                var matches = commandArgs.Any(x => String.Equals(name, x.TrimStart('/', '-'), StringComparison.CurrentCultureIgnoreCase));
-
-                //Set value in to-be-returned instance of the command.
-                prop.SetValue(commandInstance, matches);
-            }
+            ProcessSwitches(switches, commandArgs, commandInstance);
             
             //Process flags now.
-            foreach (var prop in flags)
-            {
-                var attribute = prop.GetCustomAttribute<NamedParameterAttribute>();
-                var name = attribute.Flag ?? prop.Name;
-                var required = attribute.Required;
-
-                bool match = false;
-
-                //Look for any args which match this flag, but there can only be one.
-                try
-                {
-                    match = commandArgs.Single(x => String.Equals(name, x.TrimStart(flagSpecifiers.ToArray()), StringComparison.CurrentCultureIgnoreCase)).Any();
-                }
-                catch (InvalidOperationException)
-                {
-                    //TODO: Command parsing error exception throwing.
-                    if (required)
-                    {
-                        throw;
-                        //Throw exception for "Required flag could not be found."
-                    }
-                }
-
-                //If we've found a match for this flag.
-                if (match)
-                {
-                    //Get the argument from the command string for this flag.
-                    //The argument is always the parameter in the next position in the command string.
-                    var matchIndex = IndexOfFlag(commandArgs, name, flagSpecifiers);
-                    var flagArg = commandArgs[matchIndex + 1];
-
-                    //Get the parsed argument.
-                    object flagArgAsTargetType = ParseArgumentIntoObject(prop.PropertyType, flagArg);
-
-                    //Set the property value in the instance to the parsed value.
-                    prop.SetValue(commandInstance, flagArgAsTargetType);
-                }
-            }
+            ProcessFlags(flags, commandArgs, commandInstance);
 
             //Process positional arguments now.
-            var positionalArgsFromString = commandArgs.Where(x => !IsFlagOrSwitch(x, flagSpecifiers)).ToList();
+            ProcessPositionalArguments(commandArgs, positional, commandInstance);
+
+            return commandInstance;
+        }
+
+        private void ProcessPositionalArguments(List<string> commandArgs, IEnumerable<PropertyInfo> positional, IOrionCommand commandInstance)
+        {
+            var positionalArgsFromString = commandArgs.Where(x => !IsFlagOrSwitch(x, _flagSpecifiers)).ToList();
             var ordered = positional.OrderBy(x => x.GetCustomAttribute<PositionalParameterAttribute>().Position).ToList();
 
             //We're dependent on the positional args in `positionalArgsFromString` being ordered in accordance with the props from `ordered`.
@@ -164,14 +132,69 @@ namespace Orion.Commands.Commands
                     if (required)
                     {
                         //The arg is required, so throw an exception since we do not have a value for it.
-                        //TODO: Handle required positional arg not getting an arg.
-                        //Throw proper exception.
-                        throw new Exception();
+                        throw new CommandProcessingException($"Required positional argument \"{prop.Name}\" in position \"{i}\" did not get a value.");
                     }
                 }
             }
+        }
 
-            return commandInstance;
+        private void ProcessFlags(IEnumerable<PropertyInfo> flags, List<string> commandArgs, IOrionCommand commandInstance)
+        {
+            foreach (var prop in flags)
+            {
+                var attribute = prop.GetCustomAttribute<NamedParameterAttribute>();
+                var name = attribute.Flag ?? prop.Name;
+                var required = attribute.Required;
+
+                bool match = false;
+
+                //Look for any args which match this flag, but there can only be one.
+                try
+                {
+                    match =
+                        commandArgs.Single(
+                            x =>
+                                String.Equals(name, x.TrimStart(_flagSpecifiers.ToArray()),
+                                    StringComparison.CurrentCultureIgnoreCase)).Any();
+                }
+                catch (InvalidOperationException)
+                {
+                    //If the flag was required then throw an exception.
+                    if (required)
+                    {
+                        throw new CommandProcessingException($"Required flag \"{prop.Name}\" not found in command string.");
+                    }
+                }
+
+                //If we've found a match for this flag.
+                if (match)
+                {
+                    //Get the argument from the command string for this flag.
+                    //The argument is always the parameter in the next position in the command string.
+                    var matchIndex = IndexOfFlag(commandArgs, name, _flagSpecifiers);
+                    var flagArg = commandArgs[matchIndex + 1];
+
+                    //Get the parsed argument.
+                    object flagArgAsTargetType = ParseArgumentIntoObject(prop.PropertyType, flagArg);
+
+                    //Set the property value in the instance to the parsed value.
+                    prop.SetValue(commandInstance, flagArgAsTargetType);
+                }
+            }
+        }
+
+        private void ProcessSwitches(IEnumerable<PropertyInfo> switches, List<string> commandArgs, IOrionCommand commandInstance)
+        {
+            foreach (var prop in switches)
+            {
+                var name = prop.Name;
+                //Only really care if it's declared at least once, so using Any.
+                var matches =
+                    commandArgs.Any(x => String.Equals(name, x.TrimStart('/', '-'), StringComparison.CurrentCultureIgnoreCase));
+
+                //Set value in to-be-returned instance of the command.
+                prop.SetValue(commandInstance, matches);
+            }
         }
 
         /// <summary>

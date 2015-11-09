@@ -12,7 +12,7 @@ namespace Orion.Commands.Commands
 {
     public class CommandManager
     {
-        public CommandStringParser Parser = new CommandStringParser();
+        public CommandStringParser Parser { get; private set; }
 
         private List<RegisteredCommand> _registeredCommands = new List<RegisteredCommand>();
         private readonly CommandConfiguration _config;
@@ -20,6 +20,7 @@ namespace Orion.Commands.Commands
         public CommandManager(CommandConfiguration config)
         {
             _config = config;
+            Parser = new CommandStringParser(config.FlagPrefixs);
         }
 
         public void RegisterCommand<T>() where T : IOrionCommand, new()
@@ -53,7 +54,7 @@ namespace Orion.Commands.Commands
             }
             catch (Exception e)
             {
-                //TODO: Proper exception handling and user feedback.
+                //TODO: Proper exception handling and user feedback. Blocked by the possibility of @Wolfje making changes to output. Not filling in until then.
             }
         }
     }

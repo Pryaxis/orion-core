@@ -13,7 +13,6 @@ namespace Orion.Commands
 {
     //TODO: Logging of exceptions and issues.
     //TODO: Hook into a chat hook and process command strings.
-    //TODO: Config options such as what the command specifier character is.
     [OrionModule("Command Provider", "Nyx Studios", Description = "Allows for other modules to register commands for use in-game by players.")]
     [DependsOn(typeof(Modules.Configuration.ConfigurationModule))]
     public class CommandProviderModule : OrionModuleBase

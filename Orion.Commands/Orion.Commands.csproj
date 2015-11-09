@@ -72,6 +72,7 @@
     <Compile Include="Commands\CommandStringParser.cs" />
     <Compile Include="Commands\Exceptions\ArgumentParsingException.cs" />
     <Compile Include="Commands\Exceptions\CommandException.cs" />
+    <Compile Include="Commands\Exceptions\CommandProcessingException.cs" />
     <Compile Include="Commands\IOrionCommand.cs" />
     <Compile Include="Commands\ParsedCommandArguments.cs" />
     <Compile Include="Commands\RegisteredCommand.cs" />
