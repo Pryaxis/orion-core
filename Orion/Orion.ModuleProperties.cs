@@ -20,5 +20,7 @@ namespace Orion
         public IConsoleProvider ConsoleModule => Get<Modules.Console.ConsoleModule>();
         
         public IConfigurationProvider Configuration => Get<Modules.Configuration.ConfigurationModule>();
+
+		public ILogProvider Log => Get<Modules.Logging.LogModule>();
     }
 }
