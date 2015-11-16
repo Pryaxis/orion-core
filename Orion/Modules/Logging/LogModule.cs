@@ -8,7 +8,7 @@ namespace Orion.Modules.Logging
 		private log4net.ILog _log;
 		private log4net.ILog _fileLog;
 
-		protected LogModule(Orion core) 
+		public LogModule(Orion core) 
 			: base(core)
 		{
 		}
