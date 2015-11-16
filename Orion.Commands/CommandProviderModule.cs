@@ -14,7 +14,7 @@ namespace Orion.Commands
     //TODO: Logging of exceptions and issues.
     //TODO: Hook into a chat hook and process command strings.
     [OrionModule("Command Provider", "Nyx Studios", Description = "Allows for other modules to register commands for use in-game by players.")]
-    [DependsOn(typeof(Modules.Configuration.ConfigurationModule))]
+    [DependsOn(typeof(Modules.Configuration.ConfigurationModule), typeof(Modules.Console.ConsoleModule))]
     public class CommandProviderModule : OrionModuleBase
     {
         public CommandConfiguration Configuration { get; set; }
@@ -26,7 +26,6 @@ namespace Orion.Commands
             this.RegisterConfigurationProperty(p => p.Configuration);
                         
             Commands = new CommandManager(Configuration);
-            Core.ConsoleModule.ConsoleLine += ConsoleModule_ConsoleLine;
         }
 
         private void ConsoleModule_ConsoleLine(object sender, ConsoleLineEventArgs e)
