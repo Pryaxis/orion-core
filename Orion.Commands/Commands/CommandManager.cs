@@ -48,8 +48,19 @@ namespace Orion.Commands.Commands
                 return;
             }
 
-            RegisteredCommand registeredCommand = _registeredCommands.Single(x => String.Equals(x.Name, commandName, StringComparison.CurrentCultureIgnoreCase));
-
+			//Single throws an InvalidOperationException if no values satisfy its condition.
+			//This would cause the entire program to crash if a non-existent command was entered
+			RegisteredCommand registeredCommand = null;
+			try
+			{
+				registeredCommand = _registeredCommands.Single(x => String.Equals(x.Name, commandName, StringComparison.CurrentCultureIgnoreCase));
+			}
+			catch (InvalidOperationException)
+			{
+				//temporary, until the provided BasePlayer is not null (see ConsoleModule.ActivePlayer)
+				Console.WriteLine("Invalid command");
+				return;
+			}
             //Check perms here.
 
             IOrionCommand commandInstance = Parser.ParseArgumentsIntoCommandClass(registeredCommand.CommandClass, commandString, _config.FlagPrefixs);
