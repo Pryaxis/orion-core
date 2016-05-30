@@ -1,12 +1,11 @@
-﻿using System;
+﻿using Orion.Commands.Attributes;
+using Orion.Commands.Commands.Exceptions;
+using OTAPI.Core;
+using OTAPI.Core.Debug;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-using System.Security.Cryptography.X509Certificates;
-using Orion.Commands.Attributes;
-using Orion.Commands.Commands.Exceptions;
-using OTA;
-using OTA.DebugFramework;
 
 namespace Orion.Commands.Commands
 {
@@ -38,7 +37,7 @@ namespace Orion.Commands.Commands
             _registeredCommands.Add(new RegisteredCommand(commandAttribute.Name, commandAttribute.Permissions.ToList(), commandType));
         }
 
-        public void RunCommand(BasePlayer player, string commandString)
+        public void RunCommand(IEntity player, string commandString)
         {
             string commandName = CommandStringParser.GetCommandNameFromCommandString(commandString, _config.CommandPrefix);
 
@@ -76,7 +75,7 @@ namespace Orion.Commands.Commands
             }
         }
 
-        private void HandleHelpCommand(BasePlayer player, string commandString)
+        private void HandleHelpCommand(IEntity player, string commandString)
         {
             //Split the help command string into several args.
             List<string> args = CommandStringParser.SplitCommandStringIntoArguments(commandString);

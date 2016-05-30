@@ -1,9 +1,8 @@
+using Orion.Extensions;
+using Orion.Framework;
+using OTAPI.Core.Debug;
 using System;
 using System.Reflection;
-using Orion.Framework;
-using OTA.DebugFramework;
-using OTA.Logging;
-using Orion.Extensions;
 using System.Text.RegularExpressions;
 
 namespace Orion.Modules.Configuration
@@ -91,7 +90,8 @@ namespace Orion.Modules.Configuration
 
             if (weakRef.IsAlive == false)
             {
-                ProgramLog.Error.Log($"orion config: Module {ModuleType.Name} instance is dead!");
+                Assert.Expression(() => !weakRef.IsAlive);
+                (weakRef.Target as OrionModuleBase).Core.Log.LogError(LogOutputFlag.All, $"orion config: Module {ModuleType.Name} instance is dead!");
             }
 
             ConfigurationProperty.SetValue(weakRef.Target, configurationObj);

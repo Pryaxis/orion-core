@@ -1,12 +1,11 @@
-﻿using System.Collections.Generic;
-using OTA;
+﻿using OTAPI.Core;
 
 namespace Orion.Commands.Commands
 {
     public interface IOrionCommand
     {
 
-        BasePlayer Sender { get; set; }
+        IEntity Sender { get; set; }
         CommandResult Run();
     }
 }

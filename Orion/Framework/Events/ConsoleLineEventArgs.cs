@@ -1,16 +1,10 @@
-﻿using Orion.Framework.Events;
-using OTA;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using OTAPI.Core;
 
 namespace Orion.Framework.Events
 {
     public class ConsoleLineEventArgs : OrionEventArgs
     {
-        public BasePlayer Player { get; set; }
+        public IEntity Player { get; set; }
 
         public string Line { get; set; }
     }

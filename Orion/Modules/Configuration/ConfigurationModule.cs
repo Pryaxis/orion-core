@@ -1,15 +1,13 @@
-﻿using Orion.Framework;
+﻿using Newtonsoft.Json;
 using Orion.Extensions;
-using OTA.DebugFramework;
+using Orion.Framework;
+using OTAPI.Core.Debug;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
-using OTA.Logging;
-using System.IO;
-
-using Newtonsoft.Json;
 using System.Security.Cryptography;
 using System.Threading.Tasks;
 
@@ -80,7 +78,7 @@ namespace Orion.Modules.Configuration
             }
             catch (Exception ex)
             {
-                ProgramLog.Log(ex);
+                this.Core.Log.LogError(LogOutputFlag.All, ex);
             }
 
             /*
@@ -96,7 +94,7 @@ namespace Orion.Modules.Configuration
                 return;
             }
 
-            ProgramLog.Debug.Log($"orion config: Detected config change for {registration.ModuleType.Name} through file {registration.FileName} and was reloaded.");
+            this.Core.Log.LogDebug(LogOutputFlag.All, $"orion config: Detected config change for {registration.ModuleType.Name} through file {registration.FileName} and was reloaded.");
 
             Load(registration.ModuleType);
             registration.sha1Hash = shaHash;
@@ -204,13 +202,13 @@ namespace Orion.Modules.Configuration
             ConfigurationRegistration registration = GetConfigurationRegistration(moduleType);
             string configPath = Path.Combine(Core.OrionConfigurationPath, registration.FileName);
 
-            ProgramLog.Debug.Log($"orion config: Loading configuration for type {moduleType.Name} from {registration.FileName}");
+            this.Core.Log.LogDebug(LogOutputFlag.All, $"orion config: Loading configuration for type {moduleType.Name} from {registration.FileName}");
 
             object deserializedConfig = null;
 
             if (File.Exists(configPath) == false)
             {
-                ProgramLog.Debug.Log($"orion config: No configuration file exists for {moduleType.Name}, creating one");
+                this.Core.Log.LogDebug(LogOutputFlag.All, $"orion config: No configuration file exists for {moduleType.Name}, creating one");
                 deserializedConfig = LoadDefaultConfiguration(moduleType);
                 Save(moduleType);
             }
@@ -223,7 +221,7 @@ namespace Orion.Modules.Configuration
             {
                 //TODO: Handle corruption of config objects
                 deserializedConfig = LoadDefaultConfiguration(moduleType);
-                ProgramLog.Error.Log(ex.Message);
+                this.Core.Log.LogError(LogOutputFlag.All, ex);
             }
 
             AssignConfigurationProperty(moduleType, deserializedConfig);
@@ -271,7 +269,7 @@ namespace Orion.Modules.Configuration
 
             if (configValue == null)
             {
-                ProgramLog.Error.Log($"orion config: Registered property value on {moduleType.Name} was null and cannot be saved");
+                this.Core.Log.LogError(LogOutputFlag.All, $"orion config: Registered property value on {moduleType.Name} was null and cannot be saved");
                 return;
             }
 
@@ -281,7 +279,7 @@ namespace Orion.Modules.Configuration
             }
             catch (Exception ex)
             {
-                ProgramLog.Error.Log($"orion config: error serializing configuration property for {moduleType.Name}: {ex.Message}");
+                this.Core.Log.LogError(LogOutputFlag.All, $"orion config: error serializing configuration property for {moduleType.Name}: {ex.Message}");
                 throw;
             }
 

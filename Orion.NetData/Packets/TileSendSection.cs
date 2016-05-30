@@ -1,5 +1,4 @@
 ﻿using Orion.Framework.Events;
-using OTA.Memory;
 using System.Collections.Generic;
 using Terraria;
 using Terraria.DataStructures;
@@ -7,16 +6,16 @@ using Terraria.GameContent.Tile_Entities;
 
 namespace Orion.NetData.Packets
 {
-	/// <summary>
-	/// Not fully implemented. Packet 10
-	/// </summary>
-	public class TileSendSection : TerrariaPacketBase
+    /// <summary>
+    /// Not fully implemented. Packet 10
+    /// </summary>
+    public class TileSendSection : TerrariaPacketBase
 	{
 		public int XStart { get; set; }
 		public int YStart { get; set; }
 		public short Width { get; set; }
 		public short Height { get; set; }
-		public List<MemTile> Tiles { get; set; } = new List<MemTile>();
+		public List<Tile> Tiles { get; set; } = new List<Tile>();
 		public short ChestCount { get; set; } = 0;
 		public List<Chest> Chests { get; set; } = new List<Chest>();
 		public short SignCount { get; set; } = 0;
@@ -35,7 +34,7 @@ namespace Orion.NetData.Packets
 			{
 				for (int j = XStart; j < XStart + Width; j++)
 				{
-					MemTile t = Main.tile[i, j];
+                    Tile t = Main.tile[i, j];
 
 					if (t != null && t.active())
 					{

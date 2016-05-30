@@ -1,17 +1,11 @@
 ﻿using Orion.Extensions;
 using Orion.Framework;
-using OTA.DebugFramework;
-using OTA.Logging;
-using OTA.Plugin;
+using OTAPI.Core.Debug;
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Reflection;
-using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
 
 namespace Orion
 {
@@ -22,19 +16,8 @@ namespace Orion
     public partial class Orion : IDisposable
     {
         private bool disposedValue = false; // To detect redundant calls
-        private readonly OTAPIPlugin plugin;
 
         public const string kOrionBasePath = "Orion";
-
-        /// <summary>
-        /// Gets a reference to the OTAPI plugin container in which this Orion core
-        /// runs inside of
-        /// </summary>
-        /// <remarks>
-        /// Marked as internal, Orion modules should be using hooks from the IHookProvider
-        /// interface Orion provides itself
-        /// </remarks>
-        internal OTAPIPlugin Plugin => plugin;
 
         /// <summary>
         /// Contains references to all the Orion modules loaded inside Orion
@@ -73,10 +56,9 @@ namespace Orion
 
         protected int initPercent = 0;
 
-        public Orion(OTAPIPlugin plugin)
+        public Orion()
         {
             this.moduleContainer = new List<ModuleRef>();
-            this.plugin = plugin;
             AppDomain.CurrentDomain.AssemblyResolve += CurrentDomain_AssemblyResolve;
         }
 
@@ -288,11 +270,11 @@ namespace Orion
 
                 if (failedModules.Count > 0)
                 {
-                    ProgramLog.Error.Log($"orion modules:  These following modules failed to initialize and were disabled.");
+                    Log.LogError(LogOutputFlag.All, $"orion modules:  These following modules failed to initialize and were disabled.");
 
                     foreach (OrionModuleBase failedModule in failedModules)
                     {
-                        ProgramLog.Error.Log($" * {failedModule.ModuleName} by {failedModule.Author}");
+                        Log.LogError(LogOutputFlag.All, $" * {failedModule.ModuleName} by {failedModule.Author}");
                         failedModule.Dispose();
                     }
                 }
@@ -335,7 +317,7 @@ namespace Orion
                 }
                 catch
                 {
-                    ProgramLog.Log($"orion modules: Could not load module {attr.ModuleName} because of an error", ConsoleColor.Yellow);
+                    Log.LogWarning(LogOutputFlag.All, $"orion modules: Could not load module {attr.ModuleName} because of an error");
                     continue;
                 }
             }
@@ -376,7 +358,7 @@ namespace Orion
 
             foreach (string pluginFile in Directory.EnumerateFiles(OrionModulePath, "*.dll"))
             {
-                ProgramLog.Debug.Log($"orion modules: trying assembly {pluginFile}");
+                Log.LogDebug(LogOutputFlag.All, $"orion modules: trying assembly {pluginFile}");
                 try
                 {
                     asm = Assembly.LoadFrom(pluginFile);
@@ -471,7 +453,7 @@ namespace Orion
         {
             string asmName = args.Name.Split(',')[0];
 
-            ProgramLog.Debug.Log($"orion modules: AssemblyResolve called for {args.Name}");
+            Log.LogDebug(LogOutputFlag.All, $"orion modules: AssemblyResolve called for {args.Name}");
 
             /*
              * WORKAROUND
@@ -503,15 +485,15 @@ namespace Orion
                 }
                 catch (FileNotFoundException)
                 {
-                    ProgramLog.Error.Log($"orion modules: {path} skipped: file not found");
+                    Log.LogError(LogOutputFlag.All, $"orion modules: {path} skipped: file not found");
                 }
                 catch
                 {
-                    ProgramLog.Error.Log($"orion modules: {path} skipped: load error");
+                    Log.LogError(LogOutputFlag.All, $"orion modules: {path} skipped: load error");
                 }
             }
 
-            ProgramLog.Error.Log($"orion modules: no candidate for assembly {asmName}");
+            Log.LogError(LogOutputFlag.All, $"orion modules: no candidate for assembly {asmName}");
             return null;
         }
         #endregion

@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 namespace Orion.Modules.Console
 {
     using Framework;
-    using OTA;
+    using OTAPI.Core;
     using System.Threading;
     using Console = System.Console;
 
@@ -20,7 +20,7 @@ namespace Orion.Modules.Console
 
         public event EventHandler<Framework.Events.ConsoleLineEventArgs> ConsoleLine;
 
-        public BasePlayer ActivePlayer { get; set; }
+        public NamedEntity ActivePlayer { get; set; }
 
         public ConsoleModule(Orion core)
             : base(core)
@@ -59,7 +59,7 @@ namespace Orion.Modules.Console
                 return "server";
             }
 
-            return ActivePlayer.SenderName;
+            return ActivePlayer.Name;
         }
 
         private void PrintPrompt()

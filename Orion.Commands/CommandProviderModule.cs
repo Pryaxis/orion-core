@@ -1,13 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading;
-using Orion.Commands.Commands;
+﻿using Orion.Commands.Commands;
+using Orion.Extensions;
 using Orion.Framework;
 using Orion.Framework.Events;
-using Orion.Extensions;
-using OTA;
+using OTAPI.Core;
 
 namespace Orion.Commands
 {
@@ -33,7 +28,7 @@ namespace Orion.Commands
             RunCommand(e.Player, e.Line);
         }
 
-        public void RunCommand(BasePlayer player, string commandString)
+        public void RunCommand(IEntity player, string commandString)
         {
             Commands.RunCommand(player, commandString);
         }
