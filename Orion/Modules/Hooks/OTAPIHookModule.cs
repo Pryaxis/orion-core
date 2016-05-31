@@ -1,6 +1,8 @@
-﻿using Orion.Framework;
+﻿using Orion.Extensions;
+using Orion.Framework;
 using Orion.Framework.Events;
 using OTAPI.Core.Debug;
+using System;
 
 namespace Orion.Modules.Hooks
 {
@@ -27,6 +29,8 @@ namespace Orion.Modules.Hooks
             Assert.Expression(() => Core == null);
 
             OTAPI.Core.Hooks.Command.StartCommandThread = OnStartCommandProcessing;
+            OTAPI.Core.Hooks.Game.PreUpdate = OnGameUpdate;
+            OTAPI.Core.Hooks.Game.PostUpdate = OnGamePostUpdate;
 
             //TODO: This is here as a reminder for DeathCradle
             //Core.Plugin.Hook(HookPoints.ServerUpdate, OnGameUpdate);
@@ -127,28 +131,40 @@ namespace Orion.Modules.Hooks
         //    }
         //}
 
-        //internal void OnGameUpdate(ref HookContext context, ref HookArgs.ServerUpdate args)
-        //{
-        //    OrionEventArgs e;
 
-        //    try
-        //    {
-        //        if (GameUpdate != null && args.State == MethodState.Begin)
-        //        {
-        //            GameUpdate(Core, (e = new OrionEventArgs()));
-        //            context.Conclude = e.Cancelled;
-        //        }
-        //        else if (GamePostUpdate != null && args.State == MethodState.End)
-        //        {
-        //            GameUpdate(Core, (e = new OrionEventArgs()));
-        //            context.Conclude = e.Cancelled;
-        //        }
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        ProgramLog.Log(ex);
-        //    }
-        //}
+        internal void OnGameUpdate()
+        {
+            OrionEventArgs e;
+
+            try
+            {
+                if (GameUpdate != null)
+                {
+                    GameUpdate(Core, (e = new OrionEventArgs()));
+                }
+            }
+            catch (Exception ex)
+            {
+                this.Core.Log.LogError(LogOutputFlag.All, ex, $"Exception in {nameof(OnGameUpdate)}");
+            }
+        }
+
+        internal void OnGamePostUpdate()
+        {
+            OrionEventArgs e;
+
+            try
+            {
+                 if (GamePostUpdate != null)
+                {
+                    GamePostUpdate(Core, (e = new OrionEventArgs()));
+                }
+            }
+            catch (Exception ex)
+            {
+                this.Core.Log.LogError(LogOutputFlag.All, ex, $"Exception in {nameof(GamePostUpdate)}");
+            }
+        }
 
         //internal void OnNetSendData(ref HookContext context, ref HookArgs.SendNetMessage args)
         //{
@@ -213,6 +229,8 @@ namespace Orion.Modules.Hooks
                 //Core.Plugin.Unhook(HookPoints.ItemNetDefaults);
                 //Core.Plugin.Unhook(HookPoints.ReceiveNetMessage);
                 //Core.Plugin.Unhook(HookPoints.ConsoleMessageReceived);
+                OTAPI.Core.Hooks.Game.PostUpdate = null;
+                OTAPI.Core.Hooks.Game.PreUpdate = null;
                 OTAPI.Core.Hooks.Command.StartCommandThread = null;
             }
 
