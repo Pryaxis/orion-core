@@ -1,14 +1,8 @@
-﻿using Orion.Framework;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System;
 
 namespace Orion.Modules.Console
 {
     using Framework;
-    using OTAPI.Core;
     using System.Threading;
     using Console = System.Console;
 

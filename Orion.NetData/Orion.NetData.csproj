@@ -31,7 +31,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="OTAPI, Version=1.0.0.0, Culture=neutral, processorArchitecture=x86">
+    <Reference Include="OTAPI, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\OTAPI.dll.0.2.0\lib\net451\OTAPI.dll</HintPath>
       <Private>True</Private>
     </Reference>

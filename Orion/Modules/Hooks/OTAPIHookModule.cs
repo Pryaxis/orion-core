@@ -1,8 +1,6 @@
 ﻿using Orion.Framework;
 using Orion.Framework.Events;
 using OTAPI.Core.Debug;
-using System;
-using Terraria;
 
 namespace Orion.Modules.Hooks
 {
@@ -28,7 +26,7 @@ namespace Orion.Modules.Hooks
 
             Assert.Expression(() => Core == null);
 
-            OTAPI.Core.Hooks.Terraria.Main.OnStartCommandThread = OnStartCommandProcessing;
+            OTAPI.Core.Hooks.Command.StartCommandThread = OnStartCommandProcessing;
 
             //TODO: This is here as a reminder for DeathCradle
             //Core.Plugin.Hook(HookPoints.ServerUpdate, OnGameUpdate);
@@ -204,6 +202,10 @@ namespace Orion.Modules.Hooks
                 GamePostUpdate = null;
                 GameUpdate = null;
                 NetSendData = null;
+                NetGetData = null;
+                ItemNetDefaults = null;
+                ServerChat = null;
+                ServerCommandThreadStarting = null;
 
                 //Remove all OTAPI callbacks and hooks
                 //Core.Plugin.Unhook(HookPoints.ServerUpdate);
@@ -211,7 +213,7 @@ namespace Orion.Modules.Hooks
                 //Core.Plugin.Unhook(HookPoints.ItemNetDefaults);
                 //Core.Plugin.Unhook(HookPoints.ReceiveNetMessage);
                 //Core.Plugin.Unhook(HookPoints.ConsoleMessageReceived);
-                OTAPI.Core.Hooks.Terraria.Main.OnStartCommandThread = null;
+                OTAPI.Core.Hooks.Command.StartCommandThread = null;
             }
 
             base.Dispose(disposing);

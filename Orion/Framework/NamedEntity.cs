@@ -3,10 +3,13 @@
 namespace Orion.Framework
 {
     /// <summary>
-    /// TODO: this mean i have no intentions of ever coming back to do this
+    /// This extends the base entity used for all terrarian entities to include a name.
     /// </summary>
     public abstract class NamedEntity : IEntity
     {
+        /// <summary>
+        /// Name of the entity
+        /// </summary>
         public abstract string Name { get; protected set; }
     }
 }

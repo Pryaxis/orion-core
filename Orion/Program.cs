@@ -14,7 +14,10 @@ namespace Orion
             orionInstance = new Orion();
 
             Initialized();
+
+            Console.WriteLine("Initialising server...");
             Terraria.WindowsLaunch.Main(args);
+
             Disposed();
         }
 

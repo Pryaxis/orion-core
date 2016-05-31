@@ -90,8 +90,7 @@ namespace Orion.Modules.Configuration
 
             if (weakRef.IsAlive == false)
             {
-                Assert.Expression(() => !weakRef.IsAlive);
-                (weakRef.Target as OrionModuleBase).Core.Log.LogError(LogOutputFlag.All, $"orion config: Module {ModuleType.Name} instance is dead!");
+                System.Console.WriteLine($"orion config: Module {ModuleType.Name} instance is dead!"); //Not sure if this class is staying, so if it is change to ILogProvider
             }
 
             ConfigurationProperty.SetValue(weakRef.Target, configurationObj);
