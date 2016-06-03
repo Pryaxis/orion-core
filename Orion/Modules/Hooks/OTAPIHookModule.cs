@@ -1,8 +1,10 @@
 ﻿using Orion.Extensions;
 using Orion.Framework;
 using Orion.Framework.Events;
+using OTAPI.Core;
 using OTAPI.Core.Debug;
 using System;
+using Terraria;
 
 namespace Orion.Modules.Hooks
 {
@@ -31,19 +33,14 @@ namespace Orion.Modules.Hooks
             OTAPI.Core.Hooks.Command.StartCommandThread = OnStartCommandProcessing;
             OTAPI.Core.Hooks.Game.PreUpdate = OnGameUpdate;
             OTAPI.Core.Hooks.Game.PostUpdate = OnGamePostUpdate;
-
-            //TODO: This is here as a reminder for DeathCradle
-            //Core.Plugin.Hook(HookPoints.ServerUpdate, OnGameUpdate);
-            //Core.Plugin.Hook(HookPoints.SendNetMessage, OnNetSendData);
-            //Core.Plugin.Hook(HookPoints.ItemNetDefaults, OnItemNetDefaults);
-            //Core.Plugin.Hook(HookPoints.ReceiveNetMessage, OnNetGetData);
-            //Core.Plugin.Hook(HookPoints.ConsoleMessageReceived, OnConsoleMessageReceived);
-            //Core.Plugin.Hook(HookPoints.StartCommandProcessing, OnStartCommandProcessing);
+            OTAPI.Core.Hooks.Net.SendData = OnNetSendData;
+            OTAPI.Core.Hooks.Net.ReceiveData = OnReceiveData;
+            OTAPI.Core.Hooks.Item.PreNetDefaults = OnItemNetDefaults;
         }
 
         #region On* Internals
 
-        private bool OnStartCommandProcessing()
+        private HookResult OnStartCommandProcessing()
         {
             if (ServerCommandThreadStarting != null)
             {
@@ -51,9 +48,10 @@ namespace Orion.Modules.Hooks
             }
 
             //The new OTAPI will expect false to be returned in order to cancel the execution of vanilla code.
-            return false;
+            return HookResult.Cancel;
         }
 
+        //TODO reminder: this will now need to be done in orion.
         //private void OnConsoleMessageReceived(ref HookContext context, ref HookArgs.ConsoleMessageReceived argument)
         //{
         //    ServerChatEventArgs e;
@@ -76,63 +74,75 @@ namespace Orion.Modules.Hooks
         //    }
         //}
 
-        //internal void OnNetGetData(ref HookContext context, ref HookArgs.ReceiveNetMessage argument)
-        //{
-        //    HookArgs.ReceiveNetMessage msg = argument; //causes a copy
-        //    NetGetDataEventArgs e;
+        internal HookResult OnReceiveData
+        (
+            MessageBuffer buffer,
+            ref byte packetId,
+            ref int readOffset,
+            ref int start,
+            ref int length,
+            ref int messageType
+        )
+        {
+            NetGetDataEventArgs e;
 
-        //    try
-        //    {
-        //        ArraySegment<byte> packetSegment = new ArraySegment<byte>(Netplay.Clients[argument.BufferId].ReadBuffer, argument.Start, argument.Length);
-        //        short packetLength = BitConverter.ToInt16(packetSegment.Array, packetSegment.Offset);
-        //        byte type = packetSegment.Array[packetSegment.Offset + 2];
+            try
+            {
+                ArraySegment<byte> packetSegment = new ArraySegment<byte>(Netplay.Clients[buffer.whoAmI].ReadBuffer, readOffset, length);
+                short packetLength = BitConverter.ToInt16(packetSegment.Array, packetSegment.Offset);
+                byte type = packetSegment.Array[packetSegment.Offset + 2];
 
-        //        /*
-        //         * Packet sanity checks
-        //         */
-        //        Assert.Expression(() => Enum.IsDefined(typeof(PacketTypes), type));
-        //        Assert.Expression(() => packetLength > 0);
+                /*
+                 * Packet sanity checks
+                 */
+                Assert.Expression(() => Enum.IsDefined(typeof(PacketTypes), type));
+                Assert.Expression(() => packetLength > 0);
 
-        //        if (NetGetData != null)
-        //        {
-        //            NetGetData(Core, (e = new NetGetDataEventArgs((byte)argument.BufferId, type, packetLength)));
-        //            context.Conclude = e.Cancelled;
-        //        }
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        ProgramLog.Log(ex);
-        //    }
-        //}
+                if (NetGetData != null)
+                {
+                    NetGetData(Core, (e = new NetGetDataEventArgs((byte)buffer.whoAmI, type, packetLength)));
 
-        //internal void OnItemNetDefaults(ref HookContext context, ref HookArgs.ItemNetDefaults argument)
-        //{
-        //    DefaultsEventArgs<Terraria.Item, int> e;
-        //    HookArgs.ItemNetDefaults defaults = argument; // causes a copy
+                    if (e.Cancelled)
+                        return HookResult.Cancel;
+                }
+            }
+            catch (Exception ex)
+            {
+                this.Core.Log.LogError(LogOutputFlag.All, ex, $"Exception in {nameof(OnReceiveData)}");
+            }
 
-        //    Assert.Expression(() => defaults.Item == null);
+            return HookResult.Continue;
+        }
 
-        //    try
-        //    {
-        //        if (ItemNetDefaults != null)
-        //        {
-        //            ItemNetDefaults(Core, (e = new DefaultsEventArgs<Terraria.Item, int>()
-        //            {
-        //                Object = argument.Item,
-        //                Info = argument.Type
-        //            }));
+        internal HookResult OnItemNetDefaults(Item item, ref int type)
+        {
+            DefaultsEventArgs<Terraria.Item, int> e;
 
-        //            context.Conclude = e.Cancelled;
-        //        }
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        ProgramLog.Log(ex);
-        //    }
-        //}
+            Assert.Expression(() => item == null);
 
+            try
+            {
+                if (ItemNetDefaults != null)
+                {
+                    ItemNetDefaults(Core, (e = new DefaultsEventArgs<Terraria.Item, int>()
+                    {
+                        Object = item,
+                        Info = type
+                    }));
 
-        internal void OnGameUpdate()
+                    if (e.Cancelled)
+                        return HookResult.Cancel;
+                }
+            }
+            catch (Exception ex)
+            {
+                this.Core.Log.LogError(LogOutputFlag.All, ex, $"Exception in {nameof(OnItemNetDefaults)}");
+            }
+
+            return HookResult.Continue;
+        }
+
+        internal void OnGameUpdate(ref Microsoft.Xna.Framework.GameTime gameTime)
         {
             OrionEventArgs e;
 
@@ -149,13 +159,13 @@ namespace Orion.Modules.Hooks
             }
         }
 
-        internal void OnGamePostUpdate()
+        internal void OnGamePostUpdate(ref Microsoft.Xna.Framework.GameTime gameTime)
         {
             OrionEventArgs e;
 
             try
             {
-                 if (GamePostUpdate != null)
+                if (GamePostUpdate != null)
                 {
                     GamePostUpdate(Core, (e = new OrionEventArgs()));
                 }
@@ -166,47 +176,64 @@ namespace Orion.Modules.Hooks
             }
         }
 
-        //internal void OnNetSendData(ref HookContext context, ref HookArgs.SendNetMessage args)
-        //{
-        //    NetSendDataEventArgs e;
+        internal HookResult OnNetSendData
+        (
+            ref int bufferIndex,
+            ref int msgType,
+            ref int remoteClient,
+            ref int ignoreClient,
+            ref string text,
+            ref int number,
+            ref float number2,
+            ref float number3,
+            ref float number4,
+            ref int number5,
+            ref int number6,
+            ref int number7
+        )
+        {
+            NetSendDataEventArgs e;
 
-        //    try
-        //    {
-        //        if (NetSendData != null)
-        //        {
-        //            e = new NetSendDataEventArgs()
-        //            {
-        //                RemoteClient = args.RemoteClient,
-        //                Text = args.Text,
-        //                MsgType = args.MsgType,
-        //                IgnoreClient = args.IgnoreClient,
-        //                Number = args.Number,
-        //                Number2 = args.Number2,
-        //                Number3 = args.Number3,
-        //                Number4 = args.Number4,
-        //                Number5 = args.Number5
-        //            };
+            try
+            {
+                if (NetSendData != null)
+                {
+                    e = new NetSendDataEventArgs()
+                    {
+                        RemoteClient = remoteClient,
+                        Text = text,
+                        MsgType = msgType,
+                        IgnoreClient = ignoreClient,
+                        Number = number,
+                        Number2 = number2,
+                        Number3 = number3,
+                        Number4 = number4,
+                        Number5 = number5
+                    };
 
-        //            NetSendData(Core, e);
+                    NetSendData(Core, e);
 
-        //            args.RemoteClient = e.RemoteClient;
-        //            args.Text = e.Text;
-        //            args.MsgType = e.MsgType;
-        //            args.IgnoreClient = e.IgnoreClient;
-        //            args.Number = e.Number;
-        //            args.Number2 = e.Number2;
-        //            args.Number3 = e.Number3;
-        //            args.Number4 = e.Number4;
-        //            args.Number5 = e.Number5;
+                    remoteClient = e.RemoteClient;
+                    text = e.Text;
+                    msgType = e.MsgType;
+                    ignoreClient = e.IgnoreClient;
+                    number = e.Number;
+                    number2 = e.Number2;
+                    number3 = e.Number3;
+                    number4 = e.Number4;
+                    number5 = e.Number5;
+                    
+                    if (e.Cancelled)
+                        return HookResult.Cancel;
+                }
+            }
+            catch (Exception ex)
+            {
+                this.Core.Log.LogError(LogOutputFlag.All, ex, $"Exception in {nameof(OnNetSendData)}");
+            }
 
-        //            context.Conclude = e.Cancelled;
-        //        }
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        ProgramLog.Log(ex);
-        //    }
-        //}
+            return HookResult.Continue;
+        }
 
         #endregion
 
@@ -223,12 +250,9 @@ namespace Orion.Modules.Hooks
                 ServerChat = null;
                 ServerCommandThreadStarting = null;
 
-                //Remove all OTAPI callbacks and hooks
-                //Core.Plugin.Unhook(HookPoints.ServerUpdate);
-                //Core.Plugin.Unhook(HookPoints.SendNetMessage);
-                //Core.Plugin.Unhook(HookPoints.ItemNetDefaults);
-                //Core.Plugin.Unhook(HookPoints.ReceiveNetMessage);
-                //Core.Plugin.Unhook(HookPoints.ConsoleMessageReceived);
+                //Remove all OTAPI hooks
+                OTAPI.Core.Hooks.Net.ReceiveData = null;
+                OTAPI.Core.Hooks.Net.SendData = null;
                 OTAPI.Core.Hooks.Game.PostUpdate = null;
                 OTAPI.Core.Hooks.Game.PreUpdate = null;
                 OTAPI.Core.Hooks.Command.StartCommandThread = null;
