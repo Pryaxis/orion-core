@@ -12,6 +12,8 @@ namespace ConsoleApplication
             orion = new Orion.Orion(args);
 
             orion.StartServer();
+
+            orion.Dispose();
         }
     }
 }
