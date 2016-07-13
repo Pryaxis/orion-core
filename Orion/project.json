@@ -1,0 +1,11 @@
+{
+  "version": "1.0.0-*",
+  "dependencies": {
+    "OTAPI": "0.2.2",
+    "Ninject": "3.2.2"
+  },
+  "frameworks": {
+    "net451": {
+    }
+  }
+}
