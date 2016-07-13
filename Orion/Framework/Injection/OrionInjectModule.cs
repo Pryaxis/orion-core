@@ -17,7 +17,7 @@ namespace Orion.Framework.Injection
             Kernel.Bind(x => x
                 .FromThisAssembly()
                 .SelectAllClasses().InheritedFrom<ServiceBase>()
-                .Join.FromAssembliesInPath("plugins").SelectAllClasses().InheritedFrom<ServiceBase>()
+				.Join.FromAssembliesInPath(".\\plugins").SelectAllClasses().InheritedFrom<ServiceBase>()
                 .BindAllInterfaces()
                 .Configure(config =>
                 {

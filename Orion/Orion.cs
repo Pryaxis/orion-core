@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Threading.Tasks;
 using Terraria;
 
@@ -33,16 +34,30 @@ namespace Orion
 
             CreateDirectories();
 
-            this.injectionContainer = new StandardKernel(
-                new Framework.Injection.OrionInjectModule()
-                );
-        }
+			AppDomain.CurrentDomain.AssemblyResolve += CurrentDomain_AssemblyResolve;
 
-        /// <summary>
-        /// Enumerates through all directories in Orion's standard directory list
-        /// and creates them if they don't exist.
-        /// </summary>
-        public void CreateDirectories()
+            this.injectionContainer = new StandardKernel(
+				new Framework.Injection.OrionInjectModule()
+			);
+		}
+
+		private System.Reflection.Assembly CurrentDomain_AssemblyResolve(object sender, ResolveEventArgs args)
+		{
+			AssemblyName asmName = new AssemblyName(args.RequestingAssembly.FullName);
+
+			if (asmName.Name == "Ninject")
+			{
+				return typeof(Ninject.KernelBase).Assembly;
+			}
+
+			return null;
+		}
+
+		/// <summary>
+		/// Enumerates through all directories in Orion's standard directory list
+		/// and creates them if they don't exist.
+		/// </summary>
+		public void CreateDirectories()
         {
             foreach (string dir in standardDirectories)
             {
