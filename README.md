@@ -6,7 +6,7 @@ Orion is a modern, cross-platform, service-oriented library which makes it easy 
 serves as the API replacement for TShock v5.
 
 It sits in between Terraria server plugins and Terraria itself, and serves as an abstraction layer between the plugin and
-TerrariaServer itself.  With it, plugin authors will be able to interact with Terraria components on a higher level, saving
+the server.  With it, plugin authors will be able to interact with Terraria components on a higher level, saving
 the amount of effort required to extend Terraria Server's functionality
 
 ### Building Orion
