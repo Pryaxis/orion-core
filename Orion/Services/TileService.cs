@@ -3,28 +3,42 @@ using Orion.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using Terraria;
 
 namespace Orion.Services
 {
+	/// <summary>
+	/// Orion tile service.  Mimics vanilla behaviour by storing tiles in
+	/// a 2D tile array.
+	/// </summary>
+	[Service(Author = "Nyx Studios", Name = "Tile Service")]
 	public class TileService : ServiceBase, ITileService
 	{
+		protected Terraria.Tile[,] tileBuffer;
+
 		public TileService(Orion orion) : base(orion)
 		{
+			OTAPI.Core.Hooks.Tile.CreateCollection = () => this;
 		}
 
 		public Tile this[int x, int y]
 		{
 			get
 			{
-				throw new NotImplementedException();
+				if (tileBuffer == null)
+				{
+					tileBuffer = new Tile[Main.maxTilesX, Main.maxTilesY];
+				}
+
+				return tileBuffer[x, y];
 			}
 
 			set
 			{
-				throw new NotImplementedException();
+				tileBuffer[x, y] = value;
 			}
 		}
 	}
