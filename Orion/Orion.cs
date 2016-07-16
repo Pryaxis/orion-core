@@ -10,47 +10,30 @@ using Terraria;
 
 namespace Orion
 {
-    public class Orion : IDisposable
-    {
-        protected string[] CommandArguments { get; set; }
+	public partial class Orion : IDisposable
+	{
 
-        /// <summary>
-        /// A list of directories that must exist under orion's directory
-        /// </summary>
-        protected string[] standardDirectories = new[]
-        {
-            "plugins"
-        };
+		/// <summary>
+		/// Contains a reference to the injection container, which contains references
+		/// to plugins and services.
+		/// </summary>
+		internal IKernel injectionContainer;
+		internal ServiceMap serviceMap;
 
-        /// <summary>
-        /// Contains a reference to the injection container, which contains references
-        /// to plugins and services.
-        /// </summary>
-        protected IKernel injectionContainer;
+		public IKernel InjectionContainer { get { return injectionContainer; } }
 
-        public Orion(params string[] args)
-        {
-            this.CommandArguments = args;
-
-            CreateDirectories();
-
-			AppDomain.CurrentDomain.AssemblyResolve += CurrentDomain_AssemblyResolve;
-
-            this.injectionContainer = new StandardKernel(
-				new Framework.Injection.OrionInjectModule()
-			);
-		}
-
-		private System.Reflection.Assembly CurrentDomain_AssemblyResolve(object sender, ResolveEventArgs args)
+		public Orion()
 		{
-			AssemblyName asmName = new AssemblyName(args.RequestingAssembly.FullName);
+			CreateDirectories();
+			LoadPluginAssemblies();
 
-			if (asmName.Name == "Ninject")
-			{
-				return typeof(Ninject.KernelBase).Assembly;
-			}
+			this.serviceMap = new ServiceMap();
 
-			return null;
+			this.injectionContainer = new StandardKernel(
+				new Framework.Injection.ServiceInjectionModule(serviceMap)
+			);
+
+			this.injectionContainer.Bind<Orion>().ToConstant(this);
 		}
 
 		/// <summary>
@@ -58,53 +41,63 @@ namespace Orion
 		/// and creates them if they don't exist.
 		/// </summary>
 		public void CreateDirectories()
-        {
-            foreach (string dir in standardDirectories)
-            {
-                if (Directory.Exists(dir))
-                {
-                    continue;
-                }
+		{
+			foreach (string dir in standardDirectories)
+			{
+				Directory.CreateDirectory(dir);
+			}
+		}
 
-                Directory.CreateDirectory(dir);
-            }
-        }
+		public void LoadPluginAssemblies()
+		{
+			foreach (string asmPath in Directory.GetFiles(PluginDirectory, "*.dll"))
+			{
+				try
+				{
+					Assembly.LoadFrom(asmPath);
+				}
+				catch (Exception ex)
+				{
 
-        public void StartServer()
-        {
-            foreach (IService service in injectionContainer.GetAll<IService>())
-            {
-                Console.WriteLine($"  * Loading {service.Name} by {service.Author}");
-            }
+				}
+			}
+		}
 
-            WindowsLaunch.Main(CommandArguments);
-        }
+		public void StartServer()
+		{
+			foreach (IService service in injectionContainer.GetAll<IService>())
+			{
+				Console.WriteLine($"  * Loading {service.Name} by {service.Author}");
+			}
 
-        #region IDisposable Support
-        private bool disposedValue = false; // To detect redundant calls
+			WindowsLaunch.Main(new string[] { });
+		}
 
-        protected virtual void Dispose(bool disposing)
-        {
-            if (!disposedValue)
-            {
-                if (disposing)
-                {
-                    injectionContainer.Dispose();
-                }
+		#region IDisposable Support
+		private bool disposedValue = false; // To detect redundant calls
 
-                // TODO: free unmanaged resources (unmanaged objects) and override a finalizer below.
-                // TODO: set large fields to null.
+		protected virtual void Dispose(bool disposing)
+		{
+			if (!disposedValue)
+			{
+				if (disposing)
+				{
+					injectionContainer.Dispose();
+				}
 
-                disposedValue = true;
-            }
-        }
+				// TODO: free unmanaged resources (unmanaged objects) and override a finalizer below.
+				// TODO: set large fields to null.
 
-        // This code added to correctly implement the disposable pattern.
-        public void Dispose()
-        {
-            // Do not change this code. Put cleanup code in Dispose(bool disposing) above.
-            Dispose(true);
-        }
-        #endregion
-    }
+				disposedValue = true;
+			}
+		}
+
+		// This code added to correctly implement the disposable pattern.
+		public void Dispose()
+		{
+			// Do not change this code. Put cleanup code in Dispose(bool disposing) above.
+			Dispose(true);
+		}
+		#endregion
+	}
 }

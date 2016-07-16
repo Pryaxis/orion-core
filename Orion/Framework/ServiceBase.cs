@@ -5,70 +5,74 @@ using System.Threading.Tasks;
 
 namespace Orion.Framework
 {
-    public class ServiceBase : IService
-    {
-        /// <summary>
-        /// Contains a reference to the Orion instance in which it belongs
-        /// </summary>
-        protected Orion Orion { get; set; }
-        
-        public string Author { get; } = "Nyx Studios";
+	public class ServiceBase : IService
+	{
+		/// <summary>
+		/// Contains a reference to the Orion instance in which it belongs
+		/// </summary>
+		protected Orion Orion { get; set; }
 
-        public string Name { get; }
+		public string Author { get; } = "Nyx Studios";
 
-        public Version Version { get; } = new Version(1, 0, 0);
+		public string Name { get; }
 
-        /// <summary>
-        /// Creates a new instance of an Orion service.
-        /// </summary>
-        protected ServiceBase(Orion orion)
-        {
-            ServiceAttribute serviceAttr;
+		public Version Version { get; } = new Version(1, 0, 0);
 
-            this.Orion = orion;
+		/// <summary>
+		/// Creates a new instance of an Orion service.
+		/// </summary>
+		protected ServiceBase(Orion orion)
+		{
+			ServiceAttribute serviceAttr;
 
-            serviceAttr = Attribute.GetCustomAttribute(this.GetType(), typeof(ServiceAttribute)) as ServiceAttribute;
-            if (serviceAttr != null)
-            {
-                Author = serviceAttr.Author;
-                Name = serviceAttr.Name;
-                Version = serviceAttr.Version;
-            }
-        }
+			this.Orion = orion;
 
-        #region IDisposable Support
-        private bool disposedValue = false; // To detect redundant calls
+			serviceAttr = Attribute.GetCustomAttribute(this.GetType(), typeof(ServiceAttribute)) as ServiceAttribute;
+			if (serviceAttr != null)
+			{
+				Author = serviceAttr.Author;
+				Name = serviceAttr.Name;
+				Version = serviceAttr.Version;
+			}
+		}
 
-        protected virtual void Dispose(bool disposing)
-        {
-            if (!disposedValue)
-            {
-                if (disposing)
-                {
-                    // TODO: dispose managed state (managed objects).
-                }
+		public virtual void Start()
+		{
+		}
 
-                // TODO: free unmanaged resources (unmanaged objects) and override a finalizer below.
-                // TODO: set large fields to null.
+		#region IDisposable Support
+		private bool disposedValue = false; // To detect redundant calls
 
-                disposedValue = true;
-            }
-        }
+		protected virtual void Dispose(bool disposing)
+		{
+			if (!disposedValue)
+			{
+				if (disposing)
+				{
+					// TODO: dispose managed state (managed objects).
+				}
 
-        // TODO: override a finalizer only if Dispose(bool disposing) above has code to free unmanaged resources.
-        // ~ServiceBase() {
-        //   // Do not change this code. Put cleanup code in Dispose(bool disposing) above.
-        //   Dispose(false);
-        // }
+				// TODO: free unmanaged resources (unmanaged objects) and override a finalizer below.
+				// TODO: set large fields to null.
 
-        // This code added to correctly implement the disposable pattern.
-        public void Dispose()
-        {
-            // Do not change this code. Put cleanup code in Dispose(bool disposing) above.
-            Dispose(true);
-            // TODO: uncomment the following line if the finalizer is overridden above.
-            // GC.SuppressFinalize(this);
-        }
-        #endregion
-    }
+				disposedValue = true;
+			}
+		}
+
+		// TODO: override a finalizer only if Dispose(bool disposing) above has code to free unmanaged resources.
+		// ~ServiceBase() {
+		//   // Do not change this code. Put cleanup code in Dispose(bool disposing) above.
+		//   Dispose(false);
+		// }
+
+		// This code added to correctly implement the disposable pattern.
+		public void Dispose()
+		{
+			// Do not change this code. Put cleanup code in Dispose(bool disposing) above.
+			Dispose(true);
+			// TODO: uncomment the following line if the finalizer is overridden above.
+			// GC.SuppressFinalize(this);
+		}
+		#endregion
+	}
 }

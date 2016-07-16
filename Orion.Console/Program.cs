@@ -9,7 +9,7 @@ namespace ConsoleApplication
 
         public static void Main(string[] args)
         {
-            orion = new Orion.Orion(args);
+            orion = new Orion.Orion();
 
             orion.StartServer();
 

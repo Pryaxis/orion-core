@@ -30,6 +30,10 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Newtonsoft.Json, Version=9.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.9.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Ninject, Version=3.2.0.0, Culture=neutral, PublicKeyToken=c7192dc5380945e7, processorArchitecture=MSIL">
       <HintPath>..\packages\Ninject.3.2.2.0\lib\net45-full\Ninject.dll</HintPath>
       <Private>True</Private>
@@ -39,7 +43,7 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="OTAPI, Version=1.3.1.1, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\OTAPI.0.2.2\lib\net451\OTAPI.dll</HintPath>
+      <HintPath>..\packages\OTAPI.0.2.5\lib\net451\OTAPI.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="System" />
@@ -52,14 +56,19 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Framework\Injection\OrionInjectModule.cs" />
+    <Compile Include="Framework\Injection\ServiceInjectionModule.cs" />
     <Compile Include="Framework\IService.cs" />
     <Compile Include="Framework\ServiceAttribute.cs" />
     <Compile Include="Framework\ServiceBase.cs" />
+    <Compile Include="Framework\ServiceMap.cs" />
+    <Compile Include="Interfaces\ITileService.cs" />
     <Compile Include="Orion.cs" />
+    <Compile Include="Orion.DataFields.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Services\TileService.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="app.config" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup />
