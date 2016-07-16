@@ -34,7 +34,6 @@ namespace Orion
 			);
 
 			this.injectionContainer.Bind<Orion>().ToConstant(this);
-
 		}
 
 		/// <summary>
