@@ -30,7 +30,7 @@ namespace Orion.Services
 			{
 				if (tileBuffer == null)
 				{
-					tileBuffer = new Tile[Main.maxTilesX, Main.maxTilesY];
+					tileBuffer = new Tile[Main.maxTilesX + 1, Main.maxTilesY + 1];
 				}
 
 				return tileBuffer[x, y];
