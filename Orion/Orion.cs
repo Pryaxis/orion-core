@@ -34,6 +34,7 @@ namespace Orion
 			);
 
 			this.injectionContainer.Bind<Orion>().ToConstant(this);
+
 		}
 
 		/// <summary>
@@ -65,7 +66,7 @@ namespace Orion
 
 		public void StartServer()
 		{
-			foreach (IService service in injectionContainer.GetAll<IService>())
+			foreach (ServiceBase service in injectionContainer.GetAll<ServiceBase>())
 			{
 				Console.WriteLine($"  * Loading {service.Name} by {service.Author}");
 			}

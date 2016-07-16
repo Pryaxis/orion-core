@@ -26,7 +26,23 @@ namespace Orion.Framework.Injection
 		{
 			foreach (var serviceEntry in serviceMap.Map)
 			{
+				/*
+				 * NOTE:
+				 * 
+				 * Bindings do not implicily flow up the implementation and inheritance
+				 * chain, so a binding rule must be created for every type that will be 
+				 * requested in orion.
+				 * 
+				 * For example, a binding to ITileService to Orion.Services.TileService
+				 * will not resolve on calls to Get<ServiceBase> or Get<IService> even
+				 * though all services implement IService and inherit from ServiceBase,
+				 * you need to create the rules for these in the injection engine
+				 * explicitly.
+				 */
+				
 				Bind(serviceEntry.Key).To(serviceEntry.Value);
+				Bind<IService>().To(serviceEntry.Value);
+				Bind<ServiceBase>().To(serviceEntry.Value);
 			}
 		}
 	}
