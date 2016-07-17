@@ -33,7 +33,7 @@ namespace Orion.Framework
 		protected Dictionary<Type, Type> serviceMap = new Dictionary<Type, Type>()
 		{
 			{ typeof(ITileService), typeof(TileService) },
-			{ typeof(IConfigurationService), typeof(JSONFileConfigurationService) }
+			{ typeof(IConfigurationService), typeof(JsonFileConfigurationService) }
 		};
 
 		internal IDictionary<Type, Type> Map => serviceMap;

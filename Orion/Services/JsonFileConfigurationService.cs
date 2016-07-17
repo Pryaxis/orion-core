@@ -14,11 +14,11 @@ namespace Orion.Services
 	/// Configuration service which loads and saves configuration from disk in JSON
 	/// format, using Newtonsoft.Json to load/store data.
 	/// </summary>
-	public class JSONFileConfigurationService : ServiceBase, IConfigurationService
+	public class JsonFileConfigurationService : ServiceBase, IConfigurationService
 	{
 		public static string ConfigurationDirectory => "config";
 
-		public JSONFileConfigurationService(Orion orion) : base(orion)
+		public JsonFileConfigurationService(Orion orion) : base(orion)
 		{
 		}
 
