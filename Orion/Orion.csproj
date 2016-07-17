@@ -56,7 +56,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Events\NPCDeathEventArgs.cs" />
+    <Compile Include="Events\NPCDiedEventArgs.cs" />
     <Compile Include="Events\NPCEventArgs.cs" />
     <Compile Include="Events\NPCHandledEventArgs.cs" />
     <Compile Include="Events\NPCSpawnEventArgs.cs" />

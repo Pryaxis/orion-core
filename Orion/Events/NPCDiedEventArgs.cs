@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Orion.Events
 {
-	public class NPCDeathEventArgs : NPCEventArgs
+	public class NPCDiedEventArgs : NPCEventArgs
 	{
 	}
 }

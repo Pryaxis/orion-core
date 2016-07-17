@@ -23,7 +23,7 @@ namespace Orion.Interfaces
 		/// <summary>
 		/// Occurs after an NPC dies in the world.
 		/// </summary>
-		event EventHandler<NPCSpawnEventArgs> NPCDeath;
+		event EventHandler<NPCDiedEventArgs> NPCDied;
 
 		/// <summary>
 		/// Occurs after an NPC transforms from one type to another.
@@ -36,25 +36,29 @@ namespace Orion.Interfaces
 		event EventHandler<NPCTeleportingEventArgs> NPCTeleporting;
 
 		/// <summary>
+		/// Finds all NPCs that match the specified predicate.
+		/// </summary>
+		/// <returns>
+		/// An enumerable collection of NPCs that match the specified predicate.
+		/// </returns>
+		IEnumerable<Terraria.NPC> FindNPCs(Predicate<Terraria.NPC> predicate);
+
+		/// <summary>
 		/// Creates a new NPC with the NPC's default parameters, optionally with custom life values.
 		/// </summary>
 		/// <param name="type">
 		/// A number referring to the type ID of the monster to spawn.
 		/// </param>
-		/// <param name="npc">
-		/// (out) A reference relating to the Terraria.NPC object which will be updated with the new NPC object
-		/// after it has spawned into the world.
-		/// </param>
 		/// <param name="life">
-		/// (optional) A number relating to the HP value the new NPC will spawn with
+		/// (optional) A number relating to the HP value the new NPC will spawn with.
 		/// </param>
 		/// <param name="lifeMax">
-		/// (optional) A number relating to the HP Max value the NPC will spawn with
+		/// (optional) A number relating to the HP Max value the NPC will spawn with.
 		/// </param>
 		/// <returns>
-		/// A number of the position in the Terraria NPC array.
+		/// The resulting spawned NPC.
 		/// </returns>
-		int SpawnNPC(int type, out Terraria.NPC npc, int? life = null, int? lifeMax = null);
+		Terraria.NPC SpawnNPC(int type, int? life = null, int? lifeMax = null);
 
 		/// <summary>
 		/// Kills an NPC via its NPC object.
