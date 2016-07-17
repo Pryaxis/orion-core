@@ -1,4 +1,4 @@
-﻿using Orion.Events;
+﻿using Orion.Events.NPC;
 using Orion.Framework;
 using System;
 using System.Collections.Generic;

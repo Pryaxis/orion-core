@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Orion.Events
+namespace Orion.Events.NPC
 {
 	public class NPCTeleportingEventArgs : NPCHandledEventArgs
 	{

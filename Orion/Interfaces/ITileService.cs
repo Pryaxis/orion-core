@@ -18,4 +18,3 @@ namespace Orion.Interfaces
     {
     }
 }
-

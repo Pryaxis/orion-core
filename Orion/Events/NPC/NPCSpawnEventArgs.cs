@@ -4,10 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Orion.Events
+namespace Orion.Events.NPC
 {
-	public class NPCEventArgs : EventArgs
+	public class NPCSpawnEventArgs : NPCEventArgs
 	{
-		public Terraria.NPC NPC { get; set; }
 	}
 }
