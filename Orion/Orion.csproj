@@ -56,12 +56,17 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Events\NPCDiedEventArgs.cs" />
-    <Compile Include="Events\NPCEventArgs.cs" />
-    <Compile Include="Events\NPCHandledEventArgs.cs" />
-    <Compile Include="Events\NPCSpawnEventArgs.cs" />
-    <Compile Include="Events\NPCTeleportingEventArgs.cs" />
-    <Compile Include="Events\NPCTransformEventArgs.cs" />
+    <Compile Include="Events\NPC\NPCDiedEventArgs.cs" />
+    <Compile Include="Events\NPC\NPCEventArgs.cs" />
+    <Compile Include="Events\NPC\NPCHandledEventArgs.cs" />
+    <Compile Include="Events\NPC\NPCSpawnEventArgs.cs" />
+    <Compile Include="Events\NPC\NPCTeleportingEventArgs.cs" />
+    <Compile Include="Events\NPC\NPCTransformEventArgs.cs" />
+    <Compile Include="Events\Player\PlayerEventArgs.cs" />
+    <Compile Include="Events\Player\PlayerHandledEventArgs.cs" />
+    <Compile Include="Events\Player\PlayerJoinedEventArgs.cs" />
+    <Compile Include="Events\Player\PlayerJoiningEventArgs.cs" />
+    <Compile Include="Events\Player\PlayerQuitEventArgs.cs" />
     <Compile Include="Framework\Injection\ServiceInjectionModule.cs" />
     <Compile Include="Framework\IService.cs" />
     <Compile Include="Framework\ServiceAttribute.cs" />
@@ -69,6 +74,7 @@
     <Compile Include="Framework\ServiceMap.cs" />
     <Compile Include="Interfaces\IConfigurationService.cs" />
     <Compile Include="Interfaces\INPCService.cs" />
+    <Compile Include="Interfaces\IPlayerService.cs" />
     <Compile Include="Interfaces\ITileService.cs" />
     <Compile Include="Orion.cs" />
     <Compile Include="Orion.DataFields.cs" />
@@ -80,7 +86,10 @@
     <None Include="app.config" />
     <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Events\NPC" />
+    <Folder Include="Events\Player" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
