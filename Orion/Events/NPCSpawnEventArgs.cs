@@ -6,8 +6,7 @@ using System.Threading.Tasks;
 
 namespace Orion.Events
 {
-	public class NPCSpawnEventArgs : EventArgs
+	public class NPCSpawnEventArgs : NPCEventArgs
 	{
-		public Terraria.NPC NPC { get; set; }
 	}
 }
