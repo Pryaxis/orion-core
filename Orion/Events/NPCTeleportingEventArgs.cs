@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Orion.Events
 {
-	public class NPCTeleportEventArgs : NPCEventArgs
+	public class NPCTeleportingEventArgs : NPCHandledEventArgs
 	{
 		public int TargetX;
 		public int TargetY;

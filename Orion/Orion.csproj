@@ -57,7 +57,11 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Events\NPCDeathEventArgs.cs" />
+    <Compile Include="Events\NPCEventArgs.cs" />
+    <Compile Include="Events\NPCHandledEventArgs.cs" />
     <Compile Include="Events\NPCSpawnEventArgs.cs" />
+    <Compile Include="Events\NPCTeleportingEventArgs.cs" />
+    <Compile Include="Events\NPCTransformEventArgs.cs" />
     <Compile Include="Framework\Injection\ServiceInjectionModule.cs" />
     <Compile Include="Framework\IService.cs" />
     <Compile Include="Framework\ServiceAttribute.cs" />
