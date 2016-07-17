@@ -26,6 +26,16 @@ namespace Orion.Interfaces
 		event EventHandler<NPCSpawnEventArgs> NPCDeath;
 
 		/// <summary>
+		/// Occurs after an NPC transforms from one type to another.
+		/// </summary>
+		event EventHandler<NPCTransformEventArgs> NPCTransform;
+
+		/// <summary>
+		/// Occurs before an NPC teleports to a new position.
+		/// </summary>
+		event EventHandler<NPCTeleportEventArgs> NPCTeleport;
+
+		/// <summary>
 		/// Creates a new NPC with the NPC's default parameters, optionally with custom life values.
 		/// </summary>
 		/// <param name="type">
@@ -57,7 +67,65 @@ namespace Orion.Interfaces
 		/// <summary>
 		/// Kills an NPC via its position in the Terraria NPC array.
 		/// </summary>
-		/// <param name="id"></param>
+		/// <param name="id">
+		/// The index of the NPC in the Terraria NPC array.
+		/// </param>
 		void KillNPC(int id);
+
+		/// <summary>
+		/// Transforms an NPC via its NPC object.
+		/// </summary>
+		/// <param name="npc">
+		/// A reference to an NPC object to be transformed.
+		/// </param>
+		/// <param name="newType">
+		/// The NPC type the NPC will have after the transformation.
+		/// </param>
+		void TransformNPC(Terraria.NPC npc, int newType);
+
+		/// <summary>
+		/// Transforms an NPC via its position in the Terraria NPC array.
+		/// </summary>
+		/// <param name="id">
+		/// The index of the NPC in the Terraria NPC array.
+		/// </param>
+		/// <param name="newType">
+		/// The NPC type the NPC will have after the transformation.
+		/// </param>
+		void TransformNPC(int id, int newType);
+
+		/// <summary>
+		/// Teleports an NPC to a new position via its NPC object.
+		/// </summary>
+		/// <param name="npc">
+		/// A reference to an NPC object to be teleported.
+		/// </param>
+		/// <param name="targetX">
+		/// The target position on the x-axis that the NPC will be teleported to.
+		/// </param>
+		/// <param name="targetY">
+		/// The target position on the y-axis that the NPC will be teleported to.
+		/// </param>
+		/// <param name="style">
+		/// (optional) The teleport style that the NPC will use when it teleports.
+		/// </param>
+		void TeleportNPC(Terraria.NPC npc, int targetX, int targetY, int style = 0);
+
+		/// <summary>
+		/// Teleports an NPC to a new position via its position in the Terraria NPC array.
+		/// </summary>
+		/// <param name="id">
+		/// The index of the NPC in the Terraria NPC array.
+		/// </param>
+		/// <param name="targetX">
+		/// The target position on the x-axis that the NPC will be teleported to.
+		/// </param>
+		/// <param name="targetY">
+		/// The target position on the y-axis that the NPC will be teleported to.
+		/// </param>
+		/// <param name="style">
+		/// (optional) The teleport style that the NPC will use when it teleports.
+		/// </param>
+		void TeleportNPC(int id, int targetX, int targetY, int style = 0);
 	}
 }
