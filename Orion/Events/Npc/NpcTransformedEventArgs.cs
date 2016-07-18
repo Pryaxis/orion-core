@@ -1,12 +1,19 @@
-﻿using Orion.Interfaces;
+﻿using System;
+using Orion.Interfaces;
+using Orion.Services;
 
 namespace Orion.Events.Npc
 {
 	/// <summary>
 	/// Provides data for the <see cref="INpcService.NpcTransformed"/> event.
 	/// </summary>
-	public class NpcTransformedEventArgs : EntityEventArgs<Terraria.NPC>
+	public class NpcTransformedEventArgs : EventArgs
 	{
+		/// <summary>
+		/// Gets the relevant NPC.
+		/// </summary>
+		public INpc Npc { get; }
+
 		/// <summary>
 		/// Gets the new type that the NPC transformed to.
 		/// </summary>
@@ -17,8 +24,9 @@ namespace Orion.Events.Npc
 		/// </summary>
 		/// <param name="npc">The NPC.</param>
 		/// <param name="newType">The new type.</param>
-		public NpcTransformedEventArgs(Terraria.NPC npc, int newType) : base(npc)
+		public NpcTransformedEventArgs(INpc npc, int newType)
 		{
+			Npc = npc;
 			NewType = newType;
 		}
 	}

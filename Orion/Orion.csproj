@@ -56,8 +56,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Events\HandledEntityEventArgs.cs" />
-    <Compile Include="Events\EntityEventArgs.cs" />
     <Compile Include="Events\Npc\NpcDiedEventArgs.cs" />
     <Compile Include="Events\Npc\NpcSpawnedEventArgs.cs" />
     <Compile Include="Events\Npc\NpcTeleportingEventArgs.cs" />
@@ -70,16 +68,20 @@
     <Compile Include="Framework\ServiceAttribute.cs" />
     <Compile Include="Framework\ServiceBase.cs" />
     <Compile Include="Framework\ServiceMap.cs" />
-    <Compile Include="Interfaces\IConfigurationService.cs" />
-    <Compile Include="Interfaces\IEntityService.cs" />
-    <Compile Include="Interfaces\INpcService.cs" />
-    <Compile Include="Interfaces\IPlayerService.cs" />
-    <Compile Include="Interfaces\ITileService.cs" />
+    <Compile Include="Interfaces\IEntity.cs" />
+    <Compile Include="Interfaces\IItem.cs" />
+    <Compile Include="Interfaces\Implementations\Entity.cs" />
+    <Compile Include="Interfaces\INpc.cs" />
+    <Compile Include="Interfaces\IPlayer.cs" />
     <Compile Include="Orion.cs" />
     <Compile Include="Orion.DataFields.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Services\JsonFileConfigurationService.cs" />
-    <Compile Include="Services\TileService.cs" />
+    <Compile Include="Services\IConfigurationService.cs" />
+    <Compile Include="Services\Implementations\JsonFileConfigurationService.cs" />
+    <Compile Include="Services\Implementations\TileService.cs" />
+    <Compile Include="Services\INpcService.cs" />
+    <Compile Include="Services\IPlayerService.cs" />
+    <Compile Include="Services\ITileService.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
@@ -88,6 +90,8 @@
   <ItemGroup>
     <Folder Include="Events\Npc" />
     <Folder Include="Events\Player" />
+    <Folder Include="Interfaces\Implementations" />
+    <Folder Include="Services\Implementations" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

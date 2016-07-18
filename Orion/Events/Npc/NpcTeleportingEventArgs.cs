@@ -1,13 +1,20 @@
-﻿using Microsoft.Xna.Framework;
+﻿using System.ComponentModel;
+using Microsoft.Xna.Framework;
 using Orion.Interfaces;
+using Orion.Services;
 
 namespace Orion.Events.Npc
 {
 	/// <summary>
 	/// Provides data for the <see cref="INpcService.NpcTeleporting"/> event.
 	/// </summary>
-	public class NpcTeleportingEventArgs : HandledEntityEventArgs<Terraria.NPC>
+	public class NpcTeleportingEventArgs : HandledEventArgs
 	{
+		/// <summary>
+		/// Gets the relevant NPC.
+		/// </summary>
+		public INpc Npc { get; }
+
 		/// <summary>
 		/// Gets the position in the world that the NPC is teleporting to.
 		/// </summary>
@@ -25,8 +32,9 @@ namespace Orion.Events.Npc
 		/// <param name="npc">The NPC.</param>
 		/// <param name="position">The position in the world.</param>
 		/// <param name="style">The teleportation style.</param>
-		public NpcTeleportingEventArgs(Terraria.NPC npc, Vector2 position, int style) : base(npc)
+		public NpcTeleportingEventArgs(INpc npc, Vector2 position, int style)
 		{
+			Npc = npc;
 			Position = position;
 			Style = style;
 		}

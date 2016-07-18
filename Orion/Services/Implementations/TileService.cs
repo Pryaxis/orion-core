@@ -8,7 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Terraria;
 
-namespace Orion.Services
+namespace Orion.Services.Implementations
 {
 	/// <summary>
 	/// Orion tile service.  Mimics vanilla behaviour by storing tiles in

@@ -8,7 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Orion.Services
+namespace Orion.Services.Implementations
 {
 	/// <summary>
 	/// Configuration service which loads and saves configuration from disk in JSON

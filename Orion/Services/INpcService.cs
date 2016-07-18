@@ -1,15 +1,18 @@
 ﻿using Microsoft.Xna.Framework;
 using Orion.Events.Npc;
 using System;
+using System.Collections.Generic;
+using Orion.Framework;
+using Orion.Interfaces;
 
-namespace Orion.Interfaces
+namespace Orion.Services
 {
 	/// <summary>
 	/// Service definition: INpcService
 	/// 
 	/// Provides a mechanism for managing NPCs in the Terraria world.
 	/// </summary>
-	public interface INpcService : IEntityService<Terraria.NPC>
+	public interface INpcService : IService
 	{
 		/// <summary>
 		/// Occurs after an NPC has spawned in the world.
@@ -32,6 +35,19 @@ namespace Orion.Interfaces
 		event EventHandler<NpcTeleportingEventArgs> NpcTeleporting;
 
 		/// <summary>
+		/// Finds all NPCs matching a predicate.
+		/// </summary>
+		/// <param name="predicate">The predicate to match with.</param>
+		/// <returns>An enumerable collection of NPCs matching the predicate.</returns>
+		IEnumerable<INpc> Find(Predicate<INpc> predicate);
+
+		/// <summary>
+		/// Gets all NPCs.
+		/// </summary>
+		/// <returns>An enumerable collection of NPCs.</returns>
+		IEnumerable<INpc> GetAll();
+
+		/// <summary>
 		/// Spawns a new NPC at the specified position, optionally with custom HP values.
 		/// </summary>
 		/// <param name="type">The type ID of the NPC to spawn.</param>
@@ -39,12 +55,12 @@ namespace Orion.Interfaces
 		/// <param name="life">The HP value the new NPC will spawn with, or null for default.</param>
 		/// <param name="maxLife">The maximum HP value the NPC will spawn with, or null for default.</param>
 		/// <returns>The resulting spawned NPC.</returns>
-		Terraria.NPC Spawn(int type, Vector2 position, int? life = null, int? maxLife = null);
+		INpc Spawn(int type, Vector2 position, int? life = null, int? maxLife = null);
 
 		/// <summary>
 		/// Kills an NPC.
 		/// </summary>
 		/// <param name="npc">The NPC to be killed.</param>
-		void Kill(Terraria.NPC npc);
+		void Kill(INpc npc);
 	}
 }
