@@ -3,14 +3,14 @@
 namespace Orion.Interfaces
 {
 	/// <summary>
-	/// Represents a Terraria entity.
+	/// Encapsulates a Terraria entity.
 	/// </summary>
 	public interface IEntity
 	{
 		/// <summary>
 		/// Gets the backing Terraria entity.
 		/// </summary>
-		Terraria.Entity TEntity { get; }
+		Terraria.Entity BackingEntity { get; }
 
 		/// <summary>
 		/// Gets the name.

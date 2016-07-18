@@ -52,10 +52,10 @@ namespace Orion.Services
 		/// </summary>
 		/// <param name="type">The type ID of the NPC to spawn.</param>
 		/// <param name="position">The position to spawn the NPC at.</param>
-		/// <param name="life">The HP value the new NPC will spawn with, or null for default.</param>
-		/// <param name="maxLife">The maximum HP value the NPC will spawn with, or null for default.</param>
+		/// <param name="hp">The HP the new NPC will spawn with, or null for default.</param>
+		/// <param name="maxHP">The maximum HP the NPC will spawn with, or null for default.</param>
 		/// <returns>The resulting spawned NPC.</returns>
-		INpc Spawn(int type, Vector2 position, int? life = null, int? maxLife = null);
+		INpc Spawn(int type, Vector2 position, int? hp = null, int? maxHP = null);
 
 		/// <summary>
 		/// Kills an NPC.

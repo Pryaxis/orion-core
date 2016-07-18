@@ -1,23 +1,25 @@
 ﻿namespace Orion.Interfaces
 {
 	/// <summary>
-	/// Represents a Terraria NPC.
+	/// Encapsulates a Terraria NPC.
 	/// </summary>
 	public interface INpc : IEntity
 	{
 		/// <summary>
-		/// Gets the HP value.
+		/// Gets or sets the HP.
 		/// </summary>
-		int HP { get; }
+		int HP { get; set; }
 
 		/// <summary>
-		/// Gets the maximum HP value.
+		/// Gets or sets the maximum HP.
 		/// </summary>
-		int MaxHP { get; }
+		int MaxHP { get; set; }
 
 		/// <summary>
 		/// Gets the type ID.
 		/// </summary>
 		int Type { get; }
+
+		// TODO: complete
 	}
 }
