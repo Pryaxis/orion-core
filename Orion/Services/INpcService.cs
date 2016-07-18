@@ -10,7 +10,7 @@ namespace Orion.Services
 	/// <summary>
 	/// Service definition: INpcService
 	/// 
-	/// Provides a mechanism for managing NPCs in the Terraria world.
+	/// Provides a mechanism for managing NPCs.
 	/// </summary>
 	public interface INpcService : IService
 	{
@@ -35,25 +35,25 @@ namespace Orion.Services
 		event EventHandler<NpcTransformedEventArgs> NpcTransformed;
 
 		/// <summary>
-		/// Finds all NPCs matching a predicate.
+		/// Finds all NPCs in the world matching a predicate.
 		/// </summary>
 		/// <param name="predicate">The predicate to match with.</param>
 		/// <returns>An enumerable collection of NPCs matching the predicate.</returns>
 		IEnumerable<INpc> Find(Predicate<INpc> predicate);
 
 		/// <summary>
-		/// Gets all NPCs.
+		/// Gets all NPCs in the world.
 		/// </summary>
 		/// <returns>An enumerable collection of NPCs.</returns>
 		IEnumerable<INpc> GetAll();
 
 		/// <summary>
-		/// Spawns a new NPC at the specified position, optionally with custom HP values.
+		/// Spawns a new NPC with the specified type ID at a position in the world, optionally with custom HP values.
 		/// </summary>
-		/// <param name="type">The type ID of the NPC to spawn.</param>
-		/// <param name="position">The position to spawn the NPC at.</param>
-		/// <param name="hp">The HP the new NPC will spawn with, or null for default.</param>
-		/// <param name="maxHP">The maximum HP the NPC will spawn with, or null for default.</param>
+		/// <param name="type">The type ID.</param>
+		/// <param name="position">The position.</param>
+		/// <param name="hp">The custom HP, or null for the default.</param>
+		/// <param name="maxHP">The custom maximum HP, or null for the default.</param>
 		/// <returns>The resulting spawned NPC.</returns>
 		INpc Spawn(int type, Vector2 position, int? hp = null, int? maxHP = null);
 

@@ -36,9 +36,9 @@ namespace Orion.Interfaces.Implementations
 		}
 
 		/// <summary>
-		/// Initializes a new instance of the <see cref="Entity"/> class with the specified backing Terraria entity.
+		/// Initializes a new instance of the <see cref="Entity"/> class encapsulating the specified Terraria entity.
 		/// </summary>
-		/// <param name="entity">The backing Terraria entity.</param>
+		/// <param name="entity">The Terraria entity.</param>
 		public Entity(Terraria.Entity entity)
 		{
 			Backing = entity;

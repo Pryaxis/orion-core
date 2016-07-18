@@ -80,6 +80,7 @@
     <Compile Include="Orion.DataFields.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\IConfigurationService.cs" />
+    <Compile Include="Services\IItemService.cs" />
     <Compile Include="Services\Implementations\JsonFileConfigurationService.cs" />
     <Compile Include="Services\Implementations\TileService.cs" />
     <Compile Include="Services\INpcService.cs" />

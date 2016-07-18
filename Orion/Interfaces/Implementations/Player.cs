@@ -62,9 +62,9 @@
 		public IItem SelectedItem => Inventory[Backing.selectedItem];
 
 		/// <summary>
-		/// Initializes a new instance of the <see cref="Player"/> class with the specified backing Terraria player.
+		/// Initializes a new instance of the <see cref="Player"/> class encapsulating the specified Terraria player.
 		/// </summary>
-		/// <param name="player">The backing Terraria player.</param>
+		/// <param name="player">The Terraria player.</param>
 		public Player(Terraria.Player player) : base(player)
 		{
 			Backing = player;

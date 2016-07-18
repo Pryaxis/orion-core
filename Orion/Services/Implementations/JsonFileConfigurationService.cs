@@ -14,6 +14,7 @@ namespace Orion.Services.Implementations
 	/// Configuration service which loads and saves configuration from disk in JSON
 	/// format, using Newtonsoft.Json to load/store data.
 	/// </summary>
+	[Service(Author = "Nyx Studios", Name = "JSON File Configuration Service")]
 	public class JsonFileConfigurationService : ServiceBase, IConfigurationService
 	{
 		public static string ConfigurationDirectory => "config";

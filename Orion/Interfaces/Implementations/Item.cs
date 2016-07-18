@@ -44,9 +44,9 @@
 		public int Type => Backing.netID;
 
 		/// <summary>
-		/// Initializes a new instance of the <see cref="Item"/> class with the specified backing Terraria item.
+		/// Initializes a new instance of the <see cref="Item"/> class encapsulating the specified Terraria item.
 		/// </summary>
-		/// <param name="item">The backing Terraria item.</param>
+		/// <param name="item">The Terraria item.</param>
 		public Item(Terraria.Item item) : base(item)
 		{
 			Backing = item;

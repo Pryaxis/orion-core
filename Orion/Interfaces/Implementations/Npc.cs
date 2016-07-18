@@ -34,9 +34,9 @@
 		public int Type => Backing.type;
 
 		/// <summary>
-		/// Initializes a new instance of the <see cref="Npc"/> class with the specified backing Terraria NPC.
+		/// Initializes a new instance of the <see cref="Npc"/> class encapsulating the specified Terraria NPC.
 		/// </summary>
-		/// <param name="npc">The backing Terraria NPC.</param>
+		/// <param name="npc">The Terraria NPC.</param>
 		public Npc(Terraria.NPC npc) : base(npc)
 		{
 			Backing = npc;
