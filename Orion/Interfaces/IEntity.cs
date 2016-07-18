@@ -10,7 +10,7 @@ namespace Orion.Interfaces
 		/// <summary>
 		/// Gets the backing Terraria entity.
 		/// </summary>
-		Terraria.Entity BackingEntity { get; }
+		Terraria.Entity Backing { get; }
 
 		/// <summary>
 		/// Gets the name.

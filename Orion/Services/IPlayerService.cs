@@ -14,14 +14,14 @@ namespace Orion.Services
 	public interface IPlayerService : IService
 	{
 		/// <summary>
-		/// Occurs when a player is joining the server.
-		/// </summary>
-		event EventHandler<PlayerJoiningEventArgs> PlayerJoining;
-
-		/// <summary>
 		/// Occurs when a player has joined the server.
 		/// </summary>
 		event EventHandler<PlayerJoinedEventArgs> PlayerJoined;
+
+		/// <summary>
+		/// Occurs when a player is joining the server.
+		/// </summary>
+		event EventHandler<PlayerJoiningEventArgs> PlayerJoining;
 
 		/// <summary>
 		/// Occurs when a player has quit the server.

@@ -10,20 +10,20 @@ namespace Orion.Interfaces.Implementations
 		/// <summary>
 		/// Gets the backing Terraria entity.
 		/// </summary>
-		public Terraria.Entity BackingEntity { get; }
+		public Terraria.Entity Backing { get; }
 
 		/// <summary>
 		/// Gets the name.
 		/// </summary>
-		public string Name => BackingEntity.name;
+		public string Name => Backing.name;
 
 		/// <summary>
 		/// Gets or sets the position.
 		/// </summary>
 		public Vector2 Position
 		{
-			get { return BackingEntity.position; }
-			set { BackingEntity.position = value; }
+			get { return Backing.position; }
+			set { Backing.position = value; }
 		}
 
 		/// <summary>
@@ -31,17 +31,17 @@ namespace Orion.Interfaces.Implementations
 		/// </summary>
 		public Vector2 Velocity
 		{
-			get { return BackingEntity.velocity; }
-			set { BackingEntity.velocity = value; }
+			get { return Backing.velocity; }
+			set { Backing.velocity = value; }
 		}
 
 		/// <summary>
 		/// Initializes a new instance of the <see cref="Entity"/> class with the specified backing Terraria entity.
 		/// </summary>
-		/// <param name="backingEntity">The backing Terraria entity.</param>
-		public Entity(Terraria.Entity backingEntity)
+		/// <param name="entity">The backing Terraria entity.</param>
+		public Entity(Terraria.Entity entity)
 		{
-			BackingEntity = backingEntity;
+			Backing = entity;
 		}
 	}
 }

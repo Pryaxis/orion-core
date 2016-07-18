@@ -6,6 +6,11 @@
 	public interface INpc : IEntity
 	{
 		/// <summary>
+		/// Gets the backing Terraria NPC.
+		/// </summary>
+		new Terraria.NPC Backing { get; }
+
+		/// <summary>
 		/// Gets or sets the HP.
 		/// </summary>
 		int HP { get; set; }

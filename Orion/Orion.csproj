@@ -71,6 +71,9 @@
     <Compile Include="Interfaces\IEntity.cs" />
     <Compile Include="Interfaces\IItem.cs" />
     <Compile Include="Interfaces\Implementations\Entity.cs" />
+    <Compile Include="Interfaces\Implementations\Item.cs" />
+    <Compile Include="Interfaces\Implementations\Npc.cs" />
+    <Compile Include="Interfaces\Implementations\Player.cs" />
     <Compile Include="Interfaces\INpc.cs" />
     <Compile Include="Interfaces\IPlayer.cs" />
     <Compile Include="Orion.cs" />

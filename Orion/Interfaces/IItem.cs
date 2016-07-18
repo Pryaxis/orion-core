@@ -6,14 +6,24 @@
 	public interface IItem : IEntity
 	{
 		/// <summary>
-		/// Gets the damage value.
+		/// Gets the backing Terraria item.
+		/// </summary>
+		new Terraria.Item Backing { get; }
+
+		/// <summary>
+		/// Gets the damage.
 		/// </summary>
 		int Damage { get; }
 
 		/// <summary>
+		/// Gets the maximum stack size.
+		/// </summary>
+		int MaxStack { get; }
+
+		/// <summary>
 		/// Gets or sets the prefix.
 		/// </summary>
-		int Prefix { get; set; }
+		byte Prefix { get; set; }
 
 		/// <summary>
 		/// Gets or sets the stack size.

@@ -15,24 +15,24 @@ namespace Orion.Services
 	public interface INpcService : IService
 	{
 		/// <summary>
-		/// Occurs after an NPC has spawned in the world.
-		/// </summary>
-		event EventHandler<NpcSpawnedEventArgs> NpcSpawned;
-
-		/// <summary>
 		/// Occurs after an NPC has died.
 		/// </summary>
 		event EventHandler<NpcDiedEventArgs> NpcDied;
 
 		/// <summary>
-		/// Occurs after an NPC transforms from one type to another.
+		/// Occurs after an NPC has spawned in the world.
 		/// </summary>
-		event EventHandler<NpcTransformedEventArgs> NpcTransformed;
+		event EventHandler<NpcSpawnedEventArgs> NpcSpawned;
 
 		/// <summary>
 		/// Occurs before an NPC teleports to a new position.
 		/// </summary>
 		event EventHandler<NpcTeleportingEventArgs> NpcTeleporting;
+
+		/// <summary>
+		/// Occurs after an NPC transforms from one type to another.
+		/// </summary>
+		event EventHandler<NpcTransformedEventArgs> NpcTransformed;
 
 		/// <summary>
 		/// Finds all NPCs matching a predicate.
