@@ -4,7 +4,7 @@ using System.Runtime.CompilerServices;
 namespace Orion.Interfaces.Implementations
 {
 	/// <summary>
-	/// Wraps a <see cref="Terraria.Player"/>.
+	/// Wraps a Terraria player.
 	/// </summary>
 	public class Player : Entity, IPlayer
 	{
@@ -12,12 +12,12 @@ namespace Orion.Interfaces.Implementations
 			= new ConditionalWeakTable<Terraria.Player, Player>(); 
 
 		/// <summary>
-		/// Gets the defense.
+		/// Gets the player's defense.
 		/// </summary>
 		public int Defense => WrappedPlayer.statDefense;
 
 		/// <summary>
-		/// Gets or sets the HP.
+		/// Gets or sets the player's HP.
 		/// </summary>
 		public int HP
 		{
@@ -26,12 +26,12 @@ namespace Orion.Interfaces.Implementations
 		}
 
 		/// <summary>
-		/// Gets the inventory <see cref="IItemArray"/>.
+		/// Gets the player's inventory <see cref="IItemArray"/>.
 		/// </summary>
 		public IItemArray Inventory => ItemArray.Wrap(WrappedPlayer.inventory);
 
 		/// <summary>
-		/// Gets or sets the maximum HP.
+		/// Gets or sets the player's maximum HP.
 		/// </summary>
 		public int MaxHP
 		{
@@ -40,7 +40,7 @@ namespace Orion.Interfaces.Implementations
 		}
 
 		/// <summary>
-		/// Gets or sets the maximum MP.
+		/// Gets or sets the player's maximum MP.
 		/// </summary>
 		public int MaxMP
 		{
@@ -49,7 +49,7 @@ namespace Orion.Interfaces.Implementations
 		}
 
 		/// <summary>
-		/// Gets or sets the MP.
+		/// Gets or sets the player's MP.
 		/// </summary>
 		public int MP
 		{
@@ -58,17 +58,17 @@ namespace Orion.Interfaces.Implementations
 		}
 
 		/// <summary>
-		/// Gets the selected <see cref="IItem"/>.
+		/// Gets the player's selected <see cref="IItem"/>.
 		/// </summary>
 		public IItem SelectedItem => Inventory[WrappedPlayer.selectedItem];
 
 		/// <summary>
-		/// Gets the wrapped <see cref="Terraria.Entity"/>.
+		/// Gets the wrapped Terraria entity.
 		/// </summary>
 		public override Terraria.Entity WrappedEntity => WrappedPlayer;
 
 		/// <summary>
-		/// Gets the wrapped <see cref="Terraria.Player"/>.
+		/// Gets the wrapped Terraria player.
 		/// </summary>
 		public Terraria.Player WrappedPlayer { get; }
 		
@@ -78,12 +78,12 @@ namespace Orion.Interfaces.Implementations
 		}
 
 		/// <summary>
-		/// Creates a new instance of the <see cref="Player"/> class wrapping the specified
-		/// <see cref="Terraria.Player"/>. If this method is called multiple times on the same
-		/// <see cref="Terraria.Player"/>, then the same <see cref="Player"/> will be returned.
+		/// Creates a new instance of the <see cref="Player"/> class wrapping the specified Terraria player. If this
+		/// method is called multiple times on the same Terraria player, then the same <see cref="Player"/> will be
+		/// returned.
 		/// </summary>
-		/// <param name="terrariaPlayer">The <see cref="Terraria.Player"/>.</param>
-		/// <returns>A <see cref="Player"/> wrapping <paramref name="terrariaPlayer"/>.</returns>
+		/// <param name="terrariaPlayer">The Terraria player to wrap.</param>
+		/// <returns>An <see cref="Player"/> that wraps <paramref name="terrariaPlayer"/>.</returns>
 		/// <exception cref="ArgumentNullException"><paramref name="terrariaPlayer"/> was null.</exception>
 		public static Player Wrap(Terraria.Player terrariaPlayer)
 		{

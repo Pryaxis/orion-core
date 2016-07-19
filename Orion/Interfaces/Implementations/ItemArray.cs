@@ -4,7 +4,7 @@ using System.Runtime.CompilerServices;
 namespace Orion.Interfaces.Implementations
 {
 	/// <summary>
-	/// Wraps a <see cref="Terraria.Item"/> array.
+	/// Wraps a Terraria item array.
 	/// </summary>
 	public class ItemArray : IItemArray
 	{
@@ -12,7 +12,7 @@ namespace Orion.Interfaces.Implementations
 			= new ConditionalWeakTable<Terraria.Item[], ItemArray>();
 
 		/// <summary>
-		/// Gets the wrapped <see cref="Terraria.Item"/> array.
+		/// Gets the wrapped Terraria item array.
 		/// </summary>
 		public Terraria.Item[] WrappedItemArray { get; }
 		
@@ -24,8 +24,8 @@ namespace Orion.Interfaces.Implementations
 		/// <summary>
 		/// Gets or sets the <see cref="IItem"/> at the specified index.
 		/// </summary>
-		/// <param name="index">The index.</param>
-		/// <returns>The <see cref="IItem"/> at the specified index.</returns>
+		/// <param name="index">The index to retrieve or modify.</param>
+		/// <returns>The <see cref="IItem"/> at <paramref name="index"/>.</returns>
 		/// <exception cref="IndexOutOfRangeException"><paramref name="index"/> was out of range.</exception>
 		public IItem this[int index]
 		{
@@ -34,12 +34,12 @@ namespace Orion.Interfaces.Implementations
 		}
 
 		/// <summary>
-		/// Creates a new instance of the <see cref="ItemArray"/> class wrapping the specified <see cref="Terraria.Item"/>
-		/// array. If this method is called multiple times on the same <see cref="Terraria.Item"/> array, then the same
-		/// <see cref="ItemArray"/> will be returned.
+		/// Creates a new instance of the <see cref="ItemArray"/> class wrapping the specified Terraria item array. If
+		/// this method is called multiple times on the same Terraria item array, then the same <see cref="ItemArray"/>
+		/// will be returned.
 		/// </summary>
-		/// <param name="terrariaItemArray">The <see cref="Terraria.Item"/> array.</param>
-		/// <returns>An <see cref="ItemArray"/> wrapping <paramref name="terrariaItemArray"/>.</returns>
+		/// <param name="terrariaItemArray">The Terraria item array to wrap.</param>
+		/// <returns>An <see cref="ItemArray"/> that wraps <paramref name="terrariaItemArray"/>.</returns>
 		/// <exception cref="ArgumentNullException"><paramref name="terrariaItemArray"/> was null.</exception>
 		public static ItemArray Wrap(Terraria.Item[] terrariaItemArray)
 		{

@@ -10,15 +10,14 @@ namespace Orion.Events.Player
 	public class PlayerJoiningEventArgs : HandledEventArgs
 	{
 		/// <summary>
-		/// Gets the <see cref="IPlayer"/>.
+		/// Gets the <see cref="IPlayer"/> that is joining the server.
 		/// </summary>
 		public IPlayer Player { get; }
 
 		/// <summary>
-		/// Initializes a new instance of the <see cref="PlayerJoiningEventArgs"/> class with the specified
-		/// <see cref="IPlayer"/>.
+		/// Initializes a new instance of the <see cref="PlayerJoiningEventArgs"/> class.
 		/// </summary>
-		/// <param name="player">The <see cref="IPlayer"/>.</param>
+		/// <param name="player">The <see cref="IPlayer"/> that is joining the server.</param>
 		public PlayerJoiningEventArgs(IPlayer player)
 		{
 			Player = player;

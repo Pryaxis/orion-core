@@ -1,27 +1,27 @@
 ﻿namespace Orion.Interfaces
 {
 	/// <summary>
-	/// Wraps a <see cref="Terraria.NPC"/>.
+	/// Provides a wrapper around a Terraria NPC.
 	/// </summary>
 	public interface INpc : IEntity
 	{
 		/// <summary>
-		/// Gets or sets the HP.
+		/// Gets or sets the NPC's HP.
 		/// </summary>
 		int HP { get; set; }
 
 		/// <summary>
-		/// Gets or sets the maximum HP.
+		/// Gets or sets the NPC's maximum HP.
 		/// </summary>
 		int MaxHP { get; set; }
 
 		/// <summary>
-		/// Gets the type ID.
+		/// Gets the NPC's type ID.
 		/// </summary>
 		int Type { get; }
 
 		/// <summary>
-		/// Gets the wrapped <see cref="Terraria.NPC"/>.
+		/// Gets the wrapped Terraria NPC.
 		/// </summary>
 		Terraria.NPC WrappedNpc { get; }
 

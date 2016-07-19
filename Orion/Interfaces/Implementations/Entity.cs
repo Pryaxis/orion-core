@@ -3,22 +3,22 @@
 namespace Orion.Interfaces.Implementations
 {
 	/// <summary>
-	/// Wraps a <see cref="Terraria.Entity"/>.
+	/// Wraps a Terraria entity.
 	/// </summary>
 	public abstract class Entity : IEntity
 	{
 		/// <summary>
-		/// Gets the ID.
+		/// Gets the entity ID.
 		/// </summary>
 		public int Id => WrappedEntity.whoAmI;
 
 		/// <summary>
-		/// Gets the name.
+		/// Gets the entity name.
 		/// </summary>
 		public string Name => WrappedEntity.name;
 
 		/// <summary>
-		/// Gets or sets the position.
+		/// Gets or sets the entity position.
 		/// </summary>
 		public Vector2 Position
 		{
@@ -27,7 +27,7 @@ namespace Orion.Interfaces.Implementations
 		}
 
 		/// <summary>
-		/// Gets or sets the velocity.
+		/// Gets or sets the entity velocity.
 		/// </summary>
 		public Vector2 Velocity
 		{
@@ -36,7 +36,7 @@ namespace Orion.Interfaces.Implementations
 		}
 
 		/// <summary>
-		/// Gets the wrapped <see cref="Terraria.Entity"/>.
+		/// Gets the wrapped Terraria entity.
 		/// </summary>
 		public abstract Terraria.Entity WrappedEntity { get; }
 	}

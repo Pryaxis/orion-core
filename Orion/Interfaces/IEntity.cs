@@ -3,32 +3,32 @@
 namespace Orion.Interfaces
 {
 	/// <summary>
-	/// Wraps a <see cref="Terraria.Entity"/>.
+	/// Provides a wrapper around a Terraria entity.
 	/// </summary>
 	public interface IEntity
 	{
 		/// <summary>
-		/// Gets the ID.
+		/// Gets the entity ID.
 		/// </summary>
 		int Id { get; }
 
 		/// <summary>
-		/// Gets the name.
+		/// Gets the entity name.
 		/// </summary>
 		string Name { get; }
 
 		/// <summary>
-		/// Gets or sets the position.
+		/// Gets or sets the entity position.
 		/// </summary>
 		Vector2 Position { get; set; }
 
 		/// <summary>
-		/// Gets or sets the velocity.
+		/// Gets or sets the entity velocity.
 		/// </summary>
 		Vector2 Velocity { get; set; }
 
 		/// <summary>
-		/// Gets the wrapped <see cref="Terraria.Entity"/>.
+		/// Gets the wrapped Terraria entity.
 		/// </summary>
 		Terraria.Entity WrappedEntity { get; }
 	}

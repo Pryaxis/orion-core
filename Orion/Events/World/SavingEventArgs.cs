@@ -19,10 +19,10 @@ namespace Orion.Events.World
 		public bool UseCloud { get; set; }
 		
 		/// <summary>
-		/// Initializes a new instance of the <see cref="SavingEventArgs"/> class with the specified options.
+		/// Initializes a new instance of the <see cref="SavingEventArgs"/> class.
 		/// </summary>
-		/// <param name="useCloud">A value indicating whether to reset the time.</param>
-		/// <param name="resetTime">A value indicating whether to save to the "cloud".</param>
+		/// <param name="useCloud">A value indicating whether to save to the "cloud".</param>
+		/// <param name="resetTime">A value indicating whether to reset the time.</param>
 		public SavingEventArgs(bool useCloud, bool resetTime)
 		{
 			UseCloud = useCloud;

@@ -4,7 +4,7 @@ using System.Runtime.CompilerServices;
 namespace Orion.Interfaces.Implementations
 {
 	/// <summary>
-	/// Wraps a <see cref="Terraria.Item"/>.
+	/// Wraps a Terraria item.
 	/// </summary>
 	public class Item : Entity, IItem
 	{
@@ -12,17 +12,17 @@ namespace Orion.Interfaces.Implementations
 			= new ConditionalWeakTable<Terraria.Item, Item>();
 
 		/// <summary>
-		/// Gets the damage.
+		/// Gets the item damage.
 		/// </summary>
 		public int Damage => WrappedItem.damage;
 
 		/// <summary>
-		/// Gets the maximum stack size.
+		/// Gets the item maximum stack size.
 		/// </summary>
 		public int MaxStack => WrappedItem.maxStack;
 
 		/// <summary>
-		/// Gets or sets the prefix.
+		/// Gets or sets the item prefix.
 		/// </summary>
 		public byte Prefix
 		{
@@ -31,7 +31,7 @@ namespace Orion.Interfaces.Implementations
 		}
 
 		/// <summary>
-		/// Gets or sets the stack size.
+		/// Gets or sets the item stack size.
 		/// </summary>
 		public int Stack
 		{
@@ -40,17 +40,17 @@ namespace Orion.Interfaces.Implementations
 		}
 
 		/// <summary>
-		/// Gets the type ID.
+		/// Gets the item type ID.
 		/// </summary>
 		public int Type => WrappedItem.netID;
 
 		/// <summary>
-		/// Gets the wrapped <see cref="Terraria.Entity"/>.
+		/// Gets the wrapped Terraria entity.
 		/// </summary>
 		public override Terraria.Entity WrappedEntity => WrappedItem;
 
 		/// <summary>
-		/// Gets the wrapped <see cref="Terraria.Item"/>.
+		/// Gets the wrapped Terraria item.
 		/// </summary>
 		public Terraria.Item WrappedItem { get; }
 		
@@ -60,12 +60,11 @@ namespace Orion.Interfaces.Implementations
 		}
 
 		/// <summary>
-		/// Creates a new instance of the <see cref="Item"/> class wrapping the specified <see cref="Terraria.Item"/>.
-		/// If this method is called multiple times on the same <see cref="Terraria.Item"/>, then the same
-		/// <see cref="Item"/> will be returned.
+		/// Creates a new instance of the <see cref="Item"/> class wrapping the specified Terraria item. If this method
+		/// is called multiple times on the same Terraria item, then the same <see cref="Item"/> will be returned.
 		/// </summary>
-		/// <param name="terrariaItem">The <see cref="Terraria.Item"/>.</param>
-		/// <returns>An <see cref="Item"/> wrapping <paramref name="terrariaItem"/>.</returns>
+		/// <param name="terrariaItem">The Terraria item to wrap.</param>
+		/// <returns>An <see cref="Item"/> that wraps <paramref name="terrariaItem"/>.</returns>
 		/// <exception cref="ArgumentNullException"><paramref name="terrariaItem"/> was null.</exception>
 		public static Item Wrap(Terraria.Item terrariaItem)
 		{
