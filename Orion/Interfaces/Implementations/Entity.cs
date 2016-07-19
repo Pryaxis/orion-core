@@ -13,6 +13,11 @@ namespace Orion.Interfaces.Implementations
 		public Terraria.Entity Backing { get; }
 
 		/// <summary>
+		/// Gets the ID.
+		/// </summary>
+		public int Id => Backing.whoAmI;
+
+		/// <summary>
 		/// Gets the name.
 		/// </summary>
 		public string Name => Backing.name;

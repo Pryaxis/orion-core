@@ -15,9 +15,9 @@ namespace Orion.Services
 	public interface INpcService : IService
 	{
 		/// <summary>
-		/// Occurs after an NPC has died.
+		/// Occurs after an NPC has been killed.
 		/// </summary>
-		event EventHandler<NpcDiedEventArgs> NpcDied;
+		event EventHandler<NpcKilledEventArgs> NpcKilled;
 
 		/// <summary>
 		/// Occurs after an NPC has spawned in the world.

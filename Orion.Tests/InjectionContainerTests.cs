@@ -4,7 +4,8 @@ using Ninject;
 using Orion.Framework;
 using Orion.Interfaces;
 using Orion.Services;
-using Terraria;
+using Orion.Services.Implementations;
+using OTAPI.Tile;
 
 namespace Orion.Tests
 {
@@ -14,7 +15,7 @@ namespace Orion.Tests
 		{
 		}
 
-		public Tile this[int x, int y]
+		public ITile this[int x, int y]
 		{
 			get
 			{

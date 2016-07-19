@@ -43,7 +43,7 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="OTAPI, Version=1.3.1.1, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\OTAPI.0.2.5\lib\net451\OTAPI.dll</HintPath>
+      <HintPath>..\packages\OTAPI.0.2.7\lib\net451\OTAPI.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="System" />
@@ -56,13 +56,15 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Events\Npc\NpcDiedEventArgs.cs" />
+    <Compile Include="Events\Npc\NpcKilledEventArgs.cs" />
     <Compile Include="Events\Npc\NpcSpawnedEventArgs.cs" />
     <Compile Include="Events\Npc\NpcTeleportingEventArgs.cs" />
     <Compile Include="Events\Npc\NpcTransformedEventArgs.cs" />
     <Compile Include="Events\Player\PlayerJoinedEventArgs.cs" />
     <Compile Include="Events\Player\PlayerJoiningEventArgs.cs" />
     <Compile Include="Events\Player\PlayerQuitEventArgs.cs" />
+    <Compile Include="Events\World\MeteorDroppingEventArgs.cs" />
+    <Compile Include="Events\World\SavingEventArgs.cs" />
     <Compile Include="Framework\Injection\ServiceInjectionModule.cs" />
     <Compile Include="Framework\IService.cs" />
     <Compile Include="Framework\ServiceAttribute.cs" />
@@ -83,20 +85,17 @@
     <Compile Include="Services\IItemService.cs" />
     <Compile Include="Services\Implementations\JsonFileConfigurationService.cs" />
     <Compile Include="Services\Implementations\TileService.cs" />
+    <Compile Include="Services\Implementations\WorldService.cs" />
     <Compile Include="Services\INpcService.cs" />
     <Compile Include="Services\IPlayerService.cs" />
     <Compile Include="Services\ITileService.cs" />
+    <Compile Include="Services\IWorldService.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
     <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Events\Npc" />
-    <Folder Include="Events\Player" />
-    <Folder Include="Interfaces\Implementations" />
-    <Folder Include="Services\Implementations" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

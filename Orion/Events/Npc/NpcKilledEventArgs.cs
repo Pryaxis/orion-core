@@ -5,9 +5,9 @@ using Orion.Services;
 namespace Orion.Events.Npc
 {
 	/// <summary>
-	/// Provides data for the <see cref="INpcService.NpcDied"/> event.
+	/// Provides data for the <see cref="INpcService.NpcKilled"/> event.
 	/// </summary>
-	public class NpcDiedEventArgs : EventArgs
+	public class NpcKilledEventArgs : EventArgs
 	{
 		/// <summary>
 		/// Gets the relevant NPC.
@@ -15,10 +15,10 @@ namespace Orion.Events.Npc
 		public INpc Npc { get; }
 
 		/// <summary>
-		/// Initializes a new instance of the <see cref="NpcDiedEventArgs"/> class with the specified NPC.
+		/// Initializes a new instance of the <see cref="NpcKilledEventArgs"/> class with the specified NPC.
 		/// </summary>
 		/// <param name="npc">The NPC.</param>
-		public NpcDiedEventArgs(INpc npc)
+		public NpcKilledEventArgs(INpc npc)
 		{
 			Npc = npc;
 		}
