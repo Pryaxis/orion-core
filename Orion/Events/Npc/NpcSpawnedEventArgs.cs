@@ -11,7 +11,7 @@ namespace Orion.Events.Npc
 	public class NpcSpawnedEventArgs : EventArgs
 	{
 		/// <summary>
-		/// Gets the relevant NPC.
+		/// Gets the <see cref="INpc"/>.
 		/// </summary>
 		public INpc Npc { get; }
 
@@ -21,10 +21,10 @@ namespace Orion.Events.Npc
 		public Vector2 Position { get; }
 
 		/// <summary>
-		/// Initializes a new instance of the <see cref="NpcSpawnedEventArgs"/> class with the specified NPC and
-		/// position.
+		/// Initializes a new instance of the <see cref="NpcSpawnedEventArgs"/> class with the specified
+		/// <see cref="INpc"/> and position.
 		/// </summary>
-		/// <param name="npc">The NPC.</param>
+		/// <param name="npc">The <see cref="INpc"/>.</param>
 		/// <param name="position">The position in the world.</param>
 		public NpcSpawnedEventArgs(INpc npc, Vector2 position)
 		{

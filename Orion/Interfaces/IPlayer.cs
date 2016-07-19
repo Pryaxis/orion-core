@@ -1,17 +1,10 @@
-﻿using System.Collections.Generic;
-
-namespace Orion.Interfaces
+﻿namespace Orion.Interfaces
 {
 	/// <summary>
-	/// Encapsulates a Terraria player.
+	/// Wraps a <see cref="Terraria.Player"/>.
 	/// </summary>
 	public interface IPlayer : IEntity
 	{
-		/// <summary>
-		/// Gets the backing Terraria player.
-		/// </summary>
-		new Terraria.Player Backing { get; }
-
 		/// <summary>
 		/// Gets the defense.
 		/// </summary>
@@ -23,8 +16,7 @@ namespace Orion.Interfaces
 		int HP { get; set; }
 
 		/// <summary>
-		/// Gets the inventory <see cref="IItemArray"/>. A new instance will be created if the underlying array is
-		/// reassigned.
+		/// Gets the inventory <see cref="IItemArray"/>.
 		/// </summary>
 		IItemArray Inventory { get; }
 
@@ -48,6 +40,9 @@ namespace Orion.Interfaces
 		/// </summary>
 		IItem SelectedItem { get; }
 
-		// TODO: complete
+		/// <summary>
+		/// Gets the wrapped <see cref="Terraria.Player"/>.
+		/// </summary>
+		Terraria.Player WrappedPlayer { get; }
 	}
 }

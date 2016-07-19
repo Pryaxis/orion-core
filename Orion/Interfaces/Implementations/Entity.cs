@@ -3,32 +3,27 @@
 namespace Orion.Interfaces.Implementations
 {
 	/// <summary>
-	/// Encapsulates a Terraria entity.
+	/// Wraps a <see cref="Terraria.Entity"/>.
 	/// </summary>
-	public class Entity : IEntity
+	public abstract class Entity : IEntity
 	{
-		/// <summary>
-		/// Gets the backing Terraria entity.
-		/// </summary>
-		public Terraria.Entity Backing { get; }
-
 		/// <summary>
 		/// Gets the ID.
 		/// </summary>
-		public int Id => Backing.whoAmI;
+		public int Id => WrappedEntity.whoAmI;
 
 		/// <summary>
 		/// Gets the name.
 		/// </summary>
-		public string Name => Backing.name;
+		public string Name => WrappedEntity.name;
 
 		/// <summary>
 		/// Gets or sets the position.
 		/// </summary>
 		public Vector2 Position
 		{
-			get { return Backing.position; }
-			set { Backing.position = value; }
+			get { return WrappedEntity.position; }
+			set { WrappedEntity.position = value; }
 		}
 
 		/// <summary>
@@ -36,17 +31,13 @@ namespace Orion.Interfaces.Implementations
 		/// </summary>
 		public Vector2 Velocity
 		{
-			get { return Backing.velocity; }
-			set { Backing.velocity = value; }
+			get { return WrappedEntity.velocity; }
+			set { WrappedEntity.velocity = value; }
 		}
 
 		/// <summary>
-		/// Initializes a new instance of the <see cref="Entity"/> class encapsulating the specified Terraria entity.
+		/// Gets the wrapped <see cref="Terraria.Entity"/>.
 		/// </summary>
-		/// <param name="entity">The Terraria entity.</param>
-		public Entity(Terraria.Entity entity)
-		{
-			Backing = entity;
-		}
+		public abstract Terraria.Entity WrappedEntity { get; }
 	}
 }

@@ -1,15 +1,10 @@
 ﻿namespace Orion.Interfaces
 {
 	/// <summary>
-	/// Encapsulates a Terraria item.
+	/// Wraps a <see cref="Terraria.Item"/>.
 	/// </summary>
 	public interface IItem : IEntity
 	{
-		/// <summary>
-		/// Gets the backing Terraria item.
-		/// </summary>
-		new Terraria.Item Backing { get; }
-
 		/// <summary>
 		/// Gets the damage.
 		/// </summary>
@@ -35,6 +30,9 @@
 		/// </summary>
 		int Type { get; }
 
-		// TODO: complete
+		/// <summary>
+		/// Gets the wrapped <see cref="Terraria.Item"/>.
+		/// </summary>
+		Terraria.Item WrappedItem { get; }
 	}
 }

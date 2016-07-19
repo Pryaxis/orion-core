@@ -1,15 +1,10 @@
 ﻿namespace Orion.Interfaces
 {
 	/// <summary>
-	/// Encapsulates a Terraria NPC.
+	/// Wraps a <see cref="Terraria.NPC"/>.
 	/// </summary>
 	public interface INpc : IEntity
 	{
-		/// <summary>
-		/// Gets the backing Terraria NPC.
-		/// </summary>
-		new Terraria.NPC Backing { get; }
-
 		/// <summary>
 		/// Gets or sets the HP.
 		/// </summary>
@@ -25,6 +20,14 @@
 		/// </summary>
 		int Type { get; }
 
-		// TODO: complete
+		/// <summary>
+		/// Gets the wrapped <see cref="Terraria.NPC"/>.
+		/// </summary>
+		Terraria.NPC WrappedNpc { get; }
+
+		/// <summary>
+		/// Kills the NPC.
+		/// </summary>
+		void Kill();
 	}
 }

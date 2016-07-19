@@ -3,15 +3,10 @@
 namespace Orion.Interfaces
 {
 	/// <summary>
-	/// Encapsulates a Terraria entity.
+	/// Wraps a <see cref="Terraria.Entity"/>.
 	/// </summary>
 	public interface IEntity
 	{
-		/// <summary>
-		/// Gets the backing Terraria entity.
-		/// </summary>
-		Terraria.Entity Backing { get; }
-
 		/// <summary>
 		/// Gets the ID.
 		/// </summary>
@@ -31,5 +26,10 @@ namespace Orion.Interfaces
 		/// Gets or sets the velocity.
 		/// </summary>
 		Vector2 Velocity { get; set; }
+
+		/// <summary>
+		/// Gets the wrapped <see cref="Terraria.Entity"/>.
+		/// </summary>
+		Terraria.Entity WrappedEntity { get; }
 	}
 }

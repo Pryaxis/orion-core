@@ -11,12 +11,12 @@ namespace Orion.Events.Npc
 	public class NpcTeleportingEventArgs : HandledEventArgs
 	{
 		/// <summary>
-		/// Gets the relevant NPC.
+		/// Gets the <see cref="INpc"/>.
 		/// </summary>
 		public INpc Npc { get; }
 
 		/// <summary>
-		/// Gets the position in the world that the NPC is teleporting to.
+		/// Gets the position in the world.
 		/// </summary>
 		public Vector2 Position { get; }
 
@@ -26,10 +26,10 @@ namespace Orion.Events.Npc
 		public int Style { get; }
 
 		/// <summary>
-		/// Initializes a new instance of the <see cref="NpcTeleportingEventArgs"/> class with the specified NPC,
-		/// position, and style.
+		/// Initializes a new instance of the <see cref="NpcTeleportingEventArgs"/> class with the specified
+		/// <see cref="INpc"/>, position in the world, and style.
 		/// </summary>
-		/// <param name="npc">The NPC.</param>
+		/// <param name="npc">The <see cref="INpc"/>.</param>
 		/// <param name="position">The position in the world.</param>
 		/// <param name="style">The teleportation style.</param>
 		public NpcTeleportingEventArgs(INpc npc, Vector2 position, int style)

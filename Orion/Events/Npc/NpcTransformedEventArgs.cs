@@ -10,20 +10,21 @@ namespace Orion.Events.Npc
 	public class NpcTransformedEventArgs : EventArgs
 	{
 		/// <summary>
-		/// Gets the new type that the NPC transformed to.
+		/// Gets the new type ID.
 		/// </summary>
 		public int NewType { get; }
 
 		/// <summary>
-		/// Gets the relevant NPC.
+		/// Gets the <see cref="INpc"/>.
 		/// </summary>
 		public INpc Npc { get; }
 
 		/// <summary>
-		/// Initializes a new instance of the <see cref="NpcKilledEventArgs"/> class with the specified NPC and new type.
+		/// Initializes a new instance of the <see cref="NpcKilledEventArgs"/> class with the specified
+		/// <see cref="INpc"/> and new type ID.
 		/// </summary>
-		/// <param name="npc">The NPC.</param>
-		/// <param name="newType">The new type.</param>
+		/// <param name="npc">The <see cref="INpc"/>.</param>
+		/// <param name="newType">The new type ID.</param>
 		public NpcTransformedEventArgs(INpc npc, int newType)
 		{
 			Npc = npc;

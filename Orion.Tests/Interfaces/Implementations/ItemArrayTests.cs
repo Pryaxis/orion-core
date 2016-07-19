@@ -1,4 +1,5 @@
-﻿using NUnit.Framework;
+﻿using System;
+using NUnit.Framework;
 using Orion.Interfaces.Implementations;
 
 namespace Orion.Tests.Interfaces.Implementations
@@ -10,35 +11,52 @@ namespace Orion.Tests.Interfaces.Implementations
 		public void GetItem_IsCorrect()
 		{
 			var terrariaItemArray = new Terraria.Item[10];
-			var itemArray = new ItemArray(terrariaItemArray);
+			ItemArray itemArray = ItemArray.Wrap(terrariaItemArray);
 
 			terrariaItemArray[0] = new Terraria.Item();
 
-			Assert.AreSame(terrariaItemArray[0], itemArray[0].Backing);
+			Assert.AreSame(terrariaItemArray[0], itemArray[0].WrappedItem);
 		}
 
 		[Test]
 		public void GetItem_NoReassignment_ReturnsSameInstance()
 		{
 			var terrariaItemArray = new Terraria.Item[10];
-			var itemArray = new ItemArray(terrariaItemArray);
+			ItemArray itemArray = ItemArray.Wrap(terrariaItemArray);
 
 			terrariaItemArray[0] = new Terraria.Item();
 
 			Assert.AreSame(itemArray[0], itemArray[0]);
 		}
-
+		
 		[Test]
 		public void SetItem_Updates()
 		{
 			var terrariaItemArray = new Terraria.Item[10];
-			var itemArray = new ItemArray(terrariaItemArray);
+			ItemArray itemArray = ItemArray.Wrap(terrariaItemArray);
 			var terrariaItem = new Terraria.Item();
-			var item = new Item(terrariaItem);
+			Item item = Item.Wrap(terrariaItem);
 
 			itemArray[0] = item;
 
-			Assert.AreSame(itemArray[0].Backing, terrariaItemArray[0]);
+			Assert.AreSame(itemArray[0].WrappedItem, terrariaItemArray[0]);
+		}
+
+		[Test]
+		public void Wrap_Null_ThrowsException()
+		{
+			Assert.Throws<ArgumentNullException>(() => ItemArray.Wrap(null));
+		}
+
+		[Test]
+		public void Wrap_ReturnsSameInstance()
+		{
+			var terrariaItemArray = new Terraria.Item[10];
+
+			ItemArray itemArray1 = ItemArray.Wrap(terrariaItemArray);
+			ItemArray itemArray2 = ItemArray.Wrap(terrariaItemArray);
+
+			Assert.AreSame(itemArray1, itemArray2);
 		}
 	}
 }

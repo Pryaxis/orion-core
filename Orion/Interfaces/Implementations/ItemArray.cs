@@ -4,61 +4,57 @@ using System.Runtime.CompilerServices;
 namespace Orion.Interfaces.Implementations
 {
 	/// <summary>
-	/// Encapsulates an array of Terraria items.
+	/// Wraps a <see cref="Terraria.Item"/> array.
 	/// </summary>
 	public class ItemArray : IItemArray
 	{
-		private readonly IItem[] _array;
-		private readonly Terraria.Item[] _previousBacking;
+		private static readonly ConditionalWeakTable<Terraria.Item[], ItemArray> Cache
+			= new ConditionalWeakTable<Terraria.Item[], ItemArray>();
 
 		/// <summary>
-		/// Gets the backing Terraria item array.
+		/// Gets the wrapped <see cref="Terraria.Item"/> array.
 		/// </summary>
-		public Terraria.Item[] Backing { get; }
-
-		/// <summary>
-		/// Initializes a new instance of the <see cref="ItemArray"/> class encapsulating the specified Terraria item
-		/// array.
-		/// </summary>
-		/// <param name="array">The Terraria item array.</param>
-		public ItemArray(Terraria.Item[] array)
+		public Terraria.Item[] WrappedItemArray { get; }
+		
+		private ItemArray(Terraria.Item[] terrariaItemArray)
 		{
-			_array = new IItem[array.Length];
-			for (int i = 0; i < array.Length; ++i)
-			{
-				_array[i] = new Item(array[i]);
-			}
-			Backing = array;
-			_previousBacking = (Terraria.Item[])array.Clone();
+			WrappedItemArray = terrariaItemArray;
 		}
 
 		/// <summary>
 		/// Gets or sets the <see cref="IItem"/> at the specified index.
 		/// </summary>
 		/// <param name="index">The index.</param>
-		/// <returns>
-		/// The <see cref="IItem"/> at the specified index. A new instance will be created if the underlying item is
-		/// reassigned.
-		/// </returns>
+		/// <returns>The <see cref="IItem"/> at the specified index.</returns>
 		/// <exception cref="IndexOutOfRangeException"><paramref name="index"/> was out of range.</exception>
 		public IItem this[int index]
 		{
-			get
+			get { return Item.Wrap(WrappedItemArray[index]); }
+			set { WrappedItemArray[index] = value.WrappedItem; }
+		}
+
+		/// <summary>
+		/// Creates a new instance of the <see cref="ItemArray"/> class wrapping the specified <see cref="Terraria.Item"/>
+		/// array. If this method is called multiple times on the same <see cref="Terraria.Item"/> array, then the same
+		/// <see cref="ItemArray"/> will be returned.
+		/// </summary>
+		/// <param name="terrariaItemArray">The <see cref="Terraria.Item"/> array.</param>
+		/// <returns>An <see cref="ItemArray"/> wrapping <paramref name="terrariaItemArray"/>.</returns>
+		/// <exception cref="ArgumentNullException"><paramref name="terrariaItemArray"/> was null.</exception>
+		public static ItemArray Wrap(Terraria.Item[] terrariaItemArray)
+		{
+			if (terrariaItemArray == null)
 			{
-				if (!ReferenceEquals(Backing[index], _previousBacking[index]))
-				{
-					// If _backing[index] has been reassigned, then update.
-					_previousBacking[index] = Backing[index];
-					_array[index] = new Item(Backing[index]);
-				}
-				return _array[index];
+				throw new ArgumentNullException(nameof(terrariaItemArray));
 			}
-			set
+
+			ItemArray itemArray;
+			if (!Cache.TryGetValue(terrariaItemArray, out itemArray))
 			{
-				_array[index] = value;
-				Backing[index] = value.Backing;
-				_previousBacking[index] = value.Backing;
+				itemArray = new ItemArray(terrariaItemArray);
+				Cache.Add(terrariaItemArray, itemArray);
 			}
+			return itemArray;
 		}
 	}
 }

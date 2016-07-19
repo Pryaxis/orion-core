@@ -1,57 +1,42 @@
-﻿namespace Orion.Interfaces.Implementations
+﻿using System;
+using System.Runtime.CompilerServices;
+
+namespace Orion.Interfaces.Implementations
 {
 	/// <summary>
-	/// Encapsulates a Terraria player.
+	/// Wraps a <see cref="Terraria.Player"/>.
 	/// </summary>
 	public class Player : Entity, IPlayer
 	{
-		private ItemArray _inventory;
-		private Terraria.Item[] _previousInventory;
-
-		/// <summary>
-		/// Gets the backing Terraria player.
-		/// </summary>
-		public new Terraria.Player Backing { get; }
+		private static readonly ConditionalWeakTable<Terraria.Player, Player> Cache
+			= new ConditionalWeakTable<Terraria.Player, Player>(); 
 
 		/// <summary>
 		/// Gets the defense.
 		/// </summary>
-		public int Defense => Backing.statDefense;
+		public int Defense => WrappedPlayer.statDefense;
 
 		/// <summary>
 		/// Gets or sets the HP.
 		/// </summary>
 		public int HP
 		{
-			get { return Backing.statLife; }
-			set { Backing.statLife = value; }
+			get { return WrappedPlayer.statLife; }
+			set { WrappedPlayer.statLife = value; }
 		}
 
 		/// <summary>
-		/// Gets the inventory <see cref="IItemArray"/>. A new instance will be created if the underlying array is
-		/// reassigned.
+		/// Gets the inventory <see cref="IItemArray"/>.
 		/// </summary>
-		public IItemArray Inventory
-		{
-			get
-			{
-				if (!ReferenceEquals(Backing.inventory, _previousInventory))
-				{
-					// If Backing.inventory has been reassigned, then update.
-					_previousInventory = Backing.inventory;
-					_inventory = new ItemArray(Backing.inventory);
-				}
-				return _inventory;
-			}
-		}
+		public IItemArray Inventory => ItemArray.Wrap(WrappedPlayer.inventory);
 
 		/// <summary>
 		/// Gets or sets the maximum HP.
 		/// </summary>
 		public int MaxHP
 		{
-			get { return Backing.statLifeMax; }
-			set { Backing.statLifeMax = value; }
+			get { return WrappedPlayer.statLifeMax; }
+			set { WrappedPlayer.statLifeMax = value; }
 		}
 
 		/// <summary>
@@ -59,8 +44,8 @@
 		/// </summary>
 		public int MaxMP
 		{
-			get { return Backing.statManaMax; }
-			set { Backing.statManaMax = value; }
+			get { return WrappedPlayer.statManaMax; }
+			set { WrappedPlayer.statManaMax = value; }
 		}
 
 		/// <summary>
@@ -68,24 +53,52 @@
 		/// </summary>
 		public int MP
 		{
-			get { return Backing.statMana; }
-			set { Backing.statMana = value; }
+			get { return WrappedPlayer.statMana; }
+			set { WrappedPlayer.statMana = value; }
 		}
 
 		/// <summary>
 		/// Gets the selected <see cref="IItem"/>.
 		/// </summary>
-		public IItem SelectedItem => Inventory[Backing.selectedItem];
+		public IItem SelectedItem => Inventory[WrappedPlayer.selectedItem];
 
 		/// <summary>
-		/// Initializes a new instance of the <see cref="Player"/> class encapsulating the specified Terraria player.
+		/// Gets the wrapped <see cref="Terraria.Entity"/>.
 		/// </summary>
-		/// <param name="player">The Terraria player.</param>
-		public Player(Terraria.Player player) : base(player)
+		public override Terraria.Entity WrappedEntity => WrappedPlayer;
+
+		/// <summary>
+		/// Gets the wrapped <see cref="Terraria.Player"/>.
+		/// </summary>
+		public Terraria.Player WrappedPlayer { get; }
+		
+		private Player(Terraria.Player terrariaPlayer)
 		{
-			Backing = player;
-			_inventory = new ItemArray(player.inventory);
-			_previousInventory = player.inventory;
+			WrappedPlayer = terrariaPlayer;
+		}
+
+		/// <summary>
+		/// Creates a new instance of the <see cref="Player"/> class wrapping the specified
+		/// <see cref="Terraria.Player"/>. If this method is called multiple times on the same
+		/// <see cref="Terraria.Player"/>, then the same <see cref="Player"/> will be returned.
+		/// </summary>
+		/// <param name="terrariaPlayer">The <see cref="Terraria.Player"/>.</param>
+		/// <returns>A <see cref="Player"/> wrapping <paramref name="terrariaPlayer"/>.</returns>
+		/// <exception cref="ArgumentNullException"><paramref name="terrariaPlayer"/> was null.</exception>
+		public static Player Wrap(Terraria.Player terrariaPlayer)
+		{
+			if (terrariaPlayer == null)
+			{
+				throw new ArgumentNullException(nameof(terrariaPlayer));
+			}
+
+			Player player;
+			if (!Cache.TryGetValue(terrariaPlayer, out player))
+			{
+				player = new Player(terrariaPlayer);
+				Cache.Add(terrariaPlayer, player);
+			}
+			return player;
 		}
 	}
 }

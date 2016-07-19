@@ -56,11 +56,5 @@ namespace Orion.Services
 		/// <param name="maxHP">The custom maximum HP, or null for the default.</param>
 		/// <returns>The resulting spawned NPC.</returns>
 		INpc Spawn(int type, Vector2 position, int? hp = null, int? maxHP = null);
-
-		/// <summary>
-		/// Kills an NPC.
-		/// </summary>
-		/// <param name="npc">The NPC to be killed.</param>
-		void Kill(INpc npc);
 	}
 }
