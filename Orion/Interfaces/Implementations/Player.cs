@@ -5,6 +5,9 @@
 	/// </summary>
 	public class Player : Entity, IPlayer
 	{
+		private ItemArray _inventory;
+		private Terraria.Item[] _previousInventory;
+
 		/// <summary>
 		/// Gets the backing Terraria player.
 		/// </summary>
@@ -25,9 +28,22 @@
 		}
 
 		/// <summary>
-		/// Gets the inventory array. This only includes the main inventory and mouse cursor.
+		/// Gets the inventory <see cref="IItemArray"/>. A new instance will be created if the underlying array is
+		/// reassigned.
 		/// </summary>
-		public IItem[] Inventory { get; }
+		public IItemArray Inventory
+		{
+			get
+			{
+				if (!ReferenceEquals(Backing.inventory, _previousInventory))
+				{
+					// If Backing.inventory has been reassigned, then update.
+					_previousInventory = Backing.inventory;
+					_inventory = new ItemArray(Backing.inventory);
+				}
+				return _inventory;
+			}
+		}
 
 		/// <summary>
 		/// Gets or sets the maximum HP.
@@ -57,7 +73,7 @@
 		}
 
 		/// <summary>
-		/// Gets the selected item.
+		/// Gets the selected <see cref="IItem"/>.
 		/// </summary>
 		public IItem SelectedItem => Inventory[Backing.selectedItem];
 
@@ -68,11 +84,8 @@
 		public Player(Terraria.Player player) : base(player)
 		{
 			Backing = player;
-			Inventory = new IItem[player.inventory.Length];
-			for (int i = 0; i < Inventory.Length; ++i)
-			{
-				Inventory[i] = new Item(player.inventory[i]);
-			}
+			_inventory = new ItemArray(player.inventory);
+			_previousInventory = player.inventory;
 		}
 	}
 }

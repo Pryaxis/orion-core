@@ -1,4 +1,6 @@
-﻿namespace Orion.Interfaces
+﻿using System.Collections.Generic;
+
+namespace Orion.Interfaces
 {
 	/// <summary>
 	/// Encapsulates a Terraria player.
@@ -21,9 +23,10 @@
 		int HP { get; set; }
 
 		/// <summary>
-		/// Gets the inventory array. This only includes the main inventory and mouse cursor.
+		/// Gets the inventory <see cref="IItemArray"/>. A new instance will be created if the underlying array is
+		/// reassigned.
 		/// </summary>
-		IItem[] Inventory { get; }
+		IItemArray Inventory { get; }
 
 		/// <summary>
 		/// Gets or sets the maximum HP.
@@ -41,7 +44,7 @@
 		int MP { get; set; }
 
 		/// <summary>
-		/// Gets the selected item.
+		/// Gets the selected <see cref="IItem"/>.
 		/// </summary>
 		IItem SelectedItem { get; }
 

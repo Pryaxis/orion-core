@@ -1,20 +1,19 @@
-﻿using System;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Orion.Framework;
+﻿using NUnit.Framework;
+using System;
 using System.IO;
+using Orion.Framework;
 
 namespace Orion.Tests
 {
-	[TestClass]
+	[TestFixture]
 	public class ServiceMapTest
 	{
-
-		[TestInitialize]
+		[OneTimeSetUp]
 		public void Setup()
 		{
 		}
 
-		[TestMethod]
+		[Test]
 		public void TestServiceMap()
 		{
 			ServiceMap serviceMap = new ServiceMap();
