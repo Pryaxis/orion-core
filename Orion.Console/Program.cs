@@ -1,16 +1,16 @@
-﻿namespace ConsoleApplication
+﻿namespace Orion.Console
 {
 	public class Program
-    {
-        static Orion.Orion orion;
+	{
+		static Orion orion;
 
-        public static void Main(string[] args)
-        {
-            orion = new Orion.Orion();
+		public static void Main(string[] args)
+		{
+			orion = new Orion();
 
-            orion.StartServer();
+			orion.StartServer();
 
-            orion.Dispose();
-        }
-    }
+			orion.Dispose();
+		}
+	}
 }
