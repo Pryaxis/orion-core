@@ -44,7 +44,7 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="OTAPI, Version=1.3.1.1, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\OTAPI.0.2.5\lib\net451\OTAPI.dll</HintPath>
+      <HintPath>..\packages\OTAPI.0.2.7\lib\net451\OTAPI.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="System" />
@@ -57,25 +57,42 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Events\NPCDiedEventArgs.cs" />
-    <Compile Include="Events\NPCEventArgs.cs" />
-    <Compile Include="Events\NPCHandledEventArgs.cs" />
-    <Compile Include="Events\NPCSpawnEventArgs.cs" />
-    <Compile Include="Events\NPCTeleportingEventArgs.cs" />
-    <Compile Include="Events\NPCTransformEventArgs.cs" />
+    <Compile Include="Events\Npc\NpcKilledEventArgs.cs" />
+    <Compile Include="Events\Npc\NpcSpawnedEventArgs.cs" />
+    <Compile Include="Events\Npc\NpcTeleportingEventArgs.cs" />
+    <Compile Include="Events\Npc\NpcTransformedEventArgs.cs" />
+    <Compile Include="Events\Player\PlayerJoinedEventArgs.cs" />
+    <Compile Include="Events\Player\PlayerJoiningEventArgs.cs" />
+    <Compile Include="Events\Player\PlayerQuitEventArgs.cs" />
+    <Compile Include="Events\World\MeteorDroppingEventArgs.cs" />
+    <Compile Include="Events\World\SavingEventArgs.cs" />
     <Compile Include="Framework\Injection\ServiceInjectionModule.cs" />
     <Compile Include="Framework\IService.cs" />
     <Compile Include="Framework\ServiceAttribute.cs" />
     <Compile Include="Framework\ServiceBase.cs" />
     <Compile Include="Framework\ServiceMap.cs" />
-    <Compile Include="Interfaces\IConfigurationService.cs" />
-    <Compile Include="Interfaces\INPCService.cs" />
-    <Compile Include="Interfaces\ITileService.cs" />
+    <Compile Include="Interfaces\IEntity.cs" />
+    <Compile Include="Interfaces\IItem.cs" />
+    <Compile Include="Interfaces\IItemArray.cs" />
+    <Compile Include="Interfaces\Implementations\Entity.cs" />
+    <Compile Include="Interfaces\Implementations\Item.cs" />
+    <Compile Include="Interfaces\Implementations\ItemArray.cs" />
+    <Compile Include="Interfaces\Implementations\Npc.cs" />
+    <Compile Include="Interfaces\Implementations\Player.cs" />
+    <Compile Include="Interfaces\INpc.cs" />
+    <Compile Include="Interfaces\IPlayer.cs" />
     <Compile Include="Orion.cs" />
     <Compile Include="Orion.DataFields.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Services\JSONFileConfigurationService.cs" />
-    <Compile Include="Services\TileService.cs" />
+    <Compile Include="Services\IConfigurationService.cs" />
+    <Compile Include="Services\IItemService.cs" />
+    <Compile Include="Services\Implementations\JsonFileConfigurationService.cs" />
+    <Compile Include="Services\Implementations\TileService.cs" />
+    <Compile Include="Services\Implementations\WorldService.cs" />
+    <Compile Include="Services\INpcService.cs" />
+    <Compile Include="Services\IPlayerService.cs" />
+    <Compile Include="Services\ITileService.cs" />
+    <Compile Include="Services\IWorldService.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />

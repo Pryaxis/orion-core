@@ -1,8 +1,11 @@
 ﻿using System;
 using Ninject;
+using NUnit.Framework;
 using Orion.Framework;
 using Orion.Interfaces;
 using Orion.Services;
+using Orion.Services.Implementations;
+using OTAPI.Tile;
 using Terraria;
 using NUnit.Framework;
 
@@ -14,7 +17,7 @@ namespace Orion.Tests
 		{
 		}
 
-		public Tile this[int x, int y]
+		public ITile this[int x, int y]
 		{
 			get
 			{
@@ -41,7 +44,7 @@ namespace Orion.Tests
 			serviceMap = new ServiceMap();
 			container = new StandardKernel(new Framework.Injection.ServiceInjectionModule(serviceMap));
 
-			Assert.AreEqual(container.Get<ITileService>().GetType(), typeof(TileService));
+			Assert.IsInstanceOf(typeof(TileService), container.Get<ITileService>());
 		}
 
 		[Test]
@@ -52,7 +55,7 @@ namespace Orion.Tests
 
 			serviceMap.OverrideService<ITileService, TestTileService>(container);
 
-			Assert.AreEqual(container.Get<ITileService>().GetType(), typeof(TestTileService));
+			Assert.IsInstanceOf(typeof(TestTileService), container.Get<ITileService>());
 		}
 	}
 }

@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Orion.Interfaces
+namespace Orion.Services
 {
     /// <summary>
     /// Service definition: ITileService
@@ -18,4 +18,3 @@ namespace Orion.Interfaces
     {
     }
 }
-

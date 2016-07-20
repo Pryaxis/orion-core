@@ -60,7 +60,7 @@
       <Private>False</Private>
     </Reference>
     <Reference Include="OTAPI, Version=1.3.1.1, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\OTAPI.0.2.6\lib\net451\OTAPI.dll</HintPath>
+      <HintPath>..\packages\OTAPI.0.2.7\lib\net451\OTAPI.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="System" />
@@ -80,6 +80,13 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Interfaces\Implementations\EntityTests.cs" />
+    <Compile Include="Interfaces\Implementations\ItemArrayTests.cs" />
+    <Compile Include="Interfaces\Implementations\ItemTests.cs" />
+    <Compile Include="Interfaces\Implementations\NpcTests.cs" />
+    <Compile Include="Interfaces\Implementations\PlayerTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Orion\Orion.csproj">

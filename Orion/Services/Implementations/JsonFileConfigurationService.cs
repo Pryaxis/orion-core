@@ -8,17 +8,18 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Orion.Services
+namespace Orion.Services.Implementations
 {
 	/// <summary>
 	/// Configuration service which loads and saves configuration from disk in JSON
 	/// format, using Newtonsoft.Json to load/store data.
 	/// </summary>
-	public class JSONFileConfigurationService : ServiceBase, IConfigurationService
+	[Service(Author = "Nyx Studios", Name = "JSON File Configuration Service")]
+	public class JsonFileConfigurationService : ServiceBase, IConfigurationService
 	{
 		public static string ConfigurationDirectory => "config";
 
-		public JSONFileConfigurationService(Orion orion) : base(orion)
+		public JsonFileConfigurationService(Orion orion) : base(orion)
 		{
 		}
 

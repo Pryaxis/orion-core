@@ -9,6 +9,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Orion.Services.Implementations;
 
 namespace Orion.Framework
 {
@@ -18,11 +19,6 @@ namespace Orion.Framework
 	/// </summary>
 	public class ServiceMap
 	{
-
-		public ServiceMap()
-		{
-		}
-
 		/// <summary>
 		/// Contains the Orion service map.
 		/// 
@@ -32,8 +28,9 @@ namespace Orion.Framework
 		/// </summary>
 		protected Dictionary<Type, Type> serviceMap = new Dictionary<Type, Type>()
 		{
-			{ typeof(ITileService), typeof(TileService) },
-			{ typeof(IConfigurationService), typeof(JSONFileConfigurationService) }
+			[typeof(IConfigurationService)] = typeof(JsonFileConfigurationService),
+			[typeof(ITileService)] = typeof(TileService),
+			[typeof(IWorldService)] = typeof(WorldService)
 		};
 
 		internal IDictionary<Type, Type> Map => serviceMap;
@@ -50,7 +47,7 @@ namespace Orion.Framework
 		/// </typeparam>
 		public void OverrideService<TServiceDefinition, TImplementation>(IKernel kernel)
 			where TServiceDefinition : IService
-			where TImplementation : ServiceBase
+			where TImplementation : TServiceDefinition
 		{
 			Type serviceDefinitionName = typeof(TServiceDefinition);
 
@@ -66,12 +63,13 @@ namespace Orion.Framework
 				.To(typeof(TImplementation))
 				.InSingletonScope();
 		}
-
+		
 
 
 		/// <summary>
-		/// Saves the service map out to a file.
+		/// Saves the service map to a stream.
 		/// </summary>
+		/// <param name="stream">The stream.</param>
 		public void Save(Stream stream)
 		{
 			using (StreamWriter sw = new StreamWriter(stream, System.Text.Encoding.UTF8, 1024, leaveOpen: true))
