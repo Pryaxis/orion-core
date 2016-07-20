@@ -1,16 +1,9 @@
 ﻿using Orion.Framework;
-using Orion.Interfaces;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
 using OTAPI.Core;
 using OTAPI.Tile;
 using Terraria;
 
-namespace Orion.Services.Implementations
+namespace Orion.Services
 {
 	/// <summary>
 	/// Implements the functionality in <see cref="TileService"/>. Mimics vanilla behaviour by storing tiles in a 2D tile

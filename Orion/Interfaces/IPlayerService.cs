@@ -1,10 +1,9 @@
-﻿using Orion.Events.Player;
-using System;
+﻿using System;
 using System.Collections.Generic;
+using Orion.Events.Player;
 using Orion.Framework;
-using Orion.Interfaces;
 
-namespace Orion.Services
+namespace Orion.Interfaces
 {
 	/// <summary>
 	/// Service definition: IPlayerService

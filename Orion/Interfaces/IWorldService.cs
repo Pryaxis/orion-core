@@ -1,12 +1,8 @@
-﻿using Orion.Events.World;
+﻿using System;
+using Orion.Events.World;
 using Orion.Framework;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace Orion.Services
+namespace Orion.Interfaces
 {
 	/// <summary>
 	/// Service definition: IWorldService

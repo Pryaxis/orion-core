@@ -1,10 +1,9 @@
-﻿using Microsoft.Xna.Framework;
-using System;
+﻿using System;
 using System.Collections.Generic;
+using Microsoft.Xna.Framework;
 using Orion.Framework;
-using Orion.Interfaces;
 
-namespace Orion.Services
+namespace Orion.Interfaces
 {
 	/// <summary>
 	/// Service definition: IItemService

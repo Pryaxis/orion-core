@@ -1,6 +1,5 @@
 ﻿using NUnit.Framework;
 using Orion.Framework;
-using System;
 using System.IO;
 
 namespace Orion.Tests

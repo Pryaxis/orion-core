@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace Orion.Interfaces
+﻿namespace Orion.Interfaces
 {
 	/// <summary>
 	/// Provides a wrapper around a Terraria item array.

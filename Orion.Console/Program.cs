@@ -1,9 +1,6 @@
-﻿using System;
-using Orion;
-
-namespace ConsoleApplication
+﻿namespace ConsoleApplication
 {
-    public class Program
+	public class Program
     {
         static Orion.Orion orion;
 

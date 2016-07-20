@@ -1,6 +1,5 @@
 ﻿using System.ComponentModel;
 using Orion.Interfaces;
-using Orion.Services;
 
 namespace Orion.Events.Player
 {

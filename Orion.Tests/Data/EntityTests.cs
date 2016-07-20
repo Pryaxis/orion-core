@@ -2,7 +2,7 @@
 using NUnit.Framework;
 using Orion.Data;
 
-namespace Orion.Tests.Interfaces.Implementations
+namespace Orion.Tests.Data
 {
 	[TestFixture]
 	public abstract class EntityTests

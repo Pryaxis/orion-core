@@ -1,9 +1,10 @@
-﻿using Orion.Events.World;
+﻿using System;
+using Orion.Events.World;
 using Orion.Framework;
+using Orion.Interfaces;
 using OTAPI.Core;
-using System;
 
-namespace Orion.Services.Implementations
+namespace Orion.Services
 {
 	/// <summary>
 	/// Implements the functionality in <see cref="IWorldService"/>.

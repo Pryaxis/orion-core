@@ -2,11 +2,8 @@
 using Ninject;
 using NUnit.Framework;
 using Orion.Framework;
-using Orion.Interfaces;
 using Orion.Services;
-using Orion.Services.Implementations;
 using OTAPI.Tile;
-using Terraria;
 
 namespace Orion.Tests
 {
