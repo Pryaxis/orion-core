@@ -1,10 +1,10 @@
 ﻿using System;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Ninject;
 using Orion.Framework;
 using Orion.Interfaces;
 using Orion.Services;
 using Terraria;
+using NUnit.Framework;
 
 namespace Orion.Tests
 {
@@ -28,18 +28,14 @@ namespace Orion.Tests
 		}
 	}
 
-	[TestClass]
+	[TestFixture]
 	public class InjectionContainerTests
 	{
 		protected ServiceMap serviceMap;
 		protected IKernel container;
 
-		[TestInitialize]
-		public void Setup()
-		{
-		}
 
-		[TestMethod]
+		[Test]
 		public void TestDefaultBindings()
 		{
 			serviceMap = new ServiceMap();
@@ -48,7 +44,7 @@ namespace Orion.Tests
 			Assert.AreEqual(container.Get<ITileService>().GetType(), typeof(TileService));
 		}
 
-		[TestMethod]
+		[Test]
 		public void TestServiceOverride()
 		{
 			serviceMap = new ServiceMap();

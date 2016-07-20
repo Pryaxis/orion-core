@@ -1,20 +1,15 @@
 ﻿using System;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Orion.Framework;
 using System.IO;
+using NUnit.Framework;
 
 namespace Orion.Tests
 {
-	[TestClass]
+	[TestFixture]
 	public class ServiceMapTest
 	{
-
-		[TestInitialize]
-		public void Setup()
-		{
-		}
-
-		[TestMethod]
+        
+		[Test]
 		public void TestServiceMap()
 		{
 			ServiceMap serviceMap = new ServiceMap();
@@ -25,12 +20,9 @@ namespace Orion.Tests
 				serviceMap.Save(ms);
 				Assert.IsTrue(ms.ToArray().Length > 0);
 				ms.Seek(0, SeekOrigin.Begin);
-
-
+                
 				System.IO.File.WriteAllBytes("services.json", ms.ToArray());
 			}
-
-
 		}
 	}
 }

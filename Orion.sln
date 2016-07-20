@@ -7,7 +7,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Orion.Console", "Orion.Cons
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Orion", "Orion\Orion.csproj", "{2EE55527-75E1-4774-A0A9-681740868F85}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Orion.Tests", "Orion.Tests\Orion.Tests.csproj", "{C2FA03B7-AECA-4E4C-9BA5-9554081DDC10}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Orion.Tests", "Orion.Tests\Orion.Tests.csproj", "{A52F86FB-DB58-4C27-A85D-B67DDFA6E14D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -23,10 +23,10 @@ Global
 		{2EE55527-75E1-4774-A0A9-681740868F85}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2EE55527-75E1-4774-A0A9-681740868F85}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2EE55527-75E1-4774-A0A9-681740868F85}.Release|Any CPU.Build.0 = Release|Any CPU
-		{C2FA03B7-AECA-4E4C-9BA5-9554081DDC10}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{C2FA03B7-AECA-4E4C-9BA5-9554081DDC10}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{C2FA03B7-AECA-4E4C-9BA5-9554081DDC10}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{C2FA03B7-AECA-4E4C-9BA5-9554081DDC10}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A52F86FB-DB58-4C27-A85D-B67DDFA6E14D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A52F86FB-DB58-4C27-A85D-B67DDFA6E14D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A52F86FB-DB58-4C27-A85D-B67DDFA6E14D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A52F86FB-DB58-4C27-A85D-B67DDFA6E14D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
