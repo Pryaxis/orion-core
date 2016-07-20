@@ -1,7 +1,7 @@
 ﻿using Orion.Framework;
 using OTAPI.Tile;
 
-namespace Orion.Services
+namespace Orion.Interfaces
 {
 	/// <summary>
 	/// Service definition: ITileService
