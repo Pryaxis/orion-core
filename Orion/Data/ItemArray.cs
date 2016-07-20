@@ -1,7 +1,8 @@
-﻿using System;
+﻿using Orion.Interfaces;
+using System;
 using System.Runtime.CompilerServices;
 
-namespace Orion.Interfaces.Implementations
+namespace Orion.Data
 {
 	/// <summary>
 	/// Wraps a Terraria item array.

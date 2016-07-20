@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
+using Orion.Interfaces;
 
-namespace Orion.Interfaces.Implementations
+namespace Orion.Data
 {
 	/// <summary>
 	/// Wraps a Terraria entity.

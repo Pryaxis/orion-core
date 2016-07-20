@@ -1,6 +1,6 @@
 ﻿using System;
 using NUnit.Framework;
-using Orion.Interfaces.Implementations;
+using Orion.Data;
 
 namespace Orion.Tests.Interfaces.Implementations
 {

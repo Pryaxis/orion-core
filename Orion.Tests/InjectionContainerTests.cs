@@ -7,7 +7,6 @@ using Orion.Services;
 using Orion.Services.Implementations;
 using OTAPI.Tile;
 using Terraria;
-using NUnit.Framework;
 
 namespace Orion.Tests
 {
