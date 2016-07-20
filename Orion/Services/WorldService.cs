@@ -9,7 +9,7 @@ namespace Orion.Services
 	/// <summary>
 	/// Implements the functionality in <see cref="IWorldService"/>.
 	/// </summary>
-	[Service(Author = "Nyx Studios", Name = "World Service")]
+	[Service("World Service", Author = "Nyx Studios")]
 	public class WorldService : ServiceBase, IWorldService
 	{
 		/// <summary>
@@ -25,7 +25,7 @@ namespace Orion.Services
 		/// <summary>
 		/// Initializes a new instance of the <see cref="WorldService"/> class.
 		/// </summary>
-		/// <param name="orion">The <see cref="Orion"/> instance.</param>
+		/// <param name="orion">The parent <see cref="Orion"/> instance.</param>
 		public WorldService(Orion orion) : base(orion)
 		{
 			Hooks.World.DropMeteor = InvokeMeteorDropping;

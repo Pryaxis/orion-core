@@ -3,9 +3,8 @@
 namespace Orion.Framework.Injection
 {
 	/// <summary>
-	/// Injects all the base Orion services according what's present in the
-	/// service map.  The service map may be overridden in which case the
-	/// the service will be re-bound.
+	/// Injects all the base Orion services according what's present in the service map. The service map may be
+	/// overridden, in which case the the service will be re-bound.
 	/// </summary>
 	public class ServiceInjectionModule : NinjectModule
 	{
@@ -27,7 +26,7 @@ namespace Orion.Framework.Injection
 				 * chain, so a binding rule must be created for every type that will be 
 				 * requested in orion.
 				 * 
-				 * For example, a binding to ITileService to Orion.Services.TileService
+				 * For example, a binding from ITileService to Orion.Services.TileService
 				 * will not resolve on calls to Get<ServiceBase> or Get<IService> even
 				 * though all services implement IService and inherit from ServiceBase,
 				 * you need to create the rules for these in the injection engine

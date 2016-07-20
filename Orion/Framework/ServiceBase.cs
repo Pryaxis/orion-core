@@ -2,22 +2,35 @@
 
 namespace Orion.Framework
 {
-	public class ServiceBase : IService
+	/// <summary>
+	/// Provides the base class for all services.
+	/// </summary>
+	public abstract class ServiceBase : IService
 	{
 		/// <summary>
-		/// Contains a reference to the Orion instance in which it belongs
+		/// Gets the parent <see cref="Orion"/> instance.
 		/// </summary>
-		protected Orion Orion { get; set; }
+		protected Orion Orion { get; }
 
-		public string Author { get; } = "Nyx Studios";
+		/// <summary>
+		/// Gets the service author.
+		/// </summary>
+		public string Author { get; } = "Anonymous";
 
-		public string Name { get; }
+		/// <summary>
+		/// Gets the service name.
+		/// </summary>
+		public string Name { get; } = "Unnamed";
 
+		/// <summary>
+		/// Gets the service version.
+		/// </summary>
 		public Version Version { get; } = new Version(1, 0, 0);
 
 		/// <summary>
-		/// Creates a new instance of an Orion service.
+		/// Initializes a new instance of the <see cref="ServiceBase"/> class.
 		/// </summary>
+		/// <param name="orion">The parent <see cref="Orion"/> instance.</param>
 		protected ServiceBase(Orion orion)
 		{
 			ServiceAttribute serviceAttr;

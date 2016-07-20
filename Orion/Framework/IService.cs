@@ -3,22 +3,22 @@
 namespace Orion.Framework
 {
 	/// <summary>
-	/// Interface which describes all Orion services.
+	/// Describes an Orion service.
 	/// </summary>
 	public interface IService : IDisposable
 	{
 		/// <summary>
-		/// Author of the Service
+		/// Gets the service author.
 		/// </summary>
 		string Author { get; }
 
 		/// <summary>
-		/// Name of the service
+		/// Gets the service name.
 		/// </summary>
 		string Name { get; }
 
 		/// <summary>
-		/// Service version
+		/// Gets the service version.
 		/// </summary>
 		Version Version { get; }
 	}

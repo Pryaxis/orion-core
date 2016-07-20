@@ -2,12 +2,33 @@
 
 namespace Orion.Framework
 {
+	/// <summary>
+	/// Provides information about a service.
+	/// </summary>
 	public class ServiceAttribute : Attribute
 	{
-		public string Name { get; set; }
+		/// <summary>
+		/// Gets the service name.
+		/// </summary>
+		public string Name { get; }
 
-		public string Author { get; set; }
+		/// <summary>
+		/// Gets or sets the service author. Defaults to "Anonymous".
+		/// </summary>
+		public string Author { get; set; } = "Anonymous";
 
+		/// <summary>
+		/// Gets or sets the service version. Defaults to 1.0.0.
+		/// </summary>
 		public Version Version { get; set; } = new Version(1, 0, 0);
+
+		/// <summary>
+		/// Initializes a new instance of the <see cref="ServiceAttribute"/> class.
+		/// </summary>
+		/// <param name="name">The service name.</param>
+		public ServiceAttribute(string name)
+		{
+			Name = name;
+		}
 	}
 }

@@ -91,10 +91,10 @@ namespace Orion.Data
 		}
 
 		/// <summary>
-		/// Gets the player's inventory item at the specified index.
+		/// Gets the player's inventory <see cref="IItem"/> at the specified index.
 		/// </summary>
 		/// <param name="index">The index to retrieve.</param>
-		/// <returns>The item at the specified index.</returns>
+		/// <returns>The <see cref="IItem"/> at the specified index.</returns>
 		/// <exception cref="IndexOutOfRangeException"><paramref name="index"/> was out of range.</exception>
 		public IItem GetInventory(int index)
 		{
@@ -106,16 +106,16 @@ namespace Orion.Data
 		}
 
 		/// <summary>
-		/// Gets the player's selected item.
+		/// Gets the player's selected <see cref="IItem"/>.
 		/// </summary>
-		/// <returns>The selected item.</returns>
+		/// <returns>The selected <see cref="IItem"/>.</returns>
 		public IItem GetSelectedItem() => GetInventory(WrappedPlayer.selectedItem);
 
 		/// <summary>
-		/// Sets the player's inventory item at the specified index.
+		/// Sets the player's inventory <see cref="IItem"/> at the specified index.
 		/// </summary>
 		/// <param name="index">The index to modify.</param>
-		/// <param name="item">The item to set.</param>
+		/// <param name="item">The <see cref="IItem"/> to set.</param>
 		/// <exception cref="IndexOutOfRangeException"><paramref name="index"/> was out of range.</exception>
 		public void SetInventory(int index, IItem item)
 		{

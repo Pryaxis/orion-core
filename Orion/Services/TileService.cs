@@ -9,7 +9,7 @@ namespace Orion.Services
 	/// Implements the functionality in <see cref="TileService"/>. Mimics vanilla behaviour by storing tiles in a 2D tile
 	/// array.
 	/// </summary>
-	[Service(Author = "Nyx Studios", Name = "Tile Service")]
+	[Service("Tile Service", Author = "Nyx Studios")]
 	public class TileService : ServiceBase, ITileService
 	{
 		protected ITile[,] tileBuffer;
@@ -17,7 +17,7 @@ namespace Orion.Services
 		/// <summary>
 		/// Initializes a new instance of the <see cref="TileService"/> class.
 		/// </summary>
-		/// <param name="orion">The <see cref="Orion"/> instance.</param>
+		/// <param name="orion">The parent <see cref="Orion"/> instance.</param>
 		public TileService(Orion orion) : base(orion)
 		{
 			Hooks.Tile.CreateCollection = () => this;

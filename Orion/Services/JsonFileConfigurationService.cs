@@ -1,5 +1,4 @@
-﻿using System;
-using System.IO;
+﻿using System.IO;
 using Newtonsoft.Json;
 using Orion.Framework;
 using Orion.Interfaces;
@@ -10,11 +9,18 @@ namespace Orion.Services
 	/// Configuration service which loads and saves configuration from disk in JSON
 	/// format, using Newtonsoft.Json to load/store data.
 	/// </summary>
-	[Service(Author = "Nyx Studios", Name = "JSON File Configuration Service")]
+	[Service("JSON File Configuration Service", Author = "Nyx Studios")]
 	public class JsonFileConfigurationService : ServiceBase, IConfigurationService
 	{
+		/// <summary>
+		/// Gets the configuration directory.
+		/// </summary>
 		public static string ConfigurationDirectory => "config";
 
+		/// <summary>
+		/// Initializes a new instance of the <see cref="JsonFileConfigurationService"/> class.
+		/// </summary>
+		/// <param name="orion">The parent <see cref="Orion"/> instance.</param>
 		public JsonFileConfigurationService(Orion orion) : base(orion)
 		{
 		}
@@ -23,9 +29,10 @@ namespace Orion.Services
 			where TService : ServiceBase
 			where TConfig : class, new()
 		{
+			// TODO: generalize with streams instead?
 			string configDirectory = Path.Combine(ConfigurationDirectory, typeof(TService).Name);
 			string configFile = Path.Combine(configDirectory, "config.json");
-			JsonSerializer serializer = new JsonSerializer();
+			var serializer = new JsonSerializer();
 			
 			TConfig configObject;
 
@@ -44,8 +51,8 @@ namespace Orion.Services
 				return configObject;
 			}
 
-			using (FileStream fs = new FileStream(configFile, FileMode.Open, FileAccess.Read))
-			using (StreamReader sr = new StreamReader(fs))
+			using (var fs = new FileStream(configFile, FileMode.Open, FileAccess.Read))
+			using (var sr = new StreamReader(fs))
 			{
 				configObject = serializer.Deserialize(sr, typeof(TConfig)) as TConfig;
 			}
@@ -57,7 +64,16 @@ namespace Orion.Services
 			where TService : ServiceBase
 			where TConfig : class, new()
 		{
-			throw new NotImplementedException();
+			// TODO: generalize with streams instead?
+			string configDirectory = Path.Combine(ConfigurationDirectory, typeof(TService).Name);
+			string configFile = Path.Combine(configDirectory, "config.json");
+			var serializer = new JsonSerializer {Formatting = Formatting.Indented};
+
+			using (var fs = new FileStream(configFile, FileMode.Create, FileAccess.Write))
+			using (var sw = new StreamWriter(fs))
+			{
+				serializer.Serialize(sw, config);
+			}
 		}
 	}
 }
