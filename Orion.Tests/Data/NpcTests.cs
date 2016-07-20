@@ -1,19 +1,12 @@
-﻿using System;
+﻿using Microsoft.Xna.Framework;
 using NUnit.Framework;
 using Orion.Data;
 
 namespace Orion.Tests.Data
 {
 	[TestFixture]
-	public class NpcTests : EntityTests
+	public class NpcTests
 	{
-		protected override void GetEntities(out Terraria.Entity terrariaEntity, out Entity entity)
-		{
-			var terrariaNpc = new Terraria.NPC();
-			terrariaEntity = terrariaNpc;
-			entity = new Npc(terrariaNpc);
-		}
-
 		[Test]
 		public void GetBacking_IsCorrect()
 		{
@@ -68,6 +61,39 @@ namespace Orion.Tests.Data
 		}
 
 		[Test]
+		public void GetName_IsCorrect()
+		{
+			var terrariaNpc = new Terraria.NPC();
+			var npc = new Npc(terrariaNpc);
+
+			terrariaNpc.name = "Name";
+
+			Assert.AreEqual("Name", npc.Name);
+		}
+
+		[Test]
+		public void GetPosition_IsCorrect()
+		{
+			var terrariaNpc = new Terraria.NPC();
+			var npc = new Npc(terrariaNpc);
+
+			terrariaNpc.position = Vector2.One;
+
+			Assert.AreEqual(Vector2.One, npc.Position);
+		}
+
+		[Test]
+		public void SetPosition_Updates()
+		{
+			var terrariaNpc = new Terraria.NPC();
+			var npc = new Npc(terrariaNpc);
+
+			npc.Position = Vector2.One;
+
+			Assert.AreEqual(Vector2.One, terrariaNpc.position);
+		}
+
+		[Test]
 		public void GetType_IsCorrect()
 		{
 			var terrariaNpc = new Terraria.NPC();
@@ -76,6 +102,28 @@ namespace Orion.Tests.Data
 			terrariaNpc.type = 5;
 
 			Assert.AreEqual(5, npc.Type);
+		}
+
+		[Test]
+		public void GetVelocity_IsCorrect()
+		{
+			var terrariaNpc = new Terraria.NPC();
+			var npc = new Npc(terrariaNpc);
+
+			terrariaNpc.velocity = Vector2.One;
+
+			Assert.AreEqual(Vector2.One, npc.Velocity);
+		}
+
+		[Test]
+		public void SetVelocity_Updates()
+		{
+			var terrariaNpc = new Terraria.NPC();
+			var npc = new Npc(terrariaNpc);
+
+			npc.Velocity = Vector2.One;
+
+			Assert.AreEqual(Vector2.One, terrariaNpc.velocity);
 		}
 	}
 }

@@ -1,19 +1,13 @@
 ﻿using System;
+using Microsoft.Xna.Framework;
 using NUnit.Framework;
 using Orion.Data;
 
 namespace Orion.Tests.Data
 {
 	[TestFixture]
-	public class PlayerTests : EntityTests
+	public class PlayerTests
 	{
-		protected override void GetEntities(out Terraria.Entity terrariaEntity, out Entity entity)
-		{
-			var terrariaPlayer = new Terraria.Player();
-			terrariaEntity = terrariaPlayer;
-			entity = new Player(terrariaPlayer);
-		}
-
 		[Test]
 		public void GetBacking_IsCorrect()
 		{
@@ -120,6 +114,61 @@ namespace Orion.Tests.Data
 			player.MP = 100;
 
 			Assert.AreEqual(100, terrariaPlayer.statMana);
+		}
+
+		[Test]
+		public void GetName_IsCorrect()
+		{
+			var terrariaPlayer = new Terraria.Player();
+			var player = new Player(terrariaPlayer);
+
+			terrariaPlayer.name = "Name";
+
+			Assert.AreEqual("Name", player.Name);
+		}
+
+		[Test]
+		public void GetPosition_IsCorrect()
+		{
+			var terrariaPlayer = new Terraria.Player();
+			var player = new Player(terrariaPlayer);
+
+			terrariaPlayer.position = Vector2.One;
+
+			Assert.AreEqual(Vector2.One, player.Position);
+		}
+
+		[Test]
+		public void SetPosition_Updates()
+		{
+			var terrariaPlayer = new Terraria.Player();
+			var player = new Player(terrariaPlayer);
+
+			player.Position = Vector2.One;
+
+			Assert.AreEqual(Vector2.One, terrariaPlayer.position);
+		}
+
+		[Test]
+		public void GetVelocity_IsCorrect()
+		{
+			var terrariaPlayer = new Terraria.Player();
+			var player = new Player(terrariaPlayer);
+
+			terrariaPlayer.velocity = Vector2.One;
+
+			Assert.AreEqual(Vector2.One, player.Velocity);
+		}
+
+		[Test]
+		public void SetVelocity_Updates()
+		{
+			var terrariaPlayer = new Terraria.Player();
+			var player = new Player(terrariaPlayer);
+
+			player.Velocity = Vector2.One;
+
+			Assert.AreEqual(Vector2.One, terrariaPlayer.velocity);
 		}
 
 		[Test]

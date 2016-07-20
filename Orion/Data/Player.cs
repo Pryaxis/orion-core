@@ -1,12 +1,13 @@
 ﻿using Orion.Interfaces;
 using System;
+using Microsoft.Xna.Framework;
 
 namespace Orion.Data
 {
 	/// <summary>
 	/// Wraps a Terraria player.
 	/// </summary>
-	public class Player : Entity, IPlayer
+	public class Player : IPlayer
 	{
 		private readonly IItem[] _inventory;
 
@@ -52,9 +53,27 @@ namespace Orion.Data
 		}
 
 		/// <summary>
-		/// Gets the wrapped Terraria entity.
+		/// Gets the player's name.
 		/// </summary>
-		public override Terraria.Entity WrappedEntity => WrappedPlayer;
+		public string Name => WrappedPlayer.name;
+
+		/// <summary>
+		/// Gets or sets the player's position.
+		/// </summary>
+		public Vector2 Position
+		{
+			get { return WrappedPlayer.position; }
+			set { WrappedPlayer.position = value; }
+		}
+
+		/// <summary>
+		/// Gets or sets the player's velocity.
+		/// </summary>
+		public Vector2 Velocity
+		{
+			get { return WrappedPlayer.velocity; }
+			set { WrappedPlayer.velocity = value; }
+		}
 
 		/// <summary>
 		/// Gets the wrapped Terraria player.

@@ -1,11 +1,12 @@
-﻿using Orion.Interfaces;
+﻿using Microsoft.Xna.Framework;
+using Orion.Interfaces;
 
 namespace Orion.Data
 {
 	/// <summary>
 	/// Wraps a Terraria NPC.
 	/// </summary>
-	public class Npc : Entity, INpc
+	public class Npc : INpc
 	{
 		/// <summary>
 		/// Gets or sets the NPC's HP.
@@ -26,14 +27,32 @@ namespace Orion.Data
 		}
 
 		/// <summary>
+		/// Gets the NPC's name.
+		/// </summary>
+		public string Name => WrappedNpc.name;
+
+		/// <summary>
+		/// Gets or sets the NPC's position.
+		/// </summary>
+		public Vector2 Position
+		{
+			get { return WrappedNpc.position; }
+			set { WrappedNpc.position = value; }
+		}
+
+		/// <summary>
 		/// Gets the NPC's type ID.
 		/// </summary>
 		public int Type => WrappedNpc.type;
 
 		/// <summary>
-		/// Gets the wrapped Terraria entity.
+		/// Gets or sets the NPC's velocity.
 		/// </summary>
-		public override Terraria.Entity WrappedEntity => WrappedNpc;
+		public Vector2 Velocity
+		{
+			get { return WrappedNpc.velocity; }
+			set { WrappedNpc.velocity = value; }
+		}
 
 		/// <summary>
 		/// Gets the wrapped Terraria NPC.

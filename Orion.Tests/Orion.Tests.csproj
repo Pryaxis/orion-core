@@ -82,7 +82,6 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Data\EntityTests.cs" />
     <Compile Include="Data\ItemTests.cs" />
     <Compile Include="Data\NpcTests.cs" />
     <Compile Include="Data\PlayerTests.cs" />

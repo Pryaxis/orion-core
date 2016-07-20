@@ -1,11 +1,12 @@
-﻿using Orion.Interfaces;
+﻿using Microsoft.Xna.Framework;
+using Orion.Interfaces;
 
 namespace Orion.Data
 {
 	/// <summary>
 	/// Wraps a Terraria item.
 	/// </summary>
-	public class Item : Entity, IItem
+	public class Item : IItem
 	{
 		/// <summary>
 		/// Gets the item damage.
@@ -16,6 +17,20 @@ namespace Orion.Data
 		/// Gets the item maximum stack size.
 		/// </summary>
 		public int MaxStack => WrappedItem.maxStack;
+
+		/// <summary>
+		/// Gets the item name.
+		/// </summary>
+		public string Name => WrappedItem.name;
+
+		/// <summary>
+		/// Gets or sets the item position.
+		/// </summary>
+		public Vector2 Position
+		{
+			get { return WrappedItem.position; }
+			set { WrappedItem.position = value; }
+		}
 
 		/// <summary>
 		/// Gets or sets the item prefix.
@@ -41,9 +56,13 @@ namespace Orion.Data
 		public int Type => WrappedItem.netID;
 
 		/// <summary>
-		/// Gets the wrapped Terraria entity.
+		/// Gets or sets the item velocity.
 		/// </summary>
-		public override Terraria.Entity WrappedEntity => WrappedItem;
+		public Vector2 Velocity
+		{
+			get { return WrappedItem.velocity; }
+			set { WrappedItem.velocity = value; }
+		}
 
 		/// <summary>
 		/// Gets the wrapped Terraria item.

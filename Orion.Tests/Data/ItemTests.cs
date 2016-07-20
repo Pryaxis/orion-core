@@ -1,19 +1,12 @@
-﻿using System;
+﻿using Microsoft.Xna.Framework;
 using NUnit.Framework;
 using Orion.Data;
 
 namespace Orion.Tests.Data
 {
 	[TestFixture]
-	public class ItemTests : EntityTests
+	public class ItemTests
 	{
-		protected override void GetEntities(out Terraria.Entity terrariaEntity, out Entity entity)
-		{
-			var terrariaItem = new Terraria.Item();
-			terrariaEntity = terrariaItem;
-			entity = new Item(terrariaItem);
-		}
-
 		[Test]
 		public void GetBacking_IsCorrect()
 		{
@@ -43,6 +36,39 @@ namespace Orion.Tests.Data
 			terrariaItem.maxStack = 999;
 
 			Assert.AreEqual(999, item.MaxStack);
+		}
+
+		[Test]
+		public void GetName_IsCorrect()
+		{
+			var terrariaItem = new Terraria.Item();
+			var item = new Item(terrariaItem);
+
+			terrariaItem.name = "Name";
+
+			Assert.AreEqual("Name", item.Name);
+		}
+
+		[Test]
+		public void GetPosition_IsCorrect()
+		{
+			var terrariaItem = new Terraria.Item();
+			var item = new Item(terrariaItem);
+
+			terrariaItem.position = Vector2.One;
+
+			Assert.AreEqual(Vector2.One, item.Position);
+		}
+
+		[Test]
+		public void SetPosition_Updates()
+		{
+			var terrariaItem = new Terraria.Item();
+			var item = new Item(terrariaItem);
+
+			item.Position = Vector2.One;
+
+			Assert.AreEqual(Vector2.One, terrariaItem.position);
 		}
 
 		[Test]
@@ -98,6 +124,28 @@ namespace Orion.Tests.Data
 			terrariaItem.netID = 149;
 
 			Assert.AreEqual(149, item.Type);
+		}
+
+		[Test]
+		public void GetVelocity_IsCorrect()
+		{
+			var terrariaItem = new Terraria.Item();
+			var item = new Item(terrariaItem);
+
+			terrariaItem.velocity = Vector2.One;
+
+			Assert.AreEqual(Vector2.One, item.Velocity);
+		}
+
+		[Test]
+		public void SetVelocity_Updates()
+		{
+			var terrariaItem = new Terraria.Item();
+			var item = new Item(terrariaItem);
+
+			item.Velocity = Vector2.One;
+
+			Assert.AreEqual(Vector2.One, terrariaItem.velocity);
 		}
 	}
 }

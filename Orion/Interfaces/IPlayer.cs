@@ -1,11 +1,12 @@
 ﻿using System;
+using Microsoft.Xna.Framework;
 
 namespace Orion.Interfaces
 {
 	/// <summary>
 	/// Provides a wrapper around a Terraria player.
 	/// </summary>
-	public interface IPlayer : IEntity
+	public interface IPlayer
 	{
 		/// <summary>
 		/// Gets the player's defense.
@@ -31,6 +32,21 @@ namespace Orion.Interfaces
 		/// Gets or sets the player's MP.
 		/// </summary>
 		int MP { get; set; }
+
+		/// <summary>
+		/// Gets the player's name.
+		/// </summary>
+		string Name { get; }
+
+		/// <summary>
+		/// Gets or sets the player's position.
+		/// </summary>
+		Vector2 Position { get; set; }
+
+		/// <summary>
+		/// Gets or sets the player's velocity.
+		/// </summary>
+		Vector2 Velocity { get; set; }
 
 		/// <summary>
 		/// Gets the wrapped Terraria player.

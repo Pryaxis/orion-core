@@ -71,9 +71,7 @@
     <Compile Include="Framework\ServiceAttribute.cs" />
     <Compile Include="Framework\ServiceBase.cs" />
     <Compile Include="Framework\ServiceMap.cs" />
-    <Compile Include="Interfaces\IEntity.cs" />
     <Compile Include="Interfaces\IItem.cs" />
-    <Compile Include="Data\Entity.cs" />
     <Compile Include="Data\Item.cs" />
     <Compile Include="Data\Npc.cs" />
     <Compile Include="Data\Player.cs" />
