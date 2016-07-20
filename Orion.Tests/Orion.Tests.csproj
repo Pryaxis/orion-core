@@ -82,9 +82,9 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Data\ItemTests.cs" />
-    <Compile Include="Data\NpcTests.cs" />
-    <Compile Include="Data\PlayerTests.cs" />
+    <Compile Include="Core\ItemTests.cs" />
+    <Compile Include="Core\NpcTests.cs" />
+    <Compile Include="Core\PlayerTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Orion\Orion.csproj">

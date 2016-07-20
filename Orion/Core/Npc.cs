@@ -1,7 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Orion.Interfaces;
 
-namespace Orion.Data
+namespace Orion.Core
 {
 	/// <summary>
 	/// Wraps a Terraria NPC.

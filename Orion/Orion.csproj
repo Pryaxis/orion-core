@@ -72,9 +72,9 @@
     <Compile Include="Framework\ServiceBase.cs" />
     <Compile Include="Framework\ServiceMap.cs" />
     <Compile Include="Interfaces\IItem.cs" />
-    <Compile Include="Data\Item.cs" />
-    <Compile Include="Data\Npc.cs" />
-    <Compile Include="Data\Player.cs" />
+    <Compile Include="Core\Item.cs" />
+    <Compile Include="Core\Npc.cs" />
+    <Compile Include="Core\Player.cs" />
     <Compile Include="Interfaces\INpc.cs" />
     <Compile Include="Interfaces\IPlayer.cs" />
     <Compile Include="Orion.cs" />

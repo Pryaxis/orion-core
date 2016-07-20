@@ -1,8 +1,8 @@
-﻿using Orion.Interfaces;
-using System;
+﻿using System;
 using Microsoft.Xna.Framework;
+using Orion.Interfaces;
 
-namespace Orion.Data
+namespace Orion.Core
 {
 	/// <summary>
 	/// Wraps a Terraria player.

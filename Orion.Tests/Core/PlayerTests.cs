@@ -1,9 +1,9 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
 using NUnit.Framework;
-using Orion.Data;
+using Orion.Core;
 
-namespace Orion.Tests.Data
+namespace Orion.Tests.Core
 {
 	[TestFixture]
 	public class PlayerTests

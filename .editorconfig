@@ -1,0 +1,6 @@
+root = True
+
+[*]
+insert_final_newline = true
+indent_style = tab
+tab_width = 4
