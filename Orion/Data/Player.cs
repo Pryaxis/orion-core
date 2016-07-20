@@ -1,6 +1,5 @@
 ﻿using Orion.Interfaces;
 using System;
-using System.Runtime.CompilerServices;
 
 namespace Orion.Data
 {
@@ -9,8 +8,7 @@ namespace Orion.Data
 	/// </summary>
 	public class Player : Entity, IPlayer
 	{
-		private static readonly ConditionalWeakTable<Terraria.Player, Player> Cache
-			= new ConditionalWeakTable<Terraria.Player, Player>(); 
+		private readonly IItem[] _inventory;
 
 		/// <summary>
 		/// Gets the player's defense.
@@ -25,11 +23,6 @@ namespace Orion.Data
 			get { return WrappedPlayer.statLife; }
 			set { WrappedPlayer.statLife = value; }
 		}
-
-		/// <summary>
-		/// Gets the player's inventory <see cref="IItemArray"/>.
-		/// </summary>
-		public IItemArray Inventory => ItemArray.Wrap(WrappedPlayer.inventory);
 
 		/// <summary>
 		/// Gets or sets the player's maximum HP.
@@ -59,11 +52,6 @@ namespace Orion.Data
 		}
 
 		/// <summary>
-		/// Gets the player's selected <see cref="IItem"/>.
-		/// </summary>
-		public IItem SelectedItem => Inventory[WrappedPlayer.selectedItem];
-
-		/// <summary>
 		/// Gets the wrapped Terraria entity.
 		/// </summary>
 		public override Terraria.Entity WrappedEntity => WrappedPlayer;
@@ -72,34 +60,48 @@ namespace Orion.Data
 		/// Gets the wrapped Terraria player.
 		/// </summary>
 		public Terraria.Player WrappedPlayer { get; }
-		
-		private Player(Terraria.Player terrariaPlayer)
+
+		/// <summary>
+		/// Initializes a new instance of the <see cref="Player"/> class wrapping the specified Terraria player.
+		/// </summary>
+		/// <param name="terrariaPlayer">The Terraria player to wrap.</param>
+		public Player(Terraria.Player terrariaPlayer)
 		{
+			_inventory = new IItem[terrariaPlayer.inventory.Length];
 			WrappedPlayer = terrariaPlayer;
 		}
 
 		/// <summary>
-		/// Creates a new instance of the <see cref="Player"/> class wrapping the specified Terraria player. If this
-		/// method is called multiple times on the same Terraria player, then the same <see cref="Player"/> will be
-		/// returned.
+		/// Gets the player's inventory item at the specified index.
 		/// </summary>
-		/// <param name="terrariaPlayer">The Terraria player to wrap.</param>
-		/// <returns>An <see cref="Player"/> that wraps <paramref name="terrariaPlayer"/>.</returns>
-		/// <exception cref="ArgumentNullException"><paramref name="terrariaPlayer"/> was null.</exception>
-		public static Player Wrap(Terraria.Player terrariaPlayer)
+		/// <param name="index">The index to retrieve.</param>
+		/// <returns>The item at the specified index.</returns>
+		/// <exception cref="IndexOutOfRangeException"><paramref name="index"/> was out of range.</exception>
+		public IItem GetInventory(int index)
 		{
-			if (terrariaPlayer == null)
+			if (_inventory[index]?.WrappedItem != WrappedPlayer.inventory[index])
 			{
-				throw new ArgumentNullException(nameof(terrariaPlayer));
+				_inventory[index] = new Item(WrappedPlayer.inventory[index]);
 			}
+			return _inventory[index];
+		}
 
-			Player player;
-			if (!Cache.TryGetValue(terrariaPlayer, out player))
-			{
-				player = new Player(terrariaPlayer);
-				Cache.Add(terrariaPlayer, player);
-			}
-			return player;
+		/// <summary>
+		/// Gets the player's selected item.
+		/// </summary>
+		/// <returns>The selected item.</returns>
+		public IItem GetSelectedItem() => GetInventory(WrappedPlayer.selectedItem);
+
+		/// <summary>
+		/// Sets the player's inventory item at the specified index.
+		/// </summary>
+		/// <param name="index">The index to modify.</param>
+		/// <param name="item">The item to set.</param>
+		/// <exception cref="IndexOutOfRangeException"><paramref name="index"/> was out of range.</exception>
+		public void SetInventory(int index, IItem item)
+		{
+			_inventory[index] = item;
+			WrappedPlayer.inventory[index] = item.WrappedItem;
 		}
 	}
 }

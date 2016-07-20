@@ -11,14 +11,14 @@ namespace Orion.Tests.Data
 		{
 			var terrariaNpc = new Terraria.NPC();
 			terrariaEntity = terrariaNpc;
-			entity = Npc.Wrap(terrariaNpc);
+			entity = new Npc(terrariaNpc);
 		}
 
 		[Test]
 		public void GetBacking_IsCorrect()
 		{
 			var terrariaNpc = new Terraria.NPC();
-			Npc npc = Npc.Wrap(terrariaNpc);
+			var npc = new Npc(terrariaNpc);
 
 			Assert.AreSame(terrariaNpc, npc.WrappedNpc);
 		}
@@ -27,7 +27,7 @@ namespace Orion.Tests.Data
 		public void GetMaxHP_IsCorrect()
 		{
 			var terrariaNpc = new Terraria.NPC();
-			Npc npc = Npc.Wrap(terrariaNpc);
+			var npc = new Npc(terrariaNpc);
 
 			terrariaNpc.lifeMax = 100;
 
@@ -38,7 +38,7 @@ namespace Orion.Tests.Data
 		public void SetMaxHP_Updates()
 		{
 			var terrariaNpc = new Terraria.NPC();
-			Npc npc = Npc.Wrap(terrariaNpc);
+			var npc = new Npc(terrariaNpc);
 
 			npc.MaxHP = 100;
 
@@ -49,7 +49,7 @@ namespace Orion.Tests.Data
 		public void GetHP_IsCorrect()
 		{
 			var terrariaNpc = new Terraria.NPC();
-			Npc npc = Npc.Wrap(terrariaNpc);
+			var npc = new Npc(terrariaNpc);
 
 			terrariaNpc.life = 50;
 
@@ -60,7 +60,7 @@ namespace Orion.Tests.Data
 		public void SetHP_Updates()
 		{
 			var terrariaNpc = new Terraria.NPC();
-			Npc npc = Npc.Wrap(terrariaNpc);
+			var npc = new Npc(terrariaNpc);
 
 			npc.HP = 50;
 
@@ -71,28 +71,11 @@ namespace Orion.Tests.Data
 		public void GetType_IsCorrect()
 		{
 			var terrariaNpc = new Terraria.NPC();
-			Npc npc = Npc.Wrap(terrariaNpc);
+			var npc = new Npc(terrariaNpc);
 
 			terrariaNpc.type = 5;
 
 			Assert.AreEqual(5, npc.Type);
-		}
-
-		[Test]
-		public void Wrap_Null_ThrowsException()
-		{
-			Assert.Throws<ArgumentNullException>(() => Npc.Wrap(null));
-		}
-
-		[Test]
-		public void Wrap_ReturnsSameInstance()
-		{
-			var terrariaNpc = new Terraria.NPC();
-
-			Npc npc1 = Npc.Wrap(terrariaNpc);
-			Npc npc2 = Npc.Wrap(terrariaNpc);
-
-			Assert.AreSame(npc1, npc2);
 		}
 	}
 }

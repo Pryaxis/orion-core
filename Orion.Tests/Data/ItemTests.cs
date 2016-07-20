@@ -11,14 +11,14 @@ namespace Orion.Tests.Data
 		{
 			var terrariaItem = new Terraria.Item();
 			terrariaEntity = terrariaItem;
-			entity = Item.Wrap(terrariaItem);
+			entity = new Item(terrariaItem);
 		}
 
 		[Test]
 		public void GetBacking_IsCorrect()
 		{
 			var terrariaItem = new Terraria.Item();
-			Item item = Item.Wrap(terrariaItem);
+			var item = new Item(terrariaItem);
 
 			Assert.AreSame(terrariaItem, item.WrappedItem);
 		}
@@ -27,7 +27,7 @@ namespace Orion.Tests.Data
 		public void GetDamage_IsCorrect()
 		{
 			var terrariaItem = new Terraria.Item();
-			Item item = Item.Wrap(terrariaItem);
+			var item = new Item(terrariaItem);
 
 			terrariaItem.damage = 100;
 
@@ -38,7 +38,7 @@ namespace Orion.Tests.Data
 		public void GetMaxStack_IsCorrect()
 		{
 			var terrariaItem = new Terraria.Item();
-			Item item = Item.Wrap(terrariaItem);
+			var item = new Item(terrariaItem);
 
 			terrariaItem.maxStack = 999;
 
@@ -49,7 +49,7 @@ namespace Orion.Tests.Data
 		public void GetPrefix_IsCorrect()
 		{
 			var terrariaItem = new Terraria.Item();
-			Item item = Item.Wrap(terrariaItem);
+			var item = new Item(terrariaItem);
 
 			terrariaItem.prefix = 81;
 
@@ -60,7 +60,7 @@ namespace Orion.Tests.Data
 		public void SetPrefix_Updates()
 		{
 			var terrariaItem = new Terraria.Item();
-			Item item = Item.Wrap(terrariaItem);
+			var item = new Item(terrariaItem);
 
 			item.Prefix = 81;
 
@@ -71,7 +71,7 @@ namespace Orion.Tests.Data
 		public void GetStack_IsCorrect()
 		{
 			var terrariaItem = new Terraria.Item();
-			Item item = Item.Wrap(terrariaItem);
+			var item = new Item(terrariaItem);
 
 			terrariaItem.stack = 99;
 
@@ -82,7 +82,7 @@ namespace Orion.Tests.Data
 		public void SetStack_Updates()
 		{
 			var terrariaItem = new Terraria.Item();
-			Item item = Item.Wrap(terrariaItem);
+			var item = new Item(terrariaItem);
 
 			item.Stack = 99;
 
@@ -93,28 +93,11 @@ namespace Orion.Tests.Data
 		public void GetType_IsCorrect()
 		{
 			var terrariaItem = new Terraria.Item();
-			Item item = Item.Wrap(terrariaItem);
+			var item = new Item(terrariaItem);
 
 			terrariaItem.netID = 149;
 
 			Assert.AreEqual(149, item.Type);
-		}
-
-		[Test]
-		public void Wrap_Null_ThrowsException()
-		{
-			Assert.Throws<ArgumentNullException>(() => Item.Wrap(null));
-		}
-
-		[Test]
-		public void Wrap_ReturnsSameInstance()
-		{
-			var terrariaItem = new Terraria.Item();
-
-			Item item1 = Item.Wrap(terrariaItem);
-			Item item2 = Item.Wrap(terrariaItem);
-
-			Assert.AreSame(item1, item2);
 		}
 	}
 }

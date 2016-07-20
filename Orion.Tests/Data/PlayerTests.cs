@@ -11,14 +11,14 @@ namespace Orion.Tests.Data
 		{
 			var terrariaPlayer = new Terraria.Player();
 			terrariaEntity = terrariaPlayer;
-			entity = Player.Wrap(terrariaPlayer);
+			entity = new Player(terrariaPlayer);
 		}
 
 		[Test]
 		public void GetBacking_IsCorrect()
 		{
 			var terrariaPlayer = new Terraria.Player();
-			Player player = Player.Wrap(terrariaPlayer);
+			var player = new Player(terrariaPlayer);
 
 			Assert.AreSame(terrariaPlayer, player.WrappedPlayer);
 		}
@@ -27,7 +27,7 @@ namespace Orion.Tests.Data
 		public void GetDefense_IsCorrect()
 		{
 			var terrariaPlayer = new Terraria.Player();
-			Player player = Player.Wrap(terrariaPlayer);
+			var player = new Player(terrariaPlayer);
 
 			terrariaPlayer.statDefense = 100;
 
@@ -38,7 +38,7 @@ namespace Orion.Tests.Data
 		public void GetHP_IsCorrect()
 		{
 			var terrariaPlayer = new Terraria.Player();
-			Player player = Player.Wrap(terrariaPlayer);
+			var player = new Player(terrariaPlayer);
 
 			terrariaPlayer.statLife = 200;
 
@@ -49,7 +49,7 @@ namespace Orion.Tests.Data
 		public void SetHP_Updates()
 		{
 			var terrariaPlayer = new Terraria.Player();
-			Player player = Player.Wrap(terrariaPlayer);
+			var player = new Player(terrariaPlayer);
 
 			player.HP = 200;
 
@@ -57,21 +57,10 @@ namespace Orion.Tests.Data
 		}
 
 		[Test]
-		public void GetInventory_IsCorrect()
-		{
-			var terrariaPlayer = new Terraria.Player();
-			Player player = Player.Wrap(terrariaPlayer);
-			
-			terrariaPlayer.inventory[0] = new Terraria.Item();
-
-			Assert.AreSame(terrariaPlayer.inventory, player.Inventory.WrappedItemArray);
-		}
-
-		[Test]
 		public void GetMaxHP_IsCorrect()
 		{
 			var terrariaPlayer = new Terraria.Player();
-			Player player = Player.Wrap(terrariaPlayer);
+			var player = new Player(terrariaPlayer);
 
 			terrariaPlayer.statLifeMax = 400;
 
@@ -82,7 +71,7 @@ namespace Orion.Tests.Data
 		public void SetMaxHP_Updates()
 		{
 			var terrariaPlayer = new Terraria.Player();
-			Player player = Player.Wrap(terrariaPlayer);
+			var player = new Player(terrariaPlayer);
 
 			player.MaxHP = 400;
 
@@ -93,7 +82,7 @@ namespace Orion.Tests.Data
 		public void GetMaxMP_IsCorrect()
 		{
 			var terrariaPlayer = new Terraria.Player();
-			Player player = Player.Wrap(terrariaPlayer);
+			var player = new Player(terrariaPlayer);
 
 			terrariaPlayer.statManaMax = 200;
 
@@ -104,7 +93,7 @@ namespace Orion.Tests.Data
 		public void SetMaxMP_Updates()
 		{
 			var terrariaPlayer = new Terraria.Player();
-			Player player = Player.Wrap(terrariaPlayer);
+			var player = new Player(terrariaPlayer);
 
 			player.MaxMP = 200;
 
@@ -115,7 +104,7 @@ namespace Orion.Tests.Data
 		public void GetMP_IsCorrect()
 		{
 			var terrariaPlayer = new Terraria.Player();
-			Player player = Player.Wrap(terrariaPlayer);
+			var player = new Player(terrariaPlayer);
 
 			terrariaPlayer.statMana = 100;
 
@@ -126,7 +115,7 @@ namespace Orion.Tests.Data
 		public void SetMP_Updates()
 		{
 			var terrariaPlayer = new Terraria.Player();
-			Player player = Player.Wrap(terrariaPlayer);
+			var player = new Player(terrariaPlayer);
 
 			player.MP = 100;
 
@@ -134,33 +123,56 @@ namespace Orion.Tests.Data
 		}
 
 		[Test]
-		public void SelectedItem_IsCorrect()
+		public void GetInventory_IsCorrect()
 		{
 			var terrariaPlayer = new Terraria.Player();
-			var terrariaItem = new Terraria.Item();
-			Player player = Player.Wrap(terrariaPlayer);
+			var player = new Player(terrariaPlayer);
+
+			terrariaPlayer.inventory[1] = new Terraria.Item();
+
+			Assert.AreSame(terrariaPlayer.inventory[1], player.GetInventory(1).WrappedItem);
+		}
+
+		[Test]
+		public void GetInventory_OutOfRange_ThrowsException()
+		{
+			var terrariaPlayer = new Terraria.Player();
+			var player = new Player(terrariaPlayer);
+
+			Assert.Throws<IndexOutOfRangeException>(() => player.GetInventory(-1));
+		}
+
+		[Test]
+		public void GetSelectedItem_IsCorrect()
+		{
+			var terrariaPlayer = new Terraria.Player();
+			var player = new Player(terrariaPlayer);
 
 			terrariaPlayer.selectedItem = 1;
-			terrariaPlayer.inventory[1] = terrariaItem;
+			terrariaPlayer.inventory[1] = new Terraria.Item();
 
-			Assert.AreEqual(terrariaItem, player.SelectedItem.WrappedItem);
+			Assert.AreEqual(terrariaPlayer.inventory[1], player.GetSelectedItem().WrappedItem);
 		}
 
 		[Test]
-		public void Wrap_Null_ThrowsException()
-		{
-			Assert.Throws<ArgumentNullException>(() => Player.Wrap(null));
-		}
-
-		[Test]
-		public void Wrap_ReturnsSameInstance()
+		public void SetInventory_Updates()
 		{
 			var terrariaPlayer = new Terraria.Player();
+			var player = new Player(terrariaPlayer);
+			var item = new Item(new Terraria.Item());
 
-			Player player1 = Player.Wrap(terrariaPlayer);
-			Player player2 = Player.Wrap(terrariaPlayer);
+			player.SetInventory(1, item);
 
-			Assert.AreSame(player1, player2);
+			Assert.AreSame(item.WrappedItem, terrariaPlayer.inventory[1]);
+		}
+
+		[Test]
+		public void SetInventory_OutOfRange_ThrowsException()
+		{
+			var terrariaPlayer = new Terraria.Player();
+			var player = new Player(terrariaPlayer);
+
+			Assert.Throws<IndexOutOfRangeException>(() => player.SetInventory(-1, null));
 		}
 	}
 }

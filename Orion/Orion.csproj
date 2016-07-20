@@ -73,10 +73,8 @@
     <Compile Include="Framework\ServiceMap.cs" />
     <Compile Include="Interfaces\IEntity.cs" />
     <Compile Include="Interfaces\IItem.cs" />
-    <Compile Include="Interfaces\IItemArray.cs" />
     <Compile Include="Data\Entity.cs" />
     <Compile Include="Data\Item.cs" />
-    <Compile Include="Data\ItemArray.cs" />
     <Compile Include="Data\Npc.cs" />
     <Compile Include="Data\Player.cs" />
     <Compile Include="Interfaces\INpc.cs" />
