@@ -5,6 +5,7 @@ namespace Orion.Framework
 	/// <summary>
 	/// Provides information about a service.
 	/// </summary>
+	[AttributeUsage(AttributeTargets.Class)]
 	public class ServiceAttribute : Attribute
 	{
 		/// <summary>

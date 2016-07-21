@@ -23,6 +23,7 @@ namespace Orion.Framework
 		protected Dictionary<Type, Type> serviceMap = new Dictionary<Type, Type>()
 		{
 			[typeof(IConfigurationService)] = typeof(JsonFileConfigurationService),
+			[typeof(IItemService)] = typeof(ItemService),
 			[typeof(ITileService)] = typeof(TileService),
 			[typeof(IWorldService)] = typeof(WorldService)
 		};
@@ -68,7 +69,7 @@ namespace Orion.Framework
 		{
 			using (StreamWriter sw = new StreamWriter(stream, System.Text.Encoding.UTF8, 1024, leaveOpen: true))
 			{
-
+				throw new NotImplementedException();
 			}
 		}
 	}

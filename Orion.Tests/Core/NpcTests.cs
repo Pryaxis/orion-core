@@ -7,6 +7,15 @@ namespace Orion.Tests.Core
 	[TestFixture]
 	public class NpcTests
 	{
+		[OneTimeSetUp]
+		public void Setup()
+		{
+			for (int i = 0; i < Terraria.Main.player.Length; ++i)
+			{
+				Terraria.Main.player[i] = new Terraria.Player();
+			}
+		}
+
 		[Test]
 		public void GetBacking_IsCorrect()
 		{
@@ -16,114 +25,118 @@ namespace Orion.Tests.Core
 			Assert.AreSame(terrariaNpc, npc.WrappedNpc);
 		}
 
-		[Test]
-		public void GetMaxHP_IsCorrect()
+		[TestCase(100)]
+		public void GetMaxHP_IsCorrect(int maxHP)
 		{
 			var terrariaNpc = new Terraria.NPC();
 			var npc = new Npc(terrariaNpc);
 
-			terrariaNpc.lifeMax = 100;
+			terrariaNpc.lifeMax = maxHP;
 
-			Assert.AreEqual(100, npc.MaxHP);
+			Assert.AreEqual(maxHP, npc.MaxHP);
 		}
 
-		[Test]
-		public void SetMaxHP_Updates()
+		[TestCase(100)]
+		public void SetMaxHP_Updates(int maxHP)
 		{
 			var terrariaNpc = new Terraria.NPC();
 			var npc = new Npc(terrariaNpc);
 
-			npc.MaxHP = 100;
+			npc.MaxHP = maxHP;
 
-			Assert.AreEqual(100, terrariaNpc.lifeMax);
+			Assert.AreEqual(maxHP, terrariaNpc.lifeMax);
 		}
 
-		[Test]
-		public void GetHP_IsCorrect()
+		[TestCase(50)]
+		public void GetHP_IsCorrect(int hp)
 		{
 			var terrariaNpc = new Terraria.NPC();
 			var npc = new Npc(terrariaNpc);
 
-			terrariaNpc.life = 50;
+			terrariaNpc.life = hp;
 
-			Assert.AreEqual(50, npc.HP);
+			Assert.AreEqual(hp, npc.HP);
 		}
 
-		[Test]
-		public void SetHP_Updates()
+		[TestCase(50)]
+		public void SetHP_Updates(int hp)
 		{
 			var terrariaNpc = new Terraria.NPC();
 			var npc = new Npc(terrariaNpc);
 
-			npc.HP = 50;
+			npc.HP = hp;
 
-			Assert.AreEqual(50, terrariaNpc.life);
+			Assert.AreEqual(hp, terrariaNpc.life);
 		}
 
-		[Test]
-		public void GetName_IsCorrect()
+		[TestCase("Name")]
+		public void GetName_IsCorrect(string name)
 		{
 			var terrariaNpc = new Terraria.NPC();
 			var npc = new Npc(terrariaNpc);
 
-			terrariaNpc.name = "Name";
+			terrariaNpc.name = name;
 
-			Assert.AreEqual("Name", npc.Name);
+			Assert.AreEqual(name, npc.Name);
 		}
 
-		[Test]
-		public void GetPosition_IsCorrect()
+		private static readonly Vector2[] Positions = { Vector2.One };
+
+		[Test, TestCaseSource(nameof(Positions))]
+		public void GetPosition_IsCorrect(Vector2 position)
 		{
 			var terrariaNpc = new Terraria.NPC();
 			var npc = new Npc(terrariaNpc);
 
-			terrariaNpc.position = Vector2.One;
+			terrariaNpc.position = position;
 
-			Assert.AreEqual(Vector2.One, npc.Position);
+			Assert.AreEqual(position, npc.Position);
 		}
 
-		[Test]
-		public void SetPosition_Updates()
+		[Test, TestCaseSource(nameof(Positions))]
+		public void SetPosition_Updates(Vector2 position)
 		{
 			var terrariaNpc = new Terraria.NPC();
 			var npc = new Npc(terrariaNpc);
 
-			npc.Position = Vector2.One;
+			npc.Position = position;
 
-			Assert.AreEqual(Vector2.One, terrariaNpc.position);
+			Assert.AreEqual(position, terrariaNpc.position);
 		}
 
-		[Test]
-		public void GetType_IsCorrect()
+		[TestCase(5)]
+		public void GetType_IsCorrect(int type)
 		{
 			var terrariaNpc = new Terraria.NPC();
 			var npc = new Npc(terrariaNpc);
 
-			terrariaNpc.type = 5;
+			terrariaNpc.type = type;
 
-			Assert.AreEqual(5, npc.Type);
+			Assert.AreEqual(type, npc.Type);
 		}
 
-		[Test]
-		public void GetVelocity_IsCorrect()
+		private static readonly Vector2[] Velocities = { Vector2.One };
+
+		[Test, TestCaseSource(nameof(Velocities))]
+		public void GetVelocity_IsCorrect(Vector2 velocity)
 		{
 			var terrariaNpc = new Terraria.NPC();
 			var npc = new Npc(terrariaNpc);
 
-			terrariaNpc.velocity = Vector2.One;
+			terrariaNpc.velocity = velocity;
 
-			Assert.AreEqual(Vector2.One, npc.Velocity);
+			Assert.AreEqual(velocity, npc.Velocity);
 		}
 
-		[Test]
-		public void SetVelocity_Updates()
+		[Test, TestCaseSource(nameof(Velocities))]
+		public void SetVelocity_Updates(Vector2 velocity)
 		{
 			var terrariaNpc = new Terraria.NPC();
 			var npc = new Npc(terrariaNpc);
 
-			npc.Velocity = Vector2.One;
+			npc.Velocity = velocity;
 
-			Assert.AreEqual(Vector2.One, terrariaNpc.velocity);
+			Assert.AreEqual(velocity, terrariaNpc.velocity);
 		}
 	}
 }

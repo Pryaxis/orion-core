@@ -11,14 +11,12 @@ namespace Orion.Interfaces
 	public interface IConfigurationService : IService
 	{
 		/// <summary>
-		/// Deserializes a <typeparamref name="TConfig"/> object from the configuration
-		/// data store.
+		/// Deserializes a <typeparamref name="TConfig"/> object from the configuration data store.
 		/// </summary>
-		/// <typeparam name="TConfig">
-		/// TConfig is the class which stores the configuration members
-		/// </typeparam>
+		/// <typeparam name="TService">The service type.</typeparam>
+		/// <typeparam name="TConfig">The config type which stores the configuration members.</typeparam>
 		/// <returns>
-		/// The deserialized configuration object as was loaded from the configuration datastore
+		/// The deserialized <typeparamref name="TConfig"/> object as was loaded from the configuration data store.
 		/// </returns>
 		TConfig Load<TService, TConfig>()
 			where TService : ServiceBase
@@ -27,9 +25,8 @@ namespace Orion.Interfaces
 		/// <summary>
 		/// Saves the <typeparamref name="TConfig"/> object to persistent storage.
 		/// </summary>
-		/// <typeparam name="TConfig">
-		/// TConfig is the class which stores the configuration members
-		/// </typeparam>
+		/// <typeparam name="TService">The service type.</typeparam>
+		/// <typeparam name="TConfig">The config type which stores the configuration members.</typeparam>
 		void Save<TService, TConfig>(TConfig config) 
 			where TService : ServiceBase
 			where TConfig : class, new();

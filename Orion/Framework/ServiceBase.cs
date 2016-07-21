@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Reflection;
 
 namespace Orion.Framework
 {
@@ -33,16 +34,14 @@ namespace Orion.Framework
 		/// <param name="orion">The parent <see cref="Orion"/> instance.</param>
 		protected ServiceBase(Orion orion)
 		{
-			ServiceAttribute serviceAttr;
+			Orion = orion;
 
-			this.Orion = orion;
-
-			serviceAttr = Attribute.GetCustomAttribute(this.GetType(), typeof(ServiceAttribute)) as ServiceAttribute;
-			if (serviceAttr != null)
+			var attr = GetType().GetCustomAttribute<ServiceAttribute>();
+			if (attr != null)
 			{
-				Author = serviceAttr.Author;
-				Name = serviceAttr.Name;
-				Version = serviceAttr.Version;
+				Author = attr.Author;
+				Name = attr.Name;
+				Version = attr.Version;
 			}
 		}
 
@@ -51,11 +50,11 @@ namespace Orion.Framework
 		}
 
 		#region IDisposable Support
-		private bool disposedValue = false; // To detect redundant calls
+		private bool _disposed; // To detect redundant calls
 
 		protected virtual void Dispose(bool disposing)
 		{
-			if (!disposedValue)
+			if (!_disposed)
 			{
 				if (disposing)
 				{
@@ -65,7 +64,7 @@ namespace Orion.Framework
 				// TODO: free unmanaged resources (unmanaged objects) and override a finalizer below.
 				// TODO: set large fields to null.
 
-				disposedValue = true;
+				_disposed = true;
 			}
 		}
 

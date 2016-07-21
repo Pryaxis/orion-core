@@ -7,7 +7,7 @@ using OTAPI.Core;
 namespace Orion.Services
 {
 	/// <summary>
-	/// Implements the functionality in <see cref="IWorldService"/>.
+	/// Implements the <see cref="IWorldService"/> functionality.
 	/// </summary>
 	[Service("World Service", Author = "Nyx Studios")]
 	public class WorldService : ServiceBase, IWorldService

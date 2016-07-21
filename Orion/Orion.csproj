@@ -82,6 +82,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Interfaces\IConfigurationService.cs" />
     <Compile Include="Interfaces\IItemService.cs" />
+    <Compile Include="Services\ItemService.cs" />
     <Compile Include="Services\JsonFileConfigurationService.cs" />
     <Compile Include="Services\TileService.cs" />
     <Compile Include="Services\WorldService.cs" />

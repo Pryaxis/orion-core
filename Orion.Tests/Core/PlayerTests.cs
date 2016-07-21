@@ -17,211 +17,217 @@ namespace Orion.Tests.Core
 			Assert.AreSame(terrariaPlayer, player.WrappedPlayer);
 		}
 
-		[Test]
-		public void GetDefense_IsCorrect()
+		[TestCase(100)]
+		public void GetDefense_IsCorrect(int defense)
 		{
 			var terrariaPlayer = new Terraria.Player();
 			var player = new Player(terrariaPlayer);
 
-			terrariaPlayer.statDefense = 100;
+			terrariaPlayer.statDefense = defense;
 
-			Assert.AreEqual(100, player.Defense);
+			Assert.AreEqual(defense, player.Defense);
 		}
 
-		[Test]
-		public void GetHP_IsCorrect()
+		[TestCase(200)]
+		public void GetHP_IsCorrect(int hp)
 		{
 			var terrariaPlayer = new Terraria.Player();
 			var player = new Player(terrariaPlayer);
 
-			terrariaPlayer.statLife = 200;
+			terrariaPlayer.statLife = hp;
 
-			Assert.AreEqual(200, player.HP);
+			Assert.AreEqual(hp, player.HP);
 		}
 
-		[Test]
-		public void SetHP_Updates()
+		[TestCase(200)]
+		public void SetHP_Updates(int hp)
 		{
 			var terrariaPlayer = new Terraria.Player();
 			var player = new Player(terrariaPlayer);
 
-			player.HP = 200;
+			player.HP = hp;
 
-			Assert.AreEqual(200, terrariaPlayer.statLife);
+			Assert.AreEqual(hp, terrariaPlayer.statLife);
 		}
 
-		[Test]
-		public void GetMaxHP_IsCorrect()
+		[TestCase(400)]
+		public void GetMaxHP_IsCorrect(int maxHP)
 		{
 			var terrariaPlayer = new Terraria.Player();
 			var player = new Player(terrariaPlayer);
 
-			terrariaPlayer.statLifeMax = 400;
+			terrariaPlayer.statLifeMax = maxHP;
 
-			Assert.AreEqual(400, player.MaxHP);
+			Assert.AreEqual(maxHP, player.MaxHP);
 		}
 
-		[Test]
-		public void SetMaxHP_Updates()
+		[TestCase(400)]
+		public void SetMaxHP_Updates(int maxHP)
 		{
 			var terrariaPlayer = new Terraria.Player();
 			var player = new Player(terrariaPlayer);
 
-			player.MaxHP = 400;
+			player.MaxHP = maxHP;
 
-			Assert.AreEqual(400, terrariaPlayer.statLifeMax);
+			Assert.AreEqual(maxHP, terrariaPlayer.statLifeMax);
 		}
 
-		[Test]
-		public void GetMaxMP_IsCorrect()
+		[TestCase(200)]
+		public void GetMaxMP_IsCorrect(int maxMP)
 		{
 			var terrariaPlayer = new Terraria.Player();
 			var player = new Player(terrariaPlayer);
 
-			terrariaPlayer.statManaMax = 200;
+			terrariaPlayer.statManaMax = maxMP;
 
-			Assert.AreEqual(200, player.MaxMP);
+			Assert.AreEqual(maxMP, player.MaxMP);
 		}
 
-		[Test]
-		public void SetMaxMP_Updates()
+		[TestCase(200)]
+		public void SetMaxMP_Updates(int maxMP)
 		{
 			var terrariaPlayer = new Terraria.Player();
 			var player = new Player(terrariaPlayer);
 
-			player.MaxMP = 200;
+			player.MaxMP = maxMP;
 
-			Assert.AreEqual(200, terrariaPlayer.statManaMax);
+			Assert.AreEqual(maxMP, terrariaPlayer.statManaMax);
 		}
 
-		[Test]
-		public void GetMP_IsCorrect()
+		[TestCase(100)]
+		public void GetMP_IsCorrect(int mp)
 		{
 			var terrariaPlayer = new Terraria.Player();
 			var player = new Player(terrariaPlayer);
 
-			terrariaPlayer.statMana = 100;
+			terrariaPlayer.statMana = mp;
 
-			Assert.AreEqual(100, player.MP);
+			Assert.AreEqual(mp, player.MP);
 		}
 
-		[Test]
-		public void SetMP_Updates()
+		[TestCase(100)]
+		public void SetMP_Updates(int mp)
 		{
 			var terrariaPlayer = new Terraria.Player();
 			var player = new Player(terrariaPlayer);
 
-			player.MP = 100;
+			player.MP = mp;
 
-			Assert.AreEqual(100, terrariaPlayer.statMana);
+			Assert.AreEqual(mp, terrariaPlayer.statMana);
 		}
 
-		[Test]
-		public void GetName_IsCorrect()
+		[TestCase("Name")]
+		public void GetName_IsCorrect(string name)
 		{
 			var terrariaPlayer = new Terraria.Player();
 			var player = new Player(terrariaPlayer);
 
-			terrariaPlayer.name = "Name";
+			terrariaPlayer.name = name;
 
-			Assert.AreEqual("Name", player.Name);
+			Assert.AreEqual(name, player.Name);
 		}
 
-		[Test]
-		public void GetPosition_IsCorrect()
+		private static readonly object[] Positions = { Vector2.One };
+
+		[Test, TestCaseSource(nameof(Positions))]
+		public void GetPosition_IsCorrect(Vector2 position)
 		{
 			var terrariaPlayer = new Terraria.Player();
 			var player = new Player(terrariaPlayer);
 
-			terrariaPlayer.position = Vector2.One;
+			terrariaPlayer.position = position;
 
-			Assert.AreEqual(Vector2.One, player.Position);
+			Assert.AreEqual(position, player.Position);
 		}
 
-		[Test]
-		public void SetPosition_Updates()
+		[Test, TestCaseSource(nameof(Positions))]
+		public void SetPosition_Updates(Vector2 position)
 		{
 			var terrariaPlayer = new Terraria.Player();
 			var player = new Player(terrariaPlayer);
 
-			player.Position = Vector2.One;
+			player.Position = position;
 
-			Assert.AreEqual(Vector2.One, terrariaPlayer.position);
+			Assert.AreEqual(position, terrariaPlayer.position);
 		}
 
-		[Test]
-		public void GetVelocity_IsCorrect()
+		private static readonly object[] Velocities = { Vector2.One };
+
+		[Test, TestCaseSource(nameof(Velocities))]
+		public void GetVelocity_IsCorrect(Vector2 velocity)
 		{
 			var terrariaPlayer = new Terraria.Player();
 			var player = new Player(terrariaPlayer);
 
-			terrariaPlayer.velocity = Vector2.One;
+			terrariaPlayer.velocity = velocity;
 
-			Assert.AreEqual(Vector2.One, player.Velocity);
+			Assert.AreEqual(velocity, player.Velocity);
 		}
 
-		[Test]
-		public void SetVelocity_Updates()
+		[Test, TestCaseSource(nameof(Velocities))]
+		public void SetVelocity_Updates(Vector2 velocity)
 		{
 			var terrariaPlayer = new Terraria.Player();
 			var player = new Player(terrariaPlayer);
 
-			player.Velocity = Vector2.One;
+			player.Velocity = velocity;
 
-			Assert.AreEqual(Vector2.One, terrariaPlayer.velocity);
+			Assert.AreEqual(velocity, terrariaPlayer.velocity);
 		}
 
-		[Test]
-		public void GetInventory_IsCorrect()
+		[TestCase(1)]
+		public void GetInventory_IsCorrect(int index)
 		{
 			var terrariaPlayer = new Terraria.Player();
 			var player = new Player(terrariaPlayer);
 
-			terrariaPlayer.inventory[1] = new Terraria.Item();
+			terrariaPlayer.inventory[index] = new Terraria.Item();
 
-			Assert.AreSame(terrariaPlayer.inventory[1], player.GetInventory(1).WrappedItem);
+			Assert.AreSame(terrariaPlayer.inventory[index], player.GetInventory(index).WrappedItem);
 		}
 
-		[Test]
-		public void GetInventory_OutOfRange_ThrowsException()
+		[TestCase(-1)]
+		[TestCase(100)]
+		public void GetInventory_ParamOutOfRange_ThrowsException(int index)
 		{
 			var terrariaPlayer = new Terraria.Player();
 			var player = new Player(terrariaPlayer);
 
-			Assert.Throws<IndexOutOfRangeException>(() => player.GetInventory(-1));
+			Assert.Throws<IndexOutOfRangeException>(() => player.GetInventory(index));
 		}
 
-		[Test]
-		public void GetSelectedItem_IsCorrect()
+		[TestCase(1)]
+		public void GetSelectedItem_IsCorrect(int selectedItem)
 		{
 			var terrariaPlayer = new Terraria.Player();
 			var player = new Player(terrariaPlayer);
 
-			terrariaPlayer.selectedItem = 1;
-			terrariaPlayer.inventory[1] = new Terraria.Item();
+			terrariaPlayer.selectedItem = selectedItem;
+			terrariaPlayer.inventory[selectedItem] = new Terraria.Item();
 
-			Assert.AreEqual(terrariaPlayer.inventory[1], player.GetSelectedItem().WrappedItem);
+			Assert.AreEqual(terrariaPlayer.inventory[selectedItem], player.GetSelectedItem().WrappedItem);
 		}
 
-		[Test]
-		public void SetInventory_Updates()
+		[TestCase(1)]
+		public void SetInventory_Updates(int index)
 		{
 			var terrariaPlayer = new Terraria.Player();
 			var player = new Player(terrariaPlayer);
 			var item = new Item(new Terraria.Item());
 
-			player.SetInventory(1, item);
+			player.SetInventory(index, item);
 
-			Assert.AreSame(item.WrappedItem, terrariaPlayer.inventory[1]);
+			Assert.AreSame(item.WrappedItem, terrariaPlayer.inventory[index]);
 		}
 
-		[Test]
-		public void SetInventory_OutOfRange_ThrowsException()
+		[TestCase(-1)]
+		[TestCase(100)]
+		public void SetInventory_OutOfRange_ThrowsException(int index)
 		{
 			var terrariaPlayer = new Terraria.Player();
 			var player = new Player(terrariaPlayer);
 
-			Assert.Throws<IndexOutOfRangeException>(() => player.SetInventory(-1, null));
+			Assert.Throws<IndexOutOfRangeException>(() => player.SetInventory(index, null));
 		}
 	}
 }

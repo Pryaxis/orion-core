@@ -76,6 +76,7 @@
     <Compile Include="InjectionContainerTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ServiceMapTest.cs" />
+    <Compile Include="Services\ItemServiceTests.cs" />
     <Compile Include="Setup.cs" />
   </ItemGroup>
   <ItemGroup>
