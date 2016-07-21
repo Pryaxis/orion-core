@@ -13,33 +13,22 @@ namespace Orion.Tests
 		public TestTileService(Orion orion) : base(orion)
 		{
 		}
-
+		
 		public ITile this[int x, int y]
 		{
-			get
-			{
-				throw new NotImplementedException();
-			}
-
-			set
-			{
-				throw new NotImplementedException();
-			}
+			get { throw new NotImplementedException(); }
+			set { throw new NotImplementedException(); }
 		}
 	}
 
 	[TestFixture]
 	public class InjectionContainerTests
 	{
-		protected ServiceMap serviceMap;
-		protected IKernel container;
-
-
 		[Test]
 		public void TestDefaultBindings()
 		{
-			serviceMap = new ServiceMap();
-			container = new StandardKernel(new Framework.Injection.ServiceInjectionModule(serviceMap));
+			var serviceMap = new ServiceMap();
+			var container = new StandardKernel(new Framework.Injection.ServiceInjectionModule(serviceMap));
 
 			Assert.IsInstanceOf(typeof(TileService), container.Get<ITileService>());
 		}
@@ -47,8 +36,8 @@ namespace Orion.Tests
 		[Test]
 		public void TestServiceOverride()
 		{
-			serviceMap = new ServiceMap();
-			container = new StandardKernel(new Framework.Injection.ServiceInjectionModule(serviceMap));
+			var serviceMap = new ServiceMap();
+			var container = new StandardKernel(new Framework.Injection.ServiceInjectionModule(serviceMap));
 
 			serviceMap.OverrideService<ITileService, TestTileService>(container);
 

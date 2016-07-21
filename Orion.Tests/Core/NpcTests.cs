@@ -7,15 +7,6 @@ namespace Orion.Tests.Core
 	[TestFixture]
 	public class NpcTests
 	{
-		[OneTimeSetUp]
-		public void Setup()
-		{
-			for (int i = 0; i < Terraria.Main.player.Length; ++i)
-			{
-				Terraria.Main.player[i] = new Terraria.Player();
-			}
-		}
-
 		[Test]
 		public void GetBacking_IsCorrect()
 		{
@@ -80,7 +71,7 @@ namespace Orion.Tests.Core
 			Assert.AreEqual(name, npc.Name);
 		}
 
-		private static readonly Vector2[] Positions = { Vector2.One };
+		private static readonly Vector2[] Positions = {Vector2.One};
 
 		[Test, TestCaseSource(nameof(Positions))]
 		public void GetPosition_IsCorrect(Vector2 position)
@@ -115,7 +106,7 @@ namespace Orion.Tests.Core
 			Assert.AreEqual(type, npc.Type);
 		}
 
-		private static readonly Vector2[] Velocities = { Vector2.One };
+		private static readonly Vector2[] Velocities = {Vector2.One};
 
 		[Test, TestCaseSource(nameof(Velocities))]
 		public void GetVelocity_IsCorrect(Vector2 velocity)

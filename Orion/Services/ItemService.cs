@@ -11,6 +11,7 @@ namespace Orion.Services
 	/// <summary>
 	/// Implements the <see cref="IItemService"/> functionality.
 	/// </summary>
+	[Service("Item Service", Author = "Nyx Studios")]
 	public class ItemService : ServiceBase, IItemService
 	{
 		private readonly IItem[] _items;

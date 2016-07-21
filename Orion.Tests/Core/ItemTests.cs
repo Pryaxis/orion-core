@@ -128,7 +128,7 @@ namespace Orion.Tests.Core
 			Assert.AreEqual(type, item.Type);
 		}
 
-		private static readonly Vector2[] Velocities = { Vector2.One };
+		private static readonly Vector2[] Velocities = {Vector2.One};
 
 		[Test, TestCaseSource(nameof(Velocities))]
 		public void GetVelocity_IsCorrect(Vector2 velocity)

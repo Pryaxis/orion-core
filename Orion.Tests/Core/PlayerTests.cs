@@ -127,7 +127,7 @@ namespace Orion.Tests.Core
 			Assert.AreEqual(name, player.Name);
 		}
 
-		private static readonly object[] Positions = { Vector2.One };
+		private static readonly object[] Positions = {Vector2.One};
 
 		[Test, TestCaseSource(nameof(Positions))]
 		public void GetPosition_IsCorrect(Vector2 position)
@@ -151,7 +151,7 @@ namespace Orion.Tests.Core
 			Assert.AreEqual(position, terrariaPlayer.position);
 		}
 
-		private static readonly object[] Velocities = { Vector2.One };
+		private static readonly object[] Velocities = {Vector2.One};
 
 		[Test, TestCaseSource(nameof(Velocities))]
 		public void GetVelocity_IsCorrect(Vector2 velocity)

@@ -41,7 +41,7 @@ namespace Orion.Framework
 			{
 				Author = attr.Author;
 				Name = attr.Name;
-				Version = attr.Version;
+				Version = Version.Parse(attr.Version);
 			}
 		}
 
