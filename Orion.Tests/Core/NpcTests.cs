@@ -7,15 +7,6 @@ namespace Orion.Tests.Core
 	[TestFixture]
 	public class NpcTests
 	{
-		[Test]
-		public void GetBacking_IsCorrect()
-		{
-			var terrariaNpc = new Terraria.NPC();
-			var npc = new Npc(terrariaNpc);
-
-			Assert.AreSame(terrariaNpc, npc.WrappedNpc);
-		}
-
 		[TestCase(100)]
 		public void GetMaxHP_IsCorrect(int maxHP)
 		{
@@ -128,6 +119,28 @@ namespace Orion.Tests.Core
 			npc.Velocity = velocity;
 
 			Assert.AreEqual(velocity, terrariaNpc.velocity);
+		}
+
+		[Test]
+		public void GetWrappedNpc_IsCorrect()
+		{
+			var terrariaNpc = new Terraria.NPC();
+			var npc = new Npc(terrariaNpc);
+
+			Assert.AreSame(terrariaNpc, npc.WrappedNpc);
+		}
+
+		[Test]
+		public void Kill_IsCorrect()
+		{
+			var terrariaNpc = new Terraria.NPC();
+			terrariaNpc.SetDefaults(1);
+			var npc = new Npc(terrariaNpc);
+
+			npc.Kill();
+
+			Assert.IsFalse(terrariaNpc.active, "NPC should have been killed.");
+			Assert.IsTrue(npc.HP <= 0, "NPC should have been killed.");
 		}
 	}
 }

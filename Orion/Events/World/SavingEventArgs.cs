@@ -12,20 +12,13 @@ namespace Orion.Events.World
 		/// Gets or sets a value indicating whether to reset the time.
 		/// </summary>
 		public bool ResetTime { get; set; }
-
-		/// <summary>
-		/// Gets or sets a value indicating whether to save to the "cloud".
-		/// </summary>
-		public bool UseCloud { get; set; }
 		
 		/// <summary>
 		/// Initializes a new instance of the <see cref="SavingEventArgs"/> class.
 		/// </summary>
-		/// <param name="useCloud">A value indicating whether to save to the "cloud".</param>
 		/// <param name="resetTime">A value indicating whether to reset the time.</param>
-		public SavingEventArgs(bool useCloud, bool resetTime)
+		public SavingEventArgs(bool resetTime)
 		{
-			UseCloud = useCloud;
 			ResetTime = resetTime;
 		}
 	}

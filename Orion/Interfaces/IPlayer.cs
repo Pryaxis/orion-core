@@ -39,7 +39,7 @@ namespace Orion.Interfaces
 		string Name { get; }
 
 		/// <summary>
-		/// Gets or sets the player's position.
+		/// Gets or sets the player's position in the world.
 		/// </summary>
 		Vector2 Position { get; set; }
 

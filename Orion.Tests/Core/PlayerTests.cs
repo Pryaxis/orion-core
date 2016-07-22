@@ -8,15 +8,6 @@ namespace Orion.Tests.Core
 	[TestFixture]
 	public class PlayerTests
 	{
-		[Test]
-		public void GetBacking_IsCorrect()
-		{
-			var terrariaPlayer = new Terraria.Player();
-			var player = new Player(terrariaPlayer);
-
-			Assert.AreSame(terrariaPlayer, player.WrappedPlayer);
-		}
-
 		[TestCase(100)]
 		public void GetDefense_IsCorrect(int defense)
 		{
@@ -173,6 +164,15 @@ namespace Orion.Tests.Core
 			player.Velocity = velocity;
 
 			Assert.AreEqual(velocity, terrariaPlayer.velocity);
+		}
+
+		[Test]
+		public void GetWrappedPlayer_IsCorrect()
+		{
+			var terrariaPlayer = new Terraria.Player();
+			var player = new Player(terrariaPlayer);
+
+			Assert.AreSame(terrariaPlayer, player.WrappedPlayer);
 		}
 
 		[TestCase(1)]

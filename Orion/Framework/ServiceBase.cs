@@ -9,11 +9,6 @@ namespace Orion.Framework
 	public abstract class ServiceBase : IService
 	{
 		/// <summary>
-		/// Gets the parent <see cref="Orion"/> instance.
-		/// </summary>
-		protected Orion Orion { get; }
-
-		/// <summary>
 		/// Gets the service author.
 		/// </summary>
 		public string Author { get; } = "Anonymous";
@@ -22,6 +17,11 @@ namespace Orion.Framework
 		/// Gets the service name.
 		/// </summary>
 		public string Name { get; } = "Unnamed";
+
+		/// <summary>
+		/// Gets the parent <see cref="Orion"/> instance.
+		/// </summary>
+		protected Orion Orion { get; }
 
 		/// <summary>
 		/// Gets the service version.
@@ -45,43 +45,28 @@ namespace Orion.Framework
 			}
 		}
 
+		/// <summary>
+		/// Disposes the service, suppressing the GC from running the finalizer, if any.
+		/// </summary>
+		public void Dispose()
+		{
+			Dispose(true);
+			GC.SuppressFinalize(this);
+		}
+
+		/// <summary>
+		/// Disposes the service and its unmanaged resources, if any, optionally disposing its managed resources, if
+		/// any.
+		/// </summary>
+		/// <param name="disposing">
+		/// true to dispose managed and unmanaged resources, false to only dispose unmanaged resources.
+		/// </param>
+		protected virtual void Dispose(bool disposing)
+		{
+		}
+
 		public virtual void Start()
 		{
 		}
-
-		#region IDisposable Support
-		private bool _disposed; // To detect redundant calls
-
-		protected virtual void Dispose(bool disposing)
-		{
-			if (!_disposed)
-			{
-				if (disposing)
-				{
-					// TODO: dispose managed state (managed objects).
-				}
-
-				// TODO: free unmanaged resources (unmanaged objects) and override a finalizer below.
-				// TODO: set large fields to null.
-
-				_disposed = true;
-			}
-		}
-
-		// TODO: override a finalizer only if Dispose(bool disposing) above has code to free unmanaged resources.
-		// ~ServiceBase() {
-		//   // Do not change this code. Put cleanup code in Dispose(bool disposing) above.
-		//   Dispose(false);
-		// }
-
-		// This code added to correctly implement the disposable pattern.
-		public void Dispose()
-		{
-			// Do not change this code. Put cleanup code in Dispose(bool disposing) above.
-			Dispose(true);
-			// TODO: uncomment the following line if the finalizer is overridden above.
-			// GC.SuppressFinalize(this);
-		}
-		#endregion
 	}
 }

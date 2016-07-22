@@ -10,6 +10,10 @@ namespace Orion.Tests
 		[OneTimeSetUp]
 		public void TestSetup()
 		{
+			// Setup for tests that are highly coupled to Terraria
+			Terraria.Main.dedServ = true;
+			new Terraria.Main().Initialize();
+
 			Environment.CurrentDirectory = Path.GetDirectoryName(this.GetType().Assembly.Location);
 		}
 	}

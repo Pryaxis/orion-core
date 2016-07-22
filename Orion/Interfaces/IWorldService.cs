@@ -5,8 +5,6 @@ using Orion.Framework;
 namespace Orion.Interfaces
 {
 	/// <summary>
-	/// Service definition: IWorldService
-	/// 
 	/// Provides access to Terraria's world functions.
 	/// </summary>
 	public interface IWorldService : IService

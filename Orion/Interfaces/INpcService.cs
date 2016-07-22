@@ -7,8 +7,6 @@ using Orion.Framework;
 namespace Orion.Interfaces
 {
 	/// <summary>
-	/// Service definition: INpcService
-	/// 
 	/// Provides a mechanism for managing <see cref="INpc"/>s.
 	/// </summary>
 	public interface INpcService : IService
@@ -24,7 +22,7 @@ namespace Orion.Interfaces
 		event EventHandler<NpcSpawnedEventArgs> NpcSpawned;
 
 		/// <summary>
-		/// Occurs before an <see cref="INpc"/> teleports to a new position.
+		/// Occurs before an <see cref="INpc"/> teleports to a new position in the world.
 		/// </summary>
 		event EventHandler<NpcTeleportingEventArgs> NpcTeleporting;
 
@@ -51,7 +49,7 @@ namespace Orion.Interfaces
 		/// custom HP values.
 		/// </summary>
 		/// <param name="type">The type ID.</param>
-		/// <param name="position">The position.</param>
+		/// <param name="position">The position in the world.</param>
 		/// <param name="hp">The custom HP, or null for the default.</param>
 		/// <param name="maxHP">The custom maximum HP, or null for the default.</param>
 		/// <returns>The resulting spawned <see cref="INpc"/>.</returns>

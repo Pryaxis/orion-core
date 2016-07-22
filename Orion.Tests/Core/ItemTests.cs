@@ -7,15 +7,6 @@ namespace Orion.Tests.Core
 	[TestFixture]
 	public class ItemTests
 	{
-		[Test]
-		public void GetBacking_IsCorrect()
-		{
-			var terrariaItem = new Terraria.Item();
-			var item = new Item(terrariaItem);
-
-			Assert.AreSame(terrariaItem, item.WrappedItem);
-		}
-
 		[TestCase(100)]
 		public void GetDamage_IsCorrect(int damage)
 		{
@@ -150,6 +141,15 @@ namespace Orion.Tests.Core
 			item.Velocity = velocity;
 
 			Assert.AreEqual(velocity, terrariaItem.velocity);
+		}
+
+		[Test]
+		public void GetWrappedItem_IsCorrect()
+		{
+			var terrariaItem = new Terraria.Item();
+			var item = new Item(terrariaItem);
+
+			Assert.AreSame(terrariaItem, item.WrappedItem);
 		}
 	}
 }

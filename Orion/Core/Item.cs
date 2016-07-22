@@ -24,7 +24,7 @@ namespace Orion.Core
 		public string Name => WrappedItem.name;
 
 		/// <summary>
-		/// Gets or sets the item position.
+		/// Gets or sets the item position in the world.
 		/// </summary>
 		public Vector2 Position
 		{

@@ -2,7 +2,7 @@
 using Orion.Framework;
 using System.IO;
 
-namespace Orion.Tests
+namespace Orion.Tests.Framework
 {
 	[TestFixture]
 	public class ServiceMapTest

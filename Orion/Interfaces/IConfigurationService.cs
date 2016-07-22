@@ -3,15 +3,13 @@
 namespace Orion.Interfaces
 {
 	/// <summary>
-	/// Service Definition: IConfigurationService
-	/// 
 	/// Provides a generic interface to interact with persistent configuration for plugins
 	/// and services without having to deal with where the data loads and saves from.
 	/// </summary>
 	public interface IConfigurationService : IService
 	{
 		/// <summary>
-		/// Deserializes a <typeparamref name="TConfig"/> object from the configuration data store.
+		/// Loads a <typeparamref name="TConfig"/> object from the configuration data store.
 		/// </summary>
 		/// <typeparam name="TService">The service type.</typeparam>
 		/// <typeparam name="TConfig">The config type which stores the configuration members.</typeparam>

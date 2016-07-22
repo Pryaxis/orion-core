@@ -58,7 +58,7 @@ namespace Orion.Core
 		public string Name => WrappedPlayer.name;
 
 		/// <summary>
-		/// Gets or sets the player's position.
+		/// Gets or sets the player's position in the world.
 		/// </summary>
 		public Vector2 Position
 		{

@@ -32,7 +32,7 @@ namespace Orion.Core
 		public string Name => WrappedNpc.name;
 
 		/// <summary>
-		/// Gets or sets the NPC's position.
+		/// Gets or sets the NPC's position in the world.
 		/// </summary>
 		public Vector2 Position
 		{

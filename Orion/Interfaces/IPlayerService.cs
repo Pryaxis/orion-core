@@ -6,8 +6,6 @@ using Orion.Framework;
 namespace Orion.Interfaces
 {
 	/// <summary>
-	/// Service definition: IPlayerService
-	///
 	/// Provides a mechanism for dealing with <see cref="IPlayer"/>s.
 	/// </summary>
 	public interface IPlayerService : IService
@@ -28,14 +26,14 @@ namespace Orion.Interfaces
 		event EventHandler<PlayerQuitEventArgs> PlayerQuit;
 
 		/// <summary>
-		/// Finds all <see cref="IPlayer"/>s matching a predicate.
+		/// Finds all <see cref="IPlayer"/>s in the world matching a predicate.
 		/// </summary>
 		/// <param name="predicate">The predicate to match with.</param>
 		/// <returns>An enumerable collection of <see cref="IPlayer"/>s matching the predicate.</returns>
 		IEnumerable<IPlayer> Find(Predicate<IPlayer> predicate);
 
 		/// <summary>
-		/// Gets all <see cref="IPlayer"/>s.
+		/// Gets all <see cref="IPlayer"/>s in the world.
 		/// </summary>
 		/// <returns>An enumerable collection of <see cref="IPlayer"/>s.</returns>
 		IEnumerable<IPlayer> GetAll();

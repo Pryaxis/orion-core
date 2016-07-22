@@ -23,7 +23,7 @@ namespace Orion.Interfaces
 		string Name { get; }
 
 		/// <summary>
-		/// Gets or sets the item position.
+		/// Gets or sets the item position in the world.
 		/// </summary>
 		Vector2 Position { get; set; }
 
