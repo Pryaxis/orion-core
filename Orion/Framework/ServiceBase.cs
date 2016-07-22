@@ -26,7 +26,7 @@ namespace Orion.Framework
 		/// <summary>
 		/// Gets the service version.
 		/// </summary>
-		public Version Version { get; } = new Version(1, 0, 0);
+		public virtual Version Version { get; } = new Version(1, 0, 0);
 
 		/// <summary>
 		/// Initializes a new instance of the <see cref="ServiceBase"/> class.
@@ -41,7 +41,6 @@ namespace Orion.Framework
 			{
 				Author = attr.Author;
 				Name = attr.Name;
-				Version = Version.Parse(attr.Version);
 			}
 		}
 

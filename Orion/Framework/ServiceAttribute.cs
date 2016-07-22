@@ -19,11 +19,6 @@ namespace Orion.Framework
 		public string Author { get; set; } = "Anonymous";
 
 		/// <summary>
-		/// Gets or sets the service version. Defaults to "1.0.0".
-		/// </summary>
-		public string Version { get; set; } = "1.0.0";
-
-		/// <summary>
 		/// Initializes a new instance of the <see cref="ServiceAttribute"/> class.
 		/// </summary>
 		/// <param name="name">The service name.</param>

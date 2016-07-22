@@ -12,6 +12,8 @@ namespace Orion.Services
 	[Service("World Service", Author = "Nyx Studios")]
 	public class WorldService : ServiceBase, IWorldService
 	{
+		private bool _disposed;
+
 		/// <summary>
 		/// Occurs before a meteor drops.
 		/// </summary>
@@ -73,6 +75,27 @@ namespace Orion.Services
 		public void PlaceWall(int x, int y, byte type)
 		{
 			Terraria.WorldGen.PlaceWall(x, y, type);
+		}
+
+		/// <summary>
+		/// Disposes the service and its unmanaged resources, if any, optionally disposing its managed resources, if
+		/// any.
+		/// </summary>
+		/// <param name="disposing">
+		/// true to dispose managed and unmanaged resources, false to only dispose unmanaged resources.
+		/// </param>
+		protected override void Dispose(bool disposing)
+		{
+			if (!_disposed)
+			{
+				if (disposing)
+				{
+					Hooks.World.DropMeteor = null;
+					Hooks.World.IO.PreSaveWorld = null;
+				}
+				_disposed = true;
+			}
+			base.Dispose(disposing);
 		}
 
 		private HookResult InvokeMeteorDropping(ref int x, ref int y)
