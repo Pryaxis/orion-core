@@ -73,11 +73,14 @@
     <Compile Include="Framework\ServiceAttribute.cs" />
     <Compile Include="Framework\ServiceBase.cs" />
     <Compile Include="Framework\ServiceMap.cs" />
+    <Compile Include="Interfaces\Authorization\IGroup.cs" />
+    <Compile Include="Interfaces\Authorization\IUserAccount.cs" />
     <Compile Include="Interfaces\IItem.cs" />
     <Compile Include="Core\Item.cs" />
     <Compile Include="Core\Npc.cs" />
     <Compile Include="Core\Player.cs" />
     <Compile Include="Interfaces\INpc.cs" />
+    <Compile Include="Interfaces\Authorization\IPermission.cs" />
     <Compile Include="Interfaces\IPlayer.cs" />
     <Compile Include="Orion.cs" />
     <Compile Include="Orion.DataFields.cs" />

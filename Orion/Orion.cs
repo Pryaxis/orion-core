@@ -17,6 +17,9 @@ namespace Orion
 		internal IKernel injectionContainer;
 		internal ServiceMap serviceMap;
 
+        /// <summary>
+        /// Returns a reference to Orion's dependency injection container.
+        /// </summary>
 		public IKernel InjectionContainer { get { return injectionContainer; } }
 
 		public Orion()
