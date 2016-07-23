@@ -39,7 +39,6 @@ namespace Orion.Interfaces.Authorization
         /// <param name="inherit"></param>
         /// <returns></returns>
         bool HasPermission(IPermission permission, bool inherit = true);
-
-        bool HasPermission(string permissionPath, bool inherit = true);
+        
     }
 }
