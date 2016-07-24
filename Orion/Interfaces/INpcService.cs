@@ -22,9 +22,9 @@ namespace Orion.Interfaces
 		event EventHandler<NpcSpawnedEventArgs> NpcSpawned;
 
 		/// <summary>
-		/// Occurs before an <see cref="INpc"/> teleports to a new position in the world.
+		/// Occurs before an <see cref="INpc"/> spawns in the world.
 		/// </summary>
-		event EventHandler<NpcTeleportingEventArgs> NpcTeleporting;
+		event EventHandler<NpcSpawningEventArgs> NpcSpawning;
 
 		/// <summary>
 		/// Occurs after an <see cref="INpc"/> transforms from one type to another.

@@ -7,7 +7,7 @@ using Terraria;
 namespace Orion.Services
 {
 	/// <summary>
-	/// Implements the <see cref="TileService"/> functionality. Mimics vanilla behaviour by storing tiles in a 2D tile
+	/// Implements the <see cref="ITileService"/> functionality. Mimics vanilla behaviour by storing tiles in a 2D tile
 	/// array.
 	/// </summary>
 	[Service("Tile Service", Author = "Nyx Studios")]
