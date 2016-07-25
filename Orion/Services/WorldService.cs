@@ -141,12 +141,12 @@ namespace Orion.Services
 		/// The type ID of the tile that is updating. This will update the normal server's value.
 		/// </param>
 		/// <returns>A value indicating whether to continue or cancel normal server code.</returns>
-		private HookResult InvokeHardmodeTileUpdating(int x, int y, ref ushort type)
+		private HardmodeTileUpdateResult InvokeHardmodeTileUpdating(int x, int y, ref ushort type)
 		{
 			var args = new HardmodeTileUpdatingEventArgs(x, y, type);
 			HardmodeTileUpdating?.Invoke(this, args);
 			type = args.Type;
-			return args.Handled ? HookResult.Cancel : HookResult.Continue;
+			return args.Handled ? HardmodeTileUpdateResult.ContinueWithoutUpdate : HardmodeTileUpdateResult.Continue;
 		}
 
 		/// <summary>
