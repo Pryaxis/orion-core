@@ -15,6 +15,11 @@ namespace Orion.Interfaces
 		event EventHandler<MeteorDroppingEventArgs> MeteorDropping;
 
 		/// <summary>
+		/// Occurs before a tile is updated in hardmode.
+		/// </summary>
+		event EventHandler<HardmodeTileUpdatingEventArgs> HardmodeTileUpdating;
+
+		/// <summary>
 		/// Occurs after the world saves.
 		/// </summary>
 		event EventHandler<WorldSavedEventArgs> WorldSaved;

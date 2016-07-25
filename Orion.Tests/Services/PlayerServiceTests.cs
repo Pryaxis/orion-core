@@ -18,13 +18,13 @@ namespace Orion.Tests.Services
 		[TestCase(100)]
 		public void Find_Null_ReturnsAll(int populate)
 		{
-			for (int i = 0; i < Terraria.Main.player.Length; ++i)
-			{
-				Terraria.Main.player[i] = new Terraria.Player {active = i < populate, name = "A"};
-			}
 			using (var orion = new Orion())
 			using (var playerService = new PlayerService(orion))
 			{
+				for (int i = 0; i < Terraria.Main.player.Length; ++i)
+				{
+					Terraria.Main.player[i] = new Terraria.Player {active = i < populate, name = "A"};
+				}
 				List<IPlayer> players = playerService.Find().ToList();
 
 				Assert.AreEqual(populate, players.Count);
@@ -38,15 +38,15 @@ namespace Orion.Tests.Services
 		[Test, TestCaseSource(nameof(Predicates))]
 		public void Find_IsCorrect(Predicate<IPlayer> predicate)
 		{
-			for (int i = 0; i < Terraria.Main.player.Length; ++i)
-			{
-				Terraria.Main.player[i] = new Terraria.Player {active = true, position = new Vector2(i, 0)};
-			}
 			using (var orion = new Orion())
 			using (var playerService = new PlayerService(orion))
 			{
-				IEnumerable<IPlayer> players = playerService.Find(predicate);
-				IEnumerable<IPlayer> otherPlayers = playerService.Find(p => !predicate(p));
+				for (int i = 0; i < Terraria.Main.player.Length; ++i)
+				{
+					Terraria.Main.player[i] = new Terraria.Player {active = true, position = new Vector2(i, 0)};
+				}
+				List<IPlayer> players = playerService.Find(predicate).ToList();
+				IEnumerable<IPlayer> otherPlayers = playerService.Find(p => !players.Contains(p));
 
 				foreach (IPlayer player in players)
 				{

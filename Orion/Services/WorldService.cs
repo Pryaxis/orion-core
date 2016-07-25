@@ -24,6 +24,11 @@ namespace Orion.Services
 		public event EventHandler<MeteorDroppingEventArgs> MeteorDropping;
 
 		/// <summary>
+		/// Occurs when a tile is updated in hardmode.
+		/// </summary>
+		public event EventHandler<HardmodeTileUpdatingEventArgs> HardmodeTileUpdating;
+
+		/// <summary>
 		/// Occurs before the world saves.
 		/// </summary>
 		public event EventHandler<WorldSavedEventArgs> WorldSaved;
@@ -39,11 +44,11 @@ namespace Orion.Services
 		/// <param name="orion">The parent <see cref="Orion"/> instance.</param>
 		public WorldService(Orion orion) : base(orion)
 		{
-			// TODO: add more events
-			// TODO: add tests
+			// TODO: add christmas, halloween, initialize, update
 			Hooks.World.DropMeteor = InvokeMeteorDropping;
-			Hooks.World.IO.PreSaveWorld = InvokeSaving;
-			Hooks.World.IO.PostSaveWorld = InvokeSaved;
+			Hooks.World.HardmodeTileUpdate = InvokeHardmodeTileUpdating;
+			Hooks.World.IO.PreSaveWorld = InvokeWorldSaving;
+			Hooks.World.IO.PostSaveWorld = InvokeWorldSaved;
 		}
 
 		/// <summary>
@@ -103,7 +108,9 @@ namespace Orion.Services
 				if (disposing)
 				{
 					Hooks.World.DropMeteor = null;
+					Hooks.World.HardmodeTileUpdate = null;
 					Hooks.World.IO.PreSaveWorld = null;
+					Hooks.World.IO.PostSaveWorld = null;
 				}
 				_disposed = true;
 			}
@@ -115,7 +122,7 @@ namespace Orion.Services
 		/// </summary>
 		/// <param name="x">The x position in the world. This will update the normal server's value.</param>
 		/// <param name="y">The y position in the world. This will update the normal server's value.</param>
-		/// <returns></returns>
+		/// <returns>A value indicating whether to continue or cancel normal server code.</returns>
 		private HookResult InvokeMeteorDropping(ref int x, ref int y)
 		{
 			var args = new MeteorDroppingEventArgs(x, y);
@@ -126,11 +133,28 @@ namespace Orion.Services
 		}
 
 		/// <summary>
+		/// Invokes the <see cref="HardmodeTileUpdating"/> event.
+		/// </summary>
+		/// <param name="x">The x position of the tile that is updating.</param>
+		/// <param name="y">The y position of the tile that is updating.</param>
+		/// <param name="type">
+		/// The type ID of the tile that is updating. This will update the normal server's value.
+		/// </param>
+		/// <returns>A value indicating whether to continue or cancel normal server code.</returns>
+		private HookResult InvokeHardmodeTileUpdating(int x, int y, ref ushort type)
+		{
+			var args = new HardmodeTileUpdatingEventArgs(x, y, type);
+			HardmodeTileUpdating?.Invoke(this, args);
+			type = args.Type;
+			return args.Handled ? HookResult.Cancel : HookResult.Continue;
+		}
+
+		/// <summary>
 		/// Invokes the <see cref="WorldSaved"/> event.
 		/// </summary>
 		/// <param name="useCloud">A value indicating whether to use the "cloud". Unused.</param>
 		/// <param name="resetTime">A value indicating whether to reset the time. Unused.</param>
-		private void InvokeSaved(bool useCloud, bool resetTime)
+		private void InvokeWorldSaved(bool useCloud, bool resetTime)
 		{
 			var args = new WorldSavedEventArgs();
 			WorldSaved?.Invoke(this, args);
@@ -143,7 +167,8 @@ namespace Orion.Services
 		/// <param name="resetTime">
 		/// A value indicating whether to reset the time. This will update the normal server's value.
 		/// </param>
-		private HookResult InvokeSaving(ref bool useCloud, ref bool resetTime)
+		/// <returns>A value indicating whether to continue or cancel normal server code.</returns>
+		private HookResult InvokeWorldSaving(ref bool useCloud, ref bool resetTime)
 		{
 			var args = new WorldSavingEventArgs(resetTime);
 			WorldSaving?.Invoke(this, args);

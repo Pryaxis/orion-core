@@ -32,8 +32,8 @@ namespace Orion.Events.Npc
 				throw new ArgumentNullException(nameof(npc));
 			}
 
-			Index = index;
 			Npc = npc;
+			Index = index;
 		}
 	}
 }

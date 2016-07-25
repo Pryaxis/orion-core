@@ -22,7 +22,7 @@ namespace Orion.Services
 		private bool _disposed;
 
 		/// <summary>
-		/// The backing array of <see cref="IPlayer"/>s. Lazily updated with items from the Terraria item array.
+		/// The backing array of <see cref="IPlayer"/>s. Lazily updated with players from the Terraria player array.
 		/// </summary>
 		private readonly IPlayer[] _players;
 
@@ -85,7 +85,7 @@ namespace Orion.Services
 			{
 				if (disposing)
 				{
-					Hooks.Net.RemoteClient.PostReset = null;
+					Hooks.Net.RemoteClient.PreReset = null;
 					Hooks.Player.PreGreet = null;
 				}
 				_disposed = true;
@@ -124,7 +124,7 @@ namespace Orion.Services
 		/// <returns>A value indicating to continue normal server code.</returns>
 		private HookResult InvokePlayerQuit(Terraria.RemoteClient remoteClient)
 		{
-			if (remoteClient.Socket != null)
+			if (remoteClient.Socket == null)
 			{
 				return HookResult.Continue;
 			}

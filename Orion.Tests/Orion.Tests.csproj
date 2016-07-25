@@ -87,6 +87,7 @@
     <Compile Include="Framework\ServiceMapTest.cs" />
     <Compile Include="Services\ItemServiceTests.cs" />
     <Compile Include="Services\PlayerServiceTests.cs" />
+    <Compile Include="Services\WorldServiceTests.cs" />
     <Compile Include="Setup.cs" />
   </ItemGroup>
   <ItemGroup>

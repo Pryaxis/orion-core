@@ -145,8 +145,7 @@ namespace Orion.Tests.Core
 			var npc = new Npc(terrariaNpc);
 
 			npc.Kill();
-
-			Assert.IsFalse(terrariaNpc.active, "NPC should have been killed.");
+			
 			Assert.IsTrue(npc.HP <= 0, "NPC should have been killed.");
 		}
 	}

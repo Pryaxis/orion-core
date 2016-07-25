@@ -17,12 +17,13 @@ namespace Orion.Tests.Services
 			using (var orion = new Orion())
 			using (var itemService = new ItemService(orion))
 			{
+				var terrariaItem = new Terraria.Item();
 				bool eventOccurred = false;
 				itemService.ItemSetDefaults += (s, a) =>
 				{
 					eventOccurred = true;
+					Assert.AreEqual(terrariaItem, a.Item.WrappedItem);
 				};
-				var terrariaItem = new Terraria.Item();
 
 				terrariaItem.SetDefaults(type);
 
@@ -37,12 +38,9 @@ namespace Orion.Tests.Services
 			using (var orion = new Orion())
 			using (var itemService = new ItemService(orion))
 			{
-				bool eventOccurred = false;
-				itemService.ItemSetDefaults += (s, a) =>
-				{
-					eventOccurred = true;
-				};
 				var terrariaItem = new Terraria.Item();
+				bool eventOccurred = false;
+				itemService.ItemSetDefaults += (s, a) => eventOccurred = true;
 				
 				terrariaItem.netDefaults(type);
 
@@ -56,12 +54,9 @@ namespace Orion.Tests.Services
 			using (var orion = new Orion())
 			using (var itemService = new ItemService(orion))
 			{
-				bool eventOccurred = false;
-				itemService.ItemSetDefaults += (s, a) =>
-				{
-					eventOccurred = true;
-				};
 				var terrariaItem = new Terraria.Item();
+				bool eventOccurred = false;
+				itemService.ItemSetDefaults += (s, a) => eventOccurred = true;
 
 				terrariaItem.SetDefaults(type);
 
@@ -75,13 +70,14 @@ namespace Orion.Tests.Services
 			using (var orion = new Orion())
 			using (var itemService = new ItemService(orion))
 			{
+				var terrariaItem = new Terraria.Item();
 				bool eventOccurred = false;
 				itemService.ItemSettingDefaults += (s, a) =>
 				{
 					eventOccurred = true;
+					Assert.AreEqual(terrariaItem, a.Item.WrappedItem);
 					Assert.AreEqual(type, a.Type);
 				};
-				var terrariaItem = new Terraria.Item();
 
 				terrariaItem.SetDefaults(type);
 
@@ -95,18 +91,27 @@ namespace Orion.Tests.Services
 			using (var orion = new Orion())
 			using (var itemService = new ItemService(orion))
 			{
-				bool eventOccurred = false;
-				itemService.ItemSettingDefaults += (s, a) =>
-				{
-					eventOccurred = true;
-					a.Type = newType;
-				};
 				var terrariaItem = new Terraria.Item();
+				itemService.ItemSettingDefaults += (s, a) => a.Type = newType;
 
-				terrariaItem.netDefaults(type);
-
-				Assert.IsTrue(eventOccurred, "SettingDefaults event should have occurred.");
+				terrariaItem.SetDefaults(type);
+				
 				Assert.AreEqual(newType, terrariaItem.type);
+			}
+		}
+
+		[TestCase(1)]
+		public void ItemSettingDefaults_Handled_StopsSetDefaults(int type)
+		{
+			using (var orion = new Orion())
+			using (var itemService = new ItemService(orion))
+			{
+				var terrariaItem = new Terraria.Item();
+				itemService.ItemSettingDefaults += (s, a) => a.Handled = true;
+
+				terrariaItem.SetDefaults(type);
+
+				Assert.AreEqual(0, terrariaItem.type);
 			}
 		}
 
@@ -117,12 +122,9 @@ namespace Orion.Tests.Services
 			using (var orion = new Orion())
 			using (var itemService = new ItemService(orion))
 			{
-				bool eventOccurred = false;
-				itemService.ItemSetDefaults += (s, a) =>
-				{
-					eventOccurred = true;
-				};
 				var terrariaItem = new Terraria.Item();
+				bool eventOccurred = false;
+				itemService.ItemSettingDefaults += (s, a) => eventOccurred = true;
 
 				terrariaItem.netDefaults(type);
 
@@ -136,12 +138,9 @@ namespace Orion.Tests.Services
 			using (var orion = new Orion())
 			using (var itemService = new ItemService(orion))
 			{
-				bool eventOccurred = false;
-				itemService.ItemSettingDefaults += (s, a) =>
-				{
-					eventOccurred = true;
-				};
 				var terrariaItem = new Terraria.Item();
+				bool eventOccurred = false;
+				itemService.ItemSettingDefaults += (s, a) => eventOccurred = true;
 
 				terrariaItem.SetDefaults(type);
 
@@ -183,13 +182,13 @@ namespace Orion.Tests.Services
 		[TestCase(100)]
 		public void Find_Null_ReturnsAll(int populate)
 		{
-			for (int i = 0; i < Terraria.Main.item.Length; ++i)
-			{
-				Terraria.Main.item[i] = new Terraria.Item { active = i < populate, netID = 1 };
-			}
 			using (var orion = new Orion())
 			using (var itemService = new ItemService(orion))
 			{
+				for (int i = 0; i < Terraria.Main.item.Length; ++i)
+				{
+					Terraria.Main.item[i] = new Terraria.Item {active = i < populate, netID = 1};
+				}
 				List<IItem> items = itemService.Find().ToList();
 
 				Assert.AreEqual(populate, items.Count);
@@ -205,15 +204,15 @@ namespace Orion.Tests.Services
 		[Test, TestCaseSource(nameof(Predicates))]
 		public void Find_IsCorrect(Predicate<IItem> predicate)
 		{
-			for (int i = 0; i < Terraria.Main.item.Length; ++i)
-			{
-				Terraria.Main.item[i] = new Terraria.Item { active = true, netID = i };
-			}
 			using (var orion = new Orion())
 			using (var itemService = new ItemService(orion))
 			{
-				IEnumerable<IItem> items = itemService.Find(predicate).ToList();
-				IEnumerable<IItem> otherItems = itemService.Find(i => !predicate(i)).ToList();
+				for (int i = 0; i < Terraria.Main.item.Length; ++i)
+				{
+					Terraria.Main.item[i] = new Terraria.Item {active = true, netID = i};
+				}
+				List<IItem> items = itemService.Find(predicate).ToList();
+				IEnumerable<IItem> otherItems = itemService.Find(i => !items.Contains(i));
 
 				foreach (IItem item in items)
 				{

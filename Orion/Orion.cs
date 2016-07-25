@@ -9,21 +9,12 @@ namespace Orion
 {
 	public partial class Orion : IDisposable
 	{
-		/// <summary>
-		/// Contains a reference to the injection container, which contains references
-		/// to plugins and services.
-		/// </summary>
-		internal IKernel injectionContainer;
-
 		internal ServiceMap serviceMap;
 
 		/// <summary>
-		/// Returns a reference to Orion's dependency injection container.
+		/// Gets the dependency injection container, which contains references to plugins and services.
 		/// </summary>
-		public IKernel InjectionContainer
-		{
-			get { return injectionContainer; }
-		}
+		public IKernel InjectionContainer { get; }
 
 		public Orion()
 		{
@@ -32,11 +23,11 @@ namespace Orion
 
 			this.serviceMap = new ServiceMap();
 
-			this.injectionContainer = new StandardKernel(
+			InjectionContainer = new StandardKernel(
 				new Framework.Injection.ServiceInjectionModule(serviceMap)
 				);
 
-			this.injectionContainer.Bind<Orion>().ToConstant(this);
+			InjectionContainer.Bind<Orion>().ToConstant(this);
 		}
 
 		/// <summary>
@@ -68,7 +59,7 @@ namespace Orion
 
 		public void StartServer()
 		{
-			foreach (IService service in injectionContainer.GetAll<IService>())
+			foreach (IService service in InjectionContainer.GetAll<IService>())
 			{
 				Console.WriteLine($"  * Loading {service.Name} by {service.Author}");
 			}
@@ -86,12 +77,8 @@ namespace Orion
 			{
 				if (disposing)
 				{
-					injectionContainer.Dispose();
+					InjectionContainer.Dispose();
 				}
-
-				// TODO: free unmanaged resources (unmanaged objects) and override a finalizer below.
-				// TODO: set large fields to null.
-
 				disposedValue = true;
 			}
 		}
