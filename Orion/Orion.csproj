@@ -59,7 +59,9 @@
   <ItemGroup>
     <Compile Include="Events\Item\ItemSetDefaultsEventArgs.cs" />
     <Compile Include="Events\Item\ItemSettingDefaultsEventArgs.cs" />
+    <Compile Include="Events\Npc\NpcDroppedLootEventArgs.cs" />
     <Compile Include="Events\Npc\NpcKilledEventArgs.cs" />
+    <Compile Include="Events\Npc\NpcDroppingLootEventArgs.cs" />
     <Compile Include="Events\Npc\NpcSpawnedEventArgs.cs" />
     <Compile Include="Events\Npc\NpcSpawningEventArgs.cs" />
     <Compile Include="Events\Npc\NpcTransformedEventArgs.cs" />
