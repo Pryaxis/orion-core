@@ -67,8 +67,8 @@
     <Compile Include="Events\Player\PlayerJoiningEventArgs.cs" />
     <Compile Include="Events\Player\PlayerQuitEventArgs.cs" />
     <Compile Include="Events\World\MeteorDroppingEventArgs.cs" />
-    <Compile Include="Events\World\SavedEventArgs.cs" />
-    <Compile Include="Events\World\SavingEventArgs.cs" />
+    <Compile Include="Events\World\WorldSavedEventArgs.cs" />
+    <Compile Include="Events\World\WorldSavingEventArgs.cs" />
     <Compile Include="Framework\Injection\ServiceInjectionModule.cs" />
     <Compile Include="Framework\IService.cs" />
     <Compile Include="Framework\ServiceAttribute.cs" />

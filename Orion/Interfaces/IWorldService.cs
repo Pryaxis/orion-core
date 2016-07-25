@@ -17,7 +17,12 @@ namespace Orion.Interfaces
 		/// <summary>
 		/// Occurs before the world saves.
 		/// </summary>
-		event EventHandler<SavingEventArgs> Saving;
+		event EventHandler<WorldSavingEventArgs> WorldSaving;
+
+		/// <summary>
+		/// Occurs after the world saves.
+		/// </summary>
+		event EventHandler<WorldSavedEventArgs> WorldSaved;
 
 		/// <summary>
 		/// Breaks the tile at a position in the world.

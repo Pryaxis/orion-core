@@ -26,12 +26,12 @@ namespace Orion.Services
 		/// <summary>
 		/// Occurs before the world saves.
 		/// </summary>
-		public event EventHandler<SavedEventArgs> Saved;
+		public event EventHandler<WorldSavedEventArgs> WorldSaved;
 
 		/// <summary>
 		/// Occurs before the world saves.
 		/// </summary>
-		public event EventHandler<SavingEventArgs> Saving;
+		public event EventHandler<WorldSavingEventArgs> WorldSaving;
 
 		/// <summary>
 		/// Initializes a new instance of the <see cref="WorldService"/> class.
@@ -126,18 +126,18 @@ namespace Orion.Services
 		}
 
 		/// <summary>
-		/// Invokes the <see cref="Saved"/> event.
+		/// Invokes the <see cref="WorldSaved"/> event.
 		/// </summary>
 		/// <param name="useCloud">A value indicating whether to use the "cloud". Unused.</param>
 		/// <param name="resetTime">A value indicating whether to reset the time. Unused.</param>
 		private void InvokeSaved(bool useCloud, bool resetTime)
 		{
-			var args = new SavedEventArgs();
-			Saved?.Invoke(this, args);
+			var args = new WorldSavedEventArgs();
+			WorldSaved?.Invoke(this, args);
 		}
 
 		/// <summary>
-		/// Invokes the <see cref="Saving"/> event.
+		/// Invokes the <see cref="WorldSaving"/> event.
 		/// </summary>
 		/// <param name="useCloud">A value indicating whether to use the "cloud". Unused.</param>
 		/// <param name="resetTime">
@@ -145,8 +145,8 @@ namespace Orion.Services
 		/// </param>
 		private HookResult InvokeSaving(ref bool useCloud, ref bool resetTime)
 		{
-			var args = new SavingEventArgs(resetTime);
-			Saving?.Invoke(this, args);
+			var args = new WorldSavingEventArgs(resetTime);
+			WorldSaving?.Invoke(this, args);
 			resetTime = args.ResetTime;
 			return args.Handled ? HookResult.Cancel : HookResult.Continue;
 		}

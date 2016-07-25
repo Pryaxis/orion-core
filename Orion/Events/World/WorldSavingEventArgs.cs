@@ -4,9 +4,9 @@ using Orion.Interfaces;
 namespace Orion.Events.World
 {
 	/// <summary>
-	/// Provides data for the <see cref="IWorldService.Saving"/> event.
+	/// Provides data for the <see cref="IWorldService.WorldSaving"/> event.
 	/// </summary>
-	public class SavingEventArgs : HandledEventArgs
+	public class WorldSavingEventArgs : HandledEventArgs
 	{
 		/// <summary>
 		/// Gets or sets a value indicating whether to reset the time.
@@ -14,10 +14,10 @@ namespace Orion.Events.World
 		public bool ResetTime { get; set; }
 		
 		/// <summary>
-		/// Initializes a new instance of the <see cref="SavingEventArgs"/> class.
+		/// Initializes a new instance of the <see cref="WorldSavingEventArgs"/> class.
 		/// </summary>
 		/// <param name="resetTime">A value indicating whether to reset the time.</param>
-		public SavingEventArgs(bool resetTime)
+		public WorldSavingEventArgs(bool resetTime)
 		{
 			ResetTime = resetTime;
 		}
