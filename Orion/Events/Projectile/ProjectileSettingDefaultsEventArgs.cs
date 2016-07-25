@@ -1,4 +1,5 @@
-﻿using Orion.Interfaces;
+﻿using System;
+using Orion.Interfaces;
 using System.ComponentModel;
 
 namespace Orion.Events.Projectile
@@ -23,8 +24,14 @@ namespace Orion.Events.Projectile
 		/// </summary>
 		/// <param name="projectile">The <see cref="IProjectile"/> that's having its defaults set.</param>
 		/// <param name="type">The type ID that the <see cref="IProjectile"/> is having its defaults set to.</param>
+		/// <exception cref="ArgumentNullException"><paramref name="projectile"/> was null.</exception>
 		public ProjectileSettingDefaultsEventArgs(IProjectile projectile, int type)
 		{
+			if (projectile == null)
+			{
+				throw new ArgumentNullException(nameof(projectile));
+			}
+
 			Projectile = projectile;
 			Type = type;
 		}

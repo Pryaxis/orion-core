@@ -48,7 +48,7 @@ namespace Orion.Services
 			var projectiles = new List<IProjectile>();
 			for (int i = 0; i < _projectiles.Length; i++)
 			{
-				if (_projectiles[i].WrappedProjectile != Terraria.Main.projectile[i])
+				if (_projectiles[i]?.WrappedProjectile != Terraria.Main.projectile[i])
 				{
 					_projectiles[i] = new Projectile(Terraria.Main.projectile[i]);
 				}

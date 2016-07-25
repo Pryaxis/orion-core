@@ -55,9 +55,15 @@ namespace Orion.Core
 		/// Initializes a new instance of the <see cref="Projectile"/> class wrapping the specified Terraria projectile.
 		/// </summary>
 		/// <param name="projectile">The Terraria projectile to wrap.</param>
-		public Projectile(Terraria.Projectile projectile)
+		/// <exception cref="ArgumentNullException"><paramref name="terrariaProjectile"/> was null.</exception>
+		public Projectile(Terraria.Projectile terrariaProjectile)
 		{
-			WrappedProjectile = projectile;
+			if (terrariaProjectile == null)
+			{
+				throw new ArgumentNullException(nameof(terrariaProjectile));
+			}
+
+			WrappedProjectile = terrariaProjectile;
 		}
 	}
 }

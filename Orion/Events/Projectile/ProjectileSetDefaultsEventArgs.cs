@@ -23,8 +23,14 @@ namespace Orion.Events.Projectile
 		/// </summary>
 		/// <param name="projectile">The <see cref="IProjectile"/> that had its defaults set.</param>
 		/// <param name="type">The type ID that the <see cref="IProjectile"/> had its defaults set to. </param>
+		/// <exception cref="ArgumentNullException"><paramref name="projectile"/> was null.</exception>
 		public ProjectileSetDefaultsEventArgs(IProjectile projectile, int type)
 		{
+			if (projectile == null)
+			{
+				throw new ArgumentNullException(nameof(projectile));
+			}
+
 			Projectile = projectile;
 			Type = type;
 		}
