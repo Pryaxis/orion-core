@@ -29,8 +29,8 @@ namespace Orion.Interfaces
 		/// <param name="prefix">The prefix, or 0 for none.</param>
 		/// <returns>The resulting instantiated <see cref="IItem"/>.</returns>
 		/// <exception cref="ArgumentOutOfRangeException">
-		/// <paramref name="type"/> is out of range, <paramref name="stack"/> is negative, or <paramref name="prefix"/>
-		/// is too large.
+		/// <paramref name="type"/> was out of range, <paramref name="stack"/> was negative, or
+		/// <paramref name="prefix"/> was too large.
 		/// </exception>
 		IItem Create(int type, int stack = 1, byte prefix = 0);
 
@@ -51,8 +51,8 @@ namespace Orion.Interfaces
 		/// <param name="prefix">The prefix.</param>
 		/// <returns>The resulting spawned <see cref="IItem"/>.</returns>
 		/// <exception cref="ArgumentOutOfRangeException">
-		/// <paramref name="type"/> is out of range, <paramref name="stack"/> is negative, or <paramref name="prefix"/>
-		/// is too large.
+		/// <paramref name="type"/> was out of range, <paramref name="stack"/> was negative, or
+		/// <paramref name="prefix"/> was too large.
 		/// </exception>
 		IItem Spawn(int type, Vector2 position, int stack = 1, byte prefix = 0);
 	}

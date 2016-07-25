@@ -12,6 +12,16 @@ namespace Orion.Interfaces
 	public interface INpcService : IService
 	{
 		/// <summary>
+		/// Occurs after an <see cref="INpc"/> drops loot.
+		/// </summary>
+		event EventHandler<NpcDroppedLootEventArgs> NpcDroppedLoot;
+
+		/// <summary>
+		/// Occurs before an <see cref="INpc"/> drops loot.
+		/// </summary>
+		event EventHandler<NpcDroppingLootEventArgs> NpcDroppingLoot;
+
+		/// <summary>
 		/// Occurs after an <see cref="INpc"/> has been killed.
 		/// </summary>
 		event EventHandler<NpcKilledEventArgs> NpcKilled;
@@ -48,7 +58,7 @@ namespace Orion.Interfaces
 		/// <param name="maxHP">The custom maximum HP, or null for the default.</param>
 		/// <returns>The resulting spawned <see cref="INpc"/>.</returns>
 		/// <exception cref="ArgumentOutOfRangeException">
-		/// <paramref name="type"/> is out of range, or <paramref name="hp"/> or <paramref name="maxHP"/> are
+		/// <paramref name="type"/> was out of range, or <paramref name="hp"/> or <paramref name="maxHP"/> were
 		/// negative.
 		/// </exception>
 		INpc Spawn(int type, Vector2 position, int? hp = null, int? maxHP = null);
