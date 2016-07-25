@@ -13,7 +13,10 @@ namespace Orion.Services
 	[Service("Tile Service", Author = "Nyx Studios")]
 	public class TileService : ServiceBase, ITileService
 	{
-		protected ITile[,] tileBuffer;
+		/// <summary>
+		/// The 2D tile array.
+		/// </summary>
+		private ITile[,] _tiles;
 
 		/// <summary>
 		/// Initializes a new instance of the <see cref="TileService"/> class.
@@ -24,21 +27,24 @@ namespace Orion.Services
 			Hooks.Tile.CreateCollection = () => this;
 		}
 
+		/// <summary>
+		/// Gets or sets the <see cref="ITile"/> at the specified position in the world.
+		/// </summary>
+		/// <param name="x">The x position in the world.</param>
+		/// <param name="y">The y position in the world.</param>
+		/// <returns>The <see cref="ITile"/> at the specified position in the world.</returns>
 		public ITile this[int x, int y]
 		{
 			get
 			{
-				if (tileBuffer == null)
+				if (_tiles == null)
 				{
-					tileBuffer = new ITile[Main.maxTilesX + 1, Main.maxTilesY + 1];
+					_tiles = new ITile[Main.maxTilesX + 1, Main.maxTilesY + 1];
 				}
 
-				return tileBuffer[x, y];
+				return _tiles[x, y];
 			}
-			set
-			{
-				tileBuffer[x, y] = value;
-			}
+			set { _tiles[x, y] = value; }
 		}
 	}
 }

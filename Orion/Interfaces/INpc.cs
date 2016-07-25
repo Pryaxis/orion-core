@@ -33,7 +33,7 @@ namespace Orion.Interfaces
 		int Type { get; }
 
 		/// <summary>
-		/// Gets or sets the NPC's velocity.
+		/// Gets or sets the NPC's velocity in the world.
 		/// </summary>
 		Vector2 Velocity { get; set; }
 

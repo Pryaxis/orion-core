@@ -1,4 +1,5 @@
-﻿using Microsoft.Xna.Framework;
+﻿using System;
+using Microsoft.Xna.Framework;
 using NUnit.Framework;
 using Orion.Core;
 
@@ -7,6 +8,12 @@ namespace Orion.Tests.Core
 	[TestFixture]
 	public class ItemTests
 	{
+		[Test]
+		public void Constructor_Null_ThrowsException()
+		{
+			Assert.Throws<ArgumentNullException>(() => new Item(null));
+		}
+
 		[TestCase(100)]
 		public void GetDamage_IsCorrect(int damage)
 		{

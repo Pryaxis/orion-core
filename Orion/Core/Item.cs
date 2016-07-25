@@ -1,4 +1,5 @@
-﻿using Microsoft.Xna.Framework;
+﻿using System;
+using Microsoft.Xna.Framework;
 using Orion.Interfaces;
 
 namespace Orion.Core
@@ -9,22 +10,22 @@ namespace Orion.Core
 	public class Item : IItem
 	{
 		/// <summary>
-		/// Gets the item damage.
+		/// Gets the item's damage.
 		/// </summary>
 		public int Damage => WrappedItem.damage;
 
 		/// <summary>
-		/// Gets the item maximum stack size.
+		/// Gets the item's maximum stack size.
 		/// </summary>
 		public int MaxStack => WrappedItem.maxStack;
 
 		/// <summary>
-		/// Gets the item name.
+		/// Gets the item's name.
 		/// </summary>
 		public string Name => WrappedItem.name;
 
 		/// <summary>
-		/// Gets or sets the item position in the world.
+		/// Gets or sets the item's position in the world.
 		/// </summary>
 		public Vector2 Position
 		{
@@ -33,7 +34,7 @@ namespace Orion.Core
 		}
 
 		/// <summary>
-		/// Gets or sets the item prefix.
+		/// Gets or sets the item's prefix.
 		/// </summary>
 		public byte Prefix
 		{
@@ -42,7 +43,7 @@ namespace Orion.Core
 		}
 
 		/// <summary>
-		/// Gets or sets the item stack size.
+		/// Gets or sets the item's stack size.
 		/// </summary>
 		public int Stack
 		{
@@ -51,12 +52,12 @@ namespace Orion.Core
 		}
 
 		/// <summary>
-		/// Gets the item type ID.
+		/// Gets the item's type ID.
 		/// </summary>
 		public int Type => WrappedItem.netID;
 
 		/// <summary>
-		/// Gets or sets the item velocity.
+		/// Gets or sets the item's velocity in the world.
 		/// </summary>
 		public Vector2 Velocity
 		{
@@ -73,8 +74,14 @@ namespace Orion.Core
 		/// Initializes a new instance of the <see cref="Item"/> class wrapping the specified Terraria item.
 		/// </summary>
 		/// <param name="terrariaItem">The Terraria item to wrap.</param>
+		/// <exception cref="ArgumentNullException"><paramref name="terrariaItem"/> was null.</exception>
 		public Item(Terraria.Item terrariaItem)
 		{
+			if (terrariaItem == null)
+			{
+				throw new ArgumentNullException(nameof(terrariaItem));
+			}
+
 			WrappedItem = terrariaItem;
 		}
 	}

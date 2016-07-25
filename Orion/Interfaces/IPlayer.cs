@@ -44,7 +44,7 @@ namespace Orion.Interfaces
 		Vector2 Position { get; set; }
 
 		/// <summary>
-		/// Gets or sets the player's velocity.
+		/// Gets or sets the player's velocity in the world.
 		/// </summary>
 		Vector2 Velocity { get; set; }
 

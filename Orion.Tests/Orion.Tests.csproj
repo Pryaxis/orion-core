@@ -73,6 +73,15 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Events\Item\ItemSettingDefaultsEventArgsTests.cs" />
+    <Compile Include="Events\Item\ItemSetDefaultsEventArgsTests.cs" />
+    <Compile Include="Events\Npc\NpcTransformedEventArgsTests.cs" />
+    <Compile Include="Events\Npc\NpcSpawningEventArgsTests.cs" />
+    <Compile Include="Events\Npc\NpcSpawnedEventArgsTests.cs" />
+    <Compile Include="Events\Npc\NpcKilledEventArgsTests.cs" />
+    <Compile Include="Events\Player\PlayerQuitEventArgsTests.cs" />
+    <Compile Include="Events\Player\PlayerJoiningEventArgsTests.cs" />
+    <Compile Include="Events\Player\PlayerJoinedEventArgsTests.cs" />
     <Compile Include="InjectionContainerTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Framework\ServiceMapTest.cs" />

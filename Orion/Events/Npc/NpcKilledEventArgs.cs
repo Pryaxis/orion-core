@@ -17,8 +17,14 @@ namespace Orion.Events.Npc
 		/// Initializes a new instance of the <see cref="NpcKilledEventArgs"/> class.
 		/// </summary>
 		/// <param name="npc">The <see cref="INpc"/> that was killed.</param>
+		/// <exception cref="ArgumentNullException"><paramref name="npc"/> was null.</exception>
 		public NpcKilledEventArgs(INpc npc)
 		{
+			if (npc == null)
+			{
+				throw new ArgumentNullException(nameof(npc));
+			}
+
 			Npc = npc;
 		}
 	}

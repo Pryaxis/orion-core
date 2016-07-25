@@ -8,6 +8,12 @@ namespace Orion.Tests.Core
 	[TestFixture]
 	public class PlayerTests
 	{
+		[Test]
+		public void Constructor_Null_ThrowsException()
+		{
+			Assert.Throws<ArgumentNullException>(() => new Player(null));
+		}
+
 		[TestCase(100)]
 		public void GetDefense_IsCorrect(int defense)
 		{

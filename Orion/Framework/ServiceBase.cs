@@ -71,12 +71,11 @@ namespace Orion.Framework
 		}
 
 		/// <summary>
-		/// Disposes the service and its unmanaged resources, if any, optionally disposing its managed resources, if
-		/// any.
+		/// Disposes the service and its unmanaged resources, optionally disposing its managed resources.
 		/// </summary>
 		/// <param name="disposing">
-		/// true if Dispose() was called from a managed disposal, and *both* unmanaged and managed resources must be freed.
-        /// false if Dispose() was called from a finalizer, and *only* unmanaged resources may be freed.
+		/// true if called from a managed disposal, and *both* unmanaged and managed resources must be freed. false
+		/// if called from a finalizer, and *only* unmanaged resources may be freed.
 		/// </param>
 		protected virtual void Dispose(bool disposing)
 		{

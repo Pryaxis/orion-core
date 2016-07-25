@@ -26,16 +26,10 @@ namespace Orion.Interfaces
 		event EventHandler<PlayerQuitEventArgs> PlayerQuit;
 
 		/// <summary>
-		/// Finds all <see cref="IPlayer"/>s in the world matching a predicate.
+		/// Finds all <see cref="IPlayer"/>s in the world, optionally matching a predicate.
 		/// </summary>
-		/// <param name="predicate">The predicate to match with.</param>
-		/// <returns>An enumerable collection of <see cref="IPlayer"/>s matching the predicate.</returns>
-		IEnumerable<IPlayer> Find(Predicate<IPlayer> predicate);
-
-		/// <summary>
-		/// Gets all <see cref="IPlayer"/>s in the world.
-		/// </summary>
+		/// <param name="predicate">The predicate to match with, or null for none.</param>
 		/// <returns>An enumerable collection of <see cref="IPlayer"/>s.</returns>
-		IEnumerable<IPlayer> GetAll();
+		IEnumerable<IPlayer> Find(Predicate<IPlayer> predicate);
 	}
 }

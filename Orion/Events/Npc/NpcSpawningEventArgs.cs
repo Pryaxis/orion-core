@@ -1,5 +1,4 @@
 ﻿using System;
-using Microsoft.Xna.Framework;
 using Orion.Interfaces;
 using System.ComponentModel;
 
@@ -23,10 +22,16 @@ namespace Orion.Events.Npc
 		/// <summary>
 		/// Initializes a new instance of the <see cref="NpcSpawningEventArgs"/> class.
 		/// </summary>
-		/// <param name="index">The position of the <see cref="INpc"/> that is spawning in the NPC array.</param>
 		/// <param name="npc">The <see cref="INpc"/> that is spawning.</param>
-		public NpcSpawningEventArgs(int index, INpc npc)
+		/// <param name="index">The position of the <see cref="INpc"/> that is spawning in the NPC array.</param>
+		/// <exception cref="ArgumentNullException"><paramref name="npc"/> was null.</exception>
+		public NpcSpawningEventArgs(INpc npc, int index)
 		{
+			if (npc == null)
+			{
+				throw new ArgumentNullException(nameof(npc));
+			}
+
 			Index = index;
 			Npc = npc;
 		}

@@ -12,16 +12,15 @@ namespace Orion.Tests.Services
 	public class ItemServiceTests
 	{
 		[TestCase(1)]
-		public void SetDefaults_IsCorrect(int type)
+		public void ItemSetDefaults_IsCorrect(int type)
 		{
 			using (var orion = new Orion())
 			using (var itemService = new ItemService(orion))
 			{
 				bool eventOccurred = false;
-				itemService.SetDefaults += (s, a) =>
+				itemService.ItemSetDefaults += (s, a) =>
 				{
 					eventOccurred = true;
-					Assert.AreEqual(type, a.Type);
 				};
 				var terrariaItem = new Terraria.Item();
 
@@ -33,13 +32,13 @@ namespace Orion.Tests.Services
 
 		[TestCase(-48)]
 		[TestCase(1)]
-		public void SetDefaults_OccursFromNetDefaults(int type)
+		public void ItemSetDefaults_OccursFromNetDefaults(int type)
 		{
 			using (var orion = new Orion())
 			using (var itemService = new ItemService(orion))
 			{
 				bool eventOccurred = false;
-				itemService.SetDefaults += (s, a) =>
+				itemService.ItemSetDefaults += (s, a) =>
 				{
 					eventOccurred = true;
 				};
@@ -52,13 +51,13 @@ namespace Orion.Tests.Services
 		}
 
 		[TestCase("Gold Broadsword")]
-		public void SetDefaults_OccursFromSetDefaultsString(string type)
+		public void ItemSetDefaults_OccursFromSetDefaultsString(string type)
 		{
 			using (var orion = new Orion())
 			using (var itemService = new ItemService(orion))
 			{
 				bool eventOccurred = false;
-				itemService.SetDefaults += (s, a) =>
+				itemService.ItemSetDefaults += (s, a) =>
 				{
 					eventOccurred = true;
 				};
@@ -71,13 +70,13 @@ namespace Orion.Tests.Services
 		}
 
 		[TestCase(1)]
-		public void SettingDefaults_IsCorrect(int type)
+		public void ItemSettingDefaults_IsCorrect(int type)
 		{
 			using (var orion = new Orion())
 			using (var itemService = new ItemService(orion))
 			{
 				bool eventOccurred = false;
-				itemService.SettingDefaults += (s, a) =>
+				itemService.ItemSettingDefaults += (s, a) =>
 				{
 					eventOccurred = true;
 					Assert.AreEqual(type, a.Type);
@@ -91,13 +90,13 @@ namespace Orion.Tests.Services
 		}
 
 		[TestCase(1, 2)]
-		public void SettingDefaults_ModifiesType(int type, int newType)
+		public void ItemSettingDefaults_ModifiesType(int type, int newType)
 		{
 			using (var orion = new Orion())
 			using (var itemService = new ItemService(orion))
 			{
 				bool eventOccurred = false;
-				itemService.SettingDefaults += (s, a) =>
+				itemService.ItemSettingDefaults += (s, a) =>
 				{
 					eventOccurred = true;
 					a.Type = newType;
@@ -113,13 +112,13 @@ namespace Orion.Tests.Services
 
 		[TestCase(-48)]
 		[TestCase(1)]
-		public void SettingDefaults_OccursFromNetDefaults(int type)
+		public void ItemSettingDefaults_OccursFromNetDefaults(int type)
 		{
 			using (var orion = new Orion())
 			using (var itemService = new ItemService(orion))
 			{
 				bool eventOccurred = false;
-				itemService.SetDefaults += (s, a) =>
+				itemService.ItemSetDefaults += (s, a) =>
 				{
 					eventOccurred = true;
 				};
@@ -132,13 +131,13 @@ namespace Orion.Tests.Services
 		}
 
 		[TestCase("Gold Broadsword")]
-		public void SettingDefaults_OccursFromSetDefaultsString(string type)
+		public void ItemSettingDefaults_OccursFromSetDefaultsString(string type)
 		{
 			using (var orion = new Orion())
 			using (var itemService = new ItemService(orion))
 			{
 				bool eventOccurred = false;
-				itemService.SettingDefaults += (s, a) =>
+				itemService.ItemSettingDefaults += (s, a) =>
 				{
 					eventOccurred = true;
 				};
@@ -179,6 +178,28 @@ namespace Orion.Tests.Services
 			}
 		}
 
+		[TestCase(0)]
+		[TestCase(1)]
+		[TestCase(100)]
+		public void Find_Null_ReturnsAll(int populate)
+		{
+			for (int i = 0; i < Terraria.Main.item.Length; ++i)
+			{
+				Terraria.Main.item[i] = new Terraria.Item { active = i < populate, netID = 1 };
+			}
+			using (var orion = new Orion())
+			using (var itemService = new ItemService(orion))
+			{
+				List<IItem> items = itemService.Find().ToList();
+
+				Assert.AreEqual(populate, items.Count);
+				foreach (IItem item in items)
+				{
+					Assert.AreEqual(1, item.Type);
+				}
+			}
+		}
+
 		private static readonly Predicate<IItem>[] Predicates = {item => item.Type < 100};
 
 		[Test, TestCaseSource(nameof(Predicates))]
@@ -191,8 +212,8 @@ namespace Orion.Tests.Services
 			using (var orion = new Orion())
 			using (var itemService = new ItemService(orion))
 			{
-				List<IItem> items = itemService.Find(predicate).ToList();
-				List<IItem> otherItems = itemService.GetAll().Where(i => !items.Contains(i)).ToList();
+				IEnumerable<IItem> items = itemService.Find(predicate).ToList();
+				IEnumerable<IItem> otherItems = itemService.Find(i => !predicate(i)).ToList();
 
 				foreach (IItem item in items)
 				{
@@ -201,28 +222,6 @@ namespace Orion.Tests.Services
 				foreach (IItem item in otherItems)
 				{
 					Assert.IsFalse(predicate(item));
-				}
-			}
-		}
-
-		[TestCase(0)]
-		[TestCase(1)]
-		[TestCase(100)]
-		public void GetAll_IsCorrect(int populate)
-		{
-			for (int i = 0; i < Terraria.Main.item.Length; ++i)
-			{
-				Terraria.Main.item[i] = new Terraria.Item { active = i < populate, netID = 1 };
-			}
-			using (var orion = new Orion())
-			using (var itemService = new ItemService(orion))
-			{
-				List<IItem> items = itemService.GetAll().ToList();
-
-				Assert.AreEqual(populate, items.Count);
-				foreach (IItem item in items)
-				{
-					Assert.AreEqual(1, item.Type);
 				}
 			}
 		}

@@ -23,8 +23,14 @@ namespace Orion.Events.Npc
 		/// </summary>
 		/// <param name="npc">The <see cref="INpc"/> that transformed.</param>
 		/// <param name="newType">The new type ID that the <see cref="INpc"/> transformed to.</param>
+		/// <exception cref="ArgumentNullException"><paramref name="npc"/> was null.</exception>
 		public NpcTransformedEventArgs(INpc npc, int newType)
 		{
+			if (npc == null)
+			{
+				throw new ArgumentNullException(nameof(npc));
+			}
+
 			Npc = npc;
 			NewType = newType;
 		}

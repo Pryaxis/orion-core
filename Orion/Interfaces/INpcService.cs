@@ -17,7 +17,7 @@ namespace Orion.Interfaces
 		event EventHandler<NpcKilledEventArgs> NpcKilled;
 
 		/// <summary>
-		/// Occurs after an <see cref="INpc"/> has spawned in the world.
+		/// Occurs after an <see cref="INpc"/> spawns in the world.
 		/// </summary>
 		event EventHandler<NpcSpawnedEventArgs> NpcSpawned;
 
@@ -32,17 +32,11 @@ namespace Orion.Interfaces
 		event EventHandler<NpcTransformedEventArgs> NpcTransformed;
 
 		/// <summary>
-		/// Finds all <see cref="INpc"/>s in the world matching a predicate.
+		/// Finds all <see cref="INpc"/>s in the world, optionally matching a predicate.
 		/// </summary>
-		/// <param name="predicate">The predicate to match with.</param>
-		/// <returns>An enumerable collection of <see cref="INpc"/>s matching the predicate.</returns>
-		IEnumerable<INpc> Find(Predicate<INpc> predicate);
-
-		/// <summary>
-		/// Gets all <see cref="INpc"/>s in the world.
-		/// </summary>
+		/// <param name="predicate">The predicate to match with, or null for none.</param>
 		/// <returns>An enumerable collection of <see cref="INpc"/>s.</returns>
-		IEnumerable<INpc> GetAll();
+		IEnumerable<INpc> Find(Predicate<INpc> predicate = null);
 
 		/// <summary>
 		/// Spawns a new <see cref="INpc"/> with the specified type ID at a position in the world, optionally with
@@ -54,7 +48,7 @@ namespace Orion.Interfaces
 		/// <param name="maxHP">The custom maximum HP, or null for the default.</param>
 		/// <returns>The resulting spawned <see cref="INpc"/>.</returns>
 		/// <exception cref="ArgumentOutOfRangeException">
-		/// <paramref name="type"/> is too small or large, or <paramref name="hp"/> or <paramref name="maxHP"/> are
+		/// <paramref name="type"/> is out of range, or <paramref name="hp"/> or <paramref name="maxHP"/> are
 		/// negative.
 		/// </exception>
 		INpc Spawn(int type, Vector2 position, int? hp = null, int? maxHP = null);

@@ -1,4 +1,5 @@
-﻿using System.ComponentModel;
+﻿using System;
+using System.ComponentModel;
 using Orion.Interfaces;
 
 namespace Orion.Events.Player
@@ -17,8 +18,14 @@ namespace Orion.Events.Player
 		/// Initializes a new instance of the <see cref="PlayerJoiningEventArgs"/> class.
 		/// </summary>
 		/// <param name="player">The <see cref="IPlayer"/> that is joining the server.</param>
+		/// <exception cref="ArgumentNullException"><paramref name="player"/> was null.</exception>
 		public PlayerJoiningEventArgs(IPlayer player)
 		{
+			if (player == null)
+			{
+				throw new ArgumentNullException(nameof(player));
+			}
+
 			Player = player;
 		}
 	}

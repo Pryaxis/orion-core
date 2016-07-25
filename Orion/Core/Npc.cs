@@ -1,4 +1,5 @@
-﻿using Microsoft.Xna.Framework;
+﻿using System;
+using Microsoft.Xna.Framework;
 using Orion.Interfaces;
 
 namespace Orion.Core
@@ -46,7 +47,7 @@ namespace Orion.Core
 		public int Type => WrappedNpc.type;
 
 		/// <summary>
-		/// Gets or sets the NPC's velocity.
+		/// Gets or sets the NPC's velocity in the world.
 		/// </summary>
 		public Vector2 Velocity
 		{
@@ -63,8 +64,14 @@ namespace Orion.Core
 		/// Initializes a new instance of the <see cref="Npc"/> class wrapping the specified Terraria NPC.
 		/// </summary>
 		/// <param name="terrariaNpc">The Terraria NPC to wrap.</param>
+		/// <exception cref="ArgumentNullException"><paramref name="terrariaNpc"/> was null.</exception>
 		public Npc(Terraria.NPC terrariaNpc)
 		{
+			if (terrariaNpc == null)
+			{
+				throw new ArgumentNullException(nameof(terrariaNpc));
+			}
+
 			WrappedNpc = terrariaNpc;
 		}
 

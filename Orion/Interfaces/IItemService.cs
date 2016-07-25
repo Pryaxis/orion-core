@@ -14,12 +14,12 @@ namespace Orion.Interfaces
 		/// <summary>
 		/// Occurs after an <see cref="IItem"/> has its defaults set.
 		/// </summary>
-		event EventHandler<SetDefaultsEventArgs> SetDefaults;
+		event EventHandler<ItemSetDefaultsEventArgs> ItemSetDefaults;
 
 		/// <summary>
 		/// Occurs before an <see cref="IItem"/> has its defaults set.
 		/// </summary>
-		event EventHandler<SettingDefaultsEventArgs> SettingDefaults;
+		event EventHandler<ItemSettingDefaultsEventArgs> ItemSettingDefaults;
 
 		/// <summary>
 		/// Creates a new <see cref="IItem"/> with the specified type ID, optionally with stack size and prefix.
@@ -29,23 +29,17 @@ namespace Orion.Interfaces
 		/// <param name="prefix">The prefix, or 0 for none.</param>
 		/// <returns>The resulting instantiated <see cref="IItem"/>.</returns>
 		/// <exception cref="ArgumentOutOfRangeException">
-		/// <paramref name="type"/> is too small or large, <paramref name="stack"/> is negative, or
-		/// <paramref name="prefix"/> is too large.
+		/// <paramref name="type"/> is out of range, <paramref name="stack"/> is negative, or <paramref name="prefix"/>
+		/// is too large.
 		/// </exception>
 		IItem Create(int type, int stack = 1, byte prefix = 0);
 
 		/// <summary>
-		/// Finds all <see cref="IItem"/>s in the world matching a predicate.
+		/// Finds all <see cref="IItem"/>s in the world, optionally matching a predicate.
 		/// </summary>
-		/// <param name="predicate">The predicate to match with.</param>
-		/// <returns>An enumerable collection of <see cref="IItem"/>s matching the predicate.</returns>
-		IEnumerable<IItem> Find(Predicate<IItem> predicate);
-
-		/// <summary>
-		/// Gets all <see cref="IItem"/>s in the world.
-		/// </summary>
+		/// <param name="predicate">The predicate to match with, or null for none.</param>
 		/// <returns>An enumerable collection of <see cref="IItem"/>s.</returns>
-		IEnumerable<IItem> GetAll();
+		IEnumerable<IItem> Find(Predicate<IItem> predicate = null);
 
 		/// <summary>
 		/// Spawns a new <see cref="IItem"/> with the specified type ID at a position in the world, optionally with
@@ -57,8 +51,8 @@ namespace Orion.Interfaces
 		/// <param name="prefix">The prefix.</param>
 		/// <returns>The resulting spawned <see cref="IItem"/>.</returns>
 		/// <exception cref="ArgumentOutOfRangeException">
-		/// <paramref name="type"/> is too small or large, <paramref name="stack"/> is negative, or
-		/// <paramref name="prefix"/> is too large.
+		/// <paramref name="type"/> is out of range, <paramref name="stack"/> is negative, or <paramref name="prefix"/>
+		/// is too large.
 		/// </exception>
 		IItem Spawn(int type, Vector2 position, int stack = 1, byte prefix = 0);
 	}

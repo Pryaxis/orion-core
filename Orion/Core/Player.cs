@@ -67,7 +67,7 @@ namespace Orion.Core
 		}
 
 		/// <summary>
-		/// Gets or sets the player's velocity.
+		/// Gets or sets the player's velocity in the world.
 		/// </summary>
 		public Vector2 Velocity
 		{
@@ -84,8 +84,14 @@ namespace Orion.Core
 		/// Initializes a new instance of the <see cref="Player"/> class wrapping the specified Terraria player.
 		/// </summary>
 		/// <param name="terrariaPlayer">The Terraria player to wrap.</param>
+		/// <exception cref="ArgumentNullException"><paramref name="terrariaPlayer"/> was null.</exception>
 		public Player(Terraria.Player terrariaPlayer)
 		{
+			if (terrariaPlayer == null)
+			{
+				throw new ArgumentNullException(nameof(terrariaPlayer));
+			}
+
 			_inventory = new IItem[terrariaPlayer.inventory.Length];
 			WrappedPlayer = terrariaPlayer;
 		}

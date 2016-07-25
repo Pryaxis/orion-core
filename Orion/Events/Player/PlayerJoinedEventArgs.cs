@@ -17,8 +17,14 @@ namespace Orion.Events.Player
 		/// Initializes a new instance of the <see cref="PlayerJoinedEventArgs"/> class.
 		/// </summary>
 		/// <param name="player">The <see cref="IPlayer"/> that joined the server.</param>
+		/// <exception cref="ArgumentNullException"><paramref name="player"/> was null.</exception>
 		public PlayerJoinedEventArgs(IPlayer player)
 		{
+			if (player == null)
+			{
+				throw new ArgumentNullException(nameof(player));
+			}
+
 			Player = player;
 		}
 	}

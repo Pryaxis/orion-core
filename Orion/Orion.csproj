@@ -57,8 +57,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Events\Item\SetDefaultsEventArgs.cs" />
-    <Compile Include="Events\Item\SettingDefaultsEventArgs.cs" />
+    <Compile Include="Events\Item\ItemSetDefaultsEventArgs.cs" />
+    <Compile Include="Events\Item\ItemSettingDefaultsEventArgs.cs" />
     <Compile Include="Events\Npc\NpcKilledEventArgs.cs" />
     <Compile Include="Events\Npc\NpcSpawnedEventArgs.cs" />
     <Compile Include="Events\Npc\NpcSpawningEventArgs.cs" />
@@ -67,6 +67,7 @@
     <Compile Include="Events\Player\PlayerJoiningEventArgs.cs" />
     <Compile Include="Events\Player\PlayerQuitEventArgs.cs" />
     <Compile Include="Events\World\MeteorDroppingEventArgs.cs" />
+    <Compile Include="Events\World\SavedEventArgs.cs" />
     <Compile Include="Events\World\SavingEventArgs.cs" />
     <Compile Include="Framework\Injection\ServiceInjectionModule.cs" />
     <Compile Include="Framework\IService.cs" />

@@ -8,42 +8,42 @@ namespace Orion.Interfaces
 	public interface IItem
 	{
 		/// <summary>
-		/// Gets the item damage.
+		/// Gets the item's damage.
 		/// </summary>
 		int Damage { get; }
 
 		/// <summary>
-		/// Gets the item maximum stack size.
+		/// Gets the item's maximum stack size.
 		/// </summary>
 		int MaxStack { get; }
 
 		/// <summary>
-		/// Gets the item name.
+		/// Gets the item's name.
 		/// </summary>
 		string Name { get; }
 
 		/// <summary>
-		/// Gets or sets the item position in the world.
+		/// Gets or sets the item's position in the world.
 		/// </summary>
 		Vector2 Position { get; set; }
 
 		/// <summary>
-		/// Gets or sets the item prefix.
+		/// Gets or sets the item's prefix.
 		/// </summary>
 		byte Prefix { get; set; }
 
 		/// <summary>
-		/// Gets or sets the item stack size.
+		/// Gets or sets the item's stack size.
 		/// </summary>
 		int Stack { get; set; }
 
 		/// <summary>
-		/// Gets the item type ID.
+		/// Gets the item's type ID.
 		/// </summary>
 		int Type { get; }
 
 		/// <summary>
-		/// Gets or sets the item velocity.
+		/// Gets or sets the item's velocity in the world.
 		/// </summary>
 		Vector2 Velocity { get; set; }
 
