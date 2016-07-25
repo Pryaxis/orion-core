@@ -141,7 +141,7 @@ namespace Orion.Services
 		/// </summary>
 		/// <param name="useCloud">A value indicating whether to use the "cloud". Unused.</param>
 		/// <param name="resetTime">
-		/// A value indicating whether to reset the time. This will update hte normal server's value.
+		/// A value indicating whether to reset the time. This will update the normal server's value.
 		/// </param>
 		private HookResult InvokeSaving(ref bool useCloud, ref bool resetTime)
 		{

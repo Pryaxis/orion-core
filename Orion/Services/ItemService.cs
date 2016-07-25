@@ -49,7 +49,7 @@ namespace Orion.Services
 		}
 
 		/// <summary>
-		/// Creates a new <see cref="IItem"/> with the specified type ID, optionally with stack size and prefix.
+		/// Creates a new <see cref="IItem"/> with the specified type ID, optionally with custom stack size and prefix.
 		/// </summary>
 		/// <param name="type">The type ID.</param>
 		/// <param name="stack">The stack size.</param>
@@ -102,7 +102,7 @@ namespace Orion.Services
 
 		/// <summary>
 		/// Spawns a new <see cref="IItem"/> with the specified type ID at a position in the world, optionally with
-		/// stack size and prefix.
+		/// custom stack size and prefix.
 		/// </summary>
 		/// <param name="type">The type ID.</param>
 		/// <param name="position">The position in the world.</param>

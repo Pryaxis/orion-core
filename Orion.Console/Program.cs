@@ -2,15 +2,14 @@
 {
 	public class Program
 	{
-		static Orion orion;
+		private static Orion _orion;
 
 		public static void Main(string[] args)
 		{
-			orion = new Orion();
-
-			orion.StartServer();
-
-			orion.Dispose();
+			using (_orion = new Orion())
+			{
+				_orion.StartServer();
+			}
 		}
 	}
 }

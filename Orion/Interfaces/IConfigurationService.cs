@@ -25,7 +25,7 @@ namespace Orion.Interfaces
 		/// </summary>
 		/// <typeparam name="TService">The service type.</typeparam>
 		/// <typeparam name="TConfig">The config type which stores the configuration members.</typeparam>
-		void Save<TService, TConfig>(TConfig config) 
+		void Save<TService, TConfig>(TConfig config)
 			where TService : ServiceBase
 			where TConfig : class, new();
 	}

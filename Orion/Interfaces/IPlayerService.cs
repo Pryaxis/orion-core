@@ -30,6 +30,6 @@ namespace Orion.Interfaces
 		/// </summary>
 		/// <param name="predicate">The predicate to match with, or null for none.</param>
 		/// <returns>An enumerable collection of <see cref="IPlayer"/>s.</returns>
-		IEnumerable<IPlayer> Find(Predicate<IPlayer> predicate);
+		IEnumerable<IPlayer> Find(Predicate<IPlayer> predicate = null);
 	}
 }

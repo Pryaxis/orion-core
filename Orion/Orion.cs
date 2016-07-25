@@ -9,18 +9,21 @@ namespace Orion
 {
 	public partial class Orion : IDisposable
 	{
-
 		/// <summary>
 		/// Contains a reference to the injection container, which contains references
 		/// to plugins and services.
 		/// </summary>
 		internal IKernel injectionContainer;
+
 		internal ServiceMap serviceMap;
 
-        /// <summary>
-        /// Returns a reference to Orion's dependency injection container.
-        /// </summary>
-		public IKernel InjectionContainer { get { return injectionContainer; } }
+		/// <summary>
+		/// Returns a reference to Orion's dependency injection container.
+		/// </summary>
+		public IKernel InjectionContainer
+		{
+			get { return injectionContainer; }
+		}
 
 		public Orion()
 		{
@@ -31,7 +34,7 @@ namespace Orion
 
 			this.injectionContainer = new StandardKernel(
 				new Framework.Injection.ServiceInjectionModule(serviceMap)
-			);
+				);
 
 			this.injectionContainer.Bind<Orion>().ToConstant(this);
 		}
@@ -70,10 +73,11 @@ namespace Orion
 				Console.WriteLine($"  * Loading {service.Name} by {service.Author}");
 			}
 
-			WindowsLaunch.Main(new string[] { });
+			WindowsLaunch.Main(new string[] {});
 		}
 
 		#region IDisposable Support
+
 		private bool disposedValue = false; // To detect redundant calls
 
 		protected virtual void Dispose(bool disposing)
@@ -98,6 +102,7 @@ namespace Orion
 			// Do not change this code. Put cleanup code in Dispose(bool disposing) above.
 			Dispose(true);
 		}
+
 		#endregion
 	}
 }

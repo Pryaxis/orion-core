@@ -15,14 +15,14 @@ namespace Orion.Interfaces
 		event EventHandler<MeteorDroppingEventArgs> MeteorDropping;
 
 		/// <summary>
-		/// Occurs before the world saves.
-		/// </summary>
-		event EventHandler<WorldSavingEventArgs> WorldSaving;
-
-		/// <summary>
 		/// Occurs after the world saves.
 		/// </summary>
 		event EventHandler<WorldSavedEventArgs> WorldSaved;
+
+		/// <summary>
+		/// Occurs before the world saves.
+		/// </summary>
+		event EventHandler<WorldSavingEventArgs> WorldSaving;
 
 		/// <summary>
 		/// Breaks the tile at a position in the world.
