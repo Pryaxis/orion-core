@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Orion.Interfaces;
+﻿using Orion.Interfaces;
 using System.ComponentModel;
 
 namespace Orion.Events.Projectile
@@ -11,12 +6,12 @@ namespace Orion.Events.Projectile
 	/// <summary>
 	/// Provides data for the see <see cref="IProjectileService.SettingDefaults"/> event.
 	/// </summary>
-	public class SettingDefaultsEventArgs : HandledEventArgs
+	public class ProjectileSettingDefaultsEventArgs : HandledEventArgs
 	{
 		/// <summary>
 		/// Gets the <see cref="IProjectile"/> that's having its defaults set.
 		/// </summary>
-		public Terraria.Projectile Projectile { get; }
+		public IProjectile Projectile { get; }
 
 		/// <summary>
 		/// Gets or sets the type ID for the <see cref="IProjectile"/> is having its defaults set to.
@@ -24,11 +19,11 @@ namespace Orion.Events.Projectile
 		public int Type { get; set; }
 
 		/// <summary>
-		/// Initializes a new instance of the <see cref="SettingDefaultsEventArgs"/> class.
+		/// Initializes a new instance of the <see cref="ProjectileSettingDefaultsEventArgs"/> class.
 		/// </summary>
 		/// <param name="projectile">The <see cref="IProjectile"/> that's having its defaults set.</param>
 		/// <param name="type">The type ID that the <see cref="IProjectile"/> is having its defaults set to.</param>
-		public SettingDefaultsEventArgs(Terraria.Projectile projectile, int type)
+		public ProjectileSettingDefaultsEventArgs(IProjectile projectile, int type)
 		{
 			Projectile = projectile;
 			Type = type;

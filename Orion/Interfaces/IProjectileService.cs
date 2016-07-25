@@ -13,24 +13,18 @@ namespace Orion.Interfaces
 		/// <summary>
 		/// Occurs after a <see cref="IProjectile"/> has its defaults set.
 		/// </summary>
-		event EventHandler<SetDefaultsEventArgs> SetDefaults;
+		event EventHandler<ProjectileSetDefaultsEventArgs> ProjectileSetDefaults;
 
 		/// <summary>
 		/// Occurs before a <see cref="IProjectile"/> has its defaults set.
 		/// </summary>
-		event EventHandler<SettingDefaultsEventArgs> SettingDefaults;
+		event EventHandler<ProjectileSettingDefaultsEventArgs> ProjectileSettingDefaults;
 
 		/// <summary>
 		/// Finds all <see cref="IProjectile"/>s in the world matching the predicate.
 		/// </summary>
-		/// <param name="predicate">The predicate to match with.</param>
+		/// <param name="predicate">The predicate to match with, or null for none.</param>
 		/// <returns>An enumerable collection of <see cref="IProjectile"/>s that match the predicate.</returns>
-		IEnumerable<IProjectile> Find(Predicate<IProjectile> predicate);
-
-		/// <summary>
-		/// Gets all <see cref="IProjectile"/>s in the world.
-		/// </summary>
-		/// <returns>An enumerable collection of <see cref="IProjectile"/>s.</returns>
-		IEnumerable<IProjectile> GetAll();
+		IEnumerable<IProjectile> Find(Predicate<IProjectile> predicate = null);
 	}
 }

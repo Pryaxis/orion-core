@@ -16,7 +16,7 @@ namespace Orion.Interfaces
 		/// Gets the projectile's name.
 		/// </summary>
 		string Name { get; }
-			 
+
 		/// <summary>
 		/// Gets the projectile's type ID.
 		/// </summary>
