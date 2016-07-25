@@ -10,31 +10,31 @@ namespace Orion.Interfaces
 	public interface IWorldService : IService
 	{
 		/// <summary>
-		/// Occurs before a meteor drops.
+		/// Occurs when a meteor drops.
 		/// </summary>
 		event EventHandler<MeteorDroppingEventArgs> MeteorDropping;
 
 		/// <summary>
-		/// Occurs before a tile is updated in hardmode.
+		/// Occurs when a tile is updating in hardmode.
 		/// </summary>
 		event EventHandler<HardmodeTileUpdatingEventArgs> HardmodeTileUpdating;
 
 		/// <summary>
-		/// Occurs after the world saves.
+		/// Occurs after the world has saved.
 		/// </summary>
 		event EventHandler<WorldSavedEventArgs> WorldSaved;
 
 		/// <summary>
-		/// Occurs before the world saves.
+		/// Occurs when the world saves.
 		/// </summary>
 		event EventHandler<WorldSavingEventArgs> WorldSaving;
 
 		/// <summary>
-		/// Breaks the tile at a position in the world.
+		/// Breaks the block at a position in the world.
 		/// </summary>
 		/// <param name="x">The x position in the world.</param>
 		/// <param name="y">The y position in the world.</param>
-		void BreakTile(int x, int y);
+		void BreakBlock(int x, int y);
 
 		/// <summary>
 		/// Breaks the wall at a position in the world.
@@ -44,13 +44,13 @@ namespace Orion.Interfaces
 		void BreakWall(int x, int y);
 
 		/// <summary>
-		/// Places a tile at a position in the world, optionally with a style.
+		/// Places a block at a position in the world, optionally with a style.
 		/// </summary>
 		/// <param name="x">The x position in the world.</param>
 		/// <param name="y">The y position in the world.</param>
 		/// <param name="type">The tile type ID.</param>
 		/// <param name="style">The style.</param>
-		void PlaceTile(int x, int y, ushort type, int style = 0);
+		void PlaceBlock(int x, int y, ushort type, int style = 0);
 
 		/// <summary>
 		/// Places a wall at a position in the world.

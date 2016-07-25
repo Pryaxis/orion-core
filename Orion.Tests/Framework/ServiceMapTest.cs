@@ -10,10 +10,10 @@ namespace Orion.Tests.Framework
 		[Test]
 		public void TestServiceMap()
 		{
-			ServiceMap serviceMap = new ServiceMap();
+			var serviceMap = new ServiceMap();
 
-			using (MemoryStream ms = new MemoryStream())
-			using (StreamReader sw = new StreamReader(ms))
+			using (var ms = new MemoryStream())
+			using (var sw = new StreamReader(ms))
 			{
 				serviceMap.Save(ms);
 				Assert.IsTrue(ms.ToArray().Length > 0);

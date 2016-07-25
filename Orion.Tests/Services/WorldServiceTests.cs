@@ -20,11 +20,11 @@ namespace Orion.Tests.Services
 					}
 				}
 				bool eventOccurred = false;
-				worldService.MeteorDropping += (s, a) =>
+				worldService.MeteorDropping += (sender, args) =>
 				{
 					eventOccurred = true;
-					Assert.AreEqual(x, a.X);
-					Assert.AreEqual(y, a.Y);
+					Assert.AreEqual(x, args.X);
+					Assert.AreEqual(y, args.Y);
 				};
 
 				Terraria.WorldGen.meteor(x, y);
@@ -46,18 +46,60 @@ namespace Orion.Tests.Services
 						Terraria.Main.tile[i, j] = new Terraria.Tile();
 					}
 				}
-				worldService.MeteorDropping += (s, a) => a.Handled = true;
+				worldService.MeteorDropping += (sender, args) => args.Handled = true;
 
 				Terraria.WorldGen.meteor(x, y);
-				
+
+				bool foundMeteor = false;
 				for (int i = x - 50; i < x + 50; ++i)
 				{
 					for (int j = y - 50; j < y + 50; ++j)
 					{
-						Assert.IsFalse(Terraria.Main.tile[i, j].type == Terraria.ID.TileID.Meteorite,
-							"Meteor should not have dropped.");
+						if (Terraria.Main.tile[i, j].type == Terraria.ID.TileID.Meteorite)
+						{
+							foundMeteor = true;
+							break;
+						}
 					}
 				}
+				Assert.IsFalse(foundMeteor, "Meteor should not have dropped.");
+			}
+		}
+
+		[TestCase(100, 100, 200, 200)]
+		public void MeteorDropping_ModifiesXY(int x, int y, int newX, int newY)
+		{
+			using (var orion = new Orion())
+			using (var worldService = new WorldService(orion))
+			{
+				for (int i = newX - 50; i < newX + 50; ++i)
+				{
+					for (int j = newY - 50; j < newY + 50; ++j)
+					{
+						Terraria.Main.tile[i, j] = new Terraria.Tile();
+					}
+				}
+				worldService.MeteorDropping += (sender, args) =>
+				{
+					args.X = newX;
+					args.Y = newY;
+				};
+
+				Terraria.WorldGen.meteor(x, y);
+
+				bool foundMeteor = false;
+				for (int i = newX - 50; i < newX + 50; ++i)
+				{
+					for (int j = newY - 50; j < newY + 50; ++j)
+					{
+						if (Terraria.Main.tile[i, j].type == Terraria.ID.TileID.Meteorite)
+						{
+							foundMeteor = true;
+							break;
+						}
+					}
+				}
+				Assert.IsTrue(foundMeteor, "Meteor should have been moved.");
 			}
 		}
 
@@ -69,11 +111,12 @@ namespace Orion.Tests.Services
 			using (var worldService = new WorldService(orion))
 			{
 				Terraria.Main.worldName = "";
+				Terraria.WorldGen.saveLock = false;
 				bool eventOccurred = false;
-				worldService.WorldSaving += (s, a) =>
+				worldService.WorldSaving += (sender, args) =>
 				{
 					eventOccurred = true;
-					Assert.AreEqual(resetTime, a.ResetTime);
+					Assert.AreEqual(resetTime, args.ResetTime);
 				};
 
 				Terraria.IO.WorldFile.saveWorld(false, resetTime);
@@ -89,11 +132,30 @@ namespace Orion.Tests.Services
 			using (var worldService = new WorldService(orion))
 			{
 				Terraria.Main.worldName = "";
-				worldService.WorldSaving += (s, a) => a.Handled = true;
+				Terraria.WorldGen.saveLock = false;
+				worldService.WorldSaving += (sender, args) => args.Handled = true;
 
 				Terraria.IO.WorldFile.saveWorld(false, resetTime);
 
-				Assert.AreNotEqual("World", Terraria.Main.worldName, "WorldSaving event should not have occurred.");
+				Assert.AreNotEqual("World", Terraria.Main.worldName);
+			}
+		}
+
+		[TestCase(true, false)]
+		[TestCase(false, true)]
+		public void WorldSaving_ModifiesResetTime(bool resetTime, bool newResetTime)
+		{
+			using (var orion = new Orion())
+			using (var worldService = new WorldService(orion))
+			{
+				Terraria.Main.time = 0.0;
+				Terraria.IO.WorldFile.tempTime = 0.0;
+				Terraria.WorldGen.saveLock = false;
+				worldService.WorldSaving += (sender, args) => args.ResetTime = newResetTime;
+
+				Terraria.IO.WorldFile.saveWorld(false, resetTime);
+
+				Assert.AreEqual(newResetTime, Terraria.IO.WorldFile.tempTime == 13500.0);
 			}
 		}
 
@@ -105,7 +167,11 @@ namespace Orion.Tests.Services
 			using (var worldService = new WorldService(orion))
 			{
 				bool eventOccurred = false;
-				worldService.WorldSaved += (s, a) => eventOccurred = true;
+				worldService.WorldSaved += (sender, args) =>
+				{
+					eventOccurred = true;
+					Assert.AreEqual(resetTime, args.ResetTime);
+				};
 
 				Terraria.IO.WorldFile.saveWorld(false, resetTime);
 

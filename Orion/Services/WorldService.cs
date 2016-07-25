@@ -19,22 +19,22 @@ namespace Orion.Services
 		private bool _disposed;
 
 		/// <summary>
-		/// Occurs before a meteor drops.
+		/// Occurs when a meteor drops.
 		/// </summary>
 		public event EventHandler<MeteorDroppingEventArgs> MeteorDropping;
 
 		/// <summary>
-		/// Occurs when a tile is updated in hardmode.
+		/// Occurs when a tile is updating in hardmode.
 		/// </summary>
 		public event EventHandler<HardmodeTileUpdatingEventArgs> HardmodeTileUpdating;
 
 		/// <summary>
-		/// Occurs before the world saves.
+		/// Occurs after the world has saved.
 		/// </summary>
 		public event EventHandler<WorldSavedEventArgs> WorldSaved;
 
 		/// <summary>
-		/// Occurs before the world saves.
+		/// Occurs when the world saves.
 		/// </summary>
 		public event EventHandler<WorldSavingEventArgs> WorldSaving;
 
@@ -52,11 +52,11 @@ namespace Orion.Services
 		}
 
 		/// <summary>
-		/// Breaks the tile at a position in the world.
+		/// Breaks the block at a position in the world.
 		/// </summary>
 		/// <param name="x">The x position in the world.</param>
 		/// <param name="y">The y position in the world.</param>
-		public void BreakTile(int x, int y)
+		public void BreakBlock(int x, int y)
 		{
 			Terraria.WorldGen.KillTile(x, y);
 		}
@@ -72,13 +72,13 @@ namespace Orion.Services
 		}
 
 		/// <summary>
-		/// Places a tile at a position in the world, optionally with a style.
+		/// Places a block at a position in the world, optionally with a style.
 		/// </summary>
 		/// <param name="x">The x position in the world.</param>
 		/// <param name="y">The y position in the world.</param>
 		/// <param name="type">The tile type ID.</param>
 		/// <param name="style">The style.</param>
-		public void PlaceTile(int x, int y, ushort type, int style = 0)
+		public void PlaceBlock(int x, int y, ushort type, int style = 0)
 		{
 			Terraria.WorldGen.PlaceTile(x, y, type, style: style);
 		}
@@ -95,11 +95,11 @@ namespace Orion.Services
 		}
 
 		/// <summary>
-		/// Disposes the service and its unmanaged resources, if any, optionally disposing its managed resources, if
-		/// any.
+		/// Disposes the service and its unmanaged resources, optionally disposing its managed resources.
 		/// </summary>
 		/// <param name="disposing">
-		/// true to dispose managed and unmanaged resources, false to only dispose unmanaged resources.
+		/// true if called from a managed disposal, and *both* unmanaged and managed resources must be freed. false
+		/// if called from a finalizer, and *only* unmanaged resources may be freed.
 		/// </param>
 		protected override void Dispose(bool disposing)
 		{
@@ -153,10 +153,10 @@ namespace Orion.Services
 		/// Invokes the <see cref="WorldSaved"/> event.
 		/// </summary>
 		/// <param name="useCloud">A value indicating whether to use the "cloud". Unused.</param>
-		/// <param name="resetTime">A value indicating whether to reset the time. Unused.</param>
+		/// <param name="resetTime">A value indicating whether to reset the time.</param>
 		private void InvokeWorldSaved(bool useCloud, bool resetTime)
 		{
-			var args = new WorldSavedEventArgs();
+			var args = new WorldSavedEventArgs(resetTime);
 			WorldSaved?.Invoke(this, args);
 		}
 

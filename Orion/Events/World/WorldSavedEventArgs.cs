@@ -9,10 +9,17 @@ namespace Orion.Events.World
 	public class WorldSavedEventArgs : EventArgs
 	{
 		/// <summary>
-		/// Initializes a new instance of the <see cref="WorldSavingEventArgs"/> class.
+		/// Gets a value indicating whether to reset the time.
 		/// </summary>
-		public WorldSavedEventArgs()
+		public bool ResetTime { get; }
+
+		/// <summary>
+		/// Initializes a new instance of the <see cref="WorldSavedEventArgs"/> class.
+		/// </summary>
+		/// <param name="resetTime">A value indicating whether to reset the time.</param>
+		public WorldSavedEventArgs(bool resetTime)
 		{
+			ResetTime = resetTime;
 		}
 	}
 }

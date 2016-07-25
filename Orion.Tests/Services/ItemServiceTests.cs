@@ -19,10 +19,10 @@ namespace Orion.Tests.Services
 			{
 				var terrariaItem = new Terraria.Item();
 				bool eventOccurred = false;
-				itemService.ItemSetDefaults += (s, a) =>
+				itemService.ItemSetDefaults += (sender, args) =>
 				{
 					eventOccurred = true;
-					Assert.AreEqual(terrariaItem, a.Item.WrappedItem);
+					Assert.AreEqual(terrariaItem, args.Item.WrappedItem);
 				};
 
 				terrariaItem.SetDefaults(type);
@@ -40,7 +40,7 @@ namespace Orion.Tests.Services
 			{
 				var terrariaItem = new Terraria.Item();
 				bool eventOccurred = false;
-				itemService.ItemSetDefaults += (s, a) => eventOccurred = true;
+				itemService.ItemSetDefaults += (sender, args) => eventOccurred = true;
 				
 				terrariaItem.netDefaults(type);
 
@@ -56,7 +56,7 @@ namespace Orion.Tests.Services
 			{
 				var terrariaItem = new Terraria.Item();
 				bool eventOccurred = false;
-				itemService.ItemSetDefaults += (s, a) => eventOccurred = true;
+				itemService.ItemSetDefaults += (sender, args) => eventOccurred = true;
 
 				terrariaItem.SetDefaults(type);
 
@@ -72,11 +72,11 @@ namespace Orion.Tests.Services
 			{
 				var terrariaItem = new Terraria.Item();
 				bool eventOccurred = false;
-				itemService.ItemSettingDefaults += (s, a) =>
+				itemService.ItemSettingDefaults += (sender, args) =>
 				{
 					eventOccurred = true;
-					Assert.AreEqual(terrariaItem, a.Item.WrappedItem);
-					Assert.AreEqual(type, a.Type);
+					Assert.AreEqual(terrariaItem, args.Item.WrappedItem);
+					Assert.AreEqual(type, args.Type);
 				};
 
 				terrariaItem.SetDefaults(type);
@@ -92,7 +92,7 @@ namespace Orion.Tests.Services
 			using (var itemService = new ItemService(orion))
 			{
 				var terrariaItem = new Terraria.Item();
-				itemService.ItemSettingDefaults += (s, a) => a.Type = newType;
+				itemService.ItemSettingDefaults += (sender, args) => args.Type = newType;
 
 				terrariaItem.SetDefaults(type);
 				
@@ -107,7 +107,7 @@ namespace Orion.Tests.Services
 			using (var itemService = new ItemService(orion))
 			{
 				var terrariaItem = new Terraria.Item();
-				itemService.ItemSettingDefaults += (s, a) => a.Handled = true;
+				itemService.ItemSettingDefaults += (sender, args) => args.Handled = true;
 
 				terrariaItem.SetDefaults(type);
 
@@ -124,7 +124,7 @@ namespace Orion.Tests.Services
 			{
 				var terrariaItem = new Terraria.Item();
 				bool eventOccurred = false;
-				itemService.ItemSettingDefaults += (s, a) => eventOccurred = true;
+				itemService.ItemSettingDefaults += (sender, args) => eventOccurred = true;
 
 				terrariaItem.netDefaults(type);
 
@@ -140,7 +140,7 @@ namespace Orion.Tests.Services
 			{
 				var terrariaItem = new Terraria.Item();
 				bool eventOccurred = false;
-				itemService.ItemSettingDefaults += (s, a) => eventOccurred = true;
+				itemService.ItemSettingDefaults += (sender, args) => eventOccurred = true;
 
 				terrariaItem.SetDefaults(type);
 

@@ -14,28 +14,6 @@ namespace Orion.Tests.Core
 			Assert.Throws<ArgumentNullException>(() => new Npc(null));
 		}
 
-		[TestCase(100)]
-		public void GetMaxHP_IsCorrect(int maxHP)
-		{
-			var terrariaNpc = new Terraria.NPC();
-			var npc = new Npc(terrariaNpc);
-
-			terrariaNpc.lifeMax = maxHP;
-
-			Assert.AreEqual(maxHP, npc.MaxHP);
-		}
-
-		[TestCase(100)]
-		public void SetMaxHP_Updates(int maxHP)
-		{
-			var terrariaNpc = new Terraria.NPC();
-			var npc = new Npc(terrariaNpc);
-
-			npc.MaxHP = maxHP;
-
-			Assert.AreEqual(maxHP, terrariaNpc.lifeMax);
-		}
-
 		[TestCase(50)]
 		public void GetHP_IsCorrect(int hp)
 		{
@@ -56,6 +34,28 @@ namespace Orion.Tests.Core
 			npc.HP = hp;
 
 			Assert.AreEqual(hp, terrariaNpc.life);
+		}
+
+		[TestCase(100)]
+		public void GetMaxHP_IsCorrect(int maxHP)
+		{
+			var terrariaNpc = new Terraria.NPC();
+			var npc = new Npc(terrariaNpc);
+
+			terrariaNpc.lifeMax = maxHP;
+
+			Assert.AreEqual(maxHP, npc.MaxHP);
+		}
+
+		[TestCase(100)]
+		public void SetMaxHP_Updates(int maxHP)
+		{
+			var terrariaNpc = new Terraria.NPC();
+			var npc = new Npc(terrariaNpc);
+
+			npc.MaxHP = maxHP;
+
+			Assert.AreEqual(maxHP, terrariaNpc.lifeMax);
 		}
 
 		[TestCase("Name")]

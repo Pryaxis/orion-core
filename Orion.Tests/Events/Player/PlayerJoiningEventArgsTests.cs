@@ -8,7 +8,7 @@ namespace Orion.Tests.Events.Player
 	public class PlayedJoiningEventArgsTests
 	{
 		[Test]
-		public void Constructor_Null_ThrowsException()
+		public void Constructor_NullPlayer_ThrowsException()
 		{
 			Assert.Throws<ArgumentNullException>(() => new PlayerJoiningEventArgs(null));
 		}

@@ -8,7 +8,7 @@ namespace Orion.Tests.Events.Item
 	public class ItemSettingDefaultsEventArgsTests
 	{
 		[Test]
-		public void Constructor_Null_ThrowsException()
+		public void Constructor_NullItem_ThrowsException()
 		{
 			Assert.Throws<ArgumentNullException>(() => new ItemSettingDefaultsEventArgs(null, 0));
 		}

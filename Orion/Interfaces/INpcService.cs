@@ -12,12 +12,12 @@ namespace Orion.Interfaces
 	public interface INpcService : IService
 	{
 		/// <summary>
-		/// Occurs after an <see cref="INpc"/> drops loot.
+		/// Occurs after an <see cref="INpc"/> has dropped loot.
 		/// </summary>
 		event EventHandler<NpcDroppedLootEventArgs> NpcDroppedLoot;
 
 		/// <summary>
-		/// Occurs before an <see cref="INpc"/> drops loot.
+		/// Occurs when an <see cref="INpc"/> drops loot.
 		/// </summary>
 		event EventHandler<NpcDroppingLootEventArgs> NpcDroppingLoot;
 
@@ -27,40 +27,36 @@ namespace Orion.Interfaces
 		event EventHandler<NpcKilledEventArgs> NpcKilled;
 
 		/// <summary>
-		/// Occurs after an <see cref="INpc"/> spawns in the world.
+		/// Occurs after an <see cref="INpc"/> has spawned in the world.
 		/// </summary>
 		event EventHandler<NpcSpawnedEventArgs> NpcSpawned;
 
 		/// <summary>
-		/// Occurs before an <see cref="INpc"/> spawns in the world.
+		/// Occurs when an <see cref="INpc"/> spawns in the world.
 		/// </summary>
 		event EventHandler<NpcSpawningEventArgs> NpcSpawning;
 
 		/// <summary>
-		/// Occurs after an <see cref="INpc"/> transforms from one type to another.
+		/// Occurs after an <see cref="INpc"/> has transformed to another type.
 		/// </summary>
 		event EventHandler<NpcTransformedEventArgs> NpcTransformed;
 
 		/// <summary>
 		/// Finds all <see cref="INpc"/>s in the world, optionally matching a predicate.
 		/// </summary>
-		/// <param name="predicate">The predicate to match with, or null for none.</param>
+		/// <param name="predicate">The predicate to match with.</param>
 		/// <returns>An enumerable collection of <see cref="INpc"/>s.</returns>
 		IEnumerable<INpc> Find(Predicate<INpc> predicate = null);
 
 		/// <summary>
-		/// Spawns a new <see cref="INpc"/> with the specified type ID at a position in the world, optionally with
-		/// custom HP values.
+		/// Spawns a new <see cref="INpc"/> with the specified type ID at a position in the world.
 		/// </summary>
 		/// <param name="type">The type ID.</param>
 		/// <param name="position">The position in the world.</param>
-		/// <param name="hp">The custom HP, or null for the default.</param>
-		/// <param name="maxHP">The custom maximum HP, or null for the default.</param>
 		/// <returns>The resulting spawned <see cref="INpc"/>.</returns>
 		/// <exception cref="ArgumentOutOfRangeException">
-		/// <paramref name="type"/> was out of range, or <paramref name="hp"/> or <paramref name="maxHP"/> were
-		/// negative.
+		/// <paramref name="type"/> was out of range.
 		/// </exception>
-		INpc Spawn(int type, Vector2 position, int? hp = null, int? maxHP = null);
+		INpc Spawn(int type, Vector2 position);
 	}
 }

@@ -27,7 +27,7 @@ namespace Orion.Services
 		private readonly IPlayer[] _players;
 
 		/// <summary>
-		/// Occurs when a <see cref="IPlayer"/> has joined the server.
+		/// Occurs after a <see cref="IPlayer"/> has joined the server.
 		/// </summary>
 		public event EventHandler<PlayerJoinedEventArgs> PlayerJoined;
 
@@ -37,7 +37,7 @@ namespace Orion.Services
 		public event EventHandler<PlayerJoiningEventArgs> PlayerJoining;
 
 		/// <summary>
-		/// Occurs when a <see cref="IPlayer"/> has quit the server.
+		/// Occurs after a <see cref="IPlayer"/> has quit the server.
 		/// </summary>
 		public event EventHandler<PlayerQuitEventArgs> PlayerQuit;
 
@@ -56,7 +56,7 @@ namespace Orion.Services
 		/// <summary>
 		/// Finds all <see cref="IPlayer"/>s in the world, optionally matching a predicate.
 		/// </summary>
-		/// <param name="predicate">The predicate to match with, or null for none.</param>
+		/// <param name="predicate">The predicate to match with.</param>
 		/// <returns>An enumerable collection of <see cref="IPlayer"/>s.</returns>
 		public IEnumerable<IPlayer> Find(Predicate<IPlayer> predicate = null)
 		{

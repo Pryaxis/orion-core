@@ -12,12 +12,12 @@ namespace Orion.Interfaces
 	public interface IItemService : IService
 	{
 		/// <summary>
-		/// Occurs after an <see cref="IItem"/> has its defaults set.
+		/// Occurs after an <see cref="IItem"/> has had its defaults set.
 		/// </summary>
 		event EventHandler<ItemSetDefaultsEventArgs> ItemSetDefaults;
 
 		/// <summary>
-		/// Occurs before an <see cref="IItem"/> has its defaults set.
+		/// Occurs when an <see cref="IItem"/> is having its defaults set.
 		/// </summary>
 		event EventHandler<ItemSettingDefaultsEventArgs> ItemSettingDefaults;
 
@@ -26,7 +26,7 @@ namespace Orion.Interfaces
 		/// </summary>
 		/// <param name="type">The type ID.</param>
 		/// <param name="stack">The stack size.</param>
-		/// <param name="prefix">The prefix, or 0 for none.</param>
+		/// <param name="prefix">The prefix.</param>
 		/// <returns>The resulting instantiated <see cref="IItem"/>.</returns>
 		/// <exception cref="ArgumentOutOfRangeException">
 		/// <paramref name="type"/> was out of range, <paramref name="stack"/> was negative, or
@@ -37,7 +37,7 @@ namespace Orion.Interfaces
 		/// <summary>
 		/// Finds all <see cref="IItem"/>s in the world, optionally matching a predicate.
 		/// </summary>
-		/// <param name="predicate">The predicate to match with, or null for none.</param>
+		/// <param name="predicate">The predicate to match with.</param>
 		/// <returns>An enumerable collection of <see cref="IItem"/>s.</returns>
 		IEnumerable<IItem> Find(Predicate<IItem> predicate = null);
 

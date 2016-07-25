@@ -8,7 +8,7 @@ namespace Orion.Tests.Events.Npc
 	public class NpcSpawningEventArgsTests
 	{
 		[Test]
-		public void Constructor_Null_ThrowsException()
+		public void Constructor_NullNpc_ThrowsException()
 		{
 			Assert.Throws<ArgumentNullException>(() => new NpcSpawningEventArgs(null, 0));
 		}

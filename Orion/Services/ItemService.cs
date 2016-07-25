@@ -28,12 +28,12 @@ namespace Orion.Services
 		private readonly IItem[] _items;
 
 		/// <summary>
-		/// Occurs after an <see cref="IItem"/> has its defaults set.
+		/// Occurs after an <see cref="IItem"/> has had its defaults set.
 		/// </summary>
 		public event EventHandler<ItemSetDefaultsEventArgs> ItemSetDefaults;
 
 		/// <summary>
-		/// Occurs before an <see cref="IItem"/> has its defaults set.
+		/// Occurs when an <see cref="IItem"/> is having its defaults set.
 		/// </summary>
 		public event EventHandler<ItemSettingDefaultsEventArgs> ItemSettingDefaults;
 
@@ -53,7 +53,7 @@ namespace Orion.Services
 		/// </summary>
 		/// <param name="type">The type ID.</param>
 		/// <param name="stack">The stack size.</param>
-		/// <param name="prefix">The prefix, or 0 for none.</param>
+		/// <param name="prefix">The prefix.</param>
 		/// <returns>The resulting instantiated <see cref="IItem"/>.</returns>
 		/// <exception cref="ArgumentOutOfRangeException">
 		/// <paramref name="type"/> was out of range, <paramref name="stack"/> was negative, or
@@ -84,7 +84,7 @@ namespace Orion.Services
 		/// <summary>
 		/// Finds all <see cref="IItem"/>s in the world, optionally matching a predicate.
 		/// </summary>
-		/// <param name="predicate">The predicate to match with, or null for none.</param>
+		/// <param name="predicate">The predicate to match with.</param>
 		/// <returns>An enumerable collection of <see cref="IItem"/>s.</returns>
 		public IEnumerable<IItem> Find(Predicate<IItem> predicate = null)
 		{
@@ -174,7 +174,7 @@ namespace Orion.Services
 		/// Invokes the <see cref="ItemSettingDefaults"/> event.
 		/// </summary>
 		/// <param name="terrariaItem">The Terraria item that is having its defaults set.</param>
-		/// <param name="type">The Terraria item's type ID. This will update the type ID.</param>
+		/// <param name="type">The Terraria item's type ID. This will update the normal server's type ID.</param>
 		/// <param name="noMaterialCheck">
 		/// A value indicating whether to determine whether the Terraria item is a material. Unused.
 		/// </param>
