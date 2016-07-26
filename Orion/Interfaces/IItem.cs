@@ -8,14 +8,24 @@ namespace Orion.Interfaces
 	public interface IItem
 	{
 		/// <summary>
+		/// Gets the item's axe power.
+		/// </summary>
+		int AxePower { get; }
+		
+		/// <summary>
 		/// Gets the item's damage.
 		/// </summary>
 		int Damage { get; }
 
 		/// <summary>
+		/// Gets the item's hammer power.
+		/// </summary>
+		int HammerPower { get; }
+		
+		/// <summary>
 		/// Gets the item's maximum stack size.
 		/// </summary>
-		int MaxStack { get; }
+		int MaxStackSize { get; }
 
 		/// <summary>
 		/// Gets the item's name.
@@ -23,30 +33,43 @@ namespace Orion.Interfaces
 		string Name { get; }
 
 		/// <summary>
+		/// Gets the item's pickaxe power.
+		/// </summary>
+		int PickaxePower { get; }
+
+		/// <summary>
 		/// Gets or sets the item's position in the world.
 		/// </summary>
 		Vector2 Position { get; set; }
-
+		
 		/// <summary>
 		/// Gets or sets the item's prefix.
 		/// </summary>
 		byte Prefix { get; set; }
-
+		
+		/// <summary>
+		/// Gets the projectile type ID that the item creates.
+		/// </summary>
+		int Projectile { get; }
+		
 		/// <summary>
 		/// Gets or sets the item's stack size.
 		/// </summary>
-		int Stack { get; set; }
-
+		int StackSize { get; set; }
+		
 		/// <summary>
-		/// Gets the item's type ID.
+		/// Gets or sets the item's type ID.
 		/// </summary>
-		int Type { get; }
-
+		/// <remarks>
+		/// Setting the type ID will update the other properties as well.
+		/// </remarks>
+		int Type { get; set; }
+		
 		/// <summary>
 		/// Gets or sets the item's velocity in the world.
 		/// </summary>
 		Vector2 Velocity { get; set; }
-
+		
 		/// <summary>
 		/// Gets the wrapped Terraria item.
 		/// </summary>

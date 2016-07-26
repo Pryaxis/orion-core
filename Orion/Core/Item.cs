@@ -10,19 +10,34 @@ namespace Orion.Core
 	public class Item : IItem
 	{
 		/// <summary>
+		/// Gets the item's axe power.
+		/// </summary>
+		public int AxePower => WrappedItem.axe;
+
+		/// <summary>
 		/// Gets the item's damage.
 		/// </summary>
 		public int Damage => WrappedItem.damage;
 
 		/// <summary>
+		/// Gets the item's hammer power.
+		/// </summary>
+		public int HammerPower => WrappedItem.hammer;
+
+		/// <summary>
 		/// Gets the item's maximum stack size.
 		/// </summary>
-		public int MaxStack => WrappedItem.maxStack;
+		public int MaxStackSize => WrappedItem.maxStack;
 
 		/// <summary>
 		/// Gets the item's name.
 		/// </summary>
 		public string Name => WrappedItem.name;
+
+		/// <summary>
+		/// Gets the item's pickaxe power.
+		/// </summary>
+		public int PickaxePower => WrappedItem.pick;
 
 		/// <summary>
 		/// Gets or sets the item's position in the world.
@@ -43,18 +58,30 @@ namespace Orion.Core
 		}
 
 		/// <summary>
+		/// Gets the projectile type ID that the item shoots.
+		/// </summary>
+		public int Projectile => WrappedItem.shoot;
+
+		/// <summary>
 		/// Gets or sets the item's stack size.
 		/// </summary>
-		public int Stack
+		public int StackSize
 		{
 			get { return WrappedItem.stack; }
 			set { WrappedItem.stack = value; }
 		}
 
 		/// <summary>
-		/// Gets the item's type ID.
+		/// Gets or sets the item's type ID.
 		/// </summary>
-		public int Type => WrappedItem.netID;
+		/// <remarks>
+		/// Setting the type ID will update the other properties as well.
+		/// </remarks>
+		public int Type
+		{
+			get { return WrappedItem.netID; }
+			set { WrappedItem.netDefaults(value); }
+		}
 
 		/// <summary>
 		/// Gets or sets the item's velocity in the world.
@@ -64,7 +91,7 @@ namespace Orion.Core
 			get { return WrappedItem.velocity; }
 			set { WrappedItem.velocity = value; }
 		}
-
+		
 		/// <summary>
 		/// Gets the wrapped Terraria item.
 		/// </summary>

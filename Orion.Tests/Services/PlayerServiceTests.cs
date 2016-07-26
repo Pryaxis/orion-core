@@ -23,14 +23,14 @@ namespace Orion.Tests.Services
 			{
 				for (int i = 0; i < Terraria.Main.player.Length; ++i)
 				{
-					Terraria.Main.player[i] = new Terraria.Player {active = i < populate, name = "A"};
+					Terraria.Main.player[i] = new Terraria.Player {active = i < populate};
 				}
 				List<IPlayer> players = playerService.Find().ToList();
 
 				Assert.AreEqual(populate, players.Count);
-				foreach (IPlayer player in players)
+				for (int i = 0; i < populate; ++i)
 				{
-					Assert.AreEqual("A", player.Name);
+					Assert.AreSame(Terraria.Main.player[i], players[i].WrappedPlayer);
 				}
 			}
 		}

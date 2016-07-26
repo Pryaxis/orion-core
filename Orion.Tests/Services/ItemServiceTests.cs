@@ -159,7 +159,7 @@ namespace Orion.Tests.Services
 				IItem item = itemService.Create(type, stack, prefix);
 
 				Assert.AreEqual(type, item.Type);
-				Assert.AreEqual(stack, item.Stack);
+				Assert.AreEqual(stack, item.StackSize);
 				Assert.AreEqual(prefix, item.Prefix);
 			}
 		}
@@ -187,14 +187,14 @@ namespace Orion.Tests.Services
 			{
 				for (int i = 0; i < Terraria.Main.item.Length; ++i)
 				{
-					Terraria.Main.item[i] = new Terraria.Item {active = i < populate, netID = 1};
+					Terraria.Main.item[i] = new Terraria.Item {active = i < populate, type = 1};
 				}
 				List<IItem> items = itemService.Find().ToList();
 
 				Assert.AreEqual(populate, items.Count);
-				foreach (IItem item in items)
+				for (int i = 0; i < populate; ++i)
 				{
-					Assert.AreEqual(1, item.Type);
+					Assert.AreSame(Terraria.Main.item[i], items[i].WrappedItem);
 				}
 			}
 		}
@@ -209,7 +209,7 @@ namespace Orion.Tests.Services
 			{
 				for (int i = 0; i < Terraria.Main.item.Length; ++i)
 				{
-					Terraria.Main.item[i] = new Terraria.Item {active = true, netID = i};
+					Terraria.Main.item[i] = new Terraria.Item {active = true, type = i};
 				}
 				List<IItem> items = itemService.Find(predicate).ToList();
 				IEnumerable<IItem> otherItems = itemService.Find(i => !items.Contains(i));
@@ -236,7 +236,7 @@ namespace Orion.Tests.Services
 				IItem item = itemService.Spawn(type, new Vector2(1000, 2000), stack, prefix);
 
 				Assert.AreEqual(type, item.Type);
-				Assert.AreEqual(stack, item.Stack);
+				Assert.AreEqual(stack, item.StackSize);
 				Assert.AreEqual(prefix, item.Prefix);
 				Assert.That(item.Position.X, Is.InRange(900, 1100));
 				Assert.That(item.Position.Y, Is.InRange(1900, 2100));

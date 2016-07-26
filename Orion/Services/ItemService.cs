@@ -52,22 +52,22 @@ namespace Orion.Services
 		/// Creates a new <see cref="IItem"/> with the specified type ID, optionally with custom stack size and prefix.
 		/// </summary>
 		/// <param name="type">The type ID.</param>
-		/// <param name="stack">The stack size.</param>
+		/// <param name="stackSize">The stack size.</param>
 		/// <param name="prefix">The prefix.</param>
 		/// <returns>The resulting instantiated <see cref="IItem"/>.</returns>
 		/// <exception cref="ArgumentOutOfRangeException">
-		/// <paramref name="type"/> was out of range, <paramref name="stack"/> was negative, or
+		/// <paramref name="type"/> was out of range, <paramref name="stackSize"/> was negative, or
 		/// <paramref name="prefix"/> was too large.
 		/// </exception>
-		public IItem Create(int type, int stack = 1, byte prefix = 0)
+		public IItem Create(int type, int stackSize = 1, byte prefix = 0)
 		{
 			if (type < -48 || type > Terraria.Main.maxItemTypes)
 			{
 				throw new ArgumentOutOfRangeException(nameof(type));
 			}
-			if (stack < 0)
+			if (stackSize < 0)
 			{
-				throw new ArgumentOutOfRangeException(nameof(stack));
+				throw new ArgumentOutOfRangeException(nameof(stackSize));
 			}
 			if (prefix > Terraria.Item.maxPrefixes)
 			{
@@ -76,7 +76,7 @@ namespace Orion.Services
 			
 			var terrariaItem = new Terraria.Item();
 			terrariaItem.netDefaults(type);
-			terrariaItem.stack = stack;
+			terrariaItem.stack = stackSize;
 			terrariaItem.prefix = prefix;
 			return new Item(terrariaItem);
 		}
@@ -106,29 +106,29 @@ namespace Orion.Services
 		/// </summary>
 		/// <param name="type">The type ID.</param>
 		/// <param name="position">The position in the world.</param>
-		/// <param name="stack">The stack size.</param>
+		/// <param name="stackSize">The stack size.</param>
 		/// <param name="prefix">The prefix.</param>
 		/// <returns>The resulting spawned <see cref="IItem"/>.</returns>
 		/// <exception cref="ArgumentOutOfRangeException">
-		/// <paramref name="type"/> was out of range, <paramref name="stack"/> was negative, or
+		/// <paramref name="type"/> was out of range, <paramref name="stackSize"/> was negative, or
 		/// <paramref name="prefix"/> was too large.
 		/// </exception>
-		public IItem Spawn(int type, Vector2 position, int stack = 1, byte prefix = 0)
+		public IItem Spawn(int type, Vector2 position, int stackSize = 1, byte prefix = 0)
 		{
 			if (type < -48 || type > Terraria.Main.maxItemTypes)
 			{
 				throw new ArgumentOutOfRangeException(nameof(type));
 			}
-			if (stack < 0)
+			if (stackSize < 0)
 			{
-				throw new ArgumentOutOfRangeException(nameof(stack));
+				throw new ArgumentOutOfRangeException(nameof(stackSize));
 			}
 			if (prefix > Terraria.Item.maxPrefixes)
 			{
 				throw new ArgumentOutOfRangeException(nameof(prefix));
 			}
 
-			int index = Terraria.Item.NewItem((int) position.X, (int) position.Y, 0, 0, type, stack, pfix: prefix);
+			int index = Terraria.Item.NewItem((int) position.X, (int) position.Y, 0, 0, type, stackSize, pfix: prefix);
 			var item = new Item(Terraria.Main.item[index]);
 			_items[index] = item;
 			return item;

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Reflection;
 using Microsoft.Xna.Framework;
 using NUnit.Framework;
 using Orion.Core;
@@ -8,146 +9,60 @@ namespace Orion.Tests.Core
 	[TestFixture]
 	public class ItemTests
 	{
+		private static readonly object[] GetProperties =
+		{
+			new object[] {nameof(Item.AxePower), nameof(Terraria.Item.axe), 100},
+			new object[] {nameof(Item.Damage), nameof(Terraria.Item.damage), 100},
+			new object[] {nameof(Item.MaxStackSize), nameof(Terraria.Item.maxStack), 999},
+			new object[] {nameof(Item.HammerPower), nameof(Terraria.Item.hammer), 100},
+			new object[] {nameof(Item.Name), nameof(Terraria.Item.name), "TEST"},
+			new object[] {nameof(Item.PickaxePower), nameof(Terraria.Item.pick), 100},
+			new object[] {nameof(Item.Position), nameof(Terraria.Item.position), Vector2.One},
+			new object[] {nameof(Item.Prefix), nameof(Terraria.Item.prefix), (byte)83},
+			new object[] {nameof(Item.Projectile), nameof(Terraria.Item.shoot), 1},
+			new object[] {nameof(Item.StackSize), nameof(Terraria.Item.stack), 999},
+			new object[] {nameof(Item.Type), nameof(Terraria.Item.netID), 1},
+			new object[] {nameof(Item.Velocity), nameof(Terraria.Item.velocity), Vector2.One},
+		};
+
+		private static readonly object[] SetProperties =
+		{
+			new object[] {nameof(Item.Prefix), nameof(Terraria.Item.prefix), (byte)83},
+			new object[] {nameof(Item.StackSize), nameof(Terraria.Item.stack), 999},
+			new object[] {nameof(Item.Type), nameof(Terraria.Item.netID), 1},
+		};
+
 		[Test]
 		public void Constructor_Null_ThrowsException()
 		{
 			Assert.Throws<ArgumentNullException>(() => new Item(null));
 		}
 
-		[TestCase(100)]
-		public void GetDamage_IsCorrect(int damage)
+		[TestCaseSource(nameof(GetProperties))]
+		public void GetProperty_IsCorrect(string itemPropertyName, string terrariaItemFieldName, object value)
 		{
 			var terrariaItem = new Terraria.Item();
+			FieldInfo terrariaItemField = typeof(Terraria.Item).GetField(terrariaItemFieldName);
 			var item = new Item(terrariaItem);
+			PropertyInfo itemProperty = typeof(Item).GetProperty(itemPropertyName);
 
-			terrariaItem.damage = damage;
+			terrariaItemField.SetValue(terrariaItem, Convert.ChangeType(value, terrariaItemField.FieldType));
 
-			Assert.AreEqual(damage, item.Damage);
+			Assert.AreEqual(terrariaItemField.GetValue(terrariaItem), itemProperty.GetValue(item));
 		}
 
-		[TestCase(999)]
-		public void GetMaxStack_IsCorrect(int maxStack)
+		[TestCaseSource(nameof(SetProperties))]
+		public void SetProperty_IsCorrect(string itemPropertyName, string terrariaItemFieldName, object value)
 		{
 			var terrariaItem = new Terraria.Item();
+			FieldInfo terrariaItemField = typeof(Terraria.Item).GetField(terrariaItemFieldName);
 			var item = new Item(terrariaItem);
+			PropertyInfo itemProperty = typeof(Item).GetProperty(itemPropertyName);
 
-			terrariaItem.maxStack = maxStack;
+			itemProperty.SetValue(item, Convert.ChangeType(value, itemProperty.PropertyType));
 
-			Assert.AreEqual(maxStack, item.MaxStack);
-		}
+			Assert.AreEqual(itemProperty.GetValue(item), terrariaItemField.GetValue(terrariaItem));
 
-		[TestCase("Name")]
-		public void GetName_IsCorrect(string name)
-		{
-			var terrariaItem = new Terraria.Item();
-			var item = new Item(terrariaItem);
-
-			terrariaItem.name = name;
-
-			Assert.AreEqual(name, item.Name);
-		}
-
-		private static readonly Vector2[] Positions = {Vector2.One};
-
-		[Test, TestCaseSource(nameof(Positions))]
-		public void GetPosition_IsCorrect(Vector2 position)
-		{
-			var terrariaItem = new Terraria.Item();
-			var item = new Item(terrariaItem);
-
-			terrariaItem.position = position;
-
-			Assert.AreEqual(position, item.Position);
-		}
-
-		[Test, TestCaseSource(nameof(Positions))]
-		public void SetPosition_Updates(Vector2 position)
-		{
-			var terrariaItem = new Terraria.Item();
-			var item = new Item(terrariaItem);
-
-			item.Position = position;
-
-			Assert.AreEqual(position, terrariaItem.position);
-		}
-		
-		[TestCase(81)]
-		public void GetPrefix_IsCorrect(byte prefix)
-		{
-			var terrariaItem = new Terraria.Item();
-			var item = new Item(terrariaItem);
-
-			terrariaItem.prefix = prefix;
-
-			Assert.AreEqual(prefix, item.Prefix);
-		}
-
-		[TestCase(81)]
-		public void SetPrefix_Updates(byte prefix)
-		{
-			var terrariaItem = new Terraria.Item();
-			var item = new Item(terrariaItem);
-
-			item.Prefix = prefix;
-
-			Assert.AreEqual(prefix, terrariaItem.prefix);
-		}
-
-		[TestCase(99)]
-		public void GetStack_IsCorrect(int stack)
-		{
-			var terrariaItem = new Terraria.Item();
-			var item = new Item(terrariaItem);
-
-			terrariaItem.stack = stack;
-
-			Assert.AreEqual(stack, item.Stack);
-		}
-
-		[TestCase(99)]
-		public void SetStack_Updates(int stack)
-		{
-			var terrariaItem = new Terraria.Item();
-			var item = new Item(terrariaItem);
-
-			item.Stack = stack;
-
-			Assert.AreEqual(stack, terrariaItem.stack);
-		}
-
-		[TestCase(149)]
-		public void GetType_IsCorrect(int type)
-		{
-			var terrariaItem = new Terraria.Item();
-			var item = new Item(terrariaItem);
-
-			terrariaItem.netID = type;
-
-			Assert.AreEqual(type, item.Type);
-		}
-
-		private static readonly Vector2[] Velocities = {Vector2.One};
-
-		[Test, TestCaseSource(nameof(Velocities))]
-		public void GetVelocity_IsCorrect(Vector2 velocity)
-		{
-			var terrariaItem = new Terraria.Item();
-			var item = new Item(terrariaItem);
-
-			terrariaItem.velocity = velocity;
-
-			Assert.AreEqual(velocity, item.Velocity);
-		}
-
-		[Test, TestCaseSource(nameof(Velocities))]
-		public void SetVelocity_Updates(Vector2 velocity)
-		{
-			var terrariaItem = new Terraria.Item();
-			var item = new Item(terrariaItem);
-
-			item.Velocity = velocity;
-
-			Assert.AreEqual(velocity, terrariaItem.velocity);
 		}
 
 		[Test]
