@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Reflection;
 using Microsoft.Xna.Framework;
 using NUnit.Framework;
 using Orion.Core;
@@ -8,124 +9,55 @@ namespace Orion.Tests.Core
 	[TestFixture]
 	public class NpcTests
 	{
+		private static readonly object[] GetWrappers =
+		{
+			new object[] {nameof(Npc.Damage), nameof(Terraria.NPC.damage), 100},
+			new object[] {nameof(Npc.Defense), nameof(Terraria.NPC.defense), 100},
+			new object[] {nameof(Npc.Health), nameof(Terraria.NPC.life), 100},
+			new object[] {nameof(Npc.MaxHealth), nameof(Terraria.NPC.lifeMax), 100},
+			new object[] {nameof(Npc.Name), nameof(Terraria.NPC.name), "TEST"},
+			new object[] {nameof(Npc.Position), nameof(Terraria.NPC.position), Vector2.One},
+			new object[] {nameof(Npc.Type), nameof(Terraria.NPC.netID), 1}
+		};
+
+		private static readonly object[] SetWrappers =
+		{
+			new object[] {nameof(Npc.Health), nameof(Terraria.NPC.life), 100},
+			new object[] {nameof(Npc.MaxHealth), nameof(Terraria.NPC.lifeMax), 100},
+			new object[] {nameof(Npc.Position), nameof(Terraria.NPC.position), Vector2.One},
+			new object[] {nameof(Npc.Velocity), nameof(Terraria.NPC.velocity), Vector2.One}
+		};
+
 		[Test]
-		public void Constructor_NullNpc_ThrowsException()
+		public void Constructor_NullNpc_ThrowsArgumentNullException()
 		{
 			Assert.Throws<ArgumentNullException>(() => new Npc(null));
 		}
 
-		[TestCase(50)]
-		public void GetHP_IsCorrect(int hp)
+		[TestCaseSource(nameof(GetWrappers))]
+		public void GetProperty_IsCorrect(string npcPropertyName, string terrariaNpcFieldName, object value)
 		{
 			var terrariaNpc = new Terraria.NPC();
+			FieldInfo terrariaNpcField = typeof(Terraria.NPC).GetField(terrariaNpcFieldName);
 			var npc = new Npc(terrariaNpc);
+			PropertyInfo npcProperty = typeof(Npc).GetProperty(npcPropertyName);
 
-			terrariaNpc.life = hp;
+			terrariaNpcField.SetValue(terrariaNpc, Convert.ChangeType(value, terrariaNpcField.FieldType));
 
-			Assert.AreEqual(hp, npc.HP);
+			Assert.AreEqual(value, npcProperty.GetValue(npc));
 		}
 
-		[TestCase(50)]
-		public void SetHP_Updates(int hp)
+		[TestCaseSource(nameof(SetWrappers))]
+		public void SetProperty_IsCorrect(string npcPropertyName, string terrariaNpcFieldName, object value)
 		{
 			var terrariaNpc = new Terraria.NPC();
+			FieldInfo terrariaNpcField = typeof(Terraria.NPC).GetField(terrariaNpcFieldName);
 			var npc = new Npc(terrariaNpc);
+			PropertyInfo npcProperty = typeof(Npc).GetProperty(npcPropertyName);
 
-			npc.HP = hp;
+			npcProperty.SetValue(npc, Convert.ChangeType(value, npcProperty.PropertyType));
 
-			Assert.AreEqual(hp, terrariaNpc.life);
-		}
-
-		[TestCase(100)]
-		public void GetMaxHP_IsCorrect(int maxHP)
-		{
-			var terrariaNpc = new Terraria.NPC();
-			var npc = new Npc(terrariaNpc);
-
-			terrariaNpc.lifeMax = maxHP;
-
-			Assert.AreEqual(maxHP, npc.MaxHP);
-		}
-
-		[TestCase(100)]
-		public void SetMaxHP_Updates(int maxHP)
-		{
-			var terrariaNpc = new Terraria.NPC();
-			var npc = new Npc(terrariaNpc);
-
-			npc.MaxHP = maxHP;
-
-			Assert.AreEqual(maxHP, terrariaNpc.lifeMax);
-		}
-
-		[TestCase("Name")]
-		public void GetName_IsCorrect(string name)
-		{
-			var terrariaNpc = new Terraria.NPC();
-			var npc = new Npc(terrariaNpc);
-
-			terrariaNpc.name = name;
-
-			Assert.AreEqual(name, npc.Name);
-		}
-
-		private static readonly Vector2[] Positions = {Vector2.One};
-
-		[Test, TestCaseSource(nameof(Positions))]
-		public void GetPosition_IsCorrect(Vector2 position)
-		{
-			var terrariaNpc = new Terraria.NPC();
-			var npc = new Npc(terrariaNpc);
-
-			terrariaNpc.position = position;
-
-			Assert.AreEqual(position, npc.Position);
-		}
-
-		[Test, TestCaseSource(nameof(Positions))]
-		public void SetPosition_Updates(Vector2 position)
-		{
-			var terrariaNpc = new Terraria.NPC();
-			var npc = new Npc(terrariaNpc);
-
-			npc.Position = position;
-
-			Assert.AreEqual(position, terrariaNpc.position);
-		}
-
-		[TestCase(5)]
-		public void GetType_IsCorrect(int type)
-		{
-			var terrariaNpc = new Terraria.NPC();
-			var npc = new Npc(terrariaNpc);
-
-			terrariaNpc.type = type;
-
-			Assert.AreEqual(type, npc.Type);
-		}
-
-		private static readonly Vector2[] Velocities = {Vector2.One};
-
-		[Test, TestCaseSource(nameof(Velocities))]
-		public void GetVelocity_IsCorrect(Vector2 velocity)
-		{
-			var terrariaNpc = new Terraria.NPC();
-			var npc = new Npc(terrariaNpc);
-
-			terrariaNpc.velocity = velocity;
-
-			Assert.AreEqual(velocity, npc.Velocity);
-		}
-
-		[Test, TestCaseSource(nameof(Velocities))]
-		public void SetVelocity_Updates(Vector2 velocity)
-		{
-			var terrariaNpc = new Terraria.NPC();
-			var npc = new Npc(terrariaNpc);
-
-			npc.Velocity = velocity;
-
-			Assert.AreEqual(velocity, terrariaNpc.velocity);
+			Assert.AreEqual(value, terrariaNpcField.GetValue(terrariaNpc));
 		}
 
 		[Test]
@@ -146,7 +78,18 @@ namespace Orion.Tests.Core
 
 			npc.Kill();
 			
-			Assert.IsTrue(npc.HP <= 0, "NPC should have been killed.");
+			Assert.IsTrue(npc.Health <= 0, "NPC should have been killed.");
+		}
+
+		[TestCase(1)]
+		public void SetDefaults_IsCorrect(int type)
+		{
+			var terrariaNpc = new Terraria.NPC();
+			var npc = new Npc(terrariaNpc);
+
+			npc.SetDefaults(type);
+
+			Assert.AreEqual(type, npc.Type);
 		}
 	}
 }

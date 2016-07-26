@@ -7,7 +7,7 @@ namespace Orion.Tests.Framework
 	[TestFixture]
 	public class ServiceMapTest
 	{
-		[Test]
+		/*[Test]
 		public void TestServiceMap()
 		{
 			var serviceMap = new ServiceMap();
@@ -21,6 +21,6 @@ namespace Orion.Tests.Framework
 
 				File.WriteAllBytes("services.json", ms.ToArray());
 			}
-		}
+		}*/
 	}
 }

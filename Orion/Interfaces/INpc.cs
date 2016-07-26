@@ -1,4 +1,5 @@
-﻿using Microsoft.Xna.Framework;
+﻿using System;
+using Microsoft.Xna.Framework;
 
 namespace Orion.Interfaces
 {
@@ -8,14 +9,24 @@ namespace Orion.Interfaces
 	public interface INpc
 	{
 		/// <summary>
-		/// Gets or sets the NPC's HP.
+		/// Gets the NPC's damage.
 		/// </summary>
-		int HP { get; set; }
+		int Damage { get; }
 
 		/// <summary>
-		/// Gets or sets the NPC's maximum HP.
+		/// Gets the NPC's defense.
 		/// </summary>
-		int MaxHP { get; set; }
+		int Defense { get; }
+
+		/// <summary>
+		/// Gets or sets the NPC's health.
+		/// </summary>
+		int Health { get; set; }
+
+		/// <summary>
+		/// Gets or sets the NPC's maximum health.
+		/// </summary>
+		int MaxHealth { get; set; }
 
 		/// <summary>
 		/// Gets the NPC's name.
@@ -28,7 +39,7 @@ namespace Orion.Interfaces
 		Vector2 Position { get; set; }
 
 		/// <summary>
-		/// Gets the NPC's type ID.
+		/// Gets the NPC's type.
 		/// </summary>
 		int Type { get; }
 
@@ -46,5 +57,12 @@ namespace Orion.Interfaces
 		/// Kills the NPC.
 		/// </summary>
 		void Kill();
+
+		/// <summary>
+		/// Sets the NPC's defaults to the specified type's.
+		/// </summary>
+		/// <param name="type">The type.</param>
+		/// <exception cref="ArgumentOutOfRangeException"><paramref name="type"/> was an invalid type.</exception>
+		void SetDefaults(int type);
 	}
 }

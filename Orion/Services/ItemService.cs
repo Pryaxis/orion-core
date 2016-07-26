@@ -61,7 +61,6 @@ namespace Orion.Services
 			return item;
 		}
 
-
 		/// <summary>
 		/// Finds all <see cref="IItem"/>s in the world, optionally matching a predicate.
 		/// </summary>
@@ -84,7 +83,6 @@ namespace Orion.Services
 			}
 			return items.Where(i => i.WrappedItem.active && (predicate?.Invoke(i) ?? true));
 		}
-=
 
 		/// <summary>
 		/// Spawns a new <see cref="IItem"/> with the specified type and position in the world, optionally with custom

@@ -22,13 +22,13 @@ namespace Orion.Tests.Core
 			new object[] {nameof(Item.Projectile), nameof(Terraria.Item.shoot), 1},
 			new object[] {nameof(Item.StackSize), nameof(Terraria.Item.stack), 999},
 			new object[] {nameof(Item.Type), nameof(Terraria.Item.netID), 1},
-			new object[] {nameof(Item.Velocity), nameof(Terraria.Item.velocity), Vector2.One},
+			new object[] {nameof(Item.Velocity), nameof(Terraria.Item.velocity), Vector2.One}
 		};
 
 		private static readonly object[] SetWrappers =
 		{
 			new object[] {nameof(Item.Position), nameof(Terraria.Item.position), Vector2.One},
-			new object[] {nameof(Item.Velocity), nameof(Terraria.Item.velocity), Vector2.One},
+			new object[] {nameof(Item.Velocity), nameof(Terraria.Item.velocity), Vector2.One}
 		};
 
 		[Test]
@@ -47,7 +47,7 @@ namespace Orion.Tests.Core
 
 			terrariaItemField.SetValue(terrariaItem, Convert.ChangeType(value, terrariaItemField.FieldType));
 
-			Assert.AreEqual(terrariaItemField.GetValue(terrariaItem), itemProperty.GetValue(item));
+			Assert.AreEqual(value, itemProperty.GetValue(item));
 		}
 
 		[TestCaseSource(nameof(SetWrappers))]
@@ -60,8 +60,7 @@ namespace Orion.Tests.Core
 
 			itemProperty.SetValue(item, Convert.ChangeType(value, itemProperty.PropertyType));
 
-			Assert.AreEqual(itemProperty.GetValue(item), terrariaItemField.GetValue(terrariaItem));
-
+			Assert.AreEqual(value, terrariaItemField.GetValue(terrariaItem));
 		}
 
 		[TestCase(1)]
