@@ -4,7 +4,7 @@ using Orion.Interfaces;
 namespace Orion.Events.Projectile
 {
 	/// <summary>
-	/// Provides data for the <see cref="IProjectileService.SetDefaults"/> event.
+	/// Provides data for the <see cref="IProjectileService.ProjectileSetDefaults"/> event.
 	/// </summary>
 	public class ProjectileSetDefaultsEventArgs : EventArgs
 	{
