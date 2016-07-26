@@ -81,7 +81,7 @@ namespace Orion.Services
 		private void InvokeProjectileSetDefaults(Terraria.Projectile terrariaProjectile, int type)
 		{
 			var projectile = new Projectile(terrariaProjectile);
-			var args = new ProjectileSetDefaultsEventArgs(projectile, type);
+			var args = new ProjectileSetDefaultsEventArgs(projectile);
 			ProjectileSetDefaults?.Invoke(this, args);
 		}
 

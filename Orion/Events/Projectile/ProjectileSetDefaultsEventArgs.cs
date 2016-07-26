@@ -14,17 +14,11 @@ namespace Orion.Events.Projectile
 		public IProjectile Projectile { get; }
 
 		/// <summary>
-		/// Gets the type ID that the <see cref="IProjectile"/> had its defaults set to. 
-		/// </summary>
-		public int Type { get; }
-
-		/// <summary>
 		/// Initializes a new instance of the <see cref="ProjectileSetDefaultsEventArgs"/> class. 
 		/// </summary>
 		/// <param name="projectile">The <see cref="IProjectile"/> that had its defaults set.</param>
-		/// <param name="type">The type ID that the <see cref="IProjectile"/> had its defaults set to. </param>
 		/// <exception cref="ArgumentNullException"><paramref name="projectile"/> was null.</exception>
-		public ProjectileSetDefaultsEventArgs(IProjectile projectile, int type)
+		public ProjectileSetDefaultsEventArgs(IProjectile projectile)
 		{
 			if (projectile == null)
 			{
@@ -32,7 +26,6 @@ namespace Orion.Events.Projectile
 			}
 
 			Projectile = projectile;
-			Type = type;
 		}
 	}
 }
