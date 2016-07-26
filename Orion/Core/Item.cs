@@ -49,33 +49,37 @@ namespace Orion.Core
 		}
 
 		/// <summary>
-		/// Gets or sets the item's prefix.
+		/// Gets the item's prefix.
 		/// </summary>
-		/// <exception cref="ArgumentOutOfRangeException">
-		/// <paramref name="value"/> was greater than the number of prefixes.
-		/// </exception>
-		public byte Prefix
-		{
-			get { return WrappedItem.prefix; }
-			set { WrappedItem.prefix = value; }
-		}
+		public int Prefix => WrappedItem.prefix;
 
 		/// <summary>
-		/// Gets the projectile type ID that the item shoots.
+		/// Gets the projectile type that the item creates.
 		/// </summary>
 		public int Projectile => WrappedItem.shoot;
 
 		/// <summary>
 		/// Gets or sets the item's stack size.
 		/// </summary>
+		/// <exception cref="ArgumentOutOfRangeException">
+		/// <paramref name="value"/> was negative or greater than <see cref="IItem.MaxStackSize"/>.
+		/// </exception>
 		public int StackSize
 		{
 			get { return WrappedItem.stack; }
-			set { WrappedItem.stack = value; }
+			set
+			{
+				if (value < 0 || value > MaxStackSize)
+				{
+					throw new ArgumentOutOfRangeException(nameof(value));
+				}
+
+				WrappedItem.stack = value;
+			}
 		}
 
 		/// <summary>
-		/// Gets the item's type ID.
+		/// Gets the item's type.
 		/// </summary>
 		public int Type => WrappedItem.netID;
 
@@ -87,7 +91,7 @@ namespace Orion.Core
 			get { return WrappedItem.velocity; }
 			set { WrappedItem.velocity = value; }
 		}
-		
+
 		/// <summary>
 		/// Gets the wrapped Terraria item.
 		/// </summary>
@@ -109,12 +113,33 @@ namespace Orion.Core
 		}
 
 		/// <summary>
-		/// Sets the item's defaults to the specified type ID.
+		/// Sets the item's defaults to the specified type's.
 		/// </summary>
-		/// <param name="type">The type ID.</param>
+		/// <param name="type">The type.</param>
+		/// <exception cref="ArgumentOutOfRangeException"><paramref name="type"/> was an invalid type.</exception>
 		public void SetDefaults(int type)
 		{
+			if (type < 0 || type > Terraria.Main.maxItemTypes)
+			{
+				throw new ArgumentOutOfRangeException(nameof(type));
+			}
+
 			WrappedItem.SetDefaults(type);
+		}
+
+		/// <summary>
+		/// Sets the item's prefix.
+		/// </summary>
+		/// <param name="prefix">The prefix.</param>
+		/// <exception cref="ArgumentOutOfRangeException"><paramref name="prefix"/> was an invalid prefix.</exception>
+		public void SetPrefix(int prefix)
+		{
+			if (prefix < 0 || prefix > Terraria.Item.maxPrefixes)
+			{
+				throw new ArgumentOutOfRangeException(nameof(prefix));
+			}
+
+			WrappedItem.Prefix(prefix);
 		}
 	}
 }

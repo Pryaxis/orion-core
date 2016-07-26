@@ -9,7 +9,7 @@ namespace Orion.Tests.Core
 	[TestFixture]
 	public class ItemTests
 	{
-		private static readonly object[] GetProperties =
+		private static readonly object[] GetWrappers =
 		{
 			new object[] {nameof(Item.AxePower), nameof(Terraria.Item.axe), 100},
 			new object[] {nameof(Item.Damage), nameof(Terraria.Item.damage), 100},
@@ -18,28 +18,26 @@ namespace Orion.Tests.Core
 			new object[] {nameof(Item.Name), nameof(Terraria.Item.name), "TEST"},
 			new object[] {nameof(Item.PickaxePower), nameof(Terraria.Item.pick), 100},
 			new object[] {nameof(Item.Position), nameof(Terraria.Item.position), Vector2.One},
-			new object[] {nameof(Item.Prefix), nameof(Terraria.Item.prefix), (byte)83},
+			new object[] {nameof(Item.Prefix), nameof(Terraria.Item.prefix), (byte) 83},
 			new object[] {nameof(Item.Projectile), nameof(Terraria.Item.shoot), 1},
 			new object[] {nameof(Item.StackSize), nameof(Terraria.Item.stack), 999},
 			new object[] {nameof(Item.Type), nameof(Terraria.Item.netID), 1},
 			new object[] {nameof(Item.Velocity), nameof(Terraria.Item.velocity), Vector2.One},
 		};
 
-		private static readonly object[] SetProperties =
+		private static readonly object[] SetWrappers =
 		{
 			new object[] {nameof(Item.Position), nameof(Terraria.Item.position), Vector2.One},
-			new object[] {nameof(Item.Prefix), nameof(Terraria.Item.prefix), (byte)83},
-			new object[] {nameof(Item.StackSize), nameof(Terraria.Item.stack), 999},
 			new object[] {nameof(Item.Velocity), nameof(Terraria.Item.velocity), Vector2.One},
 		};
 
 		[Test]
-		public void Constructor_NullItem_ThrowsException()
+		public void Constructor_NullItem_ThrowsArgumentNullException()
 		{
 			Assert.Throws<ArgumentNullException>(() => new Item(null));
 		}
 
-		[TestCaseSource(nameof(GetProperties))]
+		[TestCaseSource(nameof(GetWrappers))]
 		public void GetProperty_IsCorrect(string itemPropertyName, string terrariaItemFieldName, object value)
 		{
 			var terrariaItem = new Terraria.Item();
@@ -52,7 +50,7 @@ namespace Orion.Tests.Core
 			Assert.AreEqual(terrariaItemField.GetValue(terrariaItem), itemProperty.GetValue(item));
 		}
 
-		[TestCaseSource(nameof(SetProperties))]
+		[TestCaseSource(nameof(SetWrappers))]
 		public void SetProperty_IsCorrect(string itemPropertyName, string terrariaItemFieldName, object value)
 		{
 			var terrariaItem = new Terraria.Item();
@@ -64,6 +62,29 @@ namespace Orion.Tests.Core
 
 			Assert.AreEqual(itemProperty.GetValue(item), terrariaItemField.GetValue(terrariaItem));
 
+		}
+
+		[TestCase(1)]
+		public void SetStackSize_IsCorrect(int stackSize)
+		{
+			var terrariaItem = new Terraria.Item();
+			terrariaItem.SetDefaults(1);
+			var item = new Item(terrariaItem);
+
+			item.StackSize = stackSize;
+
+			Assert.AreEqual(stackSize, terrariaItem.stack);
+		}
+
+		[TestCase(-1)]
+		[TestCase(100000)]
+		public void SetStackSize_InvalidStackSize_ThrowsArgumentOutOfRangeException(int stackSize)
+		{
+			var terrariaItem = new Terraria.Item();
+			terrariaItem.SetDefaults(1);
+			var item = new Item(terrariaItem);
+
+			Assert.Throws<ArgumentOutOfRangeException>(() => item.StackSize = stackSize);
 		}
 
 		[Test]
@@ -84,6 +105,38 @@ namespace Orion.Tests.Core
 			item.SetDefaults(type);
 
 			Assert.AreEqual(type, item.Type);
+		}
+
+		[TestCase(-1)]
+		[TestCase(100000)]
+		public void SetDefaults_InvalidType_ThrowsArgumentOutOfRangeException(int type)
+		{
+			var terrariaItem = new Terraria.Item();
+			var item = new Item(terrariaItem);
+
+			Assert.Throws<ArgumentOutOfRangeException>(() => item.SetDefaults(type));
+		}
+
+		[TestCase(1)]
+		public void SetPrefix_IsCorrect(int prefix)
+		{
+			var terrariaItem = new Terraria.Item();
+			terrariaItem.SetDefaults(1);
+			var item = new Item(terrariaItem);
+
+			item.SetPrefix(prefix);
+
+			Assert.IsTrue(item.Prefix > 0, "Some prefix should have been set.");
+		}
+
+		[TestCase(-1)]
+		[TestCase(100000)]
+		public void SetPrefix_InvalidPrefix_ThrowsArgumentOutOfRangeException(int prefix)
+		{
+			var terrariaItem = new Terraria.Item();
+			var item = new Item(terrariaItem);
+
+			Assert.Throws<ArgumentOutOfRangeException>(() => item.SetPrefix(prefix));
 		}
 	}
 }

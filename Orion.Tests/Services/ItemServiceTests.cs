@@ -149,9 +149,9 @@ namespace Orion.Tests.Services
 		}
 
 		[TestCase(1, 1, 0)]
-		[TestCase(1, 100, 0)]
-		[TestCase(1, 100, 81)]
-		public void Create_IsCorrect(int type, int stack, byte prefix)
+		[TestCase(2, 100, 0)]
+		[TestCase(1, 1, 81)]
+		public void Create_IsCorrect(int type, int stack, int prefix)
 		{
 			using (var orion = new Orion())
 			using (var itemService = new ItemService(orion))
@@ -164,11 +164,13 @@ namespace Orion.Tests.Services
 			}
 		}
 
-		[TestCase(-100, 1, 0)]
-		[TestCase(int.MaxValue, 1, 0)]
+		[TestCase(-1, 1, 0)]
+		[TestCase(100000, 1, 0)]
 		[TestCase(1, -1, 0)]
-		[TestCase(1, 1, 255)]
-		public void Create_ParamOutOfRange_ThrowsException(int type, int stack, byte prefix)
+		[TestCase(1, 100000, 0)]
+		[TestCase(1, 1, -1)]
+		[TestCase(1, 1, 100000)]
+		public void Create_ParamOutOfRange_ThrowsArgumentOutOfRangeException(int type, int stack, int prefix)
 		{
 			using (var orion = new Orion())
 			using (var itemService = new ItemService(orion))
@@ -187,7 +189,7 @@ namespace Orion.Tests.Services
 			{
 				for (int i = 0; i < Terraria.Main.item.Length; ++i)
 				{
-					Terraria.Main.item[i] = new Terraria.Item {active = i < populate, type = 1};
+					Terraria.Main.item[i] = new Terraria.Item {active = i < populate};
 				}
 				List<IItem> items = itemService.Find().ToList();
 
@@ -211,6 +213,7 @@ namespace Orion.Tests.Services
 				{
 					Terraria.Main.item[i] = new Terraria.Item {active = true, type = i};
 				}
+
 				List<IItem> items = itemService.Find(predicate).ToList();
 				IEnumerable<IItem> otherItems = itemService.Find(i => !items.Contains(i));
 
@@ -226,9 +229,9 @@ namespace Orion.Tests.Services
 		}
 
 		[TestCase(1, 1, 0)]
-		[TestCase(1, 100, 0)]
-		[TestCase(1, 100, 81)]
-		public void Spawn_IsCorrect(int type, int stack, byte prefix)
+		[TestCase(2, 100, 0)]
+		[TestCase(1, 1, 81)]
+		public void Spawn_IsCorrect(int type, int stack, int prefix)
 		{
 			using (var orion = new Orion())
 			using (var itemService = new ItemService(orion))
@@ -237,17 +240,19 @@ namespace Orion.Tests.Services
 
 				Assert.AreEqual(type, item.Type);
 				Assert.AreEqual(stack, item.StackSize);
-				Assert.AreEqual(prefix, item.Prefix);
+				Assert.AreEqual(prefix != 0, item.Prefix != 0);
 				Assert.That(item.Position.X, Is.InRange(900, 1100));
 				Assert.That(item.Position.Y, Is.InRange(1900, 2100));
 			}
 		}
 
-		[TestCase(-100, 1, 0)]
-		[TestCase(int.MaxValue, 1, 0)]
+		[TestCase(-1, 1, 0)]
+		[TestCase(100000, 1, 0)]
 		[TestCase(1, -1, 0)]
-		[TestCase(1, 1, 255)]
-		public void Spawn_ParamOutOfRange_ThrowsException(int type, int stack, byte prefix)
+		[TestCase(1, 100000, 0)]
+		[TestCase(1, 1, -1)]
+		[TestCase(1, 1, 100000)]
+		public void Spawn_ParamOutOfRange_ThrowsArgumentOutOfRangeException(int type, int stack, int prefix)
 		{
 			using (var orion = new Orion())
 			using (var itemService = new ItemService(orion))

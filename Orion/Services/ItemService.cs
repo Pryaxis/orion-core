@@ -16,24 +16,16 @@ namespace Orion.Services
 	[Service("Item Service", Author = "Nyx Studios")]
 	public class ItemService : ServiceBase, IItemService
 	{
-		/// <summary>
-		/// A value indicating whether the service has been disposed. Used to ignore multiple
-		/// <see cref="Dispose(bool)"/> calls.
-		/// </summary>
 		private bool _disposed;
-
-		/// <summary>
-		/// The backing array of <see cref="IItem"/>s. Lazily updated with items from the Terraria item array.
-		/// </summary>
 		private readonly IItem[] _items;
 
 		/// <summary>
-		/// Occurs after an <see cref="IItem"/> has had its defaults set.
+		/// Occurs after an item has had its defaults set.
 		/// </summary>
 		public event EventHandler<ItemSetDefaultsEventArgs> ItemSetDefaults;
 
 		/// <summary>
-		/// Occurs when an <see cref="IItem"/> is having its defaults set.
+		/// Occurs when an item is having its defaults set.
 		/// </summary>
 		public event EventHandler<ItemSettingDefaultsEventArgs> ItemSettingDefaults;
 
@@ -49,43 +41,36 @@ namespace Orion.Services
 		}
 
 		/// <summary>
-		/// Creates a new <see cref="IItem"/> with the specified type ID, optionally with custom stack size and prefix.
+		/// Creates a new <see cref="IItem"/> with the specified type, optionally with custom stack size and prefix.
 		/// </summary>
-		/// <param name="type">The type ID.</param>
+		/// <param name="type">The type.</param>
 		/// <param name="stackSize">The stack size.</param>
 		/// <param name="prefix">The prefix.</param>
-		/// <returns>The resulting instantiated <see cref="IItem"/>.</returns>
+		/// <returns>The resulting <see cref="IItem"/>.</returns>
 		/// <exception cref="ArgumentOutOfRangeException">
-		/// <paramref name="type"/> was out of range, <paramref name="stackSize"/> was negative, or
-		/// <paramref name="prefix"/> was too large.
+		/// <paramref name="type"/> was an invalid type, <paramref name="stackSize"/> was an invalid stack size, or
+		/// <paramref name="prefix"/> was an invalid prefix.
 		/// </exception>
-		public IItem Create(int type, int stackSize = 1, byte prefix = 0)
+		public IItem Create(int type, int stackSize = 1, int prefix = 0)
 		{
-			if (type < -48 || type > Terraria.Main.maxItemTypes)
-			{
-				throw new ArgumentOutOfRangeException(nameof(type));
-			}
-			if (stackSize < 0)
-			{
-				throw new ArgumentOutOfRangeException(nameof(stackSize));
-			}
-			if (prefix > Terraria.Item.maxPrefixes)
-			{
-				throw new ArgumentOutOfRangeException(nameof(prefix));
-			}
-			
 			var terrariaItem = new Terraria.Item();
-			terrariaItem.netDefaults(type);
-			terrariaItem.stack = stackSize;
-			terrariaItem.prefix = prefix;
-			return new Item(terrariaItem);
+			var item = new Item(terrariaItem);
+			item.SetDefaults(type);
+			item.StackSize = stackSize;
+			item.SetPrefix(prefix);
+			return item;
 		}
+
 
 		/// <summary>
 		/// Finds all <see cref="IItem"/>s in the world, optionally matching a predicate.
 		/// </summary>
-		/// <param name="predicate">The predicate to match with.</param>
+		/// <param name="predicate">The predicate.</param>
 		/// <returns>An enumerable collection of <see cref="IItem"/>s.</returns>
+		/// <remarks>
+		/// The <see cref="IItem"/>s are cached in an array. Calling this method multiple times will result in the same
+		/// <see cref="IItem"/> references as long as the Terraria item array is not updated.
+		/// </remarks>
 		public IEnumerable<IItem> Find(Predicate<IItem> predicate = null)
 		{
 			var items = new List<IItem>();
@@ -99,23 +84,24 @@ namespace Orion.Services
 			}
 			return items.Where(i => i.WrappedItem.active && (predicate?.Invoke(i) ?? true));
 		}
+=
 
 		/// <summary>
-		/// Spawns a new <see cref="IItem"/> with the specified type ID at a position in the world, optionally with
-		/// custom stack size and prefix.
+		/// Spawns a new <see cref="IItem"/> with the specified type and position in the world, optionally with custom
+		/// stack size and prefix.
 		/// </summary>
-		/// <param name="type">The type ID.</param>
+		/// <param name="type">The type.</param>
 		/// <param name="position">The position in the world.</param>
 		/// <param name="stackSize">The stack size.</param>
 		/// <param name="prefix">The prefix.</param>
-		/// <returns>The resulting spawned <see cref="IItem"/>.</returns>
+		/// <returns>The resulting <see cref="IItem"/>.</returns>
 		/// <exception cref="ArgumentOutOfRangeException">
-		/// <paramref name="type"/> was out of range, <paramref name="stackSize"/> was negative, or
-		/// <paramref name="prefix"/> was too large.
+		/// <paramref name="type"/> was an invalid type, <paramref name="stackSize"/> was an invalid stack size, or
+		/// <paramref name="prefix"/> was an invalid prefix.
 		/// </exception>
-		public IItem Spawn(int type, Vector2 position, int stackSize = 1, byte prefix = 0)
+		public IItem Spawn(int type, Vector2 position, int stackSize = 1, int prefix = 0)
 		{
-			if (type < -48 || type > Terraria.Main.maxItemTypes)
+			if (type < 0 || type > Terraria.Main.maxItemTypes)
 			{
 				throw new ArgumentOutOfRangeException(nameof(type));
 			}
@@ -123,7 +109,7 @@ namespace Orion.Services
 			{
 				throw new ArgumentOutOfRangeException(nameof(stackSize));
 			}
-			if (prefix > Terraria.Item.maxPrefixes)
+			if (prefix < 0 || prefix > Terraria.Item.maxPrefixes)
 			{
 				throw new ArgumentOutOfRangeException(nameof(prefix));
 			}
@@ -135,12 +121,8 @@ namespace Orion.Services
 		}
 
 		/// <summary>
-		/// Disposes the service and its unmanaged resources, optionally disposing its managed resources.
+		/// Overrides <see cref="ServiceBase.Dispose"/>.
 		/// </summary>
-		/// <param name="disposing">
-		/// true if called from a managed disposal, and *both* unmanaged and managed resources must be freed. false
-		/// if called from a finalizer, and *only* unmanaged resources may be freed.
-		/// </param>
 		protected override void Dispose(bool disposing)
 		{
 			if (!_disposed)
@@ -155,14 +137,6 @@ namespace Orion.Services
 			base.Dispose(disposing);
 		}
 
-		/// <summary>
-		/// Invokes the <see cref="ItemSetDefaults"/> event.
-		/// </summary>
-		/// <param name="terrariaItem">The Terraria item that had its defaults set.</param>
-		/// <param name="type">The Terraria item's type ID. Unused.</param>
-		/// <param name="noMaterialCheck">
-		/// A value indicating whether to determine whether the Terraria item is a material. Unused.
-		/// </param>
 		private void InvokeItemSetDefaults(Terraria.Item terrariaItem, ref int type, ref bool noMaterialCheck)
 		{
 			var item = new Item(terrariaItem);
@@ -170,15 +144,6 @@ namespace Orion.Services
 			ItemSetDefaults?.Invoke(this, args);
 		}
 
-		/// <summary>
-		/// Invokes the <see cref="ItemSettingDefaults"/> event.
-		/// </summary>
-		/// <param name="terrariaItem">The Terraria item that is having its defaults set.</param>
-		/// <param name="type">The Terraria item's type ID. This will update the normal server's type ID.</param>
-		/// <param name="noMaterialCheck">
-		/// A value indicating whether to determine whether the Terraria item is a material. Unused.
-		/// </param>
-		/// <returns>A value indicating whether to continue or cancel normal server code.</returns>
 		private HookResult InvokeItemSettingDefaults(Terraria.Item terrariaItem, ref int type, ref bool noMaterialCheck)
 		{
 			var item = new Item(terrariaItem);
