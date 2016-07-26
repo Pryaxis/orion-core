@@ -15,28 +15,28 @@ namespace Orion.Core
 		public int Defense => WrappedPlayer.statDefense;
 
 		/// <inheritdoc/>
-		public int HP
+		public int Health
 		{
 			get { return WrappedPlayer.statLife; }
 			set { WrappedPlayer.statLife = value; }
 		}
 
 		/// <inheritdoc/>
-		public int MaxHP
+		public int MaxHealth
 		{
 			get { return WrappedPlayer.statLifeMax; }
 			set { WrappedPlayer.statLifeMax = value; }
 		}
 
 		/// <inheritdoc/>
-		public int MaxMP
+		public int MaxMana
 		{
 			get { return WrappedPlayer.statManaMax; }
 			set { WrappedPlayer.statManaMax = value; }
 		}
 
 		/// <inheritdoc/>
-		public int MP
+		public int Mana
 		{
 			get { return WrappedPlayer.statMana; }
 			set { WrappedPlayer.statMana = value; }

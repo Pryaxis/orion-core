@@ -8,7 +8,7 @@ namespace Orion.Tests.Events.Projectile
 	public class ProjectileSettingDefaultsEventArgsTests
 	{
 		[Test]
-		public void Constructor_NullProjectile_ThrowsException()
+		public void Constructor_NullProjectile_ThrowsArgumentNullException()
 		{
 			Assert.Throws<ArgumentNullException>(() => new ProjectileSettingDefaultsEventArgs(null, 0));
 		}

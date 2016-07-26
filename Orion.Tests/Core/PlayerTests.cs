@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Reflection;
 using Microsoft.Xna.Framework;
 using NUnit.Framework;
 using Orion.Core;
@@ -8,177 +9,57 @@ namespace Orion.Tests.Core
 	[TestFixture]
 	public class PlayerTests
 	{
+		private static readonly object[] GetWrappers =
+		{
+			new object[] {nameof(Player.Defense), nameof(Terraria.Player.statDefense), 100},
+			new object[] {nameof(Player.Health), nameof(Terraria.Player.statLife), 100},
+			new object[] {nameof(Player.MaxHealth), nameof(Terraria.Player.statLifeMax), 100},
+			new object[] {nameof(Player.Mana), nameof(Terraria.Player.statMana), 100},
+			new object[] {nameof(Player.MaxMana), nameof(Terraria.Player.statManaMax), 100},
+			new object[] {nameof(Player.Name), nameof(Terraria.Player.name), "TEST"},
+			new object[] {nameof(Player.Position), nameof(Terraria.Player.position), Vector2.One},
+		};
+
+		private static readonly object[] SetWrappers =
+		{
+			new object[] {nameof(Player.Health), nameof(Terraria.Player.statLife), 100},
+			new object[] {nameof(Player.MaxHealth), nameof(Terraria.Player.statLifeMax), 100},
+			new object[] {nameof(Player.Mana), nameof(Terraria.Player.statMana), 100},
+			new object[] {nameof(Player.MaxMana), nameof(Terraria.Player.statManaMax), 100},
+			new object[] {nameof(Player.Position), nameof(Terraria.Player.position), Vector2.One},
+			new object[] {nameof(Player.Velocity), nameof(Terraria.Player.velocity), Vector2.One}
+		};
+
 		[Test]
-		public void Constructor_NullPlayer_ThrowsException()
+		public void Constructor_NullPlayer_ThrowsArgumentNullException()
 		{
 			Assert.Throws<ArgumentNullException>(() => new Player(null));
 		}
 
-		[TestCase(100)]
-		public void GetDefense_IsCorrect(int defense)
+		[TestCaseSource(nameof(GetWrappers))]
+		public void GetProperty_IsCorrect(string playerPropertyName, string terrariaPlayerFieldName, object value)
 		{
 			var terrariaPlayer = new Terraria.Player();
+			FieldInfo terrariaPlayerField = typeof(Terraria.Player).GetField(terrariaPlayerFieldName);
 			var player = new Player(terrariaPlayer);
+			PropertyInfo playerProperty = typeof(Player).GetProperty(playerPropertyName);
 
-			terrariaPlayer.statDefense = defense;
+			terrariaPlayerField.SetValue(terrariaPlayer, Convert.ChangeType(value, terrariaPlayerField.FieldType));
 
-			Assert.AreEqual(defense, player.Defense);
+			Assert.AreEqual(value, playerProperty.GetValue(player));
 		}
 
-		[TestCase(200)]
-		public void GetHP_IsCorrect(int hp)
+		[TestCaseSource(nameof(SetWrappers))]
+		public void SetProperty_IsCorrect(string playerPropertyName, string terrariaPlayerFieldName, object value)
 		{
 			var terrariaPlayer = new Terraria.Player();
+			FieldInfo terrariaPlayerField = typeof(Terraria.Player).GetField(terrariaPlayerFieldName);
 			var player = new Player(terrariaPlayer);
+			PropertyInfo playerProperty = typeof(Player).GetProperty(playerPropertyName);
 
-			terrariaPlayer.statLife = hp;
+			playerProperty.SetValue(player, Convert.ChangeType(value, playerProperty.PropertyType));
 
-			Assert.AreEqual(hp, player.HP);
-		}
-
-		[TestCase(200)]
-		public void SetHP_Updates(int hp)
-		{
-			var terrariaPlayer = new Terraria.Player();
-			var player = new Player(terrariaPlayer);
-
-			player.HP = hp;
-
-			Assert.AreEqual(hp, terrariaPlayer.statLife);
-		}
-
-		[TestCase(400)]
-		public void GetMaxHP_IsCorrect(int maxHP)
-		{
-			var terrariaPlayer = new Terraria.Player();
-			var player = new Player(terrariaPlayer);
-
-			terrariaPlayer.statLifeMax = maxHP;
-
-			Assert.AreEqual(maxHP, player.MaxHP);
-		}
-
-		[TestCase(400)]
-		public void SetMaxHP_Updates(int maxHP)
-		{
-			var terrariaPlayer = new Terraria.Player();
-			var player = new Player(terrariaPlayer);
-
-			player.MaxHP = maxHP;
-
-			Assert.AreEqual(maxHP, terrariaPlayer.statLifeMax);
-		}
-
-		[TestCase(200)]
-		public void GetMaxMP_IsCorrect(int maxMP)
-		{
-			var terrariaPlayer = new Terraria.Player();
-			var player = new Player(terrariaPlayer);
-
-			terrariaPlayer.statManaMax = maxMP;
-
-			Assert.AreEqual(maxMP, player.MaxMP);
-		}
-
-		[TestCase(200)]
-		public void SetMaxMP_Updates(int maxMP)
-		{
-			var terrariaPlayer = new Terraria.Player();
-			var player = new Player(terrariaPlayer);
-
-			player.MaxMP = maxMP;
-
-			Assert.AreEqual(maxMP, terrariaPlayer.statManaMax);
-		}
-
-		[TestCase(100)]
-		public void GetMP_IsCorrect(int mp)
-		{
-			var terrariaPlayer = new Terraria.Player();
-			var player = new Player(terrariaPlayer);
-
-			terrariaPlayer.statMana = mp;
-
-			Assert.AreEqual(mp, player.MP);
-		}
-
-		[TestCase(100)]
-		public void SetMP_Updates(int mp)
-		{
-			var terrariaPlayer = new Terraria.Player();
-			var player = new Player(terrariaPlayer);
-
-			player.MP = mp;
-
-			Assert.AreEqual(mp, terrariaPlayer.statMana);
-		}
-
-		[TestCase("Name")]
-		public void GetName_IsCorrect(string name)
-		{
-			var terrariaPlayer = new Terraria.Player();
-			var player = new Player(terrariaPlayer);
-
-			terrariaPlayer.name = name;
-
-			Assert.AreEqual(name, player.Name);
-		}
-
-		private static readonly object[] Positions = {Vector2.One};
-
-		[Test, TestCaseSource(nameof(Positions))]
-		public void GetPosition_IsCorrect(Vector2 position)
-		{
-			var terrariaPlayer = new Terraria.Player();
-			var player = new Player(terrariaPlayer);
-
-			terrariaPlayer.position = position;
-
-			Assert.AreEqual(position, player.Position);
-		}
-
-		[Test, TestCaseSource(nameof(Positions))]
-		public void SetPosition_Updates(Vector2 position)
-		{
-			var terrariaPlayer = new Terraria.Player();
-			var player = new Player(terrariaPlayer);
-
-			player.Position = position;
-
-			Assert.AreEqual(position, terrariaPlayer.position);
-		}
-
-		private static readonly object[] Velocities = {Vector2.One};
-
-		[Test, TestCaseSource(nameof(Velocities))]
-		public void GetVelocity_IsCorrect(Vector2 velocity)
-		{
-			var terrariaPlayer = new Terraria.Player();
-			var player = new Player(terrariaPlayer);
-
-			terrariaPlayer.velocity = velocity;
-
-			Assert.AreEqual(velocity, player.Velocity);
-		}
-
-		[Test, TestCaseSource(nameof(Velocities))]
-		public void SetVelocity_Updates(Vector2 velocity)
-		{
-			var terrariaPlayer = new Terraria.Player();
-			var player = new Player(terrariaPlayer);
-
-			player.Velocity = velocity;
-
-			Assert.AreEqual(velocity, terrariaPlayer.velocity);
-		}
-
-		[Test]
-		public void GetWrappedPlayer_IsCorrect()
-		{
-			var terrariaPlayer = new Terraria.Player();
-			var player = new Player(terrariaPlayer);
-
-			Assert.AreSame(terrariaPlayer, player.WrappedPlayer);
+			Assert.AreEqual(value, terrariaPlayerField.GetValue(terrariaPlayer));
 		}
 
 		[TestCase(1)]
@@ -193,8 +74,8 @@ namespace Orion.Tests.Core
 		}
 
 		[TestCase(-1)]
-		[TestCase(100)]
-		public void GetInventory_ParamOutOfRange_ThrowsException(int index)
+		[TestCase(100000)]
+		public void GetInventory_ParamOutOfRange_ThrowsArgumentOutOfRangeException(int index)
 		{
 			var terrariaPlayer = new Terraria.Player();
 			var player = new Player(terrariaPlayer);
@@ -227,8 +108,8 @@ namespace Orion.Tests.Core
 		}
 
 		[TestCase(-1)]
-		[TestCase(100)]
-		public void SetInventory_OutOfRange_ThrowsException(int index)
+		[TestCase(100000)]
+		public void SetInventory_OutOfRange_ThrowsArgumentOutOfRangeException(int index)
 		{
 			var terrariaPlayer = new Terraria.Player();
 			var player = new Player(terrariaPlayer);

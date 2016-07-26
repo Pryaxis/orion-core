@@ -14,24 +14,24 @@ namespace Orion.Interfaces
 		int Defense { get; }
 
 		/// <summary>
-		/// Gets or sets the player's HP.
+		/// Gets or sets the player's health.
 		/// </summary>
-		int HP { get; set; }
+		int Health { get; set; }
 
 		/// <summary>
-		/// Gets or sets the player's maximum HP.
+		/// Gets or sets the player's maximum health.
 		/// </summary>
-		int MaxHP { get; set; }
+		int MaxHealth { get; set; }
 
 		/// <summary>
-		/// Gets or sets the player's maximum MP.
+		/// Gets or sets the player's mana.
 		/// </summary>
-		int MaxMP { get; set; }
+		int Mana { get; set; }
 
 		/// <summary>
-		/// Gets or sets the player's MP.
+		/// Gets or sets the player's maximum mana.
 		/// </summary>
-		int MP { get; set; }
+		int MaxMana { get; set; }
 
 		/// <summary>
 		/// Gets the player's name.

@@ -8,7 +8,7 @@ namespace Orion.Tests.Events.Npc
 	public class NpcDroppingLootEventArgsTests
 	{
 		[Test]
-		public void Constructor_NullNpc_ThrowsException()
+		public void Constructor_NullNpc_ThrowsArgumentNullException()
 		{
 			var terrariaItem = new Terraria.Item();
 			var item = new global::Orion.Core.Item(terrariaItem);
@@ -16,7 +16,7 @@ namespace Orion.Tests.Events.Npc
 		}
 
 		[Test]
-		public void Constructor_NullItem_ThrowsException()
+		public void Constructor_NullItem_ThrowsArgumentNullException()
 		{
 			var terrariaNpc = new Terraria.NPC();
 			var npc = new global::Orion.Core.Npc(terrariaNpc);

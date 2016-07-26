@@ -8,7 +8,7 @@ namespace Orion.Tests.Events.Player
 	public class PlayedQuitEventArgsTests
 	{
 		[Test]
-		public void Constructor_NullPlayer_ThrowsException()
+		public void Constructor_NullPlayer_ThrowsArgumentNullException()
 		{
 			Assert.Throws<ArgumentNullException>(() => new PlayerQuitEventArgs(null));
 		}
