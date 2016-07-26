@@ -27,13 +27,14 @@ namespace Orion.Tests.Core
 
 		private static readonly object[] SetProperties =
 		{
+			new object[] {nameof(Item.Position), nameof(Terraria.Item.position), Vector2.One},
 			new object[] {nameof(Item.Prefix), nameof(Terraria.Item.prefix), (byte)83},
 			new object[] {nameof(Item.StackSize), nameof(Terraria.Item.stack), 999},
-			new object[] {nameof(Item.Type), nameof(Terraria.Item.netID), 1},
+			new object[] {nameof(Item.Velocity), nameof(Terraria.Item.velocity), Vector2.One},
 		};
 
 		[Test]
-		public void Constructor_Null_ThrowsException()
+		public void Constructor_NullItem_ThrowsException()
 		{
 			Assert.Throws<ArgumentNullException>(() => new Item(null));
 		}
@@ -72,6 +73,17 @@ namespace Orion.Tests.Core
 			var item = new Item(terrariaItem);
 
 			Assert.AreSame(terrariaItem, item.WrappedItem);
+		}
+
+		[TestCase(1)]
+		public void SetDefaults_IsCorrect(int type)
+		{
+			var terrariaItem = new Terraria.Item();
+			var item = new Item(terrariaItem);
+
+			item.SetDefaults(type);
+
+			Assert.AreEqual(type, item.Type);
 		}
 	}
 }

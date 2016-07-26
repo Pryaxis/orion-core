@@ -1,4 +1,5 @@
-﻿using Microsoft.Xna.Framework;
+﻿using System;
+using Microsoft.Xna.Framework;
 
 namespace Orion.Interfaces
 {
@@ -45,6 +46,9 @@ namespace Orion.Interfaces
 		/// <summary>
 		/// Gets or sets the item's prefix.
 		/// </summary>
+		/// <exception cref="ArgumentOutOfRangeException">
+		/// <paramref name="value"/> was greater than the number of prefixes.
+		/// </exception>
 		byte Prefix { get; set; }
 		
 		/// <summary>
@@ -55,15 +59,15 @@ namespace Orion.Interfaces
 		/// <summary>
 		/// Gets or sets the item's stack size.
 		/// </summary>
+		/// <exception cref="ArgumentOutOfRangeException">
+		/// <paramref name="value"/> was negative or greater than <see cref="MaxStackSize"/>.
+		/// </exception>
 		int StackSize { get; set; }
 		
 		/// <summary>
 		/// Gets or sets the item's type ID.
 		/// </summary>
-		/// <remarks>
-		/// Setting the type ID will update the other properties as well.
-		/// </remarks>
-		int Type { get; set; }
+		int Type { get; }
 		
 		/// <summary>
 		/// Gets or sets the item's velocity in the world.
@@ -74,5 +78,11 @@ namespace Orion.Interfaces
 		/// Gets the wrapped Terraria item.
 		/// </summary>
 		Terraria.Item WrappedItem { get; }
+
+		/// <summary>
+		/// Sets the item's defaults to the specified type ID.
+		/// </summary>
+		/// <param name="type">The type ID.</param>
+		void SetDefaults(int type);
 	}
 }

@@ -51,6 +51,9 @@ namespace Orion.Core
 		/// <summary>
 		/// Gets or sets the item's prefix.
 		/// </summary>
+		/// <exception cref="ArgumentOutOfRangeException">
+		/// <paramref name="value"/> was greater than the number of prefixes.
+		/// </exception>
 		public byte Prefix
 		{
 			get { return WrappedItem.prefix; }
@@ -72,16 +75,9 @@ namespace Orion.Core
 		}
 
 		/// <summary>
-		/// Gets or sets the item's type ID.
+		/// Gets the item's type ID.
 		/// </summary>
-		/// <remarks>
-		/// Setting the type ID will update the other properties as well.
-		/// </remarks>
-		public int Type
-		{
-			get { return WrappedItem.netID; }
-			set { WrappedItem.netDefaults(value); }
-		}
+		public int Type => WrappedItem.netID;
 
 		/// <summary>
 		/// Gets or sets the item's velocity in the world.
@@ -110,6 +106,15 @@ namespace Orion.Core
 			}
 
 			WrappedItem = terrariaItem;
+		}
+
+		/// <summary>
+		/// Sets the item's defaults to the specified type ID.
+		/// </summary>
+		/// <param name="type">The type ID.</param>
+		public void SetDefaults(int type)
+		{
+			WrappedItem.SetDefaults(type);
 		}
 	}
 }
