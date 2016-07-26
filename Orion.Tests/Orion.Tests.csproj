@@ -73,6 +73,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Core\ProjectileTests.cs" />
     <Compile Include="Events\Item\ItemSettingDefaultsEventArgsTests.cs" />
     <Compile Include="Events\Item\ItemSetDefaultsEventArgsTests.cs" />
     <Compile Include="Events\Npc\NpcDroppedLootEventArgsTests.cs" />
@@ -84,11 +85,14 @@
     <Compile Include="Events\Player\PlayerQuitEventArgsTests.cs" />
     <Compile Include="Events\Player\PlayerJoiningEventArgsTests.cs" />
     <Compile Include="Events\Player\PlayerJoinedEventArgsTests.cs" />
+    <Compile Include="Events\Projectile\ProjectileSetDefaultsEventArgsTests.cs" />
+    <Compile Include="Events\Projectile\ProjectileSettingDefaultsEventArgsTests.cs" />
     <Compile Include="InjectionContainerTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Framework\ServiceMapTest.cs" />
     <Compile Include="Services\ItemServiceTests.cs" />
     <Compile Include="Services\PlayerServiceTests.cs" />
+    <Compile Include="Services\ProjectileServiceTests.cs" />
     <Compile Include="Services\WorldServiceTests.cs" />
     <Compile Include="Setup.cs" />
   </ItemGroup>

@@ -57,6 +57,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Core\Projectile.cs" />
     <Compile Include="Events\Item\ItemSetDefaultsEventArgs.cs" />
     <Compile Include="Events\Item\ItemSettingDefaultsEventArgs.cs" />
     <Compile Include="Events\Npc\NpcDroppedLootEventArgs.cs" />
@@ -68,6 +69,8 @@
     <Compile Include="Events\Player\PlayerJoinedEventArgs.cs" />
     <Compile Include="Events\Player\PlayerJoiningEventArgs.cs" />
     <Compile Include="Events\Player\PlayerQuitEventArgs.cs" />
+    <Compile Include="Events\Projectile\ProjectileSetDefaultsEventArgs.cs" />
+    <Compile Include="Events\Projectile\ProjectileSettingDefaultsEventArgs.cs" />
     <Compile Include="Events\World\HardmodeTileUpdatingEventArgs.cs" />
     <Compile Include="Events\World\MeteorDroppingEventArgs.cs" />
     <Compile Include="Events\World\WorldSavedEventArgs.cs" />
@@ -86,6 +89,8 @@
     <Compile Include="Interfaces\INpc.cs" />
     <Compile Include="Interfaces\Authorization\IPermission.cs" />
     <Compile Include="Interfaces\IPlayer.cs" />
+    <Compile Include="Interfaces\IProjectile.cs" />
+    <Compile Include="Interfaces\IProjectileService.cs" />
     <Compile Include="Orion.cs" />
     <Compile Include="Orion.DataFields.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -94,6 +99,7 @@
     <Compile Include="Services\ItemService.cs" />
     <Compile Include="Services\JsonFileConfigurationService.cs" />
     <Compile Include="Services\PlayerService.cs" />
+    <Compile Include="Services\ProjectileService.cs" />
     <Compile Include="Services\TileService.cs" />
     <Compile Include="Services\WorldService.cs" />
     <Compile Include="Interfaces\INpcService.cs" />

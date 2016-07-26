@@ -19,7 +19,7 @@ namespace Orion.Events.Npc
 		public INpc Npc { get; }
 
 		/// <summary>
-		/// Initializes a new instance of the <see cref="NpcKilledEventArgs"/> class.
+		/// Initializes a new instance of the <see cref="NpcTransformedEventArgs"/> class.
 		/// </summary>
 		/// <param name="npc">The <see cref="INpc"/> that transformed.</param>
 		/// <param name="newType">The new type ID that the <see cref="INpc"/> transformed to.</param>
