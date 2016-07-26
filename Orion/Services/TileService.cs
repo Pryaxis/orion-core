@@ -28,10 +28,10 @@ namespace Orion.Services
 		}
 
 		/// <summary>
-		/// Gets or sets the <see cref="ITile"/> at the specified position in the world.
+		/// Gets or sets the <see cref="ITile"/> at the specified position.
 		/// </summary>
-		/// <param name="x">The x position in the world.</param>
-		/// <param name="y">The y position in the world.</param>
+		/// <param name="x">The x position.</param>
+		/// <param name="y">The y position.</param>
 		/// <returns>The <see cref="ITile"/> at the specified position in the world.</returns>
 		public ITile this[int x, int y]
 		{

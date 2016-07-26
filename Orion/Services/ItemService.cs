@@ -11,7 +11,7 @@ using OTAPI.Core;
 namespace Orion.Services
 {
 	/// <summary>
-	/// Manages <see cref="IItem"/>s with a backing array, retrieving information from the Terraria item array.
+	/// Manages <see cref="IItem"/>s.
 	/// </summary>
 	[Service("Item Service", Author = "Nyx Studios")]
 	public class ItemService : ServiceBase, IItemService
@@ -19,20 +19,19 @@ namespace Orion.Services
 		private bool _disposed;
 		private readonly IItem[] _items;
 
-		/// <summary>
-		/// Occurs after an item has had its defaults set.
-		/// </summary>
+		/// <inheritdoc/>
 		public event EventHandler<ItemSetDefaultsEventArgs> ItemSetDefaults;
 
-		/// <summary>
-		/// Occurs when an item is having its defaults set.
-		/// </summary>
+		/// <inheritdoc/>
 		public event EventHandler<ItemSettingDefaultsEventArgs> ItemSettingDefaults;
 
 		/// <summary>
 		/// Initializes a new instance of the <see cref="ItemService"/> class.
 		/// </summary>
 		/// <param name="orion">The parent <see cref="Orion"/> instance.</param>
+		/// <remarks>
+		/// This constructor registers the OTAPI hooks.
+		/// </remarks>
 		public ItemService(Orion orion) : base(orion)
 		{
 			_items = new IItem[Terraria.Main.item.Length];
@@ -40,32 +39,18 @@ namespace Orion.Services
 			Hooks.Item.PreSetDefaultsById = InvokeItemSettingDefaults;
 		}
 
-		/// <summary>
-		/// Creates a new <see cref="IItem"/> with the specified type, optionally with custom stack size and prefix.
-		/// </summary>
-		/// <param name="type">The type.</param>
-		/// <param name="stackSize">The stack size.</param>
-		/// <param name="prefix">The prefix.</param>
-		/// <returns>The resulting <see cref="IItem"/>.</returns>
-		/// <exception cref="ArgumentOutOfRangeException">
-		/// <paramref name="type"/> was an invalid type, <paramref name="stackSize"/> was an invalid stack size, or
-		/// <paramref name="prefix"/> was an invalid prefix.
-		/// </exception>
+		/// <inheritdoc/>
 		public IItem Create(int type, int stackSize = 1, int prefix = 0)
 		{
 			var terrariaItem = new Terraria.Item();
 			var item = new Item(terrariaItem);
 			item.SetDefaults(type);
-			item.StackSize = stackSize;
 			item.SetPrefix(prefix);
+			item.StackSize = stackSize;
 			return item;
 		}
 
-		/// <summary>
-		/// Finds all <see cref="IItem"/>s in the world, optionally matching a predicate.
-		/// </summary>
-		/// <param name="predicate">The predicate.</param>
-		/// <returns>An enumerable collection of <see cref="IItem"/>s.</returns>
+		/// <inheritdoc/>
 		/// <remarks>
 		/// The <see cref="IItem"/>s are cached in an array. Calling this method multiple times will result in the same
 		/// <see cref="IItem"/> references as long as the Terraria item array is not updated.
@@ -84,19 +69,7 @@ namespace Orion.Services
 			return items.Where(i => i.WrappedItem.active && (predicate?.Invoke(i) ?? true));
 		}
 
-		/// <summary>
-		/// Spawns a new <see cref="IItem"/> with the specified type and position in the world, optionally with custom
-		/// stack size and prefix.
-		/// </summary>
-		/// <param name="type">The type.</param>
-		/// <param name="position">The position in the world.</param>
-		/// <param name="stackSize">The stack size.</param>
-		/// <param name="prefix">The prefix.</param>
-		/// <returns>The resulting <see cref="IItem"/>.</returns>
-		/// <exception cref="ArgumentOutOfRangeException">
-		/// <paramref name="type"/> was an invalid type, <paramref name="stackSize"/> was an invalid stack size, or
-		/// <paramref name="prefix"/> was an invalid prefix.
-		/// </exception>
+		/// <inheritdoc/>
 		public IItem Spawn(int type, Vector2 position, int stackSize = 1, int prefix = 0)
 		{
 			if (type < 0 || type > Terraria.Main.maxItemTypes)
@@ -118,9 +91,10 @@ namespace Orion.Services
 			return item;
 		}
 
-		/// <summary>
-		/// Overrides <see cref="ServiceBase.Dispose"/>.
-		/// </summary>
+		/// <inheritdoc/>
+		/// <remarks>
+		/// This method deregisters the OTAPI hooks.
+		/// </remarks>
 		protected override void Dispose(bool disposing)
 		{
 			if (!_disposed)

@@ -11,73 +11,55 @@ namespace Orion.Core
 	{
 		private readonly IItem[] _inventory;
 
-		/// <summary>
-		/// Gets the player's defense.
-		/// </summary>
+		/// <inheritdoc/>
 		public int Defense => WrappedPlayer.statDefense;
 
-		/// <summary>
-		/// Gets or sets the player's HP.
-		/// </summary>
+		/// <inheritdoc/>
 		public int HP
 		{
 			get { return WrappedPlayer.statLife; }
 			set { WrappedPlayer.statLife = value; }
 		}
 
-		/// <summary>
-		/// Gets or sets the player's maximum HP.
-		/// </summary>
+		/// <inheritdoc/>
 		public int MaxHP
 		{
 			get { return WrappedPlayer.statLifeMax; }
 			set { WrappedPlayer.statLifeMax = value; }
 		}
 
-		/// <summary>
-		/// Gets or sets the player's maximum MP.
-		/// </summary>
+		/// <inheritdoc/>
 		public int MaxMP
 		{
 			get { return WrappedPlayer.statManaMax; }
 			set { WrappedPlayer.statManaMax = value; }
 		}
 
-		/// <summary>
-		/// Gets or sets the player's MP.
-		/// </summary>
+		/// <inheritdoc/>
 		public int MP
 		{
 			get { return WrappedPlayer.statMana; }
 			set { WrappedPlayer.statMana = value; }
 		}
 
-		/// <summary>
-		/// Gets the player's name.
-		/// </summary>
+		/// <inheritdoc/>
 		public string Name => WrappedPlayer.name;
 
-		/// <summary>
-		/// Gets or sets the player's position in the world.
-		/// </summary>
+		/// <inheritdoc/>
 		public Vector2 Position
 		{
 			get { return WrappedPlayer.position; }
 			set { WrappedPlayer.position = value; }
 		}
 
-		/// <summary>
-		/// Gets or sets the player's velocity in the world.
-		/// </summary>
+		/// <inheritdoc/>
 		public Vector2 Velocity
 		{
 			get { return WrappedPlayer.velocity; }
 			set { WrappedPlayer.velocity = value; }
 		}
 
-		/// <summary>
-		/// Gets the wrapped Terraria player.
-		/// </summary>
+		/// <inheritdoc/>
 		public Terraria.Player WrappedPlayer { get; }
 
 		/// <summary>
@@ -96,12 +78,7 @@ namespace Orion.Core
 			WrappedPlayer = terrariaPlayer;
 		}
 
-		/// <summary>
-		/// Gets the player's inventory <see cref="IItem"/> at the specified index.
-		/// </summary>
-		/// <param name="index">The index to retrieve.</param>
-		/// <returns>The <see cref="IItem"/> at the specified index.</returns>
-		/// <exception cref="IndexOutOfRangeException"><paramref name="index"/> was out of range.</exception>
+		/// <inheritdoc/>
 		public IItem GetInventory(int index)
 		{
 			if (_inventory[index]?.WrappedItem != WrappedPlayer.inventory[index])
@@ -111,18 +88,10 @@ namespace Orion.Core
 			return _inventory[index];
 		}
 
-		/// <summary>
-		/// Gets the player's selected <see cref="IItem"/>.
-		/// </summary>
-		/// <returns>The selected <see cref="IItem"/>.</returns>
+		/// <inheritdoc/>
 		public IItem GetSelectedItem() => GetInventory(WrappedPlayer.selectedItem);
 
-		/// <summary>
-		/// Sets the player's inventory <see cref="IItem"/> at the specified index.
-		/// </summary>
-		/// <param name="index">The index to modify.</param>
-		/// <param name="item">The <see cref="IItem"/> to set.</param>
-		/// <exception cref="IndexOutOfRangeException"><paramref name="index"/> was out of range.</exception>
+		/// <inheritdoc/>
 		public void SetInventory(int index, IItem item)
 		{
 			_inventory[index] = item;

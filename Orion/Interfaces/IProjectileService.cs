@@ -11,19 +11,19 @@ namespace Orion.Interfaces
 	public interface IProjectileService : IService
 	{
 		/// <summary>
-		/// Occurs after a <see cref="IProjectile"/> has its defaults set.
+		/// Occurs after a projectile had its defaults set.
 		/// </summary>
 		event EventHandler<ProjectileSetDefaultsEventArgs> ProjectileSetDefaults;
 
 		/// <summary>
-		/// Occurs before a <see cref="IProjectile"/> has its defaults set.
+		/// Occurs when a projectile is having its defaults set.
 		/// </summary>
 		event EventHandler<ProjectileSettingDefaultsEventArgs> ProjectileSettingDefaults;
 
 		/// <summary>
-		/// Finds all <see cref="IProjectile"/>s in the world matching the predicate.
+		/// Finds all <see cref="IProjectile"/>s in the world, optionally matching a predicate.
 		/// </summary>
-		/// <param name="predicate">The predicate to match with, or null for none.</param>
+		/// <param name="predicate">The predicate to match with.</param>
 		/// <returns>An enumerable collection of <see cref="IProjectile"/>s that match the predicate.</returns>
 		IEnumerable<IProjectile> Find(Predicate<IProjectile> predicate = null);
 	}

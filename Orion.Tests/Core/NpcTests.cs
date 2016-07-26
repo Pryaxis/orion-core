@@ -91,5 +91,15 @@ namespace Orion.Tests.Core
 
 			Assert.AreEqual(type, npc.Type);
 		}
+
+		[TestCase(-1)]
+		[TestCase(100000)]
+		public void SetDefaults_InvalidType_ThrowsArgumentOutOfRangeException(int type)
+		{
+			var terrariaNpc = new Terraria.NPC();
+			var npc = new Npc(terrariaNpc);
+
+			Assert.Throws<ArgumentOutOfRangeException>(() => npc.SetDefaults(type));
+		}
 	}
 }

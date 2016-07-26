@@ -8,14 +8,10 @@ namespace Orion.Framework
 	/// </summary>
 	public abstract class ServiceBase : IService
 	{
-		/// <summary>
-		/// Gets the service author.
-		/// </summary>
+		/// <inheritdoc/>
 		public string Author { get; } = "Anonymous";
 
-		/// <summary>
-		/// Gets the service name.
-		/// </summary>
+		/// <inheritdoc/>
 		public string Name { get; } = "Unnamed";
 
 		/// <summary>
@@ -23,15 +19,17 @@ namespace Orion.Framework
 		/// </summary>
 		protected Orion Orion { get; }
 
-		/// <summary>
-		/// Gets the service version.
-		/// </summary>
+		/// <inheritdoc/>
 		public virtual Version Version { get; } = new Version(1, 0, 0);
 
 		/// <summary>
 		/// Initializes a new instance of the <see cref="ServiceBase"/> class.
 		/// </summary>
 		/// <param name="orion">The parent <see cref="Orion"/> instance.</param>
+		/// <remarks>
+		/// This constructor populates the <see cref="Name"/> and <see cref="Author"/> properties if the
+		/// <see cref="ServiceAttribute"/> attribute is on the derived class.
+		/// </remarks>
 		protected ServiceBase(Orion orion)
 		{
 			Orion = orion;
@@ -45,10 +43,7 @@ namespace Orion.Framework
 		}
 
         /// <summary>
-        /// Destructor: ServiceBase
-        /// 
-        /// If your service has unmanaged resources, you must override <see cref="Dispose(bool)"/>
-        /// and release it.
+        /// If your service has unmanaged resources, you must override <see cref="Dispose(bool)"/> and release it.
         /// </summary>
         ~ServiceBase()
         {
@@ -62,7 +57,7 @@ namespace Orion.Framework
         }
 
 		/// <summary>
-		/// Disposes the service, suppressing the GC from running the finalizer, if any.
+		/// Disposes the service, suppressing the GC from running the finalizer.
 		/// </summary>
 		public void Dispose()
 		{

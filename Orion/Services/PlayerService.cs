@@ -10,41 +10,30 @@ using OTAPI.Core;
 namespace Orion.Services
 {
 	/// <summary>
-	/// Manages <see cref="IPlayer"/>s with a backing array, retrieving information from the Terraria player array.
+	/// Manages <see cref="IPlayer"/>s.
 	/// </summary>
 	[Service("Player Service", Author = "Nyx Studios")]
 	public class PlayerService : ServiceBase, IPlayerService
 	{
-		/// <summary>
-		/// A value indicating whether the service has been disposed. Used to ignore multiple
-		/// <see cref="Dispose(bool)"/> calls.
-		/// </summary>
 		private bool _disposed;
-
-		/// <summary>
-		/// The backing array of <see cref="IPlayer"/>s. Lazily updated with players from the Terraria player array.
-		/// </summary>
 		private readonly IPlayer[] _players;
 
-		/// <summary>
-		/// Occurs after a <see cref="IPlayer"/> has joined the server.
-		/// </summary>
+		/// <inheritdoc/>
 		public event EventHandler<PlayerJoinedEventArgs> PlayerJoined;
 
-		/// <summary>
-		/// Occurs when a <see cref="IPlayer"/> is joining the server.
-		/// </summary>
+		/// <inheritdoc/>
 		public event EventHandler<PlayerJoiningEventArgs> PlayerJoining;
 
-		/// <summary>
-		/// Occurs after a <see cref="IPlayer"/> has quit the server.
-		/// </summary>
+		/// <inheritdoc/>
 		public event EventHandler<PlayerQuitEventArgs> PlayerQuit;
 
 		/// <summary>
 		/// Initializes a new instance of the <see cref="PlayerService"/> class.
 		/// </summary>
 		/// <param name="orion">The parent <see cref="Orion"/> instance.</param>
+		/// <remarks>
+		/// This constructor registers the OTAPI hooks.
+		/// </remarks>
 		public PlayerService(Orion orion) : base(orion)
 		{
 			_players = new IPlayer[Terraria.Main.player.Length];
@@ -53,11 +42,11 @@ namespace Orion.Services
 			Hooks.Player.PreGreet = InvokePlayerJoin;
 		}
 
-		/// <summary>
-		/// Finds all <see cref="IPlayer"/>s in the world, optionally matching a predicate.
-		/// </summary>
-		/// <param name="predicate">The predicate to match with.</param>
-		/// <returns>An enumerable collection of <see cref="IPlayer"/>s.</returns>
+		/// <inheritdoc/>
+		/// <remarks>
+		/// The <see cref="IPlayer"/>s are cached in an array. Calling this method multiple times will result in the
+		/// same <see cref="IPlayer"/> references as long as the Terraria player array is not updated.
+		/// </remarks>
 		public IEnumerable<IPlayer> Find(Predicate<IPlayer> predicate = null)
 		{
 			var players = new List<IPlayer>();
@@ -72,13 +61,10 @@ namespace Orion.Services
 			return players.Where(p => p.WrappedPlayer.active && (predicate?.Invoke(p) ?? true));
 		}
 
-		/// <summary>
-		/// Disposes the service and its unmanaged resources, optionally disposing its managed resources.
-		/// </summary>
-		/// <param name="disposing">
-		/// true if called from a managed disposal, and *both* unmanaged and managed resources must be freed. false
-		/// if called from a finalizer, and *only* unmanaged resources may be freed.
-		/// </param>
+		/// <inheritdoc/>
+		/// <remarks>
+		/// This method deregisters the OTAPI hooks.
+		/// </remarks>
 		protected override void Dispose(bool disposing)
 		{
 			if (!_disposed)
@@ -93,11 +79,6 @@ namespace Orion.Services
 			base.Dispose(disposing);
 		}
 
-		/// <summary>
-		/// Invokes the <see cref="PlayerJoining"/> and <see cref="PlayerJoined"/> events.
-		/// </summary>
-		/// <param name="playerId">The ID of the player that is joining.</param>
-		/// <returns>A value indicating whether to continue or cancel normal server code.</returns>
 		private HookResult InvokePlayerJoin(ref int playerId)
 		{
 			if (_players[playerId]?.WrappedPlayer != Terraria.Main.player[playerId])
@@ -117,11 +98,6 @@ namespace Orion.Services
 			return HookResult.Continue;
 		}
 
-		/// <summary>
-		/// Invokes the <see cref="PlayerQuit"/> event.
-		/// </summary>
-		/// <param name="remoteClient">The remote client that was reset due to leaving.</param>
-		/// <returns>A value indicating to continue normal server code.</returns>
 		private HookResult InvokePlayerQuit(Terraria.RemoteClient remoteClient)
 		{
 			if (remoteClient.Socket == null)

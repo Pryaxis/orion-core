@@ -167,7 +167,6 @@ namespace Orion.Tests.Services
 		[TestCase(-1, 1, 0)]
 		[TestCase(100000, 1, 0)]
 		[TestCase(1, -1, 0)]
-		[TestCase(1, 100000, 0)]
 		[TestCase(1, 1, -1)]
 		[TestCase(1, 1, 100000)]
 		public void Create_ParamOutOfRange_ThrowsArgumentOutOfRangeException(int type, int stack, int prefix)
@@ -214,16 +213,11 @@ namespace Orion.Tests.Services
 					Terraria.Main.item[i] = new Terraria.Item {active = true, type = i};
 				}
 
-				List<IItem> items = itemService.Find(predicate).ToList();
-				IEnumerable<IItem> otherItems = itemService.Find(i => !items.Contains(i));
+				IEnumerable<IItem> items = itemService.Find(predicate);
 
 				foreach (IItem item in items)
 				{
 					Assert.IsTrue(predicate(item));
-				}
-				foreach (IItem item in otherItems)
-				{
-					Assert.IsFalse(predicate(item));
 				}
 			}
 		}
@@ -249,7 +243,6 @@ namespace Orion.Tests.Services
 		[TestCase(-1, 1, 0)]
 		[TestCase(100000, 1, 0)]
 		[TestCase(1, -1, 0)]
-		[TestCase(1, 100000, 0)]
 		[TestCase(1, 1, -1)]
 		[TestCase(1, 1, 100000)]
 		public void Spawn_ParamOutOfRange_ThrowsArgumentOutOfRangeException(int type, int stack, int prefix)

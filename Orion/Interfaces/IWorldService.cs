@@ -20,7 +20,7 @@ namespace Orion.Interfaces
 		event EventHandler<HardmodeTileUpdatingEventArgs> HardmodeTileUpdating;
 
 		/// <summary>
-		/// Occurs after the world has saved.
+		/// Occurs after the world saved.
 		/// </summary>
 		event EventHandler<WorldSavedEventArgs> WorldSaved;
 

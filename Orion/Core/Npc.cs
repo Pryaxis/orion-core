@@ -9,65 +9,47 @@ namespace Orion.Core
 	/// </summary>
 	public class Npc : INpc
 	{
-		/// <summary>
-		/// Gets the NPC's damage.
-		/// </summary>
+		/// <inheritdoc/>
 		public int Damage => WrappedNpc.damage;
 
-		/// <summary>
-		/// Gets the NPC's defense.
-		/// </summary>
+		/// <inheritdoc/>
 		public int Defense => WrappedNpc.defense;
 
-		/// <summary>
-		/// Gets or sets the NPC's health.
-		/// </summary>
+		/// <inheritdoc/>
 		public int Health
 		{
 			get { return WrappedNpc.life; }
 			set { WrappedNpc.life = value; }
 		}
 
-		/// <summary>
-		/// Gets or sets the NPC's maximum health.
-		/// </summary>
+		/// <inheritdoc/>
 		public int MaxHealth
 		{
 			get { return WrappedNpc.lifeMax; }
 			set { WrappedNpc.lifeMax = value; }
 		}
 
-		/// <summary>
-		/// Gets the NPC's name.
-		/// </summary>
+		/// <inheritdoc/>
 		public string Name => WrappedNpc.name;
 
-		/// <summary>
-		/// Gets or sets the NPC's position in the world.
-		/// </summary>
+		/// <inheritdoc/>
 		public Vector2 Position
 		{
 			get { return WrappedNpc.position; }
 			set { WrappedNpc.position = value; }
 		}
 
-		/// <summary>
-		/// Gets the NPC's type.
-		/// </summary>
+		/// <inheritdoc/>
 		public int Type => WrappedNpc.netID;
 
-		/// <summary>
-		/// Gets or sets the NPC's velocity in the world.
-		/// </summary>
+		/// <inheritdoc/>
 		public Vector2 Velocity
 		{
 			get { return WrappedNpc.velocity; }
 			set { WrappedNpc.velocity = value; }
 		}
 
-		/// <summary>
-		/// Gets the wrapped Terraria NPC.
-		/// </summary>
+		/// <inheritdoc/>
 		public Terraria.NPC WrappedNpc { get; }
 
 		/// <summary>
@@ -85,20 +67,14 @@ namespace Orion.Core
 			WrappedNpc = terrariaNpc;
 		}
 
-		/// <summary>
-		/// Kills the NPC.
-		/// </summary>
+		/// <inheritdoc/>
 		public void Kill()
 		{
 			Health = 0;
 			WrappedNpc.checkDead();
 		}
 
-		/// <summary>
-		/// Sets the NPC's defaults to the specified type's.
-		/// </summary>
-		/// <param name="type">The type.</param>
-		/// <exception cref="ArgumentOutOfRangeException"><paramref name="type"/> was an invalid type.</exception>
+		/// <inheritdoc/>
 		public void SetDefaults(int type)
 		{
 			if (type < 0 || type > Terraria.Main.maxNPCTypes)

@@ -1,4 +1,6 @@
-﻿using Microsoft.Xna.Framework;
+﻿using System;
+using System.Reflection;
+using Microsoft.Xna.Framework;
 using NUnit.Framework;
 using Orion.Core;
 
@@ -7,83 +9,54 @@ namespace Orion.Tests.Core
 	[TestFixture]
 	public class ProjectileTests
 	{
-		[TestCase(100)]
-		public void GetDamage_IsCorrect(int damage)
+		private static readonly object[] GetWrappers =
 		{
-			var terrariaProjectile = new Terraria.Projectile();
-			var projectile = new Projectile(terrariaProjectile);
+			new object[] {nameof(Projectile.Damage), nameof(Terraria.Projectile.damage), 100},
+			new object[] {nameof(Projectile.IsHostile), nameof(Terraria.Projectile.hostile), true},
+			new object[] {nameof(Projectile.Name), nameof(Terraria.Projectile.name), "TEST"},
+			new object[] {nameof(Projectile.Position), nameof(Terraria.Projectile.position), Vector2.One},
+			new object[] {nameof(Projectile.Type), nameof(Terraria.Projectile.type), 1}
+		};
 
-			terrariaProjectile.damage = damage;
+		private static readonly object[] SetWrappers =
+		{
+			new object[] {nameof(Projectile.Position), nameof(Terraria.Projectile.position), Vector2.One},
+			new object[] {nameof(Projectile.Velocity), nameof(Terraria.Projectile.velocity), Vector2.One}
+		};
 
-			Assert.AreEqual(projectile.Damage, damage);
+		[Test]
+		public void Constructor_NullProjectile_ThrowsArgumentNullException()
+		{
+			Assert.Throws<ArgumentNullException>(() => new Projectile(null));
 		}
 
-		[TestCase("Name")]
-		public void GetName_IsCorrect(string name)
+		[TestCaseSource(nameof(GetWrappers))]
+		public void GetProperty_IsCorrect(
+			string projectilePropertyName, string terrariaProjectileFieldName, object value)
 		{
 			var terrariaProjectile = new Terraria.Projectile();
+			FieldInfo terrariaProjectileField = typeof(Terraria.Projectile).GetField(terrariaProjectileFieldName);
 			var projectile = new Projectile(terrariaProjectile);
+			PropertyInfo projectileProperty = typeof(Projectile).GetProperty(projectilePropertyName);
 
-			terrariaProjectile.name = name;
+			terrariaProjectileField.SetValue(
+				terrariaProjectile, Convert.ChangeType(value, terrariaProjectileField.FieldType));
 
-			Assert.AreEqual(projectile.Name, name);
+			Assert.AreEqual(value, projectileProperty.GetValue(projectile));
 		}
 
-		[TestCase(1)]
-		public void GetType_IsCorrect(int type)
+		[TestCaseSource(nameof(SetWrappers))]
+		public void SetProperty_IsCorrect(
+			string projectilePropertyName, string terrariaProjectileFieldName, object value)
 		{
 			var terrariaProjectile = new Terraria.Projectile();
+			FieldInfo terrariaProjectileField = typeof(Terraria.Projectile).GetField(terrariaProjectileFieldName);
 			var projectile = new Projectile(terrariaProjectile);
+			PropertyInfo projectileProperty = typeof(Projectile).GetProperty(projectilePropertyName);
 
-			terrariaProjectile.type = type;
+			projectileProperty.SetValue(projectile, Convert.ChangeType(value, projectileProperty.PropertyType));
 
-			Assert.AreEqual(projectile.Type, type);
-		}
-
-		private static readonly Vector2[] Positions = { Vector2.One };
-		[Test, TestCaseSource(nameof(Positions))]
-		public void GetPosition_IsCorrect(Vector2 position)
-		{
-			var terrariaProjectile = new Terraria.Projectile();
-			var projectile = new Projectile(terrariaProjectile);
-
-			terrariaProjectile.position = position;
-
-			Assert.AreEqual(projectile.Position, position);
-		}
-
-		[Test, TestCaseSource(nameof(Positions))]
-		public void SetPosition_Updates(Vector2 position)
-		{
-			var terrariaProjectile = new Terraria.Projectile();
-			var projectile = new Projectile(terrariaProjectile);
-
-			projectile.Position = position;
-
-			Assert.AreEqual(terrariaProjectile.position, position);
-		}
-
-		private static readonly Vector2[] Velocities = { Vector2.One };
-		[Test, TestCaseSource(nameof(Velocities))]
-		public void GetVelocity_IsCorrect(Vector2 velocity)
-		{
-			var terrariaProjectile = new Terraria.Projectile();
-			var projectile = new Projectile(terrariaProjectile);
-
-			terrariaProjectile.velocity = velocity;
-
-			Assert.AreEqual(projectile.Velocity, velocity);
-		}
-
-		[Test, TestCaseSource(nameof(Velocities))]
-		public void SetVelocity_Updates(Vector2 velocity)
-		{
-			var terrariaProjectile = new Terraria.Projectile();
-			var projectile = new Projectile(terrariaProjectile);
-
-			projectile.Velocity = velocity;
-
-			Assert.AreEqual(terrariaProjectile.velocity, velocity);
+			Assert.AreEqual(value, terrariaProjectileField.GetValue(terrariaProjectile));
 		}
 
 		[Test]
@@ -93,6 +66,27 @@ namespace Orion.Tests.Core
 			var projectile = new Projectile(terrariaProjectile);
 
 			Assert.AreSame(terrariaProjectile, projectile.WrappedProjectile);
+		}
+
+		[TestCase(1)]
+		public void SetDefaults_IsCorrect(int type)
+		{
+			var terrariaProjectile = new Terraria.Projectile();
+			var projectile = new Projectile(terrariaProjectile);
+
+			projectile.SetDefaults(type);
+
+			Assert.AreEqual(type, projectile.Type);
+		}
+
+		[TestCase(-1)]
+		[TestCase(100000)]
+		public void SetDefaults_InvalidType_ThrowsArgumentOutOfRangeException(int type)
+		{
+			var terrariaProjectile = new Terraria.Projectile();
+			var projectile = new Projectile(terrariaProjectile);
+
+			Assert.Throws<ArgumentOutOfRangeException>(() => projectile.SetDefaults(type));
 		}
 	}
 }

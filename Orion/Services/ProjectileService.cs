@@ -10,7 +10,7 @@ using OTAPI.Core;
 namespace Orion.Services
 {
 	/// <summary>
-	/// Manages <see cref="IProjectile"/>s with a backing array, retrieving information from the Terraria projectile array.
+	/// Manages <see cref="IProjectile"/>s.
 	/// </summary>
 	[Service("Projectile Service", Author = "Nyx Studios")]
 	public class ProjectileService : ServiceBase, IProjectileService
@@ -18,20 +18,19 @@ namespace Orion.Services
 		private bool _disposed;
 		private readonly IProjectile[] _projectiles;
 
-		/// <summary>
-		/// Occurs after a <see cref="IProjectile"/> has it defaults set.
-		/// </summary>
+		/// <inheritdoc/>
 		public event EventHandler<ProjectileSetDefaultsEventArgs> ProjectileSetDefaults;
 
-		/// <summary>
-		/// Occurs before a <see cref="IProjectile"/> has its defaults set.
-		/// </summary>
+		/// <inheritdoc/>
 		public event EventHandler<ProjectileSettingDefaultsEventArgs> ProjectileSettingDefaults;
 
 		/// <summary>
 		/// Initializes a new instance of the <see cref="ProjectileService"/> class.
 		/// </summary>
 		/// <param name="orion">The parent <see cref="Orion"/> instance.</param>
+		/// <remarks>
+		/// This constructor registers the OTAPI hooks.
+		/// </remarks>
 		public ProjectileService(Orion orion) : base(orion)
 		{
 			_projectiles = new IProjectile[Terraria.Main.projectile.Length];
@@ -39,11 +38,11 @@ namespace Orion.Services
 			Hooks.Projectile.PreSetDefaultsById = InvokeProjectileSettingDefaults;
 		}
 
-		/// <summary>
-		/// Finds all <see cref="IProjectile"/>s in the world matching a predicate. 
-		/// </summary>
-		/// <param name="predicate">The predicate to match with, or null for none.</param>
-		/// <returns>An enumerable collection of <see cref="IProjectile"/>s matching the predicate.</returns>
+		/// <inheritdoc/>
+		/// <remarks>
+		/// The <see cref="IProjectile"/>s are cached in an array. Calling this method multiple times will result in the
+		/// same <see cref="IProjectile"/> references as long as the Terraria projectile array is not updated.
+		/// </remarks>
 		public IEnumerable<IProjectile> Find(Predicate<IProjectile> predicate = null)
 		{
 			var projectiles = new List<IProjectile>();
@@ -58,13 +57,10 @@ namespace Orion.Services
 			return projectiles.Where(p => p.WrappedProjectile.active && (predicate?.Invoke(p) ?? true));
 		}
 
-		/// <summary>
-		/// Disposes the service and its unmanaged resources, if any, optionally disposing its managed resources, if
-		/// any.
-		/// </summary>
-		/// <param name="disposing">
-		/// true to dispose managed and unmanaged resources, false to only dispose unmanaged resources.
-		/// </param>
+		/// <inheritdoc/>
+		/// <remarks>
+		/// This method deregisters the OTAPI hooks.
+		/// </remarks>
 		protected override void Dispose(bool disposing)
 		{
 			if (!_disposed)

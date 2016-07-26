@@ -1,60 +1,47 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Microsoft.Xna.Framework;
 using Orion.Interfaces;
 
 namespace Orion.Core
 {
 	/// <summary>
-	/// Wraps a Terraria Projectile.
+	/// Wraps a Terraria projectile.
 	/// </summary>
 	public class Projectile : IProjectile
 	{
-		/// <summary>
-		/// Gets the projectile damage.
-		/// </summary>
+		/// <inheritdoc/>
 		public int Damage => WrappedProjectile.damage;
 
-		/// <summary>
-		/// Gets the projectile name.
-		/// </summary>
+		/// <inheritdoc/>
+		public bool IsHostile => WrappedProjectile.hostile;
+
+		/// <inheritdoc/>
 		public string Name => WrappedProjectile.name;
 
-		/// <summary>
-		/// Gets the projectile type ID.
-		/// </summary>
+		/// <inheritdoc/>
 		public int Type => WrappedProjectile.type;
 
-		/// <summary>
-		/// Gets or sets the projectile's position.
-		/// </summary>
+		/// <inheritdoc/>
 		public Vector2 Position
 		{
 			get { return WrappedProjectile.position; }
 			set { WrappedProjectile.position = value; }
 		}
 
-		/// <summary>
-		/// Gets or sets the projectile's velocity.
-		/// </summary>
+		/// <inheritdoc/>
 		public Vector2 Velocity
 		{
 			get { return WrappedProjectile.velocity; }
 			set { WrappedProjectile.velocity = value; }
 		}
 
-		/// <summary>
-		/// Gets the wrapped Terraria projectile.
-		/// </summary>
+		/// <inheritdoc/>
 		public Terraria.Projectile WrappedProjectile { get; }
 
 		/// <summary>
 		/// Initializes a new instance of the <see cref="Projectile"/> class wrapping the specified Terraria projectile.
 		/// </summary>
-		/// <param name="projectile">The Terraria projectile to wrap.</param>
+		/// <param name="terrariaProjectile">The Terraria projectile to wrap.</param>
 		/// <exception cref="ArgumentNullException"><paramref name="terrariaProjectile"/> was null.</exception>
 		public Projectile(Terraria.Projectile terrariaProjectile)
 		{
@@ -64,6 +51,17 @@ namespace Orion.Core
 			}
 
 			WrappedProjectile = terrariaProjectile;
+		}
+
+		/// <inheritdoc/>
+		public void SetDefaults(int type)
+		{
+			if (type < 0 || type > Terraria.Main.maxProjectileTypes)
+			{
+				throw new ArgumentOutOfRangeException(nameof(type));
+			}
+
+			WrappedProjectile.SetDefaults(type);
 		}
 	}
 }

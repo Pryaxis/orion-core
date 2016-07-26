@@ -54,9 +54,7 @@ namespace Orion.Interfaces
 		/// <param name="type">The type ID.</param>
 		/// <param name="position">The position in the world.</param>
 		/// <returns>The resulting spawned <see cref="INpc"/>.</returns>
-		/// <exception cref="ArgumentOutOfRangeException">
-		/// <paramref name="type"/> was out of range.
-		/// </exception>
+		/// <exception cref="ArgumentOutOfRangeException"><paramref name="type"/> was out of range.</exception>
 		INpc Spawn(int type, Vector2 position);
 	}
 }

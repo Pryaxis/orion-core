@@ -56,9 +56,7 @@ namespace Orion.Interfaces
 		/// <summary>
 		/// Gets or sets the item's stack size.
 		/// </summary>
-		/// <exception cref="ArgumentOutOfRangeException">
-		/// <paramref name="value"/> was negative or greater than <see cref="MaxStackSize"/>.
-		/// </exception>
+		/// <exception cref="ArgumentOutOfRangeException"><paramref name="value"/> was negative.</exception>
 		int StackSize { get; set; }
 		
 		/// <summary>
@@ -84,7 +82,7 @@ namespace Orion.Interfaces
 		void SetDefaults(int type);
 
 		/// <summary>
-		/// Sets the item's prefix.
+		/// Tries to set the item's prefix.
 		/// </summary>
 		/// <param name="prefix">The prefix.</param>
 		/// <exception cref="ArgumentOutOfRangeException"><paramref name="prefix"/> was an invalid prefix.</exception>

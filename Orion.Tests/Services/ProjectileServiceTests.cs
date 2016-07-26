@@ -19,10 +19,10 @@ namespace Orion.Tests.Services
 			{
 				var terrariaProjectile = new Terraria.Projectile();
 				bool eventOcccurred = false;
-				projectileService.ProjectileSetDefaults += (s, a) =>
+				projectileService.ProjectileSetDefaults += (sender, args) =>
 				{
 					eventOcccurred = true;
-					Assert.AreEqual(terrariaProjectile, a.Projectile.WrappedProjectile);
+					Assert.AreEqual(terrariaProjectile, args.Projectile.WrappedProjectile);
 				};
 
 				terrariaProjectile.SetDefaults(type);
@@ -34,15 +34,16 @@ namespace Orion.Tests.Services
 		[TestCase(1)]
 		public void ProjectileSettingDefaults_IsCorrect(int type)
 		{
-			using (Orion orion = new Orion())
+			using (var orion = new Orion())
 			using (var projectileService = new ProjectileService(orion))
 			{
 				var terrariaProjectile = new Terraria.Projectile();
 				bool eventOccurred = false;
-				projectileService.ProjectileSettingDefaults += (s, a) =>
+				projectileService.ProjectileSettingDefaults += (sender, args) =>
 				{
 					eventOccurred = true;
-					Assert.AreEqual(type, a.Type);
+					Assert.AreEqual(terrariaProjectile, args.Projectile.WrappedProjectile);
+					Assert.AreEqual(type, args.Type);
 				};
 
 				terrariaProjectile.SetDefaults(type);
@@ -54,14 +55,11 @@ namespace Orion.Tests.Services
 		[TestCase(1, 2)]
 		public void ProjectileSettingDefaults_ModifiesType(int type, int newType)
 		{
-			using (Orion orion = new Orion())
+			using (var orion = new Orion())
 			using (var projectileService = new ProjectileService(orion))
 			{
 				var terrariaProjectile = new Terraria.Projectile();
-				projectileService.ProjectileSettingDefaults += (s, a) =>
-				{
-					a.Type = newType;
-				};
+				projectileService.ProjectileSettingDefaults += (sender, args) => args.Type = newType;
 
 				terrariaProjectile.SetDefaults(type);
 
@@ -72,14 +70,11 @@ namespace Orion.Tests.Services
 		[TestCase(1)]
 		public void ProjectileSettingDefaults_Handled_StopsSetDefaults(int type)
 		{
-			using (Orion orion = new Orion())
+			using (var orion = new Orion())
 			using (var projectileService = new ProjectileService(orion))
 			{
 				var terrariaProjectile = new Terraria.Projectile();
-				projectileService.ProjectileSettingDefaults += (s, a) =>
-				{
-					a.Handled = true;
-				};
+				projectileService.ProjectileSettingDefaults += (sender, args) => args.Handled = true;
 
 				terrariaProjectile.SetDefaults(type);
 
@@ -96,19 +91,20 @@ namespace Orion.Tests.Services
 			{
 				for (int i = 0; i < Terraria.Main.projectile.Length; i++)
 				{
-					Terraria.Main.projectile[i] = new Terraria.Projectile { active = i < populate, name = "A" };
+					Terraria.Main.projectile[i] = new Terraria.Projectile { active = i < populate };
 				}
 				List<IProjectile> projectiles = projectileService.Find().ToList();
 
 				Assert.AreEqual(populate, projectiles.Count);
-				foreach (IProjectile projectile in projectiles)
+				for (int i = 0; i < populate; ++i)
 				{
-					Assert.AreEqual("A", projectile.Name);
+					Assert.AreSame(Terraria.Main.projectile[i], projectiles[i].WrappedProjectile);
 				}
 			}
 		}
 
 		private static readonly Predicate<IProjectile>[] Predicates = { projectile => projectile.Position.X <= 10 };
+
 		[Test, TestCaseSource(nameof(Predicates))]
 		public void Find_IsCorrect(Predicate<IProjectile> predicate)
 		{
@@ -119,16 +115,11 @@ namespace Orion.Tests.Services
 				{
 					Terraria.Main.projectile[i] = new Terraria.Projectile { active = true, position = new Vector2(i, 0) };
 				}
-				List<IProjectile> projectiles = projectileService.Find(predicate).ToList();
-				IEnumerable<IProjectile> otherProjectiles = projectileService.Find(p => !projectiles.Contains(p));
+				IEnumerable<IProjectile> projectiles = projectileService.Find(predicate);
 
 				foreach (IProjectile projectile in projectiles)
 				{
 					Assert.IsTrue(predicate(projectile));
-				}
-				foreach (IProjectile otherProjectile in otherProjectiles)
-				{
-					Assert.IsFalse(predicate(otherProjectile));
 				}
 			}
 		}

@@ -12,12 +12,12 @@ namespace Orion.Interfaces
 	public interface IItemService : IService
 	{
 		/// <summary>
-		/// Occurs after an item has had its defaults set.
+		/// Occurs after an <see cref="IItem"/> had its defaults set.
 		/// </summary>
 		event EventHandler<ItemSetDefaultsEventArgs> ItemSetDefaults;
 
 		/// <summary>
-		/// Occurs when an item is having its defaults set.
+		/// Occurs when an <see cref="IItem"/> is having its defaults set.
 		/// </summary>
 		event EventHandler<ItemSettingDefaultsEventArgs> ItemSettingDefaults;
 
@@ -29,7 +29,7 @@ namespace Orion.Interfaces
 		/// <param name="prefix">The prefix.</param>
 		/// <returns>The resulting <see cref="IItem"/>.</returns>
 		/// <exception cref="ArgumentOutOfRangeException">
-		/// <paramref name="type"/> was an invalid type, <paramref name="stackSize"/> was an invalid stack size, or
+		/// <paramref name="type"/> was an invalid type, <paramref name="stackSize"/> was negative, or
 		/// <paramref name="prefix"/> was an invalid prefix.
 		/// </exception>
 		IItem Create(int type, int stackSize = 1, int prefix = 0);
@@ -51,7 +51,7 @@ namespace Orion.Interfaces
 		/// <param name="prefix">The prefix.</param>
 		/// <returns>The resulting <see cref="IItem"/>.</returns>
 		/// <exception cref="ArgumentOutOfRangeException">
-		/// <paramref name="type"/> was an invalid type, <paramref name="stackSize"/> was an invalid stack size, or
+		/// <paramref name="type"/> was an invalid type, <paramref name="stackSize"/> was negative, or
 		/// <paramref name="prefix"/> was an invalid prefix.
 		/// </exception>
 		IItem Spawn(int type, Vector2 position, int stackSize = 1, int prefix = 0);

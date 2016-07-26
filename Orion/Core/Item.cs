@@ -9,67 +9,44 @@ namespace Orion.Core
 	/// </summary>
 	public class Item : IItem
 	{
-		/// <summary>
-		/// Gets the item's axe power.
-		/// </summary>
+		/// <inheritdoc/>
 		public int AxePower => WrappedItem.axe;
 
-		/// <summary>
-		/// Gets the item's damage.
-		/// </summary>
+		/// <inheritdoc/>
 		public int Damage => WrappedItem.damage;
 
-		/// <summary>
-		/// Gets the item's hammer power.
-		/// </summary>
+		/// <inheritdoc/>
 		public int HammerPower => WrappedItem.hammer;
 
-		/// <summary>
-		/// Gets the item's maximum stack size.
-		/// </summary>
+		/// <inheritdoc/>
 		public int MaxStackSize => WrappedItem.maxStack;
 
-		/// <summary>
-		/// Gets the item's name.
-		/// </summary>
+		/// <inheritdoc/>
 		public string Name => WrappedItem.name;
 
-		/// <summary>
-		/// Gets the item's pickaxe power.
-		/// </summary>
+		/// <inheritdoc/>
 		public int PickaxePower => WrappedItem.pick;
 
-		/// <summary>
-		/// Gets or sets the item's position in the world.
-		/// </summary>
+		/// <inheritdoc/>
 		public Vector2 Position
 		{
 			get { return WrappedItem.position; }
 			set { WrappedItem.position = value; }
 		}
 
-		/// <summary>
-		/// Gets the item's prefix.
-		/// </summary>
+		/// <inheritdoc/>
 		public int Prefix => WrappedItem.prefix;
 
-		/// <summary>
-		/// Gets the projectile type that the item creates.
-		/// </summary>
+		/// <inheritdoc/>
 		public int Projectile => WrappedItem.shoot;
 
-		/// <summary>
-		/// Gets or sets the item's stack size.
-		/// </summary>
-		/// <exception cref="ArgumentOutOfRangeException">
-		/// <paramref name="value"/> was negative or greater than <see cref="IItem.MaxStackSize"/>.
-		/// </exception>
+		/// <inheritdoc/>
 		public int StackSize
 		{
 			get { return WrappedItem.stack; }
 			set
 			{
-				if (value < 0 || value > MaxStackSize)
+				if (value < 0)
 				{
 					throw new ArgumentOutOfRangeException(nameof(value));
 				}
@@ -78,30 +55,20 @@ namespace Orion.Core
 			}
 		}
 
-		/// <summary>
-		/// Gets the item's type.
-		/// </summary>
+		/// <inheritdoc/>
 		public int Type => WrappedItem.netID;
 
-		/// <summary>
-		/// Gets or sets the item's velocity in the world.
-		/// </summary>
+		/// <inheritdoc/>
 		public Vector2 Velocity
 		{
 			get { return WrappedItem.velocity; }
 			set { WrappedItem.velocity = value; }
 		}
 
-		/// <summary>
-		/// Gets the wrapped Terraria item.
-		/// </summary>
+		/// <inheritdoc/>
 		public Terraria.Item WrappedItem { get; }
 
-		/// <summary>
-		/// Initializes a new instance of the <see cref="Item"/> class wrapping the specified Terraria item.
-		/// </summary>
-		/// <param name="terrariaItem">The Terraria item to wrap.</param>
-		/// <exception cref="ArgumentNullException"><paramref name="terrariaItem"/> was null.</exception>
+		/// <inheritdoc/>
 		public Item(Terraria.Item terrariaItem)
 		{
 			if (terrariaItem == null)
@@ -112,11 +79,7 @@ namespace Orion.Core
 			WrappedItem = terrariaItem;
 		}
 
-		/// <summary>
-		/// Sets the item's defaults to the specified type's.
-		/// </summary>
-		/// <param name="type">The type.</param>
-		/// <exception cref="ArgumentOutOfRangeException"><paramref name="type"/> was an invalid type.</exception>
+		/// <inheritdoc/>
 		public void SetDefaults(int type)
 		{
 			if (type < 0 || type > Terraria.Main.maxItemTypes)
@@ -127,11 +90,10 @@ namespace Orion.Core
 			WrappedItem.SetDefaults(type);
 		}
 
-		/// <summary>
-		/// Sets the item's prefix.
-		/// </summary>
-		/// <param name="prefix">The prefix.</param>
-		/// <exception cref="ArgumentOutOfRangeException"><paramref name="prefix"/> was an invalid prefix.</exception>
+		/// <inheritdoc/>
+		/// <remarks>
+		/// If <see cref="prefix"/> is not applicable to the item type, then a randomly chosen prefix will be used.
+		/// </remarks>
 		public void SetPrefix(int prefix)
 		{
 			if (prefix < 0 || prefix > Terraria.Item.maxPrefixes)

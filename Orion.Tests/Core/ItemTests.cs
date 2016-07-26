@@ -76,7 +76,6 @@ namespace Orion.Tests.Core
 		}
 
 		[TestCase(-1)]
-		[TestCase(100000)]
 		public void SetStackSize_InvalidStackSize_ThrowsArgumentOutOfRangeException(int stackSize)
 		{
 			var terrariaItem = new Terraria.Item();

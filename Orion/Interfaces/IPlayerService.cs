@@ -11,7 +11,7 @@ namespace Orion.Interfaces
 	public interface IPlayerService : IService
 	{
 		/// <summary>
-		/// Occurs after a <see cref="IPlayer"/> has joined the server.
+		/// Occurs after a <see cref="IPlayer"/> joined the server.
 		/// </summary>
 		event EventHandler<PlayerJoinedEventArgs> PlayerJoined;
 
@@ -21,7 +21,7 @@ namespace Orion.Interfaces
 		event EventHandler<PlayerJoiningEventArgs> PlayerJoining;
 
 		/// <summary>
-		/// Occurs after a <see cref="IPlayer"/> has quit the server.
+		/// Occurs after a <see cref="IPlayer"/> quit the server.
 		/// </summary>
 		event EventHandler<PlayerQuitEventArgs> PlayerQuit;
 

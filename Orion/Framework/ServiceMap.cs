@@ -20,10 +20,12 @@ namespace Orion.Framework
 		/// the type of the default implementation that the injector will bind to.  The service
 		/// map can be overridden via runtime or file-time configuration.
 		/// </summary>
-		protected Dictionary<Type, Type> serviceMap = new Dictionary<Type, Type>()
+		protected Dictionary<Type, Type> serviceMap = new Dictionary<Type, Type>
 		{
 			[typeof(IConfigurationService)] = typeof(JsonFileConfigurationService),
 			[typeof(IItemService)] = typeof(ItemService),
+			[typeof(IPlayerService)] = typeof(PlayerService),
+			[typeof(IProjectileService)] = typeof(ProjectileService),
 			[typeof(ITileService)] = typeof(TileService),
 			[typeof(IWorldService)] = typeof(WorldService)
 		};
@@ -58,8 +60,6 @@ namespace Orion.Framework
 				.To(typeof(TImplementation))
 				.InSingletonScope();
 		}
-		
-
 
 		/// <summary>
 		/// Saves the service map to a stream.
