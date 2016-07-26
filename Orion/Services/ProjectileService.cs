@@ -10,8 +10,9 @@ using OTAPI.Core;
 namespace Orion.Services
 {
 	/// <summary>
-	/// Implements the <see cref="IProjectileService"/> functionality.
+	/// Manages <see cref="IProjectile"/>s with a backing array, retrieving information from the Terraria projectile array.
 	/// </summary>
+	[Service("Projectile Service", Author = "Nyx Studios")]
 	public class ProjectileService : ServiceBase, IProjectileService
 	{
 		private bool _disposed;
