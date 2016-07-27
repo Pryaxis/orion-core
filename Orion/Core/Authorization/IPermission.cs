@@ -1,10 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 
-namespace Orion.Interfaces.Authorization
+namespace Orion.Core.Authorization
 {
     /// <summary>
     /// An authorization object which controls player access to Orion features, such as commands and

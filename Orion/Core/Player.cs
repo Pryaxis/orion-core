@@ -1,6 +1,5 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
-using Orion.Interfaces;
 
 namespace Orion.Core
 {
@@ -29,17 +28,17 @@ namespace Orion.Core
 		}
 
 		/// <inheritdoc/>
-		public int MaxMana
-		{
-			get { return WrappedPlayer.statManaMax; }
-			set { WrappedPlayer.statManaMax = value; }
-		}
-
-		/// <inheritdoc/>
 		public int Mana
 		{
 			get { return WrappedPlayer.statMana; }
 			set { WrappedPlayer.statMana = value; }
+		}
+
+		/// <inheritdoc/>
+		public int MaxMana
+		{
+			get { return WrappedPlayer.statManaMax; }
+			set { WrappedPlayer.statManaMax = value; }
 		}
 
 		/// <inheritdoc/>

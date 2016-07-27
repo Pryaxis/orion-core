@@ -4,7 +4,6 @@ using System.Linq;
 using Orion.Core;
 using Orion.Events.Projectile;
 using Orion.Framework;
-using Orion.Interfaces;
 using OTAPI.Core;
 
 namespace Orion.Services

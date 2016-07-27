@@ -1,6 +1,6 @@
 ﻿using Orion.Framework;
 
-namespace Orion.Interfaces
+namespace Orion.Services
 {
 	/// <summary>
 	/// Provides a generic interface to interact with persistent configuration for plugins

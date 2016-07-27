@@ -1,10 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using Microsoft.Xna.Framework;
+using Orion.Core;
 using Orion.Events.Item;
 using Orion.Framework;
 
-namespace Orion.Interfaces
+namespace Orion.Services
 {
 	/// <summary>
 	/// Provides a mechanism for managing <see cref="IItem"/>s.

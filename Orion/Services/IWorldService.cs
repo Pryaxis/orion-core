@@ -2,7 +2,7 @@
 using Orion.Events.World;
 using Orion.Framework;
 
-namespace Orion.Interfaces
+namespace Orion.Services
 {
 	/// <summary>
 	/// Provides access to Terraria's world functions.

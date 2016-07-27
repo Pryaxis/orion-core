@@ -1,7 +1,7 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
 
-namespace Orion.Interfaces
+namespace Orion.Core
 {
 	/// <summary>
 	/// Provides a wrapper around a Terraria item.

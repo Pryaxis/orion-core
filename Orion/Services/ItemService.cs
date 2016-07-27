@@ -5,7 +5,6 @@ using Microsoft.Xna.Framework;
 using Orion.Core;
 using Orion.Events.Item;
 using Orion.Framework;
-using Orion.Interfaces;
 using OTAPI.Core;
 
 namespace Orion.Services

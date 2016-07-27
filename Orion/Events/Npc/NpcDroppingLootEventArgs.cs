@@ -1,6 +1,7 @@
 ﻿using System;
 using System.ComponentModel;
-using Orion.Interfaces;
+using Orion.Core;
+using Orion.Services;
 
 namespace Orion.Events.Npc
 {

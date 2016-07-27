@@ -1,5 +1,5 @@
 ﻿using System;
-using Orion.Interfaces;
+using Orion.Services;
 
 namespace Orion.Events.World
 {

@@ -1,6 +1,5 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
-using Orion.Interfaces;
 
 namespace Orion.Core
 {
@@ -92,7 +91,8 @@ namespace Orion.Core
 
 		/// <inheritdoc/>
 		/// <remarks>
-		/// If <see cref="prefix"/> is not applicable to the item type, then a randomly chosen prefix will be used.
+		/// If <paramref name="prefix"/> is not applicable to the item type, then a randomly chosen prefix will be
+		/// used.
 		/// </remarks>
 		public void SetPrefix(int prefix)
 		{

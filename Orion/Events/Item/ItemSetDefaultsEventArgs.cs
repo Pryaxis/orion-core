@@ -1,5 +1,6 @@
 ﻿using System;
-using Orion.Interfaces;
+using Orion.Core;
+using Orion.Services;
 
 namespace Orion.Events.Item
 {
