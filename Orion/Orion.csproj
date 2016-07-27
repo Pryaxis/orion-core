@@ -59,6 +59,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Authorization\IUserAccountService.cs" />
     <Compile Include="Entities\Projectile\Projectile.cs" />
     <Compile Include="Events\Item\ItemSetDefaultsEventArgs.cs" />
     <Compile Include="Events\Item\ItemSettingDefaultsEventArgs.cs" />
