@@ -25,6 +25,18 @@ namespace Orion.Authorization
 		IEnumerable<IUserAccount> Find(Predicate<IUserAccount> predicate = null);
 
 		/// <summary>
+		/// Returns a user account by the specified account name, or a default value if one cannot be found.
+		/// </summary>
+		/// <param name="accountName">
+		/// A string containing the account name to retrieve from the service
+		/// </param>
+		/// <returns>
+		/// A user account object if one was found by the specified <paramref name="accountName"/>, or the compiler
+		/// default if one cannot be found.
+		/// </returns>
+		IUserAccount GetUserAccountOrDefault(string accountName);
+
+		/// <summary>
 		/// Adds an account with the specified account name to the account service in the default group.
 		/// </summary>
 		/// <param name="accountName">

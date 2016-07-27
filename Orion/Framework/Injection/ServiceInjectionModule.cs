@@ -34,9 +34,10 @@ namespace Orion.Framework.Injection
 				 */
 				
 				Bind(serviceEntry.Key).To(serviceEntry.Value);
+				Bind(serviceEntry.Value).To(serviceEntry.Value);
 				Bind<IService>().To(serviceEntry.Value);
 				Bind<ServiceBase>().To(serviceEntry.Value);
 			}
 		}
 	}
-}
+} 
