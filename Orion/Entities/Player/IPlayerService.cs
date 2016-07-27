@@ -1,10 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using Orion.Core;
 using Orion.Events.Player;
 using Orion.Framework;
 
-namespace Orion.Services
+namespace Orion.Entities.Player
 {
 	/// <summary>
 	/// Provides a mechanism for managing <see cref="IPlayer"/>s.

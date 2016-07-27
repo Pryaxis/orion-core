@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
+using Orion.Entities.Player;
 
-namespace Orion.Core.Authorization
+namespace Orion.Authorization
 {
     /// <summary>
     /// Organises players together into a single entity with a list of permissions that

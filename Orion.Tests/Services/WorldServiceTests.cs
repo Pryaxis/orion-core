@@ -1,5 +1,5 @@
 ﻿using NUnit.Framework;
-using Orion.Services;
+using Orion.World;
 
 namespace Orion.Tests.Services
 {

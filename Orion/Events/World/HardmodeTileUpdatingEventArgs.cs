@@ -1,5 +1,5 @@
 ﻿using System.ComponentModel;
-using Orion.Services;
+using Orion.World;
 
 namespace Orion.Events.World
 {

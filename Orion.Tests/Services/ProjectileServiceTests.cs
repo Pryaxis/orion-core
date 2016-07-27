@@ -3,8 +3,7 @@ using System.Linq;
 using System.Collections.Generic;
 using NUnit.Framework;
 using Microsoft.Xna.Framework;
-using Orion.Core;
-using Orion.Services;
+using Orion.Entities.Projectile;
 
 namespace Orion.Tests.Services
 {

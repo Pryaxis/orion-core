@@ -1,8 +1,12 @@
 ﻿using Ninject;
-using Orion.Services;
 using System;
 using System.Collections.Generic;
 using System.IO;
+using Orion.Configuration;
+using Orion.Entities.Item;
+using Orion.Entities.Player;
+using Orion.Entities.Projectile;
+using Orion.World;
 
 namespace Orion.Framework
 {

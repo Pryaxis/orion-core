@@ -1,6 +1,5 @@
 ﻿using System;
-using Orion.Core;
-using Orion.Services;
+using Orion.Entities.Projectile;
 
 namespace Orion.Events.Projectile
 {

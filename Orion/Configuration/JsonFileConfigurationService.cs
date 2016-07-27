@@ -2,7 +2,7 @@
 using Newtonsoft.Json;
 using Orion.Framework;
 
-namespace Orion.Services
+namespace Orion.Configuration
 {
 	/// <summary>
 	/// Configuration service which loads and saves configuration from disk in JSON

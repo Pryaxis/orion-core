@@ -1,12 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using Orion.Core;
 using Orion.Events.Player;
 using Orion.Framework;
 using OTAPI.Core;
 
-namespace Orion.Services
+namespace Orion.Entities.Player
 {
 	/// <summary>
 	/// Manages <see cref="IPlayer"/>s.

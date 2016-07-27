@@ -1,6 +1,6 @@
 ﻿using System;
-using Orion.Core;
-using Orion.Services;
+using Orion.Entities.Item;
+using Orion.Entities.Npc;
 
 namespace Orion.Events.Npc
 {

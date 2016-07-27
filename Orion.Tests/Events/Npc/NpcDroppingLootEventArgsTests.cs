@@ -11,7 +11,7 @@ namespace Orion.Tests.Events.Npc
 		public void Constructor_NullNpc_ThrowsArgumentNullException()
 		{
 			var terrariaItem = new Terraria.Item();
-			var item = new global::Orion.Core.Item(terrariaItem);
+			var item = new global::Orion.Entities.Item.Item(terrariaItem);
 			Assert.Throws<ArgumentNullException>(() => new NpcDroppingLootEventArgs(null, item));
 		}
 
@@ -19,7 +19,7 @@ namespace Orion.Tests.Events.Npc
 		public void Constructor_NullItem_ThrowsArgumentNullException()
 		{
 			var terrariaNpc = new Terraria.NPC();
-			var npc = new global::Orion.Core.Npc(terrariaNpc);
+			var npc = new global::Orion.Entities.Npc.Npc(terrariaNpc);
 			Assert.Throws<ArgumentNullException>(() => new NpcDroppingLootEventArgs(npc, null));
 		}
 	}

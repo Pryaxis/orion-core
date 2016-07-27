@@ -1,12 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using Orion.Core;
 using Orion.Events.Projectile;
 using Orion.Framework;
 using OTAPI.Core;
 
-namespace Orion.Services
+namespace Orion.Entities.Projectile
 {
 	/// <summary>
 	/// Manages <see cref="IProjectile"/>s.

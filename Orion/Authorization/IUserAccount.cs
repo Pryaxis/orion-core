@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace Orion.Core.Authorization
+namespace Orion.Authorization
 {
     /// <summary>
     /// Describes an Orion user account.

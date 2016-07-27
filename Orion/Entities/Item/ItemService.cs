@@ -2,12 +2,11 @@
 using System.Collections.Generic;
 using System.Linq;
 using Microsoft.Xna.Framework;
-using Orion.Core;
 using Orion.Events.Item;
 using Orion.Framework;
 using OTAPI.Core;
 
-namespace Orion.Services
+namespace Orion.Entities.Item
 {
 	/// <summary>
 	/// Manages <see cref="IItem"/>s.

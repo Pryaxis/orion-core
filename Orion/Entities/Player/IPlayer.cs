@@ -1,7 +1,8 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
+using Orion.Entities.Item;
 
-namespace Orion.Core
+namespace Orion.Entities.Player
 {
 	/// <summary>
 	/// Provides a wrapper around a Terraria player.

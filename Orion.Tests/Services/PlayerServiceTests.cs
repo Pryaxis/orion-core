@@ -1,10 +1,9 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
 using NUnit.Framework;
-using Orion.Services;
 using System.Collections.Generic;
 using System.Linq;
-using Orion.Core;
+using Orion.Entities.Player;
 
 namespace Orion.Tests.Services
 {

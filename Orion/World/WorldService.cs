@@ -3,7 +3,7 @@ using Orion.Events.World;
 using Orion.Framework;
 using OTAPI.Core;
 
-namespace Orion.Services
+namespace Orion.World
 {
 	/// <summary>
 	/// Manages Terraria's world functions.

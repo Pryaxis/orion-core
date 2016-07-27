@@ -1,7 +1,8 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
+using Orion.Entities.Item;
 
-namespace Orion.Core
+namespace Orion.Entities.Player
 {
 	/// <summary>
 	/// Wraps a Terraria player.
@@ -82,7 +83,7 @@ namespace Orion.Core
 		{
 			if (_inventory[index]?.WrappedItem != WrappedPlayer.inventory[index])
 			{
-				_inventory[index] = new Item(WrappedPlayer.inventory[index]);
+				_inventory[index] = new Item.Item(WrappedPlayer.inventory[index]);
 			}
 			return _inventory[index];
 		}

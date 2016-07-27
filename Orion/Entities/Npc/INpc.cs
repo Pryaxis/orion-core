@@ -1,7 +1,7 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
 
-namespace Orion.Core
+namespace Orion.Entities.Npc
 {
 	/// <summary>
 	/// Provides a wrapper around a Terraria NPC.

@@ -3,7 +3,7 @@ using OTAPI.Core;
 using OTAPI.Tile;
 using Terraria;
 
-namespace Orion.Services
+namespace Orion.World
 {
 	/// <summary>
 	/// Implements the <see cref="ITileService"/> functionality. Mimics vanilla behaviour by storing tiles in a 2D tile

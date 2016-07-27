@@ -1,11 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using Microsoft.Xna.Framework;
-using Orion.Core;
 using Orion.Events.Npc;
 using Orion.Framework;
 
-namespace Orion.Services
+namespace Orion.Entities.Npc
 {
 	/// <summary>
 	/// Provides a mechanism for managing <see cref="INpc"/>s.

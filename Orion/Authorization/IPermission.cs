@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
+using Orion.Entities.Player;
 
-namespace Orion.Core.Authorization
+namespace Orion.Authorization
 {
     /// <summary>
     /// An authorization object which controls player access to Orion features, such as commands and
