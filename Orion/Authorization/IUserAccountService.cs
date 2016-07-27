@@ -41,6 +41,9 @@ namespace Orion.Authorization
 		/// <summary>
 		/// Sets the account password to the specified password in clear-text.
 		/// </summary>
+		/// <param name="userAccount">
+		/// A reference to the user account to set the password.
+		/// </param>
 		/// <param name="password">
 		/// A string containing the clear text password of the account to be changed to
 		/// </param>
@@ -48,12 +51,15 @@ namespace Orion.Authorization
 		/// This method force-updates the password on this account without re-authenticating, and should be considered an admin
 		/// only function.
 		/// </remarks>
-		void SetPassword(string password);
+		void SetPassword(IUserAccount userAccount, string password);
 
 		/// <summary>
 		/// Updates the account password with a clear-text password specified by <paramref name="newPassword"/>, if the current 
 		/// password on the account matches the clear-text password specified by <paramref name="currentPassword"/>.
 		/// </summary>
+		/// <param name="userAccount">
+		/// A user account to change the password.
+		/// </param>
 		/// <param name="currentPassword">
 		/// A string containing the clear-text password currently on the account.
 		/// </param>
@@ -67,11 +73,14 @@ namespace Orion.Authorization
 		/// <exception cref="ArgumentNullException">
 		/// Thrown if <paramref name="currentPassword"/> or <paramref name="newPassword"/> is null or empty
 		/// </exception>
-		void ChangePassword(string currentPassword, string newPassword);
+		void ChangePassword(IUserAccount userAccount, string currentPassword, string newPassword);
 
 		/// <summary>
 		/// Authenticates this user account with the specified clear-text password.
 		/// </summary>
+		/// <param name="userAccount">
+		/// A reference to a user account object to authenticate with.
+		/// </param>
 		/// <param name="password">
 		/// A string containing the clear-text password to authenticate this account with.
 		/// </param>
@@ -81,6 +90,6 @@ namespace Orion.Authorization
 		/// <exception cref="ArgumentNullException">
 		/// Thrown when <paramref name="password"/> is null or empty.
 		/// </exception>
-		bool Authenticate(string password);
+		bool Authenticate(IUserAccount userAccount, string password);
 	}
 }
