@@ -9,20 +9,35 @@ namespace Orion.Entities.Item
 	public interface IItem
 	{
 		/// <summary>
+		/// Gets or sets the item's animation time.
+		/// </summary>
+		int AnimationTime { get; set; }
+
+		/// <summary>
 		/// Gets the item's axe power.
 		/// </summary>
 		int AxePower { get; }
-		
+
 		/// <summary>
-		/// Gets the item's damage.
+		/// Gets or sets the item's color.
 		/// </summary>
-		int Damage { get; }
+		Color Color { get; set; }
+
+		/// <summary>
+		/// Gets or sets the item's damage.
+		/// </summary>
+		int Damage { get; set; }
 
 		/// <summary>
 		/// Gets the item's hammer power.
 		/// </summary>
 		int HammerPower { get; }
-		
+
+		/// <summary>
+		/// Gets or sets the item's knockback.
+		/// </summary>
+		float Knockback { get; set; }
+
 		/// <summary>
 		/// Gets the item's maximum stack size.
 		/// </summary>
@@ -49,10 +64,15 @@ namespace Orion.Entities.Item
 		int Prefix { get; }
 		
 		/// <summary>
-		/// Gets the projectile type that the item creates.
+		/// Gets or sets the item's projectile type.
 		/// </summary>
-		int Projectile { get; }
-		
+		int Projectile { get; set; }
+
+		/// <summary>
+		/// Gets or sets the item's projectile speed.
+		/// </summary>
+		float ProjectileSpeed { get; set; }
+
 		/// <summary>
 		/// Gets or sets the item's stack size.
 		/// </summary>
@@ -63,7 +83,12 @@ namespace Orion.Entities.Item
 		/// Gets the item's type.
 		/// </summary>
 		int Type { get; }
-		
+
+		/// <summary>
+		/// Gets or sets the item's use time.
+		/// </summary>
+		int UseTime { get; set; }
+
 		/// <summary>
 		/// Gets or sets the item's velocity in the world.
 		/// </summary>

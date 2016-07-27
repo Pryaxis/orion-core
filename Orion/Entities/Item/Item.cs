@@ -9,16 +9,41 @@ namespace Orion.Entities.Item
 	public class Item : IItem
 	{
 		/// <inheritdoc/>
+		public int AnimationTime
+		{
+			get { return WrappedItem.useAnimation; }
+			set { WrappedItem.useAnimation = value; }
+		}
+
+		/// <inheritdoc/>
 		public int AxePower => WrappedItem.axe;
 
 		/// <inheritdoc/>
-		public int Damage => WrappedItem.damage;
+		public Color Color
+		{
+			get { return WrappedItem.color; }
+			set { WrappedItem.color = value; }
+		}
+
+		/// <inheritdoc/>
+		public int Damage
+		{
+			get { return WrappedItem.damage; }
+			set { WrappedItem.damage = value; }
+		}
 
 		/// <inheritdoc/>
 		public int HammerPower => WrappedItem.hammer;
 
 		/// <inheritdoc/>
 		public int MaxStackSize => WrappedItem.maxStack;
+
+		/// <inheritdoc/>
+		public float Knockback
+		{
+			get { return WrappedItem.knockBack; }
+			set { WrappedItem.knockBack = value; }
+		}
 
 		/// <inheritdoc/>
 		public string Name => WrappedItem.name;
@@ -37,7 +62,18 @@ namespace Orion.Entities.Item
 		public int Prefix => WrappedItem.prefix;
 
 		/// <inheritdoc/>
-		public int Projectile => WrappedItem.shoot;
+		public int Projectile
+		{
+			get { return WrappedItem.shoot; }
+			set { WrappedItem.shoot = value; }
+		}
+
+		/// <inheritdoc/>
+		public float ProjectileSpeed
+		{
+			get { return WrappedItem.shootSpeed; }
+			set { WrappedItem.shootSpeed = value; }
+		}
 
 		/// <inheritdoc/>
 		public int StackSize
@@ -56,6 +92,13 @@ namespace Orion.Entities.Item
 
 		/// <inheritdoc/>
 		public int Type => WrappedItem.netID;
+
+		/// <inheritdoc/>
+		public int UseTime
+		{
+			get { return WrappedItem.useTime; }
+			set { WrappedItem.useTime = value; }
+		}
 
 		/// <inheritdoc/>
 		public Vector2 Velocity
