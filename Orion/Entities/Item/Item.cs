@@ -9,10 +9,10 @@ namespace Orion.Entities.Item
 	public class Item : IItem
 	{
 		/// <inheritdoc/>
-		public int AnimationTime
+		public int AmmoType
 		{
-			get { return WrappedItem.useAnimation; }
-			set { WrappedItem.useAnimation = value; }
+			get { return WrappedItem.ammo; }
+			set { WrappedItem.ammo = value; }
 		}
 
 		/// <inheritdoc/>
@@ -34,6 +34,13 @@ namespace Orion.Entities.Item
 
 		/// <inheritdoc/>
 		public int HammerPower => WrappedItem.hammer;
+
+		/// <inheritdoc/>
+		public int Height
+		{
+			get { return WrappedItem.height; }
+			set { WrappedItem.height = value; }
+		}
 
 		/// <inheritdoc/>
 		public int MaxStackSize => WrappedItem.maxStack;
@@ -62,17 +69,24 @@ namespace Orion.Entities.Item
 		public int Prefix => WrappedItem.prefix;
 
 		/// <inheritdoc/>
-		public int Projectile
+		public float ProjectileSpeed
+		{
+			get { return WrappedItem.shootSpeed; }
+			set { WrappedItem.shootSpeed = value; }
+		}
+
+		/// <inheritdoc/>
+		public int ProjectileType
 		{
 			get { return WrappedItem.shoot; }
 			set { WrappedItem.shoot = value; }
 		}
 
 		/// <inheritdoc/>
-		public float ProjectileSpeed
+		public float Scale
 		{
-			get { return WrappedItem.shootSpeed; }
-			set { WrappedItem.shootSpeed = value; }
+			get { return WrappedItem.scale; }
+			set { WrappedItem.scale = value; }
 		}
 
 		/// <inheritdoc/>
@@ -94,6 +108,20 @@ namespace Orion.Entities.Item
 		public int Type => WrappedItem.netID;
 
 		/// <inheritdoc/>
+		public int UseAmmoType
+		{
+			get { return WrappedItem.useAmmo; }
+			set { WrappedItem.useAmmo = value; }
+		}
+
+		/// <inheritdoc/>
+		public int UseAnimationTime
+		{
+			get { return WrappedItem.useAnimation; }
+			set { WrappedItem.useAnimation = value; }
+		}
+
+		/// <inheritdoc/>
 		public int UseTime
 		{
 			get { return WrappedItem.useTime; }
@@ -105,6 +133,13 @@ namespace Orion.Entities.Item
 		{
 			get { return WrappedItem.velocity; }
 			set { WrappedItem.velocity = value; }
+		}
+
+		/// <inheritdoc/>
+		public int Width
+		{
+			get { return WrappedItem.width; }
+			set { WrappedItem.width = value; }
 		}
 
 		/// <inheritdoc/>

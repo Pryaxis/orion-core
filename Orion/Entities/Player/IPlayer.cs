@@ -20,14 +20,14 @@ namespace Orion.Entities.Player
 		int Health { get; set; }
 
 		/// <summary>
-		/// Gets or sets the player's maximum health.
-		/// </summary>
-		int MaxHealth { get; set; }
-
-		/// <summary>
 		/// Gets or sets the player's mana.
 		/// </summary>
 		int Mana { get; set; }
+
+		/// <summary>
+		/// Gets or sets the player's maximum health.
+		/// </summary>
+		int MaxHealth { get; set; }
 
 		/// <summary>
 		/// Gets or sets the player's maximum mana.

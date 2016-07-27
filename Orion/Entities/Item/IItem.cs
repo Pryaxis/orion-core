@@ -9,9 +9,9 @@ namespace Orion.Entities.Item
 	public interface IItem
 	{
 		/// <summary>
-		/// Gets or sets the item's animation time.
+		/// Gets or sets the item's ammo type.
 		/// </summary>
-		int AnimationTime { get; set; }
+		int AmmoType { get; set; }
 
 		/// <summary>
 		/// Gets the item's axe power.
@@ -32,6 +32,11 @@ namespace Orion.Entities.Item
 		/// Gets the item's hammer power.
 		/// </summary>
 		int HammerPower { get; }
+
+		/// <summary>
+		/// Gets or sets the item's height.
+		/// </summary>
+		int Height { get; set; }
 
 		/// <summary>
 		/// Gets or sets the item's knockback.
@@ -62,16 +67,21 @@ namespace Orion.Entities.Item
 		/// Gets the item's prefix.
 		/// </summary>
 		int Prefix { get; }
-		
-		/// <summary>
-		/// Gets or sets the item's projectile type.
-		/// </summary>
-		int Projectile { get; set; }
 
 		/// <summary>
 		/// Gets or sets the item's projectile speed.
 		/// </summary>
 		float ProjectileSpeed { get; set; }
+		
+		/// <summary>
+		/// Gets or sets the item's projectile type.
+		/// </summary>
+		int ProjectileType { get; set; }
+
+		/// <summary>
+		/// Gets or sets the item's scale.
+		/// </summary>
+		float Scale { get; set; }
 
 		/// <summary>
 		/// Gets or sets the item's stack size.
@@ -85,6 +95,16 @@ namespace Orion.Entities.Item
 		int Type { get; }
 
 		/// <summary>
+		/// Gets or sets the item's projectile ammo type.
+		/// </summary>
+		int UseAmmoType { get; set; }
+
+		/// <summary>
+		/// Gets or sets the item's use animation time.
+		/// </summary>
+		int UseAnimationTime { get; set; }
+
+		/// <summary>
 		/// Gets or sets the item's use time.
 		/// </summary>
 		int UseTime { get; set; }
@@ -94,6 +114,11 @@ namespace Orion.Entities.Item
 		/// </summary>
 		Vector2 Velocity { get; set; }
 		
+		/// <summary>
+		/// Gets or sets the item's width.
+		/// </summary>
+		int Width { get; set; }
+
 		/// <summary>
 		/// Gets the wrapped Terraria item.
 		/// </summary>

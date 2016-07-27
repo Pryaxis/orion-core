@@ -36,7 +36,7 @@ namespace Orion
 
 			InjectionContainer.Bind<Orion>().ToConstant(this);
 		}
-		
+
 		private void CreateDirectories()
 		{
 			foreach (string dir in standardDirectories)

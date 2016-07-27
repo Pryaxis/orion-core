@@ -11,36 +11,46 @@ namespace Orion.Tests.Core
 	{
 		private static readonly object[] GetWrappers =
 		{
-			new object[] {nameof(Item.AnimationTime), nameof(Terraria.Item.useAnimation), 4},
+			new object[] {nameof(Item.AmmoType), nameof(Terraria.Item.ammo), 14},
 			new object[] {nameof(Item.AxePower), nameof(Terraria.Item.axe), 100},
 			new object[] {nameof(Item.Color), nameof(Terraria.Item.color), Color.White},
 			new object[] {nameof(Item.Damage), nameof(Terraria.Item.damage), 100},
 			new object[] {nameof(Item.MaxStackSize), nameof(Terraria.Item.maxStack), 999},
 			new object[] {nameof(Item.HammerPower), nameof(Terraria.Item.hammer), 100},
+			new object[] {nameof(Item.Height), nameof(Terraria.Item.height), 100},
 			new object[] {nameof(Item.Knockback), nameof(Terraria.Item.knockBack), 1.0f},
 			new object[] {nameof(Item.Name), nameof(Terraria.Item.name), "TEST"},
 			new object[] {nameof(Item.PickaxePower), nameof(Terraria.Item.pick), 100},
 			new object[] {nameof(Item.Position), nameof(Terraria.Item.position), Vector2.One},
-			new object[] {nameof(Item.Prefix), nameof(Terraria.Item.prefix), (byte) 83},
-			new object[] {nameof(Item.Projectile), nameof(Terraria.Item.shoot), 1},
+			new object[] {nameof(Item.Prefix), nameof(Terraria.Item.prefix), (byte)83},
 			new object[] {nameof(Item.ProjectileSpeed), nameof(Terraria.Item.shootSpeed), 1.0f},
+			new object[] {nameof(Item.ProjectileType), nameof(Terraria.Item.shoot), 1},
+			new object[] {nameof(Item.Scale), nameof(Terraria.Item.scale), 10.0f},
 			new object[] {nameof(Item.StackSize), nameof(Terraria.Item.stack), 999},
 			new object[] {nameof(Item.Type), nameof(Terraria.Item.netID), 1},
+			new object[] {nameof(Item.UseAmmoType), nameof(Terraria.Item.useAmmo), 14},
+			new object[] {nameof(Item.UseAnimationTime), nameof(Terraria.Item.useAnimation), 4},
 			new object[] {nameof(Item.UseTime), nameof(Terraria.Item.useTime), 4},
-			new object[] {nameof(Item.Velocity), nameof(Terraria.Item.velocity), Vector2.One}
+			new object[] {nameof(Item.Velocity), nameof(Terraria.Item.velocity), Vector2.One},
+			new object[] {nameof(Item.Width), nameof(Terraria.Item.width), 100}
 		};
 
 		private static readonly object[] SetWrappers =
 		{
-			new object[] {nameof(Item.AnimationTime), nameof(Terraria.Item.useAnimation), 4},
+			new object[] {nameof(Item.AmmoType), nameof(Terraria.Item.ammo), 14},
 			new object[] {nameof(Item.Color), nameof(Terraria.Item.color), Color.White},
 			new object[] {nameof(Item.Damage), nameof(Terraria.Item.damage), 100},
+			new object[] {nameof(Item.Height), nameof(Terraria.Item.height), 100},
 			new object[] {nameof(Item.Knockback), nameof(Terraria.Item.knockBack), 1.0f},
 			new object[] {nameof(Item.Position), nameof(Terraria.Item.position), Vector2.One},
-			new object[] {nameof(Item.Projectile), nameof(Terraria.Item.shoot), 1},
 			new object[] {nameof(Item.ProjectileSpeed), nameof(Terraria.Item.shootSpeed), 1.0f},
+			new object[] {nameof(Item.ProjectileType), nameof(Terraria.Item.shoot), 1},
+			new object[] {nameof(Item.Scale), nameof(Terraria.Item.scale), 10.0f},
+			new object[] {nameof(Item.UseAmmoType), nameof(Terraria.Item.useAmmo), 14},
+			new object[] {nameof(Item.UseAnimationTime), nameof(Terraria.Item.useAnimation), 4},
 			new object[] {nameof(Item.UseTime), nameof(Terraria.Item.useTime), 4},
-			new object[] {nameof(Item.Velocity), nameof(Terraria.Item.velocity), Vector2.One}
+			new object[] {nameof(Item.Velocity), nameof(Terraria.Item.velocity), Vector2.One},
+			new object[] {nameof(Item.Width), nameof(Terraria.Item.width), 100}
 		};
 
 		[Test]

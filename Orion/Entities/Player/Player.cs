@@ -22,17 +22,17 @@ namespace Orion.Entities.Player
 		}
 
 		/// <inheritdoc/>
-		public int MaxHealth
-		{
-			get { return WrappedPlayer.statLifeMax; }
-			set { WrappedPlayer.statLifeMax = value; }
-		}
-
-		/// <inheritdoc/>
 		public int Mana
 		{
 			get { return WrappedPlayer.statMana; }
 			set { WrappedPlayer.statMana = value; }
+		}
+
+		/// <inheritdoc/>
+		public int MaxHealth
+		{
+			get { return WrappedPlayer.statLifeMax; }
+			set { WrappedPlayer.statLifeMax = value; }
 		}
 
 		/// <inheritdoc/>
