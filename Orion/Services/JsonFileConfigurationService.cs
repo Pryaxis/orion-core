@@ -24,6 +24,7 @@ namespace Orion.Services
 		{
 		}
 
+		/// <inheritdoc/>
 		public TConfig Load<TService, TConfig>()
 			where TService : ServiceBase
 			where TConfig : class, new()
@@ -59,6 +60,7 @@ namespace Orion.Services
 			return configObject;
 		}
 
+		/// <inheritdoc/>
 		public void Save<TService, TConfig>(TConfig config)
 			where TService : ServiceBase
 			where TConfig : class, new()

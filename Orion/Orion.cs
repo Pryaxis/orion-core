@@ -9,6 +9,7 @@ namespace Orion
 {
 	public partial class Orion : IDisposable
 	{
+		private bool _disposed;
 		internal ServiceMap serviceMap;
 
 		/// <summary>
@@ -16,6 +17,12 @@ namespace Orion
 		/// </summary>
 		public IKernel InjectionContainer { get; }
 
+		/// <summary>
+		/// Initializes a new instance of the <see cref="Orion"/> class.
+		/// </summary>
+		/// <remarks>
+		/// This creates Orion's directory structure, loads plugin assemblies, and defines the injection container.
+		/// </remarks>
 		public Orion()
 		{
 			CreateDirectories();
@@ -29,12 +36,8 @@ namespace Orion
 
 			InjectionContainer.Bind<Orion>().ToConstant(this);
 		}
-
-		/// <summary>
-		/// Enumerates through all directories in Orion's standard directory list
-		/// and creates them if they don't exist.
-		/// </summary>
-		public void CreateDirectories()
+		
+		private void CreateDirectories()
 		{
 			foreach (string dir in standardDirectories)
 			{
@@ -42,7 +45,24 @@ namespace Orion
 			}
 		}
 
-		public void LoadPluginAssemblies()
+		public void Dispose()
+		{
+			Dispose(true);
+		}
+
+		protected virtual void Dispose(bool disposing)
+		{
+			if (!_disposed)
+			{
+				if (disposing)
+				{
+					InjectionContainer.Dispose();
+				}
+				_disposed = true;
+			}
+		}
+
+		private void LoadPluginAssemblies()
 		{
 			foreach (string asmPath in Directory.GetFiles(PluginDirectory, "*.dll"))
 			{
@@ -50,13 +70,15 @@ namespace Orion
 				{
 					Assembly.LoadFrom(asmPath);
 				}
-				catch (Exception ex)
+				catch (BadImageFormatException)
 				{
-
 				}
 			}
 		}
 
+		/// <summary>
+		/// Starts the server.
+		/// </summary>
 		public void StartServer()
 		{
 			foreach (IService service in InjectionContainer.GetAll<IService>())
@@ -66,30 +88,5 @@ namespace Orion
 
 			WindowsLaunch.Main(new string[] {});
 		}
-
-		#region IDisposable Support
-
-		private bool disposedValue = false; // To detect redundant calls
-
-		protected virtual void Dispose(bool disposing)
-		{
-			if (!disposedValue)
-			{
-				if (disposing)
-				{
-					InjectionContainer.Dispose();
-				}
-				disposedValue = true;
-			}
-		}
-
-		// This code added to correctly implement the disposable pattern.
-		public void Dispose()
-		{
-			// Do not change this code. Put cleanup code in Dispose(bool disposing) above.
-			Dispose(true);
-		}
-
-		#endregion
 	}
 }
