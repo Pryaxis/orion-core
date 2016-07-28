@@ -33,8 +33,8 @@ namespace Orion.Entities.Player
 		{
 			_players = new IPlayer[Terraria.Main.player.Length];
 			Hooks.Net.RemoteClient.PreReset = InvokePlayerQuit;
-			// TODO: change this to use net hooks, so we can have separate greeting hooks
 			Hooks.Player.PreGreet = InvokePlayerJoin;
+			// TODO: change this to use net hooks, so we can have separate greeting hooks
 		}
 
 		/// <inheritdoc/>
