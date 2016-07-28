@@ -56,7 +56,7 @@ namespace Orion.Entities.Projectile
 		/// <inheritdoc/>
 		public void SetDefaults(int type)
 		{
-			if (type < 0 || type > Terraria.Main.maxProjectileTypes)
+			if (type < 0 || type >= Terraria.Main.maxProjectileTypes)
 			{
 				throw new ArgumentOutOfRangeException(nameof(type));
 			}

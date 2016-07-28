@@ -163,7 +163,7 @@ namespace Orion.Entities.Item
 		/// <inheritdoc/>
 		public void SetDefaults(int type)
 		{
-			if (type < 0 || type > Terraria.Main.maxItemTypes)
+			if (type < 0 || type >= Terraria.Main.maxItemTypes)
 			{
 				throw new ArgumentOutOfRangeException(nameof(type));
 			}
@@ -178,7 +178,7 @@ namespace Orion.Entities.Item
 		/// </remarks>
 		public void SetPrefix(int prefix)
 		{
-			if (prefix < 0 || prefix > Terraria.Item.maxPrefixes)
+			if (prefix < 0 || prefix >= Terraria.Item.maxPrefixes)
 			{
 				throw new ArgumentOutOfRangeException(nameof(prefix));
 			}

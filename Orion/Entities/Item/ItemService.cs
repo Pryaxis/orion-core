@@ -37,7 +37,7 @@ namespace Orion.Entities.Item
 		/// <inheritdoc/>
 		public IItem Create(int type, int stackSize = 1, int prefix = 0)
 		{
-			if (type < 0 || type > Terraria.Main.maxItemTypes)
+			if (type < 0 || type >= Terraria.Main.maxItemTypes)
 			{
 				throw new ArgumentOutOfRangeException(nameof(type));
 			}
@@ -45,7 +45,7 @@ namespace Orion.Entities.Item
 			{
 				throw new ArgumentOutOfRangeException(nameof(stackSize));
 			}
-			if (prefix < 0 || prefix > Terraria.Item.maxPrefixes)
+			if (prefix < 0 || prefix >= Terraria.Item.maxPrefixes)
 			{
 				throw new ArgumentOutOfRangeException(nameof(prefix));
 			}
@@ -80,7 +80,7 @@ namespace Orion.Entities.Item
 		/// <inheritdoc/>
 		public IItem Spawn(int type, Vector2 position, int stackSize = 1, int prefix = 0)
 		{
-			if (type < 0 || type > Terraria.Main.maxItemTypes)
+			if (type < 0 || type >= Terraria.Main.maxItemTypes)
 			{
 				throw new ArgumentOutOfRangeException(nameof(type));
 			}
@@ -88,7 +88,7 @@ namespace Orion.Entities.Item
 			{
 				throw new ArgumentOutOfRangeException(nameof(stackSize));
 			}
-			if (prefix < 0 || prefix > Terraria.Item.maxPrefixes)
+			if (prefix < 0 || prefix >= Terraria.Item.maxPrefixes)
 			{
 				throw new ArgumentOutOfRangeException(nameof(prefix));
 			}

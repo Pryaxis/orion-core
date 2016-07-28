@@ -117,7 +117,7 @@ namespace Orion.Tests.Core
 		}
 
 		[TestCase(-1)]
-		[TestCase(100000)]
+		[TestCase(Terraria.Main.maxItemTypes)]
 		public void SetDefaults_InvalidType_ThrowsArgumentOutOfRangeException(int type)
 		{
 			var terrariaItem = new Terraria.Item();
@@ -139,7 +139,7 @@ namespace Orion.Tests.Core
 		}
 
 		[TestCase(-1)]
-		[TestCase(100000)]
+		[TestCase(Terraria.Item.maxPrefixes)]
 		public void SetPrefix_InvalidPrefix_ThrowsArgumentOutOfRangeException(int prefix)
 		{
 			var terrariaItem = new Terraria.Item();
