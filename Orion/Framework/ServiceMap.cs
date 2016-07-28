@@ -7,6 +7,7 @@ using Orion.Entities.Item;
 using Orion.Entities.Player;
 using Orion.Entities.Projectile;
 using Orion.World;
+using Orion.Authorization;
 
 namespace Orion.Framework
 {
@@ -16,21 +17,23 @@ namespace Orion.Framework
 	/// </summary>
 	public class ServiceMap
 	{
-		/// <summary>
-		/// Contains the Orion service map.
-		/// 
-		/// The service map contains an entry for each service definition in Orion, and provides
-		/// the type of the default implementation that the injector will bind to.  The service
-		/// map can be overridden via runtime or file-time configuration.
-		/// </summary>
-		protected Dictionary<Type, Type> serviceMap = new Dictionary<Type, Type>
-		{
-			[typeof(IConfigurationService)] = typeof(JsonFileConfigurationService),
-			[typeof(IItemService)] = typeof(ItemService),
-			[typeof(IPlayerService)] = typeof(PlayerService),
-			[typeof(IProjectileService)] = typeof(ProjectileService),
-			[typeof(ITileService)] = typeof(TileService),
-			[typeof(IWorldService)] = typeof(WorldService)
+        /// <summary>
+        /// Contains the Orion service map.
+        /// 
+        /// The service map contains an entry for each service definition in Orion, and provides
+        /// the type of the default implementation that the injector will bind to.  The service
+        /// map can be overridden via runtime or file-time configuration.
+        /// </summary>
+        protected Dictionary<Type, Type> serviceMap = new Dictionary<Type, Type>
+        {
+            [typeof(IConfigurationService)] = typeof(JsonFileConfigurationService),
+            [typeof(IItemService)] = typeof(ItemService),
+            [typeof(IPlayerService)] = typeof(PlayerService),
+            [typeof(IProjectileService)] = typeof(ProjectileService),
+            [typeof(ITileService)] = typeof(TileService),
+            [typeof(IWorldService)] = typeof(WorldService),
+			[typeof(IUserAccountService)] = typeof(PlainTextAccountService),
+			[typeof(IGroupService)] = typeof(PlainTextAccountService)
 		};
 
 		internal IDictionary<Type, Type> Map => serviceMap;

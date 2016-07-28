@@ -48,7 +48,15 @@ namespace Orion.Authorization
 		/// <exception cref="ArgumentNullException">
 		/// Thrown if <paramref name="accountName"/> is null or empty
 		/// </exception>
-		void AddAccount(string accountName);
+		IUserAccount AddAccount(string accountName);
+
+        /// <summary>
+        /// Deletes the user account by the account name specified.
+        /// </summary>
+        /// <param name="accountName">
+        /// A string containing the account name to delete.
+        /// </param>
+	    void DeleteAccount(string accountName);
 
 		/// <summary>
 		/// Sets the account password to the specified password in clear-text.
