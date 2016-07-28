@@ -80,7 +80,7 @@ namespace Orion.Tests.Core
 		}
 
 		[TestCase(-1)]
-		[TestCase(100000)]
+		[TestCase(Terraria.Main.maxProjectileTypes)]
 		public void SetDefaults_InvalidType_ThrowsArgumentOutOfRangeException(int type)
 		{
 			var terrariaProjectile = new Terraria.Projectile();

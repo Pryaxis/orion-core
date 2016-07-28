@@ -166,10 +166,10 @@ namespace Orion.Tests.Services
 		}
 
 		[TestCase(-1, 1, 0)]
-		[TestCase(100000, 1, 0)]
+		[TestCase(Terraria.Main.maxItemTypes, 1, 0)]
 		[TestCase(1, -1, 0)]
 		[TestCase(1, 1, -1)]
-		[TestCase(1, 1, 100000)]
+		[TestCase(1, 1, Terraria.Item.maxPrefixes)]
 		public void Create_ParamOutOfRange_ThrowsArgumentOutOfRangeException(int type, int stack, int prefix)
 		{
 			using (var orion = new Orion())
@@ -261,10 +261,10 @@ namespace Orion.Tests.Services
 		}
 
 		[TestCase(-1, 1, 0)]
-		[TestCase(100000, 1, 0)]
+		[TestCase(Terraria.Main.maxItemTypes, 1, 0)]
 		[TestCase(1, -1, 0)]
 		[TestCase(1, 1, -1)]
-		[TestCase(1, 1, 100000)]
+		[TestCase(1, 1, Terraria.Item.maxPrefixes)]
 		public void Spawn_ParamOutOfRange_ThrowsArgumentOutOfRangeException(int type, int stack, int prefix)
 		{
 			using (var orion = new Orion())

@@ -76,7 +76,7 @@ namespace Orion.Entities.Npc
 		/// <inheritdoc/>
 		public void SetDefaults(int type)
 		{
-			if (type < 0 || type > Terraria.Main.maxNPCTypes)
+			if (type < 0 || type >= Terraria.Main.maxNPCTypes)
 			{
 				throw new ArgumentOutOfRangeException(nameof(type));
 			}
