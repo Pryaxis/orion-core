@@ -9,7 +9,7 @@ namespace Orion.Tests.Core
 	[TestFixture]
 	public class NpcTests
 	{
-		private static readonly object[] GetWrappers =
+		private static readonly object[] GetProperties =
 		{
 			new object[] {nameof(Npc.Damage), nameof(Terraria.NPC.damage), 100},
 			new object[] {nameof(Npc.Defense), nameof(Terraria.NPC.defense), 100},
@@ -20,7 +20,7 @@ namespace Orion.Tests.Core
 			new object[] {nameof(Npc.Type), nameof(Terraria.NPC.netID), 1}
 		};
 
-		private static readonly object[] SetWrappers =
+		private static readonly object[] SetProperties =
 		{
 			new object[] {nameof(Npc.Health), nameof(Terraria.NPC.life), 100},
 			new object[] {nameof(Npc.MaxHealth), nameof(Terraria.NPC.lifeMax), 100},
@@ -34,7 +34,7 @@ namespace Orion.Tests.Core
 			Assert.Throws<ArgumentNullException>(() => new Npc(null));
 		}
 
-		[TestCaseSource(nameof(GetWrappers))]
+		[TestCaseSource(nameof(GetProperties))]
 		public void GetProperty_IsCorrect(string npcPropertyName, string terrariaNpcFieldName, object value)
 		{
 			var terrariaNpc = new Terraria.NPC();
@@ -47,7 +47,7 @@ namespace Orion.Tests.Core
 			Assert.AreEqual(value, npcProperty.GetValue(npc));
 		}
 
-		[TestCaseSource(nameof(SetWrappers))]
+		[TestCaseSource(nameof(SetProperties))]
 		public void SetProperty_IsCorrect(string npcPropertyName, string terrariaNpcFieldName, object value)
 		{
 			var terrariaNpc = new Terraria.NPC();
@@ -58,6 +58,24 @@ namespace Orion.Tests.Core
 			npcProperty.SetValue(npc, Convert.ChangeType(value, npcProperty.PropertyType));
 
 			Assert.AreEqual(value, terrariaNpcField.GetValue(terrariaNpc));
+		}
+
+		[TestCase(-1)]
+		public void SetHealth_NegativeValue_ThrowsArgumentOutOfRangeException(int health)
+		{
+			var terrariaNpc = new Terraria.NPC();
+			var npc = new Npc(terrariaNpc);
+
+			Assert.Throws<ArgumentOutOfRangeException>(() => npc.Health = health);
+		}
+
+		[TestCase(-1)]
+		public void SetMaxHealth_NegativeValue_ThrowsArgumentOutOfRangeException(int maxHealth)
+		{
+			var terrariaNpc = new Terraria.NPC();
+			var npc = new Npc(terrariaNpc);
+
+			Assert.Throws<ArgumentOutOfRangeException>(() => npc.MaxHealth = maxHealth);
 		}
 
 		[Test]

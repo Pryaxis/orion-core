@@ -39,15 +39,15 @@ namespace Orion.Entities.Item
 		{
 			if (type < 0 || type >= Terraria.Main.maxItemTypes)
 			{
-				throw new ArgumentOutOfRangeException(nameof(type));
+				throw new ArgumentOutOfRangeException(nameof(type), "Value was an invalid item type.");
 			}
 			if (stackSize < 0)
 			{
-				throw new ArgumentOutOfRangeException(nameof(stackSize));
+				throw new ArgumentOutOfRangeException(nameof(stackSize), "Value cannot be negative.");
 			}
 			if (prefix < 0 || prefix >= Terraria.Item.maxPrefixes)
 			{
-				throw new ArgumentOutOfRangeException(nameof(prefix));
+				throw new ArgumentOutOfRangeException(nameof(prefix), "Value was an invalid item prefix.");
 			}
 
 			var terrariaItem = new Terraria.Item();
@@ -82,15 +82,15 @@ namespace Orion.Entities.Item
 		{
 			if (type < 0 || type >= Terraria.Main.maxItemTypes)
 			{
-				throw new ArgumentOutOfRangeException(nameof(type));
+				throw new ArgumentOutOfRangeException(nameof(type), "Value was an invalid item type.");
 			}
 			if (stackSize < 0)
 			{
-				throw new ArgumentOutOfRangeException(nameof(stackSize));
+				throw new ArgumentOutOfRangeException(nameof(stackSize), "Value cannot be negative.");
 			}
 			if (prefix < 0 || prefix >= Terraria.Item.maxPrefixes)
 			{
-				throw new ArgumentOutOfRangeException(nameof(prefix));
+				throw new ArgumentOutOfRangeException(nameof(prefix), "Value was an invalid item prefix.");
 			}
 
 			int index = Terraria.Item.NewItem((int)position.X, (int)position.Y, 0, 0, type, stackSize, pfix: prefix);

@@ -18,14 +18,30 @@ namespace Orion.Entities.Npc
 		public int Health
 		{
 			get { return WrappedNpc.life; }
-			set { WrappedNpc.life = value; }
+			set
+			{
+				if (value < 0)
+				{
+					throw new ArgumentOutOfRangeException(nameof(value), "Value cannot be negative.");
+				}
+
+				WrappedNpc.life = value;
+			}
 		}
 
 		/// <inheritdoc/>
 		public int MaxHealth
 		{
 			get { return WrappedNpc.lifeMax; }
-			set { WrappedNpc.lifeMax = value; }
+			set
+			{
+				if (value < 0)
+				{
+					throw new ArgumentOutOfRangeException(nameof(value), "Value cannot be negative.");
+				}
+
+				WrappedNpc.lifeMax = value;
+			}
 		}
 
 		/// <inheritdoc/>
@@ -78,7 +94,7 @@ namespace Orion.Entities.Npc
 		{
 			if (type < 0 || type >= Terraria.Main.maxNPCTypes)
 			{
-				throw new ArgumentOutOfRangeException(nameof(type));
+				throw new ArgumentOutOfRangeException(nameof(type), "Value was an invalid NPC type.");
 			}
 
 			WrappedNpc.SetDefaults(type);

@@ -91,7 +91,7 @@ namespace Orion.Entities.Player
 		/// <summary>
 		/// Gets or sets the player's trash <see cref="IItem"/> instance.
 		/// </summary>
-		/// <exception cref="ArgumentNullException"><paramref name="value"/> was negative.</exception>
+		/// <exception cref="ArgumentNullException"><paramref name="value"/> was null.</exception>
 		IItem TrashItem { get; set; }
 
 		/// <summary>

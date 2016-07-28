@@ -26,7 +26,7 @@ namespace Orion.Entities.Item
 			{
 				if (index < 0 || index >= Length)
 				{
-					throw new ArgumentOutOfRangeException(nameof(index));
+					throw new ArgumentOutOfRangeException(nameof(index), "Index was out of range.");
 				}
 
 				if (_iitemArray[index]?.WrappedItem != WrappedItemArray[index])
@@ -43,7 +43,7 @@ namespace Orion.Entities.Item
 				}
 				if (index < 0 || index >= Length)
 				{
-					throw new ArgumentOutOfRangeException(nameof(index));
+					throw new ArgumentOutOfRangeException(nameof(index), "Index was out of range.");
 				}
 
 				_iitemArray[index] = value;

@@ -58,7 +58,7 @@ namespace Orion.Entities.Projectile
 		{
 			if (type < 0 || type >= Terraria.Main.maxProjectileTypes)
 			{
-				throw new ArgumentOutOfRangeException(nameof(type));
+				throw new ArgumentOutOfRangeException(nameof(type), "Value was an invalid projectile type.");
 			}
 
 			WrappedProjectile.SetDefaults(type);
