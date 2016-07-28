@@ -50,13 +50,13 @@ namespace Orion.Authorization
 		/// </exception>
 		IUserAccount AddAccount(string accountName);
 
-        /// <summary>
-        /// Deletes the user account by the account name specified.
-        /// </summary>
-        /// <param name="accountName">
-        /// A string containing the account name to delete.
-        /// </param>
-	    void DeleteAccount(string accountName);
+		/// <summary>
+		/// Deletes the user account by the account name specified.
+		/// </summary>
+		/// <param name="accountName">
+		/// A string containing the account name to delete.
+		/// </param>
+		void DeleteAccount(string accountName);
 
 		/// <summary>
 		/// Sets the account password to the specified password in clear-text.

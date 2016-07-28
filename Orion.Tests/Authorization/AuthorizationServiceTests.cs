@@ -13,110 +13,110 @@ namespace Orion.Tests.Authorization
 	[TestFixture]
 	public class AuthorizationServiceTests
 	{
-        [TestCase("TestAccount")]
-        [TestCase("198213032057")]
-        [TestCase("something with spaces")]
-        [TestCase("Ԙԛӭӱӱ")]
-        [TestCase("Ԙԛӭӱ\\\\...ӱ")]
-	    public void UserAccount_AddAccount(string accountName)
-	    {
-            using (Orion orion = new Orion())
-            using (IUserAccountService userAccountService = new PlainTextAccountService(orion))
-            {
-                userAccountService.AddAccount(accountName);
+		[TestCase("TestAccount")]
+		[TestCase("198213032057")]
+		[TestCase("something with spaces")]
+		[TestCase("Ԙԛӭӱӱ")]
+		[TestCase("Ԙԛӭӱ\\\\...ӱ")]
+		public void UserAccount_AddAccount(string accountName)
+		{
+			using (Orion orion = new Orion())
+			using (IUserAccountService userAccountService = new PlainTextAccountService(orion))
+			{
+				userAccountService.AddAccount(accountName);
 
-                IUserAccount account = userAccountService.GetUserAccountOrDefault(accountName);
-                Assert.IsNotNull(account);
-                Assert.AreEqual(account.AccountName, accountName);
+				IUserAccount account = userAccountService.GetUserAccountOrDefault(accountName);
+				Assert.IsNotNull(account);
+				Assert.AreEqual(account.AccountName, accountName);
 
-                userAccountService.DeleteAccount(accountName);
-            }
-	    }
+				userAccountService.DeleteAccount(accountName);
+			}
+		}
 
-        [TestCase("")]
-        [TestCase(null)]
-	    public void UserAccount_AddAccountShouldThrowArgumentNullException(string accountName)
-	    {
-            using (Orion orion = new Orion())
-            using (IUserAccountService userAccountService = new PlainTextAccountService(orion))
-            {
-                Assert.That(() => userAccountService.AddAccount(accountName), Throws.TypeOf<ArgumentNullException>());
-            }
-	    }
+		[TestCase("")]
+		[TestCase(null)]
+		public void UserAccount_AddAccountShouldThrowArgumentNullException(string accountName)
+		{
+			using (Orion orion = new Orion())
+			using (IUserAccountService userAccountService = new PlainTextAccountService(orion))
+			{
+				Assert.That(() => userAccountService.AddAccount(accountName), Throws.TypeOf<ArgumentNullException>());
+			}
+		}
 
-        [Test]
-	    public void UserAccount_AddAccountShouldThrowInvalidOperationException()
-	    {
-            using (Orion orion = new Orion())
-            using (IUserAccountService userAccountService = new PlainTextAccountService(orion))
-            {
-                Assert.That(() =>
-                {
-                    userAccountService.AddAccount("duplicateAccount");
-                    userAccountService.AddAccount("duplicateAccount");
-                }, Throws.TypeOf<InvalidOperationException>());
+		[Test]
+		public void UserAccount_AddAccountShouldThrowInvalidOperationException()
+		{
+			using (Orion orion = new Orion())
+			using (IUserAccountService userAccountService = new PlainTextAccountService(orion))
+			{
+				Assert.That(() =>
+				{
+					userAccountService.AddAccount("duplicateAccount");
+					userAccountService.AddAccount("duplicateAccount");
+				}, Throws.TypeOf<InvalidOperationException>());
 
-                userAccountService.DeleteAccount("duplicateAccount");
-            }
-        }
+				userAccountService.DeleteAccount("duplicateAccount");
+			}
+		}
 
-        [TestCase("")]
-        [TestCase(null)]
-	    public void UserAccount_SetPasswordWithNullValueShouldThrowArgumentNullException(string password)
-	    {
-            using (Orion orion = new Orion())
-            using (IUserAccountService userAccountService = new PlainTextAccountService(orion))
-            {
-                IUserAccount userAccount = userAccountService.GetUserAccountOrDefault("nullPasswordTest") ??
-                                           userAccountService.AddAccount("nullPasswordTest");
-                
-                Assert.That(() =>
-                {
-                    userAccount.SetPassword(password);
-                }, Throws.TypeOf<ArgumentNullException>());
+		[TestCase("")]
+		[TestCase(null)]
+		public void UserAccount_SetPasswordWithNullValueShouldThrowArgumentNullException(string password)
+		{
+			using (Orion orion = new Orion())
+			using (IUserAccountService userAccountService = new PlainTextAccountService(orion))
+			{
+				IUserAccount userAccount = userAccountService.GetUserAccountOrDefault("nullPasswordTest") ??
+										   userAccountService.AddAccount("nullPasswordTest");
 
-                userAccountService.DeleteAccount("nullPasswordTest");
-            } 
-	    }
+				Assert.That(() =>
+				{
+					userAccount.SetPassword(password);
+				}, Throws.TypeOf<ArgumentNullException>());
 
-        [TestCase("SamplePassword")]
-        [TestCase("Test1!")]
-	    public void UserAccount_SetPasswordShouldSucceed(string password)
-	    {
-            using (Orion orion = new Orion())
-            using (IUserAccountService userAccountService = new PlainTextAccountService(orion))
-            {
-                IUserAccount userAccount = userAccountService.GetUserAccountOrDefault("SetPasswordShouldSucceedTest") ??
-                                           userAccountService.AddAccount("SetPasswordShouldSucceedTest");
+				userAccountService.DeleteAccount("nullPasswordTest");
+			}
+		}
 
-                userAccount.SetPassword(password);
+		[TestCase("SamplePassword")]
+		[TestCase("Test1!")]
+		public void UserAccount_SetPasswordShouldSucceed(string password)
+		{
+			using (Orion orion = new Orion())
+			using (IUserAccountService userAccountService = new PlainTextAccountService(orion))
+			{
+				IUserAccount userAccount = userAccountService.GetUserAccountOrDefault("SetPasswordShouldSucceedTest") ??
+										   userAccountService.AddAccount("SetPasswordShouldSucceedTest");
 
-                Assert.IsTrue(userAccount.Authenticate(password));
+				userAccount.SetPassword(password);
 
-                userAccountService.DeleteAccount("SetPasswordShouldSucceedTest");
-            } 
-	    }
+				Assert.IsTrue(userAccount.Authenticate(password));
 
-	    [TestCase("test", "test", ExpectedResult = true)]
-	    [TestCase("test", "test1", ExpectedResult = false)]
-	    public bool UserAccount_AuthenticateValues(string passwordToSet, string passwordToCompare)
-	    {
-	        bool val = false;
+				userAccountService.DeleteAccount("SetPasswordShouldSucceedTest");
+			}
+		}
 
-            using (Orion orion = new Orion())
-            using (IUserAccountService userAccountService = new PlainTextAccountService(orion))
-            {
-                IUserAccount userAccount = userAccountService.GetUserAccountOrDefault("Authenticate") ??
-                                           userAccountService.AddAccount("Authenticate");
+		[TestCase("test", "test", ExpectedResult = true)]
+		[TestCase("test", "test1", ExpectedResult = false)]
+		public bool UserAccount_AuthenticateValues(string passwordToSet, string passwordToCompare)
+		{
+			bool val = false;
 
-                userAccount.SetPassword(passwordToSet);
+			using (Orion orion = new Orion())
+			using (IUserAccountService userAccountService = new PlainTextAccountService(orion))
+			{
+				IUserAccount userAccount = userAccountService.GetUserAccountOrDefault("Authenticate") ??
+										   userAccountService.AddAccount("Authenticate");
 
-                val = userAccount.Authenticate(passwordToCompare);
+				userAccount.SetPassword(passwordToSet);
 
-                userAccountService.DeleteAccount("Authenticate");
-            }
+				val = userAccount.Authenticate(passwordToCompare);
 
-	        return val;
-	    }
-    }
+				userAccountService.DeleteAccount("Authenticate");
+			}
+
+			return val;
+		}
+	}
 }

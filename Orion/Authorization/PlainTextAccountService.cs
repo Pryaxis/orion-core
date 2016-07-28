@@ -28,69 +28,69 @@ namespace Orion.Authorization
 			set { _iniData.Sections["User"]["AccountName"] = value; }
 		}
 
-        /// <summary>
-        /// Gets or sets the bcrypt password hash on this account.
-        /// </summary>
-        /// <remarks>
-        /// This is a hidden property.  Password hashes must not be leaked outside of this instance.
-        /// 
-        /// See <see cref="Authenticate"/> to authenticate passwords against the stored hash on this
-        /// account.
-        /// </remarks>
-	    protected string PasswordHash
-	    {
-	        get { return _iniData.Sections["User"]["Password"]; }
-            set { _iniData.Sections["User"]["Password"] = value; }
-	    }
+		/// <summary>
+		/// Gets or sets the bcrypt password hash on this account.
+		/// </summary>
+		/// <remarks>
+		/// This is a hidden property.  Password hashes must not be leaked outside of this instance.
+		/// 
+		/// See <see cref="Authenticate"/> to authenticate passwords against the stored hash on this
+		/// account.
+		/// </remarks>
+		protected string PasswordHash
+		{
+			get { return _iniData.Sections["User"]["Password"]; }
+			set { _iniData.Sections["User"]["Password"] = value; }
+		}
 
-        /// <summary>
-        /// Gets the computed account file path on disk according to the normalized account name.
-        /// </summary>
-	    protected string AccountFilePath
-	        => Path.Combine(PlainTextAccountService.UserPathPrefix, $"{AccountName.Slugify()}.ini");
+		/// <summary>
+		/// Gets the computed account file path on disk according to the normalized account name.
+		/// </summary>
+		protected string AccountFilePath
+			=> Path.Combine(PlainTextAccountService.UserPathPrefix, $"{AccountName.Slugify()}.ini");
 
-        /// <summary>
-        /// Initializes a new instance of a plain text user account
-        /// </summary>
+		/// <summary>
+		/// Initializes a new instance of a plain text user account
+		/// </summary>
 		public PlainTextUserAccount(PlainTextAccountService service)
 		{
 			this._iniData = new IniData();
 			this._iniData.Sections.AddSection("User");
 		}
 
-        /// <summary>
-        /// Initializes a new instance of a plain text user account with the provided account name, which will
-        /// load the account name from disk.
-        /// </summary>
-        /// <param name="service">
-        /// A reference to the plain text account service which owns this user account.
-        /// </param>
-        /// <param name="accountName">
-        /// A string containing the account name to load from disk.
-        /// </param>
-	    public PlainTextUserAccount(PlainTextAccountService service, string accountName)
-            : this(service)
+		/// <summary>
+		/// Initializes a new instance of a plain text user account with the provided account name, which will
+		/// load the account name from disk.
+		/// </summary>
+		/// <param name="service">
+		/// A reference to the plain text account service which owns this user account.
+		/// </param>
+		/// <param name="accountName">
+		/// A string containing the account name to load from disk.
+		/// </param>
+		public PlainTextUserAccount(PlainTextAccountService service, string accountName)
+			: this(service)
 		{
-	        AccountName = accountName;
+			AccountName = accountName;
 
 			StreamIniDataParser parser = new StreamIniDataParser();
 
-	        using (FileStream fs = new FileStream(AccountFilePath, FileMode.Open, FileAccess.Read, FileShare.Read))
-	        {
-                this._iniData = parser.ReadData(new StreamReader(fs));
-            }
-        }
+			using (FileStream fs = new FileStream(AccountFilePath, FileMode.Open, FileAccess.Read, FileShare.Read))
+			{
+				this._iniData = parser.ReadData(new StreamReader(fs));
+			}
+		}
 
-        /// <summary>
-        /// Initializes a new instance of a plain text user account from the specified I/O stream.
-        /// </summary>
-	    public PlainTextUserAccount(PlainTextAccountService service, Stream stream)
-            : this(service)
-	    {
+		/// <summary>
+		/// Initializes a new instance of a plain text user account from the specified I/O stream.
+		/// </summary>
+		public PlainTextUserAccount(PlainTextAccountService service, Stream stream)
+			: this(service)
+		{
 			StreamIniDataParser parser = new StreamIniDataParser();
 
-	        this._iniData = parser.ReadData(new StreamReader(stream));
-	    }
+			this._iniData = parser.ReadData(new StreamReader(stream));
+		}
 
 		/// <inheritdoc />
 		public bool MemberOf(IGroup group)
@@ -107,69 +107,69 @@ namespace Orion.Authorization
 			throw new NotImplementedException();
 		}
 
-        /// <inheritdoc />
-	    public bool Authenticate(string password, bool? ignoreExpiry = false)
-	    {
-	        if (string.IsNullOrEmpty(password))
-	        {
-	            throw new ArgumentNullException(nameof(password));
-	        }
+		/// <inheritdoc />
+		public bool Authenticate(string password, bool? ignoreExpiry = false)
+		{
+			if (string.IsNullOrEmpty(password))
+			{
+				throw new ArgumentNullException(nameof(password));
+			}
 
-	        if (string.IsNullOrEmpty(PasswordHash) == true)
-	        {
-                /*
+			if (string.IsNullOrEmpty(PasswordHash) == true)
+			{
+				/*
                  * Authentication cannot succeed if there is no password at all.
                  */
-	            return false;
-	        }
+				return false;
+			}
 
-	        return BCrypt.Net.BCrypt.Verify(password, PasswordHash);
-	    }
+			return BCrypt.Net.BCrypt.Verify(password, PasswordHash);
+		}
 
-        /// <inheritdoc />
-	    public void SetPassword(string password)
-	    {
-	        if (string.IsNullOrEmpty(password))
-	        {
-	            throw new ArgumentNullException(nameof(password));
-	        }
+		/// <inheritdoc />
+		public void SetPassword(string password)
+		{
+			if (string.IsNullOrEmpty(password))
+			{
+				throw new ArgumentNullException(nameof(password));
+			}
 
-	        PasswordHash = BCrypt.Net.BCrypt.HashPassword(password);
-	        Save();
-	    }
+			PasswordHash = BCrypt.Net.BCrypt.HashPassword(password);
+			Save();
+		}
 
-        /// <inheritdoc />
-	    public void ChangePassword(string currentPassword, string newPassword)
-	    {
-	        if (string.IsNullOrEmpty(currentPassword)
-                || string.IsNullOrEmpty(newPassword))
-	        {
-	            throw new ArgumentNullException("currentPassword or newPassword");
-	        }
+		/// <inheritdoc />
+		public void ChangePassword(string currentPassword, string newPassword)
+		{
+			if (string.IsNullOrEmpty(currentPassword)
+				|| string.IsNullOrEmpty(newPassword))
+			{
+				throw new ArgumentNullException("currentPassword or newPassword");
+			}
 
-	        if (Authenticate(currentPassword, ignoreExpiry: false) == false)
-	        {
-	            throw new AuthenticationException("Authentication failed: password was incorrect.");
-	        }
+			if (Authenticate(currentPassword, ignoreExpiry: false) == false)
+			{
+				throw new AuthenticationException("Authentication failed: password was incorrect.");
+			}
 
-            SetPassword(newPassword);
-	    }
+			SetPassword(newPassword);
+		}
 
-        /// <summary>
-        /// Saves this plain text account to file in the pre-computed location.
-        /// </summary>
-	    public void Save()
-	    {
-	        using (FileStream fs = new FileStream(AccountFilePath, FileMode.OpenOrCreate, FileAccess.Write, FileShare.None))
-	        {
-	            ToStream(fs);
-	        }
-	    }
+		/// <summary>
+		/// Saves this plain text account to file in the pre-computed location.
+		/// </summary>
+		public void Save()
+		{
+			using (FileStream fs = new FileStream(AccountFilePath, FileMode.OpenOrCreate, FileAccess.Write, FileShare.None))
+			{
+				ToStream(fs);
+			}
+		}
 
-        /// <summary>
-        /// Saves this plain text account into the specified stream.
-        /// </summary>
-	    public void ToStream(Stream stream)
+		/// <summary>
+		/// Saves this plain text account into the specified stream.
+		/// </summary>
+		public void ToStream(Stream stream)
 		{
 			var parser = new StreamIniDataParser();
 
@@ -237,13 +237,13 @@ namespace Orion.Authorization
 		public IUserAccount AddAccount(string accountName)
 		{
 			PlainTextUserAccount userAccount;
-		    string accountPath;
+			string accountPath;
 
 			if (string.IsNullOrEmpty(accountName) == true)
 			{
 				throw new ArgumentNullException(nameof(accountName));
 			}
-            
+
 			accountPath = Path.Combine(UserPathPrefix, $"{accountName.Slugify()}.ini");
 
 			if (File.Exists(accountPath) == true)
@@ -261,24 +261,24 @@ namespace Orion.Authorization
 				userAccount.ToStream(fs);
 			}
 
-		    return userAccount;
+			return userAccount;
 		}
 
-	    public void DeleteAccount(string accountName)
-	    {
-		    string accountPath;
+		public void DeleteAccount(string accountName)
+		{
+			string accountPath;
 
 			if (string.IsNullOrEmpty(accountName) == true)
 			{
 				throw new ArgumentNullException(nameof(accountName));
 			}
 
-	        accountPath = Path.Combine(UserPathPrefix, $"{accountName.Slugify()}.ini");
+			accountPath = Path.Combine(UserPathPrefix, $"{accountName.Slugify()}.ini");
 
-            File.Delete(accountPath);
-	    }
+			File.Delete(accountPath);
+		}
 
-	    /// <inheritdoc />
+		/// <inheritdoc />
 		public void SetPassword(IUserAccount userAccount, string password)
 		{
 			throw new NotImplementedException();
