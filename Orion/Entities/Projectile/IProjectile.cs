@@ -39,7 +39,7 @@ namespace Orion.Entities.Projectile
 		Vector2 Velocity { get; set; }
 
 		/// <summary>
-		/// Gets the wrapped Terraria Projectile instance.
+		/// Gets the wrapped Terraria projectile instance.
 		/// </summary>
 		Terraria.Projectile WrappedProjectile { get; }
 

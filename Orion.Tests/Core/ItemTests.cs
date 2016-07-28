@@ -46,6 +46,7 @@ namespace Orion.Tests.Core
 			new object[] {nameof(Item.ProjectileSpeed), nameof(Terraria.Item.shootSpeed), 1.0f},
 			new object[] {nameof(Item.ProjectileType), nameof(Terraria.Item.shoot), 1},
 			new object[] {nameof(Item.Scale), nameof(Terraria.Item.scale), 10.0f},
+			new object[] {nameof(Item.StackSize), nameof(Terraria.Item.stack), 1},
 			new object[] {nameof(Item.UseAmmoType), nameof(Terraria.Item.useAmmo), 14},
 			new object[] {nameof(Item.UseAnimationTime), nameof(Terraria.Item.useAnimation), 4},
 			new object[] {nameof(Item.UseTime), nameof(Terraria.Item.useTime), 4},
@@ -85,20 +86,8 @@ namespace Orion.Tests.Core
 			Assert.AreEqual(value, terrariaItemField.GetValue(terrariaItem));
 		}
 
-		[TestCase(1)]
-		public void SetStackSize_IsCorrect(int stackSize)
-		{
-			var terrariaItem = new Terraria.Item();
-			terrariaItem.SetDefaults(1);
-			var item = new Item(terrariaItem);
-
-			item.StackSize = stackSize;
-
-			Assert.AreEqual(stackSize, terrariaItem.stack);
-		}
-
 		[TestCase(-1)]
-		public void SetStackSize_InvalidStackSize_ThrowsArgumentOutOfRangeException(int stackSize)
+		public void SetStackSize_InvalidValue_ThrowsArgumentOutOfRangeException(int stackSize)
 		{
 			var terrariaItem = new Terraria.Item();
 			terrariaItem.SetDefaults(1);

@@ -66,6 +66,8 @@
     <Compile Include="Authorization\IGroupService.cs" />
     <Compile Include="Authorization\IUserAccountService.cs" />
     <Compile Include="Authorization\PlainTextAccountService.cs" />
+    <Compile Include="Entities\Item\IItemArray.cs" />
+    <Compile Include="Entities\Item\ItemArray.cs" />
     <Compile Include="Entities\Projectile\Projectile.cs" />
     <Compile Include="Events\Item\ItemSetDefaultsEventArgs.cs" />
     <Compile Include="Events\Item\ItemSettingDefaultsEventArgs.cs" />

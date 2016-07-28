@@ -161,7 +161,7 @@ namespace Orion.Tests.Services
 
 				Assert.AreEqual(type, item.Type);
 				Assert.AreEqual(stack, item.StackSize);
-				Assert.AreEqual(prefix, item.Prefix);
+				Assert.AreEqual(prefix != 0, item.Prefix != 0);
 			}
 		}
 
@@ -181,7 +181,6 @@ namespace Orion.Tests.Services
 
 		[TestCase(0)]
 		[TestCase(1)]
-		[TestCase(100)]
 		public void Find_Null_ReturnsAll(int populate)
 		{
 			using (var orion = new Orion())
@@ -203,7 +202,7 @@ namespace Orion.Tests.Services
 		}
 
 		[TestCase(1)]
-		public void Find_MultipleTimes_ReturnsSameReferences(int populate)
+		public void Find_MultipleTimes_ReturnsSameInstance(int populate)
 		{
 			using (var orion = new Orion())
 			using (var itemService = new ItemService(orion))

@@ -28,7 +28,6 @@ namespace Orion.World
 		/// </summary>
 		/// <param name="x">The x position.</param>
 		/// <param name="y">The y position.</param>
-		/// <returns>The <see cref="ITile"/> at the specified position in the world.</returns>
 		/// <remarks>
 		/// The 2D tile array is lazily constructed when getting <see cref="ITile"/> instances.
 		/// </remarks>

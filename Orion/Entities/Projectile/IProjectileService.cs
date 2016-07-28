@@ -24,9 +24,7 @@ namespace Orion.Entities.Projectile
 		/// Finds all <see cref="IProjectile"/> instances in the world, optionally matching a predicate.
 		/// </summary>
 		/// <param name="predicate">The predicate.</param>
-		/// <returns>
-		/// An enumerable collection of <see cref="IProjectile"/> instances that match the predicate.
-		/// </returns>
+		/// <returns>An enumerable collection of <see cref="IProjectile"/> instances.</returns>
 		IEnumerable<IProjectile> Find(Predicate<IProjectile> predicate = null);
 	}
 }

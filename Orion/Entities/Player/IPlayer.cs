@@ -15,24 +15,53 @@ namespace Orion.Entities.Player
 		int Defense { get; }
 
 		/// <summary>
+		/// Gets the player's dyes <see cref="IItemArray"/> instance.
+		/// </summary>
+		IItemArray Dyes { get; }
+
+		/// <summary>
+		/// Gets the player's equips <see cref="IItemArray"/> instance.
+		/// </summary>
+		IItemArray Equips { get; }
+
+		/// <summary>
 		/// Gets or sets the player's health.
 		/// </summary>
+		/// <exception cref="ArgumentNullException"><paramref name="value"/> was negative.</exception>
 		int Health { get; set; }
+
+		/// <summary>
+		/// Gets the player's inventory <see cref="IItemArray"/> instance.
+		/// </summary>
+		IItemArray Inventory { get; }
 
 		/// <summary>
 		/// Gets or sets the player's mana.
 		/// </summary>
+		/// <exception cref="ArgumentNullException"><paramref name="value"/> was negative.</exception>
 		int Mana { get; set; }
 
 		/// <summary>
 		/// Gets or sets the player's maximum health.
 		/// </summary>
+		/// <exception cref="ArgumentNullException"><paramref name="value"/> was negative.</exception>
 		int MaxHealth { get; set; }
 
 		/// <summary>
 		/// Gets or sets the player's maximum mana.
 		/// </summary>
+		/// <exception cref="ArgumentNullException"><paramref name="value"/> was negative.</exception>
 		int MaxMana { get; set; }
+
+		/// <summary>
+		/// Gets the player's miscellaneous dyes <see cref="IItemArray"/> instance.
+		/// </summary>
+		IItemArray MiscDyes { get; }
+
+		/// <summary>
+		/// Gets the player's miscellaneous equips <see cref="IItemArray"/> instance.
+		/// </summary>
+		IItemArray MiscEquips { get; }
 
 		/// <summary>
 		/// Gets the player's name.
@@ -40,9 +69,30 @@ namespace Orion.Entities.Player
 		string Name { get; }
 
 		/// <summary>
+		/// Gets the player's piggy bank <see cref="IItemArray"/> instance.
+		/// </summary>
+		IItemArray PiggyBank { get; }
+
+		/// <summary>
 		/// Gets or sets the player's position in the world.
 		/// </summary>
 		Vector2 Position { get; set; }
+
+		/// <summary>
+		/// Gets the player's safe <see cref="IItemArray"/> instance.
+		/// </summary>
+		IItemArray Safe { get; }
+
+		/// <summary>
+		/// Gets the player's selected <see cref="IItem"/> instance.
+		/// </summary>
+		IItem SelectedItem { get; }
+
+		/// <summary>
+		/// Gets or sets the player's trash <see cref="IItem"/> instance.
+		/// </summary>
+		/// <exception cref="ArgumentNullException"><paramref name="value"/> was negative.</exception>
+		IItem TrashItem { get; set; }
 
 		/// <summary>
 		/// Gets or sets the player's velocity in the world.
@@ -53,27 +103,5 @@ namespace Orion.Entities.Player
 		/// Gets the wrapped Terraria player instance.
 		/// </summary>
 		Terraria.Player WrappedPlayer { get; }
-
-		/// <summary>
-		/// Gets the player's inventory <see cref="IItem"/> at the specified index.
-		/// </summary>
-		/// <param name="index">The index to retrieve.</param>
-		/// <returns>The <see cref="IItem"/> at the specified index.</returns>
-		/// <exception cref="IndexOutOfRangeException"><paramref name="index"/> was out of range.</exception>
-		IItem GetInventory(int index);
-
-		/// <summary>
-		/// Gets the player's selected <see cref="IItem"/>.
-		/// </summary>
-		/// <returns>The selected <see cref="IItem"/>.</returns>
-		IItem GetSelectedItem();
-
-		/// <summary>
-		/// Sets the player's inventory <see cref="IItem"/> at the specified index.
-		/// </summary>
-		/// <param name="index">The index to modify.</param>
-		/// <param name="item">The <see cref="IItem"/> to set.</param>
-		/// <exception cref="IndexOutOfRangeException"><paramref name="index"/> was out of range.</exception>
-		void SetInventory(int index, IItem item);
 	}
 }

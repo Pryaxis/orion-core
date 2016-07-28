@@ -63,59 +63,192 @@ namespace Orion.Tests.Core
 			Assert.AreEqual(value, terrariaPlayerField.GetValue(terrariaPlayer));
 		}
 
-		[TestCase(1)]
-		public void GetInventory_IsCorrect(int index)
+		[Test]
+		public void GetDyes_IsCorrect()
 		{
 			var terrariaPlayer = new Terraria.Player();
 			var player = new Player(terrariaPlayer);
 
-			terrariaPlayer.inventory[index] = new Terraria.Item();
+			IItemArray dyes = player.Dyes;
 
-			Assert.AreSame(terrariaPlayer.inventory[index], player.GetInventory(index).WrappedItem);
+			Assert.AreSame(terrariaPlayer.dye, dyes.WrappedItemArray);
+		}
+
+		[Test]
+		public void GetEquips_IsCorrect()
+		{
+			var terrariaPlayer = new Terraria.Player();
+			var player = new Player(terrariaPlayer);
+
+			IItemArray equips = player.Equips;
+
+			Assert.AreSame(terrariaPlayer.armor, equips.WrappedItemArray);
 		}
 
 		[TestCase(-1)]
-		[TestCase(100000)]
-		public void GetInventory_ParamOutOfRange_ThrowsArgumentOutOfRangeException(int index)
+		public void SetHealth_InvalidValue_ThrowsArgumentOutOfRangeException(int health)
 		{
 			var terrariaPlayer = new Terraria.Player();
 			var player = new Player(terrariaPlayer);
 
-			Assert.Throws<IndexOutOfRangeException>(() => player.GetInventory(index));
+			Assert.Throws<ArgumentOutOfRangeException>(() => player.Health = health);
+		}
+
+		[Test]
+		public void GetInventory_IsCorrect()
+		{
+			var terrariaPlayer = new Terraria.Player();
+			var player = new Player(terrariaPlayer);
+
+			IItemArray inventory = player.Inventory;
+
+			Assert.AreSame(terrariaPlayer.inventory, inventory.WrappedItemArray);
+		}
+
+		[TestCase(-1)]
+		public void SetMana_InvalidValue_ThrowsArgumentOutOfRangeException(int mana)
+		{
+			var terrariaPlayer = new Terraria.Player();
+			var player = new Player(terrariaPlayer);
+
+			Assert.Throws<ArgumentOutOfRangeException>(() => player.Mana = mana);
+		}
+
+		[TestCase(-1)]
+		public void SetMaxHealth_InvalidValue_ThrowsArgumentOutOfRangeException(int maxHealth)
+		{
+			var terrariaPlayer = new Terraria.Player();
+			var player = new Player(terrariaPlayer);
+
+			Assert.Throws<ArgumentOutOfRangeException>(() => player.MaxHealth = maxHealth);
+		}
+
+		[TestCase(-1)]
+		public void SetMaxMana_InvalidValue_ThrowsArgumentOutOfRangeException(int maxMana)
+		{
+			var terrariaPlayer = new Terraria.Player();
+			var player = new Player(terrariaPlayer);
+
+			Assert.Throws<ArgumentOutOfRangeException>(() => player.MaxMana = maxMana);
+		}
+
+		[Test]
+		public void GetMiscDyes_IsCorrect()
+		{
+			var terrariaPlayer = new Terraria.Player();
+			var player = new Player(terrariaPlayer);
+
+			IItemArray miscDyes = player.MiscDyes;
+
+			Assert.AreSame(terrariaPlayer.miscDyes, miscDyes.WrappedItemArray);
+		}
+
+		[Test]
+		public void GetMiscEquips_IsCorrect()
+		{
+			var terrariaPlayer = new Terraria.Player();
+			var player = new Player(terrariaPlayer);
+
+			IItemArray miscEquips = player.MiscEquips;
+
+			Assert.AreSame(terrariaPlayer.miscEquips, miscEquips.WrappedItemArray);
+		}
+
+		[Test]
+		public void GetPiggyBank_IsCorrect()
+		{
+			var terrariaPlayer = new Terraria.Player();
+			var player = new Player(terrariaPlayer);
+
+			IItemArray piggyBank = player.PiggyBank;
+
+			Assert.AreSame(terrariaPlayer.bank.item, piggyBank.WrappedItemArray);
 		}
 
 		[TestCase(1)]
 		public void GetSelectedItem_IsCorrect(int selectedItem)
 		{
 			var terrariaPlayer = new Terraria.Player();
+			terrariaPlayer.inventory[selectedItem] = new Terraria.Item();
 			var player = new Player(terrariaPlayer);
 
 			terrariaPlayer.selectedItem = selectedItem;
-			terrariaPlayer.inventory[selectedItem] = new Terraria.Item();
 
-			Assert.AreEqual(terrariaPlayer.inventory[selectedItem], player.GetSelectedItem().WrappedItem);
+			Assert.AreEqual(terrariaPlayer.inventory[selectedItem], player.SelectedItem.WrappedItem);
 		}
 
 		[TestCase(1)]
-		public void SetInventory_Updates(int index)
+		public void GetSelectedItem_MultipleTimes_ReturnsSameInstance(int selectedItem)
 		{
 			var terrariaPlayer = new Terraria.Player();
+			terrariaPlayer.inventory[selectedItem] = new Terraria.Item();
 			var player = new Player(terrariaPlayer);
-			var item = new Item(new Terraria.Item());
 
-			player.SetInventory(index, item);
-
-			Assert.AreSame(item.WrappedItem, terrariaPlayer.inventory[index]);
+			IItem item1 = player.SelectedItem;
+			IItem item2 = player.SelectedItem;
+			
+			Assert.AreSame(item1, item2);
 		}
 
-		[TestCase(-1)]
-		[TestCase(100000)]
-		public void SetInventory_OutOfRange_ThrowsArgumentOutOfRangeException(int index)
+		[Test]
+		public void GetSafe_IsCorrect()
 		{
 			var terrariaPlayer = new Terraria.Player();
 			var player = new Player(terrariaPlayer);
 
-			Assert.Throws<IndexOutOfRangeException>(() => player.SetInventory(index, null));
+			IItemArray safe = player.Safe;
+
+			Assert.AreSame(terrariaPlayer.bank2.item, safe.WrappedItemArray);
+		}
+
+		[Test]
+		public void GetTrashItem_IsCorrect()
+		{
+			var terrariaPlayer = new Terraria.Player();
+			var terrariaItem = new Terraria.Item();
+			terrariaPlayer.trashItem = terrariaItem;
+			var player = new Player(terrariaPlayer);
+
+			IItem trashItem = player.TrashItem;
+
+			Assert.AreEqual(terrariaItem, trashItem.WrappedItem);
+		}
+
+		[Test]
+		public void GetTrashItem_MultipleTimes_ReturnsSameInstance()
+		{
+			var terrariaPlayer = new Terraria.Player();
+			var terrariaItem = new Terraria.Item();
+			terrariaPlayer.trashItem = terrariaItem;
+			var player = new Player(terrariaPlayer);
+
+			IItem item1 = player.TrashItem;
+			IItem item2 = player.TrashItem;
+
+			Assert.AreSame(item1, item2);
+		}
+
+		[Test]
+		public void SetTrashItem_IsCorrect()
+		{
+			var terrariaPlayer = new Terraria.Player();
+			var terrariaItem = new Terraria.Item();
+			var player = new Player(terrariaPlayer);
+			var item = new Item(terrariaItem);
+
+			player.TrashItem = item;
+
+			Assert.AreEqual(item, player.TrashItem);
+			Assert.AreEqual(terrariaPlayer.trashItem, item.WrappedItem);
+		}
+
+		[Test]
+		public void SetTrashItem_NullValue_ThrowsArgumentNullException()
+		{
+			var terrariaPlayer = new Terraria.Player();
+			var player = new Player(terrariaPlayer);
+
+			Assert.Throws<ArgumentNullException>(() => player.TrashItem = null);
 		}
 	}
 }

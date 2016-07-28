@@ -37,6 +37,19 @@ namespace Orion.Entities.Item
 		/// <inheritdoc/>
 		public IItem Create(int type, int stackSize = 1, int prefix = 0)
 		{
+			if (type < 0 || type > Terraria.Main.maxItemTypes)
+			{
+				throw new ArgumentOutOfRangeException(nameof(type));
+			}
+			if (stackSize < 0)
+			{
+				throw new ArgumentOutOfRangeException(nameof(stackSize));
+			}
+			if (prefix < 0 || prefix > Terraria.Item.maxPrefixes)
+			{
+				throw new ArgumentOutOfRangeException(nameof(prefix));
+			}
+
 			var terrariaItem = new Terraria.Item();
 			var item = new Item(terrariaItem);
 			item.SetDefaults(type);

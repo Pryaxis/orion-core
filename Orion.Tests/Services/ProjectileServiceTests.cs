@@ -83,8 +83,8 @@ namespace Orion.Tests.Services
 			}
 		}
 
-		[TestCase(10)]
-		[TestCase(100)]
+		[TestCase(0)]
+		[TestCase(1)]
 		public void Find_Null_ReturnsAll(int populate)
 		{
 			using (var orion = new Orion())
@@ -106,7 +106,7 @@ namespace Orion.Tests.Services
 		}
 
 		[TestCase(1)]
-		public void Find_MultipleTimes_ReturnsSameReferences(int populate)
+		public void Find_MultipleTimes_ReturnsSameInstance(int populate)
 		{
 			using (var orion = new Orion())
 			using (var projectileService = new ProjectileService(orion))
