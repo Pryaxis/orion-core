@@ -5,7 +5,7 @@ using Orion.Entities.Item;
 namespace Orion.Entities.Player
 {
 	/// <summary>
-	/// Provides a wrapper around a Terraria player.
+	/// Provides a wrapper around a Terraria player instance.
 	/// </summary>
 	public interface IPlayer
 	{
@@ -50,7 +50,7 @@ namespace Orion.Entities.Player
 		Vector2 Velocity { get; set; }
 
 		/// <summary>
-		/// Gets the wrapped Terraria player.
+		/// Gets the wrapped Terraria player instance.
 		/// </summary>
 		Terraria.Player WrappedPlayer { get; }
 

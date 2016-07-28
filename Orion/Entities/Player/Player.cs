@@ -5,7 +5,7 @@ using Orion.Entities.Item;
 namespace Orion.Entities.Player
 {
 	/// <summary>
-	/// Wraps a Terraria player.
+	/// Wraps a Terraria player instance.
 	/// </summary>
 	public class Player : IPlayer
 	{
@@ -63,9 +63,10 @@ namespace Orion.Entities.Player
 		public Terraria.Player WrappedPlayer { get; }
 
 		/// <summary>
-		/// Initializes a new instance of the <see cref="Player"/> class wrapping the specified Terraria player.
+		/// Initializes a new instance of the <see cref="Player"/> class wrapping the specified Terraria player
+		/// instance.
 		/// </summary>
-		/// <param name="terrariaPlayer">The Terraria player to wrap.</param>
+		/// <param name="terrariaPlayer">The Terraria player instance to wrap.</param>
 		/// <exception cref="ArgumentNullException"><paramref name="terrariaPlayer"/> was null.</exception>
 		public Player(Terraria.Player terrariaPlayer)
 		{

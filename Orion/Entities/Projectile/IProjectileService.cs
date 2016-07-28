@@ -6,25 +6,27 @@ using Orion.Framework;
 namespace Orion.Entities.Projectile
 {
 	/// <summary>
-	/// Provides a mechanism for managing <see cref="IProjectile"/>s.
+	/// Provides a mechanism for managing <see cref="IProjectile"/> instances.
 	/// </summary>
 	public interface IProjectileService : IService
 	{
 		/// <summary>
-		/// Occurs after a projectile had its defaults set.
+		/// Occurs after a <see cref="IProjectile"/> instance had its defaults set.
 		/// </summary>
 		event EventHandler<ProjectileSetDefaultsEventArgs> ProjectileSetDefaults;
 
 		/// <summary>
-		/// Occurs when a projectile is having its defaults set.
+		/// Occurs when a <see cref="IProjectile"/> instance is having its defaults set.
 		/// </summary>
 		event EventHandler<ProjectileSettingDefaultsEventArgs> ProjectileSettingDefaults;
 
 		/// <summary>
-		/// Finds all <see cref="IProjectile"/>s in the world, optionally matching a predicate.
+		/// Finds all <see cref="IProjectile"/> instances in the world, optionally matching a predicate.
 		/// </summary>
-		/// <param name="predicate">The predicate to match with.</param>
-		/// <returns>An enumerable collection of <see cref="IProjectile"/>s that match the predicate.</returns>
+		/// <param name="predicate">The predicate.</param>
+		/// <returns>
+		/// An enumerable collection of <see cref="IProjectile"/> instances that match the predicate.
+		/// </returns>
 		IEnumerable<IProjectile> Find(Predicate<IProjectile> predicate = null);
 	}
 }

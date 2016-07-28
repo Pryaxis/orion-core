@@ -10,6 +10,8 @@ namespace Orion.Tests.Services
 	[TestFixture]
 	public class ProjectileServiceTests
 	{
+		private static readonly Predicate<IProjectile>[] Predicates = { projectile => projectile.Position.X <= 10 };
+
 		[TestCase(1)]
 		public void ProjectileSetDefaults_IsCorrect(int type)
 		{
@@ -92,6 +94,7 @@ namespace Orion.Tests.Services
 				{
 					Terraria.Main.projectile[i] = new Terraria.Projectile { active = i < populate };
 				}
+
 				List<IProjectile> projectiles = projectileService.Find().ToList();
 
 				Assert.AreEqual(populate, projectiles.Count);
@@ -102,7 +105,26 @@ namespace Orion.Tests.Services
 			}
 		}
 
-		private static readonly Predicate<IProjectile>[] Predicates = { projectile => projectile.Position.X <= 10 };
+		[TestCase(1)]
+		public void Find_MultipleTimes_ReturnsSameReferences(int populate)
+		{
+			using (var orion = new Orion())
+			using (var projectileService = new ProjectileService(orion))
+			{
+				for (int i = 0; i < Terraria.Main.projectile.Length; ++i)
+				{
+					Terraria.Main.projectile[i] = new Terraria.Projectile { active = i < populate };
+				}
+
+				List<IProjectile> projectiles = projectileService.Find().ToList();
+				List<IProjectile> projectiles2 = projectileService.Find().ToList();
+
+				for (int i = 0; i < populate; ++i)
+				{
+					Assert.AreSame(projectiles[i], projectiles2[i]);
+				}
+			}
+		}
 
 		[Test, TestCaseSource(nameof(Predicates))]
 		public void Find_IsCorrect(Predicate<IProjectile> predicate)
@@ -114,6 +136,7 @@ namespace Orion.Tests.Services
 				{
 					Terraria.Main.projectile[i] = new Terraria.Projectile { active = true, position = new Vector2(i, 0) };
 				}
+
 				IEnumerable<IProjectile> projectiles = projectileService.Find(predicate);
 
 				foreach (IProjectile projectile in projectiles)

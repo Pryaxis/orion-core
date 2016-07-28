@@ -29,9 +29,6 @@ namespace Orion.World
 		/// Initializes a new instance of the <see cref="WorldService"/> class.
 		/// </summary>
 		/// <param name="orion">The parent <see cref="Orion"/> instance.</param>
-		/// <remarks>
-		/// This constructor registers the OTAPI hooks.
-		/// </remarks>
 		public WorldService(Orion orion) : base(orion)
 		{
 			// TODO: add christmas, halloween, initialize, update
@@ -66,9 +63,6 @@ namespace Orion.World
 		}
 
 		/// <inheritdoc/>
-		/// <remarks>
-		/// This method deregisters the OTAPI hooks.
-		/// </remarks>
 		protected override void Dispose(bool disposing)
 		{
 			if (!_disposed)

@@ -4,7 +4,7 @@ using Microsoft.Xna.Framework;
 namespace Orion.Entities.Npc
 {
 	/// <summary>
-	/// Provides a wrapper around a Terraria NPC.
+	/// Provides a wrapper around a Terraria NPC instance.
 	/// </summary>
 	public interface INpc
 	{
@@ -49,7 +49,7 @@ namespace Orion.Entities.Npc
 		Vector2 Velocity { get; set; }
 
 		/// <summary>
-		/// Gets the wrapped Terraria NPC.
+		/// Gets the wrapped Terraria NPC instance.
 		/// </summary>
 		Terraria.NPC WrappedNpc { get; }
 

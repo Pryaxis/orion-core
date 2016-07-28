@@ -9,13 +9,13 @@ using OTAPI.Core;
 namespace Orion.Entities.Item
 {
 	/// <summary>
-	/// Manages <see cref="IItem"/>s.
+	/// Manages <see cref="IItem"/> instances.
 	/// </summary>
 	[Service("Item Service", Author = "Nyx Studios")]
 	public class ItemService : ServiceBase, IItemService
 	{
-		private bool _disposed;
 		private readonly IItem[] _items;
+		private bool _disposed;
 
 		/// <inheritdoc/>
 		public event EventHandler<ItemSetDefaultsEventArgs> ItemSetDefaults;
@@ -27,9 +27,6 @@ namespace Orion.Entities.Item
 		/// Initializes a new instance of the <see cref="ItemService"/> class.
 		/// </summary>
 		/// <param name="orion">The parent <see cref="Orion"/> instance.</param>
-		/// <remarks>
-		/// This constructor registers the OTAPI hooks.
-		/// </remarks>
 		public ItemService(Orion orion) : base(orion)
 		{
 			_items = new IItem[Terraria.Main.item.Length];
@@ -50,8 +47,8 @@ namespace Orion.Entities.Item
 
 		/// <inheritdoc/>
 		/// <remarks>
-		/// The <see cref="IItem"/>s are cached in an array. Calling this method multiple times will result in the same
-		/// <see cref="IItem"/> references as long as the Terraria item array is not updated.
+		/// The <see cref="IItem"/> instances are cached in an array. Calling this method multiple times will result
+		/// in the same <see cref="IItem"/> instances as long as Terraria's item array remains unchanged.
 		/// </remarks>
 		public IEnumerable<IItem> Find(Predicate<IItem> predicate = null)
 		{
@@ -83,16 +80,13 @@ namespace Orion.Entities.Item
 				throw new ArgumentOutOfRangeException(nameof(prefix));
 			}
 
-			int index = Terraria.Item.NewItem((int) position.X, (int) position.Y, 0, 0, type, stackSize, pfix: prefix);
+			int index = Terraria.Item.NewItem((int)position.X, (int)position.Y, 0, 0, type, stackSize, pfix: prefix);
 			var item = new Item(Terraria.Main.item[index]);
 			_items[index] = item;
 			return item;
 		}
 
 		/// <inheritdoc/>
-		/// <remarks>
-		/// This method deregisters the OTAPI hooks.
-		/// </remarks>
 		protected override void Dispose(bool disposing)
 		{
 			if (!_disposed)

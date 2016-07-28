@@ -4,7 +4,7 @@ using Microsoft.Xna.Framework;
 namespace Orion.Entities.Projectile
 {
 	/// <summary>
-	/// Wraps a Terraria projectile.
+	/// Wraps a Terraria projectile instance.
 	/// </summary>
 	public class Projectile : IProjectile
 	{
@@ -18,14 +18,14 @@ namespace Orion.Entities.Projectile
 		public string Name => WrappedProjectile.name;
 
 		/// <inheritdoc/>
-		public int Type => WrappedProjectile.type;
-
-		/// <inheritdoc/>
 		public Vector2 Position
 		{
 			get { return WrappedProjectile.position; }
 			set { WrappedProjectile.position = value; }
 		}
+
+		/// <inheritdoc/>
+		public int Type => WrappedProjectile.type;
 
 		/// <inheritdoc/>
 		public Vector2 Velocity
@@ -38,7 +38,8 @@ namespace Orion.Entities.Projectile
 		public Terraria.Projectile WrappedProjectile { get; }
 
 		/// <summary>
-		/// Initializes a new instance of the <see cref="Projectile"/> class wrapping the specified Terraria projectile.
+		/// Initializes a new instance of the <see cref="Projectile"/> class wrapping the specified Terraria projectile
+		/// instance.
 		/// </summary>
 		/// <param name="terrariaProjectile">The Terraria projectile to wrap.</param>
 		/// <exception cref="ArgumentNullException"><paramref name="terrariaProjectile"/> was null.</exception>

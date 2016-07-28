@@ -10,20 +10,22 @@ namespace Orion.Events.Npc
 	public class NpcDroppedLootEventArgs : EventArgs
 	{
 		/// <summary>
-		/// Gets the loot <see cref="IItem"/> that the <see cref="INpc"/> dropped.
+		/// Gets the loot <see cref="IItem"/> instance that the <see cref="INpc"/> instance dropped.
 		/// </summary>
 		public IItem Item { get; }
 
 		/// <summary>
-		/// Gets the <see cref="INpc"/> that dropped the loot.
+		/// Gets the <see cref="INpc"/> instance that dropped the loot.
 		/// </summary>
 		public INpc Npc { get; }
 
 		/// <summary>
 		/// Initializes a new instance of the <see cref="NpcDroppedLootEventArgs"/> class.
 		/// </summary>
-		/// <param name="npc">The <see cref="INpc"/> that dropped the loot.</param>
-		/// <param name="item">The loot <see cref="IItem"/> that the <see cref="INpc"/> dropped.</param>
+		/// <param name="npc">The <see cref="INpc"/> instance that dropped the loot.</param>
+		/// <param name="item">
+		/// The loot <see cref="IItem"/> instance that the <see cref="INpc"/> instance dropped.
+		/// </param>
 		/// <exception cref="ArgumentNullException">
 		/// <paramref name="npc"/> or <paramref name="item"/> were null.
 		/// </exception>

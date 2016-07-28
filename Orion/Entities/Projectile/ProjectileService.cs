@@ -8,13 +8,13 @@ using OTAPI.Core;
 namespace Orion.Entities.Projectile
 {
 	/// <summary>
-	/// Manages <see cref="IProjectile"/>s.
+	/// Manages <see cref="IProjectile"/> instances.
 	/// </summary>
 	[Service("Projectile Service", Author = "Nyx Studios")]
 	public class ProjectileService : ServiceBase, IProjectileService
 	{
-		private bool _disposed;
 		private readonly IProjectile[] _projectiles;
+		private bool _disposed;
 
 		/// <inheritdoc/>
 		public event EventHandler<ProjectileSetDefaultsEventArgs> ProjectileSetDefaults;
@@ -26,9 +26,6 @@ namespace Orion.Entities.Projectile
 		/// Initializes a new instance of the <see cref="ProjectileService"/> class.
 		/// </summary>
 		/// <param name="orion">The parent <see cref="Orion"/> instance.</param>
-		/// <remarks>
-		/// This constructor registers the OTAPI hooks.
-		/// </remarks>
 		public ProjectileService(Orion orion) : base(orion)
 		{
 			_projectiles = new IProjectile[Terraria.Main.projectile.Length];
@@ -38,8 +35,9 @@ namespace Orion.Entities.Projectile
 
 		/// <inheritdoc/>
 		/// <remarks>
-		/// The <see cref="IProjectile"/>s are cached in an array. Calling this method multiple times will result in the
-		/// same <see cref="IProjectile"/> references as long as the Terraria projectile array is not updated.
+		/// The <see cref="IProjectile"/> instances are cached in an array. Calling this method multiple times will
+		/// result in the same <see cref="IProjectile"/> instances as long as Terraria's projectile array remains
+		/// unchanged.
 		/// </remarks>
 		public IEnumerable<IProjectile> Find(Predicate<IProjectile> predicate = null)
 		{
@@ -56,9 +54,6 @@ namespace Orion.Entities.Projectile
 		}
 
 		/// <inheritdoc/>
-		/// <remarks>
-		/// This method deregisters the OTAPI hooks.
-		/// </remarks>
 		protected override void Dispose(bool disposing)
 		{
 			if (!_disposed)

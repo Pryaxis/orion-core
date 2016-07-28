@@ -4,7 +4,7 @@ using Microsoft.Xna.Framework;
 namespace Orion.Entities.Item
 {
 	/// <summary>
-	/// Provides a wrapper around a Terraria item.
+	/// Provides a wrapper around a Terraria item instance.
 	/// </summary>
 	public interface IItem
 	{
@@ -62,7 +62,7 @@ namespace Orion.Entities.Item
 		/// Gets or sets the item's position in the world.
 		/// </summary>
 		Vector2 Position { get; set; }
-		
+
 		/// <summary>
 		/// Gets the item's prefix.
 		/// </summary>
@@ -72,7 +72,7 @@ namespace Orion.Entities.Item
 		/// Gets or sets the item's projectile speed.
 		/// </summary>
 		float ProjectileSpeed { get; set; }
-		
+
 		/// <summary>
 		/// Gets or sets the item's projectile type.
 		/// </summary>
@@ -88,14 +88,14 @@ namespace Orion.Entities.Item
 		/// </summary>
 		/// <exception cref="ArgumentOutOfRangeException"><paramref name="value"/> was negative.</exception>
 		int StackSize { get; set; }
-		
+
 		/// <summary>
 		/// Gets the item's type.
 		/// </summary>
 		int Type { get; }
 
 		/// <summary>
-		/// Gets or sets the item's projectile ammo type.
+		/// Gets or sets the item's used ammo type.
 		/// </summary>
 		int UseAmmoType { get; set; }
 
@@ -113,14 +113,14 @@ namespace Orion.Entities.Item
 		/// Gets or sets the item's velocity in the world.
 		/// </summary>
 		Vector2 Velocity { get; set; }
-		
+
 		/// <summary>
 		/// Gets or sets the item's width.
 		/// </summary>
 		int Width { get; set; }
 
 		/// <summary>
-		/// Gets the wrapped Terraria item.
+		/// Gets the wrapped Terraria item instance.
 		/// </summary>
 		Terraria.Item WrappedItem { get; }
 

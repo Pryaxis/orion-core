@@ -8,13 +8,13 @@ using OTAPI.Core;
 namespace Orion.Entities.Player
 {
 	/// <summary>
-	/// Manages <see cref="IPlayer"/>s.
+	/// Manages <see cref="IPlayer"/> instances.
 	/// </summary>
 	[Service("Player Service", Author = "Nyx Studios")]
 	public class PlayerService : ServiceBase, IPlayerService
 	{
-		private bool _disposed;
 		private readonly IPlayer[] _players;
+		private bool _disposed;
 
 		/// <inheritdoc/>
 		public event EventHandler<PlayerJoinedEventArgs> PlayerJoined;
@@ -29,9 +29,6 @@ namespace Orion.Entities.Player
 		/// Initializes a new instance of the <see cref="PlayerService"/> class.
 		/// </summary>
 		/// <param name="orion">The parent <see cref="Orion"/> instance.</param>
-		/// <remarks>
-		/// This constructor registers the OTAPI hooks.
-		/// </remarks>
 		public PlayerService(Orion orion) : base(orion)
 		{
 			_players = new IPlayer[Terraria.Main.player.Length];
@@ -42,8 +39,8 @@ namespace Orion.Entities.Player
 
 		/// <inheritdoc/>
 		/// <remarks>
-		/// The <see cref="IPlayer"/>s are cached in an array. Calling this method multiple times will result in the
-		/// same <see cref="IPlayer"/> references as long as the Terraria player array is not updated.
+		/// The <see cref="IPlayer"/> instances are cached in an array. Calling this method multiple times will result
+		/// in the same <see cref="IPlayer"/> instances as long as Terraria's player array remains unchanged.
 		/// </remarks>
 		public IEnumerable<IPlayer> Find(Predicate<IPlayer> predicate = null)
 		{
@@ -60,9 +57,6 @@ namespace Orion.Entities.Player
 		}
 
 		/// <inheritdoc/>
-		/// <remarks>
-		/// This method deregisters the OTAPI hooks.
-		/// </remarks>
 		protected override void Dispose(bool disposing)
 		{
 			if (!_disposed)

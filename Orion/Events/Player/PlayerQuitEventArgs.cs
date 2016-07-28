@@ -9,14 +9,14 @@ namespace Orion.Events.Player
 	public class PlayerQuitEventArgs : EventArgs
 	{
 		/// <summary>
-		/// Gets the <see cref="IPlayer"/> that quit the server.
+		/// Gets the <see cref="IPlayer"/> instance that quit the server.
 		/// </summary>
 		public IPlayer Player { get; }
 
 		/// <summary>
 		/// Initializes a new instance of the <see cref="PlayerQuitEventArgs"/> class.
 		/// </summary>
-		/// <param name="player">The <see cref="IPlayer"/> that quit the server.</param>
+		/// <param name="player">The <see cref="IPlayer"/> instance that quit the server.</param>
 		/// <exception cref="ArgumentNullException"><paramref name="player"/> was null.</exception>
 		public PlayerQuitEventArgs(IPlayer player)
 		{

@@ -9,14 +9,14 @@ namespace Orion.Events.Projectile
 	public class ProjectileSetDefaultsEventArgs : EventArgs
 	{
 		/// <summary>
-		/// Gets the <see cref="IProjectile"/> that had its defaults set.
+		/// Gets the <see cref="IProjectile"/> instance that had its defaults set.
 		/// </summary>
 		public IProjectile Projectile { get; }
 
 		/// <summary>
 		/// Initializes a new instance of the <see cref="ProjectileSetDefaultsEventArgs"/> class. 
 		/// </summary>
-		/// <param name="projectile">The <see cref="IProjectile"/> that had its defaults set.</param>
+		/// <param name="projectile">The <see cref="IProjectile"/> instance that had its defaults set.</param>
 		/// <exception cref="ArgumentNullException"><paramref name="projectile"/> was null.</exception>
 		public ProjectileSetDefaultsEventArgs(IProjectile projectile)
 		{

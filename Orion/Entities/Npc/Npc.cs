@@ -4,7 +4,7 @@ using Microsoft.Xna.Framework;
 namespace Orion.Entities.Npc
 {
 	/// <summary>
-	/// Wraps a Terraria NPC.
+	/// Wraps a Terraria NPC instance.
 	/// </summary>
 	public class Npc : INpc
 	{
@@ -52,9 +52,9 @@ namespace Orion.Entities.Npc
 		public Terraria.NPC WrappedNpc { get; }
 
 		/// <summary>
-		/// Initializes a new instance of the <see cref="Npc"/> class wrapping the specified Terraria NPC.
+		/// Initializes a new instance of the <see cref="Npc"/> class wrapping the specified Terraria NPC instance.
 		/// </summary>
-		/// <param name="terrariaNpc">The Terraria NPC to wrap.</param>
+		/// <param name="terrariaNpc">The Terraria NPC instance to wrap.</param>
 		/// <exception cref="ArgumentNullException"><paramref name="terrariaNpc"/> was null.</exception>
 		public Npc(Terraria.NPC terrariaNpc)
 		{

@@ -10,6 +10,8 @@ namespace Orion.Tests.Services
 	[TestFixture]
 	public class ItemServiceTests
 	{
+		private static readonly Predicate<IItem>[] Predicates = { item => item.Type < 100 };
+
 		[TestCase(1)]
 		public void ItemSetDefaults_IsCorrect(int type)
 		{
@@ -189,6 +191,7 @@ namespace Orion.Tests.Services
 				{
 					Terraria.Main.item[i] = new Terraria.Item {active = i < populate};
 				}
+
 				List<IItem> items = itemService.Find().ToList();
 
 				Assert.AreEqual(populate, items.Count);
@@ -199,7 +202,26 @@ namespace Orion.Tests.Services
 			}
 		}
 
-		private static readonly Predicate<IItem>[] Predicates = {item => item.Type < 100};
+		[TestCase(1)]
+		public void Find_MultipleTimes_ReturnsSameReferences(int populate)
+		{
+			using (var orion = new Orion())
+			using (var itemService = new ItemService(orion))
+			{
+				for (int i = 0; i < Terraria.Main.item.Length; ++i)
+				{
+					Terraria.Main.item[i] = new Terraria.Item { active = i < populate };
+				}
+
+				List<IItem> items = itemService.Find().ToList();
+				List<IItem> items2 = itemService.Find().ToList();
+				
+				for (int i = 0; i < populate; ++i)
+				{
+					Assert.AreSame(items[i], items2[i]);
+				}
+			}
+		}
 
 		[Test, TestCaseSource(nameof(Predicates))]
 		public void Find_IsCorrect(Predicate<IItem> predicate)

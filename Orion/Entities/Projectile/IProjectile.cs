@@ -4,7 +4,7 @@ using Microsoft.Xna.Framework;
 namespace Orion.Entities.Projectile
 {
 	/// <summary>
-	/// Provides a wrapper around a Terraria projectile.
+	/// Provides a wrapper around a Terraria projectile instance.
 	/// </summary>
 	public interface IProjectile
 	{
@@ -24,14 +24,14 @@ namespace Orion.Entities.Projectile
 		string Name { get; }
 
 		/// <summary>
-		/// Gets the projectile's type.
-		/// </summary>
-		int Type { get; }
-
-		/// <summary>
 		/// Gets or sets the projectile's position in the world.
 		/// </summary>
 		Vector2 Position { get; set; }
+
+		/// <summary>
+		/// Gets the projectile's type.
+		/// </summary>
+		int Type { get; }
 
 		/// <summary>
 		/// Gets or sets the projectile's velocity in the world.
@@ -39,7 +39,7 @@ namespace Orion.Entities.Projectile
 		Vector2 Velocity { get; set; }
 
 		/// <summary>
-		/// Gets the wrapped Terraria Projectile.
+		/// Gets the wrapped Terraria Projectile instance.
 		/// </summary>
 		Terraria.Projectile WrappedProjectile { get; }
 

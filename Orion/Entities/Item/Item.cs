@@ -4,7 +4,7 @@ using Microsoft.Xna.Framework;
 namespace Orion.Entities.Item
 {
 	/// <summary>
-	/// Wraps a Terraria item.
+	/// Wraps a Terraria item instance.
 	/// </summary>
 	public class Item : IItem
 	{
@@ -43,14 +43,14 @@ namespace Orion.Entities.Item
 		}
 
 		/// <inheritdoc/>
-		public int MaxStackSize => WrappedItem.maxStack;
-
-		/// <inheritdoc/>
 		public float Knockback
 		{
 			get { return WrappedItem.knockBack; }
 			set { WrappedItem.knockBack = value; }
 		}
+
+		/// <inheritdoc/>
+		public int MaxStackSize => WrappedItem.maxStack;
 
 		/// <inheritdoc/>
 		public string Name => WrappedItem.name;
@@ -145,7 +145,11 @@ namespace Orion.Entities.Item
 		/// <inheritdoc/>
 		public Terraria.Item WrappedItem { get; }
 
-		/// <inheritdoc/>
+		/// <summary>
+		/// Initializes a new instance of the <see cref="Item"/> class wrapping the specified Terraria item instance.
+		/// </summary>
+		/// <param name="terrariaItem">The Terraria item instance to wrap.</param>
+		/// <exception cref="ArgumentNullException"><paramref name="terrariaItem"/> was null.</exception>
 		public Item(Terraria.Item terrariaItem)
 		{
 			if (terrariaItem == null)

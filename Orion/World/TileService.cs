@@ -12,9 +12,6 @@ namespace Orion.World
 	[Service("Tile Service", Author = "Nyx Studios")]
 	public class TileService : ServiceBase, ITileService
 	{
-		/// <summary>
-		/// The 2D tile array.
-		/// </summary>
 		private ITile[,] _tiles;
 
 		/// <summary>
@@ -27,11 +24,14 @@ namespace Orion.World
 		}
 
 		/// <summary>
-		/// Gets or sets the <see cref="ITile"/> at the specified position.
+		/// Gets or sets the <see cref="ITile"/> instance at the specified position.
 		/// </summary>
 		/// <param name="x">The x position.</param>
 		/// <param name="y">The y position.</param>
 		/// <returns>The <see cref="ITile"/> at the specified position in the world.</returns>
+		/// <remarks>
+		/// The 2D tile array is lazily constructed when getting <see cref="ITile"/> instances.
+		/// </remarks>
 		public ITile this[int x, int y]
 		{
 			get
