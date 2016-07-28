@@ -1,4 +1,4 @@
-# Orion
+# Orion [![Build Status](https://travis-ci.org/NyxStudios/Orion.svg?branch=master)](https://travis-ci.org/NyxStudios/Orion)
 
 Orion is the next generation of Terraria Server APIs.
 
