@@ -2,7 +2,7 @@
 using System.Reflection;
 using Microsoft.Xna.Framework;
 using NUnit.Framework;
-using Orion.Entities.Npc;
+using Orion.Npcs;
 
 namespace Orion.Tests.Core
 {

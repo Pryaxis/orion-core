@@ -3,11 +3,11 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using Orion.Configuration;
-using Orion.Entities.Item;
-using Orion.Entities.Player;
-using Orion.Entities.Projectile;
 using Orion.World;
 using Orion.Authorization;
+using Orion.Items;
+using Orion.Players;
+using Orion.Projectiles;
 
 namespace Orion.Framework
 {

@@ -3,7 +3,7 @@ using Microsoft.Xna.Framework;
 using NUnit.Framework;
 using System.Collections.Generic;
 using System.Linq;
-using Orion.Entities.Player;
+using Orion.Players;
 
 namespace Orion.Tests.Services
 {

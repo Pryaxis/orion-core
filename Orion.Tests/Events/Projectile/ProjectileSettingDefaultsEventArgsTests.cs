@@ -1,6 +1,6 @@
 ﻿using System;
 using NUnit.Framework;
-using Orion.Events.Projectile;
+using Orion.Projectiles.Events;
 
 namespace Orion.Tests.Events.Projectile
 {

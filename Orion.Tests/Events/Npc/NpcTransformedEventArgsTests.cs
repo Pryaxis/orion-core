@@ -1,6 +1,6 @@
 ﻿using System;
 using NUnit.Framework;
-using Orion.Events.Npc;
+using Orion.Npcs.Events;
 
 namespace Orion.Tests.Events.Npc
 {

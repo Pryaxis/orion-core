@@ -1,6 +1,6 @@
 ﻿using System;
 using NUnit.Framework;
-using Orion.Events.Item;
+using Orion.Items.Events;
 
 namespace Orion.Tests.Events.Item
 {

@@ -2,8 +2,8 @@
 using System.Reflection;
 using Microsoft.Xna.Framework;
 using NUnit.Framework;
-using Orion.Entities.Item;
-using Orion.Entities.Player;
+using Orion.Items;
+using Orion.Players;
 
 namespace Orion.Tests.Core
 {

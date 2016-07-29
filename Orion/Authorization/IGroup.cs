@@ -1,5 +1,5 @@
 ﻿using System.Collections.Generic;
-using Orion.Entities.Player;
+using Orion.Players;
 
 namespace Orion.Authorization
 {

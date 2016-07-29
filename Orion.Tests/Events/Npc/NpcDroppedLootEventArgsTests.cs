@@ -1,6 +1,6 @@
 ﻿using System;
 using NUnit.Framework;
-using Orion.Events.Npc;
+using Orion.Npcs.Events;
 
 namespace Orion.Tests.Events.Npc
 {
@@ -11,7 +11,7 @@ namespace Orion.Tests.Events.Npc
 		public void Constructor_NullNpc_ThrowsArgumentNullException()
 		{
 			var terrariaItem = new Terraria.Item();
-			var item = new global::Orion.Entities.Item.Item(terrariaItem);
+			var item = new global::Orion.Items.Item(terrariaItem);
 			Assert.Throws<ArgumentNullException>(() => new NpcDroppedLootEventArgs(null, item));
 		}
 
@@ -19,7 +19,7 @@ namespace Orion.Tests.Events.Npc
 		public void Constructor_NullItem_ThrowsArgumentNullException()
 		{
 			var terrariaNpc = new Terraria.NPC();
-			var npc = new global::Orion.Entities.Npc.Npc(terrariaNpc);
+			var npc = new global::Orion.Npcs.Npc(terrariaNpc);
 			Assert.Throws<ArgumentNullException>(() => new NpcDroppedLootEventArgs(npc, null));
 		}
 	}

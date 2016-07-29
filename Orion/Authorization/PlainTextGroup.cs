@@ -3,8 +3,8 @@ using System.IO;
 using System.Text;
 using IniParser;
 using IniParser.Model;
-using Orion.Entities.Player;
 using Orion.Extensions;
+using Orion.Players;
 
 namespace Orion.Authorization
 {

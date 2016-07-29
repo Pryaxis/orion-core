@@ -2,7 +2,7 @@
 using System.Reflection;
 using Microsoft.Xna.Framework;
 using NUnit.Framework;
-using Orion.Entities.Projectile;
+using Orion.Projectiles;
 
 namespace Orion.Tests.Core
 {
