@@ -75,21 +75,24 @@
   <ItemGroup>
     <Compile Include="Authorization\AuthorizationServiceTests.cs" />
     <Compile Include="Core\ItemArrayTests.cs" />
+    <Compile Include="Core\ItemTests.cs" />
+    <Compile Include="Core\NpcTests.cs" />
+    <Compile Include="Core\PlayerTests.cs" />
     <Compile Include="Core\ProjectileTests.cs" />
-    <Compile Include="Events\Item\ItemSettingDefaultsEventArgsTests.cs" />
-    <Compile Include="Events\Item\ItemSetDefaultsEventArgsTests.cs" />
-    <Compile Include="Events\Npc\NpcDroppedLootEventArgsTests.cs" />
-    <Compile Include="Events\Npc\NpcDroppingLootEventArgsTests.cs" />
-    <Compile Include="Events\Npc\NpcTransformedEventArgsTests.cs" />
-    <Compile Include="Events\Npc\NpcSpawningEventArgsTests.cs" />
-    <Compile Include="Events\Npc\NpcSpawnedEventArgsTests.cs" />
-    <Compile Include="Events\Npc\NpcKilledEventArgsTests.cs" />
-    <Compile Include="Events\Player\PlayerQuitEventArgsTests.cs" />
-    <Compile Include="Events\Player\PlayerJoiningEventArgsTests.cs" />
-    <Compile Include="Events\Player\PlayerJoinedEventArgsTests.cs" />
-    <Compile Include="Events\Projectile\ProjectileSetDefaultsEventArgsTests.cs" />
-    <Compile Include="Events\Projectile\ProjectileSettingDefaultsEventArgsTests.cs" />
     <Compile Include="InjectionContainerTests.cs" />
+    <Compile Include="Items\Events\ItemSetDefaultsEventArgsTests.cs" />
+    <Compile Include="Items\Events\ItemSettingDefaultsEventArgsTests.cs" />
+    <Compile Include="Npcs\Events\NpcDroppedLootEventArgsTests.cs" />
+    <Compile Include="Npcs\Events\NpcDroppingLootEventArgsTests.cs" />
+    <Compile Include="Npcs\Events\NpcKilledEventArgsTests.cs" />
+    <Compile Include="Npcs\Events\NpcSpawnedEventArgsTests.cs" />
+    <Compile Include="Npcs\Events\NpcSpawningEventArgsTests.cs" />
+    <Compile Include="Npcs\Events\NpcTransformedEventArgsTests.cs" />
+    <Compile Include="Players\Events\PlayerJoinedEventArgsTests.cs" />
+    <Compile Include="Players\Events\PlayerJoiningEventArgsTests.cs" />
+    <Compile Include="Players\Events\PlayerQuitEventArgsTests.cs" />
+    <Compile Include="Projectiles\Events\ProjectileSetDefaultsEventArgsTests.cs" />
+    <Compile Include="Projectiles\Events\ProjectileSettingDefaultsEventArgsTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Framework\ServiceMapTest.cs" />
     <Compile Include="Services\ItemServiceTests.cs" />
@@ -100,11 +103,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Include="Core\ItemTests.cs" />
-    <Compile Include="Core\NpcTests.cs" />
-    <Compile Include="Core\PlayerTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Orion\Orion.csproj">

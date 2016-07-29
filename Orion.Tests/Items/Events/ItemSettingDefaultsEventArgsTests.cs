@@ -2,7 +2,7 @@
 using NUnit.Framework;
 using Orion.Items.Events;
 
-namespace Orion.Tests.Events.Item
+namespace Orion.Tests.Items.Events
 {
 	[TestFixture]
 	public class ItemSettingDefaultsEventArgsTests

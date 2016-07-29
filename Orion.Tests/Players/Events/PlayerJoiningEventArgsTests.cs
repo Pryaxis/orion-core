@@ -2,15 +2,15 @@
 using NUnit.Framework;
 using Orion.Players.Events;
 
-namespace Orion.Tests.Events.Player
+namespace Orion.Tests.Players.Events
 {
 	[TestFixture]
-	public class PlayedQuitEventArgsTests
+	public class PlayedJoiningEventArgsTests
 	{
 		[Test]
 		public void Constructor_NullPlayer_ThrowsArgumentNullException()
 		{
-			Assert.Throws<ArgumentNullException>(() => new PlayerQuitEventArgs(null));
+			Assert.Throws<ArgumentNullException>(() => new PlayerJoiningEventArgs(null));
 		}
 	}
 }

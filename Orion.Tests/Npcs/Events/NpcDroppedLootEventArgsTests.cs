@@ -2,7 +2,7 @@
 using NUnit.Framework;
 using Orion.Npcs.Events;
 
-namespace Orion.Tests.Events.Npc
+namespace Orion.Tests.Npcs.Events
 {
 	[TestFixture]
 	public class NpcDroppedLootEventArgsTests

@@ -2,7 +2,7 @@
 using NUnit.Framework;
 using Orion.Projectiles.Events;
 
-namespace Orion.Tests.Events.Projectile
+namespace Orion.Tests.Projectiles.Events
 {
 	[TestFixture]
 	public class ProjectileSetDefaultsEventArgsTests

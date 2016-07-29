@@ -2,7 +2,7 @@
 using NUnit.Framework;
 using Orion.Players.Events;
 
-namespace Orion.Tests.Events.Player
+namespace Orion.Tests.Players.Events
 {
 	[TestFixture]
 	public class PlayedJoinedEventArgsTests
