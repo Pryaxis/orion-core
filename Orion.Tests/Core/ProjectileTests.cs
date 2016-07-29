@@ -9,7 +9,7 @@ namespace Orion.Tests.Core
 	[TestFixture]
 	public class ProjectileTests
 	{
-		private static readonly object[] GetWrappers =
+		private static readonly object[] GetProperties =
 		{
 			new object[] {nameof(Projectile.Damage), nameof(Terraria.Projectile.damage), 100},
 			new object[] {nameof(Projectile.IsHostile), nameof(Terraria.Projectile.hostile), true},
@@ -18,7 +18,7 @@ namespace Orion.Tests.Core
 			new object[] {nameof(Projectile.Type), nameof(Terraria.Projectile.type), 1}
 		};
 
-		private static readonly object[] SetWrappers =
+		private static readonly object[] SetProperties =
 		{
 			new object[] {nameof(Projectile.Position), nameof(Terraria.Projectile.position), Vector2.One},
 			new object[] {nameof(Projectile.Velocity), nameof(Terraria.Projectile.velocity), Vector2.One}
@@ -30,7 +30,7 @@ namespace Orion.Tests.Core
 			Assert.Throws<ArgumentNullException>(() => new Projectile(null));
 		}
 
-		[TestCaseSource(nameof(GetWrappers))]
+		[TestCaseSource(nameof(GetProperties))]
 		public void GetProperty_IsCorrect(
 			string projectilePropertyName, string terrariaProjectileFieldName, object value)
 		{
@@ -45,7 +45,7 @@ namespace Orion.Tests.Core
 			Assert.AreEqual(value, projectileProperty.GetValue(projectile));
 		}
 
-		[TestCaseSource(nameof(SetWrappers))]
+		[TestCaseSource(nameof(SetProperties))]
 		public void SetProperty_IsCorrect(
 			string projectilePropertyName, string terrariaProjectileFieldName, object value)
 		{

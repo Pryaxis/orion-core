@@ -28,7 +28,7 @@ namespace Orion.Entities.Player
 			{
 				if (value < 0)
 				{
-					throw new ArgumentOutOfRangeException(nameof(value));
+					throw new ArgumentOutOfRangeException(nameof(value), "Value cannot be negative.");
 				}
 
 				WrappedPlayer.statLife = value;
@@ -46,7 +46,7 @@ namespace Orion.Entities.Player
 			{
 				if (value < 0)
 				{
-					throw new ArgumentOutOfRangeException(nameof(value));
+					throw new ArgumentOutOfRangeException(nameof(value), "Value cannot be negative.");
 				}
 
 				WrappedPlayer.statMana = value;
@@ -61,7 +61,7 @@ namespace Orion.Entities.Player
 			{
 				if (value < 0)
 				{
-					throw new ArgumentOutOfRangeException(nameof(value));
+					throw new ArgumentOutOfRangeException(nameof(value), "Value cannot be negative.");
 				}
 
 				WrappedPlayer.statLifeMax = value;
@@ -76,7 +76,7 @@ namespace Orion.Entities.Player
 			{
 				if (value < 0)
 				{
-					throw new ArgumentOutOfRangeException(nameof(value));
+					throw new ArgumentOutOfRangeException(nameof(value), "Value cannot be negative.");
 				}
 
 				WrappedPlayer.statManaMax = value;

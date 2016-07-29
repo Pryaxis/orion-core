@@ -26,6 +26,7 @@ namespace Orion.Entities.Item
 		/// <summary>
 		/// Gets or sets the item's damage.
 		/// </summary>
+		/// <exception cref="ArgumentOutOfRangeException"><paramref name="value"/> was negative.</exception>
 		int Damage { get; set; }
 
 		/// <summary>
@@ -36,6 +37,7 @@ namespace Orion.Entities.Item
 		/// <summary>
 		/// Gets or sets the item's height.
 		/// </summary>
+		/// <exception cref="ArgumentOutOfRangeException"><paramref name="value"/> was negative.</exception>
 		int Height { get; set; }
 
 		/// <summary>
@@ -76,11 +78,15 @@ namespace Orion.Entities.Item
 		/// <summary>
 		/// Gets or sets the item's projectile type.
 		/// </summary>
+		/// <exception cref="ArgumentOutOfRangeException">
+		/// <paramref name="value"/> was an invalid projectile type.
+		/// </exception>
 		int ProjectileType { get; set; }
 
 		/// <summary>
 		/// Gets or sets the item's scale.
 		/// </summary>
+		/// <exception cref="ArgumentOutOfRangeException"><paramref name="value"/> was negative.</exception>
 		float Scale { get; set; }
 
 		/// <summary>
@@ -102,11 +108,13 @@ namespace Orion.Entities.Item
 		/// <summary>
 		/// Gets or sets the item's use animation time.
 		/// </summary>
+		/// <exception cref="ArgumentOutOfRangeException"><paramref name="value"/> was negative.</exception>
 		int UseAnimationTime { get; set; }
 
 		/// <summary>
 		/// Gets or sets the item's use time.
 		/// </summary>
+		/// <exception cref="ArgumentOutOfRangeException"><paramref name="value"/> was negative.</exception>
 		int UseTime { get; set; }
 
 		/// <summary>
@@ -117,6 +125,7 @@ namespace Orion.Entities.Item
 		/// <summary>
 		/// Gets or sets the item's width.
 		/// </summary>
+		/// <exception cref="ArgumentOutOfRangeException"><paramref name="value"/> was negative.</exception>
 		int Width { get; set; }
 
 		/// <summary>
@@ -128,14 +137,16 @@ namespace Orion.Entities.Item
 		/// Sets the item's defaults to the specified type's.
 		/// </summary>
 		/// <param name="type">The type.</param>
-		/// <exception cref="ArgumentOutOfRangeException"><paramref name="type"/> was an invalid type.</exception>
+		/// <exception cref="ArgumentOutOfRangeException"><paramref name="type"/> was an invalid item type.</exception>
 		void SetDefaults(int type);
 
 		/// <summary>
 		/// Tries to set the item's prefix.
 		/// </summary>
 		/// <param name="prefix">The prefix.</param>
-		/// <exception cref="ArgumentOutOfRangeException"><paramref name="prefix"/> was an invalid prefix.</exception>
+		/// <exception cref="ArgumentOutOfRangeException">
+		/// <paramref name="prefix"/> was an invalid item prefix.
+		/// </exception>
 		void SetPrefix(int prefix);
 	}
 }

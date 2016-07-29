@@ -29,7 +29,15 @@ namespace Orion.Entities.Item
 		public int Damage
 		{
 			get { return WrappedItem.damage; }
-			set { WrappedItem.damage = value; }
+			set
+			{
+				if (value < 0)
+				{
+					throw new ArgumentOutOfRangeException(nameof(value), "Value cannot be negative.");
+				}
+
+				WrappedItem.damage = value;
+			}
 		}
 
 		/// <inheritdoc/>
@@ -39,7 +47,15 @@ namespace Orion.Entities.Item
 		public int Height
 		{
 			get { return WrappedItem.height; }
-			set { WrappedItem.height = value; }
+			set
+			{
+				if (value < 0)
+				{
+					throw new ArgumentOutOfRangeException(nameof(value), "Value cannot be negative.");
+				}
+
+				WrappedItem.height = value;
+			}
 		}
 
 		/// <inheritdoc/>
@@ -79,14 +95,30 @@ namespace Orion.Entities.Item
 		public int ProjectileType
 		{
 			get { return WrappedItem.shoot; }
-			set { WrappedItem.shoot = value; }
+			set
+			{
+				if (value < 0 || value >= Terraria.Main.maxProjectileTypes)
+				{
+					throw new ArgumentOutOfRangeException(nameof(value), "Value was an invalid projectile type.");
+				}
+
+				WrappedItem.shoot = value;
+			}
 		}
 
 		/// <inheritdoc/>
 		public float Scale
 		{
 			get { return WrappedItem.scale; }
-			set { WrappedItem.scale = value; }
+			set
+			{
+				if (value < 0)
+				{
+					throw new ArgumentOutOfRangeException(nameof(value), "Value cannot be negative.");
+				}
+
+				WrappedItem.scale = value;
+			}
 		}
 
 		/// <inheritdoc/>
@@ -97,7 +129,7 @@ namespace Orion.Entities.Item
 			{
 				if (value < 0)
 				{
-					throw new ArgumentOutOfRangeException(nameof(value));
+					throw new ArgumentOutOfRangeException(nameof(value), "Value cannot be negative.");
 				}
 
 				WrappedItem.stack = value;
@@ -118,14 +150,30 @@ namespace Orion.Entities.Item
 		public int UseAnimationTime
 		{
 			get { return WrappedItem.useAnimation; }
-			set { WrappedItem.useAnimation = value; }
+			set
+			{
+				if (value < 0)
+				{
+					throw new ArgumentOutOfRangeException(nameof(value), "Value cannot be negative.");
+				}
+
+				WrappedItem.useAnimation = value;
+			}
 		}
 
 		/// <inheritdoc/>
 		public int UseTime
 		{
 			get { return WrappedItem.useTime; }
-			set { WrappedItem.useTime = value; }
+			set
+			{
+				if (value < 0)
+				{
+					throw new ArgumentOutOfRangeException(nameof(value), "Value cannot be negative.");
+				}
+
+				WrappedItem.useTime = value;
+			}
 		}
 
 		/// <inheritdoc/>
@@ -139,7 +187,15 @@ namespace Orion.Entities.Item
 		public int Width
 		{
 			get { return WrappedItem.width; }
-			set { WrappedItem.width = value; }
+			set
+			{
+				if (value < 0)
+				{
+					throw new ArgumentOutOfRangeException(nameof(value), "Value cannot be negative.");
+				}
+
+				WrappedItem.width = value;
+			}
 		}
 
 		/// <inheritdoc/>
@@ -165,7 +221,7 @@ namespace Orion.Entities.Item
 		{
 			if (type < 0 || type >= Terraria.Main.maxItemTypes)
 			{
-				throw new ArgumentOutOfRangeException(nameof(type));
+				throw new ArgumentOutOfRangeException(nameof(type), "Value was an invalid item type.");
 			}
 
 			WrappedItem.SetDefaults(type);
@@ -180,7 +236,7 @@ namespace Orion.Entities.Item
 		{
 			if (prefix < 0 || prefix >= Terraria.Item.maxPrefixes)
 			{
-				throw new ArgumentOutOfRangeException(nameof(prefix));
+				throw new ArgumentOutOfRangeException(nameof(prefix), "Value was an invalid item prefix.");
 			}
 
 			WrappedItem.Prefix(prefix);

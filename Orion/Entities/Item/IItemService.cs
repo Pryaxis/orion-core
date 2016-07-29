@@ -30,8 +30,8 @@ namespace Orion.Entities.Item
 		/// <param name="prefix">The prefix.</param>
 		/// <returns>The resulting <see cref="IItem"/> instance.</returns>
 		/// <exception cref="ArgumentOutOfRangeException">
-		/// <paramref name="type"/> was an invalid type, <paramref name="stackSize"/> was negative, or
-		/// <paramref name="prefix"/> was an invalid prefix.
+		/// <paramref name="type"/> was an invalid item type, <paramref name="stackSize"/> was negative, or
+		/// <paramref name="prefix"/> was an invalid item prefix.
 		/// </exception>
 		IItem Create(int type, int stackSize = 1, int prefix = 0);
 
@@ -52,8 +52,8 @@ namespace Orion.Entities.Item
 		/// <param name="prefix">The prefix.</param>
 		/// <returns>The resulting <see cref="IItem"/> instance.</returns>
 		/// <exception cref="ArgumentOutOfRangeException">
-		/// <paramref name="type"/> was an invalid type, <paramref name="stackSize"/> was negative, or
-		/// <paramref name="prefix"/> was an invalid prefix.
+		/// <paramref name="type"/> was an invalid item type, <paramref name="stackSize"/> was negative, or
+		/// <paramref name="prefix"/> was an invalid item prefix.
 		/// </exception>
 		IItem Spawn(int type, Vector2 position, int stackSize = 1, int prefix = 0);
 	}

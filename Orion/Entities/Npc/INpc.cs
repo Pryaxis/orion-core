@@ -21,11 +21,13 @@ namespace Orion.Entities.Npc
 		/// <summary>
 		/// Gets or sets the NPC's health.
 		/// </summary>
+		/// <exception cref="ArgumentOutOfRangeException"><paramref name="value"/> was negative.</exception>
 		int Health { get; set; }
 
 		/// <summary>
 		/// Gets or sets the NPC's maximum health.
 		/// </summary>
+		/// <exception cref="ArgumentOutOfRangeException"><paramref name="value"/> was negative.</exception>
 		int MaxHealth { get; set; }
 
 		/// <summary>
@@ -62,7 +64,7 @@ namespace Orion.Entities.Npc
 		/// Sets the NPC's defaults to the specified type's.
 		/// </summary>
 		/// <param name="type">The type.</param>
-		/// <exception cref="ArgumentOutOfRangeException"><paramref name="type"/> was an invalid type.</exception>
+		/// <exception cref="ArgumentOutOfRangeException"><paramref name="type"/> was an invalid NPC type.</exception>
 		void SetDefaults(int type);
 	}
 }

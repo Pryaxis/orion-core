@@ -47,7 +47,9 @@ namespace Orion.Entities.Projectile
 		/// Sets the projectile's defaults to the type's.
 		/// </summary>
 		/// <param name="type">The type.</param>
-		/// <exception cref="ArgumentOutOfRangeException"><paramref name="type"/> was an invalid type.</exception>
+		/// <exception cref="ArgumentOutOfRangeException">
+		/// <paramref name="type"/> was an invalid projectile type.
+		/// </exception>
 		void SetDefaults(int type);
 	}
 }

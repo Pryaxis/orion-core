@@ -9,7 +9,7 @@ namespace Orion.Tests.Core
 	[TestFixture]
 	public class ItemTests
 	{
-		private static readonly object[] GetWrappers =
+		private static readonly object[] GetProperties =
 		{
 			new object[] {nameof(Item.AmmoType), nameof(Terraria.Item.ammo), 14},
 			new object[] {nameof(Item.AxePower), nameof(Terraria.Item.axe), 100},
@@ -35,7 +35,7 @@ namespace Orion.Tests.Core
 			new object[] {nameof(Item.Width), nameof(Terraria.Item.width), 100}
 		};
 
-		private static readonly object[] SetWrappers =
+		private static readonly object[] SetProperties =
 		{
 			new object[] {nameof(Item.AmmoType), nameof(Terraria.Item.ammo), 14},
 			new object[] {nameof(Item.Color), nameof(Terraria.Item.color), Color.White},
@@ -60,7 +60,7 @@ namespace Orion.Tests.Core
 			Assert.Throws<ArgumentNullException>(() => new Item(null));
 		}
 
-		[TestCaseSource(nameof(GetWrappers))]
+		[TestCaseSource(nameof(GetProperties))]
 		public void GetProperty_IsCorrect(string itemPropertyName, string terrariaItemFieldName, object value)
 		{
 			var terrariaItem = new Terraria.Item();
@@ -73,7 +73,7 @@ namespace Orion.Tests.Core
 			Assert.AreEqual(value, itemProperty.GetValue(item));
 		}
 
-		[TestCaseSource(nameof(SetWrappers))]
+		[TestCaseSource(nameof(SetProperties))]
 		public void SetProperty_IsCorrect(string itemPropertyName, string terrariaItemFieldName, object value)
 		{
 			var terrariaItem = new Terraria.Item();
@@ -87,13 +87,76 @@ namespace Orion.Tests.Core
 		}
 
 		[TestCase(-1)]
-		public void SetStackSize_InvalidValue_ThrowsArgumentOutOfRangeException(int stackSize)
+		public void SetDamage_NegativeValue_ThrowsArgumentOutOfRangeException(int damage)
 		{
 			var terrariaItem = new Terraria.Item();
-			terrariaItem.SetDefaults(1);
+			var item = new Item(terrariaItem);
+
+			Assert.Throws<ArgumentOutOfRangeException>(() => item.Damage = damage);
+		}
+
+		[TestCase(-1)]
+		public void SetHeight_NegativeValue_ThrowsArgumentOutOfRangeException(int height)
+		{
+			var terrariaItem = new Terraria.Item();
+			var item = new Item(terrariaItem);
+
+			Assert.Throws<ArgumentOutOfRangeException>(() => item.Height = height);
+		}
+
+		[TestCase(-1)]
+		[TestCase(Terraria.Main.maxProjectileTypes)]
+		public void SetProjectileType_InvalidValue_ThrowsArgumentOutOfRangeException(int projectileType)
+		{
+			var terrariaItem = new Terraria.Item();
+			var item = new Item(terrariaItem);
+
+			Assert.Throws<ArgumentOutOfRangeException>(() => item.ProjectileType = projectileType);
+		}
+
+		[TestCase(-1.0f)]
+		public void SetScale_NegativeValue_ThrowsArgumentOutOfRangeException(float scale)
+		{
+			var terrariaItem = new Terraria.Item();
+			var item = new Item(terrariaItem);
+
+			Assert.Throws<ArgumentOutOfRangeException>(() => item.Scale = scale);
+		}
+
+		[TestCase(-1)]
+		public void SetStackSize_NegativeValue_ThrowsArgumentOutOfRangeException(int stackSize)
+		{
+			var terrariaItem = new Terraria.Item();
 			var item = new Item(terrariaItem);
 
 			Assert.Throws<ArgumentOutOfRangeException>(() => item.StackSize = stackSize);
+		}
+
+		[TestCase(-1)]
+		public void SetUseAnimationTime_NegativeValue_ThrowsArgumentOutOfRangeException(int useAnimationTime)
+		{
+			var terrariaItem = new Terraria.Item();
+			var item = new Item(terrariaItem);
+
+			Assert.Throws<ArgumentOutOfRangeException>(() => item.UseAnimationTime = useAnimationTime);
+		}
+
+		[TestCase(-1)]
+		public void SetUseTime_NegativeValue_ThrowsArgumentOutOfRangeException(int useTime)
+		{
+			var terrariaItem = new Terraria.Item();
+			var item = new Item(terrariaItem);
+
+			Assert.Throws<ArgumentOutOfRangeException>(() => item.UseTime = useTime);
+		}
+
+		[TestCase(-1)]
+		public void SetWidth_NegativeValue_ThrowsArgumentOutOfRangeException(int width)
+		{
+			var terrariaItem = new Terraria.Item();
+			var item = new Item(terrariaItem);
+
+			Assert.Throws<ArgumentOutOfRangeException>(() => item.Width = width);
 		}
 
 		[Test]

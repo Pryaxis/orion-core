@@ -1,0 +1,8 @@
+language: csharp
+solution: Orion.sln
+install:
+  - nuget restore Orion.sln
+  - nuget install NUnit.Runners -Version 3.4.1 -OutputDirectory testrunner
+script:
+  - xbuild /p:Configuration=Release Orion.sln
+  - mono ./testrunner/NUnit.ConsoleRunner.3.4.1/tools/nunit3-console.exe ./Orion.Tests/bin/Release/Orion.Tests.dll

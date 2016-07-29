@@ -10,7 +10,7 @@ namespace Orion.Tests.Core
 	[TestFixture]
 	public class PlayerTests
 	{
-		private static readonly object[] GetWrappers =
+		private static readonly object[] GetProperties =
 		{
 			new object[] {nameof(Player.Defense), nameof(Terraria.Player.statDefense), 100},
 			new object[] {nameof(Player.Health), nameof(Terraria.Player.statLife), 100},
@@ -21,7 +21,7 @@ namespace Orion.Tests.Core
 			new object[] {nameof(Player.Position), nameof(Terraria.Player.position), Vector2.One},
 		};
 
-		private static readonly object[] SetWrappers =
+		private static readonly object[] SetProperties =
 		{
 			new object[] {nameof(Player.Health), nameof(Terraria.Player.statLife), 100},
 			new object[] {nameof(Player.MaxHealth), nameof(Terraria.Player.statLifeMax), 100},
@@ -37,7 +37,7 @@ namespace Orion.Tests.Core
 			Assert.Throws<ArgumentNullException>(() => new Player(null));
 		}
 
-		[TestCaseSource(nameof(GetWrappers))]
+		[TestCaseSource(nameof(GetProperties))]
 		public void GetProperty_IsCorrect(string playerPropertyName, string terrariaPlayerFieldName, object value)
 		{
 			var terrariaPlayer = new Terraria.Player();
@@ -50,7 +50,7 @@ namespace Orion.Tests.Core
 			Assert.AreEqual(value, playerProperty.GetValue(player));
 		}
 
-		[TestCaseSource(nameof(SetWrappers))]
+		[TestCaseSource(nameof(SetProperties))]
 		public void SetProperty_IsCorrect(string playerPropertyName, string terrariaPlayerFieldName, object value)
 		{
 			var terrariaPlayer = new Terraria.Player();
@@ -86,7 +86,7 @@ namespace Orion.Tests.Core
 		}
 
 		[TestCase(-1)]
-		public void SetHealth_InvalidValue_ThrowsArgumentOutOfRangeException(int health)
+		public void SetHealth_NegativeValue_ThrowsArgumentOutOfRangeException(int health)
 		{
 			var terrariaPlayer = new Terraria.Player();
 			var player = new Player(terrariaPlayer);
@@ -106,7 +106,7 @@ namespace Orion.Tests.Core
 		}
 
 		[TestCase(-1)]
-		public void SetMana_InvalidValue_ThrowsArgumentOutOfRangeException(int mana)
+		public void SetMana_NegativeValue_ThrowsArgumentOutOfRangeException(int mana)
 		{
 			var terrariaPlayer = new Terraria.Player();
 			var player = new Player(terrariaPlayer);
@@ -115,7 +115,7 @@ namespace Orion.Tests.Core
 		}
 
 		[TestCase(-1)]
-		public void SetMaxHealth_InvalidValue_ThrowsArgumentOutOfRangeException(int maxHealth)
+		public void SetMaxHealth_NegativeValue_ThrowsArgumentOutOfRangeException(int maxHealth)
 		{
 			var terrariaPlayer = new Terraria.Player();
 			var player = new Player(terrariaPlayer);
@@ -124,7 +124,7 @@ namespace Orion.Tests.Core
 		}
 
 		[TestCase(-1)]
-		public void SetMaxMana_InvalidValue_ThrowsArgumentOutOfRangeException(int maxMana)
+		public void SetMaxMana_NegativeValue_ThrowsArgumentOutOfRangeException(int maxMana)
 		{
 			var terrariaPlayer = new Terraria.Player();
 			var player = new Player(terrariaPlayer);
