@@ -44,7 +44,15 @@ namespace Orion.Authorization
 		/// <param name="initialMembers">
 		/// (optional) A list of user accounts that will initially become members of this group.
 		/// </param>
-		void AddGroup(string groupName, IEnumerable<IUserAccount> initialMembers = null);
+		IGroup AddGroup(string groupName, IEnumerable<IUserAccount> initialMembers = null);
+
+		/// <summary>
+		/// Deletes the specified <paramref name="group"/>.
+		/// </summary>
+		/// <param name="group">
+		/// A reference to the group to be deleted.
+		/// </param>
+		void DeleteGroup(IGroup group);
 
 		/// <summary>
 		/// Binds the specified list of user accounts to the specified group.

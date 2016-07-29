@@ -1,4 +1,5 @@
 ﻿using Ninject.Modules;
+using Ninject.Extensions.Conventions;
 
 namespace Orion.Framework.Injection
 {
@@ -17,6 +18,20 @@ namespace Orion.Framework.Injection
 
 		public override void Load()
 		{
+
+			Kernel.Bind(i => i
+				.FromThisAssembly()
+				.SelectAllTypes().InheritedFrom<ServiceBase>()
+				.Join.FromAssembliesInPath(Orion.PluginDirectory).SelectAllClasses().InheritedFrom<ServiceBase>()
+				.BindAllInterfaces()
+				.Configure(config =>
+				{
+					config.InSingletonScope();
+				})
+			);
+
+			return;
+
 			foreach (var serviceEntry in serviceMap.Map)
 			{
 				/*

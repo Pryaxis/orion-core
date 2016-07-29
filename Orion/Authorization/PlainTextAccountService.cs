@@ -25,6 +25,7 @@ namespace Orion.Authorization
 		public PlainTextAccountService(Orion orion) : base(orion)
 		{
 			Directory.CreateDirectory(UserPathPrefix);
+			Directory.CreateDirectory(UserGroupPrefix);
 		}
 
 		/// <inheritdoc />
@@ -91,6 +92,7 @@ namespace Orion.Authorization
 			return userAccount;
 		}
 
+		/// <inheritdoc />
 		public void DeleteAccount(string accountName)
 		{
 			string accountPath;
@@ -136,7 +138,13 @@ namespace Orion.Authorization
 		}
 
 		/// <inheritdoc />
-		public void AddGroup(string groupName, IEnumerable<IUserAccount> initialMembers = null)
+		public IGroup AddGroup(string groupName, IEnumerable<IUserAccount> initialMembers = null)
+		{
+			throw new NotImplementedException();
+		}
+
+		/// <inheritdoc />
+		public void DeleteGroup(IGroup @group)
 		{
 			throw new NotImplementedException();
 		}

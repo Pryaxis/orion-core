@@ -115,8 +115,8 @@ namespace Orion.Authorization
 			if (string.IsNullOrEmpty(PasswordHash) == true)
 			{
 				/*
-                 * Authentication cannot succeed if there is no password at all.
-                 */
+				 * Authentication cannot succeed if there is no password at all.
+				 */
 				return false;
 			}
 

@@ -12,7 +12,7 @@ namespace Orion.Authorization
         /// <summary>
         /// Gets the group name
         /// </summary>
-        string Name { get; }
+        string Name { get; set; }
 
         /// <summary>
         /// Gets a human-readable description of the group.
@@ -20,17 +20,17 @@ namespace Orion.Authorization
         /// <example>
         /// "Enables access into a specific region".
         /// </example>
-        string Description { get; }
+        string Description { get; set; }
 
         /// <summary>
         /// Gets all users that are members of this group.
         /// </summary>
-        IEnumerable<IUserAccount> Members { get; set; }
+        IEnumerable<IUserAccount> Members { get; }
 
         /// <summary>
         /// Gets all permissions that members of this group inherit.
         /// </summary>
-        IEnumerable<IPermission> Permissions { get; set; }
+        IEnumerable<IPermission> Permissions { get; }
 
         /// <summary>
         /// Determines whether this group contains the specified player
