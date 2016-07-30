@@ -1,18 +1,22 @@
 ﻿using System;
-using System.Linq;
 using System.Collections.Generic;
-using NUnit.Framework;
+using System.Linq;
 using Microsoft.Xna.Framework;
+using NUnit.Framework;
 using Orion.Projectiles;
 
-namespace Orion.Tests.Services
+namespace Orion.Tests.Projectiles
 {
 	[TestFixture]
 	public class ProjectileServiceTests
 	{
-		private static readonly Predicate<IProjectile>[] Predicates = { projectile => projectile.Position.X <= 10 };
+		private static readonly Predicate<IProjectile>[] FindTestCases = {projectile => projectile.Position.X <= 10};
 
-		[TestCase(ProjectileType.AdamantiteChainsaw)]
+		private static readonly object[] ProjectileSetDefaultsTestCases = {ProjectileType.AdamantiteChainsaw};
+
+		private static readonly object[] ProjectileSettingDefaultsTestCases = {ProjectileType.AdamantiteChainsaw};
+
+		[TestCaseSource(nameof(ProjectileSetDefaultsTestCases))]
 		public void ProjectileSetDefaults_IsCorrect(ProjectileType type)
 		{
 			using (var orion = new Orion())
@@ -33,7 +37,7 @@ namespace Orion.Tests.Services
 			}
 		}
 
-		[TestCase(ProjectileType.AdamantiteChainsaw)]
+		[TestCaseSource(nameof(ProjectileSettingDefaultsTestCases))]
 		public void ProjectileSettingDefaults_IsCorrect(ProjectileType type)
 		{
 			using (var orion = new Orion())
@@ -55,23 +59,23 @@ namespace Orion.Tests.Services
 			}
 		}
 
-		[TestCase(ProjectileType.AdamantiteChainsaw, ProjectileType.AdamantiteDrill)]
-		public void ProjectileSettingDefaults_ModifiesType(ProjectileType type, ProjectileType newType)
+		[TestCaseSource(nameof(ProjectileSettingDefaultsTestCases))]
+		public void ProjectileSettingDefaults_ModifiesType(ProjectileType type)
 		{
 			using (var orion = new Orion())
 			using (var projectileService = new ProjectileService(orion))
 			{
 				var terrariaProjectile = new Terraria.Projectile();
 				var projectile = new Projectile(terrariaProjectile);
-				projectileService.ProjectileSettingDefaults += (sender, args) => args.Type = newType;
+				projectileService.ProjectileSettingDefaults += (sender, args) => args.Type = type;
 
-				projectile.SetDefaults(type);
+				projectile.SetDefaults(0);
 
-				Assert.AreEqual(newType, terrariaProjectile.type);
+				Assert.AreEqual(type, projectile.Type);
 			}
 		}
 
-		[TestCase(ProjectileType.AdamantiteChainsaw)]
+		[TestCaseSource(nameof(ProjectileSettingDefaultsTestCases))]
 		public void ProjectileSettingDefaults_Handled_StopsSetDefaults(ProjectileType type)
 		{
 			using (var orion = new Orion())
@@ -83,7 +87,7 @@ namespace Orion.Tests.Services
 
 				projectile.SetDefaults(type);
 
-				Assert.AreEqual(0, terrariaProjectile.type);
+				Assert.AreEqual(ProjectileType.None, projectile.Type);
 			}
 		}
 
@@ -130,7 +134,7 @@ namespace Orion.Tests.Services
 			}
 		}
 
-		[Test, TestCaseSource(nameof(Predicates))]
+		[Test, TestCaseSource(nameof(FindTestCases))]
 		public void Find_IsCorrect(Predicate<IProjectile> predicate)
 		{
 			using (var orion = new Orion())

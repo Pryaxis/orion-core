@@ -14,7 +14,8 @@ namespace Orion.Projectiles.Events
 		public IProjectile Projectile { get; }
 
 		/// <summary>
-		/// Gets or sets the type for the <see cref="IProjectile"/> instance is having its defaults set to.
+		/// Gets or sets the <see cref="ProjectileType"/> instance that the <see cref="IProjectile"/> instance is
+		/// having its defaults set to.
 		/// </summary>
 		public ProjectileType Type { get; set; }
 
@@ -23,7 +24,8 @@ namespace Orion.Projectiles.Events
 		/// </summary>
 		/// <param name="projectile">The <see cref="IProjectile"/> instance that is having its defaults set.</param>
 		/// <param name="type">
-		/// The type that the <see cref="IProjectile"/> instance is having its defaults set to.
+		/// The <see cref="ProjectileType"/> instance that the <see cref="IProjectile"/> instance is having its
+		/// defaults set to.
 		/// </param>
 		/// <exception cref="ArgumentNullException"><paramref name="projectile"/> was null.</exception>
 		public ProjectileSettingDefaultsEventArgs(IProjectile projectile, ProjectileType type)

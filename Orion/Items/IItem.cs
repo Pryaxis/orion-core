@@ -78,9 +78,6 @@ namespace Orion.Items
 		/// <summary>
 		/// Gets or sets the item's projectile type.
 		/// </summary>
-		/// <exception cref="ArgumentOutOfRangeException">
-		/// <paramref name="value"/> was an invalid projectile type.
-		/// </exception>
 		int ProjectileType { get; set; }
 
 		/// <summary>

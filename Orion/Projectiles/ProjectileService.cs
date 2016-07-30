@@ -78,9 +78,9 @@ namespace Orion.Projectiles
 		private HookResult InvokeProjectileSettingDefaults(Terraria.Projectile terrariaProjectile, ref int type)
 		{
 			var projectile = new Projectile(terrariaProjectile);
-			var args = new ProjectileSettingDefaultsEventArgs(projectile, (ProjectileType)type);
+			var args = new ProjectileSettingDefaultsEventArgs(projectile, type);
 			ProjectileSettingDefaults?.Invoke(this, args);
-			type = (int)args.Type;
+			type = args.Type;
 			return args.Handled ? HookResult.Cancel : HookResult.Continue;
 		}
 	}

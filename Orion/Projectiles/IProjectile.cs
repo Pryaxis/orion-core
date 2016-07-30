@@ -1,5 +1,4 @@
-﻿using System;
-using Microsoft.Xna.Framework;
+﻿using Microsoft.Xna.Framework;
 
 namespace Orion.Projectiles
 {
@@ -29,7 +28,7 @@ namespace Orion.Projectiles
 		Vector2 Position { get; set; }
 
 		/// <summary>
-		/// Gets the projectile's type.
+		/// Gets the projectile's <see cref="ProjectileType"/> instance.
 		/// </summary>
 		ProjectileType Type { get; }
 
@@ -44,9 +43,9 @@ namespace Orion.Projectiles
 		Terraria.Projectile WrappedProjectile { get; }
 
 		/// <summary>
-		/// Sets the projectile's defaults to the type's.
+		/// Sets the projectile's defaults to a <see cref="ProjectileType"/> instance.
 		/// </summary>
-		/// <param name="type">The type.</param>
+		/// <param name="type">The <see cref="ProjectileType"/> instance.</param>
 		void SetDefaults(ProjectileType type);
 	}
 }

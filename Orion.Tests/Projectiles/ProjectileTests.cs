@@ -4,7 +4,7 @@ using Microsoft.Xna.Framework;
 using NUnit.Framework;
 using Orion.Projectiles;
 
-namespace Orion.Tests.Core
+namespace Orion.Tests.Projectiles
 {
 	[TestFixture]
 	public class ProjectileTests
@@ -14,8 +14,7 @@ namespace Orion.Tests.Core
 			new object[] {nameof(Projectile.Damage), nameof(Terraria.Projectile.damage), 100},
 			new object[] {nameof(Projectile.IsHostile), nameof(Terraria.Projectile.hostile), true},
 			new object[] {nameof(Projectile.Name), nameof(Terraria.Projectile.name), "TEST"},
-			new object[] {nameof(Projectile.Position), nameof(Terraria.Projectile.position), Vector2.One},
-			new object[] {nameof(Projectile.Type), nameof(Terraria.Projectile.type), ProjectileType.AdamantiteChainsaw}
+			new object[] {nameof(Projectile.Position), nameof(Terraria.Projectile.position), Vector2.One}
 		};
 
 		private static readonly object[] SetProperties =
@@ -23,6 +22,10 @@ namespace Orion.Tests.Core
 			new object[] {nameof(Projectile.Position), nameof(Terraria.Projectile.position), Vector2.One},
 			new object[] {nameof(Projectile.Velocity), nameof(Terraria.Projectile.velocity), Vector2.One}
 		};
+
+		private static readonly object[] GetTypeTestCases = {ProjectileType.WoodenArrowFriendly};
+
+		private static readonly object[] SetDefaultsTestCases = {ProjectileType.WoodenArrowFriendly};
 
 		[Test]
 		public void Constructor_NullProjectile_ThrowsArgumentNullException()
@@ -59,6 +62,17 @@ namespace Orion.Tests.Core
 			Assert.AreEqual(value, terrariaProjectileField.GetValue(terrariaProjectile));
 		}
 
+		[TestCaseSource(nameof(GetTypeTestCases))]
+		public void GetType_IsCorrect(ProjectileType type)
+		{
+			var terrariaProjectile = new Terraria.Projectile();
+			var projectile = new Projectile(terrariaProjectile);
+
+			terrariaProjectile.type = type;
+
+			Assert.AreEqual(type, projectile.Type);
+		}
+
 		[Test]
 		public void GetWrappedProjectile_IsCorrect()
 		{
@@ -68,7 +82,7 @@ namespace Orion.Tests.Core
 			Assert.AreSame(terrariaProjectile, projectile.WrappedProjectile);
 		}
 
-		[TestCase(ProjectileType.AdamantiteChainsaw)]
+		[TestCaseSource(nameof(SetDefaultsTestCases))]
 		public void SetDefaults_IsCorrect(ProjectileType type)
 		{
 			var terrariaProjectile = new Terraria.Projectile();
