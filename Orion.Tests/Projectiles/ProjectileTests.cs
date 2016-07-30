@@ -9,7 +9,7 @@ namespace Orion.Tests.Projectiles
 	[TestFixture]
 	public class ProjectileTests
 	{
-		private static readonly object[] GetProperties =
+		private static readonly object[] GetPropertyTestCases =
 		{
 			new object[] {nameof(Projectile.Damage), nameof(Terraria.Projectile.damage), 100},
 			new object[] {nameof(Projectile.IsHostile), nameof(Terraria.Projectile.hostile), true},
@@ -17,7 +17,7 @@ namespace Orion.Tests.Projectiles
 			new object[] {nameof(Projectile.Position), nameof(Terraria.Projectile.position), Vector2.One}
 		};
 
-		private static readonly object[] SetProperties =
+		private static readonly object[] SetPropertyTestCases =
 		{
 			new object[] {nameof(Projectile.Position), nameof(Terraria.Projectile.position), Vector2.One},
 			new object[] {nameof(Projectile.Velocity), nameof(Terraria.Projectile.velocity), Vector2.One}
@@ -33,22 +33,23 @@ namespace Orion.Tests.Projectiles
 			Assert.Throws<ArgumentNullException>(() => new Projectile(null));
 		}
 
-		[TestCaseSource(nameof(GetProperties))]
+		[TestCaseSource(nameof(GetPropertyTestCases))]
 		public void GetProperty_IsCorrect(
 			string projectilePropertyName, string terrariaProjectileFieldName, object value)
 		{
 			var terrariaProjectile = new Terraria.Projectile();
 			FieldInfo terrariaProjectileField = typeof(Terraria.Projectile).GetField(terrariaProjectileFieldName);
+			terrariaProjectileField.SetValue(
+				terrariaProjectile, Convert.ChangeType(value, terrariaProjectileField.FieldType));
 			var projectile = new Projectile(terrariaProjectile);
 			PropertyInfo projectileProperty = typeof(Projectile).GetProperty(projectilePropertyName);
 
-			terrariaProjectileField.SetValue(
-				terrariaProjectile, Convert.ChangeType(value, terrariaProjectileField.FieldType));
+			object actualValue = projectileProperty.GetValue(projectile);
 
-			Assert.AreEqual(value, projectileProperty.GetValue(projectile));
+			Assert.AreEqual(value, actualValue);
 		}
 
-		[TestCaseSource(nameof(SetProperties))]
+		[TestCaseSource(nameof(SetPropertyTestCases))]
 		public void SetProperty_IsCorrect(
 			string projectilePropertyName, string terrariaProjectileFieldName, object value)
 		{
@@ -65,12 +66,12 @@ namespace Orion.Tests.Projectiles
 		[TestCaseSource(nameof(GetTypeTestCases))]
 		public void GetType_IsCorrect(ProjectileType type)
 		{
-			var terrariaProjectile = new Terraria.Projectile();
+			var terrariaProjectile = new Terraria.Projectile {type = type};
 			var projectile = new Projectile(terrariaProjectile);
 
-			terrariaProjectile.type = type;
+			ProjectileType actualType = projectile.Type;
 
-			Assert.AreEqual(type, projectile.Type);
+			Assert.AreEqual(type, actualType);
 		}
 
 		[Test]
@@ -79,7 +80,9 @@ namespace Orion.Tests.Projectiles
 			var terrariaProjectile = new Terraria.Projectile();
 			var projectile = new Projectile(terrariaProjectile);
 
-			Assert.AreSame(terrariaProjectile, projectile.WrappedProjectile);
+			Terraria.Projectile actualProjectile = projectile.WrappedProjectile;
+
+			Assert.AreSame(terrariaProjectile, actualProjectile);
 		}
 
 		[TestCaseSource(nameof(SetDefaultsTestCases))]

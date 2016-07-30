@@ -4,23 +4,22 @@ using Microsoft.Xna.Framework;
 using NUnit.Framework;
 using Orion.Npcs;
 
-namespace Orion.Tests.Core
+namespace Orion.Tests.Npcs
 {
 	[TestFixture]
 	public class NpcTests
 	{
-		private static readonly object[] GetProperties =
+		private static readonly object[] GetPropertyTestCases =
 		{
 			new object[] {nameof(Npc.Damage), nameof(Terraria.NPC.damage), 100},
 			new object[] {nameof(Npc.Defense), nameof(Terraria.NPC.defense), 100},
 			new object[] {nameof(Npc.Health), nameof(Terraria.NPC.life), 100},
 			new object[] {nameof(Npc.MaxHealth), nameof(Terraria.NPC.lifeMax), 100},
 			new object[] {nameof(Npc.Name), nameof(Terraria.NPC.name), "TEST"},
-			new object[] {nameof(Npc.Position), nameof(Terraria.NPC.position), Vector2.One},
-			new object[] {nameof(Npc.Type), nameof(Terraria.NPC.netID), 1}
+			new object[] {nameof(Npc.Position), nameof(Terraria.NPC.position), Vector2.One}
 		};
 
-		private static readonly object[] SetProperties =
+		private static readonly object[] SetPropertyTestCases =
 		{
 			new object[] {nameof(Npc.Health), nameof(Terraria.NPC.life), 100},
 			new object[] {nameof(Npc.MaxHealth), nameof(Terraria.NPC.lifeMax), 100},
@@ -28,26 +27,31 @@ namespace Orion.Tests.Core
 			new object[] {nameof(Npc.Velocity), nameof(Terraria.NPC.velocity), Vector2.One}
 		};
 
+		private static readonly object[] GetTypeTestCases = {NpcType.BlueSlime };
+
+		private static readonly object[] SetDefaultsTestCases = {NpcType.BlueSlime};
+
 		[Test]
 		public void Constructor_NullNpc_ThrowsArgumentNullException()
 		{
 			Assert.Throws<ArgumentNullException>(() => new Npc(null));
 		}
 
-		[TestCaseSource(nameof(GetProperties))]
+		[TestCaseSource(nameof(GetPropertyTestCases))]
 		public void GetProperty_IsCorrect(string npcPropertyName, string terrariaNpcFieldName, object value)
 		{
 			var terrariaNpc = new Terraria.NPC();
 			FieldInfo terrariaNpcField = typeof(Terraria.NPC).GetField(terrariaNpcFieldName);
+			terrariaNpcField.SetValue(terrariaNpc, Convert.ChangeType(value, terrariaNpcField.FieldType));
 			var npc = new Npc(terrariaNpc);
 			PropertyInfo npcProperty = typeof(Npc).GetProperty(npcPropertyName);
 
-			terrariaNpcField.SetValue(terrariaNpc, Convert.ChangeType(value, terrariaNpcField.FieldType));
+			object actualValue = npcProperty.GetValue(npc);
 
-			Assert.AreEqual(value, npcProperty.GetValue(npc));
+			Assert.AreEqual(value, actualValue);
 		}
 
-		[TestCaseSource(nameof(SetProperties))]
+		[TestCaseSource(nameof(SetPropertyTestCases))]
 		public void SetProperty_IsCorrect(string npcPropertyName, string terrariaNpcFieldName, object value)
 		{
 			var terrariaNpc = new Terraria.NPC();
@@ -78,13 +82,27 @@ namespace Orion.Tests.Core
 			Assert.Throws<ArgumentOutOfRangeException>(() => npc.MaxHealth = maxHealth);
 		}
 
+		[TestCaseSource(nameof(GetTypeTestCases))]
+		public void GetType_IsCorrect(NpcType type)
+		{
+			var terrariaNpc = new Terraria.NPC();
+			terrariaNpc.netID = type;
+			var npc = new Npc(terrariaNpc);
+
+			NpcType actualType = npc.Type;
+
+			Assert.AreEqual(type, actualType);
+		}
+
 		[Test]
 		public void GetWrappedNpc_IsCorrect()
 		{
 			var terrariaNpc = new Terraria.NPC();
 			var npc = new Npc(terrariaNpc);
 
-			Assert.AreSame(terrariaNpc, npc.WrappedNpc);
+			Terraria.NPC actualNpc = npc.WrappedNpc;
+
+			Assert.AreSame(terrariaNpc, actualNpc);
 		}
 
 		[Test]
@@ -99,8 +117,8 @@ namespace Orion.Tests.Core
 			Assert.IsTrue(npc.Health <= 0, "NPC should have been killed.");
 		}
 
-		[TestCase(1)]
-		public void SetDefaults_IsCorrect(int type)
+		[TestCaseSource(nameof(SetDefaultsTestCases))]
+		public void SetDefaults_IsCorrect(NpcType type)
 		{
 			var terrariaNpc = new Terraria.NPC();
 			var npc = new Npc(terrariaNpc);
@@ -108,16 +126,6 @@ namespace Orion.Tests.Core
 			npc.SetDefaults(type);
 
 			Assert.AreEqual(type, npc.Type);
-		}
-
-		[TestCase(-1)]
-		[TestCase(Terraria.Main.maxNPCTypes)]
-		public void SetDefaults_InvalidType_ThrowsArgumentOutOfRangeException(int type)
-		{
-			var terrariaNpc = new Terraria.NPC();
-			var npc = new Npc(terrariaNpc);
-
-			Assert.Throws<ArgumentOutOfRangeException>(() => npc.SetDefaults(type));
 		}
 	}
 }

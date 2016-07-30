@@ -1,16 +1,16 @@
 ﻿using System;
-using Microsoft.Xna.Framework;
-using NUnit.Framework;
 using System.Collections.Generic;
 using System.Linq;
+using Microsoft.Xna.Framework;
+using NUnit.Framework;
 using Orion.Players;
 
-namespace Orion.Tests.Services
+namespace Orion.Tests.Players
 {
 	[TestFixture]
 	public class PlayerServiceTests
 	{
-		private static readonly Predicate<IPlayer>[] Predicates = {player => player.Position.X < 100};
+		private static readonly Predicate<IPlayer>[] FindTestCases = {player => player.Position.X < 100};
 
 		[TestCase(0)]
 		[TestCase(1)]
@@ -55,7 +55,7 @@ namespace Orion.Tests.Services
 			}
 		}
 
-		[Test, TestCaseSource(nameof(Predicates))]
+		[Test, TestCaseSource(nameof(FindTestCases))]
 		public void Find_IsCorrect(Predicate<IPlayer> predicate)
 		{
 			using (var orion = new Orion())

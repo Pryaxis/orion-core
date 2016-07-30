@@ -727,5 +727,11 @@ namespace Orion.Projectiles
 		/// </summary>
 		/// <returns>The hash code for this instance.</returns>
 		public override int GetHashCode() => _type;
+
+		/// <summary>
+		/// Returns the string representation of this instance.
+		/// </summary>
+		/// <returns>The string representation of this instance.</returns>
+		public override string ToString() => $"{_type}";
 	}
 }

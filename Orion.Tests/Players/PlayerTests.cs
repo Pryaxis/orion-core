@@ -5,12 +5,12 @@ using NUnit.Framework;
 using Orion.Items;
 using Orion.Players;
 
-namespace Orion.Tests.Core
+namespace Orion.Tests.Players
 {
 	[TestFixture]
 	public class PlayerTests
 	{
-		private static readonly object[] GetProperties =
+		private static readonly object[] GetPropertyTestCases =
 		{
 			new object[] {nameof(Player.Defense), nameof(Terraria.Player.statDefense), 100},
 			new object[] {nameof(Player.Health), nameof(Terraria.Player.statLife), 100},
@@ -21,7 +21,7 @@ namespace Orion.Tests.Core
 			new object[] {nameof(Player.Position), nameof(Terraria.Player.position), Vector2.One},
 		};
 
-		private static readonly object[] SetProperties =
+		private static readonly object[] SetPropertyTestCases =
 		{
 			new object[] {nameof(Player.Health), nameof(Terraria.Player.statLife), 100},
 			new object[] {nameof(Player.MaxHealth), nameof(Terraria.Player.statLifeMax), 100},
@@ -37,20 +37,21 @@ namespace Orion.Tests.Core
 			Assert.Throws<ArgumentNullException>(() => new Player(null));
 		}
 
-		[TestCaseSource(nameof(GetProperties))]
+		[TestCaseSource(nameof(GetPropertyTestCases))]
 		public void GetProperty_IsCorrect(string playerPropertyName, string terrariaPlayerFieldName, object value)
 		{
 			var terrariaPlayer = new Terraria.Player();
 			FieldInfo terrariaPlayerField = typeof(Terraria.Player).GetField(terrariaPlayerFieldName);
+			terrariaPlayerField.SetValue(terrariaPlayer, Convert.ChangeType(value, terrariaPlayerField.FieldType));
 			var player = new Player(terrariaPlayer);
 			PropertyInfo playerProperty = typeof(Player).GetProperty(playerPropertyName);
 
-			terrariaPlayerField.SetValue(terrariaPlayer, Convert.ChangeType(value, terrariaPlayerField.FieldType));
+			object actualValue = playerProperty.GetValue(player);
 
-			Assert.AreEqual(value, playerProperty.GetValue(player));
+			Assert.AreEqual(value, actualValue);
 		}
 
-		[TestCaseSource(nameof(SetProperties))]
+		[TestCaseSource(nameof(SetPropertyTestCases))]
 		public void SetProperty_IsCorrect(string playerPropertyName, string terrariaPlayerFieldName, object value)
 		{
 			var terrariaPlayer = new Terraria.Player();

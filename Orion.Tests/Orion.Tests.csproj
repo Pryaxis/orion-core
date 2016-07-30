@@ -76,8 +76,9 @@
     <Compile Include="Authorization\AuthorizationServiceTests.cs" />
     <Compile Include="Core\ItemArrayTests.cs" />
     <Compile Include="Core\ItemTests.cs" />
-    <Compile Include="Core\NpcTests.cs" />
-    <Compile Include="Core\PlayerTests.cs" />
+    <Compile Include="Npcs\NpcTests.cs" />
+    <Compile Include="Players\PlayerTests.cs" />
+    <Compile Include="Npcs\NpcTypeTests.cs" />
     <Compile Include="Projectiles\ProjectileTests.cs" />
     <Compile Include="InjectionContainerTests.cs" />
     <Compile Include="Items\Events\ItemSetDefaultsEventArgsTests.cs" />
@@ -97,7 +98,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Framework\ServiceMapTest.cs" />
     <Compile Include="Services\ItemServiceTests.cs" />
-    <Compile Include="Services\PlayerServiceTests.cs" />
+    <Compile Include="Players\PlayerServiceTests.cs" />
     <Compile Include="Projectiles\ProjectileServiceTests.cs" />
     <Compile Include="Services\WorldServiceTests.cs" />
     <Compile Include="Setup.cs" />

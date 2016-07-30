@@ -41,9 +41,9 @@ namespace Orion.Npcs
 		Vector2 Position { get; set; }
 
 		/// <summary>
-		/// Gets the NPC's type.
+		/// Gets the NPC's <see cref="NpcType"/> instance.
 		/// </summary>
-		int Type { get; }
+		NpcType Type { get; }
 
 		/// <summary>
 		/// Gets or sets the NPC's velocity in the world.
@@ -61,10 +61,9 @@ namespace Orion.Npcs
 		void Kill();
 
 		/// <summary>
-		/// Sets the NPC's defaults to the specified type's.
+		/// Sets the NPC's defaults using a <see cref="NpcType"/> instance.
 		/// </summary>
-		/// <param name="type">The type.</param>
-		/// <exception cref="ArgumentOutOfRangeException"><paramref name="type"/> was an invalid NPC type.</exception>
-		void SetDefaults(int type);
+		/// <param name="type">The <see cref="NpcType"/> instance.</param>
+		void SetDefaults(NpcType type);
 	}
 }
