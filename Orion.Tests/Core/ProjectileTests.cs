@@ -15,7 +15,7 @@ namespace Orion.Tests.Core
 			new object[] {nameof(Projectile.IsHostile), nameof(Terraria.Projectile.hostile), true},
 			new object[] {nameof(Projectile.Name), nameof(Terraria.Projectile.name), "TEST"},
 			new object[] {nameof(Projectile.Position), nameof(Terraria.Projectile.position), Vector2.One},
-			new object[] {nameof(Projectile.Type), nameof(Terraria.Projectile.type), 1}
+			new object[] {nameof(Projectile.Type), nameof(Terraria.Projectile.type), ProjectileType.AdamantiteChainsaw}
 		};
 
 		private static readonly object[] SetProperties =
@@ -68,8 +68,8 @@ namespace Orion.Tests.Core
 			Assert.AreSame(terrariaProjectile, projectile.WrappedProjectile);
 		}
 
-		[TestCase(1)]
-		public void SetDefaults_IsCorrect(int type)
+		[TestCase(ProjectileType.AdamantiteChainsaw)]
+		public void SetDefaults_IsCorrect(ProjectileType type)
 		{
 			var terrariaProjectile = new Terraria.Projectile();
 			var projectile = new Projectile(terrariaProjectile);
@@ -77,16 +77,6 @@ namespace Orion.Tests.Core
 			projectile.SetDefaults(type);
 
 			Assert.AreEqual(type, projectile.Type);
-		}
-
-		[TestCase(-1)]
-		[TestCase(Terraria.Main.maxProjectileTypes)]
-		public void SetDefaults_InvalidType_ThrowsArgumentOutOfRangeException(int type)
-		{
-			var terrariaProjectile = new Terraria.Projectile();
-			var projectile = new Projectile(terrariaProjectile);
-
-			Assert.Throws<ArgumentOutOfRangeException>(() => projectile.SetDefaults(type));
 		}
 	}
 }

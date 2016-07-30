@@ -31,7 +31,7 @@ namespace Orion.Projectiles
 		/// <summary>
 		/// Gets the projectile's type.
 		/// </summary>
-		int Type { get; }
+		ProjectileType Type { get; }
 
 		/// <summary>
 		/// Gets or sets the projectile's velocity in the world.
@@ -47,9 +47,6 @@ namespace Orion.Projectiles
 		/// Sets the projectile's defaults to the type's.
 		/// </summary>
 		/// <param name="type">The type.</param>
-		/// <exception cref="ArgumentOutOfRangeException">
-		/// <paramref name="type"/> was an invalid projectile type.
-		/// </exception>
-		void SetDefaults(int type);
+		void SetDefaults(ProjectileType type);
 	}
 }

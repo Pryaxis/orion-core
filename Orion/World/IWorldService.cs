@@ -10,14 +10,14 @@ namespace Orion.World
 	public interface IWorldService : IService
 	{
 		/// <summary>
-		/// Occurs when a meteor drops.
-		/// </summary>
-		event EventHandler<MeteorDroppingEventArgs> MeteorDropping;
-
-		/// <summary>
 		/// Occurs when a tile is updating in hardmode.
 		/// </summary>
 		event EventHandler<HardmodeTileUpdatingEventArgs> HardmodeTileUpdating;
+
+		/// <summary>
+		/// Occurs when a meteor drops.
+		/// </summary>
+		event EventHandler<MeteorDroppingEventArgs> MeteorDropping;
 
 		/// <summary>
 		/// Occurs after the world saved.

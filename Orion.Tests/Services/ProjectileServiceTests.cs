@@ -12,33 +12,35 @@ namespace Orion.Tests.Services
 	{
 		private static readonly Predicate<IProjectile>[] Predicates = { projectile => projectile.Position.X <= 10 };
 
-		[TestCase(1)]
-		public void ProjectileSetDefaults_IsCorrect(int type)
+		[TestCase(ProjectileType.AdamantiteChainsaw)]
+		public void ProjectileSetDefaults_IsCorrect(ProjectileType type)
 		{
 			using (var orion = new Orion())
 			using (var projectileService = new ProjectileService(orion))
 			{
 				var terrariaProjectile = new Terraria.Projectile();
-				bool eventOcccurred = false;
+				var projectile = new Projectile(terrariaProjectile);
+				bool eventOccurred = false;
 				projectileService.ProjectileSetDefaults += (sender, args) =>
 				{
-					eventOcccurred = true;
+					eventOccurred = true;
 					Assert.AreEqual(terrariaProjectile, args.Projectile.WrappedProjectile);
 				};
 
-				terrariaProjectile.SetDefaults(type);
+				projectile.SetDefaults(type);
 
-				Assert.IsTrue(eventOcccurred, "SetDefaults event should have occurred.");
+				Assert.IsTrue(eventOccurred, "SetDefaults event should have occurred.");
 			}
 		}
 
-		[TestCase(1)]
-		public void ProjectileSettingDefaults_IsCorrect(int type)
+		[TestCase(ProjectileType.AdamantiteChainsaw)]
+		public void ProjectileSettingDefaults_IsCorrect(ProjectileType type)
 		{
 			using (var orion = new Orion())
 			using (var projectileService = new ProjectileService(orion))
 			{
 				var terrariaProjectile = new Terraria.Projectile();
+				var projectile = new Projectile(terrariaProjectile);
 				bool eventOccurred = false;
 				projectileService.ProjectileSettingDefaults += (sender, args) =>
 				{
@@ -47,37 +49,39 @@ namespace Orion.Tests.Services
 					Assert.AreEqual(type, args.Type);
 				};
 
-				terrariaProjectile.SetDefaults(type);
+				projectile.SetDefaults(type);
 
 				Assert.IsTrue(eventOccurred, "SettingDefaults event should have occurred.");
 			}
 		}
 
-		[TestCase(1, 2)]
-		public void ProjectileSettingDefaults_ModifiesType(int type, int newType)
+		[TestCase(ProjectileType.AdamantiteChainsaw, ProjectileType.AdamantiteDrill)]
+		public void ProjectileSettingDefaults_ModifiesType(ProjectileType type, ProjectileType newType)
 		{
 			using (var orion = new Orion())
 			using (var projectileService = new ProjectileService(orion))
 			{
 				var terrariaProjectile = new Terraria.Projectile();
+				var projectile = new Projectile(terrariaProjectile);
 				projectileService.ProjectileSettingDefaults += (sender, args) => args.Type = newType;
 
-				terrariaProjectile.SetDefaults(type);
+				projectile.SetDefaults(type);
 
 				Assert.AreEqual(newType, terrariaProjectile.type);
 			}
 		}
 
-		[TestCase(1)]
-		public void ProjectileSettingDefaults_Handled_StopsSetDefaults(int type)
+		[TestCase(ProjectileType.AdamantiteChainsaw)]
+		public void ProjectileSettingDefaults_Handled_StopsSetDefaults(ProjectileType type)
 		{
 			using (var orion = new Orion())
 			using (var projectileService = new ProjectileService(orion))
 			{
 				var terrariaProjectile = new Terraria.Projectile();
+				var projectile = new Projectile(terrariaProjectile);
 				projectileService.ProjectileSettingDefaults += (sender, args) => args.Handled = true;
 
-				terrariaProjectile.SetDefaults(type);
+				projectile.SetDefaults(type);
 
 				Assert.AreEqual(0, terrariaProjectile.type);
 			}

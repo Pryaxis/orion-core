@@ -25,7 +25,7 @@ namespace Orion.Projectiles
 		}
 
 		/// <inheritdoc/>
-		public int Type => WrappedProjectile.type;
+		public ProjectileType Type => (ProjectileType)WrappedProjectile.type;
 
 		/// <inheritdoc/>
 		public Vector2 Velocity
@@ -54,14 +54,6 @@ namespace Orion.Projectiles
 		}
 
 		/// <inheritdoc/>
-		public void SetDefaults(int type)
-		{
-			if (type < 0 || type >= Terraria.Main.maxProjectileTypes)
-			{
-				throw new ArgumentOutOfRangeException(nameof(type), "Value was an invalid projectile type.");
-			}
-
-			WrappedProjectile.SetDefaults(type);
-		}
+		public void SetDefaults(ProjectileType type) => WrappedProjectile.SetDefaults((int)type);
 	}
 }

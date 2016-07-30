@@ -14,10 +14,10 @@ namespace Orion.World
 		private bool _disposed;
 
 		/// <inheritdoc/>
-		public event EventHandler<MeteorDroppingEventArgs> MeteorDropping;
+		public event EventHandler<HardmodeTileUpdatingEventArgs> HardmodeTileUpdating;
 
 		/// <inheritdoc/>
-		public event EventHandler<HardmodeTileUpdatingEventArgs> HardmodeTileUpdating;
+		public event EventHandler<MeteorDroppingEventArgs> MeteorDropping;
 
 		/// <inheritdoc/>
 		public event EventHandler<WorldSavedEventArgs> WorldSaved;
@@ -79,6 +79,14 @@ namespace Orion.World
 			base.Dispose(disposing);
 		}
 
+		private HardmodeTileUpdateResult InvokeHardmodeTileUpdating(int x, int y, ref ushort type)
+		{
+			var args = new HardmodeTileUpdatingEventArgs(x, y, type);
+			HardmodeTileUpdating?.Invoke(this, args);
+			type = args.Type;
+			return args.Handled ? HardmodeTileUpdateResult.ContinueWithoutUpdate : HardmodeTileUpdateResult.Continue;
+		}
+
 		private HookResult InvokeMeteorDropping(ref int x, ref int y)
 		{
 			var args = new MeteorDroppingEventArgs(x, y);
@@ -86,14 +94,6 @@ namespace Orion.World
 			x = args.X;
 			y = args.Y;
 			return args.Handled ? HookResult.Cancel : HookResult.Continue;
-		}
-
-		private HardmodeTileUpdateResult InvokeHardmodeTileUpdating(int x, int y, ref ushort type)
-		{
-			var args = new HardmodeTileUpdatingEventArgs(x, y, type);
-			HardmodeTileUpdating?.Invoke(this, args);
-			type = args.Type;
-			return args.Handled ? HardmodeTileUpdateResult.ContinueWithoutUpdate : HardmodeTileUpdateResult.Continue;
 		}
 
 		private void InvokeWorldSaved(bool useCloud, bool resetTime)
