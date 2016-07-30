@@ -88,7 +88,9 @@
     <Compile Include="Items\IItemService.cs" />
     <Compile Include="Items\Item.cs" />
     <Compile Include="Items\ItemArray.cs" />
+    <Compile Include="Items\ItemPrefix.cs" />
     <Compile Include="Items\ItemService.cs" />
+    <Compile Include="Items\ItemType.cs" />
     <Compile Include="Npcs\Events\NpcDroppedLootEventArgs.cs" />
     <Compile Include="Npcs\Events\NpcDroppingLootEventArgs.cs" />
     <Compile Include="Npcs\Events\NpcKilledEventArgs.cs" />

@@ -6,7 +6,7 @@ namespace Orion.Tests.Projectiles
 	[TestFixture]
 	public class ProjectileTypeTests
 	{
-		private static readonly object[] OpImplicitProjectileTypeTestCases =
+		private static readonly object[] OpExplicitProjectileTypeTestCases =
 		{
 			new object[] {1, ProjectileType.WoodenArrowFriendly}
 		};
@@ -29,17 +29,17 @@ namespace Orion.Tests.Projectiles
 		}
 
 		[TestCase(1, ExpectedResult = 1)]
-		public int OpImplicitInt_IsCorrect(int type)
+		public int OpExplicitInt_IsCorrect(int type)
 		{
 			var projectileType = new ProjectileType(type);
 
-			return projectileType;
+			return (int)projectileType;
 		}
 
-		[TestCaseSource(nameof(OpImplicitProjectileTypeTestCases))]
-		public void OpImplicitProjectileType_IsCorrect(int type, ProjectileType expectedResult)
+		[TestCaseSource(nameof(OpExplicitProjectileTypeTestCases))]
+		public void OpExplicitProjectileType_IsCorrect(int type, ProjectileType expectedResult)
 		{
-			ProjectileType actualResult = type;
+			var actualResult = (ProjectileType)type;
 
 			Assert.AreEqual(expectedResult, actualResult);
 		}

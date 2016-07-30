@@ -2,7 +2,7 @@
 using NUnit.Framework;
 using Orion.Items;
 
-namespace Orion.Tests.Core
+namespace Orion.Tests.Items
 {
 	[TestFixture]
 	public class ItemArrayTests
@@ -55,7 +55,7 @@ namespace Orion.Tests.Core
 			var terrariaItemArray = new Terraria.Item[10];
 			var itemArray = new ItemArray(terrariaItemArray);
 
-			Assert.Throws<ArgumentOutOfRangeException>(() => itemArray[index].SetDefaults(0));
+			Assert.Throws<ArgumentOutOfRangeException>(() => itemArray[index].SetDefaults(ItemType.None));
 		}
 
 		[TestCase(0)]

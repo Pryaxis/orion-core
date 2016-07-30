@@ -15,15 +15,6 @@ namespace Orion.World
 		private ITile[,] _tiles;
 
 		/// <summary>
-		/// Initializes a new instance of the <see cref="TileService"/> class.
-		/// </summary>
-		/// <param name="orion">The parent <see cref="Orion"/> instance.</param>
-		public TileService(Orion orion) : base(orion)
-		{
-			Hooks.Tile.CreateCollection = () => this;
-		}
-
-		/// <summary>
 		/// Gets or sets the <see cref="ITile"/> instance at the specified position.
 		/// </summary>
 		/// <param name="x">The x position.</param>
@@ -43,6 +34,15 @@ namespace Orion.World
 				return _tiles[x, y];
 			}
 			set { _tiles[x, y] = value; }
+		}
+
+		/// <summary>
+		/// Initializes a new instance of the <see cref="TileService"/> class.
+		/// </summary>
+		/// <param name="orion">The parent <see cref="Orion"/> instance.</param>
+		public TileService(Orion orion) : base(orion)
+		{
+			Hooks.Tile.CreateCollection = () => this;
 		}
 	}
 }

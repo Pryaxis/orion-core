@@ -32,7 +32,7 @@ namespace Orion.Tests.Players
 		};
 
 		[Test]
-		public void Constructor_NullPlayer_ThrowsArgumentNullException()
+		public void Constructor_NullTerrariaPlayer_ThrowsArgumentNullException()
 		{
 			Assert.Throws<ArgumentNullException>(() => new Player(null));
 		}

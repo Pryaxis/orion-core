@@ -35,25 +35,17 @@ namespace Orion.Items
 		}
 
 		/// <inheritdoc/>
-		public IItem Create(int type, int stackSize = 1, int prefix = 0)
+		public IItem Create(ItemType type, int stackSize = 1, ItemPrefix? prefix = null)
 		{
-			if (type < 0 || type >= Terraria.Main.maxItemTypes)
-			{
-				throw new ArgumentOutOfRangeException(nameof(type), "Value was an invalid item type.");
-			}
 			if (stackSize < 0)
 			{
 				throw new ArgumentOutOfRangeException(nameof(stackSize), "Value cannot be negative.");
-			}
-			if (prefix < 0 || prefix >= Terraria.Item.maxPrefixes)
-			{
-				throw new ArgumentOutOfRangeException(nameof(prefix), "Value was an invalid item prefix.");
 			}
 
 			var terrariaItem = new Terraria.Item();
 			var item = new Item(terrariaItem);
 			item.SetDefaults(type);
-			item.SetPrefix(prefix);
+			item.SetPrefix(prefix ?? ItemPrefix.None);
 			item.StackSize = stackSize;
 			return item;
 		}
@@ -78,22 +70,15 @@ namespace Orion.Items
 		}
 
 		/// <inheritdoc/>
-		public IItem Spawn(int type, Vector2 position, int stackSize = 1, int prefix = 0)
+		public IItem Spawn(ItemType type, Vector2 position, int stackSize = 1, ItemPrefix? prefix = null)
 		{
-			if (type < 0 || type >= Terraria.Main.maxItemTypes)
-			{
-				throw new ArgumentOutOfRangeException(nameof(type), "Value was an invalid item type.");
-			}
 			if (stackSize < 0)
 			{
 				throw new ArgumentOutOfRangeException(nameof(stackSize), "Value cannot be negative.");
 			}
-			if (prefix < 0 || prefix >= Terraria.Item.maxPrefixes)
-			{
-				throw new ArgumentOutOfRangeException(nameof(prefix), "Value was an invalid item prefix.");
-			}
 
-			int index = Terraria.Item.NewItem((int)position.X, (int)position.Y, 0, 0, type, stackSize, pfix: prefix);
+			int index = Terraria.Item.NewItem(
+				(int)position.X, (int)position.Y, 0, 0, (int)type, stackSize, pfix: (int)(prefix ?? ItemPrefix.None));
 			var item = new Item(Terraria.Main.item[index]);
 			_items[index] = item;
 			return item;
@@ -121,12 +106,13 @@ namespace Orion.Items
 			ItemSetDefaults?.Invoke(this, args);
 		}
 
-		private HookResult InvokeItemSettingDefaults(Terraria.Item terrariaItem, ref int type, ref bool noMaterialCheck)
+		private HookResult InvokeItemSettingDefaults(
+			Terraria.Item terrariaItem, ref int type, ref bool noMaterialCheck)
 		{
 			var item = new Item(terrariaItem);
-			var args = new ItemSettingDefaultsEventArgs(item, type);
+			var args = new ItemSettingDefaultsEventArgs(item, (ItemType)type);
 			ItemSettingDefaults?.Invoke(this, args);
-			type = args.Type;
+			type = (int)args.Type;
 			return args.Handled ? HookResult.Cancel : HookResult.Continue;
 		}
 	}

@@ -1,5 +1,6 @@
 ﻿using System;
 using NUnit.Framework;
+using Orion.Projectiles;
 using Orion.Projectiles.Events;
 
 namespace Orion.Tests.Projectiles.Events
@@ -10,7 +11,8 @@ namespace Orion.Tests.Projectiles.Events
 		[Test]
 		public void Constructor_NullProjectile_ThrowsArgumentNullException()
 		{
-			Assert.Throws<ArgumentNullException>(() => new ProjectileSettingDefaultsEventArgs(null, 0));
+			Assert.Throws<ArgumentNullException>(
+				() => new ProjectileSettingDefaultsEventArgs(null, ProjectileType.None));
 		}
 	}
 }

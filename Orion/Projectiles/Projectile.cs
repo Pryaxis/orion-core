@@ -25,7 +25,7 @@ namespace Orion.Projectiles
 		}
 
 		/// <inheritdoc/>
-		public ProjectileType Type => WrappedProjectile.type;
+		public ProjectileType Type => (ProjectileType)WrappedProjectile.type;
 
 		/// <inheritdoc/>
 		public Vector2 Velocity
@@ -41,19 +41,19 @@ namespace Orion.Projectiles
 		/// Initializes a new instance of the <see cref="Projectile"/> class wrapping the specified Terraria projectile
 		/// instance.
 		/// </summary>
-		/// <param name="projectile">The Terraria projectile to wrap.</param>
-		/// <exception cref="ArgumentNullException"><paramref name="projectile"/> was null.</exception>
-		public Projectile(Terraria.Projectile projectile)
+		/// <param name="terrariaProjectile">The Terraria projectile to wrap.</param>
+		/// <exception cref="ArgumentNullException"><paramref name="terrariaProjectile"/> was null.</exception>
+		public Projectile(Terraria.Projectile terrariaProjectile)
 		{
-			if (projectile == null)
+			if (terrariaProjectile == null)
 			{
-				throw new ArgumentNullException(nameof(projectile));
+				throw new ArgumentNullException(nameof(terrariaProjectile));
 			}
 
-			WrappedProjectile = projectile;
+			WrappedProjectile = terrariaProjectile;
 		}
 
 		/// <inheritdoc/>
-		public void SetDefaults(ProjectileType type) => WrappedProjectile.SetDefaults(type);
+		public void SetDefaults(ProjectileType type) => WrappedProjectile.SetDefaults((int)type);
 	}
 }

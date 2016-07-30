@@ -32,7 +32,7 @@ namespace Orion.Tests.Npcs
 		private static readonly object[] SetDefaultsTestCases = {NpcType.BlueSlime};
 
 		[Test]
-		public void Constructor_NullNpc_ThrowsArgumentNullException()
+		public void Constructor_NullTerrariaNpc_ThrowsArgumentNullException()
 		{
 			Assert.Throws<ArgumentNullException>(() => new Npc(null));
 		}
@@ -85,8 +85,7 @@ namespace Orion.Tests.Npcs
 		[TestCaseSource(nameof(GetTypeTestCases))]
 		public void GetType_IsCorrect(NpcType type)
 		{
-			var terrariaNpc = new Terraria.NPC();
-			terrariaNpc.netID = type;
+			var terrariaNpc = new Terraria.NPC {netID = (int)type};
 			var npc = new Npc(terrariaNpc);
 
 			NpcType actualType = npc.Type;

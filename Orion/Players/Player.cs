@@ -153,23 +153,23 @@ namespace Orion.Players
 		/// Initializes a new instance of the <see cref="Player"/> class wrapping the specified Terraria player
 		/// instance.
 		/// </summary>
-		/// <param name="player">The Terraria player instance to wrap.</param>
-		/// <exception cref="ArgumentNullException"><paramref name="player"/> was null.</exception>
-		public Player(Terraria.Player player)
+		/// <param name="terrariaPlayer">The Terraria player instance to wrap.</param>
+		/// <exception cref="ArgumentNullException"><paramref name="terrariaPlayer"/> was null.</exception>
+		public Player(Terraria.Player terrariaPlayer)
 		{
-			if (player == null)
+			if (terrariaPlayer == null)
 			{
-				throw new ArgumentNullException(nameof(player));
+				throw new ArgumentNullException(nameof(terrariaPlayer));
 			}
 
-			Dyes = new ItemArray(player.dye);
-			Equips = new ItemArray(player.armor);
-			Inventory = new ItemArray(player.inventory);
-			MiscDyes = new ItemArray(player.miscDyes);
-			MiscEquips = new ItemArray(player.miscEquips);
-			PiggyBank = new ItemArray(player.bank.item);
-			Safe = new ItemArray(player.bank2.item);
-			WrappedPlayer = player;
+			Dyes = new ItemArray(terrariaPlayer.dye);
+			Equips = new ItemArray(terrariaPlayer.armor);
+			Inventory = new ItemArray(terrariaPlayer.inventory);
+			MiscDyes = new ItemArray(terrariaPlayer.miscDyes);
+			MiscEquips = new ItemArray(terrariaPlayer.miscEquips);
+			PiggyBank = new ItemArray(terrariaPlayer.bank.item);
+			Safe = new ItemArray(terrariaPlayer.bank2.item);
+			WrappedPlayer = terrariaPlayer;
 		}
 	}
 }

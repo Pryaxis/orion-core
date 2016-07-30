@@ -1,19 +1,19 @@
 ﻿using NUnit.Framework;
-using Orion.Npcs;
+using Orion.Items;
 
-namespace Orion.Tests.Npcs
+namespace Orion.Tests.Items
 {
 	[TestFixture]
-	public class NpcTypeTests
+	public class ItemTypeTests
 	{
-		private static readonly object[] OpExplicitNpcTypeTestCases =
+		private static readonly object[] OpExplicitItemTypeTestCases =
 		{
-			new object[] {1, NpcType.BlueSlime}
+			new object[] {1, ItemType.IronPickaxe}
 		};
 
 		private static readonly object[] EqualsObjectTestCases =
 		{
-			new object[] {1, NpcType.BlueSlime, true},
+			new object[] {1, ItemType.IronPickaxe, true},
 			new object[] {1, "string", false},
 			new object[] {1, null, false}
 		};
@@ -22,24 +22,24 @@ namespace Orion.Tests.Npcs
 		[TestCase(1, 2, ExpectedResult = false)]
 		public bool OpEquality_IsCorrect(int type1, int type2)
 		{
-			var npcType1 = new NpcType(type1);
-			var npcType2 = new NpcType(type2);
+			var itemType1 = new ItemType(type1);
+			var itemType2 = new ItemType(type2);
 
-			return npcType1 == npcType2;
+			return itemType1 == itemType2;
 		}
 
 		[TestCase(1, ExpectedResult = 1)]
 		public int OpExplicitInt_IsCorrect(int type)
 		{
-			var npcType = new NpcType(type);
+			var itemType = new ItemType(type);
 
-			return (int)npcType;
+			return (int)itemType;
 		}
 
-		[TestCaseSource(nameof(OpExplicitNpcTypeTestCases))]
-		public void OpExplicitNpcType_IsCorrect(int type, NpcType expectedResult)
+		[TestCaseSource(nameof(OpExplicitItemTypeTestCases))]
+		public void OpExplicitItemType_IsCorrect(int type, ItemType expectedResult)
 		{
-			var actualResult = (NpcType)type;
+			ItemType actualResult = (ItemType)type;
 
 			Assert.AreEqual(expectedResult, actualResult);
 		}
@@ -48,28 +48,28 @@ namespace Orion.Tests.Npcs
 		[TestCase(1, 2, ExpectedResult = true)]
 		public bool OpInequality_IsCorrect(int type1, int type2)
 		{
-			var npcType1 = new NpcType(type1);
-			var npcType2 = new NpcType(type2);
+			var itemType1 = new ItemType(type1);
+			var itemType2 = new ItemType(type2);
 
-			return npcType1 != npcType2;
+			return itemType1 != itemType2;
 		}
 
 		[TestCase(1, 1, ExpectedResult = true)]
 		[TestCase(1, 2, ExpectedResult = false)]
-		public bool EqualsNpcType_IsCorrect(int type1, int type2)
+		public bool EqualsItemType_IsCorrect(int type1, int type2)
 		{
-			var npcType1 = new NpcType(type1);
-			var npcType2 = new NpcType(type2);
+			var itemType1 = new ItemType(type1);
+			var itemType2 = new ItemType(type2);
 
-			return npcType1.Equals(npcType2);
+			return itemType1.Equals(itemType2);
 		}
 
 		[TestCaseSource(nameof(EqualsObjectTestCases))]
 		public void EqualsObject_IsCorrect(int type, object obj, bool expectedResult)
 		{
-			var npcType = new NpcType(type);
+			var itemType = new ItemType(type);
 
-			bool actualResult = npcType.Equals(obj);
+			bool actualResult = itemType.Equals(obj);
 
 			Assert.AreEqual(expectedResult, actualResult);
 		}
@@ -77,9 +77,9 @@ namespace Orion.Tests.Npcs
 		[TestCase(1, ExpectedResult = 1)]
 		public int GetHashCode_IsCorrect(int type)
 		{
-			var npcType = new NpcType(type);
+			var itemType = new ItemType(type);
 
-			return npcType.GetHashCode();
+			return itemType.GetHashCode();
 		}
 	}
 }

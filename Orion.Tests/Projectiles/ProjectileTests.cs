@@ -28,7 +28,7 @@ namespace Orion.Tests.Projectiles
 		private static readonly object[] SetDefaultsTestCases = {ProjectileType.WoodenArrowFriendly};
 
 		[Test]
-		public void Constructor_NullProjectile_ThrowsArgumentNullException()
+		public void Constructor_NullTerrariaProjectile_ThrowsArgumentNullException()
 		{
 			Assert.Throws<ArgumentNullException>(() => new Projectile(null));
 		}
@@ -66,7 +66,7 @@ namespace Orion.Tests.Projectiles
 		[TestCaseSource(nameof(GetTypeTestCases))]
 		public void GetType_IsCorrect(ProjectileType type)
 		{
-			var terrariaProjectile = new Terraria.Projectile {type = type};
+			var terrariaProjectile = new Terraria.Projectile {type = (int)type};
 			var projectile = new Projectile(terrariaProjectile);
 
 			ProjectileType actualType = projectile.Type;

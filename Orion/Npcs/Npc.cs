@@ -55,7 +55,7 @@ namespace Orion.Npcs
 		}
 
 		/// <inheritdoc/>
-		public NpcType Type => WrappedNpc.netID;
+		public NpcType Type => (NpcType)WrappedNpc.netID;
 
 		/// <inheritdoc/>
 		public Vector2 Velocity
@@ -70,16 +70,16 @@ namespace Orion.Npcs
 		/// <summary>
 		/// Initializes a new instance of the <see cref="Npc"/> class wrapping the specified Terraria NPC instance.
 		/// </summary>
-		/// <param name="npc">The Terraria NPC instance to wrap.</param>
-		/// <exception cref="ArgumentNullException"><paramref name="npc"/> was null.</exception>
-		public Npc(Terraria.NPC npc)
+		/// <param name="terrariaNpc">The Terraria NPC instance to wrap.</param>
+		/// <exception cref="ArgumentNullException"><paramref name="terrariaNpc"/> was null.</exception>
+		public Npc(Terraria.NPC terrariaNpc)
 		{
-			if (npc == null)
+			if (terrariaNpc == null)
 			{
-				throw new ArgumentNullException(nameof(npc));
+				throw new ArgumentNullException(nameof(terrariaNpc));
 			}
 
-			WrappedNpc = npc;
+			WrappedNpc = terrariaNpc;
 		}
 
 		/// <inheritdoc/>
@@ -90,6 +90,6 @@ namespace Orion.Npcs
 		}
 
 		/// <inheritdoc/>
-		public void SetDefaults(NpcType type) => WrappedNpc.SetDefaults(type);
+		public void SetDefaults(NpcType type) => WrappedNpc.SetDefaults((int)type);
 	}
 }

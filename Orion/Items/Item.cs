@@ -1,5 +1,6 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
+using Orion.Projectiles;
 
 namespace Orion.Items
 {
@@ -82,7 +83,7 @@ namespace Orion.Items
 		}
 
 		/// <inheritdoc/>
-		public int Prefix => WrappedItem.prefix;
+		public ItemPrefix Prefix => (ItemPrefix)WrappedItem.prefix;
 
 		/// <inheritdoc/>
 		public float ProjectileSpeed
@@ -92,18 +93,10 @@ namespace Orion.Items
 		}
 
 		/// <inheritdoc/>
-		public int ProjectileType
+		public ProjectileType ProjectileType
 		{
-			get { return WrappedItem.shoot; }
-			set
-			{
-				if (value < 0 || value >= Terraria.Main.maxProjectileTypes)
-				{
-					throw new ArgumentOutOfRangeException(nameof(value), "Value was an invalid projectile type.");
-				}
-
-				WrappedItem.shoot = value;
-			}
+			get { return (ProjectileType)WrappedItem.shoot; }
+			set { WrappedItem.shoot = (int)value; }
 		}
 
 		/// <inheritdoc/>
@@ -137,7 +130,7 @@ namespace Orion.Items
 		}
 
 		/// <inheritdoc/>
-		public int Type => WrappedItem.netID;
+		public ItemType Type => (ItemType)WrappedItem.netID;
 
 		/// <inheritdoc/>
 		public int UseAmmoType
@@ -217,29 +210,13 @@ namespace Orion.Items
 		}
 
 		/// <inheritdoc/>
-		public void SetDefaults(int type)
-		{
-			if (type < 0 || type >= Terraria.Main.maxItemTypes)
-			{
-				throw new ArgumentOutOfRangeException(nameof(type), "Value was an invalid item type.");
-			}
-
-			WrappedItem.SetDefaults(type);
-		}
+		public void SetDefaults(ItemType type) => WrappedItem.SetDefaults((int)type);
 
 		/// <inheritdoc/>
 		/// <remarks>
 		/// If <paramref name="prefix"/> is not applicable to the item type, then a randomly chosen prefix will be
 		/// used.
 		/// </remarks>
-		public void SetPrefix(int prefix)
-		{
-			if (prefix < 0 || prefix >= Terraria.Item.maxPrefixes)
-			{
-				throw new ArgumentOutOfRangeException(nameof(prefix), "Value was an invalid item prefix.");
-			}
-
-			WrappedItem.Prefix(prefix);
-		}
+		public void SetPrefix(ItemPrefix prefix) => WrappedItem.Prefix((int)prefix);
 	}
 }

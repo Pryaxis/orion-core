@@ -10,11 +10,11 @@ namespace Orion.Tests.Projectiles
 	[TestFixture]
 	public class ProjectileServiceTests
 	{
-		private static readonly Predicate<IProjectile>[] FindTestCases = {projectile => projectile.Position.X <= 10};
-
 		private static readonly object[] ProjectileSetDefaultsTestCases = {ProjectileType.AdamantiteChainsaw};
 
 		private static readonly object[] ProjectileSettingDefaultsTestCases = {ProjectileType.AdamantiteChainsaw};
+
+		private static readonly Predicate<IProjectile>[] FindTestCases = {projectile => projectile.Position.X <= 10};
 
 		[TestCaseSource(nameof(ProjectileSetDefaultsTestCases))]
 		public void ProjectileSetDefaults_IsCorrect(ProjectileType type)
@@ -69,7 +69,7 @@ namespace Orion.Tests.Projectiles
 				var projectile = new Projectile(terrariaProjectile);
 				projectileService.ProjectileSettingDefaults += (sender, args) => args.Type = type;
 
-				projectile.SetDefaults(0);
+				projectile.SetDefaults(ProjectileType.None);
 
 				Assert.AreEqual(type, projectile.Type);
 			}

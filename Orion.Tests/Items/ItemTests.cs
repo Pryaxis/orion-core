@@ -3,13 +3,14 @@ using System.Reflection;
 using Microsoft.Xna.Framework;
 using NUnit.Framework;
 using Orion.Items;
+using Orion.Projectiles;
 
-namespace Orion.Tests.Core
+namespace Orion.Tests.Items
 {
 	[TestFixture]
 	public class ItemTests
 	{
-		private static readonly object[] GetProperties =
+		private static readonly object[] GetPropertyTestCases =
 		{
 			new object[] {nameof(Item.AmmoType), nameof(Terraria.Item.ammo), 14},
 			new object[] {nameof(Item.AxePower), nameof(Terraria.Item.axe), 100},
@@ -22,12 +23,9 @@ namespace Orion.Tests.Core
 			new object[] {nameof(Item.Name), nameof(Terraria.Item.name), "TEST"},
 			new object[] {nameof(Item.PickaxePower), nameof(Terraria.Item.pick), 100},
 			new object[] {nameof(Item.Position), nameof(Terraria.Item.position), Vector2.One},
-			new object[] {nameof(Item.Prefix), nameof(Terraria.Item.prefix), (byte)83},
 			new object[] {nameof(Item.ProjectileSpeed), nameof(Terraria.Item.shootSpeed), 1.0f},
-			new object[] {nameof(Item.ProjectileType), nameof(Terraria.Item.shoot), 1},
 			new object[] {nameof(Item.Scale), nameof(Terraria.Item.scale), 10.0f},
 			new object[] {nameof(Item.StackSize), nameof(Terraria.Item.stack), 999},
-			new object[] {nameof(Item.Type), nameof(Terraria.Item.netID), 1},
 			new object[] {nameof(Item.UseAmmoType), nameof(Terraria.Item.useAmmo), 14},
 			new object[] {nameof(Item.UseAnimationTime), nameof(Terraria.Item.useAnimation), 4},
 			new object[] {nameof(Item.UseTime), nameof(Terraria.Item.useTime), 4},
@@ -35,7 +33,7 @@ namespace Orion.Tests.Core
 			new object[] {nameof(Item.Width), nameof(Terraria.Item.width), 100}
 		};
 
-		private static readonly object[] SetProperties =
+		private static readonly object[] SetPropertyTestCases =
 		{
 			new object[] {nameof(Item.AmmoType), nameof(Terraria.Item.ammo), 14},
 			new object[] {nameof(Item.Color), nameof(Terraria.Item.color), Color.White},
@@ -44,7 +42,6 @@ namespace Orion.Tests.Core
 			new object[] {nameof(Item.Knockback), nameof(Terraria.Item.knockBack), 1.0f},
 			new object[] {nameof(Item.Position), nameof(Terraria.Item.position), Vector2.One},
 			new object[] {nameof(Item.ProjectileSpeed), nameof(Terraria.Item.shootSpeed), 1.0f},
-			new object[] {nameof(Item.ProjectileType), nameof(Terraria.Item.shoot), 1},
 			new object[] {nameof(Item.Scale), nameof(Terraria.Item.scale), 10.0f},
 			new object[] {nameof(Item.StackSize), nameof(Terraria.Item.stack), 1},
 			new object[] {nameof(Item.UseAmmoType), nameof(Terraria.Item.useAmmo), 14},
@@ -54,26 +51,39 @@ namespace Orion.Tests.Core
 			new object[] {nameof(Item.Width), nameof(Terraria.Item.width), 100}
 		};
 
+		private static readonly object[] GetPrefixTestCases = { ItemPrefix.Large };
+		
+		private static readonly object[] GetProjectileTypeTestCases = { ProjectileType.WoodenArrowFriendly };
+
+		private static readonly object[] SetProjectileTypeTestCases = { ProjectileType.WoodenArrowFriendly };
+
+		private static readonly object[] GetTypeTestCases = { ItemType.IronPickaxe };
+
+		private static readonly object[] SetDefaultsTestCases = { ItemType.IronPickaxe };
+
+		private static readonly object[] SetPrefixTestCases = { ItemPrefix.Large };
+
 		[Test]
 		public void Constructor_NullItem_ThrowsArgumentNullException()
 		{
 			Assert.Throws<ArgumentNullException>(() => new Item(null));
 		}
 
-		[TestCaseSource(nameof(GetProperties))]
+		[TestCaseSource(nameof(GetPropertyTestCases))]
 		public void GetProperty_IsCorrect(string itemPropertyName, string terrariaItemFieldName, object value)
 		{
 			var terrariaItem = new Terraria.Item();
 			FieldInfo terrariaItemField = typeof(Terraria.Item).GetField(terrariaItemFieldName);
+			terrariaItemField.SetValue(terrariaItem, Convert.ChangeType(value, terrariaItemField.FieldType));
 			var item = new Item(terrariaItem);
 			PropertyInfo itemProperty = typeof(Item).GetProperty(itemPropertyName);
+			
+			object actualValue = itemProperty.GetValue(item);
 
-			terrariaItemField.SetValue(terrariaItem, Convert.ChangeType(value, terrariaItemField.FieldType));
-
-			Assert.AreEqual(value, itemProperty.GetValue(item));
+			Assert.AreEqual(value, actualValue);
 		}
 
-		[TestCaseSource(nameof(SetProperties))]
+		[TestCaseSource(nameof(SetPropertyTestCases))]
 		public void SetProperty_IsCorrect(string itemPropertyName, string terrariaItemFieldName, object value)
 		{
 			var terrariaItem = new Terraria.Item();
@@ -104,14 +114,37 @@ namespace Orion.Tests.Core
 			Assert.Throws<ArgumentOutOfRangeException>(() => item.Height = height);
 		}
 
-		[TestCase(-1)]
-		[TestCase(Terraria.Main.maxProjectileTypes)]
-		public void SetProjectileType_InvalidValue_ThrowsArgumentOutOfRangeException(int projectileType)
+		[TestCaseSource(nameof(GetPrefixTestCases))]
+		public void GetPrefix_IsCorrect(ItemPrefix prefix)
+		{
+			var terrariaItem = new Terraria.Item { prefix = (byte)prefix };
+			var item = new Item(terrariaItem);
+
+			ItemPrefix actualPrefix = item.Prefix;
+
+			Assert.AreEqual(prefix, actualPrefix);
+		}
+
+		[TestCaseSource(nameof(GetProjectileTypeTestCases))]
+		public void GetProjectileType_IsCorrect(ProjectileType type)
+		{
+			var terrariaItem = new Terraria.Item {shoot = (int)type};
+			var item = new Item(terrariaItem);
+
+			ProjectileType actualType = item.ProjectileType;
+
+			Assert.AreEqual(type, actualType);
+		}
+
+		[TestCaseSource(nameof(SetProjectileTypeTestCases))]
+		public void SetProjectileType_IsCorrect(ProjectileType type)
 		{
 			var terrariaItem = new Terraria.Item();
 			var item = new Item(terrariaItem);
 
-			Assert.Throws<ArgumentOutOfRangeException>(() => item.ProjectileType = projectileType);
+			item.ProjectileType = type;
+
+			Assert.AreEqual(type, (ProjectileType)terrariaItem.shoot);
 		}
 
 		[TestCase(-1.0f)]
@@ -130,6 +163,17 @@ namespace Orion.Tests.Core
 			var item = new Item(terrariaItem);
 
 			Assert.Throws<ArgumentOutOfRangeException>(() => item.StackSize = stackSize);
+		}
+
+		[TestCaseSource(nameof(GetTypeTestCases))]
+		public void GetType_IsCorrect(ItemType type)
+		{
+			var terrariaItem = new Terraria.Item {netID = (int)type};
+			var item = new Item(terrariaItem);
+
+			ItemType actualType = item.Type;
+
+			Assert.AreEqual(type, actualType);
 		}
 
 		[TestCase(-1)]
@@ -168,8 +212,8 @@ namespace Orion.Tests.Core
 			Assert.AreSame(terrariaItem, item.WrappedItem);
 		}
 
-		[TestCase(1)]
-		public void SetDefaults_IsCorrect(int type)
+		[TestCaseSource(nameof(SetDefaultsTestCases))]
+		public void SetDefaults_IsCorrect(ItemType type)
 		{
 			var terrariaItem = new Terraria.Item();
 			var item = new Item(terrariaItem);
@@ -179,18 +223,8 @@ namespace Orion.Tests.Core
 			Assert.AreEqual(type, item.Type);
 		}
 
-		[TestCase(-1)]
-		[TestCase(Terraria.Main.maxItemTypes)]
-		public void SetDefaults_InvalidType_ThrowsArgumentOutOfRangeException(int type)
-		{
-			var terrariaItem = new Terraria.Item();
-			var item = new Item(terrariaItem);
-
-			Assert.Throws<ArgumentOutOfRangeException>(() => item.SetDefaults(type));
-		}
-
-		[TestCase(1)]
-		public void SetPrefix_IsCorrect(int prefix)
+		[TestCaseSource(nameof(SetPrefixTestCases))]
+		public void SetPrefix_IsCorrect(ItemPrefix prefix)
 		{
 			var terrariaItem = new Terraria.Item();
 			terrariaItem.SetDefaults(1);
@@ -198,17 +232,7 @@ namespace Orion.Tests.Core
 
 			item.SetPrefix(prefix);
 
-			Assert.IsTrue(item.Prefix > 0, "Some prefix should have been set.");
-		}
-
-		[TestCase(-1)]
-		[TestCase(Terraria.Item.maxPrefixes)]
-		public void SetPrefix_InvalidPrefix_ThrowsArgumentOutOfRangeException(int prefix)
-		{
-			var terrariaItem = new Terraria.Item();
-			var item = new Item(terrariaItem);
-
-			Assert.Throws<ArgumentOutOfRangeException>(() => item.SetPrefix(prefix));
+			Assert.IsTrue(item.Prefix != ItemPrefix.None, "Some prefix should have been set.");
 		}
 	}
 }

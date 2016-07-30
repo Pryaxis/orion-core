@@ -1,5 +1,6 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
+using Orion.Projectiles;
 
 namespace Orion.Items
 {
@@ -66,9 +67,9 @@ namespace Orion.Items
 		Vector2 Position { get; set; }
 
 		/// <summary>
-		/// Gets the item's prefix.
+		/// Gets the item's <see cref="ItemPrefix"/> instance.
 		/// </summary>
-		int Prefix { get; }
+		ItemPrefix Prefix { get; }
 
 		/// <summary>
 		/// Gets or sets the item's projectile speed.
@@ -76,9 +77,9 @@ namespace Orion.Items
 		float ProjectileSpeed { get; set; }
 
 		/// <summary>
-		/// Gets or sets the item's projectile type.
+		/// Gets or sets the item's <see cref="ProjectileType"/> instance.
 		/// </summary>
-		int ProjectileType { get; set; }
+		ProjectileType ProjectileType { get; set; }
 
 		/// <summary>
 		/// Gets or sets the item's scale.
@@ -93,9 +94,9 @@ namespace Orion.Items
 		int StackSize { get; set; }
 
 		/// <summary>
-		/// Gets the item's type.
+		/// Gets the item's <see cref="ItemType"/> instance.
 		/// </summary>
-		int Type { get; }
+		ItemType Type { get; }
 
 		/// <summary>
 		/// Gets or sets the item's used ammo type.
@@ -131,19 +132,15 @@ namespace Orion.Items
 		Terraria.Item WrappedItem { get; }
 
 		/// <summary>
-		/// Sets the item's defaults to the specified type's.
+		/// Sets the item's defaults using an <see cref="ItemType"/> instance.
 		/// </summary>
-		/// <param name="type">The type.</param>
-		/// <exception cref="ArgumentOutOfRangeException"><paramref name="type"/> was an invalid item type.</exception>
-		void SetDefaults(int type);
+		/// <param name="type">The <see cref="ItemType"/> instance.</param>
+		void SetDefaults(ItemType type);
 
 		/// <summary>
-		/// Tries to set the item's prefix.
+		/// Tries to set the item's prefix using an <see cref="ItemPrefix"/> instance.
 		/// </summary>
-		/// <param name="prefix">The prefix.</param>
-		/// <exception cref="ArgumentOutOfRangeException">
-		/// <paramref name="prefix"/> was an invalid item prefix.
-		/// </exception>
-		void SetPrefix(int prefix);
+		/// <param name="prefix">The <see cref="ItemPrefix"/> instance.</param>
+		void SetPrefix(ItemPrefix prefix);
 	}
 }

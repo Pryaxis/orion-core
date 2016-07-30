@@ -1,7 +1,7 @@
 ﻿using NUnit.Framework;
 using Orion.World;
 
-namespace Orion.Tests.Services
+namespace Orion.Tests.World
 {
 	[TestFixture]
 	public class WorldServiceTests

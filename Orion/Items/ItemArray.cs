@@ -10,12 +10,6 @@ namespace Orion.Items
 		private readonly IItem[] _iitemArray;
 
 		/// <inheritdoc/>
-		public int Length => WrappedItemArray.Length;
-
-		/// <inheritdoc/>
-		public Terraria.Item[] WrappedItemArray { get; }
-
-		/// <inheritdoc/>
 		/// <remarks>
 		/// The <see cref="IItem"/> instances are cached in an array. Calling this method multiple times will result
 		/// in the same <see cref="IItem"/> instances as long as the wrapped Terraria item array remains unchanged.
@@ -50,6 +44,12 @@ namespace Orion.Items
 				WrappedItemArray[index] = value.WrappedItem;
 			}
 		}
+
+		/// <inheritdoc/>
+		public int Length => WrappedItemArray.Length;
+
+		/// <inheritdoc/>
+		public Terraria.Item[] WrappedItemArray { get; }
 
 		/// <summary>
 		/// Initializes a new instance of the <see cref="ItemArray"/> class wrapping the specified array of Terraria
