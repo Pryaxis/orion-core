@@ -54,7 +54,7 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="OTAPI, Version=1.3.2.1, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\OTAPI.0.2.12\lib\net451\OTAPI.dll</HintPath>
+      <HintPath>..\packages\OTAPI.0.2.13\lib\net451\OTAPI.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="System" />
@@ -65,6 +65,10 @@
     <Reference Include="System.Data" />
     <Reference Include="System.Net.Http" />
     <Reference Include="System.Xml" />
+    <Reference Include="YamlDotNet, Version=3.9.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\YamlDotNet.3.9.0\lib\net35\YamlDotNet.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Authorization\IGroupService.cs" />
@@ -72,6 +76,7 @@
     <Compile Include="Authorization\PlainTextAccountService.cs" />
     <Compile Include="Authorization\PlainTextGroup.cs" />
     <Compile Include="Authorization\PlainTextUserAccount.cs" />
+    <Compile Include="Configuration\YamlFileConfigurationService.cs" />
     <Compile Include="Extensions\StringExtensions.cs" />
     <Compile Include="Framework\Injection\ServiceInjectionModule.cs" />
     <Compile Include="Framework\IService.cs" />

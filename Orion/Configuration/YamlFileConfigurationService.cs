@@ -1,15 +1,15 @@
-﻿using System.IO;
-using Newtonsoft.Json;
-using Orion.Framework;
+﻿using Orion.Framework;
+using YamlDotNet.Serialization;
+using System.IO;
 
 namespace Orion.Configuration
 {
 	/// <summary>
-	/// Configuration service which loads and saves configuration from disk in JSON
-	/// format, using Newtonsoft.Json to load/store data.
+	/// Configuration service which loads and saves configuration from disk in YAML
+	/// format, using YamlDotNet to load/store data.
 	/// </summary>
-	[Service("JSON File Configuration Service", Author = "Nyx Studios")]
-	public class JsonFileConfigurationService : ServiceBase, IConfigurationService
+	[Service("YAML File Configuration Service", Author = "Nyx Studios")]
+	public class YamlFileConfigurationService : ServiceBase, IConfigurationService
 	{
 		/// <summary>
 		/// Gets the configuration directory.
@@ -17,10 +17,10 @@ namespace Orion.Configuration
 		public static string ConfigurationDirectory => "config";
 
 		/// <summary>
-		/// Initializes a new instance of the <see cref="JsonFileConfigurationService"/> class.
+		/// Initializes a new instance of the <see cref="YamlFileConfigurationService"/> class.
 		/// </summary>
 		/// <param name="orion">The parent <see cref="Orion"/> instance.</param>
-		public JsonFileConfigurationService(Orion orion) : base(orion)
+		public YamlFileConfigurationService(Orion orion) : base(orion)
 		{
 		}
 
@@ -29,11 +29,10 @@ namespace Orion.Configuration
 			where TService : ServiceBase
 			where TConfig : class, new()
 		{
-			// TODO: generalize with streams instead?
 			string configDirectory = Path.Combine(ConfigurationDirectory, typeof(TService).Name);
-			string configFile = Path.Combine(configDirectory, "config.json");
-			var serializer = new JsonSerializer();
-			
+			string configFile = Path.Combine(configDirectory, "config.yaml");
+			var deserializer = new Deserializer();
+
 			TConfig configObject;
 
 			Directory.CreateDirectory(configDirectory);
@@ -54,7 +53,7 @@ namespace Orion.Configuration
 			using (var fs = new FileStream(configFile, FileMode.Open, FileAccess.Read))
 			using (var sr = new StreamReader(fs))
 			{
-				configObject = serializer.Deserialize(sr, typeof(TConfig)) as TConfig;
+				configObject = deserializer.Deserialize<TConfig>(sr);
 			}
 
 			return configObject;
@@ -65,10 +64,9 @@ namespace Orion.Configuration
 			where TService : ServiceBase
 			where TConfig : class, new()
 		{
-			// TODO: generalize with streams instead?
 			string configDirectory = Path.Combine(ConfigurationDirectory, typeof(TService).Name);
-			string configFile = Path.Combine(configDirectory, "config.json");
-			var serializer = new JsonSerializer {Formatting = Formatting.Indented};
+			string configFile = Path.Combine(configDirectory, "config.yaml");
+			var serializer = new Serializer(SerializationOptions.EmitDefaults);
 
 			using (var fs = new FileStream(configFile, FileMode.Create, FileAccess.Write))
 			using (var sw = new StreamWriter(fs))
