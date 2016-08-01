@@ -10,15 +10,14 @@ using Orion.Extensions;
 namespace Orion.Authorization
 {
 	/// <summary>
-	/// Plain-text user account linked to the plain text account service.
+	/// Plain-text user account used by the <see cref="PlainTextAccountService"/>.
 	/// </summary>
 	public class PlainTextUserAccount : IUserAccount
 	{
-
 		private PlainTextAccountService _service;
-		protected IniData _iniData;
+		private IniData _iniData;
 
-		/// <inheritdoc />
+		/// <inheritdoc/>
 		public string AccountName
 		{
 			get { return _iniData.Sections["User"]["AccountName"]; }
@@ -29,7 +28,7 @@ namespace Orion.Authorization
 		/// Gets or sets the bcrypt password hash on this account.
 		/// </summary>
 		/// <remarks>
-		/// This is a hidden property.  Password hashes must not be leaked outside of this instance.
+		/// This is a hidden property. Password hashes must not be leaked outside of this instance.
 		/// 
 		/// See <see cref="Authenticate"/> to authenticate passwords against the stored hash on this
 		/// account.
@@ -47,24 +46,26 @@ namespace Orion.Authorization
 			=> Path.Combine(PlainTextAccountService.UserPathPrefix, $"{AccountName.Slugify()}.ini");
 
 		/// <summary>
-		/// Initializes a new instance of a plain text user account
+		/// Initializes a new instance of the <see cref="PlainTextUserAccount"/> class.
 		/// </summary>
+		/// <param name="service">
+		/// A reference to the <see cref="PlainTextAccountService"/> which owns this user account.
+		/// </param>
 		public PlainTextUserAccount(PlainTextAccountService service)
 		{
+			_service = service;
 			this._iniData = new IniData();
 			this._iniData.Sections.AddSection("User");
 		}
 
 		/// <summary>
-		/// Initializes a new instance of a plain text user account with the provided account name, which will
-		/// load the account name from disk.
+		/// Initializes a new instance of the <see cref="PlainTextUserAccount"/> class with the provided account name, which
+		/// will load the account data from disk.
 		/// </summary>
 		/// <param name="service">
-		/// A reference to the plain text account service which owns this user account.
+		/// A reference to the <see cref="PlainTextAccountService"/> which owns this user account.
 		/// </param>
-		/// <param name="accountName">
-		/// A string containing the account name to load from disk.
-		/// </param>
+		/// <param name="accountName">A string containing the account name to load from disk.</param>
 		public PlainTextUserAccount(PlainTextAccountService service, string accountName)
 			: this(service)
 		{
@@ -79,8 +80,12 @@ namespace Orion.Authorization
 		}
 
 		/// <summary>
-		/// Initializes a new instance of a plain text user account from the specified I/O stream.
+		/// Initializes a new instance of the <see cref="PlainTextUserAccount"/> class from the specified I/O stream.
 		/// </summary>
+		/// <param name="service">
+		/// A reference to the <see cref="PlainTextAccountService"/> which owns this user account.
+		/// </param>
+		/// <param name="stream">The I/O stream to load the <see cref="PlainTextUserAccount"/> data from.</param>
 		public PlainTextUserAccount(PlainTextAccountService service, Stream stream)
 			: this(service)
 		{
@@ -89,44 +94,42 @@ namespace Orion.Authorization
 			this._iniData = parser.ReadData(new StreamReader(stream));
 		}
 
-		/// <inheritdoc />
+		/// <inheritdoc/>
 		public bool MemberOf(IGroup group)
 		{
 			throw new NotImplementedException();
 		}
 
-		/// <inheritdoc />
+		/// <inheritdoc/>
 		public IEnumerable<IPermission> Permissions { get; }
 
-		/// <inheritdoc />
+		/// <inheritdoc/>
 		public bool HasPermission(IPermission permission, bool inherit = true)
 		{
 			throw new NotImplementedException();
 		}
 
-		/// <inheritdoc />
+		/// <inheritdoc/>
 		public bool Authenticate(string password, bool? ignoreExpiry = false)
 		{
-			if (string.IsNullOrEmpty(password))
+			if (String.IsNullOrEmpty(password))
 			{
 				throw new ArgumentNullException(nameof(password));
 			}
 
-			if (string.IsNullOrEmpty(PasswordHash) == true)
+			if (String.IsNullOrEmpty(PasswordHash))
 			{
-				/*
-				 * Authentication cannot succeed if there is no password at all.
-				 */
+				// Authentication cannot succeed if there is no password at all.
 				return false;
 			}
 
 			return BCrypt.Net.BCrypt.Verify(password, PasswordHash);
 		}
 
-		/// <inheritdoc />
+		/// <inheritdoc/>
 		public void SetPassword(string password)
 		{
-			if (string.IsNullOrEmpty(password))
+			if (String.IsNullOrEmpty(password))
 			{
 				throw new ArgumentNullException(nameof(password));
 			}
@@ -135,16 +138,19 @@ namespace Orion.Authorization
 			Save();
 		}
 
-		/// <inheritdoc />
+		/// <inheritdoc/>
 		public void ChangePassword(string currentPassword, string newPassword)
 		{
-			if (string.IsNullOrEmpty(currentPassword)
-				|| string.IsNullOrEmpty(newPassword))
+			if (String.IsNullOrEmpty(currentPassword))
 			{
-				throw new ArgumentNullException("currentPassword or newPassword");
+				throw new ArgumentNullException(nameof(currentPassword));
+			}
+			if (String.IsNullOrEmpty(newPassword))
+			{
+				throw new ArgumentNullException(nameof(newPassword));
 			}
 
-			if (Authenticate(currentPassword, ignoreExpiry: false) == false)
+			if (!Authenticate(currentPassword, ignoreExpiry: false))
 			{
 				throw new AuthenticationException("Authentication failed: password was incorrect.");
 			}

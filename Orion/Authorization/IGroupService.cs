@@ -6,7 +6,7 @@ using System.Collections.Generic;
 namespace Orion.Authorization
 {
 	/// <summary>
-	/// Service definition: GroupService
+	/// Service definition: GroupService.
 	/// 
 	/// Groups link lists of accounts together which has a common set of permissions and properties
 	/// set against them.

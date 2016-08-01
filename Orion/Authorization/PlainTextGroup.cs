@@ -8,12 +8,15 @@ using Orion.Players;
 
 namespace Orion.Authorization
 {
+	/// <summary>
+	/// Plain-text user group used by the <see cref="PlainTextAccountService"/>.
+	/// </summary>
 	public class PlainTextGroup : IGroup
 	{
-		protected IniData _iniData;
-		protected PlainTextAccountService _service;
+		private IniData _iniData;
+		private PlainTextAccountService _service;
 
-		///<inheritdoc />
+		/// <inheritdoc/>
 		public string Name
 		{
 			get
@@ -27,7 +30,7 @@ namespace Orion.Authorization
 			}
 		}
 
-		///<inheritdoc />
+		/// <inheritdoc/>
 		public string Description
 		{
 			get
@@ -41,15 +44,23 @@ namespace Orion.Authorization
 			}
 		}
 
+		/// <inheritdoc/>
 		public IEnumerable<IUserAccount> Members { get; }
+
+		/// <inheritdoc/>
 		public IEnumerable<IPermission> Permissions { get; }
 
 		/// <summary>
 		/// Gets the computed group file path based on the group name.
 		/// </summary>
-		protected string GroupPath =>
-			 Path.Combine(PlainTextAccountService.UserGroupPrefix, $"{Name.Slugify()}.ini");
+		protected string GroupPath => Path.Combine(PlainTextAccountService.GroupPathPrefix, $"{Name.Slugify()}.ini");
 
+		/// <summary>
+		/// Initializes a new instance of the <see cref="PlainTextGroup"/> class.
+		/// </summary>
+		/// <param name="service">
+		/// A reference to the <see cref="PlainTextAccountService"/> which owns this user group.
+		/// </param>
 		public PlainTextGroup(PlainTextAccountService service)
 		{
 			this._service = service;
@@ -59,6 +70,14 @@ namespace Orion.Authorization
 			this._iniData.Sections.AddSection("Membership");
 		}
 
+		/// <summary>
+		/// Initializes a new instance of the <see cref="PlainTextGroup"/> class with the provided group name, which
+		/// will load the group data from disk.
+		/// </summary>
+		/// <param name="service">
+		/// A reference to the <see cref="PlainTextAccountService"/> which owns this user group.
+		/// </param>
+		/// <param name="groupName">A string containing the group name to load from disk.</param>
 		public PlainTextGroup(PlainTextAccountService service, string groupName)
 			: this(service)
 		{
@@ -71,6 +90,13 @@ namespace Orion.Authorization
 			}
 		}
 
+		/// <summary>
+		/// Initializes a new instance of the <see cref="PlainTextGroup"/> class from the specified I/O stream.
+		/// </summary>
+		/// <param name="service">
+		/// A reference to the <see cref="PlainTextAccountService"/> which owns this user group.
+		/// </param>
+		/// <param name="stream">The I/O stream to load the <see cref="PlainTextGroup"/> data from.</param>
 		public PlainTextGroup(PlainTextAccountService service, Stream stream)
 			: this(service)
 		{
@@ -80,13 +106,14 @@ namespace Orion.Authorization
 			}
 		}
 
+		/// <inheritdoc/>
 		public bool HasMember(IPlayer player)
 		{
 			throw new System.NotImplementedException();
 		}
 
 		/// <summary>
-		/// Saves this plain text group to file in the pre-computed location.
+		/// Saves this plain text group data to file in the pre-computed location.
 		/// </summary>
 		public void Save()
 		{
@@ -97,8 +124,9 @@ namespace Orion.Authorization
 		}
 
 		/// <summary>
-		/// Saves this plain text account into the specified stream.
+		/// Saves this plain text group data into the specified <paramref name="stream"/>.
 		/// </summary>
+		/// <param name="stream">The <see cref="Stream"/> to save the data to.</param>
 		public void ToStream(Stream stream)
 		{
 			var parser = new StreamIniDataParser();

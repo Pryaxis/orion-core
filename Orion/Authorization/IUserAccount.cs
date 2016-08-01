@@ -11,12 +11,12 @@ namespace Orion.Authorization
 	public interface IUserAccount
 	{
 		/// <summary>
-		/// Gets or sets the Orion account name
+		/// Gets or sets the Orion account name.
 		/// </summary>
 		string AccountName { get; set; }
 
 		/// <summary>
-		/// Determines if the user account is a member of the specified group thus inheriting all the group's permissions
+		/// Determines if the user account is a member of the specified group.
 		/// </summary>
 		/// <param name="group">
 		/// A reference to an Orion group to check if the user is a member of.
@@ -32,11 +32,11 @@ namespace Orion.Authorization
 		IEnumerable<IPermission> Permissions { get; }
 
 		/// <summary>
-		/// Determines whether this user has the specified permission, 
+		/// Determines whether this user has the specified permission.
 		/// </summary>
-		/// <param name="permission"></param>
-		/// <param name="inherit"></param>
-		/// <returns></returns>
+		/// <param name="permission">The <see cref="IPermission"/> to check.</param>
+		/// <param name="inherit">Whether or not to include permissions inherited from parent groups.</param>
+		/// <returns>true if the user has the permission, false otherwise.</returns>
 		bool HasPermission(IPermission permission, bool inherit = true);
 
 		/// <summary>
@@ -46,13 +46,13 @@ namespace Orion.Authorization
 		/// A string containing the clear-text password for this user account.
 		/// </param>
 		/// <param name="ignoreExpiry">
-		/// (optional) a flag indicating whether to ignore the password expiry on this account and authenticate anyway.
+		/// (optional) A flag indicating whether to ignore the password expiry on this account and authenticate anyway.
 		/// </param>
 		/// <returns>
 		/// true if authentication succeeded, false otherwise.
 		/// </returns>
 		/// <exception cref="ArgumentNullException">
-		/// Thrown when <paramref name="password"/> is null or empty
+		/// Thrown when <paramref name="password"/> is null or empty.
 		/// </exception>
 		bool Authenticate(string password, bool? ignoreExpiry = false);
 
