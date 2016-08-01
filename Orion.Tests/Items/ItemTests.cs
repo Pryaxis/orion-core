@@ -232,7 +232,7 @@ namespace Orion.Tests.Items
 
 			item.SetPrefix(prefix);
 
-			Assert.IsTrue(item.Prefix != ItemPrefix.None, "Some prefix should have been set.");
+			Assert.AreNotEqual(ItemPrefix.None, item.Prefix, "Some prefix should have been set.");
 		}
 	}
 }

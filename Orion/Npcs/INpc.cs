@@ -41,7 +41,7 @@ namespace Orion.Npcs
 		Vector2 Position { get; set; }
 
 		/// <summary>
-		/// Gets the NPC's <see cref="NpcType"/> instance.
+		/// Gets the NPC's <see cref="NpcType"/>.
 		/// </summary>
 		NpcType Type { get; }
 
@@ -61,9 +61,9 @@ namespace Orion.Npcs
 		void Kill();
 
 		/// <summary>
-		/// Sets the NPC's defaults using a <see cref="NpcType"/> instance.
+		/// Sets the NPC's defaults using an <see cref="NpcType"/>.
 		/// </summary>
-		/// <param name="type">The <see cref="NpcType"/> instance.</param>
+		/// <param name="type">The <see cref="NpcType"/>.</param>
 		void SetDefaults(NpcType type);
 	}
 }

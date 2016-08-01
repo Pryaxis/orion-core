@@ -28,7 +28,7 @@ namespace Orion.Projectiles
 		Vector2 Position { get; set; }
 
 		/// <summary>
-		/// Gets the projectile's <see cref="ProjectileType"/> instance.
+		/// Gets the projectile's <see cref="ProjectileType"/>.
 		/// </summary>
 		ProjectileType Type { get; }
 
@@ -43,9 +43,9 @@ namespace Orion.Projectiles
 		Terraria.Projectile WrappedProjectile { get; }
 
 		/// <summary>
-		/// Sets the projectile's defaults using a <see cref="ProjectileType"/> instance.
+		/// Sets the projectile's defaults using a <see cref="ProjectileType"/>.
 		/// </summary>
-		/// <param name="type">The <see cref="ProjectileType"/> instance.</param>
+		/// <param name="type">The <see cref="ProjectileType"/>.</param>
 		void SetDefaults(ProjectileType type);
 	}
 }

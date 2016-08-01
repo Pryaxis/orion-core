@@ -67,7 +67,7 @@ namespace Orion.Items
 		Vector2 Position { get; set; }
 
 		/// <summary>
-		/// Gets the item's <see cref="ItemPrefix"/> instance.
+		/// Gets the item's <see cref="ItemPrefix"/>.
 		/// </summary>
 		ItemPrefix Prefix { get; }
 
@@ -77,7 +77,7 @@ namespace Orion.Items
 		float ProjectileSpeed { get; set; }
 
 		/// <summary>
-		/// Gets or sets the item's <see cref="ProjectileType"/> instance.
+		/// Gets or sets the item's <see cref="ProjectileType"/>.
 		/// </summary>
 		ProjectileType ProjectileType { get; set; }
 
@@ -132,15 +132,15 @@ namespace Orion.Items
 		Terraria.Item WrappedItem { get; }
 
 		/// <summary>
-		/// Sets the item's defaults using an <see cref="ItemType"/> instance.
+		/// Sets the item's defaults using an <see cref="ItemType"/>.
 		/// </summary>
-		/// <param name="type">The <see cref="ItemType"/> instance.</param>
+		/// <param name="type">The <see cref="ItemType"/>.</param>
 		void SetDefaults(ItemType type);
 
 		/// <summary>
-		/// Tries to set the item's prefix using an <see cref="ItemPrefix"/> instance.
+		/// Tries to set the item's prefix using an <see cref="ItemPrefix"/>.
 		/// </summary>
-		/// <param name="prefix">The <see cref="ItemPrefix"/> instance.</param>
+		/// <param name="prefix">The <see cref="ItemPrefix"/>.</param>
 		void SetPrefix(ItemPrefix prefix);
 	}
 }

@@ -1,6 +1,5 @@
 ﻿using System;
 using NUnit.Framework;
-using Orion.Npcs;
 using Orion.Npcs.Events;
 
 namespace Orion.Tests.Npcs.Events
@@ -11,7 +10,7 @@ namespace Orion.Tests.Npcs.Events
 		[Test]
 		public void Constructor_NullNpc_ThrowsException()
 		{
-			Assert.Throws<ArgumentNullException>(() => new NpcTransformedEventArgs(null, NpcType.None));
+			Assert.Throws<ArgumentNullException>(() => new NpcTransformedEventArgs(null));
 		}
 	}
 }
