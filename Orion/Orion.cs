@@ -33,7 +33,7 @@ namespace Orion
 			InjectionContainer = new StandardKernel(
 				new Framework.Injection.ServiceInjectionModule(serviceMap)
 				);
-
+			
 			InjectionContainer.Bind<Orion>().ToConstant(this);
 		}
 
