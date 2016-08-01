@@ -107,7 +107,19 @@ namespace Orion.Authorization
 		}
 
 		/// <inheritdoc/>
-		public bool HasMember(IPlayer player)
+		public IUserAccount AddMember(IUserAccount userAccount)
+		{
+			throw new System.NotImplementedException();
+		}
+
+		/// <inheritdoc/>
+		public void RemoveMember(IUserAccount player)
+		{
+			throw new System.NotImplementedException();
+		}
+
+		/// <inheritdoc/>
+		public bool HasMember(IUserAccount player)
 		{
 			throw new System.NotImplementedException();
 		}

@@ -42,11 +42,11 @@ namespace Orion.Authorization
 		/// <param name="accountName">
 		/// A string referring to the account name.
 		/// </param>
-		/// <exception cref="InvalidOperationException">
-		/// Thrown when the account name already exists.
-		/// </exception>
 		/// <exception cref="ArgumentNullException">
 		/// Thrown if <paramref name="accountName"/> is null or empty.
+		/// </exception>
+		/// <exception cref="InvalidOperationException">
+		/// Thrown when the account name already exists.
 		/// </exception>
 		IUserAccount AddAccount(string accountName);
 
@@ -87,12 +87,12 @@ namespace Orion.Authorization
 		/// <param name="newPassword">
 		/// A string containing the new clear-text password for the account, if the current password matches.
 		/// </param>
+		/// <exception cref="ArgumentNullException">
+		/// Thrown if <paramref name="currentPassword"/> or <paramref name="newPassword"/> is null or empty.
+		/// </exception>
 		/// <exception cref="InvalidOperationException">
 		/// Thrown if authentication failed on the account specifying <paramref name="currentPassword"/>, or
 		/// <paramref name="newPassword"/> does not meet the password complexity requirements.
-		/// </exception>
-		/// <exception cref="ArgumentNullException">
-		/// Thrown if <paramref name="currentPassword"/> or <paramref name="newPassword"/> is null or empty.
 		/// </exception>
 		void ChangePassword(IUserAccount userAccount, string currentPassword, string newPassword);
 

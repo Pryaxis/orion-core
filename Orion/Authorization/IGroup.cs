@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using Orion.Players;
 
 namespace Orion.Authorization
@@ -33,10 +34,25 @@ namespace Orion.Authorization
 		IEnumerable<IPermission> Permissions { get; }
 
 		/// <summary>
-		/// Determines whether this group contains the specified player.
+		/// Adds an <see cref="IUserAccount"/> to this group's list of members.
 		/// </summary>
-		/// <param name="player">The <see cref="IPlayer"/> to check.</param>
-		/// <returns>true if the group contains the <paramref name="player"/>, false otherwise.</returns>
-		bool HasMember(IPlayer player);
+		/// <param name="userAccount">The user account to add.</param>
+		/// <exception cref="InvalidOperationException">
+		/// Thrown when the <paramref name="userAccount"/> already exists.
+		/// </exception>
+		IUserAccount AddMember(IUserAccount userAccount);
+
+		/// <summary>
+		/// Removes an <see cref="IUserAccount"/> from this group's list of members.
+		/// </summary>
+		/// <param name="userAccount">A reference to the user account to be removed.</param>
+		void RemoveMember(IUserAccount userAccount);
+
+		/// <summary>
+		/// Determines whether this group contains the specified user account.
+		/// </summary>
+		/// <param name="userAccount">The user account to check.</param>
+		/// <returns>true if the group contains the <paramref name="userAccount"/>, false otherwise.</returns>
+		bool HasMember(IUserAccount userAccount);
 	}
 }

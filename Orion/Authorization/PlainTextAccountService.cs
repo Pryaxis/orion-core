@@ -38,7 +38,11 @@ namespace Orion.Authorization
 				{
 					PlainTextUserAccount userAccount = new PlainTextUserAccount(this, fs);
 
-					if (predicate != null && predicate(userAccount))
+					if (predicate == null)
+					{
+						yield return userAccount;
+					}
+					else if (predicate(userAccount))
 					{
 						yield return userAccount;
 					}
@@ -98,7 +102,7 @@ namespace Orion.Authorization
 		{
 			string accountPath;
 
-			if (string.IsNullOrEmpty(accountName) == true)
+			if (String.IsNullOrEmpty(accountName))
 			{
 				throw new ArgumentNullException(nameof(accountName));
 			}
@@ -135,23 +139,73 @@ namespace Orion.Authorization
 		/// <inheritdoc/>
 		public IEnumerable<IGroup> Find(Predicate<IGroup> predicate)
 		{
-			throw new NotImplementedException();
+			foreach (var filePath in Directory.GetFiles(GroupPathPrefix, "*.ini"))
+			{
+				using (FileStream fs = new FileStream(filePath, FileMode.Open, FileAccess.Read, FileShare.Read))
+				{
+					PlainTextGroup group = new PlainTextGroup(this, fs);
+
+					if (predicate == null)
+					{
+						yield return group;
+					}
+					else if (predicate(group))
+					{
+						yield return group;
+					}
+				}
+			}
 		}
 
 		/// <inheritdoc/>
 		public IGroup AddGroup(string groupName, IEnumerable<IUserAccount> initialMembers = null)
 		{
-			throw new NotImplementedException();
+			PlainTextGroup group;
+			string groupPath;
+
+			if (String.IsNullOrEmpty(groupName))
+			{
+				throw new ArgumentNullException(nameof(groupName));
+			}
+
+			groupPath = Path.Combine(GroupPathPrefix, $"{groupName.Slugify()}.ini");
+
+			if (File.Exists(groupPath))
+			{
+				throw new InvalidOperationException($"Group by the name of {groupName} already exists.");
+			}
+
+			group = new PlainTextGroup(this)
+			{
+				Name = groupName
+			};
+
+			if (initialMembers != null)
+			{
+				foreach (IUserAccount a in initialMembers)
+				{
+					group.AddMember(a);
+				}
+			}
+
+			using (FileStream fs = new FileStream(groupPath, FileMode.OpenOrCreate, FileAccess.Write, FileShare.None))
+			{
+				group.ToStream(fs);
+			}
+
+			return group;
 		}
 
 		/// <inheritdoc/>
-		public void DeleteGroup(IGroup @group)
+		public void DeleteGroup(IGroup group)
 		{
-			throw new NotImplementedException();
+			string groupPath = Path.Combine(GroupPathPrefix, $"{group.Name.Slugify()}.ini");
+
+			File.Delete(groupPath);
 		}
 
 		/// <inheritdoc/>
-		public void AddMembers(IGroup @group, params IUserAccount[] userAccounts)
+		public void AddMembers(IGroup group, params IUserAccount[] userAccounts)
 		{
 			throw new NotImplementedException();
 		}
