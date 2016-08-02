@@ -35,7 +35,7 @@ namespace Orion.Items
 		}
 
 		/// <inheritdoc/>
-		public IItem Create(ItemType type, int stackSize = 1, ItemPrefix? prefix = null)
+		public IItem CreateItem(ItemType type, int stackSize = 1, ItemPrefix? prefix = null)
 		{
 			if (stackSize < 0)
 			{
@@ -55,7 +55,7 @@ namespace Orion.Items
 		/// The <see cref="IItem"/> instances are cached in an array. Calling this method multiple times will result
 		/// in the same <see cref="IItem"/> instances as long as Terraria's item array remains unchanged.
 		/// </remarks>
-		public IEnumerable<IItem> Find(Predicate<IItem> predicate = null)
+		public IEnumerable<IItem> FindItems(Predicate<IItem> predicate = null)
 		{
 			var items = new List<IItem>();
 			for (int i = 0; i < _items.Length; ++i)
@@ -70,7 +70,7 @@ namespace Orion.Items
 		}
 
 		/// <inheritdoc/>
-		public IItem Spawn(ItemType type, Vector2 position, int stackSize = 1, ItemPrefix? prefix = null)
+		public IItem SpawnItem(ItemType type, Vector2 position, int stackSize = 1, ItemPrefix? prefix = null)
 		{
 			if (stackSize < 0)
 			{

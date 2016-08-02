@@ -25,6 +25,6 @@ namespace Orion.Projectiles
 		/// </summary>
 		/// <param name="predicate">The predicate.</param>
 		/// <returns>An enumerable collection of <see cref="IProjectile"/> instances.</returns>
-		IEnumerable<IProjectile> Find(Predicate<IProjectile> predicate = null);
+		IEnumerable<IProjectile> FindProjectiles(Predicate<IProjectile> predicate = null);
 	}
 }

@@ -171,12 +171,12 @@ namespace Orion.Tests.Items
 		}
 
 		[TestCaseSource(nameof(CreateTestCases))]
-		public void Create_IsCorrect(ItemType type, int stack, ItemPrefix? prefix)
+		public void CreateItem_IsCorrect(ItemType type, int stack, ItemPrefix? prefix)
 		{
 			using (var orion = new Orion())
 			using (var itemService = new ItemService(orion))
 			{
-				IItem item = itemService.Create(type, stack, prefix);
+				IItem item = itemService.CreateItem(type, stack, prefix);
 
 				Assert.AreEqual(type, item.Type);
 				Assert.AreEqual(stack, item.StackSize);
@@ -185,18 +185,18 @@ namespace Orion.Tests.Items
 		}
 		
 		[TestCase(-1)]
-		public void Create_ParamOutOfRange_ThrowsArgumentOutOfRangeException(int stackSize)
+		public void CreateItem_ParamOutOfRange_ThrowsArgumentOutOfRangeException(int stackSize)
 		{
 			using (var orion = new Orion())
 			using (var itemService = new ItemService(orion))
 			{
-				Assert.Throws<ArgumentOutOfRangeException>(() => itemService.Create(ItemType.IronPickaxe, stackSize));
+				Assert.Throws<ArgumentOutOfRangeException>(() => itemService.CreateItem(ItemType.IronPickaxe, stackSize));
 			}
 		}
 
 		[TestCase(0)]
 		[TestCase(1)]
-		public void Find_Null_ReturnsAll(int populate)
+		public void FindItems_Null_ReturnsAll(int populate)
 		{
 			using (var orion = new Orion())
 			using (var itemService = new ItemService(orion))
@@ -206,7 +206,7 @@ namespace Orion.Tests.Items
 					Terraria.Main.item[i] = new Terraria.Item {active = i < populate};
 				}
 
-				List<IItem> items = itemService.Find().ToList();
+				List<IItem> items = itemService.FindItems().ToList();
 
 				Assert.AreEqual(populate, items.Count);
 				for (int i = 0; i < populate; ++i)
@@ -217,7 +217,7 @@ namespace Orion.Tests.Items
 		}
 
 		[TestCase(1)]
-		public void Find_MultipleTimes_ReturnsSameInstance(int populate)
+		public void FindItems_MultipleTimes_ReturnsSameInstance(int populate)
 		{
 			using (var orion = new Orion())
 			using (var itemService = new ItemService(orion))
@@ -227,8 +227,8 @@ namespace Orion.Tests.Items
 					Terraria.Main.item[i] = new Terraria.Item { active = i < populate };
 				}
 
-				List<IItem> items = itemService.Find().ToList();
-				List<IItem> items2 = itemService.Find().ToList();
+				List<IItem> items = itemService.FindItems().ToList();
+				List<IItem> items2 = itemService.FindItems().ToList();
 				
 				for (int i = 0; i < populate; ++i)
 				{
@@ -238,7 +238,7 @@ namespace Orion.Tests.Items
 		}
 
 		[Test, TestCaseSource(nameof(FindTestCases))]
-		public void Find_IsCorrect(Predicate<IItem> predicate)
+		public void FindItems_IsCorrect(Predicate<IItem> predicate)
 		{
 			using (var orion = new Orion())
 			using (var itemService = new ItemService(orion))
@@ -248,7 +248,7 @@ namespace Orion.Tests.Items
 					Terraria.Main.item[i] = new Terraria.Item {active = true, type = i};
 				}
 
-				IEnumerable<IItem> items = itemService.Find(predicate);
+				IEnumerable<IItem> items = itemService.FindItems(predicate);
 
 				foreach (IItem item in items)
 				{
@@ -258,12 +258,12 @@ namespace Orion.Tests.Items
 		}
 
 		[TestCaseSource(nameof(SpawnTestCases))]
-		public void Spawn_IsCorrect(ItemType type, int stack, ItemPrefix? prefix)
+		public void SpawnItem_IsCorrect(ItemType type, int stack, ItemPrefix? prefix)
 		{
 			using (var orion = new Orion())
 			using (var itemService = new ItemService(orion))
 			{
-				IItem item = itemService.Spawn(type, new Vector2(1000, 2000), stack, prefix);
+				IItem item = itemService.SpawnItem(type, new Vector2(1000, 2000), stack, prefix);
 
 				Assert.AreEqual(type, item.Type);
 				Assert.AreEqual(stack, item.StackSize);
@@ -280,7 +280,7 @@ namespace Orion.Tests.Items
 			using (var itemService = new ItemService(orion))
 			{
 				Assert.Throws<ArgumentOutOfRangeException>(
-					() => itemService.Spawn(ItemType.IronPickaxe, Vector2.Zero, stackSize));
+					() => itemService.SpawnItem(ItemType.IronPickaxe, Vector2.Zero, stackSize));
 			}
 		}
 	}

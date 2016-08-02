@@ -42,7 +42,7 @@ namespace Orion.Players
 		/// The <see cref="IPlayer"/> instances are cached in an array. Calling this method multiple times will result
 		/// in the same <see cref="IPlayer"/> instances as long as Terraria's player array remains unchanged.
 		/// </remarks>
-		public IEnumerable<IPlayer> Find(Predicate<IPlayer> predicate = null)
+		public IEnumerable<IPlayer> FindPlayers(Predicate<IPlayer> predicate = null)
 		{
 			var players = new List<IPlayer>();
 			for (int i = 0; i < _players.Length; i++)

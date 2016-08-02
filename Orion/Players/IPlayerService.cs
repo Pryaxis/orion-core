@@ -30,6 +30,6 @@ namespace Orion.Players
 		/// </summary>
 		/// <param name="predicate">The predicate.</param>
 		/// <returns>An enumerable collection of <see cref="IPlayer"/> instances.</returns>
-		IEnumerable<IPlayer> Find(Predicate<IPlayer> predicate = null);
+		IEnumerable<IPlayer> FindPlayers(Predicate<IPlayer> predicate = null);
 	}
 }

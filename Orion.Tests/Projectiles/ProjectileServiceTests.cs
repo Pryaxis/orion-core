@@ -93,7 +93,7 @@ namespace Orion.Tests.Projectiles
 
 		[TestCase(0)]
 		[TestCase(1)]
-		public void Find_Null_ReturnsAll(int populate)
+		public void FindProjectiles_Null_ReturnsAll(int populate)
 		{
 			using (var orion = new Orion())
 			using (var projectileService = new ProjectileService(orion))
@@ -103,7 +103,7 @@ namespace Orion.Tests.Projectiles
 					Terraria.Main.projectile[i] = new Terraria.Projectile { active = i < populate };
 				}
 
-				List<IProjectile> projectiles = projectileService.Find().ToList();
+				List<IProjectile> projectiles = projectileService.FindProjectiles().ToList();
 
 				Assert.AreEqual(populate, projectiles.Count);
 				for (int i = 0; i < populate; ++i)
@@ -114,7 +114,7 @@ namespace Orion.Tests.Projectiles
 		}
 
 		[TestCase(1)]
-		public void Find_MultipleTimes_ReturnsSameInstance(int populate)
+		public void FindProjectiles_MultipleTimes_ReturnsSameInstance(int populate)
 		{
 			using (var orion = new Orion())
 			using (var projectileService = new ProjectileService(orion))
@@ -124,8 +124,8 @@ namespace Orion.Tests.Projectiles
 					Terraria.Main.projectile[i] = new Terraria.Projectile { active = i < populate };
 				}
 
-				List<IProjectile> projectiles = projectileService.Find().ToList();
-				List<IProjectile> projectiles2 = projectileService.Find().ToList();
+				List<IProjectile> projectiles = projectileService.FindProjectiles().ToList();
+				List<IProjectile> projectiles2 = projectileService.FindProjectiles().ToList();
 
 				for (int i = 0; i < populate; ++i)
 				{
@@ -135,7 +135,7 @@ namespace Orion.Tests.Projectiles
 		}
 
 		[Test, TestCaseSource(nameof(FindTestCases))]
-		public void Find_IsCorrect(Predicate<IProjectile> predicate)
+		public void FindProjectiles_IsCorrect(Predicate<IProjectile> predicate)
 		{
 			using (var orion = new Orion())
 			using (var projectileService = new ProjectileService(orion))
@@ -145,7 +145,7 @@ namespace Orion.Tests.Projectiles
 					Terraria.Main.projectile[i] = new Terraria.Projectile { active = true, position = new Vector2(i, 0) };
 				}
 
-				IEnumerable<IProjectile> projectiles = projectileService.Find(predicate);
+				IEnumerable<IProjectile> projectiles = projectileService.FindProjectiles(predicate);
 
 				foreach (IProjectile projectile in projectiles)
 				{

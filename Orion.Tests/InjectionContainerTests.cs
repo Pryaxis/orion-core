@@ -2,7 +2,6 @@
 using Ninject;
 using NUnit.Framework;
 using Orion.Framework;
-using Orion.Framework.Injection;
 using Orion.World;
 using OTAPI.Tile;
 

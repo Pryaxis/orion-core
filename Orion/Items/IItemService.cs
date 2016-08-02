@@ -30,14 +30,14 @@ namespace Orion.Items
 		/// <param name="prefix">The <see cref="ItemPrefix"/>.</param>
 		/// <returns>The resulting <see cref="IItem"/> instance.</returns>
 		/// <exception cref="ArgumentOutOfRangeException"><paramref name="stackSize"/> was negative.</exception>
-		IItem Create(ItemType type, int stackSize = 1, ItemPrefix? prefix = null);
+		IItem CreateItem(ItemType type, int stackSize = 1, ItemPrefix? prefix = null);
 
 		/// <summary>
 		/// Finds all <see cref="IItem"/> instances in the world, optionally matching a predicate.
 		/// </summary>
 		/// <param name="predicate">The predicate.</param>
 		/// <returns>An enumerable collection of <see cref="IItem"/> instances.</returns>
-		IEnumerable<IItem> Find(Predicate<IItem> predicate = null);
+		IEnumerable<IItem> FindItems(Predicate<IItem> predicate = null);
 
 		/// <summary>
 		/// Spawns a new <see cref="IItem"/> instance using the specified <see cref="ItemType"/> and position in the
@@ -49,6 +49,6 @@ namespace Orion.Items
 		/// <param name="prefix">The <see cref="ItemPrefix"/>.</param>
 		/// <returns>The resulting <see cref="IItem"/> instance.</returns>
 		/// <exception cref="ArgumentOutOfRangeException"><paramref name="stackSize"/> was negative.</exception>
-		IItem Spawn(ItemType type, Vector2 position, int stackSize = 1, ItemPrefix? prefix = null);
+		IItem SpawnItem(ItemType type, Vector2 position, int stackSize = 1, ItemPrefix? prefix = null);
 	}
 }

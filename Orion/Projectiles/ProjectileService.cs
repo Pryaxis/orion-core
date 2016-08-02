@@ -39,7 +39,7 @@ namespace Orion.Projectiles
 		/// result in the same <see cref="IProjectile"/> instances as long as Terraria's projectile array remains
 		/// unchanged.
 		/// </remarks>
-		public IEnumerable<IProjectile> Find(Predicate<IProjectile> predicate = null)
+		public IEnumerable<IProjectile> FindProjectiles(Predicate<IProjectile> predicate = null)
 		{
 			var projectiles = new List<IProjectile>();
 			for (int i = 0; i < _projectiles.Length; i++)

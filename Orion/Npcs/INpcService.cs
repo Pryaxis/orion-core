@@ -46,7 +46,7 @@ namespace Orion.Npcs
 		/// </summary>
 		/// <param name="predicate">The predicate.</param>
 		/// <returns>An enumerable collection of <see cref="INpc"/> instances.</returns>
-		IEnumerable<INpc> Find(Predicate<INpc> predicate = null);
+		IEnumerable<INpc> FindNpcs(Predicate<INpc> predicate = null);
 
 		/// <summary>
 		/// Spawns a new <see cref="INpc"/> instance with the specified type ID at a position in the world.
@@ -55,6 +55,6 @@ namespace Orion.Npcs
 		/// <param name="position">The position in the world.</param>
 		/// <returns>The resulting <see cref="INpc"/> instance.</returns>
 		/// <exception cref="ArgumentOutOfRangeException"><paramref name="type"/> was an invalid NPC type.</exception>
-		INpc Spawn(int type, Vector2 position);
+		INpc SpawnNpc(int type, Vector2 position);
 	}
 }

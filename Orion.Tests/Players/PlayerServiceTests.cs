@@ -14,7 +14,7 @@ namespace Orion.Tests.Players
 
 		[TestCase(0)]
 		[TestCase(1)]
-		public void Find_Null_ReturnsAll(int populate)
+		public void FindPlayers_Null_ReturnsAll(int populate)
 		{
 			using (var orion = new Orion())
 			using (var playerService = new PlayerService(orion))
@@ -24,7 +24,7 @@ namespace Orion.Tests.Players
 					Terraria.Main.player[i] = new Terraria.Player {active = i < populate};
 				}
 
-				List<IPlayer> players = playerService.Find().ToList();
+				List<IPlayer> players = playerService.FindPlayers().ToList();
 
 				Assert.AreEqual(populate, players.Count);
 				for (int i = 0; i < populate; ++i)
@@ -35,7 +35,7 @@ namespace Orion.Tests.Players
 		}
 
 		[TestCase(1)]
-		public void Find_MultipleTimes_ReturnsSameInstance(int populate)
+		public void FindPlayers_MultipleTimes_ReturnsSameInstance(int populate)
 		{
 			using (var orion = new Orion())
 			using (var playerService = new PlayerService(orion))
@@ -45,8 +45,8 @@ namespace Orion.Tests.Players
 					Terraria.Main.player[i] = new Terraria.Player { active = i < populate };
 				}
 
-				List<IPlayer> players = playerService.Find().ToList();
-				List<IPlayer> players2 = playerService.Find().ToList();
+				List<IPlayer> players = playerService.FindPlayers().ToList();
+				List<IPlayer> players2 = playerService.FindPlayers().ToList();
 
 				for (int i = 0; i < populate; ++i)
 				{
@@ -56,7 +56,7 @@ namespace Orion.Tests.Players
 		}
 
 		[Test, TestCaseSource(nameof(FindTestCases))]
-		public void Find_IsCorrect(Predicate<IPlayer> predicate)
+		public void FindPlayers_IsCorrect(Predicate<IPlayer> predicate)
 		{
 			using (var orion = new Orion())
 			using (var playerService = new PlayerService(orion))
@@ -66,7 +66,7 @@ namespace Orion.Tests.Players
 					Terraria.Main.player[i] = new Terraria.Player {active = true, position = new Vector2(i, 0)};
 				}
 
-				List<IPlayer> players = playerService.Find(predicate).ToList();
+				List<IPlayer> players = playerService.FindPlayers(predicate).ToList();
 				
 				foreach (IPlayer player in players)
 				{

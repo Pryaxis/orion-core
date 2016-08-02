@@ -2,7 +2,6 @@
 using Orion.Framework;
 using System;
 using System.IO;
-using System.Reflection;
 using Terraria;
 
 namespace Orion
@@ -26,13 +25,10 @@ namespace Orion
 		public Orion()
 		{
 			CreateDirectories();
-			LoadPluginAssemblies();
 
 			this.serviceMap = new ServiceMap();
 
-			InjectionContainer = new StandardKernel(
-				new Framework.Injection.ServiceInjectionModule(serviceMap)
-				);
+			InjectionContainer = new StandardKernel(new ServiceInjectionModule(serviceMap));
 			
 			InjectionContainer.Bind<Orion>().ToConstant(this);
 		}
@@ -59,20 +55,6 @@ namespace Orion
 					InjectionContainer.Dispose();
 				}
 				_disposed = true;
-			}
-		}
-
-		private void LoadPluginAssemblies()
-		{
-			foreach (string asmPath in Directory.GetFiles(PluginDirectory, "*.dll"))
-			{
-				try
-				{
-					Assembly.LoadFrom(asmPath);
-				}
-				catch (BadImageFormatException)
-				{
-				}
 			}
 		}
 
