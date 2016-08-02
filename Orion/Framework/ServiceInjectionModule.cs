@@ -8,27 +8,34 @@ using Ninject.Modules;
 namespace Orion.Framework
 {
 	/// <summary>
-	/// Injects all the base Orion services according what's present in the service map. The service map may be
-	/// overridden, in which case the the service will be re-bound.
+	/// A Ninject module that binds service interfaces to implementations.
 	/// </summary>
 	public class ServiceInjectionModule : NinjectModule
 	{
 		// TODO: kill off service map?
 		protected ServiceMap serviceMap;
 
+		/// <summary>
+		/// Initializes a new instance of the <see cref="ServiceInjectionModule"/> class.
+		/// </summary>
 		public ServiceInjectionModule(ServiceMap serviceMap)
 		{
 			this.serviceMap = serviceMap;
 		}
 
+		/// <inheritdoc/>
+		/// <remarks>
+		/// This will scan the Orion assembly and all assemblies in the plugins directory.
+		/// </remarks>
 		public override void Load()
 		{
-			IEnumerable<Type> serviceTypes = LoadAssemblies(Orion.PluginDirectory)
-				.Concat(new[] {Assembly.GetExecutingAssembly()})
+			IEnumerable<Type> serviceTypes = new[] {Assembly.GetExecutingAssembly()}
+				.Concat(LoadAssemblies(Orion.PluginDirectory))
 				.SelectMany(a => a.GetExportedTypes())
 				.Where(t => t.IsSubclassOf(typeof(ServiceBase)));
 			foreach (Type serviceType in serviceTypes)
 			{
+				Bind(serviceType).To(serviceType).InSingletonScope();
 				foreach (Type interfaceType in serviceType.GetInterfaces())
 				{
 					Bind(interfaceType).To(serviceType).InSingletonScope();
@@ -49,14 +56,14 @@ namespace Orion.Framework
 				);*/
 		}
 
-		private IEnumerable<Assembly> LoadAssemblies(string path)
+		private static IEnumerable<Assembly> LoadAssemblies(string path)
 		{
 			foreach (string assemblyPath in Directory.EnumerateFiles(path, "*.dll"))
 			{
 				Assembly assembly;
 				try
 				{
-					assembly = Assembly.LoadFile(assemblyPath);
+					assembly = Assembly.LoadFrom(assemblyPath);
 				}
 				catch (BadImageFormatException)
 				{
