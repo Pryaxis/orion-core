@@ -39,8 +39,7 @@ namespace Orion.Tests.Projectiles
 		{
 			var terrariaProjectile = new Terraria.Projectile();
 			FieldInfo terrariaProjectileField = typeof(Terraria.Projectile).GetField(terrariaProjectileFieldName);
-			terrariaProjectileField.SetValue(
-				terrariaProjectile, Convert.ChangeType(value, terrariaProjectileField.FieldType));
+			terrariaProjectileField.SetValue(terrariaProjectile, value);
 			var projectile = new Projectile(terrariaProjectile);
 			PropertyInfo projectileProperty = typeof(Projectile).GetProperty(projectilePropertyName);
 
@@ -58,7 +57,7 @@ namespace Orion.Tests.Projectiles
 			var projectile = new Projectile(terrariaProjectile);
 			PropertyInfo projectileProperty = typeof(Projectile).GetProperty(projectilePropertyName);
 
-			projectileProperty.SetValue(projectile, Convert.ChangeType(value, projectileProperty.PropertyType));
+			projectileProperty.SetValue(projectile, value);
 
 			Assert.AreEqual(value, terrariaProjectileField.GetValue(terrariaProjectile));
 		}

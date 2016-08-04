@@ -12,6 +12,16 @@ namespace Orion.Npcs
 	public interface INpcService : IService
 	{
 		/// <summary>
+		/// Gets or sets the base NPC spawning limit.
+		/// </summary>
+		int BaseNpcSpawningLimit { get; set; }
+
+		/// <summary>
+		/// Gets or sets the base NPC spawning rate.
+		/// </summary>
+		int BaseNpcSpawningRate { get; set; }
+
+		/// <summary>
 		/// Occurs after an <see cref="INpc"/> instance dropped loot.
 		/// </summary>
 		event EventHandler<NpcDroppedLootEventArgs> NpcDroppedLoot;

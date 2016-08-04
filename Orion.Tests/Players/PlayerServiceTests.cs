@@ -19,7 +19,7 @@ namespace Orion.Tests.Players
 			using (var orion = new Orion())
 			using (var playerService = new PlayerService(orion))
 			{
-				for (int i = 0; i < Terraria.Main.player.Length; ++i)
+				for (var i = 0; i < Terraria.Main.player.Length; ++i)
 				{
 					Terraria.Main.player[i] = new Terraria.Player {active = i < populate};
 				}
@@ -27,7 +27,7 @@ namespace Orion.Tests.Players
 				List<IPlayer> players = playerService.FindPlayers().ToList();
 
 				Assert.AreEqual(populate, players.Count);
-				for (int i = 0; i < populate; ++i)
+				for (var i = 0; i < populate; ++i)
 				{
 					Assert.AreSame(Terraria.Main.player[i], players[i].WrappedPlayer);
 				}
@@ -40,7 +40,7 @@ namespace Orion.Tests.Players
 			using (var orion = new Orion())
 			using (var playerService = new PlayerService(orion))
 			{
-				for (int i = 0; i < Terraria.Main.player.Length; ++i)
+				for (var i = 0; i < Terraria.Main.player.Length; ++i)
 				{
 					Terraria.Main.player[i] = new Terraria.Player { active = i < populate };
 				}
@@ -48,7 +48,7 @@ namespace Orion.Tests.Players
 				List<IPlayer> players = playerService.FindPlayers().ToList();
 				List<IPlayer> players2 = playerService.FindPlayers().ToList();
 
-				for (int i = 0; i < populate; ++i)
+				for (var i = 0; i < populate; ++i)
 				{
 					Assert.AreSame(players[i], players2[i]);
 				}
@@ -61,7 +61,7 @@ namespace Orion.Tests.Players
 			using (var orion = new Orion())
 			using (var playerService = new PlayerService(orion))
 			{
-				for (int i = 0; i < Terraria.Main.player.Length; ++i)
+				for (var i = 0; i < Terraria.Main.player.Length; ++i)
 				{
 					Terraria.Main.player[i] = new Terraria.Player {active = true, position = new Vector2(i, 0)};
 				}

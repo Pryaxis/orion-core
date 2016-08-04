@@ -1,4 +1,5 @@
-﻿using NUnit.Framework;
+﻿using System.Reflection;
+using NUnit.Framework;
 using Orion.World;
 
 namespace Orion.Tests.World
@@ -6,6 +7,55 @@ namespace Orion.Tests.World
 	[TestFixture]
 	public class WorldServiceTests
 	{
+		// NOTE: cannot test WorldService.IsExpertMode since it requires an active world file
+
+		private static readonly object[] GetPropertyTestCases =
+		{
+			new object[] {nameof(WorldService.IsBloodMoon), nameof(Terraria.Main.bloodMoon), true},
+			new object[] {nameof(WorldService.IsDaytime), nameof(Terraria.Main.dayTime), false},
+			new object[] {nameof(WorldService.IsEclipse), nameof(Terraria.Main.eclipse), true},
+			new object[] {nameof(WorldService.Time), nameof(Terraria.Main.time), 0.0}
+		};
+
+		private static readonly object[] SetPropertyTestCases =
+		{
+			new object[] {nameof(WorldService.IsBloodMoon), nameof(Terraria.Main.bloodMoon), true},
+			new object[] {nameof(WorldService.IsDaytime), nameof(Terraria.Main.dayTime), false},
+			new object[] {nameof(WorldService.IsEclipse), nameof(Terraria.Main.eclipse), true},
+			new object[] {nameof(WorldService.Time), nameof(Terraria.Main.time), 0.0}
+		};
+
+		[TestCaseSource(nameof(GetPropertyTestCases))]
+		public void GetProperty_IsCorrect(string worldServicePropertyName, string terrariaMainFieldName, object value)
+		{
+			using (var orion = new Orion())
+			using (var worldService = new WorldService(orion))
+			{
+				FieldInfo terrariaMainField = typeof(Terraria.Main).GetField(terrariaMainFieldName);
+				terrariaMainField.SetValue(null, value);
+				PropertyInfo worldServiceProperty = typeof(WorldService).GetProperty(worldServicePropertyName);
+
+				object actualValue = worldServiceProperty.GetValue(worldService);
+
+				Assert.AreEqual(value, actualValue);
+			}
+		}
+
+		[TestCaseSource(nameof(SetPropertyTestCases))]
+		public void SetProperty_IsCorrect(string worldServicePropertyName, string terrariaMainFieldName, object value)
+		{
+			using (var orion = new Orion())
+			using (var worldService = new WorldService(orion))
+			{
+				FieldInfo terrariaMainField = typeof(Terraria.Main).GetField(terrariaMainFieldName);
+				PropertyInfo worldServiceProperty = typeof(WorldService).GetProperty(worldServicePropertyName);
+
+				worldServiceProperty.SetValue(worldService, value);
+
+				Assert.AreEqual(value, terrariaMainField.GetValue(null));
+			}
+		}
+
 		[TestCase(100, 100)]
 		public void MeteorDropping_IsCorrect(int x, int y)
 		{
@@ -19,7 +69,7 @@ namespace Orion.Tests.World
 						Terraria.Main.tile[i, j] = new Terraria.Tile();
 					}
 				}
-				bool eventOccurred = false;
+				var eventOccurred = false;
 				worldService.MeteorDropping += (sender, args) =>
 				{
 					eventOccurred = true;
@@ -29,7 +79,7 @@ namespace Orion.Tests.World
 
 				Terraria.WorldGen.meteor(x, y);
 
-				Assert.IsTrue(eventOccurred, "MeteorDropping event should have occurred.");
+				Assert.IsTrue(eventOccurred);
 			}
 		}
 
@@ -50,7 +100,7 @@ namespace Orion.Tests.World
 
 				Terraria.WorldGen.meteor(x, y);
 
-				bool foundMeteor = false;
+				var foundMeteor = false;
 				for (int i = x - 50; i < x + 50; ++i)
 				{
 					for (int j = y - 50; j < y + 50; ++j)
@@ -62,7 +112,7 @@ namespace Orion.Tests.World
 						}
 					}
 				}
-				Assert.IsFalse(foundMeteor, "Meteor should not have dropped.");
+				Assert.IsFalse(foundMeteor);
 			}
 		}
 
@@ -87,7 +137,7 @@ namespace Orion.Tests.World
 
 				Terraria.WorldGen.meteor(x, y);
 
-				bool foundMeteor = false;
+				var foundMeteor = false;
 				for (int i = newX - 50; i < newX + 50; ++i)
 				{
 					for (int j = newY - 50; j < newY + 50; ++j)
@@ -99,7 +149,7 @@ namespace Orion.Tests.World
 						}
 					}
 				}
-				Assert.IsTrue(foundMeteor, "Meteor should have been moved.");
+				Assert.IsTrue(foundMeteor);
 			}
 		}
 
@@ -112,16 +162,16 @@ namespace Orion.Tests.World
 			{
 				Terraria.Main.worldName = "";
 				Terraria.WorldGen.saveLock = false;
-				bool eventOccurred = false;
+				var eventOccurred = false;
 				worldService.WorldSaving += (sender, args) =>
 				{
 					eventOccurred = true;
 					Assert.AreEqual(resetTime, args.ResetTime);
 				};
 
-				Terraria.IO.WorldFile.saveWorld(false, resetTime);
+				worldService.Save(resetTime);
 
-				Assert.IsTrue(eventOccurred, "WorldSaving event should have occurred.");
+				Assert.IsTrue(eventOccurred);
 			}
 		}
 
@@ -135,9 +185,9 @@ namespace Orion.Tests.World
 				Terraria.WorldGen.saveLock = false;
 				worldService.WorldSaving += (sender, args) => args.Handled = true;
 
-				Terraria.IO.WorldFile.saveWorld(false, resetTime);
+				worldService.Save(resetTime);
 
-				Assert.AreNotEqual("World", Terraria.Main.worldName);
+				Assert.AreNotEqual("World", Terraria.Main.worldName, "World should not have saved.");
 			}
 		}
 
@@ -153,7 +203,7 @@ namespace Orion.Tests.World
 				Terraria.WorldGen.saveLock = false;
 				worldService.WorldSaving += (sender, args) => args.ResetTime = newResetTime;
 
-				Terraria.IO.WorldFile.saveWorld(false, resetTime);
+				worldService.Save(resetTime);
 
 				Assert.AreEqual(newResetTime, Terraria.IO.WorldFile.tempTime == 13500.0);
 			}
@@ -166,16 +216,81 @@ namespace Orion.Tests.World
 			using (var orion = new Orion())
 			using (var worldService = new WorldService(orion))
 			{
-				bool eventOccurred = false;
+				var eventOccurred = false;
 				worldService.WorldSaved += (sender, args) =>
 				{
 					eventOccurred = true;
 					Assert.AreEqual(resetTime, args.ResetTime);
 				};
 
-				Terraria.IO.WorldFile.saveWorld(false, resetTime);
+				worldService.Save(resetTime);
 
-				Assert.IsTrue(eventOccurred, "WorldSaved event should have occurred.");
+				Assert.IsTrue(eventOccurred);
+			}
+		}
+
+		[TestCase(true)]
+		[TestCase(false)]
+		public void Save_IsCorrect(bool resetTime)
+		{
+			using (var orion = new Orion())
+			using (var worldService = new WorldService(orion))
+			{
+				Terraria.Main.time = 0.0;
+				Terraria.Main.worldName = "";
+				Terraria.IO.WorldFile.tempTime = 0.0;
+				Terraria.WorldGen.saveLock = false;
+
+				worldService.Save(resetTime);
+
+				Assert.AreEqual(resetTime, Terraria.IO.WorldFile.tempTime == 13500.0);
+				Assert.AreEqual("World", Terraria.Main.worldName, "World should have saved.");
+			}
+		}
+
+		[TestCase(100, 100)]
+		public void DropMeteor_IsCorrect(int x, int y)
+		{
+			using (var orion = new Orion())
+			using (var worldService = new WorldService(orion))
+			{
+				for (int i = x - 50; i < x + 50; ++i)
+				{
+					for (int j = y - 50; j < y + 50; ++j)
+					{
+						Terraria.Main.tile[i, j] = new Terraria.Tile();
+					}
+				}
+
+				worldService.DropMeteor(x, y);
+
+				var foundMeteor = false;
+				for (int i = x - 50; i < x + 50; ++i)
+				{
+					for (int j = y - 50; j < y + 50; ++j)
+					{
+						if (Terraria.Main.tile[i, j].type == Terraria.ID.TileID.Meteorite)
+						{
+							foundMeteor = true;
+							break;
+						}
+					}
+				}
+				Assert.IsTrue(foundMeteor);
+			}
+		}
+
+		[Test]
+		public void SettleLiquids_IsCorrect()
+		{
+			using (var orion = new Orion())
+			using (var worldService = new WorldService(orion))
+			{
+				Terraria.Liquid.panicMode = false;
+
+				worldService.SettleLiquids();
+
+				Assert.IsTrue(Terraria.Liquid.panicMode);
 			}
 		}
 	}

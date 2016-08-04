@@ -22,8 +22,8 @@ namespace Orion.Items
 		event EventHandler<ItemSettingDefaultsEventArgs> ItemSettingDefaults;
 
 		/// <summary>
-		/// Creates a new <see cref="IItem"/> instance using the specified <see cref="ItemType"/>, optionally with
-		/// custom stack size and <see cref="ItemPrefix"/>.
+		/// Creates a new <see cref="IItem"/> instance using the specified <see cref="ItemType"/>, optionally with the
+		/// specified stack size and <see cref="ItemPrefix"/>.
 		/// </summary>
 		/// <param name="type">The <see cref="ItemType"/>.</param>
 		/// <param name="stackSize">The stack size.</param>
@@ -40,8 +40,8 @@ namespace Orion.Items
 		IEnumerable<IItem> FindItems(Predicate<IItem> predicate = null);
 
 		/// <summary>
-		/// Spawns a new <see cref="IItem"/> instance using the specified <see cref="ItemType"/> and position in the
-		/// world, optionally with custom stack size and <see cref="ItemPrefix"/>.
+		/// Spawns a new <see cref="IItem"/> instance using the specified <see cref="ItemType"/> at the position in the
+		/// world, optionally with the specified stack size and <see cref="ItemPrefix"/>.
 		/// </summary>
 		/// <param name="type">The <see cref="ItemType"/>.</param>
 		/// <param name="position">The position in the world.</param>

@@ -17,7 +17,42 @@ namespace Orion.World
 		public event EventHandler<HardmodeTileUpdatingEventArgs> HardmodeTileUpdating;
 
 		/// <inheritdoc/>
+		public bool IsBloodMoon
+		{
+			get { return Terraria.Main.bloodMoon; }
+			set { Terraria.Main.bloodMoon = value; }
+		}
+
+		/// <inheritdoc/>
+		public bool IsDaytime
+		{
+			get { return Terraria.Main.dayTime; }
+			set { Terraria.Main.dayTime = value; }
+		}
+
+		/// <inheritdoc/>
+		public bool IsEclipse
+		{
+			get { return Terraria.Main.eclipse; }
+			set { Terraria.Main.eclipse = value; }
+		}
+
+		/// <inheritdoc/>
+		public bool IsExpertMode
+		{
+			get { return Terraria.Main.expertMode; }
+			set { Terraria.Main.expertMode = value; }
+		}
+
+		/// <inheritdoc/>
 		public event EventHandler<MeteorDroppingEventArgs> MeteorDropping;
+
+		/// <inheritdoc/>
+		public double Time
+		{
+			get { return Terraria.Main.time; }
+			set { Terraria.Main.time = value; }
+		}
 
 		/// <inheritdoc/>
 		public event EventHandler<WorldSavedEventArgs> WorldSaved;
@@ -39,28 +74,26 @@ namespace Orion.World
 		}
 
 		/// <inheritdoc/>
-		public void BreakBlock(int x, int y)
-		{
-			Terraria.WorldGen.KillTile(x, y);
-		}
+		public void BreakBlock(int x, int y) => Terraria.WorldGen.KillTile(x, y);
 
 		/// <inheritdoc/>
-		public void BreakWall(int x, int y)
-		{
-			Terraria.WorldGen.KillWall(x, y);
-		}
+		public void BreakWall(int x, int y) => Terraria.WorldGen.KillWall(x, y);
 
 		/// <inheritdoc/>
-		public void PlaceBlock(int x, int y, ushort type, int style = 0)
-		{
+		public void DropMeteor(int x, int y) => Terraria.WorldGen.meteor(x, y);
+
+		/// <inheritdoc/>
+		public void PlaceBlock(int x, int y, ushort type, int style = 0) =>
 			Terraria.WorldGen.PlaceTile(x, y, type, style: style);
-		}
 
 		/// <inheritdoc/>
-		public void PlaceWall(int x, int y, byte type)
-		{
-			Terraria.WorldGen.PlaceWall(x, y, type);
-		}
+		public void PlaceWall(int x, int y, byte type) => Terraria.WorldGen.PlaceWall(x, y, type);
+
+		/// <inheritdoc/>
+		public void Save(bool resetTime = false) => Terraria.IO.WorldFile.saveWorld(false, resetTime);
+
+		/// <inheritdoc/>
+		public void SettleLiquids() => Terraria.Liquid.StartPanic();
 
 		/// <inheritdoc/>
 		protected override void Dispose(bool disposing)

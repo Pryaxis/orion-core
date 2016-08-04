@@ -24,7 +24,7 @@ namespace Orion.Tests.Projectiles
 			{
 				var terrariaProjectile = new Terraria.Projectile();
 				var projectile = new Projectile(terrariaProjectile);
-				bool eventOccurred = false;
+				var eventOccurred = false;
 				projectileService.ProjectileSetDefaults += (sender, args) =>
 				{
 					eventOccurred = true;
@@ -33,7 +33,7 @@ namespace Orion.Tests.Projectiles
 
 				projectile.SetDefaults(type);
 
-				Assert.IsTrue(eventOccurred, "SetDefaults event should have occurred.");
+				Assert.IsTrue(eventOccurred);
 			}
 		}
 
@@ -45,7 +45,7 @@ namespace Orion.Tests.Projectiles
 			{
 				var terrariaProjectile = new Terraria.Projectile();
 				var projectile = new Projectile(terrariaProjectile);
-				bool eventOccurred = false;
+				var eventOccurred = false;
 				projectileService.ProjectileSettingDefaults += (sender, args) =>
 				{
 					eventOccurred = true;
@@ -55,23 +55,23 @@ namespace Orion.Tests.Projectiles
 
 				projectile.SetDefaults(type);
 
-				Assert.IsTrue(eventOccurred, "SettingDefaults event should have occurred.");
+				Assert.IsTrue(eventOccurred);
 			}
 		}
 
 		[TestCaseSource(nameof(ProjectileSettingDefaultsTestCases))]
-		public void ProjectileSettingDefaults_ModifiesType(ProjectileType type)
+		public void ProjectileSettingDefaults_ModifiesType(ProjectileType newType)
 		{
 			using (var orion = new Orion())
 			using (var projectileService = new ProjectileService(orion))
 			{
 				var terrariaProjectile = new Terraria.Projectile();
 				var projectile = new Projectile(terrariaProjectile);
-				projectileService.ProjectileSettingDefaults += (sender, args) => args.Type = type;
+				projectileService.ProjectileSettingDefaults += (sender, args) => args.Type = newType;
 
 				projectile.SetDefaults(ProjectileType.None);
 
-				Assert.AreEqual(type, projectile.Type);
+				Assert.AreEqual(newType, projectile.Type);
 			}
 		}
 
@@ -87,7 +87,7 @@ namespace Orion.Tests.Projectiles
 
 				projectile.SetDefaults(type);
 
-				Assert.AreEqual(ProjectileType.None, projectile.Type);
+				Assert.AreEqual(ProjectileType.None, projectile.Type, "SetDefaults should not have occurred.");
 			}
 		}
 
@@ -98,15 +98,15 @@ namespace Orion.Tests.Projectiles
 			using (var orion = new Orion())
 			using (var projectileService = new ProjectileService(orion))
 			{
-				for (int i = 0; i < Terraria.Main.projectile.Length; i++)
+				for (var i = 0; i < Terraria.Main.projectile.Length; i++)
 				{
-					Terraria.Main.projectile[i] = new Terraria.Projectile { active = i < populate };
+					Terraria.Main.projectile[i] = new Terraria.Projectile {active = i < populate};
 				}
 
 				List<IProjectile> projectiles = projectileService.FindProjectiles().ToList();
 
 				Assert.AreEqual(populate, projectiles.Count);
-				for (int i = 0; i < populate; ++i)
+				for (var i = 0; i < populate; ++i)
 				{
 					Assert.AreSame(Terraria.Main.projectile[i], projectiles[i].WrappedProjectile);
 				}
@@ -119,15 +119,15 @@ namespace Orion.Tests.Projectiles
 			using (var orion = new Orion())
 			using (var projectileService = new ProjectileService(orion))
 			{
-				for (int i = 0; i < Terraria.Main.projectile.Length; ++i)
+				for (var i = 0; i < Terraria.Main.projectile.Length; ++i)
 				{
-					Terraria.Main.projectile[i] = new Terraria.Projectile { active = i < populate };
+					Terraria.Main.projectile[i] = new Terraria.Projectile {active = i < populate};
 				}
 
 				List<IProjectile> projectiles = projectileService.FindProjectiles().ToList();
 				List<IProjectile> projectiles2 = projectileService.FindProjectiles().ToList();
 
-				for (int i = 0; i < populate; ++i)
+				for (var i = 0; i < populate; ++i)
 				{
 					Assert.AreSame(projectiles[i], projectiles2[i]);
 				}
@@ -140,9 +140,9 @@ namespace Orion.Tests.Projectiles
 			using (var orion = new Orion())
 			using (var projectileService = new ProjectileService(orion))
 			{
-				for (int i = 0; i < Terraria.Main.projectile.Length; ++i)
+				for (var i = 0; i < Terraria.Main.projectile.Length; ++i)
 				{
-					Terraria.Main.projectile[i] = new Terraria.Projectile { active = true, position = new Vector2(i, 0) };
+					Terraria.Main.projectile[i] = new Terraria.Projectile {active = true, position = new Vector2(i, 0)};
 				}
 
 				IEnumerable<IProjectile> projectiles = projectileService.FindProjectiles(predicate);

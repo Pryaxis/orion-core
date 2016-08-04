@@ -42,7 +42,7 @@ namespace Orion.Projectiles
 		public IEnumerable<IProjectile> FindProjectiles(Predicate<IProjectile> predicate = null)
 		{
 			var projectiles = new List<IProjectile>();
-			for (int i = 0; i < _projectiles.Length; i++)
+			for (var i = 0; i < _projectiles.Length; i++)
 			{
 				if (_projectiles[i]?.WrappedProjectile != Terraria.Main.projectile[i])
 				{

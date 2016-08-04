@@ -45,7 +45,7 @@ namespace Orion.Players
 		public IEnumerable<IPlayer> FindPlayers(Predicate<IPlayer> predicate = null)
 		{
 			var players = new List<IPlayer>();
-			for (int i = 0; i < _players.Length; i++)
+			for (var i = 0; i < _players.Length; i++)
 			{
 				if (_players[i]?.WrappedPlayer != Terraria.Main.player[i])
 				{

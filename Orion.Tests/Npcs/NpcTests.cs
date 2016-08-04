@@ -42,7 +42,7 @@ namespace Orion.Tests.Npcs
 		{
 			var terrariaNpc = new Terraria.NPC();
 			FieldInfo terrariaNpcField = typeof(Terraria.NPC).GetField(terrariaNpcFieldName);
-			terrariaNpcField.SetValue(terrariaNpc, Convert.ChangeType(value, terrariaNpcField.FieldType));
+			terrariaNpcField.SetValue(terrariaNpc, value);
 			var npc = new Npc(terrariaNpc);
 			PropertyInfo npcProperty = typeof(Npc).GetProperty(npcPropertyName);
 
@@ -59,7 +59,7 @@ namespace Orion.Tests.Npcs
 			var npc = new Npc(terrariaNpc);
 			PropertyInfo npcProperty = typeof(Npc).GetProperty(npcPropertyName);
 
-			npcProperty.SetValue(npc, Convert.ChangeType(value, npcProperty.PropertyType));
+			npcProperty.SetValue(npc, value);
 
 			Assert.AreEqual(value, terrariaNpcField.GetValue(terrariaNpc));
 		}

@@ -58,7 +58,7 @@ namespace Orion.Items
 		public IEnumerable<IItem> FindItems(Predicate<IItem> predicate = null)
 		{
 			var items = new List<IItem>();
-			for (int i = 0; i < _items.Length; ++i)
+			for (var i = 0; i < _items.Length; ++i)
 			{
 				if (_items[i]?.WrappedItem != Terraria.Main.item[i])
 				{

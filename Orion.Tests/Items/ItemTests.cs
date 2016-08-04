@@ -74,7 +74,7 @@ namespace Orion.Tests.Items
 		{
 			var terrariaItem = new Terraria.Item();
 			FieldInfo terrariaItemField = typeof(Terraria.Item).GetField(terrariaItemFieldName);
-			terrariaItemField.SetValue(terrariaItem, Convert.ChangeType(value, terrariaItemField.FieldType));
+			terrariaItemField.SetValue(terrariaItem, value);
 			var item = new Item(terrariaItem);
 			PropertyInfo itemProperty = typeof(Item).GetProperty(itemPropertyName);
 			
@@ -91,7 +91,7 @@ namespace Orion.Tests.Items
 			var item = new Item(terrariaItem);
 			PropertyInfo itemProperty = typeof(Item).GetProperty(itemPropertyName);
 
-			itemProperty.SetValue(item, Convert.ChangeType(value, itemProperty.PropertyType));
+			itemProperty.SetValue(item, value);
 
 			Assert.AreEqual(value, terrariaItemField.GetValue(terrariaItem));
 		}

@@ -42,7 +42,7 @@ namespace Orion.Tests.Players
 		{
 			var terrariaPlayer = new Terraria.Player();
 			FieldInfo terrariaPlayerField = typeof(Terraria.Player).GetField(terrariaPlayerFieldName);
-			terrariaPlayerField.SetValue(terrariaPlayer, Convert.ChangeType(value, terrariaPlayerField.FieldType));
+			terrariaPlayerField.SetValue(terrariaPlayer, value);
 			var player = new Player(terrariaPlayer);
 			PropertyInfo playerProperty = typeof(Player).GetProperty(playerPropertyName);
 
@@ -59,7 +59,7 @@ namespace Orion.Tests.Players
 			var player = new Player(terrariaPlayer);
 			PropertyInfo playerProperty = typeof(Player).GetProperty(playerPropertyName);
 
-			playerProperty.SetValue(player, Convert.ChangeType(value, playerProperty.PropertyType));
+			playerProperty.SetValue(player, value);
 
 			Assert.AreEqual(value, terrariaPlayerField.GetValue(terrariaPlayer));
 		}
