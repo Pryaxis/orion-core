@@ -41,11 +41,11 @@ namespace Orion.Items
 			{
 				throw new ArgumentOutOfRangeException(nameof(stackSize), "Value cannot be negative.");
 			}
-
+			
 			var terrariaItem = new Terraria.Item();
 			var item = new Item(terrariaItem);
 			item.SetDefaults(type);
-			item.SetPrefix(ItemPrefix.None);
+			item.SetPrefix(prefix);
 			item.StackSize = stackSize;
 			return item;
 		}

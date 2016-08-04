@@ -180,7 +180,7 @@ namespace Orion.Tests.Items
 
 				Assert.AreEqual(type, item.Type);
 				Assert.AreEqual(stack, item.StackSize);
-				Assert.AreEqual(prefix != null, item.Prefix != ItemPrefix.None);
+				Assert.AreEqual(prefix != ItemPrefix.None, item.Prefix != ItemPrefix.None);
 			}
 		}
 		
@@ -267,7 +267,7 @@ namespace Orion.Tests.Items
 
 				Assert.AreEqual(type, item.Type);
 				Assert.AreEqual(stack, item.StackSize);
-				Assert.AreEqual(prefix != null, item.Prefix != ItemPrefix.None);
+				Assert.AreEqual(prefix != ItemPrefix.None, item.Prefix != ItemPrefix.None);
 				Assert.That(item.Position.X, Is.InRange(900, 1100));
 				Assert.That(item.Position.Y, Is.InRange(1900, 2100));
 			}
