@@ -11,17 +11,27 @@ namespace Orion.Tests.World
 
 		private static readonly object[] GetPropertyTestCases =
 		{
+			new object[] {nameof(WorldService.Height), nameof(Terraria.Main.maxTilesY), 1000},
 			new object[] {nameof(WorldService.IsBloodMoon), nameof(Terraria.Main.bloodMoon), true},
+			new object[] {nameof(WorldService.IsChristmas), nameof(Terraria.Main.xMas), true},
 			new object[] {nameof(WorldService.IsDaytime), nameof(Terraria.Main.dayTime), false},
 			new object[] {nameof(WorldService.IsEclipse), nameof(Terraria.Main.eclipse), true},
-			new object[] {nameof(WorldService.Time), nameof(Terraria.Main.time), 0.0}
+			new object[] {nameof(WorldService.IsFrostMoon), nameof(Terraria.Main.snowMoon), true},
+			new object[] {nameof(WorldService.IsHalloween), nameof(Terraria.Main.halloween), true},
+			new object[] {nameof(WorldService.IsPumpkinMoon), nameof(Terraria.Main.pumpkinMoon), true},
+			new object[] {nameof(WorldService.Time), nameof(Terraria.Main.time), 0.0},
+			new object[] {nameof(WorldService.Width), nameof(Terraria.Main.maxTilesX), 1000}
 		};
 
 		private static readonly object[] SetPropertyTestCases =
 		{
 			new object[] {nameof(WorldService.IsBloodMoon), nameof(Terraria.Main.bloodMoon), true},
+			new object[] {nameof(WorldService.IsChristmas), nameof(Terraria.Main.xMas), true},
 			new object[] {nameof(WorldService.IsDaytime), nameof(Terraria.Main.dayTime), false},
 			new object[] {nameof(WorldService.IsEclipse), nameof(Terraria.Main.eclipse), true},
+			new object[] {nameof(WorldService.IsFrostMoon), nameof(Terraria.Main.snowMoon), true},
+			new object[] {nameof(WorldService.IsHalloween), nameof(Terraria.Main.halloween), true},
+			new object[] {nameof(WorldService.IsPumpkinMoon), nameof(Terraria.Main.pumpkinMoon), true},
 			new object[] {nameof(WorldService.Time), nameof(Terraria.Main.time), 0.0}
 		};
 
@@ -62,13 +72,7 @@ namespace Orion.Tests.World
 			using (var orion = new Orion())
 			using (var worldService = new WorldService(orion))
 			{
-				for (int i = x - 50; i < x + 50; ++i)
-				{
-					for (int j = y - 50; j < y + 50; ++j)
-					{
-						Terraria.Main.tile[i, j] = new Terraria.Tile();
-					}
-				}
+				InitializeMeteorRange(x, y);
 				var eventOccurred = false;
 				worldService.MeteorDropping += (sender, args) =>
 				{
@@ -89,30 +93,12 @@ namespace Orion.Tests.World
 			using (var orion = new Orion())
 			using (var worldService = new WorldService(orion))
 			{
-				for (int i = x - 50; i < x + 50; ++i)
-				{
-					for (int j = y - 50; j < y + 50; ++j)
-					{
-						Terraria.Main.tile[i, j] = new Terraria.Tile();
-					}
-				}
+				InitializeMeteorRange(x, y);
 				worldService.MeteorDropping += (sender, args) => args.Handled = true;
 
 				Terraria.WorldGen.meteor(x, y);
 
-				var foundMeteor = false;
-				for (int i = x - 50; i < x + 50; ++i)
-				{
-					for (int j = y - 50; j < y + 50; ++j)
-					{
-						if (Terraria.Main.tile[i, j].type == Terraria.ID.TileID.Meteorite)
-						{
-							foundMeteor = true;
-							break;
-						}
-					}
-				}
-				Assert.IsFalse(foundMeteor);
+				Assert.IsFalse(MeteorIsInRange(x, y));
 			}
 		}
 
@@ -122,13 +108,7 @@ namespace Orion.Tests.World
 			using (var orion = new Orion())
 			using (var worldService = new WorldService(orion))
 			{
-				for (int i = newX - 50; i < newX + 50; ++i)
-				{
-					for (int j = newY - 50; j < newY + 50; ++j)
-					{
-						Terraria.Main.tile[i, j] = new Terraria.Tile();
-					}
-				}
+				InitializeMeteorRange(newX, newY);
 				worldService.MeteorDropping += (sender, args) =>
 				{
 					args.X = newX;
@@ -137,19 +117,7 @@ namespace Orion.Tests.World
 
 				Terraria.WorldGen.meteor(x, y);
 
-				var foundMeteor = false;
-				for (int i = newX - 50; i < newX + 50; ++i)
-				{
-					for (int j = newY - 50; j < newY + 50; ++j)
-					{
-						if (Terraria.Main.tile[i, j].type == Terraria.ID.TileID.Meteorite)
-						{
-							foundMeteor = true;
-							break;
-						}
-					}
-				}
-				Assert.IsTrue(foundMeteor);
+				Assert.IsTrue(MeteorIsInRange(newX, newY));
 			}
 		}
 
@@ -254,29 +222,11 @@ namespace Orion.Tests.World
 			using (var orion = new Orion())
 			using (var worldService = new WorldService(orion))
 			{
-				for (int i = x - 50; i < x + 50; ++i)
-				{
-					for (int j = y - 50; j < y + 50; ++j)
-					{
-						Terraria.Main.tile[i, j] = new Terraria.Tile();
-					}
-				}
+				InitializeMeteorRange(x, y);
 
 				worldService.DropMeteor(x, y);
 
-				var foundMeteor = false;
-				for (int i = x - 50; i < x + 50; ++i)
-				{
-					for (int j = y - 50; j < y + 50; ++j)
-					{
-						if (Terraria.Main.tile[i, j].type == Terraria.ID.TileID.Meteorite)
-						{
-							foundMeteor = true;
-							break;
-						}
-					}
-				}
-				Assert.IsTrue(foundMeteor);
+				Assert.IsTrue(MeteorIsInRange(x, y));
 			}
 		}
 
@@ -292,6 +242,32 @@ namespace Orion.Tests.World
 
 				Assert.IsTrue(Terraria.Liquid.panicMode);
 			}
+		}
+
+		private static void InitializeMeteorRange(int x, int y)
+		{
+			for (int i = x - 50; i < x + 50; ++i)
+			{
+				for (int j = y - 50; j < y + 50; ++j)
+				{
+					Terraria.Main.tile[i, j] = new Terraria.Tile();
+				}
+			}
+		}
+
+		private static bool MeteorIsInRange(int x, int y)
+		{
+			for (int i = x - 50; i < x + 50; ++i)
+			{
+				for (int j = y - 50; j < y + 50; ++j)
+				{
+					if (Terraria.Main.tile[i, j].type == Terraria.ID.TileID.Meteorite)
+					{
+						return true;
+					}
+				}
+			}
+			return false;
 		}
 	}
 }

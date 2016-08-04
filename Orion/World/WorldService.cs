@@ -17,10 +17,20 @@ namespace Orion.World
 		public event EventHandler<HardmodeTileUpdatingEventArgs> HardmodeTileUpdating;
 
 		/// <inheritdoc/>
+		public int Height => Terraria.Main.maxTilesY;
+
+		/// <inheritdoc/>
 		public bool IsBloodMoon
 		{
 			get { return Terraria.Main.bloodMoon; }
 			set { Terraria.Main.bloodMoon = value; }
+		}
+
+		/// <inheritdoc/>
+		public bool IsChristmas
+		{
+			get { return Terraria.Main.xMas; }
+			set { Terraria.Main.xMas = value; }
 		}
 
 		/// <inheritdoc/>
@@ -45,6 +55,27 @@ namespace Orion.World
 		}
 
 		/// <inheritdoc/>
+		public bool IsFrostMoon
+		{
+			get { return Terraria.Main.snowMoon; }
+			set { Terraria.Main.snowMoon = value; }
+		}
+
+		/// <inheritdoc/>
+		public bool IsHalloween
+		{
+			get { return Terraria.Main.halloween; }
+			set { Terraria.Main.halloween = value; }
+		}
+
+		/// <inheritdoc/>
+		public bool IsPumpkinMoon
+		{
+			get { return Terraria.Main.pumpkinMoon; }
+			set { Terraria.Main.pumpkinMoon = value; }
+		}
+
+		/// <inheritdoc/>
 		public event EventHandler<MeteorDroppingEventArgs> MeteorDropping;
 
 		/// <inheritdoc/>
@@ -53,6 +84,9 @@ namespace Orion.World
 			get { return Terraria.Main.time; }
 			set { Terraria.Main.time = value; }
 		}
+
+		/// <inheritdoc/>
+		public int Width => Terraria.Main.maxTilesX;
 
 		/// <inheritdoc/>
 		public event EventHandler<WorldSavedEventArgs> WorldSaved;

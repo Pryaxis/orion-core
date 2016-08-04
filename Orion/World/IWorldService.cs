@@ -15,9 +15,19 @@ namespace Orion.World
 		event EventHandler<HardmodeTileUpdatingEventArgs> HardmodeTileUpdating;
 
 		/// <summary>
-		/// Gets or sets a value indicating whether there is currently a blood moon.
+		/// Gets the world height.
+		/// </summary>
+		int Height { get; }
+
+		/// <summary>
+		/// Gets or sets a value indicating whether it is currently a blood moon.
 		/// </summary>
 		bool IsBloodMoon { get; set; }
+
+		/// <summary>
+		/// Gets or sets a value indicating whether it is currently Christmas.
+		/// </summary>
+		bool IsChristmas { get; set; }
 
 		/// <summary>
 		/// Gets or sets a value indicating whether it is currently daytime.
@@ -25,7 +35,7 @@ namespace Orion.World
 		bool IsDaytime { get; set; }
 
 		/// <summary>
-		/// Gets or sets a value indicating whether there is currently an eclipse.
+		/// Gets or sets a value indicating whether it is currently an eclipse.
 		/// </summary>
 		bool IsEclipse { get; set; }
 
@@ -33,6 +43,21 @@ namespace Orion.World
 		/// Gets or sets a value indicating whether the world is in expert mode.
 		/// </summary>
 		bool IsExpertMode { get; set; }
+
+		/// <summary>
+		/// Gets or sets a value indicating whether it is currently a frost moon.
+		/// </summary>
+		bool IsFrostMoon { get; set; }
+
+		/// <summary>
+		/// Gets or sets a value indicating whether it is currently halloween.
+		/// </summary>
+		bool IsHalloween { get; set; }
+
+		/// <summary>
+		/// Gets or sets a value indicating whether it is currently a pumpkin moon.
+		/// </summary>
+		bool IsPumpkinMoon { get; set; }
 
 		/// <summary>
 		/// Occurs when a meteor drops.
@@ -43,6 +68,11 @@ namespace Orion.World
 		/// Gets or sets the time. This value is the number of ticks since daytime/nighttime.
 		/// </summary>
 		double Time { get; set; }
+
+		/// <summary>
+		/// Gets the world width.
+		/// </summary>
+		int Width { get; }
 
 		/// <summary>
 		/// Occurs after the world saved.
