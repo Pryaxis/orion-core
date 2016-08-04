@@ -35,7 +35,7 @@ namespace Orion.Items
 		}
 
 		/// <inheritdoc/>
-		public IItem CreateItem(ItemType type, int stackSize = 1, ItemPrefix? prefix = null)
+		public IItem CreateItem(ItemType type, int stackSize = 1, ItemPrefix prefix = ItemPrefix.None)
 		{
 			if (stackSize < 0)
 			{
@@ -45,7 +45,7 @@ namespace Orion.Items
 			var terrariaItem = new Terraria.Item();
 			var item = new Item(terrariaItem);
 			item.SetDefaults(type);
-			item.SetPrefix(prefix ?? ItemPrefix.None);
+			item.SetPrefix(ItemPrefix.None);
 			item.StackSize = stackSize;
 			return item;
 		}
@@ -70,7 +70,7 @@ namespace Orion.Items
 		}
 
 		/// <inheritdoc/>
-		public IItem SpawnItem(ItemType type, Vector2 position, int stackSize = 1, ItemPrefix? prefix = null)
+		public IItem SpawnItem(ItemType type, Vector2 position, int stackSize = 1, ItemPrefix prefix = ItemPrefix.None)
 		{
 			if (stackSize < 0)
 			{
@@ -78,7 +78,7 @@ namespace Orion.Items
 			}
 
 			int index = Terraria.Item.NewItem(
-				(int)position.X, (int)position.Y, 0, 0, (int)type, stackSize, pfix: (int)(prefix ?? ItemPrefix.None));
+				(int)position.X, (int)position.Y, 0, 0, (int)type, stackSize, pfix: (int)prefix);
 			var item = new Item(Terraria.Main.item[index]);
 			_items[index] = item;
 			return item;

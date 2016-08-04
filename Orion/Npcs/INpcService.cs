@@ -42,7 +42,7 @@ namespace Orion.Npcs
 		event EventHandler<NpcTransformedEventArgs> NpcTransformed;
 
 		/// <summary>
-		/// Finds all <see cref="INpc"/> instances in the world, optionally matching a predicate.
+		/// Returns all <see cref="INpc"/> instances in the world, optionally matching a predicate.
 		/// </summary>
 		/// <param name="predicate">The predicate.</param>
 		/// <returns>An enumerable collection of <see cref="INpc"/> instances.</returns>

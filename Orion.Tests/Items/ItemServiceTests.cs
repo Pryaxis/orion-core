@@ -16,8 +16,8 @@ namespace Orion.Tests.Items
 
 		private static readonly object[] CreateTestCases =
 		{
-			new object[] {ItemType.IronPickaxe, 1, null},
-			new object[] {ItemType.IronPickaxe, 100, null},
+			new object[] {ItemType.IronPickaxe, 1, ItemPrefix.None},
+			new object[] {ItemType.IronPickaxe, 100, ItemPrefix.None},
 			new object[] {ItemType.IronPickaxe, 100, ItemPrefix.Legendary}
 		};
 
@@ -25,8 +25,8 @@ namespace Orion.Tests.Items
 
 		private static readonly object[] SpawnTestCases =
 		{
-			new object[] {ItemType.IronPickaxe, 1, null},
-			new object[] {ItemType.IronPickaxe, 100, null},
+			new object[] {ItemType.IronPickaxe, 1, ItemPrefix.None},
+			new object[] {ItemType.IronPickaxe, 100, ItemPrefix.None},
 			new object[] {ItemType.IronPickaxe, 100, ItemPrefix.Legendary}
 		};
 
@@ -171,7 +171,7 @@ namespace Orion.Tests.Items
 		}
 
 		[TestCaseSource(nameof(CreateTestCases))]
-		public void CreateItem_IsCorrect(ItemType type, int stack, ItemPrefix? prefix)
+		public void CreateItem_IsCorrect(ItemType type, int stack, ItemPrefix prefix)
 		{
 			using (var orion = new Orion())
 			using (var itemService = new ItemService(orion))
@@ -258,7 +258,7 @@ namespace Orion.Tests.Items
 		}
 
 		[TestCaseSource(nameof(SpawnTestCases))]
-		public void SpawnItem_IsCorrect(ItemType type, int stack, ItemPrefix? prefix)
+		public void SpawnItem_IsCorrect(ItemType type, int stack, ItemPrefix prefix)
 		{
 			using (var orion = new Orion())
 			using (var itemService = new ItemService(orion))

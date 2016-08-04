@@ -26,7 +26,7 @@ namespace Orion.Players
 		event EventHandler<PlayerQuitEventArgs> PlayerQuit;
 
 		/// <summary>
-		/// Finds all <see cref="IPlayer"/> instances in the world, optionally matching a predicate.
+		/// Returns all <see cref="IPlayer"/> instances in the world, optionally matching a predicate.
 		/// </summary>
 		/// <param name="predicate">The predicate.</param>
 		/// <returns>An enumerable collection of <see cref="IPlayer"/> instances.</returns>
