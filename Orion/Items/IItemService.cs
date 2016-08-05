@@ -12,7 +12,7 @@ namespace Orion.Items
 	public interface IItemService : IService
 	{
 		/// <summary>
-		/// Occurs after an <see cref="IItem"/> instance had its defaults set.
+		/// Occurs after an <see cref="IItem"/> instance has had its defaults set.
 		/// </summary>
 		event EventHandler<ItemSetDefaultsEventArgs> ItemSetDefaults;
 
@@ -29,7 +29,6 @@ namespace Orion.Items
 		/// <param name="stackSize">The stack size.</param>
 		/// <param name="prefix">The <see cref="ItemPrefix"/>.</param>
 		/// <returns>The resulting <see cref="IItem"/> instance.</returns>
-		/// <exception cref="ArgumentOutOfRangeException"><paramref name="stackSize"/> was negative.</exception>
 		IItem CreateItem(ItemType type, int stackSize = 1, ItemPrefix prefix = ItemPrefix.None);
 
 		/// <summary>
@@ -48,7 +47,6 @@ namespace Orion.Items
 		/// <param name="stackSize">The stack size.</param>
 		/// <param name="prefix">The <see cref="ItemPrefix"/>.</param>
 		/// <returns>The resulting <see cref="IItem"/> instance.</returns>
-		/// <exception cref="ArgumentOutOfRangeException"><paramref name="stackSize"/> was negative.</exception>
 		IItem SpawnItem(ItemType type, Vector2 position, int stackSize = 1, ItemPrefix prefix = ItemPrefix.None);
 	}
 }

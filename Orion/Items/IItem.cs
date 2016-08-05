@@ -27,7 +27,6 @@ namespace Orion.Items
 		/// <summary>
 		/// Gets or sets the item's damage.
 		/// </summary>
-		/// <exception cref="ArgumentOutOfRangeException"><paramref name="value"/> was negative.</exception>
 		int Damage { get; set; }
 
 		/// <summary>
@@ -38,7 +37,6 @@ namespace Orion.Items
 		/// <summary>
 		/// Gets or sets the item's height.
 		/// </summary>
-		/// <exception cref="ArgumentOutOfRangeException"><paramref name="value"/> was negative.</exception>
 		int Height { get; set; }
 
 		/// <summary>
@@ -94,7 +92,7 @@ namespace Orion.Items
 		int StackSize { get; set; }
 
 		/// <summary>
-		/// Gets the item's <see cref="ItemType"/> instance.
+		/// Gets the item's <see cref="ItemType"/>.
 		/// </summary>
 		ItemType Type { get; }
 
@@ -106,13 +104,11 @@ namespace Orion.Items
 		/// <summary>
 		/// Gets or sets the item's use animation time.
 		/// </summary>
-		/// <exception cref="ArgumentOutOfRangeException"><paramref name="value"/> was negative.</exception>
 		int UseAnimationTime { get; set; }
 
 		/// <summary>
 		/// Gets or sets the item's use time.
 		/// </summary>
-		/// <exception cref="ArgumentOutOfRangeException"><paramref name="value"/> was negative.</exception>
 		int UseTime { get; set; }
 
 		/// <summary>
@@ -123,7 +119,6 @@ namespace Orion.Items
 		/// <summary>
 		/// Gets or sets the item's width.
 		/// </summary>
-		/// <exception cref="ArgumentOutOfRangeException"><paramref name="value"/> was negative.</exception>
 		int Width { get; set; }
 
 		/// <summary>

@@ -86,15 +86,6 @@ namespace Orion.Tests.Players
 			Assert.AreSame(terrariaPlayer.armor, equips.WrappedItemArray);
 		}
 
-		[TestCase(-1)]
-		public void SetHealth_NegativeValue_ThrowsArgumentOutOfRangeException(int health)
-		{
-			var terrariaPlayer = new Terraria.Player();
-			var player = new Player(terrariaPlayer);
-
-			Assert.Throws<ArgumentOutOfRangeException>(() => player.Health = health);
-		}
-
 		[Test]
 		public void GetInventory_IsCorrect()
 		{
@@ -104,33 +95,6 @@ namespace Orion.Tests.Players
 			IItemArray inventory = player.Inventory;
 
 			Assert.AreSame(terrariaPlayer.inventory, inventory.WrappedItemArray);
-		}
-
-		[TestCase(-1)]
-		public void SetMana_NegativeValue_ThrowsArgumentOutOfRangeException(int mana)
-		{
-			var terrariaPlayer = new Terraria.Player();
-			var player = new Player(terrariaPlayer);
-
-			Assert.Throws<ArgumentOutOfRangeException>(() => player.Mana = mana);
-		}
-
-		[TestCase(-1)]
-		public void SetMaxHealth_NegativeValue_ThrowsArgumentOutOfRangeException(int maxHealth)
-		{
-			var terrariaPlayer = new Terraria.Player();
-			var player = new Player(terrariaPlayer);
-
-			Assert.Throws<ArgumentOutOfRangeException>(() => player.MaxHealth = maxHealth);
-		}
-
-		[TestCase(-1)]
-		public void SetMaxMana_NegativeValue_ThrowsArgumentOutOfRangeException(int maxMana)
-		{
-			var terrariaPlayer = new Terraria.Player();
-			var player = new Player(terrariaPlayer);
-
-			Assert.Throws<ArgumentOutOfRangeException>(() => player.MaxMana = maxMana);
 		}
 
 		[Test]
@@ -239,7 +203,6 @@ namespace Orion.Tests.Players
 
 			player.TrashItem = item;
 
-			Assert.AreEqual(item, player.TrashItem);
 			Assert.AreEqual(terrariaPlayer.trashItem, item.WrappedItem);
 		}
 

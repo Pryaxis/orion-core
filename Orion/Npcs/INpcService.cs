@@ -22,12 +22,12 @@ namespace Orion.Npcs
 		int BaseNpcSpawningRate { get; set; }
 
 		/// <summary>
-		/// Occurs after an <see cref="INpc"/> instance dropped loot.
+		/// Occurs after an <see cref="INpc"/> instance has dropped loot.
 		/// </summary>
 		event EventHandler<NpcDroppedLootEventArgs> NpcDroppedLoot;
 
 		/// <summary>
-		/// Occurs when an <see cref="INpc"/> instance drops loot.
+		/// Occurs when an <see cref="INpc"/> instance is dropping loot.
 		/// </summary>
 		event EventHandler<NpcDroppingLootEventArgs> NpcDroppingLoot;
 
@@ -37,17 +37,17 @@ namespace Orion.Npcs
 		event EventHandler<NpcKilledEventArgs> NpcKilled;
 
 		/// <summary>
-		/// Occurs after an <see cref="INpc"/> instance spawned in the world.
+		/// Occurs after an <see cref="INpc"/> instance has spawned in the world.
 		/// </summary>
 		event EventHandler<NpcSpawnedEventArgs> NpcSpawned;
 
 		/// <summary>
-		/// Occurs when an <see cref="INpc"/> instance spawns in the world.
+		/// Occurs when an <see cref="INpc"/> instance is spawning in the world.
 		/// </summary>
 		event EventHandler<NpcSpawningEventArgs> NpcSpawning;
 
 		/// <summary>
-		/// Occurs after an <see cref="INpc"/> instance transformed to another type.
+		/// Occurs after an <see cref="INpc"/> instance has transformed to another type.
 		/// </summary>
 		event EventHandler<NpcTransformedEventArgs> NpcTransformed;
 

@@ -24,15 +24,7 @@ namespace Orion.Players
 		public int Health
 		{
 			get { return WrappedPlayer.statLife; }
-			set
-			{
-				if (value < 0)
-				{
-					throw new ArgumentOutOfRangeException(nameof(value), "Value cannot be negative.");
-				}
-
-				WrappedPlayer.statLife = value;
-			}
+			set { WrappedPlayer.statLife = value; }
 		}
 
 		/// <inheritdoc/>
@@ -42,45 +34,21 @@ namespace Orion.Players
 		public int Mana
 		{
 			get { return WrappedPlayer.statMana; }
-			set
-			{
-				if (value < 0)
-				{
-					throw new ArgumentOutOfRangeException(nameof(value), "Value cannot be negative.");
-				}
-
-				WrappedPlayer.statMana = value;
-			}
+			set { WrappedPlayer.statMana = value; }
 		}
 
 		/// <inheritdoc/>
 		public int MaxHealth
 		{
 			get { return WrappedPlayer.statLifeMax; }
-			set
-			{
-				if (value < 0)
-				{
-					throw new ArgumentOutOfRangeException(nameof(value), "Value cannot be negative.");
-				}
-
-				WrappedPlayer.statLifeMax = value;
-			}
+			set { WrappedPlayer.statLifeMax = value; }
 		}
 
 		/// <inheritdoc/>
 		public int MaxMana
 		{
 			get { return WrappedPlayer.statManaMax; }
-			set
-			{
-				if (value < 0)
-				{
-					throw new ArgumentOutOfRangeException(nameof(value), "Value cannot be negative.");
-				}
-
-				WrappedPlayer.statManaMax = value;
-			}
+			set { WrappedPlayer.statManaMax = value; }
 		}
 
 		/// <inheritdoc/>

@@ -10,12 +10,12 @@ namespace Orion.World
 	public interface IWorldService : IService
 	{
 		/// <summary>
-		/// Occurs when the server checks if it is Christmas.
+		/// Occurs when the game is checking if it is Christmas.
 		/// </summary>
 		event EventHandler<CheckingChristmasEventArgs> CheckingChristmas;
 
 		/// <summary>
-		/// Occurs when the server checks if it is Halloween.
+		/// Occurs when the game is checking if it is Halloween.
 		/// </summary>
 		event EventHandler<CheckingHalloweenEventArgs> CheckingHalloween;
 
@@ -80,7 +80,7 @@ namespace Orion.World
 		bool IsPumpkinMoon { get; set; }
 
 		/// <summary>
-		/// Occurs when a meteor drops.
+		/// Occurs when a meteor is dropping.
 		/// </summary>
 		event EventHandler<MeteorDroppingEventArgs> MeteorDropping;
 
@@ -95,7 +95,7 @@ namespace Orion.World
 		int Width { get; }
 
 		/// <summary>
-		/// Occurs after the world is loaded.
+		/// Occurs after the world has loaded.
 		/// </summary>
 		event EventHandler<WorldLoadedEventArgs> WorldLoaded;
 
@@ -105,7 +105,7 @@ namespace Orion.World
 		event EventHandler<WorldLoadingEventArgs> WorldLoading;
 
 		/// <summary>
-		/// Occurs after the world is saved.
+		/// Occurs after the world has saved.
 		/// </summary>
 		event EventHandler<WorldSavedEventArgs> WorldSaved;
 

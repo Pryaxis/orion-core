@@ -64,24 +64,6 @@ namespace Orion.Tests.Npcs
 			Assert.AreEqual(value, terrariaNpcField.GetValue(terrariaNpc));
 		}
 
-		[TestCase(-1)]
-		public void SetHealth_NegativeValue_ThrowsArgumentOutOfRangeException(int health)
-		{
-			var terrariaNpc = new Terraria.NPC();
-			var npc = new Npc(terrariaNpc);
-
-			Assert.Throws<ArgumentOutOfRangeException>(() => npc.Health = health);
-		}
-
-		[TestCase(-1)]
-		public void SetMaxHealth_NegativeValue_ThrowsArgumentOutOfRangeException(int maxHealth)
-		{
-			var terrariaNpc = new Terraria.NPC();
-			var npc = new Npc(terrariaNpc);
-
-			Assert.Throws<ArgumentOutOfRangeException>(() => npc.MaxHealth = maxHealth);
-		}
-
 		[TestCaseSource(nameof(GetTypeTestCases))]
 		public void GetType_IsCorrect(NpcType type)
 		{

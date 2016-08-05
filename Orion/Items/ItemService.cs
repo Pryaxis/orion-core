@@ -37,11 +37,6 @@ namespace Orion.Items
 		/// <inheritdoc/>
 		public IItem CreateItem(ItemType type, int stackSize = 1, ItemPrefix prefix = ItemPrefix.None)
 		{
-			if (stackSize < 0)
-			{
-				throw new ArgumentOutOfRangeException(nameof(stackSize), "Value cannot be negative.");
-			}
-			
 			var terrariaItem = new Terraria.Item();
 			var item = new Item(terrariaItem);
 			item.SetDefaults(type);
@@ -72,11 +67,6 @@ namespace Orion.Items
 		/// <inheritdoc/>
 		public IItem SpawnItem(ItemType type, Vector2 position, int stackSize = 1, ItemPrefix prefix = ItemPrefix.None)
 		{
-			if (stackSize < 0)
-			{
-				throw new ArgumentOutOfRangeException(nameof(stackSize), "Value cannot be negative.");
-			}
-
 			int index = Terraria.Item.NewItem(
 				(int)position.X, (int)position.Y, 0, 0, (int)type, stackSize, pfix: (int)prefix);
 			var item = new Item(Terraria.Main.item[index]);

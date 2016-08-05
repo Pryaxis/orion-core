@@ -68,7 +68,6 @@ namespace Orion.Tests.Items
 
 			itemArray[index] = item;
 
-			Assert.AreEqual(item, itemArray[index]);
 			Assert.AreEqual(terrariaItem, itemArray[index].WrappedItem);
 		}
 

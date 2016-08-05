@@ -27,7 +27,6 @@ namespace Orion.Players
 		/// <summary>
 		/// Gets or sets the player's health.
 		/// </summary>
-		/// <exception cref="ArgumentOutOfRangeException"><paramref name="value"/> was negative.</exception>
 		int Health { get; set; }
 
 		/// <summary>
@@ -38,19 +37,16 @@ namespace Orion.Players
 		/// <summary>
 		/// Gets or sets the player's mana.
 		/// </summary>
-		/// <exception cref="ArgumentOutOfRangeException"><paramref name="value"/> was negative.</exception>
 		int Mana { get; set; }
 
 		/// <summary>
 		/// Gets or sets the player's maximum health.
 		/// </summary>
-		/// <exception cref="ArgumentOutOfRangeException"><paramref name="value"/> was negative.</exception>
 		int MaxHealth { get; set; }
 
 		/// <summary>
 		/// Gets or sets the player's maximum mana.
 		/// </summary>
-		/// <exception cref="ArgumentOutOfRangeException"><paramref name="value"/> was negative.</exception>
 		int MaxMana { get; set; }
 
 		/// <summary>

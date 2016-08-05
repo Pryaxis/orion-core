@@ -96,24 +96,6 @@ namespace Orion.Tests.Items
 			Assert.AreEqual(value, terrariaItemField.GetValue(terrariaItem));
 		}
 
-		[TestCase(-1)]
-		public void SetDamage_NegativeValue_ThrowsArgumentOutOfRangeException(int damage)
-		{
-			var terrariaItem = new Terraria.Item();
-			var item = new Item(terrariaItem);
-
-			Assert.Throws<ArgumentOutOfRangeException>(() => item.Damage = damage);
-		}
-
-		[TestCase(-1)]
-		public void SetHeight_NegativeValue_ThrowsArgumentOutOfRangeException(int height)
-		{
-			var terrariaItem = new Terraria.Item();
-			var item = new Item(terrariaItem);
-
-			Assert.Throws<ArgumentOutOfRangeException>(() => item.Height = height);
-		}
-
 		[TestCaseSource(nameof(GetPrefixTestCases))]
 		public void GetPrefix_IsCorrect(ItemPrefix prefix)
 		{
@@ -147,24 +129,6 @@ namespace Orion.Tests.Items
 			Assert.AreEqual(type, (ProjectileType)terrariaItem.shoot);
 		}
 
-		[TestCase(-1.0f)]
-		public void SetScale_NegativeValue_ThrowsArgumentOutOfRangeException(float scale)
-		{
-			var terrariaItem = new Terraria.Item();
-			var item = new Item(terrariaItem);
-
-			Assert.Throws<ArgumentOutOfRangeException>(() => item.Scale = scale);
-		}
-
-		[TestCase(-1)]
-		public void SetStackSize_NegativeValue_ThrowsArgumentOutOfRangeException(int stackSize)
-		{
-			var terrariaItem = new Terraria.Item();
-			var item = new Item(terrariaItem);
-
-			Assert.Throws<ArgumentOutOfRangeException>(() => item.StackSize = stackSize);
-		}
-
 		[TestCaseSource(nameof(GetTypeTestCases))]
 		public void GetType_IsCorrect(ItemType type)
 		{
@@ -174,33 +138,6 @@ namespace Orion.Tests.Items
 			ItemType actualType = item.Type;
 
 			Assert.AreEqual(type, actualType);
-		}
-
-		[TestCase(-1)]
-		public void SetUseAnimationTime_NegativeValue_ThrowsArgumentOutOfRangeException(int useAnimationTime)
-		{
-			var terrariaItem = new Terraria.Item();
-			var item = new Item(terrariaItem);
-
-			Assert.Throws<ArgumentOutOfRangeException>(() => item.UseAnimationTime = useAnimationTime);
-		}
-
-		[TestCase(-1)]
-		public void SetUseTime_NegativeValue_ThrowsArgumentOutOfRangeException(int useTime)
-		{
-			var terrariaItem = new Terraria.Item();
-			var item = new Item(terrariaItem);
-
-			Assert.Throws<ArgumentOutOfRangeException>(() => item.UseTime = useTime);
-		}
-
-		[TestCase(-1)]
-		public void SetWidth_NegativeValue_ThrowsArgumentOutOfRangeException(int width)
-		{
-			var terrariaItem = new Terraria.Item();
-			var item = new Item(terrariaItem);
-
-			Assert.Throws<ArgumentOutOfRangeException>(() => item.Width = width);
 		}
 
 		[Test]

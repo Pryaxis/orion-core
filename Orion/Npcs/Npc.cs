@@ -18,30 +18,14 @@ namespace Orion.Npcs
 		public int Health
 		{
 			get { return WrappedNpc.life; }
-			set
-			{
-				if (value < 0)
-				{
-					throw new ArgumentOutOfRangeException(nameof(value), "Value cannot be negative.");
-				}
-
-				WrappedNpc.life = value;
-			}
+			set { WrappedNpc.life = value; }
 		}
 
 		/// <inheritdoc/>
 		public int MaxHealth
 		{
 			get { return WrappedNpc.lifeMax; }
-			set
-			{
-				if (value < 0)
-				{
-					throw new ArgumentOutOfRangeException(nameof(value), "Value cannot be negative.");
-				}
-
-				WrappedNpc.lifeMax = value;
-			}
+			set { WrappedNpc.lifeMax = value; }
 		}
 
 		/// <inheritdoc/>
@@ -55,7 +39,7 @@ namespace Orion.Npcs
 		}
 
 		/// <inheritdoc/>
-		public NpcType Type => (NpcType)WrappedNpc.netID;
+		public NpcType Type => (NpcType) WrappedNpc.netID;
 
 		/// <inheritdoc/>
 		public Vector2 Velocity

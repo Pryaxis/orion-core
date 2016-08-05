@@ -11,7 +11,7 @@ namespace Orion.Projectiles
 	public interface IProjectileService : IService
 	{
 		/// <summary>
-		/// Occurs after a <see cref="IProjectile"/> instance had its defaults set.
+		/// Occurs after a <see cref="IProjectile"/> instance has had its defaults set.
 		/// </summary>
 		event EventHandler<ProjectileSetDefaultsEventArgs> ProjectileSetDefaults;
 

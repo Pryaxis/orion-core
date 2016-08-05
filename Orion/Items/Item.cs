@@ -30,15 +30,7 @@ namespace Orion.Items
 		public int Damage
 		{
 			get { return WrappedItem.damage; }
-			set
-			{
-				if (value < 0)
-				{
-					throw new ArgumentOutOfRangeException(nameof(value), "Value cannot be negative.");
-				}
-
-				WrappedItem.damage = value;
-			}
+			set { WrappedItem.damage = value; }
 		}
 
 		/// <inheritdoc/>
@@ -48,15 +40,7 @@ namespace Orion.Items
 		public int Height
 		{
 			get { return WrappedItem.height; }
-			set
-			{
-				if (value < 0)
-				{
-					throw new ArgumentOutOfRangeException(nameof(value), "Value cannot be negative.");
-				}
-
-				WrappedItem.height = value;
-			}
+			set { WrappedItem.height = value; }
 		}
 
 		/// <inheritdoc/>
@@ -83,7 +67,7 @@ namespace Orion.Items
 		}
 
 		/// <inheritdoc/>
-		public ItemPrefix Prefix => (ItemPrefix)WrappedItem.prefix;
+		public ItemPrefix Prefix => (ItemPrefix) WrappedItem.prefix;
 
 		/// <inheritdoc/>
 		public float ProjectileSpeed
@@ -95,42 +79,26 @@ namespace Orion.Items
 		/// <inheritdoc/>
 		public ProjectileType ProjectileType
 		{
-			get { return (ProjectileType)WrappedItem.shoot; }
-			set { WrappedItem.shoot = (int)value; }
+			get { return (ProjectileType) WrappedItem.shoot; }
+			set { WrappedItem.shoot = (int) value; }
 		}
 
 		/// <inheritdoc/>
 		public float Scale
 		{
 			get { return WrappedItem.scale; }
-			set
-			{
-				if (value < 0)
-				{
-					throw new ArgumentOutOfRangeException(nameof(value), "Value cannot be negative.");
-				}
-
-				WrappedItem.scale = value;
-			}
+			set { WrappedItem.scale = value; }
 		}
 
 		/// <inheritdoc/>
 		public int StackSize
 		{
 			get { return WrappedItem.stack; }
-			set
-			{
-				if (value < 0)
-				{
-					throw new ArgumentOutOfRangeException(nameof(value), "Value cannot be negative.");
-				}
-
-				WrappedItem.stack = value;
-			}
+			set { WrappedItem.stack = value; }
 		}
 
 		/// <inheritdoc/>
-		public ItemType Type => (ItemType)WrappedItem.netID;
+		public ItemType Type => (ItemType) WrappedItem.netID;
 
 		/// <inheritdoc/>
 		public int UseAmmoType
@@ -143,30 +111,14 @@ namespace Orion.Items
 		public int UseAnimationTime
 		{
 			get { return WrappedItem.useAnimation; }
-			set
-			{
-				if (value < 0)
-				{
-					throw new ArgumentOutOfRangeException(nameof(value), "Value cannot be negative.");
-				}
-
-				WrappedItem.useAnimation = value;
-			}
+			set { WrappedItem.useAnimation = value; }
 		}
 
 		/// <inheritdoc/>
 		public int UseTime
 		{
 			get { return WrappedItem.useTime; }
-			set
-			{
-				if (value < 0)
-				{
-					throw new ArgumentOutOfRangeException(nameof(value), "Value cannot be negative.");
-				}
-
-				WrappedItem.useTime = value;
-			}
+			set { WrappedItem.useTime = value; }
 		}
 
 		/// <inheritdoc/>
@@ -180,15 +132,7 @@ namespace Orion.Items
 		public int Width
 		{
 			get { return WrappedItem.width; }
-			set
-			{
-				if (value < 0)
-				{
-					throw new ArgumentOutOfRangeException(nameof(value), "Value cannot be negative.");
-				}
-
-				WrappedItem.width = value;
-			}
+			set { WrappedItem.width = value; }
 		}
 
 		/// <inheritdoc/>

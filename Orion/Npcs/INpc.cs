@@ -21,13 +21,11 @@ namespace Orion.Npcs
 		/// <summary>
 		/// Gets or sets the NPC's health.
 		/// </summary>
-		/// <exception cref="ArgumentOutOfRangeException"><paramref name="value"/> was negative.</exception>
 		int Health { get; set; }
 
 		/// <summary>
 		/// Gets or sets the NPC's maximum health.
 		/// </summary>
-		/// <exception cref="ArgumentOutOfRangeException"><paramref name="value"/> was negative.</exception>
 		int MaxHealth { get; set; }
 
 		/// <summary>

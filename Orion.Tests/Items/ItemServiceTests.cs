@@ -183,16 +183,6 @@ namespace Orion.Tests.Items
 				Assert.AreEqual(prefix != ItemPrefix.None, item.Prefix != ItemPrefix.None);
 			}
 		}
-		
-		[TestCase(-1)]
-		public void CreateItem_ParamOutOfRange_ThrowsArgumentOutOfRangeException(int stackSize)
-		{
-			using (var orion = new Orion())
-			using (var itemService = new ItemService(orion))
-			{
-				Assert.Throws<ArgumentOutOfRangeException>(() => itemService.CreateItem(ItemType.IronPickaxe, stackSize));
-			}
-		}
 
 		[TestCase(0)]
 		[TestCase(1)]
@@ -270,17 +260,6 @@ namespace Orion.Tests.Items
 				Assert.AreEqual(prefix != ItemPrefix.None, item.Prefix != ItemPrefix.None);
 				Assert.That(item.Position.X, Is.InRange(900, 1100));
 				Assert.That(item.Position.Y, Is.InRange(1900, 2100));
-			}
-		}
-
-		[TestCase(-1)]
-		public void Spawn_ParamOutOfRange_ThrowsArgumentOutOfRangeException(int stackSize)
-		{
-			using (var orion = new Orion())
-			using (var itemService = new ItemService(orion))
-			{
-				Assert.Throws<ArgumentOutOfRangeException>(
-					() => itemService.SpawnItem(ItemType.IronPickaxe, Vector2.Zero, stackSize));
 			}
 		}
 	}
