@@ -7,7 +7,9 @@ namespace Orion.Tests.World
 	[TestFixture]
 	public class WorldServiceTests
 	{
-		// NOTE: cannot test WorldService.IsExpertMode since it requires an active world file
+		/*
+		 * NOTE: HardmodeStarted, HardmodeStarting, IsExpertMode, WorldLoaded, and WorldLoading cannot be tested.
+		 */
 
 		private static readonly object[] GetPropertyTestCases =
 		{

@@ -20,6 +20,12 @@ namespace Orion.World
 		public event EventHandler<CheckingHalloweenEventArgs> CheckingHalloween;
 
 		/// <inheritdoc/>
+		public event EventHandler<HardmodeStartedEventArgs> HardmodeStarted;
+
+		/// <inheritdoc/>
+		public event EventHandler<HardmodeStartingEventArgs> HardmodeStarting;
+
+		/// <inheritdoc/>
 		public event EventHandler<HardmodeTileUpdatingEventArgs> HardmodeTileUpdating;
 
 		/// <inheritdoc/>
@@ -95,6 +101,12 @@ namespace Orion.World
 		public int Width => Terraria.Main.maxTilesX;
 
 		/// <inheritdoc/>
+		public event EventHandler<WorldLoadedEventArgs> WorldLoaded;
+
+		/// <inheritdoc/>
+		public event EventHandler<WorldLoadingEventArgs> WorldLoading;
+
+		/// <inheritdoc/>
 		public event EventHandler<WorldSavedEventArgs> WorldSaved;
 
 		/// <inheritdoc/>
@@ -106,11 +118,15 @@ namespace Orion.World
 		/// <param name="orion">The parent <see cref="Orion"/> instance.</param>
 		public WorldService(Orion orion) : base(orion)
 		{
-			// TODO: add initialize, update, world loading hooks
+			// TODO: add initialize, update
 			Hooks.Game.Christmas = InvokeCheckingChristmas;
 			Hooks.Game.Halloween = InvokeCheckingHalloween;
 			Hooks.World.DropMeteor = InvokeMeteorDropping;
+			Hooks.World.PreHardmode = InvokeHardmodeStarting;
+			Hooks.World.PostHardmode = InvokeHardmodeStarted;
 			Hooks.World.HardmodeTileUpdate = InvokeHardmodeTileUpdating;
+			Hooks.World.IO.PreLoadWorld = InvokeWorldLoading;
+			Hooks.World.IO.PostLoadWorld = InvokeWorldLoaded;
 			Hooks.World.IO.PreSaveWorld = InvokeWorldSaving;
 			Hooks.World.IO.PostSaveWorld = InvokeWorldSaved;
 		}
@@ -151,8 +167,14 @@ namespace Orion.World
 			{
 				if (disposing)
 				{
+					Hooks.Game.Christmas = null;
+					Hooks.Game.Halloween = null;
 					Hooks.World.DropMeteor = null;
+					Hooks.World.PreHardmode = null;
+					Hooks.World.PostHardmode = null;
 					Hooks.World.HardmodeTileUpdate = null;
+					Hooks.World.IO.PreLoadWorld = null;
+					Hooks.World.IO.PostLoadWorld = null;
 					Hooks.World.IO.PreSaveWorld = null;
 					Hooks.World.IO.PostSaveWorld = null;
 				}
@@ -175,6 +197,19 @@ namespace Orion.World
 			return args.Handled ? HookResult.Cancel : HookResult.Continue;
 		}
 
+		private void InvokeHardmodeStarted()
+		{
+			var args = new HardmodeStartedEventArgs();
+			HardmodeStarted?.Invoke(this, args);
+		}
+
+		private HookResult InvokeHardmodeStarting()
+		{
+			var args = new HardmodeStartingEventArgs();
+			HardmodeStarting?.Invoke(this, args);
+			return args.Handled ? HookResult.Cancel : HookResult.Continue;
+		}
+
 		private HardmodeTileUpdateResult InvokeHardmodeTileUpdating(int x, int y, ref ushort type)
 		{
 			var args = new HardmodeTileUpdatingEventArgs(x, y, type);
@@ -189,6 +224,19 @@ namespace Orion.World
 			MeteorDropping?.Invoke(this, args);
 			x = args.X;
 			y = args.Y;
+			return args.Handled ? HookResult.Cancel : HookResult.Continue;
+		}
+
+		private void InvokeWorldLoaded(bool useCloud)
+		{
+			var args = new WorldLoadedEventArgs();
+			WorldLoaded?.Invoke(this, args);
+		}
+
+		private HookResult InvokeWorldLoading(ref bool useCloud)
+		{
+			var args = new WorldLoadingEventArgs();
+			WorldLoading?.Invoke(this, args);
 			return args.Handled ? HookResult.Cancel : HookResult.Continue;
 		}
 

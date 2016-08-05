@@ -20,6 +20,16 @@ namespace Orion.World
 		event EventHandler<CheckingHalloweenEventArgs> CheckingHalloween;
 
 		/// <summary>
+		/// Occurs after hardmode has started.
+		/// </summary>
+		event EventHandler<HardmodeStartedEventArgs> HardmodeStarted;
+
+		/// <summary>
+		/// Occurs when hardmode is starting.
+		/// </summary>
+		event EventHandler<HardmodeStartingEventArgs> HardmodeStarting;
+
+		/// <summary>
 		/// Occurs when a tile is updating in hardmode.
 		/// </summary>
 		event EventHandler<HardmodeTileUpdatingEventArgs> HardmodeTileUpdating;
@@ -85,12 +95,22 @@ namespace Orion.World
 		int Width { get; }
 
 		/// <summary>
-		/// Occurs after the world saved.
+		/// Occurs after the world is loaded.
+		/// </summary>
+		event EventHandler<WorldLoadedEventArgs> WorldLoaded;
+
+		/// <summary>
+		/// Occurs when the world is loading.
+		/// </summary>
+		event EventHandler<WorldLoadingEventArgs> WorldLoading;
+
+		/// <summary>
+		/// Occurs after the world is saved.
 		/// </summary>
 		event EventHandler<WorldSavedEventArgs> WorldSaved;
 
 		/// <summary>
-		/// Occurs when the world saves.
+		/// Occurs when the world is saving.
 		/// </summary>
 		event EventHandler<WorldSavingEventArgs> WorldSaving;
 

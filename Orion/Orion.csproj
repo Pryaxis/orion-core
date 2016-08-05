@@ -123,8 +123,12 @@
     <Compile Include="Configuration\JsonFileConfigurationService.cs" />
     <Compile Include="World\Events\CheckingChristmasEventArgs.cs" />
     <Compile Include="World\Events\CheckingHalloweenEventArgs.cs" />
+    <Compile Include="World\Events\HardmodeStartedEventArgs.cs" />
+    <Compile Include="World\Events\HardmodeStartingEventArgs.cs" />
     <Compile Include="World\Events\HardmodeTileUpdatingEventArgs.cs" />
     <Compile Include="World\Events\MeteorDroppingEventArgs.cs" />
+    <Compile Include="World\Events\WorldLoadedEventArgs.cs" />
+    <Compile Include="World\Events\WorldLoadingEventArgs.cs" />
     <Compile Include="World\Events\WorldSavedEventArgs.cs" />
     <Compile Include="World\Events\WorldSavingEventArgs.cs" />
     <Compile Include="World\TileService.cs" />
