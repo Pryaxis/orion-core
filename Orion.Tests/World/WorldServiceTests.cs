@@ -66,6 +66,68 @@ namespace Orion.Tests.World
 			}
 		}
 
+		[Test]
+		public void CheckingChristmas_IsCorrect()
+		{
+			using (var orion = new Orion())
+			using (var worldService = new WorldService(orion))
+			{
+				var eventOccurred = false;
+				worldService.CheckingChristmas += (sender, args) => eventOccurred = true;
+
+				Terraria.Main.checkXMas();
+
+				Assert.IsTrue(eventOccurred);
+			}
+		}
+
+		[TestCase(true)]
+		[TestCase(false)]
+		public void CheckingChristmas_Handled_StopsCheck(bool christmas)
+		{
+			using (var orion = new Orion())
+			using (var worldService = new WorldService(orion))
+			{
+				worldService.CheckingChristmas += (sender, args) => args.Handled = true;
+				Terraria.Main.xMas = christmas;
+
+				Terraria.Main.checkXMas();
+
+				Assert.AreEqual(christmas, Terraria.Main.xMas);
+			}
+		}
+
+		[Test]
+		public void CheckingHalloween_IsCorrect()
+		{
+			using (var orion = new Orion())
+			using (var worldService = new WorldService(orion))
+			{
+				var eventOccurred = false;
+				worldService.CheckingHalloween += (sender, args) => eventOccurred = true;
+				
+				Terraria.Main.checkHalloween();
+
+				Assert.IsTrue(eventOccurred);
+			}
+		}
+		
+		[TestCase(true)]
+		[TestCase(false)]
+		public void CheckingHalloween_Handled_StopsCheck(bool halloween)
+		{
+			using (var orion = new Orion())
+			using (var worldService = new WorldService(orion))
+			{
+				worldService.CheckingHalloween += (sender, args) => args.Handled = true;
+				Terraria.Main.halloween = halloween;
+
+				Terraria.Main.checkHalloween();
+
+				Assert.AreEqual(halloween, Terraria.Main.halloween);
+			}
+		}
+
 		[TestCase(100, 100)]
 		public void MeteorDropping_IsCorrect(int x, int y)
 		{
@@ -217,6 +279,37 @@ namespace Orion.Tests.World
 		}
 
 		[TestCase(100, 100)]
+		public void BreakBlock_IsCorrect(int x, int y)
+		{
+			using (var orion = new Orion())
+			using (var worldService = new WorldService(orion))
+			{
+				var tile = new Terraria.Tile();
+				tile.active(true);
+				Terraria.Main.tile[x, y] = tile;
+
+				worldService.BreakBlock(x, y);
+
+				Assert.IsFalse(tile.active());
+			}
+		}
+
+		[TestCase(100, 100)]
+		public void BreakWall_IsCorrect(int x, int y)
+		{
+			using (var orion = new Orion())
+			using (var worldService = new WorldService(orion))
+			{
+				var tile = new Terraria.Tile {wall = 1};
+				Terraria.Main.tile[x, y] = tile;
+
+				worldService.BreakWall(x, y);
+
+				Assert.AreEqual(0, tile.wall);
+			}
+		}
+
+		[TestCase(100, 100)]
 		public void DropMeteor_IsCorrect(int x, int y)
 		{
 			using (var orion = new Orion())
@@ -227,6 +320,67 @@ namespace Orion.Tests.World
 				worldService.DropMeteor(x, y);
 
 				Assert.IsTrue(MeteorIsInRange(x, y));
+			}
+		}
+
+		[TestCase(100, 100, 1)]
+		public void PaintBlock_IsCorrect(int x, int y, byte type)
+		{
+			using (var orion = new Orion())
+			using (var worldService = new WorldService(orion))
+			{
+				var tile = new Terraria.Tile();
+				tile.active(true);
+				Terraria.Main.tile[x, y] = tile;
+
+				worldService.PaintBlock(x, y, type);
+
+				Assert.AreEqual(type, tile.color());
+			}
+		}
+
+		[TestCase(100, 100, 1)]
+		public void PaintWall_IsCorrect(int x, int y, byte type)
+		{
+			using (var orion = new Orion())
+			using (var worldService = new WorldService(orion))
+			{
+				var tile = new Terraria.Tile {wall = 1};
+				Terraria.Main.tile[x, y] = tile;
+
+				worldService.PaintWall(x, y, type);
+
+				Assert.AreEqual(type, tile.wallColor());
+			}
+		}
+
+		[TestCase(100, 100, (ushort)1)]
+		public void PlaceBlock_Simple_IsCorrect(int x, int y, ushort type)
+		{
+			using (var orion = new Orion())
+			using (var worldService = new WorldService(orion))
+			{
+				var tile = new Terraria.Tile();
+				Terraria.Main.tile[x, y] = tile;
+
+				worldService.PlaceBlock(x, y, type);
+
+				Assert.AreEqual(type, tile.type);
+			}
+		}
+
+		[TestCase(100, 100, (byte)1)]
+		public void PlaceWall_IsCorrect(int x, int y, byte type)
+		{
+			using (var orion = new Orion())
+			using (var worldService = new WorldService(orion))
+			{
+				var tile = new Terraria.Tile();
+				Terraria.Main.tile[x, y] = tile;
+
+				worldService.PlaceWall(x, y, type);
+
+				Assert.AreEqual(type, tile.wall);
 			}
 		}
 

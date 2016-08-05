@@ -121,6 +121,8 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Configuration\IConfigurationService.cs" />
     <Compile Include="Configuration\JsonFileConfigurationService.cs" />
+    <Compile Include="World\Events\CheckingChristmasEventArgs.cs" />
+    <Compile Include="World\Events\CheckingHalloweenEventArgs.cs" />
     <Compile Include="World\Events\HardmodeTileUpdatingEventArgs.cs" />
     <Compile Include="World\Events\MeteorDroppingEventArgs.cs" />
     <Compile Include="World\Events\WorldSavedEventArgs.cs" />

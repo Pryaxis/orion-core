@@ -14,6 +14,12 @@ namespace Orion.World
 		private bool _disposed;
 
 		/// <inheritdoc/>
+		public event EventHandler<CheckingChristmasEventArgs> CheckingChristmas;
+
+		/// <inheritdoc/>
+		public event EventHandler<CheckingHalloweenEventArgs> CheckingHalloween;
+
+		/// <inheritdoc/>
 		public event EventHandler<HardmodeTileUpdatingEventArgs> HardmodeTileUpdating;
 
 		/// <inheritdoc/>
@@ -100,13 +106,16 @@ namespace Orion.World
 		/// <param name="orion">The parent <see cref="Orion"/> instance.</param>
 		public WorldService(Orion orion) : base(orion)
 		{
-			// TODO: add christmas, halloween, initialize, update
+			// TODO: add initialize, update, world loading hooks
+			Hooks.Game.Christmas = InvokeCheckingChristmas;
+			Hooks.Game.Halloween = InvokeCheckingHalloween;
 			Hooks.World.DropMeteor = InvokeMeteorDropping;
 			Hooks.World.HardmodeTileUpdate = InvokeHardmodeTileUpdating;
 			Hooks.World.IO.PreSaveWorld = InvokeWorldSaving;
 			Hooks.World.IO.PostSaveWorld = InvokeWorldSaved;
 		}
 
+		// TODO: if performance is necessary, optimize these
 		/// <inheritdoc/>
 		public void BreakBlock(int x, int y) => Terraria.WorldGen.KillTile(x, y);
 
@@ -115,6 +124,12 @@ namespace Orion.World
 
 		/// <inheritdoc/>
 		public void DropMeteor(int x, int y) => Terraria.WorldGen.meteor(x, y);
+
+		/// <inheritdoc/>
+		public void PaintBlock(int x, int y, byte type) => Terraria.WorldGen.paintTile(x, y, type);
+
+		/// <inheritdoc/>
+		public void PaintWall(int x, int y, byte type) => Terraria.WorldGen.paintWall(x, y, type);
 
 		/// <inheritdoc/>
 		public void PlaceBlock(int x, int y, ushort type, int style = 0) =>
@@ -144,6 +159,20 @@ namespace Orion.World
 				_disposed = true;
 			}
 			base.Dispose(disposing);
+		}
+
+		private HookResult InvokeCheckingChristmas()
+		{
+			var args = new CheckingChristmasEventArgs();
+			CheckingChristmas?.Invoke(this, args);
+			return args.Handled ? HookResult.Cancel : HookResult.Continue;
+		}
+
+		private HookResult InvokeCheckingHalloween()
+		{
+			var args = new CheckingHalloweenEventArgs();
+			CheckingHalloween?.Invoke(this, args);
+			return args.Handled ? HookResult.Cancel : HookResult.Continue;
 		}
 
 		private HardmodeTileUpdateResult InvokeHardmodeTileUpdating(int x, int y, ref ushort type)

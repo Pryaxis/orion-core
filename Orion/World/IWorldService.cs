@@ -10,12 +10,22 @@ namespace Orion.World
 	public interface IWorldService : IService
 	{
 		/// <summary>
+		/// Occurs when the server checks if it is Christmas.
+		/// </summary>
+		event EventHandler<CheckingChristmasEventArgs> CheckingChristmas;
+
+		/// <summary>
+		/// Occurs when the server checks if it is Halloween.
+		/// </summary>
+		event EventHandler<CheckingHalloweenEventArgs> CheckingHalloween;
+
+		/// <summary>
 		/// Occurs when a tile is updating in hardmode.
 		/// </summary>
 		event EventHandler<HardmodeTileUpdatingEventArgs> HardmodeTileUpdating;
 
 		/// <summary>
-		/// Gets the world height.
+		/// Gets the world's height.
 		/// </summary>
 		int Height { get; }
 
@@ -50,7 +60,7 @@ namespace Orion.World
 		bool IsFrostMoon { get; set; }
 
 		/// <summary>
-		/// Gets or sets a value indicating whether it is currently halloween.
+		/// Gets or sets a value indicating whether it is currently Halloween.
 		/// </summary>
 		bool IsHalloween { get; set; }
 
@@ -65,12 +75,12 @@ namespace Orion.World
 		event EventHandler<MeteorDroppingEventArgs> MeteorDropping;
 
 		/// <summary>
-		/// Gets or sets the time. This value is the number of ticks since daytime/nighttime.
+		/// Gets or sets the time. This value is the number of ticks since the beginning of daytime or nighttime.
 		/// </summary>
 		double Time { get; set; }
 
 		/// <summary>
-		/// Gets the world width.
+		/// Gets the world's width.
 		/// </summary>
 		int Width { get; }
 
@@ -104,6 +114,22 @@ namespace Orion.World
 		/// <param name="x">The x position.</param>
 		/// <param name="y">The y position.</param>
 		void DropMeteor(int x, int y);
+
+		/// <summary>
+		/// Paints a block at a position in the world.
+		/// </summary>
+		/// <param name="x">The x position.</param>
+		/// <param name="y">The y position.</param>
+		/// <param name="type">The paint type.</param>
+		void PaintBlock(int x, int y, byte type);
+
+		/// <summary>
+		/// Paints a wall at a position in the world.
+		/// </summary>
+		/// <param name="x">The x position.</param>
+		/// <param name="y">The y position.</param>
+		/// <param name="type">The paint type.</param>
+		void PaintWall(int x, int y, byte type);
 
 		/// <summary>
 		/// Places a block at a position in the world, optionally with a style.
