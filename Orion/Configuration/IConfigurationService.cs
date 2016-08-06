@@ -17,7 +17,7 @@ namespace Orion.Configuration
 		/// The deserialized <typeparamref name="TConfig"/> object as was loaded from the configuration data store.
 		/// </returns>
 		TConfig Load<TService, TConfig>()
-			where TService : ServiceBase
+			where TService : SharedService
 			where TConfig : class, new();
 
 		/// <summary>
@@ -26,7 +26,7 @@ namespace Orion.Configuration
 		/// <typeparam name="TService">The service type.</typeparam>
 		/// <typeparam name="TConfig">The config type which stores the configuration members.</typeparam>
 		void Save<TService, TConfig>(TConfig config)
-			where TService : ServiceBase
+			where TService : SharedService
 			where TConfig : class, new();
 	}
 }

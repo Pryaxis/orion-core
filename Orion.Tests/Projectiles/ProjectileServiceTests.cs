@@ -20,8 +20,9 @@ namespace Orion.Tests.Projectiles
 		public void ProjectileSetDefaults_IsCorrect(ProjectileType type)
 		{
 			using (var orion = new Orion())
-			using (var projectileService = new ProjectileService(orion))
 			{
+				var projectileService = orion.GetService<ProjectileService>();
+
 				var terrariaProjectile = new Terraria.Projectile();
 				var projectile = new Projectile(terrariaProjectile);
 				var eventOccurred = false;
@@ -41,8 +42,9 @@ namespace Orion.Tests.Projectiles
 		public void ProjectileSettingDefaults_IsCorrect(ProjectileType type)
 		{
 			using (var orion = new Orion())
-			using (var projectileService = new ProjectileService(orion))
 			{
+				var projectileService = orion.GetService<ProjectileService>();
+
 				var terrariaProjectile = new Terraria.Projectile();
 				var projectile = new Projectile(terrariaProjectile);
 				var eventOccurred = false;
@@ -63,8 +65,8 @@ namespace Orion.Tests.Projectiles
 		public void ProjectileSettingDefaults_ModifiesType(ProjectileType newType)
 		{
 			using (var orion = new Orion())
-			using (var projectileService = new ProjectileService(orion))
 			{
+				var projectileService = orion.GetService<ProjectileService>();
 				var terrariaProjectile = new Terraria.Projectile();
 				var projectile = new Projectile(terrariaProjectile);
 				projectileService.ProjectileSettingDefaults += (sender, args) => args.Type = newType;
@@ -79,8 +81,8 @@ namespace Orion.Tests.Projectiles
 		public void ProjectileSettingDefaults_Handled_StopsSetDefaults(ProjectileType type)
 		{
 			using (var orion = new Orion())
-			using (var projectileService = new ProjectileService(orion))
 			{
+				var projectileService = orion.GetService<ProjectileService>();
 				var terrariaProjectile = new Terraria.Projectile();
 				var projectile = new Projectile(terrariaProjectile);
 				projectileService.ProjectileSettingDefaults += (sender, args) => args.Handled = true;
@@ -96,8 +98,8 @@ namespace Orion.Tests.Projectiles
 		public void FindProjectiles_Null_ReturnsAll(int populate)
 		{
 			using (var orion = new Orion())
-			using (var projectileService = new ProjectileService(orion))
 			{
+				var projectileService = orion.GetService<ProjectileService>();
 				for (var i = 0; i < Terraria.Main.projectile.Length; i++)
 				{
 					Terraria.Main.projectile[i] = new Terraria.Projectile {active = i < populate};
@@ -117,8 +119,8 @@ namespace Orion.Tests.Projectiles
 		public void FindProjectiles_MultipleTimes_ReturnsSameInstance(int populate)
 		{
 			using (var orion = new Orion())
-			using (var projectileService = new ProjectileService(orion))
 			{
+				var projectileService = orion.GetService<ProjectileService>();
 				for (var i = 0; i < Terraria.Main.projectile.Length; ++i)
 				{
 					Terraria.Main.projectile[i] = new Terraria.Projectile {active = i < populate};
@@ -138,8 +140,8 @@ namespace Orion.Tests.Projectiles
 		public void FindProjectiles_IsCorrect(Predicate<IProjectile> predicate)
 		{
 			using (var orion = new Orion())
-			using (var projectileService = new ProjectileService(orion))
 			{
+				var projectileService = orion.GetService<ProjectileService>();
 				for (var i = 0; i < Terraria.Main.projectile.Length; ++i)
 				{
 					Terraria.Main.projectile[i] = new Terraria.Projectile {active = true, position = new Vector2(i, 0)};

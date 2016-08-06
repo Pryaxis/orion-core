@@ -75,10 +75,11 @@
     <Compile Include="Configuration\YamlFileConfigurationService.cs" />
     <Compile Include="Extensions\StringExtensions.cs" />
     <Compile Include="Framework\IService.cs" />
+    <Compile Include="Framework\ISharedService.cs" />
+    <Compile Include="Framework\Service.cs" />
     <Compile Include="Framework\ServiceAttribute.cs" />
-    <Compile Include="Framework\ServiceBase.cs" />
-    <Compile Include="Framework\ServiceInjectionModule.cs" />
-    <Compile Include="Framework\ServiceMap.cs" />
+    <Compile Include="Framework\SharedService.cs" />
+    <Compile Include="Framework\SharedServiceInjectionModule.cs" />
     <Compile Include="Authorization\IGroup.cs" />
     <Compile Include="Authorization\IPermission.cs" />
     <Compile Include="Authorization\IUserAccount.cs" />

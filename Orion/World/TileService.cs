@@ -11,7 +11,7 @@ namespace Orion.World
 	/// array.
 	/// </summary>
 	[Service("Tile Service", Author = "Nyx Studios")]
-	public class TileService : ServiceBase, ITileService
+	public class TileService : SharedService, ITileService
 	{
 		private ITile[,] _tiles;
 		private bool _disposed;
@@ -45,20 +45,6 @@ namespace Orion.World
 		public TileService(Orion orion) : base(orion)
 		{
 			Hooks.Tile.CreateCollection = () => this;
-		}
-
-		/// <inheritdoc/>
-		protected override void Dispose(bool disposing)
-		{
-			if (!_disposed)
-			{
-				if (disposing)
-				{
-					Hooks.Tile.CreateCollection = null;
-				}
-				_disposed = true;
-			}
-			base.Dispose(disposing);
 		}
 	}
 }

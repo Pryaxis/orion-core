@@ -12,7 +12,7 @@ namespace Orion.Items
 	/// Manages <see cref="IItem"/> instances.
 	/// </summary>
 	[Service("Item Service", Author = "Nyx Studios")]
-	public class ItemService : ServiceBase, IItemService
+	public class ItemService : SharedService, IItemService
 	{
 		private readonly IItem[] _items;
 		private bool _disposed;
@@ -72,21 +72,6 @@ namespace Orion.Items
 			var item = new Item(Terraria.Main.item[index]);
 			_items[index] = item;
 			return item;
-		}
-
-		/// <inheritdoc/>
-		protected override void Dispose(bool disposing)
-		{
-			if (!_disposed)
-			{
-				if (disposing)
-				{
-					Hooks.Item.PostSetDefaultsById = null;
-					Hooks.Item.PreSetDefaultsById = null;
-				}
-				_disposed = true;
-			}
-			base.Dispose(disposing);
 		}
 
 		private void InvokeItemSetDefaults(Terraria.Item terrariaItem, ref int type, ref bool noMaterialCheck)

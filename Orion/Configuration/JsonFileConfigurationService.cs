@@ -9,7 +9,7 @@ namespace Orion.Configuration
 	/// format, using Newtonsoft.Json to load/store data.
 	/// </summary>
 	[Service("JSON File Configuration Service", Author = "Nyx Studios")]
-	public class JsonFileConfigurationService : ServiceBase, IConfigurationService
+	public class JsonFileConfigurationService : SharedService, IConfigurationService
 	{
 		/// <summary>
 		/// Gets the configuration directory.
@@ -26,7 +26,7 @@ namespace Orion.Configuration
 
 		/// <inheritdoc/>
 		public TConfig Load<TService, TConfig>()
-			where TService : ServiceBase
+			where TService : SharedService
 			where TConfig : class, new()
 		{
 			// TODO: generalize with streams instead?
@@ -62,7 +62,7 @@ namespace Orion.Configuration
 
 		/// <inheritdoc/>
 		public void Save<TService, TConfig>(TConfig config)
-			where TService : ServiceBase
+			where TService : SharedService
 			where TConfig : class, new()
 		{
 			// TODO: generalize with streams instead?

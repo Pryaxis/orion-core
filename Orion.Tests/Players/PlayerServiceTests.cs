@@ -17,8 +17,8 @@ namespace Orion.Tests.Players
 		public void FindPlayers_Null_ReturnsAll(int populate)
 		{
 			using (var orion = new Orion())
-			using (var playerService = new PlayerService(orion))
 			{
+				var playerService = orion.GetService<PlayerService>();
 				for (var i = 0; i < Terraria.Main.player.Length; ++i)
 				{
 					Terraria.Main.player[i] = new Terraria.Player {active = i < populate};
@@ -38,8 +38,8 @@ namespace Orion.Tests.Players
 		public void FindPlayers_MultipleTimes_ReturnsSameInstance(int populate)
 		{
 			using (var orion = new Orion())
-			using (var playerService = new PlayerService(orion))
 			{
+				var playerService = orion.GetService<PlayerService>();
 				for (var i = 0; i < Terraria.Main.player.Length; ++i)
 				{
 					Terraria.Main.player[i] = new Terraria.Player { active = i < populate };
@@ -59,8 +59,9 @@ namespace Orion.Tests.Players
 		public void FindPlayers_IsCorrect(Predicate<IPlayer> predicate)
 		{
 			using (var orion = new Orion())
-			using (var playerService = new PlayerService(orion))
 			{
+				var playerService = orion.GetService<PlayerService>();
+
 				for (var i = 0; i < Terraria.Main.player.Length; ++i)
 				{
 					Terraria.Main.player[i] = new Terraria.Player {active = true, position = new Vector2(i, 0)};

@@ -11,7 +11,7 @@ namespace Orion.Projectiles
 	/// Manages <see cref="IProjectile"/> instances.
 	/// </summary>
 	[Service("Projectile Service", Author = "Nyx Studios")]
-	public class ProjectileService : ServiceBase, IProjectileService
+	public class ProjectileService : SharedService, IProjectileService
 	{
 		private readonly IProjectile[] _projectiles;
 		private bool _disposed;
@@ -51,21 +51,6 @@ namespace Orion.Projectiles
 				projectiles.Add(_projectiles[i]);
 			}
 			return projectiles.Where(p => p.WrappedProjectile.active && (predicate?.Invoke(p) ?? true));
-		}
-
-		/// <inheritdoc/>
-		protected override void Dispose(bool disposing)
-		{
-			if (!_disposed)
-			{
-				if (disposing)
-				{
-					Hooks.Projectile.PostSetDefaultsById = null;
-					Hooks.Projectile.PreSetDefaultsById = null;
-				}
-				_disposed = true;
-			}
-			base.Dispose(disposing);
 		}
 
 		private void InvokeProjectileSetDefaults(Terraria.Projectile terrariaProjectile, int type)

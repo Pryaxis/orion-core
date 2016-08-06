@@ -5,7 +5,7 @@ namespace Orion.Framework
 	/// <summary>
 	/// Describes an Orion service.
 	/// </summary>
-	public interface IService : IDisposable
+	public interface IService
 	{
 		/// <summary>
 		/// Gets the service author.

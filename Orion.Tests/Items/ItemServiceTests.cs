@@ -34,8 +34,9 @@ namespace Orion.Tests.Items
 		public void ItemSetDefaults_IsCorrect(ItemType type)
 		{
 			using (var orion = new Orion())
-			using (var itemService = new ItemService(orion))
 			{
+				var itemService = orion.GetService<ItemService>();
+
 				var terrariaItem = new Terraria.Item();
 				var item = new Item(terrariaItem);
 				var eventOccurred = false;
@@ -55,8 +56,9 @@ namespace Orion.Tests.Items
 		public void ItemSetDefaults_OccursFromNetDefaults(ItemType type)
 		{
 			using (var orion = new Orion())
-			using (var itemService = new ItemService(orion))
 			{
+				var itemService = orion.GetService<ItemService>();
+			
 				var terrariaItem = new Terraria.Item();
 				var eventOccurred = false;
 				itemService.ItemSetDefaults += (sender, args) => eventOccurred = true;
@@ -71,8 +73,8 @@ namespace Orion.Tests.Items
 		public void ItemSetDefaults_OccursFromSetDefaultsString(string type)
 		{
 			using (var orion = new Orion())
-			using (var itemService = new ItemService(orion))
 			{
+				var itemService = orion.GetService<ItemService>();
 				var terrariaItem = new Terraria.Item();
 				var eventOccurred = false;
 				itemService.ItemSetDefaults += (sender, args) => eventOccurred = true;
@@ -87,8 +89,8 @@ namespace Orion.Tests.Items
 		public void ItemSettingDefaults_IsCorrect(ItemType type)
 		{
 			using (var orion = new Orion())
-			using (var itemService = new ItemService(orion))
 			{
+				var itemService = orion.GetService<ItemService>();
 				var terrariaItem = new Terraria.Item();
 				var item = new Item(terrariaItem);
 				var eventOccurred = false;
@@ -109,8 +111,8 @@ namespace Orion.Tests.Items
 		public void ItemSettingDefaults_ModifiesType(ItemType newType)
 		{
 			using (var orion = new Orion())
-			using (var itemService = new ItemService(orion))
 			{
+				var itemService = orion.GetService<ItemService>();
 				var terrariaItem = new Terraria.Item();
 				var item = new Item(terrariaItem);
 				itemService.ItemSettingDefaults += (sender, args) => args.Type = newType;
@@ -125,8 +127,8 @@ namespace Orion.Tests.Items
 		public void ItemSettingDefaults_Handled_StopsSetDefaults(ItemType type)
 		{
 			using (var orion = new Orion())
-			using (var itemService = new ItemService(orion))
 			{
+				var itemService = orion.GetService<ItemService>();
 				var terrariaItem = new Terraria.Item();
 				var item = new Item(terrariaItem);
 				itemService.ItemSettingDefaults += (sender, args) => args.Handled = true;
@@ -142,8 +144,8 @@ namespace Orion.Tests.Items
 		public void ItemSettingDefaults_OccursFromNetDefaults(ItemType type)
 		{
 			using (var orion = new Orion())
-			using (var itemService = new ItemService(orion))
 			{
+				var itemService = orion.GetService<ItemService>();
 				var terrariaItem = new Terraria.Item();
 				var eventOccurred = false;
 				itemService.ItemSettingDefaults += (sender, args) => eventOccurred = true;
@@ -158,8 +160,8 @@ namespace Orion.Tests.Items
 		public void ItemSettingDefaults_OccursFromSetDefaultsString(string type)
 		{
 			using (var orion = new Orion())
-			using (var itemService = new ItemService(orion))
 			{
+				var itemService = orion.GetService<ItemService>();
 				var terrariaItem = new Terraria.Item();
 				var eventOccurred = false;
 				itemService.ItemSettingDefaults += (sender, args) => eventOccurred = true;
@@ -174,8 +176,8 @@ namespace Orion.Tests.Items
 		public void CreateItem_IsCorrect(ItemType type, int stack, ItemPrefix prefix)
 		{
 			using (var orion = new Orion())
-			using (var itemService = new ItemService(orion))
 			{
+				var itemService = orion.GetService<ItemService>();
 				IItem item = itemService.CreateItem(type, stack, prefix);
 
 				Assert.AreEqual(type, item.Type);
@@ -189,8 +191,8 @@ namespace Orion.Tests.Items
 		public void FindItems_Null_ReturnsAll(int populate)
 		{
 			using (var orion = new Orion())
-			using (var itemService = new ItemService(orion))
 			{
+				var itemService = orion.GetService<ItemService>();
 				for (var i = 0; i < Terraria.Main.item.Length; ++i)
 				{
 					Terraria.Main.item[i] = new Terraria.Item {active = i < populate};
@@ -210,8 +212,8 @@ namespace Orion.Tests.Items
 		public void FindItems_MultipleTimes_ReturnsSameInstance(int populate)
 		{
 			using (var orion = new Orion())
-			using (var itemService = new ItemService(orion))
 			{
+				var itemService = orion.GetService<ItemService>();
 				for (var i = 0; i < Terraria.Main.item.Length; ++i)
 				{
 					Terraria.Main.item[i] = new Terraria.Item {active = i < populate};
@@ -231,8 +233,8 @@ namespace Orion.Tests.Items
 		public void FindItems_IsCorrect(Predicate<IItem> predicate)
 		{
 			using (var orion = new Orion())
-			using (var itemService = new ItemService(orion))
 			{
+				var itemService = orion.GetService<ItemService>();
 				for (var i = 0; i < Terraria.Main.item.Length; ++i)
 				{
 					Terraria.Main.item[i] = new Terraria.Item {active = true, type = i};
@@ -251,8 +253,8 @@ namespace Orion.Tests.Items
 		public void SpawnItem_IsCorrect(ItemType type, int stack, ItemPrefix prefix)
 		{
 			using (var orion = new Orion())
-			using (var itemService = new ItemService(orion))
 			{
+				var itemService = orion.GetService<ItemService>();
 				IItem item = itemService.SpawnItem(type, new Vector2(1000, 2000), stack, prefix);
 
 				Assert.AreEqual(type, item.Type);

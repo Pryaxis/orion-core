@@ -8,19 +8,15 @@ using Ninject.Modules;
 namespace Orion.Framework
 {
 	/// <summary>
-	/// A Ninject module that binds service interfaces to implementations.
+	/// A Ninject module that binds shared service implementations to their service definitions.
 	/// </summary>
-	public class ServiceInjectionModule : NinjectModule
+	public class SharedServiceInjectionModule : NinjectModule
 	{
-		// TODO: kill off service map?
-		protected ServiceMap serviceMap;
-
 		/// <summary>
-		/// Initializes a new instance of the <see cref="ServiceInjectionModule"/> class.
+		/// Initializes a new instance of the <see cref="SharedServiceInjectionModule"/> class.
 		/// </summary>
-		public ServiceInjectionModule(ServiceMap serviceMap)
+		public SharedServiceInjectionModule()
 		{
-			this.serviceMap = serviceMap;
 		}
 
 		/// <inheritdoc/>
@@ -32,7 +28,8 @@ namespace Orion.Framework
 			IEnumerable<Type> serviceTypes = new[] {Assembly.GetExecutingAssembly()}
 				.Concat(LoadAssemblies(Orion.PluginDirectory))
 				.SelectMany(a => a.GetExportedTypes())
-				.Where(t => t.IsSubclassOf(typeof(ServiceBase)));
+				.Where(t => t.IsSubclassOf(typeof(SharedService)));
+
 			foreach (Type serviceType in serviceTypes)
 			{
 				Bind(serviceType).To(serviceType).InSingletonScope();
@@ -41,19 +38,6 @@ namespace Orion.Framework
 					Bind(interfaceType).To(serviceType).InSingletonScope();
 				}
 			}
-
-			/*Kernel.Bind(
-				i => i
-					.FromThisAssembly()
-					.SelectAllTypes().InheritedFrom<ServiceBase>()
-					.Join.FromAssembliesInPath(Orion.PluginDirectory).SelectAllClasses().InheritedFrom<ServiceBase>()
-					.BindAllInterfaces()
-					.Configure(
-						config =>
-						{
-							config.InSingletonScope();
-						})
-				);*/
 		}
 
 		private static IEnumerable<Assembly> LoadAssemblies(string path)

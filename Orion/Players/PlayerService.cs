@@ -11,7 +11,7 @@ namespace Orion.Players
 	/// Manages <see cref="IPlayer"/> instances.
 	/// </summary>
 	[Service("Player Service", Author = "Nyx Studios")]
-	public class PlayerService : ServiceBase, IPlayerService
+	public class PlayerService : SharedService, IPlayerService
 	{
 		private readonly IPlayer[] _players;
 		private bool _disposed;
@@ -54,21 +54,6 @@ namespace Orion.Players
 				players.Add(_players[i]);
 			}
 			return players.Where(p => p.WrappedPlayer.active && (predicate?.Invoke(p) ?? true));
-		}
-
-		/// <inheritdoc/>
-		protected override void Dispose(bool disposing)
-		{
-			if (!_disposed)
-			{
-				if (disposing)
-				{
-					Hooks.Net.RemoteClient.PreReset = null;
-					Hooks.Player.PreGreet = null;
-				}
-				_disposed = true;
-			}
-			base.Dispose(disposing);
 		}
 
 		private HookResult InvokePlayerJoin(ref int playerId)

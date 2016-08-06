@@ -9,7 +9,7 @@ namespace Orion.Configuration
 	/// format, using YamlDotNet to load/store data.
 	/// </summary>
 	[Service("YAML File Configuration Service", Author = "Nyx Studios")]
-	public class YamlFileConfigurationService : ServiceBase, IConfigurationService
+	public class YamlFileConfigurationService : SharedService, IConfigurationService
 	{
 		/// <summary>
 		/// Gets the configuration directory.
@@ -26,7 +26,7 @@ namespace Orion.Configuration
 
 		/// <inheritdoc/>
 		public TConfig Load<TService, TConfig>()
-			where TService : ServiceBase
+			where TService : SharedService
 			where TConfig : class, new()
 		{
 			string configDirectory = Path.Combine(ConfigurationDirectory, typeof(TService).Name);
@@ -61,7 +61,7 @@ namespace Orion.Configuration
 
 		/// <inheritdoc/>
 		public void Save<TService, TConfig>(TConfig config)
-			where TService : ServiceBase
+			where TService : SharedService
 			where TConfig : class, new()
 		{
 			string configDirectory = Path.Combine(ConfigurationDirectory, typeof(TService).Name);

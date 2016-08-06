@@ -42,8 +42,8 @@ namespace Orion.Tests.World
 		public void GetProperty_IsCorrect(string worldServicePropertyName, string terrariaMainFieldName, object value)
 		{
 			using (var orion = new Orion())
-			using (var worldService = new WorldService(orion))
 			{
+				var worldService = orion.GetService<WorldService>();
 				FieldInfo terrariaMainField = typeof(Terraria.Main).GetField(terrariaMainFieldName);
 				terrariaMainField.SetValue(null, value);
 				PropertyInfo worldServiceProperty = typeof(WorldService).GetProperty(worldServicePropertyName);
@@ -58,8 +58,8 @@ namespace Orion.Tests.World
 		public void SetProperty_IsCorrect(string worldServicePropertyName, string terrariaMainFieldName, object value)
 		{
 			using (var orion = new Orion())
-			using (var worldService = new WorldService(orion))
 			{
+				var worldService = orion.GetService<WorldService>();
 				FieldInfo terrariaMainField = typeof(Terraria.Main).GetField(terrariaMainFieldName);
 				PropertyInfo worldServiceProperty = typeof(WorldService).GetProperty(worldServicePropertyName);
 
@@ -73,8 +73,8 @@ namespace Orion.Tests.World
 		public void CheckingChristmas_IsCorrect()
 		{
 			using (var orion = new Orion())
-			using (var worldService = new WorldService(orion))
 			{
+				var worldService = orion.GetService<WorldService>();
 				var eventOccurred = false;
 				worldService.CheckingChristmas += (sender, args) => eventOccurred = true;
 
@@ -89,8 +89,9 @@ namespace Orion.Tests.World
 		public void CheckingChristmas_Handled_StopsCheck(bool christmas)
 		{
 			using (var orion = new Orion())
-			using (var worldService = new WorldService(orion))
 			{
+				var worldService = orion.GetService<WorldService>();
+				var eventOccurred = false;
 				worldService.CheckingChristmas += (sender, args) => args.Handled = true;
 				Terraria.Main.xMas = christmas;
 
@@ -104,8 +105,8 @@ namespace Orion.Tests.World
 		public void CheckingHalloween_IsCorrect()
 		{
 			using (var orion = new Orion())
-			using (var worldService = new WorldService(orion))
 			{
+				var worldService = orion.GetService<WorldService>();
 				var eventOccurred = false;
 				worldService.CheckingHalloween += (sender, args) => eventOccurred = true;
 				
@@ -120,8 +121,8 @@ namespace Orion.Tests.World
 		public void CheckingHalloween_Handled_StopsCheck(bool halloween)
 		{
 			using (var orion = new Orion())
-			using (var worldService = new WorldService(orion))
 			{
+				var worldService = orion.GetService<WorldService>();
 				worldService.CheckingHalloween += (sender, args) => args.Handled = true;
 				Terraria.Main.halloween = halloween;
 
@@ -135,8 +136,8 @@ namespace Orion.Tests.World
 		public void MeteorDropping_IsCorrect(int x, int y)
 		{
 			using (var orion = new Orion())
-			using (var worldService = new WorldService(orion))
 			{
+				var worldService = orion.GetService<WorldService>();
 				InitializeMeteorRange(x, y);
 				var eventOccurred = false;
 				worldService.MeteorDropping += (sender, args) =>
@@ -156,8 +157,8 @@ namespace Orion.Tests.World
 		public void MeteorDropping_Handled_StopsMeteor(int x, int y)
 		{
 			using (var orion = new Orion())
-			using (var worldService = new WorldService(orion))
 			{
+				var worldService = orion.GetService<WorldService>();
 				InitializeMeteorRange(x, y);
 				worldService.MeteorDropping += (sender, args) => args.Handled = true;
 
@@ -171,8 +172,8 @@ namespace Orion.Tests.World
 		public void MeteorDropping_ModifiesXY(int x, int y, int newX, int newY)
 		{
 			using (var orion = new Orion())
-			using (var worldService = new WorldService(orion))
 			{
+				var worldService = orion.GetService<WorldService>();
 				InitializeMeteorRange(newX, newY);
 				worldService.MeteorDropping += (sender, args) =>
 				{
@@ -191,8 +192,8 @@ namespace Orion.Tests.World
 		public void WorldSaving_IsCorrect(bool resetTime)
 		{
 			using (var orion = new Orion())
-			using (var worldService = new WorldService(orion))
 			{
+				var worldService = orion.GetService<WorldService>();
 				Terraria.Main.worldName = "";
 				Terraria.WorldGen.saveLock = false;
 				var eventOccurred = false;
@@ -212,8 +213,8 @@ namespace Orion.Tests.World
 		public void WorldSaving_Handled_StopsSaving(bool resetTime)
 		{
 			using (var orion = new Orion())
-			using (var worldService = new WorldService(orion))
 			{
+				var worldService = orion.GetService<WorldService>();
 				Terraria.Main.worldName = "";
 				Terraria.WorldGen.saveLock = false;
 				worldService.WorldSaving += (sender, args) => args.Handled = true;
@@ -229,8 +230,8 @@ namespace Orion.Tests.World
 		public void WorldSaving_ModifiesResetTime(bool resetTime, bool newResetTime)
 		{
 			using (var orion = new Orion())
-			using (var worldService = new WorldService(orion))
 			{
+				var worldService = orion.GetService<WorldService>();
 				Terraria.Main.time = 0.0;
 				Terraria.IO.WorldFile.tempTime = 0.0;
 				Terraria.WorldGen.saveLock = false;
@@ -247,8 +248,8 @@ namespace Orion.Tests.World
 		public void WorldSaved_IsCorrect(bool resetTime)
 		{
 			using (var orion = new Orion())
-			using (var worldService = new WorldService(orion))
 			{
+				var worldService = orion.GetService<WorldService>();
 				var eventOccurred = false;
 				worldService.WorldSaved += (sender, args) =>
 				{
@@ -267,8 +268,8 @@ namespace Orion.Tests.World
 		public void Save_IsCorrect(bool resetTime)
 		{
 			using (var orion = new Orion())
-			using (var worldService = new WorldService(orion))
 			{
+				var worldService = orion.GetService<WorldService>();
 				Terraria.Main.time = 0.0;
 				Terraria.Main.worldName = "";
 				Terraria.IO.WorldFile.tempTime = 0.0;
@@ -285,8 +286,8 @@ namespace Orion.Tests.World
 		public void BreakBlock_IsCorrect(int x, int y)
 		{
 			using (var orion = new Orion())
-			using (var worldService = new WorldService(orion))
 			{
+				var worldService = orion.GetService<WorldService>();
 				var tile = new Terraria.Tile();
 				tile.active(true);
 				Terraria.Main.tile[x, y] = tile;
@@ -304,8 +305,8 @@ namespace Orion.Tests.World
 		public void BreakBlock_PositionOutOfRange_ThrowsArgumentOutOfRangeException(int x, int y)
 		{
 			using (var orion = new Orion())
-			using (var worldService = new WorldService(orion))
 			{
+				var worldService = orion.GetService<WorldService>();
 				Assert.Throws<ArgumentOutOfRangeException>(() => worldService.BreakBlock(x, y));
 			}
 		}
@@ -314,8 +315,8 @@ namespace Orion.Tests.World
 		public void BreakWall_IsCorrect(int x, int y)
 		{
 			using (var orion = new Orion())
-			using (var worldService = new WorldService(orion))
 			{
+				var worldService = orion.GetService<WorldService>();
 				var tile = new Terraria.Tile {wall = 1};
 				Terraria.Main.tile[x, y] = tile;
 
@@ -332,8 +333,8 @@ namespace Orion.Tests.World
 		public void BreakWall_PositionOutOfRange_ThrowsArgumentOutOfRangeException(int x, int y)
 		{
 			using (var orion = new Orion())
-			using (var worldService = new WorldService(orion))
 			{
+				var worldService = orion.GetService<WorldService>();
 				Assert.Throws<ArgumentOutOfRangeException>(() => worldService.BreakWall(x, y));
 			}
 		}
@@ -342,8 +343,8 @@ namespace Orion.Tests.World
 		public void DropMeteor_IsCorrect(int x, int y)
 		{
 			using (var orion = new Orion())
-			using (var worldService = new WorldService(orion))
 			{
+				var worldService = orion.GetService<WorldService>();
 				InitializeMeteorRange(x, y);
 
 				worldService.DropMeteor(x, y);
@@ -359,8 +360,8 @@ namespace Orion.Tests.World
 		public void DropMeteor_PositionOutOfRange_ThrowsArgumentOutOfRangeException(int x, int y)
 		{
 			using (var orion = new Orion())
-			using (var worldService = new WorldService(orion))
 			{
+				var worldService = orion.GetService<WorldService>();
 				Assert.Throws<ArgumentOutOfRangeException>(() => worldService.DropMeteor(x, y));
 			}
 		}
@@ -369,8 +370,8 @@ namespace Orion.Tests.World
 		public void PaintBlock_IsCorrect(int x, int y, byte color)
 		{
 			using (var orion = new Orion())
-			using (var worldService = new WorldService(orion))
 			{
+				var worldService = orion.GetService<WorldService>();
 				var tile = new Terraria.Tile();
 				tile.active(true);
 				Terraria.Main.tile[x, y] = tile;
@@ -388,8 +389,8 @@ namespace Orion.Tests.World
 		public void PaintBlock_PositionOutOfRange_ThrowsArgumentOutOfRangeException(int x, int y)
 		{
 			using (var orion = new Orion())
-			using (var worldService = new WorldService(orion))
 			{
+				var worldService = orion.GetService<WorldService>();
 				Assert.Throws<ArgumentOutOfRangeException>(() => worldService.PaintBlock(x, y, 0));
 			}
 		}
@@ -398,8 +399,8 @@ namespace Orion.Tests.World
 		public void PaintWall_IsCorrect(int x, int y, byte color)
 		{
 			using (var orion = new Orion())
-			using (var worldService = new WorldService(orion))
 			{
+				var worldService = orion.GetService<WorldService>();
 				var tile = new Terraria.Tile {wall = 1};
 				Terraria.Main.tile[x, y] = tile;
 
@@ -416,8 +417,8 @@ namespace Orion.Tests.World
 		public void PaintWall_PositionOutOfRange_ThrowsArgumentOutOfRangeException(int x, int y)
 		{
 			using (var orion = new Orion())
-			using (var worldService = new WorldService(orion))
 			{
+				var worldService = orion.GetService<WorldService>();
 				Assert.Throws<ArgumentOutOfRangeException>(() => worldService.PaintWall(x, y, 0));
 			}
 		}
@@ -426,8 +427,8 @@ namespace Orion.Tests.World
 		public void PlaceBlock_Simple_IsCorrect(int x, int y, ushort block)
 		{
 			using (var orion = new Orion())
-			using (var worldService = new WorldService(orion))
 			{
+				var worldService = orion.GetService<WorldService>();
 				var tile = new Terraria.Tile();
 				Terraria.Main.tile[x, y] = tile;
 
@@ -444,8 +445,8 @@ namespace Orion.Tests.World
 		public void PlaceBlock_PositionOutOfRange_ThrowsArgumentOutOfRangeException(int x, int y)
 		{
 			using (var orion = new Orion())
-			using (var worldService = new WorldService(orion))
 			{
+				var worldService = orion.GetService<WorldService>();
 				Assert.Throws<ArgumentOutOfRangeException>(() => worldService.PlaceBlock(x, y, 0));
 			}
 		}
@@ -454,8 +455,8 @@ namespace Orion.Tests.World
 		public void PlaceWall_IsCorrect(int x, int y, byte wall)
 		{
 			using (var orion = new Orion())
-			using (var worldService = new WorldService(orion))
 			{
+				var worldService = orion.GetService<WorldService>();
 				var tile = new Terraria.Tile();
 				Terraria.Main.tile[x, y] = tile;
 
@@ -472,8 +473,9 @@ namespace Orion.Tests.World
 		public void PlaceWall_PositionOutOfRange_ThrowsArgumentOutOfRangeException(int x, int y)
 		{
 			using (var orion = new Orion())
-			using (var worldService = new WorldService(orion))
 			{
+				var worldService = orion.GetService<WorldService>();
+
 				Assert.Throws<ArgumentOutOfRangeException>(() => worldService.PlaceWall(x, y, 0));
 			}
 		}
@@ -482,8 +484,8 @@ namespace Orion.Tests.World
 		public void SettleLiquids_IsCorrect()
 		{
 			using (var orion = new Orion())
-			using (var worldService = new WorldService(orion))
 			{
+				var worldService = orion.GetService<WorldService>();
 				Terraria.Liquid.panicMode = false;
 
 				worldService.SettleLiquids();

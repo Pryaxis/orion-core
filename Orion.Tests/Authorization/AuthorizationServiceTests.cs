@@ -21,8 +21,8 @@ namespace Orion.Tests.Authorization
 		public void UserAccount_AddAccount(string accountName)
 		{
 			using (Orion orion = new Orion())
-			using (IUserAccountService userAccountService = new PlainTextAccountService(orion))
 			{
+				IUserAccountService userAccountService = orion.GetService<PlainTextAccountService>();
 				userAccountService.AddAccount(accountName);
 
 				IUserAccount account = userAccountService.GetUserAccountOrDefault(accountName);
@@ -38,8 +38,8 @@ namespace Orion.Tests.Authorization
 		public void UserAccount_AddAccountShouldThrowArgumentNullException(string accountName)
 		{
 			using (Orion orion = new Orion())
-			using (IUserAccountService userAccountService = new PlainTextAccountService(orion))
 			{
+				IUserAccountService userAccountService = orion.GetService<PlainTextAccountService>();
 				Assert.That(() => userAccountService.AddAccount(accountName), Throws.TypeOf<ArgumentNullException>());
 			}
 		}
@@ -48,8 +48,8 @@ namespace Orion.Tests.Authorization
 		public void UserAccount_AddAccountShouldThrowInvalidOperationException()
 		{
 			using (Orion orion = new Orion())
-			using (IUserAccountService userAccountService = new PlainTextAccountService(orion))
 			{
+				IUserAccountService userAccountService = orion.GetService<PlainTextAccountService>();
 				Assert.That(() =>
 				{
 					userAccountService.AddAccount("duplicateAccount");
@@ -65,8 +65,9 @@ namespace Orion.Tests.Authorization
 		public void UserAccount_SetPasswordWithNullValueShouldThrowArgumentNullException(string password)
 		{
 			using (Orion orion = new Orion())
-			using (IUserAccountService userAccountService = new PlainTextAccountService(orion))
 			{
+				IUserAccountService userAccountService = orion.GetService<PlainTextAccountService>();
+
 				IUserAccount userAccount = userAccountService.GetUserAccountOrDefault("nullPasswordTest") ??
 										   userAccountService.AddAccount("nullPasswordTest");
 
@@ -84,8 +85,9 @@ namespace Orion.Tests.Authorization
 		public void UserAccount_SetPasswordShouldSucceed(string password)
 		{
 			using (Orion orion = new Orion())
-			using (IUserAccountService userAccountService = new PlainTextAccountService(orion))
 			{
+				IUserAccountService userAccountService = orion.GetService<PlainTextAccountService>();
+
 				IUserAccount userAccount = userAccountService.GetUserAccountOrDefault("SetPasswordShouldSucceedTest") ??
 										   userAccountService.AddAccount("SetPasswordShouldSucceedTest");
 
@@ -104,8 +106,9 @@ namespace Orion.Tests.Authorization
 			bool val = false;
 
 			using (Orion orion = new Orion())
-			using (IUserAccountService userAccountService = new PlainTextAccountService(orion))
 			{
+				IUserAccountService userAccountService = orion.GetService<PlainTextAccountService>();
+
 				IUserAccount userAccount = userAccountService.GetUserAccountOrDefault("Authenticate") ??
 										   userAccountService.AddAccount("Authenticate");
 

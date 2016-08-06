@@ -1,6 +1,7 @@
 ﻿using Ninject;
 using Orion.Framework;
 using System;
+using System.Collections.Generic;
 using System.IO;
 using Terraria;
 
@@ -9,12 +10,7 @@ namespace Orion
 	public partial class Orion : IDisposable
 	{
 		private bool _disposed;
-		internal ServiceMap serviceMap;
-
-		/// <summary>
-		/// Gets the dependency injection container, which contains references to plugins and services.
-		/// </summary>
-		public IKernel InjectionContainer { get; }
+		protected IKernel _injectionContainer;
 
 		/// <summary>
 		/// Initializes a new instance of the <see cref="Orion"/> class.
@@ -26,11 +22,8 @@ namespace Orion
 		{
 			CreateDirectories();
 
-			this.serviceMap = new ServiceMap();
-
-			InjectionContainer = new StandardKernel(new ServiceInjectionModule(serviceMap));
-			
-			InjectionContainer.Bind<Orion>().ToConstant(this);
+			_injectionContainer = new StandardKernel(new SharedServiceInjectionModule());
+			_injectionContainer.Bind<Orion>().ToConstant(this);
 		}
 
 		private void CreateDirectories()
@@ -52,10 +45,38 @@ namespace Orion
 			{
 				if (disposing)
 				{
-					InjectionContainer.Dispose();
+					_injectionContainer.Dispose();
 				}
 				_disposed = true;
 			}
+		}
+
+		/// <summary>
+		/// Gets an Orion service by the type specified.
+		/// </summary>
+		/// <typeparam name="TService">
+		/// TService is the type of any Orion service
+		/// </typeparam>
+		/// <returns>
+		/// The <typeparamref name="TService"/> requested, or null if it cannot be found.
+		/// </returns>
+		public TService GetService<TService>()
+		{
+			return _injectionContainer.Get<TService>();
+		}
+
+		/// <summary>
+		/// Gets a list of all Orion services by the type specified.
+		/// </summary>
+		/// <typeparam name="TService">
+		/// TService is the type of any Orion service
+		/// </typeparam>
+		/// <returns>
+		/// The <typeparamref name="TService"/> requested, or null if it cannot be found.
+		/// </returns>
+		public IEnumerable<TService> GetServices<TService>()
+		{
+			return _injectionContainer.GetAll<TService>();
 		}
 
 		/// <summary>
@@ -63,7 +84,7 @@ namespace Orion
 		/// </summary>
 		public void StartServer()
 		{
-			foreach (IService service in InjectionContainer.GetAll<IService>())
+			foreach (IService service in _injectionContainer.GetAll<IService>())
 			{
 				Console.WriteLine($"  * Loading {service.Name} by {service.Author}");
 			}

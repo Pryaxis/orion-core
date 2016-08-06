@@ -9,7 +9,7 @@ namespace Orion.World
 	/// Manages Terraria's world functions.
 	/// </summary>
 	[Service("World Service", Author = "Nyx Studios")]
-	public class WorldService : ServiceBase, IWorldService
+	public class WorldService : SharedService, IWorldService
 	{
 		private bool _disposed;
 
@@ -255,29 +255,6 @@ namespace Orion.World
 
 		/// <inheritdoc/>
 		public void SettleLiquids() => Terraria.Liquid.StartPanic();
-
-		/// <inheritdoc/>
-		protected override void Dispose(bool disposing)
-		{
-			if (!_disposed)
-			{
-				if (disposing)
-				{
-					Hooks.Game.Christmas = null;
-					Hooks.Game.Halloween = null;
-					Hooks.World.DropMeteor = null;
-					Hooks.World.PreHardmode = null;
-					Hooks.World.PostHardmode = null;
-					Hooks.World.HardmodeTileUpdate = null;
-					Hooks.World.IO.PreLoadWorld = null;
-					Hooks.World.IO.PostLoadWorld = null;
-					Hooks.World.IO.PreSaveWorld = null;
-					Hooks.World.IO.PostSaveWorld = null;
-				}
-				_disposed = true;
-			}
-			base.Dispose(disposing);
-		}
 
 		private HookResult InvokeCheckingChristmas()
 		{

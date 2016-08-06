@@ -10,7 +10,7 @@ namespace Orion.Authorization
 	/// Plain text account and group service which sources its account information from flat files in Orion's data
 	/// subdirectory.
 	/// </summary>
-	public class PlainTextAccountService : ServiceBase, IUserAccountService, IGroupService
+	public class PlainTextAccountService : SharedService, IUserAccountService, IGroupService
 	{
 		/// <summary>
 		/// The path to where <see cref="PlainTextUserAccount"/> objects are stored.

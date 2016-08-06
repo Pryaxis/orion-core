@@ -1,38 +1,45 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Reflection;
+using System.Text;
+using System.Threading.Tasks;
 
 namespace Orion.Framework
 {
 	/// <summary>
-	/// Provides the base class for all services.
+	/// Base class which describes a non-shared (or scoped) service. 
 	/// </summary>
-	public abstract class ServiceBase : IService
+	/// <remarks>
+	/// Scoped services provide functionality to plugins and other services in the same manner as
+	/// shared services, however new copies are instantiated each time they are requested in Orion.
+	/// 
+	/// Therefore, scoped services *may* contain instance-specific state.
+	/// 
+	/// Scoped services implement IDisposable, and are disposed when their owning instances get
+	/// destroyed.
+	/// </remarks>
+	public abstract class Service : IService, IDisposable
 	{
-		/// <inheritdoc/>
 		public string Author { get; } = "Anonymous";
-
-		/// <inheritdoc/>
 		public string Name { get; } = "Unnamed";
 
+		public Version Version { get; } = new Version(1,0,0);
+		
 		/// <summary>
-		/// Gets the parent <see cref="Orion"/> instance.
+		/// Returns the Orion instance this service belongs to.
 		/// </summary>
 		protected Orion Orion { get; }
 
-		/// <inheritdoc/>
-		public virtual Version Version { get; } = new Version(1, 0, 0);
-
 		/// <summary>
-		/// Initializes a new instance of the <see cref="ServiceBase"/> class.
+		/// Creates a new scoped service.
 		/// </summary>
-		/// <param name="orion">The parent <see cref="Orion"/> instance.</param>
-		/// <remarks>
-		/// This constructor populates the <see cref="Name"/> and <see cref="Author"/> properties if the
-		/// <see cref="ServiceAttribute"/> attribute is on the derived class.
-		/// </remarks>
-		protected ServiceBase(Orion orion)
+		/// <param name="orion">
+		/// A reference to the Orion instance that this service belongs to.
+		/// </param>
+		protected Service(Orion orion)
 		{
-			Orion = orion;
+			this.Orion = orion;
 
 			var attr = GetType().GetCustomAttribute<ServiceAttribute>();
 			if (attr != null)
@@ -42,10 +49,11 @@ namespace Orion.Framework
 			}
 		}
 
+
 		/// <summary>
 		/// If your service has unmanaged resources, you must override <see cref="Dispose(bool)"/> and release it.
 		/// </summary>
-		~ServiceBase()
+		~Service()
 		{
 			/*
 			 * All unmanaged service resources must be deallocated in Dispose() regardless of if it's a
@@ -73,10 +81,6 @@ namespace Orion.Framework
 		/// if called from a finalizer, and *only* unmanaged resources may be freed.
 		/// </param>
 		protected virtual void Dispose(bool disposing)
-		{
-		}
-
-		public virtual void Start()
 		{
 		}
 	}
