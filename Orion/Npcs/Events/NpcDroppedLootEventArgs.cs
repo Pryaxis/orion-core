@@ -26,7 +26,7 @@ namespace Orion.Npcs.Events
 		/// The loot <see cref="IItem"/> instance that the <see cref="INpc"/> instance dropped.
 		/// </param>
 		/// <exception cref="ArgumentNullException">
-		/// <paramref name="npc"/> or <paramref name="item"/> were null.
+		/// <paramref name="npc"/> or <paramref name="item"/> are null.
 		/// </exception>
 		public NpcDroppedLootEventArgs(INpc npc, IItem item)
 		{

@@ -119,6 +119,10 @@ namespace Orion.World
 		/// </summary>
 		/// <param name="x">The x position.</param>
 		/// <param name="y">The y position.</param>
+		/// <exception cref="ArgumentOutOfRangeException">
+		/// <paramref name="x"/> is negative or greater than or equal to <see cref="Width"/>, or <paramref name="y"/>
+		/// is negative or greater than or equal to<see cref="Height"/>.
+		/// </exception>
 		void BreakBlock(int x, int y);
 
 		/// <summary>
@@ -126,6 +130,10 @@ namespace Orion.World
 		/// </summary>
 		/// <param name="x">The x position.</param>
 		/// <param name="y">The y position.</param>
+		/// <exception cref="ArgumentOutOfRangeException">
+		/// <paramref name="x"/> is negative or greater than or equal to <see cref="Width"/>, or <paramref name="y"/>
+		/// is negative or greater than or equal to<see cref="Height"/>.
+		/// </exception>
 		void BreakWall(int x, int y);
 
 		/// <summary>
@@ -133,6 +141,10 @@ namespace Orion.World
 		/// </summary>
 		/// <param name="x">The x position.</param>
 		/// <param name="y">The y position.</param>
+		/// <exception cref="ArgumentOutOfRangeException">
+		/// <paramref name="x"/> is less than 50 or greater than or equal to <see cref="Width"/> minus 50, or
+		/// <paramref name="y"/> is less than 50 or greater than or equal to <see cref="Height"/> minus 50.
+		/// </exception>
 		void DropMeteor(int x, int y);
 
 		/// <summary>
@@ -140,33 +152,49 @@ namespace Orion.World
 		/// </summary>
 		/// <param name="x">The x position.</param>
 		/// <param name="y">The y position.</param>
-		/// <param name="type">The paint type.</param>
-		void PaintBlock(int x, int y, byte type);
+		/// <param name="color">The paint color.</param>
+		/// <exception cref="ArgumentOutOfRangeException">
+		/// <paramref name="x"/> is negative or greater than or equal to <see cref="Width"/>, or <paramref name="y"/>
+		/// is negative or greater than or equal to<see cref="Height"/>.
+		/// </exception>
+		void PaintBlock(int x, int y, byte color);
 
 		/// <summary>
 		/// Paints a wall at a position in the world.
 		/// </summary>
 		/// <param name="x">The x position.</param>
 		/// <param name="y">The y position.</param>
-		/// <param name="type">The paint type.</param>
-		void PaintWall(int x, int y, byte type);
+		/// <param name="color">The paint color.</param>
+		/// <exception cref="ArgumentOutOfRangeException">
+		/// <paramref name="x"/> is negative or greater than or equal to <see cref="Width"/>, or <paramref name="y"/>
+		/// is negative or greater than or equal to<see cref="Height"/>.
+		/// </exception>
+		void PaintWall(int x, int y, byte color);
 
 		/// <summary>
 		/// Places a block at a position in the world, optionally with a style.
 		/// </summary>
 		/// <param name="x">The x position.</param>
 		/// <param name="y">The y position.</param>
-		/// <param name="type">The tile type ID.</param>
+		/// <param name="block">The block type.</param>
 		/// <param name="style">The style.</param>
-		void PlaceBlock(int x, int y, ushort type, int style = 0);
+		/// <exception cref="ArgumentOutOfRangeException">
+		/// <paramref name="x"/> is negative or greater than or equal to <see cref="Width"/>, or <paramref name="y"/>
+		/// is negative or greater than or equal to<see cref="Height"/>.
+		/// </exception>
+		void PlaceBlock(int x, int y, ushort block, int style = 0);
 
 		/// <summary>
 		/// Places a wall at a position in the world.
 		/// </summary>
 		/// <param name="x">The x position.</param>
 		/// <param name="y">The y position.</param>
-		/// <param name="type">The wall type ID.</param>
-		void PlaceWall(int x, int y, byte type);
+		/// <param name="wall">The wall type.</param>
+		/// <exception cref="ArgumentOutOfRangeException">
+		/// <paramref name="x"/> is negative or greater than or equal to <see cref="Width"/>, or <paramref name="y"/>
+		/// is negative or greater than or equal to<see cref="Height"/>.
+		/// </exception>
+		void PlaceWall(int x, int y, byte wall);
 
 		/// <summary>
 		/// Saves the world.

@@ -205,14 +205,5 @@ namespace Orion.Tests.Players
 
 			Assert.AreEqual(terrariaPlayer.trashItem, item.WrappedItem);
 		}
-
-		[Test]
-		public void SetTrashItem_NullValue_ThrowsArgumentNullException()
-		{
-			var terrariaPlayer = new Terraria.Player();
-			var player = new Player(terrariaPlayer);
-
-			Assert.Throws<ArgumentNullException>(() => player.TrashItem = null);
-		}
 	}
 }

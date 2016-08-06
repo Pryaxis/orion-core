@@ -11,8 +11,9 @@ namespace Orion.Items
 		/// Gets or sets the <see cref="IItem"/> instance at the specified index in the array.
 		/// </summary>
 		/// <param name="index">The index.</param>
-		/// <exception cref="ArgumentNullException"><paramref name="value"/> was null.</exception>
-		/// <exception cref="ArgumentOutOfRangeException"><paramref name="index"/> was out of range.</exception>
+		/// <exception cref="ArgumentOutOfRangeException">
+		/// <paramref name="index"/> is negative or greater than or equal to <see cref="Length"/>.
+		/// </exception>
 		IItem this[int index] { get; set; }
 
 		/// <summary>

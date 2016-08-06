@@ -71,15 +71,6 @@ namespace Orion.Tests.Items
 			Assert.AreEqual(terrariaItem, itemArray[index].WrappedItem);
 		}
 
-		[TestCase(0)]
-		public void SetItem_NullValue_ThrowsArgumentNullException(int index)
-		{
-			var terrariaItemArray = new Terraria.Item[10];
-			var itemArray = new ItemArray(terrariaItemArray);
-
-			Assert.Throws<ArgumentNullException>(() => itemArray[index] = null);
-		}
-
 		[TestCase(-1)]
 		[TestCase(100000)]
 		public void SetItem_IndexOutOfRange_ThrowsArgumentOutOfRangeException(int index)

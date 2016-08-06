@@ -42,7 +42,7 @@ namespace Orion.Projectiles
 		/// instance.
 		/// </summary>
 		/// <param name="terrariaProjectile">The Terraria projectile to wrap.</param>
-		/// <exception cref="ArgumentNullException"><paramref name="terrariaProjectile"/> was null.</exception>
+		/// <exception cref="ArgumentNullException"><paramref name="terrariaProjectile"/> is null.</exception>
 		public Projectile(Terraria.Projectile terrariaProjectile)
 		{
 			if (terrariaProjectile == null)

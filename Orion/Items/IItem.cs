@@ -82,13 +82,11 @@ namespace Orion.Items
 		/// <summary>
 		/// Gets or sets the item's scale.
 		/// </summary>
-		/// <exception cref="ArgumentOutOfRangeException"><paramref name="value"/> was negative.</exception>
 		float Scale { get; set; }
 
 		/// <summary>
 		/// Gets or sets the item's stack size.
 		/// </summary>
-		/// <exception cref="ArgumentOutOfRangeException"><paramref name="value"/> was negative.</exception>
 		int StackSize { get; set; }
 
 		/// <summary>

@@ -25,7 +25,7 @@ namespace Orion.Npcs.Events
 		/// <param name="index">
 		/// The position of the <see cref="INpc"/> instance that is spawning in the NPC array.
 		/// </param>
-		/// <exception cref="ArgumentNullException"><paramref name="npc"/> was null.</exception>
+		/// <exception cref="ArgumentNullException"><paramref name="npc"/> is null.</exception>
 		public NpcSpawningEventArgs(INpc npc, int index)
 		{
 			if (npc == null)

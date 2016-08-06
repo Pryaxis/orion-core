@@ -130,29 +130,125 @@ namespace Orion.World
 			Hooks.World.IO.PreSaveWorld = InvokeWorldSaving;
 			Hooks.World.IO.PostSaveWorld = InvokeWorldSaved;
 		}
-
-		// TODO: if performance is necessary, optimize these
+		
 		/// <inheritdoc/>
-		public void BreakBlock(int x, int y) => Terraria.WorldGen.KillTile(x, y);
+		public void BreakBlock(int x, int y)
+		{
+			if (x < 0 || x >= Width)
+			{
+				throw new ArgumentOutOfRangeException(nameof(x),
+					"X position was out of range. Must be non-negative and less than the world's width.");
+			}
+			if (y < 0 || y >= Height)
+			{
+				throw new ArgumentOutOfRangeException(nameof(x),
+					"Y position was out of range. Must be non-negative and less than the world's height.");
+			}
 
-		/// <inheritdoc/>
-		public void BreakWall(int x, int y) => Terraria.WorldGen.KillWall(x, y);
-
-		/// <inheritdoc/>
-		public void DropMeteor(int x, int y) => Terraria.WorldGen.meteor(x, y);
-
-		/// <inheritdoc/>
-		public void PaintBlock(int x, int y, byte type) => Terraria.WorldGen.paintTile(x, y, type);
-
-		/// <inheritdoc/>
-		public void PaintWall(int x, int y, byte type) => Terraria.WorldGen.paintWall(x, y, type);
-
-		/// <inheritdoc/>
-		public void PlaceBlock(int x, int y, ushort type, int style = 0) =>
-			Terraria.WorldGen.PlaceTile(x, y, type, style: style);
+			Terraria.WorldGen.KillTile(x, y);
+		}
 
 		/// <inheritdoc/>
-		public void PlaceWall(int x, int y, byte type) => Terraria.WorldGen.PlaceWall(x, y, type);
+		public void BreakWall(int x, int y)
+		{
+			if (x < 0 || x >= Width)
+			{
+				throw new ArgumentOutOfRangeException(nameof(x),
+					"X position was out of range. Must be non-negative and less than the world's width.");
+			}
+			if (y < 0 || y >= Height)
+			{
+				throw new ArgumentOutOfRangeException(nameof(x),
+					"Y position was out of range. Must be non-negative and less than the world's height.");
+			}
+
+			Terraria.WorldGen.KillWall(x, y);
+		}
+
+		/// <inheritdoc/>
+		public void DropMeteor(int x, int y)
+		{
+			if (x < 50 || x >= Width - 50)
+			{
+				throw new ArgumentOutOfRangeException(nameof(x),
+					"X position was out of range. Must be at least 50 and less than the world's width minus 50.");
+			}
+			if (y < 50 || y >= Height - 50)
+			{
+				throw new ArgumentOutOfRangeException(nameof(x),
+					"Y position was out of range. Must be at least 50 and less than the world's height minus 50.");
+			}
+
+			Terraria.WorldGen.meteor(x, y);
+		}
+
+		/// <inheritdoc/>
+		public void PaintBlock(int x, int y, byte color)
+		{
+			if (x < 0 || x >= Width)
+			{
+				throw new ArgumentOutOfRangeException(nameof(x),
+					"X position was out of range. Must be non-negative and less than the world's width.");
+			}
+			if (y < 0 || y >= Height)
+			{
+				throw new ArgumentOutOfRangeException(nameof(x),
+					"Y position was out of range. Must be non-negative and less than the world's height.");
+			}
+
+			Terraria.WorldGen.paintTile(x, y, color);
+		}
+
+		/// <inheritdoc/>
+		public void PaintWall(int x, int y, byte color)
+		{
+			if (x < 0 || x >= Width)
+			{
+				throw new ArgumentOutOfRangeException(nameof(x),
+					"X position was out of range. Must be non-negative and less than the world's width.");
+			}
+			if (y < 0 || y >= Height)
+			{
+				throw new ArgumentOutOfRangeException(nameof(x),
+					"Y position was out of range. Must be non-negative and less than the world's height.");
+			}
+
+			Terraria.WorldGen.paintWall(x, y, color);
+		}
+
+		/// <inheritdoc/>
+		public void PlaceBlock(int x, int y, ushort block, int style = 0)
+		{
+			if (x < 0 || x >= Width)
+			{
+				throw new ArgumentOutOfRangeException(nameof(x),
+					"X position was out of range. Must be non-negative and less than the world's width.");
+			}
+			if (y < 0 || y >= Height)
+			{
+				throw new ArgumentOutOfRangeException(nameof(x),
+					"Y position was out of range. Must be non-negative and less than the world's height.");
+			}
+
+			Terraria.WorldGen.PlaceTile(x, y, block, style: style);
+		}
+
+		/// <inheritdoc/>
+		public void PlaceWall(int x, int y, byte wall)
+		{
+			if (x < 0 || x >= Width)
+			{
+				throw new ArgumentOutOfRangeException(nameof(x),
+					"X position was out of range. Must be non-negative and less than the world's width.");
+			}
+			if (y < 0 || y >= Height)
+			{
+				throw new ArgumentOutOfRangeException(nameof(x),
+					"Y position was out of range. Must be non-negative and less than the world's height.");
+			}
+
+			Terraria.WorldGen.PlaceWall(x, y, wall);
+		}
 
 		/// <inheritdoc/>
 		public void Save(bool resetTime = false) => Terraria.IO.WorldFile.saveWorld(false, resetTime);

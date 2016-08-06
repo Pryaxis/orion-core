@@ -1,4 +1,5 @@
-﻿using System.Reflection;
+﻿using System;
+using System.Reflection;
 using NUnit.Framework;
 using Orion.World;
 
@@ -36,7 +37,7 @@ namespace Orion.Tests.World
 			new object[] {nameof(WorldService.IsPumpkinMoon), nameof(Terraria.Main.pumpkinMoon), true},
 			new object[] {nameof(WorldService.Time), nameof(Terraria.Main.time), 0.0}
 		};
-
+		
 		[TestCaseSource(nameof(GetPropertyTestCases))]
 		public void GetProperty_IsCorrect(string worldServicePropertyName, string terrariaMainFieldName, object value)
 		{
@@ -296,6 +297,19 @@ namespace Orion.Tests.World
 			}
 		}
 
+		[TestCase(-1, 0)]
+		[TestCase(100000, 0)]
+		[TestCase(0, -1)]
+		[TestCase(0, 100000)]
+		public void BreakBlock_PositionOutOfRange_ThrowsArgumentOutOfRangeException(int x, int y)
+		{
+			using (var orion = new Orion())
+			using (var worldService = new WorldService(orion))
+			{
+				Assert.Throws<ArgumentOutOfRangeException>(() => worldService.BreakBlock(x, y));
+			}
+		}
+
 		[TestCase(100, 100)]
 		public void BreakWall_IsCorrect(int x, int y)
 		{
@@ -308,6 +322,19 @@ namespace Orion.Tests.World
 				worldService.BreakWall(x, y);
 
 				Assert.AreEqual(0, tile.wall);
+			}
+		}
+
+		[TestCase(-1, 0)]
+		[TestCase(100000, 0)]
+		[TestCase(0, -1)]
+		[TestCase(0, 100000)]
+		public void BreakWall_PositionOutOfRange_ThrowsArgumentOutOfRangeException(int x, int y)
+		{
+			using (var orion = new Orion())
+			using (var worldService = new WorldService(orion))
+			{
+				Assert.Throws<ArgumentOutOfRangeException>(() => worldService.BreakWall(x, y));
 			}
 		}
 
@@ -325,8 +352,21 @@ namespace Orion.Tests.World
 			}
 		}
 
+		[TestCase(-1, 0)]
+		[TestCase(100000, 0)]
+		[TestCase(0, -1)]
+		[TestCase(0, 100000)]
+		public void DropMeteor_PositionOutOfRange_ThrowsArgumentOutOfRangeException(int x, int y)
+		{
+			using (var orion = new Orion())
+			using (var worldService = new WorldService(orion))
+			{
+				Assert.Throws<ArgumentOutOfRangeException>(() => worldService.DropMeteor(x, y));
+			}
+		}
+
 		[TestCase(100, 100, 1)]
-		public void PaintBlock_IsCorrect(int x, int y, byte type)
+		public void PaintBlock_IsCorrect(int x, int y, byte color)
 		{
 			using (var orion = new Orion())
 			using (var worldService = new WorldService(orion))
@@ -335,14 +375,27 @@ namespace Orion.Tests.World
 				tile.active(true);
 				Terraria.Main.tile[x, y] = tile;
 
-				worldService.PaintBlock(x, y, type);
+				worldService.PaintBlock(x, y, color);
 
-				Assert.AreEqual(type, tile.color());
+				Assert.AreEqual(color, tile.color());
+			}
+		}
+
+		[TestCase(-1, 0)]
+		[TestCase(100000, 0)]
+		[TestCase(0, -1)]
+		[TestCase(0, 100000)]
+		public void PaintBlock_PositionOutOfRange_ThrowsArgumentOutOfRangeException(int x, int y)
+		{
+			using (var orion = new Orion())
+			using (var worldService = new WorldService(orion))
+			{
+				Assert.Throws<ArgumentOutOfRangeException>(() => worldService.PaintBlock(x, y, 0));
 			}
 		}
 
 		[TestCase(100, 100, 1)]
-		public void PaintWall_IsCorrect(int x, int y, byte type)
+		public void PaintWall_IsCorrect(int x, int y, byte color)
 		{
 			using (var orion = new Orion())
 			using (var worldService = new WorldService(orion))
@@ -350,14 +403,27 @@ namespace Orion.Tests.World
 				var tile = new Terraria.Tile {wall = 1};
 				Terraria.Main.tile[x, y] = tile;
 
-				worldService.PaintWall(x, y, type);
+				worldService.PaintWall(x, y, color);
 
-				Assert.AreEqual(type, tile.wallColor());
+				Assert.AreEqual(color, tile.wallColor());
+			}
+		}
+
+		[TestCase(-1, 0)]
+		[TestCase(100000, 0)]
+		[TestCase(0, -1)]
+		[TestCase(0, 100000)]
+		public void PaintWall_PositionOutOfRange_ThrowsArgumentOutOfRangeException(int x, int y)
+		{
+			using (var orion = new Orion())
+			using (var worldService = new WorldService(orion))
+			{
+				Assert.Throws<ArgumentOutOfRangeException>(() => worldService.PaintWall(x, y, 0));
 			}
 		}
 
 		[TestCase(100, 100, (ushort)1)]
-		public void PlaceBlock_Simple_IsCorrect(int x, int y, ushort type)
+		public void PlaceBlock_Simple_IsCorrect(int x, int y, ushort block)
 		{
 			using (var orion = new Orion())
 			using (var worldService = new WorldService(orion))
@@ -365,14 +431,27 @@ namespace Orion.Tests.World
 				var tile = new Terraria.Tile();
 				Terraria.Main.tile[x, y] = tile;
 
-				worldService.PlaceBlock(x, y, type);
+				worldService.PlaceBlock(x, y, block);
 
-				Assert.AreEqual(type, tile.type);
+				Assert.AreEqual(block, tile.type);
+			}
+		}
+
+		[TestCase(-1, 0)]
+		[TestCase(100000, 0)]
+		[TestCase(0, -1)]
+		[TestCase(0, 100000)]
+		public void PlaceBlock_PositionOutOfRange_ThrowsArgumentOutOfRangeException(int x, int y)
+		{
+			using (var orion = new Orion())
+			using (var worldService = new WorldService(orion))
+			{
+				Assert.Throws<ArgumentOutOfRangeException>(() => worldService.PlaceBlock(x, y, 0));
 			}
 		}
 
 		[TestCase(100, 100, (byte)1)]
-		public void PlaceWall_IsCorrect(int x, int y, byte type)
+		public void PlaceWall_IsCorrect(int x, int y, byte wall)
 		{
 			using (var orion = new Orion())
 			using (var worldService = new WorldService(orion))
@@ -380,9 +459,22 @@ namespace Orion.Tests.World
 				var tile = new Terraria.Tile();
 				Terraria.Main.tile[x, y] = tile;
 
-				worldService.PlaceWall(x, y, type);
+				worldService.PlaceWall(x, y, wall);
 
-				Assert.AreEqual(type, tile.wall);
+				Assert.AreEqual(wall, tile.wall);
+			}
+		}
+
+		[TestCase(-1, 0)]
+		[TestCase(100000, 0)]
+		[TestCase(0, -1)]
+		[TestCase(0, 100000)]
+		public void PlaceWall_PositionOutOfRange_ThrowsArgumentOutOfRangeException(int x, int y)
+		{
+			using (var orion = new Orion())
+			using (var worldService = new WorldService(orion))
+			{
+				Assert.Throws<ArgumentOutOfRangeException>(() => worldService.PlaceWall(x, y, 0));
 			}
 		}
 

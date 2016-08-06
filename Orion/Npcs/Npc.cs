@@ -55,7 +55,7 @@ namespace Orion.Npcs
 		/// Initializes a new instance of the <see cref="Npc"/> class wrapping the specified Terraria NPC instance.
 		/// </summary>
 		/// <param name="terrariaNpc">The Terraria NPC instance to wrap.</param>
-		/// <exception cref="ArgumentNullException"><paramref name="terrariaNpc"/> was null.</exception>
+		/// <exception cref="ArgumentNullException"><paramref name="terrariaNpc"/> is null.</exception>
 		public Npc(Terraria.NPC terrariaNpc)
 		{
 			if (terrariaNpc == null)

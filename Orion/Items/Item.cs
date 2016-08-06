@@ -142,7 +142,7 @@ namespace Orion.Items
 		/// Initializes a new instance of the <see cref="Item"/> class wrapping the specified Terraria item instance.
 		/// </summary>
 		/// <param name="terrariaItem">The Terraria item instance to wrap.</param>
-		/// <exception cref="ArgumentNullException"><paramref name="terrariaItem"/> was null.</exception>
+		/// <exception cref="ArgumentNullException"><paramref name="terrariaItem"/> is null.</exception>
 		public Item(Terraria.Item terrariaItem)
 		{
 			if (terrariaItem == null)

@@ -16,7 +16,7 @@ namespace Orion.Npcs.Events
 		/// Initializes a new instance of the <see cref="NpcSpawnedEventArgs"/> class.
 		/// </summary>
 		/// <param name="npc">The <see cref="INpc"/> instance that spawned.</param>
-		/// <exception cref="ArgumentNullException"><paramref name="npc"/> was null.</exception>
+		/// <exception cref="ArgumentNullException"><paramref name="npc"/> is null.</exception>
 		public NpcSpawnedEventArgs(INpc npc)
 		{
 			if (npc == null)

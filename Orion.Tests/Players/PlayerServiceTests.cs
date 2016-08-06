@@ -11,7 +11,7 @@ namespace Orion.Tests.Players
 	public class PlayerServiceTests
 	{
 		private static readonly Predicate<IPlayer>[] FindTestCases = {player => player.Position.X < 100};
-
+		
 		[TestCase(0)]
 		[TestCase(1)]
 		public void FindPlayers_Null_ReturnsAll(int populate)

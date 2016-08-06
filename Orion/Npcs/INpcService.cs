@@ -64,7 +64,6 @@ namespace Orion.Npcs
 		/// <param name="type">The type ID.</param>
 		/// <param name="position">The position in the world.</param>
 		/// <returns>The resulting <see cref="INpc"/> instance.</returns>
-		/// <exception cref="ArgumentOutOfRangeException"><paramref name="type"/> was an invalid NPC type.</exception>
 		INpc SpawnNpc(int type, Vector2 position);
 	}
 }

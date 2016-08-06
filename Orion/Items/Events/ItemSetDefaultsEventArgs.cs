@@ -16,7 +16,7 @@ namespace Orion.Items.Events
 		/// Initializes a new instance of the <see cref="ItemSetDefaultsEventArgs"/> class.
 		/// </summary>
 		/// <param name="item">The <see cref="IItem"/> instance that had its defaults set.</param>
-		/// <exception cref="ArgumentNullException"><paramref name="item"/> was null.</exception>
+		/// <exception cref="ArgumentNullException"><paramref name="item"/> is null.</exception>
 		public ItemSetDefaultsEventArgs(IItem item)
 		{
 			if (item == null)

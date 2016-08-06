@@ -29,7 +29,7 @@ namespace Orion.Tests.Items
 			new object[] {ItemType.IronPickaxe, 100, ItemPrefix.None},
 			new object[] {ItemType.IronPickaxe, 100, ItemPrefix.Legendary}
 		};
-
+		
 		[TestCaseSource(nameof(ItemSetDefaultsTestCases))]
 		public void ItemSetDefaults_IsCorrect(ItemType type)
 		{

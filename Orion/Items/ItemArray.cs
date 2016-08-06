@@ -20,7 +20,8 @@ namespace Orion.Items
 			{
 				if (index < 0 || index >= Length)
 				{
-					throw new ArgumentOutOfRangeException(nameof(index), "Index was out of range.");
+					throw new ArgumentOutOfRangeException(nameof(index),
+						"Index was out of range. Must be non-negative and less than the length of the array.");
 				}
 
 				if (_iitemArray[index]?.WrappedItem != WrappedItemArray[index])
@@ -31,17 +32,14 @@ namespace Orion.Items
 			}
 			set
 			{
-				if (value == null)
-				{
-					throw new ArgumentNullException(nameof(value));
-				}
 				if (index < 0 || index >= Length)
 				{
-					throw new ArgumentOutOfRangeException(nameof(index), "Index was out of range.");
+					throw new ArgumentOutOfRangeException(nameof(index),
+						"Index was out of range. Must be non-negative and less than the length of the array.");
 				}
 
 				_iitemArray[index] = value;
-				WrappedItemArray[index] = value.WrappedItem;
+				WrappedItemArray[index] = value?.WrappedItem;
 			}
 		}
 
@@ -56,7 +54,7 @@ namespace Orion.Items
 		/// item instances.
 		/// </summary>
 		/// <param name="terrariaItemArray">The array of Terraria item instances.</param>
-		/// <exception cref="ArgumentNullException"><paramref name="terrariaItemArray"/> was null.</exception>
+		/// <exception cref="ArgumentNullException"><paramref name="terrariaItemArray"/> is null.</exception>
 		public ItemArray(Terraria.Item[] terrariaItemArray)
 		{
 			if (terrariaItemArray == null)

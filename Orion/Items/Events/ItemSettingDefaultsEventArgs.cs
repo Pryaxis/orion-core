@@ -25,7 +25,7 @@ namespace Orion.Items.Events
 		/// <param name="type">
 		/// The <see cref="ItemType"/> that the <see cref="IItem"/> instance is having its defaults set to.
 		/// </param>
-		/// <exception cref="ArgumentNullException"><paramref name="item"/> was null.</exception>
+		/// <exception cref="ArgumentNullException"><paramref name="item"/> is null.</exception>
 		public ItemSettingDefaultsEventArgs(IItem item, ItemType type)
 		{
 			if (item == null)

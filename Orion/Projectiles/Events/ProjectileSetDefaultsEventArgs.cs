@@ -16,7 +16,7 @@ namespace Orion.Projectiles.Events
 		/// Initializes a new instance of the <see cref="ProjectileSetDefaultsEventArgs"/> class. 
 		/// </summary>
 		/// <param name="projectile">The <see cref="IProjectile"/> instance that had its defaults set.</param>
-		/// <exception cref="ArgumentNullException"><paramref name="projectile"/> was null.</exception>
+		/// <exception cref="ArgumentNullException"><paramref name="projectile"/> is null.</exception>
 		public ProjectileSetDefaultsEventArgs(IProjectile projectile)
 		{
 			if (projectile == null)

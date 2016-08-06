@@ -97,13 +97,8 @@ namespace Orion.Players
 			}
 			set
 			{
-				if (value == null)
-				{
-					throw new ArgumentNullException(nameof(value));
-				}
-
 				_trashItem = value;
-				WrappedPlayer.trashItem = value.WrappedItem;
+				WrappedPlayer.trashItem = value?.WrappedItem;
 			}
 		}
 
@@ -122,7 +117,7 @@ namespace Orion.Players
 		/// instance.
 		/// </summary>
 		/// <param name="terrariaPlayer">The Terraria player instance to wrap.</param>
-		/// <exception cref="ArgumentNullException"><paramref name="terrariaPlayer"/> was null.</exception>
+		/// <exception cref="ArgumentNullException"><paramref name="terrariaPlayer"/> is null.</exception>
 		public Player(Terraria.Player terrariaPlayer)
 		{
 			if (terrariaPlayer == null)

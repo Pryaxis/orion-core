@@ -8,15 +8,15 @@ namespace Orion.Players.Events
 	public class PlayerJoinedEventArgs : EventArgs
 	{
 		/// <summary>
-		/// Gets the <see cref="IPlayer"/> instance that joined the server.
+		/// Gets the <see cref="IPlayer"/> instance that joined the game.
 		/// </summary>
 		public IPlayer Player { get; }
 
 		/// <summary>
 		/// Initializes a new instance of the <see cref="PlayerJoinedEventArgs"/> class.
 		/// </summary>
-		/// <param name="player">The <see cref="IPlayer"/> instance that joined the server.</param>
-		/// <exception cref="ArgumentNullException"><paramref name="player"/> was null.</exception>
+		/// <param name="player">The <see cref="IPlayer"/> instance that joined the game.</param>
+		/// <exception cref="ArgumentNullException"><paramref name="player"/> is null.</exception>
 		public PlayerJoinedEventArgs(IPlayer player)
 		{
 			if (player == null)

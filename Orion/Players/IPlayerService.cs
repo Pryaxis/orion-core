@@ -11,17 +11,17 @@ namespace Orion.Players
 	public interface IPlayerService : IService
 	{
 		/// <summary>
-		/// Occurs after a <see cref="IPlayer"/> instance has joined the server.
+		/// Occurs after a <see cref="IPlayer"/> instance has joined the game.
 		/// </summary>
 		event EventHandler<PlayerJoinedEventArgs> PlayerJoined;
 
 		/// <summary>
-		/// Occurs when a <see cref="IPlayer"/> instance is joining the server.
+		/// Occurs when a <see cref="IPlayer"/> instance is joining the game.
 		/// </summary>
 		event EventHandler<PlayerJoiningEventArgs> PlayerJoining;
 
 		/// <summary>
-		/// Occurs after a <see cref="IPlayer"/> instance has quit the server.
+		/// Occurs after a <see cref="IPlayer"/> instance has quit the game.
 		/// </summary>
 		event EventHandler<PlayerQuitEventArgs> PlayerQuit;
 
