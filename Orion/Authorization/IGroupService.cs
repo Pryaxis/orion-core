@@ -11,7 +11,7 @@ namespace Orion.Authorization
 	/// Groups link lists of accounts together which has a common set of permissions and properties
 	/// set against them.
 	/// </summary>
-	public interface IGroupService : IService
+	public interface IGroupService : ISharedService
 	{
 		/// <summary>
 		/// Gets the built-in administrator group.  That is, the group which members have access to everything.

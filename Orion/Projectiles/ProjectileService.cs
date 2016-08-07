@@ -14,7 +14,6 @@ namespace Orion.Projectiles
 	public class ProjectileService : SharedService, IProjectileService
 	{
 		private readonly IProjectile[] _projectiles;
-		private bool _disposed;
 
 		/// <inheritdoc/>
 		public event EventHandler<ProjectileSetDefaultsEventArgs> ProjectileSetDefaults;

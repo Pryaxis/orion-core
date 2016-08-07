@@ -6,27 +6,23 @@ namespace Orion.Configuration
 	/// Provides a generic interface to interact with persistent configuration for plugins
 	/// and services without having to deal with where the data loads and saves from.
 	/// </summary>
-	public interface IConfigurationService : IService
+	public interface IConfigurationService<out TConfiguration> : IService
+		where TConfiguration : class, new()
 	{
 		/// <summary>
-		/// Loads a <typeparamref name="TConfig"/> object from the configuration data store.
+		/// Gets the <typeparamref name="TConfiguration"/> object associated with this configuration service.
 		/// </summary>
-		/// <typeparam name="TService">The service type.</typeparam>
-		/// <typeparam name="TConfig">The config type which stores the configuration members.</typeparam>
-		/// <returns>
-		/// The deserialized <typeparamref name="TConfig"/> object as was loaded from the configuration data store.
-		/// </returns>
-		TConfig Load<TService, TConfig>()
-			where TService : SharedService
-			where TConfig : class, new();
+		TConfiguration Configuration { get; }
 
 		/// <summary>
-		/// Saves the <typeparamref name="TConfig"/> object to persistent storage.
+		/// Loads a <typeparamref name="TConfiguration"/> object from the configuration data store, and sets the
+		/// <see cref="Configuration"/> object to the deserialized representation of the configuration.
 		/// </summary>
-		/// <typeparam name="TService">The service type.</typeparam>
-		/// <typeparam name="TConfig">The config type which stores the configuration members.</typeparam>
-		void Save<TService, TConfig>(TConfig config)
-			where TService : SharedService
-			where TConfig : class, new();
+		void Load();
+
+		/// <summary>
+		/// Saves the <typeparamref name="TConfiguration"/> object to persistent storage.
+		/// </summary>
+		void Save();
 	}
 }

@@ -12,21 +12,14 @@ namespace Orion.Framework
 	/// </summary>
 	public class SharedServiceInjectionModule : NinjectModule
 	{
-		/// <summary>
-		/// Initializes a new instance of the <see cref="SharedServiceInjectionModule"/> class.
-		/// </summary>
-		public SharedServiceInjectionModule()
-		{
-		}
-
 		/// <inheritdoc/>
 		/// <remarks>
 		/// This will scan the Orion assembly and all assemblies in the plugins directory.
 		/// </remarks>
 		public override void Load()
 		{
-			IEnumerable<Type> serviceTypes = new[] {Assembly.GetExecutingAssembly()}
-				.Concat(LoadAssemblies(Orion.PluginDirectory))
+			IEnumerable<Type> serviceTypes = new[] { Assembly.GetExecutingAssembly() }
+				.Concat(AssemblyResolver.LoadAssemblies(Orion.PluginDirectory))
 				.SelectMany(a => a.GetExportedTypes())
 				.Where(t => t.IsSubclassOf(typeof(SharedService)));
 
@@ -37,23 +30,6 @@ namespace Orion.Framework
 				{
 					Bind(interfaceType).To(serviceType).InSingletonScope();
 				}
-			}
-		}
-
-		private static IEnumerable<Assembly> LoadAssemblies(string path)
-		{
-			foreach (string assemblyPath in Directory.EnumerateFiles(path, "*.dll"))
-			{
-				Assembly assembly;
-				try
-				{
-					assembly = Assembly.LoadFrom(assemblyPath);
-				}
-				catch (BadImageFormatException)
-				{
-					continue;
-				}
-				yield return assembly;
 			}
 		}
 	}

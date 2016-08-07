@@ -11,8 +11,6 @@ namespace Orion.World
 	[Service("World Service", Author = "Nyx Studios")]
 	public class WorldService : SharedService, IWorldService
 	{
-		private bool _disposed;
-
 		/// <inheritdoc/>
 		public event EventHandler<CheckingChristmasEventArgs> CheckingChristmas;
 

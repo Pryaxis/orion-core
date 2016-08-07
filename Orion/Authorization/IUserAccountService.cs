@@ -10,7 +10,7 @@ namespace Orion.Authorization
 	/// 
 	/// Controls access to user accounts, groups and permissions.
 	/// </summary>
-	public interface IUserAccountService : IService
+	public interface IUserAccountService : ISharedService
 	{
 		/// <summary>
 		/// Returns a list of user accounts in the system, optionally filtered by a predicate expression.

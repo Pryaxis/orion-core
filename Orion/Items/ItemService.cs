@@ -15,7 +15,6 @@ namespace Orion.Items
 	public class ItemService : SharedService, IItemService
 	{
 		private readonly IItem[] _items;
-		private bool _disposed;
 
 		/// <inheritdoc/>
 		public event EventHandler<ItemSetDefaultsEventArgs> ItemSetDefaults;

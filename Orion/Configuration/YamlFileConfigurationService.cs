@@ -9,12 +9,20 @@ namespace Orion.Configuration
 	/// format, using YamlDotNet to load/store data.
 	/// </summary>
 	[Service("YAML File Configuration Service", Author = "Nyx Studios")]
-	public class YamlFileConfigurationService : SharedService, IConfigurationService
+	public class YamlFileConfigurationService<TConfig> : Service, IConfigurationService<TConfig>
+		where TConfig : class, new()
 	{
+		private string _configDirectory => Path.Combine(ConfigurationRootDirectory, typeof(TConfig).Name);
+		private string _configFile => Path.Combine(_configDirectory, "config.yaml");
+
 		/// <summary>
-		/// Gets the configuration directory.
+		/// Gets the configuration root directory, relative to Orion's working path.
 		/// </summary>
-		public static string ConfigurationDirectory => "config";
+		public static string ConfigurationRootDirectory => "config";
+
+
+		/// <inheritdoc />
+		public TConfig Configuration { get; protected set; }
 
 		/// <summary>
 		/// Initializes a new instance of the <see cref="YamlFileConfigurationService"/> class.
@@ -22,56 +30,44 @@ namespace Orion.Configuration
 		/// <param name="orion">The parent <see cref="Orion"/> instance.</param>
 		public YamlFileConfigurationService(Orion orion) : base(orion)
 		{
+			Directory.CreateDirectory(_configDirectory);
 		}
 
 		/// <inheritdoc/>
-		public TConfig Load<TService, TConfig>()
-			where TService : SharedService
-			where TConfig : class, new()
+		public void Load()
 		{
-			string configDirectory = Path.Combine(ConfigurationDirectory, typeof(TService).Name);
-			string configFile = Path.Combine(configDirectory, "config.yaml");
 			var deserializer = new Deserializer();
 
-			TConfig configObject;
-
-			Directory.CreateDirectory(configDirectory);
-
-			if (!File.Exists(configFile))
+			if (!File.Exists(_configFile))
 			{
 				/*
 				 * If the configuration file does not exist, assume default configuration
 				 * according to a new blank instance of TConfig, and write it out to file
 				 * so a configuration file always exists.
 				 */
-				configObject = new TConfig();
-				Save<TService, TConfig>(configObject);
-
-				return configObject;
+				Configuration = new TConfig();
+				Save();
 			}
-
-			using (var fs = new FileStream(configFile, FileMode.Open, FileAccess.Read))
-			using (var sr = new StreamReader(fs))
+			else
 			{
-				configObject = deserializer.Deserialize<TConfig>(sr);
+				using (var fs = new FileStream(_configFile, FileMode.Open, FileAccess.Read))
+				using (var sr = new StreamReader(fs))
+				{
+					Configuration = deserializer.Deserialize<TConfig>(sr);
+				}
 			}
-
-			return configObject;
 		}
 
 		/// <inheritdoc/>
-		public void Save<TService, TConfig>(TConfig config)
-			where TService : SharedService
-			where TConfig : class, new()
+		public void Save()
 		{
-			string configDirectory = Path.Combine(ConfigurationDirectory, typeof(TService).Name);
-			string configFile = Path.Combine(configDirectory, "config.yaml");
+			string configFile = Path.Combine(_configDirectory, "config.yaml");
 			var serializer = new Serializer(SerializationOptions.EmitDefaults);
 
 			using (var fs = new FileStream(configFile, FileMode.Create, FileAccess.Write))
 			using (var sw = new StreamWriter(fs))
 			{
-				serializer.Serialize(sw, config);
+				serializer.Serialize(sw, Configuration);
 			}
 		}
 	}

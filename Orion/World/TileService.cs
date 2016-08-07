@@ -14,7 +14,6 @@ namespace Orion.World
 	public class TileService : SharedService, ITileService
 	{
 		private ITile[,] _tiles;
-		private bool _disposed;
 
 		/// <summary>
 		/// Gets or sets the <see cref="ITile"/> instance at the specified position.

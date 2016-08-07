@@ -9,12 +9,16 @@ namespace Orion.Configuration
 	/// format, using Newtonsoft.Json to load/store data.
 	/// </summary>
 	[Service("JSON File Configuration Service", Author = "Nyx Studios")]
-	public class JsonFileConfigurationService : SharedService, IConfigurationService
+	public class JsonFileConfigurationService<TConfiguration> : Service, IConfigurationService<TConfiguration>
+		where TConfiguration : class, new()
 	{
 		/// <summary>
 		/// Gets the configuration directory.
 		/// </summary>
 		public static string ConfigurationDirectory => "config";
+
+		/// <inheritdoc />
+		public TConfiguration Configuration { get; protected set; }
 
 		/// <summary>
 		/// Initializes a new instance of the <see cref="JsonFileConfigurationService"/> class.
@@ -25,16 +29,12 @@ namespace Orion.Configuration
 		}
 
 		/// <inheritdoc/>
-		public TConfig Load<TService, TConfig>()
-			where TService : SharedService
-			where TConfig : class, new()
+		public void Load()
 		{
 			// TODO: generalize with streams instead?
-			string configDirectory = Path.Combine(ConfigurationDirectory, typeof(TService).Name);
+			string configDirectory = Path.Combine(ConfigurationDirectory, typeof(TConfiguration).Name);
 			string configFile = Path.Combine(configDirectory, "config.json");
 			var serializer = new JsonSerializer();
-			
-			TConfig configObject;
 
 			Directory.CreateDirectory(configDirectory);
 
@@ -45,35 +45,31 @@ namespace Orion.Configuration
 				 * according to a new blank instance of TConfig, and write it out to file
 				 * so a configuration file always exists.
 				 */
-				configObject = new TConfig();
-				Save<TService, TConfig>(configObject);
-
-				return configObject;
+				Configuration = new TConfiguration();
+				Save();
 			}
-
-			using (var fs = new FileStream(configFile, FileMode.Open, FileAccess.Read))
-			using (var sr = new StreamReader(fs))
+			else
 			{
-				configObject = serializer.Deserialize(sr, typeof(TConfig)) as TConfig;
+				using (var fs = new FileStream(configFile, FileMode.Open, FileAccess.Read))
+				using (var sr = new StreamReader(fs))
+				{
+					Configuration = serializer.Deserialize(sr, typeof(TConfiguration)) as TConfiguration;
+				}
 			}
-
-			return configObject;
 		}
 
 		/// <inheritdoc/>
-		public void Save<TService, TConfig>(TConfig config)
-			where TService : SharedService
-			where TConfig : class, new()
+		public void Save()
 		{
 			// TODO: generalize with streams instead?
-			string configDirectory = Path.Combine(ConfigurationDirectory, typeof(TService).Name);
+			string configDirectory = Path.Combine(ConfigurationDirectory, typeof(TConfiguration).Name);
 			string configFile = Path.Combine(configDirectory, "config.json");
 			var serializer = new JsonSerializer {Formatting = Formatting.Indented};
 
 			using (var fs = new FileStream(configFile, FileMode.Create, FileAccess.Write))
 			using (var sw = new StreamWriter(fs))
 			{
-				serializer.Serialize(sw, config);
+				serializer.Serialize(sw, Configuration);
 			}
 		}
 	}

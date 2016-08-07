@@ -8,7 +8,7 @@ namespace Orion.Projectiles
 	/// <summary>
 	/// Provides a mechanism for managing <see cref="IProjectile"/> instances.
 	/// </summary>
-	public interface IProjectileService : IService
+	public interface IProjectileService : ISharedService
 	{
 		/// <summary>
 		/// Occurs after a <see cref="IProjectile"/> instance has had its defaults set.

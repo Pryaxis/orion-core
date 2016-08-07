@@ -7,7 +7,7 @@ namespace Orion.World
 	/// <summary>
 	/// Provides access to Terraria's world functions.
 	/// </summary>
-	public interface IWorldService : IService
+	public interface IWorldService : ISharedService
 	{
 		/// <summary>
 		/// Occurs when the game is checking if it is Christmas.

@@ -14,7 +14,6 @@ namespace Orion.Players
 	public class PlayerService : SharedService, IPlayerService
 	{
 		private readonly IPlayer[] _players;
-		private bool _disposed;
 
 		/// <inheritdoc/>
 		public event EventHandler<PlayerJoinedEventArgs> PlayerJoined;

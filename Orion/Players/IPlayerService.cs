@@ -8,7 +8,7 @@ namespace Orion.Players
 	/// <summary>
 	/// Provides a mechanism for managing <see cref="IPlayer"/> instances.
 	/// </summary>
-	public interface IPlayerService : IService
+	public interface IPlayerService : ISharedService
 	{
 		/// <summary>
 		/// Occurs after a <see cref="IPlayer"/> instance has joined the game.

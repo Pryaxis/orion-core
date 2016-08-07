@@ -22,7 +22,8 @@ namespace Orion
 		{
 			CreateDirectories();
 
-			_injectionContainer = new StandardKernel(new SharedServiceInjectionModule());
+			_injectionContainer = new StandardKernel(new SharedServiceInjectionModule(), 
+				new ScopedServiceInjectionModule());
 			_injectionContainer.Bind<Orion>().ToConstant(this);
 		}
 

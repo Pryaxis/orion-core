@@ -9,7 +9,7 @@ namespace Orion.Items
 	/// <summary>
 	/// Provides a mechanism for managing <see cref="IItem"/> instances.
 	/// </summary>
-	public interface IItemService : IService
+	public interface IItemService : ISharedService
 	{
 		/// <summary>
 		/// Occurs after an <see cref="IItem"/> instance has had its defaults set.
