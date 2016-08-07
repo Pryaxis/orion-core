@@ -4,6 +4,7 @@ using System.Linq;
 using Microsoft.Xna.Framework;
 using NUnit.Framework;
 using Orion.Items;
+using Orion.Items.Events;
 
 namespace Orion.Tests.Items
 {
@@ -36,17 +37,17 @@ namespace Orion.Tests.Items
 			using (var orion = new Orion())
 			{
 				var itemService = orion.GetService<ItemService>();
-
 				var terrariaItem = new Terraria.Item();
-				var item = new Item(terrariaItem);
 				var eventOccurred = false;
-				itemService.ItemSetDefaults += (sender, args) =>
+				EventHandler<ItemSetDefaultsEventArgs> handler = (sender, e) =>
 				{
 					eventOccurred = true;
-					Assert.AreEqual(terrariaItem, args.Item.WrappedItem);
+					Assert.AreEqual(terrariaItem, e.Item.WrappedItem);
 				};
+				itemService.ItemSetDefaults += handler;
 
-				item.SetDefaults(type);
+				terrariaItem.SetDefaults((int)type);
+				itemService.ItemSetDefaults -= handler;
 
 				Assert.IsTrue(eventOccurred);
 			}
@@ -58,12 +59,13 @@ namespace Orion.Tests.Items
 			using (var orion = new Orion())
 			{
 				var itemService = orion.GetService<ItemService>();
-			
 				var terrariaItem = new Terraria.Item();
 				var eventOccurred = false;
-				itemService.ItemSetDefaults += (sender, args) => eventOccurred = true;
+				EventHandler<ItemSetDefaultsEventArgs> handler = (sender, e) => eventOccurred = true;
+				itemService.ItemSetDefaults += handler;
 				
 				terrariaItem.netDefaults((int)type);
+				itemService.ItemSetDefaults -= handler;
 
 				Assert.IsTrue(eventOccurred);
 			}
@@ -77,9 +79,11 @@ namespace Orion.Tests.Items
 				var itemService = orion.GetService<ItemService>();
 				var terrariaItem = new Terraria.Item();
 				var eventOccurred = false;
-				itemService.ItemSetDefaults += (sender, args) => eventOccurred = true;
+				EventHandler<ItemSetDefaultsEventArgs> handler = (sender, e) => eventOccurred = true;
+				itemService.ItemSetDefaults += handler;
 
 				terrariaItem.SetDefaults(type);
+				itemService.ItemSetDefaults -= handler;
 
 				Assert.IsTrue(eventOccurred);
 			}
@@ -92,16 +96,17 @@ namespace Orion.Tests.Items
 			{
 				var itemService = orion.GetService<ItemService>();
 				var terrariaItem = new Terraria.Item();
-				var item = new Item(terrariaItem);
 				var eventOccurred = false;
-				itemService.ItemSettingDefaults += (sender, args) =>
+				EventHandler<ItemSettingDefaultsEventArgs> handler = (sender, e) =>
 				{
 					eventOccurred = true;
-					Assert.AreEqual(terrariaItem, args.Item.WrappedItem);
-					Assert.AreEqual(type, args.Type);
+					Assert.AreEqual(terrariaItem, e.Item.WrappedItem);
+					Assert.AreEqual(type, e.Type);
 				};
+				itemService.ItemSettingDefaults += handler;
 
-				item.SetDefaults(type);
+				terrariaItem.SetDefaults((int)type);
+				itemService.ItemSettingDefaults -= handler;
 
 				Assert.IsTrue(eventOccurred);
 			}
@@ -114,12 +119,13 @@ namespace Orion.Tests.Items
 			{
 				var itemService = orion.GetService<ItemService>();
 				var terrariaItem = new Terraria.Item();
-				var item = new Item(terrariaItem);
-				itemService.ItemSettingDefaults += (sender, args) => args.Type = newType;
+				EventHandler<ItemSettingDefaultsEventArgs> handler = (sender, e) => e.Type = newType;
+				itemService.ItemSettingDefaults += handler;
 
-				item.SetDefaults(ItemType.None);
+				terrariaItem.SetDefaults();
+				itemService.ItemSettingDefaults -= handler;
 				
-				Assert.AreEqual(newType, item.Type);
+				Assert.AreEqual((int)newType, terrariaItem.netID);
 			}
 		}
 
@@ -130,12 +136,13 @@ namespace Orion.Tests.Items
 			{
 				var itemService = orion.GetService<ItemService>();
 				var terrariaItem = new Terraria.Item();
-				var item = new Item(terrariaItem);
-				itemService.ItemSettingDefaults += (sender, args) => args.Handled = true;
+				EventHandler<ItemSettingDefaultsEventArgs> handler = (sender, e) => e.Handled = true;
+				itemService.ItemSettingDefaults += handler;
 
-				item.SetDefaults(type);
+				terrariaItem.SetDefaults((int)type);
+				itemService.ItemSettingDefaults -= handler;
 
-				Assert.AreEqual(0, terrariaItem.type, "SetDefaults should not have occurred.");
+				Assert.AreEqual(0, terrariaItem.netID, "SetDefaults should not have occurred.");
 			}
 		}
 
@@ -148,9 +155,11 @@ namespace Orion.Tests.Items
 				var itemService = orion.GetService<ItemService>();
 				var terrariaItem = new Terraria.Item();
 				var eventOccurred = false;
-				itemService.ItemSettingDefaults += (sender, args) => eventOccurred = true;
+				EventHandler<ItemSettingDefaultsEventArgs> handler = (sender, e) => eventOccurred = true;
+				itemService.ItemSettingDefaults += handler;
 
 				terrariaItem.netDefaults((int)type);
+				itemService.ItemSettingDefaults -= handler;
 
 				Assert.IsTrue(eventOccurred);
 			}
@@ -164,9 +173,11 @@ namespace Orion.Tests.Items
 				var itemService = orion.GetService<ItemService>();
 				var terrariaItem = new Terraria.Item();
 				var eventOccurred = false;
-				itemService.ItemSettingDefaults += (sender, args) => eventOccurred = true;
+				EventHandler<ItemSettingDefaultsEventArgs> handler = (sender, e) => eventOccurred = true;
+				itemService.ItemSettingDefaults += handler;
 
 				terrariaItem.SetDefaults(type);
+				itemService.ItemSettingDefaults -= handler;
 
 				Assert.IsTrue(eventOccurred);
 			}

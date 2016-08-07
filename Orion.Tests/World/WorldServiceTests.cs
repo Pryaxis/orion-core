@@ -2,6 +2,7 @@
 using System.Reflection;
 using NUnit.Framework;
 using Orion.World;
+using Orion.World.Events;
 
 namespace Orion.Tests.World
 {
@@ -76,9 +77,11 @@ namespace Orion.Tests.World
 			{
 				var worldService = orion.GetService<WorldService>();
 				var eventOccurred = false;
-				worldService.CheckingChristmas += (sender, args) => eventOccurred = true;
+				EventHandler<CheckingChristmasEventArgs> handler = (sender, e) => eventOccurred = true;
+				worldService.CheckingChristmas += handler;
 
 				Terraria.Main.checkXMas();
+				worldService.CheckingChristmas -= handler;
 
 				Assert.IsTrue(eventOccurred);
 			}
@@ -91,11 +94,12 @@ namespace Orion.Tests.World
 			using (var orion = new Orion())
 			{
 				var worldService = orion.GetService<WorldService>();
-				var eventOccurred = false;
-				worldService.CheckingChristmas += (sender, args) => args.Handled = true;
+				EventHandler<CheckingChristmasEventArgs> handler = (sender, e) => e.Handled = true;
+				worldService.CheckingChristmas += handler;
 				Terraria.Main.xMas = christmas;
 
 				Terraria.Main.checkXMas();
+				worldService.CheckingChristmas -= handler;
 
 				Assert.AreEqual(christmas, Terraria.Main.xMas);
 			}
@@ -108,9 +112,11 @@ namespace Orion.Tests.World
 			{
 				var worldService = orion.GetService<WorldService>();
 				var eventOccurred = false;
-				worldService.CheckingHalloween += (sender, args) => eventOccurred = true;
+				EventHandler<CheckingHalloweenEventArgs> handler = (sender, e) => eventOccurred = true;
+				worldService.CheckingHalloween += handler;
 				
 				Terraria.Main.checkHalloween();
+				worldService.CheckingHalloween -= handler;
 
 				Assert.IsTrue(eventOccurred);
 			}
@@ -123,10 +129,12 @@ namespace Orion.Tests.World
 			using (var orion = new Orion())
 			{
 				var worldService = orion.GetService<WorldService>();
-				worldService.CheckingHalloween += (sender, args) => args.Handled = true;
+				EventHandler<CheckingHalloweenEventArgs> handler = (sender, e) => e.Handled = true;
+				worldService.CheckingHalloween += handler;
 				Terraria.Main.halloween = halloween;
 
 				Terraria.Main.checkHalloween();
+				worldService.CheckingHalloween -= handler;
 
 				Assert.AreEqual(halloween, Terraria.Main.halloween);
 			}
@@ -140,14 +148,16 @@ namespace Orion.Tests.World
 				var worldService = orion.GetService<WorldService>();
 				InitializeMeteorRange(x, y);
 				var eventOccurred = false;
-				worldService.MeteorDropping += (sender, args) =>
+				EventHandler<MeteorDroppingEventArgs> handler = (sender, e) =>
 				{
 					eventOccurred = true;
-					Assert.AreEqual(x, args.X);
-					Assert.AreEqual(y, args.Y);
+					Assert.AreEqual(x, e.X);
+					Assert.AreEqual(y, e.Y);
 				};
+				worldService.MeteorDropping += handler;
 
 				Terraria.WorldGen.meteor(x, y);
+				worldService.MeteorDropping -= handler;
 
 				Assert.IsTrue(eventOccurred);
 			}
@@ -160,9 +170,11 @@ namespace Orion.Tests.World
 			{
 				var worldService = orion.GetService<WorldService>();
 				InitializeMeteorRange(x, y);
-				worldService.MeteorDropping += (sender, args) => args.Handled = true;
+				EventHandler<MeteorDroppingEventArgs> handler = (sender, e) => e.Handled = true;
+				worldService.MeteorDropping += handler;
 
 				Terraria.WorldGen.meteor(x, y);
+				worldService.MeteorDropping -= handler;
 
 				Assert.IsFalse(MeteorIsInRange(x, y));
 			}
@@ -175,13 +187,15 @@ namespace Orion.Tests.World
 			{
 				var worldService = orion.GetService<WorldService>();
 				InitializeMeteorRange(newX, newY);
-				worldService.MeteorDropping += (sender, args) =>
+				EventHandler<MeteorDroppingEventArgs> handler = (sender, e) =>
 				{
-					args.X = newX;
-					args.Y = newY;
+					e.X = newX;
+					e.Y = newY;
 				};
+				worldService.MeteorDropping += handler;
 
 				Terraria.WorldGen.meteor(x, y);
+				worldService.MeteorDropping -= handler;
 
 				Assert.IsTrue(MeteorIsInRange(newX, newY));
 			}
@@ -197,13 +211,15 @@ namespace Orion.Tests.World
 				Terraria.Main.worldName = "";
 				Terraria.WorldGen.saveLock = false;
 				var eventOccurred = false;
-				worldService.WorldSaving += (sender, args) =>
+				EventHandler<WorldSavingEventArgs> handler = (sender, e) =>
 				{
 					eventOccurred = true;
-					Assert.AreEqual(resetTime, args.ResetTime);
+					Assert.AreEqual(resetTime, e.ResetTime);
 				};
+				worldService.WorldSaving += handler;
 
 				worldService.Save(resetTime);
+				worldService.WorldSaving -= handler;
 
 				Assert.IsTrue(eventOccurred);
 			}
@@ -217,9 +233,11 @@ namespace Orion.Tests.World
 				var worldService = orion.GetService<WorldService>();
 				Terraria.Main.worldName = "";
 				Terraria.WorldGen.saveLock = false;
-				worldService.WorldSaving += (sender, args) => args.Handled = true;
+				EventHandler<WorldSavingEventArgs> handler = (sender, e) => e.Handled = true;
+				worldService.WorldSaving += handler;
 
 				worldService.Save(resetTime);
+				worldService.WorldSaving -= handler;
 
 				Assert.AreNotEqual("World", Terraria.Main.worldName, "World should not have saved.");
 			}
@@ -235,9 +253,11 @@ namespace Orion.Tests.World
 				Terraria.Main.time = 0.0;
 				Terraria.IO.WorldFile.tempTime = 0.0;
 				Terraria.WorldGen.saveLock = false;
-				worldService.WorldSaving += (sender, args) => args.ResetTime = newResetTime;
+				EventHandler<WorldSavingEventArgs> handler = (sender, e) => e.ResetTime = newResetTime;
+				worldService.WorldSaving += handler;
 
 				worldService.Save(resetTime);
+				worldService.WorldSaving -= handler;
 
 				Assert.AreEqual(newResetTime, Terraria.IO.WorldFile.tempTime == 13500.0);
 			}
@@ -251,13 +271,15 @@ namespace Orion.Tests.World
 			{
 				var worldService = orion.GetService<WorldService>();
 				var eventOccurred = false;
-				worldService.WorldSaved += (sender, args) =>
+				EventHandler<WorldSavedEventArgs> handler = (sender, e) =>
 				{
 					eventOccurred = true;
-					Assert.AreEqual(resetTime, args.ResetTime);
+					Assert.AreEqual(resetTime, e.ResetTime);
 				};
+				worldService.WorldSaved += handler;
 
 				worldService.Save(resetTime);
+				worldService.WorldSaved -= handler;
 
 				Assert.IsTrue(eventOccurred);
 			}

@@ -4,6 +4,7 @@ using System.Linq;
 using Microsoft.Xna.Framework;
 using NUnit.Framework;
 using Orion.Projectiles;
+using Orion.Projectiles.Events;
 
 namespace Orion.Tests.Projectiles
 {
@@ -22,17 +23,17 @@ namespace Orion.Tests.Projectiles
 			using (var orion = new Orion())
 			{
 				var projectileService = orion.GetService<ProjectileService>();
-
 				var terrariaProjectile = new Terraria.Projectile();
-				var projectile = new Projectile(terrariaProjectile);
 				var eventOccurred = false;
-				projectileService.ProjectileSetDefaults += (sender, args) =>
+				EventHandler<ProjectileSetDefaultsEventArgs> handler = (sender, e) =>
 				{
 					eventOccurred = true;
-					Assert.AreEqual(terrariaProjectile, args.Projectile.WrappedProjectile);
+					Assert.AreEqual(terrariaProjectile, e.Projectile.WrappedProjectile);
 				};
+				projectileService.ProjectileSetDefaults += handler;
 
-				projectile.SetDefaults(type);
+				terrariaProjectile.SetDefaults((int)type);
+				projectileService.ProjectileSetDefaults -= handler;
 
 				Assert.IsTrue(eventOccurred);
 			}
@@ -44,18 +45,18 @@ namespace Orion.Tests.Projectiles
 			using (var orion = new Orion())
 			{
 				var projectileService = orion.GetService<ProjectileService>();
-
 				var terrariaProjectile = new Terraria.Projectile();
-				var projectile = new Projectile(terrariaProjectile);
 				var eventOccurred = false;
-				projectileService.ProjectileSettingDefaults += (sender, args) =>
+				EventHandler<ProjectileSettingDefaultsEventArgs> handler = (sender, e) =>
 				{
 					eventOccurred = true;
-					Assert.AreEqual(terrariaProjectile, args.Projectile.WrappedProjectile);
-					Assert.AreEqual(type, args.Type);
+					Assert.AreEqual(terrariaProjectile, e.Projectile.WrappedProjectile);
+					Assert.AreEqual(type, e.Type);
 				};
+				projectileService.ProjectileSettingDefaults += handler;
 
-				projectile.SetDefaults(type);
+				terrariaProjectile.SetDefaults((int)type);
+				projectileService.ProjectileSettingDefaults -= handler;
 
 				Assert.IsTrue(eventOccurred);
 			}
@@ -68,12 +69,13 @@ namespace Orion.Tests.Projectiles
 			{
 				var projectileService = orion.GetService<ProjectileService>();
 				var terrariaProjectile = new Terraria.Projectile();
-				var projectile = new Projectile(terrariaProjectile);
-				projectileService.ProjectileSettingDefaults += (sender, args) => args.Type = newType;
+				EventHandler<ProjectileSettingDefaultsEventArgs> handler = (sender, e) => e.Type = newType;
+				projectileService.ProjectileSettingDefaults += handler;
 
-				projectile.SetDefaults(ProjectileType.None);
+				terrariaProjectile.SetDefaults(0);
+				projectileService.ProjectileSettingDefaults -= handler;
 
-				Assert.AreEqual(newType, projectile.Type);
+				Assert.AreEqual((int)newType, terrariaProjectile.type);
 			}
 		}
 
@@ -84,12 +86,13 @@ namespace Orion.Tests.Projectiles
 			{
 				var projectileService = orion.GetService<ProjectileService>();
 				var terrariaProjectile = new Terraria.Projectile();
-				var projectile = new Projectile(terrariaProjectile);
-				projectileService.ProjectileSettingDefaults += (sender, args) => args.Handled = true;
+				EventHandler<ProjectileSettingDefaultsEventArgs> handler = (sender, e) => e.Handled = true;
+				projectileService.ProjectileSettingDefaults += handler;
 
-				projectile.SetDefaults(type);
+				terrariaProjectile.SetDefaults((int)type);
+				projectileService.ProjectileSettingDefaults -= handler;
 
-				Assert.AreEqual(ProjectileType.None, projectile.Type, "SetDefaults should not have occurred.");
+				Assert.AreEqual(0, terrariaProjectile.type, "SetDefaults should not have occurred.");
 			}
 		}
 

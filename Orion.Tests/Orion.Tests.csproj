@@ -93,7 +93,6 @@
     <Compile Include="Projectiles\Events\ProjectileSetDefaultsEventArgsTests.cs" />
     <Compile Include="Projectiles\Events\ProjectileSettingDefaultsEventArgsTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Framework\ServiceMapTest.cs" />
     <Compile Include="Items\ItemServiceTests.cs" />
     <Compile Include="Players\PlayerServiceTests.cs" />
     <Compile Include="Projectiles\ProjectileServiceTests.cs" />
