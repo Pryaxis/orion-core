@@ -85,7 +85,7 @@ namespace Orion
 		/// </summary>
 		public void StartServer()
 		{
-			foreach (IService service in _injectionContainer.GetAll<IService>())
+			foreach (ISharedService service in _injectionContainer.GetAll<ISharedService>())
 			{
 				Console.WriteLine($"  * Loading {service.Name} by {service.Author}");
 			}
