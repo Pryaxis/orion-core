@@ -28,10 +28,20 @@ namespace Orion.Configuration
 		{
 		}
 
+		/// <inheritdoc />
+		public void Load(Stream stream)
+		{
+			var serializer = new JsonSerializer {Formatting = Formatting.Indented};
+
+			using (var sr = new StreamReader(stream))
+			{
+				Configuration = serializer.Deserialize(sr, typeof(TConfiguration)) as TConfiguration;
+			}
+		}
+
 		/// <inheritdoc/>
 		public void Load()
 		{
-			// TODO: generalize with streams instead?
 			string configDirectory = Path.Combine(ConfigurationDirectory, typeof(TConfiguration).Name);
 			string configFile = Path.Combine(configDirectory, "config.json");
 			var serializer = new JsonSerializer();
@@ -51,9 +61,8 @@ namespace Orion.Configuration
 			else
 			{
 				using (var fs = new FileStream(configFile, FileMode.Open, FileAccess.Read))
-				using (var sr = new StreamReader(fs))
 				{
-					Configuration = serializer.Deserialize(sr, typeof(TConfiguration)) as TConfiguration;
+					Load(fs);
 				}
 			}
 		}
@@ -61,13 +70,21 @@ namespace Orion.Configuration
 		/// <inheritdoc/>
 		public void Save()
 		{
-			// TODO: generalize with streams instead?
 			string configDirectory = Path.Combine(ConfigurationDirectory, typeof(TConfiguration).Name);
 			string configFile = Path.Combine(configDirectory, "config.json");
-			var serializer = new JsonSerializer {Formatting = Formatting.Indented};
 
 			using (var fs = new FileStream(configFile, FileMode.Create, FileAccess.Write))
-			using (var sw = new StreamWriter(fs))
+			{
+				Save(fs);
+			}
+		}
+
+		/// <inheritdoc />
+		public void Save(Stream stream)
+		{
+			var serializer = new JsonSerializer {Formatting = Formatting.Indented};
+
+			using (var sw = new StreamWriter(stream))
 			{
 				serializer.Serialize(sw, Configuration);
 			}

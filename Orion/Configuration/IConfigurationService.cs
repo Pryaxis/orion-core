@@ -1,4 +1,5 @@
-﻿using Orion.Framework;
+﻿using System.IO;
+using Orion.Framework;
 
 namespace Orion.Configuration
 {
@@ -15,14 +16,24 @@ namespace Orion.Configuration
 		TConfiguration Configuration { get; }
 
 		/// <summary>
-		/// Loads a <typeparamref name="TConfiguration"/> object from the configuration data store, and sets the
-		/// <see cref="Configuration"/> object to the deserialized representation of the configuration.
+		/// Loads a <typeparamref name="TConfiguration"/> from a custom stream.
+		/// </summary>
+		void Load(Stream stream);
+
+		/// <summary>
+		/// Loads a <typeparamref name="TConfiguration"/> object from the implementation's default data store, and sets
+		/// the <see cref="Configuration"/> object to the deserialized representation of the configuration.
 		/// </summary>
 		void Load();
 
 		/// <summary>
-		/// Saves the <typeparamref name="TConfiguration"/> object to persistent storage.
+		/// Saves the <typeparamref name="TConfiguration"/> object to the implementaton's default persistent storage.
 		/// </summary>
 		void Save();
+
+		/// <summary>
+		/// Saves the <typeparamref name="TConfiguration"/> object to a custom stream.
+		/// </summary>
+		void Save(Stream stream);
 	}
 }

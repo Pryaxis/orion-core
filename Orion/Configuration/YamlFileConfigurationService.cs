@@ -33,11 +33,20 @@ namespace Orion.Configuration
 			Directory.CreateDirectory(_configDirectory);
 		}
 
-		/// <inheritdoc/>
-		public void Load()
+		/// <inheritdoc />
+		public void Load(Stream stream)
 		{
 			var deserializer = new Deserializer();
 
+			using (var sr = new StreamReader(stream))
+			{
+				Configuration = deserializer.Deserialize<TConfig>(sr);
+			}
+		}
+
+		/// <inheritdoc/>
+		public void Load()
+		{
 			if (!File.Exists(_configFile))
 			{
 				/*
@@ -51,9 +60,8 @@ namespace Orion.Configuration
 			else
 			{
 				using (var fs = new FileStream(_configFile, FileMode.Open, FileAccess.Read))
-				using (var sr = new StreamReader(fs))
 				{
-					Configuration = deserializer.Deserialize<TConfig>(sr);
+					Load(fs);
 				}
 			}
 		}
@@ -62,10 +70,19 @@ namespace Orion.Configuration
 		public void Save()
 		{
 			string configFile = Path.Combine(_configDirectory, "config.yaml");
-			var serializer = new Serializer(SerializationOptions.EmitDefaults);
 
 			using (var fs = new FileStream(configFile, FileMode.Create, FileAccess.Write))
-			using (var sw = new StreamWriter(fs))
+			{
+				Save(fs);
+			}
+		}
+
+		/// <inheritdoc />
+		public void Save(Stream stream)
+		{
+			var serializer = new Serializer(SerializationOptions.EmitDefaults);
+
+			using (var sw = new StreamWriter(stream))
 			{
 				serializer.Serialize(sw, Configuration);
 			}
