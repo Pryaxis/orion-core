@@ -105,12 +105,17 @@
     <Compile Include="Npcs\Events\NpcDroppedLootEventArgs.cs" />
     <Compile Include="Npcs\Events\NpcDroppingLootEventArgs.cs" />
     <Compile Include="Npcs\Events\NpcKilledEventArgs.cs" />
+    <Compile Include="Npcs\Events\NpcSetDefaultsEventArgs.cs" />
+    <Compile Include="Npcs\Events\NpcSettingDefaultsEventArgs.cs" />
     <Compile Include="Npcs\Events\NpcSpawnedEventArgs.cs" />
     <Compile Include="Npcs\Events\NpcSpawningEventArgs.cs" />
+    <Compile Include="Npcs\Events\NpcStruckEventArgs.cs" />
     <Compile Include="Npcs\Events\NpcTransformedEventArgs.cs" />
+    <Compile Include="Npcs\Events\NpcTransformingEventArgs.cs" />
     <Compile Include="Npcs\INpc.cs" />
     <Compile Include="Npcs\INpcService.cs" />
     <Compile Include="Npcs\Npc.cs" />
+    <Compile Include="Npcs\NpcService.cs" />
     <Compile Include="Npcs\NpcType.cs" />
     <Compile Include="Orion.cs" />
     <Compile Include="Players\Events\PlayerJoinedEventArgs.cs" />
