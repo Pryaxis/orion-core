@@ -26,6 +26,7 @@ namespace Orion.Configuration
 		/// <param name="orion">The parent <see cref="Orion"/> instance.</param>
 		public JsonFileConfigurationService(Orion orion) : base(orion)
 		{
+			Load();
 		}
 
 		/// <inheritdoc />
@@ -56,7 +57,6 @@ namespace Orion.Configuration
 				 * so a configuration file always exists.
 				 */
 				Configuration = new TConfiguration();
-				Save();
 			}
 			else
 			{

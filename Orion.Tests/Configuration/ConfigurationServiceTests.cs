@@ -16,13 +16,25 @@ namespace Orion.Tests.Configuration
 		{
 			using (Orion orion = new Orion())
 			{
-				IConfigurationService<TestConfiguration> configService =
-					orion.GetService<YamlFileConfigurationService<TestConfiguration>>();
+				using (IConfigurationService<TestConfiguration> configService =
+					   orion.GetService<YamlFileConfigurationService<TestConfiguration>>())
+				{
+					Assert.IsNotNull(configService);
+					Assert.AreEqual(typeof(TestConfiguration), configService.GetType().GetGenericArguments()[0]);
+				}
+			}
+		}
 
-				Assert.IsNotNull(configService);
-
-				Assert.AreEqual(typeof(TestConfiguration), configService.GetType().GetGenericTypeDefinition());
-				Assert.AreNotEqual(configService.GetType().GetGenericTypeDefinition(), this.GetType());
+		[Test]
+		public void ConfigurationService_ConfigurationElementShouldNotBeNullAfterInitialization()
+		{
+			using (Orion orion = new Orion())
+			{
+				using (IConfigurationService<TestConfiguration> configService =
+					   orion.GetService<YamlFileConfigurationService<TestConfiguration>>())
+				{
+					Assert.IsNotNull(configService.Configuration);
+				}
 			}
 		}
 	}

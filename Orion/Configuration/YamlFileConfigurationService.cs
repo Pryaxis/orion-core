@@ -31,6 +31,7 @@ namespace Orion.Configuration
 		public YamlFileConfigurationService(Orion orion) : base(orion)
 		{
 			Directory.CreateDirectory(_configDirectory);
+			Load();
 		}
 
 		/// <inheritdoc />
@@ -55,7 +56,6 @@ namespace Orion.Configuration
 				 * so a configuration file always exists.
 				 */
 				Configuration = new TConfig();
-				Save();
 			}
 			else
 			{
