@@ -61,6 +61,10 @@ namespace Orion.Npcs
 		/// <inheritdoc/>
 		public event EventHandler<NpcTransformingEventArgs> NpcTransforming;
 
+		/// <summary>
+		/// Initializes a new instance of the <see cref="NpcService"/> class.
+		/// </summary>
+		/// <param name="orion">The parent <see cref="Orion"/> instance.</param>
 		public NpcService(Orion orion) : base(orion)
 		{
 			_npcs = new INpc[Terraria.Main.npc.Length];
@@ -116,7 +120,7 @@ namespace Orion.Npcs
 		private HookResult InvokeNpcDroppingLoot(Terraria.NPC terrariaNpc, ref int itemId, ref int x, ref int y, ref int width, ref int height, ref int type, ref int stack, ref bool noBroadcast, ref int prefix, ref bool noGrabDelay, ref bool reverseLookup)
 		{
 			var npc = new Npc(terrariaNpc);
-			var item = new Item(new Terraria.Item { position = new Vector2(x, y), width = width, height = height, type = type, stack = stack, prefix = (byte)prefix });
+			var item = new Item(Terraria.Main.item[Terraria.Item.NewItem(x, y, width, height, type, stack, noBroadcast, prefix, noGrabDelay, reverseLookup)]);
 			var args = new NpcDroppingLootEventArgs(npc, item);
 			NpcDroppingLoot?.Invoke(this, args);
 			return args.Handled ? HookResult.Cancel : HookResult.Continue;

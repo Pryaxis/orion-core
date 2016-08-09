@@ -44,7 +44,7 @@ namespace Orion.Npcs.Events
 		public bool FromNet { get; set; }
 
 		/// <summary>
-		/// Creates a new instance of the <see cref="NpcStruckEventArgs"/> class.
+		/// Initializes a new instance of the <see cref="NpcStruckEventArgs"/> class.
 		/// </summary>
 		/// <param name="npc">The <see cref="INpc"/> instance that was hit.</param>
 		/// <param name="damage">The hit damage.</param>
