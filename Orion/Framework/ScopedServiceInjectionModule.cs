@@ -68,7 +68,7 @@ namespace Orion.Framework
 
 					Bind(interfaceType)
 						.To(serviceType)
-						.When(request => request.Service.BaseType.IsAssignableFrom(typeof(Service)) && request.Target != null)
+						.When(request => request.Service.BaseType.IsAssignableFrom(typeof(Service)) && request.Target == null)
 						.InTransientScope();
 				}
 			}
