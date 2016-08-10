@@ -53,7 +53,7 @@ namespace Orion.Npcs
 		public event EventHandler<NpcSpawningEventArgs> NpcSpawning;
 
 		/// <inheritdoc/>
-		public event EventHandler<NpcStruckEventArgs> NpcStruck;
+		public event EventHandler<NpcStrikingEventArgs> NpcStriking;
 
 		/// <inheritdoc/>
 		public event EventHandler<NpcTransformedEventArgs> NpcTransformed;
@@ -75,22 +75,27 @@ namespace Orion.Npcs
 			Hooks.Npc.PreSetDefaultsById = InvokeNpcSettingDefaults;
 			Hooks.Npc.Create = InvokeNpcSpawned;
 			Hooks.Npc.Spawn = InvokeNpcSpawning;
-			Hooks.Npc.Strike = InvokeNpcStruck;
+			Hooks.Npc.Strike = InvokeNpcStriking;
 			Hooks.Npc.PostTransform = InvokeNpcTransformed;
 			Hooks.Npc.PreTransform = InvokeNpcTransforming;
 		}
 
 		/// <inheritdoc/>
-		public INpc SpawnNpc(int type, Vector2 position)
+		public INpc SpawnNpc(NpcType type, Vector2 position)
 		{
-			var terrariaNpc = new Terraria.NPC();
-			var npc = new Npc(terrariaNpc);
-			npc.SetDefaults((NpcType)type);
+			int index = Terraria.NPC.NewNPC((int)position.X, (int)position.Y, (int)type);
+			var npc = new Npc(Terraria.Main.npc[index]);
+			_npcs[index] = npc;
+			npc.SetDefaults(type);
 			npc.Position = position;
 			return npc;
 		}
 
 		/// <inheritdoc/>
+		/// <remarks>
+		/// The <see cref="INpc"/> instances are cached in an array. Calling this method multiple times will result
+		/// in the same <see cref="INpc"/> instances as long as Terraria's npc array remains unchanged.
+		/// </remarks>
 		public IEnumerable<INpc> FindNpcs(Predicate<INpc> predicate = null)
 		{
 			var npcs = new List<INpc>();
@@ -109,7 +114,7 @@ namespace Orion.Npcs
 		{
 			using (var orion = new Orion())
 			{
-				var itemService = orion.GetService<ItemService>();
+				var itemService = orion.GetService<IItemService>();
 				var npc = new Npc(terrariaNpc);
 				var item = itemService.FindItems(i => (int)i.Type == type).FirstOrDefault();
 				var args = new NpcDroppedLootEventArgs(npc, item);
@@ -167,11 +172,11 @@ namespace Orion.Npcs
 			return args.Handled ? HookResult.Cancel : HookResult.Continue;
 		}
 
-		private HookResult InvokeNpcStruck(Terraria.NPC terrariaNpc, ref int cancelResult, ref int damage, ref float knockback, ref int hitDirection, ref bool crit, ref bool noEffect, ref bool fromNet)
+		private HookResult InvokeNpcStriking(Terraria.NPC terrariaNpc, ref int cancelResult, ref int damage, ref float knockback, ref int hitDirection, ref bool crit, ref bool noEffect, ref bool fromNet)
 		{
 			var npc = new Npc(terrariaNpc);
-			var args = new NpcStruckEventArgs(npc, damage, knockback, hitDirection, crit, noEffect, fromNet);
-			NpcStruck?.Invoke(this, args);
+			var args = new NpcStrikingEventArgs(npc, damage, knockback, hitDirection, crit, noEffect, fromNet);
+			NpcStriking?.Invoke(this, args);
 			damage = args.Damage;
 			knockback = args.Knockback;
 			hitDirection = args.HitDirection;

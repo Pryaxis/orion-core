@@ -9,9 +9,9 @@ namespace Orion.Npcs.Events
 	public class NpcTransformingEventArgs : HandledEventArgs
 	{
 		/// <summary>
-		/// Gets or sets the <see cref="INpc"/> instance that's transforming.
+		/// Gets the <see cref="INpc"/> instance that's transforming.
 		/// </summary>
-		public INpc Npc { get; set; }
+		public INpc Npc { get; }
 
 		/// <summary>
 		/// Gets or sets the <see cref="NpcType"/> that the <see cref="INpc"/> instance is transforming to.

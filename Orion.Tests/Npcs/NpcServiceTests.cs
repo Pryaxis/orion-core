@@ -11,31 +11,55 @@ namespace Orion.Tests.Npcs
 	[TestFixture]
 	public class NpcServiceTests
 	{
-		private static readonly object[] NpcDroppedLootTestCases = { NpcType.EyeofCthulhu };
-
-		private static readonly object[] NpcDroppingLootTestCases = { NpcType.EyeofCthulhu };
-
-		private static readonly object[] NpcKilledTestCases = { NpcType.BlueSlime };
-
-		private static readonly object[] NpcSetDefaultsTestCases = { NpcType.BlueSlime };
-
-		private static readonly object[] NpcSettingDefaultsTestCases = { NpcType.BlueSlime };
-
-		private static readonly object[] NpcSpawnedTestCases = { NpcType.BlueSlime };
-
-		private static readonly object[] NpcSpawningTestCases = { NpcType.BlueSlime };
-
-		private static readonly object[] NpcStruckTestCases = { NpcType.BlueSlime };
-
-		private static readonly object[] NpcTransformedTestCases = { NpcType.KingSlime };
-
-		private static readonly object[] NpcTransformingTestCases = { NpcType.KingSlime };
-
 		private static readonly object[] SpawnTestCases = { new object[] { NpcType.BlueSlime, new Vector2(1000, 2000) } };
 
 		private static readonly Predicate<INpc>[] FindTestCases = { npc => (int)npc.Type < 100 };
 
-		[TestCaseSource(nameof(NpcDroppedLootTestCases))]
+		[Test]
+		public void BaseNpcSpawningLimit_IsCorrect()
+		{
+			using (var orion = new Orion())
+			{
+				var npcService = orion.GetService<NpcService>();
+				Assert.AreEqual(Terraria.NPC.defaultMaxSpawns, npcService.BaseNpcSpawningLimit);
+			}
+		}
+
+		[TestCase(100)]
+		public void BaseNpcSpawningLimit_ModifiesLimit(int newSpawnLimit)
+		{
+			using (var orion = new Orion())
+			{
+				var npcService = orion.GetService<NpcService>();
+				npcService.BaseNpcSpawningLimit = newSpawnLimit;
+
+				Assert.AreEqual(newSpawnLimit, npcService.BaseNpcSpawningLimit);
+			}
+		}
+
+		[Test]
+		public void BaseNpcSpawningRate_IsCorrect()
+		{
+			using (var orion = new Orion())
+			{
+				var npcService = orion.GetService<NpcService>();
+				Assert.AreEqual(Terraria.NPC.defaultSpawnRate, npcService.BaseNpcSpawningRate);
+			}
+		}
+
+		[TestCase(100)]
+		public void BaseNpcSpawningRate_ModifiesRate(int newSpawnRate)
+		{
+			using (var orion = new Orion())
+			{
+				var npcService = orion.GetService<NpcService>();
+				npcService.BaseNpcSpawningRate = newSpawnRate;
+
+				Assert.AreEqual(newSpawnRate, npcService.BaseNpcSpawningRate);
+			}
+		}
+
+		[TestCase(NpcType.EyeofCthulhu)]
 		public void NpcDroppedLoot_IsCorrect(NpcType type)
 		{
 			using (var orion = new Orion())
@@ -58,7 +82,7 @@ namespace Orion.Tests.Npcs
 			}
 		}
 
-		[TestCaseSource(nameof(NpcDroppingLootTestCases))]
+		[TestCase(NpcType.EyeofCthulhu)]
 		public void NpcDroppingLoot_IsCorrect(NpcType type)
 		{
 			using (var orion = new Orion())
@@ -81,7 +105,7 @@ namespace Orion.Tests.Npcs
 			}
 		}
 
-		[TestCaseSource(nameof(NpcDroppingLootTestCases))]
+		[TestCase(NpcType.EyeofCthulhu)]
 		public void NpcDroppingLoot_Handled_StopsNPCLoot(NpcType type)
 		{
 			using (var orion = new Orion())
@@ -97,7 +121,7 @@ namespace Orion.Tests.Npcs
 			}
 		}
 
-		[TestCaseSource(nameof(NpcKilledTestCases))]
+		[TestCase(NpcType.BlueSlime)]
 		public void NpcKilled_IsCorrect(NpcType type)
 		{
 			using (var orion = new Orion())
@@ -120,7 +144,7 @@ namespace Orion.Tests.Npcs
 			}
 		}
 
-		[TestCaseSource(nameof(NpcSetDefaultsTestCases))]
+		[TestCase(NpcType.BlueSlime)]
 		public void NpcSetDefaults_IsCorrect(NpcType type)
 		{
 			using (var orion = new Orion())
@@ -143,7 +167,7 @@ namespace Orion.Tests.Npcs
 			}
 		}
 
-		[TestCaseSource(nameof(NpcSetDefaultsTestCases))]
+		[TestCase(NpcType.BlueSlime)]
 		public void NpcSetDefaults_OccursFromNetDefaults(NpcType type)
 		{
 			using (var orion = new Orion())
@@ -181,7 +205,7 @@ namespace Orion.Tests.Npcs
 			}
 		}
 
-		[TestCaseSource(nameof(NpcSettingDefaultsTestCases))]
+		[TestCase(NpcType.BlueSlime)]
 		public void NpcSettingDefaults_IsCorrect(NpcType type)
 		{
 			using (var orion = new Orion())
@@ -204,7 +228,7 @@ namespace Orion.Tests.Npcs
 			}
 		}
 
-		[TestCaseSource(nameof(NpcSettingDefaultsTestCases))]
+		[TestCase(NpcType.BlueSlime)]
 		public void NpcSettingDefaults_ModifiesType(NpcType newType)
 		{
 			using (var orion = new Orion())
@@ -220,7 +244,7 @@ namespace Orion.Tests.Npcs
 			}
 		}
 
-		[TestCaseSource(nameof(NpcSettingDefaultsTestCases))]
+		[TestCase(NpcType.BlueSlime)]
 		public void NpcSettingDefaults_Handled_StopsSetDefaults(NpcType type)
 		{
 			using (var orion = new Orion())
@@ -238,7 +262,7 @@ namespace Orion.Tests.Npcs
 			}
 		}
 
-		[TestCaseSource(nameof(NpcSettingDefaultsTestCases))]
+		[TestCase(NpcType.BlueSlime)]
 		public void NpcSettingDefaults_OccursFromNetDefaults(NpcType type)
 		{
 			using (var orion = new Orion())
@@ -276,7 +300,7 @@ namespace Orion.Tests.Npcs
 			}
 		}
 
-		[TestCaseSource(nameof(NpcSpawnedTestCases))]
+		[TestCase(NpcType.BlueSlime)]
 		public void NpcSpawned_IsCorrect(NpcType type)
 		{
 			using (var orion = new Orion())
@@ -295,7 +319,7 @@ namespace Orion.Tests.Npcs
 			}
 		}
 
-		[TestCaseSource(nameof(NpcSpawnedTestCases))]
+		[TestCase(NpcType.BlueSlime)]
 		public void NpcSpawning_IsCorrect(NpcType type)
 		{
 			using (var orion = new Orion())
@@ -314,7 +338,7 @@ namespace Orion.Tests.Npcs
 			}
 		}
 
-		[TestCaseSource(nameof(NpcSpawnedTestCases))]
+		[TestCase(NpcType.BlueSlime)]
 		public void NpcSpawning_Handled_StopsNewNPC(NpcType type)
 		{
 			using (var orion = new Orion())
@@ -332,8 +356,8 @@ namespace Orion.Tests.Npcs
 			}
 		}
 
-		[TestCaseSource(nameof(NpcStruckTestCases))]
-		public void NpcStruck_IsCorrect(NpcType type)
+		[TestCase(NpcType.BlueSlime)]
+		public void NpcStriking_IsCorrect(NpcType type)
 		{
 			using (var orion = new Orion())
 			{
@@ -341,21 +365,21 @@ namespace Orion.Tests.Npcs
 				var terrariaNpc = new Terraria.NPC();
 				var npc = new Npc(terrariaNpc);
 				var eventOccurred = false;
-				EventHandler<NpcStruckEventArgs> handler = (sender, e) => 
+				EventHandler<NpcStrikingEventArgs> handler = (sender, e) => 
 				{
 					eventOccurred = true;
 					Assert.AreEqual(terrariaNpc, e.Npc.WrappedNpc);
 				};
-				npcService.NpcStruck += handler;
+				npcService.NpcStriking += handler;
 
 				terrariaNpc.StrikeNPC(0, 0, 0);
-				npcService.NpcStruck -= handler;
+				npcService.NpcStriking -= handler;
 
 				Assert.IsTrue(eventOccurred);
 			}
 		}
 
-		[TestCaseSource(nameof(NpcTransformedTestCases))]
+		[TestCase(NpcType.KingSlime)]
 		public void NpcTransformed_IsCorrect(NpcType newType)
 		{
 			using (var orion = new Orion())
@@ -378,7 +402,7 @@ namespace Orion.Tests.Npcs
 			}
 		}
 
-		[TestCaseSource(nameof(NpcTransformingTestCases))]
+		[TestCase(NpcType.KingSlime)]
 		public void NpcTransforming_IsCorrect(NpcType newType)
 		{
 			using (var orion = new Orion())
@@ -401,7 +425,7 @@ namespace Orion.Tests.Npcs
 			}
 		}
 
-		[TestCaseSource(nameof(NpcTransformingTestCases))]
+		[TestCase(NpcType.KingSlime)]
 		public void NpcTransforming_ModifiesType(NpcType newType)
 		{
 			using (var orion = new Orion())
@@ -488,7 +512,7 @@ namespace Orion.Tests.Npcs
 			using (var orion = new Orion())
 			{
 				var npcService = orion.GetService<NpcService>();
-				INpc npc = npcService.SpawnNpc((int)type, position);
+				INpc npc = npcService.SpawnNpc(type, position);
 
 				Assert.AreEqual(type, npc.Type);
 				Assert.That(npc.Position.X, Is.InRange(900, 1100));

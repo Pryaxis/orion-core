@@ -66,7 +66,7 @@ namespace Orion.Npcs
 =======
 		/// Occurs when an <see cref="INpc"/> instance has been hit.
 		/// </summary>
-		event EventHandler<NpcStruckEventArgs> NpcStruck;
+		event EventHandler<NpcStrikingEventArgs> NpcStriking;
 
 		/// <summary>
 		/// Occurs after an <see cref="INpc"/> instance has transformed to another type.
@@ -98,9 +98,14 @@ namespace Orion.Npcs
 		/// <summary>
 		/// Spawns a new NPC with the specified type ID at a position in the world.
 		/// </summary>
-		/// <param name="type">The type ID.</param>
+		/// <param name="type">The <see cref="NpcType"/>.</param>
 		/// <param name="position">The position in the world.</param>
+<<<<<<< 904f8c3ad633379923d86b6198b0c0d84fd61d79
 		/// <returns>The resulting NPC.</returns>
 		INpc SpawnNpc(int type, Vector2 position);
+=======
+		/// <returns>The resulting <see cref="INpc"/> instance.</returns>
+		INpc SpawnNpc(NpcType type, Vector2 position);
+>>>>>>> Add missing NpcService tests, fix SpawnNpc
 	}
 }

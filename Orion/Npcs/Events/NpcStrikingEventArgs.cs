@@ -4,14 +4,14 @@ using System.ComponentModel;
 namespace Orion.Npcs.Events
 {
 	/// <summary>
-	/// Provides data for the <see cref="INpcService.NpcStruck"/> event.
+	/// Provides data for the <see cref="INpcService.NpcStriking"/> event.
 	/// </summary>
-	public class NpcStruckEventArgs : HandledEventArgs
+	public class NpcStrikingEventArgs : HandledEventArgs
 	{
 		/// <summary>
 		/// Gets or sets the <see cref="INpc"/> instance that was hit.
 		/// </summary>
-		public INpc Npc { get; set; }
+		public INpc Npc { get; }
 
 		/// <summary>
 		/// Gets or sets the hit damage.
@@ -44,7 +44,7 @@ namespace Orion.Npcs.Events
 		public bool FromNet { get; set; }
 
 		/// <summary>
-		/// Initializes a new instance of the <see cref="NpcStruckEventArgs"/> class.
+		/// Initializes a new instance of the <see cref="NpcStrikingEventArgs"/> class.
 		/// </summary>
 		/// <param name="npc">The <see cref="INpc"/> instance that was hit.</param>
 		/// <param name="damage">The hit damage.</param>
@@ -53,7 +53,7 @@ namespace Orion.Npcs.Events
 		/// <param name="critical">Whether the hit was critical.</param>
 		/// <param name="noEffect">Whether to display the hit effect.</param>
 		/// <param name="fromNet">Whether the hit was caused by a bug net.</param>
-		public NpcStruckEventArgs(INpc npc, int damage, float knockback, int hitDirection, bool critical, bool noEffect, bool fromNet)
+		public NpcStrikingEventArgs(INpc npc, int damage, float knockback, int hitDirection, bool critical, bool noEffect, bool fromNet)
 		{
 			if (npc == null)
 			{

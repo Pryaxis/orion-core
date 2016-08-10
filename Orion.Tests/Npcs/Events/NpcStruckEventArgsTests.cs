@@ -10,7 +10,7 @@ namespace Orion.Tests.Npcs.Events
 		[Test]
 		public void Constructor_NullNpc_ThrowsArgumentNullException()
 		{
-			Assert.Throws<ArgumentNullException>(() => new NpcStruckEventArgs(null, 0, 0, 0, false, false, false));
+			Assert.Throws<ArgumentNullException>(() => new NpcStrikingEventArgs(null, 0, 0, 0, false, false, false));
 		}
 	}
 }

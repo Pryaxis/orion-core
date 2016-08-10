@@ -9,9 +9,9 @@ namespace Orion.Npcs.Events
 	public class NpcSettingDefaultsEventArgs : HandledEventArgs
 	{
 		/// <summary>
-		/// Gets or sets the <see cref="INpc"/> instance that's having its defaults set.
+		/// Gets the <see cref="INpc"/> instance that's having its defaults set.
 		/// </summary>
-		public INpc Npc { get; set; }
+		public INpc Npc { get; }
 
 		/// <summary>
 		/// Gets or sets the <see cref="NpcType"/> that the <see cref="INpc"/> instance is having its defaults set to.

@@ -109,7 +109,7 @@
     <Compile Include="Npcs\Events\NpcSettingDefaultsEventArgs.cs" />
     <Compile Include="Npcs\Events\NpcSpawnedEventArgs.cs" />
     <Compile Include="Npcs\Events\NpcSpawningEventArgs.cs" />
-    <Compile Include="Npcs\Events\NpcStruckEventArgs.cs" />
+    <Compile Include="Npcs\Events\NpcStrikingEventArgs.cs" />
     <Compile Include="Npcs\Events\NpcTransformedEventArgs.cs" />
     <Compile Include="Npcs\Events\NpcTransformingEventArgs.cs" />
     <Compile Include="Npcs\INpc.cs" />
