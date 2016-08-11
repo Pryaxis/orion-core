@@ -18,17 +18,21 @@ namespace Orion.Framework
 		/// </remarks>
 		public override void Load()
 		{
-			IEnumerable<Type> serviceTypes = new[] { Assembly.GetExecutingAssembly() }
+			IEnumerable<Type> services = new[] {Assembly.GetExecutingAssembly()}
 				.Concat(AssemblyResolver.LoadAssemblies(Orion.PluginDirectory))
 				.SelectMany(a => a.GetExportedTypes())
-				.Where(t => t.IsSubclassOf(typeof(SharedService)));
+				.Where(t => t.IsSubclassOf(typeof(SharedService)))
+				.Select(t => t.IsGenericType ? t.GetGenericTypeDefinition() : t);
 
-			foreach (Type serviceType in serviceTypes)
+			foreach (Type service in services)
 			{
-				Bind(serviceType).To(serviceType).InSingletonScope();
-				foreach (Type interfaceType in serviceType.GetInterfaces())
+				Bind(service).ToSelf().InSingletonScope();
+
+				IEnumerable<Type> serviceInterfaces = service.GetInterfaces()
+					.Select(t => t.IsGenericType ? t.GetGenericTypeDefinition() : t);
+				foreach (Type serviceInterface in serviceInterfaces)
 				{
-					Bind(interfaceType).To(serviceType).InSingletonScope();
+					Bind(serviceInterface).To(service).InSingletonScope();
 				}
 			}
 		}

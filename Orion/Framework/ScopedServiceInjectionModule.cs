@@ -19,12 +19,17 @@ namespace Orion.Framework
 	/// </remarks>
 	public class ScopedServiceInjectionModule : NinjectModule
 	{
+		/// <inheritdoc/>
+		/// <remarks>
+		/// This will scan the Orion assembly and all assemblies in the plugins directory.
+		/// </remarks>
 		public override void Load()
 		{
-			IEnumerable<Type> serviceTypes = new[] {Assembly.GetExecutingAssembly()}
+			IEnumerable<Type> services = new[] {Assembly.GetExecutingAssembly()}
 				.Concat(AssemblyResolver.LoadAssemblies(Orion.PluginDirectory))
 				.SelectMany(a => a.GetExportedTypes())
-				.Where(t => t.IsSubclassOf(typeof(Service)));
+				.Where(t => t.IsSubclassOf(typeof(Service)))
+				.Select(t => t.IsGenericType ? t.GetGenericTypeDefinition() : t);
 
 			/*
 			 * WORKAROUND:
@@ -47,29 +52,17 @@ namespace Orion.Framework
 			 * fails.
 			 */
 
-			foreach (Type serviceType in serviceTypes)
+			foreach (Type service in services)
 			{
-				Bind(serviceType)
-					.To(serviceType)
-					.When(request => request.Service.BaseType.IsAssignableFrom(typeof(Service)) && request.Target != null)
-					.InParentScope();
+				Bind(service).ToSelf().When(request => request.Target != null).InParentScope();
+				Bind(service).ToSelf().When(request => request.Target == null).InTransientScope();
 
-				Bind(serviceType)
-					.To(serviceType)
-					.When(request => request.Service.BaseType.IsAssignableFrom(typeof(Service)) && request.Target == null)
-					.InTransientScope();
-				
-				foreach (Type interfaceType in serviceType.GetInterfaces())
+				IEnumerable<Type> serviceInterfaces = service.GetInterfaces()
+					.Select(t => t.IsGenericType ? t.GetGenericTypeDefinition() : t);
+				foreach (Type serviceInterface in serviceInterfaces)
 				{
-					Bind(interfaceType)
-						.To(serviceType)
-						.When(request => request.Service.BaseType.IsAssignableFrom(typeof(Service)) && request.Target != null)
-						.InParentScope();
-
-					Bind(interfaceType)
-						.To(serviceType)
-						.When(request => request.Service.BaseType.IsAssignableFrom(typeof(Service)) && request.Target == null)
-						.InTransientScope();
+					Bind(serviceInterface).To(service).When(request => request.Target != null).InParentScope();
+					Bind(serviceInterface).To(service).When(request => request.Target == null).InTransientScope();
 				}
 			}
 		}
