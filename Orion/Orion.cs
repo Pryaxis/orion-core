@@ -81,16 +81,17 @@ namespace Orion
 		}
 
 		/// <summary>
-		/// Starts the server.
+		/// Starts the server or client.
 		/// </summary>
-		public void StartServer()
+		/// <param name="args">The command-line arguments.</param>
+		internal void Start(string[] args)
 		{
 			foreach (ISharedService service in _injectionContainer.GetAll<ISharedService>())
 			{
 				Console.WriteLine($"  * Loading {service.Name} by {service.Author}");
 			}
 
-			WindowsLaunch.Main(new string[] {});
+			WindowsLaunch.Main(args);
 		}
 	}
 }

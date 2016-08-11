@@ -6,7 +6,7 @@ namespace Orion.Framework
 	/// Provides information about a service.
 	/// </summary>
 	[AttributeUsage(AttributeTargets.Class)]
-	public class ServiceAttribute : Attribute
+	public sealed class ServiceAttribute : Attribute
 	{
 		/// <summary>
 		/// Gets or sets the service's author. Defaults to "Anonymous".
