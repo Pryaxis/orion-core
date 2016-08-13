@@ -1,4 +1,4 @@
-﻿namespace Orion.Console
+﻿namespace Orion.Launcher
 {
 	internal static class Program
 	{

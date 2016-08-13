@@ -13,7 +13,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyCopyright("Copyright © Nyx Studios 2016")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
-[assembly: InternalsVisibleTo("Orion.Console")]
+[assembly: InternalsVisibleTo("Orion.Launcher")]
 [assembly: InternalsVisibleTo("Orion.Tests")]
 
 // Setting ComVisible to false makes the types in this assembly not visible 
