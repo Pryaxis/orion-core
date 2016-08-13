@@ -8,14 +8,14 @@ namespace Orion.Projectiles.Events
 	public class ProjectileKilledEventArgs : EventArgs
 	{
 		/// <summary>
-		/// Gets the <see cref="IProjectile"/> instance that was killed.
+		/// Gets the projectile that was killed.
 		/// </summary>
 		public IProjectile Projectile { get; }
 
 		/// <summary>
 		/// Initializes a new instance of the <see cref="ProjectileKilledEventArgs"/> class. 
 		/// </summary>
-		/// <param name="projectile">The <see cref="IProjectile"/> instance that was killed.</param>
+		/// <param name="projectile">The projectile that was killed.</param>
 		/// <exception cref="ArgumentNullException"><paramref name="projectile"/> is null.</exception>
 		public ProjectileKilledEventArgs(IProjectile projectile)
 		{

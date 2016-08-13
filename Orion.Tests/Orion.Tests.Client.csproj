@@ -83,6 +83,10 @@
     <Compile Include="Players\PlayerTests.cs" />
     <Compile Include="Projectiles\Events\ProjectileKilledEventArgsTests.cs" />
     <Compile Include="Projectiles\Events\ProjectileKillingEventArgsTests.cs" />
+    <Compile Include="Projectiles\Events\ProjectileUpdatedAIEventArgsTests.cs" />
+    <Compile Include="Projectiles\Events\ProjectileUpdatedEventArgsTests.cs" />
+    <Compile Include="Projectiles\Events\ProjectileUpdatingAIEventArgsTests.cs" />
+    <Compile Include="Projectiles\Events\ProjectileUpdatingEventArgsTests.cs" />
     <Compile Include="Projectiles\ProjectileTests.cs" />
     <Compile Include="Items\Events\ItemSetDefaultsEventArgsTests.cs" />
     <Compile Include="Items\Events\ItemSettingDefaultsEventArgsTests.cs" />

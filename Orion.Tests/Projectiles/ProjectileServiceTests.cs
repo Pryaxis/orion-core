@@ -153,6 +153,94 @@ namespace Orion.Tests.Projectiles
 			}
 		}
 
+		[Test]
+		public void ProjectileUpdated_IsCorrect()
+		{
+			using (var orion = new Orion())
+			{
+				var projectileService = orion.GetService<ProjectileService>();
+				var terrariaProjectile = new Terraria.Projectile();
+				var eventOccurred = false;
+				EventHandler<ProjectileUpdatedEventArgs> handler = (sender, e) =>
+				{
+					eventOccurred = true;
+					Assert.AreEqual(terrariaProjectile, e.Projectile.WrappedProjectile);
+				};
+				projectileService.ProjectileUpdated += handler;
+
+				terrariaProjectile.Update(0);
+				projectileService.ProjectileUpdated -= handler;
+
+				Assert.IsTrue(eventOccurred);
+			}
+		}
+
+		[Test]
+		public void ProjectileUpdatedAI_IsCorrect()
+		{
+			using (var orion = new Orion())
+			{
+				var projectileService = orion.GetService<ProjectileService>();
+				var terrariaProjectile = new Terraria.Projectile();
+				var eventOccurred = false;
+				EventHandler<ProjectileUpdatedAIEventArgs> handler = (sender, e) =>
+				{
+					eventOccurred = true;
+					Assert.AreEqual(terrariaProjectile, e.Projectile.WrappedProjectile);
+				};
+				projectileService.ProjectileUpdatedAI += handler;
+
+				terrariaProjectile.AI();
+				projectileService.ProjectileUpdatedAI -= handler;
+
+				Assert.IsTrue(eventOccurred);
+			}
+		}
+
+		[Test]
+		public void ProjectileUpdating_IsCorrect()
+		{
+			using (var orion = new Orion())
+			{
+				var projectileService = orion.GetService<ProjectileService>();
+				var terrariaProjectile = new Terraria.Projectile();
+				var eventOccurred = false;
+				EventHandler<ProjectileUpdatingEventArgs> handler = (sender, e) =>
+				{
+					eventOccurred = true;
+					Assert.AreEqual(terrariaProjectile, e.Projectile.WrappedProjectile);
+				};
+				projectileService.ProjectileUpdating += handler;
+
+				terrariaProjectile.Update(0);
+				projectileService.ProjectileUpdating -= handler;
+
+				Assert.IsTrue(eventOccurred);
+			}
+		}
+
+		[Test]
+		public void ProjectileUpdatingAI_IsCorrect()
+		{
+			using (var orion = new Orion())
+			{
+				var projectileService = orion.GetService<ProjectileService>();
+				var terrariaProjectile = new Terraria.Projectile();
+				var eventOccurred = false;
+				EventHandler<ProjectileUpdatingAIEventArgs> handler = (sender, e) =>
+				{
+					eventOccurred = true;
+					Assert.AreEqual(terrariaProjectile, e.Projectile.WrappedProjectile);
+				};
+				projectileService.ProjectileUpdatingAI += handler;
+
+				terrariaProjectile.AI();
+				projectileService.ProjectileUpdatingAI -= handler;
+
+				Assert.IsTrue(eventOccurred);
+			}
+		}
+
 		[TestCase(0)]
 		[TestCase(1)]
 		public void FindProjectiles_Null_ReturnsAll(int populate)

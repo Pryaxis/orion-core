@@ -119,6 +119,10 @@
     <Compile Include="Players\Player.cs" />
     <Compile Include="Players\PlayerService.cs" />
     <Compile Include="Players\Team.cs" />
+    <Compile Include="Projectiles\Events\ProjectileUpdatedAIEventArgs.cs" />
+    <Compile Include="Projectiles\Events\ProjectileUpdatedEventArgs.cs" />
+    <Compile Include="Projectiles\Events\ProjectileUpdatingAIEventArgs.cs" />
+    <Compile Include="Projectiles\Events\ProjectileUpdatingEventArgs.cs" />
     <Compile Include="Projectiles\Events\ProjectileKillingEventArgs.cs" />
     <Compile Include="Projectiles\Events\ProjectileKilledEventArgs.cs" />
     <Compile Include="Projectiles\Events\ProjectileSetDefaultsEventArgs.cs" />

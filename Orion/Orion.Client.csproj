@@ -114,6 +114,10 @@
     <Compile Include="Projectiles\Events\ProjectileKillingEventArgs.cs" />
     <Compile Include="Projectiles\Events\ProjectileSetDefaultsEventArgs.cs" />
     <Compile Include="Projectiles\Events\ProjectileSettingDefaultsEventArgs.cs" />
+    <Compile Include="Projectiles\Events\ProjectileUpdatedAIEventArgs.cs" />
+    <Compile Include="Projectiles\Events\ProjectileUpdatedEventArgs.cs" />
+    <Compile Include="Projectiles\Events\ProjectileUpdatingAIEventArgs.cs" />
+    <Compile Include="Projectiles\Events\ProjectileUpdatingEventArgs.cs" />
     <Compile Include="Projectiles\IProjectile.cs" />
     <Compile Include="Projectiles\IProjectileService.cs" />
     <Compile Include="Projectiles\Projectile.cs" />

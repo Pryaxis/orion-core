@@ -16,7 +16,7 @@ namespace Orion.Projectiles
 		event EventHandler<ProjectileKilledEventArgs> ProjectileKilled;
 
 		/// <summary>
-		/// Occurs after a projectile is being killed.
+		/// Occurs when a projectile is being killed.
 		/// </summary>
 		event EventHandler<ProjectileKillingEventArgs> ProjectileKilling;
 
@@ -29,6 +29,26 @@ namespace Orion.Projectiles
 		/// Occurs when a projectile is having its defaults set.
 		/// </summary>
 		event EventHandler<ProjectileSettingDefaultsEventArgs> ProjectileSettingDefaults;
+
+		/// <summary>
+		/// Occurs after a projectile was updated.
+		/// </summary>
+		event EventHandler<ProjectileUpdatedEventArgs> ProjectileUpdated;
+
+		/// <summary>
+		/// Occurs after a projectile's AI was updated.
+		/// </summary>
+		event EventHandler<ProjectileUpdatedAIEventArgs> ProjectileUpdatedAI;
+
+		/// <summary>
+		/// Occurs when a projectile is being updated.
+		/// </summary>
+		event EventHandler<ProjectileUpdatingEventArgs> ProjectileUpdating;
+
+		/// <summary>
+		/// Occurs when a projectile's AI is being updated.
+		/// </summary>
+		event EventHandler<ProjectileUpdatingAIEventArgs> ProjectileUpdatingAI;
 
 		/// <summary>
 		/// Returns all projectiles in the world, optionally matching a predicate.
