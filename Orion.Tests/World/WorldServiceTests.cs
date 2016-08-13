@@ -23,9 +23,9 @@ namespace Orion.Tests.World
 			new object[] {nameof(WorldService.IsFrostMoon), nameof(Terraria.Main.snowMoon), true},
 			new object[] {nameof(WorldService.IsHalloween), nameof(Terraria.Main.halloween), true},
 			new object[] {nameof(WorldService.IsPumpkinMoon), nameof(Terraria.Main.pumpkinMoon), true},
-			new object[] {nameof(WorldService.Name), nameof(Terraria.Main.worldName), "Name"},
 			new object[] {nameof(WorldService.Time), nameof(Terraria.Main.time), 0.0},
-			new object[] {nameof(WorldService.Width), nameof(Terraria.Main.maxTilesX), 1000}
+			new object[] {nameof(WorldService.Width), nameof(Terraria.Main.maxTilesX), 1000},
+			new object[] {nameof(WorldService.WorldName), nameof(Terraria.Main.worldName), "Name"}
 		};
 
 		private static readonly object[] SetPropertyTestCases =
@@ -38,9 +38,9 @@ namespace Orion.Tests.World
 			new object[] {nameof(WorldService.IsFrostMoon), nameof(Terraria.Main.snowMoon), true},
 			new object[] {nameof(WorldService.IsHalloween), nameof(Terraria.Main.halloween), true},
 			new object[] {nameof(WorldService.IsPumpkinMoon), nameof(Terraria.Main.pumpkinMoon), true},
-			new object[] {nameof(WorldService.Name), nameof(Terraria.Main.worldName), "Name"},
 			new object[] {nameof(WorldService.Time), nameof(Terraria.Main.time), 0.0},
-			new object[] {nameof(WorldService.Width), nameof(Terraria.Main.maxTilesX), 1000}
+			new object[] {nameof(WorldService.Width), nameof(Terraria.Main.maxTilesX), 1000},
+			new object[] {nameof(WorldService.WorldName), nameof(Terraria.Main.worldName), "Name"}
 		};
 		
 		[TestCaseSource(nameof(GetPropertyTestCases))]
