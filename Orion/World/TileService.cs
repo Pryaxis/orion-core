@@ -1,6 +1,6 @@
 ﻿using System;
 using Orion.Framework;
-using OTAPI.Core;
+using OTAPI;
 using OTAPI.Tile;
 using Terraria;
 

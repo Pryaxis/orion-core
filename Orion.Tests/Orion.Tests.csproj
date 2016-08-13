@@ -60,7 +60,7 @@
       <Private>False</Private>
     </Reference>
     <Reference Include="OTAPI, Version=1.3.2.1, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\OTAPI.0.2.16\lib\net451\OTAPI.dll</HintPath>
+      <HintPath>..\packages\OTAPI.0.2.17\lib\net451\OTAPI.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="System" />

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Orion.Framework;
 using Orion.Projectiles.Events;
-using OTAPI.Core;
+using OTAPI;
 
 namespace Orion.Projectiles
 {

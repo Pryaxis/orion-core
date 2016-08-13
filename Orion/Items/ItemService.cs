@@ -4,7 +4,7 @@ using System.Linq;
 using Microsoft.Xna.Framework;
 using Orion.Framework;
 using Orion.Items.Events;
-using OTAPI.Core;
+using OTAPI;
 
 namespace Orion.Items
 {

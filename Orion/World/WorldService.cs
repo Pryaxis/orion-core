@@ -1,7 +1,7 @@
 ﻿using System;
 using Orion.Framework;
 using Orion.World.Events;
-using OTAPI.Core;
+using OTAPI;
 
 namespace Orion.World
 {
