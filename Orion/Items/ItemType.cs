@@ -1,7 +1,7 @@
 ﻿namespace Orion.Items
 {
 	/// <summary>
-	/// Specifies the type of an <see cref="IItem"/> instance.
+	/// Specifies an item's type.
 	/// </summary>
 	public enum ItemType
 	{

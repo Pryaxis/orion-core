@@ -11,27 +11,9 @@ namespace Orion.Tests.Items
 	[TestFixture]
 	public class ItemServiceTests
 	{
-		private static readonly object[] ItemSetDefaultsTestCases = {ItemType.IronPickaxe};
-
-		private static readonly object[] ItemSettingDefaultsTestCases = {ItemType.IronPickaxe};
-
-		private static readonly object[] CreateTestCases =
-		{
-			new object[] {ItemType.IronPickaxe, 1, ItemPrefix.None},
-			new object[] {ItemType.IronPickaxe, 100, ItemPrefix.None},
-			new object[] {ItemType.IronPickaxe, 100, ItemPrefix.Legendary}
-		};
-
 		private static readonly Predicate<IItem>[] FindTestCases = { item => (int)item.Type < 100 };
-
-		private static readonly object[] SpawnTestCases =
-		{
-			new object[] {ItemType.IronPickaxe, 1, ItemPrefix.None},
-			new object[] {ItemType.IronPickaxe, 100, ItemPrefix.None},
-			new object[] {ItemType.IronPickaxe, 100, ItemPrefix.Legendary}
-		};
 		
-		[TestCaseSource(nameof(ItemSetDefaultsTestCases))]
+		[TestCase(ItemType.IronPickaxe)]
 		public void ItemSetDefaults_IsCorrect(ItemType type)
 		{
 			using (var orion = new Orion())
@@ -53,7 +35,7 @@ namespace Orion.Tests.Items
 			}
 		}
 
-		[TestCaseSource(nameof(ItemSetDefaultsTestCases))]
+		[TestCase(ItemType.IronPickaxe)]
 		public void ItemSetDefaults_OccursFromNetDefaults(ItemType type)
 		{
 			using (var orion = new Orion())
@@ -89,7 +71,7 @@ namespace Orion.Tests.Items
 			}
 		}
 
-		[TestCaseSource(nameof(ItemSettingDefaultsTestCases))]
+		[TestCase(ItemType.IronPickaxe)]
 		public void ItemSettingDefaults_IsCorrect(ItemType type)
 		{
 			using (var orion = new Orion())
@@ -112,7 +94,7 @@ namespace Orion.Tests.Items
 			}
 		}
 
-		[TestCaseSource(nameof(ItemSettingDefaultsTestCases))]
+		[TestCase(ItemType.IronPickaxe)]
 		public void ItemSettingDefaults_ModifiesType(ItemType newType)
 		{
 			using (var orion = new Orion())
@@ -129,8 +111,8 @@ namespace Orion.Tests.Items
 			}
 		}
 
-		[TestCaseSource(nameof(ItemSettingDefaultsTestCases))]
-		public void ItemSettingDefaults_Handled_StopsSetDefaults(ItemType type)
+		[TestCase]
+		public void ItemSettingDefaults_Handled_StopsSetDefaults()
 		{
 			using (var orion = new Orion())
 			{
@@ -139,15 +121,14 @@ namespace Orion.Tests.Items
 				EventHandler<ItemSettingDefaultsEventArgs> handler = (sender, e) => e.Handled = true;
 				itemService.ItemSettingDefaults += handler;
 
-				terrariaItem.SetDefaults((int)type);
+				terrariaItem.SetDefaults(1);
 				itemService.ItemSettingDefaults -= handler;
 
 				Assert.AreEqual(0, terrariaItem.netID, "SetDefaults should not have occurred.");
 			}
 		}
 
-		[TestCaseSource(nameof(ItemSettingDefaultsTestCases))]
-
+		[TestCase(ItemType.IronPickaxe)]
 		public void ItemSettingDefaults_OccursFromNetDefaults(ItemType type)
 		{
 			using (var orion = new Orion())
@@ -183,8 +164,10 @@ namespace Orion.Tests.Items
 			}
 		}
 
-		[TestCaseSource(nameof(CreateTestCases))]
-		public void CreateItem_IsCorrect(ItemType type, int stack, ItemPrefix prefix)
+		[TestCase(ItemType.IronPickaxe, 1, Prefix.None)]
+		[TestCase(ItemType.IronPickaxe, 100, Prefix.None)]
+		[TestCase(ItemType.IronPickaxe, 100, Prefix.Legendary)]
+		public void CreateItem_IsCorrect(ItemType type, int stack, Prefix prefix)
 		{
 			using (var orion = new Orion())
 			{
@@ -193,7 +176,7 @@ namespace Orion.Tests.Items
 
 				Assert.AreEqual(type, item.Type);
 				Assert.AreEqual(stack, item.StackSize);
-				Assert.AreEqual(prefix != ItemPrefix.None, item.Prefix != ItemPrefix.None);
+				Assert.AreEqual(prefix != Prefix.None, item.Prefix != Prefix.None);
 			}
 		}
 
@@ -219,28 +202,28 @@ namespace Orion.Tests.Items
 			}
 		}
 
-		[TestCase(1)]
-		public void FindItems_MultipleTimes_ReturnsSameInstance(int populate)
+		[Test]
+		public void FindItems_MultipleTimes_ReturnsSameInstance()
 		{
 			using (var orion = new Orion())
 			{
 				var itemService = orion.GetService<ItemService>();
 				for (var i = 0; i < Terraria.Main.item.Length; ++i)
 				{
-					Terraria.Main.item[i] = new Terraria.Item {active = i < populate};
+					Terraria.Main.item[i] = new Terraria.Item {active = i < 100};
 				}
 
 				List<IItem> items = itemService.FindItems().ToList();
 				List<IItem> items2 = itemService.FindItems().ToList();
 				
-				for (var i = 0; i < populate; ++i)
+				for (var i = 0; i < 100; ++i)
 				{
 					Assert.AreSame(items[i], items2[i]);
 				}
 			}
 		}
 
-		[Test, TestCaseSource(nameof(FindTestCases))]
+		[TestCaseSource(nameof(FindTestCases))]
 		public void FindItems_IsCorrect(Predicate<IItem> predicate)
 		{
 			using (var orion = new Orion())
@@ -260,8 +243,10 @@ namespace Orion.Tests.Items
 			}
 		}
 
-		[TestCaseSource(nameof(SpawnTestCases))]
-		public void SpawnItem_IsCorrect(ItemType type, int stack, ItemPrefix prefix)
+		[TestCase(ItemType.IronPickaxe, 1, Prefix.None)]
+		[TestCase(ItemType.IronPickaxe, 100, Prefix.None)]
+		[TestCase(ItemType.IronPickaxe, 100, Prefix.Legendary)]
+		public void SpawnItem_IsCorrect(ItemType type, int stack, Prefix prefix)
 		{
 			using (var orion = new Orion())
 			{
@@ -270,7 +255,7 @@ namespace Orion.Tests.Items
 
 				Assert.AreEqual(type, item.Type);
 				Assert.AreEqual(stack, item.StackSize);
-				Assert.AreEqual(prefix != ItemPrefix.None, item.Prefix != ItemPrefix.None);
+				Assert.AreEqual(prefix != Prefix.None, item.Prefix != Prefix.None);
 				Assert.That(item.Position.X, Is.InRange(900, 1100));
 				Assert.That(item.Position.Y, Is.InRange(1900, 2100));
 			}

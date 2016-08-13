@@ -35,15 +35,15 @@ namespace Orion.Tests.Items
 			Assert.AreEqual(terrariaItemArray[index], item.WrappedItem);
 		}
 
-		[TestCase(0)]
-		public void GetItem_MultipleTimes_ReturnsSameInstance(int index)
+		[Test]
+		public void GetItem_MultipleTimes_ReturnsSameInstance()
 		{
 			var terrariaItemArray = new Terraria.Item[10];
-			terrariaItemArray[index] = new Terraria.Item();
+			terrariaItemArray[0] = new Terraria.Item();
 			var itemArray = new ItemArray(terrariaItemArray);
 
-			IItem item1 = itemArray[index];
-			IItem item2 = itemArray[index];
+			IItem item1 = itemArray[0];
+			IItem item2 = itemArray[0];
 
 			Assert.AreSame(item1, item2);
 		}

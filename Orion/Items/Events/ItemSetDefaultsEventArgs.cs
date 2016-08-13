@@ -8,14 +8,14 @@ namespace Orion.Items.Events
 	public class ItemSetDefaultsEventArgs : EventArgs
 	{
 		/// <summary>
-		/// Gets the <see cref="IItem"/> instance that had its defaults set.
+		/// Gets the item that had its defaults set.
 		/// </summary>
 		public IItem Item { get; }
 
 		/// <summary>
 		/// Initializes a new instance of the <see cref="ItemSetDefaultsEventArgs"/> class.
 		/// </summary>
-		/// <param name="item">The <see cref="IItem"/> instance that had its defaults set.</param>
+		/// <param name="item">The item that had its defaults set.</param>
 		/// <exception cref="ArgumentNullException"><paramref name="item"/> is null.</exception>
 		public ItemSetDefaultsEventArgs(IItem item)
 		{

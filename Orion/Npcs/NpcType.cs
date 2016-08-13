@@ -1,7 +1,7 @@
 ﻿namespace Orion.Npcs
 {
 	/// <summary>
-	/// Specifies the type of an <see cref="INpc"/> instance.
+	/// Specifies an NPC's type.
 	/// </summary>
 	public enum NpcType
 	{

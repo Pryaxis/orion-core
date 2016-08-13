@@ -10,7 +10,7 @@ namespace Orion.Tests.Players
 	[TestFixture]
 	public class PlayerTests
 	{
-		public static readonly object[] GetPropertyTestCases =
+		private static readonly object[] GetPropertyTestCases =
 		{
 			new object[] {nameof(Player.Defense), nameof(Terraria.Player.statDefense), 100},
 			new object[] {nameof(Player.HasPvpEnabled), nameof(Terraria.Player.hostile), true},
@@ -39,7 +39,7 @@ namespace Orion.Tests.Players
 			new object[] {nameof(Player.Width), nameof(Terraria.Player.width), 100}
 		};
 
-		public static readonly object[] SetPropertyTestCases =
+		private static readonly object[] SetPropertyTestCases =
 		{
 			new object[] {nameof(Player.Defense), nameof(Terraria.Player.statDefense), 100},
 			new object[] {nameof(Player.HasPvpEnabled), nameof(Terraria.Player.hostile), true},

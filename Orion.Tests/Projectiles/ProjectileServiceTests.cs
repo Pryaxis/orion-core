@@ -11,7 +11,7 @@ namespace Orion.Tests.Projectiles
 	[TestFixture]
 	public class ProjectileServiceTests
 	{
-		public static readonly Predicate<IProjectile>[] FindTestCases = {projectile => projectile.Position.X <= 10};
+		private static readonly Predicate<IProjectile>[] FindTestCases = {projectile => projectile.Position.X <= 10};
 
 		[Test]
 		public void ProjectileKilled_IsCorrect()

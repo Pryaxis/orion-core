@@ -14,23 +14,30 @@ namespace Orion.Tests.Npcs
 			new object[] {nameof(Npc.Damage), nameof(Terraria.NPC.damage), 100},
 			new object[] {nameof(Npc.Defense), nameof(Terraria.NPC.defense), 100},
 			new object[] {nameof(Npc.Health), nameof(Terraria.NPC.life), 100},
+			new object[] {nameof(Npc.Height), nameof(Terraria.NPC.height), 100},
+			new object[] {nameof(Npc.IsBoss), nameof(Terraria.NPC.boss), true},
 			new object[] {nameof(Npc.MaxHealth), nameof(Terraria.NPC.lifeMax), 100},
 			new object[] {nameof(Npc.Name), nameof(Terraria.NPC.name), "TEST"},
-			new object[] {nameof(Npc.Position), nameof(Terraria.NPC.position), Vector2.One}
+			new object[] {nameof(Npc.Position), nameof(Terraria.NPC.position), Vector2.One},
+			new object[] {nameof(Npc.Type), nameof(Terraria.NPC.netID), NpcType.BlueSlime},
+			new object[] {nameof(Npc.Velocity), nameof(Terraria.NPC.velocity), Vector2.One},
+			new object[] {nameof(Npc.Width), nameof(Terraria.NPC.width), 100}
 		};
 
 		private static readonly object[] SetPropertyTestCases =
 		{
+			new object[] {nameof(Npc.Damage), nameof(Terraria.NPC.damage), 100},
+			new object[] {nameof(Npc.Defense), nameof(Terraria.NPC.defense), 100},
 			new object[] {nameof(Npc.Health), nameof(Terraria.NPC.life), 100},
+			new object[] {nameof(Npc.Height), nameof(Terraria.NPC.height), 100},
+			new object[] {nameof(Npc.IsBoss), nameof(Terraria.NPC.boss), true},
 			new object[] {nameof(Npc.MaxHealth), nameof(Terraria.NPC.lifeMax), 100},
+			new object[] {nameof(Npc.Name), nameof(Terraria.NPC.name), "TEST"},
 			new object[] {nameof(Npc.Position), nameof(Terraria.NPC.position), Vector2.One},
-			new object[] {nameof(Npc.Velocity), nameof(Terraria.NPC.velocity), Vector2.One}
+			new object[] {nameof(Npc.Velocity), nameof(Terraria.NPC.velocity), Vector2.One},
+			new object[] {nameof(Npc.Width), nameof(Terraria.NPC.width), 100}
 		};
-
-		private static readonly object[] GetTypeTestCases = {NpcType.BlueSlime };
-
-		private static readonly object[] SetDefaultsTestCases = {NpcType.BlueSlime};
-
+		
 		[Test]
 		public void Constructor_NullTerrariaNpc_ThrowsArgumentNullException()
 		{
@@ -42,7 +49,7 @@ namespace Orion.Tests.Npcs
 		{
 			var terrariaNpc = new Terraria.NPC();
 			FieldInfo terrariaNpcField = typeof(Terraria.NPC).GetField(terrariaNpcFieldName);
-			terrariaNpcField.SetValue(terrariaNpc, value);
+			terrariaNpcField.SetValue(terrariaNpc, Convert.ChangeType(value, terrariaNpcField.FieldType));
 			var npc = new Npc(terrariaNpc);
 			PropertyInfo npcProperty = typeof(Npc).GetProperty(npcPropertyName);
 
@@ -61,20 +68,10 @@ namespace Orion.Tests.Npcs
 
 			npcProperty.SetValue(npc, value);
 
-			Assert.AreEqual(value, terrariaNpcField.GetValue(terrariaNpc));
+			Assert.AreEqual(
+				Convert.ChangeType(value, terrariaNpcField.FieldType), terrariaNpcField.GetValue(terrariaNpc));
 		}
-
-		[TestCaseSource(nameof(GetTypeTestCases))]
-		public void GetType_IsCorrect(NpcType type)
-		{
-			var terrariaNpc = new Terraria.NPC {netID = (int)type};
-			var npc = new Npc(terrariaNpc);
-
-			NpcType actualType = npc.Type;
-
-			Assert.AreEqual(type, actualType);
-		}
-
+		
 		[Test]
 		public void GetWrappedNpc_IsCorrect()
 		{
@@ -98,7 +95,7 @@ namespace Orion.Tests.Npcs
 			Assert.IsTrue(npc.Health <= 0, "NPC should have been killed.");
 		}
 
-		[TestCaseSource(nameof(SetDefaultsTestCases))]
+		[TestCase(NpcType.BlueSlime)]
 		public void SetDefaults_IsCorrect(NpcType type)
 		{
 			var terrariaNpc = new Terraria.NPC();

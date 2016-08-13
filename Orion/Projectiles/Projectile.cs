@@ -115,6 +115,9 @@ namespace Orion.Projectiles
 		}
 
 		/// <inheritdoc/>
+		public void Kill() => WrappedProjectile.Kill();
+
+		/// <inheritdoc/>
 		public void SetDefaults(ProjectileType type) => WrappedProjectile.SetDefaults((int)type);
 	}
 }

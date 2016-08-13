@@ -1,5 +1,4 @@
-﻿using System;
-using Microsoft.Xna.Framework;
+﻿using Microsoft.Xna.Framework;
 using Orion.Projectiles;
 
 namespace Orion.Items
@@ -15,9 +14,29 @@ namespace Orion.Items
 		int AmmoType { get; set; }
 
 		/// <summary>
-		/// Gets the item's axe power.
+		/// Gets or sets the item's <see cref="Items.AnimationStyle"/>.
 		/// </summary>
-		int AxePower { get; }
+		AnimationStyle AnimationStyle { get; set; }
+
+		/// <summary>
+		/// Gets or sets the item's animation time.
+		/// </summary>
+		int AnimationTime { get; set; }
+
+		/// <summary>
+		/// Gets or sets the item's axe power.
+		/// </summary>
+		int AxePower { get; set; }
+
+		/// <summary>
+		/// Gets or sets the item's bait power.
+		/// </summary>
+		int BaitPower { get; set; }
+
+		/// <summary>
+		/// Gets or sets a value indicating whether the item can automatically be reused.
+		/// </summary>
+		bool CanAutoReuse { get; set; }
 
 		/// <summary>
 		/// Gets or sets the item's color.
@@ -30,9 +49,19 @@ namespace Orion.Items
 		int Damage { get; set; }
 
 		/// <summary>
-		/// Gets the item's hammer power.
+		/// Gets or sets the item's fishing power.
 		/// </summary>
-		int HammerPower { get; }
+		int FishingPower { get; set; }
+
+		/// <summary>
+		/// Gets or sets the item's graphical scale.
+		/// </summary>
+		float GraphicalScale { get; set; }
+
+		/// <summary>
+		/// Gets or sets the item's hammer power.
+		/// </summary>
+		int HammerPower { get; set; }
 
 		/// <summary>
 		/// Gets or sets the item's height.
@@ -40,24 +69,54 @@ namespace Orion.Items
 		int Height { get; set; }
 
 		/// <summary>
+		/// Gets or sets a value indicating whether the item is an accessory.
+		/// </summary>
+		bool IsAccessory { get; set; }
+
+		/// <summary>
+		/// Gets or sets a value indicating whether the item is a magic weapon.
+		/// </summary>
+		bool IsMagicWeapon { get; set; }
+
+		/// <summary>
+		/// Gets or sets a value indicating whether the item is a melee weapon.
+		/// </summary>
+		bool IsMeleeWeapon { get; set; }
+
+		/// <summary>
+		/// Gets or sets a value indicating whether the item is a ranged weapon.
+		/// </summary>
+		bool IsRangedWeapon { get; set; }
+
+		/// <summary>
+		/// Gets or sets a value indicating whether the item is a thrown weapon.
+		/// </summary>
+		bool IsThrownWeapon { get; set; }
+
+		/// <summary>
 		/// Gets or sets the item's knockback.
 		/// </summary>
 		float Knockback { get; set; }
 
 		/// <summary>
-		/// Gets the item's maximum stack size.
+		/// Gets or sets the item's mana cost.
 		/// </summary>
-		int MaxStackSize { get; }
+		int ManaCost { get; set; }
 
 		/// <summary>
-		/// Gets the item's name.
+		/// Gets or sets the item's maximum stack size.
 		/// </summary>
-		string Name { get; }
+		int MaxStackSize { get; set; }
 
 		/// <summary>
-		/// Gets the item's pickaxe power.
+		/// Gets or sets the item's name.
 		/// </summary>
-		int PickaxePower { get; }
+		string Name { get; set; }
+
+		/// <summary>
+		/// Gets or sets the item's pickaxe power.
+		/// </summary>
+		int PickaxePower { get; set; }
 
 		/// <summary>
 		/// Gets or sets the item's position in the world.
@@ -65,9 +124,9 @@ namespace Orion.Items
 		Vector2 Position { get; set; }
 
 		/// <summary>
-		/// Gets the item's <see cref="ItemPrefix"/>.
+		/// Gets the item's <see cref="Items.Prefix"/>.
 		/// </summary>
-		ItemPrefix Prefix { get; }
+		Prefix Prefix { get; }
 
 		/// <summary>
 		/// Gets or sets the item's projectile speed.
@@ -75,14 +134,14 @@ namespace Orion.Items
 		float ProjectileSpeed { get; set; }
 
 		/// <summary>
-		/// Gets or sets the item's <see cref="ProjectileType"/>.
+		/// Gets or sets the item's <see cref="Projectiles.ProjectileType"/>.
 		/// </summary>
 		ProjectileType ProjectileType { get; set; }
 
 		/// <summary>
-		/// Gets or sets the item's scale.
+		/// Gets or sets the item's <see cref="Items.Rarity"/>.
 		/// </summary>
-		float Scale { get; set; }
+		Rarity Rarity { get; set; }
 
 		/// <summary>
 		/// Gets or sets the item's stack size.
@@ -98,11 +157,6 @@ namespace Orion.Items
 		/// Gets or sets the item's used ammo type.
 		/// </summary>
 		int UseAmmoType { get; set; }
-
-		/// <summary>
-		/// Gets or sets the item's use animation time.
-		/// </summary>
-		int UseAnimationTime { get; set; }
 
 		/// <summary>
 		/// Gets or sets the item's use time.
@@ -131,9 +185,9 @@ namespace Orion.Items
 		void SetDefaults(ItemType type);
 
 		/// <summary>
-		/// Tries to set the item's prefix using an <see cref="ItemPrefix"/>.
+		/// Tries to set the item's prefix using an <see cref="Items.Prefix"/>.
 		/// </summary>
-		/// <param name="prefix">The <see cref="ItemPrefix"/>.</param>
-		void SetPrefix(ItemPrefix prefix);
+		/// <param name="prefix">The <see cref="Items.Prefix"/>.</param>
+		void SetPrefix(Prefix prefix);
 	}
 }

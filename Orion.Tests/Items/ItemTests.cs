@@ -13,21 +13,35 @@ namespace Orion.Tests.Items
 		private static readonly object[] GetPropertyTestCases =
 		{
 			new object[] {nameof(Item.AmmoType), nameof(Terraria.Item.ammo), 14},
+			new object[] {nameof(Item.AnimationStyle), nameof(Terraria.Item.useStyle), AnimationStyle.Swing},
+			new object[] {nameof(Item.AnimationTime), nameof(Terraria.Item.useAnimation), 4},
 			new object[] {nameof(Item.AxePower), nameof(Terraria.Item.axe), 100},
+			new object[] {nameof(Item.BaitPower), nameof(Terraria.Item.bait), 100},
+			new object[] {nameof(Item.CanAutoReuse), nameof(Terraria.Item.autoReuse), true},
 			new object[] {nameof(Item.Color), nameof(Terraria.Item.color), Color.White},
 			new object[] {nameof(Item.Damage), nameof(Terraria.Item.damage), 100},
-			new object[] {nameof(Item.MaxStackSize), nameof(Terraria.Item.maxStack), 999},
+			new object[] {nameof(Item.FishingPower), nameof(Terraria.Item.fishingPole), 100},
+			new object[] {nameof(Item.GraphicalScale), nameof(Terraria.Item.scale), 10.0f},
 			new object[] {nameof(Item.HammerPower), nameof(Terraria.Item.hammer), 100},
 			new object[] {nameof(Item.Height), nameof(Terraria.Item.height), 100},
+			new object[] {nameof(Item.IsAccessory), nameof(Terraria.Item.accessory), true},
+			new object[] {nameof(Item.IsMagicWeapon), nameof(Terraria.Item.magic), true},
+			new object[] {nameof(Item.IsMeleeWeapon), nameof(Terraria.Item.melee), true},
+			new object[] {nameof(Item.IsRangedWeapon), nameof(Terraria.Item.ranged), true},
+			new object[] {nameof(Item.IsThrownWeapon), nameof(Terraria.Item.thrown), true},
 			new object[] {nameof(Item.Knockback), nameof(Terraria.Item.knockBack), 1.0f},
+			new object[] {nameof(Item.ManaCost), nameof(Terraria.Item.mana), 100},
+			new object[] {nameof(Item.MaxStackSize), nameof(Terraria.Item.maxStack), 999},
 			new object[] {nameof(Item.Name), nameof(Terraria.Item.name), "TEST"},
 			new object[] {nameof(Item.PickaxePower), nameof(Terraria.Item.pick), 100},
 			new object[] {nameof(Item.Position), nameof(Terraria.Item.position), Vector2.One},
+			new object[] {nameof(Item.Prefix), nameof(Terraria.Item.prefix), Prefix.Legendary},
 			new object[] {nameof(Item.ProjectileSpeed), nameof(Terraria.Item.shootSpeed), 1.0f},
-			new object[] {nameof(Item.Scale), nameof(Terraria.Item.scale), 10.0f},
+			new object[] {nameof(Item.ProjectileType), nameof(Terraria.Item.shoot), ProjectileType.Amarok},
+			new object[] {nameof(Item.Rarity), nameof(Terraria.Item.rare), Rarity.Purple},
 			new object[] {nameof(Item.StackSize), nameof(Terraria.Item.stack), 999},
+			new object[] {nameof(Item.Type), nameof(Terraria.Item.netID), ItemType.IronPickaxe},
 			new object[] {nameof(Item.UseAmmoType), nameof(Terraria.Item.useAmmo), 14},
-			new object[] {nameof(Item.UseAnimationTime), nameof(Terraria.Item.useAnimation), 4},
 			new object[] {nameof(Item.UseTime), nameof(Terraria.Item.useTime), 4},
 			new object[] {nameof(Item.Velocity), nameof(Terraria.Item.velocity), Vector2.One},
 			new object[] {nameof(Item.Width), nameof(Terraria.Item.width), 100}
@@ -36,33 +50,38 @@ namespace Orion.Tests.Items
 		private static readonly object[] SetPropertyTestCases =
 		{
 			new object[] {nameof(Item.AmmoType), nameof(Terraria.Item.ammo), 14},
+			new object[] {nameof(Item.AnimationStyle), nameof(Terraria.Item.useStyle), AnimationStyle.Swing},
+			new object[] {nameof(Item.AnimationTime), nameof(Terraria.Item.useAnimation), 4},
+			new object[] {nameof(Item.AxePower), nameof(Terraria.Item.axe), 100},
+			new object[] {nameof(Item.BaitPower), nameof(Terraria.Item.bait), 100},
+			new object[] {nameof(Item.CanAutoReuse), nameof(Terraria.Item.autoReuse), true},
 			new object[] {nameof(Item.Color), nameof(Terraria.Item.color), Color.White},
 			new object[] {nameof(Item.Damage), nameof(Terraria.Item.damage), 100},
+			new object[] {nameof(Item.FishingPower), nameof(Terraria.Item.fishingPole), 100},
+			new object[] {nameof(Item.GraphicalScale), nameof(Terraria.Item.scale), 10.0f},
+			new object[] {nameof(Item.HammerPower), nameof(Terraria.Item.hammer), 100},
 			new object[] {nameof(Item.Height), nameof(Terraria.Item.height), 100},
+			new object[] {nameof(Item.IsAccessory), nameof(Terraria.Item.accessory), true},
+			new object[] {nameof(Item.IsMagicWeapon), nameof(Terraria.Item.magic), true},
+			new object[] {nameof(Item.IsMeleeWeapon), nameof(Terraria.Item.melee), true},
+			new object[] {nameof(Item.IsRangedWeapon), nameof(Terraria.Item.ranged), true},
+			new object[] {nameof(Item.IsThrownWeapon), nameof(Terraria.Item.thrown), true},
 			new object[] {nameof(Item.Knockback), nameof(Terraria.Item.knockBack), 1.0f},
+			new object[] {nameof(Item.ManaCost), nameof(Terraria.Item.mana), 100},
+			new object[] {nameof(Item.MaxStackSize), nameof(Terraria.Item.maxStack), 999},
+			new object[] {nameof(Item.Name), nameof(Terraria.Item.name), "TEST"},
+			new object[] {nameof(Item.PickaxePower), nameof(Terraria.Item.pick), 100},
 			new object[] {nameof(Item.Position), nameof(Terraria.Item.position), Vector2.One},
 			new object[] {nameof(Item.ProjectileSpeed), nameof(Terraria.Item.shootSpeed), 1.0f},
-			new object[] {nameof(Item.Scale), nameof(Terraria.Item.scale), 10.0f},
-			new object[] {nameof(Item.StackSize), nameof(Terraria.Item.stack), 1},
+			new object[] {nameof(Item.ProjectileType), nameof(Terraria.Item.shoot), ProjectileType.Amarok},
+			new object[] {nameof(Item.Rarity), nameof(Terraria.Item.rare), Rarity.Purple},
+			new object[] {nameof(Item.StackSize), nameof(Terraria.Item.stack), 999},
 			new object[] {nameof(Item.UseAmmoType), nameof(Terraria.Item.useAmmo), 14},
-			new object[] {nameof(Item.UseAnimationTime), nameof(Terraria.Item.useAnimation), 4},
 			new object[] {nameof(Item.UseTime), nameof(Terraria.Item.useTime), 4},
 			new object[] {nameof(Item.Velocity), nameof(Terraria.Item.velocity), Vector2.One},
 			new object[] {nameof(Item.Width), nameof(Terraria.Item.width), 100}
 		};
-
-		private static readonly object[] GetPrefixTestCases = { ItemPrefix.Large };
 		
-		private static readonly object[] GetProjectileTypeTestCases = { ProjectileType.WoodenArrowFriendly };
-
-		private static readonly object[] SetProjectileTypeTestCases = { ProjectileType.WoodenArrowFriendly };
-
-		private static readonly object[] GetTypeTestCases = { ItemType.IronPickaxe };
-
-		private static readonly object[] SetDefaultsTestCases = { ItemType.IronPickaxe };
-
-		private static readonly object[] SetPrefixTestCases = { ItemPrefix.Large };
-
 		[Test]
 		public void Constructor_NullItem_ThrowsArgumentNullException()
 		{
@@ -74,7 +93,7 @@ namespace Orion.Tests.Items
 		{
 			var terrariaItem = new Terraria.Item();
 			FieldInfo terrariaItemField = typeof(Terraria.Item).GetField(terrariaItemFieldName);
-			terrariaItemField.SetValue(terrariaItem, value);
+			terrariaItemField.SetValue(terrariaItem, Convert.ChangeType(value, terrariaItemField.FieldType));
 			var item = new Item(terrariaItem);
 			PropertyInfo itemProperty = typeof(Item).GetProperty(itemPropertyName);
 			
@@ -93,53 +112,10 @@ namespace Orion.Tests.Items
 
 			itemProperty.SetValue(item, value);
 
-			Assert.AreEqual(value, terrariaItemField.GetValue(terrariaItem));
+			Assert.AreEqual(
+				Convert.ChangeType(value, terrariaItemField.FieldType), terrariaItemField.GetValue(terrariaItem));
 		}
-
-		[TestCaseSource(nameof(GetPrefixTestCases))]
-		public void GetPrefix_IsCorrect(ItemPrefix prefix)
-		{
-			var terrariaItem = new Terraria.Item { prefix = (byte)prefix };
-			var item = new Item(terrariaItem);
-
-			ItemPrefix actualPrefix = item.Prefix;
-
-			Assert.AreEqual(prefix, actualPrefix);
-		}
-
-		[TestCaseSource(nameof(GetProjectileTypeTestCases))]
-		public void GetProjectileType_IsCorrect(ProjectileType type)
-		{
-			var terrariaItem = new Terraria.Item {shoot = (int)type};
-			var item = new Item(terrariaItem);
-
-			ProjectileType actualType = item.ProjectileType;
-
-			Assert.AreEqual(type, actualType);
-		}
-
-		[TestCaseSource(nameof(SetProjectileTypeTestCases))]
-		public void SetProjectileType_IsCorrect(ProjectileType type)
-		{
-			var terrariaItem = new Terraria.Item();
-			var item = new Item(terrariaItem);
-
-			item.ProjectileType = type;
-
-			Assert.AreEqual(type, (ProjectileType)terrariaItem.shoot);
-		}
-
-		[TestCaseSource(nameof(GetTypeTestCases))]
-		public void GetType_IsCorrect(ItemType type)
-		{
-			var terrariaItem = new Terraria.Item {netID = (int)type};
-			var item = new Item(terrariaItem);
-
-			ItemType actualType = item.Type;
-
-			Assert.AreEqual(type, actualType);
-		}
-
+		
 		[Test]
 		public void GetWrappedItem_IsCorrect()
 		{
@@ -149,7 +125,7 @@ namespace Orion.Tests.Items
 			Assert.AreSame(terrariaItem, item.WrappedItem);
 		}
 
-		[TestCaseSource(nameof(SetDefaultsTestCases))]
+		[TestCase(ItemType.IronPickaxe)]
 		public void SetDefaults_IsCorrect(ItemType type)
 		{
 			var terrariaItem = new Terraria.Item();
@@ -160,8 +136,8 @@ namespace Orion.Tests.Items
 			Assert.AreEqual(type, item.Type);
 		}
 
-		[TestCaseSource(nameof(SetPrefixTestCases))]
-		public void SetPrefix_IsCorrect(ItemPrefix prefix)
+		[TestCase(Prefix.Legendary)]
+		public void SetPrefix_IsCorrect(Prefix prefix)
 		{
 			var terrariaItem = new Terraria.Item();
 			terrariaItem.SetDefaults(1);
@@ -169,7 +145,7 @@ namespace Orion.Tests.Items
 
 			item.SetPrefix(prefix);
 
-			Assert.AreNotEqual(ItemPrefix.None, item.Prefix, "Some prefix should have been set.");
+			Assert.AreNotEqual(Prefix.None, item.Prefix, "Some prefix should have been set.");
 		}
 	}
 }

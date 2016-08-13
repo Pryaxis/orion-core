@@ -1,7 +1,7 @@
 ﻿namespace Orion.Projectiles
 {
 	/// <summary>
-	/// Specifies the type of an <see cref="IProjectile"/> instance.
+	/// Specifies a projectile's type.
 	/// </summary>
 	public enum ProjectileType
 	{

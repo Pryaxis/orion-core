@@ -1,9 +1,9 @@
 ﻿namespace Orion.Items
 {
 	/// <summary>
-	/// Specifies the prefix of an <see cref="IItem"/> instance.
+	/// Specifies an item's prefix.
 	/// </summary>
-	public enum ItemPrefix
+	public enum Prefix
 	{
 #pragma warning disable 1591
 		Adept = 27,

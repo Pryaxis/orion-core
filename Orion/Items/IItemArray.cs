@@ -8,7 +8,7 @@ namespace Orion.Items
 	public interface IItemArray
 	{
 		/// <summary>
-		/// Gets or sets the <see cref="IItem"/> instance at the specified index in the array.
+		/// Gets or sets the item at the specified index in the array.
 		/// </summary>
 		/// <param name="index">The index.</param>
 		/// <exception cref="ArgumentOutOfRangeException">

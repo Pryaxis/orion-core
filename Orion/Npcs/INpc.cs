@@ -1,5 +1,4 @@
-﻿using System;
-using Microsoft.Xna.Framework;
+﻿using Microsoft.Xna.Framework;
 
 namespace Orion.Npcs
 {
@@ -9,14 +8,14 @@ namespace Orion.Npcs
 	public interface INpc
 	{
 		/// <summary>
-		/// Gets the NPC's damage.
+		/// Gets or sets the NPC's damage.
 		/// </summary>
-		int Damage { get; }
+		int Damage { get; set; }
 
 		/// <summary>
-		/// Gets the NPC's defense.
+		/// Gets or sets the NPC's defense.
 		/// </summary>
-		int Defense { get; }
+		int Defense { get; set; }
 
 		/// <summary>
 		/// Gets or sets the NPC's health.
@@ -24,14 +23,24 @@ namespace Orion.Npcs
 		int Health { get; set; }
 
 		/// <summary>
+		/// Gets or sets the NPC's height in pixels.
+		/// </summary>
+		int Height { get; set; }
+
+		/// <summary>
+		/// Gets or sets a value indicating whether the NPC is a boss.
+		/// </summary>
+		bool IsBoss { get; set; }
+
+		/// <summary>
 		/// Gets or sets the NPC's maximum health.
 		/// </summary>
 		int MaxHealth { get; set; }
 
 		/// <summary>
-		/// Gets the NPC's name.
+		/// Gets or sets the NPC's name.
 		/// </summary>
-		string Name { get; }
+		string Name { get; set; }
 
 		/// <summary>
 		/// Gets or sets the NPC's position in the world.
@@ -49,6 +58,11 @@ namespace Orion.Npcs
 		Vector2 Velocity { get; set; }
 
 		/// <summary>
+		/// Gets or sets the NPC's width in pixels.
+		/// </summary>
+		int Width { get; set; }
+
+		/// <summary>
 		/// Gets the wrapped Terraria NPC instance.
 		/// </summary>
 		Terraria.NPC WrappedNpc { get; }
@@ -59,7 +73,7 @@ namespace Orion.Npcs
 		void Kill();
 
 		/// <summary>
-		/// Sets the NPC's defaults using an <see cref="NpcType"/>.
+		/// Sets the NPC's defaults using the specified <see cref="NpcType"/>.
 		/// </summary>
 		/// <param name="type">The <see cref="NpcType"/>.</param>
 		void SetDefaults(NpcType type);

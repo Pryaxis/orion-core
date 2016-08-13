@@ -9,16 +9,38 @@ namespace Orion.Npcs
 	public class Npc : INpc
 	{
 		/// <inheritdoc/>
-		public int Damage => WrappedNpc.damage;
+		public int Damage
+		{
+			get { return WrappedNpc.damage; }
+			set { WrappedNpc.damage = value; }
+		}
 
 		/// <inheritdoc/>
-		public int Defense => WrappedNpc.defense;
+		public int Defense
+		{
+			get { return WrappedNpc.defense; }
+			set { WrappedNpc.defense = value; }
+		}
 
 		/// <inheritdoc/>
 		public int Health
 		{
 			get { return WrappedNpc.life; }
 			set { WrappedNpc.life = value; }
+		}
+
+		/// <inheritdoc/>
+		public int Height
+		{
+			get { return WrappedNpc.height; }
+			set { WrappedNpc.height = value; }
+		}
+
+		/// <inheritdoc/>
+		public bool IsBoss
+		{
+			get { return WrappedNpc.boss; }
+			set { WrappedNpc.boss = value; }
 		}
 
 		/// <inheritdoc/>
@@ -29,7 +51,11 @@ namespace Orion.Npcs
 		}
 
 		/// <inheritdoc/>
-		public string Name => WrappedNpc.name;
+		public string Name
+		{
+			get { return WrappedNpc.name; }
+			set { WrappedNpc.name = value; }
+		}
 
 		/// <inheritdoc/>
 		public Vector2 Position
@@ -39,13 +65,20 @@ namespace Orion.Npcs
 		}
 
 		/// <inheritdoc/>
-		public NpcType Type => (NpcType) WrappedNpc.netID;
+		public NpcType Type => (NpcType)WrappedNpc.netID;
 
 		/// <inheritdoc/>
 		public Vector2 Velocity
 		{
 			get { return WrappedNpc.velocity; }
 			set { WrappedNpc.velocity = value; }
+		}
+
+		/// <inheritdoc/>
+		public int Width
+		{
+			get { return WrappedNpc.width; }
+			set { WrappedNpc.width = value; }
 		}
 
 		/// <inheritdoc/>

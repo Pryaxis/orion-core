@@ -9,7 +9,7 @@ using OTAPI;
 namespace Orion.Items
 {
 	/// <summary>
-	/// Manages <see cref="IItem"/> instances.
+	/// Manages items.
 	/// </summary>
 	[Service("Item Service", Author = "Nyx Studios")]
 	public class ItemService : SharedService, IItemService
@@ -34,7 +34,7 @@ namespace Orion.Items
 		}
 
 		/// <inheritdoc/>
-		public IItem CreateItem(ItemType type, int stackSize = 1, ItemPrefix prefix = ItemPrefix.None)
+		public IItem CreateItem(ItemType type, int stackSize = 1, Prefix prefix = Prefix.None)
 		{
 			var terrariaItem = new Terraria.Item();
 			var item = new Item(terrariaItem);
@@ -46,8 +46,8 @@ namespace Orion.Items
 
 		/// <inheritdoc/>
 		/// <remarks>
-		/// The <see cref="IItem"/> instances are cached in an array. Calling this method multiple times will result
-		/// in the same <see cref="IItem"/> instances as long as Terraria's item array remains unchanged.
+		/// The items are cached in an array. Calling this method multiple times will result in the same instances as
+		/// long as Terraria's item array remains unchanged.
 		/// </remarks>
 		public IEnumerable<IItem> FindItems(Predicate<IItem> predicate = null)
 		{
@@ -64,7 +64,7 @@ namespace Orion.Items
 		}
 
 		/// <inheritdoc/>
-		public IItem SpawnItem(ItemType type, Vector2 position, int stackSize = 1, ItemPrefix prefix = ItemPrefix.None)
+		public IItem SpawnItem(ItemType type, Vector2 position, int stackSize = 1, Prefix prefix = Prefix.None)
 		{
 			int index = Terraria.Item.NewItem(
 				(int)position.X, (int)position.Y, 0, 0, (int)type, stackSize, pfix: (int)prefix);

@@ -17,7 +17,39 @@ namespace Orion.Items
 		}
 
 		/// <inheritdoc/>
-		public int AxePower => WrappedItem.axe;
+		public AnimationStyle AnimationStyle
+		{
+			get { return (AnimationStyle)WrappedItem.useStyle; }
+			set { WrappedItem.useStyle = (int)value; }
+		}
+
+		/// <inheritdoc/>
+		public int AnimationTime
+		{
+			get { return WrappedItem.useAnimation; }
+			set { WrappedItem.useAnimation = value; }
+		}
+
+		/// <inheritdoc/>
+		public int AxePower
+		{
+			get { return WrappedItem.axe; }
+			set { WrappedItem.axe = value; }
+		}
+
+		/// <inheritdoc/>
+		public int BaitPower
+		{
+			get { return WrappedItem.bait; }
+			set { WrappedItem.bait = value; }
+		}
+
+		/// <inheritdoc/>
+		public bool CanAutoReuse
+		{
+			get { return WrappedItem.autoReuse; }
+			set { WrappedItem.autoReuse = value; }
+		}
 
 		/// <inheritdoc/>
 		public Color Color
@@ -34,13 +66,66 @@ namespace Orion.Items
 		}
 
 		/// <inheritdoc/>
-		public int HammerPower => WrappedItem.hammer;
+		public int FishingPower
+		{
+			get { return WrappedItem.fishingPole; }
+			set { WrappedItem.fishingPole = value; }
+		}
+
+		/// <inheritdoc/>
+		public float GraphicalScale
+		{
+			get { return WrappedItem.scale; }
+			set { WrappedItem.scale = value; }
+		}
+
+		/// <inheritdoc/>
+		public int HammerPower
+		{
+			get { return WrappedItem.hammer; }
+			set { WrappedItem.hammer = value; }
+		}
 
 		/// <inheritdoc/>
 		public int Height
 		{
 			get { return WrappedItem.height; }
 			set { WrappedItem.height = value; }
+		}
+
+		/// <inheritdoc/>
+		public bool IsAccessory
+		{
+			get { return WrappedItem.accessory; }
+			set { WrappedItem.accessory = value; }
+		}
+
+		/// <inheritdoc/>
+		public bool IsMagicWeapon
+		{
+			get { return WrappedItem.magic; }
+			set { WrappedItem.magic = value; }
+		}
+
+		/// <inheritdoc/>
+		public bool IsMeleeWeapon
+		{
+			get { return WrappedItem.melee; }
+			set { WrappedItem.melee = value; }
+		}
+
+		/// <inheritdoc/>
+		public bool IsRangedWeapon
+		{
+			get { return WrappedItem.ranged; }
+			set { WrappedItem.ranged = value; }
+		}
+
+		/// <inheritdoc/>
+		public bool IsThrownWeapon
+		{
+			get { return WrappedItem.thrown; }
+			set { WrappedItem.thrown = value; }
 		}
 
 		/// <inheritdoc/>
@@ -51,13 +136,32 @@ namespace Orion.Items
 		}
 
 		/// <inheritdoc/>
-		public int MaxStackSize => WrappedItem.maxStack;
+		public int ManaCost
+		{
+			get { return WrappedItem.mana; }
+			set { WrappedItem.mana = value; }
+		}
 
 		/// <inheritdoc/>
-		public string Name => WrappedItem.name;
+		public int MaxStackSize
+		{
+			get { return WrappedItem.maxStack; }
+			set { WrappedItem.maxStack = value; }
+		}
 
 		/// <inheritdoc/>
-		public int PickaxePower => WrappedItem.pick;
+		public string Name
+		{
+			get { return WrappedItem.name; }
+			set { WrappedItem.name = value; }
+		}
+
+		/// <inheritdoc/>
+		public int PickaxePower
+		{
+			get { return WrappedItem.pick; }
+			set { WrappedItem.pick = value; }
+		}
 
 		/// <inheritdoc/>
 		public Vector2 Position
@@ -67,7 +171,7 @@ namespace Orion.Items
 		}
 
 		/// <inheritdoc/>
-		public ItemPrefix Prefix => (ItemPrefix) WrappedItem.prefix;
+		public Prefix Prefix => (Prefix)WrappedItem.prefix;
 
 		/// <inheritdoc/>
 		public float ProjectileSpeed
@@ -79,15 +183,15 @@ namespace Orion.Items
 		/// <inheritdoc/>
 		public ProjectileType ProjectileType
 		{
-			get { return (ProjectileType) WrappedItem.shoot; }
-			set { WrappedItem.shoot = (int) value; }
+			get { return (ProjectileType)WrappedItem.shoot; }
+			set { WrappedItem.shoot = (int)value; }
 		}
 
 		/// <inheritdoc/>
-		public float Scale
+		public Rarity Rarity
 		{
-			get { return WrappedItem.scale; }
-			set { WrappedItem.scale = value; }
+			get { return (Rarity)WrappedItem.rare; }
+			set { WrappedItem.rare = (int)value; }
 		}
 
 		/// <inheritdoc/>
@@ -98,20 +202,13 @@ namespace Orion.Items
 		}
 
 		/// <inheritdoc/>
-		public ItemType Type => (ItemType) WrappedItem.netID;
+		public ItemType Type => (ItemType)WrappedItem.netID;
 
 		/// <inheritdoc/>
 		public int UseAmmoType
 		{
 			get { return WrappedItem.useAmmo; }
 			set { WrappedItem.useAmmo = value; }
-		}
-
-		/// <inheritdoc/>
-		public int UseAnimationTime
-		{
-			get { return WrappedItem.useAnimation; }
-			set { WrappedItem.useAnimation = value; }
 		}
 
 		/// <inheritdoc/>
@@ -161,6 +258,6 @@ namespace Orion.Items
 		/// If <paramref name="prefix"/> is not applicable to the item type, then a randomly chosen prefix will be
 		/// used.
 		/// </remarks>
-		public void SetPrefix(ItemPrefix prefix) => WrappedItem.Prefix((int)prefix);
+		public void SetPrefix(Prefix prefix) => WrappedItem.Prefix((int)prefix);
 	}
 }

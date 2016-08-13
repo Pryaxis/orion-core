@@ -9,7 +9,7 @@ namespace Orion.Tests.Projectiles
 	[TestFixture]
 	public class ProjectileTests
 	{
-		public static readonly object[] GetPropertyTestCases =
+		private static readonly object[] GetPropertyTestCases =
 		{
 			new object[] {nameof(Projectile.Damage), nameof(Terraria.Projectile.damage), 100},
 			new object[] {nameof(Projectile.Height), nameof(Terraria.Projectile.height), 100},
@@ -25,7 +25,7 @@ namespace Orion.Tests.Projectiles
 			new object[] {nameof(Projectile.Width), nameof(Terraria.Projectile.width), 100}
 		};
 
-		public static readonly object[] SetPropertyTestCases =
+		private static readonly object[] SetPropertyTestCases =
 		{
 			new object[] {nameof(Projectile.Damage), nameof(Terraria.Projectile.damage), 100},
 			new object[] {nameof(Projectile.Height), nameof(Terraria.Projectile.height), 100},
@@ -39,9 +39,7 @@ namespace Orion.Tests.Projectiles
 			new object[] {nameof(Projectile.Position), nameof(Terraria.Projectile.position), Vector2.One},
 			new object[] {nameof(Projectile.Width), nameof(Terraria.Projectile.width), 100}
 		};
-
-		public static readonly object[] SetDefaultsTestCases = {ProjectileType.WoodenArrowFriendly};
-
+		
 		[Test]
 		public void Constructor_NullTerrariaProjectile_ThrowsArgumentNullException()
 		{
@@ -91,7 +89,18 @@ namespace Orion.Tests.Projectiles
 			Assert.AreSame(terrariaProjectile, actualProjectile);
 		}
 
-		[TestCaseSource(nameof(SetDefaultsTestCases))]
+		[Test]
+		public void Kill_IsCorrect()
+		{
+			var terrariaProjectile = new Terraria.Projectile {active = true};
+			var projectile = new Projectile(terrariaProjectile);
+
+			projectile.Kill();
+
+			Assert.IsFalse(terrariaProjectile.active);
+		}
+
+		[TestCase(ProjectileType.Amarok)]
 		public void SetDefaults_IsCorrect(ProjectileType type)
 		{
 			var terrariaProjectile = new Terraria.Projectile();

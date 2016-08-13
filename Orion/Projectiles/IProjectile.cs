@@ -78,7 +78,12 @@ namespace Orion.Projectiles
 		Terraria.Projectile WrappedProjectile { get; }
 
 		/// <summary>
-		/// Sets the projectile's defaults using a <see cref="ProjectileType"/>.
+		/// Kills the projectile.
+		/// </summary>
+		void Kill();
+
+		/// <summary>
+		/// Sets the projectile's defaults using the specified <see cref="ProjectileType"/>.
 		/// </summary>
 		/// <param name="type">The <see cref="ProjectileType"/>.</param>
 		void SetDefaults(ProjectileType type);
