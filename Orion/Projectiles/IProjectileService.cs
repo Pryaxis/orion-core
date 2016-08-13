@@ -6,25 +6,35 @@ using Orion.Projectiles.Events;
 namespace Orion.Projectiles
 {
 	/// <summary>
-	/// Provides a mechanism for managing <see cref="IProjectile"/> instances.
+	/// Provides a mechanism for managing projectiles.
 	/// </summary>
 	public interface IProjectileService : ISharedService
 	{
 		/// <summary>
-		/// Occurs after a <see cref="IProjectile"/> instance has had its defaults set.
+		/// Occurs after a projectile was killed.
+		/// </summary>
+		event EventHandler<ProjectileKilledEventArgs> ProjectileKilled;
+
+		/// <summary>
+		/// Occurs after a projectile is being killed.
+		/// </summary>
+		event EventHandler<ProjectileKillingEventArgs> ProjectileKilling;
+
+		/// <summary>
+		/// Occurs after a projectile has had its defaults set.
 		/// </summary>
 		event EventHandler<ProjectileSetDefaultsEventArgs> ProjectileSetDefaults;
 
 		/// <summary>
-		/// Occurs when a <see cref="IProjectile"/> instance is having its defaults set.
+		/// Occurs when a projectile is having its defaults set.
 		/// </summary>
 		event EventHandler<ProjectileSettingDefaultsEventArgs> ProjectileSettingDefaults;
 
 		/// <summary>
-		/// Returns all <see cref="IProjectile"/> instances in the world, optionally matching a predicate.
+		/// Returns all projectiles in the world, optionally matching a predicate.
 		/// </summary>
 		/// <param name="predicate">The predicate.</param>
-		/// <returns>An enumerable collection of <see cref="IProjectile"/> instances.</returns>
+		/// <returns>An enumerable collection of projectiles.</returns>
 		IEnumerable<IProjectile> FindProjectiles(Predicate<IProjectile> predicate = null);
 	}
 }

@@ -82,6 +82,8 @@
     <Compile Include="Items\ItemTests.cs" />
     <Compile Include="Npcs\NpcTests.cs" />
     <Compile Include="Players\PlayerTests.cs" />
+    <Compile Include="Projectiles\Events\ProjectileKillingEventArgsTests.cs" />
+    <Compile Include="Projectiles\Events\ProjectileKilledEventArgsTests.cs" />
     <Compile Include="Projectiles\ProjectileTests.cs" />
     <Compile Include="Items\Events\ItemSetDefaultsEventArgsTests.cs" />
     <Compile Include="Items\Events\ItemSettingDefaultsEventArgsTests.cs" />

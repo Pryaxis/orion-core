@@ -8,12 +8,18 @@ using OTAPI;
 namespace Orion.Projectiles
 {
 	/// <summary>
-	/// Manages <see cref="IProjectile"/> instances.
+	/// Manages projectiles;
 	/// </summary>
 	[Service("Projectile Service", Author = "Nyx Studios")]
 	public class ProjectileService : SharedService, IProjectileService
 	{
 		private readonly IProjectile[] _projectiles;
+
+		/// <inheritdoc/>
+		public event EventHandler<ProjectileKilledEventArgs> ProjectileKilled;
+
+		/// <inheritdoc/>
+		public event EventHandler<ProjectileKillingEventArgs> ProjectileKilling;
 
 		/// <inheritdoc/>
 		public event EventHandler<ProjectileSetDefaultsEventArgs> ProjectileSetDefaults;
@@ -28,15 +34,16 @@ namespace Orion.Projectiles
 		public ProjectileService(Orion orion) : base(orion)
 		{
 			_projectiles = new IProjectile[Terraria.Main.projectile.Length];
+			Hooks.Projectile.PostKilled = InvokeProjectileKilled;
+			Hooks.Projectile.PreKill = InvokeProjectileKilling;
 			Hooks.Projectile.PostSetDefaultsById = InvokeProjectileSetDefaults;
 			Hooks.Projectile.PreSetDefaultsById = InvokeProjectileSettingDefaults;
 		}
 
 		/// <inheritdoc/>
 		/// <remarks>
-		/// The <see cref="IProjectile"/> instances are cached in an array. Calling this method multiple times will
-		/// result in the same <see cref="IProjectile"/> instances as long as Terraria's projectile array remains
-		/// unchanged.
+		/// The projectiles are cached in an array. Calling this method multiple times will result in the same
+		/// instances as long as Terraria's projectile array remains unchanged.
 		/// </remarks>
 		public IEnumerable<IProjectile> FindProjectiles(Predicate<IProjectile> predicate = null)
 		{
@@ -50,6 +57,21 @@ namespace Orion.Projectiles
 				projectiles.Add(_projectiles[i]);
 			}
 			return projectiles.Where(p => p.WrappedProjectile.active && (predicate?.Invoke(p) ?? true));
+		}
+
+		private void InvokeProjectileKilled(Terraria.Projectile terrariaProjectile)
+		{
+			var projectile = new Projectile(terrariaProjectile);
+			var args = new ProjectileKilledEventArgs(projectile);
+			ProjectileKilled?.Invoke(this, args);
+		}
+
+		private HookResult InvokeProjectileKilling(Terraria.Projectile terrariaProjectile)
+		{
+			var projectile = new Projectile(terrariaProjectile);
+			var args = new ProjectileKillingEventArgs(projectile);
+			ProjectileKilling?.Invoke(this, args);
+			return args.Handled ? HookResult.Cancel : HookResult.Continue;
 		}
 
 		private void InvokeProjectileSetDefaults(Terraria.Projectile terrariaProjectile, int type)

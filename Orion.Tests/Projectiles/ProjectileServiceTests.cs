@@ -11,14 +11,71 @@ namespace Orion.Tests.Projectiles
 	[TestFixture]
 	public class ProjectileServiceTests
 	{
-		private static readonly object[] ProjectileSetDefaultsTestCases = {ProjectileType.AdamantiteChainsaw};
+		public static readonly Predicate<IProjectile>[] FindTestCases = {projectile => projectile.Position.X <= 10};
 
-		private static readonly object[] ProjectileSettingDefaultsTestCases = {ProjectileType.AdamantiteChainsaw};
+		[Test]
+		public void ProjectileKilled_IsCorrect()
+		{
+			using (var orion = new Orion())
+			{
+				var projectileService = orion.GetService<ProjectileService>();
+				var terrariaProjectile = new Terraria.Projectile();
+				var eventOccurred = false;
+				EventHandler<ProjectileKilledEventArgs> handler = (sender, e) =>
+				{
+					eventOccurred = true;
+					Assert.AreEqual(terrariaProjectile, e.Projectile.WrappedProjectile);
+				};
+				projectileService.ProjectileKilled += handler;
 
-		private static readonly Predicate<IProjectile>[] FindTestCases = {projectile => projectile.Position.X <= 10};
+				terrariaProjectile.Kill();
+				projectileService.ProjectileKilled -= handler;
 
-		[TestCaseSource(nameof(ProjectileSetDefaultsTestCases))]
-		public void ProjectileSetDefaults_IsCorrect(ProjectileType type)
+				Assert.IsTrue(eventOccurred);
+			}
+		}
+
+		[Test]
+		public void ProjectileKilling_IsCorrect()
+		{
+			using (var orion = new Orion())
+			{
+				var projectileService = orion.GetService<ProjectileService>();
+				var terrariaProjectile = new Terraria.Projectile();
+				var eventOccurred = false;
+				EventHandler<ProjectileKillingEventArgs> handler = (sender, e) =>
+				{
+					eventOccurred = true;
+					Assert.AreEqual(terrariaProjectile, e.Projectile.WrappedProjectile);
+				};
+				projectileService.ProjectileKilling += handler;
+
+				terrariaProjectile.Kill();
+				projectileService.ProjectileKilling -= handler;
+
+				Assert.IsTrue(eventOccurred);
+			}
+		}
+		
+		[Test]
+		public void ProjectileKilling_Handled_StopsKill()
+		{
+			using (var orion = new Orion())
+			{
+				var projectileService = orion.GetService<ProjectileService>();
+				var terrariaProjectile = new Terraria.Projectile {active = true};
+				EventHandler<ProjectileKillingEventArgs> handler = (sender, e) => e.Handled = true;
+				projectileService.ProjectileKilling += handler;
+				
+				terrariaProjectile.Kill();
+				projectileService.ProjectileKilling -= handler;
+
+				Assert.IsTrue(terrariaProjectile.active, "Kill should not have occurred.");
+			}
+		}
+
+		[Test]
+		public void ProjectileSetDefaults_IsCorrect()
 		{
 			using (var orion = new Orion())
 			{
@@ -32,14 +89,14 @@ namespace Orion.Tests.Projectiles
 				};
 				projectileService.ProjectileSetDefaults += handler;
 
-				terrariaProjectile.SetDefaults((int)type);
+				terrariaProjectile.SetDefaults(0);
 				projectileService.ProjectileSetDefaults -= handler;
 
 				Assert.IsTrue(eventOccurred);
 			}
 		}
 
-		[TestCaseSource(nameof(ProjectileSettingDefaultsTestCases))]
+		[TestCase(ProjectileType.AdamantiteChainsaw)]
 		public void ProjectileSettingDefaults_IsCorrect(ProjectileType type)
 		{
 			using (var orion = new Orion())
@@ -62,7 +119,7 @@ namespace Orion.Tests.Projectiles
 			}
 		}
 
-		[TestCaseSource(nameof(ProjectileSettingDefaultsTestCases))]
+		[TestCase(ProjectileType.AdamantiteChainsaw)]
 		public void ProjectileSettingDefaults_ModifiesType(ProjectileType newType)
 		{
 			using (var orion = new Orion())
@@ -79,8 +136,8 @@ namespace Orion.Tests.Projectiles
 			}
 		}
 
-		[TestCaseSource(nameof(ProjectileSettingDefaultsTestCases))]
-		public void ProjectileSettingDefaults_Handled_StopsSetDefaults(ProjectileType type)
+		[Test]
+		public void ProjectileSettingDefaults_Handled_StopsSetDefaults()
 		{
 			using (var orion = new Orion())
 			{
@@ -89,7 +146,7 @@ namespace Orion.Tests.Projectiles
 				EventHandler<ProjectileSettingDefaultsEventArgs> handler = (sender, e) => e.Handled = true;
 				projectileService.ProjectileSettingDefaults += handler;
 
-				terrariaProjectile.SetDefaults((int)type);
+				terrariaProjectile.SetDefaults(1);
 				projectileService.ProjectileSettingDefaults -= handler;
 
 				Assert.AreEqual(0, terrariaProjectile.type, "SetDefaults should not have occurred.");
@@ -118,28 +175,28 @@ namespace Orion.Tests.Projectiles
 			}
 		}
 
-		[TestCase(1)]
-		public void FindProjectiles_MultipleTimes_ReturnsSameInstance(int populate)
+		[Test]
+		public void FindProjectiles_MultipleTimes_ReturnsSameInstance()
 		{
 			using (var orion = new Orion())
 			{
 				var projectileService = orion.GetService<ProjectileService>();
 				for (var i = 0; i < Terraria.Main.projectile.Length; ++i)
 				{
-					Terraria.Main.projectile[i] = new Terraria.Projectile {active = i < populate};
+					Terraria.Main.projectile[i] = new Terraria.Projectile {active = i < 100};
 				}
 
 				List<IProjectile> projectiles = projectileService.FindProjectiles().ToList();
 				List<IProjectile> projectiles2 = projectileService.FindProjectiles().ToList();
 
-				for (var i = 0; i < populate; ++i)
+				for (var i = 0; i < 100; ++i)
 				{
 					Assert.AreSame(projectiles[i], projectiles2[i]);
 				}
 			}
 		}
 
-		[Test, TestCaseSource(nameof(FindTestCases))]
+		[TestCaseSource(nameof(FindTestCases))]
 		public void FindProjectiles_IsCorrect(Predicate<IProjectile> predicate)
 		{
 			using (var orion = new Orion())

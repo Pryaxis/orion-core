@@ -14,13 +14,16 @@ namespace Orion.Tests.Projectiles
 			new object[] {nameof(Projectile.Damage), nameof(Terraria.Projectile.damage), 100},
 			new object[] {nameof(Projectile.IsHostile), nameof(Terraria.Projectile.hostile), true},
 			new object[] {nameof(Projectile.Name), nameof(Terraria.Projectile.name), "TEST"},
+			new object[] {nameof(Projectile.Type), nameof(Terraria.Projectile.type), ProjectileType.Amarok},
 			new object[] {nameof(Projectile.Position), nameof(Terraria.Projectile.position), Vector2.One}
 		};
 
 		private static readonly object[] SetPropertyTestCases =
 		{
-			new object[] {nameof(Projectile.Position), nameof(Terraria.Projectile.position), Vector2.One},
-			new object[] {nameof(Projectile.Velocity), nameof(Terraria.Projectile.velocity), Vector2.One}
+			new object[] {nameof(Projectile.Damage), nameof(Terraria.Projectile.damage), 100},
+			new object[] {nameof(Projectile.IsHostile), nameof(Terraria.Projectile.hostile), true},
+			new object[] {nameof(Projectile.Name), nameof(Terraria.Projectile.name), "TEST"},
+			new object[] {nameof(Projectile.Position), nameof(Terraria.Projectile.position), Vector2.One}
 		};
 
 		private static readonly object[] GetTypeTestCases = {ProjectileType.WoodenArrowFriendly};
@@ -39,7 +42,8 @@ namespace Orion.Tests.Projectiles
 		{
 			var terrariaProjectile = new Terraria.Projectile();
 			FieldInfo terrariaProjectileField = typeof(Terraria.Projectile).GetField(terrariaProjectileFieldName);
-			terrariaProjectileField.SetValue(terrariaProjectile, value);
+			terrariaProjectileField.SetValue(
+				terrariaProjectile, Convert.ChangeType(value, terrariaProjectileField.FieldType));
 			var projectile = new Projectile(terrariaProjectile);
 			PropertyInfo projectileProperty = typeof(Projectile).GetProperty(projectilePropertyName);
 
@@ -59,18 +63,9 @@ namespace Orion.Tests.Projectiles
 
 			projectileProperty.SetValue(projectile, value);
 
-			Assert.AreEqual(value, terrariaProjectileField.GetValue(terrariaProjectile));
-		}
-
-		[TestCaseSource(nameof(GetTypeTestCases))]
-		public void GetType_IsCorrect(ProjectileType type)
-		{
-			var terrariaProjectile = new Terraria.Projectile {type = (int)type};
-			var projectile = new Projectile(terrariaProjectile);
-
-			ProjectileType actualType = projectile.Type;
-
-			Assert.AreEqual(type, actualType);
+			Assert.AreEqual(
+				Convert.ChangeType(value, terrariaProjectileField.FieldType),
+				terrariaProjectileField.GetValue(terrariaProjectile));
 		}
 
 		[Test]

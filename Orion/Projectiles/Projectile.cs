@@ -9,13 +9,25 @@ namespace Orion.Projectiles
 	public class Projectile : IProjectile
 	{
 		/// <inheritdoc/>
-		public int Damage => WrappedProjectile.damage;
+		public int Damage
+		{
+			get { return WrappedProjectile.damage; }
+			set { WrappedProjectile.damage = value; }
+		}
 
 		/// <inheritdoc/>
-		public bool IsHostile => WrappedProjectile.hostile;
+		public bool IsHostile
+		{
+			get { return WrappedProjectile.hostile; }
+			set { WrappedProjectile.hostile = value; }
+		}
 
 		/// <inheritdoc/>
-		public string Name => WrappedProjectile.name;
+		public string Name
+		{
+			get { return WrappedProjectile.name; }
+			set { WrappedProjectile.name = value; }
+		}
 
 		/// <inheritdoc/>
 		public Vector2 Position

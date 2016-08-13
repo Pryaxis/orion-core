@@ -8,19 +8,19 @@ namespace Orion.Projectiles
 	public interface IProjectile
 	{
 		/// <summary>
-		/// Gets the projectile's damage.
+		/// Gets or sets the projectile's damage.
 		/// </summary>
-		int Damage { get; }
+		int Damage { get; set; }
 
 		/// <summary>
-		/// Gets a value indicating whether the projectile is hostile.
+		/// Gets or sets a value indicating whether the projectile is hostile.
 		/// </summary>
-		bool IsHostile { get; }
+		bool IsHostile { get; set; }
 
 		/// <summary>
-		/// Gets the projectile's name.
+		/// Gets or sets the projectile's name.
 		/// </summary>
-		string Name { get; }
+		string Name { get; set; }
 
 		/// <summary>
 		/// Gets or sets the projectile's position in the world.
