@@ -12,13 +12,24 @@ namespace Orion.Players
 		private IItem _trashItem;
 
 		/// <inheritdoc/>
-		public int Defense => WrappedPlayer.statDefense;
+		public int Defense
+		{
+			get { return WrappedPlayer.statDefense; }
+			set { WrappedPlayer.statDefense = value; }
+		}
 
 		/// <inheritdoc/>
 		public IItemArray Dyes { get; }
 
 		/// <inheritdoc/>
 		public IItemArray Equips { get; }
+
+		/// <inheritdoc/>
+		public bool HasPvpEnabled
+		{
+			get { return WrappedPlayer.hostile; }
+			set { WrappedPlayer.hostile = value; }
+		}
 
 		/// <inheritdoc/>
 		public int Health
@@ -28,13 +39,41 @@ namespace Orion.Players
 		}
 
 		/// <inheritdoc/>
+		public int Height
+		{
+			get { return WrappedPlayer.height; }
+			set { WrappedPlayer.height = value; }
+		}
+
+		/// <inheritdoc/>
 		public IItemArray Inventory { get; }
+
+		/// <inheritdoc/>
+		public int MagicCritBonus
+		{
+			get { return WrappedPlayer.magicCrit; }
+			set { WrappedPlayer.magicCrit = value; }
+		}
+
+		/// <inheritdoc/>
+		public float MagicDamageMultiplier
+		{
+			get { return WrappedPlayer.magicDamage; }
+			set { WrappedPlayer.magicDamage = value; }
+		}
 
 		/// <inheritdoc/>
 		public int Mana
 		{
 			get { return WrappedPlayer.statMana; }
 			set { WrappedPlayer.statMana = value; }
+		}
+
+		/// <inheritdoc/>
+		public float ManaCostMultiplier
+		{
+			get { return WrappedPlayer.manaCost; }
+			set { WrappedPlayer.manaCost = value; }
 		}
 
 		/// <inheritdoc/>
@@ -52,13 +91,52 @@ namespace Orion.Players
 		}
 
 		/// <inheritdoc/>
+		public int MaxMinions
+		{
+			get { return WrappedPlayer.maxMinions; }
+			set { WrappedPlayer.maxMinions = value; }
+		}
+
+		/// <inheritdoc/>
+		public int MeleeCritBonus
+		{
+			get { return WrappedPlayer.meleeCrit; }
+			set { WrappedPlayer.meleeCrit = value; }
+		}
+
+		/// <inheritdoc/>
+		public float MeleeDamageMultiplier
+		{
+			get { return WrappedPlayer.meleeDamage; }
+			set { WrappedPlayer.meleeDamage = value; }
+		}
+
+		/// <inheritdoc/>
+		public float MinionDamageMultiplier
+		{
+			get { return WrappedPlayer.minionDamage; }
+			set { WrappedPlayer.minionDamage = value; }
+		}
+
+		/// <inheritdoc/>
 		public IItemArray MiscDyes { get; }
 
 		/// <inheritdoc/>
 		public IItemArray MiscEquips { get; }
 
 		/// <inheritdoc/>
-		public string Name => WrappedPlayer.name;
+		public float MovementSpeed
+		{
+			get { return WrappedPlayer.moveSpeed; }
+			set { WrappedPlayer.moveSpeed = value; }
+		}
+
+		/// <inheritdoc/>
+		public string Name
+		{
+			get { return WrappedPlayer.name; }
+			set { WrappedPlayer.name = value; }
+		}
 
 		/// <inheritdoc/>
 		public IItemArray PiggyBank { get; }
@@ -71,6 +149,20 @@ namespace Orion.Players
 		}
 
 		/// <inheritdoc/>
+		public int RangedCritBonus
+		{
+			get { return WrappedPlayer.rangedCrit; }
+			set { WrappedPlayer.rangedCrit = value; }
+		}
+
+		/// <inheritdoc/>
+		public float RangedDamageMultiplier
+		{
+			get { return WrappedPlayer.rangedDamage; }
+			set { WrappedPlayer.rangedDamage = value; }
+		}
+
+		/// <inheritdoc/>
 		public IItemArray Safe { get; }
 
 		/// <inheritdoc/>
@@ -79,6 +171,20 @@ namespace Orion.Players
 		/// <see cref="IItem"/> instance as long as the player's selected item remains unchanged.
 		/// </remarks>
 		public IItem SelectedItem => Inventory[WrappedPlayer.selectedItem];
+
+		/// <inheritdoc/>
+		public int ThrownCritBonus
+		{
+			get { return WrappedPlayer.thrownCrit; }
+			set { WrappedPlayer.thrownCrit = value; }
+		}
+
+		/// <inheritdoc/>
+		public float ThrownDamageMultiplier
+		{
+			get { return WrappedPlayer.thrownDamage; }
+			set { WrappedPlayer.thrownDamage = value; }
+		}
 
 		/// <inheritdoc/>
 		/// <remarks>
@@ -107,6 +213,13 @@ namespace Orion.Players
 		{
 			get { return WrappedPlayer.velocity; }
 			set { WrappedPlayer.velocity = value; }
+		}
+
+		/// <inheritdoc/>
+		public int Width
+		{
+			get { return WrappedPlayer.width; }
+			set { WrappedPlayer.width = value; }
 		}
 
 		/// <inheritdoc/>

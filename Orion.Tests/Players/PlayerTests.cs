@@ -10,25 +10,58 @@ namespace Orion.Tests.Players
 	[TestFixture]
 	public class PlayerTests
 	{
-		private static readonly object[] GetPropertyTestCases =
+		public static readonly object[] GetPropertyTestCases =
 		{
 			new object[] {nameof(Player.Defense), nameof(Terraria.Player.statDefense), 100},
+			new object[] {nameof(Player.HasPvpEnabled), nameof(Terraria.Player.hostile), true},
 			new object[] {nameof(Player.Health), nameof(Terraria.Player.statLife), 100},
+			new object[] {nameof(Player.Height), nameof(Terraria.Player.height), 100},
+			new object[] {nameof(Player.MagicCritBonus), nameof(Terraria.Player.magicCrit), 100},
+			new object[] {nameof(Player.MagicDamageMultiplier), nameof(Terraria.Player.magicDamage), 2.0f},
+			new object[] {nameof(Player.ManaCostMultiplier), nameof(Terraria.Player.manaCost), 2.0f},
+			new object[] {nameof(Player.MaxMinions), nameof(Terraria.Player.maxMinions), 100},
 			new object[] {nameof(Player.MaxHealth), nameof(Terraria.Player.statLifeMax), 100},
 			new object[] {nameof(Player.Mana), nameof(Terraria.Player.statMana), 100},
 			new object[] {nameof(Player.MaxMana), nameof(Terraria.Player.statManaMax), 100},
+			new object[] {nameof(Player.MeleeCritBonus), nameof(Terraria.Player.meleeCrit), 100},
+			new object[] {nameof(Player.MeleeDamageMultiplier), nameof(Terraria.Player.meleeDamage), 2.0f},
+			new object[] {nameof(Player.MinionDamageMultiplier), nameof(Terraria.Player.minionDamage), 2.0f},
+			new object[] {nameof(Player.MovementSpeed), nameof(Terraria.Player.moveSpeed), 2.0f},
 			new object[] {nameof(Player.Name), nameof(Terraria.Player.name), "TEST"},
 			new object[] {nameof(Player.Position), nameof(Terraria.Player.position), Vector2.One},
+			new object[] {nameof(Player.RangedCritBonus), nameof(Terraria.Player.rangedCrit), 100},
+			new object[] {nameof(Player.RangedDamageMultiplier), nameof(Terraria.Player.rangedDamage), 2.0f},
+			new object[] {nameof(Player.ThrownCritBonus), nameof(Terraria.Player.thrownCrit), 100},
+			new object[] {nameof(Player.ThrownDamageMultiplier), nameof(Terraria.Player.thrownDamage), 2.0f},
+			new object[] {nameof(Player.Velocity), nameof(Terraria.Player.velocity), Vector2.One},
+			new object[] {nameof(Player.Width), nameof(Terraria.Player.width), 100}
 		};
 
-		private static readonly object[] SetPropertyTestCases =
+		public static readonly object[] SetPropertyTestCases =
 		{
+			new object[] {nameof(Player.Defense), nameof(Terraria.Player.statDefense), 100},
+			new object[] {nameof(Player.HasPvpEnabled), nameof(Terraria.Player.hostile), true},
 			new object[] {nameof(Player.Health), nameof(Terraria.Player.statLife), 100},
+			new object[] {nameof(Player.Height), nameof(Terraria.Player.height), 100},
+			new object[] {nameof(Player.MagicCritBonus), nameof(Terraria.Player.magicCrit), 100},
+			new object[] {nameof(Player.MagicDamageMultiplier), nameof(Terraria.Player.magicDamage), 2.0f},
+			new object[] {nameof(Player.ManaCostMultiplier), nameof(Terraria.Player.manaCost), 2.0f},
+			new object[] {nameof(Player.MaxMinions), nameof(Terraria.Player.maxMinions), 100},
 			new object[] {nameof(Player.MaxHealth), nameof(Terraria.Player.statLifeMax), 100},
 			new object[] {nameof(Player.Mana), nameof(Terraria.Player.statMana), 100},
 			new object[] {nameof(Player.MaxMana), nameof(Terraria.Player.statManaMax), 100},
+			new object[] {nameof(Player.MeleeCritBonus), nameof(Terraria.Player.meleeCrit), 100},
+			new object[] {nameof(Player.MeleeDamageMultiplier), nameof(Terraria.Player.meleeDamage), 2.0f},
+			new object[] {nameof(Player.MinionDamageMultiplier), nameof(Terraria.Player.minionDamage), 2.0f},
+			new object[] {nameof(Player.MovementSpeed), nameof(Terraria.Player.moveSpeed), 2.0f},
+			new object[] {nameof(Player.Name), nameof(Terraria.Player.name), "TEST"},
 			new object[] {nameof(Player.Position), nameof(Terraria.Player.position), Vector2.One},
-			new object[] {nameof(Player.Velocity), nameof(Terraria.Player.velocity), Vector2.One}
+			new object[] {nameof(Player.RangedCritBonus), nameof(Terraria.Player.rangedCrit), 100},
+			new object[] {nameof(Player.RangedDamageMultiplier), nameof(Terraria.Player.rangedDamage), 2.0f},
+			new object[] {nameof(Player.ThrownCritBonus), nameof(Terraria.Player.thrownCrit), 100},
+			new object[] {nameof(Player.ThrownDamageMultiplier), nameof(Terraria.Player.thrownDamage), 2.0f},
+			new object[] {nameof(Player.Velocity), nameof(Terraria.Player.velocity), Vector2.One},
+			new object[] {nameof(Player.Width), nameof(Terraria.Player.width), 100}
 		};
 
 		[Test]
