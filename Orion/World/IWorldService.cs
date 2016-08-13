@@ -35,9 +35,9 @@ namespace Orion.World
 		event EventHandler<HardmodeTileUpdatingEventArgs> HardmodeTileUpdating;
 
 		/// <summary>
-		/// Gets the world's height.
+		/// Gets or sets the world's height.
 		/// </summary>
-		int Height { get; }
+		int Height { get; set; }
 
 		/// <summary>
 		/// Gets or sets a value indicating whether it is currently a blood moon.
@@ -90,9 +90,9 @@ namespace Orion.World
 		double Time { get; set; }
 
 		/// <summary>
-		/// Gets the world's width.
+		/// Gets or sets the world's width.
 		/// </summary>
-		int Width { get; }
+		int Width { get; set; }
 
 		/// <summary>
 		/// Occurs after the world has loaded.
@@ -103,6 +103,11 @@ namespace Orion.World
 		/// Occurs when the world is loading.
 		/// </summary>
 		event EventHandler<WorldLoadingEventArgs> WorldLoading;
+
+		/// <summary>
+		/// Gets or sets the world's name.
+		/// </summary>
+		string WorldName { get; set; }
 
 		/// <summary>
 		/// Occurs after the world has saved.
@@ -121,7 +126,7 @@ namespace Orion.World
 		/// <param name="y">The y position.</param>
 		/// <exception cref="ArgumentOutOfRangeException">
 		/// <paramref name="x"/> is negative or greater than or equal to <see cref="Width"/>, or <paramref name="y"/>
-		/// is negative or greater than or equal to<see cref="Height"/>.
+		/// is negative or greater than or equal to <see cref="Height"/>.
 		/// </exception>
 		void BreakBlock(int x, int y);
 
@@ -132,7 +137,7 @@ namespace Orion.World
 		/// <param name="y">The y position.</param>
 		/// <exception cref="ArgumentOutOfRangeException">
 		/// <paramref name="x"/> is negative or greater than or equal to <see cref="Width"/>, or <paramref name="y"/>
-		/// is negative or greater than or equal to<see cref="Height"/>.
+		/// is negative or greater than or equal to <see cref="Height"/>.
 		/// </exception>
 		void BreakWall(int x, int y);
 
@@ -155,7 +160,7 @@ namespace Orion.World
 		/// <param name="color">The paint color.</param>
 		/// <exception cref="ArgumentOutOfRangeException">
 		/// <paramref name="x"/> is negative or greater than or equal to <see cref="Width"/>, or <paramref name="y"/>
-		/// is negative or greater than or equal to<see cref="Height"/>.
+		/// is negative or greater than or equal to <see cref="Height"/>.
 		/// </exception>
 		void PaintBlock(int x, int y, byte color);
 
@@ -167,7 +172,7 @@ namespace Orion.World
 		/// <param name="color">The paint color.</param>
 		/// <exception cref="ArgumentOutOfRangeException">
 		/// <paramref name="x"/> is negative or greater than or equal to <see cref="Width"/>, or <paramref name="y"/>
-		/// is negative or greater than or equal to<see cref="Height"/>.
+		/// is negative or greater than or equal to <see cref="Height"/>.
 		/// </exception>
 		void PaintWall(int x, int y, byte color);
 
@@ -180,7 +185,7 @@ namespace Orion.World
 		/// <param name="style">The style.</param>
 		/// <exception cref="ArgumentOutOfRangeException">
 		/// <paramref name="x"/> is negative or greater than or equal to <see cref="Width"/>, or <paramref name="y"/>
-		/// is negative or greater than or equal to<see cref="Height"/>.
+		/// is negative or greater than or equal to <see cref="Height"/>.
 		/// </exception>
 		void PlaceBlock(int x, int y, ushort block, int style = 0);
 
@@ -192,7 +197,7 @@ namespace Orion.World
 		/// <param name="wall">The wall type.</param>
 		/// <exception cref="ArgumentOutOfRangeException">
 		/// <paramref name="x"/> is negative or greater than or equal to <see cref="Width"/>, or <paramref name="y"/>
-		/// is negative or greater than or equal to<see cref="Height"/>.
+		/// is negative or greater than or equal to <see cref="Height"/>.
 		/// </exception>
 		void PlaceWall(int x, int y, byte wall);
 

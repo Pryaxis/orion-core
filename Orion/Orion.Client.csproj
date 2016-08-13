@@ -81,6 +81,7 @@
     <Compile Include="Framework\Service.cs" />
     <Compile Include="Framework\ServiceAttribute.cs" />
     <Compile Include="Framework\SharedService.cs" />
+    <Compile Include="Items\AnimationStyle.cs" />
     <Compile Include="Items\Events\ItemSetDefaultsEventArgs.cs" />
     <Compile Include="Items\Events\ItemSettingDefaultsEventArgs.cs" />
     <Compile Include="Items\IItem.cs" />
@@ -88,9 +89,10 @@
     <Compile Include="Items\IItemService.cs" />
     <Compile Include="Items\Item.cs" />
     <Compile Include="Items\ItemArray.cs" />
-    <Compile Include="Items\ItemPrefix.cs" />
     <Compile Include="Items\ItemService.cs" />
     <Compile Include="Items\ItemType.cs" />
+    <Compile Include="Items\Prefix.cs" />
+    <Compile Include="Items\Rarity.cs" />
     <Compile Include="Npcs\Events\NpcDroppedLootEventArgs.cs" />
     <Compile Include="Npcs\Events\NpcDroppingLootEventArgs.cs" />
     <Compile Include="Npcs\Events\NpcKilledEventArgs.cs" />

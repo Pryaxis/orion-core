@@ -23,12 +23,14 @@ namespace Orion.Tests.World
 			new object[] {nameof(WorldService.IsFrostMoon), nameof(Terraria.Main.snowMoon), true},
 			new object[] {nameof(WorldService.IsHalloween), nameof(Terraria.Main.halloween), true},
 			new object[] {nameof(WorldService.IsPumpkinMoon), nameof(Terraria.Main.pumpkinMoon), true},
+			new object[] {nameof(WorldService.Name), nameof(Terraria.Main.worldName), "Name"},
 			new object[] {nameof(WorldService.Time), nameof(Terraria.Main.time), 0.0},
 			new object[] {nameof(WorldService.Width), nameof(Terraria.Main.maxTilesX), 1000}
 		};
 
 		private static readonly object[] SetPropertyTestCases =
 		{
+			new object[] {nameof(WorldService.Height), nameof(Terraria.Main.maxTilesY), 1000},
 			new object[] {nameof(WorldService.IsBloodMoon), nameof(Terraria.Main.bloodMoon), true},
 			new object[] {nameof(WorldService.IsChristmas), nameof(Terraria.Main.xMas), true},
 			new object[] {nameof(WorldService.IsDaytime), nameof(Terraria.Main.dayTime), false},
@@ -36,7 +38,9 @@ namespace Orion.Tests.World
 			new object[] {nameof(WorldService.IsFrostMoon), nameof(Terraria.Main.snowMoon), true},
 			new object[] {nameof(WorldService.IsHalloween), nameof(Terraria.Main.halloween), true},
 			new object[] {nameof(WorldService.IsPumpkinMoon), nameof(Terraria.Main.pumpkinMoon), true},
-			new object[] {nameof(WorldService.Time), nameof(Terraria.Main.time), 0.0}
+			new object[] {nameof(WorldService.Name), nameof(Terraria.Main.worldName), "Name"},
+			new object[] {nameof(WorldService.Time), nameof(Terraria.Main.time), 0.0},
+			new object[] {nameof(WorldService.Width), nameof(Terraria.Main.maxTilesX), 1000}
 		};
 		
 		[TestCaseSource(nameof(GetPropertyTestCases))]
@@ -46,7 +50,7 @@ namespace Orion.Tests.World
 			{
 				var worldService = orion.GetService<WorldService>();
 				FieldInfo terrariaMainField = typeof(Terraria.Main).GetField(terrariaMainFieldName);
-				terrariaMainField.SetValue(null, value);
+				terrariaMainField.SetValue(null, Convert.ChangeType(value, terrariaMainField.FieldType));
 				PropertyInfo worldServiceProperty = typeof(WorldService).GetProperty(worldServicePropertyName);
 
 				object actualValue = worldServiceProperty.GetValue(worldService);
@@ -66,7 +70,8 @@ namespace Orion.Tests.World
 
 				worldServiceProperty.SetValue(worldService, value);
 
-				Assert.AreEqual(value, terrariaMainField.GetValue(null));
+				Assert.AreEqual(
+					Convert.ChangeType(value, terrariaMainField.FieldType), terrariaMainField.GetValue(null));
 			}
 		}
 

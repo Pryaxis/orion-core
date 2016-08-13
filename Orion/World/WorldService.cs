@@ -27,7 +27,11 @@ namespace Orion.World
 		public event EventHandler<HardmodeTileUpdatingEventArgs> HardmodeTileUpdating;
 
 		/// <inheritdoc/>
-		public int Height => Terraria.Main.maxTilesY;
+		public int Height
+		{
+			get { return Terraria.Main.maxTilesY; }
+			set { Terraria.Main.maxTilesY = value; }
+		}
 
 		/// <inheritdoc/>
 		public bool IsBloodMoon
@@ -96,13 +100,24 @@ namespace Orion.World
 		}
 
 		/// <inheritdoc/>
-		public int Width => Terraria.Main.maxTilesX;
+		public int Width
+		{
+			get { return Terraria.Main.maxTilesX; }
+			set { Terraria.Main.maxTilesX = value; }
+		}
 
 		/// <inheritdoc/>
 		public event EventHandler<WorldLoadedEventArgs> WorldLoaded;
 
 		/// <inheritdoc/>
 		public event EventHandler<WorldLoadingEventArgs> WorldLoading;
+
+		/// <inheritdoc/>
+		public string WorldName
+		{
+			get { return Terraria.Main.worldName; }
+			set { Terraria.Main.worldName = value; }
+		}
 
 		/// <inheritdoc/>
 		public event EventHandler<WorldSavedEventArgs> WorldSaved;
@@ -128,18 +143,20 @@ namespace Orion.World
 			Hooks.World.IO.PreSaveWorld = InvokeWorldSaving;
 			Hooks.World.IO.PostSaveWorld = InvokeWorldSaved;
 		}
-		
+
 		/// <inheritdoc/>
 		public void BreakBlock(int x, int y)
 		{
 			if (x < 0 || x >= Width)
 			{
-				throw new ArgumentOutOfRangeException(nameof(x),
+				throw new ArgumentOutOfRangeException(
+					nameof(x),
 					"X position was out of range. Must be non-negative and less than the world's width.");
 			}
 			if (y < 0 || y >= Height)
 			{
-				throw new ArgumentOutOfRangeException(nameof(x),
+				throw new ArgumentOutOfRangeException(
+					nameof(x),
 					"Y position was out of range. Must be non-negative and less than the world's height.");
 			}
 
@@ -151,12 +168,14 @@ namespace Orion.World
 		{
 			if (x < 0 || x >= Width)
 			{
-				throw new ArgumentOutOfRangeException(nameof(x),
+				throw new ArgumentOutOfRangeException(
+					nameof(x),
 					"X position was out of range. Must be non-negative and less than the world's width.");
 			}
 			if (y < 0 || y >= Height)
 			{
-				throw new ArgumentOutOfRangeException(nameof(x),
+				throw new ArgumentOutOfRangeException(
+					nameof(x),
 					"Y position was out of range. Must be non-negative and less than the world's height.");
 			}
 
@@ -168,12 +187,14 @@ namespace Orion.World
 		{
 			if (x < 50 || x >= Width - 50)
 			{
-				throw new ArgumentOutOfRangeException(nameof(x),
+				throw new ArgumentOutOfRangeException(
+					nameof(x),
 					"X position was out of range. Must be at least 50 and less than the world's width minus 50.");
 			}
 			if (y < 50 || y >= Height - 50)
 			{
-				throw new ArgumentOutOfRangeException(nameof(x),
+				throw new ArgumentOutOfRangeException(
+					nameof(x),
 					"Y position was out of range. Must be at least 50 and less than the world's height minus 50.");
 			}
 
@@ -185,12 +206,14 @@ namespace Orion.World
 		{
 			if (x < 0 || x >= Width)
 			{
-				throw new ArgumentOutOfRangeException(nameof(x),
+				throw new ArgumentOutOfRangeException(
+					nameof(x),
 					"X position was out of range. Must be non-negative and less than the world's width.");
 			}
 			if (y < 0 || y >= Height)
 			{
-				throw new ArgumentOutOfRangeException(nameof(x),
+				throw new ArgumentOutOfRangeException(
+					nameof(x),
 					"Y position was out of range. Must be non-negative and less than the world's height.");
 			}
 
@@ -202,12 +225,14 @@ namespace Orion.World
 		{
 			if (x < 0 || x >= Width)
 			{
-				throw new ArgumentOutOfRangeException(nameof(x),
+				throw new ArgumentOutOfRangeException(
+					nameof(x),
 					"X position was out of range. Must be non-negative and less than the world's width.");
 			}
 			if (y < 0 || y >= Height)
 			{
-				throw new ArgumentOutOfRangeException(nameof(x),
+				throw new ArgumentOutOfRangeException(
+					nameof(x),
 					"Y position was out of range. Must be non-negative and less than the world's height.");
 			}
 
@@ -219,12 +244,14 @@ namespace Orion.World
 		{
 			if (x < 0 || x >= Width)
 			{
-				throw new ArgumentOutOfRangeException(nameof(x),
+				throw new ArgumentOutOfRangeException(
+					nameof(x),
 					"X position was out of range. Must be non-negative and less than the world's width.");
 			}
 			if (y < 0 || y >= Height)
 			{
-				throw new ArgumentOutOfRangeException(nameof(x),
+				throw new ArgumentOutOfRangeException(
+					nameof(x),
 					"Y position was out of range. Must be non-negative and less than the world's height.");
 			}
 
@@ -236,12 +263,14 @@ namespace Orion.World
 		{
 			if (x < 0 || x >= Width)
 			{
-				throw new ArgumentOutOfRangeException(nameof(x),
+				throw new ArgumentOutOfRangeException(
+					nameof(x),
 					"X position was out of range. Must be non-negative and less than the world's width.");
 			}
 			if (y < 0 || y >= Height)
 			{
-				throw new ArgumentOutOfRangeException(nameof(x),
+				throw new ArgumentOutOfRangeException(
+					nameof(x),
 					"Y position was out of range. Must be non-negative and less than the world's height.");
 			}
 
