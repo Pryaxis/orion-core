@@ -13,9 +13,39 @@ namespace Orion.Projectiles
 		int Damage { get; set; }
 
 		/// <summary>
+		/// Gets or sets the projectile's height in pixels.
+		/// </summary>
+		int Height { get; set; }
+
+		/// <summary>
 		/// Gets or sets a value indicating whether the projectile is hostile.
 		/// </summary>
 		bool IsHostile { get; set; }
+
+		/// <summary>
+		/// Gets or sets a value indicating whether the projectile is magic.
+		/// </summary>
+		bool IsMagic { get; set; }
+
+		/// <summary>
+		/// Gets or sets a value indicating whether the projectile is melee.
+		/// </summary>
+		bool IsMelee { get; set; }
+
+		/// <summary>
+		/// Gets or sets a value indicating whether the projectile is a minion.
+		/// </summary>
+		bool IsMinion { get; set; }
+
+		/// <summary>
+		/// Gets or sets a value indicating whether the projectile is ranged.
+		/// </summary>
+		bool IsRanged { get; set; }
+
+		/// <summary>
+		/// Gets or sets a value indicating whether the projectile is thrown.
+		/// </summary>
+		bool IsThrown { get; set; }
 
 		/// <summary>
 		/// Gets or sets the projectile's name.
@@ -36,6 +66,11 @@ namespace Orion.Projectiles
 		/// Gets or sets the projectile's velocity in the world.
 		/// </summary>
 		Vector2 Velocity { get; set; }
+
+		/// <summary>
+		/// Gets or sets the projectile's width in pixels.
+		/// </summary>
+		int Width { get; set; }
 
 		/// <summary>
 		/// Gets the wrapped Terraria projectile instance.

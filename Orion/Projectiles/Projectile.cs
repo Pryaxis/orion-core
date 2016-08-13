@@ -16,10 +16,52 @@ namespace Orion.Projectiles
 		}
 
 		/// <inheritdoc/>
+		public int Height
+		{
+			get { return WrappedProjectile.height; }
+			set { WrappedProjectile.height = value; }
+		}
+
+		/// <inheritdoc/>
 		public bool IsHostile
 		{
 			get { return WrappedProjectile.hostile; }
 			set { WrappedProjectile.hostile = value; }
+		}
+
+		/// <inheritdoc/>
+		public bool IsMagic
+		{
+			get { return WrappedProjectile.magic; }
+			set { WrappedProjectile.magic = value; }
+		}
+
+		/// <inheritdoc/>
+		public bool IsMelee
+		{
+			get { return WrappedProjectile.melee; }
+			set { WrappedProjectile.melee = value; }
+		}
+
+		/// <inheritdoc/>
+		public bool IsMinion
+		{
+			get { return WrappedProjectile.minion; }
+			set { WrappedProjectile.minion = value; }
+		}
+
+		/// <inheritdoc/>
+		public bool IsRanged
+		{
+			get { return WrappedProjectile.ranged; }
+			set { WrappedProjectile.ranged = value; }
+		}
+
+		/// <inheritdoc/>
+		public bool IsThrown
+		{
+			get { return WrappedProjectile.thrown; }
+			set { WrappedProjectile.thrown = value; }
 		}
 
 		/// <inheritdoc/>
@@ -44,6 +86,13 @@ namespace Orion.Projectiles
 		{
 			get { return WrappedProjectile.velocity; }
 			set { WrappedProjectile.velocity = value; }
+		}
+
+		/// <inheritdoc/>
+		public int Width
+		{
+			get { return WrappedProjectile.width; }
+			set { WrappedProjectile.width = value; }
 		}
 
 		/// <inheritdoc/>

@@ -109,6 +109,9 @@
     <Compile Include="Players\IPlayerService.cs" />
     <Compile Include="Players\Player.cs" />
     <Compile Include="Players\PlayerService.cs" />
+    <Compile Include="Players\Team.cs" />
+    <Compile Include="Projectiles\Events\ProjectileKilledEventArgs.cs" />
+    <Compile Include="Projectiles\Events\ProjectileKillingEventArgs.cs" />
     <Compile Include="Projectiles\Events\ProjectileSetDefaultsEventArgs.cs" />
     <Compile Include="Projectiles\Events\ProjectileSettingDefaultsEventArgs.cs" />
     <Compile Include="Projectiles\IProjectile.cs" />
