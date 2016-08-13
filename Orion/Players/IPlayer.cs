@@ -42,6 +42,11 @@ namespace Orion.Players
 		int Height { get; set; }
 
 		/// <summary>
+		/// Gets or sets a value indicating whether the player is dead.
+		/// </summary>
+		bool IsDead { get; set; }
+
+		/// <summary>
 		/// Gets the player's inventory.
 		/// </summary>
 		IItemArray Inventory { get; }
@@ -148,6 +153,11 @@ namespace Orion.Players
 		/// Gets the player's selected item.
 		/// </summary>
 		IItem SelectedItem { get; }
+
+		/// <summary>
+		/// Gets or sets the player's team.
+		/// </summary>
+		Team Team { get; set; }
 
 		/// <summary>
 		/// Gets or sets the player's thrown crit bonus.

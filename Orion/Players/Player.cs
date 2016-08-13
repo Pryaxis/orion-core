@@ -46,6 +46,13 @@ namespace Orion.Players
 		}
 
 		/// <inheritdoc/>
+		public bool IsDead
+		{
+			get { return WrappedPlayer.dead; }
+			set { WrappedPlayer.dead = value; }
+		}
+
+		/// <inheritdoc/>
 		public IItemArray Inventory { get; }
 
 		/// <inheritdoc/>
@@ -171,6 +178,13 @@ namespace Orion.Players
 		/// <see cref="IItem"/> instance as long as the player's selected item remains unchanged.
 		/// </remarks>
 		public IItem SelectedItem => Inventory[WrappedPlayer.selectedItem];
+
+		/// <inheritdoc/>
+		public Team Team
+		{
+			get { return (Team)WrappedPlayer.team; }
+			set { WrappedPlayer.team = (int)value; }
+		}
 
 		/// <inheritdoc/>
 		public int ThrownCritBonus

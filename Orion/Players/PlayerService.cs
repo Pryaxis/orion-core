@@ -8,7 +8,7 @@ using OTAPI;
 namespace Orion.Players
 {
 	/// <summary>
-	/// Manages <see cref="IPlayer"/> instances.
+	/// Manages players.
 	/// </summary>
 	[Service("Player Service", Author = "Nyx Studios")]
 	public class PlayerService : SharedService, IPlayerService
@@ -38,8 +38,8 @@ namespace Orion.Players
 
 		/// <inheritdoc/>
 		/// <remarks>
-		/// The <see cref="IPlayer"/> instances are cached in an array. Calling this method multiple times will result
-		/// in the same <see cref="IPlayer"/> instances as long as Terraria's player array remains unchanged.
+		/// The players are cached in an array. Calling this method multiple times will result in the same instances as
+		/// long as Terraria's player array remains unchanged.
 		/// </remarks>
 		public IEnumerable<IPlayer> FindPlayers(Predicate<IPlayer> predicate = null)
 		{

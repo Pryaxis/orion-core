@@ -16,6 +16,7 @@ namespace Orion.Tests.Players
 			new object[] {nameof(Player.HasPvpEnabled), nameof(Terraria.Player.hostile), true},
 			new object[] {nameof(Player.Health), nameof(Terraria.Player.statLife), 100},
 			new object[] {nameof(Player.Height), nameof(Terraria.Player.height), 100},
+			new object[] {nameof(Player.IsDead), nameof(Terraria.Player.dead), true},
 			new object[] {nameof(Player.MagicCritBonus), nameof(Terraria.Player.magicCrit), 100},
 			new object[] {nameof(Player.MagicDamageMultiplier), nameof(Terraria.Player.magicDamage), 2.0f},
 			new object[] {nameof(Player.ManaCostMultiplier), nameof(Terraria.Player.manaCost), 2.0f},
@@ -31,6 +32,7 @@ namespace Orion.Tests.Players
 			new object[] {nameof(Player.Position), nameof(Terraria.Player.position), Vector2.One},
 			new object[] {nameof(Player.RangedCritBonus), nameof(Terraria.Player.rangedCrit), 100},
 			new object[] {nameof(Player.RangedDamageMultiplier), nameof(Terraria.Player.rangedDamage), 2.0f},
+			new object[] {nameof(Player.Team), nameof(Terraria.Player.team), Team.Red},
 			new object[] {nameof(Player.ThrownCritBonus), nameof(Terraria.Player.thrownCrit), 100},
 			new object[] {nameof(Player.ThrownDamageMultiplier), nameof(Terraria.Player.thrownDamage), 2.0f},
 			new object[] {nameof(Player.Velocity), nameof(Terraria.Player.velocity), Vector2.One},
@@ -43,6 +45,7 @@ namespace Orion.Tests.Players
 			new object[] {nameof(Player.HasPvpEnabled), nameof(Terraria.Player.hostile), true},
 			new object[] {nameof(Player.Health), nameof(Terraria.Player.statLife), 100},
 			new object[] {nameof(Player.Height), nameof(Terraria.Player.height), 100},
+			new object[] {nameof(Player.IsDead), nameof(Terraria.Player.dead), true},
 			new object[] {nameof(Player.MagicCritBonus), nameof(Terraria.Player.magicCrit), 100},
 			new object[] {nameof(Player.MagicDamageMultiplier), nameof(Terraria.Player.magicDamage), 2.0f},
 			new object[] {nameof(Player.ManaCostMultiplier), nameof(Terraria.Player.manaCost), 2.0f},
@@ -58,6 +61,7 @@ namespace Orion.Tests.Players
 			new object[] {nameof(Player.Position), nameof(Terraria.Player.position), Vector2.One},
 			new object[] {nameof(Player.RangedCritBonus), nameof(Terraria.Player.rangedCrit), 100},
 			new object[] {nameof(Player.RangedDamageMultiplier), nameof(Terraria.Player.rangedDamage), 2.0f},
+			new object[] {nameof(Player.Team), nameof(Terraria.Player.team), Team.Red},
 			new object[] {nameof(Player.ThrownCritBonus), nameof(Terraria.Player.thrownCrit), 100},
 			new object[] {nameof(Player.ThrownDamageMultiplier), nameof(Terraria.Player.thrownDamage), 2.0f},
 			new object[] {nameof(Player.Velocity), nameof(Terraria.Player.velocity), Vector2.One},
@@ -75,7 +79,7 @@ namespace Orion.Tests.Players
 		{
 			var terrariaPlayer = new Terraria.Player();
 			FieldInfo terrariaPlayerField = typeof(Terraria.Player).GetField(terrariaPlayerFieldName);
-			terrariaPlayerField.SetValue(terrariaPlayer, value);
+			terrariaPlayerField.SetValue(terrariaPlayer, Convert.ChangeType(value, terrariaPlayerField.FieldType));
 			var player = new Player(terrariaPlayer);
 			PropertyInfo playerProperty = typeof(Player).GetProperty(playerPropertyName);
 
@@ -94,92 +98,56 @@ namespace Orion.Tests.Players
 
 			playerProperty.SetValue(player, value);
 
-			Assert.AreEqual(value, terrariaPlayerField.GetValue(terrariaPlayer));
+			Assert.AreEqual(
+				Convert.ChangeType(value, terrariaPlayerField.FieldType),
+				terrariaPlayerField.GetValue(terrariaPlayer));
 		}
 
-		[Test]
-		public void GetDyes_IsCorrect()
+		[TestCase(nameof(Player.Dyes), nameof(Terraria.Player.dye))]
+		[TestCase(nameof(Player.Equips), nameof(Terraria.Player.armor))]
+		[TestCase(nameof(Player.Inventory), nameof(Terraria.Player.inventory))]
+		[TestCase(nameof(Player.MiscDyes), nameof(Terraria.Player.miscDyes))]
+		[TestCase(nameof(Player.MiscEquips), nameof(Terraria.Player.miscEquips))]
+		public void GetItemArray_IsCorrect(string playerPropertyName, string terrariaPlayerFieldName)
 		{
 			var terrariaPlayer = new Terraria.Player();
+			FieldInfo terrariaPlayerField = typeof(Terraria.Player).GetField(terrariaPlayerFieldName);
 			var player = new Player(terrariaPlayer);
+			PropertyInfo playerProperty = typeof(Player).GetProperty(playerPropertyName);
 
-			IItemArray dyes = player.Dyes;
+			var actualArray = (IItemArray)playerProperty.GetValue(player);
 
-			Assert.AreSame(terrariaPlayer.dye, dyes.WrappedItemArray);
+			Assert.AreSame(terrariaPlayerField.GetValue(terrariaPlayer), actualArray.WrappedItemArray);
 		}
-
-		[Test]
-		public void GetEquips_IsCorrect()
-		{
-			var terrariaPlayer = new Terraria.Player();
-			var player = new Player(terrariaPlayer);
-
-			IItemArray equips = player.Equips;
-
-			Assert.AreSame(terrariaPlayer.armor, equips.WrappedItemArray);
-		}
-
-		[Test]
-		public void GetInventory_IsCorrect()
-		{
-			var terrariaPlayer = new Terraria.Player();
-			var player = new Player(terrariaPlayer);
-
-			IItemArray inventory = player.Inventory;
-
-			Assert.AreSame(terrariaPlayer.inventory, inventory.WrappedItemArray);
-		}
-
-		[Test]
-		public void GetMiscDyes_IsCorrect()
-		{
-			var terrariaPlayer = new Terraria.Player();
-			var player = new Player(terrariaPlayer);
-
-			IItemArray miscDyes = player.MiscDyes;
-
-			Assert.AreSame(terrariaPlayer.miscDyes, miscDyes.WrappedItemArray);
-		}
-
-		[Test]
-		public void GetMiscEquips_IsCorrect()
-		{
-			var terrariaPlayer = new Terraria.Player();
-			var player = new Player(terrariaPlayer);
-
-			IItemArray miscEquips = player.MiscEquips;
-
-			Assert.AreSame(terrariaPlayer.miscEquips, miscEquips.WrappedItemArray);
-		}
-
+		
 		[Test]
 		public void GetPiggyBank_IsCorrect()
 		{
 			var terrariaPlayer = new Terraria.Player();
 			var player = new Player(terrariaPlayer);
 
-			IItemArray piggyBank = player.PiggyBank;
+			IItemArray actualPiggyBank = player.PiggyBank;
 
-			Assert.AreSame(terrariaPlayer.bank.item, piggyBank.WrappedItemArray);
+			Assert.AreSame(terrariaPlayer.bank.item, actualPiggyBank.WrappedItemArray);
 		}
 
 		[TestCase(1)]
-		public void GetSelectedItem_IsCorrect(int selectedItem)
+		public void GetSelectedItem_IsCorrect(int selectedItemIndex)
 		{
-			var terrariaPlayer = new Terraria.Player();
-			terrariaPlayer.inventory[selectedItem] = new Terraria.Item();
+			var terrariaPlayer = new Terraria.Player { selectedItem = selectedItemIndex };
+			terrariaPlayer.inventory[selectedItemIndex] = new Terraria.Item();
 			var player = new Player(terrariaPlayer);
 
-			terrariaPlayer.selectedItem = selectedItem;
+			IItem actualItem = player.SelectedItem;
 
-			Assert.AreEqual(terrariaPlayer.inventory[selectedItem], player.SelectedItem.WrappedItem);
+			Assert.AreEqual(terrariaPlayer.inventory[selectedItemIndex], actualItem.WrappedItem);
 		}
 
-		[TestCase(1)]
-		public void GetSelectedItem_MultipleTimes_ReturnsSameInstance(int selectedItem)
+		[Test]
+		public void GetSelectedItem_MultipleTimes_ReturnsSameInstance()
 		{
 			var terrariaPlayer = new Terraria.Player();
-			terrariaPlayer.inventory[selectedItem] = new Terraria.Item();
+			terrariaPlayer.inventory[0] = new Terraria.Item();
 			var player = new Player(terrariaPlayer);
 
 			IItem item1 = player.SelectedItem;
@@ -194,11 +162,11 @@ namespace Orion.Tests.Players
 			var terrariaPlayer = new Terraria.Player();
 			var player = new Player(terrariaPlayer);
 
-			IItemArray safe = player.Safe;
+			IItemArray actualSafe = player.Safe;
 
-			Assert.AreSame(terrariaPlayer.bank2.item, safe.WrappedItemArray);
+			Assert.AreSame(terrariaPlayer.bank2.item, actualSafe.WrappedItemArray);
 		}
-
+		
 		[Test]
 		public void GetTrashItem_IsCorrect()
 		{
@@ -207,9 +175,9 @@ namespace Orion.Tests.Players
 			terrariaPlayer.trashItem = terrariaItem;
 			var player = new Player(terrariaPlayer);
 
-			IItem trashItem = player.TrashItem;
+			IItem actualItem = player.TrashItem;
 
-			Assert.AreEqual(terrariaItem, trashItem.WrappedItem);
+			Assert.AreEqual(terrariaItem, actualItem.WrappedItem);
 		}
 
 		[Test]
