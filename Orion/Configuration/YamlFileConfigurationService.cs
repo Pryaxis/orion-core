@@ -25,7 +25,7 @@ namespace Orion.Configuration
 		public TConfig Configuration { get; protected set; }
 
 		/// <summary>
-		/// Initializes a new instance of the <see cref="YamlFileConfigurationService"/> class.
+		/// Initializes a new instance of the <see cref="YamlFileConfigurationService{T}"/> class.
 		/// </summary>
 		/// <param name="orion">The parent <see cref="Orion"/> instance.</param>
 		public YamlFileConfigurationService(Orion orion) : base(orion)

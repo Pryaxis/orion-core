@@ -21,7 +21,7 @@ namespace Orion.Configuration
 		public TConfiguration Configuration { get; protected set; }
 
 		/// <summary>
-		/// Initializes a new instance of the <see cref="JsonFileConfigurationService"/> class.
+		/// Initializes a new instance of the <see cref="JsonFileConfigurationService{T}"/> class.
 		/// </summary>
 		/// <param name="orion">The parent <see cref="Orion"/> instance.</param>
 		public JsonFileConfigurationService(Orion orion) : base(orion)

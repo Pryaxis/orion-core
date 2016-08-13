@@ -1,14 +1,12 @@
 ﻿namespace Orion.Console
 {
-	public class Program
+	internal static class Program
 	{
-		private static Orion _orion;
-		
-		public static void Main(string[] args)
+		private static void Main(string[] args)
 		{
-			using (_orion = new Orion())
+			using (var orion = new Orion())
 			{
-				_orion.StartServer();
+				orion.Start(args);
 			}
 		}
 	}

@@ -75,6 +75,9 @@
   <ItemGroup>
     <Compile Include="Authorization\AuthorizationServiceTests.cs" />
     <Compile Include="Configuration\ConfigurationServiceTests.cs" />
+    <Compile Include="Framework\PluginTests.cs" />
+    <Compile Include="Framework\SharedServiceTests.cs" />
+    <Compile Include="Framework\ServiceTests.cs" />
     <Compile Include="Items\ItemArrayTests.cs" />
     <Compile Include="Items\ItemTests.cs" />
     <Compile Include="Npcs\NpcTests.cs" />

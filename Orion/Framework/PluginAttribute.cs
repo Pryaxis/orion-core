@@ -3,26 +3,26 @@
 namespace Orion.Framework
 {
 	/// <summary>
-	/// Provides information about a service.
+	/// Provides information about a plugin.
 	/// </summary>
 	[AttributeUsage(AttributeTargets.Class)]
-	public sealed class ServiceAttribute : Attribute
+	public sealed class PluginAttribute : Attribute
 	{
 		/// <summary>
-		/// Gets or sets the service's author.
+		/// Gets or sets the plugin's author.
 		/// </summary>
 		public string Author { get; set; }
 
 		/// <summary>
-		/// Gets the service's name.
+		/// Gets the plugin's name.
 		/// </summary>
 		public string Name { get; }
 
 		/// <summary>
-		/// Initializes a new instance of the <see cref="ServiceAttribute"/> class.
+		/// Initializes a new instance of the <see cref="PluginAttribute"/> class.
 		/// </summary>
-		/// <param name="name">The service's name.</param>
-		public ServiceAttribute(string name)
+		/// <param name="name">The plugin's name.</param>
+		public PluginAttribute(string name)
 		{
 			Name = name;
 		}

@@ -7,51 +7,44 @@ using Terraria;
 
 namespace Orion
 {
-	public partial class Orion : IDisposable
+	/// <summary>
+	/// Handles Orion's dependency injection.
+	/// </summary>
+	public sealed class Orion : IDisposable
 	{
+		/// <summary>
+		/// Gets the plugin directory.
+		/// </summary>
+		public static string PluginDirectory => "plugins";
+
+		private readonly IKernel _injectionContainer;
 		private bool _disposed;
-		protected IKernel _injectionContainer;
 
 		/// <summary>
 		/// Initializes a new instance of the <see cref="Orion"/> class.
 		/// </summary>
-		/// <remarks>
-		/// This creates Orion's directory structure, loads plugin assemblies, and defines the injection container.
-		/// </remarks>
-		public Orion()
+		internal Orion()
 		{
-			CreateDirectories();
+			Directory.CreateDirectory(PluginDirectory);
 
-			_injectionContainer = new StandardKernel(new SharedServiceInjectionModule(), 
-				new ScopedServiceInjectionModule());
+			_injectionContainer = new StandardKernel(new OrionModule());
 			_injectionContainer.Bind<Orion>().ToConstant(this);
 		}
 
-		private void CreateDirectories()
-		{
-			foreach (string dir in standardDirectories)
-			{
-				Directory.CreateDirectory(dir);
-			}
-		}
-
+		/// <summary>
+		/// Disposes the dependency injection kernel. This will dispose all shared services and plugins.
+		/// </summary>
 		public void Dispose()
 		{
-			Dispose(true);
-		}
-
-		protected virtual void Dispose(bool disposing)
-		{
-			if (!_disposed)
+			if (_disposed)
 			{
-				if (disposing)
-				{
-					_injectionContainer.Dispose();
-				}
-				_disposed = true;
+				return;
 			}
-		}
 
+			_injectionContainer.Dispose();
+			_disposed = true;
+		}
+		
 		/// <summary>
 		/// Gets an Orion service by the type specified.
 		/// </summary>
@@ -81,11 +74,12 @@ namespace Orion
 		}
 
 		/// <summary>
-		/// Starts the server.
+		/// Starts the server or client. This will initialize all shared services and plugins.
 		/// </summary>
-		public void StartServer()
+		/// <param name="args">The command-line arguments to use.</param>
+		internal void Start(string[] args)
 		{
-			foreach (ISharedService service in _injectionContainer.GetAll<ISharedService>())
+			foreach (ISharedService service in GetServices<ISharedService>())
 			{
 				Console.WriteLine($"  * Loading {service.Name} by {service.Author}");
 			}

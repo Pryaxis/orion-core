@@ -78,14 +78,14 @@
     <Compile Include="Authorization\PlainTextUserAccount.cs" />
     <Compile Include="Configuration\YamlFileConfigurationService.cs" />
     <Compile Include="Extensions\StringExtensions.cs" />
-    <Compile Include="Framework\AssemblyResolver.cs" />
     <Compile Include="Framework\IService.cs" />
     <Compile Include="Framework\ISharedService.cs" />
-    <Compile Include="Framework\ScopedServiceInjectionModule.cs" />
+    <Compile Include="Framework\OrionModule.cs" />
+    <Compile Include="Framework\Plugin.cs" />
+    <Compile Include="Framework\PluginAttribute.cs" />
     <Compile Include="Framework\Service.cs" />
     <Compile Include="Framework\ServiceAttribute.cs" />
     <Compile Include="Framework\SharedService.cs" />
-    <Compile Include="Framework\SharedServiceInjectionModule.cs" />
     <Compile Include="Authorization\IGroup.cs" />
     <Compile Include="Authorization\IPermission.cs" />
     <Compile Include="Authorization\IUserAccount.cs" />
@@ -110,7 +110,6 @@
     <Compile Include="Npcs\Npc.cs" />
     <Compile Include="Npcs\NpcType.cs" />
     <Compile Include="Orion.cs" />
-    <Compile Include="Orion.DataFields.cs" />
     <Compile Include="Players\Events\PlayerJoinedEventArgs.cs" />
     <Compile Include="Players\Events\PlayerJoiningEventArgs.cs" />
     <Compile Include="Players\Events\PlayerQuitEventArgs.cs" />
