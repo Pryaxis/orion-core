@@ -29,9 +29,12 @@ namespace Orion.Rest.Owin
 		/// Initializes a new instance of the <see cref="OwinRestService"/> class
 		/// </summary>
 		/// <param name="orion">The parent <see cref="Orion"/> instance</param>
-		public OwinRestService(Orion orion) : base(orion)
+		/// <param name="configuration">
+		/// The configuration service instance to provide access to <see cref="OwinConfiguration"/>
+		/// </param>
+		public OwinRestService(Orion orion, JsonFileConfigurationService<OwinConfiguration> configuration) : base(orion)
 		{
-			this._configuration = orion.GetService<JsonFileConfigurationService<OwinConfiguration>>();
+			this._configuration = configuration;
 
 			Debug.Assert(_configuration != null);
 			Debug.Assert(_configuration.Configuration != null);
@@ -87,11 +90,6 @@ namespace Orion.Rest.Owin
 			{
 				if (disposing)
 				{
-					if (_configuration != null)
-					{
-						_configuration.Dispose();
-						_configuration = null;
-					}
 					if (_webApp != null)
 					{
 						_webApp.Dispose();
