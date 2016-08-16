@@ -512,7 +512,7 @@ namespace Orion.Tests.Npcs
 			using (var orion = new Orion())
 			{
 				var npcService = orion.GetService<NpcService>();
-				INpc npc = npcService.SpawnNpc(type, position);
+				INpc npc = npcService.SpawnNpc((int)type, position);
 
 				Assert.AreEqual(type, npc.Type);
 				Assert.That(npc.Position.X, Is.InRange(900, 1100));

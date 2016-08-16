@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using Microsoft.Xna.Framework;
-using OTAPI.Core;
+using OTAPI;
 using Orion.Framework;
 using Orion.Items;
 using Orion.Npcs.Events;
@@ -84,12 +84,12 @@ namespace Orion.Npcs
 		}
 
 		/// <inheritdoc/>
-		public INpc SpawnNpc(NpcType type, Vector2 position)
+		public INpc SpawnNpc(int type, Vector2 position)
 		{
 			int index = Terraria.NPC.NewNPC((int)position.X, (int)position.Y, (int)type);
 			var npc = new Npc(Terraria.Main.npc[index]);
 			_npcs[index] = npc;
-			npc.SetDefaults(type);
+			npc.SetDefaults((NpcType)type);
 			npc.Position = position;
 			return npc;
 		}
@@ -126,7 +126,7 @@ namespace Orion.Npcs
 			ref int height, ref int type, ref int stack, ref bool noBroadcast, ref int prefix, ref bool noGrabDelay, ref bool reverseLookup)
 		{
 			var npc = new Npc(terrariaNpc);
-			var item = _itemService.CreateItem((ItemType)type, stack, (ItemPrefix)prefix);
+			var item = _itemService.CreateItem((ItemType)type, stack, (Prefix)prefix);
 			var args = new NpcDroppingLootEventArgs(npc, item);
 			NpcDroppingLoot?.Invoke(this, args);
 			return args.Handled ? HookResult.Cancel : HookResult.Continue;

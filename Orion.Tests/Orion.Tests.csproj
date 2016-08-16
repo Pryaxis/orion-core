@@ -80,16 +80,12 @@
     <Compile Include="Framework\SharedServiceTests.cs" />
     <Compile Include="Framework\ServiceTests.cs" />
     <Compile Include="Items\ItemArrayTests.cs" />
-    <Compile Include="Items\ItemTests.cs" />
-    <Compile Include="Npcs\NpcTests.cs" />
-    <Compile Include="Players\PlayerTests.cs" />
     <Compile Include="Projectiles\Events\ProjectileUpdatedAIEventArgsTests.cs" />
     <Compile Include="Projectiles\Events\ProjectileUpdatedEventArgsTests.cs" />
     <Compile Include="Projectiles\Events\ProjectileUpdatingAIEventArgsTests.cs" />
     <Compile Include="Projectiles\Events\ProjectileUpdatingEventArgsTests.cs" />
     <Compile Include="Projectiles\Events\ProjectileKillingEventArgsTests.cs" />
     <Compile Include="Projectiles\Events\ProjectileKilledEventArgsTests.cs" />
-    <Compile Include="Items\ItemArrayTests.cs" />
     <Compile Include="Items\ItemTests.cs" />
     <Compile Include="Npcs\Events\NpcSetDefaultsEventArgsTests.cs" />
     <Compile Include="Npcs\Events\NpcSettingDefaultsEventArgsTests.cs" />
@@ -123,15 +119,14 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <Service Include="{82A7F48D-3B50-4B1E-B82E-3ADA8210C358}" />
+  </ItemGroup>
+  <ItemGroup>
     <ProjectReference Include="..\Orion\Orion.csproj">
       <Project>{2ee55527-75e1-4774-a0a9-681740868f85}</Project>
       <Name>Orion</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup>
-    <Service Include="{82A7F48D-3B50-4B1E-B82E-3ADA8210C358}" />
-  </ItemGroup>
-  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
