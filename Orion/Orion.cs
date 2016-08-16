@@ -23,7 +23,7 @@ namespace Orion
 		/// <summary>
 		/// Initializes a new instance of the <see cref="Orion"/> class.
 		/// </summary>
-		internal Orion()
+		public Orion()
 		{
 			Directory.CreateDirectory(PluginDirectory);
 
