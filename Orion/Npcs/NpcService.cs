@@ -110,7 +110,8 @@ namespace Orion.Npcs
 			return npcs.Where(n => n.WrappedNpc.active && (predicate?.Invoke(n) ?? true));
 		}
 
-		private void InvokeNpcDroppedLoot(Terraria.NPC terrariaNpc, int x, int y, int width, int height, int type, int stack, bool noBroadcast, int prefix, bool noGrabDelay, bool reverseLookup)
+		private void InvokeNpcDroppedLoot(Terraria.NPC terrariaNpc, int x, int y, int width, int height, int type, int stack,
+			bool noBroadcast, int prefix, bool noGrabDelay, bool reverseLookup)
 		{
 			using (var orion = new Orion())
 			{
@@ -122,13 +123,18 @@ namespace Orion.Npcs
 			}
 		}
 
-		private HookResult InvokeNpcDroppingLoot(Terraria.NPC terrariaNpc, ref int itemId, ref int x, ref int y, ref int width, ref int height, ref int type, ref int stack, ref bool noBroadcast, ref int prefix, ref bool noGrabDelay, ref bool reverseLookup)
+		private HookResult InvokeNpcDroppingLoot(Terraria.NPC terrariaNpc, ref int itemId, ref int x, ref int y, ref int width,
+			ref int height, ref int type, ref int stack, ref bool noBroadcast, ref int prefix, ref bool noGrabDelay, ref bool reverseLookup)
 		{
-			var npc = new Npc(terrariaNpc);
-			var item = new Item(Terraria.Main.item[Terraria.Item.NewItem(x, y, width, height, type, stack, noBroadcast, prefix, noGrabDelay, reverseLookup)]);
-			var args = new NpcDroppingLootEventArgs(npc, item);
-			NpcDroppingLoot?.Invoke(this, args);
-			return args.Handled ? HookResult.Cancel : HookResult.Continue;
+			using (var orion = new Orion())
+			{
+				var itemService = orion.GetService<IItemService>();
+				var npc = new Npc(terrariaNpc);
+				var item = itemService.CreateItem((ItemType)type, stack, (ItemPrefix)prefix);
+				var args = new NpcDroppingLootEventArgs(npc, item);
+				NpcDroppingLoot?.Invoke(this, args);
+				return args.Handled ? HookResult.Cancel : HookResult.Continue;
+			}
 		}
 
 		private void InvokeNpcKilled(Terraria.NPC terrariaNpc)
@@ -154,7 +160,8 @@ namespace Orion.Npcs
 			return args.Handled ? HookResult.Cancel : HookResult.Continue;
 		}
 
-		private Terraria.NPC InvokeNpcSpawned(ref int index, ref int x, ref int y, ref int type, ref int start, ref float ai0, ref float ai1, ref float ai2, ref float ai3, ref int target)
+		private Terraria.NPC InvokeNpcSpawned(ref int index, ref int x, ref int y, ref int type, ref int start, ref float ai0,
+			ref float ai1, ref float ai2, ref float ai3, ref int target)
 		{
 			var terrariaNpc = Terraria.Main.npc[index];
 			var npc = new Npc(terrariaNpc);
@@ -172,7 +179,8 @@ namespace Orion.Npcs
 			return args.Handled ? HookResult.Cancel : HookResult.Continue;
 		}
 
-		private HookResult InvokeNpcStriking(Terraria.NPC terrariaNpc, ref int cancelResult, ref int damage, ref float knockback, ref int hitDirection, ref bool crit, ref bool noEffect, ref bool fromNet)
+		private HookResult InvokeNpcStriking(Terraria.NPC terrariaNpc, ref int cancelResult, ref int damage, ref float knockback,
+			ref int hitDirection, ref bool crit, ref bool noEffect, ref bool fromNet)
 		{
 			var npc = new Npc(terrariaNpc);
 			var args = new NpcStrikingEventArgs(npc, damage, knockback, hitDirection, crit, noEffect, fromNet);
