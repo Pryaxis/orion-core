@@ -16,6 +16,7 @@ namespace Orion.Npcs
 	public class NpcService : SharedService, INpcService
 	{
 		private readonly INpc[] _npcs;
+		private ItemService _itemService;
 
 		/// <inheritdoc/>
 		public int BaseNpcSpawningLimit
@@ -65,9 +66,11 @@ namespace Orion.Npcs
 		/// Initializes a new instance of the <see cref="NpcService"/> class.
 		/// </summary>
 		/// <param name="orion">The parent <see cref="Orion"/> instance.</param>
-		public NpcService(Orion orion) : base(orion)
+		/// <param name="itemService">The <see cref="ItemService"/> instance.</param>
+		public NpcService(Orion orion, ItemService itemService) : base(orion)
 		{
 			_npcs = new INpc[Terraria.Main.npc.Length];
+			_itemService = itemService;
 			Hooks.Npc.PostDropLoot = InvokeNpcDroppedLoot;
 			Hooks.Npc.PreDropLoot = InvokeNpcDroppingLoot;
 			Hooks.Npc.Killed = InvokeNpcKilled;
@@ -113,28 +116,20 @@ namespace Orion.Npcs
 		private void InvokeNpcDroppedLoot(Terraria.NPC terrariaNpc, int x, int y, int width, int height, int type, int stack,
 			bool noBroadcast, int prefix, bool noGrabDelay, bool reverseLookup)
 		{
-			using (var orion = new Orion())
-			{
-				var itemService = orion.GetService<IItemService>();
-				var npc = new Npc(terrariaNpc);
-				var item = itemService.FindItems(i => (int)i.Type == type).FirstOrDefault();
-				var args = new NpcDroppedLootEventArgs(npc, item);
-				NpcDroppedLoot?.Invoke(this, args);
-			}
+			var npc = new Npc(terrariaNpc);
+			var item = _itemService.FindItems(i => (int)i.Type == type).FirstOrDefault();
+			var args = new NpcDroppedLootEventArgs(npc, item);
+			NpcDroppedLoot?.Invoke(this, args);
 		}
 
 		private HookResult InvokeNpcDroppingLoot(Terraria.NPC terrariaNpc, ref int itemId, ref int x, ref int y, ref int width,
 			ref int height, ref int type, ref int stack, ref bool noBroadcast, ref int prefix, ref bool noGrabDelay, ref bool reverseLookup)
 		{
-			using (var orion = new Orion())
-			{
-				var itemService = orion.GetService<IItemService>();
-				var npc = new Npc(terrariaNpc);
-				var item = itemService.CreateItem((ItemType)type, stack, (ItemPrefix)prefix);
-				var args = new NpcDroppingLootEventArgs(npc, item);
-				NpcDroppingLoot?.Invoke(this, args);
-				return args.Handled ? HookResult.Cancel : HookResult.Continue;
-			}
+			var npc = new Npc(terrariaNpc);
+			var item = _itemService.CreateItem((ItemType)type, stack, (ItemPrefix)prefix);
+			var args = new NpcDroppingLootEventArgs(npc, item);
+			NpcDroppingLoot?.Invoke(this, args);
+			return args.Handled ? HookResult.Cancel : HookResult.Continue;
 		}
 
 		private void InvokeNpcKilled(Terraria.NPC terrariaNpc)
