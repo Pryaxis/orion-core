@@ -16,7 +16,7 @@ namespace Orion.Npcs
 	public class NpcService : SharedService, INpcService
 	{
 		private readonly INpc[] _npcs;
-		private ItemService _itemService;
+		private readonly ItemService _itemService;
 
 		/// <inheritdoc/>
 		public int BaseNpcSpawningLimit
@@ -117,8 +117,7 @@ namespace Orion.Npcs
 			bool noBroadcast, int prefix, bool noGrabDelay, bool reverseLookup)
 		{
 			var npc = new Npc(terrariaNpc);
-			var item = _itemService.FindItems(i => (int)i.Type == type).FirstOrDefault();
-			var args = new NpcDroppedLootEventArgs(npc, item);
+			var args = new NpcDroppedLootEventArgs(npc, type, x, y, width, height, stack, prefix);
 			NpcDroppedLoot?.Invoke(this, args);
 		}
 
@@ -129,6 +128,13 @@ namespace Orion.Npcs
 			var item = _itemService.CreateItem((ItemType)type, stack, (Prefix)prefix);
 			var args = new NpcDroppingLootEventArgs(npc, item);
 			NpcDroppingLoot?.Invoke(this, args);
+			x = (int)args.Item.Position.X;
+			y = (int)args.Item.Position.Y;
+			width = args.Item.Width;
+			height = args.Item.Height;
+			type = (int)args.Item.Type;
+			stack = args.Item.StackSize;
+			prefix = (int)args.Item.Prefix;
 			return args.Handled ? HookResult.Cancel : HookResult.Continue;
 		}
 
