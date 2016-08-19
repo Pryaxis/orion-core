@@ -1,12 +1,12 @@
-﻿namespace Orion.Rest.Owin
+﻿namespace Orion.Rest.AspNetCore
 {
 	/// <summary>
-	/// OWIN specific configuration for use with the <see cref="OwinRestService"/>
+	/// Defines the configuration for use with the <see cref="AspNetCoreRestService"/>
 	/// </summary>
-	public class OwinConfiguration
+	public class AspNetCoreConfiguration
 	{
 		/// <summary>
-		/// Defines weather the <see cref="OwinRestService"/> is allowed to auto start
+		/// Defines weather the <see cref="AspNetCoreRestService"/> is allowed to auto start
 		/// </summary>
 		public bool AutoStart { get; set; } = true;
 
