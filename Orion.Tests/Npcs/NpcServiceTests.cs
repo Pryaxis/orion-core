@@ -306,7 +306,7 @@ namespace Orion.Tests.Npcs
 			using (var orion = new Orion())
 			{
 				var npcService = orion.GetService<NpcService>();
-				var terrariaNpc = Terraria.Main.npc[x];
+				var terrariaNpc = new Terraria.NPC();
 				var npc = new Npc(terrariaNpc);
 				var eventOccurred = false;
 				EventHandler<NpcSpawnedEventArgs> handler = (sender, e) => eventOccurred = true;
