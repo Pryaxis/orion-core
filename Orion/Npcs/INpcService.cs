@@ -47,7 +47,7 @@ namespace Orion.Npcs
 		event EventHandler<NpcSettingDefaultsEventArgs> NpcSettingDefaults;
 
 		/// <summary>
-		/// Occurs after an <see cref="INpc"/> instance has spawned in the world.
+		/// Occurs when an <see cref="INpc"/> instance is about to be spawned in the world.
 		/// </summary>
 		event EventHandler<NpcSpawnedEventArgs> NpcSpawned;
 

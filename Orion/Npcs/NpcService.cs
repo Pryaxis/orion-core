@@ -76,8 +76,8 @@ namespace Orion.Npcs
 			Hooks.Npc.Killed = InvokeNpcKilled;
 			Hooks.Npc.PostSetDefaultsById = InvokeNpcSetDefaults;
 			Hooks.Npc.PreSetDefaultsById = InvokeNpcSettingDefaults;
-			Hooks.Npc.Create = InvokeNpcSpawned;
-			Hooks.Npc.Spawn = InvokeNpcSpawning;
+			Hooks.Npc.Spawn = InvokeNpcSpawned;
+			Hooks.Npc.Create = InvokeNpcSpawning;
 			Hooks.Npc.Strike = InvokeNpcStriking;
 			Hooks.Npc.PostTransform = InvokeNpcTransformed;
 			Hooks.Npc.PreTransform = InvokeNpcTransforming;
@@ -161,23 +161,26 @@ namespace Orion.Npcs
 			return args.Handled ? HookResult.Cancel : HookResult.Continue;
 		}
 
-		private Terraria.NPC InvokeNpcSpawned(ref int index, ref int x, ref int y, ref int type, ref int start, ref float ai0,
-			ref float ai1, ref float ai2, ref float ai3, ref int target)
+		private HookResult InvokeNpcSpawned(ref int index)
 		{
 			var terrariaNpc = Terraria.Main.npc[index];
 			var npc = new Npc(terrariaNpc);
-			var args = new NpcSpawnedEventArgs(npc);
-			NpcSpawned?.Invoke(this, args);
-			return terrariaNpc;
+			var spawnedArgs = new NpcSpawnedEventArgs(npc);
+			NpcSpawned?.Invoke(this, spawnedArgs);
+			return spawnedArgs.Handled ? HookResult.Cancel : HookResult.Continue;
 		}
 
-		private HookResult InvokeNpcSpawning(ref int index)
+		private Terraria.NPC InvokeNpcSpawning(ref int index, ref int x, ref int y, ref int type, ref int start, ref float ai0,
+			ref float ai1, ref float ai2, ref float ai3, ref int target)
 		{
-			var npc = new Npc(Terraria.Main.npc[index]);
+			var terrariaNpc = new Terraria.NPC();
+			terrariaNpc.SetDefaults(type);
+			var npc = new Npc(terrariaNpc);
 			var args = new NpcSpawningEventArgs(npc, index);
-			NpcSpawning?.Invoke(this, args);
 			index = args.Index;
-			return args.Handled ? HookResult.Cancel : HookResult.Continue;
+			type = (int)args.Type;
+			NpcSpawning?.Invoke(this, args);
+			return terrariaNpc;
 		}
 
 		private HookResult InvokeNpcStriking(Terraria.NPC terrariaNpc, ref int cancelResult, ref int damage, ref float knockback,

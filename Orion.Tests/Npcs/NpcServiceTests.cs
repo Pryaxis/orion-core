@@ -306,7 +306,7 @@ namespace Orion.Tests.Npcs
 			using (var orion = new Orion())
 			{
 				var npcService = orion.GetService<NpcService>();
-				var terrariaNpc = new Terraria.NPC();
+				var terrariaNpc = Terraria.Main.npc[x];
 				var npc = new Npc(terrariaNpc);
 				var eventOccurred = false;
 				EventHandler<NpcSpawnedEventArgs> handler = (sender, e) => eventOccurred = true;
@@ -335,24 +335,6 @@ namespace Orion.Tests.Npcs
 				npcService.NpcSpawning -= handler;
 
 				Assert.IsTrue(eventOccurred);
-			}
-		}
-
-		[TestCase(NpcType.BlueSlime)]
-		public void NpcSpawning_Handled_StopsNewNPC(NpcType type)
-		{
-			using (var orion = new Orion())
-			{
-				var npcService = orion.GetService<NpcService>();
-				var terrariaNpc = new Terraria.NPC();
-				var npc = new Npc(terrariaNpc);
-				EventHandler<NpcSpawningEventArgs> handler = (sender, e) => e.Handled = true;
-				npcService.NpcSpawning += handler;
-
-				Terraria.NPC.NewNPC(0, 0, (int)type);
-				npcService.NpcSpawning -= handler;
-
-				Assert.AreEqual(0, terrariaNpc.type);
 			}
 		}
 

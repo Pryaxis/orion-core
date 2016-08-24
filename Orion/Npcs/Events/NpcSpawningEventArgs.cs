@@ -14,6 +14,11 @@ namespace Orion.Npcs.Events
 		public int Index { get; set; }
 
 		/// <summary>
+		/// Gets or sets the type of the NPC that is spawning.
+		/// </summary>
+		public NpcType Type { get; set; }
+
+		/// <summary>
 		/// Gets the NPC that is spawning.
 		/// </summary>
 		public INpc Npc { get; }
