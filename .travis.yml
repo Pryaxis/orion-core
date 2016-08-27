@@ -1,7 +1,6 @@
 language: csharp
 solution: Orion.sln
 before_install:
-- sudo add-apt-repository "deb http://archive.ubuntu.com/ubuntu $(lsb_release -sc) universe"
 - sudo apt-get update
 - sudo apt-get install libuv-dev
 install:
