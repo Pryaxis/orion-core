@@ -1,8 +1,5 @@
 language: csharp
 solution: Orion.sln
-before_install:
-- sudo apt-get update
-- sudo apt-get install libuv-dev
 install:
 - nuget restore Orion.sln
 - nuget install NUnit.Runners -Version 3.4.1 -OutputDirectory testrunner

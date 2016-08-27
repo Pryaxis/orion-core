@@ -1,18 +1,16 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using NUnit.Framework;
+﻿using NUnit.Framework;
 using Orion.Configuration;
 using Orion.Rest;
-using Orion.Rest.AspNetCore;
+using Orion.Rest.Owin;
 using System;
 using System.Net.Http;
+using System.Web.Http;
 
 namespace Orion.Tests.Rest
 {
-	[Route("api/v1/relay")]
-	public class RelayController : Controller
+	public class RelayController : ApiController
 	{
-		[HttpGet]
-		public IActionResult Get(string value)
+		public IHttpActionResult Get(string value)
 		{
 			return Ok(value);
 		}
@@ -31,11 +29,11 @@ namespace Orion.Tests.Rest
 	public class RestServiceTests
 	{
 		[Test]
-		public void AspNetCoreConfiguration()
+		public void OwinConfiguration()
 		{
 			using (Orion orion = new Orion())
 			{
-				using (var service = orion.GetService<JsonFileConfigurationService<AspNetCoreConfiguration>>())
+				using (IConfigurationService<OwinConfiguration> service = orion.GetService<JsonFileConfigurationService<OwinConfiguration>>())
 				{
 					Assert.IsNotNull(service);
 					Assert.IsNotNull(service.Configuration);
@@ -54,8 +52,7 @@ namespace Orion.Tests.Rest
 					Assert.IsNotNull(service.BaseAddress);
 
 					string testResponse = RelayController.GetResponse(service, responseValue);
-					Assert.IsNotNull(testResponse);
-					Assert.AreEqual(responseValue, testResponse);
+					Assert.AreNotEqual(responseValue, testResponse);
 				}
 			}
 		}
