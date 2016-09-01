@@ -31,6 +31,10 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Multiplicity.Packets, Version=1.0.6079.37002, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Multiplicity.Packets.1.0.6079.37002\lib\net45\Multiplicity.Packets.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Newtonsoft.Json, Version=9.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\packages\Newtonsoft.Json.9.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
       <Private>True</Private>
@@ -80,6 +84,8 @@
     <Compile Include="Framework\ServiceTests.cs" />
     <Compile Include="Items\ItemArrayTests.cs" />
     <Compile Include="Items\ItemTests.cs" />
+    <Compile Include="Networking\Events\ReceivedPacketEventArgsTests.cs" />
+    <Compile Include="Networking\Events\ReceivingPacketEventArgsTests.cs" />
     <Compile Include="Npcs\NpcTests.cs" />
     <Compile Include="Players\PlayerTests.cs" />
     <Compile Include="Projectiles\Events\ProjectileUpdatedAIEventArgsTests.cs" />

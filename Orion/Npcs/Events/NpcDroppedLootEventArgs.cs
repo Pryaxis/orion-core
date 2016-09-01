@@ -22,9 +22,7 @@ namespace Orion.Npcs.Events
 		/// Initializes a new instance of the <see cref="NpcDroppedLootEventArgs"/> class.
 		/// </summary>
 		/// <param name="npc">The NPC that dropped the loot.</param>
-		/// <param name="item">
-		/// The loot <see cref="IItem"/> instance that the NPC dropped.
-		/// </param>
+		/// <param name="item">The loot that the NPC dropped.</param>
 		/// <exception cref="ArgumentNullException">
 		/// <paramref name="npc"/> or <paramref name="item"/> are null.
 		/// </exception>

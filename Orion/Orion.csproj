@@ -42,6 +42,10 @@
       <HintPath>..\packages\ini-parser.2.3.0\lib\net20\INIFileParser.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="Multiplicity.Packets, Version=1.0.6079.37002, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Multiplicity.Packets.1.0.6079.37002\lib\net45\Multiplicity.Packets.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Newtonsoft.Json, Version=9.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\packages\Newtonsoft.Json.9.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
       <Private>True</Private>
@@ -102,6 +106,9 @@
     <Compile Include="Items\ItemService.cs" />
     <Compile Include="Items\ItemType.cs" />
     <Compile Include="Items\Rarity.cs" />
+    <Compile Include="Networking\Events\ReceivedPacketEventArgs.cs" />
+    <Compile Include="Networking\Events\ReceivingPacketEventArgs.cs" />
+    <Compile Include="Networking\INetworkService.cs" />
     <Compile Include="Npcs\Events\NpcDroppedLootEventArgs.cs" />
     <Compile Include="Npcs\Events\NpcDroppingLootEventArgs.cs" />
     <Compile Include="Npcs\Events\NpcKilledEventArgs.cs" />
