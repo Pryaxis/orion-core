@@ -6,6 +6,7 @@ using System.Text;
 using IniParser;
 using IniParser.Model;
 using Orion.Extensions;
+using System.Threading.Tasks;
 
 namespace Orion.Authorization
 {
@@ -127,6 +128,12 @@ namespace Orion.Authorization
 		}
 
 		/// <inheritdoc/>
+		public async Task<bool> AuthenticateAsync(string password, bool? ignoreExpiry = false)
+		{
+			return await Task.Run(() => Authenticate(password, ignoreExpiry));
+		}
+
+		/// <inheritdoc/>
 		public void SetPassword(string password)
 		{
 			if (String.IsNullOrEmpty(password))
@@ -136,6 +143,12 @@ namespace Orion.Authorization
 
 			PasswordHash = BCrypt.Net.BCrypt.HashPassword(password);
 			Save();
+		}
+
+		/// <inheritdoc/>
+		public async Task SetPasswordAsync(string password)
+		{
+			await Task.Run(() => SetPassword(password));
 		}
 
 		/// <inheritdoc/>
@@ -157,6 +170,12 @@ namespace Orion.Authorization
 
 			SetPassword(newPassword);
 			Save();
+		}
+
+		/// <inheritdoc/>
+		public async Task ChangePasswordAsync(string currentPassword, string newPassword)
+		{
+			await Task.Run(() => ChangePassword(currentPassword, newPassword));
 		}
 
 		/// <summary>
