@@ -180,7 +180,7 @@ namespace Orion.Authorization
 		public IGroup AnonymousGroup { get; }
 
 		/// <inheritdoc/>
-		public IEnumerable<IGroup> Find(Predicate<IGroup> predicate)
+		public IEnumerable<IGroup> Find(Predicate<IGroup> predicate = null)
 		{
 			foreach (var filePath in Directory.GetFiles(GroupPathPrefix, "*.ini"))
 			{
@@ -198,6 +198,12 @@ namespace Orion.Authorization
 					}
 				}
 			}
+		}
+
+		/// <inheritdoc/>
+		public async Task<IEnumerable<IGroup>> FindAsync(Predicate<IGroup> predicate = null)
+		{
+			return await Task.Run(() => Find(predicate));
 		}
 
 		/// <inheritdoc/>
@@ -240,6 +246,12 @@ namespace Orion.Authorization
 		}
 
 		/// <inheritdoc/>
+		public async Task<IGroup> AddGroupAsync(string groupName, IEnumerable<IUserAccount> initialMembers = null)
+		{
+			return await Task.Run(() => AddGroup(groupName, initialMembers));
+		}
+
+		/// <inheritdoc/>
 		public void DeleteGroup(IGroup group)
 		{
 			string groupPath = Path.Combine(GroupPathPrefix, $"{group.Name.Slugify()}.ini");
@@ -248,9 +260,21 @@ namespace Orion.Authorization
 		}
 
 		/// <inheritdoc/>
+		public async Task DeleteGroupAsync(IGroup group)
+		{
+			await Task.Run(() => DeleteGroup(group));
+		}
+
+		/// <inheritdoc/>
 		public void AddMembers(IGroup group, params IUserAccount[] userAccounts)
 		{
 			throw new NotImplementedException();
+		}
+
+		/// <inheritdoc/>
+		public async Task AddMembersAsync(IGroup group, params IUserAccount[] userAccounts)
+		{
+			await Task.Run(() => AddMembers(group, userAccounts));
 		}
 	}
 }

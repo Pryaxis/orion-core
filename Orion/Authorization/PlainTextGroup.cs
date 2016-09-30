@@ -5,6 +5,7 @@ using IniParser;
 using IniParser.Model;
 using Orion.Extensions;
 using Orion.Players;
+using System.Threading.Tasks;
 
 namespace Orion.Authorization
 {
@@ -113,13 +114,30 @@ namespace Orion.Authorization
 		}
 
 		/// <inheritdoc/>
-		public void RemoveMember(IUserAccount player)
+		public async Task<IUserAccount> AddMemberAsync(IUserAccount userAccount)
 		{
 			throw new System.NotImplementedException();
 		}
 
 		/// <inheritdoc/>
-		public bool HasMember(IUserAccount player)
+		public void RemoveMember(IUserAccount userAccount)
+		{
+			throw new System.NotImplementedException();
+		}
+
+		/// <inheritdoc/>
+		public async Task RemoveMemberAsync(IUserAccount userAccount)
+		{
+			throw new System.NotImplementedException();
+		}
+
+		/// <inheritdoc/>
+		public bool HasMember(IUserAccount userAccount)
+		{
+			throw new System.NotImplementedException();
+		}
+
+		public async Task<bool> HasMemberAsync(IUserAccount userAccount)
 		{
 			throw new System.NotImplementedException();
 		}
