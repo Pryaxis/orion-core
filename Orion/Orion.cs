@@ -79,9 +79,13 @@ namespace Orion
 		/// <param name="args">The command-line arguments to use.</param>
 		internal void Start(string[] args)
 		{
-			foreach (ISharedService service in GetServices<ISharedService>())
+			foreach (ISharedService service in _injectionContainer.GetAll<ISharedService>())
 			{
 				Console.WriteLine($"  * Loading {service.Name} by {service.Author}");
+			}
+			foreach (Plugin plugin in _injectionContainer.GetAll<Plugin>())
+			{
+				Console.WriteLine($"  * Loading {plugin.Name} by {plugin.Author}");
 			}
 
 			WindowsLaunch.Main(new string[] {});

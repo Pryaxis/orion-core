@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using Orion.Players;
+using System.Threading.Tasks;
 
 namespace Orion.Authorization
 {
@@ -43,10 +44,25 @@ namespace Orion.Authorization
 		IUserAccount AddMember(IUserAccount userAccount);
 
 		/// <summary>
+		/// Asynchronously adds an <see cref="IUserAccount"/> to this group's list of members.
+		/// </summary>
+		/// <param name="userAccount">The user account to add.</param>
+		/// <exception cref="InvalidOperationException">
+		/// Thrown when the <paramref name="userAccount"/> already exists.
+		/// </exception>
+		Task<IUserAccount> AddMemberAsync(IUserAccount userAccount);
+
+		/// <summary>
 		/// Removes an <see cref="IUserAccount"/> from this group's list of members.
 		/// </summary>
 		/// <param name="userAccount">A reference to the user account to be removed.</param>
 		void RemoveMember(IUserAccount userAccount);
+
+		/// <summary>
+		/// Asynchronously emoves an <see cref="IUserAccount"/> from this group's list of members.
+		/// </summary>
+		/// <param name="userAccount">A reference to the user account to be removed.</param>
+		Task RemoveMemberAsync(IUserAccount userAccount);
 
 		/// <summary>
 		/// Determines whether this group contains the specified user account.
@@ -54,5 +70,12 @@ namespace Orion.Authorization
 		/// <param name="userAccount">The user account to check.</param>
 		/// <returns>true if the group contains the <paramref name="userAccount"/>, false otherwise.</returns>
 		bool HasMember(IUserAccount userAccount);
+
+		/// <summary>
+		/// Asynchronously determines whether this group contains the specified user account.
+		/// </summary>
+		/// <param name="userAccount">The user account to check.</param>
+		/// <returns>true if the group contains the <paramref name="userAccount"/>, false otherwise.</returns>
+		Task<bool> HasMemberAsync(IUserAccount userAccount);
 	}
 }

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using Orion.Extensions;
 using Orion.Framework;
+using System.Threading.Tasks;
 
 namespace Orion.Authorization
 {
@@ -52,6 +53,12 @@ namespace Orion.Authorization
 		}
 
 		/// <inheritdoc/>
+		public async Task<IEnumerable<IUserAccount>> FindAsync(Predicate<IUserAccount> predicate = null)
+		{
+			return await Task.Run(() => Find(predicate));
+		}
+
+		/// <inheritdoc/>
 		public IUserAccount GetUserAccountOrDefault(string accountName)
 		{
 			string accountPath = Path.Combine(UserPathPrefix, $"{accountName.Slugify()}.ini");
@@ -65,6 +72,12 @@ namespace Orion.Authorization
 			{
 				return new PlainTextUserAccount(this, fs);
 			}
+		}
+
+		/// <inheritdoc/>
+		public async Task<IUserAccount> GetUserAccountOrDefaultAsync(string accountName)
+		{
+			return await Task.Run(() => GetUserAccountOrDefault(accountName));
 		}
 
 		/// <inheritdoc/>
@@ -99,6 +112,12 @@ namespace Orion.Authorization
 		}
 
 		/// <inheritdoc/>
+		public async Task<IUserAccount> AddAccountAsync(string accountName)
+		{
+			return await Task.Run(() => AddAccount(accountName));
+		}
+
+		/// <inheritdoc/>
 		public void DeleteAccount(string accountName)
 		{
 			string accountPath;
@@ -114,9 +133,21 @@ namespace Orion.Authorization
 		}
 
 		/// <inheritdoc/>
+		public async Task DeleteAccountAsync(string accountName)
+		{
+			await Task.Run(() => DeleteAccount(accountName));
+		}
+
+		/// <inheritdoc/>
 		public void SetPassword(IUserAccount userAccount, string password)
 		{
 			userAccount.SetPassword(password);
+		}
+
+		/// <inheritdoc/>
+		public async Task SetPasswordAsync(IUserAccount userAccount, string password)
+		{
+			await userAccount.SetPasswordAsync(password);
 		}
 
 		/// <inheritdoc/>
@@ -126,9 +157,21 @@ namespace Orion.Authorization
 		}
 
 		/// <inheritdoc/>
+		public async Task ChangePasswordAsync(IUserAccount userAccount, string currentPassword, string newPassword)
+		{
+			await userAccount.ChangePasswordAsync(currentPassword, newPassword);
+		}
+
+		/// <inheritdoc/>
 		public bool Authenticate(IUserAccount userAccount, string password)
 		{
 			return userAccount.Authenticate(password);
+		}
+
+		/// <inheritdoc/>
+		public async Task<bool> AuthenticateAsync(IUserAccount userAccount, string password)
+		{
+			return await userAccount.AuthenticateAsync(password);
 		}
 
 		/// <inheritdoc/>
@@ -138,7 +181,7 @@ namespace Orion.Authorization
 		public IGroup AnonymousGroup { get; }
 
 		/// <inheritdoc/>
-		public IEnumerable<IGroup> Find(Predicate<IGroup> predicate)
+		public IEnumerable<IGroup> Find(Predicate<IGroup> predicate = null)
 		{
 			foreach (var filePath in Directory.GetFiles(GroupPathPrefix, "*.ini"))
 			{
@@ -156,6 +199,12 @@ namespace Orion.Authorization
 					}
 				}
 			}
+		}
+
+		/// <inheritdoc/>
+		public async Task<IEnumerable<IGroup>> FindAsync(Predicate<IGroup> predicate = null)
+		{
+			return await Task.Run(() => Find(predicate));
 		}
 
 		/// <inheritdoc/>
@@ -198,6 +247,12 @@ namespace Orion.Authorization
 		}
 
 		/// <inheritdoc/>
+		public async Task<IGroup> AddGroupAsync(string groupName, IEnumerable<IUserAccount> initialMembers = null)
+		{
+			return await Task.Run(() => AddGroup(groupName, initialMembers));
+		}
+
+		/// <inheritdoc/>
 		public void DeleteGroup(IGroup group)
 		{
 			string groupPath = Path.Combine(GroupPathPrefix, $"{group.Name.Slugify()}.ini");
@@ -206,9 +261,21 @@ namespace Orion.Authorization
 		}
 
 		/// <inheritdoc/>
+		public async Task DeleteGroupAsync(IGroup group)
+		{
+			await Task.Run(() => DeleteGroup(group));
+		}
+
+		/// <inheritdoc/>
 		public void AddMembers(IGroup group, params IUserAccount[] userAccounts)
 		{
 			throw new NotImplementedException();
+		}
+
+		/// <inheritdoc/>
+		public async Task AddMembersAsync(IGroup group, params IUserAccount[] userAccounts)
+		{
+			await Task.Run(() => AddMembers(group, userAccounts));
 		}
 	}
 }
