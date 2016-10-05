@@ -10,8 +10,17 @@ namespace Orion.Tests.Rest
 {
 	public class RelayController : ApiController
 	{
+		IRestService _restService;
+
+		public RelayController(IRestService restService)
+		{
+			_restService = restService;
+			Assert.IsNotNull(_restService);
+		}
+
 		public IHttpActionResult Get(string value)
 		{
+			Assert.IsNotNull(_restService);
 			return Ok(value);
 		}
 

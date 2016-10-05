@@ -1,4 +1,5 @@
 ﻿using Microsoft.Owin.Hosting;
+using Ninject;
 using Orion.Configuration;
 using Orion.Framework;
 using Owin;
@@ -16,6 +17,7 @@ namespace Orion.Rest.Owin
 	{
 		private IConfigurationService<OwinConfiguration> _configuration;
 		private IDisposable _webApp;
+		private IKernel _kernel;
 
 		/// <summary>
 		/// Provides access to the configuration used for the OWIN service.
@@ -32,31 +34,45 @@ namespace Orion.Rest.Owin
 		/// <param name="configuration">
 		/// The configuration service instance to provide access to <see cref="OwinConfiguration"/>
 		/// </param>
-		public OwinRestService(Orion orion, JsonFileConfigurationService<OwinConfiguration> configuration) : base(orion)
+		/// <param name="kernel">
+		/// The master injection container kernel that is shared with the <see cref="Orion"/> instance
+		/// </param>
+		public OwinRestService
+		(
+			Orion orion,
+			JsonFileConfigurationService<OwinConfiguration> configuration,
+			IKernel kernel) : base(orion)
 		{
-			this._configuration = configuration;
+			_configuration = configuration;
+			_kernel = kernel;
 
 			Debug.Assert(_configuration != null);
 			Debug.Assert(_configuration.Configuration != null);
+			Debug.Assert(kernel != null);
 
-			if (this.Configuration.AutoStart)
+			if (Configuration.AutoStart)
 			{
-				this.Startup();
+				Startup();
 			}
 		}
 
 		/// <inheritdoc/>
+		/// <exception cref="ObjectDisposedException"/>
+		/// <exception cref="InvalidOperationException"/>
 		public void Startup()
 		{
-			Debug.Assert(_webApp == null);
-			_webApp = WebApp.Start(url: this.BaseAddress, startup: Startup);
+			if (_kernel == null)
+				throw new ObjectDisposedException(nameof(OwinRestService));
+			if (_webApp != null)
+				throw new InvalidOperationException("The service is already started");
+
+			_webApp = WebApp.Start(url: BaseAddress, startup: Startup);
 		}
 
 		/// <inheritdoc/>
 		public void Shutdown()
 		{
-			Debug.Assert(_webApp != null);
-			_webApp.Dispose();
+			_webApp?.Dispose();
 			_webApp = null;
 		}
 
@@ -67,6 +83,10 @@ namespace Orion.Rest.Owin
 		private void Startup(IAppBuilder appBuilder)
 		{
 			var config = new HttpConfiguration();
+
+			//ApiControllers need to be able to use dependency injection, so we need to
+			//hook up our custom implementation of a Ninject dependency resolver
+			config.DependencyResolver = new OwinNinjectDependencyResolver(_kernel);
 
 			config.Routes.MapHttpRoute(
 				name: "DefaultApi",
@@ -90,11 +110,9 @@ namespace Orion.Rest.Owin
 			{
 				if (disposing)
 				{
-					if (_webApp != null)
-					{
-						_webApp.Dispose();
-						_webApp = null;
-					}
+					_webApp?.Dispose();
+					_webApp = null;
+					_kernel = null;
 				}
 
 				disposedValue = true;
