@@ -56,6 +56,7 @@ namespace Orion.Configuration
 				 * so a configuration file always exists.
 				 */
 				Configuration = new TConfig();
+				Save();
 			}
 			else
 			{

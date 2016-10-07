@@ -11,6 +11,7 @@ namespace Orion.Authorization
 	/// Plain text account and group service which sources its account information from flat files in Orion's data
 	/// subdirectory.
 	/// </summary>
+	[Service("Plain Text Account Service", Author = "Nyx Studios")]
 	public class PlainTextAccountService : SharedService, IUserAccountService, IGroupService
 	{
 		/// <summary>
