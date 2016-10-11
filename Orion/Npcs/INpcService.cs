@@ -9,7 +9,7 @@ namespace Orion.Npcs
 	/// <summary>
 	/// Provides a mechanism for managing NPCs.
 	/// </summary>
-	public interface INpcService : IService
+	public interface INpcService : ISharedService
 	{
 		/// <summary>
 		/// Gets or sets the base NPC spawning limit.
@@ -37,7 +37,17 @@ namespace Orion.Npcs
 		event EventHandler<NpcKilledEventArgs> NpcKilled;
 
 		/// <summary>
-		/// Occurs after an NPC has spawned in the world.
+		/// Occurs after an <see cref="INpc"/> instance had its defaults set.
+		/// </summary>
+		event EventHandler<NpcSetDefaultsEventArgs> NpcSetDefaults;
+
+		/// <summary>
+		/// Occurs when an <see cref="INpc"/> instance is having its defaults set.
+		/// </summary>
+		event EventHandler<NpcSettingDefaultsEventArgs> NpcSettingDefaults;
+
+		/// <summary>
+		/// Occurs when an <see cref="INpc"/> instance is about to be spawned in the world.
 		/// </summary>
 		event EventHandler<NpcSpawnedEventArgs> NpcSpawned;
 
@@ -47,17 +57,22 @@ namespace Orion.Npcs
 		event EventHandler<NpcSpawningEventArgs> NpcSpawning;
 
 		/// <summary>
-		/// Occurs after an NPC has transformed to another type.
+		/// Occurs when an <see cref="INpc"/> instance has been hit.
+		/// </summary>
+		event EventHandler<NpcStrikingEventArgs> NpcStriking;
+
+		/// <summary>
+		/// Occurs after an <see cref="INpc"/> instance has transformed to another type.
 		/// </summary>
 		event EventHandler<NpcTransformedEventArgs> NpcTransformed;
 
 		/// <summary>
 		/// Occurs when an NPC is transforming to another type.
 		/// </summary>
-		event EventHandler<NpcTransformedEventArgs> NpcTransforming;
+		event EventHandler<NpcTransformingEventArgs> NpcTransforming;
 
 		/// <summary>
-		/// Returns all NPCs in the world, optionally matching a predicate.
+		/// Returns all <see cref="INpc"/> instances in the world, optionally matching a predicate.
 		/// </summary>
 		/// <param name="predicate">The predicate.</param>
 		/// <returns>An enumerable collection of NPCs.</returns>
@@ -66,7 +81,7 @@ namespace Orion.Npcs
 		/// <summary>
 		/// Spawns a new NPC with the specified type ID at a position in the world.
 		/// </summary>
-		/// <param name="type">The type ID.</param>
+		/// <param name="type">The <see cref="NpcType"/>.</param>
 		/// <param name="position">The position in the world.</param>
 		/// <returns>The resulting NPC.</returns>
 		INpc SpawnNpc(int type, Vector2 position);

@@ -1,11 +1,12 @@
 ﻿using System;
+using System.ComponentModel;
 
 namespace Orion.Npcs.Events
 {
 	/// <summary>
 	/// Provides data for the <see cref="INpcService.NpcSpawned"/> event.
 	/// </summary>
-	public class NpcSpawnedEventArgs : EventArgs
+	public class NpcSpawnedEventArgs : HandledEventArgs
 	{
 		/// <summary>
 		/// Gets the NPC that spawned.
