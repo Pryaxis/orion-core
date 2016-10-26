@@ -118,24 +118,24 @@ namespace Orion.Authorization
 		}
 
 		/// <inheritdoc/>
-		public void DeleteUser(string accountName)
+		public void DeleteUser(IUserAccount user)
 		{
 			string accountPath;
 
-			if (String.IsNullOrEmpty(accountName))
+			if (user == null)
 			{
-				throw new ArgumentNullException(nameof(accountName));
+				throw new ArgumentNullException(nameof(user));
 			}
 
-			accountPath = Path.Combine(UserPathPrefix, $"{accountName.Slugify()}.ini");
+			accountPath = Path.Combine(UserPathPrefix, $"{user.AccountName.Slugify()}.ini");
 
 			File.Delete(accountPath);
 		}
 
 		/// <inheritdoc/>
-		public async Task DeleteAccountAsync(string accountName)
+		public async Task DeleteUserAsync(IUserAccount user)
 		{
-			await Task.Run(() => DeleteUser(accountName));
+			await Task.Run(() => DeleteUser(user));
 		}
 
 		/// <inheritdoc/>
