@@ -32,7 +32,7 @@ namespace Orion.Authorization
 		}
 
 		/// <inheritdoc/>
-		public IEnumerable<IUserAccount> Find(Predicate<IUserAccount> predicate = null)
+		public IEnumerable<IUserAccount> FindUsers(Predicate<IUserAccount> predicate = null)
 		{
 			foreach (var filePath in Directory.GetFiles(UserPathPrefix, "*.ini"))
 			{
@@ -53,13 +53,13 @@ namespace Orion.Authorization
 		}
 
 		/// <inheritdoc/>
-		public async Task<IEnumerable<IUserAccount>> FindAsync(Predicate<IUserAccount> predicate = null)
+		public async Task<IEnumerable<IUserAccount>> FindUsersAsync(Predicate<IUserAccount> predicate = null)
 		{
-			return await Task.Run(() => Find(predicate));
+			return await Task.Run(() => FindUsers(predicate));
 		}
 
 		/// <inheritdoc/>
-		public IUserAccount GetUserAccountOrDefault(string accountName)
+		public IUserAccount GetUser(string accountName)
 		{
 			string accountPath = Path.Combine(UserPathPrefix, $"{accountName.Slugify()}.ini");
 
@@ -75,13 +75,13 @@ namespace Orion.Authorization
 		}
 
 		/// <inheritdoc/>
-		public async Task<IUserAccount> GetUserAccountOrDefaultAsync(string accountName)
+		public async Task<IUserAccount> GetUserAsync(string accountName)
 		{
-			return await Task.Run(() => GetUserAccountOrDefault(accountName));
+			return await Task.Run(() => GetUser(accountName));
 		}
 
 		/// <inheritdoc/>
-		public IUserAccount AddAccount(string accountName)
+		public IUserAccount AddUser(string accountName)
 		{
 			PlainTextUserAccount userAccount;
 			string accountPath;
@@ -112,13 +112,13 @@ namespace Orion.Authorization
 		}
 
 		/// <inheritdoc/>
-		public async Task<IUserAccount> AddAccountAsync(string accountName)
+		public async Task<IUserAccount> AddUserAsync(string accountName)
 		{
-			return await Task.Run(() => AddAccount(accountName));
+			return await Task.Run(() => AddUser(accountName));
 		}
 
 		/// <inheritdoc/>
-		public void DeleteAccount(string accountName)
+		public void DeleteUser(string accountName)
 		{
 			string accountPath;
 
@@ -135,7 +135,7 @@ namespace Orion.Authorization
 		/// <inheritdoc/>
 		public async Task DeleteAccountAsync(string accountName)
 		{
-			await Task.Run(() => DeleteAccount(accountName));
+			await Task.Run(() => DeleteUser(accountName));
 		}
 
 		/// <inheritdoc/>
@@ -181,7 +181,7 @@ namespace Orion.Authorization
 		public IGroup AnonymousGroup { get; }
 
 		/// <inheritdoc/>
-		public IEnumerable<IGroup> Find(Predicate<IGroup> predicate = null)
+		public IEnumerable<IGroup> FindGroups(Predicate<IGroup> predicate = null)
 		{
 			foreach (var filePath in Directory.GetFiles(GroupPathPrefix, "*.ini"))
 			{
@@ -202,9 +202,9 @@ namespace Orion.Authorization
 		}
 
 		/// <inheritdoc/>
-		public async Task<IEnumerable<IGroup>> FindAsync(Predicate<IGroup> predicate = null)
+		public async Task<IEnumerable<IGroup>> FindGroupsAsync(Predicate<IGroup> predicate = null)
 		{
-			return await Task.Run(() => Find(predicate));
+			return await Task.Run(() => FindGroups(predicate));
 		}
 
 		/// <inheritdoc/>

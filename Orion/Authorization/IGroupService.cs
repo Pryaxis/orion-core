@@ -7,8 +7,6 @@ using System.Threading.Tasks;
 namespace Orion.Authorization
 {
 	/// <summary>
-	/// Service definition: GroupService.
-	/// 
 	/// Groups link lists of accounts together which has a common set of permissions and properties
 	/// set against them.
 	/// </summary>
@@ -34,7 +32,7 @@ namespace Orion.Authorization
 		/// An enumerable of all <see cref="IGroup"/> instances matching the specified <paramref name="predicate"/>.
 		/// If no predicate expression was specified, returns all groups.
 		/// </returns>
-		IEnumerable<IGroup> Find(Predicate<IGroup> predicate = null);
+		IEnumerable<IGroup> FindGroups(Predicate<IGroup> predicate = null);
 
 		/// <summary>
 		/// Asynchronously finds a list of groups, optionally filtered by the supplied <paramref name="predicate"/>.
@@ -46,7 +44,7 @@ namespace Orion.Authorization
 		/// An enumerable of all <see cref="IGroup"/> instances matching the specified <paramref name="predicate"/>.
 		/// If no predicate expression was specified, returns all groups.
 		/// </returns>
-		Task<IEnumerable<IGroup>> FindAsync(Predicate<IGroup> predicate = null);
+		Task<IEnumerable<IGroup>> FindGroupsAsync(Predicate<IGroup> predicate = null);
 
 		/// <summary>
 		/// Adds a group with the specified group name to the service, optionally with an initial list of members.
@@ -81,23 +79,5 @@ namespace Orion.Authorization
 		/// </summary>
 		/// <param name="group">A reference to the group to be deleted.</param>
 		Task DeleteGroupAsync(IGroup group);
-
-		/// <summary>
-		/// Binds the specified list of user accounts to the specified group.
-		/// </summary>
-		/// <param name="group">
-		/// A reference to the group object to bind members to.
-		/// </param>
-		/// <param name="userAccounts">A list of user account objects to add to the specified group.</param>
-		void AddMembers(IGroup group, params IUserAccount[] userAccounts);
-
-		/// <summary>
-		/// Asynchronously binds the specified list of user accounts to the specified group.
-		/// </summary>
-		/// <param name="group">
-		/// A reference to the group object to bind members to.
-		/// </param>
-		/// <param name="userAccounts">A list of user account objects to add to the specified group.</param>
-		Task AddMembersAsync(IGroup group, params IUserAccount[] userAccounts);
 	}
 }
