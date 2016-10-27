@@ -23,13 +23,13 @@ namespace Orion.Tests.Authorization
 			using (Orion orion = new Orion())
 			{
 				IUserAccountService userAccountService = orion.GetService<PlainTextAccountService>();
-				userAccountService.AddAccount(accountName);
+				userAccountService.AddUser(accountName);
 
-				IUserAccount account = userAccountService.GetUserAccountOrDefault(accountName);
+				IUserAccount account = userAccountService.GetUser(accountName);
 				Assert.IsNotNull(account);
 				Assert.AreEqual(account.AccountName, accountName);
 
-				userAccountService.DeleteAccount(accountName);
+				userAccountService.DeleteUser(account);
 			}
 		}
 
@@ -40,7 +40,7 @@ namespace Orion.Tests.Authorization
 			using (Orion orion = new Orion())
 			{
 				IUserAccountService userAccountService = orion.GetService<PlainTextAccountService>();
-				Assert.That(() => userAccountService.AddAccount(accountName), Throws.TypeOf<ArgumentNullException>());
+				Assert.That(() => userAccountService.AddUser(accountName), Throws.TypeOf<ArgumentNullException>());
 			}
 		}
 
@@ -50,13 +50,13 @@ namespace Orion.Tests.Authorization
 			using (Orion orion = new Orion())
 			{
 				IUserAccountService userAccountService = orion.GetService<PlainTextAccountService>();
+				IUserAccount account = userAccountService.AddUser("duplicateAccount");
 				Assert.That(() =>
 				{
-					userAccountService.AddAccount("duplicateAccount");
-					userAccountService.AddAccount("duplicateAccount");
+					userAccountService.AddUser("duplicateAccount");
 				}, Throws.TypeOf<InvalidOperationException>());
 
-				userAccountService.DeleteAccount("duplicateAccount");
+				userAccountService.DeleteUser(account);
 			}
 		}
 
@@ -68,15 +68,15 @@ namespace Orion.Tests.Authorization
 			{
 				IUserAccountService userAccountService = orion.GetService<PlainTextAccountService>();
 
-				IUserAccount userAccount = userAccountService.GetUserAccountOrDefault("nullPasswordTest") ??
-										   userAccountService.AddAccount("nullPasswordTest");
+				IUserAccount userAccount = userAccountService.GetUser("nullPasswordTest") ??
+										   userAccountService.AddUser("nullPasswordTest");
 
 				Assert.That(() =>
 				{
 					userAccount.SetPassword(password);
 				}, Throws.TypeOf<ArgumentNullException>());
 
-				userAccountService.DeleteAccount("nullPasswordTest");
+				userAccountService.DeleteUser(userAccount);
 			}
 		}
 
@@ -88,14 +88,14 @@ namespace Orion.Tests.Authorization
 			{
 				IUserAccountService userAccountService = orion.GetService<PlainTextAccountService>();
 
-				IUserAccount userAccount = userAccountService.GetUserAccountOrDefault("SetPasswordShouldSucceedTest") ??
-										   userAccountService.AddAccount("SetPasswordShouldSucceedTest");
+				IUserAccount userAccount = userAccountService.GetUser("SetPasswordShouldSucceedTest") ??
+										   userAccountService.AddUser("SetPasswordShouldSucceedTest");
 
 				userAccount.SetPassword(password);
 
 				Assert.IsTrue(userAccount.Authenticate(password));
 
-				userAccountService.DeleteAccount("SetPasswordShouldSucceedTest");
+				userAccountService.DeleteUser(userAccount);
 			}
 		}
 
@@ -109,14 +109,14 @@ namespace Orion.Tests.Authorization
 			{
 				IUserAccountService userAccountService = orion.GetService<PlainTextAccountService>();
 
-				IUserAccount userAccount = userAccountService.GetUserAccountOrDefault("Authenticate") ??
-										   userAccountService.AddAccount("Authenticate");
+				IUserAccount userAccount = userAccountService.GetUser("Authenticate") ??
+										   userAccountService.AddUser("Authenticate");
 
 				userAccount.SetPassword(passwordToSet);
 
 				val = userAccount.Authenticate(passwordToCompare);
 
-				userAccountService.DeleteAccount("Authenticate");
+				userAccountService.DeleteUser(userAccount);
 			}
 
 			return val;
