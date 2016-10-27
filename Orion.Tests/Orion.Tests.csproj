@@ -114,15 +114,12 @@
     <Compile Include="Items\ItemTests.cs" />
     <Compile Include="Networking\Events\ReceivedPacketEventArgsTests.cs" />
     <Compile Include="Networking\Events\ReceivingPacketEventArgsTests.cs" />
-    <Compile Include="Npcs\NpcTests.cs" />
-    <Compile Include="Players\PlayerTests.cs" />
     <Compile Include="Projectiles\Events\ProjectileUpdatedAIEventArgsTests.cs" />
     <Compile Include="Projectiles\Events\ProjectileUpdatedEventArgsTests.cs" />
     <Compile Include="Projectiles\Events\ProjectileUpdatingAIEventArgsTests.cs" />
     <Compile Include="Projectiles\Events\ProjectileUpdatingEventArgsTests.cs" />
     <Compile Include="Projectiles\Events\ProjectileKillingEventArgsTests.cs" />
     <Compile Include="Projectiles\Events\ProjectileKilledEventArgsTests.cs" />
-    <Compile Include="Items\ItemTests.cs" />
     <Compile Include="Npcs\Events\NpcSetDefaultsEventArgsTests.cs" />
     <Compile Include="Npcs\Events\NpcSettingDefaultsEventArgsTests.cs" />
     <Compile Include="Npcs\Events\NpcStruckEventArgsTests.cs" />
