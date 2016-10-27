@@ -13,7 +13,7 @@ namespace Orion.Authorization
 	/// <summary>
 	/// Plain-text user account used by the <see cref="PlainTextAccountService"/>.
 	/// </summary>
-	public class PlainTextUserAccount : IUserAccount
+	public class PlainTextUserAccount : IAccount
 	{
 		private PlainTextAccountService _service;
 		private IniData _iniData;

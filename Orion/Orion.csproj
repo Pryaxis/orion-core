@@ -105,7 +105,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Authorization\IGroupService.cs" />
-    <Compile Include="Authorization\IUserAccountService.cs" />
+    <Compile Include="Authorization\IAccountService.cs" />
     <Compile Include="Authorization\PlainTextAccountService.cs" />
     <Compile Include="Authorization\PlainTextGroup.cs" />
     <Compile Include="Authorization\PlainTextUserAccount.cs" />
@@ -121,7 +121,7 @@
     <Compile Include="Framework\SharedService.cs" />
     <Compile Include="Authorization\IGroup.cs" />
     <Compile Include="Authorization\IPermission.cs" />
-    <Compile Include="Authorization\IUserAccount.cs" />
+    <Compile Include="Authorization\IAccount.cs" />
     <Compile Include="Items\AnimationStyle.cs" />
     <Compile Include="Items\Events\ItemSetDefaultsEventArgs.cs" />
     <Compile Include="Items\Events\ItemSettingDefaultsEventArgs.cs" />

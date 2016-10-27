@@ -46,7 +46,7 @@ namespace Orion.Authorization
 		}
 
 		/// <inheritdoc/>
-		public IEnumerable<IUserAccount> Members { get; }
+		public IEnumerable<IAccount> Members { get; }
 
 		/// <inheritdoc/>
 		public IEnumerable<IPermission> Permissions { get; }
@@ -108,36 +108,36 @@ namespace Orion.Authorization
 		}
 
 		/// <inheritdoc/>
-		public IUserAccount AddMember(IUserAccount userAccount)
+		public IAccount AddMember(IAccount userAccount)
 		{
 			throw new System.NotImplementedException();
 		}
 
 		/// <inheritdoc/>
-		public async Task<IUserAccount> AddMemberAsync(IUserAccount userAccount)
+		public async Task<IAccount> AddMemberAsync(IAccount userAccount)
 		{
 			throw new System.NotImplementedException();
 		}
 
 		/// <inheritdoc/>
-		public void RemoveMember(IUserAccount userAccount)
+		public void RemoveMember(IAccount userAccount)
 		{
 			throw new System.NotImplementedException();
 		}
 
 		/// <inheritdoc/>
-		public async Task RemoveMemberAsync(IUserAccount userAccount)
+		public async Task RemoveMemberAsync(IAccount userAccount)
 		{
 			throw new System.NotImplementedException();
 		}
 
 		/// <inheritdoc/>
-		public bool HasMember(IUserAccount userAccount)
+		public bool HasMember(IAccount userAccount)
 		{
 			throw new System.NotImplementedException();
 		}
 
-		public async Task<bool> HasMemberAsync(IUserAccount userAccount)
+		public async Task<bool> HasMemberAsync(IAccount userAccount)
 		{
 			throw new System.NotImplementedException();
 		}

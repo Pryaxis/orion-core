@@ -55,7 +55,7 @@ namespace Orion.Authorization
 		/// <param name="initialMembers">
 		/// (optional) A list of user accounts that will initially become members of this group.
 		/// </param>
-		IGroup AddGroup(string groupName, IEnumerable<IUserAccount> initialMembers = null);
+		IGroup AddGroup(string groupName, IEnumerable<IAccount> initialMembers = null);
 
 		/// <summary>
 		/// Asynchronously adds a group with the specified group name to the service, optionally with an initial list of members.
@@ -66,7 +66,7 @@ namespace Orion.Authorization
 		/// <param name="initialMembers">
 		/// (optional) A list of user accounts that will initially become members of this group.
 		/// </param>
-		Task<IGroup> AddGroupAsync(string groupName, IEnumerable<IUserAccount> initialMembers = null);
+		Task<IGroup> AddGroupAsync(string groupName, IEnumerable<IAccount> initialMembers = null);
 
 		/// <summary>
 		/// Deletes the specified <paramref name="group"/>.
