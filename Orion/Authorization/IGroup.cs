@@ -27,7 +27,7 @@ namespace Orion.Authorization
 		/// <summary>
 		/// Gets all users that are members of this group.
 		/// </summary>
-		IEnumerable<IUserAccount> Members { get; }
+		IEnumerable<IAccount> Members { get; }
 
 		/// <summary>
 		/// Gets all permissions that members of this group inherit.
@@ -35,47 +35,47 @@ namespace Orion.Authorization
 		IEnumerable<IPermission> Permissions { get; }
 
 		/// <summary>
-		/// Adds an <see cref="IUserAccount"/> to this group's list of members.
+		/// Adds an <see cref="IAccount"/> to this group's list of members.
 		/// </summary>
 		/// <param name="userAccount">The user account to add.</param>
 		/// <exception cref="InvalidOperationException">
 		/// Thrown when the <paramref name="userAccount"/> already exists.
 		/// </exception>
-		IUserAccount AddMember(IUserAccount userAccount);
+		IAccount AddMember(IAccount userAccount);
 
 		/// <summary>
-		/// Asynchronously adds an <see cref="IUserAccount"/> to this group's list of members.
+		/// Asynchronously adds an <see cref="IAccount"/> to this group's list of members.
 		/// </summary>
 		/// <param name="userAccount">The user account to add.</param>
 		/// <exception cref="InvalidOperationException">
 		/// Thrown when the <paramref name="userAccount"/> already exists.
 		/// </exception>
-		Task<IUserAccount> AddMemberAsync(IUserAccount userAccount);
+		Task<IAccount> AddMemberAsync(IAccount userAccount);
 
 		/// <summary>
-		/// Removes an <see cref="IUserAccount"/> from this group's list of members.
+		/// Removes an <see cref="IAccount"/> from this group's list of members.
 		/// </summary>
 		/// <param name="userAccount">A reference to the user account to be removed.</param>
-		void RemoveMember(IUserAccount userAccount);
+		void RemoveMember(IAccount userAccount);
 
 		/// <summary>
-		/// Asynchronously emoves an <see cref="IUserAccount"/> from this group's list of members.
+		/// Asynchronously emoves an <see cref="IAccount"/> from this group's list of members.
 		/// </summary>
 		/// <param name="userAccount">A reference to the user account to be removed.</param>
-		Task RemoveMemberAsync(IUserAccount userAccount);
+		Task RemoveMemberAsync(IAccount userAccount);
 
 		/// <summary>
 		/// Determines whether this group contains the specified user account.
 		/// </summary>
 		/// <param name="userAccount">The user account to check.</param>
 		/// <returns>true if the group contains the <paramref name="userAccount"/>, false otherwise.</returns>
-		bool HasMember(IUserAccount userAccount);
+		bool HasMember(IAccount userAccount);
 
 		/// <summary>
 		/// Asynchronously determines whether this group contains the specified user account.
 		/// </summary>
 		/// <param name="userAccount">The user account to check.</param>
 		/// <returns>true if the group contains the <paramref name="userAccount"/>, false otherwise.</returns>
-		Task<bool> HasMemberAsync(IUserAccount userAccount);
+		Task<bool> HasMemberAsync(IAccount userAccount);
 	}
 }

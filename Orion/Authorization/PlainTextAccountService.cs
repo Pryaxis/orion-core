@@ -12,7 +12,7 @@ namespace Orion.Authorization
 	/// subdirectory.
 	/// </summary>
 	[Service("Plain Text Account Service", Author = "Nyx Studios")]
-	public class PlainTextAccountService : SharedService, IUserAccountService, IGroupService
+	public class PlainTextAccountService : SharedService, IAccountService, IGroupService
 	{
 		/// <summary>
 		/// The path to where <see cref="PlainTextUserAccount"/> objects are stored.
@@ -32,7 +32,7 @@ namespace Orion.Authorization
 		}
 
 		/// <inheritdoc/>
-		public IEnumerable<IUserAccount> FindUsers(Predicate<IUserAccount> predicate = null)
+		public IEnumerable<IAccount> FindAccounts(Predicate<IAccount> predicate = null)
 		{
 			foreach (var filePath in Directory.GetFiles(UserPathPrefix, "*.ini"))
 			{
@@ -53,19 +53,19 @@ namespace Orion.Authorization
 		}
 
 		/// <inheritdoc/>
-		public async Task<IEnumerable<IUserAccount>> FindUsersAsync(Predicate<IUserAccount> predicate = null)
+		public async Task<IEnumerable<IAccount>> FindAccountsAsync(Predicate<IAccount> predicate = null)
 		{
-			return await Task.Run(() => FindUsers(predicate));
+			return await Task.Run(() => FindAccounts(predicate));
 		}
 
 		/// <inheritdoc/>
-		public IUserAccount GetUser(string accountName)
+		public IAccount GetAccount(string accountName)
 		{
 			string accountPath = Path.Combine(UserPathPrefix, $"{accountName.Slugify()}.ini");
 
 			if (!File.Exists(accountPath))
 			{
-				return default(IUserAccount);
+				return default(IAccount);
 			}
 
 			using (FileStream fs = new FileStream(accountPath, FileMode.Open, FileAccess.Read, FileShare.Read))
@@ -75,13 +75,13 @@ namespace Orion.Authorization
 		}
 
 		/// <inheritdoc/>
-		public async Task<IUserAccount> GetUserAsync(string accountName)
+		public async Task<IAccount> GetAccountAsync(string accountName)
 		{
-			return await Task.Run(() => GetUser(accountName));
+			return await Task.Run(() => GetAccount(accountName));
 		}
 
 		/// <inheritdoc/>
-		public IUserAccount AddUser(string accountName)
+		public IAccount AddAccount(string accountName)
 		{
 			PlainTextUserAccount userAccount;
 			string accountPath;
@@ -112,13 +112,13 @@ namespace Orion.Authorization
 		}
 
 		/// <inheritdoc/>
-		public async Task<IUserAccount> AddUserAsync(string accountName)
+		public async Task<IAccount> AddAccountAsync(string accountName)
 		{
-			return await Task.Run(() => AddUser(accountName));
+			return await Task.Run(() => AddAccount(accountName));
 		}
 
 		/// <inheritdoc/>
-		public void DeleteUser(IUserAccount user)
+		public void DeleteAccount(IAccount user)
 		{
 			string accountPath;
 
@@ -133,43 +133,43 @@ namespace Orion.Authorization
 		}
 
 		/// <inheritdoc/>
-		public async Task DeleteUserAsync(IUserAccount user)
+		public async Task DeleteAccountAsync(IAccount user)
 		{
-			await Task.Run(() => DeleteUser(user));
+			await Task.Run(() => DeleteAccount(user));
 		}
 
 		/// <inheritdoc/>
-		public void SetPassword(IUserAccount userAccount, string password)
+		public void SetPassword(IAccount userAccount, string password)
 		{
 			userAccount.SetPassword(password);
 		}
 
 		/// <inheritdoc/>
-		public async Task SetPasswordAsync(IUserAccount userAccount, string password)
+		public async Task SetPasswordAsync(IAccount userAccount, string password)
 		{
 			await userAccount.SetPasswordAsync(password);
 		}
 
 		/// <inheritdoc/>
-		public void ChangePassword(IUserAccount userAccount, string currentPassword, string newPassword)
+		public void ChangePassword(IAccount userAccount, string currentPassword, string newPassword)
 		{
 			userAccount.ChangePassword(currentPassword, newPassword);
 		}
 
 		/// <inheritdoc/>
-		public async Task ChangePasswordAsync(IUserAccount userAccount, string currentPassword, string newPassword)
+		public async Task ChangePasswordAsync(IAccount userAccount, string currentPassword, string newPassword)
 		{
 			await userAccount.ChangePasswordAsync(currentPassword, newPassword);
 		}
 
 		/// <inheritdoc/>
-		public bool Authenticate(IUserAccount userAccount, string password)
+		public bool Authenticate(IAccount userAccount, string password)
 		{
 			return userAccount.Authenticate(password);
 		}
 
 		/// <inheritdoc/>
-		public async Task<bool> AuthenticateAsync(IUserAccount userAccount, string password)
+		public async Task<bool> AuthenticateAsync(IAccount userAccount, string password)
 		{
 			return await userAccount.AuthenticateAsync(password);
 		}
@@ -208,7 +208,7 @@ namespace Orion.Authorization
 		}
 
 		/// <inheritdoc/>
-		public IGroup AddGroup(string groupName, IEnumerable<IUserAccount> initialMembers = null)
+		public IGroup AddGroup(string groupName, IEnumerable<IAccount> initialMembers = null)
 		{
 			PlainTextGroup group;
 			string groupPath;
@@ -232,7 +232,7 @@ namespace Orion.Authorization
 
 			if (initialMembers != null)
 			{
-				foreach (IUserAccount a in initialMembers)
+				foreach (IAccount a in initialMembers)
 				{
 					group.AddMember(a);
 				}
@@ -247,7 +247,7 @@ namespace Orion.Authorization
 		}
 
 		/// <inheritdoc/>
-		public async Task<IGroup> AddGroupAsync(string groupName, IEnumerable<IUserAccount> initialMembers = null)
+		public async Task<IGroup> AddGroupAsync(string groupName, IEnumerable<IAccount> initialMembers = null)
 		{
 			return await Task.Run(() => AddGroup(groupName, initialMembers));
 		}
@@ -267,13 +267,13 @@ namespace Orion.Authorization
 		}
 
 		/// <inheritdoc/>
-		public void AddMembers(IGroup group, params IUserAccount[] userAccounts)
+		public void AddMembers(IGroup group, params IAccount[] userAccounts)
 		{
 			throw new NotImplementedException();
 		}
 
 		/// <inheritdoc/>
-		public async Task AddMembersAsync(IGroup group, params IUserAccount[] userAccounts)
+		public async Task AddMembersAsync(IGroup group, params IAccount[] userAccounts)
 		{
 			await Task.Run(() => AddMembers(group, userAccounts));
 		}
