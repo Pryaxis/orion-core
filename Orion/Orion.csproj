@@ -54,8 +54,8 @@
       <HintPath>..\packages\Microsoft.Owin.Hosting.2.0.2\lib\net45\Microsoft.Owin.Hosting.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Multiplicity.Packets, Version=1.1.6089.15820, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Multiplicity.Packets.1.1.6089.15820\lib\net45\Multiplicity.Packets.dll</HintPath>
+    <Reference Include="Multiplicity.Packets, Version=1.2.5.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Multiplicity.Packets.1.2.5\lib\net45\Multiplicity.Packets.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Newtonsoft.Json, Version=9.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
@@ -70,8 +70,8 @@
       <HintPath>..\packages\Ninject.Extensions.NamedScope.3.2.0.0\lib\net45-full\Ninject.Extensions.NamedScope.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="OTAPI, Version=1.3.4.3, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\OTAPI.2.0.0.4\lib\net451\OTAPI.dll</HintPath>
+    <Reference Include="OTAPI, Version=1.3.4.4, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\OTAPI.2.0.0.12\lib\net451\OTAPI.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Owin, Version=1.0.0.0, Culture=neutral, PublicKeyToken=f0ebd12fd5e55cc5, processorArchitecture=MSIL">
@@ -110,6 +110,8 @@
     <Compile Include="Authorization\PlainTextGroup.cs" />
     <Compile Include="Authorization\PlainTextUserAccount.cs" />
     <Compile Include="Configuration\YamlFileConfigurationService.cs" />
+    <Compile Include="Entities\IOrionEntity.cs" />
+    <Compile Include="Entities\OrionEntity.cs" />
     <Compile Include="Extensions\StringExtensions.cs" />
     <Compile Include="Framework\IService.cs" />
     <Compile Include="Framework\ISharedService.cs" />
