@@ -44,6 +44,11 @@ namespace Orion.Npcs.Events
 		public bool FromNet { get; set; }
 
 		/// <summary>
+		/// Gets or sets the <see cref="Entities.IOrionEntity"/> that struck the NPC. May be null.
+		/// </summary>
+		public Entities.IOrionEntity Entity { get; set; }
+
+		/// <summary>
 		/// Initializes a new instance of the <see cref="NpcStrikingEventArgs"/> class.
 		/// </summary>
 		/// <param name="npc">The <see cref="INpc"/> instance that was hit.</param>
@@ -53,7 +58,9 @@ namespace Orion.Npcs.Events
 		/// <param name="critical">Whether the hit was critical.</param>
 		/// <param name="noEffect">Whether to display the hit effect.</param>
 		/// <param name="fromNet">Whether the hit was caused by a bug net.</param>
-		public NpcStrikingEventArgs(INpc npc, int damage, float knockback, int hitDirection, bool critical, bool noEffect, bool fromNet)
+		/// <param name="entity">The <see cref="Entities.IOrionEntity"/>that struck the NPC. May be null.</param>
+		public NpcStrikingEventArgs(INpc npc, int damage, float knockback, int hitDirection, bool critical,
+			bool noEffect, bool fromNet, Entities.IOrionEntity entity)
 		{
 			if (npc == null)
 			{
@@ -67,6 +74,7 @@ namespace Orion.Npcs.Events
 			Critical = critical;
 			NoEffect = noEffect;
 			FromNet = fromNet;
+			Entity = entity;
 		}
 	}
 }

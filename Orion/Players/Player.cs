@@ -239,6 +239,9 @@ namespace Orion.Players
 		/// <inheritdoc/>
 		public Terraria.Player WrappedPlayer { get; }
 
+		/// <inheritdoc/>
+		public Terraria.Entity WrappedEntity { get; }
+
 		/// <summary>
 		/// Initializes a new instance of the <see cref="Player"/> class wrapping the specified Terraria player
 		/// instance.
@@ -260,6 +263,15 @@ namespace Orion.Players
 			PiggyBank = new ItemArray(terrariaPlayer.bank.item);
 			Safe = new ItemArray(terrariaPlayer.bank2.item);
 			WrappedPlayer = terrariaPlayer;
+			WrappedEntity = terrariaPlayer;
+		}
+
+		/// <inheritdoc/>
+		public void Kill()
+		{
+			//Killing a player requires sending net messages.
+			//TODO: implement this.
+			throw new NotImplementedException();
 		}
 	}
 }

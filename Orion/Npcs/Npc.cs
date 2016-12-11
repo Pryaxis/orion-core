@@ -84,6 +84,9 @@ namespace Orion.Npcs
 		/// <inheritdoc/>
 		public Terraria.NPC WrappedNpc { get; }
 
+		/// <inheritdoc/>
+		public Terraria.Entity WrappedEntity { get; }
+
 		/// <summary>
 		/// Initializes a new instance of the <see cref="Npc"/> class wrapping the specified Terraria NPC instance.
 		/// </summary>
@@ -97,6 +100,7 @@ namespace Orion.Npcs
 			}
 
 			WrappedNpc = terrariaNpc;
+			WrappedEntity = terrariaNpc;
 		}
 
 		/// <inheritdoc/>

@@ -98,6 +98,9 @@ namespace Orion.Projectiles
 		/// <inheritdoc/>
 		public Terraria.Projectile WrappedProjectile { get; }
 
+		/// <inheritdoc/>
+		public Terraria.Entity WrappedEntity { get; }
+
 		/// <summary>
 		/// Initializes a new instance of the <see cref="Projectile"/> class wrapping the specified Terraria projectile
 		/// instance.

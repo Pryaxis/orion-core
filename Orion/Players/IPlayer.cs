@@ -1,4 +1,4 @@
-﻿using Microsoft.Xna.Framework;
+﻿using Orion.Entities;
 using Orion.Items;
 
 namespace Orion.Players
@@ -6,7 +6,7 @@ namespace Orion.Players
 	/// <summary>
 	/// Provides a wrapper around a Terraria player instance.
 	/// </summary>
-	public interface IPlayer
+	public interface IPlayer : IOrionEntity
 	{
 		/// <summary>
 		/// Gets or sets the player's defense.
@@ -35,11 +35,6 @@ namespace Orion.Players
 		/// Gets or sets the player's health.
 		/// </summary>
 		int Health { get; set; }
-
-		/// <summary>
-		/// Gets or sets the player's height in pixels.
-		/// </summary>
-		int Height { get; set; }
 
 		/// <summary>
 		/// Gets or sets a value indicating whether the player is dead.
@@ -120,19 +115,9 @@ namespace Orion.Players
 		float MovementSpeed { get; set; }
 
 		/// <summary>
-		/// Gets or sets the player's name.
-		/// </summary>
-		string Name { get; set; }
-
-		/// <summary>
 		/// Gets the player's piggy bank.
 		/// </summary>
 		IItemArray PiggyBank { get; }
-
-		/// <summary>
-		/// Gets or sets the player's position in the world.
-		/// </summary>
-		Vector2 Position { get; set; }
 
 		/// <summary>
 		/// Gets or sets the player's ranged crit bonus.
@@ -173,16 +158,6 @@ namespace Orion.Players
 		/// Gets or sets the player's trash item.
 		/// </summary>
 		IItem TrashItem { get; set; }
-
-		/// <summary>
-		/// Gets or sets the player's velocity in the world.
-		/// </summary>
-		Vector2 Velocity { get; set; }
-
-		/// <summary>
-		/// Gets or sets the player's width in pixels.
-		/// </summary>
-		int Width { get; set; }
 
 		/// <summary>
 		/// Gets the wrapped Terraria player instance.

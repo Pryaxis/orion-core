@@ -183,11 +183,12 @@ namespace Orion.Npcs
 			return terrariaNpc;
 		}
 
-		private HookResult InvokeNpcStriking(Terraria.NPC terrariaNpc, ref int cancelResult, ref int damage, ref float knockback,
-			ref int hitDirection, ref bool crit, ref bool noEffect, ref bool fromNet)
+		private HookResult InvokeNpcStriking(Terraria.NPC terrariaNpc, ref double cancelResult, ref int damage, ref float knockback,
+			ref int hitDirection, ref bool crit, ref bool noEffect, ref bool fromNet, Terraria.Entity entity)
 		{
 			var npc = new Npc(terrariaNpc);
-			var args = new NpcStrikingEventArgs(npc, damage, knockback, hitDirection, crit, noEffect, fromNet);
+			var orionEntity = entity != null ? new Entities.OrionEntity(entity) : null;
+			var args = new NpcStrikingEventArgs(npc, damage, knockback, hitDirection, crit, noEffect, fromNet, orionEntity);
 			NpcStriking?.Invoke(this, args);
 			damage = args.Damage;
 			knockback = args.Knockback;
@@ -195,6 +196,7 @@ namespace Orion.Npcs
 			crit = args.Critical;
 			noEffect = args.NoEffect;
 			fromNet = args.FromNet;
+			entity = args.Entity.WrappedEntity;
 			return args.Handled ? HookResult.Cancel : HookResult.Continue;
 		}
 

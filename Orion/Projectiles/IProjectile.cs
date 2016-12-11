@@ -1,21 +1,17 @@
 ﻿using Microsoft.Xna.Framework;
+using Orion.Entities;
 
 namespace Orion.Projectiles
 {
 	/// <summary>
 	/// Provides a wrapper around a Terraria projectile instance.
 	/// </summary>
-	public interface IProjectile
+	public interface IProjectile : IOrionEntity
 	{
 		/// <summary>
 		/// Gets or sets the projectile's damage.
 		/// </summary>
 		int Damage { get; set; }
-
-		/// <summary>
-		/// Gets or sets the projectile's height in pixels.
-		/// </summary>
-		int Height { get; set; }
 
 		/// <summary>
 		/// Gets or sets a value indicating whether the projectile is hostile.
@@ -48,39 +44,14 @@ namespace Orion.Projectiles
 		bool IsThrown { get; set; }
 
 		/// <summary>
-		/// Gets or sets the projectile's name.
-		/// </summary>
-		string Name { get; set; }
-
-		/// <summary>
-		/// Gets or sets the projectile's position in the world.
-		/// </summary>
-		Vector2 Position { get; set; }
-
-		/// <summary>
 		/// Gets the projectile's <see cref="ProjectileType"/>.
 		/// </summary>
 		ProjectileType Type { get; }
 
 		/// <summary>
-		/// Gets or sets the projectile's velocity in the world.
-		/// </summary>
-		Vector2 Velocity { get; set; }
-
-		/// <summary>
-		/// Gets or sets the projectile's width in pixels.
-		/// </summary>
-		int Width { get; set; }
-
-		/// <summary>
 		/// Gets the wrapped Terraria projectile instance.
 		/// </summary>
 		Terraria.Projectile WrappedProjectile { get; }
-
-		/// <summary>
-		/// Kills the projectile.
-		/// </summary>
-		void Kill();
 
 		/// <summary>
 		/// Sets the projectile's defaults using the specified <see cref="ProjectileType"/>.
