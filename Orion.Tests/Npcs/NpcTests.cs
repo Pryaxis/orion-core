@@ -44,41 +44,13 @@ namespace Orion.Tests.Npcs
 			Assert.Throws<ArgumentNullException>(() => new Npc(null));
 		}
 
-		//[TestCaseSource(nameof(GetPropertyTestCases))]
-		//public void GetProperty_IsCorrect(string npcPropertyName, string terrariaNpcFieldName, object value)
-		//{
-		//	var terrariaNpc = new Terraria.NPC();
-		//	FieldInfo terrariaNpcField = typeof(Terraria.NPC).GetField(terrariaNpcFieldName);
-		//	terrariaNpcField.SetValue(terrariaNpc, Convert.ChangeType(value, terrariaNpcField.FieldType));
-		//	var npc = new Npc(terrariaNpc);
-		//	PropertyInfo npcProperty = typeof(Npc).GetProperty(npcPropertyName);
-
-		//	object actualValue = npcProperty.GetValue(npc);
-
-		//	Assert.AreEqual(value, actualValue);
-		//}
-
-		//[TestCaseSource(nameof(SetPropertyTestCases))]
-		//public void SetProperty_IsCorrect(string npcPropertyName, string terrariaNpcFieldName, object value)
-		//{
-		//	var terrariaNpc = new Terraria.NPC();
-		//	FieldInfo terrariaNpcField = typeof(Terraria.NPC).GetField(terrariaNpcFieldName);
-		//	var npc = new Npc(terrariaNpc);
-		//	PropertyInfo npcProperty = typeof(Npc).GetProperty(npcPropertyName);
-
-		//	npcProperty.SetValue(npc, value);
-
-		//	Assert.AreEqual(
-		//		Convert.ChangeType(value, terrariaNpcField.FieldType), terrariaNpcField.GetValue(terrariaNpc));
-		//}
-
 		[TestCaseSource(nameof(GetPropertyTestCases))]
 		public void GetProperty_IsCorrect(string npcPropertyName, string terrariaNpcMemberName, object value)
 		{
 			var terrariaNpc = new Terraria.NPC();
 
 			MemberInfo[] memberInfo = typeof(Terraria.NPC).GetMember(terrariaNpcMemberName);
-			Assert.AreEqual(memberInfo?.Length, 1, "Expected");
+			Assert.AreEqual(memberInfo?.Length, 1, $"Expected only one occurance of {terrariaNpcMemberName} in type {nameof(Terraria.NPC)}");
 			MemberInfo member = memberInfo[0];
 
 			FieldInfo field = member as FieldInfo;
@@ -112,7 +84,7 @@ namespace Orion.Tests.Npcs
 			npcProperty.SetValue(npc, value);
 			
 			MemberInfo[] memberInfo = typeof(Terraria.NPC).GetMember(terrariaNpcMemberName);
-			Assert.AreEqual(memberInfo?.Length, 1, "Expected");
+			Assert.AreEqual(memberInfo?.Length, 1, $"Expected only one occurance of {terrariaNpcMemberName} in type {nameof(Terraria.NPC)}");
 			MemberInfo member = memberInfo[0];
 
 			FieldInfo field = member as FieldInfo;

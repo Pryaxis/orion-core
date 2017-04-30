@@ -196,7 +196,7 @@ namespace Orion.Npcs
 			crit = args.Critical;
 			noEffect = args.NoEffect;
 			fromNet = args.FromNet;
-			entity = args.Entity.WrappedEntity;
+			entity = args.Entity?.WrappedEntity;
 			return args.Handled ? HookResult.Cancel : HookResult.Continue;
 		}
 
