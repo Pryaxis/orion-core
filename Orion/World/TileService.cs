@@ -15,11 +15,15 @@ namespace Orion.World
 	{
 		private ITile[,] _tiles;
 
-		//TODO: Implement this.
-		public int Width => throw new NotImplementedException();
+		/// <summary>
+		/// Defines the absolute maximum value that can be requested for the x axis
+		/// </summary>
+		public int Width { get; set; }
 
-		//TODO: Implement this.
-		public int Height => throw new NotImplementedException();
+		/// <summary>
+		/// Defines the absolute maximum value that can be requested for the y axis
+		/// </summary>
+		public int Height { get; set; }
 
 		/// <summary>
 		/// Gets or sets the <see cref="ITile"/> instance at the specified position.
@@ -35,6 +39,9 @@ namespace Orion.World
 			{
 				if (_tiles == null)
 				{
+					Width = Main.maxTilesX;
+					Height = Main.maxTilesY;
+
 					_tiles = new ITile[Main.maxTilesX + 1, Main.maxTilesY + 1];
 				}
 

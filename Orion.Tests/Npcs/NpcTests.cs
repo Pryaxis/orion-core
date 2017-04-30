@@ -17,7 +17,7 @@ namespace Orion.Tests.Npcs
 			new object[] {nameof(Npc.Height), nameof(Terraria.NPC.height), 100},
 			new object[] {nameof(Npc.IsBoss), nameof(Terraria.NPC.boss), true},
 			new object[] {nameof(Npc.MaxHealth), nameof(Terraria.NPC.lifeMax), 100},
-			new object[] {nameof(Npc.Name), nameof(Terraria.NPC.FullName), "TEST"},
+			new object[] {nameof(Npc.Name), nameof(Terraria.NPC.GivenName), "TEST"},
 			new object[] {nameof(Npc.Position), nameof(Terraria.NPC.position), Vector2.One},
 			new object[] {nameof(Npc.Type), nameof(Terraria.NPC.netID), NpcType.BlueSlime},
 			new object[] {nameof(Npc.Velocity), nameof(Terraria.NPC.velocity), Vector2.One},
@@ -32,7 +32,7 @@ namespace Orion.Tests.Npcs
 			new object[] {nameof(Npc.Height), nameof(Terraria.NPC.height), 100},
 			new object[] {nameof(Npc.IsBoss), nameof(Terraria.NPC.boss), true},
 			new object[] {nameof(Npc.MaxHealth), nameof(Terraria.NPC.lifeMax), 100},
-			new object[] {nameof(Npc.Name), nameof(Terraria.NPC.FullName), "TEST"},
+			new object[] {nameof(Npc.Name), nameof(Terraria.NPC.GivenName), "TEST"},
 			new object[] {nameof(Npc.Position), nameof(Terraria.NPC.position), Vector2.One},
 			new object[] {nameof(Npc.Velocity), nameof(Terraria.NPC.velocity), Vector2.One},
 			new object[] {nameof(Npc.Width), nameof(Terraria.NPC.width), 100}
@@ -44,12 +44,55 @@ namespace Orion.Tests.Npcs
 			Assert.Throws<ArgumentNullException>(() => new Npc(null));
 		}
 
+		//[TestCaseSource(nameof(GetPropertyTestCases))]
+		//public void GetProperty_IsCorrect(string npcPropertyName, string terrariaNpcFieldName, object value)
+		//{
+		//	var terrariaNpc = new Terraria.NPC();
+		//	FieldInfo terrariaNpcField = typeof(Terraria.NPC).GetField(terrariaNpcFieldName);
+		//	terrariaNpcField.SetValue(terrariaNpc, Convert.ChangeType(value, terrariaNpcField.FieldType));
+		//	var npc = new Npc(terrariaNpc);
+		//	PropertyInfo npcProperty = typeof(Npc).GetProperty(npcPropertyName);
+
+		//	object actualValue = npcProperty.GetValue(npc);
+
+		//	Assert.AreEqual(value, actualValue);
+		//}
+
+		//[TestCaseSource(nameof(SetPropertyTestCases))]
+		//public void SetProperty_IsCorrect(string npcPropertyName, string terrariaNpcFieldName, object value)
+		//{
+		//	var terrariaNpc = new Terraria.NPC();
+		//	FieldInfo terrariaNpcField = typeof(Terraria.NPC).GetField(terrariaNpcFieldName);
+		//	var npc = new Npc(terrariaNpc);
+		//	PropertyInfo npcProperty = typeof(Npc).GetProperty(npcPropertyName);
+
+		//	npcProperty.SetValue(npc, value);
+
+		//	Assert.AreEqual(
+		//		Convert.ChangeType(value, terrariaNpcField.FieldType), terrariaNpcField.GetValue(terrariaNpc));
+		//}
+
 		[TestCaseSource(nameof(GetPropertyTestCases))]
-		public void GetProperty_IsCorrect(string npcPropertyName, string terrariaNpcFieldName, object value)
+		public void GetProperty_IsCorrect(string npcPropertyName, string terrariaNpcMemberName, object value)
 		{
 			var terrariaNpc = new Terraria.NPC();
-			FieldInfo terrariaNpcField = typeof(Terraria.NPC).GetField(terrariaNpcFieldName);
-			terrariaNpcField.SetValue(terrariaNpc, Convert.ChangeType(value, terrariaNpcField.FieldType));
+
+			MemberInfo[] memberInfo = typeof(Terraria.NPC).GetMember(terrariaNpcMemberName);
+			Assert.AreEqual(memberInfo?.Length, 1, "Expected");
+			MemberInfo member = memberInfo[0];
+
+			FieldInfo field = member as FieldInfo;
+			PropertyInfo property = member as PropertyInfo;
+
+			if (property != null)
+			{
+				property.SetMethod.Invoke(terrariaNpc, new[] { Convert.ChangeType(value, property.PropertyType) });
+			}
+			else if (field != null)
+			{
+				field.SetValue(terrariaNpc, Convert.ChangeType(value, field.FieldType));
+			}
+
 			var npc = new Npc(terrariaNpc);
 			PropertyInfo npcProperty = typeof(Npc).GetProperty(npcPropertyName);
 
@@ -59,19 +102,39 @@ namespace Orion.Tests.Npcs
 		}
 
 		[TestCaseSource(nameof(SetPropertyTestCases))]
-		public void SetProperty_IsCorrect(string npcPropertyName, string terrariaNpcFieldName, object value)
+		public void SetProperty_IsCorrect(string npcPropertyName, string terrariaNpcMemberName, object value)
 		{
 			var terrariaNpc = new Terraria.NPC();
-			FieldInfo terrariaNpcField = typeof(Terraria.NPC).GetField(terrariaNpcFieldName);
+			
 			var npc = new Npc(terrariaNpc);
 			PropertyInfo npcProperty = typeof(Npc).GetProperty(npcPropertyName);
 
 			npcProperty.SetValue(npc, value);
+			
+			MemberInfo[] memberInfo = typeof(Terraria.NPC).GetMember(terrariaNpcMemberName);
+			Assert.AreEqual(memberInfo?.Length, 1, "Expected");
+			MemberInfo member = memberInfo[0];
+
+			FieldInfo field = member as FieldInfo;
+			PropertyInfo property = member as PropertyInfo;
+
+			Type terrariaDataType = null;
+			object terrariaValue = null;
+			if (property != null)
+			{
+				terrariaDataType = property.PropertyType;
+				terrariaValue = property.GetMethod.Invoke(terrariaNpc, null);
+			}
+			else if (field != null)
+			{
+				terrariaDataType = field.FieldType;
+				terrariaValue = field.GetValue(terrariaNpc);
+			}
 
 			Assert.AreEqual(
-				Convert.ChangeType(value, terrariaNpcField.FieldType), terrariaNpcField.GetValue(terrariaNpc));
+				Convert.ChangeType(value, terrariaDataType), terrariaValue);
 		}
-		
+
 		[Test]
 		public void GetWrappedNpc_IsCorrect()
 		{

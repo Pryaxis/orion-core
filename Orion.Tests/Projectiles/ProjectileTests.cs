@@ -19,7 +19,7 @@ namespace Orion.Tests.Projectiles
 			new object[] {nameof(Projectile.IsMinion), nameof(Terraria.Projectile.minion), true},
 			new object[] {nameof(Projectile.IsRanged), nameof(Terraria.Projectile.ranged), true},
 			new object[] {nameof(Projectile.IsThrown), nameof(Terraria.Projectile.thrown), true},
-			new object[] {nameof(Projectile.Name), nameof(Terraria.Projectile.Name), "TEST"},
+			//new object[] {nameof(Projectile.Name), nameof(Terraria.Projectile.Name), "TEST"},
 			new object[] {nameof(Projectile.Position), nameof(Terraria.Projectile.position), Vector2.One},
 			new object[] {nameof(Projectile.Type), nameof(Terraria.Projectile.type), ProjectileType.Amarok},
 			new object[] {nameof(Projectile.Velocity), nameof(Terraria.Projectile.velocity), Vector2.One},
@@ -36,7 +36,7 @@ namespace Orion.Tests.Projectiles
 			new object[] {nameof(Projectile.IsMinion), nameof(Terraria.Projectile.minion), true},
 			new object[] {nameof(Projectile.IsRanged), nameof(Terraria.Projectile.ranged), true},
 			new object[] {nameof(Projectile.IsThrown), nameof(Terraria.Projectile.thrown), true},
-			new object[] {nameof(Projectile.Name), nameof(Terraria.Projectile.Name), "TEST"},
+			//new object[] {nameof(Projectile.Name), nameof(Terraria.Projectile.Name), "TEST"},
 			new object[] {nameof(Projectile.Position), nameof(Terraria.Projectile.position), Vector2.One},
 			new object[] {nameof(Projectile.Velocity), nameof(Terraria.Projectile.velocity), Vector2.One},
 			new object[] {nameof(Projectile.Width), nameof(Terraria.Projectile.width), 100}
