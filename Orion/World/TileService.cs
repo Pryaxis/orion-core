@@ -15,6 +15,12 @@ namespace Orion.World
 	{
 		private ITile[,] _tiles;
 
+		//TODO: Implement this.
+		public int Width => throw new NotImplementedException();
+
+		//TODO: Implement this.
+		public int Height => throw new NotImplementedException();
+
 		/// <summary>
 		/// Gets or sets the <see cref="ITile"/> instance at the specified position.
 		/// </summary>

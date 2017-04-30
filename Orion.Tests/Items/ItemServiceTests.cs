@@ -53,23 +53,24 @@ namespace Orion.Tests.Items
 			}
 		}
 
-		[TestCase("Gold Broadsword")]
-		public void ItemSetDefaults_OccursFromSetDefaultsString(string type)
-		{
-			using (var orion = new Orion())
-			{
-				var itemService = orion.GetService<ItemService>();
-				var terrariaItem = new Terraria.Item();
-				var eventOccurred = false;
-				EventHandler<ItemSetDefaultsEventArgs> handler = (sender, e) => eventOccurred = true;
-				itemService.ItemSetDefaults += handler;
+		//TODO: Find if there is an equivalent for this test. Newest Terraria doesn't seem to have a SetDefaults(string)
+		//[TestCase("Gold Broadsword")]
+		//public void ItemSetDefaults_OccursFromSetDefaultsString(string type)
+		//{
+		//	using (var orion = new Orion())
+		//	{
+		//		var itemService = orion.GetService<ItemService>();
+		//		var terrariaItem = new Terraria.Item();
+		//		var eventOccurred = false;
+		//		EventHandler<ItemSetDefaultsEventArgs> handler = (sender, e) => eventOccurred = true;
+		//		itemService.ItemSetDefaults += handler;
+				
+		//		terrariaItem.SetDefaults(type);
+		//		itemService.ItemSetDefaults -= handler;
 
-				terrariaItem.SetDefaults(type);
-				itemService.ItemSetDefaults -= handler;
-
-				Assert.IsTrue(eventOccurred);
-			}
-		}
+		//		Assert.IsTrue(eventOccurred);
+		//	}
+		//}
 
 		[TestCase(ItemType.IronPickaxe)]
 		public void ItemSettingDefaults_IsCorrect(ItemType type)
@@ -146,23 +147,23 @@ namespace Orion.Tests.Items
 			}
 		}
 
-		[TestCase("Gold Broadsword")]
-		public void ItemSettingDefaults_OccursFromSetDefaultsString(string type)
-		{
-			using (var orion = new Orion())
-			{
-				var itemService = orion.GetService<ItemService>();
-				var terrariaItem = new Terraria.Item();
-				var eventOccurred = false;
-				EventHandler<ItemSettingDefaultsEventArgs> handler = (sender, e) => eventOccurred = true;
-				itemService.ItemSettingDefaults += handler;
+		//[TestCase("Gold Broadsword")]
+		//public void ItemSettingDefaults_OccursFromSetDefaultsString(string type)
+		//{
+		//	using (var orion = new Orion())
+		//	{
+		//		var itemService = orion.GetService<ItemService>();
+		//		var terrariaItem = new Terraria.Item();
+		//		var eventOccurred = false;
+		//		EventHandler<ItemSettingDefaultsEventArgs> handler = (sender, e) => eventOccurred = true;
+		//		itemService.ItemSettingDefaults += handler;
 
-				terrariaItem.SetDefaults(type);
-				itemService.ItemSettingDefaults -= handler;
+		//		terrariaItem.SetDefaults(type);
+		//		itemService.ItemSettingDefaults -= handler;
 
-				Assert.IsTrue(eventOccurred);
-			}
-		}
+		//		Assert.IsTrue(eventOccurred);
+		//	}
+		//}
 
 		[TestCase(ItemType.IronPickaxe, 1, Prefix.None)]
 		[TestCase(ItemType.IronPickaxe, 100, Prefix.None)]

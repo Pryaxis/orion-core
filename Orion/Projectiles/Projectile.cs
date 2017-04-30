@@ -64,11 +64,11 @@ namespace Orion.Projectiles
 			set { WrappedProjectile.thrown = value; }
 		}
 
+		//TODO: Confirm if names are readonly now.
 		/// <inheritdoc/>
 		public string Name
 		{
-			get { return WrappedProjectile.name; }
-			set { WrappedProjectile.name = value; }
+			get { return WrappedProjectile.Name; }
 		}
 
 		/// <inheritdoc/>

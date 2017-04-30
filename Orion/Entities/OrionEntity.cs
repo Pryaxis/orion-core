@@ -14,13 +14,13 @@ namespace Orion.Entities
 			get { return WrappedEntity.height; }
 			set { WrappedEntity.height = value; }
 		}
-
+		
 		/// <inheritdoc/>
-		public string Name
-		{
-			get { return WrappedEntity.name; }
-			set { WrappedEntity.name = value; }
-		}
+		//public string Name
+		//{
+		//	get { return WrappedEntity.name; }
+		//	set { WrappedEntity.name = value; }
+		//}
 
 		/// <inheritdoc/>
 		public Vector2 Position

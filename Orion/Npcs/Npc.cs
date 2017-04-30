@@ -50,11 +50,11 @@ namespace Orion.Npcs
 			set { WrappedNpc.lifeMax = value; }
 		}
 
+		//TODO: Confirm if names are readonly now.
 		/// <inheritdoc/>
 		public string Name
 		{
-			get { return WrappedNpc.name; }
-			set { WrappedNpc.name = value; }
+			get { return WrappedNpc.FullName; }
 		}
 
 		/// <inheritdoc/>

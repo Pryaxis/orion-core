@@ -149,11 +149,12 @@ namespace Orion.Items
 			set { WrappedItem.maxStack = value; }
 		}
 
+		//TODO: Confirm if SetNameOverride is the correct way to 'rename' an item.
 		/// <inheritdoc/>
 		public string Name
 		{
-			get { return WrappedItem.name; }
-			set { WrappedItem.name = value; }
+			get { return WrappedItem.Name; }
+			set { WrappedItem.SetNameOverride(value); }
 		}
 
 		/// <inheritdoc/>

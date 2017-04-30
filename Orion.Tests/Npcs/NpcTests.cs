@@ -17,7 +17,7 @@ namespace Orion.Tests.Npcs
 			new object[] {nameof(Npc.Height), nameof(Terraria.NPC.height), 100},
 			new object[] {nameof(Npc.IsBoss), nameof(Terraria.NPC.boss), true},
 			new object[] {nameof(Npc.MaxHealth), nameof(Terraria.NPC.lifeMax), 100},
-			new object[] {nameof(Npc.Name), nameof(Terraria.NPC.name), "TEST"},
+			new object[] {nameof(Npc.Name), nameof(Terraria.NPC.FullName), "TEST"},
 			new object[] {nameof(Npc.Position), nameof(Terraria.NPC.position), Vector2.One},
 			new object[] {nameof(Npc.Type), nameof(Terraria.NPC.netID), NpcType.BlueSlime},
 			new object[] {nameof(Npc.Velocity), nameof(Terraria.NPC.velocity), Vector2.One},
@@ -32,7 +32,7 @@ namespace Orion.Tests.Npcs
 			new object[] {nameof(Npc.Height), nameof(Terraria.NPC.height), 100},
 			new object[] {nameof(Npc.IsBoss), nameof(Terraria.NPC.boss), true},
 			new object[] {nameof(Npc.MaxHealth), nameof(Terraria.NPC.lifeMax), 100},
-			new object[] {nameof(Npc.Name), nameof(Terraria.NPC.name), "TEST"},
+			new object[] {nameof(Npc.Name), nameof(Terraria.NPC.FullName), "TEST"},
 			new object[] {nameof(Npc.Position), nameof(Terraria.NPC.position), Vector2.One},
 			new object[] {nameof(Npc.Velocity), nameof(Terraria.NPC.velocity), Vector2.One},
 			new object[] {nameof(Npc.Width), nameof(Terraria.NPC.width), 100}

@@ -186,24 +186,25 @@ namespace Orion.Tests.Npcs
 			}
 		}
 
-		[TestCase("Blue Slime")]
-		public void NpcSetDefaults_OccursFromSetDefaultsString(string name)
-		{
-			using (var orion = new Orion())
-			{
-				var npcService = orion.GetService<NpcService>();
-				var terrariaNpc = new Terraria.NPC();
-				var npc = new Npc(terrariaNpc);
-				var eventOccurred = false;
-				EventHandler<NpcSetDefaultsEventArgs> handler = (sender, e) => eventOccurred = true;
-				npcService.NpcSetDefaults += handler;
+		////TODO: Find if there is an equivalent for this test. Newest Terraria doesn't seem to have a SetDefaults(string)
+		//[TestCase("Blue Slime")]
+		//public void NpcSetDefaults_OccursFromSetDefaultsString(string name)
+		//{
+		//	using (var orion = new Orion())
+		//	{
+		//		var npcService = orion.GetService<NpcService>();
+		//		var terrariaNpc = new Terraria.NPC();
+		//		var npc = new Npc(terrariaNpc);
+		//		var eventOccurred = false;
+		//		EventHandler<NpcSetDefaultsEventArgs> handler = (sender, e) => eventOccurred = true;
+		//		npcService.NpcSetDefaults += handler;
 
-				terrariaNpc.SetDefaults(name);
-				npcService.NpcSetDefaults -= handler;
+		//		terrariaNpc.SetDefaults(name);
+		//		npcService.NpcSetDefaults -= handler;
 
-				Assert.IsTrue(eventOccurred);
-			}
-		}
+		//		Assert.IsTrue(eventOccurred);
+		//	}
+		//}
 
 		[TestCase(NpcType.BlueSlime)]
 		public void NpcSettingDefaults_IsCorrect(NpcType type)
@@ -281,24 +282,25 @@ namespace Orion.Tests.Npcs
 			}
 		}
 
-		[TestCase("Blue Slime")]
-		public void NpcSettingDefaults_OccursFromSetDefaultsString(string name)
-		{
-			using (var orion = new Orion())
-			{
-				var npcService = orion.GetService<NpcService>();
-				var terrariaNpc = new Terraria.NPC();
-				var npc = new Npc(terrariaNpc);
-				var eventOccurred = false;
-				EventHandler<NpcSettingDefaultsEventArgs> handler = (sender, e) => eventOccurred = true;
-				npcService.NpcSettingDefaults += handler;
+		//TODO: Find if there is an equivalent for this test. Newest Terraria doesn't seem to have a SetDefaults(string)
+		//[TestCase("Blue Slime")]
+		//public void NpcSettingDefaults_OccursFromSetDefaultsString(string name)
+		//{
+		//	using (var orion = new Orion())
+		//	{
+		//		var npcService = orion.GetService<NpcService>();
+		//		var terrariaNpc = new Terraria.NPC();
+		//		var npc = new Npc(terrariaNpc);
+		//		var eventOccurred = false;
+		//		EventHandler<NpcSettingDefaultsEventArgs> handler = (sender, e) => eventOccurred = true;
+		//		npcService.NpcSettingDefaults += handler;
 
-				terrariaNpc.SetDefaults(name);
-				npcService.NpcSettingDefaults -= handler;
+		//		terrariaNpc.SetDefaults(name);
+		//		npcService.NpcSettingDefaults -= handler;
 
-				Assert.IsTrue(eventOccurred);
-			}
-		}
+		//		Assert.IsTrue(eventOccurred);
+		//	}
+		//}
 
 		[TestCase(NpcType.BlueSlime)]
 		public void NpcSpawned_IsCorrect(NpcType type)

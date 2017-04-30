@@ -12,10 +12,11 @@ namespace Orion.Entities
 		/// </summary>
 		int Height { get; set; }
 
+		// TODO: Figure out if this is still necessary. Newest Terraria.Entity version seems to have no name.
 		/// <summary>
 		/// Gets or sets the name of the entity.
 		/// </summary>
-		string Name { get; set; }
+		//string Name { get; set; }
 
 		/// <summary>
 		/// Gets or sets the entity's position in the world.

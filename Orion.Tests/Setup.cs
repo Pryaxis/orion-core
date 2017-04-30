@@ -13,7 +13,6 @@ namespace Orion.Tests
 			// Setup for tests that are highly coupled to Terraria
 			Terraria.Main.dedServ = true;
 			new Terraria.Main().Initialize();
-			Terraria.Lang.setLang();
 
 			Environment.CurrentDirectory = Path.GetDirectoryName(this.GetType().Assembly.Location);
 		}
