@@ -42,6 +42,14 @@ namespace Orion.Tests.World
 			new object[] {nameof(WorldService.Width), nameof(Terraria.Main.maxTilesX), 1000},
 			new object[] {nameof(WorldService.WorldName), nameof(Terraria.Main.worldName), "Name"}
 		};
+
+		[SetUp]
+		public void SetUp()
+		{
+			// Required for meteor based tests. The legacy lang arrays are blank
+			// and cause NullReferenceExceptions.
+			Terraria.Lang.InitializeLegacyLocalization();
+		}
 		
 		[TestCaseSource(nameof(GetPropertyTestCases))]
 		public void GetProperty_IsCorrect(string worldServicePropertyName, string terrariaMainFieldName, object value)
