@@ -6,8 +6,8 @@ Orion is the next generation of Terraria Server APIs.
 
 | Branch          | Status 
 |-----------------|--------
-| `master`        | [![Build Status](https://travis-ci.org/NyxStudios/Orion.svg?branch=master)](https://travis-ci.org/NyxStudios/Orion)
-| `general-devel` | [![Build Status](https://travis-ci.org/NyxStudios/Orion.svg?branch=general-devel)](https://travis-ci.org/NyxStudios/Orion)
+| `master`        | [![Build Status](https://travis-ci.org/Pryaxis/Orion.svg?branch=master)](https://travis-ci.org/Pryaxis/Orion)
+| `general-devel` | [![Build Status](https://travis-ci.org/Pryaxis/Orion.svg?branch=general-devel)](https://travis-ci.org/Pryaxis/Orion)
 
 Orion is a modern, cross-platform, service-oriented library which makes it easy to write server plugins for Terraria, and 
 serves as the API replacement for TShock v5.
