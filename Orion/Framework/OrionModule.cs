@@ -85,6 +85,7 @@ namespace Orion.Framework
 			foreach (Type sharedModule in GetSubclasses<SharedService>().Concat(GetSubclasses<Plugin>()))
 			{
 				Bind(sharedModule).ToSelf().InSingletonScope();
+				Bind(sharedModule.BaseType).To(sharedModule).InSingletonScope();
 				foreach (Type sharedModuleInterface in GetInterfaces(sharedModule))
 				{
 					Bind(sharedModuleInterface).To(sharedModule).InSingletonScope();
