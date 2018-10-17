@@ -81,7 +81,7 @@ namespace Orion.Configuration
 		/// <inheritdoc />
 		public void Save(Stream stream)
 		{
-			var serializer = new Serializer(SerializationOptions.EmitDefaults);
+			var serializer = new Serializer();
 
 			using (var sw = new StreamWriter(stream))
 			{
