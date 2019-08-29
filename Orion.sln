@@ -3,11 +3,16 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.29215.179
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Orion", "Orion\Orion.csproj", "{2739ECCB-09C1-45DC-8EF8-864F964905CB}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Orion", "Orion\Orion.csproj", "{2739ECCB-09C1-45DC-8EF8-864F964905CB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Orion.Tests", "Orion.Tests\Orion.Tests.csproj", "{BAF61F61-2584-4B08-BCF2-088284F6C679}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Orion.Tests", "Orion.Tests\Orion.Tests.csproj", "{BAF61F61-2584-4B08-BCF2-088284F6C679}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Orion.Launcher", "Orion.Launcher\Orion.Launcher.csproj", "{F77A5DDF-CFCE-4660-8379-6DCD8FD8C1ED}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Orion.Launcher", "Orion.Launcher\Orion.Launcher.csproj", "{F77A5DDF-CFCE-4660-8379-6DCD8FD8C1ED}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{CD524E77-4123-4056-8727-0F7C61E25EBB}"
+	ProjectSection(SolutionItems) = preProject
+		.editorconfig = .editorconfig
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
