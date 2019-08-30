@@ -41,8 +41,16 @@
             them to the appropriate scopes.
             </summary>
         </member>
+        <member name="M:Orion.Framework.OrionNinjectModule.#ctor(System.String)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Orion.Framework.OrionNinjectModule"/> class with the specified plugin
+            directory.
+            </summary>
+            <param name="pluginDirectory">The plugin directory.</param>
+            <exception cref="T:System.ArgumentNullException"><paramref name="pluginDirectory"/> is <c>null</c>.</exception>
+        </member>
         <member name="M:Orion.Framework.OrionNinjectModule.Load">
-            <inheritdoc cref="M:Ninject.Modules.NinjectModule.Load"/>
+            <inheritdoc />
         </member>
         <member name="T:Orion.Framework.OrionService">
             <summary>
@@ -50,13 +58,13 @@
             </summary>
         </member>
         <member name="P:Orion.Framework.OrionService.Author">
-            <inheritdoc cref="P:Orion.Framework.IService.Author"/>
+            <inheritdoc />
         </member>
         <member name="P:Orion.Framework.OrionService.Name">
-            <inheritdoc cref="P:Orion.Framework.IService.Name"/>
+            <inheritdoc />
         </member>
         <member name="P:Orion.Framework.OrionService.Version">
-            <inheritdoc cref="P:Orion.Framework.IService.Version"/>
+            <inheritdoc />
             <remarks>
             By default, this property returns the version of the assembly containing the derived type.
             </remarks>
@@ -83,24 +91,88 @@
             If your service has unmanaged resources, you must release them here.
             </remarks>
         </member>
-        <member name="T:Orion.Orion">
+        <member name="T:Orion.Framework.OverrideServiceAttribute">
             <summary>
-            Handles Orion's dependency injection, and is responsible for the server.
+            An attribute that can be applied to a class to indicate that it overrides a service.
+            </summary>
+            <remarks>
+            Having multiple implementations of a service with this attribute results in undefined behavior.
+            </remarks>
+        </member>
+        <member name="T:Orion.Framework.TypeExtensions">
+            <summary>
+            Provides extension methods for the <see cref="T:System.Type"/> class.
             </summary>
         </member>
-        <member name="P:Orion.Orion.PluginDirectory">
+        <member name="M:Orion.Framework.TypeExtensions.GetAllSubtypes(System.Type)">
             <summary>
-            Gets the plugin directory.
+            Gets all subtypes of the specified type within the current <see cref="T:System.AppDomain"/>.
+            </summary>
+            <param name="baseType">The type.</param>
+            <returns>All of the subtypes.</returns>
+            <exception cref="T:System.ArgumentNullException"><paramref name="baseType"/> is <c>null</c>.</exception>
+        </member>
+        <member name="M:Orion.Framework.TypeExtensions.GetGenericTypeMaybe(System.Type)">
+            <summary>
+            Returns either the specified type or its genericized version, if applicable.
+            </summary>
+            <param name="type">The type.</param>
+            <returns>The type or its genericized version, if applicable.</returns>
+            <exception cref="T:System.ArgumentNullException"><paramref name="type"/> is <c>null</c>.</exception>
+        </member>
+        <member name="T:Orion.Networking.Packets.ConnectionRequestPacket">
+            <summary>
+            A packet that is sent from the client to the server to initiate a connection.
             </summary>
         </member>
-        <member name="M:Orion.Orion.#ctor">
+        <member name="P:Orion.Networking.Packets.ConnectionRequestPacket.IsSentToClient">
+            <inheritdoc />
+        </member>
+        <member name="P:Orion.Networking.Packets.ConnectionRequestPacket.IsSentToServer">
+            <inheritdoc />
+        </member>
+        <member name="P:Orion.Networking.Packets.ConnectionRequestPacket.Type">
+            <inheritdoc />
+        </member>
+        <member name="T:Orion.Networking.Packets.TerrariaPacket">
             <summary>
-            Initializes a new instance of the <see cref="T:Orion.Orion"/> class.
+            Represents a Terraria packet.
             </summary>
         </member>
-        <member name="M:Orion.Orion.Dispose">
+        <member name="P:Orion.Networking.Packets.TerrariaPacket.IsSentToClient">
             <summary>
-            Disposes the dependency injection kernel. This will dispose all services.
+            Gets a value indicating whether this packet is sent to a client.
+            </summary>
+        </member>
+        <member name="P:Orion.Networking.Packets.TerrariaPacket.IsSentToServer">
+            <summary>
+            Gets a value indicating whether this packet is sent to a server.
+            </summary>
+        </member>
+        <member name="P:Orion.Networking.Packets.TerrariaPacket.Type">
+            <summary>
+            Gets the type of the packet.
+            </summary>
+        </member>
+        <member name="M:Orion.Networking.Packets.TerrariaPacket.WriteToStream(System.IO.Stream,System.Boolean)">
+            <summary>
+            Writes the packet to the specified stream.
+            </summary>
+            <param name="stream">The stream.</param>
+            <param name="shouldIncludeHeader">Whether or not to include the header when writing the packet.</param>
+            <exception cref="T:System.ArgumentException">
+            Either <paramref name="stream"/> cannot seek or cannot be written to.
+            </exception>
+            <exception cref="T:System.ArgumentNullException"><paramref name="stream"/> is <c>null</c>.</exception>
+        </member>
+        <member name="T:Orion.Networking.Packets.TerrariaPacketType">
+            <summary>
+            Specifies the type of a <see cref="T:Orion.Networking.Packets.TerrariaPacket"/>.
+            </summary>
+        </member>
+        <member name="F:Orion.Networking.Packets.TerrariaPacketType.ConnectionRequest">
+            <summary>
+            Indicates that the packet is a <see cref="T:Orion.Networking.Packets.ConnectionRequestPacket"/>.
             </summary>
         </member>
     </members>

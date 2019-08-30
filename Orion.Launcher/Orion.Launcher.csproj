@@ -4,28 +4,32 @@
     <OutputType>Exe</OutputType>
     <TargetFramework>net461</TargetFramework>
     <StartupObject>Orion.Launcher.Program</StartupObject>
+    <Authors>orion-contributors</Authors>
+    <Product>Orion.Launcher</Product>
+    <Description>Acts as the de-facto launcher for an Orion-enabled Terraria server.</Description>
+    <Company>Pryaxis</Company>
+    <PackageProjectUrl>https://github.com/orgs/Pryaxis/teams/orion-contributors</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/Pryaxis/Orion</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
+    <NeutralLanguage>en-US</NeutralLanguage>
   </PropertyGroup>
-
-  <ItemGroup>
-    <PackageReference Include="System.IO.Packaging" Version="4.5.0" />
-  </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\Orion\Orion.csproj" />
   </ItemGroup>
 
   <ItemGroup>
-    <Compile Update="strings.Designer.cs">
-      <DependentUpon>strings.resx</DependentUpon>
+    <Compile Update="Resources\strings.Designer.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
+      <DependentUpon>strings.resx</DependentUpon>
     </Compile>
   </ItemGroup>
 
   <ItemGroup>
-    <EmbeddedResource Update="strings.resx">
-      <LastGenOutput>strings.Designer.cs</LastGenOutput>
+    <EmbeddedResource Update="Resources\strings.resx">
       <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>strings.Designer.cs</LastGenOutput>
     </EmbeddedResource>
   </ItemGroup>
 

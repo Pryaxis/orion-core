@@ -5,6 +5,13 @@
 
     <IsPackable>false</IsPackable>
     <NoWarn>NU1701</NoWarn>
+    <Authors>orion-contributors</Authors>
+    <Company>Pryaxis</Company>
+    <Description>Provides tests for the Orion library.</Description>
+    <PackageProjectUrl>https://github.com/orgs/Pryaxis/teams/orion-contributors</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/Pryaxis/Orion</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
+    <NeutralLanguage>en-US</NeutralLanguage>
   </PropertyGroup>
 
 

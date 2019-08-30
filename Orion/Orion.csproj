@@ -3,9 +3,20 @@
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
     <NoWarn>NU1701</NoWarn>
+    <Company>Pryaxis</Company>
+    <Authors>orion-contributors</Authors>
+    <RepositoryUrl>https://github.com/Pryaxis/Orion</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
+    <NeutralLanguage>en-US</NeutralLanguage>
+    <PackageProjectUrl>https://github.com/orgs/Pryaxis/teams/orion-contributors</PackageProjectUrl>
+    <Description>Provides the next generation of Terraria APIs.</Description>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <DocumentationFile>C:\Users\kevzhao\Dropbox (Personal)\Orion\Orion\Orion.xml</DocumentationFile>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
     <DocumentationFile>C:\Users\kevzhao\Dropbox (Personal)\Orion\Orion\Orion.xml</DocumentationFile>
   </PropertyGroup>
 

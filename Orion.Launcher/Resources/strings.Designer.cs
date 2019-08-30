@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Orion.Launcher {
+namespace Orion.Launcher.Resources {
     using System;
     
     
@@ -39,7 +39,7 @@ namespace Orion.Launcher {
         internal static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Orion.Launcher.strings", typeof(strings).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Orion.Launcher.Resources.strings", typeof(strings).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
@@ -61,7 +61,7 @@ namespace Orion.Launcher {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to   * Loaded {0} by {1}.
+        ///   Looks up a localized string similar to   * Loaded {0} by {1}..
         /// </summary>
         internal static string LoadedServiceMessage {
             get {

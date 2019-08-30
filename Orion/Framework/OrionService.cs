@@ -6,13 +6,13 @@
     /// Provides the base class for an <see cref="IService"/>.
     /// </summary>
     public abstract class OrionService : IService {
-        /// <inheritdoc cref="IService.Author"/>
+        /// <inheritdoc />
         public abstract string Author { get; }
 
-        /// <inheritdoc cref="IService.Name"/>
+        /// <inheritdoc />
         public abstract string Name { get; }
 
-        /// <inheritdoc cref="IService.Version"/>
+        /// <inheritdoc />
         /// <remarks>
         /// By default, this property returns the version of the assembly containing the derived type.
         /// </remarks>
