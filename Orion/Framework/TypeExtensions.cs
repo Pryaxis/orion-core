@@ -46,21 +46,5 @@
 
             return type.IsGenericType ? type.GetGenericTypeDefinition() : type;
         }
-
-        /// <summary>
-        /// Gets all interfaces that the specified type implements.
-        /// </summary>
-        /// <param name="derivedType">The type.</param>
-        /// <returns>All of the interfaces.</returns>
-        /// <exception cref="ArgumentNullException"><paramref name="derivedType"/> is <c>null</c>.</exception>
-        public static IEnumerable<Type> GetInterfaces(this Type derivedType) {
-            if (derivedType == null) {
-                throw new ArgumentNullException(nameof(derivedType));
-            }
-
-            return derivedType
-                .GetInterfaces()
-                .Select(GetGenericTypeMaybe);
-        }
     }
 }
