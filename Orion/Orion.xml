@@ -4,6 +4,25 @@
         <name>Orion</name>
     </assembly>
     <members>
+        <member name="T:Orion.Framework.Extensions.TypeExtensions">
+            <summary>
+            Provides extension methods for the <see cref="T:System.Type"/> class.
+            </summary>
+        </member>
+        <member name="M:Orion.Framework.Extensions.TypeExtensions.GetAllSubtypes(System.Type)">
+            <summary>
+            Gets all subtypes of the specified type within the current <see cref="T:System.AppDomain"/>.
+            </summary>
+            <param name="baseType">The type.</param>
+            <returns>All of the subtypes.</returns>
+        </member>
+        <member name="M:Orion.Framework.Extensions.TypeExtensions.GetGenericTypeMaybe(System.Type)">
+            <summary>
+            Returns either the specified type or its genericized version, if applicable.
+            </summary>
+            <param name="type">The type.</param>
+            <returns>The type or its genericized version, if applicable.</returns>
+        </member>
         <member name="T:Orion.Framework.InstancedServiceAttribute">
             <summary>
             An attribute that can be applied to a class to indicate that it is an instanced service, not a static service.
@@ -99,30 +118,9 @@
             Having multiple implementations of a service with this attribute results in undefined behavior.
             </remarks>
         </member>
-        <member name="T:Orion.Framework.TypeExtensions">
-            <summary>
-            Provides extension methods for the <see cref="T:System.Type"/> class.
-            </summary>
-        </member>
-        <member name="M:Orion.Framework.TypeExtensions.GetAllSubtypes(System.Type)">
-            <summary>
-            Gets all subtypes of the specified type within the current <see cref="T:System.AppDomain"/>.
-            </summary>
-            <param name="baseType">The type.</param>
-            <returns>All of the subtypes.</returns>
-            <exception cref="T:System.ArgumentNullException"><paramref name="baseType"/> is <c>null</c>.</exception>
-        </member>
-        <member name="M:Orion.Framework.TypeExtensions.GetGenericTypeMaybe(System.Type)">
-            <summary>
-            Returns either the specified type or its genericized version, if applicable.
-            </summary>
-            <param name="type">The type.</param>
-            <returns>The type or its genericized version, if applicable.</returns>
-            <exception cref="T:System.ArgumentNullException"><paramref name="type"/> is <c>null</c>.</exception>
-        </member>
         <member name="T:Orion.Networking.Packets.ConnectionRequestPacket">
             <summary>
-            A packet that is sent from the client to the server to initiate a connection.
+            Packet sent from the client to the server to request connection.
             </summary>
         </member>
         <member name="P:Orion.Networking.Packets.ConnectionRequestPacket.IsSentToClient">
@@ -134,19 +132,129 @@
         <member name="P:Orion.Networking.Packets.ConnectionRequestPacket.Type">
             <inheritdoc />
         </member>
+        <member name="P:Orion.Networking.Packets.ConnectionRequestPacket.Version">
+            <summary>
+            Gets the version, which is of the form $"Terraria{Main.curRelease}".
+            </summary>
+        </member>
+        <member name="M:Orion.Networking.Packets.ConnectionRequestPacket.#ctor(System.IO.BinaryReader)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Orion.Networking.Packets.ConnectionRequestPacket"/> with the given reader.
+            </summary>
+            <param name="reader">The reader.</param>
+        </member>
+        <member name="M:Orion.Networking.Packets.ConnectionRequestPacket.WriteToWriter(System.IO.BinaryWriter)">
+            <inheritdoc />
+        </member>
+        <member name="T:Orion.Networking.Packets.ContinueConnectingPacket">
+            <summary>
+            Packet sent from the client to the server to request connection.
+            </summary>
+        </member>
+        <member name="P:Orion.Networking.Packets.ContinueConnectingPacket.IsSentToClient">
+            <inheritdoc />
+        </member>
+        <member name="P:Orion.Networking.Packets.ContinueConnectingPacket.IsSentToServer">
+            <inheritdoc />
+        </member>
+        <member name="P:Orion.Networking.Packets.ContinueConnectingPacket.PlayerId">
+            <summary>
+            Gets the player ID.
+            </summary>
+        </member>
+        <member name="P:Orion.Networking.Packets.ContinueConnectingPacket.Type">
+            <inheritdoc />
+        </member>
+        <member name="M:Orion.Networking.Packets.ContinueConnectingPacket.#ctor(System.IO.BinaryReader)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Orion.Networking.Packets.ConnectionRequestPacket"/> with the given reader.
+            </summary>
+            <param name="reader">The reader.</param>
+        </member>
+        <member name="M:Orion.Networking.Packets.ContinueConnectingPacket.WriteToWriter(System.IO.BinaryWriter)">
+            <inheritdoc />
+        </member>
+        <member name="T:Orion.Networking.Packets.DisconnectPacket">
+            <summary>
+            Packet sent from the server to disconnect the client.
+            </summary>
+        </member>
+        <member name="P:Orion.Networking.Packets.DisconnectPacket.HeaderlessLength">
+            <inheritdoc />
+        </member>
+        <member name="P:Orion.Networking.Packets.DisconnectPacket.IsSentToClient">
+            <inheritdoc />
+        </member>
+        <member name="P:Orion.Networking.Packets.DisconnectPacket.IsSentToServer">
+            <inheritdoc />
+        </member>
+        <member name="P:Orion.Networking.Packets.DisconnectPacket.Reason">
+            <summary>
+            Gets the disconnect reason.
+            </summary>
+        </member>
+        <member name="P:Orion.Networking.Packets.DisconnectPacket.Type">
+            <inheritdoc />
+        </member>
+        <member name="M:Orion.Networking.Packets.DisconnectPacket.#ctor(System.IO.BinaryReader)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Orion.Networking.Packets.DisconnectPacket"/> with the given reader.
+            </summary>
+            <param name="reader">The reader.</param>
+        </member>
+        <member name="M:Orion.Networking.Packets.DisconnectPacket.WriteToWriter(System.IO.BinaryWriter)">
+            <inheritdoc />
+        </member>
+        <member name="T:Orion.Networking.Packets.Extensions.BinaryExtensions">
+            <summary>
+            Provides extension methods for the <see cref="T:System.IO.BinaryReader"/> and <see cref="T:System.IO.BinaryWriter"/> classes.
+            </summary>
+        </member>
+        <member name="M:Orion.Networking.Packets.Extensions.BinaryExtensions.ReadColor(System.IO.BinaryReader)">
+            <summary>
+            Reads a color from the specified reader.
+            </summary>
+            <param name="reader">The reader.</param>
+            <returns>The color.</returns>
+        </member>
+        <member name="M:Orion.Networking.Packets.Extensions.BinaryExtensions.Write(System.IO.BinaryWriter,Microsoft.Xna.Framework.Color)">
+            <summary>
+            Writes a color to the specified writer.
+            </summary>
+            <param name="writer">The writer.</param>
+            <param name="color">The color.</param>
+        </member>
+        <member name="T:Orion.Networking.Packets.Extensions.StringExtensions">
+            <summary>
+            Provides extension methods for the <see cref="T:System.String"/> class.
+            </summary>
+        </member>
+        <member name="M:Orion.Networking.Packets.Extensions.StringExtensions.GetBinaryLength(System.String,System.Text.Encoding)">
+            <summary>
+            Gets the length of the string when encoded using the given encoding.
+            </summary>
+            <param name="str">The string.</param>
+            <param name="encoding">The encoding.</param>
+            <returns>The length.</returns>
+        </member>
         <member name="T:Orion.Networking.Packets.TerrariaPacket">
             <summary>
             Represents a Terraria packet.
             </summary>
         </member>
+        <member name="P:Orion.Networking.Packets.TerrariaPacket.HeaderLength">
+            <summary>
+            Gets the length of a packet header.
+            </summary>
+        </member>
         <member name="P:Orion.Networking.Packets.TerrariaPacket.IsSentToClient">
             <summary>
-            Gets a value indicating whether this packet is sent to a client.
+            Gets a value indicating whether the packet is sent to the client.
             </summary>
         </member>
         <member name="P:Orion.Networking.Packets.TerrariaPacket.IsSentToServer">
             <summary>
-            Gets a value indicating whether this packet is sent to a server.
+            Gets a value indicating whether the packet is sent to the server.
             </summary>
         </member>
         <member name="P:Orion.Networking.Packets.TerrariaPacket.Type">
@@ -154,26 +262,65 @@
             Gets the type of the packet.
             </summary>
         </member>
-        <member name="M:Orion.Networking.Packets.TerrariaPacket.WriteToStream(System.IO.Stream,System.Boolean)">
+        <member name="M:Orion.Networking.Packets.TerrariaPacket.FromStream(System.IO.Stream)">
+            <summary>
+            Reads a packet from the specified stream.
+            </summary>
+            <param name="stream">The stream.</param>
+            <exception cref="T:System.ArgumentNullException"><paramref name="stream"/> is <c>null</c>.</exception>
+            <returns>The packet.</returns>
+        </member>
+        <member name="M:Orion.Networking.Packets.TerrariaPacket.WriteToStream(System.IO.Stream)">
             <summary>
             Writes the packet to the specified stream.
             </summary>
             <param name="stream">The stream.</param>
-            <param name="shouldIncludeHeader">Whether or not to include the header when writing the packet.</param>
-            <exception cref="T:System.ArgumentException">
-            Either <paramref name="stream"/> cannot seek or cannot be written to.
-            </exception>
             <exception cref="T:System.ArgumentNullException"><paramref name="stream"/> is <c>null</c>.</exception>
         </member>
         <member name="T:Orion.Networking.Packets.TerrariaPacketType">
             <summary>
-            Specifies the type of a <see cref="T:Orion.Networking.Packets.TerrariaPacket"/>.
+            Indicates the type of a <see cref="T:Orion.Networking.Packets.TerrariaPacket"/>.
             </summary>
         </member>
         <member name="F:Orion.Networking.Packets.TerrariaPacketType.ConnectionRequest">
             <summary>
-            Indicates that the packet is a <see cref="T:Orion.Networking.Packets.ConnectionRequestPacket"/>.
+            Indicates a <see cref="T:Orion.Networking.Packets.ConnectionRequestPacket"/>.
             </summary>
+        </member>
+        <member name="F:Orion.Networking.Packets.TerrariaPacketType.Disconnect">
+            <summary>
+            Indicates a <see cref="T:Orion.Networking.Packets.DisconnectPacket"/>.
+            </summary>
+        </member>
+        <member name="F:Orion.Networking.Packets.TerrariaPacketType.ContinueConnecting">
+            <summary>
+            Indicates a <see cref="T:Orion.Networking.Packets.ContinueConnectingPacket"/>.
+            </summary>
+        </member>
+        <member name="T:Orion.Networking.Packets.UnknownPacket">
+            <summary>
+            Used as a fail-safe for any packet that failed to be read.
+            </summary>
+        </member>
+        <member name="P:Orion.Networking.Packets.UnknownPacket.Bytes">
+            <summary>
+            Gets the byte array.
+            </summary>
+        </member>
+        <member name="P:Orion.Networking.Packets.UnknownPacket.HeaderlessLength">
+            <inheritdoc />
+        </member>
+        <member name="P:Orion.Networking.Packets.UnknownPacket.IsSentToClient">
+            <inheritdoc />
+        </member>
+        <member name="P:Orion.Networking.Packets.UnknownPacket.IsSentToServer">
+            <inheritdoc />
+        </member>
+        <member name="P:Orion.Networking.Packets.UnknownPacket.Type">
+            <inheritdoc />
+        </member>
+        <member name="M:Orion.Networking.Packets.UnknownPacket.WriteToWriter(System.IO.BinaryWriter)">
+            <inheritdoc />
         </member>
     </members>
 </doc>

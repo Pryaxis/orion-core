@@ -1,21 +1,13 @@
 ﻿// ReSharper disable UnusedMember.Global
 
-namespace Orion.Tests.Framework {
-    using System;
+namespace Orion.Tests.Framework.Extensions {
     using System.Collections.Generic;
     using System.Linq;
     using FluentAssertions;
-    using Orion.Framework;
+    using Orion.Framework.Extensions;
     using Xunit;
 
     public class TypeExtensionsTests {
-        [Fact]
-        public void GetAllSubtypes_Null_ThrowsArgumentNullException() {
-            Action action = () => ((Type)null).GetAllSubtypes();
-
-            action.Should().Throw<ArgumentNullException>();
-        }
-
         [Fact]
         public void GetAllSubtypes_IsCorrect() {
             var subtypes = typeof(BaseType).GetAllSubtypes().ToList();
@@ -23,13 +15,6 @@ namespace Orion.Tests.Framework {
             subtypes.Should().HaveCount(2);
             subtypes.Should().Contain(typeof(DerivedType));
             subtypes.Should().Contain(typeof(DerivedType2));
-        }
-        
-        [Fact]
-        public void GetGenericTypeMaybe_Null_ThrowsArgumentNullException() {
-            Action action = () => ((Type)null).GetGenericTypeMaybe();
-
-            action.Should().Throw<ArgumentNullException>();
         }
         
         [Fact]
