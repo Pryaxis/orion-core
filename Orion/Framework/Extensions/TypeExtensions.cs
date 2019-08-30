@@ -1,4 +1,4 @@
-﻿namespace Orion.Framework {
+﻿namespace Orion.Framework.Extensions {
     using System;
     using System.Collections.Generic;
     using System.Linq;
@@ -13,12 +13,7 @@
         /// </summary>
         /// <param name="baseType">The type.</param>
         /// <returns>All of the subtypes.</returns>
-        /// <exception cref="ArgumentNullException"><paramref name="baseType"/> is <c>null</c>.</exception>
         public static IEnumerable<Type> GetAllSubtypes(this Type baseType) {
-            if (baseType == null) {
-                throw new ArgumentNullException(nameof(baseType));
-            }
-
             IEnumerable<Type> GetTypes(Assembly assembly) {
                 try {
                     return assembly.GetTypes();
@@ -38,12 +33,7 @@
         /// </summary>
         /// <param name="type">The type.</param>
         /// <returns>The type or its genericized version, if applicable.</returns>
-        /// <exception cref="ArgumentNullException"><paramref name="type"/> is <c>null</c>.</exception>
         public static Type GetGenericTypeMaybe(this Type type) {
-            if (type == null) {
-                throw new ArgumentNullException(nameof(type));
-            }
-
             return type.IsGenericType ? type.GetGenericTypeDefinition() : type;
         }
     }

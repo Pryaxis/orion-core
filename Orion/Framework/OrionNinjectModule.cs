@@ -5,6 +5,7 @@
     using System.Reflection;
     using Ninject.Extensions.NamedScope;
     using Ninject.Modules;
+    using Orion.Framework.Extensions;
 
     /// <summary>
     /// A Ninject module that scans for services and plugins in the executing assembly and plugin assemblies, binding
@@ -30,7 +31,6 @@
                 try {
                     Assembly.LoadFrom(assemblyPath);
                 } catch (Exception ex) when (ex is BadImageFormatException || ex is IOException) {
-                    continue;
                 }
             }
 
