@@ -11,7 +11,7 @@
         public byte[] Bytes { get; }
 
         /// <inheritdoc />
-        private protected override short HeaderlessLength { get; }
+        private protected override int HeaderlessLength { get; }
 
         /// <inheritdoc />
         public override bool IsSentToClient => true;

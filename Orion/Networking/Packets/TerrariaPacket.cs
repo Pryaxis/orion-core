@@ -19,7 +19,7 @@
         /// </summary>
         internal static int HeaderLength => sizeof(TerrariaPacketType) + sizeof(short);
 
-        private protected abstract short HeaderlessLength { get; }
+        private protected abstract int HeaderlessLength { get; }
 
         /// <summary>
         /// Gets a value indicating whether the packet is sent to the client.

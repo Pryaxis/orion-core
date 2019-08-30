@@ -1,11 +1,12 @@
 ﻿namespace Orion.Networking.Packets {
+    using System;
     using System.IO;
 
     /// <summary>
     /// Packet sent from the client to the server to request connection.
     /// </summary>
     public sealed class ContinueConnectingPacket : TerrariaPacket {
-        private protected override short HeaderlessLength => 1;
+        private protected override int HeaderlessLength => 1;
 
         /// <inheritdoc />
         public override bool IsSentToClient => false;
@@ -25,8 +26,21 @@
         /// Initializes a new instance of the <see cref="ConnectionRequestPacket"/> with the given reader.
         /// </summary>
         /// <param name="reader">The reader.</param>
-        internal ContinueConnectingPacket(BinaryReader reader) {
+        /// <exception cref="ArgumentNullException"><paramref name="reader"/> is <c>null</c>.</exception>
+        public ContinueConnectingPacket(BinaryReader reader) {
+            if (reader == null) {
+                throw new ArgumentNullException(nameof(reader));
+            }
+
             PlayerId = reader.ReadByte();
+        }
+        
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ConnectionRequestPacket"/> with the given player ID.
+        /// </summary>
+        /// <param name="playerId">The player ID.</param>
+        public ContinueConnectingPacket(byte playerId) {
+            PlayerId = playerId;
         }
 
         /// <inheritdoc />
