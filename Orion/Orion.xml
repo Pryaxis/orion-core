@@ -1,0 +1,107 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Orion</name>
+    </assembly>
+    <members>
+        <member name="T:Orion.Framework.InstancedServiceAttribute">
+            <summary>
+            An attribute that can be applied to a class to indicate that it is an instanced service, not a static service.
+            </summary>
+        </member>
+        <member name="T:Orion.Framework.IService">
+            <summary>
+            Represents a service.
+            </summary>
+            <remarks>
+            Services are modules providing a specific type of functionality to consumers. By default, these services are
+            statically loaded once Orion is loaded, and disposed once Orion is disposed. However, services can be annotated
+            with <see cref="T:Orion.Framework.InstancedServiceAttribute"/>, in which case they will be injected per-instance and disposed
+            once the parent object is garbage collected.
+            </remarks>
+        </member>
+        <member name="P:Orion.Framework.IService.Author">
+            <summary>
+            Gets the service's author.
+            </summary>
+        </member>
+        <member name="P:Orion.Framework.IService.Name">
+            <summary>
+            Gets the service's name.
+            </summary>
+        </member>
+        <member name="P:Orion.Framework.IService.Version">
+            <summary>
+            Gets the service's version.
+            </summary>
+        </member>
+        <member name="T:Orion.Framework.OrionNinjectModule">
+            <summary>
+            A Ninject module that scans for services and plugins in the executing assembly and plugin assemblies, binding
+            them to the appropriate scopes.
+            </summary>
+        </member>
+        <member name="M:Orion.Framework.OrionNinjectModule.Load">
+            <inheritdoc cref="M:Ninject.Modules.NinjectModule.Load"/>
+        </member>
+        <member name="T:Orion.Framework.OrionService">
+            <summary>
+            Provides the base class for an <see cref="T:Orion.Framework.IService"/>.
+            </summary>
+        </member>
+        <member name="P:Orion.Framework.OrionService.Author">
+            <inheritdoc cref="P:Orion.Framework.IService.Author"/>
+        </member>
+        <member name="P:Orion.Framework.OrionService.Name">
+            <inheritdoc cref="P:Orion.Framework.IService.Name"/>
+        </member>
+        <member name="P:Orion.Framework.OrionService.Version">
+            <inheritdoc cref="P:Orion.Framework.IService.Version"/>
+            <remarks>
+            By default, this property returns the version of the assembly containing the derived type.
+            </remarks>
+        </member>
+        <member name="M:Orion.Framework.OrionService.Finalize">
+            <summary>
+            Destroys the service, releasing any of its unmanaged resources.
+            </summary>
+        </member>
+        <member name="M:Orion.Framework.OrionService.Dispose">
+            <summary>
+            Disposes the service and any of its unmanaged and managed resources.
+            </summary>
+        </member>
+        <member name="M:Orion.Framework.OrionService.Dispose(System.Boolean)">
+            <summary>
+            Disposes the service and any of its unmanaged resources, optionally including its managed resources.
+            </summary>
+            <param name="disposeManaged">
+            <c>true</c> if called from a managed disposal and both unmanaged and managed resources must be released,
+            <c>false</c> if called from a finalizer and only unmanaged resources must be released.
+            </param>
+            <remarks>
+            If your service has unmanaged resources, you must release them here.
+            </remarks>
+        </member>
+        <member name="T:Orion.Orion">
+            <summary>
+            Handles Orion's dependency injection, and is responsible for the server.
+            </summary>
+        </member>
+        <member name="P:Orion.Orion.PluginDirectory">
+            <summary>
+            Gets the plugin directory.
+            </summary>
+        </member>
+        <member name="M:Orion.Orion.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:Orion.Orion"/> class.
+            </summary>
+        </member>
+        <member name="M:Orion.Orion.Dispose">
+            <summary>
+            Disposes the dependency injection kernel. This will dispose all services.
+            </summary>
+        </member>
+    </members>
+</doc>
