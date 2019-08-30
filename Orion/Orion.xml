@@ -118,6 +118,18 @@
             Having multiple implementations of a service with this attribute results in undefined behavior.
             </remarks>
         </member>
+        <member name="T:Orion.Networking.INetworkService">
+            <summary>
+            Provides a mechanism for managing the network.
+            </summary>
+        </member>
+        <member name="M:Orion.Networking.INetworkService.SendPacket(System.Int32,Orion.Networking.Packets.TerrariaPacket)">
+            <summary>
+            Sends the specified packet to the target ID.
+            </summary>
+            <param name="targetId">The target. <c>-1</c> represents everyone.</param>
+            <param name="packet">The packet.</param>
+        </member>
         <member name="T:Orion.Networking.Packets.ConnectionRequestPacket">
             <summary>
             Packet sent from the client to the server to request connection.
@@ -142,6 +154,14 @@
             Initializes a new instance of the <see cref="T:Orion.Networking.Packets.ConnectionRequestPacket"/> with the given reader.
             </summary>
             <param name="reader">The reader.</param>
+            <exception cref="T:System.ArgumentNullException"><paramref name="reader"/> is <c>null</c>.</exception>
+        </member>
+        <member name="M:Orion.Networking.Packets.ConnectionRequestPacket.#ctor(System.String)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Orion.Networking.Packets.ConnectionRequestPacket"/> with the given version.
+            </summary>
+            <param name="version">The version.</param>
+            <exception cref="T:System.ArgumentNullException"><paramref name="version"/> is <c>null</c>.</exception>
         </member>
         <member name="M:Orion.Networking.Packets.ConnectionRequestPacket.WriteToWriter(System.IO.BinaryWriter)">
             <inheritdoc />
@@ -170,6 +190,13 @@
             Initializes a new instance of the <see cref="T:Orion.Networking.Packets.ConnectionRequestPacket"/> with the given reader.
             </summary>
             <param name="reader">The reader.</param>
+            <exception cref="T:System.ArgumentNullException"><paramref name="reader"/> is <c>null</c>.</exception>
+        </member>
+        <member name="M:Orion.Networking.Packets.ContinueConnectingPacket.#ctor(System.Byte)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Orion.Networking.Packets.ConnectionRequestPacket"/> with the given player ID.
+            </summary>
+            <param name="playerId">The player ID.</param>
         </member>
         <member name="M:Orion.Networking.Packets.ContinueConnectingPacket.WriteToWriter(System.IO.BinaryWriter)">
             <inheritdoc />
@@ -188,19 +215,28 @@
         <member name="P:Orion.Networking.Packets.DisconnectPacket.IsSentToServer">
             <inheritdoc />
         </member>
+        <member name="P:Orion.Networking.Packets.DisconnectPacket.Type">
+            <inheritdoc />
+        </member>
         <member name="P:Orion.Networking.Packets.DisconnectPacket.Reason">
             <summary>
             Gets the disconnect reason.
             </summary>
-        </member>
-        <member name="P:Orion.Networking.Packets.DisconnectPacket.Type">
-            <inheritdoc />
         </member>
         <member name="M:Orion.Networking.Packets.DisconnectPacket.#ctor(System.IO.BinaryReader)">
             <summary>
             Initializes a new instance of the <see cref="T:Orion.Networking.Packets.DisconnectPacket"/> with the given reader.
             </summary>
             <param name="reader">The reader.</param>
+            <exception cref="T:System.ArgumentNullException"><paramref name="reader"/> is <c>null</c>.</exception>
+        </member>
+        <member name="M:Orion.Networking.Packets.DisconnectPacket.#ctor(System.String)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Orion.Networking.Packets.DisconnectPacket"/> with the given reason.
+            </summary>
+            <param name="reason">The reason.</param>
+            <exception cref="T:System.ArgumentNullException"><paramref name="reason"/> is <c>null</c>.</exception>
+            <exception cref="T:System.ArgumentOutOfRangeException"><paramref name="reason"/> is too long.</exception>
         </member>
         <member name="M:Orion.Networking.Packets.DisconnectPacket.WriteToWriter(System.IO.BinaryWriter)">
             <inheritdoc />
