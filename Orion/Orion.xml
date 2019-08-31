@@ -4,6 +4,64 @@
         <name>Orion</name>
     </assembly>
     <members>
+        <member name="T:Orion.Entities.IEntity">
+            <summary>
+            Provides a wrapper around a <see cref="T:Terraria.Entity"/>.
+            </summary>
+        </member>
+        <member name="P:Orion.Entities.IEntity.Height">
+            <summary>
+            Gets or sets the entity's height in pixels.
+            </summary>
+        </member>
+        <member name="P:Orion.Entities.IEntity.Position">
+            <summary>
+            Gets or sets the entity's position in the world.
+            </summary>
+        </member>
+        <member name="P:Orion.Entities.IEntity.Velocity">
+            <summary>
+            Gets or sets the entity's velocity in the world.
+            </summary>
+        </member>
+        <member name="P:Orion.Entities.IEntity.Width">
+            <summary>
+            Gets or sets the entity's width in pixels.
+            </summary>
+        </member>
+        <member name="P:Orion.Entities.IEntity.WrappedEntity">
+            <summary>
+            Gets the wrapped <see cref="T:Terraria.Entity"/> instance.
+            </summary>
+        </member>
+        <member name="T:Orion.Entities.OrionEntity">
+            <summary>
+            Orion's implementation of <see cref="T:Orion.Entities.IEntity"/>.
+            </summary>
+        </member>
+        <member name="P:Orion.Entities.OrionEntity.Height">
+            <inheritdoc/>
+        </member>
+        <member name="P:Orion.Entities.OrionEntity.Position">
+            <inheritdoc/>
+        </member>
+        <member name="P:Orion.Entities.OrionEntity.Velocity">
+            <inheritdoc/>
+        </member>
+        <member name="P:Orion.Entities.OrionEntity.Width">
+            <inheritdoc/>
+        </member>
+        <member name="P:Orion.Entities.OrionEntity.WrappedEntity">
+            <inheritdoc/>
+        </member>
+        <member name="M:Orion.Entities.OrionEntity.#ctor(Terraria.Entity)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Orion.Entities.OrionEntity"/> class wrapping the specified Terraria Entity
+            instance.
+            </summary>
+            <param name="entity">The Terraria Entity instance to wrap.</param>
+            <exception cref="T:System.ArgumentNullException"><paramref name="entity"/> is null.</exception>
+        </member>
         <member name="T:Orion.Framework.Extensions.TypeExtensions">
             <summary>
             Provides extension methods for the <see cref="T:System.Type"/> class.
@@ -714,6 +772,11 @@
             Indicates a <see cref="T:Orion.Networking.Packets.FinishConnectionPacket"/>.
             </summary>
         </member>
+        <member name="F:Orion.Networking.Packets.TerrariaPacketType.WorldInfo">
+            <summary>
+            Indicates a <see cref="!:WorldInfoPacket"/>.
+            </summary>
+        </member>
         <member name="T:Orion.Networking.Packets.UnknownPacket">
             <summary>
             Used as a fail-safe for any packet that failed to be read.
@@ -755,6 +818,11 @@
         </member>
         <member name="M:Orion.Networking.Packets.UnknownPacket.WriteToWriter(System.IO.BinaryWriter)">
             <inheritdoc />
+        </member>
+        <member name="T:Orion.World.ITileService">
+            <summary>
+            Provides access to Terraria's tile mechanism.
+            </summary>
         </member>
     </members>
 </doc>
