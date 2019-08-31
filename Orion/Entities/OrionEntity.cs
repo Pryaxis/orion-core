@@ -13,6 +13,12 @@
         }
 
         /// <inheritdoc/>
+        public int Width {
+            get => WrappedEntity.width;
+            set => WrappedEntity.width = value;
+        }
+
+        /// <inheritdoc/>
         public Vector2 Position {
             get => WrappedEntity.position;
             set => WrappedEntity.position = value;
@@ -22,12 +28,6 @@
         public Vector2 Velocity {
             get => WrappedEntity.velocity;
             set => WrappedEntity.velocity = value;
-        }
-
-        /// <inheritdoc/>
-        public int Width {
-            get => WrappedEntity.width;
-            set => WrappedEntity.width = value;
         }
 
         /// <inheritdoc/>

@@ -14,6 +14,11 @@
             Gets or sets the entity's height in pixels.
             </summary>
         </member>
+        <member name="P:Orion.Entities.IEntity.Width">
+            <summary>
+            Gets or sets the entity's width in pixels.
+            </summary>
+        </member>
         <member name="P:Orion.Entities.IEntity.Position">
             <summary>
             Gets or sets the entity's position in the world.
@@ -22,11 +27,6 @@
         <member name="P:Orion.Entities.IEntity.Velocity">
             <summary>
             Gets or sets the entity's velocity in the world.
-            </summary>
-        </member>
-        <member name="P:Orion.Entities.IEntity.Width">
-            <summary>
-            Gets or sets the entity's width in pixels.
             </summary>
         </member>
         <member name="P:Orion.Entities.IEntity.WrappedEntity">
@@ -42,13 +42,13 @@
         <member name="P:Orion.Entities.OrionEntity.Height">
             <inheritdoc/>
         </member>
+        <member name="P:Orion.Entities.OrionEntity.Width">
+            <inheritdoc/>
+        </member>
         <member name="P:Orion.Entities.OrionEntity.Position">
             <inheritdoc/>
         </member>
         <member name="P:Orion.Entities.OrionEntity.Velocity">
-            <inheritdoc/>
-        </member>
-        <member name="P:Orion.Entities.OrionEntity.Width">
             <inheritdoc/>
         </member>
         <member name="P:Orion.Entities.OrionEntity.WrappedEntity">
