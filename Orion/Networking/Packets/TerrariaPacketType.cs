@@ -22,5 +22,10 @@
         /// Indicates a <see cref="PlayerInfoPacket"/>.
         /// </summary>
         PlayerInfo = 4,
+        
+        /// <summary>
+        /// Indicates a <see cref="PlayerInventorySlotPacket"/>.
+        /// </summary>
+        PlayerInventorySlot = 5,
     }
 }

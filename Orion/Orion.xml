@@ -118,6 +118,16 @@
             Having multiple implementations of a service with this attribute results in undefined behavior.
             </remarks>
         </member>
+        <member name="T:Orion.Items.ItemPrefix">
+            <summary>
+            Specifies an item's prefix.
+            </summary>
+        </member>
+        <member name="T:Orion.Items.ItemType">
+            <summary>
+            Specifies an item's type.
+            </summary>
+        </member>
         <member name="T:Orion.Networking.Events.ReceivedPacketEventArgs">
             <summary>
             Provides data for the <see cref="E:Orion.Networking.INetworkService.ReceivedPacket"/> event.
@@ -551,6 +561,55 @@
         <member name="M:Orion.Networking.Packets.PlayerInfoPacket.WriteToWriter(System.IO.BinaryWriter)">
             <inheritdoc />
         </member>
+        <member name="T:Orion.Networking.Packets.PlayerInventorySlotPacket">
+            <summary>
+            Packet sent to provide information about a player's inventory slot.
+            </summary>
+        </member>
+        <member name="P:Orion.Networking.Packets.PlayerInventorySlotPacket.IsSentToClient">
+            <inheritdoc />
+        </member>
+        <member name="P:Orion.Networking.Packets.PlayerInventorySlotPacket.IsSentToServer">
+            <inheritdoc />
+        </member>
+        <member name="P:Orion.Networking.Packets.PlayerInventorySlotPacket.Type">
+            <inheritdoc />
+        </member>
+        <member name="P:Orion.Networking.Packets.PlayerInventorySlotPacket.PlayerId">
+            <summary>
+            Gets or sets the player ID.
+            </summary>
+        </member>
+        <member name="P:Orion.Networking.Packets.PlayerInventorySlotPacket.InventorySlot">
+            <summary>
+            Gets or sets the inventory slot.
+            </summary>
+        </member>
+        <member name="P:Orion.Networking.Packets.PlayerInventorySlotPacket.ItemStackSize">
+            <summary>
+            Gets or sets the item's stack size.
+            </summary>
+        </member>
+        <member name="P:Orion.Networking.Packets.PlayerInventorySlotPacket.ItemPrefix">
+            <summary>
+            Gets or sets the item prefix.
+            </summary>
+        </member>
+        <member name="P:Orion.Networking.Packets.PlayerInventorySlotPacket.ItemType">
+            <summary>
+            Gets or sets the item type.
+            </summary>
+        </member>
+        <member name="M:Orion.Networking.Packets.PlayerInventorySlotPacket.FromReader(System.IO.BinaryReader)">
+            <summary>
+            Reads a <see cref="T:Orion.Networking.Packets.PlayerInventorySlotPacket"/> from the given reader.
+            </summary>
+            <param name="reader">The reader.</param>
+            <exception cref="T:System.ArgumentNullException"><paramref name="reader"/> is <c>null</c>.</exception>
+        </member>
+        <member name="M:Orion.Networking.Packets.PlayerInventorySlotPacket.WriteToWriter(System.IO.BinaryWriter)">
+            <inheritdoc />
+        </member>
         <member name="T:Orion.Networking.Packets.TerrariaPacket">
             <summary>
             Represents a Terraria packet.
@@ -619,6 +678,11 @@
         <member name="F:Orion.Networking.Packets.TerrariaPacketType.PlayerInfo">
             <summary>
             Indicates a <see cref="T:Orion.Networking.Packets.PlayerInfoPacket"/>.
+            </summary>
+        </member>
+        <member name="F:Orion.Networking.Packets.TerrariaPacketType.PlayerInventorySlot">
+            <summary>
+            Indicates a <see cref="T:Orion.Networking.Packets.PlayerInventorySlotPacket"/>.
             </summary>
         </member>
         <member name="T:Orion.Networking.Packets.UnknownPacket">
