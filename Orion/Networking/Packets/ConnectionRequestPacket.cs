@@ -40,8 +40,7 @@
                 throw new ArgumentNullException(nameof(reader));
             }
 
-            var version = reader.ReadString();
-            return new ConnectionRequestPacket {_version = version};
+            return new ConnectionRequestPacket {_version = reader.ReadString()};
         }
 
         /// <inheritdoc />

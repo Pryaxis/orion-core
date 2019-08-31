@@ -17,6 +17,7 @@
                 [TerrariaPacketType.ConnectionRequest] = ConnectionRequestPacket.FromReader,
                 [TerrariaPacketType.Disconnect] = DisconnectPacket.FromReader,
                 [TerrariaPacketType.ContinueConnecting] = ContinueConnectingPacket.FromReader,
+                //[TerrariaPacketType.PlayerInfo] = PlayerInfoPacket.FromReader,
             };
 
         /// <summary>

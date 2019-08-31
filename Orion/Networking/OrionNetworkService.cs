@@ -60,8 +60,6 @@
                     return HookResult.Cancel;
                 }
 
-                receivingArgs.MarkPacketAsDirty();
-
                 packet = receivingArgs.Packet;
                 if (receivingArgs.IsPacketDirty) {
                     var targetPosition = start + length;

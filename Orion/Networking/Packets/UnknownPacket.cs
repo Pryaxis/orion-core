@@ -8,15 +8,6 @@
     public sealed class UnknownPacket : TerrariaPacket {
         private byte[] _bytes = new byte[0];
 
-        /// <summary>
-        /// Gets or sets the byte array.
-        /// </summary>
-        /// <exception cref="ArgumentNullException"><paramref name="value"/> is <c>null</c>.</exception>
-        public byte[] Bytes {
-            get => _bytes;
-            set => _bytes = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
         /// <inheritdoc />
         private protected override int HeaderlessLength => Bytes.Length;
 
@@ -28,6 +19,15 @@
 
         /// <inheritdoc />
         public override TerrariaPacketType Type { get; }
+
+        /// <summary>
+        /// Gets or sets the byte array.
+        /// </summary>
+        /// <exception cref="ArgumentNullException"><paramref name="value"/> is <c>null</c>.</exception>
+        public byte[] Bytes {
+            get => _bytes;
+            set => _bytes = value ?? throw new ArgumentNullException(nameof(value));
+        }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="UnknownPacket"/> class with the specified type.
@@ -54,8 +54,7 @@
                 throw new ArgumentOutOfRangeException(nameof(headerlessLength), "Length is too long.");
             }
 
-            var bytes = reader.ReadBytes(headerlessLength);
-            return new UnknownPacket(type) {_bytes = bytes};
+            return new UnknownPacket(type) {_bytes = reader.ReadBytes(headerlessLength)};
         }
 
         /// <inheritdoc />

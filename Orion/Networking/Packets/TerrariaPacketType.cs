@@ -17,5 +17,10 @@
         /// Indicates a <see cref="ContinueConnectingPacket"/>.
         /// </summary>
         ContinueConnecting = 3,
+
+        /// <summary>
+        /// Indicates a <see cref="PlayerInfoPacket"/>.
+        /// </summary>
+        PlayerInfo = 4,
     }
 }

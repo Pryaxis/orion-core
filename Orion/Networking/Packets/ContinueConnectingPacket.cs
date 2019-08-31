@@ -14,13 +14,13 @@
         /// <inheritdoc />
         public override bool IsSentToServer => false;
 
+        /// <inheritdoc />
+        public override TerrariaPacketType Type => TerrariaPacketType.ContinueConnecting;
+
         /// <summary>
         /// Gets or sets the player ID.
         /// </summary>
         public byte PlayerId { get; set; }
-
-        /// <inheritdoc />
-        public override TerrariaPacketType Type => TerrariaPacketType.ContinueConnecting;
 
         /// <summary>
         /// Reads a <see cref="ContinueConnectingPacket"/> from the given reader.
@@ -32,8 +32,7 @@
                 throw new ArgumentNullException(nameof(reader));
             }
 
-            var playerId = reader.ReadByte();
-            return new ContinueConnectingPacket {PlayerId = playerId};
+            return new ContinueConnectingPacket {PlayerId = reader.ReadByte()};
         }
 
         /// <inheritdoc />

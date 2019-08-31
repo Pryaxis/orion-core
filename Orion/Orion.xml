@@ -368,13 +368,13 @@
         <member name="P:Orion.Networking.Packets.ContinueConnectingPacket.IsSentToServer">
             <inheritdoc />
         </member>
+        <member name="P:Orion.Networking.Packets.ContinueConnectingPacket.Type">
+            <inheritdoc />
+        </member>
         <member name="P:Orion.Networking.Packets.ContinueConnectingPacket.PlayerId">
             <summary>
             Gets or sets the player ID.
             </summary>
-        </member>
-        <member name="P:Orion.Networking.Packets.ContinueConnectingPacket.Type">
-            <inheritdoc />
         </member>
         <member name="M:Orion.Networking.Packets.ContinueConnectingPacket.FromReader(System.IO.BinaryReader)">
             <summary>
@@ -451,6 +451,106 @@
             <param name="encoding">The encoding.</param>
             <returns>The length.</returns>
         </member>
+        <member name="T:Orion.Networking.Packets.PlayerInfoPacket">
+            <summary>
+            Packet sent to provide information about a player.
+            </summary>
+        </member>
+        <member name="P:Orion.Networking.Packets.PlayerInfoPacket.IsSentToClient">
+            <inheritdoc />
+        </member>
+        <member name="P:Orion.Networking.Packets.PlayerInfoPacket.IsSentToServer">
+            <inheritdoc />
+        </member>
+        <member name="P:Orion.Networking.Packets.PlayerInfoPacket.Type">
+            <inheritdoc />
+        </member>
+        <member name="P:Orion.Networking.Packets.PlayerInfoPacket.PlayerId">
+            <summary>
+            Gets or sets the player ID.
+            </summary>
+        </member>
+        <member name="P:Orion.Networking.Packets.PlayerInfoPacket.SkinType">
+            <summary>
+            Gets or sets the player's skin type.
+            </summary>
+        </member>
+        <member name="P:Orion.Networking.Packets.PlayerInfoPacket.HairType">
+            <summary>
+            Gets or sets the player's hair type.
+            </summary>
+        </member>
+        <member name="P:Orion.Networking.Packets.PlayerInfoPacket.Name">
+            <summary>
+            Gets or sets the player's name.
+            </summary>
+            <exception cref="T:System.ArgumentNullException"><paramref name="value"/> is <c>null</c>.</exception>
+        </member>
+        <member name="P:Orion.Networking.Packets.PlayerInfoPacket.HairDye">
+            <summary>
+            Gets or sets the player's hair dye.
+            </summary>
+        </member>
+        <member name="P:Orion.Networking.Packets.PlayerInfoPacket.HiddenVisualsFlags">
+            <summary>
+            Gets or sets the player's hidden visuals flags.
+            </summary>
+        </member>
+        <member name="P:Orion.Networking.Packets.PlayerInfoPacket.HiddenMiscFlags">
+            <summary>
+            Gets or sets the player's hidden misc flags.
+            </summary>
+        </member>
+        <member name="P:Orion.Networking.Packets.PlayerInfoPacket.HairColor">
+            <summary>
+            Gets or sets the player's hair color.
+            </summary>
+        </member>
+        <member name="P:Orion.Networking.Packets.PlayerInfoPacket.SkinColor">
+            <summary>
+            Gets or sets the player's skin color.
+            </summary>
+        </member>
+        <member name="P:Orion.Networking.Packets.PlayerInfoPacket.EyeColor">
+            <summary>
+            Gets or sets the player's eye color.
+            </summary>
+        </member>
+        <member name="P:Orion.Networking.Packets.PlayerInfoPacket.ShirtColor">
+            <summary>
+            Gets or sets the player's shirt color.
+            </summary>
+        </member>
+        <member name="P:Orion.Networking.Packets.PlayerInfoPacket.UndershirtColor">
+            <summary>
+            Gets or sets the player's undershirt color.
+            </summary>
+        </member>
+        <member name="P:Orion.Networking.Packets.PlayerInfoPacket.PantsColor">
+            <summary>
+            Gets or sets the player's pants color.
+            </summary>
+        </member>
+        <member name="P:Orion.Networking.Packets.PlayerInfoPacket.ShoeColor">
+            <summary>
+            Gets or sets the player's shoe color.
+            </summary>
+        </member>
+        <member name="P:Orion.Networking.Packets.PlayerInfoPacket.Difficulty">
+            <summary>
+            Gets or sets the player's difficulty.
+            </summary>
+        </member>
+        <member name="M:Orion.Networking.Packets.PlayerInfoPacket.FromReader(System.IO.BinaryReader)">
+            <summary>
+            Reads a <see cref="T:Orion.Networking.Packets.PlayerInfoPacket"/> from the given reader.
+            </summary>
+            <param name="reader">The reader.</param>
+            <exception cref="T:System.ArgumentNullException"><paramref name="reader"/> is <c>null</c>.</exception>
+        </member>
+        <member name="M:Orion.Networking.Packets.PlayerInfoPacket.WriteToWriter(System.IO.BinaryWriter)">
+            <inheritdoc />
+        </member>
         <member name="T:Orion.Networking.Packets.TerrariaPacket">
             <summary>
             Represents a Terraria packet.
@@ -516,16 +616,15 @@
             Indicates a <see cref="T:Orion.Networking.Packets.ContinueConnectingPacket"/>.
             </summary>
         </member>
+        <member name="F:Orion.Networking.Packets.TerrariaPacketType.PlayerInfo">
+            <summary>
+            Indicates a <see cref="T:Orion.Networking.Packets.PlayerInfoPacket"/>.
+            </summary>
+        </member>
         <member name="T:Orion.Networking.Packets.UnknownPacket">
             <summary>
             Used as a fail-safe for any packet that failed to be read.
             </summary>
-        </member>
-        <member name="P:Orion.Networking.Packets.UnknownPacket.Bytes">
-            <summary>
-            Gets or sets the byte array.
-            </summary>
-            <exception cref="T:System.ArgumentNullException"><paramref name="value"/> is <c>null</c>.</exception>
         </member>
         <member name="P:Orion.Networking.Packets.UnknownPacket.HeaderlessLength">
             <inheritdoc />
@@ -538,6 +637,12 @@
         </member>
         <member name="P:Orion.Networking.Packets.UnknownPacket.Type">
             <inheritdoc />
+        </member>
+        <member name="P:Orion.Networking.Packets.UnknownPacket.Bytes">
+            <summary>
+            Gets or sets the byte array.
+            </summary>
+            <exception cref="T:System.ArgumentNullException"><paramref name="value"/> is <c>null</c>.</exception>
         </member>
         <member name="M:Orion.Networking.Packets.UnknownPacket.#ctor(Orion.Networking.Packets.TerrariaPacketType)">
             <summary>

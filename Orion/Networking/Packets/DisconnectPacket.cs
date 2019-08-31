@@ -41,8 +41,7 @@
                 throw new ArgumentNullException(nameof(reader));
             }
 
-            var reason = reader.ReadString();
-            return new DisconnectPacket {_reason = reason};
+            return new DisconnectPacket {_reason = reader.ReadString()};
         }
 
         /// <inheritdoc />
