@@ -12,7 +12,9 @@
                 // Load all services.
                 Console.ForegroundColor = ConsoleColor.Yellow;
                 foreach (var service in kernel.GetAll<IService>()) {
-                    Console.WriteLine(Resources.strings.LoadedServiceMessage, service.Name, service.Author);
+                    Console.WriteLine(
+                        Resources.strings.LoadedServiceMessage,
+                        service.Name, service.Version, service.Author);
                 }
                 Console.ResetColor();
 

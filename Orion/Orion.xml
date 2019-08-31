@@ -118,17 +118,214 @@
             Having multiple implementations of a service with this attribute results in undefined behavior.
             </remarks>
         </member>
-        <member name="T:Orion.Networking.INetworkService">
+        <member name="T:Orion.Networking.Events.ReceivedPacketEventArgs">
             <summary>
-            Provides a mechanism for managing the network.
+            Provides data for the <see cref="E:Orion.Networking.INetworkService.ReceivedPacket"/> event.
             </summary>
         </member>
-        <member name="M:Orion.Networking.INetworkService.SendPacket(System.Int32,Orion.Networking.Packets.TerrariaPacket)">
+        <member name="P:Orion.Networking.Events.ReceivedPacketEventArgs.Packet">
             <summary>
-            Sends the specified packet to the target ID.
+            Gets the packet that was received.
             </summary>
-            <param name="targetId">The target. <c>-1</c> represents everyone.</param>
+        </member>
+        <member name="P:Orion.Networking.Events.ReceivedPacketEventArgs.Sender">
+            <summary>
+            Gets the packet's sender.
+            </summary>
+        </member>
+        <member name="M:Orion.Networking.Events.ReceivedPacketEventArgs.#ctor(Terraria.RemoteClient,Orion.Networking.Packets.TerrariaPacket)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Orion.Networking.Events.ReceivedPacketEventArgs"/> class with the specified sender and
+            packet.
+            </summary>
+            <param name="sender">The packet's sender.</param>
+            <param name="packet">The packet that was received.</param>
+            <exception cref="T:System.ArgumentNullException">
+            Either <paramref name="sender"/> is <c>null</c> or <paramref name="packet"/> is <c>null</c>.
+            </exception>
+        </member>
+        <member name="T:Orion.Networking.Events.ReceivingPacketEventArgs">
+            <summary>
+            Provides data for the <see cref="E:Orion.Networking.INetworkService.ReceivingPacket"/> event.
+            </summary>
+        </member>
+        <member name="P:Orion.Networking.Events.ReceivingPacketEventArgs.IsPacketDirty">
+            <summary>
+            Gets a value indicating whether the packet is dirty.
+            </summary>
+        </member>
+        <member name="P:Orion.Networking.Events.ReceivingPacketEventArgs.Packet">
+            <summary>
+            Gets or sets the packet that is being received.
+            </summary>
+            <exception cref="T:System.ArgumentNullException"><paramref name="value"/> is <c>null</c>.</exception>
+        </member>
+        <member name="P:Orion.Networking.Events.ReceivingPacketEventArgs.Sender">
+            <summary>
+            Gets the packet's sender.
+            </summary>
+        </member>
+        <member name="M:Orion.Networking.Events.ReceivingPacketEventArgs.#ctor(Terraria.RemoteClient,Orion.Networking.Packets.TerrariaPacket)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Orion.Networking.Events.ReceivingPacketEventArgs"/> class with the specified sender
+            and packet.
+            </summary>
+            <param name="sender">The packet's sender.</param>
+            <param name="packet">The packet that is being received.</param>
+            <exception cref="T:System.ArgumentNullException">
+            Either <paramref name="sender"/> is <c>null</c> or <paramref name="packet"/> is <c>null</c>.
+            </exception>
+        </member>
+        <member name="M:Orion.Networking.Events.ReceivingPacketEventArgs.MarkPacketAsDirty">
+            <summary>
+            Marks the packet as being dirty.
+            </summary>
+        </member>
+        <member name="T:Orion.Networking.Events.SendingPacketEventArgs">
+            <summary>
+            Provides data for the <see cref="E:Orion.Networking.INetworkService.SendingPacket"/> event.
+            </summary>
+        </member>
+        <member name="P:Orion.Networking.Events.SendingPacketEventArgs.IsPacketDirty">
+            <summary>
+            Gets a value indicating whether the packet is dirty.
+            </summary>
+        </member>
+        <member name="P:Orion.Networking.Events.SendingPacketEventArgs.Packet">
+            <summary>
+            Gets or sets the packet that is being sent.
+            </summary>
+            <exception cref="T:System.ArgumentNullException"><paramref name="value"/> is <c>null</c>.</exception>
+        </member>
+        <member name="P:Orion.Networking.Events.SendingPacketEventArgs.Receiver">
+            <summary>
+            Gets the packet's receiver.
+            </summary>
+        </member>
+        <member name="M:Orion.Networking.Events.SendingPacketEventArgs.#ctor(Terraria.RemoteClient,Orion.Networking.Packets.TerrariaPacket)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Orion.Networking.Events.SendingPacketEventArgs"/> class with the specified receiver
+            and packet.
+            </summary>
+            <param name="receiver">The packet's receiver.</param>
+            <param name="packet">The packet that is being received.</param>
+            <exception cref="T:System.ArgumentNullException">
+            Either <paramref name="receiver"/> is <c>null</c> or <paramref name="packet"/> is <c>null</c>.
+            </exception>
+        </member>
+        <member name="M:Orion.Networking.Events.SendingPacketEventArgs.MarkPacketAsDirty">
+            <summary>
+            Marks the packet as being dirty.
+            </summary>
+        </member>
+        <member name="T:Orion.Networking.Events.SentPacketEventArgs">
+            <summary>
+            Provides data for the <see cref="E:Orion.Networking.INetworkService.SentPacket"/> event.
+            </summary>
+        </member>
+        <member name="P:Orion.Networking.Events.SentPacketEventArgs.Packet">
+            <summary>
+            Gets the packet that was sent.
+            </summary>
+        </member>
+        <member name="P:Orion.Networking.Events.SentPacketEventArgs.Receiver">
+            <summary>
+            Gets the packet's receiver.
+            </summary>
+        </member>
+        <member name="M:Orion.Networking.Events.SentPacketEventArgs.#ctor(Terraria.RemoteClient,Orion.Networking.Packets.TerrariaPacket)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Orion.Networking.Events.SentPacketEventArgs"/> class with the specified receiver and
+            packet.
+            </summary>
+            <param name="receiver">The packet's receiver.</param>
+            <param name="packet">The packet that was received.</param>
+            <exception cref="T:System.ArgumentNullException">
+            Either <paramref name="receiver"/> is <c>null</c> or <paramref name="packet"/> is <c>null</c>.
+            </exception>
+        </member>
+        <member name="T:Orion.Networking.INetworkService">
+            <summary>
+            Provides a mechanism for managing the network. All implementations must be thread-safe.
+            </summary>
+        </member>
+        <member name="E:Orion.Networking.INetworkService.ReceivedPacket">
+            <summary>
+            Occurs when a packet was received.
+            </summary>
+        </member>
+        <member name="E:Orion.Networking.INetworkService.ReceivingPacket">
+            <summary>
+            Occurs when a packet is being received. This event can be handled.
+            </summary>
+        </member>
+        <member name="E:Orion.Networking.INetworkService.SentPacket">
+            <summary>
+            Occurs when a packet was sent.
+            </summary>
+        </member>
+        <member name="E:Orion.Networking.INetworkService.SendingPacket">
+            <summary>
+            Occurs when a packet is being sent. This event can be handled.
+            </summary>
+        </member>
+        <member name="M:Orion.Networking.INetworkService.SendPacket(Orion.Networking.Packets.TerrariaPacket,System.Int32,System.Int32)">
+            <summary>
+            Sends the specified packet to the target ID excepting the given except ID.
+            </summary>
             <param name="packet">The packet.</param>
+            <param name="targetId">The target ID. <c>-1</c> represents everyone.</param>
+            <param name="exceptId">The except ID. <c>-1</c> represents no-one.</param>
+        </member>
+        <member name="M:Orion.Networking.INetworkService.SendPacket(Orion.Networking.Packets.TerrariaPacketType,System.Int32,System.Int32,System.String,System.Int32,System.Single,System.Single,System.Single,System.Int32,System.Int32,System.Int32)">
+            <summary>
+            Sends the specified packet to the target ID excepting the given except ID.
+            </summary>
+            <param name="packetType">The packet type.</param>
+            <param name="targetId">The target ID. <c>-1</c> represents everyone.</param>
+            <param name="exceptId">The except ID. <c>-1</c> represents no-one.</param>
+            <param name="text">The text.</param>
+            <param name="number">The first packet-specific number.</param>
+            <param name="number2">The second packet-specific number.</param>
+            <param name="number3">The third packet-specific number.</param>
+            <param name="number4">The fourth packet-specific number.</param>
+            <param name="number5">The fifth packet-specific number.</param>
+            <param name="number6">The sixth packet-specific number.</param>
+            <param name="number7">The seventh packet-specific number.</param>
+        </member>
+        <member name="T:Orion.Networking.OrionNetworkService">
+            <summary>
+            Orion's implementation of <see cref="T:Orion.Networking.INetworkService"/>.
+            </summary>
+        </member>
+        <member name="P:Orion.Networking.OrionNetworkService.Author">
+            <inheritdoc />
+        </member>
+        <member name="P:Orion.Networking.OrionNetworkService.Name">
+            <inheritdoc />
+        </member>
+        <member name="E:Orion.Networking.OrionNetworkService.ReceivedPacket">
+            <inheritdoc />
+        </member>
+        <member name="E:Orion.Networking.OrionNetworkService.ReceivingPacket">
+            <inheritdoc />
+        </member>
+        <member name="E:Orion.Networking.OrionNetworkService.SentPacket">
+            <inheritdoc />
+        </member>
+        <member name="E:Orion.Networking.OrionNetworkService.SendingPacket">
+            <inheritdoc />
+        </member>
+        <member name="M:Orion.Networking.OrionNetworkService.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:Orion.Networking.OrionNetworkService"/> class.
+            </summary>
+        </member>
+        <member name="M:Orion.Networking.OrionNetworkService.SendPacket(Orion.Networking.Packets.TerrariaPacket,System.Int32,System.Int32)">
+            <inheritdoc />
+        </member>
+        <member name="M:Orion.Networking.OrionNetworkService.SendPacket(Orion.Networking.Packets.TerrariaPacketType,System.Int32,System.Int32,System.String,System.Int32,System.Single,System.Single,System.Single,System.Int32,System.Int32,System.Int32)">
+            <inheritdoc />
         </member>
         <member name="T:Orion.Networking.Packets.ConnectionRequestPacket">
             <summary>
@@ -146,22 +343,16 @@
         </member>
         <member name="P:Orion.Networking.Packets.ConnectionRequestPacket.Version">
             <summary>
-            Gets the version, which is of the form $"Terraria{Main.curRelease}".
+            Gets or sets the version, which is of the form $"Terraria{Main.curRelease}".
             </summary>
+            <exception cref="T:System.ArgumentNullException"><paramref name="value"/> is <c>null</c>.</exception>
         </member>
-        <member name="M:Orion.Networking.Packets.ConnectionRequestPacket.#ctor(System.IO.BinaryReader)">
+        <member name="M:Orion.Networking.Packets.ConnectionRequestPacket.FromReader(System.IO.BinaryReader)">
             <summary>
-            Initializes a new instance of the <see cref="T:Orion.Networking.Packets.ConnectionRequestPacket"/> with the given reader.
+            Reads a <see cref="T:Orion.Networking.Packets.ConnectionRequestPacket"/> from the given reader.
             </summary>
             <param name="reader">The reader.</param>
             <exception cref="T:System.ArgumentNullException"><paramref name="reader"/> is <c>null</c>.</exception>
-        </member>
-        <member name="M:Orion.Networking.Packets.ConnectionRequestPacket.#ctor(System.String)">
-            <summary>
-            Initializes a new instance of the <see cref="T:Orion.Networking.Packets.ConnectionRequestPacket"/> with the given version.
-            </summary>
-            <param name="version">The version.</param>
-            <exception cref="T:System.ArgumentNullException"><paramref name="version"/> is <c>null</c>.</exception>
         </member>
         <member name="M:Orion.Networking.Packets.ConnectionRequestPacket.WriteToWriter(System.IO.BinaryWriter)">
             <inheritdoc />
@@ -179,24 +370,18 @@
         </member>
         <member name="P:Orion.Networking.Packets.ContinueConnectingPacket.PlayerId">
             <summary>
-            Gets the player ID.
+            Gets or sets the player ID.
             </summary>
         </member>
         <member name="P:Orion.Networking.Packets.ContinueConnectingPacket.Type">
             <inheritdoc />
         </member>
-        <member name="M:Orion.Networking.Packets.ContinueConnectingPacket.#ctor(System.IO.BinaryReader)">
+        <member name="M:Orion.Networking.Packets.ContinueConnectingPacket.FromReader(System.IO.BinaryReader)">
             <summary>
-            Initializes a new instance of the <see cref="T:Orion.Networking.Packets.ConnectionRequestPacket"/> with the given reader.
+            Reads a <see cref="T:Orion.Networking.Packets.ContinueConnectingPacket"/> from the given reader.
             </summary>
             <param name="reader">The reader.</param>
             <exception cref="T:System.ArgumentNullException"><paramref name="reader"/> is <c>null</c>.</exception>
-        </member>
-        <member name="M:Orion.Networking.Packets.ContinueConnectingPacket.#ctor(System.Byte)">
-            <summary>
-            Initializes a new instance of the <see cref="T:Orion.Networking.Packets.ConnectionRequestPacket"/> with the given player ID.
-            </summary>
-            <param name="playerId">The player ID.</param>
         </member>
         <member name="M:Orion.Networking.Packets.ContinueConnectingPacket.WriteToWriter(System.IO.BinaryWriter)">
             <inheritdoc />
@@ -220,23 +405,16 @@
         </member>
         <member name="P:Orion.Networking.Packets.DisconnectPacket.Reason">
             <summary>
-            Gets the disconnect reason.
+            Gets or sets the disconnect reason.
             </summary>
+            <exception cref="T:System.ArgumentNullException"><paramref name="value"/> is <c>null</c>.</exception>
         </member>
-        <member name="M:Orion.Networking.Packets.DisconnectPacket.#ctor(System.IO.BinaryReader)">
+        <member name="M:Orion.Networking.Packets.DisconnectPacket.FromReader(System.IO.BinaryReader)">
             <summary>
-            Initializes a new instance of the <see cref="T:Orion.Networking.Packets.DisconnectPacket"/> with the given reader.
+            Reads a <see cref="T:Orion.Networking.Packets.DisconnectPacket"/> from the given reader.
             </summary>
             <param name="reader">The reader.</param>
             <exception cref="T:System.ArgumentNullException"><paramref name="reader"/> is <c>null</c>.</exception>
-        </member>
-        <member name="M:Orion.Networking.Packets.DisconnectPacket.#ctor(System.String)">
-            <summary>
-            Initializes a new instance of the <see cref="T:Orion.Networking.Packets.DisconnectPacket"/> with the given reason.
-            </summary>
-            <param name="reason">The reason.</param>
-            <exception cref="T:System.ArgumentNullException"><paramref name="reason"/> is <c>null</c>.</exception>
-            <exception cref="T:System.ArgumentOutOfRangeException"><paramref name="reason"/> is too long.</exception>
         </member>
         <member name="M:Orion.Networking.Packets.DisconnectPacket.WriteToWriter(System.IO.BinaryWriter)">
             <inheritdoc />
@@ -277,6 +455,10 @@
             <summary>
             Represents a Terraria packet.
             </summary>
+            <remarks>
+            Terraria packets are limited to a maximum of 65536 bytes, but this restriction is not enforced immediately on
+            each of the packet types. Instead, this restriction is enforced when the packet is sent.
+            </remarks>
         </member>
         <member name="P:Orion.Networking.Packets.TerrariaPacket.HeaderLength">
             <summary>
@@ -312,6 +494,7 @@
             </summary>
             <param name="stream">The stream.</param>
             <exception cref="T:System.ArgumentNullException"><paramref name="stream"/> is <c>null</c>.</exception>
+            <exception cref="T:System.InvalidOperationException">The packet cannot be written due to its length.</exception>
         </member>
         <member name="T:Orion.Networking.Packets.TerrariaPacketType">
             <summary>
@@ -340,8 +523,9 @@
         </member>
         <member name="P:Orion.Networking.Packets.UnknownPacket.Bytes">
             <summary>
-            Gets the byte array.
+            Gets or sets the byte array.
             </summary>
+            <exception cref="T:System.ArgumentNullException"><paramref name="value"/> is <c>null</c>.</exception>
         </member>
         <member name="P:Orion.Networking.Packets.UnknownPacket.HeaderlessLength">
             <inheritdoc />
@@ -354,6 +538,22 @@
         </member>
         <member name="P:Orion.Networking.Packets.UnknownPacket.Type">
             <inheritdoc />
+        </member>
+        <member name="M:Orion.Networking.Packets.UnknownPacket.#ctor(Orion.Networking.Packets.TerrariaPacketType)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Orion.Networking.Packets.UnknownPacket"/> class with the specified type.
+            </summary>
+            <param name="type">The type.</param>
+        </member>
+        <member name="M:Orion.Networking.Packets.UnknownPacket.FromReader(System.IO.BinaryReader,Orion.Networking.Packets.TerrariaPacketType,System.UInt16)">
+            <summary>
+            Reads an <see cref="T:Orion.Networking.Packets.UnknownPacket"/> from the given reader with the specified type and length.
+            </summary>
+            <param name="reader">The reader.</param>
+            <param name="type">The type.</param>
+            <param name="headerlessLength">The length.</param>
+            <exception cref="T:System.ArgumentNullException"><paramref name="reader"/> is <c>null</c>.</exception>
+            <exception cref="T:System.ArgumentOutOfRangeException"><paramref name="headerlessLength"/> is too big.</exception>
         </member>
         <member name="M:Orion.Networking.Packets.UnknownPacket.WriteToWriter(System.IO.BinaryWriter)">
             <inheritdoc />

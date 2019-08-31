@@ -1,6 +1,4 @@
-﻿// ReSharper disable ObjectCreationAsStatement
-
-namespace Orion.Tests.Networking.Packets {
+﻿namespace Orion.Tests.Networking.Packets {
     using System;
     using System.Collections.Generic;
     using System.IO;
@@ -17,23 +15,23 @@ namespace Orion.Tests.Networking.Packets {
             };
 
         [Fact]
-        public void Ctor_NullReader_ThrowsArgumentNullException() {
-            Action action = () => new DisconnectPacket((BinaryReader)null);
+        public void FromReader_NullReader_ThrowsArgumentNullException() {
+            Func<TerrariaPacket> func = () => DisconnectPacket.FromReader(null);
 
-            action.Should().Throw<ArgumentNullException>();
+            func.Should().Throw<ArgumentNullException>();
         }
 
         [Theory]
         [MemberData(nameof(CtorReaderData))]
 
-        public void Ctor_Reader_IsCorrect(string str) {
+        public void FromReader_IsCorrect(string str) {
             using (var stream = new MemoryStream())
             using (var writer = new BinaryWriter(stream))
             using (var reader = new BinaryReader(stream)) {
                 writer.Write(str);
                 stream.Position = 0;
 
-                var packet = new DisconnectPacket(reader);
+                var packet = DisconnectPacket.FromReader(reader);
 
                 packet.IsSentToClient.Should().BeTrue();
                 packet.IsSentToServer.Should().BeFalse();
@@ -43,17 +41,11 @@ namespace Orion.Tests.Networking.Packets {
         }
 
         [Fact]
-        public void Ctor_NullVersion_ThrowsArgumentNullException() {
-            Action action = () => new DisconnectPacket((string)null);
+        public void SetReason_Null_ThrowsArgumentNullException() {
+            var packet = new DisconnectPacket();
+            Action action = () => packet.Reason = null;
 
             action.Should().Throw<ArgumentNullException>();
-        }
-
-        [Fact]
-        public void Ctor_VersionTooLong_ThrowsArgumentOutOfRangeException() {
-            Action action = () => new DisconnectPacket(new string('t', 65536));
-
-            action.Should().Throw<ArgumentOutOfRangeException>();
         }
     }
 }

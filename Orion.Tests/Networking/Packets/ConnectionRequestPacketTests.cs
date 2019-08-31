@@ -1,6 +1,4 @@
-﻿// ReSharper disable ObjectCreationAsStatement
-
-namespace Orion.Tests.Networking.Packets {
+﻿namespace Orion.Tests.Networking.Packets {
     using System;
     using System.Collections.Generic;
     using System.IO;
@@ -17,23 +15,23 @@ namespace Orion.Tests.Networking.Packets {
             };
 
         [Fact]
-        public void Ctor_NullReader_ThrowsArgumentNullException() {
-            Action action = () => new ConnectionRequestPacket((BinaryReader)null);
+        public void FromReader_NullReader_ThrowsArgumentNullException() {
+            Func<TerrariaPacket> func = () => ConnectionRequestPacket.FromReader(null);
 
-            action.Should().Throw<ArgumentNullException>();
+            func.Should().Throw<ArgumentNullException>();
         }
 
         [Theory]
         [MemberData(nameof(CtorReaderData))]
 
-        public void Ctor_Reader_IsCorrect(string str) {
+        public void FromReader_IsCorrect(string str) {
             using (var stream = new MemoryStream())
             using (var writer = new BinaryWriter(stream))
             using (var reader = new BinaryReader(stream)) {
                 writer.Write(str);
                 stream.Position = 0;
 
-                var packet = new ConnectionRequestPacket(reader);
+                var packet = ConnectionRequestPacket.FromReader(reader);
 
                 packet.IsSentToClient.Should().BeFalse();
                 packet.IsSentToServer.Should().BeTrue();
@@ -43,17 +41,11 @@ namespace Orion.Tests.Networking.Packets {
         }
 
         [Fact]
-        public void Ctor_NullVersion_ThrowsArgumentNullException() {
-            Action action = () => new ConnectionRequestPacket((string)null);
+        public void SetVersion_Null_ThrowsArgumentNullException() {
+            var packet = new ConnectionRequestPacket();
+            Action action = () => packet.Version = null;
 
             action.Should().Throw<ArgumentNullException>();
-        }
-
-        [Fact]
-        public void Ctor_VersionTooLong_ThrowsArgumentOutOfRangeException() {
-            Action action = () => new ConnectionRequestPacket(new string('t', 65536));
-
-            action.Should().Throw<ArgumentOutOfRangeException>();
         }
     }
 }

@@ -1,6 +1,4 @@
-﻿// ReSharper disable UnusedMember.Global
-
-namespace Orion.Tests.Framework {
+﻿namespace Orion.Tests.Framework {
     using System;
     using System.IO;
     using System.Linq;
@@ -27,7 +25,8 @@ namespace Orion.Tests.Framework {
         public void ServicesAreSingleton() {
             var service1 = _kernel.Get<IMockService>();
             var service2 = _kernel.Get<IMockService>();
-
+            
+            service1.Should().BeOfType<MockService>();
             service1.Should().BeSameAs(service2);
         }
 
@@ -35,7 +34,8 @@ namespace Orion.Tests.Framework {
         public void InstancedServicesAreInstanced() {
             var service1 = _kernel.Get<IMockInstanceService>();
             var service2 = _kernel.Get<IMockInstanceService>();
-
+            
+            service1.Should().BeOfType<MockInstanceService>();
             service1.Should().NotBeSameAs(service2);
         }
 
@@ -44,6 +44,7 @@ namespace Orion.Tests.Framework {
             var services = _kernel.GetAll<IMockOverrideService>().ToList();
 
             services.Should().ContainSingle();
+            services[0].Should().NotBeOfType<MockOverrideService>();
             services[0].Should().BeOfType<MockOverrideServiceV2>();
         }
 

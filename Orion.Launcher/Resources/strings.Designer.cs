@@ -61,7 +61,7 @@ namespace Orion.Launcher.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to   * Loaded {0} by {1}..
+        ///   Looks up a localized string similar to   * Loaded {0} (v{1}) by {2}..
         /// </summary>
         internal static string LoadedServiceMessage {
             get {

@@ -8,6 +8,8 @@
     /// Packet sent from the server to disconnect the client.
     /// </summary>
     public sealed class DisconnectPacket : TerrariaPacket {
+        private string _reason = "";
+
         /// <inheritdoc />
         private protected override int HeaderlessLength => Reason.GetBinaryLength(Encoding.UTF8);
 
@@ -21,35 +23,26 @@
         public override TerrariaPacketType Type => TerrariaPacketType.Disconnect;
 
         /// <summary>
-        /// Gets the disconnect reason.
+        /// Gets or sets the disconnect reason.
         /// </summary>
-        public string Reason { get; }
-        
+        /// <exception cref="ArgumentNullException"><paramref name="value"/> is <c>null</c>.</exception>
+        public string Reason {
+            get => _reason;
+            set => _reason = value ?? throw new ArgumentNullException(nameof(value));
+        }
+
         /// <summary>
-        /// Initializes a new instance of the <see cref="DisconnectPacket"/> with the given reader.
+        /// Reads a <see cref="DisconnectPacket"/> from the given reader.
         /// </summary>
         /// <param name="reader">The reader.</param>
         /// <exception cref="ArgumentNullException"><paramref name="reader"/> is <c>null</c>.</exception>
-        public DisconnectPacket(BinaryReader reader) {
+        public static DisconnectPacket FromReader(BinaryReader reader) {
             if (reader == null) {
                 throw new ArgumentNullException(nameof(reader));
             }
 
-            Reason = reader.ReadString();
-        }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="DisconnectPacket"/> with the given reason.
-        /// </summary>
-        /// <param name="reason">The reason.</param>
-        /// <exception cref="ArgumentNullException"><paramref name="reason"/> is <c>null</c>.</exception>
-        /// <exception cref="ArgumentOutOfRangeException"><paramref name="reason"/> is too long.</exception>
-        public DisconnectPacket(string reason) {
-            Reason = reason ?? throw new ArgumentNullException(nameof(reason));
-
-            if (HeaderLength + HeaderlessLength > short.MaxValue) {
-                throw new ArgumentOutOfRangeException(nameof(reason), "Reason string is too long.");
-            }
+            var reason = reader.ReadString();
+            return new DisconnectPacket {_reason = reason};
         }
 
         /// <inheritdoc />

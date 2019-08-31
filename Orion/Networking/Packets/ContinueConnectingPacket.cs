@@ -15,32 +15,25 @@
         public override bool IsSentToServer => true;
 
         /// <summary>
-        /// Gets the player ID.
+        /// Gets or sets the player ID.
         /// </summary>
-        public byte PlayerId { get; }
+        public byte PlayerId { get; set; }
 
         /// <inheritdoc />
         public override TerrariaPacketType Type => TerrariaPacketType.ContinueConnecting;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="ConnectionRequestPacket"/> with the given reader.
+        /// Reads a <see cref="ContinueConnectingPacket"/> from the given reader.
         /// </summary>
         /// <param name="reader">The reader.</param>
         /// <exception cref="ArgumentNullException"><paramref name="reader"/> is <c>null</c>.</exception>
-        public ContinueConnectingPacket(BinaryReader reader) {
+        public static ContinueConnectingPacket FromReader(BinaryReader reader) {
             if (reader == null) {
                 throw new ArgumentNullException(nameof(reader));
             }
 
-            PlayerId = reader.ReadByte();
-        }
-        
-        /// <summary>
-        /// Initializes a new instance of the <see cref="ConnectionRequestPacket"/> with the given player ID.
-        /// </summary>
-        /// <param name="playerId">The player ID.</param>
-        public ContinueConnectingPacket(byte playerId) {
-            PlayerId = playerId;
+            var playerId = reader.ReadByte();
+            return new ContinueConnectingPacket {PlayerId = playerId};
         }
 
         /// <inheritdoc />

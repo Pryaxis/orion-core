@@ -7,11 +7,16 @@
     /// <summary>
     /// Represents a Terraria packet.
     /// </summary>
+    /// <remarks>
+    /// Terraria packets are limited to a maximum of 65536 bytes, but this restriction is not enforced immediately on
+    /// each of the packet types. Instead, this restriction is enforced when the packet is sent.
+    /// </remarks>
     public abstract class TerrariaPacket {
         private static readonly Dictionary<TerrariaPacketType, Func<BinaryReader, TerrariaPacket>> Deserializers =
             new Dictionary<TerrariaPacketType, Func<BinaryReader, TerrariaPacket>> {
-                [TerrariaPacketType.ConnectionRequest] = br => new ConnectionRequestPacket(br),
-                [TerrariaPacketType.Disconnect] = br => new DisconnectPacket(br),
+                [TerrariaPacketType.ConnectionRequest] = ConnectionRequestPacket.FromReader,
+                [TerrariaPacketType.Disconnect] = DisconnectPacket.FromReader,
+                [TerrariaPacketType.ContinueConnecting] = ContinueConnectingPacket.FromReader,
             };
 
         /// <summary>
@@ -48,13 +53,13 @@
             }
 
             using (var reader = new BinaryReader(stream, Encoding.UTF8, true)) {
-                var packetLength = reader.ReadInt16();
+                var packetLength = reader.ReadUInt16();
                 var packetType = (TerrariaPacketType)reader.ReadByte();
 
                 if (Deserializers.TryGetValue(packetType, out var deserializer)) {
                     return deserializer(reader);
                 } else {
-                    return new UnknownPacket(reader, packetType, packetLength);
+                    return UnknownPacket.FromReader(reader, packetType, packetLength);
                 }
             }
         }
@@ -64,13 +69,19 @@
         /// </summary>
         /// <param name="stream">The stream.</param>
         /// <exception cref="ArgumentNullException"><paramref name="stream"/> is <c>null</c>.</exception>
+        /// <exception cref="InvalidOperationException">The packet cannot be written due to its length.</exception>
         public void WriteToStream(Stream stream) {
             if (stream == null) {
                 throw new ArgumentNullException(nameof(stream));
             }
 
+            var packetLength = HeaderLength + HeaderlessLength;
+            if (packetLength > ushort.MaxValue) {
+                throw new InvalidOperationException("Packet is too long.");
+            }
+
             using (var writer = new BinaryWriter(stream, Encoding.UTF8, true)) {
-                writer.Write((short)(HeaderLength + HeaderlessLength));
+                writer.Write((ushort)packetLength);
                 writer.Write((byte)Type);
                 WriteToWriter(writer);
             }

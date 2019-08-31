@@ -1,6 +1,4 @@
-﻿// ReSharper disable StringLiteralTypo
-
-namespace Orion.Tests.Networking.Packets.Extensions {
+﻿namespace Orion.Tests.Networking.Packets.Extensions {
     using System.Collections.Generic;
     using System.IO;
     using System.Text;
@@ -13,8 +11,8 @@ namespace Orion.Tests.Networking.Packets.Extensions {
         public static IEnumerable<object[]> GetBinaryLengthData =>
             new List<object[]> {
                 new object[] {"test", Encoding.UTF8},
-                new object[] {"tëst", Encoding.UTF8},
-                new object[] {"tëst", Encoding.ASCII},
+                new object[] {"ë", Encoding.UTF8},
+                new object[] {"ë", Encoding.ASCII},
                 new object[] {new string('t', 128), Encoding.UTF8},
                 new object[] {new string('t', 32768), Encoding.UTF8},
                 new object[] {new string('t', 8388608), Encoding.UTF8},
