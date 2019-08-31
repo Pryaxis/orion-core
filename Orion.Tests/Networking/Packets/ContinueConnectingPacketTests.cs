@@ -33,8 +33,8 @@
 
                 var packet = ContinueConnectingPacket.FromReader(reader);
 
-                packet.IsSentToClient.Should().BeFalse();
-                packet.IsSentToServer.Should().BeTrue();
+                packet.IsSentToClient.Should().BeTrue();
+                packet.IsSentToServer.Should().BeFalse();
                 packet.Type.Should().Be(TerrariaPacketType.ContinueConnecting);
                 packet.PlayerId.Should().Be(playerId);
             }

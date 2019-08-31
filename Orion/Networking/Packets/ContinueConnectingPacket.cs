@@ -3,16 +3,16 @@
     using System.IO;
 
     /// <summary>
-    /// Packet sent from the client to the server to request connection.
+    /// Packet sent from the server to the client to continue the connection.
     /// </summary>
     public sealed class ContinueConnectingPacket : TerrariaPacket {
         private protected override int HeaderlessLength => 1;
 
         /// <inheritdoc />
-        public override bool IsSentToClient => false;
+        public override bool IsSentToClient => true;
 
         /// <inheritdoc />
-        public override bool IsSentToServer => true;
+        public override bool IsSentToServer => false;
 
         /// <summary>
         /// Gets or sets the player ID.

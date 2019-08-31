@@ -359,7 +359,7 @@
         </member>
         <member name="T:Orion.Networking.Packets.ContinueConnectingPacket">
             <summary>
-            Packet sent from the client to the server to request connection.
+            Packet sent from the server to the client to continue the connection.
             </summary>
         </member>
         <member name="P:Orion.Networking.Packets.ContinueConnectingPacket.IsSentToClient">
