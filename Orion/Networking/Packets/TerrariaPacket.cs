@@ -16,8 +16,10 @@
             new Dictionary<TerrariaPacketType, Func<BinaryReader, TerrariaPacket>> {
                 [TerrariaPacketType.ConnectionRequest] = ConnectionRequestPacket.FromReader,
                 [TerrariaPacketType.Disconnect] = DisconnectPacket.FromReader,
-                [TerrariaPacketType.ContinueConnecting] = ContinueConnectingPacket.FromReader,
-                //[TerrariaPacketType.PlayerInfo] = PlayerInfoPacket.FromReader,
+                [TerrariaPacketType.ContinueConnecting] = ContinueConnectionPacket.FromReader,
+                [TerrariaPacketType.PlayerInfo] = PlayerInfoPacket.FromReader,
+                [TerrariaPacketType.PlayerInventorySlot] = PlayerInventorySlotPacket.FromReader,
+                [TerrariaPacketType.FinishConnection] = FinishConnectionPacket.FromReader,
             };
 
         /// <summary>

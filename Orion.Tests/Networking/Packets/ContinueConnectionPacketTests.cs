@@ -6,7 +6,7 @@
     using Orion.Networking.Packets;
     using Xunit;
 
-    public class ContinueConnectingPacketTests {
+    public class ContinueConnectionPacketTests {
         public static IEnumerable<object[]> CtorByteData =>
             new List<object[]> {
                 new object[] {(byte)0},
@@ -16,7 +16,7 @@
 
         [Fact]
         public void FromReader_NullReader_ThrowsArgumentNullException() {
-            Func<TerrariaPacket> func = () => ContinueConnectingPacket.FromReader(null);
+            Func<TerrariaPacket> func = () => ContinueConnectionPacket.FromReader(null);
 
             func.Should().Throw<ArgumentNullException>();
         }
@@ -31,7 +31,7 @@
                 writer.Write(playerId);
                 stream.Position = 0;
 
-                var packet = ContinueConnectingPacket.FromReader(reader);
+                var packet = ContinueConnectionPacket.FromReader(reader);
 
                 packet.IsSentToClient.Should().BeTrue();
                 packet.IsSentToServer.Should().BeFalse();

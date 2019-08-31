@@ -14,7 +14,7 @@
         Disconnect = 2,
 
         /// <summary>
-        /// Indicates a <see cref="ContinueConnectingPacket"/>.
+        /// Indicates a <see cref="ContinueConnectionPacket"/>.
         /// </summary>
         ContinueConnecting = 3,
 
@@ -27,5 +27,10 @@
         /// Indicates a <see cref="PlayerInventorySlotPacket"/>.
         /// </summary>
         PlayerInventorySlot = 5,
+        
+        /// <summary>
+        /// Indicates a <see cref="FinishConnectionPacket"/>.
+        /// </summary>
+        FinishConnection = 5,
     }
 }

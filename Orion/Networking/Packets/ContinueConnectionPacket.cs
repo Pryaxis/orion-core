@@ -5,7 +5,7 @@
     /// <summary>
     /// Packet sent from the server to the client to continue the connection.
     /// </summary>
-    public sealed class ContinueConnectingPacket : TerrariaPacket {
+    public sealed class ContinueConnectionPacket : TerrariaPacket {
         private protected override int HeaderlessLength => 1;
 
         /// <inheritdoc />
@@ -23,16 +23,16 @@
         public byte PlayerId { get; set; }
 
         /// <summary>
-        /// Reads a <see cref="ContinueConnectingPacket"/> from the given reader.
+        /// Reads a <see cref="ContinueConnectionPacket"/> from the given reader.
         /// </summary>
         /// <param name="reader">The reader.</param>
         /// <exception cref="ArgumentNullException"><paramref name="reader"/> is <c>null</c>.</exception>
-        public static ContinueConnectingPacket FromReader(BinaryReader reader) {
+        public static ContinueConnectionPacket FromReader(BinaryReader reader) {
             if (reader == null) {
                 throw new ArgumentNullException(nameof(reader));
             }
 
-            return new ContinueConnectingPacket {PlayerId = reader.ReadByte()};
+            return new ContinueConnectionPacket {PlayerId = reader.ReadByte()};
         }
 
         /// <inheritdoc />

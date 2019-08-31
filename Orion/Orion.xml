@@ -367,33 +367,33 @@
         <member name="M:Orion.Networking.Packets.ConnectionRequestPacket.WriteToWriter(System.IO.BinaryWriter)">
             <inheritdoc />
         </member>
-        <member name="T:Orion.Networking.Packets.ContinueConnectingPacket">
+        <member name="T:Orion.Networking.Packets.ContinueConnectionPacket">
             <summary>
             Packet sent from the server to the client to continue the connection.
             </summary>
         </member>
-        <member name="P:Orion.Networking.Packets.ContinueConnectingPacket.IsSentToClient">
+        <member name="P:Orion.Networking.Packets.ContinueConnectionPacket.IsSentToClient">
             <inheritdoc />
         </member>
-        <member name="P:Orion.Networking.Packets.ContinueConnectingPacket.IsSentToServer">
+        <member name="P:Orion.Networking.Packets.ContinueConnectionPacket.IsSentToServer">
             <inheritdoc />
         </member>
-        <member name="P:Orion.Networking.Packets.ContinueConnectingPacket.Type">
+        <member name="P:Orion.Networking.Packets.ContinueConnectionPacket.Type">
             <inheritdoc />
         </member>
-        <member name="P:Orion.Networking.Packets.ContinueConnectingPacket.PlayerId">
+        <member name="P:Orion.Networking.Packets.ContinueConnectionPacket.PlayerId">
             <summary>
             Gets or sets the player ID.
             </summary>
         </member>
-        <member name="M:Orion.Networking.Packets.ContinueConnectingPacket.FromReader(System.IO.BinaryReader)">
+        <member name="M:Orion.Networking.Packets.ContinueConnectionPacket.FromReader(System.IO.BinaryReader)">
             <summary>
-            Reads a <see cref="T:Orion.Networking.Packets.ContinueConnectingPacket"/> from the given reader.
+            Reads a <see cref="T:Orion.Networking.Packets.ContinueConnectionPacket"/> from the given reader.
             </summary>
             <param name="reader">The reader.</param>
             <exception cref="T:System.ArgumentNullException"><paramref name="reader"/> is <c>null</c>.</exception>
         </member>
-        <member name="M:Orion.Networking.Packets.ContinueConnectingPacket.WriteToWriter(System.IO.BinaryWriter)">
+        <member name="M:Orion.Networking.Packets.ContinueConnectionPacket.WriteToWriter(System.IO.BinaryWriter)">
             <inheritdoc />
         </member>
         <member name="T:Orion.Networking.Packets.DisconnectPacket">
@@ -460,6 +460,30 @@
             <param name="str">The string.</param>
             <param name="encoding">The encoding.</param>
             <returns>The length.</returns>
+        </member>
+        <member name="T:Orion.Networking.Packets.FinishConnectionPacket">
+            <summary>
+            Packet sent from the client to the server to finish the connection.
+            </summary>
+        </member>
+        <member name="P:Orion.Networking.Packets.FinishConnectionPacket.IsSentToClient">
+            <inheritdoc />
+        </member>
+        <member name="P:Orion.Networking.Packets.FinishConnectionPacket.IsSentToServer">
+            <inheritdoc />
+        </member>
+        <member name="P:Orion.Networking.Packets.FinishConnectionPacket.Type">
+            <inheritdoc />
+        </member>
+        <member name="M:Orion.Networking.Packets.FinishConnectionPacket.FromReader(System.IO.BinaryReader)">
+            <summary>
+            Reads a <see cref="T:Orion.Networking.Packets.FinishConnectionPacket"/> from the given reader.
+            </summary>
+            <param name="reader">The reader.</param>
+            <exception cref="T:System.ArgumentNullException"><paramref name="reader"/> is <c>null</c>.</exception>
+        </member>
+        <member name="M:Orion.Networking.Packets.FinishConnectionPacket.WriteToWriter(System.IO.BinaryWriter)">
+            <inheritdoc />
         </member>
         <member name="T:Orion.Networking.Packets.PlayerInfoPacket">
             <summary>
@@ -672,7 +696,7 @@
         </member>
         <member name="F:Orion.Networking.Packets.TerrariaPacketType.ContinueConnecting">
             <summary>
-            Indicates a <see cref="T:Orion.Networking.Packets.ContinueConnectingPacket"/>.
+            Indicates a <see cref="T:Orion.Networking.Packets.ContinueConnectionPacket"/>.
             </summary>
         </member>
         <member name="F:Orion.Networking.Packets.TerrariaPacketType.PlayerInfo">
@@ -683,6 +707,11 @@
         <member name="F:Orion.Networking.Packets.TerrariaPacketType.PlayerInventorySlot">
             <summary>
             Indicates a <see cref="T:Orion.Networking.Packets.PlayerInventorySlotPacket"/>.
+            </summary>
+        </member>
+        <member name="F:Orion.Networking.Packets.TerrariaPacketType.FinishConnection">
+            <summary>
+            Indicates a <see cref="T:Orion.Networking.Packets.FinishConnectionPacket"/>.
             </summary>
         </member>
         <member name="T:Orion.Networking.Packets.UnknownPacket">
