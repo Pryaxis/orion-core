@@ -31,6 +31,11 @@
         /// <summary>
         /// Indicates a <see cref="FinishConnectionPacket"/>.
         /// </summary>
-        FinishConnection = 5,
+        FinishConnection = 6,
+        
+        /// <summary>
+        /// Indicates a <see cref="WorldInfoPacket"/>.
+        /// </summary>
+        WorldInfo = 7,
     }
 }

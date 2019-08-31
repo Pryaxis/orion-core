@@ -26,4 +26,13 @@
     <PackageReference Include="OTAPI" Version="2.0.0.32" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Entities\" />
+    <Folder Include="Items\Events\" />
+    <Folder Include="Npcs\Events\" />
+    <Folder Include="Players\Events\" />
+    <Folder Include="Projectiles\Events\" />
+    <Folder Include="World\Events\" />
+  </ItemGroup>
+
 </Project>
