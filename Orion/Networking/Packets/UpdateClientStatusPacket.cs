@@ -5,7 +5,7 @@
     /// <summary>
     /// Packet sent from the client to the server to request a world section.
     /// </summary>
-    public sealed class WorldSectionRequestPacket : TerrariaPacket {
+    public sealed class UpdateClientStatusPacket : TerrariaPacket {
         private protected override int HeaderlessLength => 8;
 
         /// <inheritdoc />
@@ -15,7 +15,7 @@
         public override bool IsSentToServer => true;
 
         /// <inheritdoc />
-        public override TerrariaPacketType Type => TerrariaPacketType.WorldSectionRequest;
+        public override TerrariaPacketType Type => TerrariaPacketType.RequestWorldSection;
 
         /// <summary>
         /// Gets or sets the section's X position.
@@ -28,16 +28,16 @@
         public int SectionY { get; set; }
 
         /// <summary>
-        /// Reads a <see cref="WorldSectionRequestPacket"/> from the given reader.
+        /// Reads a <see cref="RequestWorldSectionPacket"/> from the given reader.
         /// </summary>
         /// <param name="reader">The reader.</param>
         /// <exception cref="ArgumentNullException"><paramref name="reader"/> is <c>null</c>.</exception>
-        public static WorldSectionRequestPacket FromReader(BinaryReader reader) {
+        public static RequestWorldSectionPacket FromReader(BinaryReader reader) {
             if (reader == null) {
                 throw new ArgumentNullException(nameof(reader));
             }
 
-            return new WorldSectionRequestPacket {SectionX = reader.ReadInt32(), SectionY = reader.ReadInt32()};
+            return new RequestWorldSectionPacket {SectionX = reader.ReadInt32(), SectionY = reader.ReadInt32()};
         }
 
         /// <inheritdoc />

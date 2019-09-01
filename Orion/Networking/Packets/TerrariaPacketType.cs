@@ -3,44 +3,118 @@
     /// Indicates the type of a <see cref="TerrariaPacket"/>.
     /// </summary>
     public enum TerrariaPacketType {
-        /// <summary>
-        /// Indicates a <see cref="ConnectionRequestPacket"/>.
-        /// </summary>
-        ConnectionRequest = 1,
-
-        /// <summary>
-        /// Indicates a <see cref="DisconnectPacket"/>.
-        /// </summary>
-        Disconnect = 2,
-
-        /// <summary>
-        /// Indicates a <see cref="ContinueConnectionPacket"/>.
-        /// </summary>
+#pragma warning disable 1591
+        RequestConnection = 1,
+        DisconnectPlayer = 2,
         ContinueConnecting = 3,
-
-        /// <summary>
-        /// Indicates a <see cref="PlayerInfoPacket"/>.
-        /// </summary>
-        PlayerInfo = 4,
-        
-        /// <summary>
-        /// Indicates a <see cref="PlayerInventorySlotPacket"/>.
-        /// </summary>
-        PlayerInventorySlot = 5,
-        
-        /// <summary>
-        /// Indicates a <see cref="FinishConnectionPacket"/>.
-        /// </summary>
+        UpdatePlayerInfo = 4,
+        UpdatePlayerInventorySlot = 5,
         FinishConnection = 6,
-        
-        /// <summary>
-        /// Indicates a <see cref="WorldInfoPacket"/>.
-        /// </summary>
-        WorldInfo = 7,
-
-        /// <summary>
-        /// Indicates a <see cref="WorldSectionRequestPacket"/>.
-        /// </summary>
-        WorldSectionRequest = 8,
+        UpdateWorldInfo = 7,
+        RequestWorldSection = 8,
+        UpdateClientStatus = 9,
+        UpdateWorldSection = 10,
+        UpdateTileFrames = 11,
+        SpawnPlayer = 12,
+        UpdatePlayer = 13,
+        ActivatePlayer = 14,
+        UpdatePlayerHp = 16,
+        ModifyTile = 17,
+        UpdateTime = 18,
+        ToggleDoor = 19,
+        UpdateTiles = 20,
+        UpdateItem = 21,
+        UpdateItemOwner = 22,
+        UpdateNpc = 23,
+        DamageNpcWithItem = 24,
+        UpdateProjectile = 27,
+        DamageNpc = 28,
+        RemoveProjectile = 29,
+        TogglePlayerPvp = 30,
+        RequestChestContents = 31,
+        UpdateChestItem = 32,
+        UpdatePlayerChest = 33,
+        ModifyChest = 34,
+        ShowHealEffects = 35,
+        UpdatePlayerZones = 36,
+        RequestServerPassword = 37,
+        SendServerPassword = 38,
+        RemoveItemOwner = 39,
+        UpdatePlayerActiveNpc = 40,
+        UpdatePlayerItemAnimation = 41,
+        UpdatePlayerMp = 42,
+        ShowManaEffects = 43,
+        UpdatePlayerTeam = 45,
+        RequestSign = 46,
+        UpdateSign = 47,
+        UpdateLiquid = 48,
+        FirstSpawnPlayer = 49,
+        UpdatePlayerBuffs = 50,
+        PerformNpcAction = 51,
+        UnlockTile = 52,
+        AddNpcBuff = 53,
+        UpdateNpcBuffs = 54,
+        AddPlayerBuff = 55,
+        UpdateNpcName = 56,
+        UpdateBiomeStats = 57,
+        PlayHarpNote = 58,
+        ActivateWiring = 59,
+        UpdateNpcHome = 60,
+        SummonBossOrInvasion = 61,
+        ShowPlayerDodge = 62,
+        PaintTile = 63,
+        PaintWall = 64,
+        TeleportEntity = 65,
+        HealOtherPlayer = 66,
+        UpdateUuid = 68,
+        RequestOrUpdateChestName = 69,
+        CatchNpc = 70,
+        ReleaseNpc = 71,
+        UpdateTravelingMerchantInventory = 72,
+        PerformTeleportationPotion = 73,
+        UpdateAnglerQuest = 74,
+        CompleteAnglerQuest = 75,
+        UpdateAnglerQuestsCompleted = 76,
+        CreateTemporaryAnimation = 77,
+        UpdateInvasion = 78,
+        PlaceObject = 79,
+        UpdateOtherPlayerChest = 80,
+        CreateCombatText = 81,
+        NetManager = 82,
+        UpdateNpcKills = 83,
+        UpdatePlayerStealth = 84,
+        QuickStack = 85,
+        UpdateTileEntity = 86,
+        PlaceTileEntity = 87,
+        AlterItem = 88,
+        PlaceItemFrame = 89,
+        UpdateInstancedItem = 90,
+        UpdateEmoteBubble = 91,
+        IncrementNpcCoins = 92,
+        RemovePortal = 95,
+        TeleportPlayerThroughPortal = 96,
+        NotifyNpcKill = 97,
+        NotifyEventProgression = 98,
+        UpdatePlayerMinionTarget = 99,
+        TeleportNpcThroughPortal = 100,
+        UpdatePillarShields = 101,
+        LevelUpNebulaArmor = 102,
+        UpdateMoonLordCountdown = 103,
+        UpdateNpcShopSlot = 104,
+        ToggleGemLock = 105,
+        ShowPoofOfSmoke = 106,
+        ShowChat = 107,
+        ShootFromCannon = 108,
+        RequestMassWireOperation = 109,
+        ConsumeWires = 110,
+        ToggleBirthdayParty = 111,
+        ShowTreeEffects = 112,
+        StartOldOnesArmyInvasion = 113,
+        EndOldOnesArmyInvasion = 114,
+        UpdatePlayerMinionTargetNpc = 115,
+        UpdateOldOnesArmyInvasion = 116,
+        HurtPlayer = 117,
+        KillPlayer = 118,
+#pragma warning restore 1591
     }
 }

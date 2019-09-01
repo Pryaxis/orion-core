@@ -14,14 +14,14 @@
     public abstract class TerrariaPacket {
         private static readonly Dictionary<TerrariaPacketType, Func<BinaryReader, TerrariaPacket>> Deserializers =
             new Dictionary<TerrariaPacketType, Func<BinaryReader, TerrariaPacket>> {
-                [TerrariaPacketType.ConnectionRequest] = ConnectionRequestPacket.FromReader,
-                [TerrariaPacketType.Disconnect] = DisconnectPacket.FromReader,
+                [TerrariaPacketType.RequestConnection] = RequestConnectionPacket.FromReader,
+                [TerrariaPacketType.DisconnectPlayer] = DisconnectPlayerPacket.FromReader,
                 [TerrariaPacketType.ContinueConnecting] = ContinueConnectionPacket.FromReader,
-                [TerrariaPacketType.PlayerInfo] = PlayerInfoPacket.FromReader,
-                [TerrariaPacketType.PlayerInventorySlot] = PlayerInventorySlotPacket.FromReader,
+                [TerrariaPacketType.UpdatePlayerInfo] = UpdatePlayerInfoPacket.FromReader,
+                [TerrariaPacketType.UpdatePlayerInventorySlot] = UpdatePlayerInventorySlotPacket.FromReader,
                 [TerrariaPacketType.FinishConnection] = FinishConnectionPacket.FromReader,
-                [TerrariaPacketType.WorldInfo] = WorldInfoPacket.FromReader,
-                [TerrariaPacketType.WorldSectionRequest] = WorldSectionRequestPacket.FromReader,
+                [TerrariaPacketType.UpdateWorldInfo] = UpdateWorldInfoPacket.FromReader,
+                [TerrariaPacketType.RequestWorldSection] = RequestWorldSectionPacket.FromReader,
             };
 
         /// <summary>

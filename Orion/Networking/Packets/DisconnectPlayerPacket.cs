@@ -7,7 +7,7 @@
     /// <summary>
     /// Packet sent from the server to disconnect the client.
     /// </summary>
-    public sealed class DisconnectPacket : TerrariaPacket {
+    public sealed class DisconnectPlayerPacket : TerrariaPacket {
         private string _reason = "";
 
         /// <inheritdoc />
@@ -20,7 +20,7 @@
         public override bool IsSentToServer => false;
 
         /// <inheritdoc />
-        public override TerrariaPacketType Type => TerrariaPacketType.Disconnect;
+        public override TerrariaPacketType Type => TerrariaPacketType.DisconnectPlayer;
 
         /// <summary>
         /// Gets or sets the disconnect reason.
@@ -32,16 +32,16 @@
         }
 
         /// <summary>
-        /// Reads a <see cref="DisconnectPacket"/> from the given reader.
+        /// Reads a <see cref="DisconnectPlayerPacket"/> from the given reader.
         /// </summary>
         /// <param name="reader">The reader.</param>
         /// <exception cref="ArgumentNullException"><paramref name="reader"/> is <c>null</c>.</exception>
-        public static DisconnectPacket FromReader(BinaryReader reader) {
+        public static DisconnectPlayerPacket FromReader(BinaryReader reader) {
             if (reader == null) {
                 throw new ArgumentNullException(nameof(reader));
             }
 
-            return new DisconnectPacket {_reason = reader.ReadString()};
+            return new DisconnectPlayerPacket {_reason = reader.ReadString()};
         }
 
         /// <inheritdoc />

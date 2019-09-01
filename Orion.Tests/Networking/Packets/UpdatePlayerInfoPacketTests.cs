@@ -7,7 +7,7 @@
     using Orion.Networking.Packets;
     using Xunit;
 
-    public class PlayerInfoPacketTests {
+    public class UpdatePlayerInfoPacketTests {
         // These canned bytes were taken from a real client.
         private static readonly byte[] Bytes = {
             0, 2, 50, 1, 102, 0, 0, 0, 0, 26, 131, 54, 158, 74, 51, 47, 39, 88, 184, 58, 43, 69, 8, 97, 162, 167, 255,
@@ -16,7 +16,7 @@
 
         [Fact]
         public void FromReader_NullReader_ThrowsArgumentNullException() {
-            Func<PlayerInfoPacket> func = () => PlayerInfoPacket.FromReader(null);
+            Func<UpdatePlayerInfoPacket> func = () => UpdatePlayerInfoPacket.FromReader(null);
 
             func.Should().Throw<ArgumentNullException>();
         }
@@ -25,11 +25,11 @@
         public void FromReader_IsCorrect() {
             using (var stream = new MemoryStream(Bytes))
             using (var reader = new BinaryReader(stream)) {
-                var packet = PlayerInfoPacket.FromReader(reader);
+                var packet = UpdatePlayerInfoPacket.FromReader(reader);
 
                 packet.IsSentToClient.Should().BeTrue();
                 packet.IsSentToServer.Should().BeTrue();
-                packet.Type.Should().Be(TerrariaPacketType.PlayerInfo);
+                packet.Type.Should().Be(TerrariaPacketType.UpdatePlayerInfo);
                 packet.PlayerId.Should().Be(0);
                 packet.SkinType.Should().Be(2);
                 packet.Name.Should().Be("f");
@@ -53,7 +53,7 @@
             using (var stream = new MemoryStream(Bytes))
             using (var reader = new BinaryReader(stream)) 
             using (var stream2 = new MemoryStream()) {
-                var packet = PlayerInfoPacket.FromReader(reader);
+                var packet = UpdatePlayerInfoPacket.FromReader(reader);
 
                 packet.WriteToStream(stream2);
 

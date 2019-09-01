@@ -7,7 +7,7 @@
     /// <summary>
     /// Packet sent from the client to the server to request connection.
     /// </summary>
-    public sealed class ConnectionRequestPacket : TerrariaPacket {
+    public sealed class RequestConnectionPacket : TerrariaPacket {
         private string _version = "";
 
         private protected override int HeaderlessLength => Version.GetBinaryLength(Encoding.UTF8);
@@ -19,7 +19,7 @@
         public override bool IsSentToServer => true;
 
         /// <inheritdoc />
-        public override TerrariaPacketType Type => TerrariaPacketType.ConnectionRequest;
+        public override TerrariaPacketType Type => TerrariaPacketType.RequestConnection;
 
         /// <summary>
         /// Gets or sets the version, which is of the form $"Terraria{Main.curRelease}".
@@ -31,16 +31,16 @@
         }
 
         /// <summary>
-        /// Reads a <see cref="ConnectionRequestPacket"/> from the given reader.
+        /// Reads a <see cref="RequestConnectionPacket"/> from the given reader.
         /// </summary>
         /// <param name="reader">The reader.</param>
         /// <exception cref="ArgumentNullException"><paramref name="reader"/> is <c>null</c>.</exception>
-        public static ConnectionRequestPacket FromReader(BinaryReader reader) {
+        public static RequestConnectionPacket FromReader(BinaryReader reader) {
             if (reader == null) {
                 throw new ArgumentNullException(nameof(reader));
             }
 
-            return new ConnectionRequestPacket {_version = reader.ReadString()};
+            return new RequestConnectionPacket {_version = reader.ReadString()};
         }
 
         /// <inheritdoc />

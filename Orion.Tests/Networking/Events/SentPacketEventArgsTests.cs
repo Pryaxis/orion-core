@@ -8,7 +8,7 @@
     public class SentPacketEventArgsTests {
         [Fact]
         public void Ctor_NullSender_ThrowsArgumentNullException() {
-            var packet = new ConnectionRequestPacket {Version = "test"};
+            var packet = new RequestConnectionPacket {Version = "test"};
             Func<SentPacketEventArgs> func = () => new SentPacketEventArgs(null, packet);
 
             func.Should().Throw<ArgumentNullException>();

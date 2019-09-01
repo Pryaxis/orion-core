@@ -6,7 +6,7 @@
     using Orion.Networking.Packets;
     using Xunit;
 
-    public class DisconnectPacketTests {
+    public class DisconnectPlayerPacketTests {
         public static IEnumerable<object[]> CtorReaderData =>
             new List<object[]> {
                 new object[] {"test"},
@@ -16,7 +16,7 @@
 
         [Fact]
         public void FromReader_NullReader_ThrowsArgumentNullException() {
-            Func<DisconnectPacket> func = () => DisconnectPacket.FromReader(null);
+            Func<DisconnectPlayerPacket> func = () => DisconnectPlayerPacket.FromReader(null);
 
             func.Should().Throw<ArgumentNullException>();
         }
@@ -31,18 +31,18 @@
                 writer.Write(str);
                 stream.Position = 0;
 
-                var packet = DisconnectPacket.FromReader(reader);
+                var packet = DisconnectPlayerPacket.FromReader(reader);
 
                 packet.IsSentToClient.Should().BeTrue();
                 packet.IsSentToServer.Should().BeFalse();
-                packet.Type.Should().Be(TerrariaPacketType.Disconnect);
+                packet.Type.Should().Be(TerrariaPacketType.DisconnectPlayer);
                 packet.Reason.Should().Be(str);
             }
         }
 
         [Fact]
         public void SetReason_Null_ThrowsArgumentNullException() {
-            var packet = new DisconnectPacket();
+            var packet = new DisconnectPlayerPacket();
             Action action = () => packet.Reason = null;
 
             action.Should().Throw<ArgumentNullException>();

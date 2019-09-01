@@ -8,7 +8,7 @@
     /// <summary>
     /// Packet sent to the client to provide information about the world.
     /// </summary>
-    public sealed class WorldInfoPacket : TerrariaPacket {
+    public sealed class UpdateWorldInfoPacket : TerrariaPacket {
         private string _worldName = "";
 
         private protected override int HeaderlessLength => 117 + WorldName.GetBinaryLength(Encoding.UTF8);
@@ -20,7 +20,7 @@
         public override bool IsSentToServer => false;
 
         /// <inheritdoc />
-        public override TerrariaPacketType Type => TerrariaPacketType.WorldInfo;
+        public override TerrariaPacketType Type => TerrariaPacketType.UpdateWorldInfo;
 
         /// <summary>
         /// Gets or sets the time.
@@ -212,16 +212,16 @@
         public float SandstormIntensity { get; set; }
 
         /// <summary>
-        /// Reads a <see cref="WorldInfoPacket"/> from the given reader.
+        /// Reads a <see cref="UpdateWorldInfoPacket"/> from the given reader.
         /// </summary>
         /// <param name="reader">The reader.</param>
         /// <exception cref="ArgumentNullException"><paramref name="reader"/> is <c>null</c>.</exception>
-        public static WorldInfoPacket FromReader(BinaryReader reader) {
+        public static UpdateWorldInfoPacket FromReader(BinaryReader reader) {
             if (reader == null) {
                 throw new ArgumentNullException(nameof(reader));
             }
 
-            return new WorldInfoPacket {
+            return new UpdateWorldInfoPacket {
                 Time = reader.ReadInt32(),
                 TimeFlags = (WorldTimeFlags)reader.ReadByte(),
                 MoonPhase = reader.ReadByte(),

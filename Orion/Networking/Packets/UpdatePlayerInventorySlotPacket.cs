@@ -6,7 +6,7 @@
     /// <summary>
     /// Packet sent to provide information about a player's inventory slot.
     /// </summary>
-    public sealed class PlayerInventorySlotPacket : TerrariaPacket {
+    public sealed class UpdatePlayerInventorySlotPacket : TerrariaPacket {
         private protected override int HeaderlessLength => 7;
 
         /// <inheritdoc />
@@ -16,7 +16,7 @@
         public override bool IsSentToServer => true;
 
         /// <inheritdoc />
-        public override TerrariaPacketType Type => TerrariaPacketType.PlayerInventorySlot;
+        public override TerrariaPacketType Type => TerrariaPacketType.UpdatePlayerInventorySlot;
 
         /// <summary>
         /// Gets or sets the player ID.
@@ -44,16 +44,16 @@
         public ItemType ItemType { get; set; }
 
         /// <summary>
-        /// Reads a <see cref="PlayerInventorySlotPacket"/> from the given reader.
+        /// Reads a <see cref="UpdatePlayerInventorySlotPacket"/> from the given reader.
         /// </summary>
         /// <param name="reader">The reader.</param>
         /// <exception cref="ArgumentNullException"><paramref name="reader"/> is <c>null</c>.</exception>
-        public static PlayerInventorySlotPacket FromReader(BinaryReader reader) {
+        public static UpdatePlayerInventorySlotPacket FromReader(BinaryReader reader) {
             if (reader == null) {
                 throw new ArgumentNullException(nameof(reader));
             }
 
-            return new PlayerInventorySlotPacket {
+            return new UpdatePlayerInventorySlotPacket {
                 PlayerId = reader.ReadByte(),
                 InventorySlot = reader.ReadByte(),
                 ItemStackSize = reader.ReadInt16(),

@@ -6,7 +6,7 @@
     using Orion.Networking.Packets;
     using Xunit;
 
-    public class ConnectionRequestPacketTests {
+    public class RequestConnectionPacketTests {
         public static IEnumerable<object[]> CtorReaderData =>
             new List<object[]> {
                 new object[] {"test"},
@@ -16,7 +16,7 @@
 
         [Fact]
         public void FromReader_NullReader_ThrowsArgumentNullException() {
-            Func<ConnectionRequestPacket> func = () => ConnectionRequestPacket.FromReader(null);
+            Func<RequestConnectionPacket> func = () => RequestConnectionPacket.FromReader(null);
 
             func.Should().Throw<ArgumentNullException>();
         }
@@ -31,18 +31,18 @@
                 writer.Write(str);
                 stream.Position = 0;
 
-                var packet = ConnectionRequestPacket.FromReader(reader);
+                var packet = RequestConnectionPacket.FromReader(reader);
 
                 packet.IsSentToClient.Should().BeFalse();
                 packet.IsSentToServer.Should().BeTrue();
-                packet.Type.Should().Be(TerrariaPacketType.ConnectionRequest);
+                packet.Type.Should().Be(TerrariaPacketType.RequestConnection);
                 packet.Version.Should().Be(str);
             }
         }
 
         [Fact]
         public void SetVersion_Null_ThrowsArgumentNullException() {
-            var packet = new ConnectionRequestPacket();
+            var packet = new RequestConnectionPacket();
             Action action = () => packet.Version = null;
 
             action.Should().Throw<ArgumentNullException>();

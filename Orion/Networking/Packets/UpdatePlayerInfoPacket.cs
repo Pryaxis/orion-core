@@ -8,7 +8,7 @@
     /// <summary>
     /// Packet sent to provide information about a player.
     /// </summary>
-    public sealed class PlayerInfoPacket : TerrariaPacket {
+    public sealed class UpdatePlayerInfoPacket : TerrariaPacket {
         private string _name = "";
 
         private protected override int HeaderlessLength => 29 + Name.GetBinaryLength(Encoding.UTF8);
@@ -20,7 +20,7 @@
         public override bool IsSentToServer => true;
 
         /// <inheritdoc />
-        public override TerrariaPacketType Type => TerrariaPacketType.PlayerInfo;
+        public override TerrariaPacketType Type => TerrariaPacketType.UpdatePlayerInfo;
 
         /// <summary>
         /// Gets or sets the player ID.
@@ -102,16 +102,16 @@
         public byte Difficulty { get; set; }
 
         /// <summary>
-        /// Reads a <see cref="PlayerInfoPacket"/> from the given reader.
+        /// Reads a <see cref="UpdatePlayerInfoPacket"/> from the given reader.
         /// </summary>
         /// <param name="reader">The reader.</param>
         /// <exception cref="ArgumentNullException"><paramref name="reader"/> is <c>null</c>.</exception>
-        public static PlayerInfoPacket FromReader(BinaryReader reader) {
+        public static UpdatePlayerInfoPacket FromReader(BinaryReader reader) {
             if (reader == null) {
                 throw new ArgumentNullException(nameof(reader));
             }
 
-            return new PlayerInfoPacket {
+            return new UpdatePlayerInfoPacket {
                 PlayerId = reader.ReadByte(),
                 SkinType = reader.ReadByte(),
                 HairType = reader.ReadByte(),

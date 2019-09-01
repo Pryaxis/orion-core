@@ -395,34 +395,34 @@
         <member name="M:Orion.Networking.OrionNetworkService.SendPacket(Orion.Networking.Packets.TerrariaPacketType,System.Int32,System.Int32,System.String,System.Int32,System.Single,System.Single,System.Single,System.Int32,System.Int32,System.Int32)">
             <inheritdoc />
         </member>
-        <member name="T:Orion.Networking.Packets.ConnectionRequestPacket">
+        <member name="T:Orion.Networking.Packets.RequestConnectionPacket">
             <summary>
             Packet sent from the client to the server to request connection.
             </summary>
         </member>
-        <member name="P:Orion.Networking.Packets.ConnectionRequestPacket.IsSentToClient">
+        <member name="P:Orion.Networking.Packets.RequestConnectionPacket.IsSentToClient">
             <inheritdoc />
         </member>
-        <member name="P:Orion.Networking.Packets.ConnectionRequestPacket.IsSentToServer">
+        <member name="P:Orion.Networking.Packets.RequestConnectionPacket.IsSentToServer">
             <inheritdoc />
         </member>
-        <member name="P:Orion.Networking.Packets.ConnectionRequestPacket.Type">
+        <member name="P:Orion.Networking.Packets.RequestConnectionPacket.Type">
             <inheritdoc />
         </member>
-        <member name="P:Orion.Networking.Packets.ConnectionRequestPacket.Version">
+        <member name="P:Orion.Networking.Packets.RequestConnectionPacket.Version">
             <summary>
             Gets or sets the version, which is of the form $"Terraria{Main.curRelease}".
             </summary>
             <exception cref="T:System.ArgumentNullException"><paramref name="value"/> is <c>null</c>.</exception>
         </member>
-        <member name="M:Orion.Networking.Packets.ConnectionRequestPacket.FromReader(System.IO.BinaryReader)">
+        <member name="M:Orion.Networking.Packets.RequestConnectionPacket.FromReader(System.IO.BinaryReader)">
             <summary>
-            Reads a <see cref="T:Orion.Networking.Packets.ConnectionRequestPacket"/> from the given reader.
+            Reads a <see cref="T:Orion.Networking.Packets.RequestConnectionPacket"/> from the given reader.
             </summary>
             <param name="reader">The reader.</param>
             <exception cref="T:System.ArgumentNullException"><paramref name="reader"/> is <c>null</c>.</exception>
         </member>
-        <member name="M:Orion.Networking.Packets.ConnectionRequestPacket.WriteToWriter(System.IO.BinaryWriter)">
+        <member name="M:Orion.Networking.Packets.RequestConnectionPacket.WriteToWriter(System.IO.BinaryWriter)">
             <inheritdoc />
         </member>
         <member name="T:Orion.Networking.Packets.ContinueConnectionPacket">
@@ -454,37 +454,37 @@
         <member name="M:Orion.Networking.Packets.ContinueConnectionPacket.WriteToWriter(System.IO.BinaryWriter)">
             <inheritdoc />
         </member>
-        <member name="T:Orion.Networking.Packets.DisconnectPacket">
+        <member name="T:Orion.Networking.Packets.DisconnectPlayerPacket">
             <summary>
             Packet sent from the server to disconnect the client.
             </summary>
         </member>
-        <member name="P:Orion.Networking.Packets.DisconnectPacket.HeaderlessLength">
+        <member name="P:Orion.Networking.Packets.DisconnectPlayerPacket.HeaderlessLength">
             <inheritdoc />
         </member>
-        <member name="P:Orion.Networking.Packets.DisconnectPacket.IsSentToClient">
+        <member name="P:Orion.Networking.Packets.DisconnectPlayerPacket.IsSentToClient">
             <inheritdoc />
         </member>
-        <member name="P:Orion.Networking.Packets.DisconnectPacket.IsSentToServer">
+        <member name="P:Orion.Networking.Packets.DisconnectPlayerPacket.IsSentToServer">
             <inheritdoc />
         </member>
-        <member name="P:Orion.Networking.Packets.DisconnectPacket.Type">
+        <member name="P:Orion.Networking.Packets.DisconnectPlayerPacket.Type">
             <inheritdoc />
         </member>
-        <member name="P:Orion.Networking.Packets.DisconnectPacket.Reason">
+        <member name="P:Orion.Networking.Packets.DisconnectPlayerPacket.Reason">
             <summary>
             Gets or sets the disconnect reason.
             </summary>
             <exception cref="T:System.ArgumentNullException"><paramref name="value"/> is <c>null</c>.</exception>
         </member>
-        <member name="M:Orion.Networking.Packets.DisconnectPacket.FromReader(System.IO.BinaryReader)">
+        <member name="M:Orion.Networking.Packets.DisconnectPlayerPacket.FromReader(System.IO.BinaryReader)">
             <summary>
-            Reads a <see cref="T:Orion.Networking.Packets.DisconnectPacket"/> from the given reader.
+            Reads a <see cref="T:Orion.Networking.Packets.DisconnectPlayerPacket"/> from the given reader.
             </summary>
             <param name="reader">The reader.</param>
             <exception cref="T:System.ArgumentNullException"><paramref name="reader"/> is <c>null</c>.</exception>
         </member>
-        <member name="M:Orion.Networking.Packets.DisconnectPacket.WriteToWriter(System.IO.BinaryWriter)">
+        <member name="M:Orion.Networking.Packets.DisconnectPlayerPacket.WriteToWriter(System.IO.BinaryWriter)">
             <inheritdoc />
         </member>
         <member name="T:Orion.Networking.Packets.Extensions.BinaryExtensions">
@@ -543,153 +543,153 @@
         <member name="M:Orion.Networking.Packets.FinishConnectionPacket.WriteToWriter(System.IO.BinaryWriter)">
             <inheritdoc />
         </member>
-        <member name="T:Orion.Networking.Packets.PlayerInfoPacket">
+        <member name="T:Orion.Networking.Packets.UpdateUpdatePlayerInfoPacket">
             <summary>
             Packet sent to provide information about a player.
             </summary>
         </member>
-        <member name="P:Orion.Networking.Packets.PlayerInfoPacket.IsSentToClient">
+        <member name="P:Orion.Networking.Packets.UpdateUpdatePlayerInfoPacket.IsSentToClient">
             <inheritdoc />
         </member>
-        <member name="P:Orion.Networking.Packets.PlayerInfoPacket.IsSentToServer">
+        <member name="P:Orion.Networking.Packets.UpdateUpdatePlayerInfoPacket.IsSentToServer">
             <inheritdoc />
         </member>
-        <member name="P:Orion.Networking.Packets.PlayerInfoPacket.Type">
+        <member name="P:Orion.Networking.Packets.UpdateUpdatePlayerInfoPacket.Type">
             <inheritdoc />
         </member>
-        <member name="P:Orion.Networking.Packets.PlayerInfoPacket.PlayerId">
+        <member name="P:Orion.Networking.Packets.UpdateUpdatePlayerInfoPacket.PlayerId">
             <summary>
             Gets or sets the player ID.
             </summary>
         </member>
-        <member name="P:Orion.Networking.Packets.PlayerInfoPacket.SkinType">
+        <member name="P:Orion.Networking.Packets.UpdateUpdatePlayerInfoPacket.SkinType">
             <summary>
             Gets or sets the player's skin type.
             </summary>
         </member>
-        <member name="P:Orion.Networking.Packets.PlayerInfoPacket.HairType">
+        <member name="P:Orion.Networking.Packets.UpdateUpdatePlayerInfoPacket.HairType">
             <summary>
             Gets or sets the player's hair type.
             </summary>
         </member>
-        <member name="P:Orion.Networking.Packets.PlayerInfoPacket.Name">
+        <member name="P:Orion.Networking.Packets.UpdateUpdatePlayerInfoPacket.Name">
             <summary>
             Gets or sets the player's name.
             </summary>
             <exception cref="T:System.ArgumentNullException"><paramref name="value"/> is <c>null</c>.</exception>
         </member>
-        <member name="P:Orion.Networking.Packets.PlayerInfoPacket.HairDye">
+        <member name="P:Orion.Networking.Packets.UpdateUpdatePlayerInfoPacket.HairDye">
             <summary>
             Gets or sets the player's hair dye.
             </summary>
         </member>
-        <member name="P:Orion.Networking.Packets.PlayerInfoPacket.HiddenVisualsFlags">
+        <member name="P:Orion.Networking.Packets.UpdateUpdatePlayerInfoPacket.HiddenVisualsFlags">
             <summary>
             Gets or sets the player's hidden visuals flags.
             </summary>
         </member>
-        <member name="P:Orion.Networking.Packets.PlayerInfoPacket.HiddenMiscFlags">
+        <member name="P:Orion.Networking.Packets.UpdateUpdatePlayerInfoPacket.HiddenMiscFlags">
             <summary>
             Gets or sets the player's hidden misc flags.
             </summary>
         </member>
-        <member name="P:Orion.Networking.Packets.PlayerInfoPacket.HairColor">
+        <member name="P:Orion.Networking.Packets.UpdateUpdatePlayerInfoPacket.HairColor">
             <summary>
             Gets or sets the player's hair color.
             </summary>
         </member>
-        <member name="P:Orion.Networking.Packets.PlayerInfoPacket.SkinColor">
+        <member name="P:Orion.Networking.Packets.UpdateUpdatePlayerInfoPacket.SkinColor">
             <summary>
             Gets or sets the player's skin color.
             </summary>
         </member>
-        <member name="P:Orion.Networking.Packets.PlayerInfoPacket.EyeColor">
+        <member name="P:Orion.Networking.Packets.UpdateUpdatePlayerInfoPacket.EyeColor">
             <summary>
             Gets or sets the player's eye color.
             </summary>
         </member>
-        <member name="P:Orion.Networking.Packets.PlayerInfoPacket.ShirtColor">
+        <member name="P:Orion.Networking.Packets.UpdateUpdatePlayerInfoPacket.ShirtColor">
             <summary>
             Gets or sets the player's shirt color.
             </summary>
         </member>
-        <member name="P:Orion.Networking.Packets.PlayerInfoPacket.UndershirtColor">
+        <member name="P:Orion.Networking.Packets.UpdateUpdatePlayerInfoPacket.UndershirtColor">
             <summary>
             Gets or sets the player's undershirt color.
             </summary>
         </member>
-        <member name="P:Orion.Networking.Packets.PlayerInfoPacket.PantsColor">
+        <member name="P:Orion.Networking.Packets.UpdateUpdatePlayerInfoPacket.PantsColor">
             <summary>
             Gets or sets the player's pants color.
             </summary>
         </member>
-        <member name="P:Orion.Networking.Packets.PlayerInfoPacket.ShoeColor">
+        <member name="P:Orion.Networking.Packets.UpdateUpdatePlayerInfoPacket.ShoeColor">
             <summary>
             Gets or sets the player's shoe color.
             </summary>
         </member>
-        <member name="P:Orion.Networking.Packets.PlayerInfoPacket.Difficulty">
+        <member name="P:Orion.Networking.Packets.UpdateUpdatePlayerInfoPacket.Difficulty">
             <summary>
             Gets or sets the player's difficulty.
             </summary>
         </member>
-        <member name="M:Orion.Networking.Packets.PlayerInfoPacket.FromReader(System.IO.BinaryReader)">
+        <member name="M:Orion.Networking.Packets.UpdateUpdatePlayerInfoPacket.FromReader(System.IO.BinaryReader)">
             <summary>
-            Reads a <see cref="T:Orion.Networking.Packets.PlayerInfoPacket"/> from the given reader.
+            Reads a <see cref="T:Orion.Networking.Packets.UpdateUpdatePlayerInfoPacket"/> from the given reader.
             </summary>
             <param name="reader">The reader.</param>
             <exception cref="T:System.ArgumentNullException"><paramref name="reader"/> is <c>null</c>.</exception>
         </member>
-        <member name="M:Orion.Networking.Packets.PlayerInfoPacket.WriteToWriter(System.IO.BinaryWriter)">
+        <member name="M:Orion.Networking.Packets.UpdateUpdatePlayerInfoPacket.WriteToWriter(System.IO.BinaryWriter)">
             <inheritdoc />
         </member>
-        <member name="T:Orion.Networking.Packets.PlayerInventorySlotPacket">
+        <member name="T:Orion.Networking.Packets.UpdateUpdatePlayerInventorySlotPacket">
             <summary>
             Packet sent to provide information about a player's inventory slot.
             </summary>
         </member>
-        <member name="P:Orion.Networking.Packets.PlayerInventorySlotPacket.IsSentToClient">
+        <member name="P:Orion.Networking.Packets.UpdateUpdatePlayerInventorySlotPacket.IsSentToClient">
             <inheritdoc />
         </member>
-        <member name="P:Orion.Networking.Packets.PlayerInventorySlotPacket.IsSentToServer">
+        <member name="P:Orion.Networking.Packets.UpdateUpdatePlayerInventorySlotPacket.IsSentToServer">
             <inheritdoc />
         </member>
-        <member name="P:Orion.Networking.Packets.PlayerInventorySlotPacket.Type">
+        <member name="P:Orion.Networking.Packets.UpdateUpdatePlayerInventorySlotPacket.Type">
             <inheritdoc />
         </member>
-        <member name="P:Orion.Networking.Packets.PlayerInventorySlotPacket.PlayerId">
+        <member name="P:Orion.Networking.Packets.UpdateUpdatePlayerInventorySlotPacket.PlayerId">
             <summary>
             Gets or sets the player ID.
             </summary>
         </member>
-        <member name="P:Orion.Networking.Packets.PlayerInventorySlotPacket.InventorySlot">
+        <member name="P:Orion.Networking.Packets.UpdateUpdatePlayerInventorySlotPacket.InventorySlot">
             <summary>
             Gets or sets the inventory slot.
             </summary>
         </member>
-        <member name="P:Orion.Networking.Packets.PlayerInventorySlotPacket.ItemStackSize">
+        <member name="P:Orion.Networking.Packets.UpdateUpdatePlayerInventorySlotPacket.ItemStackSize">
             <summary>
             Gets or sets the item's stack size.
             </summary>
         </member>
-        <member name="P:Orion.Networking.Packets.PlayerInventorySlotPacket.ItemPrefix">
+        <member name="P:Orion.Networking.Packets.UpdateUpdatePlayerInventorySlotPacket.ItemPrefix">
             <summary>
             Gets or sets the item prefix.
             </summary>
         </member>
-        <member name="P:Orion.Networking.Packets.PlayerInventorySlotPacket.ItemType">
+        <member name="P:Orion.Networking.Packets.UpdateUpdatePlayerInventorySlotPacket.ItemType">
             <summary>
             Gets or sets the item type.
             </summary>
         </member>
-        <member name="M:Orion.Networking.Packets.PlayerInventorySlotPacket.FromReader(System.IO.BinaryReader)">
+        <member name="M:Orion.Networking.Packets.UpdateUpdatePlayerInventorySlotPacket.FromReader(System.IO.BinaryReader)">
             <summary>
-            Reads a <see cref="T:Orion.Networking.Packets.PlayerInventorySlotPacket"/> from the given reader.
+            Reads a <see cref="T:Orion.Networking.Packets.UpdateUpdatePlayerInventorySlotPacket"/> from the given reader.
             </summary>
             <param name="reader">The reader.</param>
             <exception cref="T:System.ArgumentNullException"><paramref name="reader"/> is <c>null</c>.</exception>
         </member>
-        <member name="M:Orion.Networking.Packets.PlayerInventorySlotPacket.WriteToWriter(System.IO.BinaryWriter)">
+        <member name="M:Orion.Networking.Packets.UpdateUpdatePlayerInventorySlotPacket.WriteToWriter(System.IO.BinaryWriter)">
             <inheritdoc />
         </member>
         <member name="T:Orion.Networking.Packets.TerrariaPacket">
@@ -742,14 +742,14 @@
             Indicates the type of a <see cref="T:Orion.Networking.Packets.TerrariaPacket"/>.
             </summary>
         </member>
-        <member name="F:Orion.Networking.Packets.TerrariaPacketType.ConnectionRequest">
+        <member name="F:Orion.Networking.Packets.TerrariaPacketType.RequestConnection">
             <summary>
-            Indicates a <see cref="T:Orion.Networking.Packets.ConnectionRequestPacket"/>.
+            Indicates a <see cref="T:Orion.Networking.Packets.RequestConnectionPacket"/>.
             </summary>
         </member>
-        <member name="F:Orion.Networking.Packets.TerrariaPacketType.Disconnect">
+        <member name="F:Orion.Networking.Packets.TerrariaPacketType.DisconnectPlayer">
             <summary>
-            Indicates a <see cref="T:Orion.Networking.Packets.DisconnectPacket"/>.
+            Indicates a <see cref="T:Orion.Networking.Packets.DisconnectPlayerPacket"/>.
             </summary>
         </member>
         <member name="F:Orion.Networking.Packets.TerrariaPacketType.ContinueConnecting">
@@ -757,14 +757,14 @@
             Indicates a <see cref="T:Orion.Networking.Packets.ContinueConnectionPacket"/>.
             </summary>
         </member>
-        <member name="F:Orion.Networking.Packets.TerrariaPacketType.PlayerInfo">
+        <member name="F:Orion.Networking.Packets.TerrariaPacketType.UpdatePlayerInfo">
             <summary>
-            Indicates a <see cref="T:Orion.Networking.Packets.PlayerInfoPacket"/>.
+            Indicates a <see cref="T:Orion.Networking.Packets.UpdateUpdatePlayerInfoPacket"/>.
             </summary>
         </member>
-        <member name="F:Orion.Networking.Packets.TerrariaPacketType.PlayerInventorySlot">
+        <member name="F:Orion.Networking.Packets.TerrariaPacketType.UpdatePlayerInventorySlot">
             <summary>
-            Indicates a <see cref="T:Orion.Networking.Packets.PlayerInventorySlotPacket"/>.
+            Indicates a <see cref="T:Orion.Networking.Packets.UpdateUpdatePlayerInventorySlotPacket"/>.
             </summary>
         </member>
         <member name="F:Orion.Networking.Packets.TerrariaPacketType.FinishConnection">
@@ -772,14 +772,14 @@
             Indicates a <see cref="T:Orion.Networking.Packets.FinishConnectionPacket"/>.
             </summary>
         </member>
-        <member name="F:Orion.Networking.Packets.TerrariaPacketType.WorldInfo">
+        <member name="F:Orion.Networking.Packets.TerrariaPacketType.UpdateWorldInfo">
             <summary>
-            Indicates a <see cref="T:Orion.Networking.Packets.WorldInfoPacket"/>.
+            Indicates a <see cref="T:Orion.Networking.Packets.UpdateUpdateWorldInfoPacket"/>.
             </summary>
         </member>
-        <member name="F:Orion.Networking.Packets.TerrariaPacketType.WorldSectionRequest">
+        <member name="F:Orion.Networking.Packets.TerrariaPacketType.RequestWorldSection">
             <summary>
-            Indicates a <see cref="T:Orion.Networking.Packets.WorldSectionRequestPacket"/>.
+            Indicates a <see cref="T:Orion.Networking.Packets.RequestWorldSectionPacket"/>.
             </summary>
         </member>
         <member name="T:Orion.Networking.Packets.UnknownPacket">
@@ -824,214 +824,214 @@
         <member name="M:Orion.Networking.Packets.UnknownPacket.WriteToWriter(System.IO.BinaryWriter)">
             <inheritdoc />
         </member>
-        <member name="T:Orion.Networking.Packets.WorldInfoPacket">
+        <member name="T:Orion.Networking.Packets.UpdateUpdateWorldInfoPacket">
             <summary>
             Packet sent to the client to provide information about the world.
             </summary>
         </member>
-        <member name="P:Orion.Networking.Packets.WorldInfoPacket.IsSentToClient">
+        <member name="P:Orion.Networking.Packets.UpdateUpdateWorldInfoPacket.IsSentToClient">
             <inheritdoc />
         </member>
-        <member name="P:Orion.Networking.Packets.WorldInfoPacket.IsSentToServer">
+        <member name="P:Orion.Networking.Packets.UpdateUpdateWorldInfoPacket.IsSentToServer">
             <inheritdoc />
         </member>
-        <member name="P:Orion.Networking.Packets.WorldInfoPacket.Type">
+        <member name="P:Orion.Networking.Packets.UpdateUpdateWorldInfoPacket.Type">
             <inheritdoc />
         </member>
-        <member name="P:Orion.Networking.Packets.WorldInfoPacket.Time">
+        <member name="P:Orion.Networking.Packets.UpdateUpdateWorldInfoPacket.Time">
             <summary>
             Gets or sets the time.
             </summary>
         </member>
-        <member name="P:Orion.Networking.Packets.WorldInfoPacket.TimeFlags">
+        <member name="P:Orion.Networking.Packets.UpdateUpdateWorldInfoPacket.TimeFlags">
             <summary>
             Gets or sets the time flags.
             </summary>
         </member>
-        <member name="P:Orion.Networking.Packets.WorldInfoPacket.MoonPhase">
+        <member name="P:Orion.Networking.Packets.UpdateUpdateWorldInfoPacket.MoonPhase">
             <summary>
             Gets or sets the moon phase.
             </summary>
         </member>
-        <member name="P:Orion.Networking.Packets.WorldInfoPacket.WorldWidth">
+        <member name="P:Orion.Networking.Packets.UpdateUpdateWorldInfoPacket.WorldWidth">
             <summary>
             Gets or sets the world width.
             </summary>
         </member>
-        <member name="P:Orion.Networking.Packets.WorldInfoPacket.WorldHeight">
+        <member name="P:Orion.Networking.Packets.UpdateUpdateWorldInfoPacket.WorldHeight">
             <summary>
             Gets or sets the world height.
             </summary>
         </member>
-        <member name="P:Orion.Networking.Packets.WorldInfoPacket.SpawnX">
+        <member name="P:Orion.Networking.Packets.UpdateUpdateWorldInfoPacket.SpawnX">
             <summary>
             Gets or sets the spawn X position.
             </summary>
         </member>
-        <member name="P:Orion.Networking.Packets.WorldInfoPacket.SpawnY">
+        <member name="P:Orion.Networking.Packets.UpdateUpdateWorldInfoPacket.SpawnY">
             <summary>
             Gets or sets the spawn Y position.
             </summary>
         </member>
-        <member name="P:Orion.Networking.Packets.WorldInfoPacket.SurfaceY">
+        <member name="P:Orion.Networking.Packets.UpdateUpdateWorldInfoPacket.SurfaceY">
             <summary>
             Gets or sets the surface Y position.
             </summary>
         </member>
-        <member name="P:Orion.Networking.Packets.WorldInfoPacket.RockLayerY">
+        <member name="P:Orion.Networking.Packets.UpdateUpdateWorldInfoPacket.RockLayerY">
             <summary>
             Gets or sets the rock layer Y position.
             </summary>
         </member>
-        <member name="P:Orion.Networking.Packets.WorldInfoPacket.WorldId">
+        <member name="P:Orion.Networking.Packets.UpdateUpdateWorldInfoPacket.WorldId">
             <summary>
             Gets or sets the world ID.
             </summary>
         </member>
-        <member name="P:Orion.Networking.Packets.WorldInfoPacket.WorldName">
+        <member name="P:Orion.Networking.Packets.UpdateUpdateWorldInfoPacket.WorldName">
             <summary>
             Gets or sets the world name.
             </summary>
             <exception cref="T:System.ArgumentNullException"><paramref name="value"/> is <c>null</c>.</exception>
         </member>
-        <member name="P:Orion.Networking.Packets.WorldInfoPacket.WorldGuid">
+        <member name="P:Orion.Networking.Packets.UpdateUpdateWorldInfoPacket.WorldGuid">
             <summary>
             Gets or sets the world GUID.
             </summary>
         </member>
-        <member name="P:Orion.Networking.Packets.WorldInfoPacket.WorldGeneratorVersion">
+        <member name="P:Orion.Networking.Packets.UpdateUpdateWorldInfoPacket.WorldGeneratorVersion">
             <summary>
             Gets or sets the world generator version.
             </summary>
         </member>
-        <member name="P:Orion.Networking.Packets.WorldInfoPacket.MoonType">
+        <member name="P:Orion.Networking.Packets.UpdateUpdateWorldInfoPacket.MoonType">
             <summary>
             Gets or sets the moon type.
             </summary>
         </member>
-        <member name="P:Orion.Networking.Packets.WorldInfoPacket.TreeBackgroundStyle">
+        <member name="P:Orion.Networking.Packets.UpdateUpdateWorldInfoPacket.TreeBackgroundStyle">
             <summary>
             Gets or sets the tree background style.
             </summary>
         </member>
-        <member name="P:Orion.Networking.Packets.WorldInfoPacket.CorruptionBackgroundStyle">
+        <member name="P:Orion.Networking.Packets.UpdateUpdateWorldInfoPacket.CorruptionBackgroundStyle">
             <summary>
             Gets or sets the corruption background style.
             </summary>
         </member>
-        <member name="P:Orion.Networking.Packets.WorldInfoPacket.JungleBackgroundStyle">
+        <member name="P:Orion.Networking.Packets.UpdateUpdateWorldInfoPacket.JungleBackgroundStyle">
             <summary>
             Gets or sets the jungle background style.
             </summary>
         </member>
-        <member name="P:Orion.Networking.Packets.WorldInfoPacket.SnowBackgroundStyle">
+        <member name="P:Orion.Networking.Packets.UpdateUpdateWorldInfoPacket.SnowBackgroundStyle">
             <summary>
             Gets or sets the snow background style.
             </summary>
         </member>
-        <member name="P:Orion.Networking.Packets.WorldInfoPacket.HallowBackgroundStyle">
+        <member name="P:Orion.Networking.Packets.UpdateUpdateWorldInfoPacket.HallowBackgroundStyle">
             <summary>
             Gets or sets the hallow background style.
             </summary>
         </member>
-        <member name="P:Orion.Networking.Packets.WorldInfoPacket.CrimsonBackgroundStyle">
+        <member name="P:Orion.Networking.Packets.UpdateUpdateWorldInfoPacket.CrimsonBackgroundStyle">
             <summary>
             Gets or sets the crimson background style.
             </summary>
         </member>
-        <member name="P:Orion.Networking.Packets.WorldInfoPacket.DesertBackgroundStyle">
+        <member name="P:Orion.Networking.Packets.UpdateUpdateWorldInfoPacket.DesertBackgroundStyle">
             <summary>
             Gets or sets the desert background style.
             </summary>
         </member>
-        <member name="P:Orion.Networking.Packets.WorldInfoPacket.OceanBackgroundStyle">
+        <member name="P:Orion.Networking.Packets.UpdateUpdateWorldInfoPacket.OceanBackgroundStyle">
             <summary>
             Gets or sets the ocean background style.
             </summary>
         </member>
-        <member name="P:Orion.Networking.Packets.WorldInfoPacket.IceCaveBackgroundStyle">
+        <member name="P:Orion.Networking.Packets.UpdateUpdateWorldInfoPacket.IceCaveBackgroundStyle">
             <summary>
             Gets or sets the ice cave background style.
             </summary>
         </member>
-        <member name="P:Orion.Networking.Packets.WorldInfoPacket.UndergroundJungleBackgroundStyle">
+        <member name="P:Orion.Networking.Packets.UpdateUpdateWorldInfoPacket.UndergroundJungleBackgroundStyle">
             <summary>
             Gets or sets the underground jungle background style.
             </summary>
         </member>
-        <member name="P:Orion.Networking.Packets.WorldInfoPacket.HellBackgroundStyle">
+        <member name="P:Orion.Networking.Packets.UpdateUpdateWorldInfoPacket.HellBackgroundStyle">
             <summary>
             Gets or sets the hell background style.
             </summary>
         </member>
-        <member name="P:Orion.Networking.Packets.WorldInfoPacket.WindSpeed">
+        <member name="P:Orion.Networking.Packets.UpdateUpdateWorldInfoPacket.WindSpeed">
             <summary>
             Gets or sets the wind speed.
             </summary>
         </member>
-        <member name="P:Orion.Networking.Packets.WorldInfoPacket.NumberOfClouds">
+        <member name="P:Orion.Networking.Packets.UpdateUpdateWorldInfoPacket.NumberOfClouds">
             <summary>
             Gets or sets the number of clouds.
             </summary>
         </member>
-        <member name="P:Orion.Networking.Packets.WorldInfoPacket.TreeStyleBoundaries">
+        <member name="P:Orion.Networking.Packets.UpdateUpdateWorldInfoPacket.TreeStyleBoundaries">
             <summary>
             Get the tree style boundaries.
             </summary>
         </member>
-        <member name="P:Orion.Networking.Packets.WorldInfoPacket.TreeStyles">
+        <member name="P:Orion.Networking.Packets.UpdateUpdateWorldInfoPacket.TreeStyles">
             <summary>
             Gets the tree styles.
             </summary>
         </member>
-        <member name="P:Orion.Networking.Packets.WorldInfoPacket.CaveBackgroundStyleBoundaries">
+        <member name="P:Orion.Networking.Packets.UpdateUpdateWorldInfoPacket.CaveBackgroundStyleBoundaries">
             <summary>
             Gets the cave background style boundaries.
             </summary>
         </member>
-        <member name="P:Orion.Networking.Packets.WorldInfoPacket.CaveBackgroundStyles">
+        <member name="P:Orion.Networking.Packets.UpdateUpdateWorldInfoPacket.CaveBackgroundStyles">
             <summary>
             Gets the cave background styles.
             </summary>
         </member>
-        <member name="P:Orion.Networking.Packets.WorldInfoPacket.Rain">
+        <member name="P:Orion.Networking.Packets.UpdateUpdateWorldInfoPacket.Rain">
             <summary>
             Gets or sets the rain.
             </summary>
         </member>
-        <member name="P:Orion.Networking.Packets.WorldInfoPacket.StateFlags">
+        <member name="P:Orion.Networking.Packets.UpdateUpdateWorldInfoPacket.StateFlags">
             <summary>
             Gets or sets the state flags.
             </summary>
         </member>
-        <member name="P:Orion.Networking.Packets.WorldInfoPacket.StateFlags2">
+        <member name="P:Orion.Networking.Packets.UpdateUpdateWorldInfoPacket.StateFlags2">
             <summary>
             Gets or sets the state flags, part two.
             </summary>
         </member>
-        <member name="P:Orion.Networking.Packets.WorldInfoPacket.InvasionType">
+        <member name="P:Orion.Networking.Packets.UpdateUpdateWorldInfoPacket.InvasionType">
             <summary>
             Gets or sets the invasion type.
             </summary>
         </member>
-        <member name="P:Orion.Networking.Packets.WorldInfoPacket.LobbyId">
+        <member name="P:Orion.Networking.Packets.UpdateUpdateWorldInfoPacket.LobbyId">
             <summary>
             Gets or sets the lobby ID.
             </summary>
         </member>
-        <member name="P:Orion.Networking.Packets.WorldInfoPacket.SandstormIntensity">
+        <member name="P:Orion.Networking.Packets.UpdateUpdateWorldInfoPacket.SandstormIntensity">
             <summary>
             Gets or sets the sandstorm intensity.
             </summary>
         </member>
-        <member name="M:Orion.Networking.Packets.WorldInfoPacket.FromReader(System.IO.BinaryReader)">
+        <member name="M:Orion.Networking.Packets.UpdateUpdateWorldInfoPacket.FromReader(System.IO.BinaryReader)">
             <summary>
-            Reads a <see cref="T:Orion.Networking.Packets.WorldInfoPacket"/> from the given reader.
+            Reads a <see cref="T:Orion.Networking.Packets.UpdateUpdateWorldInfoPacket"/> from the given reader.
             </summary>
             <param name="reader">The reader.</param>
             <exception cref="T:System.ArgumentNullException"><paramref name="reader"/> is <c>null</c>.</exception>
         </member>
-        <member name="M:Orion.Networking.Packets.WorldInfoPacket.WriteToWriter(System.IO.BinaryWriter)">
+        <member name="M:Orion.Networking.Packets.UpdateUpdateWorldInfoPacket.WriteToWriter(System.IO.BinaryWriter)">
             <inheritdoc />
         </member>
         <member name="T:Orion.Networking.Packets.WorldTimeFlags">
@@ -1269,38 +1269,38 @@
             Indicates that tier 3 of the Old One's Army has been defeated.
             </summary>
         </member>
-        <member name="T:Orion.Networking.Packets.WorldSectionRequestPacket">
+        <member name="T:Orion.Networking.Packets.RequestWorldSectionPacket">
             <summary>
             Packet sent from the client to the server to request a world section.
             </summary>
         </member>
-        <member name="P:Orion.Networking.Packets.WorldSectionRequestPacket.IsSentToClient">
+        <member name="P:Orion.Networking.Packets.RequestWorldSectionPacket.IsSentToClient">
             <inheritdoc />
         </member>
-        <member name="P:Orion.Networking.Packets.WorldSectionRequestPacket.IsSentToServer">
+        <member name="P:Orion.Networking.Packets.RequestWorldSectionPacket.IsSentToServer">
             <inheritdoc />
         </member>
-        <member name="P:Orion.Networking.Packets.WorldSectionRequestPacket.Type">
+        <member name="P:Orion.Networking.Packets.RequestWorldSectionPacket.Type">
             <inheritdoc />
         </member>
-        <member name="P:Orion.Networking.Packets.WorldSectionRequestPacket.SectionX">
+        <member name="P:Orion.Networking.Packets.RequestWorldSectionPacket.SectionX">
             <summary>
             Gets or sets the section's X position.
             </summary>
         </member>
-        <member name="P:Orion.Networking.Packets.WorldSectionRequestPacket.SectionY">
+        <member name="P:Orion.Networking.Packets.RequestWorldSectionPacket.SectionY">
             <summary>
             Gets or sets the section's Y position.
             </summary>
         </member>
-        <member name="M:Orion.Networking.Packets.WorldSectionRequestPacket.FromReader(System.IO.BinaryReader)">
+        <member name="M:Orion.Networking.Packets.RequestWorldSectionPacket.FromReader(System.IO.BinaryReader)">
             <summary>
-            Reads a <see cref="T:Orion.Networking.Packets.WorldSectionRequestPacket"/> from the given reader.
+            Reads a <see cref="T:Orion.Networking.Packets.RequestWorldSectionPacket"/> from the given reader.
             </summary>
             <param name="reader">The reader.</param>
             <exception cref="T:System.ArgumentNullException"><paramref name="reader"/> is <c>null</c>.</exception>
         </member>
-        <member name="M:Orion.Networking.Packets.WorldSectionRequestPacket.WriteToWriter(System.IO.BinaryWriter)">
+        <member name="M:Orion.Networking.Packets.RequestWorldSectionPacket.WriteToWriter(System.IO.BinaryWriter)">
             <inheritdoc />
         </member>
         <member name="T:Orion.World.InvasionType">

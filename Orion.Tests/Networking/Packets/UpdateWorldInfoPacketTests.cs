@@ -3,12 +3,11 @@
     using System.IO;
     using System.Linq;
     using FluentAssertions;
-    using Microsoft.Xna.Framework;
     using Orion.Networking.Packets;
     using Orion.World;
     using Xunit;
 
-    public class WorldInfoPacketTests {
+    public class UpdateWorldInfoPacketTests {
         // These canned bytes were taken from a real server.
         private static readonly byte[] Bytes = {
             141, 127, 0, 0, 1, 0, 104, 16, 176, 4, 54, 8, 102, 1, 129, 1, 53, 2, 24, 49, 0, 9, 1, 102, 63, 129, 163,
@@ -19,7 +18,7 @@
 
         [Fact]
         public void FromReader_NullReader_ThrowsArgumentNullException() {
-            Func<WorldInfoPacket> func = () => WorldInfoPacket.FromReader(null);
+            Func<UpdateWorldInfoPacket> func = () => UpdateWorldInfoPacket.FromReader(null);
 
             func.Should().Throw<ArgumentNullException>();
         }
@@ -28,11 +27,11 @@
         public void FromReader_IsCorrect() {
             using (var stream = new MemoryStream(Bytes))
             using (var reader = new BinaryReader(stream)) {
-                var packet = WorldInfoPacket.FromReader(reader);
+                var packet = UpdateWorldInfoPacket.FromReader(reader);
 
                 packet.IsSentToClient.Should().BeTrue();
                 packet.IsSentToServer.Should().BeFalse();
-                packet.Type.Should().Be(TerrariaPacketType.WorldInfo);
+                packet.Type.Should().Be(TerrariaPacketType.UpdateWorldInfo);
                 packet.Time.Should().Be(32653);
                 packet.TimeFlags.Should().Be(WorldTimeFlags.IsDaytime);
                 packet.MoonPhase.Should().Be(0);
@@ -79,7 +78,7 @@
             using (var stream = new MemoryStream(Bytes))
             using (var reader = new BinaryReader(stream)) 
             using (var stream2 = new MemoryStream()) {
-                var packet = WorldInfoPacket.FromReader(reader);
+                var packet = UpdateWorldInfoPacket.FromReader(reader);
 
                 packet.WriteToStream(stream2);
 
