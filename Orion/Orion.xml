@@ -774,7 +774,7 @@
         </member>
         <member name="F:Orion.Networking.Packets.TerrariaPacketType.WorldInfo">
             <summary>
-            Indicates a <see cref="!:WorldInfoPacket"/>.
+            Indicates a <see cref="T:Orion.Networking.Packets.WorldInfoPacket"/>.
             </summary>
         </member>
         <member name="T:Orion.Networking.Packets.UnknownPacket">
@@ -818,6 +818,481 @@
         </member>
         <member name="M:Orion.Networking.Packets.UnknownPacket.WriteToWriter(System.IO.BinaryWriter)">
             <inheritdoc />
+        </member>
+        <member name="T:Orion.Networking.Packets.WorldInfoPacket">
+            <summary>
+            Packet sent to the client to provide information about the world.
+            </summary>
+        </member>
+        <member name="P:Orion.Networking.Packets.WorldInfoPacket.IsSentToClient">
+            <inheritdoc />
+        </member>
+        <member name="P:Orion.Networking.Packets.WorldInfoPacket.IsSentToServer">
+            <inheritdoc />
+        </member>
+        <member name="P:Orion.Networking.Packets.WorldInfoPacket.Type">
+            <inheritdoc />
+        </member>
+        <member name="P:Orion.Networking.Packets.WorldInfoPacket.Time">
+            <summary>
+            Gets or sets the time.
+            </summary>
+        </member>
+        <member name="P:Orion.Networking.Packets.WorldInfoPacket.TimeFlags">
+            <summary>
+            Gets or sets the time flags.
+            </summary>
+        </member>
+        <member name="P:Orion.Networking.Packets.WorldInfoPacket.MoonPhase">
+            <summary>
+            Gets or sets the moon phase.
+            </summary>
+        </member>
+        <member name="P:Orion.Networking.Packets.WorldInfoPacket.WorldWidth">
+            <summary>
+            Gets or sets the world width.
+            </summary>
+        </member>
+        <member name="P:Orion.Networking.Packets.WorldInfoPacket.WorldHeight">
+            <summary>
+            Gets or sets the world height.
+            </summary>
+        </member>
+        <member name="P:Orion.Networking.Packets.WorldInfoPacket.SpawnX">
+            <summary>
+            Gets or sets the spawn X position.
+            </summary>
+        </member>
+        <member name="P:Orion.Networking.Packets.WorldInfoPacket.SpawnY">
+            <summary>
+            Gets or sets the spawn Y position.
+            </summary>
+        </member>
+        <member name="P:Orion.Networking.Packets.WorldInfoPacket.SurfaceY">
+            <summary>
+            Gets or sets the surface Y position.
+            </summary>
+        </member>
+        <member name="P:Orion.Networking.Packets.WorldInfoPacket.RockLayerY">
+            <summary>
+            Gets or sets the rock layer Y position.
+            </summary>
+        </member>
+        <member name="P:Orion.Networking.Packets.WorldInfoPacket.WorldId">
+            <summary>
+            Gets or sets the world ID.
+            </summary>
+        </member>
+        <member name="P:Orion.Networking.Packets.WorldInfoPacket.WorldName">
+            <summary>
+            Gets or sets the world name.
+            </summary>
+            <exception cref="T:System.ArgumentNullException"><paramref name="value"/> is <c>null</c>.</exception>
+        </member>
+        <member name="P:Orion.Networking.Packets.WorldInfoPacket.WorldGuid">
+            <summary>
+            Gets or sets the world GUID.
+            </summary>
+        </member>
+        <member name="P:Orion.Networking.Packets.WorldInfoPacket.WorldGeneratorVersion">
+            <summary>
+            Gets or sets the world generator version.
+            </summary>
+        </member>
+        <member name="P:Orion.Networking.Packets.WorldInfoPacket.MoonType">
+            <summary>
+            Gets or sets the moon type.
+            </summary>
+        </member>
+        <member name="P:Orion.Networking.Packets.WorldInfoPacket.TreeBackgroundStyle">
+            <summary>
+            Gets or sets the tree background style.
+            </summary>
+        </member>
+        <member name="P:Orion.Networking.Packets.WorldInfoPacket.CorruptionBackgroundStyle">
+            <summary>
+            Gets or sets the corruption background style.
+            </summary>
+        </member>
+        <member name="P:Orion.Networking.Packets.WorldInfoPacket.JungleBackgroundStyle">
+            <summary>
+            Gets or sets the jungle background style.
+            </summary>
+        </member>
+        <member name="P:Orion.Networking.Packets.WorldInfoPacket.SnowBackgroundStyle">
+            <summary>
+            Gets or sets the snow background style.
+            </summary>
+        </member>
+        <member name="P:Orion.Networking.Packets.WorldInfoPacket.HallowBackgroundStyle">
+            <summary>
+            Gets or sets the hallow background style.
+            </summary>
+        </member>
+        <member name="P:Orion.Networking.Packets.WorldInfoPacket.CrimsonBackgroundStyle">
+            <summary>
+            Gets or sets the crimson background style.
+            </summary>
+        </member>
+        <member name="P:Orion.Networking.Packets.WorldInfoPacket.DesertBackgroundStyle">
+            <summary>
+            Gets or sets the desert background style.
+            </summary>
+        </member>
+        <member name="P:Orion.Networking.Packets.WorldInfoPacket.OceanBackgroundStyle">
+            <summary>
+            Gets or sets the ocean background style.
+            </summary>
+        </member>
+        <member name="P:Orion.Networking.Packets.WorldInfoPacket.IceCaveBackgroundStyle">
+            <summary>
+            Gets or sets the ice cave background style.
+            </summary>
+        </member>
+        <member name="P:Orion.Networking.Packets.WorldInfoPacket.UndergroundJungleBackgroundStyle">
+            <summary>
+            Gets or sets the underground jungle background style.
+            </summary>
+        </member>
+        <member name="P:Orion.Networking.Packets.WorldInfoPacket.HellBackgroundStyle">
+            <summary>
+            Gets or sets the hell background style.
+            </summary>
+        </member>
+        <member name="P:Orion.Networking.Packets.WorldInfoPacket.WindSpeed">
+            <summary>
+            Gets or sets the wind speed.
+            </summary>
+        </member>
+        <member name="P:Orion.Networking.Packets.WorldInfoPacket.NumberOfClouds">
+            <summary>
+            Gets or sets the number of clouds.
+            </summary>
+        </member>
+        <member name="P:Orion.Networking.Packets.WorldInfoPacket.TreeStyleBoundaries">
+            <summary>
+            Get the tree style boundaries.
+            </summary>
+        </member>
+        <member name="P:Orion.Networking.Packets.WorldInfoPacket.TreeStyles">
+            <summary>
+            Gets the tree styles.
+            </summary>
+        </member>
+        <member name="P:Orion.Networking.Packets.WorldInfoPacket.CaveBackgroundStyleBoundaries">
+            <summary>
+            Gets the cave background style boundaries.
+            </summary>
+        </member>
+        <member name="P:Orion.Networking.Packets.WorldInfoPacket.CaveBackgroundStyles">
+            <summary>
+            Gets the cave background styles.
+            </summary>
+        </member>
+        <member name="P:Orion.Networking.Packets.WorldInfoPacket.Rain">
+            <summary>
+            Gets or sets the rain.
+            </summary>
+        </member>
+        <member name="P:Orion.Networking.Packets.WorldInfoPacket.StateFlags">
+            <summary>
+            Gets or sets the state flags.
+            </summary>
+        </member>
+        <member name="P:Orion.Networking.Packets.WorldInfoPacket.StateFlags2">
+            <summary>
+            Gets or sets the state flags, part two.
+            </summary>
+        </member>
+        <member name="P:Orion.Networking.Packets.WorldInfoPacket.InvasionType">
+            <summary>
+            Gets or sets the invasion type.
+            </summary>
+        </member>
+        <member name="P:Orion.Networking.Packets.WorldInfoPacket.LobbyId">
+            <summary>
+            Gets or sets the lobby ID.
+            </summary>
+        </member>
+        <member name="P:Orion.Networking.Packets.WorldInfoPacket.SandstormIntensity">
+            <summary>
+            Gets or sets the sandstorm intensity.
+            </summary>
+        </member>
+        <member name="M:Orion.Networking.Packets.WorldInfoPacket.FromReader(System.IO.BinaryReader)">
+            <summary>
+            Reads a <see cref="T:Orion.Networking.Packets.WorldInfoPacket"/> from the given reader.
+            </summary>
+            <param name="reader">The reader.</param>
+            <exception cref="T:System.ArgumentNullException"><paramref name="reader"/> is <c>null</c>.</exception>
+        </member>
+        <member name="M:Orion.Networking.Packets.WorldInfoPacket.WriteToWriter(System.IO.BinaryWriter)">
+            <inheritdoc />
+        </member>
+        <member name="T:Orion.Networking.Packets.WorldTimeFlags">
+            <summary>
+            Flags that specify information about the time of the world.
+            </summary>
+        </member>
+        <member name="F:Orion.Networking.Packets.WorldTimeFlags.IsDaytime">
+            <summary>
+            Indicates that it is day.
+            </summary>
+        </member>
+        <member name="F:Orion.Networking.Packets.WorldTimeFlags.IsBloodMoon">
+            <summary>
+            Indicates that it is a blood moon.
+            </summary>
+        </member>
+        <member name="F:Orion.Networking.Packets.WorldTimeFlags.IsEclipse">
+            <summary>
+            Indicates that it is an eclipse.
+            </summary>
+        </member>
+        <member name="T:Orion.Networking.Packets.WorldStateFlags">
+            <summary>
+            Flags that specify information about the state of the world.
+            </summary>
+        </member>
+        <member name="F:Orion.Networking.Packets.WorldStateFlags.None">
+            <summary>
+            Indicates nothing.
+            </summary>
+        </member>
+        <member name="F:Orion.Networking.Packets.WorldStateFlags.SmashedShadowOrb">
+            <summary>
+            Indicates that a shadow orb has been smashed.
+            </summary>
+        </member>
+        <member name="F:Orion.Networking.Packets.WorldStateFlags.DefeatedEyeOfCthulhu">
+            <summary>
+            Indicates that the Eye of Cthulhu has been defeated.
+            </summary>
+        </member>
+        <member name="F:Orion.Networking.Packets.WorldStateFlags.DefeatedEvilBoss">
+            <summary>
+            Indicates that the "evil boss" (Eater of Worlds, or Brain of Cthulhu) has been defeated.
+            </summary>
+        </member>
+        <member name="F:Orion.Networking.Packets.WorldStateFlags.DefeatedSkeletron">
+            <summary>
+            Indicates that Skeletron has been defeated.
+            </summary>
+        </member>
+        <member name="F:Orion.Networking.Packets.WorldStateFlags.HardMode">
+            <summary>
+            Indicates that the world is hard mode.
+            </summary>
+        </member>
+        <member name="F:Orion.Networking.Packets.WorldStateFlags.DefeatedClown">
+            <summary>
+            Indicates that a clown has been defeated.
+            </summary>
+        </member>
+        <member name="F:Orion.Networking.Packets.WorldStateFlags.ServerSideCharacter">
+            <summary>
+            Indicates that the world has server-side characters.
+            </summary>
+        </member>
+        <member name="F:Orion.Networking.Packets.WorldStateFlags.DefeatedPlantera">
+            <summary>
+            Indicates that Plantera has been defeated.
+            </summary>
+        </member>
+        <member name="F:Orion.Networking.Packets.WorldStateFlags.DefeatedDestroyer">
+            <summary>
+            Indicates that the Destroyer has been defeated.
+            </summary>
+        </member>
+        <member name="F:Orion.Networking.Packets.WorldStateFlags.DefeatedTwins">
+            <summary>
+            Indicates that the Twins have been defeated.
+            </summary>
+        </member>
+        <member name="F:Orion.Networking.Packets.WorldStateFlags.DefeatedSkeletronPrime">
+            <summary>
+            Indicates that Skeletron Prime has been defeated.
+            </summary>
+        </member>
+        <member name="F:Orion.Networking.Packets.WorldStateFlags.DefeatedMechanicalBoss">
+            <summary>
+            Indicates that any mechanical boss has been defeated.
+            </summary>
+        </member>
+        <member name="F:Orion.Networking.Packets.WorldStateFlags.CloudBackgroundActive">
+            <summary>
+            Indicates that the cloud background is active.
+            </summary>
+        </member>
+        <member name="F:Orion.Networking.Packets.WorldStateFlags.Crimson">
+            <summary>
+            Indicates that the world is crimson, not corruption.
+            </summary>
+        </member>
+        <member name="F:Orion.Networking.Packets.WorldStateFlags.PumpkinMoon">
+            <summary>
+            Indicates that the world is in a pumpkin moon.
+            </summary>
+        </member>
+        <member name="F:Orion.Networking.Packets.WorldStateFlags.FrostMoon">
+            <summary>
+            Indicates that the world is in a frost moon.
+            </summary>
+        </member>
+        <member name="F:Orion.Networking.Packets.WorldStateFlags.ExpertMode">
+            <summary>
+            Indicates that the world is in expert mode.
+            </summary>
+        </member>
+        <member name="F:Orion.Networking.Packets.WorldStateFlags.FastForwardingTime">
+            <summary>
+            Indicates that time is fast-forwarding.
+            </summary>
+        </member>
+        <member name="F:Orion.Networking.Packets.WorldStateFlags.SlimeRain">
+            <summary>
+            Indicates that there is a slime rain.
+            </summary>
+        </member>
+        <member name="F:Orion.Networking.Packets.WorldStateFlags.DefeatedKingSlime">
+            <summary>
+            Indicates that the King Slime has been defeated.
+            </summary>
+        </member>
+        <member name="F:Orion.Networking.Packets.WorldStateFlags.DefeatedQueenBee">
+            <summary>
+            Indicates that the Queen Bee has been defeated.
+            </summary>
+        </member>
+        <member name="F:Orion.Networking.Packets.WorldStateFlags.DefeatedDukeFishron">
+            <summary>
+            Indicates that Duke Fishron has been defeated.
+            </summary>
+        </member>
+        <member name="F:Orion.Networking.Packets.WorldStateFlags.DefeatedMartians">
+            <summary>
+            Indicates that the Martians have been defeated.
+            </summary>
+        </member>
+        <member name="F:Orion.Networking.Packets.WorldStateFlags.DefeatedAncientCultist">
+            <summary>
+            Indicates that the Ancient Cultist has been defeated.
+            </summary>
+        </member>
+        <member name="F:Orion.Networking.Packets.WorldStateFlags.DefeatedMoonLord">
+            <summary>
+            Indicates that the Moon Lord has been defeated.
+            </summary>
+        </member>
+        <member name="F:Orion.Networking.Packets.WorldStateFlags.DefeatedPumpking">
+            <summary>
+            Indicates that a Pumpking has been defeated.
+            </summary>
+        </member>
+        <member name="F:Orion.Networking.Packets.WorldStateFlags.DefeatedMourningWood">
+            <summary>
+            Indicates that a Mourning Wood has been defeated.
+            </summary>
+        </member>
+        <member name="F:Orion.Networking.Packets.WorldStateFlags.DefeatedIceQueen">
+            <summary>
+            Indicates that an Ice Queen has been defeated.
+            </summary>
+        </member>
+        <member name="F:Orion.Networking.Packets.WorldStateFlags.DefeatedSantank">
+            <summary>
+            Indicates that a Santank has been defeated.
+            </summary>
+        </member>
+        <member name="F:Orion.Networking.Packets.WorldStateFlags.DefeatedEverscream">
+            <summary>
+            Indicates that an Everscream has been defeated.
+            </summary>
+        </member>
+        <member name="F:Orion.Networking.Packets.WorldStateFlags.DefeatedGolem">
+            <summary>
+            Indicates that the Golem has been defeated.
+            </summary>
+        </member>
+        <member name="F:Orion.Networking.Packets.WorldStateFlags.BirthdayParty">
+            <summary>
+            Indicates that it is a birthday party.
+            </summary>
+        </member>
+        <member name="T:Orion.Networking.Packets.WorldStateFlags2">
+            <summary>
+            Flags that specify information about the state of the world.
+            </summary>
+        </member>
+        <member name="F:Orion.Networking.Packets.WorldStateFlags2.DefeatedPirates">
+            <summary>
+            Indicates that the Pirates have been defeated.
+            </summary>
+        </member>
+        <member name="F:Orion.Networking.Packets.WorldStateFlags2.DefeatedFrostLegion">
+            <summary>
+            Indicates that the Frost Legion has been defeated.
+            </summary>
+        </member>
+        <member name="F:Orion.Networking.Packets.WorldStateFlags2.DefeatedGoblins">
+            <summary>
+            Indicates that the Goblins have been defeated.
+            </summary>
+        </member>
+        <member name="F:Orion.Networking.Packets.WorldStateFlags2.Sandstorm">
+            <summary>
+            Indicates that it is a sandstorm.
+            </summary>
+        </member>
+        <member name="F:Orion.Networking.Packets.WorldStateFlags2.OldOnesArmy">
+            <summary>
+            Indicates that it is an Old One's Army event.
+            </summary>
+        </member>
+        <member name="F:Orion.Networking.Packets.WorldStateFlags2.DefeatedOldOnesArmyTier1">
+            <summary>
+            Indicates that tier 1 of the Old One's Army has been defeated.
+            </summary>
+        </member>
+        <member name="F:Orion.Networking.Packets.WorldStateFlags2.DefeatedOldOnesArmyTier2">
+            <summary>
+            Indicates that tier 2 of the Old One's Army has been defeated.
+            </summary>
+        </member>
+        <member name="F:Orion.Networking.Packets.WorldStateFlags2.DefeatedOldOnesArmyTier3">
+            <summary>
+            Indicates that tier 3 of the Old One's Army has been defeated.
+            </summary>
+        </member>
+        <member name="T:Orion.World.InvasionType">
+            <summary>
+            Indicates the type of an invasion.
+            </summary>
+        </member>
+        <member name="F:Orion.World.InvasionType.None">
+            <summary>
+            Indicates no invasion.
+            </summary>
+        </member>
+        <member name="F:Orion.World.InvasionType.Goblins">
+            <summary>
+            Indicates the Goblins.
+            </summary>
+        </member>
+        <member name="F:Orion.World.InvasionType.FrostLegion">
+            <summary>
+            Indicates the Frost Legion.
+            </summary>
+        </member>
+        <member name="F:Orion.World.InvasionType.Pirates">
+            <summary>
+            Indicates the Pirates.
+            </summary>
+        </member>
+        <member name="F:Orion.World.InvasionType.Martians">
+            <summary>
+            Indicates the Martians.
+            </summary>
         </member>
         <member name="T:Orion.World.ITileService">
             <summary>

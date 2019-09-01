@@ -16,7 +16,7 @@
 
         [Fact]
         public void FromReader_NullReader_ThrowsArgumentNullException() {
-            Func<TerrariaPacket> func = () => PlayerInfoPacket.FromReader(null);
+            Func<PlayerInfoPacket> func = () => PlayerInfoPacket.FromReader(null);
 
             func.Should().Throw<ArgumentNullException>();
         }
@@ -44,6 +44,7 @@
                 packet.PantsColor.Should().Be(new Color(162, 167, 255));
                 packet.ShoeColor.Should().Be(new Color(212, 159, 76));
                 packet.Difficulty.Should().Be(0);
+                stream.Position.Should().Be(Bytes.Length);
             }
         }
 

@@ -8,7 +8,7 @@
     public class FinishConnectionPacketTests {
         [Fact]
         public void FromReader_NullReader_ThrowsArgumentNullException() {
-            Func<TerrariaPacket> func = () => FinishConnectionPacket.FromReader(null);
+            Func<FinishConnectionPacket> func = () => FinishConnectionPacket.FromReader(null);
 
             func.Should().Throw<ArgumentNullException>();
         }

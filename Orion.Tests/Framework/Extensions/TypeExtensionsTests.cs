@@ -1,6 +1,4 @@
-﻿// ReSharper disable UnusedMember.Global
-
-namespace Orion.Tests.Framework.Extensions {
+﻿namespace Orion.Tests.Framework.Extensions {
     using System.Collections.Generic;
     using System.Linq;
     using FluentAssertions;

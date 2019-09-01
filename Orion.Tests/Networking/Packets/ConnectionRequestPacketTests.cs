@@ -16,7 +16,7 @@
 
         [Fact]
         public void FromReader_NullReader_ThrowsArgumentNullException() {
-            Func<TerrariaPacket> func = () => ConnectionRequestPacket.FromReader(null);
+            Func<ConnectionRequestPacket> func = () => ConnectionRequestPacket.FromReader(null);
 
             func.Should().Throw<ArgumentNullException>();
         }

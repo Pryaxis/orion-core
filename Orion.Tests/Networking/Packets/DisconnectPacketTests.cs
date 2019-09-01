@@ -16,7 +16,7 @@
 
         [Fact]
         public void FromReader_NullReader_ThrowsArgumentNullException() {
-            Func<TerrariaPacket> func = () => DisconnectPacket.FromReader(null);
+            Func<DisconnectPacket> func = () => DisconnectPacket.FromReader(null);
 
             func.Should().Throw<ArgumentNullException>();
         }

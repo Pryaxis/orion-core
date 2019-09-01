@@ -19,7 +19,7 @@
             using (var stream = new MemoryStream())
             using (var reader = new BinaryReader(stream)) {
                 // ReSharper disable once AccessToDisposedClosure
-                Func<TerrariaPacket> func = () => UnknownPacket.FromReader(reader, (TerrariaPacketType)255, 65535);
+                Func<UnknownPacket> func = () => UnknownPacket.FromReader(reader, (TerrariaPacketType)255, 65535);
 
                 func.Should().Throw<ArgumentOutOfRangeException>();
             }

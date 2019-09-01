@@ -1,6 +1,4 @@
 ﻿// ReSharper disable IdentifierTypo
-// ReSharper disable UnusedMember.Global
-
 namespace Orion.Items {
     /// <summary>
     /// Specifies an item's prefix.

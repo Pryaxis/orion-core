@@ -20,6 +20,7 @@
                 [TerrariaPacketType.PlayerInfo] = PlayerInfoPacket.FromReader,
                 [TerrariaPacketType.PlayerInventorySlot] = PlayerInventorySlotPacket.FromReader,
                 [TerrariaPacketType.FinishConnection] = FinishConnectionPacket.FromReader,
+                [TerrariaPacketType.WorldInfo] = WorldInfoPacket.FromReader,
             };
 
         /// <summary>

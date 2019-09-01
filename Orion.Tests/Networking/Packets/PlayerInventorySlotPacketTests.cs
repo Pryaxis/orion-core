@@ -13,7 +13,7 @@
 
         [Fact]
         public void FromReader_NullReader_ThrowsArgumentNullException() {
-            Func<TerrariaPacket> func = () => PlayerInventorySlotPacket.FromReader(null);
+            Func<PlayerInventorySlotPacket> func = () => PlayerInventorySlotPacket.FromReader(null);
 
             func.Should().Throw<ArgumentNullException>();
         }
@@ -32,6 +32,7 @@
                 packet.ItemStackSize.Should().Be(1);
                 packet.ItemPrefix.Should().Be(ItemPrefix.Godly);
                 packet.ItemType.Should().Be(expected: ItemType.CopperShortsword);
+                stream.Position.Should().Be(Bytes.Length);
             }
         }
 

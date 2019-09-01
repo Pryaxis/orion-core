@@ -1,7 +1,5 @@
 ﻿// ReSharper disable IdentifierTypo
 // ReSharper disable InconsistentNaming
-// ReSharper disable UnusedMember.Global
-
 namespace Orion.Items {
     /// <summary>
     /// Specifies an item's type.
