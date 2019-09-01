@@ -37,5 +37,10 @@
         /// Indicates a <see cref="WorldInfoPacket"/>.
         /// </summary>
         WorldInfo = 7,
+
+        /// <summary>
+        /// Indicates a <see cref="WorldSectionRequestPacket"/>.
+        /// </summary>
+        WorldSectionRequest = 8,
     }
 }

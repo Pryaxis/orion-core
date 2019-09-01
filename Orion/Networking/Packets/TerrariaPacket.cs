@@ -21,6 +21,7 @@
                 [TerrariaPacketType.PlayerInventorySlot] = PlayerInventorySlotPacket.FromReader,
                 [TerrariaPacketType.FinishConnection] = FinishConnectionPacket.FromReader,
                 [TerrariaPacketType.WorldInfo] = WorldInfoPacket.FromReader,
+                [TerrariaPacketType.WorldSectionRequest] = WorldSectionRequestPacket.FromReader,
             };
 
         /// <summary>

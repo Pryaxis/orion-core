@@ -777,6 +777,11 @@
             Indicates a <see cref="T:Orion.Networking.Packets.WorldInfoPacket"/>.
             </summary>
         </member>
+        <member name="F:Orion.Networking.Packets.TerrariaPacketType.WorldSectionRequest">
+            <summary>
+            Indicates a <see cref="T:Orion.Networking.Packets.WorldSectionRequestPacket"/>.
+            </summary>
+        </member>
         <member name="T:Orion.Networking.Packets.UnknownPacket">
             <summary>
             Used as a fail-safe for any packet that failed to be read.
@@ -1263,6 +1268,40 @@
             <summary>
             Indicates that tier 3 of the Old One's Army has been defeated.
             </summary>
+        </member>
+        <member name="T:Orion.Networking.Packets.WorldSectionRequestPacket">
+            <summary>
+            Packet sent from the client to the server to request a world section.
+            </summary>
+        </member>
+        <member name="P:Orion.Networking.Packets.WorldSectionRequestPacket.IsSentToClient">
+            <inheritdoc />
+        </member>
+        <member name="P:Orion.Networking.Packets.WorldSectionRequestPacket.IsSentToServer">
+            <inheritdoc />
+        </member>
+        <member name="P:Orion.Networking.Packets.WorldSectionRequestPacket.Type">
+            <inheritdoc />
+        </member>
+        <member name="P:Orion.Networking.Packets.WorldSectionRequestPacket.SectionX">
+            <summary>
+            Gets or sets the section's X position.
+            </summary>
+        </member>
+        <member name="P:Orion.Networking.Packets.WorldSectionRequestPacket.SectionY">
+            <summary>
+            Gets or sets the section's Y position.
+            </summary>
+        </member>
+        <member name="M:Orion.Networking.Packets.WorldSectionRequestPacket.FromReader(System.IO.BinaryReader)">
+            <summary>
+            Reads a <see cref="T:Orion.Networking.Packets.WorldSectionRequestPacket"/> from the given reader.
+            </summary>
+            <param name="reader">The reader.</param>
+            <exception cref="T:System.ArgumentNullException"><paramref name="reader"/> is <c>null</c>.</exception>
+        </member>
+        <member name="M:Orion.Networking.Packets.WorldSectionRequestPacket.WriteToWriter(System.IO.BinaryWriter)">
+            <inheritdoc />
         </member>
         <member name="T:Orion.World.InvasionType">
             <summary>
