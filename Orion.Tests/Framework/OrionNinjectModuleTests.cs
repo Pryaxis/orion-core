@@ -1,12 +1,12 @@
-﻿namespace Orion.Tests.Framework {
-    using System;
-    using System.IO;
-    using System.Linq;
-    using FluentAssertions;
-    using Ninject;
-    using Orion.Framework;
-    using Xunit;
+﻿using System;
+using System.IO;
+using System.Linq;
+using FluentAssertions;
+using Ninject;
+using Orion.Framework;
+using Xunit;
 
+namespace Orion.Tests.Framework {
     public class OrionNinjectModuleTests : IDisposable {
         private static string PluginDirectory => "test";
 
@@ -25,7 +25,7 @@
         public void ServicesAreSingleton() {
             var service1 = _kernel.Get<IMockService>();
             var service2 = _kernel.Get<IMockService>();
-            
+
             service1.Should().BeOfType<MockService>();
             service1.Should().BeSameAs(service2);
         }
@@ -34,7 +34,7 @@
         public void InstancedServicesAreInstanced() {
             var service1 = _kernel.Get<IMockInstanceService>();
             var service2 = _kernel.Get<IMockInstanceService>();
-            
+
             service1.Should().BeOfType<MockInstanceService>();
             service1.Should().NotBeSameAs(service2);
         }
@@ -49,14 +49,11 @@
         }
 
 
-        public interface IMockService : IService {
-        }
+        public interface IMockService : IService { }
 
-        public interface IMockInstanceService : IService {
-        }
+        public interface IMockInstanceService : IService { }
 
-        public interface IMockOverrideService : IService {
-        }
+        public interface IMockOverrideService : IService { }
 
         public class MockService : OrionService, IMockService {
             public override string Author => "TestAuthor";

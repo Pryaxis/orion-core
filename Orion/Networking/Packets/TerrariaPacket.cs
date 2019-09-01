@@ -1,9 +1,9 @@
-﻿namespace Orion.Networking.Packets {
-    using System;
-    using System.Collections.Generic;
-    using System.IO;
-    using System.Text;
+﻿using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Text;
 
+namespace Orion.Networking.Packets {
     /// <summary>
     /// Represents a Terraria packet.
     /// </summary>
@@ -16,12 +16,13 @@
             new Dictionary<TerrariaPacketType, Func<BinaryReader, TerrariaPacket>> {
                 [TerrariaPacketType.RequestConnection] = RequestConnectionPacket.FromReader,
                 [TerrariaPacketType.DisconnectPlayer] = DisconnectPlayerPacket.FromReader,
-                [TerrariaPacketType.ContinueConnecting] = ContinueConnectionPacket.FromReader,
+                [TerrariaPacketType.ContinueConnection] = ContinueConnectionPacket.FromReader,
                 [TerrariaPacketType.UpdatePlayerInfo] = UpdatePlayerInfoPacket.FromReader,
                 [TerrariaPacketType.UpdatePlayerInventorySlot] = UpdatePlayerInventorySlotPacket.FromReader,
                 [TerrariaPacketType.FinishConnection] = FinishConnectionPacket.FromReader,
                 [TerrariaPacketType.UpdateWorldInfo] = UpdateWorldInfoPacket.FromReader,
                 [TerrariaPacketType.RequestWorldSection] = RequestWorldSectionPacket.FromReader,
+                [TerrariaPacketType.UpdateClientStatus] = UpdateClientStatusPacket.FromReader,
             };
 
         /// <summary>

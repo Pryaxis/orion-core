@@ -1,13 +1,13 @@
-﻿namespace Orion.Networking {
-    using System;
-    using System.Diagnostics;
-    using System.IO;
-    using System.Linq;
-    using Orion.Framework;
-    using Orion.Networking.Events;
-    using Orion.Networking.Packets;
-    using OTAPI;
+﻿using System;
+using System.Diagnostics;
+using System.IO;
+using System.Linq;
+using Orion.Framework;
+using Orion.Networking.Events;
+using Orion.Networking.Packets;
+using OTAPI;
 
+namespace Orion.Networking {
     /// <summary>
     /// Orion's implementation of <see cref="INetworkService"/>.
     /// </summary>
@@ -40,7 +40,6 @@
 
         private HookResult ReceiveDataHandler(
             Terraria.MessageBuffer buffer, ref byte packetId, ref int readOffset, ref int start, ref int length) {
-
             var data = buffer.readBuffer;
             Debug.Assert(
                 buffer.whoAmI >= 0 && buffer.whoAmI < Terraria.Netplay.MaxConnections,
@@ -81,7 +80,6 @@
         private HookResult SendBytesHandler(
             ref int remoteId, ref byte[] data, ref int start, ref int length,
             ref Terraria.Net.Sockets.SocketSendCallback callback, ref object state) {
-
             Debug.Assert(
                 remoteId >= 0 && remoteId < Terraria.Netplay.MaxConnections,
                 $"{nameof(remoteId)} should be a valid index.");
@@ -123,13 +121,15 @@
         }
 
         /// <inheritdoc />
-        public void SendPacket(TerrariaPacketType packetType, int targetId = -1, int exceptId = -1, string text = "",
-            int number = default, float number2 = default, float number3 = default, float number4 = default,
+        public void SendPacket(
+            TerrariaPacketType packetType, int targetId = -1, int exceptId = -1, string text = "",
+            int number = default, float number2 = default, float number3 = default,
+            float number4 = default,
             int number5 = default, int number6 = default, int number7 = default) {
-
             Terraria.NetMessage.SendData(
                 (int)packetType, targetId, exceptId,
-                Terraria.Localization.NetworkText.FromLiteral(text), number, number2, number3, number4, number5,
+                Terraria.Localization.NetworkText.FromLiteral(text), number, number2, number3, number4,
+                number5,
                 number6, number7);
         }
 
@@ -160,7 +160,6 @@
                 byte[] buffer, long targetPosition, bool ignoreFirstTime, Terraria.MessageBuffer messageBuffer,
                 byte[] oldBuffer)
                 : base(buffer) {
-
                 _targetPosition = targetPosition;
                 _ignoreFirstTime = ignoreFirstTime;
                 _messageBuffer = messageBuffer;

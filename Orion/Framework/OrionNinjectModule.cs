@@ -1,12 +1,12 @@
-﻿namespace Orion.Framework {
-    using System;
-    using System.Collections.Generic;
-    using System.IO;
-    using System.Reflection;
-    using Ninject.Extensions.NamedScope;
-    using Ninject.Modules;
-    using Orion.Framework.Extensions;
+﻿using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Reflection;
+using Ninject.Extensions.NamedScope;
+using Ninject.Modules;
+using Orion.Framework.Extensions;
 
+namespace Orion.Framework {
     /// <summary>
     /// A Ninject module that scans for services and plugins in the executing assembly and plugin assemblies, binding
     /// them to the appropriate scopes.
@@ -30,8 +30,7 @@
             foreach (var assemblyPath in Directory.EnumerateFiles(_pluginDirectory, "*.dll")) {
                 try {
                     Assembly.LoadFrom(assemblyPath);
-                } catch (Exception ex) when (ex is BadImageFormatException || ex is IOException) {
-                }
+                } catch (Exception ex) when (ex is BadImageFormatException || ex is IOException) { }
             }
 
             IList<Type> overrideServiceTypes = new List<Type>();
@@ -67,7 +66,7 @@
                  * Note that we need transient scope if the object is retrieved via Get<T> from the kernel. We can
                  * check this by checking whether the request target is null.
                  */
-                 
+
                 Bind(serviceType).ToSelf().When(request => request.Target != null).InParentScope();
                 Bind(serviceType).ToSelf().When(request => request.Target == null).InTransientScope();
                 foreach (var interfaceType in serviceType.GetInterfaces()) {

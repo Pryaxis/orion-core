@@ -39,7 +39,7 @@
         [Fact]
         public void WriteToStream_IsCorrect() {
             using (var stream = new MemoryStream(Bytes))
-            using (var reader = new BinaryReader(stream)) 
+            using (var reader = new BinaryReader(stream))
             using (var stream2 = new MemoryStream()) {
                 var packet = UpdatePlayerInventorySlotPacket.FromReader(reader);
 

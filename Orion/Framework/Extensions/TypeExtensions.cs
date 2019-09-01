@@ -1,9 +1,9 @@
-﻿namespace Orion.Framework.Extensions {
-    using System;
-    using System.Collections.Generic;
-    using System.Linq;
-    using System.Reflection;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Reflection;
 
+namespace Orion.Framework.Extensions {
     /// <summary>
     /// Provides extension methods for the <see cref="Type"/> class.
     /// </summary>
@@ -22,10 +22,11 @@
                 }
             }
 
-            return AppDomain.CurrentDomain.GetAssemblies()
-                .SelectMany(GetTypes)
-                .Where(t => t.IsSubclassOf(baseType))
-                .Select(GetGenericTypeMaybe);
+            return AppDomain.CurrentDomain
+                            .GetAssemblies()
+                            .SelectMany(GetTypes)
+                            .Where(t => t.IsSubclassOf(baseType))
+                            .Select(GetGenericTypeMaybe);
         }
 
         /// <summary>

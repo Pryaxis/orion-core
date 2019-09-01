@@ -1,9 +1,9 @@
-﻿namespace Orion.Networking.Packets {
-    using System;
-    using System.IO;
+﻿using System;
+using System.IO;
 
+namespace Orion.Networking.Packets {
     /// <summary>
-    /// Packet sent from the server to the client to continue the connection.
+    /// Packet sent to the client to continue the connection.
     /// </summary>
     public sealed class ContinueConnectionPacket : TerrariaPacket {
         private protected override int HeaderlessLength => 1;
@@ -15,7 +15,7 @@
         public override bool IsSentToServer => false;
 
         /// <inheritdoc />
-        public override TerrariaPacketType Type => TerrariaPacketType.ContinueConnecting;
+        public override TerrariaPacketType Type => TerrariaPacketType.ContinueConnection;
 
         /// <summary>
         /// Gets or sets the player ID.

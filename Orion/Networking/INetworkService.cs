@@ -1,9 +1,9 @@
-﻿namespace Orion.Networking {
-    using System;
-    using Orion.Framework;
-    using Orion.Networking.Events;
-    using Orion.Networking.Packets;
+﻿using System;
+using Orion.Framework;
+using Orion.Networking.Events;
+using Orion.Networking.Packets;
 
+namespace Orion.Networking {
     /// <summary>
     /// Provides a mechanism for managing the network. All implementations must be thread-safe.
     /// </summary>
@@ -12,7 +12,7 @@
         /// Occurs when a packet was received.
         /// </summary>
         event EventHandler<ReceivedPacketEventArgs> ReceivedPacket;
-		
+
         /// <summary>
         /// Occurs when a packet is being received. This event can be handled.
         /// </summary>
@@ -22,11 +22,11 @@
         /// Occurs when a packet was sent.
         /// </summary>
         event EventHandler<SentPacketEventArgs> SentPacket;
-		
+
         /// <summary>
         /// Occurs when a packet is being sent. This event can be handled.
         /// </summary>
-        event EventHandler<SendingPacketEventArgs> SendingPacket; 
+        event EventHandler<SendingPacketEventArgs> SendingPacket;
 
         /// <summary>
         /// Sends the specified packet to the target ID excepting the given except ID.

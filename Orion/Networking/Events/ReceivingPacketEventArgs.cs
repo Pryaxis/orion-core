@@ -1,8 +1,8 @@
-﻿namespace Orion.Networking.Events {
-    using System;
-    using System.ComponentModel;
-    using Orion.Networking.Packets;
+﻿using System;
+using System.ComponentModel;
+using Orion.Networking.Packets;
 
+namespace Orion.Networking.Events {
     /// <summary>
     /// Provides data for the <see cref="INetworkService.ReceivingPacket"/> event.
     /// </summary>

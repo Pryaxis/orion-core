@@ -1,6 +1,6 @@
-﻿namespace Orion.Framework {
-    using System;
+﻿using System;
 
+namespace Orion.Framework {
     /// <summary>
     /// Represents a service.
     /// </summary>

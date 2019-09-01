@@ -1,7 +1,7 @@
-﻿namespace Orion.Framework {
-    using System;
-    using System.Reflection;
+﻿using System;
+using System.Reflection;
 
+namespace Orion.Framework {
     /// <summary>
     /// Provides the base class for an <see cref="IService"/>.
     /// </summary>
@@ -43,7 +43,6 @@
         /// <remarks>
         /// If your service has unmanaged resources, you must release them here.
         /// </remarks>
-        protected virtual void Dispose(bool disposeManaged) {
-        }
+        protected virtual void Dispose(bool disposeManaged) { }
     }
 }

@@ -1,8 +1,8 @@
-﻿namespace Orion.Networking.Packets {
-    using System;
-    using System.IO;
-    using Orion.Items;
+﻿using System;
+using System.IO;
+using Orion.Items;
 
+namespace Orion.Networking.Packets {
     /// <summary>
     /// Packet sent to provide information about a player's inventory slot.
     /// </summary>
@@ -44,7 +44,7 @@
         public ItemType ItemType { get; set; }
 
         /// <summary>
-        /// Reads a <see cref="UpdatePlayerInventorySlotPacket"/> from the given reader.
+        /// Reads an <see cref="UpdatePlayerInventorySlotPacket"/> from the given reader.
         /// </summary>
         /// <param name="reader">The reader.</param>
         /// <exception cref="ArgumentNullException"><paramref name="reader"/> is <c>null</c>.</exception>

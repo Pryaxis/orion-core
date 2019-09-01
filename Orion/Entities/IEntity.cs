@@ -1,6 +1,6 @@
-﻿namespace Orion.Entities {
-    using Microsoft.Xna.Framework;
+﻿using Microsoft.Xna.Framework;
 
+namespace Orion.Entities {
     /// <summary>
     /// Provides a wrapper around a <see cref="Terraria.Entity"/>.
     /// </summary>

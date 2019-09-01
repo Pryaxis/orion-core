@@ -1,6 +1,6 @@
-﻿namespace Orion.Framework {
-    using System;
+﻿using System;
 
+namespace Orion.Framework {
     /// <summary>
     /// An attribute that can be applied to a class to indicate that it overrides a service.
     /// </summary>
@@ -8,6 +8,5 @@
     /// Having multiple implementations of a service with this attribute results in undefined behavior.
     /// </remarks>
     [AttributeUsage(AttributeTargets.Class)]
-    public class OverrideServiceAttribute : Attribute {
-    }
+    public class OverrideServiceAttribute : Attribute { }
 }

@@ -1,7 +1,7 @@
-﻿namespace Orion.Entities {
-    using System;
-    using Microsoft.Xna.Framework;
+﻿using System;
+using Microsoft.Xna.Framework;
 
+namespace Orion.Entities {
     /// <summary>
     /// Orion's implementation of <see cref="IEntity"/>.
     /// </summary>

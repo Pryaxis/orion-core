@@ -1,6 +1,6 @@
-﻿namespace Orion.Networking.Packets.Extensions {
-    using System.Text;
+﻿using System.Text;
 
+namespace Orion.Networking.Packets.Extensions {
     /// <summary>
     /// Provides extension methods for the <see cref="string"/> class.
     /// </summary>

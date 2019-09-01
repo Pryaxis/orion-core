@@ -1,13 +1,12 @@
-﻿namespace Orion.Tests.Networking.Packets.Extensions {
-    using System.Collections.Generic;
-    using System.IO;
-    using System.Text;
-    using FluentAssertions;
-    using Orion.Networking.Packets.Extensions;
-    using Xunit;
+﻿using System.Collections.Generic;
+using System.IO;
+using System.Text;
+using FluentAssertions;
+using Orion.Networking.Packets.Extensions;
+using Xunit;
 
+namespace Orion.Tests.Networking.Packets.Extensions {
     public class StringExtensionsTests {
-
         public static IEnumerable<object[]> GetBinaryLengthData =>
             new List<object[]> {
                 new object[] {"test", Encoding.UTF8},

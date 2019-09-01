@@ -1,7 +1,7 @@
-﻿namespace Orion.Networking.Packets {
-    using System;
-    using System.IO;
+﻿using System;
+using System.IO;
 
+namespace Orion.Networking.Packets {
     /// <summary>
     /// Used as a fail-safe for any packet that failed to be read.
     /// </summary>

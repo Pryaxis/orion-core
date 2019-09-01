@@ -1,9 +1,8 @@
-﻿namespace Orion.Networking.Events
-{
-    using System;
-    using System.ComponentModel;
-    using Orion.Networking.Packets;
+﻿using System;
+using System.ComponentModel;
+using Orion.Networking.Packets;
 
+namespace Orion.Networking.Events {
     /// <summary>
     /// Provides data for the <see cref="INetworkService.SendingPacket"/> event.
     /// </summary>
@@ -41,8 +40,7 @@
         /// <exception cref="ArgumentNullException">
         /// Either <paramref name="receiver"/> is <c>null</c> or <paramref name="packet"/> is <c>null</c>.
         /// </exception>
-        public SendingPacketEventArgs(Terraria.RemoteClient receiver, TerrariaPacket packet)
-        {
+        public SendingPacketEventArgs(Terraria.RemoteClient receiver, TerrariaPacket packet) {
             Receiver = receiver ?? throw new ArgumentNullException(nameof(receiver));
             _packet = packet ?? throw new ArgumentNullException(nameof(packet));
         }

@@ -1,9 +1,9 @@
-﻿namespace Orion.Networking.Packets {
-    using System;
-    using System.IO;
+﻿using System;
+using System.IO;
 
+namespace Orion.Networking.Packets {
     /// <summary>
-    /// Packet sent from the client to the server to finish the connection.
+    /// Packet sent to the server to finish the connection.
     /// </summary>
     public sealed class FinishConnectionPacket : TerrariaPacket {
         private protected override int HeaderlessLength => 0;
@@ -31,7 +31,6 @@
         }
 
         /// <inheritdoc />
-        private protected override void WriteToWriter(BinaryWriter writer) {
-        }
+        private protected override void WriteToWriter(BinaryWriter writer) { }
     }
 }

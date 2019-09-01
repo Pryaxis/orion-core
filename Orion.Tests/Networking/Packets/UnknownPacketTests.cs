@@ -1,11 +1,11 @@
-﻿namespace Orion.Tests.Networking.Packets {
-    using System;
-    using System.IO;
-    using System.Linq;
-    using FluentAssertions;
-    using Orion.Networking.Packets;
-    using Xunit;
+﻿using System;
+using System.IO;
+using System.Linq;
+using FluentAssertions;
+using Orion.Networking.Packets;
+using Xunit;
 
+namespace Orion.Tests.Networking.Packets {
     public class UnknownPacketTests {
         [Fact]
         public void FromReader_NullReader_ThrowsArgumentNullException() {

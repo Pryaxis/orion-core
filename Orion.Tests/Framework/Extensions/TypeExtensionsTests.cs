@@ -1,10 +1,10 @@
-﻿namespace Orion.Tests.Framework.Extensions {
-    using System.Collections.Generic;
-    using System.Linq;
-    using FluentAssertions;
-    using Orion.Framework.Extensions;
-    using Xunit;
+﻿using System.Collections.Generic;
+using System.Linq;
+using FluentAssertions;
+using Orion.Framework.Extensions;
+using Xunit;
 
+namespace Orion.Tests.Framework.Extensions {
     public class TypeExtensionsTests {
         [Fact]
         public void GetAllSubtypes_IsCorrect() {
@@ -14,14 +14,14 @@
             subtypes.Should().Contain(typeof(DerivedType));
             subtypes.Should().Contain(typeof(DerivedType2));
         }
-        
+
         [Fact]
         public void GetGenericTypeMaybe_NonGenericType_IsCorrect() {
             var type = typeof(int).GetGenericTypeMaybe();
 
             type.Should().Be<int>();
         }
-        
+
         [Fact]
         public void GetGenericTypeMaybe_GenericType_IsCorrect() {
             var type = typeof(List<int>).GetGenericTypeMaybe();
@@ -30,16 +30,10 @@
         }
 
 
+        public class BaseType { }
 
-        public class BaseType {
-        }
+        public class DerivedType : BaseType { }
 
-        public class DerivedType : BaseType {
-
-        }
-
-        public class DerivedType2 : BaseType {
-
-        }
+        public class DerivedType2 : BaseType { }
     }
 }

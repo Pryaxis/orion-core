@@ -1,10 +1,10 @@
-﻿namespace Orion.Networking.Packets {
-    using System;
-    using System.IO;
-    using System.Text;
-    using Orion.Networking.Packets.Extensions;
-    using Orion.World;
+﻿using System;
+using System.IO;
+using System.Text;
+using Orion.Networking.Packets.Extensions;
+using Orion.World;
 
+namespace Orion.Networking.Packets {
     /// <summary>
     /// Packet sent to the client to provide information about the world.
     /// </summary>
@@ -36,12 +36,12 @@
         /// Gets or sets the moon phase.
         /// </summary>
         public byte MoonPhase { get; set; }
-        
+
         /// <summary>
         /// Gets or sets the world width.
         /// </summary>
         public short WorldWidth { get; set; }
-        
+
         /// <summary>
         /// Gets or sets the world height.
         /// </summary>
@@ -212,7 +212,7 @@
         public float SandstormIntensity { get; set; }
 
         /// <summary>
-        /// Reads a <see cref="UpdateWorldInfoPacket"/> from the given reader.
+        /// Reads an <see cref="UpdateWorldInfoPacket"/> from the given reader.
         /// </summary>
         /// <param name="reader">The reader.</param>
         /// <exception cref="ArgumentNullException"><paramref name="reader"/> is <c>null</c>.</exception>
@@ -311,7 +311,7 @@
             writer.Write(SandstormIntensity);
         }
     }
-    
+
     /// <summary>
     /// Flags that specify information about the time of the world.
     /// </summary>

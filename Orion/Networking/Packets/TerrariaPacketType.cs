@@ -6,7 +6,7 @@
 #pragma warning disable 1591
         RequestConnection = 1,
         DisconnectPlayer = 2,
-        ContinueConnecting = 3,
+        ContinueConnection = 3,
         UpdatePlayerInfo = 4,
         UpdatePlayerInventorySlot = 5,
         FinishConnection = 6,

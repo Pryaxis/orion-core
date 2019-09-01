@@ -1,10 +1,10 @@
-﻿namespace Orion.Networking.Packets {
-    using System;
-    using System.IO;
-    using System.Text;
-    using Microsoft.Xna.Framework;
-    using Orion.Networking.Packets.Extensions;
+﻿using System;
+using System.IO;
+using System.Text;
+using Microsoft.Xna.Framework;
+using Orion.Networking.Packets.Extensions;
 
+namespace Orion.Networking.Packets {
     /// <summary>
     /// Packet sent to provide information about a player.
     /// </summary>
@@ -102,7 +102,7 @@
         public byte Difficulty { get; set; }
 
         /// <summary>
-        /// Reads a <see cref="UpdatePlayerInfoPacket"/> from the given reader.
+        /// Reads an <see cref="UpdatePlayerInfoPacket"/> from the given reader.
         /// </summary>
         /// <param name="reader">The reader.</param>
         /// <exception cref="ArgumentNullException"><paramref name="reader"/> is <c>null</c>.</exception>

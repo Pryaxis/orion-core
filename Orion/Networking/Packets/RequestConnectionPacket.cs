@@ -1,11 +1,11 @@
-﻿namespace Orion.Networking.Packets {
-    using System;
-    using System.IO;
-    using System.Text;
-    using Orion.Networking.Packets.Extensions;
+﻿using System;
+using System.IO;
+using System.Text;
+using Orion.Networking.Packets.Extensions;
 
+namespace Orion.Networking.Packets {
     /// <summary>
-    /// Packet sent from the client to the server to request connection.
+    /// Packet sent to the server to request connection.
     /// </summary>
     public sealed class RequestConnectionPacket : TerrariaPacket {
         private string _version = "";

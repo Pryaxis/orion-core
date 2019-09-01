@@ -1,7 +1,7 @@
-﻿namespace Orion.Networking.Packets.Extensions {
-    using System.IO;
-    using Microsoft.Xna.Framework;
+﻿using System.IO;
+using Microsoft.Xna.Framework;
 
+namespace Orion.Networking.Packets.Extensions {
     /// <summary>
     /// Provides extension methods for the <see cref="BinaryReader"/> and <see cref="BinaryWriter"/> classes.
     /// </summary>
@@ -19,6 +19,15 @@
         }
 
         /// <summary>
+        /// Reads a Terraria.Localization.NetworkText from the specified reader.
+        /// </summary>
+        /// <param name="reader">The reader.</param>
+        /// <returns>The text.</returns>
+        public static Terraria.Localization.NetworkText ReadNetworkText(this BinaryReader reader) {
+            return Terraria.Localization.NetworkText.Deserialize(reader);
+        }
+
+        /// <summary>
         /// Writes a color to the specified writer.
         /// </summary>
         /// <param name="writer">The writer.</param>
@@ -27,6 +36,15 @@
             writer.Write(color.R);
             writer.Write(color.G);
             writer.Write(color.B);
+        }
+
+        /// <summary>
+        /// Writes a Terraria.Localization.NetworkText to the specified writer.
+        /// </summary>
+        /// <param name="writer">The writer.</param>
+        /// <param name="text">The text.</param>
+        public static void Write(this BinaryWriter writer, Terraria.Localization.NetworkText text) {
+            text.Serialize(writer);
         }
     }
 }

@@ -1,9 +1,9 @@
-﻿namespace Orion.Launcher {
-    using System;
-    using System.IO;
-    using Framework;
-    using Ninject;
+﻿using System;
+using System.IO;
+using Orion.Framework;
+using Ninject;
 
+namespace Orion.Launcher {
     internal class Program {
         internal static void Main(string[] args) {
             Directory.CreateDirectory(Resources.strings.PluginDirectory);
@@ -16,6 +16,7 @@
                         Resources.strings.LoadedServiceMessage,
                         service.Name, service.Version, service.Author);
                 }
+
                 Console.ResetColor();
 
                 Terraria.WindowsLaunch.Main(args);

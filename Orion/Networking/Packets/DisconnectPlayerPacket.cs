@@ -1,14 +1,14 @@
-﻿namespace Orion.Networking.Packets {
-    using System;
-    using System.IO;
-    using System.Text;
-    using Orion.Networking.Packets.Extensions;
+﻿using System;
+using System.IO;
+using System.Text;
+using Orion.Networking.Packets.Extensions;
 
+namespace Orion.Networking.Packets {
     /// <summary>
-    /// Packet sent from the server to disconnect the client.
+    /// Packet sent to the client to disconnect it.
     /// </summary>
     public sealed class DisconnectPlayerPacket : TerrariaPacket {
-        private string _reason = "";
+        private Terraria.Localization.NetworkText _reason = Terraria.Localization.NetworkText.Empty;
 
         /// <inheritdoc />
         private protected override int HeaderlessLength => Reason.GetBinaryLength(Encoding.UTF8);
@@ -26,7 +26,7 @@
         /// Gets or sets the disconnect reason.
         /// </summary>
         /// <exception cref="ArgumentNullException"><paramref name="value"/> is <c>null</c>.</exception>
-        public string Reason {
+        public Terraria.Localization.NetworkText Reason {
             get => _reason;
             set => _reason = value ?? throw new ArgumentNullException(nameof(value));
         }
@@ -41,7 +41,7 @@
                 throw new ArgumentNullException(nameof(reader));
             }
 
-            return new DisconnectPlayerPacket {_reason = reader.ReadString()};
+            return new DisconnectPlayerPacket {_reason = reader.ReadNetworkText()};
         }
 
         /// <inheritdoc />

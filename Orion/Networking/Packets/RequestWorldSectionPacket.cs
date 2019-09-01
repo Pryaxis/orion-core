@@ -1,9 +1,9 @@
-﻿namespace Orion.Networking.Packets {
-    using System;
-    using System.IO;
+﻿using System;
+using System.IO;
 
+namespace Orion.Networking.Packets {
     /// <summary>
-    /// Packet sent from the client to the server to request a world section.
+    /// Packet sent to the server to request a world section.
     /// </summary>
     public sealed class RequestWorldSectionPacket : TerrariaPacket {
         private protected override int HeaderlessLength => 8;
@@ -37,7 +37,10 @@
                 throw new ArgumentNullException(nameof(reader));
             }
 
-            return new RequestWorldSectionPacket {SectionX = reader.ReadInt32(), SectionY = reader.ReadInt32()};
+            return new RequestWorldSectionPacket {
+                SectionX = reader.ReadInt32(),
+                SectionY = reader.ReadInt32()
+            };
         }
 
         /// <inheritdoc />

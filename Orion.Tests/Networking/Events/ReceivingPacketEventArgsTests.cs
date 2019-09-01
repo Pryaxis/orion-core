@@ -1,10 +1,10 @@
-﻿namespace Orion.Tests.Networking.Events {
-    using System;
-    using FluentAssertions;
-    using Orion.Networking.Events;
-    using Orion.Networking.Packets;
-    using Xunit;
+﻿using System;
+using FluentAssertions;
+using Orion.Networking.Events;
+using Orion.Networking.Packets;
+using Xunit;
 
+namespace Orion.Tests.Networking.Events {
     public class ReceivingPacketEventArgsTests {
         [Fact]
         public void Ctor_NullSender_ThrowsArgumentNullException() {

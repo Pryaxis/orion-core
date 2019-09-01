@@ -1,11 +1,11 @@
-﻿namespace Orion.Tests.Networking.Packets {
-    using System;
-    using System.Collections.Generic;
-    using System.IO;
-    using FluentAssertions;
-    using Orion.Networking.Packets;
-    using Xunit;
+﻿using System;
+using System.Collections.Generic;
+using System.IO;
+using FluentAssertions;
+using Orion.Networking.Packets;
+using Xunit;
 
+namespace Orion.Tests.Networking.Packets {
     public class RequestConnectionPacketTests {
         public static IEnumerable<object[]> CtorReaderData =>
             new List<object[]> {
@@ -23,7 +23,6 @@
 
         [Theory]
         [MemberData(nameof(CtorReaderData))]
-
         public void FromReader_IsCorrect(string str) {
             using (var stream = new MemoryStream())
             using (var writer = new BinaryWriter(stream))
