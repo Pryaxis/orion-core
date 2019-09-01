@@ -7,12 +7,11 @@ using Xunit;
 
 namespace Orion.Tests.Networking.Packets.Extensions {
     public class BinaryExtensionTests {
-        public static IEnumerable<object[]> ColorData =>
-            new List<object[]> {
-                new object[] {255, 0, 0},
-                new object[] {0, 255, 0},
-                new object[] {0, 0, 255},
-            };
+        public static readonly IEnumerable<object[]> ColorData = new List<object[]> {
+            new object[] {255, 0, 0},
+            new object[] {0, 255, 0},
+            new object[] {0, 0, 255},
+        };
 
         [Theory]
         [MemberData(nameof(ColorData))]

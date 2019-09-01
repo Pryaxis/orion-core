@@ -7,15 +7,14 @@ using Xunit;
 
 namespace Orion.Tests.Networking.Packets.Extensions {
     public class StringExtensionsTests {
-        public static IEnumerable<object[]> GetBinaryLengthData =>
-            new List<object[]> {
-                new object[] {"test", Encoding.UTF8},
-                new object[] {"ë", Encoding.UTF8},
-                new object[] {"ë", Encoding.ASCII},
-                new object[] {new string('t', 128), Encoding.UTF8},
-                new object[] {new string('t', 32768), Encoding.UTF8},
-                new object[] {new string('t', 8388608), Encoding.UTF8},
-            };
+        public static readonly IEnumerable<object[]> GetBinaryLengthData = new List<object[]> {
+            new object[] {"test", Encoding.UTF8},
+            new object[] {"ë", Encoding.UTF8},
+            new object[] {"ë", Encoding.ASCII},
+            new object[] {new string('t', 128), Encoding.UTF8},
+            new object[] {new string('t', 32768), Encoding.UTF8},
+            new object[] {new string('t', 8388608), Encoding.UTF8},
+        };
 
         [Theory]
         [MemberData(nameof(GetBinaryLengthData))]

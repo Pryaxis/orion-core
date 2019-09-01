@@ -29,7 +29,7 @@ namespace Orion.Tests.Networking.Packets {
                 packet.IsSentToServer.Should().BeFalse();
                 packet.Type.Should().Be(TerrariaPacketType.UpdateClientStatus);
                 packet.StatusIncrease.Should().Be(15);
-                packet.StatusText.Should().Be("LegacyInterface.44");
+                packet.StatusText.ToString().Should().Be("LegacyInterface.44");
                 stream.Position.Should().Be(Bytes.Length);
             }
         }

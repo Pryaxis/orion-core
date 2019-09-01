@@ -7,12 +7,11 @@ using Xunit;
 
 namespace Orion.Tests.Networking.Packets {
     public class RequestConnectionPacketTests {
-        public static IEnumerable<object[]> CtorReaderData =>
-            new List<object[]> {
-                new object[] {"test"},
-                new object[] {new string('t', 128)},
-                new object[] {new string('t', 32768)},
-            };
+        public static readonly IEnumerable<object[]> CtorReaderData = new List<object[]> {
+            new object[] {"test"},
+            new object[] {new string('t', 128)},
+            new object[] {new string('t', 32768)},
+        };
 
         [Fact]
         public void FromReader_NullReader_ThrowsArgumentNullException() {
