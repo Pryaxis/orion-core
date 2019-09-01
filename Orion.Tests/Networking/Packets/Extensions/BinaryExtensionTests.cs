@@ -3,37 +3,46 @@ using System.IO;
 using FluentAssertions;
 using Microsoft.Xna.Framework;
 using Orion.Networking.Packets.Extensions;
+using Terraria.Localization;
 using Xunit;
 
 namespace Orion.Tests.Networking.Packets.Extensions {
     public class BinaryExtensionTests {
         public static readonly IEnumerable<object[]> ColorData = new List<object[]> {
-            new object[] {255, 0, 0},
-            new object[] {0, 255, 0},
-            new object[] {0, 0, 255},
+            new object[] {new Color(255, 0, 0)},
+            new object[] {new Color(0, 255, 0)},
+            new object[] {new Color(0, 0, 255)},
         };
 
+        public static readonly IEnumerable<object[]> NetworkTextData = new List<object[]> {
+            new object[] {NetworkText.FromLiteral("literal_test")},
+            new object[] {NetworkText.FromFormattable("formattable_test{0}", "sub1")},
+        };
+        
         [Theory]
         [MemberData(nameof(ColorData))]
-        public void ReadColor_IsCorrect(byte r, byte g, byte b) {
-            using (var stream = new MemoryStream(new[] {r, g, b}))
+        public void WriteColor_ReadColor_IsCorrect(Color color) {
+            using (var stream = new MemoryStream())
+            using (var writer = new BinaryWriter(stream))
             using (var reader = new BinaryReader(stream)) {
-                reader.ReadColor().Should().Be(new Color(r, g, b));
+                writer.Write(color);
+                stream.Position = 0;
+
+                reader.ReadColor().Should().Be(color);
             }
         }
-
+        
         [Theory]
-        [MemberData(nameof(ColorData))]
-        public void WriteColor_IsCorrect(byte r, byte g, byte b) {
-            var buffer = new byte[3];
-            using (var stream = new MemoryStream(buffer))
-            using (var writer = new BinaryWriter(stream)) {
-                writer.Write(new Color(r, g, b));
-            }
+        [MemberData(nameof(NetworkTextData))]
+        public void WriteNetworkText_ReadNetworkText_IsCorrect(NetworkText text) {
+            using (var stream = new MemoryStream())
+            using (var writer = new BinaryWriter(stream))
+            using (var reader = new BinaryReader(stream)) {
+                writer.Write(text);
+                stream.Position = 0;
 
-            buffer[0].Should().Be(r);
-            buffer[1].Should().Be(g);
-            buffer[2].Should().Be(b);
+                reader.ReadNetworkText().ToString().Should().Be(text.ToString());
+            }
         }
     }
 }
