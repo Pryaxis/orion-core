@@ -13,6 +13,6 @@ namespace Orion.Projectiles {
         /// <summary>
         /// Gets the wrapped Terraria Projectile instance.
         /// </summary>
-        new Terraria.Projectile WrappedEntity { get; }
+        Terraria.Projectile WrappedProjectile { get; }
     }
 }
