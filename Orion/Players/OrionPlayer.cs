@@ -7,7 +7,7 @@ namespace Orion.Players {
     /// </summary>
     internal sealed class OrionPlayer : OrionEntity, IPlayer {
         /// <inheritdoc />
-        public new Terraria.Player WrappedEntity { get; }
+        public Terraria.Player WrappedPlayer { get; }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="OrionPlayer"/> class wrapping the specified Terraria Player
@@ -16,7 +16,7 @@ namespace Orion.Players {
         /// <param name="player">The player.</param>
         /// <exception cref="ArgumentNullException"><paramref name="player"/> is <c>null</c>.</exception>
         public OrionPlayer(Terraria.Player player) : base(player) {
-            WrappedEntity = player ?? throw new ArgumentNullException();
+            WrappedPlayer = player ?? throw new ArgumentNullException();
         }
     }
 }

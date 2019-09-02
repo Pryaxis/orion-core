@@ -4,7 +4,7 @@ namespace Orion.Players.Events {
     /// <summary>
     /// Provides data for the <see cref="IPlayerService.PlayerQuit"/> event.
     /// </summary>
-    public class PlayerQuitEventArgs : EventArgs {
+    public sealed class PlayerQuitEventArgs : EventArgs {
         /// <summary>
         /// Gets the player that quit.
         /// </summary>

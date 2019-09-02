@@ -4,7 +4,7 @@ namespace Orion.Players.Events {
     /// <summary>
     /// Provides data for the <see cref="IPlayerService.PlayerJoined"/> event.
     /// </summary>
-    public class PlayerJoinedEventArgs : EventArgs {
+    public sealed class PlayerJoinedEventArgs : EventArgs {
         /// <summary>
         /// Gets the player that joined.
         /// </summary>

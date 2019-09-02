@@ -6,7 +6,7 @@ namespace Orion.Networking.Events {
     /// <summary>
     /// Provides data for the <see cref="INetworkService.SendingPacket"/> event.
     /// </summary>
-    public class SendingPacketEventArgs : HandledEventArgs {
+    public sealed class SendingPacketEventArgs : HandledEventArgs {
         private TerrariaPacket _packet;
 
         /// <summary>

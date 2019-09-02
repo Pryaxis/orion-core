@@ -13,6 +13,6 @@ namespace Orion.Npcs {
         /// <summary>
         /// Gets the wrapped Terraria NPC instance.
         /// </summary>
-        new Terraria.NPC WrappedEntity { get; }
+        Terraria.NPC WrappedNpc { get; }
     }
 }

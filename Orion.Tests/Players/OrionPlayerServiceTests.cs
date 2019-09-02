@@ -9,7 +9,7 @@ namespace Orion.Tests.Players {
         private readonly IPlayerService _playerService;
 
         public OrionPlayerServiceTests() {
-            for (var i = 0; i < Terraria.Main.player.Length; ++i) {
+            for (var i = 0; i < Terraria.Main.maxPlayers; ++i) {
                 Terraria.Main.player[i] = new Terraria.Player {whoAmI = i};
             }
             
@@ -22,14 +22,14 @@ namespace Orion.Tests.Players {
 
         [Fact]
         public void GetCount_IsCorrect() {
-            _playerService.Count.Should().Be(Terraria.Main.player.Length);
+            _playerService.Count.Should().Be(Terraria.Main.maxPlayers);
         }
 
         [Fact]
         public void GetItem_IsCorrect() {
             var player = _playerService[0];
 
-            player.WrappedEntity.Should().BeSameAs(Terraria.Main.player[0]);
+            player.WrappedPlayer.Should().BeSameAs(Terraria.Main.player[0]);
         }
 
         [Fact]
@@ -40,12 +40,21 @@ namespace Orion.Tests.Players {
             player.Should().BeSameAs(player2);
         }
 
+        [Theory]
+        [InlineData(-1)]
+        [InlineData(10000)]
+        public void GetItem_InvalidIndex_ThrowsIndexOutOfRangeException(int index) {
+            Func<IPlayer> func = () => _playerService[index];
+
+            func.Should().Throw<IndexOutOfRangeException>();
+        }
+
         [Fact]
         public void GetEnumerator_IsCorrect() {
             var players = _playerService.ToList();
 
             for (var i = 0; i < players.Count; ++i) {
-                players[i].WrappedEntity.Should().BeSameAs(Terraria.Main.player[i]);
+                players[i].WrappedPlayer.Should().BeSameAs(Terraria.Main.player[i]);
             }
         }
     }

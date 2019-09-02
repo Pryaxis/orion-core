@@ -71,10 +71,6 @@ namespace Orion.Networking {
                 var receivingArgs = new ReceivingPacketEventArgs(sender, packet);
                 ReceivingPacket?.Invoke(this, receivingArgs);
 
-                if (packet.Type == TerrariaPacketType.RequestWorldSection) {
-                    Console.WriteLine("tesT");
-                }
-
                 if (receivingArgs.Handled) {
                     return HookResult.Cancel;
                 }
@@ -93,6 +89,7 @@ namespace Orion.Networking {
 
                 var receivedArgs = new ReceivedPacketEventArgs(sender, packet);
                 ReceivedPacket?.Invoke(this, receivedArgs);
+
                 return HookResult.Continue;
             }
         }
@@ -113,10 +110,6 @@ namespace Orion.Networking {
                 var sendingArgs = new SendingPacketEventArgs(receiver, packet);
                 SendingPacket?.Invoke(this, sendingArgs);
 
-                if (packet.Type == TerrariaPacketType.UpdateClientStatus) {
-                    Console.WriteLine("test");
-                }
-
                 if (sendingArgs.Handled) {
                     return HookResult.Cancel;
                 }
@@ -135,6 +128,7 @@ namespace Orion.Networking {
 
                 var sentArgs = new SentPacketEventArgs(receiver, packet);
                 SentPacket?.Invoke(this, sentArgs);
+
                 return HookResult.Continue;
             }
         }

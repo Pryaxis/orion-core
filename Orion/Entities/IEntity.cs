@@ -29,10 +29,5 @@ namespace Orion.Entities {
         /// Gets or sets the entity's height in pixels.
         /// </summary>
         int Height { get; set; }
-
-        /// <summary>
-        /// Gets the wrapped Terraria Entity instance.
-        /// </summary>
-        Terraria.Entity WrappedEntity { get; }
     }
 }

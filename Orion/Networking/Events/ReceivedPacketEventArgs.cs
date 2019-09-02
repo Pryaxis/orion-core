@@ -5,7 +5,7 @@ namespace Orion.Networking.Events {
     /// <summary>
     /// Provides data for the <see cref="INetworkService.ReceivedPacket"/> event.
     /// </summary>
-    public class ReceivedPacketEventArgs : EventArgs {
+    public sealed class ReceivedPacketEventArgs : EventArgs {
         /// <summary>
         /// Gets the packet that was received.
         /// </summary>

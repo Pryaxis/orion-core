@@ -8,5 +8,5 @@ namespace Orion.Framework {
     /// Having multiple implementations of a service with this attribute results in undefined behavior.
     /// </remarks>
     [AttributeUsage(AttributeTargets.Class)]
-    public class OverrideServiceAttribute : Attribute { }
+    public sealed class OverrideServiceAttribute : Attribute { }
 }

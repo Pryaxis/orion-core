@@ -9,14 +9,14 @@ namespace Orion.Players {
     /// </summary>
     public interface IPlayerService : IReadOnlyList<IPlayer>, IService {
         /// <summary>
-        /// Occurs when a player has joined the game.
-        /// </summary>
-        event EventHandler<PlayerJoinedEventArgs> PlayerJoined;
-
-        /// <summary>
         /// Occurs when a player is joining the game.
         /// </summary>
         event EventHandler<PlayerJoiningEventArgs> PlayerJoining;
+
+        /// <summary>
+        /// Occurs when a player has joined the game.
+        /// </summary>
+        event EventHandler<PlayerJoinedEventArgs> PlayerJoined;
 
         /// <summary>
         /// Occurs when a player has quit the game.

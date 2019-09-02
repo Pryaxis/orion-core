@@ -34,11 +34,6 @@
             Gets or sets the entity's height in pixels.
             </summary>
         </member>
-        <member name="P:Orion.Entities.IEntity.WrappedEntity">
-            <summary>
-            Gets the wrapped Terraria Entity instance.
-            </summary>
-        </member>
         <member name="T:Orion.Entities.OrionEntity">
             <summary>
             Orion's implementation of <see cref="T:Orion.Entities.IEntity"/>.
@@ -57,9 +52,6 @@
             <inheritdoc/>
         </member>
         <member name="P:Orion.Entities.OrionEntity.Height">
-            <inheritdoc/>
-        </member>
-        <member name="P:Orion.Entities.OrionEntity.WrappedEntity">
             <inheritdoc/>
         </member>
         <member name="M:Orion.Entities.OrionEntity.#ctor(Terraria.Entity)">
@@ -224,7 +216,7 @@
             Gets or sets the item's use time.
             </summary>
         </member>
-        <member name="P:Orion.Items.IItem.WrappedEntity">
+        <member name="P:Orion.Items.IItem.WrappedItem">
             <summary>
             Gets the wrapped Terraria.Item.
             </summary>
@@ -1282,7 +1274,7 @@
             Gets or sets the NPC's type.
             </summary>
         </member>
-        <member name="P:Orion.Npcs.INpc.WrappedEntity">
+        <member name="P:Orion.Npcs.INpc.WrappedNpc">
             <summary>
             Gets the wrapped Terraria NPC instance.
             </summary>
@@ -1348,7 +1340,7 @@
             Provides a wrapper around a Terraria.Player instance.
             </summary>
         </member>
-        <member name="P:Orion.Players.IPlayer.WrappedEntity">
+        <member name="P:Orion.Players.IPlayer.WrappedPlayer">
             <summary>
             Gets the wrapped Terraria Player instance.
             </summary>
@@ -1358,14 +1350,14 @@
             Provides a mechanism for managing players. All implementations must be thread-safe.
             </summary>
         </member>
-        <member name="E:Orion.Players.IPlayerService.PlayerJoined">
-            <summary>
-            Occurs when a player has joined the game.
-            </summary>
-        </member>
         <member name="E:Orion.Players.IPlayerService.PlayerJoining">
             <summary>
             Occurs when a player is joining the game.
+            </summary>
+        </member>
+        <member name="E:Orion.Players.IPlayerService.PlayerJoined">
+            <summary>
+            Occurs when a player has joined the game.
             </summary>
         </member>
         <member name="E:Orion.Players.IPlayerService.PlayerQuit">
@@ -1378,7 +1370,7 @@
             Orion's implementation of <see cref="T:Orion.Players.IPlayer"/>.
             </summary>
         </member>
-        <member name="P:Orion.Players.OrionPlayer.WrappedEntity">
+        <member name="P:Orion.Players.OrionPlayer.WrappedPlayer">
             <inheritdoc />
         </member>
         <member name="M:Orion.Players.OrionPlayer.#ctor(Terraria.Player)">
@@ -1406,10 +1398,10 @@
         <member name="P:Orion.Players.OrionPlayerService.Item(System.Int32)">
             <inheritdoc />
         </member>
-        <member name="E:Orion.Players.OrionPlayerService.PlayerJoined">
+        <member name="E:Orion.Players.OrionPlayerService.PlayerJoining">
             <inheritdoc />
         </member>
-        <member name="E:Orion.Players.OrionPlayerService.PlayerJoining">
+        <member name="E:Orion.Players.OrionPlayerService.PlayerJoined">
             <inheritdoc />
         </member>
         <member name="E:Orion.Players.OrionPlayerService.PlayerQuit">
@@ -1423,6 +1415,120 @@
         <member name="M:Orion.Players.OrionPlayerService.GetEnumerator">
             <inheritdoc />
         </member>
+        <member name="T:Orion.Projectiles.Events.ProjectileRemovedEventArgs">
+            <summary>
+            Provides data for the <see cref="E:Orion.Projectiles.IProjectileService.ProjectileRemoved"/> event.
+            </summary>
+        </member>
+        <member name="P:Orion.Projectiles.Events.ProjectileRemovedEventArgs.Projectile">
+            <summary>
+            Gets the projectile that was removed.
+            </summary>
+        </member>
+        <member name="M:Orion.Projectiles.Events.ProjectileRemovedEventArgs.#ctor(Orion.Projectiles.IProjectile)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Orion.Projectiles.Events.ProjectileRemovedEventArgs"/> class with the specified
+            projectile.
+            </summary>
+            <param name="projectile">The projectile.</param>
+            <exception cref="T:System.ArgumentNullException"><paramref name="projectile"/> is null.</exception>
+        </member>
+        <member name="T:Orion.Projectiles.Events.ProjectileRemovingEventArgs">
+            <summary>
+            Provides data for the <see cref="E:Orion.Projectiles.IProjectileService.ProjectileRemoving"/> event.
+            </summary>
+        </member>
+        <member name="P:Orion.Projectiles.Events.ProjectileRemovingEventArgs.Projectile">
+            <summary>
+            Gets the projectile that is being removed.
+            </summary>
+        </member>
+        <member name="M:Orion.Projectiles.Events.ProjectileRemovingEventArgs.#ctor(Orion.Projectiles.IProjectile)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Orion.Projectiles.Events.ProjectileRemovingEventArgs"/> class with the specified
+            projectile.
+            </summary>
+            <param name="projectile">The projectile.</param>
+            <exception cref="T:System.ArgumentNullException"><paramref name="projectile"/> is null.</exception>
+        </member>
+        <member name="T:Orion.Projectiles.Events.ProjectileSetDefaultsEventArgs">
+            <summary>
+            Provides data for the see <see cref="E:Orion.Projectiles.IProjectileService.ProjectileSetDefaults"/> event.
+            </summary>
+        </member>
+        <member name="P:Orion.Projectiles.Events.ProjectileSetDefaultsEventArgs.Projectile">
+            <summary>
+            Gets the projectile that had its defaults set.
+            </summary>
+        </member>
+        <member name="M:Orion.Projectiles.Events.ProjectileSetDefaultsEventArgs.#ctor(Orion.Projectiles.IProjectile)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Orion.Projectiles.Events.ProjectileSetDefaultsEventArgs"/> class with the specified
+            projectile.
+            </summary>
+            <param name="projectile">The projectile.</param>
+            <exception cref="T:System.ArgumentNullException"><paramref name="projectile"/> is null.</exception>
+        </member>
+        <member name="T:Orion.Projectiles.Events.ProjectileSettingDefaultsEventArgs">
+            <summary>
+            Provides data for the see <see cref="E:Orion.Projectiles.IProjectileService.ProjectileSettingDefaults"/> event.
+            </summary>
+        </member>
+        <member name="P:Orion.Projectiles.Events.ProjectileSettingDefaultsEventArgs.Projectile">
+            <summary>
+            Gets the projectile that is having its defaults set.
+            </summary>
+        </member>
+        <member name="P:Orion.Projectiles.Events.ProjectileSettingDefaultsEventArgs.Type">
+            <summary>
+            Gets or sets the <see cref="T:Orion.Projectiles.ProjectileType"/> that the projectile is having its defaults set to.
+            </summary>
+        </member>
+        <member name="M:Orion.Projectiles.Events.ProjectileSettingDefaultsEventArgs.#ctor(Orion.Projectiles.IProjectile,Orion.Projectiles.ProjectileType)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Orion.Projectiles.Events.ProjectileSettingDefaultsEventArgs"/> class with the specified
+            projectile and type.
+            </summary>
+            <param name="projectile">The projectile.</param>
+            <param name="type">The type.</param>
+            <exception cref="T:System.ArgumentNullException"><paramref name="projectile"/> is null.</exception>
+        </member>
+        <member name="T:Orion.Projectiles.Events.ProjectileUpdatedEventArgs">
+            <summary>
+            Provides data for the <see cref="E:Orion.Projectiles.IProjectileService.ProjectileUpdated"/> event.
+            </summary>
+        </member>
+        <member name="P:Orion.Projectiles.Events.ProjectileUpdatedEventArgs.Projectile">
+            <summary>
+            Gets the projectile that was updated.
+            </summary>
+        </member>
+        <member name="M:Orion.Projectiles.Events.ProjectileUpdatedEventArgs.#ctor(Orion.Projectiles.IProjectile)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Orion.Projectiles.Events.ProjectileUpdatedEventArgs"/> class with the specified
+            projectile.
+            </summary>
+            <param name="projectile">The projectile.</param>
+            <exception cref="T:System.ArgumentNullException"><paramref name="projectile"/> is null.</exception>
+        </member>
+        <member name="T:Orion.Projectiles.Events.ProjectileUpdatingEventArgs">
+            <summary>
+            Provides data for the <see cref="E:Orion.Projectiles.IProjectileService.ProjectileUpdating"/> event.
+            </summary>
+        </member>
+        <member name="P:Orion.Projectiles.Events.ProjectileUpdatingEventArgs.Projectile">
+            <summary>
+            Gets the projectile that is being updated.
+            </summary>
+        </member>
+        <member name="M:Orion.Projectiles.Events.ProjectileUpdatingEventArgs.#ctor(Orion.Projectiles.IProjectile)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Orion.Projectiles.Events.ProjectileUpdatingEventArgs"/> class with the specified
+            projectile.
+            </summary>
+            <param name="projectile">The projectile.</param>
+            <exception cref="T:System.ArgumentNullException"><paramref name="projectile"/> is null.</exception>
+        </member>
         <member name="T:Orion.Projectiles.IProjectile">
             <summary>
             Provides a wrapper around a Terraria.Projectile.
@@ -1433,10 +1539,121 @@
             Gets or sets the projectile type.
             </summary>
         </member>
-        <member name="P:Orion.Projectiles.IProjectile.WrappedEntity">
+        <member name="P:Orion.Projectiles.IProjectile.WrappedProjectile">
             <summary>
             Gets the wrapped Terraria Projectile instance.
             </summary>
+        </member>
+        <member name="T:Orion.Projectiles.IProjectileService">
+            <summary>
+            Provides a mechanism for managing projectiles.
+            </summary>
+        </member>
+        <member name="E:Orion.Projectiles.IProjectileService.ProjectileSettingDefaults">
+            <summary>
+            Occurs when a projectile is having its defaults set.
+            </summary>
+        </member>
+        <member name="E:Orion.Projectiles.IProjectileService.ProjectileSetDefaults">
+            <summary>
+            Occurs after a projectile has had its defaults set.
+            </summary>
+        </member>
+        <member name="E:Orion.Projectiles.IProjectileService.ProjectileUpdating">
+            <summary>
+            Occurs when a projectile is being updated.
+            </summary>
+        </member>
+        <member name="E:Orion.Projectiles.IProjectileService.ProjectileUpdatingAi">
+            <summary>
+            Occurs when a projectile's AI is being updated.
+            </summary>
+        </member>
+        <member name="E:Orion.Projectiles.IProjectileService.ProjectileUpdatedAi">
+            <summary>
+            Occurs after a projectile's AI was updated.
+            </summary>
+        </member>
+        <member name="E:Orion.Projectiles.IProjectileService.ProjectileUpdated">
+            <summary>
+            Occurs after a projectile was updated.
+            </summary>
+        </member>
+        <member name="E:Orion.Projectiles.IProjectileService.ProjectileRemoving">
+            <summary>
+            Occurs when a projectile is being removed.
+            </summary>
+        </member>
+        <member name="E:Orion.Projectiles.IProjectileService.ProjectileRemoved">
+            <summary>
+            Occurs after a projectile was removed.
+            </summary>
+        </member>
+        <member name="T:Orion.Projectiles.OrionProjectile">
+            <summary>
+            Orion's implementation of <see cref="T:Orion.Projectiles.IProjectile"/>.
+            </summary>
+        </member>
+        <member name="P:Orion.Projectiles.OrionProjectile.Type">
+            <inheritdoc />
+        </member>
+        <member name="P:Orion.Projectiles.OrionProjectile.WrappedProjectile">
+            <inheritdoc />
+        </member>
+        <member name="M:Orion.Projectiles.OrionProjectile.#ctor(Terraria.Projectile)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Orion.Projectiles.OrionProjectile"/> class wrapping the specified Terraria
+            Projectile instance.
+            </summary>
+            <param name="terrariaProjectile">The projectile.</param>
+            <exception cref="T:System.ArgumentNullException"><paramref name="terrariaProjectile"/> is <c>null</c>.</exception>
+        </member>
+        <member name="T:Orion.Projectiles.OrionProjectileService">
+            <summary>
+            Orion's implementation of <see cref="T:Orion.Projectiles.IProjectileService"/>.
+            </summary>
+        </member>
+        <member name="P:Orion.Projectiles.OrionProjectileService.Author">
+            <inheritdoc />
+        </member>
+        <member name="P:Orion.Projectiles.OrionProjectileService.Name">
+            <inheritdoc />
+        </member>
+        <member name="P:Orion.Projectiles.OrionProjectileService.Count">
+            <inheritdoc />
+        </member>
+        <member name="P:Orion.Projectiles.OrionProjectileService.Item(System.Int32)">
+            <inheritdoc />
+        </member>
+        <member name="E:Orion.Projectiles.OrionProjectileService.ProjectileSettingDefaults">
+            <inheritdoc />
+        </member>
+        <member name="E:Orion.Projectiles.OrionProjectileService.ProjectileSetDefaults">
+            <inheritdoc />
+        </member>
+        <member name="E:Orion.Projectiles.OrionProjectileService.ProjectileUpdating">
+            <inheritdoc />
+        </member>
+        <member name="E:Orion.Projectiles.OrionProjectileService.ProjectileUpdatingAi">
+            <inheritdoc />
+        </member>
+        <member name="E:Orion.Projectiles.OrionProjectileService.ProjectileUpdatedAi">
+            <inheritdoc />
+        </member>
+        <member name="E:Orion.Projectiles.OrionProjectileService.ProjectileUpdated">
+            <inheritdoc />
+        </member>
+        <member name="E:Orion.Projectiles.OrionProjectileService.ProjectileRemoving">
+            <inheritdoc />
+        </member>
+        <member name="E:Orion.Projectiles.OrionProjectileService.ProjectileRemoved">
+            <inheritdoc />
+        </member>
+        <member name="M:Orion.Projectiles.OrionProjectileService.GetEnumerator">
+            <inheritdoc />
+        </member>
+        <member name="M:Orion.Projectiles.OrionProjectileService.System#Collections#IEnumerable#GetEnumerator">
+            <inheritdoc />
         </member>
         <member name="T:Orion.Projectiles.ProjectileType">
             <summary>

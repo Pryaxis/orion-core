@@ -8,6 +8,6 @@ namespace Orion.Players {
         /// <summary>
         /// Gets the wrapped Terraria Player instance.
         /// </summary>
-        new Terraria.Player WrappedEntity { get; }
+        Terraria.Player WrappedPlayer { get; }
     }
 }
