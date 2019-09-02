@@ -1,7 +1,5 @@
 ﻿using System;
 using System.IO;
-using System.Text;
-using Orion.Networking.Packets.Extensions;
 using Orion.World;
 
 namespace Orion.Networking.Packets {
@@ -10,8 +8,6 @@ namespace Orion.Networking.Packets {
     /// </summary>
     public sealed class UpdateWorldInfoPacket : TerrariaPacket {
         private string _worldName = "";
-
-        private protected override int HeaderlessLength => 117 + WorldName.GetBinaryLength(Encoding.UTF8);
 
         /// <inheritdoc />
         public override bool IsSentToClient => true;
@@ -211,58 +207,46 @@ namespace Orion.Networking.Packets {
         /// </summary>
         public float SandstormIntensity { get; set; }
 
-        /// <summary>
-        /// Reads an <see cref="UpdateWorldInfoPacket"/> from the given reader.
-        /// </summary>
-        /// <param name="reader">The reader.</param>
-        /// <exception cref="ArgumentNullException"><paramref name="reader"/> is <c>null</c>.</exception>
-        public static UpdateWorldInfoPacket FromReader(BinaryReader reader) {
-            if (reader == null) {
-                throw new ArgumentNullException(nameof(reader));
-            }
-
-            return new UpdateWorldInfoPacket {
-                Time = reader.ReadInt32(),
-                TimeFlags = (WorldTimeFlags)reader.ReadByte(),
-                MoonPhase = reader.ReadByte(),
-                WorldWidth = reader.ReadInt16(),
-                WorldHeight = reader.ReadInt16(),
-                SpawnX = reader.ReadInt16(),
-                SpawnY = reader.ReadInt16(),
-                SurfaceY = reader.ReadInt16(),
-                RockLayerY = reader.ReadInt16(),
-                WorldId = reader.ReadInt32(),
-                WorldName = reader.ReadString(),
-                WorldGuid = new Guid(reader.ReadBytes(16)),
-                WorldGeneratorVersion = reader.ReadUInt64(),
-                MoonType = reader.ReadByte(),
-                TreeBackgroundStyle = reader.ReadByte(),
-                CorruptionBackgroundStyle = reader.ReadByte(),
-                JungleBackgroundStyle = reader.ReadByte(),
-                SnowBackgroundStyle = reader.ReadByte(),
-                HallowBackgroundStyle = reader.ReadByte(),
-                CrimsonBackgroundStyle = reader.ReadByte(),
-                DesertBackgroundStyle = reader.ReadByte(),
-                OceanBackgroundStyle = reader.ReadByte(),
-                IceCaveBackgroundStyle = reader.ReadByte(),
-                UndergroundJungleBackgroundStyle = reader.ReadByte(),
-                HellBackgroundStyle = reader.ReadByte(),
-                WindSpeed = reader.ReadSingle(),
-                NumberOfClouds = reader.ReadByte(),
-                TreeStyleBoundaries = new[] {reader.ReadInt32(), reader.ReadInt32(), reader.ReadInt32()},
-                TreeStyles = reader.ReadBytes(4),
-                CaveBackgroundStyleBoundaries = new[] {reader.ReadInt32(), reader.ReadInt32(), reader.ReadInt32()},
-                CaveBackgroundStyles = reader.ReadBytes(4),
-                Rain = reader.ReadSingle(),
-                StateFlags = (WorldStateFlags)reader.ReadInt32(),
-                StateFlags2 = (WorldStateFlags2)reader.ReadByte(),
-                InvasionType = (InvasionType)reader.ReadSByte(),
-                LobbyId = reader.ReadUInt64(),
-                SandstormIntensity = reader.ReadSingle(),
-            };
+        private protected override void ReadFromReader(BinaryReader reader, ushort packetLength) {
+            Time = reader.ReadInt32();
+            TimeFlags = (WorldTimeFlags)reader.ReadByte();
+            MoonPhase = reader.ReadByte();
+            WorldWidth = reader.ReadInt16();
+            WorldHeight = reader.ReadInt16();
+            SpawnX = reader.ReadInt16();
+            SpawnY = reader.ReadInt16();
+            SurfaceY = reader.ReadInt16();
+            RockLayerY = reader.ReadInt16();
+            WorldId = reader.ReadInt32();
+            _worldName = reader.ReadString();
+            WorldGuid = new Guid(reader.ReadBytes(16));
+            WorldGeneratorVersion = reader.ReadUInt64();
+            MoonType = reader.ReadByte();
+            TreeBackgroundStyle = reader.ReadByte();
+            CorruptionBackgroundStyle = reader.ReadByte();
+            JungleBackgroundStyle = reader.ReadByte();
+            SnowBackgroundStyle = reader.ReadByte();
+            HallowBackgroundStyle = reader.ReadByte();
+            CrimsonBackgroundStyle = reader.ReadByte();
+            DesertBackgroundStyle = reader.ReadByte();
+            OceanBackgroundStyle = reader.ReadByte();
+            IceCaveBackgroundStyle = reader.ReadByte();
+            UndergroundJungleBackgroundStyle = reader.ReadByte();
+            HellBackgroundStyle = reader.ReadByte();
+            WindSpeed = reader.ReadSingle();
+            NumberOfClouds = reader.ReadByte();
+            TreeStyleBoundaries = new[] {reader.ReadInt32(), reader.ReadInt32(), reader.ReadInt32()};
+            TreeStyles = reader.ReadBytes(4);
+            CaveBackgroundStyleBoundaries = new[] {reader.ReadInt32(), reader.ReadInt32(), reader.ReadInt32()};
+            CaveBackgroundStyles = reader.ReadBytes(4);
+            Rain = reader.ReadSingle();
+            StateFlags = (WorldStateFlags)reader.ReadInt32();
+            StateFlags2 = (WorldStateFlags2)reader.ReadByte();
+            InvasionType = (InvasionType)reader.ReadSByte();
+            LobbyId = reader.ReadUInt64();
+            SandstormIntensity = reader.ReadSingle();
         }
 
-        /// <inheritdoc />
         private protected override void WriteToWriter(BinaryWriter writer) {
             writer.Write(Time);
             writer.Write((byte)TimeFlags);

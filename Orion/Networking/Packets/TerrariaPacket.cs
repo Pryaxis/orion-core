@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Text;
 
@@ -12,25 +13,23 @@ namespace Orion.Networking.Packets {
     /// each of the packet types. Instead, this restriction is enforced when the packet is sent.
     /// </remarks>
     public abstract class TerrariaPacket {
-        private static readonly Dictionary<TerrariaPacketType, Func<BinaryReader, TerrariaPacket>> Deserializers =
-            new Dictionary<TerrariaPacketType, Func<BinaryReader, TerrariaPacket>> {
-                [TerrariaPacketType.RequestConnection] = RequestConnectionPacket.FromReader,
-                [TerrariaPacketType.DisconnectPlayer] = DisconnectPlayerPacket.FromReader,
-                [TerrariaPacketType.ContinueConnection] = ContinueConnectionPacket.FromReader,
-                [TerrariaPacketType.UpdatePlayerInfo] = UpdatePlayerInfoPacket.FromReader,
-                [TerrariaPacketType.UpdatePlayerInventorySlot] = UpdatePlayerInventorySlotPacket.FromReader,
-                [TerrariaPacketType.FinishConnection] = FinishConnectionPacket.FromReader,
-                [TerrariaPacketType.UpdateWorldInfo] = UpdateWorldInfoPacket.FromReader,
-                [TerrariaPacketType.RequestWorldSection] = RequestWorldSectionPacket.FromReader,
-                [TerrariaPacketType.UpdateClientStatus] = UpdateClientStatusPacket.FromReader,
+        private static readonly Dictionary<TerrariaPacketType, Func<TerrariaPacket>> PacketConstructors =
+            new Dictionary<TerrariaPacketType, Func<TerrariaPacket>> {
+                [TerrariaPacketType.RequestConnection] = () => new RequestConnectionPacket(),
+                [TerrariaPacketType.DisconnectPlayer] = () => new DisconnectPlayerPacket(),
+                [TerrariaPacketType.ContinueConnection] = () => new ContinueConnectionPacket(),
+                [TerrariaPacketType.UpdatePlayerInfo] = () => new UpdatePlayerInfoPacket(),
+                [TerrariaPacketType.UpdatePlayerInventorySlot] = () => new UpdatePlayerInventorySlotPacket(),
+                [TerrariaPacketType.FinishConnection] = () => new FinishConnectionPacket(),
+                [TerrariaPacketType.UpdateWorldInfo] = () => new UpdateWorldInfoPacket(),
+                [TerrariaPacketType.RequestWorldSection] = () => new RequestWorldSectionPacket(),
+                [TerrariaPacketType.UpdateClientStatus] = () => new UpdateClientStatusPacket(),
             };
 
         /// <summary>
         /// Gets the length of a packet header.
         /// </summary>
         internal static int HeaderLength => sizeof(TerrariaPacketType) + sizeof(short);
-
-        private protected abstract int HeaderlessLength { get; }
 
         /// <summary>
         /// Gets a value indicating whether the packet is sent to the client.
@@ -53,20 +52,27 @@ namespace Orion.Networking.Packets {
         /// <param name="stream">The stream.</param>
         /// <exception cref="ArgumentNullException"><paramref name="stream"/> is <c>null</c>.</exception>
         /// <returns>The packet.</returns>
-        public static TerrariaPacket FromStream(Stream stream) {
+        public static TerrariaPacket ReadFromStream(Stream stream) {
             if (stream == null) {
                 throw new ArgumentNullException(nameof(stream));
             }
 
             using (var reader = new BinaryReader(stream, Encoding.UTF8, true)) {
+#if DEBUG
+                var position = stream.Position;
+#endif
+
                 var packetLength = reader.ReadUInt16();
                 var packetType = (TerrariaPacketType)reader.ReadByte();
+                var packetCtor =
+                    PacketConstructors.TryGetValue(packetType, out var f) ? f : () => new UnknownPacket(packetType);
+                var packet = packetCtor();
+                packet.ReadFromReader(reader, packetLength);
 
-                if (Deserializers.TryGetValue(packetType, out var deserializer)) {
-                    return deserializer(reader);
-                } else {
-                    return UnknownPacket.FromReader(reader, packetType, packetLength);
-                }
+                Debug.Assert(stream.Position - position == packetLength,
+                             "Packet should have been fully consumed.");
+
+                return packet;
             }
         }
 
@@ -81,18 +87,26 @@ namespace Orion.Networking.Packets {
                 throw new ArgumentNullException(nameof(stream));
             }
 
-            var packetLength = HeaderLength + HeaderlessLength;
-            if (packetLength > ushort.MaxValue) {
-                throw new InvalidOperationException("Packet is too long.");
-            }
-
             using (var writer = new BinaryWriter(stream, Encoding.UTF8, true)) {
-                writer.Write((ushort)packetLength);
+                var startPosition = stream.Position;
+
+                writer.Write((ushort)0);
                 writer.Write((byte)Type);
                 WriteToWriter(writer);
+
+                var finalPosition = stream.Position;
+                var packetLength = finalPosition - startPosition;
+                if (packetLength > ushort.MaxValue) {
+                    throw new InvalidOperationException("Packet is too long.");
+                }
+
+                stream.Position = startPosition;
+                writer.Write((ushort)packetLength);
+                stream.Position = finalPosition;
             }
         }
 
+        private protected abstract void ReadFromReader(BinaryReader reader, ushort packetLength);
         private protected abstract void WriteToWriter(BinaryWriter writer);
     }
 }

@@ -1,5 +1,4 @@
-﻿using System;
-using System.IO;
+﻿using System.IO;
 using Orion.Items;
 
 namespace Orion.Networking.Packets {
@@ -7,8 +6,6 @@ namespace Orion.Networking.Packets {
     /// Packet sent to provide information about a player's inventory slot.
     /// </summary>
     public sealed class UpdatePlayerInventorySlotPacket : TerrariaPacket {
-        private protected override int HeaderlessLength => 7;
-
         /// <inheritdoc />
         public override bool IsSentToClient => true;
 
@@ -43,26 +40,14 @@ namespace Orion.Networking.Packets {
         /// </summary>
         public ItemType ItemType { get; set; }
 
-        /// <summary>
-        /// Reads an <see cref="UpdatePlayerInventorySlotPacket"/> from the given reader.
-        /// </summary>
-        /// <param name="reader">The reader.</param>
-        /// <exception cref="ArgumentNullException"><paramref name="reader"/> is <c>null</c>.</exception>
-        public static UpdatePlayerInventorySlotPacket FromReader(BinaryReader reader) {
-            if (reader == null) {
-                throw new ArgumentNullException(nameof(reader));
-            }
-
-            return new UpdatePlayerInventorySlotPacket {
-                PlayerId = reader.ReadByte(),
-                InventorySlot = reader.ReadByte(),
-                ItemStackSize = reader.ReadInt16(),
-                ItemPrefix = (ItemPrefix)reader.ReadByte(),
-                ItemType = (ItemType)reader.ReadInt16(),
-            };
+        private protected override void ReadFromReader(BinaryReader reader, ushort packetLength) {
+            PlayerId = reader.ReadByte();
+            InventorySlot = reader.ReadByte();
+            ItemStackSize = reader.ReadInt16();
+            ItemPrefix = (ItemPrefix)reader.ReadByte();
+            ItemType = (ItemType)reader.ReadInt16();
         }
 
-        /// <inheritdoc />
         private protected override void WriteToWriter(BinaryWriter writer) {
             writer.Write(PlayerId);
             writer.Write(InventorySlot);

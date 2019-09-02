@@ -38,22 +38,42 @@ namespace Orion.Networking {
             Hooks.Net.SendBytes = SendBytesHandler;
         }
 
+        /// <inheritdoc />
+        public void SendPacket(TerrariaPacket packet, int targetId = -1, int exceptId = -1) {
+            throw new NotImplementedException();
+        }
+
+        /// <inheritdoc />
+        public void SendPacket(
+            TerrariaPacketType packetType, int targetId = -1, int exceptId = -1, string text = "",
+            int number = default, float number2 = default, float number3 = default,
+            float number4 = default,
+            int number5 = default, int number6 = default, int number7 = default) {
+            Terraria.NetMessage.SendData(
+                (int)packetType, targetId, exceptId,
+                Terraria.Localization.NetworkText.FromLiteral(text), number, number2, number3, number4,
+                number5,
+                number6, number7);
+        }
+
         private HookResult ReceiveDataHandler(
             Terraria.MessageBuffer buffer, ref byte packetId, ref int readOffset, ref int start, ref int length) {
             var data = buffer.readBuffer;
-            Debug.Assert(
-                buffer.whoAmI >= 0 && buffer.whoAmI < Terraria.Netplay.MaxConnections,
-                $"{nameof(buffer.whoAmI)} should be a valid index.");
-            Debug.Assert(
-                start >= 2 && start + length <= data.Length,
-                $"{nameof(start)} and {nameof(length)} should be valid indices into {nameof(data)}.");
+            Debug.Assert(buffer.whoAmI >= 0 && buffer.whoAmI < Terraria.Netplay.MaxConnections,
+                         $"{nameof(buffer.whoAmI)} should be a valid index.");
+            Debug.Assert(start >= 2 && start + length <= data.Length,
+                         $"{nameof(start)} and {nameof(length)} should be valid indices into {nameof(data)}.");
 
             // start and length need to be adjusted by two to account for the packet header's length field.
             using (var stream = new MemoryStream(data, start - 2, length + 2)) {
                 var sender = Terraria.Netplay.Clients[buffer.whoAmI];
-                var packet = TerrariaPacket.FromStream(stream);
+                var packet = TerrariaPacket.ReadFromStream(stream);
                 var receivingArgs = new ReceivingPacketEventArgs(sender, packet);
                 ReceivingPacket?.Invoke(this, receivingArgs);
+
+                if (packet.Type == TerrariaPacketType.RequestWorldSection) {
+                    Console.WriteLine("tesT");
+                }
 
                 if (receivingArgs.Handled) {
                     return HookResult.Cancel;
@@ -89,9 +109,13 @@ namespace Orion.Networking {
 
             using (var stream = new MemoryStream(data, start, length)) {
                 var receiver = Terraria.Netplay.Clients[remoteId];
-                var packet = TerrariaPacket.FromStream(stream);
+                var packet = TerrariaPacket.ReadFromStream(stream);
                 var sendingArgs = new SendingPacketEventArgs(receiver, packet);
                 SendingPacket?.Invoke(this, sendingArgs);
+
+                if (packet.Type == TerrariaPacketType.UpdateClientStatus) {
+                    Console.WriteLine("test");
+                }
 
                 if (sendingArgs.Handled) {
                     return HookResult.Cancel;
@@ -113,24 +137,6 @@ namespace Orion.Networking {
                 SentPacket?.Invoke(this, sentArgs);
                 return HookResult.Continue;
             }
-        }
-
-        /// <inheritdoc />
-        public void SendPacket(TerrariaPacket packet, int targetId = -1, int exceptId = -1) {
-            throw new NotImplementedException();
-        }
-
-        /// <inheritdoc />
-        public void SendPacket(
-            TerrariaPacketType packetType, int targetId = -1, int exceptId = -1, string text = "",
-            int number = default, float number2 = default, float number3 = default,
-            float number4 = default,
-            int number5 = default, int number6 = default, int number7 = default) {
-            Terraria.NetMessage.SendData(
-                (int)packetType, targetId, exceptId,
-                Terraria.Localization.NetworkText.FromLiteral(text), number, number2, number3, number4,
-                number5,
-                number6, number7);
         }
 
 

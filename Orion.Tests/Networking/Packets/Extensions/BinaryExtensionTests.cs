@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.IO;
+using System.Text;
 using FluentAssertions;
 using Microsoft.Xna.Framework;
 using Orion.Networking.Packets.Extensions;
@@ -23,8 +24,8 @@ namespace Orion.Tests.Networking.Packets.Extensions {
         [MemberData(nameof(ColorData))]
         public void WriteColor_ReadColor_IsCorrect(Color color) {
             using (var stream = new MemoryStream())
-            using (var writer = new BinaryWriter(stream))
-            using (var reader = new BinaryReader(stream)) {
+            using (var writer = new BinaryWriter(stream, Encoding.UTF8))
+            using (var reader = new BinaryReader(stream, Encoding.UTF8)) {
                 writer.Write(color);
                 stream.Position = 0;
 
@@ -36,8 +37,8 @@ namespace Orion.Tests.Networking.Packets.Extensions {
         [MemberData(nameof(NetworkTextData))]
         public void WriteNetworkText_ReadNetworkText_IsCorrect(NetworkText text) {
             using (var stream = new MemoryStream())
-            using (var writer = new BinaryWriter(stream))
-            using (var reader = new BinaryReader(stream)) {
+            using (var writer = new BinaryWriter(stream, Encoding.UTF8))
+            using (var reader = new BinaryReader(stream, Encoding.UTF8)) {
                 writer.Write(text);
                 stream.Position = 0;
 

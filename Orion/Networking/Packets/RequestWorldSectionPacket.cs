@@ -1,13 +1,10 @@
-﻿using System;
-using System.IO;
+﻿using System.IO;
 
 namespace Orion.Networking.Packets {
     /// <summary>
-    /// Packet sent to the server to request a world section.
+    /// Packet sent to the server to request a section of the world.
     /// </summary>
     public sealed class RequestWorldSectionPacket : TerrariaPacket {
-        private protected override int HeaderlessLength => 8;
-
         /// <inheritdoc />
         public override bool IsSentToClient => false;
 
@@ -27,23 +24,11 @@ namespace Orion.Networking.Packets {
         /// </summary>
         public int SectionY { get; set; }
 
-        /// <summary>
-        /// Reads a <see cref="RequestWorldSectionPacket"/> from the given reader.
-        /// </summary>
-        /// <param name="reader">The reader.</param>
-        /// <exception cref="ArgumentNullException"><paramref name="reader"/> is <c>null</c>.</exception>
-        public static RequestWorldSectionPacket FromReader(BinaryReader reader) {
-            if (reader == null) {
-                throw new ArgumentNullException(nameof(reader));
-            }
-
-            return new RequestWorldSectionPacket {
-                SectionX = reader.ReadInt32(),
-                SectionY = reader.ReadInt32()
-            };
+        private protected override void ReadFromReader(BinaryReader reader, ushort packetLength) {
+            SectionX = reader.ReadInt32();
+            SectionY = reader.ReadInt32();
         }
 
-        /// <inheritdoc />
         private protected override void WriteToWriter(BinaryWriter writer) {
             writer.Write(SectionX);
             writer.Write(SectionY);

@@ -2,7 +2,7 @@
     /// <summary>
     /// Indicates the type of a <see cref="TerrariaPacket"/>.
     /// </summary>
-    public enum TerrariaPacketType {
+    public enum TerrariaPacketType : byte {
 #pragma warning disable 1591
         RequestConnection = 1,
         DisconnectPlayer = 2,
@@ -14,7 +14,7 @@
         RequestWorldSection = 8,
         UpdateClientStatus = 9,
         UpdateWorldSection = 10,
-        UpdateTileFrames = 11,
+        SyncTileFrames = 11,
         SpawnPlayer = 12,
         UpdatePlayer = 13,
         ActivatePlayer = 14,

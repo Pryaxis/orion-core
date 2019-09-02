@@ -1,6 +1,5 @@
 ﻿using System;
 using System.IO;
-using System.Text;
 using Microsoft.Xna.Framework;
 using Orion.Networking.Packets.Extensions;
 
@@ -10,8 +9,6 @@ namespace Orion.Networking.Packets {
     /// </summary>
     public sealed class UpdatePlayerInfoPacket : TerrariaPacket {
         private string _name = "";
-
-        private protected override int HeaderlessLength => 29 + Name.GetBinaryLength(Encoding.UTF8);
 
         /// <inheritdoc />
         public override bool IsSentToClient => true;
@@ -101,36 +98,24 @@ namespace Orion.Networking.Packets {
         /// </summary>
         public byte Difficulty { get; set; }
 
-        /// <summary>
-        /// Reads an <see cref="UpdatePlayerInfoPacket"/> from the given reader.
-        /// </summary>
-        /// <param name="reader">The reader.</param>
-        /// <exception cref="ArgumentNullException"><paramref name="reader"/> is <c>null</c>.</exception>
-        public static UpdatePlayerInfoPacket FromReader(BinaryReader reader) {
-            if (reader == null) {
-                throw new ArgumentNullException(nameof(reader));
-            }
-
-            return new UpdatePlayerInfoPacket {
-                PlayerId = reader.ReadByte(),
-                SkinType = reader.ReadByte(),
-                HairType = reader.ReadByte(),
-                _name = reader.ReadString(),
-                HairDye = reader.ReadByte(),
-                HiddenVisualsFlags = reader.ReadUInt16(),
-                HiddenMiscFlags = reader.ReadByte(),
-                HairColor = reader.ReadColor(),
-                SkinColor = reader.ReadColor(),
-                EyeColor = reader.ReadColor(),
-                ShirtColor = reader.ReadColor(),
-                UndershirtColor = reader.ReadColor(),
-                PantsColor = reader.ReadColor(),
-                ShoeColor = reader.ReadColor(),
-                Difficulty = reader.ReadByte(),
-            };
+        private protected override void ReadFromReader(BinaryReader reader, ushort packetLength) {
+            PlayerId = reader.ReadByte();
+            SkinType = reader.ReadByte();
+            HairType = reader.ReadByte();
+            _name = reader.ReadString();
+            HairDye = reader.ReadByte();
+            HiddenVisualsFlags = reader.ReadUInt16();
+            HiddenMiscFlags = reader.ReadByte();
+            HairColor = reader.ReadColor();
+            SkinColor = reader.ReadColor();
+            EyeColor = reader.ReadColor();
+            ShirtColor = reader.ReadColor();
+            UndershirtColor = reader.ReadColor();
+            PantsColor = reader.ReadColor();
+            ShoeColor = reader.ReadColor();
+            Difficulty = reader.ReadByte();
         }
 
-        /// <inheritdoc />
         private protected override void WriteToWriter(BinaryWriter writer) {
             writer.Write(PlayerId);
             writer.Write(SkinType);

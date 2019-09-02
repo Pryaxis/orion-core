@@ -1,7 +1,5 @@
 ﻿using System;
 using System.IO;
-using System.Text;
-using Orion.Networking.Packets.Extensions;
 
 namespace Orion.Networking.Packets {
     /// <summary>
@@ -9,8 +7,6 @@ namespace Orion.Networking.Packets {
     /// </summary>
     public sealed class RequestConnectionPacket : TerrariaPacket {
         private string _version = "";
-
-        private protected override int HeaderlessLength => Version.GetBinaryLength(Encoding.UTF8);
 
         /// <inheritdoc />
         public override bool IsSentToClient => false;
@@ -30,20 +26,10 @@ namespace Orion.Networking.Packets {
             set => _version = value ?? throw new ArgumentNullException(nameof(value));
         }
 
-        /// <summary>
-        /// Reads a <see cref="RequestConnectionPacket"/> from the given reader.
-        /// </summary>
-        /// <param name="reader">The reader.</param>
-        /// <exception cref="ArgumentNullException"><paramref name="reader"/> is <c>null</c>.</exception>
-        public static RequestConnectionPacket FromReader(BinaryReader reader) {
-            if (reader == null) {
-                throw new ArgumentNullException(nameof(reader));
-            }
-
-            return new RequestConnectionPacket {_version = reader.ReadString()};
+        private protected override void ReadFromReader(BinaryReader reader, ushort packetLength) {
+            _version = reader.ReadString();
         }
 
-        /// <inheritdoc />
         private protected override void WriteToWriter(BinaryWriter writer) {
             writer.Write(Version);
         }
