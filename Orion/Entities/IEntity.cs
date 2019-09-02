@@ -21,13 +21,8 @@ namespace Orion.Entities {
         Vector2 Velocity { get; set; }
 
         /// <summary>
-        /// Gets or sets the entity's width in pixels.
+        /// Gets or sets the entity's size in the world.
         /// </summary>
-        int Width { get; set; }
-
-        /// <summary>
-        /// Gets or sets the entity's height in pixels.
-        /// </summary>
-        int Height { get; set; }
+        Vector2 Size { get; set; }
     }
 }

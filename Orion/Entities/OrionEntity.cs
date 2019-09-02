@@ -24,15 +24,9 @@ namespace Orion.Entities {
         }
 
         /// <inheritdoc/>
-        public int Width {
-            get => _wrappedEntity.width;
-            set => _wrappedEntity.width = value;
-        }
-
-        /// <inheritdoc/>
-        public int Height {
-            get => _wrappedEntity.height;
-            set => _wrappedEntity.height = value;
+        public Vector2 Size {
+            get => _wrappedEntity.Size;
+            set => _wrappedEntity.Size = value;
         }
 
         /// <summary>
