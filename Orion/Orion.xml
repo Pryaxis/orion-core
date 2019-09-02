@@ -549,32 +549,6 @@
             <param name="writer">The writer.</param>
             <param name="text">The text.</param>
         </member>
-        <member name="T:Orion.Networking.Packets.Extensions.NetworkTextExtensions">
-            <summary>
-            Provides extension methods for the Terraria.Localization.NetworkText class.
-            </summary>
-        </member>
-        <member name="M:Orion.Networking.Packets.Extensions.NetworkTextExtensions.GetBinaryLength(Terraria.Localization.NetworkText,System.Text.Encoding)">
-            <summary>
-            Gets the length of the text when encoded using the given encoding.
-            </summary>
-            <param name="text">The text.</param>
-            <param name="encoding">The encoding.</param>
-            <returns>The length.</returns>
-        </member>
-        <member name="T:Orion.Networking.Packets.Extensions.StringExtensions">
-            <summary>
-            Provides extension methods for the <see cref="T:System.String"/> class.
-            </summary>
-        </member>
-        <member name="M:Orion.Networking.Packets.Extensions.StringExtensions.GetBinaryLength(System.String,System.Text.Encoding)">
-            <summary>
-            Gets the length of the string when encoded using the given encoding.
-            </summary>
-            <param name="str">The string.</param>
-            <param name="encoding">The encoding.</param>
-            <returns>The length.</returns>
-        </member>
         <member name="T:Orion.Networking.Packets.FinishConnectionPacket">
             <summary>
             Packet sent to the server to finish the connection.
