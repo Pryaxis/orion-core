@@ -14,7 +14,7 @@ namespace Orion.Projectiles {
         event EventHandler<ProjectileSettingDefaultsEventArgs> ProjectileSettingDefaults;
 
         /// <summary>
-        /// Occurs after a projectile has had its defaults set.
+        /// Occurs when a projectile had its defaults set.
         /// </summary>
         event EventHandler<ProjectileSetDefaultsEventArgs> ProjectileSetDefaults;
 
@@ -29,12 +29,12 @@ namespace Orion.Projectiles {
         event EventHandler<ProjectileUpdatingEventArgs> ProjectileUpdatingAi;
 
         /// <summary>
-        /// Occurs after a projectile's AI was updated.
+        /// Occurs when a projectile's AI was updated.
         /// </summary>
         event EventHandler<ProjectileUpdatedEventArgs> ProjectileUpdatedAi;
 
         /// <summary>
-        /// Occurs after a projectile was updated.
+        /// Occurs when a projectile was updated.
         /// </summary>
         event EventHandler<ProjectileUpdatedEventArgs> ProjectileUpdated;
 
@@ -44,7 +44,7 @@ namespace Orion.Projectiles {
         event EventHandler<ProjectileRemovingEventArgs> ProjectileRemoving;
 
         /// <summary>
-        /// Occurs after a projectile was removed.
+        /// Occurs when a projectile was removed.
         /// </summary>
         event EventHandler<ProjectileRemovedEventArgs> ProjectileRemoved;
     }

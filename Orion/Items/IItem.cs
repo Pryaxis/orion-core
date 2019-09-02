@@ -44,5 +44,11 @@ namespace Orion.Items {
         /// Gets the wrapped Terraria.Item.
         /// </summary>
         Terraria.Item WrappedItem { get; }
+
+        /// <summary>
+        /// Applies the given prefix to the item.
+        /// </summary>
+        /// <param name="prefix">The prefix.</param>
+        void ApplyPrefix(ItemPrefix prefix);
     }
 }

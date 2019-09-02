@@ -176,6 +176,81 @@
             Having multiple implementations of a service with this attribute results in undefined behavior.
             </remarks>
         </member>
+        <member name="T:Orion.Items.Events.ItemSetDefaultsEventArgs">
+            <summary>
+            Provides data for the <see cref="E:Orion.Items.IItemService.ItemSetDefaults"/> event.
+            </summary>
+        </member>
+        <member name="P:Orion.Items.Events.ItemSetDefaultsEventArgs.Item">
+            <summary>
+            Gets the item that had its defaults set.
+            </summary>
+        </member>
+        <member name="M:Orion.Items.Events.ItemSetDefaultsEventArgs.#ctor(Orion.Items.IItem)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Orion.Items.Events.ItemSetDefaultsEventArgs"/> class with the specified item.
+            </summary>
+            <param name="item">The item.</param>
+            <exception cref="T:System.ArgumentNullException"><paramref name="item"/> is null.</exception>
+        </member>
+        <member name="T:Orion.Items.Events.ItemSettingDefaultsEventArgs">
+            <summary>
+            Provides data for the <see cref="E:Orion.Items.IItemService.ItemSettingDefaults"/> event.
+            </summary>
+        </member>
+        <member name="P:Orion.Items.Events.ItemSettingDefaultsEventArgs.Item">
+            <summary>
+            Gets the item that is having its defaults set.
+            </summary>
+        </member>
+        <member name="P:Orion.Items.Events.ItemSettingDefaultsEventArgs.Type">
+            <summary>
+            Gets or sets the <see cref="T:Orion.Items.ItemType"/> that the item is having its defaults set to.
+            </summary>
+        </member>
+        <member name="M:Orion.Items.Events.ItemSettingDefaultsEventArgs.#ctor(Orion.Items.IItem,Orion.Items.ItemType)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Orion.Items.Events.ItemSettingDefaultsEventArgs"/> class with the specified item
+            and type.
+            </summary>
+            <param name="item">The item that is having its defaults set.</param>
+            <param name="type">The type.</param>
+            <exception cref="T:System.ArgumentNullException"><paramref name="item"/> is null.</exception>
+        </member>
+        <member name="T:Orion.Items.Events.ItemUpdatedEventArgs">
+            <summary>
+            Provides data for the <see cref="E:Orion.Items.IItemService.ItemUpdated"/> event.
+            </summary>
+        </member>
+        <member name="P:Orion.Items.Events.ItemUpdatedEventArgs.Item">
+            <summary>
+            Gets the item that was updated.
+            </summary>
+        </member>
+        <member name="M:Orion.Items.Events.ItemUpdatedEventArgs.#ctor(Orion.Items.IItem)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Orion.Items.Events.ItemUpdatedEventArgs"/> class with the specified item.
+            </summary>
+            <param name="item">The item.</param>
+            <exception cref="T:System.ArgumentNullException"><paramref name="item"/> is null.</exception>
+        </member>
+        <member name="T:Orion.Items.Events.ItemUpdatingEventArgs">
+            <summary>
+            Provides data for the <see cref="E:Orion.Items.IItemService.ItemUpdating"/> event.
+            </summary>
+        </member>
+        <member name="P:Orion.Items.Events.ItemUpdatingEventArgs.Item">
+            <summary>
+            Gets the item that was updated.
+            </summary>
+        </member>
+        <member name="M:Orion.Items.Events.ItemUpdatingEventArgs.#ctor(Orion.Items.IItem)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Orion.Items.Events.ItemUpdatingEventArgs"/> class with the specified item.
+            </summary>
+            <param name="item">The item.</param>
+            <exception cref="T:System.ArgumentNullException"><paramref name="item"/> is null.</exception>
+        </member>
         <member name="T:Orion.Items.IItem">
             <summary>
             Provides a wrapper around a Terraria.Item.
@@ -221,6 +296,12 @@
             Gets the wrapped Terraria.Item.
             </summary>
         </member>
+        <member name="M:Orion.Items.IItem.ApplyPrefix(Orion.Items.ItemPrefix)">
+            <summary>
+            Applies the given prefix to the item.
+            </summary>
+            <param name="prefix">The prefix.</param>
+        </member>
         <member name="T:Orion.Items.IItemArray">
             <summary>
             Provides a wrapper around an array of Terraria.Item instances.
@@ -245,6 +326,31 @@
             Gets the wrapped array of Terraria item instances.
             </summary>
         </member>
+        <member name="T:Orion.Items.IItemService">
+            <summary>
+            Provides a mechanism for managing items.
+            </summary>
+        </member>
+        <member name="E:Orion.Items.IItemService.ItemSettingDefaults">
+            <summary>
+            Occurs when an item is having its defaults set.
+            </summary>
+        </member>
+        <member name="E:Orion.Items.IItemService.ItemSetDefaults">
+            <summary>
+            Occurs when an item had its defaults set.
+            </summary>
+        </member>
+        <member name="E:Orion.Items.IItemService.ItemUpdating">
+            <summary>
+            Occurs when an item is being updated.
+            </summary>
+        </member>
+        <member name="E:Orion.Items.IItemService.ItemUpdated">
+            <summary>
+            Occurs when an item was updated.
+            </summary>
+        </member>
         <member name="T:Orion.Items.ItemPrefix">
             <summary>
             Specifies an item's prefix.
@@ -259,6 +365,83 @@
             <summary>
             Specifies an item's type.
             </summary>
+        </member>
+        <member name="T:Orion.Items.OrionItem">
+            <summary>
+            Orion's implementation of <see cref="T:Orion.Items.IItem"/>.
+            </summary>
+        </member>
+        <member name="P:Orion.Items.OrionItem.Type">
+            <inheritdoc />
+        </member>
+        <member name="P:Orion.Items.OrionItem.StackSize">
+            <inheritdoc />
+        </member>
+        <member name="P:Orion.Items.OrionItem.MaxStackSize">
+            <inheritdoc />
+        </member>
+        <member name="P:Orion.Items.OrionItem.Prefix">
+            <inheritdoc />
+        </member>
+        <member name="P:Orion.Items.OrionItem.Rarity">
+            <inheritdoc />
+        </member>
+        <member name="P:Orion.Items.OrionItem.Damage">
+            <inheritdoc />
+        </member>
+        <member name="P:Orion.Items.OrionItem.UseTime">
+            <inheritdoc />
+        </member>
+        <member name="P:Orion.Items.OrionItem.WrappedItem">
+            <inheritdoc />
+        </member>
+        <member name="M:Orion.Items.OrionItem.#ctor(Terraria.Item)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Orion.Items.OrionItem"/> class wrapping the specified Terraria Item
+            instance.
+            </summary>
+            <param name="terrariaItem">The item.</param>
+            <exception cref="T:System.ArgumentNullException"><paramref name="terrariaItem"/> is <c>null</c>.</exception>
+        </member>
+        <member name="M:Orion.Items.OrionItem.ApplyPrefix(Orion.Items.ItemPrefix)">
+            <inheritdoc />
+        </member>
+        <member name="T:Orion.Items.OrionItemService">
+            <summary>
+            Orion's implementation of <see cref="T:Orion.Items.IItemService"/>.
+            </summary>
+        </member>
+        <member name="P:Orion.Items.OrionItemService.Author">
+            <inheritdoc />
+        </member>
+        <member name="P:Orion.Items.OrionItemService.Name">
+            <inheritdoc />
+        </member>
+        <member name="P:Orion.Items.OrionItemService.Count">
+            <inheritdoc />
+        </member>
+        <member name="P:Orion.Items.OrionItemService.Item(System.Int32)">
+            <inheritdoc />
+        </member>
+        <member name="E:Orion.Items.OrionItemService.ItemSettingDefaults">
+            <inheritdoc />
+        </member>
+        <member name="E:Orion.Items.OrionItemService.ItemSetDefaults">
+            <inheritdoc />
+        </member>
+        <member name="E:Orion.Items.OrionItemService.ItemUpdating">
+            <inheritdoc />
+        </member>
+        <member name="E:Orion.Items.OrionItemService.ItemUpdated">
+            <inheritdoc />
+        </member>
+        <member name="M:Orion.Items.OrionItemService.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:Orion.Items.OrionItemService"/> class.
+            </summary>
+        </member>
+        <member name="M:Orion.Items.OrionItemService.GetEnumerator">
+            <inheritdoc />
         </member>
         <member name="T:Orion.Networking.Events.ReceivedPacketEventArgs">
             <summary>
@@ -1378,8 +1561,8 @@
             Initializes a new instance of the <see cref="T:Orion.Players.OrionPlayer"/> class wrapping the specified Terraria Player
             instance.
             </summary>
-            <param name="player">The player.</param>
-            <exception cref="T:System.ArgumentNullException"><paramref name="player"/> is <c>null</c>.</exception>
+            <param name="terrariaPlayer">The player.</param>
+            <exception cref="T:System.ArgumentNullException"><paramref name="terrariaPlayer"/> is <c>null</c>.</exception>
         </member>
         <member name="T:Orion.Players.OrionPlayerService">
             <summary>
@@ -1556,7 +1739,7 @@
         </member>
         <member name="E:Orion.Projectiles.IProjectileService.ProjectileSetDefaults">
             <summary>
-            Occurs after a projectile has had its defaults set.
+            Occurs when a projectile had its defaults set.
             </summary>
         </member>
         <member name="E:Orion.Projectiles.IProjectileService.ProjectileUpdating">
@@ -1571,12 +1754,12 @@
         </member>
         <member name="E:Orion.Projectiles.IProjectileService.ProjectileUpdatedAi">
             <summary>
-            Occurs after a projectile's AI was updated.
+            Occurs when a projectile's AI was updated.
             </summary>
         </member>
         <member name="E:Orion.Projectiles.IProjectileService.ProjectileUpdated">
             <summary>
-            Occurs after a projectile was updated.
+            Occurs when a projectile was updated.
             </summary>
         </member>
         <member name="E:Orion.Projectiles.IProjectileService.ProjectileRemoving">
@@ -1586,7 +1769,7 @@
         </member>
         <member name="E:Orion.Projectiles.IProjectileService.ProjectileRemoved">
             <summary>
-            Occurs after a projectile was removed.
+            Occurs when a projectile was removed.
             </summary>
         </member>
         <member name="T:Orion.Projectiles.OrionProjectile">

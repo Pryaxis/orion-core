@@ -13,10 +13,10 @@ namespace Orion.Players {
         /// Initializes a new instance of the <see cref="OrionPlayer"/> class wrapping the specified Terraria Player
         /// instance.
         /// </summary>
-        /// <param name="player">The player.</param>
-        /// <exception cref="ArgumentNullException"><paramref name="player"/> is <c>null</c>.</exception>
-        public OrionPlayer(Terraria.Player player) : base(player) {
-            WrappedPlayer = player ?? throw new ArgumentNullException();
+        /// <param name="terrariaPlayer">The player.</param>
+        /// <exception cref="ArgumentNullException"><paramref name="terrariaPlayer"/> is <c>null</c>.</exception>
+        public OrionPlayer(Terraria.Player terrariaPlayer) : base(terrariaPlayer) {
+            WrappedPlayer = terrariaPlayer ?? throw new ArgumentNullException();
         }
     }
 }

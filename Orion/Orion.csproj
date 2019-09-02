@@ -27,7 +27,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Items\Events\" />
     <Folder Include="Npcs\Events\" />
     <Folder Include="World\Events\" />
   </ItemGroup>
