@@ -71,8 +71,7 @@ namespace Orion.Players {
         IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
 
         private HookResult PreGreetHandler(ref int playerId) {
-            Debug.Assert(playerId >= 0 && playerId < Count,
-                         $"{nameof(playerId)} should be a valid index.");
+            Debug.Assert(playerId >= 0 && playerId < Count, $"{nameof(playerId)} should be a valid index.");
 
             var player = this[playerId];
             var joiningArgs = new PlayerJoiningEventArgs(player);
@@ -81,8 +80,7 @@ namespace Orion.Players {
         }
 
         private void PostGreetHandler(int playerId) {
-            Debug.Assert(playerId >= 0 && playerId < Count,
-                         $"{nameof(playerId)} should be a valid index.");
+            Debug.Assert(playerId >= 0 && playerId < Count, $"{nameof(playerId)} should be a valid index.");
 
             var player = this[playerId];
             var joinedArgs = new PlayerJoinedEventArgs(player);
@@ -94,8 +92,7 @@ namespace Orion.Players {
                 return HookResult.Continue;
             }
 
-            Debug.Assert(remoteClient.Id >= 0 && remoteClient.Id < Count,
-                         $"{nameof(remoteClient.Id)} should be a valid index.");
+            Debug.Assert(remoteClient.Id >= 0 && remoteClient.Id < Count, $"{nameof(remoteClient.Id)} should be a valid index.");
 
             var player = this[remoteClient.Id];
             var quitArgs = new PlayerQuitEventArgs(player);

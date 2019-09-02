@@ -18,10 +18,10 @@ namespace Orion.Projectiles.Events {
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ProjectileSettingDefaultsEventArgs"/> class with the specified
-        /// projectile and type.
+        /// projectile and projectile type.
         /// </summary>
         /// <param name="projectile">The projectile.</param>
-        /// <param name="type">The type.</param>
+        /// <param name="type">The projectile type.</param>
         /// <exception cref="ArgumentNullException"><paramref name="projectile"/> is null.</exception>
         public ProjectileSettingDefaultsEventArgs(IProjectile projectile, ProjectileType type) {
             Projectile = projectile ?? throw new ArgumentNullException(nameof(projectile));

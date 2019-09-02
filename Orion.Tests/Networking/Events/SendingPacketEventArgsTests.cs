@@ -24,18 +24,16 @@ namespace Orion.Tests.Networking.Events {
 
         [Fact]
         public void Ctor_StartsOffNotDirty() {
-            var args = new SendingPacketEventArgs(
-                new Terraria.RemoteClient(),
-                new RequestConnectionPacket {Version = "test"});
+            var packet = new RequestConnectionPacket {Version = "test"};
+            var args = new SendingPacketEventArgs(new Terraria.RemoteClient(), packet);
 
             args.IsPacketDirty.Should().BeFalse();
         }
 
         [Fact]
         public void SetPacket_NullValue_ThrowsArgumentNullException() {
-            var args = new SendingPacketEventArgs(
-                new Terraria.RemoteClient(),
-                new RequestConnectionPacket {Version = "test"});
+            var packet = new RequestConnectionPacket {Version = "test"};
+            var args = new SendingPacketEventArgs(new Terraria.RemoteClient(), packet);
             Action action = () => args.Packet = null;
 
             action.Should().Throw<ArgumentNullException>();
@@ -43,9 +41,8 @@ namespace Orion.Tests.Networking.Events {
 
         [Fact]
         public void MarkPacketAsDirty_IsCorrect() {
-            var args = new SendingPacketEventArgs(
-                new Terraria.RemoteClient(),
-                new RequestConnectionPacket {Version = "test"});
+            var packet = new RequestConnectionPacket {Version = "test"};
+            var args = new SendingPacketEventArgs(new Terraria.RemoteClient(), packet);
             args.MarkPacketAsDirty();
 
             args.IsPacketDirty.Should().BeTrue();

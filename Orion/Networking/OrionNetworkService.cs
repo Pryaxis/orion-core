@@ -49,6 +49,7 @@ namespace Orion.Networking {
             int number = default, float number2 = default, float number3 = default,
             float number4 = default,
             int number5 = default, int number6 = default, int number7 = default) {
+
             Terraria.NetMessage.SendData(
                 (int)packetType, targetId, exceptId,
                 Terraria.Localization.NetworkText.FromLiteral(text), number, number2, number3, number4,
@@ -58,6 +59,7 @@ namespace Orion.Networking {
 
         private HookResult ReceiveDataHandler(
             Terraria.MessageBuffer buffer, ref byte packetId, ref int readOffset, ref int start, ref int length) {
+
             var data = buffer.readBuffer;
             Debug.Assert(buffer.whoAmI >= 0 && buffer.whoAmI < Terraria.Netplay.MaxConnections,
                          $"{nameof(buffer.whoAmI)} should be a valid index.");
@@ -97,6 +99,7 @@ namespace Orion.Networking {
         private HookResult SendBytesHandler(
             ref int remoteId, ref byte[] data, ref int start, ref int length,
             ref Terraria.Net.Sockets.SocketSendCallback callback, ref object state) {
+
             Debug.Assert(
                 remoteId >= 0 && remoteId < Terraria.Netplay.MaxConnections,
                 $"{nameof(remoteId)} should be a valid index.");
@@ -160,6 +163,7 @@ namespace Orion.Networking {
                 byte[] buffer, long targetPosition, bool ignoreFirstTime, Terraria.MessageBuffer messageBuffer,
                 byte[] oldBuffer)
                 : base(buffer) {
+
                 _targetPosition = targetPosition;
                 _ignoreFirstTime = ignoreFirstTime;
                 _messageBuffer = messageBuffer;

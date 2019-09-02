@@ -104,8 +104,7 @@ namespace Orion.Projectiles {
         }
 
         private HookResult PreUpdateHandler(Terraria.Projectile terrariaProjectile, ref int index) {
-            Debug.Assert(index >= 0 && index < Count,
-                         $"{nameof(index)} must be a valid index.");
+            Debug.Assert(index >= 0 && index < Count, $"{nameof(index)} must be a valid index.");
 
             var updatingArgs = new ProjectileUpdatingEventArgs(this[index]);
             ProjectileUpdating?.Invoke(this, updatingArgs);
@@ -128,8 +127,7 @@ namespace Orion.Projectiles {
         }
 
         private void PostUpdateHandler(Terraria.Projectile terrariaProjectile, int index) {
-            Debug.Assert(index >= 0 && index < Count,
-                         $"{nameof(index)} must be a valid index.");
+            Debug.Assert(index >= 0 && index < Count, $"{nameof(index)} must be a valid index.");
 
             var updatedArgs = new ProjectileUpdatedEventArgs(this[index]);
             ProjectileUpdated?.Invoke(this, updatedArgs);
