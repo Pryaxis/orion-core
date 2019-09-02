@@ -7,18 +7,6 @@ namespace Orion.Entities {
     /// </summary>
     internal class OrionEntity : IEntity {
         /// <inheritdoc/>
-        public int Height {
-            get => WrappedEntity.height;
-            set => WrappedEntity.height = value;
-        }
-
-        /// <inheritdoc/>
-        public int Width {
-            get => WrappedEntity.width;
-            set => WrappedEntity.width = value;
-        }
-
-        /// <inheritdoc/>
         public Vector2 Position {
             get => WrappedEntity.position;
             set => WrappedEntity.position = value;
@@ -31,10 +19,22 @@ namespace Orion.Entities {
         }
 
         /// <inheritdoc/>
+        public int Width {
+            get => WrappedEntity.width;
+            set => WrappedEntity.width = value;
+        }
+
+        /// <inheritdoc/>
+        public int Height {
+            get => WrappedEntity.height;
+            set => WrappedEntity.height = value;
+        }
+
+        /// <inheritdoc/>
         public Terraria.Entity WrappedEntity { get; }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="OrionEntity"/> class wrapping the specified Terraria Entity
+        /// Initializes a new instance of the <see cref="OrionEntity"/> class wrapping the specified Terraria.Entity
         /// instance.
         /// </summary>
         /// <param name="entity">The Terraria Entity instance to wrap.</param>

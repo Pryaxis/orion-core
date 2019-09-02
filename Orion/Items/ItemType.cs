@@ -1,5 +1,4 @@
-﻿// ReSharper disable IdentifierTypo
-// ReSharper disable InconsistentNaming
+﻿// ReSharper disable InconsistentNaming
 
 namespace Orion.Items {
     /// <summary>
