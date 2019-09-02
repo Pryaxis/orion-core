@@ -6,17 +6,12 @@
     <members>
         <member name="T:Orion.Entities.IEntity">
             <summary>
-            Provides a wrapper around a <see cref="T:Terraria.Entity"/>.
+            Provides a wrapper around a Terraria.Entity instance.
             </summary>
         </member>
-        <member name="P:Orion.Entities.IEntity.Height">
+        <member name="P:Orion.Entities.IEntity.Index">
             <summary>
-            Gets or sets the entity's height in pixels.
-            </summary>
-        </member>
-        <member name="P:Orion.Entities.IEntity.Width">
-            <summary>
-            Gets or sets the entity's width in pixels.
+            Gets the entity's index.
             </summary>
         </member>
         <member name="P:Orion.Entities.IEntity.Position">
@@ -29,9 +24,19 @@
             Gets or sets the entity's velocity in the world.
             </summary>
         </member>
+        <member name="P:Orion.Entities.IEntity.Width">
+            <summary>
+            Gets or sets the entity's width in pixels.
+            </summary>
+        </member>
+        <member name="P:Orion.Entities.IEntity.Height">
+            <summary>
+            Gets or sets the entity's height in pixels.
+            </summary>
+        </member>
         <member name="P:Orion.Entities.IEntity.WrappedEntity">
             <summary>
-            Gets the wrapped <see cref="T:Terraria.Entity"/> instance.
+            Gets the wrapped Terraria Entity instance.
             </summary>
         </member>
         <member name="T:Orion.Entities.OrionEntity">
@@ -39,10 +44,7 @@
             Orion's implementation of <see cref="T:Orion.Entities.IEntity"/>.
             </summary>
         </member>
-        <member name="P:Orion.Entities.OrionEntity.Height">
-            <inheritdoc/>
-        </member>
-        <member name="P:Orion.Entities.OrionEntity.Width">
+        <member name="P:Orion.Entities.OrionEntity.Index">
             <inheritdoc/>
         </member>
         <member name="P:Orion.Entities.OrionEntity.Position">
@@ -51,12 +53,18 @@
         <member name="P:Orion.Entities.OrionEntity.Velocity">
             <inheritdoc/>
         </member>
+        <member name="P:Orion.Entities.OrionEntity.Width">
+            <inheritdoc/>
+        </member>
+        <member name="P:Orion.Entities.OrionEntity.Height">
+            <inheritdoc/>
+        </member>
         <member name="P:Orion.Entities.OrionEntity.WrappedEntity">
             <inheritdoc/>
         </member>
         <member name="M:Orion.Entities.OrionEntity.#ctor(Terraria.Entity)">
             <summary>
-            Initializes a new instance of the <see cref="T:Orion.Entities.OrionEntity"/> class wrapping the specified Terraria Entity
+            Initializes a new instance of the <see cref="T:Orion.Entities.OrionEntity"/> class wrapping the specified Terraria.Entity
             instance.
             </summary>
             <param name="entity">The Terraria Entity instance to wrap.</param>
@@ -176,9 +184,83 @@
             Having multiple implementations of a service with this attribute results in undefined behavior.
             </remarks>
         </member>
+        <member name="T:Orion.Items.IItem">
+            <summary>
+            Provides a wrapper around a Terraria.Item.
+            </summary>
+        </member>
+        <member name="P:Orion.Items.IItem.Type">
+            <summary>
+            Gets or sets the item type.
+            </summary>
+        </member>
+        <member name="P:Orion.Items.IItem.StackSize">
+            <summary>
+            Gets or sets the item stack size.
+            </summary>
+        </member>
+        <member name="P:Orion.Items.IItem.MaxStackSize">
+            <summary>
+            Gets or sets the maximum item stack size.
+            </summary>
+        </member>
+        <member name="P:Orion.Items.IItem.Prefix">
+            <summary>
+            Gets or sets the item prefix.
+            </summary>
+        </member>
+        <member name="P:Orion.Items.IItem.Rarity">
+            <summary>
+            Gets or sets the item rarity.
+            </summary>
+        </member>
+        <member name="P:Orion.Items.IItem.Damage">
+            <summary>
+            Gets or sets the item damage.
+            </summary>
+        </member>
+        <member name="P:Orion.Items.IItem.UseTime">
+            <summary>
+            Gets or sets the item's use time.
+            </summary>
+        </member>
+        <member name="P:Orion.Items.IItem.WrappedEntity">
+            <summary>
+            Gets the wrapped Terraria.Item.
+            </summary>
+        </member>
+        <member name="T:Orion.Items.IItemArray">
+            <summary>
+            Provides a wrapper around an array of Terraria.Item instances.
+            </summary>
+        </member>
+        <member name="P:Orion.Items.IItemArray.Item(System.Int32)">
+            <summary>
+            Gets or sets the item at the specified index in the array.
+            </summary>
+            <param name="index">The index.</param>
+            <exception cref="T:System.ArgumentOutOfRangeException">
+            <paramref name="index"/> is negative or greater than or equal to <see cref="P:Orion.Items.IItemArray.Length"/>.
+            </exception>
+        </member>
+        <member name="P:Orion.Items.IItemArray.Length">
+            <summary>
+            Gets the array's length.
+            </summary>
+        </member>
+        <member name="P:Orion.Items.IItemArray.WrappedItemArray">
+            <summary>
+            Gets the wrapped array of Terraria item instances.
+            </summary>
+        </member>
         <member name="T:Orion.Items.ItemPrefix">
             <summary>
             Specifies an item's prefix.
+            </summary>
+        </member>
+        <member name="T:Orion.Items.ItemRarity">
+            <summary>
+            Specifies an item's rarity.
             </summary>
         </member>
         <member name="T:Orion.Items.ItemType">
@@ -414,23 +496,10 @@
             Gets or sets the player ID.
             </summary>
         </member>
-        <member name="M:Orion.Networking.Packets.ContinueConnectionPacket.FromReader(System.IO.BinaryReader)">
-            <summary>
-            Reads a <see cref="T:Orion.Networking.Packets.ContinueConnectionPacket"/> from the given reader.
-            </summary>
-            <param name="reader">The reader.</param>
-            <exception cref="T:System.ArgumentNullException"><paramref name="reader"/> is <c>null</c>.</exception>
-        </member>
-        <member name="M:Orion.Networking.Packets.ContinueConnectionPacket.WriteToWriter(System.IO.BinaryWriter)">
-            <inheritdoc />
-        </member>
         <member name="T:Orion.Networking.Packets.DisconnectPlayerPacket">
             <summary>
             Packet sent to the client to disconnect it.
             </summary>
-        </member>
-        <member name="P:Orion.Networking.Packets.DisconnectPlayerPacket.HeaderlessLength">
-            <inheritdoc />
         </member>
         <member name="P:Orion.Networking.Packets.DisconnectPlayerPacket.IsSentToClient">
             <inheritdoc />
@@ -446,16 +515,6 @@
             Gets or sets the disconnect reason.
             </summary>
             <exception cref="T:System.ArgumentNullException"><paramref name="value"/> is <c>null</c>.</exception>
-        </member>
-        <member name="M:Orion.Networking.Packets.DisconnectPlayerPacket.FromReader(System.IO.BinaryReader)">
-            <summary>
-            Reads a <see cref="T:Orion.Networking.Packets.DisconnectPlayerPacket"/> from the given reader.
-            </summary>
-            <param name="reader">The reader.</param>
-            <exception cref="T:System.ArgumentNullException"><paramref name="reader"/> is <c>null</c>.</exception>
-        </member>
-        <member name="M:Orion.Networking.Packets.DisconnectPlayerPacket.WriteToWriter(System.IO.BinaryWriter)">
-            <inheritdoc />
         </member>
         <member name="T:Orion.Networking.Packets.Extensions.BinaryExtensions">
             <summary>
@@ -530,16 +589,6 @@
         <member name="P:Orion.Networking.Packets.FinishConnectionPacket.Type">
             <inheritdoc />
         </member>
-        <member name="M:Orion.Networking.Packets.FinishConnectionPacket.FromReader(System.IO.BinaryReader)">
-            <summary>
-            Reads a <see cref="T:Orion.Networking.Packets.FinishConnectionPacket"/> from the given reader.
-            </summary>
-            <param name="reader">The reader.</param>
-            <exception cref="T:System.ArgumentNullException"><paramref name="reader"/> is <c>null</c>.</exception>
-        </member>
-        <member name="M:Orion.Networking.Packets.FinishConnectionPacket.WriteToWriter(System.IO.BinaryWriter)">
-            <inheritdoc />
-        </member>
         <member name="T:Orion.Networking.Packets.RequestConnectionPacket">
             <summary>
             Packet sent to the server to request connection.
@@ -560,19 +609,9 @@
             </summary>
             <exception cref="T:System.ArgumentNullException"><paramref name="value"/> is <c>null</c>.</exception>
         </member>
-        <member name="M:Orion.Networking.Packets.RequestConnectionPacket.FromReader(System.IO.BinaryReader)">
-            <summary>
-            Reads a <see cref="T:Orion.Networking.Packets.RequestConnectionPacket"/> from the given reader.
-            </summary>
-            <param name="reader">The reader.</param>
-            <exception cref="T:System.ArgumentNullException"><paramref name="reader"/> is <c>null</c>.</exception>
-        </member>
-        <member name="M:Orion.Networking.Packets.RequestConnectionPacket.WriteToWriter(System.IO.BinaryWriter)">
-            <inheritdoc />
-        </member>
         <member name="T:Orion.Networking.Packets.RequestWorldSectionPacket">
             <summary>
-            Packet sent to the server to request a world section.
+            Packet sent to the server to request a section of the world.
             </summary>
         </member>
         <member name="P:Orion.Networking.Packets.RequestWorldSectionPacket.IsSentToClient">
@@ -593,16 +632,6 @@
             <summary>
             Gets or sets the section's Y position.
             </summary>
-        </member>
-        <member name="M:Orion.Networking.Packets.RequestWorldSectionPacket.FromReader(System.IO.BinaryReader)">
-            <summary>
-            Reads a <see cref="T:Orion.Networking.Packets.RequestWorldSectionPacket"/> from the given reader.
-            </summary>
-            <param name="reader">The reader.</param>
-            <exception cref="T:System.ArgumentNullException"><paramref name="reader"/> is <c>null</c>.</exception>
-        </member>
-        <member name="M:Orion.Networking.Packets.RequestWorldSectionPacket.WriteToWriter(System.IO.BinaryWriter)">
-            <inheritdoc />
         </member>
         <member name="T:Orion.Networking.Packets.TerrariaPacket">
             <summary>
@@ -633,7 +662,7 @@
             Gets the type of the packet.
             </summary>
         </member>
-        <member name="M:Orion.Networking.Packets.TerrariaPacket.FromStream(System.IO.Stream)">
+        <member name="M:Orion.Networking.Packets.TerrariaPacket.ReadFromStream(System.IO.Stream)">
             <summary>
             Reads a packet from the specified stream.
             </summary>
@@ -659,9 +688,6 @@
             Used as a fail-safe for any packet that failed to be read.
             </summary>
         </member>
-        <member name="P:Orion.Networking.Packets.UnknownPacket.HeaderlessLength">
-            <inheritdoc />
-        </member>
         <member name="P:Orion.Networking.Packets.UnknownPacket.IsSentToClient">
             <inheritdoc />
         </member>
@@ -671,9 +697,9 @@
         <member name="P:Orion.Networking.Packets.UnknownPacket.Type">
             <inheritdoc />
         </member>
-        <member name="P:Orion.Networking.Packets.UnknownPacket.Bytes">
+        <member name="P:Orion.Networking.Packets.UnknownPacket.Payload">
             <summary>
-            Gets or sets the byte array.
+            Gets or sets the payload.
             </summary>
             <exception cref="T:System.ArgumentNullException"><paramref name="value"/> is <c>null</c>.</exception>
         </member>
@@ -682,19 +708,6 @@
             Initializes a new instance of the <see cref="T:Orion.Networking.Packets.UnknownPacket"/> class with the specified type.
             </summary>
             <param name="type">The type.</param>
-        </member>
-        <member name="M:Orion.Networking.Packets.UnknownPacket.FromReader(System.IO.BinaryReader,Orion.Networking.Packets.TerrariaPacketType,System.UInt16)">
-            <summary>
-            Reads an <see cref="T:Orion.Networking.Packets.UnknownPacket"/> from the given reader with the specified type and length.
-            </summary>
-            <param name="reader">The reader.</param>
-            <param name="type">The type.</param>
-            <param name="headerlessLength">The length.</param>
-            <exception cref="T:System.ArgumentNullException"><paramref name="reader"/> is <c>null</c>.</exception>
-            <exception cref="T:System.ArgumentOutOfRangeException"><paramref name="headerlessLength"/> is too big.</exception>
-        </member>
-        <member name="M:Orion.Networking.Packets.UnknownPacket.WriteToWriter(System.IO.BinaryWriter)">
-            <inheritdoc />
         </member>
         <member name="T:Orion.Networking.Packets.UpdateClientStatusPacket">
             <summary>
@@ -720,16 +733,6 @@
             Gets or sets the status text.
             </summary>
             <exception cref="T:System.ArgumentNullException"><paramref name="value"/> is <c>null</c>.</exception>
-        </member>
-        <member name="M:Orion.Networking.Packets.UpdateClientStatusPacket.FromReader(System.IO.BinaryReader)">
-            <summary>
-            Reads an <see cref="T:Orion.Networking.Packets.UpdateClientStatusPacket"/> from the given reader.
-            </summary>
-            <param name="reader">The reader.</param>
-            <exception cref="T:System.ArgumentNullException"><paramref name="reader"/> is <c>null</c>.</exception>
-        </member>
-        <member name="M:Orion.Networking.Packets.UpdateClientStatusPacket.WriteToWriter(System.IO.BinaryWriter)">
-            <inheritdoc />
         </member>
         <member name="T:Orion.Networking.Packets.UpdatePlayerInfoPacket">
             <summary>
@@ -821,16 +824,6 @@
             Gets or sets the player's difficulty.
             </summary>
         </member>
-        <member name="M:Orion.Networking.Packets.UpdatePlayerInfoPacket.FromReader(System.IO.BinaryReader)">
-            <summary>
-            Reads an <see cref="T:Orion.Networking.Packets.UpdatePlayerInfoPacket"/> from the given reader.
-            </summary>
-            <param name="reader">The reader.</param>
-            <exception cref="T:System.ArgumentNullException"><paramref name="reader"/> is <c>null</c>.</exception>
-        </member>
-        <member name="M:Orion.Networking.Packets.UpdatePlayerInfoPacket.WriteToWriter(System.IO.BinaryWriter)">
-            <inheritdoc />
-        </member>
         <member name="T:Orion.Networking.Packets.UpdatePlayerInventorySlotPacket">
             <summary>
             Packet sent to provide information about a player's inventory slot.
@@ -869,16 +862,6 @@
             <summary>
             Gets or sets the item type.
             </summary>
-        </member>
-        <member name="M:Orion.Networking.Packets.UpdatePlayerInventorySlotPacket.FromReader(System.IO.BinaryReader)">
-            <summary>
-            Reads an <see cref="T:Orion.Networking.Packets.UpdatePlayerInventorySlotPacket"/> from the given reader.
-            </summary>
-            <param name="reader">The reader.</param>
-            <exception cref="T:System.ArgumentNullException"><paramref name="reader"/> is <c>null</c>.</exception>
-        </member>
-        <member name="M:Orion.Networking.Packets.UpdatePlayerInventorySlotPacket.WriteToWriter(System.IO.BinaryWriter)">
-            <inheritdoc />
         </member>
         <member name="T:Orion.Networking.Packets.UpdateWorldInfoPacket">
             <summary>
@@ -1079,16 +1062,6 @@
             <summary>
             Gets or sets the sandstorm intensity.
             </summary>
-        </member>
-        <member name="M:Orion.Networking.Packets.UpdateWorldInfoPacket.FromReader(System.IO.BinaryReader)">
-            <summary>
-            Reads an <see cref="T:Orion.Networking.Packets.UpdateWorldInfoPacket"/> from the given reader.
-            </summary>
-            <param name="reader">The reader.</param>
-            <exception cref="T:System.ArgumentNullException"><paramref name="reader"/> is <c>null</c>.</exception>
-        </member>
-        <member name="M:Orion.Networking.Packets.UpdateWorldInfoPacket.WriteToWriter(System.IO.BinaryWriter)">
-            <inheritdoc />
         </member>
         <member name="T:Orion.Networking.Packets.WorldTimeFlags">
             <summary>
@@ -1325,34 +1298,235 @@
             Indicates that tier 3 of the Old One's Army has been defeated.
             </summary>
         </member>
+        <member name="T:Orion.Npcs.INpc">
+            <summary>
+            Provides a wrapper arround a Terraria.NPC instance.
+            </summary>
+        </member>
+        <member name="P:Orion.Npcs.INpc.Type">
+            <summary>
+            Gets or sets the NPC's type.
+            </summary>
+        </member>
+        <member name="P:Orion.Npcs.INpc.WrappedEntity">
+            <summary>
+            Gets the wrapped Terraria NPC instance.
+            </summary>
+        </member>
+        <member name="T:Orion.Npcs.NpcType">
+            <summary>
+            Specifies an NPC's type.
+            </summary>
+        </member>
+        <member name="T:Orion.Players.Events.PlayerJoinedEventArgs">
+            <summary>
+            Provides data for the <see cref="E:Orion.Players.IPlayerService.PlayerJoined"/> event.
+            </summary>
+        </member>
+        <member name="P:Orion.Players.Events.PlayerJoinedEventArgs.Player">
+            <summary>
+            Gets the player that joined.
+            </summary>
+        </member>
+        <member name="M:Orion.Players.Events.PlayerJoinedEventArgs.#ctor(Orion.Players.IPlayer)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Orion.Players.Events.PlayerJoinedEventArgs"/> class with the specified player.
+            </summary>
+            <param name="player">The player that joined.</param>
+            <exception cref="T:System.ArgumentNullException"><paramref name="player"/> is null.</exception>
+        </member>
+        <member name="T:Orion.Players.Events.PlayerJoiningEventArgs">
+            <summary>
+            Provides data for the <see cref="E:Orion.Players.IPlayerService.PlayerJoining"/> event.
+            </summary>
+        </member>
+        <member name="P:Orion.Players.Events.PlayerJoiningEventArgs.Player">
+            <summary>
+            Gets the player that is joining.
+            </summary>
+        </member>
+        <member name="M:Orion.Players.Events.PlayerJoiningEventArgs.#ctor(Orion.Players.IPlayer)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Orion.Players.Events.PlayerJoiningEventArgs"/> class with the specified player.
+            </summary>
+            <param name="player">The player that is joining the game.</param>
+            <exception cref="T:System.ArgumentNullException"><paramref name="player"/> is null.</exception>
+        </member>
+        <member name="T:Orion.Players.Events.PlayerQuitEventArgs">
+            <summary>
+            Provides data for the <see cref="E:Orion.Players.IPlayerService.PlayerQuit"/> event.
+            </summary>
+        </member>
+        <member name="P:Orion.Players.Events.PlayerQuitEventArgs.Player">
+            <summary>
+            Gets the player that quit.
+            </summary>
+        </member>
+        <member name="M:Orion.Players.Events.PlayerQuitEventArgs.#ctor(Orion.Players.IPlayer)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Orion.Players.Events.PlayerQuitEventArgs"/> class with the specified player.
+            </summary>
+            <param name="player">The player that quit the game.</param>
+            <exception cref="T:System.ArgumentNullException"><paramref name="player"/> is null.</exception>
+        </member>
+        <member name="T:Orion.Players.IPlayer">
+            <summary>
+            Provides a wrapper around a Terraria.Player instance.
+            </summary>
+        </member>
+        <member name="P:Orion.Players.IPlayer.WrappedEntity">
+            <summary>
+            Gets the wrapped Terraria Player instance.
+            </summary>
+        </member>
+        <member name="T:Orion.Players.IPlayerService">
+            <summary>
+            Provides a mechanism for managing players. All implementations must be thread-safe.
+            </summary>
+        </member>
+        <member name="E:Orion.Players.IPlayerService.PlayerJoined">
+            <summary>
+            Occurs when a player has joined the game.
+            </summary>
+        </member>
+        <member name="E:Orion.Players.IPlayerService.PlayerJoining">
+            <summary>
+            Occurs when a player is joining the game.
+            </summary>
+        </member>
+        <member name="E:Orion.Players.IPlayerService.PlayerQuit">
+            <summary>
+            Occurs when a player has quit the game.
+            </summary>
+        </member>
+        <member name="T:Orion.Players.OrionPlayer">
+            <summary>
+            Orion's implementation of <see cref="T:Orion.Players.IPlayer"/>.
+            </summary>
+        </member>
+        <member name="P:Orion.Players.OrionPlayer.WrappedEntity">
+            <inheritdoc />
+        </member>
+        <member name="M:Orion.Players.OrionPlayer.#ctor(Terraria.Player)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Orion.Players.OrionPlayer"/> class wrapping the specified Terraria Player
+            instance.
+            </summary>
+            <param name="player">The player.</param>
+            <exception cref="T:System.ArgumentNullException"><paramref name="player"/> is <c>null</c>.</exception>
+        </member>
+        <member name="T:Orion.Players.OrionPlayerService">
+            <summary>
+            Orion's implementation of <see cref="T:Orion.Players.IPlayerService"/>.
+            </summary>
+        </member>
+        <member name="P:Orion.Players.OrionPlayerService.Author">
+            <inheritdoc />
+        </member>
+        <member name="P:Orion.Players.OrionPlayerService.Name">
+            <inheritdoc />
+        </member>
+        <member name="P:Orion.Players.OrionPlayerService.Count">
+            <inheritdoc />
+        </member>
+        <member name="P:Orion.Players.OrionPlayerService.Item(System.Int32)">
+            <inheritdoc />
+        </member>
+        <member name="E:Orion.Players.OrionPlayerService.PlayerJoined">
+            <inheritdoc />
+        </member>
+        <member name="E:Orion.Players.OrionPlayerService.PlayerJoining">
+            <inheritdoc />
+        </member>
+        <member name="E:Orion.Players.OrionPlayerService.PlayerQuit">
+            <inheritdoc />
+        </member>
+        <member name="M:Orion.Players.OrionPlayerService.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:Orion.Players.OrionPlayerService"/> class.
+            </summary>
+        </member>
+        <member name="M:Orion.Players.OrionPlayerService.GetEnumerator">
+            <inheritdoc />
+        </member>
+        <member name="T:Orion.Projectiles.IProjectile">
+            <summary>
+            Provides a wrapper around a Terraria.Projectile.
+            </summary>
+        </member>
+        <member name="P:Orion.Projectiles.IProjectile.Type">
+            <summary>
+            Gets or sets the projectile type.
+            </summary>
+        </member>
+        <member name="P:Orion.Projectiles.IProjectile.WrappedEntity">
+            <summary>
+            Gets the wrapped Terraria Projectile instance.
+            </summary>
+        </member>
+        <member name="T:Orion.Projectiles.ProjectileType">
+            <summary>
+            Specifies a projectile's type.
+            </summary>
+        </member>
+        <member name="T:Orion.World.IChest">
+            <summary>
+            Provides a wrapper around a Terraria.Chest.
+            </summary>
+        </member>
+        <member name="P:Orion.World.IChest.X">
+            <summary>
+            Gets or sets the X position.
+            </summary>
+        </member>
+        <member name="P:Orion.World.IChest.Y">
+            <summary>
+            Gets or sets the Y position.
+            </summary>
+        </member>
+        <member name="P:Orion.World.IChest.Name">
+            <summary>
+            Gets or sets the name.
+            </summary>
+        </member>
+        <member name="P:Orion.World.IChest.Items">
+            <summary>
+            Gets the items.
+            </summary>
+        </member>
+        <member name="P:Orion.World.IChest.WrappedChest">
+            <summary>
+            Gets the wrapped chest.
+            </summary>
+        </member>
         <member name="T:Orion.World.InvasionType">
             <summary>
             Indicates the type of an invasion.
             </summary>
         </member>
-        <member name="F:Orion.World.InvasionType.None">
+        <member name="T:Orion.World.ISign">
             <summary>
-            Indicates no invasion.
+            Provides a wrapper around a Terraria.Sign instance.
             </summary>
         </member>
-        <member name="F:Orion.World.InvasionType.Goblins">
+        <member name="P:Orion.World.ISign.X">
             <summary>
-            Indicates the Goblins.
+            Gets or sets the X position.
             </summary>
         </member>
-        <member name="F:Orion.World.InvasionType.FrostLegion">
+        <member name="P:Orion.World.ISign.Y">
             <summary>
-            Indicates the Frost Legion.
+            Gets or sets the Y position.
             </summary>
         </member>
-        <member name="F:Orion.World.InvasionType.Pirates">
+        <member name="P:Orion.World.ISign.Text">
             <summary>
-            Indicates the Pirates.
+            Gets or sets the text.
             </summary>
         </member>
-        <member name="F:Orion.World.InvasionType.Martians">
+        <member name="P:Orion.World.ISign.WrappedSign">
             <summary>
-            Indicates the Martians.
+            Gets the wrapped sign.
             </summary>
         </member>
         <member name="T:Orion.World.ITileService">

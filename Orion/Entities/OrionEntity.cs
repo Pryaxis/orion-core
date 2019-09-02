@@ -7,6 +7,9 @@ namespace Orion.Entities {
     /// </summary>
     internal class OrionEntity : IEntity {
         /// <inheritdoc/>
+        public int Index => WrappedEntity.whoAmI;
+
+        /// <inheritdoc/>
         public Vector2 Position {
             get => WrappedEntity.position;
             set => WrappedEntity.position = value;

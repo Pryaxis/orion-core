@@ -43,6 +43,6 @@ namespace Orion.Items {
         /// <summary>
         /// Gets the wrapped Terraria.Item.
         /// </summary>
-        Terraria.Item WrappedItem { get; }
+        new Terraria.Item WrappedEntity { get; }
     }
 }
