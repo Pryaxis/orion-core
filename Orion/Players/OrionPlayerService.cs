@@ -69,6 +69,7 @@ namespace Orion.Players {
             var player = this[playerIndex];
             var args = new PlayerGreetingEventArgs(player);
             PlayerGreeting?.Invoke(this, args);
+
             return args.Handled ? HookResult.Cancel : HookResult.Continue;
         }
 

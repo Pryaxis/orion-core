@@ -264,7 +264,7 @@
             Gets or sets the item at the specified index in the array.
             </summary>
             <param name="index">The index.</param>
-            <exception cref="T:System.ArgumentOutOfRangeException">
+            <exception cref="T:System.IndexOutOfRangeException">
             <paramref name="index"/> is negative or greater than or equal to <see cref="P:Orion.Items.IItemArray.Length"/>.
             </exception>
         </member>

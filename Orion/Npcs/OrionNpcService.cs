@@ -271,6 +271,7 @@ namespace Orion.Npcs {
                 PlayerResponsible = playerResponsible,
             };
             NpcDamaged?.Invoke(this, args2);
+
             return HookResult.Continue;
         }
 

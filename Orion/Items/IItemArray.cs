@@ -9,7 +9,7 @@ namespace Orion.Items {
         /// Gets or sets the item at the specified index in the array.
         /// </summary>
         /// <param name="index">The index.</param>
-        /// <exception cref="ArgumentOutOfRangeException">
+        /// <exception cref="IndexOutOfRangeException">
         /// <paramref name="index"/> is negative or greater than or equal to <see cref="Length"/>.
         /// </exception>
         IItem this[int index] { get; set; }

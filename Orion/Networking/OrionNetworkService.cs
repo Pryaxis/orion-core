@@ -33,15 +33,12 @@ namespace Orion.Networking {
             Hooks.Net.RemoteClient.PreReset = null;
         }
 
-        public void SendPacket(TerrariaPacketType packetType, int targetIndex = -1, int exceptIndex = -1, string text = "",
-                               int number = default, float number2 = default, float number3 = default,
-                               float number4 = default, int number5 = default, int number6 = default,
-                               int number7 = default) {
-            Terraria.NetMessage.SendData(
-                (int)packetType, targetIndex, exceptIndex,
-                Terraria.Localization.NetworkText.FromLiteral(text), number, number2, number3, number4,
-                number5,
-                number6, number7);
+        public void SendPacket(TerrariaPacketType packetType, int targetIndex = -1, int exceptIndex = -1,
+                               string text = "", int number = 0, float number2 = 0, float number3 = 0,
+                               float number4 = 0, int number5 = 0, int number6 = 0, int number7 = 0) {
+            Terraria.NetMessage.SendData((int)packetType, targetIndex, exceptIndex,
+                                         Terraria.Localization.NetworkText.FromLiteral(text), number, number2, number3,
+                                         number4, number5, number6, number7);
         }
 
 
@@ -122,6 +119,7 @@ namespace Orion.Networking {
         private HookResult PreResetHandler(Terraria.RemoteClient remoteClient) {
             var args = new ClientDisconnectedEventArgs(remoteClient);
             ClientDisconnected?.Invoke(this, args);
+
             return HookResult.Continue;
         }
 
@@ -148,11 +146,8 @@ namespace Orion.Networking {
                 }
             }
 
-            public HelperMemoryStream(
-                byte[] buffer, long targetPosition, bool ignoreFirstTime, Terraria.MessageBuffer messageBuffer,
-                byte[] oldBuffer)
-                : base(buffer) {
-
+            public HelperMemoryStream(byte[] buffer, long targetPosition, bool ignoreFirstTime,
+                                      Terraria.MessageBuffer messageBuffer, byte[] oldBuffer) : base(buffer) {
                 _targetPosition = targetPosition;
                 _ignoreFirstTime = ignoreFirstTime;
                 _messageBuffer = messageBuffer;
