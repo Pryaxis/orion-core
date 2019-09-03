@@ -6,7 +6,6 @@ using Orion.Framework;
 using Orion.Networking.Events;
 using Orion.Networking.Packets;
 using OTAPI;
-using Terraria;
 
 namespace Orion.Networking {
     /// <summary>
@@ -50,15 +49,15 @@ namespace Orion.Networking {
             using (var stream = new MemoryStream(data, start - 2, length + 2)) {
                 var sender = Terraria.Netplay.Clients[buffer.whoAmI];
                 var packet = TerrariaPacket.ReadFromStream(stream);
-                var receivingArgs = new ReceivingPacketEventArgs(sender, packet);
-                ReceivingPacket?.Invoke(this, receivingArgs);
+                var args = new ReceivingPacketEventArgs(sender, packet);
+                ReceivingPacket?.Invoke(this, args);
 
-                if (receivingArgs.Handled) {
+                if (args.Handled) {
                     return HookResult.Cancel;
                 }
 
-                packet = receivingArgs.Packet;
-                if (receivingArgs.IsPacketDirty) {
+                packet = args.Packet;
+                if (args.IsPacketDirty) {
                     var targetPosition = start + length;
                     var oldBuffer = data.ToArray();
                     stream.Position = 0;
@@ -69,8 +68,8 @@ namespace Orion.Networking {
                     buffer.reader = new BinaryReader(buffer.readerStream);
                 }
 
-                var receivedArgs = new ReceivedPacketEventArgs(sender, packet);
-                ReceivedPacket?.Invoke(this, receivedArgs);
+                var args2 = new ReceivedPacketEventArgs(sender, packet);
+                ReceivedPacket?.Invoke(this, args2);
 
                 return HookResult.Continue;
             }
@@ -86,15 +85,15 @@ namespace Orion.Networking {
             using (var stream = new MemoryStream(data, start, length)) {
                 var receiver = Terraria.Netplay.Clients[remoteId];
                 var packet = TerrariaPacket.ReadFromStream(stream);
-                var sendingArgs = new SendingPacketEventArgs(receiver, packet);
-                SendingPacket?.Invoke(this, sendingArgs);
+                var args = new SendingPacketEventArgs(receiver, packet);
+                SendingPacket?.Invoke(this, args);
 
-                if (sendingArgs.Handled) {
+                if (args.Handled) {
                     return HookResult.Cancel;
                 }
 
-                packet = sendingArgs.Packet;
-                if (sendingArgs.IsPacketDirty) {
+                packet = args.Packet;
+                if (args.IsPacketDirty) {
                     var bytes = new byte[ushort.MaxValue];
                     using (var stream2 = new MemoryStream(bytes)) {
                         packet.WriteToStream(stream2);
@@ -105,8 +104,8 @@ namespace Orion.Networking {
                     }
                 }
 
-                var sentArgs = new SentPacketEventArgs(receiver, packet);
-                SentPacket?.Invoke(this, sentArgs);
+                var args2 = new SentPacketEventArgs(receiver, packet);
+                SentPacket?.Invoke(this, args2);
 
                 return HookResult.Continue;
             }

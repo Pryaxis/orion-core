@@ -18,7 +18,7 @@ namespace Orion.Npcs.Events {
         public Vector2 Position { get; set; }
 
         /// <summary>
-        /// Gets the AI bytes.
+        /// Gets the AI values.
         /// </summary>
         public float[] AiValues { get; } = new float[4];
 

@@ -99,7 +99,9 @@ namespace Orion.Npcs {
         /// </summary>
         /// <param name="type">The type.</param>
         /// <param name="position">The position.</param>
+        /// <param name="aiValues">The AI bytes to use, or <c>null</c> for none.</param>
         /// <returns>The NPC, or <c>null</c> if none was spawned.</returns>
-        INpc SpawnNpc(NpcType type, Vector2 position);
+        /// <exception cref="ArgumentException"><paramref name="aiValues"/> does not have length 4.</exception>
+        INpc SpawnNpc(NpcType type, Vector2 position, float[] aiValues = null);
     }
 }

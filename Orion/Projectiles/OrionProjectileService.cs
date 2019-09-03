@@ -69,61 +69,63 @@ namespace Orion.Projectiles {
 
         private HookResult PreSetDefaultsByIdHandler(Terraria.Projectile terrariaProjectile, ref int type) {
             var projectile = new OrionProjectile(terrariaProjectile);
-            var settingDefaultsArgs = new ProjectileSettingDefaultsEventArgs(projectile, (ProjectileType)type);
-            ProjectileSettingDefaults?.Invoke(this, settingDefaultsArgs);
+            var args = new ProjectileSettingDefaultsEventArgs(projectile, (ProjectileType)type);
+            ProjectileSettingDefaults?.Invoke(this, args);
 
-            type = (int)settingDefaultsArgs.Type;
-            return settingDefaultsArgs.Handled ? HookResult.Cancel : HookResult.Continue;
+            type = (int)args.Type;
+            return args.Handled ? HookResult.Cancel : HookResult.Continue;
         }
 
         private void PostSetDefaultsByIdHandler(Terraria.Projectile terrariaProjectile, int type) {
             var projectile = new OrionProjectile(terrariaProjectile);
-            var setDefaultsArgs = new ProjectileSetDefaultsEventArgs(projectile);
-            ProjectileSetDefaults?.Invoke(this, setDefaultsArgs);
+            var args = new ProjectileSetDefaultsEventArgs(projectile);
+            ProjectileSetDefaults?.Invoke(this, args);
         }
 
-        private HookResult PreUpdateHandler(Terraria.Projectile terrariaProjectile, ref int index) {
-            Debug.Assert(index >= 0 && index < Count, $"{nameof(index)} must be a valid index.");
+        private HookResult PreUpdateHandler(Terraria.Projectile terrariaProjectile, ref int projectileIndex) {
+            Debug.Assert(projectileIndex >= 0 && projectileIndex < Count,
+                         $"{nameof(projectileIndex)} must be a valid index.");
 
-            var updatingArgs = new ProjectileUpdatingEventArgs(this[index]);
-            ProjectileUpdating?.Invoke(this, updatingArgs);
+            var args = new ProjectileUpdatingEventArgs(this[projectileIndex]);
+            ProjectileUpdating?.Invoke(this, args);
 
-            return updatingArgs.Handled ? HookResult.Cancel : HookResult.Continue;
+            return args.Handled ? HookResult.Cancel : HookResult.Continue;
         }
 
         private HookResult PreAiHandler(Terraria.Projectile terrariaProjectile) {
             var projectile = new OrionProjectile(terrariaProjectile);
-            var updatingArgs = new ProjectileUpdatingEventArgs(projectile);
-            ProjectileUpdatingAi?.Invoke(this, updatingArgs);
+            var args = new ProjectileUpdatingEventArgs(projectile);
+            ProjectileUpdatingAi?.Invoke(this, args);
 
-            return updatingArgs.Handled ? HookResult.Cancel : HookResult.Continue;
+            return args.Handled ? HookResult.Cancel : HookResult.Continue;
         }
 
         private void PostAiHandler(Terraria.Projectile terrariaProjectile) {
             var projectile = new OrionProjectile(terrariaProjectile);
-            var updatedArgs = new ProjectileUpdatedEventArgs(projectile);
-            ProjectileUpdatedAi?.Invoke(this, updatedArgs);
+            var args = new ProjectileUpdatedEventArgs(projectile);
+            ProjectileUpdatedAi?.Invoke(this, args);
         }
 
-        private void PostUpdateHandler(Terraria.Projectile terrariaProjectile, int index) {
-            Debug.Assert(index >= 0 && index < Count, $"{nameof(index)} must be a valid index.");
+        private void PostUpdateHandler(Terraria.Projectile terrariaProjectile, int projectileIndex) {
+            Debug.Assert(projectileIndex >= 0 && projectileIndex < Count,
+                         $"{nameof(projectileIndex)} must be a valid index.");
 
-            var updatedArgs = new ProjectileUpdatedEventArgs(this[index]);
-            ProjectileUpdated?.Invoke(this, updatedArgs);
+            var args = new ProjectileUpdatedEventArgs(this[projectileIndex]);
+            ProjectileUpdated?.Invoke(this, args);
         }
 
         private HookResult PreKillHandler(Terraria.Projectile terrariaProjectile) {
             var projectile = new OrionProjectile(terrariaProjectile);
-            var removingArgs = new ProjectileRemovingEventArgs(projectile);
-            ProjectileRemoving?.Invoke(this, removingArgs);
+            var args = new ProjectileRemovingEventArgs(projectile);
+            ProjectileRemoving?.Invoke(this, args);
 
-            return removingArgs.Handled ? HookResult.Cancel : HookResult.Continue;
+            return args.Handled ? HookResult.Cancel : HookResult.Continue;
         }
 
         private void PostKilledHandler(Terraria.Projectile terrariaProjectile) {
             var projectile = new OrionProjectile(terrariaProjectile);
-            var removedArgs = new ProjectileRemovedEventArgs(projectile);
-            ProjectileRemoved?.Invoke(this, removedArgs);
+            var args = new ProjectileRemovedEventArgs(projectile);
+            ProjectileRemoved?.Invoke(this, args);
         }
     }
 }

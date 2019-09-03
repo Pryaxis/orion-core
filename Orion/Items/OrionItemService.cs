@@ -77,31 +77,31 @@ namespace Orion.Items {
         private HookResult PreSetDefaultsByIdHandler(Terraria.Item terrariaItem, ref int type,
                                                      ref bool noMaterialCheck) {
             var item = new OrionItem(terrariaItem);
-            var settingDefaultsArgs = new ItemSettingDefaultsEventArgs(item, (ItemType)type);
-            ItemSettingDefaults?.Invoke(this, settingDefaultsArgs);
+            var args = new ItemSettingDefaultsEventArgs(item, (ItemType)type);
+            ItemSettingDefaults?.Invoke(this, args);
 
-            type = (int)settingDefaultsArgs.Type;
-            return settingDefaultsArgs.Handled ? HookResult.Cancel : HookResult.Continue;
+            type = (int)args.Type;
+            return args.Handled ? HookResult.Cancel : HookResult.Continue;
         }
 
         private void PostSetDefaultsByIdHandler(Terraria.Item terrariaItem, ref int type, ref bool noMaterialCheck) {
             var item = new OrionItem(terrariaItem);
-            var setDefaultsArgs = new ItemSetDefaultsEventArgs(item);
-            ItemSetDefaults?.Invoke(this, setDefaultsArgs);
+            var args = new ItemSetDefaultsEventArgs(item);
+            ItemSetDefaults?.Invoke(this, args);
         }
 
         private HookResult PreUpdateHandler(Terraria.Item terrariaItem, ref int i) {
             var item = new OrionItem(terrariaItem);
-            var updatingArgs = new ItemUpdatingEventArgs(item);
-            ItemUpdating?.Invoke(this, updatingArgs);
+            var args = new ItemUpdatingEventArgs(item);
+            ItemUpdating?.Invoke(this, args);
 
-            return updatingArgs.Handled ? HookResult.Cancel : HookResult.Continue;
+            return args.Handled ? HookResult.Cancel : HookResult.Continue;
         }
 
         private void PostUpdateHandler(Terraria.Item terrariaItem, int i) {
             var item = new OrionItem(terrariaItem);
-            var updatedArgs = new ItemUpdatedEventArgs(item);
-            ItemUpdated?.Invoke(this, updatedArgs);
+            var args = new ItemUpdatedEventArgs(item);
+            ItemUpdated?.Invoke(this, args);
         }
     }
 }

@@ -99,8 +99,16 @@ namespace Orion.Npcs {
 
         IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
 
-        public INpc SpawnNpc(NpcType type, Vector2 position) {
-            var npcIndex = Terraria.NPC.NewNPC((int)position.X, (int)position.Y, (int)type);
+        public INpc SpawnNpc(NpcType type, Vector2 position, float[] aiValues = null) {
+            if (aiValues != null && aiValues.Length != 4) {
+                throw new ArgumentException($"{nameof(aiValues)} must have length 4.", nameof(aiValues));
+            }
+
+            var ai0 = aiValues?[0] ?? 0;
+            var ai1 = aiValues?[1] ?? 0;
+            var ai2 = aiValues?[2] ?? 0;
+            var ai3 = aiValues?[3] ?? 0;
+            var npcIndex = Terraria.NPC.NewNPC((int)position.X, (int)position.Y, (int)type, 0, ai0, ai1, ai2, ai3);
             if (npcIndex < 0 || npcIndex >= Terraria.Main.maxNPCs) {
                 return null;
             }
@@ -109,8 +117,8 @@ namespace Orion.Npcs {
         }
 
 
-        private Terraria.NPC CreateHandler(ref int npcIndex, ref int x, ref int y, ref int type, ref int start, ref float ai0,
-                                  ref float ai1, ref float ai2, ref float ai3, ref int target) {
+        private Terraria.NPC CreateHandler(ref int npcIndex, ref int x, ref int y, ref int type, ref int start,
+                                           ref float ai0, ref float ai1, ref float ai2, ref float ai3, ref int target) {
             var args = new NpcSpawningEventArgs {
                 NpcType = (NpcType)type,
                 Position = new Vector2(x, y),
@@ -127,6 +135,13 @@ namespace Orion.Npcs {
                 npcIndex = Terraria.Main.maxNPCs;
             } else {
                 terrariaNpc.SetDefaults((int)args.NpcType);
+                x = (int)args.Position.X;
+                y = (int)args.Position.Y;
+                type = (int)args.NpcType;
+                ai0 = args.AiValues[0];
+                ai1 = args.AiValues[1];
+                ai2 = args.AiValues[2];
+                ai3 = args.AiValues[3];
             }
 
             return terrariaNpc;
