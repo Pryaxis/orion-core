@@ -13,16 +13,11 @@ namespace Orion.Players {
     internal sealed class OrionPlayerService : OrionService, IPlayerService {
         private readonly IPlayer[] _players;
 
-        /// <inheritdoc />
         public override string Author => "Pryaxis";
-
-        /// <inheritdoc />
         public override string Name => "Orion Player Service";
 
-        /// <inheritdoc />
         public int Count => Terraria.Main.maxPlayers;
 
-        /// <inheritdoc />
         public IPlayer this[int index] {
             get {
                 if (index < 0 || index >= Count) {
@@ -41,13 +36,8 @@ namespace Orion.Players {
             }
         }
 
-        /// <inheritdoc />
         public event EventHandler<PlayerJoiningEventArgs> PlayerJoining;
-        
-        /// <inheritdoc />
         public event EventHandler<PlayerJoinedEventArgs> PlayerJoined;
-
-        /// <inheritdoc />
         public event EventHandler<PlayerQuitEventArgs> PlayerQuit;
 
         /// <summary>
@@ -61,7 +51,6 @@ namespace Orion.Players {
             Hooks.Net.RemoteClient.PreReset = PreResetHandler;
         }
 
-        /// <inheritdoc />
         public IEnumerator<IPlayer> GetEnumerator() {
             for (var i = 0; i < Count; ++i) {
                 yield return this[i];
@@ -69,6 +58,7 @@ namespace Orion.Players {
         }
 
         IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
+
 
         private HookResult PreGreetHandler(ref int playerId) {
             Debug.Assert(playerId >= 0 && playerId < Count, $"{nameof(playerId)} should be a valid index.");

@@ -14,16 +14,11 @@ namespace Orion.Items {
     internal sealed class OrionItemService : OrionService, IItemService {
         private readonly IItem[] _items;
 
-        /// <inheritdoc />
         public override string Author => "Pryaxis";
-
-        /// <inheritdoc />
         public override string Name => "Orion Item Service";
 
-        /// <inheritdoc />
         public int Count => Terraria.Main.maxItems;
 
-        /// <inheritdoc />
         public IItem this[int index] {
             get {
                 if (index < 0 || index >= Count) {
@@ -41,16 +36,9 @@ namespace Orion.Items {
             }
         }
 
-        /// <inheritdoc />
         public event EventHandler<ItemSettingDefaultsEventArgs> ItemSettingDefaults;
-
-        /// <inheritdoc />
         public event EventHandler<ItemSetDefaultsEventArgs> ItemSetDefaults;
-
-        /// <inheritdoc />
         public event EventHandler<ItemUpdatingEventArgs> ItemUpdating;
-
-        /// <inheritdoc />
         public event EventHandler<ItemUpdatedEventArgs> ItemUpdated;
 
         /// <summary>
@@ -65,7 +53,6 @@ namespace Orion.Items {
             Hooks.Item.PostUpdate = PostUpdateHandler;
         }
 
-        /// <inheritdoc />
         public IEnumerator<IItem> GetEnumerator() {
             for (var i = 0; i < Count; ++i) {
                 yield return this[i];
@@ -74,7 +61,6 @@ namespace Orion.Items {
 
         IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
 
-        /// <inheritdoc />
         public IItem SpawnItem(ItemType type, Vector2 position, int stackSize = 1,
                                ItemPrefix prefix = ItemPrefix.None) {
             // We need to force the item to spawn without caching it.
@@ -89,6 +75,7 @@ namespace Orion.Items {
             Terraria.Item.itemCaches[(int)type] = oldItemCache;
             return this[itemIndex];
         }
+
 
         private HookResult PreSetDefaultsByIdHandler(Terraria.Item terrariaItem, ref int type,
                                                      ref bool noMaterialCheck) {

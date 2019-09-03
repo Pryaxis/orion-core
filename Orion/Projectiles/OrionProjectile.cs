@@ -6,13 +6,11 @@ namespace Orion.Projectiles {
     /// Orion's implementation of <see cref="IProjectile"/>.
     /// </summary>
     internal sealed class OrionProjectile : OrionEntity, IProjectile {
-        /// <inheritdoc />
         public ProjectileType Type {
             get => (ProjectileType)WrappedProjectile.type;
             set => WrappedProjectile.type = (int)value;
         }
 
-        /// <inheritdoc />
         public Terraria.Projectile WrappedProjectile { get; }
 
         /// <summary>

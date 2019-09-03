@@ -6,13 +6,11 @@ namespace Orion.Npcs {
     /// Orion's implementation of <see cref="INpc"/>.
     /// </summary>
     internal sealed class OrionNpc : OrionEntity, INpc {
-        /// <inheritdoc />
         public NpcType Type {
             get => (NpcType)WrappedNpc.type;
             set => WrappedNpc.type = (int)value;
         }
 
-        /// <inheritdoc />
         public Terraria.NPC WrappedNpc { get; }
 
         /// <summary>

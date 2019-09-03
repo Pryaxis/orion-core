@@ -12,22 +12,12 @@ namespace Orion.Networking {
     /// Orion's implementation of <see cref="INetworkService"/>.
     /// </summary>
     internal sealed class OrionNetworkService : OrionService, INetworkService {
-        /// <inheritdoc />
         public override string Author => "Pryaxis";
-
-        /// <inheritdoc />
         public override string Name => "Orion Network Service";
 
-        /// <inheritdoc />
         public event EventHandler<ReceivedPacketEventArgs> ReceivedPacket;
-
-        /// <inheritdoc />
         public event EventHandler<ReceivingPacketEventArgs> ReceivingPacket;
-
-        /// <inheritdoc />
         public event EventHandler<SentPacketEventArgs> SentPacket;
-
-        /// <inheritdoc />
         public event EventHandler<SendingPacketEventArgs> SendingPacket;
 
         /// <summary>
@@ -38,12 +28,10 @@ namespace Orion.Networking {
             Hooks.Net.SendBytes = SendBytesHandler;
         }
 
-        /// <inheritdoc />
         public void SendPacket(TerrariaPacket packet, int targetId = -1, int exceptId = -1) {
             throw new NotImplementedException();
         }
 
-        /// <inheritdoc />
         public void SendPacket(TerrariaPacketType packetType, int targetId = -1, int exceptId = -1, string text = "",
                                int number = default, float number2 = default, float number3 = default,
                                float number4 = default, int number5 = default, int number6 = default,
@@ -54,6 +42,7 @@ namespace Orion.Networking {
                 number5,
                 number6, number7);
         }
+
 
         private HookResult ReceiveDataHandler(Terraria.MessageBuffer buffer, ref byte packetId, ref int readOffset,
                                               ref int start, ref int length) {

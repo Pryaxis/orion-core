@@ -8,22 +8,18 @@ namespace Orion.Entities {
     internal class OrionEntity : IEntity {
         private readonly Terraria.Entity _wrappedEntity;
 
-        /// <inheritdoc/>
         public int Index => _wrappedEntity.whoAmI;
 
-        /// <inheritdoc/>
         public Vector2 Position {
             get => _wrappedEntity.position;
             set => _wrappedEntity.position = value;
         }
 
-        /// <inheritdoc/>
         public Vector2 Velocity {
             get => _wrappedEntity.velocity;
             set => _wrappedEntity.velocity = value;
         }
 
-        /// <inheritdoc/>
         public Vector2 Size {
             get => _wrappedEntity.Size;
             set => _wrappedEntity.Size = value;

@@ -6,7 +6,6 @@ namespace Orion.Players {
     /// Orion's implementation of <see cref="IPlayer"/>.
     /// </summary>
     internal sealed class OrionPlayer : OrionEntity, IPlayer {
-        /// <inheritdoc />
         public Terraria.Player WrappedPlayer { get; }
 
         /// <summary>

@@ -24,7 +24,6 @@ namespace Orion.Framework {
             _pluginDirectory = pluginDirectory ?? throw new ArgumentNullException(nameof(pluginDirectory));
         }
 
-        /// <inheritdoc />
         public override void Load() {
             // Load assemblies in the plugin directory.
             foreach (var assemblyPath in Directory.EnumerateFiles(_pluginDirectory, "*.dll")) {

@@ -34,18 +34,6 @@
             Orion's implementation of <see cref="T:Orion.Entities.IEntity"/>.
             </summary>
         </member>
-        <member name="P:Orion.Entities.OrionEntity.Index">
-            <inheritdoc/>
-        </member>
-        <member name="P:Orion.Entities.OrionEntity.Position">
-            <inheritdoc/>
-        </member>
-        <member name="P:Orion.Entities.OrionEntity.Velocity">
-            <inheritdoc/>
-        </member>
-        <member name="P:Orion.Entities.OrionEntity.Size">
-            <inheritdoc/>
-        </member>
         <member name="M:Orion.Entities.OrionEntity.#ctor(Terraria.Entity)">
             <summary>
             Initializes a new instance of the <see cref="T:Orion.Entities.OrionEntity"/> class wrapping the specified Terraria.Entity
@@ -117,9 +105,6 @@
             </summary>
             <param name="pluginDirectory">The plugin directory.</param>
             <exception cref="T:System.ArgumentNullException"><paramref name="pluginDirectory"/> is <c>null</c>.</exception>
-        </member>
-        <member name="M:Orion.Framework.OrionNinjectModule.Load">
-            <inheritdoc />
         </member>
         <member name="T:Orion.Framework.OrionService">
             <summary>
@@ -373,30 +358,6 @@
             Orion's implementation of <see cref="T:Orion.Items.IItem"/>.
             </summary>
         </member>
-        <member name="P:Orion.Items.OrionItem.Type">
-            <inheritdoc />
-        </member>
-        <member name="P:Orion.Items.OrionItem.StackSize">
-            <inheritdoc />
-        </member>
-        <member name="P:Orion.Items.OrionItem.MaxStackSize">
-            <inheritdoc />
-        </member>
-        <member name="P:Orion.Items.OrionItem.Prefix">
-            <inheritdoc />
-        </member>
-        <member name="P:Orion.Items.OrionItem.Rarity">
-            <inheritdoc />
-        </member>
-        <member name="P:Orion.Items.OrionItem.Damage">
-            <inheritdoc />
-        </member>
-        <member name="P:Orion.Items.OrionItem.UseTime">
-            <inheritdoc />
-        </member>
-        <member name="P:Orion.Items.OrionItem.WrappedItem">
-            <inheritdoc />
-        </member>
         <member name="M:Orion.Items.OrionItem.#ctor(Terraria.Item)">
             <summary>
             Initializes a new instance of the <see cref="T:Orion.Items.OrionItem"/> class wrapping the specified Terraria Item
@@ -405,48 +366,15 @@
             <param name="terrariaItem">The item.</param>
             <exception cref="T:System.ArgumentNullException"><paramref name="terrariaItem"/> is <c>null</c>.</exception>
         </member>
-        <member name="M:Orion.Items.OrionItem.ApplyPrefix(Orion.Items.ItemPrefix)">
-            <inheritdoc />
-        </member>
         <member name="T:Orion.Items.OrionItemService">
             <summary>
             Orion's implementation of <see cref="T:Orion.Items.IItemService"/>.
             </summary>
         </member>
-        <member name="P:Orion.Items.OrionItemService.Author">
-            <inheritdoc />
-        </member>
-        <member name="P:Orion.Items.OrionItemService.Name">
-            <inheritdoc />
-        </member>
-        <member name="P:Orion.Items.OrionItemService.Count">
-            <inheritdoc />
-        </member>
-        <member name="P:Orion.Items.OrionItemService.Item(System.Int32)">
-            <inheritdoc />
-        </member>
-        <member name="E:Orion.Items.OrionItemService.ItemSettingDefaults">
-            <inheritdoc />
-        </member>
-        <member name="E:Orion.Items.OrionItemService.ItemSetDefaults">
-            <inheritdoc />
-        </member>
-        <member name="E:Orion.Items.OrionItemService.ItemUpdating">
-            <inheritdoc />
-        </member>
-        <member name="E:Orion.Items.OrionItemService.ItemUpdated">
-            <inheritdoc />
-        </member>
         <member name="M:Orion.Items.OrionItemService.#ctor">
             <summary>
             Initializes a new instance of the <see cref="T:Orion.Items.OrionItemService"/> class.
             </summary>
-        </member>
-        <member name="M:Orion.Items.OrionItemService.GetEnumerator">
-            <inheritdoc />
-        </member>
-        <member name="M:Orion.Items.OrionItemService.SpawnItem(Orion.Items.ItemType,Microsoft.Xna.Framework.Vector2,System.Int32,Orion.Items.ItemPrefix)">
-            <inheritdoc />
         </member>
         <member name="T:Orion.Networking.Events.ReceivedPacketEventArgs">
             <summary>
@@ -628,34 +556,10 @@
             Orion's implementation of <see cref="T:Orion.Networking.INetworkService"/>.
             </summary>
         </member>
-        <member name="P:Orion.Networking.OrionNetworkService.Author">
-            <inheritdoc />
-        </member>
-        <member name="P:Orion.Networking.OrionNetworkService.Name">
-            <inheritdoc />
-        </member>
-        <member name="E:Orion.Networking.OrionNetworkService.ReceivedPacket">
-            <inheritdoc />
-        </member>
-        <member name="E:Orion.Networking.OrionNetworkService.ReceivingPacket">
-            <inheritdoc />
-        </member>
-        <member name="E:Orion.Networking.OrionNetworkService.SentPacket">
-            <inheritdoc />
-        </member>
-        <member name="E:Orion.Networking.OrionNetworkService.SendingPacket">
-            <inheritdoc />
-        </member>
         <member name="M:Orion.Networking.OrionNetworkService.#ctor">
             <summary>
             Initializes a new instance of the <see cref="T:Orion.Networking.OrionNetworkService"/> class.
             </summary>
-        </member>
-        <member name="M:Orion.Networking.OrionNetworkService.SendPacket(Orion.Networking.Packets.TerrariaPacket,System.Int32,System.Int32)">
-            <inheritdoc />
-        </member>
-        <member name="M:Orion.Networking.OrionNetworkService.SendPacket(Orion.Networking.Packets.TerrariaPacketType,System.Int32,System.Int32,System.String,System.Int32,System.Single,System.Single,System.Single,System.Int32,System.Int32,System.Int32)">
-            <inheritdoc />
         </member>
         <member name="T:Orion.Networking.Packets.ContinueConnectionPacket">
             <summary>
@@ -1883,12 +1787,6 @@
             Orion's implementation of <see cref="T:Orion.Npcs.INpc"/>.
             </summary>
         </member>
-        <member name="P:Orion.Npcs.OrionNpc.Type">
-            <inheritdoc />
-        </member>
-        <member name="P:Orion.Npcs.OrionNpc.WrappedNpc">
-            <inheritdoc />
-        </member>
         <member name="M:Orion.Npcs.OrionNpc.#ctor(Terraria.NPC)">
             <summary>
             Initializes a new instance of the <see cref="T:Orion.Npcs.OrionNpc"/> class wrapping the specified Terraria NPC
@@ -1996,9 +1894,6 @@
             Orion's implementation of <see cref="T:Orion.Players.IPlayer"/>.
             </summary>
         </member>
-        <member name="P:Orion.Players.OrionPlayer.WrappedPlayer">
-            <inheritdoc />
-        </member>
         <member name="M:Orion.Players.OrionPlayer.#ctor(Terraria.Player)">
             <summary>
             Initializes a new instance of the <see cref="T:Orion.Players.OrionPlayer"/> class wrapping the specified Terraria Player
@@ -2012,34 +1907,10 @@
             Orion's implementation of <see cref="T:Orion.Players.IPlayerService"/>.
             </summary>
         </member>
-        <member name="P:Orion.Players.OrionPlayerService.Author">
-            <inheritdoc />
-        </member>
-        <member name="P:Orion.Players.OrionPlayerService.Name">
-            <inheritdoc />
-        </member>
-        <member name="P:Orion.Players.OrionPlayerService.Count">
-            <inheritdoc />
-        </member>
-        <member name="P:Orion.Players.OrionPlayerService.Item(System.Int32)">
-            <inheritdoc />
-        </member>
-        <member name="E:Orion.Players.OrionPlayerService.PlayerJoining">
-            <inheritdoc />
-        </member>
-        <member name="E:Orion.Players.OrionPlayerService.PlayerJoined">
-            <inheritdoc />
-        </member>
-        <member name="E:Orion.Players.OrionPlayerService.PlayerQuit">
-            <inheritdoc />
-        </member>
         <member name="M:Orion.Players.OrionPlayerService.#ctor">
             <summary>
             Initializes a new instance of the <see cref="T:Orion.Players.OrionPlayerService"/> class.
             </summary>
-        </member>
-        <member name="M:Orion.Players.OrionPlayerService.GetEnumerator">
-            <inheritdoc />
         </member>
         <member name="T:Orion.Projectiles.Events.ProjectileRemovedEventArgs">
             <summary>
@@ -2220,12 +2091,6 @@
             Orion's implementation of <see cref="T:Orion.Projectiles.IProjectile"/>.
             </summary>
         </member>
-        <member name="P:Orion.Projectiles.OrionProjectile.Type">
-            <inheritdoc />
-        </member>
-        <member name="P:Orion.Projectiles.OrionProjectile.WrappedProjectile">
-            <inheritdoc />
-        </member>
         <member name="M:Orion.Projectiles.OrionProjectile.#ctor(Terraria.Projectile)">
             <summary>
             Initializes a new instance of the <see cref="T:Orion.Projectiles.OrionProjectile"/> class wrapping the specified Terraria
@@ -2239,47 +2104,10 @@
             Orion's implementation of <see cref="T:Orion.Projectiles.IProjectileService"/>.
             </summary>
         </member>
-        <member name="P:Orion.Projectiles.OrionProjectileService.Author">
-            <inheritdoc />
-        </member>
-        <member name="P:Orion.Projectiles.OrionProjectileService.Name">
-            <inheritdoc />
-        </member>
-        <member name="P:Orion.Projectiles.OrionProjectileService.Count">
-            <inheritdoc />
-        </member>
-        <member name="P:Orion.Projectiles.OrionProjectileService.Item(System.Int32)">
-            <inheritdoc />
-        </member>
-        <member name="E:Orion.Projectiles.OrionProjectileService.ProjectileSettingDefaults">
-            <inheritdoc />
-        </member>
-        <member name="E:Orion.Projectiles.OrionProjectileService.ProjectileSetDefaults">
-            <inheritdoc />
-        </member>
-        <member name="E:Orion.Projectiles.OrionProjectileService.ProjectileUpdating">
-            <inheritdoc />
-        </member>
-        <member name="E:Orion.Projectiles.OrionProjectileService.ProjectileUpdatingAi">
-            <inheritdoc />
-        </member>
-        <member name="E:Orion.Projectiles.OrionProjectileService.ProjectileUpdatedAi">
-            <inheritdoc />
-        </member>
-        <member name="E:Orion.Projectiles.OrionProjectileService.ProjectileUpdated">
-            <inheritdoc />
-        </member>
-        <member name="E:Orion.Projectiles.OrionProjectileService.ProjectileRemoving">
-            <inheritdoc />
-        </member>
-        <member name="E:Orion.Projectiles.OrionProjectileService.ProjectileRemoved">
-            <inheritdoc />
-        </member>
-        <member name="M:Orion.Projectiles.OrionProjectileService.GetEnumerator">
-            <inheritdoc />
-        </member>
-        <member name="M:Orion.Projectiles.OrionProjectileService.System#Collections#IEnumerable#GetEnumerator">
-            <inheritdoc />
+        <member name="M:Orion.Projectiles.OrionProjectileService.#ctor">
+            <summary>
+            Initialize an instance of the <see cref="T:Orion.Projectiles.OrionProjectileService"/> class.
+            </summary>
         </member>
         <member name="T:Orion.Projectiles.ProjectileType">
             <summary>

@@ -13,16 +13,11 @@ namespace Orion.Projectiles {
     internal sealed class OrionProjectileService : OrionService, IProjectileService {
         private readonly IProjectile[] _projectiles;
 
-        /// <inheritdoc />
         public override string Author => "Pryaxis";
-
-        /// <inheritdoc />
         public override string Name => "Orion Projectile Service";
 
-        /// <inheritdoc />
         public int Count => Terraria.Main.maxProjectiles;
 
-        /// <inheritdoc />
         public IProjectile this[int index] {
             get {
                 if (index < 0 || index >= Count) {
@@ -41,30 +36,18 @@ namespace Orion.Projectiles {
             }
         }
         
-        /// <inheritdoc />
         public event EventHandler<ProjectileSettingDefaultsEventArgs> ProjectileSettingDefaults;
-        
-        /// <inheritdoc />
         public event EventHandler<ProjectileSetDefaultsEventArgs> ProjectileSetDefaults;
-        
-        /// <inheritdoc />
         public event EventHandler<ProjectileUpdatingEventArgs> ProjectileUpdating;
-        
-        /// <inheritdoc />
         public event EventHandler<ProjectileUpdatingEventArgs> ProjectileUpdatingAi;
-        
-        /// <inheritdoc />
         public event EventHandler<ProjectileUpdatedEventArgs> ProjectileUpdatedAi;
-        
-        /// <inheritdoc />
         public event EventHandler<ProjectileUpdatedEventArgs> ProjectileUpdated;
-        
-        /// <inheritdoc />
         public event EventHandler<ProjectileRemovingEventArgs> ProjectileRemoving;
-        
-        /// <inheritdoc />
         public event EventHandler<ProjectileRemovedEventArgs> ProjectileRemoved;
 
+        /// <summary>
+        /// Initialize an instance of the <see cref="OrionProjectileService"/> class.
+        /// </summary>
         public OrionProjectileService() {
             _projectiles = new IProjectile[Terraria.Main.maxProjectiles];
 
@@ -78,15 +61,14 @@ namespace Orion.Projectiles {
             Hooks.Projectile.PostKilled = PostKilledHandler;
         }
 
-        /// <inheritdoc />
         public IEnumerator<IProjectile> GetEnumerator() {
             for (var i = 0; i < Count; ++i) {
                 yield return this[i];
             }
         }
 
-        /// <inheritdoc />
         IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
+
 
         private HookResult PreSetDefaultsByIdHandler(Terraria.Projectile terrariaProjectile, ref int type) {
             var projectile = new OrionProjectile(terrariaProjectile);
