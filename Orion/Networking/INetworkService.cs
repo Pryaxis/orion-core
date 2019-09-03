@@ -29,19 +29,11 @@ namespace Orion.Networking {
         event EventHandler<SendingPacketEventArgs> SendingPacket;
 
         /// <summary>
-        /// Sends the specified packet to the target ID excepting the given except ID.
-        /// </summary>
-        /// <param name="packet">The packet.</param>
-        /// <param name="targetId">The target ID. <c>-1</c> represents everyone.</param>
-        /// <param name="exceptId">The except ID. <c>-1</c> represents no-one.</param>
-        void SendPacket(TerrariaPacket packet, int targetId = -1, int exceptId = -1);
-
-        /// <summary>
-        /// Sends the specified packet to the target ID excepting the given except ID.
+        /// Sends the specified packet to the target index excepting the given except index.
         /// </summary>
         /// <param name="packetType">The packet type.</param>
-        /// <param name="targetId">The target ID. <c>-1</c> represents everyone.</param>
-        /// <param name="exceptId">The except ID. <c>-1</c> represents no-one.</param>
+        /// <param name="targetIndex">The target index. <c>-1</c> represents everyone.</param>
+        /// <param name="exceptIndex">The except index. <c>-1</c> represents no-one.</param>
         /// <param name="text">The text.</param>
         /// <param name="number">The first packet-specific number.</param>
         /// <param name="number2">The second packet-specific number.</param>
@@ -51,7 +43,7 @@ namespace Orion.Networking {
         /// <param name="number6">The sixth packet-specific number.</param>
         /// <param name="number7">The seventh packet-specific number.</param>
         void SendPacket(
-            TerrariaPacketType packetType, int targetId = -1, int exceptId = -1, string text = "",
+            TerrariaPacketType packetType, int targetIndex = -1, int exceptIndex = -1, string text = "",
             int number = default, float number2 = default, float number3 = default, float number4 = default,
             int number5 = default, int number6 = default, int number7 = default);
     }

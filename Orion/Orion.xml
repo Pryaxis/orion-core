@@ -39,20 +39,6 @@
             Provides extension methods for the <see cref="T:System.Type"/> class.
             </summary>
         </member>
-        <member name="M:Orion.Framework.Extensions.TypeExtensions.GetAllSubtypes(System.Type)">
-            <summary>
-            Gets all subtypes of the specified type within the current <see cref="T:System.AppDomain"/>.
-            </summary>
-            <param name="baseType">The type.</param>
-            <returns>All of the subtypes.</returns>
-        </member>
-        <member name="M:Orion.Framework.Extensions.TypeExtensions.GetGenericTypeMaybe(System.Type)">
-            <summary>
-            Returns either the specified type or its genericized version, if applicable.
-            </summary>
-            <param name="type">The type.</param>
-            <returns>The type or its genericized version, if applicable.</returns>
-        </member>
         <member name="T:Orion.Framework.InstancedServiceAttribute">
             <summary>
             An attribute that can be applied to a class to indicate that it is an instanced service, not a static service.
@@ -352,14 +338,14 @@
             Provides data for the <see cref="E:Orion.Networking.INetworkService.ReceivedPacket"/> event.
             </summary>
         </member>
-        <member name="P:Orion.Networking.Events.ReceivedPacketEventArgs.Packet">
-            <summary>
-            Gets the packet that was received.
-            </summary>
-        </member>
         <member name="P:Orion.Networking.Events.ReceivedPacketEventArgs.Sender">
             <summary>
             Gets the packet's sender.
+            </summary>
+        </member>
+        <member name="P:Orion.Networking.Events.ReceivedPacketEventArgs.Packet">
+            <summary>
+            Gets the packet that was received.
             </summary>
         </member>
         <member name="M:Orion.Networking.Events.ReceivedPacketEventArgs.#ctor(Terraria.RemoteClient,Orion.Networking.Packets.TerrariaPacket)">
@@ -378,9 +364,9 @@
             Provides data for the <see cref="E:Orion.Networking.INetworkService.ReceivingPacket"/> event.
             </summary>
         </member>
-        <member name="P:Orion.Networking.Events.ReceivingPacketEventArgs.IsPacketDirty">
+        <member name="P:Orion.Networking.Events.ReceivingPacketEventArgs.Sender">
             <summary>
-            Gets a value indicating whether the packet is dirty.
+            Gets the packet's sender.
             </summary>
         </member>
         <member name="P:Orion.Networking.Events.ReceivingPacketEventArgs.Packet">
@@ -389,9 +375,9 @@
             </summary>
             <exception cref="T:System.ArgumentNullException"><paramref name="value"/> is <c>null</c>.</exception>
         </member>
-        <member name="P:Orion.Networking.Events.ReceivingPacketEventArgs.Sender">
+        <member name="P:Orion.Networking.Events.ReceivingPacketEventArgs.IsPacketDirty">
             <summary>
-            Gets the packet's sender.
+            Gets a value indicating whether the packet is dirty.
             </summary>
         </member>
         <member name="M:Orion.Networking.Events.ReceivingPacketEventArgs.#ctor(Terraria.RemoteClient,Orion.Networking.Packets.TerrariaPacket)">
@@ -415,9 +401,9 @@
             Provides data for the <see cref="E:Orion.Networking.INetworkService.SendingPacket"/> event.
             </summary>
         </member>
-        <member name="P:Orion.Networking.Events.SendingPacketEventArgs.IsPacketDirty">
+        <member name="P:Orion.Networking.Events.SendingPacketEventArgs.Receiver">
             <summary>
-            Gets a value indicating whether the packet is dirty.
+            Gets the packet's receiver.
             </summary>
         </member>
         <member name="P:Orion.Networking.Events.SendingPacketEventArgs.Packet">
@@ -426,9 +412,9 @@
             </summary>
             <exception cref="T:System.ArgumentNullException"><paramref name="value"/> is <c>null</c>.</exception>
         </member>
-        <member name="P:Orion.Networking.Events.SendingPacketEventArgs.Receiver">
+        <member name="P:Orion.Networking.Events.SendingPacketEventArgs.IsPacketDirty">
             <summary>
-            Gets the packet's receiver.
+            Gets a value indicating whether the packet is dirty.
             </summary>
         </member>
         <member name="M:Orion.Networking.Events.SendingPacketEventArgs.#ctor(Terraria.RemoteClient,Orion.Networking.Packets.TerrariaPacket)">
@@ -452,14 +438,14 @@
             Provides data for the <see cref="E:Orion.Networking.INetworkService.SentPacket"/> event.
             </summary>
         </member>
-        <member name="P:Orion.Networking.Events.SentPacketEventArgs.Packet">
-            <summary>
-            Gets the packet that was sent.
-            </summary>
-        </member>
         <member name="P:Orion.Networking.Events.SentPacketEventArgs.Receiver">
             <summary>
             Gets the packet's receiver.
+            </summary>
+        </member>
+        <member name="P:Orion.Networking.Events.SentPacketEventArgs.Packet">
+            <summary>
+            Gets the packet that was sent.
             </summary>
         </member>
         <member name="M:Orion.Networking.Events.SentPacketEventArgs.#ctor(Terraria.RemoteClient,Orion.Networking.Packets.TerrariaPacket)">
@@ -498,21 +484,13 @@
             Occurs when a packet is being sent. This event can be handled.
             </summary>
         </member>
-        <member name="M:Orion.Networking.INetworkService.SendPacket(Orion.Networking.Packets.TerrariaPacket,System.Int32,System.Int32)">
-            <summary>
-            Sends the specified packet to the target ID excepting the given except ID.
-            </summary>
-            <param name="packet">The packet.</param>
-            <param name="targetId">The target ID. <c>-1</c> represents everyone.</param>
-            <param name="exceptId">The except ID. <c>-1</c> represents no-one.</param>
-        </member>
         <member name="M:Orion.Networking.INetworkService.SendPacket(Orion.Networking.Packets.TerrariaPacketType,System.Int32,System.Int32,System.String,System.Int32,System.Single,System.Single,System.Single,System.Int32,System.Int32,System.Int32)">
             <summary>
-            Sends the specified packet to the target ID excepting the given except ID.
+            Sends the specified packet to the target index excepting the given except index.
             </summary>
             <param name="packetType">The packet type.</param>
-            <param name="targetId">The target ID. <c>-1</c> represents everyone.</param>
-            <param name="exceptId">The except ID. <c>-1</c> represents no-one.</param>
+            <param name="targetIndex">The target index. <c>-1</c> represents everyone.</param>
+            <param name="exceptIndex">The except index. <c>-1</c> represents no-one.</param>
             <param name="text">The text.</param>
             <param name="number">The first packet-specific number.</param>
             <param name="number2">The second packet-specific number.</param>
@@ -570,34 +548,6 @@
             <summary>
             Provides extension methods for the <see cref="T:System.IO.BinaryReader"/> and <see cref="T:System.IO.BinaryWriter"/> classes.
             </summary>
-        </member>
-        <member name="M:Orion.Networking.Packets.Extensions.BinaryExtensions.ReadColor(System.IO.BinaryReader)">
-            <summary>
-            Reads a color from the specified reader.
-            </summary>
-            <param name="reader">The reader.</param>
-            <returns>The color.</returns>
-        </member>
-        <member name="M:Orion.Networking.Packets.Extensions.BinaryExtensions.ReadNetworkText(System.IO.BinaryReader)">
-            <summary>
-            Reads a Terraria.Localization.NetworkText from the specified reader.
-            </summary>
-            <param name="reader">The reader.</param>
-            <returns>The text.</returns>
-        </member>
-        <member name="M:Orion.Networking.Packets.Extensions.BinaryExtensions.Write(System.IO.BinaryWriter,Microsoft.Xna.Framework.Color)">
-            <summary>
-            Writes a color to the specified writer.
-            </summary>
-            <param name="writer">The writer.</param>
-            <param name="color">The color.</param>
-        </member>
-        <member name="M:Orion.Networking.Packets.Extensions.BinaryExtensions.Write(System.IO.BinaryWriter,Terraria.Localization.NetworkText)">
-            <summary>
-            Writes a Terraria.Localization.NetworkText to the specified writer.
-            </summary>
-            <param name="writer">The writer.</param>
-            <param name="text">The text.</param>
         </member>
         <member name="T:Orion.Networking.Packets.FinishConnectionPacket">
             <summary>

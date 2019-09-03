@@ -6,6 +6,7 @@ using Orion.Framework;
 using Orion.Networking.Events;
 using Orion.Networking.Packets;
 using OTAPI;
+using Terraria;
 
 namespace Orion.Networking {
     /// <summary>
@@ -25,16 +26,12 @@ namespace Orion.Networking {
             Hooks.Net.SendBytes = SendBytesHandler;
         }
 
-        public void SendPacket(TerrariaPacket packet, int targetId = -1, int exceptId = -1) {
-            throw new NotImplementedException();
-        }
-
-        public void SendPacket(TerrariaPacketType packetType, int targetId = -1, int exceptId = -1, string text = "",
+        public void SendPacket(TerrariaPacketType packetType, int targetIndex = -1, int exceptIndex = -1, string text = "",
                                int number = default, float number2 = default, float number3 = default,
                                float number4 = default, int number5 = default, int number6 = default,
                                int number7 = default) {
             Terraria.NetMessage.SendData(
-                (int)packetType, targetId, exceptId,
+                (int)packetType, targetIndex, exceptIndex,
                 Terraria.Localization.NetworkText.FromLiteral(text), number, number2, number3, number4,
                 number5,
                 number6, number7);
