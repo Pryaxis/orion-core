@@ -10,9 +10,9 @@ namespace Orion.Networking.Events {
         private TerrariaPacket _packet;
 
         /// <summary>
-        /// Gets a value indicating whether the packet is dirty.
+        /// Gets the packet's sender.
         /// </summary>
-        public bool IsPacketDirty { get; private set; }
+        public Terraria.RemoteClient Sender { get; }
 
         /// <summary>
         /// Gets or sets the packet that is being received.
@@ -27,9 +27,9 @@ namespace Orion.Networking.Events {
         }
 
         /// <summary>
-        /// Gets the packet's sender.
+        /// Gets a value indicating whether the packet is dirty.
         /// </summary>
-        public Terraria.RemoteClient Sender { get; }
+        public bool IsPacketDirty { get; private set; }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ReceivingPacketEventArgs"/> class with the specified sender

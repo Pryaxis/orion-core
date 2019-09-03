@@ -45,9 +45,6 @@ namespace Orion.Projectiles {
         public event EventHandler<ProjectileRemovingEventArgs> ProjectileRemoving;
         public event EventHandler<ProjectileRemovedEventArgs> ProjectileRemoved;
 
-        /// <summary>
-        /// Initialize an instance of the <see cref="OrionProjectileService"/> class.
-        /// </summary>
         public OrionProjectileService() {
             _projectiles = new IProjectile[Terraria.Main.maxProjectiles];
 

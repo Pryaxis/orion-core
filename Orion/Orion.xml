@@ -34,14 +34,6 @@
             Orion's implementation of <see cref="T:Orion.Entities.IEntity"/>.
             </summary>
         </member>
-        <member name="M:Orion.Entities.OrionEntity.#ctor(Terraria.Entity)">
-            <summary>
-            Initializes a new instance of the <see cref="T:Orion.Entities.OrionEntity"/> class wrapping the specified Terraria.Entity
-            instance.
-            </summary>
-            <param name="entity">The Terraria Entity instance to wrap.</param>
-            <exception cref="T:System.ArgumentNullException"><paramref name="entity"/> is null.</exception>
-        </member>
         <member name="T:Orion.Framework.Extensions.TypeExtensions">
             <summary>
             Provides extension methods for the <see cref="T:System.Type"/> class.
@@ -97,14 +89,6 @@
             A Ninject module that scans for services and plugins in the executing assembly and plugin assemblies, binding
             them to the appropriate scopes.
             </summary>
-        </member>
-        <member name="M:Orion.Framework.OrionNinjectModule.#ctor(System.String)">
-            <summary>
-            Initializes a new instance of the <see cref="T:Orion.Framework.OrionNinjectModule"/> class with the specified plugin
-            directory.
-            </summary>
-            <param name="pluginDirectory">The plugin directory.</param>
-            <exception cref="T:System.ArgumentNullException"><paramref name="pluginDirectory"/> is <c>null</c>.</exception>
         </member>
         <member name="T:Orion.Framework.OrionService">
             <summary>
@@ -358,22 +342,9 @@
             Orion's implementation of <see cref="T:Orion.Items.IItem"/>.
             </summary>
         </member>
-        <member name="M:Orion.Items.OrionItem.#ctor(Terraria.Item)">
-            <summary>
-            Initializes a new instance of the <see cref="T:Orion.Items.OrionItem"/> class wrapping the specified Terraria Item
-            instance.
-            </summary>
-            <param name="terrariaItem">The item.</param>
-            <exception cref="T:System.ArgumentNullException"><paramref name="terrariaItem"/> is <c>null</c>.</exception>
-        </member>
         <member name="T:Orion.Items.OrionItemService">
             <summary>
             Orion's implementation of <see cref="T:Orion.Items.IItemService"/>.
-            </summary>
-        </member>
-        <member name="M:Orion.Items.OrionItemService.#ctor">
-            <summary>
-            Initializes a new instance of the <see cref="T:Orion.Items.OrionItemService"/> class.
             </summary>
         </member>
         <member name="T:Orion.Networking.Events.ReceivedPacketEventArgs">
@@ -554,11 +525,6 @@
         <member name="T:Orion.Networking.OrionNetworkService">
             <summary>
             Orion's implementation of <see cref="T:Orion.Networking.INetworkService"/>.
-            </summary>
-        </member>
-        <member name="M:Orion.Networking.OrionNetworkService.#ctor">
-            <summary>
-            Initializes a new instance of the <see cref="T:Orion.Networking.OrionNetworkService"/> class.
             </summary>
         </member>
         <member name="T:Orion.Networking.Packets.ContinueConnectionPacket">
@@ -1787,26 +1753,10 @@
             Orion's implementation of <see cref="T:Orion.Npcs.INpc"/>.
             </summary>
         </member>
-        <member name="M:Orion.Npcs.OrionNpc.#ctor(Terraria.NPC)">
-            <summary>
-            Initializes a new instance of the <see cref="T:Orion.Npcs.OrionNpc"/> class wrapping the specified Terraria NPC
-            instance.
-            </summary>
-            <param name="terrariaNpc">The projectile.</param>
-            <exception cref="T:System.ArgumentNullException"><paramref name="terrariaNpc"/> is <c>null</c>.</exception>
-        </member>
         <member name="T:Orion.Npcs.OrionNpcService">
             <summary>
             Orion's implementation of <see cref="T:Orion.Npcs.INpcService"/>.
             </summary>
-        </member>
-        <member name="M:Orion.Npcs.OrionNpcService.#ctor(Orion.Items.IItemService,Orion.Players.IPlayerService)">
-            <summary>
-            Initializes a new instance of the <see cref="T:Orion.Npcs.OrionNpcService"/> class with the specified item and player
-            services.
-            </summary>
-            <param name="itemService">The item service.</param>
-            <param name="playerService">The player service.</param>
         </member>
         <member name="T:Orion.Players.Events.PlayerJoinedEventArgs">
             <summary>
@@ -1894,22 +1844,9 @@
             Orion's implementation of <see cref="T:Orion.Players.IPlayer"/>.
             </summary>
         </member>
-        <member name="M:Orion.Players.OrionPlayer.#ctor(Terraria.Player)">
-            <summary>
-            Initializes a new instance of the <see cref="T:Orion.Players.OrionPlayer"/> class wrapping the specified Terraria Player
-            instance.
-            </summary>
-            <param name="terrariaPlayer">The player.</param>
-            <exception cref="T:System.ArgumentNullException"><paramref name="terrariaPlayer"/> is <c>null</c>.</exception>
-        </member>
         <member name="T:Orion.Players.OrionPlayerService">
             <summary>
             Orion's implementation of <see cref="T:Orion.Players.IPlayerService"/>.
-            </summary>
-        </member>
-        <member name="M:Orion.Players.OrionPlayerService.#ctor">
-            <summary>
-            Initializes a new instance of the <see cref="T:Orion.Players.OrionPlayerService"/> class.
             </summary>
         </member>
         <member name="T:Orion.Projectiles.Events.ProjectileRemovedEventArgs">
@@ -2091,22 +2028,9 @@
             Orion's implementation of <see cref="T:Orion.Projectiles.IProjectile"/>.
             </summary>
         </member>
-        <member name="M:Orion.Projectiles.OrionProjectile.#ctor(Terraria.Projectile)">
-            <summary>
-            Initializes a new instance of the <see cref="T:Orion.Projectiles.OrionProjectile"/> class wrapping the specified Terraria
-            Projectile instance.
-            </summary>
-            <param name="terrariaProjectile">The projectile.</param>
-            <exception cref="T:System.ArgumentNullException"><paramref name="terrariaProjectile"/> is <c>null</c>.</exception>
-        </member>
         <member name="T:Orion.Projectiles.OrionProjectileService">
             <summary>
             Orion's implementation of <see cref="T:Orion.Projectiles.IProjectileService"/>.
-            </summary>
-        </member>
-        <member name="M:Orion.Projectiles.OrionProjectileService.#ctor">
-            <summary>
-            Initialize an instance of the <see cref="T:Orion.Projectiles.OrionProjectileService"/> class.
             </summary>
         </member>
         <member name="T:Orion.Projectiles.ProjectileType">

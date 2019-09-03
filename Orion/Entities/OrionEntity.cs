@@ -1,4 +1,4 @@
-﻿using System;
+﻿using System.Diagnostics;
 using Microsoft.Xna.Framework;
 
 namespace Orion.Entities {
@@ -25,14 +25,10 @@ namespace Orion.Entities {
             set => _wrappedEntity.Size = value;
         }
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="OrionEntity"/> class wrapping the specified Terraria.Entity
-        /// instance.
-        /// </summary>
-        /// <param name="entity">The Terraria Entity instance to wrap.</param>
-        /// <exception cref="ArgumentNullException"><paramref name="entity"/> is null.</exception>
         public OrionEntity(Terraria.Entity entity) {
-            _wrappedEntity = entity ?? throw new ArgumentNullException(nameof(entity));
+            Debug.Assert(entity != null, $"{nameof(entity)} should not be null.");
+
+            _wrappedEntity = entity;
         }
     }
 }

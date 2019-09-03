@@ -1,4 +1,4 @@
-﻿using System;
+﻿using System.Diagnostics;
 using Orion.Entities;
 
 namespace Orion.Projectiles {
@@ -13,14 +13,10 @@ namespace Orion.Projectiles {
 
         public Terraria.Projectile WrappedProjectile { get; }
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="OrionProjectile"/> class wrapping the specified Terraria
-        /// Projectile instance.
-        /// </summary>
-        /// <param name="terrariaProjectile">The projectile.</param>
-        /// <exception cref="ArgumentNullException"><paramref name="terrariaProjectile"/> is <c>null</c>.</exception>
         public OrionProjectile(Terraria.Projectile terrariaProjectile) : base(terrariaProjectile) {
-            WrappedProjectile = terrariaProjectile ?? throw new ArgumentNullException();
+            Debug.Assert(terrariaProjectile != null, $"{nameof(terrariaProjectile)} should not be null.");
+
+            WrappedProjectile = terrariaProjectile;
         }
     }
 }

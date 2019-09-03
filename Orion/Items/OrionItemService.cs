@@ -41,9 +41,6 @@ namespace Orion.Items {
         public event EventHandler<ItemUpdatingEventArgs> ItemUpdating;
         public event EventHandler<ItemUpdatedEventArgs> ItemUpdated;
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="OrionItemService"/> class.
-        /// </summary>
         public OrionItemService() {
             _items = new IItem[Terraria.Main.maxItems];
 

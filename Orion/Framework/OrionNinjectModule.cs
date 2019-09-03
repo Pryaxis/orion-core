@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Reflection;
 using Ninject.Extensions.NamedScope;
@@ -14,14 +15,10 @@ namespace Orion.Framework {
     internal sealed class OrionNinjectModule : NinjectModule {
         private readonly string _pluginDirectory;
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="OrionNinjectModule"/> class with the specified plugin
-        /// directory.
-        /// </summary>
-        /// <param name="pluginDirectory">The plugin directory.</param>
-        /// <exception cref="ArgumentNullException"><paramref name="pluginDirectory"/> is <c>null</c>.</exception>
         internal OrionNinjectModule(string pluginDirectory) {
-            _pluginDirectory = pluginDirectory ?? throw new ArgumentNullException(nameof(pluginDirectory));
+            Debug.Assert(pluginDirectory != null, $"{nameof(pluginDirectory)} should not be null.");
+
+            _pluginDirectory = pluginDirectory;
         }
 
         public override void Load() {
@@ -54,6 +51,7 @@ namespace Orion.Framework {
                 BindService(serviceType);
             }
         }
+
 
         private void BindService(Type serviceType) {
             var isInstanced = Attribute.GetCustomAttribute(serviceType, typeof(InstancedServiceAttribute)) != null;

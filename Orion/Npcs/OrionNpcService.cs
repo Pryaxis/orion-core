@@ -67,15 +67,10 @@ namespace Orion.Npcs {
         public event EventHandler<NpcDroppedLootItemEventArgs> NpcDroppedLootItem;
         public event EventHandler<NpcKilledEventArgs> NpcKilled;
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="OrionNpcService"/> class with the specified item and player
-        /// services.
-        /// </summary>
-        /// <param name="itemService">The item service.</param>
-        /// <param name="playerService">The player service.</param>
         [Inject]
         public OrionNpcService(IItemService itemService, IPlayerService playerService) {
             Debug.Assert(itemService != null, $"{nameof(itemService)} should not be null.");
+            Debug.Assert(playerService != null, $"{nameof(playerService)} should not be null.");
             
             _itemService = itemService;
             _playerService = playerService;

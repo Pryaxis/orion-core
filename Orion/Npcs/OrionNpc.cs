@@ -1,4 +1,4 @@
-﻿using System;
+﻿using System.Diagnostics;
 using Orion.Entities;
 
 namespace Orion.Npcs {
@@ -13,14 +13,10 @@ namespace Orion.Npcs {
 
         public Terraria.NPC WrappedNpc { get; }
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="OrionNpc"/> class wrapping the specified Terraria NPC
-        /// instance.
-        /// </summary>
-        /// <param name="terrariaNpc">The projectile.</param>
-        /// <exception cref="ArgumentNullException"><paramref name="terrariaNpc"/> is <c>null</c>.</exception>
         public OrionNpc(Terraria.NPC terrariaNpc) : base(terrariaNpc) {
-            WrappedNpc = terrariaNpc ?? throw new ArgumentNullException();
+            Debug.Assert(terrariaNpc != null, $"{nameof(terrariaNpc)} should not be null.");
+
+            WrappedNpc = terrariaNpc;
         }
     }
 }

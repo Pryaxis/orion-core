@@ -7,14 +7,14 @@ namespace Orion.Networking.Events {
     /// </summary>
     public sealed class SentPacketEventArgs : EventArgs {
         /// <summary>
-        /// Gets the packet that was sent.
-        /// </summary>
-        public TerrariaPacket Packet { get; }
-
-        /// <summary>
         /// Gets the packet's receiver.
         /// </summary>
         public Terraria.RemoteClient Receiver { get; }
+
+        /// <summary>
+        /// Gets the packet that was sent.
+        /// </summary>
+        public TerrariaPacket Packet { get; }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="SentPacketEventArgs"/> class with the specified receiver and

@@ -40,9 +40,6 @@ namespace Orion.Players {
         public event EventHandler<PlayerJoinedEventArgs> PlayerJoined;
         public event EventHandler<PlayerQuitEventArgs> PlayerQuit;
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="OrionPlayerService"/> class.
-        /// </summary>
         public OrionPlayerService() {
             _players = new IPlayer[Terraria.Main.maxPlayers];
             

@@ -20,9 +20,6 @@ namespace Orion.Networking {
         public event EventHandler<SentPacketEventArgs> SentPacket;
         public event EventHandler<SendingPacketEventArgs> SendingPacket;
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="OrionNetworkService"/> class.
-        /// </summary>
         public OrionNetworkService() {
             Hooks.Net.ReceiveData = ReceiveDataHandler;
             Hooks.Net.SendBytes = SendBytesHandler;
