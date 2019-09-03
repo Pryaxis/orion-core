@@ -23,11 +23,6 @@ namespace Orion.Tests.Items {
         }
 
         [Fact]
-        public void GetCount_IsCorrect() {
-            _itemService.Count.Should().Be(Terraria.Main.maxItems);
-        }
-
-        [Fact]
         public void GetItem_IsCorrect() {
             var item = _itemService[0];
 

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using Microsoft.Xna.Framework;
 using Orion.Framework;
 using Orion.Npcs.Events;
 
@@ -17,6 +18,16 @@ namespace Orion.Npcs {
         /// Gets or sets the base NPC spawning limit.
         /// </summary>
         int BaseNpcSpawningLimit { get; set; }
+
+        /// <summary>
+        /// Occurs when an NPC is spawning.
+        /// </summary>
+        event EventHandler<NpcSpawningEventArgs> NpcSpawning;
+
+        /// <summary>
+        /// Occurs when an NPC spawned.
+        /// </summary>
+        event EventHandler<NpcSpawnedEventArgs> NpcSpawned;
 
         /// <summary>
         /// Occurs when an NPC is having its defaults set.
@@ -49,6 +60,16 @@ namespace Orion.Npcs {
         event EventHandler<NpcUpdatedEventArgs> NpcUpdatedAi;
 
         /// <summary>
+        /// Occurs when an NPC is being struck.
+        /// </summary>
+        event EventHandler<NpcStrikingEventArgs> NpcStriking;
+
+        /// <summary>
+        /// Occurs when an NPC is struck.
+        /// </summary>
+        event EventHandler<NpcStruckEventArgs> NpcStruck;
+
+        /// <summary>
         /// Occurs when an NPC is transforming to another type.
         /// </summary>
         event EventHandler<NpcTransformingEventArgs> NpcTransforming;
@@ -72,5 +93,13 @@ namespace Orion.Npcs {
         /// Occurs when an NPC was killed.
         /// </summary>
         event EventHandler<NpcKilledEventArgs> NpcKilled;
+
+        /// <summary>
+        /// Spawns an NPC with the specified type at the position.
+        /// </summary>
+        /// <param name="type">The type.</param>
+        /// <param name="position">The position.</param>
+        /// <returns>The NPC, or <c>null</c> if none was spawned.</returns>
+        INpc SpawnNpc(NpcType type, Vector2 position);
     }
 }

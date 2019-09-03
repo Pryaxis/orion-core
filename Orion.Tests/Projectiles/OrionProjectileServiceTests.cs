@@ -21,11 +21,6 @@ namespace Orion.Tests.Projectiles {
         }
 
         [Fact]
-        public void GetCount_IsCorrect() {
-            _projectileService.Count.Should().Be(Terraria.Main.maxProjectiles);
-        }
-
-        [Fact]
         public void GetItem_IsCorrect() {
             var projectile = _projectileService[0];
 

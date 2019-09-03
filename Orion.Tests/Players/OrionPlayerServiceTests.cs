@@ -21,11 +21,6 @@ namespace Orion.Tests.Players {
         }
 
         [Fact]
-        public void GetCount_IsCorrect() {
-            _playerService.Count.Should().Be(Terraria.Main.maxPlayers);
-        }
-
-        [Fact]
         public void GetItem_IsCorrect() {
             var player = _playerService[0];
 

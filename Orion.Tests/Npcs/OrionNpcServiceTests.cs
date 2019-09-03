@@ -4,6 +4,7 @@ using FluentAssertions;
 using Moq;
 using Orion.Items;
 using Orion.Npcs;
+using Orion.Players;
 using Xunit;
 
 namespace Orion.Tests.Npcs {
@@ -16,16 +17,12 @@ namespace Orion.Tests.Npcs {
             }
 
             var itemService = new Mock<IItemService>();
-            _npcService = new OrionNpcService(itemService.Object);
+            var playerService = new Mock<IPlayerService>();
+            _npcService = new OrionNpcService(itemService.Object, playerService.Object);
         }
 
         public void Dispose() {
             _npcService.Dispose();
-        }
-
-        [Fact]
-        public void GetCount_IsCorrect() {
-            _npcService.Count.Should().Be(Terraria.Main.maxNPCs);
         }
 
         [Fact]

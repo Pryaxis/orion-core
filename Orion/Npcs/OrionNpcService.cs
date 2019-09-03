@@ -7,6 +7,7 @@ using Ninject;
 using Orion.Framework;
 using Orion.Items;
 using Orion.Npcs.Events;
+using Orion.Players;
 using OTAPI;
 
 namespace Orion.Npcs {
@@ -15,6 +16,7 @@ namespace Orion.Npcs {
     /// </summary>
     internal sealed class OrionNpcService : OrionService, INpcService {
         private readonly IItemService _itemService;
+        private readonly IPlayerService _playerService;
         private readonly INpc[] _npcs;
 
         public override string Author => "Pryaxis";
@@ -49,12 +51,16 @@ namespace Orion.Npcs {
             set => Terraria.NPC.defaultMaxSpawns = value;
         }
 
+        public event EventHandler<NpcSpawningEventArgs> NpcSpawning;
+        public event EventHandler<NpcSpawnedEventArgs> NpcSpawned;
         public event EventHandler<NpcSettingDefaultsEventArgs> NpcSettingDefaults;
         public event EventHandler<NpcSetDefaultsEventArgs> NpcSetDefaults;
         public event EventHandler<NpcUpdatingEventArgs> NpcUpdating;
         public event EventHandler<NpcUpdatedEventArgs> NpcUpdated;
         public event EventHandler<NpcUpdatingEventArgs> NpcUpdatingAi;
         public event EventHandler<NpcUpdatedEventArgs> NpcUpdatedAi;
+        public event EventHandler<NpcStrikingEventArgs> NpcStriking;
+        public event EventHandler<NpcStruckEventArgs> NpcStruck;
         public event EventHandler<NpcTransformingEventArgs> NpcTransforming;
         public event EventHandler<NpcTransformedEventArgs> NpcTransformed;
         public event EventHandler<NpcDroppingLootItemEventArgs> NpcDroppingLootItem;
@@ -62,29 +68,34 @@ namespace Orion.Npcs {
         public event EventHandler<NpcKilledEventArgs> NpcKilled;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="OrionNpcService"/> class with the specified item service.
+        /// Initializes a new instance of the <see cref="OrionNpcService"/> class with the specified item and player
+        /// services.
         /// </summary>
         /// <param name="itemService">The item service.</param>
+        /// <param name="playerService">The player service.</param>
         [Inject]
-        public OrionNpcService(IItemService itemService) {
+        public OrionNpcService(IItemService itemService, IPlayerService playerService) {
             Debug.Assert(itemService != null, $"{nameof(itemService)} should not be null.");
             
             _itemService = itemService;
+            _playerService = playerService;
             _npcs = new INpc[Terraria.Main.maxNPCs];
 
+            Hooks.Npc.Create = CreateHandler;
+            Hooks.Npc.Spawn = SpawnHandler;
             Hooks.Npc.PreSetDefaultsById = PreSetDefaultsByIdHandler;
             Hooks.Npc.PostSetDefaultsById = PostSetDefaultsByIdHandler;
             Hooks.Npc.PreUpdate = PreUpdateHandler;
             Hooks.Npc.PreAI = PreAiHandler;
             Hooks.Npc.PostAI = PostAiHandler;
             Hooks.Npc.PostUpdate = PostUpdateHandler;
+            Hooks.Npc.Strike = StrikeHandler;
             Hooks.Npc.PreTransform = PreTransformHandler;
             Hooks.Npc.PostTransform = PostTransformHandler;
             Hooks.Npc.PreDropLoot = PreDropLootHandler;
             Hooks.Npc.Killed = KilledHandler;
         }
 
-        /// <inheritdoc />
         public IEnumerator<INpc> GetEnumerator() {
             for (var i = 0; i < Count; ++i) {
                 yield return this[i];
@@ -92,6 +103,51 @@ namespace Orion.Npcs {
         }
 
         IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
+
+        public INpc SpawnNpc(NpcType type, Vector2 position) {
+            var npcIndex = Terraria.NPC.NewNPC((int)position.X, (int)position.Y, (int)type);
+            if (npcIndex < 0 || npcIndex >= Terraria.Main.maxNPCs) {
+                return null;
+            }
+
+            return this[npcIndex];
+        }
+
+
+        private Terraria.NPC CreateHandler(ref int npcIndex, ref int x, ref int y, ref int type, ref int start, ref float ai0,
+                                  ref float ai1, ref float ai2, ref float ai3, ref int target) {
+            var args = new NpcSpawningEventArgs {
+                NpcType = (NpcType)type,
+                Position = new Vector2(x, y),
+                NpcTarget = target >= 0 && target < _playerService.Count ? _playerService[target] : null
+            };
+            args.AiValues[0] = ai0;
+            args.AiValues[1] = ai1;
+            args.AiValues[2] = ai2;
+            args.AiValues[3] = ai3;
+            NpcSpawning?.Invoke(this, args);
+
+            var terrariaNpc = new Terraria.NPC();
+            if (args.Handled) {
+                npcIndex = Terraria.Main.maxNPCs;
+            } else {
+                terrariaNpc.SetDefaults((int)args.NpcType);
+            }
+
+            return terrariaNpc;
+        }
+
+        private HookResult SpawnHandler(ref int npcIndex) {
+            if (npcIndex < 0 || npcIndex >= Terraria.Main.maxNPCs) {
+                return HookResult.Continue;
+            }
+
+            var npc = this[npcIndex];
+            var args = new NpcSpawnedEventArgs(npc);
+            NpcSpawned?.Invoke(this, args);
+
+            return HookResult.Continue;
+        }
 
         private HookResult PreSetDefaultsByIdHandler(Terraria.NPC terrariaNpc, ref int type, ref float scaleOverride) {
             var npc = new OrionNpc(terrariaNpc);
@@ -140,6 +196,44 @@ namespace Orion.Npcs {
             NpcUpdated?.Invoke(this, args);
         }
 
+        private HookResult StrikeHandler(Terraria.NPC terrariaNpc, ref double cancelResult, ref int damage, ref float knockback,
+                                         ref int hitDirection, ref bool crit, ref bool noEffect, ref bool fromNet,
+                                         Terraria.Entity entity) {
+            var npc = new OrionNpc(terrariaNpc);
+            IPlayer strikePlayer = null;
+            if (entity is Terraria.Player terrariaPlayer) {
+                strikePlayer = _playerService[terrariaPlayer.whoAmI];
+            }
+
+            var args = new NpcStrikingEventArgs(npc) {
+                Damage = damage,
+                Knockback = knockback,
+                HitDirection = hitDirection,
+                IsCriticalHit = crit,
+                StrikePlayer = strikePlayer,
+            };
+            NpcStriking?.Invoke(this, args);
+
+            if (args.Handled) {
+                return HookResult.Cancel;
+            }
+
+            damage = args.Damage;
+            knockback = args.Knockback;
+            hitDirection = args.HitDirection;
+            crit = args.IsCriticalHit;
+
+            var args2 = new NpcStruckEventArgs(npc) {
+                Damage = damage,
+                Knockback = knockback,
+                HitDirection = hitDirection,
+                IsCriticalHit = crit,
+                StrikePlayer = strikePlayer,
+            };
+            NpcStruck?.Invoke(this, args2);
+            return HookResult.Continue;
+        }
+
         private HookResult PreTransformHandler(Terraria.NPC terrariaNpc, ref int newType) {
             var npc = new OrionNpc(terrariaNpc);
             var args = new NpcTransformingEventArgs(npc);
@@ -165,9 +259,6 @@ namespace Orion.Npcs {
             };
             NpcDroppingLootItem?.Invoke(this, args);
 
-            args.LootItemType = ItemType.CrystalBullet;
-            args.LootItemPrefix = ItemPrefix.Unreal;
-            args.LootItemStackSize = 50;
             if (args.Handled) {
                 return HookResult.Cancel;
             }
