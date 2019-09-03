@@ -11,7 +11,7 @@ namespace Orion.Tests.Items {
         private readonly IItemService _itemService;
 
         public OrionItemServiceTests() {
-            for (var i = 0; i < Terraria.Main.maxItems; ++i) {
+            for (var i = 0; i < Terraria.Main.maxItems + 1; ++i) {
                 Terraria.Main.item[i] = new Terraria.Item {whoAmI = i};
             }
             
@@ -46,15 +46,6 @@ namespace Orion.Tests.Items {
             func.Should().Throw<IndexOutOfRangeException>();
         }
 
-        [Fact]
-        public void GetEnumerator_IsCorrect() {
-            var items = _itemService.ToList();
-
-            for (var i = 0; i < items.Count; ++i) {
-                items[i].WrappedItem.Should().BeSameAs(Terraria.Main.item[i]);
-            }
-        }
-
         public static readonly IEnumerable<object[]> SpawnItemData = new List<object[]> {
             new object[] {ItemType.StoneBlock, 100, ItemPrefix.None},
             new object[] {ItemType.SDMG, 1, ItemPrefix.Unreal},
@@ -81,6 +72,94 @@ namespace Orion.Tests.Items {
             item.Type.Should().Be(type);
             item.StackSize.Should().Be(stackSize);
             item.Prefix.Should().Be(prefix);
+        }
+        
+        [Fact]
+        public void ItemSettingDefaults_IsCorrect() {
+            IItem argsItem = null;
+            _itemService.ItemSettingDefaults += (sender, args) => {
+                argsItem = args.Item;
+            };
+            
+            var item = _itemService.SpawnItem(ItemType.SDMG, Vector2.Zero, 1, ItemPrefix.Unreal);
+
+            argsItem.Should().NotBeNull();
+            argsItem.WrappedItem.Should().BeSameAs(item.WrappedItem);
+        }
+        
+        [Theory]
+        [InlineData(ItemType.CopperPickaxe, ItemType.IronPickaxe)]
+        [InlineData(ItemType.StoneBlock, ItemType.None)]
+        public void ItemSettingDefaults_ModifyType_IsCorrect(ItemType oldType, ItemType newType) {
+            _itemService.ItemSettingDefaults += (sender, args) => {
+                args.Type = newType;
+            };
+
+            var item = _itemService.SpawnItem(oldType, Vector2.Zero);
+
+            item.Type.Should().Be(newType);
+        }
+
+        [Fact]
+        public void ItemSettingDefaults_Handled_IsCorrect() {
+            _itemService.ItemSettingDefaults += (sender, args) => {
+                args.Handled = true;
+            };
+
+            var item = _itemService.SpawnItem(ItemType.SDMG, Vector2.Zero);
+
+            item.Type.Should().Be(ItemType.None);
+        }
+
+        [Fact]
+        public void ItemSetDefaults_IsCorrect() {
+            IItem argsItem = null;
+            _itemService.ItemSetDefaults += (sender, args) => {
+                argsItem = args.Item;
+                args.Item.Type.Should().Be(ItemType.SDMG);
+                args.Item.StackSize.Should().Be(1);
+            };
+
+            var item = _itemService.SpawnItem(ItemType.SDMG, Vector2.Zero);
+            argsItem.Should().NotBeNull();
+            argsItem.WrappedItem.Should().BeSameAs(item.WrappedItem);
+        }
+
+        [Fact]
+        public void ItemUpdating_IsCorrect() {
+            IItem argsItem = null;
+            _itemService.ItemUpdating += (sender, args) => {
+                argsItem = args.Item;
+            };
+            var item = _itemService.SpawnItem(ItemType.SDMG, Vector2.Zero);
+
+            item.WrappedItem.UpdateItem(item.Index);
+            
+            argsItem.Should().NotBeNull();
+            argsItem.WrappedItem.Should().BeSameAs(item.WrappedItem);
+        }
+
+        [Fact]
+        public void ItemUpdated_IsCorrect() {
+            IItem argsItem = null;
+            _itemService.ItemUpdated += (sender, args) => {
+                argsItem = args.Item;
+            };
+            var item = _itemService.SpawnItem(ItemType.SDMG, Vector2.Zero);
+
+            item.WrappedItem.UpdateItem(item.Index);
+            
+            argsItem.Should().NotBeNull();
+            argsItem.WrappedItem.Should().BeSameAs(item.WrappedItem);
+        }
+
+        [Fact]
+        public void GetEnumerator_IsCorrect() {
+            var items = _itemService.ToList();
+
+            for (var i = 0; i < items.Count; ++i) {
+                items[i].WrappedItem.Should().BeSameAs(Terraria.Main.item[i]);
+            }
         }
     }
 }

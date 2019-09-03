@@ -11,6 +11,11 @@ namespace Orion.Entities {
         int Index { get; }
 
         /// <summary>
+        /// Gets or sets a value indicating whether the entity is active.
+        /// </summary>
+        bool IsActive { get; set; }
+
+        /// <summary>
         /// Gets or sets the entity's position in the world.
         /// </summary>
         Vector2 Position { get; set; }

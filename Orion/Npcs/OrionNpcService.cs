@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Threading;
 using Microsoft.Xna.Framework;
 using Ninject;
 using Orion.Framework;
@@ -17,6 +18,7 @@ namespace Orion.Npcs {
     internal sealed class OrionNpcService : OrionService, INpcService {
         private readonly IItemService _itemService;
         private readonly IPlayerService _playerService;
+        private readonly ThreadLocal<int> _setDefaultsToIgnore = new ThreadLocal<int>();
         private readonly INpc[] _npcs;
 
         public override string Author => "Pryaxis";
@@ -56,11 +58,11 @@ namespace Orion.Npcs {
         public event EventHandler<NpcSettingDefaultsEventArgs> NpcSettingDefaults;
         public event EventHandler<NpcSetDefaultsEventArgs> NpcSetDefaults;
         public event EventHandler<NpcUpdatingEventArgs> NpcUpdating;
-        public event EventHandler<NpcUpdatedEventArgs> NpcUpdated;
         public event EventHandler<NpcUpdatingEventArgs> NpcUpdatingAi;
         public event EventHandler<NpcUpdatedEventArgs> NpcUpdatedAi;
-        public event EventHandler<NpcStrikingEventArgs> NpcStriking;
-        public event EventHandler<NpcStruckEventArgs> NpcStruck;
+        public event EventHandler<NpcUpdatedEventArgs> NpcUpdated;
+        public event EventHandler<NpcDamagingEventArgs> NpcDamaging;
+        public event EventHandler<NpcDamagedEventArgs> NpcDamaged;
         public event EventHandler<NpcTransformingEventArgs> NpcTransforming;
         public event EventHandler<NpcTransformedEventArgs> NpcTransformed;
         public event EventHandler<NpcDroppingLootItemEventArgs> NpcDroppingLootItem;
@@ -89,6 +91,24 @@ namespace Orion.Npcs {
             Hooks.Npc.PostTransform = PostTransformHandler;
             Hooks.Npc.PreDropLoot = PreDropLootHandler;
             Hooks.Npc.Killed = KilledHandler;
+        }
+
+        protected override void Dispose(bool disposeManaged) {
+            _setDefaultsToIgnore.Dispose();
+
+            Hooks.Npc.Create = null;
+            Hooks.Npc.Spawn = null;
+            Hooks.Npc.PreSetDefaultsById = null;
+            Hooks.Npc.PostSetDefaultsById = null;
+            Hooks.Npc.PreUpdate = null;
+            Hooks.Npc.PreAI = null;
+            Hooks.Npc.PostAI = null;
+            Hooks.Npc.PostUpdate = null;
+            Hooks.Npc.Strike = null;
+            Hooks.Npc.PreTransform = null;
+            Hooks.Npc.PostTransform = null;
+            Hooks.Npc.PreDropLoot = null;
+            Hooks.Npc.Killed = null;
         }
 
         public IEnumerator<INpc> GetEnumerator() {
@@ -160,15 +180,25 @@ namespace Orion.Npcs {
         }
 
         private HookResult PreSetDefaultsByIdHandler(Terraria.NPC terrariaNpc, ref int type, ref float scaleOverride) {
+            if (_setDefaultsToIgnore.Value > 0) {
+                return HookResult.Continue;
+            }
+
             var npc = new OrionNpc(terrariaNpc);
             var args = new NpcSettingDefaultsEventArgs(npc, (NpcType)type);
             NpcSettingDefaults?.Invoke(this, args);
 
             type = (int)args.Type;
+            _setDefaultsToIgnore.Value = type < 0 ? 2 : 0;
             return args.Handled ? HookResult.Cancel : HookResult.Continue;
         }
 
         private void PostSetDefaultsByIdHandler(Terraria.NPC terrariaNpc, int type, float scaleOverride) {
+            if (_setDefaultsToIgnore.Value > 0) {
+                _setDefaultsToIgnore.Value--;
+                return;
+            }
+
             var npc = new OrionNpc(terrariaNpc);
             var args = new NpcSetDefaultsEventArgs(npc);
             NpcSetDefaults?.Invoke(this, args);
@@ -210,19 +240,19 @@ namespace Orion.Npcs {
                                          ref int hitDirection, ref bool crit, ref bool noEffect, ref bool fromNet,
                                          Terraria.Entity entity) {
             var npc = new OrionNpc(terrariaNpc);
-            IPlayer strikePlayer = null;
+            IPlayer playerResponsible = null;
             if (entity is Terraria.Player terrariaPlayer) {
-                strikePlayer = _playerService[terrariaPlayer.whoAmI];
+                playerResponsible = _playerService[terrariaPlayer.whoAmI];
             }
 
-            var args = new NpcStrikingEventArgs(npc) {
+            var args = new NpcDamagingEventArgs(npc) {
                 Damage = damage,
                 Knockback = knockback,
                 HitDirection = hitDirection,
                 IsCriticalHit = crit,
-                StrikePlayer = strikePlayer,
+                PlayerResponsible = playerResponsible,
             };
-            NpcStriking?.Invoke(this, args);
+            NpcDamaging?.Invoke(this, args);
 
             if (args.Handled) {
                 return HookResult.Cancel;
@@ -233,14 +263,14 @@ namespace Orion.Npcs {
             hitDirection = args.HitDirection;
             crit = args.IsCriticalHit;
 
-            var args2 = new NpcStruckEventArgs(npc) {
+            var args2 = new NpcDamagedEventArgs(npc) {
                 Damage = damage,
                 Knockback = knockback,
                 HitDirection = hitDirection,
                 IsCriticalHit = crit,
-                StrikePlayer = strikePlayer,
+                PlayerResponsible = playerResponsible,
             };
-            NpcStruck?.Invoke(this, args2);
+            NpcDamaged?.Invoke(this, args2);
             return HookResult.Continue;
         }
 

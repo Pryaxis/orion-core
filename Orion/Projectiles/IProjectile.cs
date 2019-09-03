@@ -11,8 +11,23 @@ namespace Orion.Projectiles {
         ProjectileType Type { get; set; }
 
         /// <summary>
+        /// Gets or sets the damage.
+        /// </summary>
+        int Damage { get; set; }
+
+        /// <summary>
+        /// Gets or sets the knockback.
+        /// </summary>
+        float Knockback { get; set; }
+
+        /// <summary>
         /// Gets the wrapped Terraria Projectile instance.
         /// </summary>
         Terraria.Projectile WrappedProjectile { get; }
+
+        /// <summary>
+        /// Removes the projectile.
+        /// </summary>
+        void Remove();
     }
 }

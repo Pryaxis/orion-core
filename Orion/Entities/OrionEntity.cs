@@ -10,6 +10,11 @@ namespace Orion.Entities {
 
         public int Index => _wrappedEntity.whoAmI;
 
+        public bool IsActive {
+            get => _wrappedEntity.active;
+            set => _wrappedEntity.active = value;
+        }
+
         public Vector2 Position {
             get => _wrappedEntity.position;
             set => _wrappedEntity.position = value;

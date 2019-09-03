@@ -59,6 +59,17 @@ namespace Orion.Projectiles {
             Hooks.Projectile.PostKilled = PostKilledHandler;
         }
 
+        protected override void Dispose(bool disposeManaged) {
+            Hooks.Projectile.PreSetDefaultsById = null;
+            Hooks.Projectile.PostSetDefaultsById = null;
+            Hooks.Projectile.PreUpdate = null;
+            Hooks.Projectile.PreAI = null;
+            Hooks.Projectile.PostAI = null;
+            Hooks.Projectile.PostUpdate = null;
+            Hooks.Projectile.PreKill = null;
+            Hooks.Projectile.PostKilled = null;
+        }
+
         public IEnumerator<IProjectile> GetEnumerator() {
             for (var i = 0; i < Count; ++i) {
                 yield return this[i];

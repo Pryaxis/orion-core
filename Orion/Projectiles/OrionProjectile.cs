@@ -11,6 +11,16 @@ namespace Orion.Projectiles {
             set => WrappedProjectile.type = (int)value;
         }
 
+        public int Damage {
+            get => WrappedProjectile.damage;
+            set => WrappedProjectile.damage = value;
+        }
+
+        public float Knockback {
+            get => WrappedProjectile.knockBack;
+            set => WrappedProjectile.knockBack = value;
+        }
+
         public Terraria.Projectile WrappedProjectile { get; }
 
         public OrionProjectile(Terraria.Projectile terrariaProjectile) : base(terrariaProjectile) {
@@ -18,5 +28,7 @@ namespace Orion.Projectiles {
 
             WrappedProjectile = terrariaProjectile;
         }
+
+        public void Remove() => WrappedProjectile.Kill();
     }
 }

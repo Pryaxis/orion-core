@@ -45,11 +45,6 @@ namespace Orion.Npcs {
         event EventHandler<NpcUpdatingEventArgs> NpcUpdating;
 
         /// <summary>
-        /// Occurs when an NPC is updated.
-        /// </summary>
-        event EventHandler<NpcUpdatedEventArgs> NpcUpdated;
-
-        /// <summary>
         /// Occurs when an NPC's AI is being updated.
         /// </summary>
         event EventHandler<NpcUpdatingEventArgs> NpcUpdatingAi;
@@ -60,14 +55,19 @@ namespace Orion.Npcs {
         event EventHandler<NpcUpdatedEventArgs> NpcUpdatedAi;
 
         /// <summary>
-        /// Occurs when an NPC is being struck.
+        /// Occurs when an NPC is updated.
         /// </summary>
-        event EventHandler<NpcStrikingEventArgs> NpcStriking;
+        event EventHandler<NpcUpdatedEventArgs> NpcUpdated;
 
         /// <summary>
-        /// Occurs when an NPC is struck.
+        /// Occurs when an NPC is being damaged.
         /// </summary>
-        event EventHandler<NpcStruckEventArgs> NpcStruck;
+        event EventHandler<NpcDamagingEventArgs> NpcDamaging;
+
+        /// <summary>
+        /// Occurs when an NPC is damaged.
+        /// </summary>
+        event EventHandler<NpcDamagedEventArgs> NpcDamaged;
 
         /// <summary>
         /// Occurs when an NPC is transforming to another type.

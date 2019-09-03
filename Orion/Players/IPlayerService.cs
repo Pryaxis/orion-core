@@ -5,18 +5,13 @@ using Orion.Players.Events;
 
 namespace Orion.Players {
     /// <summary>
-    /// Provides a mechanism for managing players. All implementations must be thread-safe.
+    /// Provides a mechanism for managing players.
     /// </summary>
     public interface IPlayerService : IReadOnlyList<IPlayer>, IService {
         /// <summary>
-        /// Occurs when a player is joining the game.
+        /// Occurs when a player is being greeted.
         /// </summary>
-        event EventHandler<PlayerJoiningEventArgs> PlayerJoining;
-
-        /// <summary>
-        /// Occurs when a player has joined the game.
-        /// </summary>
-        event EventHandler<PlayerJoinedEventArgs> PlayerJoined;
+        event EventHandler<PlayerGreetingEventArgs> PlayerGreeting;
 
         /// <summary>
         /// Occurs when a player is being updated.
@@ -27,10 +22,5 @@ namespace Orion.Players {
         /// Occurs when a player is updated.
         /// </summary>
         event EventHandler<PlayerUpdatedEventArgs> PlayerUpdated;
-
-        /// <summary>
-        /// Occurs when a player has quit the game.
-        /// </summary>
-        event EventHandler<PlayerQuitEventArgs> PlayerQuit;
     }
 }

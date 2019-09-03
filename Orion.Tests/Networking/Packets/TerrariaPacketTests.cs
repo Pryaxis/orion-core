@@ -35,6 +35,32 @@ namespace Orion.Tests.Networking.Packets {
             }
         }
 
+        public static readonly byte[] UnknownBytes = {11, 0, 255, 1, 2, 3, 4, 5, 6, 7, 8,};
+
+        [Fact]
+        public void ReadFromStream_Unknown_IsCorrect() {
+            using (var stream = new MemoryStream(UnknownBytes)) {
+                var packet = (UnknownPacket)TerrariaPacket.ReadFromStream(stream);
+
+                packet.IsSentToClient.Should().BeTrue();
+                packet.IsSentToServer.Should().BeTrue();
+                packet.Type.Should().Be((TerrariaPacketType)255);
+                packet.Payload.Should().BeEquivalentTo(1, 2, 3, 4, 5, 6, 7, 8);
+            }
+        }
+
+        [Fact]
+        public void WriteToStream_Unknown_IsCorrect() {
+            using (var stream = new MemoryStream(UnknownBytes))
+            using (var stream2 = new MemoryStream()) {
+                var packet = TerrariaPacket.ReadFromStream(stream);
+
+                packet.WriteToStream(stream2);
+
+                stream2.ToArray().Should().BeEquivalentTo(UnknownBytes);
+            }
+        }
+
         public static readonly byte[] RequestConnectionBytes = {
             15, 0, 1, 11, 84, 101, 114, 114, 97, 114, 105, 97, 49, 57, 52
         };

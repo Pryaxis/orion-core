@@ -4,10 +4,10 @@ using Orion.Players.Events;
 using Xunit;
 
 namespace Orion.Tests.Players.Events {
-    public class PlayerJoiningEventArgsTests {
+    public class PlayerGreetingEventArgsTests {
         [Fact]
         public void Ctor_NullPlayer_ThrowsArgumentNullException() {
-            Func<PlayerJoiningEventArgs> func = () => new PlayerJoiningEventArgs(null);
+            Func<PlayerGreetingEventArgs> func = () => new PlayerGreetingEventArgs(null);
 
             func.Should().Throw<ArgumentNullException>();
         }

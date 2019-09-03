@@ -9,9 +9,11 @@ namespace Orion.Tests.Players {
         private readonly IPlayerService _playerService;
 
         public OrionPlayerServiceTests() {
-            for (var i = 0; i < Terraria.Main.maxPlayers; ++i) {
+            for (var i = 0; i < Terraria.Main.maxPlayers + 1; ++i) {
                 Terraria.Main.player[i] = new Terraria.Player {whoAmI = i};
             }
+
+            Terraria.Main.motd = "test";
             
             _playerService = new OrionPlayerService();
         }
@@ -42,6 +44,34 @@ namespace Orion.Tests.Players {
             Func<IPlayer> func = () => _playerService[index];
 
             func.Should().Throw<IndexOutOfRangeException>();
+        }
+
+        [Fact]
+        public void PlayerUpdating_IsCorrect() {
+            IPlayer argsPlayer = null;
+            _playerService.PlayerUpdating += (sender, args) => {
+                argsPlayer = args.Player;
+            };
+            var player = _playerService[0];
+
+            player.WrappedPlayer.Update(player.Index);
+
+            argsPlayer.Should().NotBeNull();
+            argsPlayer.WrappedPlayer.Should().BeSameAs(player.WrappedPlayer);
+        }
+
+        [Fact]
+        public void PlayerUpdated_IsCorrect() {
+            IPlayer argsPlayer = null;
+            _playerService.PlayerUpdated += (sender, args) => {
+                argsPlayer = args.Player;
+            };
+            var player = _playerService[0];
+
+            player.WrappedPlayer.Update(player.Index);
+
+            argsPlayer.Should().NotBeNull();
+            argsPlayer.WrappedPlayer.Should().BeSameAs(player.WrappedPlayer);
         }
 
         [Fact]

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
 using FluentAssertions;
+using Microsoft.Xna.Framework;
 using Moq;
 using Orion.Items;
 using Orion.Npcs;
@@ -9,16 +10,30 @@ using Xunit;
 
 namespace Orion.Tests.Npcs {
     public class OrionNpcServiceTests : IDisposable {
+        private readonly Mock<IItemService> _itemService = new Mock<IItemService>();
+        private readonly Mock<IPlayerService> _playerService = new Mock<IPlayerService>();
         private readonly INpcService _npcService;
 
         public OrionNpcServiceTests() {
-            for (var i = 0; i < Terraria.Main.maxNPCs; ++i) {
+            for (var i = 0; i < Terraria.Main.maxNPCs + 1; ++i) {
                 Terraria.Main.npc[i] = new Terraria.NPC {whoAmI = i};
             }
+            for (var i = 0; i < Terraria.Main.maxCombatText; ++i) {
+                Terraria.Main.combatText[i] = new Terraria.CombatText {active = true};
+            }
+            for (var i = 0; i < Terraria.Main.maxItems + 1; ++i) {
+                Terraria.Main.item[i] = new Terraria.Item {whoAmI = i};
+            }
+            for (var i = 0; i < Terraria.Main.maxPlayers + 1; ++i) {
+                Terraria.Main.player[i] = new Terraria.Player {whoAmI = i};
+            }
 
-            var itemService = new Mock<IItemService>();
-            var playerService = new Mock<IPlayerService>();
-            _npcService = new OrionNpcService(itemService.Object, playerService.Object);
+            Terraria.Main.rand = new Terraria.Utilities.UnifiedRandom();
+            
+            _itemService.Setup(s => s.SpawnItem(It.IsAny<ItemType>(), It.IsAny<Vector2>(), It.IsAny<int>(),
+                                                It.IsAny<ItemPrefix>()))
+                        .Returns(new Mock<IItem>().Object);
+            _npcService = new OrionNpcService(_itemService.Object, _playerService.Object);
         }
 
         public void Dispose() {
@@ -50,12 +65,331 @@ namespace Orion.Tests.Npcs {
         }
 
         [Fact]
+        public void NpcSpawning_IsCorrect() {
+            var isRun = false;
+            _npcService.NpcSpawning += (sender, args) => {
+                isRun = true;
+                args.NpcType.Should().Be(NpcType.BlueSlime);
+                args.Position.Should().Be(Vector2.Zero);
+            };
+
+            _npcService.SpawnNpc(NpcType.BlueSlime, Vector2.Zero);
+
+            isRun.Should().BeTrue();
+        }
+
+        [Fact]
+        public void NpcSpawning_Handled_IsCorrect() {
+            _npcService.NpcSpawning += (sender, args) => {
+                args.Handled = true;
+            };
+
+            var npc = _npcService.SpawnNpc(NpcType.BlueSlime, Vector2.Zero);
+
+            npc.Should().BeNull();
+        }
+
+        [Fact]
+        public void NpcSettingDefaults_IsCorrect() {
+            INpc argsNpc = null;
+            _npcService.NpcSettingDefaults += (sender, args) => {
+                argsNpc = args.Npc;
+            };
+
+            var npc = _npcService.SpawnNpc(NpcType.BlueSlime, Vector2.Zero);
+
+            argsNpc.Should().NotBeNull();
+            argsNpc.WrappedNpc.Should().BeSameAs(npc.WrappedNpc);
+        }
+
+        [Theory]
+        [InlineData(NpcType.BlueSlime, NpcType.GreenSlime)]
+        [InlineData(NpcType.BlueSlime, NpcType.None)]
+        public void NpcSettingDefaults_ModifyType_IsCorrect(NpcType oldType, NpcType newType) {
+            _npcService.NpcSettingDefaults += (sender, args) => {
+                args.Type = newType;
+            };
+
+            var npc = _npcService.SpawnNpc(oldType, Vector2.Zero);
+
+            npc.Type.Should().Be(newType);
+        }
+
+        [Fact]
+        public void NpcSettingDefaults_Handled_IsCorrect() {
+            _npcService.NpcSettingDefaults += (sender, args) => {
+                args.Handled = true;
+            };
+
+            var npc = _npcService.SpawnNpc(NpcType.BlueSlime, Vector2.Zero);
+
+            npc.Type.Should().Be(NpcType.None);
+        }
+
+        [Fact]
+        public void NpcSettingDefaults_NegativeType_RunsOnce() {
+            var count = 0;
+            _npcService.NpcSettingDefaults += (sender, args) => {
+                ++count;
+            };
+
+            _npcService.SpawnNpc(NpcType.GreenSlime, Vector2.Zero);
+
+            count.Should().Be(1);
+        }
+
+        [Fact]
+        public void NpcSetDefaults_IsCorrect() {
+            INpc argsNpc = null;
+            _npcService.NpcSetDefaults += (sender, args) => {
+                argsNpc = args.Npc;
+            };
+
+            var npc = _npcService.SpawnNpc(NpcType.BlueSlime, Vector2.Zero);
+
+            argsNpc.Should().NotBeNull();
+            argsNpc.WrappedNpc.Should().BeSameAs(npc.WrappedNpc);
+        }
+
+        [Fact]
+        public void NpcSetDefaults_NegativeType_RunsOnce() {
+            var count = 0;
+            _npcService.NpcSetDefaults += (sender, args) => {
+                ++count;
+            };
+
+            _npcService.SpawnNpc(NpcType.GreenSlime, Vector2.Zero);
+
+            count.Should().Be(1);
+        }
+
+        [Fact]
+        public void NpcUpdating_IsCorrect() {
+            INpc argsNpc = null;
+            _npcService.NpcUpdating += (sender, args) => {
+                argsNpc = args.Npc;
+            };
+            var npc = _npcService.SpawnNpc(NpcType.BlueSlime, Vector2.Zero);
+
+            npc.WrappedNpc.UpdateNPC(npc.Index);
+
+            argsNpc.Should().NotBeNull();
+            argsNpc.WrappedNpc.Should().BeSameAs(npc.WrappedNpc);
+        }
+
+        [Fact]
+        public void NpcUpdatingAi_IsCorrect() {
+            INpc argsNpc = null;
+            _npcService.NpcUpdatingAi += (sender, args) => {
+                argsNpc = args.Npc;
+            };
+            var npc = _npcService.SpawnNpc(NpcType.BlueSlime, Vector2.Zero);
+
+            npc.WrappedNpc.AI();
+
+            argsNpc.Should().NotBeNull();
+            argsNpc.WrappedNpc.Should().BeSameAs(npc.WrappedNpc);
+        }
+
+        [Fact]
+        public void NpcUpdatedAi_IsCorrect() {
+            INpc argsNpc = null;
+            _npcService.NpcUpdatedAi += (sender, args) => {
+                argsNpc = args.Npc;
+            };
+            var npc = _npcService.SpawnNpc(NpcType.BlueSlime, Vector2.Zero);
+
+            npc.WrappedNpc.AI();
+
+            argsNpc.Should().NotBeNull();
+            argsNpc.WrappedNpc.Should().BeSameAs(npc.WrappedNpc);
+        }
+
+        [Fact]
+        public void NpcUpdated_IsCorrect() {
+            INpc argsNpc = null;
+            _npcService.NpcUpdated += (sender, args) => {
+                argsNpc = args.Npc;
+            };
+            var npc = _npcService.SpawnNpc(NpcType.BlueSlime, Vector2.Zero);
+
+            npc.WrappedNpc.UpdateNPC(npc.Index);
+
+            argsNpc.Should().NotBeNull();
+            argsNpc.WrappedNpc.Should().BeSameAs(npc.WrappedNpc);
+        }
+
+        [Theory]
+        [InlineData(10, 0.4, 1)]
+        [InlineData(100, -0.4, -1)]
+        public void NpcDamaging_IsCorrect(int damage, float knockback, int hitDirection) {
+            INpc argsNpc = null;
+            _npcService.NpcDamaging += (sender, args) => {
+                argsNpc = args.Npc;
+                args.Damage.Should().Be(damage);
+                args.Knockback.Should().Be(knockback);
+                args.HitDirection.Should().Be(hitDirection);
+                args.PlayerResponsible.Should().BeNull();
+            };
+            var npc = _npcService.SpawnNpc(NpcType.BlueSlime, Vector2.Zero);
+
+            npc.Damage(damage, knockback, hitDirection);
+
+            argsNpc.Should().NotBeNull();
+            argsNpc.WrappedNpc.Should().BeSameAs(npc.WrappedNpc);
+        }
+        
+        [Fact]
+        public void NpcDamaging_Handled_IsCorrect() {
+            _npcService.NpcDamaging += (sender, args) => {
+                args.Handled = true;
+            };
+            var npc = _npcService.SpawnNpc(NpcType.BlueSlime, Vector2.Zero);
+
+            npc.Damage(10000, 0, 0);
+
+            npc.Hp.Should().Be(npc.MaxHp);
+        }
+
+        [Theory]
+        [InlineData(10, 0.4, 1)]
+        [InlineData(100, -0.4, -1)]
+        public void NpcDamaged_IsCorrect(int damage, float knockback, int hitDirection) {
+            INpc argsNpc = null;
+            _npcService.NpcDamaged += (sender, args) => {
+                argsNpc = args.Npc;
+                args.Damage.Should().Be(damage);
+                args.Knockback.Should().Be(knockback);
+                args.HitDirection.Should().Be(hitDirection);
+                args.PlayerResponsible.Should().BeNull();
+            };
+            var npc = _npcService.SpawnNpc(NpcType.BlueSlime, Vector2.Zero);
+
+            npc.Damage(damage, knockback, hitDirection);
+
+            argsNpc.Should().NotBeNull();
+            argsNpc.WrappedNpc.Should().BeSameAs(npc.WrappedNpc);
+        }
+        
+        [Theory]
+        [InlineData(NpcType.BlueSlime, NpcType.GreenSlime)]
+        [InlineData(NpcType.BlueSlime, NpcType.None)]
+        public void NpcTransforming_IsCorrect(NpcType oldType, NpcType newType) {
+            INpc argsNpc = null;
+            _npcService.NpcTransforming += (sender, args) => {
+                argsNpc = args.Npc;
+            };
+            var npc = _npcService.SpawnNpc(oldType, Vector2.Zero);
+
+            npc.Transform(newType);
+
+            argsNpc.Should().NotBeNull();
+            argsNpc.WrappedNpc.Should().BeSameAs(npc.WrappedNpc);
+        }
+
+        [Fact]
+        public void NpcTransforming_Handled_IsCorrect() {
+            _npcService.NpcTransforming += (sender, args) => {
+                args.Handled = true;
+            };
+            var npc = _npcService.SpawnNpc(NpcType.BlueSlime, Vector2.Zero);
+
+            npc.Transform(NpcType.GreenSlime);
+
+            npc.Type.Should().Be(NpcType.BlueSlime);
+        }
+
+        [Fact]
+        public void NpcTransformed_IsCorrect() {
+            INpc argsNpc = null;
+            _npcService.NpcTransformed += (sender, args) => {
+                argsNpc = args.Npc;
+            };
+            var npc = _npcService.SpawnNpc(NpcType.BlueSlime, Vector2.Zero);
+
+            npc.Transform(NpcType.BlueSlime);
+
+            argsNpc.Should().NotBeNull();
+            argsNpc.WrappedNpc.Should().BeSameAs(npc.WrappedNpc);
+        }
+
+        [Fact]
+        public void NpcDroppingLootItem_IsCorrect() {
+            INpc argsNpc = null;
+            _npcService.NpcDroppingLootItem += (sender, args) => {
+                argsNpc = args.Npc;
+            };
+            var npc = _npcService.SpawnNpc(NpcType.BlueSlime, Vector2.Zero);
+
+            npc.Kill();
+
+            argsNpc.Should().NotBeNull();
+            argsNpc.WrappedNpc.Should().BeSameAs(npc.WrappedNpc);
+        }
+
+        [Fact]
+        public void NpcDroppingLootItem_Handled_IsCorrect() {
+            _npcService.NpcDroppingLootItem += (sender, args) => {
+                args.Handled = true;
+            };
+            var npc = _npcService.SpawnNpc(NpcType.BlueSlime, Vector2.Zero);
+
+            npc.Kill();
+
+            _itemService.VerifyNoOtherCalls();
+        }
+
+        [Fact]
+        public void NpcDroppedLootItem_IsCorrect() {
+            INpc argsNpc = null;
+            _npcService.NpcDroppedLootItem += (sender, args) => {
+                argsNpc = args.Npc;
+            };
+            var npc = _npcService.SpawnNpc(NpcType.BlueSlime, Vector2.Zero);
+
+            npc.Kill();
+
+            argsNpc.Should().NotBeNull();
+            argsNpc.WrappedNpc.Should().BeSameAs(npc.WrappedNpc);
+        }
+
+        [Fact]
+        public void NpcKilled_IsCorrect() {
+            INpc argsNpc = null;
+            _npcService.NpcKilled += (sender, args) => {
+                argsNpc = args.Npc;
+            };
+            var npc = _npcService.SpawnNpc(NpcType.BlueSlime, Vector2.Zero);
+
+            npc.Kill();
+
+            argsNpc.Should().NotBeNull();
+            argsNpc.WrappedNpc.Should().BeSameAs(npc.WrappedNpc);
+        }
+
+        [Fact]
         public void GetEnumerator_IsCorrect() {
             var npcs = _npcService.ToList();
 
             for (var i = 0; i < npcs.Count; ++i) {
                 npcs[i].WrappedNpc.Should().BeSameAs(Terraria.Main.npc[i]);
             }
+        }
+
+        [Theory]
+        [InlineData(NpcType.BlueSlime)]
+        [InlineData(NpcType.GreenSlime)]
+        public void SpawnNpc_IsCorrect(NpcType type) {
+            var npc = _npcService.SpawnNpc(type, Vector2.Zero);
+
+            npc.Type.Should().Be(type);
+        }
+
+        [Fact]
+        public void SpawnNpc_InvalidAiValues_ThrowsArgumentException() {
+            Func<INpc> func = () => _npcService.SpawnNpc(NpcType.BlueSlime, Vector2.Zero, new float[8]);
+
+            func.Should().Throw<ArgumentException>();
         }
     }
 }

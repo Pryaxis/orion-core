@@ -19,10 +19,18 @@ namespace Orion.Networking {
         public event EventHandler<ReceivingPacketEventArgs> ReceivingPacket;
         public event EventHandler<SentPacketEventArgs> SentPacket;
         public event EventHandler<SendingPacketEventArgs> SendingPacket;
+        public event EventHandler<ClientDisconnectedEventArgs> ClientDisconnected;
 
         public OrionNetworkService() {
             Hooks.Net.ReceiveData = ReceiveDataHandler;
             Hooks.Net.SendBytes = SendBytesHandler;
+            Hooks.Net.RemoteClient.PreReset = PreResetHandler;
+        }
+
+        protected override void Dispose(bool disposeManaged) {
+            Hooks.Net.ReceiveData = null;
+            Hooks.Net.SendBytes = null;
+            Hooks.Net.RemoteClient.PreReset = null;
         }
 
         public void SendPacket(TerrariaPacketType packetType, int targetIndex = -1, int exceptIndex = -1, string text = "",
@@ -109,6 +117,12 @@ namespace Orion.Networking {
 
                 return HookResult.Continue;
             }
+        }
+
+        private HookResult PreResetHandler(Terraria.RemoteClient remoteClient) {
+            var args = new ClientDisconnectedEventArgs(remoteClient);
+            ClientDisconnected?.Invoke(this, args);
+            return HookResult.Continue;
         }
 
 

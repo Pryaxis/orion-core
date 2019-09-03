@@ -50,6 +50,13 @@ namespace Orion.Items {
             Hooks.Item.PostUpdate = PostUpdateHandler;
         }
 
+        protected override void Dispose(bool disposeManaged) {
+            Hooks.Item.PreSetDefaultsById = null;
+            Hooks.Item.PostSetDefaultsById = null;
+            Hooks.Item.PreUpdate = null;
+            Hooks.Item.PostUpdate = null;
+        }
+
         public IEnumerator<IItem> GetEnumerator() {
             for (var i = 0; i < Count; ++i) {
                 yield return this[i];

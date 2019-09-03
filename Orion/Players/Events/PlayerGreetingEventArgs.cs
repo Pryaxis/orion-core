@@ -3,20 +3,20 @@ using System.ComponentModel;
 
 namespace Orion.Players.Events {
     /// <summary>
-    /// Provides data for the <see cref="IPlayerService.PlayerJoining"/> event.
+    /// Provides data for the <see cref="IPlayerService.PlayerGreeting"/> event.
     /// </summary>
-    public sealed class PlayerJoiningEventArgs : HandledEventArgs {
+    public sealed class PlayerGreetingEventArgs : HandledEventArgs {
         /// <summary>
-        /// Gets the player that is joining.
+        /// Gets the player that is being greeted.
         /// </summary>
         public IPlayer Player { get; }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="PlayerJoiningEventArgs"/> class with the specified player.
+        /// Initializes a new instance of the <see cref="PlayerGreetingEventArgs"/> class with the specified player.
         /// </summary>
-        /// <param name="player">The player that is joining the game.</param>
+        /// <param name="player">The player.</param>
         /// <exception cref="ArgumentNullException"><paramref name="player"/> is null.</exception>
-        public PlayerJoiningEventArgs(IPlayer player) {
+        public PlayerGreetingEventArgs(IPlayer player) {
             Player = player ?? throw new ArgumentNullException(nameof(player));
         }
     }

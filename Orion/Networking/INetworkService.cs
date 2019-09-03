@@ -5,7 +5,7 @@ using Orion.Networking.Packets;
 
 namespace Orion.Networking {
     /// <summary>
-    /// Provides a mechanism for managing the network. All implementations must be thread-safe.
+    /// Provides a mechanism for managing the network.
     /// </summary>
     public interface INetworkService : IService {
         /// <summary>
@@ -27,6 +27,11 @@ namespace Orion.Networking {
         /// Occurs when a packet is being sent. This event can be handled.
         /// </summary>
         event EventHandler<SendingPacketEventArgs> SendingPacket;
+
+        /// <summary>
+        /// Occurs when a client is disconnected.
+        /// </summary>
+        event EventHandler<ClientDisconnectedEventArgs> ClientDisconnected;
 
         /// <summary>
         /// Sends the specified packet to the target index excepting the given except index.

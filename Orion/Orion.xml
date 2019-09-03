@@ -14,6 +14,11 @@
             Gets the entity's index.
             </summary>
         </member>
+        <member name="P:Orion.Entities.IEntity.IsActive">
+            <summary>
+            Gets or sets a value indicating whether the entity is active.
+            </summary>
+        </member>
         <member name="P:Orion.Entities.IEntity.Position">
             <summary>
             Gets or sets the entity's position in the world.
@@ -333,6 +338,23 @@
             Orion's implementation of <see cref="T:Orion.Items.IItemService"/>.
             </summary>
         </member>
+        <member name="T:Orion.Networking.Events.ClientDisconnectedEventArgs">
+            <summary>
+            Provides data for the <see cref="E:Orion.Networking.INetworkService.ClientDisconnected"/> event.
+            </summary>
+        </member>
+        <member name="P:Orion.Networking.Events.ClientDisconnectedEventArgs.Client">
+            <summary>
+            Gets the client that disconnected.
+            </summary>
+        </member>
+        <member name="M:Orion.Networking.Events.ClientDisconnectedEventArgs.#ctor(Terraria.RemoteClient)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Orion.Networking.Events.ClientDisconnectedEventArgs"/> with the specified client.
+            </summary>
+            <param name="client">The client.</param>
+            <exception cref="T:System.ArgumentNullException"><paramref name="client"/> is <c>null</c>.</exception>
+        </member>
         <member name="T:Orion.Networking.Events.ReceivedPacketEventArgs">
             <summary>
             Provides data for the <see cref="E:Orion.Networking.INetworkService.ReceivedPacket"/> event.
@@ -461,7 +483,7 @@
         </member>
         <member name="T:Orion.Networking.INetworkService">
             <summary>
-            Provides a mechanism for managing the network. All implementations must be thread-safe.
+            Provides a mechanism for managing the network.
             </summary>
         </member>
         <member name="E:Orion.Networking.INetworkService.ReceivedPacket">
@@ -482,6 +504,11 @@
         <member name="E:Orion.Networking.INetworkService.SendingPacket">
             <summary>
             Occurs when a packet is being sent. This event can be handled.
+            </summary>
+        </member>
+        <member name="E:Orion.Networking.INetworkService.ClientDisconnected">
+            <summary>
+            Occurs when a client is disconnected.
             </summary>
         </member>
         <member name="M:Orion.Networking.INetworkService.SendPacket(Orion.Networking.Packets.TerrariaPacketType,System.Int32,System.Int32,System.String,System.Int32,System.Single,System.Single,System.Single,System.Int32,System.Int32,System.Int32)">
@@ -1272,6 +1299,88 @@
             Indicates that tier 3 of the Old One's Army has been defeated.
             </summary>
         </member>
+        <member name="T:Orion.Npcs.Events.NpcDamagedEventArgs">
+            <summary>
+            Provides data for the <see cref="E:Orion.Npcs.INpcService.NpcDamaged"/> event.
+            </summary>
+        </member>
+        <member name="P:Orion.Npcs.Events.NpcDamagedEventArgs.Npc">
+            <summary>
+            Gets the NPC that was damaged.
+            </summary>
+        </member>
+        <member name="P:Orion.Npcs.Events.NpcDamagedEventArgs.Damage">
+            <summary>
+            Gets or sets the damage.
+            </summary>
+        </member>
+        <member name="P:Orion.Npcs.Events.NpcDamagedEventArgs.Knockback">
+            <summary>
+            Gets or sets the knockback.
+            </summary>
+        </member>
+        <member name="P:Orion.Npcs.Events.NpcDamagedEventArgs.HitDirection">
+            <summary>
+            Gets or sets the hit direction.
+            </summary>
+        </member>
+        <member name="P:Orion.Npcs.Events.NpcDamagedEventArgs.IsCriticalHit">
+            <summary>
+            Gets or sets a value indicating whether the hit is critical.
+            </summary>
+        </member>
+        <member name="P:Orion.Npcs.Events.NpcDamagedEventArgs.PlayerResponsible">
+            <summary>
+            Gets the player responsible for damaging the NPC.
+            </summary>
+        </member>
+        <member name="M:Orion.Npcs.Events.NpcDamagedEventArgs.#ctor(Orion.Npcs.INpc)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Orion.Npcs.Events.NpcDamagedEventArgs"/> class with the specified NPC.
+            </summary>
+            <param name="npc">The NPC.</param>
+        </member>
+        <member name="T:Orion.Npcs.Events.NpcDamagingEventArgs">
+            <summary>
+            Provides data for the <see cref="E:Orion.Npcs.INpcService.NpcDamaging"/> event.
+            </summary>
+        </member>
+        <member name="P:Orion.Npcs.Events.NpcDamagingEventArgs.Npc">
+            <summary>
+            Gets the NPC that is being damaged.
+            </summary>
+        </member>
+        <member name="P:Orion.Npcs.Events.NpcDamagingEventArgs.Damage">
+            <summary>
+            Gets or sets the damage.
+            </summary>
+        </member>
+        <member name="P:Orion.Npcs.Events.NpcDamagingEventArgs.Knockback">
+            <summary>
+            Gets or sets the knockback.
+            </summary>
+        </member>
+        <member name="P:Orion.Npcs.Events.NpcDamagingEventArgs.HitDirection">
+            <summary>
+            Gets or sets the hit direction.
+            </summary>
+        </member>
+        <member name="P:Orion.Npcs.Events.NpcDamagingEventArgs.IsCriticalHit">
+            <summary>
+            Gets or sets a value indicating whether the hit is critical.
+            </summary>
+        </member>
+        <member name="P:Orion.Npcs.Events.NpcDamagingEventArgs.PlayerResponsible">
+            <summary>
+            Gets the player responsible for damaging the NPC.
+            </summary>
+        </member>
+        <member name="M:Orion.Npcs.Events.NpcDamagingEventArgs.#ctor(Orion.Npcs.INpc)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Orion.Npcs.Events.NpcDamagingEventArgs"/> class with the specified NPC.
+            </summary>
+            <param name="npc">The NPC.</param>
+        </member>
         <member name="T:Orion.Npcs.Events.NpcDroppedLootItemEventArgs">
             <summary>
             Provides data for the <see cref="E:Orion.Npcs.INpcService.NpcDroppedLootItem"/> event.
@@ -1430,88 +1539,6 @@
             Gets or sets the NPC's target.
             </summary>
         </member>
-        <member name="T:Orion.Npcs.Events.NpcStrikingEventArgs">
-            <summary>
-            Provides data for the <see cref="E:Orion.Npcs.INpcService.NpcStriking"/> event.
-            </summary>
-        </member>
-        <member name="P:Orion.Npcs.Events.NpcStrikingEventArgs.Npc">
-            <summary>
-            Gets the NPC that is being struck.
-            </summary>
-        </member>
-        <member name="P:Orion.Npcs.Events.NpcStrikingEventArgs.Damage">
-            <summary>
-            Gets or sets the damage.
-            </summary>
-        </member>
-        <member name="P:Orion.Npcs.Events.NpcStrikingEventArgs.Knockback">
-            <summary>
-            Gets or sets the knockback.
-            </summary>
-        </member>
-        <member name="P:Orion.Npcs.Events.NpcStrikingEventArgs.HitDirection">
-            <summary>
-            Gets or sets the hit direction.
-            </summary>
-        </member>
-        <member name="P:Orion.Npcs.Events.NpcStrikingEventArgs.IsCriticalHit">
-            <summary>
-            Gets or sets a value indicating whether the hit is critical.
-            </summary>
-        </member>
-        <member name="P:Orion.Npcs.Events.NpcStrikingEventArgs.StrikePlayer">
-            <summary>
-            Gets the strike player.
-            </summary>
-        </member>
-        <member name="M:Orion.Npcs.Events.NpcStrikingEventArgs.#ctor(Orion.Npcs.INpc)">
-            <summary>
-            Initializes a new instance of the <see cref="T:Orion.Npcs.Events.NpcStrikingEventArgs"/> class with the specified NPC.
-            </summary>
-            <param name="npc">The NPC.</param>
-        </member>
-        <member name="T:Orion.Npcs.Events.NpcStruckEventArgs">
-            <summary>
-            Provides data for the <see cref="E:Orion.Npcs.INpcService.NpcStruck"/> event.
-            </summary>
-        </member>
-        <member name="P:Orion.Npcs.Events.NpcStruckEventArgs.Npc">
-            <summary>
-            Gets the NPC that was struck.
-            </summary>
-        </member>
-        <member name="P:Orion.Npcs.Events.NpcStruckEventArgs.Damage">
-            <summary>
-            Gets or sets the damage.
-            </summary>
-        </member>
-        <member name="P:Orion.Npcs.Events.NpcStruckEventArgs.Knockback">
-            <summary>
-            Gets or sets the knockback.
-            </summary>
-        </member>
-        <member name="P:Orion.Npcs.Events.NpcStruckEventArgs.HitDirection">
-            <summary>
-            Gets or sets the hit direction.
-            </summary>
-        </member>
-        <member name="P:Orion.Npcs.Events.NpcStruckEventArgs.IsCriticalHit">
-            <summary>
-            Gets or sets a value indicating whether the hit is critical.
-            </summary>
-        </member>
-        <member name="P:Orion.Npcs.Events.NpcStruckEventArgs.StrikePlayer">
-            <summary>
-            Gets the strike player.
-            </summary>
-        </member>
-        <member name="M:Orion.Npcs.Events.NpcStruckEventArgs.#ctor(Orion.Npcs.INpc)">
-            <summary>
-            Initializes a new instance of the <see cref="T:Orion.Npcs.Events.NpcStruckEventArgs"/> class with the specified NPC.
-            </summary>
-            <param name="npc">The NPC.</param>
-        </member>
         <member name="T:Orion.Npcs.Events.NpcTransformedEventArgs">
             <summary>
             Provides data for the <see cref="E:Orion.Npcs.INpcService.NpcTransformed"/> event.
@@ -1590,10 +1617,40 @@
             Gets or sets the NPC's type.
             </summary>
         </member>
+        <member name="P:Orion.Npcs.INpc.Hp">
+            <summary>
+            Gets or sets the NPC's HP.
+            </summary>
+        </member>
+        <member name="P:Orion.Npcs.INpc.MaxHp">
+            <summary>
+            Gets or sets the NPC's max HP.
+            </summary>
+        </member>
         <member name="P:Orion.Npcs.INpc.WrappedNpc">
             <summary>
             Gets the wrapped Terraria NPC instance.
             </summary>
+        </member>
+        <member name="M:Orion.Npcs.INpc.Damage(System.Int32,System.Single,System.Int32,System.Boolean)">
+            <summary>
+            Damages the NPC with the specified damage, knockback, hit direction, and criticality.
+            </summary>
+            <param name="damage">The damage.</param>
+            <param name="knockback">The knockback.</param>
+            <param name="hitDirection">The hit direction.</param>
+            <param name="isCritical">A value indicating whether the hit should be critical.</param>
+        </member>
+        <member name="M:Orion.Npcs.INpc.Kill">
+            <summary>
+            Kills the NPC.
+            </summary>
+        </member>
+        <member name="M:Orion.Npcs.INpc.Transform(Orion.Npcs.NpcType)">
+            <summary>
+            Transforms the NPC to a new type.
+            </summary>
+            <param name="newType">The new type.</param>
         </member>
         <member name="T:Orion.Npcs.INpcService">
             <summary>
@@ -1635,11 +1692,6 @@
             Occurs when an NPC is being updated.
             </summary>
         </member>
-        <member name="E:Orion.Npcs.INpcService.NpcUpdated">
-            <summary>
-            Occurs when an NPC is updated.
-            </summary>
-        </member>
         <member name="E:Orion.Npcs.INpcService.NpcUpdatingAi">
             <summary>
             Occurs when an NPC's AI is being updated.
@@ -1650,14 +1702,19 @@
             Occurs when an NPC's AI is updated.
             </summary>
         </member>
-        <member name="E:Orion.Npcs.INpcService.NpcStriking">
+        <member name="E:Orion.Npcs.INpcService.NpcUpdated">
             <summary>
-            Occurs when an NPC is being struck.
+            Occurs when an NPC is updated.
             </summary>
         </member>
-        <member name="E:Orion.Npcs.INpcService.NpcStruck">
+        <member name="E:Orion.Npcs.INpcService.NpcDamaging">
             <summary>
-            Occurs when an NPC is struck.
+            Occurs when an NPC is being damaged.
+            </summary>
+        </member>
+        <member name="E:Orion.Npcs.INpcService.NpcDamaged">
+            <summary>
+            Occurs when an NPC is damaged.
             </summary>
         </member>
         <member name="E:Orion.Npcs.INpcService.NpcTransforming">
@@ -1712,55 +1769,21 @@
             Orion's implementation of <see cref="T:Orion.Npcs.INpcService"/>.
             </summary>
         </member>
-        <member name="T:Orion.Players.Events.PlayerJoinedEventArgs">
+        <member name="T:Orion.Players.Events.PlayerGreetingEventArgs">
             <summary>
-            Provides data for the <see cref="E:Orion.Players.IPlayerService.PlayerJoined"/> event.
+            Provides data for the <see cref="E:Orion.Players.IPlayerService.PlayerGreeting"/> event.
             </summary>
         </member>
-        <member name="P:Orion.Players.Events.PlayerJoinedEventArgs.Player">
+        <member name="P:Orion.Players.Events.PlayerGreetingEventArgs.Player">
             <summary>
-            Gets the player that joined.
+            Gets the player that is being greeted.
             </summary>
         </member>
-        <member name="M:Orion.Players.Events.PlayerJoinedEventArgs.#ctor(Orion.Players.IPlayer)">
+        <member name="M:Orion.Players.Events.PlayerGreetingEventArgs.#ctor(Orion.Players.IPlayer)">
             <summary>
-            Initializes a new instance of the <see cref="T:Orion.Players.Events.PlayerJoinedEventArgs"/> class with the specified player.
+            Initializes a new instance of the <see cref="T:Orion.Players.Events.PlayerGreetingEventArgs"/> class with the specified player.
             </summary>
-            <param name="player">The player that joined.</param>
-            <exception cref="T:System.ArgumentNullException"><paramref name="player"/> is null.</exception>
-        </member>
-        <member name="T:Orion.Players.Events.PlayerJoiningEventArgs">
-            <summary>
-            Provides data for the <see cref="E:Orion.Players.IPlayerService.PlayerJoining"/> event.
-            </summary>
-        </member>
-        <member name="P:Orion.Players.Events.PlayerJoiningEventArgs.Player">
-            <summary>
-            Gets the player that is joining.
-            </summary>
-        </member>
-        <member name="M:Orion.Players.Events.PlayerJoiningEventArgs.#ctor(Orion.Players.IPlayer)">
-            <summary>
-            Initializes a new instance of the <see cref="T:Orion.Players.Events.PlayerJoiningEventArgs"/> class with the specified player.
-            </summary>
-            <param name="player">The player that is joining the game.</param>
-            <exception cref="T:System.ArgumentNullException"><paramref name="player"/> is null.</exception>
-        </member>
-        <member name="T:Orion.Players.Events.PlayerQuitEventArgs">
-            <summary>
-            Provides data for the <see cref="E:Orion.Players.IPlayerService.PlayerQuit"/> event.
-            </summary>
-        </member>
-        <member name="P:Orion.Players.Events.PlayerQuitEventArgs.Player">
-            <summary>
-            Gets the player that quit.
-            </summary>
-        </member>
-        <member name="M:Orion.Players.Events.PlayerQuitEventArgs.#ctor(Orion.Players.IPlayer)">
-            <summary>
-            Initializes a new instance of the <see cref="T:Orion.Players.Events.PlayerQuitEventArgs"/> class with the specified player.
-            </summary>
-            <param name="player">The player that quit the game.</param>
+            <param name="player">The player.</param>
             <exception cref="T:System.ArgumentNullException"><paramref name="player"/> is null.</exception>
         </member>
         <member name="T:Orion.Players.Events.PlayerUpdatedEventArgs">
@@ -1809,17 +1832,12 @@
         </member>
         <member name="T:Orion.Players.IPlayerService">
             <summary>
-            Provides a mechanism for managing players. All implementations must be thread-safe.
+            Provides a mechanism for managing players.
             </summary>
         </member>
-        <member name="E:Orion.Players.IPlayerService.PlayerJoining">
+        <member name="E:Orion.Players.IPlayerService.PlayerGreeting">
             <summary>
-            Occurs when a player is joining the game.
-            </summary>
-        </member>
-        <member name="E:Orion.Players.IPlayerService.PlayerJoined">
-            <summary>
-            Occurs when a player has joined the game.
+            Occurs when a player is being greeted.
             </summary>
         </member>
         <member name="E:Orion.Players.IPlayerService.PlayerUpdating">
@@ -1830,11 +1848,6 @@
         <member name="E:Orion.Players.IPlayerService.PlayerUpdated">
             <summary>
             Occurs when a player is updated.
-            </summary>
-        </member>
-        <member name="E:Orion.Players.IPlayerService.PlayerQuit">
-            <summary>
-            Occurs when a player has quit the game.
             </summary>
         </member>
         <member name="T:Orion.Players.OrionPlayer">
@@ -1971,9 +1984,24 @@
             Gets or sets the projectile type.
             </summary>
         </member>
+        <member name="P:Orion.Projectiles.IProjectile.Damage">
+            <summary>
+            Gets or sets the damage.
+            </summary>
+        </member>
+        <member name="P:Orion.Projectiles.IProjectile.Knockback">
+            <summary>
+            Gets or sets the knockback.
+            </summary>
+        </member>
         <member name="P:Orion.Projectiles.IProjectile.WrappedProjectile">
             <summary>
             Gets the wrapped Terraria Projectile instance.
+            </summary>
+        </member>
+        <member name="M:Orion.Projectiles.IProjectile.Remove">
+            <summary>
+            Removes the projectile.
             </summary>
         </member>
         <member name="T:Orion.Projectiles.IProjectileService">

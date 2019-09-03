@@ -30,26 +30,28 @@ namespace Orion.Players {
 
                 var player = _players[index];
                 Debug.Assert(player != null, $"{nameof(player)} should not be null.");
-                Debug.Assert(player.WrappedPlayer != null, 
-                             $"{nameof(player.WrappedPlayer)} should not be null.");
+                Debug.Assert(player.WrappedPlayer != null, $"{nameof(player.WrappedPlayer)} should not be null.");
                 return player;
             }
         }
 
-        public event EventHandler<PlayerJoiningEventArgs> PlayerJoining;
-        public event EventHandler<PlayerJoinedEventArgs> PlayerJoined;
+        public event EventHandler<PlayerGreetingEventArgs> PlayerGreeting;
         public event EventHandler<PlayerUpdatingEventArgs> PlayerUpdating;
         public event EventHandler<PlayerUpdatedEventArgs> PlayerUpdated;
-        public event EventHandler<PlayerQuitEventArgs> PlayerQuit;
 
         public OrionPlayerService() {
+
             _players = new IPlayer[Terraria.Main.maxPlayers];
             
             Hooks.Player.PreGreet = PreGreetHandler;
-            Hooks.Player.PostGreet = PostGreetHandler;
             Hooks.Player.PreUpdate = PreUpdateHandler;
             Hooks.Player.PostUpdate = PostUpdateHandler;
-            Hooks.Net.RemoteClient.PreReset = PreResetHandler;
+        }
+
+        protected override void Dispose(bool disposeManaged) {
+            Hooks.Player.PreGreet = null;
+            Hooks.Player.PreUpdate = null;
+            Hooks.Player.PostUpdate = null;
         }
 
         public IEnumerator<IPlayer> GetEnumerator() {
@@ -65,17 +67,9 @@ namespace Orion.Players {
             Debug.Assert(playerIndex >= 0 && playerIndex < Count, $"{nameof(playerIndex)} should be a valid index.");
 
             var player = this[playerIndex];
-            var args = new PlayerJoiningEventArgs(player);
-            PlayerJoining?.Invoke(this, args);
+            var args = new PlayerGreetingEventArgs(player);
+            PlayerGreeting?.Invoke(this, args);
             return args.Handled ? HookResult.Cancel : HookResult.Continue;
-        }
-
-        private void PostGreetHandler(int playerIndex) {
-            Debug.Assert(playerIndex >= 0 && playerIndex < Count, $"{nameof(playerIndex)} should be a valid index.");
-
-            var player = this[playerIndex];
-            var args = new PlayerJoinedEventArgs(player);
-            PlayerJoined?.Invoke(this, args);
         }
 
         private HookResult PreUpdateHandler(Terraria.Player terrariaPlayer, ref int playerIndex) {
@@ -94,19 +88,6 @@ namespace Orion.Players {
             var player = this[playerIndex];
             var args = new PlayerUpdatedEventArgs(player);
             PlayerUpdated?.Invoke(this, args);
-        }
-
-        private HookResult PreResetHandler(Terraria.RemoteClient remoteClient) {
-            if (remoteClient.Socket == null) {
-                return HookResult.Continue;
-            }
-
-            Debug.Assert(remoteClient.Id >= 0 && remoteClient.Id < Count, $"{nameof(remoteClient.Id)} should be a valid index.");
-
-            var player = this[remoteClient.Id];
-            var args = new PlayerQuitEventArgs(player);
-            PlayerQuit?.Invoke(this, args);
-            return HookResult.Continue;
         }
     }
 }
