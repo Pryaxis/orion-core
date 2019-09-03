@@ -1759,6 +1759,40 @@
             <param name="player">The player that quit the game.</param>
             <exception cref="T:System.ArgumentNullException"><paramref name="player"/> is null.</exception>
         </member>
+        <member name="T:Orion.Players.Events.PlayerUpdatedEventArgs">
+            <summary>
+            Provides data for the <see cref="E:Orion.Players.IPlayerService.PlayerUpdated"/> event.
+            </summary>
+        </member>
+        <member name="P:Orion.Players.Events.PlayerUpdatedEventArgs.Player">
+            <summary>
+            Gets the player that was updated.
+            </summary>
+        </member>
+        <member name="M:Orion.Players.Events.PlayerUpdatedEventArgs.#ctor(Orion.Players.IPlayer)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Orion.Players.Events.PlayerUpdatedEventArgs"/> class with the specified player.
+            </summary>
+            <param name="player">The player.</param>
+            <exception cref="T:System.ArgumentNullException"><paramref name="player"/> is null.</exception>
+        </member>
+        <member name="T:Orion.Players.Events.PlayerUpdatingEventArgs">
+            <summary>
+            Provides data for the <see cref="E:Orion.Players.IPlayerService.PlayerUpdating"/> event.
+            </summary>
+        </member>
+        <member name="P:Orion.Players.Events.PlayerUpdatingEventArgs.Player">
+            <summary>
+            Gets the player that is being updated.
+            </summary>
+        </member>
+        <member name="M:Orion.Players.Events.PlayerUpdatingEventArgs.#ctor(Orion.Players.IPlayer)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Orion.Players.Events.PlayerUpdatingEventArgs"/> class with the specified player.
+            </summary>
+            <param name="player">The player.</param>
+            <exception cref="T:System.ArgumentNullException"><paramref name="player"/> is null.</exception>
+        </member>
         <member name="T:Orion.Players.IPlayer">
             <summary>
             Provides a wrapper around a Terraria.Player instance.
@@ -1782,6 +1816,16 @@
         <member name="E:Orion.Players.IPlayerService.PlayerJoined">
             <summary>
             Occurs when a player has joined the game.
+            </summary>
+        </member>
+        <member name="E:Orion.Players.IPlayerService.PlayerUpdating">
+            <summary>
+            Occurs when a player is being updated.
+            </summary>
+        </member>
+        <member name="E:Orion.Players.IPlayerService.PlayerUpdated">
+            <summary>
+            Occurs when a player is updated.
             </summary>
         </member>
         <member name="E:Orion.Players.IPlayerService.PlayerQuit">

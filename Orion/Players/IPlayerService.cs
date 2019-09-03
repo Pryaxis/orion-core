@@ -26,7 +26,7 @@ namespace Orion.Players {
         /// <summary>
         /// Occurs when a player is updated.
         /// </summary>
-        event EventHandler<PlayerUpdatedEventArgs> PlayerUpdated
+        event EventHandler<PlayerUpdatedEventArgs> PlayerUpdated;
 
         /// <summary>
         /// Occurs when a player has quit the game.
