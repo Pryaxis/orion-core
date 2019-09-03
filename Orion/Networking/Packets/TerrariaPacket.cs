@@ -69,8 +69,7 @@ namespace Orion.Networking.Packets {
                 var packet = packetCtor();
                 packet.ReadFromReader(reader, packetLength);
 
-                Debug.Assert(stream.Position - position == packetLength,
-                             "Packet should have been fully consumed.");
+                Debug.Assert(stream.Position - position == packetLength, "Packet should be fully consumed.");
 
                 return packet;
             }

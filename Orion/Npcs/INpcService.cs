@@ -95,12 +95,14 @@ namespace Orion.Npcs {
         event EventHandler<NpcKilledEventArgs> NpcKilled;
 
         /// <summary>
-        /// Spawns an NPC with the specified type at the position.
+        /// Spawns an NPC with the specified type at the position with the AI values.
         /// </summary>
-        /// <param name="type">The type.</param>
+        /// <param name="type">The NPC type.</param>
         /// <param name="position">The position.</param>
-        /// <param name="aiValues">The AI bytes to use, or <c>null</c> for none.</param>
-        /// <returns>The NPC, or <c>null</c> if none was spawned.</returns>
+        /// <param name="aiValues">
+        /// The AI values to use, or <c>null</c> for none. If not <c>null</c>, this should have length 4.
+        /// </param>
+        /// <returns>The resulting NPC, or <c>null</c> if none was spawned.</returns>
         /// <exception cref="ArgumentException"><paramref name="aiValues"/> does not have length 4.</exception>
         INpc SpawnNpc(NpcType type, Vector2 position, float[] aiValues = null);
     }

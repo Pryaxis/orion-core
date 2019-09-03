@@ -67,7 +67,7 @@ namespace Orion.Items {
             var itemIndex = Terraria.Item.NewItem(position, Vector2.Zero, (int)type,
                                                   stackSize, prefixGiven: (int)prefix);
 
-            Debug.Assert(itemIndex >= 0 && itemIndex < Count, $"{nameof(itemIndex)} should have been a valid index.");
+            Debug.Assert(itemIndex >= 0 && itemIndex < Count, $"{nameof(itemIndex)} should be a valid index.");
 
             Terraria.Item.itemCaches[(int)type] = oldItemCache;
             return this[itemIndex];

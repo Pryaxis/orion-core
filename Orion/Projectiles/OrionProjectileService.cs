@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
+using Microsoft.Xna.Framework;
 using Orion.Framework;
 using Orion.Projectiles.Events;
 using OTAPI;
@@ -65,6 +66,23 @@ namespace Orion.Projectiles {
         }
 
         IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
+
+        public IProjectile SpawnProjectile(ProjectileType type, Vector2 position, Vector2 velocity, int damage, float knockback,
+                                           float[] aiValues = null) {
+            if (aiValues != null && aiValues.Length != 2) {
+                throw new ArgumentException($"{nameof(aiValues)} must have length 2.", nameof(aiValues));
+            }
+
+            var ai0 = aiValues?[0] ?? 0;
+            var ai1 = aiValues?[1] ?? 0;
+            var projectileIndex = Terraria.Projectile.NewProjectile(position, velocity, (int)type, damage, knockback,
+                                                                    255, ai0, ai1);
+
+            Debug.Assert(projectileIndex >= 0 && projectileIndex < Count,
+                         $"{nameof(projectileIndex)} should be a valid index.");
+
+            return this[projectileIndex];
+        }
 
 
         private HookResult PreSetDefaultsByIdHandler(Terraria.Projectile terrariaProjectile, ref int type) {

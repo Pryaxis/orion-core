@@ -306,7 +306,7 @@
             <param name="position">The position.</param>
             <param name="stackSize">The stack size.</param>
             <param name="prefix">The prefix.</param>
-            <returns>The newly spawned item.</returns>
+            <returns>The resulting item.</returns>
         </member>
         <member name="T:Orion.Items.ItemPrefix">
             <summary>
@@ -1422,7 +1422,7 @@
         </member>
         <member name="P:Orion.Npcs.Events.NpcSpawningEventArgs.AiValues">
             <summary>
-            Gets the AI bytes.
+            Gets the AI values.
             </summary>
         </member>
         <member name="P:Orion.Npcs.Events.NpcSpawningEventArgs.NpcTarget">
@@ -1685,13 +1685,17 @@
             Occurs when an NPC was killed.
             </summary>
         </member>
-        <member name="M:Orion.Npcs.INpcService.SpawnNpc(Orion.Npcs.NpcType,Microsoft.Xna.Framework.Vector2)">
+        <member name="M:Orion.Npcs.INpcService.SpawnNpc(Orion.Npcs.NpcType,Microsoft.Xna.Framework.Vector2,System.Single[])">
             <summary>
-            Spawns an NPC with the specified type at the position.
+            Spawns an NPC with the specified type at the position with the AI values.
             </summary>
-            <param name="type">The type.</param>
+            <param name="type">The NPC type.</param>
             <param name="position">The position.</param>
-            <returns>The NPC, or <c>null</c> if none was spawned.</returns>
+            <param name="aiValues">
+            The AI values to use, or <c>null</c> for none. If not <c>null</c>, this should have length 4.
+            </param>
+            <returns>The resulting NPC, or <c>null</c> if none was spawned.</returns>
+            <exception cref="T:System.ArgumentException"><paramref name="aiValues"/> does not have length 4.</exception>
         </member>
         <member name="T:Orion.Npcs.NpcType">
             <summary>
@@ -2016,6 +2020,22 @@
             <summary>
             Occurs when a projectile was removed.
             </summary>
+        </member>
+        <member name="M:Orion.Projectiles.IProjectileService.SpawnProjectile(Orion.Projectiles.ProjectileType,Microsoft.Xna.Framework.Vector2,Microsoft.Xna.Framework.Vector2,System.Int32,System.Single,System.Single[])">
+            <summary>
+            Spawns a projectile with the specified type at the position with the velocity, damage, knockback, and AI
+            values.
+            </summary>
+            <param name="type">The projectile type.</param>
+            <param name="position">The position.</param>
+            <param name="velocity">The velocity.</param>
+            <param name="damage">The damage.</param>
+            <param name="knockback">The knockback.</param>
+            <param name="aiValues">The AI values, or <c>null</c> for none. If not <c>null</c>, this should have length 2.</param>
+            <returns>The resulting projectile.</returns>
+            <exception cref="T:System.ArgumentException">
+            <paramref name="aiValues"/> is not <c>null</c> and does not have length 2.
+            </exception>
         </member>
         <member name="T:Orion.Projectiles.OrionProjectile">
             <summary>
