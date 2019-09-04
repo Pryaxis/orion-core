@@ -1,6 +1,6 @@
 ﻿using Orion.Items;
 
-namespace Orion.World {
+namespace Orion.World.Chests {
     /// <summary>
     /// Provides a wrapper around a Terraria.Chest.
     /// </summary>
@@ -23,11 +23,6 @@ namespace Orion.World {
         /// <summary>
         /// Gets the items.
         /// </summary>
-        IItemArray Items { get; }
-
-        /// <summary>
-        /// Gets the wrapped chest.
-        /// </summary>
-        Terraria.Chest WrappedChest { get; }
+        //IItemArray Items { get; }
     }
 }

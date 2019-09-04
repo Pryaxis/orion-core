@@ -205,12 +205,12 @@
         </member>
         <member name="T:Orion.Items.IItem">
             <summary>
-            Provides a wrapper around a Terraria.Item.
+            Provides a wrapper around a Terraria.Item instance that may or may not exist within the world.
             </summary>
         </member>
         <member name="P:Orion.Items.IItem.Type">
             <summary>
-            Gets or sets the item type.
+            Gets the item type.
             </summary>
         </member>
         <member name="P:Orion.Items.IItem.StackSize">
@@ -218,14 +218,14 @@
             Gets or sets the item stack size.
             </summary>
         </member>
+        <member name="P:Orion.Items.IItem.Prefix">
+            <summary>
+            Gets the item prefix.
+            </summary>
+        </member>
         <member name="P:Orion.Items.IItem.MaxStackSize">
             <summary>
             Gets or sets the maximum item stack size.
-            </summary>
-        </member>
-        <member name="P:Orion.Items.IItem.Prefix">
-            <summary>
-            Gets or sets the item prefix.
             </summary>
         </member>
         <member name="P:Orion.Items.IItem.Rarity">
@@ -243,39 +243,26 @@
             Gets or sets the item's use time.
             </summary>
         </member>
+        <member name="M:Orion.Items.IItem.ApplyType(Orion.Items.ItemType)">
+            <summary>
+            Applies the given type to the item.
+            </summary>
+            <param name="type">The type.</param>
+        </member>
         <member name="M:Orion.Items.IItem.ApplyPrefix(Orion.Items.ItemPrefix)">
             <summary>
             Applies the given prefix to the item.
             </summary>
             <param name="prefix">The prefix.</param>
         </member>
-        <member name="T:Orion.Items.IItemArray">
+        <member name="T:Orion.Items.IItemList">
             <summary>
-            Provides a wrapper around an array of Terraria.Item instances.
-            </summary>
-        </member>
-        <member name="P:Orion.Items.IItemArray.Item(System.Int32)">
-            <summary>
-            Gets or sets the item at the specified index in the array.
-            </summary>
-            <param name="index">The index.</param>
-            <exception cref="T:System.IndexOutOfRangeException">
-            <paramref name="index"/> is negative or greater than or equal to <see cref="P:Orion.Items.IItemArray.Length"/>.
-            </exception>
-        </member>
-        <member name="P:Orion.Items.IItemArray.Length">
-            <summary>
-            Gets the array's length.
-            </summary>
-        </member>
-        <member name="P:Orion.Items.IItemArray.WrappedItemArray">
-            <summary>
-            Gets the wrapped array of Terraria item instances.
+            Provides a wrapper around an array of Terraria.Item instances that do not exist within the world.
             </summary>
         </member>
         <member name="T:Orion.Items.IItemService">
             <summary>
-            Provides a mechanism for managing items.
+            Provides a mechanism for managing world items.
             </summary>
         </member>
         <member name="E:Orion.Items.IItemService.SettingItemDefaults">
@@ -326,6 +313,11 @@
         <member name="T:Orion.Items.OrionItem">
             <summary>
             Orion's implementation of <see cref="T:Orion.Items.IItem"/>.
+            </summary>
+        </member>
+        <member name="T:Orion.Items.OrionItemList">
+            <summary>
+            Orion's implementation of <see cref="T:Orion.Items.IItemList"/>.
             </summary>
         </member>
         <member name="T:Orion.Items.OrionItemService">
@@ -1815,6 +1807,26 @@
             Provides a wrapper around a Terraria.Player instance.
             </summary>
         </member>
+        <member name="P:Orion.Players.IPlayer.Hp">
+            <summary>
+            Gets or sets the player's HP.
+            </summary>
+        </member>
+        <member name="P:Orion.Players.IPlayer.MaxHp">
+            <summary>
+            Gets or sets the player's max HP.
+            </summary>
+        </member>
+        <member name="P:Orion.Players.IPlayer.Mp">
+            <summary>
+            Gets or sets the player's MP.
+            </summary>
+        </member>
+        <member name="P:Orion.Players.IPlayer.MaxMp">
+            <summary>
+            Gets or sets the player's max MP.
+            </summary>
+        </member>
         <member name="T:Orion.Players.IPlayerService">
             <summary>
             Provides a mechanism for managing players.
@@ -2060,34 +2072,29 @@
             Specifies a projectile's type.
             </summary>
         </member>
-        <member name="T:Orion.World.IChest">
+        <member name="T:Orion.World.Chests.IChest">
             <summary>
             Provides a wrapper around a Terraria.Chest.
             </summary>
         </member>
-        <member name="P:Orion.World.IChest.X">
+        <member name="P:Orion.World.Chests.IChest.X">
             <summary>
             Gets or sets the X position.
             </summary>
         </member>
-        <member name="P:Orion.World.IChest.Y">
+        <member name="P:Orion.World.Chests.IChest.Y">
             <summary>
             Gets or sets the Y position.
             </summary>
         </member>
-        <member name="P:Orion.World.IChest.Name">
+        <member name="P:Orion.World.Chests.IChest.Name">
             <summary>
             Gets or sets the name.
             </summary>
         </member>
-        <member name="P:Orion.World.IChest.Items">
+        <member name="T:Orion.World.Chests.OrionChest">
             <summary>
-            Gets the items.
-            </summary>
-        </member>
-        <member name="P:Orion.World.IChest.WrappedChest">
-            <summary>
-            Gets the wrapped chest.
+            Orion's implementation of <see cref="T:Orion.World.Chests.IChest"/>.
             </summary>
         </member>
         <member name="T:Orion.World.InvasionType">

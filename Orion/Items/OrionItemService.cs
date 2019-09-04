@@ -68,7 +68,7 @@ namespace Orion.Items {
         IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
 
         public IItem SpawnItem(ItemType type, Vector2 position, int stackSize = 1,
-                               ItemPrefix prefix = ItemPrefix.None) {
+                                    ItemPrefix prefix = ItemPrefix.None) {
             // We need to force the item to spawn without caching it.
             var oldItemCache = Terraria.Item.itemCaches[(int)type];
             Terraria.Item.itemCaches[(int)type] = -1;

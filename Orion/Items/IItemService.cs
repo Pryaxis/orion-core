@@ -6,7 +6,7 @@ using Orion.Items.Events;
 
 namespace Orion.Items {
     /// <summary>
-    /// Provides a mechanism for managing items.
+    /// Provides a mechanism for managing world items.
     /// </summary>
     public interface IItemService : IReadOnlyList<IItem>, IService {
         /// <summary>

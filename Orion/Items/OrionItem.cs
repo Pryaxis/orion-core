@@ -3,7 +3,7 @@ using Orion.Entities;
 
 namespace Orion.Items {
     /// <summary>
-    /// Orion's implementation of <see cref="IItem"/>.
+    /// Orion's implementation of <see cref="Orion.Items.IItem"/>.
     /// </summary>
     internal sealed class OrionItem : OrionEntity, IItem {
         public ItemType Type {
@@ -21,10 +21,7 @@ namespace Orion.Items {
             set => WrappedItem.maxStack = value;
         }
 
-        public ItemPrefix Prefix {
-            get => (ItemPrefix)WrappedItem.prefix;
-            set => WrappedItem.prefix = (byte)value;
-        }
+        public ItemPrefix Prefix => (ItemPrefix)WrappedItem.prefix;
 
         public ItemRarity Rarity {
             get => (ItemRarity)WrappedItem.rare;
@@ -49,8 +46,7 @@ namespace Orion.Items {
             WrappedItem = terrariaItem;
         }
 
-        public void ApplyPrefix(ItemPrefix prefix) {
-            WrappedItem.Prefix((int)prefix);
-        }
+        public void ApplyType(ItemType type) => WrappedItem.SetDefaults((int)type);
+        public void ApplyPrefix(ItemPrefix prefix) => WrappedItem.Prefix((int)prefix);
     }
 }
