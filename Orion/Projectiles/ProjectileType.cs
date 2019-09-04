@@ -2,7 +2,7 @@
     /// <summary>
     /// Specifies a projectile's type.
     /// </summary>
-    public enum ProjectileType {
+    public enum ProjectileType : short {
 #pragma warning disable 1591
         None = 0,
         WoodenArrowFriendly = 1,

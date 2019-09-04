@@ -4,6 +4,8 @@
     /// </summary>
     public enum ItemPrefix {
 #pragma warning disable 1591
+        Reforge = -2,
+        Random = -1,
         None = 0,
         Large = 1,
         Massive = 2,

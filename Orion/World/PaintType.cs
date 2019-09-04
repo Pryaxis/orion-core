@@ -2,9 +2,9 @@
     /// <summary>
     /// Specifies the type of paint.
     /// </summary>
-    public enum PaintType {
+    public enum PaintType : byte {
 #pragma warning disable 1591
-        Blank = 0,
+        None = 0,
         Red = 1,
         Orange = 2,
         Yellow = 3,

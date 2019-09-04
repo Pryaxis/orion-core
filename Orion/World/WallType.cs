@@ -2,7 +2,7 @@
     /// <summary>
     /// Specifies a wall's type.
     /// </summary>
-    public enum WallType {
+    public enum WallType : byte {
 #pragma warning disable 1591
         None = 0,
         Stone = 1,
