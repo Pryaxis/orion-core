@@ -1,6 +1,4 @@
-﻿// ReSharper disable InconsistentNaming
-
-namespace Orion.Projectiles {
+﻿namespace Orion.Projectiles {
     /// <summary>
     /// Specifies a projectile's type.
     /// </summary>

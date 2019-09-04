@@ -1,6 +1,4 @@
-﻿// ReSharper disable InconsistentNaming
-
-namespace Orion.Npcs {
+﻿namespace Orion.Npcs {
     /// <summary>
     /// Specifies an NPC's type.
     /// </summary>

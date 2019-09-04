@@ -1,6 +1,4 @@
-﻿// ReSharper disable InconsistentNaming
-
-namespace Orion.Items {
+﻿namespace Orion.Items {
     /// <summary>
     /// Specifies an item's type.
     /// </summary>

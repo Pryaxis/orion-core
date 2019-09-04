@@ -1,6 +1,4 @@
-﻿// ReSharper disable IdentifierTypo
-
-namespace Orion.Items {
+﻿namespace Orion.Items {
     /// <summary>
     /// Specifies an item's prefix.
     /// </summary>
