@@ -12,22 +12,22 @@ namespace Orion.Items {
         /// <summary>
         /// Occurs when an item is having its defaults set.
         /// </summary>
-        event EventHandler<ItemSettingDefaultsEventArgs> ItemSettingDefaults;
+        event EventHandler<SettingItemDefaultsEventArgs> SettingItemDefaults;
 
         /// <summary>
         /// Occurs when an item had its defaults set.
         /// </summary>
-        event EventHandler<ItemSetDefaultsEventArgs> ItemSetDefaults;
+        event EventHandler<SetItemDefaultsEventArgs> SetItemDefaults;
 
         /// <summary>
         /// Occurs when an item is being updated.
         /// </summary>
-        event EventHandler<ItemUpdatingEventArgs> ItemUpdating;
+        event EventHandler<UpdatingItemEventArgs> UpdatingItem;
 
         /// <summary>
         /// Occurs when an item was updated.
         /// </summary>
-        event EventHandler<ItemUpdatedEventArgs> ItemUpdated;
+        event EventHandler<UpdatedItemEventArgs> UpdatedItem;
 
         /// <summary>
         /// Spawns an item with the specified type at the position with the stack size and prefix.

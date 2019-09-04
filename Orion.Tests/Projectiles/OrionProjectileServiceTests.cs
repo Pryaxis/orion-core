@@ -51,7 +51,7 @@ namespace Orion.Tests.Projectiles {
         [Fact]
         public void ProjectileSettingDefaults_IsCorrect() {
             IProjectile argsProjectile = null;
-            _projectileService.ProjectileSettingDefaults += (sender, args) => {
+            _projectileService.SettingProjectileDefaults += (sender, args) => {
                 argsProjectile = args.Projectile;
             };
 
@@ -65,7 +65,7 @@ namespace Orion.Tests.Projectiles {
         [InlineData(ProjectileType.CrystalBullet, ProjectileType.VenomBullet)]
         [InlineData(ProjectileType.CrystalBullet, ProjectileType.None)]
         public void ProjectileSettingDefaults_ModifyType_IsCorrect(ProjectileType oldType, ProjectileType newType) {
-            _projectileService.ProjectileSettingDefaults += (sender, args) => {
+            _projectileService.SettingProjectileDefaults += (sender, args) => {
                 args.Type = newType;
             };
 
@@ -76,7 +76,7 @@ namespace Orion.Tests.Projectiles {
 
         [Fact]
         public void ProjectileSettingDefaults_Handled_IsCorrect() {
-            _projectileService.ProjectileSettingDefaults += (sender, args) => {
+            _projectileService.SettingProjectileDefaults += (sender, args) => {
                 args.Handled = true;
             };
 
@@ -88,7 +88,7 @@ namespace Orion.Tests.Projectiles {
         [Fact]
         public void ProjectileSetDefaults_IsCorrect() {
             IProjectile argsProjectile = null;
-            _projectileService.ProjectileSetDefaults += (sender, args) => {
+            _projectileService.SetProjectileDefaults += (sender, args) => {
                 argsProjectile = args.Projectile;
             };
 
@@ -101,7 +101,7 @@ namespace Orion.Tests.Projectiles {
         [Fact]
         public void ProjectileUpdating_IsCorrect() {
             IProjectile argsProjectile = null;
-            _projectileService.ProjectileUpdating += (sender, args) => {
+            _projectileService.UpdatingProjectile += (sender, args) => {
                 argsProjectile = args.Projectile;
             };
             var projectile = _projectileService.SpawnProjectile(ProjectileType.Ale, Vector2.Zero, Vector2.Zero, 0, 0);
@@ -115,7 +115,7 @@ namespace Orion.Tests.Projectiles {
         [Fact]
         public void ProjectileUpdatingAi_IsCorrect() {
             IProjectile argsProjectile = null;
-            _projectileService.ProjectileUpdatingAi += (sender, args) => {
+            _projectileService.UpdatingProjectileAi += (sender, args) => {
                 argsProjectile = args.Projectile;
             };
             var projectile = _projectileService.SpawnProjectile(ProjectileType.Ale, Vector2.Zero, Vector2.Zero, 0, 0);
@@ -129,7 +129,7 @@ namespace Orion.Tests.Projectiles {
         [Fact]
         public void ProjectileUpdatedAi_IsCorrect() {
             IProjectile argsProjectile = null;
-            _projectileService.ProjectileUpdatedAi += (sender, args) => {
+            _projectileService.UpdatedProjectileAi += (sender, args) => {
                 argsProjectile = args.Projectile;
             };
             var projectile = _projectileService.SpawnProjectile(ProjectileType.Ale, Vector2.Zero, Vector2.Zero, 0, 0);
@@ -143,7 +143,7 @@ namespace Orion.Tests.Projectiles {
         [Fact]
         public void ProjectileUpdated_IsCorrect() {
             IProjectile argsProjectile = null;
-            _projectileService.ProjectileUpdated += (sender, args) => {
+            _projectileService.UpdatedProjectile += (sender, args) => {
                 argsProjectile = args.Projectile;
             };
             var projectile = _projectileService.SpawnProjectile(ProjectileType.Ale, Vector2.Zero, Vector2.Zero, 0, 0);
@@ -157,7 +157,7 @@ namespace Orion.Tests.Projectiles {
         [Fact]
         public void ProjectileRemoving_IsCorrect() {
             IProjectile argsProjectile = null;
-            _projectileService.ProjectileRemoving += (sender, args) => {
+            _projectileService.RemovingProjectile += (sender, args) => {
                 argsProjectile = args.Projectile;
             };
             var projectile = _projectileService.SpawnProjectile(ProjectileType.Ale, Vector2.Zero, Vector2.Zero, 0, 0);
@@ -170,7 +170,7 @@ namespace Orion.Tests.Projectiles {
 
         [Fact]
         public void ProjectileRemoving_Handled_IsCorrect() {
-            _projectileService.ProjectileRemoving += (sender, args) => {
+            _projectileService.RemovingProjectile += (sender, args) => {
                 args.Handled = true;
             };
             var projectile = _projectileService.SpawnProjectile(ProjectileType.Ale, Vector2.Zero, Vector2.Zero, 0, 0);
@@ -183,7 +183,7 @@ namespace Orion.Tests.Projectiles {
         [Fact]
         public void ProjectileRemoved_IsCorrect() {
             IProjectile argsProjectile = null;
-            _projectileService.ProjectileRemoved += (sender, args) => {
+            _projectileService.RemovedProjectile += (sender, args) => {
                 argsProjectile = args.Projectile;
             };
             var projectile = _projectileService.SpawnProjectile(ProjectileType.Ale, Vector2.Zero, Vector2.Zero, 0, 0);

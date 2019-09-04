@@ -11,16 +11,16 @@ namespace Orion.Players {
         /// <summary>
         /// Occurs when a player is being greeted.
         /// </summary>
-        event EventHandler<PlayerGreetingEventArgs> PlayerGreeting;
+        event EventHandler<GreetingPlayerEventArgs> GreetingPlayer;
 
         /// <summary>
         /// Occurs when a player is being updated.
         /// </summary>
-        event EventHandler<PlayerUpdatingEventArgs> PlayerUpdating;
+        event EventHandler<UpdatingPlayerEventArgs> UpdatingPlayer;
 
         /// <summary>
         /// Occurs when a player is updated.
         /// </summary>
-        event EventHandler<PlayerUpdatedEventArgs> PlayerUpdated;
+        event EventHandler<UpdatedPlayerEventArgs> UpdatedPlayer;
     }
 }

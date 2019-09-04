@@ -128,77 +128,77 @@
             Having multiple implementations of a service with this attribute results in undefined behavior.
             </remarks>
         </member>
-        <member name="T:Orion.Items.Events.ItemSetDefaultsEventArgs">
+        <member name="T:Orion.Items.Events.SetItemDefaultsEventArgs">
             <summary>
-            Provides data for the <see cref="E:Orion.Items.IItemService.ItemSetDefaults"/> event.
+            Provides data for the <see cref="E:Orion.Items.IItemService.SetItemDefaults"/> event.
             </summary>
         </member>
-        <member name="P:Orion.Items.Events.ItemSetDefaultsEventArgs.Item">
+        <member name="P:Orion.Items.Events.SetItemDefaultsEventArgs.Item">
             <summary>
             Gets the item that had its defaults set.
             </summary>
         </member>
-        <member name="M:Orion.Items.Events.ItemSetDefaultsEventArgs.#ctor(Orion.Items.IItem)">
+        <member name="M:Orion.Items.Events.SetItemDefaultsEventArgs.#ctor(Orion.Items.IItem)">
             <summary>
-            Initializes a new instance of the <see cref="T:Orion.Items.Events.ItemSetDefaultsEventArgs"/> class with the specified item.
+            Initializes a new instance of the <see cref="T:Orion.Items.Events.SetItemDefaultsEventArgs"/> class with the specified item.
             </summary>
             <param name="item">The item.</param>
             <exception cref="T:System.ArgumentNullException"><paramref name="item"/> is null.</exception>
         </member>
-        <member name="T:Orion.Items.Events.ItemSettingDefaultsEventArgs">
+        <member name="T:Orion.Items.Events.SettingItemDefaultsEventArgs">
             <summary>
-            Provides data for the <see cref="E:Orion.Items.IItemService.ItemSettingDefaults"/> event.
+            Provides data for the <see cref="E:Orion.Items.IItemService.SettingItemDefaults"/> event.
             </summary>
         </member>
-        <member name="P:Orion.Items.Events.ItemSettingDefaultsEventArgs.Item">
+        <member name="P:Orion.Items.Events.SettingItemDefaultsEventArgs.Item">
             <summary>
             Gets the item that is having its defaults set.
             </summary>
         </member>
-        <member name="P:Orion.Items.Events.ItemSettingDefaultsEventArgs.Type">
+        <member name="P:Orion.Items.Events.SettingItemDefaultsEventArgs.Type">
             <summary>
             Gets or sets the <see cref="T:Orion.Items.ItemType"/> that the item is having its defaults set to.
             </summary>
         </member>
-        <member name="M:Orion.Items.Events.ItemSettingDefaultsEventArgs.#ctor(Orion.Items.IItem,Orion.Items.ItemType)">
+        <member name="M:Orion.Items.Events.SettingItemDefaultsEventArgs.#ctor(Orion.Items.IItem,Orion.Items.ItemType)">
             <summary>
-            Initializes a new instance of the <see cref="T:Orion.Items.Events.ItemSettingDefaultsEventArgs"/> class with the specified item
+            Initializes a new instance of the <see cref="T:Orion.Items.Events.SettingItemDefaultsEventArgs"/> class with the specified item
             and item type.
             </summary>
             <param name="item">The item that is having its defaults set.</param>
             <param name="type">The item type.</param>
             <exception cref="T:System.ArgumentNullException"><paramref name="item"/> is null.</exception>
         </member>
-        <member name="T:Orion.Items.Events.ItemUpdatedEventArgs">
+        <member name="T:Orion.Items.Events.UpdatedItemEventArgs">
             <summary>
-            Provides data for the <see cref="E:Orion.Items.IItemService.ItemUpdated"/> event.
+            Provides data for the <see cref="E:Orion.Items.IItemService.UpdatedItem"/> event.
             </summary>
         </member>
-        <member name="P:Orion.Items.Events.ItemUpdatedEventArgs.Item">
+        <member name="P:Orion.Items.Events.UpdatedItemEventArgs.Item">
             <summary>
             Gets the item that was updated.
             </summary>
         </member>
-        <member name="M:Orion.Items.Events.ItemUpdatedEventArgs.#ctor(Orion.Items.IItem)">
+        <member name="M:Orion.Items.Events.UpdatedItemEventArgs.#ctor(Orion.Items.IItem)">
             <summary>
-            Initializes a new instance of the <see cref="T:Orion.Items.Events.ItemUpdatedEventArgs"/> class with the specified item.
+            Initializes a new instance of the <see cref="T:Orion.Items.Events.UpdatedItemEventArgs"/> class with the specified item.
             </summary>
             <param name="item">The item.</param>
             <exception cref="T:System.ArgumentNullException"><paramref name="item"/> is null.</exception>
         </member>
-        <member name="T:Orion.Items.Events.ItemUpdatingEventArgs">
+        <member name="T:Orion.Items.Events.UpdatingItemEventArgs">
             <summary>
-            Provides data for the <see cref="E:Orion.Items.IItemService.ItemUpdating"/> event.
+            Provides data for the <see cref="E:Orion.Items.IItemService.UpdatingItem"/> event.
             </summary>
         </member>
-        <member name="P:Orion.Items.Events.ItemUpdatingEventArgs.Item">
+        <member name="P:Orion.Items.Events.UpdatingItemEventArgs.Item">
             <summary>
-            Gets the item that was updated.
+            Gets the item that is being updated.
             </summary>
         </member>
-        <member name="M:Orion.Items.Events.ItemUpdatingEventArgs.#ctor(Orion.Items.IItem)">
+        <member name="M:Orion.Items.Events.UpdatingItemEventArgs.#ctor(Orion.Items.IItem)">
             <summary>
-            Initializes a new instance of the <see cref="T:Orion.Items.Events.ItemUpdatingEventArgs"/> class with the specified item.
+            Initializes a new instance of the <see cref="T:Orion.Items.Events.UpdatingItemEventArgs"/> class with the specified item.
             </summary>
             <param name="item">The item.</param>
             <exception cref="T:System.ArgumentNullException"><paramref name="item"/> is null.</exception>
@@ -283,22 +283,22 @@
             Provides a mechanism for managing items.
             </summary>
         </member>
-        <member name="E:Orion.Items.IItemService.ItemSettingDefaults">
+        <member name="E:Orion.Items.IItemService.SettingItemDefaults">
             <summary>
             Occurs when an item is having its defaults set.
             </summary>
         </member>
-        <member name="E:Orion.Items.IItemService.ItemSetDefaults">
+        <member name="E:Orion.Items.IItemService.SetItemDefaults">
             <summary>
             Occurs when an item had its defaults set.
             </summary>
         </member>
-        <member name="E:Orion.Items.IItemService.ItemUpdating">
+        <member name="E:Orion.Items.IItemService.UpdatingItem">
             <summary>
             Occurs when an item is being updated.
             </summary>
         </member>
-        <member name="E:Orion.Items.IItemService.ItemUpdated">
+        <member name="E:Orion.Items.IItemService.UpdatedItem">
             <summary>
             Occurs when an item was updated.
             </summary>
@@ -1299,87 +1299,104 @@
             Indicates that tier 3 of the Old One's Army has been defeated.
             </summary>
         </member>
-        <member name="T:Orion.Npcs.Events.NpcDamagedEventArgs">
+        <member name="T:Orion.Npcs.Events.DamagedNpcEventArgs">
             <summary>
-            Provides data for the <see cref="E:Orion.Npcs.INpcService.NpcDamaged"/> event.
+            Provides data for the <see cref="E:Orion.Npcs.INpcService.DamagedNpc"/> event.
             </summary>
         </member>
-        <member name="P:Orion.Npcs.Events.NpcDamagedEventArgs.Npc">
+        <member name="P:Orion.Npcs.Events.DamagedNpcEventArgs.Npc">
             <summary>
             Gets the NPC that was damaged.
             </summary>
         </member>
-        <member name="P:Orion.Npcs.Events.NpcDamagedEventArgs.Damage">
+        <member name="P:Orion.Npcs.Events.DamagedNpcEventArgs.Damage">
             <summary>
             Gets or sets the damage.
             </summary>
         </member>
-        <member name="P:Orion.Npcs.Events.NpcDamagedEventArgs.Knockback">
+        <member name="P:Orion.Npcs.Events.DamagedNpcEventArgs.Knockback">
             <summary>
             Gets or sets the knockback.
             </summary>
         </member>
-        <member name="P:Orion.Npcs.Events.NpcDamagedEventArgs.HitDirection">
+        <member name="P:Orion.Npcs.Events.DamagedNpcEventArgs.HitDirection">
             <summary>
             Gets or sets the hit direction.
             </summary>
         </member>
-        <member name="P:Orion.Npcs.Events.NpcDamagedEventArgs.IsCriticalHit">
+        <member name="P:Orion.Npcs.Events.DamagedNpcEventArgs.IsCriticalHit">
             <summary>
             Gets or sets a value indicating whether the hit is critical.
             </summary>
         </member>
-        <member name="P:Orion.Npcs.Events.NpcDamagedEventArgs.PlayerResponsible">
+        <member name="P:Orion.Npcs.Events.DamagedNpcEventArgs.PlayerResponsible">
             <summary>
             Gets the player responsible for damaging the NPC.
             </summary>
         </member>
-        <member name="M:Orion.Npcs.Events.NpcDamagedEventArgs.#ctor(Orion.Npcs.INpc)">
+        <member name="M:Orion.Npcs.Events.DamagedNpcEventArgs.#ctor(Orion.Npcs.INpc)">
             <summary>
-            Initializes a new instance of the <see cref="T:Orion.Npcs.Events.NpcDamagedEventArgs"/> class with the specified NPC.
+            Initializes a new instance of the <see cref="T:Orion.Npcs.Events.DamagedNpcEventArgs"/> class with the specified NPC.
             </summary>
             <param name="npc">The NPC.</param>
         </member>
-        <member name="T:Orion.Npcs.Events.NpcDamagingEventArgs">
+        <member name="T:Orion.Npcs.Events.DamagingNpcEventArgs">
             <summary>
-            Provides data for the <see cref="E:Orion.Npcs.INpcService.NpcDamaging"/> event.
+            Provides data for the <see cref="E:Orion.Npcs.INpcService.DamagingNpc"/> event.
             </summary>
         </member>
-        <member name="P:Orion.Npcs.Events.NpcDamagingEventArgs.Npc">
+        <member name="P:Orion.Npcs.Events.DamagingNpcEventArgs.Npc">
             <summary>
             Gets the NPC that is being damaged.
             </summary>
         </member>
-        <member name="P:Orion.Npcs.Events.NpcDamagingEventArgs.Damage">
+        <member name="P:Orion.Npcs.Events.DamagingNpcEventArgs.Damage">
             <summary>
             Gets or sets the damage.
             </summary>
         </member>
-        <member name="P:Orion.Npcs.Events.NpcDamagingEventArgs.Knockback">
+        <member name="P:Orion.Npcs.Events.DamagingNpcEventArgs.Knockback">
             <summary>
             Gets or sets the knockback.
             </summary>
         </member>
-        <member name="P:Orion.Npcs.Events.NpcDamagingEventArgs.HitDirection">
+        <member name="P:Orion.Npcs.Events.DamagingNpcEventArgs.HitDirection">
             <summary>
             Gets or sets the hit direction.
             </summary>
         </member>
-        <member name="P:Orion.Npcs.Events.NpcDamagingEventArgs.IsCriticalHit">
+        <member name="P:Orion.Npcs.Events.DamagingNpcEventArgs.IsCriticalHit">
             <summary>
             Gets or sets a value indicating whether the hit is critical.
             </summary>
         </member>
-        <member name="P:Orion.Npcs.Events.NpcDamagingEventArgs.PlayerResponsible">
+        <member name="P:Orion.Npcs.Events.DamagingNpcEventArgs.PlayerResponsible">
             <summary>
             Gets the player responsible for damaging the NPC.
             </summary>
         </member>
-        <member name="M:Orion.Npcs.Events.NpcDamagingEventArgs.#ctor(Orion.Npcs.INpc)">
+        <member name="M:Orion.Npcs.Events.DamagingNpcEventArgs.#ctor(Orion.Npcs.INpc)">
             <summary>
-            Initializes a new instance of the <see cref="T:Orion.Npcs.Events.NpcDamagingEventArgs"/> class with the specified NPC.
+            Initializes a new instance of the <see cref="T:Orion.Npcs.Events.DamagingNpcEventArgs"/> class with the specified NPC.
             </summary>
             <param name="npc">The NPC.</param>
+        </member>
+        <member name="T:Orion.Npcs.Events.KilledNpcEventArgs">
+            <summary>
+            Provides data for the <see cref="E:Orion.Npcs.INpcService.KilledNpc"/> event.
+            </summary>
+        </member>
+        <member name="P:Orion.Npcs.Events.KilledNpcEventArgs.Npc">
+            <summary>
+            Gets the NPC that was killed.
+            </summary>
+        </member>
+        <member name="M:Orion.Npcs.Events.KilledNpcEventArgs.#ctor(Orion.Npcs.INpc)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Orion.Npcs.Events.KilledNpcEventArgs"/> class with the specified NPC.
+            </summary>
+            <param name="npc">The NPC.</param>
+            <exception cref="T:System.ArgumentNullException"><paramref name="npc"/> is null.</exception>
         </member>
         <member name="T:Orion.Npcs.Events.NpcDroppedLootItemEventArgs">
             <summary>
@@ -1439,106 +1456,6 @@
             <param name="npc">The NPC.</param>
             <exception cref="T:System.ArgumentNullException"><paramref name="npc"/> is null.</exception>
         </member>
-        <member name="T:Orion.Npcs.Events.NpcKilledEventArgs">
-            <summary>
-            Provides data for the <see cref="E:Orion.Npcs.INpcService.NpcKilled"/> event.
-            </summary>
-        </member>
-        <member name="P:Orion.Npcs.Events.NpcKilledEventArgs.Npc">
-            <summary>
-            Gets the NPC that was killed.
-            </summary>
-        </member>
-        <member name="M:Orion.Npcs.Events.NpcKilledEventArgs.#ctor(Orion.Npcs.INpc)">
-            <summary>
-            Initializes a new instance of the <see cref="T:Orion.Npcs.Events.NpcKilledEventArgs"/> class with the specified NPC.
-            </summary>
-            <param name="npc">The NPC.</param>
-            <exception cref="T:System.ArgumentNullException"><paramref name="npc"/> is null.</exception>
-        </member>
-        <member name="T:Orion.Npcs.Events.NpcSetDefaultsEventArgs">
-            <summary>
-            Provides data for the <see cref="E:Orion.Npcs.INpcService.NpcSetDefaults"/> event.
-            </summary>
-        </member>
-        <member name="P:Orion.Npcs.Events.NpcSetDefaultsEventArgs.Npc">
-            <summary>
-            Gets the NPC that had its defaults set.
-            </summary>
-        </member>
-        <member name="M:Orion.Npcs.Events.NpcSetDefaultsEventArgs.#ctor(Orion.Npcs.INpc)">
-            <summary>
-            Initializes a new instance of the <see cref="T:Orion.Npcs.Events.NpcSetDefaultsEventArgs"/> class with the specified NPC.
-            </summary>
-            <param name="npc">The NPC.</param>
-            <exception cref="T:System.ArgumentNullException"><paramref name="npc"/> is null.</exception>
-        </member>
-        <member name="T:Orion.Npcs.Events.NpcSettingDefaultsEventArgs">
-            <summary>
-            Provides data for the <see cref="E:Orion.Npcs.INpcService.NpcSettingDefaults"/> event.
-            </summary>
-        </member>
-        <member name="P:Orion.Npcs.Events.NpcSettingDefaultsEventArgs.Npc">
-            <summary>
-            Gets the NPC that is having its defaults set.
-            </summary>
-        </member>
-        <member name="P:Orion.Npcs.Events.NpcSettingDefaultsEventArgs.Type">
-            <summary>
-            Gets or sets the <see cref="T:Orion.Npcs.NpcType"/> that the NPC is having its defaults set to.
-            </summary>
-        </member>
-        <member name="M:Orion.Npcs.Events.NpcSettingDefaultsEventArgs.#ctor(Orion.Npcs.INpc,Orion.Npcs.NpcType)">
-            <summary>
-            Initializes a new instance of the <see cref="T:Orion.Npcs.Events.NpcSettingDefaultsEventArgs"/> class with the specified NPC
-            and NPC type.
-            </summary>
-            <param name="npc">The NPC that is having its defaults set.</param>
-            <param name="type">The NPC type.</param>
-            <exception cref="T:System.ArgumentNullException"><paramref name="npc"/> is null.</exception>
-        </member>
-        <member name="T:Orion.Npcs.Events.NpcSpawnedEventArgs">
-            <summary>
-            Provides data for the <see cref="E:Orion.Npcs.INpcService.NpcSpawned"/> event.
-            </summary>
-        </member>
-        <member name="P:Orion.Npcs.Events.NpcSpawnedEventArgs.Npc">
-            <summary>
-            Gets the NPC that spawned.
-            </summary>
-        </member>
-        <member name="M:Orion.Npcs.Events.NpcSpawnedEventArgs.#ctor(Orion.Npcs.INpc)">
-            <summary>
-            Initializes a new instance of the <see cref="T:Orion.Npcs.Events.NpcSpawnedEventArgs"/> class with the specified NPC.
-            </summary>
-            <param name="npc">The NPC.</param>
-            <exception cref="T:System.ArgumentNullException"><paramref name="npc"/> is null.</exception>
-        </member>
-        <member name="T:Orion.Npcs.Events.NpcSpawningEventArgs">
-            <summary>
-            Provides data for the <see cref="E:Orion.Npcs.INpcService.NpcSpawning"/> event.
-            </summary>
-        </member>
-        <member name="P:Orion.Npcs.Events.NpcSpawningEventArgs.NpcType">
-            <summary>
-            Gets or sets the NPC type.
-            </summary>
-        </member>
-        <member name="P:Orion.Npcs.Events.NpcSpawningEventArgs.Position">
-            <summary>
-            Gets or sets the position.
-            </summary>
-        </member>
-        <member name="P:Orion.Npcs.Events.NpcSpawningEventArgs.AiValues">
-            <summary>
-            Gets the AI values.
-            </summary>
-        </member>
-        <member name="P:Orion.Npcs.Events.NpcSpawningEventArgs.NpcTarget">
-            <summary>
-            Gets or sets the NPC's target.
-            </summary>
-        </member>
         <member name="T:Orion.Npcs.Events.NpcTransformedEventArgs">
             <summary>
             Provides data for the <see cref="E:Orion.Npcs.INpcService.NpcTransformed"/> event.
@@ -1573,36 +1490,119 @@
             <param name="npc">The NPC.</param>
             <exception cref="T:System.ArgumentNullException"><paramref name="npc"/> is null.</exception>
         </member>
-        <member name="T:Orion.Npcs.Events.NpcUpdatedEventArgs">
+        <member name="T:Orion.Npcs.Events.SetNpcDefaultsEventArgs">
             <summary>
-            Provides data for the <see cref="E:Orion.Npcs.INpcService.NpcUpdated"/> event.
+            Provides data for the <see cref="E:Orion.Npcs.INpcService.SetNpcDefaults"/> event.
             </summary>
         </member>
-        <member name="P:Orion.Npcs.Events.NpcUpdatedEventArgs.Npc">
+        <member name="P:Orion.Npcs.Events.SetNpcDefaultsEventArgs.Npc">
             <summary>
-            Gets the NPC that was updated.
+            Gets the NPC that had its defaults set.
             </summary>
         </member>
-        <member name="M:Orion.Npcs.Events.NpcUpdatedEventArgs.#ctor(Orion.Npcs.INpc)">
+        <member name="M:Orion.Npcs.Events.SetNpcDefaultsEventArgs.#ctor(Orion.Npcs.INpc)">
             <summary>
-            Initializes a new instance of the <see cref="T:Orion.Npcs.Events.NpcUpdatedEventArgs"/> class with the specified NPC.
+            Initializes a new instance of the <see cref="T:Orion.Npcs.Events.SetNpcDefaultsEventArgs"/> class with the specified NPC.
             </summary>
             <param name="npc">The NPC.</param>
             <exception cref="T:System.ArgumentNullException"><paramref name="npc"/> is null.</exception>
         </member>
-        <member name="T:Orion.Npcs.Events.NpcUpdatingEventArgs">
+        <member name="T:Orion.Npcs.Events.SettingNpcDefaultsEventArgs">
             <summary>
-            Provides data for the <see cref="E:Orion.Npcs.INpcService.NpcUpdating"/> event.
+            Provides data for the <see cref="E:Orion.Npcs.INpcService.SettingNpcDefaults"/> event.
             </summary>
         </member>
-        <member name="P:Orion.Npcs.Events.NpcUpdatingEventArgs.Npc">
+        <member name="P:Orion.Npcs.Events.SettingNpcDefaultsEventArgs.Npc">
+            <summary>
+            Gets the NPC that is having its defaults set.
+            </summary>
+        </member>
+        <member name="P:Orion.Npcs.Events.SettingNpcDefaultsEventArgs.Type">
+            <summary>
+            Gets or sets the <see cref="T:Orion.Npcs.NpcType"/> that the NPC is having its defaults set to.
+            </summary>
+        </member>
+        <member name="M:Orion.Npcs.Events.SettingNpcDefaultsEventArgs.#ctor(Orion.Npcs.INpc,Orion.Npcs.NpcType)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Orion.Npcs.Events.SettingNpcDefaultsEventArgs"/> class with the specified NPC
+            and NPC type.
+            </summary>
+            <param name="npc">The NPC that is having its defaults set.</param>
+            <param name="type">The NPC type.</param>
+            <exception cref="T:System.ArgumentNullException"><paramref name="npc"/> is null.</exception>
+        </member>
+        <member name="T:Orion.Npcs.Events.SpawnedNpcEventArgs">
+            <summary>
+            Provides data for the <see cref="E:Orion.Npcs.INpcService.SpawnedNpc"/> event.
+            </summary>
+        </member>
+        <member name="P:Orion.Npcs.Events.SpawnedNpcEventArgs.Npc">
+            <summary>
+            Gets the NPC that spawned.
+            </summary>
+        </member>
+        <member name="M:Orion.Npcs.Events.SpawnedNpcEventArgs.#ctor(Orion.Npcs.INpc)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Orion.Npcs.Events.SpawnedNpcEventArgs"/> class with the specified NPC.
+            </summary>
+            <param name="npc">The NPC.</param>
+            <exception cref="T:System.ArgumentNullException"><paramref name="npc"/> is null.</exception>
+        </member>
+        <member name="T:Orion.Npcs.Events.SpawningNpcEventArgs">
+            <summary>
+            Provides data for the <see cref="E:Orion.Npcs.INpcService.SpawningNpc"/> event.
+            </summary>
+        </member>
+        <member name="P:Orion.Npcs.Events.SpawningNpcEventArgs.NpcType">
+            <summary>
+            Gets or sets the NPC type.
+            </summary>
+        </member>
+        <member name="P:Orion.Npcs.Events.SpawningNpcEventArgs.Position">
+            <summary>
+            Gets or sets the position.
+            </summary>
+        </member>
+        <member name="P:Orion.Npcs.Events.SpawningNpcEventArgs.AiValues">
+            <summary>
+            Gets the AI values.
+            </summary>
+        </member>
+        <member name="P:Orion.Npcs.Events.SpawningNpcEventArgs.NpcTarget">
+            <summary>
+            Gets or sets the NPC's target.
+            </summary>
+        </member>
+        <member name="T:Orion.Npcs.Events.UpdatedNpcEventArgs">
+            <summary>
+            Provides data for the <see cref="E:Orion.Npcs.INpcService.UpdatedNpc"/> event.
+            </summary>
+        </member>
+        <member name="P:Orion.Npcs.Events.UpdatedNpcEventArgs.Npc">
+            <summary>
+            Gets the NPC that was updated.
+            </summary>
+        </member>
+        <member name="M:Orion.Npcs.Events.UpdatedNpcEventArgs.#ctor(Orion.Npcs.INpc)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Orion.Npcs.Events.UpdatedNpcEventArgs"/> class with the specified NPC.
+            </summary>
+            <param name="npc">The NPC.</param>
+            <exception cref="T:System.ArgumentNullException"><paramref name="npc"/> is null.</exception>
+        </member>
+        <member name="T:Orion.Npcs.Events.UpdatingNpcEventArgs">
+            <summary>
+            Provides data for the <see cref="E:Orion.Npcs.INpcService.UpdatingNpc"/> event.
+            </summary>
+        </member>
+        <member name="P:Orion.Npcs.Events.UpdatingNpcEventArgs.Npc">
             <summary>
             Gets the NPC that is being updated.
             </summary>
         </member>
-        <member name="M:Orion.Npcs.Events.NpcUpdatingEventArgs.#ctor(Orion.Npcs.INpc)">
+        <member name="M:Orion.Npcs.Events.UpdatingNpcEventArgs.#ctor(Orion.Npcs.INpc)">
             <summary>
-            Initializes a new instance of the <see cref="T:Orion.Npcs.Events.NpcUpdatingEventArgs"/> class with the specified NPC.
+            Initializes a new instance of the <see cref="T:Orion.Npcs.Events.UpdatingNpcEventArgs"/> class with the specified NPC.
             </summary>
             <param name="npc">The NPC.</param>
             <exception cref="T:System.ArgumentNullException"><paramref name="npc"/> is null.</exception>
@@ -1667,52 +1667,52 @@
             Gets or sets the base NPC spawning limit.
             </summary>
         </member>
-        <member name="E:Orion.Npcs.INpcService.NpcSpawning">
+        <member name="E:Orion.Npcs.INpcService.SpawningNpc">
             <summary>
             Occurs when an NPC is spawning.
             </summary>
         </member>
-        <member name="E:Orion.Npcs.INpcService.NpcSpawned">
+        <member name="E:Orion.Npcs.INpcService.SpawnedNpc">
             <summary>
             Occurs when an NPC spawned.
             </summary>
         </member>
-        <member name="E:Orion.Npcs.INpcService.NpcSettingDefaults">
+        <member name="E:Orion.Npcs.INpcService.SettingNpcDefaults">
             <summary>
             Occurs when an NPC is having its defaults set.
             </summary>
         </member>
-        <member name="E:Orion.Npcs.INpcService.NpcSetDefaults">
+        <member name="E:Orion.Npcs.INpcService.SetNpcDefaults">
             <summary>
             Occurs when an NPC had its defaults set.
             </summary>
         </member>
-        <member name="E:Orion.Npcs.INpcService.NpcUpdating">
+        <member name="E:Orion.Npcs.INpcService.UpdatingNpc">
             <summary>
             Occurs when an NPC is being updated.
             </summary>
         </member>
-        <member name="E:Orion.Npcs.INpcService.NpcUpdatingAi">
+        <member name="E:Orion.Npcs.INpcService.UpdatingNpcAi">
             <summary>
             Occurs when an NPC's AI is being updated.
             </summary>
         </member>
-        <member name="E:Orion.Npcs.INpcService.NpcUpdatedAi">
+        <member name="E:Orion.Npcs.INpcService.UpdatedNpcAi">
             <summary>
             Occurs when an NPC's AI is updated.
             </summary>
         </member>
-        <member name="E:Orion.Npcs.INpcService.NpcUpdated">
+        <member name="E:Orion.Npcs.INpcService.UpdatedNpc">
             <summary>
             Occurs when an NPC is updated.
             </summary>
         </member>
-        <member name="E:Orion.Npcs.INpcService.NpcDamaging">
+        <member name="E:Orion.Npcs.INpcService.DamagingNpc">
             <summary>
             Occurs when an NPC is being damaged.
             </summary>
         </member>
-        <member name="E:Orion.Npcs.INpcService.NpcDamaged">
+        <member name="E:Orion.Npcs.INpcService.DamagedNpc">
             <summary>
             Occurs when an NPC is damaged.
             </summary>
@@ -1737,7 +1737,7 @@
             Occurs when an NPC has dropped a loot item.
             </summary>
         </member>
-        <member name="E:Orion.Npcs.INpcService.NpcKilled">
+        <member name="E:Orion.Npcs.INpcService.KilledNpc">
             <summary>
             Occurs when an NPC was killed.
             </summary>
@@ -1769,53 +1769,53 @@
             Orion's implementation of <see cref="T:Orion.Npcs.INpcService"/>.
             </summary>
         </member>
-        <member name="T:Orion.Players.Events.PlayerGreetingEventArgs">
+        <member name="T:Orion.Players.Events.GreetingPlayerEventArgs">
             <summary>
-            Provides data for the <see cref="E:Orion.Players.IPlayerService.PlayerGreeting"/> event.
+            Provides data for the <see cref="E:Orion.Players.IPlayerService.GreetingPlayer"/> event.
             </summary>
         </member>
-        <member name="P:Orion.Players.Events.PlayerGreetingEventArgs.Player">
+        <member name="P:Orion.Players.Events.GreetingPlayerEventArgs.Player">
             <summary>
             Gets the player that is being greeted.
             </summary>
         </member>
-        <member name="M:Orion.Players.Events.PlayerGreetingEventArgs.#ctor(Orion.Players.IPlayer)">
+        <member name="M:Orion.Players.Events.GreetingPlayerEventArgs.#ctor(Orion.Players.IPlayer)">
             <summary>
-            Initializes a new instance of the <see cref="T:Orion.Players.Events.PlayerGreetingEventArgs"/> class with the specified player.
+            Initializes a new instance of the <see cref="T:Orion.Players.Events.GreetingPlayerEventArgs"/> class with the specified player.
             </summary>
             <param name="player">The player.</param>
             <exception cref="T:System.ArgumentNullException"><paramref name="player"/> is null.</exception>
         </member>
-        <member name="T:Orion.Players.Events.PlayerUpdatedEventArgs">
+        <member name="T:Orion.Players.Events.UpdatedPlayerEventArgs">
             <summary>
-            Provides data for the <see cref="E:Orion.Players.IPlayerService.PlayerUpdated"/> event.
+            Provides data for the <see cref="E:Orion.Players.IPlayerService.UpdatedPlayer"/> event.
             </summary>
         </member>
-        <member name="P:Orion.Players.Events.PlayerUpdatedEventArgs.Player">
+        <member name="P:Orion.Players.Events.UpdatedPlayerEventArgs.Player">
             <summary>
             Gets the player that was updated.
             </summary>
         </member>
-        <member name="M:Orion.Players.Events.PlayerUpdatedEventArgs.#ctor(Orion.Players.IPlayer)">
+        <member name="M:Orion.Players.Events.UpdatedPlayerEventArgs.#ctor(Orion.Players.IPlayer)">
             <summary>
-            Initializes a new instance of the <see cref="T:Orion.Players.Events.PlayerUpdatedEventArgs"/> class with the specified player.
+            Initializes a new instance of the <see cref="T:Orion.Players.Events.UpdatedPlayerEventArgs"/> class with the specified player.
             </summary>
             <param name="player">The player.</param>
             <exception cref="T:System.ArgumentNullException"><paramref name="player"/> is null.</exception>
         </member>
-        <member name="T:Orion.Players.Events.PlayerUpdatingEventArgs">
+        <member name="T:Orion.Players.Events.UpdatingPlayerEventArgs">
             <summary>
-            Provides data for the <see cref="E:Orion.Players.IPlayerService.PlayerUpdating"/> event.
+            Provides data for the <see cref="E:Orion.Players.IPlayerService.UpdatingPlayer"/> event.
             </summary>
         </member>
-        <member name="P:Orion.Players.Events.PlayerUpdatingEventArgs.Player">
+        <member name="P:Orion.Players.Events.UpdatingPlayerEventArgs.Player">
             <summary>
             Gets the player that is being updated.
             </summary>
         </member>
-        <member name="M:Orion.Players.Events.PlayerUpdatingEventArgs.#ctor(Orion.Players.IPlayer)">
+        <member name="M:Orion.Players.Events.UpdatingPlayerEventArgs.#ctor(Orion.Players.IPlayer)">
             <summary>
-            Initializes a new instance of the <see cref="T:Orion.Players.Events.PlayerUpdatingEventArgs"/> class with the specified player.
+            Initializes a new instance of the <see cref="T:Orion.Players.Events.UpdatingPlayerEventArgs"/> class with the specified player.
             </summary>
             <param name="player">The player.</param>
             <exception cref="T:System.ArgumentNullException"><paramref name="player"/> is null.</exception>
@@ -1835,17 +1835,17 @@
             Provides a mechanism for managing players.
             </summary>
         </member>
-        <member name="E:Orion.Players.IPlayerService.PlayerGreeting">
+        <member name="E:Orion.Players.IPlayerService.GreetingPlayer">
             <summary>
             Occurs when a player is being greeted.
             </summary>
         </member>
-        <member name="E:Orion.Players.IPlayerService.PlayerUpdating">
+        <member name="E:Orion.Players.IPlayerService.UpdatingPlayer">
             <summary>
             Occurs when a player is being updated.
             </summary>
         </member>
-        <member name="E:Orion.Players.IPlayerService.PlayerUpdated">
+        <member name="E:Orion.Players.IPlayerService.UpdatedPlayer">
             <summary>
             Occurs when a player is updated.
             </summary>
@@ -1860,115 +1860,115 @@
             Orion's implementation of <see cref="T:Orion.Players.IPlayerService"/>.
             </summary>
         </member>
-        <member name="T:Orion.Projectiles.Events.ProjectileRemovedEventArgs">
+        <member name="T:Orion.Projectiles.Events.RemovedProjectileEventArgs">
             <summary>
-            Provides data for the <see cref="E:Orion.Projectiles.IProjectileService.ProjectileRemoved"/> event.
+            Provides data for the <see cref="E:Orion.Projectiles.IProjectileService.RemovedProjectile"/> event.
             </summary>
         </member>
-        <member name="P:Orion.Projectiles.Events.ProjectileRemovedEventArgs.Projectile">
+        <member name="P:Orion.Projectiles.Events.RemovedProjectileEventArgs.Projectile">
             <summary>
             Gets the projectile that was removed.
             </summary>
         </member>
-        <member name="M:Orion.Projectiles.Events.ProjectileRemovedEventArgs.#ctor(Orion.Projectiles.IProjectile)">
+        <member name="M:Orion.Projectiles.Events.RemovedProjectileEventArgs.#ctor(Orion.Projectiles.IProjectile)">
             <summary>
-            Initializes a new instance of the <see cref="T:Orion.Projectiles.Events.ProjectileRemovedEventArgs"/> class with the specified
+            Initializes a new instance of the <see cref="T:Orion.Projectiles.Events.RemovedProjectileEventArgs"/> class with the specified
             projectile.
             </summary>
             <param name="projectile">The projectile.</param>
             <exception cref="T:System.ArgumentNullException"><paramref name="projectile"/> is null.</exception>
         </member>
-        <member name="T:Orion.Projectiles.Events.ProjectileRemovingEventArgs">
+        <member name="T:Orion.Projectiles.Events.RemovingProjectileEventArgs">
             <summary>
-            Provides data for the <see cref="E:Orion.Projectiles.IProjectileService.ProjectileRemoving"/> event.
+            Provides data for the <see cref="E:Orion.Projectiles.IProjectileService.RemovingProjectile"/> event.
             </summary>
         </member>
-        <member name="P:Orion.Projectiles.Events.ProjectileRemovingEventArgs.Projectile">
+        <member name="P:Orion.Projectiles.Events.RemovingProjectileEventArgs.Projectile">
             <summary>
             Gets the projectile that is being removed.
             </summary>
         </member>
-        <member name="M:Orion.Projectiles.Events.ProjectileRemovingEventArgs.#ctor(Orion.Projectiles.IProjectile)">
+        <member name="M:Orion.Projectiles.Events.RemovingProjectileEventArgs.#ctor(Orion.Projectiles.IProjectile)">
             <summary>
-            Initializes a new instance of the <see cref="T:Orion.Projectiles.Events.ProjectileRemovingEventArgs"/> class with the specified
+            Initializes a new instance of the <see cref="T:Orion.Projectiles.Events.RemovingProjectileEventArgs"/> class with the specified
             projectile.
             </summary>
             <param name="projectile">The projectile.</param>
             <exception cref="T:System.ArgumentNullException"><paramref name="projectile"/> is null.</exception>
         </member>
-        <member name="T:Orion.Projectiles.Events.ProjectileSetDefaultsEventArgs">
+        <member name="T:Orion.Projectiles.Events.SetProjectileDefaultsEventArgs">
             <summary>
-            Provides data for the see <see cref="E:Orion.Projectiles.IProjectileService.ProjectileSetDefaults"/> event.
+            Provides data for the see <see cref="E:Orion.Projectiles.IProjectileService.SetProjectileDefaults"/> event.
             </summary>
         </member>
-        <member name="P:Orion.Projectiles.Events.ProjectileSetDefaultsEventArgs.Projectile">
+        <member name="P:Orion.Projectiles.Events.SetProjectileDefaultsEventArgs.Projectile">
             <summary>
             Gets the projectile that had its defaults set.
             </summary>
         </member>
-        <member name="M:Orion.Projectiles.Events.ProjectileSetDefaultsEventArgs.#ctor(Orion.Projectiles.IProjectile)">
+        <member name="M:Orion.Projectiles.Events.SetProjectileDefaultsEventArgs.#ctor(Orion.Projectiles.IProjectile)">
             <summary>
-            Initializes a new instance of the <see cref="T:Orion.Projectiles.Events.ProjectileSetDefaultsEventArgs"/> class with the specified
+            Initializes a new instance of the <see cref="T:Orion.Projectiles.Events.SetProjectileDefaultsEventArgs"/> class with the specified
             projectile.
             </summary>
             <param name="projectile">The projectile.</param>
             <exception cref="T:System.ArgumentNullException"><paramref name="projectile"/> is null.</exception>
         </member>
-        <member name="T:Orion.Projectiles.Events.ProjectileSettingDefaultsEventArgs">
+        <member name="T:Orion.Projectiles.Events.SettingProjectileDefaultsEventArgs">
             <summary>
-            Provides data for the see <see cref="E:Orion.Projectiles.IProjectileService.ProjectileSettingDefaults"/> event.
+            Provides data for the see <see cref="E:Orion.Projectiles.IProjectileService.SettingProjectileDefaults"/> event.
             </summary>
         </member>
-        <member name="P:Orion.Projectiles.Events.ProjectileSettingDefaultsEventArgs.Projectile">
+        <member name="P:Orion.Projectiles.Events.SettingProjectileDefaultsEventArgs.Projectile">
             <summary>
             Gets the projectile that is having its defaults set.
             </summary>
         </member>
-        <member name="P:Orion.Projectiles.Events.ProjectileSettingDefaultsEventArgs.Type">
+        <member name="P:Orion.Projectiles.Events.SettingProjectileDefaultsEventArgs.Type">
             <summary>
             Gets or sets the <see cref="T:Orion.Projectiles.ProjectileType"/> that the projectile is having its defaults set to.
             </summary>
         </member>
-        <member name="M:Orion.Projectiles.Events.ProjectileSettingDefaultsEventArgs.#ctor(Orion.Projectiles.IProjectile,Orion.Projectiles.ProjectileType)">
+        <member name="M:Orion.Projectiles.Events.SettingProjectileDefaultsEventArgs.#ctor(Orion.Projectiles.IProjectile,Orion.Projectiles.ProjectileType)">
             <summary>
-            Initializes a new instance of the <see cref="T:Orion.Projectiles.Events.ProjectileSettingDefaultsEventArgs"/> class with the specified
+            Initializes a new instance of the <see cref="T:Orion.Projectiles.Events.SettingProjectileDefaultsEventArgs"/> class with the specified
             projectile and projectile type.
             </summary>
             <param name="projectile">The projectile.</param>
             <param name="type">The projectile type.</param>
             <exception cref="T:System.ArgumentNullException"><paramref name="projectile"/> is null.</exception>
         </member>
-        <member name="T:Orion.Projectiles.Events.ProjectileUpdatedEventArgs">
+        <member name="T:Orion.Projectiles.Events.UpdatedProjectileEventArgs">
             <summary>
-            Provides data for the <see cref="E:Orion.Projectiles.IProjectileService.ProjectileUpdated"/> event.
+            Provides data for the <see cref="E:Orion.Projectiles.IProjectileService.UpdatedProjectile"/> event.
             </summary>
         </member>
-        <member name="P:Orion.Projectiles.Events.ProjectileUpdatedEventArgs.Projectile">
+        <member name="P:Orion.Projectiles.Events.UpdatedProjectileEventArgs.Projectile">
             <summary>
             Gets the projectile that was updated.
             </summary>
         </member>
-        <member name="M:Orion.Projectiles.Events.ProjectileUpdatedEventArgs.#ctor(Orion.Projectiles.IProjectile)">
+        <member name="M:Orion.Projectiles.Events.UpdatedProjectileEventArgs.#ctor(Orion.Projectiles.IProjectile)">
             <summary>
-            Initializes a new instance of the <see cref="T:Orion.Projectiles.Events.ProjectileUpdatedEventArgs"/> class with the specified
+            Initializes a new instance of the <see cref="T:Orion.Projectiles.Events.UpdatedProjectileEventArgs"/> class with the specified
             projectile.
             </summary>
             <param name="projectile">The projectile.</param>
             <exception cref="T:System.ArgumentNullException"><paramref name="projectile"/> is null.</exception>
         </member>
-        <member name="T:Orion.Projectiles.Events.ProjectileUpdatingEventArgs">
+        <member name="T:Orion.Projectiles.Events.UpdatingProjectileEventArgs">
             <summary>
-            Provides data for the <see cref="E:Orion.Projectiles.IProjectileService.ProjectileUpdating"/> event.
+            Provides data for the <see cref="E:Orion.Projectiles.IProjectileService.UpdatingProjectile"/> event.
             </summary>
         </member>
-        <member name="P:Orion.Projectiles.Events.ProjectileUpdatingEventArgs.Projectile">
+        <member name="P:Orion.Projectiles.Events.UpdatingProjectileEventArgs.Projectile">
             <summary>
             Gets the projectile that is being updated.
             </summary>
         </member>
-        <member name="M:Orion.Projectiles.Events.ProjectileUpdatingEventArgs.#ctor(Orion.Projectiles.IProjectile)">
+        <member name="M:Orion.Projectiles.Events.UpdatingProjectileEventArgs.#ctor(Orion.Projectiles.IProjectile)">
             <summary>
-            Initializes a new instance of the <see cref="T:Orion.Projectiles.Events.ProjectileUpdatingEventArgs"/> class with the specified
+            Initializes a new instance of the <see cref="T:Orion.Projectiles.Events.UpdatingProjectileEventArgs"/> class with the specified
             projectile.
             </summary>
             <param name="projectile">The projectile.</param>
@@ -2009,42 +2009,42 @@
             Provides a mechanism for managing projectiles.
             </summary>
         </member>
-        <member name="E:Orion.Projectiles.IProjectileService.ProjectileSettingDefaults">
+        <member name="E:Orion.Projectiles.IProjectileService.SettingProjectileDefaults">
             <summary>
             Occurs when a projectile is having its defaults set.
             </summary>
         </member>
-        <member name="E:Orion.Projectiles.IProjectileService.ProjectileSetDefaults">
+        <member name="E:Orion.Projectiles.IProjectileService.SetProjectileDefaults">
             <summary>
             Occurs when a projectile had its defaults set.
             </summary>
         </member>
-        <member name="E:Orion.Projectiles.IProjectileService.ProjectileUpdating">
+        <member name="E:Orion.Projectiles.IProjectileService.UpdatingProjectile">
             <summary>
             Occurs when a projectile is being updated.
             </summary>
         </member>
-        <member name="E:Orion.Projectiles.IProjectileService.ProjectileUpdatingAi">
+        <member name="E:Orion.Projectiles.IProjectileService.UpdatingProjectileAi">
             <summary>
             Occurs when a projectile's AI is being updated.
             </summary>
         </member>
-        <member name="E:Orion.Projectiles.IProjectileService.ProjectileUpdatedAi">
+        <member name="E:Orion.Projectiles.IProjectileService.UpdatedProjectileAi">
             <summary>
             Occurs when a projectile's AI was updated.
             </summary>
         </member>
-        <member name="E:Orion.Projectiles.IProjectileService.ProjectileUpdated">
+        <member name="E:Orion.Projectiles.IProjectileService.UpdatedProjectile">
             <summary>
             Occurs when a projectile was updated.
             </summary>
         </member>
-        <member name="E:Orion.Projectiles.IProjectileService.ProjectileRemoving">
+        <member name="E:Orion.Projectiles.IProjectileService.RemovingProjectile">
             <summary>
             Occurs when a projectile is being removed.
             </summary>
         </member>
-        <member name="E:Orion.Projectiles.IProjectileService.ProjectileRemoved">
+        <member name="E:Orion.Projectiles.IProjectileService.RemovedProjectile">
             <summary>
             Occurs when a projectile was removed.
             </summary>

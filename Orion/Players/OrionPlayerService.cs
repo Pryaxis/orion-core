@@ -35,9 +35,9 @@ namespace Orion.Players {
             }
         }
 
-        public event EventHandler<PlayerGreetingEventArgs> PlayerGreeting;
-        public event EventHandler<PlayerUpdatingEventArgs> PlayerUpdating;
-        public event EventHandler<PlayerUpdatedEventArgs> PlayerUpdated;
+        public event EventHandler<GreetingPlayerEventArgs> GreetingPlayer;
+        public event EventHandler<UpdatingPlayerEventArgs> UpdatingPlayer;
+        public event EventHandler<UpdatedPlayerEventArgs> UpdatedPlayer;
 
         public OrionPlayerService() {
 
@@ -67,8 +67,8 @@ namespace Orion.Players {
             Debug.Assert(playerIndex >= 0 && playerIndex < Count, $"{nameof(playerIndex)} should be a valid index.");
 
             var player = this[playerIndex];
-            var args = new PlayerGreetingEventArgs(player);
-            PlayerGreeting?.Invoke(this, args);
+            var args = new GreetingPlayerEventArgs(player);
+            GreetingPlayer?.Invoke(this, args);
 
             return args.Handled ? HookResult.Cancel : HookResult.Continue;
         }
@@ -77,8 +77,8 @@ namespace Orion.Players {
             Debug.Assert(playerIndex >= 0 && playerIndex < Count, $"{nameof(playerIndex)} should be a valid index.");
 
             var player = this[playerIndex];
-            var args = new PlayerUpdatingEventArgs(player);
-            PlayerUpdating?.Invoke(this, args);
+            var args = new UpdatingPlayerEventArgs(player);
+            UpdatingPlayer?.Invoke(this, args);
 
             return args.Handled ? HookResult.Cancel : HookResult.Continue;
         }
@@ -87,8 +87,8 @@ namespace Orion.Players {
             Debug.Assert(playerIndex >= 0 && playerIndex < Count, $"{nameof(playerIndex)} should be a valid index.");
 
             var player = this[playerIndex];
-            var args = new PlayerUpdatedEventArgs(player);
-            PlayerUpdated?.Invoke(this, args);
+            var args = new UpdatedPlayerEventArgs(player);
+            UpdatedPlayer?.Invoke(this, args);
         }
     }
 }

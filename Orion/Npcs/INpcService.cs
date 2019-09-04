@@ -22,52 +22,52 @@ namespace Orion.Npcs {
         /// <summary>
         /// Occurs when an NPC is spawning.
         /// </summary>
-        event EventHandler<NpcSpawningEventArgs> NpcSpawning;
+        event EventHandler<SpawningNpcEventArgs> SpawningNpc;
 
         /// <summary>
         /// Occurs when an NPC spawned.
         /// </summary>
-        event EventHandler<NpcSpawnedEventArgs> NpcSpawned;
+        event EventHandler<SpawnedNpcEventArgs> SpawnedNpc;
 
         /// <summary>
         /// Occurs when an NPC is having its defaults set.
         /// </summary>
-        event EventHandler<NpcSettingDefaultsEventArgs> NpcSettingDefaults;
+        event EventHandler<SettingNpcDefaultsEventArgs> SettingNpcDefaults;
 
         /// <summary>
         /// Occurs when an NPC had its defaults set.
         /// </summary>
-        event EventHandler<NpcSetDefaultsEventArgs> NpcSetDefaults;
+        event EventHandler<SetNpcDefaultsEventArgs> SetNpcDefaults;
 
         /// <summary>
         /// Occurs when an NPC is being updated.
         /// </summary>
-        event EventHandler<NpcUpdatingEventArgs> NpcUpdating;
+        event EventHandler<UpdatingNpcEventArgs> UpdatingNpc;
 
         /// <summary>
         /// Occurs when an NPC's AI is being updated.
         /// </summary>
-        event EventHandler<NpcUpdatingEventArgs> NpcUpdatingAi;
+        event EventHandler<UpdatingNpcEventArgs> UpdatingNpcAi;
 
         /// <summary>
         /// Occurs when an NPC's AI is updated.
         /// </summary>
-        event EventHandler<NpcUpdatedEventArgs> NpcUpdatedAi;
+        event EventHandler<UpdatedNpcEventArgs> UpdatedNpcAi;
 
         /// <summary>
         /// Occurs when an NPC is updated.
         /// </summary>
-        event EventHandler<NpcUpdatedEventArgs> NpcUpdated;
+        event EventHandler<UpdatedNpcEventArgs> UpdatedNpc;
 
         /// <summary>
         /// Occurs when an NPC is being damaged.
         /// </summary>
-        event EventHandler<NpcDamagingEventArgs> NpcDamaging;
+        event EventHandler<DamagingNpcEventArgs> DamagingNpc;
 
         /// <summary>
         /// Occurs when an NPC is damaged.
         /// </summary>
-        event EventHandler<NpcDamagedEventArgs> NpcDamaged;
+        event EventHandler<DamagedNpcEventArgs> DamagedNpc;
 
         /// <summary>
         /// Occurs when an NPC is transforming to another type.
@@ -92,7 +92,7 @@ namespace Orion.Npcs {
         /// <summary>
         /// Occurs when an NPC was killed.
         /// </summary>
-        event EventHandler<NpcKilledEventArgs> NpcKilled;
+        event EventHandler<KilledNpcEventArgs> KilledNpc;
 
         /// <summary>
         /// Spawns an NPC with the specified type at the position with the AI values.

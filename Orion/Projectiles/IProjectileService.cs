@@ -12,42 +12,42 @@ namespace Orion.Projectiles {
         /// <summary>
         /// Occurs when a projectile is having its defaults set.
         /// </summary>
-        event EventHandler<ProjectileSettingDefaultsEventArgs> ProjectileSettingDefaults;
+        event EventHandler<SettingProjectileDefaultsEventArgs> SettingProjectileDefaults;
 
         /// <summary>
         /// Occurs when a projectile had its defaults set.
         /// </summary>
-        event EventHandler<ProjectileSetDefaultsEventArgs> ProjectileSetDefaults;
+        event EventHandler<SetProjectileDefaultsEventArgs> SetProjectileDefaults;
 
         /// <summary>
         /// Occurs when a projectile is being updated.
         /// </summary>
-        event EventHandler<ProjectileUpdatingEventArgs> ProjectileUpdating;
+        event EventHandler<UpdatingProjectileEventArgs> UpdatingProjectile;
 
         /// <summary>
         /// Occurs when a projectile's AI is being updated.
         /// </summary>
-        event EventHandler<ProjectileUpdatingEventArgs> ProjectileUpdatingAi;
+        event EventHandler<UpdatingProjectileEventArgs> UpdatingProjectileAi;
 
         /// <summary>
         /// Occurs when a projectile's AI was updated.
         /// </summary>
-        event EventHandler<ProjectileUpdatedEventArgs> ProjectileUpdatedAi;
+        event EventHandler<UpdatedProjectileEventArgs> UpdatedProjectileAi;
 
         /// <summary>
         /// Occurs when a projectile was updated.
         /// </summary>
-        event EventHandler<ProjectileUpdatedEventArgs> ProjectileUpdated;
+        event EventHandler<UpdatedProjectileEventArgs> UpdatedProjectile;
 
         /// <summary>
         /// Occurs when a projectile is being removed.
         /// </summary>
-        event EventHandler<ProjectileRemovingEventArgs> ProjectileRemoving;
+        event EventHandler<RemovingProjectileEventArgs> RemovingProjectile;
 
         /// <summary>
         /// Occurs when a projectile was removed.
         /// </summary>
-        event EventHandler<ProjectileRemovedEventArgs> ProjectileRemoved;
+        event EventHandler<RemovedProjectileEventArgs> RemovedProjectile;
 
         /// <summary>
         /// Spawns a projectile with the specified type at the position with the velocity, damage, knockback, and AI

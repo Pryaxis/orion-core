@@ -36,10 +36,10 @@ namespace Orion.Items {
             }
         }
 
-        public event EventHandler<ItemSettingDefaultsEventArgs> ItemSettingDefaults;
-        public event EventHandler<ItemSetDefaultsEventArgs> ItemSetDefaults;
-        public event EventHandler<ItemUpdatingEventArgs> ItemUpdating;
-        public event EventHandler<ItemUpdatedEventArgs> ItemUpdated;
+        public event EventHandler<SettingItemDefaultsEventArgs> SettingItemDefaults;
+        public event EventHandler<SetItemDefaultsEventArgs> SetItemDefaults;
+        public event EventHandler<UpdatingItemEventArgs> UpdatingItem;
+        public event EventHandler<UpdatedItemEventArgs> UpdatedItem;
 
         public OrionItemService() {
             _items = new IItem[Terraria.Main.maxItems];
@@ -84,8 +84,8 @@ namespace Orion.Items {
         private HookResult PreSetDefaultsByIdHandler(Terraria.Item terrariaItem, ref int type,
                                                      ref bool noMaterialCheck) {
             var item = new OrionItem(terrariaItem);
-            var args = new ItemSettingDefaultsEventArgs(item, (ItemType)type);
-            ItemSettingDefaults?.Invoke(this, args);
+            var args = new SettingItemDefaultsEventArgs(item, (ItemType)type);
+            SettingItemDefaults?.Invoke(this, args);
 
             type = (int)args.Type;
             return args.Handled ? HookResult.Cancel : HookResult.Continue;
@@ -93,22 +93,22 @@ namespace Orion.Items {
 
         private void PostSetDefaultsByIdHandler(Terraria.Item terrariaItem, ref int type, ref bool noMaterialCheck) {
             var item = new OrionItem(terrariaItem);
-            var args = new ItemSetDefaultsEventArgs(item);
-            ItemSetDefaults?.Invoke(this, args);
+            var args = new SetItemDefaultsEventArgs(item);
+            SetItemDefaults?.Invoke(this, args);
         }
 
         private HookResult PreUpdateHandler(Terraria.Item terrariaItem, ref int i) {
             var item = new OrionItem(terrariaItem);
-            var args = new ItemUpdatingEventArgs(item);
-            ItemUpdating?.Invoke(this, args);
+            var args = new UpdatingItemEventArgs(item);
+            UpdatingItem?.Invoke(this, args);
 
             return args.Handled ? HookResult.Cancel : HookResult.Continue;
         }
 
         private void PostUpdateHandler(Terraria.Item terrariaItem, int i) {
             var item = new OrionItem(terrariaItem);
-            var args = new ItemUpdatedEventArgs(item);
-            ItemUpdated?.Invoke(this, args);
+            var args = new UpdatedItemEventArgs(item);
+            UpdatedItem?.Invoke(this, args);
         }
     }
 }

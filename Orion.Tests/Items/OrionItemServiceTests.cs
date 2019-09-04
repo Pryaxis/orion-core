@@ -77,7 +77,7 @@ namespace Orion.Tests.Items {
         [Fact]
         public void ItemSettingDefaults_IsCorrect() {
             IItem argsItem = null;
-            _itemService.ItemSettingDefaults += (sender, args) => {
+            _itemService.SettingItemDefaults += (sender, args) => {
                 argsItem = args.Item;
             };
             
@@ -91,7 +91,7 @@ namespace Orion.Tests.Items {
         [InlineData(ItemType.CopperPickaxe, ItemType.IronPickaxe)]
         [InlineData(ItemType.StoneBlock, ItemType.None)]
         public void ItemSettingDefaults_ModifyType_IsCorrect(ItemType oldType, ItemType newType) {
-            _itemService.ItemSettingDefaults += (sender, args) => {
+            _itemService.SettingItemDefaults += (sender, args) => {
                 args.Type = newType;
             };
 
@@ -102,7 +102,7 @@ namespace Orion.Tests.Items {
 
         [Fact]
         public void ItemSettingDefaults_Handled_IsCorrect() {
-            _itemService.ItemSettingDefaults += (sender, args) => {
+            _itemService.SettingItemDefaults += (sender, args) => {
                 args.Handled = true;
             };
 
@@ -114,7 +114,7 @@ namespace Orion.Tests.Items {
         [Fact]
         public void ItemSetDefaults_IsCorrect() {
             IItem argsItem = null;
-            _itemService.ItemSetDefaults += (sender, args) => {
+            _itemService.SetItemDefaults += (sender, args) => {
                 argsItem = args.Item;
                 args.Item.Type.Should().Be(ItemType.SDMG);
                 args.Item.StackSize.Should().Be(1);
@@ -128,7 +128,7 @@ namespace Orion.Tests.Items {
         [Fact]
         public void ItemUpdating_IsCorrect() {
             IItem argsItem = null;
-            _itemService.ItemUpdating += (sender, args) => {
+            _itemService.UpdatingItem += (sender, args) => {
                 argsItem = args.Item;
             };
             var item = _itemService.SpawnItem(ItemType.SDMG, Vector2.Zero);
@@ -142,7 +142,7 @@ namespace Orion.Tests.Items {
         [Fact]
         public void ItemUpdated_IsCorrect() {
             IItem argsItem = null;
-            _itemService.ItemUpdated += (sender, args) => {
+            _itemService.UpdatedItem += (sender, args) => {
                 argsItem = args.Item;
             };
             var item = _itemService.SpawnItem(ItemType.SDMG, Vector2.Zero);

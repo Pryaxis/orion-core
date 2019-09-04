@@ -49,7 +49,7 @@ namespace Orion.Tests.Players {
         [Fact]
         public void PlayerUpdating_IsCorrect() {
             IPlayer argsPlayer = null;
-            _playerService.PlayerUpdating += (sender, args) => {
+            _playerService.UpdatingPlayer += (sender, args) => {
                 argsPlayer = args.Player;
             };
             var player = _playerService[0];
@@ -63,7 +63,7 @@ namespace Orion.Tests.Players {
         [Fact]
         public void PlayerUpdated_IsCorrect() {
             IPlayer argsPlayer = null;
-            _playerService.PlayerUpdated += (sender, args) => {
+            _playerService.UpdatedPlayer += (sender, args) => {
                 argsPlayer = args.Player;
             };
             var player = _playerService[0];
