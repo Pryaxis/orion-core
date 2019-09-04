@@ -1825,11 +1825,6 @@
             Provides a wrapper around a Terraria.Player instance.
             </summary>
         </member>
-        <member name="P:Orion.Players.IPlayer.WrappedPlayer">
-            <summary>
-            Gets the wrapped Terraria Player instance.
-            </summary>
-        </member>
         <member name="T:Orion.Players.IPlayerService">
             <summary>
             Provides a mechanism for managing players.

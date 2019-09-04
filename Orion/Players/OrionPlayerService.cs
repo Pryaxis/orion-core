@@ -11,7 +11,8 @@ namespace Orion.Players {
     /// Orion's implementation of <see cref="IPlayerService"/>.
     /// </summary>
     internal sealed class OrionPlayerService : OrionService, IPlayerService {
-        private readonly IPlayer[] _players;
+        private readonly IList<Terraria.Player> _terrariaPlayers;
+        private readonly IList<OrionPlayer> _players;
 
         public override string Author => "Pryaxis";
         public override string Name => "Orion Player Service";
@@ -24,8 +25,8 @@ namespace Orion.Players {
                     throw new IndexOutOfRangeException(nameof(index));
                 }
 
-                if (_players[index]?.WrappedPlayer != Terraria.Main.player[index]) {
-                    _players[index] = new OrionPlayer(Terraria.Main.player[index]);
+                if (_players[index]?.WrappedPlayer != _terrariaPlayers[index]) {
+                    _players[index] = new OrionPlayer(_terrariaPlayers[index]);
                 }
 
                 var player = _players[index];
@@ -40,8 +41,8 @@ namespace Orion.Players {
         public event EventHandler<UpdatedPlayerEventArgs> UpdatedPlayer;
 
         public OrionPlayerService() {
-
-            _players = new IPlayer[Terraria.Main.maxPlayers];
+            _terrariaPlayers = Terraria.Main.player;
+            _players = new OrionPlayer[_terrariaPlayers.Count];
             
             Hooks.Player.PreGreet = PreGreetHandler;
             Hooks.Player.PreUpdate = PreUpdateHandler;
