@@ -2092,9 +2092,24 @@
             Gets or sets the name.
             </summary>
         </member>
+        <member name="P:Orion.World.Chests.IChest.Items">
+            <summary>
+            Gets the items.
+            </summary>
+        </member>
+        <member name="T:Orion.World.Chests.IChestService">
+            <summary>
+            Provides a mechanism for managing chests.
+            </summary>
+        </member>
         <member name="T:Orion.World.Chests.OrionChest">
             <summary>
             Orion's implementation of <see cref="T:Orion.World.Chests.IChest"/>.
+            </summary>
+        </member>
+        <member name="T:Orion.World.Chests.OrionChestService">
+            <summary>
+            Orion's implementation of <see cref="T:Orion.World.Chests.IChestService"/>.
             </summary>
         </member>
         <member name="T:Orion.World.InvasionType">
@@ -2102,34 +2117,44 @@
             Indicates the type of an invasion.
             </summary>
         </member>
-        <member name="T:Orion.World.ISign">
+        <member name="T:Orion.World.ITileService">
+            <summary>
+            Provides access to Terraria's tile mechanism.
+            </summary>
+        </member>
+        <member name="T:Orion.World.Signs.ISign">
             <summary>
             Provides a wrapper around a Terraria.Sign instance.
             </summary>
         </member>
-        <member name="P:Orion.World.ISign.X">
+        <member name="P:Orion.World.Signs.ISign.X">
             <summary>
             Gets or sets the X position.
             </summary>
         </member>
-        <member name="P:Orion.World.ISign.Y">
+        <member name="P:Orion.World.Signs.ISign.Y">
             <summary>
             Gets or sets the Y position.
             </summary>
         </member>
-        <member name="P:Orion.World.ISign.Text">
+        <member name="P:Orion.World.Signs.ISign.Text">
             <summary>
             Gets or sets the text.
             </summary>
         </member>
-        <member name="P:Orion.World.ISign.WrappedSign">
+        <member name="T:Orion.World.Signs.ISignService">
             <summary>
-            Gets the wrapped sign.
+            Provides a mechanism for managing signs.
             </summary>
         </member>
-        <member name="T:Orion.World.ITileService">
+        <member name="T:Orion.World.Signs.OrionSign">
             <summary>
-            Provides access to Terraria's tile mechanism.
+            Orion's implementation of <see cref="T:Orion.World.Signs.ISign"/>.
+            </summary>
+        </member>
+        <member name="T:Orion.World.Signs.OrionSignService">
+            <summary>
+            Orion's implementation of <see cref="T:Orion.World.Signs.ISignService"/>.
             </summary>
         </member>
     </members>

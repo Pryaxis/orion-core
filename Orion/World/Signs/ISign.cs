@@ -1,4 +1,4 @@
-﻿namespace Orion.World {
+﻿namespace Orion.World.Signs {
     /// <summary>
     /// Provides a wrapper around a Terraria.Sign instance.
     /// </summary>
@@ -17,10 +17,5 @@
         /// Gets or sets the text.
         /// </summary>
         string Text { get; set; }
-
-        /// <summary>
-        /// Gets the wrapped sign.
-        /// </summary>
-        Terraria.Sign WrappedSign { get; }
     }
 }
