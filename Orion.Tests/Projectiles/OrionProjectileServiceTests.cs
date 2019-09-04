@@ -26,7 +26,7 @@ namespace Orion.Tests.Projectiles {
 
         [Fact]
         public void GetItem_IsCorrect() {
-            var projectile = _projectileService[0];
+            var projectile = (OrionProjectile)_projectileService[0];
 
             projectile.WrappedProjectile.Should().BeSameAs(Terraria.Main.projectile[0]);
         }
@@ -50,12 +50,12 @@ namespace Orion.Tests.Projectiles {
 
         [Fact]
         public void ProjectileSettingDefaults_IsCorrect() {
-            IProjectile argsProjectile = null;
+            OrionProjectile argsProjectile = null;
             _projectileService.SettingProjectileDefaults += (sender, args) => {
-                argsProjectile = args.Projectile;
+                argsProjectile = (OrionProjectile)args.Projectile;
             };
 
-            var projectile = _projectileService.SpawnProjectile(ProjectileType.Ale, Vector2.Zero, Vector2.Zero, 0, 0);
+            var projectile = (OrionProjectile)_projectileService.SpawnProjectile(ProjectileType.Ale, Vector2.Zero, Vector2.Zero, 0, 0);
 
             argsProjectile.Should().NotBeNull();
             argsProjectile.WrappedProjectile.Should().BeSameAs(projectile.WrappedProjectile);
@@ -69,7 +69,7 @@ namespace Orion.Tests.Projectiles {
                 args.Type = newType;
             };
 
-            var projectile = _projectileService.SpawnProjectile(oldType, Vector2.Zero, Vector2.Zero, 0, 0);
+            var projectile = (OrionProjectile)_projectileService.SpawnProjectile(oldType, Vector2.Zero, Vector2.Zero, 0, 0);
 
             projectile.Type.Should().Be(newType);
         }
@@ -80,19 +80,19 @@ namespace Orion.Tests.Projectiles {
                 args.Handled = true;
             };
 
-            var projectile = _projectileService.SpawnProjectile(ProjectileType.Ale, Vector2.Zero, Vector2.Zero, 0, 0);
+            var projectile = (OrionProjectile)_projectileService.SpawnProjectile(ProjectileType.Ale, Vector2.Zero, Vector2.Zero, 0, 0);
 
             projectile.Type.Should().Be(ProjectileType.None);
         }
 
         [Fact]
         public void ProjectileSetDefaults_IsCorrect() {
-            IProjectile argsProjectile = null;
+            OrionProjectile argsProjectile = null;
             _projectileService.SetProjectileDefaults += (sender, args) => {
-                argsProjectile = args.Projectile;
+                argsProjectile = (OrionProjectile)args.Projectile;
             };
 
-            var projectile = _projectileService.SpawnProjectile(ProjectileType.Ale, Vector2.Zero, Vector2.Zero, 0, 0);
+            var projectile = (OrionProjectile)_projectileService.SpawnProjectile(ProjectileType.Ale, Vector2.Zero, Vector2.Zero, 0, 0);
 
             argsProjectile.Should().NotBeNull();
             argsProjectile.WrappedProjectile.Should().BeSameAs(projectile.WrappedProjectile);
@@ -100,11 +100,11 @@ namespace Orion.Tests.Projectiles {
 
         [Fact]
         public void ProjectileUpdating_IsCorrect() {
-            IProjectile argsProjectile = null;
+            OrionProjectile argsProjectile = null;
             _projectileService.UpdatingProjectile += (sender, args) => {
-                argsProjectile = args.Projectile;
+                argsProjectile = (OrionProjectile)args.Projectile;
             };
-            var projectile = _projectileService.SpawnProjectile(ProjectileType.Ale, Vector2.Zero, Vector2.Zero, 0, 0);
+            var projectile = (OrionProjectile)_projectileService.SpawnProjectile(ProjectileType.Ale, Vector2.Zero, Vector2.Zero, 0, 0);
 
             projectile.WrappedProjectile.Update(projectile.Index);
 
@@ -114,11 +114,11 @@ namespace Orion.Tests.Projectiles {
 
         [Fact]
         public void ProjectileUpdatingAi_IsCorrect() {
-            IProjectile argsProjectile = null;
+            OrionProjectile argsProjectile = null;
             _projectileService.UpdatingProjectileAi += (sender, args) => {
-                argsProjectile = args.Projectile;
+                argsProjectile = (OrionProjectile)args.Projectile;
             };
-            var projectile = _projectileService.SpawnProjectile(ProjectileType.Ale, Vector2.Zero, Vector2.Zero, 0, 0);
+            var projectile = (OrionProjectile)_projectileService.SpawnProjectile(ProjectileType.Ale, Vector2.Zero, Vector2.Zero, 0, 0);
 
             projectile.WrappedProjectile.AI();
 
@@ -128,11 +128,11 @@ namespace Orion.Tests.Projectiles {
 
         [Fact]
         public void ProjectileUpdatedAi_IsCorrect() {
-            IProjectile argsProjectile = null;
+            OrionProjectile argsProjectile = null;
             _projectileService.UpdatedProjectileAi += (sender, args) => {
-                argsProjectile = args.Projectile;
+                argsProjectile = (OrionProjectile)args.Projectile;
             };
-            var projectile = _projectileService.SpawnProjectile(ProjectileType.Ale, Vector2.Zero, Vector2.Zero, 0, 0);
+            var projectile = (OrionProjectile)_projectileService.SpawnProjectile(ProjectileType.Ale, Vector2.Zero, Vector2.Zero, 0, 0);
 
             projectile.WrappedProjectile.AI();
 
@@ -142,11 +142,11 @@ namespace Orion.Tests.Projectiles {
 
         [Fact]
         public void ProjectileUpdated_IsCorrect() {
-            IProjectile argsProjectile = null;
+            OrionProjectile argsProjectile = null;
             _projectileService.UpdatedProjectile += (sender, args) => {
-                argsProjectile = args.Projectile;
+                argsProjectile = (OrionProjectile)args.Projectile;
             };
-            var projectile = _projectileService.SpawnProjectile(ProjectileType.Ale, Vector2.Zero, Vector2.Zero, 0, 0);
+            var projectile = (OrionProjectile)_projectileService.SpawnProjectile(ProjectileType.Ale, Vector2.Zero, Vector2.Zero, 0, 0);
             
             projectile.WrappedProjectile.Update(projectile.Index);
 
@@ -156,11 +156,11 @@ namespace Orion.Tests.Projectiles {
 
         [Fact]
         public void ProjectileRemoving_IsCorrect() {
-            IProjectile argsProjectile = null;
+            OrionProjectile argsProjectile = null;
             _projectileService.RemovingProjectile += (sender, args) => {
-                argsProjectile = args.Projectile;
+                argsProjectile = (OrionProjectile)args.Projectile;
             };
-            var projectile = _projectileService.SpawnProjectile(ProjectileType.Ale, Vector2.Zero, Vector2.Zero, 0, 0);
+            var projectile = (OrionProjectile)_projectileService.SpawnProjectile(ProjectileType.Ale, Vector2.Zero, Vector2.Zero, 0, 0);
 
             projectile.Remove();
 
@@ -173,7 +173,7 @@ namespace Orion.Tests.Projectiles {
             _projectileService.RemovingProjectile += (sender, args) => {
                 args.Handled = true;
             };
-            var projectile = _projectileService.SpawnProjectile(ProjectileType.Ale, Vector2.Zero, Vector2.Zero, 0, 0);
+            var projectile = (OrionProjectile)_projectileService.SpawnProjectile(ProjectileType.Ale, Vector2.Zero, Vector2.Zero, 0, 0);
 
             projectile.Remove();
 
@@ -182,11 +182,11 @@ namespace Orion.Tests.Projectiles {
 
         [Fact]
         public void ProjectileRemoved_IsCorrect() {
-            IProjectile argsProjectile = null;
+            OrionProjectile argsProjectile = null;
             _projectileService.RemovedProjectile += (sender, args) => {
-                argsProjectile = args.Projectile;
+                argsProjectile = (OrionProjectile)args.Projectile;
             };
-            var projectile = _projectileService.SpawnProjectile(ProjectileType.Ale, Vector2.Zero, Vector2.Zero, 0, 0);
+            var projectile = (OrionProjectile)_projectileService.SpawnProjectile(ProjectileType.Ale, Vector2.Zero, Vector2.Zero, 0, 0);
 
             projectile.Remove();
 
@@ -199,7 +199,7 @@ namespace Orion.Tests.Projectiles {
             var projectiles = _projectileService.ToList();
 
             for (var i = 0; i < projectiles.Count; ++i) {
-                projectiles[i].WrappedProjectile.Should().BeSameAs(Terraria.Main.projectile[i]);
+                ((OrionProjectile)projectiles[i]).WrappedProjectile.Should().BeSameAs(Terraria.Main.projectile[i]);
             }
         }
         

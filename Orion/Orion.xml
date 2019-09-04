@@ -1994,11 +1994,6 @@
             Gets or sets the knockback.
             </summary>
         </member>
-        <member name="P:Orion.Projectiles.IProjectile.WrappedProjectile">
-            <summary>
-            Gets the wrapped Terraria Projectile instance.
-            </summary>
-        </member>
         <member name="M:Orion.Projectiles.IProjectile.Remove">
             <summary>
             Removes the projectile.

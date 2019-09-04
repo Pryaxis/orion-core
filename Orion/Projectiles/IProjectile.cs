@@ -21,11 +21,6 @@ namespace Orion.Projectiles {
         float Knockback { get; set; }
 
         /// <summary>
-        /// Gets the wrapped Terraria Projectile instance.
-        /// </summary>
-        Terraria.Projectile WrappedProjectile { get; }
-
-        /// <summary>
         /// Removes the projectile.
         /// </summary>
         void Remove();

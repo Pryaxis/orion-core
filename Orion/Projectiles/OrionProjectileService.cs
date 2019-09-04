@@ -12,12 +12,13 @@ namespace Orion.Projectiles {
     /// Orion's implementation of <see cref="IProjectileService"/>.
     /// </summary>
     internal sealed class OrionProjectileService : OrionService, IProjectileService {
-        private readonly IProjectile[] _projectiles;
+        private readonly IList<Terraria.Projectile> _terrariaProjectiles;
+        private readonly IList<OrionProjectile> _projectiles;
 
         public override string Author => "Pryaxis";
         public override string Name => "Orion Projectile Service";
 
-        public int Count => Terraria.Main.maxProjectiles;
+        public int Count => _projectiles.Count;
 
         public IProjectile this[int index] {
             get {
@@ -25,8 +26,8 @@ namespace Orion.Projectiles {
                     throw new IndexOutOfRangeException(nameof(index));
                 }
 
-                if (_projectiles[index]?.WrappedProjectile != Terraria.Main.projectile[index]) {
-                    _projectiles[index] = new OrionProjectile(Terraria.Main.projectile[index]);
+                if (_projectiles[index]?.WrappedProjectile != _terrariaProjectiles[index]) {
+                    _projectiles[index] = new OrionProjectile(_terrariaProjectiles[index]);
                 }
 
                 var projectile = _projectiles[index];
@@ -47,7 +48,8 @@ namespace Orion.Projectiles {
         public event EventHandler<RemovedProjectileEventArgs> RemovedProjectile;
 
         public OrionProjectileService() {
-            _projectiles = new IProjectile[Terraria.Main.maxProjectiles];
+            _terrariaProjectiles = Terraria.Main.projectile;
+            _projectiles = new OrionProjectile[_terrariaProjectiles.Count];
 
             Hooks.Projectile.PreSetDefaultsById = PreSetDefaultsByIdHandler;
             Hooks.Projectile.PostSetDefaultsById = PostSetDefaultsByIdHandler;

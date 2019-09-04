@@ -21,7 +21,7 @@ namespace Orion.Projectiles {
             set => WrappedProjectile.knockBack = value;
         }
 
-        public Terraria.Projectile WrappedProjectile { get; }
+        internal Terraria.Projectile WrappedProjectile { get; }
 
         public OrionProjectile(Terraria.Projectile terrariaProjectile) : base(terrariaProjectile) {
             Debug.Assert(terrariaProjectile != null, $"{nameof(terrariaProjectile)} should not be null.");
