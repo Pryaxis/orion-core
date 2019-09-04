@@ -21,11 +21,6 @@ namespace Orion.Npcs {
         int MaxHp { get; set; }
 
         /// <summary>
-        /// Gets the wrapped Terraria NPC instance.
-        /// </summary>
-        Terraria.NPC WrappedNpc { get; }
-
-        /// <summary>
         /// Damages the NPC with the specified damage, knockback, hit direction, and criticality.
         /// </summary>
         /// <param name="damage">The damage.</param>

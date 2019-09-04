@@ -18,7 +18,7 @@ namespace Orion.Projectiles {
         public override string Author => "Pryaxis";
         public override string Name => "Orion Projectile Service";
 
-        public int Count => _projectiles.Count;
+        public int Count => _projectiles.Count - 1;
 
         public IProjectile this[int index] {
             get {

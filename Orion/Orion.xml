@@ -1627,11 +1627,6 @@
             Gets or sets the NPC's max HP.
             </summary>
         </member>
-        <member name="P:Orion.Npcs.INpc.WrappedNpc">
-            <summary>
-            Gets the wrapped Terraria NPC instance.
-            </summary>
-        </member>
         <member name="M:Orion.Npcs.INpc.Damage(System.Int32,System.Single,System.Int32,System.Boolean)">
             <summary>
             Damages the NPC with the specified damage, knockback, hit direction, and criticality.

@@ -19,12 +19,13 @@ namespace Orion.Npcs {
         private readonly IItemService _itemService;
         private readonly IPlayerService _playerService;
         private readonly ThreadLocal<int> _setDefaultsToIgnore = new ThreadLocal<int>();
-        private readonly INpc[] _npcs;
+        private readonly IList<Terraria.NPC> _terrariaNpcs;
+        private readonly IList<OrionNpc> _npcs;
 
         public override string Author => "Pryaxis";
         public override string Name => "Orion NPC Service";
 
-        public int Count => Terraria.Main.maxNPCs;
+        public int Count => _npcs.Count - 1;
         
         public INpc this[int index] {
             get {
@@ -32,8 +33,8 @@ namespace Orion.Npcs {
                     throw new IndexOutOfRangeException(nameof(index));
                 }
 
-                if (_npcs[index]?.WrappedNpc != Terraria.Main.npc[index]) {
-                    _npcs[index] = new OrionNpc(Terraria.Main.npc[index]);
+                if (_npcs[index]?.WrappedNpc != _terrariaNpcs[index]) {
+                    _npcs[index] = new OrionNpc(_terrariaNpcs[index]);
                 }
 
                 var npc = _npcs[index];
@@ -76,7 +77,8 @@ namespace Orion.Npcs {
             
             _itemService = itemService;
             _playerService = playerService;
-            _npcs = new INpc[Terraria.Main.maxNPCs];
+            _terrariaNpcs = Terraria.Main.npc;
+            _npcs = new OrionNpc[_terrariaNpcs.Count];
 
             Hooks.Npc.Create = CreateHandler;
             Hooks.Npc.Spawn = SpawnHandler;
@@ -129,7 +131,7 @@ namespace Orion.Npcs {
             var ai2 = aiValues?[2] ?? 0;
             var ai3 = aiValues?[3] ?? 0;
             var npcIndex = Terraria.NPC.NewNPC((int)position.X, (int)position.Y, (int)type, 0, ai0, ai1, ai2, ai3);
-            if (npcIndex < 0 || npcIndex >= Terraria.Main.maxNPCs) {
+            if (npcIndex < 0 || npcIndex >= Count) {
                 return null;
             }
 
@@ -152,7 +154,7 @@ namespace Orion.Npcs {
 
             var terrariaNpc = new Terraria.NPC();
             if (args.Handled) {
-                npcIndex = Terraria.Main.maxNPCs;
+                npcIndex = Count;
             } else {
                 terrariaNpc.SetDefaults((int)args.NpcType);
                 x = (int)args.Position.X;
@@ -168,7 +170,7 @@ namespace Orion.Npcs {
         }
 
         private HookResult SpawnHandler(ref int npcIndex) {
-            if (npcIndex < 0 || npcIndex >= Terraria.Main.maxNPCs) {
+            if (npcIndex < 0 || npcIndex >= Count) {
                 return HookResult.Continue;
             }
 

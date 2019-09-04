@@ -42,7 +42,7 @@ namespace Orion.Tests.Npcs {
 
         [Fact]
         public void GetNpc_IsCorrect() {
-            var npc = _npcService[0];
+            var npc = (OrionNpc)_npcService[0];
 
             npc.WrappedNpc.Should().BeSameAs(Terraria.Main.npc[0]);
         }
@@ -91,12 +91,12 @@ namespace Orion.Tests.Npcs {
 
         [Fact]
         public void NpcSettingDefaults_IsCorrect() {
-            INpc argsNpc = null;
+            OrionNpc argsNpc = null;
             _npcService.SettingNpcDefaults += (sender, args) => {
-                argsNpc = args.Npc;
+                argsNpc = (OrionNpc)args.Npc;
             };
 
-            var npc = _npcService.SpawnNpc(NpcType.BlueSlime, Vector2.Zero);
+            var npc = (OrionNpc)_npcService.SpawnNpc(NpcType.BlueSlime, Vector2.Zero);
 
             argsNpc.Should().NotBeNull();
             argsNpc.WrappedNpc.Should().BeSameAs(npc.WrappedNpc);
@@ -140,12 +140,12 @@ namespace Orion.Tests.Npcs {
 
         [Fact]
         public void NpcSetDefaults_IsCorrect() {
-            INpc argsNpc = null;
+            OrionNpc argsNpc = null;
             _npcService.SetNpcDefaults += (sender, args) => {
-                argsNpc = args.Npc;
+                argsNpc = (OrionNpc)args.Npc;
             };
 
-            var npc = _npcService.SpawnNpc(NpcType.BlueSlime, Vector2.Zero);
+            var npc = (OrionNpc)_npcService.SpawnNpc(NpcType.BlueSlime, Vector2.Zero);
 
             argsNpc.Should().NotBeNull();
             argsNpc.WrappedNpc.Should().BeSameAs(npc.WrappedNpc);
@@ -165,11 +165,11 @@ namespace Orion.Tests.Npcs {
 
         [Fact]
         public void NpcUpdating_IsCorrect() {
-            INpc argsNpc = null;
+            OrionNpc argsNpc = null;
             _npcService.UpdatingNpc += (sender, args) => {
-                argsNpc = args.Npc;
+                argsNpc = (OrionNpc)args.Npc;
             };
-            var npc = _npcService.SpawnNpc(NpcType.BlueSlime, Vector2.Zero);
+            var npc = (OrionNpc)_npcService.SpawnNpc(NpcType.BlueSlime, Vector2.Zero);
 
             npc.WrappedNpc.UpdateNPC(npc.Index);
 
@@ -179,11 +179,11 @@ namespace Orion.Tests.Npcs {
 
         [Fact]
         public void NpcUpdatingAi_IsCorrect() {
-            INpc argsNpc = null;
+            OrionNpc argsNpc = null;
             _npcService.UpdatingNpcAi += (sender, args) => {
-                argsNpc = args.Npc;
+                argsNpc = (OrionNpc)args.Npc;
             };
-            var npc = _npcService.SpawnNpc(NpcType.BlueSlime, Vector2.Zero);
+            var npc = (OrionNpc)_npcService.SpawnNpc(NpcType.BlueSlime, Vector2.Zero);
 
             npc.WrappedNpc.AI();
 
@@ -193,11 +193,11 @@ namespace Orion.Tests.Npcs {
 
         [Fact]
         public void NpcUpdatedAi_IsCorrect() {
-            INpc argsNpc = null;
+            OrionNpc argsNpc = null;
             _npcService.UpdatedNpcAi += (sender, args) => {
-                argsNpc = args.Npc;
+                argsNpc = (OrionNpc)args.Npc;
             };
-            var npc = _npcService.SpawnNpc(NpcType.BlueSlime, Vector2.Zero);
+            var npc = (OrionNpc)_npcService.SpawnNpc(NpcType.BlueSlime, Vector2.Zero);
 
             npc.WrappedNpc.AI();
 
@@ -207,11 +207,11 @@ namespace Orion.Tests.Npcs {
 
         [Fact]
         public void NpcUpdated_IsCorrect() {
-            INpc argsNpc = null;
+            OrionNpc argsNpc = null;
             _npcService.UpdatedNpc += (sender, args) => {
-                argsNpc = args.Npc;
+                argsNpc = (OrionNpc)args.Npc;
             };
-            var npc = _npcService.SpawnNpc(NpcType.BlueSlime, Vector2.Zero);
+            var npc = (OrionNpc)_npcService.SpawnNpc(NpcType.BlueSlime, Vector2.Zero);
 
             npc.WrappedNpc.UpdateNPC(npc.Index);
 
@@ -223,15 +223,15 @@ namespace Orion.Tests.Npcs {
         [InlineData(10, 0.4, 1)]
         [InlineData(100, -0.4, -1)]
         public void NpcDamaging_IsCorrect(int damage, float knockback, int hitDirection) {
-            INpc argsNpc = null;
+            OrionNpc argsNpc = null;
             _npcService.DamagingNpc += (sender, args) => {
-                argsNpc = args.Npc;
+                argsNpc = (OrionNpc)args.Npc;
                 args.Damage.Should().Be(damage);
                 args.Knockback.Should().Be(knockback);
                 args.HitDirection.Should().Be(hitDirection);
                 args.PlayerResponsible.Should().BeNull();
             };
-            var npc = _npcService.SpawnNpc(NpcType.BlueSlime, Vector2.Zero);
+            var npc = (OrionNpc)_npcService.SpawnNpc(NpcType.BlueSlime, Vector2.Zero);
 
             npc.Damage(damage, knockback, hitDirection);
 
@@ -255,15 +255,15 @@ namespace Orion.Tests.Npcs {
         [InlineData(10, 0.4, 1)]
         [InlineData(100, -0.4, -1)]
         public void NpcDamaged_IsCorrect(int damage, float knockback, int hitDirection) {
-            INpc argsNpc = null;
+            OrionNpc argsNpc = null;
             _npcService.DamagedNpc += (sender, args) => {
-                argsNpc = args.Npc;
+                argsNpc = (OrionNpc)args.Npc;
                 args.Damage.Should().Be(damage);
                 args.Knockback.Should().Be(knockback);
                 args.HitDirection.Should().Be(hitDirection);
                 args.PlayerResponsible.Should().BeNull();
             };
-            var npc = _npcService.SpawnNpc(NpcType.BlueSlime, Vector2.Zero);
+            var npc = (OrionNpc)_npcService.SpawnNpc(NpcType.BlueSlime, Vector2.Zero);
 
             npc.Damage(damage, knockback, hitDirection);
 
@@ -275,11 +275,11 @@ namespace Orion.Tests.Npcs {
         [InlineData(NpcType.BlueSlime, NpcType.GreenSlime)]
         [InlineData(NpcType.BlueSlime, NpcType.None)]
         public void NpcTransforming_IsCorrect(NpcType oldType, NpcType newType) {
-            INpc argsNpc = null;
+            OrionNpc argsNpc = null;
             _npcService.NpcTransforming += (sender, args) => {
-                argsNpc = args.Npc;
+                argsNpc = (OrionNpc)args.Npc;
             };
-            var npc = _npcService.SpawnNpc(oldType, Vector2.Zero);
+            var npc = (OrionNpc)_npcService.SpawnNpc(oldType, Vector2.Zero);
 
             npc.Transform(newType);
 
@@ -292,7 +292,7 @@ namespace Orion.Tests.Npcs {
             _npcService.NpcTransforming += (sender, args) => {
                 args.Handled = true;
             };
-            var npc = _npcService.SpawnNpc(NpcType.BlueSlime, Vector2.Zero);
+            var npc = (OrionNpc)_npcService.SpawnNpc(NpcType.BlueSlime, Vector2.Zero);
 
             npc.Transform(NpcType.GreenSlime);
 
@@ -301,11 +301,11 @@ namespace Orion.Tests.Npcs {
 
         [Fact]
         public void NpcTransformed_IsCorrect() {
-            INpc argsNpc = null;
+            OrionNpc argsNpc = null;
             _npcService.NpcTransformed += (sender, args) => {
-                argsNpc = args.Npc;
+                argsNpc = (OrionNpc)args.Npc;
             };
-            var npc = _npcService.SpawnNpc(NpcType.BlueSlime, Vector2.Zero);
+            var npc = (OrionNpc)_npcService.SpawnNpc(NpcType.BlueSlime, Vector2.Zero);
 
             npc.Transform(NpcType.BlueSlime);
 
@@ -315,11 +315,11 @@ namespace Orion.Tests.Npcs {
 
         [Fact]
         public void NpcDroppingLootItem_IsCorrect() {
-            INpc argsNpc = null;
+            OrionNpc argsNpc = null;
             _npcService.NpcDroppingLootItem += (sender, args) => {
-                argsNpc = args.Npc;
+                argsNpc = (OrionNpc)args.Npc;
             };
-            var npc = _npcService.SpawnNpc(NpcType.BlueSlime, Vector2.Zero);
+            var npc = (OrionNpc)_npcService.SpawnNpc(NpcType.BlueSlime, Vector2.Zero);
 
             npc.Kill();
 
@@ -341,11 +341,11 @@ namespace Orion.Tests.Npcs {
 
         [Fact]
         public void NpcDroppedLootItem_IsCorrect() {
-            INpc argsNpc = null;
+            OrionNpc argsNpc = null;
             _npcService.NpcDroppedLootItem += (sender, args) => {
-                argsNpc = args.Npc;
+                argsNpc = (OrionNpc)args.Npc;
             };
-            var npc = _npcService.SpawnNpc(NpcType.BlueSlime, Vector2.Zero);
+            var npc = (OrionNpc)_npcService.SpawnNpc(NpcType.BlueSlime, Vector2.Zero);
 
             npc.Kill();
 
@@ -355,11 +355,11 @@ namespace Orion.Tests.Npcs {
 
         [Fact]
         public void NpcKilled_IsCorrect() {
-            INpc argsNpc = null;
+            OrionNpc argsNpc = null;
             _npcService.KilledNpc += (sender, args) => {
-                argsNpc = args.Npc;
+                argsNpc = (OrionNpc)args.Npc;
             };
-            var npc = _npcService.SpawnNpc(NpcType.BlueSlime, Vector2.Zero);
+            var npc = (OrionNpc)_npcService.SpawnNpc(NpcType.BlueSlime, Vector2.Zero);
 
             npc.Kill();
 
@@ -372,7 +372,7 @@ namespace Orion.Tests.Npcs {
             var npcs = _npcService.ToList();
 
             for (var i = 0; i < npcs.Count; ++i) {
-                npcs[i].WrappedNpc.Should().BeSameAs(Terraria.Main.npc[i]);
+                ((OrionNpc)npcs[i]).WrappedNpc.Should().BeSameAs(Terraria.Main.npc[i]);
             }
         }
 

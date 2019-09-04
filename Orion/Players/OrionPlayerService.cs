@@ -17,7 +17,7 @@ namespace Orion.Players {
         public override string Author => "Pryaxis";
         public override string Name => "Orion Player Service";
 
-        public int Count => Terraria.Main.maxPlayers;
+        public int Count => _players.Count - 1;
 
         public IPlayer this[int index] {
             get {

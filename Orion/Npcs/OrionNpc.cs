@@ -24,7 +24,7 @@ namespace Orion.Npcs {
             set => WrappedNpc.lifeMax = value;
         }
 
-        public Terraria.NPC WrappedNpc { get; }
+        internal Terraria.NPC WrappedNpc { get; }
 
         public OrionNpc(Terraria.NPC terrariaNpc) : base(terrariaNpc) {
             Debug.Assert(terrariaNpc != null, $"{nameof(terrariaNpc)} should not be null.");
