@@ -1,6 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
+using System.Diagnostics;
 using Orion.Items;
 
 namespace Orion.World.Chests {
@@ -20,15 +19,19 @@ namespace Orion.World.Chests {
 
         public string Name {
             get => WrappedChest.name;
-            set => WrappedChest.name = value;
+            set => WrappedChest.name = value ?? throw new ArgumentNullException(nameof(value));
         }
 
-        //public IItemArray Items { get; }
+        public IItemList Items { get; }
 
         internal Terraria.Chest WrappedChest { get; }
 
-        public OrionChest(Terraria.Chest chest) {
-            WrappedChest = chest;
+        public OrionChest(Terraria.Chest terrariaChest) {
+            Debug.Assert(terrariaChest != null, $"{nameof(terrariaChest)} should not be null.");
+
+            WrappedChest = terrariaChest;
+
+            Items = new OrionItemList(WrappedChest.item);
         }
     }
 }

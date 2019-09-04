@@ -23,6 +23,6 @@ namespace Orion.World.Chests {
         /// <summary>
         /// Gets the items.
         /// </summary>
-        //IItemArray Items { get; }
+        IItemList Items { get; }
     }
 }
