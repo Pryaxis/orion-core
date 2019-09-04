@@ -2122,6 +2122,11 @@
             Provides access to Terraria's tile mechanism.
             </summary>
         </member>
+        <member name="T:Orion.World.PaintType">
+            <summary>
+            Specifies the type of paint.
+            </summary>
+        </member>
         <member name="T:Orion.World.Signs.ISign">
             <summary>
             Provides a wrapper around a Terraria.Sign instance.
@@ -2155,6 +2160,16 @@
         <member name="T:Orion.World.Signs.OrionSignService">
             <summary>
             Orion's implementation of <see cref="T:Orion.World.Signs.ISignService"/>.
+            </summary>
+        </member>
+        <member name="T:Orion.World.TileType">
+            <summary>
+            Specifies a tile's type.
+            </summary>
+        </member>
+        <member name="T:Orion.World.WallType">
+            <summary>
+            Specifies a wall's type.
             </summary>
         </member>
     </members>
