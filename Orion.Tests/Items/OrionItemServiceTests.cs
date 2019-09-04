@@ -24,7 +24,7 @@ namespace Orion.Tests.Items {
 
         [Fact]
         public void GetItem_IsCorrect() {
-            var item = _itemService[0];
+            var item = (OrionItem)_itemService[0];
 
             item.WrappedItem.Should().BeSameAs(Terraria.Main.item[0]);
         }
@@ -76,12 +76,12 @@ namespace Orion.Tests.Items {
         
         [Fact]
         public void ItemSettingDefaults_IsCorrect() {
-            IItem argsItem = null;
+            OrionItem argsItem = null;
             _itemService.SettingItemDefaults += (sender, args) => {
-                argsItem = args.Item;
+                argsItem = (OrionItem)args.Item;
             };
             
-            var item = _itemService.SpawnItem(ItemType.SDMG, Vector2.Zero, 1, ItemPrefix.Unreal);
+            var item = (OrionItem)_itemService.SpawnItem(ItemType.SDMG, Vector2.Zero, 1, ItemPrefix.Unreal);
 
             argsItem.Should().NotBeNull();
             argsItem.WrappedItem.Should().BeSameAs(item.WrappedItem);
@@ -113,25 +113,25 @@ namespace Orion.Tests.Items {
 
         [Fact]
         public void ItemSetDefaults_IsCorrect() {
-            IItem argsItem = null;
+            OrionItem argsItem = null;
             _itemService.SetItemDefaults += (sender, args) => {
-                argsItem = args.Item;
+                argsItem = (OrionItem)args.Item;
                 args.Item.Type.Should().Be(ItemType.SDMG);
                 args.Item.StackSize.Should().Be(1);
             };
 
-            var item = _itemService.SpawnItem(ItemType.SDMG, Vector2.Zero);
+            var item = (OrionItem)_itemService.SpawnItem(ItemType.SDMG, Vector2.Zero);
             argsItem.Should().NotBeNull();
             argsItem.WrappedItem.Should().BeSameAs(item.WrappedItem);
         }
 
         [Fact]
         public void ItemUpdating_IsCorrect() {
-            IItem argsItem = null;
+            OrionItem argsItem = null;
             _itemService.UpdatingItem += (sender, args) => {
-                argsItem = args.Item;
+                argsItem = (OrionItem)args.Item;
             };
-            var item = _itemService.SpawnItem(ItemType.SDMG, Vector2.Zero);
+            var item = (OrionItem)_itemService.SpawnItem(ItemType.SDMG, Vector2.Zero);
 
             item.WrappedItem.UpdateItem(item.Index);
             
@@ -141,11 +141,11 @@ namespace Orion.Tests.Items {
 
         [Fact]
         public void ItemUpdated_IsCorrect() {
-            IItem argsItem = null;
+            OrionItem argsItem = null;
             _itemService.UpdatedItem += (sender, args) => {
-                argsItem = args.Item;
+                argsItem = (OrionItem)args.Item;
             };
-            var item = _itemService.SpawnItem(ItemType.SDMG, Vector2.Zero);
+            var item = (OrionItem)_itemService.SpawnItem(ItemType.SDMG, Vector2.Zero);
 
             item.WrappedItem.UpdateItem(item.Index);
             
@@ -158,7 +158,7 @@ namespace Orion.Tests.Items {
             var items = _itemService.ToList();
 
             for (var i = 0; i < items.Count; ++i) {
-                items[i].WrappedItem.Should().BeSameAs(Terraria.Main.item[i]);
+                ((OrionItem)items[i]).WrappedItem.Should().BeSameAs(Terraria.Main.item[i]);
             }
         }
     }

@@ -12,12 +12,13 @@ namespace Orion.Items {
     /// Orion's implementation of <see cref="IItemService"/>.
     /// </summary>
     internal sealed class OrionItemService : OrionService, IItemService {
-        private readonly IItem[] _items;
+        private readonly IList<Terraria.Item> _terrariaItems;
+        private readonly IList<OrionItem> _items;
 
         public override string Author => "Pryaxis";
         public override string Name => "Orion Item Service";
 
-        public int Count => Terraria.Main.maxItems;
+        public int Count => _items.Count - 1;
 
         public IItem this[int index] {
             get {
@@ -25,8 +26,8 @@ namespace Orion.Items {
                     throw new IndexOutOfRangeException(nameof(index));
                 }
 
-                if (_items[index]?.WrappedItem != Terraria.Main.item[index]) {
-                    _items[index] = new OrionItem(Terraria.Main.item[index]);
+                if (_items[index]?.WrappedItem != _terrariaItems[index]) {
+                    _items[index] = new OrionItem(_terrariaItems[index]);
                 }
 
                 var item = _items[index];
@@ -42,7 +43,8 @@ namespace Orion.Items {
         public event EventHandler<UpdatedItemEventArgs> UpdatedItem;
 
         public OrionItemService() {
-            _items = new IItem[Terraria.Main.maxItems];
+            _terrariaItems = Terraria.Main.item;
+            _items = new OrionItem[_terrariaItems.Count];
 
             Hooks.Item.PreSetDefaultsById = PreSetDefaultsByIdHandler;
             Hooks.Item.PostSetDefaultsById = PostSetDefaultsByIdHandler;

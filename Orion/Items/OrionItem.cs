@@ -41,7 +41,7 @@ namespace Orion.Items {
             set => WrappedItem.useTime = value;
         }
 
-        public Terraria.Item WrappedItem { get; }
+        internal Terraria.Item WrappedItem { get; }
         
         public OrionItem(Terraria.Item terrariaItem) : base(terrariaItem) {
             Debug.Assert(terrariaItem != null, $"{nameof(terrariaItem)} should not be null.");

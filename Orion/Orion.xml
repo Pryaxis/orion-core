@@ -243,11 +243,6 @@
             Gets or sets the item's use time.
             </summary>
         </member>
-        <member name="P:Orion.Items.IItem.WrappedItem">
-            <summary>
-            Gets the wrapped Terraria.Item.
-            </summary>
-        </member>
         <member name="M:Orion.Items.IItem.ApplyPrefix(Orion.Items.ItemPrefix)">
             <summary>
             Applies the given prefix to the item.
