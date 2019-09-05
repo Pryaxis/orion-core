@@ -5,50 +5,64 @@ namespace Orion.World {
     /// <summary>
     /// Provides the base class for a tile.
     /// </summary>
+    /// <remarks>
+    /// This class is essentially a wrapper around an OTAPI.Tile.ITile. However, its public interface is significantly
+    /// better-structured. It makes use of enums such as <see cref="BlockType"/> and <see cref="WallType"/>, and
+    /// exposes properties such as <see cref="IsBlockActive"/> and <see cref="IsBlockActuated"/> instead of methods.
+    /// </remarks>
     public abstract class Tile : ITile {
         /// <summary>
         /// Gets or sets the block type.
         /// </summary>
+        /// <remarks>This corresponds to OTAPI.Tile.ITile.type.</remarks>
         public abstract BlockType BlockType { get; set; }
 
         /// <summary>
         /// Gets or sets the wall type.
         /// </summary>
+        /// <remarks>This corresponds to OTAPI.Tile.ITile.wall.</remarks>
         public abstract WallType WallType { get; set; }
 
         /// <summary>
         /// Gets or sets the liquid amount.
         /// </summary>
+        /// <remarks>This corresponds to OTAPI.Tile.ITile.liquid.</remarks>
         public abstract byte LiquidAmount { get; set; }
 
         /// <summary>
         /// Gets or sets the main tile header.
         /// </summary>
+        /// <remarks>This corresponds to OTAPI.Tile.ITile.sTileHeader.</remarks>
         public abstract short TileHeader { get; set; }
 
         /// <summary>
         /// Gets or sets the second tile header.
         /// </summary>
+        /// <remarks>This corresponds to OTAPI.Tile.ITile.bTileHeader.</remarks>
         public abstract byte TileHeader2 { get; set; }
 
         /// <summary>
         /// Gets or sets the third tile header.
         /// </summary>
+        /// <remarks>This corresponds to OTAPI.Tile.ITile.bTileHeader2.</remarks>
         public abstract byte TileHeader3 { get; set; }
 
         /// <summary>
         /// Gets or sets the fourth tile header.
         /// </summary>
+        /// <remarks>This corresponds to OTAPI.Tile.ITile.bTileHeader3.</remarks>
         public abstract byte TileHeader4 { get; set; }
 
         /// <summary>
         /// Gets or sets the block X frame.
         /// </summary>
+        /// <remarks>This corresponds to OTAPI.Tile.ITile.frameX.</remarks>
         public abstract short BlockFrameX { get; set; }
 
         /// <summary>
         /// Gets or sets the block Y frame.
         /// </summary>
+        /// <remarks>This corresponds to OTAPI.Tile.ITile.frameY.</remarks>
         public abstract short BlockFrameY { get; set; }
 
         /// <summary>
@@ -365,9 +379,7 @@ namespace Orion.World {
             }
         }
 
-        byte ITile.liquidType() {
-            return (byte)((((ITile)this).bTileHeader & 96) >> 5);
-        }
+        byte ITile.liquidType() => (byte)((((ITile)this).bTileHeader & 96) >> 5);
 
         bool ITile.nactive() {
             int num = (((ITile)this).sTileHeader & 96);
@@ -432,13 +444,8 @@ namespace Orion.World {
             return b == 1 || b == 3;
         }
 
-        bool ITile.HasSameSlope(ITile tile) {
-            return (((ITile)this).sTileHeader & 29696) == (tile.sTileHeader & 29696);
-        }
-
-        byte ITile.wallColor() {
-            return (byte)(((ITile)this).bTileHeader & 31);
-        }
+        bool ITile.HasSameSlope(ITile tile) => (((ITile)this).sTileHeader & 29696) == (tile.sTileHeader & 29696);
+        byte ITile.wallColor() => (byte)(((ITile)this).bTileHeader & 31);
 
         void ITile.wallColor(byte wallColor) {
             if (wallColor > 30) {
@@ -448,9 +455,7 @@ namespace Orion.World {
             ((ITile)this).bTileHeader = (byte)((((ITile)this).bTileHeader & 224) | wallColor);
         }
 
-        bool ITile.lava() {
-            return (((ITile)this).bTileHeader & 32) == 32;
-        }
+        bool ITile.lava() => (((ITile)this).bTileHeader & 32) == 32;
 
         void ITile.lava(bool lava) {
             if (lava) {
@@ -461,9 +466,7 @@ namespace Orion.World {
             ((ITile)this).bTileHeader &= 223;
         }
 
-        bool ITile.honey() {
-            return (((ITile)this).bTileHeader & 64) == 64;
-        }
+        bool ITile.honey() => (((ITile)this).bTileHeader & 64) == 64;
 
         void ITile.honey(bool honey) {
             if (honey) {
@@ -474,9 +477,7 @@ namespace Orion.World {
             ((ITile)this).bTileHeader &= 191;
         }
 
-        bool ITile.wire4() {
-            return (((ITile)this).bTileHeader & 128) == 128;
-        }
+        bool ITile.wire4() => (((ITile)this).bTileHeader & 128) == 128;
 
         void ITile.wire4(bool wire4) {
             if (wire4) {
@@ -487,41 +488,30 @@ namespace Orion.World {
             ((ITile)this).bTileHeader &= 127;
         }
 
-        int ITile.wallFrameX() {
-            return ((((ITile)this).bTileHeader2 & 15) * 36);
-        }
+        int ITile.wallFrameX() => ((((ITile)this).bTileHeader2 & 15) * 36);
 
         void ITile.wallFrameX(int wallFrameX) {
             ((ITile)this).bTileHeader2 = (byte)((((ITile)this).bTileHeader2 & 240) | (wallFrameX / 36 & 15));
         }
 
-        byte ITile.frameNumber() {
-            return (byte)((((ITile)this).bTileHeader2 & 48) >> 4);
-        }
+        byte ITile.frameNumber() => (byte)((((ITile)this).bTileHeader2 & 48) >> 4);
 
         void ITile.frameNumber(byte frameNumber) {
             ((ITile)this).bTileHeader2 = (byte)((((ITile)this).bTileHeader2 & 207) | (frameNumber & 3) << 4);
         }
 
-        byte ITile.wallFrameNumber() {
-            return (byte)((((ITile)this).bTileHeader2 & 192) >> 6);
-        }
+        byte ITile.wallFrameNumber() => (byte)((((ITile)this).bTileHeader2 & 192) >> 6);
 
         void ITile.wallFrameNumber(byte wallFrameNumber) {
             ((ITile)this).bTileHeader2 = (byte)((((ITile)this).bTileHeader2 & 63) | (wallFrameNumber & 3) << 6);
         }
 
-        int ITile.wallFrameY() {
-            return ((((ITile)this).bTileHeader3 & 7) * 36);
-        }
+        int ITile.wallFrameY() => ((((ITile)this).bTileHeader3 & 7) * 36);
 
-        void ITile.wallFrameY(int wallFrameY) {
+        void ITile.wallFrameY(int wallFrameY) =>
             ((ITile)this).bTileHeader3 = (byte)((((ITile)this).bTileHeader3 & 248) | (wallFrameY / 36 & 7));
-        }
 
-        bool ITile.checkingLiquid() {
-            return (((ITile)this).bTileHeader3 & 8) == 8;
-        }
+        bool ITile.checkingLiquid() => (((ITile)this).bTileHeader3 & 8) == 8;
 
         void ITile.checkingLiquid(bool checkingLiquid) {
             if (checkingLiquid) {
@@ -532,9 +522,7 @@ namespace Orion.World {
             ((ITile)this).bTileHeader3 &= 247;
         }
 
-        bool ITile.skipLiquid() {
-            return (((ITile)this).bTileHeader3 & 16) == 16;
-        }
+        bool ITile.skipLiquid() => (((ITile)this).bTileHeader3 & 16) == 16;
 
         void ITile.skipLiquid(bool skipLiquid) {
             if (skipLiquid) {
@@ -545,9 +533,7 @@ namespace Orion.World {
             ((ITile)this).bTileHeader3 &= 239;
         }
 
-        byte ITile.color() {
-            return (byte)(((ITile)this).sTileHeader & 31);
-        }
+        byte ITile.color() => (byte)(((ITile)this).sTileHeader & 31);
 
         void ITile.color(byte color) {
             if (color > 30) {
@@ -557,9 +543,7 @@ namespace Orion.World {
             ((ITile)this).sTileHeader = (short)((((ITile)this).sTileHeader & 65504) | color);
         }
 
-        bool ITile.active() {
-            return (((ITile)this).sTileHeader & 32) == 32;
-        }
+        bool ITile.active() => (((ITile)this).sTileHeader & 32) == 32;
 
         void ITile.active(bool active) {
             if (active) {
@@ -570,9 +554,7 @@ namespace Orion.World {
             ((ITile)this).sTileHeader = (short)(((ITile)this).sTileHeader & 65503);
         }
 
-        bool ITile.inActive() {
-            return (((ITile)this).sTileHeader & 64) == 64;
-        }
+        bool ITile.inActive() => (((ITile)this).sTileHeader & 64) == 64;
 
         void ITile.inActive(bool inActive) {
             if (inActive) {
@@ -583,9 +565,7 @@ namespace Orion.World {
             ((ITile)this).sTileHeader = (short)(((ITile)this).sTileHeader & 65471);
         }
 
-        bool ITile.wire() {
-            return (((ITile)this).sTileHeader & 128) == 128;
-        }
+        bool ITile.wire() => (((ITile)this).sTileHeader & 128) == 128;
 
         void ITile.wire(bool wire) {
             if (wire) {
@@ -596,9 +576,7 @@ namespace Orion.World {
             ((ITile)this).sTileHeader = (short)(((ITile)this).sTileHeader & 65407);
         }
 
-        bool ITile.wire2() {
-            return (((ITile)this).sTileHeader & 256) == 256;
-        }
+        bool ITile.wire2() => (((ITile)this).sTileHeader & 256) == 256;
 
         void ITile.wire2(bool wire2) {
             if (wire2) {
@@ -609,9 +587,7 @@ namespace Orion.World {
             ((ITile)this).sTileHeader = (short)(((ITile)this).sTileHeader & 65279);
         }
 
-        bool ITile.wire3() {
-            return (((ITile)this).sTileHeader & 512) == 512;
-        }
+        bool ITile.wire3() => (((ITile)this).sTileHeader & 512) == 512;
 
         void ITile.wire3(bool wire3) {
             if (wire3) {
@@ -622,9 +598,7 @@ namespace Orion.World {
             ((ITile)this).sTileHeader = (short)(((ITile)this).sTileHeader & 65023);
         }
 
-        bool ITile.halfBrick() {
-            return (((ITile)this).sTileHeader & 1024) == 1024;
-        }
+        bool ITile.halfBrick() => (((ITile)this).sTileHeader & 1024) == 1024;
 
         void ITile.halfBrick(bool halfBrick) {
             if (halfBrick) {
@@ -635,9 +609,7 @@ namespace Orion.World {
             ((ITile)this).sTileHeader = (short)(((ITile)this).sTileHeader & 64511);
         }
 
-        bool ITile.actuator() {
-            return (((ITile)this).sTileHeader & 2048) == 2048;
-        }
+        bool ITile.actuator() => (((ITile)this).sTileHeader & 2048) == 2048;
 
         void ITile.actuator(bool actuator) {
             if (actuator) {
@@ -648,13 +620,9 @@ namespace Orion.World {
             ((ITile)this).sTileHeader = (short)(((ITile)this).sTileHeader & 63487);
         }
 
-        byte ITile.slope() {
-            return (byte)((((ITile)this).sTileHeader & 28672) >> 12);
-        }
-
-        void ITile.slope(byte slope) {
+        byte ITile.slope() => (byte)((((ITile)this).sTileHeader & 28672) >> 12);
+        void ITile.slope(byte slope) =>
             ((ITile)this).sTileHeader = (short)((((ITile)this).sTileHeader & 36863) | (slope & 7) << 12);
-        }
         #endregion
     }
 }

@@ -1,4 +1,5 @@
-﻿using Orion.Items;
+﻿using System;
+using Orion.Items;
 
 namespace Orion.World.Chests {
     /// <summary>
@@ -18,6 +19,7 @@ namespace Orion.World.Chests {
         /// <summary>
         /// Gets or sets the name.
         /// </summary>
+        /// <exception cref="ArgumentNullException"><paramref name="value"/> is <c>null</c>.</exception>
         string Name { get; set; }
 
         /// <summary>

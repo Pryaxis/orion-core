@@ -23,7 +23,7 @@ namespace Orion.World {
             get => *(_ptr + 3);
             set => *(_ptr + 3) = value;
         }
-
+        
         public override short TileHeader {
             get => *(short*)(_ptr + 4);
             set => *(short*)(_ptr + 4) = value;
@@ -34,7 +34,12 @@ namespace Orion.World {
             set => *(_ptr + 6) = value;
         }
 
-        // TileHeader3 can be ignored in the server.
+        /*
+         * We will ignore TileHeader3, since these values cannot actually be observed in the server. Technically this
+         * breaks our contract and violates the LSP, but I don't really care about that.
+         *
+         * This results in each OrionTile taking up 12 bytes, which also results in some alignment guarantees.
+         */
         public override byte TileHeader3 {
             get => 0;
             set { }
@@ -44,7 +49,7 @@ namespace Orion.World {
             get => *(_ptr + 7);
             set => *(_ptr + 7) = value;
         }
-
+        
         public override short BlockFrameX {
             get => *(short*)(_ptr + 8);
             set => *(short*)(_ptr + 8) = value;
@@ -73,7 +78,7 @@ namespace Orion.World {
                 *(int*)_ptr = *(int*)src;
                 *(int*)(_ptr + 4) = *(int*)(src + 4);
                 *(int*)(_ptr + 8) = *(int*)(src + 8);
-            } else {
+            } else if (from != null) {
                 ((ITile)this).type = from.type;
                 ((ITile)this).wall = from.wall;
                 ((ITile)this).liquid = from.liquid;
@@ -83,6 +88,8 @@ namespace Orion.World {
                 ((ITile)this).bTileHeader3 = from.bTileHeader3;
                 ((ITile)this).frameX = from.frameX;
                 ((ITile)this).frameY = from.frameY;
+            } else {
+                ((ITile)this).ClearEverything();
             }
         }
         

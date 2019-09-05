@@ -9,6 +9,9 @@ namespace Orion.Npcs {
         public NpcType Type {
             get => (NpcType)WrappedNpc.netID;
             set {
+                /*
+                 * To properly handle the type, we need to set both type and netID!
+                 */
                 WrappedNpc.type = Terraria.ID.NPCID.FromNetId((int)value);
                 WrappedNpc.netID = (int)value;
             }
@@ -32,9 +35,8 @@ namespace Orion.Npcs {
             WrappedNpc = terrariaNpc;
         }
 
-        public void Damage(int damage, float knockback, int hitDirection, bool isCritical = false) {
+        public void Damage(int damage, float knockback, int hitDirection, bool isCritical = false) =>
             WrappedNpc.StrikeNPC(damage, knockback, hitDirection, isCritical);
-        }
 
         public void Kill() {
             Hp = 0;

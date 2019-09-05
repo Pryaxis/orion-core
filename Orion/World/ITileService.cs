@@ -2,17 +2,19 @@
 
 namespace Orion.World {
     /// <summary>
-    /// Provides access to Terraria's tile mechanism.
+    /// Provides access to Terraria's tiles.
     /// </summary>
     public interface ITileService : IService {
         /// <summary>
         /// Gets the width of the tiles.
         /// </summary>
+        /// <remarks>This corresponds to Terraria.Main.maxTilesX.</remarks>
         int Width { get; }
 
         /// <summary>
         /// Gets the height of the tiles.
         /// </summary>
+        /// <remarks>This corresponds to Terraria.Main.maxTilesY.</remarks>
         int Height { get; }
 
         /// <summary>
@@ -21,7 +23,7 @@ namespace Orion.World {
         /// <param name="x">The X coordinate.</param>
         /// <param name="y">The Y coordinate.</param>
         /// <returns>The tile.</returns>
-        /// <remarks>For performance reasons, we do not do bounds checking on the coordinates.</remarks>
+        /// <remarks>For performance reasons, we don't bother bounds checking the coordinates.</remarks>
         Tile this[int x, int y] { get; set; }
     }
 }

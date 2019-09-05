@@ -18,6 +18,10 @@ namespace Orion.Projectiles {
         public override string Author => "Pryaxis";
         public override string Name => "Orion Projectile Service";
 
+        /*
+         * We need to subtract 1 from the count. This is because Terraria actually has an extra slot which is reserved
+         * as a failure index.
+         */
         public int Count => _projectiles.Count - 1;
 
         public IProjectile this[int index] {

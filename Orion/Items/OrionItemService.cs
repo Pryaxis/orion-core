@@ -17,7 +17,11 @@ namespace Orion.Items {
 
         public override string Author => "Pryaxis";
         public override string Name => "Orion Item Service";
-
+        
+        /*
+         * We need to subtract 1 from the count. This is because Terraria actually has an extra slot which is reserved
+         * as a failure index.
+         */
         public int Count => _items.Count - 1;
 
         public IItem this[int index] {
@@ -73,7 +77,10 @@ namespace Orion.Items {
 
         public IItem SpawnItem(ItemType type, Vector2 position, int stackSize = 1,
                                     ItemPrefix prefix = ItemPrefix.None) {
-            // We need to force the item to spawn without caching it.
+            /*
+             * Terraria has this mechanism of item caching which allows, for instance, The Plan to drop all wires at
+             * once. We need to disable that temporarily so that our item *definitely* spawns.
+             */
             var oldItemCache = Terraria.Item.itemCaches[(int)type];
             Terraria.Item.itemCaches[(int)type] = -1;
 

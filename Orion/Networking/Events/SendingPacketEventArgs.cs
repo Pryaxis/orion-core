@@ -48,8 +48,6 @@ namespace Orion.Networking.Events {
         /// <summary>
         /// Marks the packet as being dirty.
         /// </summary>
-        public void MarkPacketAsDirty() {
-            IsPacketDirty = true;
-        }
+        public void MarkPacketAsDirty() => IsPacketDirty = true;
     }
 }

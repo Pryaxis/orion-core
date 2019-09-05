@@ -1,4 +1,6 @@
-﻿namespace Orion.World.Signs {
+﻿using System;
+
+namespace Orion.World.Signs {
     /// <summary>
     /// Provides a wrapper around a Terraria.Sign instance.
     /// </summary>
@@ -16,6 +18,7 @@
         /// <summary>
         /// Gets or sets the text.
         /// </summary>
+        /// <exception cref="ArgumentNullException"><paramref name="value"/> is <c>null</c>.</exception>
         string Text { get; set; }
     }
 }

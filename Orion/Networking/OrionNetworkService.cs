@@ -54,7 +54,9 @@ namespace Orion.Networking {
             Debug.Assert(start >= 2 && start + length <= data.Length,
                          $"{nameof(start)} and {nameof(length)} should be valid indices into {nameof(data)}.");
 
-            // start and length need to be adjusted by two to account for the packet header's length field.
+            /*
+             * start and length need to be adjusted by two to account for the packet header's length field.
+             */
             using (var stream = new MemoryStream(data, start - 2, length + 2)) {
                 var sender = Terraria.Netplay.Clients[buffer.whoAmI];
                 var packet = TerrariaPacket.ReadFromStream(stream);
@@ -66,6 +68,15 @@ namespace Orion.Networking {
                 }
 
                 packet = args.Packet;
+
+                /*
+                 * To properly deal with a dirty packet, we'll need to use a major hack. By using HelperMemoryStream,
+                 * we can run an action whenever Terraria.NetMessage sets the stream to the "real" position after
+                 * reading the "real" packet.
+                 *
+                 * This allows us to replace the buffer and restore the old position, acting as if the dirty packet
+                 * was never out of the ordinary.
+                 */
                 if (args.IsPacketDirty) {
                     var targetPosition = start + length;
                     var oldBuffer = data.ToArray();

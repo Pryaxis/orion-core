@@ -16,7 +16,11 @@ namespace Orion.Players {
 
         public override string Author => "Pryaxis";
         public override string Name => "Orion Player Service";
-
+        
+        /*
+         * We need to subtract 1 from the count. This is because Terraria actually has an extra slot which is reserved
+         * as a failure index.
+         */
         public int Count => _players.Count - 1;
 
         public IPlayer this[int index] {

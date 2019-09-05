@@ -22,7 +22,10 @@ namespace Orion.World.Signs {
                 if (index < 0 || index >= Count) {
                     throw new IndexOutOfRangeException(nameof(index));
                 }
-
+                
+                /*
+                 * Some signs in _terrariaSigns may be null, so we need to handle this properly by also returning null.
+                 */
                 if (_signs[index] == null || _signs[index].WrappedSign != _terrariaSigns[index]) {
                     if (_terrariaSigns[index] == null) {
                         return null;

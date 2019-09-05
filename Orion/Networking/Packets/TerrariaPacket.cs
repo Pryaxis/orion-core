@@ -67,6 +67,7 @@ namespace Orion.Networking.Packets {
                 packet.ReadFromReader(reader, packetLength);
                 
                 Debug.Assert(stream.Position - position == packetLength, "Packet should be fully consumed.");
+
                 return packet;
             }
         }
@@ -91,6 +92,11 @@ namespace Orion.Networking.Packets {
 
                 var finalPosition = stream.Position;
                 var packetLength = finalPosition - startPosition;
+
+                /*
+                 * Ideally we would have thrown this exception a long time ago, when the packet is actually being
+                 * modified. Unfortunately, this is a major pain to implement properly.
+                 */
                 if (packetLength > ushort.MaxValue) {
                     throw new InvalidOperationException("Packet is too long.");
                 }

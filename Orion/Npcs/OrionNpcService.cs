@@ -24,7 +24,11 @@ namespace Orion.Npcs {
 
         public override string Author => "Pryaxis";
         public override string Name => "Orion NPC Service";
-
+        
+        /*
+         * We need to subtract 1 from the count. This is because Terraria actually has an extra slot which is reserved
+         * as a failure index.
+         */
         public int Count => _npcs.Count - 1;
         
         public INpc this[int index] {
@@ -158,6 +162,9 @@ namespace Orion.Npcs {
 
             var terrariaNpc = new Terraria.NPC();
             if (args.Handled) {
+                /*
+                 * To properly handle the event, npcIndex needs to be set to the failure index described above.
+                 */
                 npcIndex = Count;
             } else {
                 terrariaNpc.SetDefaults((int)args.NpcType);
@@ -310,6 +317,10 @@ namespace Orion.Npcs {
                 return HookResult.Cancel;
             }
 
+            /*
+             * Handle item spawning in this method. This enables us to provide a reference to an IItem in
+             * NpcDroppedLootItemEventArgs, but adds a dependency on IItemService.
+             */
             var item = _itemService.SpawnItem(args.LootItemType, new Vector2(x + width / 2, y + height / 2),
                                               args.LootItemStackSize, args.LootItemPrefix);
             var args2 = new NpcDroppedLootItemEventArgs(npc, item);

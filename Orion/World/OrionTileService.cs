@@ -19,10 +19,18 @@ namespace Orion.World {
 
         public Tile this[int x, int y] {
             get {
+                /*
+                 * Lazily initialize _ptr. This allows us to use less memory if the world size is Small or Medium;
+                 * however, this comes at the cost of a null check for every Tile access.
+                 */
                 if (_ptr == null) {
                     Width = Terraria.Main.maxTilesX;
                     Height = Terraria.Main.maxTilesY;
 
+                    /*
+                     * Allocate with AllocHGlobal so that the memory is pre-pinned. We could also use a GCHandle here,
+                     * but this is just simpler.
+                     */
                     _ptr = (byte*)Marshal.AllocHGlobal(OrionTile.ByteCount * (Width + 1) * (Height + 1));
                 }
 

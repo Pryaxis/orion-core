@@ -23,6 +23,10 @@ namespace Orion.World.Chests {
                     throw new IndexOutOfRangeException(nameof(index));
                 }
 
+                /*
+                 * Some chests in _terrariaChests may be null, so we need to handle this properly by also returning
+                 * null.
+                 */
                 if (_chests[index] == null || _chests[index].WrappedChest != _terrariaChests[index]) {
                     if (_terrariaChests[index] == null) {
                         return null;
