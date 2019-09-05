@@ -1,11 +1,7 @@
 ﻿using System;
-using System.Diagnostics;
 using Orion.Entities;
 
 namespace Orion.Items {
-    /// <summary>
-    /// Orion's implementation of <see cref="Orion.Items.IItem"/>.
-    /// </summary>
     internal sealed class OrionItem : OrionEntity<Terraria.Item>, IItem {
         public override string Name {
             get => Wrapped.Name;

@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel;
+using Orion.World.Tiles;
 
 namespace Orion.World.Events {
     /// <summary>
@@ -17,7 +18,7 @@ namespace Orion.World.Events {
         public int Y { get; }
 
         /// <summary>
-        /// Gets or sets the <see cref="Orion.World.BlockType"/> that the block will become.
+        /// Gets or sets the <see cref="Tiles.BlockType"/> that the block will become.
         /// </summary>
         public BlockType BlockType { get; set; }
 

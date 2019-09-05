@@ -21,7 +21,7 @@ namespace Orion.Tests.World.Chests {
             Terraria.Main.chest[0] = new Terraria.Chest();
             var chest = (OrionChest)_chestService[0];
 
-            chest.WrappedChest.Should().BeSameAs(Terraria.Main.chest[0]);
+            chest.Wrapped.Should().BeSameAs(Terraria.Main.chest[0]);
         }
 
         [Fact]
@@ -56,7 +56,7 @@ namespace Orion.Tests.World.Chests {
             var chests = _chestService.ToList();
 
             for (var i = 0; i < chests.Count; ++i) {
-                ((OrionChest)chests[i]).WrappedChest.Should().BeSameAs(Terraria.Main.chest[i]);
+                ((OrionChest)chests[i]).Wrapped.Should().BeSameAs(Terraria.Main.chest[i]);
             }
         }
     }

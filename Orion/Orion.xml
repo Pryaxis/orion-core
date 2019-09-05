@@ -40,11 +40,6 @@
             Gets or sets the entity's size in the world.
             </summary>
         </member>
-        <member name="T:Orion.Entities.OrionEntity`1">
-            <summary>
-            Orion's implementation of <see cref="T:Orion.Entities.IEntity"/>.
-            </summary>
-        </member>
         <member name="T:Orion.Framework.Extensions.TypeExtensions">
             <summary>
             Provides extension methods for the <see cref="T:System.Type"/> class.
@@ -316,21 +311,6 @@
             Specifies an item's type.
             </summary>
         </member>
-        <member name="T:Orion.Items.OrionItem">
-            <summary>
-            Orion's implementation of <see cref="T:Orion.Items.IItem"/>.
-            </summary>
-        </member>
-        <member name="T:Orion.Items.OrionItemList">
-            <summary>
-            Orion's implementation of <see cref="T:Orion.Items.IItemList"/>.
-            </summary>
-        </member>
-        <member name="T:Orion.Items.OrionItemService">
-            <summary>
-            Orion's implementation of <see cref="T:Orion.Items.IItemService"/>.
-            </summary>
-        </member>
         <member name="T:Orion.Networking.Events.ClientDisconnectedEventArgs">
             <summary>
             Provides data for the <see cref="E:Orion.Networking.INetworkService.ClientDisconnected"/> event.
@@ -519,11 +499,6 @@
             <param name="number5">The fifth packet-specific number.</param>
             <param name="number6">The sixth packet-specific number.</param>
             <param name="number7">The seventh packet-specific number.</param>
-        </member>
-        <member name="T:Orion.Networking.OrionNetworkService">
-            <summary>
-            Orion's implementation of <see cref="T:Orion.Networking.INetworkService"/>.
-            </summary>
         </member>
         <member name="T:Orion.Networking.Packets.ContinueConnectionPacket">
             <summary>
@@ -1747,16 +1722,6 @@
             Specifies an NPC's type.
             </summary>
         </member>
-        <member name="T:Orion.Npcs.OrionNpc">
-            <summary>
-            Orion's implementation of <see cref="T:Orion.Npcs.INpc"/>.
-            </summary>
-        </member>
-        <member name="T:Orion.Npcs.OrionNpcService">
-            <summary>
-            Orion's implementation of <see cref="T:Orion.Npcs.INpcService"/>.
-            </summary>
-        </member>
         <member name="T:Orion.Players.Events.GreetingPlayerEventArgs">
             <summary>
             Provides data for the <see cref="E:Orion.Players.IPlayerService.GreetingPlayer"/> event.
@@ -1851,16 +1816,6 @@
         <member name="E:Orion.Players.IPlayerService.UpdatedPlayer">
             <summary>
             Occurs when a player is updated.
-            </summary>
-        </member>
-        <member name="T:Orion.Players.OrionPlayer">
-            <summary>
-            Orion's implementation of <see cref="T:Orion.Players.IPlayer"/>.
-            </summary>
-        </member>
-        <member name="T:Orion.Players.OrionPlayerService">
-            <summary>
-            Orion's implementation of <see cref="T:Orion.Players.IPlayerService"/>.
             </summary>
         </member>
         <member name="T:Orion.Projectiles.Events.RemovedProjectileEventArgs">
@@ -2063,24 +2018,9 @@
             <paramref name="aiValues"/> is not <c>null</c> and does not have length 2.
             </exception>
         </member>
-        <member name="T:Orion.Projectiles.OrionProjectile">
-            <summary>
-            Orion's implementation of <see cref="T:Orion.Projectiles.IProjectile"/>.
-            </summary>
-        </member>
-        <member name="T:Orion.Projectiles.OrionProjectileService">
-            <summary>
-            Orion's implementation of <see cref="T:Orion.Projectiles.IProjectileService"/>.
-            </summary>
-        </member>
         <member name="T:Orion.Projectiles.ProjectileType">
             <summary>
             Specifies a projectile's type.
-            </summary>
-        </member>
-        <member name="T:Orion.World.BlockType">
-            <summary>
-            Specifies a block's type.
             </summary>
         </member>
         <member name="T:Orion.World.Chests.IChest">
@@ -2191,10 +2131,10 @@
         </member>
         <member name="P:Orion.World.Events.UpdatingHardmodeTileEventArgs.BlockType">
             <summary>
-            Gets or sets the <see cref="T:Orion.World.BlockType"/> that the block will become.
+            Gets or sets the <see cref="T:Orion.World.Tiles.BlockType"/> that the block will become.
             </summary>
         </member>
-        <member name="M:Orion.World.Events.UpdatingHardmodeTileEventArgs.#ctor(System.Int32,System.Int32,Orion.World.BlockType)">
+        <member name="M:Orion.World.Events.UpdatingHardmodeTileEventArgs.#ctor(System.Int32,System.Int32,Orion.World.Tiles.BlockType)">
             <summary>
             Initializes a new instance of the <see cref="T:Orion.World.Events.UpdatingHardmodeTileEventArgs"/> class with the specified
             coordinates and block type.
@@ -2207,32 +2147,6 @@
             <summary>
             Indicates the type of an invasion.
             </summary>
-        </member>
-        <member name="T:Orion.World.ITileService">
-            <summary>
-            Provides access to Terraria's tiles.
-            </summary>
-        </member>
-        <member name="P:Orion.World.ITileService.Width">
-            <summary>
-            Gets the width of the tiles.
-            </summary>
-            <remarks>This corresponds to Terraria.Main.maxTilesX.</remarks>
-        </member>
-        <member name="P:Orion.World.ITileService.Height">
-            <summary>
-            Gets the height of the tiles.
-            </summary>
-            <remarks>This corresponds to Terraria.Main.maxTilesY.</remarks>
-        </member>
-        <member name="P:Orion.World.ITileService.Item(System.Int32,System.Int32)">
-            <summary>
-            Gets or sets the tile at the specified coordinates.
-            </summary>
-            <param name="x">The X coordinate.</param>
-            <param name="y">The Y coordinate.</param>
-            <returns>The tile.</returns>
-            <remarks>For performance reasons, we don't bother bounds checking the coordinates.</remarks>
         </member>
         <member name="T:Orion.World.IWorldService">
             <summary>
@@ -2331,26 +2245,6 @@
             Saves the world.
             </summary>
         </member>
-        <member name="T:Orion.World.LiquidType">
-            <summary>
-            Specifies the liquid type.
-            </summary>
-        </member>
-        <member name="T:Orion.World.OrionTile">
-            <summary>
-            Orion's optimized implementation of <see cref="T:Orion.World.Tile"/>.
-            </summary>
-        </member>
-        <member name="T:Orion.World.OrionTileService">
-            <summary>
-            Orion's implementation of <see cref="T:Orion.World.ITileService"/>.
-            </summary>
-        </member>
-        <member name="T:Orion.World.PaintColor">
-            <summary>
-            Specifies the color of paint.
-            </summary>
-        </member>
         <member name="T:Orion.World.Signs.ISign">
             <summary>
             Provides a wrapper around a Terraria.Sign instance.
@@ -2387,172 +2281,192 @@
             Orion's implementation of <see cref="T:Orion.World.Signs.ISignService"/>.
             </summary>
         </member>
-        <member name="T:Orion.World.SlopeType">
+        <member name="T:Orion.World.Tiles.BlockType">
+            <summary>
+            Specifies a block's type.
+            </summary>
+        </member>
+        <member name="T:Orion.World.Tiles.LiquidType">
+            <summary>
+            Specifies the liquid type.
+            </summary>
+        </member>
+        <member name="T:Orion.World.Tiles.OrionTile">
+            <summary>
+            Orion's optimized implementation of <see cref="T:Orion.World.Tiles.Tile"/>.
+            </summary>
+        </member>
+        <member name="T:Orion.World.Tiles.PaintColor">
+            <summary>
+            Specifies the color of paint.
+            </summary>
+        </member>
+        <member name="T:Orion.World.Tiles.SlopeType">
             <summary>
             Specifies the type of slope.
             </summary>
         </member>
-        <member name="T:Orion.World.Tile">
+        <member name="T:Orion.World.Tiles.Tile">
             <summary>
             Provides the base class for a tile.
             </summary>
             <remarks>
             This class is essentially a wrapper around an OTAPI.Tile.ITile. However, its public interface is significantly
-            better-structured. It makes use of enums such as <see cref="P:Orion.World.Tile.BlockType"/> and <see cref="P:Orion.World.Tile.WallType"/>, and
-            exposes properties such as <see cref="P:Orion.World.Tile.IsBlockActive"/> and <see cref="P:Orion.World.Tile.IsBlockActuated"/> instead of methods.
+            better-structured. It makes use of enums such as <see cref="P:Orion.World.Tiles.Tile.BlockType"/> and <see cref="P:Orion.World.Tiles.Tile.WallType"/>, and
+            exposes properties such as <see cref="P:Orion.World.Tiles.Tile.IsBlockActive"/> and <see cref="P:Orion.World.Tiles.Tile.IsBlockActuated"/> instead of methods.
             </remarks>
         </member>
-        <member name="P:Orion.World.Tile.BlockType">
+        <member name="P:Orion.World.Tiles.Tile.BlockType">
             <summary>
             Gets or sets the block type.
             </summary>
             <remarks>This corresponds to OTAPI.Tile.ITile.type.</remarks>
         </member>
-        <member name="P:Orion.World.Tile.WallType">
+        <member name="P:Orion.World.Tiles.Tile.WallType">
             <summary>
             Gets or sets the wall type.
             </summary>
             <remarks>This corresponds to OTAPI.Tile.ITile.wall.</remarks>
         </member>
-        <member name="P:Orion.World.Tile.LiquidAmount">
+        <member name="P:Orion.World.Tiles.Tile.LiquidAmount">
             <summary>
             Gets or sets the liquid amount.
             </summary>
             <remarks>This corresponds to OTAPI.Tile.ITile.liquid.</remarks>
         </member>
-        <member name="P:Orion.World.Tile.TileHeader">
+        <member name="P:Orion.World.Tiles.Tile.TileHeader">
             <summary>
             Gets or sets the main tile header.
             </summary>
             <remarks>This corresponds to OTAPI.Tile.ITile.sTileHeader.</remarks>
         </member>
-        <member name="P:Orion.World.Tile.TileHeader2">
+        <member name="P:Orion.World.Tiles.Tile.TileHeader2">
             <summary>
             Gets or sets the second tile header.
             </summary>
             <remarks>This corresponds to OTAPI.Tile.ITile.bTileHeader.</remarks>
         </member>
-        <member name="P:Orion.World.Tile.TileHeader3">
+        <member name="P:Orion.World.Tiles.Tile.TileHeader3">
             <summary>
             Gets or sets the third tile header.
             </summary>
             <remarks>This corresponds to OTAPI.Tile.ITile.bTileHeader2.</remarks>
         </member>
-        <member name="P:Orion.World.Tile.TileHeader4">
+        <member name="P:Orion.World.Tiles.Tile.TileHeader4">
             <summary>
             Gets or sets the fourth tile header.
             </summary>
             <remarks>This corresponds to OTAPI.Tile.ITile.bTileHeader3.</remarks>
         </member>
-        <member name="P:Orion.World.Tile.BlockFrameX">
+        <member name="P:Orion.World.Tiles.Tile.BlockFrameX">
             <summary>
             Gets or sets the block X frame.
             </summary>
             <remarks>This corresponds to OTAPI.Tile.ITile.frameX.</remarks>
         </member>
-        <member name="P:Orion.World.Tile.BlockFrameY">
+        <member name="P:Orion.World.Tiles.Tile.BlockFrameY">
             <summary>
             Gets or sets the block Y frame.
             </summary>
             <remarks>This corresponds to OTAPI.Tile.ITile.frameY.</remarks>
         </member>
-        <member name="P:Orion.World.Tile.BlockColor">
+        <member name="P:Orion.World.Tiles.Tile.BlockColor">
             <summary>
             Gets or sets the block's color.
             </summary>
-            <remarks>This value is usually stored as bits 0-4 of <see cref="P:Orion.World.Tile.TileHeader"/>.</remarks>
+            <remarks>This value is usually stored as bits 0-4 of <see cref="P:Orion.World.Tiles.Tile.TileHeader"/>.</remarks>
         </member>
-        <member name="P:Orion.World.Tile.IsBlockActive">
+        <member name="P:Orion.World.Tiles.Tile.IsBlockActive">
             <summary>
             Gets or sets a value indicating whether the block is active.
             </summary>
-            <remarks>This value is usually stored as bit 5 of <see cref="P:Orion.World.Tile.TileHeader"/>.</remarks>
+            <remarks>This value is usually stored as bit 5 of <see cref="P:Orion.World.Tiles.Tile.TileHeader"/>.</remarks>
         </member>
-        <member name="P:Orion.World.Tile.IsBlockActuated">
+        <member name="P:Orion.World.Tiles.Tile.IsBlockActuated">
             <summary>
             Gets or sets a value indicating whether the block is acutuated.
             </summary>
-            <remarks>This value is usually stored as bit 6 of <see cref="P:Orion.World.Tile.TileHeader"/>.</remarks>
+            <remarks>This value is usually stored as bit 6 of <see cref="P:Orion.World.Tiles.Tile.TileHeader"/>.</remarks>
         </member>
-        <member name="P:Orion.World.Tile.HasRedWire">
+        <member name="P:Orion.World.Tiles.Tile.HasRedWire">
             <summary>
             Gets or sets a value indicating whether the tile has red wire.
             </summary>
-            <remarks>This value is usually stored as bit 7 of <see cref="P:Orion.World.Tile.TileHeader"/>.</remarks>
+            <remarks>This value is usually stored as bit 7 of <see cref="P:Orion.World.Tiles.Tile.TileHeader"/>.</remarks>
         </member>
-        <member name="P:Orion.World.Tile.HasBlueWire">
+        <member name="P:Orion.World.Tiles.Tile.HasBlueWire">
             <summary>
             Gets or sets a value indicating whether the tile has blue wire.
             </summary>
-            <remarks>This value is usually stored as bit 8 of <see cref="P:Orion.World.Tile.TileHeader"/>.</remarks>
+            <remarks>This value is usually stored as bit 8 of <see cref="P:Orion.World.Tiles.Tile.TileHeader"/>.</remarks>
         </member>
-        <member name="P:Orion.World.Tile.HasGreenWire">
+        <member name="P:Orion.World.Tiles.Tile.HasGreenWire">
             <summary>
             Gets or sets a value indicating whether the tile has green wire.
             </summary>
-            <remarks>This value is usually stored as bit 9 of <see cref="P:Orion.World.Tile.TileHeader"/>.</remarks>
+            <remarks>This value is usually stored as bit 9 of <see cref="P:Orion.World.Tiles.Tile.TileHeader"/>.</remarks>
         </member>
-        <member name="P:Orion.World.Tile.IsBlockHalved">
+        <member name="P:Orion.World.Tiles.Tile.IsBlockHalved">
             <summary>
             Gets or sets a value indicating whether the block is halved.
             </summary>
-            <remarks>This value is usually stored as bit 10 of <see cref="P:Orion.World.Tile.TileHeader"/>.</remarks>
+            <remarks>This value is usually stored as bit 10 of <see cref="P:Orion.World.Tiles.Tile.TileHeader"/>.</remarks>
         </member>
-        <member name="P:Orion.World.Tile.HasActuator">
+        <member name="P:Orion.World.Tiles.Tile.HasActuator">
             <summary>
             Gets or sets a value indicating whether the tile has an actuator.
             </summary>
-            <remarks>This value is usually stored as bit 11 of <see cref="P:Orion.World.Tile.TileHeader"/>.</remarks>
+            <remarks>This value is usually stored as bit 11 of <see cref="P:Orion.World.Tiles.Tile.TileHeader"/>.</remarks>
         </member>
-        <member name="P:Orion.World.Tile.SlopeType">
+        <member name="P:Orion.World.Tiles.Tile.SlopeType">
             <summary>
             Gets or sets the slope type.
             </summary>
-            <remarks>This value is usually stored as bits 12-14 of <see cref="P:Orion.World.Tile.TileHeader"/>.</remarks>
+            <remarks>This value is usually stored as bits 12-14 of <see cref="P:Orion.World.Tiles.Tile.TileHeader"/>.</remarks>
         </member>
-        <member name="P:Orion.World.Tile.WallColor">
+        <member name="P:Orion.World.Tiles.Tile.WallColor">
             <summary>
             Gets or sets the wall's color.
             </summary>
-            <remarks>This value is usually stored as bits 0-4 of <see cref="P:Orion.World.Tile.TileHeader2"/>.</remarks>
+            <remarks>This value is usually stored as bits 0-4 of <see cref="P:Orion.World.Tiles.Tile.TileHeader2"/>.</remarks>
         </member>
-        <member name="P:Orion.World.Tile.IsLava">
+        <member name="P:Orion.World.Tiles.Tile.IsLava">
             <summary>
             Gets or sets a value indicating whether the liquid is lava.
             </summary>
-            <remarks>This value is usually stored as bit 5 of <see cref="P:Orion.World.Tile.TileHeader2"/>.</remarks>
+            <remarks>This value is usually stored as bit 5 of <see cref="P:Orion.World.Tiles.Tile.TileHeader2"/>.</remarks>
         </member>
-        <member name="P:Orion.World.Tile.IsHoney">
+        <member name="P:Orion.World.Tiles.Tile.IsHoney">
             <summary>
             Gets or sets a value indicating whether the liquid is honey.
             </summary>
-            <remarks>This value is usually stored as bit 6 of <see cref="P:Orion.World.Tile.TileHeader2"/>.</remarks>
+            <remarks>This value is usually stored as bit 6 of <see cref="P:Orion.World.Tiles.Tile.TileHeader2"/>.</remarks>
         </member>
-        <member name="P:Orion.World.Tile.LiquidType">
+        <member name="P:Orion.World.Tiles.Tile.LiquidType">
             <summary>
             Gets or sets the liquid type.
             </summary>
-            <remarks>This value is usually stored as bits 5-6 of <see cref="P:Orion.World.Tile.TileHeader2"/>.</remarks>
+            <remarks>This value is usually stored as bits 5-6 of <see cref="P:Orion.World.Tiles.Tile.TileHeader2"/>.</remarks>
         </member>
-        <member name="P:Orion.World.Tile.HasYellowWire">
+        <member name="P:Orion.World.Tiles.Tile.HasYellowWire">
             <summary>
             Gets or sets a value indicating whether the tile has yellow wire.
             </summary>
-            <remarks>This value is usually stored as bit 7 of <see cref="P:Orion.World.Tile.TileHeader2"/>.</remarks>
+            <remarks>This value is usually stored as bit 7 of <see cref="P:Orion.World.Tiles.Tile.TileHeader2"/>.</remarks>
         </member>
-        <member name="P:Orion.World.Tile.IsCheckingLiquid">
+        <member name="P:Orion.World.Tiles.Tile.IsCheckingLiquid">
             <summary>
             Gets or sets a value indicating whether the tile is checking liquid.
             </summary>
-            <remarks>This value is usually stored as bit 3 of <see cref="P:Orion.World.Tile.TileHeader4"/>.</remarks>
+            <remarks>This value is usually stored as bit 3 of <see cref="P:Orion.World.Tiles.Tile.TileHeader4"/>.</remarks>
         </member>
-        <member name="P:Orion.World.Tile.ShouldSkipLiquid">
+        <member name="P:Orion.World.Tiles.Tile.ShouldSkipLiquid">
             <summary>
             Gets or sets a value indicating whether the tile should skip liquids.
             </summary>
-            <remarks>This value is usually stored as bit 4 of <see cref="P:Orion.World.Tile.TileHeader4"/>.</remarks>
+            <remarks>This value is usually stored as bit 4 of <see cref="P:Orion.World.Tiles.Tile.TileHeader4"/>.</remarks>
         </member>
-        <member name="T:Orion.World.WallType">
+        <member name="T:Orion.World.Tiles.WallType">
             <summary>
             Specifies a wall's type.
             </summary>

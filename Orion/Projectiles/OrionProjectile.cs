@@ -1,11 +1,7 @@
 ﻿using System;
-using System.Diagnostics;
 using Orion.Entities;
 
 namespace Orion.Projectiles {
-    /// <summary>
-    /// Orion's implementation of <see cref="IProjectile"/>.
-    /// </summary>
     internal sealed class OrionProjectile : OrionEntity<Terraria.Projectile>, IProjectile {
         private string _nameOverride;
 

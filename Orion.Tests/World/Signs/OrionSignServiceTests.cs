@@ -21,7 +21,7 @@ namespace Orion.Tests.World.Signs {
             Terraria.Main.sign[0] = new Terraria.Sign();
             var sign = (OrionSign)_signService[0];
 
-            sign.WrappedSign.Should().BeSameAs(Terraria.Main.sign[0]);
+            sign.Wrapped.Should().BeSameAs(Terraria.Main.sign[0]);
         }
 
         [Fact]
@@ -56,7 +56,7 @@ namespace Orion.Tests.World.Signs {
             var signs = _signService.ToList();
 
             for (var i = 0; i < signs.Count; ++i) {
-                ((OrionSign)signs[i]).WrappedSign.Should().BeSameAs(Terraria.Main.sign[i]);
+                ((OrionSign)signs[i]).Wrapped.Should().BeSameAs(Terraria.Main.sign[i]);
             }
         }
     }

@@ -1,11 +1,7 @@
 ﻿using System;
-using System.Diagnostics;
 using Orion.Entities;
 
 namespace Orion.Players {
-    /// <summary>
-    /// Orion's implementation of <see cref="IPlayer"/>.
-    /// </summary>
     internal sealed class OrionPlayer : OrionEntity<Terraria.Player>, IPlayer {
         public override string Name {
             get => Wrapped.name;

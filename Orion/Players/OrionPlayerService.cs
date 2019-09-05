@@ -7,9 +7,6 @@ using Orion.Players.Events;
 using OTAPI;
 
 namespace Orion.Players {
-    /// <summary>
-    /// Orion's implementation of <see cref="IPlayerService"/>.
-    /// </summary>
     internal sealed class OrionPlayerService : OrionService, IPlayerService {
         private readonly IList<Terraria.Player> _terrariaPlayers;
         private readonly IList<OrionPlayer> _players;

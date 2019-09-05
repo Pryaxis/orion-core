@@ -1,4 +1,4 @@
-﻿namespace Orion.World {
+﻿namespace Orion.World.Tiles {
     /// <summary>
     /// Specifies the type of slope.
     /// </summary>

@@ -1,6 +1,6 @@
 ﻿using OTAPI.Tile;
 
-namespace Orion.World {
+namespace Orion.World.Tiles {
     /// <summary>
     /// Orion's optimized implementation of <see cref="Tile"/>.
     /// </summary>

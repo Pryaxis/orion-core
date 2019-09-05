@@ -1,7 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using OTAPI.Tile;
 
-namespace Orion.World {
+namespace Orion.World.Tiles {
     /// <summary>
     /// Provides the base class for a tile.
     /// </summary>

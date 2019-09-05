@@ -8,9 +8,6 @@ using Orion.Projectiles.Events;
 using OTAPI;
 
 namespace Orion.Projectiles {
-    /// <summary>
-    /// Orion's implementation of <see cref="IProjectileService"/>.
-    /// </summary>
     internal sealed class OrionProjectileService : OrionService, IProjectileService {
         private readonly IList<Terraria.Projectile> _terrariaProjectiles;
         private readonly IList<OrionProjectile> _projectiles;

@@ -8,9 +8,6 @@ using Orion.Networking.Packets;
 using OTAPI;
 
 namespace Orion.Networking {
-    /// <summary>
-    /// Orion's implementation of <see cref="INetworkService"/>.
-    /// </summary>
     internal sealed class OrionNetworkService : OrionService, INetworkService {
         public override string Author => "Pryaxis";
         public override string Name => "Orion Network Service";

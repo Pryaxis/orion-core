@@ -70,11 +70,29 @@ namespace Orion.Launcher.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Loading services and plugins....
+        /// </summary>
+        internal static string LoadingServicesAndPluginsMessage {
+            get {
+                return ResourceManager.GetString("LoadingServicesAndPluginsMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to plugins.
         /// </summary>
         internal static string PluginDirectory {
             get {
                 return ResourceManager.GetString("PluginDirectory", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to .
+        /// </summary>
+        internal static string PressKeyToContinueMessage {
+            get {
+                return ResourceManager.GetString("PressKeyToContinueMessage", resourceCulture);
             }
         }
     }

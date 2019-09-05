@@ -12,9 +12,6 @@ using Orion.Players;
 using OTAPI;
 
 namespace Orion.Npcs {
-    /// <summary>
-    /// Orion's implementation of <see cref="INpcService"/>.
-    /// </summary>
     internal sealed class OrionNpcService : OrionService, INpcService {
         private readonly IItemService _itemService;
         private readonly IPlayerService _playerService;

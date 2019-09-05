@@ -4,9 +4,6 @@ using System.Collections.Generic;
 using System.Diagnostics;
 
 namespace Orion.Items {
-    /// <summary>
-    /// Orion's implementation of <see cref="IItemList"/>.
-    /// </summary>
     internal sealed class OrionItemList : IItemList {
         private readonly IList<Terraria.Item> _terrariaItems;
         private readonly IList<OrionItem> _items;

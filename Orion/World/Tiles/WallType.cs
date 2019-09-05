@@ -1,4 +1,4 @@
-﻿namespace Orion.World {
+﻿namespace Orion.World.Tiles {
     /// <summary>
     /// Specifies a wall's type.
     /// </summary>

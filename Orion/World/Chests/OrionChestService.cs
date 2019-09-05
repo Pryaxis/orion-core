@@ -27,7 +27,7 @@ namespace Orion.World.Chests {
                  * Some chests in _terrariaChests may be null, so we need to handle this properly by also returning
                  * null.
                  */
-                if (_chests[index] == null || _chests[index].WrappedChest != _terrariaChests[index]) {
+                if (_chests[index] == null || _chests[index].Wrapped != _terrariaChests[index]) {
                     if (_terrariaChests[index] == null) {
                         return null;
                     } else {
@@ -37,7 +37,7 @@ namespace Orion.World.Chests {
 
                 var chest = _chests[index];
                 Debug.Assert(chest != null, $"{nameof(chest)} should not be null.");
-                Debug.Assert(chest.WrappedChest != null, $"{nameof(chest.WrappedChest)} should not be null.");
+                Debug.Assert(chest.Wrapped != null, $"{nameof(chest.Wrapped)} should not be null.");
                 return chest;
             }
         }

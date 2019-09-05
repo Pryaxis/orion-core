@@ -26,7 +26,7 @@ namespace Orion.World.Signs {
                 /*
                  * Some signs in _terrariaSigns may be null, so we need to handle this properly by also returning null.
                  */
-                if (_signs[index] == null || _signs[index].WrappedSign != _terrariaSigns[index]) {
+                if (_signs[index] == null || _signs[index].Wrapped != _terrariaSigns[index]) {
                     if (_terrariaSigns[index] == null) {
                         return null;
                     } else {
@@ -36,7 +36,7 @@ namespace Orion.World.Signs {
 
                 var sign = _signs[index];
                 Debug.Assert(sign != null, $"{nameof(sign)} should not be null.");
-                Debug.Assert(sign.WrappedSign != null, $"{nameof(sign.WrappedSign)} should not be null.");
+                Debug.Assert(sign.Wrapped != null, $"{nameof(sign.Wrapped)} should not be null.");
                 return sign;
             }
         }

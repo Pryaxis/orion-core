@@ -1,11 +1,7 @@
 ﻿using System;
-using System.Diagnostics;
 using Orion.Entities;
 
 namespace Orion.Npcs {
-    /// <summary>
-    /// Orion's implementation of <see cref="INpc"/>.
-    /// </summary>
     internal sealed class OrionNpc : OrionEntity<Terraria.NPC>, INpc {
         public override string Name {
             get => Wrapped.GivenOrTypeName;

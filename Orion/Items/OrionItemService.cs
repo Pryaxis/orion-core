@@ -8,9 +8,6 @@ using Orion.Items.Events;
 using OTAPI;
 
 namespace Orion.Items {
-    /// <summary>
-    /// Orion's implementation of <see cref="IItemService"/>.
-    /// </summary>
     internal sealed class OrionItemService : OrionService, IItemService {
         private readonly IList<Terraria.Item> _terrariaItems;
         private readonly IList<OrionItem> _items;

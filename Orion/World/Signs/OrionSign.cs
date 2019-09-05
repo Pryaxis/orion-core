@@ -7,28 +7,28 @@ namespace Orion.World.Signs {
     /// </summary>
     internal sealed class OrionSign : ISign {
         public int X {
-            get => WrappedSign.x;
-            set => WrappedSign.x = value;
+            get => Wrapped.x;
+            set => Wrapped.x = value;
         }
 
         public int Y {
-            get => WrappedSign.y;
-            set => WrappedSign.y = value;
+            get => Wrapped.y;
+            set => Wrapped.y = value;
         }
 
         public string Text {
-            get => WrappedSign.text;
-            set => WrappedSign.text = value ?? throw new ArgumentNullException(nameof(value));
+            get => Wrapped.text;
+            set => Wrapped.text = value ?? throw new ArgumentNullException(nameof(value));
         }
 
 
-        internal Terraria.Sign WrappedSign { get; }
+        internal Terraria.Sign Wrapped { get; }
 
 
         public OrionSign(Terraria.Sign terrariaSign) {
             Debug.Assert(terrariaSign != null, $"{nameof(terrariaSign)} should not be null.");
 
-            WrappedSign = terrariaSign;
+            Wrapped = terrariaSign;
         }
     }
 }

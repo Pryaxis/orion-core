@@ -2,9 +2,6 @@
 using Microsoft.Xna.Framework;
 
 namespace Orion.Entities {
-    /// <summary>
-    /// Orion's implementation of <see cref="IEntity"/>.
-    /// </summary>
     internal abstract class OrionEntity<TEntity> : IEntity where TEntity : Terraria.Entity {
         public int Index => Wrapped.whoAmI;
 

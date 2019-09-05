@@ -1,8 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 using Orion.Framework;
 using Orion.World.Events;
+using Orion.World.Tiles;
 
 namespace Orion.World {
     /// <summary>
