@@ -30,13 +30,13 @@ namespace Orion.Items {
                     throw new IndexOutOfRangeException(nameof(index));
                 }
 
-                if (_items[index]?.WrappedItem != _terrariaItems[index]) {
+                if (_items[index]?.Wrapped != _terrariaItems[index]) {
                     _items[index] = new OrionItem(_terrariaItems[index]);
                 }
 
                 var item = _items[index];
                 Debug.Assert(item != null, $"{nameof(item)} should not be null.");
-                Debug.Assert(item.WrappedItem != null, $"{nameof(item.WrappedItem)} should not be null.");
+                Debug.Assert(item.Wrapped != null, $"{nameof(item.Wrapped)} should not be null.");
                 return item;
             }
         }

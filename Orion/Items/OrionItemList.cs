@@ -20,7 +20,7 @@ namespace Orion.Items {
                         "Index was out of range. Must be non-negative and less than the length of the collection.");
                 }
 
-                if (_items[index]?.WrappedItem != _terrariaItems[index]) {
+                if (_items[index]?.Wrapped != _terrariaItems[index]) {
                     _items[index] = new OrionItem(_terrariaItems[index]);
                 }
 

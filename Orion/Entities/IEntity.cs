@@ -1,4 +1,5 @@
-﻿using Microsoft.Xna.Framework;
+﻿using System;
+using Microsoft.Xna.Framework;
 
 namespace Orion.Entities {
     /// <summary>
@@ -14,6 +15,12 @@ namespace Orion.Entities {
         /// Gets or sets a value indicating whether the entity is active.
         /// </summary>
         bool IsActive { get; set; }
+
+        /// <summary>
+        /// Gets or sets the entity name.
+        /// </summary>
+        /// <exception cref="ArgumentNullException"><paramref name="value"/> is <c>null</c>.</exception>
+        string Name { get; set; }
 
         /// <summary>
         /// Gets or sets the entity's position in the world.

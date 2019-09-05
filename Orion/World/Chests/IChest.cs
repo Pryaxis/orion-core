@@ -7,12 +7,12 @@ namespace Orion.World.Chests {
     /// </summary>
     public interface IChest {
         /// <summary>
-        /// Gets or sets the X position.
+        /// Gets or sets the X coordinate.
         /// </summary>
         int X { get; set; }
 
         /// <summary>
-        /// Gets or sets the Y position.
+        /// Gets or sets the Y coordinate.
         /// </summary>
         int Y { get; set; }
 

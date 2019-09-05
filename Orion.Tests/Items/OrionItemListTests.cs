@@ -24,7 +24,7 @@ namespace Orion.Tests.Items {
             terrariaItems[index] = new Terraria.Item();
             var items = new OrionItemList(terrariaItems);
 
-            ((OrionItem)items[index]).WrappedItem.Should().BeSameAs(terrariaItems[index]);
+            ((OrionItem)items[index]).Wrapped.Should().BeSameAs(terrariaItems[index]);
         }
 
         [Fact]
@@ -60,7 +60,7 @@ namespace Orion.Tests.Items {
 
             var items = new OrionItemList(terrariaItems).ToList();
             for (var i = 0; i < 10; ++i) {
-                ((OrionItem)items[i]).WrappedItem.Should().BeSameAs(terrariaItems[i]);
+                ((OrionItem)items[i]).Wrapped.Should().BeSameAs(terrariaItems[i]);
             }
         }
     }

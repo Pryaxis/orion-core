@@ -26,7 +26,7 @@ namespace Orion.Tests.Items {
         public void GetItem_IsCorrect() {
             var item = (OrionItem)_itemService[0];
 
-            item.WrappedItem.Should().BeSameAs(Terraria.Main.item[0]);
+            item.Wrapped.Should().BeSameAs(Terraria.Main.item[0]);
         }
 
         [Fact]
@@ -84,7 +84,7 @@ namespace Orion.Tests.Items {
             var item = (OrionItem)_itemService.SpawnItem(ItemType.SDMG, Vector2.Zero, 1, ItemPrefix.Unreal);
 
             argsItem.Should().NotBeNull();
-            argsItem.WrappedItem.Should().BeSameAs(item.WrappedItem);
+            argsItem.Wrapped.Should().BeSameAs(item.Wrapped);
         }
         
         [Theory]
@@ -122,7 +122,7 @@ namespace Orion.Tests.Items {
 
             var item = (OrionItem)_itemService.SpawnItem(ItemType.SDMG, Vector2.Zero);
             argsItem.Should().NotBeNull();
-            argsItem.WrappedItem.Should().BeSameAs(item.WrappedItem);
+            argsItem.Wrapped.Should().BeSameAs(item.Wrapped);
         }
 
         [Fact]
@@ -133,10 +133,10 @@ namespace Orion.Tests.Items {
             };
             var item = (OrionItem)_itemService.SpawnItem(ItemType.SDMG, Vector2.Zero);
 
-            item.WrappedItem.UpdateItem(item.Index);
+            item.Wrapped.UpdateItem(item.Index);
             
             argsItem.Should().NotBeNull();
-            argsItem.WrappedItem.Should().BeSameAs(item.WrappedItem);
+            argsItem.Wrapped.Should().BeSameAs(item.Wrapped);
         }
 
         [Fact]
@@ -147,10 +147,10 @@ namespace Orion.Tests.Items {
             };
             var item = (OrionItem)_itemService.SpawnItem(ItemType.SDMG, Vector2.Zero);
 
-            item.WrappedItem.UpdateItem(item.Index);
+            item.Wrapped.UpdateItem(item.Index);
             
             argsItem.Should().NotBeNull();
-            argsItem.WrappedItem.Should().BeSameAs(item.WrappedItem);
+            argsItem.Wrapped.Should().BeSameAs(item.Wrapped);
         }
 
         [Fact]
@@ -158,7 +158,7 @@ namespace Orion.Tests.Items {
             var items = _itemService.ToList();
 
             for (var i = 0; i < items.Count; ++i) {
-                ((OrionItem)items[i]).WrappedItem.Should().BeSameAs(Terraria.Main.item[i]);
+                ((OrionItem)items[i]).Wrapped.Should().BeSameAs(Terraria.Main.item[i]);
             }
         }
     }

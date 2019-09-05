@@ -1,52 +1,52 @@
-﻿using System.Diagnostics;
+﻿using System;
+using System.Diagnostics;
 using Orion.Entities;
 
 namespace Orion.Items {
     /// <summary>
     /// Orion's implementation of <see cref="Orion.Items.IItem"/>.
     /// </summary>
-    internal sealed class OrionItem : OrionEntity, IItem {
+    internal sealed class OrionItem : OrionEntity<Terraria.Item>, IItem {
+        public override string Name {
+            get => Wrapped.Name;
+            set => Wrapped._nameOverride = value ?? throw new ArgumentNullException(nameof(value));
+        }
+
         public ItemType Type {
-            get => (ItemType)WrappedItem.type;
-            set => WrappedItem.type = (int)value;
+            get => (ItemType)Wrapped.type;
+            set => Wrapped.type = (int)value;
         }
 
         public int StackSize {
-            get => WrappedItem.stack;
-            set => WrappedItem.stack = value;
+            get => Wrapped.stack;
+            set => Wrapped.stack = value;
         }
 
         public int MaxStackSize {
-            get => WrappedItem.maxStack;
-            set => WrappedItem.maxStack = value;
+            get => Wrapped.maxStack;
+            set => Wrapped.maxStack = value;
         }
 
-        public ItemPrefix Prefix => (ItemPrefix)WrappedItem.prefix;
+        public ItemPrefix Prefix => (ItemPrefix)Wrapped.prefix;
 
         public ItemRarity Rarity {
-            get => (ItemRarity)WrappedItem.rare;
-            set => WrappedItem.rare = (int)value;
+            get => (ItemRarity)Wrapped.rare;
+            set => Wrapped.rare = (int)value;
         }
 
         public int Damage {
-            get => WrappedItem.damage;
-            set => WrappedItem.damage = value;
+            get => Wrapped.damage;
+            set => Wrapped.damage = value;
         }
 
         public int UseTime {
-            get => WrappedItem.useTime;
-            set => WrappedItem.useTime = value;
+            get => Wrapped.useTime;
+            set => Wrapped.useTime = value;
         }
 
-        internal Terraria.Item WrappedItem { get; }
-        
-        public OrionItem(Terraria.Item terrariaItem) : base(terrariaItem) {
-            Debug.Assert(terrariaItem != null, $"{nameof(terrariaItem)} should not be null.");
+        public OrionItem(Terraria.Item terrariaItem) : base(terrariaItem) { }
 
-            WrappedItem = terrariaItem;
-        }
-
-        public void ApplyType(ItemType type) => WrappedItem.SetDefaults((int)type);
-        public void ApplyPrefix(ItemPrefix prefix) => WrappedItem.Prefix((int)prefix);
+        public void ApplyType(ItemType type) => Wrapped.SetDefaults((int)type);
+        public void ApplyPrefix(ItemPrefix prefix) => Wrapped.Prefix((int)prefix);
     }
 }

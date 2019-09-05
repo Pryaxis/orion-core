@@ -33,7 +33,6 @@ namespace Orion.World {
                      */
                     _ptr = (byte*)Marshal.AllocHGlobal(OrionTile.ByteCount * (Width + 1) * (Height + 1));
                 }
-
                 return new OrionTile(_ptr + OrionTile.ByteCount * ((Width + 1) * y + x));
             }
             set => ((ITileCollection)this)[x, y] = value;

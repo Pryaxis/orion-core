@@ -30,14 +30,14 @@ namespace Orion.Projectiles {
                     throw new IndexOutOfRangeException(nameof(index));
                 }
 
-                if (_projectiles[index]?.WrappedProjectile != _terrariaProjectiles[index]) {
+                if (_projectiles[index]?.Wrapped != _terrariaProjectiles[index]) {
                     _projectiles[index] = new OrionProjectile(_terrariaProjectiles[index]);
                 }
 
                 var projectile = _projectiles[index];
                 Debug.Assert(projectile != null, $"{nameof(projectile)} should not be null.");
-                Debug.Assert(projectile.WrappedProjectile != null, 
-                             $"{nameof(projectile.WrappedProjectile)} should not be null.");
+                Debug.Assert(projectile.Wrapped != null, 
+                             $"{nameof(projectile.Wrapped)} should not be null.");
                 return projectile;
             }
         }

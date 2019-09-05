@@ -44,7 +44,7 @@ namespace Orion.Tests.Npcs {
         public void GetNpc_IsCorrect() {
             var npc = (OrionNpc)_npcService[0];
 
-            npc.WrappedNpc.Should().BeSameAs(Terraria.Main.npc[0]);
+            npc.Wrapped.Should().BeSameAs(Terraria.Main.npc[0]);
         }
 
         [Fact]
@@ -99,7 +99,7 @@ namespace Orion.Tests.Npcs {
             var npc = (OrionNpc)_npcService.SpawnNpc(NpcType.BlueSlime, Vector2.Zero);
 
             argsNpc.Should().NotBeNull();
-            argsNpc.WrappedNpc.Should().BeSameAs(npc.WrappedNpc);
+            argsNpc.Wrapped.Should().BeSameAs(npc.Wrapped);
         }
 
         [Theory]
@@ -148,7 +148,7 @@ namespace Orion.Tests.Npcs {
             var npc = (OrionNpc)_npcService.SpawnNpc(NpcType.BlueSlime, Vector2.Zero);
 
             argsNpc.Should().NotBeNull();
-            argsNpc.WrappedNpc.Should().BeSameAs(npc.WrappedNpc);
+            argsNpc.Wrapped.Should().BeSameAs(npc.Wrapped);
         }
 
         [Fact]
@@ -171,10 +171,10 @@ namespace Orion.Tests.Npcs {
             };
             var npc = (OrionNpc)_npcService.SpawnNpc(NpcType.BlueSlime, Vector2.Zero);
 
-            npc.WrappedNpc.UpdateNPC(npc.Index);
+            npc.Wrapped.UpdateNPC(npc.Index);
 
             argsNpc.Should().NotBeNull();
-            argsNpc.WrappedNpc.Should().BeSameAs(npc.WrappedNpc);
+            argsNpc.Wrapped.Should().BeSameAs(npc.Wrapped);
         }
 
         [Fact]
@@ -185,10 +185,10 @@ namespace Orion.Tests.Npcs {
             };
             var npc = (OrionNpc)_npcService.SpawnNpc(NpcType.BlueSlime, Vector2.Zero);
 
-            npc.WrappedNpc.AI();
+            npc.Wrapped.AI();
 
             argsNpc.Should().NotBeNull();
-            argsNpc.WrappedNpc.Should().BeSameAs(npc.WrappedNpc);
+            argsNpc.Wrapped.Should().BeSameAs(npc.Wrapped);
         }
 
         [Fact]
@@ -199,10 +199,10 @@ namespace Orion.Tests.Npcs {
             };
             var npc = (OrionNpc)_npcService.SpawnNpc(NpcType.BlueSlime, Vector2.Zero);
 
-            npc.WrappedNpc.AI();
+            npc.Wrapped.AI();
 
             argsNpc.Should().NotBeNull();
-            argsNpc.WrappedNpc.Should().BeSameAs(npc.WrappedNpc);
+            argsNpc.Wrapped.Should().BeSameAs(npc.Wrapped);
         }
 
         [Fact]
@@ -213,10 +213,10 @@ namespace Orion.Tests.Npcs {
             };
             var npc = (OrionNpc)_npcService.SpawnNpc(NpcType.BlueSlime, Vector2.Zero);
 
-            npc.WrappedNpc.UpdateNPC(npc.Index);
+            npc.Wrapped.UpdateNPC(npc.Index);
 
             argsNpc.Should().NotBeNull();
-            argsNpc.WrappedNpc.Should().BeSameAs(npc.WrappedNpc);
+            argsNpc.Wrapped.Should().BeSameAs(npc.Wrapped);
         }
 
         [Theory]
@@ -236,7 +236,7 @@ namespace Orion.Tests.Npcs {
             npc.Damage(damage, knockback, hitDirection);
 
             argsNpc.Should().NotBeNull();
-            argsNpc.WrappedNpc.Should().BeSameAs(npc.WrappedNpc);
+            argsNpc.Wrapped.Should().BeSameAs(npc.Wrapped);
         }
         
         [Fact]
@@ -268,7 +268,7 @@ namespace Orion.Tests.Npcs {
             npc.Damage(damage, knockback, hitDirection);
 
             argsNpc.Should().NotBeNull();
-            argsNpc.WrappedNpc.Should().BeSameAs(npc.WrappedNpc);
+            argsNpc.Wrapped.Should().BeSameAs(npc.Wrapped);
         }
         
         [Theory]
@@ -284,7 +284,7 @@ namespace Orion.Tests.Npcs {
             npc.Transform(newType);
 
             argsNpc.Should().NotBeNull();
-            argsNpc.WrappedNpc.Should().BeSameAs(npc.WrappedNpc);
+            argsNpc.Wrapped.Should().BeSameAs(npc.Wrapped);
         }
 
         [Fact]
@@ -310,7 +310,7 @@ namespace Orion.Tests.Npcs {
             npc.Transform(NpcType.BlueSlime);
 
             argsNpc.Should().NotBeNull();
-            argsNpc.WrappedNpc.Should().BeSameAs(npc.WrappedNpc);
+            argsNpc.Wrapped.Should().BeSameAs(npc.Wrapped);
         }
 
         [Fact]
@@ -324,7 +324,7 @@ namespace Orion.Tests.Npcs {
             npc.Kill();
 
             argsNpc.Should().NotBeNull();
-            argsNpc.WrappedNpc.Should().BeSameAs(npc.WrappedNpc);
+            argsNpc.Wrapped.Should().BeSameAs(npc.Wrapped);
         }
 
         [Fact]
@@ -350,7 +350,7 @@ namespace Orion.Tests.Npcs {
             npc.Kill();
 
             argsNpc.Should().NotBeNull();
-            argsNpc.WrappedNpc.Should().BeSameAs(npc.WrappedNpc);
+            argsNpc.Wrapped.Should().BeSameAs(npc.Wrapped);
         }
 
         [Fact]
@@ -364,7 +364,7 @@ namespace Orion.Tests.Npcs {
             npc.Kill();
 
             argsNpc.Should().NotBeNull();
-            argsNpc.WrappedNpc.Should().BeSameAs(npc.WrappedNpc);
+            argsNpc.Wrapped.Should().BeSameAs(npc.Wrapped);
         }
 
         [Fact]
@@ -372,7 +372,7 @@ namespace Orion.Tests.Npcs {
             var npcs = _npcService.ToList();
 
             for (var i = 0; i < npcs.Count; ++i) {
-                ((OrionNpc)npcs[i]).WrappedNpc.Should().BeSameAs(Terraria.Main.npc[i]);
+                ((OrionNpc)npcs[i]).Wrapped.Should().BeSameAs(Terraria.Main.npc[i]);
             }
         }
 

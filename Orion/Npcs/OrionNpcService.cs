@@ -37,13 +37,13 @@ namespace Orion.Npcs {
                     throw new IndexOutOfRangeException(nameof(index));
                 }
 
-                if (_npcs[index]?.WrappedNpc != _terrariaNpcs[index]) {
+                if (_npcs[index]?.Wrapped != _terrariaNpcs[index]) {
                     _npcs[index] = new OrionNpc(_terrariaNpcs[index]);
                 }
 
                 var npc = _npcs[index];
                 Debug.Assert(npc != null, $"{nameof(npc)} should not be null.");
-                Debug.Assert(npc.WrappedNpc != null, $"{nameof(npc.WrappedNpc)} should not be null.");
+                Debug.Assert(npc.Wrapped != null, $"{nameof(npc.Wrapped)} should not be null.");
                 return npc;
             }
         }

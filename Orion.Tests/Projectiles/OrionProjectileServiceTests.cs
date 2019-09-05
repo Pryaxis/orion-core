@@ -28,7 +28,7 @@ namespace Orion.Tests.Projectiles {
         public void GetItem_IsCorrect() {
             var projectile = (OrionProjectile)_projectileService[0];
 
-            projectile.WrappedProjectile.Should().BeSameAs(Terraria.Main.projectile[0]);
+            projectile.Wrapped.Should().BeSameAs(Terraria.Main.projectile[0]);
         }
 
         [Fact]
@@ -58,7 +58,7 @@ namespace Orion.Tests.Projectiles {
             var projectile = (OrionProjectile)_projectileService.SpawnProjectile(ProjectileType.Ale, Vector2.Zero, Vector2.Zero, 0, 0);
 
             argsProjectile.Should().NotBeNull();
-            argsProjectile.WrappedProjectile.Should().BeSameAs(projectile.WrappedProjectile);
+            argsProjectile.Wrapped.Should().BeSameAs(projectile.Wrapped);
         }
 
         [Theory]
@@ -95,7 +95,7 @@ namespace Orion.Tests.Projectiles {
             var projectile = (OrionProjectile)_projectileService.SpawnProjectile(ProjectileType.Ale, Vector2.Zero, Vector2.Zero, 0, 0);
 
             argsProjectile.Should().NotBeNull();
-            argsProjectile.WrappedProjectile.Should().BeSameAs(projectile.WrappedProjectile);
+            argsProjectile.Wrapped.Should().BeSameAs(projectile.Wrapped);
         }
 
         [Fact]
@@ -106,10 +106,10 @@ namespace Orion.Tests.Projectiles {
             };
             var projectile = (OrionProjectile)_projectileService.SpawnProjectile(ProjectileType.Ale, Vector2.Zero, Vector2.Zero, 0, 0);
 
-            projectile.WrappedProjectile.Update(projectile.Index);
+            projectile.Wrapped.Update(projectile.Index);
 
             argsProjectile.Should().NotBeNull();
-            argsProjectile.WrappedProjectile.Should().BeSameAs(projectile.WrappedProjectile);
+            argsProjectile.Wrapped.Should().BeSameAs(projectile.Wrapped);
         }
 
         [Fact]
@@ -120,10 +120,10 @@ namespace Orion.Tests.Projectiles {
             };
             var projectile = (OrionProjectile)_projectileService.SpawnProjectile(ProjectileType.Ale, Vector2.Zero, Vector2.Zero, 0, 0);
 
-            projectile.WrappedProjectile.AI();
+            projectile.Wrapped.AI();
 
             argsProjectile.Should().NotBeNull();
-            argsProjectile.WrappedProjectile.Should().BeSameAs(projectile.WrappedProjectile);
+            argsProjectile.Wrapped.Should().BeSameAs(projectile.Wrapped);
         }
 
         [Fact]
@@ -134,10 +134,10 @@ namespace Orion.Tests.Projectiles {
             };
             var projectile = (OrionProjectile)_projectileService.SpawnProjectile(ProjectileType.Ale, Vector2.Zero, Vector2.Zero, 0, 0);
 
-            projectile.WrappedProjectile.AI();
+            projectile.Wrapped.AI();
 
             argsProjectile.Should().NotBeNull();
-            argsProjectile.WrappedProjectile.Should().BeSameAs(projectile.WrappedProjectile);
+            argsProjectile.Wrapped.Should().BeSameAs(projectile.Wrapped);
         }
 
         [Fact]
@@ -148,10 +148,10 @@ namespace Orion.Tests.Projectiles {
             };
             var projectile = (OrionProjectile)_projectileService.SpawnProjectile(ProjectileType.Ale, Vector2.Zero, Vector2.Zero, 0, 0);
             
-            projectile.WrappedProjectile.Update(projectile.Index);
+            projectile.Wrapped.Update(projectile.Index);
 
             argsProjectile.Should().NotBeNull();
-            argsProjectile.WrappedProjectile.Should().BeSameAs(projectile.WrappedProjectile);
+            argsProjectile.Wrapped.Should().BeSameAs(projectile.Wrapped);
         }
 
         [Fact]
@@ -165,7 +165,7 @@ namespace Orion.Tests.Projectiles {
             projectile.Remove();
 
             argsProjectile.Should().NotBeNull();
-            argsProjectile.WrappedProjectile.Should().BeSameAs(projectile.WrappedProjectile);
+            argsProjectile.Wrapped.Should().BeSameAs(projectile.Wrapped);
         }
 
         [Fact]
@@ -191,7 +191,7 @@ namespace Orion.Tests.Projectiles {
             projectile.Remove();
 
             argsProjectile.Should().NotBeNull();
-            argsProjectile.WrappedProjectile.Should().BeSameAs(projectile.WrappedProjectile);
+            argsProjectile.Wrapped.Should().BeSameAs(projectile.Wrapped);
         }
 
         [Fact]
@@ -199,7 +199,7 @@ namespace Orion.Tests.Projectiles {
             var projectiles = _projectileService.ToList();
 
             for (var i = 0; i < projectiles.Count; ++i) {
-                ((OrionProjectile)projectiles[i]).WrappedProjectile.Should().BeSameAs(Terraria.Main.projectile[i]);
+                ((OrionProjectile)projectiles[i]).Wrapped.Should().BeSameAs(Terraria.Main.projectile[i]);
             }
         }
         

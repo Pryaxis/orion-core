@@ -26,7 +26,7 @@ namespace Orion.Tests.Players {
         public void GetItem_IsCorrect() {
             var player = (OrionPlayer)_playerService[0];
 
-            player.WrappedPlayer.Should().BeSameAs(Terraria.Main.player[0]);
+            player.Wrapped.Should().BeSameAs(Terraria.Main.player[0]);
         }
 
         [Fact]
@@ -54,10 +54,10 @@ namespace Orion.Tests.Players {
             };
             var player = (OrionPlayer)_playerService[0];
 
-            player.WrappedPlayer.Update(player.Index);
+            player.Wrapped.Update(player.Index);
 
             argsPlayer.Should().NotBeNull();
-            argsPlayer.WrappedPlayer.Should().BeSameAs(player.WrappedPlayer);
+            argsPlayer.Wrapped.Should().BeSameAs(player.Wrapped);
         }
 
         [Fact]
@@ -68,10 +68,10 @@ namespace Orion.Tests.Players {
             };
             var player = (OrionPlayer)_playerService[0];
 
-            player.WrappedPlayer.Update(player.Index);
+            player.Wrapped.Update(player.Index);
 
             argsPlayer.Should().NotBeNull();
-            argsPlayer.WrappedPlayer.Should().BeSameAs(player.WrappedPlayer);
+            argsPlayer.Wrapped.Should().BeSameAs(player.Wrapped);
         }
 
         [Fact]
@@ -79,7 +79,7 @@ namespace Orion.Tests.Players {
             var players = _playerService.ToList();
 
             for (var i = 0; i < players.Count; ++i) {
-                ((OrionPlayer)players[i]).WrappedPlayer.Should().BeSameAs(Terraria.Main.player[i]);
+                ((OrionPlayer)players[i]).Wrapped.Should().BeSameAs(Terraria.Main.player[i]);
             }
         }
     }

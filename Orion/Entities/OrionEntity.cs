@@ -5,35 +5,37 @@ namespace Orion.Entities {
     /// <summary>
     /// Orion's implementation of <see cref="IEntity"/>.
     /// </summary>
-    internal class OrionEntity : IEntity {
-        private readonly Terraria.Entity _wrappedEntity;
-
-        public int Index => _wrappedEntity.whoAmI;
+    internal abstract class OrionEntity<TEntity> : IEntity where TEntity : Terraria.Entity {
+        public int Index => Wrapped.whoAmI;
 
         public bool IsActive {
-            get => _wrappedEntity.active;
-            set => _wrappedEntity.active = value;
+            get => Wrapped.active;
+            set => Wrapped.active = value;
         }
 
+        public abstract string Name { get; set; }
+
         public Vector2 Position {
-            get => _wrappedEntity.position;
-            set => _wrappedEntity.position = value;
+            get => Wrapped.position;
+            set => Wrapped.position = value;
         }
 
         public Vector2 Velocity {
-            get => _wrappedEntity.velocity;
-            set => _wrappedEntity.velocity = value;
+            get => Wrapped.velocity;
+            set => Wrapped.velocity = value;
         }
 
         public Vector2 Size {
-            get => _wrappedEntity.Size;
-            set => _wrappedEntity.Size = value;
+            get => Wrapped.Size;
+            set => Wrapped.Size = value;
         }
 
-        public OrionEntity(Terraria.Entity entity) {
-            Debug.Assert(entity != null, $"{nameof(entity)} should not be null.");
+        internal TEntity Wrapped { get; }
 
-            _wrappedEntity = entity;
+        protected OrionEntity(TEntity terrariaEntity) {
+            Debug.Assert(terrariaEntity != null, $"{nameof(terrariaEntity)} should not be null.");
+
+            Wrapped = terrariaEntity;
         }
     }
 }

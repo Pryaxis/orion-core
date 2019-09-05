@@ -1,37 +1,37 @@
-﻿using System.Diagnostics;
+﻿using System;
+using System.Diagnostics;
 using Orion.Entities;
 
 namespace Orion.Players {
     /// <summary>
     /// Orion's implementation of <see cref="IPlayer"/>.
     /// </summary>
-    internal sealed class OrionPlayer : OrionEntity, IPlayer {
+    internal sealed class OrionPlayer : OrionEntity<Terraria.Player>, IPlayer {
+        public override string Name {
+            get => Wrapped.name;
+            set => Wrapped.name = value ?? throw new ArgumentNullException(nameof(value));
+        }
+
         public int Hp {
-            get => WrappedPlayer.statLife;
-            set => WrappedPlayer.statLife = value;
+            get => Wrapped.statLife;
+            set => Wrapped.statLife = value;
         }
 
         public int MaxHp {
-            get => WrappedPlayer.statLifeMax;
-            set => WrappedPlayer.statLifeMax = value;
+            get => Wrapped.statLifeMax;
+            set => Wrapped.statLifeMax = value;
         }
 
         public int Mp {
-            get => WrappedPlayer.statMana;
-            set => WrappedPlayer.statMana = value;
+            get => Wrapped.statMana;
+            set => Wrapped.statMana = value;
         }
 
         public int MaxMp {
-            get => WrappedPlayer.statManaMax;
-            set => WrappedPlayer.statManaMax = value;
+            get => Wrapped.statManaMax;
+            set => Wrapped.statManaMax = value;
         }
 
-        internal Terraria.Player WrappedPlayer { get; }
-
-        public OrionPlayer(Terraria.Player terrariaPlayer) : base(terrariaPlayer) {
-            Debug.Assert(terrariaPlayer != null, $"{nameof(terrariaPlayer)} should not be null.");
-
-            WrappedPlayer = terrariaPlayer;
-        }
+        public OrionPlayer(Terraria.Player terrariaPlayer) : base(terrariaPlayer) { }
     }
 }

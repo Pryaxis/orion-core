@@ -15,12 +15,12 @@ namespace Orion.Networking.Packets {
         public override TerrariaPacketType Type => TerrariaPacketType.RequestWorldSection;
 
         /// <summary>
-        /// Gets or sets the section's X position.
+        /// Gets or sets the section's X coordinate.
         /// </summary>
         public int SectionX { get; set; }
 
         /// <summary>
-        /// Gets or sets the section's Y position.
+        /// Gets or sets the section's Y coordinate.
         /// </summary>
         public int SectionY { get; set; }
 

@@ -29,13 +29,13 @@ namespace Orion.Players {
                     throw new IndexOutOfRangeException(nameof(index));
                 }
 
-                if (_players[index]?.WrappedPlayer != _terrariaPlayers[index]) {
+                if (_players[index]?.Wrapped != _terrariaPlayers[index]) {
                     _players[index] = new OrionPlayer(_terrariaPlayers[index]);
                 }
 
                 var player = _players[index];
                 Debug.Assert(player != null, $"{nameof(player)} should not be null.");
-                Debug.Assert(player.WrappedPlayer != null, $"{nameof(player.WrappedPlayer)} should not be null.");
+                Debug.Assert(player.Wrapped != null, $"{nameof(player.Wrapped)} should not be null.");
                 return player;
             }
         }

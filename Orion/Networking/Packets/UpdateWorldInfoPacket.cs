@@ -44,22 +44,22 @@ namespace Orion.Networking.Packets {
         public short WorldHeight { get; set; }
 
         /// <summary>
-        /// Gets or sets the spawn X position.
+        /// Gets or sets the spawn X coordinate.
         /// </summary>
         public short SpawnX { get; set; }
 
         /// <summary>
-        /// Gets or sets the spawn Y position.
+        /// Gets or sets the spawn Y coordinate.
         /// </summary>
         public short SpawnY { get; set; }
 
         /// <summary>
-        /// Gets or sets the surface Y position.
+        /// Gets or sets the surface Y coordinate.
         /// </summary>
         public short SurfaceY { get; set; }
 
         /// <summary>
-        /// Gets or sets the rock layer Y position.
+        /// Gets or sets the rock layer Y coordinate.
         /// </summary>
         public short RockLayerY { get; set; }
 
