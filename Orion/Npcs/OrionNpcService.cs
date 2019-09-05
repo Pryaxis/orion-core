@@ -96,6 +96,10 @@ namespace Orion.Npcs {
         }
 
         protected override void Dispose(bool disposeManaged) {
+            if (!disposeManaged) {
+                return;
+            }
+
             _setDefaultsToIgnore.Dispose();
 
             Hooks.Npc.Create = null;

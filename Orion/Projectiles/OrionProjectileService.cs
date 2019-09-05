@@ -62,6 +62,10 @@ namespace Orion.Projectiles {
         }
 
         protected override void Dispose(bool disposeManaged) {
+            if (!disposeManaged) {
+                return;
+            }
+
             Hooks.Projectile.PreSetDefaultsById = null;
             Hooks.Projectile.PostSetDefaultsById = null;
             Hooks.Projectile.PreUpdate = null;

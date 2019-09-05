@@ -21,7 +21,9 @@ namespace Orion.World.Signs {
             set => WrappedSign.text = value ?? throw new ArgumentNullException(nameof(value));
         }
 
+
         internal Terraria.Sign WrappedSign { get; }
+
 
         public OrionSign(Terraria.Sign terrariaSign) {
             Debug.Assert(terrariaSign != null, $"{nameof(terrariaSign)} should not be null.");

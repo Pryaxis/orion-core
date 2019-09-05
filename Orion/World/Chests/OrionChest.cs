@@ -24,7 +24,9 @@ namespace Orion.World.Chests {
 
         public IItemList Items { get; }
 
+
         internal Terraria.Chest WrappedChest { get; }
+
 
         public OrionChest(Terraria.Chest terrariaChest) {
             Debug.Assert(terrariaChest != null, $"{nameof(terrariaChest)} should not be null.");

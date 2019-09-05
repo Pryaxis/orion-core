@@ -1,8 +1,8 @@
 ﻿namespace Orion.World {
     /// <summary>
-    /// Specifies a tile's type.
+    /// Specifies a block's type.
     /// </summary>
-    public enum TileType : ushort {
+    public enum BlockType : ushort {
 #pragma warning disable 1591
         Dirt = 0,
         Stone = 1,

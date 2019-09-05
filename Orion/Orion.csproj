@@ -10,6 +10,7 @@
     <NeutralLanguage>en-US</NeutralLanguage>
     <PackageProjectUrl>https://github.com/orgs/Pryaxis/teams/orion-contributors</PackageProjectUrl>
     <Description>Provides the next generation of Terraria APIs.</Description>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">

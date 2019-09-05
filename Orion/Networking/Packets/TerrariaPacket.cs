@@ -58,19 +58,15 @@ namespace Orion.Networking.Packets {
             }
 
             using (var reader = new BinaryReader(stream, Encoding.UTF8, true)) {
-#if DEBUG
                 var position = stream.Position;
-#endif
-
                 var packetLength = reader.ReadUInt16();
                 var packetType = (TerrariaPacketType)reader.ReadByte();
                 var packetCtor =
                     PacketConstructors.TryGetValue(packetType, out var f) ? f : () => new UnknownPacket(packetType);
                 var packet = packetCtor();
                 packet.ReadFromReader(reader, packetLength);
-
+                
                 Debug.Assert(stream.Position - position == packetLength, "Packet should be fully consumed.");
-
                 return packet;
             }
         }

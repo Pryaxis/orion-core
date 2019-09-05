@@ -28,6 +28,10 @@ namespace Orion.Networking {
         }
 
         protected override void Dispose(bool disposeManaged) {
+            if (!disposeManaged) {
+                return;
+            }
+
             Hooks.Net.ReceiveData = null;
             Hooks.Net.SendBytes = null;
             Hooks.Net.RemoteClient.PreReset = null;

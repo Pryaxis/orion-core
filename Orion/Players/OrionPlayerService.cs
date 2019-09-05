@@ -50,6 +50,10 @@ namespace Orion.Players {
         }
 
         protected override void Dispose(bool disposeManaged) {
+            if (!disposeManaged) {
+                return;
+            }
+
             Hooks.Player.PreGreet = null;
             Hooks.Player.PreUpdate = null;
             Hooks.Player.PostUpdate = null;

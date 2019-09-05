@@ -1,8 +1,8 @@
 ﻿namespace Orion.World {
     /// <summary>
-    /// Specifies the type of paint.
+    /// Specifies the color of paint.
     /// </summary>
-    public enum PaintType : byte {
+    public enum PaintColor : byte {
 #pragma warning disable 1591
         None = 0,
         Red = 1,
