@@ -1,4 +1,5 @@
-﻿using System.Runtime.InteropServices;
+﻿using System;
+using System.Runtime.InteropServices;
 using Orion.Framework;
 using OTAPI;
 using OTAPI.Tile;
@@ -8,8 +9,7 @@ namespace Orion.World {
     /// Orion's implementation of <see cref="ITileService"/>.
     /// </summary>
     internal sealed unsafe class OrionTileService : OrionService, ITileService, ITileCollection {
-        private GCHandle _handle;
-        private byte* _ptr;
+        private byte* _ptr = null;
 
         public override string Author => "Pryaxis";
         public override string Name => "Orion Tile Service";
@@ -19,13 +19,11 @@ namespace Orion.World {
 
         public Tile this[int x, int y] {
             get {
-                if (!_handle.IsAllocated) {
+                if (_ptr == null) {
                     Width = Terraria.Main.maxTilesX;
                     Height = Terraria.Main.maxTilesY;
 
-                    var bytes = new byte[OrionTile.ByteCount * (Width + 1) * (Height + 1)];
-                    _handle = GCHandle.Alloc(bytes, GCHandleType.Pinned);
-                    _ptr = (byte*)_handle.AddrOfPinnedObject();
+                    _ptr = (byte*)Marshal.AllocHGlobal(OrionTile.ByteCount * (Width + 1) * (Height + 1));
                 }
 
                 return new OrionTile(_ptr + OrionTile.ByteCount * ((Width + 1) * y + x));
@@ -46,7 +44,7 @@ namespace Orion.World {
         }
 
         protected override void Dispose(bool disposeManaged) {
-            _handle.Free();
+            Marshal.FreeHGlobal((IntPtr)_ptr);
 
             if (disposeManaged) {
                 Hooks.Tile.CreateCollection = null;

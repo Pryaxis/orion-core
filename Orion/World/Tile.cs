@@ -405,9 +405,9 @@ namespace Orion.World {
 
             return new Color
             (
-                ((byte)(ActNum * oldColor.R)),
-                ((byte)(ActNum * oldColor.G)),
-                ((byte)(ActNum * oldColor.B)),
+                (byte)(ActNum * oldColor.R),
+                (byte)(ActNum * oldColor.G),
+                (byte)(ActNum * oldColor.B),
                 oldColor.A
             );
         }

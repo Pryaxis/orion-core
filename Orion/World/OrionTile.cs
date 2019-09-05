@@ -85,6 +85,18 @@ namespace Orion.World {
                 ((ITile)this).frameY = from.frameY;
             }
         }
+        
+        void ITile.ResetToType(ushort type) {
+            ((ITile)this).ClearEverything();
+            ((ITile)this).sTileHeader = 32;
+            ((ITile)this).type = type;
+        }
+
+        void ITile.ClearMetadata() {
+            *(int*)(_ptr + 3) = 0;
+            *(int*)(_ptr + 7) = 0;
+            *(_ptr + 11) = 0;
+        }
         #endregion
     }
 }
