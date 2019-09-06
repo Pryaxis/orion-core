@@ -3,11 +3,9 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
+using Orion.World.Tiles;
 
-namespace Orion.World.Signs {
-    /// <summary>
-    /// Orion's implementation of <see cref="ISignService"/>.
-    /// </summary>
+namespace Orion.World.TileEntities {
     internal sealed class OrionSignService : OrionService, ISignService {
         private readonly IList<Terraria.Sign> _terrariaSigns;
         private readonly IList<OrionSign> _signs;
@@ -57,5 +55,28 @@ namespace Orion.World.Signs {
         
         [ExcludeFromCodeCoverage]
         IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
+
+        public ISign PlaceSign(int x, int y, BlockType type = BlockType.Signs, int style = 0) =>
+            Terraria.WorldGen.PlaceSign(x, y, (ushort)type, style) ? GetSign(x, y) : null;
+
+        public ISign GetSign(int x, int y) {
+            var signIndex = Terraria.Sign.ReadSign(x, y);
+            if (signIndex < 0) {
+                return null;
+            }
+
+            Debug.Assert(signIndex < Count, $"{nameof(signIndex)} should be a valid index.");
+            return this[signIndex];
+        }
+
+        public bool RemoveSign(ISign sign) {
+            var signIndex = Terraria.Sign.ReadSign(sign.X, sign.Y);
+            if (signIndex < 0) {
+                return false;
+            }
+
+            Terraria.Sign.KillSign(sign.X, sign.Y);
+            return true;
+        }
     }
 }

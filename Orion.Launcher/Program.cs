@@ -1,6 +1,5 @@
 ﻿using System;
 using System.IO;
-using OTAPI;
 
 namespace Orion.Launcher {
     internal class Program {
@@ -23,19 +22,8 @@ namespace Orion.Launcher {
                 Console.ResetColor();
                 Console.WriteLine();
 
-                Hooks.Console.Write = WriteHandler;
-                Hooks.Console.WriteLine = WriteLineHandler;
-
                 Terraria.WindowsLaunch.Main(args);
             }
-        }
-
-        private static HookResult WriteLineHandler(ConsoleHookArgs value) {
-            return HookResult.Continue;
-        }
-
-        private static HookResult WriteHandler(string message) {
-            return HookResult.Continue;
         }
     }
 }

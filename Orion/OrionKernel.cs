@@ -10,8 +10,7 @@ using Orion.Npcs;
 using Orion.Players;
 using Orion.Projectiles;
 using Orion.World;
-using Orion.World.Chests;
-using Orion.World.Signs;
+using Orion.World.TileEntities;
 
 namespace Orion {
     /// <summary>

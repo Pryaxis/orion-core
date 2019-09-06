@@ -3,11 +3,9 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
+using Orion.World.Tiles;
 
-namespace Orion.World.Chests {
-    /// <summary>
-    /// Orion's implementation of <see cref="IChestService"/>.
-    /// </summary>
+namespace Orion.World.TileEntities {
     internal sealed class OrionChestService : OrionService, IChestService {
         private readonly IList<Terraria.Chest> _terrariaChests;
         private readonly IList<OrionChest> _chests;
@@ -58,5 +56,36 @@ namespace Orion.World.Chests {
         
         [ExcludeFromCodeCoverage]
         IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
+
+        public IChest PlaceChest(int x, int y, BlockType type = BlockType.Containers, int style = 0) {
+            var chestIndex = Terraria.WorldGen.PlaceChest(x, y, (ushort)type, false, style);
+            if (chestIndex < 0) {
+                return null;
+            }
+
+            Debug.Assert(chestIndex < Count, $"{nameof(chestIndex)} should be a valid index.");
+            return this[chestIndex];
+        }
+
+        public IChest GetChest(int x, int y) {
+            var chestIndex = Terraria.Chest.FindChest(x, y);
+            if (chestIndex < 0) {
+                return null;
+            }
+            
+            Debug.Assert(chestIndex < Count, $"{nameof(chestIndex)} should be a valid index.");
+            return this[chestIndex];
+        }
+
+        public bool RemoveChest(IChest chest) {
+            var chestIndex = Terraria.Chest.FindChest(chest.X, chest.Y);
+            if (chestIndex < 0) {
+                return false;
+            }
+            
+            Debug.Assert(chestIndex < Count, $"{nameof(chestIndex)} should be a valid index.");
+            Terraria.Chest.DestroyChestDirect(chest.X, chest.Y, chestIndex);
+            return true;
+        }
     }
 }

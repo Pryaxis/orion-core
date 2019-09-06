@@ -1,8 +1,8 @@
 ﻿using System;
 using FluentAssertions;
-using Orion.World.Chests;
+using Orion.World.TileEntities;
 
-namespace Orion.Tests.World.Chests {
+namespace Orion.Tests.World.TileEntities {
     public class OrionChestTests {
         public void SetName_NullValue_ThrowsArgumentNullException() {
             var terrariaChest = new Terraria.Chest();

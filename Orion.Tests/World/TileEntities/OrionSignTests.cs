@@ -1,8 +1,8 @@
 ﻿using System;
 using FluentAssertions;
-using Orion.World.Signs;
+using Orion.World.TileEntities;
 
-namespace Orion.Tests.World.Signs {
+namespace Orion.Tests.World.TileEntities {
     public class OrionSignTests {
         public void SetText_NullValue_ThrowsArgumentNullException() {
             var terrariaSign = new Terraria.Sign();

@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Linq;
 using FluentAssertions;
-using Orion.World.Signs;
+using Orion.World.TileEntities;
 using Xunit;
 
-namespace Orion.Tests.World.Signs {
+namespace Orion.Tests.World.TileEntities {
     public class OrionSignServiceTests : IDisposable {
         private readonly ISignService _signService;
 

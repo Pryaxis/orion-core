@@ -2,7 +2,7 @@
 using System.Diagnostics;
 using Orion.Items;
 
-namespace Orion.World.Chests {
+namespace Orion.World.TileEntities {
     /// <summary>
     /// Orion's implementation of <see cref="IChest"/>.
     /// </summary>
@@ -24,9 +24,7 @@ namespace Orion.World.Chests {
 
         public IItemList Items { get; }
 
-
         internal Terraria.Chest Wrapped { get; }
-
 
         public OrionChest(Terraria.Chest terrariaChest) {
             Debug.Assert(terrariaChest != null, $"{nameof(terrariaChest)} should not be null.");

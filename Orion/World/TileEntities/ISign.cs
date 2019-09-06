@@ -1,20 +1,10 @@
 ﻿using System;
 
-namespace Orion.World.Signs {
+namespace Orion.World.TileEntities {
     /// <summary>
     /// Provides a wrapper around a Terraria.Sign instance.
     /// </summary>
-    public interface ISign {
-        /// <summary>
-        /// Gets or sets the X coordinate.
-        /// </summary>
-        int X { get; set; }
-
-        /// <summary>
-        /// Gets or sets the Y coordinate.
-        /// </summary>
-        int Y { get; set; }
-
+    public interface ISign : ITileEntity {
         /// <summary>
         /// Gets or sets the text.
         /// </summary>

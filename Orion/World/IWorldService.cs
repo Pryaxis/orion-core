@@ -1,5 +1,6 @@
 ﻿using System;
 using Orion.World.Events;
+using Orion.World.TileEntities;
 using Orion.World.Tiles;
 
 namespace Orion.World {
@@ -26,7 +27,7 @@ namespace Orion.World {
         int WorldHeight { get; }
 
         /// <summary>
-        /// Gets or sets the tile at the specified coordinates.
+        /// Gets or sets the <see cref="Tile"/> at the specified coordinates.
         /// </summary>
         /// <param name="x">The X coordinate.</param>
         /// <param name="y">The Y coordinate.</param>

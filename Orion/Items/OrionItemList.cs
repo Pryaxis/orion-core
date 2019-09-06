@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Orion.Items {
     internal sealed class OrionItemList : IItemList {
@@ -38,6 +39,7 @@ namespace Orion.Items {
             }
         }
 
+        [ExcludeFromCodeCoverage]
         IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
     }
 }

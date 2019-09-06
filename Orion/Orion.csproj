@@ -22,8 +22,4 @@
     <PackageReference Include="OTAPI" Version="2.0.0.32" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="World\TileEntities\" />
-  </ItemGroup>
-
 </Project>

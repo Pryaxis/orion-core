@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics.CodeAnalysis;
 using System.Reflection;
 
 namespace Orion {
@@ -16,11 +17,13 @@ namespace Orion {
         /// <remarks>
         /// By default, this property returns the version of the assembly containing the derived type.
         /// </remarks>
+        [ExcludeFromCodeCoverage]
         public virtual Version Version => Assembly.GetAssembly(GetType()).GetName().Version;
 
         /// <summary>
         /// Destroys the service, releasing any of its unmanaged resources.
         /// </summary>
+        [ExcludeFromCodeCoverage]
         ~OrionService() {
             Dispose(false);
         }

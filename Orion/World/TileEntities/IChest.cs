@@ -1,21 +1,11 @@
 ﻿using System;
 using Orion.Items;
 
-namespace Orion.World.Chests {
+namespace Orion.World.TileEntities {
     /// <summary>
     /// Provides a wrapper around a Terraria.Chest.
     /// </summary>
-    public interface IChest {
-        /// <summary>
-        /// Gets or sets the X coordinate.
-        /// </summary>
-        int X { get; set; }
-
-        /// <summary>
-        /// Gets or sets the Y coordinate.
-        /// </summary>
-        int Y { get; set; }
-
+    public interface IChest : ITileEntity {
         /// <summary>
         /// Gets or sets the name.
         /// </summary>

@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Linq;
 using FluentAssertions;
-using Orion.World.Chests;
+using Orion.World.TileEntities;
 using Xunit;
 
-namespace Orion.Tests.World.Chests {
+namespace Orion.Tests.World.TileEntities {
     public class OrionChestServiceTests : IDisposable {
         private readonly IChestService _chestService;
 

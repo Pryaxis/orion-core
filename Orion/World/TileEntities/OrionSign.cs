@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Diagnostics;
 
-namespace Orion.World.Signs {
+namespace Orion.World.TileEntities {
     /// <summary>
     /// Orion's implementation of <see cref="ISign"/>.
     /// </summary>
@@ -21,9 +21,7 @@ namespace Orion.World.Signs {
             set => Wrapped.text = value ?? throw new ArgumentNullException(nameof(value));
         }
 
-
         internal Terraria.Sign Wrapped { get; }
-
 
         public OrionSign(Terraria.Sign terrariaSign) {
             Debug.Assert(terrariaSign != null, $"{nameof(terrariaSign)} should not be null.");
