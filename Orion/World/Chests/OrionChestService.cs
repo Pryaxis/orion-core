@@ -2,7 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
-using Orion.Framework;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Orion.World.Chests {
     /// <summary>
@@ -11,8 +11,11 @@ namespace Orion.World.Chests {
     internal sealed class OrionChestService : OrionService, IChestService {
         private readonly IList<Terraria.Chest> _terrariaChests;
         private readonly IList<OrionChest> _chests;
-
+        
+        [ExcludeFromCodeCoverage]
         public override string Author => "Pryaxis";
+
+        [ExcludeFromCodeCoverage]
         public override string Name => "Orion Chest Service";
 
         public int Count => _chests.Count;
@@ -52,7 +55,8 @@ namespace Orion.World.Chests {
                 yield return this[i];
             }
         }
-
+        
+        [ExcludeFromCodeCoverage]
         IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
     }
 }

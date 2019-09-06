@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using Microsoft.Xna.Framework;
-using Orion.Framework;
 using Orion.Projectiles.Events;
 
 namespace Orion.Projectiles {

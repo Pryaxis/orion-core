@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Text;
 
@@ -26,9 +27,7 @@ namespace Orion.Networking.Packets {
                 [TerrariaPacketType.UpdateClientStatus] = () => new UpdateClientStatusPacket(),
             };
 
-        /// <summary>
-        /// Gets the length of a packet header.
-        /// </summary>
+        [ExcludeFromCodeCoverage]
         internal static int HeaderLength => sizeof(TerrariaPacketType) + sizeof(short);
 
         /// <summary>

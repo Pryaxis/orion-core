@@ -2,10 +2,10 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Diagnostics.CodeAnalysis;
 using System.Threading;
 using Microsoft.Xna.Framework;
 using Ninject;
-using Orion.Framework;
 using Orion.Items;
 using Orion.Npcs.Events;
 using Orion.Players;
@@ -19,7 +19,10 @@ namespace Orion.Npcs {
         private readonly IList<Terraria.NPC> _terrariaNpcs;
         private readonly IList<OrionNpc> _npcs;
 
+        [ExcludeFromCodeCoverage]
         public override string Author => "Pryaxis";
+
+        [ExcludeFromCodeCoverage]
         public override string Name => "Orion NPC Service";
         
         /*
@@ -123,7 +126,8 @@ namespace Orion.Npcs {
                 yield return this[i];
             }
         }
-
+        
+        [ExcludeFromCodeCoverage]
         IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
 
         public INpc SpawnNpc(NpcType type, Vector2 position, float[] aiValues = null) {

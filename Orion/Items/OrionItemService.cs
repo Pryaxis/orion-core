@@ -2,8 +2,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Diagnostics.CodeAnalysis;
 using Microsoft.Xna.Framework;
-using Orion.Framework;
 using Orion.Items.Events;
 using OTAPI;
 
@@ -11,8 +11,11 @@ namespace Orion.Items {
     internal sealed class OrionItemService : OrionService, IItemService {
         private readonly IList<Terraria.Item> _terrariaItems;
         private readonly IList<OrionItem> _items;
-
+        
+        [ExcludeFromCodeCoverage]
         public override string Author => "Pryaxis";
+
+        [ExcludeFromCodeCoverage]
         public override string Name => "Orion Item Service";
         
         /*
@@ -69,7 +72,8 @@ namespace Orion.Items {
                 yield return this[i];
             }
         }
-
+        
+        [ExcludeFromCodeCoverage]
         IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
 
         public IItem SpawnItem(ItemType type, Vector2 position, int stackSize = 1,

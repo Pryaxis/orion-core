@@ -63,18 +63,18 @@ namespace Orion.Launcher.Resources {
         /// <summary>
         ///   Looks up a localized string similar to   * Loaded {0} (v{1}) by {2}..
         /// </summary>
-        internal static string LoadedServiceMessage {
+        internal static string LoadedPluginMessage {
             get {
-                return ResourceManager.GetString("LoadedServiceMessage", resourceCulture);
+                return ResourceManager.GetString("LoadedPluginMessage", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Loading services and plugins....
+        ///   Looks up a localized string similar to Loading plugins....
         /// </summary>
-        internal static string LoadingServicesAndPluginsMessage {
+        internal static string LoadingPluginsMessage {
             get {
-                return ResourceManager.GetString("LoadingServicesAndPluginsMessage", resourceCulture);
+                return ResourceManager.GetString("LoadingPluginsMessage", resourceCulture);
             }
         }
         
@@ -84,15 +84,6 @@ namespace Orion.Launcher.Resources {
         internal static string PluginDirectory {
             get {
                 return ResourceManager.GetString("PluginDirectory", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to .
-        /// </summary>
-        internal static string PressKeyToContinueMessage {
-            get {
-                return ResourceManager.GetString("PressKeyToContinueMessage", resourceCulture);
             }
         }
     }

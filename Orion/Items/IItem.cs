@@ -41,7 +41,7 @@ namespace Orion.Items {
         int UseTime { get; set; }
 
         /// <summary>
-        /// Applies the given type to the item.
+        /// Applies the given <see cref="ItemType"/> to the item.
         /// </summary>
         /// <param name="type">The type.</param>
         void ApplyType(ItemType type);

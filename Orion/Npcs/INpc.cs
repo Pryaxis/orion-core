@@ -6,9 +6,9 @@ namespace Orion.Npcs {
     /// </summary>
     public interface INpc : IEntity {
         /// <summary>
-        /// Gets or sets the NPC's type.
+        /// Gets the NPC's type.
         /// </summary>
-        NpcType Type { get; set; }
+        NpcType Type { get; }
 
         /// <summary>
         /// Gets or sets the NPC's HP.
@@ -19,6 +19,12 @@ namespace Orion.Npcs {
         /// Gets or sets the NPC's max HP.
         /// </summary>
         int MaxHp { get; set; }
+
+        /// <summary>
+        /// Applies the given <see cref="NpcType"/> to the projectile.
+        /// </summary>
+        /// <param name="type">The type.</param>
+        void ApplyType(NpcType type);
 
         /// <summary>
         /// Damages the NPC with the specified damage, knockback, hit direction, and criticality.

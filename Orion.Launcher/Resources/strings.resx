@@ -117,16 +117,13 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="LoadedServiceMessage" xml:space="preserve">
+  <data name="LoadedPluginMessage" xml:space="preserve">
     <value>  * Loaded {0} (v{1}) by {2}.</value>
   </data>
-  <data name="LoadingServicesAndPluginsMessage" xml:space="preserve">
-    <value>Loading services and plugins...</value>
+  <data name="LoadingPluginsMessage" xml:space="preserve">
+    <value>Loading plugins...</value>
   </data>
   <data name="PluginDirectory" xml:space="preserve">
     <value>plugins</value>
-  </data>
-  <data name="PressKeyToContinueMessage" xml:space="preserve">
-    <value />
   </data>
 </root>

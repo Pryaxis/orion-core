@@ -1,5 +1,4 @@
 ﻿using System;
-using Orion.Framework;
 using Orion.Networking.Events;
 using Orion.Networking.Packets;
 

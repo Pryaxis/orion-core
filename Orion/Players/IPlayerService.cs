@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using Orion.Framework;
 using Orion.Players.Events;
 
 namespace Orion.Players {

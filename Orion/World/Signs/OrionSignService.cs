@@ -2,7 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
-using Orion.Framework;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Orion.World.Signs {
     /// <summary>
@@ -11,8 +11,11 @@ namespace Orion.World.Signs {
     internal sealed class OrionSignService : OrionService, ISignService {
         private readonly IList<Terraria.Sign> _terrariaSigns;
         private readonly IList<OrionSign> _signs;
-
+        
+        [ExcludeFromCodeCoverage]
         public override string Author => "Pryaxis";
+        
+        [ExcludeFromCodeCoverage]
         public override string Name => "Orion Sign Service";
 
         public int Count => _signs.Count;
@@ -51,7 +54,8 @@ namespace Orion.World.Signs {
                 yield return this[i];
             }
         }
-
+        
+        [ExcludeFromCodeCoverage]
         IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
     }
 }

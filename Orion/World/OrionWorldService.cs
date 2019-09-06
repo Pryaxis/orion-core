@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Runtime.InteropServices;
-using Orion.Framework;
 using Orion.World.Events;
 using Orion.World.Tiles;
 using OTAPI;
@@ -85,6 +84,7 @@ namespace Orion.World {
             Hooks.World.IO.PostSaveWorld = PostSaveWorldHandler;
             Hooks.World.PreHardmode = PreHardmodeHandler;
             Hooks.World.PostHardmode = PostHardmodeHandler;
+            Hooks.World.HardmodeTileUpdate = HardmodeTileUpdateHandler;
         }
 
         protected override void Dispose(bool disposeManaged) {
@@ -102,6 +102,7 @@ namespace Orion.World {
             Hooks.World.IO.PostSaveWorld = null;
             Hooks.World.PreHardmode = null;
             Hooks.World.PostHardmode = null;
+            Hooks.World.HardmodeTileUpdate = null;
         }
 
         public void SaveWorld() => Terraria.IO.WorldFile.saveWorld();
@@ -155,6 +156,14 @@ namespace Orion.World {
         private void PostHardmodeHandler() {
             var args = new StartedHardmodeEventArgs();
             StartedHardmode?.Invoke(this, args);
+        }
+
+        private HardmodeTileUpdateResult HardmodeTileUpdateHandler(int x, int y, ref ushort type) {
+            var args = new UpdatingHardmodeTileEventArgs(x, y, (BlockType)type);
+            UpdatingHardmodeTile?.Invoke(this, args);
+
+            type = (ushort)args.BlockType;
+            return args.Handled ? HardmodeTileUpdateResult.Cancel : HardmodeTileUpdateResult.Continue;
         }
     }
 }

@@ -11,14 +11,9 @@
     <PackageProjectUrl>https://github.com/orgs/Pryaxis/teams/orion-contributors</PackageProjectUrl>
     <Description>Provides the next generation of Terraria APIs.</Description>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
-  </PropertyGroup>
-
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
-    <DocumentationFile>C:\Users\kevzhao\Dropbox (Personal)\Orion\Orion\Orion.xml</DocumentationFile>
-  </PropertyGroup>
-
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
-    <DocumentationFile>C:\Users\kevzhao\Dropbox (Personal)\Orion\Orion\Orion.xml</DocumentationFile>
+    <DocumentationFile>bin\$(Configuration)\Orion.xml</DocumentationFile>
+      <TrimUnusedDependencies>true</TrimUnusedDependencies>
+      <RootPackageReference>false</RootPackageReference>
   </PropertyGroup>
 
   <ItemGroup>

@@ -27,4 +27,8 @@
     <ProjectReference Include="..\Orion\Orion.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Framework\" />
+  </ItemGroup>
+
 </Project>

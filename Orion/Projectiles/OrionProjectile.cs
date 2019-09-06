@@ -10,10 +10,7 @@ namespace Orion.Projectiles {
             set => _nameOverride = value ?? throw new ArgumentNullException(nameof(value));
         }
 
-        public ProjectileType Type {
-            get => (ProjectileType)Wrapped.type;
-            set => Wrapped.type = (int)value;
-        }
+        public ProjectileType Type => (ProjectileType)Wrapped.type;
 
         public int Damage {
             get => Wrapped.damage;
@@ -27,6 +24,7 @@ namespace Orion.Projectiles {
 
         public OrionProjectile(Terraria.Projectile terrariaProjectile) : base(terrariaProjectile) { }
 
+        public void ApplyType(ProjectileType type) => Wrapped.SetDefaults((int)type);
         public void Remove() => Wrapped.Kill();
     }
 }

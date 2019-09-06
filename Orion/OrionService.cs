@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Reflection;
 
-namespace Orion.Framework {
+namespace Orion {
     /// <summary>
     /// Provides the base class for an <see cref="IService"/>.
     /// </summary>

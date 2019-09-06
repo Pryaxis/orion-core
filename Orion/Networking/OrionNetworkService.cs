@@ -1,15 +1,18 @@
 ﻿using System;
 using System.Diagnostics;
+using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Linq;
-using Orion.Framework;
 using Orion.Networking.Events;
 using Orion.Networking.Packets;
 using OTAPI;
 
 namespace Orion.Networking {
     internal sealed class OrionNetworkService : OrionService, INetworkService {
+        [ExcludeFromCodeCoverage]
         public override string Author => "Pryaxis";
+
+        [ExcludeFromCodeCoverage]
         public override string Name => "Orion Network Service";
 
         public event EventHandler<ReceivedPacketEventArgs> ReceivedPacket;

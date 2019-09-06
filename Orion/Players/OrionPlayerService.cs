@@ -2,7 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
-using Orion.Framework;
+using System.Diagnostics.CodeAnalysis;
 using Orion.Players.Events;
 using OTAPI;
 
@@ -10,8 +10,11 @@ namespace Orion.Players {
     internal sealed class OrionPlayerService : OrionService, IPlayerService {
         private readonly IList<Terraria.Player> _terrariaPlayers;
         private readonly IList<OrionPlayer> _players;
-
+        
+        [ExcludeFromCodeCoverage]
         public override string Author => "Pryaxis";
+        
+        [ExcludeFromCodeCoverage]
         public override string Name => "Orion Player Service";
         
         /*
@@ -65,7 +68,8 @@ namespace Orion.Players {
                 yield return this[i];
             }
         }
-
+        
+        [ExcludeFromCodeCoverage]
         IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
 
 

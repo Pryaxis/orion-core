@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using Microsoft.Xna.Framework;
-using Orion.Framework;
 using Orion.Items.Events;
 
 namespace Orion.Items {

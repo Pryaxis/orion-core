@@ -2,8 +2,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Diagnostics.CodeAnalysis;
 using Microsoft.Xna.Framework;
-using Orion.Framework;
 using Orion.Projectiles.Events;
 using OTAPI;
 
@@ -11,8 +11,11 @@ namespace Orion.Projectiles {
     internal sealed class OrionProjectileService : OrionService, IProjectileService {
         private readonly IList<Terraria.Projectile> _terrariaProjectiles;
         private readonly IList<OrionProjectile> _projectiles;
-
+        
+        [ExcludeFromCodeCoverage]
         public override string Author => "Pryaxis";
+        
+        [ExcludeFromCodeCoverage]
         public override string Name => "Orion Projectile Service";
 
         /*
@@ -82,7 +85,8 @@ namespace Orion.Projectiles {
                 yield return this[i];
             }
         }
-
+        
+        [ExcludeFromCodeCoverage]
         IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
 
         public IProjectile SpawnProjectile(ProjectileType type, Vector2 position, Vector2 velocity, int damage, float knockback,

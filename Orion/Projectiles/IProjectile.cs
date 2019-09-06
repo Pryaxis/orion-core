@@ -6,9 +6,9 @@ namespace Orion.Projectiles {
     /// </summary>
     public interface IProjectile : IEntity {
         /// <summary>
-        /// Gets or sets the projectile type.
+        /// Gets the projectile type.
         /// </summary>
-        ProjectileType Type { get; set; }
+        ProjectileType Type { get; }
 
         /// <summary>
         /// Gets or sets the damage.
@@ -19,6 +19,12 @@ namespace Orion.Projectiles {
         /// Gets or sets the knockback.
         /// </summary>
         float Knockback { get; set; }
+
+        /// <summary>
+        /// Applies the given <see cref="ProjectileType"/> to the projectile.
+        /// </summary>
+        /// <param name="type">The type.</param>
+        void ApplyType(ProjectileType type);
 
         /// <summary>
         /// Removes the projectile.
