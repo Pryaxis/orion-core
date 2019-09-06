@@ -70,7 +70,7 @@ namespace Orion.World.TileEntities {
         }
 
         public bool RemoveSign(ISign sign) {
-            var signIndex = Terraria.Sign.ReadSign(sign.X, sign.Y);
+            var signIndex = Terraria.Sign.ReadSign(sign.X, sign.Y, false);
             if (signIndex < 0) {
                 return false;
             }

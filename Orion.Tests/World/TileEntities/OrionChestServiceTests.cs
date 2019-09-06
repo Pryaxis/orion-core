@@ -5,6 +5,7 @@ using Orion.World.TileEntities;
 using Xunit;
 
 namespace Orion.Tests.World.TileEntities {
+    [Collection("TerrariaTestsCollection")]
     public class OrionChestServiceTests : IDisposable {
         private readonly IChestService _chestService;
 
@@ -26,6 +27,7 @@ namespace Orion.Tests.World.TileEntities {
 
         [Fact]
         public void GetItem_MultipleTimes_ReturnsSameInstance() {
+            Terraria.Main.chest[0] = new Terraria.Chest();
             var chest = _chestService[0];
             var chest2 = _chestService[0];
 
@@ -43,6 +45,8 @@ namespace Orion.Tests.World.TileEntities {
 
         [Fact]
         public void GetItem_ChestIsNull_IsCorrect() {
+            Terraria.Main.chest[0] = null;
+
             var chest = (OrionChest)_chestService[0];
 
             chest.Should().BeNull();
@@ -58,6 +62,95 @@ namespace Orion.Tests.World.TileEntities {
             for (var i = 0; i < chests.Count; ++i) {
                 ((OrionChest)chests[i]).Wrapped.Should().BeSameAs(Terraria.Main.chest[i]);
             }
+        }
+
+        [Fact]
+        public void PlaceChest_IsCorrect() {
+            Terraria.Main.tile[100, 98] = new Terraria.Tile();
+            Terraria.Main.tile[101, 98] = new Terraria.Tile();
+            Terraria.Main.tile[100, 99] = new Terraria.Tile();
+            Terraria.Main.tile[101, 99] = new Terraria.Tile();
+            Terraria.Main.tile[100, 100] = new Terraria.Tile();
+            Terraria.Main.tile[100, 100].active(true);
+            Terraria.Main.tile[101, 100] = new Terraria.Tile();
+            Terraria.Main.tile[101, 100].active(true);
+
+            var chest = _chestService.PlaceChest(100, 99);
+
+            chest.Should().NotBeNull();
+            chest.X.Should().Be(100);
+            chest.Y.Should().Be(98);
+        }
+
+        [Fact]
+        public void PlaceChest_InvalidPlacement_ReturnsNull() {
+            Terraria.Main.tile[100, 98] = new Terraria.Tile();
+            Terraria.Main.tile[101, 98] = new Terraria.Tile();
+            Terraria.Main.tile[100, 99] = new Terraria.Tile();
+            Terraria.Main.tile[101, 99] = new Terraria.Tile();
+            Terraria.Main.tile[100, 100] = new Terraria.Tile();
+            Terraria.Main.tile[101, 100] = new Terraria.Tile();
+
+            var chest = _chestService.PlaceChest(100, 99);
+
+            chest.Should().BeNull();
+        }
+
+        [Fact]
+        public void GetChest_IsCorrect() {
+            Terraria.Main.chest[0] = new Terraria.Chest {
+                x = 100,
+                y = 100,
+                name = "test",
+            };
+
+            var chest = _chestService.GetChest(100, 100);
+
+            chest.Should().NotBeNull();
+            chest.X.Should().Be(100);
+            chest.Y.Should().Be(100);
+            chest.Name.Should().Be("test");
+        }
+
+        [Fact]
+        public void GetChest_NoChest_ReturnsNull() {
+            for (var i = 0; i < Terraria.Main.maxChests; ++i) {
+                Terraria.Main.chest[i] = null;
+            }
+
+            var chest = _chestService.GetChest(100, 100);
+
+            chest.Should().BeNull();
+        }
+
+        [Fact]
+        public void RemoveChest_IsCorrect() {
+            Terraria.Main.chest[0] = new Terraria.Chest {
+                x = 100,
+                y = 100,
+            };
+            var chest = _chestService.GetChest(100, 100);
+
+            var result = _chestService.RemoveChest(chest);
+
+            result.Should().BeTrue();
+            Terraria.Main.chest[0].Should().BeNull();
+        }
+
+        [Fact]
+        public void RemoveChest_NoChest_ReturnsFalse() {
+            Terraria.Main.chest[0] = new Terraria.Chest {
+                x = 100,
+                y = 100,
+            };
+            var chest = _chestService.GetChest(100, 100);
+            for (var i = 0; i < Terraria.Main.maxChests; ++i) {
+                Terraria.Main.chest[i] = null;
+            }
+
+            var result = _chestService.RemoveChest(chest);
+
+            result.Should().BeFalse();
         }
     }
 }
