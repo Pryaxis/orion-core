@@ -8,15 +8,6 @@ namespace Orion.Tests.World.TileEntities {
     public class OrionTrainingDummyTests {
         [Theory]
         [InlineData(100)]
-        public void GetNpcIndex_IsCorrect(int npcIndex) {
-            var terrariaTrainingDummy = new TGCTE.TETrainingDummy {npc = npcIndex};
-            var trainingDummy = new OrionTrainingDummy(terrariaTrainingDummy);
-
-            trainingDummy.NpcIndex.Should().Be(npcIndex);
-        }
-        
-        [Theory]
-        [InlineData(100)]
         public void GetX_IsCorrect(int x) {
             var terrariaTrainingDummy = new TGCTE.TETrainingDummy {Position = new TDS.Point16(x, 0)};
             var trainingDummy = new OrionTrainingDummy(terrariaTrainingDummy);
@@ -53,6 +44,15 @@ namespace Orion.Tests.World.TileEntities {
             trainingDummy.Y = y;
 
             terrariaTrainingDummy.Position.Y.Should().Be((short)y);
+        }
+
+        [Theory]
+        [InlineData(100)]
+        public void GetNpcIndex_IsCorrect(int npcIndex) {
+            var terrariaTrainingDummy = new TGCTE.TETrainingDummy {npc = npcIndex};
+            var trainingDummy = new OrionTrainingDummy(terrariaTrainingDummy);
+
+            trainingDummy.NpcIndex.Should().Be(npcIndex);
         }
     }
 }

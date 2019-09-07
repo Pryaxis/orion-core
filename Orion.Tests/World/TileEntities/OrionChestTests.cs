@@ -82,7 +82,7 @@ namespace Orion.Tests.World.TileEntities {
             terrariaChest.item[0] = new Terraria.Item {
                 type = (int)itemType,
                 stack = itemStackSize,
-                prefix = (byte)itemPrefix
+                prefix = (byte)itemPrefix,
             };
             var chest = new OrionChest(terrariaChest);
 
