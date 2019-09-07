@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using Ninject;
+using Ninject.Extensions.NamedScope;
 using Orion.Items;
 using Orion.Networking;
 using Orion.Npcs;
@@ -64,9 +65,50 @@ namespace Orion {
              */
             var assembly = Assembly.Load(File.ReadAllBytes(assemblyPath));
             _pluginAssemblies.Add(assembly);
+
+            /*
+             * Bind all plugin types to themselves. This allows plugins to properly depend on other plugins; we won't
+             * have any icky reliance on static state.
+             */
             foreach (var pluginType in assembly.GetExportedTypes().Where(t => t.IsSubclassOf(typeof(OrionPlugin)))) {
                 _pluginTypesToLoad.Add(pluginType);
                 Bind(pluginType).ToSelf().InSingletonScope();
+            }
+
+            /*
+             * Bind all service interfaces to their implementations. We use a contextual binding here which will
+             * override any default bindings that we've set in the constructor of OrionKernel.
+             */
+            foreach (var serviceType in assembly.GetExportedTypes().Where(t => t.IsSubclassOf(typeof(OrionService)))) {
+                if (serviceType.IsSubclassOf(typeof(OrionPlugin))) {
+                    /*
+                     * Bind all plugin types to themselves, allowing plugins to properly depend on other plugins
+                     * without reliance on static state.
+                     */
+                    _pluginTypesToLoad.Add(serviceType);
+                    Bind(serviceType).ToSelf().InSingletonScope();
+                } else {
+                    var isInstanced = serviceType.GetCustomAttribute<InstancedServiceAttribute>() != null;
+
+                    /*
+                     * Bind all service interfaces to the implementation. We use a contextual binding here which will
+                     * override any default bindings that we've set in the constructor of OrionKernel.
+                     */
+                    foreach (var interfaceType in serviceType.GetInterfaces()) {
+                        // Ignore IDisposable and IService.
+                        if (interfaceType == typeof(IDisposable) || interfaceType == typeof(IService)) {
+                            continue;
+                        }
+
+                        var bind = Bind(interfaceType).To(serviceType).When(r => _pluginAssemblies.Contains(assembly));
+                        if (isInstanced) {
+                            bind.InParentScope();
+                        } else {
+                            bind.InSingletonScope();
+                        }
+                    }
+                }
+
             }
         }
 
