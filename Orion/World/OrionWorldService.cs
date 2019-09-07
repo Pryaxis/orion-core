@@ -46,6 +46,11 @@ namespace Orion.World {
             }
         }
 
+        public double Time {
+            get => Terraria.Main.time;
+            set => Terraria.Main.time = value;
+        }
+
         public bool IsDaytime {
             get => Terraria.Main.dayTime;
             set => Terraria.Main.dayTime = value;

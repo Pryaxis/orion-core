@@ -36,6 +36,11 @@ namespace Orion.World {
         Tile this[int x, int y] { get; set; }
 
         /// <summary>
+        /// Gets or sets the time.
+        /// </summary>
+        double Time { get; set; }
+
+        /// <summary>
         /// Gets or sets a value indicating whether the world is in daytime.
         /// </summary>
         bool IsDaytime { get; set; }

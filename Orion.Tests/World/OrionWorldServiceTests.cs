@@ -64,6 +64,22 @@ namespace Orion.Tests.World {
         }
 
         [Theory]
+        [InlineData(100.0)]
+        public void GetTime_IsCorrect(double time) {
+            Terraria.Main.time = time;
+
+            _worldService.Time.Should().Be(time);
+        }
+
+        [Theory]
+        [InlineData(100.0)]
+        public void SetTime_IsCorrect(double time) {
+            _worldService.Time = time;
+
+            Terraria.Main.time.Should().Be(time);
+        }
+
+        [Theory]
         [InlineData(true)]
         public void GetIsDaytime_IsCorrect(bool isDaytime) {
             Terraria.Main.dayTime = isDaytime;
