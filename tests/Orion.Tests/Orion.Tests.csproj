@@ -24,7 +24,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Orion\Orion.csproj" />
+    <ProjectReference Include="..\..\src\Orion\Orion.csproj" />
   </ItemGroup>
 
 </Project>
