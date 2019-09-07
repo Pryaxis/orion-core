@@ -8,10 +8,7 @@ namespace Orion.Items {
             set => Wrapped._nameOverride = value ?? throw new ArgumentNullException(nameof(value));
         }
 
-        public ItemType Type {
-            get => (ItemType)Wrapped.type;
-            set => Wrapped.type = (int)value;
-        }
+        public ItemType Type => (ItemType)Wrapped.type;
 
         public int StackSize {
             get => Wrapped.stack;
