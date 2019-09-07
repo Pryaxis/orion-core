@@ -6,6 +6,15 @@ using Xunit;
 namespace Orion.Tests.Hooks {
     public class HookHandlerCollectionTests {
         [Fact]
+        public void Invoke_NullArgs_ThrowsArgumentNullException() {
+            HookHandlerCollection<TestEventArgs> collection = null;
+            collection += TestHandler;
+            Action action = () => collection.Invoke(this, null);
+
+            action.Should().Throw<ArgumentNullException>();
+        }
+
+        [Fact]
         public void Invoke_ExceptionIsSwallowed() {
             HookHandlerCollection<TestEventArgs> collection = null;
             collection += TestHandler3;

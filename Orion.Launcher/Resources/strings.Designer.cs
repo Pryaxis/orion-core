@@ -61,11 +61,29 @@ namespace Orion.Launcher.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to   * Loaded {0} (v{1}) by {2}..
+        ///   Looks up a localized string similar to Failed to load plugin from {Path}.
+        /// </summary>
+        internal static string FailedToLoadPluginMessage {
+            get {
+                return ResourceManager.GetString("FailedToLoadPluginMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Loaded plugin {Name} v{Version} by {Author}.
         /// </summary>
         internal static string LoadedPluginMessage {
             get {
                 return ResourceManager.GetString("LoadedPluginMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Loading plugin from {Path}.
+        /// </summary>
+        internal static string LoadingPluginMessage {
+            get {
+                return ResourceManager.GetString("LoadingPluginMessage", resourceCulture);
             }
         }
         
@@ -79,6 +97,15 @@ namespace Orion.Launcher.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to logs.
+        /// </summary>
+        internal static string LogsDirectory {
+            get {
+                return ResourceManager.GetString("LogsDirectory", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to plugins.
         /// </summary>
         internal static string PluginDirectory {
@@ -88,8 +115,7 @@ namespace Orion.Launcher.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Unhandled exception:
-        ///{0}.
+        ///   Looks up a localized string similar to Unhandled exception.
         /// </summary>
         internal static string UnhandledExceptionMessage {
             get {

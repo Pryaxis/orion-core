@@ -117,17 +117,25 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="FailedToLoadPluginMessage" xml:space="preserve">
+    <value>Failed to load plugin from {Path}</value>
+  </data>
   <data name="LoadedPluginMessage" xml:space="preserve">
-    <value>  * Loaded {0} (v{1}) by {2}.</value>
+    <value>Loaded plugin {Name} v{Version} by {Author}</value>
+  </data>
+  <data name="LoadingPluginMessage" xml:space="preserve">
+    <value>Loading plugin from {Path}</value>
   </data>
   <data name="LoadingPluginsMessage" xml:space="preserve">
     <value>Loading plugins...</value>
+  </data>
+  <data name="LogsDirectory" xml:space="preserve">
+    <value>logs</value>
   </data>
   <data name="PluginDirectory" xml:space="preserve">
     <value>plugins</value>
   </data>
   <data name="UnhandledExceptionMessage" xml:space="preserve">
-    <value>Unhandled exception:
-{0}</value>
+    <value>Unhandled exception</value>
   </data>
 </root>
