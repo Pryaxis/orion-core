@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using System.Linq;
 using FluentAssertions;
 using Microsoft.Xna.Framework;
 using Orion.Items;
@@ -363,6 +364,44 @@ namespace Orion.Tests.Networking.Packets {
                 packet.WriteToStream(stream2);
 
                 stream2.ToArray().Should().BeEquivalentTo(UpdateClientStatusBytes);
+            }
+        }
+
+        private static readonly byte[] UpdateWorldSectionBytes = {
+            4, 1, 10, 1, 53, 143, 75, 78, 195, 48, 16, 134, 199, 227, 196, 5, 154, 164, 70, 208, 5, 172, 16, 39, 224, 8,
+            163, 89, 68, 181, 122, 25, 54, 236, 123, 10, 206, 192, 67, 32, 94, 21, 11, 52, 2, 36, 47, 184, 4, 103, 41,
+            191, 147, 224, 133, 253, 125, 51, 163, 223, 118, 236, 136, 174, 137, 232, 7, 187, 102, 47, 153, 243, 230,
+            119, 185, 186, 92, 248, 11, 99, 147, 173, 114, 167, 198, 254, 204, 228, 173, 167, 212, 246, 150, 60, 219,
+            106, 87, 249, 104, 242, 136, 74, 131, 74, 152, 69, 75, 77, 218, 149, 35, 88, 98, 43, 227, 15, 104, 206, 209,
+            108, 71, 189, 135, 238, 67, 23, 83, 218, 45, 60, 192, 151, 60, 50, 131, 79, 193, 55, 96, 87, 88, 205, 65,
+            44, 157, 168, 121, 76, 88, 58, 86, 171, 9, 19, 119, 224, 35, 132, 138, 201, 51, 240, 16, 129, 242, 2, 136,
+            67, 141, 206, 175, 28, 190, 67, 255, 37, 217, 226, 236, 250, 156, 156, 102, 231, 99, 150, 87, 248, 28, 30,
+            52, 243, 16, 208, 64, 246, 56, 203, 211, 212, 152, 149, 65, 25, 189, 13, 57, 105, 174, 135, 176, 3, 60, 164,
+            92, 250, 94, 126, 60, 241, 7, 184, 46, 47, 253, 4, 84, 5, 190, 212, 42, 116, 54, 223, 107, 26, 214, 31, 0,
+            0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+        };
+
+        [Fact]
+        public void ReadFromStream_UpdateWorldSection_IsCorrect() {
+            using (var stream = new MemoryStream(UpdateWorldSectionBytes)) {
+                var packet = (UpdateWorldSectionPacket)TerrariaPacket.ReadFromStream(stream);
+
+                packet.IsSentToClient.Should().BeTrue();
+                packet.IsSentToServer.Should().BeFalse();
+                packet.Type.Should().Be(TerrariaPacketType.UpdateWorldSection);
+                packet.WorldSection.Should().BeEquivalentTo(UpdateWorldSectionBytes.Skip(3));
+            }
+        }
+
+        [Fact]
+        public void WriteToStream_UpdateWorldSection_IsCorrect() {
+            using (var stream = new MemoryStream(UpdateWorldSectionBytes))
+            using (var stream2 = new MemoryStream()) {
+                var packet = TerrariaPacket.ReadFromStream(stream);
+
+                packet.WriteToStream(stream2);
+
+                stream2.ToArray().Should().BeEquivalentTo(UpdateWorldSectionBytes);
             }
         }
     }

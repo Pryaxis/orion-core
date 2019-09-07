@@ -35,7 +35,7 @@ namespace Orion.Networking.Packets {
         }
 
         private protected override void ReadFromReader(BinaryReader reader, ushort packetLength) {
-            _payload = reader.ReadBytes(packetLength);
+            _payload = reader.ReadBytes(packetLength - HeaderLength);
         }
 
         private protected override void WriteToWriter(BinaryWriter writer) {

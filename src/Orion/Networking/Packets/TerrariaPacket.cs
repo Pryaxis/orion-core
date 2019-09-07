@@ -25,6 +25,7 @@ namespace Orion.Networking.Packets {
                 [TerrariaPacketType.UpdateWorldInfo] = () => new UpdateWorldInfoPacket(),
                 [TerrariaPacketType.RequestWorldSection] = () => new RequestWorldSectionPacket(),
                 [TerrariaPacketType.UpdateClientStatus] = () => new UpdateClientStatusPacket(),
+                [TerrariaPacketType.UpdateWorldSection] = () => new UpdateWorldSectionPacket(),
             };
 
         [ExcludeFromCodeCoverage]
