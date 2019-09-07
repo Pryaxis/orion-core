@@ -5,6 +5,7 @@ using Orion.Players;
 using Xunit;
 
 namespace Orion.Tests.Players {
+    [Collection("TerrariaTestsCollection")]
     public class OrionPlayerServiceTests : IDisposable {
         private readonly IPlayerService _playerService;
 

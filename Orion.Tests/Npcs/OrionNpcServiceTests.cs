@@ -9,6 +9,7 @@ using Orion.Players;
 using Xunit;
 
 namespace Orion.Tests.Npcs {
+    [Collection("TerrariaTestsCollection")]
     public class OrionNpcServiceTests : IDisposable {
         private readonly Mock<IItemService> _itemService = new Mock<IItemService>();
         private readonly Mock<IPlayerService> _playerService = new Mock<IPlayerService>();

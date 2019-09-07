@@ -16,6 +16,10 @@ namespace Orion.Tests {
         }
     }
 
-    [CollectionDefinition("TerrariaTestsCollection")]
-    public class WorldTestsCollection : ICollectionFixture<TerrariaTestsFixture> { }
+    /*
+     * These tests cannot run in parallel, since they interact heavily with Terraria's static state. So we have to run
+     * these in series. However, all of the other tests can be run simultaneously, at least.
+     */
+    [CollectionDefinition("TerrariaTestsCollection", DisableParallelization = true)]
+    public class TerrariaTestsCollection : ICollectionFixture<TerrariaTestsFixture> { }
 }

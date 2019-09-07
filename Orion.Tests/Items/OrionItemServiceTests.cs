@@ -7,6 +7,7 @@ using Orion.Items;
 using Xunit;
 
 namespace Orion.Tests.Items {
+    [Collection("TerrariaTestsCollection")]
     public class OrionItemServiceTests : IDisposable {
         private readonly IItemService _itemService;
 
