@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using Microsoft.Xna.Framework;
+using Orion.Hooks;
 using Orion.Items.Events;
 
 namespace Orion.Items {
@@ -40,10 +41,10 @@ namespace Orion.Items {
             }
         }
 
-        public event EventHandler<SettingItemDefaultsEventArgs> SettingItemDefaults;
-        public event EventHandler<SetItemDefaultsEventArgs> SetItemDefaults;
-        public event EventHandler<UpdatingItemEventArgs> UpdatingItem;
-        public event EventHandler<UpdatedItemEventArgs> UpdatedItem;
+        public HookHandlerCollection<SettingItemDefaultsEventArgs> SettingItemDefaults { get; set; }
+        public HookHandlerCollection<SetItemDefaultsEventArgs> SetItemDefaults { get; set; }
+        public HookHandlerCollection<UpdatingItemEventArgs> UpdatingItem { get; set; }
+        public HookHandlerCollection<UpdatedItemEventArgs> UpdatedItem { get; set; }
 
         public OrionItemService() {
             _terrariaItems = Terraria.Main.item;

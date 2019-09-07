@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
+using Orion.Hooks;
 using Orion.Players.Events;
 
 namespace Orion.Players {
@@ -39,9 +40,9 @@ namespace Orion.Players {
             }
         }
 
-        public event EventHandler<GreetingPlayerEventArgs> GreetingPlayer;
-        public event EventHandler<UpdatingPlayerEventArgs> UpdatingPlayer;
-        public event EventHandler<UpdatedPlayerEventArgs> UpdatedPlayer;
+        public HookHandlerCollection<GreetingPlayerEventArgs> GreetingPlayer { get; set; }
+        public HookHandlerCollection<UpdatingPlayerEventArgs> UpdatingPlayer { get; set; }
+        public HookHandlerCollection<UpdatedPlayerEventArgs> UpdatedPlayer { get; set; }
 
         public OrionPlayerService() {
             _terrariaPlayers = Terraria.Main.player;

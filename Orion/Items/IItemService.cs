@@ -1,6 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using Microsoft.Xna.Framework;
+using Orion.Hooks;
 using Orion.Items.Events;
 
 namespace Orion.Items {
@@ -11,22 +11,22 @@ namespace Orion.Items {
         /// <summary>
         /// Occurs when an item is having its defaults set.
         /// </summary>
-        event EventHandler<SettingItemDefaultsEventArgs> SettingItemDefaults;
+        HookHandlerCollection<SettingItemDefaultsEventArgs> SettingItemDefaults { get; set; }
 
         /// <summary>
         /// Occurs when an item had its defaults set.
         /// </summary>
-        event EventHandler<SetItemDefaultsEventArgs> SetItemDefaults;
+        HookHandlerCollection<SetItemDefaultsEventArgs> SetItemDefaults { get; set; }
 
         /// <summary>
         /// Occurs when an item is being updated.
         /// </summary>
-        event EventHandler<UpdatingItemEventArgs> UpdatingItem;
+        HookHandlerCollection<UpdatingItemEventArgs> UpdatingItem { get; set; }
 
         /// <summary>
         /// Occurs when an item was updated.
         /// </summary>
-        event EventHandler<UpdatedItemEventArgs> UpdatedItem;
+        HookHandlerCollection<UpdatedItemEventArgs> UpdatedItem { get; set; }
 
         /// <summary>
         /// Spawns an item with the specified type at the position with the stack size and prefix.

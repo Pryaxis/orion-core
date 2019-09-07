@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using Microsoft.Xna.Framework;
+using Orion.Hooks;
 using Orion.Npcs.Events;
 
 namespace Orion.Npcs {
@@ -21,77 +22,77 @@ namespace Orion.Npcs {
         /// <summary>
         /// Occurs when an NPC is spawning.
         /// </summary>
-        event EventHandler<SpawningNpcEventArgs> SpawningNpc;
+        HookHandlerCollection<SpawningNpcEventArgs> SpawningNpc { get; set; }
 
         /// <summary>
         /// Occurs when an NPC spawned.
         /// </summary>
-        event EventHandler<SpawnedNpcEventArgs> SpawnedNpc;
+        HookHandlerCollection<SpawnedNpcEventArgs> SpawnedNpc { get; set; }
 
         /// <summary>
         /// Occurs when an NPC is having its defaults set.
         /// </summary>
-        event EventHandler<SettingNpcDefaultsEventArgs> SettingNpcDefaults;
+        HookHandlerCollection<SettingNpcDefaultsEventArgs> SettingNpcDefaults { get; set; }
 
         /// <summary>
         /// Occurs when an NPC had its defaults set.
         /// </summary>
-        event EventHandler<SetNpcDefaultsEventArgs> SetNpcDefaults;
+        HookHandlerCollection<SetNpcDefaultsEventArgs> SetNpcDefaults { get; set; }
 
         /// <summary>
         /// Occurs when an NPC is being updated.
         /// </summary>
-        event EventHandler<UpdatingNpcEventArgs> UpdatingNpc;
+        HookHandlerCollection<UpdatingNpcEventArgs> UpdatingNpc { get; set; }
 
         /// <summary>
         /// Occurs when an NPC's AI is being updated.
         /// </summary>
-        event EventHandler<UpdatingNpcEventArgs> UpdatingNpcAi;
+        HookHandlerCollection<UpdatingNpcEventArgs> UpdatingNpcAi { get; set; }
 
         /// <summary>
         /// Occurs when an NPC's AI is updated.
         /// </summary>
-        event EventHandler<UpdatedNpcEventArgs> UpdatedNpcAi;
+        HookHandlerCollection<UpdatedNpcEventArgs> UpdatedNpcAi { get; set; }
 
         /// <summary>
         /// Occurs when an NPC is updated.
         /// </summary>
-        event EventHandler<UpdatedNpcEventArgs> UpdatedNpc;
+        HookHandlerCollection<UpdatedNpcEventArgs> UpdatedNpc { get; set; }
 
         /// <summary>
         /// Occurs when an NPC is being damaged.
         /// </summary>
-        event EventHandler<DamagingNpcEventArgs> DamagingNpc;
+        HookHandlerCollection<DamagingNpcEventArgs> DamagingNpc { get; set; }
 
         /// <summary>
         /// Occurs when an NPC is damaged.
         /// </summary>
-        event EventHandler<DamagedNpcEventArgs> DamagedNpc;
+        HookHandlerCollection<DamagedNpcEventArgs> DamagedNpc { get; set; }
 
         /// <summary>
         /// Occurs when an NPC is transforming to another type.
         /// </summary>
-        event EventHandler<NpcTransformingEventArgs> NpcTransforming;
+        HookHandlerCollection<NpcTransformingEventArgs> NpcTransforming { get; set; }
 
         /// <summary>
         /// Occurs when an NPC has transformed to another type.
         /// </summary>
-        event EventHandler<NpcTransformedEventArgs> NpcTransformed;
+        HookHandlerCollection<NpcTransformedEventArgs> NpcTransformed { get; set; }
 
         /// <summary>
         /// Occurs when an NPC is dropping a loot item.
         /// </summary>
-        event EventHandler<NpcDroppingLootItemEventArgs> NpcDroppingLootItem;
+        HookHandlerCollection<NpcDroppingLootItemEventArgs> NpcDroppingLootItem { get; set; }
 
         /// <summary>
         /// Occurs when an NPC has dropped a loot item.
         /// </summary>
-        event EventHandler<NpcDroppedLootItemEventArgs> NpcDroppedLootItem;
+        HookHandlerCollection<NpcDroppedLootItemEventArgs> NpcDroppedLootItem { get; set; }
 
         /// <summary>
         /// Occurs when an NPC was killed.
         /// </summary>
-        event EventHandler<KilledNpcEventArgs> KilledNpc;
+        HookHandlerCollection<KilledNpcEventArgs> KilledNpc { get; set; }
 
         /// <summary>
         /// Spawns an NPC with the specified type at the position with the AI values.

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using Microsoft.Xna.Framework;
+using Orion.Hooks;
 using Orion.Projectiles.Events;
 
 namespace Orion.Projectiles {
@@ -11,42 +12,42 @@ namespace Orion.Projectiles {
         /// <summary>
         /// Occurs when a projectile is having its defaults set.
         /// </summary>
-        event EventHandler<SettingProjectileDefaultsEventArgs> SettingProjectileDefaults;
+        HookHandlerCollection<SettingProjectileDefaultsEventArgs> SettingProjectileDefaults { get; set; }
 
         /// <summary>
         /// Occurs when a projectile had its defaults set.
         /// </summary>
-        event EventHandler<SetProjectileDefaultsEventArgs> SetProjectileDefaults;
+        HookHandlerCollection<SetProjectileDefaultsEventArgs> SetProjectileDefaults { get; set; }
 
         /// <summary>
         /// Occurs when a projectile is being updated.
         /// </summary>
-        event EventHandler<UpdatingProjectileEventArgs> UpdatingProjectile;
+        HookHandlerCollection<UpdatingProjectileEventArgs> UpdatingProjectile { get; set; }
 
         /// <summary>
         /// Occurs when a projectile's AI is being updated.
         /// </summary>
-        event EventHandler<UpdatingProjectileEventArgs> UpdatingProjectileAi;
+        HookHandlerCollection<UpdatingProjectileEventArgs> UpdatingProjectileAi { get; set; }
 
         /// <summary>
         /// Occurs when a projectile's AI was updated.
         /// </summary>
-        event EventHandler<UpdatedProjectileEventArgs> UpdatedProjectileAi;
+        HookHandlerCollection<UpdatedProjectileEventArgs> UpdatedProjectileAi { get; set; }
 
         /// <summary>
         /// Occurs when a projectile was updated.
         /// </summary>
-        event EventHandler<UpdatedProjectileEventArgs> UpdatedProjectile;
+        HookHandlerCollection<UpdatedProjectileEventArgs> UpdatedProjectile { get; set; }
 
         /// <summary>
         /// Occurs when a projectile is being removed.
         /// </summary>
-        event EventHandler<RemovingProjectileEventArgs> RemovingProjectile;
+        HookHandlerCollection<RemovingProjectileEventArgs> RemovingProjectile { get; set; }
 
         /// <summary>
         /// Occurs when a projectile was removed.
         /// </summary>
-        event EventHandler<RemovedProjectileEventArgs> RemovedProjectile;
+        HookHandlerCollection<RemovedProjectileEventArgs> RemovedProjectile { get; set; }
 
         /// <summary>
         /// Spawns a projectile with the specified type at the position with the velocity, damage, knockback, and AI

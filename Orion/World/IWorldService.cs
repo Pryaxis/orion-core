@@ -1,4 +1,5 @@
 ﻿using System;
+using Orion.Hooks;
 using Orion.World.Events;
 using Orion.World.TileEntities;
 using Orion.World.Tiles;
@@ -63,47 +64,47 @@ namespace Orion.World {
         /// <summary>
         /// Occurs when the world is checking for whether it's halloween.
         /// </summary>
-        event EventHandler<CheckingHalloweenEventArgs> CheckingHalloween;
+        HookHandlerCollection<CheckingHalloweenEventArgs> CheckingHalloween { get; set; }
 
         /// <summary>
         /// Occurs when the world is checking for whether it's Christmas.
         /// </summary>
-        event EventHandler<CheckingChristmasEventArgs> CheckingChristmas;
+        HookHandlerCollection<CheckingChristmasEventArgs> CheckingChristmas { get; set; }
 
         /// <summary>
         /// Occurs when the world is loading.
         /// </summary>
-        event EventHandler<LoadingWorldEventArgs> LoadingWorld;
+        HookHandlerCollection<LoadingWorldEventArgs> LoadingWorld { get; set; }
 
         /// <summary>
         /// Occurs when the world was loaded.
         /// </summary>
-        event EventHandler<LoadedWorldEventArgs> LoadedWorld;
+        HookHandlerCollection<LoadedWorldEventArgs> LoadedWorld { get; set; }
 
         /// <summary>
         /// Occurs when the world is saving.
         /// </summary>
-        event EventHandler<SavingWorldEventArgs> SavingWorld;
+        HookHandlerCollection<SavingWorldEventArgs> SavingWorld { get; set; }
 
         /// <summary>
         /// Occurs when the world was saved.
         /// </summary>
-        event EventHandler<SavedWorldEventArgs> SavedWorld;
+        HookHandlerCollection<SavedWorldEventArgs> SavedWorld { get; set; }
 
         /// <summary>
         /// Occurs when the world is starting hardmode.
         /// </summary>
-        event EventHandler<StartingHardmodeEventArgs> StartingHardmode;
+        HookHandlerCollection<StartingHardmodeEventArgs> StartingHardmode { get; set; }
 
         /// <summary>
         /// Occurs when the world has started hardmode.
         /// </summary>
-        event EventHandler<StartedHardmodeEventArgs> StartedHardmode;
+        HookHandlerCollection<StartedHardmodeEventArgs> StartedHardmode { get; set; }
 
         /// <summary>
         /// Occurs when the world is updating a tile in hardmode.
         /// </summary>
-        event EventHandler<UpdatingHardmodeTileEventArgs> UpdatingHardmodeTile;
+        HookHandlerCollection<UpdatingHardmodeTileEventArgs> UpdatingHardmodeTile { get; set; }
 
         /// <summary>
         /// Starts an invasion with the given <see cref="InvasionType"/>.

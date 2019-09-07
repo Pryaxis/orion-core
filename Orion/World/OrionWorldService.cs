@@ -2,6 +2,7 @@
 using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.Runtime.InteropServices;
+using Orion.Hooks;
 using Orion.World.Events;
 using Orion.World.TileEntities;
 using Orion.World.Tiles;
@@ -67,16 +68,15 @@ namespace Orion.World {
         }
 
         public InvasionType CurrentInvasion => (InvasionType)Terraria.Main.invasionType;
-
-        public event EventHandler<CheckingHalloweenEventArgs> CheckingHalloween;
-        public event EventHandler<CheckingChristmasEventArgs> CheckingChristmas;
-        public event EventHandler<LoadingWorldEventArgs> LoadingWorld;
-        public event EventHandler<LoadedWorldEventArgs> LoadedWorld;
-        public event EventHandler<SavingWorldEventArgs> SavingWorld;
-        public event EventHandler<SavedWorldEventArgs> SavedWorld;
-        public event EventHandler<StartingHardmodeEventArgs> StartingHardmode;
-        public event EventHandler<StartedHardmodeEventArgs> StartedHardmode;
-        public event EventHandler<UpdatingHardmodeTileEventArgs> UpdatingHardmodeTile;
+        public HookHandlerCollection<CheckingHalloweenEventArgs> CheckingHalloween { get; set; }
+        public HookHandlerCollection<CheckingChristmasEventArgs> CheckingChristmas { get; set; }
+        public HookHandlerCollection<LoadingWorldEventArgs> LoadingWorld { get; set; }
+        public HookHandlerCollection<LoadedWorldEventArgs> LoadedWorld { get; set; }
+        public HookHandlerCollection<SavingWorldEventArgs> SavingWorld { get; set; }
+        public HookHandlerCollection<SavedWorldEventArgs> SavedWorld { get; set; }
+        public HookHandlerCollection<StartingHardmodeEventArgs> StartingHardmode { get; set; }
+        public HookHandlerCollection<StartedHardmodeEventArgs> StartedHardmode { get; set; }
+        public HookHandlerCollection<UpdatingHardmodeTileEventArgs> UpdatingHardmodeTile { get; set; }
 
         public OrionWorldService(IChestService chestService, ISignService signService) {
             Debug.Assert(chestService != null, $"{nameof(chestService)} should not be null.");

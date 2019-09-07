@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using Orion.Hooks;
 using Orion.Players.Events;
 
 namespace Orion.Players {
@@ -10,16 +11,16 @@ namespace Orion.Players {
         /// <summary>
         /// Occurs when a player is being greeted.
         /// </summary>
-        event EventHandler<GreetingPlayerEventArgs> GreetingPlayer;
+        HookHandlerCollection<GreetingPlayerEventArgs> GreetingPlayer { get; set; }
 
         /// <summary>
         /// Occurs when a player is being updated.
         /// </summary>
-        event EventHandler<UpdatingPlayerEventArgs> UpdatingPlayer;
+        HookHandlerCollection<UpdatingPlayerEventArgs> UpdatingPlayer { get; set; }
 
         /// <summary>
         /// Occurs when a player is updated.
         /// </summary>
-        event EventHandler<UpdatedPlayerEventArgs> UpdatedPlayer;
+        HookHandlerCollection<UpdatedPlayerEventArgs> UpdatedPlayer { get; set; }
     }
 }

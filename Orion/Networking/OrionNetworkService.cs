@@ -3,6 +3,7 @@ using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Linq;
+using Orion.Hooks;
 using Orion.Networking.Events;
 using Orion.Networking.Packets;
 
@@ -14,11 +15,11 @@ namespace Orion.Networking {
         [ExcludeFromCodeCoverage]
         public override string Name => "Orion Network Service";
 
-        public event EventHandler<ReceivedPacketEventArgs> ReceivedPacket;
-        public event EventHandler<ReceivingPacketEventArgs> ReceivingPacket;
-        public event EventHandler<SentPacketEventArgs> SentPacket;
-        public event EventHandler<SendingPacketEventArgs> SendingPacket;
-        public event EventHandler<ClientDisconnectedEventArgs> ClientDisconnected;
+        public HookHandlerCollection<ReceivedPacketEventArgs> ReceivedPacket { get; set; }
+        public HookHandlerCollection<ReceivingPacketEventArgs> ReceivingPacket { get; set; }
+        public HookHandlerCollection<SentPacketEventArgs> SentPacket { get; set; }
+        public HookHandlerCollection<SendingPacketEventArgs> SendingPacket { get; set; }
+        public HookHandlerCollection<ClientDisconnectedEventArgs> ClientDisconnected { get; set; }
 
         public OrionNetworkService() {
             OTAPI.Hooks.Net.ReceiveData = ReceiveDataHandler;

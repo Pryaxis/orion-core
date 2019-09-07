@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using Microsoft.Xna.Framework;
+using Orion.Hooks;
 using Orion.Projectiles.Events;
 
 namespace Orion.Projectiles {
@@ -40,15 +41,15 @@ namespace Orion.Projectiles {
                 return projectile;
             }
         }
-        
-        public event EventHandler<SettingProjectileDefaultsEventArgs> SettingProjectileDefaults;
-        public event EventHandler<SetProjectileDefaultsEventArgs> SetProjectileDefaults;
-        public event EventHandler<UpdatingProjectileEventArgs> UpdatingProjectile;
-        public event EventHandler<UpdatingProjectileEventArgs> UpdatingProjectileAi;
-        public event EventHandler<UpdatedProjectileEventArgs> UpdatedProjectileAi;
-        public event EventHandler<UpdatedProjectileEventArgs> UpdatedProjectile;
-        public event EventHandler<RemovingProjectileEventArgs> RemovingProjectile;
-        public event EventHandler<RemovedProjectileEventArgs> RemovedProjectile;
+
+        public HookHandlerCollection<SettingProjectileDefaultsEventArgs> SettingProjectileDefaults { get; set; }
+        public HookHandlerCollection<SetProjectileDefaultsEventArgs> SetProjectileDefaults { get; set; }
+        public HookHandlerCollection<UpdatingProjectileEventArgs> UpdatingProjectile { get; set; }
+        public HookHandlerCollection<UpdatingProjectileEventArgs> UpdatingProjectileAi { get; set; }
+        public HookHandlerCollection<UpdatedProjectileEventArgs> UpdatedProjectileAi { get; set; }
+        public HookHandlerCollection<UpdatedProjectileEventArgs> UpdatedProjectile { get; set; }
+        public HookHandlerCollection<RemovingProjectileEventArgs> RemovingProjectile { get; set; }
+        public HookHandlerCollection<RemovedProjectileEventArgs> RemovedProjectile { get; set; }
 
         public OrionProjectileService() {
             _terrariaProjectiles = Terraria.Main.projectile;

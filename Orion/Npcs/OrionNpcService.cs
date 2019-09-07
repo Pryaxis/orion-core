@@ -6,6 +6,7 @@ using System.Diagnostics.CodeAnalysis;
 using System.Threading;
 using Microsoft.Xna.Framework;
 using Ninject;
+using Orion.Hooks;
 using Orion.Items;
 using Orion.Npcs.Events;
 using Orion.Players;
@@ -57,21 +58,21 @@ namespace Orion.Npcs {
             set => Terraria.NPC.defaultMaxSpawns = value;
         }
 
-        public event EventHandler<SpawningNpcEventArgs> SpawningNpc;
-        public event EventHandler<SpawnedNpcEventArgs> SpawnedNpc;
-        public event EventHandler<SettingNpcDefaultsEventArgs> SettingNpcDefaults;
-        public event EventHandler<SetNpcDefaultsEventArgs> SetNpcDefaults;
-        public event EventHandler<UpdatingNpcEventArgs> UpdatingNpc;
-        public event EventHandler<UpdatingNpcEventArgs> UpdatingNpcAi;
-        public event EventHandler<UpdatedNpcEventArgs> UpdatedNpcAi;
-        public event EventHandler<UpdatedNpcEventArgs> UpdatedNpc;
-        public event EventHandler<DamagingNpcEventArgs> DamagingNpc;
-        public event EventHandler<DamagedNpcEventArgs> DamagedNpc;
-        public event EventHandler<NpcTransformingEventArgs> NpcTransforming;
-        public event EventHandler<NpcTransformedEventArgs> NpcTransformed;
-        public event EventHandler<NpcDroppingLootItemEventArgs> NpcDroppingLootItem;
-        public event EventHandler<NpcDroppedLootItemEventArgs> NpcDroppedLootItem;
-        public event EventHandler<KilledNpcEventArgs> KilledNpc;
+        public HookHandlerCollection<SpawningNpcEventArgs> SpawningNpc { get; set; }
+        public HookHandlerCollection<SpawnedNpcEventArgs> SpawnedNpc { get; set; }
+        public HookHandlerCollection<SettingNpcDefaultsEventArgs> SettingNpcDefaults { get; set; }
+        public HookHandlerCollection<SetNpcDefaultsEventArgs> SetNpcDefaults { get; set; }
+        public HookHandlerCollection<UpdatingNpcEventArgs> UpdatingNpc { get; set; }
+        public HookHandlerCollection<UpdatingNpcEventArgs> UpdatingNpcAi { get; set; }
+        public HookHandlerCollection<UpdatedNpcEventArgs> UpdatedNpcAi { get; set; }
+        public HookHandlerCollection<UpdatedNpcEventArgs> UpdatedNpc { get; set; }
+        public HookHandlerCollection<DamagingNpcEventArgs> DamagingNpc { get; set; }
+        public HookHandlerCollection<DamagedNpcEventArgs> DamagedNpc { get; set; }
+        public HookHandlerCollection<NpcTransformingEventArgs> NpcTransforming { get; set; }
+        public HookHandlerCollection<NpcTransformedEventArgs> NpcTransformed { get; set; }
+        public HookHandlerCollection<NpcDroppingLootItemEventArgs> NpcDroppingLootItem { get; set; }
+        public HookHandlerCollection<NpcDroppedLootItemEventArgs> NpcDroppedLootItem { get; set; }
+        public HookHandlerCollection<KilledNpcEventArgs> KilledNpc { get; set; }
 
         [Inject]
         public OrionNpcService(IItemService itemService, IPlayerService playerService) {

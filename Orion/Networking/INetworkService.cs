@@ -1,4 +1,5 @@
 ﻿using System;
+using Orion.Hooks;
 using Orion.Networking.Events;
 using Orion.Networking.Packets;
 
@@ -10,27 +11,27 @@ namespace Orion.Networking {
         /// <summary>
         /// Occurs when a packet was received.
         /// </summary>
-        event EventHandler<ReceivedPacketEventArgs> ReceivedPacket;
+        HookHandlerCollection<ReceivedPacketEventArgs> ReceivedPacket { get; set; }
 
         /// <summary>
         /// Occurs when a packet is being received. This event can be handled.
         /// </summary>
-        event EventHandler<ReceivingPacketEventArgs> ReceivingPacket;
+        HookHandlerCollection<ReceivingPacketEventArgs> ReceivingPacket { get; set; }
 
         /// <summary>
         /// Occurs when a packet was sent.
         /// </summary>
-        event EventHandler<SentPacketEventArgs> SentPacket;
+        HookHandlerCollection<SentPacketEventArgs> SentPacket { get; set; }
 
         /// <summary>
         /// Occurs when a packet is being sent. This event can be handled.
         /// </summary>
-        event EventHandler<SendingPacketEventArgs> SendingPacket;
+        HookHandlerCollection<SendingPacketEventArgs> SendingPacket { get; set; }
 
         /// <summary>
         /// Occurs when a client is disconnected.
         /// </summary>
-        event EventHandler<ClientDisconnectedEventArgs> ClientDisconnected;
+        HookHandlerCollection<ClientDisconnectedEventArgs> ClientDisconnected { get; set; }
 
         /// <summary>
         /// Sends the given packet to the target index, excepting the exception index.
