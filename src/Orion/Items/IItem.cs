@@ -1,4 +1,6 @@
 ﻿using Orion.Entities;
+using Orion.Projectiles;
+using Orion.World.Tiles;
 
 namespace Orion.Items {
     /// <summary>
@@ -31,6 +33,41 @@ namespace Orion.Items {
         ItemRarity Rarity { get; set; }
 
         /// <summary>
+        /// Gets or sets the item's scale.
+        /// </summary>
+        float Scale { get; set; }
+
+        /// <summary>
+        /// Gets or sets the item value.
+        /// </summary>
+        int Value { get; set; }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether the item is a melee weapon.
+        /// </summary>
+        bool IsMeleeWeapon { get; set; }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether the item is a ranged weapon.
+        /// </summary>
+        bool IsRangedWeapon { get; set; }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether the item is a magic weapon.
+        /// </summary>
+        bool IsMagicWeapon { get; set; }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether the item is a summon weapon.
+        /// </summary>
+        bool IsSummonWeapon { get; set; }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether the item is a thrown weapon.
+        /// </summary>
+        bool IsThrownWeapon { get; set; }
+
+        /// <summary>
         /// Gets or sets the item damage.
         /// </summary>
         int Damage { get; set; }
@@ -39,6 +76,51 @@ namespace Orion.Items {
         /// Gets or sets the item's use time.
         /// </summary>
         int UseTime { get; set; }
+
+        /// <summary>
+        /// Gets or sets the item's projectile speed.
+        /// </summary>
+        float ProjectileSpeed { get; set; }
+
+        /// <summary>
+        /// Gets or sets the item's projectile type.
+        /// </summary>
+        ProjectileType ProjectileType { get; set; }
+
+        /// <summary>
+        /// Gets or sets the item's block type.
+        /// </summary>
+        BlockType? BlockType { get; set; }
+
+        /// <summary>
+        /// Gets or sets the item's wall type.
+        /// </summary>
+        WallType? WallType { get; set; }
+
+        /// <summary>
+        /// Gets or sets the item's pickaxe power.
+        /// </summary>
+        int PickaxePower { get; set; }
+
+        /// <summary>
+        /// Gets or sets the item's pickaxe power.
+        /// </summary>
+        int AxePower { get; set; }
+
+        /// <summary>
+        /// Gets or sets the item's pickaxe power.
+        /// </summary>
+        int HammerPower { get; set; }
+
+        /// <summary>
+        /// Gets or sets the item's defense.
+        /// </summary>
+        int Defense { get; set; }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether the item is an accessory.
+        /// </summary>
+        bool IsAccessory { get; set; }
 
         /// <summary>
         /// Applies the given <see cref="ItemType"/> to the item.

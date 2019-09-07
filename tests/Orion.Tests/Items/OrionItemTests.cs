@@ -2,6 +2,8 @@
 using FluentAssertions;
 using Microsoft.Xna.Framework;
 using Orion.Items;
+using Orion.Projectiles;
+using Orion.World.Tiles;
 using Xunit;
 
 namespace Orion.Tests.Items {
@@ -200,6 +202,156 @@ namespace Orion.Tests.Items {
 
         [Theory]
         [InlineData(100)]
+        public void GetScale_IsCorrect(float scale) {
+            var terrariaItem = new Terraria.Item {scale = scale};
+            var item = new OrionItem(terrariaItem);
+
+            item.Scale.Should().Be(scale);
+        }
+
+        [Theory]
+        [InlineData(100)]
+        public void SetScale_IsCorrect(float scale) {
+            var terrariaItem = new Terraria.Item();
+            var item = new OrionItem(terrariaItem);
+
+            item.Scale = scale;
+
+            terrariaItem.scale.Should().Be(scale);
+        }
+
+        [Theory]
+        [InlineData(100)]
+        public void GetValue_IsCorrect(int value) {
+            var terrariaItem = new Terraria.Item {value = value};
+            var item = new OrionItem(terrariaItem);
+
+            item.Value.Should().Be(value);
+        }
+
+        [Theory]
+        [InlineData(100)]
+        public void SetValue_IsCorrect(int value) {
+            var terrariaItem = new Terraria.Item();
+            var item = new OrionItem(terrariaItem);
+
+            item.Value = value;
+
+            terrariaItem.value.Should().Be(value);
+        }
+
+        [Theory]
+        [InlineData(true)]
+        [InlineData(false)]
+        public void GetIsMeleeWeapon_IsCorrect(bool isMeleeWeapon) {
+            var terrariaItem = new Terraria.Item {melee = isMeleeWeapon};
+            var item = new OrionItem(terrariaItem);
+
+            item.IsMeleeWeapon.Should().Be(isMeleeWeapon);
+        }
+
+        [Theory]
+        [InlineData(true)]
+        [InlineData(false)]
+        public void SetIsMeleeWeapon_IsCorrect(bool isMeleeWeapon) {
+            var terrariaItem = new Terraria.Item();
+            var item = new OrionItem(terrariaItem);
+
+            item.IsMeleeWeapon = isMeleeWeapon;
+
+            terrariaItem.melee.Should().Be(isMeleeWeapon);
+        }
+        
+        [Theory]
+        [InlineData(true)]
+        [InlineData(false)]
+        public void GetIsRangedWeapon_IsCorrect(bool isRangedWeapon) {
+            var terrariaItem = new Terraria.Item {ranged = isRangedWeapon};
+            var item = new OrionItem(terrariaItem);
+
+            item.IsRangedWeapon.Should().Be(isRangedWeapon);
+        }
+
+        [Theory]
+        [InlineData(true)]
+        [InlineData(false)]
+        public void SetIsRangedWeapon_IsCorrect(bool isRangedWeapon) {
+            var terrariaItem = new Terraria.Item();
+            var item = new OrionItem(terrariaItem);
+
+            item.IsRangedWeapon = isRangedWeapon;
+
+            terrariaItem.ranged.Should().Be(isRangedWeapon);
+        }
+        
+        [Theory]
+        [InlineData(true)]
+        [InlineData(false)]
+        public void GetIsMagicWeapon_IsCorrect(bool isMagicWeapon) {
+            var terrariaItem = new Terraria.Item {magic = isMagicWeapon};
+            var item = new OrionItem(terrariaItem);
+
+            item.IsMagicWeapon.Should().Be(isMagicWeapon);
+        }
+
+        [Theory]
+        [InlineData(true)]
+        [InlineData(false)]
+        public void SetIsMagicWeapon_IsCorrect(bool isMagicWeapon) {
+            var terrariaItem = new Terraria.Item();
+            var item = new OrionItem(terrariaItem);
+
+            item.IsMagicWeapon = isMagicWeapon;
+
+            terrariaItem.magic.Should().Be(isMagicWeapon);
+        }
+        
+        [Theory]
+        [InlineData(true)]
+        [InlineData(false)]
+        public void GetIsSummonWeapon_IsCorrect(bool isSummonWeapon) {
+            var terrariaItem = new Terraria.Item {summon = isSummonWeapon};
+            var item = new OrionItem(terrariaItem);
+
+            item.IsSummonWeapon.Should().Be(isSummonWeapon);
+        }
+
+        [Theory]
+        [InlineData(true)]
+        [InlineData(false)]
+        public void SetIsSummonWeapon_IsCorrect(bool isSummonWeapon) {
+            var terrariaItem = new Terraria.Item();
+            var item = new OrionItem(terrariaItem);
+
+            item.IsSummonWeapon = isSummonWeapon;
+
+            terrariaItem.summon.Should().Be(isSummonWeapon);
+        }
+        
+        [Theory]
+        [InlineData(true)]
+        [InlineData(false)]
+        public void GetIsThrownWeapon_IsCorrect(bool isThrownWeapon) {
+            var terrariaItem = new Terraria.Item {thrown = isThrownWeapon};
+            var item = new OrionItem(terrariaItem);
+
+            item.IsThrownWeapon.Should().Be(isThrownWeapon);
+        }
+
+        [Theory]
+        [InlineData(true)]
+        [InlineData(false)]
+        public void SetIsThrownWeapon_IsCorrect(bool isThrownWeapon) {
+            var terrariaItem = new Terraria.Item();
+            var item = new OrionItem(terrariaItem);
+
+            item.IsThrownWeapon = isThrownWeapon;
+
+            terrariaItem.thrown.Should().Be(isThrownWeapon);
+        }
+
+        [Theory]
+        [InlineData(100)]
         public void GetDamage_IsCorrect(int damage) {
             var terrariaItem = new Terraria.Item {damage = damage};
             var item = new OrionItem(terrariaItem);
@@ -237,7 +389,192 @@ namespace Orion.Tests.Items {
 
             terrariaItem.useTime.Should().Be(useTime);
         }
-        
+
+        [Theory]
+        [InlineData(100)]
+        public void GetProjectileSpeed_IsCorrect(float projectileSpeed) {
+            var terrariaItem = new Terraria.Item {shootSpeed = projectileSpeed};
+            var item = new OrionItem(terrariaItem);
+
+            item.ProjectileSpeed.Should().Be(projectileSpeed);
+        }
+
+        [Theory]
+        [InlineData(100)]
+        public void SetProjectileSpeed_IsCorrect(float projectileSpeed) {
+            var terrariaItem = new Terraria.Item();
+            var item = new OrionItem(terrariaItem);
+
+            item.ProjectileSpeed = projectileSpeed;
+
+            terrariaItem.shootSpeed.Should().Be(projectileSpeed);
+        }
+
+        [Theory]
+        [InlineData(ProjectileType.StarWrath)]
+        public void GetProjectileType_IsCorrect(ProjectileType projectileType) {
+            var terrariaItem = new Terraria.Item {shoot = (int)projectileType};
+            var item = new OrionItem(terrariaItem);
+
+            item.ProjectileType.Should().Be(projectileType);
+        }
+
+        [Theory]
+        [InlineData(ProjectileType.StarWrath)]
+        public void SetProjectileType_IsCorrect(ProjectileType projectileType) {
+            var terrariaItem = new Terraria.Item();
+            var item = new OrionItem(terrariaItem);
+
+            item.ProjectileType = projectileType;
+
+            terrariaItem.shoot.Should().Be((int)projectileType);
+        }
+
+        [Theory]
+        [InlineData(null)]
+        [InlineData(BlockType.Stone)]
+        public void GetBlockType_IsCorrect(BlockType? blockType) {
+            var terrariaItem = new Terraria.Item {createTile = (int?)blockType ?? -1};
+            var item = new OrionItem(terrariaItem);
+
+            item.BlockType.Should().Be(blockType);
+        }
+
+        [Theory]
+        [InlineData(null)]
+        [InlineData(BlockType.Stone)]
+        public void SetBlockType_IsCorrect(BlockType? blockType) {
+            var terrariaItem = new Terraria.Item();
+            var item = new OrionItem(terrariaItem);
+
+            item.BlockType = blockType;
+
+            terrariaItem.createTile.Should().Be((int?)blockType ?? -1);
+        }
+
+        [Theory]
+        [InlineData(null)]
+        [InlineData(WallType.Stone)]
+        public void GetWallType_IsCorrect(WallType? wallType) {
+            var terrariaItem = new Terraria.Item {createWall = (int?)wallType ?? -1};
+            var item = new OrionItem(terrariaItem);
+
+            item.WallType.Should().Be(wallType);
+        }
+
+        [Theory]
+        [InlineData(null)]
+        [InlineData(WallType.Stone)]
+        public void SetWallType_IsCorrect(WallType? wallType) {
+            var terrariaItem = new Terraria.Item();
+            var item = new OrionItem(terrariaItem);
+
+            item.WallType = wallType;
+
+            terrariaItem.createWall.Should().Be((int?)wallType ?? -1);
+        }
+
+        [Theory]
+        [InlineData(100)]
+        public void GetPickaxePower_IsCorrect(int pickaxePower) {
+            var terrariaItem = new Terraria.Item {pick = pickaxePower};
+            var item = new OrionItem(terrariaItem);
+
+            item.PickaxePower.Should().Be(pickaxePower);
+        }
+
+        [Theory]
+        [InlineData(100)]
+        public void SetPickaxePower_IsCorrect(int pickaxePower) {
+            var terrariaItem = new Terraria.Item();
+            var item = new OrionItem(terrariaItem);
+
+            item.PickaxePower = pickaxePower;
+
+            terrariaItem.pick.Should().Be(pickaxePower);
+        }
+
+        [Theory]
+        [InlineData(100)]
+        public void GetAxePower_IsCorrect(int axePower) {
+            var terrariaItem = new Terraria.Item {axe = axePower};
+            var item = new OrionItem(terrariaItem);
+
+            item.AxePower.Should().Be(axePower);
+        }
+
+        [Theory]
+        [InlineData(100)]
+        public void SetAxePower_IsCorrect(int axePower) {
+            var terrariaItem = new Terraria.Item();
+            var item = new OrionItem(terrariaItem);
+
+            item.AxePower = axePower;
+
+            terrariaItem.axe.Should().Be(axePower);
+        }
+
+        [Theory]
+        [InlineData(100)]
+        public void GetHammerPower_IsCorrect(int hammerPower) {
+            var terrariaItem = new Terraria.Item {hammer = hammerPower};
+            var item = new OrionItem(terrariaItem);
+
+            item.HammerPower.Should().Be(hammerPower);
+        }
+
+        [Theory]
+        [InlineData(100)]
+        public void SetHammerPower_IsCorrect(int hammerPower) {
+            var terrariaItem = new Terraria.Item();
+            var item = new OrionItem(terrariaItem);
+
+            item.HammerPower = hammerPower;
+
+            terrariaItem.hammer.Should().Be(hammerPower);
+        }
+
+        [Theory]
+        [InlineData(100)]
+        public void GetDefense_IsCorrect(int defense) {
+            var terrariaItem = new Terraria.Item {defense = defense};
+            var item = new OrionItem(terrariaItem);
+
+            item.Defense.Should().Be(defense);
+        }
+
+        [Theory]
+        [InlineData(100)]
+        public void SetDefense_IsCorrect(int defense) {
+            var terrariaItem = new Terraria.Item();
+            var item = new OrionItem(terrariaItem);
+
+            item.Defense = defense;
+
+            terrariaItem.defense.Should().Be(defense);
+        }
+
+        [Theory]
+        [InlineData(true)]
+        [InlineData(false)]
+        public void GetIsAccessory_IsCorrect(bool isAccessory) {
+            var terrariaItem = new Terraria.Item {accessory = isAccessory};
+            var item = new OrionItem(terrariaItem);
+
+            item.IsAccessory.Should().Be(isAccessory);
+        }
+
+        [Theory]
+        [InlineData(true)]
+        [InlineData(false)]
+        public void SetIsAccessory_IsCorrect(bool isAccessory) {
+            var terrariaItem = new Terraria.Item();
+            var item = new OrionItem(terrariaItem);
+
+            item.IsAccessory = isAccessory;
+
+            terrariaItem.accessory.Should().Be(isAccessory);
+        }
 
         [Theory]
         [InlineData(ItemType.SDMG)]
