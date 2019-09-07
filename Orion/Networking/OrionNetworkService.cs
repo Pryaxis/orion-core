@@ -5,7 +5,6 @@ using System.IO;
 using System.Linq;
 using Orion.Networking.Events;
 using Orion.Networking.Packets;
-using OTAPI;
 
 namespace Orion.Networking {
     internal sealed class OrionNetworkService : OrionService, INetworkService {
@@ -22,9 +21,9 @@ namespace Orion.Networking {
         public event EventHandler<ClientDisconnectedEventArgs> ClientDisconnected;
 
         public OrionNetworkService() {
-            Hooks.Net.ReceiveData = ReceiveDataHandler;
-            Hooks.Net.SendBytes = SendBytesHandler;
-            Hooks.Net.RemoteClient.PreReset = PreResetHandler;
+            OTAPI.Hooks.Net.ReceiveData = ReceiveDataHandler;
+            OTAPI.Hooks.Net.SendBytes = SendBytesHandler;
+            OTAPI.Hooks.Net.RemoteClient.PreReset = PreResetHandler;
         }
 
         protected override void Dispose(bool disposeManaged) {
@@ -32,9 +31,9 @@ namespace Orion.Networking {
                 return;
             }
 
-            Hooks.Net.ReceiveData = null;
-            Hooks.Net.SendBytes = null;
-            Hooks.Net.RemoteClient.PreReset = null;
+            OTAPI.Hooks.Net.ReceiveData = null;
+            OTAPI.Hooks.Net.SendBytes = null;
+            OTAPI.Hooks.Net.RemoteClient.PreReset = null;
         }
 
         public void SendPacket(TerrariaPacket packet, int targetIndex = -1, int exceptIndex = -1) {
@@ -85,7 +84,7 @@ namespace Orion.Networking {
         }
 
 
-        private HookResult ReceiveDataHandler(Terraria.MessageBuffer buffer, ref byte packetId, ref int readOffset,
+        private OTAPI.HookResult ReceiveDataHandler(Terraria.MessageBuffer buffer, ref byte packetId, ref int readOffset,
                                               ref int start, ref int length) {
             var data = buffer.readBuffer;
             Debug.Assert(buffer.whoAmI >= 0 && buffer.whoAmI < Terraria.Netplay.MaxConnections,
@@ -103,7 +102,7 @@ namespace Orion.Networking {
                 ReceivingPacket?.Invoke(this, args);
 
                 if (args.Handled) {
-                    return HookResult.Cancel;
+                    return OTAPI.HookResult.Cancel;
                 }
 
                 packet = args.Packet;
@@ -130,11 +129,11 @@ namespace Orion.Networking {
                 var args2 = new ReceivedPacketEventArgs(sender, packet);
                 ReceivedPacket?.Invoke(this, args2);
 
-                return HookResult.Continue;
+                return OTAPI.HookResult.Continue;
             }
         }
 
-        private HookResult SendBytesHandler(ref int remoteId, ref byte[] data, ref int start, ref int length,
+        private OTAPI.HookResult SendBytesHandler(ref int remoteId, ref byte[] data, ref int start, ref int length,
                                             ref Terraria.Net.Sockets.SocketSendCallback callback, ref object state) {
             Debug.Assert(remoteId >= 0 && remoteId < Terraria.Netplay.MaxConnections,
                          $"{nameof(remoteId)} should be a valid index.");
@@ -148,7 +147,7 @@ namespace Orion.Networking {
                 SendingPacket?.Invoke(this, args);
 
                 if (args.Handled) {
-                    return HookResult.Cancel;
+                    return OTAPI.HookResult.Cancel;
                 }
 
                 packet = args.Packet;
@@ -166,15 +165,15 @@ namespace Orion.Networking {
                 var args2 = new SentPacketEventArgs(receiver, packet);
                 SentPacket?.Invoke(this, args2);
 
-                return HookResult.Continue;
+                return OTAPI.HookResult.Continue;
             }
         }
 
-        private HookResult PreResetHandler(Terraria.RemoteClient remoteClient) {
+        private OTAPI.HookResult PreResetHandler(Terraria.RemoteClient remoteClient) {
             var args = new ClientDisconnectedEventArgs(remoteClient);
             ClientDisconnected?.Invoke(this, args);
 
-            return HookResult.Continue;
+            return OTAPI.HookResult.Continue;
         }
 
 

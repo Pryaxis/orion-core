@@ -5,7 +5,6 @@ using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using Microsoft.Xna.Framework;
 using Orion.Projectiles.Events;
-using OTAPI;
 
 namespace Orion.Projectiles {
     internal sealed class OrionProjectileService : OrionService, IProjectileService {
@@ -55,14 +54,14 @@ namespace Orion.Projectiles {
             _terrariaProjectiles = Terraria.Main.projectile;
             _projectiles = new OrionProjectile[_terrariaProjectiles.Count];
 
-            Hooks.Projectile.PreSetDefaultsById = PreSetDefaultsByIdHandler;
-            Hooks.Projectile.PostSetDefaultsById = PostSetDefaultsByIdHandler;
-            Hooks.Projectile.PreUpdate = PreUpdateHandler;
-            Hooks.Projectile.PreAI = PreAiHandler;
-            Hooks.Projectile.PostAI = PostAiHandler;
-            Hooks.Projectile.PostUpdate = PostUpdateHandler;
-            Hooks.Projectile.PreKill = PreKillHandler;
-            Hooks.Projectile.PostKilled = PostKilledHandler;
+            OTAPI.Hooks.Projectile.PreSetDefaultsById = PreSetDefaultsByIdHandler;
+            OTAPI.Hooks.Projectile.PostSetDefaultsById = PostSetDefaultsByIdHandler;
+            OTAPI.Hooks.Projectile.PreUpdate = PreUpdateHandler;
+            OTAPI.Hooks.Projectile.PreAI = PreAiHandler;
+            OTAPI.Hooks.Projectile.PostAI = PostAiHandler;
+            OTAPI.Hooks.Projectile.PostUpdate = PostUpdateHandler;
+            OTAPI.Hooks.Projectile.PreKill = PreKillHandler;
+            OTAPI.Hooks.Projectile.PostKilled = PostKilledHandler;
         }
 
         protected override void Dispose(bool disposeManaged) {
@@ -70,14 +69,14 @@ namespace Orion.Projectiles {
                 return;
             }
 
-            Hooks.Projectile.PreSetDefaultsById = null;
-            Hooks.Projectile.PostSetDefaultsById = null;
-            Hooks.Projectile.PreUpdate = null;
-            Hooks.Projectile.PreAI = null;
-            Hooks.Projectile.PostAI = null;
-            Hooks.Projectile.PostUpdate = null;
-            Hooks.Projectile.PreKill = null;
-            Hooks.Projectile.PostKilled = null;
+            OTAPI.Hooks.Projectile.PreSetDefaultsById = null;
+            OTAPI.Hooks.Projectile.PostSetDefaultsById = null;
+            OTAPI.Hooks.Projectile.PreUpdate = null;
+            OTAPI.Hooks.Projectile.PreAI = null;
+            OTAPI.Hooks.Projectile.PostAI = null;
+            OTAPI.Hooks.Projectile.PostUpdate = null;
+            OTAPI.Hooks.Projectile.PreKill = null;
+            OTAPI.Hooks.Projectile.PostKilled = null;
         }
 
         public IEnumerator<IProjectile> GetEnumerator() {
@@ -107,13 +106,13 @@ namespace Orion.Projectiles {
         }
 
 
-        private HookResult PreSetDefaultsByIdHandler(Terraria.Projectile terrariaProjectile, ref int type) {
+        private OTAPI.HookResult PreSetDefaultsByIdHandler(Terraria.Projectile terrariaProjectile, ref int type) {
             var projectile = new OrionProjectile(terrariaProjectile);
             var args = new SettingProjectileDefaultsEventArgs(projectile, (ProjectileType)type);
             SettingProjectileDefaults?.Invoke(this, args);
 
             type = (int)args.Type;
-            return args.Handled ? HookResult.Cancel : HookResult.Continue;
+            return args.Handled ? OTAPI.HookResult.Cancel : OTAPI.HookResult.Continue;
         }
 
         private void PostSetDefaultsByIdHandler(Terraria.Projectile terrariaProjectile, int type) {
@@ -122,22 +121,22 @@ namespace Orion.Projectiles {
             SetProjectileDefaults?.Invoke(this, args);
         }
 
-        private HookResult PreUpdateHandler(Terraria.Projectile terrariaProjectile, ref int projectileIndex) {
+        private OTAPI.HookResult PreUpdateHandler(Terraria.Projectile terrariaProjectile, ref int projectileIndex) {
             Debug.Assert(projectileIndex >= 0 && projectileIndex < Count,
                          $"{nameof(projectileIndex)} must be a valid index.");
 
             var args = new UpdatingProjectileEventArgs(this[projectileIndex]);
             UpdatingProjectile?.Invoke(this, args);
 
-            return args.Handled ? HookResult.Cancel : HookResult.Continue;
+            return args.Handled ? OTAPI.HookResult.Cancel : OTAPI.HookResult.Continue;
         }
 
-        private HookResult PreAiHandler(Terraria.Projectile terrariaProjectile) {
+        private OTAPI.HookResult PreAiHandler(Terraria.Projectile terrariaProjectile) {
             var projectile = new OrionProjectile(terrariaProjectile);
             var args = new UpdatingProjectileEventArgs(projectile);
             UpdatingProjectileAi?.Invoke(this, args);
 
-            return args.Handled ? HookResult.Cancel : HookResult.Continue;
+            return args.Handled ? OTAPI.HookResult.Cancel : OTAPI.HookResult.Continue;
         }
 
         private void PostAiHandler(Terraria.Projectile terrariaProjectile) {
@@ -154,12 +153,12 @@ namespace Orion.Projectiles {
             UpdatedProjectile?.Invoke(this, args);
         }
 
-        private HookResult PreKillHandler(Terraria.Projectile terrariaProjectile) {
+        private OTAPI.HookResult PreKillHandler(Terraria.Projectile terrariaProjectile) {
             var projectile = new OrionProjectile(terrariaProjectile);
             var args = new RemovingProjectileEventArgs(projectile);
             RemovingProjectile?.Invoke(this, args);
 
-            return args.Handled ? HookResult.Cancel : HookResult.Continue;
+            return args.Handled ? OTAPI.HookResult.Cancel : OTAPI.HookResult.Continue;
         }
 
         private void PostKilledHandler(Terraria.Projectile terrariaProjectile) {

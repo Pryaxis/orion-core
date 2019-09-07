@@ -9,7 +9,6 @@ using Ninject;
 using Orion.Items;
 using Orion.Npcs.Events;
 using Orion.Players;
-using OTAPI;
 
 namespace Orion.Npcs {
     internal sealed class OrionNpcService : OrionService, INpcService {
@@ -84,19 +83,19 @@ namespace Orion.Npcs {
             _terrariaNpcs = Terraria.Main.npc;
             _npcs = new OrionNpc[_terrariaNpcs.Count];
 
-            Hooks.Npc.Create = CreateHandler;
-            Hooks.Npc.Spawn = SpawnHandler;
-            Hooks.Npc.PreSetDefaultsById = PreSetDefaultsByIdHandler;
-            Hooks.Npc.PostSetDefaultsById = PostSetDefaultsByIdHandler;
-            Hooks.Npc.PreUpdate = PreUpdateHandler;
-            Hooks.Npc.PreAI = PreAiHandler;
-            Hooks.Npc.PostAI = PostAiHandler;
-            Hooks.Npc.PostUpdate = PostUpdateHandler;
-            Hooks.Npc.Strike = StrikeHandler;
-            Hooks.Npc.PreTransform = PreTransformHandler;
-            Hooks.Npc.PostTransform = PostTransformHandler;
-            Hooks.Npc.PreDropLoot = PreDropLootHandler;
-            Hooks.Npc.Killed = KilledHandler;
+            OTAPI.Hooks.Npc.Create = CreateHandler;
+            OTAPI.Hooks.Npc.Spawn = SpawnHandler;
+            OTAPI.Hooks.Npc.PreSetDefaultsById = PreSetDefaultsByIdHandler;
+            OTAPI.Hooks.Npc.PostSetDefaultsById = PostSetDefaultsByIdHandler;
+            OTAPI.Hooks.Npc.PreUpdate = PreUpdateHandler;
+            OTAPI.Hooks.Npc.PreAI = PreAiHandler;
+            OTAPI.Hooks.Npc.PostAI = PostAiHandler;
+            OTAPI.Hooks.Npc.PostUpdate = PostUpdateHandler;
+            OTAPI.Hooks.Npc.Strike = StrikeHandler;
+            OTAPI.Hooks.Npc.PreTransform = PreTransformHandler;
+            OTAPI.Hooks.Npc.PostTransform = PostTransformHandler;
+            OTAPI.Hooks.Npc.PreDropLoot = PreDropLootHandler;
+            OTAPI.Hooks.Npc.Killed = KilledHandler;
         }
 
         protected override void Dispose(bool disposeManaged) {
@@ -106,19 +105,19 @@ namespace Orion.Npcs {
 
             _setDefaultsToIgnore.Dispose();
 
-            Hooks.Npc.Create = null;
-            Hooks.Npc.Spawn = null;
-            Hooks.Npc.PreSetDefaultsById = null;
-            Hooks.Npc.PostSetDefaultsById = null;
-            Hooks.Npc.PreUpdate = null;
-            Hooks.Npc.PreAI = null;
-            Hooks.Npc.PostAI = null;
-            Hooks.Npc.PostUpdate = null;
-            Hooks.Npc.Strike = null;
-            Hooks.Npc.PreTransform = null;
-            Hooks.Npc.PostTransform = null;
-            Hooks.Npc.PreDropLoot = null;
-            Hooks.Npc.Killed = null;
+            OTAPI.Hooks.Npc.Create = null;
+            OTAPI.Hooks.Npc.Spawn = null;
+            OTAPI.Hooks.Npc.PreSetDefaultsById = null;
+            OTAPI.Hooks.Npc.PostSetDefaultsById = null;
+            OTAPI.Hooks.Npc.PreUpdate = null;
+            OTAPI.Hooks.Npc.PreAI = null;
+            OTAPI.Hooks.Npc.PostAI = null;
+            OTAPI.Hooks.Npc.PostUpdate = null;
+            OTAPI.Hooks.Npc.Strike = null;
+            OTAPI.Hooks.Npc.PreTransform = null;
+            OTAPI.Hooks.Npc.PostTransform = null;
+            OTAPI.Hooks.Npc.PreDropLoot = null;
+            OTAPI.Hooks.Npc.Killed = null;
         }
 
         public IEnumerator<INpc> GetEnumerator() {
@@ -181,21 +180,21 @@ namespace Orion.Npcs {
             return terrariaNpc;
         }
 
-        private HookResult SpawnHandler(ref int npcIndex) {
+        private OTAPI.HookResult SpawnHandler(ref int npcIndex) {
             if (npcIndex < 0 || npcIndex >= Count) {
-                return HookResult.Continue;
+                return OTAPI.HookResult.Continue;
             }
 
             var npc = this[npcIndex];
             var args = new SpawnedNpcEventArgs(npc);
             SpawnedNpc?.Invoke(this, args);
 
-            return HookResult.Continue;
+            return OTAPI.HookResult.Continue;
         }
 
-        private HookResult PreSetDefaultsByIdHandler(Terraria.NPC terrariaNpc, ref int type, ref float scaleOverride) {
+        private OTAPI.HookResult PreSetDefaultsByIdHandler(Terraria.NPC terrariaNpc, ref int type, ref float scaleOverride) {
             if (_setDefaultsToIgnore.Value > 0) {
-                return HookResult.Continue;
+                return OTAPI.HookResult.Continue;
             }
 
             var npc = new OrionNpc(terrariaNpc);
@@ -204,7 +203,7 @@ namespace Orion.Npcs {
 
             type = (int)args.Type;
             _setDefaultsToIgnore.Value = type < 0 ? 2 : 0;
-            return args.Handled ? HookResult.Cancel : HookResult.Continue;
+            return args.Handled ? OTAPI.HookResult.Cancel : OTAPI.HookResult.Continue;
         }
 
         private void PostSetDefaultsByIdHandler(Terraria.NPC terrariaNpc, int type, float scaleOverride) {
@@ -218,22 +217,22 @@ namespace Orion.Npcs {
             SetNpcDefaults?.Invoke(this, args);
         }
 
-        private HookResult PreUpdateHandler(Terraria.NPC terrariaNpc, ref int npcIndex) {
+        private OTAPI.HookResult PreUpdateHandler(Terraria.NPC terrariaNpc, ref int npcIndex) {
             Debug.Assert(npcIndex >= 0 && npcIndex < Count, $"{nameof(npcIndex)} should be a valid index.");
 
             var npc = this[npcIndex];
             var args = new UpdatingNpcEventArgs(npc);
             UpdatingNpc?.Invoke(this, args);
 
-            return args.Handled ? HookResult.Cancel : HookResult.Continue;
+            return args.Handled ? OTAPI.HookResult.Cancel : OTAPI.HookResult.Continue;
         }
 
-        private HookResult PreAiHandler(Terraria.NPC terrariaNpc) {
+        private OTAPI.HookResult PreAiHandler(Terraria.NPC terrariaNpc) {
             var npc = new OrionNpc(terrariaNpc);
             var args = new UpdatingNpcEventArgs(npc);
             UpdatingNpcAi?.Invoke(this, args);
 
-            return args.Handled ? HookResult.Cancel : HookResult.Continue;
+            return args.Handled ? OTAPI.HookResult.Cancel : OTAPI.HookResult.Continue;
         }
 
         private void PostAiHandler(Terraria.NPC terrariaNpc) {
@@ -250,7 +249,7 @@ namespace Orion.Npcs {
             UpdatedNpc?.Invoke(this, args);
         }
 
-        private HookResult StrikeHandler(Terraria.NPC terrariaNpc, ref double cancelResult, ref int damage, ref float knockback,
+        private OTAPI.HookResult StrikeHandler(Terraria.NPC terrariaNpc, ref double cancelResult, ref int damage, ref float knockback,
                                          ref int hitDirection, ref bool crit, ref bool noEffect, ref bool fromNet,
                                          Terraria.Entity entity) {
             var npc = new OrionNpc(terrariaNpc);
@@ -269,7 +268,7 @@ namespace Orion.Npcs {
             DamagingNpc?.Invoke(this, args);
 
             if (args.Handled) {
-                return HookResult.Cancel;
+                return OTAPI.HookResult.Cancel;
             }
 
             damage = args.Damage;
@@ -286,15 +285,15 @@ namespace Orion.Npcs {
             };
             DamagedNpc?.Invoke(this, args2);
 
-            return HookResult.Continue;
+            return OTAPI.HookResult.Continue;
         }
 
-        private HookResult PreTransformHandler(Terraria.NPC terrariaNpc, ref int newType) {
+        private OTAPI.HookResult PreTransformHandler(Terraria.NPC terrariaNpc, ref int newType) {
             var npc = new OrionNpc(terrariaNpc);
             var args = new NpcTransformingEventArgs(npc);
             NpcTransforming?.Invoke(this, args);
 
-            return args.Handled ? HookResult.Cancel : HookResult.Continue;
+            return args.Handled ? OTAPI.HookResult.Cancel : OTAPI.HookResult.Continue;
         }
 
         private void PostTransformHandler(Terraria.NPC terrariaNpc) {
@@ -303,7 +302,7 @@ namespace Orion.Npcs {
             NpcTransformed?.Invoke(this, args);
         }
 
-        private HookResult PreDropLootHandler(Terraria.NPC terrariaNpc, ref int itemId, ref int x, ref int y, ref int width,
+        private OTAPI.HookResult PreDropLootHandler(Terraria.NPC terrariaNpc, ref int itemId, ref int x, ref int y, ref int width,
                                               ref int height, ref int type, ref int stack, ref bool noBroadcast,
                                               ref int prefix, ref bool noGrabDelay, ref bool reverseLookup) {
             var npc = new OrionNpc(terrariaNpc);
@@ -315,7 +314,7 @@ namespace Orion.Npcs {
             NpcDroppingLootItem?.Invoke(this, args);
 
             if (args.Handled) {
-                return HookResult.Cancel;
+                return OTAPI.HookResult.Cancel;
             }
 
             /*
@@ -327,7 +326,7 @@ namespace Orion.Npcs {
             var args2 = new NpcDroppedLootItemEventArgs(npc, item);
             NpcDroppedLootItem?.Invoke(this, args2);
 
-            return HookResult.Cancel;
+            return OTAPI.HookResult.Cancel;
         }
 
         private void KilledHandler(Terraria.NPC terrariaNpc) {

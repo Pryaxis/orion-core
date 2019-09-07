@@ -85,7 +85,7 @@ namespace Orion.World {
             _chestService = chestService;
             _signService = signService;
 
-            Hooks.Tile.CreateCollection = () => {
+            OTAPI.Hooks.Tile.CreateCollection = () => {
                 // Allocate with AllocHGlobal so that the memory is pre-pinned.
                 _tilesPtr = (byte*)Marshal.AllocHGlobal(OrionTile.ByteCount * (WorldWidth + 1) * (WorldHeight + 1));
                 return this;
@@ -93,18 +93,18 @@ namespace Orion.World {
 
             // Force the tile collection to be this instance.
             if (Terraria.Main.tile == null || Terraria.Main.tile != this) {
-                Terraria.Main.tile = Hooks.Tile.CreateCollection();
+                Terraria.Main.tile = OTAPI.Hooks.Tile.CreateCollection();
             }
 
-            Hooks.Game.Halloween = HalloweenHandler;
-            Hooks.Game.Christmas = ChristmasHandler;
-            Hooks.World.IO.PreLoadWorld = PreLoadWorldHandler;
-            Hooks.World.IO.PostLoadWorld = PostLoadWorldHandler;
-            Hooks.World.IO.PreSaveWorld = PreSaveWorldHandler;
-            Hooks.World.IO.PostSaveWorld = PostSaveWorldHandler;
-            Hooks.World.PreHardmode = PreHardmodeHandler;
-            Hooks.World.PostHardmode = PostHardmodeHandler;
-            Hooks.World.HardmodeTileUpdate = HardmodeTileUpdateHandler;
+            OTAPI.Hooks.Game.Halloween = HalloweenHandler;
+            OTAPI.Hooks.Game.Christmas = ChristmasHandler;
+            OTAPI.Hooks.World.IO.PreLoadWorld = PreLoadWorldHandler;
+            OTAPI.Hooks.World.IO.PostLoadWorld = PostLoadWorldHandler;
+            OTAPI.Hooks.World.IO.PreSaveWorld = PreSaveWorldHandler;
+            OTAPI.Hooks.World.IO.PostSaveWorld = PostSaveWorldHandler;
+            OTAPI.Hooks.World.PreHardmode = PreHardmodeHandler;
+            OTAPI.Hooks.World.PostHardmode = PostHardmodeHandler;
+            OTAPI.Hooks.World.HardmodeTileUpdate = HardmodeTileUpdateHandler;
         }
 
         protected override void Dispose(bool disposeManaged) {
@@ -115,16 +115,16 @@ namespace Orion.World {
                 return;
             }
 
-            Hooks.Tile.CreateCollection = null;
-            Hooks.Game.Halloween = null;
-            Hooks.Game.Christmas = null;
-            Hooks.World.IO.PreLoadWorld = null;
-            Hooks.World.IO.PostLoadWorld = null;
-            Hooks.World.IO.PreSaveWorld = null;
-            Hooks.World.IO.PostSaveWorld = null;
-            Hooks.World.PreHardmode = null;
-            Hooks.World.PostHardmode = null;
-            Hooks.World.HardmodeTileUpdate = null;
+            OTAPI.Hooks.Tile.CreateCollection = null;
+            OTAPI.Hooks.Game.Halloween = null;
+            OTAPI.Hooks.Game.Christmas = null;
+            OTAPI.Hooks.World.IO.PreLoadWorld = null;
+            OTAPI.Hooks.World.IO.PostLoadWorld = null;
+            OTAPI.Hooks.World.IO.PreSaveWorld = null;
+            OTAPI.Hooks.World.IO.PostSaveWorld = null;
+            OTAPI.Hooks.World.PreHardmode = null;
+            OTAPI.Hooks.World.PostHardmode = null;
+            OTAPI.Hooks.World.HardmodeTileUpdate = null;
         }
 
         public bool StartInvasion(InvasionType invasionType) {
@@ -193,25 +193,25 @@ namespace Orion.World {
         public void SaveWorld() => Terraria.IO.WorldFile.saveWorld();
         
 
-        private HookResult HalloweenHandler() {
+        private OTAPI.HookResult HalloweenHandler() {
             var args = new CheckingHalloweenEventArgs();
             CheckingHalloween?.Invoke(this, args);
 
-            return args.Handled ? HookResult.Cancel : HookResult.Continue;
+            return args.Handled ? OTAPI.HookResult.Cancel : OTAPI.HookResult.Continue;
         }
 
-        private HookResult ChristmasHandler() {
+        private OTAPI.HookResult ChristmasHandler() {
             var args = new CheckingChristmasEventArgs();
             CheckingChristmas?.Invoke(this, args);
 
-            return args.Handled ? HookResult.Cancel : HookResult.Continue;
+            return args.Handled ? OTAPI.HookResult.Cancel : OTAPI.HookResult.Continue;
         }
 
-        private HookResult PreLoadWorldHandler(ref bool loadFromCloud) {
+        private OTAPI.HookResult PreLoadWorldHandler(ref bool loadFromCloud) {
             var args = new LoadingWorldEventArgs();
             LoadingWorld?.Invoke(this, args);
 
-            return args.Handled ? HookResult.Cancel : HookResult.Continue;
+            return args.Handled ? OTAPI.HookResult.Cancel : OTAPI.HookResult.Continue;
         }
 
         private void PostLoadWorldHandler(bool loadFromCloud) {
@@ -219,11 +219,11 @@ namespace Orion.World {
             LoadedWorld?.Invoke(this, args);
         }
 
-        private HookResult PreSaveWorldHandler(ref bool useCloudSaving, ref bool resetTime) {
+        private OTAPI.HookResult PreSaveWorldHandler(ref bool useCloudSaving, ref bool resetTime) {
             var args = new SavingWorldEventArgs {ShouldResetTime = resetTime};
             SavingWorld?.Invoke(this, args);
             
-            return args.Handled ? HookResult.Cancel : HookResult.Continue;
+            return args.Handled ? OTAPI.HookResult.Cancel : OTAPI.HookResult.Continue;
         }
 
         private void PostSaveWorldHandler(bool useCloudSaving, bool resetTime) {
@@ -231,11 +231,11 @@ namespace Orion.World {
             SavedWorld?.Invoke(this, args);
         }
 
-        private HookResult PreHardmodeHandler() {
+        private OTAPI.HookResult PreHardmodeHandler() {
             var args = new StartingHardmodeEventArgs();
             StartingHardmode?.Invoke(this, args);
 
-            return args.Handled ? HookResult.Cancel : HookResult.Continue;
+            return args.Handled ? OTAPI.HookResult.Cancel : OTAPI.HookResult.Continue;
         }
 
         private void PostHardmodeHandler() {

@@ -4,7 +4,6 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using Orion.Players.Events;
-using OTAPI;
 
 namespace Orion.Players {
     internal sealed class OrionPlayerService : OrionService, IPlayerService {
@@ -48,9 +47,9 @@ namespace Orion.Players {
             _terrariaPlayers = Terraria.Main.player;
             _players = new OrionPlayer[_terrariaPlayers.Count];
             
-            Hooks.Player.PreGreet = PreGreetHandler;
-            Hooks.Player.PreUpdate = PreUpdateHandler;
-            Hooks.Player.PostUpdate = PostUpdateHandler;
+            OTAPI.Hooks.Player.PreGreet = PreGreetHandler;
+            OTAPI.Hooks.Player.PreUpdate = PreUpdateHandler;
+            OTAPI.Hooks.Player.PostUpdate = PostUpdateHandler;
         }
 
         protected override void Dispose(bool disposeManaged) {
@@ -58,9 +57,9 @@ namespace Orion.Players {
                 return;
             }
 
-            Hooks.Player.PreGreet = null;
-            Hooks.Player.PreUpdate = null;
-            Hooks.Player.PostUpdate = null;
+            OTAPI.Hooks.Player.PreGreet = null;
+            OTAPI.Hooks.Player.PreUpdate = null;
+            OTAPI.Hooks.Player.PostUpdate = null;
         }
 
         public IEnumerator<IPlayer> GetEnumerator() {
@@ -73,24 +72,24 @@ namespace Orion.Players {
         IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
 
 
-        private HookResult PreGreetHandler(ref int playerIndex) {
+        private OTAPI.HookResult PreGreetHandler(ref int playerIndex) {
             Debug.Assert(playerIndex >= 0 && playerIndex < Count, $"{nameof(playerIndex)} should be a valid index.");
 
             var player = this[playerIndex];
             var args = new GreetingPlayerEventArgs(player);
             GreetingPlayer?.Invoke(this, args);
 
-            return args.Handled ? HookResult.Cancel : HookResult.Continue;
+            return args.Handled ? OTAPI.HookResult.Cancel : OTAPI.HookResult.Continue;
         }
 
-        private HookResult PreUpdateHandler(Terraria.Player terrariaPlayer, ref int playerIndex) {
+        private OTAPI.HookResult PreUpdateHandler(Terraria.Player terrariaPlayer, ref int playerIndex) {
             Debug.Assert(playerIndex >= 0 && playerIndex < Count, $"{nameof(playerIndex)} should be a valid index.");
 
             var player = this[playerIndex];
             var args = new UpdatingPlayerEventArgs(player);
             UpdatingPlayer?.Invoke(this, args);
 
-            return args.Handled ? HookResult.Cancel : HookResult.Continue;
+            return args.Handled ? OTAPI.HookResult.Cancel : OTAPI.HookResult.Continue;
         }
 
         private void PostUpdateHandler(Terraria.Player terrariaPlayer, int playerIndex) {

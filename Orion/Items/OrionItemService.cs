@@ -5,7 +5,6 @@ using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using Microsoft.Xna.Framework;
 using Orion.Items.Events;
-using OTAPI;
 
 namespace Orion.Items {
     internal sealed class OrionItemService : OrionService, IItemService {
@@ -50,10 +49,10 @@ namespace Orion.Items {
             _terrariaItems = Terraria.Main.item;
             _items = new OrionItem[_terrariaItems.Count];
 
-            Hooks.Item.PreSetDefaultsById = PreSetDefaultsByIdHandler;
-            Hooks.Item.PostSetDefaultsById = PostSetDefaultsByIdHandler;
-            Hooks.Item.PreUpdate = PreUpdateHandler;
-            Hooks.Item.PostUpdate = PostUpdateHandler;
+            OTAPI.Hooks.Item.PreSetDefaultsById = PreSetDefaultsByIdHandler;
+            OTAPI.Hooks.Item.PostSetDefaultsById = PostSetDefaultsByIdHandler;
+            OTAPI.Hooks.Item.PreUpdate = PreUpdateHandler;
+            OTAPI.Hooks.Item.PostUpdate = PostUpdateHandler;
         }
 
         protected override void Dispose(bool disposeManaged) {
@@ -61,10 +60,10 @@ namespace Orion.Items {
                 return;
             }
 
-            Hooks.Item.PreSetDefaultsById = null;
-            Hooks.Item.PostSetDefaultsById = null;
-            Hooks.Item.PreUpdate = null;
-            Hooks.Item.PostUpdate = null;
+            OTAPI.Hooks.Item.PreSetDefaultsById = null;
+            OTAPI.Hooks.Item.PostSetDefaultsById = null;
+            OTAPI.Hooks.Item.PreUpdate = null;
+            OTAPI.Hooks.Item.PostUpdate = null;
         }
 
         public IEnumerator<IItem> GetEnumerator() {
@@ -95,14 +94,14 @@ namespace Orion.Items {
         }
 
 
-        private HookResult PreSetDefaultsByIdHandler(Terraria.Item terrariaItem, ref int type,
+        private OTAPI.HookResult PreSetDefaultsByIdHandler(Terraria.Item terrariaItem, ref int type,
                                                      ref bool noMaterialCheck) {
             var item = new OrionItem(terrariaItem);
             var args = new SettingItemDefaultsEventArgs(item, (ItemType)type);
             SettingItemDefaults?.Invoke(this, args);
 
             type = (int)args.Type;
-            return args.Handled ? HookResult.Cancel : HookResult.Continue;
+            return args.Handled ? OTAPI.HookResult.Cancel : OTAPI.HookResult.Continue;
         }
 
         private void PostSetDefaultsByIdHandler(Terraria.Item terrariaItem, ref int type, ref bool noMaterialCheck) {
@@ -111,12 +110,12 @@ namespace Orion.Items {
             SetItemDefaults?.Invoke(this, args);
         }
 
-        private HookResult PreUpdateHandler(Terraria.Item terrariaItem, ref int i) {
+        private OTAPI.HookResult PreUpdateHandler(Terraria.Item terrariaItem, ref int i) {
             var item = new OrionItem(terrariaItem);
             var args = new UpdatingItemEventArgs(item);
             UpdatingItem?.Invoke(this, args);
 
-            return args.Handled ? HookResult.Cancel : HookResult.Continue;
+            return args.Handled ? OTAPI.HookResult.Cancel : OTAPI.HookResult.Continue;
         }
 
         private void PostUpdateHandler(Terraria.Item terrariaItem, int i) {
