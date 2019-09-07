@@ -57,7 +57,7 @@ namespace Orion.Tests.World.TileEntities {
 
         [Fact]
         public void GetEnumerator_IsCorrect() {
-            for (var i = 0; i < 1000; ++i) {
+            for (var i = 0; i < Terraria.Main.maxChests; ++i) {
                 Terraria.Main.chest[i] = new Terraria.Chest();
             }
             var chests = _chestService.ToList();
@@ -74,6 +74,26 @@ namespace Orion.Tests.World.TileEntities {
             chest.Should().NotBeNull();
             chest.X.Should().Be(100);
             chest.Y.Should().Be(100);
+        }
+
+        [Fact]
+        public void AddChest_Exists_ReturnsNull() {
+            _chestService.AddChest(100, 100);
+
+            var chest = _chestService.AddChest(100, 100);
+
+            chest.Should().BeNull();
+        }
+
+        [Fact]
+        public void AddChest_TooMany_ReturnsNull() {
+            for (var i = 0; i < Terraria.Main.maxChests; ++i) {
+                Terraria.Main.chest[i] = new Terraria.Chest();
+            }
+
+            var chest = _chestService.AddChest(100, 100);
+
+            chest.Should().BeNull();
         }
 
         [Fact]

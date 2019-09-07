@@ -68,12 +68,32 @@ namespace Orion.Tests.World.TileEntities {
         }
 
         [Fact]
-        public void PlaceSign_IsCorrect() {
+        public void AddSign_IsCorrect() {
             var sign = _signService.AddSign(100, 100);
 
             sign.Should().NotBeNull();
             sign.X.Should().Be(100);
             sign.Y.Should().Be(100);
+        }
+
+        [Fact]
+        public void AddSign_Exists_ReturnsNull() {
+            _signService.AddSign(100, 100);
+
+            var sign = _signService.AddSign(100, 100);
+
+            sign.Should().BeNull();
+        }
+
+        [Fact]
+        public void AddSign_TooMany_ReturnsNull() {
+            for (var i = 0; i < Terraria.Sign.maxSigns; ++i) {
+                Terraria.Main.sign[i] = new Terraria.Sign();
+            }
+
+            var sign = _signService.AddSign(100, 100);
+
+            sign.Should().BeNull();
         }
 
         [Fact]
