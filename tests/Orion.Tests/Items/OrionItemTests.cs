@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using FluentAssertions;
 using Microsoft.Xna.Framework;
 using Orion.Items;
@@ -200,6 +201,32 @@ namespace Orion.Tests.Items {
             terrariaItem.rare.Should().Be((int)itemRarity);
         }
 
+        public static readonly IEnumerable<object[]> ColorData = new List<object[]> {
+            new object[] {new Color(255, 0, 0)},
+            new object[] {new Color(0, 255, 0)},
+            new object[] {new Color(0, 0, 255)},
+        };
+        
+        [Theory]
+        [MemberData(nameof(ColorData))]
+        public void GetColor_IsCorrect(Color color) {
+            var terrariaItem = new Terraria.Item {color = color};
+            var item = new OrionItem(terrariaItem);
+
+            item.Color.Should().Be(color);
+        }
+        
+        [Theory]
+        [MemberData(nameof(ColorData))]
+        public void SetColor_IsCorrect(Color color) {
+            var terrariaItem = new Terraria.Item();
+            var item = new OrionItem(terrariaItem);
+
+            item.Color = color;
+
+            terrariaItem.color.Should().Be(color);
+        }
+
         [Theory]
         [InlineData(100)]
         public void GetScale_IsCorrect(float scale) {
@@ -372,6 +399,26 @@ namespace Orion.Tests.Items {
 
         [Theory]
         [InlineData(100)]
+        public void GetKnockback_IsCorrect(float knockBack) {
+            var terrariaItem = new Terraria.Item {knockBack = knockBack};
+            var item = new OrionItem(terrariaItem);
+
+            item.Knockback.Should().Be(knockBack);
+        }
+
+        [Theory]
+        [InlineData(100)]
+        public void SetKnockback_IsCorrect(float knockback) {
+            var terrariaItem = new Terraria.Item();
+            var item = new OrionItem(terrariaItem);
+
+            item.Knockback = knockback;
+
+            terrariaItem.knockBack.Should().Be(knockback);
+        }
+
+        [Theory]
+        [InlineData(100)]
         public void GetUseTime_IsCorrect(int useTime) {
             var terrariaItem = new Terraria.Item {useTime = useTime};
             var item = new OrionItem(terrariaItem);
@@ -388,6 +435,26 @@ namespace Orion.Tests.Items {
             item.UseTime = useTime;
 
             terrariaItem.useTime.Should().Be(useTime);
+        }
+
+        [Theory]
+        [InlineData(AmmoType.FallenStar)]
+        public void GetUsesAmmoType_IsCorrect(AmmoType usesAmmoType) {
+            var terrariaItem = new Terraria.Item {useAmmo = (int)usesAmmoType};
+            var item = new OrionItem(terrariaItem);
+
+            item.UsesAmmoType.Should().Be(usesAmmoType);
+        }
+
+        [Theory]
+        [InlineData(AmmoType.FallenStar)]
+        public void SetUsesAmmoType_IsCorrect(AmmoType usesAmmoType) {
+            var terrariaItem = new Terraria.Item();
+            var item = new OrionItem(terrariaItem);
+
+            item.UsesAmmoType = usesAmmoType;
+
+            terrariaItem.useAmmo.Should().Be((int)usesAmmoType);
         }
 
         [Theory]
@@ -408,6 +475,26 @@ namespace Orion.Tests.Items {
             item.ProjectileSpeed = projectileSpeed;
 
             terrariaItem.shootSpeed.Should().Be(projectileSpeed);
+        }
+
+        [Theory]
+        [InlineData(AmmoType.FallenStar)]
+        public void GetAmmoType_IsCorrect(AmmoType ammoType) {
+            var terrariaItem = new Terraria.Item {ammo = (int)ammoType};
+            var item = new OrionItem(terrariaItem);
+
+            item.AmmoType.Should().Be(ammoType);
+        }
+
+        [Theory]
+        [InlineData(AmmoType.FallenStar)]
+        public void SetAmmoType_IsCorrect(AmmoType ammoType) {
+            var terrariaItem = new Terraria.Item();
+            var item = new OrionItem(terrariaItem);
+
+            item.AmmoType = ammoType;
+
+            terrariaItem.ammo.Should().Be((int)ammoType);
         }
 
         [Theory]

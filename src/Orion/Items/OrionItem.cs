@@ -1,4 +1,5 @@
 ﻿using System;
+using Microsoft.Xna.Framework;
 using Orion.Entities;
 using Orion.Projectiles;
 using Orion.World.Tiles;
@@ -27,6 +28,11 @@ namespace Orion.Items {
         public ItemRarity Rarity {
             get => (ItemRarity)Wrapped.rare;
             set => Wrapped.rare = (int)value;
+        }
+
+        public Color Color {
+            get => Wrapped.color;
+            set => Wrapped.color = value;
         }
 
         public float Scale {
@@ -69,14 +75,29 @@ namespace Orion.Items {
             set => Wrapped.damage = value;
         }
 
+        public float Knockback {
+            get => Wrapped.knockBack;
+            set => Wrapped.knockBack = value;
+        }
+
         public int UseTime {
             get => Wrapped.useTime;
             set => Wrapped.useTime = value;
         }
 
+        public AmmoType UsesAmmoType {
+            get => (AmmoType)Wrapped.useAmmo;
+            set => Wrapped.useAmmo = (int)value;
+        }
+
         public float ProjectileSpeed {
             get => Wrapped.shootSpeed;
             set => Wrapped.shootSpeed = value;
+        }
+
+        public AmmoType AmmoType {
+            get => (AmmoType)Wrapped.ammo;
+            set => Wrapped.ammo = (int)value;
         }
 
         public ProjectileType ProjectileType {

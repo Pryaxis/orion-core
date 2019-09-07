@@ -1,4 +1,5 @@
-﻿using Orion.Entities;
+﻿using Microsoft.Xna.Framework;
+using Orion.Entities;
 using Orion.Projectiles;
 using Orion.World.Tiles;
 
@@ -31,6 +32,11 @@ namespace Orion.Items {
         /// Gets or sets the item rarity.
         /// </summary>
         ItemRarity Rarity { get; set; }
+
+        /// <summary>
+        /// Gets or sets the item's color.
+        /// </summary>
+        Color Color { get; set; }
 
         /// <summary>
         /// Gets or sets the item's scale.
@@ -68,9 +74,14 @@ namespace Orion.Items {
         bool IsThrownWeapon { get; set; }
 
         /// <summary>
-        /// Gets or sets the item damage.
+        /// Gets or sets the item's damage.
         /// </summary>
         int Damage { get; set; }
+
+        /// <summary>
+        /// Gets or sets the item's knockback.
+        /// </summary>
+        float Knockback { get; set; }
 
         /// <summary>
         /// Gets or sets the item's use time.
@@ -78,9 +89,19 @@ namespace Orion.Items {
         int UseTime { get; set; }
 
         /// <summary>
+        /// Gets or sets what <see cref="AmmoType"/> the item uses.
+        /// </summary>
+        AmmoType UsesAmmoType { get; set; }
+
+        /// <summary>
         /// Gets or sets the item's projectile speed.
         /// </summary>
         float ProjectileSpeed { get; set; }
+
+        /// <summary>
+        /// Gets or sets the item's ammo type.
+        /// </summary>
+        AmmoType AmmoType { get; set; }
 
         /// <summary>
         /// Gets or sets the item's projectile type.
