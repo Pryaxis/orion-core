@@ -65,6 +65,38 @@ namespace Orion.Tests.Npcs {
             func.Should().Throw<IndexOutOfRangeException>();
         }
 
+        [Theory]
+        [InlineData(100)]
+        public void GetBaseNpcSpawningRate_IsCorrect(int spawningRate) {
+            Terraria.NPC.defaultSpawnRate = spawningRate;
+
+            _npcService.BaseNpcSpawningRate.Should().Be(spawningRate);
+        }
+
+        [Theory]
+        [InlineData(100)]
+        public void SetBaseNpcSpawningRate_IsCorrect(int spawningRate) {
+            _npcService.BaseNpcSpawningRate = spawningRate;
+
+            Terraria.NPC.defaultSpawnRate.Should().Be(spawningRate);
+        }
+
+        [Theory]
+        [InlineData(100)]
+        public void GetBaseNpcSpawningLimit_IsCorrect(int spawningLimit) {
+            Terraria.NPC.defaultMaxSpawns = spawningLimit;
+
+            _npcService.BaseNpcSpawningLimit.Should().Be(spawningLimit);
+        }
+
+        [Theory]
+        [InlineData(100)]
+        public void SetBaseNpcSpawningLimit_IsCorrect(int spawningLimit) {
+            _npcService.BaseNpcSpawningLimit = spawningLimit;
+
+            Terraria.NPC.defaultMaxSpawns.Should().Be(spawningLimit);
+        }
+
         [Fact]
         public void NpcSpawning_IsCorrect() {
             var isRun = false;
