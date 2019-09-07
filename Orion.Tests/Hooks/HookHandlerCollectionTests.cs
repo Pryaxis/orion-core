@@ -6,6 +6,14 @@ using Xunit;
 namespace Orion.Tests.Hooks {
     public class HookHandlerCollectionTests {
         [Fact]
+        public void Invoke_ExceptionIsSwallowed() {
+            HookHandlerCollection<TestEventArgs> collection = null;
+            collection += TestHandler3;
+
+            collection.Invoke(this, new TestEventArgs());
+        }
+
+        [Fact]
         public void Plus_IsCorrect() {
             HookHandlerCollection<TestEventArgs> collection = null;
             collection += TestHandler;
@@ -73,6 +81,10 @@ namespace Orion.Tests.Hooks {
         [HookHandler(HookPriority.Highest)]
         private static void TestHandler2(object sender, TestEventArgs args) {
             args.Value = 200;
+        }
+
+        private static void TestHandler3(object sender, TestEventArgs args) {
+            throw new InvalidOperationException();
         }
 
         private class TestEventArgs : EventArgs {
