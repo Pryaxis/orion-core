@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Diagnostics;
+using System.Diagnostics.CodeAnalysis;
 using System.Runtime.InteropServices;
 using Orion.World.Events;
 using Orion.World.TileEntities;
@@ -14,13 +16,19 @@ namespace Orion.World {
         private readonly ISignService _signService;
         private byte* _tilesPtr = null;
 
+        [ExcludeFromCodeCoverage]
         public override string Author => "Pryaxis";
+
+        [ExcludeFromCodeCoverage]
         public override string Name => "Orion World Service";
 
-        public string WorldName { get; set; }
+        public string WorldName {
+            get => Terraria.Main.worldName;
+            set => Terraria.Main.worldName = value ?? throw new ArgumentNullException(nameof(value));
+        }
 
-        public int WorldWidth { get; private set; }
-        public int WorldHeight { get; private set; }
+        public int WorldWidth => Terraria.Main.maxTilesX;
+        public int WorldHeight => Terraria.Main.maxTilesY;
 
         public Tile this[int x, int y] {
             get => new OrionTile(_tilesPtr + OrionTile.ByteCount * ((WorldWidth + 1) * y + x));
@@ -53,6 +61,8 @@ namespace Orion.World {
             set => Terraria.Main.expertMode = value;
         }
 
+        public InvasionType CurrentInvasion => (InvasionType)Terraria.Main.invasionType;
+
         public event EventHandler<CheckingHalloweenEventArgs> CheckingHalloween;
         public event EventHandler<CheckingChristmasEventArgs> CheckingChristmas;
         public event EventHandler<LoadingWorldEventArgs> LoadingWorld;
@@ -64,21 +74,20 @@ namespace Orion.World {
         public event EventHandler<UpdatingHardmodeTileEventArgs> UpdatingHardmodeTile;
 
         public OrionWorldService(IChestService chestService, ISignService signService) {
+            Debug.Assert(chestService != null, $"{nameof(chestService)} should not be null.");
+            Debug.Assert(signService != null, $"{nameof(signService)} should not be null.");
+
             _chestService = chestService;
             _signService = signService;
 
             Hooks.Tile.CreateCollection = () => {
-                WorldWidth = Terraria.Main.maxTilesX;
-                WorldHeight = Terraria.Main.maxTilesY;
-
                 // Allocate with AllocHGlobal so that the memory is pre-pinned.
                 _tilesPtr = (byte*)Marshal.AllocHGlobal(OrionTile.ByteCount * (WorldWidth + 1) * (WorldHeight + 1));
                 return this;
             };
 
-            // This looks really dumb, but the first Terraria.Main.tile access might trigger the cctor, in which case
-            // we should check twice to see if we should actually call Hooks.Tile.CreateCollection manually.
-            if (Terraria.Main.tile == null && Terraria.Main.tile == null) {
+            // Force the tile collection to be this instance.
+            if (Terraria.Main.tile == null || Terraria.Main.tile != this) {
                 Terraria.Main.tile = Hooks.Tile.CreateCollection();
             }
 
@@ -111,6 +120,11 @@ namespace Orion.World {
             Hooks.World.PreHardmode = null;
             Hooks.World.PostHardmode = null;
             Hooks.World.HardmodeTileUpdate = null;
+        }
+
+        public bool StartInvasion(InvasionType invasionType) {
+            Terraria.Main.StartInvasion((int)invasionType);
+            return CurrentInvasion == invasionType;
         }
 
         public ITargetDummy AddTargetDummy(int x, int y) {

@@ -51,6 +51,11 @@ namespace Orion.World {
         bool IsExpertMode { get; set; }
 
         /// <summary>
+        /// Gets the current <see cref="InvasionType"/>.
+        /// </summary>
+        InvasionType CurrentInvasion { get; }
+
+        /// <summary>
         /// Occurs when the world is checking for whether it's halloween.
         /// </summary>
         event EventHandler<CheckingHalloweenEventArgs> CheckingHalloween;
@@ -94,6 +99,13 @@ namespace Orion.World {
         /// Occurs when the world is updating a tile in hardmode.
         /// </summary>
         event EventHandler<UpdatingHardmodeTileEventArgs> UpdatingHardmodeTile;
+
+        /// <summary>
+        /// Starts an invasion with the given <see cref="InvasionType"/>.
+        /// </summary>
+        /// <param name="invasionType">The invasion type.</param>
+        /// <returns><c>true</c> if the invasion was successfully started; <c>false</c> otherwise.</returns>
+        bool StartInvasion(InvasionType invasionType);
 
         /// <summary>
         /// Adds a target dummy at the given coordinates.

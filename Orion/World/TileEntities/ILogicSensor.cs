@@ -2,7 +2,7 @@
     /// <summary>
     /// Provides a wrapper around a Terraria logic sensor tile entity.
     /// </summary>
-    public interface ILogicSensor {
+    public interface ILogicSensor : ITileEntity {
         /// <summary>
         /// Gets or sets the sensor type.
         /// </summary>
