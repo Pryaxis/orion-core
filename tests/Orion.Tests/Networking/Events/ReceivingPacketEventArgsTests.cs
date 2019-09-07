@@ -31,6 +31,37 @@ namespace Orion.Tests.Networking.Events {
         }
 
         [Fact]
+        public void GetSender_IsCorrect() {
+            var sender = new Terraria.RemoteClient();
+            var packet = new RequestConnectionPacket {Version = "test"};
+            var args = new ReceivingPacketEventArgs(sender, packet);
+
+            args.Sender.Should().BeSameAs(sender);
+        }
+
+        [Fact]
+        public void GetPacket_IsCorrect() {
+            var sender = new Terraria.RemoteClient();
+            var packet = new RequestConnectionPacket {Version = "test"};
+            var args = new ReceivingPacketEventArgs(sender, packet);
+
+            args.Packet.Should().BeSameAs(packet);
+        }
+
+        [Fact]
+        public void SetPacket_IsCorrect() {
+            var sender = new Terraria.RemoteClient();
+            var packet = new RequestConnectionPacket {Version = "test"};
+            var args = new ReceivingPacketEventArgs(sender, packet);
+            var packet2 = new RequestConnectionPacket {Version = "test2"};
+
+            args.Packet = packet2;
+
+            args.IsPacketDirty.Should().BeTrue();
+            args.Packet.Should().BeSameAs(packet2);
+        }
+
+        [Fact]
         public void SetPacket_NullValue_ThrowsArgumentNullException() {
             var packet = new RequestConnectionPacket {Version = "test"};
             var args = new ReceivingPacketEventArgs(new Terraria.RemoteClient(), packet);

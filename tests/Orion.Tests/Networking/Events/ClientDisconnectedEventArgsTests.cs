@@ -11,5 +11,13 @@ namespace Orion.Tests.Networking.Events {
 
             func.Should().Throw<ArgumentNullException>();
         }
+
+        [Fact]
+        public void GetClient_IsCorrect() {
+            var client = new Terraria.RemoteClient();
+            var args = new ClientDisconnectedEventArgs(client);
+
+            args.Client.Should().BeSameAs(client);
+        }
     }
 }

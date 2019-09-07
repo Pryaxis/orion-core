@@ -10,18 +10,36 @@ namespace Orion.Tests.Npcs.Events {
     public class NpcDroppedLootItemEventArgsTests {
         [Fact]
         public void Ctor_NullNpc_ThrowsArgumentNullException() {
-            var mockItem = new Mock<IItem>();
-            Func<NpcDroppedLootItemEventArgs> func = () => new NpcDroppedLootItemEventArgs(null, mockItem.Object);
+            var item = new Mock<IItem>();
+            Func<NpcDroppedLootItemEventArgs> func = () => new NpcDroppedLootItemEventArgs(null, item.Object);
 
             func.Should().Throw<ArgumentNullException>();
         }
 
         [Fact]
         public void Ctor_NullItem_ThrowsArgumentNullException() {
-            var mockNpc = new Mock<INpc>();
-            Func<NpcDroppedLootItemEventArgs> func = () => new NpcDroppedLootItemEventArgs(mockNpc.Object, null);
+            var npc = new Mock<INpc>();
+            Func<NpcDroppedLootItemEventArgs> func = () => new NpcDroppedLootItemEventArgs(npc.Object, null);
 
             func.Should().Throw<ArgumentNullException>();
+        }
+
+        [Fact]
+        public void GetNpc_IsCorrect() {
+            var npc = new Mock<INpc>().Object;
+            var item = new Mock<IItem>().Object;
+            var args = new NpcDroppedLootItemEventArgs(npc, item);
+
+            args.Npc.Should().BeSameAs(npc);
+        }
+
+        [Fact]
+        public void GetLootItem_IsCorrect() {
+            var npc = new Mock<INpc>().Object;
+            var item = new Mock<IItem>().Object;
+            var args = new NpcDroppedLootItemEventArgs(npc, item);
+
+            args.LootItem.Should().BeSameAs(item);
         }
     }
 }

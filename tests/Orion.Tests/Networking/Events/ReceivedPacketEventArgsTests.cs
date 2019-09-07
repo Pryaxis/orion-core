@@ -21,5 +21,23 @@ namespace Orion.Tests.Networking.Events {
 
             func.Should().Throw<ArgumentNullException>();
         }
+
+        [Fact]
+        public void GetSender_IsCorrect() {
+            var sender = new Terraria.RemoteClient();
+            var packet = new RequestConnectionPacket {Version = "test"};
+            var args = new ReceivedPacketEventArgs(sender, packet);
+
+            args.Sender.Should().BeSameAs(sender);
+        }
+
+        [Fact]
+        public void GetPacket_IsCorrect() {
+            var sender = new Terraria.RemoteClient();
+            var packet = new RequestConnectionPacket {Version = "test"};
+            var args = new ReceivedPacketEventArgs(sender, packet);
+
+            args.Packet.Should().BeSameAs(packet);
+        }
     }
 }
