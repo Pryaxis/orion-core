@@ -404,5 +404,34 @@ namespace Orion.Tests.Networking.Packets {
                 stream2.ToArray().Should().BeEquivalentTo(UpdateWorldSectionBytes);
             }
         }
+
+        private static readonly byte[] SyncTileFramesBytes = {11, 0, 11, 18, 0, 1, 0, 22, 0, 3, 0,};
+
+        [Fact]
+        public void ReadFromStream_SyncTileFrames_IsCorrect() {
+            using (var stream = new MemoryStream(SyncTileFramesBytes)) {
+                var packet = (SyncTileFramesPacket)TerrariaPacket.ReadFromStream(stream);
+
+                packet.IsSentToClient.Should().BeTrue();
+                packet.IsSentToServer.Should().BeFalse();
+                packet.Type.Should().Be(TerrariaPacketType.SyncTileFrames);
+                packet.StartSectionX.Should().Be(18);
+                packet.StartSectionY.Should().Be(1);
+                packet.EndSectionX.Should().Be(22);
+                packet.EndSectionY.Should().Be(3);
+            }
+        }
+
+        [Fact]
+        public void WriteToStream_SyncTileFrames_IsCorrect() {
+            using (var stream = new MemoryStream(SyncTileFramesBytes))
+            using (var stream2 = new MemoryStream()) {
+                var packet = TerrariaPacket.ReadFromStream(stream);
+
+                packet.WriteToStream(stream2);
+
+                stream2.ToArray().Should().BeEquivalentTo(SyncTileFramesBytes);
+            }
+        }
     }
 }

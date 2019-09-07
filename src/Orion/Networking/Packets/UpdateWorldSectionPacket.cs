@@ -5,7 +5,7 @@ namespace Orion.Networking.Packets {
     /// <summary>
     /// Packet sent to the client to provide a world section.
     /// </summary>
-    public class UpdateWorldSectionPacket : TerrariaPacket {
+    public sealed class UpdateWorldSectionPacket : TerrariaPacket {
         private byte[] _worldSection = new byte[0];
 
         /// <inheritdoc />

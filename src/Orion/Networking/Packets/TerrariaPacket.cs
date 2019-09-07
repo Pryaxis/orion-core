@@ -26,6 +26,7 @@ namespace Orion.Networking.Packets {
                 [TerrariaPacketType.RequestWorldSection] = () => new RequestWorldSectionPacket(),
                 [TerrariaPacketType.UpdateClientStatus] = () => new UpdateClientStatusPacket(),
                 [TerrariaPacketType.UpdateWorldSection] = () => new UpdateWorldSectionPacket(),
+                [TerrariaPacketType.SyncTileFrames] = () => new SyncTileFramesPacket(),
             };
 
         [ExcludeFromCodeCoverage]

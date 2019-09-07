@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using Orion.Networking;
 using Serilog;
 using Serilog.Sinks.SystemConsole.Themes;
 
@@ -43,7 +44,11 @@ namespace Orion.Launcher {
                 Console.ResetColor();
                 Console.WriteLine();
 
-                Terraria.WindowsLaunch.Main(args);
+                var service = new OrionNetworkService();
+
+                // Set SkipAssemblyLoad so that we don't JIT the social API.
+                Terraria.Main.SkipAssemblyLoad = true;
+                Terraria.Program.LaunchGame(args);
             }
         }
     }
