@@ -3,7 +3,6 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
-using Orion.World.Tiles;
 
 namespace Orion.World.TileEntities {
     internal sealed class OrionSignService : OrionService, ISignService {
@@ -31,7 +30,7 @@ namespace Orion.World.TileEntities {
                     if (_terrariaSigns[index] == null) {
                         return null;
                     } else {
-                        _signs[index] = new OrionSign(_terrariaSigns[index]);
+                        _signs[index] = new OrionSign(index, _terrariaSigns[index]);
                     }
                 }
 
@@ -56,26 +55,43 @@ namespace Orion.World.TileEntities {
         [ExcludeFromCodeCoverage]
         IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
 
-        public ISign PlaceSign(int x, int y, BlockType type = BlockType.Signs, int style = 0) =>
-            Terraria.WorldGen.PlaceSign(x, y, (ushort)type, style) ? GetSign(x, y) : null;
-
-        public ISign GetSign(int x, int y) {
-            var signIndex = Terraria.Sign.ReadSign(x, y);
-            if (signIndex < 0) {
+        public ISign AddSign(int x, int y) {
+            if (GetSign(x, y) != null) {
                 return null;
             }
 
-            Debug.Assert(signIndex < Count, $"{nameof(signIndex)} should be a valid index.");
-            return this[signIndex];
+            for (var i = 0; i < Count; ++i) {
+                if (_terrariaSigns[i] == null) {
+                    _terrariaSigns[i] = new Terraria.Sign {
+                        x = x,
+                        y = y,
+                        text = ""
+                    };
+                    return this[i];
+                }
+            }
+
+            return null;
+        }
+
+        public ISign GetSign(int x, int y) {
+            for (var i = 0; i < Count; ++i) {
+                var terrariaSign = _terrariaSigns[i];
+                if (terrariaSign != null && terrariaSign.x == x && terrariaSign.y == y) {
+                    return this[i];
+                }
+            }
+
+            return null;
         }
 
         public bool RemoveSign(ISign sign) {
-            var signIndex = Terraria.Sign.ReadSign(sign.X, sign.Y, false);
-            if (signIndex < 0) {
+            var maybeSign = _terrariaSigns[sign.Index];
+            if (maybeSign == null || maybeSign.x != sign.X || maybeSign.y != sign.Y) {
                 return false;
             }
 
-            Terraria.Sign.KillSign(sign.X, sign.Y);
+            _terrariaSigns[sign.Index] = null;
             return true;
         }
     }

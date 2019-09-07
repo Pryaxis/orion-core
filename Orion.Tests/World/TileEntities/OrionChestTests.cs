@@ -10,7 +10,7 @@ namespace Orion.Tests.World.TileEntities {
         [InlineData(100)]
         public void GetX_IsCorrect(int x) {
             var terrariaChest = new Terraria.Chest {x = x};
-            var chest = new OrionChest(terrariaChest);
+            var chest = new OrionChest(0, terrariaChest);
 
             chest.X.Should().Be(x);
         }
@@ -19,7 +19,7 @@ namespace Orion.Tests.World.TileEntities {
         [InlineData(100)]
         public void SetX_IsCorrect(int x) {
             var terrariaChest = new Terraria.Chest();
-            var chest = new OrionChest(terrariaChest);
+            var chest = new OrionChest(0, terrariaChest);
 
             chest.X = x;
 
@@ -30,7 +30,7 @@ namespace Orion.Tests.World.TileEntities {
         [InlineData(100)]
         public void GetY_IsCorrect(int y) {
             var terrariaChest = new Terraria.Chest {y = y};
-            var chest = new OrionChest(terrariaChest);
+            var chest = new OrionChest(0, terrariaChest);
 
             chest.Y.Should().Be(y);
         }
@@ -39,7 +39,7 @@ namespace Orion.Tests.World.TileEntities {
         [InlineData(100)]
         public void SetY_IsCorrect(int y) {
             var terrariaChest = new Terraria.Chest();
-            var chest = new OrionChest(terrariaChest);
+            var chest = new OrionChest(0, terrariaChest);
 
             chest.Y = y;
 
@@ -50,7 +50,7 @@ namespace Orion.Tests.World.TileEntities {
         [InlineData("test")]
         public void GetName_IsCorrect(string name) {
             var terrariaChest = new Terraria.Chest {name = name};
-            var chest = new OrionChest(terrariaChest);
+            var chest = new OrionChest(0, terrariaChest);
 
             chest.Name.Should().Be(name);
         }
@@ -59,7 +59,7 @@ namespace Orion.Tests.World.TileEntities {
         [InlineData("test")]
         public void SetName_IsCorrect(string name) {
             var terrariaChest = new Terraria.Chest();
-            var chest = new OrionChest(terrariaChest);
+            var chest = new OrionChest(0, terrariaChest);
 
             chest.Name = name;
 
@@ -69,7 +69,7 @@ namespace Orion.Tests.World.TileEntities {
         [Fact]
         public void SetName_NullValue_ThrowsArgumentNullException() {
             var terrariaChest = new Terraria.Chest();
-            var chest = new OrionChest(terrariaChest);
+            var chest = new OrionChest(0, terrariaChest);
             Action action = () => chest.Name = null;
 
             action.Should().Throw<ArgumentNullException>();
@@ -84,7 +84,7 @@ namespace Orion.Tests.World.TileEntities {
                 stack = itemStackSize,
                 prefix = (byte)itemPrefix,
             };
-            var chest = new OrionChest(terrariaChest);
+            var chest = new OrionChest(0, terrariaChest);
 
             chest.Items[0].Type.Should().Be(itemType);
             chest.Items[0].StackSize.Should().Be(itemStackSize);

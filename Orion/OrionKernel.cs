@@ -18,6 +18,12 @@ namespace Orion {
     /// Manages Orion's dependency injection.
     /// </summary>
     public sealed class OrionKernel : StandardKernel {
+        private static ISet<Type> InterfaceTypesToIgnore => new HashSet<Type> {
+            typeof(IDisposable),
+            typeof(IReadOnlyList<>),
+            typeof(IService)
+        };
+
         private readonly ISet<Assembly> _pluginAssemblies = new HashSet<Assembly>();
         private readonly ISet<Type> _pluginTypesToLoad = new HashSet<Type>();
         private readonly ISet<OrionPlugin> _plugins = new HashSet<OrionPlugin>();
@@ -33,10 +39,8 @@ namespace Orion {
             Bind<ISignService>().To<OrionSignService>().InSingletonScope();
             Bind<IWorldService>().To<OrionWorldService>().InSingletonScope();
             
-            /*
-             * Because we're using Assembly.Load, we'll need to have an AssemblyResolve handler to deal with any issues
-             * that may pop up.
-             */
+            // Because we're using Assembly.Load, we'll need to have an AssemblyResolve handler to deal with any issues
+            // that may pop up.
             AppDomain.CurrentDomain.AssemblyResolve += (sender, args) => {
                 Console.WriteLine(args.Name);
                 return _pluginAssemblies.First(a => a.FullName == args.Name);
@@ -59,56 +63,40 @@ namespace Orion {
                 throw new ArgumentNullException(nameof(assemblyPath));
             }
 
-            /*
-             * Load the assembly from the path. We're using Assembly.Load with the bytes of the file so that we don't
-             * hold a lock on the path, allowing the user to delete or upgrade the path.
-             */
+            // Load the assembly from the path. We're using Assembly.Load with the bytes of the file so that we don't
+            // hold a lock on the path, allowing the user to delete or upgrade the path.
             var assembly = Assembly.Load(File.ReadAllBytes(assemblyPath));
             _pluginAssemblies.Add(assembly);
 
-            /*
-             * Bind all plugin types to themselves. This allows plugins to properly depend on other plugins; we won't
-             * have any icky reliance on static state.
-             */
-            foreach (var pluginType in assembly.GetExportedTypes().Where(t => t.IsSubclassOf(typeof(OrionPlugin)))) {
-                _pluginTypesToLoad.Add(pluginType);
-                Bind(pluginType).ToSelf().InSingletonScope();
-            }
+            // Because GetExportedTypes returns generic types that are 'bound', we may potentially need to get unbound
+            // versions of the types.
+            Type GetGenericTypeMaybe(Type type) => type.IsGenericType ? type.GetGenericTypeDefinition() : type;
 
-            /*
-             * Bind all service interfaces to their implementations. We use a contextual binding here which will
-             * override any default bindings that we've set in the constructor of OrionKernel.
-             */
-            foreach (var serviceType in assembly.GetExportedTypes().Where(t => t.IsSubclassOf(typeof(OrionService)))) {
+            foreach (var serviceType in assembly.GetExportedTypes()
+                                                .Where(s => s.IsSubclassOf(typeof(OrionService)))
+                                                .Select(GetGenericTypeMaybe)) {
                 if (serviceType.IsSubclassOf(typeof(OrionPlugin))) {
-                    /*
-                     * Bind all plugin types to themselves, allowing plugins to properly depend on other plugins
-                     * without reliance on static state.
-                     */
+                    // Bind all plugin types to themselves, allowing plugins to properly depend on other plugins
+                    // without reliance on static state.
                     _pluginTypesToLoad.Add(serviceType);
                     Bind(serviceType).ToSelf().InSingletonScope();
-                } else {
-                    var isInstanced = serviceType.GetCustomAttribute<InstancedServiceAttribute>() != null;
-
-                    /*
-                     * Bind all service interfaces to the implementation. We use a contextual binding here which will
-                     * override any default bindings that we've set in the constructor of OrionKernel.
-                     */
-                    foreach (var interfaceType in serviceType.GetInterfaces()) {
-                        // Ignore IDisposable and IService.
-                        if (interfaceType == typeof(IDisposable) || interfaceType == typeof(IService)) {
-                            continue;
-                        }
-
-                        var bind = Bind(interfaceType).To(serviceType).When(r => _pluginAssemblies.Contains(assembly));
-                        if (isInstanced) {
-                            bind.InParentScope();
-                        } else {
-                            bind.InSingletonScope();
-                        }
-                    }
+                    continue;
                 }
 
+                var isInstanced = serviceType.GetCustomAttribute<InstancedServiceAttribute>() != null;
+
+                // Bind all service interfaces to the implementation. We use a contextual binding here which will
+                // override any default bindings that we've set in the constructor of OrionKernel.
+                foreach (var interfaceType in serviceType.GetInterfaces()
+                                                         .Where(i => !InterfaceTypesToIgnore.Contains(i))
+                                                         .Select(GetGenericTypeMaybe)) {
+                    var bind = Bind(interfaceType).To(serviceType).When(r => _pluginAssemblies.Contains(assembly));
+                    if (isInstanced) {
+                        bind.InParentScope();
+                    } else {
+                        bind.InSingletonScope();
+                    }
+                }
             }
         }
 

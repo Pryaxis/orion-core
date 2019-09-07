@@ -3,7 +3,6 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
-using Orion.World.Tiles;
 
 namespace Orion.World.TileEntities {
     internal sealed class OrionChestService : OrionService, IChestService {
@@ -32,7 +31,7 @@ namespace Orion.World.TileEntities {
                     if (_terrariaChests[index] == null) {
                         return null;
                     } else {
-                        _chests[index] = new OrionChest(_terrariaChests[index]);
+                        _chests[index] = new OrionChest(index, _terrariaChests[index]);
                     }
                 }
 
@@ -57,34 +56,48 @@ namespace Orion.World.TileEntities {
         [ExcludeFromCodeCoverage]
         IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
 
-        public IChest PlaceChest(int x, int y, BlockType type = BlockType.Containers, int style = 0) {
-            var chestIndex = Terraria.WorldGen.PlaceChest(x, y, (ushort)type, false, style);
-            if (chestIndex < 0) {
+        public IChest AddChest(int x, int y) {
+            if (GetChest(x, y) != null) {
                 return null;
             }
 
-            Debug.Assert(chestIndex < Count, $"{nameof(chestIndex)} should be a valid index.");
-            return this[chestIndex];
+            for (var i = 0; i < Count; ++i) {
+                var terrariaChest = _terrariaChests[i];
+                if (terrariaChest == null) {
+                    terrariaChest = _terrariaChests[i] = new Terraria.Chest {
+                        x = x,
+                        y = y,
+                    };
+
+                    for (var j = 0; j < Terraria.Chest.maxItems; ++j) {
+                        terrariaChest.item[j] = new Terraria.Item();
+                    }
+
+                    return this[i];
+                }
+            }
+
+            return null;
         }
 
         public IChest GetChest(int x, int y) {
-            var chestIndex = Terraria.Chest.FindChest(x, y);
-            if (chestIndex < 0) {
-                return null;
+            for (var i = 0; i < Count; ++i) {
+                var terrariaChest = _terrariaChests[i];
+                if (terrariaChest != null && terrariaChest.x == x && terrariaChest.y == y) {
+                    return this[i];
+                }
             }
-            
-            Debug.Assert(chestIndex < Count, $"{nameof(chestIndex)} should be a valid index.");
-            return this[chestIndex];
+
+            return null;
         }
 
         public bool RemoveChest(IChest chest) {
-            var chestIndex = Terraria.Chest.FindChest(chest.X, chest.Y);
-            if (chestIndex < 0) {
+            var maybeChest = _terrariaChests[chest.Index];
+            if (maybeChest == null || maybeChest.x != chest.X || maybeChest.y != chest.Y) {
                 return false;
             }
-            
-            Debug.Assert(chestIndex < Count, $"{nameof(chestIndex)} should be a valid index.");
-            Terraria.Chest.DestroyChestDirect(chest.X, chest.Y, chestIndex);
+
+            _terrariaChests[chest.Index] = null;
             return true;
         }
     }

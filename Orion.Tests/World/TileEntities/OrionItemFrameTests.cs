@@ -9,6 +9,15 @@ namespace Orion.Tests.World.TileEntities {
     public class OrionItemFrameTests {
         [Theory]
         [InlineData(100)]
+        public void GetIndex_IsCorrect(int index) {
+            var terrariaItemFrame = new TGCTE.TEItemFrame {ID = index};
+            var itemFrame = new OrionItemFrame(terrariaItemFrame);
+
+            itemFrame.Index.Should().Be(index);
+        }
+
+        [Theory]
+        [InlineData(100)]
         public void GetX_IsCorrect(int x) {
             var terrariaItemFrame = new TGCTE.TEItemFrame {Position = new TDS.Point16(x, 0)};
             var itemFrame = new OrionItemFrame(terrariaItemFrame);

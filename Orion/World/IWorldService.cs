@@ -96,6 +96,46 @@ namespace Orion.World {
         event EventHandler<UpdatingHardmodeTileEventArgs> UpdatingHardmodeTile;
 
         /// <summary>
+        /// Adds a target dummy at the given coordinates.
+        /// </summary>
+        /// <param name="x">The X coordinate.</param>
+        /// <param name="y">The Y coordinate.</param>
+        /// <returns>The resulting training dummy, or <c>null</c> if none was placed.</returns>
+        ITargetDummy AddTargetDummy(int x, int y);
+
+        /// <summary>
+        /// Adds an item frame at the given coordinates.
+        /// </summary>
+        /// <param name="x">The X coordinate.</param>
+        /// <param name="y">The Y coordinate.</param>
+        /// <returns>The resulting item frame, or <c>null</c> if none was placed.</returns>
+        IItemFrame AddItemFrame(int x, int y);
+
+        /// <summary>
+        /// Adds a logic sensor at the given coordinates.
+        /// </summary>
+        /// <param name="x">The X coordinate.</param>
+        /// <param name="y">The Y coordinate.</param>
+        /// <returns>The resulting logic sensor, or <c>null</c> if none was placed.</returns>
+        ILogicSensor AddLogicSensor(int x, int y);
+
+        /// <summary>
+        /// Gets the tile entity at the given coordinates.
+        /// </summary>
+        /// <param name="x">The X coordinate.</param>
+        /// <param name="y">The Y coordinate.</param>
+        /// <returns>The tile entity, or <c>null</c> if there is none.</returns>
+        ITileEntity GetTileEntity(int x, int y);
+
+        /// <summary>
+        /// Removes the given <see cref="ITileEntity"/> from the world.
+        /// </summary>
+        /// <param name="tileEntity">The tile entity.</param>
+        /// <returns>A value indicating whether the tile entity was successfully removed.</returns>
+        /// <exception cref="ArgumentNullException"><paramref name="tileEntity"/> is <c>null</c>.</exception>
+        bool RemoveTileEntity(ITileEntity tileEntity);
+
+        /// <summary>
         /// Saves the world.
         /// </summary>
         void SaveWorld();

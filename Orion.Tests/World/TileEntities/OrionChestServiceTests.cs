@@ -10,12 +10,6 @@ namespace Orion.Tests.World.TileEntities {
         private readonly IChestService _chestService;
 
         public OrionChestServiceTests() {
-            for (int x = 100; x <= 101; ++x) {
-                for (int y = 98; y <= 100; ++y) {
-                    Terraria.Main.tile[x, y] = new Terraria.Tile();
-                }
-            }
-
             for (int i = 0; i < Terraria.Main.maxChests; ++i) {
                 Terraria.Main.chest[i] = null;
             }
@@ -33,6 +27,7 @@ namespace Orion.Tests.World.TileEntities {
             var chest = (OrionChest)_chestService[0];
 
             chest.Wrapped.Should().BeSameAs(Terraria.Main.chest[0]);
+            chest.Index.Should().Be(0);
         }
 
         [Fact]
@@ -73,22 +68,12 @@ namespace Orion.Tests.World.TileEntities {
         }
 
         [Fact]
-        public void PlaceChest_IsCorrect() {
-            Terraria.Main.tile[100, 100].active(true);
-            Terraria.Main.tile[101, 100].active(true);
-
-            var chest = _chestService.PlaceChest(100, 99);
+        public void AddChest_IsCorrect() {
+            var chest = _chestService.AddChest(100, 100);
 
             chest.Should().NotBeNull();
             chest.X.Should().Be(100);
-            chest.Y.Should().Be(98);
-        }
-
-        [Fact]
-        public void PlaceChest_InvalidPlacement_ReturnsNull() {
-            var chest = _chestService.PlaceChest(100, 99);
-
-            chest.Should().BeNull();
+            chest.Y.Should().Be(100);
         }
 
         [Fact]

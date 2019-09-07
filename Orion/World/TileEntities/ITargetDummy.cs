@@ -1,8 +1,8 @@
 ﻿namespace Orion.World.TileEntities {
     /// <summary>
-    /// Provides a wrapper around a Terraria training dummy tile entity.
+    /// Provides a wrapper around a Terraria target dummy tile entity.
     /// </summary>
-    public interface ITrainingDummy : ITileEntity {
+    public interface ITargetDummy : ITileEntity {
         /// <summary>
         /// Gets the NPC index corresponding to the training dummy.
         /// </summary>

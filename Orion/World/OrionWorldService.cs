@@ -1,12 +1,17 @@
 ﻿using System;
 using System.Runtime.InteropServices;
 using Orion.World.Events;
+using Orion.World.TileEntities;
 using Orion.World.Tiles;
 using OTAPI;
 using OTAPI.Tile;
+using TDS = Terraria.DataStructures;
+using TGCTE = Terraria.GameContent.Tile_Entities;
 
 namespace Orion.World {
     internal sealed unsafe class OrionWorldService : OrionService, IWorldService, ITileCollection {
+        private readonly IChestService _chestService;
+        private readonly ISignService _signService;
         private byte* _tilesPtr = null;
 
         public override string Author => "Pryaxis";
@@ -18,23 +23,7 @@ namespace Orion.World {
         public int WorldHeight { get; private set; }
 
         public Tile this[int x, int y] {
-            get {
-                /*
-                 * Lazily initialize _tilesPtr. This allows us to use less memory if the world size is Small or Medium;
-                 * however, this comes at the cost of a null check for every Tile access.
-                 */
-                if (_tilesPtr == null) {
-                    WorldWidth = Terraria.Main.maxTilesX;
-                    WorldHeight = Terraria.Main.maxTilesY;
-
-                    /*
-                     * Allocate with AllocHGlobal so that the memory is pre-pinned. We could also use a GCHandle here,
-                     * but this is just simpler.
-                     */
-                    _tilesPtr = (byte*)Marshal.AllocHGlobal(OrionTile.ByteCount * (WorldWidth + 1) * (WorldHeight + 1));
-                }
-                return new OrionTile(_tilesPtr + OrionTile.ByteCount * ((WorldWidth + 1) * y + x));
-            }
+            get => new OrionTile(_tilesPtr + OrionTile.ByteCount * ((WorldWidth + 1) * y + x));
             set => ((ITileCollection)this)[x, y] = value;
         }
 
@@ -74,8 +63,25 @@ namespace Orion.World {
         public event EventHandler<StartedHardmodeEventArgs> StartedHardmode;
         public event EventHandler<UpdatingHardmodeTileEventArgs> UpdatingHardmodeTile;
 
-        public OrionWorldService() {
-            Hooks.Tile.CreateCollection = () => this;
+        public OrionWorldService(IChestService chestService, ISignService signService) {
+            _chestService = chestService;
+            _signService = signService;
+
+            Hooks.Tile.CreateCollection = () => {
+                WorldWidth = Terraria.Main.maxTilesX;
+                WorldHeight = Terraria.Main.maxTilesY;
+
+                // Allocate with AllocHGlobal so that the memory is pre-pinned.
+                _tilesPtr = (byte*)Marshal.AllocHGlobal(OrionTile.ByteCount * (WorldWidth + 1) * (WorldHeight + 1));
+                return this;
+            };
+
+            // This looks really dumb, but the first Terraria.Main.tile access might trigger the cctor, in which case
+            // we should check twice to see if we should actually call Hooks.Tile.CreateCollection manually.
+            if (Terraria.Main.tile == null && Terraria.Main.tile == null) {
+                Terraria.Main.tile = Hooks.Tile.CreateCollection();
+            }
+
             Hooks.Game.Halloween = HalloweenHandler;
             Hooks.Game.Christmas = ChristmasHandler;
             Hooks.World.IO.PreLoadWorld = PreLoadWorldHandler;
@@ -88,7 +94,9 @@ namespace Orion.World {
         }
 
         protected override void Dispose(bool disposeManaged) {
+            Terraria.Main.tile = null;
             Marshal.FreeHGlobal((IntPtr)_tilesPtr);
+
             if (!disposeManaged) {
                 return;
             }
@@ -105,7 +113,65 @@ namespace Orion.World {
             Hooks.World.HardmodeTileUpdate = null;
         }
 
+        public ITargetDummy AddTargetDummy(int x, int y) {
+            if (TDS.TileEntity.ByPosition.ContainsKey(new TDS.Point16(x, y))) {
+                return null;
+            }
+
+            var targetDummyIndex = TGCTE.TETrainingDummy.Place(x, y);
+            return new OrionTargetDummy((TGCTE.TETrainingDummy)TDS.TileEntity.ByID[targetDummyIndex]);
+        }
+
+        public IItemFrame AddItemFrame(int x, int y) {
+            if (TDS.TileEntity.ByPosition.ContainsKey(new TDS.Point16(x, y))) {
+                return null;
+            }
+
+            var itemFrameIndex = TGCTE.TEItemFrame.Place(x, y);
+            return new OrionItemFrame((TGCTE.TEItemFrame)TDS.TileEntity.ByID[itemFrameIndex]);
+        }
+
+        public ILogicSensor AddLogicSensor(int x, int y) {
+            if (TDS.TileEntity.ByPosition.ContainsKey(new TDS.Point16(x, y))) {
+                return null;
+            }
+
+            var logicSensor = TGCTE.TELogicSensor.Place(x, y);
+            return new OrionLogicSensor((TGCTE.TELogicSensor)TDS.TileEntity.ByID[logicSensor]);
+        }
+
+        public ITileEntity GetTileEntity(int x, int y) =>
+            _chestService.GetChest(x, y) ?? _signService.GetSign(x, y) ?? GetTerrariaTileEntity(x, y);
+
+        public bool RemoveTileEntity(ITileEntity tileEntity) {
+            switch (tileEntity) {
+            case IChest chest: return _chestService.RemoveChest(chest);
+            case ISign sign: return _signService.RemoveSign(sign);
+            default: return RemoveTerrariaTileEntity(tileEntity);
+            }
+        }
+
         public void SaveWorld() => Terraria.IO.WorldFile.saveWorld();
+        
+
+        private static ITileEntity GetTerrariaTileEntity(int x, int y) {
+            if (!TDS.TileEntity.ByPosition.TryGetValue(new TDS.Point16(x, y), out var terrariaTileEntity)) {
+                return null;
+            }
+
+            switch (terrariaTileEntity) {
+            case TGCTE.TETrainingDummy trainingDummy: return new OrionTargetDummy(trainingDummy);
+            case TGCTE.TEItemFrame itemFrame: return new OrionItemFrame(itemFrame);
+            case TGCTE.TELogicSensor logicSensor: return new OrionLogicSensor(logicSensor);
+            default: return null;
+            }
+        }
+
+        private static bool RemoveTerrariaTileEntity(ITileEntity tileEntity) {
+            // We use the & operator here instead of && since we always need to execute both operands.
+            return TDS.TileEntity.ByPosition.Remove(new TDS.Point16(tileEntity.X, tileEntity.Y)) &
+                   TDS.TileEntity.ByID.Remove(tileEntity.Index);
+        }
 
 
         private HookResult HalloweenHandler() {

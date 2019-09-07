@@ -1,24 +1,18 @@
 ﻿using System;
 using System.Collections.Generic;
-using Orion.World.Tiles;
 
 namespace Orion.World.TileEntities {
     /// <summary>
     /// Provides a mechanism for managing signs.
     /// </summary>
     public interface ISignService : IReadOnlyList<ISign>, IService {
-
         /// <summary>
-        /// Attempts to place a sign at the given coordinates with the type and style.
+        /// Attempts to add a sign at the given coordinates with the type and style.
         /// </summary>
         /// <param name="x">The X coordinate.</param>
         /// <param name="y">The Y coordinate.</param>
-        /// <param name="type">
-        /// The type. Must be <see cref="BlockType.Signs"/> or <see cref="BlockType.AnnouncementBox"/>.
-        /// </param>
-        /// <param name="style">The style.</param>
         /// <returns>The resulting chest, or <c>null</c> if none was added.</returns>
-        ISign PlaceSign(int x, int y, BlockType type = BlockType.Signs, int style = 0);
+        ISign AddSign(int x, int y);
 
         /// <summary>
         /// Gets the sign with the given coordinates.

@@ -7,6 +7,8 @@ namespace Orion.World.TileEntities {
     /// Orion's implementation of <see cref="IChest"/>.
     /// </summary>
     internal sealed class OrionChest : IChest {
+        public int Index { get; }
+
         public int X {
             get => Wrapped.x;
             set => Wrapped.x = value;
@@ -26,9 +28,12 @@ namespace Orion.World.TileEntities {
 
         internal Terraria.Chest Wrapped { get; }
 
-        public OrionChest(Terraria.Chest terrariaChest) {
+        public OrionChest(int chestIndex, Terraria.Chest terrariaChest) {
+            Debug.Assert(chestIndex >= 0 && chestIndex < Terraria.Main.maxChests,
+                         $"{nameof(chestIndex)} should be a valid index.");
             Debug.Assert(terrariaChest != null, $"{nameof(terrariaChest)} should not be null.");
 
+            Index = chestIndex;
             Wrapped = terrariaChest;
 
             Items = new OrionItemList(Wrapped.item);

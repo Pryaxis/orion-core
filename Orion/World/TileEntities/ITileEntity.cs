@@ -4,6 +4,11 @@
     /// </summary>
     public interface ITileEntity {
         /// <summary>
+        /// Gets the index of the tile entity.
+        /// </summary>
+        int Index { get; }
+
+        /// <summary>
         /// Gets or sets the X coordinate.
         /// </summary>
         int X { get; set; }

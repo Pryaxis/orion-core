@@ -8,6 +8,15 @@ namespace Orion.Tests.World.TileEntities {
     public class OrionLogicSensorTests {
         [Theory]
         [InlineData(100)]
+        public void GetIndex_IsCorrect(int index) {
+            var terrariaLogicSensor = new TGCTE.TELogicSensor {ID = index};
+            var logicSensor = new OrionLogicSensor(terrariaLogicSensor);
+
+            logicSensor.Index.Should().Be(index);
+        }
+
+        [Theory]
+        [InlineData(100)]
         public void GetX_IsCorrect(int x) {
             var terrariaLogicSensor = new TGCTE.TELogicSensor {Position = new TDS.Point16(x, 0)};
             var logicSensor = new OrionLogicSensor(terrariaLogicSensor);
