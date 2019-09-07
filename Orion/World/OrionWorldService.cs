@@ -154,39 +154,39 @@ namespace Orion.World {
             return new OrionLogicSensor((TGCTE.TELogicSensor)TDS.TileEntity.ByID[logicSensor]);
         }
 
-        public ITileEntity GetTileEntity(int x, int y) =>
-            _chestService.GetChest(x, y) ?? _signService.GetSign(x, y) ?? GetTerrariaTileEntity(x, y);
+        public ITileEntity GetTileEntity(int x, int y) {
+            ITileEntity GetTerrariaTileEntity() {
+                if (!TDS.TileEntity.ByPosition.TryGetValue(new TDS.Point16(x, y), out var terrariaTileEntity)) {
+                    return null;
+                }
+
+                switch (terrariaTileEntity) {
+                case TGCTE.TETrainingDummy trainingDummy: return new OrionTargetDummy(trainingDummy);
+                case TGCTE.TEItemFrame itemFrame: return new OrionItemFrame(itemFrame);
+                case TGCTE.TELogicSensor logicSensor: return new OrionLogicSensor(logicSensor);
+                default: return null;
+                }
+            }
+
+            return _chestService.GetChest(x, y) ?? _signService.GetSign(x, y) ?? GetTerrariaTileEntity();
+        }
 
         public bool RemoveTileEntity(ITileEntity tileEntity) {
+            bool RemoveTerrariaTileEntity() {
+                // We use the & operator here instead of && since we always need to execute both operands.
+                return TDS.TileEntity.ByPosition.Remove(new TDS.Point16(tileEntity.X, tileEntity.Y)) &
+                       TDS.TileEntity.ByID.Remove(tileEntity.Index);
+            }
+
             switch (tileEntity) {
             case IChest chest: return _chestService.RemoveChest(chest);
             case ISign sign: return _signService.RemoveSign(sign);
-            default: return RemoveTerrariaTileEntity(tileEntity);
+            default: return RemoveTerrariaTileEntity();
             }
         }
 
         public void SaveWorld() => Terraria.IO.WorldFile.saveWorld();
         
-
-        private static ITileEntity GetTerrariaTileEntity(int x, int y) {
-            if (!TDS.TileEntity.ByPosition.TryGetValue(new TDS.Point16(x, y), out var terrariaTileEntity)) {
-                return null;
-            }
-
-            switch (terrariaTileEntity) {
-            case TGCTE.TETrainingDummy trainingDummy: return new OrionTargetDummy(trainingDummy);
-            case TGCTE.TEItemFrame itemFrame: return new OrionItemFrame(itemFrame);
-            case TGCTE.TELogicSensor logicSensor: return new OrionLogicSensor(logicSensor);
-            default: return null;
-            }
-        }
-
-        private static bool RemoveTerrariaTileEntity(ITileEntity tileEntity) {
-            // We use the & operator here instead of && since we always need to execute both operands.
-            return TDS.TileEntity.ByPosition.Remove(new TDS.Point16(tileEntity.X, tileEntity.Y)) &
-                   TDS.TileEntity.ByID.Remove(tileEntity.Index);
-        }
-
 
         private HookResult HalloweenHandler() {
             var args = new CheckingHalloweenEventArgs();
