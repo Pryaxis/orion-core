@@ -13,9 +13,10 @@ using TGCTE = Terraria.GameContent.Tile_Entities;
 
 namespace Orion.World {
     internal sealed unsafe class OrionWorldService : OrionService, IWorldService, ITileCollection {
+        private static byte* _tilesPtr = null;
+
         private readonly IChestService _chestService;
         private readonly ISignService _signService;
-        private byte* _tilesPtr = null;
 
         [ExcludeFromCodeCoverage]
         public override string Author => "Pryaxis";
@@ -87,12 +88,13 @@ namespace Orion.World {
 
             OTAPI.Hooks.Tile.CreateCollection = () => {
                 // Allocate with AllocHGlobal so that the memory is pre-pinned.
-                _tilesPtr = (byte*)Marshal.AllocHGlobal(OrionTile.ByteCount * (WorldWidth + 1) * (WorldHeight + 1));
+                if (_tilesPtr == null) {
+                    _tilesPtr = (byte*)Marshal.AllocHGlobal(OrionTile.ByteCount * (WorldWidth + 1) * (WorldHeight + 1));
+                }
                 return this;
             };
 
-            // Force the tile collection to be this instance.
-            if (Terraria.Main.tile == null || Terraria.Main.tile != this) {
+            if (Terraria.Main.tile != this) {
                 Terraria.Main.tile = OTAPI.Hooks.Tile.CreateCollection();
             }
 
@@ -108,9 +110,6 @@ namespace Orion.World {
         }
 
         protected override void Dispose(bool disposeManaged) {
-            Terraria.Main.tile = null;
-            Marshal.FreeHGlobal((IntPtr)_tilesPtr);
-
             if (!disposeManaged) {
                 return;
             }
