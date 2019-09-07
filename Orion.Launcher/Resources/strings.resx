@@ -126,4 +126,8 @@
   <data name="PluginDirectory" xml:space="preserve">
     <value>plugins</value>
   </data>
+  <data name="UnhandledExceptionMessage" xml:space="preserve">
+    <value>Unhandled exception:
+{0}</value>
+  </data>
 </root>

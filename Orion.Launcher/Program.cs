@@ -4,6 +4,12 @@ using System.IO;
 namespace Orion.Launcher {
     internal class Program {
         internal static void Main(string[] args) {
+            AppDomain.CurrentDomain.UnhandledException += (sender, eventArgs) => {
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.WriteLine(Resources.strings.UnhandledExceptionMessage, eventArgs.ExceptionObject);
+                Console.ResetColor();
+            };
+
             Directory.CreateDirectory(Resources.strings.PluginDirectory);
 
             using (var kernel = new OrionKernel()) {

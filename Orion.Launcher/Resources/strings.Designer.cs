@@ -86,5 +86,15 @@ namespace Orion.Launcher.Resources {
                 return ResourceManager.GetString("PluginDirectory", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Unhandled exception:
+        ///{0}.
+        /// </summary>
+        internal static string UnhandledExceptionMessage {
+            get {
+                return ResourceManager.GetString("UnhandledExceptionMessage", resourceCulture);
+            }
+        }
     }
 }
