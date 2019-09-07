@@ -10,6 +10,16 @@ namespace Orion.Tests.World.TileEntities {
         private readonly IChestService _chestService;
 
         public OrionChestServiceTests() {
+            for (int x = 100; x <= 101; ++x) {
+                for (int y = 98; y <= 100; ++y) {
+                    Terraria.Main.tile[x, y] = new Terraria.Tile();
+                }
+            }
+
+            for (int i = 0; i < Terraria.Main.maxChests; ++i) {
+                Terraria.Main.chest[i] = null;
+            }
+
             _chestService = new OrionChestService();
         }
 
@@ -45,8 +55,6 @@ namespace Orion.Tests.World.TileEntities {
 
         [Fact]
         public void GetItem_ChestIsNull_IsCorrect() {
-            Terraria.Main.chest[0] = null;
-
             var chest = (OrionChest)_chestService[0];
 
             chest.Should().BeNull();
@@ -66,13 +74,7 @@ namespace Orion.Tests.World.TileEntities {
 
         [Fact]
         public void PlaceChest_IsCorrect() {
-            Terraria.Main.tile[100, 98] = new Terraria.Tile();
-            Terraria.Main.tile[101, 98] = new Terraria.Tile();
-            Terraria.Main.tile[100, 99] = new Terraria.Tile();
-            Terraria.Main.tile[101, 99] = new Terraria.Tile();
-            Terraria.Main.tile[100, 100] = new Terraria.Tile();
             Terraria.Main.tile[100, 100].active(true);
-            Terraria.Main.tile[101, 100] = new Terraria.Tile();
             Terraria.Main.tile[101, 100].active(true);
 
             var chest = _chestService.PlaceChest(100, 99);
@@ -84,13 +86,6 @@ namespace Orion.Tests.World.TileEntities {
 
         [Fact]
         public void PlaceChest_InvalidPlacement_ReturnsNull() {
-            Terraria.Main.tile[100, 98] = new Terraria.Tile();
-            Terraria.Main.tile[101, 98] = new Terraria.Tile();
-            Terraria.Main.tile[100, 99] = new Terraria.Tile();
-            Terraria.Main.tile[101, 99] = new Terraria.Tile();
-            Terraria.Main.tile[100, 100] = new Terraria.Tile();
-            Terraria.Main.tile[101, 100] = new Terraria.Tile();
-
             var chest = _chestService.PlaceChest(100, 99);
 
             chest.Should().BeNull();
@@ -114,10 +109,6 @@ namespace Orion.Tests.World.TileEntities {
 
         [Fact]
         public void GetChest_NoChest_ReturnsNull() {
-            for (var i = 0; i < Terraria.Main.maxChests; ++i) {
-                Terraria.Main.chest[i] = null;
-            }
-
             var chest = _chestService.GetChest(100, 100);
 
             chest.Should().BeNull();
@@ -144,9 +135,7 @@ namespace Orion.Tests.World.TileEntities {
                 y = 100,
             };
             var chest = _chestService.GetChest(100, 100);
-            for (var i = 0; i < Terraria.Main.maxChests; ++i) {
-                Terraria.Main.chest[i] = null;
-            }
+            Terraria.Main.chest[0] = null;
 
             var result = _chestService.RemoveChest(chest);
 

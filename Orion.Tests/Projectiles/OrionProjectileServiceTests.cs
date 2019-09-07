@@ -6,15 +6,13 @@ using Orion.Projectiles;
 using Xunit;
 
 namespace Orion.Tests.Projectiles {
+    [Collection("TerrariaTestsCollection")]
     public class OrionProjectileServiceTests : IDisposable {
         private readonly IProjectileService _projectileService;
 
         public OrionProjectileServiceTests() {
             for (var i = 0; i < Terraria.Main.maxProjectiles + 1; ++i) {
                 Terraria.Main.projectile[i] = new Terraria.Projectile {whoAmI = i};
-            }
-            for (var i = 0; i < Terraria.Main.maxDust + 1; ++i) {
-                Terraria.Main.dust[i] = new Terraria.Dust {dustIndex = i};
             }
             
             _projectileService = new OrionProjectileService();

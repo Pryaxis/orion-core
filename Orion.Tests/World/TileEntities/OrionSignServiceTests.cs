@@ -11,6 +11,16 @@ namespace Orion.Tests.World.TileEntities {
         private readonly ISignService _signService;
 
         public OrionSignServiceTests() {
+            for (int x = 100; x <= 101; ++x) {
+                for (int y = 98; y <= 100; ++y) {
+                    Terraria.Main.tile[x, y] = new Terraria.Tile();
+                }
+            }
+
+            for (var i = 0; i < Terraria.Sign.maxSigns; ++i) {
+                Terraria.Main.sign[i] = null;
+            }
+
             _signService = new OrionSignService();
         }
 
@@ -46,8 +56,6 @@ namespace Orion.Tests.World.TileEntities {
 
         [Fact]
         public void GetItem_SignIsNull_IsCorrect() {
-            Terraria.Main.sign[0] = null;
-
             var sign = (OrionSign)_signService[0];
 
             sign.Should().BeNull();
@@ -67,13 +75,7 @@ namespace Orion.Tests.World.TileEntities {
 
         [Fact]
         public void PlaceSign_IsCorrect() {
-            Terraria.Main.tile[100, 98] = new Terraria.Tile();
-            Terraria.Main.tile[101, 98] = new Terraria.Tile();
-            Terraria.Main.tile[100, 99] = new Terraria.Tile();
-            Terraria.Main.tile[101, 99] = new Terraria.Tile();
-            Terraria.Main.tile[100, 100] = new Terraria.Tile();
             Terraria.Main.tile[100, 100].active(true);
-            Terraria.Main.tile[101, 100] = new Terraria.Tile();
             Terraria.Main.tile[101, 100].active(true);
 
             var sign = _signService.PlaceSign(100, 99);
@@ -85,13 +87,6 @@ namespace Orion.Tests.World.TileEntities {
 
         [Fact]
         public void PlaceSign_InvalidPlacement_ReturnsNull() {
-            Terraria.Main.tile[100, 98] = new Terraria.Tile();
-            Terraria.Main.tile[101, 98] = new Terraria.Tile();
-            Terraria.Main.tile[100, 99] = new Terraria.Tile();
-            Terraria.Main.tile[101, 99] = new Terraria.Tile();
-            Terraria.Main.tile[100, 100] = new Terraria.Tile();
-            Terraria.Main.tile[101, 100] = new Terraria.Tile();
-
             var sign = _signService.PlaceSign(100, 99);
 
             sign.Should().BeNull();
@@ -99,13 +94,7 @@ namespace Orion.Tests.World.TileEntities {
 
         [Fact]
         public void GetSign_IsCorrect() {
-            Terraria.Main.tile[100, 98] = new Terraria.Tile();
-            Terraria.Main.tile[101, 98] = new Terraria.Tile();
-            Terraria.Main.tile[100, 99] = new Terraria.Tile();
-            Terraria.Main.tile[101, 99] = new Terraria.Tile();
-            Terraria.Main.tile[100, 100] = new Terraria.Tile();
             Terraria.Main.tile[100, 100].active(true);
-            Terraria.Main.tile[101, 100] = new Terraria.Tile();
             Terraria.Main.tile[101, 100].active(true);
             Terraria.WorldGen.PlaceSign(100, 99, (ushort)BlockType.Signs);
             Terraria.Main.sign[0] = new Terraria.Sign {
@@ -124,14 +113,6 @@ namespace Orion.Tests.World.TileEntities {
 
         [Fact]
         public void GetSign_NoSign_ReturnsNull() {
-            Terraria.Main.tile[100, 98] = new Terraria.Tile();
-            Terraria.Main.tile[101, 98] = new Terraria.Tile();
-            Terraria.Main.tile[100, 99] = new Terraria.Tile();
-            Terraria.Main.tile[101, 99] = new Terraria.Tile();
-            for (var i = 0; i < Terraria.Sign.maxSigns; ++i) {
-                Terraria.Main.sign[i] = null;
-            }
-
             var sign = _signService.GetSign(100, 98);
 
             sign.Should().BeNull();
@@ -139,13 +120,7 @@ namespace Orion.Tests.World.TileEntities {
 
         [Fact]
         public void RemoveSign_IsCorrect() {
-            Terraria.Main.tile[100, 98] = new Terraria.Tile();
-            Terraria.Main.tile[101, 98] = new Terraria.Tile();
-            Terraria.Main.tile[100, 99] = new Terraria.Tile();
-            Terraria.Main.tile[101, 99] = new Terraria.Tile();
-            Terraria.Main.tile[100, 100] = new Terraria.Tile();
             Terraria.Main.tile[100, 100].active(true);
-            Terraria.Main.tile[101, 100] = new Terraria.Tile();
             Terraria.Main.tile[101, 100].active(true);
             Terraria.WorldGen.PlaceSign(100, 99, (ushort)BlockType.Signs);
             Terraria.Main.sign[0] = new Terraria.Sign {
@@ -162,13 +137,7 @@ namespace Orion.Tests.World.TileEntities {
 
         [Fact]
         public void RemoveSign_NoSign_ReturnsFalse() {
-            Terraria.Main.tile[100, 98] = new Terraria.Tile();
-            Terraria.Main.tile[101, 98] = new Terraria.Tile();
-            Terraria.Main.tile[100, 99] = new Terraria.Tile();
-            Terraria.Main.tile[101, 99] = new Terraria.Tile();
-            Terraria.Main.tile[100, 100] = new Terraria.Tile();
             Terraria.Main.tile[100, 100].active(true);
-            Terraria.Main.tile[101, 100] = new Terraria.Tile();
             Terraria.Main.tile[101, 100].active(true);
             Terraria.WorldGen.PlaceSign(100, 99, (ushort)BlockType.Signs);
             Terraria.Main.sign[0] = new Terraria.Sign {
@@ -176,9 +145,7 @@ namespace Orion.Tests.World.TileEntities {
                 y = 98,
             };
             var sign = _signService.GetSign(100, 98);
-            for (var i = 0; i < Terraria.Sign.maxSigns; ++i) {
-                Terraria.Main.sign[i] = null;
-            }
+            Terraria.Main.sign[0] = null;
 
             var result = _signService.RemoveSign(sign);
 
