@@ -1,10 +1,8 @@
 ﻿using System;
 using FluentAssertions;
 using Moq;
-using Ninject.Planning.Targets;
 using Orion.World;
 using Orion.World.TileEntities;
-using Orion.World.Tiles;
 using Xunit;
 using TDS = Terraria.DataStructures;
 using TGCTE = Terraria.GameContent.Tile_Entities;

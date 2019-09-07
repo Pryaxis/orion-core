@@ -33,6 +33,16 @@ namespace Orion.Networking {
         event EventHandler<ClientDisconnectedEventArgs> ClientDisconnected;
 
         /// <summary>
+        /// Sends the given packet to the target index, excepting the exception index.
+        /// </summary>
+        /// <param name="packet">The packet.</param>
+        /// <param name="targetIndex">The target index. <c>-1</c> represents everyone.</param>
+        /// <param name="exceptIndex">The except index. <c>-1</c> represents no-one.</param>
+        /// <exception cref="ArgumentNullException"><paramref name="packet"/> is <c>null</c>.</exception>
+        /// <exception cref="ArgumentOutOfRangeException"><paramref name="targetIndex"/> is out of range.</exception>
+        void SendPacket(TerrariaPacket packet, int targetIndex = -1, int exceptIndex = -1);
+
+        /// <summary>
         /// Sends the specified packet to the target index excepting the given except index.
         /// </summary>
         /// <param name="packetType">The packet type.</param>

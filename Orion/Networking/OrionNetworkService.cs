@@ -37,6 +37,45 @@ namespace Orion.Networking {
             Hooks.Net.RemoteClient.PreReset = null;
         }
 
+        public void SendPacket(TerrariaPacket packet, int targetIndex = -1, int exceptIndex = -1) {
+            if (packet == null) {
+                throw new ArgumentNullException(nameof(packet));
+            }
+
+            if (targetIndex < -2 || targetIndex >= Terraria.Netplay.MaxConnections) {
+                throw new ArgumentOutOfRangeException(nameof(targetIndex), $"{nameof(targetIndex)} is out of range.");
+            }
+
+            void TrySendPacket(int index) {
+                Debug.Assert(index >= 0 && index < Terraria.Netplay.MaxConnections,
+                             $"{nameof(index)} should be a valid index.");
+
+                var receiver = Terraria.Netplay.Clients[index];
+                var args = new SendingPacketEventArgs(receiver, packet);
+                SendingPacket?.Invoke(this, args);
+
+                if (args.Handled) {
+                    return;
+                }
+
+                var bytes = new byte[ushort.MaxValue];
+                using (var stream = new MemoryStream(bytes)) {
+                    args.Packet.WriteToStream(stream);
+                    receiver.Socket?.AsyncSend(bytes, 0, (int)stream.Length, receiver.ServerWriteCallBack);
+                }
+            }
+
+            if (targetIndex > 0) {
+                TrySendPacket(targetIndex);
+            } else {
+                for (var i = 0; i < Terraria.Netplay.MaxConnections; ++i) {
+                    if (i != exceptIndex) {
+                        TrySendPacket(i);
+                    }
+                }
+            }
+        }
+
         public void SendPacket(TerrariaPacketType packetType, int targetIndex = -1, int exceptIndex = -1,
                                string text = "", int number = 0, float number2 = 0, float number3 = 0,
                                float number4 = 0, int number5 = 0, int number6 = 0, int number7 = 0) {
