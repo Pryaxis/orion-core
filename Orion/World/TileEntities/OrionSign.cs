@@ -5,7 +5,7 @@ namespace Orion.World.TileEntities {
     /// <summary>
     /// Orion's implementation of <see cref="ISign"/>.
     /// </summary>
-    internal sealed class OrionSign : ISign {
+    internal sealed class OrionSign : AnnotatableObject, ISign {
         public int Index { get; }
 
         public int X {

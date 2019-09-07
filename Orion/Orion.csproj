@@ -12,8 +12,6 @@
     <Description>Provides the next generation of Terraria APIs.</Description>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <DocumentationFile>bin\$(Configuration)\Orion.xml</DocumentationFile>
-      <TrimUnusedDependencies>true</TrimUnusedDependencies>
-      <RootPackageReference>false</RootPackageReference>
   </PropertyGroup>
 
   <ItemGroup>

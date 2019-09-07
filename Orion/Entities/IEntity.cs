@@ -5,7 +5,7 @@ namespace Orion.Entities {
     /// <summary>
     /// Provides a wrapper around a Terraria.Entity instance.
     /// </summary>
-    public interface IEntity {
+    public interface IEntity : IAnnotatable {
         /// <summary>
         /// Gets the entity's index.
         /// </summary>

@@ -2,7 +2,7 @@
     /// <summary>
     /// Provides a wrapper around a generalized tile entity.
     /// </summary>
-    public interface ITileEntity {
+    public interface ITileEntity : IAnnotatable {
         /// <summary>
         /// Gets the index of the tile entity.
         /// </summary>

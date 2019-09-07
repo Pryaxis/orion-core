@@ -2,7 +2,7 @@
 using Microsoft.Xna.Framework;
 
 namespace Orion.Entities {
-    internal abstract class OrionEntity<TEntity> : IEntity where TEntity : Terraria.Entity {
+    internal abstract class OrionEntity<TEntity> : AnnotatableObject, IEntity where TEntity : Terraria.Entity {
         public int Index => Wrapped.whoAmI;
         
         public bool IsActive {

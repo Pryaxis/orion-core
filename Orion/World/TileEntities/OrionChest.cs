@@ -6,7 +6,7 @@ namespace Orion.World.TileEntities {
     /// <summary>
     /// Orion's implementation of <see cref="IChest"/>.
     /// </summary>
-    internal sealed class OrionChest : IChest {
+    internal sealed class OrionChest : AnnotatableObject, IChest {
         public int Index { get; }
 
         public int X {
