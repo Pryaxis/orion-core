@@ -21,6 +21,11 @@ namespace Orion.Projectiles {
         float Knockback { get; set; }
 
         /// <summary>
+        /// Gets or sets a value indicating whether the projectile is hostile.
+        /// </summary>
+        bool IsHostile { get; set; }
+
+        /// <summary>
         /// Applies the given <see cref="ProjectileType"/> to the projectile.
         /// </summary>
         /// <param name="type">The type.</param>

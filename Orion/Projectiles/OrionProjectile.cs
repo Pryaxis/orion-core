@@ -22,6 +22,11 @@ namespace Orion.Projectiles {
             set => Wrapped.knockBack = value;
         }
 
+        public bool IsHostile {
+            get => Wrapped.hostile;
+            set => Wrapped.hostile = value;
+        }
+
         public OrionProjectile(Terraria.Projectile terrariaProjectile) : base(terrariaProjectile) { }
 
         public void ApplyType(ProjectileType type) => Wrapped.SetDefaults((int)type);
