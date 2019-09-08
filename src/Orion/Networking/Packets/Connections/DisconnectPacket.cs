@@ -18,6 +18,8 @@ namespace Orion.Networking.Packets.Connections {
             set => _reason = value ?? throw new ArgumentNullException(nameof(value));
         }
 
+        private protected override PacketType Type => PacketType.Disconnect;
+
         private protected override void ReadFromReader(BinaryReader reader, ushort packetLength) {
             _reason = reader.ReadNetworkText();
         }

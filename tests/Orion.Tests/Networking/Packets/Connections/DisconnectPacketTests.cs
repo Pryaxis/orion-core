@@ -15,14 +15,14 @@ namespace Orion.Tests.Networking.Packets.Connections {
             action.Should().Throw<ArgumentNullException>();
         }
 
-        public static readonly byte[] DisconnectPlayerBytes = {
+        public static readonly byte[] DisconnectBytes = {
             21, 0, 2, 2, 15, 67, 76, 73, 46, 75, 105, 99, 107, 77, 101, 115, 115, 97, 103, 101, 0,
         };
 
 
         [Fact]
-        public void ReadFromStream_DisconnectPlayer_IsCorrect() {
-            using (var stream = new MemoryStream(DisconnectPlayerBytes)) {
+        public void ReadFromStream_IsCorrect() {
+            using (var stream = new MemoryStream(DisconnectBytes)) {
                 var packet = (DisconnectPacket)Packet.ReadFromStream(stream);
 
                 packet.Reason.ToString().Should().Be("CLI.KickMessage");
@@ -30,14 +30,14 @@ namespace Orion.Tests.Networking.Packets.Connections {
         }
 
         [Fact]
-        public void WriteToStream_DisconnectPlayer_IsCorrect() {
-            using (var stream = new MemoryStream(DisconnectPlayerBytes))
+        public void WriteToStream_IsCorrect() {
+            using (var stream = new MemoryStream(DisconnectBytes))
             using (var stream2 = new MemoryStream()) {
                 var packet = Packet.ReadFromStream(stream);
 
                 packet.WriteToStream(stream2);
 
-                stream2.ToArray().Should().BeEquivalentTo(DisconnectPlayerBytes);
+                stream2.ToArray().Should().BeEquivalentTo(DisconnectBytes);
             }
         }
     }

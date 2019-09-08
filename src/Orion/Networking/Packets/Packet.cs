@@ -19,7 +19,7 @@ namespace Orion.Networking.Packets {
             new Dictionary<PacketType, Func<Packet>> {
                 [PacketType.Connect] = () => new ConnectPacket(),
                 [PacketType.Disconnect] = () => new DisconnectPacket(),
-                [PacketType.ContinueConnection] = () => new ContinueConnectionPacket(),
+                [PacketType.ContinueConnecting] = () => new ContinueConnectingPacket(),
                 [PacketType.UpdatePlayerInfo] = () => new UpdatePlayerInfoPacket(),
                 [PacketType.UpdatePlayerInventorySlot] = () => new UpdatePlayerInventorySlotPacket(),
                 [PacketType.FinishConnection] = () => new FinishConnectionPacket(),

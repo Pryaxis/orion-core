@@ -65,29 +65,6 @@ namespace Orion.Tests.Networking.Packets {
             }
         }
 
-        public static readonly byte[] ContinueConnectionBytes = {4, 0, 3, 0};
-
-        [Fact]
-        public void ReadFromStream_ContinueConnection_IsCorrect() {
-            using (var stream = new MemoryStream(ContinueConnectionBytes)) {
-                var packet = (ContinueConnectionPacket)Packet.ReadFromStream(stream);
-
-                packet.PlayerIndex.Should().Be(0);
-            }
-        }
-
-        [Fact]
-        public void WriteToStream_ContinueConnection_IsCorrect() {
-            using (var stream = new MemoryStream(ContinueConnectionBytes))
-            using (var stream2 = new MemoryStream()) {
-                var packet = Packet.ReadFromStream(stream);
-
-                packet.WriteToStream(stream2);
-
-                stream2.ToArray().Should().BeEquivalentTo(ContinueConnectionBytes);
-            }
-        }
-
         public static readonly byte[] UpdatePlayerInfoBytes = {
             34, 0, 4, 0, 2, 50, 1, 102, 0, 0, 0, 0, 26, 131, 54, 158, 74, 51, 47, 39, 88, 184, 58, 43, 69, 8, 97, 162,
             167, 255, 212, 159, 76, 0
