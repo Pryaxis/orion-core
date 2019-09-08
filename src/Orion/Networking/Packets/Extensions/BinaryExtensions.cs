@@ -2,9 +2,6 @@
 using Microsoft.Xna.Framework;
 
 namespace Orion.Networking.Packets.Extensions {
-    /// <summary>
-    /// Provides extension methods for the <see cref="BinaryReader"/> and <see cref="BinaryWriter"/> classes.
-    /// </summary>
     internal static class BinaryExtensions {
         public static Color ReadColor(this BinaryReader reader) {
             byte red = reader.ReadByte();
