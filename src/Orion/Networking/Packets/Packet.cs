@@ -36,6 +36,8 @@ namespace Orion.Networking.Packets {
                 [PacketType.ToggleDoor] = () => new ToggleDoorPacket(),
                 [PacketType.UpdateSquareOfTiles] = () => new UpdateSquareOfTilesPacket(),
                 [PacketType.UpdateItem] = () => new UpdateItemPacket(),
+                [PacketType.UpdateItemOwner] = () => new UpdateItemOwnerPacket(),
+                [PacketType.UpdateNpc] = () => new UpdateNpcPacket(),
             };
 
         private static readonly IDictionary<Type, PacketType> PacketTypes = new Dictionary<Type, PacketType> {
@@ -59,6 +61,8 @@ namespace Orion.Networking.Packets {
             [typeof(ToggleDoorPacket)] = PacketType.ToggleDoor,
             [typeof(UpdateSquareOfTilesPacket)] = PacketType.UpdateSquareOfTiles,
             [typeof(UpdateItemPacket)] = PacketType.UpdateItem,
+            [typeof(UpdateItemOwnerPacket)] = PacketType.UpdateItemOwner,
+            [typeof(UpdateNpcPacket)] = PacketType.UpdateNpc,
         };
 
         [ExcludeFromCodeCoverage]

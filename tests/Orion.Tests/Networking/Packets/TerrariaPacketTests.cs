@@ -4,6 +4,7 @@ using FluentAssertions;
 using Microsoft.Xna.Framework;
 using Orion.Items;
 using Orion.Networking.Packets;
+using Orion.Npcs;
 using Orion.World;
 using Xunit;
 
@@ -795,6 +796,70 @@ namespace Orion.Tests.Networking.Packets {
                 packet.WriteToStream(stream2);
 
                 stream2.ToArray().Should().BeEquivalentTo(UpdateItemBytes);
+            }
+        }
+
+        private static readonly byte[] UpdateItemOwnerBytes = {6, 0, 22, 144, 1, 0};
+
+        [Fact]
+        public void ReadFromStream_UpdateItemOwner_IsCorrect() {
+            using (var stream = new MemoryStream(UpdateItemOwnerBytes)) {
+                var packet = (UpdateItemOwnerPacket)Packet.ReadFromStream(stream);
+
+                packet.ItemIndex.Should().Be(400);
+                packet.OwnerPlayerIndex.Should().Be(0);
+            }
+        }
+
+        [Fact]
+        public void WriteToStream_UpdateItemOwner_IsCorrect() {
+            using (var stream = new MemoryStream(UpdateItemOwnerBytes))
+            using (var stream2 = new MemoryStream()) {
+                var packet = Packet.ReadFromStream(stream);
+
+                packet.WriteToStream(stream2);
+
+                stream2.ToArray().Should().BeEquivalentTo(UpdateItemOwnerBytes);
+            }
+        }
+
+        private static readonly byte[] UpdateNpcBytes = {
+            26, 0, 23, 1, 0, 38, 209, 132, 71, 0, 0, 213, 69, 0, 0, 0, 0, 0, 0, 0, 0, 255, 0, 130, 22, 0,
+        };
+
+        [Fact]
+        public void ReadFromStream_UpdateNpc_IsCorrect() {
+            using (var stream = new MemoryStream(UpdateNpcBytes)) {
+                var packet = (UpdateNpcPacket)Packet.ReadFromStream(stream);
+
+                packet.NpcIndex.Should().Be(1);
+                packet.Position.Should().Be(new Vector2(68002.3f, 6816));
+                packet.Velocity.Should().Be(Vector2.Zero);
+                packet.TargetIndex.Should().Be(255);
+                packet.HorizontalDirection.Should().BeFalse();
+                packet.VerticalDirection.Should().BeTrue();
+                packet.AiValues[0].Should().Be(0);
+                packet.AiValues[1].Should().Be(0);
+                packet.AiValues[2].Should().Be(0);
+                packet.AiValues[3].Should().Be(0);
+                packet.SpriteDirection.Should().BeFalse();
+                packet.IsAtMaxHp.Should().BeTrue();
+                packet.NpcType.Should().Be(NpcType.Guide);
+                packet.NumberOfHpBytes.Should().Be(0);
+                packet.Hp.Should().Be(0);
+                packet.ReleaseOwnerIndex.Should().Be(0);
+            }
+        }
+
+        [Fact]
+        public void WriteToStream_UpdateNpc_IsCorrect() {
+            using (var stream = new MemoryStream(UpdateNpcBytes))
+            using (var stream2 = new MemoryStream()) {
+                var packet = Packet.ReadFromStream(stream);
+
+                packet.WriteToStream(stream2);
+
+                stream2.ToArray().Should().BeEquivalentTo(UpdateNpcBytes);
             }
         }
     }
