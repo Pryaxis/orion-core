@@ -650,5 +650,32 @@ namespace Orion.Tests.Networking.Packets {
                 stream2.ToArray().Should().BeEquivalentTo(UpdatePlayerBytes);
             }
         }
+
+        private static readonly byte[] UpdatePlayerStatusBytes = {5, 0, 14, 0, 1,};
+
+        [Fact]
+        public void ReadFromStream_UpdatePlayerStatus_IsCorrect() {
+            using (var stream = new MemoryStream(UpdatePlayerStatusBytes)) {
+                var packet = (UpdatePlayerStatusPacket)TerrariaPacket.ReadFromStream(stream);
+
+                packet.IsSentToClient.Should().BeTrue();
+                packet.IsSentToServer.Should().BeFalse();
+                packet.Type.Should().Be(TerrariaPacketType.UpdatePlayerStatus);
+                packet.PlayerIndex.Should().Be(0);
+                packet.IsActive.Should().BeTrue();
+            }
+        }
+
+        [Fact]
+        public void WriteToStream_UpdatePlayerStatus_IsCorrect() {
+            using (var stream = new MemoryStream(UpdatePlayerStatusBytes))
+            using (var stream2 = new MemoryStream()) {
+                var packet = TerrariaPacket.ReadFromStream(stream);
+
+                packet.WriteToStream(stream2);
+
+                stream2.ToArray().Should().BeEquivalentTo(UpdatePlayerStatusBytes);
+            }
+        }
     }
 }

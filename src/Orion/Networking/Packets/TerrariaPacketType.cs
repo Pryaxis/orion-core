@@ -17,7 +17,7 @@
         SyncTileFrames = 11,
         SpawnPlayer = 12,
         UpdatePlayer = 13,
-        ActivatePlayer = 14,
+        UpdatePlayerStatus = 14,
         UpdatePlayerHp = 16,
         ModifyTile = 17,
         UpdateTime = 18,
