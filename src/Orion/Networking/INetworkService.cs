@@ -41,7 +41,7 @@ namespace Orion.Networking {
         /// <param name="exceptIndex">The except index. <c>-1</c> represents no-one.</param>
         /// <exception cref="ArgumentNullException"><paramref name="packet"/> is <c>null</c>.</exception>
         /// <exception cref="ArgumentOutOfRangeException"><paramref name="targetIndex"/> is out of range.</exception>
-        void SendPacket(TerrariaPacket packet, int targetIndex = -1, int exceptIndex = -1);
+        void SendPacket(Packet packet, int targetIndex = -1, int exceptIndex = -1);
 
         /// <summary>
         /// Sends the specified packet to the target index excepting the given except index.
@@ -57,7 +57,7 @@ namespace Orion.Networking {
         /// <param name="number5">The fifth packet-specific number.</param>
         /// <param name="number6">The sixth packet-specific number.</param>
         /// <param name="number7">The seventh packet-specific number.</param>
-        void SendPacket(TerrariaPacketType packetType, int targetIndex = -1, int exceptIndex = -1, string text = "",
+        void SendPacket(PacketType packetType, int targetIndex = -1, int exceptIndex = -1, string text = "",
                         int number = 0, float number2 = 0, float number3 = 0, float number4 = 0, int number5 = 0,
                         int number6 = 0, int number7 = 0);
     }

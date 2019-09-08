@@ -7,17 +7,8 @@ namespace Orion.Networking.Packets {
     /// <summary>
     /// Packet sent to provide information about a player.
     /// </summary>
-    public sealed class UpdatePlayerInfoPacket : TerrariaPacket {
+    public sealed class UpdatePlayerInfoPacket : Packet {
         private string _name = "";
-
-        /// <inheritdoc />
-        public override bool IsSentToClient => true;
-
-        /// <inheritdoc />
-        public override bool IsSentToServer => true;
-
-        /// <inheritdoc />
-        public override TerrariaPacketType Type => TerrariaPacketType.UpdatePlayerInfo;
 
         /// <summary>
         /// Gets or sets the player index.

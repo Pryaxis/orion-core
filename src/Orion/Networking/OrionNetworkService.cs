@@ -37,7 +37,7 @@ namespace Orion.Networking {
             OTAPI.Hooks.Net.RemoteClient.PreReset = null;
         }
 
-        public void SendPacket(TerrariaPacket packet, int targetIndex = -1, int exceptIndex = -1) {
+        public void SendPacket(Packet packet, int targetIndex = -1, int exceptIndex = -1) {
             if (packet == null) {
                 throw new ArgumentNullException(nameof(packet));
             }
@@ -76,7 +76,7 @@ namespace Orion.Networking {
             }
         }
 
-        public void SendPacket(TerrariaPacketType packetType, int targetIndex = -1, int exceptIndex = -1,
+        public void SendPacket(PacketType packetType, int targetIndex = -1, int exceptIndex = -1,
                                string text = "", int number = 0, float number2 = 0, float number3 = 0,
                                float number4 = 0, int number5 = 0, int number6 = 0, int number7 = 0) {
             Terraria.NetMessage.SendData((int)packetType, targetIndex, exceptIndex,
@@ -98,7 +98,7 @@ namespace Orion.Networking {
              */
             using (var stream = new MemoryStream(data, start - 2, length + 2)) {
                 var sender = Terraria.Netplay.Clients[buffer.whoAmI];
-                var packet = TerrariaPacket.ReadFromStream(stream);
+                var packet = Packet.ReadFromStream(stream);
                 var args = new ReceivingPacketEventArgs(sender, packet);
                 ReceivingPacket?.Invoke(this, args);
 
@@ -143,7 +143,7 @@ namespace Orion.Networking {
 
             using (var stream = new MemoryStream(data, start, length)) {
                 var receiver = Terraria.Netplay.Clients[remoteId];
-                var packet = TerrariaPacket.ReadFromStream(stream);
+                var packet = Packet.ReadFromStream(stream);
                 var args = new SendingPacketEventArgs(receiver, packet);
                 SendingPacket?.Invoke(this, args);
 

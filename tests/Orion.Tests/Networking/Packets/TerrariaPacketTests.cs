@@ -12,14 +12,14 @@ namespace Orion.Tests.Networking.Packets {
     public class TerrariaPacketTests {
         [Fact]
         public void ReadFromStream_NullStream_ThrowsArgumentNullException() {
-            Func<TerrariaPacket> func = () => TerrariaPacket.ReadFromStream(null);
+            Func<Packet> func = () => Packet.ReadFromStream(null);
 
             func.Should().Throw<ArgumentNullException>();
         }
 
         [Fact]
         public void WriteToStream_NullStream_ThrowsArgumentNullException() {
-            var packet = new UnknownPacket((TerrariaPacketType)255);
+            var packet = new UnknownPacket((PacketType)255);
             Action action = () => packet.WriteToStream(null);
 
             action.Should().Throw<ArgumentNullException>();
@@ -27,7 +27,7 @@ namespace Orion.Tests.Networking.Packets {
 
         [Fact]
         public void WriteToStream_PacketTooLong_ThrowsInvalidOperationException() {
-            var packet = new UnknownPacket((TerrariaPacketType)255) {Payload = new byte[ushort.MaxValue]};
+            var packet = new UnknownPacket((PacketType)255) {Payload = new byte[ushort.MaxValue]};
             using (var stream = new MemoryStream()) {
                 // ReSharper disable once AccessToDisposedClosure
                 Action action = () => packet.WriteToStream(stream);
@@ -41,11 +41,9 @@ namespace Orion.Tests.Networking.Packets {
         [Fact]
         public void ReadFromStream_Unknown_IsCorrect() {
             using (var stream = new MemoryStream(UnknownBytes)) {
-                var packet = (UnknownPacket)TerrariaPacket.ReadFromStream(stream);
+                var packet = (UnknownPacket)Packet.ReadFromStream(stream);
 
-                packet.IsSentToClient.Should().BeTrue();
-                packet.IsSentToServer.Should().BeTrue();
-                packet.Type.Should().Be((TerrariaPacketType)255);
+                packet.PacketType.Should().Be((PacketType)255);
                 packet.Payload.Should().BeEquivalentTo(1, 2, 3, 4, 5, 6, 7, 8);
             }
         }
@@ -54,7 +52,7 @@ namespace Orion.Tests.Networking.Packets {
         public void WriteToStream_Unknown_IsCorrect() {
             using (var stream = new MemoryStream(UnknownBytes))
             using (var stream2 = new MemoryStream()) {
-                var packet = TerrariaPacket.ReadFromStream(stream);
+                var packet = Packet.ReadFromStream(stream);
 
                 packet.WriteToStream(stream2);
 
@@ -69,11 +67,8 @@ namespace Orion.Tests.Networking.Packets {
         [Fact]
         public void ReadFromStream_RequestConnection_IsCorrect() {
             using (var stream = new MemoryStream(RequestConnectionBytes)) {
-                var packet = (RequestConnectionPacket)TerrariaPacket.ReadFromStream(stream);
+                var packet = (RequestConnectionPacket)Packet.ReadFromStream(stream);
 
-                packet.IsSentToClient.Should().BeFalse();
-                packet.IsSentToServer.Should().BeTrue();
-                packet.Type.Should().Be(TerrariaPacketType.RequestConnection);
                 packet.Version.Should().Be("Terraria194");
             }
         }
@@ -82,7 +77,7 @@ namespace Orion.Tests.Networking.Packets {
         public void WriteToStream_RequestConnection_IsCorrect() {
             using (var stream = new MemoryStream(RequestConnectionBytes))
             using (var stream2 = new MemoryStream()) {
-                var packet = TerrariaPacket.ReadFromStream(stream);
+                var packet = Packet.ReadFromStream(stream);
 
                 packet.WriteToStream(stream2);
 
@@ -98,11 +93,8 @@ namespace Orion.Tests.Networking.Packets {
         [Fact]
         public void ReadFromStream_DisconnectPlayer_IsCorrect() {
             using (var stream = new MemoryStream(DisconnectPlayerBytes)) {
-                var packet = (DisconnectPlayerPacket)TerrariaPacket.ReadFromStream(stream);
+                var packet = (DisconnectPlayerPacket)Packet.ReadFromStream(stream);
 
-                packet.IsSentToClient.Should().BeTrue();
-                packet.IsSentToServer.Should().BeFalse();
-                packet.Type.Should().Be(TerrariaPacketType.DisconnectPlayer);
                 packet.Reason.ToString().Should().Be("CLI.KickMessage");
             }
         }
@@ -111,7 +103,7 @@ namespace Orion.Tests.Networking.Packets {
         public void WriteToStream_DisconnectPlayer_IsCorrect() {
             using (var stream = new MemoryStream(DisconnectPlayerBytes))
             using (var stream2 = new MemoryStream()) {
-                var packet = TerrariaPacket.ReadFromStream(stream);
+                var packet = Packet.ReadFromStream(stream);
 
                 packet.WriteToStream(stream2);
 
@@ -124,11 +116,8 @@ namespace Orion.Tests.Networking.Packets {
         [Fact]
         public void ReadFromStream_ContinueConnection_IsCorrect() {
             using (var stream = new MemoryStream(ContinueConnectionBytes)) {
-                var packet = (ContinueConnectionPacket)TerrariaPacket.ReadFromStream(stream);
+                var packet = (ContinueConnectionPacket)Packet.ReadFromStream(stream);
 
-                packet.IsSentToClient.Should().BeTrue();
-                packet.IsSentToServer.Should().BeFalse();
-                packet.Type.Should().Be(TerrariaPacketType.ContinueConnection);
                 packet.PlayerIndex.Should().Be(0);
             }
         }
@@ -137,7 +126,7 @@ namespace Orion.Tests.Networking.Packets {
         public void WriteToStream_ContinueConnection_IsCorrect() {
             using (var stream = new MemoryStream(ContinueConnectionBytes))
             using (var stream2 = new MemoryStream()) {
-                var packet = TerrariaPacket.ReadFromStream(stream);
+                var packet = Packet.ReadFromStream(stream);
 
                 packet.WriteToStream(stream2);
 
@@ -153,11 +142,8 @@ namespace Orion.Tests.Networking.Packets {
         [Fact]
         public void ReadFromStream_UpdatePlayerInfo_IsCorrect() {
             using (var stream = new MemoryStream(UpdatePlayerInfoBytes)) {
-                var packet = (UpdatePlayerInfoPacket)TerrariaPacket.ReadFromStream(stream);
+                var packet = (UpdatePlayerInfoPacket)Packet.ReadFromStream(stream);
 
-                packet.IsSentToClient.Should().BeTrue();
-                packet.IsSentToServer.Should().BeTrue();
-                packet.Type.Should().Be(TerrariaPacketType.UpdatePlayerInfo);
                 packet.PlayerIndex.Should().Be(0);
                 packet.SkinType.Should().Be(2);
                 packet.Name.Should().Be("f");
@@ -179,7 +165,7 @@ namespace Orion.Tests.Networking.Packets {
         public void WriteToStream_UpdatePlayerInfo_IsCorrect() {
             using (var stream = new MemoryStream(UpdatePlayerInfoBytes))
             using (var stream2 = new MemoryStream()) {
-                var packet = TerrariaPacket.ReadFromStream(stream);
+                var packet = Packet.ReadFromStream(stream);
 
                 packet.WriteToStream(stream2);
 
@@ -192,11 +178,8 @@ namespace Orion.Tests.Networking.Packets {
         [Fact]
         public void ReadFromStream_UpdatePlayerInventorySlot_IsCorrect() {
             using (var stream = new MemoryStream(UpdatePlayerInventorySlotBytes)) {
-                var packet = (UpdatePlayerInventorySlotPacket)TerrariaPacket.ReadFromStream(stream);
+                var packet = (UpdatePlayerInventorySlotPacket)Packet.ReadFromStream(stream);
 
-                packet.IsSentToClient.Should().BeTrue();
-                packet.IsSentToServer.Should().BeTrue();
-                packet.Type.Should().Be(TerrariaPacketType.UpdatePlayerInventorySlot);
                 packet.PlayerIndex.Should().Be(0);
                 packet.InventorySlotIndex.Should().Be(0);
                 packet.ItemStackSize.Should().Be(1);
@@ -209,7 +192,7 @@ namespace Orion.Tests.Networking.Packets {
         public void WriteToStream_UpdatePlayerInventorySlot_IsCorrect() {
             using (var stream = new MemoryStream(UpdatePlayerInventorySlotBytes))
             using (var stream2 = new MemoryStream()) {
-                var packet = TerrariaPacket.ReadFromStream(stream);
+                var packet = Packet.ReadFromStream(stream);
 
                 packet.WriteToStream(stream2);
 
@@ -222,11 +205,7 @@ namespace Orion.Tests.Networking.Packets {
         [Fact]
         public void ReadFromStream_FinishConnection_IsCorrect() {
             using (var stream = new MemoryStream(FinishConnectionBytes)) {
-                var packet = (FinishConnectionPacket)TerrariaPacket.ReadFromStream(stream);
-
-                packet.IsSentToClient.Should().BeFalse();
-                packet.IsSentToServer.Should().BeTrue();
-                packet.Type.Should().Be(TerrariaPacketType.FinishConnection);
+                Packet.ReadFromStream(stream);
             }
         }
 
@@ -234,7 +213,7 @@ namespace Orion.Tests.Networking.Packets {
         public void WriteToStream_FinishConnection_IsCorrect() {
             using (var stream = new MemoryStream(FinishConnectionBytes))
             using (var stream2 = new MemoryStream()) {
-                var packet = TerrariaPacket.ReadFromStream(stream);
+                var packet = Packet.ReadFromStream(stream);
 
                 packet.WriteToStream(stream2);
 
@@ -253,11 +232,8 @@ namespace Orion.Tests.Networking.Packets {
         [Fact]
         public void ReadFromStream_UpdateWorldInfo_IsCorrect() {
             using (var stream = new MemoryStream(UpdateWorldInfoBytes)) {
-                var packet = (UpdateWorldInfoPacket)TerrariaPacket.ReadFromStream(stream);
+                var packet = (UpdateWorldInfoPacket)Packet.ReadFromStream(stream);
 
-                packet.IsSentToClient.Should().BeTrue();
-                packet.IsSentToServer.Should().BeFalse();
-                packet.Type.Should().Be(TerrariaPacketType.UpdateWorldInfo);
                 packet.Time.Should().Be(32653);
                 packet.IsDaytime.Should().BeTrue();
                 packet.IsBloodMoon.Should().BeFalse();
@@ -342,7 +318,7 @@ namespace Orion.Tests.Networking.Packets {
         public void WriteToStream_UpdateWorldInfo_IsCorrect() {
             using (var stream = new MemoryStream(UpdateWorldInfoBytes))
             using (var stream2 = new MemoryStream()) {
-                var packet = TerrariaPacket.ReadFromStream(stream);
+                var packet = Packet.ReadFromStream(stream);
 
                 packet.WriteToStream(stream2);
 
@@ -355,11 +331,8 @@ namespace Orion.Tests.Networking.Packets {
         [Fact]
         public void ReadFromStream_RequestWorldSection_IsCorrect() {
             using (var stream = new MemoryStream(RequestWorldSectionBytes)) {
-                var packet = (RequestWorldSectionPacket)TerrariaPacket.ReadFromStream(stream);
+                var packet = (RequestWorldSectionPacket)Packet.ReadFromStream(stream);
 
-                packet.IsSentToClient.Should().BeFalse();
-                packet.IsSentToServer.Should().BeTrue();
-                packet.Type.Should().Be(TerrariaPacketType.RequestWorldSection);
                 packet.SectionX.Should().Be(-1);
                 packet.SectionY.Should().Be(-1);
             }
@@ -369,7 +342,7 @@ namespace Orion.Tests.Networking.Packets {
         public void WriteToStream_RequestWorldSection_IsCorrect() {
             using (var stream = new MemoryStream(RequestWorldSectionBytes))
             using (var stream2 = new MemoryStream()) {
-                var packet = TerrariaPacket.ReadFromStream(stream);
+                var packet = Packet.ReadFromStream(stream);
 
                 packet.WriteToStream(stream2);
 
@@ -385,11 +358,8 @@ namespace Orion.Tests.Networking.Packets {
         [Fact]
         public void ReadFromStream_UpdateClientStatus_IsCorrect() {
             using (var stream = new MemoryStream(UpdateClientStatusBytes)) {
-                var packet = (UpdateClientStatusPacket)TerrariaPacket.ReadFromStream(stream);
+                var packet = (UpdateClientStatusPacket)Packet.ReadFromStream(stream);
 
-                packet.IsSentToClient.Should().BeTrue();
-                packet.IsSentToServer.Should().BeFalse();
-                packet.Type.Should().Be(TerrariaPacketType.UpdateClientStatus);
                 packet.StatusIncrease.Should().Be(15);
                 packet.StatusText.ToString().Should().Be("LegacyInterface.44");
             }
@@ -399,7 +369,7 @@ namespace Orion.Tests.Networking.Packets {
         public void WriteToStream_UpdateClientStatus_IsCorrect() {
             using (var stream = new MemoryStream(UpdateClientStatusBytes))
             using (var stream2 = new MemoryStream()) {
-                var packet = TerrariaPacket.ReadFromStream(stream);
+                var packet = Packet.ReadFromStream(stream);
 
                 packet.WriteToStream(stream2);
 
@@ -501,11 +471,8 @@ namespace Orion.Tests.Networking.Packets {
         [Fact]
         public void ReadFromStream_UpdateWorldSection_IsCorrect() {
             using (var stream = new MemoryStream(UpdateWorldSectionBytes)) {
-                var packet = (UpdateWorldSectionPacket)TerrariaPacket.ReadFromStream(stream);
+                var packet = (UpdateWorldSectionPacket)Packet.ReadFromStream(stream);
 
-                packet.IsSentToClient.Should().BeTrue();
-                packet.IsSentToServer.Should().BeFalse();
-                packet.Type.Should().Be(TerrariaPacketType.UpdateWorldSection);
                 packet.IsCompressed.Should().BeTrue();
                 packet.StartX.Should().Be(4200);
                 packet.StartY.Should().Be(300);
@@ -523,12 +490,12 @@ namespace Orion.Tests.Networking.Packets {
         public void WriteToStream_UpdateWorldSection_IsCorrect() {
             using (var stream = new MemoryStream(UpdateWorldSectionBytes))
             using (var stream2 = new MemoryStream()) {
-                var packet = (UpdateWorldSectionPacket)TerrariaPacket.ReadFromStream(stream);
+                var packet = (UpdateWorldSectionPacket)Packet.ReadFromStream(stream);
 
                 packet.WriteToStream(stream2);
 
                 stream2.Position = 0;
-                var packet2 = (UpdateWorldSectionPacket)TerrariaPacket.ReadFromStream(stream2);
+                var packet2 = (UpdateWorldSectionPacket)Packet.ReadFromStream(stream2);
 
                 // Compare packet and packet2, since we can't guarantee that DeflateStream will always compress the
                 // exact same way.
@@ -557,11 +524,8 @@ namespace Orion.Tests.Networking.Packets {
         [Fact]
         public void ReadFromStream_SyncTileFrames_IsCorrect() {
             using (var stream = new MemoryStream(SyncTileFramesBytes)) {
-                var packet = (SyncTileFramesPacket)TerrariaPacket.ReadFromStream(stream);
+                var packet = (SyncTileFramesPacket)Packet.ReadFromStream(stream);
 
-                packet.IsSentToClient.Should().BeTrue();
-                packet.IsSentToServer.Should().BeFalse();
-                packet.Type.Should().Be(TerrariaPacketType.SyncTileFrames);
                 packet.StartSectionX.Should().Be(18);
                 packet.StartSectionY.Should().Be(1);
                 packet.EndSectionX.Should().Be(22);
@@ -573,7 +537,7 @@ namespace Orion.Tests.Networking.Packets {
         public void WriteToStream_SyncTileFrames_IsCorrect() {
             using (var stream = new MemoryStream(SyncTileFramesBytes))
             using (var stream2 = new MemoryStream()) {
-                var packet = TerrariaPacket.ReadFromStream(stream);
+                var packet = Packet.ReadFromStream(stream);
 
                 packet.WriteToStream(stream2);
 
@@ -586,11 +550,8 @@ namespace Orion.Tests.Networking.Packets {
         [Fact]
         public void ReadFromStream_SpawnPlayer_IsCorrect() {
             using (var stream = new MemoryStream(SpawnPlayerBytes)) {
-                var packet = (SpawnPlayerPacket)TerrariaPacket.ReadFromStream(stream);
+                var packet = (SpawnPlayerPacket)Packet.ReadFromStream(stream);
 
-                packet.IsSentToClient.Should().BeTrue();
-                packet.IsSentToServer.Should().BeTrue();
-                packet.Type.Should().Be(TerrariaPacketType.SpawnPlayer);
                 packet.PlayerIndex.Should().Be(0);
                 packet.SpawnX.Should().Be(-1);
                 packet.SpawnY.Should().Be(-1);
@@ -601,7 +562,7 @@ namespace Orion.Tests.Networking.Packets {
         public void WriteToStream_SpawnPlayer_IsCorrect() {
             using (var stream = new MemoryStream(SpawnPlayerBytes))
             using (var stream2 = new MemoryStream()) {
-                var packet = TerrariaPacket.ReadFromStream(stream);
+                var packet = Packet.ReadFromStream(stream);
 
                 packet.WriteToStream(stream2);
 
@@ -614,11 +575,8 @@ namespace Orion.Tests.Networking.Packets {
         [Fact]
         public void ReadFromStream_UpdatePlayer_IsCorrect() {
             using (var stream = new MemoryStream(UpdatePlayerBytes)) {
-                var packet = (UpdatePlayerPacket)TerrariaPacket.ReadFromStream(stream);
+                var packet = (UpdatePlayerPacket)Packet.ReadFromStream(stream);
 
-                packet.IsSentToClient.Should().BeTrue();
-                packet.IsSentToServer.Should().BeTrue();
-                packet.Type.Should().Be(TerrariaPacketType.UpdatePlayer);
                 packet.PlayerIndex.Should().Be(0);
                 packet.IsHoldingUp.Should().BeFalse();
                 packet.IsHoldingDown.Should().BeFalse();
@@ -626,9 +584,9 @@ namespace Orion.Tests.Networking.Packets {
                 packet.IsHoldingRight.Should().BeTrue();
                 packet.IsHoldingJump.Should().BeFalse();
                 packet.IsHoldingUseItem.Should().BeFalse();
-                packet.IsFacingRight.Should().BeTrue();
+                packet.Direction.Should().BeTrue();
                 packet.IsClimbingRope.Should().BeFalse();
-                packet.IsClimbingRopeFacingRight.Should().BeFalse();
+                packet.ClimbingRopeDirection.Should().BeFalse();
                 packet.IsMoving.Should().BeFalse();
                 packet.IsVortexStealthed.Should().BeFalse();
                 packet.IsRightSideUp.Should().BeTrue();
@@ -643,7 +601,7 @@ namespace Orion.Tests.Networking.Packets {
         public void WriteToStream_UpdatePlayer_IsCorrect() {
             using (var stream = new MemoryStream(UpdatePlayerBytes))
             using (var stream2 = new MemoryStream()) {
-                var packet = TerrariaPacket.ReadFromStream(stream);
+                var packet = Packet.ReadFromStream(stream);
 
                 packet.WriteToStream(stream2);
 
@@ -656,11 +614,8 @@ namespace Orion.Tests.Networking.Packets {
         [Fact]
         public void ReadFromStream_UpdatePlayerStatus_IsCorrect() {
             using (var stream = new MemoryStream(UpdatePlayerStatusBytes)) {
-                var packet = (UpdatePlayerStatusPacket)TerrariaPacket.ReadFromStream(stream);
+                var packet = (UpdatePlayerStatusPacket)Packet.ReadFromStream(stream);
 
-                packet.IsSentToClient.Should().BeTrue();
-                packet.IsSentToServer.Should().BeFalse();
-                packet.Type.Should().Be(TerrariaPacketType.UpdatePlayerStatus);
                 packet.PlayerIndex.Should().Be(0);
                 packet.IsActive.Should().BeTrue();
             }
@@ -670,11 +625,115 @@ namespace Orion.Tests.Networking.Packets {
         public void WriteToStream_UpdatePlayerStatus_IsCorrect() {
             using (var stream = new MemoryStream(UpdatePlayerStatusBytes))
             using (var stream2 = new MemoryStream()) {
-                var packet = TerrariaPacket.ReadFromStream(stream);
+                var packet = Packet.ReadFromStream(stream);
 
                 packet.WriteToStream(stream2);
 
                 stream2.ToArray().Should().BeEquivalentTo(UpdatePlayerStatusBytes);
+            }
+        }
+
+        private static readonly byte[] UpdatePlayerHpBytes = {8, 0, 16, 0, 100, 0, 100, 0};
+
+        [Fact]
+        public void ReadFromStream_UpdatePlayerHp_IsCorrect() {
+            using (var stream = new MemoryStream(UpdatePlayerHpBytes)) {
+                var packet = (UpdatePlayerHpPacket)Packet.ReadFromStream(stream);
+
+                packet.PlayerIndex.Should().Be(0);
+                packet.Hp.Should().Be(100);
+                packet.MaxHp.Should().Be(100);
+            }
+        }
+
+        [Fact]
+        public void WriteToStream_UpdatePlayerHp_IsCorrect() {
+            using (var stream = new MemoryStream(UpdatePlayerHpBytes))
+            using (var stream2 = new MemoryStream()) {
+                var packet = Packet.ReadFromStream(stream);
+
+                packet.WriteToStream(stream2);
+
+                stream2.ToArray().Should().BeEquivalentTo(UpdatePlayerHpBytes);
+            }
+        }
+
+        private static readonly byte[] ModifyTileBytes = {11, 0, 17, 0, 16, 14, 194, 1, 1, 0, 0};
+
+        [Fact]
+        public void ReadFromStream_ModifyTile_IsCorrect() {
+            using (var stream = new MemoryStream(ModifyTileBytes)) {
+                var packet = (ModifyTilePacket)Packet.ReadFromStream(stream);
+
+                packet.Type.Should().Be(ModifyTilePacket.ModificationType.DestroyBlock);
+                packet.X.Should().Be(3600);
+                packet.Y.Should().Be(450);
+                packet.Data.Should().Be(1);
+                packet.Style.Should().Be(0);
+            }
+        }
+
+        [Fact]
+        public void WriteToStream_ModifyTile_IsCorrect() {
+            using (var stream = new MemoryStream(ModifyTileBytes))
+            using (var stream2 = new MemoryStream()) {
+                var packet = Packet.ReadFromStream(stream);
+
+                packet.WriteToStream(stream2);
+
+                stream2.ToArray().Should().BeEquivalentTo(ModifyTileBytes);
+            }
+        }
+
+        private static readonly byte[] UpdateTimeBytes = {12, 0, 18, 1, 0, 128, 0, 0, 200, 0, 200, 0};
+
+        [Fact]
+        public void ReadFromStream_UpdateTime_IsCorrect() {
+            using (var stream = new MemoryStream(UpdateTimeBytes)) {
+                var packet = (UpdateTimePacket)Packet.ReadFromStream(stream);
+
+                packet.IsDaytime.Should().BeTrue();
+                packet.Time.Should().Be(32768);
+                packet.SunY.Should().Be(200);
+                packet.MoonY.Should().Be(200);
+            }
+        }
+
+        [Fact]
+        public void WriteToStream_UpdateTime_IsCorrect() {
+            using (var stream = new MemoryStream(UpdateTimeBytes))
+            using (var stream2 = new MemoryStream()) {
+                var packet = Packet.ReadFromStream(stream);
+
+                packet.WriteToStream(stream2);
+
+                stream2.ToArray().Should().BeEquivalentTo(UpdateTimeBytes);
+            }
+        }
+
+        private static readonly byte[] ToggleDoorBytes = {9, 0, 19, 0, 16, 14, 194, 1, 1};
+
+        [Fact]
+        public void ReadFromStream_ToggleDoor_IsCorrect() {
+            using (var stream = new MemoryStream(ToggleDoorBytes)) {
+                var packet = (ToggleDoorPacket)Packet.ReadFromStream(stream);
+
+                packet.ToggleType.Should().Be(ToggleDoorPacket.Type.OpenDoor);
+                packet.X.Should().Be(3600);
+                packet.Y.Should().Be(450);
+                packet.Direction.Should().BeTrue();
+            }
+        }
+
+        [Fact]
+        public void WriteToStream_ToggleDoor_IsCorrect() {
+            using (var stream = new MemoryStream(ToggleDoorBytes))
+            using (var stream2 = new MemoryStream()) {
+                var packet = Packet.ReadFromStream(stream);
+
+                packet.WriteToStream(stream2);
+
+                stream2.ToArray().Should().BeEquivalentTo(ToggleDoorBytes);
             }
         }
     }

@@ -16,7 +16,7 @@ namespace Orion.Npcs {
         int Hp { get; set; }
 
         /// <summary>
-        /// Gets or sets the NPC's max HP.
+        /// Gets or sets the NPC's maximum HP.
         /// </summary>
         int MaxHp { get; set; }
 

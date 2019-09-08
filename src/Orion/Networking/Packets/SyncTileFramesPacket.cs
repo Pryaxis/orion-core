@@ -4,16 +4,7 @@ namespace Orion.Networking.Packets {
     /// <summary>
     /// Packet sent to the client to synchronize tile frames.
     /// </summary>
-    public sealed class SyncTileFramesPacket : TerrariaPacket {
-        /// <inheritdoc />
-        public override bool IsSentToClient => true;
-        
-        /// <inheritdoc />
-        public override bool IsSentToServer => false;
-        
-        /// <inheritdoc />
-        public override TerrariaPacketType Type => TerrariaPacketType.SyncTileFrames;
-
+    public sealed class SyncTileFramesPacket : Packet {
         /// <summary>
         /// Gets or sets the starting section X coordinate.
         /// </summary>

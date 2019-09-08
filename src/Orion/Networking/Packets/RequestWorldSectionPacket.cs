@@ -4,16 +4,7 @@ namespace Orion.Networking.Packets {
     /// <summary>
     /// Packet sent to the server to request a section of the world.
     /// </summary>
-    public sealed class RequestWorldSectionPacket : TerrariaPacket {
-        /// <inheritdoc />
-        public override bool IsSentToClient => false;
-
-        /// <inheritdoc />
-        public override bool IsSentToServer => true;
-
-        /// <inheritdoc />
-        public override TerrariaPacketType Type => TerrariaPacketType.RequestWorldSection;
-
+    public sealed class RequestWorldSectionPacket : Packet {
         /// <summary>
         /// Gets or sets the section's X coordinate.
         /// </summary>

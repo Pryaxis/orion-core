@@ -7,16 +7,7 @@ namespace Orion.Networking.Packets {
     /// <summary>
     /// Packet sent to update a player.
     /// </summary>
-    public sealed class UpdatePlayerPacket : TerrariaPacket {
-        /// <inheritdoc />
-        public override bool IsSentToClient => true;
-
-        /// <inheritdoc />
-        public override bool IsSentToServer => true;
-
-        /// <inheritdoc />
-        public override TerrariaPacketType Type => TerrariaPacketType.UpdatePlayer;
-
+    public sealed class UpdatePlayerPacket : Packet {
         /// <summary>
         /// Gets or sets the player index.
         /// </summary>
@@ -53,9 +44,9 @@ namespace Orion.Networking.Packets {
         public bool IsHoldingUseItem { get; set; }
 
         /// <summary>
-        /// Gets or sets a value indicating whether the player is facing right.
+        /// Gets or sets a value indicating the direction of the player.
         /// </summary>
-        public bool IsFacingRight { get; set; }
+        public bool Direction { get; set; }
 
         /// <summary>
         /// Gets or sets a value indicating whether the player is climbing a rope.
@@ -63,9 +54,9 @@ namespace Orion.Networking.Packets {
         public bool IsClimbingRope { get; set; }
 
         /// <summary>
-        /// Gets or sets a value indicating whether the player is climbing a rope facing right.
+        /// Gets or sets a value indicating the direction of the player when climbing a rope.
         /// </summary>
-        public bool IsClimbingRopeFacingRight { get; set; }
+        public bool ClimbingRopeDirection { get; set; }
 
         /// <summary>
         /// Gets or sets a value indicating whether the player is moving.
@@ -113,9 +104,9 @@ namespace Orion.Networking.Packets {
             IsHoldingRight = flags[3];
             IsHoldingJump = flags[4];
             IsHoldingUseItem = flags[5];
-            IsFacingRight = flags[6];
+            Direction = flags[6];
             IsClimbingRope = flags2[0];
-            IsClimbingRopeFacingRight = flags2[1];
+            ClimbingRopeDirection = flags2[1];
             IsMoving = flags2[2];
             IsVortexStealthed = flags2[3];
             IsRightSideUp = flags2[4];
@@ -139,9 +130,9 @@ namespace Orion.Networking.Packets {
             flags[3] = IsHoldingRight;
             flags[4] = IsHoldingJump;
             flags[5] = IsHoldingUseItem;
-            flags[6] = IsFacingRight;
+            flags[6] = Direction;
             flags2[0] = IsClimbingRope;
-            flags2[1] = IsClimbingRopeFacingRight;
+            flags2[1] = ClimbingRopeDirection;
             flags2[2] = IsMoving;
             flags2[3] = IsVortexStealthed;
             flags2[4] = IsRightSideUp;

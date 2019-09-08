@@ -11,7 +11,7 @@ namespace Orion.Players {
         int Hp { get; set; }
 
         /// <summary>
-        /// Gets or sets the player's max HP.
+        /// Gets or sets the player's maximum HP.
         /// </summary>
         int MaxHp { get; set; }
 
@@ -21,7 +21,7 @@ namespace Orion.Players {
         int Mp { get; set; }
 
         /// <summary>
-        /// Gets or sets the player's max MP.
+        /// Gets or sets the player's maximum MP.
         /// </summary>
         int MaxMp { get; set; }
     }

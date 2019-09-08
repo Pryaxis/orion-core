@@ -5,16 +5,7 @@ namespace Orion.Networking.Packets {
     /// <summary>
     /// Packet sent to provide information about a player's inventory slot.
     /// </summary>
-    public sealed class UpdatePlayerInventorySlotPacket : TerrariaPacket {
-        /// <inheritdoc />
-        public override bool IsSentToClient => true;
-
-        /// <inheritdoc />
-        public override bool IsSentToServer => true;
-
-        /// <inheritdoc />
-        public override TerrariaPacketType Type => TerrariaPacketType.UpdatePlayerInventorySlot;
-
+    public sealed class UpdatePlayerInventorySlotPacket : Packet {
         /// <summary>
         /// Gets or sets the player index.
         /// </summary>

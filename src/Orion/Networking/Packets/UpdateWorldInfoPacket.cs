@@ -6,17 +6,8 @@ namespace Orion.Networking.Packets {
     /// <summary>
     /// Packet sent to the client to provide information about the world.
     /// </summary>
-    public sealed class UpdateWorldInfoPacket : TerrariaPacket {
+    public sealed class UpdateWorldInfoPacket : Packet {
         private string _worldName = "";
-
-        /// <inheritdoc />
-        public override bool IsSentToClient => true;
-
-        /// <inheritdoc />
-        public override bool IsSentToServer => false;
-
-        /// <inheritdoc />
-        public override TerrariaPacketType Type => TerrariaPacketType.UpdateWorldInfo;
 
         /// <summary>
         /// Gets or sets the time.

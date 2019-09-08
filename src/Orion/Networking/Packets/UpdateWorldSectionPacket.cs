@@ -12,17 +12,8 @@ namespace Orion.Networking.Packets {
     /// <summary>
     /// Packet sent to the client to provide a world section.
     /// </summary>
-    public sealed class UpdateWorldSectionPacket : TerrariaPacket {
+    public sealed class UpdateWorldSectionPacket : Packet {
         private NetTile[,] _tiles;
-
-        /// <inheritdoc />
-        public override bool IsSentToClient => true;
-        
-        /// <inheritdoc />
-        public override bool IsSentToServer => false;
-        
-        /// <inheritdoc />
-        public override TerrariaPacketType Type => TerrariaPacketType.UpdateWorldSection;
 
         /// <summary>
         /// Gets or sets a value indicating whether the section data is compressed.
@@ -86,7 +77,7 @@ namespace Orion.Networking.Packets {
         }
 
         private protected override void WriteToWriter(BinaryWriter writer) {
-            writer.Write((byte)(IsCompressed ? 1 : 0));
+            writer.Write(IsCompressed);
             if (!IsCompressed) {
                 WriteToWriterImpl(writer);
                 return;

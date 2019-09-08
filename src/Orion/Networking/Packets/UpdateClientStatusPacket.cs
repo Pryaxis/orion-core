@@ -6,17 +6,8 @@ namespace Orion.Networking.Packets {
     /// <summary>
     /// Packet sent to the client to update the client's status.
     /// </summary>
-    public sealed class UpdateClientStatusPacket : TerrariaPacket {
+    public sealed class UpdateClientStatusPacket : Packet {
         private Terraria.Localization.NetworkText _statusText = Terraria.Localization.NetworkText.Empty;
-
-        /// <inheritdoc />
-        public override bool IsSentToClient => true;
-
-        /// <inheritdoc />
-        public override bool IsSentToServer => false;
-
-        /// <inheritdoc />
-        public override TerrariaPacketType Type => TerrariaPacketType.UpdateClientStatus;
 
         /// <summary>
         /// Gets or sets the status increase.

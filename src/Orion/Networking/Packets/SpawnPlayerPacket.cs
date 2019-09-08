@@ -4,16 +4,7 @@ namespace Orion.Networking.Packets {
     /// <summary>
     /// Packet sent to spawn a player.
     /// </summary>
-    public sealed class SpawnPlayerPacket : TerrariaPacket {
-        /// <inheritdoc />
-        public override bool IsSentToClient => true;
-
-        /// <inheritdoc />
-        public override bool IsSentToServer => true;
-
-        /// <inheritdoc />
-        public override TerrariaPacketType Type => TerrariaPacketType.SpawnPlayer;
-
+    public sealed class SpawnPlayerPacket : Packet {
         /// <summary>
         /// Gets or sets the player index.
         /// </summary>

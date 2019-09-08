@@ -1,8 +1,8 @@
 ﻿namespace Orion.Networking.Packets {
     /// <summary>
-    /// Indicates the type of a <see cref="TerrariaPacket"/>.
+    /// Indicates the type of a <see cref="Packet"/>.
     /// </summary>
-    public enum TerrariaPacketType : byte {
+    public enum PacketType : byte {
 #pragma warning disable 1591
         RequestConnection = 1,
         DisconnectPlayer = 2,

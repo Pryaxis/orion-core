@@ -7,7 +7,7 @@ namespace Orion.Networking.Events {
     /// Provides data for the <see cref="INetworkService.ReceivingPacket"/> event.
     /// </summary>
     public sealed class ReceivingPacketEventArgs : HandledEventArgs {
-        private TerrariaPacket _packet;
+        private Packet _packet;
 
         /// <summary>
         /// Gets the packet's sender.
@@ -18,7 +18,7 @@ namespace Orion.Networking.Events {
         /// Gets or sets the packet that is being received.
         /// </summary>
         /// <exception cref="ArgumentNullException"><paramref name="value"/> is <c>null</c>.</exception>
-        public TerrariaPacket Packet {
+        public Packet Packet {
             get => _packet;
             set {
                 _packet = value ?? throw new ArgumentNullException(nameof(value));
@@ -40,7 +40,7 @@ namespace Orion.Networking.Events {
         /// <exception cref="ArgumentNullException">
         /// Either <paramref name="sender"/> is <c>null</c> or <paramref name="packet"/> is <c>null</c>.
         /// </exception>
-        public ReceivingPacketEventArgs(Terraria.RemoteClient sender, TerrariaPacket packet) {
+        public ReceivingPacketEventArgs(Terraria.RemoteClient sender, Packet packet) {
             Sender = sender ?? throw new ArgumentNullException(nameof(sender));
             _packet = packet ?? throw new ArgumentNullException(nameof(packet));
         }

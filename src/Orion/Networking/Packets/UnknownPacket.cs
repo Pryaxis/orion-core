@@ -5,17 +5,13 @@ namespace Orion.Networking.Packets {
     /// <summary>
     /// Used as a fail-safe for any packet that failed to be read.
     /// </summary>
-    public sealed class UnknownPacket : TerrariaPacket {
+    public sealed class UnknownPacket : Packet {
         private byte[] _payload = new byte[0];
 
-        /// <inheritdoc />
-        public override bool IsSentToClient => true;
-
-        /// <inheritdoc />
-        public override bool IsSentToServer => true;
-
-        /// <inheritdoc />
-        public override TerrariaPacketType Type { get; }
+        /// <summary>
+        /// Gets the packet type.
+        /// </summary>
+        public PacketType PacketType { get; }
 
         /// <summary>
         /// Gets or sets the payload.
@@ -30,15 +26,15 @@ namespace Orion.Networking.Packets {
         /// Initializes a new instance of the <see cref="UnknownPacket"/> class with the specified type.
         /// </summary>
         /// <param name="type">The type.</param>
-        public UnknownPacket(TerrariaPacketType type) {
-            Type = type;
+        public UnknownPacket(PacketType type) {
+            PacketType = type;
         }
 
-        private protected override void ReadFromReader(BinaryReader reader, ushort packetLength) {
+        private protected override void ReadFromReader(BinaryReader reader, ushort packetLength) =>
             _payload = reader.ReadBytes(packetLength - HeaderLength);
-        }
 
         private protected override void WriteToWriter(BinaryWriter writer) {
+            writer.Write((byte)PacketType);
             writer.Write(Payload);
         }
     }
