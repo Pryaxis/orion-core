@@ -25,7 +25,6 @@ namespace Orion.Networking.Packets {
         /// </summary>
         public bool Direction { get; set; }
 
-        /// <inheritdoc />
         private protected override void ReadFromReader(BinaryReader reader, ushort packetLength) {
             ToggleType = (Type)reader.ReadByte();
             X = reader.ReadInt16();
@@ -33,7 +32,6 @@ namespace Orion.Networking.Packets {
             Direction = reader.ReadByte() == 1;
         }
 
-        /// <inheritdoc />
         private protected override void WriteToWriter(BinaryWriter writer) {
             writer.Write((byte)ToggleType);
             writer.Write(X);
