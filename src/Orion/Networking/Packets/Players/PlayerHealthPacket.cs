@@ -16,7 +16,8 @@ namespace Orion.Networking.Packets.Players {
         public short PlayerHealth { get; set; }
 
         /// <summary>
-        /// Gets or sets the player's maximum health.
+        /// Gets or sets the player's maximum health. The minimum that this can actually become is 100, and this is
+        /// enforced client-side and server-side.
         /// </summary>
         public short PlayerMaxHealth { get; set; }
 

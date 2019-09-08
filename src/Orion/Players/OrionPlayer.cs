@@ -18,12 +18,12 @@ namespace Orion.Players {
             set => Wrapped.statLifeMax = value;
         }
 
-        public int Mp {
+        public int Mana {
             get => Wrapped.statMana;
             set => Wrapped.statMana = value;
         }
 
-        public int MaxMp {
+        public int MaxMana {
             get => Wrapped.statManaMax;
             set => Wrapped.statManaMax = value;
         }

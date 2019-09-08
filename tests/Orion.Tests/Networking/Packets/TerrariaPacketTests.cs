@@ -4,8 +4,6 @@ using FluentAssertions;
 using Microsoft.Xna.Framework;
 using Orion.Items;
 using Orion.Networking.Packets;
-using Orion.Networking.Packets.Connections;
-using Orion.Networking.Packets.Players;
 using Orion.Npcs;
 using Orion.Players;
 using Orion.Projectiles;
@@ -1107,31 +1105,6 @@ namespace Orion.Tests.Networking.Packets {
                 packet.WriteToStream(stream2);
 
                 stream2.ToArray().Should().BeEquivalentTo(UpdatePlayerItemAnimationBytes);
-            }
-        }
-
-        public static readonly byte[] UpdatePlayerMpBytes = {8, 0, 42, 0, 100, 0, 100, 0,};
-
-        [Fact]
-        public void ReadFromStream_UpdatePlayerMp_IsCorrect() {
-            using (var stream = new MemoryStream(UpdatePlayerMpBytes)) {
-                var packet = (UpdatePlayerMpPacket)Packet.ReadFromStream(stream);
-
-                packet.PlayerIndex.Should().Be(0);
-                packet.Mp.Should().Be(100);
-                packet.MaxMp.Should().Be(100);
-            }
-        }
-
-        [Fact]
-        public void WriteToStream_UpdatePlayerMp_IsCorrect() {
-            using (var stream = new MemoryStream(UpdatePlayerMpBytes))
-            using (var stream2 = new MemoryStream()) {
-                var packet = Packet.ReadFromStream(stream);
-
-                packet.WriteToStream(stream2);
-
-                stream2.ToArray().Should().BeEquivalentTo(UpdatePlayerMpBytes);
             }
         }
 

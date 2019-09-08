@@ -42,7 +42,7 @@
         RemoveItemOwner = 39,
         UpdatePlayerTalkingToNpc = 40,
         UpdatePlayerItemAnimation = 41,
-        UpdatePlayerMp = 42,
+        PlayerMana = 42,
         ShowManaEffect = 43,
         UpdatePlayerTeam = 45,
         RequestSign = 46,

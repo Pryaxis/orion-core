@@ -57,7 +57,7 @@ namespace Orion.Networking.Packets {
                 [PacketType.RemoveItemOwner] = () => new RemoveItemOwnerPacket(),
                 [PacketType.UpdatePlayerTalkingToNpc] = () => new UpdatePlayerTalkingToNpcPacket(),
                 [PacketType.UpdatePlayerItemAnimation] = () => new UpdatePlayerItemAnimationPacket(),
-                [PacketType.UpdatePlayerMp] = () => new UpdatePlayerMpPacket(),
+                [PacketType.PlayerMana] = () => new PlayerManaPacket(),
                 [PacketType.ShowManaEffect] = () => new ShowManaEffectPacket(),
                 [PacketType.UpdatePlayerTeam] = () => new UpdatePlayerTeamPacket(),
                 [PacketType.RequestSign] = () => new RequestSignPacket(),

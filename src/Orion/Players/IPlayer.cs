@@ -16,13 +16,13 @@ namespace Orion.Players {
         int MaxHealth { get; set; }
 
         /// <summary>
-        /// Gets or sets the player's MP.
+        /// Gets or sets the player's mana.
         /// </summary>
-        int Mp { get; set; }
+        int Mana { get; set; }
 
         /// <summary>
-        /// Gets or sets the player's maximum MP.
+        /// Gets or sets the player's maximum mana.
         /// </summary>
-        int MaxMp { get; set; }
+        int MaxMana { get; set; }
     }
 }

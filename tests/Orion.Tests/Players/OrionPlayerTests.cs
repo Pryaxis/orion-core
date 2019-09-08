@@ -162,42 +162,42 @@ namespace Orion.Tests.Players {
         
         [Theory]
         [InlineData(100)]
-        public void GetMp_IsCorrect(int mp) {
-            var terrariaPlayer = new Terraria.Player {statMana = mp};
+        public void GetMana_IsCorrect(int mana) {
+            var terrariaPlayer = new Terraria.Player {statMana = mana};
             var player = new OrionPlayer(terrariaPlayer);
 
-            player.Mp.Should().Be(mp);
+            player.Mana.Should().Be(mana);
         }
 
         [Theory]
         [InlineData(100)]
-        public void SetMp_IsCorrect(int mp) {
+        public void SetMana_IsCorrect(int mana) {
             var terrariaPlayer = new Terraria.Player();
             var player = new OrionPlayer(terrariaPlayer);
 
-            player.Mp = mp;
+            player.Mana = mana;
 
-            terrariaPlayer.statMana.Should().Be(mp);
+            terrariaPlayer.statMana.Should().Be(mana);
         }
         
         [Theory]
         [InlineData(100)]
-        public void GetMaxMp_IsCorrect(int maxMaxMp) {
-            var terrariaPlayer = new Terraria.Player {statManaMax = maxMaxMp};
+        public void GetMaxMana_IsCorrect(int maxMana) {
+            var terrariaPlayer = new Terraria.Player {statManaMax = maxMana};
             var player = new OrionPlayer(terrariaPlayer);
 
-            player.MaxMp.Should().Be(maxMaxMp);
+            player.MaxMana.Should().Be(maxMana);
         }
 
         [Theory]
         [InlineData(100)]
-        public void SetMaxMp_IsCorrect(int maxMaxMp) {
+        public void SetMaxMana_IsCorrect(int maxMana) {
             var terrariaPlayer = new Terraria.Player();
             var player = new OrionPlayer(terrariaPlayer);
 
-            player.MaxMp = maxMaxMp;
+            player.MaxMana = maxMana;
 
-            terrariaPlayer.statManaMax.Should().Be(maxMaxMp);
+            terrariaPlayer.statManaMax.Should().Be(maxMana);
         }
     }
 }
