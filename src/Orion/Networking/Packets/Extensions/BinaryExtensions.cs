@@ -14,6 +14,9 @@ namespace Orion.Networking.Packets.Extensions {
             return Terraria.Localization.NetworkText.Deserialize(reader);
         }
 
+        public static Vector2 ReadVector2(this BinaryReader reader) =>
+            new Vector2(reader.ReadSingle(), reader.ReadSingle());
+
         public static void Write(this BinaryWriter writer, Color color) {
             writer.Write(color.R);
             writer.Write(color.G);
@@ -22,6 +25,11 @@ namespace Orion.Networking.Packets.Extensions {
 
         public static void Write(this BinaryWriter writer, Terraria.Localization.NetworkText text) {
             text.Serialize(writer);
+        }
+
+        public static void Write(this BinaryWriter writer, Vector2 vector) {
+            writer.Write(vector.X);
+            writer.Write(vector.Y);
         }
     }
 }

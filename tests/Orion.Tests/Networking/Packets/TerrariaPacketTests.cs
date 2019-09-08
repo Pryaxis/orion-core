@@ -608,5 +608,47 @@ namespace Orion.Tests.Networking.Packets {
                 stream2.ToArray().Should().BeEquivalentTo(SpawnPlayerBytes);
             }
         }
+
+        private static readonly byte[] UpdatePlayerBytes = {15, 0, 13, 0, 72, 16, 0, 0, 31, 131, 71, 0, 48, 212, 69,};
+
+        [Fact]
+        public void ReadFromStream_UpdatePlayer_IsCorrect() {
+            using (var stream = new MemoryStream(UpdatePlayerBytes)) {
+                var packet = (UpdatePlayerPacket)TerrariaPacket.ReadFromStream(stream);
+
+                packet.IsSentToClient.Should().BeTrue();
+                packet.IsSentToServer.Should().BeTrue();
+                packet.Type.Should().Be(TerrariaPacketType.UpdatePlayer);
+                packet.PlayerIndex.Should().Be(0);
+                packet.IsHoldingUp.Should().BeFalse();
+                packet.IsHoldingDown.Should().BeFalse();
+                packet.IsHoldingLeft.Should().BeFalse();
+                packet.IsHoldingRight.Should().BeTrue();
+                packet.IsHoldingJump.Should().BeFalse();
+                packet.IsHoldingUseItem.Should().BeFalse();
+                packet.IsFacingRight.Should().BeTrue();
+                packet.IsClimbingRope.Should().BeFalse();
+                packet.IsClimbingRopeFacingRight.Should().BeFalse();
+                packet.IsMoving.Should().BeFalse();
+                packet.IsVortexStealthed.Should().BeFalse();
+                packet.IsRightSideUp.Should().BeTrue();
+                packet.IsRaisingShield.Should().BeFalse();
+                packet.SelectedItemIndex.Should().Be(0);
+                packet.Position.Should().Be(new Vector2(67134, 6790));
+                packet.Velocity.Should().Be(Vector2.Zero);
+            }
+        }
+
+        [Fact]
+        public void WriteToStream_UpdatePlayer_IsCorrect() {
+            using (var stream = new MemoryStream(UpdatePlayerBytes))
+            using (var stream2 = new MemoryStream()) {
+                var packet = TerrariaPacket.ReadFromStream(stream);
+
+                packet.WriteToStream(stream2);
+
+                stream2.ToArray().Should().BeEquivalentTo(UpdatePlayerBytes);
+            }
+        }
     }
 }

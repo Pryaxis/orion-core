@@ -19,6 +19,11 @@ namespace Orion.Tests.Networking.Packets.Extensions {
             new object[] {NetworkText.FromLiteral("literal_test")},
             new object[] {NetworkText.FromFormattable("formattable_test{0}", "sub1")},
         };
+
+        public static readonly IEnumerable<object[]> Vector2Data = new List<object[]> {
+            new object[] {new Vector2(100, 100)},
+            new object[] {new Vector2(-100, -100)},
+        };
         
         [Theory]
         [MemberData(nameof(ColorData))]
@@ -43,6 +48,19 @@ namespace Orion.Tests.Networking.Packets.Extensions {
                 stream.Position = 0;
 
                 reader.ReadNetworkText().ToString().Should().Be(text.ToString());
+            }
+        }
+        
+        [Theory]
+        [MemberData(nameof(Vector2Data))]
+        public void WriteVector2_ReadVector2_IsCorrect(Vector2 vector) {
+            using (var stream = new MemoryStream())
+            using (var writer = new BinaryWriter(stream, Encoding.UTF8))
+            using (var reader = new BinaryReader(stream, Encoding.UTF8)) {
+                writer.Write(vector);
+                stream.Position = 0;
+
+                reader.ReadVector2().ToString().Should().Be(vector.ToString());
             }
         }
     }
