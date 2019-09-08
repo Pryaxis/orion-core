@@ -6,14 +6,14 @@ namespace Orion.Players {
     /// </summary>
     public interface IPlayer : IEntity {
         /// <summary>
-        /// Gets or sets the player's HP.
+        /// Gets or sets the player's health.
         /// </summary>
-        int Hp { get; set; }
+        int Health { get; set; }
 
         /// <summary>
-        /// Gets or sets the player's maximum HP.
+        /// Gets or sets the player's maximum health.
         /// </summary>
-        int MaxHp { get; set; }
+        int MaxHealth { get; set; }
 
         /// <summary>
         /// Gets or sets the player's MP.

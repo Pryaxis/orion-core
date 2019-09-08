@@ -526,31 +526,6 @@ namespace Orion.Tests.Networking.Packets {
             }
         }
 
-        private static readonly byte[] UpdatePlayerHpBytes = {8, 0, 16, 0, 100, 0, 100, 0};
-
-        [Fact]
-        public void ReadFromStream_UpdatePlayerHp_IsCorrect() {
-            using (var stream = new MemoryStream(UpdatePlayerHpBytes)) {
-                var packet = (UpdatePlayerHpPacket)Packet.ReadFromStream(stream);
-
-                packet.PlayerIndex.Should().Be(0);
-                packet.Hp.Should().Be(100);
-                packet.MaxHp.Should().Be(100);
-            }
-        }
-
-        [Fact]
-        public void WriteToStream_UpdatePlayerHp_IsCorrect() {
-            using (var stream = new MemoryStream(UpdatePlayerHpBytes))
-            using (var stream2 = new MemoryStream()) {
-                var packet = Packet.ReadFromStream(stream);
-
-                packet.WriteToStream(stream2);
-
-                stream2.ToArray().Should().BeEquivalentTo(UpdatePlayerHpBytes);
-            }
-        }
-
         private static readonly byte[] ModifyTileBytes = {11, 0, 17, 0, 16, 14, 194, 1, 1, 0, 0};
 
         [Fact]

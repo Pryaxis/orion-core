@@ -8,12 +8,12 @@ namespace Orion.Players {
             set => Wrapped.name = value ?? throw new ArgumentNullException(nameof(value));
         }
 
-        public int Hp {
+        public int Health {
             get => Wrapped.statLife;
             set => Wrapped.statLife = value;
         }
 
-        public int MaxHp {
+        public int MaxHealth {
             get => Wrapped.statLifeMax;
             set => Wrapped.statLifeMax = value;
         }

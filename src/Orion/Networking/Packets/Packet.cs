@@ -32,7 +32,7 @@ namespace Orion.Networking.Packets {
                 [PacketType.SpawnPlayer] = () => new SpawnPlayerPacket(),
                 [PacketType.UpdatePlayer] = () => new UpdatePlayerPacket(),
                 [PacketType.UpdatePlayerStatus] = () => new UpdatePlayerStatusPacket(),
-                [PacketType.UpdatePlayerHp] = () => new UpdatePlayerHpPacket(),
+                [PacketType.PlayerHealth] = () => new PlayerHealthPacket(),
                 [PacketType.ModifyTile] = () => new ModifyTilePacket(),
                 [PacketType.UpdateTime] = () => new UpdateTimePacket(),
                 [PacketType.ToggleDoor] = () => new ToggleDoorPacket(),

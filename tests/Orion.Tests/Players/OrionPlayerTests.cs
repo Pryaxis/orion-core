@@ -122,42 +122,42 @@ namespace Orion.Tests.Players {
         
         [Theory]
         [InlineData(100)]
-        public void GetHp_IsCorrect(int hp) {
-            var terrariaPlayer = new Terraria.Player {statLife = hp};
+        public void GetHealth_IsCorrect(int health) {
+            var terrariaPlayer = new Terraria.Player {statLife = health};
             var player = new OrionPlayer(terrariaPlayer);
 
-            player.Hp.Should().Be(hp);
+            player.Health.Should().Be(health);
         }
 
         [Theory]
         [InlineData(100)]
-        public void SetHp_IsCorrect(int hp) {
+        public void SetHealth_IsCorrect(int health) {
             var terrariaPlayer = new Terraria.Player();
             var player = new OrionPlayer(terrariaPlayer);
 
-            player.Hp = hp;
+            player.Health = health;
 
-            terrariaPlayer.statLife.Should().Be(hp);
+            terrariaPlayer.statLife.Should().Be(health);
         }
         
         [Theory]
         [InlineData(100)]
-        public void GetMaxHp_IsCorrect(int maxMaxHp) {
-            var terrariaPlayer = new Terraria.Player {statLifeMax = maxMaxHp};
+        public void GetMaxHealth_IsCorrect(int maxHealth) {
+            var terrariaPlayer = new Terraria.Player {statLifeMax = maxHealth};
             var player = new OrionPlayer(terrariaPlayer);
 
-            player.MaxHp.Should().Be(maxMaxHp);
+            player.MaxHealth.Should().Be(maxHealth);
         }
 
         [Theory]
         [InlineData(100)]
-        public void SetMaxHp_IsCorrect(int maxMaxHp) {
+        public void SetMaxHealth_IsCorrect(int maxHealth) {
             var terrariaPlayer = new Terraria.Player();
             var player = new OrionPlayer(terrariaPlayer);
 
-            player.MaxHp = maxMaxHp;
+            player.MaxHealth = maxHealth;
 
-            terrariaPlayer.statLifeMax.Should().Be(maxMaxHp);
+            terrariaPlayer.statLifeMax.Should().Be(maxHealth);
         }
         
         [Theory]

@@ -18,7 +18,7 @@
         SpawnPlayer = 12,
         UpdatePlayer = 13,
         UpdatePlayerStatus = 14,
-        UpdatePlayerHp = 16,
+        PlayerHealth = 16,
         ModifyTile = 17,
         UpdateTime = 18,
         ToggleDoor = 19,
