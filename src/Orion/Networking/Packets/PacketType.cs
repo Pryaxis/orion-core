@@ -7,7 +7,7 @@
         Connect = 1,
         Disconnect = 2,
         ContinueConnecting = 3,
-        UpdatePlayerInfo = 4,
+        PlayerInfo = 4,
         UpdatePlayerInventorySlot = 5,
         FinishConnection = 6,
         UpdateWorldInfo = 7,

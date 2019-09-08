@@ -5,6 +5,7 @@ using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Text;
 using Orion.Networking.Packets.Connections;
+using Orion.Networking.Packets.Players;
 
 namespace Orion.Networking.Packets {
     /// <summary>
@@ -20,7 +21,7 @@ namespace Orion.Networking.Packets {
                 [PacketType.Connect] = () => new ConnectPacket(),
                 [PacketType.Disconnect] = () => new DisconnectPacket(),
                 [PacketType.ContinueConnecting] = () => new ContinueConnectingPacket(),
-                [PacketType.UpdatePlayerInfo] = () => new UpdatePlayerInfoPacket(),
+                [PacketType.PlayerInfo] = () => new PlayerInfoPacket(),
                 [PacketType.UpdatePlayerInventorySlot] = () => new UpdatePlayerInventorySlotPacket(),
                 [PacketType.FinishConnection] = () => new FinishConnectionPacket(),
                 [PacketType.UpdateWorldInfo] = () => new UpdateWorldInfoPacket(),

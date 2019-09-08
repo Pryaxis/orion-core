@@ -5,6 +5,7 @@ using Microsoft.Xna.Framework;
 using Orion.Items;
 using Orion.Networking.Packets;
 using Orion.Networking.Packets.Connections;
+using Orion.Networking.Packets.Players;
 using Orion.Npcs;
 using Orion.Players;
 using Orion.Projectiles;
@@ -62,45 +63,6 @@ namespace Orion.Tests.Networking.Packets {
                 packet.WriteToStream(stream2);
 
                 stream2.ToArray().Should().BeEquivalentTo(UnknownBytes);
-            }
-        }
-
-        public static readonly byte[] UpdatePlayerInfoBytes = {
-            34, 0, 4, 0, 2, 50, 1, 102, 0, 0, 0, 0, 26, 131, 54, 158, 74, 51, 47, 39, 88, 184, 58, 43, 69, 8, 97, 162,
-            167, 255, 212, 159, 76, 0
-        };
-
-        [Fact]
-        public void ReadFromStream_UpdatePlayerInfo_IsCorrect() {
-            using (var stream = new MemoryStream(UpdatePlayerInfoBytes)) {
-                var packet = (UpdatePlayerInfoPacket)Packet.ReadFromStream(stream);
-
-                packet.PlayerIndex.Should().Be(0);
-                packet.SkinType.Should().Be(2);
-                packet.Name.Should().Be("f");
-                packet.HairDye.Should().Be(0);
-                packet.HiddenVisualsFlags.Should().Be(0);
-                packet.HiddenMiscFlags.Should().Be(0);
-                packet.HairColor.Should().Be(new Color(26, 131, 54));
-                packet.SkinColor.Should().Be(new Color(158, 74, 51));
-                packet.EyeColor.Should().Be(new Color(47, 39, 88));
-                packet.ShirtColor.Should().Be(new Color(184, 58, 43));
-                packet.UndershirtColor.Should().Be(new Color(69, 8, 97));
-                packet.PantsColor.Should().Be(new Color(162, 167, 255));
-                packet.ShoeColor.Should().Be(new Color(212, 159, 76));
-                packet.Difficulty.Should().Be(0);
-            }
-        }
-
-        [Fact]
-        public void WriteToStream_UpdatePlayerInfo_IsCorrect() {
-            using (var stream = new MemoryStream(UpdatePlayerInfoBytes))
-            using (var stream2 = new MemoryStream()) {
-                var packet = Packet.ReadFromStream(stream);
-
-                packet.WriteToStream(stream2);
-
-                stream2.ToArray().Should().BeEquivalentTo(UpdatePlayerInfoBytes);
             }
         }
 

@@ -1,8 +1,7 @@
 ﻿using System;
 using System.IO;
-using Orion.Networking.Packets.Connections;
 
-namespace Orion.Networking.Packets {
+namespace Orion.Networking.Packets.Connections {
     /// <summary>
     /// Packet sent from the client to the server in response to a <see cref="RequestPasswordPacket"/>.
     /// </summary>
@@ -10,7 +9,7 @@ namespace Orion.Networking.Packets {
         private string _password = "";
 
         /// <summary>
-        /// Gets or sets the server password.
+        /// Gets or sets the password.
         /// </summary>
         /// <exception cref="ArgumentNullException"><paramref name="value"/> is <c>null</c>.</exception>
         public string Password {
