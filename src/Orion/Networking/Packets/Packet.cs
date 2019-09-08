@@ -45,6 +45,16 @@ namespace Orion.Networking.Packets {
                 [PacketType.UpdatePlayerPvpStatus] = () => new UpdatePlayerPvpStatusPacket(),
                 [PacketType.RequestChestContents] = () => new RequestChestContentsPacket(),
                 [PacketType.UpdateChestContentsSlot] = () => new UpdateChestContentsSlotPacket(),
+                [PacketType.UpdatePlayerChest] = () => new UpdatePlayerChestPacket(),
+                [PacketType.ModifyChest] = () => new ModifyChestPacket(),
+                [PacketType.ShowHealEffect] = () => new ShowHealEffectPacket(),
+                [PacketType.UpdatePlayerZones] = () => new UpdatePlayerZonesPacket(),
+                [PacketType.RequestServerPassword] = () => new RequestServerPasswordPacket(),
+                [PacketType.ContinueConnectionWithServerPassword] =
+                    () => new ContinueConnectionWithServerPasswordPacket(),
+                [PacketType.RemoveItemOwner] = () => new RemoveItemOwnerPacket(),
+                [PacketType.UpdatePlayerTalkingToNpc] = () => new UpdatePlayerTalkingToNpcPacket(),
+                [PacketType.UpdatePlayerItemAnimation] = () => new UpdatePlayerItemAnimationPacket(),
             };
 
         private static readonly IDictionary<Type, PacketType> PacketTypes = new Dictionary<Type, PacketType> {
@@ -77,6 +87,15 @@ namespace Orion.Networking.Packets {
             [typeof(UpdatePlayerPvpStatusPacket)] = PacketType.UpdatePlayerPvpStatus,
             [typeof(RequestChestContentsPacket)] = PacketType.RequestChestContents,
             [typeof(UpdateChestContentsSlotPacket)] = PacketType.UpdateChestContentsSlot,
+            [typeof(UpdatePlayerChestPacket)] = PacketType.UpdatePlayerChest,
+            [typeof(ModifyChestPacket)] = PacketType.ModifyChest,
+            [typeof(ShowHealEffectPacket)] = PacketType.ShowHealEffect,
+            [typeof(UpdatePlayerZonesPacket)] = PacketType.UpdatePlayerZones,
+            [typeof(RequestServerPasswordPacket)] = PacketType.RequestServerPassword,
+            [typeof(ContinueConnectionWithServerPasswordPacket)] = PacketType.ContinueConnectionWithServerPassword,
+            [typeof(RemoveItemOwnerPacket)] = PacketType.RemoveItemOwner,
+            [typeof(UpdatePlayerTalkingToNpcPacket)] = PacketType.UpdatePlayerTalkingToNpc,
+            [typeof(UpdatePlayerItemAnimationPacket)] = PacketType.UpdatePlayerItemAnimation,
         };
 
         [ExcludeFromCodeCoverage]

@@ -1047,5 +1047,247 @@ namespace Orion.Tests.Networking.Packets {
                 stream2.ToArray().Should().BeEquivalentTo(UpdateChestContentsSlotBytes);
             }
         }
+
+        private static readonly byte[] UpdatePlayerChestBytes = {10, 0, 33, 0, 0, 100, 0, 100, 0, 0,};
+
+        [Fact]
+        public void ReadFromStream_UpdatePlayerChest_IsCorrect() {
+            using (var stream = new MemoryStream(UpdatePlayerChestBytes)) {
+                var packet = (UpdatePlayerChestPacket)Packet.ReadFromStream(stream);
+
+                packet.ChestIndex.Should().Be(0);
+                packet.ChestX.Should().Be(100);
+                packet.ChestY.Should().Be(100);
+                packet.ChestName.Should().BeNull();
+            }
+        }
+
+        [Fact]
+        public void WriteToStream_UpdatePlayerChestSlot_IsCorrect() {
+            using (var stream = new MemoryStream(UpdatePlayerChestBytes))
+            using (var stream2 = new MemoryStream()) {
+                var packet = Packet.ReadFromStream(stream);
+
+                packet.WriteToStream(stream2);
+
+                stream2.ToArray().Should().BeEquivalentTo(UpdatePlayerChestBytes);
+            }
+        }
+
+        private static readonly byte[] ModifyChestBytes = {12, 0, 34, 0, 100, 0, 100, 0, 1, 0, 0, 0};
+
+        [Fact]
+        public void ReadFromStream_ModifyChest_IsCorrect() {
+            using (var stream = new MemoryStream(ModifyChestBytes)) {
+                var packet = (ModifyChestPacket)Packet.ReadFromStream(stream);
+
+                packet.ModificationType.Should().Be(ModifyChestPacket.Type.PlaceContainers);
+                packet.ChestX.Should().Be(100);
+                packet.ChestY.Should().Be(100);
+                packet.ChestStyle.Should().Be(1);
+                packet.ChestIndex.Should().Be(0);
+            }
+        }
+
+        [Fact]
+        public void WriteToStream_ModifyChestSlot_IsCorrect() {
+            using (var stream = new MemoryStream(ModifyChestBytes))
+            using (var stream2 = new MemoryStream()) {
+                var packet = Packet.ReadFromStream(stream);
+
+                packet.WriteToStream(stream2);
+
+                stream2.ToArray().Should().BeEquivalentTo(ModifyChestBytes);
+            }
+        }
+
+        private static readonly byte[] ShowHealEffectBytes = {6, 0, 35, 0, 100, 0};
+
+        [Fact]
+        public void ReadFromStream_ShowHealEffect_IsCorrect() {
+            using (var stream = new MemoryStream(ShowHealEffectBytes)) {
+                var packet = (ShowHealEffectPacket)Packet.ReadFromStream(stream);
+
+                packet.PlayerIndex.Should().Be(0);
+                packet.HealAmount.Should().Be(100);
+            }
+        }
+
+        [Fact]
+        public void WriteToStream_ShowHealEffectSlot_IsCorrect() {
+            using (var stream = new MemoryStream(ShowHealEffectBytes))
+            using (var stream2 = new MemoryStream()) {
+                var packet = Packet.ReadFromStream(stream);
+
+                packet.WriteToStream(stream2);
+
+                stream2.ToArray().Should().BeEquivalentTo(ShowHealEffectBytes);
+            }
+        }
+
+        private static readonly byte[] UpdatePlayerZonesBytes = {8, 0, 36, 1, 0, 0, 0, 0};
+
+        [Fact]
+        public void ReadFromStream_UpdatePlayerZones_IsCorrect() {
+            using (var stream = new MemoryStream(UpdatePlayerZonesBytes)) {
+                var packet = (UpdatePlayerZonesPacket)Packet.ReadFromStream(stream);
+
+                packet.PlayerIndex.Should().Be(1);
+                packet.IsNearDungeonZone.Should().BeFalse();
+                packet.IsNearCorruptionZone.Should().BeFalse();
+                packet.IsNearHallowedZone.Should().BeFalse();
+                packet.IsNearMeteorZone.Should().BeFalse();
+                packet.IsNearJungleZone.Should().BeFalse();
+                packet.IsNearSnowZone.Should().BeFalse();
+                packet.IsNearCrimsonZone.Should().BeFalse();
+                packet.IsNearWaterCandleZone.Should().BeFalse();
+                packet.IsNearPeaceCandleZone.Should().BeFalse();
+                packet.IsNearSolarTowerZone.Should().BeFalse();
+                packet.IsNearVortexTowerZone.Should().BeFalse();
+                packet.IsNearNebulaTowerZone.Should().BeFalse();
+                packet.IsNearStardustTowerZone.Should().BeFalse();
+                packet.IsNearDesertZone.Should().BeFalse();
+                packet.IsNearGlowingMushroomZone.Should().BeFalse();
+                packet.IsNearUndergroundDesertZone.Should().BeFalse();
+                packet.IsNearSkyHeightZone.Should().BeFalse();
+                packet.IsNearOverworldHeightZone.Should().BeFalse();
+                packet.IsNearDirtLayerHeightZone.Should().BeFalse();
+                packet.IsNearRockLayerHeightZone.Should().BeFalse();
+                packet.IsNearUnderworldHeightZone.Should().BeFalse();
+                packet.IsNearBeachZone.Should().BeFalse();
+                packet.IsNearRainZone.Should().BeFalse();
+                packet.IsNearSandstormZone.Should().BeFalse();
+                packet.IsNearOldOnesArmyZone.Should().BeFalse();
+            }
+        }
+
+        [Fact]
+        public void WriteToStream_UpdatePlayerZonesSlot_IsCorrect() {
+            using (var stream = new MemoryStream(UpdatePlayerZonesBytes))
+            using (var stream2 = new MemoryStream()) {
+                var packet = Packet.ReadFromStream(stream);
+
+                packet.WriteToStream(stream2);
+
+                stream2.ToArray().Should().BeEquivalentTo(UpdatePlayerZonesBytes);
+            }
+        }
+
+        private static readonly byte[] RequestServerPasswordBytes = {3, 0, 37};
+
+        [Fact]
+        public void ReadFromStream_RequestServerPassword_IsCorrect() {
+            using (var stream = new MemoryStream(RequestServerPasswordBytes)) {
+                Packet.ReadFromStream(stream);
+            }
+        }
+
+        [Fact]
+        public void WriteToStream_RequestServerPasswordSlot_IsCorrect() {
+            using (var stream = new MemoryStream(RequestServerPasswordBytes))
+            using (var stream2 = new MemoryStream()) {
+                var packet = Packet.ReadFromStream(stream);
+
+                packet.WriteToStream(stream2);
+
+                stream2.ToArray().Should().BeEquivalentTo(RequestServerPasswordBytes);
+            }
+        }
+
+        public static readonly byte[] ContinueConnectionWithServerPasswordBytes = {
+            12, 0, 38, 8, 84, 101, 114, 114, 97, 114, 105, 97
+        };
+
+        [Fact]
+        public void ReadFromStream_ContinueConnectionWithServerPassword_IsCorrect() {
+            using (var stream = new MemoryStream(ContinueConnectionWithServerPasswordBytes)) {
+                var packet = (ContinueConnectionWithServerPasswordPacket)Packet.ReadFromStream(stream);
+
+                packet.ServerPassword.Should().Be("Terraria");
+            }
+        }
+
+        [Fact]
+        public void WriteToStream_ContinueConnectionWithServerPassword_IsCorrect() {
+            using (var stream = new MemoryStream(ContinueConnectionWithServerPasswordBytes))
+            using (var stream2 = new MemoryStream()) {
+                var packet = Packet.ReadFromStream(stream);
+
+                packet.WriteToStream(stream2);
+
+                stream2.ToArray().Should().BeEquivalentTo(ContinueConnectionWithServerPasswordBytes);
+            }
+        }
+
+        public static readonly byte[] RemoveItemOwnerBytes = {5, 0, 39, 1, 0};
+
+        [Fact]
+        public void ReadFromStream_RemoveItemOwner_IsCorrect() {
+            using (var stream = new MemoryStream(RemoveItemOwnerBytes)) {
+                var packet = (RemoveItemOwnerPacket)Packet.ReadFromStream(stream);
+
+                packet.ItemIndex.Should().Be(1);
+            }
+        }
+
+        [Fact]
+        public void WriteToStream_RemoveItemOwner_IsCorrect() {
+            using (var stream = new MemoryStream(RemoveItemOwnerBytes))
+            using (var stream2 = new MemoryStream()) {
+                var packet = Packet.ReadFromStream(stream);
+
+                packet.WriteToStream(stream2);
+
+                stream2.ToArray().Should().BeEquivalentTo(RemoveItemOwnerBytes);
+            }
+        }
+
+        public static readonly byte[] UpdatePlayerTalkingToNpcBytes = {6, 0, 40, 1, 1, 0};
+
+        [Fact]
+        public void ReadFromStream_UpdatePlayerTalkingToNpc_IsCorrect() {
+            using (var stream = new MemoryStream(UpdatePlayerTalkingToNpcBytes)) {
+                var packet = (UpdatePlayerTalkingToNpcPacket)Packet.ReadFromStream(stream);
+
+                packet.PlayerIndex.Should().Be(1);
+                packet.NpcIndex.Should().Be(1);
+            }
+        }
+
+        [Fact]
+        public void WriteToStream_UpdatePlayerTalkingToNpc_IsCorrect() {
+            using (var stream = new MemoryStream(UpdatePlayerTalkingToNpcBytes))
+            using (var stream2 = new MemoryStream()) {
+                var packet = Packet.ReadFromStream(stream);
+
+                packet.WriteToStream(stream2);
+
+                stream2.ToArray().Should().BeEquivalentTo(UpdatePlayerTalkingToNpcBytes);
+            }
+        }
+
+        public static readonly byte[] UpdatePlayerItemAnimationBytes = {10, 0, 41, 0, 60, 244, 29, 63, 3, 0,};
+
+        [Fact]
+        public void ReadFromStream_UpdatePlayerItemAnimation_IsCorrect() {
+            using (var stream = new MemoryStream(UpdatePlayerItemAnimationBytes)) {
+                var packet = (UpdatePlayerItemAnimationPacket)Packet.ReadFromStream(stream);
+
+                packet.PlayerIndex.Should().Be(0);
+                packet.PlayerItemAnimation.Should().Be(3);
+            }
+        }
+
+        [Fact]
+        public void WriteToStream_UpdatePlayerItemAnimation_IsCorrect() {
+            using (var stream = new MemoryStream(UpdatePlayerItemAnimationBytes))
+            using (var stream2 = new MemoryStream()) {
+                var packet = Packet.ReadFromStream(stream);
+
+                packet.WriteToStream(stream2);
+
+                stream2.ToArray().Should().BeEquivalentTo(UpdatePlayerItemAnimationBytes);
+            }
+        }
     }
 }
