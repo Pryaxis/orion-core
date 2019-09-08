@@ -16,14 +16,14 @@ namespace Orion.Networking.Packets {
         public override TerrariaPacketType Type => TerrariaPacketType.UpdatePlayerInventorySlot;
 
         /// <summary>
-        /// Gets or sets the player ID.
+        /// Gets or sets the player index.
         /// </summary>
-        public byte PlayerId { get; set; }
+        public byte PlayerIndex { get; set; }
 
         /// <summary>
-        /// Gets or sets the inventory slot.
+        /// Gets or sets the inventory slot index.
         /// </summary>
-        public byte InventorySlot { get; set; }
+        public byte InventorySlotIndex { get; set; }
 
         /// <summary>
         /// Gets or sets the item's stack size.
@@ -41,16 +41,16 @@ namespace Orion.Networking.Packets {
         public ItemType ItemType { get; set; }
 
         private protected override void ReadFromReader(BinaryReader reader, ushort packetLength) {
-            PlayerId = reader.ReadByte();
-            InventorySlot = reader.ReadByte();
+            PlayerIndex = reader.ReadByte();
+            InventorySlotIndex = reader.ReadByte();
             ItemStackSize = reader.ReadInt16();
             ItemPrefix = (ItemPrefix)reader.ReadByte();
             ItemType = (ItemType)reader.ReadInt16();
         }
 
         private protected override void WriteToWriter(BinaryWriter writer) {
-            writer.Write(PlayerId);
-            writer.Write(InventorySlot);
+            writer.Write(PlayerIndex);
+            writer.Write(InventorySlotIndex);
             writer.Write(ItemStackSize);
             writer.Write((byte)ItemPrefix);
             writer.Write((short)ItemType);

@@ -20,9 +20,9 @@ namespace Orion.Networking.Packets {
         public override TerrariaPacketType Type => TerrariaPacketType.UpdatePlayerInfo;
 
         /// <summary>
-        /// Gets or sets the player ID.
+        /// Gets or sets the player index.
         /// </summary>
-        public byte PlayerId { get; set; }
+        public byte PlayerIndex { get; set; }
 
         /// <summary>
         /// Gets or sets the player's skin type.
@@ -99,7 +99,7 @@ namespace Orion.Networking.Packets {
         public byte Difficulty { get; set; }
 
         private protected override void ReadFromReader(BinaryReader reader, ushort packetLength) {
-            PlayerId = reader.ReadByte();
+            PlayerIndex = reader.ReadByte();
             SkinType = reader.ReadByte();
             HairType = reader.ReadByte();
             _name = reader.ReadString();
@@ -117,7 +117,7 @@ namespace Orion.Networking.Packets {
         }
 
         private protected override void WriteToWriter(BinaryWriter writer) {
-            writer.Write(PlayerId);
+            writer.Write(PlayerIndex);
             writer.Write(SkinType);
             writer.Write(HairType);
             writer.Write(Name);

@@ -13,6 +13,8 @@ namespace Orion.Networking.Packets {
     /// Packet sent to the client to provide a world section.
     /// </summary>
     public sealed class UpdateWorldSectionPacket : TerrariaPacket {
+        private NetTile[,] _tiles;
+
         /// <inheritdoc />
         public override bool IsSentToClient => true;
         
@@ -38,19 +40,22 @@ namespace Orion.Networking.Packets {
         public int StartY { get; set; }
 
         /// <summary>
-        /// Gets the width.
+        /// Gets or sets the width.
         /// </summary>
-        public short Width { get; private set; }
+        public short Width { get; set; }
 
         /// <summary>
-        /// Gets the height.
+        /// Gets or sets the height.
         /// </summary>
-        public short Height { get; private set; }
+        public short Height { get; set; }
 
         /// <summary>
-        /// Gets the tiles.
+        /// Gets or sets the tiles.
         /// </summary>
-        public NetTile[,] Tiles { get; private set; }
+        public NetTile[,] Tiles {
+            get => _tiles;
+            set => _tiles = value ?? throw new ArgumentNullException(nameof(value));
+        }
 
         /// <summary>
         /// Gets the chests.

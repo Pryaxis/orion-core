@@ -129,7 +129,7 @@ namespace Orion.Tests.Networking.Packets {
                 packet.IsSentToClient.Should().BeTrue();
                 packet.IsSentToServer.Should().BeFalse();
                 packet.Type.Should().Be(TerrariaPacketType.ContinueConnection);
-                packet.PlayerId.Should().Be(0);
+                packet.PlayerIndex.Should().Be(0);
             }
         }
 
@@ -158,7 +158,7 @@ namespace Orion.Tests.Networking.Packets {
                 packet.IsSentToClient.Should().BeTrue();
                 packet.IsSentToServer.Should().BeTrue();
                 packet.Type.Should().Be(TerrariaPacketType.UpdatePlayerInfo);
-                packet.PlayerId.Should().Be(0);
+                packet.PlayerIndex.Should().Be(0);
                 packet.SkinType.Should().Be(2);
                 packet.Name.Should().Be("f");
                 packet.HairDye.Should().Be(0);
@@ -197,8 +197,8 @@ namespace Orion.Tests.Networking.Packets {
                 packet.IsSentToClient.Should().BeTrue();
                 packet.IsSentToServer.Should().BeTrue();
                 packet.Type.Should().Be(TerrariaPacketType.UpdatePlayerInventorySlot);
-                packet.PlayerId.Should().Be(0);
-                packet.InventorySlot.Should().Be(0);
+                packet.PlayerIndex.Should().Be(0);
+                packet.InventorySlotIndex.Should().Be(0);
                 packet.ItemStackSize.Should().Be(1);
                 packet.ItemPrefix.Should().Be(ItemPrefix.Godly);
                 packet.ItemType.Should().Be(ItemType.CopperShortsword);
@@ -578,6 +578,34 @@ namespace Orion.Tests.Networking.Packets {
                 packet.WriteToStream(stream2);
 
                 stream2.ToArray().Should().BeEquivalentTo(SyncTileFramesBytes);
+            }
+        }
+
+        private static readonly byte[] SpawnPlayerBytes = {8, 0, 12, 0, 255, 255, 255, 255,};
+
+        [Fact]
+        public void ReadFromStream_SpawnPlayer_IsCorrect() {
+            using (var stream = new MemoryStream(SpawnPlayerBytes)) {
+                var packet = (SpawnPlayerPacket)TerrariaPacket.ReadFromStream(stream);
+
+                packet.IsSentToClient.Should().BeTrue();
+                packet.IsSentToServer.Should().BeTrue();
+                packet.Type.Should().Be(TerrariaPacketType.SpawnPlayer);
+                packet.PlayerIndex.Should().Be(0);
+                packet.SpawnX.Should().Be(-1);
+                packet.SpawnY.Should().Be(-1);
+            }
+        }
+
+        [Fact]
+        public void WriteToStream_SpawnPlayer_IsCorrect() {
+            using (var stream = new MemoryStream(SpawnPlayerBytes))
+            using (var stream2 = new MemoryStream()) {
+                var packet = TerrariaPacket.ReadFromStream(stream);
+
+                packet.WriteToStream(stream2);
+
+                stream2.ToArray().Should().BeEquivalentTo(SpawnPlayerBytes);
             }
         }
     }

@@ -27,6 +27,7 @@ namespace Orion.Networking.Packets {
                 [TerrariaPacketType.UpdateClientStatus] = () => new UpdateClientStatusPacket(),
                 [TerrariaPacketType.UpdateWorldSection] = () => new UpdateWorldSectionPacket(),
                 [TerrariaPacketType.SyncTileFrames] = () => new SyncTileFramesPacket(),
+                [TerrariaPacketType.SpawnPlayer] = () => new SpawnPlayerPacket(),
             };
 
         [ExcludeFromCodeCoverage]

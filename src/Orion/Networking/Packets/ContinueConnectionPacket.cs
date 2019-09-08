@@ -15,16 +15,16 @@ namespace Orion.Networking.Packets {
         public override TerrariaPacketType Type => TerrariaPacketType.ContinueConnection;
 
         /// <summary>
-        /// Gets or sets the player ID.
+        /// Gets or sets the player index.
         /// </summary>
-        public byte PlayerId { get; set; }
+        public byte PlayerIndex { get; set; }
 
         private protected override void ReadFromReader(BinaryReader reader, ushort packetLength) {
-            PlayerId = reader.ReadByte();
+            PlayerIndex = reader.ReadByte();
         }
 
         private protected override void WriteToWriter(BinaryWriter writer) {
-            writer.Write(PlayerId);
+            writer.Write(PlayerIndex);
         }
     }
 }
