@@ -2,15 +2,15 @@
 using System.IO;
 using Orion.Networking.Packets.Extensions;
 
-namespace Orion.Networking.Packets {
+namespace Orion.Networking.Packets.Connections {
     /// <summary>
-    /// Packet sent to the client to disconnect it.
+    /// Packet sent from the server to the client to disconnect it.
     /// </summary>
-    public sealed class DisconnectPlayerPacket : Packet {
+    public sealed class DisconnectPacket : Packet {
         private Terraria.Localization.NetworkText _reason = Terraria.Localization.NetworkText.Empty;
 
         /// <summary>
-        /// Gets or sets the disconnect reason.
+        /// Gets or sets the disconnection reason.
         /// </summary>
         /// <exception cref="ArgumentNullException"><paramref name="value"/> is <c>null</c>.</exception>
         public Terraria.Localization.NetworkText Reason {
@@ -18,9 +18,12 @@ namespace Orion.Networking.Packets {
             set => _reason = value ?? throw new ArgumentNullException(nameof(value));
         }
 
-        private protected override void ReadFromReader(BinaryReader reader, ushort packetLength) =>
+        private protected override void ReadFromReader(BinaryReader reader, ushort packetLength) {
             _reason = reader.ReadNetworkText();
+        }
 
-        private protected override void WriteToWriter(BinaryWriter writer) => writer.Write(Reason);
+        private protected override void WriteToWriter(BinaryWriter writer) {
+            writer.Write(Reason);
+        }
     }
 }

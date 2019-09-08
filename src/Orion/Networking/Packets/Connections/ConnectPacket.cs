@@ -3,14 +3,16 @@ using System.IO;
 
 namespace Orion.Networking.Packets.Connections {
     /// <summary>
-    /// Packet sent from the client to the server to initiate a connection.
+    /// Packet sent from the client to the server to initiate a connection. The client's version must match the server's
+    /// version in order to proceed.
     /// </summary>
     public sealed class ConnectPacket : Packet {
         private string _version = "";
 
+        private protected override PacketType Type => PacketType.Connect;
+
         /// <summary>
-        /// Gets or sets the version, which is of the form "Terraria###". The client's version must match the server's
-        /// in order for the connection to proceed.
+        /// Gets or sets the version. This is usually of the form <c>"Terraria###"</c>.
         /// </summary>
         /// <exception cref="ArgumentNullException"><paramref name="value"/> is <c>null</c>.</exception>
         public string Version {

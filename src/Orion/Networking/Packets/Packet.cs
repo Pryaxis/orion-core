@@ -18,7 +18,7 @@ namespace Orion.Networking.Packets {
         private static readonly IDictionary<PacketType, Func<Packet>> PacketConstructors =
             new Dictionary<PacketType, Func<Packet>> {
                 [PacketType.Connect] = () => new ConnectPacket(),
-                [PacketType.DisconnectPlayer] = () => new DisconnectPlayerPacket(),
+                [PacketType.Disconnect] = () => new DisconnectPacket(),
                 [PacketType.ContinueConnection] = () => new ContinueConnectionPacket(),
                 [PacketType.UpdatePlayerInfo] = () => new UpdatePlayerInfoPacket(),
                 [PacketType.UpdatePlayerInventorySlot] = () => new UpdatePlayerInventorySlotPacket(),
@@ -135,6 +135,8 @@ namespace Orion.Networking.Packets {
 
         [ExcludeFromCodeCoverage]
         internal static int HeaderLength => sizeof(PacketType) + sizeof(short);
+
+        private protected virtual PacketType Type => throw new NotImplementedException();
 
         /// <summary>
         /// Reads a packet from the specified stream.

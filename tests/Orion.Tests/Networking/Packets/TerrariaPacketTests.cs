@@ -65,32 +65,6 @@ namespace Orion.Tests.Networking.Packets {
             }
         }
 
-        public static readonly byte[] DisconnectPlayerBytes = {
-            21, 0, 2, 2, 15, 67, 76, 73, 46, 75, 105, 99, 107, 77, 101, 115, 115, 97, 103, 101, 0,
-        };
-
-
-        [Fact]
-        public void ReadFromStream_DisconnectPlayer_IsCorrect() {
-            using (var stream = new MemoryStream(DisconnectPlayerBytes)) {
-                var packet = (DisconnectPlayerPacket)Packet.ReadFromStream(stream);
-
-                packet.Reason.ToString().Should().Be("CLI.KickMessage");
-            }
-        }
-
-        [Fact]
-        public void WriteToStream_DisconnectPlayer_IsCorrect() {
-            using (var stream = new MemoryStream(DisconnectPlayerBytes))
-            using (var stream2 = new MemoryStream()) {
-                var packet = Packet.ReadFromStream(stream);
-
-                packet.WriteToStream(stream2);
-
-                stream2.ToArray().Should().BeEquivalentTo(DisconnectPlayerBytes);
-            }
-        }
-
         public static readonly byte[] ContinueConnectionBytes = {4, 0, 3, 0};
 
         [Fact]
