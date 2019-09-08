@@ -1,6 +1,9 @@
 ﻿using System;
 using System.IO;
+using Orion.Items;
 using Orion.Networking;
+using Orion.World;
+using Orion.World.TileEntities;
 using Serilog;
 using Serilog.Sinks.SystemConsole.Themes;
 
@@ -45,6 +48,8 @@ namespace Orion.Launcher {
                 Console.WriteLine();
 
                 var service = new OrionNetworkService();
+                var service2 = new OrionWorldService(new OrionChestService(), new OrionSignService());
+                var service3 = new OrionItemService();
 
                 // Set SkipAssemblyLoad so that we don't JIT the social API.
                 Terraria.Main.SkipAssemblyLoad = true;

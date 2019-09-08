@@ -3,16 +3,19 @@ using TGCTE = Terraria.GameContent.Tile_Entities;
 
 namespace Orion.World.TileEntities {
     internal sealed class OrionItemFrame : OrionTileEntity<TGCTE.TEItemFrame>, IItemFrame {
-        private OrionItem _item;
+        public ItemType ItemType {
+            get => (ItemType)Wrapped.item.type;
+            set => Wrapped.item.type = (int)value;
+        }
 
-        public IItem Item {
-            get {
-                if (_item?.Wrapped != Wrapped.item) {
-                    _item = new OrionItem(Wrapped.item);
-                }
+        public int ItemStackSize {
+            get => Wrapped.item.stack;
+            set => Wrapped.item.stack = value;
+        }
 
-                return _item;
-            }
+        public ItemPrefix ItemPrefix {
+            get => (ItemPrefix)Wrapped.item.prefix;
+            set => Wrapped.item.prefix = (byte)value;
         }
 
         public OrionItemFrame(TGCTE.TEItemFrame itemFrame) : base(itemFrame) { }

@@ -57,20 +57,80 @@ namespace Orion.Tests.World.TileEntities {
         }
         
         [Theory]
-        [InlineData(ItemType.SDMG, 1, ItemPrefix.Unreal)]
-        public void GetItem_IsCorrect(ItemType itemType, int itemStackSize, ItemPrefix itemPrefix) {
+        [InlineData(ItemType.SDMG)]
+        public void GetItemType_IsCorrect(ItemType itemType) {
             var terrariaItemFrame = new TGCTE.TEItemFrame {
                 item = new Terraria.Item {
                     type = (int)itemType,
-                    stack = itemStackSize,
-                    prefix = (byte)itemPrefix,
-                }
+                },
             };
             var itemFrame = new OrionItemFrame(terrariaItemFrame);
 
-            itemFrame.Item.Type.Should().Be(itemType);
-            itemFrame.Item.StackSize.Should().Be(itemStackSize);
-            itemFrame.Item.Prefix.Should().Be(itemPrefix);
+            itemFrame.ItemType.Should().Be(itemType);
+        }
+        
+        [Theory]
+        [InlineData(ItemType.SDMG)]
+        public void SetItemType_IsCorrect(ItemType itemType) {
+            var terrariaItemFrame = new TGCTE.TEItemFrame {
+                item = new Terraria.Item(),
+            };
+            var itemFrame = new OrionItemFrame(terrariaItemFrame);
+            itemFrame.ItemType = itemType;
+
+            terrariaItemFrame.item.type.Should().Be((int)itemType);
+        }
+        
+        [Theory]
+        [InlineData(100)]
+        public void GetItemStackSize_IsCorrect(int itemStackSize) {
+            var terrariaItemFrame = new TGCTE.TEItemFrame {
+                item = new Terraria.Item {
+                    stack = itemStackSize,
+                },
+            };
+            var itemFrame = new OrionItemFrame(terrariaItemFrame);
+
+            itemFrame.ItemStackSize.Should().Be(itemStackSize);
+        }
+        
+        [Theory]
+        [InlineData(100)]
+        public void SetItemStackSize_IsCorrect(int itemStackSize) {
+            var terrariaItemFrame = new TGCTE.TEItemFrame {
+                item = new Terraria.Item(),
+            };
+            var itemFrame = new OrionItemFrame(terrariaItemFrame);
+
+            itemFrame.ItemStackSize = itemStackSize;
+
+            terrariaItemFrame.item.stack.Should().Be(itemStackSize);
+        }
+        
+        [Theory]
+        [InlineData(ItemPrefix.Unreal)]
+        public void GetItemPrefix_IsCorrect(ItemPrefix itemPrefix) {
+            var terrariaItemFrame = new TGCTE.TEItemFrame {
+                item = new Terraria.Item {
+                    prefix = (byte)itemPrefix,
+                },
+            };
+            var itemFrame = new OrionItemFrame(terrariaItemFrame);
+
+            itemFrame.ItemPrefix.Should().Be(itemPrefix);
+        }
+        
+        [Theory]
+        [InlineData(ItemPrefix.Unreal)]
+        public void SetItemPrefix_IsCorrect(ItemPrefix itemPrefix) {
+            var terrariaItemFrame = new TGCTE.TEItemFrame {
+                item = new Terraria.Item(),
+            };
+            var itemFrame = new OrionItemFrame(terrariaItemFrame);
+
+            itemFrame.ItemPrefix = itemPrefix;
+
+            terrariaItemFrame.item.prefix.Should().Be((byte)itemPrefix);
         }
     }
 }

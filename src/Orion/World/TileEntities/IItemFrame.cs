@@ -6,8 +6,18 @@ namespace Orion.World.TileEntities {
     /// </summary>
     public interface IItemFrame : ITileEntity {
         /// <summary>
-        /// Gets the framed item.
+        /// Gets or sets the item type.
         /// </summary>
-        IItem Item { get; }
+        ItemType ItemType { get; set; }
+
+        /// <summary>
+        /// Gets or sets the item stack size.
+        /// </summary>
+        int ItemStackSize { get; set; }
+
+        /// <summary>
+        /// Gets or sets the item prefix.
+        /// </summary>
+        ItemPrefix ItemPrefix { get; set; }
     }
 }
