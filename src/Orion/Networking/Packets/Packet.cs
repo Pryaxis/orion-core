@@ -38,6 +38,7 @@ namespace Orion.Networking.Packets {
                 [PacketType.UpdateItem] = () => new UpdateItemPacket(),
                 [PacketType.UpdateItemOwner] = () => new UpdateItemOwnerPacket(),
                 [PacketType.UpdateNpc] = () => new UpdateNpcPacket(),
+                [PacketType.DamageNpcWithSelectedItem] = () => new DamageNpcWithSelectedItemPacket(),
             };
 
         private static readonly IDictionary<Type, PacketType> PacketTypes = new Dictionary<Type, PacketType> {
@@ -63,6 +64,7 @@ namespace Orion.Networking.Packets {
             [typeof(UpdateItemPacket)] = PacketType.UpdateItem,
             [typeof(UpdateItemOwnerPacket)] = PacketType.UpdateItemOwner,
             [typeof(UpdateNpcPacket)] = PacketType.UpdateNpc,
+            [typeof(DamageNpcWithSelectedItemPacket)] = PacketType.DamageNpcWithSelectedItem,
         };
 
         [ExcludeFromCodeCoverage]

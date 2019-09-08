@@ -862,5 +862,29 @@ namespace Orion.Tests.Networking.Packets {
                 stream2.ToArray().Should().BeEquivalentTo(UpdateNpcBytes);
             }
         }
+
+        private static readonly byte[] DamageNpcWithSelectedItemBytes = {6, 0, 24, 1, 0, 0};
+
+        [Fact]
+        public void ReadFromStream_DamageNpcWithSelectedItem_IsCorrect() {
+            using (var stream = new MemoryStream(DamageNpcWithSelectedItemBytes)) {
+                var packet = (DamageNpcWithSelectedItemPacket)Packet.ReadFromStream(stream);
+
+                packet.NpcIndex.Should().Be(1);
+                packet.PlayerIndex.Should().Be(0);
+            }
+        }
+
+        [Fact]
+        public void WriteToStream_DamageNpcWithSelectedItem_IsCorrect() {
+            using (var stream = new MemoryStream(DamageNpcWithSelectedItemBytes))
+            using (var stream2 = new MemoryStream()) {
+                var packet = Packet.ReadFromStream(stream);
+
+                packet.WriteToStream(stream2);
+
+                stream2.ToArray().Should().BeEquivalentTo(DamageNpcWithSelectedItemBytes);
+            }
+        }
     }
 }

@@ -26,7 +26,7 @@
         UpdateItem = 21,
         UpdateItemOwner = 22,
         UpdateNpc = 23,
-        DamageNpcWithItem = 24,
+        DamageNpcWithSelectedItem = 24,
         UpdateProjectile = 27,
         DamageNpc = 28,
         RemoveProjectile = 29,
