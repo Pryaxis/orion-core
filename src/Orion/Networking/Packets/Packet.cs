@@ -41,6 +41,10 @@ namespace Orion.Networking.Packets {
                 [PacketType.DamageNpcWithSelectedItem] = () => new DamageNpcWithSelectedItemPacket(),
                 [PacketType.UpdateProjectile] = () => new UpdateProjectilePacket(),
                 [PacketType.DamageNpc] = () => new DamageNpcPacket(),
+                [PacketType.RemoveProjectile] = () => new RemoveProjectilePacket(),
+                [PacketType.UpdatePlayerPvpStatus] = () => new UpdatePlayerPvpStatusPacket(),
+                [PacketType.RequestChestContents] = () => new RequestChestContentsPacket(),
+                [PacketType.UpdateChestContentsSlot] = () => new UpdateChestContentsSlotPacket(),
             };
 
         private static readonly IDictionary<Type, PacketType> PacketTypes = new Dictionary<Type, PacketType> {
@@ -69,6 +73,10 @@ namespace Orion.Networking.Packets {
             [typeof(DamageNpcWithSelectedItemPacket)] = PacketType.DamageNpcWithSelectedItem,
             [typeof(UpdateProjectilePacket)] = PacketType.UpdateProjectile,
             [typeof(DamageNpcPacket)] = PacketType.DamageNpc,
+            [typeof(RemoveProjectilePacket)] = PacketType.RemoveProjectile,
+            [typeof(UpdatePlayerPvpStatusPacket)] = PacketType.UpdatePlayerPvpStatus,
+            [typeof(RequestChestContentsPacket)] = PacketType.RequestChestContents,
+            [typeof(UpdateChestContentsSlotPacket)] = PacketType.UpdateChestContentsSlot,
         };
 
         [ExcludeFromCodeCoverage]

@@ -948,5 +948,104 @@ namespace Orion.Tests.Networking.Packets {
                 stream2.ToArray().Should().BeEquivalentTo(DamageNpcBytes);
             }
         }
+
+        private static readonly byte[] RemoveProjectileBytes = {6, 0, 29, 1, 0, 0,};
+
+        [Fact]
+        public void ReadFromStream_RemoveProjectile_IsCorrect() {
+            using (var stream = new MemoryStream(RemoveProjectileBytes)) {
+                var packet = (RemoveProjectilePacket)Packet.ReadFromStream(stream);
+
+                packet.ProjectileIdentity.Should().Be(1);
+                packet.OwnerPlayerIndex.Should().Be(0);
+            }
+        }
+
+        [Fact]
+        public void WriteToStream_RemoveProjectile_IsCorrect() {
+            using (var stream = new MemoryStream(RemoveProjectileBytes))
+            using (var stream2 = new MemoryStream()) {
+                var packet = Packet.ReadFromStream(stream);
+
+                packet.WriteToStream(stream2);
+
+                stream2.ToArray().Should().BeEquivalentTo(RemoveProjectileBytes);
+            }
+        }
+
+        private static readonly byte[] UpdatePlayerPvpStatusBytes = {5, 0, 30, 0, 1,};
+
+        [Fact]
+        public void ReadFromStream_UpdatePlayerPvpStatus_IsCorrect() {
+            using (var stream = new MemoryStream(UpdatePlayerPvpStatusBytes)) {
+                var packet = (UpdatePlayerPvpStatusPacket)Packet.ReadFromStream(stream);
+
+                packet.PlayerIndex.Should().Be(0);
+                packet.PlayerIsInPvp.Should().BeTrue();
+            }
+        }
+
+        [Fact]
+        public void WriteToStream_UpdatePlayerPvpStatus_IsCorrect() {
+            using (var stream = new MemoryStream(UpdatePlayerPvpStatusBytes))
+            using (var stream2 = new MemoryStream()) {
+                var packet = Packet.ReadFromStream(stream);
+
+                packet.WriteToStream(stream2);
+
+                stream2.ToArray().Should().BeEquivalentTo(UpdatePlayerPvpStatusBytes);
+            }
+        }
+
+        private static readonly byte[] RequestChestContentsBytes = {7, 0, 31, 100, 0, 100, 0,};
+
+        [Fact]
+        public void ReadFromStream_RequestChestContents_IsCorrect() {
+            using (var stream = new MemoryStream(RequestChestContentsBytes)) {
+                var packet = (RequestChestContentsPacket)Packet.ReadFromStream(stream);
+
+                packet.ChestX.Should().Be(100);
+                packet.ChestY.Should().Be(100);
+            }
+        }
+
+        [Fact]
+        public void WriteToStream_RequestChestContents_IsCorrect() {
+            using (var stream = new MemoryStream(RequestChestContentsBytes))
+            using (var stream2 = new MemoryStream()) {
+                var packet = Packet.ReadFromStream(stream);
+
+                packet.WriteToStream(stream2);
+
+                stream2.ToArray().Should().BeEquivalentTo(RequestChestContentsBytes);
+            }
+        }
+
+        private static readonly byte[] UpdateChestContentsSlotBytes = {11, 0, 32, 0, 0, 0, 1, 0, 0, 17, 6,};
+
+        [Fact]
+        public void ReadFromStream_UpdateChestContentsSlot_IsCorrect() {
+            using (var stream = new MemoryStream(UpdateChestContentsSlotBytes)) {
+                var packet = (UpdateChestContentsSlotPacket)Packet.ReadFromStream(stream);
+
+                packet.ChestIndex.Should().Be(0);
+                packet.ChestContentsSlot.Should().Be(0);
+                packet.ItemStackSize.Should().Be(1);
+                packet.ItemPrefix.Should().Be(ItemPrefix.None);
+                packet.ItemType.Should().Be(ItemType.SDMG);
+            }
+        }
+
+        [Fact]
+        public void WriteToStream_UpdateChestContentsSlot_IsCorrect() {
+            using (var stream = new MemoryStream(UpdateChestContentsSlotBytes))
+            using (var stream2 = new MemoryStream()) {
+                var packet = Packet.ReadFromStream(stream);
+
+                packet.WriteToStream(stream2);
+
+                stream2.ToArray().Should().BeEquivalentTo(UpdateChestContentsSlotBytes);
+            }
+        }
     }
 }
