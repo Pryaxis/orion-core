@@ -5,6 +5,7 @@ using Microsoft.Xna.Framework;
 using Orion.Items;
 using Orion.Networking.Packets;
 using Orion.Npcs;
+using Orion.Projectiles;
 using Orion.World;
 using Xunit;
 
@@ -884,6 +885,40 @@ namespace Orion.Tests.Networking.Packets {
                 packet.WriteToStream(stream2);
 
                 stream2.ToArray().Should().BeEquivalentTo(DamageNpcWithSelectedItemBytes);
+            }
+        }
+
+        private static readonly byte[] UpdateProjectileBytes = {
+            31, 0, 27, 0, 0, 128, 57, 131, 71, 0, 200, 212, 69, 254, 14, 40, 65, 147, 84, 121, 193, 205, 204, 128, 64,
+            99, 0, 0, 89, 0, 0,
+        };
+
+        [Fact]
+        public void ReadFromStream_UpdateProjectile_IsCorrect() {
+            using (var stream = new MemoryStream(UpdateProjectileBytes)) {
+                var packet = (UpdateProjectilePacket)Packet.ReadFromStream(stream);
+
+                packet.ProjectileIdentity.Should().Be(0);
+                packet.Position.Should().Be(new Vector2(67187, 6809));
+                packet.Knockback.Should().Be(4.025f);
+                packet.Damage.Should().Be(99);
+                packet.OwnerPlayerIndex.Should().Be(0);
+                packet.ProjectileType.Should().Be(ProjectileType.CrystalBullet);
+                packet.AiValues[0].Should().Be(0);
+                packet.AiValues[1].Should().Be(0);
+                packet.ProjectileUuid.Should().Be(-1);
+            }
+        }
+
+        [Fact]
+        public void WriteToStream_UpdateProjectile_IsCorrect() {
+            using (var stream = new MemoryStream(UpdateProjectileBytes))
+            using (var stream2 = new MemoryStream()) {
+                var packet = Packet.ReadFromStream(stream);
+
+                packet.WriteToStream(stream2);
+
+                stream2.ToArray().Should().BeEquivalentTo(UpdateProjectileBytes);
             }
         }
     }
