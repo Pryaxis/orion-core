@@ -50,9 +50,9 @@ namespace Orion.Networking.Packets {
                 [PacketType.ModifyChest] = () => new ModifyChestPacket(),
                 [PacketType.ShowHealEffect] = () => new ShowHealEffectPacket(),
                 [PacketType.UpdatePlayerZones] = () => new UpdatePlayerZonesPacket(),
-                [PacketType.RequestServerPassword] = () => new RequestServerPasswordPacket(),
-                [PacketType.ContinueConnectionWithServerPassword] =
-                    () => new ContinueConnectionWithServerPasswordPacket(),
+                [PacketType.RequestPassword] = () => new RequestPasswordPacket(),
+                [PacketType.PasswordResponse] =
+                    () => new PasswordResponsePacket(),
                 [PacketType.RemoveItemOwner] = () => new RemoveItemOwnerPacket(),
                 [PacketType.UpdatePlayerTalkingToNpc] = () => new UpdatePlayerTalkingToNpcPacket(),
                 [PacketType.UpdatePlayerItemAnimation] = () => new UpdatePlayerItemAnimationPacket(),

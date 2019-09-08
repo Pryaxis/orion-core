@@ -1102,52 +1102,6 @@ namespace Orion.Tests.Networking.Packets {
             }
         }
 
-        private static readonly byte[] RequestServerPasswordBytes = {3, 0, 37};
-
-        [Fact]
-        public void ReadFromStream_RequestServerPassword_IsCorrect() {
-            using (var stream = new MemoryStream(RequestServerPasswordBytes)) {
-                Packet.ReadFromStream(stream);
-            }
-        }
-
-        [Fact]
-        public void WriteToStream_RequestServerPasswordSlot_IsCorrect() {
-            using (var stream = new MemoryStream(RequestServerPasswordBytes))
-            using (var stream2 = new MemoryStream()) {
-                var packet = Packet.ReadFromStream(stream);
-
-                packet.WriteToStream(stream2);
-
-                stream2.ToArray().Should().BeEquivalentTo(RequestServerPasswordBytes);
-            }
-        }
-
-        public static readonly byte[] ContinueConnectionWithServerPasswordBytes = {
-            12, 0, 38, 8, 84, 101, 114, 114, 97, 114, 105, 97
-        };
-
-        [Fact]
-        public void ReadFromStream_ContinueConnectionWithServerPassword_IsCorrect() {
-            using (var stream = new MemoryStream(ContinueConnectionWithServerPasswordBytes)) {
-                var packet = (ContinueConnectionWithServerPasswordPacket)Packet.ReadFromStream(stream);
-
-                packet.ServerPassword.Should().Be("Terraria");
-            }
-        }
-
-        [Fact]
-        public void WriteToStream_ContinueConnectionWithServerPassword_IsCorrect() {
-            using (var stream = new MemoryStream(ContinueConnectionWithServerPasswordBytes))
-            using (var stream2 = new MemoryStream()) {
-                var packet = Packet.ReadFromStream(stream);
-
-                packet.WriteToStream(stream2);
-
-                stream2.ToArray().Should().BeEquivalentTo(ContinueConnectionWithServerPasswordBytes);
-            }
-        }
-
         public static readonly byte[] RemoveItemOwnerBytes = {5, 0, 39, 1, 0};
 
         [Fact]
