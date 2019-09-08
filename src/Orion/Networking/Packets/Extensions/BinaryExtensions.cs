@@ -1,5 +1,6 @@
 ﻿using System.IO;
 using Microsoft.Xna.Framework;
+using TDS = Terraria.DataStructures;
 
 namespace Orion.Networking.Packets.Extensions {
     internal static class BinaryExtensions {
@@ -10,9 +11,10 @@ namespace Orion.Networking.Packets.Extensions {
             return new Color(red, green, blue);
         }
 
-        public static Terraria.Localization.NetworkText ReadNetworkText(this BinaryReader reader) {
-            return Terraria.Localization.NetworkText.Deserialize(reader);
-        }
+        public static Terraria.Localization.NetworkText ReadNetworkText(this BinaryReader reader) => Terraria.Localization.NetworkText.Deserialize(reader);
+
+        public static TDS.PlayerDeathReason ReadPlayerDeathReason(this BinaryReader reader) =>
+            TDS.PlayerDeathReason.FromReader(reader);
 
         public static Vector2 ReadVector2(this BinaryReader reader) =>
             new Vector2(reader.ReadSingle(), reader.ReadSingle());
@@ -23,9 +25,10 @@ namespace Orion.Networking.Packets.Extensions {
             writer.Write(color.B);
         }
 
-        public static void Write(this BinaryWriter writer, Terraria.Localization.NetworkText text) {
-            text.Serialize(writer);
-        }
+        public static void Write(this BinaryWriter writer, TDS.PlayerDeathReason playerDeathReason) =>
+            playerDeathReason.WriteSelfTo(writer);
+
+        public static void Write(this BinaryWriter writer, Terraria.Localization.NetworkText text) => text.Serialize(writer);
 
         public static void Write(this BinaryWriter writer, Vector2 vector) {
             writer.Write(vector.X);

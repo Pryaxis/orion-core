@@ -55,48 +55,82 @@ namespace Orion.Networking.Packets {
                 [PacketType.RemoveItemOwner] = () => new RemoveItemOwnerPacket(),
                 [PacketType.UpdatePlayerTalkingToNpc] = () => new UpdatePlayerTalkingToNpcPacket(),
                 [PacketType.UpdatePlayerItemAnimation] = () => new UpdatePlayerItemAnimationPacket(),
+                [PacketType.UpdatePlayerMp] = () => new UpdatePlayerMpPacket(),
+                [PacketType.ShowManaEffect] = () => new ShowManaEffectPacket(),
+                [PacketType.UpdatePlayerTeam] = () => new UpdatePlayerTeamPacket(),
+                [PacketType.RequestSign] = () => new RequestSignPacket(),
+                [PacketType.UpdateSign] = () => new UpdateSignPacket(),
+                [PacketType.UpdateLiquid] = () => new UpdateLiquidPacket(),
+                [PacketType.FirstSpawnPlayer] = () => new FirstSpawnPlayerPacket(),
+                [PacketType.UpdatePlayerBuffs] = () => new UpdatePlayerBuffsPacket(),
+                [PacketType.PerformAction] = () => new PerformActionPacket(),
+                [PacketType.UnlockTile] = () => new UnlockTilePacket(),
+                [PacketType.AddNpcBuff] = () => new AddNpcBuffPacket(),
+                [PacketType.UpdateNpcBuffs] = () => new UpdateNpcBuffsPacket(),
+                [PacketType.AddPlayerBuff] = () => new AddPlayerBuffPacket(),
+                [PacketType.UpdateNpcName] = () => new UpdateNpcNamePacket(),
+                [PacketType.UpdateBiomeStats] = () => new UpdateBiomeStatsPacket(),
+                [PacketType.PlayHarpNote] = () => new PlayHarpNotePacket(),
+                [PacketType.ActivateWiring] = () => new ActivateWiringPacket(),
+                [PacketType.UpdateNpcHome] = () => new UpdateNpcHomePacket(),
+                [PacketType.SummonBossOrInvasion] = () => new SummonBossOrInvasionPacket(),
+                [PacketType.ShowPlayerDodge] = () => new ShowPlayerDodgePacket(),
+                [PacketType.PaintBlock] = () => new PaintBlockPacket(),
+                [PacketType.PaintWall] = () => new PaintWallPacket(),
+                [PacketType.TeleportEntity] = () => new TeleportEntityPacket(),
+                [PacketType.HealOtherPlayer] = () => new HealOtherPlayerPacket(),
+                [PacketType.UpdateUuid] = () => new UpdateUuidPacket(),
+                [PacketType.RequestOrUpdateChestName] = () => new RequestOrUpdateChestNamePacket(),
+                [PacketType.CatchNpc] = () => new CatchNpcPacket(),
+                [PacketType.ReleaseNpc] = () => new ReleaseNpcPacket(),
+                [PacketType.UpdateTravelingMerchantInventory] = () => new UpdateTravelingMerchantInventoryPacket(),
+                [PacketType.PerformTeleportationPotion] = () => new PerformTeleportationPotionPacket(),
+                [PacketType.UpdateAnglerQuest] = () => new UpdateAnglerQuestPacket(),
+                [PacketType.CompleteAnglerQuest] = () => new CompleteAnglerQuestPacket(),
+                [PacketType.UpdateAnglerQuestsCompleted] = () => new UpdateAnglerQuestsCompletedPacket(),
+                [PacketType.CreateTemporaryAnimation] = () => new CreateTemporaryAnimationPacket(),
+                [PacketType.UpdateInvasion] = () => new UpdateInvasionPacket(),
+                [PacketType.PlaceObject] = () => new PlaceObjectPacket(),
+                [PacketType.UpdateOtherPlayerChest] = () => new UpdateOtherPlayerChestPacket(),
+                [PacketType.CreateCombatText] = () => new CreateCombatTextPacket(),
+                [PacketType.UpdateNpcKills] = () => new UpdateNpcKillsPacket(),
+                [PacketType.UpdatePlayerStealth] = () => new UpdatePlayerStealthPacket(),
+                [PacketType.MoveItemIntoChest] = () => new MoveItemIntoChestPacket(),
+                [PacketType.UpdateTileEntity] = () => new UpdateTileEntityPacket(),
+                [PacketType.PlaceTileEntity] = () => new PlaceTileEntityPacket(),
+                [PacketType.AlterItem] = () => new AlterItemPacket(),
+                [PacketType.PlaceItemFrame] = () => new PlaceItemFramePacket(),
+                [PacketType.UpdateInstancedItem] = () => new UpdateInstancedItemPacket(),
+                [PacketType.UpdateEmoteBubble] = () => new UpdateEmoteBubblePacket(),
+                [PacketType.IncrementNpcCoins] = () => new IncrementNpcCoinsPacket(),
+                [PacketType.RemovePortal] = () => new RemovePortalPacket(),
+                [PacketType.TeleportPlayerThroughPortal] = () => new TeleportPlayerThroughPortalPacket(),
+                [PacketType.NotifyNpcKill] = () => new NotifyNpcKillPacket(),
+                [PacketType.NotifyEventProgression] = () => new NotifyEventProgressionPacket(),
+                [PacketType.UpdatePlayerMinionTarget] = () => new UpdatePlayerMinionTargetPacket(),
+                [PacketType.TeleportNpcThroughPortal] = () => new TeleportNpcThroughPortalPacket(),
+                [PacketType.UpdatePillarShields] = () => new UpdatePillarShieldsPacket(),
+                [PacketType.LevelUpNebulaArmor] = () => new LevelUpNebulaArmorPacket(),
+                [PacketType.UpdateMoonLordCountdown] = () => new UpdateMoonLordCountdownPacket(),
+                [PacketType.UpdateNpcShopSlot] = () => new UpdateNpcShopSlotPacket(),
+                [PacketType.ToggleGemLock] = () => new ToggleGemLockPacket(),
+                [PacketType.ShowPoofOfSmoke] = () => new ShowPoofOfSmokePacket(),
+                [PacketType.ShowChat] = () => new ShowChatPacket(),
+                [PacketType.ShootFromCannon] = () => new ShootFromCannonPacket(),
+                [PacketType.RequestMassWireOperation] = () => new RequestMassWireOperationPacket(),
+                [PacketType.ConsumeWires] = () => new ConsumeWiresPacket(),
+                [PacketType.ToggleBirthdayParty] = () => new ToggleBirthdayPartyPacket(),
+                [PacketType.ShowTreeEffect] = () => new ShowTreeEffectPacket(),
+                [PacketType.StartOldOnesArmyInvasion] = () => new StartOldOnesArmyInvasionPacket(),
+                [PacketType.EndOldOnesArmyInvasion] = () => new EndOldOnesArmyInvasionPacket(),
+                [PacketType.UpdatePlayerMinionTargetNpc] = () => new UpdatePlayerMinionTargetNpcPacket(),
+                [PacketType.UpdateOldOnesArmyInvasion] = () => new UpdateOldOnesArmyInvasionPacket(),
+                [PacketType.HurtPlayer] = () => new HurtPlayerPacket(),
+                [PacketType.KillPlayer] = () => new KillPlayerPacket(),
+                [PacketType.ShowCombatText] = () => new ShowCombatTextPacket(),
             };
 
-        private static readonly IDictionary<Type, PacketType> PacketTypes = new Dictionary<Type, PacketType> {
-            [typeof(RequestConnectionPacket)] = PacketType.RequestConnection,
-            [typeof(DisconnectPlayerPacket)] = PacketType.DisconnectPlayer,
-            [typeof(ContinueConnectionPacket)] = PacketType.ContinueConnection,
-            [typeof(UpdatePlayerInfoPacket)] = PacketType.UpdatePlayerInfo,
-            [typeof(UpdatePlayerInventorySlotPacket)] = PacketType.UpdatePlayerInventorySlot,
-            [typeof(FinishConnectionPacket)] = PacketType.FinishConnection,
-            [typeof(UpdateWorldInfoPacket)] = PacketType.UpdateWorldInfo,
-            [typeof(RequestWorldSectionPacket)] = PacketType.RequestWorldSection,
-            [typeof(UpdateClientStatusPacket)] = PacketType.UpdateClientStatus,
-            [typeof(UpdateWorldSectionPacket)] = PacketType.UpdateWorldSection,
-            [typeof(SyncTileFramesPacket)] = PacketType.SyncTileFrames,
-            [typeof(SpawnPlayerPacket)] = PacketType.SpawnPlayer,
-            [typeof(UpdatePlayerPacket)] = PacketType.UpdatePlayer,
-            [typeof(UpdatePlayerStatusPacket)] = PacketType.UpdatePlayerStatus,
-            [typeof(UpdatePlayerHpPacket)] = PacketType.UpdatePlayerHp,
-            [typeof(ModifyTilePacket)] = PacketType.ModifyTile,
-            [typeof(UpdateTimePacket)] = PacketType.UpdateTime,
-            [typeof(ToggleDoorPacket)] = PacketType.ToggleDoor,
-            [typeof(UpdateSquareOfTilesPacket)] = PacketType.UpdateSquareOfTiles,
-            [typeof(UpdateItemPacket)] = PacketType.UpdateItem,
-            [typeof(UpdateItemOwnerPacket)] = PacketType.UpdateItemOwner,
-            [typeof(UpdateNpcPacket)] = PacketType.UpdateNpc,
-            [typeof(DamageNpcWithSelectedItemPacket)] = PacketType.DamageNpcWithSelectedItem,
-            [typeof(UpdateProjectilePacket)] = PacketType.UpdateProjectile,
-            [typeof(DamageNpcPacket)] = PacketType.DamageNpc,
-            [typeof(RemoveProjectilePacket)] = PacketType.RemoveProjectile,
-            [typeof(UpdatePlayerPvpStatusPacket)] = PacketType.UpdatePlayerPvpStatus,
-            [typeof(RequestChestContentsPacket)] = PacketType.RequestChestContents,
-            [typeof(UpdateChestContentsSlotPacket)] = PacketType.UpdateChestContentsSlot,
-            [typeof(UpdatePlayerChestPacket)] = PacketType.UpdatePlayerChest,
-            [typeof(ModifyChestPacket)] = PacketType.ModifyChest,
-            [typeof(ShowHealEffectPacket)] = PacketType.ShowHealEffect,
-            [typeof(UpdatePlayerZonesPacket)] = PacketType.UpdatePlayerZones,
-            [typeof(RequestServerPasswordPacket)] = PacketType.RequestServerPassword,
-            [typeof(ContinueConnectionWithServerPasswordPacket)] = PacketType.ContinueConnectionWithServerPassword,
-            [typeof(RemoveItemOwnerPacket)] = PacketType.RemoveItemOwner,
-            [typeof(UpdatePlayerTalkingToNpcPacket)] = PacketType.UpdatePlayerTalkingToNpc,
-            [typeof(UpdatePlayerItemAnimationPacket)] = PacketType.UpdatePlayerItemAnimation,
-        };
+        private static readonly IDictionary<Type, PacketType> PacketTypes = new Dictionary<Type, PacketType>();
 
         [ExcludeFromCodeCoverage]
         internal static int HeaderLength => sizeof(PacketType) + sizeof(short);
@@ -143,10 +177,17 @@ namespace Orion.Networking.Packets {
 
                 writer.Write((ushort)0);
 
-                if (PacketTypes.TryGetValue(GetType(), out var packetType)) {
+                // This is a hack until I focus down on a better implementation.
+                var type = GetType();
+                if (PacketTypes.TryGetValue(type, out var packetType)) {
                     writer.Write((byte)packetType);
                 } else {
-                    Debug.Assert(this is UnknownPacket, "Packet should be an UnknownPacket.");
+                    if (Enum.TryParse(type.Name.Replace("Packet", ""), out packetType)) {
+                        PacketTypes[type] = packetType;
+                        writer.Write((byte)packetType);
+                    } else {
+                        Debug.Assert(this is UnknownPacket, "Packet should be an UnknownPacket.");
+                    }
                 }
 
                 WriteToWriter(writer);

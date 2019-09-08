@@ -5,8 +5,10 @@ using Microsoft.Xna.Framework;
 using Orion.Items;
 using Orion.Networking.Packets;
 using Orion.Npcs;
+using Orion.Players;
 using Orion.Projectiles;
 using Orion.World;
+using Orion.World.Tiles;
 using Xunit;
 
 namespace Orion.Tests.Networking.Packets {
@@ -1287,6 +1289,1019 @@ namespace Orion.Tests.Networking.Packets {
                 packet.WriteToStream(stream2);
 
                 stream2.ToArray().Should().BeEquivalentTo(UpdatePlayerItemAnimationBytes);
+            }
+        }
+
+        public static readonly byte[] UpdatePlayerMpBytes = {8, 0, 42, 0, 100, 0, 100, 0,};
+
+        [Fact]
+        public void ReadFromStream_UpdatePlayerMp_IsCorrect() {
+            using (var stream = new MemoryStream(UpdatePlayerMpBytes)) {
+                var packet = (UpdatePlayerMpPacket)Packet.ReadFromStream(stream);
+
+                packet.PlayerIndex.Should().Be(0);
+                packet.Mp.Should().Be(100);
+                packet.MaxMp.Should().Be(100);
+            }
+        }
+
+        [Fact]
+        public void WriteToStream_UpdatePlayerMp_IsCorrect() {
+            using (var stream = new MemoryStream(UpdatePlayerMpBytes))
+            using (var stream2 = new MemoryStream()) {
+                var packet = Packet.ReadFromStream(stream);
+
+                packet.WriteToStream(stream2);
+
+                stream2.ToArray().Should().BeEquivalentTo(UpdatePlayerMpBytes);
+            }
+        }
+
+        public static readonly byte[] ShowManaEffectBytes = {6, 0, 43, 0, 100, 0,};
+
+        [Fact]
+        public void ReadFromStream_ShowManaEffect_IsCorrect() {
+            using (var stream = new MemoryStream(ShowManaEffectBytes)) {
+                var packet = (ShowManaEffectPacket)Packet.ReadFromStream(stream);
+
+                packet.PlayerIndex.Should().Be(0);
+                packet.ManaAmount.Should().Be(100);
+            }
+        }
+
+        [Fact]
+        public void WriteToStream_ShowManaEffect_IsCorrect() {
+            using (var stream = new MemoryStream(ShowManaEffectBytes))
+            using (var stream2 = new MemoryStream()) {
+                var packet = Packet.ReadFromStream(stream);
+
+                packet.WriteToStream(stream2);
+
+                stream2.ToArray().Should().BeEquivalentTo(ShowManaEffectBytes);
+            }
+        }
+
+        public static readonly byte[] UpdatePlayerTeamBytes = {5, 0, 45, 0, 1,};
+
+        [Fact]
+        public void ReadFromStream_UpdatePlayerTeam_IsCorrect() {
+            using (var stream = new MemoryStream(UpdatePlayerTeamBytes)) {
+                var packet = (UpdatePlayerTeamPacket)Packet.ReadFromStream(stream);
+
+                packet.PlayerIndex.Should().Be(0);
+                packet.PlayerTeam.Should().Be(PlayerTeam.Red);
+            }
+        }
+
+        [Fact]
+        public void WriteToStream_UpdatePlayerTeam_IsCorrect() {
+            using (var stream = new MemoryStream(UpdatePlayerTeamBytes))
+            using (var stream2 = new MemoryStream()) {
+                var packet = Packet.ReadFromStream(stream);
+
+                packet.WriteToStream(stream2);
+
+                stream2.ToArray().Should().BeEquivalentTo(UpdatePlayerTeamBytes);
+            }
+        }
+
+        public static readonly byte[] RequestSignBytes = {7, 0, 46, 0, 1, 100, 0};
+
+        [Fact]
+        public void ReadFromStream_RequestSign_IsCorrect() {
+            using (var stream = new MemoryStream(RequestSignBytes)) {
+                var packet = (RequestSignPacket)Packet.ReadFromStream(stream);
+
+                packet.SignX.Should().Be(256);
+                packet.SignY.Should().Be(100);
+            }
+        }
+
+        [Fact]
+        public void WriteToStream_RequestSign_IsCorrect() {
+            using (var stream = new MemoryStream(RequestSignBytes))
+            using (var stream2 = new MemoryStream()) {
+                var packet = Packet.ReadFromStream(stream);
+
+                packet.WriteToStream(stream2);
+
+                stream2.ToArray().Should().BeEquivalentTo(RequestSignBytes);
+            }
+        }
+
+        public static readonly byte[] UpdateSignBytes = {18, 0, 47, 0, 0, 0, 1, 100, 0, 8, 84, 101, 114, 114, 97, 114, 105, 97};
+
+        [Fact]
+        public void ReadFromStream_UpdateSign_IsCorrect() {
+            using (var stream = new MemoryStream(UpdateSignBytes)) {
+                var packet = (UpdateSignPacket)Packet.ReadFromStream(stream);
+
+                packet.SignIndex.Should().Be(0);
+                packet.SignX.Should().Be(256);
+                packet.SignY.Should().Be(100);
+                packet.SignText.Should().Be("Terraria");
+            }
+        }
+
+        [Fact]
+        public void WriteToStream_UpdateSign_IsCorrect() {
+            using (var stream = new MemoryStream(UpdateSignBytes))
+            using (var stream2 = new MemoryStream()) {
+                var packet = Packet.ReadFromStream(stream);
+
+                packet.WriteToStream(stream2);
+
+                stream2.ToArray().Should().BeEquivalentTo(UpdateSignBytes);
+            }
+        }
+
+        public static readonly byte[] UpdateLiquidBytes = {9, 0, 48, 0, 1, 100, 0, 255, 0};
+
+        [Fact]
+        public void ReadFromStream_UpdateLiquid_IsCorrect() {
+            using (var stream = new MemoryStream(UpdateLiquidBytes)) {
+                var packet = (UpdateLiquidPacket)Packet.ReadFromStream(stream);
+
+                packet.TileX.Should().Be(256);
+                packet.TileY.Should().Be(100);
+                packet.LiquidAmount.Should().Be(255);
+                packet.LiquidType.Should().Be(LiquidType.Water);
+            }
+        }
+
+        [Fact]
+        public void WriteToStream_UpdateLiquid_IsCorrect() {
+            using (var stream = new MemoryStream(UpdateLiquidBytes))
+            using (var stream2 = new MemoryStream()) {
+                var packet = Packet.ReadFromStream(stream);
+
+                packet.WriteToStream(stream2);
+
+                stream2.ToArray().Should().BeEquivalentTo(UpdateLiquidBytes);
+            }
+        }
+
+        public static readonly byte[] FirstSpawnPlayerBytes = {3, 0, 49};
+
+        [Fact]
+        public void ReadFromStream_FirstSpawnPlayer_IsCorrect() {
+            using (var stream = new MemoryStream(FirstSpawnPlayerBytes)) {
+                Packet.ReadFromStream(stream);
+            }
+        }
+
+        [Fact]
+        public void WriteToStream_FirstSpawnPlayer_IsCorrect() {
+            using (var stream = new MemoryStream(FirstSpawnPlayerBytes))
+            using (var stream2 = new MemoryStream()) {
+                var packet = Packet.ReadFromStream(stream);
+
+                packet.WriteToStream(stream2);
+
+                stream2.ToArray().Should().BeEquivalentTo(FirstSpawnPlayerBytes);
+            }
+        }
+
+        public static readonly byte[] UpdatePlayerBuffsBytes = {
+            26, 0, 50, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+        };
+
+        [Fact]
+        public void ReadFromStream_UpdatePlayerBuffs_IsCorrect() {
+            using (var stream = new MemoryStream(UpdatePlayerBuffsBytes)) {
+                var packet = (UpdatePlayerBuffsPacket)Packet.ReadFromStream(stream);
+
+                packet.PlayerIndex.Should().Be(0);
+                foreach (var buffType in packet.PlayerBuffs) {
+                    buffType.Should().Be(BuffType.None);
+                }
+            }
+        }
+
+        [Fact]
+        public void WriteToStream_UpdatePlayerBuffs_IsCorrect() {
+            using (var stream = new MemoryStream(UpdatePlayerBuffsBytes))
+            using (var stream2 = new MemoryStream()) {
+                var packet = Packet.ReadFromStream(stream);
+
+                packet.WriteToStream(stream2);
+
+                stream2.ToArray().Should().BeEquivalentTo(UpdatePlayerBuffsBytes);
+            }
+        }
+
+        public static readonly byte[] PerformActionBytes = {5, 0, 51, 0, 1};
+
+        [Fact]
+        public void ReadFromStream_PerformAction_IsCorrect() {
+            using (var stream = new MemoryStream(PerformActionBytes)) {
+                var packet = (PerformActionPacket)Packet.ReadFromStream(stream);
+
+                packet.PlayerOrNpcIndex.Should().Be(0);
+                packet.ActionType.Should().Be(PerformActionPacket.Type.SpawnSkeletron);
+            }
+        }
+
+        [Fact]
+        public void WriteToStream_PerformAction_IsCorrect() {
+            using (var stream = new MemoryStream(PerformActionBytes))
+            using (var stream2 = new MemoryStream()) {
+                var packet = Packet.ReadFromStream(stream);
+
+                packet.WriteToStream(stream2);
+
+                stream2.ToArray().Should().BeEquivalentTo(PerformActionBytes);
+            }
+        }
+
+        public static readonly byte[] UnlockTileBytes = {8, 0, 52, 1, 0, 1, 100, 0};
+
+        [Fact]
+        public void ReadFromStream_UnlockTile_IsCorrect() {
+            using (var stream = new MemoryStream(UnlockTileBytes)) {
+                var packet = (UnlockTilePacket)Packet.ReadFromStream(stream);
+
+                packet.ObjectType.Should().Be(UnlockTilePacket.Type.UnlockChest);
+                packet.TileX.Should().Be(256);
+                packet.TileY.Should().Be(100);
+            }
+        }
+
+        [Fact]
+        public void WriteToStream_UnlockTile_IsCorrect() {
+            using (var stream = new MemoryStream(UnlockTileBytes))
+            using (var stream2 = new MemoryStream()) {
+                var packet = Packet.ReadFromStream(stream);
+
+                packet.WriteToStream(stream2);
+
+                stream2.ToArray().Should().BeEquivalentTo(UnlockTileBytes);
+            }
+        }
+
+        public static readonly byte[] AddNpcBuffBytes = {8, 0, 53, 0, 0, 1, 100, 0};
+
+        [Fact]
+        public void ReadFromStream_AddNpcBuff_IsCorrect() {
+            using (var stream = new MemoryStream(AddNpcBuffBytes)) {
+                var packet = (AddNpcBuffPacket)Packet.ReadFromStream(stream);
+
+                packet.NpcIndex.Should().Be(0);
+                packet.BuffType.Should().Be(BuffType.ObsidianSkin);
+                packet.BuffTime.Should().Be(100);
+            }
+        }
+
+        [Fact]
+        public void WriteToStream_AddNpcBuff_IsCorrect() {
+            using (var stream = new MemoryStream(AddNpcBuffBytes))
+            using (var stream2 = new MemoryStream()) {
+                var packet = Packet.ReadFromStream(stream);
+
+                packet.WriteToStream(stream2);
+
+                stream2.ToArray().Should().BeEquivalentTo(AddNpcBuffBytes);
+            }
+        }
+
+        public static readonly byte[] UpdateNpcBuffsBytes = {10, 0, 54, 0, 0, 0, 0, 0, 0, 0};
+
+        [Fact]
+        public void ReadFromStream_UpdateNpcBuffs_IsCorrect() {
+            using (var stream = new MemoryStream(UpdateNpcBuffsBytes)) {
+                var packet = (UpdateNpcBuffsPacket)Packet.ReadFromStream(stream);
+                
+                packet.NpcIndex.Should().Be(0);
+                foreach (var buffType in packet.NpcBuffs) {
+                    buffType.Should().Be(BuffType.None);
+                }
+            }
+        }
+
+        [Fact]
+        public void WriteToStream_UpdateNpcBuffs_IsCorrect() {
+            using (var stream = new MemoryStream(UpdateNpcBuffsBytes))
+            using (var stream2 = new MemoryStream()) {
+                var packet = Packet.ReadFromStream(stream);
+
+                packet.WriteToStream(stream2);
+
+                stream2.ToArray().Should().BeEquivalentTo(UpdateNpcBuffsBytes);
+            }
+        }
+
+        public static readonly byte[] AddPlayerBuffBytes = {7, 0, 55, 0, 1, 100, 0};
+
+        [Fact]
+        public void ReadFromStream_AddPlayerBuff_IsCorrect() {
+            using (var stream = new MemoryStream(AddPlayerBuffBytes)) {
+                var packet = (AddPlayerBuffPacket)Packet.ReadFromStream(stream);
+                
+                packet.PlayerIndex.Should().Be(0);
+                packet.BuffType.Should().Be(BuffType.ObsidianSkin);
+                packet.BuffTime.Should().Be(100);
+            }
+        }
+
+        [Fact]
+        public void WriteToStream_AddPlayerBuff_IsCorrect() {
+            using (var stream = new MemoryStream(AddPlayerBuffBytes))
+            using (var stream2 = new MemoryStream()) {
+                var packet = Packet.ReadFromStream(stream);
+
+                packet.WriteToStream(stream2);
+
+                stream2.ToArray().Should().BeEquivalentTo(AddPlayerBuffBytes);
+            }
+        }
+
+        public static readonly byte[] UpdateNpcNameBytes = {14, 0, 56, 0, 0, 8, 84, 101, 114, 114, 97, 114, 105, 97};
+
+        [Fact]
+        public void ReadFromStream_UpdateNpcName_IsCorrect() {
+            using (var stream = new MemoryStream(UpdateNpcNameBytes)) {
+                var packet = (UpdateNpcNamePacket)Packet.ReadFromStream(stream);
+
+                packet.NpcIndex.Should().Be(0);
+                packet.NpcName.Should().Be("Terraria");
+            }
+        }
+
+        [Fact]
+        public void WriteToStream_UpdateNpcName_IsCorrect() {
+            using (var stream = new MemoryStream(UpdateNpcNameBytes))
+            using (var stream2 = new MemoryStream()) {
+                var packet = Packet.ReadFromStream(stream);
+
+                packet.WriteToStream(stream2);
+
+                stream2.ToArray().Should().BeEquivalentTo(UpdateNpcNameBytes);
+            }
+        }
+
+        public static readonly byte[] UpdateBiomeStatsBytes = {6, 0, 57, 1, 2, 3};
+
+        [Fact]
+        public void ReadFromStream_UpdateBiomeStats_IsCorrect() {
+            using (var stream = new MemoryStream(UpdateBiomeStatsBytes)) {
+                var packet = (UpdateBiomeStatsPacket)Packet.ReadFromStream(stream);
+
+                packet.GoodAmount.Should().Be(1);
+                packet.CorruptionAmount.Should().Be(2);
+                packet.CrimsonAmount.Should().Be(3);
+            }
+        }
+
+        [Fact]
+        public void WriteToStream_UpdateBiomeStats_IsCorrect() {
+            using (var stream = new MemoryStream(UpdateBiomeStatsBytes))
+            using (var stream2 = new MemoryStream()) {
+                var packet = Packet.ReadFromStream(stream);
+
+                packet.WriteToStream(stream2);
+
+                stream2.ToArray().Should().BeEquivalentTo(UpdateBiomeStatsBytes);
+            }
+        }
+        
+        public static readonly byte[] PlayHarpNoteBytes = {8, 0, 58, 0, 205, 204, 128, 64};
+
+        [Fact]
+        public void ReadFromStream_PlayHarpNote_IsCorrect() {
+            using (var stream = new MemoryStream(PlayHarpNoteBytes)) {
+                var packet = (PlayHarpNotePacket)Packet.ReadFromStream(stream);
+
+                packet.PlayerIndex.Should().Be(0);
+                packet.HarpNote.Should().Be(4.025f);
+            }
+        }
+
+        [Fact]
+        public void WriteToStream_PlayHarpNote_IsCorrect() {
+            using (var stream = new MemoryStream(PlayHarpNoteBytes))
+            using (var stream2 = new MemoryStream()) {
+                var packet = Packet.ReadFromStream(stream);
+
+                packet.WriteToStream(stream2);
+
+                stream2.ToArray().Should().BeEquivalentTo(PlayHarpNoteBytes);
+            }
+        }
+        
+        public static readonly byte[] ActivateWiringBytes = {7, 0, 59, 0, 1, 100, 0};
+
+        [Fact]
+        public void ReadFromStream_ActivateWiring_IsCorrect() {
+            using (var stream = new MemoryStream(ActivateWiringBytes)) {
+                var packet = (ActivateWiringPacket)Packet.ReadFromStream(stream);
+
+                packet.TileX.Should().Be(256);
+                packet.TileY.Should().Be(100);
+            }
+        }
+
+        [Fact]
+        public void WriteToStream_ActivateWiring_IsCorrect() {
+            using (var stream = new MemoryStream(ActivateWiringBytes))
+            using (var stream2 = new MemoryStream()) {
+                var packet = Packet.ReadFromStream(stream);
+
+                packet.WriteToStream(stream2);
+
+                stream2.ToArray().Should().BeEquivalentTo(ActivateWiringBytes);
+            }
+        }
+        
+        public static readonly byte[] UpdateNpcHomeBytes = {10, 0, 60, 0, 0, 0, 1, 100, 0, 0};
+
+        [Fact]
+        public void ReadFromStream_UpdateNpcHome_IsCorrect() {
+            using (var stream = new MemoryStream(UpdateNpcHomeBytes)) {
+                var packet = (UpdateNpcHomePacket)Packet.ReadFromStream(stream);
+
+                packet.NpcIndex.Should().Be(0);
+                packet.NpcHomeX.Should().Be(256);
+                packet.NpcHomeY.Should().Be(100);
+                packet.IsNpcHomeless.Should().BeFalse();
+            }
+        }
+
+        [Fact]
+        public void WriteToStream_UpdateNpcHome_IsCorrect() {
+            using (var stream = new MemoryStream(UpdateNpcHomeBytes))
+            using (var stream2 = new MemoryStream()) {
+                var packet = Packet.ReadFromStream(stream);
+
+                packet.WriteToStream(stream2);
+
+                stream2.ToArray().Should().BeEquivalentTo(UpdateNpcHomeBytes);
+            }
+        }
+        
+        public static readonly byte[] SummonBossOrInvasionBytes = {7, 0, 61, 0, 0, 255, 255};
+
+        [Fact]
+        public void ReadFromStream_SummonBossOrInvasion_IsCorrect() {
+            using (var stream = new MemoryStream(SummonBossOrInvasionBytes)) {
+                var packet = (SummonBossOrInvasionPacket)Packet.ReadFromStream(stream);
+
+                packet.PlayerIndex.Should().Be(0);
+                packet.BossOrInvasionType.Should().Be(-1);
+            }
+        }
+
+        [Fact]
+        public void WriteToStream_SummonBossOrInvasion_IsCorrect() {
+            using (var stream = new MemoryStream(SummonBossOrInvasionBytes))
+            using (var stream2 = new MemoryStream()) {
+                var packet = Packet.ReadFromStream(stream);
+
+                packet.WriteToStream(stream2);
+
+                stream2.ToArray().Should().BeEquivalentTo(SummonBossOrInvasionBytes);
+            }
+        }
+        
+        public static readonly byte[] ShowPlayerDodgeBytes = {5, 0, 62, 0, 1};
+
+        [Fact]
+        public void ReadFromStream_ShowPlayerDodge_IsCorrect() {
+            using (var stream = new MemoryStream(ShowPlayerDodgeBytes)) {
+                var packet = (ShowPlayerDodgePacket)Packet.ReadFromStream(stream);
+
+                packet.PlayerIndex.Should().Be(0);
+                packet.PlayerDodgeType.Should().Be(ShowPlayerDodgePacket.Type.NinjaDodge);
+            }
+        }
+
+        [Fact]
+        public void WriteToStream_ShowPlayerDodge_IsCorrect() {
+            using (var stream = new MemoryStream(ShowPlayerDodgeBytes))
+            using (var stream2 = new MemoryStream()) {
+                var packet = Packet.ReadFromStream(stream);
+
+                packet.WriteToStream(stream2);
+
+                stream2.ToArray().Should().BeEquivalentTo(ShowPlayerDodgeBytes);
+            }
+        }
+        
+        public static readonly byte[] PaintBlockBytes = {8, 0, 63, 0, 1, 100, 0, 1};
+
+        [Fact]
+        public void ReadFromStream_PaintBlock_IsCorrect() {
+            using (var stream = new MemoryStream(PaintBlockBytes)) {
+                var packet = (PaintBlockPacket)Packet.ReadFromStream(stream);
+
+                packet.TileX.Should().Be(256);
+                packet.TileY.Should().Be(100);
+                packet.BlockColor.Should().Be(PaintColor.Red);
+            }
+        }
+
+        [Fact]
+        public void WriteToStream_PaintBlock_IsCorrect() {
+            using (var stream = new MemoryStream(PaintBlockBytes))
+            using (var stream2 = new MemoryStream()) {
+                var packet = Packet.ReadFromStream(stream);
+
+                packet.WriteToStream(stream2);
+
+                stream2.ToArray().Should().BeEquivalentTo(PaintBlockBytes);
+            }
+        }
+        
+        public static readonly byte[] PaintWallBytes = {8, 0, 64, 0, 1, 100, 0, 1};
+
+        [Fact]
+        public void ReadFromStream_PaintWall_IsCorrect() {
+            using (var stream = new MemoryStream(PaintWallBytes)) {
+                var packet = (PaintWallPacket)Packet.ReadFromStream(stream);
+
+                packet.TileX.Should().Be(256);
+                packet.TileY.Should().Be(100);
+                packet.WallColor.Should().Be(PaintColor.Red);
+            }
+        }
+
+        [Fact]
+        public void WriteToStream_PaintWall_IsCorrect() {
+            using (var stream = new MemoryStream(PaintWallBytes))
+            using (var stream2 = new MemoryStream()) {
+                var packet = Packet.ReadFromStream(stream);
+
+                packet.WriteToStream(stream2);
+
+                stream2.ToArray().Should().BeEquivalentTo(PaintWallBytes);
+            }
+        }
+        
+        public static readonly byte[] TeleportEntityBytes = {14, 0, 65, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
+
+        [Fact]
+        public void ReadFromStream_TeleportEntity_IsCorrect() {
+            using (var stream = new MemoryStream(TeleportEntityBytes)) {
+                var packet = (TeleportEntityPacket)Packet.ReadFromStream(stream);
+
+                packet.TeleportationType.Should().Be(TeleportEntityPacket.Type.TeleportPlayerToOtherPlayer);
+                packet.TeleportationStyle.Should().Be(0);
+                packet.PlayerOrNpcIndex.Should().Be(0);
+                packet.Position.Should().Be(Vector2.Zero);
+            }
+        }
+
+        [Fact]
+        public void WriteToStream_TeleportEntity_IsCorrect() {
+            using (var stream = new MemoryStream(TeleportEntityBytes))
+            using (var stream2 = new MemoryStream()) {
+                var packet = Packet.ReadFromStream(stream);
+
+                packet.WriteToStream(stream2);
+
+                stream2.ToArray().Should().BeEquivalentTo(TeleportEntityBytes);
+            }
+        }
+        
+        public static readonly byte[] HealOtherPlayerBytes = {6, 0, 66, 0, 100, 0};
+
+        [Fact]
+        public void ReadFromStream_HealOtherPlayer_IsCorrect() {
+            using (var stream = new MemoryStream(HealOtherPlayerBytes)) {
+                var packet = (HealOtherPlayerPacket)Packet.ReadFromStream(stream);
+
+                packet.PlayerIndex.Should().Be(0);
+                packet.HealAmount.Should().Be(100);
+            }
+        }
+
+        [Fact]
+        public void WriteToStream_HealOtherPlayer_IsCorrect() {
+            using (var stream = new MemoryStream(HealOtherPlayerBytes))
+            using (var stream2 = new MemoryStream()) {
+                var packet = Packet.ReadFromStream(stream);
+
+                packet.WriteToStream(stream2);
+
+                stream2.ToArray().Should().BeEquivalentTo(HealOtherPlayerBytes);
+            }
+        }
+        
+        public static readonly byte[] UpdateUuidBytes = {12, 0, 68, 8, 84, 101, 114, 114, 97, 114, 105, 97};
+
+        [Fact]
+        public void ReadFromStream_UpdateUuid_IsCorrect() {
+            using (var stream = new MemoryStream(UpdateUuidBytes)) {
+                var packet = (UpdateUuidPacket)Packet.ReadFromStream(stream);
+
+                packet.Uuid.Should().Be("Terraria");
+            }
+        }
+
+        [Fact]
+        public void WriteToStream_UpdateUuid_IsCorrect() {
+            using (var stream = new MemoryStream(UpdateUuidBytes))
+            using (var stream2 = new MemoryStream()) {
+                var packet = Packet.ReadFromStream(stream);
+
+                packet.WriteToStream(stream2);
+
+                stream2.ToArray().Should().BeEquivalentTo(UpdateUuidBytes);
+            }
+        }
+        
+        public static readonly byte[] RequestOrUpdateChestNameBytes = {18, 0, 69, 0, 0, 0, 1, 100, 0, 8, 84, 101, 114, 114, 97, 114, 105, 97};
+
+        [Fact]
+        public void ReadFromStream_RequestOrUpdateChestName_IsCorrect() {
+            using (var stream = new MemoryStream(RequestOrUpdateChestNameBytes)) {
+                var packet = (RequestOrUpdateChestNamePacket)Packet.ReadFromStream(stream);
+
+                packet.ChestIndex.Should().Be(0);
+                packet.ChestX.Should().Be(256);
+                packet.ChestY.Should().Be(100);
+                packet.ChestName.Should().Be("Terraria");
+            }
+        }
+
+        [Fact]
+        public void WriteToStream_RequestOrUpdateChestName_IsCorrect() {
+            using (var stream = new MemoryStream(RequestOrUpdateChestNameBytes))
+            using (var stream2 = new MemoryStream()) {
+                var packet = Packet.ReadFromStream(stream);
+
+                packet.WriteToStream(stream2);
+
+                stream2.ToArray().Should().BeEquivalentTo(RequestOrUpdateChestNameBytes);
+            }
+        }
+        
+        public static readonly byte[] CatchNpcBytes = {6, 0, 70, 1, 0, 0};
+
+        [Fact]
+        public void ReadFromStream_CatchNpc_IsCorrect() {
+            using (var stream = new MemoryStream(CatchNpcBytes)) {
+                var packet = (CatchNpcPacket)Packet.ReadFromStream(stream);
+
+                packet.NpcIndex.Should().Be(1);
+                packet.NpcCatcherPlayerIndex.Should().Be(0);
+            }
+        }
+
+        [Fact]
+        public void WriteToStream_CatchNpc_IsCorrect() {
+            using (var stream = new MemoryStream(CatchNpcBytes))
+            using (var stream2 = new MemoryStream()) {
+                var packet = Packet.ReadFromStream(stream);
+
+                packet.WriteToStream(stream2);
+
+                stream2.ToArray().Should().BeEquivalentTo(CatchNpcBytes);
+            }
+        }
+        
+        public static readonly byte[] ReleaseNpcBytes = {14, 0, 71, 0, 1, 0, 0, 100, 0, 0, 0, 1, 0, 0};
+
+        [Fact]
+        public void ReadFromStream_ReleaseNpc_IsCorrect() {
+            using (var stream = new MemoryStream(ReleaseNpcBytes)) {
+                var packet = (ReleaseNpcPacket)Packet.ReadFromStream(stream);
+
+                packet.NpcX.Should().Be(256);
+                packet.NpcY.Should().Be(100);
+                packet.NpcType.Should().Be(NpcType.BlueSlime);
+                packet.NpcStyle.Should().Be(0);
+            }
+        }
+
+        [Fact]
+        public void WriteToStream_ReleaseNpc_IsCorrect() {
+            using (var stream = new MemoryStream(ReleaseNpcBytes))
+            using (var stream2 = new MemoryStream()) {
+                var packet = Packet.ReadFromStream(stream);
+
+                packet.WriteToStream(stream2);
+
+                stream2.ToArray().Should().BeEquivalentTo(ReleaseNpcBytes);
+            }
+        }
+
+        public static readonly byte[] UpdateTravelingMerchantInventoryBytes = {
+            83, 0, 72, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+            0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+            0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+        };
+
+        [Fact]
+        public void ReadFromStream_UpdateTravelingMerchantInventory_IsCorrect() {
+            using (var stream = new MemoryStream(UpdateTravelingMerchantInventoryBytes)) {
+                var packet = (UpdateTravelingMerchantInventoryPacket)Packet.ReadFromStream(stream);
+
+                foreach (var itemType in packet.ShopItems) {
+                    itemType.Should().Be(ItemType.None);
+                }
+            }
+        }
+
+        [Fact]
+        public void WriteToStream_UpdateTravelingMerchantInventory_IsCorrect() {
+            using (var stream = new MemoryStream(UpdateTravelingMerchantInventoryBytes))
+            using (var stream2 = new MemoryStream()) {
+                var packet = Packet.ReadFromStream(stream);
+
+                packet.WriteToStream(stream2);
+
+                stream2.ToArray().Should().BeEquivalentTo(UpdateTravelingMerchantInventoryBytes);
+            }
+        }
+
+        public static readonly byte[] PerformTeleportationPotionBytes = {3, 0, 73};
+
+        [Fact]
+        public void ReadFromStream_PerformTeleportationPotion_IsCorrect() {
+            using (var stream = new MemoryStream(PerformTeleportationPotionBytes)) {
+                Packet.ReadFromStream(stream).Should().BeOfType<PerformTeleportationPotionPacket>();
+            }
+        }
+
+        [Fact]
+        public void WriteToStream_PerformTeleportationPotion_IsCorrect() {
+            using (var stream = new MemoryStream(PerformTeleportationPotionBytes))
+            using (var stream2 = new MemoryStream()) {
+                var packet = Packet.ReadFromStream(stream);
+
+                packet.WriteToStream(stream2);
+
+                stream2.ToArray().Should().BeEquivalentTo(PerformTeleportationPotionBytes);
+            }
+        }
+
+        public static readonly byte[] UpdateAnglerQuestBytes = {5, 0, 74, 1, 1};
+
+        [Fact]
+        public void ReadFromStream_UpdateAnglerQuest_IsCorrect() {
+            using (var stream = new MemoryStream(UpdateAnglerQuestBytes)) {
+                var packet = (UpdateAnglerQuestPacket)Packet.ReadFromStream(stream);
+
+                packet.AnglerQuest.Should().Be(1);
+                packet.IsAnglerQuestFinished.Should().BeTrue();
+            }
+        }
+
+        [Fact]
+        public void WriteToStream_UpdateAnglerQuest_IsCorrect() {
+            using (var stream = new MemoryStream(UpdateAnglerQuestBytes))
+            using (var stream2 = new MemoryStream()) {
+                var packet = Packet.ReadFromStream(stream);
+
+                packet.WriteToStream(stream2);
+
+                stream2.ToArray().Should().BeEquivalentTo(UpdateAnglerQuestBytes);
+            }
+        }
+
+        public static readonly byte[] CompleteAnglerQuestBytes = {3, 0, 75};
+
+        [Fact]
+        public void ReadFromStream_CompleteAnglerQuest_IsCorrect() {
+            using (var stream = new MemoryStream(CompleteAnglerQuestBytes)) {
+                Packet.ReadFromStream(stream).Should().BeOfType<CompleteAnglerQuestPacket>();
+            }
+        }
+
+        [Fact]
+        public void WriteToStream_CompleteAnglerQuest_IsCorrect() {
+            using (var stream = new MemoryStream(CompleteAnglerQuestBytes))
+            using (var stream2 = new MemoryStream()) {
+                var packet = Packet.ReadFromStream(stream);
+
+                packet.WriteToStream(stream2);
+
+                stream2.ToArray().Should().BeEquivalentTo(CompleteAnglerQuestBytes);
+            }
+        }
+
+        public static readonly byte[] UpdateAnglerQuestsCompletedBytes = {7, 0, 76, 1, 1, 0, 0};
+
+        [Fact]
+        public void ReadFromStream_UpdateAnglerQuestsCompleted_IsCorrect() {
+            using (var stream = new MemoryStream(UpdateAnglerQuestsCompletedBytes)) {
+                var packet = (UpdateAnglerQuestsCompletedPacket)Packet.ReadFromStream(stream);
+
+                packet.NumberOfAnglerQuestsCompleted.Should().Be(257);
+            }
+        }
+
+        [Fact]
+        public void WriteToStream_UpdateAnglerQuestsCompleted_IsCorrect() {
+            using (var stream = new MemoryStream(UpdateAnglerQuestsCompletedBytes))
+            using (var stream2 = new MemoryStream()) {
+                var packet = Packet.ReadFromStream(stream);
+
+                packet.WriteToStream(stream2);
+
+                stream2.ToArray().Should().BeEquivalentTo(UpdateAnglerQuestsCompletedBytes);
+            }
+        }
+
+        public static readonly byte[] CreateTemporaryAnimationBytes = {11, 0, 77, 1, 0, 1, 0, 0, 1, 100, 0};
+
+        [Fact]
+        public void ReadFromStream_CreateTemporaryAnimation_IsCorrect() {
+            using (var stream = new MemoryStream(CreateTemporaryAnimationBytes)) {
+                var packet = (CreateTemporaryAnimationPacket)Packet.ReadFromStream(stream);
+
+                packet.AnimationType.Should().Be(1);
+                packet.BlockType.Should().Be(BlockType.Stone);
+                packet.TileX.Should().Be(256);
+                packet.TileY.Should().Be(100);
+            }
+        }
+
+        [Fact]
+        public void WriteToStream_CreateTemporaryAnimation_IsCorrect() {
+            using (var stream = new MemoryStream(CreateTemporaryAnimationBytes))
+            using (var stream2 = new MemoryStream()) {
+                var packet = Packet.ReadFromStream(stream);
+
+                packet.WriteToStream(stream2);
+
+                stream2.ToArray().Should().BeEquivalentTo(CreateTemporaryAnimationBytes);
+            }
+        }
+
+        public static readonly byte[] UpdateInvasionBytes = {19, 0, 78, 1, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 2, 0, 0, 0};
+
+        [Fact]
+        public void ReadFromStream_UpdateInvasion_IsCorrect() {
+            using (var stream = new MemoryStream(UpdateInvasionBytes)) {
+                var packet = (UpdateInvasionPacket)Packet.ReadFromStream(stream);
+
+                packet.NumberOfKills.Should().Be(1);
+                packet.NumberOfKillsToProgress.Should().Be(256);
+                packet.InvasionIconType.Should().Be(1);
+                packet.WaveNumber.Should().Be(2);
+            }
+        }
+
+        [Fact]
+        public void WriteToStream_UpdateInvasion_IsCorrect() {
+            using (var stream = new MemoryStream(UpdateInvasionBytes))
+            using (var stream2 = new MemoryStream()) {
+                var packet = Packet.ReadFromStream(stream);
+
+                packet.WriteToStream(stream2);
+
+                stream2.ToArray().Should().BeEquivalentTo(UpdateInvasionBytes);
+            }
+        }
+
+        public static readonly byte[] PlaceObjectBytes = {14, 0, 79, 0, 1, 100, 0, 21, 0, 1, 0, 0, 255, 1};
+
+        [Fact]
+        public void ReadFromStream_PlaceObject_IsCorrect() {
+            using (var stream = new MemoryStream(PlaceObjectBytes)) {
+                var packet = (PlaceObjectPacket)Packet.ReadFromStream(stream);
+                
+                packet.TileX.Should().Be(256);
+                packet.TileY.Should().Be(100);
+                packet.ObjectType.Should().Be(BlockType.Containers);
+                packet.ObjectStyle.Should().Be(1);
+                packet.Alternate.Should().Be(0);
+                packet.RandomState.Should().Be(-1);
+                packet.Direction.Should().BeTrue();
+            }
+        }
+
+        [Fact]
+        public void WriteToStream_PlaceObject_IsCorrect() {
+            using (var stream = new MemoryStream(PlaceObjectBytes))
+            using (var stream2 = new MemoryStream()) {
+                var packet = Packet.ReadFromStream(stream);
+
+                packet.WriteToStream(stream2);
+
+                stream2.ToArray().Should().BeEquivalentTo(PlaceObjectBytes);
+            }
+        }
+
+        public static readonly byte[] UpdateOtherPlayerChestBytes = {6, 0, 80, 0, 255, 255};
+
+        [Fact]
+        public void ReadFromStream_UpdateOtherPlayerChest_IsCorrect() {
+            using (var stream = new MemoryStream(UpdateOtherPlayerChestBytes)) {
+                var packet = (UpdateOtherPlayerChestPacket)Packet.ReadFromStream(stream);
+
+                packet.PlayerIndex.Should().Be(0);
+                packet.PlayerChestIndex.Should().Be(-1);
+            }
+        }
+
+        [Fact]
+        public void WriteToStream_UpdateOtherPlayerChest_IsCorrect() {
+            using (var stream = new MemoryStream(UpdateOtherPlayerChestBytes))
+            using (var stream2 = new MemoryStream()) {
+                var packet = Packet.ReadFromStream(stream);
+
+                packet.WriteToStream(stream2);
+
+                stream2.ToArray().Should().BeEquivalentTo(UpdateOtherPlayerChestBytes);
+            }
+        }
+
+        public static readonly byte[] CreateCombatTextBytes = {18, 0, 81, 0, 0, 0, 0, 0, 0, 0, 0, 255, 255, 255, 100, 0, 0, 0};
+
+        [Fact]
+        public void ReadFromStream_CreateCombatText_IsCorrect() {
+            using (var stream = new MemoryStream(CreateCombatTextBytes)) {
+                var packet = (CreateCombatTextPacket)Packet.ReadFromStream(stream);
+
+                packet.TextX.Should().Be(0);
+                packet.TextY.Should().Be(0);
+                packet.TextColor.Should().Be(Color.White);
+                packet.TextNumber.Should().Be(100);
+            }
+        }
+
+        [Fact]
+        public void WriteToStream_CreateCombatText_IsCorrect() {
+            using (var stream = new MemoryStream(CreateCombatTextBytes))
+            using (var stream2 = new MemoryStream()) {
+                var packet = Packet.ReadFromStream(stream);
+
+                packet.WriteToStream(stream2);
+
+                stream2.ToArray().Should().BeEquivalentTo(CreateCombatTextBytes);
+            }
+        }
+
+        public static readonly byte[] UpdateNpcKillsBytes = {9, 0, 83, 1, 0, 100, 0, 0, 0};
+
+        [Fact]
+        public void ReadFromStream_UpdateNpcKills_IsCorrect() {
+            using (var stream = new MemoryStream(UpdateNpcKillsBytes)) {
+                var packet = (UpdateNpcKillsPacket)Packet.ReadFromStream(stream);
+
+                packet.NpcType.Should().Be(NpcType.BlueSlime);
+                packet.NpcTypeKillCount.Should().Be(100);
+            }
+        }
+
+        [Fact]
+        public void WriteToStream_UpdateNpcKills_IsCorrect() {
+            using (var stream = new MemoryStream(UpdateNpcKillsBytes))
+            using (var stream2 = new MemoryStream()) {
+                var packet = Packet.ReadFromStream(stream);
+
+                packet.WriteToStream(stream2);
+
+                stream2.ToArray().Should().BeEquivalentTo(UpdateNpcKillsBytes);
+            }
+        }
+
+        public static readonly byte[] UpdatePlayerStealthBytes = {8, 0, 84, 0, 0, 0, 0, 0};
+
+        [Fact]
+        public void ReadFromStream_UpdatePlayerStealth_IsCorrect() {
+            using (var stream = new MemoryStream(UpdatePlayerStealthBytes)) {
+                var packet = (UpdatePlayerStealthPacket)Packet.ReadFromStream(stream);
+
+                packet.PlayerIndex.Should().Be(0);
+                packet.PlayerStealthStatus.Should().Be(0);
+            }
+        }
+
+        [Fact]
+        public void WriteToStream_UpdatePlayerStealth_IsCorrect() {
+            using (var stream = new MemoryStream(UpdatePlayerStealthBytes))
+            using (var stream2 = new MemoryStream()) {
+                var packet = Packet.ReadFromStream(stream);
+
+                packet.WriteToStream(stream2);
+
+                stream2.ToArray().Should().BeEquivalentTo(UpdatePlayerStealthBytes);
+            }
+        }
+
+        public static readonly byte[] MoveItemIntoChestBytes = {4, 0, 85, 1};
+
+        [Fact]
+        public void ReadFromStream_MoveItemIntoChest_IsCorrect() {
+            using (var stream = new MemoryStream(MoveItemIntoChestBytes)) {
+                var packet = (MoveItemIntoChestPacket)Packet.ReadFromStream(stream);
+
+                packet.PlayerInventorySlot.Should().Be(1);
+            }
+        }
+
+        [Fact]
+        public void WriteToStream_MoveItemIntoChest_IsCorrect() {
+            using (var stream = new MemoryStream(MoveItemIntoChestBytes))
+            using (var stream2 = new MemoryStream()) {
+                var packet = Packet.ReadFromStream(stream);
+
+                packet.WriteToStream(stream2);
+
+                stream2.ToArray().Should().BeEquivalentTo(MoveItemIntoChestBytes);
             }
         }
     }
