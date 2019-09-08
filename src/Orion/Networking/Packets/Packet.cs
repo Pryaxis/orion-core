@@ -4,6 +4,7 @@ using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Text;
+using Orion.Networking.Packets.Connections;
 
 namespace Orion.Networking.Packets {
     /// <summary>
@@ -16,7 +17,7 @@ namespace Orion.Networking.Packets {
     public abstract class Packet {
         private static readonly IDictionary<PacketType, Func<Packet>> PacketConstructors =
             new Dictionary<PacketType, Func<Packet>> {
-                [PacketType.RequestConnection] = () => new RequestConnectionPacket(),
+                [PacketType.Connect] = () => new ConnectPacket(),
                 [PacketType.DisconnectPlayer] = () => new DisconnectPlayerPacket(),
                 [PacketType.ContinueConnection] = () => new ContinueConnectionPacket(),
                 [PacketType.UpdatePlayerInfo] = () => new UpdatePlayerInfoPacket(),

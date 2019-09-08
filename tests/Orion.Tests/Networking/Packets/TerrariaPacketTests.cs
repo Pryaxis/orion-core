@@ -4,6 +4,7 @@ using FluentAssertions;
 using Microsoft.Xna.Framework;
 using Orion.Items;
 using Orion.Networking.Packets;
+using Orion.Networking.Packets.Connections;
 using Orion.Npcs;
 using Orion.Players;
 using Orion.Projectiles;
@@ -61,31 +62,6 @@ namespace Orion.Tests.Networking.Packets {
                 packet.WriteToStream(stream2);
 
                 stream2.ToArray().Should().BeEquivalentTo(UnknownBytes);
-            }
-        }
-
-        public static readonly byte[] RequestConnectionBytes = {
-            15, 0, 1, 11, 84, 101, 114, 114, 97, 114, 105, 97, 49, 57, 52
-        };
-
-        [Fact]
-        public void ReadFromStream_RequestConnection_IsCorrect() {
-            using (var stream = new MemoryStream(RequestConnectionBytes)) {
-                var packet = (RequestConnectionPacket)Packet.ReadFromStream(stream);
-
-                packet.Version.Should().Be("Terraria194");
-            }
-        }
-
-        [Fact]
-        public void WriteToStream_RequestConnection_IsCorrect() {
-            using (var stream = new MemoryStream(RequestConnectionBytes))
-            using (var stream2 = new MemoryStream()) {
-                var packet = Packet.ReadFromStream(stream);
-
-                packet.WriteToStream(stream2);
-
-                stream2.ToArray().Should().BeEquivalentTo(RequestConnectionBytes);
             }
         }
 
