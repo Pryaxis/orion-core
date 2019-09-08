@@ -22,7 +22,7 @@
         ModifyTile = 17,
         UpdateTime = 18,
         ToggleDoor = 19,
-        UpdateTiles = 20,
+        UpdateSquareOfTiles = 20,
         UpdateItem = 21,
         UpdateItemOwner = 22,
         UpdateNpc = 23,

@@ -736,5 +736,35 @@ namespace Orion.Tests.Networking.Packets {
                 stream2.ToArray().Should().BeEquivalentTo(ToggleDoorBytes);
             }
         }
+
+        private static readonly byte[] UpdateSquareOfTilesBytes = {
+            17, 0, 20, 1, 0, 153, 16, 171, 1, 1, 0, 3, 0, 72, 0, 0, 0,
+        };
+
+        [Fact]
+        public void ReadFromStream_UpdateSquareOfTiles_IsCorrect() {
+            using (var stream = new MemoryStream(UpdateSquareOfTilesBytes)) {
+                var packet = (UpdateSquareOfTilesPacket)Packet.ReadFromStream(stream);
+
+                packet.Size.Should().Be(1);
+                packet.LiquidChangeType.Should().Be(UpdateSquareOfTilesPacket.Type.None);
+                packet.X.Should().Be(4249);
+                packet.Y.Should().Be(427);
+                packet.Tiles.GetLength(0).Should().Be(1);
+                packet.Tiles.GetLength(1).Should().Be(1);
+            }
+        }
+
+        [Fact]
+        public void WriteToStream_UpdateSquareOfTiles_IsCorrect() {
+            using (var stream = new MemoryStream(UpdateSquareOfTilesBytes))
+            using (var stream2 = new MemoryStream()) {
+                var packet = Packet.ReadFromStream(stream);
+
+                packet.WriteToStream(stream2);
+
+                stream2.ToArray().Should().BeEquivalentTo(UpdateSquareOfTilesBytes);
+            }
+        }
     }
 }

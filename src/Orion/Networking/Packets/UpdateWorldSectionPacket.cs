@@ -43,6 +43,7 @@ namespace Orion.Networking.Packets {
         /// <summary>
         /// Gets or sets the tiles.
         /// </summary>
+        /// <exception cref="ArgumentNullException"><paramref name="value"/> is <c>null</c>.</exception>
         public NetTile[,] Tiles {
             get => _tiles;
             set => _tiles = value ?? throw new ArgumentNullException(nameof(value));
@@ -120,6 +121,9 @@ namespace Orion.Networking.Packets {
                     if (Terraria.Main.tileFrameImportant[(int)tile.BlockType]) {
                         tile.BlockFrameX = reader.ReadInt16();
                         tile.BlockFrameY = reader.ReadInt16();
+                    } else {
+                        tile.BlockFrameX = -1;
+                        tile.BlockFrameY = -1;
                     }
 
                     if ((header3 & 8) == 8) {
