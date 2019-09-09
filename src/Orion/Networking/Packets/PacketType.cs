@@ -8,7 +8,7 @@
         Disconnect = 2,
         ContinueConnecting = 3,
         PlayerInfo = 4,
-        UpdatePlayerInventorySlot = 5,
+        PlayerInventorySlot = 5,
         FinishConnection = 6,
         UpdateWorldInfo = 7,
         RequestWorldSection = 8,

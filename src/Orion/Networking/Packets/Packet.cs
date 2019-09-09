@@ -22,7 +22,7 @@ namespace Orion.Networking.Packets {
                 [PacketType.Disconnect] = () => new DisconnectPacket(),
                 [PacketType.ContinueConnecting] = () => new ContinueConnectingPacket(),
                 [PacketType.PlayerInfo] = () => new PlayerInfoPacket(),
-                [PacketType.UpdatePlayerInventorySlot] = () => new UpdatePlayerInventorySlotPacket(),
+                [PacketType.PlayerInventorySlot] = () => new PlayerInventorySlotPacket(),
                 [PacketType.FinishConnection] = () => new FinishConnectionPacket(),
                 [PacketType.UpdateWorldInfo] = () => new UpdateWorldInfoPacket(),
                 [PacketType.RequestWorldSection] = () => new RequestWorldSectionPacket(),

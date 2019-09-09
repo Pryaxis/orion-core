@@ -64,33 +64,6 @@ namespace Orion.Tests.Networking.Packets {
             }
         }
 
-        private static readonly byte[] UpdatePlayerInventorySlotBytes = {10, 0, 5, 0, 0, 1, 0, 59, 179, 13};
-
-        [Fact]
-        public void ReadFromStream_UpdatePlayerInventorySlot_IsCorrect() {
-            using (var stream = new MemoryStream(UpdatePlayerInventorySlotBytes)) {
-                var packet = (UpdatePlayerInventorySlotPacket)Packet.ReadFromStream(stream);
-
-                packet.PlayerIndex.Should().Be(0);
-                packet.InventorySlotIndex.Should().Be(0);
-                packet.ItemStackSize.Should().Be(1);
-                packet.ItemPrefix.Should().Be(ItemPrefix.Godly);
-                packet.ItemType.Should().Be(ItemType.CopperShortsword);
-            }
-        }
-
-        [Fact]
-        public void WriteToStream_UpdatePlayerInventorySlot_IsCorrect() {
-            using (var stream = new MemoryStream(UpdatePlayerInventorySlotBytes))
-            using (var stream2 = new MemoryStream()) {
-                var packet = Packet.ReadFromStream(stream);
-
-                packet.WriteToStream(stream2);
-
-                stream2.ToArray().Should().BeEquivalentTo(UpdatePlayerInventorySlotBytes);
-            }
-        }
-
         public static readonly byte[] FinishConnectionBytes = {3, 0, 6};
 
         [Fact]
