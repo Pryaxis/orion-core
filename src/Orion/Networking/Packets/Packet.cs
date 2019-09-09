@@ -64,7 +64,7 @@ namespace Orion.Networking.Packets {
                 [PacketType.RequestSign] = () => new RequestSignPacket(),
                 [PacketType.UpdateSign] = () => new UpdateSignPacket(),
                 [PacketType.UpdateLiquid] = () => new UpdateLiquidPacket(),
-                [PacketType.FirstSpawnPlayer] = () => new FirstSpawnPlayerPacket(),
+                [PacketType.EnterWorld] = () => new EnterWorldPacket(),
                 [PacketType.PlayerBuffs] = () => new PlayerBuffsPacket(),
                 [PacketType.PerformAction] = () => new PerformActionPacket(),
                 [PacketType.UnlockTile] = () => new UnlockTilePacket(),

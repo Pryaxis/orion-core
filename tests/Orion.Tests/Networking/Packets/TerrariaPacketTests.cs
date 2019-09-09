@@ -1112,27 +1112,6 @@ namespace Orion.Tests.Networking.Packets {
             }
         }
 
-        public static readonly byte[] FirstSpawnPlayerBytes = {3, 0, 49};
-
-        [Fact]
-        public void ReadFromStream_FirstSpawnPlayer_IsCorrect() {
-            using (var stream = new MemoryStream(FirstSpawnPlayerBytes)) {
-                Packet.ReadFromStream(stream);
-            }
-        }
-
-        [Fact]
-        public void WriteToStream_FirstSpawnPlayer_IsCorrect() {
-            using (var stream = new MemoryStream(FirstSpawnPlayerBytes))
-            using (var stream2 = new MemoryStream()) {
-                var packet = Packet.ReadFromStream(stream);
-
-                packet.WriteToStream(stream2);
-
-                stream2.ToArray().Should().BeEquivalentTo(FirstSpawnPlayerBytes);
-            }
-        }
-
         public static readonly byte[] PerformActionBytes = {5, 0, 51, 0, 1};
 
         [Fact]

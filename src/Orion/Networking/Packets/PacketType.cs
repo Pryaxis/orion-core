@@ -48,7 +48,7 @@
         RequestSign = 46,
         UpdateSign = 47,
         UpdateLiquid = 48,
-        FirstSpawnPlayer = 49,
+        EnterWorld = 49,
         PlayerBuffs = 50,
         PerformAction = 51,
         UnlockTile = 52,
