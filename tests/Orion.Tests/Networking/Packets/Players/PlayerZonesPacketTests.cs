@@ -6,7 +6,7 @@ using Xunit;
 
 namespace Orion.Tests.Networking.Packets.Players {
     public class PlayerZonesPacketTests {
-        private static readonly byte[] PlayerZonesBytes = {8, 0, 36, 1, 0, 0, 0, 0};
+        private static readonly byte[] PlayerZonesBytes = {8, 0, 36, 1, 0, 0, 0, 0,};
 
         [Fact]
         public void ReadFromStream_IsCorrect() {

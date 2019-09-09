@@ -64,162 +64,6 @@ namespace Orion.Tests.Networking.Packets {
             }
         }
 
-        private static readonly byte[] UpdateWorldInfoBytes = {
-            122, 0, 7, 141, 127, 0, 0, 1, 0, 104, 16, 176, 4, 54, 8, 102, 1, 129, 1, 53, 2, 24, 49, 0, 9, 1, 102, 63,
-            129, 163, 174, 200, 216, 57, 65, 188, 220, 22, 170, 161, 45, 221, 99, 1, 0, 0, 0, 194, 0, 0, 0, 0, 51, 0, 1,
-            2, 1, 0, 1, 2, 3, 0, 0, 217, 206, 151, 62, 0, 37, 4, 0, 0, 104, 16, 0, 0, 104, 16, 0, 0, 3, 2, 0, 0, 248, 4,
-            0, 0, 104, 16, 0, 0, 104, 16, 0, 0, 7, 1, 0, 6, 0, 0, 0, 0, 0, 32, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-            0, 0
-        };
-
-        [Fact]
-        public void ReadFromStream_UpdateWorldInfo_IsCorrect() {
-            using (var stream = new MemoryStream(UpdateWorldInfoBytes)) {
-                var packet = (UpdateWorldInfoPacket)Packet.ReadFromStream(stream);
-
-                packet.Time.Should().Be(32653);
-                packet.IsDaytime.Should().BeTrue();
-                packet.IsBloodMoon.Should().BeFalse();
-                packet.IsEclipse.Should().BeFalse();
-                packet.MoonPhase.Should().Be(0);
-                packet.WorldWidth.Should().Be(4200);
-                packet.WorldHeight.Should().Be(1200);
-                packet.SpawnX.Should().Be(2102);
-                packet.SpawnY.Should().Be(358);
-                packet.SurfaceY.Should().Be(385);
-                packet.RockLayerY.Should().Be(565);
-                packet.WorldId.Should().Be(151007512);
-                packet.WorldName.Should().Be("f");
-                packet.WorldGuid.Should().Be("{aea3813f-d8c8-4139-bcdc-16aaa12ddd63}");
-                packet.WorldGeneratorVersion.Should().Be(833223655425);
-                packet.MoonType.Should().Be(0);
-                packet.TreeBackgroundStyle.Should().Be(51);
-                packet.CorruptionBackgroundStyle.Should().Be(0);
-                packet.JungleBackgroundStyle.Should().Be(1);
-                packet.SnowBackgroundStyle.Should().Be(2);
-                packet.HallowBackgroundStyle.Should().Be(1);
-                packet.CrimsonBackgroundStyle.Should().Be(0);
-                packet.DesertBackgroundStyle.Should().Be(1);
-                packet.OceanBackgroundStyle.Should().Be(2);
-                packet.IceCaveBackgroundStyle.Should().Be(3);
-                packet.UndergroundJungleBackgroundStyle.Should().Be(0);
-                packet.HellBackgroundStyle.Should().Be(0);
-                packet.WindSpeed.Should().Be(0.2965f);
-                packet.NumberOfClouds.Should().Be(0);
-                packet.TreeStyleBoundaries.Should().BeEquivalentTo(1061, 4200, 4200);
-                packet.TreeStyles.Should().BeEquivalentTo(3, 2, 0, 0);
-                packet.CaveBackgroundStyleBoundaries.Should().BeEquivalentTo(1272, 4200, 4200);
-                packet.CaveBackgroundStyles.Should().BeEquivalentTo(7, 1, 0, 6);
-                packet.Rain.Should().Be(0);
-                packet.HasSmashedShadowOrb.Should().BeFalse();
-                packet.HasDefeatedEyeOfCthulhu.Should().BeFalse();
-                packet.HasDefeatedEvilBoss.Should().BeFalse();
-                packet.HasDefeatedSkeletron.Should().BeFalse();
-                packet.IsHardMode.Should().BeFalse();
-                packet.HasDefeatedClown.Should().BeFalse();
-                packet.IsServerSideCharacter.Should().BeFalse();
-                packet.HasDefeatedPlantera.Should().BeFalse();
-                packet.HasDefeatedDestroyer.Should().BeFalse();
-                packet.HasDefeatedTwins.Should().BeFalse();
-                packet.HasDefeatedSkeletronPrime.Should().BeFalse();
-                packet.HasDefeatedMechanicalBoss.Should().BeFalse();
-                packet.IsCloudBackgroundActive.Should().BeFalse();
-                packet.IsCrimson.Should().BeTrue();
-                packet.IsPumpkinMoon.Should().BeFalse();
-                packet.IsFrostMoon.Should().BeFalse();
-                packet.IsExpertMode.Should().BeFalse();
-                packet.IsFastForwardingTime.Should().BeFalse();
-                packet.IsSlimeRain.Should().BeFalse();
-                packet.HasDefeatedKingSlime.Should().BeFalse();
-                packet.HasDefeatedQueenBee.Should().BeFalse();
-                packet.HasDefeatedDukeFishron.Should().BeFalse();
-                packet.HasDefeatedMartians.Should().BeFalse();
-                packet.HasDefeatedAncientCultist.Should().BeFalse();
-                packet.HasDefeatedMoonLord.Should().BeFalse();
-                packet.HasDefeatedPumpking.Should().BeFalse();
-                packet.HasDefeatedMourningWood.Should().BeFalse();
-                packet.HasDefeatedIceQueen.Should().BeFalse();
-                packet.HasDefeatedSantank.Should().BeFalse();
-                packet.HasDefeatedEverscream.Should().BeFalse();
-                packet.HasDefeatedGolem.Should().BeFalse();
-                packet.IsBirthdayParty.Should().BeFalse();
-                packet.HasDefeatedPirates.Should().BeFalse();
-                packet.HasDefeatedFrostLegion.Should().BeFalse();
-                packet.HasDefeatedGoblins.Should().BeFalse();
-                packet.IsSandstorm.Should().BeFalse();
-                packet.IsOldOnesArmy.Should().BeFalse();
-                packet.HasDefeatedOldOnesArmyTier1.Should().BeFalse();
-                packet.HasDefeatedOldOnesArmyTier2.Should().BeFalse();
-                packet.HasDefeatedOldOnesArmyTier3.Should().BeFalse();
-                packet.InvasionType.Should().Be(InvasionType.None);
-                packet.LobbyId.Should().Be(0);
-                packet.SandstormIntensity.Should().Be(0);
-            }
-        }
-
-        [Fact]
-        public void WriteToStream_UpdateWorldInfo_IsCorrect() {
-            using (var stream = new MemoryStream(UpdateWorldInfoBytes))
-            using (var stream2 = new MemoryStream()) {
-                var packet = Packet.ReadFromStream(stream);
-
-                packet.WriteToStream(stream2);
-
-                stream2.ToArray().Should().BeEquivalentTo(UpdateWorldInfoBytes);
-            }
-        }
-
-        private static readonly byte[] SyncTileFramesBytes = {11, 0, 11, 18, 0, 1, 0, 22, 0, 3, 0,};
-
-        [Fact]
-        public void ReadFromStream_SyncTileFrames_IsCorrect() {
-            using (var stream = new MemoryStream(SyncTileFramesBytes)) {
-                var packet = (SyncTileFramesPacket)Packet.ReadFromStream(stream);
-
-                packet.StartSectionX.Should().Be(18);
-                packet.StartSectionY.Should().Be(1);
-                packet.EndSectionX.Should().Be(22);
-                packet.EndSectionY.Should().Be(3);
-            }
-        }
-
-        [Fact]
-        public void WriteToStream_SyncTileFrames_IsCorrect() {
-            using (var stream = new MemoryStream(SyncTileFramesBytes))
-            using (var stream2 = new MemoryStream()) {
-                var packet = Packet.ReadFromStream(stream);
-
-                packet.WriteToStream(stream2);
-
-                stream2.ToArray().Should().BeEquivalentTo(SyncTileFramesBytes);
-            }
-        }
-
-        private static readonly byte[] SpawnPlayerBytes = {8, 0, 12, 0, 255, 255, 255, 255,};
-
-        [Fact]
-        public void ReadFromStream_SpawnPlayer_IsCorrect() {
-            using (var stream = new MemoryStream(SpawnPlayerBytes)) {
-                var packet = (SpawnPlayerPacket)Packet.ReadFromStream(stream);
-
-                packet.PlayerIndex.Should().Be(0);
-                packet.SpawnX.Should().Be(-1);
-                packet.SpawnY.Should().Be(-1);
-            }
-        }
-
-        [Fact]
-        public void WriteToStream_SpawnPlayer_IsCorrect() {
-            using (var stream = new MemoryStream(SpawnPlayerBytes))
-            using (var stream2 = new MemoryStream()) {
-                var packet = Packet.ReadFromStream(stream);
-
-                packet.WriteToStream(stream2);
-
-                stream2.ToArray().Should().BeEquivalentTo(SpawnPlayerBytes);
-            }
-        }
-
         private static readonly byte[] UpdatePlayerBytes = {15, 0, 13, 0, 72, 16, 0, 0, 31, 131, 71, 0, 48, 212, 69,};
 
         [Fact]
@@ -309,125 +153,6 @@ namespace Orion.Tests.Networking.Packets {
             }
         }
 
-        private static readonly byte[] UpdateItemBytes = {
-            27, 0, 21, 144, 1, 128, 51, 131, 71, 0, 112, 212, 69, 0, 0, 128, 64, 0, 0, 0, 192, 1, 0, 82, 0, 17, 6
-        };
-
-        [Fact]
-        public void ReadFromStream_UpdateItem_IsCorrect() {
-            using (var stream = new MemoryStream(UpdateItemBytes)) {
-                var packet = (UpdateItemPacket)Packet.ReadFromStream(stream);
-
-                packet.ItemIndex.Should().Be(400);
-                packet.Position.Should().Be(new Vector2(67175, 6798));
-                packet.Velocity.Should().Be(new Vector2(4, -2));
-                packet.ItemStackSize.Should().Be(1);
-                packet.ItemPrefix.Should().Be(ItemPrefix.Unreal);
-                packet.ShouldDisown.Should().BeFalse();
-                packet.ItemType.Should().Be(ItemType.SDMG);
-            }
-        }
-
-        [Fact]
-        public void WriteToStream_UpdateItem_IsCorrect() {
-            using (var stream = new MemoryStream(UpdateItemBytes))
-            using (var stream2 = new MemoryStream()) {
-                var packet = Packet.ReadFromStream(stream);
-
-                packet.WriteToStream(stream2);
-
-                stream2.ToArray().Should().BeEquivalentTo(UpdateItemBytes);
-            }
-        }
-
-        private static readonly byte[] UpdateItemOwnerBytes = {6, 0, 22, 144, 1, 0};
-
-        [Fact]
-        public void ReadFromStream_UpdateItemOwner_IsCorrect() {
-            using (var stream = new MemoryStream(UpdateItemOwnerBytes)) {
-                var packet = (UpdateItemOwnerPacket)Packet.ReadFromStream(stream);
-
-                packet.ItemIndex.Should().Be(400);
-                packet.OwnerPlayerIndex.Should().Be(0);
-            }
-        }
-
-        [Fact]
-        public void WriteToStream_UpdateItemOwner_IsCorrect() {
-            using (var stream = new MemoryStream(UpdateItemOwnerBytes))
-            using (var stream2 = new MemoryStream()) {
-                var packet = Packet.ReadFromStream(stream);
-
-                packet.WriteToStream(stream2);
-
-                stream2.ToArray().Should().BeEquivalentTo(UpdateItemOwnerBytes);
-            }
-        }
-
-        private static readonly byte[] UpdateNpcBytes = {
-            26, 0, 23, 1, 0, 38, 209, 132, 71, 0, 0, 213, 69, 0, 0, 0, 0, 0, 0, 0, 0, 255, 0, 130, 22, 0,
-        };
-
-        [Fact]
-        public void ReadFromStream_UpdateNpc_IsCorrect() {
-            using (var stream = new MemoryStream(UpdateNpcBytes)) {
-                var packet = (UpdateNpcPacket)Packet.ReadFromStream(stream);
-
-                packet.NpcIndex.Should().Be(1);
-                packet.Position.Should().Be(new Vector2(68002.3f, 6816));
-                packet.Velocity.Should().Be(Vector2.Zero);
-                packet.TargetIndex.Should().Be(255);
-                packet.HorizontalDirection.Should().BeFalse();
-                packet.VerticalDirection.Should().BeTrue();
-                packet.AiValues[0].Should().Be(0);
-                packet.AiValues[1].Should().Be(0);
-                packet.AiValues[2].Should().Be(0);
-                packet.AiValues[3].Should().Be(0);
-                packet.SpriteDirection.Should().BeFalse();
-                packet.IsAtMaxHp.Should().BeTrue();
-                packet.NpcType.Should().Be(NpcType.Guide);
-                packet.NumberOfHpBytes.Should().Be(0);
-                packet.Hp.Should().Be(0);
-                packet.ReleaseOwnerIndex.Should().Be(0);
-            }
-        }
-
-        [Fact]
-        public void WriteToStream_UpdateNpc_IsCorrect() {
-            using (var stream = new MemoryStream(UpdateNpcBytes))
-            using (var stream2 = new MemoryStream()) {
-                var packet = Packet.ReadFromStream(stream);
-
-                packet.WriteToStream(stream2);
-
-                stream2.ToArray().Should().BeEquivalentTo(UpdateNpcBytes);
-            }
-        }
-
-        private static readonly byte[] DamageNpcWithSelectedItemBytes = {6, 0, 24, 1, 0, 0};
-
-        [Fact]
-        public void ReadFromStream_DamageNpcWithSelectedItem_IsCorrect() {
-            using (var stream = new MemoryStream(DamageNpcWithSelectedItemBytes)) {
-                var packet = (DamageNpcWithSelectedItemPacket)Packet.ReadFromStream(stream);
-
-                packet.NpcIndex.Should().Be(1);
-                packet.PlayerIndex.Should().Be(0);
-            }
-        }
-
-        [Fact]
-        public void WriteToStream_DamageNpcWithSelectedItem_IsCorrect() {
-            using (var stream = new MemoryStream(DamageNpcWithSelectedItemBytes))
-            using (var stream2 = new MemoryStream()) {
-                var packet = Packet.ReadFromStream(stream);
-
-                packet.WriteToStream(stream2);
-
-                stream2.ToArray().Should().BeEquivalentTo(DamageNpcWithSelectedItemBytes);
-            }
-        }
-
         private static readonly byte[] UpdateProjectileBytes = {
             31, 0, 27, 0, 0, 128, 57, 131, 71, 0, 200, 212, 69, 254, 14, 40, 65, 147, 84, 121, 193, 205, 204, 128, 64,
             99, 0, 0, 89, 0, 0,
@@ -512,33 +237,6 @@ namespace Orion.Tests.Networking.Packets {
             }
         }
 
-        private static readonly byte[] ModifyChestBytes = {12, 0, 34, 0, 100, 0, 100, 0, 1, 0, 0, 0};
-
-        [Fact]
-        public void ReadFromStream_ModifyChest_IsCorrect() {
-            using (var stream = new MemoryStream(ModifyChestBytes)) {
-                var packet = (ModifyChestPacket)Packet.ReadFromStream(stream);
-
-                packet.ModificationType.Should().Be(ModifyChestPacket.Type.PlaceContainers);
-                packet.ChestX.Should().Be(100);
-                packet.ChestY.Should().Be(100);
-                packet.ChestStyle.Should().Be(1);
-                packet.ChestIndex.Should().Be(0);
-            }
-        }
-
-        [Fact]
-        public void WriteToStream_ModifyChestSlot_IsCorrect() {
-            using (var stream = new MemoryStream(ModifyChestBytes))
-            using (var stream2 = new MemoryStream()) {
-                var packet = Packet.ReadFromStream(stream);
-
-                packet.WriteToStream(stream2);
-
-                stream2.ToArray().Should().BeEquivalentTo(ModifyChestBytes);
-            }
-        }
-
         public static readonly byte[] RemoveItemOwnerBytes = {5, 0, 39, 1, 0};
 
         [Fact]
@@ -610,81 +308,6 @@ namespace Orion.Tests.Networking.Packets {
             }
         }
 
-        public static readonly byte[] UnlockTileBytes = {8, 0, 52, 1, 0, 1, 100, 0};
-
-        [Fact]
-        public void ReadFromStream_UnlockTile_IsCorrect() {
-            using (var stream = new MemoryStream(UnlockTileBytes)) {
-                var packet = (UnlockTilePacket)Packet.ReadFromStream(stream);
-
-                packet.ObjectType.Should().Be(UnlockTilePacket.Type.UnlockChest);
-                packet.TileX.Should().Be(256);
-                packet.TileY.Should().Be(100);
-            }
-        }
-
-        [Fact]
-        public void WriteToStream_UnlockTile_IsCorrect() {
-            using (var stream = new MemoryStream(UnlockTileBytes))
-            using (var stream2 = new MemoryStream()) {
-                var packet = Packet.ReadFromStream(stream);
-
-                packet.WriteToStream(stream2);
-
-                stream2.ToArray().Should().BeEquivalentTo(UnlockTileBytes);
-            }
-        }
-
-        public static readonly byte[] UpdateNpcBuffsBytes = {10, 0, 54, 0, 0, 0, 0, 0, 0, 0};
-
-        [Fact]
-        public void ReadFromStream_UpdateNpcBuffs_IsCorrect() {
-            using (var stream = new MemoryStream(UpdateNpcBuffsBytes)) {
-                var packet = (UpdateNpcBuffsPacket)Packet.ReadFromStream(stream);
-                
-                packet.NpcIndex.Should().Be(0);
-                foreach (var buffType in packet.NpcBuffs) {
-                    buffType.Should().Be(BuffType.None);
-                }
-            }
-        }
-
-        [Fact]
-        public void WriteToStream_UpdateNpcBuffs_IsCorrect() {
-            using (var stream = new MemoryStream(UpdateNpcBuffsBytes))
-            using (var stream2 = new MemoryStream()) {
-                var packet = Packet.ReadFromStream(stream);
-
-                packet.WriteToStream(stream2);
-
-                stream2.ToArray().Should().BeEquivalentTo(UpdateNpcBuffsBytes);
-            }
-        }
-
-        public static readonly byte[] UpdateNpcNameBytes = {14, 0, 56, 0, 0, 8, 84, 101, 114, 114, 97, 114, 105, 97};
-
-        [Fact]
-        public void ReadFromStream_UpdateNpcName_IsCorrect() {
-            using (var stream = new MemoryStream(UpdateNpcNameBytes)) {
-                var packet = (UpdateNpcNamePacket)Packet.ReadFromStream(stream);
-
-                packet.NpcIndex.Should().Be(0);
-                packet.NpcName.Should().Be("Terraria");
-            }
-        }
-
-        [Fact]
-        public void WriteToStream_UpdateNpcName_IsCorrect() {
-            using (var stream = new MemoryStream(UpdateNpcNameBytes))
-            using (var stream2 = new MemoryStream()) {
-                var packet = Packet.ReadFromStream(stream);
-
-                packet.WriteToStream(stream2);
-
-                stream2.ToArray().Should().BeEquivalentTo(UpdateNpcNameBytes);
-            }
-        }
-
         public static readonly byte[] UpdateBiomeStatsBytes = {6, 0, 57, 1, 2, 3};
 
         [Fact]
@@ -734,32 +357,6 @@ namespace Orion.Tests.Networking.Packets {
             }
         }
         
-        public static readonly byte[] UpdateNpcHomeBytes = {10, 0, 60, 0, 0, 0, 1, 100, 0, 0};
-
-        [Fact]
-        public void ReadFromStream_UpdateNpcHome_IsCorrect() {
-            using (var stream = new MemoryStream(UpdateNpcHomeBytes)) {
-                var packet = (UpdateNpcHomePacket)Packet.ReadFromStream(stream);
-
-                packet.NpcIndex.Should().Be(0);
-                packet.NpcHomeX.Should().Be(256);
-                packet.NpcHomeY.Should().Be(100);
-                packet.IsNpcHomeless.Should().BeFalse();
-            }
-        }
-
-        [Fact]
-        public void WriteToStream_UpdateNpcHome_IsCorrect() {
-            using (var stream = new MemoryStream(UpdateNpcHomeBytes))
-            using (var stream2 = new MemoryStream()) {
-                var packet = Packet.ReadFromStream(stream);
-
-                packet.WriteToStream(stream2);
-
-                stream2.ToArray().Should().BeEquivalentTo(UpdateNpcHomeBytes);
-            }
-        }
-        
         public static readonly byte[] SummonBossOrInvasionBytes = {7, 0, 61, 0, 0, 255, 255};
 
         [Fact]
@@ -781,30 +378,6 @@ namespace Orion.Tests.Networking.Packets {
                 packet.WriteToStream(stream2);
 
                 stream2.ToArray().Should().BeEquivalentTo(SummonBossOrInvasionBytes);
-            }
-        }
-        
-        public static readonly byte[] ShowPlayerDodgeBytes = {5, 0, 62, 0, 1};
-
-        [Fact]
-        public void ReadFromStream_ShowPlayerDodge_IsCorrect() {
-            using (var stream = new MemoryStream(ShowPlayerDodgeBytes)) {
-                var packet = (ShowPlayerDodgePacket)Packet.ReadFromStream(stream);
-
-                packet.PlayerIndex.Should().Be(0);
-                packet.PlayerDodgeType.Should().Be(ShowPlayerDodgePacket.Type.NinjaDodge);
-            }
-        }
-
-        [Fact]
-        public void WriteToStream_ShowPlayerDodge_IsCorrect() {
-            using (var stream = new MemoryStream(ShowPlayerDodgeBytes))
-            using (var stream2 = new MemoryStream()) {
-                var packet = Packet.ReadFromStream(stream);
-
-                packet.WriteToStream(stream2);
-
-                stream2.ToArray().Should().BeEquivalentTo(ShowPlayerDodgeBytes);
             }
         }
         
@@ -889,74 +462,6 @@ namespace Orion.Tests.Networking.Packets {
             }
         }
 
-        public static readonly byte[] UpdateAnglerQuestBytes = {5, 0, 74, 1, 1};
-
-        [Fact]
-        public void ReadFromStream_UpdateAnglerQuest_IsCorrect() {
-            using (var stream = new MemoryStream(UpdateAnglerQuestBytes)) {
-                var packet = (UpdateAnglerQuestPacket)Packet.ReadFromStream(stream);
-
-                packet.AnglerQuest.Should().Be(1);
-                packet.IsAnglerQuestFinished.Should().BeTrue();
-            }
-        }
-
-        [Fact]
-        public void WriteToStream_UpdateAnglerQuest_IsCorrect() {
-            using (var stream = new MemoryStream(UpdateAnglerQuestBytes))
-            using (var stream2 = new MemoryStream()) {
-                var packet = Packet.ReadFromStream(stream);
-
-                packet.WriteToStream(stream2);
-
-                stream2.ToArray().Should().BeEquivalentTo(UpdateAnglerQuestBytes);
-            }
-        }
-
-        public static readonly byte[] CompleteAnglerQuestBytes = {3, 0, 75};
-
-        [Fact]
-        public void ReadFromStream_CompleteAnglerQuest_IsCorrect() {
-            using (var stream = new MemoryStream(CompleteAnglerQuestBytes)) {
-                Packet.ReadFromStream(stream).Should().BeOfType<CompleteAnglerQuestPacket>();
-            }
-        }
-
-        [Fact]
-        public void WriteToStream_CompleteAnglerQuest_IsCorrect() {
-            using (var stream = new MemoryStream(CompleteAnglerQuestBytes))
-            using (var stream2 = new MemoryStream()) {
-                var packet = Packet.ReadFromStream(stream);
-
-                packet.WriteToStream(stream2);
-
-                stream2.ToArray().Should().BeEquivalentTo(CompleteAnglerQuestBytes);
-            }
-        }
-
-        public static readonly byte[] UpdateAnglerQuestsCompletedBytes = {7, 0, 76, 1, 1, 0, 0};
-
-        [Fact]
-        public void ReadFromStream_UpdateAnglerQuestsCompleted_IsCorrect() {
-            using (var stream = new MemoryStream(UpdateAnglerQuestsCompletedBytes)) {
-                var packet = (UpdateAnglerQuestsCompletedPacket)Packet.ReadFromStream(stream);
-
-                packet.NumberOfAnglerQuestsCompleted.Should().Be(257);
-            }
-        }
-
-        [Fact]
-        public void WriteToStream_UpdateAnglerQuestsCompleted_IsCorrect() {
-            using (var stream = new MemoryStream(UpdateAnglerQuestsCompletedBytes))
-            using (var stream2 = new MemoryStream()) {
-                var packet = Packet.ReadFromStream(stream);
-
-                packet.WriteToStream(stream2);
-
-                stream2.ToArray().Should().BeEquivalentTo(UpdateAnglerQuestsCompletedBytes);
-            }
-        }
-
         public static readonly byte[] CreateTemporaryAnimationBytes = {11, 0, 77, 1, 0, 1, 0, 0, 1, 100, 0};
 
         [Fact]
@@ -983,35 +488,6 @@ namespace Orion.Tests.Networking.Packets {
             }
         }
 
-        public static readonly byte[] PlaceObjectBytes = {14, 0, 79, 0, 1, 100, 0, 21, 0, 1, 0, 0, 255, 1};
-
-        [Fact]
-        public void ReadFromStream_PlaceObject_IsCorrect() {
-            using (var stream = new MemoryStream(PlaceObjectBytes)) {
-                var packet = (PlaceObjectPacket)Packet.ReadFromStream(stream);
-                
-                packet.TileX.Should().Be(256);
-                packet.TileY.Should().Be(100);
-                packet.ObjectType.Should().Be(BlockType.Containers);
-                packet.ObjectStyle.Should().Be(1);
-                packet.Alternate.Should().Be(0);
-                packet.RandomState.Should().Be(-1);
-                packet.Direction.Should().BeTrue();
-            }
-        }
-
-        [Fact]
-        public void WriteToStream_PlaceObject_IsCorrect() {
-            using (var stream = new MemoryStream(PlaceObjectBytes))
-            using (var stream2 = new MemoryStream()) {
-                var packet = Packet.ReadFromStream(stream);
-
-                packet.WriteToStream(stream2);
-
-                stream2.ToArray().Should().BeEquivalentTo(PlaceObjectBytes);
-            }
-        }
-
         public static readonly byte[] UpdateOtherPlayerChestBytes = {6, 0, 80, 0, 255, 255};
 
         [Fact]
@@ -1033,32 +509,6 @@ namespace Orion.Tests.Networking.Packets {
                 packet.WriteToStream(stream2);
 
                 stream2.ToArray().Should().BeEquivalentTo(UpdateOtherPlayerChestBytes);
-            }
-        }
-
-        public static readonly byte[] CreateCombatTextBytes = {18, 0, 81, 0, 0, 0, 0, 0, 0, 0, 0, 255, 255, 255, 100, 0, 0, 0};
-
-        [Fact]
-        public void ReadFromStream_CreateCombatText_IsCorrect() {
-            using (var stream = new MemoryStream(CreateCombatTextBytes)) {
-                var packet = (CreateCombatTextPacket)Packet.ReadFromStream(stream);
-
-                packet.TextX.Should().Be(0);
-                packet.TextY.Should().Be(0);
-                packet.TextColor.Should().Be(Color.White);
-                packet.TextNumber.Should().Be(100);
-            }
-        }
-
-        [Fact]
-        public void WriteToStream_CreateCombatText_IsCorrect() {
-            using (var stream = new MemoryStream(CreateCombatTextBytes))
-            using (var stream2 = new MemoryStream()) {
-                var packet = Packet.ReadFromStream(stream);
-
-                packet.WriteToStream(stream2);
-
-                stream2.ToArray().Should().BeEquivalentTo(CreateCombatTextBytes);
             }
         }
 

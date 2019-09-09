@@ -6,7 +6,7 @@ using Xunit;
 
 namespace Orion.Tests.Networking.Packets.Connections {
     public class ContinueConnectingPacketTests {
-        public static readonly byte[] ContinueConnectingBytes = {4, 0, 3, 0};
+        public static readonly byte[] ContinueConnectingBytes = {4, 0, 3, 0,};
 
         [Fact]
         public void ReadFromStream_IsCorrect() {

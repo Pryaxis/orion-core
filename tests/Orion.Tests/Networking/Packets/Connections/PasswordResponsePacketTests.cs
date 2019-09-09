@@ -7,7 +7,7 @@ using Xunit;
 namespace Orion.Tests.Networking.Packets.Connections {
     public class PasswordResponsePacketTests {
         public static readonly byte[] PasswordResponseBytes = {
-            12, 0, 38, 8, 84, 101, 114, 114, 97, 114, 105, 97
+            12, 0, 38, 8, 84, 101, 114, 114, 97, 114, 105, 97,
         };
 
         [Fact]

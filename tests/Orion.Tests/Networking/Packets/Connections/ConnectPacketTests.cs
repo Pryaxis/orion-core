@@ -16,7 +16,7 @@ namespace Orion.Tests.Networking.Packets.Connections {
         }
 
         public static readonly byte[] ConnectBytes = {
-            15, 0, 1, 11, 84, 101, 114, 114, 97, 114, 105, 97, 49, 57, 52
+            15, 0, 1, 11, 84, 101, 114, 114, 97, 114, 105, 97, 49, 57, 52,
         };
 
         [Fact]

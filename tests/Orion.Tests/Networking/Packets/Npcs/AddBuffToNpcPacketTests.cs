@@ -8,7 +8,7 @@ using Xunit;
 
 namespace Orion.Tests.Networking.Packets.Npcs {
     public class AddBuffToNpcPacketTests {
-        public static readonly byte[] AddBuffToNpcBytes = {8, 0, 53, 0, 0, 1, 60, 0};
+        public static readonly byte[] AddBuffToNpcBytes = {8, 0, 53, 0, 0, 1, 60, 0,};
 
         [Fact]
         public void ReadFromStream_IsCorrect() {

@@ -11,7 +11,7 @@ using Xunit;
 
 namespace Orion.Tests.Networking.Packets.Npcs {
     public class ReleaseNpcPacketTests {
-        public static readonly byte[] ReleaseNpcBytes = {14, 0, 71, 0, 1, 0, 0, 100, 0, 0, 0, 1, 0, 0};
+        public static readonly byte[] ReleaseNpcBytes = {14, 0, 71, 0, 1, 0, 0, 100, 0, 0, 0, 1, 0, 0,};
 
         [Fact]
         public void ReadFromStream_IsCorrect() {

@@ -5,7 +5,7 @@ using Xunit;
 
 namespace Orion.Tests.Networking.Packets.Connections {
     public class RequestPasswordPacketTests {
-        private static readonly byte[] RequestPasswordBytes = {3, 0, 37};
+        private static readonly byte[] RequestPasswordBytes = {3, 0, 37,};
 
         [Fact]
         public void ReadFromStream_IsCorrect() {

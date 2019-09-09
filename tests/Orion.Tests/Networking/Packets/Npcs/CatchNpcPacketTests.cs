@@ -6,7 +6,7 @@ using Xunit;
 
 namespace Orion.Tests.Networking.Packets.Npcs {
     public class CatchNpcPacketTests {
-        public static readonly byte[] CatchNpcBytes = {6, 0, 70, 1, 0, 0};
+        public static readonly byte[] CatchNpcBytes = {6, 0, 70, 1, 0, 0,};
 
         [Fact]
         public void ReadFromStream_IsCorrect() {

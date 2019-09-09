@@ -6,7 +6,7 @@ using Xunit;
 
 namespace Orion.Tests.Networking.Packets.Players {
     public class HealPlayerPacketTests {
-        public static readonly byte[] HealPlayerBytes = {6, 0, 66, 0, 100, 0};
+        public static readonly byte[] HealPlayerBytes = {6, 0, 66, 0, 100, 0,};
 
         [Fact]
         public void ReadFromStream_IsCorrect() {
