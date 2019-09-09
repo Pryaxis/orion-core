@@ -1132,30 +1132,6 @@ namespace Orion.Tests.Networking.Packets {
             }
         }
 
-        public static readonly byte[] UpdatePlayerTeamBytes = {5, 0, 45, 0, 1,};
-
-        [Fact]
-        public void ReadFromStream_UpdatePlayerTeam_IsCorrect() {
-            using (var stream = new MemoryStream(UpdatePlayerTeamBytes)) {
-                var packet = (UpdatePlayerTeamPacket)Packet.ReadFromStream(stream);
-
-                packet.PlayerIndex.Should().Be(0);
-                packet.PlayerTeam.Should().Be(PlayerTeam.Red);
-            }
-        }
-
-        [Fact]
-        public void WriteToStream_UpdatePlayerTeam_IsCorrect() {
-            using (var stream = new MemoryStream(UpdatePlayerTeamBytes))
-            using (var stream2 = new MemoryStream()) {
-                var packet = Packet.ReadFromStream(stream);
-
-                packet.WriteToStream(stream2);
-
-                stream2.ToArray().Should().BeEquivalentTo(UpdatePlayerTeamBytes);
-            }
-        }
-
         public static readonly byte[] RequestSignBytes = {7, 0, 46, 0, 1, 100, 0};
 
         [Fact]

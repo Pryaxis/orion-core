@@ -44,7 +44,7 @@
         UpdatePlayerItemAnimation = 41,
         PlayerMana = 42,
         ShowManaEffect = 43,
-        UpdatePlayerTeam = 45,
+        PlayerTeam = 45,
         RequestSign = 46,
         UpdateSign = 47,
         UpdateLiquid = 48,

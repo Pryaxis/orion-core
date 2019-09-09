@@ -59,7 +59,7 @@ namespace Orion.Networking.Packets {
                 [PacketType.UpdatePlayerItemAnimation] = () => new UpdatePlayerItemAnimationPacket(),
                 [PacketType.PlayerMana] = () => new PlayerManaPacket(),
                 [PacketType.ShowManaEffect] = () => new ShowManaEffectPacket(),
-                [PacketType.UpdatePlayerTeam] = () => new UpdatePlayerTeamPacket(),
+                [PacketType.PlayerTeam] = () => new PlayerTeamPacket(),
                 [PacketType.RequestSign] = () => new RequestSignPacket(),
                 [PacketType.UpdateSign] = () => new UpdateSignPacket(),
                 [PacketType.UpdateLiquid] = () => new UpdateLiquidPacket(),
