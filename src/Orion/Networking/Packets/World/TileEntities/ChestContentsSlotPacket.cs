@@ -3,7 +3,7 @@ using Orion.Items;
 
 namespace Orion.Networking.Packets.World.TileEntities {
     /// <summary>
-    /// Packet sent to update a chest contents' slot. This is sent in response to a <see cref="RequestChestPacket"/>.
+    /// Packet sent to set a chest contents' slot. This is sent in response to a <see cref="RequestChestPacket"/>.
     /// </summary>
     public sealed class ChestContentsSlotPacket : Packet {
         /// <summary>

@@ -1,10 +1,10 @@
 ﻿using System.IO;
 
-namespace Orion.Networking.Packets {
+namespace Orion.Networking.Packets.Players {
     /// <summary>
-    /// Packet sent to update a player's stealth status.
+    /// Packet sent to set a player's stealth.
     /// </summary>
-    public sealed class UpdatePlayerStealthPacket : Packet {
+    public sealed class PlayerStealthPacket : Packet {
         /// <summary>
         /// Gets or sets the player index.
         /// </summary>
@@ -14,6 +14,8 @@ namespace Orion.Networking.Packets {
         /// Gets or sets the player's stealth status.
         /// </summary>
         public float PlayerStealthStatus { get; set; }
+
+        private protected override PacketType Type => PacketType.PlayerStealth;
 
         private protected override void ReadFromReader(BinaryReader reader, ushort packetLength) {
             PlayerIndex = reader.ReadByte();

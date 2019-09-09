@@ -5,6 +5,7 @@ using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Text;
 using Orion.Networking.Packets.Connections;
+using Orion.Networking.Packets.Npcs;
 using Orion.Networking.Packets.Players;
 using Orion.Networking.Packets.World;
 using Orion.Networking.Packets.World.TileEntities;
@@ -52,11 +53,11 @@ namespace Orion.Networking.Packets {
                 [PacketType.UpdatePlayerChest] = () => new UpdatePlayerChestPacket(),
                 [PacketType.ModifyChest] = () => new ModifyChestPacket(),
                 [PacketType.ShowHealEffect] = () => new ShowHealEffectPacket(),
-                [PacketType.UpdatePlayerZones] = () => new UpdatePlayerZonesPacket(),
+                [PacketType.PlayerZones] = () => new PlayerZonesPacket(),
                 [PacketType.RequestPassword] = () => new RequestPasswordPacket(),
                 [PacketType.PasswordResponse] = () => new PasswordResponsePacket(),
                 [PacketType.RemoveItemOwner] = () => new RemoveItemOwnerPacket(),
-                [PacketType.UpdatePlayerTalkingToNpc] = () => new UpdatePlayerTalkingToNpcPacket(),
+                [PacketType.PlayerTalkingToNpc] = () => new PlayerTalkingToNpcPacket(),
                 [PacketType.UpdatePlayerItemAnimation] = () => new UpdatePlayerItemAnimationPacket(),
                 [PacketType.PlayerMana] = () => new PlayerManaPacket(),
                 [PacketType.ShowManaEffect] = () => new ShowManaEffectPacket(),
@@ -68,7 +69,7 @@ namespace Orion.Networking.Packets {
                 [PacketType.PlayerBuffs] = () => new PlayerBuffsPacket(),
                 [PacketType.PerformAction] = () => new PerformActionPacket(),
                 [PacketType.UnlockTile] = () => new UnlockTilePacket(),
-                [PacketType.AddNpcBuff] = () => new AddNpcBuffPacket(),
+                [PacketType.AddBuffToNpc] = () => new AddBuffToNpcPacket(),
                 [PacketType.UpdateNpcBuffs] = () => new UpdateNpcBuffsPacket(),
                 [PacketType.AddBuffToPlayer] = () => new AddBuffToPlayerPacket(),
                 [PacketType.UpdateNpcName] = () => new UpdateNpcNamePacket(),
@@ -81,7 +82,7 @@ namespace Orion.Networking.Packets {
                 [PacketType.PaintBlock] = () => new PaintBlockPacket(),
                 [PacketType.PaintWall] = () => new PaintWallPacket(),
                 [PacketType.TeleportEntity] = () => new TeleportEntityPacket(),
-                [PacketType.HealOtherPlayer] = () => new HealOtherPlayerPacket(),
+                [PacketType.HealPlayer] = () => new HealPlayerPacket(),
                 [PacketType.ClientUuid] = () => new ClientUuidPacket(),
                 [PacketType.RequestOrUpdateChestName] = () => new RequestOrUpdateChestNamePacket(),
                 [PacketType.CatchNpc] = () => new CatchNpcPacket(),
@@ -97,7 +98,7 @@ namespace Orion.Networking.Packets {
                 [PacketType.UpdateOtherPlayerChest] = () => new UpdateOtherPlayerChestPacket(),
                 [PacketType.CreateCombatText] = () => new CreateCombatTextPacket(),
                 [PacketType.UpdateNpcKills] = () => new UpdateNpcKillsPacket(),
-                [PacketType.UpdatePlayerStealth] = () => new UpdatePlayerStealthPacket(),
+                [PacketType.PlayerStealth] = () => new PlayerStealthPacket(),
                 [PacketType.MoveItemIntoChest] = () => new MoveItemIntoChestPacket(),
                 [PacketType.TileEntity] = () => new TileEntityPacket(),
                 [PacketType.PlaceTileEntity] = () => new PlaceTileEntityPacket(),
@@ -127,7 +128,7 @@ namespace Orion.Networking.Packets {
                 [PacketType.StartOldOnesArmy] = () => new StartOldOnesArmyPacket(),
                 [PacketType.EndOldOnesArmy] = () => new EndOldOnesArmyPacket(),
                 [PacketType.UpdatePlayerMinionTargetNpc] = () => new UpdatePlayerMinionTargetNpcPacket(),
-                [PacketType.UpdateOldOnesArmy] = () => new UpdateOldOnesArmyPacket(),
+                [PacketType.OldOnesArmyInfo] = () => new OldOnesArmyInfoPacket(),
                 [PacketType.HurtPlayer] = () => new HurtPlayerPacket(),
                 [PacketType.KillPlayer] = () => new KillPlayerPacket(),
                 [PacketType.ShowCombatText] = () => new ShowCombatTextPacket(),

@@ -1,20 +1,16 @@
 ﻿using System.IO;
+using Microsoft.Xna.Framework;
 using Orion.Npcs;
 
-namespace Orion.Networking.Packets {
+namespace Orion.Networking.Packets.Npcs {
     /// <summary>
-    /// Packet sent to the server to release an NPC.
+    /// Packet sent from the client to the server to release an NPC.
     /// </summary>
     public sealed class ReleaseNpcPacket : Packet {
         /// <summary>
-        /// Gets or sets the NPC's X position.
+        /// Gets or sets the NPC's position.
         /// </summary>
-        public int NpcX { get; set; }
-
-        /// <summary>
-        /// Gets or sets the NPC's Y position.
-        /// </summary>
-        public int NpcY { get; set; }
+        public Vector2 NpcPosition { get; set; }
 
         /// <summary>
         /// Gets or sets the NPC type.
@@ -26,16 +22,17 @@ namespace Orion.Networking.Packets {
         /// </summary>
         public byte NpcStyle { get; set; }
 
+        private protected override PacketType Type => PacketType.ReleaseNpc;
+
         private protected override void ReadFromReader(BinaryReader reader, ushort packetLength) {
-            NpcX = reader.ReadInt32();
-            NpcY = reader.ReadInt32();
+            NpcPosition = new Vector2(reader.ReadInt32(), reader.ReadInt32());
             NpcType = (NpcType)reader.ReadInt16();
             NpcStyle = reader.ReadByte();
         }
 
         private protected override void WriteToWriter(BinaryWriter writer) {
-            writer.Write(NpcX);
-            writer.Write(NpcY);
+            writer.Write((int)NpcPosition.X);
+            writer.Write((int)NpcPosition.Y);
             writer.Write((short)NpcType);
             writer.Write(NpcStyle);
         }

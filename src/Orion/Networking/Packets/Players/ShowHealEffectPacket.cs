@@ -2,7 +2,7 @@
 
 namespace Orion.Networking.Packets.Players {
     /// <summary>
-    /// Packet to show a heal effect on a player.
+    /// Packet sent to show a heal effect on a player.
     /// </summary>
     public sealed class ShowHealEffectPacket : Packet {
         /// <summary>

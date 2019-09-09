@@ -2,7 +2,7 @@
 
 namespace Orion.Networking.Packets.Players {
     /// <summary>
-    /// Packet sent to show a mana effect.
+    /// Packet sent to show a mana effect on a player.
     /// </summary>
     public sealed class ShowManaEffectPacket : Packet {
         /// <summary>

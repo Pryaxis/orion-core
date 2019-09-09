@@ -1,6 +1,6 @@
 ﻿using System.IO;
 
-namespace Orion.Networking.Packets {
+namespace Orion.Networking.Packets.Npcs {
     /// <summary>
     /// Packet sent to catch an NPC.
     /// </summary>
@@ -14,6 +14,8 @@ namespace Orion.Networking.Packets {
         /// Gets or sets the NPC catcher's player index.
         /// </summary>
         public byte NpcCatcherPlayerIndex { get; set; }
+
+        private protected override PacketType Type => PacketType.CatchNpc;
 
         private protected override void ReadFromReader(BinaryReader reader, ushort packetLength) {
             NpcIndex = reader.ReadInt16();

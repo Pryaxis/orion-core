@@ -1,30 +1,30 @@
 ﻿using System.IO;
 
-namespace Orion.Networking.Packets {
+namespace Orion.Networking.Packets.Players {
     /// <summary>
-    /// Packet sent to heal another player.
+    /// Packet sent to set the NPC that a player is talking to.
     /// </summary>
-    public sealed class HealOtherPlayerPacket : Packet {
+    public sealed class PlayerTalkingToNpcPacket : Packet {
         /// <summary>
         /// Gets or sets the player index.
         /// </summary>
         public byte PlayerIndex { get; set; }
 
         /// <summary>
-        /// Gets or sets the heal amount.
+        /// Gets or sets the NPC index.
         /// </summary>
-        public short HealAmount { get; set; }
+        public short NpcIndex { get; set; }
 
-        /// <inheritdoc />
+        private protected override PacketType Type => PacketType.PlayerTalkingToNpc;
+
         private protected override void ReadFromReader(BinaryReader reader, ushort packetLength) {
             PlayerIndex = reader.ReadByte();
-            HealAmount = reader.ReadInt16();
+            NpcIndex = reader.ReadInt16();
         }
 
-        /// <inheritdoc />
         private protected override void WriteToWriter(BinaryWriter writer) {
             writer.Write(PlayerIndex);
-            writer.Write(HealAmount);
+            writer.Write(NpcIndex);
         }
     }
 }

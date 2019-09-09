@@ -5,13 +5,13 @@ using Orion.Networking.Packets.World;
 using Xunit;
 
 namespace Orion.Tests.Networking.Packets.World {
-    public class UpdateOldOnesArmyPacketTests {
-        public static readonly byte[] UpdateOldOnesArmyBytes = {7, 0, 116, 1, 0, 0, 0,};
+    public class OldOnesArmyInfoPacketTests {
+        public static readonly byte[] OldOnesArmyInfoBytes = {7, 0, 116, 1, 0, 0, 0,};
 
         [Fact]
         public void ReadFromStream_IsCorrect() {
-            using (var stream = new MemoryStream(UpdateOldOnesArmyBytes)) {
-                var packet = (UpdateOldOnesArmyPacket)Packet.ReadFromStream(stream);
+            using (var stream = new MemoryStream(OldOnesArmyInfoBytes)) {
+                var packet = (OldOnesArmyInfoPacket)Packet.ReadFromStream(stream);
 
                 packet.TimeLeftBetweenWaves.Should().Be(1);
             }
@@ -19,13 +19,13 @@ namespace Orion.Tests.Networking.Packets.World {
 
         [Fact]
         public void WriteToStream_IsCorrect() {
-            using (var stream = new MemoryStream(UpdateOldOnesArmyBytes))
+            using (var stream = new MemoryStream(OldOnesArmyInfoBytes))
             using (var stream2 = new MemoryStream()) {
                 var packet = Packet.ReadFromStream(stream);
 
                 packet.WriteToStream(stream2);
 
-                stream2.ToArray().Should().BeEquivalentTo(UpdateOldOnesArmyBytes);
+                stream2.ToArray().Should().BeEquivalentTo(OldOnesArmyInfoBytes);
             }
         }
     }

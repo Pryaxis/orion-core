@@ -23,7 +23,6 @@
 
   <ItemGroup>
     <Folder Include="Networking\Packets\Items\" />
-    <Folder Include="Networking\Packets\Npcs\" />
   </ItemGroup>
 
 </Project>

@@ -4,7 +4,7 @@ using Orion.World.Tiles;
 
 namespace Orion.Networking.Packets.World {
     /// <summary>
-    /// Packet sent to update a square of tiles.
+    /// Packet sent to set a square of tiles.
     /// </summary>
     public sealed class SquareOfTilesPacket : Packet {
         private NetworkTile[,] _tiles;

@@ -1,6 +1,6 @@
 ﻿using System.IO;
 
-namespace Orion.Networking.Packets {
+namespace Orion.Networking.Packets.Npcs {
     /// <summary>
     /// Packet sent to damage an NPC.
     /// </summary>
@@ -29,6 +29,8 @@ namespace Orion.Networking.Packets {
         /// Gets or sets a value indicating whether the hit is critical.
         /// </summary>
         public bool IsCriticalHit { get; set; }
+
+        private protected override PacketType Type => PacketType.DamageNpc;
 
         private protected override void ReadFromReader(BinaryReader reader, ushort packetLength) {
             NpcIndex = reader.ReadInt16();

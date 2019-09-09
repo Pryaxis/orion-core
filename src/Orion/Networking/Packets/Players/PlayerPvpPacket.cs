@@ -2,7 +2,7 @@
 
 namespace Orion.Networking.Packets.Players {
     /// <summary>
-    /// Packet used to update a player's PvP status.
+    /// Packet used to set a player's PvP status.
     /// </summary>
     public sealed class PlayerPvpPacket : Packet {
         /// <summary>

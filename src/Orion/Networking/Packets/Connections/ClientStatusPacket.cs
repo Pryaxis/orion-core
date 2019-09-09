@@ -4,7 +4,7 @@ using Orion.Networking.Packets.Extensions;
 
 namespace Orion.Networking.Packets.Connections {
     /// <summary>
-    /// Packet sent from the server to the client to update the client's status.
+    /// Packet sent from the server to the client to set the client's status.
     /// </summary>
     public sealed class ClientStatusPacket : Packet {
         private Terraria.Localization.NetworkText _statusText = Terraria.Localization.NetworkText.Empty;
