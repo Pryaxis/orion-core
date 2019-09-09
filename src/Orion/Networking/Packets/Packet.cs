@@ -7,6 +7,7 @@ using System.Text;
 using Orion.Networking.Packets.Connections;
 using Orion.Networking.Packets.Players;
 using Orion.Networking.Packets.World;
+using Orion.Networking.Packets.World.TileEntities;
 
 namespace Orion.Networking.Packets {
     /// <summary>
@@ -46,15 +47,14 @@ namespace Orion.Networking.Packets {
                 [PacketType.DamageNpc] = () => new DamageNpcPacket(),
                 [PacketType.RemoveProjectile] = () => new RemoveProjectilePacket(),
                 [PacketType.PlayerPvp] = () => new PlayerPvpPacket(),
-                [PacketType.RequestChestContents] = () => new RequestChestContentsPacket(),
-                [PacketType.UpdateChestContentsSlot] = () => new UpdateChestContentsSlotPacket(),
+                [PacketType.RequestChest] = () => new RequestChestPacket(),
+                [PacketType.ChestContentsSlot] = () => new ChestContentsSlotPacket(),
                 [PacketType.UpdatePlayerChest] = () => new UpdatePlayerChestPacket(),
                 [PacketType.ModifyChest] = () => new ModifyChestPacket(),
                 [PacketType.ShowHealEffect] = () => new ShowHealEffectPacket(),
                 [PacketType.UpdatePlayerZones] = () => new UpdatePlayerZonesPacket(),
                 [PacketType.RequestPassword] = () => new RequestPasswordPacket(),
-                [PacketType.PasswordResponse] =
-                    () => new PasswordResponsePacket(),
+                [PacketType.PasswordResponse] = () => new PasswordResponsePacket(),
                 [PacketType.RemoveItemOwner] = () => new RemoveItemOwnerPacket(),
                 [PacketType.UpdatePlayerTalkingToNpc] = () => new UpdatePlayerTalkingToNpcPacket(),
                 [PacketType.UpdatePlayerItemAnimation] = () => new UpdatePlayerItemAnimationPacket(),
@@ -62,7 +62,7 @@ namespace Orion.Networking.Packets {
                 [PacketType.ShowManaEffect] = () => new ShowManaEffectPacket(),
                 [PacketType.PlayerTeam] = () => new PlayerTeamPacket(),
                 [PacketType.RequestSign] = () => new RequestSignPacket(),
-                [PacketType.UpdateSign] = () => new UpdateSignPacket(),
+                [PacketType.SignText] = () => new SignTextPacket(),
                 [PacketType.Liquid] = () => new LiquidPacket(),
                 [PacketType.EnterWorld] = () => new EnterWorldPacket(),
                 [PacketType.PlayerBuffs] = () => new PlayerBuffsPacket(),
@@ -87,19 +87,19 @@ namespace Orion.Networking.Packets {
                 [PacketType.CatchNpc] = () => new CatchNpcPacket(),
                 [PacketType.ReleaseNpc] = () => new ReleaseNpcPacket(),
                 [PacketType.UpdateTravelingMerchantInventory] = () => new UpdateTravelingMerchantInventoryPacket(),
-                [PacketType.PerformTeleportationPotion] = () => new PerformTeleportationPotionPacket(),
+                [PacketType.TeleportationPotion] = () => new TeleportationPotionPacket(),
                 [PacketType.UpdateAnglerQuest] = () => new UpdateAnglerQuestPacket(),
                 [PacketType.CompleteAnglerQuest] = () => new CompleteAnglerQuestPacket(),
                 [PacketType.UpdateAnglerQuestsCompleted] = () => new UpdateAnglerQuestsCompletedPacket(),
                 [PacketType.CreateTemporaryAnimation] = () => new CreateTemporaryAnimationPacket(),
-                [PacketType.UpdateInvasion] = () => new UpdateInvasionPacket(),
+                [PacketType.InvasionInfo] = () => new InvasionInfoPacket(),
                 [PacketType.PlaceObject] = () => new PlaceObjectPacket(),
                 [PacketType.UpdateOtherPlayerChest] = () => new UpdateOtherPlayerChestPacket(),
                 [PacketType.CreateCombatText] = () => new CreateCombatTextPacket(),
                 [PacketType.UpdateNpcKills] = () => new UpdateNpcKillsPacket(),
                 [PacketType.UpdatePlayerStealth] = () => new UpdatePlayerStealthPacket(),
                 [PacketType.MoveItemIntoChest] = () => new MoveItemIntoChestPacket(),
-                [PacketType.UpdateTileEntity] = () => new UpdateTileEntityPacket(),
+                [PacketType.TileEntity] = () => new TileEntityPacket(),
                 [PacketType.PlaceTileEntity] = () => new PlaceTileEntityPacket(),
                 [PacketType.AlterItem] = () => new AlterItemPacket(),
                 [PacketType.PlaceItemFrame] = () => new PlaceItemFramePacket(),

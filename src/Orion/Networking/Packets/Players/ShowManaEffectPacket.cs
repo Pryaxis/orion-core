@@ -1,30 +1,30 @@
 ﻿using System.IO;
 
-namespace Orion.Networking.Packets {
+namespace Orion.Networking.Packets.Players {
     /// <summary>
-    /// Packet to show a heal effect on a player.
+    /// Packet sent to show a mana effect.
     /// </summary>
-    public sealed class ShowHealEffectPacket : Packet {
+    public sealed class ShowManaEffectPacket : Packet {
         /// <summary>
         /// Gets or sets the player index.
         /// </summary>
         public byte PlayerIndex { get; set; }
 
         /// <summary>
-        /// Gets or sets the heal amount.
+        /// Gets or sets the mana amount.
         /// </summary>
-        public short HealAmount { get; set; }
+        public short ManaAmount { get; set; }
 
-        /// <inheritdoc />
+        private protected override PacketType Type => PacketType.ShowManaEffect;
+
         private protected override void ReadFromReader(BinaryReader reader, ushort packetLength) {
             PlayerIndex = reader.ReadByte();
-            HealAmount = reader.ReadInt16();
+            ManaAmount = reader.ReadInt16();
         }
 
-        /// <inheritdoc />
         private protected override void WriteToWriter(BinaryWriter writer) {
             writer.Write(PlayerIndex);
-            writer.Write(HealAmount);
+            writer.Write(ManaAmount);
         }
     }
 }

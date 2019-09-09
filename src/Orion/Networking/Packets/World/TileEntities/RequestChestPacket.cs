@@ -1,10 +1,10 @@
 ﻿using System.IO;
 
-namespace Orion.Networking.Packets {
+namespace Orion.Networking.Packets.World.TileEntities {
     /// <summary>
-    /// Packet sent to the server to request chest contents.
+    /// Packet sent from the client to the server to request a chest's contents.
     /// </summary>
-    public sealed class RequestChestContentsPacket : Packet {
+    public sealed class RequestChestPacket : Packet {
         /// <summary>
         /// Gets or sets the chest's X coordinate.
         /// </summary>
@@ -14,6 +14,8 @@ namespace Orion.Networking.Packets {
         /// Gets or sets the chest's Y coordinate.
         /// </summary>
         public short ChestY { get; set; }
+
+        private protected override PacketType Type => PacketType.RequestChest;
 
         private protected override void ReadFromReader(BinaryReader reader, ushort packetLength) {
             ChestX = reader.ReadInt16();

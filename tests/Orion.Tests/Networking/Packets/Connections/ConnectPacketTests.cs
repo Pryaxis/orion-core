@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿using System;
+using System.IO;
 using FluentAssertions;
 using Orion.Networking.Packets;
 using Orion.Networking.Packets.Connections;
@@ -6,6 +7,14 @@ using Xunit;
 
 namespace Orion.Tests.Networking.Packets.Connections {
     public class ConnectPacketTests {
+        [Fact]
+        public void SetVersion_Null_ThrowsArgumentNullException() {
+            var packet = new ConnectPacket();
+            Action action = () => packet.Version = null;
+
+            action.Should().Throw<ArgumentNullException>();
+        }
+
         public static readonly byte[] ConnectBytes = {
             15, 0, 1, 11, 84, 101, 114, 114, 97, 114, 105, 97, 49, 57, 52
         };

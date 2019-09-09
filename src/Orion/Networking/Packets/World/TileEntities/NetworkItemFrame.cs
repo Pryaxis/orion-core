@@ -1,4 +1,5 @@
-﻿using Orion.Items;
+﻿using System.IO;
+using Orion.Items;
 using Orion.World.TileEntities;
 
 namespace Orion.Networking.Packets.World.TileEntities {
@@ -15,13 +16,18 @@ namespace Orion.Networking.Packets.World.TileEntities {
         /// <inheritdoc />
         public ItemPrefix ItemPrefix { get; set; }
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="NetworkTargetDummy"/> class with the specified index and
-        /// coordinates.
-        /// </summary>
-        /// <param name="index">The index.</param>
-        /// <param name="x">The X coordinate.</param>
-        /// <param name="y">The Y coordinate.</param>
-        public NetworkItemFrame(int index, int x, int y) : base(index, x, y) { }
+        private protected override TileEntityType Type => TileEntityType.ItemFrame;
+
+        private protected override void ReadFromReaderImpl(BinaryReader reader) {
+            ItemType = (ItemType)reader.ReadInt16();
+            ItemPrefix = (ItemPrefix)reader.ReadByte();
+            ItemStackSize = reader.ReadInt16();
+        }
+
+        private protected override void WriteToWriterImpl(BinaryWriter writer) {
+            writer.Write((short)ItemType);
+            writer.Write((byte)ItemPrefix);
+            writer.Write((short)ItemStackSize);
+        }
     }
 }

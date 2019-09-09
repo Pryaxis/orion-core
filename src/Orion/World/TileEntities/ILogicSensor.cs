@@ -6,7 +6,7 @@
         /// <summary>
         /// Gets or sets the sensor type.
         /// </summary>
-        LogicSensorType Type { get; set; }
+        LogicSensorType SensorType { get; set; }
 
         /// <summary>
         /// Gets or sets a value indicating whether the sensor is activated.

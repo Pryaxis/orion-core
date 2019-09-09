@@ -2,7 +2,7 @@
 
 namespace Orion.World.TileEntities {
     internal sealed class OrionLogicSensor : OrionTileEntity<TGCTE.TELogicSensor>, ILogicSensor {
-        public LogicSensorType Type {
+        public LogicSensorType SensorType {
             get => (LogicSensorType)Wrapped.logicCheck;
             set => Wrapped.logicCheck = (TGCTE.TELogicSensor.LogicCheckType)value;
         }

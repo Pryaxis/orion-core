@@ -2,9 +2,9 @@
 
 namespace Orion.Networking.Packets {
     /// <summary>
-    /// Packet sent to update an invasion.
+    /// Packet sent from the server to the client to set invasion information.
     /// </summary>
-    public sealed class UpdateInvasionPacket : Packet {
+    public sealed class InvasionInfoPacket : Packet {
         /// <summary>
         /// Gets or sets the number of kills.
         /// </summary>
@@ -18,12 +18,15 @@ namespace Orion.Networking.Packets {
         /// <summary>
         /// Gets or sets the invasion icon type.
         /// </summary>
+        // TODO: implement enum for this.
         public int InvasionIconType { get; set; }
 
         /// <summary>
         /// Gets or sets the wave number.
         /// </summary>
         public int WaveNumber { get; set; }
+
+        private protected override PacketType Type => PacketType.InvasionInfo;
 
         private protected override void ReadFromReader(BinaryReader reader, ushort packetLength) {
             NumberOfKills = reader.ReadInt32();

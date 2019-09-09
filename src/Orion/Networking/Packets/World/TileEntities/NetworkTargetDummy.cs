@@ -1,4 +1,5 @@
-﻿using Orion.World.TileEntities;
+﻿using System.IO;
+using Orion.World.TileEntities;
 
 namespace Orion.Networking.Packets.World.TileEntities {
     /// <summary>
@@ -7,14 +8,15 @@ namespace Orion.Networking.Packets.World.TileEntities {
     public sealed class NetworkTargetDummy : NetworkTileEntity, ITargetDummy {
         /// <inheritdoc />
         public int NpcIndex { get; set; }
+        
+        private protected override TileEntityType Type => TileEntityType.TargetDummy;
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="NetworkTargetDummy"/> class with the specified index and
-        /// coordinates.
-        /// </summary>
-        /// <param name="index">The index.</param>
-        /// <param name="x">The X coordinate.</param>
-        /// <param name="y">The Y coordinate.</param>
-        public NetworkTargetDummy(int index, int x, int y) : base(index, x, y) { }
+        private protected override void ReadFromReaderImpl(BinaryReader reader) {
+            NpcIndex = reader.ReadInt16();
+        }
+
+        private protected override void WriteToWriterImpl(BinaryWriter writer) {
+            writer.Write((short)NpcIndex);
+        }
     }
 }

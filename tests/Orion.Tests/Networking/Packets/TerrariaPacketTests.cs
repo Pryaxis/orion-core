@@ -568,57 +568,6 @@ namespace Orion.Tests.Networking.Packets {
             }
         }
 
-        private static readonly byte[] RequestChestContentsBytes = {7, 0, 31, 100, 0, 100, 0,};
-
-        [Fact]
-        public void ReadFromStream_RequestChestContents_IsCorrect() {
-            using (var stream = new MemoryStream(RequestChestContentsBytes)) {
-                var packet = (RequestChestContentsPacket)Packet.ReadFromStream(stream);
-
-                packet.ChestX.Should().Be(100);
-                packet.ChestY.Should().Be(100);
-            }
-        }
-
-        [Fact]
-        public void WriteToStream_RequestChestContents_IsCorrect() {
-            using (var stream = new MemoryStream(RequestChestContentsBytes))
-            using (var stream2 = new MemoryStream()) {
-                var packet = Packet.ReadFromStream(stream);
-
-                packet.WriteToStream(stream2);
-
-                stream2.ToArray().Should().BeEquivalentTo(RequestChestContentsBytes);
-            }
-        }
-
-        private static readonly byte[] UpdateChestContentsSlotBytes = {11, 0, 32, 0, 0, 0, 1, 0, 0, 17, 6,};
-
-        [Fact]
-        public void ReadFromStream_UpdateChestContentsSlot_IsCorrect() {
-            using (var stream = new MemoryStream(UpdateChestContentsSlotBytes)) {
-                var packet = (UpdateChestContentsSlotPacket)Packet.ReadFromStream(stream);
-
-                packet.ChestIndex.Should().Be(0);
-                packet.ChestContentsSlot.Should().Be(0);
-                packet.ItemStackSize.Should().Be(1);
-                packet.ItemPrefix.Should().Be(ItemPrefix.None);
-                packet.ItemType.Should().Be(ItemType.SDMG);
-            }
-        }
-
-        [Fact]
-        public void WriteToStream_UpdateChestContentsSlot_IsCorrect() {
-            using (var stream = new MemoryStream(UpdateChestContentsSlotBytes))
-            using (var stream2 = new MemoryStream()) {
-                var packet = Packet.ReadFromStream(stream);
-
-                packet.WriteToStream(stream2);
-
-                stream2.ToArray().Should().BeEquivalentTo(UpdateChestContentsSlotBytes);
-            }
-        }
-
         private static readonly byte[] UpdatePlayerChestBytes = {10, 0, 33, 0, 0, 100, 0, 100, 0, 0,};
 
         [Fact]
@@ -669,30 +618,6 @@ namespace Orion.Tests.Networking.Packets {
                 packet.WriteToStream(stream2);
 
                 stream2.ToArray().Should().BeEquivalentTo(ModifyChestBytes);
-            }
-        }
-
-        private static readonly byte[] ShowHealEffectBytes = {6, 0, 35, 0, 100, 0};
-
-        [Fact]
-        public void ReadFromStream_ShowHealEffect_IsCorrect() {
-            using (var stream = new MemoryStream(ShowHealEffectBytes)) {
-                var packet = (ShowHealEffectPacket)Packet.ReadFromStream(stream);
-
-                packet.PlayerIndex.Should().Be(0);
-                packet.HealAmount.Should().Be(100);
-            }
-        }
-
-        [Fact]
-        public void WriteToStream_ShowHealEffectSlot_IsCorrect() {
-            using (var stream = new MemoryStream(ShowHealEffectBytes))
-            using (var stream2 = new MemoryStream()) {
-                var packet = Packet.ReadFromStream(stream);
-
-                packet.WriteToStream(stream2);
-
-                stream2.ToArray().Should().BeEquivalentTo(ShowHealEffectBytes);
             }
         }
 
@@ -812,80 +737,6 @@ namespace Orion.Tests.Networking.Packets {
                 packet.WriteToStream(stream2);
 
                 stream2.ToArray().Should().BeEquivalentTo(UpdatePlayerItemAnimationBytes);
-            }
-        }
-
-        public static readonly byte[] ShowManaEffectBytes = {6, 0, 43, 0, 100, 0,};
-
-        [Fact]
-        public void ReadFromStream_ShowManaEffect_IsCorrect() {
-            using (var stream = new MemoryStream(ShowManaEffectBytes)) {
-                var packet = (ShowManaEffectPacket)Packet.ReadFromStream(stream);
-
-                packet.PlayerIndex.Should().Be(0);
-                packet.ManaAmount.Should().Be(100);
-            }
-        }
-
-        [Fact]
-        public void WriteToStream_ShowManaEffect_IsCorrect() {
-            using (var stream = new MemoryStream(ShowManaEffectBytes))
-            using (var stream2 = new MemoryStream()) {
-                var packet = Packet.ReadFromStream(stream);
-
-                packet.WriteToStream(stream2);
-
-                stream2.ToArray().Should().BeEquivalentTo(ShowManaEffectBytes);
-            }
-        }
-
-        public static readonly byte[] RequestSignBytes = {7, 0, 46, 0, 1, 100, 0};
-
-        [Fact]
-        public void ReadFromStream_RequestSign_IsCorrect() {
-            using (var stream = new MemoryStream(RequestSignBytes)) {
-                var packet = (RequestSignPacket)Packet.ReadFromStream(stream);
-
-                packet.SignX.Should().Be(256);
-                packet.SignY.Should().Be(100);
-            }
-        }
-
-        [Fact]
-        public void WriteToStream_RequestSign_IsCorrect() {
-            using (var stream = new MemoryStream(RequestSignBytes))
-            using (var stream2 = new MemoryStream()) {
-                var packet = Packet.ReadFromStream(stream);
-
-                packet.WriteToStream(stream2);
-
-                stream2.ToArray().Should().BeEquivalentTo(RequestSignBytes);
-            }
-        }
-
-        public static readonly byte[] UpdateSignBytes = {18, 0, 47, 0, 0, 0, 1, 100, 0, 8, 84, 101, 114, 114, 97, 114, 105, 97};
-
-        [Fact]
-        public void ReadFromStream_UpdateSign_IsCorrect() {
-            using (var stream = new MemoryStream(UpdateSignBytes)) {
-                var packet = (UpdateSignPacket)Packet.ReadFromStream(stream);
-
-                packet.SignIndex.Should().Be(0);
-                packet.SignX.Should().Be(256);
-                packet.SignY.Should().Be(100);
-                packet.SignText.Should().Be("Terraria");
-            }
-        }
-
-        [Fact]
-        public void WriteToStream_UpdateSign_IsCorrect() {
-            using (var stream = new MemoryStream(UpdateSignBytes))
-            using (var stream2 = new MemoryStream()) {
-                var packet = Packet.ReadFromStream(stream);
-
-                packet.WriteToStream(stream2);
-
-                stream2.ToArray().Should().BeEquivalentTo(UpdateSignBytes);
             }
         }
 
@@ -1315,27 +1166,6 @@ namespace Orion.Tests.Networking.Packets {
             }
         }
 
-        public static readonly byte[] PerformTeleportationPotionBytes = {3, 0, 73};
-
-        [Fact]
-        public void ReadFromStream_PerformTeleportationPotion_IsCorrect() {
-            using (var stream = new MemoryStream(PerformTeleportationPotionBytes)) {
-                Packet.ReadFromStream(stream).Should().BeOfType<PerformTeleportationPotionPacket>();
-            }
-        }
-
-        [Fact]
-        public void WriteToStream_PerformTeleportationPotion_IsCorrect() {
-            using (var stream = new MemoryStream(PerformTeleportationPotionBytes))
-            using (var stream2 = new MemoryStream()) {
-                var packet = Packet.ReadFromStream(stream);
-
-                packet.WriteToStream(stream2);
-
-                stream2.ToArray().Should().BeEquivalentTo(PerformTeleportationPotionBytes);
-            }
-        }
-
         public static readonly byte[] UpdateAnglerQuestBytes = {5, 0, 74, 1, 1};
 
         [Fact]
@@ -1427,32 +1257,6 @@ namespace Orion.Tests.Networking.Packets {
                 packet.WriteToStream(stream2);
 
                 stream2.ToArray().Should().BeEquivalentTo(CreateTemporaryAnimationBytes);
-            }
-        }
-
-        public static readonly byte[] UpdateInvasionBytes = {19, 0, 78, 1, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 2, 0, 0, 0};
-
-        [Fact]
-        public void ReadFromStream_UpdateInvasion_IsCorrect() {
-            using (var stream = new MemoryStream(UpdateInvasionBytes)) {
-                var packet = (UpdateInvasionPacket)Packet.ReadFromStream(stream);
-
-                packet.NumberOfKills.Should().Be(1);
-                packet.NumberOfKillsToProgress.Should().Be(256);
-                packet.InvasionIconType.Should().Be(1);
-                packet.WaveNumber.Should().Be(2);
-            }
-        }
-
-        [Fact]
-        public void WriteToStream_UpdateInvasion_IsCorrect() {
-            using (var stream = new MemoryStream(UpdateInvasionBytes))
-            using (var stream2 = new MemoryStream()) {
-                var packet = Packet.ReadFromStream(stream);
-
-                packet.WriteToStream(stream2);
-
-                stream2.ToArray().Should().BeEquivalentTo(UpdateInvasionBytes);
             }
         }
 

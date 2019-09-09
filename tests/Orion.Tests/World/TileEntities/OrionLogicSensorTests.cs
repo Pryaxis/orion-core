@@ -61,7 +61,7 @@ namespace Orion.Tests.World.TileEntities {
             var terrariaLogicSensor = new TGCTE.TELogicSensor {logicCheck = (TGCTE.TELogicSensor.LogicCheckType)type};
             var logicSensor = new OrionLogicSensor(terrariaLogicSensor);
 
-            logicSensor.Type.Should().Be(type);
+            logicSensor.SensorType.Should().Be(type);
         }
         
         [Theory]
@@ -70,7 +70,7 @@ namespace Orion.Tests.World.TileEntities {
             var terrariaLogicSensor = new TGCTE.TELogicSensor();
             var logicSensor = new OrionLogicSensor(terrariaLogicSensor);
 
-            logicSensor.Type = type;
+            logicSensor.SensorType = type;
 
             terrariaLogicSensor.logicCheck.Should().Be((TGCTE.TELogicSensor.LogicCheckType)type);
         }

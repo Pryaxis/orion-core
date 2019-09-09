@@ -226,33 +226,7 @@ namespace Orion.Networking.Packets.World {
         private void ReadTileEntitiesFromReaderImpl(BinaryReader reader) {
             var numberOfTileEntities = reader.ReadInt16();
             for (var i = 0; i < numberOfTileEntities; ++i) {
-                var type = reader.ReadByte();
-                var index = reader.ReadInt32();
-                var x = reader.ReadInt16();
-                var y = reader.ReadInt16();
-
-                switch (type) {
-                case 0:
-                    TileEntities.Add(new NetworkTargetDummy(index, x, y) {
-                        NpcIndex = reader.ReadInt16(),
-                    });
-                    break;
-                case 1:
-                    TileEntities.Add(new NetworkItemFrame(index, x, y) {
-                        ItemType = (ItemType)reader.ReadInt16(),
-                        ItemPrefix = (ItemPrefix)reader.ReadByte(),
-                        ItemStackSize = reader.ReadInt16(),
-                    });
-                    break;
-                case 2:
-                    TileEntities.Add(new NetworkLogicSensor(index, x, y) {
-                        Type = (LogicSensorType)reader.ReadByte(),
-                        IsActivated = reader.ReadBoolean(),
-                    });
-                    break;
-                default:
-                    throw new InvalidOperationException();
-                }
+                TileEntities.Add(NetworkTileEntity.FromReader(reader, true));
             }
         }
 
@@ -423,7 +397,7 @@ namespace Orion.Networking.Packets.World {
                     writer.Write(tileEntity.Index);
                     writer.Write((short)tileEntity.X);
                     writer.Write((short)tileEntity.Y);
-                    writer.Write((byte)logicSensor.Type);
+                    writer.Write((byte)logicSensor.SensorType);
                     writer.Write(logicSensor.IsActivated);
                     break;
                 }

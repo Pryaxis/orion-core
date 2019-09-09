@@ -1,8 +1,8 @@
 ﻿using System.IO;
 
-namespace Orion.Networking.Packets {
+namespace Orion.Networking.Packets.World.TileEntities {
     /// <summary>
-    /// Packet sent to the server to request a sign.
+    /// Packet sent from the client to the server to request a sign.
     /// </summary>
     public sealed class RequestSignPacket : Packet {
         /// <summary>
@@ -14,6 +14,8 @@ namespace Orion.Networking.Packets {
         /// Gets or sets the sign's Y coordinate.
         /// </summary>
         public short SignY { get; set; }
+
+        private protected override PacketType Type => PacketType.RequestSign;
 
         private protected override void ReadFromReader(BinaryReader reader, ushort packetLength) {
             SignX = reader.ReadInt16();

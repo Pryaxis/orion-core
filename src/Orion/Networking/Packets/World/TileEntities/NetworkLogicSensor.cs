@@ -1,4 +1,5 @@
-﻿using Orion.World.TileEntities;
+﻿using System.IO;
+using Orion.World.TileEntities;
 
 namespace Orion.Networking.Packets.World.TileEntities {
     /// <summary>
@@ -6,7 +7,7 @@ namespace Orion.Networking.Packets.World.TileEntities {
     /// </summary>
     public sealed class NetworkLogicSensor : NetworkTileEntity, ILogicSensor {
         /// <inheritdoc />
-        public LogicSensorType Type { get; set; }
+        public LogicSensorType SensorType { get; set; }
 
         /// <inheritdoc />
         public bool IsActivated { get; set; }
@@ -14,13 +15,16 @@ namespace Orion.Networking.Packets.World.TileEntities {
         /// <inheritdoc />
         public int Data { get; set; }
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="NetworkTargetDummy"/> class with the specified index and
-        /// coordinates.
-        /// </summary>
-        /// <param name="index">The index.</param>
-        /// <param name="x">The X coordinate.</param>
-        /// <param name="y">The Y coordinate.</param>
-        public NetworkLogicSensor(int index, int x, int y) : base(index, x, y) { }
+        private protected override TileEntityType Type => TileEntityType.LogicSensor;
+
+        private protected override void ReadFromReaderImpl(BinaryReader reader) {
+            SensorType = (LogicSensorType)reader.ReadByte();
+            IsActivated = reader.ReadBoolean();
+        }
+
+        private protected override void WriteToWriterImpl(BinaryWriter writer) {
+            writer.Write((byte)SensorType);
+            writer.Write(IsActivated);
+        }
     }
 }

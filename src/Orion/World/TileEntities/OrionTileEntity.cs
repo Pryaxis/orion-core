@@ -5,7 +5,6 @@ using TDS = Terraria.DataStructures;
 namespace Orion.World.TileEntities {
     internal abstract class OrionTileEntity<TTileEntity> : AnnotatableObject, ITileEntity
         where TTileEntity : TDS.TileEntity {
-
         public int Index => Wrapped.ID;
 
         public int X {

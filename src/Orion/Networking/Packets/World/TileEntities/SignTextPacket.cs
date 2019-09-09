@@ -1,11 +1,11 @@
 ﻿using System;
 using System.IO;
 
-namespace Orion.Networking.Packets {
+namespace Orion.Networking.Packets.World.TileEntities {
     /// <summary>
-    /// Packet sent to update a sign.
+    /// Packet sent to set a sign's text. This is sent in response to a <see cref="RequestSignPacket"/>.
     /// </summary>
-    public sealed class UpdateSignPacket : Packet {
+    public sealed class SignTextPacket : Packet {
         private string _signText;
 
         /// <summary>
@@ -31,6 +31,8 @@ namespace Orion.Networking.Packets {
             get => _signText;
             set => _signText = value ?? throw new ArgumentNullException(nameof(value));
         }
+
+        private protected override PacketType Type => PacketType.SignText;
 
         private protected override void ReadFromReader(BinaryReader reader, ushort packetLength) {
             SignIndex = reader.ReadInt16();
