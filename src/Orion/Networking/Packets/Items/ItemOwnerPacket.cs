@@ -1,6 +1,6 @@
 ﻿using System.IO;
 
-namespace Orion.Networking.Packets {
+namespace Orion.Networking.Packets.Items {
     /// <summary>
     /// Packet sent to set an item's owner.
     /// </summary>

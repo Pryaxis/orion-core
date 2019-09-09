@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace Orion.Networking.Packets.World.TileEntities {
+﻿namespace Orion.Networking.Packets.World.TileEntities {
     /// <summary>
     /// Specifies the type of modification in a <see cref="ModifyChestPacket"/>.
     /// </summary>

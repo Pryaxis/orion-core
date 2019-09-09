@@ -1,7 +1,6 @@
 ﻿using System.IO;
-using Orion.Networking.Packets.World.TileEntities;
 
-namespace Orion.Networking.Packets {
+namespace Orion.Networking.Packets.World.TileEntities {
     /// <summary>
     /// Packet sent to modify a chest.
     /// </summary>

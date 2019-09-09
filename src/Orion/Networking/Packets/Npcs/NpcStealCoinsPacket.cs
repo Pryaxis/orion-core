@@ -2,7 +2,7 @@
 using Microsoft.Xna.Framework;
 using Orion.Networking.Packets.Extensions;
 
-namespace Orion.Networking.Packets {
+namespace Orion.Networking.Packets.Npcs {
     /// <summary>
     /// Packet sent to cause an NPC to steal coins.
     /// </summary>

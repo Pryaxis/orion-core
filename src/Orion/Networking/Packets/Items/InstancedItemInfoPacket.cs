@@ -3,7 +3,7 @@ using Microsoft.Xna.Framework;
 using Orion.Items;
 using Orion.Networking.Packets.Extensions;
 
-namespace Orion.Networking.Packets {
+namespace Orion.Networking.Packets.Items {
     /// <summary>
     /// Packet sent to set instanced item information.
     /// </summary>
@@ -16,12 +16,12 @@ namespace Orion.Networking.Packets {
         /// <summary>
         /// Gets or sets the item's position.
         /// </summary>
-        public Vector2 Position { get; set; }
+        public Vector2 ItemPosition { get; set; }
 
         /// <summary>
         /// Gets or sets the item's velocity.
         /// </summary>
-        public Vector2 Velocity { get; set; }
+        public Vector2 ItemVelocity { get; set; }
 
         /// <summary>
         /// Gets or sets the item stack size.
@@ -36,7 +36,7 @@ namespace Orion.Networking.Packets {
         /// <summary>
         /// Gets or sets a value indicating whether the item should be disowned.
         /// </summary>
-        public bool ShouldDisown { get; set; }
+        public bool ShouldDisownItem { get; set; }
 
         /// <summary>
         /// Gets or sets the item type.
@@ -47,21 +47,21 @@ namespace Orion.Networking.Packets {
 
         private protected override void ReadFromReader(BinaryReader reader, ushort packetLength) {
             ItemIndex = reader.ReadInt16();
-            Position = reader.ReadVector2();
-            Velocity = reader.ReadVector2();
+            ItemPosition = reader.ReadVector2();
+            ItemVelocity = reader.ReadVector2();
             ItemStackSize = reader.ReadInt16();
             ItemPrefix = (ItemPrefix)reader.ReadByte();
-            ShouldDisown = reader.ReadBoolean();
+            ShouldDisownItem = reader.ReadBoolean();
             ItemType = (ItemType)reader.ReadInt16();
         }
 
         private protected override void WriteToWriter(BinaryWriter writer) {
             writer.Write(ItemIndex);
-            writer.Write(Position);
-            writer.Write(Velocity);
+            writer.Write(ItemPosition);
+            writer.Write(ItemVelocity);
             writer.Write(ItemStackSize);
             writer.Write((byte)ItemPrefix);
-            writer.Write(ShouldDisown);
+            writer.Write(ShouldDisownItem);
             writer.Write((short)ItemType);
         }
     }

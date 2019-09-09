@@ -1,6 +1,6 @@
 ﻿using System.IO;
 
-namespace Orion.Networking.Packets {
+namespace Orion.Networking.Packets.Npcs {
     /// <summary>
     /// Packet sent to set an NPC's home.
     /// </summary>

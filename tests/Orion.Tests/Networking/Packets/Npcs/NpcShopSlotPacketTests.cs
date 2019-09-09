@@ -1,10 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Text;
+﻿using System.IO;
 using FluentAssertions;
 using Orion.Items;
 using Orion.Networking.Packets;
+using Orion.Networking.Packets.Npcs;
 using Xunit;
 
 namespace Orion.Tests.Networking.Packets.Npcs {

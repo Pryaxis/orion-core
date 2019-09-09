@@ -6,7 +6,6 @@ using Orion.Hooks;
 using Orion.World.Events;
 using Orion.World.TileEntities;
 using Orion.World.Tiles;
-using OTAPI;
 using OTAPI.Tile;
 using TDS = Terraria.DataStructures;
 using TGCTE = Terraria.GameContent.Tile_Entities;
@@ -242,12 +241,12 @@ namespace Orion.World {
             StartedHardmode?.Invoke(this, args);
         }
 
-        private HardmodeTileUpdateResult HardmodeTileUpdateHandler(int x, int y, ref ushort type) {
+        private OTAPI.HardmodeTileUpdateResult HardmodeTileUpdateHandler(int x, int y, ref ushort type) {
             var args = new UpdatingHardmodeTileEventArgs(x, y, (BlockType)type);
             UpdatingHardmodeTile?.Invoke(this, args);
 
             type = (ushort)args.BlockType;
-            return args.Handled ? HardmodeTileUpdateResult.Cancel : HardmodeTileUpdateResult.Continue;
+            return args.Handled ? OTAPI.HardmodeTileUpdateResult.Cancel : OTAPI.HardmodeTileUpdateResult.Continue;
         }
     }
 }

@@ -3,7 +3,7 @@ using Microsoft.Xna.Framework;
 using Orion.Networking.Packets.Extensions;
 using Orion.Npcs;
 
-namespace Orion.Networking.Packets {
+namespace Orion.Networking.Packets.Npcs {
     /// <summary>
     /// Packet sent from the server to the client to set NPC information.
     /// </summary>

@@ -1,6 +1,6 @@
 ﻿using System.IO;
 
-namespace Orion.Networking.Packets {
+namespace Orion.Networking.Packets.Npcs {
     /// <summary>
     /// Packet sent to damage an NPC with a player's selected item.
     /// </summary>

@@ -1,7 +1,7 @@
 ﻿using System.IO;
 using Orion.Items;
 
-namespace Orion.Networking.Packets {
+namespace Orion.Networking.Packets.Npcs {
     /// <summary>
     /// Packet sent from the server to the client to set an NPC's shop slot.
     /// </summary>

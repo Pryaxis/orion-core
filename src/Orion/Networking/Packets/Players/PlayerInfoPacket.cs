@@ -1,131 +1,145 @@
-﻿using System;
-using System.IO;
+﻿using System.IO;
 using Microsoft.Xna.Framework;
 using Orion.Networking.Packets.Extensions;
-using Orion.Players;
 
 namespace Orion.Networking.Packets.Players {
     /// <summary>
     /// Packet sent to set player information.
     /// </summary>
     public sealed class PlayerInfoPacket : Packet {
-        private string _playerName = "";
-
         /// <summary>
         /// Gets or sets the player index.
         /// </summary>
         public byte PlayerIndex { get; set; }
 
         /// <summary>
-        /// Gets or sets the player's skin type.
+        /// Gets or sets a value indicating whether the player is holding up.
         /// </summary>
-        public byte PlayerSkinType { get; set; }
+        public bool IsPlayerHoldingUp { get; set; }
 
         /// <summary>
-        /// Gets or sets the player's hair type.
+        /// Gets or sets a value indicating whether the player is holding down.
         /// </summary>
-        public byte PlayerHairType { get; set; }
+        public bool IsPlayerHoldingDown { get; set; }
 
         /// <summary>
-        /// Gets or sets the player's name.
+        /// Gets or sets a value indicating whether the player is holding left.
         /// </summary>
-        /// <exception cref="ArgumentNullException"><paramref name="value"/> is <c>null</c>.</exception>
-        public string PlayerName {
-            get => _playerName;
-            set => _playerName = value ?? throw new ArgumentNullException(nameof(value));
-        }
+        public bool IsPlayerHoldingLeft { get; set; }
 
         /// <summary>
-        /// Gets or sets the player's hair dye.
+        /// Gets or sets a value indicating whether the player is holding right.
         /// </summary>
-        public byte PlayerHairDye { get; set; }
+        public bool IsPlayerHoldingRight { get; set; }
 
         /// <summary>
-        /// Gets or sets the player's hidden visuals flags.
+        /// Gets or sets a value indicating whether the player is holding jump.
         /// </summary>
-        public ushort PlayerHiddenVisualsFlags { get; set; }
+        public bool IsPlayerHoldingJump { get; set; }
 
         /// <summary>
-        /// Gets or sets the player's hidden misc flags.
+        /// Gets or sets a value indicating whether the player is holding 'use item'.
         /// </summary>
-        public byte PlayerHiddenMiscFlags { get; set; }
+        public bool IsPlayerHoldingUseItem { get; set; }
 
         /// <summary>
-        /// Gets or sets the player's hair color.
+        /// Gets or sets a value indicating the direction of the player.
         /// </summary>
-        public Color PlayerHairColor { get; set; }
+        public bool PlayerDirection { get; set; }
 
         /// <summary>
-        /// Gets or sets the player's skin color.
+        /// Gets or sets a value indicating whether the player is climbing a rope.
         /// </summary>
-        public Color PlayerSkinColor { get; set; }
+        public bool IsPlayerClimbingRope { get; set; }
 
         /// <summary>
-        /// Gets or sets the player's eye color.
+        /// Gets or sets a value indicating the direction of the player when climbing a rope.
         /// </summary>
-        public Color PlayerEyeColor { get; set; }
+        public bool PlayerClimbingRopeDirection { get; set; }
 
         /// <summary>
-        /// Gets or sets the player's shirt color.
+        /// Gets or sets a value indicating whether the player is stealthed with vortex armor.
         /// </summary>
-        public Color PlayerShirtColor { get; set; }
+        public bool IsPlayerVortexStealthed { get; set; }
 
         /// <summary>
-        /// Gets or sets the player's undershirt color.
+        /// Gets or sets a value indicating whether the player is right-side up.
         /// </summary>
-        public Color PlayerUndershirtColor { get; set; }
+        public bool IsPlayerRightSideUp { get; set; }
 
         /// <summary>
-        /// Gets or sets the player's pants color.
+        /// Gets or sets a value indicating whether the player is raising a shield.
         /// </summary>
-        public Color PlayerPantsColor { get; set; }
+        public bool IsPlayerRaisingShield { get; set; }
 
         /// <summary>
-        /// Gets or sets the player's shoe color.
+        /// Gets or sets the player's selected item index.
         /// </summary>
-        public Color PlayerShoeColor { get; set; }
+        public byte PlayerSelectedItemIndex { get; set; }
 
         /// <summary>
-        /// Gets or sets the player's difficulty.
+        /// Gets or sets the player's position.
         /// </summary>
-        public PlayerDifficulty PlayerDifficulty { get; set; }
+        public Vector2 PlayerPosition { get; set; }
+
+        /// <summary>
+        /// Gets or sets the player's velocity.
+        /// </summary>
+        public Vector2 PlayerVelocity { get; set; }
 
         private protected override PacketType Type => PacketType.PlayerInfo;
 
         private protected override void ReadFromReader(BinaryReader reader, ushort packetLength) {
             PlayerIndex = reader.ReadByte();
-            PlayerSkinType = reader.ReadByte();
-            PlayerHairType = reader.ReadByte();
-            _playerName = reader.ReadString();
-            PlayerHairDye = reader.ReadByte();
-            PlayerHiddenVisualsFlags = reader.ReadUInt16();
-            PlayerHiddenMiscFlags = reader.ReadByte();
-            PlayerHairColor = reader.ReadColor();
-            PlayerSkinColor = reader.ReadColor();
-            PlayerEyeColor = reader.ReadColor();
-            PlayerShirtColor = reader.ReadColor();
-            PlayerUndershirtColor = reader.ReadColor();
-            PlayerPantsColor = reader.ReadColor();
-            PlayerShoeColor = reader.ReadColor();
-            PlayerDifficulty = (PlayerDifficulty)reader.ReadByte();
+
+            Terraria.BitsByte flags = reader.ReadByte();
+            Terraria.BitsByte flags2 = reader.ReadByte();
+            IsPlayerHoldingUp = flags[0];
+            IsPlayerHoldingDown = flags[1];
+            IsPlayerHoldingLeft = flags[2];
+            IsPlayerHoldingRight = flags[3];
+            IsPlayerHoldingJump = flags[4];
+            IsPlayerHoldingUseItem = flags[5];
+            PlayerDirection = flags[6];
+            IsPlayerClimbingRope = flags2[0];
+            PlayerClimbingRopeDirection = flags2[1];
+            IsPlayerVortexStealthed = flags2[3];
+            IsPlayerRightSideUp = flags2[4];
+            IsPlayerRaisingShield = flags2[5];
+
+            PlayerSelectedItemIndex = reader.ReadByte();
+            PlayerPosition = reader.ReadVector2();
+            if (flags2[2]) {
+                PlayerVelocity = reader.ReadVector2();
+            }
         }
 
         private protected override void WriteToWriter(BinaryWriter writer) {
             writer.Write(PlayerIndex);
-            writer.Write(PlayerSkinType);
-            writer.Write(PlayerHairType);
-            writer.Write(PlayerName);
-            writer.Write(PlayerHairDye);
-            writer.Write(PlayerHiddenVisualsFlags);
-            writer.Write(PlayerHiddenMiscFlags);
-            writer.Write(PlayerHairColor);
-            writer.Write(PlayerSkinColor);
-            writer.Write(PlayerEyeColor);
-            writer.Write(PlayerShirtColor);
-            writer.Write(PlayerUndershirtColor);
-            writer.Write(PlayerPantsColor);
-            writer.Write(PlayerShoeColor);
-            writer.Write((byte)PlayerDifficulty);
+
+            Terraria.BitsByte flags = 0;
+            Terraria.BitsByte flags2 = 0;
+            flags[0] = IsPlayerHoldingUp;
+            flags[1] = IsPlayerHoldingDown;
+            flags[2] = IsPlayerHoldingLeft;
+            flags[3] = IsPlayerHoldingRight;
+            flags[4] = IsPlayerHoldingJump;
+            flags[5] = IsPlayerHoldingUseItem;
+            flags[6] = PlayerDirection;
+            flags2[0] = IsPlayerClimbingRope;
+            flags2[1] = PlayerClimbingRopeDirection;
+            flags2[2] = PlayerVelocity != Vector2.Zero;
+            flags2[3] = IsPlayerVortexStealthed;
+            flags2[4] = IsPlayerRightSideUp;
+            flags2[5] = IsPlayerRaisingShield;
+            writer.Write(flags);
+            writer.Write(flags2);
+
+            writer.Write(PlayerSelectedItemIndex);
+            writer.Write(PlayerPosition);
+            if (flags2[2]) {
+                writer.Write(PlayerVelocity);
+            }
         }
     }
 }

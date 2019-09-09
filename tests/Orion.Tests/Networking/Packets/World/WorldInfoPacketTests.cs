@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿using System;
+using System.IO;
 using FluentAssertions;
 using Orion.Networking.Packets;
 using Orion.Networking.Packets.World;
@@ -7,6 +8,14 @@ using Xunit;
 
 namespace Orion.Tests.Networking.Packets.World {
     public class WorldInfoPacketTests {
+        [Fact]
+        public void SetWorldName_NullValue_ThrowsArgumentNullException() {
+            var packet = new WorldInfoPacket();
+            Action action = () => packet.WorldName = null;
+
+            action.Should().Throw<ArgumentNullException>();
+        }
+
         private static readonly byte[] WorldInfoBytes = {
             122, 0, 7, 141, 127, 0, 0, 1, 0, 104, 16, 176, 4, 54, 8, 102, 1, 129, 1, 53, 2, 24, 49, 0, 9, 1, 102, 63,
             129, 163, 174, 200, 216, 57, 65, 188, 220, 22, 170, 161, 45, 221, 99, 1, 0, 0, 0, 194, 0, 0, 0, 0, 51, 0, 1,

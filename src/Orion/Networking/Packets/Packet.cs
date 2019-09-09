@@ -10,6 +10,7 @@ using Orion.Networking.Packets.Items;
 using Orion.Networking.Packets.Misc;
 using Orion.Networking.Packets.Npcs;
 using Orion.Networking.Packets.Players;
+using Orion.Networking.Packets.Projectiles;
 using Orion.Networking.Packets.World;
 using Orion.Networking.Packets.World.TileEntities;
 
@@ -27,7 +28,7 @@ namespace Orion.Networking.Packets {
                 [PacketType.Connect] = () => new ConnectPacket(),
                 [PacketType.Disconnect] = () => new DisconnectPacket(),
                 [PacketType.ContinueConnecting] = () => new ContinueConnectingPacket(),
-                [PacketType.PlayerInfo] = () => new PlayerInfoPacket(),
+                [PacketType.PlayerData] = () => new PlayerDataPacket(),
                 [PacketType.PlayerInventorySlot] = () => new PlayerInventorySlotPacket(),
                 [PacketType.FinishConnecting] = () => new FinishConnectingPacket(),
                 [PacketType.WorldInfo] = () => new WorldInfoPacket(),
@@ -36,8 +37,8 @@ namespace Orion.Networking.Packets {
                 [PacketType.Section] = () => new SectionPacket(),
                 [PacketType.SyncTileFrames] = () => new SyncTileFramesPacket(),
                 [PacketType.SpawnPlayer] = () => new SpawnPlayerPacket(),
-                [PacketType.UpdatePlayer] = () => new UpdatePlayerPacket(),
-                [PacketType.UpdatePlayerStatus] = () => new UpdatePlayerStatusPacket(),
+                [PacketType.PlayerInfo] = () => new PlayerInfoPacket(),
+                [PacketType.PlayerStatus] = () => new PlayerStatusPacket(),
                 [PacketType.PlayerHealth] = () => new PlayerHealthPacket(),
                 [PacketType.ModifyTile] = () => new ModifyTilePacket(),
                 [PacketType.Time] = () => new TimePacket(),
@@ -47,13 +48,13 @@ namespace Orion.Networking.Packets {
                 [PacketType.ItemOwner] = () => new ItemOwnerPacket(),
                 [PacketType.NpcInfo] = () => new NpcInfoPacket(),
                 [PacketType.DamageNpcWithItem] = () => new DamageNpcWithItemPacket(),
-                [PacketType.UpdateProjectile] = () => new UpdateProjectilePacket(),
+                [PacketType.ProjectileInfo] = () => new ProjectileInfoPacket(),
                 [PacketType.DamageNpc] = () => new DamageNpcPacket(),
                 [PacketType.RemoveProjectile] = () => new RemoveProjectilePacket(),
                 [PacketType.PlayerPvp] = () => new PlayerPvpPacket(),
                 [PacketType.RequestChest] = () => new RequestChestPacket(),
                 [PacketType.ChestContentsSlot] = () => new ChestContentsSlotPacket(),
-                [PacketType.UpdatePlayerChest] = () => new UpdatePlayerChestPacket(),
+                [PacketType.PlayerChest] = () => new PlayerChestPacket(),
                 [PacketType.ModifyChest] = () => new ModifyChestPacket(),
                 [PacketType.ShowHealEffect] = () => new ShowHealEffectPacket(),
                 [PacketType.PlayerZones] = () => new PlayerZonesPacket(),
@@ -61,7 +62,7 @@ namespace Orion.Networking.Packets {
                 [PacketType.PasswordResponse] = () => new PasswordResponsePacket(),
                 [PacketType.RemoveItemOwner] = () => new RemoveItemOwnerPacket(),
                 [PacketType.PlayerTalkingToNpc] = () => new PlayerTalkingToNpcPacket(),
-                [PacketType.UpdatePlayerItemAnimation] = () => new UpdatePlayerItemAnimationPacket(),
+                [PacketType.PlayerItemAnimation] = () => new PlayerItemAnimationPacket(),
                 [PacketType.PlayerMana] = () => new PlayerManaPacket(),
                 [PacketType.ShowManaEffect] = () => new ShowManaEffectPacket(),
                 [PacketType.PlayerTeam] = () => new PlayerTeamPacket(),
@@ -70,79 +71,77 @@ namespace Orion.Networking.Packets {
                 [PacketType.Liquid] = () => new LiquidPacket(),
                 [PacketType.EnterWorld] = () => new EnterWorldPacket(),
                 [PacketType.PlayerBuffs] = () => new PlayerBuffsPacket(),
-                [PacketType.PerformAction] = () => new PerformActionPacket(),
+                [PacketType.PerformMiscAction] = () => new PerformMiscActionPacket(),
                 [PacketType.UnlockObject] = () => new UnlockObjectPacket(),
                 [PacketType.AddBuffToNpc] = () => new AddBuffToNpcPacket(),
                 [PacketType.NpcBuffs] = () => new NpcBuffsPacket(),
                 [PacketType.AddBuffToPlayer] = () => new AddBuffToPlayerPacket(),
                 [PacketType.NpcName] = () => new NpcNamePacket(),
-                [PacketType.UpdateBiomeStats] = () => new UpdateBiomeStatsPacket(),
-                [PacketType.PlayHarpNote] = () => new PlayHarpNotePacket(),
+                [PacketType.BiomeStats] = () => new BiomeStatsPacket(),
+                [PacketType.PlayerHarpNote] = () => new PlayerHarpNotePacket(),
                 [PacketType.ActivateWire] = () => new ActivateWirePacket(),
                 [PacketType.NpcHome] = () => new NpcHomePacket(),
                 [PacketType.SummonBossOrInvasion] = () => new SummonBossOrInvasionPacket(),
                 [PacketType.PlayerDodge] = () => new PlayerDodgePacket(),
                 [PacketType.PaintBlock] = () => new PaintBlockPacket(),
                 [PacketType.PaintWall] = () => new PaintWallPacket(),
-                [PacketType.TeleportEntity] = () => new TeleportEntityPacket(),
+                [PacketType.EntityTeleport] = () => new EntityTeleportPacket(),
                 [PacketType.HealPlayer] = () => new HealPlayerPacket(),
                 [PacketType.ClientUuid] = () => new ClientUuidPacket(),
-                [PacketType.RequestOrUpdateChestName] = () => new RequestOrUpdateChestNamePacket(),
+                [PacketType.ChestName] = () => new ChestNamePacket(),
                 [PacketType.CatchNpc] = () => new CatchNpcPacket(),
                 [PacketType.ReleaseNpc] = () => new ReleaseNpcPacket(),
-                [PacketType.UpdateTravelingMerchantInventory] = () => new UpdateTravelingMerchantInventoryPacket(),
+                [PacketType.TravelingMerchantShop] = () => new TravelingMerchantShopPacket(),
                 [PacketType.TeleportationPotion] = () => new TeleportationPotionPacket(),
                 [PacketType.AnglerQuest] = () => new AnglerQuestPacket(),
                 [PacketType.CompleteAnglerQuest] = () => new CompleteAnglerQuestPacket(),
                 [PacketType.PlayerAnglerQuestsCompleted] = () => new PlayerAnglerQuestsCompletedPacket(),
-                [PacketType.CreateTemporaryAnimation] = () => new CreateTemporaryAnimationPacket(),
+                [PacketType.ShowTileAnimation] = () => new ShowTileAnimationPacket(),
                 [PacketType.InvasionInfo] = () => new InvasionInfoPacket(),
                 [PacketType.PlaceObject] = () => new PlaceObjectPacket(),
-                [PacketType.UpdateOtherPlayerChest] = () => new UpdateOtherPlayerChestPacket(),
+                [PacketType.SyncPlayerChest] = () => new SyncPlayerChestPacket(),
                 [PacketType.ShowCombatNumber] = () => new ShowCombatNumberPacket(),
-                [PacketType.UpdateNpcKills] = () => new UpdateNpcKillsPacket(),
+                [PacketType.NpcKillCount] = () => new NpcKillCountPacket(),
                 [PacketType.PlayerStealth] = () => new PlayerStealthPacket(),
-                [PacketType.MoveItemIntoChest] = () => new MoveItemIntoChestPacket(),
+                [PacketType.MoveIntoChest] = () => new MoveIntoChestPacket(),
                 [PacketType.TileEntity] = () => new TileEntityPacket(),
                 [PacketType.PlaceTileEntity] = () => new PlaceTileEntityPacket(),
                 [PacketType.AlterItem] = () => new AlterItemPacket(),
-                [PacketType.PlaceItemFrame] = () => new PlaceItemFramePacket(),
+                [PacketType.ItemFrame] = () => new ItemFramePacket(),
                 [PacketType.InstancedItemInfo] = () => new InstancedItemInfoPacket(),
-                [PacketType.UpdateEmoteBubble] = () => new UpdateEmoteBubblePacket(),
+                [PacketType.EmoteBubble] = () => new EmoteBubblePacket(),
                 [PacketType.NpcStealCoins] = () => new NpcStealCoinsPacket(),
                 [PacketType.RemovePortal] = () => new RemovePortalPacket(),
-                [PacketType.TeleportPlayerThroughPortal] = () => new TeleportPlayerThroughPortalPacket(),
-                [PacketType.NotifyNpcKill] = () => new NotifyNpcKillPacket(),
-                [PacketType.NotifyEventProgression] = () => new NotifyEventProgressionPacket(),
-                [PacketType.UpdatePlayerMinionTarget] = () => new UpdatePlayerMinionTargetPacket(),
-                [PacketType.TeleportNpcThroughPortal] = () => new TeleportNpcThroughPortalPacket(),
+                [PacketType.TeleportPlayerPortal] = () => new TeleportPlayerPortalPacket(),
+                [PacketType.NpcKilledEvent] = () => new NpcKilledEventPacket(),
+                [PacketType.NotifyEventProgression] = () => new ProgressionEventPacket(),
+                [PacketType.PlayerMinionPosition] = () => new PlayerMinionPositionPacket(),
+                [PacketType.TeleportNpcPortal] = () => new TeleportNpcPortalPacket(),
                 [PacketType.PillarShieldStrengths] = () => new PillarShieldStrengthsPacket(),
-                [PacketType.LevelUpNebulaArmor] = () => new LevelUpNebulaArmorPacket(),
-                [PacketType.UpdateMoonLordCountdown] = () => new UpdateMoonLordCountdownPacket(),
+                [PacketType.SpreadNebulaBuff] = () => new SpreadNebulaBuffPacket(),
+                [PacketType.MoonLordCountdown] = () => new MoonLordCountdownPacket(),
                 [PacketType.NpcShopSlot] = () => new NpcShopSlotPacket(),
                 [PacketType.ToggleGemLock] = () => new ToggleGemLockPacket(),
                 [PacketType.ShowPoofOfSmoke] = () => new ShowPoofOfSmokePacket(),
                 [PacketType.ShowChat] = () => new ShowChatPacket(),
-                [PacketType.ShootFromCannon] = () => new ShootFromCannonPacket(),
+                [PacketType.CannonShot] = () => new CannonShotPacket(),
                 [PacketType.RequestMassWireOperation] = () => new RequestMassWireOperationPacket(),
                 [PacketType.ConsumeItems] = () => new ConsumeItemsPacket(),
                 [PacketType.ToggleBirthdayParty] = () => new ToggleBirthdayPartyPacket(),
                 [PacketType.ShowTreeGrowingEffect] = () => new ShowTreeGrowingEffectPacket(),
                 [PacketType.StartOldOnesArmy] = () => new StartOldOnesArmyPacket(),
                 [PacketType.EndOldOnesArmy] = () => new EndOldOnesArmyPacket(),
-                [PacketType.UpdatePlayerMinionTargetNpc] = () => new UpdatePlayerMinionTargetNpcPacket(),
+                [PacketType.PlayerMinionNpc] = () => new PlayerMinionNpcPacket(),
                 [PacketType.OldOnesArmyInfo] = () => new OldOnesArmyInfoPacket(),
-                [PacketType.HurtPlayer] = () => new HurtPlayerPacket(),
+                [PacketType.DamagePlayer] = () => new DamagePlayerPacket(),
                 [PacketType.KillPlayer] = () => new KillPlayerPacket(),
                 [PacketType.ShowCombatText] = () => new ShowCombatTextPacket(),
             };
 
-        private static readonly IDictionary<Type, PacketType> PacketTypes = new Dictionary<Type, PacketType>();
-
         [ExcludeFromCodeCoverage]
         internal static int HeaderLength => sizeof(PacketType) + sizeof(short);
 
-        private protected virtual PacketType Type => throw new NotImplementedException();
+        private protected abstract PacketType Type { get; }
 
         /// <summary>
         /// Reads a packet from the specified stream.
@@ -159,9 +158,7 @@ namespace Orion.Networking.Packets {
                 var position = stream.Position;
                 var packetLength = reader.ReadUInt16();
                 var packetType = (PacketType)reader.ReadByte();
-                var packetCtor =
-                    PacketConstructors.TryGetValue(packetType, out var f) ? f : () => new UnknownPacket(packetType);
-                var packet = packetCtor();
+                var packet = PacketConstructors[packetType]();
                 packet.ReadFromReader(reader, packetLength);
                 
                 Debug.Assert(stream.Position - position == packetLength, "Packet should be fully consumed.");

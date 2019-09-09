@@ -1,9 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Text;
+﻿using System.IO;
 using FluentAssertions;
 using Orion.Networking.Packets;
+using Orion.Networking.Packets.Events;
 using Xunit;
 
 namespace Orion.Tests.Networking.Packets.Events {

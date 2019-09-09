@@ -1,11 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Text;
+﻿using System.IO;
 using FluentAssertions;
 using Microsoft.Xna.Framework;
 using Orion.Items;
 using Orion.Networking.Packets;
+using Orion.Networking.Packets.Items;
 using Xunit;
 
 namespace Orion.Tests.Networking.Packets.Items {
@@ -20,11 +18,11 @@ namespace Orion.Tests.Networking.Packets.Items {
                 var packet = (ItemInfoPacket)Packet.ReadFromStream(stream);
 
                 packet.ItemIndex.Should().Be(400);
-                packet.Position.Should().Be(new Vector2(67175, 6798));
-                packet.Velocity.Should().Be(new Vector2(4, -2));
+                packet.ItemPosition.Should().Be(new Vector2(67175, 6798));
+                packet.ItemVelocity.Should().Be(new Vector2(4, -2));
                 packet.ItemStackSize.Should().Be(1);
                 packet.ItemPrefix.Should().Be(ItemPrefix.Unreal);
-                packet.ShouldDisown.Should().BeFalse();
+                packet.ShouldDisownItem.Should().BeFalse();
                 packet.ItemType.Should().Be(ItemType.SDMG);
             }
         }
