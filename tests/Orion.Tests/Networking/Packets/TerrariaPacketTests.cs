@@ -1253,34 +1253,6 @@ namespace Orion.Tests.Networking.Packets {
             }
         }
 
-        public static readonly byte[] UpdatePlayerBuffsBytes = {
-            26, 0, 50, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-        };
-
-        [Fact]
-        public void ReadFromStream_UpdatePlayerBuffs_IsCorrect() {
-            using (var stream = new MemoryStream(UpdatePlayerBuffsBytes)) {
-                var packet = (UpdatePlayerBuffsPacket)Packet.ReadFromStream(stream);
-
-                packet.PlayerIndex.Should().Be(0);
-                foreach (var buffType in packet.PlayerBuffs) {
-                    buffType.Should().Be(BuffType.None);
-                }
-            }
-        }
-
-        [Fact]
-        public void WriteToStream_UpdatePlayerBuffs_IsCorrect() {
-            using (var stream = new MemoryStream(UpdatePlayerBuffsBytes))
-            using (var stream2 = new MemoryStream()) {
-                var packet = Packet.ReadFromStream(stream);
-
-                packet.WriteToStream(stream2);
-
-                stream2.ToArray().Should().BeEquivalentTo(UpdatePlayerBuffsBytes);
-            }
-        }
-
         public static readonly byte[] PerformActionBytes = {5, 0, 51, 0, 1};
 
         [Fact]

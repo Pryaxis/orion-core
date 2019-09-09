@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Orion {
+namespace Orion.Utils {
     /// <summary>
     /// Provides methods with which to retrieve and set annotations.
     /// </summary>

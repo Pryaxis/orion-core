@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace Orion {
+namespace Orion.Utils {
     /// <summary>
     /// An object that implements <see cref="IAnnotatable"/>.
     /// </summary>

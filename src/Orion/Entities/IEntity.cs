@@ -1,5 +1,6 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
+using Orion.Utils;
 
 namespace Orion.Entities {
     /// <summary>

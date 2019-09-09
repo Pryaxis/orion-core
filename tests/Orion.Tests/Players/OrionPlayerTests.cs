@@ -119,6 +119,26 @@ namespace Orion.Tests.Players {
 
             terrariaPlayer.Size.Should().Be(new Vector2(100, 100));
         }
+
+        [Theory]
+        [InlineData(PlayerDifficulty.Mediumcore)]
+        public void GetDifficulty_IsCorrect(PlayerDifficulty difficulty) {
+            var terrariaPlayer = new Terraria.Player {difficulty = (byte)difficulty};
+            var player = new OrionPlayer(terrariaPlayer);
+
+            player.Difficulty.Should().Be(difficulty);
+        }
+
+        [Theory]
+        [InlineData(PlayerDifficulty.Mediumcore)]
+        public void SetDifficulty_IsCorrect(PlayerDifficulty difficulty) {
+            var terrariaPlayer = new Terraria.Player();
+            var player = new OrionPlayer(terrariaPlayer);
+
+            player.Difficulty = difficulty;
+
+            terrariaPlayer.difficulty.Should().Be((byte)difficulty);
+        }
         
         [Theory]
         [InlineData(100)]
@@ -198,6 +218,88 @@ namespace Orion.Tests.Players {
             player.MaxMana = maxMana;
 
             terrariaPlayer.statManaMax.Should().Be(maxMana);
+        }
+
+        [Theory]
+        [InlineData(PlayerTeam.Red)]
+        public void GetTeam_IsCorrect(PlayerTeam team) {
+            var terrariaPlayer = new Terraria.Player {team = (byte)team};
+            var player = new OrionPlayer(terrariaPlayer);
+
+            player.Team.Should().Be(team);
+        }
+
+        [Theory]
+        [InlineData(PlayerTeam.Red)]
+        public void SetTeam_IsCorrect(PlayerTeam team) {
+            var terrariaPlayer = new Terraria.Player();
+            var player = new OrionPlayer(terrariaPlayer);
+
+            player.Team = team;
+
+            terrariaPlayer.team.Should().Be((byte)team);
+        }
+
+        [Theory]
+        [InlineData(true)]
+        [InlineData(false)]
+        public void GetIsInPvp_IsCorrect(bool isInPvp) {
+            var terrariaPlayer = new Terraria.Player {hostile = isInPvp};
+            var player = new OrionPlayer(terrariaPlayer);
+
+            player.IsInPvp.Should().Be(isInPvp);
+        }
+
+        [Theory]
+        [InlineData(true)]
+        [InlineData(false)]
+        public void SetIsInPvp_IsCorrect(bool isInPvp) {
+            var terrariaPlayer = new Terraria.Player();
+            var player = new OrionPlayer(terrariaPlayer);
+
+            player.IsInPvp = isInPvp;
+
+            terrariaPlayer.hostile.Should().Be(isInPvp);
+        }
+
+        [Fact]
+        public void Buffs_GetIndex_IsCorrect() {
+            var terrariaPlayer = new Terraria.Player();
+            terrariaPlayer.buffType[0] = (int)BuffType.ObsidianSkin;
+            terrariaPlayer.buffTime[0] = 3600;
+            var player = new OrionPlayer(terrariaPlayer);
+
+            player.Buffs[0].Should().Be(new Buff(BuffType.ObsidianSkin, TimeSpan.FromMinutes(1)));
+        }
+
+        [Fact]
+        public void Buffs_SetIndex_IsCorrect() {
+            var terrariaPlayer = new Terraria.Player();
+            var player = new OrionPlayer(terrariaPlayer);
+
+            player.Buffs[0] = new Buff(BuffType.ObsidianSkin, TimeSpan.FromMinutes(1));
+
+            terrariaPlayer.buffType[0].Should().Be((int)BuffType.ObsidianSkin);
+            terrariaPlayer.buffTime[0].Should().Be(3600);
+        }
+
+        [Fact]
+        public void Buffs_GetCount_IsCorrect() {
+            var terrariaPlayer = new Terraria.Player();
+            var player = new OrionPlayer(terrariaPlayer);
+
+            player.Buffs.Count.Should().Be(terrariaPlayer.buffType.Length);
+        }
+
+        [Fact]
+        public void AddBuff_IsCorrect() {
+            var terrariaPlayer = new Terraria.Player();
+            var player = new OrionPlayer(terrariaPlayer);
+
+            player.AddBuff(new Buff(BuffType.ObsidianSkin, TimeSpan.FromMinutes(1)));
+
+            terrariaPlayer.buffType[0].Should().Be((int)BuffType.ObsidianSkin);
+            terrariaPlayer.buffTime[0].Should().Be(3600);
         }
     }
 }

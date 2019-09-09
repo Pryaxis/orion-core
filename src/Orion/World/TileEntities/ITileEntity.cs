@@ -1,4 +1,6 @@
-﻿namespace Orion.World.TileEntities {
+﻿using Orion.Utils;
+
+namespace Orion.World.TileEntities {
     /// <summary>
     /// Provides a wrapper around a generalized tile entity.
     /// </summary>

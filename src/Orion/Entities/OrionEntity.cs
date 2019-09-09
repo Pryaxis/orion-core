@@ -1,5 +1,6 @@
 ﻿using System.Diagnostics;
 using Microsoft.Xna.Framework;
+using Orion.Utils;
 
 namespace Orion.Entities {
     internal abstract class OrionEntity<TEntity> : AnnotatableObject, IEntity where TEntity : Terraria.Entity {

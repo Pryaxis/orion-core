@@ -49,7 +49,7 @@
         UpdateSign = 47,
         UpdateLiquid = 48,
         FirstSpawnPlayer = 49,
-        UpdatePlayerBuffs = 50,
+        PlayerBuffs = 50,
         PerformAction = 51,
         UnlockTile = 52,
         AddNpcBuff = 53,

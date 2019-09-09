@@ -1,8 +1,9 @@
 ﻿using System;
 using FluentAssertions;
+using Orion.Utils;
 using Xunit;
 
-namespace Orion.Tests {
+namespace Orion.Tests.Utils {
     public class AnnotatableObjectTests {
         [Theory]
         [InlineData(100)]
