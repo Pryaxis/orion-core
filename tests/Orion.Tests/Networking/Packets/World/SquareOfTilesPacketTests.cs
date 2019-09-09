@@ -1,0 +1,49 @@
+﻿using System;
+using System.IO;
+using FluentAssertions;
+using Orion.Networking.Packets;
+using Orion.Networking.Packets.World;
+using Xunit;
+
+namespace Orion.Tests.Networking.Packets.World {
+    [Collection("TerrariaTestsCollection")]
+    public class SquareOfTilesPacketTests {
+        [Fact]
+        public void SetTiles_NullValue_ThrowsArgumentNullException() {
+            var packet = new SquareOfTilesPacket();
+            Action action = () => packet.Tiles = null;
+
+            action.Should().Throw<ArgumentNullException>();
+        }
+
+        private static readonly byte[] SquareOfTilesBytes = {
+            17, 0, 20, 1, 0, 153, 16, 171, 1, 1, 0, 3, 0, 72, 0, 0, 0,
+        };
+
+        [Fact]
+        public void ReadFromStream_IsCorrect() {
+            using (var stream = new MemoryStream(SquareOfTilesBytes)) {
+                var packet = (SquareOfTilesPacket)Packet.ReadFromStream(stream);
+
+                packet.Size.Should().Be(1);
+                packet.LiquidChangeType.Should().Be(LiquidChangeType.None);
+                packet.X.Should().Be(4249);
+                packet.Y.Should().Be(427);
+                packet.Tiles.GetLength(0).Should().Be(1);
+                packet.Tiles.GetLength(1).Should().Be(1);
+            }
+        }
+
+        [Fact]
+        public void WriteToStream_IsCorrect() {
+            using (var stream = new MemoryStream(SquareOfTilesBytes))
+            using (var stream2 = new MemoryStream()) {
+                var packet = Packet.ReadFromStream(stream);
+
+                packet.WriteToStream(stream2);
+
+                stream2.ToArray().Should().BeEquivalentTo(SquareOfTilesBytes);
+            }
+        }
+    }
+}

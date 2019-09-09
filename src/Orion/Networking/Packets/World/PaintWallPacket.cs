@@ -1,11 +1,11 @@
 ﻿using System.IO;
 using Orion.World.Tiles;
 
-namespace Orion.Networking.Packets {
+namespace Orion.Networking.Packets.World {
     /// <summary>
-    /// Packet sent to update a tile's liquid.
+    /// Packet sent to paint a wall.
     /// </summary>
-    public sealed class UpdateLiquidPacket : Packet {
+    public sealed class PaintWallPacket : Packet {
         /// <summary>
         /// Gets or sets the tile's X coordinate.
         /// </summary>
@@ -17,27 +17,22 @@ namespace Orion.Networking.Packets {
         public short TileY { get; set; }
 
         /// <summary>
-        /// Gets or sets the liquid amount.
+        /// Gets or sets the wall color.
         /// </summary>
-        public byte LiquidAmount { get; set; }
+        public PaintColor WallColor { get; set; }
 
-        /// <summary>
-        /// Gets or sets the liquid type.
-        /// </summary>
-        public LiquidType LiquidType { get; set; }
+        private protected override PacketType Type => PacketType.PaintWall;
 
         private protected override void ReadFromReader(BinaryReader reader, ushort packetLength) {
             TileX = reader.ReadInt16();
             TileY = reader.ReadInt16();
-            LiquidAmount = reader.ReadByte();
-            LiquidType = (LiquidType)reader.ReadByte();
+            WallColor = (PaintColor)reader.ReadByte();
         }
 
         private protected override void WriteToWriter(BinaryWriter writer) {
             writer.Write(TileX);
             writer.Write(TileY);
-            writer.Write(LiquidAmount);
-            writer.Write((byte)LiquidType);
+            writer.Write((byte)WallColor);
         }
     }
 }

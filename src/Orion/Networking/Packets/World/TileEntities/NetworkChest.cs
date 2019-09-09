@@ -3,7 +3,7 @@ using Orion.Items;
 using Orion.Utils;
 using Orion.World.TileEntities;
 
-namespace Orion.Networking {
+namespace Orion.Networking.Packets.World.TileEntities {
     /// <summary>
     /// Represents a chest that is transmitted over the network.
     /// </summary>

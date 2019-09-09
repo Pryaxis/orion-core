@@ -1,10 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 using Orion.Utils;
 using Orion.World.TileEntities;
 
-namespace Orion.Networking {
+namespace Orion.Networking.Packets.World.TileEntities {
     /// <summary>
     /// Represents a sign that is transmitted over the network.
     /// </summary>

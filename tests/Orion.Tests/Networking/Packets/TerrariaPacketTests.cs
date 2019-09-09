@@ -364,36 +364,6 @@ namespace Orion.Tests.Networking.Packets {
             }
         }
 
-        private static readonly byte[] UpdateSquareOfTilesBytes = {
-            17, 0, 20, 1, 0, 153, 16, 171, 1, 1, 0, 3, 0, 72, 0, 0, 0,
-        };
-
-        [Fact]
-        public void ReadFromStream_UpdateSquareOfTiles_IsCorrect() {
-            using (var stream = new MemoryStream(UpdateSquareOfTilesBytes)) {
-                var packet = (UpdateSquareOfTilesPacket)Packet.ReadFromStream(stream);
-
-                packet.Size.Should().Be(1);
-                packet.LiquidChangeType.Should().Be(UpdateSquareOfTilesPacket.Type.None);
-                packet.X.Should().Be(4249);
-                packet.Y.Should().Be(427);
-                packet.Tiles.GetLength(0).Should().Be(1);
-                packet.Tiles.GetLength(1).Should().Be(1);
-            }
-        }
-
-        [Fact]
-        public void WriteToStream_UpdateSquareOfTiles_IsCorrect() {
-            using (var stream = new MemoryStream(UpdateSquareOfTilesBytes))
-            using (var stream2 = new MemoryStream()) {
-                var packet = Packet.ReadFromStream(stream);
-
-                packet.WriteToStream(stream2);
-
-                stream2.ToArray().Should().BeEquivalentTo(UpdateSquareOfTilesBytes);
-            }
-        }
-
         private static readonly byte[] UpdateItemBytes = {
             27, 0, 21, 144, 1, 128, 51, 131, 71, 0, 112, 212, 69, 0, 0, 128, 64, 0, 0, 0, 192, 1, 0, 82, 0, 17, 6
         };
@@ -919,32 +889,6 @@ namespace Orion.Tests.Networking.Packets {
             }
         }
 
-        public static readonly byte[] UpdateLiquidBytes = {9, 0, 48, 0, 1, 100, 0, 255, 0};
-
-        [Fact]
-        public void ReadFromStream_UpdateLiquid_IsCorrect() {
-            using (var stream = new MemoryStream(UpdateLiquidBytes)) {
-                var packet = (UpdateLiquidPacket)Packet.ReadFromStream(stream);
-
-                packet.TileX.Should().Be(256);
-                packet.TileY.Should().Be(100);
-                packet.LiquidAmount.Should().Be(255);
-                packet.LiquidType.Should().Be(LiquidType.Water);
-            }
-        }
-
-        [Fact]
-        public void WriteToStream_UpdateLiquid_IsCorrect() {
-            using (var stream = new MemoryStream(UpdateLiquidBytes))
-            using (var stream2 = new MemoryStream()) {
-                var packet = Packet.ReadFromStream(stream);
-
-                packet.WriteToStream(stream2);
-
-                stream2.ToArray().Should().BeEquivalentTo(UpdateLiquidBytes);
-            }
-        }
-
         public static readonly byte[] PerformActionBytes = {5, 0, 51, 0, 1};
 
         [Fact]
@@ -1213,56 +1157,6 @@ namespace Orion.Tests.Networking.Packets {
                 packet.WriteToStream(stream2);
 
                 stream2.ToArray().Should().BeEquivalentTo(ShowPlayerDodgeBytes);
-            }
-        }
-        
-        public static readonly byte[] PaintBlockBytes = {8, 0, 63, 0, 1, 100, 0, 1};
-
-        [Fact]
-        public void ReadFromStream_PaintBlock_IsCorrect() {
-            using (var stream = new MemoryStream(PaintBlockBytes)) {
-                var packet = (PaintBlockPacket)Packet.ReadFromStream(stream);
-
-                packet.TileX.Should().Be(256);
-                packet.TileY.Should().Be(100);
-                packet.BlockColor.Should().Be(PaintColor.Red);
-            }
-        }
-
-        [Fact]
-        public void WriteToStream_PaintBlock_IsCorrect() {
-            using (var stream = new MemoryStream(PaintBlockBytes))
-            using (var stream2 = new MemoryStream()) {
-                var packet = Packet.ReadFromStream(stream);
-
-                packet.WriteToStream(stream2);
-
-                stream2.ToArray().Should().BeEquivalentTo(PaintBlockBytes);
-            }
-        }
-        
-        public static readonly byte[] PaintWallBytes = {8, 0, 64, 0, 1, 100, 0, 1};
-
-        [Fact]
-        public void ReadFromStream_PaintWall_IsCorrect() {
-            using (var stream = new MemoryStream(PaintWallBytes)) {
-                var packet = (PaintWallPacket)Packet.ReadFromStream(stream);
-
-                packet.TileX.Should().Be(256);
-                packet.TileY.Should().Be(100);
-                packet.WallColor.Should().Be(PaintColor.Red);
-            }
-        }
-
-        [Fact]
-        public void WriteToStream_PaintWall_IsCorrect() {
-            using (var stream = new MemoryStream(PaintWallBytes))
-            using (var stream2 = new MemoryStream()) {
-                var packet = Packet.ReadFromStream(stream);
-
-                packet.WriteToStream(stream2);
-
-                stream2.ToArray().Should().BeEquivalentTo(PaintWallBytes);
             }
         }
         

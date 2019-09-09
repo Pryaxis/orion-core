@@ -24,7 +24,6 @@
   <ItemGroup>
     <Folder Include="Networking\Packets\Items\" />
     <Folder Include="Networking\Packets\Npcs\" />
-    <Folder Include="Networking\Packets\World\TileEntities\" />
   </ItemGroup>
 
 </Project>

@@ -2,12 +2,12 @@
 using System.IO;
 using Orion.World.Tiles;
 
-namespace Orion.Networking.Packets {
+namespace Orion.Networking.Packets.World {
     /// <summary>
     /// Packet sent to update a square of tiles.
     /// </summary>
-    public sealed class UpdateSquareOfTilesPacket : Packet {
-        private NetTile[,] _tiles;
+    public sealed class SquareOfTilesPacket : Packet {
+        private NetworkTile[,] _tiles;
 
         /// <summary>
         /// Gets or sets the size of the square.
@@ -17,7 +17,7 @@ namespace Orion.Networking.Packets {
         /// <summary>
         /// Gets or sets the liquid change type.
         /// </summary>
-        public Type LiquidChangeType { get; set; }
+        public LiquidChangeType LiquidChangeType { get; set; }
 
         /// <summary>
         /// Gets or sets the X coordinate.
@@ -33,24 +33,26 @@ namespace Orion.Networking.Packets {
         /// Gets or sets the tiles.
         /// </summary>
         /// <exception cref="ArgumentNullException"><paramref name="value"/> is <c>null</c>.</exception>
-        public NetTile[,] Tiles {
+        public NetworkTile[,] Tiles {
             get => _tiles;
             set => _tiles = value ?? throw new ArgumentNullException(nameof(value));
         }
 
+        private protected override PacketType Type => PacketType.SquareOfTiles;
+
         private protected override void ReadFromReader(BinaryReader reader, ushort packetLength) {
             var size = reader.ReadUInt16();
             if ((size & 32768) == 32768) {
-                LiquidChangeType = (Type)reader.ReadByte();
+                LiquidChangeType = (LiquidChangeType)reader.ReadByte();
             }
 
             Size = (short)(size & short.MaxValue);
             X = reader.ReadInt16();
             Y = reader.ReadInt16();
-            Tiles = new NetTile[Size, Size];
+            Tiles = new NetworkTile[Size, Size];
 
-            NetTile ReadTile() {
-                var tile = new NetTile();
+            NetworkTile ReadTile() {
+                var tile = new NetworkTile();
                 var header = (Terraria.BitsByte)reader.ReadByte();
                 var header2 = (Terraria.BitsByte)reader.ReadByte();
 
@@ -108,7 +110,7 @@ namespace Orion.Networking.Packets {
         }
 
         private protected override void WriteToWriter(BinaryWriter writer) {
-            if (LiquidChangeType != Type.None) {
+            if (LiquidChangeType != LiquidChangeType.None) {
                 writer.Write((ushort)(Size | 32768));
                 writer.Write((byte)LiquidChangeType);
             } else {
@@ -118,7 +120,7 @@ namespace Orion.Networking.Packets {
             writer.Write(X);
             writer.Write(Y);
 
-            void WriteTile(NetTile tile) {
+            void WriteTile(NetworkTile tile) {
                 Terraria.BitsByte header = 0;
                 Terraria.BitsByte header2 = 0;
                 header[0] = tile.IsBlockActive;
@@ -161,52 +163,6 @@ namespace Orion.Networking.Packets {
                     WriteTile(Tiles[x, y]);
                 }
             }
-        }
-
-
-        /// <summary>
-        /// Specifies the liquid change type.
-        /// </summary>
-        public enum Type : byte {
-#pragma warning disable 1591
-            None = 0,
-            LavaToWater,
-            HoneyToWater,
-            HoneyToLava,
-#pragma warning restore 1591
-        }
-
-
-        /// <summary>
-        /// Represents a tile that is sent in a <see cref="UpdateSquareOfTilesPacket"/>.
-        /// </summary>
-        public sealed class NetTile : Tile {
-            /// <inheritdoc />
-            public override BlockType BlockType { get; set; }
-
-            /// <inheritdoc />
-            public override WallType WallType { get; set; }
-
-            /// <inheritdoc />
-            public override byte LiquidAmount { get; set; }
-
-            /// <inheritdoc />
-            public override short TileHeader { get; set; }
-
-            /// <inheritdoc />
-            public override byte TileHeader2 { get; set; }
-
-            /// <inheritdoc />
-            public override byte TileHeader3 { get; set; }
-
-            /// <inheritdoc />
-            public override byte TileHeader4 { get; set; }
-
-            /// <inheritdoc />
-            public override short BlockFrameX { get; set; }
-
-            /// <inheritdoc />
-            public override short BlockFrameY { get; set; }
         }
     }
 }

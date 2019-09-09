@@ -1,7 +1,7 @@
 ﻿using Orion.Utils;
 using Orion.World.TileEntities;
 
-namespace Orion.Networking {
+namespace Orion.Networking.Packets.World.TileEntities {
     /// <summary>
     /// Represents a tile entity that is transmitted over the network.
     /// </summary>

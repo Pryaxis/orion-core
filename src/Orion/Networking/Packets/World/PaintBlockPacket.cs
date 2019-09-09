@@ -1,7 +1,7 @@
 ﻿using System.IO;
 using Orion.World.Tiles;
 
-namespace Orion.Networking.Packets {
+namespace Orion.Networking.Packets.World {
     /// <summary>
     /// Packet sent to paint a block.
     /// </summary>
@@ -20,6 +20,8 @@ namespace Orion.Networking.Packets {
         /// Gets or sets the block color.
         /// </summary>
         public PaintColor BlockColor { get; set; }
+
+        private protected override PacketType Type => PacketType.PaintBlock;
 
         private protected override void ReadFromReader(BinaryReader reader, ushort packetLength) {
             TileX = reader.ReadInt16();

@@ -1,6 +1,6 @@
 ﻿using Orion.World.TileEntities;
 
-namespace Orion.Networking {
+namespace Orion.Networking.Packets.World.TileEntities {
     /// <summary>
     /// Represents a target dummy that is transmitted over the network.
     /// </summary>

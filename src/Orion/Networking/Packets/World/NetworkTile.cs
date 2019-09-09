@@ -1,6 +1,6 @@
 ﻿using Orion.World.Tiles;
 
-namespace Orion.Networking {
+namespace Orion.Networking.Packets.World {
     /// <summary>
     /// Represents a tile that is transmitted over the network.
     /// </summary>
