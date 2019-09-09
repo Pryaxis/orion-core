@@ -837,30 +837,6 @@ namespace Orion.Tests.Networking.Packets {
             }
         }
 
-        private static readonly byte[] UpdatePlayerPvpStatusBytes = {5, 0, 30, 0, 1,};
-
-        [Fact]
-        public void ReadFromStream_UpdatePlayerPvpStatus_IsCorrect() {
-            using (var stream = new MemoryStream(UpdatePlayerPvpStatusBytes)) {
-                var packet = (UpdatePlayerPvpStatusPacket)Packet.ReadFromStream(stream);
-
-                packet.PlayerIndex.Should().Be(0);
-                packet.PlayerIsInPvp.Should().BeTrue();
-            }
-        }
-
-        [Fact]
-        public void WriteToStream_UpdatePlayerPvpStatus_IsCorrect() {
-            using (var stream = new MemoryStream(UpdatePlayerPvpStatusBytes))
-            using (var stream2 = new MemoryStream()) {
-                var packet = Packet.ReadFromStream(stream);
-
-                packet.WriteToStream(stream2);
-
-                stream2.ToArray().Should().BeEquivalentTo(UpdatePlayerPvpStatusBytes);
-            }
-        }
-
         private static readonly byte[] RequestChestContentsBytes = {7, 0, 31, 100, 0, 100, 0,};
 
         [Fact]

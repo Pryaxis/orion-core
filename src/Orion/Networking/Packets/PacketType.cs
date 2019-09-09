@@ -30,7 +30,7 @@
         UpdateProjectile = 27,
         DamageNpc = 28,
         RemoveProjectile = 29,
-        UpdatePlayerPvpStatus = 30,
+        PlayerPvp = 30,
         RequestChestContents = 31,
         UpdateChestContentsSlot = 32,
         UpdatePlayerChest = 33,

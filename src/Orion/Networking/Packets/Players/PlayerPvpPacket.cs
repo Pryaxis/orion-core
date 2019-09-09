@@ -1,10 +1,10 @@
 ﻿using System.IO;
 
-namespace Orion.Networking.Packets {
+namespace Orion.Networking.Packets.Players {
     /// <summary>
     /// Packet used to update a player's PvP status.
     /// </summary>
-    public sealed class UpdatePlayerPvpStatusPacket : Packet {
+    public sealed class PlayerPvpPacket : Packet {
         /// <summary>
         /// Gets or sets the player index.
         /// </summary>
@@ -14,6 +14,8 @@ namespace Orion.Networking.Packets {
         /// Gets or sets a value indicating whether the player is in PvP.
         /// </summary>
         public bool PlayerIsInPvp { get; set; }
+
+        private protected override PacketType Type => PacketType.PlayerPvp;
 
         private protected override void ReadFromReader(BinaryReader reader, ushort packetLength) {
             PlayerIndex = reader.ReadByte();

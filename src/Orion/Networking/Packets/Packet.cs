@@ -44,7 +44,7 @@ namespace Orion.Networking.Packets {
                 [PacketType.UpdateProjectile] = () => new UpdateProjectilePacket(),
                 [PacketType.DamageNpc] = () => new DamageNpcPacket(),
                 [PacketType.RemoveProjectile] = () => new RemoveProjectilePacket(),
-                [PacketType.UpdatePlayerPvpStatus] = () => new UpdatePlayerPvpStatusPacket(),
+                [PacketType.PlayerPvp] = () => new PlayerPvpPacket(),
                 [PacketType.RequestChestContents] = () => new RequestChestContentsPacket(),
                 [PacketType.UpdateChestContentsSlot] = () => new UpdateChestContentsSlotPacket(),
                 [PacketType.UpdatePlayerChest] = () => new UpdatePlayerChestPacket(),
