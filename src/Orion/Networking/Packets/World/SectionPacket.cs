@@ -4,17 +4,17 @@ using System.IO;
 using System.IO.Compression;
 using System.Text;
 using Orion.Items;
-using Orion.Utils;
 using Orion.World.TileEntities;
 using Orion.World.Tiles;
 using OTAPI.Tile;
 
-namespace Orion.Networking.Packets {
+namespace Orion.Networking.Packets.World {
     /// <summary>
-    /// Packet sent to the client to provide a world section.
+    /// Packet sent from the server to the client to provide a section of the world. This is sent in response to a
+    /// <see cref="RequestSectionPacket"/>.
     /// </summary>
-    public sealed class UpdateWorldSectionPacket : Packet {
-        private NetTile[,] _tiles;
+    public sealed class SectionPacket : Packet {
+        private NetworkTile[,] _tiles;
 
         /// <summary>
         /// Gets or sets a value indicating whether the section data is compressed.
@@ -45,7 +45,7 @@ namespace Orion.Networking.Packets {
         /// Gets or sets the tiles.
         /// </summary>
         /// <exception cref="ArgumentNullException"><paramref name="value"/> is <c>null</c>.</exception>
-        public NetTile[,] Tiles {
+        public NetworkTile[,] Tiles {
             get => _tiles;
             set => _tiles = value ?? throw new ArgumentNullException(nameof(value));
         }
@@ -63,7 +63,9 @@ namespace Orion.Networking.Packets {
         /// <summary>
         /// Gets the tile entities.
         /// </summary>
-        public IList<NetTileEntity> TileEntities { get; } = new List<NetTileEntity>();
+        public IList<NetworkTileEntity> TileEntities { get; } = new List<NetworkTileEntity>();
+
+        private protected override PacketType Type => PacketType.Section;
 
         private protected override void ReadFromReader(BinaryReader reader, ushort packetLength) {
             IsCompressed = reader.ReadByte() == 1;
@@ -104,7 +106,7 @@ namespace Orion.Networking.Packets {
             StartY = reader.ReadInt32();
             Width = reader.ReadInt16();
             Height = reader.ReadInt16();
-            Tiles = new NetTile[Width, Height];
+            Tiles = new NetworkTile[Width, Height];
 
             ReadTilesFromReaderImpl(reader);
             ReadChestsFromReaderImpl(reader);
@@ -113,8 +115,8 @@ namespace Orion.Networking.Packets {
         }
 
         private void ReadTilesFromReaderImpl(BinaryReader reader) {
-            NetTile ReadTile(byte header, byte header2, byte header3) {
-                var tile = new NetTile();
+            NetworkTile ReadTile(byte header, byte header2, byte header3) {
+                var tile = new NetworkTile();
                 if ((header & 2) == 2) {
                     tile.IsBlockActive = true;
 
@@ -173,13 +175,13 @@ namespace Orion.Networking.Packets {
                 }
             }
 
-            NetTile previousTile = null;
+            NetworkTile previousTile = null;
             var runLength = 0;
             for (int y = 0; y < Height; ++y) {
                 for (int x = 0; x < Width; ++x) {
                     if (runLength > 0) {
                         --runLength;
-                        Tiles[x, y] = new NetTile();
+                        Tiles[x, y] = new NetworkTile();
                         ((ITile)Tiles[x, y]).CopyFrom(previousTile);
                         continue;
                     }
@@ -230,19 +232,19 @@ namespace Orion.Networking.Packets {
 
                 switch (type) {
                 case 0:
-                    TileEntities.Add(new NetTargetDummy(index, x, y) {
+                    TileEntities.Add(new NetworkTargetDummy(index, x, y) {
                         NpcIndex = reader.ReadInt16(),
                     });
                     break;
                 case 1:
-                    TileEntities.Add(new NetItemFrame(index, x, y) {
+                    TileEntities.Add(new NetworkItemFrame(index, x, y) {
                         ItemType = (ItemType)reader.ReadInt16(),
                         ItemPrefix = (ItemPrefix)reader.ReadByte(),
                         ItemStackSize = reader.ReadInt16(),
                     });
                     break;
                 case 2:
-                    TileEntities.Add(new NetLogicSensor(index, x, y) {
+                    TileEntities.Add(new NetworkLogicSensor(index, x, y) {
                         Type = (LogicSensorType)reader.ReadByte(),
                         IsActivated = reader.ReadBoolean(),
                     });
@@ -270,10 +272,10 @@ namespace Orion.Networking.Packets {
             var headerIndex = 0;
             byte header = 0;
             var bodyIndex = 0;
-            NetTile previousTile = null;
+            NetworkTile previousTile = null;
             var runLength = 0;
 
-            void WritePartialTile(NetTile tile) {
+            void WritePartialTile(NetworkTile tile) {
                 header = 0;
                 byte header2 = 0;
                 byte header3 = 0;
@@ -399,14 +401,14 @@ namespace Orion.Networking.Packets {
             writer.Write((short)TileEntities.Count);
             foreach (var tileEntity in TileEntities) {
                 switch (tileEntity) {
-                case NetTargetDummy targetDummy:
+                case NetworkTargetDummy targetDummy:
                     writer.Write((byte)0);
                     writer.Write(tileEntity.Index);
                     writer.Write((short)tileEntity.X);
                     writer.Write((short)tileEntity.Y);
                     writer.Write((short)targetDummy.NpcIndex);
                     break;
-                case NetItemFrame itemFrame:
+                case NetworkItemFrame itemFrame:
                     writer.Write((byte)1);
                     writer.Write(tileEntity.Index);
                     writer.Write((short)tileEntity.X);
@@ -415,7 +417,7 @@ namespace Orion.Networking.Packets {
                     writer.Write((byte)itemFrame.ItemPrefix);
                     writer.Write((short)itemFrame.ItemStackSize);
                     break;
-                case NetLogicSensor logicSensor:
+                case NetworkLogicSensor logicSensor:
                     writer.Write((byte)2);
                     writer.Write(tileEntity.Index);
                     writer.Write((short)tileEntity.X);
@@ -425,175 +427,6 @@ namespace Orion.Networking.Packets {
                     break;
                 }
             }
-        }
-
-
-        /// <summary>
-        /// Represents a tile that is sent in a <see cref="UpdateWorldSectionPacket"/>.
-        /// </summary>
-        public sealed class NetTile : Tile {
-            /// <inheritdoc />
-            public override BlockType BlockType { get; set; }
-
-            /// <inheritdoc />
-            public override WallType WallType { get; set; }
-
-            /// <inheritdoc />
-            public override byte LiquidAmount { get; set; }
-
-            /// <inheritdoc />
-            public override short TileHeader { get; set; }
-
-            /// <inheritdoc />
-            public override byte TileHeader2 { get; set; }
-
-            /// <inheritdoc />
-            public override byte TileHeader3 { get; set; }
-
-            /// <inheritdoc />
-            public override byte TileHeader4 { get; set; }
-
-            /// <inheritdoc />
-            public override short BlockFrameX { get; set; }
-
-            /// <inheritdoc />
-            public override short BlockFrameY { get; set; }
-        }
-
-
-        /// <summary>
-        /// Represents a chest that is sent in a <see cref="UpdateWorldSectionPacket"/>.
-        /// </summary>
-        public sealed class NetChest : AnnotatableObject, IChest {
-            private string _name;
-
-            /// <inheritdoc />
-            public int Index { get; set; }
-
-            /// <inheritdoc />
-            public int X { get; set; }
-
-            /// <inheritdoc />
-            public int Y { get; set; }
-
-            /// <inheritdoc />
-            public string Name {
-                get => _name;
-                set => _name = value ?? throw new ArgumentNullException(nameof(value));
-            }
-
-            /// <inheritdoc />
-            public IItemList Items => null;
-        }
-
-
-        /// <summary>
-        /// Represents a sign that is sent in a <see cref="UpdateWorldSectionPacket"/>.
-        /// </summary>
-        public sealed class NetSign : AnnotatableObject, ISign {
-            private string _name;
-
-            /// <inheritdoc />
-            public int Index { get; set; }
-
-            /// <inheritdoc />
-            public int X { get; set; }
-
-            /// <inheritdoc />
-            public int Y { get; set; }
-
-            /// <inheritdoc />
-            public string Text {
-                get => _name;
-                set => _name = value ?? throw new ArgumentNullException(nameof(value));
-            }
-        }
-
-
-        /// <summary>
-        /// Represents a tile entity that is sent in a <see cref="UpdateWorldSectionPacket"/>.
-        /// </summary>
-        public abstract class NetTileEntity : AnnotatableObject, ITileEntity {
-            /// <inheritdoc />
-            public int Index { get; set; }
-
-            /// <inheritdoc />
-            public int X { get; set; }
-
-            /// <inheritdoc />
-            public int Y { get; set; }
-
-            private protected NetTileEntity(int index, int x, int y) {
-                Index = index;
-                X = x;
-                Y = y;
-            }
-        }
-
-
-        /// <summary>
-        /// Represents a target dummy that is sent in a <see cref="UpdateWorldSectionPacket"/>.
-        /// </summary>
-        public sealed class NetTargetDummy : NetTileEntity, ITargetDummy {
-            /// <inheritdoc />
-            public int NpcIndex { get; set; }
-
-            /// <summary>
-            /// Initializes a new instance of the <see cref="NetTargetDummy"/> class with the specified index and
-            /// coordinates.
-            /// </summary>
-            /// <param name="index">The index.</param>
-            /// <param name="x">The X coordinate.</param>
-            /// <param name="y">The Y coordinate.</param>
-            public NetTargetDummy(int index, int x, int y) : base(index, x, y) { }
-        }
-
-
-        /// <summary>
-        /// Represents an item frame that is sent in a <see cref="UpdateWorldSectionPacket"/>.
-        /// </summary>
-        public sealed class NetItemFrame : NetTileEntity, IItemFrame {
-            /// <inheritdoc />
-            public ItemType ItemType { get; set; }
-
-            /// <inheritdoc />
-            public int ItemStackSize { get; set; }
-
-            /// <inheritdoc />
-            public ItemPrefix ItemPrefix { get; set; }
-
-            /// <summary>
-            /// Initializes a new instance of the <see cref="NetTargetDummy"/> class with the specified index and
-            /// coordinates.
-            /// </summary>
-            /// <param name="index">The index.</param>
-            /// <param name="x">The X coordinate.</param>
-            /// <param name="y">The Y coordinate.</param>
-            public NetItemFrame(int index, int x, int y) : base(index, x, y) { }
-        }
-
-
-        /// <summary>
-        /// Represents a logic sensor that is sent in a <see cref="UpdateWorldSectionPacket"/>.
-        /// </summary>
-        public sealed class NetLogicSensor : NetTileEntity, ILogicSensor {
-            /// <inheritdoc />
-            public LogicSensorType Type { get; set; }
-
-            /// <inheritdoc />
-            public bool IsActivated { get; set; }
-
-            /// <inheritdoc />
-            public int Data { get; set; }
-
-            /// <summary>
-            /// Initializes a new instance of the <see cref="NetTargetDummy"/> class with the specified index and
-            /// coordinates.
-            /// </summary>
-            /// <param name="index">The index.</param>
-            /// <param name="x">The X coordinate.</param>
-            /// <param name="y">The Y coordinate.</param>
-            public NetLogicSensor(int index, int x, int y) : base(index, x, y) { }
         }
     }
 }

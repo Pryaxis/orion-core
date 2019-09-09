@@ -2,11 +2,11 @@
 using System.IO;
 using Orion.Networking.Packets.Extensions;
 
-namespace Orion.Networking.Packets {
+namespace Orion.Networking.Packets.Connections {
     /// <summary>
-    /// Packet sent to the client to update the client's status.
+    /// Packet sent from the server to the client to update the client's status.
     /// </summary>
-    public sealed class UpdateClientStatusPacket : Packet {
+    public sealed class ClientStatusPacket : Packet {
         private Terraria.Localization.NetworkText _statusText = Terraria.Localization.NetworkText.Empty;
 
         /// <summary>
@@ -22,6 +22,8 @@ namespace Orion.Networking.Packets {
             get => _statusText;
             set => _statusText = value ?? throw new ArgumentNullException(nameof(value));
         }
+
+        private protected override PacketType Type => PacketType.ClientStatus;
 
         private protected override void ReadFromReader(BinaryReader reader, ushort packetLength) {
             StatusIncrease = reader.ReadInt32();
