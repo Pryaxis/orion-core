@@ -1,19 +1,21 @@
 ﻿using System.IO;
 
-namespace Orion.Networking.Packets {
+namespace Orion.Networking.Packets.World {
     /// <summary>
-    /// Packet sent to the server to request a section of the world.
+    /// Packet sent from the client to the server to request a section of the world.
     /// </summary>
-    public sealed class RequestWorldSectionPacket : Packet {
+    public sealed class RequestSectionPacket : Packet {
         /// <summary>
-        /// Gets or sets the section's X coordinate.
+        /// Gets or sets the section's X position. An invalid value results in only the spawn section being sent.
         /// </summary>
         public int SectionX { get; set; }
 
         /// <summary>
-        /// Gets or sets the section's Y coordinate.
+        /// Gets or sets the section's Y position. An invalid value results in only the spawn section being sent.
         /// </summary>
         public int SectionY { get; set; }
+
+        private protected override PacketType Type => PacketType.RequestSection;
 
         private protected override void ReadFromReader(BinaryReader reader, ushort packetLength) {
             SectionX = reader.ReadInt32();

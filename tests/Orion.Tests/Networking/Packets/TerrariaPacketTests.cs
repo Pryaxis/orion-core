@@ -64,27 +64,6 @@ namespace Orion.Tests.Networking.Packets {
             }
         }
 
-        public static readonly byte[] FinishConnectionBytes = {3, 0, 6};
-
-        [Fact]
-        public void ReadFromStream_FinishConnection_IsCorrect() {
-            using (var stream = new MemoryStream(FinishConnectionBytes)) {
-                Packet.ReadFromStream(stream);
-            }
-        }
-
-        [Fact]
-        public void WriteToStream_FinishConnection_IsCorrect() {
-            using (var stream = new MemoryStream(FinishConnectionBytes))
-            using (var stream2 = new MemoryStream()) {
-                var packet = Packet.ReadFromStream(stream);
-
-                packet.WriteToStream(stream2);
-
-                stream2.ToArray().Should().BeEquivalentTo(FinishConnectionBytes);
-            }
-        }
-
         private static readonly byte[] UpdateWorldInfoBytes = {
             122, 0, 7, 141, 127, 0, 0, 1, 0, 104, 16, 176, 4, 54, 8, 102, 1, 129, 1, 53, 2, 24, 49, 0, 9, 1, 102, 63,
             129, 163, 174, 200, 216, 57, 65, 188, 220, 22, 170, 161, 45, 221, 99, 1, 0, 0, 0, 194, 0, 0, 0, 0, 51, 0, 1,
@@ -187,30 +166,6 @@ namespace Orion.Tests.Networking.Packets {
                 packet.WriteToStream(stream2);
 
                 stream2.ToArray().Should().BeEquivalentTo(UpdateWorldInfoBytes);
-            }
-        }
-
-        private static readonly byte[] RequestWorldSectionBytes = {11, 0, 8, 255, 255, 255, 255, 255, 255, 255, 255};
-
-        [Fact]
-        public void ReadFromStream_RequestWorldSection_IsCorrect() {
-            using (var stream = new MemoryStream(RequestWorldSectionBytes)) {
-                var packet = (RequestWorldSectionPacket)Packet.ReadFromStream(stream);
-
-                packet.SectionX.Should().Be(-1);
-                packet.SectionY.Should().Be(-1);
-            }
-        }
-
-        [Fact]
-        public void WriteToStream_RequestWorldSection_IsCorrect() {
-            using (var stream = new MemoryStream(RequestWorldSectionBytes))
-            using (var stream2 = new MemoryStream()) {
-                var packet = Packet.ReadFromStream(stream);
-
-                packet.WriteToStream(stream2);
-
-                stream2.ToArray().Should().BeEquivalentTo(RequestWorldSectionBytes);
             }
         }
 
@@ -1571,29 +1526,6 @@ namespace Orion.Tests.Networking.Packets {
                 packet.WriteToStream(stream2);
 
                 stream2.ToArray().Should().BeEquivalentTo(HealOtherPlayerBytes);
-            }
-        }
-        
-        public static readonly byte[] UpdateUuidBytes = {12, 0, 68, 8, 84, 101, 114, 114, 97, 114, 105, 97};
-
-        [Fact]
-        public void ReadFromStream_UpdateUuid_IsCorrect() {
-            using (var stream = new MemoryStream(UpdateUuidBytes)) {
-                var packet = (UpdateUuidPacket)Packet.ReadFromStream(stream);
-
-                packet.Uuid.Should().Be("Terraria");
-            }
-        }
-
-        [Fact]
-        public void WriteToStream_UpdateUuid_IsCorrect() {
-            using (var stream = new MemoryStream(UpdateUuidBytes))
-            using (var stream2 = new MemoryStream()) {
-                var packet = Packet.ReadFromStream(stream);
-
-                packet.WriteToStream(stream2);
-
-                stream2.ToArray().Should().BeEquivalentTo(UpdateUuidBytes);
             }
         }
         

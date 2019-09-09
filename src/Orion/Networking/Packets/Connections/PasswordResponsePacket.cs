@@ -3,7 +3,8 @@ using System.IO;
 
 namespace Orion.Networking.Packets.Connections {
     /// <summary>
-    /// Packet sent from the client to the server in response to a <see cref="RequestPasswordPacket"/>.
+    /// Packet sent from the client to the server to try a password. This is sent in response to a
+    /// <see cref="RequestPasswordPacket"/>.
     /// </summary>
     public sealed class PasswordResponsePacket : Packet {
         private string _password = "";

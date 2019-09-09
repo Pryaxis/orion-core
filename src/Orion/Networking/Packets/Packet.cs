@@ -6,6 +6,7 @@ using System.IO;
 using System.Text;
 using Orion.Networking.Packets.Connections;
 using Orion.Networking.Packets.Players;
+using Orion.Networking.Packets.World;
 
 namespace Orion.Networking.Packets {
     /// <summary>
@@ -23,9 +24,9 @@ namespace Orion.Networking.Packets {
                 [PacketType.ContinueConnecting] = () => new ContinueConnectingPacket(),
                 [PacketType.PlayerInfo] = () => new PlayerInfoPacket(),
                 [PacketType.PlayerInventorySlot] = () => new PlayerInventorySlotPacket(),
-                [PacketType.FinishConnection] = () => new FinishConnectionPacket(),
+                [PacketType.FinishConnecting] = () => new FinishConnectingPacket(),
                 [PacketType.UpdateWorldInfo] = () => new UpdateWorldInfoPacket(),
-                [PacketType.RequestWorldSection] = () => new RequestWorldSectionPacket(),
+                [PacketType.RequestSection] = () => new RequestSectionPacket(),
                 [PacketType.UpdateClientStatus] = () => new UpdateClientStatusPacket(),
                 [PacketType.UpdateWorldSection] = () => new UpdateWorldSectionPacket(),
                 [PacketType.SyncTileFrames] = () => new SyncTileFramesPacket(),
@@ -81,7 +82,7 @@ namespace Orion.Networking.Packets {
                 [PacketType.PaintWall] = () => new PaintWallPacket(),
                 [PacketType.TeleportEntity] = () => new TeleportEntityPacket(),
                 [PacketType.HealOtherPlayer] = () => new HealOtherPlayerPacket(),
-                [PacketType.UpdateUuid] = () => new UpdateUuidPacket(),
+                [PacketType.ClientUuid] = () => new ClientUuidPacket(),
                 [PacketType.RequestOrUpdateChestName] = () => new RequestOrUpdateChestNamePacket(),
                 [PacketType.CatchNpc] = () => new CatchNpcPacket(),
                 [PacketType.ReleaseNpc] = () => new ReleaseNpcPacket(),
@@ -180,29 +181,14 @@ namespace Orion.Networking.Packets {
                 var startPosition = stream.Position;
 
                 writer.Write((ushort)0);
-
-                // This is a hack until I focus down on a better implementation.
-                var type = GetType();
-                if (PacketTypes.TryGetValue(type, out var packetType)) {
-                    writer.Write((byte)packetType);
-                } else {
-                    if (Enum.TryParse(type.Name.Replace("Packet", ""), out packetType)) {
-                        PacketTypes[type] = packetType;
-                        writer.Write((byte)packetType);
-                    } else {
-                        Debug.Assert(this is UnknownPacket, "Packet should be an UnknownPacket.");
-                    }
-                }
-
+                writer.Write((byte)Type);
                 WriteToWriter(writer);
 
                 var finalPosition = stream.Position;
                 var packetLength = finalPosition - startPosition;
 
-                /*
-                 * Ideally we would have thrown this exception a long time ago, when the packet is actually being
-                 * modified. Unfortunately, this is a major pain to implement properly.
-                 */
+                // Ideally we would have thrown this exception a long time ago, when the packet is actually being
+                // modified. Unfortunately, this is a major pain to implement properly.
                 if (packetLength > ushort.MaxValue) {
                     throw new InvalidOperationException("Packet is too long.");
                 }
