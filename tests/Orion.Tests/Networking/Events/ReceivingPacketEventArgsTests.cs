@@ -8,7 +8,7 @@ namespace Orion.Tests.Networking.Events {
     public class ReceivingPacketEventArgsTests {
         [Fact]
         public void Ctor_NullSender_ThrowsArgumentNullException() {
-            var packet = new ConnectPacket {Version = "test"};
+            var packet = new StartConnectingPacket {Version = "test"};
             Func<ReceivingPacketEventArgs> func = () => new ReceivingPacketEventArgs(null, packet);
 
             func.Should().Throw<ArgumentNullException>();
@@ -24,7 +24,7 @@ namespace Orion.Tests.Networking.Events {
 
         [Fact]
         public void Ctor_StartsOffNotDirty() {
-            var packet = new ConnectPacket {Version = "test"};
+            var packet = new StartConnectingPacket {Version = "test"};
             var args = new ReceivingPacketEventArgs(new Terraria.RemoteClient(), packet);
 
             args.IsPacketDirty.Should().BeFalse();
@@ -33,7 +33,7 @@ namespace Orion.Tests.Networking.Events {
         [Fact]
         public void GetSender_IsCorrect() {
             var sender = new Terraria.RemoteClient();
-            var packet = new ConnectPacket {Version = "test"};
+            var packet = new StartConnectingPacket {Version = "test"};
             var args = new ReceivingPacketEventArgs(sender, packet);
 
             args.Sender.Should().BeSameAs(sender);
@@ -42,7 +42,7 @@ namespace Orion.Tests.Networking.Events {
         [Fact]
         public void GetPacket_IsCorrect() {
             var sender = new Terraria.RemoteClient();
-            var packet = new ConnectPacket {Version = "test"};
+            var packet = new StartConnectingPacket {Version = "test"};
             var args = new ReceivingPacketEventArgs(sender, packet);
 
             args.Packet.Should().BeSameAs(packet);
@@ -51,9 +51,9 @@ namespace Orion.Tests.Networking.Events {
         [Fact]
         public void SetPacket_IsCorrect() {
             var sender = new Terraria.RemoteClient();
-            var packet = new ConnectPacket {Version = "test"};
+            var packet = new StartConnectingPacket {Version = "test"};
             var args = new ReceivingPacketEventArgs(sender, packet);
-            var packet2 = new ConnectPacket {Version = "test2"};
+            var packet2 = new StartConnectingPacket {Version = "test2"};
 
             args.Packet = packet2;
 
@@ -63,7 +63,7 @@ namespace Orion.Tests.Networking.Events {
 
         [Fact]
         public void SetPacket_NullValue_ThrowsArgumentNullException() {
-            var packet = new ConnectPacket {Version = "test"};
+            var packet = new StartConnectingPacket {Version = "test"};
             var args = new ReceivingPacketEventArgs(new Terraria.RemoteClient(), packet);
             Action action = () => args.Packet = null;
 
@@ -72,7 +72,7 @@ namespace Orion.Tests.Networking.Events {
 
         [Fact]
         public void MarkPacketAsDirty_IsCorrect() {
-            var packet = new ConnectPacket {Version = "test"};
+            var packet = new StartConnectingPacket {Version = "test"};
             var args = new ReceivingPacketEventArgs(new Terraria.RemoteClient(), packet);
             args.MarkPacketAsDirty();
 

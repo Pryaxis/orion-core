@@ -3,7 +3,7 @@
 namespace Orion.Networking.Packets.Connections {
     /// <summary>
     /// Packet sent from the client to the server to finish connecting. This is sent in response to a
-    /// <see cref="ContinueConnectingPacket"/>.
+    /// <see cref="ContinueConnectingPacket"/>
     /// </summary>
     public sealed class FinishConnectingPacket : Packet {
         private protected override PacketType Type => PacketType.FinishConnecting;

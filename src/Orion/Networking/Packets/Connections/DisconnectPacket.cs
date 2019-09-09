@@ -4,7 +4,8 @@ using Orion.Networking.Packets.Extensions;
 
 namespace Orion.Networking.Packets.Connections {
     /// <summary>
-    /// Packet sent from the server to the client to disconnect it.
+    /// Packet sent from the server to the client to disconnect it. This is sent as a response to an invalid
+    /// <see cref="PasswordResponsePacket"/> or for various other reasons.
     /// </summary>
     public sealed class DisconnectPacket : Packet {
         private Terraria.Localization.NetworkText _reason = Terraria.Localization.NetworkText.Empty;

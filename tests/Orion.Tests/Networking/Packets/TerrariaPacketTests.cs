@@ -17,7 +17,7 @@ namespace Orion.Tests.Networking.Packets {
 
         [Fact]
         public void WriteToStream_NullStream_ThrowsArgumentNullException() {
-            var packet = new ConnectPacket();
+            var packet = new StartConnectingPacket();
             Action action = () => packet.WriteToStream(null);
 
             action.Should().Throw<ArgumentNullException>();
@@ -25,7 +25,7 @@ namespace Orion.Tests.Networking.Packets {
 
         [Fact]
         public void WriteToStream_PacketTooLong_ThrowsInvalidOperationException() {
-            var packet = new ConnectPacket {Version = new string('a', ushort.MaxValue)};
+            var packet = new StartConnectingPacket {Version = new string('a', ushort.MaxValue)};
             using (var stream = new MemoryStream()) {
                 // ReSharper disable once AccessToDisposedClosure
                 Action action = () => packet.WriteToStream(stream);

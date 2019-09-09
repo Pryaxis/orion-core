@@ -4,7 +4,7 @@
     /// </summary>
     public enum PacketType : byte {
 #pragma warning disable 1591
-        Connect = 1,
+        StartConnecting = 1,
         Disconnect = 2,
         ContinueConnecting = 3,
         PlayerData = 4,

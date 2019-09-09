@@ -6,15 +6,7 @@ using Orion.Networking.Packets.Npcs;
 using Xunit;
 
 namespace Orion.Tests.Networking.Packets.Npcs {
-    public class NpcNameTests {
-        [Fact]
-        public void SetNpcName_NullValue_ThrowsArgumentNullException() {
-            var packet = new NpcNamePacket();
-            Action action = () => packet.NpcName = null;
-
-            action.Should().Throw<ArgumentNullException>();
-        }
-
+    public class NpcNamePacketTests {
         public static readonly byte[] NpcNameBytes = {14, 0, 56, 0, 0, 8, 84, 101, 114, 114, 97, 114, 105, 97,};
 
         [Fact]
@@ -36,6 +28,30 @@ namespace Orion.Tests.Networking.Packets.Npcs {
                 packet.WriteToStream(stream2);
 
                 stream2.ToArray().Should().BeEquivalentTo(NpcNameBytes);
+            }
+        }
+
+        public static readonly byte[] NpcNameBytes2 = {5, 0, 56, 0, 0};
+
+        [Fact]
+        public void ReadFromStream_FromClient_IsCorrect() {
+            using (var stream = new MemoryStream(NpcNameBytes2)) {
+                var packet = (NpcNamePacket)Packet.ReadFromStream(stream);
+
+                packet.NpcIndex.Should().Be(0);
+                packet.NpcName.Should().BeNull();
+            }
+        }
+
+        [Fact]
+        public void WriteToStream_FromClient_IsCorrect() {
+            using (var stream = new MemoryStream(NpcNameBytes2))
+            using (var stream2 = new MemoryStream()) {
+                var packet = Packet.ReadFromStream(stream);
+
+                packet.WriteToStream(stream2);
+
+                stream2.ToArray().Should().BeEquivalentTo(NpcNameBytes2);
             }
         }
     }

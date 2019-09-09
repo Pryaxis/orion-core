@@ -3,11 +3,11 @@
 namespace Orion.Networking.Packets.Connections {
     /// <summary>
     /// Packet sent from the server to the client to allow it to continue connecting. This is sent in response to either
-    /// a <see cref="ConnectPacket"/> or a correct <see cref="PasswordResponsePacket"/>.
+    /// a <see cref="StartConnectingPacket"/> or a valid <see cref="PasswordResponsePacket"/>.
     /// </summary>
     public sealed class ContinueConnectingPacket : Packet {
         /// <summary>
-        /// Gets or sets the player index that the client will use.
+        /// Gets or sets the player index that the client will begin using.
         /// </summary>
         public byte PlayerIndex { get; set; }
 

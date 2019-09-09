@@ -25,7 +25,7 @@ namespace Orion.Networking.Packets {
     public abstract class Packet {
         private static readonly IDictionary<PacketType, Func<Packet>> PacketConstructors =
             new Dictionary<PacketType, Func<Packet>> {
-                [PacketType.Connect] = () => new ConnectPacket(),
+                [PacketType.StartConnecting] = () => new StartConnectingPacket(),
                 [PacketType.Disconnect] = () => new DisconnectPacket(),
                 [PacketType.ContinueConnecting] = () => new ContinueConnectingPacket(),
                 [PacketType.PlayerData] = () => new PlayerDataPacket(),
