@@ -1,6 +1,6 @@
 ﻿using System.IO;
 
-namespace Orion.Networking.Packets {
+namespace Orion.Networking.Packets.World {
     /// <summary>
     /// Packet sent from the server to the client to set invasion information.
     /// </summary>

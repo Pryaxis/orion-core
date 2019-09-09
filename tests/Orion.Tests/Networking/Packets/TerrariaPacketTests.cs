@@ -4,11 +4,9 @@ using FluentAssertions;
 using Microsoft.Xna.Framework;
 using Orion.Items;
 using Orion.Networking.Packets;
-using Orion.Networking.Packets.Players;
 using Orion.Npcs;
 using Orion.Players;
 using Orion.Projectiles;
-using Orion.Tests.Networking.Packets.Players;
 using Orion.World;
 using Orion.World.Tiles;
 using Xunit;
@@ -282,59 +280,6 @@ namespace Orion.Tests.Networking.Packets {
                 packet.WriteToStream(stream2);
 
                 stream2.ToArray().Should().BeEquivalentTo(UpdatePlayerStatusBytes);
-            }
-        }
-
-        private static readonly byte[] ModifyTileBytes = {11, 0, 17, 0, 16, 14, 194, 1, 1, 0, 0};
-
-        [Fact]
-        public void ReadFromStream_ModifyTile_IsCorrect() {
-            using (var stream = new MemoryStream(ModifyTileBytes)) {
-                var packet = (ModifyTilePacket)Packet.ReadFromStream(stream);
-
-                packet.Type.Should().Be(ModifyTilePacket.ModificationType.DestroyBlock);
-                packet.X.Should().Be(3600);
-                packet.Y.Should().Be(450);
-                packet.Data.Should().Be(1);
-                packet.Style.Should().Be(0);
-            }
-        }
-
-        [Fact]
-        public void WriteToStream_ModifyTile_IsCorrect() {
-            using (var stream = new MemoryStream(ModifyTileBytes))
-            using (var stream2 = new MemoryStream()) {
-                var packet = Packet.ReadFromStream(stream);
-
-                packet.WriteToStream(stream2);
-
-                stream2.ToArray().Should().BeEquivalentTo(ModifyTileBytes);
-            }
-        }
-
-        private static readonly byte[] UpdateTimeBytes = {12, 0, 18, 1, 0, 128, 0, 0, 200, 0, 200, 0};
-
-        [Fact]
-        public void ReadFromStream_UpdateTime_IsCorrect() {
-            using (var stream = new MemoryStream(UpdateTimeBytes)) {
-                var packet = (UpdateTimePacket)Packet.ReadFromStream(stream);
-
-                packet.IsDaytime.Should().BeTrue();
-                packet.Time.Should().Be(32768);
-                packet.SunY.Should().Be(200);
-                packet.MoonY.Should().Be(200);
-            }
-        }
-
-        [Fact]
-        public void WriteToStream_UpdateTime_IsCorrect() {
-            using (var stream = new MemoryStream(UpdateTimeBytes))
-            using (var stream2 = new MemoryStream()) {
-                var packet = Packet.ReadFromStream(stream);
-
-                packet.WriteToStream(stream2);
-
-                stream2.ToArray().Should().BeEquivalentTo(UpdateTimeBytes);
             }
         }
 
@@ -910,30 +855,6 @@ namespace Orion.Tests.Networking.Packets {
                 packet.WriteToStream(stream2);
 
                 stream2.ToArray().Should().BeEquivalentTo(PlayHarpNoteBytes);
-            }
-        }
-        
-        public static readonly byte[] ActivateWiringBytes = {7, 0, 59, 0, 1, 100, 0};
-
-        [Fact]
-        public void ReadFromStream_ActivateWiring_IsCorrect() {
-            using (var stream = new MemoryStream(ActivateWiringBytes)) {
-                var packet = (ActivateWiringPacket)Packet.ReadFromStream(stream);
-
-                packet.TileX.Should().Be(256);
-                packet.TileY.Should().Be(100);
-            }
-        }
-
-        [Fact]
-        public void WriteToStream_ActivateWiring_IsCorrect() {
-            using (var stream = new MemoryStream(ActivateWiringBytes))
-            using (var stream2 = new MemoryStream()) {
-                var packet = Packet.ReadFromStream(stream);
-
-                packet.WriteToStream(stream2);
-
-                stream2.ToArray().Should().BeEquivalentTo(ActivateWiringBytes);
             }
         }
         

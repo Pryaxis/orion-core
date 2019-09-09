@@ -6,7 +6,7 @@ using Xunit;
 
 namespace Orion.Tests.Networking.Packets.World.TileEntities {
     public class RequestSignPacketTests {
-        public static readonly byte[] RequestSignBytes = {7, 0, 46, 0, 1, 100, 0};
+        public static readonly byte[] RequestSignBytes = {7, 0, 46, 0, 1, 100, 0,};
 
         [Fact]
         public void ReadFromStream_IsCorrect() {

@@ -19,7 +19,7 @@ namespace Orion.Tests.Networking.Packets.Players {
 
         public static readonly byte[] PlayerInfoBytes = {
             34, 0, 4, 0, 2, 50, 1, 102, 0, 0, 0, 0, 26, 131, 54, 158, 74, 51, 47, 39, 88, 184, 58, 43, 69, 8, 97, 162,
-            167, 255, 212, 159, 76, 0
+            167, 255, 212, 159, 76, 0,
         };
 
         [Fact]

@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Text;
+﻿using System.IO;
 using FluentAssertions;
 using Orion.Networking.Packets;
 using Orion.Networking.Packets.World;
@@ -10,7 +7,7 @@ using Xunit;
 
 namespace Orion.Tests.Networking.Packets.World {
     public class LiquidPacketTests {
-        public static readonly byte[] LiquidBytes = {9, 0, 48, 0, 1, 100, 0, 255, 0};
+        public static readonly byte[] LiquidBytes = {9, 0, 48, 0, 1, 100, 0, 255, 0,};
 
         [Fact]
         public void ReadFromStream_IsCorrect() {

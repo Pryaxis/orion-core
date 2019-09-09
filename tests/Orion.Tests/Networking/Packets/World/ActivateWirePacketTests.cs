@@ -5,25 +5,28 @@ using Orion.Networking.Packets.World;
 using Xunit;
 
 namespace Orion.Tests.Networking.Packets.World {
-    public class EnterWorldPacketTests {
-        public static readonly byte[] EnterWorldBytes = {3, 0, 49,};
+    public class ActivateWirePacketTests {
+        public static readonly byte[] ActivateWireBytes = {7, 0, 59, 0, 1, 100, 0,};
 
         [Fact]
         public void ReadFromStream_IsCorrect() {
-            using (var stream = new MemoryStream(EnterWorldBytes)) {
-                Packet.ReadFromStream(stream).Should().BeOfType<EnterWorldPacket>();
+            using (var stream = new MemoryStream(ActivateWireBytes)) {
+                var packet = (ActivateWirePacket)Packet.ReadFromStream(stream);
+
+                packet.WireX.Should().Be(256);
+                packet.WireY.Should().Be(100);
             }
         }
 
         [Fact]
         public void WriteToStream_IsCorrect() {
-            using (var stream = new MemoryStream(EnterWorldBytes))
+            using (var stream = new MemoryStream(ActivateWireBytes))
             using (var stream2 = new MemoryStream()) {
                 var packet = Packet.ReadFromStream(stream);
 
                 packet.WriteToStream(stream2);
 
-                stream2.ToArray().Should().BeEquivalentTo(EnterWorldBytes);
+                stream2.ToArray().Should().BeEquivalentTo(ActivateWireBytes);
             }
         }
     }

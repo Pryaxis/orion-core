@@ -1,11 +1,12 @@
 ﻿using System.IO;
 using FluentAssertions;
 using Orion.Networking.Packets;
+using Orion.Networking.Packets.World;
 using Xunit;
 
 namespace Orion.Tests.Networking.Packets.World {
     public class InvasionInfoPacketTests {
-        public static readonly byte[] InvasionInfoBytes = {19, 0, 78, 1, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 2, 0, 0, 0};
+        public static readonly byte[] InvasionInfoBytes = {19, 0, 78, 1, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 2, 0, 0, 0,};
 
         [Fact]
         public void ReadFromStream_IsCorrect() {

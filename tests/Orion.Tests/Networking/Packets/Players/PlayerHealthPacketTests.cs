@@ -6,7 +6,7 @@ using Xunit;
 
 namespace Orion.Tests.Networking.Packets.Players {
     public class PlayerHealthPacketTests {
-        private static readonly byte[] PlayerHealthBytes = {8, 0, 16, 0, 100, 0, 100, 0};
+        private static readonly byte[] PlayerHealthBytes = {8, 0, 16, 0, 100, 0, 100, 0,};
 
         [Fact]
         public void ReadFromStream_IsCorrect() {

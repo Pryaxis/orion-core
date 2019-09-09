@@ -7,7 +7,7 @@ using Xunit;
 
 namespace Orion.Tests.Networking.Packets.World {
     public class PaintWallPacketTests {
-        public static readonly byte[] PaintWallBytes = {8, 0, 64, 0, 1, 100, 0, 1};
+        public static readonly byte[] PaintWallBytes = {8, 0, 64, 0, 1, 100, 0, 1,};
 
         [Fact]
         public void ReadFromStream_IsCorrect() {

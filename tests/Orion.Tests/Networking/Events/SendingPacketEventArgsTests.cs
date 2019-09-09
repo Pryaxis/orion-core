@@ -1,7 +1,6 @@
 ﻿using System;
 using FluentAssertions;
 using Orion.Networking.Events;
-using Orion.Networking.Packets;
 using Orion.Networking.Packets.Connections;
 using Xunit;
 

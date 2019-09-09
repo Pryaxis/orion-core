@@ -6,7 +6,7 @@ using Xunit;
 
 namespace Orion.Tests.Networking.Packets.Players {
     public class TeleportationPotionPacketTests {
-        public static readonly byte[] TeleportationPotionBytes = {3, 0, 73};
+        public static readonly byte[] TeleportationPotionBytes = {3, 0, 73,};
 
         [Fact]
         public void ReadFromStream_IsCorrect() {

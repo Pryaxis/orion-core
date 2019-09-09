@@ -7,7 +7,7 @@ using Xunit;
 
 namespace Orion.Tests.Networking.Packets.Players {
     public class PlayerInventorySlotPacketTests {
-        private static readonly byte[] PlayerInventorySlotBytes = {10, 0, 5, 0, 0, 1, 0, 59, 179, 13};
+        private static readonly byte[] PlayerInventorySlotBytes = {10, 0, 5, 0, 0, 1, 0, 59, 179, 13,};
 
         [Fact]
         public void ReadFromStream_IsCorrect() {

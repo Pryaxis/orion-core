@@ -6,7 +6,7 @@ using Xunit;
 
 namespace Orion.Tests.Networking.Packets.World {
     public class RequestSectionPacketTests {
-        private static readonly byte[] RequestSectionBytes = {11, 0, 8, 255, 255, 255, 255, 255, 255, 255, 255};
+        private static readonly byte[] RequestSectionBytes = {11, 0, 8, 255, 255, 255, 255, 255, 255, 255, 255,};
 
         [Fact]
         public void ReadFromStream_IsCorrect() {

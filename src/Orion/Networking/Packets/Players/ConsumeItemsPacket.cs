@@ -1,11 +1,12 @@
 ﻿using System.IO;
 using Orion.Items;
 
-namespace Orion.Networking.Packets {
+namespace Orion.Networking.Packets.Players {
     /// <summary>
-    /// Packet sent to consume a player's items.
+    /// Packet sent from the server to the client to consume a player's items. This is sent in response to a
+    /// <see cref="RequestMassWireOperationPacket"/>.
     /// </summary>
-    public sealed class ConsumeWiresPacket : Packet {
+    public sealed class ConsumeItemsPacket : Packet {
         /// <summary>
         /// Gets or sets the item type.
         /// </summary>
@@ -20,6 +21,8 @@ namespace Orion.Networking.Packets {
         /// Gets or sets the player index.
         /// </summary>
         public byte PlayerIndex { get; set; }
+
+        private protected override PacketType Type => PacketType.ConsumeItems;
 
         private protected override void ReadFromReader(BinaryReader reader, ushort packetLength) {
             ItemType = (ItemType)reader.ReadInt16();

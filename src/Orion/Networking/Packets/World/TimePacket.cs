@@ -1,10 +1,10 @@
 ﻿using System.IO;
 
-namespace Orion.Networking.Packets {
+namespace Orion.Networking.Packets.World {
     /// <summary>
-    /// Packet sent to update the time.
+    /// Packet sent to set the time.
     /// </summary>
-    public sealed class UpdateTimePacket : Packet {
+    public sealed class TimePacket : Packet {
         /// <summary>
         /// Gets or sets a value indicating whether it is daytime.
         /// </summary>
@@ -24,6 +24,8 @@ namespace Orion.Networking.Packets {
         /// Gets or sets the moon's Y position.
         /// </summary>
         public short MoonY { get; set; }
+
+        private protected override PacketType Type => PacketType.Time;
 
         /// <inheritdoc />
         private protected override void ReadFromReader(BinaryReader reader, ushort packetLength) {

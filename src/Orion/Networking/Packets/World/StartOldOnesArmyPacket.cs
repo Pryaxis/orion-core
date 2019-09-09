@@ -1,10 +1,10 @@
 ﻿using System.IO;
 
-namespace Orion.Networking.Packets {
+namespace Orion.Networking.Packets.World {
     /// <summary>
-    /// Packet sent to the server to start an Old One's Army event.
+    /// Packet sent from the client to the server to start the Old One's Army event.
     /// </summary>
-    public sealed class StartOldOnesArmyInvasionPacket : Packet {
+    public sealed class StartOldOnesArmyPacket : Packet {
         /// <summary>
         /// Gets or sets the crystal's X coordinate.
         /// </summary>
@@ -14,6 +14,8 @@ namespace Orion.Networking.Packets {
         /// Gets or sets the crystal's Y coordinate.
         /// </summary>
         public short CrystalY { get; set; }
+
+        private protected override PacketType Type => PacketType.StartOldOnesArmy;
 
         private protected override void ReadFromReader(BinaryReader reader, ushort packetLength) {
             CrystalX = reader.ReadInt16();
