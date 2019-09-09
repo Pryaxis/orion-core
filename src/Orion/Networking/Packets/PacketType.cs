@@ -54,7 +54,7 @@
         UnlockTile = 52,
         AddNpcBuff = 53,
         UpdateNpcBuffs = 54,
-        AddPlayerBuff = 55,
+        AddBuffToPlayer = 55,
         UpdateNpcName = 56,
         UpdateBiomeStats = 57,
         PlayHarpNote = 58,

@@ -70,7 +70,7 @@ namespace Orion.Networking.Packets {
                 [PacketType.UnlockTile] = () => new UnlockTilePacket(),
                 [PacketType.AddNpcBuff] = () => new AddNpcBuffPacket(),
                 [PacketType.UpdateNpcBuffs] = () => new UpdateNpcBuffsPacket(),
-                [PacketType.AddPlayerBuff] = () => new AddPlayerBuffPacket(),
+                [PacketType.AddBuffToPlayer] = () => new AddBuffToPlayerPacket(),
                 [PacketType.UpdateNpcName] = () => new UpdateNpcNamePacket(),
                 [PacketType.UpdateBiomeStats] = () => new UpdateBiomeStatsPacket(),
                 [PacketType.PlayHarpNote] = () => new PlayHarpNotePacket(),

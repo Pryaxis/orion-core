@@ -4,9 +4,11 @@ using FluentAssertions;
 using Microsoft.Xna.Framework;
 using Orion.Items;
 using Orion.Networking.Packets;
+using Orion.Networking.Packets.Players;
 using Orion.Npcs;
 using Orion.Players;
 using Orion.Projectiles;
+using Orion.Tests.Networking.Packets.Players;
 using Orion.World;
 using Orion.World.Tiles;
 using Xunit;
@@ -1209,31 +1211,6 @@ namespace Orion.Tests.Networking.Packets {
                 packet.WriteToStream(stream2);
 
                 stream2.ToArray().Should().BeEquivalentTo(UpdateNpcBuffsBytes);
-            }
-        }
-
-        public static readonly byte[] AddPlayerBuffBytes = {7, 0, 55, 0, 1, 100, 0};
-
-        [Fact]
-        public void ReadFromStream_AddPlayerBuff_IsCorrect() {
-            using (var stream = new MemoryStream(AddPlayerBuffBytes)) {
-                var packet = (AddPlayerBuffPacket)Packet.ReadFromStream(stream);
-                
-                packet.PlayerIndex.Should().Be(0);
-                packet.BuffType.Should().Be(BuffType.ObsidianSkin);
-                packet.BuffTime.Should().Be(100);
-            }
-        }
-
-        [Fact]
-        public void WriteToStream_AddPlayerBuff_IsCorrect() {
-            using (var stream = new MemoryStream(AddPlayerBuffBytes))
-            using (var stream2 = new MemoryStream()) {
-                var packet = Packet.ReadFromStream(stream);
-
-                packet.WriteToStream(stream2);
-
-                stream2.ToArray().Should().BeEquivalentTo(AddPlayerBuffBytes);
             }
         }
 
