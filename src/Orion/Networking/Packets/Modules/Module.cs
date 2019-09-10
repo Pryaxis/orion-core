@@ -13,7 +13,7 @@ namespace Orion.Networking.Packets.Modules {
                 [ModuleType.LiquidChanges] = () => new LiquidChangesModule(),
                 [ModuleType.Chat] = () => new ChatModule(),
             };
-        
+
         private protected abstract ModuleType Type { get; }
 
         /// <summary>
@@ -24,9 +24,7 @@ namespace Orion.Networking.Packets.Modules {
         /// <exception cref="ArgumentNullException"><paramref name="stream"/> is <c>null</c>.</exception>
         /// <returns>The module.</returns>
         public static Module ReadFromStream(Stream stream, PacketContext context) {
-            if (stream == null) {
-                throw new ArgumentNullException(nameof(stream));
-            }
+            if (stream == null) throw new ArgumentNullException(nameof(stream));
 
             using (var reader = new BinaryReader(stream, Encoding.UTF8, true)) {
                 var moduleType = (ModuleType)reader.ReadUInt16();
@@ -43,9 +41,7 @@ namespace Orion.Networking.Packets.Modules {
         /// <param name="context">The context with which to write the packet to.</param>
         /// <exception cref="ArgumentNullException"><paramref name="stream"/> is <c>null</c>.</exception>
         public void WriteToStream(Stream stream, PacketContext context) {
-            if (stream == null) {
-                throw new ArgumentNullException(nameof(stream));
-            }
+            if (stream == null) throw new ArgumentNullException(nameof(stream));
 
             using (var writer = new BinaryWriter(stream, Encoding.UTF8, true)) {
                 writer.Write((ushort)Type);

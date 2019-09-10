@@ -114,9 +114,7 @@ namespace Orion.Networking.Packets.Players {
 
             PlayerSelectedItemIndex = reader.ReadByte();
             PlayerPosition = reader.ReadVector2();
-            if (flags2[2]) {
-                PlayerVelocity = reader.ReadVector2();
-            }
+            if (flags2[2]) PlayerVelocity = reader.ReadVector2();
         }
 
         private protected override void WriteToWriter(BinaryWriter writer, PacketContext context) {
@@ -142,9 +140,7 @@ namespace Orion.Networking.Packets.Players {
 
             writer.Write(PlayerSelectedItemIndex);
             writer.Write(PlayerPosition);
-            if (flags2[2]) {
-                writer.Write(PlayerVelocity);
-            }
+            if (flags2[2]) writer.Write(PlayerVelocity);
         }
     }
 }

@@ -13,7 +13,7 @@ namespace Orion.Networking.Packets.Connections {
         public byte PlayerIndex { get; set; }
 
         private protected override PacketType Type => PacketType.ContinueConnecting;
-        
+
         /// <inheritdoc />
         [ExcludeFromCodeCoverage]
         public override string ToString() => $"{Type}[#={PlayerIndex}]";

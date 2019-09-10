@@ -189,13 +189,13 @@ namespace Orion.Networking.Packets.World {
         /// <summary>
         /// Gets or sets a value indicating whether a shadow orb has been smashed.
         /// </summary>
-		public bool HasSmashedShadowOrb { get; set; }
+        public bool HasSmashedShadowOrb { get; set; }
 
         /// <summary>
         /// Gets or sets a value indicating whether the Eye of Cthulhu has been defeated.
         /// </summary>
         public bool HasDefeatedEyeOfCthulhu { get; set; }
-        
+
         /// <summary>
         /// Gets or sets a value indicating whether the "evil" boss (Eater of Worlds, or Brain of Cthulhu) has been
         /// defeated.

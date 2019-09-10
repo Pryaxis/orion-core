@@ -19,6 +19,7 @@ namespace Orion.Networking.Packets.Events {
         /// <summary>
         /// Gets or sets the invasion icon type.
         /// </summary>
+
         // TODO: implement enum for this.
         public int InvasionIconType { get; set; }
 

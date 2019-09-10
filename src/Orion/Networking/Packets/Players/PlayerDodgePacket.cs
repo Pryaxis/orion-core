@@ -14,7 +14,7 @@ namespace Orion.Networking.Packets.Players {
         /// <summary>
         /// Gets or sets the player's dodge type.
         /// </summary>
-        public PlayerDodgeType PlayerDodgeType {get; set; }
+        public PlayerDodgeType PlayerDodgeType { get; set; }
 
         private protected override PacketType Type => PacketType.PlayerDodge;
 

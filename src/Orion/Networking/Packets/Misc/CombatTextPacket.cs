@@ -10,7 +10,7 @@ namespace Orion.Networking.Packets.Misc {
     /// </summary>
     public sealed class CombatTextPacket : Packet {
         private Terraria.Localization.NetworkText _text = Terraria.Localization.NetworkText.Empty;
-        
+
         /// <summary>
         /// Gets or sets the text's position.
         /// </summary>

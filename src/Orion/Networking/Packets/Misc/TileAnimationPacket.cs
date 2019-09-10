@@ -10,13 +10,14 @@ namespace Orion.Networking.Packets.Misc {
         /// <summary>
         /// Gets or sets the animation type.
         /// </summary>
+
         // TODO: implement enum for this.
         public short AnimationType { get; set; }
 
         /// <summary>
         /// Gets or sets the block type.
         /// </summary>
-        public BlockType BlockType {get; set;}
+        public BlockType BlockType { get; set; }
 
         /// <summary>
         /// Gets or sets the tile's X coordinate.

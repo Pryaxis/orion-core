@@ -379,32 +379,7 @@ namespace Orion.Networking.Packets.World {
         private void WriteTileEntitiesToWriterImpl(BinaryWriter writer) {
             writer.Write((short)SectionTileEntities.Count);
             foreach (var tileEntity in SectionTileEntities) {
-                switch (tileEntity) {
-                case NetworkTargetDummy targetDummy:
-                    writer.Write((byte)0);
-                    writer.Write(tileEntity.Index);
-                    writer.Write((short)tileEntity.X);
-                    writer.Write((short)tileEntity.Y);
-                    writer.Write((short)targetDummy.NpcIndex);
-                    break;
-                case NetworkItemFrame itemFrame:
-                    writer.Write((byte)1);
-                    writer.Write(tileEntity.Index);
-                    writer.Write((short)tileEntity.X);
-                    writer.Write((short)tileEntity.Y);
-                    writer.Write((short)itemFrame.ItemType);
-                    writer.Write((byte)itemFrame.ItemPrefix);
-                    writer.Write((short)itemFrame.ItemStackSize);
-                    break;
-                case NetworkLogicSensor logicSensor:
-                    writer.Write((byte)2);
-                    writer.Write(tileEntity.Index);
-                    writer.Write((short)tileEntity.X);
-                    writer.Write((short)tileEntity.Y);
-                    writer.Write((byte)logicSensor.SensorType);
-                    writer.Write(logicSensor.IsActivated);
-                    break;
-                }
+                tileEntity.WriteToWriter(writer, true);
             }
         }
     }

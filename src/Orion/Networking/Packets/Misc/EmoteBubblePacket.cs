@@ -29,6 +29,7 @@ namespace Orion.Networking.Packets.Misc {
         /// <summary>
         /// Gets or sets the emotion.
         /// </summary>
+
         // TODO: implement enum for this.
         public int Emotion { get; set; }
 
@@ -46,9 +47,7 @@ namespace Orion.Networking.Packets.Misc {
         private protected override void ReadFromReader(BinaryReader reader, PacketContext context) {
             EmoteIndex = reader.ReadInt32();
             AnchorType = reader.ReadByte();
-            if (AnchorType == byte.MaxValue) {
-                return;
-            }
+            if (AnchorType == byte.MaxValue) return;
 
             AnchorIndex = reader.ReadUInt16();
             Lifetime = reader.ReadByte();
@@ -61,9 +60,7 @@ namespace Orion.Networking.Packets.Misc {
         private protected override void WriteToWriter(BinaryWriter writer, PacketContext context) {
             writer.Write(EmoteIndex);
             writer.Write(AnchorType);
-            if (AnchorType == byte.MaxValue) {
-                return;
-            }
+            if (AnchorType == byte.MaxValue) return;
 
             writer.Write(AnchorIndex);
             writer.Write(Lifetime);

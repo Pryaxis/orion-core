@@ -15,7 +15,7 @@ namespace Orion.Networking.Packets.Npcs {
         /// Gets or sets the NPC home's X coordinate.
         /// </summary>
         public short NpcHomeX { get; set; }
-        
+
         /// <summary>
         /// Gets or sets the NPC home's Y coordinate.
         /// </summary>

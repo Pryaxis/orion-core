@@ -41,7 +41,8 @@ namespace Orion.Networking.Packets.World {
             case TileModificationType.DestroyBlock:
                 return $"{Type}[{ModificationType} @ ({TileX}, {TileY}), {ModificationData == 1}]";
             case TileModificationType.PlaceBlock:
-                return $"{Type}[{ModificationType}, {(BlockType)ModificationData}_{ModificationStyle} @ ({TileX}, {TileY})]";
+                return
+                    $"{Type}[{ModificationType}, {(BlockType)ModificationData}_{ModificationStyle} @ ({TileX}, {TileY})]";
             case TileModificationType.DestroyWall:
                 return $"{Type}[{ModificationType} @ ({TileX}, {TileY}), {ModificationData == 1}]";
             case TileModificationType.PlaceWall:

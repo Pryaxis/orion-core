@@ -148,9 +148,7 @@ namespace Orion.Networking.Packets {
         /// <exception cref="ArgumentNullException"><paramref name="stream"/> is <c>null</c>.</exception>
         /// <returns>The packet that was read.</returns>
         public static Packet ReadFromStream(Stream stream, PacketContext context) {
-            if (stream == null) {
-                throw new ArgumentNullException(nameof(stream));
-            }
+            if (stream == null) throw new ArgumentNullException(nameof(stream));
 
             using (var reader = new BinaryReader(stream, Encoding.UTF8, true)) {
                 var position = stream.Position;
@@ -175,9 +173,7 @@ namespace Orion.Networking.Packets {
         /// <exception cref="ArgumentNullException"><paramref name="stream"/> is <c>null</c>.</exception>
         /// <exception cref="InvalidOperationException">The packet cannot be written due to its length.</exception>
         public void WriteToStream(Stream stream, PacketContext context) {
-            if (stream == null) {
-                throw new ArgumentNullException(nameof(stream));
-            }
+            if (stream == null) throw new ArgumentNullException(nameof(stream));
 
             using (var writer = new BinaryWriter(stream, Encoding.UTF8, true)) {
                 var startPosition = stream.Position;

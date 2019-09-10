@@ -21,7 +21,7 @@ namespace Orion.Networking.Packets.Npcs {
 
         /// <inheritdoc />
         [ExcludeFromCodeCoverage]
-        public override string ToString() => $"{Type}[{NpcTypeKillCount}x {NpcType}]";
+        public override string ToString() => $"{Type}[{NpcType} x{NpcTypeKillCount}]";
 
         /// <inheritdoc />
         private protected override void ReadFromReader(BinaryReader reader, PacketContext context) {

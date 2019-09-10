@@ -8,6 +8,7 @@ namespace Orion.Networking.Packets.Items {
     /// <summary>
     /// Packet sent from the server to the client to alter an item.
     /// </summary>
+
     // TODO: write tests for this.
     public sealed class AlterItemPacket : Packet {
         /// <summary>

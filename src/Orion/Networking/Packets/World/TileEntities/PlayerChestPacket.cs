@@ -30,7 +30,8 @@ namespace Orion.Networking.Packets.World.TileEntities {
 
         /// <inheritdoc />
         [ExcludeFromCodeCoverage]
-        public override string ToString() => $"{Type}[#={ChestIndex} @ ({ChestX}, {ChestY}) is {ChestName ?? "un-named"}]";
+        public override string ToString() =>
+            $"{Type}[#={ChestIndex} @ ({ChestX}, {ChestY}) is {ChestName ?? "un-named"}]";
 
         private protected override void ReadFromReader(BinaryReader reader, PacketContext context) {
             ChestIndex = reader.ReadInt16();

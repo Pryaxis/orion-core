@@ -9,6 +9,7 @@ namespace Orion.Networking.Packets.Events {
         /// <summary>
         /// Gets or sets the event ID.
         /// </summary>
+
         // TODO: implement enum for this.
         public short EventId { get; set; }
 

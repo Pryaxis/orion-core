@@ -9,6 +9,7 @@ namespace Orion.Networking.Packets.Events {
         /// <summary>
         /// Gets or sets the angler quest.
         /// </summary>
+
         // TODO: implement enum for this.
         public byte CurrentAnglerQuest { get; set; }
 

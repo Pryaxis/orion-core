@@ -8,7 +8,7 @@ namespace Orion.Networking.Packets.World.TileEntities {
     public sealed class NetworkTargetDummy : NetworkTileEntity, ITargetDummy {
         /// <inheritdoc />
         public int NpcIndex { get; set; }
-        
+
         private protected override TileEntityType Type => TileEntityType.TargetDummy;
 
         private protected override void ReadFromReaderImpl(BinaryReader reader) {

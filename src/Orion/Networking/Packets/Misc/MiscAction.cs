@@ -17,7 +17,7 @@
         /// Use the sundial.
         /// </summary>
         UseSundial = 3,
-            
+
         /// <summary>
         /// Create mimic smoke.
         /// </summary>

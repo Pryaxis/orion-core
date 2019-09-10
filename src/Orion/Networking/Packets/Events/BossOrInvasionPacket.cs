@@ -28,9 +28,7 @@ namespace Orion.Networking.Packets.Events {
         /// </exception>
         public NpcType BossType {
             get {
-                if (!IsBoss) {
-                    throw new InvalidOperationException();
-                }
+                if (!IsBoss) throw new InvalidOperationException();
 
                 return (NpcType)_type;
             }
@@ -45,9 +43,7 @@ namespace Orion.Networking.Packets.Events {
         /// </exception>
         public NetworkInvasionType InvasionType {
             get {
-                if (IsBoss) {
-                    throw new InvalidOperationException();
-                }
+                if (IsBoss) throw new InvalidOperationException();
 
                 return (NetworkInvasionType)_type;
             }

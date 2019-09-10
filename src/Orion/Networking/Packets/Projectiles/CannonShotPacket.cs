@@ -34,6 +34,7 @@ namespace Orion.Networking.Packets.Projectiles {
         /// <summary>
         /// Gets or sets the shot's ammo type.
         /// </summary>
+
         // TODO: implement an enum for this.
         public short ShotAmmoType { get; set; }
 

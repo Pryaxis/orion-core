@@ -9,12 +9,12 @@ namespace Orion.Networking.Packets.World {
         /// <summary>
         /// Gets or sets the tree's X coordinate.
         /// </summary>
-        public short TreeX { get;set; }
+        public short TreeX { get; set; }
 
         /// <summary>
         /// Gets or sets the tree's Y coordinate.
         /// </summary>
-        public short TreeY { get;set; }
+        public short TreeY { get; set; }
 
         /// <summary>
         /// Gets or sets the tree height.

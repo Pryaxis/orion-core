@@ -35,7 +35,13 @@ namespace Orion.Networking.Packets.Npcs {
             writer.Write(NpcIndex);
             foreach (var buff in NpcBuffs) {
                 writer.Write((byte)buff.BuffType);
-                writer.Write((short)(buff.Duration.TotalSeconds * 60.0));
+
+                var ticks = (int)(buff.Duration.TotalSeconds * 60.0);
+                if (ticks >= short.MaxValue) {
+                    writer.Write(short.MaxValue);
+                } else {
+                    writer.Write((short)ticks);
+                }
             }
         }
     }
