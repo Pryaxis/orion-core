@@ -1,13 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Text;
 using Orion.Networking.Packets.Connections;
 using Orion.Networking.Packets.Events;
 using Orion.Networking.Packets.Items;
 using Orion.Networking.Packets.Misc;
+using Orion.Networking.Packets.Modules;
 using Orion.Networking.Packets.Npcs;
 using Orion.Networking.Packets.Players;
 using Orion.Networking.Packets.Projectiles;
@@ -16,12 +16,8 @@ using Orion.Networking.Packets.World.TileEntities;
 
 namespace Orion.Networking.Packets {
     /// <summary>
-    /// Represents a Terraria packet.
+    /// Represents a packet. This is how clients communicate with the server and vice-versa.
     /// </summary>
-    /// <remarks>
-    /// Terraria packets are limited to a maximum of 65536 bytes, but this restriction is not enforced immediately on
-    /// each of the packet types. Instead, this restriction is enforced when the packet is sent.
-    /// </remarks>
     public abstract class Packet {
         private static readonly IDictionary<PacketType, Func<Packet>> PacketConstructors =
             new Dictionary<PacketType, Func<Packet>> {
@@ -101,6 +97,7 @@ namespace Orion.Networking.Packets {
                 [PacketType.PlaceObject] = () => new PlaceObjectPacket(),
                 [PacketType.SyncPlayerChest] = () => new SyncPlayerChestPacket(),
                 [PacketType.ShowCombatNumber] = () => new ShowCombatNumberPacket(),
+                [PacketType.Module] = () => new ModulePacket(),
                 [PacketType.NpcKillCount] = () => new NpcKillCountPacket(),
                 [PacketType.PlayerStealth] = () => new PlayerStealthPacket(),
                 [PacketType.MoveIntoChest] = () => new MoveIntoChestPacket(),
@@ -138,18 +135,19 @@ namespace Orion.Networking.Packets {
                 [PacketType.ShowCombatText] = () => new ShowCombatTextPacket(),
             };
 
-        [ExcludeFromCodeCoverage]
-        internal static int HeaderLength => sizeof(PacketType) + sizeof(short);
-
         private protected abstract PacketType Type { get; }
 
         /// <summary>
-        /// Reads a packet from the specified stream.
+        /// Reads a packet from the given stream with the specified context.
         /// </summary>
         /// <param name="stream">The stream.</param>
+        /// <param name="context">
+        /// The context with which to read the packet. For example, the Server context means the packet should be
+        /// read as if the client sent it.
+        /// </param>
         /// <exception cref="ArgumentNullException"><paramref name="stream"/> is <c>null</c>.</exception>
-        /// <returns>The packet.</returns>
-        public static Packet ReadFromStream(Stream stream) {
+        /// <returns>The packet that was read.</returns>
+        public static Packet ReadFromStream(Stream stream, PacketContext context) {
             if (stream == null) {
                 throw new ArgumentNullException(nameof(stream));
             }
@@ -159,8 +157,8 @@ namespace Orion.Networking.Packets {
                 var packetLength = reader.ReadUInt16();
                 var packetType = (PacketType)reader.ReadByte();
                 var packet = PacketConstructors[packetType]();
-                packet.ReadFromReader(reader, packetLength);
-                
+                packet.ReadFromReader(reader, context);
+
                 Debug.Assert(stream.Position - position == packetLength, "Packet should be fully consumed.");
 
                 return packet;
@@ -168,12 +166,15 @@ namespace Orion.Networking.Packets {
         }
 
         /// <summary>
-        /// Writes the packet to the specified stream.
+        /// Writes the packet to the given stream with the specified context.
         /// </summary>
         /// <param name="stream">The stream.</param>
+        /// <param name="context">
+        /// The context with which to write the packet. For example, the Server context means the packet should be
+        /// written as if the server sent it.</param>
         /// <exception cref="ArgumentNullException"><paramref name="stream"/> is <c>null</c>.</exception>
         /// <exception cref="InvalidOperationException">The packet cannot be written due to its length.</exception>
-        public void WriteToStream(Stream stream) {
+        public void WriteToStream(Stream stream, PacketContext context) {
             if (stream == null) {
                 throw new ArgumentNullException(nameof(stream));
             }
@@ -183,7 +184,7 @@ namespace Orion.Networking.Packets {
 
                 writer.Write((ushort)0);
                 writer.Write((byte)Type);
-                WriteToWriter(writer);
+                WriteToWriter(writer, context);
 
                 var finalPosition = stream.Position;
                 var packetLength = finalPosition - startPosition;
@@ -200,7 +201,7 @@ namespace Orion.Networking.Packets {
             }
         }
 
-        private protected abstract void ReadFromReader(BinaryReader reader, ushort packetLength);
-        private protected abstract void WriteToWriter(BinaryWriter writer);
+        private protected abstract void ReadFromReader(BinaryReader reader, PacketContext context);
+        private protected abstract void WriteToWriter(BinaryWriter writer, PacketContext context);
     }
 }

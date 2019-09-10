@@ -11,7 +11,7 @@ namespace Orion.Tests.Networking.Packets.World {
         [Fact]
         public void ReadFromStream_IsCorrect() {
             using (var stream = new MemoryStream(ActivateWireBytes)) {
-                var packet = (ActivateWirePacket)Packet.ReadFromStream(stream);
+                var packet = (ActivateWirePacket)Packet.ReadFromStream(stream, PacketContext.Server);
 
                 packet.WireX.Should().Be(256);
                 packet.WireY.Should().Be(100);
@@ -22,9 +22,9 @@ namespace Orion.Tests.Networking.Packets.World {
         public void WriteToStream_IsCorrect() {
             using (var stream = new MemoryStream(ActivateWireBytes))
             using (var stream2 = new MemoryStream()) {
-                var packet = Packet.ReadFromStream(stream);
+                var packet = Packet.ReadFromStream(stream, PacketContext.Server);
 
-                packet.WriteToStream(stream2);
+                packet.WriteToStream(stream2, PacketContext.Server);
 
                 stream2.ToArray().Should().BeEquivalentTo(ActivateWireBytes);
             }

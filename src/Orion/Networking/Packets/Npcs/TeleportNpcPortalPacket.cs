@@ -29,14 +29,14 @@ namespace Orion.Networking.Packets.Npcs {
 
         private protected override PacketType Type => PacketType.TeleportNpcPortal;
 
-        private protected override void ReadFromReader(BinaryReader reader, ushort packetLength) {
+        private protected override void ReadFromReader(BinaryReader reader, PacketContext context) {
             NpcIndex = reader.ReadInt16();
             PortalId = reader.ReadInt16();
             NewNpcPosition = reader.ReadVector2();
             NewNpcVelocity = reader.ReadVector2();
         }
 
-        private protected override void WriteToWriter(BinaryWriter writer) {
+        private protected override void WriteToWriter(BinaryWriter writer, PacketContext context) {
             writer.Write(NpcIndex);
             writer.Write(PortalId);
             writer.Write(NewNpcPosition);

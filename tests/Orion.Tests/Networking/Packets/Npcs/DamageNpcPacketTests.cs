@@ -11,7 +11,7 @@ namespace Orion.Tests.Networking.Packets.Npcs {
         [Fact]
         public void ReadFromStream_IsCorrect() {
             using (var stream = new MemoryStream(DamageNpcBytes)) {
-                var packet = (DamageNpcPacket)Packet.ReadFromStream(stream);
+                var packet = (DamageNpcPacket)Packet.ReadFromStream(stream, PacketContext.Server);
 
                 packet.NpcIndex.Should().Be(100);
                 packet.Damage.Should().Be(108);
@@ -25,9 +25,9 @@ namespace Orion.Tests.Networking.Packets.Npcs {
         public void WriteToStream_IsCorrect() {
             using (var stream = new MemoryStream(DamageNpcBytes))
             using (var stream2 = new MemoryStream()) {
-                var packet = Packet.ReadFromStream(stream);
+                var packet = Packet.ReadFromStream(stream, PacketContext.Server);
 
-                packet.WriteToStream(stream2);
+                packet.WriteToStream(stream2, PacketContext.Server);
 
                 stream2.ToArray().Should().BeEquivalentTo(DamageNpcBytes);
             }

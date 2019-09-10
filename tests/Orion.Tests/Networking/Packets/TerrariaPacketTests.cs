@@ -10,7 +10,7 @@ namespace Orion.Tests.Networking.Packets {
     public class TerrariaPacketTests {
         [Fact]
         public void ReadFromStream_NullStream_ThrowsArgumentNullException() {
-            Func<Packet> func = () => Packet.ReadFromStream(null);
+            Func<Packet> func = () => Packet.ReadFromStream(null, PacketContext.Server);
 
             func.Should().Throw<ArgumentNullException>();
         }
@@ -18,7 +18,7 @@ namespace Orion.Tests.Networking.Packets {
         [Fact]
         public void WriteToStream_NullStream_ThrowsArgumentNullException() {
             var packet = new StartConnectingPacket();
-            Action action = () => packet.WriteToStream(null);
+            Action action = () => packet.WriteToStream(null, PacketContext.Server);
 
             action.Should().Throw<ArgumentNullException>();
         }
@@ -28,7 +28,7 @@ namespace Orion.Tests.Networking.Packets {
             var packet = new StartConnectingPacket {Version = new string('a', ushort.MaxValue)};
             using (var stream = new MemoryStream()) {
                 // ReSharper disable once AccessToDisposedClosure
-                Action action = () => packet.WriteToStream(stream);
+                Action action = () => packet.WriteToStream(stream, PacketContext.Server);
 
                 action.Should().Throw<InvalidOperationException>();
             }

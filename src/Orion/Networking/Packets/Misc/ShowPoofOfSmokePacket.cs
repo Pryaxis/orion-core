@@ -13,13 +13,13 @@ namespace Orion.Networking.Packets.Misc {
 
         private protected override PacketType Type => PacketType.ShowPoofOfSmoke;
 
-        private protected override void ReadFromReader(BinaryReader reader, ushort packetLength) {
+        private protected override void ReadFromReader(BinaryReader reader, PacketContext context) {
             SmokePosition = new HalfVector2 {
                 PackedValue = reader.ReadUInt32(),
             };
         }
 
-        private protected override void WriteToWriter(BinaryWriter writer) {
+        private protected override void WriteToWriter(BinaryWriter writer, PacketContext context) {
             writer.Write(SmokePosition.PackedValue);
         }
     }

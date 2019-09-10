@@ -22,13 +22,13 @@ namespace Orion.Networking.Packets.World.TileEntities {
 
         private protected override PacketType Type => PacketType.PlaceTileEntity;
 
-        private protected override void ReadFromReader(BinaryReader reader, ushort packetLength) {
+        private protected override void ReadFromReader(BinaryReader reader, PacketContext context) {
             TileEntityX = reader.ReadInt16();
             TileEntityY = reader.ReadInt16();
             TileEntityType = (TileEntityType)reader.ReadByte();
         }
 
-        private protected override void WriteToWriter(BinaryWriter writer) {
+        private protected override void WriteToWriter(BinaryWriter writer, PacketContext context) {
             writer.Write(TileEntityX);
             writer.Write(TileEntityY);
             writer.Write((byte)TileEntityType);

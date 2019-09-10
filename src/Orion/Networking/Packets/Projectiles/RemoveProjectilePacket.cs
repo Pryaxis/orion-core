@@ -17,12 +17,12 @@ namespace Orion.Networking.Packets.Projectiles {
 
         private protected override PacketType Type => PacketType.RemoveProjectile;
 
-        private protected override void ReadFromReader(BinaryReader reader, ushort packetLength) {
+        private protected override void ReadFromReader(BinaryReader reader, PacketContext context) {
             ProjectileIdentity = reader.ReadInt16();
             ProjectileOwnerPlayerIndex = reader.ReadByte();
         }
 
-        private protected override void WriteToWriter(BinaryWriter writer) {
+        private protected override void WriteToWriter(BinaryWriter writer, PacketContext context) {
             writer.Write(ProjectileIdentity);
             writer.Write(ProjectileOwnerPlayerIndex);
         }

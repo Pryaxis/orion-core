@@ -29,14 +29,14 @@ namespace Orion.Networking.Packets.World {
             $"{nameof(PacketType.BiomeStats)}[H={HallowedAmount}, C={CorruptionAmount}, C'={CrimsonAmount}]";
 
         /// <inheritdoc />
-        private protected override void ReadFromReader(BinaryReader reader, ushort packetLength) {
+        private protected override void ReadFromReader(BinaryReader reader, PacketContext context) {
             HallowedAmount = reader.ReadByte();
             CorruptionAmount = reader.ReadByte();
             CrimsonAmount = reader.ReadByte();
         }
 
         /// <inheritdoc />
-        private protected override void WriteToWriter(BinaryWriter writer) {
+        private protected override void WriteToWriter(BinaryWriter writer, PacketContext context) {
             writer.Write(HallowedAmount);
             writer.Write(CorruptionAmount);
             writer.Write(CrimsonAmount);

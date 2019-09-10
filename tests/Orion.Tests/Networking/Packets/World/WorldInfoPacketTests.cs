@@ -27,7 +27,7 @@ namespace Orion.Tests.Networking.Packets.World {
         [Fact]
         public void ReadFromStream_WorldInfo_IsCorrect() {
             using (var stream = new MemoryStream(WorldInfoBytes)) {
-                var packet = (WorldInfoPacket)Packet.ReadFromStream(stream);
+                var packet = (WorldInfoPacket)Packet.ReadFromStream(stream, PacketContext.Server);
 
                 packet.Time.Should().Be(32653);
                 packet.IsDaytime.Should().BeTrue();
@@ -113,9 +113,9 @@ namespace Orion.Tests.Networking.Packets.World {
         public void WriteToStream_WorldInfo_IsCorrect() {
             using (var stream = new MemoryStream(WorldInfoBytes))
             using (var stream2 = new MemoryStream()) {
-                var packet = Packet.ReadFromStream(stream);
+                var packet = Packet.ReadFromStream(stream, PacketContext.Server);
 
-                packet.WriteToStream(stream2);
+                packet.WriteToStream(stream2, PacketContext.Server);
 
                 stream2.ToArray().Should().BeEquivalentTo(WorldInfoBytes);
             }

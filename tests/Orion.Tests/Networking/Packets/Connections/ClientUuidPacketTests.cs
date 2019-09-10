@@ -20,7 +20,7 @@ namespace Orion.Tests.Networking.Packets.Connections {
         [Fact]
         public void ReadFromStream_IsCorrect() {
             using (var stream = new MemoryStream(ClientUuidBytes)) {
-                var packet = (ClientUuidPacket)Packet.ReadFromStream(stream);
+                var packet = (ClientUuidPacket)Packet.ReadFromStream(stream, PacketContext.Server);
 
                 packet.ClientUuid.Should().Be("Terraria");
             }
@@ -30,9 +30,9 @@ namespace Orion.Tests.Networking.Packets.Connections {
         public void WriteToStream_IsCorrect() {
             using (var stream = new MemoryStream(ClientUuidBytes))
             using (var stream2 = new MemoryStream()) {
-                var packet = Packet.ReadFromStream(stream);
+                var packet = Packet.ReadFromStream(stream, PacketContext.Server);
 
-                packet.WriteToStream(stream2);
+                packet.WriteToStream(stream2, PacketContext.Server);
 
                 stream2.ToArray().Should().BeEquivalentTo(ClientUuidBytes);
             }

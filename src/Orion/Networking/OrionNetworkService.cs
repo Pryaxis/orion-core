@@ -10,11 +10,9 @@ using Serilog;
 
 namespace Orion.Networking {
     internal sealed class OrionNetworkService : OrionService, INetworkService {
-        [ExcludeFromCodeCoverage]
-        public override string Author => "Pryaxis";
+        [ExcludeFromCodeCoverage] public override string Author => "Pryaxis";
 
-        [ExcludeFromCodeCoverage]
-        public override string Name => "Orion Network Service";
+        [ExcludeFromCodeCoverage] public override string Name => "Orion Network Service";
 
         public HookHandlerCollection<ReceivedPacketEventArgs> ReceivedPacket { get; set; }
         public HookHandlerCollection<ReceivingPacketEventArgs> ReceivingPacket { get; set; }
@@ -61,7 +59,7 @@ namespace Orion.Networking {
 
                 var bytes = new byte[ushort.MaxValue];
                 using (var stream = new MemoryStream(bytes)) {
-                    args.Packet.WriteToStream(stream);
+                    args.Packet.WriteToStream(stream, PacketContext.Server);
                     receiver.Socket?.AsyncSend(bytes, 0, (int)stream.Length, receiver.ServerWriteCallBack);
                 }
             }
@@ -86,8 +84,9 @@ namespace Orion.Networking {
         }
 
 
-        private OTAPI.HookResult ReceiveDataHandler(Terraria.MessageBuffer buffer, ref byte packetId, ref int readOffset,
-                                              ref int start, ref int length) {
+        private OTAPI.HookResult ReceiveDataHandler(Terraria.MessageBuffer buffer, ref byte packetId,
+                                                    ref int readOffset,
+                                                    ref int start, ref int length) {
             var data = buffer.readBuffer;
             Debug.Assert(buffer.whoAmI >= 0 && buffer.whoAmI < Terraria.Netplay.MaxConnections,
                          $"{nameof(buffer.whoAmI)} should be a valid index.");
@@ -99,7 +98,7 @@ namespace Orion.Networking {
              */
             using (var stream = new MemoryStream(data, start - 2, length + 2)) {
                 var sender = Terraria.Netplay.Clients[buffer.whoAmI];
-                var packet = Packet.ReadFromStream(stream);
+                var packet = Packet.ReadFromStream(stream, PacketContext.Server);
                 var args = new ReceivingPacketEventArgs(sender, packet);
                 ReceivingPacket?.Invoke(this, args);
 
@@ -121,7 +120,7 @@ namespace Orion.Networking {
                     var targetPosition = start + length;
                     var oldBuffer = data.ToArray();
                     stream.Position = 0;
-                    packet.WriteToStream(stream);
+                    packet.WriteToStream(stream, PacketContext.Server);
 
                     buffer.readerStream = new HelperMemoryStream(
                         data, targetPosition, stream.Position >= targetPosition, buffer, oldBuffer);
@@ -138,7 +137,8 @@ namespace Orion.Networking {
         }
 
         private OTAPI.HookResult SendBytesHandler(ref int remoteId, ref byte[] data, ref int start, ref int length,
-                                            ref Terraria.Net.Sockets.SocketSendCallback callback, ref object state) {
+                                                  ref Terraria.Net.Sockets.SocketSendCallback callback,
+                                                  ref object state) {
             Debug.Assert(remoteId >= 0 && remoteId < Terraria.Netplay.MaxConnections,
                          $"{nameof(remoteId)} should be a valid index.");
             Debug.Assert(start >= 0 && start + length <= data.Length,
@@ -146,7 +146,7 @@ namespace Orion.Networking {
 
             using (var stream = new MemoryStream(data, start, length)) {
                 var receiver = Terraria.Netplay.Clients[remoteId];
-                var packet = Packet.ReadFromStream(stream);
+                var packet = Packet.ReadFromStream(stream, PacketContext.Client);
                 var args = new SendingPacketEventArgs(receiver, packet);
                 SendingPacket?.Invoke(this, args);
 
@@ -158,7 +158,7 @@ namespace Orion.Networking {
                 if (args.IsPacketDirty) {
                     var bytes = new byte[ushort.MaxValue];
                     using (var stream2 = new MemoryStream(bytes)) {
-                        packet.WriteToStream(stream2);
+                        packet.WriteToStream(stream2, PacketContext.Client);
 
                         data = bytes;
                         start = 0;

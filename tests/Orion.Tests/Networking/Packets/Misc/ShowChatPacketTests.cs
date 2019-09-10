@@ -14,7 +14,7 @@ namespace Orion.Tests.Networking.Packets.Misc {
         [Fact]
         public void ReadFromStream_IsCorrect() {
             using (var stream = new MemoryStream(ShowChatBytes)) {
-                var packet = (ShowChatPacket)Packet.ReadFromStream(stream);
+                var packet = (ShowChatPacket)Packet.ReadFromStream(stream, PacketContext.Server);
 
                 packet.ChatColor.Should().Be(Color.White);
                 packet.ChatText.ToString().Should().Be("Terraria");
@@ -26,9 +26,9 @@ namespace Orion.Tests.Networking.Packets.Misc {
         public void WriteToStream_IsCorrect() {
             using (var stream = new MemoryStream(ShowChatBytes))
             using (var stream2 = new MemoryStream()) {
-                var packet = Packet.ReadFromStream(stream);
+                var packet = Packet.ReadFromStream(stream, PacketContext.Server);
 
-                packet.WriteToStream(stream2);
+                packet.WriteToStream(stream2, PacketContext.Server);
 
                 stream2.ToArray().Should().BeEquivalentTo(ShowChatBytes);
             }

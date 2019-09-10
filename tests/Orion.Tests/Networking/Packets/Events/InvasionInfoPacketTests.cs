@@ -11,7 +11,7 @@ namespace Orion.Tests.Networking.Packets.Events {
         [Fact]
         public void ReadFromStream_IsCorrect() {
             using (var stream = new MemoryStream(InvasionInfoBytes)) {
-                var packet = (InvasionInfoPacket)Packet.ReadFromStream(stream);
+                var packet = (InvasionInfoPacket)Packet.ReadFromStream(stream, PacketContext.Server);
 
                 packet.NumberOfKills.Should().Be(1);
                 packet.NumberOfKillsToProgress.Should().Be(256);
@@ -24,9 +24,9 @@ namespace Orion.Tests.Networking.Packets.Events {
         public void WriteToStream_IsCorrect() {
             using (var stream = new MemoryStream(InvasionInfoBytes))
             using (var stream2 = new MemoryStream()) {
-                var packet = Packet.ReadFromStream(stream);
+                var packet = Packet.ReadFromStream(stream, PacketContext.Server);
 
-                packet.WriteToStream(stream2);
+                packet.WriteToStream(stream2, PacketContext.Server);
 
                 stream2.ToArray().Should().BeEquivalentTo(InvasionInfoBytes);
             }

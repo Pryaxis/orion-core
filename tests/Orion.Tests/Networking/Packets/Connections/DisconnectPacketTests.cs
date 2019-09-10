@@ -23,7 +23,7 @@ namespace Orion.Tests.Networking.Packets.Connections {
         [Fact]
         public void ReadFromStream_IsCorrect() {
             using (var stream = new MemoryStream(DisconnectBytes)) {
-                var packet = (DisconnectPacket)Packet.ReadFromStream(stream);
+                var packet = (DisconnectPacket)Packet.ReadFromStream(stream, PacketContext.Server);
 
                 packet.Reason.ToString().Should().Be("CLI.KickMessage");
             }
@@ -33,9 +33,9 @@ namespace Orion.Tests.Networking.Packets.Connections {
         public void WriteToStream_IsCorrect() {
             using (var stream = new MemoryStream(DisconnectBytes))
             using (var stream2 = new MemoryStream()) {
-                var packet = Packet.ReadFromStream(stream);
+                var packet = Packet.ReadFromStream(stream, PacketContext.Server);
 
-                packet.WriteToStream(stream2);
+                packet.WriteToStream(stream2, PacketContext.Server);
 
                 stream2.ToArray().Should().BeEquivalentTo(DisconnectBytes);
             }

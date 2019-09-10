@@ -37,7 +37,7 @@ namespace Orion.Networking.Packets.Misc {
 
         private protected override PacketType Type => PacketType.EmoteBubble;
 
-        private protected override void ReadFromReader(BinaryReader reader, ushort packetLength) {
+        private protected override void ReadFromReader(BinaryReader reader, PacketContext context) {
             EmoteId = reader.ReadInt32();
             AnchorType = reader.ReadByte();
             if (AnchorType == byte.MaxValue) {
@@ -52,7 +52,7 @@ namespace Orion.Networking.Packets.Misc {
             }
         }
 
-        private protected override void WriteToWriter(BinaryWriter writer) {
+        private protected override void WriteToWriter(BinaryWriter writer, PacketContext context) {
             writer.Write(EmoteId);
             writer.Write(AnchorType);
             if (AnchorType == byte.MaxValue) {

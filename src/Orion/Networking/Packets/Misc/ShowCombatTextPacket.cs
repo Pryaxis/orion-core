@@ -31,13 +31,13 @@ namespace Orion.Networking.Packets.Misc {
 
         private protected override PacketType Type => PacketType.ShowCombatText;
 
-        private protected override void ReadFromReader(BinaryReader reader, ushort packetLength) {
+        private protected override void ReadFromReader(BinaryReader reader, PacketContext context) {
             TextPosition = reader.ReadVector2();
             TextColor = reader.ReadColor();
             Text = reader.ReadNetworkText();
         }
 
-        private protected override void WriteToWriter(BinaryWriter writer) {
+        private protected override void WriteToWriter(BinaryWriter writer, PacketContext context) {
             writer.Write(TextPosition);
             writer.Write(TextColor);
             writer.Write(Text);

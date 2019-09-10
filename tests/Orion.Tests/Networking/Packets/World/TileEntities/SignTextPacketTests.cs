@@ -20,7 +20,7 @@ namespace Orion.Tests.Networking.Packets.World.TileEntities {
         [Fact]
         public void ReadFromStream_IsCorrect() {
             using (var stream = new MemoryStream(SignTextBytes)) {
-                var packet = (SignTextPacket)Packet.ReadFromStream(stream);
+                var packet = (SignTextPacket)Packet.ReadFromStream(stream, PacketContext.Server);
 
                 packet.SignIndex.Should().Be(0);
                 packet.SignX.Should().Be(256);
@@ -33,9 +33,9 @@ namespace Orion.Tests.Networking.Packets.World.TileEntities {
         public void WriteToStream_IsCorrect() {
             using (var stream = new MemoryStream(SignTextBytes))
             using (var stream2 = new MemoryStream()) {
-                var packet = Packet.ReadFromStream(stream);
+                var packet = Packet.ReadFromStream(stream, PacketContext.Server);
 
-                packet.WriteToStream(stream2);
+                packet.WriteToStream(stream2, PacketContext.Server);
 
                 stream2.ToArray().Should().BeEquivalentTo(SignTextBytes);
             }

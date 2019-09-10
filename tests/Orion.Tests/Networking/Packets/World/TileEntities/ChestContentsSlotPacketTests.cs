@@ -12,7 +12,7 @@ namespace Orion.Tests.Networking.Packets.World.TileEntities {
         [Fact]
         public void ReadFromStream_IsCorrect() {
             using (var stream = new MemoryStream(ChestContentsSlotBytes)) {
-                var packet = (ChestContentsSlotPacket)Packet.ReadFromStream(stream);
+                var packet = (ChestContentsSlotPacket)Packet.ReadFromStream(stream, PacketContext.Server);
 
                 packet.ChestIndex.Should().Be(0);
                 packet.ChestContentsSlotIndex.Should().Be(0);
@@ -26,9 +26,9 @@ namespace Orion.Tests.Networking.Packets.World.TileEntities {
         public void WriteToStream_IsCorrect() {
             using (var stream = new MemoryStream(ChestContentsSlotBytes))
             using (var stream2 = new MemoryStream()) {
-                var packet = Packet.ReadFromStream(stream);
+                var packet = Packet.ReadFromStream(stream, PacketContext.Server);
 
-                packet.WriteToStream(stream2);
+                packet.WriteToStream(stream2, PacketContext.Server);
 
                 stream2.ToArray().Should().BeEquivalentTo(ChestContentsSlotBytes);
             }

@@ -403,7 +403,7 @@ namespace Orion.Networking.Packets.World {
 
         private protected override PacketType Type => PacketType.WorldInfo;
 
-        private protected override void ReadFromReader(BinaryReader reader, ushort packetLength) {
+        private protected override void ReadFromReader(BinaryReader reader, PacketContext context) {
             Time = reader.ReadInt32();
 
             Terraria.BitsByte timeFlags = reader.ReadByte();
@@ -493,7 +493,7 @@ namespace Orion.Networking.Packets.World {
             SandstormIntensity = reader.ReadSingle();
         }
 
-        private protected override void WriteToWriter(BinaryWriter writer) {
+        private protected override void WriteToWriter(BinaryWriter writer, PacketContext context) {
             writer.Write(Time);
 
             Terraria.BitsByte timeFlags = 0;

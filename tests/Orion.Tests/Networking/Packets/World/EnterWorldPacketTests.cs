@@ -11,7 +11,7 @@ namespace Orion.Tests.Networking.Packets.World {
         [Fact]
         public void ReadFromStream_IsCorrect() {
             using (var stream = new MemoryStream(EnterWorldBytes)) {
-                Packet.ReadFromStream(stream).Should().BeOfType<EnterWorldPacket>();
+                Packet.ReadFromStream(stream, PacketContext.Server).Should().BeOfType<EnterWorldPacket>();
             }
         }
 
@@ -19,9 +19,9 @@ namespace Orion.Tests.Networking.Packets.World {
         public void WriteToStream_IsCorrect() {
             using (var stream = new MemoryStream(EnterWorldBytes))
             using (var stream2 = new MemoryStream()) {
-                var packet = Packet.ReadFromStream(stream);
+                var packet = Packet.ReadFromStream(stream, PacketContext.Server);
 
-                packet.WriteToStream(stream2);
+                packet.WriteToStream(stream2, PacketContext.Server);
 
                 stream2.ToArray().Should().BeEquivalentTo(EnterWorldBytes);
             }

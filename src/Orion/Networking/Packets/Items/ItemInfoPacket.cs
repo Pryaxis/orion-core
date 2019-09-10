@@ -45,7 +45,7 @@ namespace Orion.Networking.Packets.Items {
 
         private protected override PacketType Type => PacketType.ItemInfo;
 
-        private protected override void ReadFromReader(BinaryReader reader, ushort packetLength) {
+        private protected override void ReadFromReader(BinaryReader reader, PacketContext context) {
             ItemIndex = reader.ReadInt16();
             ItemPosition = reader.ReadVector2();
             ItemVelocity = reader.ReadVector2();
@@ -55,7 +55,7 @@ namespace Orion.Networking.Packets.Items {
             ItemType = (ItemType)reader.ReadInt16();
         }
 
-        private protected override void WriteToWriter(BinaryWriter writer) {
+        private protected override void WriteToWriter(BinaryWriter writer, PacketContext context) {
             writer.Write(ItemIndex);
             writer.Write(ItemPosition);
             writer.Write(ItemVelocity);

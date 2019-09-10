@@ -27,14 +27,14 @@ namespace Orion.Networking.Packets.Events {
 
         private protected override PacketType Type => PacketType.PillarShieldStrengths;
 
-        private protected override void ReadFromReader(BinaryReader reader, ushort packetLength) {
+        private protected override void ReadFromReader(BinaryReader reader, PacketContext context) {
             SolarPillarShieldStrength = reader.ReadUInt16();
             VortexPillarShieldStrength = reader.ReadUInt16();
             NebulaPillarShieldStrength = reader.ReadUInt16();
             StardustPillarShieldStrength = reader.ReadUInt16();
         }
 
-        private protected override void WriteToWriter(BinaryWriter writer) {
+        private protected override void WriteToWriter(BinaryWriter writer, PacketContext context) {
             writer.Write(SolarPillarShieldStrength);
             writer.Write(VortexPillarShieldStrength);
             writer.Write(NebulaPillarShieldStrength);

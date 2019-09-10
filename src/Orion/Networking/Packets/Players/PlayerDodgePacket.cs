@@ -17,12 +17,12 @@ namespace Orion.Networking.Packets.Players {
 
         private protected override PacketType Type => PacketType.PlayerDodge;
 
-        private protected override void ReadFromReader(BinaryReader reader, ushort packetLength) {
+        private protected override void ReadFromReader(BinaryReader reader, PacketContext context) {
             PlayerIndex = reader.ReadByte();
             PlayerDodgeType = (PlayerDodgeType)reader.ReadByte();
         }
 
-        private protected override void WriteToWriter(BinaryWriter writer) {
+        private protected override void WriteToWriter(BinaryWriter writer, PacketContext context) {
             writer.Write(PlayerIndex);
             writer.Write((byte)PlayerDodgeType);
         }

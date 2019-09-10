@@ -19,12 +19,12 @@ namespace Orion.Networking.Packets.Npcs {
 
         private protected override PacketType Type => PacketType.AddBuffToNpc;
 
-        private protected override void ReadFromReader(BinaryReader reader, ushort packetLength) {
+        private protected override void ReadFromReader(BinaryReader reader, PacketContext context) {
             NpcIndex = reader.ReadInt16();
             Buff = new Buff((BuffType)reader.ReadByte(), TimeSpan.FromSeconds(reader.ReadInt16() / 60.0));
         }
 
-        private protected override void WriteToWriter(BinaryWriter writer) {
+        private protected override void WriteToWriter(BinaryWriter writer, PacketContext context) {
             writer.Write(NpcIndex);
             writer.Write((byte)Buff.BuffType);
 

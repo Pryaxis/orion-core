@@ -11,7 +11,7 @@ namespace Orion.Tests.Networking.Packets.Connections {
         [Fact]
         public void ReadFromStream_IsCorrect() {
             using (var stream = new MemoryStream(ContinueConnectingBytes)) {
-                var packet = (ContinueConnectingPacket)Packet.ReadFromStream(stream);
+                var packet = (ContinueConnectingPacket)Packet.ReadFromStream(stream, PacketContext.Server);
 
                 packet.PlayerIndex.Should().Be(0);
             }
@@ -21,9 +21,9 @@ namespace Orion.Tests.Networking.Packets.Connections {
         public void WriteToStream_IsCorrect() {
             using (var stream = new MemoryStream(ContinueConnectingBytes))
             using (var stream2 = new MemoryStream()) {
-                var packet = Packet.ReadFromStream(stream);
+                var packet = Packet.ReadFromStream(stream, PacketContext.Server);
 
-                packet.WriteToStream(stream2);
+                packet.WriteToStream(stream2, PacketContext.Server);
 
                 stream2.ToArray().Should().BeEquivalentTo(ContinueConnectingBytes);
             }

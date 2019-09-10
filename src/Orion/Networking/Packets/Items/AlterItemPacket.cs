@@ -80,7 +80,7 @@ namespace Orion.Networking.Packets.Items {
 
         private protected override PacketType Type => PacketType.AlterItem;
 
-        private protected override void ReadFromReader(BinaryReader reader, ushort packetLength) {
+        private protected override void ReadFromReader(BinaryReader reader, PacketContext context) {
             ItemIndex = reader.ReadInt16();
 
             Terraria.BitsByte flags = reader.ReadByte();
@@ -102,7 +102,7 @@ namespace Orion.Networking.Packets.Items {
             if (flags2[5]) ItemIsNotAmmo = reader.ReadBoolean();
         }
 
-        private protected override void WriteToWriter(BinaryWriter writer) {
+        private protected override void WriteToWriter(BinaryWriter writer, PacketContext context) {
             writer.Write(ItemIndex);
 
             Terraria.BitsByte flags2 = 0;

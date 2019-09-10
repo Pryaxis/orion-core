@@ -22,14 +22,14 @@ namespace Orion.Networking.Packets.World {
 
         private protected override PacketType Type => PacketType.UnlockObject;
 
-        private protected override void ReadFromReader(BinaryReader reader, ushort packetLength) {
+        private protected override void ReadFromReader(BinaryReader reader, PacketContext context) {
             ObjectType = (UnlockObjectType)reader.ReadByte();
             TileX = reader.ReadInt16();
             TileY = reader.ReadInt16();
         }
 
         /// <inheritdoc />
-        private protected override void WriteToWriter(BinaryWriter writer) {
+        private protected override void WriteToWriter(BinaryWriter writer, PacketContext context) {
             writer.Write((byte)ObjectType);
             writer.Write(TileX);
             writer.Write(TileY);

@@ -11,7 +11,7 @@ namespace Orion.Tests.Networking.Packets.Events {
         [Fact]
         public void ReadFromStream_IsCorrect() {
             using (var stream = new MemoryStream(StartOldOnesArmyBytes)) {
-                var packet = (StartOldOnesArmyPacket)Packet.ReadFromStream(stream);
+                var packet = (StartOldOnesArmyPacket)Packet.ReadFromStream(stream, PacketContext.Server);
 
                 packet.CrystalX.Should().Be(256);
                 packet.CrystalY.Should().Be(100);
@@ -22,9 +22,9 @@ namespace Orion.Tests.Networking.Packets.Events {
         public void WriteToStream_IsCorrect() {
             using (var stream = new MemoryStream(StartOldOnesArmyBytes))
             using (var stream2 = new MemoryStream()) {
-                var packet = Packet.ReadFromStream(stream);
+                var packet = Packet.ReadFromStream(stream, PacketContext.Server);
 
-                packet.WriteToStream(stream2);
+                packet.WriteToStream(stream2, PacketContext.Server);
 
                 stream2.ToArray().Should().BeEquivalentTo(StartOldOnesArmyBytes);
             }

@@ -12,7 +12,7 @@ namespace Orion.Tests.Networking.Packets.Npcs {
         [Fact]
         public void ReadFromStream_IsCorrect() {
             using (var stream = new MemoryStream(NpcKillCountBytes)) {
-                var packet = (NpcKillCountPacket)Packet.ReadFromStream(stream);
+                var packet = (NpcKillCountPacket)Packet.ReadFromStream(stream, PacketContext.Server);
 
                 packet.NpcType.Should().Be(NpcType.BlueSlime);
                 packet.NpcTypeKillCount.Should().Be(100);
@@ -23,9 +23,9 @@ namespace Orion.Tests.Networking.Packets.Npcs {
         public void WriteToStream_IsCorrect() {
             using (var stream = new MemoryStream(NpcKillCountBytes))
             using (var stream2 = new MemoryStream()) {
-                var packet = Packet.ReadFromStream(stream);
+                var packet = Packet.ReadFromStream(stream, PacketContext.Server);
 
-                packet.WriteToStream(stream2);
+                packet.WriteToStream(stream2, PacketContext.Server);
 
                 stream2.ToArray().Should().BeEquivalentTo(NpcKillCountBytes);
             }

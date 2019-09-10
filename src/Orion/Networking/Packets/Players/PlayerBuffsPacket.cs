@@ -18,14 +18,14 @@ namespace Orion.Networking.Packets.Players {
 
         private protected override PacketType Type => PacketType.PlayerBuffs;
 
-        private protected override void ReadFromReader(BinaryReader reader, ushort packetLength) {
+        private protected override void ReadFromReader(BinaryReader reader, PacketContext context) {
             PlayerIndex = reader.ReadByte();
             for (var i = 0; i < PlayerBuffTypes.Length; ++i) {
                 PlayerBuffTypes[i] = (BuffType)reader.ReadByte();
             }
         }
 
-        private protected override void WriteToWriter(BinaryWriter writer) {
+        private protected override void WriteToWriter(BinaryWriter writer, PacketContext context) {
             writer.Write(PlayerIndex);
             foreach (var buffType in PlayerBuffTypes) {
                 writer.Write((byte)buffType);

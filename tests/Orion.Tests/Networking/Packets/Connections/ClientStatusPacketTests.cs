@@ -23,7 +23,7 @@ namespace Orion.Tests.Networking.Packets.Connections {
         [Fact]
         public void ReadFromStream_IsCorrect() {
             using (var stream = new MemoryStream(ClientStatusBytes)) {
-                var packet = (ClientStatusPacket)Packet.ReadFromStream(stream);
+                var packet = (ClientStatusPacket)Packet.ReadFromStream(stream, PacketContext.Server);
 
                 packet.StatusIncrease.Should().Be(15);
                 packet.StatusText.ToString().Should().Be("LegacyInterface.44");
@@ -34,9 +34,9 @@ namespace Orion.Tests.Networking.Packets.Connections {
         public void WriteToStream_IsCorrect() {
             using (var stream = new MemoryStream(ClientStatusBytes))
             using (var stream2 = new MemoryStream()) {
-                var packet = Packet.ReadFromStream(stream);
+                var packet = Packet.ReadFromStream(stream, PacketContext.Server);
 
-                packet.WriteToStream(stream2);
+                packet.WriteToStream(stream2, PacketContext.Server);
 
                 stream2.ToArray().Should().BeEquivalentTo(ClientStatusBytes);
             }

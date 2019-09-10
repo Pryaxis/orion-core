@@ -28,14 +28,14 @@ namespace Orion.Networking.Packets.Misc {
 
         private protected override PacketType Type => PacketType.ShowTileAnimation;
 
-        private protected override void ReadFromReader(BinaryReader reader, ushort packetLength) {
+        private protected override void ReadFromReader(BinaryReader reader, PacketContext context) {
             AnimationType = reader.ReadInt16();
             BlockType = (BlockType)reader.ReadUInt16();
             TileX = reader.ReadInt16();
             TileY = reader.ReadInt16();
         }
 
-        private protected override void WriteToWriter(BinaryWriter writer) {
+        private protected override void WriteToWriter(BinaryWriter writer, PacketContext context) {
             writer.Write(AnimationType);
             writer.Write((ushort)BlockType);
             writer.Write(TileX);

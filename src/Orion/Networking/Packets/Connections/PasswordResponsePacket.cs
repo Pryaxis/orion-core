@@ -25,11 +25,11 @@ namespace Orion.Networking.Packets.Connections {
         [ExcludeFromCodeCoverage]
         public override string ToString() => $"{nameof(PacketType.PasswordResponse)}[P={Password}]";
 
-        private protected override void ReadFromReader(BinaryReader reader, ushort packetLength) {
+        private protected override void ReadFromReader(BinaryReader reader, PacketContext context) {
             _password = reader.ReadString();
         }
 
-        private protected override void WriteToWriter(BinaryWriter writer) {
+        private protected override void WriteToWriter(BinaryWriter writer, PacketContext context) {
             writer.Write(Password);
         }
     }

@@ -11,7 +11,7 @@ namespace Orion.Tests.Networking.Packets.Events {
         [Fact]
         public void ReadFromStream_IsCorrect() {
             using (var stream = new MemoryStream(ToggleBirthdayPartyBytes)) {
-                Packet.ReadFromStream(stream).Should().BeOfType<ToggleBirthdayPartyPacket>();
+                Packet.ReadFromStream(stream, PacketContext.Server).Should().BeOfType<ToggleBirthdayPartyPacket>();
             }
         }
 
@@ -19,9 +19,9 @@ namespace Orion.Tests.Networking.Packets.Events {
         public void WriteToStream_IsCorrect() {
             using (var stream = new MemoryStream(ToggleBirthdayPartyBytes))
             using (var stream2 = new MemoryStream()) {
-                var packet = Packet.ReadFromStream(stream);
+                var packet = Packet.ReadFromStream(stream, PacketContext.Server);
 
-                packet.WriteToStream(stream2);
+                packet.WriteToStream(stream2, PacketContext.Server);
 
                 stream2.ToArray().Should().BeEquivalentTo(ToggleBirthdayPartyBytes);
             }

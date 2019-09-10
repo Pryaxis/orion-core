@@ -45,7 +45,7 @@ namespace Orion.Networking.Packets.World {
         [ExcludeFromCodeCoverage]
         public override string ToString() => $"{nameof(PacketType.SquareTiles)}[X={TileX}, Y={TileY}, S={SquareSize}]";
 
-        private protected override void ReadFromReader(BinaryReader reader, ushort packetLength) {
+        private protected override void ReadFromReader(BinaryReader reader, PacketContext context) {
             var size = reader.ReadUInt16();
             if ((size & 32768) == 32768) {
                 LiquidChangeType = (LiquidChangeType)reader.ReadByte();
@@ -114,7 +114,7 @@ namespace Orion.Networking.Packets.World {
             }
         }
 
-        private protected override void WriteToWriter(BinaryWriter writer) {
+        private protected override void WriteToWriter(BinaryWriter writer, PacketContext context) {
             if (LiquidChangeType != LiquidChangeType.None) {
                 writer.Write((ushort)(SquareSize | 32768));
                 writer.Write((byte)LiquidChangeType);

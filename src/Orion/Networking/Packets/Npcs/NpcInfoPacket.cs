@@ -75,7 +75,7 @@ namespace Orion.Networking.Packets.Npcs {
 
         private protected override PacketType Type => PacketType.NpcInfo;
 
-        private protected override void ReadFromReader(BinaryReader reader, ushort packetLength) {
+        private protected override void ReadFromReader(BinaryReader reader, PacketContext context) {
             NpcIndex = reader.ReadInt16();
             NpcPosition = reader.ReadVector2();
             NpcVelocity = reader.ReadVector2();
@@ -115,7 +115,7 @@ namespace Orion.Networking.Packets.Npcs {
             }
         }
 
-        private protected override void WriteToWriter(BinaryWriter writer) {
+        private protected override void WriteToWriter(BinaryWriter writer, PacketContext context) {
             writer.Write(NpcIndex);
             writer.Write(NpcPosition);
             writer.Write(NpcVelocity);

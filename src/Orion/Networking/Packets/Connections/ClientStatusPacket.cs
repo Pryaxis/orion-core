@@ -30,12 +30,12 @@ namespace Orion.Networking.Packets.Connections {
         [ExcludeFromCodeCoverage]
         public override string ToString() => $"{nameof(PacketType.ClientStatus)}[I={StatusIncrease}, T={StatusText}]";
 
-        private protected override void ReadFromReader(BinaryReader reader, ushort packetLength) {
+        private protected override void ReadFromReader(BinaryReader reader, PacketContext context) {
             StatusIncrease = reader.ReadInt32();
             _statusText = reader.ReadNetworkText();
         }
 
-        private protected override void WriteToWriter(BinaryWriter writer) {
+        private protected override void WriteToWriter(BinaryWriter writer, PacketContext context) {
             writer.Write(StatusIncrease);
             writer.Write(StatusText);
         }

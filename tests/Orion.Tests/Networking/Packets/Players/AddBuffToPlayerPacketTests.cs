@@ -13,7 +13,7 @@ namespace Orion.Tests.Networking.Packets.Players {
         [Fact]
         public void ReadFromStream_IsCorrect() {
             using (var stream = new MemoryStream(AddBuffToPlayerBytes)) {
-                var packet = (AddBuffToPlayerPacket)Packet.ReadFromStream(stream);
+                var packet = (AddBuffToPlayerPacket)Packet.ReadFromStream(stream, PacketContext.Server);
                 
                 packet.PlayerIndex.Should().Be(0);
                 packet.Buff.Should().Be(new Buff(BuffType.ObsidianSkin, TimeSpan.FromSeconds(1)));
@@ -24,9 +24,9 @@ namespace Orion.Tests.Networking.Packets.Players {
         public void WriteToStream_IsCorrect() {
             using (var stream = new MemoryStream(AddBuffToPlayerBytes))
             using (var stream2 = new MemoryStream()) {
-                var packet = Packet.ReadFromStream(stream);
+                var packet = Packet.ReadFromStream(stream, PacketContext.Server);
 
-                packet.WriteToStream(stream2);
+                packet.WriteToStream(stream2, PacketContext.Server);
 
                 stream2.ToArray().Should().BeEquivalentTo(AddBuffToPlayerBytes);
             }

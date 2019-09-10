@@ -32,7 +32,7 @@ namespace Orion.Networking.Packets.World {
 
         private protected override PacketType Type => PacketType.RequestMassWireOperation;
 
-        private protected override void ReadFromReader(BinaryReader reader, ushort packetLength) {
+        private protected override void ReadFromReader(BinaryReader reader, PacketContext context) {
             StartTileX = reader.ReadInt16();
             StartTileY = reader.ReadInt16();
             EndTileX = reader.ReadInt16();
@@ -40,7 +40,7 @@ namespace Orion.Networking.Packets.World {
             WireOperations = (MassWireOperations)reader.ReadByte();
         }
 
-        private protected override void WriteToWriter(BinaryWriter writer) {
+        private protected override void WriteToWriter(BinaryWriter writer, PacketContext context) {
             writer.Write(StartTileX);
             writer.Write(StartTileY);
             writer.Write(EndTileX);

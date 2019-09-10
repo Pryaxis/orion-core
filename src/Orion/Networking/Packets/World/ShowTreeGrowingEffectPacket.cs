@@ -27,7 +27,7 @@ namespace Orion.Networking.Packets.World {
 
         private protected override PacketType Type => PacketType.ShowTreeGrowingEffect;
 
-        private protected override void ReadFromReader(BinaryReader reader, ushort packetLength) {
+        private protected override void ReadFromReader(BinaryReader reader, PacketContext context) {
             reader.ReadByte();
             TreeX = reader.ReadInt16();
             TreeY = reader.ReadInt16();
@@ -35,7 +35,7 @@ namespace Orion.Networking.Packets.World {
             TreeType = reader.ReadInt16();
         }
 
-        private protected override void WriteToWriter(BinaryWriter writer) {
+        private protected override void WriteToWriter(BinaryWriter writer, PacketContext context) {
             writer.Write((byte)1);
             writer.Write(TreeX);
             writer.Write(TreeY);

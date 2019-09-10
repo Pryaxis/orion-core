@@ -11,7 +11,7 @@ namespace Orion.Tests.Networking.Packets.Misc {
         [Fact]
         public void ReadFromStream_IsCorrect() {
             using (var stream = new MemoryStream(PerformMiscActionBytes)) {
-                var packet = (PerformMiscActionPacket)Packet.ReadFromStream(stream);
+                var packet = (PerformMiscActionPacket)Packet.ReadFromStream(stream, PacketContext.Server);
 
                 packet.PlayerOrNpcIndex.Should().Be(0);
                 packet.Action.Should().Be(MiscAction.SpawnSkeletron);
@@ -22,9 +22,9 @@ namespace Orion.Tests.Networking.Packets.Misc {
         public void WriteToStream_IsCorrect() {
             using (var stream = new MemoryStream(PerformMiscActionBytes))
             using (var stream2 = new MemoryStream()) {
-                var packet = Packet.ReadFromStream(stream);
+                var packet = Packet.ReadFromStream(stream, PacketContext.Server);
 
-                packet.WriteToStream(stream2);
+                packet.WriteToStream(stream2, PacketContext.Server);
 
                 stream2.ToArray().Should().BeEquivalentTo(PerformMiscActionBytes);
             }

@@ -17,12 +17,12 @@ namespace Orion.Networking.Packets.Events {
 
         private protected override PacketType Type => PacketType.SummonBossOrInvasion;
 
-        private protected override void ReadFromReader(BinaryReader reader, ushort packetLength) {
+        private protected override void ReadFromReader(BinaryReader reader, PacketContext context) {
             SummonerPlayerIndex = reader.ReadInt16();
             BossOrInvasionType = reader.ReadInt16();
         }
 
-        private protected override void WriteToWriter(BinaryWriter writer) {
+        private protected override void WriteToWriter(BinaryWriter writer, PacketContext context) {
             writer.Write(SummonerPlayerIndex);
             writer.Write(BossOrInvasionType);
         }

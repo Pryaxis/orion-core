@@ -13,7 +13,7 @@ namespace Orion.Tests.Networking.Packets.World.TileEntities {
         [Fact]
         public void ReadFromStream_Delete_IsCorrect() {
             using (var stream = new MemoryStream(PlaceTileEntityBytes)) {
-                var packet = (PlaceTileEntityPacket)Packet.ReadFromStream(stream);
+                var packet = (PlaceTileEntityPacket)Packet.ReadFromStream(stream, PacketContext.Server);
 
                 packet.TileEntityX.Should().Be(256);
                 packet.TileEntityY.Should().Be(100);
@@ -25,9 +25,9 @@ namespace Orion.Tests.Networking.Packets.World.TileEntities {
         public void WriteToStream_Delete_IsCorrect() {
             using (var stream = new MemoryStream(PlaceTileEntityBytes))
             using (var stream2 = new MemoryStream()) {
-                var packet = Packet.ReadFromStream(stream);
+                var packet = Packet.ReadFromStream(stream, PacketContext.Server);
 
-                packet.WriteToStream(stream2);
+                packet.WriteToStream(stream2, PacketContext.Server);
 
                 stream2.ToArray().Should().BeEquivalentTo(PlaceTileEntityBytes);
             }

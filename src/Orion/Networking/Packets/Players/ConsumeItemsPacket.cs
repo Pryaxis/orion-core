@@ -25,13 +25,13 @@ namespace Orion.Networking.Packets.Players {
 
         private protected override PacketType Type => PacketType.ConsumeItems;
 
-        private protected override void ReadFromReader(BinaryReader reader, ushort packetLength) {
+        private protected override void ReadFromReader(BinaryReader reader, PacketContext context) {
             ItemType = (ItemType)reader.ReadInt16();
             ItemStackSize = reader.ReadInt16();
             PlayerIndex = reader.ReadByte();
         }
 
-        private protected override void WriteToWriter(BinaryWriter writer) {
+        private protected override void WriteToWriter(BinaryWriter writer, PacketContext context) {
             writer.Write((short)ItemType);
             writer.Write(ItemStackSize);
             writer.Write(PlayerIndex);

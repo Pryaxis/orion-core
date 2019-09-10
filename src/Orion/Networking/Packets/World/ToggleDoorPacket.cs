@@ -27,14 +27,14 @@ namespace Orion.Networking.Packets.World {
 
         private protected override PacketType Type => PacketType.ToggleDoor;
 
-        private protected override void ReadFromReader(BinaryReader reader, ushort packetLength) {
+        private protected override void ReadFromReader(BinaryReader reader, PacketContext context) {
             ToggleType = (DoorToggleType)reader.ReadByte();
             DoorX = reader.ReadInt16();
             DoorY = reader.ReadInt16();
             ToggleDirection = reader.ReadByte() == 1;
         }
 
-        private protected override void WriteToWriter(BinaryWriter writer) {
+        private protected override void WriteToWriter(BinaryWriter writer, PacketContext context) {
             writer.Write((byte)ToggleType);
             writer.Write(DoorX);
             writer.Write(DoorY);

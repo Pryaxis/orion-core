@@ -16,7 +16,7 @@ namespace Orion.Tests.Networking.Packets.Projectiles {
         [Fact]
         public void ReadFromStream_IsCorrect() {
             using (var stream = new MemoryStream(ProjectileInfoBytes)) {
-                var packet = (ProjectileInfoPacket)Packet.ReadFromStream(stream);
+                var packet = (ProjectileInfoPacket)Packet.ReadFromStream(stream, PacketContext.Server);
 
                 packet.ProjectileIdentity.Should().Be(0);
                 packet.ProjectilePosition.Should().Be(new Vector2(67187, 6809));
@@ -34,9 +34,9 @@ namespace Orion.Tests.Networking.Packets.Projectiles {
         public void WriteToStream_IsCorrect() {
             using (var stream = new MemoryStream(ProjectileInfoBytes))
             using (var stream2 = new MemoryStream()) {
-                var packet = Packet.ReadFromStream(stream);
+                var packet = Packet.ReadFromStream(stream, PacketContext.Server);
 
-                packet.WriteToStream(stream2);
+                packet.WriteToStream(stream2, PacketContext.Server);
 
                 stream2.ToArray().Should().BeEquivalentTo(ProjectileInfoBytes);
             }

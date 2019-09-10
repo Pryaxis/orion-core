@@ -28,7 +28,7 @@ namespace Orion.Networking.Packets.World {
         private protected override PacketType Type => PacketType.Time;
 
         /// <inheritdoc />
-        private protected override void ReadFromReader(BinaryReader reader, ushort packetLength) {
+        private protected override void ReadFromReader(BinaryReader reader, PacketContext context) {
             IsDaytime = reader.ReadByte() == 1;
             Time = reader.ReadInt32();
             SunY = reader.ReadInt16();
@@ -36,7 +36,7 @@ namespace Orion.Networking.Packets.World {
         }
 
         /// <inheritdoc />
-        private protected override void WriteToWriter(BinaryWriter writer) {
+        private protected override void WriteToWriter(BinaryWriter writer, PacketContext context) {
             writer.Write(IsDaytime);
             writer.Write(Time);
             writer.Write(SunY);

@@ -23,13 +23,13 @@ namespace Orion.Networking.Packets.World {
 
         private protected override PacketType Type => PacketType.PaintBlock;
 
-        private protected override void ReadFromReader(BinaryReader reader, ushort packetLength) {
+        private protected override void ReadFromReader(BinaryReader reader, PacketContext context) {
             TileX = reader.ReadInt16();
             TileY = reader.ReadInt16();
             BlockColor = (PaintColor)reader.ReadByte();
         }
 
-        private protected override void WriteToWriter(BinaryWriter writer) {
+        private protected override void WriteToWriter(BinaryWriter writer, PacketContext context) {
             writer.Write(TileX);
             writer.Write(TileY);
             writer.Write((byte)BlockColor);

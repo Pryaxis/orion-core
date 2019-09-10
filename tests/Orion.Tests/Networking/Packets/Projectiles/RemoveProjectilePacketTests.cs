@@ -11,7 +11,7 @@ namespace Orion.Tests.Networking.Packets.Projectiles {
         [Fact]
         public void ReadFromStream_IsCorrect() {
             using (var stream = new MemoryStream(RemoveProjectileBytes)) {
-                var packet = (RemoveProjectilePacket)Packet.ReadFromStream(stream);
+                var packet = (RemoveProjectilePacket)Packet.ReadFromStream(stream, PacketContext.Server);
 
                 packet.ProjectileIdentity.Should().Be(1);
                 packet.ProjectileOwnerPlayerIndex.Should().Be(0);
@@ -22,9 +22,9 @@ namespace Orion.Tests.Networking.Packets.Projectiles {
         public void WriteToStream_IsCorrect() {
             using (var stream = new MemoryStream(RemoveProjectileBytes))
             using (var stream2 = new MemoryStream()) {
-                var packet = Packet.ReadFromStream(stream);
+                var packet = Packet.ReadFromStream(stream, PacketContext.Server);
 
-                packet.WriteToStream(stream2);
+                packet.WriteToStream(stream2, PacketContext.Server);
 
                 stream2.ToArray().Should().BeEquivalentTo(RemoveProjectileBytes);
             }

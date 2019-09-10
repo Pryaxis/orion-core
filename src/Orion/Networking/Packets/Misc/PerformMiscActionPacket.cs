@@ -17,12 +17,12 @@ namespace Orion.Networking.Packets.Misc {
 
         private protected override PacketType Type => PacketType.PerformMiscAction;
 
-        private protected override void ReadFromReader(BinaryReader reader, ushort packetLength) {
+        private protected override void ReadFromReader(BinaryReader reader, PacketContext context) {
             PlayerOrNpcIndex = reader.ReadByte();
             Action = (MiscAction)reader.ReadByte();
         }
 
-        private protected override void WriteToWriter(BinaryWriter writer) {
+        private protected override void WriteToWriter(BinaryWriter writer, PacketContext context) {
             writer.Write(PlayerOrNpcIndex);
             writer.Write((byte)Action);
         }

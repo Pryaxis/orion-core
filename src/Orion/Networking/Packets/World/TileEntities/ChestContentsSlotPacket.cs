@@ -33,7 +33,7 @@ namespace Orion.Networking.Packets.World.TileEntities {
 
         private protected override PacketType Type => PacketType.ChestContentsSlot;
 
-        private protected override void ReadFromReader(BinaryReader reader, ushort packetLength) {
+        private protected override void ReadFromReader(BinaryReader reader, PacketContext context) {
             ChestIndex = reader.ReadInt16();
             ChestContentsSlotIndex = reader.ReadByte();
             ItemStackSize = reader.ReadInt16();
@@ -41,7 +41,7 @@ namespace Orion.Networking.Packets.World.TileEntities {
             ItemType = (ItemType)reader.ReadInt16();
         }
 
-        private protected override void WriteToWriter(BinaryWriter writer) {
+        private protected override void WriteToWriter(BinaryWriter writer, PacketContext context) {
             writer.Write(ChestIndex);
             writer.Write(ChestContentsSlotIndex);
             writer.Write(ItemStackSize);

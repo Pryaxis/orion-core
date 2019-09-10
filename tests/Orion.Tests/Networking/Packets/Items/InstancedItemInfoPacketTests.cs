@@ -15,7 +15,7 @@ namespace Orion.Tests.Networking.Packets.Items {
         [Fact]
         public void ReadFromStream_IsCorrect() {
             using (var stream = new MemoryStream(InstancedItemInfoBytes)) {
-                var packet = (InstancedItemInfoPacket)Packet.ReadFromStream(stream);
+                var packet = (InstancedItemInfoPacket)Packet.ReadFromStream(stream, PacketContext.Server);
 
                 packet.ItemIndex.Should().Be(400);
                 packet.ItemPosition.Should().Be(new Vector2(67175, 6798));
@@ -31,9 +31,9 @@ namespace Orion.Tests.Networking.Packets.Items {
         public void WriteToStream_IsCorrect() {
             using (var stream = new MemoryStream(InstancedItemInfoBytes))
             using (var stream2 = new MemoryStream()) {
-                var packet = Packet.ReadFromStream(stream);
+                var packet = Packet.ReadFromStream(stream, PacketContext.Server);
 
-                packet.WriteToStream(stream2);
+                packet.WriteToStream(stream2, PacketContext.Server);
 
                 stream2.ToArray().Should().BeEquivalentTo(InstancedItemInfoBytes);
             }

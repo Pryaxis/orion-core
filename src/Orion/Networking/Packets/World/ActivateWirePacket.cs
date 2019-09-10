@@ -22,12 +22,12 @@ namespace Orion.Networking.Packets.World {
         [ExcludeFromCodeCoverage]
         public override string ToString() => $"{nameof(PacketType.ActivateWire)}[X={WireX}, Y={WireY}]";
 
-        private protected override void ReadFromReader(BinaryReader reader, ushort packetLength) {
+        private protected override void ReadFromReader(BinaryReader reader, PacketContext context) {
             WireX = reader.ReadInt16();
             WireY = reader.ReadInt16();
         }
 
-        private protected override void WriteToWriter(BinaryWriter writer) {
+        private protected override void WriteToWriter(BinaryWriter writer, PacketContext context) {
             writer.Write(WireX);
             writer.Write(WireY);
         }

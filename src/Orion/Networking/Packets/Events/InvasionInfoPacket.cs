@@ -28,14 +28,14 @@ namespace Orion.Networking.Packets.Events {
 
         private protected override PacketType Type => PacketType.InvasionInfo;
 
-        private protected override void ReadFromReader(BinaryReader reader, ushort packetLength) {
+        private protected override void ReadFromReader(BinaryReader reader, PacketContext context) {
             NumberOfKills = reader.ReadInt32();
             NumberOfKillsToProgress = reader.ReadInt32();
             InvasionIconType = reader.ReadInt32();
             WaveNumber = reader.ReadInt32();
         }
 
-        private protected override void WriteToWriter(BinaryWriter writer) {
+        private protected override void WriteToWriter(BinaryWriter writer, PacketContext context) {
             writer.Write(NumberOfKills);
             writer.Write(NumberOfKillsToProgress);
             writer.Write(InvasionIconType);

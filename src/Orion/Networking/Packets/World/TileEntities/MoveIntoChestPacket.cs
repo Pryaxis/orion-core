@@ -12,11 +12,11 @@ namespace Orion.Networking.Packets.World.TileEntities {
 
         private protected override PacketType Type => PacketType.MoveIntoChest;
 
-        private protected override void ReadFromReader(BinaryReader reader, ushort packetLength) {
+        private protected override void ReadFromReader(BinaryReader reader, PacketContext context) {
             PlayerInventorySlotIndex = reader.ReadByte();
         }
 
-        private protected override void WriteToWriter(BinaryWriter writer) {
+        private protected override void WriteToWriter(BinaryWriter writer, PacketContext context) {
             writer.Write(PlayerInventorySlotIndex);
         }
     }

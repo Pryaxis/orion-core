@@ -13,7 +13,7 @@ namespace Orion.Tests.Networking.Packets.Connections {
         [Fact]
         public void ReadFromStream_IsCorrect() {
             using (var stream = new MemoryStream(PasswordResponseBytes)) {
-                var packet = (PasswordResponsePacket)Packet.ReadFromStream(stream);
+                var packet = (PasswordResponsePacket)Packet.ReadFromStream(stream, PacketContext.Server);
 
                 packet.Password.Should().Be("Terraria");
             }
@@ -23,9 +23,9 @@ namespace Orion.Tests.Networking.Packets.Connections {
         public void WriteToStream_IsCorrect() {
             using (var stream = new MemoryStream(PasswordResponseBytes))
             using (var stream2 = new MemoryStream()) {
-                var packet = Packet.ReadFromStream(stream);
+                var packet = Packet.ReadFromStream(stream, PacketContext.Server);
 
-                packet.WriteToStream(stream2);
+                packet.WriteToStream(stream2, PacketContext.Server);
 
                 stream2.ToArray().Should().BeEquivalentTo(PasswordResponseBytes);
             }

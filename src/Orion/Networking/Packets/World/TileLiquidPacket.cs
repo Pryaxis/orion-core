@@ -34,14 +34,14 @@ namespace Orion.Networking.Packets.World {
         public override string ToString() =>
             $"{nameof(PacketType.TileLiquid)}[X={TileX}, Y={TileY}, L={LiquidAmount}, T={LiquidType}]";
 
-        private protected override void ReadFromReader(BinaryReader reader, ushort packetLength) {
+        private protected override void ReadFromReader(BinaryReader reader, PacketContext context) {
             TileX = reader.ReadInt16();
             TileY = reader.ReadInt16();
             LiquidAmount = reader.ReadByte();
             LiquidType = (LiquidType)reader.ReadByte();
         }
 
-        private protected override void WriteToWriter(BinaryWriter writer) {
+        private protected override void WriteToWriter(BinaryWriter writer, PacketContext context) {
             writer.Write(TileX);
             writer.Write(TileY);
             writer.Write(LiquidAmount);

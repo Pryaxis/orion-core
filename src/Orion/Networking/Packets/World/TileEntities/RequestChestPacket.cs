@@ -17,12 +17,12 @@ namespace Orion.Networking.Packets.World.TileEntities {
 
         private protected override PacketType Type => PacketType.RequestChest;
 
-        private protected override void ReadFromReader(BinaryReader reader, ushort packetLength) {
+        private protected override void ReadFromReader(BinaryReader reader, PacketContext context) {
             ChestX = reader.ReadInt16();
             ChestY = reader.ReadInt16();
         }
 
-        private protected override void WriteToWriter(BinaryWriter writer) {
+        private protected override void WriteToWriter(BinaryWriter writer, PacketContext context) {
             writer.Write(ChestX);
             writer.Write(ChestY);
         }

@@ -110,7 +110,7 @@ namespace Orion.Tests.Networking.Packets.World {
         [Fact]
         public void ReadFromStream_IsCorrect() {
             using (var stream = new MemoryStream(SectionBytes)) {
-                var packet = (SectionPacket)Packet.ReadFromStream(stream);
+                var packet = (SectionPacket)Packet.ReadFromStream(stream, PacketContext.Server);
 
                 packet.IsCompressed.Should().BeTrue();
                 packet.StartX.Should().Be(4200);
@@ -130,14 +130,14 @@ namespace Orion.Tests.Networking.Packets.World {
             using (var stream = new MemoryStream(SectionBytes))
             using (var stream2 = new MemoryStream())
             using (var stream3 = new MemoryStream()) {
-                var packet = (SectionPacket)Packet.ReadFromStream(stream);
+                var packet = (SectionPacket)Packet.ReadFromStream(stream, PacketContext.Server);
 
-                packet.WriteToStream(stream2);
+                packet.WriteToStream(stream2, PacketContext.Server);
 
                 stream2.Position = 0;
-                var packet2 = (SectionPacket)Packet.ReadFromStream(stream2);
+                var packet2 = (SectionPacket)Packet.ReadFromStream(stream2, PacketContext.Server);
 
-                packet2.WriteToStream(stream3);
+                packet2.WriteToStream(stream3, PacketContext.Server);
 
                 stream2.ToArray().Should().BeEquivalentTo(stream3.ToArray());
             }

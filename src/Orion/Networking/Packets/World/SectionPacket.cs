@@ -66,7 +66,7 @@ namespace Orion.Networking.Packets.World {
 
         private protected override PacketType Type => PacketType.Section;
 
-        private protected override void ReadFromReader(BinaryReader reader, ushort packetLength) {
+        private protected override void ReadFromReader(BinaryReader reader, PacketContext context) {
             IsCompressed = reader.ReadByte() == 1;
             if (!IsCompressed) {
                 ReadFromReaderImpl(reader);
@@ -79,7 +79,7 @@ namespace Orion.Networking.Packets.World {
             }
         }
 
-        private protected override void WriteToWriter(BinaryWriter writer) {
+        private protected override void WriteToWriter(BinaryWriter writer, PacketContext context) {
             writer.Write(IsCompressed);
             if (!IsCompressed) {
                 WriteToWriterImpl(writer);

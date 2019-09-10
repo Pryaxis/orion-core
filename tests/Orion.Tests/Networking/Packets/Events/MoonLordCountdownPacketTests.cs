@@ -11,7 +11,7 @@ namespace Orion.Tests.Networking.Packets.Events {
         [Fact]
         public void ReadFromStream_IsCorrect() {
             using (var stream = new MemoryStream(MoonLordCountdownBytes)) {
-                var packet = (MoonLordCountdownPacket)Packet.ReadFromStream(stream);
+                var packet = (MoonLordCountdownPacket)Packet.ReadFromStream(stream, PacketContext.Server);
 
                 packet.MoonLordCountdown.Should().Be(100);
             }
@@ -21,9 +21,9 @@ namespace Orion.Tests.Networking.Packets.Events {
         public void WriteToStream_IsCorrect() {
             using (var stream = new MemoryStream(MoonLordCountdownBytes))
             using (var stream2 = new MemoryStream()) {
-                var packet = Packet.ReadFromStream(stream);
+                var packet = Packet.ReadFromStream(stream, PacketContext.Server);
 
-                packet.WriteToStream(stream2);
+                packet.WriteToStream(stream2, PacketContext.Server);
 
                 stream2.ToArray().Should().BeEquivalentTo(MoonLordCountdownBytes);
             }

@@ -15,7 +15,7 @@ namespace Orion.Tests.Networking.Packets.World.TileEntities {
         [Fact]
         public void ReadFromStream_Delete_IsCorrect() {
             using (var stream = new MemoryStream(TileEntityBytes)) {
-                var packet = (TileEntityPacket)Packet.ReadFromStream(stream);
+                var packet = (TileEntityPacket)Packet.ReadFromStream(stream, PacketContext.Server);
 
                 packet.TileEntityIndex.Should().Be(0);
                 packet.TileEntity.Should().BeNull();
@@ -26,9 +26,9 @@ namespace Orion.Tests.Networking.Packets.World.TileEntities {
         public void WriteToStream_Delete_IsCorrect() {
             using (var stream = new MemoryStream(TileEntityBytes))
             using (var stream2 = new MemoryStream()) {
-                var packet = Packet.ReadFromStream(stream);
+                var packet = Packet.ReadFromStream(stream, PacketContext.Server);
 
-                packet.WriteToStream(stream2);
+                packet.WriteToStream(stream2, PacketContext.Server);
 
                 stream2.ToArray().Should().BeEquivalentTo(TileEntityBytes);
             }
@@ -41,7 +41,7 @@ namespace Orion.Tests.Networking.Packets.World.TileEntities {
         [Fact]
         public void ReadFromStream_TargetDummy_IsCorrect() {
             using (var stream = new MemoryStream(TileEntityBytes2)) {
-                var packet = (TileEntityPacket)Packet.ReadFromStream(stream);
+                var packet = (TileEntityPacket)Packet.ReadFromStream(stream, PacketContext.Server);
 
                 packet.TileEntityIndex.Should().Be(0);
                 packet.TileEntity.Should().NotBeNull();
@@ -57,9 +57,9 @@ namespace Orion.Tests.Networking.Packets.World.TileEntities {
         public void WriteToStream_TargetDummy_IsCorrect() {
             using (var stream = new MemoryStream(TileEntityBytes2))
             using (var stream2 = new MemoryStream()) {
-                var packet = Packet.ReadFromStream(stream);
+                var packet = Packet.ReadFromStream(stream, PacketContext.Server);
 
-                packet.WriteToStream(stream2);
+                packet.WriteToStream(stream2, PacketContext.Server);
 
                 stream2.ToArray().Should().BeEquivalentTo(TileEntityBytes2);
             }
@@ -72,7 +72,7 @@ namespace Orion.Tests.Networking.Packets.World.TileEntities {
         [Fact]
         public void ReadFromStream_ItemFrame_IsCorrect() {
             using (var stream = new MemoryStream(TileEntityBytes3)) {
-                var packet = (TileEntityPacket)Packet.ReadFromStream(stream);
+                var packet = (TileEntityPacket)Packet.ReadFromStream(stream, PacketContext.Server);
 
                 packet.TileEntityIndex.Should().Be(0);
                 packet.TileEntity.Should().NotBeNull();
@@ -90,9 +90,9 @@ namespace Orion.Tests.Networking.Packets.World.TileEntities {
         public void WriteToStream_ItemFrame_IsCorrect() {
             using (var stream = new MemoryStream(TileEntityBytes3))
             using (var stream2 = new MemoryStream()) {
-                var packet = Packet.ReadFromStream(stream);
+                var packet = Packet.ReadFromStream(stream, PacketContext.Server);
 
-                packet.WriteToStream(stream2);
+                packet.WriteToStream(stream2, PacketContext.Server);
 
                 stream2.ToArray().Should().BeEquivalentTo(TileEntityBytes3);
             }
@@ -105,7 +105,7 @@ namespace Orion.Tests.Networking.Packets.World.TileEntities {
         [Fact]
         public void ReadFromStream_LogicSensor_IsCorrect() {
             using (var stream = new MemoryStream(TileEntityBytes4)) {
-                var packet = (TileEntityPacket)Packet.ReadFromStream(stream);
+                var packet = (TileEntityPacket)Packet.ReadFromStream(stream, PacketContext.Server);
 
                 packet.TileEntityIndex.Should().Be(0);
                 packet.TileEntity.Should().NotBeNull();
@@ -122,9 +122,9 @@ namespace Orion.Tests.Networking.Packets.World.TileEntities {
         public void WriteToStream_LogicSensor_IsCorrect() {
             using (var stream = new MemoryStream(TileEntityBytes4))
             using (var stream2 = new MemoryStream()) {
-                var packet = Packet.ReadFromStream(stream);
+                var packet = Packet.ReadFromStream(stream, PacketContext.Server);
 
-                packet.WriteToStream(stream2);
+                packet.WriteToStream(stream2, PacketContext.Server);
 
                 stream2.ToArray().Should().BeEquivalentTo(TileEntityBytes4);
             }

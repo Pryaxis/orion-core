@@ -42,7 +42,7 @@ namespace Orion.Networking.Packets.Projectiles {
 
         private protected override PacketType Type => PacketType.CannonShot;
 
-        private protected override void ReadFromReader(BinaryReader reader, ushort packetLength) {
+        private protected override void ReadFromReader(BinaryReader reader, PacketContext context) {
             Damage = reader.ReadInt16();
             Knockback = reader.ReadSingle();
             CannonTileX = reader.ReadInt16();
@@ -52,7 +52,7 @@ namespace Orion.Networking.Packets.Projectiles {
             ShooterPlayerIndex = reader.ReadByte();
         }
 
-        private protected override void WriteToWriter(BinaryWriter writer) {
+        private protected override void WriteToWriter(BinaryWriter writer, PacketContext context) {
             writer.Write(Damage);
             writer.Write(Knockback);
             writer.Write(CannonTileX);

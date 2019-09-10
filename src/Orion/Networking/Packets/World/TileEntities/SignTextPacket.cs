@@ -34,14 +34,14 @@ namespace Orion.Networking.Packets.World.TileEntities {
 
         private protected override PacketType Type => PacketType.SignText;
 
-        private protected override void ReadFromReader(BinaryReader reader, ushort packetLength) {
+        private protected override void ReadFromReader(BinaryReader reader, PacketContext context) {
             SignIndex = reader.ReadInt16();
             SignX = reader.ReadInt16();
             SignY = reader.ReadInt16();
             _signText = reader.ReadString();
         }
 
-        private protected override void WriteToWriter(BinaryWriter writer) {
+        private protected override void WriteToWriter(BinaryWriter writer, PacketContext context) {
             writer.Write(SignIndex);
             writer.Write(SignX);
             writer.Write(SignY);

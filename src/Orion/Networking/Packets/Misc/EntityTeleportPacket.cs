@@ -29,7 +29,7 @@ namespace Orion.Networking.Packets.Misc {
 
         private protected override PacketType Type => PacketType.EntityTeleport;
 
-        private protected override void ReadFromReader(BinaryReader reader, ushort packetLength) {
+        private protected override void ReadFromReader(BinaryReader reader, PacketContext context) {
             var header = reader.ReadByte();
             TeleportationType = (EntityTeleportationType)(header & 3);
             TeleportationStyle = (byte)((header >> 2) & 3);
@@ -38,7 +38,7 @@ namespace Orion.Networking.Packets.Misc {
             Position = reader.ReadVector2();
         }
 
-        private protected override void WriteToWriter(BinaryWriter writer) {
+        private protected override void WriteToWriter(BinaryWriter writer, PacketContext context) {
             byte header = 0;
             header |= (byte)((byte)TeleportationType & 3);
             header |= (byte)((TeleportationStyle & 3) << 2);

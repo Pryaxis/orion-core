@@ -11,7 +11,7 @@ namespace Orion.Tests.Networking.Packets.World.TileEntities {
         [Fact]
         public void ReadFromStream_IsCorrect() {
             using (var stream = new MemoryStream(RequestChestBytes)) {
-                var packet = (RequestChestPacket)Packet.ReadFromStream(stream);
+                var packet = (RequestChestPacket)Packet.ReadFromStream(stream, PacketContext.Server);
 
                 packet.ChestX.Should().Be(100);
                 packet.ChestY.Should().Be(100);
@@ -22,9 +22,9 @@ namespace Orion.Tests.Networking.Packets.World.TileEntities {
         public void WriteToStream_IsCorrect() {
             using (var stream = new MemoryStream(RequestChestBytes))
             using (var stream2 = new MemoryStream()) {
-                var packet = Packet.ReadFromStream(stream);
+                var packet = Packet.ReadFromStream(stream, PacketContext.Server);
 
-                packet.WriteToStream(stream2);
+                packet.WriteToStream(stream2, PacketContext.Server);
 
                 stream2.ToArray().Should().BeEquivalentTo(RequestChestBytes);
             }

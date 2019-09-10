@@ -12,7 +12,7 @@ namespace Orion.Tests.Networking.Packets.World.TileEntities {
         [Fact]
         public void ReadFromStream_IsCorrect() {
             using (var stream = new MemoryStream(ItemFrameBytes)) {
-                var packet = (ItemFramePacket)Packet.ReadFromStream(stream);
+                var packet = (ItemFramePacket)Packet.ReadFromStream(stream, PacketContext.Server);
 
                 packet.ItemFrameX.Should().Be(256);
                 packet.ItemFrameY.Should().Be(100);
@@ -26,9 +26,9 @@ namespace Orion.Tests.Networking.Packets.World.TileEntities {
         public void WriteToStream_IsCorrect() {
             using (var stream = new MemoryStream(ItemFrameBytes))
             using (var stream2 = new MemoryStream()) {
-                var packet = Packet.ReadFromStream(stream);
+                var packet = Packet.ReadFromStream(stream, PacketContext.Server);
 
-                packet.WriteToStream(stream2);
+                packet.WriteToStream(stream2, PacketContext.Server);
 
                 stream2.ToArray().Should().BeEquivalentTo(ItemFrameBytes);
             }

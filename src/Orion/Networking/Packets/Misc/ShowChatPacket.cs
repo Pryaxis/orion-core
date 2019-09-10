@@ -30,13 +30,13 @@ namespace Orion.Networking.Packets.Misc {
 
         private protected override PacketType Type => PacketType.ShowChat;
 
-        private protected override void ReadFromReader(BinaryReader reader, ushort packetLength) {
+        private protected override void ReadFromReader(BinaryReader reader, PacketContext context) {
             ChatColor = reader.ReadColor();
             ChatText = reader.ReadNetworkText();
             ChatLineWidth = reader.ReadInt16();
         }
 
-        private protected override void WriteToWriter(BinaryWriter writer) {
+        private protected override void WriteToWriter(BinaryWriter writer, PacketContext context) {
             writer.Write(ChatColor);
             writer.Write(ChatText);
             writer.Write(ChatLineWidth);

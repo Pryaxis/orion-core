@@ -17,12 +17,12 @@ namespace Orion.Networking.Packets.Npcs {
 
         private protected override PacketType Type => PacketType.CatchNpc;
 
-        private protected override void ReadFromReader(BinaryReader reader, ushort packetLength) {
+        private protected override void ReadFromReader(BinaryReader reader, PacketContext context) {
             NpcIndex = reader.ReadInt16();
             NpcCatcherPlayerIndex = reader.ReadByte();
         }
 
-        private protected override void WriteToWriter(BinaryWriter writer) {
+        private protected override void WriteToWriter(BinaryWriter writer, PacketContext context) {
             writer.Write(NpcIndex);
             writer.Write(NpcCatcherPlayerIndex);
         }

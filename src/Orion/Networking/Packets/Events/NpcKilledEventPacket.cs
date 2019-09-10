@@ -13,11 +13,11 @@ namespace Orion.Networking.Packets.Events {
 
         private protected override PacketType Type => PacketType.NpcKilledEvent;
 
-        private protected override void ReadFromReader(BinaryReader reader, ushort packetLength) {
+        private protected override void ReadFromReader(BinaryReader reader, PacketContext context) {
             KilledNpcType = (NpcType)reader.ReadInt16();
         }
 
-        private protected override void WriteToWriter(BinaryWriter writer) {
+        private protected override void WriteToWriter(BinaryWriter writer, PacketContext context) {
             writer.Write((short)KilledNpcType);
         }
     }

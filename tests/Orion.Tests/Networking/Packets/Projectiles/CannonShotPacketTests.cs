@@ -11,7 +11,7 @@ namespace Orion.Tests.Networking.Packets.Projectiles {
         [Fact]
         public void ReadFromStream_IsCorrect() {
             using (var stream = new MemoryStream(CannonShotBytes)) {
-                var packet = (CannonShotPacket)Packet.ReadFromStream(stream);
+                var packet = (CannonShotPacket)Packet.ReadFromStream(stream, PacketContext.Server);
 
                 packet.Damage.Should().Be(100);
                 packet.Knockback.Should().Be(0);
@@ -27,9 +27,9 @@ namespace Orion.Tests.Networking.Packets.Projectiles {
         public void WriteToStream_IsCorrect() {
             using (var stream = new MemoryStream(CannonShotBytes))
             using (var stream2 = new MemoryStream()) {
-                var packet = Packet.ReadFromStream(stream);
+                var packet = Packet.ReadFromStream(stream, PacketContext.Server);
 
-                packet.WriteToStream(stream2);
+                packet.WriteToStream(stream2, PacketContext.Server);
 
                 stream2.ToArray().Should().BeEquivalentTo(CannonShotBytes);
             }

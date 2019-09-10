@@ -12,11 +12,11 @@ namespace Orion.Networking.Packets.Events {
 
         private protected override PacketType Type => PacketType.MoonLordCountdown;
 
-        private protected override void ReadFromReader(BinaryReader reader, ushort packetLength) {
+        private protected override void ReadFromReader(BinaryReader reader, PacketContext context) {
             MoonLordCountdown = reader.ReadInt32();
         }
 
-        private protected override void WriteToWriter(BinaryWriter writer) {
+        private protected override void WriteToWriter(BinaryWriter writer, PacketContext context) {
             writer.Write(MoonLordCountdown);
         }
     }

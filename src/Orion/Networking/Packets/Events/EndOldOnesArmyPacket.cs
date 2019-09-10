@@ -6,7 +6,7 @@ namespace Orion.Networking.Packets.Events {
     /// </summary>
     public sealed class EndOldOnesArmyPacket : Packet {
         private protected override PacketType Type => PacketType.EndOldOnesArmy;
-        private protected override void ReadFromReader(BinaryReader reader, ushort packetLength) { }
-        private protected override void WriteToWriter(BinaryWriter writer) { }
+        private protected override void ReadFromReader(BinaryReader reader, PacketContext context) { }
+        private protected override void WriteToWriter(BinaryWriter writer, PacketContext context) { }
     }
 }

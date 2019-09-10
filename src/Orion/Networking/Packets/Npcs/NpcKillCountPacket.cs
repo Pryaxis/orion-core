@@ -19,13 +19,13 @@ namespace Orion.Networking.Packets.Npcs {
         private protected override PacketType Type => PacketType.NpcKillCount;
 
         /// <inheritdoc />
-        private protected override void ReadFromReader(BinaryReader reader, ushort packetLength) {
+        private protected override void ReadFromReader(BinaryReader reader, PacketContext context) {
             NpcType = (NpcType)reader.ReadInt16();
             NpcTypeKillCount = reader.ReadInt32();
         }
 
         /// <inheritdoc />
-        private protected override void WriteToWriter(BinaryWriter writer) {
+        private protected override void WriteToWriter(BinaryWriter writer, PacketContext context) {
             writer.Write((short)NpcType);
             writer.Write(NpcTypeKillCount);
         }

@@ -34,7 +34,7 @@ namespace Orion.Networking.Packets.Players {
         private protected override PacketType Type => PacketType.KillPlayer;
 
         /// <inheritdoc />
-        private protected override void ReadFromReader(BinaryReader reader, ushort packetLength) {
+        private protected override void ReadFromReader(BinaryReader reader, PacketContext context) {
             PlayerIndex = reader.ReadByte();
             PlayerDeathReason = reader.ReadPlayerDeathReason();
             Damage = reader.ReadInt16();
@@ -43,7 +43,7 @@ namespace Orion.Networking.Packets.Players {
         }
 
         /// <inheritdoc />
-        private protected override void WriteToWriter(BinaryWriter writer) {
+        private protected override void WriteToWriter(BinaryWriter writer, PacketContext context) {
             writer.Write(PlayerIndex);
             writer.Write(PlayerDeathReason);
             writer.Write(Damage);

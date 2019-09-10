@@ -17,12 +17,12 @@ namespace Orion.Networking.Packets.Events {
 
         private protected override PacketType Type => PacketType.StartOldOnesArmy;
 
-        private protected override void ReadFromReader(BinaryReader reader, ushort packetLength) {
+        private protected override void ReadFromReader(BinaryReader reader, PacketContext context) {
             CrystalX = reader.ReadInt16();
             CrystalY = reader.ReadInt16();
         }
 
-        private protected override void WriteToWriter(BinaryWriter writer) {
+        private protected override void WriteToWriter(BinaryWriter writer, PacketContext context) {
             writer.Write(CrystalX);
             writer.Write(CrystalY);
         }

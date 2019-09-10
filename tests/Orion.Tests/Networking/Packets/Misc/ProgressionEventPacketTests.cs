@@ -11,7 +11,7 @@ namespace Orion.Tests.Networking.Packets.Misc {
         [Fact]
         public void ReadFromStream_IsCorrect() {
             using (var stream = new MemoryStream(ProgressionEventBytes)) {
-                var packet = (ProgressionEventPacket)Packet.ReadFromStream(stream);
+                var packet = (ProgressionEventPacket)Packet.ReadFromStream(stream, PacketContext.Server);
 
                 packet.EventId.Should().Be(1);
             }
@@ -21,9 +21,9 @@ namespace Orion.Tests.Networking.Packets.Misc {
         public void WriteToStream_IsCorrect() {
             using (var stream = new MemoryStream(ProgressionEventBytes))
             using (var stream2 = new MemoryStream()) {
-                var packet = Packet.ReadFromStream(stream);
+                var packet = Packet.ReadFromStream(stream, PacketContext.Server);
 
-                packet.WriteToStream(stream2);
+                packet.WriteToStream(stream2, PacketContext.Server);
 
                 stream2.ToArray().Should().BeEquivalentTo(ProgressionEventBytes);
             }

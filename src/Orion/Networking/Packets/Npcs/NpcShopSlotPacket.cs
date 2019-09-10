@@ -33,7 +33,7 @@ namespace Orion.Networking.Packets.Npcs {
 
         private protected override PacketType Type => PacketType.NpcShopSlot;
 
-        private protected override void ReadFromReader(BinaryReader reader, ushort packetLength) {
+        private protected override void ReadFromReader(BinaryReader reader, PacketContext context) {
             NpcShopSlotIndex = reader.ReadByte();
             ItemType = (ItemType)reader.ReadInt16();
             ItemStackSize = reader.ReadInt16();
@@ -41,7 +41,7 @@ namespace Orion.Networking.Packets.Npcs {
             ItemValue = reader.ReadInt32();
         }
 
-        private protected override void WriteToWriter(BinaryWriter writer) {
+        private protected override void WriteToWriter(BinaryWriter writer, PacketContext context) {
             writer.Write(NpcShopSlotIndex);
             writer.Write((short)ItemType);
             writer.Write(ItemStackSize);

@@ -137,7 +137,7 @@ namespace Orion.Networking.Packets.Players {
 
         private protected override PacketType Type => PacketType.PlayerZones;
 
-        private protected override void ReadFromReader(BinaryReader reader, ushort packetLength) {
+        private protected override void ReadFromReader(BinaryReader reader, PacketContext context) {
             PlayerIndex = reader.ReadByte();
 
             Terraria.BitsByte zoneFlags = reader.ReadByte();
@@ -171,7 +171,7 @@ namespace Orion.Networking.Packets.Players {
             IsPlayerNearOldOnesArmyZone = zoneFlags4[0];
         }
 
-        private protected override void WriteToWriter(BinaryWriter writer) {
+        private protected override void WriteToWriter(BinaryWriter writer, PacketContext context) {
             writer.Write(PlayerIndex);
 
             Terraria.BitsByte zoneFlags = 0;

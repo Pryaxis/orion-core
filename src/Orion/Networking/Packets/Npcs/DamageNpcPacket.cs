@@ -32,7 +32,7 @@ namespace Orion.Networking.Packets.Npcs {
 
         private protected override PacketType Type => PacketType.DamageNpc;
 
-        private protected override void ReadFromReader(BinaryReader reader, ushort packetLength) {
+        private protected override void ReadFromReader(BinaryReader reader, PacketContext context) {
             NpcIndex = reader.ReadInt16();
             Damage = reader.ReadInt16();
             Knockback = reader.ReadSingle();
@@ -40,7 +40,7 @@ namespace Orion.Networking.Packets.Npcs {
             IsCriticalHit = reader.ReadBoolean();
         }
 
-        private protected override void WriteToWriter(BinaryWriter writer) {
+        private protected override void WriteToWriter(BinaryWriter writer, PacketContext context) {
             writer.Write(NpcIndex);
             writer.Write(Damage);
             writer.Write(Knockback);

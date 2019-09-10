@@ -19,12 +19,12 @@ namespace Orion.Networking.Packets.Players {
 
         private protected override PacketType Type => PacketType.AddBuffToPlayer;
 
-        private protected override void ReadFromReader(BinaryReader reader, ushort packetLength) {
+        private protected override void ReadFromReader(BinaryReader reader, PacketContext context) {
             PlayerIndex = reader.ReadByte();
             Buff = new Buff((BuffType)reader.ReadByte(), TimeSpan.FromSeconds(reader.ReadInt32() / 60.0));
         }
 
-        private protected override void WriteToWriter(BinaryWriter writer) {
+        private protected override void WriteToWriter(BinaryWriter writer, PacketContext context) {
             writer.Write(PlayerIndex);
             writer.Write((byte)Buff.BuffType);
             writer.Write((int)(Buff.Duration.TotalSeconds * 60.0));

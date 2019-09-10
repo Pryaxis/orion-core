@@ -13,13 +13,13 @@ namespace Orion.Networking.Packets.Events {
 
         private protected override PacketType Type => PacketType.TravelingMerchantShop;
 
-        private protected override void ReadFromReader(BinaryReader reader, ushort packetLength) {
+        private protected override void ReadFromReader(BinaryReader reader, PacketContext context) {
             for (var i = 0; i < Terraria.Chest.maxItems; ++i) {
                 ShopItemTypes[i] = (ItemType)reader.ReadInt16();
             }
         }
 
-        private protected override void WriteToWriter(BinaryWriter writer) {
+        private protected override void WriteToWriter(BinaryWriter writer, PacketContext context) {
             foreach (var itemType in ShopItemTypes) {
                 writer.Write((short)itemType);
             }

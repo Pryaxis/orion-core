@@ -17,12 +17,12 @@ namespace Orion.Networking.Packets.Items {
 
         private protected override PacketType Type => PacketType.ItemOwner;
 
-        private protected override void ReadFromReader(BinaryReader reader, ushort packetLength) {
+        private protected override void ReadFromReader(BinaryReader reader, PacketContext context) {
             ItemIndex = reader.ReadInt16();
             OwnerPlayerIndex = reader.ReadByte();
         }
 
-        private protected override void WriteToWriter(BinaryWriter writer) {
+        private protected override void WriteToWriter(BinaryWriter writer, PacketContext context) {
             writer.Write(ItemIndex);
             writer.Write(OwnerPlayerIndex);
         }

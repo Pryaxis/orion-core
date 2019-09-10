@@ -17,7 +17,7 @@ namespace Orion.Networking.Packets.World.TileEntities {
 
         private protected override PacketType Type => PacketType.TileEntity;
 
-        private protected override void ReadFromReader(BinaryReader reader, ushort packetLength) {
+        private protected override void ReadFromReader(BinaryReader reader, PacketContext context) {
             TileEntityIndex = reader.ReadInt32();
             if (!reader.ReadBoolean()) {
                 return;
@@ -27,7 +27,7 @@ namespace Orion.Networking.Packets.World.TileEntities {
             TileEntity.Index = TileEntityIndex;
         }
 
-        private protected override void WriteToWriter(BinaryWriter writer) {
+        private protected override void WriteToWriter(BinaryWriter writer, PacketContext context) {
             writer.Write(TileEntityIndex);
             writer.Write(TileEntity != null);
             TileEntity?.WriteToWriter(writer, false);

@@ -17,12 +17,12 @@ namespace Orion.Networking.Packets.World {
 
         private protected override PacketType Type => PacketType.RequestSection;
 
-        private protected override void ReadFromReader(BinaryReader reader, ushort packetLength) {
+        private protected override void ReadFromReader(BinaryReader reader, PacketContext context) {
             SectionX = reader.ReadInt32();
             SectionY = reader.ReadInt32();
         }
 
-        private protected override void WriteToWriter(BinaryWriter writer) {
+        private protected override void WriteToWriter(BinaryWriter writer, PacketContext context) {
             writer.Write(SectionX);
             writer.Write(SectionY);
         }

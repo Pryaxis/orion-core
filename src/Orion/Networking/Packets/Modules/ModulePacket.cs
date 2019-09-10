@@ -2,8 +2,6 @@
 using System.IO;
 
 namespace Orion.Networking.Packets.Modules {
-    // TODO: finish implementing these
-
     /// <summary>
     /// Packet sent in the form of a module.
     /// </summary>
@@ -22,13 +20,14 @@ namespace Orion.Networking.Packets.Modules {
         private protected override PacketType Type => PacketType.Module;
 
         /// <inheritdoc />
-        private protected override void ReadFromReader(BinaryReader reader, ushort packetLength) {
-            Module = Module.ReadFromStream(reader.BaseStream, (ushort)(packetLength - HeaderLength));
+        public override string ToString() => $"{nameof(PacketType.Module)}[{Module}]";
+
+        private protected override void ReadFromReader(BinaryReader reader, PacketContext context) {
+            Module = Module.ReadFromStream(reader.BaseStream, context);
         }
 
-        /// <inheritdoc />
-        private protected override void WriteToWriter(BinaryWriter writer) {
-            Module.WriteToStream(writer.BaseStream);
+        private protected override void WriteToWriter(BinaryWriter writer, PacketContext context) {
+            Module.WriteToStream(writer.BaseStream, context);
         }
     }
 }

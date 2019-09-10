@@ -54,7 +54,7 @@ namespace Orion.Networking.Packets.World {
             }
         }
 
-        private protected override void ReadFromReader(BinaryReader reader, ushort packetLength) {
+        private protected override void ReadFromReader(BinaryReader reader, PacketContext context) {
             ModificationType = (TileModificationType)reader.ReadByte();
             TileX = reader.ReadInt16();
             TileY = reader.ReadInt16();
@@ -62,7 +62,7 @@ namespace Orion.Networking.Packets.World {
             ModificationStyle = reader.ReadByte();
         }
 
-        private protected override void WriteToWriter(BinaryWriter writer) {
+        private protected override void WriteToWriter(BinaryWriter writer, PacketContext context) {
             writer.Write((byte)ModificationType);
             writer.Write(TileX);
             writer.Write(TileY);

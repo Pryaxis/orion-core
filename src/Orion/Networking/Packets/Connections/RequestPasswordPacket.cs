@@ -13,7 +13,7 @@ namespace Orion.Networking.Packets.Connections {
         [ExcludeFromCodeCoverage]
         public override string ToString() => $"{nameof(PacketType.RequestPassword)}";
 
-        private protected override void ReadFromReader(BinaryReader reader, ushort packetLength) { }
-        private protected override void WriteToWriter(BinaryWriter writer) { }
+        private protected override void ReadFromReader(BinaryReader reader, PacketContext context) { }
+        private protected override void WriteToWriter(BinaryWriter writer, PacketContext context) { }
     }
 }

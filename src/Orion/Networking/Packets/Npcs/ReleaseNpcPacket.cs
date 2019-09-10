@@ -24,13 +24,13 @@ namespace Orion.Networking.Packets.Npcs {
 
         private protected override PacketType Type => PacketType.ReleaseNpc;
 
-        private protected override void ReadFromReader(BinaryReader reader, ushort packetLength) {
+        private protected override void ReadFromReader(BinaryReader reader, PacketContext context) {
             NpcPosition = new Vector2(reader.ReadInt32(), reader.ReadInt32());
             NpcType = (NpcType)reader.ReadInt16();
             NpcStyle = reader.ReadByte();
         }
 
-        private protected override void WriteToWriter(BinaryWriter writer) {
+        private protected override void WriteToWriter(BinaryWriter writer, PacketContext context) {
             writer.Write((int)NpcPosition.X);
             writer.Write((int)NpcPosition.Y);
             writer.Write((short)NpcType);

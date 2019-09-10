@@ -24,11 +24,11 @@ namespace Orion.Networking.Packets.Connections {
         [ExcludeFromCodeCoverage]
         public override string ToString() => $"{nameof(PacketType.StartConnecting)}[V={Version}]";
 
-        private protected override void ReadFromReader(BinaryReader reader, ushort packetLength) {
+        private protected override void ReadFromReader(BinaryReader reader, PacketContext context) {
             _version = reader.ReadString();
         }
 
-        private protected override void WriteToWriter(BinaryWriter writer) {
+        private protected override void WriteToWriter(BinaryWriter writer, PacketContext context) {
             writer.Write(Version);
         }
     }

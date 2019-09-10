@@ -12,7 +12,7 @@ namespace Orion.Tests.Networking.Packets.Misc {
         [Fact]
         public void ReadFromStream_IsCorrect() {
             using (var stream = new MemoryStream(ShowTileAnimationBytes)) {
-                var packet = (ShowTileAnimationPacket)Packet.ReadFromStream(stream);
+                var packet = (ShowTileAnimationPacket)Packet.ReadFromStream(stream, PacketContext.Server);
 
                 packet.AnimationType.Should().Be(1);
                 packet.BlockType.Should().Be(BlockType.Stone);
@@ -25,9 +25,9 @@ namespace Orion.Tests.Networking.Packets.Misc {
         public void WriteToStream_IsCorrect() {
             using (var stream = new MemoryStream(ShowTileAnimationBytes))
             using (var stream2 = new MemoryStream()) {
-                var packet = Packet.ReadFromStream(stream);
+                var packet = Packet.ReadFromStream(stream, PacketContext.Server);
 
-                packet.WriteToStream(stream2);
+                packet.WriteToStream(stream2, PacketContext.Server);
 
                 stream2.ToArray().Should().BeEquivalentTo(ShowTileAnimationBytes);
             }

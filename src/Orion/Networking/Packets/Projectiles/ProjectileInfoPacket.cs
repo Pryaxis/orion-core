@@ -55,7 +55,7 @@ namespace Orion.Networking.Packets.Projectiles {
 
         private protected override PacketType Type => PacketType.ProjectileInfo;
 
-        private protected override void ReadFromReader(BinaryReader reader, ushort packetLength) {
+        private protected override void ReadFromReader(BinaryReader reader, PacketContext context) {
             ProjectileIdentity = reader.ReadInt16();
             ProjectilePosition = reader.ReadVector2();
             ProjectileVelocity = reader.ReadVector2();
@@ -70,7 +70,7 @@ namespace Orion.Networking.Packets.Projectiles {
             if (header[2]) ProjectileUuid = reader.ReadInt16();
         }
 
-        private protected override void WriteToWriter(BinaryWriter writer) {
+        private protected override void WriteToWriter(BinaryWriter writer, PacketContext context) {
             writer.Write(ProjectileIdentity);
             writer.Write(ProjectilePosition);
             writer.Write(ProjectileVelocity);

@@ -11,7 +11,7 @@ namespace Orion.Tests.Networking.Packets.World {
         [Fact]
         public void ReadFromStream_IsCorrect() {
             using (var stream = new MemoryStream(ShowTreeGrowingEffectBytes)) {
-                var packet = (ShowTreeGrowingEffectPacket)Packet.ReadFromStream(stream);
+                var packet = (ShowTreeGrowingEffectPacket)Packet.ReadFromStream(stream, PacketContext.Server);
 
                 packet.TreeX.Should().Be(256);
                 packet.TreeY.Should().Be(100);
@@ -24,9 +24,9 @@ namespace Orion.Tests.Networking.Packets.World {
         public void WriteToStream_IsCorrect() {
             using (var stream = new MemoryStream(ShowTreeGrowingEffectBytes))
             using (var stream2 = new MemoryStream()) {
-                var packet = Packet.ReadFromStream(stream);
+                var packet = Packet.ReadFromStream(stream, PacketContext.Server);
 
-                packet.WriteToStream(stream2);
+                packet.WriteToStream(stream2, PacketContext.Server);
 
                 stream2.ToArray().Should().BeEquivalentTo(ShowTreeGrowingEffectBytes);
             }

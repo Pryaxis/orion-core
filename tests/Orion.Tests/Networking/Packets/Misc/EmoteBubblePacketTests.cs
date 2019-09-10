@@ -13,7 +13,7 @@ namespace Orion.Tests.Networking.Packets.Misc {
         [Fact]
         public void ReadFromStream_Normal_IsCorrect() {
             using (var stream = new MemoryStream(EmoteBubbleBytes)) {
-                var packet = (EmoteBubblePacket)Packet.ReadFromStream(stream);
+                var packet = (EmoteBubblePacket)Packet.ReadFromStream(stream, PacketContext.Server);
 
                 packet.EmoteId.Should().Be(1);
                 packet.AnchorType.Should().Be(0);
@@ -27,9 +27,9 @@ namespace Orion.Tests.Networking.Packets.Misc {
         public void WriteToStream_Normal_IsCorrect() {
             using (var stream = new MemoryStream(EmoteBubbleBytes))
             using (var stream2 = new MemoryStream()) {
-                var packet = Packet.ReadFromStream(stream);
+                var packet = Packet.ReadFromStream(stream, PacketContext.Server);
 
-                packet.WriteToStream(stream2);
+                packet.WriteToStream(stream2, PacketContext.Server);
 
                 stream2.ToArray().Should().BeEquivalentTo(EmoteBubbleBytes);
             }
@@ -42,7 +42,7 @@ namespace Orion.Tests.Networking.Packets.Misc {
         [Fact]
         public void ReadFromStream_Remove_IsCorrect() {
             using (var stream = new MemoryStream(EmoteBubbleBytes2)) {
-                var packet = (EmoteBubblePacket)Packet.ReadFromStream(stream);
+                var packet = (EmoteBubblePacket)Packet.ReadFromStream(stream, PacketContext.Server);
 
                 packet.EmoteId.Should().Be(1);
                 packet.AnchorType.Should().Be(255);
@@ -53,9 +53,9 @@ namespace Orion.Tests.Networking.Packets.Misc {
         public void WriteToStream_Remove_IsCorrect() {
             using (var stream = new MemoryStream(EmoteBubbleBytes2))
             using (var stream2 = new MemoryStream()) {
-                var packet = Packet.ReadFromStream(stream);
+                var packet = Packet.ReadFromStream(stream, PacketContext.Server);
 
-                packet.WriteToStream(stream2);
+                packet.WriteToStream(stream2, PacketContext.Server);
 
                 stream2.ToArray().Should().BeEquivalentTo(EmoteBubbleBytes2);
             }
@@ -68,7 +68,7 @@ namespace Orion.Tests.Networking.Packets.Misc {
         [Fact]
         public void ReadFromStream_WithMetadata_IsCorrect() {
             using (var stream = new MemoryStream(EmoteBubbleBytes3)) {
-                var packet = (EmoteBubblePacket)Packet.ReadFromStream(stream);
+                var packet = (EmoteBubblePacket)Packet.ReadFromStream(stream, PacketContext.Server);
 
                 packet.EmoteId.Should().Be(1);
                 packet.AnchorType.Should().Be(0);
@@ -83,9 +83,9 @@ namespace Orion.Tests.Networking.Packets.Misc {
         public void WriteToStream_WithMetadata_IsCorrect() {
             using (var stream = new MemoryStream(EmoteBubbleBytes3))
             using (var stream2 = new MemoryStream()) {
-                var packet = Packet.ReadFromStream(stream);
+                var packet = Packet.ReadFromStream(stream, PacketContext.Server);
 
-                packet.WriteToStream(stream2);
+                packet.WriteToStream(stream2, PacketContext.Server);
 
                 stream2.ToArray().Should().BeEquivalentTo(EmoteBubbleBytes3);
             }

@@ -22,13 +22,13 @@ namespace Orion.Networking.Packets.World {
 
         private protected override PacketType Type => PacketType.ToggleGemLock;
 
-        private protected override void ReadFromReader(BinaryReader reader, ushort packetLength) {
+        private protected override void ReadFromReader(BinaryReader reader, PacketContext context) {
             GemLockTileX = reader.ReadInt16();
             GemLockTileY = reader.ReadInt16();
             IsGemLockLocked = reader.ReadBoolean();
         }
 
-        private protected override void WriteToWriter(BinaryWriter writer) {
+        private protected override void WriteToWriter(BinaryWriter writer, PacketContext context) {
             writer.Write(GemLockTileX);
             writer.Write(GemLockTileY);
             writer.Write(IsGemLockLocked);

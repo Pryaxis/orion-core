@@ -11,7 +11,7 @@ namespace Orion.Tests.Networking.Packets.Players {
         [Fact]
         public void ReadFromStream_IsCorrect() {
             using (var stream = new MemoryStream(HealPlayerBytes)) {
-                var packet = (HealPlayerPacket)Packet.ReadFromStream(stream);
+                var packet = (HealPlayerPacket)Packet.ReadFromStream(stream, PacketContext.Server);
 
                 packet.PlayerIndex.Should().Be(0);
                 packet.HealAmount.Should().Be(100);
@@ -22,9 +22,9 @@ namespace Orion.Tests.Networking.Packets.Players {
         public void WriteToStream_IsCorrect() {
             using (var stream = new MemoryStream(HealPlayerBytes))
             using (var stream2 = new MemoryStream()) {
-                var packet = Packet.ReadFromStream(stream);
+                var packet = Packet.ReadFromStream(stream, PacketContext.Server);
 
-                packet.WriteToStream(stream2);
+                packet.WriteToStream(stream2, PacketContext.Server);
 
                 stream2.ToArray().Should().BeEquivalentTo(HealPlayerBytes);
             }
