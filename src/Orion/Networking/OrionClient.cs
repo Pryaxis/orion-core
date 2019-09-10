@@ -4,6 +4,7 @@ using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using Orion.Networking.Events;
 using Orion.Networking.Packets;
+using Serilog;
 
 namespace Orion.Networking {
     internal sealed class OrionClient : IClient {
@@ -32,6 +33,8 @@ namespace Orion.Networking {
             if (packet == null) throw new ArgumentNullException(nameof(packet));
             if (!IsConnected) return;
 
+            Log.Debug("[Net] Sending {Packet} to {Receiver}", packet, Name);
+
             // Trigger SendingPacket manually.
             var args = new SendingPacketEventArgs(this, packet);
             _networkService.SendingPacket?.Invoke(this, args);
@@ -46,6 +49,8 @@ namespace Orion.Networking {
             // Trigger SentPacket manually.
             var args2 = new SentPacketEventArgs(this, packet);
             _networkService.SentPacket?.Invoke(this, args2);
+
+            Log.Debug("[Net] Sent {Packet} to {Receiver}", packet, Name);
         }
 
         public void SendPacket(PacketType packetType, string text = "", int number = 0, float number2 = 0,
@@ -53,6 +58,9 @@ namespace Orion.Networking {
                                int number7 = 0) {
             if (!IsConnected) return;
 
+            Log.Debug("[Net] Sending {Packet} (\"{Text}\", {Number1}, {Number2}, {Number3}, {Number4}, {Number5}, " +
+                      "{Number6}, {Number7} to {Receiver}", packetType, Name, text, number, number2, number3, number4,
+                      number5, number6, number7);
             Terraria.NetMessage.SendData((int)packetType, Index, -1,
                                          Terraria.Localization.NetworkText.FromLiteral(text), number, number2, number3,
                                          number4, number5, number6, number7);

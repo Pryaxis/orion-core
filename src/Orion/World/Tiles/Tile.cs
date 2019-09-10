@@ -212,7 +212,7 @@ namespace Orion.World.Tiles {
                 if (((ITile)this).halfBrick()) return 2;
 
                 if (((ITile)this).slope() > 0) {
-                    return (2 + ((ITile)this).slope());
+                    return 2 + ((ITile)this).slope();
                 }
 
                 if (Terraria.Main.tileSolid[((ITile)this).type] && !Terraria.Main.tileSolidTop[((ITile)this).type]) {
@@ -359,7 +359,7 @@ namespace Orion.World.Tiles {
         byte ITile.liquidType() => (byte)((((ITile)this).bTileHeader & 96) >> 5);
 
         bool ITile.nactive() {
-            int num = (((ITile)this).sTileHeader & 96);
+            int num = ((ITile)this).sTileHeader & 96;
             return num == 32;
         }
 
@@ -463,7 +463,7 @@ namespace Orion.World.Tiles {
             ((ITile)this).bTileHeader &= 127;
         }
 
-        int ITile.wallFrameX() => ((((ITile)this).bTileHeader2 & 15) * 36);
+        int ITile.wallFrameX() => (((ITile)this).bTileHeader2 & 15) * 36;
 
         void ITile.wallFrameX(int wallFrameX) {
             ((ITile)this).bTileHeader2 = (byte)((((ITile)this).bTileHeader2 & 240) | (wallFrameX / 36 & 15));
@@ -481,7 +481,7 @@ namespace Orion.World.Tiles {
             ((ITile)this).bTileHeader2 = (byte)((((ITile)this).bTileHeader2 & 63) | (wallFrameNumber & 3) << 6);
         }
 
-        int ITile.wallFrameY() => ((((ITile)this).bTileHeader3 & 7) * 36);
+        int ITile.wallFrameY() => (((ITile)this).bTileHeader3 & 7) * 36;
 
         void ITile.wallFrameY(int wallFrameY) =>
             ((ITile)this).bTileHeader3 = (byte)((((ITile)this).bTileHeader3 & 248) | (wallFrameY / 36 & 7));

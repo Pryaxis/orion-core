@@ -7,29 +7,15 @@ namespace Orion.Networking.Events {
     /// Provides data for the <see cref="INetworkService.ReceivingPacket"/> event.
     /// </summary>
     public sealed class ReceivingPacketEventArgs : HandledEventArgs {
-        private Packet _packet;
-
         /// <summary>
         /// Gets the packet's sender.
         /// </summary>
         public IClient Sender { get; }
 
         /// <summary>
-        /// Gets or sets the packet that is being received.
+        /// Gets the packet that is being received.
         /// </summary>
-        /// <exception cref="ArgumentNullException"><paramref name="value"/> is <c>null</c>.</exception>
-        public Packet Packet {
-            get => _packet;
-            set {
-                _packet = value ?? throw new ArgumentNullException(nameof(value));
-                MarkPacketAsDirty();
-            }
-        }
-
-        /// <summary>
-        /// Gets a value indicating whether the packet is dirty.
-        /// </summary>
-        public bool IsPacketDirty { get; private set; }
+        public Packet Packet { get; }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ReceivingPacketEventArgs"/> class with the specified sender
@@ -42,14 +28,7 @@ namespace Orion.Networking.Events {
         /// </exception>
         public ReceivingPacketEventArgs(IClient sender, Packet packet) {
             Sender = sender ?? throw new ArgumentNullException(nameof(sender));
-            _packet = packet ?? throw new ArgumentNullException(nameof(packet));
-        }
-
-        /// <summary>
-        /// Marks the packet as being dirty.
-        /// </summary>
-        public void MarkPacketAsDirty() {
-            IsPacketDirty = true;
+            Packet = packet ?? throw new ArgumentNullException(nameof(packet));
         }
     }
 }

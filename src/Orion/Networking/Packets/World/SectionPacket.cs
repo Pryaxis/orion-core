@@ -254,7 +254,7 @@ namespace Orion.Networking.Packets.World {
             NetworkTile previousTile = null;
             var runLength = 0;
 
-            void WritePartialTile(NetworkTile tile) {
+            void WritePartialTile(Tile tile) {
                 header = 0;
                 byte header2 = 0;
                 byte header3 = 0;

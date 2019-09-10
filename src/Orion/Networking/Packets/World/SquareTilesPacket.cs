@@ -125,7 +125,7 @@ namespace Orion.Networking.Packets.World {
             writer.Write(TileX);
             writer.Write(TileY);
 
-            void WriteTile(NetworkTile tile) {
+            void WriteTile(Tile tile) {
                 Terraria.BitsByte header = 0;
                 Terraria.BitsByte header2 = 0;
                 header[0] = tile.IsBlockActive;

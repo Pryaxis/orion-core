@@ -69,7 +69,8 @@ namespace Orion.Networking {
 
         public void BroadcastPacket(Packet packet, int excludeIndex = -1) {
             if (packet == null) throw new ArgumentNullException(nameof(packet));
-
+            
+            Log.Debug("[Net] Broadcasting {Packet}", packet);
             for (var i = 0; i < Terraria.Netplay.MaxConnections; ++i) {
                 if (i != excludeIndex) {
                     this[i].SendPacket(packet);
@@ -80,6 +81,9 @@ namespace Orion.Networking {
         public void BroadcastPacket(PacketType packetType, int excludeIndex = -1, string text = "", int number = 0,
                                     float number2 = 0, float number3 = 0, float number4 = 0, int number5 = 0,
                                     int number6 = 0, int number7 = 0) {
+            Log.Debug("[Net] Broadcasting {Packet} (\"{Text}\", {Number1}, {Number2}, {Number3}, {Number4}, " +
+                      "{Number5}, {Number6}, {Number7} to {Receiver}", packetType, Name, text, number, number2, number3,
+                      number4, number5, number6, number7);
             Terraria.NetMessage.SendData((int)packetType, -1, excludeIndex,
                                          Terraria.Localization.NetworkText.FromLiteral(text), number, number2, number3,
                                          number4, number5, number6, number7);
@@ -98,37 +102,15 @@ namespace Orion.Networking {
             using (var stream = new MemoryStream(data, start - 2, length + 2)) {
                 var sender = this[buffer.whoAmI];
                 var packet = Packet.ReadFromStream(stream, PacketContext.Server);
+                Log.Verbose("[Net] Receiving {Packet} from {Sender}", packet, sender.Name);
+
                 var args = new ReceivingPacketEventArgs(sender, packet);
                 ReceivingPacket?.Invoke(this, args);
                 if (args.Handled) return OTAPI.HookResult.Cancel;
 
-                /*
-                 * To properly deal with a dirty packet, we'll need to use a major hack. By using HelperMemoryStream,
-                 * we can run an action whenever Terraria.NetMessage sets the stream to the "real" position after
-                 * reading the "real" packet.
-                 *
-                 * This allows us to replace the buffer and restore the old position, acting as if the dirty packet
-                 * was never out of the ordinary.
-                 */
-                if (args.IsPacketDirty) {
-                    Log.Debug("[Net] Rcvd {Packet} originally from {Sender}", packet, sender.Name);
-                    packet = args.Packet;
-
-                    var targetPosition = start + length;
-                    var oldBuffer = data.ToArray();
-                    stream.Position = 0;
-
-                    // Since we are faking what the client sent us, use the Client context.
-                    packet.WriteToStream(stream, PacketContext.Client);
-
-                    buffer.readerStream = new HelperMemoryStream(
-                        data, targetPosition, stream.Position >= targetPosition, buffer, oldBuffer);
-                    buffer.reader = new BinaryReader(buffer.readerStream);
-                }
-
                 var args2 = new ReceivedPacketEventArgs(sender, packet);
                 ReceivedPacket?.Invoke(this, args2);
-                Log.Verbose("[Net] Rcvd {Packet} from {Sender}", packet, sender.Name);
+                Log.Verbose("[Net] Received {Packet} from {Sender}", packet, sender.Name);
                 return OTAPI.HookResult.Continue;
             }
         }
@@ -144,12 +126,13 @@ namespace Orion.Networking {
             using (var stream = new MemoryStream(data, start, length)) {
                 var receiver = this[remoteId];
                 var packet = Packet.ReadFromStream(stream, PacketContext.Client);
+                Log.Verbose("[Net] Sending {Packet} to {Receiver}", packet, receiver.Name);
+
                 var args = new SendingPacketEventArgs(receiver, packet);
                 SendingPacket?.Invoke(this, args);
                 if (args.Handled) return OTAPI.HookResult.Cancel;
 
                 if (args.IsPacketDirty) {
-                    Log.Debug("[Net] Sent {Packet} originally to {Receiver}", packet, receiver.Name);
                     packet = args.Packet;
 
                     var bytes = new byte[ushort.MaxValue];
@@ -173,39 +156,8 @@ namespace Orion.Networking {
             var client = new OrionClient(this, remoteClient);
             var args = new ClientDisconnectedEventArgs(client);
             ClientDisconnected?.Invoke(this, args);
+            Log.Information("[Net] {Client} disconnected", client);
             return OTAPI.HookResult.Continue;
-        }
-
-
-        private class HelperMemoryStream : MemoryStream {
-            private readonly Terraria.MessageBuffer _messageBuffer;
-            private readonly byte[] _oldBuffer;
-            private readonly long _targetPosition;
-            private bool _ignoreFirstTime;
-
-            public override long Position {
-                get => base.Position;
-                set {
-                    base.Position = value;
-
-                    if (value >= _targetPosition && _ignoreFirstTime) {
-                        _ignoreFirstTime = false;
-                    } else if (value == _targetPosition) {
-                        _messageBuffer.readBuffer = _oldBuffer;
-                        _messageBuffer.readerStream = new MemoryStream(_messageBuffer.readBuffer) {
-                            Position = _targetPosition
-                        };
-                    }
-                }
-            }
-
-            public HelperMemoryStream(byte[] buffer, long targetPosition, bool ignoreFirstTime,
-                                      Terraria.MessageBuffer messageBuffer, byte[] oldBuffer) : base(buffer) {
-                _targetPosition = targetPosition;
-                _ignoreFirstTime = ignoreFirstTime;
-                _messageBuffer = messageBuffer;
-                _oldBuffer = oldBuffer;
-            }
         }
     }
 }
