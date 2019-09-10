@@ -57,7 +57,8 @@ namespace Orion.Players {
 
         private class BuffArray : IArray<Buff> {
             public Buff this[int index] {
-                get => new Buff((BuffType)_wrapped.buffType[index], TimeSpan.FromSeconds(_wrapped.buffTime[index] / 60.0));
+                get => new Buff((BuffType)_wrapped.buffType[index],
+                                TimeSpan.FromSeconds(_wrapped.buffTime[index] / 60.0));
                 set {
                     _wrapped.buffType[index] = (int)value.BuffType;
                     _wrapped.buffTime[index] = (int)(value.Duration.TotalSeconds * 60.0);

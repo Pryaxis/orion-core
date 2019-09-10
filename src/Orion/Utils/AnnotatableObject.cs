@@ -12,6 +12,8 @@ namespace Orion.Utils {
             _annotations.TryGetValue(key, out var value) ? (T)value : defaultValue;
 
         /// <inheritdoc />
-        public void SetAnnotation<T>(string key, T value) => _annotations[key] = value;
+        public void SetAnnotation<T>(string key, T value) {
+            _annotations[key] = value;
+        }
     }
 }

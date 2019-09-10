@@ -18,7 +18,7 @@ namespace Orion.Entities {
         bool IsActive { get; set; }
 
         /// <summary>
-        /// Gets or sets the entity name.
+        /// Gets or sets the entity's name.
         /// </summary>
         /// <exception cref="ArgumentNullException"><paramref name="value"/> is <c>null</c>.</exception>
         string Name { get; set; }

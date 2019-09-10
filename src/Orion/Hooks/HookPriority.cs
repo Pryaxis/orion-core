@@ -29,11 +29,8 @@
         Highest,
 
         /// <summary>
-        /// Indicates that the hook handler should always be run last.
+        /// Indicates that the hook handler should always run last.
         /// </summary>
-        /// <remarks>
-        /// Logging events is a good use case of this, as the handler will have access to the 'freshest' data.
-        /// </remarks>
-        Monitor
+        Monitor,
     }
 }

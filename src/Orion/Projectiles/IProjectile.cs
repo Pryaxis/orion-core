@@ -26,7 +26,7 @@ namespace Orion.Projectiles {
         bool IsHostile { get; set; }
 
         /// <summary>
-        /// Applies the given <see cref="ProjectileType"/> to the projectile.
+        /// Applies the given type to the projectile.
         /// </summary>
         /// <param name="type">The type.</param>
         void ApplyType(ProjectileType type);

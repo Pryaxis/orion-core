@@ -44,7 +44,7 @@ namespace Orion.Tests.World.TileEntities {
 
             terrariaSign.y.Should().Be(y);
         }
-        
+
         [Theory]
         [InlineData("test")]
         public void GetText_IsCorrect(string text) {
@@ -53,7 +53,7 @@ namespace Orion.Tests.World.TileEntities {
 
             sign.Text.Should().Be(text);
         }
-        
+
         [Theory]
         [InlineData("test")]
         public void SetText_IsCorrect(string text) {

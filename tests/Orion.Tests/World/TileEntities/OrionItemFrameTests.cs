@@ -24,7 +24,7 @@ namespace Orion.Tests.World.TileEntities {
 
             itemFrame.X.Should().Be(x);
         }
-        
+
         [Theory]
         [InlineData(100)]
         public void SetX_IsCorrect(int x) {
@@ -35,7 +35,7 @@ namespace Orion.Tests.World.TileEntities {
 
             terrariaItemFrame.Position.X.Should().Be((short)x);
         }
-        
+
         [Theory]
         [InlineData(100)]
         public void GetY_IsCorrect(int y) {
@@ -44,7 +44,7 @@ namespace Orion.Tests.World.TileEntities {
 
             itemFrame.Y.Should().Be(y);
         }
-        
+
         [Theory]
         [InlineData(100)]
         public void SetY_IsCorrect(int y) {
@@ -55,7 +55,7 @@ namespace Orion.Tests.World.TileEntities {
 
             terrariaItemFrame.Position.Y.Should().Be((short)y);
         }
-        
+
         [Theory]
         [InlineData(ItemType.SDMG)]
         public void GetItemType_IsCorrect(ItemType itemType) {
@@ -68,7 +68,7 @@ namespace Orion.Tests.World.TileEntities {
 
             itemFrame.ItemType.Should().Be(itemType);
         }
-        
+
         [Theory]
         [InlineData(ItemType.SDMG)]
         public void SetItemType_IsCorrect(ItemType itemType) {
@@ -80,7 +80,7 @@ namespace Orion.Tests.World.TileEntities {
 
             terrariaItemFrame.item.type.Should().Be((int)itemType);
         }
-        
+
         [Theory]
         [InlineData(100)]
         public void GetItemStackSize_IsCorrect(int itemStackSize) {
@@ -93,7 +93,7 @@ namespace Orion.Tests.World.TileEntities {
 
             itemFrame.ItemStackSize.Should().Be(itemStackSize);
         }
-        
+
         [Theory]
         [InlineData(100)]
         public void SetItemStackSize_IsCorrect(int itemStackSize) {
@@ -106,7 +106,7 @@ namespace Orion.Tests.World.TileEntities {
 
             terrariaItemFrame.item.stack.Should().Be(itemStackSize);
         }
-        
+
         [Theory]
         [InlineData(ItemPrefix.Unreal)]
         public void GetItemPrefix_IsCorrect(ItemPrefix itemPrefix) {
@@ -119,7 +119,7 @@ namespace Orion.Tests.World.TileEntities {
 
             itemFrame.ItemPrefix.Should().Be(itemPrefix);
         }
-        
+
         [Theory]
         [InlineData(ItemPrefix.Unreal)]
         public void SetItemPrefix_IsCorrect(ItemPrefix itemPrefix) {

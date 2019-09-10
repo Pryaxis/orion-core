@@ -206,7 +206,7 @@ namespace Orion.Tests.Items {
             new object[] {new Color(0, 255, 0)},
             new object[] {new Color(0, 0, 255)},
         };
-        
+
         [Theory]
         [MemberData(nameof(ColorData))]
         public void GetColor_IsCorrect(Color color) {
@@ -215,7 +215,7 @@ namespace Orion.Tests.Items {
 
             item.Color.Should().Be(color);
         }
-        
+
         [Theory]
         [MemberData(nameof(ColorData))]
         public void SetColor_IsCorrect(Color color) {
@@ -288,7 +288,7 @@ namespace Orion.Tests.Items {
 
             terrariaItem.melee.Should().Be(isMeleeWeapon);
         }
-        
+
         [Theory]
         [InlineData(true)]
         [InlineData(false)]
@@ -310,7 +310,7 @@ namespace Orion.Tests.Items {
 
             terrariaItem.ranged.Should().Be(isRangedWeapon);
         }
-        
+
         [Theory]
         [InlineData(true)]
         [InlineData(false)]
@@ -332,7 +332,7 @@ namespace Orion.Tests.Items {
 
             terrariaItem.magic.Should().Be(isMagicWeapon);
         }
-        
+
         [Theory]
         [InlineData(true)]
         [InlineData(false)]
@@ -354,7 +354,7 @@ namespace Orion.Tests.Items {
 
             terrariaItem.summon.Should().Be(isSummonWeapon);
         }
-        
+
         [Theory]
         [InlineData(true)]
         [InlineData(false)]
@@ -673,7 +673,7 @@ namespace Orion.Tests.Items {
 
             terrariaItem.type.Should().Be((int)itemType);
         }
-        
+
         [Theory]
         [InlineData(ItemPrefix.Unreal)]
         public void ApplyPrefix_IsCorrect(ItemPrefix itemPrefix) {

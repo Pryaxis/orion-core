@@ -2,6 +2,8 @@
     /// <summary>
     /// Specifies the type of a buff.
     /// </summary>
+
+    // TODO: work on better names.
     public enum BuffType : byte {
 #pragma warning disable 1591
         None = 0,

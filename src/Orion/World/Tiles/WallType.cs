@@ -2,6 +2,8 @@
     /// <summary>
     /// Specifies a wall's type.
     /// </summary>
+
+    // TODO: work on better names.
     public enum WallType : byte {
 #pragma warning disable 1591
         None = 0,

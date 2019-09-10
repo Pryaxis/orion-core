@@ -13,18 +13,14 @@ namespace Orion.Players {
 
         [ExcludeFromCodeCoverage] public override string Author => "Pryaxis";
         [ExcludeFromCodeCoverage] public override string Name => "Orion Player Service";
-        
-        /*
-         * We need to subtract 1 from the count. This is because Terraria actually has an extra slot which is reserved
-         * as a failure index.
-         */
+
+        // We need to subtract 1 from the count. This is because Terraria actually has an extra slot which is reserved
+        // as a failure index.
         public int Count => _players.Count - 1;
 
         public IPlayer this[int index] {
             get {
-                if (index < 0 || index >= Count) {
-                    throw new IndexOutOfRangeException(nameof(index));
-                }
+                if (index < 0 || index >= Count) throw new IndexOutOfRangeException(nameof(index));
 
                 if (_players[index]?.Wrapped != _terrariaPlayers[index]) {
                     _players[index] = new OrionPlayer(_terrariaPlayers[index]);
@@ -44,16 +40,14 @@ namespace Orion.Players {
         public OrionPlayerService() {
             _terrariaPlayers = Terraria.Main.player;
             _players = new OrionPlayer[_terrariaPlayers.Count];
-            
+
             OTAPI.Hooks.Player.PreGreet = PreGreetHandler;
             OTAPI.Hooks.Player.PreUpdate = PreUpdateHandler;
             OTAPI.Hooks.Player.PostUpdate = PostUpdateHandler;
         }
 
         protected override void Dispose(bool disposeManaged) {
-            if (!disposeManaged) {
-                return;
-            }
+            if (!disposeManaged) return;
 
             OTAPI.Hooks.Player.PreGreet = null;
             OTAPI.Hooks.Player.PreUpdate = null;
@@ -65,7 +59,7 @@ namespace Orion.Players {
                 yield return this[i];
             }
         }
-        
+
         [ExcludeFromCodeCoverage]
         IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
 
@@ -76,7 +70,6 @@ namespace Orion.Players {
             var player = this[playerIndex];
             var args = new GreetingPlayerEventArgs(player);
             GreetingPlayer?.Invoke(this, args);
-
             return args.Handled ? OTAPI.HookResult.Cancel : OTAPI.HookResult.Continue;
         }
 
@@ -86,7 +79,6 @@ namespace Orion.Players {
             var player = this[playerIndex];
             var args = new UpdatingPlayerEventArgs(player);
             UpdatingPlayer?.Invoke(this, args);
-
             return args.Handled ? OTAPI.HookResult.Cancel : OTAPI.HookResult.Continue;
         }
 

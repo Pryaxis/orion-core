@@ -15,7 +15,9 @@ namespace Orion.Tests.Networking.Packets.World.TileEntities {
             action.Should().Throw<ArgumentNullException>();
         }
 
-        public static readonly byte[] SignTextBytes = {18, 0, 47, 0, 0, 0, 1, 100, 0, 8, 84, 101, 114, 114, 97, 114, 105, 97,};
+        public static readonly byte[] SignTextBytes = {
+            18, 0, 47, 0, 0, 0, 1, 100, 0, 8, 84, 101, 114, 114, 97, 114, 105, 97,
+        };
 
         [Fact]
         public void ReadFromStream_IsCorrect() {

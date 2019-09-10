@@ -142,7 +142,12 @@ namespace Orion.Items {
 
         public OrionItem(Terraria.Item terrariaItem) : base(terrariaItem) { }
 
-        public void ApplyType(ItemType type) => Wrapped.SetDefaults((int)type);
-        public void ApplyPrefix(ItemPrefix prefix) => Wrapped.Prefix((int)prefix);
+        public void ApplyType(ItemType type) {
+            Wrapped.SetDefaults((int)type);
+        }
+
+        public void ApplyPrefix(ItemPrefix prefix) {
+            Wrapped.Prefix((int)prefix);
+        }
     }
 }

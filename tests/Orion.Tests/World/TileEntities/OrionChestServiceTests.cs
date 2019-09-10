@@ -20,7 +20,7 @@ namespace Orion.Tests.World.TileEntities {
         public void Dispose() {
             _chestService.Dispose();
         }
-        
+
         [Fact]
         public void GetItem_IsCorrect() {
             Terraria.Main.chest[0] = new Terraria.Chest();
@@ -60,6 +60,7 @@ namespace Orion.Tests.World.TileEntities {
             for (var i = 0; i < Terraria.Main.maxChests; ++i) {
                 Terraria.Main.chest[i] = new Terraria.Chest();
             }
+
             var chests = _chestService.ToList();
 
             for (var i = 0; i < chests.Count; ++i) {

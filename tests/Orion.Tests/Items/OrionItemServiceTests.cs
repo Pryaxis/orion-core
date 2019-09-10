@@ -15,7 +15,7 @@ namespace Orion.Tests.Items {
             for (var i = 0; i < Terraria.Main.maxItems + 1; ++i) {
                 Terraria.Main.item[i] = new Terraria.Item {whoAmI = i};
             }
-            
+
             _itemService = new OrionItemService();
         }
 
@@ -62,7 +62,7 @@ namespace Orion.Tests.Items {
             item.StackSize.Should().Be(stackSize);
             item.Prefix.Should().Be(prefix);
         }
-        
+
         [Theory]
         [MemberData(nameof(SpawnItemData))]
         public void SpawnItem_CachedItem_IsCorrect(ItemType type, int stackSize, ItemPrefix prefix) {
@@ -74,20 +74,20 @@ namespace Orion.Tests.Items {
             item.StackSize.Should().Be(stackSize);
             item.Prefix.Should().Be(prefix);
         }
-        
+
         [Fact]
         public void ItemSettingDefaults_IsCorrect() {
             OrionItem argsItem = null;
             _itemService.SettingItemDefaults += (sender, args) => {
                 argsItem = (OrionItem)args.Item;
             };
-            
+
             var item = (OrionItem)_itemService.SpawnItem(ItemType.SDMG, Vector2.Zero, 1, ItemPrefix.Unreal);
 
             argsItem.Should().NotBeNull();
             argsItem.Wrapped.Should().BeSameAs(item.Wrapped);
         }
-        
+
         [Theory]
         [InlineData(ItemType.CopperPickaxe, ItemType.IronPickaxe)]
         [InlineData(ItemType.StoneBlock, ItemType.None)]
@@ -135,7 +135,7 @@ namespace Orion.Tests.Items {
             var item = (OrionItem)_itemService.SpawnItem(ItemType.SDMG, Vector2.Zero);
 
             item.Wrapped.UpdateItem(item.Index);
-            
+
             argsItem.Should().NotBeNull();
             argsItem.Wrapped.Should().BeSameAs(item.Wrapped);
         }
@@ -149,7 +149,7 @@ namespace Orion.Tests.Items {
             var item = (OrionItem)_itemService.SpawnItem(ItemType.SDMG, Vector2.Zero);
 
             item.Wrapped.UpdateItem(item.Index);
-            
+
             argsItem.Should().NotBeNull();
             argsItem.Wrapped.Should().BeSameAs(item.Wrapped);
         }

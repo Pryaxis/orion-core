@@ -14,7 +14,7 @@ namespace Orion.Tests.Projectiles {
             for (var i = 0; i < Terraria.Main.maxProjectiles + 1; ++i) {
                 Terraria.Main.projectile[i] = new Terraria.Projectile {whoAmI = i};
             }
-            
+
             _projectileService = new OrionProjectileService();
         }
 
@@ -53,7 +53,9 @@ namespace Orion.Tests.Projectiles {
                 argsProjectile = (OrionProjectile)args.Projectile;
             };
 
-            var projectile = (OrionProjectile)_projectileService.SpawnProjectile(ProjectileType.Ale, Vector2.Zero, Vector2.Zero, 0, 0);
+            var projectile =
+                (OrionProjectile)_projectileService.SpawnProjectile(ProjectileType.Ale, Vector2.Zero, Vector2.Zero, 0,
+                                                                    0);
 
             argsProjectile.Should().NotBeNull();
             argsProjectile.Wrapped.Should().BeSameAs(projectile.Wrapped);
@@ -67,7 +69,8 @@ namespace Orion.Tests.Projectiles {
                 args.Type = newType;
             };
 
-            var projectile = (OrionProjectile)_projectileService.SpawnProjectile(oldType, Vector2.Zero, Vector2.Zero, 0, 0);
+            var projectile =
+                (OrionProjectile)_projectileService.SpawnProjectile(oldType, Vector2.Zero, Vector2.Zero, 0, 0);
 
             projectile.Type.Should().Be(newType);
         }
@@ -78,7 +81,9 @@ namespace Orion.Tests.Projectiles {
                 args.Handled = true;
             };
 
-            var projectile = (OrionProjectile)_projectileService.SpawnProjectile(ProjectileType.Ale, Vector2.Zero, Vector2.Zero, 0, 0);
+            var projectile =
+                (OrionProjectile)_projectileService.SpawnProjectile(ProjectileType.Ale, Vector2.Zero, Vector2.Zero, 0,
+                                                                    0);
 
             projectile.Type.Should().Be(ProjectileType.None);
         }
@@ -90,7 +95,9 @@ namespace Orion.Tests.Projectiles {
                 argsProjectile = (OrionProjectile)args.Projectile;
             };
 
-            var projectile = (OrionProjectile)_projectileService.SpawnProjectile(ProjectileType.Ale, Vector2.Zero, Vector2.Zero, 0, 0);
+            var projectile =
+                (OrionProjectile)_projectileService.SpawnProjectile(ProjectileType.Ale, Vector2.Zero, Vector2.Zero, 0,
+                                                                    0);
 
             argsProjectile.Should().NotBeNull();
             argsProjectile.Wrapped.Should().BeSameAs(projectile.Wrapped);
@@ -102,7 +109,9 @@ namespace Orion.Tests.Projectiles {
             _projectileService.UpdatingProjectile += (sender, args) => {
                 argsProjectile = (OrionProjectile)args.Projectile;
             };
-            var projectile = (OrionProjectile)_projectileService.SpawnProjectile(ProjectileType.Ale, Vector2.Zero, Vector2.Zero, 0, 0);
+            var projectile =
+                (OrionProjectile)_projectileService.SpawnProjectile(ProjectileType.Ale, Vector2.Zero, Vector2.Zero, 0,
+                                                                    0);
 
             projectile.Wrapped.Update(projectile.Index);
 
@@ -116,7 +125,9 @@ namespace Orion.Tests.Projectiles {
             _projectileService.UpdatingProjectileAi += (sender, args) => {
                 argsProjectile = (OrionProjectile)args.Projectile;
             };
-            var projectile = (OrionProjectile)_projectileService.SpawnProjectile(ProjectileType.Ale, Vector2.Zero, Vector2.Zero, 0, 0);
+            var projectile =
+                (OrionProjectile)_projectileService.SpawnProjectile(ProjectileType.Ale, Vector2.Zero, Vector2.Zero, 0,
+                                                                    0);
 
             projectile.Wrapped.AI();
 
@@ -130,7 +141,9 @@ namespace Orion.Tests.Projectiles {
             _projectileService.UpdatedProjectileAi += (sender, args) => {
                 argsProjectile = (OrionProjectile)args.Projectile;
             };
-            var projectile = (OrionProjectile)_projectileService.SpawnProjectile(ProjectileType.Ale, Vector2.Zero, Vector2.Zero, 0, 0);
+            var projectile =
+                (OrionProjectile)_projectileService.SpawnProjectile(ProjectileType.Ale, Vector2.Zero, Vector2.Zero, 0,
+                                                                    0);
 
             projectile.Wrapped.AI();
 
@@ -144,8 +157,10 @@ namespace Orion.Tests.Projectiles {
             _projectileService.UpdatedProjectile += (sender, args) => {
                 argsProjectile = (OrionProjectile)args.Projectile;
             };
-            var projectile = (OrionProjectile)_projectileService.SpawnProjectile(ProjectileType.Ale, Vector2.Zero, Vector2.Zero, 0, 0);
-            
+            var projectile =
+                (OrionProjectile)_projectileService.SpawnProjectile(ProjectileType.Ale, Vector2.Zero, Vector2.Zero, 0,
+                                                                    0);
+
             projectile.Wrapped.Update(projectile.Index);
 
             argsProjectile.Should().NotBeNull();
@@ -158,7 +173,9 @@ namespace Orion.Tests.Projectiles {
             _projectileService.RemovingProjectile += (sender, args) => {
                 argsProjectile = (OrionProjectile)args.Projectile;
             };
-            var projectile = (OrionProjectile)_projectileService.SpawnProjectile(ProjectileType.Ale, Vector2.Zero, Vector2.Zero, 0, 0);
+            var projectile =
+                (OrionProjectile)_projectileService.SpawnProjectile(ProjectileType.Ale, Vector2.Zero, Vector2.Zero, 0,
+                                                                    0);
 
             projectile.Remove();
 
@@ -171,7 +188,9 @@ namespace Orion.Tests.Projectiles {
             _projectileService.RemovingProjectile += (sender, args) => {
                 args.Handled = true;
             };
-            var projectile = (OrionProjectile)_projectileService.SpawnProjectile(ProjectileType.Ale, Vector2.Zero, Vector2.Zero, 0, 0);
+            var projectile =
+                (OrionProjectile)_projectileService.SpawnProjectile(ProjectileType.Ale, Vector2.Zero, Vector2.Zero, 0,
+                                                                    0);
 
             projectile.Remove();
 
@@ -184,7 +203,9 @@ namespace Orion.Tests.Projectiles {
             _projectileService.RemovedProjectile += (sender, args) => {
                 argsProjectile = (OrionProjectile)args.Projectile;
             };
-            var projectile = (OrionProjectile)_projectileService.SpawnProjectile(ProjectileType.Ale, Vector2.Zero, Vector2.Zero, 0, 0);
+            var projectile =
+                (OrionProjectile)_projectileService.SpawnProjectile(ProjectileType.Ale, Vector2.Zero, Vector2.Zero, 0,
+                                                                    0);
 
             projectile.Remove();
 
@@ -200,7 +221,7 @@ namespace Orion.Tests.Projectiles {
                 ((OrionProjectile)projectiles[i]).Wrapped.Should().BeSameAs(Terraria.Main.projectile[i]);
             }
         }
-        
+
         [Theory]
         [InlineData(ProjectileType.CrystalBullet, 100, 0.5)]
         [InlineData(ProjectileType.RainbowRodBullet, 0, 0.5)]

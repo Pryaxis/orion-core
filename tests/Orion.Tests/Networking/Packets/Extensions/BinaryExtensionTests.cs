@@ -24,7 +24,7 @@ namespace Orion.Tests.Networking.Packets.Extensions {
             new object[] {new Vector2(100, 100)},
             new object[] {new Vector2(-100, -100)},
         };
-        
+
         [Theory]
         [MemberData(nameof(ColorData))]
         public void WriteColor_ReadColor_IsCorrect(Color color) {
@@ -37,7 +37,7 @@ namespace Orion.Tests.Networking.Packets.Extensions {
                 reader.ReadColor().Should().Be(color);
             }
         }
-        
+
         [Theory]
         [MemberData(nameof(NetworkTextData))]
         public void WriteNetworkText_ReadNetworkText_IsCorrect(NetworkText text) {
@@ -50,7 +50,7 @@ namespace Orion.Tests.Networking.Packets.Extensions {
                 reader.ReadNetworkText().ToString().Should().Be(text.ToString());
             }
         }
-        
+
         [Theory]
         [MemberData(nameof(Vector2Data))]
         public void WriteVector2_ReadVector2_IsCorrect(Vector2 vector) {

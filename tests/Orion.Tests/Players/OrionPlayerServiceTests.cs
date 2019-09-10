@@ -15,7 +15,7 @@ namespace Orion.Tests.Players {
             }
 
             Terraria.Main.motd = "test";
-            
+
             _playerService = new OrionPlayerService();
         }
 

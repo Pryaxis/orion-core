@@ -53,7 +53,7 @@ namespace Orion.Tests.Projectiles {
 
             projectile.Position.Should().Be(new Vector2(100, 100));
         }
-        
+
         [Fact]
         public void SetPosition_IsCorrect() {
             var terrariaProjectile = new Terraria.Projectile();
@@ -71,7 +71,7 @@ namespace Orion.Tests.Projectiles {
 
             projectile.Velocity.Should().Be(new Vector2(100, 100));
         }
-        
+
         [Fact]
         public void SetVelocity_IsCorrect() {
             var terrariaProjectile = new Terraria.Projectile();
@@ -89,7 +89,7 @@ namespace Orion.Tests.Projectiles {
 
             projectile.Size.Should().Be(new Vector2(100, 100));
         }
-        
+
         [Fact]
         public void SetSize_IsCorrect() {
             var terrariaProjectile = new Terraria.Projectile();
@@ -170,7 +170,7 @@ namespace Orion.Tests.Projectiles {
 
             terrariaProjectile.hostile.Should().Be(isHostile);
         }
-        
+
         [Theory]
         [InlineData(ProjectileType.StarWrath)]
         public void ApplyType_IsCorrect(ProjectileType projectileType) {

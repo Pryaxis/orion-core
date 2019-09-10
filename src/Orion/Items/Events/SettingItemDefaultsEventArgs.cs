@@ -20,7 +20,7 @@ namespace Orion.Items.Events {
         /// Initializes a new instance of the <see cref="SettingItemDefaultsEventArgs"/> class with the specified item
         /// and item type.
         /// </summary>
-        /// <param name="item">The item that is having its defaults set.</param>
+        /// <param name="item">The item.</param>
         /// <param name="type">The item type.</param>
         /// <exception cref="ArgumentNullException"><paramref name="item"/> is null.</exception>
         public SettingItemDefaultsEventArgs(IItem item, ItemType type) {

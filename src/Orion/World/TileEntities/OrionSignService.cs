@@ -8,24 +8,17 @@ namespace Orion.World.TileEntities {
     internal sealed class OrionSignService : OrionService, ISignService {
         private readonly IList<Terraria.Sign> _terrariaSigns;
         private readonly IList<OrionSign> _signs;
-        
-        [ExcludeFromCodeCoverage]
-        public override string Author => "Pryaxis";
-        
-        [ExcludeFromCodeCoverage]
-        public override string Name => "Orion Sign Service";
+
+        [ExcludeFromCodeCoverage] public override string Author => "Pryaxis";
+        [ExcludeFromCodeCoverage] public override string Name => "Orion Sign Service";
 
         public int Count => _signs.Count;
 
         public ISign this[int index] {
             get {
-                if (index < 0 || index >= Count) {
-                    throw new IndexOutOfRangeException(nameof(index));
-                }
-                
-                /*
-                 * Some signs in _terrariaSigns may be null, so we need to handle this properly by also returning null.
-                 */
+                if (index < 0 || index >= Count) throw new IndexOutOfRangeException(nameof(index));
+
+                // Some signs in _terrariaSigns may be null, so we need to handle this properly by also returning null.
                 if (_signs[index] == null || _signs[index].Wrapped != _terrariaSigns[index]) {
                     if (_terrariaSigns[index] == null) {
                         return null;
@@ -51,14 +44,12 @@ namespace Orion.World.TileEntities {
                 yield return this[i];
             }
         }
-        
+
         [ExcludeFromCodeCoverage]
         IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
 
         public ISign AddSign(int x, int y) {
-            if (GetSign(x, y) != null) {
-                return null;
-            }
+            if (GetSign(x, y) != null) return null;
 
             for (var i = 0; i < Count; ++i) {
                 if (_terrariaSigns[i] == null) {

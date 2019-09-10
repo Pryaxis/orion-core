@@ -23,7 +23,7 @@ namespace Orion.Tests.World.TileEntities {
 
             targetDummy.X.Should().Be(x);
         }
-        
+
         [Theory]
         [InlineData(100)]
         public void SetX_IsCorrect(int x) {
@@ -34,7 +34,7 @@ namespace Orion.Tests.World.TileEntities {
 
             terrariaTrainingDummy.Position.X.Should().Be((short)x);
         }
-        
+
         [Theory]
         [InlineData(100)]
         public void GetY_IsCorrect(int y) {
@@ -43,7 +43,7 @@ namespace Orion.Tests.World.TileEntities {
 
             targetDummy.Y.Should().Be(y);
         }
-        
+
         [Theory]
         [InlineData(100)]
         public void SetY_IsCorrect(int y) {

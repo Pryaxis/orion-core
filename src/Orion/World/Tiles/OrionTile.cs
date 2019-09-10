@@ -23,7 +23,7 @@ namespace Orion.World.Tiles {
             get => *(_ptr + 3);
             set => *(_ptr + 3) = value;
         }
-        
+
         public override short TileHeader {
             get => *(short*)(_ptr + 4);
             set => *(short*)(_ptr + 4) = value;
@@ -49,7 +49,7 @@ namespace Orion.World.Tiles {
             get => *(_ptr + 7);
             set => *(_ptr + 7) = value;
         }
-        
+
         public override short BlockFrameX {
             get => *(short*)(_ptr + 8);
             set => *(short*)(_ptr + 8) = value;
@@ -65,6 +65,7 @@ namespace Orion.World.Tiles {
         }
 
         #region Optimized ITile implementation
+
         void ITile.ClearEverything() {
             *(int*)_ptr = 0;
             *(int*)(_ptr + 4) = 0;
@@ -92,7 +93,7 @@ namespace Orion.World.Tiles {
                 ((ITile)this).ClearEverything();
             }
         }
-        
+
         void ITile.ResetToType(ushort type) {
             ((ITile)this).ClearEverything();
             ((ITile)this).sTileHeader = 32;
@@ -104,6 +105,7 @@ namespace Orion.World.Tiles {
             *(int*)(_ptr + 7) = 0;
             *(_ptr + 11) = 0;
         }
+
         #endregion
     }
 }

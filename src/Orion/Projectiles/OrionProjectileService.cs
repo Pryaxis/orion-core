@@ -11,24 +11,17 @@ namespace Orion.Projectiles {
     internal sealed class OrionProjectileService : OrionService, IProjectileService {
         private readonly IList<Terraria.Projectile> _terrariaProjectiles;
         private readonly IList<OrionProjectile> _projectiles;
-        
-        [ExcludeFromCodeCoverage]
-        public override string Author => "Pryaxis";
-        
-        [ExcludeFromCodeCoverage]
-        public override string Name => "Orion Projectile Service";
 
-        /*
-         * We need to subtract 1 from the count. This is because Terraria actually has an extra slot which is reserved
-         * as a failure index.
-         */
+        [ExcludeFromCodeCoverage] public override string Author => "Pryaxis";
+        [ExcludeFromCodeCoverage] public override string Name => "Orion Projectile Service";
+
+        // We need to subtract 1 from the count. This is because Terraria actually has an extra slot which is reserved
+        // as a failure index.
         public int Count => _projectiles.Count - 1;
 
         public IProjectile this[int index] {
             get {
-                if (index < 0 || index >= Count) {
-                    throw new IndexOutOfRangeException(nameof(index));
-                }
+                if (index < 0 || index >= Count) throw new IndexOutOfRangeException(nameof(index));
 
                 if (_projectiles[index]?.Wrapped != _terrariaProjectiles[index]) {
                     _projectiles[index] = new OrionProjectile(_terrariaProjectiles[index]);
@@ -36,7 +29,7 @@ namespace Orion.Projectiles {
 
                 var projectile = _projectiles[index];
                 Debug.Assert(projectile != null, $"{nameof(projectile)} should not be null.");
-                Debug.Assert(projectile.Wrapped != null, 
+                Debug.Assert(projectile.Wrapped != null,
                              $"{nameof(projectile.Wrapped)} should not be null.");
                 return projectile;
             }
@@ -66,9 +59,7 @@ namespace Orion.Projectiles {
         }
 
         protected override void Dispose(bool disposeManaged) {
-            if (!disposeManaged) {
-                return;
-            }
+            if (!disposeManaged) return;
 
             OTAPI.Hooks.Projectile.PreSetDefaultsById = null;
             OTAPI.Hooks.Projectile.PostSetDefaultsById = null;
@@ -85,12 +76,12 @@ namespace Orion.Projectiles {
                 yield return this[i];
             }
         }
-        
+
         [ExcludeFromCodeCoverage]
         IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
 
-        public IProjectile SpawnProjectile(ProjectileType type, Vector2 position, Vector2 velocity, int damage, float knockback,
-                                           float[] aiValues = null) {
+        public IProjectile SpawnProjectile(ProjectileType type, Vector2 position, Vector2 velocity, int damage,
+                                           float knockback, float[] aiValues = null) {
             if (aiValues != null && aiValues.Length != 2) {
                 throw new ArgumentException($"{nameof(aiValues)} must have length 2.", nameof(aiValues));
             }
@@ -128,7 +119,6 @@ namespace Orion.Projectiles {
 
             var args = new UpdatingProjectileEventArgs(this[projectileIndex]);
             UpdatingProjectile?.Invoke(this, args);
-
             return args.Handled ? OTAPI.HookResult.Cancel : OTAPI.HookResult.Continue;
         }
 
@@ -136,7 +126,6 @@ namespace Orion.Projectiles {
             var projectile = new OrionProjectile(terrariaProjectile);
             var args = new UpdatingProjectileEventArgs(projectile);
             UpdatingProjectileAi?.Invoke(this, args);
-
             return args.Handled ? OTAPI.HookResult.Cancel : OTAPI.HookResult.Continue;
         }
 
@@ -158,7 +147,6 @@ namespace Orion.Projectiles {
             var projectile = new OrionProjectile(terrariaProjectile);
             var args = new RemovingProjectileEventArgs(projectile);
             RemovingProjectile?.Invoke(this, args);
-
             return args.Handled ? OTAPI.HookResult.Cancel : OTAPI.HookResult.Continue;
         }
 

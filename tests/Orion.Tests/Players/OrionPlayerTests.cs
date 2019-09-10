@@ -65,7 +65,7 @@ namespace Orion.Tests.Players {
 
             action.Should().Throw<ArgumentNullException>();
         }
-        
+
         [Fact]
         public void GetPosition_IsCorrect() {
             var terrariaPlayer = new Terraria.Player {position = new Vector2(100, 100)};
@@ -73,7 +73,7 @@ namespace Orion.Tests.Players {
 
             player.Position.Should().Be(new Vector2(100, 100));
         }
-        
+
         [Fact]
         public void SetPosition_IsCorrect() {
             var terrariaPlayer = new Terraria.Player();
@@ -91,7 +91,7 @@ namespace Orion.Tests.Players {
 
             player.Velocity.Should().Be(new Vector2(100, 100));
         }
-        
+
         [Fact]
         public void SetVelocity_IsCorrect() {
             var terrariaPlayer = new Terraria.Player();
@@ -109,7 +109,7 @@ namespace Orion.Tests.Players {
 
             player.Size.Should().Be(new Vector2(100, 100));
         }
-        
+
         [Fact]
         public void SetSize_IsCorrect() {
             var terrariaPlayer = new Terraria.Player();
@@ -139,7 +139,7 @@ namespace Orion.Tests.Players {
 
             terrariaPlayer.difficulty.Should().Be((byte)difficulty);
         }
-        
+
         [Theory]
         [InlineData(100)]
         public void GetHealth_IsCorrect(int health) {
@@ -159,7 +159,7 @@ namespace Orion.Tests.Players {
 
             terrariaPlayer.statLife.Should().Be(health);
         }
-        
+
         [Theory]
         [InlineData(100)]
         public void GetMaxHealth_IsCorrect(int maxHealth) {
@@ -179,7 +179,7 @@ namespace Orion.Tests.Players {
 
             terrariaPlayer.statLifeMax.Should().Be(maxHealth);
         }
-        
+
         [Theory]
         [InlineData(100)]
         public void GetMana_IsCorrect(int mana) {
@@ -199,7 +199,7 @@ namespace Orion.Tests.Players {
 
             terrariaPlayer.statMana.Should().Be(mana);
         }
-        
+
         [Theory]
         [InlineData(100)]
         public void GetMaxMana_IsCorrect(int maxMana) {

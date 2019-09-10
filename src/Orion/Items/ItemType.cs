@@ -2,6 +2,8 @@
     /// <summary>
     /// Specifies an item's type.
     /// </summary>
+
+    // TODO: provide better names.
     public enum ItemType : short {
 #pragma warning disable 1591
         YellowPhasesaberOld = -24,

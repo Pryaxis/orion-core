@@ -4,17 +4,17 @@
     /// </summary>
     public enum PlayerDifficulty : byte {
         /// <summary>
-        /// Softcore difficulty.
+        /// Indicates softcore difficulty.
         /// </summary>
         Softcore = 0,
 
         /// <summary>
-        /// Mediumcore difficulty. All items are dropped on death.
+        /// Indicates mediumcore difficulty. All items are dropped on death.
         /// </summary>
         Mediumcore = 1,
 
         /// <summary>
-        /// Hardcore difficulty. Death is permanent.
+        /// Indicates hardcore difficulty. Death is permanent.
         /// </summary>
         Hardcore = 2,
     }

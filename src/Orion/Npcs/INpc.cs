@@ -11,23 +11,23 @@ namespace Orion.Npcs {
         NpcType Type { get; }
 
         /// <summary>
-        /// Gets or sets the NPC's HP.
+        /// Gets or sets the NPC's health.
         /// </summary>
-        int Hp { get; set; }
+        int Health { get; set; }
 
         /// <summary>
-        /// Gets or sets the NPC's maximum HP.
+        /// Gets or sets the NPC's maximum health.
         /// </summary>
-        int MaxHp { get; set; }
+        int MaxHealth { get; set; }
 
         /// <summary>
-        /// Applies the given <see cref="NpcType"/> to the projectile.
+        /// Applies the given type to the NPC.
         /// </summary>
         /// <param name="type">The type.</param>
         void ApplyType(NpcType type);
 
         /// <summary>
-        /// Damages the NPC with the specified damage, knockback, hit direction, and criticality.
+        /// Damages the NPC with the given damage, knockback, hit direction, and criticality.
         /// </summary>
         /// <param name="damage">The damage.</param>
         /// <param name="knockback">The knockback.</param>

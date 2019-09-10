@@ -8,9 +8,7 @@ using Xunit;
 
 namespace Orion.Tests.Networking.Packets.World.TileEntities {
     public class TileEntityInfoPacketTests {
-        private static readonly byte[] TileEntityInfoBytes = {
-            8, 0, 86, 0, 0, 0, 0, 0,
-        };
+        private static readonly byte[] TileEntityInfoBytes = {8, 0, 86, 0, 0, 0, 0, 0,};
 
         [Fact]
         public void ReadFromStream_Delete_IsCorrect() {
@@ -34,9 +32,7 @@ namespace Orion.Tests.Networking.Packets.World.TileEntities {
             }
         }
 
-        private static readonly byte[] TileEntityInfoBytes2 = {
-            15, 0, 86, 0, 0, 0, 0, 1, 0, 0, 1, 100, 0, 1, 0
-        };
+        private static readonly byte[] TileEntityInfoBytes2 = {15, 0, 86, 0, 0, 0, 0, 1, 0, 0, 1, 100, 0, 1, 0};
 
         [Fact]
         public void ReadFromStream_TargetDummy_IsCorrect() {
@@ -98,9 +94,7 @@ namespace Orion.Tests.Networking.Packets.World.TileEntities {
             }
         }
 
-        private static readonly byte[] TileEntityInfoBytes4 = {
-            15, 0, 86, 0, 0, 0, 0, 1, 2, 0, 1, 100, 0, 1, 1
-        };
+        private static readonly byte[] TileEntityInfoBytes4 = {15, 0, 86, 0, 0, 0, 0, 1, 2, 0, 1, 100, 0, 1, 1};
 
         [Fact]
         public void ReadFromStream_LogicSensor_IsCorrect() {

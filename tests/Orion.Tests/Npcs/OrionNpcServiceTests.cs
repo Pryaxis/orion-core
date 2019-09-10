@@ -19,18 +19,21 @@ namespace Orion.Tests.Npcs {
             for (var i = 0; i < Terraria.Main.maxNPCs + 1; ++i) {
                 Terraria.Main.npc[i] = new Terraria.NPC {whoAmI = i};
             }
+
             for (var i = 0; i < Terraria.Main.maxCombatText; ++i) {
                 Terraria.Main.combatText[i] = new Terraria.CombatText {active = true};
             }
+
             for (var i = 0; i < Terraria.Main.maxItems + 1; ++i) {
                 Terraria.Main.item[i] = new Terraria.Item {whoAmI = i};
             }
+
             for (var i = 0; i < Terraria.Main.maxPlayers + 1; ++i) {
                 Terraria.Main.player[i] = new Terraria.Player {whoAmI = i};
             }
 
             Terraria.Main.rand = new Terraria.Utilities.UnifiedRandom();
-            
+
             _itemService.Setup(s => s.SpawnItem(It.IsAny<ItemType>(), It.IsAny<Vector2>(), It.IsAny<int>(),
                                                 It.IsAny<ItemPrefix>()))
                         .Returns(new Mock<IItem>().Object);
@@ -271,7 +274,7 @@ namespace Orion.Tests.Npcs {
             argsNpc.Should().NotBeNull();
             argsNpc.Wrapped.Should().BeSameAs(npc.Wrapped);
         }
-        
+
         [Fact]
         public void NpcDamaging_Handled_IsCorrect() {
             _npcService.DamagingNpc += (sender, args) => {
@@ -281,7 +284,7 @@ namespace Orion.Tests.Npcs {
 
             npc.Damage(10000, 0, 0);
 
-            npc.Hp.Should().Be(npc.MaxHp);
+            npc.Health.Should().Be(npc.MaxHealth);
         }
 
         [Theory]
@@ -303,7 +306,7 @@ namespace Orion.Tests.Npcs {
             argsNpc.Should().NotBeNull();
             argsNpc.Wrapped.Should().BeSameAs(npc.Wrapped);
         }
-        
+
         [Theory]
         [InlineData(NpcType.BlueSlime, NpcType.GreenSlime)]
         [InlineData(NpcType.BlueSlime, NpcType.None)]

@@ -2,6 +2,8 @@
     /// <summary>
     /// Specifies a projectile's type.
     /// </summary>
+
+    // TODO: work on better names.
     public enum ProjectileType : short {
 #pragma warning disable 1591
         None = 0,

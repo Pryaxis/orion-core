@@ -29,13 +29,8 @@ namespace Orion.Hooks {
         /// <param name="sender">The sender. This is usually the service instance which initiated the event.</param>
         /// <param name="args">The event arguments.</param>
         /// <exception cref="ArgumentNullException"><paramref name="args"/> is <c>null</c>.</exception>
-        /// <remarks>
-        /// All exceptions are consumed and logged so that a faulty handler does not bring down the entire server.
-        /// </remarks>
         public void Invoke(object sender, TArgs args) {
-            if (args == null) {
-                throw new ArgumentNullException(nameof(args));
-            }
+            if (args == null) throw new ArgumentNullException(nameof(args));
 
             Log.Debug("Calling {Hook} handlers", typeof(TArgs).Name);
 
@@ -60,9 +55,7 @@ namespace Orion.Hooks {
         /// <exception cref="ArgumentNullException"><paramref name="handler"/> is <c>null</c>.</exception>
         public static HookHandlerCollection<TArgs> operator +(HookHandlerCollection<TArgs> collection,
                                                               HookHandler<TArgs> handler) {
-            if (handler == null) {
-                throw new ArgumentNullException(nameof(handler));
-            }
+            if (handler == null) throw new ArgumentNullException(nameof(handler));
 
             Log.Debug("Registering {Hook} handler from {Registrator}",
                       typeof(TArgs).Name, handler.Method.DeclaringType?.Name);
@@ -86,9 +79,7 @@ namespace Orion.Hooks {
         /// <exception cref="ArgumentNullException"><paramref name="handler"/> is <c>null</c>.</exception>
         public static HookHandlerCollection<TArgs> operator -(HookHandlerCollection<TArgs> collection,
                                                               HookHandler<TArgs> handler) {
-            if (handler == null) {
-                throw new ArgumentNullException(nameof(handler));
-            }
+            if (handler == null) throw new ArgumentNullException(nameof(handler));
 
             var attribute = handler.Method.GetCustomAttribute<HookHandlerAttribute>();
             var priority = attribute?.Priority ?? HookPriority.Normal;

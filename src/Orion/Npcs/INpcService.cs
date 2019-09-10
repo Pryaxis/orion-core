@@ -95,7 +95,7 @@ namespace Orion.Npcs {
         HookHandlerCollection<KilledNpcEventArgs> KilledNpc { get; set; }
 
         /// <summary>
-        /// Spawns an NPC with the specified type at the position with the AI values.
+        /// Spawns an NPC with the given type at the specified position with the AI values.
         /// </summary>
         /// <param name="type">The NPC type.</param>
         /// <param name="position">The position.</param>

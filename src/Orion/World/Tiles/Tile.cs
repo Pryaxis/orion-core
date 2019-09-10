@@ -5,11 +5,6 @@ namespace Orion.World.Tiles {
     /// <summary>
     /// Provides the base class for a tile.
     /// </summary>
-    /// <remarks>
-    /// This class is essentially a wrapper around an OTAPI.Tile.ITile. However, its public interface is significantly
-    /// better-structured. It makes use of enums such as <see cref="BlockType"/> and <see cref="WallType"/>, and
-    /// exposes properties such as <see cref="IsBlockActive"/> and <see cref="IsBlockActuated"/> instead of methods.
-    /// </remarks>
     public abstract class Tile : ITile {
         /// <summary>
         /// Gets or sets the block type.
@@ -210,15 +205,11 @@ namespace Orion.World.Tiles {
         }
 
         #region ITile implementation
+
         int ITile.collisionType {
             get {
-                if (!((ITile)this).active()) {
-                    return 0;
-                }
-
-                if (((ITile)this).halfBrick()) {
-                    return 2;
-                }
+                if (!((ITile)this).active()) return 0;
+                if (((ITile)this).halfBrick()) return 2;
 
                 if (((ITile)this).slope() > 0) {
                     return (2 + ((ITile)this).slope());
@@ -312,18 +303,11 @@ namespace Orion.World.Tiles {
         }
 
         bool ITile.isTheSameAs(ITile compTile) {
-            if (compTile == null) {
-                return false;
-            }
-
-            if (((ITile)this).sTileHeader != compTile.sTileHeader) {
-                return false;
-            }
+            if (compTile == null) return false;
+            if (((ITile)this).sTileHeader != compTile.sTileHeader) return false;
 
             if (((ITile)this).active()) {
-                if (((ITile)this).type != compTile.type) {
-                    return false;
-                }
+                if (((ITile)this).type != compTile.type) return false;
 
                 if (Terraria.Main.tileFrameImportant[((ITile)this).type] &&
                     (((ITile)this).frameX != compTile.frameX || ((ITile)this).frameY != compTile.frameY)) {
@@ -336,13 +320,8 @@ namespace Orion.World.Tiles {
             }
 
             if (compTile.liquid == 0) {
-                if (((ITile)this).wallColor() != compTile.wallColor()) {
-                    return false;
-                }
-
-                if (((ITile)this).wire4() != compTile.wire4()) {
-                    return false;
-                }
+                if (((ITile)this).wallColor() != compTile.wallColor()) return false;
+                if (((ITile)this).wire4() != compTile.wire4()) return false;
             } else if (((ITile)this).bTileHeader != compTile.bTileHeader) {
                 return false;
             }
@@ -351,9 +330,7 @@ namespace Orion.World.Tiles {
         }
 
         int ITile.blockType() {
-            if (((ITile)this).halfBrick()) {
-                return 1;
-            }
+            if (((ITile)this).halfBrick()) return 1;
 
             int num = ((ITile)this).slope();
             if (num > 0) {
@@ -411,9 +388,7 @@ namespace Orion.World.Tiles {
         const double ActNum = 0.4;
 
         Color ITile.actColor(Color oldColor) {
-            if (!((ITile)this).inActive()) {
-                return oldColor;
-            }
+            if (!((ITile)this).inActive()) return oldColor;
 
             return new Color
             (
@@ -621,8 +596,11 @@ namespace Orion.World.Tiles {
         }
 
         byte ITile.slope() => (byte)((((ITile)this).sTileHeader & 28672) >> 12);
-        void ITile.slope(byte slope) =>
+
+        void ITile.slope(byte slope) {
             ((ITile)this).sTileHeader = (short)((((ITile)this).sTileHeader & 36863) | (slope & 7) << 12);
+        }
+
         #endregion
     }
 }

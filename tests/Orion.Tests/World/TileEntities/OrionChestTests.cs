@@ -45,7 +45,7 @@ namespace Orion.Tests.World.TileEntities {
 
             terrariaChest.y.Should().Be(y);
         }
-        
+
         [Theory]
         [InlineData("test")]
         public void GetName_IsCorrect(string name) {
@@ -54,7 +54,7 @@ namespace Orion.Tests.World.TileEntities {
 
             chest.Name.Should().Be(name);
         }
-        
+
         [Theory]
         [InlineData("test")]
         public void SetName_IsCorrect(string name) {

@@ -50,15 +50,17 @@ namespace Orion.Projectiles {
         HookHandlerCollection<RemovedProjectileEventArgs> RemovedProjectile { get; set; }
 
         /// <summary>
-        /// Spawns a projectile with the specified type at the position with the velocity, damage, knockback, and AI
-        /// values.
+        /// Spawns a projectile with the given type at the specified position with the velocity, damage, knockback, and
+        /// AI values.
         /// </summary>
         /// <param name="type">The projectile type.</param>
         /// <param name="position">The position.</param>
         /// <param name="velocity">The velocity.</param>
         /// <param name="damage">The damage.</param>
         /// <param name="knockback">The knockback.</param>
-        /// <param name="aiValues">The AI values, or <c>null</c> for none. If not <c>null</c>, this should have length 2.</param>
+        /// <param name="aiValues">
+        /// The AI values, or <c>null</c> for none. If not <c>null</c>, this should have length 2.
+        /// </param>
         /// <returns>The resulting projectile.</returns>
         /// <exception cref="ArgumentException">
         /// <paramref name="aiValues"/> is not <c>null</c> and does not have length 2.

@@ -14,7 +14,7 @@ namespace Orion.Tests.Networking.Packets.Players {
         public void ReadFromStream_IsCorrect() {
             using (var stream = new MemoryStream(NebulaBuffBytes)) {
                 var packet = (NebulaBuffPacket)Packet.ReadFromStream(stream, PacketContext.Server);
-                
+
                 packet.PlayerIndex.Should().Be(0);
                 packet.BuffType.Should().Be(BuffType.ObsidianSkin);
                 packet.BuffPosition.Should().Be(Vector2.Zero);

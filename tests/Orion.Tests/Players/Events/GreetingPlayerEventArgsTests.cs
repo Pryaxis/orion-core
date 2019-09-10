@@ -13,7 +13,7 @@ namespace Orion.Tests.Players.Events {
 
             func.Should().Throw<ArgumentNullException>();
         }
-        
+
         [Fact]
         public void GetPlayer_IsCorrect() {
             var player = new Mock<IPlayer>().Object;

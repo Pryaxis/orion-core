@@ -17,11 +17,8 @@ namespace Orion.World {
         private readonly IChestService _chestService;
         private readonly ISignService _signService;
 
-        [ExcludeFromCodeCoverage]
-        public override string Author => "Pryaxis";
-
-        [ExcludeFromCodeCoverage]
-        public override string Name => "Orion World Service";
+        [ExcludeFromCodeCoverage] public override string Author => "Pryaxis";
+        [ExcludeFromCodeCoverage] public override string Name => "Orion World Service";
 
         public string WorldName {
             get => Terraria.Main.worldName;
@@ -67,7 +64,7 @@ namespace Orion.World {
             set => Terraria.Main.expertMode = value;
         }
 
-        public InvasionType CurrentInvasion => (InvasionType)Terraria.Main.invasionType;
+        public InvasionType CurrentInvasionType => (InvasionType)Terraria.Main.invasionType;
         public HookHandlerCollection<CheckingHalloweenEventArgs> CheckingHalloween { get; set; }
         public HookHandlerCollection<CheckingChristmasEventArgs> CheckingChristmas { get; set; }
         public HookHandlerCollection<LoadingWorldEventArgs> LoadingWorld { get; set; }
@@ -76,7 +73,7 @@ namespace Orion.World {
         public HookHandlerCollection<SavedWorldEventArgs> SavedWorld { get; set; }
         public HookHandlerCollection<StartingHardmodeEventArgs> StartingHardmode { get; set; }
         public HookHandlerCollection<StartedHardmodeEventArgs> StartedHardmode { get; set; }
-        public HookHandlerCollection<UpdatingHardmodeTileEventArgs> UpdatingHardmodeTile { get; set; }
+        public HookHandlerCollection<UpdatingHardmodeBlockEventArgs> UpdatingHardmodeBlock { get; set; }
 
         public OrionWorldService(IChestService chestService, ISignService signService) {
             Debug.Assert(chestService != null, $"{nameof(chestService)} should not be null.");
@@ -90,6 +87,7 @@ namespace Orion.World {
                 if (_tilesPtr == null) {
                     _tilesPtr = (byte*)Marshal.AllocHGlobal(OrionTile.ByteCount * (WorldWidth + 1) * (WorldHeight + 1));
                 }
+
                 return this;
             };
 
@@ -109,9 +107,7 @@ namespace Orion.World {
         }
 
         protected override void Dispose(bool disposeManaged) {
-            if (!disposeManaged) {
-                return;
-            }
+            if (!disposeManaged) return;
 
             OTAPI.Hooks.Tile.CreateCollection = null;
             OTAPI.Hooks.Game.Halloween = null;
@@ -127,7 +123,7 @@ namespace Orion.World {
 
         public bool StartInvasion(InvasionType invasionType) {
             Terraria.Main.StartInvasion((int)invasionType);
-            return CurrentInvasion == invasionType;
+            return CurrentInvasionType == invasionType;
         }
 
         public ITargetDummy AddTargetDummy(int x, int y) {
@@ -189,26 +185,23 @@ namespace Orion.World {
         }
 
         public void SaveWorld() => Terraria.IO.WorldFile.saveWorld();
-        
+
 
         private OTAPI.HookResult HalloweenHandler() {
             var args = new CheckingHalloweenEventArgs();
             CheckingHalloween?.Invoke(this, args);
-
             return args.Handled ? OTAPI.HookResult.Cancel : OTAPI.HookResult.Continue;
         }
 
         private OTAPI.HookResult ChristmasHandler() {
             var args = new CheckingChristmasEventArgs();
             CheckingChristmas?.Invoke(this, args);
-
             return args.Handled ? OTAPI.HookResult.Cancel : OTAPI.HookResult.Continue;
         }
 
         private OTAPI.HookResult PreLoadWorldHandler(ref bool loadFromCloud) {
             var args = new LoadingWorldEventArgs();
             LoadingWorld?.Invoke(this, args);
-
             return args.Handled ? OTAPI.HookResult.Cancel : OTAPI.HookResult.Continue;
         }
 
@@ -220,7 +213,6 @@ namespace Orion.World {
         private OTAPI.HookResult PreSaveWorldHandler(ref bool useCloudSaving, ref bool resetTime) {
             var args = new SavingWorldEventArgs {ShouldResetTime = resetTime};
             SavingWorld?.Invoke(this, args);
-            
             return args.Handled ? OTAPI.HookResult.Cancel : OTAPI.HookResult.Continue;
         }
 
@@ -232,7 +224,6 @@ namespace Orion.World {
         private OTAPI.HookResult PreHardmodeHandler() {
             var args = new StartingHardmodeEventArgs();
             StartingHardmode?.Invoke(this, args);
-
             return args.Handled ? OTAPI.HookResult.Cancel : OTAPI.HookResult.Continue;
         }
 
@@ -242,8 +233,8 @@ namespace Orion.World {
         }
 
         private OTAPI.HardmodeTileUpdateResult HardmodeTileUpdateHandler(int x, int y, ref ushort type) {
-            var args = new UpdatingHardmodeTileEventArgs(x, y, (BlockType)type);
-            UpdatingHardmodeTile?.Invoke(this, args);
+            var args = new UpdatingHardmodeBlockEventArgs(x, y, (BlockType)type);
+            UpdatingHardmodeBlock?.Invoke(this, args);
 
             type = (ushort)args.BlockType;
             return args.Handled ? OTAPI.HardmodeTileUpdateResult.Cancel : OTAPI.HardmodeTileUpdateResult.Continue;

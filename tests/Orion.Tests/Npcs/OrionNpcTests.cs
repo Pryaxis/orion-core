@@ -119,7 +119,7 @@ namespace Orion.Tests.Npcs {
 
             terrariaNpc.Size.Should().Be(new Vector2(100, 100));
         }
-        
+
         [Theory]
         [InlineData(NpcType.BlueSlime)]
         public void GetType_IsCorrect(NpcType npcType) {
@@ -131,42 +131,42 @@ namespace Orion.Tests.Npcs {
 
         [Theory]
         [InlineData(100)]
-        public void GetHp_IsCorrect(int hp) {
-            var terrariaNpc = new Terraria.NPC {life = hp};
+        public void GetHealth_IsCorrect(int health) {
+            var terrariaNpc = new Terraria.NPC {life = health};
             var npc = new OrionNpc(terrariaNpc);
 
-            npc.Hp.Should().Be(hp);
+            npc.Health.Should().Be(health);
         }
 
         [Theory]
         [InlineData(100)]
-        public void SetHp_IsCorrect(int hp) {
+        public void SetHealth_IsCorrect(int health) {
             var terrariaNpc = new Terraria.NPC();
             var npc = new OrionNpc(terrariaNpc);
 
-            npc.Hp = hp;
+            npc.Health = health;
 
-            terrariaNpc.life.Should().Be(hp);
+            terrariaNpc.life.Should().Be(health);
         }
 
         [Theory]
         [InlineData(100)]
-        public void GetMaxHp_IsCorrect(int maxMaxHp) {
-            var terrariaNpc = new Terraria.NPC {lifeMax = maxMaxHp};
+        public void GetMaxHealth_IsCorrect(int maxHealth) {
+            var terrariaNpc = new Terraria.NPC {lifeMax = maxHealth};
             var npc = new OrionNpc(terrariaNpc);
 
-            npc.MaxHp.Should().Be(maxMaxHp);
+            npc.MaxHealth.Should().Be(maxHealth);
         }
 
         [Theory]
         [InlineData(100)]
-        public void SetMaxHp_IsCorrect(int maxMaxHp) {
+        public void SetMaxHealth_IsCorrect(int maxHealth) {
             var terrariaNpc = new Terraria.NPC();
             var npc = new OrionNpc(terrariaNpc);
 
-            npc.MaxHp = maxMaxHp;
+            npc.MaxHealth = maxHealth;
 
-            terrariaNpc.lifeMax.Should().Be(maxMaxHp);
+            terrariaNpc.lifeMax.Should().Be(maxHealth);
         }
 
         [Theory]

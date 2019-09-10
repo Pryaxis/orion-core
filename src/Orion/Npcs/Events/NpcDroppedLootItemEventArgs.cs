@@ -24,7 +24,7 @@ namespace Orion.Npcs.Events {
         /// <param name="npc">The NPC.</param>
         /// <param name="lootItem">The loot item.</param>
         /// <exception cref="ArgumentNullException">
-        /// Either <paramref name="npc"/> or <paramref name="lootItem"/> are null.
+        /// <paramref name="npc"/> or <paramref name="lootItem"/> are <c>null</c>.
         /// </exception>
         public NpcDroppedLootItemEventArgs(INpc npc, IItem lootItem) {
             Npc = npc ?? throw new ArgumentNullException(nameof(npc));

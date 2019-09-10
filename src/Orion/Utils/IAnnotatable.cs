@@ -16,7 +16,7 @@ namespace Orion.Utils {
         T GetAnnotation<T>(string key, T defaultValue = default);
 
         /// <summary>
-        /// Sets the annotation of a type with the given key to the value.
+        /// Sets the annotation of a type with the given key to the specified value.
         /// </summary>
         /// <typeparam name="T">The type.</typeparam>
         /// <param name="key">The key.</param>

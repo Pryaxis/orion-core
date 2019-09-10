@@ -6,7 +6,7 @@ namespace Orion.World.TileEntities {
     /// </summary>
     public interface ISign : ITileEntity {
         /// <summary>
-        /// Gets or sets the text.
+        /// Gets or sets the sign's text.
         /// </summary>
         /// <exception cref="ArgumentNullException"><paramref name="value"/> is <c>null</c>.</exception>
         string Text { get; set; }

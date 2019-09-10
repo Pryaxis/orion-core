@@ -22,9 +22,7 @@ namespace Orion.Networking {
 
         public IClient this[int index] {
             get {
-                if (index < 0 || index >= Count) {
-                    throw new IndexOutOfRangeException(nameof(index));
-                }
+                if (index < 0 || index >= Count) throw new IndexOutOfRangeException(nameof(index));
 
                 if (_clients[index]?.Wrapped != _terrariaClients[index]) {
                     _clients[index] = new OrionClient(this, _terrariaClients[index]);

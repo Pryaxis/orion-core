@@ -6,9 +6,7 @@ using Xunit;
 
 namespace Orion.Tests.Networking.Packets.Misc {
     public class EmoteBubblePacketTests {
-        public static readonly byte[] EmoteBubbleBytes = {
-            12, 0, 91, 1, 0, 0, 0, 0, 100, 0, 255, 1
-        };
+        public static readonly byte[] EmoteBubbleBytes = {12, 0, 91, 1, 0, 0, 0, 0, 100, 0, 255, 1};
 
         [Fact]
         public void ReadFromStream_Normal_IsCorrect() {
@@ -35,9 +33,7 @@ namespace Orion.Tests.Networking.Packets.Misc {
             }
         }
 
-        public static readonly byte[] EmoteBubbleBytes2 = {
-            8, 0, 91, 1, 0, 0, 0, 255,
-        };
+        public static readonly byte[] EmoteBubbleBytes2 = {8, 0, 91, 1, 0, 0, 0, 255,};
 
         [Fact]
         public void ReadFromStream_Remove_IsCorrect() {
@@ -61,9 +57,7 @@ namespace Orion.Tests.Networking.Packets.Misc {
             }
         }
 
-        public static readonly byte[] EmoteBubbleBytes3 = {
-            14, 0, 91, 1, 0, 0, 0, 0, 100, 0, 255, 255, 1, 0,
-        };
+        public static readonly byte[] EmoteBubbleBytes3 = {14, 0, 91, 1, 0, 0, 0, 0, 100, 0, 255, 255, 1, 0,};
 
         [Fact]
         public void ReadFromStream_WithMetadata_IsCorrect() {

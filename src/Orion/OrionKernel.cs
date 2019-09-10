@@ -38,7 +38,7 @@ namespace Orion {
             Bind<IChestService>().To<OrionChestService>().InSingletonScope();
             Bind<ISignService>().To<OrionSignService>().InSingletonScope();
             Bind<IWorldService>().To<OrionWorldService>().InSingletonScope();
-            
+
             // Because we're using Assembly.Load, we'll need to have an AssemblyResolve handler to deal with any issues
             // that may pop up.
             AppDomain.CurrentDomain.AssemblyResolve +=
@@ -126,7 +126,7 @@ namespace Orion {
                 var pluginType = plugin.GetType();
                 _pluginAssemblies.Remove(pluginType.Assembly);
                 _plugins.Remove(plugin);
-                
+
                 plugin.Dispose();
                 Unbind(pluginType);
                 return true;

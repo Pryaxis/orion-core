@@ -12,7 +12,7 @@ namespace Orion.Hooks {
         public HookPriority Priority { get; }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="HookHandlerAttribute"/> class with the given priority.
+        /// Initializes a new instance of the <see cref="HookHandlerAttribute"/> class with the specified priority.
         /// </summary>
         /// <param name="priority">The priority.</param>
         public HookHandlerAttribute(HookPriority priority) {

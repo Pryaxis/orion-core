@@ -20,7 +20,7 @@ namespace Orion.Tests.World.TileEntities {
         public void Dispose() {
             _signService.Dispose();
         }
-        
+
         [Fact]
         public void GetItem_IsCorrect() {
             Terraria.Main.sign[0] = new Terraria.Sign();
@@ -60,6 +60,7 @@ namespace Orion.Tests.World.TileEntities {
             for (var i = 0; i < Terraria.Sign.maxSigns; ++i) {
                 Terraria.Main.sign[i] = new Terraria.Sign();
             }
+
             var signs = _signService.ToList();
 
             for (var i = 0; i < signs.Count; ++i) {

@@ -19,23 +19,16 @@ namespace Orion.Npcs {
         private readonly IList<Terraria.NPC> _terrariaNpcs;
         private readonly IList<OrionNpc> _npcs;
 
-        [ExcludeFromCodeCoverage]
-        public override string Author => "Pryaxis";
+        [ExcludeFromCodeCoverage] public override string Author => "Pryaxis";
+        [ExcludeFromCodeCoverage] public override string Name => "Orion NPC Service";
 
-        [ExcludeFromCodeCoverage]
-        public override string Name => "Orion NPC Service";
-        
-        /*
-         * We need to subtract 1 from the count. This is because Terraria actually has an extra slot which is reserved
-         * as a failure index.
-         */
+        // We need to subtract 1 from the count. This is because Terraria actually has an extra slot which is reserved
+        // as a failure index.
         public int Count => _npcs.Count - 1;
-        
+
         public INpc this[int index] {
             get {
-                if (index < 0 || index >= Count) {
-                    throw new IndexOutOfRangeException(nameof(index));
-                }
+                if (index < 0 || index >= Count) throw new IndexOutOfRangeException(nameof(index));
 
                 if (_npcs[index]?.Wrapped != _terrariaNpcs[index]) {
                     _npcs[index] = new OrionNpc(_terrariaNpcs[index]);
@@ -78,7 +71,7 @@ namespace Orion.Npcs {
         public OrionNpcService(IItemService itemService, IPlayerService playerService) {
             Debug.Assert(itemService != null, $"{nameof(itemService)} should not be null.");
             Debug.Assert(playerService != null, $"{nameof(playerService)} should not be null.");
-            
+
             _itemService = itemService;
             _playerService = playerService;
             _terrariaNpcs = Terraria.Main.npc;
@@ -100,9 +93,7 @@ namespace Orion.Npcs {
         }
 
         protected override void Dispose(bool disposeManaged) {
-            if (!disposeManaged) {
-                return;
-            }
+            if (!disposeManaged) return;
 
             _setDefaultsToIgnore.Dispose();
 
@@ -126,7 +117,7 @@ namespace Orion.Npcs {
                 yield return this[i];
             }
         }
-        
+
         [ExcludeFromCodeCoverage]
         IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
 
@@ -163,9 +154,7 @@ namespace Orion.Npcs {
 
             var terrariaNpc = new Terraria.NPC();
             if (args.Handled) {
-                /*
-                 * To properly handle the event, npcIndex needs to be set to the failure index described above.
-                 */
+                // To properly handle the event, npcIndex needs to be set to the failure index described above.
                 npcIndex = Count;
             } else {
                 terrariaNpc.SetDefaults((int)args.NpcType);
@@ -182,18 +171,16 @@ namespace Orion.Npcs {
         }
 
         private OTAPI.HookResult SpawnHandler(ref int npcIndex) {
-            if (npcIndex < 0 || npcIndex >= Count) {
-                return OTAPI.HookResult.Continue;
-            }
+            if (npcIndex < 0 || npcIndex >= Count) return OTAPI.HookResult.Continue;
 
             var npc = this[npcIndex];
             var args = new SpawnedNpcEventArgs(npc);
             SpawnedNpc?.Invoke(this, args);
-
             return OTAPI.HookResult.Continue;
         }
 
-        private OTAPI.HookResult PreSetDefaultsByIdHandler(Terraria.NPC terrariaNpc, ref int type, ref float scaleOverride) {
+        private OTAPI.HookResult PreSetDefaultsByIdHandler(Terraria.NPC terrariaNpc, ref int type,
+                                                           ref float scaleOverride) {
             if (_setDefaultsToIgnore.Value > 0) {
                 return OTAPI.HookResult.Continue;
             }
@@ -224,7 +211,6 @@ namespace Orion.Npcs {
             var npc = this[npcIndex];
             var args = new UpdatingNpcEventArgs(npc);
             UpdatingNpc?.Invoke(this, args);
-
             return args.Handled ? OTAPI.HookResult.Cancel : OTAPI.HookResult.Continue;
         }
 
@@ -232,7 +218,6 @@ namespace Orion.Npcs {
             var npc = new OrionNpc(terrariaNpc);
             var args = new UpdatingNpcEventArgs(npc);
             UpdatingNpcAi?.Invoke(this, args);
-
             return args.Handled ? OTAPI.HookResult.Cancel : OTAPI.HookResult.Continue;
         }
 
@@ -250,9 +235,9 @@ namespace Orion.Npcs {
             UpdatedNpc?.Invoke(this, args);
         }
 
-        private OTAPI.HookResult StrikeHandler(Terraria.NPC terrariaNpc, ref double cancelResult, ref int damage, ref float knockback,
-                                         ref int hitDirection, ref bool crit, ref bool noEffect, ref bool fromNet,
-                                         Terraria.Entity entity) {
+        private OTAPI.HookResult StrikeHandler(Terraria.NPC terrariaNpc, ref double cancelResult, ref int damage,
+                                               ref float knockback, ref int hitDirection, ref bool crit,
+                                               ref bool noEffect, ref bool fromNet, Terraria.Entity entity) {
             var npc = new OrionNpc(terrariaNpc);
             IPlayer playerResponsible = null;
             if (entity is Terraria.Player terrariaPlayer) {
@@ -268,9 +253,7 @@ namespace Orion.Npcs {
             };
             DamagingNpc?.Invoke(this, args);
 
-            if (args.Handled) {
-                return OTAPI.HookResult.Cancel;
-            }
+            if (args.Handled) return OTAPI.HookResult.Cancel;
 
             damage = args.Damage;
             knockback = args.Knockback;
@@ -285,7 +268,6 @@ namespace Orion.Npcs {
                 PlayerResponsible = playerResponsible,
             };
             DamagedNpc?.Invoke(this, args2);
-
             return OTAPI.HookResult.Continue;
         }
 
@@ -293,7 +275,6 @@ namespace Orion.Npcs {
             var npc = new OrionNpc(terrariaNpc);
             var args = new NpcTransformingEventArgs(npc);
             NpcTransforming?.Invoke(this, args);
-
             return args.Handled ? OTAPI.HookResult.Cancel : OTAPI.HookResult.Continue;
         }
 
@@ -303,9 +284,10 @@ namespace Orion.Npcs {
             NpcTransformed?.Invoke(this, args);
         }
 
-        private OTAPI.HookResult PreDropLootHandler(Terraria.NPC terrariaNpc, ref int itemId, ref int x, ref int y, ref int width,
-                                              ref int height, ref int type, ref int stack, ref bool noBroadcast,
-                                              ref int prefix, ref bool noGrabDelay, ref bool reverseLookup) {
+        private OTAPI.HookResult PreDropLootHandler(Terraria.NPC terrariaNpc, ref int itemId, ref int x, ref int y,
+                                                    ref int width, ref int height, ref int type, ref int stack,
+                                                    ref bool noBroadcast, ref int prefix, ref bool noGrabDelay,
+                                                    ref bool reverseLookup) {
             var npc = new OrionNpc(terrariaNpc);
             var args = new NpcDroppingLootItemEventArgs(npc) {
                 LootItemType = (ItemType)itemId,
@@ -314,19 +296,14 @@ namespace Orion.Npcs {
             };
             NpcDroppingLootItem?.Invoke(this, args);
 
-            if (args.Handled) {
-                return OTAPI.HookResult.Cancel;
-            }
+            if (args.Handled) return OTAPI.HookResult.Cancel;
 
-            /*
-             * Handle item spawning in this method. This enables us to provide a reference to an IItem in
-             * NpcDroppedLootItemEventArgs, but adds a dependency on IItemService.
-             */
+            // Handle item spawning in this method. This enables us to provide a reference to an IItem in
+            // NpcDroppedLootItemEventArgs, but adds a dependency on IItemService.
             var item = _itemService.SpawnItem(args.LootItemType, new Vector2(x + width / 2, y + height / 2),
                                               args.LootItemStackSize, args.LootItemPrefix);
             var args2 = new NpcDroppedLootItemEventArgs(npc, item);
             NpcDroppedLootItem?.Invoke(this, args2);
-
             return OTAPI.HookResult.Cancel;
         }
 

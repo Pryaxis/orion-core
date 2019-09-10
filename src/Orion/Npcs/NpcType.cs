@@ -2,6 +2,8 @@
     /// <summary>
     /// Specifies an NPC's type.
     /// </summary>
+
+    // TODO: work on better names.
     public enum NpcType : short {
 #pragma warning disable 1591
         BigHornetStingy = -65,

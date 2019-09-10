@@ -14,7 +14,7 @@ namespace Orion.Tests.Networking.Packets.Connections {
 
             action.Should().Throw<ArgumentNullException>();
         }
-        
+
         public static readonly byte[] ClientUuidBytes = {12, 0, 68, 8, 84, 101, 114, 114, 97, 114, 105, 97,};
 
         [Fact]

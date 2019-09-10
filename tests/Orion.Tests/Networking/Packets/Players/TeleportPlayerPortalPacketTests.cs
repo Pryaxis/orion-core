@@ -7,7 +7,9 @@ using Xunit;
 
 namespace Orion.Tests.Networking.Packets.Players {
     public class TeleportPlayerPortalPacketTests {
-        public static readonly byte[] TeleportPlayerPortalBytes = {22, 0, 96, 100, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,};
+        public static readonly byte[] TeleportPlayerPortalBytes = {
+            22, 0, 96, 100, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+        };
 
         [Fact]
         public void ReadFromStream_IsCorrect() {

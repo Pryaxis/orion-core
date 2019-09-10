@@ -2,6 +2,8 @@
     /// <summary>
     /// Specifies a block's type.
     /// </summary>
+
+    // TODO: work on better names.
     public enum BlockType : ushort {
 #pragma warning disable 1591
         Dirt = 0,

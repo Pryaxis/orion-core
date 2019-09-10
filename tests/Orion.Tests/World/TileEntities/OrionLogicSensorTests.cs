@@ -23,7 +23,7 @@ namespace Orion.Tests.World.TileEntities {
 
             logicSensor.X.Should().Be(x);
         }
-        
+
         [Theory]
         [InlineData(100)]
         public void SetX_IsCorrect(int x) {
@@ -34,7 +34,7 @@ namespace Orion.Tests.World.TileEntities {
 
             terrariaLogicSensor.Position.X.Should().Be((short)x);
         }
-        
+
         [Theory]
         [InlineData(100)]
         public void GetY_IsCorrect(int y) {
@@ -43,7 +43,7 @@ namespace Orion.Tests.World.TileEntities {
 
             logicSensor.Y.Should().Be(y);
         }
-        
+
         [Theory]
         [InlineData(100)]
         public void SetY_IsCorrect(int y) {
@@ -54,7 +54,7 @@ namespace Orion.Tests.World.TileEntities {
 
             terrariaLogicSensor.Position.Y.Should().Be((short)y);
         }
-        
+
         [Theory]
         [InlineData(LogicSensorType.Day)]
         public void GetType_IsCorrect(LogicSensorType type) {
@@ -63,7 +63,7 @@ namespace Orion.Tests.World.TileEntities {
 
             logicSensor.SensorType.Should().Be(type);
         }
-        
+
         [Theory]
         [InlineData(LogicSensorType.Day)]
         public void SetType_IsCorrect(LogicSensorType type) {
@@ -74,7 +74,7 @@ namespace Orion.Tests.World.TileEntities {
 
             terrariaLogicSensor.logicCheck.Should().Be((TGCTE.TELogicSensor.LogicCheckType)type);
         }
-        
+
         [Theory]
         [InlineData(true)]
         public void GetIsActivated_IsCorrect(bool isActivated) {
@@ -83,7 +83,7 @@ namespace Orion.Tests.World.TileEntities {
 
             logicSensor.IsActivated.Should().Be(isActivated);
         }
-        
+
         [Theory]
         [InlineData(true)]
         public void SetIsActivated_IsCorrect(bool isActivated) {
@@ -94,7 +94,7 @@ namespace Orion.Tests.World.TileEntities {
 
             terrariaLogicSensor.On.Should().Be(isActivated);
         }
-        
+
         [Theory]
         [InlineData(100)]
         public void GetData_IsCorrect(int data) {
@@ -103,7 +103,7 @@ namespace Orion.Tests.World.TileEntities {
 
             logicSensor.Data.Should().Be(data);
         }
-        
+
         [Theory]
         [InlineData(100)]
         public void SetData_IsCorrect(int data) {

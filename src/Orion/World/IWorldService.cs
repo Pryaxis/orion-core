@@ -16,15 +16,13 @@ namespace Orion.World {
         string WorldName { get; set; }
 
         /// <summary>
-        /// Gets the width of the world.
+        /// Gets the world width.
         /// </summary>
-        /// <remarks>This corresponds to Terraria.Main.maxTilesX.</remarks>
         int WorldWidth { get; }
 
         /// <summary>
-        /// Gets the height of the world.
+        /// Gets the world height.
         /// </summary>
-        /// <remarks>This corresponds to Terraria.Main.maxTilesY.</remarks>
         int WorldHeight { get; }
 
         /// <summary>
@@ -33,7 +31,6 @@ namespace Orion.World {
         /// <param name="x">The X coordinate.</param>
         /// <param name="y">The Y coordinate.</param>
         /// <returns>The tile.</returns>
-        /// <remarks>For performance reasons, we don't bother bounds checking the coordinates.</remarks>
         Tile this[int x, int y] { get; set; }
 
         /// <summary>
@@ -57,9 +54,9 @@ namespace Orion.World {
         bool IsExpertMode { get; set; }
 
         /// <summary>
-        /// Gets the current <see cref="InvasionType"/>.
+        /// Gets the current invasion type.
         /// </summary>
-        InvasionType CurrentInvasion { get; }
+        InvasionType CurrentInvasionType { get; }
 
         /// <summary>
         /// Occurs when the world is checking for whether it's halloween.
@@ -104,10 +101,10 @@ namespace Orion.World {
         /// <summary>
         /// Occurs when the world is updating a tile in hardmode.
         /// </summary>
-        HookHandlerCollection<UpdatingHardmodeTileEventArgs> UpdatingHardmodeTile { get; set; }
+        HookHandlerCollection<UpdatingHardmodeBlockEventArgs> UpdatingHardmodeBlock { get; set; }
 
         /// <summary>
-        /// Starts an invasion with the given <see cref="InvasionType"/>.
+        /// Starts an invasion with the given type.
         /// </summary>
         /// <param name="invasionType">The invasion type.</param>
         /// <returns><c>true</c> if the invasion was successfully started; <c>false</c> otherwise.</returns>
@@ -146,7 +143,7 @@ namespace Orion.World {
         ITileEntity GetTileEntity(int x, int y);
 
         /// <summary>
-        /// Removes the given <see cref="ITileEntity"/> from the world.
+        /// Removes the given tile entity from the world.
         /// </summary>
         /// <param name="tileEntity">The tile entity.</param>
         /// <returns>A value indicating whether the tile entity was successfully removed.</returns>

@@ -8,25 +8,18 @@ namespace Orion.World.TileEntities {
     internal sealed class OrionChestService : OrionService, IChestService {
         private readonly IList<Terraria.Chest> _terrariaChests;
         private readonly IList<OrionChest> _chests;
-        
-        [ExcludeFromCodeCoverage]
-        public override string Author => "Pryaxis";
 
-        [ExcludeFromCodeCoverage]
-        public override string Name => "Orion Chest Service";
+        [ExcludeFromCodeCoverage] public override string Author => "Pryaxis";
+        [ExcludeFromCodeCoverage] public override string Name => "Orion Chest Service";
 
         public int Count => _chests.Count;
 
         public IChest this[int index] {
             get {
-                if (index < 0 || index >= Count) {
-                    throw new IndexOutOfRangeException(nameof(index));
-                }
+                if (index < 0 || index >= Count) throw new IndexOutOfRangeException(nameof(index));
 
-                /*
-                 * Some chests in _terrariaChests may be null, so we need to handle this properly by also returning
-                 * null.
-                 */
+                // Some chests in _terrariaChests may be null, so we need to handle this properly by also returning
+                // null.
                 if (_chests[index] == null || _chests[index].Wrapped != _terrariaChests[index]) {
                     if (_terrariaChests[index] == null) {
                         return null;
@@ -52,14 +45,12 @@ namespace Orion.World.TileEntities {
                 yield return this[i];
             }
         }
-        
+
         [ExcludeFromCodeCoverage]
         IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
 
         public IChest AddChest(int x, int y) {
-            if (GetChest(x, y) != null) {
-                return null;
-            }
+            if (GetChest(x, y) != null) return null;
 
             for (var i = 0; i < Count; ++i) {
                 var terrariaChest = _terrariaChests[i];

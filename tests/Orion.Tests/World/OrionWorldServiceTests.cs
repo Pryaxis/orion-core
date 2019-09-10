@@ -132,7 +132,7 @@ namespace Orion.Tests.World {
         public void GetCurrentInvasion_IsCorrect(InvasionType invasionType) {
             Terraria.Main.invasionType = (int)invasionType;
 
-            _worldService.CurrentInvasion.Should().Be(invasionType);
+            _worldService.CurrentInvasionType.Should().Be(invasionType);
         }
 
         [Fact]
@@ -171,7 +171,7 @@ namespace Orion.Tests.World {
 
             isRun.Should().BeTrue();
         }
-        
+
         // This test should basically never flake, since it's pretty hard for both runs to pass.
         [Theory]
         [InlineData(true)]
@@ -231,7 +231,7 @@ namespace Orion.Tests.World {
             TDS.TileEntity.ByPosition.Remove(position);
 
             var targetDummy = _worldService.AddTargetDummy(x, y);
-            
+
             targetDummy.Should().NotBeNull();
             targetDummy.X.Should().Be(x);
             targetDummy.Y.Should().Be(y);
@@ -274,7 +274,7 @@ namespace Orion.Tests.World {
             terrariaTileEntity.Position.X.Should().Be((short)x);
             terrariaTileEntity.Position.Y.Should().Be((short)y);
         }
-        
+
         [Theory]
         [InlineData(100, 100)]
         public void GetTileEntity_WithChest_IsCorrect(int x, int y) {
@@ -283,12 +283,12 @@ namespace Orion.Tests.World {
             TDS.TileEntity.ByPosition.Remove(new TDS.Point16(x, y));
 
             var tileEntity = _worldService.GetTileEntity(x, y);
-            
+
             tileEntity.Should().NotBeNull();
             tileEntity.Should().BeAssignableTo<IChest>();
             tileEntity.Should().Be(chest.Object);
         }
-        
+
         [Theory]
         [InlineData(100, 100)]
         public void GetTileEntity_WithSign_IsCorrect(int x, int y) {
@@ -297,12 +297,12 @@ namespace Orion.Tests.World {
             TDS.TileEntity.ByPosition.Remove(new TDS.Point16(x, y));
 
             var tileEntity = _worldService.GetTileEntity(x, y);
-            
+
             tileEntity.Should().NotBeNull();
             tileEntity.Should().BeAssignableTo<ISign>();
             tileEntity.Should().Be(sign.Object);
         }
-        
+
         [Theory]
         [InlineData(100, 100)]
         public void GetTileEntity_WithTargetDummy_IsCorrect(int x, int y) {
@@ -316,7 +316,7 @@ namespace Orion.Tests.World {
             tileEntity.X.Should().Be(x);
             tileEntity.Y.Should().Be(x);
         }
-        
+
         [Theory]
         [InlineData(100, 100)]
         public void GetTileEntity_WithItemFrame_IsCorrect(int x, int y) {
@@ -324,13 +324,13 @@ namespace Orion.Tests.World {
             TGCTE.TEItemFrame.Place(x, y);
 
             var tileEntity = _worldService.GetTileEntity(x, y);
-            
+
             tileEntity.Should().NotBeNull();
             tileEntity.Should().BeAssignableTo<IItemFrame>();
             tileEntity.X.Should().Be(x);
             tileEntity.Y.Should().Be(x);
         }
-        
+
         [Theory]
         [InlineData(100, 100)]
         public void GetTileEntity_WithLogicSensor_IsCorrect(int x, int y) {
@@ -338,13 +338,13 @@ namespace Orion.Tests.World {
             TGCTE.TELogicSensor.Place(x, y);
 
             var tileEntity = _worldService.GetTileEntity(x, y);
-            
+
             tileEntity.Should().NotBeNull();
             tileEntity.Should().BeAssignableTo<ILogicSensor>();
             tileEntity.X.Should().Be(x);
             tileEntity.Y.Should().Be(x);
         }
-        
+
         [Theory]
         [InlineData(100, 100)]
         public void GetTileEntity_Nothing_ReturnsNull(int x, int y) {
@@ -382,7 +382,7 @@ namespace Orion.Tests.World {
 
             result.Should().Be(removeResult);
         }
-        
+
         [Theory]
         [InlineData(100, 100)]
         public void RemoveTileEntity_NotChestOrSign_IsCorrect(int x, int y) {

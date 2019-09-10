@@ -6,17 +6,17 @@ namespace Orion.World.TileEntities {
     /// </summary>
     public interface ITileEntity : IAnnotatable {
         /// <summary>
-        /// Gets the index of the tile entity.
+        /// Gets the tile entity's index.
         /// </summary>
         int Index { get; }
 
         /// <summary>
-        /// Gets or sets the X coordinate.
+        /// Gets or sets the tile entity's X coordinate.
         /// </summary>
         int X { get; set; }
 
         /// <summary>
-        /// Gets or sets the Y coordinate.
+        /// Gets or sets the tile entity's Y coordinate.
         /// </summary>
         int Y { get; set; }
     }

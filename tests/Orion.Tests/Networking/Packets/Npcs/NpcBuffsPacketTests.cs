@@ -14,7 +14,7 @@ namespace Orion.Tests.Networking.Packets.Npcs {
         public void ReadFromStream_IsCorrect() {
             using (var stream = new MemoryStream(NpcBuffsBytes)) {
                 var packet = (NpcBuffsPacket)Packet.ReadFromStream(stream, PacketContext.Server);
-                
+
                 packet.NpcIndex.Should().Be(0);
                 foreach (var buff in packet.NpcBuffs) {
                     buff.Should().Be(new Buff(BuffType.None, TimeSpan.Zero));

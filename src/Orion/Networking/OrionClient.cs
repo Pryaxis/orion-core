@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Diagnostics;
+using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using Orion.Networking.Events;
 using Orion.Networking.Packets;
@@ -56,5 +57,8 @@ namespace Orion.Networking {
                                          Terraria.Localization.NetworkText.FromLiteral(text), number, number2, number3,
                                          number4, number5, number6, number7);
         }
+
+        [ExcludeFromCodeCoverage]
+        public override string ToString() => Name;
     }
 }

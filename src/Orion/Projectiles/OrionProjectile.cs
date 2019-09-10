@@ -29,7 +29,12 @@ namespace Orion.Projectiles {
 
         public OrionProjectile(Terraria.Projectile terrariaProjectile) : base(terrariaProjectile) { }
 
-        public void ApplyType(ProjectileType type) => Wrapped.SetDefaults((int)type);
-        public void Remove() => Wrapped.Kill();
+        public void ApplyType(ProjectileType type) {
+            Wrapped.SetDefaults((int)type);
+        }
+
+        public void Remove() {
+            Wrapped.Kill();
+        }
     }
 }
