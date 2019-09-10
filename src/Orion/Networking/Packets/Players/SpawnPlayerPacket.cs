@@ -12,12 +12,12 @@ namespace Orion.Networking.Packets.Players {
         public byte PlayerIndex { get; set; }
 
         /// <summary>
-        /// Gets or sets the X coordinate of the player's spawn position. A negative value results in the world spawn.
+        /// Gets or sets the player spawn's X coordinate. A negative value results in the world spawn.
         /// </summary>
         public short PlayerSpawnX { get; set; }
 
         /// <summary>
-        /// Gets or sets the Y coordinate of the player's spawn position. A negative value results in the world spawn.
+        /// Gets or sets the player spawn's Y coordinate. A negative value results in the world spawn.
         /// </summary>
         public short PlayerSpawnY { get; set; }
 

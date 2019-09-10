@@ -3,7 +3,7 @@ using System.IO;
 
 namespace Orion.Networking.Packets.World.TileEntities {
     /// <summary>
-    /// Packet sent from the client to the server to move an inventory slot into a chest.
+    /// Packet sent from the client to the server to move an inventory slot into the current chest.
     /// </summary>
     public sealed class MoveIntoChestPacket : Packet {
         /// <summary>

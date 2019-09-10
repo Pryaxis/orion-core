@@ -1,5 +1,7 @@
 ﻿using System;
 using FluentAssertions;
+using Moq;
+using Orion.Networking;
 using Orion.Networking.Events;
 using Orion.Networking.Packets.Connections;
 using Xunit;
@@ -16,7 +18,7 @@ namespace Orion.Tests.Networking.Events {
 
         [Fact]
         public void Ctor_NullPacket_ThrowsArgumentNullException() {
-            var sender = new Terraria.RemoteClient();
+            var sender = new Mock<IClient>().Object;
             Func<ReceivedPacketEventArgs> func = () => new ReceivedPacketEventArgs(sender, null);
 
             func.Should().Throw<ArgumentNullException>();
@@ -24,7 +26,7 @@ namespace Orion.Tests.Networking.Events {
 
         [Fact]
         public void GetSender_IsCorrect() {
-            var sender = new Terraria.RemoteClient();
+            var sender = new Mock<IClient>().Object;
             var packet = new StartConnectingPacket {Version = "test"};
             var args = new ReceivedPacketEventArgs(sender, packet);
 
@@ -33,7 +35,7 @@ namespace Orion.Tests.Networking.Events {
 
         [Fact]
         public void GetPacket_IsCorrect() {
-            var sender = new Terraria.RemoteClient();
+            var sender = new Mock<IClient>().Object;
             var packet = new StartConnectingPacket {Version = "test"};
             var args = new ReceivedPacketEventArgs(sender, packet);
 

@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
@@ -10,9 +12,30 @@ using Serilog;
 
 namespace Orion.Networking {
     internal sealed class OrionNetworkService : OrionService, INetworkService {
-        [ExcludeFromCodeCoverage] public override string Author => "Pryaxis";
+        private readonly IList<Terraria.RemoteClient> _terrariaClients;
+        private readonly IList<OrionClient> _clients;
 
+        [ExcludeFromCodeCoverage] public override string Author => "Pryaxis";
         [ExcludeFromCodeCoverage] public override string Name => "Orion Network Service";
+
+        public int Count => _clients.Count;
+
+        public IClient this[int index] {
+            get {
+                if (index < 0 || index >= Count) {
+                    throw new IndexOutOfRangeException(nameof(index));
+                }
+
+                if (_clients[index]?.Wrapped != _terrariaClients[index]) {
+                    _clients[index] = new OrionClient(this, _terrariaClients[index]);
+                }
+
+                var client = _clients[index];
+                Debug.Assert(client != null, $"{nameof(client)} should not be null.");
+                Debug.Assert(client.Wrapped != null, $"{nameof(client.Wrapped)} should not be null.");
+                return client;
+            }
+        }
 
         public HookHandlerCollection<ReceivedPacketEventArgs> ReceivedPacket { get; set; }
         public HookHandlerCollection<ReceivingPacketEventArgs> ReceivingPacket { get; set; }
@@ -21,92 +44,65 @@ namespace Orion.Networking {
         public HookHandlerCollection<ClientDisconnectedEventArgs> ClientDisconnected { get; set; }
 
         public OrionNetworkService() {
+            _terrariaClients = Terraria.Netplay.Clients;
+            _clients = new OrionClient[_terrariaClients.Count];
+
             OTAPI.Hooks.Net.ReceiveData = ReceiveDataHandler;
             OTAPI.Hooks.Net.SendBytes = SendBytesHandler;
             OTAPI.Hooks.Net.RemoteClient.PreReset = PreResetHandler;
         }
 
         protected override void Dispose(bool disposeManaged) {
-            if (!disposeManaged) {
-                return;
-            }
+            if (!disposeManaged) return;
 
             OTAPI.Hooks.Net.ReceiveData = null;
             OTAPI.Hooks.Net.SendBytes = null;
             OTAPI.Hooks.Net.RemoteClient.PreReset = null;
         }
 
-        public void SendPacket(Packet packet, int targetIndex = -1, int exceptIndex = -1) {
-            if (packet == null) {
-                throw new ArgumentNullException(nameof(packet));
+        public IEnumerator<IClient> GetEnumerator() {
+            for (var i = 0; i < Count; ++i) {
+                yield return this[i];
             }
+        }
+        
+        [ExcludeFromCodeCoverage]
+        IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
 
-            if (targetIndex < -2 || targetIndex >= Terraria.Netplay.MaxConnections) {
-                throw new ArgumentOutOfRangeException(nameof(targetIndex), $"{nameof(targetIndex)} is out of range.");
-            }
+        public void BroadcastPacket(Packet packet, int excludeIndex = -1) {
+            if (packet == null) throw new ArgumentNullException(nameof(packet));
 
-            void TrySendPacket(int index) {
-                Debug.Assert(index >= 0 && index < Terraria.Netplay.MaxConnections,
-                             $"{nameof(index)} should be a valid index.");
-
-                var receiver = Terraria.Netplay.Clients[index];
-                var args = new SendingPacketEventArgs(receiver, packet);
-                SendingPacket?.Invoke(this, args);
-
-                if (args.Handled) {
-                    return;
-                }
-
-                var bytes = new byte[ushort.MaxValue];
-                using (var stream = new MemoryStream(bytes)) {
-                    args.Packet.WriteToStream(stream, PacketContext.Server);
-                    receiver.Socket?.AsyncSend(bytes, 0, (int)stream.Length, receiver.ServerWriteCallBack);
-                }
-            }
-
-            if (targetIndex > 0) {
-                TrySendPacket(targetIndex);
-            } else {
-                for (var i = 0; i < Terraria.Netplay.MaxConnections; ++i) {
-                    if (i != exceptIndex) {
-                        TrySendPacket(i);
-                    }
+            for (var i = 0; i < Terraria.Netplay.MaxConnections; ++i) {
+                if (i != excludeIndex) {
+                    this[i].SendPacket(packet);
                 }
             }
         }
 
-        public void SendPacket(PacketType packetType, int targetIndex = -1, int exceptIndex = -1,
-                               string text = "", int number = 0, float number2 = 0, float number3 = 0,
-                               float number4 = 0, int number5 = 0, int number6 = 0, int number7 = 0) {
-            Terraria.NetMessage.SendData((int)packetType, targetIndex, exceptIndex,
+        public void BroadcastPacket(PacketType packetType, int excludeIndex = -1, string text = "", int number = 0,
+                                    float number2 = 0, float number3 = 0, float number4 = 0, int number5 = 0,
+                                    int number6 = 0, int number7 = 0) {
+            Terraria.NetMessage.SendData((int)packetType, -1, excludeIndex,
                                          Terraria.Localization.NetworkText.FromLiteral(text), number, number2, number3,
                                          number4, number5, number6, number7);
         }
 
 
         private OTAPI.HookResult ReceiveDataHandler(Terraria.MessageBuffer buffer, ref byte packetId,
-                                                    ref int readOffset,
-                                                    ref int start, ref int length) {
+                                                    ref int readOffset, ref int start, ref int length) {
             var data = buffer.readBuffer;
             Debug.Assert(buffer.whoAmI >= 0 && buffer.whoAmI < Terraria.Netplay.MaxConnections,
                          $"{nameof(buffer.whoAmI)} should be a valid index.");
             Debug.Assert(start >= 2 && start + length <= data.Length,
                          $"{nameof(start)} and {nameof(length)} should be valid indices into {nameof(data)}.");
 
-            /*
-             * start and length need to be adjusted by two to account for the packet header's length field.
-             */
+            // start and length need to be adjusted by two to account for the packet header's length field.
             using (var stream = new MemoryStream(data, start - 2, length + 2)) {
-                var sender = Terraria.Netplay.Clients[buffer.whoAmI];
+                var sender = this[buffer.whoAmI];
                 var packet = Packet.ReadFromStream(stream, PacketContext.Server);
                 var args = new ReceivingPacketEventArgs(sender, packet);
                 ReceivingPacket?.Invoke(this, args);
-
-                if (args.Handled) {
-                    return OTAPI.HookResult.Cancel;
-                }
-
-                packet = args.Packet;
+                if (args.Handled) return OTAPI.HookResult.Cancel;
 
                 /*
                  * To properly deal with a dirty packet, we'll need to use a major hack. By using HelperMemoryStream,
@@ -117,10 +113,15 @@ namespace Orion.Networking {
                  * was never out of the ordinary.
                  */
                 if (args.IsPacketDirty) {
+                    Log.Debug("[Net] Rcvd {Packet} originally from {Sender}", packet, sender.Name);
+                    packet = args.Packet;
+
                     var targetPosition = start + length;
                     var oldBuffer = data.ToArray();
                     stream.Position = 0;
-                    packet.WriteToStream(stream, PacketContext.Server);
+
+                    // Since we are faking what the client sent us, use the Client context.
+                    packet.WriteToStream(stream, PacketContext.Client);
 
                     buffer.readerStream = new HelperMemoryStream(
                         data, targetPosition, stream.Position >= targetPosition, buffer, oldBuffer);
@@ -129,9 +130,7 @@ namespace Orion.Networking {
 
                 var args2 = new ReceivedPacketEventArgs(sender, packet);
                 ReceivedPacket?.Invoke(this, args2);
-
-                Log.Verbose("Rcvd {Packet} from {Sender}", packet, sender.Name);
-
+                Log.Verbose("[Net] Rcvd {Packet} from {Sender}", packet, sender.Name);
                 return OTAPI.HookResult.Continue;
             }
         }
@@ -145,20 +144,19 @@ namespace Orion.Networking {
                          $"{nameof(start)} and {nameof(length)} should be valid indices into {nameof(data)}.");
 
             using (var stream = new MemoryStream(data, start, length)) {
-                var receiver = Terraria.Netplay.Clients[remoteId];
+                var receiver = this[remoteId];
                 var packet = Packet.ReadFromStream(stream, PacketContext.Client);
                 var args = new SendingPacketEventArgs(receiver, packet);
                 SendingPacket?.Invoke(this, args);
+                if (args.Handled) return OTAPI.HookResult.Cancel;
 
-                if (args.Handled) {
-                    return OTAPI.HookResult.Cancel;
-                }
-
-                packet = args.Packet;
                 if (args.IsPacketDirty) {
+                    Log.Debug("[Net] Sent {Packet} originally to {Receiver}", packet, receiver.Name);
+                    packet = args.Packet;
+
                     var bytes = new byte[ushort.MaxValue];
                     using (var stream2 = new MemoryStream(bytes)) {
-                        packet.WriteToStream(stream2, PacketContext.Client);
+                        packet.WriteToStream(stream2, PacketContext.Server);
 
                         data = bytes;
                         start = 0;
@@ -168,17 +166,15 @@ namespace Orion.Networking {
 
                 var args2 = new SentPacketEventArgs(receiver, packet);
                 SentPacket?.Invoke(this, args2);
-
-                Log.Verbose("Sent {Packet} to {Receiver}", packet, receiver.Name);
-
+                Log.Verbose("[Net] Sent {Packet} to {Receiver}", packet, receiver.Name);
                 return OTAPI.HookResult.Continue;
             }
         }
 
         private OTAPI.HookResult PreResetHandler(Terraria.RemoteClient remoteClient) {
-            var args = new ClientDisconnectedEventArgs(remoteClient);
+            var client = new OrionClient(this, remoteClient);
+            var args = new ClientDisconnectedEventArgs(client);
             ClientDisconnected?.Invoke(this, args);
-
             return OTAPI.HookResult.Continue;
         }
 

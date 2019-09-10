@@ -10,12 +10,9 @@ namespace Orion.Players {
     internal sealed class OrionPlayerService : OrionService, IPlayerService {
         private readonly IList<Terraria.Player> _terrariaPlayers;
         private readonly IList<OrionPlayer> _players;
-        
-        [ExcludeFromCodeCoverage]
-        public override string Author => "Pryaxis";
-        
-        [ExcludeFromCodeCoverage]
-        public override string Name => "Orion Player Service";
+
+        [ExcludeFromCodeCoverage] public override string Author => "Pryaxis";
+        [ExcludeFromCodeCoverage] public override string Name => "Orion Player Service";
         
         /*
          * We need to subtract 1 from the count. This is because Terraria actually has an extra slot which is reserved

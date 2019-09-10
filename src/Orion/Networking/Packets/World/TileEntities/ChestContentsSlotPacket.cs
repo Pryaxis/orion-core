@@ -4,7 +4,7 @@ using Orion.Items;
 
 namespace Orion.Networking.Packets.World.TileEntities {
     /// <summary>
-    /// Packet sent to set a chest contents' slot. This is sent in response to a <see cref="RequestChestPacket"/>.
+    /// Packet sent to set a chest contents slot. This is sent in response to a <see cref="RequestChestPacket"/>.
     /// </summary>
     public sealed class ChestContentsSlotPacket : Packet {
         /// <summary>
@@ -13,7 +13,7 @@ namespace Orion.Networking.Packets.World.TileEntities {
         public short ChestIndex { get; set; }
 
         /// <summary>
-        /// Gets or sets the chest contents' slot index.
+        /// Gets or sets the chest contents slot index.
         /// </summary>
         public byte ChestContentsSlotIndex { get; set; }
 

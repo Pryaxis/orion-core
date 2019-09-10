@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
-using Orion.Items;
 
 namespace Orion.Networking.Packets.World.TileEntities {
     /// <summary>

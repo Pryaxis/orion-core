@@ -12,7 +12,7 @@ namespace Orion.Networking.Events {
         /// <summary>
         /// Gets the packet's sender.
         /// </summary>
-        public Terraria.RemoteClient Sender { get; }
+        public IClient Sender { get; }
 
         /// <summary>
         /// Gets or sets the packet that is being received.
@@ -35,12 +35,12 @@ namespace Orion.Networking.Events {
         /// Initializes a new instance of the <see cref="ReceivingPacketEventArgs"/> class with the specified sender
         /// and packet.
         /// </summary>
-        /// <param name="sender">The packet's sender.</param>
-        /// <param name="packet">The packet that is being received.</param>
+        /// <param name="sender">The sender.</param>
+        /// <param name="packet">The packet.</param>
         /// <exception cref="ArgumentNullException">
-        /// Either <paramref name="sender"/> is <c>null</c> or <paramref name="packet"/> is <c>null</c>.
+        /// <paramref name="sender"/> or <paramref name="packet"/> are <c>null</c>.
         /// </exception>
-        public ReceivingPacketEventArgs(Terraria.RemoteClient sender, Packet packet) {
+        public ReceivingPacketEventArgs(IClient sender, Packet packet) {
             Sender = sender ?? throw new ArgumentNullException(nameof(sender));
             _packet = packet ?? throw new ArgumentNullException(nameof(packet));
         }
@@ -48,6 +48,8 @@ namespace Orion.Networking.Events {
         /// <summary>
         /// Marks the packet as being dirty.
         /// </summary>
-        public void MarkPacketAsDirty() => IsPacketDirty = true;
+        public void MarkPacketAsDirty() {
+            IsPacketDirty = true;
+        }
     }
 }

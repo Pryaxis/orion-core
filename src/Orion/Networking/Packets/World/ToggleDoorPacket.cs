@@ -7,9 +7,9 @@ namespace Orion.Networking.Packets.World {
     /// </summary>
     public sealed class ToggleDoorPacket : Packet {
         /// <summary>
-        /// Gets or sets the toggle type.
+        /// Gets or sets the door action.
         /// </summary>
-        public DoorToggleType ToggleType { get; set; }
+        public ToggleDoorAction DoorAction { get; set; }
 
         /// <summary>
         /// Gets or sets the door's X coordinate.
@@ -30,17 +30,17 @@ namespace Orion.Networking.Packets.World {
 
         /// <inheritdoc />
         [ExcludeFromCodeCoverage]
-        public override string ToString() => $"{Type}[{ToggleType} @ ({DoorX}, {DoorY}), ...]";
+        public override string ToString() => $"{Type}[{DoorAction} @ ({DoorX}, {DoorY}), ...]";
 
         private protected override void ReadFromReader(BinaryReader reader, PacketContext context) {
-            ToggleType = (DoorToggleType)reader.ReadByte();
+            DoorAction = (ToggleDoorAction)reader.ReadByte();
             DoorX = reader.ReadInt16();
             DoorY = reader.ReadInt16();
             ToggleDirection = reader.ReadByte() == 1;
         }
 
         private protected override void WriteToWriter(BinaryWriter writer, PacketContext context) {
-            writer.Write((byte)ToggleType);
+            writer.Write((byte)DoorAction);
             writer.Write(DoorX);
             writer.Write(DoorY);
             writer.Write(ToggleDirection);

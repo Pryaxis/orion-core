@@ -8,14 +8,14 @@ namespace Orion.Networking.Packets.World {
     /// </summary>
     public sealed class PaintBlockPacket : Packet {
         /// <summary>
-        /// Gets or sets the tile's X coordinate.
+        /// Gets or sets the block's X coordinate.
         /// </summary>
-        public short TileX { get; set; }
+        public short BlockX { get; set; }
 
         /// <summary>
-        /// Gets or sets the tile's Y coordinate.
+        /// Gets or sets the block's Y coordinate.
         /// </summary>
-        public short TileY { get; set; }
+        public short BlockY { get; set; }
 
         /// <summary>
         /// Gets or sets the block color.
@@ -26,17 +26,17 @@ namespace Orion.Networking.Packets.World {
 
         /// <inheritdoc />
         [ExcludeFromCodeCoverage]
-        public override string ToString() => $"{Type}[{BlockColor} @ ({TileX}, {TileY})]";
+        public override string ToString() => $"{Type}[{BlockColor} @ ({BlockX}, {BlockY})]";
 
         private protected override void ReadFromReader(BinaryReader reader, PacketContext context) {
-            TileX = reader.ReadInt16();
-            TileY = reader.ReadInt16();
+            BlockX = reader.ReadInt16();
+            BlockY = reader.ReadInt16();
             BlockColor = (PaintColor)reader.ReadByte();
         }
 
         private protected override void WriteToWriter(BinaryWriter writer, PacketContext context) {
-            writer.Write(TileX);
-            writer.Write(TileY);
+            writer.Write(BlockX);
+            writer.Write(BlockY);
             writer.Write((byte)BlockColor);
         }
     }

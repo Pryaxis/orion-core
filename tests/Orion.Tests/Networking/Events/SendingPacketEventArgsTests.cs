@@ -1,5 +1,7 @@
 ﻿using System;
 using FluentAssertions;
+using Moq;
+using Orion.Networking;
 using Orion.Networking.Events;
 using Orion.Networking.Packets.Connections;
 using Xunit;
@@ -16,23 +18,24 @@ namespace Orion.Tests.Networking.Events {
 
         [Fact]
         public void Ctor_NullPacket_ThrowsArgumentNullException() {
-            var sender = new Terraria.RemoteClient();
-            Func<SendingPacketEventArgs> func = () => new SendingPacketEventArgs(sender, null);
+            var receiver = new Mock<IClient>().Object;
+            Func<SendingPacketEventArgs> func = () => new SendingPacketEventArgs(receiver, null);
 
             func.Should().Throw<ArgumentNullException>();
         }
 
         [Fact]
         public void Ctor_StartsOffNotDirty() {
+            var receiver = new Mock<IClient>().Object;
             var packet = new StartConnectingPacket {Version = "test"};
-            var args = new SendingPacketEventArgs(new Terraria.RemoteClient(), packet);
+            var args = new SendingPacketEventArgs(receiver, packet);
 
             args.IsPacketDirty.Should().BeFalse();
         }
 
         [Fact]
         public void GetReceiver_IsCorrect() {
-            var receiver = new Terraria.RemoteClient();
+            var receiver = new Mock<IClient>().Object;
             var packet = new StartConnectingPacket {Version = "test"};
             var args = new SendingPacketEventArgs(receiver, packet);
 
@@ -41,16 +44,16 @@ namespace Orion.Tests.Networking.Events {
 
         [Fact]
         public void GetPacket_IsCorrect() {
-            var sender = new Terraria.RemoteClient();
+            var receiver = new Mock<IClient>().Object;
             var packet = new StartConnectingPacket {Version = "test"};
-            var args = new SendingPacketEventArgs(sender, packet);
+            var args = new SendingPacketEventArgs(receiver, packet);
 
             args.Packet.Should().BeSameAs(packet);
         }
 
         [Fact]
         public void SetPacket_IsCorrect() {
-            var receiver = new Terraria.RemoteClient();
+            var receiver = new Mock<IClient>().Object;
             var packet = new StartConnectingPacket {Version = "test"};
             var args = new SendingPacketEventArgs(receiver, packet);
             var packet2 = new StartConnectingPacket {Version = "test2"};
@@ -63,8 +66,9 @@ namespace Orion.Tests.Networking.Events {
 
         [Fact]
         public void SetPacket_NullValue_ThrowsArgumentNullException() {
+            var receiver = new Mock<IClient>().Object;
             var packet = new StartConnectingPacket {Version = "test"};
-            var args = new SendingPacketEventArgs(new Terraria.RemoteClient(), packet);
+            var args = new SendingPacketEventArgs(receiver, packet);
             Action action = () => args.Packet = null;
 
             action.Should().Throw<ArgumentNullException>();
@@ -72,8 +76,9 @@ namespace Orion.Tests.Networking.Events {
 
         [Fact]
         public void MarkPacketAsDirty_IsCorrect() {
+            var receiver = new Mock<IClient>().Object;
             var packet = new StartConnectingPacket {Version = "test"};
-            var args = new SendingPacketEventArgs(new Terraria.RemoteClient(), packet);
+            var args = new SendingPacketEventArgs(receiver, packet);
             args.MarkPacketAsDirty();
 
             args.IsPacketDirty.Should().BeTrue();

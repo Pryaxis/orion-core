@@ -9,27 +9,27 @@ namespace Orion.Networking.Packets.Modules {
     /// </summary>
     public sealed class ChatModule : Module {
         /// <summary>
-        /// Gets or sets the client's chat command. Applicable when received in the Server context.
+        /// Gets or sets the client's chat command. Only applicable when received in the Server context.
         /// </summary>
         public string ClientChatCommand { get; set; }
 
         /// <summary>
-        /// Gets or sets the client's chat text. Applicable when received in the Server context.
+        /// Gets or sets the client's chat text. Only applicable when received in the Server context.
         /// </summary>
         public string ClientChatText { get; set; }
 
         /// <summary>
-        /// Gets or sets the server's chatting player index. Applicable when sent in the Server context.
+        /// Gets or sets the server's chatting player index. Only applicable when sent in the Server context.
         /// </summary>
         public byte ServerChattingPlayerIndex { get; set; }
 
         /// <summary>
-        /// Gets or sets the server's chat text. Applicable when sent in the Server context.
+        /// Gets or sets the server's chat text. Only applicable when sent in the Server context.
         /// </summary>
         public Terraria.Localization.NetworkText ServerChatText { get; set; }
 
         /// <summary>
-        /// Gets or sets the server's chat color. Applicable when sent in the Server context.
+        /// Gets or sets the server's chat color. Only applicable when sent in the Server context.
         /// </summary>
         public Color ServerChatColor { get; set; }
 

@@ -12,7 +12,7 @@ namespace Orion.Networking.Packets.Players {
         public byte PlayerIndex { get; set; }
 
         /// <summary>
-        /// Gets or sets the player's stealth status.
+        /// Gets or sets the player's stealth.
         /// </summary>
         public float PlayerStealthStatus { get; set; }
 

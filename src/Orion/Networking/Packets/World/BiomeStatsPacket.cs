@@ -12,12 +12,12 @@ namespace Orion.Networking.Packets.World {
         public byte HallowedAmount { get; set; }
 
         /// <summary>
-        /// Gets or sets the corruption amount.
+        /// Gets or sets the corruption biome amount.
         /// </summary>
         public byte CorruptionAmount { get; set; }
 
         /// <summary>
-        /// Gets or sets the crimson amount.
+        /// Gets or sets the crimson biome amount.
         /// </summary>
         public byte CrimsonAmount { get; set; }
 

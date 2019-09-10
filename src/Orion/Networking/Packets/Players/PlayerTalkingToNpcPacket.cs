@@ -12,24 +12,24 @@ namespace Orion.Networking.Packets.Players {
         public byte PlayerIndex { get; set; }
 
         /// <summary>
-        /// Gets or sets the NPC index.
+        /// Gets or sets the NPC index that the player is talking to.
         /// </summary>
-        public short NpcIndex { get; set; }
+        public short PlayerTalkingToNpcIndex { get; set; }
 
         private protected override PacketType Type => PacketType.PlayerTalkingToNpc;
 
         /// <inheritdoc />
         [ExcludeFromCodeCoverage]
-        public override string ToString() => $"{Type}[#={PlayerIndex} to N={NpcIndex}]";
+        public override string ToString() => $"{Type}[#={PlayerIndex} to N={PlayerTalkingToNpcIndex}]";
 
         private protected override void ReadFromReader(BinaryReader reader, PacketContext context) {
             PlayerIndex = reader.ReadByte();
-            NpcIndex = reader.ReadInt16();
+            PlayerTalkingToNpcIndex = reader.ReadInt16();
         }
 
         private protected override void WriteToWriter(BinaryWriter writer, PacketContext context) {
             writer.Write(PlayerIndex);
-            writer.Write(NpcIndex);
+            writer.Write(PlayerTalkingToNpcIndex);
         }
     }
 }

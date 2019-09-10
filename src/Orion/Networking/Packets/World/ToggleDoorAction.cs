@@ -2,7 +2,7 @@
     /// <summary>
     /// Specifies the toggle type in a <see cref="ToggleDoorPacket"/>.
     /// </summary>
-    public enum DoorToggleType : byte {
+    public enum ToggleDoorAction : byte {
         /// <summary>
         /// Opening a door.
         /// </summary>

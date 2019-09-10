@@ -13,7 +13,7 @@ namespace Orion.Tests.Networking.Packets.World {
             using (var stream = new MemoryStream(ToggleDoorBytes)) {
                 var packet = (ToggleDoorPacket)Packet.ReadFromStream(stream, PacketContext.Server);
 
-                packet.ToggleType.Should().Be(DoorToggleType.OpenDoor);
+                packet.DoorAction.Should().Be(ToggleDoorAction.OpenDoor);
                 packet.DoorX.Should().Be(3600);
                 packet.DoorY.Should().Be(450);
                 packet.ToggleDirection.Should().BeTrue();

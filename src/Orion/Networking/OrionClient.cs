@@ -1,0 +1,60 @@
+﻿using System;
+using System.Diagnostics;
+using System.IO;
+using Orion.Networking.Events;
+using Orion.Networking.Packets;
+
+namespace Orion.Networking {
+    internal sealed class OrionClient : IClient {
+        private readonly INetworkService _networkService;
+
+        public int Index => Wrapped.Id;
+
+        public bool IsConnected => Wrapped.IsConnected();
+
+        public string Name {
+            get => Wrapped.Name;
+            set => Wrapped.Name = value ?? throw new ArgumentNullException(nameof(value));
+        }
+
+        internal Terraria.RemoteClient Wrapped { get; }
+
+        public OrionClient(INetworkService networkService, Terraria.RemoteClient terrariaClient) {
+            Debug.Assert(networkService != null, $"{nameof(networkService)} should not be null.");
+            Debug.Assert(terrariaClient != null, $"{nameof(terrariaClient)} should not be null.");
+
+            _networkService = networkService;
+            Wrapped = terrariaClient;
+        }
+
+        public void SendPacket(Packet packet) {
+            if (packet == null) throw new ArgumentNullException(nameof(packet));
+            if (!IsConnected) return;
+
+            // Trigger SendingPacket manually.
+            var args = new SendingPacketEventArgs(this, packet);
+            _networkService.SendingPacket?.Invoke(this, args);
+            if (args.Handled) return;
+            packet = args.Packet;
+
+            // Since we are sending to the client, use the Server context.
+            var stream = new MemoryStream();
+            packet.WriteToStream(stream, PacketContext.Server);
+            Wrapped.Socket?.AsyncSend(stream.ToArray(), 0, (int)stream.Length, Wrapped.ServerWriteCallBack);
+
+            // Trigger SentPacket manually.
+            var args2 = new SentPacketEventArgs(this, packet);
+            _networkService.SentPacket?.Invoke(this, args2);
+        }
+
+        public void SendPacket(PacketType packetType, string text = "", int number = 0, float number2 = 0,
+                               float number3 = 0, float number4 = 0, int number5 = 0, int number6 = 0,
+                               int number7 = 0) {
+            if (!IsConnected) return;
+
+            Terraria.NetMessage.SendData((int)packetType, Index, -1,
+                                         Terraria.Localization.NetworkText.FromLiteral(text), number, number2, number3,
+                                         number4, number5, number6, number7);
+        }
+    }
+}

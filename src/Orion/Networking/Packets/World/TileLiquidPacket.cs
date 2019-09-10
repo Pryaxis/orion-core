@@ -4,7 +4,7 @@ using Orion.World.Tiles;
 
 namespace Orion.Networking.Packets.World {
     /// <summary>
-    /// Packet sent to update a tile's liquid.
+    /// Packet sent to set a tile's liquid.
     /// </summary>
     public sealed class TileLiquidPacket : Packet {
         /// <summary>

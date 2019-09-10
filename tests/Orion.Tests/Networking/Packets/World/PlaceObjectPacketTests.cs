@@ -14,12 +14,12 @@ namespace Orion.Tests.Networking.Packets.World {
             using (var stream = new MemoryStream(PlaceObjectBytes)) {
                 var packet = (PlaceObjectPacket)Packet.ReadFromStream(stream, PacketContext.Server);
 
-                packet.TileX.Should().Be(256);
-                packet.TileY.Should().Be(100);
+                packet.ObjectX.Should().Be(256);
+                packet.ObjectY.Should().Be(100);
                 packet.ObjectType.Should().Be(BlockType.Containers);
                 packet.ObjectStyle.Should().Be(1);
-                packet.RandomState.Should().Be(-1);
-                packet.Direction.Should().BeTrue();
+                packet.ObjectRandomState.Should().Be(-1);
+                packet.ObjectDirection.Should().BeTrue();
             }
         }
 

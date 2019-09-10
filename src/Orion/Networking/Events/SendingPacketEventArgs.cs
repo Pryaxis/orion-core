@@ -12,7 +12,7 @@ namespace Orion.Networking.Events {
         /// <summary>
         /// Gets the packet's receiver.
         /// </summary>
-        public Terraria.RemoteClient Receiver { get; }
+        public IClient Receiver { get; }
 
         /// <summary>
         /// Gets or sets the packet that is being sent.
@@ -35,12 +35,12 @@ namespace Orion.Networking.Events {
         /// Initializes a new instance of the <see cref="SendingPacketEventArgs"/> class with the specified receiver
         /// and packet.
         /// </summary>
-        /// <param name="receiver">The packet's receiver.</param>
-        /// <param name="packet">The packet that is being received.</param>
+        /// <param name="receiver">The receiver.</param>
+        /// <param name="packet">The packet.</param>
         /// <exception cref="ArgumentNullException">
-        /// Either <paramref name="receiver"/> is <c>null</c> or <paramref name="packet"/> is <c>null</c>.
+        /// <paramref name="receiver"/> or <paramref name="packet"/> are <c>null</c>.
         /// </exception>
-        public SendingPacketEventArgs(Terraria.RemoteClient receiver, Packet packet) {
+        public SendingPacketEventArgs(IClient receiver, Packet packet) {
             Receiver = receiver ?? throw new ArgumentNullException(nameof(receiver));
             _packet = packet ?? throw new ArgumentNullException(nameof(packet));
         }

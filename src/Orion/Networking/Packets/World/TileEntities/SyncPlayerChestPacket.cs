@@ -3,7 +3,7 @@ using System.IO;
 
 namespace Orion.Networking.Packets.World.TileEntities {
     /// <summary>
-    /// Packet sent from the server to the client to synchronize a player's chest.
+    /// Packet sent from the server to the client to synchronize a player's chest index.
     /// </summary>
     public sealed class SyncPlayerChestPacket : Packet {
         /// <summary>

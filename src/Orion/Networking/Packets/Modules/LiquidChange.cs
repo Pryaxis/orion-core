@@ -1,4 +1,5 @@
-﻿using Orion.World.Tiles;
+﻿using System.Diagnostics.CodeAnalysis;
+using Orion.World.Tiles;
 
 namespace Orion.Networking.Packets.Modules {
     /// <summary>
@@ -39,5 +40,9 @@ namespace Orion.Networking.Packets.Modules {
             LiquidAmount = liquidAmount;
             LiquidType = liquidType;
         }
+
+        /// <inheritdoc />
+        [ExcludeFromCodeCoverage]
+        public override string ToString() => $"{LiquidType} x{LiquidAmount} @ ({TileX}, {TileY})";
     }
 }

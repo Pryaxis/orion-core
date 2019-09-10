@@ -13,12 +13,12 @@ namespace Orion.Tests.Networking.Packets.Projectiles {
             using (var stream = new MemoryStream(CannonShotBytes)) {
                 var packet = (CannonShotPacket)Packet.ReadFromStream(stream, PacketContext.Server);
 
-                packet.Damage.Should().Be(100);
-                packet.Knockback.Should().Be(0);
+                packet.ShotDamage.Should().Be(100);
+                packet.ShotKnockback.Should().Be(0);
                 packet.CannonTileX.Should().Be(256);
                 packet.CannonTileY.Should().Be(100);
-                packet.Angle.Should().Be(0);
-                packet.AmmoType.Should().Be(0);
+                packet.ShotAngle.Should().Be(0);
+                packet.ShotAmmoType.Should().Be(0);
                 packet.ShooterPlayerIndex.Should().Be(1);
             }
         }

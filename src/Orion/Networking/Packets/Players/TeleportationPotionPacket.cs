@@ -1,7 +1,5 @@
 ﻿using System.Diagnostics.CodeAnalysis;
 using System.IO;
-using Microsoft.Xna.Framework;
-using Orion.Players;
 
 namespace Orion.Networking.Packets.Players {
     /// <summary>

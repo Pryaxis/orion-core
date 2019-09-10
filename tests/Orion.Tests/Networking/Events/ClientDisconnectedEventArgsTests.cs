@@ -1,5 +1,7 @@
 ﻿using System;
 using FluentAssertions;
+using Moq;
+using Orion.Networking;
 using Orion.Networking.Events;
 using Xunit;
 
@@ -14,7 +16,7 @@ namespace Orion.Tests.Networking.Events {
 
         [Fact]
         public void GetClient_IsCorrect() {
-            var client = new Terraria.RemoteClient();
+            var client = new Mock<IClient>().Object;
             var args = new ClientDisconnectedEventArgs(client);
 
             args.Client.Should().BeSameAs(client);

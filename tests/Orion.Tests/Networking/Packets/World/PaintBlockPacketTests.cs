@@ -14,8 +14,8 @@ namespace Orion.Tests.Networking.Packets.World {
             using (var stream = new MemoryStream(PaintBlockBytes)) {
                 var packet = (PaintBlockPacket)Packet.ReadFromStream(stream, PacketContext.Server);
 
-                packet.TileX.Should().Be(256);
-                packet.TileY.Should().Be(100);
+                packet.BlockX.Should().Be(256);
+                packet.BlockY.Should().Be(100);
                 packet.BlockColor.Should().Be(PaintColor.Red);
             }
         }
