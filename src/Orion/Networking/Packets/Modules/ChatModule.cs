@@ -1,10 +1,11 @@
-﻿using System.IO;
+﻿using System.Diagnostics.CodeAnalysis;
+using System.IO;
 using Microsoft.Xna.Framework;
 using Orion.Networking.Packets.Extensions;
 
 namespace Orion.Networking.Packets.Modules {
     /// <summary>
-    /// Module sent for chat purposes.
+    /// Module sent for chat.
     /// </summary>
     public sealed class ChatModule : Module {
         /// <summary>
@@ -32,9 +33,10 @@ namespace Orion.Networking.Packets.Modules {
         /// </summary>
         public Color ServerChatColor { get; set; }
 
-        private protected override ModuleType ModuleType => ModuleType.Chat;
+        private protected override ModuleType Type => ModuleType.Chat;
 
         /// <inheritdoc />
+        [ExcludeFromCodeCoverage]
         public override string ToString() {
             var beginning = $"{nameof(ModuleType.Chat)}[";
             if (ClientChatCommand != null) {

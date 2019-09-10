@@ -10,10 +10,11 @@ namespace Orion.Networking.Packets.Modules {
     public abstract class Module {
         private static readonly IDictionary<ModuleType, Func<Module>> ModuleConstructors =
             new Dictionary<ModuleType, Func<Module>> {
+                [ModuleType.LiquidChanges] = () => new LiquidChangesModule(),
                 [ModuleType.Chat] = () => new ChatModule(),
             };
         
-        private protected abstract ModuleType ModuleType { get; }
+        private protected abstract ModuleType Type { get; }
 
         /// <summary>
         /// Reads a module from the given stream with the specified context.
@@ -47,7 +48,7 @@ namespace Orion.Networking.Packets.Modules {
             }
 
             using (var writer = new BinaryWriter(stream, Encoding.UTF8, true)) {
-                writer.Write((ushort)ModuleType);
+                writer.Write((ushort)Type);
                 WriteToWriter(writer, context);
             }
         }
