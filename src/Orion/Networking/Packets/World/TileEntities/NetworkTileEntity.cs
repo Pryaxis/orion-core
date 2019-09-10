@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using Orion.Utils;
 using Orion.World.TileEntities;
@@ -33,6 +34,10 @@ namespace Orion.Networking.Packets.World.TileEntities {
             tileEntity.ReadFromReader(reader, shouldIncludeIndex);
             return tileEntity;
         }
+
+        /// <inheritdoc />
+        [ExcludeFromCodeCoverage]
+        public override string ToString() => $"{Type} @ ({X}, {Y})";
 
         private void ReadFromReader(BinaryReader reader, bool shouldIncludeIndex) {
             if (shouldIncludeIndex) {

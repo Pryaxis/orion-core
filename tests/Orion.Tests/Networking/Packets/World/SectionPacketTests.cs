@@ -11,7 +11,7 @@ namespace Orion.Tests.Networking.Packets.World {
         [Fact]
         public void SetTiles_NullValue_ThrowsArgumentNullException() {
             var packet = new SectionPacket();
-            Action action = () => packet.Tiles = null;
+            Action action = () => packet.SectionTiles = null;
 
             action.Should().Throw<ArgumentNullException>();
         }
@@ -112,16 +112,16 @@ namespace Orion.Tests.Networking.Packets.World {
             using (var stream = new MemoryStream(SectionBytes)) {
                 var packet = (SectionPacket)Packet.ReadFromStream(stream, PacketContext.Server);
 
-                packet.IsCompressed.Should().BeTrue();
-                packet.StartX.Should().Be(4200);
-                packet.StartY.Should().Be(300);
-                packet.Width.Should().Be(200);
-                packet.Height.Should().Be(150);
-                packet.Tiles.GetLength(0).Should().Be(200);
-                packet.Tiles.GetLength(1).Should().Be(150);
-                packet.Chests.Should().HaveCount(2);
-                packet.Signs.Should().HaveCount(1);
-                packet.TileEntities.Should().HaveCount(4);
+                packet.IsSectionCompressed.Should().BeTrue();
+                packet.StartTileX.Should().Be(4200);
+                packet.StartTileY.Should().Be(300);
+                packet.SectionWidth.Should().Be(200);
+                packet.SectionHeight.Should().Be(150);
+                packet.SectionTiles.GetLength(0).Should().Be(200);
+                packet.SectionTiles.GetLength(1).Should().Be(150);
+                packet.SectionChests.Should().HaveCount(2);
+                packet.SectionSigns.Should().HaveCount(1);
+                packet.SectionTileEntities.Should().HaveCount(4);
             }
         }
 

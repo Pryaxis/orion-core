@@ -27,7 +27,7 @@ namespace Orion.Networking.Packets.Misc {
 
         /// <inheritdoc />
         [ExcludeFromCodeCoverage]
-        public override string ToString() => $"{Type}[{Number}, C={NumberColor}, ...]";
+        public override string ToString() => $"{Type}[{Number} ({NumberColor}) @ {NumberPosition}]";
 
         private protected override void ReadFromReader(BinaryReader reader, PacketContext context) {
             NumberPosition = reader.ReadVector2();

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using Orion.Players;
 
@@ -18,6 +19,10 @@ namespace Orion.Networking.Packets.Npcs {
         public Buff[] NpcBuffs { get; } = new Buff[Terraria.NPC.maxBuffs];
 
         private protected override PacketType Type => PacketType.NpcBuffs;
+
+        /// <inheritdoc />
+        [ExcludeFromCodeCoverage]
+        public override string ToString() => $"{Type}[...]";
 
         private protected override void ReadFromReader(BinaryReader reader, PacketContext context) {
             NpcIndex = reader.ReadInt16();

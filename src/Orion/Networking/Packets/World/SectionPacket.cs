@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.IO.Compression;
 using System.Text;
@@ -13,62 +14,67 @@ namespace Orion.Networking.Packets.World {
     /// <see cref="RequestSectionPacket"/>.
     /// </summary>
     public sealed class SectionPacket : Packet {
-        private NetworkTile[,] _tiles;
+        private NetworkTile[,] _sectionTiles;
 
         /// <summary>
-        /// Gets or sets a value indicating whether the section data is compressed.
+        /// Gets or sets a value indicating whether the section is compressed.
         /// </summary>
-        public bool IsCompressed { get; set; }
+        public bool IsSectionCompressed { get; set; }
 
         /// <summary>
-        /// Gets or sets the starting X coordinate.
+        /// Gets or sets the starting tile's X coordinate.
         /// </summary>
-        public int StartX { get; set; }
+        public int StartTileX { get; set; }
 
         /// <summary>
-        /// Gets or sets the starting Y coordinate.
+        /// Gets or sets the starting tile's Y coordinate.
         /// </summary>
-        public int StartY { get; set; }
+        public int StartTileY { get; set; }
 
         /// <summary>
-        /// Gets or sets the width.
+        /// Gets or sets the section's width.
         /// </summary>
-        public short Width { get; set; }
+        public short SectionWidth { get; set; }
 
         /// <summary>
-        /// Gets or sets the height.
+        /// Gets or sets the section's height.
         /// </summary>
-        public short Height { get; set; }
+        public short SectionHeight { get; set; }
 
         /// <summary>
-        /// Gets or sets the tiles.
+        /// Gets or sets the section's tiles.
         /// </summary>
         /// <exception cref="ArgumentNullException"><paramref name="value"/> is <c>null</c>.</exception>
-        public NetworkTile[,] Tiles {
-            get => _tiles;
-            set => _tiles = value ?? throw new ArgumentNullException(nameof(value));
+        public NetworkTile[,] SectionTiles {
+            get => _sectionTiles;
+            set => _sectionTiles = value ?? throw new ArgumentNullException(nameof(value));
         }
 
         /// <summary>
-        /// Gets the chests.
+        /// Gets the section's chests.
         /// </summary>
-        public IList<NetChest> Chests { get; } = new List<NetChest>();
+        public IList<NetChest> SectionChests { get; } = new List<NetChest>();
 
         /// <summary>
-        /// Gets the signs.
+        /// Gets the section's signs.
         /// </summary>
-        public IList<NetSign> Signs { get; } = new List<NetSign>();
+        public IList<NetSign> SectionSigns { get; } = new List<NetSign>();
 
         /// <summary>
-        /// Gets the tile entities.
+        /// Gets the section's tile entities.
         /// </summary>
-        public IList<NetworkTileEntity> TileEntities { get; } = new List<NetworkTileEntity>();
+        public IList<NetworkTileEntity> SectionTileEntities { get; } = new List<NetworkTileEntity>();
 
         private protected override PacketType Type => PacketType.Section;
 
+        /// <inheritdoc />
+        [ExcludeFromCodeCoverage]
+        public override string ToString() =>
+            $"{Type}[{SectionWidth}x{SectionHeight} @ ({StartTileX}, {StartTileY}), ...]";
+
         private protected override void ReadFromReader(BinaryReader reader, PacketContext context) {
-            IsCompressed = reader.ReadByte() == 1;
-            if (!IsCompressed) {
+            IsSectionCompressed = reader.ReadByte() == 1;
+            if (!IsSectionCompressed) {
                 ReadFromReaderImpl(reader);
                 return;
             }
@@ -80,8 +86,8 @@ namespace Orion.Networking.Packets.World {
         }
 
         private protected override void WriteToWriter(BinaryWriter writer, PacketContext context) {
-            writer.Write(IsCompressed);
-            if (!IsCompressed) {
+            writer.Write(IsSectionCompressed);
+            if (!IsSectionCompressed) {
                 WriteToWriterImpl(writer);
                 return;
             }
@@ -101,11 +107,11 @@ namespace Orion.Networking.Packets.World {
         }
 
         private void ReadFromReaderImpl(BinaryReader reader) {
-            StartX = reader.ReadInt32();
-            StartY = reader.ReadInt32();
-            Width = reader.ReadInt16();
-            Height = reader.ReadInt16();
-            Tiles = new NetworkTile[Width, Height];
+            StartTileX = reader.ReadInt32();
+            StartTileY = reader.ReadInt32();
+            SectionWidth = reader.ReadInt16();
+            SectionHeight = reader.ReadInt16();
+            SectionTiles = new NetworkTile[SectionWidth, SectionHeight];
 
             ReadTilesFromReaderImpl(reader);
             ReadChestsFromReaderImpl(reader);
@@ -176,12 +182,12 @@ namespace Orion.Networking.Packets.World {
 
             NetworkTile previousTile = null;
             var runLength = 0;
-            for (int y = 0; y < Height; ++y) {
-                for (int x = 0; x < Width; ++x) {
+            for (int y = 0; y < SectionHeight; ++y) {
+                for (int x = 0; x < SectionWidth; ++x) {
                     if (runLength > 0) {
                         --runLength;
-                        Tiles[x, y] = new NetworkTile();
-                        ((ITile)Tiles[x, y]).CopyFrom(previousTile);
+                        SectionTiles[x, y] = new NetworkTile();
+                        ((ITile)SectionTiles[x, y]).CopyFrom(previousTile);
                         continue;
                     }
 
@@ -190,7 +196,7 @@ namespace Orion.Networking.Packets.World {
                     byte header3 = (header2 & 1) == 1 ? reader.ReadByte() : (byte)0;
 
                     var tile = ReadTile(header, header2, header3);
-                    Tiles[x, y] = tile;
+                    SectionTiles[x, y] = tile;
                     runLength = ReadRunLength(header);
                     previousTile = tile;
                 }
@@ -200,7 +206,7 @@ namespace Orion.Networking.Packets.World {
         private void ReadChestsFromReaderImpl(BinaryReader reader) {
             var numberOfChests = reader.ReadInt16();
             for (var i = 0; i < numberOfChests; ++i) {
-                Chests.Add(new NetChest {
+                SectionChests.Add(new NetChest {
                     Index = reader.ReadInt16(),
                     X = reader.ReadInt16(),
                     Y = reader.ReadInt16(),
@@ -212,7 +218,7 @@ namespace Orion.Networking.Packets.World {
         private void ReadSignsFromReaderImpl(BinaryReader reader) {
             var numberOfSigns = reader.ReadInt16();
             for (var i = 0; i < numberOfSigns; ++i) {
-                Signs.Add(new NetSign {
+                SectionSigns.Add(new NetSign {
                     Index = reader.ReadInt16(),
                     X = reader.ReadInt16(),
                     Y = reader.ReadInt16(),
@@ -224,15 +230,15 @@ namespace Orion.Networking.Packets.World {
         private void ReadTileEntitiesFromReaderImpl(BinaryReader reader) {
             var numberOfTileEntities = reader.ReadInt16();
             for (var i = 0; i < numberOfTileEntities; ++i) {
-                TileEntities.Add(NetworkTileEntity.FromReader(reader, true));
+                SectionTileEntities.Add(NetworkTileEntity.FromReader(reader, true));
             }
         }
 
         private void WriteToWriterImpl(BinaryWriter writer) {
-            writer.Write(StartX);
-            writer.Write(StartY);
-            writer.Write(Width);
-            writer.Write(Height);
+            writer.Write(StartTileX);
+            writer.Write(StartTileY);
+            writer.Write(SectionWidth);
+            writer.Write(SectionHeight);
 
             WriteTilesToWriterImpl(writer);
             WriteChestsToWriterImpl(writer);
@@ -330,9 +336,9 @@ namespace Orion.Networking.Packets.World {
                 runLength = 0;
             }
 
-            for (int y = 0; y < Height; ++y) {
-                for (int x = 0; x < Width; ++x) {
-                    var tile = Tiles[x, y];
+            for (int y = 0; y < SectionHeight; ++y) {
+                for (int x = 0; x < SectionWidth; ++x) {
+                    var tile = SectionTiles[x, y];
                     if (((ITile)tile).isTheSameAs(previousTile)) {
                         ++runLength;
                         continue;
@@ -351,8 +357,8 @@ namespace Orion.Networking.Packets.World {
         }
 
         private void WriteChestsToWriterImpl(BinaryWriter writer) {
-            writer.Write((short)Chests.Count);
-            foreach (var chest in Chests) {
+            writer.Write((short)SectionChests.Count);
+            foreach (var chest in SectionChests) {
                 writer.Write((short)chest.Index);
                 writer.Write((short)chest.X);
                 writer.Write((short)chest.Y);
@@ -361,8 +367,8 @@ namespace Orion.Networking.Packets.World {
         }
 
         private void WriteSignsToWriterImpl(BinaryWriter writer) {
-            writer.Write((short)Signs.Count);
-            foreach (var sign in Signs) {
+            writer.Write((short)SectionSigns.Count);
+            foreach (var sign in SectionSigns) {
                 writer.Write((short)sign.Index);
                 writer.Write((short)sign.X);
                 writer.Write((short)sign.Y);
@@ -371,8 +377,8 @@ namespace Orion.Networking.Packets.World {
         }
 
         private void WriteTileEntitiesToWriterImpl(BinaryWriter writer) {
-            writer.Write((short)TileEntities.Count);
-            foreach (var tileEntity in TileEntities) {
+            writer.Write((short)SectionTileEntities.Count);
+            foreach (var tileEntity in SectionTileEntities) {
                 switch (tileEntity) {
                 case NetworkTargetDummy targetDummy:
                     writer.Write((byte)0);

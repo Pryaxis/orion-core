@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿using System.Diagnostics.CodeAnalysis;
+using System.IO;
 
 namespace Orion.Networking.Packets.Projectiles {
     /// <summary>
@@ -33,6 +34,7 @@ namespace Orion.Networking.Packets.Projectiles {
         /// <summary>
         /// Gets or sets the ammo type.
         /// </summary>
+        // TODO: implement an enum for this.
         public short AmmoType { get; set; }
 
         /// <summary>
@@ -41,6 +43,11 @@ namespace Orion.Networking.Packets.Projectiles {
         public byte ShooterPlayerIndex { get; set; }
 
         private protected override PacketType Type => PacketType.CannonShot;
+
+        /// <inheritdoc />
+        [ExcludeFromCodeCoverage]
+        public override string ToString() =>
+            $"{Type}[#={ShooterPlayerIndex}, {AmmoType} @ ({CannonTileX}, {CannonTileY}), ...]";
 
         private protected override void ReadFromReader(BinaryReader reader, PacketContext context) {
             Damage = reader.ReadInt16();

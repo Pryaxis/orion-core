@@ -13,8 +13,8 @@ namespace Orion.Tests.Networking.Packets.World {
             using (var stream = new MemoryStream(ToggleGemLockBytes)) {
                 var packet = (ToggleGemLockPacket)Packet.ReadFromStream(stream, PacketContext.Server);
 
-                packet.GemLockTileX.Should().Be(256);
-                packet.GemLockTileY.Should().Be(100);
+                packet.GemLockX.Should().Be(256);
+                packet.GemLockY.Should().Be(100);
                 packet.IsGemLockLocked.Should().BeTrue();
             }
         }

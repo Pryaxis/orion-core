@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿using System.Diagnostics.CodeAnalysis;
+using System.IO;
 using Orion.Items;
 
 namespace Orion.Networking.Packets.World.TileEntities {
@@ -32,6 +33,12 @@ namespace Orion.Networking.Packets.World.TileEntities {
         public short ItemStackSize { get; set; }
 
         private protected override PacketType Type => PacketType.ItemFrame;
+
+        /// <inheritdoc />
+        [ExcludeFromCodeCoverage]
+        public override string ToString() =>
+            $"{Type}[({ItemFrameX}, {ItemFrameY}) is " +
+            $"{(ItemPrefix != ItemPrefix.None ? ItemPrefix + " " : "")}{ItemType} x{ItemStackSize}]";
 
         private protected override void ReadFromReader(BinaryReader reader, PacketContext context) {
             ItemFrameX = reader.ReadInt16();

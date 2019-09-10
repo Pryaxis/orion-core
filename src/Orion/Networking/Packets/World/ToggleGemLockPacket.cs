@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿using System.Diagnostics.CodeAnalysis;
+using System.IO;
 
 namespace Orion.Networking.Packets.World {
     /// <summary>
@@ -6,14 +7,14 @@ namespace Orion.Networking.Packets.World {
     /// </summary>
     public sealed class ToggleGemLockPacket : Packet {
         /// <summary>
-        /// Gets or sets the gem lock tile's X coordinate.
+        /// Gets or sets the gem lock's X coordinate.
         /// </summary>
-        public short GemLockTileX { get; set; }
+        public short GemLockX { get; set; }
 
         /// <summary>
-        /// Gets or sets the gem lock tile's Y coordinate.
+        /// Gets or sets the gem lock's Y coordinate.
         /// </summary>
-        public short GemLockTileY { get; set; }
+        public short GemLockY { get; set; }
 
         /// <summary>
         /// Gets or sets a value indicating whether the gem lock is locked.
@@ -22,15 +23,19 @@ namespace Orion.Networking.Packets.World {
 
         private protected override PacketType Type => PacketType.ToggleGemLock;
 
+        /// <inheritdoc />
+        [ExcludeFromCodeCoverage]
+        public override string ToString() => $"{Type}[{IsGemLockLocked} @ ({GemLockX}, {GemLockY})]";
+
         private protected override void ReadFromReader(BinaryReader reader, PacketContext context) {
-            GemLockTileX = reader.ReadInt16();
-            GemLockTileY = reader.ReadInt16();
+            GemLockX = reader.ReadInt16();
+            GemLockY = reader.ReadInt16();
             IsGemLockLocked = reader.ReadBoolean();
         }
 
         private protected override void WriteToWriter(BinaryWriter writer, PacketContext context) {
-            writer.Write(GemLockTileX);
-            writer.Write(GemLockTileY);
+            writer.Write(GemLockX);
+            writer.Write(GemLockY);
             writer.Write(IsGemLockLocked);
         }
     }

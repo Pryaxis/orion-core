@@ -20,7 +20,7 @@ namespace Orion.Networking.Packets.Items {
 
         /// <inheritdoc />
         [ExcludeFromCodeCoverage]
-        public override string ToString() => $"{Type}[#={ItemIndex}, O={OwnerPlayerIndex}]";
+        public override string ToString() => $"{Type}[#={ItemIndex}, P={OwnerPlayerIndex}]";
 
         private protected override void ReadFromReader(BinaryReader reader, PacketContext context) {
             ItemIndex = reader.ReadInt16();

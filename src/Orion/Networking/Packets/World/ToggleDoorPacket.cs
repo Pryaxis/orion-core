@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿using System.Diagnostics.CodeAnalysis;
+using System.IO;
 
 namespace Orion.Networking.Packets.World {
     /// <summary>
@@ -26,6 +27,10 @@ namespace Orion.Networking.Packets.World {
         public bool ToggleDirection { get; set; }
 
         private protected override PacketType Type => PacketType.ToggleDoor;
+
+        /// <inheritdoc />
+        [ExcludeFromCodeCoverage]
+        public override string ToString() => $"{Type}[{ToggleType} @ ({DoorX}, {DoorY}), ...]";
 
         private protected override void ReadFromReader(BinaryReader reader, PacketContext context) {
             ToggleType = (DoorToggleType)reader.ReadByte();

@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿using System.Diagnostics.CodeAnalysis;
+using System.IO;
 
 namespace Orion.Networking.Packets.Players {
     /// <summary>
@@ -16,6 +17,10 @@ namespace Orion.Networking.Packets.Players {
         public short HealAmount { get; set; }
 
         private protected override PacketType Type => PacketType.HealPlayer;
+
+        /// <inheritdoc />
+        [ExcludeFromCodeCoverage]
+        public override string ToString() => $"{Type}[#={PlayerIndex} by {HealAmount}, ...]";
 
         /// <inheritdoc />
         private protected override void ReadFromReader(BinaryReader reader, PacketContext context) {

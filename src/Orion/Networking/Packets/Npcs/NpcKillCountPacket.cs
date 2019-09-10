@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿using System.Diagnostics.CodeAnalysis;
+using System.IO;
 using Orion.Npcs;
 
 namespace Orion.Networking.Packets.Npcs {
@@ -17,6 +18,10 @@ namespace Orion.Networking.Packets.Npcs {
         public int NpcTypeKillCount { get; set; }
 
         private protected override PacketType Type => PacketType.NpcKillCount;
+
+        /// <inheritdoc />
+        [ExcludeFromCodeCoverage]
+        public override string ToString() => $"{Type}[{NpcTypeKillCount}x {NpcType}]";
 
         /// <inheritdoc />
         private protected override void ReadFromReader(BinaryReader reader, PacketContext context) {

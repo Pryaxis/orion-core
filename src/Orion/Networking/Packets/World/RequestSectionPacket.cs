@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿using System.Diagnostics.CodeAnalysis;
+using System.IO;
 
 namespace Orion.Networking.Packets.World {
     /// <summary>
@@ -16,6 +17,10 @@ namespace Orion.Networking.Packets.World {
         public int SectionY { get; set; }
 
         private protected override PacketType Type => PacketType.RequestSection;
+
+        /// <inheritdoc />
+        [ExcludeFromCodeCoverage]
+        public override string ToString() => $"{Type}[({SectionX}, {SectionY})]";
 
         private protected override void ReadFromReader(BinaryReader reader, PacketContext context) {
             SectionX = reader.ReadInt32();

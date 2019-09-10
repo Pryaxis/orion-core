@@ -20,7 +20,7 @@ namespace Orion.Networking.Packets.Misc {
 
         /// <inheritdoc />
         [ExcludeFromCodeCoverage]
-        public override string ToString() => $"{Type}[#={PlayerOrNpcIndex}, A={Action}]";
+        public override string ToString() => $"{Type}[{Action} by #={PlayerOrNpcIndex}]";
 
         private protected override void ReadFromReader(BinaryReader reader, PacketContext context) {
             PlayerOrNpcIndex = reader.ReadByte();

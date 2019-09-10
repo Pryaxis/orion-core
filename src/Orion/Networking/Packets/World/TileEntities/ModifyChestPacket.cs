@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿using System.Diagnostics.CodeAnalysis;
+using System.IO;
 
 namespace Orion.Networking.Packets.World.TileEntities {
     /// <summary>
@@ -31,6 +32,10 @@ namespace Orion.Networking.Packets.World.TileEntities {
         public short ChestIndex { get; set; }
 
         private protected override PacketType Type => PacketType.ModifyChest;
+
+        /// <inheritdoc />
+        [ExcludeFromCodeCoverage]
+        public override string ToString() => $"{Type}[{ModificationType}, #={ChestIndex} @ ({ChestX}, {ChestY}), ...]";
 
         private protected override void ReadFromReader(BinaryReader reader, PacketContext context) {
             ModificationType = (ChestModificationType)reader.ReadByte();

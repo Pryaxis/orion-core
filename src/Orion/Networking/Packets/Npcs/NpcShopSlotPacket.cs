@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿using System.Diagnostics.CodeAnalysis;
+using System.IO;
 using Orion.Items;
 
 namespace Orion.Networking.Packets.Npcs {
@@ -32,6 +33,10 @@ namespace Orion.Networking.Packets.Npcs {
         public int ItemValue { get; set; }
 
         private protected override PacketType Type => PacketType.NpcShopSlot;
+
+        /// <inheritdoc />
+        [ExcludeFromCodeCoverage]
+        public override string ToString() => $"{Type}[{ItemType} @ {NpcShopSlotIndex}, ...]";
 
         private protected override void ReadFromReader(BinaryReader reader, PacketContext context) {
             NpcShopSlotIndex = reader.ReadByte();

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Orion.Players {
     /// <summary>
@@ -29,5 +30,9 @@ namespace Orion.Players {
             BuffType = buffType;
             Duration = duration;
         }
+
+        /// <inheritdoc />
+        [ExcludeFromCodeCoverage]
+        public override string ToString() => $"({BuffType}, {Duration})";
     }
 }

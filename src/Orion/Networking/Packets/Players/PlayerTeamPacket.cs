@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿using System.Diagnostics.CodeAnalysis;
+using System.IO;
 using Orion.Players;
 
 namespace Orion.Networking.Packets.Players {
@@ -17,6 +18,10 @@ namespace Orion.Networking.Packets.Players {
         public PlayerTeam PlayerTeam { get; set; }
 
         private protected override PacketType Type => PacketType.PlayerTeam;
+
+        /// <inheritdoc />
+        [ExcludeFromCodeCoverage]
+        public override string ToString() => $"{Type}[#={PlayerIndex} is {PlayerTeam}]";
 
         private protected override void ReadFromReader(BinaryReader reader, PacketContext context) {
             PlayerIndex = reader.ReadByte();

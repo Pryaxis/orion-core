@@ -5,28 +5,27 @@ using Orion.Networking.Packets.Players;
 using Xunit;
 
 namespace Orion.Tests.Networking.Packets.Players {
-    public class ShowHealEffectPacketTests {
-        private static readonly byte[] ShowHealEffectBytes = {6, 0, 35, 0, 100, 0,};
+    public class PlayerAnglerQuestsPacketTests {
+        public static readonly byte[] PlayerAnglerQuestsBytes = {7, 0, 76, 1, 1, 0, 0,};
 
         [Fact]
         public void ReadFromStream_IsCorrect() {
-            using (var stream = new MemoryStream(ShowHealEffectBytes)) {
-                var packet = (ShowHealEffectPacket)Packet.ReadFromStream(stream, PacketContext.Server);
+            using (var stream = new MemoryStream(PlayerAnglerQuestsBytes)) {
+                var packet = (PlayerAnglerQuestsPacket)Packet.ReadFromStream(stream, PacketContext.Server);
 
-                packet.PlayerIndex.Should().Be(0);
-                packet.HealAmount.Should().Be(100);
+                packet.PlayerNumberOfAnglerQuestsCompleted.Should().Be(257);
             }
         }
 
         [Fact]
         public void WriteToStream_IsCorrect() {
-            using (var stream = new MemoryStream(ShowHealEffectBytes))
+            using (var stream = new MemoryStream(PlayerAnglerQuestsBytes))
             using (var stream2 = new MemoryStream()) {
                 var packet = Packet.ReadFromStream(stream, PacketContext.Server);
 
                 packet.WriteToStream(stream2, PacketContext.Server);
 
-                stream2.ToArray().Should().BeEquivalentTo(ShowHealEffectBytes);
+                stream2.ToArray().Should().BeEquivalentTo(PlayerAnglerQuestsBytes);
             }
         }
     }

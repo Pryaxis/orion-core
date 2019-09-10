@@ -15,7 +15,7 @@ namespace Orion.Tests.Networking.Packets.Npcs {
                 var packet = (TeleportNpcPortalPacket)Packet.ReadFromStream(stream, PacketContext.Server);
 
                 packet.NpcIndex.Should().Be(100);
-                packet.PortalId.Should().Be(2);
+                packet.PortalIndex.Should().Be(2);
                 packet.NewNpcPosition.Should().Be(Vector2.Zero);
                 packet.NewNpcVelocity.Should().Be(Vector2.Zero);
             }

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using Orion.Networking.Packets.Connections;
 using Orion.World;
@@ -402,6 +403,10 @@ namespace Orion.Networking.Packets.World {
         public float SandstormIntensity { get; set; }
 
         private protected override PacketType Type => PacketType.WorldInfo;
+
+        /// <inheritdoc />
+        [ExcludeFromCodeCoverage]
+        public override string ToString() => $"{Type}[{WorldName}, ...]";
 
         private protected override void ReadFromReader(BinaryReader reader, PacketContext context) {
             Time = reader.ReadInt32();

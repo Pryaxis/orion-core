@@ -1,4 +1,7 @@
-﻿using System.IO;
+﻿using System.Diagnostics.CodeAnalysis;
+using System.IO;
+using Microsoft.Xna.Framework;
+using Orion.Players;
 
 namespace Orion.Networking.Packets.Players {
     /// <summary>
@@ -6,6 +9,11 @@ namespace Orion.Networking.Packets.Players {
     /// </summary>
     public sealed class TeleportationPotionPacket : Packet {
         private protected override PacketType Type => PacketType.TeleportationPotion;
+
+        /// <inheritdoc />
+        [ExcludeFromCodeCoverage]
+        public override string ToString() => $"{Type}";
+
         private protected override void ReadFromReader(BinaryReader reader, PacketContext context) { }
         private protected override void WriteToWriter(BinaryWriter writer, PacketContext context) { }
     }

@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿using System.Diagnostics.CodeAnalysis;
+using System.IO;
 using Microsoft.Xna.Framework;
 using Orion.Networking.Packets.Extensions;
 
@@ -88,6 +89,10 @@ namespace Orion.Networking.Packets.Players {
         public Vector2 PlayerVelocity { get; set; }
 
         private protected override PacketType Type => PacketType.PlayerInfo;
+
+        /// <inheritdoc />
+        [ExcludeFromCodeCoverage]
+        public override string ToString() => $"{Type}[#={PlayerIndex} @ {PlayerPosition}, ...]";
 
         private protected override void ReadFromReader(BinaryReader reader, PacketContext context) {
             PlayerIndex = reader.ReadByte();

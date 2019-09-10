@@ -16,7 +16,7 @@ namespace Orion.Networking.Packets.Misc {
 
         /// <inheritdoc />
         [ExcludeFromCodeCoverage]
-        public override string ToString() => $"{Type}[...]";
+        public override string ToString() => $"{Type}[({SmokePosition})]";
 
         private protected override void ReadFromReader(BinaryReader reader, PacketContext context) {
             SmokePosition = new HalfVector2 {

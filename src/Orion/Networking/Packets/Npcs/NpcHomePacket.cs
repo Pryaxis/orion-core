@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿using System.Diagnostics.CodeAnalysis;
+using System.IO;
 
 namespace Orion.Networking.Packets.Npcs {
     /// <summary>
@@ -26,6 +27,10 @@ namespace Orion.Networking.Packets.Npcs {
         public bool IsNpcHomeless { get; set; }
 
         private protected override PacketType Type => PacketType.NpcHome;
+
+        /// <inheritdoc />
+        [ExcludeFromCodeCoverage]
+        public override string ToString() => $"{Type}[#={NpcIndex} @ ({NpcHomeX}, {NpcHomeY}), ...]";
 
         private protected override void ReadFromReader(BinaryReader reader, PacketContext context) {
             NpcIndex = reader.ReadInt16();

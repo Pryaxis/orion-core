@@ -32,7 +32,8 @@ namespace Orion.Networking.Packets.Misc {
 
         /// <inheritdoc />
         [ExcludeFromCodeCoverage]
-        public override string ToString() => $"{Type}[#={PlayerOrNpcIndex}, T={TeleportationType}, ...]";
+        public override string ToString() =>
+            $"{Type}[#={PlayerOrNpcIndex} to {Position} ({TeleportationType}_{TeleportationStyle})]";
 
         private protected override void ReadFromReader(BinaryReader reader, PacketContext context) {
             var header = reader.ReadByte();

@@ -1,10 +1,11 @@
-﻿using System.IO;
+﻿using System.Diagnostics.CodeAnalysis;
+using System.IO;
 
 namespace Orion.Networking.Packets.Players {
     /// <summary>
     /// Packet sent to show a heal effect on a player.
     /// </summary>
-    public sealed class ShowHealEffectPacket : Packet {
+    public sealed class HealEffectPacket : Packet {
         /// <summary>
         /// Gets or sets the player index.
         /// </summary>
@@ -15,7 +16,11 @@ namespace Orion.Networking.Packets.Players {
         /// </summary>
         public short HealAmount { get; set; }
 
-        private protected override PacketType Type => PacketType.ShowHealEffect;
+        private protected override PacketType Type => PacketType.HealEffect;
+
+        /// <inheritdoc />
+        [ExcludeFromCodeCoverage]
+        public override string ToString() => $"{Type}[#={PlayerIndex} for {HealAmount}]";
 
         /// <inheritdoc />
         private protected override void ReadFromReader(BinaryReader reader, PacketContext context) {

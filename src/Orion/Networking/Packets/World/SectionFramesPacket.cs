@@ -5,7 +5,7 @@ namespace Orion.Networking.Packets.World {
     /// Packet sent from the server to the client to synchronize tile frames. This is sent following every
     /// <see cref="SectionPacket"/>.
     /// </summary>
-    public sealed class SyncTileFramesPacket : Packet {
+    public sealed class SectionFramesPacket : Packet {
         /// <summary>
         /// Gets or sets the starting section's X coordinate.
         /// </summary>
@@ -26,7 +26,7 @@ namespace Orion.Networking.Packets.World {
         /// </summary>
         public short EndSectionY { get; set; }
 
-        private protected override PacketType Type => PacketType.SyncTileFrames;
+        private protected override PacketType Type => PacketType.SectionFrames;
 
         private protected override void ReadFromReader(BinaryReader reader, PacketContext context) {
             StartSectionX = reader.ReadInt16();

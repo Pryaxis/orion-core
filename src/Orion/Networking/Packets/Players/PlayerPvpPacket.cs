@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿using System.Diagnostics.CodeAnalysis;
+using System.IO;
 
 namespace Orion.Networking.Packets.Players {
     /// <summary>
@@ -16,6 +17,10 @@ namespace Orion.Networking.Packets.Players {
         public bool PlayerIsInPvp { get; set; }
 
         private protected override PacketType Type => PacketType.PlayerPvp;
+
+        /// <inheritdoc />
+        [ExcludeFromCodeCoverage]
+        public override string ToString() => $"{Type}[#={PlayerIndex}, {PlayerIsInPvp}]";
 
         private protected override void ReadFromReader(BinaryReader reader, PacketContext context) {
             PlayerIndex = reader.ReadByte();

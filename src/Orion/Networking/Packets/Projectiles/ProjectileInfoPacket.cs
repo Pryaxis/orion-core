@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿using System.Diagnostics.CodeAnalysis;
+using System.IO;
 using Microsoft.Xna.Framework;
 using Orion.Networking.Packets.Extensions;
 using Orion.Projectiles;
@@ -54,6 +55,10 @@ namespace Orion.Networking.Packets.Projectiles {
         public short ProjectileUuid { get; set; } = -1;
 
         private protected override PacketType Type => PacketType.ProjectileInfo;
+
+        /// <inheritdoc />
+        [ExcludeFromCodeCoverage]
+        public override string ToString() => $"{Type}[#={ProjectileIdentity}, {ProjectileType} @ ({ProjectilePosition}), ...]";
 
         private protected override void ReadFromReader(BinaryReader reader, PacketContext context) {
             ProjectileIdentity = reader.ReadInt16();

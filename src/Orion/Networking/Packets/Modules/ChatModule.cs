@@ -40,9 +40,9 @@ namespace Orion.Networking.Packets.Modules {
         public override string ToString() {
             var beginning = $"{nameof(ModuleType.Chat)}[";
             if (ClientChatCommand != null) {
-                return beginning + $"C={ClientChatCommand}, T={ClientChatText}]";
+                return beginning + $"{ClientChatCommand}, T={ClientChatText}]";
             } else {
-                return beginning + $"P={ServerChattingPlayerIndex}, T={ServerChatText}, C={ServerChatColor}]";
+                return beginning + $"{ServerChatText}, #={ServerChattingPlayerIndex}, C={ServerChatColor}]";
             }
         }
 

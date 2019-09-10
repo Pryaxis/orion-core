@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿using System.Diagnostics.CodeAnalysis;
+using System.IO;
 
 namespace Orion.Networking.Packets.Npcs {
     /// <summary>
@@ -16,6 +17,10 @@ namespace Orion.Networking.Packets.Npcs {
         public byte DamagerPlayerIndex { get; set; }
 
         private protected override PacketType Type => PacketType.DamageNpcWithItem;
+
+        /// <inheritdoc />
+        [ExcludeFromCodeCoverage]
+        public override string ToString() => $"{Type}[#={NpcIndex} by P={DamagerPlayerIndex}]";
 
         private protected override void ReadFromReader(BinaryReader reader, PacketContext context) {
             NpcIndex = reader.ReadInt16();

@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿using System.Diagnostics.CodeAnalysis;
+using System.IO;
 using Microsoft.Xna.Framework;
 using Orion.Networking.Packets.Extensions;
 
@@ -13,9 +14,9 @@ namespace Orion.Networking.Packets.Npcs {
         public short NpcIndex { get; set; }
 
         /// <summary>
-        /// Gets or sets the portal ID.
+        /// Gets or sets the portal index.
         /// </summary>
-        public short PortalId { get; set; }
+        public short PortalIndex { get; set; }
 
         /// <summary>
         /// Gets or sets the NPC's new position.
@@ -29,16 +30,20 @@ namespace Orion.Networking.Packets.Npcs {
 
         private protected override PacketType Type => PacketType.TeleportNpcPortal;
 
+        /// <inheritdoc />
+        [ExcludeFromCodeCoverage]
+        public override string ToString() => $"{Type}[#={NpcIndex} @ {NewNpcPosition}, ...]";
+
         private protected override void ReadFromReader(BinaryReader reader, PacketContext context) {
             NpcIndex = reader.ReadInt16();
-            PortalId = reader.ReadInt16();
+            PortalIndex = reader.ReadInt16();
             NewNpcPosition = reader.ReadVector2();
             NewNpcVelocity = reader.ReadVector2();
         }
 
         private protected override void WriteToWriter(BinaryWriter writer, PacketContext context) {
             writer.Write(NpcIndex);
-            writer.Write(PortalId);
+            writer.Write(PortalIndex);
             writer.Write(NewNpcPosition);
             writer.Write(NewNpcVelocity);
         }

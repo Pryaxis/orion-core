@@ -43,7 +43,7 @@ namespace Orion.Networking.Packets.World {
 
         /// <inheritdoc />
         [ExcludeFromCodeCoverage]
-        public override string ToString() => $"{Type}[X={TileX}, Y={TileY}, S={SquareSize}]";
+        public override string ToString() => $"{Type}[{SquareSize}x{SquareSize} @ ({TileX}, {TileY}), ...]";
 
         private protected override void ReadFromReader(BinaryReader reader, PacketContext context) {
             var size = reader.ReadUInt16();

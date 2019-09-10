@@ -1,10 +1,11 @@
-﻿using System.IO;
+﻿using System.Diagnostics.CodeAnalysis;
+using System.IO;
 
 namespace Orion.Networking.Packets.World.TileEntities {
     /// <summary>
-    /// Packet sent to modify a tile entity.
+    /// Packet sent to set a tile entity's information.
     /// </summary>
-    public sealed class TileEntityPacket : Packet {
+    public sealed class TileEntityInfoPacket : Packet {
         /// <summary>
         /// Gets or sets the tile entity index.
         /// </summary>
@@ -15,7 +16,11 @@ namespace Orion.Networking.Packets.World.TileEntities {
         /// </summary>
         public NetworkTileEntity TileEntity { get; set; }
 
-        private protected override PacketType Type => PacketType.TileEntity;
+        private protected override PacketType Type => PacketType.TileEntityInfo;
+
+        /// <inheritdoc />
+        [ExcludeFromCodeCoverage]
+        public override string ToString() => $"{Type}[#={TileEntityIndex}, {TileEntity}]";
 
         private protected override void ReadFromReader(BinaryReader reader, PacketContext context) {
             TileEntityIndex = reader.ReadInt32();

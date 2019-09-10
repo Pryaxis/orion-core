@@ -37,20 +37,19 @@ namespace Orion.Networking.Packets.World {
         /// <inheritdoc />
         [ExcludeFromCodeCoverage]
         public override string ToString() {
-            var beginning = $"{Type}[M={ModificationType}, X={TileX}, Y={TileY}";
             switch (ModificationType) {
             case TileModificationType.DestroyBlock:
-                return beginning + $", F={ModificationData == 1}]";
+                return $"{Type}[{ModificationType} @ ({TileX}, {TileY}), {ModificationData == 1}]";
             case TileModificationType.PlaceBlock:
-                return beginning + $", B={(BlockType)ModificationData}, S={ModificationStyle}]";
+                return $"{Type}[{ModificationType}, {(BlockType)ModificationData}_{ModificationStyle} @ ({TileX}, {TileY})]";
             case TileModificationType.DestroyWall:
-                return beginning + $", F={ModificationData == 1}]";
+                return $"{Type}[{ModificationType} @ ({TileX}, {TileY}), {ModificationData == 1}]";
             case TileModificationType.PlaceWall:
-                return beginning + $", W={(WallType)ModificationData}]";
+                return $"{Type}[{ModificationType}, {(WallType)ModificationData} @ ({TileX}, {TileY})]";
             case TileModificationType.SlopeBlock:
-                return beginning + $", S={(SlopeType)ModificationData}]";
+                return $"{Type}[{ModificationType}, {(SlopeType)ModificationData} @ ({TileX}, {TileY})]";
             default:
-                return beginning + "]";
+                return $"{Type}[{ModificationType} @ ({TileX}, {TileY})]";
             }
         }
 

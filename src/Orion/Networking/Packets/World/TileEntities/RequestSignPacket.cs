@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿using System.Diagnostics.CodeAnalysis;
+using System.IO;
 
 namespace Orion.Networking.Packets.World.TileEntities {
     /// <summary>
@@ -16,6 +17,10 @@ namespace Orion.Networking.Packets.World.TileEntities {
         public short SignY { get; set; }
 
         private protected override PacketType Type => PacketType.RequestSign;
+
+        /// <inheritdoc />
+        [ExcludeFromCodeCoverage]
+        public override string ToString() => $"{Type}[({SignX}, {SignY})]";
 
         private protected override void ReadFromReader(BinaryReader reader, PacketContext context) {
             SignX = reader.ReadInt16();

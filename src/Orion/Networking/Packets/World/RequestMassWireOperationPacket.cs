@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿using System.Diagnostics.CodeAnalysis;
+using System.IO;
 
 namespace Orion.Networking.Packets.World {
     /// <summary>
@@ -31,6 +32,11 @@ namespace Orion.Networking.Packets.World {
         public MassWireOperations WireOperations { get; set; }
 
         private protected override PacketType Type => PacketType.RequestMassWireOperation;
+
+        /// <inheritdoc />
+        [ExcludeFromCodeCoverage]
+        public override string ToString() =>
+            $"{Type}[{WireOperations:F} from ({StartTileX}, {StartTileY}) to ({EndTileX}, {EndTileY})]";
 
         private protected override void ReadFromReader(BinaryReader reader, PacketContext context) {
             StartTileX = reader.ReadInt16();

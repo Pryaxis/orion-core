@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿using System.Diagnostics.CodeAnalysis;
+using System.IO;
 using Microsoft.Xna.Framework;
 using Orion.Networking.Packets.Extensions;
 
@@ -23,6 +24,10 @@ namespace Orion.Networking.Packets.Npcs {
         public Vector2 CoinPosition { get; set; }
 
         private protected override PacketType Type => PacketType.NpcStealCoins;
+
+        /// <inheritdoc />
+        [ExcludeFromCodeCoverage]
+        public override string ToString() => $"{Type}[#={NpcIndex}, V={NpcStolenValue} @ {CoinPosition}]";
 
         private protected override void ReadFromReader(BinaryReader reader, PacketContext context) {
             NpcIndex = reader.ReadInt16();

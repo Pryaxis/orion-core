@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using Orion.Players;
 
@@ -6,7 +7,7 @@ namespace Orion.Networking.Packets.Npcs {
     /// <summary>
     /// Packet sent to add a buff to a npc.
     /// </summary>
-    public sealed class AddBuffToNpcPacket : Packet {
+    public sealed class BuffNpcPacket : Packet {
         /// <summary>
         /// Gets or sets the npc index.
         /// </summary>
@@ -17,7 +18,11 @@ namespace Orion.Networking.Packets.Npcs {
         /// </summary>
         public Buff Buff { get; set; }
 
-        private protected override PacketType Type => PacketType.AddBuffToNpc;
+        private protected override PacketType Type => PacketType.BuffNpc;
+
+        /// <inheritdoc />
+        [ExcludeFromCodeCoverage]
+        public override string ToString() => $"{Type}[#={NpcIndex}, {Buff}]";
 
         private protected override void ReadFromReader(BinaryReader reader, PacketContext context) {
             NpcIndex = reader.ReadInt16();

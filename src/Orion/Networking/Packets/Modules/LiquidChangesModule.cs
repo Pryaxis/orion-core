@@ -17,7 +17,7 @@ namespace Orion.Networking.Packets.Modules {
 
         /// <inheritdoc />
         [ExcludeFromCodeCoverage]
-        public override string ToString() => $"{nameof(ModuleType.LiquidChanges)}[C={LiquidChanges.Count}]";
+        public override string ToString() => $"{nameof(ModuleType.LiquidChanges)}[...]";
 
         private protected override void ReadFromReader(BinaryReader reader, PacketContext context) {
             var numberOfLiquidChanges = reader.ReadUInt16();

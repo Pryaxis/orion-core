@@ -48,7 +48,9 @@ namespace Orion.Networking.Packets.Items {
 
         /// <inheritdoc />
         [ExcludeFromCodeCoverage]
-        public override string ToString() => $"{Type}[#={ItemIndex}, ...]";
+        public override string ToString() =>
+            $"{Type}[#={ItemIndex}, {(ItemPrefix != ItemPrefix.None ? ItemPrefix + " " : "")}{ItemType} " +
+            $"x{ItemStackSize} @ {ItemPosition}, ...]";
 
         private protected override void ReadFromReader(BinaryReader reader, PacketContext context) {
             ItemIndex = reader.ReadInt16();

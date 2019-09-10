@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿using System.Diagnostics.CodeAnalysis;
+using System.IO;
 
 namespace Orion.Networking.Packets.Projectiles {
     /// <summary>
@@ -16,6 +17,10 @@ namespace Orion.Networking.Packets.Projectiles {
         public byte ProjectileOwnerPlayerIndex { get; set; }
 
         private protected override PacketType Type => PacketType.RemoveProjectile;
+
+        /// <inheritdoc />
+        [ExcludeFromCodeCoverage]
+        public override string ToString() => $"{Type}[#={ProjectileIdentity}), P={ProjectileOwnerPlayerIndex}]";
 
         private protected override void ReadFromReader(BinaryReader reader, PacketContext context) {
             ProjectileIdentity = reader.ReadInt16();

@@ -14,8 +14,8 @@ namespace Orion.Tests.Networking.Packets.World {
                 var packet = (UnlockObjectPacket)Packet.ReadFromStream(stream, PacketContext.Server);
 
                 packet.ObjectType.Should().Be(UnlockObjectType.Chest);
-                packet.TileX.Should().Be(256);
-                packet.TileY.Should().Be(100);
+                packet.ObjectX.Should().Be(256);
+                packet.ObjectY.Should().Be(100);
             }
         }
 

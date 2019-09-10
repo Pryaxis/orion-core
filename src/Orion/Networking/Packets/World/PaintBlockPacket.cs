@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿using System.Diagnostics.CodeAnalysis;
+using System.IO;
 using Orion.World.Tiles;
 
 namespace Orion.Networking.Packets.World {
@@ -22,6 +23,10 @@ namespace Orion.Networking.Packets.World {
         public PaintColor BlockColor { get; set; }
 
         private protected override PacketType Type => PacketType.PaintBlock;
+
+        /// <inheritdoc />
+        [ExcludeFromCodeCoverage]
+        public override string ToString() => $"{Type}[{BlockColor} @ ({TileX}, {TileY})]";
 
         private protected override void ReadFromReader(BinaryReader reader, PacketContext context) {
             TileX = reader.ReadInt16();

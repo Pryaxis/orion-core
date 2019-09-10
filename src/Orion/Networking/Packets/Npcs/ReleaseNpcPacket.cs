@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿using System.Diagnostics.CodeAnalysis;
+using System.IO;
 using Microsoft.Xna.Framework;
 using Orion.Npcs;
 
@@ -23,6 +24,10 @@ namespace Orion.Networking.Packets.Npcs {
         public byte NpcStyle { get; set; }
 
         private protected override PacketType Type => PacketType.ReleaseNpc;
+
+        /// <inheritdoc />
+        [ExcludeFromCodeCoverage]
+        public override string ToString() => $"{Type}[{NpcType}_{NpcStyle} @ {NpcPosition}]";
 
         private protected override void ReadFromReader(BinaryReader reader, PacketContext context) {
             NpcPosition = new Vector2(reader.ReadInt32(), reader.ReadInt32());

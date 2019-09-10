@@ -32,7 +32,7 @@ namespace Orion.Networking.Packets.Misc {
 
         /// <inheritdoc />
         [ExcludeFromCodeCoverage]
-        public override string ToString() => $"{Type}[X={TileX}, Y={TileY}, T={AnimationType}, B={BlockType}]";
+        public override string ToString() => $"{Type}[{AnimationType} @ ({TileX}, {TileY}), ...]";
 
         private protected override void ReadFromReader(BinaryReader reader, PacketContext context) {
             AnimationType = reader.ReadInt16();

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using Orion.Players;
 
@@ -6,18 +7,22 @@ namespace Orion.Networking.Packets.Players {
     /// <summary>
     /// Packet sent to add a buff to a player.
     /// </summary>
-    public sealed class AddBuffToPlayerPacket : Packet {
+    public sealed class BuffPlayer : Packet {
         /// <summary>
         /// Gets or sets the player index.
         /// </summary>
         public byte PlayerIndex { get; set; }
 
         /// <summary>
-        /// Gets or sets the buff. The buff duration is limited to approximately 546.1 seconds.
+        /// Gets or sets the buff.
         /// </summary>
         public Buff Buff { get; set; }
 
-        private protected override PacketType Type => PacketType.AddBuffToPlayer;
+        private protected override PacketType Type => PacketType.BuffPlayer;
+
+        /// <inheritdoc />
+        [ExcludeFromCodeCoverage]
+        public override string ToString() => $"{Type}[#={PlayerIndex}, {Buff}]";
 
         private protected override void ReadFromReader(BinaryReader reader, PacketContext context) {
             PlayerIndex = reader.ReadByte();

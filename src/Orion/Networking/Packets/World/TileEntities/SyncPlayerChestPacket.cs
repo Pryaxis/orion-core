@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿using System.Diagnostics.CodeAnalysis;
+using System.IO;
 
 namespace Orion.Networking.Packets.World.TileEntities {
     /// <summary>
@@ -16,6 +17,10 @@ namespace Orion.Networking.Packets.World.TileEntities {
         public short PlayerChestIndex { get; set; }
 
         private protected override PacketType Type => PacketType.SyncPlayerChest;
+
+        /// <inheritdoc />
+        [ExcludeFromCodeCoverage]
+        public override string ToString() => $"{Type}[#={PlayerIndex}, C={PlayerChestIndex}]";
 
         private protected override void ReadFromReader(BinaryReader reader, PacketContext context) {
             PlayerIndex = reader.ReadByte();

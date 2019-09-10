@@ -1,10 +1,11 @@
-﻿using System.IO;
+﻿using System.Diagnostics.CodeAnalysis;
+using System.IO;
 
 namespace Orion.Networking.Packets.World {
     /// <summary>
     /// Packet sent to show a tree growing effect.
     /// </summary>
-    public sealed class ShowTreeGrowingEffectPacket : Packet {
+    public sealed class TreeGrowingEffectPacket : Packet {
         /// <summary>
         /// Gets or sets the tree's X coordinate.
         /// </summary>
@@ -25,7 +26,11 @@ namespace Orion.Networking.Packets.World {
         /// </summary>
         public short TreeType { get; set; }
 
-        private protected override PacketType Type => PacketType.ShowTreeGrowingEffect;
+        private protected override PacketType Type => PacketType.TreeGrowingEffect;
+
+        /// <inheritdoc />
+        [ExcludeFromCodeCoverage]
+        public override string ToString() => $"{Type}[({TreeX}, {TreeY}), ...]";
 
         private protected override void ReadFromReader(BinaryReader reader, PacketContext context) {
             reader.ReadByte();

@@ -15,7 +15,7 @@ namespace Orion.Tests.Networking.Packets.Players {
                 var packet = (TeleportPlayerPortalPacket)Packet.ReadFromStream(stream, PacketContext.Server);
 
                 packet.PlayerIndex.Should().Be(100);
-                packet.PortalId.Should().Be(2);
+                packet.PortalIndex.Should().Be(2);
                 packet.PlayerNewPosition.Should().Be(Vector2.Zero);
                 packet.PlayerNewVelocity.Should().Be(Vector2.Zero);
             }

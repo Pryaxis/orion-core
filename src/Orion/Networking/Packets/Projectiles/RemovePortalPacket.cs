@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿using System.Diagnostics.CodeAnalysis;
+using System.IO;
 
 namespace Orion.Networking.Packets.Projectiles {
     /// <summary>
@@ -11,6 +12,10 @@ namespace Orion.Networking.Packets.Projectiles {
         public short PortalProjectileIndex { get; set; }
 
         private protected override PacketType Type => PacketType.RemovePortal;
+
+        /// <inheritdoc />
+        [ExcludeFromCodeCoverage]
+        public override string ToString() => $"{Type}[#={PortalProjectileIndex}), ...]";
 
         private protected override void ReadFromReader(BinaryReader reader, PacketContext context) {
             PortalProjectileIndex = reader.ReadInt16();

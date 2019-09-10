@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿using System.Diagnostics.CodeAnalysis;
+using System.IO;
 using Orion.World.Tiles;
 
 namespace Orion.Networking.Packets.World {
@@ -37,6 +38,10 @@ namespace Orion.Networking.Packets.World {
         public bool Direction { get; set; }
 
         private protected override PacketType Type => PacketType.PlaceObject;
+
+        /// <inheritdoc />
+        [ExcludeFromCodeCoverage]
+        public override string ToString() => $"{Type}[{ObjectType}_{ObjectStyle} @ ({TileX}, {TileY}), ...]";
 
         /// <inheritdoc />
         private protected override void ReadFromReader(BinaryReader reader, PacketContext context) {
