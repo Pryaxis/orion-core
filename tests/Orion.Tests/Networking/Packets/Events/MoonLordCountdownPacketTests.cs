@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿using System;
+using System.IO;
 using FluentAssertions;
 using Orion.Networking.Packets;
 using Orion.Networking.Packets.Events;
@@ -6,14 +7,14 @@ using Xunit;
 
 namespace Orion.Tests.Networking.Packets.Events {
     public class MoonLordCountdownPacketTests {
-        private static readonly byte[] MoonLordCountdownBytes = {7, 0, 103, 100, 0, 0, 0,};
+        private static readonly byte[] MoonLordCountdownBytes = {7, 0, 103, 60, 0, 0, 0,};
 
         [Fact]
         public void ReadFromStream_IsCorrect() {
             using (var stream = new MemoryStream(MoonLordCountdownBytes)) {
                 var packet = (MoonLordCountdownPacket)Packet.ReadFromStream(stream, PacketContext.Server);
 
-                packet.MoonLordCountdown.Should().Be(100);
+                packet.MoonLordCountdown.Should().Be(TimeSpan.FromSeconds(1));
             }
         }
 

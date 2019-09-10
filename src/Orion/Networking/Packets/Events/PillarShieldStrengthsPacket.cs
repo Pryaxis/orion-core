@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿using System.Diagnostics.CodeAnalysis;
+using System.IO;
 
 namespace Orion.Networking.Packets.Events {
     /// <summary>
@@ -26,6 +27,13 @@ namespace Orion.Networking.Packets.Events {
         public ushort StardustPillarShieldStrength { get; set; }
 
         private protected override PacketType Type => PacketType.PillarShieldStrengths;
+
+        /// <inheritdoc />
+        [ExcludeFromCodeCoverage]
+        public override string ToString() {
+            return $"{nameof(PacketType.PillarShieldStrengths)}[S={SolarPillarShieldStrength}, " +
+                   $"V={VortexPillarShieldStrength}, N={NebulaPillarShieldStrength}, T={StardustPillarShieldStrength}]";
+        }
 
         private protected override void ReadFromReader(BinaryReader reader, PacketContext context) {
             SolarPillarShieldStrength = reader.ReadUInt16();

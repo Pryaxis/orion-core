@@ -1,4 +1,6 @@
-﻿using System.IO;
+﻿using System;
+using System.Diagnostics.CodeAnalysis;
+using System.IO;
 
 namespace Orion.Networking.Packets.Events {
     /// <summary>
@@ -8,16 +10,20 @@ namespace Orion.Networking.Packets.Events {
         /// <summary>
         /// Gets or sets the Moon Lord countdown.
         /// </summary>
-        public int MoonLordCountdown { get; set; }
+        public TimeSpan MoonLordCountdown { get; set; }
 
         private protected override PacketType Type => PacketType.MoonLordCountdown;
 
+        /// <inheritdoc />
+        [ExcludeFromCodeCoverage]
+        public override string ToString() => $"{nameof(PacketType.MoonLordCountdown)}[T={MoonLordCountdown}]";
+
         private protected override void ReadFromReader(BinaryReader reader, PacketContext context) {
-            MoonLordCountdown = reader.ReadInt32();
+            MoonLordCountdown = TimeSpan.FromSeconds(reader.ReadInt32() / 60.0);
         }
 
         private protected override void WriteToWriter(BinaryWriter writer, PacketContext context) {
-            writer.Write(MoonLordCountdown);
+            writer.Write((int)(MoonLordCountdown.TotalSeconds * 60.0));
         }
     }
 }

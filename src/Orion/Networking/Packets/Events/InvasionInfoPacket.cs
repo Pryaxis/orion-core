@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿using System.Diagnostics.CodeAnalysis;
+using System.IO;
 
 namespace Orion.Networking.Packets.Events {
     /// <summary>
@@ -6,12 +7,12 @@ namespace Orion.Networking.Packets.Events {
     /// </summary>
     public sealed class InvasionInfoPacket : Packet {
         /// <summary>
-        /// Gets or sets the number of kills.
+        /// Gets or sets the number of kills in the current wave.
         /// </summary>
         public int NumberOfKills { get; set; }
 
         /// <summary>
-        /// Gets or sets the number of kills to progress the wave.
+        /// Gets or sets the number of kills to progress the current wave.
         /// </summary>
         public int NumberOfKillsToProgress { get; set; }
 
@@ -24,22 +25,29 @@ namespace Orion.Networking.Packets.Events {
         /// <summary>
         /// Gets or sets the wave number.
         /// </summary>
-        public int WaveNumber { get; set; }
+        public int InvasionWaveNumber { get; set; }
 
         private protected override PacketType Type => PacketType.InvasionInfo;
+
+        /// <inheritdoc />
+        [ExcludeFromCodeCoverage]
+        public override string ToString() {
+            return $"{nameof(PacketType.InvasionInfo)}[K={NumberOfKills}/{NumberOfKillsToProgress}, " +
+                   $"T={InvasionIconType}, #={InvasionWaveNumber}]";
+        }
 
         private protected override void ReadFromReader(BinaryReader reader, PacketContext context) {
             NumberOfKills = reader.ReadInt32();
             NumberOfKillsToProgress = reader.ReadInt32();
             InvasionIconType = reader.ReadInt32();
-            WaveNumber = reader.ReadInt32();
+            InvasionWaveNumber = reader.ReadInt32();
         }
 
         private protected override void WriteToWriter(BinaryWriter writer, PacketContext context) {
             writer.Write(NumberOfKills);
             writer.Write(NumberOfKillsToProgress);
             writer.Write(InvasionIconType);
-            writer.Write(WaveNumber);
+            writer.Write(InvasionWaveNumber);
         }
     }
 }

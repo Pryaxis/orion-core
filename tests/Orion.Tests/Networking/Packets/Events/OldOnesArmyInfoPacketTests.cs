@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿using System;
+using System.IO;
 using FluentAssertions;
 using Orion.Networking.Packets;
 using Orion.Networking.Packets.Events;
@@ -6,14 +7,14 @@ using Xunit;
 
 namespace Orion.Tests.Networking.Packets.Events {
     public class OldOnesArmyInfoPacketTests {
-        public static readonly byte[] OldOnesArmyInfoBytes = {7, 0, 116, 1, 0, 0, 0,};
+        public static readonly byte[] OldOnesArmyInfoBytes = {7, 0, 116, 60, 0, 0, 0,};
 
         [Fact]
         public void ReadFromStream_IsCorrect() {
             using (var stream = new MemoryStream(OldOnesArmyInfoBytes)) {
                 var packet = (OldOnesArmyInfoPacket)Packet.ReadFromStream(stream, PacketContext.Server);
 
-                packet.TimeLeftBetweenWaves.Should().Be(1);
+                packet.TimeBetweenWaves.Should().Be(TimeSpan.FromSeconds(1));
             }
         }
 

@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿using System.Diagnostics.CodeAnalysis;
+using System.IO;
 
 namespace Orion.Networking.Packets.Events {
     /// <summary>
@@ -16,6 +17,10 @@ namespace Orion.Networking.Packets.Events {
         public short CrystalY { get; set; }
 
         private protected override PacketType Type => PacketType.StartOldOnesArmy;
+
+        /// <inheritdoc />
+        [ExcludeFromCodeCoverage]
+        public override string ToString() => $"{nameof(PacketType.StartOldOnesArmy)}[X={CrystalX}, Y={CrystalY}]";
 
         private protected override void ReadFromReader(BinaryReader reader, PacketContext context) {
             CrystalX = reader.ReadInt16();

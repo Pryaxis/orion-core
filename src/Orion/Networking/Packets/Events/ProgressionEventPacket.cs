@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿using System.Diagnostics.CodeAnalysis;
+using System.IO;
 
 namespace Orion.Networking.Packets.Events {
     /// <summary>
@@ -8,9 +9,14 @@ namespace Orion.Networking.Packets.Events {
         /// <summary>
         /// Gets or sets the event ID.
         /// </summary>
+        // TODO: implement enum for this.
         public short EventId { get; set; }
 
-        private protected override PacketType Type => PacketType.NotifyEventProgression;
+        private protected override PacketType Type => PacketType.ProgressionEvent;
+
+        /// <inheritdoc />
+        [ExcludeFromCodeCoverage]
+        public override string ToString() => $"{nameof(PacketType.ProgressionEvent)}[E={EventId}]";
 
         private protected override void ReadFromReader(BinaryReader reader, PacketContext context) {
             EventId = reader.ReadInt16();

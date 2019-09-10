@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿using System.Diagnostics.CodeAnalysis;
+using System.IO;
 using Orion.Items;
 
 namespace Orion.Networking.Packets.Events {
@@ -12,6 +13,10 @@ namespace Orion.Networking.Packets.Events {
         public ItemType[] ShopItemTypes { get; } = new ItemType[Terraria.Chest.maxItems];
 
         private protected override PacketType Type => PacketType.TravelingMerchantShop;
+
+        /// <inheritdoc />
+        [ExcludeFromCodeCoverage]
+        public override string ToString() => $"{nameof(PacketType.TravelingMerchantShop)}";
 
         private protected override void ReadFromReader(BinaryReader reader, PacketContext context) {
             for (var i = 0; i < Terraria.Chest.maxItems; ++i) {
