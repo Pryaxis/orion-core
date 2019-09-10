@@ -13,7 +13,7 @@ namespace Orion.Tests.Networking.Packets.World {
             using (var stream = new MemoryStream(BiomeStatsBytes)) {
                 var packet = (BiomeStatsPacket)Packet.ReadFromStream(stream);
 
-                packet.GoodAmount.Should().Be(1);
+                packet.HallowedAmount.Should().Be(1);
                 packet.CorruptionAmount.Should().Be(2);
                 packet.CrimsonAmount.Should().Be(3);
             }

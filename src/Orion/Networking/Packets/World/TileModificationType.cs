@@ -1,6 +1,6 @@
 ﻿namespace Orion.Networking.Packets.World {
     /// <summary>
-    /// Specifies the type of modification in a <see cref="ModifyTilePacket"/>.
+    /// Specifies the type of modification in a <see cref="TileModificationPacket"/>.
     /// </summary>
     public enum TileModificationType : byte {
 #pragma warning disable 1591

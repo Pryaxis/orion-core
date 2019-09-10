@@ -1,9 +1,10 @@
-﻿using System.IO;
+﻿using System;
+using System.IO;
 using Orion.Players;
 
 namespace Orion.Networking.Packets.Npcs {
     /// <summary>
-    /// Packet sent from the server to the client to set an NPC's buffs. Each buff will be set for one second.
+    /// Packet sent from the server to the client to set an NPC's buffs.
     /// </summary>
     public sealed class NpcBuffsPacket : Packet {
         /// <summary>
@@ -12,23 +13,24 @@ namespace Orion.Networking.Packets.Npcs {
         public short NpcIndex { get; set; }
 
         /// <summary>
-        /// Gets the buff types.
+        /// Gets the buffs.
         /// </summary>
-        public BuffType[] NpcBuffs { get; } = new BuffType[Terraria.NPC.maxBuffs];
+        public Buff[] NpcBuffs { get; } = new Buff[Terraria.NPC.maxBuffs];
 
         private protected override PacketType Type => PacketType.NpcBuffs;
 
         private protected override void ReadFromReader(BinaryReader reader, ushort packetLength) {
             NpcIndex = reader.ReadInt16();
             for (var i = 0; i < NpcBuffs.Length; ++i) {
-                NpcBuffs[i] = (BuffType)reader.ReadByte();
+                NpcBuffs[i] = new Buff((BuffType)reader.ReadByte(), TimeSpan.FromSeconds(reader.ReadInt16() / 60.0));
             }
         }
 
         private protected override void WriteToWriter(BinaryWriter writer) {
             writer.Write(NpcIndex);
-            foreach (var buffType in NpcBuffs) {
-                writer.Write((byte)buffType);
+            foreach (var buff in NpcBuffs) {
+                writer.Write((byte)buff.BuffType);
+                writer.Write((short)(buff.Duration.TotalSeconds * 60.0));
             }
         }
     }

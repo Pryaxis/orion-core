@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿using System.Diagnostics.CodeAnalysis;
+using System.IO;
 
 namespace Orion.Networking.Packets.World {
     /// <summary>
@@ -7,6 +8,11 @@ namespace Orion.Networking.Packets.World {
     /// </summary>
     public sealed class EnterWorldPacket : Packet {
         private protected override PacketType Type => PacketType.EnterWorld;
+
+        /// <inheritdoc />
+        [ExcludeFromCodeCoverage]
+        public override string ToString() => $"{nameof(PacketType.EnterWorld)}";
+
         private protected override void ReadFromReader(BinaryReader reader, ushort packetLength) { }
         private protected override void WriteToWriter(BinaryWriter writer) { }
     }

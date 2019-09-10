@@ -10,7 +10,7 @@ namespace Orion.Tests.Networking.Packets.World {
     public class SquareOfTilesPacketTests {
         [Fact]
         public void SetTiles_NullValue_ThrowsArgumentNullException() {
-            var packet = new SquareOfTilesPacket();
+            var packet = new SquareTilesPacket();
             Action action = () => packet.Tiles = null;
 
             action.Should().Throw<ArgumentNullException>();
@@ -23,12 +23,12 @@ namespace Orion.Tests.Networking.Packets.World {
         [Fact]
         public void ReadFromStream_IsCorrect() {
             using (var stream = new MemoryStream(SquareOfTilesBytes)) {
-                var packet = (SquareOfTilesPacket)Packet.ReadFromStream(stream);
+                var packet = (SquareTilesPacket)Packet.ReadFromStream(stream);
 
-                packet.Size.Should().Be(1);
+                packet.SquareSize.Should().Be(1);
                 packet.LiquidChangeType.Should().Be(LiquidChangeType.None);
-                packet.X.Should().Be(4249);
-                packet.Y.Should().Be(427);
+                packet.TileX.Should().Be(4249);
+                packet.TileY.Should().Be(427);
                 packet.Tiles.GetLength(0).Should().Be(1);
                 packet.Tiles.GetLength(1).Should().Be(1);
             }

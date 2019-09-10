@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics.CodeAnalysis;
 using System.IO;
 
 namespace Orion.Networking.Packets.Connections {
@@ -19,6 +20,10 @@ namespace Orion.Networking.Packets.Connections {
         }
 
         private protected override PacketType Type => PacketType.PasswordResponse;
+
+        /// <inheritdoc />
+        [ExcludeFromCodeCoverage]
+        public override string ToString() => $"{nameof(PacketType.PasswordResponse)}[P={Password}]";
 
         private protected override void ReadFromReader(BinaryReader reader, ushort packetLength) {
             _password = reader.ReadString();

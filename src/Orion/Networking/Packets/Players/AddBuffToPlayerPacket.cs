@@ -21,19 +21,13 @@ namespace Orion.Networking.Packets.Players {
 
         private protected override void ReadFromReader(BinaryReader reader, ushort packetLength) {
             PlayerIndex = reader.ReadByte();
-            Buff = new Buff((BuffType)reader.ReadByte(), TimeSpan.FromSeconds(reader.ReadInt16() / 60.0));
+            Buff = new Buff((BuffType)reader.ReadByte(), TimeSpan.FromSeconds(reader.ReadInt32() / 60.0));
         }
 
         private protected override void WriteToWriter(BinaryWriter writer) {
             writer.Write(PlayerIndex);
             writer.Write((byte)Buff.BuffType);
-
-            var ticks = (int)(Buff.Duration.TotalSeconds * 60.0);
-            if (ticks >= short.MaxValue) {
-                writer.Write(short.MaxValue);
-            } else {
-                writer.Write((short)ticks);
-            }
+            writer.Write((int)(Buff.Duration.TotalSeconds * 60.0));
         }
     }
 }

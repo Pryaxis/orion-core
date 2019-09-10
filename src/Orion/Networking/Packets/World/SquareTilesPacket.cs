@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using Orion.World.Tiles;
 
@@ -6,13 +7,13 @@ namespace Orion.Networking.Packets.World {
     /// <summary>
     /// Packet sent to set a square of tiles.
     /// </summary>
-    public sealed class SquareOfTilesPacket : Packet {
+    public sealed class SquareTilesPacket : Packet {
         private NetworkTile[,] _tiles;
 
         /// <summary>
         /// Gets or sets the size of the square.
         /// </summary>
-        public short Size { get; set; }
+        public short SquareSize { get; set; }
 
         /// <summary>
         /// Gets or sets the liquid change type.
@@ -20,14 +21,14 @@ namespace Orion.Networking.Packets.World {
         public LiquidChangeType LiquidChangeType { get; set; }
 
         /// <summary>
-        /// Gets or sets the X coordinate.
+        /// Gets or sets the top-left tile's X coordinate.
         /// </summary>
-        public short X { get; set; }
+        public short TileX { get; set; }
 
         /// <summary>
-        /// Gets or sets the Y coordinate.
+        /// Gets or sets the top-left tile's Y coordinate.
         /// </summary>
-        public short Y { get; set; }
+        public short TileY { get; set; }
 
         /// <summary>
         /// Gets or sets the tiles.
@@ -38,7 +39,11 @@ namespace Orion.Networking.Packets.World {
             set => _tiles = value ?? throw new ArgumentNullException(nameof(value));
         }
 
-        private protected override PacketType Type => PacketType.SquareOfTiles;
+        private protected override PacketType Type => PacketType.SquareTiles;
+
+        /// <inheritdoc />
+        [ExcludeFromCodeCoverage]
+        public override string ToString() => $"{nameof(PacketType.SquareTiles)}[X={TileX}, Y={TileY}, S={SquareSize}]";
 
         private protected override void ReadFromReader(BinaryReader reader, ushort packetLength) {
             var size = reader.ReadUInt16();
@@ -46,10 +51,10 @@ namespace Orion.Networking.Packets.World {
                 LiquidChangeType = (LiquidChangeType)reader.ReadByte();
             }
 
-            Size = (short)(size & short.MaxValue);
-            X = reader.ReadInt16();
-            Y = reader.ReadInt16();
-            Tiles = new NetworkTile[Size, Size];
+            SquareSize = (short)(size & short.MaxValue);
+            TileX = reader.ReadInt16();
+            TileY = reader.ReadInt16();
+            Tiles = new NetworkTile[SquareSize, SquareSize];
 
             NetworkTile ReadTile() {
                 var tile = new NetworkTile();
@@ -102,8 +107,8 @@ namespace Orion.Networking.Packets.World {
                 return tile;
             }
 
-            for (int x = 0; x < Size; ++x) {
-                for (int y = 0; y < Size; ++y) {
+            for (int x = 0; x < SquareSize; ++x) {
+                for (int y = 0; y < SquareSize; ++y) {
                     Tiles[x, y] = ReadTile();
                 }
             }
@@ -111,14 +116,14 @@ namespace Orion.Networking.Packets.World {
 
         private protected override void WriteToWriter(BinaryWriter writer) {
             if (LiquidChangeType != LiquidChangeType.None) {
-                writer.Write((ushort)(Size | 32768));
+                writer.Write((ushort)(SquareSize | 32768));
                 writer.Write((byte)LiquidChangeType);
             } else {
-                writer.Write(Size);
+                writer.Write(SquareSize);
             }
 
-            writer.Write(X);
-            writer.Write(Y);
+            writer.Write(TileX);
+            writer.Write(TileY);
 
             void WriteTile(NetworkTile tile) {
                 Terraria.BitsByte header = 0;
@@ -158,8 +163,8 @@ namespace Orion.Networking.Packets.World {
                 }
             }
 
-            for (int x = 0; x < Size; ++x) {
-                for (int y = 0; y < Size; ++y) {
+            for (int x = 0; x < SquareSize; ++x) {
+                for (int y = 0; y < SquareSize; ++y) {
                     WriteTile(Tiles[x, y]);
                 }
             }

@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿using System.Diagnostics.CodeAnalysis;
+using System.IO;
 
 namespace Orion.Networking.Packets.Connections {
     /// <summary>
@@ -7,6 +8,11 @@ namespace Orion.Networking.Packets.Connections {
     /// </summary>
     public sealed class RequestPasswordPacket : Packet {
         private protected override PacketType Type => PacketType.RequestPassword;
+
+        /// <inheritdoc />
+        [ExcludeFromCodeCoverage]
+        public override string ToString() => $"{nameof(PacketType.RequestPassword)}";
+
         private protected override void ReadFromReader(BinaryReader reader, ushort packetLength) { }
         private protected override void WriteToWriter(BinaryWriter writer) { }
     }

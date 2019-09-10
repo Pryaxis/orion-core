@@ -6,6 +6,7 @@ using System.Linq;
 using Orion.Hooks;
 using Orion.Networking.Events;
 using Orion.Networking.Packets;
+using Serilog;
 
 namespace Orion.Networking {
     internal sealed class OrionNetworkService : OrionService, INetworkService {
@@ -130,6 +131,8 @@ namespace Orion.Networking {
                 var args2 = new ReceivedPacketEventArgs(sender, packet);
                 ReceivedPacket?.Invoke(this, args2);
 
+                Log.Verbose("Rcvd {Packet} from {Sender}", packet, sender.Name);
+
                 return OTAPI.HookResult.Continue;
             }
         }
@@ -165,6 +168,8 @@ namespace Orion.Networking {
 
                 var args2 = new SentPacketEventArgs(receiver, packet);
                 SentPacket?.Invoke(this, args2);
+
+                Log.Verbose("Sent {Packet} to {Receiver}", packet, receiver.Name);
 
                 return OTAPI.HookResult.Continue;
             }

@@ -20,6 +20,8 @@ namespace Orion.Networking.Packets.Npcs {
         private protected override void ReadFromReader(BinaryReader reader, ushort packetLength) {
             NpcIndex = reader.ReadInt16();
 
+            // This packet is written differently depending on who sent the packet. So we need to manually check the
+            // packet length here.
             if (packetLength > HeaderLength + sizeof(short)) {
                 NpcName = reader.ReadString();
             }

@@ -1,4 +1,6 @@
-﻿using System.IO;
+﻿using System;
+using System.Diagnostics.CodeAnalysis;
+using System.IO;
 
 namespace Orion.Networking.Packets.Connections {
     /// <summary>
@@ -12,6 +14,10 @@ namespace Orion.Networking.Packets.Connections {
         public byte PlayerIndex { get; set; }
 
         private protected override PacketType Type => PacketType.ContinueConnecting;
+        
+        /// <inheritdoc />
+        [ExcludeFromCodeCoverage]
+        public override string ToString() => $"{nameof(PacketType.ContinueConnecting)}[P={PlayerIndex}]";
 
         private protected override void ReadFromReader(BinaryReader reader, ushort packetLength) {
             PlayerIndex = reader.ReadByte();

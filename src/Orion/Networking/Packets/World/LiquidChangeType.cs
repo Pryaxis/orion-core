@@ -1,6 +1,6 @@
 ﻿namespace Orion.Networking.Packets.World {
     /// <summary>
-    /// Specifies the liquid change type in a <see cref="SquareOfTilesPacket"/>.
+    /// Specifies the liquid change type in a <see cref="SquareTilesPacket"/>.
     /// </summary>
     public enum LiquidChangeType : byte {
 #pragma warning disable 1591

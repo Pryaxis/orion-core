@@ -1,10 +1,12 @@
-﻿using System.IO;
+﻿using System.Diagnostics.CodeAnalysis;
+using System.IO;
+using Orion.World.Tiles;
 
 namespace Orion.Networking.Packets.World {
     /// <summary>
-    /// Packet sent to modify a tile.
+    /// Packet sent to perform a tile modification.
     /// </summary>
-    public sealed class ModifyTilePacket : Packet {
+    public sealed class TileModificationPacket : Packet {
         /// <summary>
         /// Gets or sets the modification type.
         /// </summary>
@@ -16,7 +18,7 @@ namespace Orion.Networking.Packets.World {
         public short TileX { get; set; }
 
         /// <summary>
-        /// Gets or sets the Y coordinate.
+        /// Gets or sets the tile's Y coordinate.
         /// </summary>
         public short TileY { get; set; }
 
@@ -30,7 +32,27 @@ namespace Orion.Networking.Packets.World {
         /// </summary>
         public byte ModificationStyle { get; set; }
 
-        private protected override PacketType Type => PacketType.ModifyTile;
+        private protected override PacketType Type => PacketType.TileModification;
+
+        /// <inheritdoc />
+        [ExcludeFromCodeCoverage]
+        public override string ToString() {
+            var beginning = $"{nameof(PacketType.TileModification)}[M={ModificationType}, X={TileX}, Y={TileY}";
+            switch (ModificationType) {
+            case TileModificationType.DestroyBlock:
+                return beginning + $", F={ModificationData == 1}]";
+            case TileModificationType.PlaceBlock:
+                return beginning + $", B={(BlockType)ModificationData}, S={ModificationStyle}]";
+            case TileModificationType.DestroyWall:
+                return beginning + $", F={ModificationData == 1}]";
+            case TileModificationType.PlaceWall:
+                return beginning + $", W={(WallType)ModificationData}]";
+            case TileModificationType.SlopeBlock:
+                return beginning + $", S={(SlopeType)ModificationData}]";
+            default:
+                return beginning + "]";
+            }
+        }
 
         private protected override void ReadFromReader(BinaryReader reader, ushort packetLength) {
             ModificationType = (TileModificationType)reader.ReadByte();

@@ -1,11 +1,12 @@
-﻿using System.IO;
+﻿using System.Diagnostics.CodeAnalysis;
+using System.IO;
 using Orion.World.Tiles;
 
 namespace Orion.Networking.Packets.World {
     /// <summary>
     /// Packet sent to update a tile's liquid.
     /// </summary>
-    public sealed class LiquidPacket : Packet {
+    public sealed class TileLiquidPacket : Packet {
         /// <summary>
         /// Gets or sets the tile's X coordinate.
         /// </summary>
@@ -26,7 +27,12 @@ namespace Orion.Networking.Packets.World {
         /// </summary>
         public LiquidType LiquidType { get; set; }
 
-        private protected override PacketType Type => PacketType.Liquid;
+        private protected override PacketType Type => PacketType.TileLiquid;
+
+        /// <inheritdoc />
+        [ExcludeFromCodeCoverage]
+        public override string ToString() =>
+            $"{nameof(PacketType.TileLiquid)}[X={TileX}, Y={TileY}, L={LiquidAmount}, T={LiquidType}]";
 
         private protected override void ReadFromReader(BinaryReader reader, ushort packetLength) {
             TileX = reader.ReadInt16();

@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿using System.Diagnostics.CodeAnalysis;
+using System.IO;
 
 namespace Orion.Networking.Packets.World {
     /// <summary>
@@ -6,9 +7,9 @@ namespace Orion.Networking.Packets.World {
     /// </summary>
     public sealed class BiomeStatsPacket : Packet {
         /// <summary>
-        /// Gets or sets the "good" biome amount.
+        /// Gets or sets the hallowed biome amount.
         /// </summary>
-        public byte GoodAmount { get; set; }
+        public byte HallowedAmount { get; set; }
 
         /// <summary>
         /// Gets or sets the corruption amount.
@@ -23,15 +24,20 @@ namespace Orion.Networking.Packets.World {
         private protected override PacketType Type => PacketType.BiomeStats;
 
         /// <inheritdoc />
+        [ExcludeFromCodeCoverage]
+        public override string ToString() =>
+            $"{nameof(PacketType.BiomeStats)}[H={HallowedAmount}, C={CorruptionAmount}, C'={CrimsonAmount}]";
+
+        /// <inheritdoc />
         private protected override void ReadFromReader(BinaryReader reader, ushort packetLength) {
-            GoodAmount = reader.ReadByte();
+            HallowedAmount = reader.ReadByte();
             CorruptionAmount = reader.ReadByte();
             CrimsonAmount = reader.ReadByte();
         }
 
         /// <inheritdoc />
         private protected override void WriteToWriter(BinaryWriter writer) {
-            writer.Write(GoodAmount);
+            writer.Write(HallowedAmount);
             writer.Write(CorruptionAmount);
             writer.Write(CrimsonAmount);
         }

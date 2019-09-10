@@ -6,13 +6,13 @@ using Orion.World.Tiles;
 using Xunit;
 
 namespace Orion.Tests.Networking.Packets.World {
-    public class LiquidPacketTests {
-        public static readonly byte[] LiquidBytes = {9, 0, 48, 0, 1, 100, 0, 255, 0,};
+    public class TileLiquidPacketTests {
+        public static readonly byte[] TileLiquidBytes = {9, 0, 48, 0, 1, 100, 0, 255, 0,};
 
         [Fact]
         public void ReadFromStream_IsCorrect() {
-            using (var stream = new MemoryStream(LiquidBytes)) {
-                var packet = (LiquidPacket)Packet.ReadFromStream(stream);
+            using (var stream = new MemoryStream(TileLiquidBytes)) {
+                var packet = (TileLiquidPacket)Packet.ReadFromStream(stream);
 
                 packet.TileX.Should().Be(256);
                 packet.TileY.Should().Be(100);
@@ -23,13 +23,13 @@ namespace Orion.Tests.Networking.Packets.World {
 
         [Fact]
         public void WriteToStream_IsCorrect() {
-            using (var stream = new MemoryStream(LiquidBytes))
+            using (var stream = new MemoryStream(TileLiquidBytes))
             using (var stream2 = new MemoryStream()) {
                 var packet = Packet.ReadFromStream(stream);
 
                 packet.WriteToStream(stream2);
 
-                stream2.ToArray().Should().BeEquivalentTo(LiquidBytes);
+                stream2.ToArray().Should().BeEquivalentTo(TileLiquidBytes);
             }
         }
     }

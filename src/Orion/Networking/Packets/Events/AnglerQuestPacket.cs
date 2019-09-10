@@ -2,7 +2,8 @@
 
 namespace Orion.Networking.Packets.Events {
     /// <summary>
-    /// Packet sent from the server to the client to set the angler quest.
+    /// Packet sent from the server to the client to set the angler quest. This is sent when the client first connects
+    /// and every dawn.
     /// </summary>
     public sealed class AnglerQuestPacket : Packet {
         /// <summary>

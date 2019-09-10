@@ -9,6 +9,11 @@ namespace Orion.Networking.Packets.Items {
     /// </summary>
     public sealed class AlterItemPacket : Packet {
         /// <summary>
+        /// Gets or sets the item index.
+        /// </summary>
+        public short ItemIndex { get; set; }
+
+        /// <summary>
         /// Gets or sets the item color.
         /// </summary>
         public Color? ItemColor { get; set; }
@@ -76,6 +81,8 @@ namespace Orion.Networking.Packets.Items {
         private protected override PacketType Type => PacketType.AlterItem;
 
         private protected override void ReadFromReader(BinaryReader reader, ushort packetLength) {
+            ItemIndex = reader.ReadInt16();
+
             Terraria.BitsByte flags = reader.ReadByte();
             if (flags[0]) ItemColor = new Color(reader.ReadUInt32());
             if (flags[1]) ItemDamage = reader.ReadUInt16();
@@ -96,6 +103,8 @@ namespace Orion.Networking.Packets.Items {
         }
 
         private protected override void WriteToWriter(BinaryWriter writer) {
+            writer.Write(ItemIndex);
+
             Terraria.BitsByte flags2 = 0;
             flags2[0] = ItemWidth != null;
             flags2[1] = ItemHeight != null;
@@ -114,6 +123,7 @@ namespace Orion.Networking.Packets.Items {
             flags[6] = ItemProjectileSpeed != null;
             flags[7] = flags2 != 0;
 
+            writer.Write(flags);
             if (flags[0]) writer.Write(ItemColor.Value.PackedValue);
             if (flags[1]) writer.Write(ItemDamage.Value);
             if (flags[2]) writer.Write(ItemKnockback.Value);

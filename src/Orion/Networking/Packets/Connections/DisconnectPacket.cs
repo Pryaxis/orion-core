@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using Orion.Networking.Packets.Extensions;
 
@@ -20,6 +21,10 @@ namespace Orion.Networking.Packets.Connections {
         }
 
         private protected override PacketType Type => PacketType.Disconnect;
+
+        /// <inheritdoc />
+        [ExcludeFromCodeCoverage]
+        public override string ToString() => $"{nameof(PacketType.Disconnect)}[R={Reason}]";
 
         private protected override void ReadFromReader(BinaryReader reader, ushort packetLength) {
             _reason = reader.ReadNetworkText();

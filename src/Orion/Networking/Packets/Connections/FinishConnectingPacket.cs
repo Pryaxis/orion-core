@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿using System.Diagnostics.CodeAnalysis;
+using System.IO;
 
 namespace Orion.Networking.Packets.Connections {
     /// <summary>
@@ -7,6 +8,11 @@ namespace Orion.Networking.Packets.Connections {
     /// </summary>
     public sealed class FinishConnectingPacket : Packet {
         private protected override PacketType Type => PacketType.FinishConnecting;
+
+        /// <inheritdoc />
+        [ExcludeFromCodeCoverage]
+        public override string ToString() => $"{nameof(PacketType.FinishConnecting)}";
+
         private protected override void ReadFromReader(BinaryReader reader, ushort packetLength) { }
         private protected override void WriteToWriter(BinaryWriter writer) { }
     }

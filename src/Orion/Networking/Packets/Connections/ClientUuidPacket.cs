@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics.CodeAnalysis;
 using System.IO;
 
 namespace Orion.Networking.Packets.Connections {
@@ -18,6 +19,10 @@ namespace Orion.Networking.Packets.Connections {
         }
 
         private protected override PacketType Type => PacketType.ClientUuid;
+
+        /// <inheritdoc />
+        [ExcludeFromCodeCoverage]
+        public override string ToString() => $"{nameof(PacketType.ClientUuid)}[U={ClientUuid}]";
 
         private protected override void ReadFromReader(BinaryReader reader, ushort packetLength) {
             _clientUuid = reader.ReadString();
