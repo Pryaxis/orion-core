@@ -5,13 +5,13 @@ using Orion.Networking.Packets.Misc;
 using Xunit;
 
 namespace Orion.Tests.Networking.Packets.Misc {
-    public class PerformMiscActionPacketTests {
-        public static readonly byte[] PerformMiscActionBytes = {5, 0, 51, 0, 1};
+    public class MiscActionPacketTests {
+        public static readonly byte[] MiscActionBytes = {5, 0, 51, 0, 1,};
 
         [Fact]
         public void ReadFromStream_IsCorrect() {
-            using (var stream = new MemoryStream(PerformMiscActionBytes)) {
-                var packet = (PerformMiscActionPacket)Packet.ReadFromStream(stream, PacketContext.Server);
+            using (var stream = new MemoryStream(MiscActionBytes)) {
+                var packet = (MiscActionPacket)Packet.ReadFromStream(stream, PacketContext.Server);
 
                 packet.PlayerOrNpcIndex.Should().Be(0);
                 packet.Action.Should().Be(MiscAction.SpawnSkeletron);
@@ -20,13 +20,13 @@ namespace Orion.Tests.Networking.Packets.Misc {
 
         [Fact]
         public void WriteToStream_IsCorrect() {
-            using (var stream = new MemoryStream(PerformMiscActionBytes))
+            using (var stream = new MemoryStream(MiscActionBytes))
             using (var stream2 = new MemoryStream()) {
                 var packet = Packet.ReadFromStream(stream, PacketContext.Server);
 
                 packet.WriteToStream(stream2, PacketContext.Server);
 
-                stream2.ToArray().Should().BeEquivalentTo(PerformMiscActionBytes);
+                stream2.ToArray().Should().BeEquivalentTo(MiscActionBytes);
             }
         }
     }

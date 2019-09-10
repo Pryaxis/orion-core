@@ -16,7 +16,7 @@ namespace Orion.Networking.Packets.Connections {
         
         /// <inheritdoc />
         [ExcludeFromCodeCoverage]
-        public override string ToString() => $"{nameof(PacketType.ContinueConnecting)}[P={PlayerIndex}]";
+        public override string ToString() => $"{Type}[#={PlayerIndex}]";
 
         private protected override void ReadFromReader(BinaryReader reader, PacketContext context) {
             PlayerIndex = reader.ReadByte();

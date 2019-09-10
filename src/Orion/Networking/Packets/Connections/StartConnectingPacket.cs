@@ -22,7 +22,7 @@ namespace Orion.Networking.Packets.Connections {
 
         /// <inheritdoc />
         [ExcludeFromCodeCoverage]
-        public override string ToString() => $"{nameof(PacketType.StartConnecting)}[V={Version}]";
+        public override string ToString() => $"{Type}[{Version}]";
 
         private protected override void ReadFromReader(BinaryReader reader, PacketContext context) {
             _version = reader.ReadString();

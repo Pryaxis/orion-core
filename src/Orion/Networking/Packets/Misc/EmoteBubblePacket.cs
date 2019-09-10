@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿using System.Diagnostics.CodeAnalysis;
+using System.IO;
 
 namespace Orion.Networking.Packets.Misc {
     /// <summary>
@@ -6,9 +7,9 @@ namespace Orion.Networking.Packets.Misc {
     /// </summary>
     public sealed class EmoteBubblePacket : Packet {
         /// <summary>
-        /// Gets or sets the emote ID.
+        /// Gets or sets the emote index.
         /// </summary>
-        public int EmoteId { get; set; }
+        public int EmoteIndex { get; set; }
 
         /// <summary>
         /// Gets or sets the anchor type.
@@ -28,6 +29,7 @@ namespace Orion.Networking.Packets.Misc {
         /// <summary>
         /// Gets or sets the emotion.
         /// </summary>
+        // TODO: implement enum for this.
         public int Emotion { get; set; }
 
         /// <summary>
@@ -37,8 +39,12 @@ namespace Orion.Networking.Packets.Misc {
 
         private protected override PacketType Type => PacketType.EmoteBubble;
 
+        /// <inheritdoc />
+        [ExcludeFromCodeCoverage]
+        public override string ToString() => $"{Type}[#={EmoteIndex}, ...]";
+
         private protected override void ReadFromReader(BinaryReader reader, PacketContext context) {
-            EmoteId = reader.ReadInt32();
+            EmoteIndex = reader.ReadInt32();
             AnchorType = reader.ReadByte();
             if (AnchorType == byte.MaxValue) {
                 return;
@@ -53,7 +59,7 @@ namespace Orion.Networking.Packets.Misc {
         }
 
         private protected override void WriteToWriter(BinaryWriter writer, PacketContext context) {
-            writer.Write(EmoteId);
+            writer.Write(EmoteIndex);
             writer.Write(AnchorType);
             if (AnchorType == byte.MaxValue) {
                 return;

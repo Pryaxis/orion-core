@@ -21,7 +21,8 @@ namespace Orion.Networking.Packets.Events {
 
         /// <inheritdoc />
         [ExcludeFromCodeCoverage]
-        public override string ToString() => $"{nameof(PacketType.AnglerQuest)}]";
+        public override string ToString() =>
+            $"{Type}[{CurrentAnglerQuest}, F={IsAnglerQuestFinished}]";
 
         private protected override void ReadFromReader(BinaryReader reader, PacketContext context) {
             CurrentAnglerQuest = reader.ReadByte();

@@ -16,7 +16,7 @@ namespace Orion.Networking.Packets.Events {
 
         /// <inheritdoc />
         [ExcludeFromCodeCoverage]
-        public override string ToString() => $"{nameof(PacketType.OldOnesArmyInfo)}[T={TimeBetweenWaves}]";
+        public override string ToString() => $"{Type}[T={TimeBetweenWaves}]";
 
         private protected override void ReadFromReader(BinaryReader reader, PacketContext context) {
             TimeBetweenWaves = TimeSpan.FromSeconds(reader.ReadInt32() / 60.0);

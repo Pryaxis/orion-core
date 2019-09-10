@@ -16,7 +16,7 @@ namespace Orion.Networking.Packets.Events {
 
         /// <inheritdoc />
         [ExcludeFromCodeCoverage]
-        public override string ToString() => $"{nameof(PacketType.ProgressionEvent)}[E={EventId}]";
+        public override string ToString() => $"{Type}[{EventId}]";
 
         private protected override void ReadFromReader(BinaryReader reader, PacketContext context) {
             EventId = reader.ReadInt16();

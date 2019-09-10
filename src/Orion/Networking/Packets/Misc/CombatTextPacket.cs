@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using Microsoft.Xna.Framework;
 using Orion.Networking.Packets.Extensions;
@@ -7,7 +8,7 @@ namespace Orion.Networking.Packets.Misc {
     /// <summary>
     /// Packet sent from the server to the client to show combat text.
     /// </summary>
-    public sealed class ShowCombatTextPacket : Packet {
+    public sealed class CombatTextPacket : Packet {
         private Terraria.Localization.NetworkText _text = Terraria.Localization.NetworkText.Empty;
         
         /// <summary>
@@ -29,7 +30,11 @@ namespace Orion.Networking.Packets.Misc {
             set => _text = value ?? throw new ArgumentNullException(nameof(value));
         }
 
-        private protected override PacketType Type => PacketType.ShowCombatText;
+        private protected override PacketType Type => PacketType.CombatText;
+
+        /// <inheritdoc />
+        [ExcludeFromCodeCoverage]
+        public override string ToString() => $"{Type}[{Text}, C={TextColor}, ...]";
 
         private protected override void ReadFromReader(BinaryReader reader, PacketContext context) {
             TextPosition = reader.ReadVector2();

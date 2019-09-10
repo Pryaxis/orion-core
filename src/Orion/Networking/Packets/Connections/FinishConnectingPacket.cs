@@ -11,7 +11,7 @@ namespace Orion.Networking.Packets.Connections {
 
         /// <inheritdoc />
         [ExcludeFromCodeCoverage]
-        public override string ToString() => $"{nameof(PacketType.FinishConnecting)}";
+        public override string ToString() => $"{Type}";
 
         private protected override void ReadFromReader(BinaryReader reader, PacketContext context) { }
         private protected override void WriteToWriter(BinaryWriter writer, PacketContext context) { }

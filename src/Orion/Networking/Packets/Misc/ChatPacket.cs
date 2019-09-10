@@ -1,13 +1,14 @@
 ﻿using System;
+using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using Microsoft.Xna.Framework;
 using Orion.Networking.Packets.Extensions;
 
 namespace Orion.Networking.Packets.Misc {
     /// <summary>
-    /// Packet sent to the client to show chat.
+    /// Packet sent from the server to the client to show chat.
     /// </summary>
-    public sealed class ShowChatPacket : Packet {
+    public sealed class ChatPacket : Packet {
         private Terraria.Localization.NetworkText _chatText;
 
         /// <summary>
@@ -28,7 +29,11 @@ namespace Orion.Networking.Packets.Misc {
         /// </summary>
         public short ChatLineWidth { get; set; }
 
-        private protected override PacketType Type => PacketType.ShowChat;
+        private protected override PacketType Type => PacketType.Chat;
+
+        /// <inheritdoc />
+        [ExcludeFromCodeCoverage]
+        public override string ToString() => $"{Type}[{ChatText}, C={ChatColor}, ...]";
 
         private protected override void ReadFromReader(BinaryReader reader, PacketContext context) {
             ChatColor = reader.ReadColor();

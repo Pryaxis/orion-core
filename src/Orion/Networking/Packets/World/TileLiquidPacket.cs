@@ -32,7 +32,7 @@ namespace Orion.Networking.Packets.World {
         /// <inheritdoc />
         [ExcludeFromCodeCoverage]
         public override string ToString() =>
-            $"{nameof(PacketType.TileLiquid)}[X={TileX}, Y={TileY}, L={LiquidAmount}, T={LiquidType}]";
+            $"{Type}[X={TileX}, Y={TileY}, L={LiquidAmount}, T={LiquidType}]";
 
         private protected override void ReadFromReader(BinaryReader reader, PacketContext context) {
             TileX = reader.ReadInt16();

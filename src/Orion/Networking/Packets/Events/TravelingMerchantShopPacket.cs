@@ -16,7 +16,7 @@ namespace Orion.Networking.Packets.Events {
 
         /// <inheritdoc />
         [ExcludeFromCodeCoverage]
-        public override string ToString() => $"{nameof(PacketType.TravelingMerchantShop)}";
+        public override string ToString() => $"{Type}[...]";
 
         private protected override void ReadFromReader(BinaryReader reader, PacketContext context) {
             for (var i = 0; i < Terraria.Chest.maxItems; ++i) {

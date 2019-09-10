@@ -15,7 +15,7 @@ namespace Orion.Tests.Networking.Packets.Misc {
             using (var stream = new MemoryStream(EmoteBubbleBytes)) {
                 var packet = (EmoteBubblePacket)Packet.ReadFromStream(stream, PacketContext.Server);
 
-                packet.EmoteId.Should().Be(1);
+                packet.EmoteIndex.Should().Be(1);
                 packet.AnchorType.Should().Be(0);
                 packet.AnchorIndex.Should().Be(100);
                 packet.Lifetime.Should().Be(255);
@@ -44,7 +44,7 @@ namespace Orion.Tests.Networking.Packets.Misc {
             using (var stream = new MemoryStream(EmoteBubbleBytes2)) {
                 var packet = (EmoteBubblePacket)Packet.ReadFromStream(stream, PacketContext.Server);
 
-                packet.EmoteId.Should().Be(1);
+                packet.EmoteIndex.Should().Be(1);
                 packet.AnchorType.Should().Be(255);
             }
         }
@@ -70,7 +70,7 @@ namespace Orion.Tests.Networking.Packets.Misc {
             using (var stream = new MemoryStream(EmoteBubbleBytes3)) {
                 var packet = (EmoteBubblePacket)Packet.ReadFromStream(stream, PacketContext.Server);
 
-                packet.EmoteId.Should().Be(1);
+                packet.EmoteIndex.Should().Be(1);
                 packet.AnchorType.Should().Be(0);
                 packet.AnchorIndex.Should().Be(100);
                 packet.Lifetime.Should().Be(255);

@@ -1,14 +1,16 @@
-﻿using System.IO;
+﻿using System.Diagnostics.CodeAnalysis;
+using System.IO;
 using Orion.World.Tiles;
 
 namespace Orion.Networking.Packets.Misc {
     /// <summary>
-    /// Packet sent to create a temporary animation.
+    /// Packet sent to show a tile animation.
     /// </summary>
-    public sealed class ShowTileAnimationPacket : Packet {
+    public sealed class TileAnimationPacket : Packet {
         /// <summary>
         /// Gets or sets the animation type.
         /// </summary>
+        // TODO: implement enum for this.
         public short AnimationType { get; set; }
 
         /// <summary>
@@ -26,7 +28,11 @@ namespace Orion.Networking.Packets.Misc {
         /// </summary>
         public short TileY { get; set; }
 
-        private protected override PacketType Type => PacketType.ShowTileAnimation;
+        private protected override PacketType Type => PacketType.TileAnimation;
+
+        /// <inheritdoc />
+        [ExcludeFromCodeCoverage]
+        public override string ToString() => $"{Type}[X={TileX}, Y={TileY}, T={AnimationType}, B={BlockType}]";
 
         private protected override void ReadFromReader(BinaryReader reader, PacketContext context) {
             AnimationType = reader.ReadInt16();

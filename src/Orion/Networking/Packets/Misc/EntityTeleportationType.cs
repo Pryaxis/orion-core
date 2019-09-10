@@ -1,6 +1,6 @@
 ﻿namespace Orion.Networking.Packets.Misc {
     /// <summary>
-    /// Specifies the teleportation type of an <see cref="EntityTeleportPacket"/>.
+    /// Specifies the teleportation type of an <see cref="EntityTeleportationPacket"/>.
     /// </summary>
     public enum EntityTeleportationType {
         /// <summary>

@@ -16,7 +16,7 @@ namespace Orion.Networking.Packets.Events {
 
         /// <inheritdoc />
         [ExcludeFromCodeCoverage]
-        public override string ToString() => $"{nameof(PacketType.NpcTypeKilledEvent)}[N={NpcTypeKilled}]";
+        public override string ToString() => $"{Type}[{NpcTypeKilled}]";
 
         private protected override void ReadFromReader(BinaryReader reader, PacketContext context) {
             NpcTypeKilled = (NpcType)reader.ReadInt16();

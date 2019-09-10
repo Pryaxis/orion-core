@@ -30,10 +30,9 @@ namespace Orion.Networking.Packets.Events {
 
         /// <inheritdoc />
         [ExcludeFromCodeCoverage]
-        public override string ToString() {
-            return $"{nameof(PacketType.PillarShieldStrengths)}[S={SolarPillarShieldStrength}, " +
-                   $"V={VortexPillarShieldStrength}, N={NebulaPillarShieldStrength}, T={StardustPillarShieldStrength}]";
-        }
+        public override string ToString() =>
+            $"{Type}[S={SolarPillarShieldStrength}, " +
+            $"V={VortexPillarShieldStrength}, N={NebulaPillarShieldStrength}, T={StardustPillarShieldStrength}]";
 
         private protected override void ReadFromReader(BinaryReader reader, PacketContext context) {
             SolarPillarShieldStrength = reader.ReadUInt16();

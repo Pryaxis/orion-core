@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿using System.Diagnostics.CodeAnalysis;
+using System.IO;
 using Microsoft.Xna.Framework;
 using Orion.Items;
 using Orion.Networking.Packets.Extensions;
@@ -44,6 +45,10 @@ namespace Orion.Networking.Packets.Items {
         public ItemType ItemType { get; set; }
 
         private protected override PacketType Type => PacketType.InstancedItemInfo;
+
+        /// <inheritdoc />
+        [ExcludeFromCodeCoverage]
+        public override string ToString() => $"{Type}[#={ItemIndex}, ...]";
 
         private protected override void ReadFromReader(BinaryReader reader, PacketContext context) {
             ItemIndex = reader.ReadInt16();

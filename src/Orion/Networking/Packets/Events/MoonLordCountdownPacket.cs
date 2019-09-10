@@ -16,7 +16,7 @@ namespace Orion.Networking.Packets.Events {
 
         /// <inheritdoc />
         [ExcludeFromCodeCoverage]
-        public override string ToString() => $"{nameof(PacketType.MoonLordCountdown)}[T={MoonLordCountdown}]";
+        public override string ToString() => $"{Type}[{MoonLordCountdown}]";
 
         private protected override void ReadFromReader(BinaryReader reader, PacketContext context) {
             MoonLordCountdown = TimeSpan.FromSeconds(reader.ReadInt32() / 60.0);

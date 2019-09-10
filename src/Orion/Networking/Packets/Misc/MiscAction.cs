@@ -1,6 +1,6 @@
 ﻿namespace Orion.Networking.Packets.Misc {
     /// <summary>
-    /// Specifies the type of action in a <see cref="PerformMiscActionPacket"/>.
+    /// Specifies the type of action in a <see cref="MiscActionPacket"/>.
     /// </summary>
     public enum MiscAction : byte {
         /// <summary>

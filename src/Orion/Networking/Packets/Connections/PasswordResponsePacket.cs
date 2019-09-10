@@ -23,7 +23,7 @@ namespace Orion.Networking.Packets.Connections {
 
         /// <inheritdoc />
         [ExcludeFromCodeCoverage]
-        public override string ToString() => $"{nameof(PacketType.PasswordResponse)}[P={Password}]";
+        public override string ToString() => $"{Type}[{Password}]";
 
         private protected override void ReadFromReader(BinaryReader reader, PacketContext context) {
             _password = reader.ReadString();

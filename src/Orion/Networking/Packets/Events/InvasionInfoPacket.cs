@@ -31,10 +31,9 @@ namespace Orion.Networking.Packets.Events {
 
         /// <inheritdoc />
         [ExcludeFromCodeCoverage]
-        public override string ToString() {
-            return $"{nameof(PacketType.InvasionInfo)}[K={NumberOfKills}/{NumberOfKillsToProgress}, " +
-                   $"T={InvasionIconType}, #={InvasionWaveNumber}]";
-        }
+        public override string ToString() =>
+            $"{Type}[{NumberOfKills}/{NumberOfKillsToProgress}, " +
+            $"T={InvasionIconType}, #={InvasionWaveNumber}]";
 
         private protected override void ReadFromReader(BinaryReader reader, PacketContext context) {
             NumberOfKills = reader.ReadInt32();

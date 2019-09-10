@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿using System.Diagnostics.CodeAnalysis;
+using System.IO;
 using Microsoft.Xna.Framework;
 using Orion.Networking.Packets.Extensions;
 
@@ -6,7 +7,7 @@ namespace Orion.Networking.Packets.Misc {
     /// <summary>
     /// /Packet sent to teleport an entity.
     /// </summary>
-    public sealed class EntityTeleportPacket : Packet {
+    public sealed class EntityTeleportationPacket : Packet {
         /// <summary>
         /// Gets or sets the teleportation type.
         /// </summary>
@@ -27,7 +28,11 @@ namespace Orion.Networking.Packets.Misc {
         /// </summary>
         public Vector2 Position { get; set; }
 
-        private protected override PacketType Type => PacketType.EntityTeleport;
+        private protected override PacketType Type => PacketType.EntityTeleportation;
+
+        /// <inheritdoc />
+        [ExcludeFromCodeCoverage]
+        public override string ToString() => $"{Type}[#={PlayerOrNpcIndex}, T={TeleportationType}, ...]";
 
         private protected override void ReadFromReader(BinaryReader reader, PacketContext context) {
             var header = reader.ReadByte();

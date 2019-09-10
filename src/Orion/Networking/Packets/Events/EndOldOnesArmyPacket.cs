@@ -10,7 +10,7 @@ namespace Orion.Networking.Packets.Events {
 
         /// <inheritdoc />
         [ExcludeFromCodeCoverage]
-        public override string ToString() => $"{nameof(PacketType.EndOldOnesArmy)}]";
+        public override string ToString() => $"{Type}";
 
         private protected override void ReadFromReader(BinaryReader reader, PacketContext context) { }
         private protected override void WriteToWriter(BinaryWriter writer, PacketContext context) { }

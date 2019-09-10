@@ -37,7 +37,7 @@ namespace Orion.Networking.Packets.World {
         /// <inheritdoc />
         [ExcludeFromCodeCoverage]
         public override string ToString() {
-            var beginning = $"{nameof(PacketType.TileModification)}[M={ModificationType}, X={TileX}, Y={TileY}";
+            var beginning = $"{Type}[M={ModificationType}, X={TileX}, Y={TileY}";
             switch (ModificationType) {
             case TileModificationType.DestroyBlock:
                 return beginning + $", F={ModificationData == 1}]";

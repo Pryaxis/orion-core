@@ -20,7 +20,7 @@ namespace Orion.Networking.Packets.World {
 
         /// <inheritdoc />
         [ExcludeFromCodeCoverage]
-        public override string ToString() => $"{nameof(PacketType.ActivateWire)}[X={WireX}, Y={WireY}]";
+        public override string ToString() => $"{Type}[X={WireX}, Y={WireY}]";
 
         private protected override void ReadFromReader(BinaryReader reader, PacketContext context) {
             WireX = reader.ReadInt16();

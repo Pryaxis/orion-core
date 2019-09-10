@@ -1,10 +1,11 @@
-﻿using System.IO;
+﻿using System.Diagnostics.CodeAnalysis;
+using System.IO;
 
 namespace Orion.Networking.Packets.Misc {
     /// <summary>
-    /// Packet sent to perform an action.
+    /// Packet sent to perform a miscellaneous action.
     /// </summary>
-    public sealed class PerformMiscActionPacket : Packet {
+    public sealed class MiscActionPacket : Packet {
         /// <summary>
         /// Gets or sets the player or NPC index.
         /// </summary>
@@ -15,7 +16,11 @@ namespace Orion.Networking.Packets.Misc {
         /// </summary>
         public MiscAction Action { get; set; }
 
-        private protected override PacketType Type => PacketType.PerformMiscAction;
+        private protected override PacketType Type => PacketType.MiscAction;
+
+        /// <inheritdoc />
+        [ExcludeFromCodeCoverage]
+        public override string ToString() => $"{Type}[#={PlayerOrNpcIndex}, A={Action}]";
 
         private protected override void ReadFromReader(BinaryReader reader, PacketContext context) {
             PlayerOrNpcIndex = reader.ReadByte();

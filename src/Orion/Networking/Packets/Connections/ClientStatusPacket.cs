@@ -28,7 +28,7 @@ namespace Orion.Networking.Packets.Connections {
 
         /// <inheritdoc />
         [ExcludeFromCodeCoverage]
-        public override string ToString() => $"{nameof(PacketType.ClientStatus)}[I={StatusIncrease}, T={StatusText}]";
+        public override string ToString() => $"{Type}[{StatusText}, I={StatusIncrease}]";
 
         private protected override void ReadFromReader(BinaryReader reader, PacketContext context) {
             StatusIncrease = reader.ReadInt32();

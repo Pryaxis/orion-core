@@ -6,15 +6,15 @@ using Orion.Networking.Packets.Misc;
 using Xunit;
 
 namespace Orion.Tests.Networking.Packets.Misc {
-    public class ShowCombatTextPacketTests {
-        public static readonly byte[] ShowCombatTextBytes = {
+    public class CombatTextPacketTests {
+        public static readonly byte[] CombatTextBytes = {
             24, 0, 119, 0, 0, 0, 0, 0, 0, 0, 0, 255, 255, 255, 0, 8, 84, 101, 114, 114, 97, 114, 105, 97,
         };
 
         [Fact]
         public void ReadFromStream_IsCorrect() {
-            using (var stream = new MemoryStream(ShowCombatTextBytes)) {
-                var packet = (ShowCombatTextPacket)Packet.ReadFromStream(stream, PacketContext.Server);
+            using (var stream = new MemoryStream(CombatTextBytes)) {
+                var packet = (CombatTextPacket)Packet.ReadFromStream(stream, PacketContext.Server);
 
                 packet.TextPosition.Should().Be(Vector2.Zero);
                 packet.TextColor.Should().Be(Color.White);
@@ -24,13 +24,13 @@ namespace Orion.Tests.Networking.Packets.Misc {
 
         [Fact]
         public void WriteToStream_IsCorrect() {
-            using (var stream = new MemoryStream(ShowCombatTextBytes))
+            using (var stream = new MemoryStream(CombatTextBytes))
             using (var stream2 = new MemoryStream()) {
                 var packet = Packet.ReadFromStream(stream, PacketContext.Server);
 
                 packet.WriteToStream(stream2, PacketContext.Server);
 
-                stream2.ToArray().Should().BeEquivalentTo(ShowCombatTextBytes);
+                stream2.ToArray().Should().BeEquivalentTo(CombatTextBytes);
             }
         }
     }

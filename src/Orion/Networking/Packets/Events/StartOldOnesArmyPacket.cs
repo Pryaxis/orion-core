@@ -20,7 +20,7 @@ namespace Orion.Networking.Packets.Events {
 
         /// <inheritdoc />
         [ExcludeFromCodeCoverage]
-        public override string ToString() => $"{nameof(PacketType.StartOldOnesArmy)}[X={CrystalX}, Y={CrystalY}]";
+        public override string ToString() => $"{Type}[X={CrystalX}, Y={CrystalY}]";
 
         private protected override void ReadFromReader(BinaryReader reader, PacketContext context) {
             CrystalX = reader.ReadInt16();

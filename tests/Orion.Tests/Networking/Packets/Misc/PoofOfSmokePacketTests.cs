@@ -6,13 +6,13 @@ using Orion.Networking.Packets.Misc;
 using Xunit;
 
 namespace Orion.Tests.Networking.Packets.Misc {
-    public class ShowPoofOfSmokePacketTests {
-        public static readonly byte[] ShowPoofOfSmokeBytes = {7, 0, 106, 0, 0, 0, 0,};
+    public class PoofOfSmokePacketTests {
+        public static readonly byte[] PoofOfSmokeBytes = {7, 0, 106, 0, 0, 0, 0,};
 
         [Fact]
         public void ReadFromStream_IsCorrect() {
-            using (var stream = new MemoryStream(ShowPoofOfSmokeBytes)) {
-                var packet = (ShowPoofOfSmokePacket)Packet.ReadFromStream(stream, PacketContext.Server);
+            using (var stream = new MemoryStream(PoofOfSmokeBytes)) {
+                var packet = (PoofOfSmokePacket)Packet.ReadFromStream(stream, PacketContext.Server);
 
                 packet.SmokePosition.Should().Be(new HalfVector2());
             }
@@ -20,13 +20,13 @@ namespace Orion.Tests.Networking.Packets.Misc {
 
         [Fact]
         public void WriteToStream_IsCorrect() {
-            using (var stream = new MemoryStream(ShowPoofOfSmokeBytes))
+            using (var stream = new MemoryStream(PoofOfSmokeBytes))
             using (var stream2 = new MemoryStream()) {
                 var packet = Packet.ReadFromStream(stream, PacketContext.Server);
 
                 packet.WriteToStream(stream2, PacketContext.Server);
 
-                stream2.ToArray().Should().BeEquivalentTo(ShowPoofOfSmokeBytes);
+                stream2.ToArray().Should().BeEquivalentTo(PoofOfSmokeBytes);
             }
         }
     }

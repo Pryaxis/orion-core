@@ -58,13 +58,7 @@ namespace Orion.Networking.Packets.Events {
 
         /// <inheritdoc />
         [ExcludeFromCodeCoverage]
-        public override string ToString() {
-            if (IsBoss) {
-                return $"{nameof(PacketType.BossOrInvasion)}[B={BossType}]";
-            } else {
-                return $"{nameof(PacketType.BossOrInvasion)}[I={InvasionType}]";
-            }
-        }
+        public override string ToString() => IsBoss ? $"{Type}[{BossType}]" : $"{Type}[{InvasionType}]";
 
         private protected override void ReadFromReader(BinaryReader reader, PacketContext context) {
             SummmonOnPlayerIndex = (byte)reader.ReadInt16();

@@ -24,7 +24,7 @@ namespace Orion.Networking.Packets.Connections {
 
         /// <inheritdoc />
         [ExcludeFromCodeCoverage]
-        public override string ToString() => $"{nameof(PacketType.Disconnect)}[R={Reason}]";
+        public override string ToString() => $"{Type}[{Reason}]";
 
         private protected override void ReadFromReader(BinaryReader reader, PacketContext context) {
             _reason = reader.ReadNetworkText();

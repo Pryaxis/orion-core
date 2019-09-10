@@ -26,7 +26,7 @@ namespace Orion.Networking.Packets.World {
         /// <inheritdoc />
         [ExcludeFromCodeCoverage]
         public override string ToString() =>
-            $"{nameof(PacketType.BiomeStats)}[H={HallowedAmount}, C={CorruptionAmount}, C'={CrimsonAmount}]";
+            $"{Type}[H={HallowedAmount}, C={CorruptionAmount}, C'={CrimsonAmount}]";
 
         /// <inheritdoc />
         private protected override void ReadFromReader(BinaryReader reader, PacketContext context) {

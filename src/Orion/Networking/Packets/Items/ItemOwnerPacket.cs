@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿using System.Diagnostics.CodeAnalysis;
+using System.IO;
 
 namespace Orion.Networking.Packets.Items {
     /// <summary>
@@ -16,6 +17,10 @@ namespace Orion.Networking.Packets.Items {
         public byte OwnerPlayerIndex { get; set; }
 
         private protected override PacketType Type => PacketType.ItemOwner;
+
+        /// <inheritdoc />
+        [ExcludeFromCodeCoverage]
+        public override string ToString() => $"{Type}[#={ItemIndex}, O={OwnerPlayerIndex}]";
 
         private protected override void ReadFromReader(BinaryReader reader, PacketContext context) {
             ItemIndex = reader.ReadInt16();

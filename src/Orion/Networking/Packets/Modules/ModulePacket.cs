@@ -20,7 +20,7 @@ namespace Orion.Networking.Packets.Modules {
         private protected override PacketType Type => PacketType.Module;
 
         /// <inheritdoc />
-        public override string ToString() => $"{nameof(PacketType.Module)}[{Module}]";
+        public override string ToString() => $"{Type}[{Module}]";
 
         private protected override void ReadFromReader(BinaryReader reader, PacketContext context) {
             Module = Module.ReadFromStream(reader.BaseStream, context);
