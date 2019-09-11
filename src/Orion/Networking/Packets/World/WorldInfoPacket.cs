@@ -1,8 +1,26 @@
-﻿using System;
+﻿// Copyright (c) 2015-2019 Pryaxis & Orion Contributors
+// 
+// This file is part of Orion.
+// 
+// Orion is free software: you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+// 
+// Orion is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+// 
+// You should have received a copy of the GNU General Public License
+// along with Orion.  If not, see <https://www.gnu.org/licenses/>.
+
+using System;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using Orion.Networking.Packets.Connections;
 using Orion.World;
+using Terraria;
 
 namespace Orion.Networking.Packets.World {
     /// <summary>
@@ -411,7 +429,7 @@ namespace Orion.Networking.Packets.World {
         private protected override void ReadFromReader(BinaryReader reader, PacketContext context) {
             Time = reader.ReadInt32();
 
-            Terraria.BitsByte timeFlags = reader.ReadByte();
+            BitsByte timeFlags = reader.ReadByte();
             IsDaytime = timeFlags[0];
             IsBloodMoon = timeFlags[1];
             IsEclipse = timeFlags[2];
@@ -447,11 +465,11 @@ namespace Orion.Networking.Packets.World {
             CaveBackgroundStyles = reader.ReadBytes(4);
             Rain = reader.ReadSingle();
 
-            Terraria.BitsByte worldFlags = reader.ReadByte();
-            Terraria.BitsByte worldFlags2 = reader.ReadByte();
-            Terraria.BitsByte worldFlags3 = reader.ReadByte();
-            Terraria.BitsByte worldFlags4 = reader.ReadByte();
-            Terraria.BitsByte worldFlags5 = reader.ReadByte();
+            BitsByte worldFlags = reader.ReadByte();
+            BitsByte worldFlags2 = reader.ReadByte();
+            BitsByte worldFlags3 = reader.ReadByte();
+            BitsByte worldFlags4 = reader.ReadByte();
+            BitsByte worldFlags5 = reader.ReadByte();
             HasSmashedShadowOrb = worldFlags[0];
             HasDefeatedEyeOfCthulhu = worldFlags[1];
             HasDefeatedEvilBoss = worldFlags[2];
@@ -501,7 +519,7 @@ namespace Orion.Networking.Packets.World {
         private protected override void WriteToWriter(BinaryWriter writer, PacketContext context) {
             writer.Write(Time);
 
-            Terraria.BitsByte timeFlags = 0;
+            BitsByte timeFlags = 0;
             timeFlags[0] = IsDaytime;
             timeFlags[1] = IsBloodMoon;
             timeFlags[2] = IsEclipse;
@@ -546,11 +564,11 @@ namespace Orion.Networking.Packets.World {
             writer.Write(CaveBackgroundStyles);
             writer.Write(Rain);
 
-            Terraria.BitsByte worldFlags = 0;
-            Terraria.BitsByte worldFlags2 = 0;
-            Terraria.BitsByte worldFlags3 = 0;
-            Terraria.BitsByte worldFlags4 = 0;
-            Terraria.BitsByte worldFlags5 = 0;
+            BitsByte worldFlags = 0;
+            BitsByte worldFlags2 = 0;
+            BitsByte worldFlags3 = 0;
+            BitsByte worldFlags4 = 0;
+            BitsByte worldFlags5 = 0;
             worldFlags[0] = HasSmashedShadowOrb;
             worldFlags[1] = HasDefeatedEyeOfCthulhu;
             worldFlags[2] = HasDefeatedEvilBoss;

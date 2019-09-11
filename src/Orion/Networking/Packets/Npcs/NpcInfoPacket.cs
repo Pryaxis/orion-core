@@ -1,8 +1,26 @@
-﻿using System.Diagnostics.CodeAnalysis;
+﻿// Copyright (c) 2015-2019 Pryaxis & Orion Contributors
+// 
+// This file is part of Orion.
+// 
+// Orion is free software: you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+// 
+// Orion is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+// 
+// You should have received a copy of the GNU General Public License
+// along with Orion.  If not, see <https://www.gnu.org/licenses/>.
+
+using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using Microsoft.Xna.Framework;
 using Orion.Networking.Packets.Extensions;
 using Orion.Npcs;
+using Terraria;
 
 namespace Orion.Networking.Packets.Npcs {
     /// <summary>
@@ -42,7 +60,7 @@ namespace Orion.Networking.Packets.Npcs {
         /// <summary>
         /// Gets the NPC's AI values.
         /// </summary>
-        public float[] NpcAiValues { get; } = new float[4];
+        public float[] NpcAiValues { get; } = new float[NPC.maxAI];
 
         /// <summary>
         /// Gets or sets a value indicating the direction of the NPC sprite.
@@ -55,7 +73,7 @@ namespace Orion.Networking.Packets.Npcs {
         public bool IsNpcAtMaxHealth { get; set; }
 
         /// <summary>
-        /// Gets or sets the NPC type.
+        /// Gets or sets the NPC's <see cref="Orion.Npcs.NpcType"/>.
         /// </summary>
         public NpcType NpcType { get; set; }
 
@@ -82,13 +100,13 @@ namespace Orion.Networking.Packets.Npcs {
 
         private protected override void ReadFromReader(BinaryReader reader, PacketContext context) {
             NpcIndex = reader.ReadInt16();
-            NpcPosition = reader.ReadVector2();
-            NpcVelocity = reader.ReadVector2();
+            NpcPosition = BinaryExtensions.ReadVector2(reader);
+            NpcVelocity = BinaryExtensions.ReadVector2(reader);
 
             var targetIndex = reader.ReadUInt16();
             NpcTargetIndex = targetIndex != ushort.MaxValue ? targetIndex : (ushort)0;
 
-            Terraria.BitsByte header = reader.ReadByte();
+            BitsByte header = reader.ReadByte();
             NpcHorizontalDirection = header[0];
             NpcVerticalDirection = header[1];
             if (header[2]) NpcAiValues[0] = reader.ReadSingle();
@@ -115,7 +133,7 @@ namespace Orion.Networking.Packets.Npcs {
                 }
             }
 
-            if (Terraria.Main.npcCatchable[(int)NpcType]) {
+            if (Main.npcCatchable[(int)NpcType]) {
                 NpcReleaserPlayerIndex = reader.ReadByte();
             }
         }
@@ -126,7 +144,7 @@ namespace Orion.Networking.Packets.Npcs {
             writer.Write(NpcVelocity);
             writer.Write(NpcTargetIndex);
 
-            Terraria.BitsByte header = 0;
+            BitsByte header = 0;
             header[0] = NpcHorizontalDirection;
             header[1] = NpcVerticalDirection;
             header[2] = NpcAiValues[0] != 0;
@@ -159,7 +177,7 @@ namespace Orion.Networking.Packets.Npcs {
                 }
             }
 
-            if (Terraria.Main.npcCatchable[(int)NpcType]) {
+            if (Main.npcCatchable[(int)NpcType]) {
                 writer.Write(NpcReleaserPlayerIndex);
             }
         }

@@ -1,4 +1,21 @@
-﻿using System;
+﻿// Copyright (c) 2015-2019 Pryaxis & Orion Contributors
+// 
+// This file is part of Orion.
+// 
+// Orion is free software: you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+// 
+// Orion is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+// 
+// You should have received a copy of the GNU General Public License
+// along with Orion.  If not, see <https://www.gnu.org/licenses/>.
+
+using System;
 using System.Linq;
 using FluentAssertions;
 using Microsoft.Xna.Framework;
@@ -6,6 +23,8 @@ using Moq;
 using Orion.Items;
 using Orion.Npcs;
 using Orion.Players;
+using Terraria;
+using Terraria.Utilities;
 using Xunit;
 
 namespace Orion.Tests.Npcs {
@@ -16,23 +35,23 @@ namespace Orion.Tests.Npcs {
         private readonly INpcService _npcService;
 
         public OrionNpcServiceTests() {
-            for (var i = 0; i < Terraria.Main.maxNPCs + 1; ++i) {
-                Terraria.Main.npc[i] = new Terraria.NPC {whoAmI = i};
+            for (var i = 0; i < Main.maxNPCs + 1; ++i) {
+                Main.npc[i] = new NPC {whoAmI = i};
             }
 
-            for (var i = 0; i < Terraria.Main.maxCombatText; ++i) {
-                Terraria.Main.combatText[i] = new Terraria.CombatText {active = true};
+            for (var i = 0; i < Main.maxCombatText; ++i) {
+                Main.combatText[i] = new CombatText {active = true};
             }
 
-            for (var i = 0; i < Terraria.Main.maxItems + 1; ++i) {
-                Terraria.Main.item[i] = new Terraria.Item {whoAmI = i};
+            for (var i = 0; i < Main.maxItems + 1; ++i) {
+                Main.item[i] = new Item {whoAmI = i};
             }
 
-            for (var i = 0; i < Terraria.Main.maxPlayers + 1; ++i) {
-                Terraria.Main.player[i] = new Terraria.Player {whoAmI = i};
+            for (var i = 0; i < Main.maxPlayers + 1; ++i) {
+                Main.player[i] = new Player {whoAmI = i};
             }
 
-            Terraria.Main.rand = new Terraria.Utilities.UnifiedRandom();
+            Main.rand = new UnifiedRandom();
 
             _itemService.Setup(s => s.SpawnItem(It.IsAny<ItemType>(), It.IsAny<Vector2>(), It.IsAny<int>(),
                                                 It.IsAny<ItemPrefix>()))
@@ -48,7 +67,7 @@ namespace Orion.Tests.Npcs {
         public void GetNpc_IsCorrect() {
             var npc = (OrionNpc)_npcService[0];
 
-            npc.Wrapped.Should().BeSameAs(Terraria.Main.npc[0]);
+            npc.Wrapped.Should().BeSameAs(Main.npc[0]);
         }
 
         [Fact]
@@ -71,7 +90,7 @@ namespace Orion.Tests.Npcs {
         [Theory]
         [InlineData(100)]
         public void GetBaseNpcSpawningRate_IsCorrect(int spawningRate) {
-            Terraria.NPC.defaultSpawnRate = spawningRate;
+            NPC.defaultSpawnRate = spawningRate;
 
             _npcService.BaseNpcSpawningRate.Should().Be(spawningRate);
         }
@@ -81,13 +100,13 @@ namespace Orion.Tests.Npcs {
         public void SetBaseNpcSpawningRate_IsCorrect(int spawningRate) {
             _npcService.BaseNpcSpawningRate = spawningRate;
 
-            Terraria.NPC.defaultSpawnRate.Should().Be(spawningRate);
+            NPC.defaultSpawnRate.Should().Be(spawningRate);
         }
 
         [Theory]
         [InlineData(100)]
         public void GetBaseNpcSpawningLimit_IsCorrect(int spawningLimit) {
-            Terraria.NPC.defaultMaxSpawns = spawningLimit;
+            NPC.defaultMaxSpawns = spawningLimit;
 
             _npcService.BaseNpcSpawningLimit.Should().Be(spawningLimit);
         }
@@ -97,7 +116,7 @@ namespace Orion.Tests.Npcs {
         public void SetBaseNpcSpawningLimit_IsCorrect(int spawningLimit) {
             _npcService.BaseNpcSpawningLimit = spawningLimit;
 
-            Terraria.NPC.defaultMaxSpawns.Should().Be(spawningLimit);
+            NPC.defaultMaxSpawns.Should().Be(spawningLimit);
         }
 
         [Fact]
@@ -106,7 +125,7 @@ namespace Orion.Tests.Npcs {
             _npcService.SpawningNpc += (sender, args) => {
                 isRun = true;
                 args.NpcType.Should().Be(NpcType.BlueSlime);
-                args.Position.Should().Be(Vector2.Zero);
+                args.NpcPosition.Should().Be(Vector2.Zero);
             };
 
             _npcService.SpawnNpc(NpcType.BlueSlime, Vector2.Zero);
@@ -265,7 +284,7 @@ namespace Orion.Tests.Npcs {
                 args.Damage.Should().Be(damage);
                 args.Knockback.Should().Be(knockback);
                 args.HitDirection.Should().Be(hitDirection);
-                args.PlayerResponsible.Should().BeNull();
+                args.DamagingPlayer.Should().BeNull();
             };
             var npc = (OrionNpc)_npcService.SpawnNpc(NpcType.BlueSlime, Vector2.Zero);
 
@@ -297,7 +316,7 @@ namespace Orion.Tests.Npcs {
                 args.Damage.Should().Be(damage);
                 args.Knockback.Should().Be(knockback);
                 args.HitDirection.Should().Be(hitDirection);
-                args.PlayerResponsible.Should().BeNull();
+                args.DamagingPlayer.Should().BeNull();
             };
             var npc = (OrionNpc)_npcService.SpawnNpc(NpcType.BlueSlime, Vector2.Zero);
 
@@ -408,7 +427,7 @@ namespace Orion.Tests.Npcs {
             var npcs = _npcService.ToList();
 
             for (var i = 0; i < npcs.Count; ++i) {
-                ((OrionNpc)npcs[i]).Wrapped.Should().BeSameAs(Terraria.Main.npc[i]);
+                ((OrionNpc)npcs[i]).Wrapped.Should().BeSameAs(Main.npc[i]);
             }
         }
 

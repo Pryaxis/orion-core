@@ -1,4 +1,21 @@
-﻿using System;
+﻿// Copyright (c) 2015-2019 Pryaxis & Orion Contributors
+// 
+// This file is part of Orion.
+// 
+// Orion is free software: you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+// 
+// Orion is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+// 
+// You should have received a copy of the GNU General Public License
+// along with Orion.  If not, see <https://www.gnu.org/licenses/>.
+
+using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
@@ -7,6 +24,8 @@ using System.Text;
 using Orion.Networking.Packets.World.TileEntities;
 using Orion.World.Tiles;
 using OTAPI.Tile;
+using Terraria;
+using Tile = Orion.World.Tiles.Tile;
 
 namespace Orion.Networking.Packets.World {
     /// <summary>
@@ -126,7 +145,7 @@ namespace Orion.Networking.Packets.World {
                     tile.IsBlockActive = true;
 
                     tile.BlockType = (BlockType)((header & 32) == 32 ? reader.ReadUInt16() : reader.ReadByte());
-                    if (Terraria.Main.tileFrameImportant[(int)tile.BlockType]) {
+                    if (Main.tileFrameImportant[(int)tile.BlockType]) {
                         tile.BlockFrameX = reader.ReadInt16();
                         tile.BlockFrameY = reader.ReadInt16();
                     } else {
@@ -157,7 +176,7 @@ namespace Orion.Networking.Packets.World {
                 tile.HasGreenWire = (header2 & 8) == 8;
 
                 var blockShape = (header2 & 112) >> 4;
-                if (blockShape != 0 && Terraria.Main.tileSolid[(int)tile.BlockType]) {
+                if (blockShape != 0 && Main.tileSolid[(int)tile.BlockType]) {
                     if (blockShape == 1) {
                         tile.IsBlockHalved = true;
                     } else {
@@ -210,7 +229,7 @@ namespace Orion.Networking.Packets.World {
                     Index = reader.ReadInt16(),
                     X = reader.ReadInt16(),
                     Y = reader.ReadInt16(),
-                    Name = reader.ReadString(),
+                    Name = reader.ReadString()
                 });
             }
         }
@@ -222,7 +241,7 @@ namespace Orion.Networking.Packets.World {
                     Index = reader.ReadInt16(),
                     X = reader.ReadInt16(),
                     Y = reader.ReadInt16(),
-                    Text = reader.ReadString(),
+                    Text = reader.ReadString()
                 });
             }
         }
@@ -270,7 +289,7 @@ namespace Orion.Networking.Packets.World {
                         buffer[bodyIndex++] = (byte)(type >> 8);
                     }
 
-                    if (Terraria.Main.tileFrameImportant[type]) {
+                    if (Main.tileFrameImportant[type]) {
                         buffer[bodyIndex++] = (byte)tile.BlockFrameX;
                         buffer[bodyIndex++] = (byte)(tile.BlockFrameX >> 8);
                         buffer[bodyIndex++] = (byte)tile.BlockFrameY;

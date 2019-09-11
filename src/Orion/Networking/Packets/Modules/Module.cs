@@ -1,4 +1,21 @@
-﻿using System;
+﻿// Copyright (c) 2015-2019 Pryaxis & Orion Contributors
+// 
+// This file is part of Orion.
+// 
+// Orion is free software: you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+// 
+// Orion is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+// 
+// You should have received a copy of the GNU General Public License
+// along with Orion.  If not, see <https://www.gnu.org/licenses/>.
+
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
@@ -11,18 +28,18 @@ namespace Orion.Networking.Packets.Modules {
         private static readonly IDictionary<ModuleType, Func<Module>> ModuleConstructors =
             new Dictionary<ModuleType, Func<Module>> {
                 [ModuleType.LiquidChanges] = () => new LiquidChangesModule(),
-                [ModuleType.Chat] = () => new ChatModule(),
+                [ModuleType.Chat] = () => new ChatModule()
             };
 
         private protected abstract ModuleType Type { get; }
 
         /// <summary>
-        /// Reads a module from the given stream with the specified context.
+        /// Reads and returns a module from the given stream with the specified context.
         /// </summary>
         /// <param name="stream">The stream.</param>
         /// <param name="context">The context with which to read the module from.</param>
         /// <exception cref="ArgumentNullException"><paramref name="stream"/> is <c>null</c>.</exception>
-        /// <returns>The module.</returns>
+        /// <returns>The resulting <see cref="Module"/> instance.</returns>
         public static Module ReadFromStream(Stream stream, PacketContext context) {
             if (stream == null) throw new ArgumentNullException(nameof(stream));
 

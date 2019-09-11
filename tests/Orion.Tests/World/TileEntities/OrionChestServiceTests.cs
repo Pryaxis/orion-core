@@ -1,7 +1,25 @@
-﻿using System;
+﻿// Copyright (c) 2015-2019 Pryaxis & Orion Contributors
+// 
+// This file is part of Orion.
+// 
+// Orion is free software: you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+// 
+// Orion is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+// 
+// You should have received a copy of the GNU General Public License
+// along with Orion.  If not, see <https://www.gnu.org/licenses/>.
+
+using System;
 using System.Linq;
 using FluentAssertions;
 using Orion.World.TileEntities;
+using Terraria;
 using Xunit;
 
 namespace Orion.Tests.World.TileEntities {
@@ -10,8 +28,8 @@ namespace Orion.Tests.World.TileEntities {
         private readonly IChestService _chestService;
 
         public OrionChestServiceTests() {
-            for (int i = 0; i < Terraria.Main.maxChests; ++i) {
-                Terraria.Main.chest[i] = null;
+            for (int i = 0; i < Main.maxChests; ++i) {
+                Main.chest[i] = null;
             }
 
             _chestService = new OrionChestService();
@@ -23,16 +41,16 @@ namespace Orion.Tests.World.TileEntities {
 
         [Fact]
         public void GetItem_IsCorrect() {
-            Terraria.Main.chest[0] = new Terraria.Chest();
+            Main.chest[0] = new Chest();
             var chest = (OrionChest)_chestService[0];
 
-            chest.Wrapped.Should().BeSameAs(Terraria.Main.chest[0]);
+            chest.Wrapped.Should().BeSameAs(Main.chest[0]);
             chest.Index.Should().Be(0);
         }
 
         [Fact]
         public void GetItem_MultipleTimes_ReturnsSameInstance() {
-            Terraria.Main.chest[0] = new Terraria.Chest();
+            Main.chest[0] = new Chest();
             var chest = _chestService[0];
             var chest2 = _chestService[0];
 
@@ -57,14 +75,14 @@ namespace Orion.Tests.World.TileEntities {
 
         [Fact]
         public void GetEnumerator_IsCorrect() {
-            for (var i = 0; i < Terraria.Main.maxChests; ++i) {
-                Terraria.Main.chest[i] = new Terraria.Chest();
+            for (var i = 0; i < Main.maxChests; ++i) {
+                Main.chest[i] = new Chest();
             }
 
             var chests = _chestService.ToList();
 
             for (var i = 0; i < chests.Count; ++i) {
-                ((OrionChest)chests[i]).Wrapped.Should().BeSameAs(Terraria.Main.chest[i]);
+                ((OrionChest)chests[i]).Wrapped.Should().BeSameAs(Main.chest[i]);
             }
         }
 
@@ -88,8 +106,8 @@ namespace Orion.Tests.World.TileEntities {
 
         [Fact]
         public void AddChest_TooMany_ReturnsNull() {
-            for (var i = 0; i < Terraria.Main.maxChests; ++i) {
-                Terraria.Main.chest[i] = new Terraria.Chest();
+            for (var i = 0; i < Main.maxChests; ++i) {
+                Main.chest[i] = new Chest();
             }
 
             var chest = _chestService.AddChest(100, 100);
@@ -99,10 +117,10 @@ namespace Orion.Tests.World.TileEntities {
 
         [Fact]
         public void GetChest_IsCorrect() {
-            Terraria.Main.chest[0] = new Terraria.Chest {
+            Main.chest[0] = new Chest {
                 x = 100,
                 y = 100,
-                name = "test",
+                name = "test"
             };
 
             var chest = _chestService.GetChest(100, 100);
@@ -122,26 +140,26 @@ namespace Orion.Tests.World.TileEntities {
 
         [Fact]
         public void RemoveChest_IsCorrect() {
-            Terraria.Main.chest[0] = new Terraria.Chest {
+            Main.chest[0] = new Chest {
                 x = 100,
-                y = 100,
+                y = 100
             };
             var chest = _chestService.GetChest(100, 100);
 
             var result = _chestService.RemoveChest(chest);
 
             result.Should().BeTrue();
-            Terraria.Main.chest[0].Should().BeNull();
+            Main.chest[0].Should().BeNull();
         }
 
         [Fact]
         public void RemoveChest_NoChest_ReturnsFalse() {
-            Terraria.Main.chest[0] = new Terraria.Chest {
+            Main.chest[0] = new Chest {
                 x = 100,
-                y = 100,
+                y = 100
             };
             var chest = _chestService.GetChest(100, 100);
-            Terraria.Main.chest[0] = null;
+            Main.chest[0] = null;
 
             var result = _chestService.RemoveChest(chest);
 

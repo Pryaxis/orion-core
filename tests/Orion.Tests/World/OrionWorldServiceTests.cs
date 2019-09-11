@@ -1,8 +1,27 @@
-﻿using System;
+﻿// Copyright (c) 2015-2019 Pryaxis & Orion Contributors
+// 
+// This file is part of Orion.
+// 
+// Orion is free software: you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+// 
+// Orion is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+// 
+// You should have received a copy of the GNU General Public License
+// along with Orion.  If not, see <https://www.gnu.org/licenses/>.
+
+using System;
 using FluentAssertions;
 using Moq;
 using Orion.World;
 using Orion.World.TileEntities;
+using Terraria;
+using Terraria.ID;
 using Xunit;
 using TDS = Terraria.DataStructures;
 using TGCTE = Terraria.GameContent.Tile_Entities;
@@ -27,7 +46,7 @@ namespace Orion.Tests.World {
         [Theory]
         [InlineData("test")]
         public void GetWorldName_IsCorrect(string worldName) {
-            Terraria.Main.worldName = worldName;
+            Main.worldName = worldName;
 
             _worldService.WorldName.Should().Be(worldName);
         }
@@ -37,7 +56,7 @@ namespace Orion.Tests.World {
         public void SetWorldName_IsCorrect(string worldName) {
             _worldService.WorldName = worldName;
 
-            Terraria.Main.worldName.Should().Be(worldName);
+            Main.worldName.Should().Be(worldName);
         }
 
         [Fact]
@@ -50,7 +69,7 @@ namespace Orion.Tests.World {
         [Theory]
         [InlineData(1000)]
         public void GetWorldWidth_IsCorrect(int worldWidth) {
-            Terraria.Main.maxTilesX = worldWidth;
+            Main.maxTilesX = worldWidth;
 
             _worldService.WorldWidth.Should().Be(worldWidth);
         }
@@ -58,7 +77,7 @@ namespace Orion.Tests.World {
         [Theory]
         [InlineData(1000)]
         public void GetWorldHeight_IsCorrect(int worldHeight) {
-            Terraria.Main.maxTilesY = worldHeight;
+            Main.maxTilesY = worldHeight;
 
             _worldService.WorldHeight.Should().Be(worldHeight);
         }
@@ -66,7 +85,7 @@ namespace Orion.Tests.World {
         [Theory]
         [InlineData(100.0)]
         public void GetTime_IsCorrect(double time) {
-            Terraria.Main.time = time;
+            Main.time = time;
 
             _worldService.Time.Should().Be(time);
         }
@@ -76,13 +95,13 @@ namespace Orion.Tests.World {
         public void SetTime_IsCorrect(double time) {
             _worldService.Time = time;
 
-            Terraria.Main.time.Should().Be(time);
+            Main.time.Should().Be(time);
         }
 
         [Theory]
         [InlineData(true)]
         public void GetIsDaytime_IsCorrect(bool isDaytime) {
-            Terraria.Main.dayTime = isDaytime;
+            Main.dayTime = isDaytime;
 
             _worldService.IsDaytime.Should().Be(isDaytime);
         }
@@ -92,13 +111,13 @@ namespace Orion.Tests.World {
         public void SetIsDaytime_IsCorrect(bool isDaytime) {
             _worldService.IsDaytime = isDaytime;
 
-            Terraria.Main.dayTime.Should().Be(isDaytime);
+            Main.dayTime.Should().Be(isDaytime);
         }
 
         [Theory]
         [InlineData(true)]
         public void GetIsHardmode_IsCorrect(bool isHardmode) {
-            Terraria.Main.hardMode = isHardmode;
+            Main.hardMode = isHardmode;
 
             _worldService.IsHardmode.Should().Be(isHardmode);
         }
@@ -108,13 +127,13 @@ namespace Orion.Tests.World {
         public void SetIsHardmode_IsCorrect(bool isHardmode) {
             _worldService.IsHardmode = isHardmode;
 
-            Terraria.Main.hardMode.Should().Be(isHardmode);
+            Main.hardMode.Should().Be(isHardmode);
         }
 
         [Theory]
         [InlineData(true)]
         public void GetIsExpertMode_IsCorrect(bool isExpertMode) {
-            Terraria.Main.expertMode = isExpertMode;
+            Main.expertMode = isExpertMode;
 
             _worldService.IsExpertMode.Should().Be(isExpertMode);
         }
@@ -124,13 +143,13 @@ namespace Orion.Tests.World {
         public void SetIsExpertMode_IsCorrect(bool isExpertMode) {
             _worldService.IsExpertMode = isExpertMode;
 
-            Terraria.Main.expertMode.Should().Be(isExpertMode);
+            Main.expertMode.Should().Be(isExpertMode);
         }
 
         [Theory]
         [InlineData(InvasionType.FrostLegion)]
         public void GetCurrentInvasion_IsCorrect(InvasionType invasionType) {
-            Terraria.Main.invasionType = (int)invasionType;
+            Main.invasionType = (int)invasionType;
 
             _worldService.CurrentInvasionType.Should().Be(invasionType);
         }
@@ -142,7 +161,7 @@ namespace Orion.Tests.World {
                 isRun = true;
             };
 
-            Terraria.Main.checkHalloween();
+            Main.checkHalloween();
 
             isRun.Should().BeTrue();
         }
@@ -152,12 +171,12 @@ namespace Orion.Tests.World {
         [InlineData(true)]
         [InlineData(false)]
         public void CheckingHalloween_Handled_IsCorrect(bool halloween) {
-            Terraria.Main.halloween = halloween;
+            Main.halloween = halloween;
             _worldService.CheckingHalloween += (sender, args) => args.Handled = true;
 
-            Terraria.Main.checkHalloween();
+            Main.checkHalloween();
 
-            Terraria.Main.halloween.Should().Be(halloween);
+            Main.halloween.Should().Be(halloween);
         }
 
         [Fact]
@@ -167,7 +186,7 @@ namespace Orion.Tests.World {
                 isRun = true;
             };
 
-            Terraria.Main.checkXMas();
+            Main.checkXMas();
 
             isRun.Should().BeTrue();
         }
@@ -177,36 +196,36 @@ namespace Orion.Tests.World {
         [InlineData(true)]
         [InlineData(false)]
         public void CheckingChristmas_Handled_IsCorrect(bool christmas) {
-            Terraria.Main.xMas = christmas;
+            Main.xMas = christmas;
             _worldService.CheckingChristmas += (sender, args) => args.Handled = true;
 
-            Terraria.Main.checkXMas();
+            Main.checkXMas();
 
-            Terraria.Main.xMas.Should().Be(christmas);
+            Main.xMas.Should().Be(christmas);
         }
 
         [Theory]
         [InlineData(InvasionType.FrostLegion)]
         public void StartInvasion_NoCurrentInvasion_ReturnsTrue(InvasionType invasionType) {
             // Fake an active player with enough HP.
-            Terraria.Main.player[0].active = true;
-            Terraria.Main.player[0].statLifeMax = 200;
-            Terraria.Main.invasionType = 0;
+            Main.player[0].active = true;
+            Main.player[0].statLifeMax = 200;
+            Main.invasionType = 0;
 
             var result = _worldService.StartInvasion(invasionType);
 
             result.Should().BeTrue();
-            Terraria.Main.invasionType.Should().Be((int)invasionType);
+            Main.invasionType.Should().Be((int)invasionType);
         }
 
         [Theory]
         [InlineData(InvasionType.FrostLegion)]
         public void StartInvasion_CurrentInvasion_ReturnsFalse(InvasionType invasionType) {
             // Fake an active player with enough HP.
-            Terraria.Main.player[0].active = true;
-            Terraria.Main.player[0].statLifeMax = 200;
-            Terraria.Main.invasionType = 1;
-            Terraria.Main.invasionSize = 100;
+            Main.player[0].active = true;
+            Main.player[0].statLifeMax = 200;
+            Main.invasionType = 1;
+            Main.invasionSize = 100;
 
             var result = _worldService.StartInvasion(invasionType);
 
@@ -216,8 +235,8 @@ namespace Orion.Tests.World {
         [Theory]
         [InlineData(InvasionType.FrostLegion)]
         public void StartInvasion_NoPlayers_ReturnsFalse(InvasionType invasionType) {
-            Terraria.Main.player[0].active = false;
-            Terraria.Main.invasionType = 0;
+            Main.player[0].active = false;
+            Main.invasionType = 0;
 
             var result = _worldService.StartInvasion(invasionType);
 
@@ -236,7 +255,7 @@ namespace Orion.Tests.World {
             targetDummy.X.Should().Be(x);
             targetDummy.Y.Should().Be(y);
             var terrariaTileEntity = TDS.TileEntity.ByPosition[position];
-            terrariaTileEntity.type.Should().Be(Terraria.ID.TileEntityID.TrainingDummy);
+            terrariaTileEntity.type.Should().Be(TileEntityID.TrainingDummy);
             terrariaTileEntity.Position.X.Should().Be((short)x);
             terrariaTileEntity.Position.Y.Should().Be((short)y);
         }
@@ -253,7 +272,7 @@ namespace Orion.Tests.World {
             itemFrame.X.Should().Be(x);
             itemFrame.Y.Should().Be(y);
             var terrariaTileEntity = TDS.TileEntity.ByPosition[position];
-            terrariaTileEntity.type.Should().Be(Terraria.ID.TileEntityID.ItemFrame);
+            terrariaTileEntity.type.Should().Be(TileEntityID.ItemFrame);
             terrariaTileEntity.Position.X.Should().Be((short)x);
             terrariaTileEntity.Position.Y.Should().Be((short)y);
         }
@@ -270,7 +289,7 @@ namespace Orion.Tests.World {
             logicSensor.X.Should().Be(x);
             logicSensor.Y.Should().Be(y);
             var terrariaTileEntity = TDS.TileEntity.ByPosition[position];
-            terrariaTileEntity.type.Should().Be(Terraria.ID.TileEntityID.LogicSensor);
+            terrariaTileEntity.type.Should().Be(TileEntityID.LogicSensor);
             terrariaTileEntity.Position.X.Should().Be((short)x);
             terrariaTileEntity.Position.Y.Should().Be((short)y);
         }

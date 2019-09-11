@@ -1,4 +1,21 @@
-﻿using System;
+﻿// Copyright (c) 2015-2019 Pryaxis & Orion Contributors
+// 
+// This file is part of Orion.
+// 
+// Orion is free software: you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+// 
+// Orion is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+// 
+// You should have received a copy of the GNU General Public License
+// along with Orion.  If not, see <https://www.gnu.org/licenses/>.
+
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
@@ -26,7 +43,7 @@ namespace Orion.Hooks {
         /// <summary>
         /// Invokes the collection of handlers in order of their priorities with the given arguments.
         /// </summary>
-        /// <param name="sender">The sender. This is usually the service instance which initiated the event.</param>
+        /// <param name="sender">The sender. This is usually the object that initiated the event.</param>
         /// <param name="args">The event arguments.</param>
         /// <exception cref="ArgumentNullException"><paramref name="args"/> is <c>null</c>.</exception>
         public void Invoke(object sender, TArgs args) {
@@ -36,12 +53,12 @@ namespace Orion.Hooks {
 
             foreach (var handler in _registrations.Select(r => r.Handler)) {
                 Log.Debug("Calling {Hook} handler registered by {Registrator}",
-                          typeof(TArgs).Name, handler.Method.DeclaringType?.Name);
+                          typeof(TArgs).Name, handler.Method.DeclaringType?.Name ?? "Unknown");
 
                 try {
                     handler(sender, args);
                 } catch (Exception ex) {
-                    Log.Error(ex, "Handler threw exception");
+                    Log.Error(ex, "{Hook} handler threw exception", typeof(TArgs).Name);
                 }
             }
         }
@@ -58,7 +75,7 @@ namespace Orion.Hooks {
             if (handler == null) throw new ArgumentNullException(nameof(handler));
 
             Log.Debug("Registering {Hook} handler from {Registrator}",
-                      typeof(TArgs).Name, handler.Method.DeclaringType?.Name);
+                      typeof(TArgs).Name, handler.Method.DeclaringType?.Name ?? "Unknown");
 
             var attribute = handler.Method.GetCustomAttribute<HookHandlerAttribute>();
             var priority = attribute?.Priority ?? HookPriority.Normal;
@@ -92,7 +109,7 @@ namespace Orion.Hooks {
             }
 
             Log.Debug("Unregistering {Hook} handler from {Registrator}",
-                      typeof(TArgs).Name, handler.Method.DeclaringType?.Name);
+                      typeof(TArgs).Name, handler.Method.DeclaringType?.Name ?? "Unknown");
 
             registrations.Remove(registration);
             return new HookHandlerCollection<TArgs>(registrations);

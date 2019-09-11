@@ -1,10 +1,29 @@
-﻿using System;
+﻿// Copyright (c) 2015-2019 Pryaxis & Orion Contributors
+// 
+// This file is part of Orion.
+// 
+// Orion is free software: you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+// 
+// Orion is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+// 
+// You should have received a copy of the GNU General Public License
+// along with Orion.  If not, see <https://www.gnu.org/licenses/>.
+
+using System;
 using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using Orion.Networking.Events;
 using Orion.Networking.Packets;
 using Serilog;
+using Terraria;
+using Terraria.Localization;
 
 namespace Orion.Networking {
     internal sealed class OrionClient : IClient {
@@ -19,9 +38,9 @@ namespace Orion.Networking {
             set => Wrapped.Name = value ?? throw new ArgumentNullException(nameof(value));
         }
 
-        internal Terraria.RemoteClient Wrapped { get; }
+        internal RemoteClient Wrapped { get; }
 
-        public OrionClient(INetworkService networkService, Terraria.RemoteClient terrariaClient) {
+        public OrionClient(INetworkService networkService, RemoteClient terrariaClient) {
             Debug.Assert(networkService != null, $"{nameof(networkService)} should not be null.");
             Debug.Assert(terrariaClient != null, $"{nameof(terrariaClient)} should not be null.");
 
@@ -33,7 +52,7 @@ namespace Orion.Networking {
             if (packet == null) throw new ArgumentNullException(nameof(packet));
             if (!IsConnected) return;
 
-            Log.Debug("[Net] Sending {Packet} to {Receiver}", packet, Name);
+            Log.Debug("[Net] Sending {Packet} to {Receiver}", packet, this);
 
             // Trigger SendingPacket manually.
             var args = new SendingPacketEventArgs(this, packet);
@@ -50,7 +69,7 @@ namespace Orion.Networking {
             var args2 = new SentPacketEventArgs(this, packet);
             _networkService.SentPacket?.Invoke(this, args2);
 
-            Log.Debug("[Net] Sent {Packet} to {Receiver}", packet, Name);
+            Log.Debug("[Net] Sent {Packet} to {Receiver}", packet, this);
         }
 
         public void SendPacket(PacketType packetType, string text = "", int number = 0, float number2 = 0,
@@ -59,10 +78,10 @@ namespace Orion.Networking {
             if (!IsConnected) return;
 
             Log.Debug("[Net] Sending {Packet} (\"{Text}\", {Number1}, {Number2}, {Number3}, {Number4}, {Number5}, " +
-                      "{Number6}, {Number7} to {Receiver}", packetType, Name, text, number, number2, number3, number4,
-                      number5, number6, number7);
-            Terraria.NetMessage.SendData((int)packetType, Index, -1,
-                                         Terraria.Localization.NetworkText.FromLiteral(text), number, number2, number3,
+                      "{Number6}, {Number7} to {Receiver}", packetType, text, number, number2, number3, number4,
+                      number5, number6, number7, this);
+            NetMessage.SendData((int)packetType, Index, -1,
+                                         NetworkText.FromLiteral(text), number, number2, number3,
                                          number4, number5, number6, number7);
         }
 

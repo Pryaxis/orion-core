@@ -1,6 +1,24 @@
-﻿using System.Diagnostics.CodeAnalysis;
+﻿// Copyright (c) 2015-2019 Pryaxis & Orion Contributors
+// 
+// This file is part of Orion.
+// 
+// Orion is free software: you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+// 
+// Orion is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+// 
+// You should have received a copy of the GNU General Public License
+// along with Orion.  If not, see <https://www.gnu.org/licenses/>.
+
+using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using Orion.Players;
+using Terraria;
 
 namespace Orion.Networking.Packets.Players {
     /// <summary>
@@ -13,9 +31,9 @@ namespace Orion.Networking.Packets.Players {
         public byte PlayerIndex { get; set; }
 
         /// <summary>
-        /// Gets the player's buff types.
+        /// Gets the player's <see cref="Orion.Players.BuffType"/>s.
         /// </summary>
-        public BuffType[] PlayerBuffTypes { get; } = new BuffType[Terraria.Player.maxBuffs];
+        public BuffType[] PlayerBuffTypes { get; } = new BuffType[Player.maxBuffs];
 
         private protected override PacketType Type => PacketType.PlayerBuffs;
 

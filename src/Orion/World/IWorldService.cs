@@ -1,4 +1,21 @@
-﻿using System;
+﻿// Copyright (c) 2015-2019 Pryaxis & Orion Contributors
+// 
+// This file is part of Orion.
+// 
+// Orion is free software: you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+// 
+// Orion is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+// 
+// You should have received a copy of the GNU General Public License
+// along with Orion.  If not, see <https://www.gnu.org/licenses/>.
+
+using System;
 using Orion.Hooks;
 using Orion.World.Events;
 using Orion.World.TileEntities;
@@ -6,27 +23,27 @@ using Orion.World.Tiles;
 
 namespace Orion.World {
     /// <summary>
-    /// Provides access to Terraria's world.
+    /// Represents a service that manages the world. Provides world-related hooks and methods.
     /// </summary>
     public interface IWorldService : IService {
         /// <summary>
-        /// Gets or sets the world name.
+        /// Gets or sets the world's name.
         /// </summary>
         /// <exception cref="ArgumentNullException"><paramref name="value"/> is <c>null</c>.</exception>
         string WorldName { get; set; }
 
         /// <summary>
-        /// Gets the world width.
+        /// Gets the world's width.
         /// </summary>
         int WorldWidth { get; }
 
         /// <summary>
-        /// Gets the world height.
+        /// Gets the world's height.
         /// </summary>
         int WorldHeight { get; }
 
         /// <summary>
-        /// Gets or sets the <see cref="Tile"/> at the specified coordinates.
+        /// Gets or sets the tile at the given coordinates.
         /// </summary>
         /// <param name="x">The X coordinate.</param>
         /// <param name="y">The Y coordinate.</param>
@@ -59,47 +76,50 @@ namespace Orion.World {
         InvasionType CurrentInvasionType { get; }
 
         /// <summary>
-        /// Occurs when the world is checking for whether it's halloween.
+        /// Gets or sets the hook handlers that occur when the world is checking for whether it's halloween. This hook
+        /// can be handled.
         /// </summary>
         HookHandlerCollection<CheckingHalloweenEventArgs> CheckingHalloween { get; set; }
 
         /// <summary>
-        /// Occurs when the world is checking for whether it's Christmas.
+        /// Gets or sets the hook handlers that occur when the world is checking for whether it's Christmas. This hook
+        /// can be handled.
         /// </summary>
         HookHandlerCollection<CheckingChristmasEventArgs> CheckingChristmas { get; set; }
 
         /// <summary>
-        /// Occurs when the world is loading.
+        /// Gets or sets the hook handlers that occur when the world is loading. This hook can be handled.
         /// </summary>
         HookHandlerCollection<LoadingWorldEventArgs> LoadingWorld { get; set; }
 
         /// <summary>
-        /// Occurs when the world was loaded.
+        /// Gets or sets the hook handlers that occur when the world was loaded.
         /// </summary>
         HookHandlerCollection<LoadedWorldEventArgs> LoadedWorld { get; set; }
 
         /// <summary>
-        /// Occurs when the world is saving.
+        /// Gets or sets the hook handlers that occur when the world is saving. This hook can be handled.
         /// </summary>
         HookHandlerCollection<SavingWorldEventArgs> SavingWorld { get; set; }
 
         /// <summary>
-        /// Occurs when the world was saved.
+        /// Gets or sets the hook handlers that occur when the world was saved.
         /// </summary>
         HookHandlerCollection<SavedWorldEventArgs> SavedWorld { get; set; }
 
         /// <summary>
-        /// Occurs when the world is starting hardmode.
+        /// Gets or sets the hook handlers that occur when the world is starting hardmode. This hook can be handled.
         /// </summary>
         HookHandlerCollection<StartingHardmodeEventArgs> StartingHardmode { get; set; }
 
         /// <summary>
-        /// Occurs when the world has started hardmode.
+        /// Gets or sets the hook handlers that occur when the world has started hardmode.
         /// </summary>
         HookHandlerCollection<StartedHardmodeEventArgs> StartedHardmode { get; set; }
 
         /// <summary>
-        /// Occurs when the world is updating a tile in hardmode.
+        /// Gets or sets the hook handlers that occur when the world is updating a tile in hardmode. This hook can be
+        /// handled.
         /// </summary>
         HookHandlerCollection<UpdatingHardmodeBlockEventArgs> UpdatingHardmodeBlock { get; set; }
 
@@ -143,7 +163,7 @@ namespace Orion.World {
         ITileEntity GetTileEntity(int x, int y);
 
         /// <summary>
-        /// Removes the given tile entity from the world.
+        /// Removes the given tile entity from the world and returns a value indicating success.
         /// </summary>
         /// <param name="tileEntity">The tile entity.</param>
         /// <returns>A value indicating whether the tile entity was successfully removed.</returns>

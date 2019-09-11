@@ -1,8 +1,26 @@
-﻿using System.Diagnostics.CodeAnalysis;
+﻿// Copyright (c) 2015-2019 Pryaxis & Orion Contributors
+// 
+// This file is part of Orion.
+// 
+// Orion is free software: you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+// 
+// Orion is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+// 
+// You should have received a copy of the GNU General Public License
+// along with Orion.  If not, see <https://www.gnu.org/licenses/>.
+
+using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using Microsoft.Xna.Framework;
 using Orion.Items;
 using Orion.Projectiles;
+using Terraria;
 
 namespace Orion.Networking.Packets.Items {
     /// <summary>
@@ -17,67 +35,71 @@ namespace Orion.Networking.Packets.Items {
         public short ItemIndex { get; set; }
 
         /// <summary>
-        /// Gets or sets the item color.
+        /// Gets or sets the override for the item's color. A value of <c>null</c> indicates no override.
         /// </summary>
         public Color? ItemColorOverride { get; set; }
 
         /// <summary>
-        /// Gets or sets the item damage.
+        /// Gets or sets the override for the item's damage. A value of <c>null</c> indicates no override.
         /// </summary>
         public ushort? ItemDamageOverride { get; set; }
 
         /// <summary>
-        /// Gets or sets the item knockback.
+        /// Gets or sets the override for the item's knockback. A value of <c>null</c> indicates no override.
         /// </summary>
         public float? ItemKnockbackOverride { get; set; }
 
         /// <summary>
-        /// Gets or sets the item's animation time.
+        /// Gets or sets the override for the item's animation time. A value of <c>null</c> indicates no override.
         /// </summary>
         public ushort? ItemAnimationTimeOverride { get; set; }
 
         /// <summary>
-        /// Gets or sets the item's use time.
+        /// Gets or sets the override for the item's use time. A value of <c>null</c> indicates no override.
         /// </summary>
         public ushort? ItemUseTimeOverride { get; set; }
 
         /// <summary>
-        /// Gets or sets the item's projectile type.
+        /// Gets or sets the override for the item's <see cref="ProjectileType"/>. A value of <c>null</c> indicates no
+        /// override.
         /// </summary>
         public ProjectileType? ItemProjectileTypeOverride { get; set; }
 
         /// <summary>
-        /// Gets or sets the item's projectile speed.
+        /// Gets or sets the override for the item's projectile speed. A value of <c>null</c> indicates no override.
         /// </summary>
         public float? ItemProjectileSpeedOverride { get; set; }
 
         /// <summary>
-        /// Gets or sets the item's width.
+        /// Gets or sets the override for the item's width. A value of <c>null</c> indicates no override.
         /// </summary>
         public short? ItemWidthOverride { get; set; }
 
         /// <summary>
-        /// Gets or sets the item's height.
+        /// Gets or sets the override for the item's height. A value of <c>null</c> indicates no override.
         /// </summary>
         public short? ItemHeightOverride { get; set; }
 
         /// <summary>
-        /// Gets or sets the item's scale.
+        /// Gets or sets the override for the item's scale. A value of <c>null</c> indicates no override.
         /// </summary>
         public float? ItemScaleOverride { get; set; }
 
         /// <summary>
-        /// Gets or sets the item's ammo type.
+        /// Gets or sets the override for the item's <see cref="AmmoType"/>. A value of <c>null</c> indicates no
+        /// override.
         /// </summary>
         public AmmoType? ItemAmmoTypeOverride { get; set; }
 
         /// <summary>
-        /// Gets or sets the item's used ammo type.
+        /// Gets or sets the override for the <see cref="AmmoType"/> that the item uses. A value of <c>null</c>
+        /// indicates no override.
         /// </summary>
         public AmmoType? ItemUsesAmmoTypeOverride { get; set; }
 
         /// <summary>
-        /// Gets or sets a value indicating whether the item is not ammo.
+        /// Gets or sets the override for the value indicating whether the item is not ammo. A value of <c>null</c>
+        /// indicates no override.
         /// </summary>
         public bool? ItemIsNotAmmoOverride { get; set; }
 
@@ -90,7 +112,7 @@ namespace Orion.Networking.Packets.Items {
         private protected override void ReadFromReader(BinaryReader reader, PacketContext context) {
             ItemIndex = reader.ReadInt16();
 
-            Terraria.BitsByte flags = reader.ReadByte();
+            BitsByte flags = reader.ReadByte();
             if (flags[0]) ItemColorOverride = new Color(reader.ReadUInt32());
             if (flags[1]) ItemDamageOverride = reader.ReadUInt16();
             if (flags[2]) ItemKnockbackOverride = reader.ReadSingle();
@@ -100,7 +122,7 @@ namespace Orion.Networking.Packets.Items {
             if (flags[6]) ItemProjectileSpeedOverride = reader.ReadSingle();
             if (!flags[7]) return;
 
-            Terraria.BitsByte flags2 = reader.ReadByte();
+            BitsByte flags2 = reader.ReadByte();
             if (flags2[0]) ItemWidthOverride = reader.ReadInt16();
             if (flags2[1]) ItemHeightOverride = reader.ReadInt16();
             if (flags2[2]) ItemScaleOverride = reader.ReadSingle();
@@ -112,7 +134,7 @@ namespace Orion.Networking.Packets.Items {
         private protected override void WriteToWriter(BinaryWriter writer, PacketContext context) {
             writer.Write(ItemIndex);
 
-            Terraria.BitsByte flags2 = 0;
+            BitsByte flags2 = 0;
             flags2[0] = ItemWidthOverride != null;
             flags2[1] = ItemHeightOverride != null;
             flags2[2] = ItemScaleOverride != null;
@@ -120,7 +142,7 @@ namespace Orion.Networking.Packets.Items {
             flags2[4] = ItemUsesAmmoTypeOverride != null;
             flags2[5] = ItemIsNotAmmoOverride != null;
 
-            Terraria.BitsByte flags = 0;
+            BitsByte flags = 0;
             flags[0] = ItemColorOverride != null;
             flags[1] = ItemDamageOverride != null;
             flags[2] = ItemKnockbackOverride != null;

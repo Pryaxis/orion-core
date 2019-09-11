@@ -1,36 +1,53 @@
-﻿namespace Orion.Networking.Packets.World {
+﻿// Copyright (c) 2015-2019 Pryaxis & Orion Contributors
+// 
+// This file is part of Orion.
+// 
+// Orion is free software: you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+// 
+// Orion is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+// 
+// You should have received a copy of the GNU General Public License
+// along with Orion.  If not, see <https://www.gnu.org/licenses/>.
+
+namespace Orion.Networking.Packets.World {
     /// <summary>
     /// Specifies the toggle type in a <see cref="ToggleDoorPacket"/>.
     /// </summary>
     public enum ToggleDoorAction : byte {
         /// <summary>
-        /// Opening a door.
+        /// Indicates that a door should be opened.
         /// </summary>
         OpenDoor = 0,
 
         /// <summary>
-        /// Closing a door.
+        /// Indicates that a door should be closed.
         /// </summary>
         CloseDoor,
 
         /// <summary>
-        /// Opening a trapdoor.
+        /// Indicates that a trapdoor should be opened.
         /// </summary>
         OpenTrapdoor,
 
         /// <summary>
-        /// Closing a trapdoor.
+        /// Indicates that a trapdoor should be closed.
         /// </summary>
         CloseTrapdoor,
 
         /// <summary>
-        /// Opening a tall gate.
+        /// Indicates that a tall gate should be opened.
         /// </summary>
         OpenTallGate,
 
         /// <summary>
-        /// Closing a tall gate.
+        /// Indicates that a tall gate should be closed.
         /// </summary>
-        CloseTallGate,
+        CloseTallGate
     }
 }

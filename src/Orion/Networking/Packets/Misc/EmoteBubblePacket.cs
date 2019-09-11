@@ -1,4 +1,21 @@
-﻿using System.Diagnostics.CodeAnalysis;
+﻿// Copyright (c) 2015-2019 Pryaxis & Orion Contributors
+// 
+// This file is part of Orion.
+// 
+// Orion is free software: you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+// 
+// Orion is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+// 
+// You should have received a copy of the GNU General Public License
+// along with Orion.  If not, see <https://www.gnu.org/licenses/>.
+
+using System.Diagnostics.CodeAnalysis;
 using System.IO;
 
 namespace Orion.Networking.Packets.Misc {
@@ -22,21 +39,21 @@ namespace Orion.Networking.Packets.Misc {
         public ushort AnchorIndex { get; set; }
 
         /// <summary>
-        /// Gets or sets the lifetime.
+        /// Gets or sets the emote's lifetime.
         /// </summary>
-        public byte Lifetime { get; set; }
+        public byte EmoteLifetime { get; set; }
 
         /// <summary>
-        /// Gets or sets the emotion.
+        /// Gets or sets the emote's emotion.
         /// </summary>
 
         // TODO: implement enum for this.
-        public int Emotion { get; set; }
+        public int EmoteEmotion { get; set; }
 
         /// <summary>
-        /// Gets or sets the metadata.
+        /// Gets or sets the emote's metadata.
         /// </summary>
-        public ushort Metadata { get; set; }
+        public ushort EmoteMetadata { get; set; }
 
         private protected override PacketType Type => PacketType.EmoteBubble;
 
@@ -50,10 +67,10 @@ namespace Orion.Networking.Packets.Misc {
             if (AnchorType == byte.MaxValue) return;
 
             AnchorIndex = reader.ReadUInt16();
-            Lifetime = reader.ReadByte();
-            Emotion = reader.ReadSByte();
-            if (Emotion < 0) {
-                Metadata = reader.ReadUInt16();
+            EmoteLifetime = reader.ReadByte();
+            EmoteEmotion = reader.ReadSByte();
+            if (EmoteEmotion < 0) {
+                EmoteMetadata = reader.ReadUInt16();
             }
         }
 
@@ -63,10 +80,10 @@ namespace Orion.Networking.Packets.Misc {
             if (AnchorType == byte.MaxValue) return;
 
             writer.Write(AnchorIndex);
-            writer.Write(Lifetime);
-            writer.Write((sbyte)Emotion);
-            if (Emotion < 0) {
-                writer.Write(Metadata);
+            writer.Write(EmoteLifetime);
+            writer.Write((sbyte)EmoteEmotion);
+            if (EmoteEmotion < 0) {
+                writer.Write(EmoteMetadata);
             }
         }
     }

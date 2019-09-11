@@ -1,7 +1,26 @@
-﻿using System;
+﻿// Copyright (c) 2015-2019 Pryaxis & Orion Contributors
+// 
+// This file is part of Orion.
+// 
+// Orion is free software: you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+// 
+// Orion is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+// 
+// You should have received a copy of the GNU General Public License
+// along with Orion.  If not, see <https://www.gnu.org/licenses/>.
+
+using System;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using Orion.World.Tiles;
+using Terraria;
+using Tile = Orion.World.Tiles.Tile;
 
 namespace Orion.Networking.Packets.World {
     /// <summary>
@@ -58,8 +77,8 @@ namespace Orion.Networking.Packets.World {
 
             NetworkTile ReadTile() {
                 var tile = new NetworkTile();
-                var header = (Terraria.BitsByte)reader.ReadByte();
-                var header2 = (Terraria.BitsByte)reader.ReadByte();
+                var header = (BitsByte)reader.ReadByte();
+                var header2 = (BitsByte)reader.ReadByte();
 
                 tile.HasRedWire = header[4];
                 tile.IsBlockHalved = header[5];
@@ -80,7 +99,7 @@ namespace Orion.Networking.Packets.World {
                 if (header[0]) {
                     tile.IsBlockActive = true;
                     tile.BlockType = (BlockType)reader.ReadUInt16();
-                    if (Terraria.Main.tileFrameImportant[(int)tile.BlockType]) {
+                    if (Main.tileFrameImportant[(int)tile.BlockType]) {
                         tile.BlockFrameX = reader.ReadInt16();
                         tile.BlockFrameY = reader.ReadInt16();
                     } else {
@@ -126,8 +145,8 @@ namespace Orion.Networking.Packets.World {
             writer.Write(TileY);
 
             void WriteTile(Tile tile) {
-                Terraria.BitsByte header = 0;
-                Terraria.BitsByte header2 = 0;
+                BitsByte header = 0;
+                BitsByte header2 = 0;
                 header[0] = tile.IsBlockActive;
                 header[2] = tile.WallType != WallType.None;
                 header[3] = tile.LiquidAmount > 0;
@@ -147,7 +166,7 @@ namespace Orion.Networking.Packets.World {
 
                 if (header[0]) {
                     writer.Write((ushort)tile.BlockType);
-                    if (Terraria.Main.tileFrameImportant[(int)tile.BlockType]) {
+                    if (Main.tileFrameImportant[(int)tile.BlockType]) {
                         writer.Write(tile.BlockFrameX);
                         writer.Write(tile.BlockFrameY);
                     }

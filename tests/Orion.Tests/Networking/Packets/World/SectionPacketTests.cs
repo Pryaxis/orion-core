@@ -1,4 +1,21 @@
-﻿using System;
+﻿// Copyright (c) 2015-2019 Pryaxis & Orion Contributors
+// 
+// This file is part of Orion.
+// 
+// Orion is free software: you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+// 
+// Orion is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+// 
+// You should have received a copy of the GNU General Public License
+// along with Orion.  If not, see <https://www.gnu.org/licenses/>.
+
+using System;
 using System.IO;
 using FluentAssertions;
 using Orion.Networking.Packets;
@@ -104,7 +121,7 @@ namespace Orion.Tests.Networking.Packets.World {
             182, 143, 26, 146, 227, 133, 252, 122, 104, 130, 123, 237, 47, 102, 255, 246, 147, 31, 124, 240, 254, 135,
             31, 221, 254, 25, 61, 254, 231, 63, 166, 13, 199, 255, 159, 208, 203, 244, 167, 191, 121, 184, 189, 253, 17,
             159, 126, 183, 116, 242, 167, 211, 135, 179, 231, 178, 58, 207, 203, 199, 36, 125, 253, 192, 253, 202, 59,
-            250, 177, 231, 254, 50, 251, 151, 255, 53, 253, 217, 65, 175, 127, 165, 215, 247, 221, 255, 1,
+            250, 177, 231, 254, 50, 251, 151, 255, 53, 253, 217, 65, 175, 127, 165, 215, 247, 221, 255, 1
         };
 
         [Fact]

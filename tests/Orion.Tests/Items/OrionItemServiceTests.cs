@@ -1,9 +1,27 @@
-﻿using System;
+﻿// Copyright (c) 2015-2019 Pryaxis & Orion Contributors
+// 
+// This file is part of Orion.
+// 
+// Orion is free software: you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+// 
+// Orion is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+// 
+// You should have received a copy of the GNU General Public License
+// along with Orion.  If not, see <https://www.gnu.org/licenses/>.
+
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using FluentAssertions;
 using Microsoft.Xna.Framework;
 using Orion.Items;
+using Terraria;
 using Xunit;
 
 namespace Orion.Tests.Items {
@@ -12,8 +30,8 @@ namespace Orion.Tests.Items {
         private readonly IItemService _itemService;
 
         public OrionItemServiceTests() {
-            for (var i = 0; i < Terraria.Main.maxItems + 1; ++i) {
-                Terraria.Main.item[i] = new Terraria.Item {whoAmI = i};
+            for (var i = 0; i < Main.maxItems + 1; ++i) {
+                Main.item[i] = new Item {whoAmI = i};
             }
 
             _itemService = new OrionItemService();
@@ -27,7 +45,7 @@ namespace Orion.Tests.Items {
         public void GetItem_IsCorrect() {
             var item = (OrionItem)_itemService[0];
 
-            item.Wrapped.Should().BeSameAs(Terraria.Main.item[0]);
+            item.Wrapped.Should().BeSameAs(Main.item[0]);
         }
 
         [Fact]
@@ -50,7 +68,7 @@ namespace Orion.Tests.Items {
         public static readonly IEnumerable<object[]> SpawnItemData = new List<object[]> {
             new object[] {ItemType.StoneBlock, 100, ItemPrefix.None},
             new object[] {ItemType.SDMG, 1, ItemPrefix.Unreal},
-            new object[] {ItemType.Meowmere, 1, ItemPrefix.Legendary},
+            new object[] {ItemType.Meowmere, 1, ItemPrefix.Legendary}
         };
 
         [Theory]
@@ -66,7 +84,7 @@ namespace Orion.Tests.Items {
         [Theory]
         [MemberData(nameof(SpawnItemData))]
         public void SpawnItem_CachedItem_IsCorrect(ItemType type, int stackSize, ItemPrefix prefix) {
-            Terraria.Item.itemCaches[(int)type] = 0;
+            Item.itemCaches[(int)type] = 0;
 
             var item = _itemService.SpawnItem(type, Vector2.Zero, stackSize, prefix);
 
@@ -159,7 +177,7 @@ namespace Orion.Tests.Items {
             var items = _itemService.ToList();
 
             for (var i = 0; i < items.Count; ++i) {
-                ((OrionItem)items[i]).Wrapped.Should().BeSameAs(Terraria.Main.item[i]);
+                ((OrionItem)items[i]).Wrapped.Should().BeSameAs(Main.item[i]);
             }
         }
     }

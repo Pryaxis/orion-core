@@ -1,7 +1,25 @@
-﻿using System;
+﻿// Copyright (c) 2015-2019 Pryaxis & Orion Contributors
+// 
+// This file is part of Orion.
+// 
+// Orion is free software: you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+// 
+// Orion is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+// 
+// You should have received a copy of the GNU General Public License
+// along with Orion.  If not, see <https://www.gnu.org/licenses/>.
+
+using System;
 using System.Linq;
 using FluentAssertions;
 using Orion.World.TileEntities;
+using Terraria;
 using Xunit;
 
 namespace Orion.Tests.World.TileEntities {
@@ -10,8 +28,8 @@ namespace Orion.Tests.World.TileEntities {
         private readonly ISignService _signService;
 
         public OrionSignServiceTests() {
-            for (var i = 0; i < Terraria.Sign.maxSigns; ++i) {
-                Terraria.Main.sign[i] = null;
+            for (var i = 0; i < Sign.maxSigns; ++i) {
+                Main.sign[i] = null;
             }
 
             _signService = new OrionSignService();
@@ -23,16 +41,16 @@ namespace Orion.Tests.World.TileEntities {
 
         [Fact]
         public void GetItem_IsCorrect() {
-            Terraria.Main.sign[0] = new Terraria.Sign();
+            Main.sign[0] = new Sign();
             var sign = (OrionSign)_signService[0];
 
-            sign.Wrapped.Should().BeSameAs(Terraria.Main.sign[0]);
+            sign.Wrapped.Should().BeSameAs(Main.sign[0]);
             sign.Index.Should().Be(0);
         }
 
         [Fact]
         public void GetItem_MultipleTimes_ReturnsSameInstance() {
-            Terraria.Main.sign[0] = new Terraria.Sign();
+            Main.sign[0] = new Sign();
             var sign = _signService[0];
             var sign2 = _signService[0];
 
@@ -57,14 +75,14 @@ namespace Orion.Tests.World.TileEntities {
 
         [Fact]
         public void GetEnumerator_IsCorrect() {
-            for (var i = 0; i < Terraria.Sign.maxSigns; ++i) {
-                Terraria.Main.sign[i] = new Terraria.Sign();
+            for (var i = 0; i < Sign.maxSigns; ++i) {
+                Main.sign[i] = new Sign();
             }
 
             var signs = _signService.ToList();
 
             for (var i = 0; i < signs.Count; ++i) {
-                ((OrionSign)signs[i]).Wrapped.Should().BeSameAs(Terraria.Main.sign[i]);
+                ((OrionSign)signs[i]).Wrapped.Should().BeSameAs(Main.sign[i]);
             }
         }
 
@@ -88,8 +106,8 @@ namespace Orion.Tests.World.TileEntities {
 
         [Fact]
         public void AddSign_TooMany_ReturnsNull() {
-            for (var i = 0; i < Terraria.Sign.maxSigns; ++i) {
-                Terraria.Main.sign[i] = new Terraria.Sign();
+            for (var i = 0; i < Sign.maxSigns; ++i) {
+                Main.sign[i] = new Sign();
             }
 
             var sign = _signService.AddSign(100, 100);
@@ -99,10 +117,10 @@ namespace Orion.Tests.World.TileEntities {
 
         [Fact]
         public void GetSign_IsCorrect() {
-            Terraria.Main.sign[0] = new Terraria.Sign {
+            Main.sign[0] = new Sign {
                 x = 100,
                 y = 100,
-                text = "test",
+                text = "test"
             };
 
             var sign = _signService.GetSign(100, 100);
@@ -122,26 +140,26 @@ namespace Orion.Tests.World.TileEntities {
 
         [Fact]
         public void RemoveSign_IsCorrect() {
-            Terraria.Main.sign[0] = new Terraria.Sign {
+            Main.sign[0] = new Sign {
                 x = 100,
-                y = 100,
+                y = 100
             };
             var sign = _signService.GetSign(100, 100);
 
             var result = _signService.RemoveSign(sign);
 
             result.Should().BeTrue();
-            Terraria.Main.sign[0].Should().BeNull();
+            Main.sign[0].Should().BeNull();
         }
 
         [Fact]
         public void RemoveSign_NoSign_ReturnsFalse() {
-            Terraria.Main.sign[0] = new Terraria.Sign {
+            Main.sign[0] = new Sign {
                 x = 100,
-                y = 100,
+                y = 100
             };
             var sign = _signService.GetSign(100, 100);
-            Terraria.Main.sign[0] = null;
+            Main.sign[0] = null;
 
             var result = _signService.RemoveSign(sign);
 

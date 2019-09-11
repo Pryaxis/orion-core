@@ -1,18 +1,36 @@
-﻿using System;
+﻿// Copyright (c) 2015-2019 Pryaxis & Orion Contributors
+// 
+// This file is part of Orion.
+// 
+// Orion is free software: you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+// 
+// Orion is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+// 
+// You should have received a copy of the GNU General Public License
+// along with Orion.  If not, see <https://www.gnu.org/licenses/>.
+
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using Orion.Hooks;
 using Orion.Players.Events;
+using OTAPI;
+using Terraria;
 
 namespace Orion.Players {
     internal sealed class OrionPlayerService : OrionService, IPlayerService {
-        private readonly IList<Terraria.Player> _terrariaPlayers;
+        private readonly IList<Player> _terrariaPlayers;
         private readonly IList<OrionPlayer> _players;
 
         [ExcludeFromCodeCoverage] public override string Author => "Pryaxis";
-        [ExcludeFromCodeCoverage] public override string Name => "Orion Player Service";
 
         // We need to subtract 1 from the count. This is because Terraria actually has an extra slot which is reserved
         // as a failure index.
@@ -20,7 +38,7 @@ namespace Orion.Players {
 
         public IPlayer this[int index] {
             get {
-                if (index < 0 || index >= Count) throw new IndexOutOfRangeException(nameof(index));
+                if (index < 0 || index >= Count) throw new IndexOutOfRangeException();
 
                 if (_players[index]?.Wrapped != _terrariaPlayers[index]) {
                     _players[index] = new OrionPlayer(_terrariaPlayers[index]);
@@ -38,7 +56,7 @@ namespace Orion.Players {
         public HookHandlerCollection<UpdatedPlayerEventArgs> UpdatedPlayer { get; set; }
 
         public OrionPlayerService() {
-            _terrariaPlayers = Terraria.Main.player;
+            _terrariaPlayers = Main.player;
             _players = new OrionPlayer[_terrariaPlayers.Count];
 
             OTAPI.Hooks.Player.PreGreet = PreGreetHandler;
@@ -64,25 +82,25 @@ namespace Orion.Players {
         IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
 
 
-        private OTAPI.HookResult PreGreetHandler(ref int playerIndex) {
+        private HookResult PreGreetHandler(ref int playerIndex) {
             Debug.Assert(playerIndex >= 0 && playerIndex < Count, $"{nameof(playerIndex)} should be a valid index.");
 
             var player = this[playerIndex];
             var args = new GreetingPlayerEventArgs(player);
             GreetingPlayer?.Invoke(this, args);
-            return args.Handled ? OTAPI.HookResult.Cancel : OTAPI.HookResult.Continue;
+            return args.Handled ? HookResult.Cancel : HookResult.Continue;
         }
 
-        private OTAPI.HookResult PreUpdateHandler(Terraria.Player terrariaPlayer, ref int playerIndex) {
+        private HookResult PreUpdateHandler(Player terrariaPlayer, ref int playerIndex) {
             Debug.Assert(playerIndex >= 0 && playerIndex < Count, $"{nameof(playerIndex)} should be a valid index.");
 
             var player = this[playerIndex];
             var args = new UpdatingPlayerEventArgs(player);
             UpdatingPlayer?.Invoke(this, args);
-            return args.Handled ? OTAPI.HookResult.Cancel : OTAPI.HookResult.Continue;
+            return args.Handled ? HookResult.Cancel : HookResult.Continue;
         }
 
-        private void PostUpdateHandler(Terraria.Player terrariaPlayer, int playerIndex) {
+        private void PostUpdateHandler(Player terrariaPlayer, int playerIndex) {
             Debug.Assert(playerIndex >= 0 && playerIndex < Count, $"{nameof(playerIndex)} should be a valid index.");
 
             var player = this[playerIndex];

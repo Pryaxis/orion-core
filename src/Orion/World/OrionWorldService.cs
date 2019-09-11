@@ -1,4 +1,21 @@
-﻿using System;
+﻿// Copyright (c) 2015-2019 Pryaxis & Orion Contributors
+// 
+// This file is part of Orion.
+// 
+// Orion is free software: you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+// 
+// Orion is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+// 
+// You should have received a copy of the GNU General Public License
+// along with Orion.  If not, see <https://www.gnu.org/licenses/>.
+
+using System;
 using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.Runtime.InteropServices;
@@ -6,9 +23,13 @@ using Orion.Hooks;
 using Orion.World.Events;
 using Orion.World.TileEntities;
 using Orion.World.Tiles;
+using OTAPI;
 using OTAPI.Tile;
+using Terraria;
+using Terraria.IO;
 using TDS = Terraria.DataStructures;
 using TGCTE = Terraria.GameContent.Tile_Entities;
+using Tile = Orion.World.Tiles.Tile;
 
 namespace Orion.World {
     internal sealed unsafe class OrionWorldService : OrionService, IWorldService, ITileCollection {
@@ -18,15 +39,14 @@ namespace Orion.World {
         private readonly ISignService _signService;
 
         [ExcludeFromCodeCoverage] public override string Author => "Pryaxis";
-        [ExcludeFromCodeCoverage] public override string Name => "Orion World Service";
 
         public string WorldName {
-            get => Terraria.Main.worldName;
-            set => Terraria.Main.worldName = value ?? throw new ArgumentNullException(nameof(value));
+            get => Main.worldName;
+            set => Main.worldName = value ?? throw new ArgumentNullException(nameof(value));
         }
 
-        public int WorldWidth => Terraria.Main.maxTilesX;
-        public int WorldHeight => Terraria.Main.maxTilesY;
+        public int WorldWidth => Main.maxTilesX;
+        public int WorldHeight => Main.maxTilesY;
 
         public Tile this[int x, int y] {
             get => new OrionTile(_tilesPtr + OrionTile.ByteCount * ((WorldWidth + 1) * y + x));
@@ -45,26 +65,26 @@ namespace Orion.World {
         }
 
         public double Time {
-            get => Terraria.Main.time;
-            set => Terraria.Main.time = value;
+            get => Main.time;
+            set => Main.time = value;
         }
 
         public bool IsDaytime {
-            get => Terraria.Main.dayTime;
-            set => Terraria.Main.dayTime = value;
+            get => Main.dayTime;
+            set => Main.dayTime = value;
         }
 
         public bool IsHardmode {
-            get => Terraria.Main.hardMode;
-            set => Terraria.Main.hardMode = value;
+            get => Main.hardMode;
+            set => Main.hardMode = value;
         }
 
         public bool IsExpertMode {
-            get => Terraria.Main.expertMode;
-            set => Terraria.Main.expertMode = value;
+            get => Main.expertMode;
+            set => Main.expertMode = value;
         }
 
-        public InvasionType CurrentInvasionType => (InvasionType)Terraria.Main.invasionType;
+        public InvasionType CurrentInvasionType => (InvasionType)Main.invasionType;
         public HookHandlerCollection<CheckingHalloweenEventArgs> CheckingHalloween { get; set; }
         public HookHandlerCollection<CheckingChristmasEventArgs> CheckingChristmas { get; set; }
         public HookHandlerCollection<LoadingWorldEventArgs> LoadingWorld { get; set; }
@@ -91,8 +111,8 @@ namespace Orion.World {
                 return this;
             };
 
-            if (Terraria.Main.tile != this) {
-                Terraria.Main.tile = OTAPI.Hooks.Tile.CreateCollection();
+            if (Main.tile != this) {
+                Main.tile = OTAPI.Hooks.Tile.CreateCollection();
             }
 
             OTAPI.Hooks.Game.Halloween = HalloweenHandler;
@@ -122,7 +142,7 @@ namespace Orion.World {
         }
 
         public bool StartInvasion(InvasionType invasionType) {
-            Terraria.Main.StartInvasion((int)invasionType);
+            Main.StartInvasion((int)invasionType);
             return CurrentInvasionType == invasionType;
         }
 
@@ -184,25 +204,25 @@ namespace Orion.World {
             }
         }
 
-        public void SaveWorld() => Terraria.IO.WorldFile.saveWorld();
+        public void SaveWorld() => WorldFile.saveWorld();
 
 
-        private OTAPI.HookResult HalloweenHandler() {
+        private HookResult HalloweenHandler() {
             var args = new CheckingHalloweenEventArgs();
             CheckingHalloween?.Invoke(this, args);
-            return args.Handled ? OTAPI.HookResult.Cancel : OTAPI.HookResult.Continue;
+            return args.Handled ? HookResult.Cancel : HookResult.Continue;
         }
 
-        private OTAPI.HookResult ChristmasHandler() {
+        private HookResult ChristmasHandler() {
             var args = new CheckingChristmasEventArgs();
             CheckingChristmas?.Invoke(this, args);
-            return args.Handled ? OTAPI.HookResult.Cancel : OTAPI.HookResult.Continue;
+            return args.Handled ? HookResult.Cancel : HookResult.Continue;
         }
 
-        private OTAPI.HookResult PreLoadWorldHandler(ref bool loadFromCloud) {
+        private HookResult PreLoadWorldHandler(ref bool loadFromCloud) {
             var args = new LoadingWorldEventArgs();
             LoadingWorld?.Invoke(this, args);
-            return args.Handled ? OTAPI.HookResult.Cancel : OTAPI.HookResult.Continue;
+            return args.Handled ? HookResult.Cancel : HookResult.Continue;
         }
 
         private void PostLoadWorldHandler(bool loadFromCloud) {
@@ -210,10 +230,10 @@ namespace Orion.World {
             LoadedWorld?.Invoke(this, args);
         }
 
-        private OTAPI.HookResult PreSaveWorldHandler(ref bool useCloudSaving, ref bool resetTime) {
+        private HookResult PreSaveWorldHandler(ref bool useCloudSaving, ref bool resetTime) {
             var args = new SavingWorldEventArgs {ShouldResetTime = resetTime};
             SavingWorld?.Invoke(this, args);
-            return args.Handled ? OTAPI.HookResult.Cancel : OTAPI.HookResult.Continue;
+            return args.Handled ? HookResult.Cancel : HookResult.Continue;
         }
 
         private void PostSaveWorldHandler(bool useCloudSaving, bool resetTime) {
@@ -221,10 +241,10 @@ namespace Orion.World {
             SavedWorld?.Invoke(this, args);
         }
 
-        private OTAPI.HookResult PreHardmodeHandler() {
+        private HookResult PreHardmodeHandler() {
             var args = new StartingHardmodeEventArgs();
             StartingHardmode?.Invoke(this, args);
-            return args.Handled ? OTAPI.HookResult.Cancel : OTAPI.HookResult.Continue;
+            return args.Handled ? HookResult.Cancel : HookResult.Continue;
         }
 
         private void PostHardmodeHandler() {
@@ -232,12 +252,12 @@ namespace Orion.World {
             StartedHardmode?.Invoke(this, args);
         }
 
-        private OTAPI.HardmodeTileUpdateResult HardmodeTileUpdateHandler(int x, int y, ref ushort type) {
+        private HardmodeTileUpdateResult HardmodeTileUpdateHandler(int x, int y, ref ushort type) {
             var args = new UpdatingHardmodeBlockEventArgs(x, y, (BlockType)type);
             UpdatingHardmodeBlock?.Invoke(this, args);
 
             type = (ushort)args.BlockType;
-            return args.Handled ? OTAPI.HardmodeTileUpdateResult.Cancel : OTAPI.HardmodeTileUpdateResult.Continue;
+            return args.Handled ? HardmodeTileUpdateResult.Cancel : HardmodeTileUpdateResult.Continue;
         }
     }
 }

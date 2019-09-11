@@ -1,9 +1,27 @@
-﻿using System;
+﻿// Copyright (c) 2015-2019 Pryaxis & Orion Contributors
+// 
+// This file is part of Orion.
+// 
+// Orion is free software: you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+// 
+// Orion is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+// 
+// You should have received a copy of the GNU General Public License
+// along with Orion.  If not, see <https://www.gnu.org/licenses/>.
+
+using System;
 using FluentAssertions;
 using Moq;
 using Orion.World;
 using Orion.World.TileEntities;
 using Orion.World.Tiles;
+using Terraria;
 using Xunit;
 
 namespace Orion.Tests.World.Tile {
@@ -24,7 +42,7 @@ namespace Orion.Tests.World.Tile {
         [Theory]
         [InlineData(BlockType.Stone)]
         public void GetBlockType_IsCorrect(BlockType blockType) {
-            Terraria.Main.tile[100, 100].type = (ushort)blockType;
+            Main.tile[100, 100].type = (ushort)blockType;
 
             var tile = _worldService[100, 100];
 
@@ -38,13 +56,13 @@ namespace Orion.Tests.World.Tile {
 
             tile.BlockType = blockType;
 
-            Terraria.Main.tile[100, 100].type.Should().Be((ushort)blockType);
+            Main.tile[100, 100].type.Should().Be((ushort)blockType);
         }
 
         [Theory]
         [InlineData(WallType.Stone)]
         public void GetWallType_IsCorrect(WallType wallType) {
-            Terraria.Main.tile[100, 100].wall = (byte)wallType;
+            Main.tile[100, 100].wall = (byte)wallType;
 
             var tile = _worldService[100, 100];
 
@@ -58,13 +76,13 @@ namespace Orion.Tests.World.Tile {
 
             tile.WallType = wallType;
 
-            Terraria.Main.tile[100, 100].wall.Should().Be((byte)wallType);
+            Main.tile[100, 100].wall.Should().Be((byte)wallType);
         }
 
         [Theory]
         [InlineData(100)]
         public void GetLiquidAmount_IsCorrect(byte liquidAmount) {
-            Terraria.Main.tile[100, 100].liquid = liquidAmount;
+            Main.tile[100, 100].liquid = liquidAmount;
 
             var tile = _worldService[100, 100];
 
@@ -78,13 +96,13 @@ namespace Orion.Tests.World.Tile {
 
             tile.LiquidAmount = liquidAmount;
 
-            Terraria.Main.tile[100, 100].liquid.Should().Be(liquidAmount);
+            Main.tile[100, 100].liquid.Should().Be(liquidAmount);
         }
 
         [Theory]
         [InlineData(100)]
         public void GetBlockFrameX_IsCorrect(byte blockFrameX) {
-            Terraria.Main.tile[100, 100].frameX = blockFrameX;
+            Main.tile[100, 100].frameX = blockFrameX;
 
             var tile = _worldService[100, 100];
 
@@ -98,13 +116,13 @@ namespace Orion.Tests.World.Tile {
 
             tile.BlockFrameX = blockFrameX;
 
-            Terraria.Main.tile[100, 100].frameX.Should().Be(blockFrameX);
+            Main.tile[100, 100].frameX.Should().Be(blockFrameX);
         }
 
         [Theory]
         [InlineData(100)]
         public void GetBlockFrameY_IsCorrect(byte blockFrameY) {
-            Terraria.Main.tile[100, 100].frameY = blockFrameY;
+            Main.tile[100, 100].frameY = blockFrameY;
 
             var tile = _worldService[100, 100];
 
@@ -118,13 +136,13 @@ namespace Orion.Tests.World.Tile {
 
             tile.BlockFrameY = blockFrameY;
 
-            Terraria.Main.tile[100, 100].frameY.Should().Be(blockFrameY);
+            Main.tile[100, 100].frameY.Should().Be(blockFrameY);
         }
 
         [Theory]
         [InlineData(PaintColor.Red)]
         public void GetBlockColor_IsCorrect(PaintColor blockColor) {
-            Terraria.Main.tile[100, 100].color((byte)blockColor);
+            Main.tile[100, 100].color((byte)blockColor);
 
             var tile = _worldService[100, 100];
 
@@ -138,14 +156,14 @@ namespace Orion.Tests.World.Tile {
 
             tile.BlockColor = blockColor;
 
-            Terraria.Main.tile[100, 100].color().Should().Be((byte)blockColor);
+            Main.tile[100, 100].color().Should().Be((byte)blockColor);
         }
 
         [Theory]
         [InlineData(true)]
         [InlineData(false)]
         public void GetIsBlockActive_IsCorrect(bool isBlockActive) {
-            Terraria.Main.tile[100, 100].active(isBlockActive);
+            Main.tile[100, 100].active(isBlockActive);
 
             var tile = _worldService[100, 100];
 
@@ -160,14 +178,14 @@ namespace Orion.Tests.World.Tile {
 
             tile.IsBlockActive = isBlockActive;
 
-            Terraria.Main.tile[100, 100].active().Should().Be(isBlockActive);
+            Main.tile[100, 100].active().Should().Be(isBlockActive);
         }
 
         [Theory]
         [InlineData(true)]
         [InlineData(false)]
         public void GetIsBlockActuated_IsCorrect(bool isBlockActuated) {
-            Terraria.Main.tile[100, 100].inActive(isBlockActuated);
+            Main.tile[100, 100].inActive(isBlockActuated);
 
             var tile = _worldService[100, 100];
 
@@ -182,14 +200,14 @@ namespace Orion.Tests.World.Tile {
 
             tile.IsBlockActuated = isBlockActuated;
 
-            Terraria.Main.tile[100, 100].inActive().Should().Be(isBlockActuated);
+            Main.tile[100, 100].inActive().Should().Be(isBlockActuated);
         }
 
         [Theory]
         [InlineData(true)]
         [InlineData(false)]
         public void GetHasRedWire_IsCorrect(bool hasRedWire) {
-            Terraria.Main.tile[100, 100].wire(hasRedWire);
+            Main.tile[100, 100].wire(hasRedWire);
 
             var tile = _worldService[100, 100];
 
@@ -204,14 +222,14 @@ namespace Orion.Tests.World.Tile {
 
             tile.HasRedWire = hasRedWire;
 
-            Terraria.Main.tile[100, 100].wire().Should().Be(hasRedWire);
+            Main.tile[100, 100].wire().Should().Be(hasRedWire);
         }
 
         [Theory]
         [InlineData(true)]
         [InlineData(false)]
         public void GetHasBlueWire_IsCorrect(bool hasBlueWire) {
-            Terraria.Main.tile[100, 100].wire2(hasBlueWire);
+            Main.tile[100, 100].wire2(hasBlueWire);
 
             var tile = _worldService[100, 100];
 
@@ -226,14 +244,14 @@ namespace Orion.Tests.World.Tile {
 
             tile.HasBlueWire = hasBlueWire;
 
-            Terraria.Main.tile[100, 100].wire2().Should().Be(hasBlueWire);
+            Main.tile[100, 100].wire2().Should().Be(hasBlueWire);
         }
 
         [Theory]
         [InlineData(true)]
         [InlineData(false)]
         public void GetHasGreenWire_IsCorrect(bool hasGreenWire) {
-            Terraria.Main.tile[100, 100].wire3(hasGreenWire);
+            Main.tile[100, 100].wire3(hasGreenWire);
 
             var tile = _worldService[100, 100];
 
@@ -248,14 +266,14 @@ namespace Orion.Tests.World.Tile {
 
             tile.HasGreenWire = hasGreenWire;
 
-            Terraria.Main.tile[100, 100].wire3().Should().Be(hasGreenWire);
+            Main.tile[100, 100].wire3().Should().Be(hasGreenWire);
         }
 
         [Theory]
         [InlineData(true)]
         [InlineData(false)]
         public void GetIsBlockHalved_IsCorrect(bool isBlockHalved) {
-            Terraria.Main.tile[100, 100].halfBrick(isBlockHalved);
+            Main.tile[100, 100].halfBrick(isBlockHalved);
 
             var tile = _worldService[100, 100];
 
@@ -270,14 +288,14 @@ namespace Orion.Tests.World.Tile {
 
             tile.IsBlockHalved = isBlockHalved;
 
-            Terraria.Main.tile[100, 100].halfBrick().Should().Be(isBlockHalved);
+            Main.tile[100, 100].halfBrick().Should().Be(isBlockHalved);
         }
 
         [Theory]
         [InlineData(true)]
         [InlineData(false)]
         public void GetHasActuator_IsCorrect(bool hasActuator) {
-            Terraria.Main.tile[100, 100].actuator(hasActuator);
+            Main.tile[100, 100].actuator(hasActuator);
 
             var tile = _worldService[100, 100];
 
@@ -292,13 +310,13 @@ namespace Orion.Tests.World.Tile {
 
             tile.HasActuator = hasActuator;
 
-            Terraria.Main.tile[100, 100].actuator().Should().Be(hasActuator);
+            Main.tile[100, 100].actuator().Should().Be(hasActuator);
         }
 
         [Theory]
         [InlineData(SlopeType.TopLeft)]
         public void GetSlopeType_IsCorrect(SlopeType slopeType) {
-            Terraria.Main.tile[100, 100].slope((byte)slopeType);
+            Main.tile[100, 100].slope((byte)slopeType);
 
             var tile = _worldService[100, 100];
 
@@ -312,13 +330,13 @@ namespace Orion.Tests.World.Tile {
 
             tile.SlopeType = slopeType;
 
-            Terraria.Main.tile[100, 100].slope().Should().Be((byte)slopeType);
+            Main.tile[100, 100].slope().Should().Be((byte)slopeType);
         }
 
         [Theory]
         [InlineData(PaintColor.Red)]
         public void GetWallColor_IsCorrect(PaintColor wallColor) {
-            Terraria.Main.tile[100, 100].wallColor((byte)wallColor);
+            Main.tile[100, 100].wallColor((byte)wallColor);
 
             var tile = _worldService[100, 100];
 
@@ -332,14 +350,14 @@ namespace Orion.Tests.World.Tile {
 
             tile.WallColor = wallColor;
 
-            Terraria.Main.tile[100, 100].wallColor().Should().Be((byte)wallColor);
+            Main.tile[100, 100].wallColor().Should().Be((byte)wallColor);
         }
 
         [Theory]
         [InlineData(true)]
         [InlineData(false)]
         public void GetIsLava_IsCorrect(bool isLava) {
-            Terraria.Main.tile[100, 100].lava(isLava);
+            Main.tile[100, 100].lava(isLava);
 
             var tile = _worldService[100, 100];
 
@@ -354,14 +372,14 @@ namespace Orion.Tests.World.Tile {
 
             tile.IsLava = isLava;
 
-            Terraria.Main.tile[100, 100].lava().Should().Be(isLava);
+            Main.tile[100, 100].lava().Should().Be(isLava);
         }
 
         [Theory]
         [InlineData(true)]
         [InlineData(false)]
         public void GetIsHoney_IsCorrect(bool isHoney) {
-            Terraria.Main.tile[100, 100].honey(isHoney);
+            Main.tile[100, 100].honey(isHoney);
 
             var tile = _worldService[100, 100];
 
@@ -376,7 +394,7 @@ namespace Orion.Tests.World.Tile {
 
             tile.IsHoney = isHoney;
 
-            Terraria.Main.tile[100, 100].honey().Should().Be(isHoney);
+            Main.tile[100, 100].honey().Should().Be(isHoney);
         }
 
         [Theory]
@@ -384,7 +402,7 @@ namespace Orion.Tests.World.Tile {
         [InlineData(LiquidType.Lava)]
         [InlineData(LiquidType.Honey)]
         public void GetLiquidType_IsCorrect(LiquidType liquidType) {
-            Terraria.Main.tile[100, 100].liquidType((int)liquidType);
+            Main.tile[100, 100].liquidType((int)liquidType);
 
             var tile = _worldService[100, 100];
 
@@ -400,14 +418,14 @@ namespace Orion.Tests.World.Tile {
 
             tile.LiquidType = liquidType;
 
-            Terraria.Main.tile[100, 100].liquidType().Should().Be((byte)liquidType);
+            Main.tile[100, 100].liquidType().Should().Be((byte)liquidType);
         }
 
         [Theory]
         [InlineData(true)]
         [InlineData(false)]
         public void GetHasYellowWire_IsCorrect(bool hasYellowWire) {
-            Terraria.Main.tile[100, 100].wire4(hasYellowWire);
+            Main.tile[100, 100].wire4(hasYellowWire);
 
             var tile = _worldService[100, 100];
 
@@ -422,14 +440,14 @@ namespace Orion.Tests.World.Tile {
 
             tile.HasYellowWire = hasYellowWire;
 
-            Terraria.Main.tile[100, 100].wire4().Should().Be(hasYellowWire);
+            Main.tile[100, 100].wire4().Should().Be(hasYellowWire);
         }
 
         [Theory]
         [InlineData(true)]
         [InlineData(false)]
         public void GetIsCheckingLiquid_IsCorrect(bool isCheckingLiquid) {
-            Terraria.Main.tile[100, 100].checkingLiquid(isCheckingLiquid);
+            Main.tile[100, 100].checkingLiquid(isCheckingLiquid);
 
             var tile = _worldService[100, 100];
 
@@ -444,14 +462,14 @@ namespace Orion.Tests.World.Tile {
 
             tile.IsCheckingLiquid = isCheckingLiquid;
 
-            Terraria.Main.tile[100, 100].checkingLiquid().Should().Be(isCheckingLiquid);
+            Main.tile[100, 100].checkingLiquid().Should().Be(isCheckingLiquid);
         }
 
         [Theory]
         [InlineData(true)]
         [InlineData(false)]
         public void GetShouldSkipLiquid_IsCorrect(bool shouldSkipLiquid) {
-            Terraria.Main.tile[100, 100].skipLiquid(shouldSkipLiquid);
+            Main.tile[100, 100].skipLiquid(shouldSkipLiquid);
 
             var tile = _worldService[100, 100];
 
@@ -466,7 +484,7 @@ namespace Orion.Tests.World.Tile {
 
             tile.ShouldSkipLiquid = shouldSkipLiquid;
 
-            Terraria.Main.tile[100, 100].skipLiquid().Should().Be(shouldSkipLiquid);
+            Main.tile[100, 100].skipLiquid().Should().Be(shouldSkipLiquid);
         }
     }
 }

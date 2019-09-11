@@ -1,8 +1,26 @@
-﻿using System;
+﻿// Copyright (c) 2015-2019 Pryaxis & Orion Contributors
+// 
+// This file is part of Orion.
+// 
+// Orion is free software: you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+// 
+// Orion is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+// 
+// You should have received a copy of the GNU General Public License
+// along with Orion.  If not, see <https://www.gnu.org/licenses/>.
+
+using System;
 using System.Linq;
 using FluentAssertions;
 using Microsoft.Xna.Framework;
 using Orion.Projectiles;
+using Terraria;
 using Xunit;
 
 namespace Orion.Tests.Projectiles {
@@ -11,8 +29,8 @@ namespace Orion.Tests.Projectiles {
         private readonly IProjectileService _projectileService;
 
         public OrionProjectileServiceTests() {
-            for (var i = 0; i < Terraria.Main.maxProjectiles + 1; ++i) {
-                Terraria.Main.projectile[i] = new Terraria.Projectile {whoAmI = i};
+            for (var i = 0; i < Main.maxProjectiles + 1; ++i) {
+                Main.projectile[i] = new Projectile {whoAmI = i};
             }
 
             _projectileService = new OrionProjectileService();
@@ -26,7 +44,7 @@ namespace Orion.Tests.Projectiles {
         public void GetItem_IsCorrect() {
             var projectile = (OrionProjectile)_projectileService[0];
 
-            projectile.Wrapped.Should().BeSameAs(Terraria.Main.projectile[0]);
+            projectile.Wrapped.Should().BeSameAs(Main.projectile[0]);
         }
 
         [Fact]
@@ -218,7 +236,7 @@ namespace Orion.Tests.Projectiles {
             var projectiles = _projectileService.ToList();
 
             for (var i = 0; i < projectiles.Count; ++i) {
-                ((OrionProjectile)projectiles[i]).Wrapped.Should().BeSameAs(Terraria.Main.projectile[i]);
+                ((OrionProjectile)projectiles[i]).Wrapped.Should().BeSameAs(Main.projectile[i]);
             }
         }
 

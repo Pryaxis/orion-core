@@ -1,7 +1,25 @@
-﻿using System.Diagnostics.CodeAnalysis;
+﻿// Copyright (c) 2015-2019 Pryaxis & Orion Contributors
+// 
+// This file is part of Orion.
+// 
+// Orion is free software: you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+// 
+// Orion is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+// 
+// You should have received a copy of the GNU General Public License
+// along with Orion.  If not, see <https://www.gnu.org/licenses/>.
+
+using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using Microsoft.Xna.Framework;
 using Orion.Networking.Packets.Extensions;
+using Terraria;
 
 namespace Orion.Networking.Packets.Players {
     /// <summary>
@@ -97,8 +115,8 @@ namespace Orion.Networking.Packets.Players {
         private protected override void ReadFromReader(BinaryReader reader, PacketContext context) {
             PlayerIndex = reader.ReadByte();
 
-            Terraria.BitsByte flags = reader.ReadByte();
-            Terraria.BitsByte flags2 = reader.ReadByte();
+            BitsByte flags = reader.ReadByte();
+            BitsByte flags2 = reader.ReadByte();
             IsPlayerHoldingUp = flags[0];
             IsPlayerHoldingDown = flags[1];
             IsPlayerHoldingLeft = flags[2];
@@ -113,15 +131,15 @@ namespace Orion.Networking.Packets.Players {
             IsPlayerRaisingShield = flags2[5];
 
             PlayerSelectedItemIndex = reader.ReadByte();
-            PlayerPosition = reader.ReadVector2();
-            if (flags2[2]) PlayerVelocity = reader.ReadVector2();
+            PlayerPosition = BinaryExtensions.ReadVector2(reader);
+            if (flags2[2]) PlayerVelocity = BinaryExtensions.ReadVector2(reader);
         }
 
         private protected override void WriteToWriter(BinaryWriter writer, PacketContext context) {
             writer.Write(PlayerIndex);
 
-            Terraria.BitsByte flags = 0;
-            Terraria.BitsByte flags2 = 0;
+            BitsByte flags = 0;
+            BitsByte flags2 = 0;
             flags[0] = IsPlayerHoldingUp;
             flags[1] = IsPlayerHoldingDown;
             flags[2] = IsPlayerHoldingLeft;

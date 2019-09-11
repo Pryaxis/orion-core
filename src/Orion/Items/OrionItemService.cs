@@ -1,4 +1,21 @@
-﻿using System;
+﻿// Copyright (c) 2015-2019 Pryaxis & Orion Contributors
+// 
+// This file is part of Orion.
+// 
+// Orion is free software: you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+// 
+// Orion is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+// 
+// You should have received a copy of the GNU General Public License
+// along with Orion.  If not, see <https://www.gnu.org/licenses/>.
+
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -6,14 +23,15 @@ using System.Diagnostics.CodeAnalysis;
 using Microsoft.Xna.Framework;
 using Orion.Hooks;
 using Orion.Items.Events;
+using OTAPI;
+using Terraria;
 
 namespace Orion.Items {
     internal sealed class OrionItemService : OrionService, IItemService {
-        private readonly IList<Terraria.Item> _terrariaItems;
+        private readonly IList<Item> _terrariaItems;
         private readonly IList<OrionItem> _items;
 
         [ExcludeFromCodeCoverage] public override string Author => "Pryaxis";
-        [ExcludeFromCodeCoverage] public override string Name => "Orion Item Service";
 
         // We need to subtract 1 from the count. This is because Terraria actually has an extra slot which is reserved
         // as a failure index.
@@ -21,7 +39,7 @@ namespace Orion.Items {
 
         public IItem this[int index] {
             get {
-                if (index < 0 || index >= Count) throw new IndexOutOfRangeException(nameof(index));
+                if (index < 0 || index >= Count) throw new IndexOutOfRangeException();
 
                 if (_items[index]?.Wrapped != _terrariaItems[index]) {
                     _items[index] = new OrionItem(_terrariaItems[index]);
@@ -40,7 +58,7 @@ namespace Orion.Items {
         public HookHandlerCollection<UpdatedItemEventArgs> UpdatedItem { get; set; }
 
         public OrionItemService() {
-            _terrariaItems = Terraria.Main.item;
+            _terrariaItems = Main.item;
             _items = new OrionItem[_terrariaItems.Count];
 
             OTAPI.Hooks.Item.PreSetDefaultsById = PreSetDefaultsByIdHandler;
@@ -71,41 +89,40 @@ namespace Orion.Items {
                                ItemPrefix prefix = ItemPrefix.None) {
             // Terraria has this mechanism of item caching which allows, for instance, The Plan to drop all wires at
             // once. We need to disable that temporarily so that our item *definitely* spawns.
-            var oldItemCache = Terraria.Item.itemCaches[(int)type];
-            Terraria.Item.itemCaches[(int)type] = -1;
+            var oldItemCache = Item.itemCaches[(int)type];
+            Item.itemCaches[(int)type] = -1;
 
-            var itemIndex = Terraria.Item.NewItem(position, Vector2.Zero, (int)type,
+            var itemIndex = Item.NewItem(position, Vector2.Zero, (int)type,
                                                   stackSize, prefixGiven: (int)prefix);
-            Debug.Assert(itemIndex >= 0 && itemIndex < Count, $"{nameof(itemIndex)} should be a valid index.");
-            Terraria.Item.itemCaches[(int)type] = oldItemCache;
-            return this[itemIndex];
+            Item.itemCaches[(int)type] = oldItemCache;
+            return itemIndex >= 0 && itemIndex < Count ? this[itemIndex] : null;
         }
 
 
-        private OTAPI.HookResult PreSetDefaultsByIdHandler(Terraria.Item terrariaItem, ref int type,
+        private HookResult PreSetDefaultsByIdHandler(Item terrariaItem, ref int type,
                                                            ref bool noMaterialCheck) {
             var item = new OrionItem(terrariaItem);
             var args = new SettingItemDefaultsEventArgs(item, (ItemType)type);
             SettingItemDefaults?.Invoke(this, args);
 
             type = (int)args.Type;
-            return args.Handled ? OTAPI.HookResult.Cancel : OTAPI.HookResult.Continue;
+            return args.Handled ? HookResult.Cancel : HookResult.Continue;
         }
 
-        private void PostSetDefaultsByIdHandler(Terraria.Item terrariaItem, ref int type, ref bool noMaterialCheck) {
+        private void PostSetDefaultsByIdHandler(Item terrariaItem, ref int type, ref bool noMaterialCheck) {
             var item = new OrionItem(terrariaItem);
             var args = new SetItemDefaultsEventArgs(item);
             SetItemDefaults?.Invoke(this, args);
         }
 
-        private OTAPI.HookResult PreUpdateHandler(Terraria.Item terrariaItem, ref int i) {
+        private HookResult PreUpdateHandler(Item terrariaItem, ref int i) {
             var item = new OrionItem(terrariaItem);
             var args = new UpdatingItemEventArgs(item);
             UpdatingItem?.Invoke(this, args);
-            return args.Handled ? OTAPI.HookResult.Cancel : OTAPI.HookResult.Continue;
+            return args.Handled ? HookResult.Cancel : HookResult.Continue;
         }
 
-        private void PostUpdateHandler(Terraria.Item terrariaItem, int i) {
+        private void PostUpdateHandler(Item terrariaItem, int i) {
             var item = new OrionItem(terrariaItem);
             var args = new UpdatedItemEventArgs(item);
             UpdatedItem?.Invoke(this, args);

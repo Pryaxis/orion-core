@@ -1,67 +1,85 @@
-﻿using Microsoft.Xna.Framework;
+﻿// Copyright (c) 2015-2019 Pryaxis & Orion Contributors
+// 
+// This file is part of Orion.
+// 
+// Orion is free software: you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+// 
+// Orion is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+// 
+// You should have received a copy of the GNU General Public License
+// along with Orion.  If not, see <https://www.gnu.org/licenses/>.
+
+using Microsoft.Xna.Framework;
 using OTAPI.Tile;
+using Terraria;
 
 namespace Orion.World.Tiles {
     /// <summary>
-    /// Provides the base class for a tile.
+    /// Represents a Terraria tile.
     /// </summary>
     public abstract class Tile : ITile {
         /// <summary>
-        /// Gets or sets the block type.
+        /// Gets or sets the tile's block type.
         /// </summary>
         /// <remarks>This corresponds to OTAPI.Tile.ITile.type.</remarks>
         public abstract BlockType BlockType { get; set; }
 
         /// <summary>
-        /// Gets or sets the wall type.
+        /// Gets or sets the tile's wall type.
         /// </summary>
         /// <remarks>This corresponds to OTAPI.Tile.ITile.wall.</remarks>
         public abstract WallType WallType { get; set; }
 
         /// <summary>
-        /// Gets or sets the liquid amount.
+        /// Gets or sets the tile's liquid amount.
         /// </summary>
         /// <remarks>This corresponds to OTAPI.Tile.ITile.liquid.</remarks>
         public abstract byte LiquidAmount { get; set; }
 
         /// <summary>
-        /// Gets or sets the main tile header.
+        /// Gets or sets the tile's main tile header.
         /// </summary>
         /// <remarks>This corresponds to OTAPI.Tile.ITile.sTileHeader.</remarks>
         public abstract short TileHeader { get; set; }
 
         /// <summary>
-        /// Gets or sets the second tile header.
+        /// Gets or sets the tile's second tile header.
         /// </summary>
         /// <remarks>This corresponds to OTAPI.Tile.ITile.bTileHeader.</remarks>
         public abstract byte TileHeader2 { get; set; }
 
         /// <summary>
-        /// Gets or sets the third tile header.
+        /// Gets or sets the tile's third tile header.
         /// </summary>
         /// <remarks>This corresponds to OTAPI.Tile.ITile.bTileHeader2.</remarks>
         public abstract byte TileHeader3 { get; set; }
 
         /// <summary>
-        /// Gets or sets the fourth tile header.
+        /// Gets or sets the tile's fourth tile header.
         /// </summary>
         /// <remarks>This corresponds to OTAPI.Tile.ITile.bTileHeader3.</remarks>
         public abstract byte TileHeader4 { get; set; }
 
         /// <summary>
-        /// Gets or sets the block X frame.
+        /// Gets or sets the tile's block X frame.
         /// </summary>
         /// <remarks>This corresponds to OTAPI.Tile.ITile.frameX.</remarks>
         public abstract short BlockFrameX { get; set; }
 
         /// <summary>
-        /// Gets or sets the block Y frame.
+        /// Gets or sets the tile's block Y frame.
         /// </summary>
         /// <remarks>This corresponds to OTAPI.Tile.ITile.frameY.</remarks>
         public abstract short BlockFrameY { get; set; }
 
         /// <summary>
-        /// Gets or sets the block's color.
+        /// Gets or sets the tile's block color.
         /// </summary>
         /// <remarks>This value is usually stored as bits 0-4 of <see cref="TileHeader"/>.</remarks>
         public PaintColor BlockColor {
@@ -70,7 +88,7 @@ namespace Orion.World.Tiles {
         }
 
         /// <summary>
-        /// Gets or sets a value indicating whether the block is active.
+        /// Gets or sets a value indicating whether the tile's block is active.
         /// </summary>
         /// <remarks>This value is usually stored as bit 5 of <see cref="TileHeader"/>.</remarks>
         public bool IsBlockActive {
@@ -79,7 +97,7 @@ namespace Orion.World.Tiles {
         }
 
         /// <summary>
-        /// Gets or sets a value indicating whether the block is acutuated.
+        /// Gets or sets a value indicating whether the tile's block is acutuated.
         /// </summary>
         /// <remarks>This value is usually stored as bit 6 of <see cref="TileHeader"/>.</remarks>
         public bool IsBlockActuated {
@@ -115,7 +133,7 @@ namespace Orion.World.Tiles {
         }
 
         /// <summary>
-        /// Gets or sets a value indicating whether the block is halved.
+        /// Gets or sets a value indicating whether the tile's block is halved.
         /// </summary>
         /// <remarks>This value is usually stored as bit 10 of <see cref="TileHeader"/>.</remarks>
         public bool IsBlockHalved {
@@ -133,7 +151,7 @@ namespace Orion.World.Tiles {
         }
 
         /// <summary>
-        /// Gets or sets the slope type.
+        /// Gets or sets the tile's slope type.
         /// </summary>
         /// <remarks>This value is usually stored as bits 12-14 of <see cref="TileHeader"/>.</remarks>
         public SlopeType SlopeType {
@@ -142,7 +160,7 @@ namespace Orion.World.Tiles {
         }
 
         /// <summary>
-        /// Gets or sets the wall's color.
+        /// Gets or sets the tile's wall color.
         /// </summary>
         /// <remarks>This value is usually stored as bits 0-4 of <see cref="TileHeader2"/>.</remarks>
         public PaintColor WallColor {
@@ -151,7 +169,7 @@ namespace Orion.World.Tiles {
         }
 
         /// <summary>
-        /// Gets or sets a value indicating whether the liquid is lava.
+        /// Gets or sets a value indicating whether the tile's liquid is lava.
         /// </summary>
         /// <remarks>This value is usually stored as bit 5 of <see cref="TileHeader2"/>.</remarks>
         public bool IsLava {
@@ -160,7 +178,7 @@ namespace Orion.World.Tiles {
         }
 
         /// <summary>
-        /// Gets or sets a value indicating whether the liquid is honey.
+        /// Gets or sets a value indicating whether the tile's liquid is honey.
         /// </summary>
         /// <remarks>This value is usually stored as bit 6 of <see cref="TileHeader2"/>.</remarks>
         public bool IsHoney {
@@ -169,7 +187,7 @@ namespace Orion.World.Tiles {
         }
 
         /// <summary>
-        /// Gets or sets the liquid type.
+        /// Gets or sets the tile's liquid type.
         /// </summary>
         /// <remarks>This value is usually stored as bits 5-6 of <see cref="TileHeader2"/>.</remarks>
         public LiquidType LiquidType {
@@ -215,7 +233,7 @@ namespace Orion.World.Tiles {
                     return 2 + ((ITile)this).slope();
                 }
 
-                if (Terraria.Main.tileSolid[((ITile)this).type] && !Terraria.Main.tileSolidTop[((ITile)this).type]) {
+                if (Main.tileSolid[((ITile)this).type] && !Main.tileSolidTop[((ITile)this).type]) {
                     return 1;
                 }
 
@@ -309,7 +327,7 @@ namespace Orion.World.Tiles {
             if (((ITile)this).active()) {
                 if (((ITile)this).type != compTile.type) return false;
 
-                if (Terraria.Main.tileFrameImportant[((ITile)this).type] &&
+                if (Main.tileFrameImportant[((ITile)this).type] &&
                     (((ITile)this).frameX != compTile.frameX || ((ITile)this).frameY != compTile.frameY)) {
                     return false;
                 }
@@ -341,18 +359,17 @@ namespace Orion.World.Tiles {
         }
 
         void ITile.liquidType(int liquidType) {
-            if (liquidType == 0) {
+            switch (liquidType)
+            {
+            case 0:
                 ((ITile)this).bTileHeader &= 159;
                 return;
-            }
-
-            if (liquidType == 1) {
+            case 1:
                 ((ITile)this).lava(true);
                 return;
-            }
-
-            if (liquidType == 2) {
+            case 2:
                 ((ITile)this).honey(true);
+                break;
             }
         }
 

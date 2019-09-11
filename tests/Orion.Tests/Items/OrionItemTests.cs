@@ -1,10 +1,28 @@
-﻿using System;
+﻿// Copyright (c) 2015-2019 Pryaxis & Orion Contributors
+// 
+// This file is part of Orion.
+// 
+// Orion is free software: you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+// 
+// Orion is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+// 
+// You should have received a copy of the GNU General Public License
+// along with Orion.  If not, see <https://www.gnu.org/licenses/>.
+
+using System;
 using System.Collections.Generic;
 using FluentAssertions;
 using Microsoft.Xna.Framework;
 using Orion.Items;
 using Orion.Projectiles;
 using Orion.World.Tiles;
+using Terraria;
 using Xunit;
 
 namespace Orion.Tests.Items {
@@ -12,7 +30,7 @@ namespace Orion.Tests.Items {
         [Theory]
         [InlineData(100)]
         public void GetIndex_IsCorrect(int index) {
-            var terrariaItem = new Terraria.Item {whoAmI = index};
+            var terrariaItem = new Item {whoAmI = index};
             var item = new OrionItem(terrariaItem);
 
             item.Index.Should().Be(index);
@@ -22,7 +40,7 @@ namespace Orion.Tests.Items {
         [InlineData(true)]
         [InlineData(false)]
         public void GetIsActive_IsCorrect(bool isActive) {
-            var terrariaItem = new Terraria.Item {active = isActive};
+            var terrariaItem = new Item {active = isActive};
             var item = new OrionItem(terrariaItem);
 
             item.IsActive.Should().Be(isActive);
@@ -32,7 +50,7 @@ namespace Orion.Tests.Items {
         [InlineData(true)]
         [InlineData(false)]
         public void SetIsActive_IsCorrect(bool isActive) {
-            var terrariaItem = new Terraria.Item();
+            var terrariaItem = new Item();
             var item = new OrionItem(terrariaItem);
 
             item.IsActive = isActive;
@@ -43,7 +61,7 @@ namespace Orion.Tests.Items {
         [Theory]
         [InlineData("test")]
         public void GetName_IsCorrect(string name) {
-            var terrariaItem = new Terraria.Item {_nameOverride = name};
+            var terrariaItem = new Item {_nameOverride = name};
             var item = new OrionItem(terrariaItem);
 
             item.Name.Should().Be(name);
@@ -52,7 +70,7 @@ namespace Orion.Tests.Items {
         [Theory]
         [InlineData("test")]
         public void SetName_IsCorrect(string name) {
-            var terrariaItem = new Terraria.Item();
+            var terrariaItem = new Item();
             var item = new OrionItem(terrariaItem);
 
             item.Name = name;
@@ -62,7 +80,7 @@ namespace Orion.Tests.Items {
 
         [Fact]
         public void SetName_NullValue_ThrowsArgumentNullException() {
-            var terrariaItem = new Terraria.Item();
+            var terrariaItem = new Item();
             var item = new OrionItem(terrariaItem);
             Action action = () => item.Name = null;
 
@@ -71,7 +89,7 @@ namespace Orion.Tests.Items {
 
         [Fact]
         public void GetPosition_IsCorrect() {
-            var terrariaItem = new Terraria.Item {position = new Vector2(100, 100)};
+            var terrariaItem = new Item {position = new Vector2(100, 100)};
             var item = new OrionItem(terrariaItem);
 
             item.Position.Should().Be(new Vector2(100, 100));
@@ -79,7 +97,7 @@ namespace Orion.Tests.Items {
 
         [Fact]
         public void SetPosition_IsCorrect() {
-            var terrariaItem = new Terraria.Item();
+            var terrariaItem = new Item();
             var item = new OrionItem(terrariaItem);
 
             item.Position = new Vector2(100, 100);
@@ -89,7 +107,7 @@ namespace Orion.Tests.Items {
 
         [Fact]
         public void GetVelocity_IsCorrect() {
-            var terrariaItem = new Terraria.Item {velocity = new Vector2(100, 100)};
+            var terrariaItem = new Item {velocity = new Vector2(100, 100)};
             var item = new OrionItem(terrariaItem);
 
             item.Velocity.Should().Be(new Vector2(100, 100));
@@ -97,7 +115,7 @@ namespace Orion.Tests.Items {
 
         [Fact]
         public void SetVelocity_IsCorrect() {
-            var terrariaItem = new Terraria.Item();
+            var terrariaItem = new Item();
             var item = new OrionItem(terrariaItem);
 
             item.Velocity = new Vector2(100, 100);
@@ -107,7 +125,7 @@ namespace Orion.Tests.Items {
 
         [Fact]
         public void GetSize_IsCorrect() {
-            var terrariaItem = new Terraria.Item {Size = new Vector2(100, 100)};
+            var terrariaItem = new Item {Size = new Vector2(100, 100)};
             var item = new OrionItem(terrariaItem);
 
             item.Size.Should().Be(new Vector2(100, 100));
@@ -115,7 +133,7 @@ namespace Orion.Tests.Items {
 
         [Fact]
         public void SetSize_IsCorrect() {
-            var terrariaItem = new Terraria.Item();
+            var terrariaItem = new Item();
             var item = new OrionItem(terrariaItem);
 
             item.Size = new Vector2(100, 100);
@@ -126,7 +144,7 @@ namespace Orion.Tests.Items {
         [Theory]
         [InlineData(ItemType.SDMG)]
         public void GetType_IsCorrect(ItemType itemType) {
-            var terrariaItem = new Terraria.Item {type = (int)itemType};
+            var terrariaItem = new Item {type = (int)itemType};
             var item = new OrionItem(terrariaItem);
 
             item.Type.Should().Be(itemType);
@@ -135,7 +153,7 @@ namespace Orion.Tests.Items {
         [Theory]
         [InlineData(100)]
         public void GetStackSize_IsCorrect(int stackSize) {
-            var terrariaItem = new Terraria.Item {stack = stackSize};
+            var terrariaItem = new Item {stack = stackSize};
             var item = new OrionItem(terrariaItem);
 
             item.StackSize.Should().Be(stackSize);
@@ -144,7 +162,7 @@ namespace Orion.Tests.Items {
         [Theory]
         [InlineData(100)]
         public void SetStackSize_IsCorrect(int stackSize) {
-            var terrariaItem = new Terraria.Item();
+            var terrariaItem = new Item();
             var item = new OrionItem(terrariaItem);
 
             item.StackSize = stackSize;
@@ -155,7 +173,7 @@ namespace Orion.Tests.Items {
         [Theory]
         [InlineData(ItemPrefix.Unreal)]
         public void GetPrefix_IsCorrect(ItemPrefix itemPrefix) {
-            var terrariaItem = new Terraria.Item {prefix = (byte)itemPrefix};
+            var terrariaItem = new Item {prefix = (byte)itemPrefix};
             var item = new OrionItem(terrariaItem);
 
             item.Prefix.Should().Be(itemPrefix);
@@ -164,7 +182,7 @@ namespace Orion.Tests.Items {
         [Theory]
         [InlineData(100)]
         public void GetMaxStackSize_IsCorrect(int maxStackSize) {
-            var terrariaItem = new Terraria.Item {maxStack = maxStackSize};
+            var terrariaItem = new Item {maxStack = maxStackSize};
             var item = new OrionItem(terrariaItem);
 
             item.MaxStackSize.Should().Be(maxStackSize);
@@ -173,7 +191,7 @@ namespace Orion.Tests.Items {
         [Theory]
         [InlineData(100)]
         public void SetMaxStackSize_IsCorrect(int maxStackSize) {
-            var terrariaItem = new Terraria.Item();
+            var terrariaItem = new Item();
             var item = new OrionItem(terrariaItem);
 
             item.MaxStackSize = maxStackSize;
@@ -184,7 +202,7 @@ namespace Orion.Tests.Items {
         [Theory]
         [InlineData(ItemRarity.Orange)]
         public void GetRarity_IsCorrect(ItemRarity itemRarity) {
-            var terrariaItem = new Terraria.Item {rare = (int)itemRarity};
+            var terrariaItem = new Item {rare = (int)itemRarity};
             var item = new OrionItem(terrariaItem);
 
             item.Rarity.Should().Be(itemRarity);
@@ -193,7 +211,7 @@ namespace Orion.Tests.Items {
         [Theory]
         [InlineData(ItemRarity.Orange)]
         public void SetRarity_IsCorrect(ItemRarity itemRarity) {
-            var terrariaItem = new Terraria.Item();
+            var terrariaItem = new Item();
             var item = new OrionItem(terrariaItem);
 
             item.Rarity = itemRarity;
@@ -204,13 +222,13 @@ namespace Orion.Tests.Items {
         public static readonly IEnumerable<object[]> ColorData = new List<object[]> {
             new object[] {new Color(255, 0, 0)},
             new object[] {new Color(0, 255, 0)},
-            new object[] {new Color(0, 0, 255)},
+            new object[] {new Color(0, 0, 255)}
         };
 
         [Theory]
         [MemberData(nameof(ColorData))]
         public void GetColor_IsCorrect(Color color) {
-            var terrariaItem = new Terraria.Item {color = color};
+            var terrariaItem = new Item {color = color};
             var item = new OrionItem(terrariaItem);
 
             item.Color.Should().Be(color);
@@ -219,7 +237,7 @@ namespace Orion.Tests.Items {
         [Theory]
         [MemberData(nameof(ColorData))]
         public void SetColor_IsCorrect(Color color) {
-            var terrariaItem = new Terraria.Item();
+            var terrariaItem = new Item();
             var item = new OrionItem(terrariaItem);
 
             item.Color = color;
@@ -230,7 +248,7 @@ namespace Orion.Tests.Items {
         [Theory]
         [InlineData(100)]
         public void GetScale_IsCorrect(float scale) {
-            var terrariaItem = new Terraria.Item {scale = scale};
+            var terrariaItem = new Item {scale = scale};
             var item = new OrionItem(terrariaItem);
 
             item.Scale.Should().Be(scale);
@@ -239,7 +257,7 @@ namespace Orion.Tests.Items {
         [Theory]
         [InlineData(100)]
         public void SetScale_IsCorrect(float scale) {
-            var terrariaItem = new Terraria.Item();
+            var terrariaItem = new Item();
             var item = new OrionItem(terrariaItem);
 
             item.Scale = scale;
@@ -250,7 +268,7 @@ namespace Orion.Tests.Items {
         [Theory]
         [InlineData(100)]
         public void GetValue_IsCorrect(int value) {
-            var terrariaItem = new Terraria.Item {value = value};
+            var terrariaItem = new Item {value = value};
             var item = new OrionItem(terrariaItem);
 
             item.Value.Should().Be(value);
@@ -259,7 +277,7 @@ namespace Orion.Tests.Items {
         [Theory]
         [InlineData(100)]
         public void SetValue_IsCorrect(int value) {
-            var terrariaItem = new Terraria.Item();
+            var terrariaItem = new Item();
             var item = new OrionItem(terrariaItem);
 
             item.Value = value;
@@ -271,7 +289,7 @@ namespace Orion.Tests.Items {
         [InlineData(true)]
         [InlineData(false)]
         public void GetIsMeleeWeapon_IsCorrect(bool isMeleeWeapon) {
-            var terrariaItem = new Terraria.Item {melee = isMeleeWeapon};
+            var terrariaItem = new Item {melee = isMeleeWeapon};
             var item = new OrionItem(terrariaItem);
 
             item.IsMeleeWeapon.Should().Be(isMeleeWeapon);
@@ -281,7 +299,7 @@ namespace Orion.Tests.Items {
         [InlineData(true)]
         [InlineData(false)]
         public void SetIsMeleeWeapon_IsCorrect(bool isMeleeWeapon) {
-            var terrariaItem = new Terraria.Item();
+            var terrariaItem = new Item();
             var item = new OrionItem(terrariaItem);
 
             item.IsMeleeWeapon = isMeleeWeapon;
@@ -293,7 +311,7 @@ namespace Orion.Tests.Items {
         [InlineData(true)]
         [InlineData(false)]
         public void GetIsRangedWeapon_IsCorrect(bool isRangedWeapon) {
-            var terrariaItem = new Terraria.Item {ranged = isRangedWeapon};
+            var terrariaItem = new Item {ranged = isRangedWeapon};
             var item = new OrionItem(terrariaItem);
 
             item.IsRangedWeapon.Should().Be(isRangedWeapon);
@@ -303,7 +321,7 @@ namespace Orion.Tests.Items {
         [InlineData(true)]
         [InlineData(false)]
         public void SetIsRangedWeapon_IsCorrect(bool isRangedWeapon) {
-            var terrariaItem = new Terraria.Item();
+            var terrariaItem = new Item();
             var item = new OrionItem(terrariaItem);
 
             item.IsRangedWeapon = isRangedWeapon;
@@ -315,7 +333,7 @@ namespace Orion.Tests.Items {
         [InlineData(true)]
         [InlineData(false)]
         public void GetIsMagicWeapon_IsCorrect(bool isMagicWeapon) {
-            var terrariaItem = new Terraria.Item {magic = isMagicWeapon};
+            var terrariaItem = new Item {magic = isMagicWeapon};
             var item = new OrionItem(terrariaItem);
 
             item.IsMagicWeapon.Should().Be(isMagicWeapon);
@@ -325,7 +343,7 @@ namespace Orion.Tests.Items {
         [InlineData(true)]
         [InlineData(false)]
         public void SetIsMagicWeapon_IsCorrect(bool isMagicWeapon) {
-            var terrariaItem = new Terraria.Item();
+            var terrariaItem = new Item();
             var item = new OrionItem(terrariaItem);
 
             item.IsMagicWeapon = isMagicWeapon;
@@ -337,7 +355,7 @@ namespace Orion.Tests.Items {
         [InlineData(true)]
         [InlineData(false)]
         public void GetIsSummonWeapon_IsCorrect(bool isSummonWeapon) {
-            var terrariaItem = new Terraria.Item {summon = isSummonWeapon};
+            var terrariaItem = new Item {summon = isSummonWeapon};
             var item = new OrionItem(terrariaItem);
 
             item.IsSummonWeapon.Should().Be(isSummonWeapon);
@@ -347,7 +365,7 @@ namespace Orion.Tests.Items {
         [InlineData(true)]
         [InlineData(false)]
         public void SetIsSummonWeapon_IsCorrect(bool isSummonWeapon) {
-            var terrariaItem = new Terraria.Item();
+            var terrariaItem = new Item();
             var item = new OrionItem(terrariaItem);
 
             item.IsSummonWeapon = isSummonWeapon;
@@ -359,7 +377,7 @@ namespace Orion.Tests.Items {
         [InlineData(true)]
         [InlineData(false)]
         public void GetIsThrownWeapon_IsCorrect(bool isThrownWeapon) {
-            var terrariaItem = new Terraria.Item {thrown = isThrownWeapon};
+            var terrariaItem = new Item {thrown = isThrownWeapon};
             var item = new OrionItem(terrariaItem);
 
             item.IsThrownWeapon.Should().Be(isThrownWeapon);
@@ -369,7 +387,7 @@ namespace Orion.Tests.Items {
         [InlineData(true)]
         [InlineData(false)]
         public void SetIsThrownWeapon_IsCorrect(bool isThrownWeapon) {
-            var terrariaItem = new Terraria.Item();
+            var terrariaItem = new Item();
             var item = new OrionItem(terrariaItem);
 
             item.IsThrownWeapon = isThrownWeapon;
@@ -380,7 +398,7 @@ namespace Orion.Tests.Items {
         [Theory]
         [InlineData(100)]
         public void GetDamage_IsCorrect(int damage) {
-            var terrariaItem = new Terraria.Item {damage = damage};
+            var terrariaItem = new Item {damage = damage};
             var item = new OrionItem(terrariaItem);
 
             item.Damage.Should().Be(damage);
@@ -389,7 +407,7 @@ namespace Orion.Tests.Items {
         [Theory]
         [InlineData(100)]
         public void SetDamage_IsCorrect(int damage) {
-            var terrariaItem = new Terraria.Item();
+            var terrariaItem = new Item();
             var item = new OrionItem(terrariaItem);
 
             item.Damage = damage;
@@ -400,7 +418,7 @@ namespace Orion.Tests.Items {
         [Theory]
         [InlineData(100)]
         public void GetKnockback_IsCorrect(float knockBack) {
-            var terrariaItem = new Terraria.Item {knockBack = knockBack};
+            var terrariaItem = new Item {knockBack = knockBack};
             var item = new OrionItem(terrariaItem);
 
             item.Knockback.Should().Be(knockBack);
@@ -409,7 +427,7 @@ namespace Orion.Tests.Items {
         [Theory]
         [InlineData(100)]
         public void SetKnockback_IsCorrect(float knockback) {
-            var terrariaItem = new Terraria.Item();
+            var terrariaItem = new Item();
             var item = new OrionItem(terrariaItem);
 
             item.Knockback = knockback;
@@ -420,7 +438,7 @@ namespace Orion.Tests.Items {
         [Theory]
         [InlineData(100)]
         public void GetUseTime_IsCorrect(int useTime) {
-            var terrariaItem = new Terraria.Item {useTime = useTime};
+            var terrariaItem = new Item {useTime = useTime};
             var item = new OrionItem(terrariaItem);
 
             item.UseTime.Should().Be(useTime);
@@ -429,7 +447,7 @@ namespace Orion.Tests.Items {
         [Theory]
         [InlineData(100)]
         public void SetUseTime_IsCorrect(int useTime) {
-            var terrariaItem = new Terraria.Item();
+            var terrariaItem = new Item();
             var item = new OrionItem(terrariaItem);
 
             item.UseTime = useTime;
@@ -440,7 +458,7 @@ namespace Orion.Tests.Items {
         [Theory]
         [InlineData(AmmoType.FallenStar)]
         public void GetUsesAmmoType_IsCorrect(AmmoType usesAmmoType) {
-            var terrariaItem = new Terraria.Item {useAmmo = (int)usesAmmoType};
+            var terrariaItem = new Item {useAmmo = (int)usesAmmoType};
             var item = new OrionItem(terrariaItem);
 
             item.UsesAmmoType.Should().Be(usesAmmoType);
@@ -449,7 +467,7 @@ namespace Orion.Tests.Items {
         [Theory]
         [InlineData(AmmoType.FallenStar)]
         public void SetUsesAmmoType_IsCorrect(AmmoType usesAmmoType) {
-            var terrariaItem = new Terraria.Item();
+            var terrariaItem = new Item();
             var item = new OrionItem(terrariaItem);
 
             item.UsesAmmoType = usesAmmoType;
@@ -460,7 +478,7 @@ namespace Orion.Tests.Items {
         [Theory]
         [InlineData(100)]
         public void GetProjectileSpeed_IsCorrect(float projectileSpeed) {
-            var terrariaItem = new Terraria.Item {shootSpeed = projectileSpeed};
+            var terrariaItem = new Item {shootSpeed = projectileSpeed};
             var item = new OrionItem(terrariaItem);
 
             item.ProjectileSpeed.Should().Be(projectileSpeed);
@@ -469,7 +487,7 @@ namespace Orion.Tests.Items {
         [Theory]
         [InlineData(100)]
         public void SetProjectileSpeed_IsCorrect(float projectileSpeed) {
-            var terrariaItem = new Terraria.Item();
+            var terrariaItem = new Item();
             var item = new OrionItem(terrariaItem);
 
             item.ProjectileSpeed = projectileSpeed;
@@ -480,7 +498,7 @@ namespace Orion.Tests.Items {
         [Theory]
         [InlineData(AmmoType.FallenStar)]
         public void GetAmmoType_IsCorrect(AmmoType ammoType) {
-            var terrariaItem = new Terraria.Item {ammo = (int)ammoType};
+            var terrariaItem = new Item {ammo = (int)ammoType};
             var item = new OrionItem(terrariaItem);
 
             item.AmmoType.Should().Be(ammoType);
@@ -489,7 +507,7 @@ namespace Orion.Tests.Items {
         [Theory]
         [InlineData(AmmoType.FallenStar)]
         public void SetAmmoType_IsCorrect(AmmoType ammoType) {
-            var terrariaItem = new Terraria.Item();
+            var terrariaItem = new Item();
             var item = new OrionItem(terrariaItem);
 
             item.AmmoType = ammoType;
@@ -500,7 +518,7 @@ namespace Orion.Tests.Items {
         [Theory]
         [InlineData(ProjectileType.StarWrath)]
         public void GetProjectileType_IsCorrect(ProjectileType projectileType) {
-            var terrariaItem = new Terraria.Item {shoot = (int)projectileType};
+            var terrariaItem = new Item {shoot = (int)projectileType};
             var item = new OrionItem(terrariaItem);
 
             item.ProjectileType.Should().Be(projectileType);
@@ -509,7 +527,7 @@ namespace Orion.Tests.Items {
         [Theory]
         [InlineData(ProjectileType.StarWrath)]
         public void SetProjectileType_IsCorrect(ProjectileType projectileType) {
-            var terrariaItem = new Terraria.Item();
+            var terrariaItem = new Item();
             var item = new OrionItem(terrariaItem);
 
             item.ProjectileType = projectileType;
@@ -521,7 +539,7 @@ namespace Orion.Tests.Items {
         [InlineData(null)]
         [InlineData(BlockType.Stone)]
         public void GetBlockType_IsCorrect(BlockType? blockType) {
-            var terrariaItem = new Terraria.Item {createTile = (int?)blockType ?? -1};
+            var terrariaItem = new Item {createTile = (int?)blockType ?? -1};
             var item = new OrionItem(terrariaItem);
 
             item.BlockType.Should().Be(blockType);
@@ -531,7 +549,7 @@ namespace Orion.Tests.Items {
         [InlineData(null)]
         [InlineData(BlockType.Stone)]
         public void SetBlockType_IsCorrect(BlockType? blockType) {
-            var terrariaItem = new Terraria.Item();
+            var terrariaItem = new Item();
             var item = new OrionItem(terrariaItem);
 
             item.BlockType = blockType;
@@ -543,7 +561,7 @@ namespace Orion.Tests.Items {
         [InlineData(null)]
         [InlineData(WallType.Stone)]
         public void GetWallType_IsCorrect(WallType? wallType) {
-            var terrariaItem = new Terraria.Item {createWall = (int?)wallType ?? -1};
+            var terrariaItem = new Item {createWall = (int?)wallType ?? -1};
             var item = new OrionItem(terrariaItem);
 
             item.WallType.Should().Be(wallType);
@@ -553,7 +571,7 @@ namespace Orion.Tests.Items {
         [InlineData(null)]
         [InlineData(WallType.Stone)]
         public void SetWallType_IsCorrect(WallType? wallType) {
-            var terrariaItem = new Terraria.Item();
+            var terrariaItem = new Item();
             var item = new OrionItem(terrariaItem);
 
             item.WallType = wallType;
@@ -564,7 +582,7 @@ namespace Orion.Tests.Items {
         [Theory]
         [InlineData(100)]
         public void GetPickaxePower_IsCorrect(int pickaxePower) {
-            var terrariaItem = new Terraria.Item {pick = pickaxePower};
+            var terrariaItem = new Item {pick = pickaxePower};
             var item = new OrionItem(terrariaItem);
 
             item.PickaxePower.Should().Be(pickaxePower);
@@ -573,7 +591,7 @@ namespace Orion.Tests.Items {
         [Theory]
         [InlineData(100)]
         public void SetPickaxePower_IsCorrect(int pickaxePower) {
-            var terrariaItem = new Terraria.Item();
+            var terrariaItem = new Item();
             var item = new OrionItem(terrariaItem);
 
             item.PickaxePower = pickaxePower;
@@ -584,7 +602,7 @@ namespace Orion.Tests.Items {
         [Theory]
         [InlineData(100)]
         public void GetAxePower_IsCorrect(int axePower) {
-            var terrariaItem = new Terraria.Item {axe = axePower};
+            var terrariaItem = new Item {axe = axePower};
             var item = new OrionItem(terrariaItem);
 
             item.AxePower.Should().Be(axePower);
@@ -593,7 +611,7 @@ namespace Orion.Tests.Items {
         [Theory]
         [InlineData(100)]
         public void SetAxePower_IsCorrect(int axePower) {
-            var terrariaItem = new Terraria.Item();
+            var terrariaItem = new Item();
             var item = new OrionItem(terrariaItem);
 
             item.AxePower = axePower;
@@ -604,7 +622,7 @@ namespace Orion.Tests.Items {
         [Theory]
         [InlineData(100)]
         public void GetHammerPower_IsCorrect(int hammerPower) {
-            var terrariaItem = new Terraria.Item {hammer = hammerPower};
+            var terrariaItem = new Item {hammer = hammerPower};
             var item = new OrionItem(terrariaItem);
 
             item.HammerPower.Should().Be(hammerPower);
@@ -613,7 +631,7 @@ namespace Orion.Tests.Items {
         [Theory]
         [InlineData(100)]
         public void SetHammerPower_IsCorrect(int hammerPower) {
-            var terrariaItem = new Terraria.Item();
+            var terrariaItem = new Item();
             var item = new OrionItem(terrariaItem);
 
             item.HammerPower = hammerPower;
@@ -624,7 +642,7 @@ namespace Orion.Tests.Items {
         [Theory]
         [InlineData(100)]
         public void GetDefense_IsCorrect(int defense) {
-            var terrariaItem = new Terraria.Item {defense = defense};
+            var terrariaItem = new Item {defense = defense};
             var item = new OrionItem(terrariaItem);
 
             item.Defense.Should().Be(defense);
@@ -633,7 +651,7 @@ namespace Orion.Tests.Items {
         [Theory]
         [InlineData(100)]
         public void SetDefense_IsCorrect(int defense) {
-            var terrariaItem = new Terraria.Item();
+            var terrariaItem = new Item();
             var item = new OrionItem(terrariaItem);
 
             item.Defense = defense;
@@ -645,7 +663,7 @@ namespace Orion.Tests.Items {
         [InlineData(true)]
         [InlineData(false)]
         public void GetIsAccessory_IsCorrect(bool isAccessory) {
-            var terrariaItem = new Terraria.Item {accessory = isAccessory};
+            var terrariaItem = new Item {accessory = isAccessory};
             var item = new OrionItem(terrariaItem);
 
             item.IsAccessory.Should().Be(isAccessory);
@@ -655,7 +673,7 @@ namespace Orion.Tests.Items {
         [InlineData(true)]
         [InlineData(false)]
         public void SetIsAccessory_IsCorrect(bool isAccessory) {
-            var terrariaItem = new Terraria.Item();
+            var terrariaItem = new Item();
             var item = new OrionItem(terrariaItem);
 
             item.IsAccessory = isAccessory;
@@ -666,7 +684,7 @@ namespace Orion.Tests.Items {
         [Theory]
         [InlineData(ItemType.SDMG)]
         public void ApplyType_IsCorrect(ItemType itemType) {
-            var terrariaItem = new Terraria.Item();
+            var terrariaItem = new Item();
             var item = new OrionItem(terrariaItem);
 
             item.ApplyType(itemType);
@@ -677,7 +695,7 @@ namespace Orion.Tests.Items {
         [Theory]
         [InlineData(ItemPrefix.Unreal)]
         public void ApplyPrefix_IsCorrect(ItemPrefix itemPrefix) {
-            var terrariaItem = new Terraria.Item();
+            var terrariaItem = new Item();
             terrariaItem.SetDefaults((int)ItemType.SDMG);
             var item = new OrionItem(terrariaItem);
 

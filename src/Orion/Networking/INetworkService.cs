@@ -1,36 +1,53 @@
-﻿using System;
-using System.Collections.Generic;
+﻿// Copyright (c) 2015-2019 Pryaxis & Orion Contributors
+// 
+// This file is part of Orion.
+// 
+// Orion is free software: you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+// 
+// Orion is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+// 
+// You should have received a copy of the GNU General Public License
+// along with Orion.  If not, see <https://www.gnu.org/licenses/>.
+
+using System;
 using Orion.Hooks;
 using Orion.Networking.Events;
 using Orion.Networking.Packets;
+using Orion.Utils;
 
 namespace Orion.Networking {
     /// <summary>
-    /// Provides a mechanism for managing the network.
+    /// Represents a service that manages the network. Provides network-related hooks and methods.
     /// </summary>
-    public interface INetworkService : IReadOnlyList<IClient>, IService {
+    public interface INetworkService : IReadOnlyArray<IClient>, IService {
         /// <summary>
-        /// Occurs when a packet was received.
+        /// Gets or sets the hook handlers that occur when a packet was received.
         /// </summary>
         HookHandlerCollection<ReceivedPacketEventArgs> ReceivedPacket { get; set; }
 
         /// <summary>
-        /// Occurs when a packet is being received. This event can be handled.
+        /// Gets or sets the hook handlers that occur when a packet is being received. This hook can be handled.
         /// </summary>
         HookHandlerCollection<ReceivingPacketEventArgs> ReceivingPacket { get; set; }
 
         /// <summary>
-        /// Occurs when a packet was sent.
+        /// Gets or sets the hook handlers that occur when a packet was sent.
         /// </summary>
         HookHandlerCollection<SentPacketEventArgs> SentPacket { get; set; }
 
         /// <summary>
-        /// Occurs when a packet is being sent. This event can be handled.
+        /// Gets or sets the hook handlers that occur when a packet is being sent. This hook can be handled.
         /// </summary>
         HookHandlerCollection<SendingPacketEventArgs> SendingPacket { get; set; }
 
         /// <summary>
-        /// Occurs when a client is disconnected.
+        /// Gets or sets the hook handlers that occur when a client is disconnected.
         /// </summary>
         HookHandlerCollection<ClientDisconnectedEventArgs> ClientDisconnected { get; set; }
 

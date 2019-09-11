@@ -1,5 +1,23 @@
-﻿using System.Diagnostics.CodeAnalysis;
+﻿// Copyright (c) 2015-2019 Pryaxis & Orion Contributors
+// 
+// This file is part of Orion.
+// 
+// Orion is free software: you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+// 
+// Orion is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+// 
+// You should have received a copy of the GNU General Public License
+// along with Orion.  If not, see <https://www.gnu.org/licenses/>.
+
+using System.Diagnostics.CodeAnalysis;
 using System.IO;
+using Terraria;
 
 namespace Orion.Networking.Packets.Players {
     /// <summary>
@@ -145,10 +163,10 @@ namespace Orion.Networking.Packets.Players {
         private protected override void ReadFromReader(BinaryReader reader, PacketContext context) {
             PlayerIndex = reader.ReadByte();
 
-            Terraria.BitsByte zoneFlags = reader.ReadByte();
-            Terraria.BitsByte zoneFlags2 = reader.ReadByte();
-            Terraria.BitsByte zoneFlags3 = reader.ReadByte();
-            Terraria.BitsByte zoneFlags4 = reader.ReadByte();
+            BitsByte zoneFlags = reader.ReadByte();
+            BitsByte zoneFlags2 = reader.ReadByte();
+            BitsByte zoneFlags3 = reader.ReadByte();
+            BitsByte zoneFlags4 = reader.ReadByte();
             IsPlayerNearDungeonZone = zoneFlags[0];
             IsPlayerNearCorruptionZone = zoneFlags[1];
             IsPlayerNearHallowedZone = zoneFlags[2];
@@ -179,10 +197,10 @@ namespace Orion.Networking.Packets.Players {
         private protected override void WriteToWriter(BinaryWriter writer, PacketContext context) {
             writer.Write(PlayerIndex);
 
-            Terraria.BitsByte zoneFlags = 0;
-            Terraria.BitsByte zoneFlags2 = 0;
-            Terraria.BitsByte zoneFlags3 = 0;
-            Terraria.BitsByte zoneFlags4 = 0;
+            BitsByte zoneFlags = 0;
+            BitsByte zoneFlags2 = 0;
+            BitsByte zoneFlags3 = 0;
+            BitsByte zoneFlags4 = 0;
             zoneFlags[0] = IsPlayerNearDungeonZone;
             zoneFlags[1] = IsPlayerNearCorruptionZone;
             zoneFlags[2] = IsPlayerNearHallowedZone;

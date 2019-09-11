@@ -2,19 +2,26 @@
 
   <PropertyGroup>
     <OutputType>Exe</OutputType>
-    <TargetFramework>net461</TargetFramework>
+    <TargetFramework>net472</TargetFramework>
     <StartupObject>Orion.Launcher.Program</StartupObject>
     <Authors>orion-contributors</Authors>
     <Product>Orion.Launcher</Product>
-    <Description>Acts as the de-facto launcher for an Orion-enabled Terraria server.</Description>
+    <Description>Provides a launcher for an Orion-enabled Terraria server.</Description>
     <Company>Pryaxis</Company>
     <PackageProjectUrl>https://github.com/orgs/Pryaxis/teams/orion-contributors</PackageProjectUrl>
     <RepositoryUrl>https://github.com/Pryaxis/Orion</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
     <NeutralLanguage>en-US</NeutralLanguage>
+    <PackageLicenseFile>LICENSE.md</PackageLicenseFile>
+    <AutoGenerateBindingRedirects>false</AutoGenerateBindingRedirects>
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Costura.Fody" Version="4.1.0" />
+    <PackageReference Include="Fody" Version="6.0.0">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
     <PackageReference Include="Serilog" Version="2.8.0" />
     <PackageReference Include="Serilog.Sinks.Console" Version="3.1.1" />
     <PackageReference Include="Serilog.Sinks.File" Version="4.0.0" />
@@ -22,21 +29,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Orion\Orion.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Compile Update="Resources\strings.Designer.cs">
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-      <DependentUpon>strings.resx</DependentUpon>
-    </Compile>
-  </ItemGroup>
-
-  <ItemGroup>
-    <EmbeddedResource Update="Resources\strings.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>strings.Designer.cs</LastGenOutput>
-    </EmbeddedResource>
   </ItemGroup>
 
 </Project>
