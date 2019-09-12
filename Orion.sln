@@ -1,13 +1,21 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 14
-VisualStudioVersion = 14.0.25420.1
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29215.179
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Orion.Launcher", "Orion.Launcher\Orion.Launcher.csproj", "{3F0782E9-93E8-4AEA-ACEB-4E6437400B62}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Orion", "src\Orion\Orion.csproj", "{2739ECCB-09C1-45DC-8EF8-864F964905CB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Orion", "Orion\Orion.csproj", "{2EE55527-75E1-4774-A0A9-681740868F85}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Orion.Tests", "tests\Orion.Tests\Orion.Tests.csproj", "{BAF61F61-2584-4B08-BCF2-088284F6C679}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Orion.Tests", "Orion.Tests\Orion.Tests.csproj", "{A52F86FB-DB58-4C27-A85D-B67DDFA6E14D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Orion.Launcher", "src\Orion.Launcher\Orion.Launcher.csproj", "{05212B2D-B6FC-4CC7-9722-F75DCFE570ED}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{CD524E77-4123-4056-8727-0F7C61E25EBB}"
+	ProjectSection(SolutionItems) = preProject
+		.gitignore = .gitignore
+		.travis.yml = .travis.yml
+		COPYING = COPYING
+		NOTICE = NOTICE
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,20 +23,23 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{3F0782E9-93E8-4AEA-ACEB-4E6437400B62}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{3F0782E9-93E8-4AEA-ACEB-4E6437400B62}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{3F0782E9-93E8-4AEA-ACEB-4E6437400B62}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{3F0782E9-93E8-4AEA-ACEB-4E6437400B62}.Release|Any CPU.Build.0 = Release|Any CPU
-		{2EE55527-75E1-4774-A0A9-681740868F85}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{2EE55527-75E1-4774-A0A9-681740868F85}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{2EE55527-75E1-4774-A0A9-681740868F85}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{2EE55527-75E1-4774-A0A9-681740868F85}.Release|Any CPU.Build.0 = Release|Any CPU
-		{A52F86FB-DB58-4C27-A85D-B67DDFA6E14D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{A52F86FB-DB58-4C27-A85D-B67DDFA6E14D}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{A52F86FB-DB58-4C27-A85D-B67DDFA6E14D}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{A52F86FB-DB58-4C27-A85D-B67DDFA6E14D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2739ECCB-09C1-45DC-8EF8-864F964905CB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2739ECCB-09C1-45DC-8EF8-864F964905CB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2739ECCB-09C1-45DC-8EF8-864F964905CB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2739ECCB-09C1-45DC-8EF8-864F964905CB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BAF61F61-2584-4B08-BCF2-088284F6C679}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BAF61F61-2584-4B08-BCF2-088284F6C679}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BAF61F61-2584-4B08-BCF2-088284F6C679}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BAF61F61-2584-4B08-BCF2-088284F6C679}.Release|Any CPU.Build.0 = Release|Any CPU
+		{05212B2D-B6FC-4CC7-9722-F75DCFE570ED}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{05212B2D-B6FC-4CC7-9722-F75DCFE570ED}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{05212B2D-B6FC-4CC7-9722-F75DCFE570ED}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{05212B2D-B6FC-4CC7-9722-F75DCFE570ED}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {2460F88F-4078-42A1-9CF9-6E5E6079F31F}
 	EndGlobalSection
 EndGlobal

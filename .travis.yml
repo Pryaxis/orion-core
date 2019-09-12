@@ -1,11 +1,13 @@
 language: csharp
-solution: Orion.sln
-install:
-- nuget restore Orion.sln
-- nuget install NUnit.Runners -Version 3.4.1 -OutputDirectory testrunner
+
+matrix:
+  include:
+    - os: linux
+      dist: xenial
+      dotnet: 2.2.401
+      mono: none
+
 script:
-- xbuild /p:Configuration=Release Orion.sln
-- mono ./testrunner/NUnit.ConsoleRunner.3.4.1/tools/nunit3-console.exe ./Orion.Tests/bin/Release/Orion.Tests.dll
-notifications:
-  slack:
-    secure: ExmT4nn5gkKLk2c6SHPz1N9OHbSFCgjU4UwG9HDEetvv9zbPUNZVT4Ri5Vj/Hqhf6KJSnqAmNg91hALe7NdQ7c6r1hSk+DlIveljq0LJ/yQ7/A6lKZ9kFQxqW7uBd+mbNYm2DLe2Gb3/UCUbeheHUU98Ny/6wh1849pPCZJtBRg=
+  - dotnet restore
+  - dotnet build -f netstandard2.0 -c Release src/Orion/Orion.csproj
+  - dotnet test -f netcoreapp2.2 -c Release tests/Orion.Tests/Orion.Tests.csproj
