@@ -49,7 +49,7 @@ namespace Orion.Networking.Packets.World.TileEntities {
             set => _chestName = value ?? throw new ArgumentNullException(nameof(value));
         }
 
-        internal override PacketType Type => PacketType.ChestName;
+        public override PacketType Type => PacketType.ChestName;
 
         /// <inheritdoc />
         [ExcludeFromCodeCoverage]

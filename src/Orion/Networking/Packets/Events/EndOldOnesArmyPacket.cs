@@ -23,7 +23,7 @@ namespace Orion.Networking.Packets.Events {
     /// Packet sent from the server to the client to end the Old One's Army event.
     /// </summary>
     public sealed class EndOldOnesArmyPacket : Packet {
-        internal override PacketType Type => PacketType.EndOldOnesArmy;
+        public override PacketType Type => PacketType.EndOldOnesArmy;
 
         /// <inheritdoc />
         [ExcludeFromCodeCoverage]

@@ -103,7 +103,7 @@ namespace Orion.Networking.Packets.Items {
         /// </summary>
         public bool? ItemIsNotAmmoOverride { get; set; }
 
-        internal override PacketType Type => PacketType.AlterItem;
+        public override PacketType Type => PacketType.AlterItem;
 
         /// <inheritdoc />
         [ExcludeFromCodeCoverage]

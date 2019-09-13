@@ -34,7 +34,7 @@ namespace Orion.Networking.Packets.Npcs {
         /// </summary>
         public int NpcTypeKillCount { get; set; }
 
-        internal override PacketType Type => PacketType.NpcKillCount;
+        public override PacketType Type => PacketType.NpcKillCount;
 
         /// <inheritdoc />
         [ExcludeFromCodeCoverage]

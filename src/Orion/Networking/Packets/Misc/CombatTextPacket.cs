@@ -48,7 +48,7 @@ namespace Orion.Networking.Packets.Misc {
             set => _text = value ?? throw new ArgumentNullException(nameof(value));
         }
 
-        internal override PacketType Type => PacketType.CombatText;
+        public override PacketType Type => PacketType.CombatText;
 
         /// <inheritdoc />
         [ExcludeFromCodeCoverage]

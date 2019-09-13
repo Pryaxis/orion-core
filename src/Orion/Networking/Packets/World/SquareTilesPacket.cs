@@ -58,7 +58,7 @@ namespace Orion.Networking.Packets.World {
             set => _tiles = value ?? throw new ArgumentNullException(nameof(value));
         }
 
-        internal override PacketType Type => PacketType.SquareTiles;
+        public override PacketType Type => PacketType.SquareTiles;
 
         /// <inheritdoc />
         [ExcludeFromCodeCoverage]

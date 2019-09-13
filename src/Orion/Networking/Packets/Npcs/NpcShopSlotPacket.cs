@@ -49,7 +49,7 @@ namespace Orion.Networking.Packets.Npcs {
         /// </summary>
         public int ItemValue { get; set; }
 
-        internal override PacketType Type => PacketType.NpcShopSlot;
+        public override PacketType Type => PacketType.NpcShopSlot;
 
         /// <inheritdoc />
         [ExcludeFromCodeCoverage]

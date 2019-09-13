@@ -39,7 +39,7 @@ namespace Orion.Networking.Packets.Players {
         /// </summary>
         public short PlayerMaxHealth { get; set; }
 
-        internal override PacketType Type => PacketType.PlayerHealth;
+        public override PacketType Type => PacketType.PlayerHealth;
 
         /// <inheritdoc />
         [ExcludeFromCodeCoverage]

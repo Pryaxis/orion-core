@@ -40,7 +40,7 @@ namespace Orion.Networking.Packets.Npcs {
         /// </summary>
         public byte NpcStyle { get; set; }
 
-        internal override PacketType Type => PacketType.ReleaseNpc;
+        public override PacketType Type => PacketType.ReleaseNpc;
 
         /// <inheritdoc />
         [ExcludeFromCodeCoverage]

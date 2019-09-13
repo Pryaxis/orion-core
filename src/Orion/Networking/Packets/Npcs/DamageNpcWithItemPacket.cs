@@ -33,7 +33,7 @@ namespace Orion.Networking.Packets.Npcs {
         /// </summary>
         public byte DamagerPlayerIndex { get; set; }
 
-        internal override PacketType Type => PacketType.DamageNpcWithItem;
+        public override PacketType Type => PacketType.DamageNpcWithItem;
 
         /// <inheritdoc />
         [ExcludeFromCodeCoverage]

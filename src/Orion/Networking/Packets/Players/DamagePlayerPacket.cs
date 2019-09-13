@@ -61,7 +61,7 @@ namespace Orion.Networking.Packets.Players {
         /// </summary>
         public bool IsHitFromPvp { get; set; }
 
-        internal override PacketType Type => PacketType.DamagePlayer;
+        public override PacketType Type => PacketType.DamagePlayer;
 
         /// <inheritdoc />
         [ExcludeFromCodeCoverage]

@@ -152,7 +152,10 @@ namespace Orion.Networking.Packets {
                 [PacketType.CombatText] = () => new CombatTextPacket()
             };
 
-        internal abstract PacketType Type { get; }
+        /// <summary>
+        /// Gets the packet type.
+        /// </summary>
+        public abstract PacketType Type { get; }
 
         /// <summary>
         /// Reads a packet from the given stream with the specified context.

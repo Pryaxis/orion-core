@@ -29,7 +29,7 @@ namespace Orion.Networking.Packets.Events {
         /// </summary>
         public NpcType NpcTypeKilled { get; set; }
 
-        internal override PacketType Type => PacketType.NpcTypeKilledEvent;
+        public override PacketType Type => PacketType.NpcTypeKilledEvent;
 
         /// <inheritdoc />
         [ExcludeFromCodeCoverage]

@@ -35,7 +35,7 @@ namespace Orion.Networking.Packets.Players {
         /// </summary>
         public Buff PlayerBuff { get; set; }
 
-        internal override PacketType Type => PacketType.BuffPlayer;
+        public override PacketType Type => PacketType.BuffPlayer;
 
         /// <inheritdoc />
         [ExcludeFromCodeCoverage]

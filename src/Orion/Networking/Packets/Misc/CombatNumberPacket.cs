@@ -40,7 +40,7 @@ namespace Orion.Networking.Packets.Misc {
         /// </summary>
         public int Number { get; set; }
 
-        internal override PacketType Type => PacketType.CombatNumber;
+        public override PacketType Type => PacketType.CombatNumber;
 
         /// <inheritdoc />
         [ExcludeFromCodeCoverage]

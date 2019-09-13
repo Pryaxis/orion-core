@@ -43,7 +43,7 @@ namespace Orion.Networking.Packets.Npcs {
         /// </summary>
         public bool IsNpcHomeless { get; set; }
 
-        internal override PacketType Type => PacketType.NpcHome;
+        public override PacketType Type => PacketType.NpcHome;
 
         /// <inheritdoc />
         [ExcludeFromCodeCoverage]

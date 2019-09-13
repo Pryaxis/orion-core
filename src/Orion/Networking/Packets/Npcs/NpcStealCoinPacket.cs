@@ -40,7 +40,7 @@ namespace Orion.Networking.Packets.Npcs {
         /// </summary>
         public Vector2 CoinPosition { get; set; }
 
-        internal override PacketType Type => PacketType.NpcStealCoin;
+        public override PacketType Type => PacketType.NpcStealCoin;
 
         /// <inheritdoc />
         [ExcludeFromCodeCoverage]

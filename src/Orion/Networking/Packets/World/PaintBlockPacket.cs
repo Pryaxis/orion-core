@@ -39,7 +39,7 @@ namespace Orion.Networking.Packets.World {
         /// </summary>
         public PaintColor BlockColor { get; set; }
 
-        internal override PacketType Type => PacketType.PaintBlock;
+        public override PacketType Type => PacketType.PaintBlock;
 
         /// <inheritdoc />
         [ExcludeFromCodeCoverage]

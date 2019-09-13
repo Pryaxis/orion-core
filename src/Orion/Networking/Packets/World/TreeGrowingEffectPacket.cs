@@ -43,7 +43,7 @@ namespace Orion.Networking.Packets.World {
         /// </summary>
         public short TreeType { get; set; }
 
-        internal override PacketType Type => PacketType.TreeGrowingEffect;
+        public override PacketType Type => PacketType.TreeGrowingEffect;
 
         /// <inheritdoc />
         [ExcludeFromCodeCoverage]

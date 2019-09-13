@@ -48,7 +48,7 @@ namespace Orion.Networking.Packets.World {
         /// </summary>
         public MassWireOperations WireOperations { get; set; }
 
-        internal override PacketType Type => PacketType.RequestMassWireOperation;
+        public override PacketType Type => PacketType.RequestMassWireOperation;
 
         /// <inheritdoc />
         [ExcludeFromCodeCoverage]

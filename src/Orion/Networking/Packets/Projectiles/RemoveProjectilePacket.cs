@@ -33,7 +33,7 @@ namespace Orion.Networking.Packets.Projectiles {
         /// </summary>
         public byte ProjectileOwnerPlayerIndex { get; set; }
 
-        internal override PacketType Type => PacketType.RemoveProjectile;
+        public override PacketType Type => PacketType.RemoveProjectile;
 
         /// <inheritdoc />
         [ExcludeFromCodeCoverage]

@@ -29,7 +29,7 @@ namespace Orion.Networking.Packets.Events {
         /// </summary>
         public TimeSpan MoonLordCountdown { get; set; }
 
-        internal override PacketType Type => PacketType.MoonLordCountdown;
+        public override PacketType Type => PacketType.MoonLordCountdown;
 
         /// <inheritdoc />
         [ExcludeFromCodeCoverage]

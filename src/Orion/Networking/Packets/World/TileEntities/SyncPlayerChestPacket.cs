@@ -33,7 +33,7 @@ namespace Orion.Networking.Packets.World.TileEntities {
         /// </summary>
         public short PlayerChestIndex { get; set; }
 
-        internal override PacketType Type => PacketType.SyncPlayerChest;
+        public override PacketType Type => PacketType.SyncPlayerChest;
 
         /// <inheritdoc />
         [ExcludeFromCodeCoverage]

@@ -35,7 +35,7 @@ namespace Orion.Networking.Packets.Players {
             set => _playerVersion = value ?? throw new ArgumentNullException(nameof(value));
         }
 
-        internal override PacketType Type => PacketType.PlayerConnect;
+        public override PacketType Type => PacketType.PlayerConnect;
 
         /// <inheritdoc />
         [ExcludeFromCodeCoverage]

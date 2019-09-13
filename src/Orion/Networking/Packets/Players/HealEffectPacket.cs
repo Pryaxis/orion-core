@@ -33,7 +33,7 @@ namespace Orion.Networking.Packets.Players {
         /// </summary>
         public short HealAmount { get; set; }
 
-        internal override PacketType Type => PacketType.HealEffect;
+        public override PacketType Type => PacketType.HealEffect;
 
         /// <inheritdoc />
         [ExcludeFromCodeCoverage]

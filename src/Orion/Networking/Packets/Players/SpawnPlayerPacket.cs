@@ -38,7 +38,7 @@ namespace Orion.Networking.Packets.Players {
         /// </summary>
         public short PlayerSpawnY { get; set; }
 
-        internal override PacketType Type => PacketType.SpawnPlayer;
+        public override PacketType Type => PacketType.SpawnPlayer;
 
         /// <inheritdoc />
         [ExcludeFromCodeCoverage]

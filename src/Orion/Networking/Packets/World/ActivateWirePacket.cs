@@ -33,7 +33,7 @@ namespace Orion.Networking.Packets.World {
         /// </summary>
         public short WireY { get; set; }
 
-        internal override PacketType Type => PacketType.ActivateWire;
+        public override PacketType Type => PacketType.ActivateWire;
 
         /// <inheritdoc />
         [ExcludeFromCodeCoverage]

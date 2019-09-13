@@ -24,7 +24,7 @@ namespace Orion.Networking.Packets.Connections {
     /// <see cref="ContinueConnectingPacket"/>
     /// </summary>
     public sealed class FinishConnectingPacket : Packet {
-        internal override PacketType Type => PacketType.FinishConnecting;
+        public override PacketType Type => PacketType.FinishConnecting;
 
         /// <inheritdoc />
         [ExcludeFromCodeCoverage]

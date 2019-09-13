@@ -28,7 +28,7 @@ namespace Orion.Networking.Packets.Players {
         /// </summary>
         public int PlayerNumberOfAnglerQuestsCompleted { get; set; }
 
-        internal override PacketType Type => PacketType.PlayerAnglerQuests;
+        public override PacketType Type => PacketType.PlayerAnglerQuests;
 
         /// <inheritdoc />
         [ExcludeFromCodeCoverage]

@@ -47,7 +47,7 @@ namespace Orion.Networking.Packets.Misc {
         /// </summary>
         public short ChatLineWidth { get; set; }
 
-        internal override PacketType Type => PacketType.Chat;
+        public override PacketType Type => PacketType.Chat;
 
         /// <inheritdoc />
         [ExcludeFromCodeCoverage]

@@ -25,6 +25,8 @@ using Orion.Events.Players;
 using Orion.Hooks;
 using Orion.Networking.Events;
 using Orion.Networking.Packets;
+using Orion.Networking.Packets.Connections;
+using Orion.Networking.Packets.Players;
 using Orion.Players;
 using OTAPI;
 using Serilog;
@@ -34,6 +36,9 @@ using Terraria.Net.Sockets;
 
 namespace Orion.Networking {
     internal sealed class OrionNetworkService : OrionService, INetworkService {
+        private readonly IDictionary<PacketType, Func<IPlayer, Packet, (bool, bool)>> PacketTypeHandlers =
+            new Dictionary<PacketType, Func<IPlayer, Packet, (bool, bool)>>();
+
         private readonly Lazy<IPlayerService> _playerService;
 
         private readonly IList<RemoteClient> _terrariaClients;
@@ -132,6 +137,11 @@ namespace Orion.Networking {
             ReceivingPacket?.Invoke(this, args);
             if (args.Handled) return HookResult.Cancel;
 
+            var player = _playerService.Value[buffer.whoAmI];
+            //var (isCanceled, isPacketDirty) = HandleReceivePacket(player, packet);
+            //if (isCanceled) return HookResult.Cancel;
+            //if (isPacketDirty) throw new NotImplementedException();
+
             var args2 = new ReceivedPacketEventArgs(sender, packet);
             ReceivedPacket?.Invoke(this, args2);
 
@@ -187,6 +197,10 @@ namespace Orion.Networking {
             Log.Information("{Player} disconnected", player);
 
             return HookResult.Continue;
+        }
+
+        private (bool, bool) HandlePlayerConnect(IPlayer player, Packet packet) {
+            return (false, false);
         }
     }
 }

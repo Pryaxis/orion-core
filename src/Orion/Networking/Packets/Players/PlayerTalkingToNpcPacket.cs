@@ -33,7 +33,7 @@ namespace Orion.Networking.Packets.Players {
         /// </summary>
         public short PlayerTalkingToNpcIndex { get; set; }
 
-        internal override PacketType Type => PacketType.PlayerTalkingToNpc;
+        public override PacketType Type => PacketType.PlayerTalkingToNpc;
 
         /// <inheritdoc />
         [ExcludeFromCodeCoverage]

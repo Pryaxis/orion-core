@@ -33,7 +33,7 @@ namespace Orion.Networking.Packets.Events {
         /// </summary>
         public short CrystalY { get; set; }
 
-        internal override PacketType Type => PacketType.StartOldOnesArmy;
+        public override PacketType Type => PacketType.StartOldOnesArmy;
 
         /// <inheritdoc />
         [ExcludeFromCodeCoverage]

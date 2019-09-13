@@ -25,7 +25,7 @@ namespace Orion.Networking.Packets.Connections {
     /// <see cref="PlayerConnectPacket"/>.
     /// </summary>
     public sealed class RequestPasswordPacket : Packet {
-        internal override PacketType Type => PacketType.RequestPassword;
+        public override PacketType Type => PacketType.RequestPassword;
 
         /// <inheritdoc />
         [ExcludeFromCodeCoverage]

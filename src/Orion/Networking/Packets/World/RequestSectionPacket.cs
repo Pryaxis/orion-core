@@ -33,7 +33,7 @@ namespace Orion.Networking.Packets.World {
         /// </summary>
         public int SectionY { get; set; }
 
-        internal override PacketType Type => PacketType.RequestSection;
+        public override PacketType Type => PacketType.RequestSection;
 
         /// <inheritdoc />
         [ExcludeFromCodeCoverage]

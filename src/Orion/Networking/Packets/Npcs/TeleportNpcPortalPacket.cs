@@ -45,7 +45,7 @@ namespace Orion.Networking.Packets.Npcs {
         /// </summary>
         public Vector2 NewNpcVelocity { get; set; }
 
-        internal override PacketType Type => PacketType.TeleportNpcPortal;
+        public override PacketType Type => PacketType.TeleportNpcPortal;
 
         /// <inheritdoc />
         [ExcludeFromCodeCoverage]

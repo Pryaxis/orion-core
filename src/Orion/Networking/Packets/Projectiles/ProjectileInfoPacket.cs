@@ -72,7 +72,7 @@ namespace Orion.Networking.Packets.Projectiles {
         /// </summary>
         public short ProjectileUuid { get; set; } = -1;
 
-        internal override PacketType Type => PacketType.ProjectileInfo;
+        public override PacketType Type => PacketType.ProjectileInfo;
 
         /// <inheritdoc />
         [ExcludeFromCodeCoverage]

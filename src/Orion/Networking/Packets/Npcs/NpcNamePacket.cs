@@ -40,7 +40,7 @@ namespace Orion.Networking.Packets.Npcs {
             set => _npcName = value ?? throw new ArgumentNullException(nameof(NpcName));
         }
 
-        internal override PacketType Type => PacketType.NpcName;
+        public override PacketType Type => PacketType.NpcName;
 
         /// <inheritdoc />
         [ExcludeFromCodeCoverage]

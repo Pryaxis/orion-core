@@ -34,7 +34,7 @@ namespace Orion.Networking.Packets.Modules {
             set => _module = value ?? throw new ArgumentNullException(nameof(value));
         }
 
-        internal override PacketType Type => PacketType.Module;
+        public override PacketType Type => PacketType.Module;
 
         /// <inheritdoc />
         public override string ToString() => $"{Type}[{Module}]";

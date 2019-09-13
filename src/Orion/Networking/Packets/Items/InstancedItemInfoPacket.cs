@@ -61,7 +61,7 @@ namespace Orion.Networking.Packets.Items {
         /// </summary>
         public ItemType ItemType { get; set; }
 
-        internal override PacketType Type => PacketType.InstancedItemInfo;
+        public override PacketType Type => PacketType.InstancedItemInfo;
 
         /// <inheritdoc />
         [ExcludeFromCodeCoverage]

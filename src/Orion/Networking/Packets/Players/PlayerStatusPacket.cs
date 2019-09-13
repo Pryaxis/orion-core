@@ -33,7 +33,7 @@ namespace Orion.Networking.Packets.Players {
         /// </summary>
         public bool IsPlayerActive { get; set; }
 
-        internal override PacketType Type => PacketType.PlayerStatus;
+        public override PacketType Type => PacketType.PlayerStatus;
 
         /// <inheritdoc />
         [ExcludeFromCodeCoverage]

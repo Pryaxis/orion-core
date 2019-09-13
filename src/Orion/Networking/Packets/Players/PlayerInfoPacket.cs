@@ -106,7 +106,7 @@ namespace Orion.Networking.Packets.Players {
         /// </summary>
         public Vector2 PlayerVelocity { get; set; }
 
-        internal override PacketType Type => PacketType.PlayerInfo;
+        public override PacketType Type => PacketType.PlayerInfo;
 
         /// <inheritdoc />
         [ExcludeFromCodeCoverage]

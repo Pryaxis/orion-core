@@ -35,7 +35,7 @@ namespace Orion.Networking.Packets.Npcs {
         /// </summary>
         public Buff NpcBuff { get; set; }
 
-        internal override PacketType Type => PacketType.BuffNpc;
+        public override PacketType Type => PacketType.BuffNpc;
 
         /// <inheritdoc />
         [ExcludeFromCodeCoverage]

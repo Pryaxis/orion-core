@@ -36,7 +36,7 @@ namespace Orion.Networking.Packets.Connections {
             set => _password = value ?? throw new ArgumentNullException(nameof(value));
         }
 
-        internal override PacketType Type => PacketType.PasswordResponse;
+        public override PacketType Type => PacketType.PasswordResponse;
 
         /// <inheritdoc />
         [ExcludeFromCodeCoverage]

@@ -54,7 +54,7 @@ namespace Orion.Networking.Packets.World {
         /// </summary>
         public bool ObjectDirection { get; set; }
 
-        internal override PacketType Type => PacketType.PlaceObject;
+        public override PacketType Type => PacketType.PlaceObject;
 
         /// <inheritdoc />
         [ExcludeFromCodeCoverage]

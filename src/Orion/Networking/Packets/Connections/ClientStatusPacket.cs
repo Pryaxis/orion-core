@@ -42,7 +42,7 @@ namespace Orion.Networking.Packets.Connections {
             set => _statusText = value ?? throw new ArgumentNullException(nameof(value));
         }
 
-        internal override PacketType Type => PacketType.ClientStatus;
+        public override PacketType Type => PacketType.ClientStatus;
 
         /// <inheritdoc />
         [ExcludeFromCodeCoverage]

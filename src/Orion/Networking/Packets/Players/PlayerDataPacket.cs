@@ -108,7 +108,7 @@ namespace Orion.Networking.Packets.Players {
         /// </summary>
         public PlayerDifficulty PlayerDifficulty { get; set; }
 
-        internal override PacketType Type => PacketType.PlayerData;
+        public override PacketType Type => PacketType.PlayerData;
 
         /// <inheritdoc />
         [ExcludeFromCodeCoverage]

@@ -33,7 +33,7 @@ namespace Orion.Networking.Packets.Items {
         /// </summary>
         public byte OwnerPlayerIndex { get; set; }
 
-        internal override PacketType Type => PacketType.ItemOwner;
+        public override PacketType Type => PacketType.ItemOwner;
 
         /// <inheritdoc />
         [ExcludeFromCodeCoverage]

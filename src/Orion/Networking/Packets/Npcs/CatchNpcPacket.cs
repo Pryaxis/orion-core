@@ -33,7 +33,7 @@ namespace Orion.Networking.Packets.Npcs {
         /// </summary>
         public byte NpcCatcherPlayerIndex { get; set; }
 
-        internal override PacketType Type => PacketType.CatchNpc;
+        public override PacketType Type => PacketType.CatchNpc;
 
         /// <inheritdoc />
         [ExcludeFromCodeCoverage]

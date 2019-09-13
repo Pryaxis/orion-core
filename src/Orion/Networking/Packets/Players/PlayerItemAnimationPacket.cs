@@ -38,7 +38,7 @@ namespace Orion.Networking.Packets.Players {
         /// </summary>
         public short PlayerItemAnimation { get; set; }
 
-        internal override PacketType Type => PacketType.PlayerItemAnimation;
+        public override PacketType Type => PacketType.PlayerItemAnimation;
 
         /// <inheritdoc />
         [ExcludeFromCodeCoverage]

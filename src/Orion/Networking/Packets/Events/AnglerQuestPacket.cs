@@ -35,7 +35,7 @@ namespace Orion.Networking.Packets.Events {
         /// </summary>
         public bool IsAnglerQuestFinished { get; set; }
 
-        internal override PacketType Type => PacketType.AnglerQuest;
+        public override PacketType Type => PacketType.AnglerQuest;
 
         /// <inheritdoc />
         [ExcludeFromCodeCoverage]

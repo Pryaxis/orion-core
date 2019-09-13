@@ -45,7 +45,7 @@ namespace Orion.Networking.Packets.Misc {
         /// </summary>
         public Vector2 EntityNewPosition { get; set; }
 
-        internal override PacketType Type => PacketType.EntityTeleportation;
+        public override PacketType Type => PacketType.EntityTeleportation;
 
         /// <inheritdoc />
         [ExcludeFromCodeCoverage]

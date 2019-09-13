@@ -30,7 +30,7 @@ namespace Orion.Networking.Packets.Connections {
         /// </summary>
         public byte PlayerIndex { get; set; }
 
-        internal override PacketType Type => PacketType.ContinueConnecting;
+        public override PacketType Type => PacketType.ContinueConnecting;
 
         /// <inheritdoc />
         [ExcludeFromCodeCoverage]

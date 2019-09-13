@@ -33,7 +33,7 @@ namespace Orion.Networking.Packets.Players {
         /// </summary>
         public PlayerDodgeType PlayerDodgeType { get; set; }
 
-        internal override PacketType Type => PacketType.PlayerDodge;
+        public override PacketType Type => PacketType.PlayerDodge;
 
         /// <inheritdoc />
         [ExcludeFromCodeCoverage]

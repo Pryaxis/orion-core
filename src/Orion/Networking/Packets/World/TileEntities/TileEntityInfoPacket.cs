@@ -33,7 +33,7 @@ namespace Orion.Networking.Packets.World.TileEntities {
         /// </summary>
         public NetworkTileEntity TileEntity { get; set; }
 
-        internal override PacketType Type => PacketType.TileEntityInfo;
+        public override PacketType Type => PacketType.TileEntityInfo;
 
         /// <inheritdoc />
         [ExcludeFromCodeCoverage]

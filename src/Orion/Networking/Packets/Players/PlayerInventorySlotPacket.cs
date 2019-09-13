@@ -49,7 +49,7 @@ namespace Orion.Networking.Packets.Players {
         /// </summary>
         public ItemType ItemType { get; set; }
 
-        internal override PacketType Type => PacketType.PlayerInventorySlot;
+        public override PacketType Type => PacketType.PlayerInventorySlot;
 
         /// <inheritdoc />
         [ExcludeFromCodeCoverage]

@@ -43,7 +43,7 @@ namespace Orion.Networking.Packets.World {
         /// </summary>
         public short MoonY { get; set; }
 
-        internal override PacketType Type => PacketType.Time;
+        public override PacketType Type => PacketType.Time;
 
         /// <inheritdoc />
         [ExcludeFromCodeCoverage]

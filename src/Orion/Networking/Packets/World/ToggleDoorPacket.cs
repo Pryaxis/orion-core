@@ -43,7 +43,7 @@ namespace Orion.Networking.Packets.World {
         /// </summary>
         public bool ToggleDirection { get; set; }
 
-        internal override PacketType Type => PacketType.ToggleDoor;
+        public override PacketType Type => PacketType.ToggleDoor;
 
         /// <inheritdoc />
         [ExcludeFromCodeCoverage]
