@@ -22,13 +22,6 @@ using System.Linq;
 using System.Reflection;
 using Ninject;
 using Ninject.Extensions.NamedScope;
-using Orion.Items;
-using Orion.Networking;
-using Orion.Npcs;
-using Orion.Players;
-using Orion.Projectiles;
-using Orion.World;
-using Orion.World.TileEntities;
 
 namespace Orion {
     /// <summary>
@@ -48,14 +41,6 @@ namespace Orion {
 
         internal OrionKernel() {
             Bind<OrionKernel>().ToConstant(this).InSingletonScope();
-            Bind<IItemService>().To<OrionItemService>().InSingletonScope();
-            Bind<INetworkService>().To<OrionNetworkService>().InSingletonScope();
-            Bind<INpcService>().To<OrionNpcService>().InSingletonScope();
-            Bind<IPlayerService>().To<OrionPlayerService>().InSingletonScope();
-            Bind<IProjectileService>().To<OrionProjectileService>().InSingletonScope();
-            Bind<IChestService>().To<OrionChestService>().InSingletonScope();
-            Bind<ISignService>().To<OrionSignService>().InSingletonScope();
-            Bind<IWorldService>().To<OrionWorldService>().InSingletonScope();
 
             // Because we're using Assembly.Load, we'll need to have an AssemblyResolve handler to deal with any issues
             // that may pop up.
