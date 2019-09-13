@@ -17,14 +17,14 @@
 
 using System;
 using FluentAssertions;
-using Orion.Hooks;
+using Orion.Events;
 using Xunit;
 
-namespace Orion.Tests.Hooks {
-    public class HookHandlerCollectionTests {
+namespace Orion.Tests.Events {
+    public class EventHandlerCollectionTests {
         [Fact]
         public void Invoke_NullArgs_ThrowsArgumentNullException() {
-            HookHandlerCollection<TestEventArgs> collection = null;
+            EventHandlerCollection<TestEventArgs> collection = null;
             collection += TestHandler;
             Action action = () => collection.Invoke(this, null);
 
@@ -33,7 +33,7 @@ namespace Orion.Tests.Hooks {
 
         [Fact]
         public void Invoke_ExceptionIsSwallowed() {
-            HookHandlerCollection<TestEventArgs> collection = null;
+            EventHandlerCollection<TestEventArgs> collection = null;
             collection += TestHandler3;
 
             collection.Invoke(this, new TestEventArgs());
@@ -41,7 +41,7 @@ namespace Orion.Tests.Hooks {
 
         [Fact]
         public void Plus_IsCorrect() {
-            HookHandlerCollection<TestEventArgs> collection = null;
+            EventHandlerCollection<TestEventArgs> collection = null;
             collection += TestHandler;
             var args = new TestEventArgs();
 
@@ -52,7 +52,7 @@ namespace Orion.Tests.Hooks {
 
         [Fact]
         public void Plus_Priority_IsCorrect() {
-            HookHandlerCollection<TestEventArgs> collection = null;
+            EventHandlerCollection<TestEventArgs> collection = null;
             collection += TestHandler2;
             collection += TestHandler;
             var args = new TestEventArgs();
@@ -64,15 +64,15 @@ namespace Orion.Tests.Hooks {
 
         [Fact]
         public void Plus_NullHandler_ThrowsArgumentNullException() {
-            HookHandlerCollection<TestEventArgs> collection = null;
-            Func<HookHandlerCollection<TestEventArgs>> func = () => collection += null;
+            EventHandlerCollection<TestEventArgs> collection = null;
+            Func<EventHandlerCollection<TestEventArgs>> func = () => collection += null;
 
             func.Should().Throw<ArgumentNullException>();
         }
 
         [Fact]
         public void Minus_IsCorrect() {
-            HookHandlerCollection<TestEventArgs> collection = null;
+            EventHandlerCollection<TestEventArgs> collection = null;
             collection += TestHandler2;
             collection += TestHandler;
             collection -= TestHandler2;
@@ -85,26 +85,26 @@ namespace Orion.Tests.Hooks {
 
         [Fact]
         public void Minus_NullHandler_ThrowsArgumentNullException() {
-            HookHandlerCollection<TestEventArgs> collection = null;
-            Func<HookHandlerCollection<TestEventArgs>> func = () => collection -= null;
+            EventHandlerCollection<TestEventArgs> collection = null;
+            Func<EventHandlerCollection<TestEventArgs>> func = () => collection -= null;
 
             func.Should().Throw<ArgumentNullException>();
         }
 
         [Fact]
         public void Minus_InvalidHandler_ThrowsArgumentException() {
-            HookHandlerCollection<TestEventArgs> collection = null;
-            Func<HookHandlerCollection<TestEventArgs>> func = () => collection -= TestHandler;
+            EventHandlerCollection<TestEventArgs> collection = null;
+            Func<EventHandlerCollection<TestEventArgs>> func = () => collection -= TestHandler;
 
             func.Should().Throw<ArgumentException>();
         }
 
-        [HookHandler(HookPriority.Lowest)]
+        [EventHandler(EventPriority.Lowest)]
         private static void TestHandler(object sender, TestEventArgs args) {
             args.Value = 100;
         }
 
-        [HookHandler(HookPriority.Highest)]
+        [EventHandler(EventPriority.Highest)]
         private static void TestHandler2(object sender, TestEventArgs args) {
             args.Value = 200;
         }
