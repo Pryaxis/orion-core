@@ -19,5 +19,45 @@ namespace Orion.Entities {
     /// <summary>
     /// Represents a Terraria player.
     /// </summary>
-    public interface IPlayer : IEntity { }
+    public interface IPlayer : IEntity {
+        /// <summary>
+        /// Gets the player's statistics.
+        /// </summary>
+        IPlayerStats Stats { get; }
+
+        /// <summary>
+        /// Gets the player's inventory.
+        /// </summary>
+        IPlayerInventory Inventory { get; }
+    }
+
+    /// <summary>
+    /// Represents a player's statistics.
+    /// </summary>
+    public interface IPlayerStats {
+        /// <summary>
+        /// Gets or sets the player's health.
+        /// </summary>
+        int Health { get; set; }
+
+        /// <summary>
+        /// Gets or sets the player's maximum health.
+        /// </summary>
+        int MaxHealth { get; set; }
+
+        /// <summary>
+        /// Gets or sets the player's mana.
+        /// </summary>
+        int Mana { get; set; }
+
+        /// <summary>
+        /// Gets or sets the player's maximum mana.
+        /// </summary>
+        int MaxMana { get; set; }
+    }
+
+    /// <summary>
+    /// Represents a player's inventory.
+    /// </summary>
+    public interface IPlayerInventory { }
 }
