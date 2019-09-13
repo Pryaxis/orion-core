@@ -20,6 +20,8 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
+using Orion.Events;
+using Orion.Events.Players;
 using Orion.Hooks;
 using Orion.Players.Events;
 using OTAPI;
@@ -54,6 +56,7 @@ namespace Orion.Players {
         public HookHandlerCollection<GreetingPlayerEventArgs> GreetingPlayer { get; set; }
         public HookHandlerCollection<UpdatingPlayerEventArgs> UpdatingPlayer { get; set; }
         public HookHandlerCollection<UpdatedPlayerEventArgs> UpdatedPlayer { get; set; }
+        public EventHandlerCollection<PlayerDisconnectEventArgs> PlayerDisconnect { get; set; }
 
         public OrionPlayerService() {
             _terrariaPlayers = Main.player;

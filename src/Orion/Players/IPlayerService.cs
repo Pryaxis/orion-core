@@ -15,6 +15,8 @@
 // You should have received a copy of the GNU General Public License
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
+using Orion.Events;
+using Orion.Events.Players;
 using Orion.Hooks;
 using Orion.Players.Events;
 using Orion.Utils;
@@ -38,5 +40,10 @@ namespace Orion.Players {
         /// Gets or sets the hook handlers that occur when a player is updated.
         /// </summary>
         HookHandlerCollection<UpdatedPlayerEventArgs> UpdatedPlayer { get; set; }
+
+        /// <summary>
+        /// Gets or sets the event handlers that occur when a player disconnects.
+        /// </summary>
+        EventHandlerCollection<PlayerDisconnectEventArgs> PlayerDisconnect { get; set; }
     }
 }
