@@ -18,11 +18,9 @@
 using System.IO;
 using FluentAssertions;
 using Microsoft.Xna.Framework;
-using Orion.Networking.Packets;
-using Orion.Networking.Packets.Players;
 using Xunit;
 
-namespace Orion.Tests.Networking.Packets.Players {
+namespace Orion.Networking.Packets.Players {
     public class PlayerMinionPositionPacketTests {
         public static readonly byte[] PlayerMinionPositionBytes = {12, 0, 99, 1, 0, 0, 0, 0, 0, 0, 0, 0};
 

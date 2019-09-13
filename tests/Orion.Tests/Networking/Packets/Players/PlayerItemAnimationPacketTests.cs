@@ -17,11 +17,9 @@
 
 using System.IO;
 using FluentAssertions;
-using Orion.Networking.Packets;
-using Orion.Networking.Packets.Players;
 using Xunit;
 
-namespace Orion.Tests.Networking.Packets.Players {
+namespace Orion.Networking.Packets.Players {
     public class PlayerItemAnimationPacketTests {
         public static readonly byte[] PlayerItemAnimationBytes = {10, 0, 41, 0, 60, 244, 29, 63, 3, 0};
 

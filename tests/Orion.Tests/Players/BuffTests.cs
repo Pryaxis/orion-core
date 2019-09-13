@@ -17,10 +17,9 @@
 
 using System;
 using FluentAssertions;
-using Orion.Players;
 using Xunit;
 
-namespace Orion.Tests.Players {
+namespace Orion.Players {
     public class BuffTests {
         [Fact]
         public void Ctor_NegativeDuration_ThrowsArgumentOutOfRangeException() {

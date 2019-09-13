@@ -18,11 +18,10 @@
 using System;
 using FluentAssertions;
 using Moq;
-using Orion.Events.Players;
 using Orion.Players;
 using Xunit;
 
-namespace Orion.Tests.Events.Players {
+namespace Orion.Events.Players {
     public class PlayerEventArgsTests {
         [Fact]
         public void Ctor_NullPlayer_ThrowsArgumentNullException() {

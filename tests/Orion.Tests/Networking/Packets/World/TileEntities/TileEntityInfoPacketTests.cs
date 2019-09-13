@@ -18,12 +18,10 @@
 using System.IO;
 using FluentAssertions;
 using Orion.Items;
-using Orion.Networking.Packets;
-using Orion.Networking.Packets.World.TileEntities;
 using Orion.World.TileEntities;
 using Xunit;
 
-namespace Orion.Tests.Networking.Packets.World.TileEntities {
+namespace Orion.Networking.Packets.World.TileEntities {
     public class TileEntityInfoPacketTests {
         private static readonly byte[] TileEntityInfoBytes = {8, 0, 86, 0, 0, 0, 0, 0};
 

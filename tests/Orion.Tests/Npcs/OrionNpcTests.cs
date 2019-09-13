@@ -18,11 +18,10 @@
 using System;
 using FluentAssertions;
 using Microsoft.Xna.Framework;
-using Orion.Npcs;
 using Terraria;
 using Xunit;
 
-namespace Orion.Tests.Npcs {
+namespace Orion.Npcs {
     public class OrionNpcTests {
         [Theory]
         [InlineData(100)]

@@ -19,12 +19,10 @@ using System;
 using System.IO;
 using FluentAssertions;
 using Microsoft.Xna.Framework;
-using Orion.Networking.Packets;
-using Orion.Networking.Packets.Players;
 using Orion.Players;
 using Xunit;
 
-namespace Orion.Tests.Networking.Packets.Players {
+namespace Orion.Networking.Packets.Players {
     public class PlayerDataPacketTests {
         [Fact]
         public void SetName_NullValue_ThrowsArgumentNullException() {

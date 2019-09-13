@@ -20,11 +20,10 @@ using System.IO;
 using System.Text;
 using FluentAssertions;
 using Microsoft.Xna.Framework;
-using Orion.Networking.Packets.Extensions;
 using Terraria.Localization;
 using Xunit;
 
-namespace Orion.Tests.Networking.Packets.Extensions {
+namespace Orion.Networking.Packets.Extensions {
     public class BinaryExtensionTests {
         public static readonly IEnumerable<object[]> ColorData = new List<object[]> {
             new object[] {new Color(255, 0, 0)},

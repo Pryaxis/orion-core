@@ -17,11 +17,9 @@
 
 using System.IO;
 using FluentAssertions;
-using Orion.Networking.Packets;
-using Orion.Networking.Packets.Players;
 using Xunit;
 
-namespace Orion.Tests.Networking.Packets.Players {
+namespace Orion.Networking.Packets.Players {
     public class HealPlayerPacketTests {
         public static readonly byte[] HealPlayerBytes = {6, 0, 66, 0, 100, 0};
 

@@ -19,13 +19,12 @@ using System;
 using System.Collections.Generic;
 using FluentAssertions;
 using Microsoft.Xna.Framework;
-using Orion.Items;
 using Orion.Projectiles;
 using Orion.World.Tiles;
 using Terraria;
 using Xunit;
 
-namespace Orion.Tests.Items {
+namespace Orion.Items {
     public class OrionItemTests {
         [Theory]
         [InlineData(100)]

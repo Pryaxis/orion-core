@@ -18,11 +18,9 @@
 using System.IO;
 using FluentAssertions;
 using Microsoft.Xna.Framework;
-using Orion.Networking.Packets;
-using Orion.Networking.Packets.Misc;
 using Xunit;
 
-namespace Orion.Tests.Networking.Packets.Misc {
+namespace Orion.Networking.Packets.Misc {
     public class ChatPacketTests {
         public static readonly byte[] ChatBytes = {
             18, 0, 107, 255, 255, 255, 0, 8, 84, 101, 114, 114, 97, 114, 105, 97, 100, 0

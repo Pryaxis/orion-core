@@ -17,11 +17,9 @@
 
 using System.IO;
 using FluentAssertions;
-using Orion.Networking.Packets;
-using Orion.Networking.Packets.World.TileEntities;
 using Xunit;
 
-namespace Orion.Tests.Networking.Packets.World.TileEntities {
+namespace Orion.Networking.Packets.World.TileEntities {
     public class RequestSignPacketTests {
         public static readonly byte[] RequestSignBytes = {7, 0, 46, 0, 1, 100, 0};
 

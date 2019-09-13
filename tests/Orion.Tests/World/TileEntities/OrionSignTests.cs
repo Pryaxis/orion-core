@@ -17,11 +17,10 @@
 
 using System;
 using FluentAssertions;
-using Orion.World.TileEntities;
 using Terraria;
 using Xunit;
 
-namespace Orion.Tests.World.TileEntities {
+namespace Orion.World.TileEntities {
     public class OrionSignTests {
         [Theory]
         [InlineData(100)]

@@ -18,11 +18,9 @@
 using System.IO;
 using FluentAssertions;
 using Microsoft.Xna.Framework;
-using Orion.Networking.Packets;
-using Orion.Networking.Packets.Misc;
 using Xunit;
 
-namespace Orion.Tests.Networking.Packets.Misc {
+namespace Orion.Networking.Packets.Misc {
     public class EntityTeleportationPacketTests {
         public static readonly byte[] EntityTeleportationBytes = {14, 0, 65, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
 

@@ -18,11 +18,9 @@
 using System;
 using FluentAssertions;
 using Moq;
-using Orion.Projectiles;
-using Orion.Projectiles.Events;
 using Xunit;
 
-namespace Orion.Tests.Projectiles.Events {
+namespace Orion.Projectiles.Events {
     public class UpdatedProjectileEventArgsTests {
         [Fact]
         public void Ctor_NullProjectile_ThrowsArgumentNullException() {

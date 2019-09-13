@@ -17,11 +17,9 @@
 
 using System.IO;
 using FluentAssertions;
-using Orion.Networking.Packets;
-using Orion.Networking.Packets.World.TileEntities;
 using Xunit;
 
-namespace Orion.Tests.Networking.Packets.World.TileEntities {
+namespace Orion.Networking.Packets.World.TileEntities {
     public class ModifyChestPacketTests {
         private static readonly byte[] ModifyChestBytes = {12, 0, 34, 0, 100, 0, 100, 0, 1, 0, 0, 0};
 

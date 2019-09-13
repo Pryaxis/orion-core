@@ -18,11 +18,9 @@
 using System.IO;
 using FluentAssertions;
 using Microsoft.Xna.Framework;
-using Orion.Networking.Packets;
-using Orion.Networking.Packets.Players;
 using Xunit;
 
-namespace Orion.Tests.Networking.Packets.Players {
+namespace Orion.Networking.Packets.Players {
     public class TeleportPlayerPortalPacketTests {
         public static readonly byte[] TeleportPlayerPortalBytes = {
             22, 0, 96, 100, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0

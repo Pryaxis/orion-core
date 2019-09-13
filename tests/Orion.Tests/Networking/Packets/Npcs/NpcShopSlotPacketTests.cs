@@ -18,11 +18,9 @@
 using System.IO;
 using FluentAssertions;
 using Orion.Items;
-using Orion.Networking.Packets;
-using Orion.Networking.Packets.Npcs;
 using Xunit;
 
-namespace Orion.Tests.Networking.Packets.Npcs {
+namespace Orion.Networking.Packets.Npcs {
     public class NpcShopSlotPacketTests {
         public static readonly byte[] NpcShopSlotBytes = {13, 0, 104, 0, 17, 6, 1, 0, 82, 100, 0, 0, 0};
 

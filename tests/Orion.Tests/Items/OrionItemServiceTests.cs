@@ -20,11 +20,10 @@ using System.Collections.Generic;
 using System.Linq;
 using FluentAssertions;
 using Microsoft.Xna.Framework;
-using Orion.Items;
 using Terraria;
 using Xunit;
 
-namespace Orion.Tests.Items {
+namespace Orion.Items {
     [Collection("TerrariaTestsCollection")]
     public class OrionItemServiceTests : IDisposable {
         private readonly IItemService _itemService;

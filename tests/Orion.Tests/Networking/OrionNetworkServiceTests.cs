@@ -20,11 +20,10 @@ using FluentAssertions;
 using Moq;
 using Orion.Events;
 using Orion.Events.Players;
-using Orion.Networking;
 using Orion.Players;
 using Xunit;
 
-namespace Orion.Tests.Networking {
+namespace Orion.Networking {
     [Collection("TerrariaTests")]
     public class OrionNetworkServiceTests : IDisposable {
         private readonly Mock<IPlayerService> _mockPlayerService = new Mock<IPlayerService>();

@@ -17,11 +17,9 @@
 
 using System.IO;
 using FluentAssertions;
-using Orion.Networking.Packets;
-using Orion.Networking.Packets.Events;
 using Xunit;
 
-namespace Orion.Tests.Networking.Packets.Events {
+namespace Orion.Networking.Packets.Events {
     public class StartOldOnesArmyPacketTests {
         public static readonly byte[] StartOldOnesArmyBytes = {7, 0, 113, 0, 1, 100, 0};
 

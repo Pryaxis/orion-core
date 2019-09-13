@@ -18,12 +18,10 @@
 using System;
 using System.IO;
 using FluentAssertions;
-using Orion.Networking.Packets;
-using Orion.Networking.Packets.Npcs;
 using Orion.Players;
 using Xunit;
 
-namespace Orion.Tests.Networking.Packets.Npcs {
+namespace Orion.Networking.Packets.Npcs {
     public class BuffNpcPacketTests {
         public static readonly byte[] BuffNpcBytes = {8, 0, 53, 0, 0, 1, 60, 0};
 

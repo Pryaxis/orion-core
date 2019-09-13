@@ -17,12 +17,10 @@
 
 using System.IO;
 using FluentAssertions;
-using Orion.Networking.Packets;
-using Orion.Networking.Packets.World;
 using Orion.World.Tiles;
 using Xunit;
 
-namespace Orion.Tests.Networking.Packets.World {
+namespace Orion.Networking.Packets.World {
     public class TileLiquidPacketTests {
         public static readonly byte[] TileLiquidBytes = {9, 0, 48, 0, 1, 100, 0, 255, 0};
 

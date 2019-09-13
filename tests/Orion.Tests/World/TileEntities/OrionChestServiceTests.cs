@@ -18,11 +18,10 @@
 using System;
 using System.Linq;
 using FluentAssertions;
-using Orion.World.TileEntities;
 using Terraria;
 using Xunit;
 
-namespace Orion.Tests.World.TileEntities {
+namespace Orion.World.TileEntities {
     [Collection("TerrariaTestsCollection")]
     public class OrionChestServiceTests : IDisposable {
         private readonly IChestService _chestService;

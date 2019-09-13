@@ -17,13 +17,12 @@
 
 using FluentAssertions;
 using Orion.Items;
-using Orion.World.TileEntities;
 using Terraria;
 using Xunit;
 using TDS = Terraria.DataStructures;
 using TGCTE = Terraria.GameContent.Tile_Entities;
 
-namespace Orion.Tests.World.TileEntities {
+namespace Orion.World.TileEntities {
     public class OrionItemFrameTests {
         [Theory]
         [InlineData(100)]

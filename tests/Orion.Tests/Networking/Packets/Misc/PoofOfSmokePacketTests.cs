@@ -18,11 +18,9 @@
 using System.IO;
 using FluentAssertions;
 using Microsoft.Xna.Framework.Graphics.PackedVector;
-using Orion.Networking.Packets;
-using Orion.Networking.Packets.Misc;
 using Xunit;
 
-namespace Orion.Tests.Networking.Packets.Misc {
+namespace Orion.Networking.Packets.Misc {
     public class PoofOfSmokePacketTests {
         public static readonly byte[] PoofOfSmokeBytes = {7, 0, 106, 0, 0, 0, 0};
 

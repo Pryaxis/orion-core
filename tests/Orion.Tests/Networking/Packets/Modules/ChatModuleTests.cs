@@ -17,11 +17,9 @@
 
 using System.IO;
 using FluentAssertions;
-using Orion.Networking.Packets;
-using Orion.Networking.Packets.Modules;
 using Xunit;
 
-namespace Orion.Tests.Networking.Packets.Modules {
+namespace Orion.Networking.Packets.Modules {
     public class ChatModuleTests {
         public static readonly byte[] ChatBytes = {
             23, 0, 82, 1, 0, 3, 83, 97, 121, 13, 47, 99, 111, 109, 109, 97, 110, 100, 32, 116, 101, 115, 116

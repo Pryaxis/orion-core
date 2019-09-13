@@ -18,11 +18,9 @@
 using System;
 using System.IO;
 using FluentAssertions;
-using Orion.Networking.Packets;
-using Orion.Networking.Packets.World.TileEntities;
 using Xunit;
 
-namespace Orion.Tests.Networking.Packets.World.TileEntities {
+namespace Orion.Networking.Packets.World.TileEntities {
     public class SignTextPacketTests {
         [Fact]
         public void SetSignText_NullValue_ThrowsArgumentNullException() {

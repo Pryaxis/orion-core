@@ -18,12 +18,10 @@
 using System.IO;
 using FluentAssertions;
 using Microsoft.Xna.Framework;
-using Orion.Networking.Packets;
-using Orion.Networking.Packets.Projectiles;
 using Orion.Projectiles;
 using Xunit;
 
-namespace Orion.Tests.Networking.Packets.Projectiles {
+namespace Orion.Networking.Packets.Projectiles {
     public class ProjectileInfoPacketTests {
         private static readonly byte[] ProjectileInfoBytes = {
             31, 0, 27, 0, 0, 128, 57, 131, 71, 0, 200, 212, 69, 254, 14, 40, 65, 147, 84, 121, 193, 205, 204, 128, 64,

@@ -17,12 +17,10 @@
 
 using System.IO;
 using FluentAssertions;
-using Orion.Networking.Packets;
-using Orion.Networking.Packets.Events;
 using Orion.Npcs;
 using Xunit;
 
-namespace Orion.Tests.Networking.Packets.Events {
+namespace Orion.Networking.Packets.Events {
     public class NpcTypeKilledEventPacketTests {
         public static readonly byte[] NpcTypeKilledEventBytes = {5, 0, 97, 1, 0};
 

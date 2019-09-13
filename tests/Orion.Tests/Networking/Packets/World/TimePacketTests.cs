@@ -17,11 +17,9 @@
 
 using System.IO;
 using FluentAssertions;
-using Orion.Networking.Packets;
-using Orion.Networking.Packets.World;
 using Xunit;
 
-namespace Orion.Tests.Networking.Packets.World {
+namespace Orion.Networking.Packets.World {
     public class TimePacketTests {
         private static readonly byte[] TimeBytes = {12, 0, 18, 1, 0, 128, 0, 0, 200, 0, 200, 0};
 

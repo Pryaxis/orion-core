@@ -18,11 +18,9 @@
 using System.IO;
 using FluentAssertions;
 using Orion.Items;
-using Orion.Networking.Packets;
-using Orion.Networking.Packets.World.TileEntities;
 using Xunit;
 
-namespace Orion.Tests.Networking.Packets.World.TileEntities {
+namespace Orion.Networking.Packets.World.TileEntities {
     public class ItemFramePacketTests {
         private static readonly byte[] ItemFrameBytes = {12, 0, 89, 0, 1, 100, 0, 17, 6, 82, 1, 0};
 

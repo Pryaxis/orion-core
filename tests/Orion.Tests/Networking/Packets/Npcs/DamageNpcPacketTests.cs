@@ -17,11 +17,9 @@
 
 using System.IO;
 using FluentAssertions;
-using Orion.Networking.Packets;
-using Orion.Networking.Packets.Npcs;
 using Xunit;
 
-namespace Orion.Tests.Networking.Packets.Npcs {
+namespace Orion.Networking.Packets.Npcs {
     public class DamageNpcPacketTests {
         private static readonly byte[] DamageNpcBytes = {13, 0, 28, 100, 0, 108, 0, 205, 204, 128, 64, 2, 0};
 

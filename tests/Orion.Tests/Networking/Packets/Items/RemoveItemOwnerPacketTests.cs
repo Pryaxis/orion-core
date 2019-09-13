@@ -17,11 +17,9 @@
 
 using System.IO;
 using FluentAssertions;
-using Orion.Networking.Packets;
-using Orion.Networking.Packets.Items;
 using Xunit;
 
-namespace Orion.Tests.Networking.Packets.Items {
+namespace Orion.Networking.Packets.Items {
     public class RemoveItemOwnerPacketTests {
         public static readonly byte[] RemoveItemOwnerBytes = {5, 0, 39, 1, 0};
 

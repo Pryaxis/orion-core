@@ -17,10 +17,9 @@
 
 using System.IO;
 using FluentAssertions;
-using Orion.Networking.Packets;
 using Xunit;
 
-namespace Orion.Tests.Networking.Packets.Connections {
+namespace Orion.Networking.Packets.Connections {
     public class FinishConnectingPacketTests {
         public static readonly byte[] FinishConnectingBytes = {3, 0, 6};
 

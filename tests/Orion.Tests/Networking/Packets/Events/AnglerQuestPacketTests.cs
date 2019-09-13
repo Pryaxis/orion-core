@@ -17,11 +17,9 @@
 
 using System.IO;
 using FluentAssertions;
-using Orion.Networking.Packets;
-using Orion.Networking.Packets.Events;
 using Xunit;
 
-namespace Orion.Tests.Networking.Packets.Events {
+namespace Orion.Networking.Packets.Events {
     public class AnglerQuestPacketTests {
         public static readonly byte[] AnglerQuestBytes = {5, 0, 74, 1, 1};
 

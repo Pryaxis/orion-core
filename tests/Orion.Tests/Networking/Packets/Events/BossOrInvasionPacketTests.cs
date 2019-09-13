@@ -18,12 +18,10 @@
 using System;
 using System.IO;
 using FluentAssertions;
-using Orion.Networking.Packets;
-using Orion.Networking.Packets.Events;
 using Orion.Npcs;
 using Xunit;
 
-namespace Orion.Tests.Networking.Packets.Events {
+namespace Orion.Networking.Packets.Events {
     public class BossOrInvasionPacketTests {
         [Fact]
         public void GetIsBoss_True_IsCorrect() {

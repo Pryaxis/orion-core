@@ -18,11 +18,9 @@
 using System.IO;
 using FluentAssertions;
 using Orion.Items;
-using Orion.Networking.Packets;
-using Orion.Networking.Packets.Events;
 using Xunit;
 
-namespace Orion.Tests.Networking.Packets.Events {
+namespace Orion.Networking.Packets.Events {
     public class TravelingMerchantShopPacketTests {
         public static readonly byte[] TravelingMerchantShopBytes = {
             83, 0, 72, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,

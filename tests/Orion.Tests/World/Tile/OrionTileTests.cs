@@ -18,13 +18,12 @@
 using System;
 using FluentAssertions;
 using Moq;
-using Orion.World;
 using Orion.World.TileEntities;
 using Orion.World.Tiles;
 using Terraria;
 using Xunit;
 
-namespace Orion.Tests.World.Tile {
+namespace Orion.World.Tile {
     [Collection("TerrariaTestsCollection")]
     public class OrionTileTests : IDisposable {
         private readonly OrionWorldService _worldService;

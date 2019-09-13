@@ -18,11 +18,10 @@
 using System;
 using System.Linq;
 using FluentAssertions;
-using Orion.Items;
 using Terraria;
 using Xunit;
 
-namespace Orion.Tests.Items {
+namespace Orion.Items {
     public class OrionItemArrayTests {
         [Theory]
         [InlineData(0)]

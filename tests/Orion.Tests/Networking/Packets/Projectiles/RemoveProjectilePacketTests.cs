@@ -17,11 +17,9 @@
 
 using System.IO;
 using FluentAssertions;
-using Orion.Networking.Packets;
-using Orion.Networking.Packets.Projectiles;
 using Xunit;
 
-namespace Orion.Tests.Networking.Packets.Projectiles {
+namespace Orion.Networking.Packets.Projectiles {
     public class RemoveProjectilePacketTests {
         private static readonly byte[] RemoveProjectileBytes = {6, 0, 29, 1, 0, 0};
 

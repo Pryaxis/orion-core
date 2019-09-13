@@ -19,7 +19,7 @@ using System;
 using Terraria;
 using Xunit;
 
-namespace Orion.Tests {
+namespace Orion {
     public class TerrariaTestsFixture : IDisposable {
         private readonly Main _main;
 

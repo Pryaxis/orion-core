@@ -18,7 +18,6 @@
 using System;
 using FluentAssertions;
 using Moq;
-using Orion.World;
 using Orion.World.TileEntities;
 using Terraria;
 using Terraria.ID;
@@ -26,7 +25,7 @@ using Xunit;
 using TDS = Terraria.DataStructures;
 using TGCTE = Terraria.GameContent.Tile_Entities;
 
-namespace Orion.Tests.World {
+namespace Orion.World {
     [Collection("TerrariaTestsCollection")]
     public class OrionWorldServiceTests : IDisposable {
         private readonly Mock<IChestService> _mockChestService;

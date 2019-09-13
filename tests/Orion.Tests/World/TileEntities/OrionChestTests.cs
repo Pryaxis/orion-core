@@ -18,11 +18,10 @@
 using System;
 using FluentAssertions;
 using Orion.Items;
-using Orion.World.TileEntities;
 using Terraria;
 using Xunit;
 
-namespace Orion.Tests.World.TileEntities {
+namespace Orion.World.TileEntities {
     public class OrionChestTests {
         [Theory]
         [InlineData(100)]

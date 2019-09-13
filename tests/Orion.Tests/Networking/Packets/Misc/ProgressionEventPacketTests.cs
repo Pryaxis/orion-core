@@ -17,11 +17,10 @@
 
 using System.IO;
 using FluentAssertions;
-using Orion.Networking.Packets;
 using Orion.Networking.Packets.Events;
 using Xunit;
 
-namespace Orion.Tests.Networking.Packets.Misc {
+namespace Orion.Networking.Packets.Misc {
     public class ProgressionEventPacketTests {
         public static readonly byte[] ProgressionEventBytes = {5, 0, 98, 1, 0};
 

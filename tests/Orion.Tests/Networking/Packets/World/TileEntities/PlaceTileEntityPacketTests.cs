@@ -17,11 +17,9 @@
 
 using System.IO;
 using FluentAssertions;
-using Orion.Networking.Packets;
-using Orion.Networking.Packets.World.TileEntities;
 using Xunit;
 
-namespace Orion.Tests.Networking.Packets.World.TileEntities {
+namespace Orion.Networking.Packets.World.TileEntities {
     public class PlaceTileEntityPacketTests {
         private static readonly byte[] PlaceTileEntityBytes = {8, 0, 87, 0, 1, 100, 0, 1};
 

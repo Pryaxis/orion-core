@@ -17,11 +17,9 @@
 
 using System.IO;
 using FluentAssertions;
-using Orion.Networking.Packets;
-using Orion.Networking.Packets.Npcs;
 using Xunit;
 
-namespace Orion.Tests.Networking.Packets.Npcs {
+namespace Orion.Networking.Packets.Npcs {
     public class NpcHomePacketTests {
         public static readonly byte[] NpcHomeBytes = {10, 0, 60, 0, 0, 0, 1, 100, 0, 0};
 

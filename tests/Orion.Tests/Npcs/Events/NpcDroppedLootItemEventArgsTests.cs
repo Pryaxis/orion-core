@@ -19,11 +19,9 @@ using System;
 using FluentAssertions;
 using Moq;
 using Orion.Items;
-using Orion.Npcs;
-using Orion.Npcs.Events;
 using Xunit;
 
-namespace Orion.Tests.Npcs.Events {
+namespace Orion.Npcs.Events {
     public class NpcDroppedLootItemEventArgsTests {
         [Fact]
         public void Ctor_NullNpc_ThrowsArgumentNullException() {

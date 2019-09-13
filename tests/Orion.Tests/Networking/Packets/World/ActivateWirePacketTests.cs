@@ -17,11 +17,9 @@
 
 using System.IO;
 using FluentAssertions;
-using Orion.Networking.Packets;
-using Orion.Networking.Packets.World;
 using Xunit;
 
-namespace Orion.Tests.Networking.Packets.World {
+namespace Orion.Networking.Packets.World {
     public class ActivateWirePacketTests {
         public static readonly byte[] ActivateWireBytes = {7, 0, 59, 0, 1, 100, 0};
 

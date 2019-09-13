@@ -18,12 +18,10 @@
 using System.IO;
 using FluentAssertions;
 using Microsoft.Xna.Framework;
-using Orion.Networking.Packets;
-using Orion.Networking.Packets.Players;
 using Orion.Players;
 using Xunit;
 
-namespace Orion.Tests.Networking.Packets.Players {
+namespace Orion.Networking.Packets.Players {
     public class NebulaBuffPacketTests {
         public static readonly byte[] NebulaBuffBytes = {13, 0, 102, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0};
 

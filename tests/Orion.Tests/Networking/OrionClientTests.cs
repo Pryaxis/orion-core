@@ -18,11 +18,10 @@
 using System;
 using FluentAssertions;
 using Moq;
-using Orion.Networking;
 using Terraria;
 using Xunit;
 
-namespace Orion.Tests.Networking {
+namespace Orion.Networking {
     public class OrionClientTests {
         [Theory]
         [InlineData(1)]

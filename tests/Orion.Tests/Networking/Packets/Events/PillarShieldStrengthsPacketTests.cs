@@ -17,11 +17,9 @@
 
 using System.IO;
 using FluentAssertions;
-using Orion.Networking.Packets;
-using Orion.Networking.Packets.Events;
 using Xunit;
 
-namespace Orion.Tests.Networking.Packets.Events {
+namespace Orion.Networking.Packets.Events {
     public class PillarShieldStrengthsPacketTests {
         private static readonly byte[] PillarShieldStrengthsBytes = {11, 0, 101, 1, 0, 2, 0, 3, 0, 4, 0};
 

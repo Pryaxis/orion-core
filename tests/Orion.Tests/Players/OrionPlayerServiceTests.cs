@@ -20,11 +20,10 @@ using System.Linq;
 using FluentAssertions;
 using Moq;
 using Orion.Networking;
-using Orion.Players;
 using Terraria;
 using Xunit;
 
-namespace Orion.Tests.Players {
+namespace Orion.Players {
     [Collection("TerrariaTestsCollection")]
     public class OrionPlayerServiceTests : IDisposable {
         private readonly Mock<INetworkService> _networkService = new Mock<INetworkService>();

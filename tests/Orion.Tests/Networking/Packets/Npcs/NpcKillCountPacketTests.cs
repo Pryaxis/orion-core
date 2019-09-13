@@ -17,12 +17,10 @@
 
 using System.IO;
 using FluentAssertions;
-using Orion.Networking.Packets;
-using Orion.Networking.Packets.Npcs;
 using Orion.Npcs;
 using Xunit;
 
-namespace Orion.Tests.Networking.Packets.Npcs {
+namespace Orion.Networking.Packets.Npcs {
     public class NpcKillCountPacketTests {
         public static readonly byte[] NpcKillCountBytes = {9, 0, 83, 1, 0, 100, 0, 0, 0};
 

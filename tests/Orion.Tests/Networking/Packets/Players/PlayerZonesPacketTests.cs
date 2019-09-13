@@ -17,11 +17,9 @@
 
 using System.IO;
 using FluentAssertions;
-using Orion.Networking.Packets;
-using Orion.Networking.Packets.Players;
 using Xunit;
 
-namespace Orion.Tests.Networking.Packets.Players {
+namespace Orion.Networking.Packets.Players {
     public class PlayerZonesPacketTests {
         private static readonly byte[] PlayerZonesBytes = {8, 0, 36, 1, 0, 0, 0, 0};
 

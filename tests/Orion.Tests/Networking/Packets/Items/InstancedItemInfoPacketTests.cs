@@ -19,11 +19,9 @@ using System.IO;
 using FluentAssertions;
 using Microsoft.Xna.Framework;
 using Orion.Items;
-using Orion.Networking.Packets;
-using Orion.Networking.Packets.Items;
 using Xunit;
 
-namespace Orion.Tests.Networking.Packets.Items {
+namespace Orion.Networking.Packets.Items {
     public class InstancedItemInfoPacketTests {
         private static readonly byte[] InstancedItemInfoBytes = {
             27, 0, 90, 144, 1, 128, 51, 131, 71, 0, 112, 212, 69, 0, 0, 128, 64, 0, 0, 0, 192, 1, 0, 82, 0, 17, 6

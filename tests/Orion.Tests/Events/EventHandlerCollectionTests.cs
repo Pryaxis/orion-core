@@ -17,10 +17,9 @@
 
 using System;
 using FluentAssertions;
-using Orion.Events;
 using Xunit;
 
-namespace Orion.Tests.Events {
+namespace Orion.Events {
     public class EventHandlerCollectionTests {
         [Fact]
         public void Invoke_NullArgs_ThrowsArgumentNullException() {

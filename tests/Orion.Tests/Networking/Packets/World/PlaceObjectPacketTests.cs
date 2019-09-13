@@ -17,12 +17,10 @@
 
 using System.IO;
 using FluentAssertions;
-using Orion.Networking.Packets;
-using Orion.Networking.Packets.World;
 using Orion.World.Tiles;
 using Xunit;
 
-namespace Orion.Tests.Networking.Packets.World {
+namespace Orion.Networking.Packets.World {
     public class PlaceObjectPacketTests {
         public static readonly byte[] PlaceObjectBytes = {14, 0, 79, 0, 1, 100, 0, 21, 0, 1, 0, 0, 255, 1};
 

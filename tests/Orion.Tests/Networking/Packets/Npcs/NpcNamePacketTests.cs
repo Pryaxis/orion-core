@@ -18,11 +18,9 @@
 using System;
 using System.IO;
 using FluentAssertions;
-using Orion.Networking.Packets;
-using Orion.Networking.Packets.Npcs;
 using Xunit;
 
-namespace Orion.Tests.Networking.Packets.Npcs {
+namespace Orion.Networking.Packets.Npcs {
     public class NpcNamePacketTests {
         [Fact]
         public void SetNpcName_NullValue_ThrowsArgumentNullException() {

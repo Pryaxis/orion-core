@@ -18,11 +18,10 @@
 using System;
 using FluentAssertions;
 using Microsoft.Xna.Framework;
-using Orion.Projectiles;
 using Terraria;
 using Xunit;
 
-namespace Orion.Tests.Projectiles {
+namespace Orion.Projectiles {
     public class OrionProjectileTests {
         [Theory]
         [InlineData(100)]

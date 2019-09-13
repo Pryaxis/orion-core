@@ -17,11 +17,9 @@
 
 using System.IO;
 using FluentAssertions;
-using Orion.Networking.Packets;
-using Orion.Networking.Packets.Players;
 using Xunit;
 
-namespace Orion.Tests.Networking.Packets.Players {
+namespace Orion.Networking.Packets.Players {
     public class PlayerHarpNotePacketTests {
         public static readonly byte[] PlayerHarpNoteBytes = {8, 0, 58, 0, 205, 204, 128, 64};
 

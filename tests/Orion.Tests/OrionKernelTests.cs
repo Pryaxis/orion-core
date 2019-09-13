@@ -19,7 +19,7 @@ using System;
 using FluentAssertions;
 using Xunit;
 
-namespace Orion.Tests {
+namespace Orion {
     public class OrionKernelTests {
         /*
          * It is difficult to test the plugin loading mechanism programmatically...

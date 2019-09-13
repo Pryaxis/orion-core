@@ -17,11 +17,9 @@
 
 using System.IO;
 using FluentAssertions;
-using Orion.Networking.Packets;
-using Orion.Networking.Packets.World;
 using Xunit;
 
-namespace Orion.Tests.Networking.Packets.World {
+namespace Orion.Networking.Packets.World {
     public class TileModificationPacketTests {
         private static readonly byte[] TileModificationBytes = {11, 0, 17, 0, 16, 14, 194, 1, 1, 0, 0};
 

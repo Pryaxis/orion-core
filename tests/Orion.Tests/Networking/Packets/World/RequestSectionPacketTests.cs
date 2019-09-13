@@ -17,11 +17,9 @@
 
 using System.IO;
 using FluentAssertions;
-using Orion.Networking.Packets;
-using Orion.Networking.Packets.World;
 using Xunit;
 
-namespace Orion.Tests.Networking.Packets.World {
+namespace Orion.Networking.Packets.World {
     public class RequestSectionPacketTests {
         private static readonly byte[] RequestSectionBytes = {11, 0, 8, 255, 255, 255, 255, 255, 255, 255, 255};
 

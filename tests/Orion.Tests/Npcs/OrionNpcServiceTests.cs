@@ -21,13 +21,12 @@ using FluentAssertions;
 using Microsoft.Xna.Framework;
 using Moq;
 using Orion.Items;
-using Orion.Npcs;
 using Orion.Players;
 using Terraria;
 using Terraria.Utilities;
 using Xunit;
 
-namespace Orion.Tests.Npcs {
+namespace Orion.Npcs {
     [Collection("TerrariaTestsCollection")]
     public class OrionNpcServiceTests : IDisposable {
         private readonly Mock<IItemService> _itemService = new Mock<IItemService>();

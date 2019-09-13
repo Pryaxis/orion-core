@@ -16,10 +16,9 @@
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
 using FluentAssertions;
-using Orion.Events;
 using Xunit;
 
-namespace Orion.Tests.Events {
+namespace Orion.Events {
     public class EventHandlerAttributeTests {
         [Theory]
         [InlineData(EventPriority.Normal)]

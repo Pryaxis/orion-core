@@ -17,11 +17,9 @@
 
 using System.IO;
 using FluentAssertions;
-using Orion.Networking.Packets;
-using Orion.Networking.Packets.World;
 using Xunit;
 
-namespace Orion.Tests.Networking.Packets.World {
+namespace Orion.Networking.Packets.World {
     public class BiomeStatsPacketTests {
         public static readonly byte[] BiomeStatsBytes = {6, 0, 57, 1, 2, 3};
 

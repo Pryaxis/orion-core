@@ -18,11 +18,10 @@
 using System;
 using System.IO;
 using FluentAssertions;
-using Orion.Networking.Packets;
 using Orion.Networking.Packets.Connections;
 using Xunit;
 
-namespace Orion.Tests.Networking.Packets {
+namespace Orion.Networking.Packets {
     [Collection("TerrariaTestsCollection")]
     public class TerrariaPacketTests {
         [Fact]

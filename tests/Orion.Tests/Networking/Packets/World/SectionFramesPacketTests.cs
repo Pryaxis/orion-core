@@ -17,11 +17,9 @@
 
 using System.IO;
 using FluentAssertions;
-using Orion.Networking.Packets;
-using Orion.Networking.Packets.World;
 using Xunit;
 
-namespace Orion.Tests.Networking.Packets.World {
+namespace Orion.Networking.Packets.World {
     public class SectionFramesPacketTests {
         private static readonly byte[] SectionFramesBytes = {11, 0, 11, 18, 0, 1, 0, 22, 0, 3, 0};
 

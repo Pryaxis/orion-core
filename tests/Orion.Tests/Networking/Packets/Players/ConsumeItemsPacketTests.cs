@@ -18,11 +18,9 @@
 using System.IO;
 using FluentAssertions;
 using Orion.Items;
-using Orion.Networking.Packets;
-using Orion.Networking.Packets.Players;
 using Xunit;
 
-namespace Orion.Tests.Networking.Packets.Players {
+namespace Orion.Networking.Packets.Players {
     public class ConsumeItemsPacketTests {
         private static readonly byte[] ConsumeItemsBytes = {8, 0, 110, 179, 13, 1, 0, 0};
 

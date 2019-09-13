@@ -17,11 +17,9 @@
 
 using System.IO;
 using FluentAssertions;
-using Orion.Networking.Packets;
-using Orion.Networking.Packets.Projectiles;
 using Xunit;
 
-namespace Orion.Tests.Networking.Packets.Projectiles {
+namespace Orion.Networking.Packets.Projectiles {
     public class CannonShotPacketTests {
         private static readonly byte[] CannonShotBytes = {18, 0, 108, 100, 0, 0, 0, 0, 0, 0, 1, 100, 0, 0, 0, 0, 0, 1};
 

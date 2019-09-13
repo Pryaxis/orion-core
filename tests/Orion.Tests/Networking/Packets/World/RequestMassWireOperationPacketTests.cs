@@ -17,11 +17,9 @@
 
 using System.IO;
 using FluentAssertions;
-using Orion.Networking.Packets;
-using Orion.Networking.Packets.World;
 using Xunit;
 
-namespace Orion.Tests.Networking.Packets.World {
+namespace Orion.Networking.Packets.World {
     public class RequestMassWireOperationPacketTests {
         public static readonly byte[] RequestMassWireOperationBytes = {12, 0, 109, 0, 0, 0, 0, 0, 1, 100, 0, 1};
 

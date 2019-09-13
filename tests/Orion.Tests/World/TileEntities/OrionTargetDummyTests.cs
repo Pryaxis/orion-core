@@ -16,12 +16,11 @@
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
 using FluentAssertions;
-using Orion.World.TileEntities;
 using Xunit;
 using TDS = Terraria.DataStructures;
 using TGCTE = Terraria.GameContent.Tile_Entities;
 
-namespace Orion.Tests.World.TileEntities {
+namespace Orion.World.TileEntities {
     public class OrionTargetDummyTests {
         [Theory]
         [InlineData(100)]

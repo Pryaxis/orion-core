@@ -20,11 +20,10 @@ using System.Linq;
 using FluentAssertions;
 using Microsoft.Xna.Framework;
 using Orion.Items;
-using Orion.Players;
 using Terraria;
 using Xunit;
 
-namespace Orion.Tests.Players {
+namespace Orion.Players {
     public class OrionPlayerTests {
         [Theory]
         [InlineData(100)]

@@ -17,11 +17,9 @@
 
 using System.IO;
 using FluentAssertions;
-using Orion.Networking.Packets;
-using Orion.Networking.Packets.Misc;
 using Xunit;
 
-namespace Orion.Tests.Networking.Packets.Misc {
+namespace Orion.Networking.Packets.Misc {
     public class EmoteBubblePacketTests {
         public static readonly byte[] EmoteBubbleBytes = {12, 0, 91, 1, 0, 0, 0, 0, 100, 0, 255, 1};
 

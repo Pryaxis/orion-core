@@ -19,11 +19,10 @@ using System;
 using System.Linq;
 using FluentAssertions;
 using Microsoft.Xna.Framework;
-using Orion.Projectiles;
 using Terraria;
 using Xunit;
 
-namespace Orion.Tests.Projectiles {
+namespace Orion.Projectiles {
     [Collection("TerrariaTestsCollection")]
     public class OrionProjectileServiceTests : IDisposable {
         private readonly IProjectileService _projectileService;

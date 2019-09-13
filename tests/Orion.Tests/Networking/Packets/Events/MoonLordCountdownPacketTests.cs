@@ -18,11 +18,9 @@
 using System;
 using System.IO;
 using FluentAssertions;
-using Orion.Networking.Packets;
-using Orion.Networking.Packets.Events;
 using Xunit;
 
-namespace Orion.Tests.Networking.Packets.Events {
+namespace Orion.Networking.Packets.Events {
     public class MoonLordCountdownPacketTests {
         private static readonly byte[] MoonLordCountdownBytes = {7, 0, 103, 60, 0, 0, 0};
 

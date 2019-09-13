@@ -17,12 +17,10 @@
 
 using System.IO;
 using FluentAssertions;
-using Orion.Networking.Packets;
-using Orion.Networking.Packets.World;
 using Orion.World.Tiles;
 using Xunit;
 
-namespace Orion.Tests.Networking.Packets.World {
+namespace Orion.Networking.Packets.World {
     public class PaintWallPacketTests {
         public static readonly byte[] PaintWallBytes = {8, 0, 64, 0, 1, 100, 0, 1};
 

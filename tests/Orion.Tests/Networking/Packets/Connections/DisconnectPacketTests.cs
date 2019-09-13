@@ -18,11 +18,9 @@
 using System;
 using System.IO;
 using FluentAssertions;
-using Orion.Networking.Packets;
-using Orion.Networking.Packets.Connections;
 using Xunit;
 
-namespace Orion.Tests.Networking.Packets.Connections {
+namespace Orion.Networking.Packets.Connections {
     public class DisconnectPacketTests {
         [Fact]
         public void SetReason_NullValue_ThrowsArgumentNullException() {
