@@ -21,9 +21,7 @@ using Xunit;
 
 namespace Orion {
     public class OrionKernelTests {
-        /*
-         * It is difficult to test the plugin loading mechanism programmatically...
-         */
+        // It is difficult to test the plugin loading mechanism programmatically...
 
         [Fact]
         public void QueuePluginsFromPath_NullAssemblyPath_ThrowsArgumentNullException() {
