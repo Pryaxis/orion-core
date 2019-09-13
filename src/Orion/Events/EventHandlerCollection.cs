@@ -78,7 +78,7 @@ namespace Orion.Events {
         /// <returns>The resulting collection.</returns>
         /// <exception cref="ArgumentNullException"><paramref name="handler"/> is <c>null</c>.</exception>
         public static EventHandlerCollection<TArgs> operator +(EventHandlerCollection<TArgs> collection,
-                                                              EventHandler<TArgs> handler) {
+                                                               EventHandler<TArgs> handler) {
             if (handler == null) throw new ArgumentNullException(nameof(handler));
 
             Log.Debug("Registering {Event} handler from {Registrator}",
@@ -102,7 +102,7 @@ namespace Orion.Events {
         /// <exception cref="ArgumentException"><paramref name="handler"/> is not registered.</exception>
         /// <exception cref="ArgumentNullException"><paramref name="handler"/> is <c>null</c>.</exception>
         public static EventHandlerCollection<TArgs> operator -(EventHandlerCollection<TArgs> collection,
-                                                              EventHandler<TArgs> handler) {
+                                                               EventHandler<TArgs> handler) {
             if (handler == null) throw new ArgumentNullException(nameof(handler));
 
             var attribute = handler.Method.GetCustomAttribute<EventHandlerAttribute>();

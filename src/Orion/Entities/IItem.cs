@@ -15,25 +15,9 @@
 // You should have received a copy of the GNU General Public License
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
-using System.Collections.Generic;
-
-namespace Orion.Utils {
+namespace Orion.Entities {
     /// <summary>
-    /// Provides the base class for an object implementing <see cref="IAnnotatable"/>.
+    /// Represents a Terraria item.
     /// </summary>
-    public class Annotatable : IAnnotatable {
-        private readonly IDictionary<string, object> _annotations = new Dictionary<string, object>();
-
-        /// <inheritdoc />
-        public T GetAnnotation<T>(string key, T defaultValue = default) =>
-            _annotations.TryGetValue(key, out var value) ? (T)value : defaultValue;
-
-        /// <inheritdoc />
-        public void SetAnnotation<T>(string key, T value) {
-            _annotations[key] = value;
-        }
-
-        /// <inheritdoc />
-        public bool RemoveAnnotation(string key) => _annotations.Remove(key);
-    }
+    public interface IItem : IEntity { }
 }
