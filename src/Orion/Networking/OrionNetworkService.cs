@@ -21,9 +21,11 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
+using Orion.Events.Players;
 using Orion.Hooks;
 using Orion.Networking.Events;
 using Orion.Networking.Packets;
+using Orion.Players;
 using OTAPI;
 using Serilog;
 using Terraria;
@@ -32,6 +34,8 @@ using Terraria.Net.Sockets;
 
 namespace Orion.Networking {
     internal sealed class OrionNetworkService : OrionService, INetworkService {
+        private readonly Lazy<IPlayerService> _playerService;
+
         private readonly IList<RemoteClient> _terrariaClients;
         private readonly IList<OrionClient> _clients;
 
@@ -58,9 +62,10 @@ namespace Orion.Networking {
         public HookHandlerCollection<ReceivingPacketEventArgs> ReceivingPacket { get; set; }
         public HookHandlerCollection<SentPacketEventArgs> SentPacket { get; set; }
         public HookHandlerCollection<SendingPacketEventArgs> SendingPacket { get; set; }
-        public HookHandlerCollection<ClientDisconnectedEventArgs> ClientDisconnected { get; set; }
 
-        public OrionNetworkService() {
+        public OrionNetworkService(Lazy<IPlayerService> playerService) {
+            _playerService = playerService ?? throw new ArgumentNullException(nameof(playerService));
+
             _terrariaClients = Netplay.Clients;
             _clients = new OrionClient[_terrariaClients.Count];
 
@@ -106,13 +111,13 @@ namespace Orion.Networking {
                       number4, number5, number6, number7);
 
             NetMessage.SendData((int)packetType, -1, excludeIndex,
-                                         NetworkText.FromLiteral(text), number, number2, number3,
-                                         number4, number5, number6, number7);
+                                NetworkText.FromLiteral(text), number, number2, number3,
+                                number4, number5, number6, number7);
         }
 
 
         private HookResult ReceiveDataHandler(MessageBuffer buffer, ref byte packetId,
-                                                    ref int readOffset, ref int start, ref int length) {
+                                              ref int readOffset, ref int start, ref int length) {
             var data = buffer.readBuffer;
             Debug.Assert(buffer.whoAmI >= 0 && buffer.whoAmI < Netplay.MaxConnections,
                          $"{nameof(buffer.whoAmI)} should be a valid index.");
@@ -136,8 +141,8 @@ namespace Orion.Networking {
         }
 
         private HookResult SendBytesHandler(ref int remoteId, ref byte[] data, ref int start, ref int length,
-                                                  ref SocketSendCallback callback,
-                                                  ref object state) {
+                                            ref SocketSendCallback callback,
+                                            ref object state) {
             Debug.Assert(remoteId >= 0 && remoteId < Netplay.MaxConnections,
                          $"{nameof(remoteId)} should be a valid index.");
             Debug.Assert(start >= 0 && start + length <= data.Length,
@@ -169,14 +174,17 @@ namespace Orion.Networking {
         }
 
         private HookResult PreResetHandler(RemoteClient remoteClient) {
-            // Ensure that the client was previously active, so that we don't get any false positives.
+            // Ensure that the client was previously active so that we don't get any false positives.
             if (!remoteClient.IsActive) return HookResult.Continue;
 
-            var client = new OrionClient(this, remoteClient);
-            var args = new ClientDisconnectedEventArgs(client);
-            ClientDisconnected?.Invoke(this, args);
+            var playerIndex = remoteClient.Id;
+            Debug.Assert(playerIndex >= 0 && playerIndex < _playerService.Value.Count,
+                         $"{nameof(playerIndex)} should be a valid player index.");
+            var player = _playerService.Value[playerIndex];
+            var args = new PlayerDisconnectEventArgs(player);
+            _playerService.Value.PlayerDisconnect?.Invoke(this, args);
 
-            Log.Information("[Net] {Client} disconnected", client);
+            Log.Information("{Player} disconnected", player);
 
             return HookResult.Continue;
         }

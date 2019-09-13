@@ -23,12 +23,14 @@ using System.Diagnostics.CodeAnalysis;
 using Orion.Events;
 using Orion.Events.Players;
 using Orion.Hooks;
+using Orion.Networking;
 using Orion.Players.Events;
 using OTAPI;
 using Terraria;
 
 namespace Orion.Players {
     internal sealed class OrionPlayerService : OrionService, IPlayerService {
+        private readonly Lazy<INetworkService> _networkService;
         private readonly IList<Player> _terrariaPlayers;
         private readonly IList<OrionPlayer> _players;
 
@@ -58,7 +60,9 @@ namespace Orion.Players {
         public HookHandlerCollection<UpdatedPlayerEventArgs> UpdatedPlayer { get; set; }
         public EventHandlerCollection<PlayerDisconnectEventArgs> PlayerDisconnect { get; set; }
 
-        public OrionPlayerService() {
+        public OrionPlayerService(Lazy<INetworkService> networkService) {
+            _networkService = networkService ?? throw new ArgumentNullException(nameof(networkService));
+
             _terrariaPlayers = Main.player;
             _players = new OrionPlayer[_terrariaPlayers.Count];
 

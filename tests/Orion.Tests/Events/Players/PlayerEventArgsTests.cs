@@ -36,7 +36,7 @@ namespace Orion.Tests.Events.Players {
             var player = new Mock<IPlayer>().Object;
             var args = new PlayerEventArgs(player);
 
-            args.Player.Should().Be(player);
+            args.Player.Should().BeSameAs(player);
         }
     }
 }

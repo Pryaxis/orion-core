@@ -17,16 +17,29 @@
 
 using System;
 using FluentAssertions;
+using Moq;
+using Orion.Events;
+using Orion.Events.Players;
 using Orion.Networking;
+using Orion.Players;
 using Xunit;
 
 namespace Orion.Tests.Networking {
     [Collection("TerrariaTests")]
     public class OrionNetworkServiceTests : IDisposable {
+        private readonly Mock<IPlayerService> _mockPlayerService = new Mock<IPlayerService>();
         private readonly OrionNetworkService _networkService;
 
         public OrionNetworkServiceTests() {
-            _networkService = new OrionNetworkService();
+            _networkService = new OrionNetworkService(new Lazy<IPlayerService>(() => _mockPlayerService.Object));
+
+            for (var i = 0; i < Terraria.NetMessage.buffer.Length; ++i) {
+                Terraria.NetMessage.buffer[i] = new Terraria.MessageBuffer {whoAmI = i};
+            }
+
+            for (var i = 0; i < Terraria.Netplay.Clients.Length; ++i) {
+                Terraria.Netplay.Clients[i] = new Terraria.RemoteClient {Id = i};
+            }
         }
 
         public void Dispose() {
@@ -38,6 +51,28 @@ namespace Orion.Tests.Networking {
             Action action = () => _networkService.BroadcastPacket(null);
 
             action.Should().Throw<ArgumentNullException>();
+        }
+
+        [Fact]
+        public void Disconnect_TriggersPlayerDisconnect() {
+            var mockPlayer = new Mock<IPlayer>();
+            var playerDisconnectCalled = false;
+            var playerDisconnect = new EventHandlerCollection<PlayerDisconnectEventArgs>((sender, args) => {
+                playerDisconnectCalled = true;
+
+                args.Player.Should().BeSameAs(mockPlayer.Object);
+            });
+
+            _mockPlayerService.Setup(ps => ps[1]).Returns(mockPlayer.Object);
+            _mockPlayerService.Setup(ps => ps.PlayerDisconnect).Returns(playerDisconnect);
+
+            Terraria.Netplay.Clients[1].IsActive = true;
+            Terraria.Netplay.Clients[1].Reset();
+
+            playerDisconnectCalled.Should().BeTrue();
+            _mockPlayerService.VerifyGet(ps => ps[1]);
+            _mockPlayerService.VerifyGet(ps => ps.PlayerDisconnect);
+            _mockPlayerService.VerifyNoOtherCalls();
         }
     }
 }

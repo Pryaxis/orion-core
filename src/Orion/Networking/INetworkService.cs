@@ -47,11 +47,6 @@ namespace Orion.Networking {
         HookHandlerCollection<SendingPacketEventArgs> SendingPacket { get; set; }
 
         /// <summary>
-        /// Gets or sets the hook handlers that occur when a client is disconnected.
-        /// </summary>
-        HookHandlerCollection<ClientDisconnectedEventArgs> ClientDisconnected { get; set; }
-
-        /// <summary>
         /// Broadcasts the given packet to everyone except the excluded index.
         /// </summary>
         /// <param name="packet">The packet.</param>

@@ -18,6 +18,8 @@
 using System;
 using System.Linq;
 using FluentAssertions;
+using Moq;
+using Orion.Networking;
 using Orion.Players;
 using Terraria;
 using Xunit;
@@ -25,6 +27,7 @@ using Xunit;
 namespace Orion.Tests.Players {
     [Collection("TerrariaTestsCollection")]
     public class OrionPlayerServiceTests : IDisposable {
+        private readonly Mock<INetworkService> _networkService = new Mock<INetworkService>();
         private readonly IPlayerService _playerService;
 
         public OrionPlayerServiceTests() {
@@ -34,7 +37,7 @@ namespace Orion.Tests.Players {
 
             Main.motd = "test";
 
-            _playerService = new OrionPlayerService();
+            _playerService = new OrionPlayerService(new Lazy<INetworkService>(() => _networkService.Object));
         }
 
         public void Dispose() {
