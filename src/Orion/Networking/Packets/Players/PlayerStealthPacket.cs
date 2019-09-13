@@ -33,7 +33,7 @@ namespace Orion.Networking.Packets.Players {
         /// </summary>
         public float PlayerStealthStatus { get; set; }
 
-        private protected override PacketType Type => PacketType.PlayerStealth;
+        internal override PacketType Type => PacketType.PlayerStealth;
 
         /// <inheritdoc />
         [ExcludeFromCodeCoverage]

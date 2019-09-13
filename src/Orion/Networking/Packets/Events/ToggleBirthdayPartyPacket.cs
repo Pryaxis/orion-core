@@ -23,7 +23,7 @@ namespace Orion.Networking.Packets.Events {
     /// Packet sent from the client to the server to toggle the birthday party.
     /// </summary>
     public sealed class ToggleBirthdayPartyPacket : Packet {
-        private protected override PacketType Type => PacketType.ToggleBirthdayParty;
+        internal override PacketType Type => PacketType.ToggleBirthdayParty;
 
         /// <inheritdoc />
         [ExcludeFromCodeCoverage]

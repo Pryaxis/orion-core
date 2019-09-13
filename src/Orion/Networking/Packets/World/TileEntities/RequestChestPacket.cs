@@ -33,7 +33,7 @@ namespace Orion.Networking.Packets.World.TileEntities {
         /// </summary>
         public short ChestY { get; set; }
 
-        private protected override PacketType Type => PacketType.RequestChest;
+        internal override PacketType Type => PacketType.RequestChest;
 
         /// <inheritdoc />
         [ExcludeFromCodeCoverage]

@@ -420,7 +420,7 @@ namespace Orion.Networking.Packets.World {
         /// </summary>
         public float SandstormIntensity { get; set; }
 
-        private protected override PacketType Type => PacketType.WorldInfo;
+        internal override PacketType Type => PacketType.WorldInfo;
 
         /// <inheritdoc />
         [ExcludeFromCodeCoverage]

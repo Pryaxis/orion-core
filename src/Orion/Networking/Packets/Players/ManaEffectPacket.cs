@@ -33,7 +33,7 @@ namespace Orion.Networking.Packets.Players {
         /// </summary>
         public short ManaAmount { get; set; }
 
-        private protected override PacketType Type => PacketType.ManaEffect;
+        internal override PacketType Type => PacketType.ManaEffect;
 
         /// <inheritdoc />
         [ExcludeFromCodeCoverage]

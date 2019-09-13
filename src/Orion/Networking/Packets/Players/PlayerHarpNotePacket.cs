@@ -33,7 +33,7 @@ namespace Orion.Networking.Packets.Players {
         /// </summary>
         public float PlayerHarpNote { get; set; }
 
-        private protected override PacketType Type => PacketType.PlayerHarpNote;
+        internal override PacketType Type => PacketType.PlayerHarpNote;
 
         /// <inheritdoc />
         [ExcludeFromCodeCoverage]

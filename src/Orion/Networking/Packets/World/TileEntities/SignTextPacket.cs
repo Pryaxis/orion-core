@@ -50,7 +50,7 @@ namespace Orion.Networking.Packets.World.TileEntities {
             set => _signText = value ?? throw new ArgumentNullException(nameof(value));
         }
 
-        private protected override PacketType Type => PacketType.SignText;
+        internal override PacketType Type => PacketType.SignText;
 
         /// <inheritdoc />
         [ExcludeFromCodeCoverage]

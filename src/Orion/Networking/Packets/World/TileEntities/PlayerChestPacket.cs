@@ -44,7 +44,7 @@ namespace Orion.Networking.Packets.World.TileEntities {
         /// </summary>
         public string ChestName { get; set; }
 
-        private protected override PacketType Type => PacketType.PlayerChest;
+        internal override PacketType Type => PacketType.PlayerChest;
 
         /// <inheritdoc />
         [ExcludeFromCodeCoverage]

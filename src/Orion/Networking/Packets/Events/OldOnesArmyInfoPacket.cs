@@ -29,7 +29,7 @@ namespace Orion.Networking.Packets.Events {
         /// </summary>
         public TimeSpan TimeBetweenWaves { get; set; }
 
-        private protected override PacketType Type => PacketType.OldOnesArmyInfo;
+        internal override PacketType Type => PacketType.OldOnesArmyInfo;
 
         /// <inheritdoc />
         [ExcludeFromCodeCoverage]

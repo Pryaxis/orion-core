@@ -84,7 +84,7 @@ namespace Orion.Networking.Packets.World {
         /// </summary>
         public IList<NetworkTileEntity> SectionTileEntities { get; } = new List<NetworkTileEntity>();
 
-        private protected override PacketType Type => PacketType.Section;
+        internal override PacketType Type => PacketType.Section;
 
         /// <inheritdoc />
         [ExcludeFromCodeCoverage]

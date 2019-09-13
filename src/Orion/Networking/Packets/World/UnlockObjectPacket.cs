@@ -38,7 +38,7 @@ namespace Orion.Networking.Packets.World {
         /// </summary>
         public short ObjectY { get; set; }
 
-        private protected override PacketType Type => PacketType.UnlockObject;
+        internal override PacketType Type => PacketType.UnlockObject;
 
         /// <inheritdoc />
         [ExcludeFromCodeCoverage]

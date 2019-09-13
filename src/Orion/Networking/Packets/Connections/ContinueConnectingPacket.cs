@@ -17,11 +17,12 @@
 
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
+using Orion.Networking.Packets.Players;
 
 namespace Orion.Networking.Packets.Connections {
     /// <summary>
     /// Packet sent from the server to the client to allow it to continue connecting. This is sent in response to either
-    /// a <see cref="StartConnectingPacket"/> or a valid <see cref="PasswordResponsePacket"/>.
+    /// a <see cref="PlayerConnectPacket"/> or a valid <see cref="PasswordResponsePacket"/>.
     /// </summary>
     public sealed class ContinueConnectingPacket : Packet {
         /// <summary>
@@ -29,7 +30,7 @@ namespace Orion.Networking.Packets.Connections {
         /// </summary>
         public byte PlayerIndex { get; set; }
 
-        private protected override PacketType Type => PacketType.ContinueConnecting;
+        internal override PacketType Type => PacketType.ContinueConnecting;
 
         /// <inheritdoc />
         [ExcludeFromCodeCoverage]

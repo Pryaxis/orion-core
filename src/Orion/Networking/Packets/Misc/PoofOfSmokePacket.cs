@@ -29,7 +29,7 @@ namespace Orion.Networking.Packets.Misc {
         /// </summary>
         public HalfVector2 SmokePosition { get; set; }
 
-        private protected override PacketType Type => PacketType.PoofOfSmoke;
+        internal override PacketType Type => PacketType.PoofOfSmoke;
 
         /// <inheritdoc />
         [ExcludeFromCodeCoverage]

@@ -28,7 +28,7 @@ namespace Orion.Networking.Packets.Items {
         /// </summary>
         public short ItemIndex { get; set; }
 
-        private protected override PacketType Type => PacketType.RemoveItemOwner;
+        internal override PacketType Type => PacketType.RemoveItemOwner;
 
         /// <inheritdoc />
         [ExcludeFromCodeCoverage]

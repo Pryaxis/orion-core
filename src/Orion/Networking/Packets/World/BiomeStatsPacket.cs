@@ -38,7 +38,7 @@ namespace Orion.Networking.Packets.World {
         /// </summary>
         public byte CrimsonAmount { get; set; }
 
-        private protected override PacketType Type => PacketType.BiomeStats;
+        internal override PacketType Type => PacketType.BiomeStats;
 
         /// <inheritdoc />
         [ExcludeFromCodeCoverage]

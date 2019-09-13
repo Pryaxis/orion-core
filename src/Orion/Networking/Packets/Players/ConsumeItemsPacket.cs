@@ -41,7 +41,7 @@ namespace Orion.Networking.Packets.Players {
         /// </summary>
         public byte PlayerIndex { get; set; }
 
-        private protected override PacketType Type => PacketType.ConsumeItems;
+        internal override PacketType Type => PacketType.ConsumeItems;
 
         /// <inheritdoc />
         [ExcludeFromCodeCoverage]

@@ -45,7 +45,7 @@ namespace Orion.Networking.Packets.Players {
         /// </summary>
         public Vector2 PlayerNewVelocity { get; set; }
 
-        private protected override PacketType Type => PacketType.TeleportPlayerPortal;
+        internal override PacketType Type => PacketType.TeleportPlayerPortal;
 
         /// <inheritdoc />
         [ExcludeFromCodeCoverage]

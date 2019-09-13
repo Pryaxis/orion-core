@@ -34,7 +34,7 @@ namespace Orion.Networking.Packets.Players {
         /// </summary>
         public PlayerTeam PlayerTeam { get; set; }
 
-        private protected override PacketType Type => PacketType.PlayerTeam;
+        internal override PacketType Type => PacketType.PlayerTeam;
 
         /// <inheritdoc />
         [ExcludeFromCodeCoverage]

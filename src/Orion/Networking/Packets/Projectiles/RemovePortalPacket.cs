@@ -28,7 +28,7 @@ namespace Orion.Networking.Packets.Projectiles {
         /// </summary>
         public short PortalProjectileIndex { get; set; }
 
-        private protected override PacketType Type => PacketType.RemovePortal;
+        internal override PacketType Type => PacketType.RemovePortal;
 
         /// <inheritdoc />
         [ExcludeFromCodeCoverage]

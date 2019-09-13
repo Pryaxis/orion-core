@@ -45,7 +45,7 @@ namespace Orion.Networking.Packets.Events {
         /// </summary>
         public int InvasionWaveNumber { get; set; }
 
-        private protected override PacketType Type => PacketType.InvasionInfo;
+        internal override PacketType Type => PacketType.InvasionInfo;
 
         /// <inheritdoc />
         [ExcludeFromCodeCoverage]

@@ -43,7 +43,7 @@ namespace Orion.Networking.Packets.Events {
         /// </summary>
         public ushort StardustPillarShieldStrength { get; set; }
 
-        private protected override PacketType Type => PacketType.PillarShieldStrengths;
+        internal override PacketType Type => PacketType.PillarShieldStrengths;
 
         /// <inheritdoc />
         [ExcludeFromCodeCoverage]

@@ -28,7 +28,7 @@ namespace Orion.Networking.Packets.World.TileEntities {
         /// </summary>
         public byte PlayerInventorySlotIndex { get; set; }
 
-        private protected override PacketType Type => PacketType.MoveIntoChest;
+        internal override PacketType Type => PacketType.MoveIntoChest;
 
         /// <inheritdoc />
         [ExcludeFromCodeCoverage]

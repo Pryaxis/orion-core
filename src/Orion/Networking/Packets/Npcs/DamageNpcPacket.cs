@@ -48,7 +48,7 @@ namespace Orion.Networking.Packets.Npcs {
         /// </summary>
         public bool IsCriticalHit { get; set; }
 
-        private protected override PacketType Type => PacketType.DamageNpc;
+        internal override PacketType Type => PacketType.DamageNpc;
 
         /// <inheritdoc />
         [ExcludeFromCodeCoverage]

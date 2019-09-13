@@ -44,7 +44,7 @@ namespace Orion.Networking.Packets.World {
         /// </summary>
         public LiquidType LiquidType { get; set; }
 
-        private protected override PacketType Type => PacketType.TileLiquid;
+        internal override PacketType Type => PacketType.TileLiquid;
 
         /// <inheritdoc />
         [ExcludeFromCodeCoverage]

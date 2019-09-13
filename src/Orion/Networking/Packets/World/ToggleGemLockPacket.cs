@@ -38,7 +38,7 @@ namespace Orion.Networking.Packets.World {
         /// </summary>
         public bool IsGemLockLocked { get; set; }
 
-        private protected override PacketType Type => PacketType.ToggleGemLock;
+        internal override PacketType Type => PacketType.ToggleGemLock;
 
         /// <inheritdoc />
         [ExcludeFromCodeCoverage]

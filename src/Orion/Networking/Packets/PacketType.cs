@@ -21,7 +21,7 @@ namespace Orion.Networking.Packets {
     /// </summary>
     public enum PacketType : byte {
 #pragma warning disable 1591
-        StartConnecting = 1,
+        PlayerConnect = 1,
         Disconnect = 2,
         ContinueConnecting = 3,
         PlayerData = 4,

@@ -49,7 +49,7 @@ namespace Orion.Networking.Packets.World {
         /// </summary>
         public byte ModificationStyle { get; set; }
 
-        private protected override PacketType Type => PacketType.TileModification;
+        internal override PacketType Type => PacketType.TileModification;
 
         /// <inheritdoc />
         [ExcludeFromCodeCoverage]

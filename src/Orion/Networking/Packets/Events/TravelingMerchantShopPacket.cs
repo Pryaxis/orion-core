@@ -30,7 +30,7 @@ namespace Orion.Networking.Packets.Events {
         /// </summary>
         public ItemType[] ShopItemTypes { get; } = new ItemType[Chest.maxItems];
 
-        private protected override PacketType Type => PacketType.TravelingMerchantShop;
+        internal override PacketType Type => PacketType.TravelingMerchantShop;
 
         /// <inheritdoc />
         [ExcludeFromCodeCoverage]

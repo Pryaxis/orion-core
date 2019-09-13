@@ -154,7 +154,7 @@ namespace Orion.Networking.Packets.Players {
         /// </summary>
         public bool IsPlayerNearOldOnesArmyZone { get; set; }
 
-        private protected override PacketType Type => PacketType.PlayerZones;
+        internal override PacketType Type => PacketType.PlayerZones;
 
         /// <inheritdoc />
         [ExcludeFromCodeCoverage]

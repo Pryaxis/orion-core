@@ -46,7 +46,7 @@ namespace Orion.Networking.Packets.Misc {
         /// </summary>
         public short TileY { get; set; }
 
-        private protected override PacketType Type => PacketType.TileAnimation;
+        internal override PacketType Type => PacketType.TileAnimation;
 
         /// <inheritdoc />
         [ExcludeFromCodeCoverage]

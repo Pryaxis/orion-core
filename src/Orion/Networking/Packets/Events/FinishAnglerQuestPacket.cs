@@ -23,7 +23,7 @@ namespace Orion.Networking.Packets.Events {
     /// Packet sent from the client to the server to finish the angler quest.
     /// </summary>
     public sealed class FinishAnglerQuestPacket : Packet {
-        private protected override PacketType Type => PacketType.FinishAnglerQuest;
+        internal override PacketType Type => PacketType.FinishAnglerQuest;
 
         /// <inheritdoc />
         [ExcludeFromCodeCoverage]

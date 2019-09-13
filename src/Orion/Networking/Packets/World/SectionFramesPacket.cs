@@ -43,7 +43,7 @@ namespace Orion.Networking.Packets.World {
         /// </summary>
         public short EndSectionY { get; set; }
 
-        private protected override PacketType Type => PacketType.SectionFrames;
+        internal override PacketType Type => PacketType.SectionFrames;
 
         private protected override void ReadFromReader(BinaryReader reader, PacketContext context) {
             StartSectionX = reader.ReadInt16();

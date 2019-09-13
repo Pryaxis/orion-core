@@ -33,7 +33,7 @@ namespace Orion.Networking.Packets.Misc {
         /// </summary>
         public MiscAction Action { get; set; }
 
-        private protected override PacketType Type => PacketType.MiscAction;
+        internal override PacketType Type => PacketType.MiscAction;
 
         /// <inheritdoc />
         [ExcludeFromCodeCoverage]

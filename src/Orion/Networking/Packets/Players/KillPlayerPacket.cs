@@ -50,7 +50,7 @@ namespace Orion.Networking.Packets.Players {
         /// </summary>
         public bool IsDeathFromPvp { get; set; }
 
-        private protected override PacketType Type => PacketType.KillPlayer;
+        internal override PacketType Type => PacketType.KillPlayer;
 
         /// <inheritdoc />
         [ExcludeFromCodeCoverage]

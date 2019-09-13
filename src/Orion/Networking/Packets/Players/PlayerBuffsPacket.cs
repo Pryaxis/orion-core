@@ -35,7 +35,7 @@ namespace Orion.Networking.Packets.Players {
         /// </summary>
         public BuffType[] PlayerBuffTypes { get; } = new BuffType[Player.maxBuffs];
 
-        private protected override PacketType Type => PacketType.PlayerBuffs;
+        internal override PacketType Type => PacketType.PlayerBuffs;
 
         /// <inheritdoc />
         [ExcludeFromCodeCoverage]

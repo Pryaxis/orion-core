@@ -33,7 +33,7 @@ namespace Orion.Networking.Packets.Players {
         /// </summary>
         public bool PlayerIsInPvp { get; set; }
 
-        private protected override PacketType Type => PacketType.PlayerPvp;
+        internal override PacketType Type => PacketType.PlayerPvp;
 
         /// <inheritdoc />
         [ExcludeFromCodeCoverage]

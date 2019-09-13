@@ -41,7 +41,7 @@ namespace Orion.Networking.Packets.Players {
         /// </summary>
         public Vector2 BuffPosition { get; set; }
 
-        private protected override PacketType Type => PacketType.NebulaBuff;
+        internal override PacketType Type => PacketType.NebulaBuff;
 
         /// <inheritdoc />
         [ExcludeFromCodeCoverage]

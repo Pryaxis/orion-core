@@ -55,7 +55,7 @@ namespace Orion.Networking.Packets.Misc {
         /// </summary>
         public ushort EmoteMetadata { get; set; }
 
-        private protected override PacketType Type => PacketType.EmoteBubble;
+        internal override PacketType Type => PacketType.EmoteBubble;
 
         /// <inheritdoc />
         [ExcludeFromCodeCoverage]

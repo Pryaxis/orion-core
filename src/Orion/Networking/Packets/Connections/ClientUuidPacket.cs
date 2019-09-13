@@ -35,7 +35,7 @@ namespace Orion.Networking.Packets.Connections {
             set => _clientUuid = value ?? throw new ArgumentNullException(nameof(value));
         }
 
-        private protected override PacketType Type => PacketType.ClientUuid;
+        internal override PacketType Type => PacketType.ClientUuid;
 
         /// <inheritdoc />
         [ExcludeFromCodeCoverage]

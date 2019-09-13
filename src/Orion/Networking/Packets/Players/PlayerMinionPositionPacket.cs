@@ -35,7 +35,7 @@ namespace Orion.Networking.Packets.Players {
         /// </summary>
         public Vector2 PlayerMinionTargetPosition { get; set; }
 
-        private protected override PacketType Type => PacketType.PlayerMinionPosition;
+        internal override PacketType Type => PacketType.PlayerMinionPosition;
 
         /// <inheritdoc />
         [ExcludeFromCodeCoverage]

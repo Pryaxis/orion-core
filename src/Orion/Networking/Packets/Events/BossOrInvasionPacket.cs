@@ -67,7 +67,7 @@ namespace Orion.Networking.Packets.Events {
             set => _type = (short)value;
         }
 
-        private protected override PacketType Type => PacketType.BossOrInvasion;
+        internal override PacketType Type => PacketType.BossOrInvasion;
 
         /// <inheritdoc />
         [ExcludeFromCodeCoverage]

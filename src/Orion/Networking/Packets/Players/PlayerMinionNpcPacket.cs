@@ -33,7 +33,7 @@ namespace Orion.Networking.Packets.Players {
         /// </summary>
         public short PlayerMinionTargetNpcIndex { get; set; }
 
-        private protected override PacketType Type => PacketType.PlayerMinionNpc;
+        internal override PacketType Type => PacketType.PlayerMinionNpc;
 
         /// <inheritdoc />
         [ExcludeFromCodeCoverage]

@@ -60,7 +60,7 @@ namespace Orion.Networking.Packets.Projectiles {
         /// </summary>
         public byte ShooterPlayerIndex { get; set; }
 
-        private protected override PacketType Type => PacketType.CannonShot;
+        internal override PacketType Type => PacketType.CannonShot;
 
         /// <inheritdoc />
         [ExcludeFromCodeCoverage]

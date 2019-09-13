@@ -30,7 +30,7 @@ namespace Orion.Networking.Packets.Events {
         // TODO: implement enum for this.
         public short EventId { get; set; }
 
-        private protected override PacketType Type => PacketType.ProgressionEvent;
+        internal override PacketType Type => PacketType.ProgressionEvent;
 
         /// <inheritdoc />
         [ExcludeFromCodeCoverage]

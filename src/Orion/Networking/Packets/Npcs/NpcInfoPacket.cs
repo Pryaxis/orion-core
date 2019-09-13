@@ -92,7 +92,7 @@ namespace Orion.Networking.Packets.Npcs {
         /// </summary>
         public byte NpcReleaserPlayerIndex { get; set; }
 
-        private protected override PacketType Type => PacketType.NpcInfo;
+        internal override PacketType Type => PacketType.NpcInfo;
 
         /// <inheritdoc />
         [ExcludeFromCodeCoverage]

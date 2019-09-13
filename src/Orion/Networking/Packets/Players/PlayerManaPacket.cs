@@ -38,7 +38,7 @@ namespace Orion.Networking.Packets.Players {
         /// </summary>
         public short PlayerMaxMana { get; set; }
 
-        private protected override PacketType Type => PacketType.PlayerMana;
+        internal override PacketType Type => PacketType.PlayerMana;
 
         /// <inheritdoc />
         [ExcludeFromCodeCoverage]

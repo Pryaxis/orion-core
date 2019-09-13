@@ -24,7 +24,7 @@ namespace Orion.Networking.Packets.World {
     /// <see cref="RequestSectionPacket"/>.
     /// </summary>
     public sealed class EnterWorldPacket : Packet {
-        private protected override PacketType Type => PacketType.EnterWorld;
+        internal override PacketType Type => PacketType.EnterWorld;
 
         /// <inheritdoc />
         [ExcludeFromCodeCoverage]

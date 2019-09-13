@@ -49,7 +49,7 @@ namespace Orion.Networking.Packets.World.TileEntities {
         /// </summary>
         public short ItemStackSize { get; set; }
 
-        private protected override PacketType Type => PacketType.ItemFrame;
+        internal override PacketType Type => PacketType.ItemFrame;
 
         /// <inheritdoc />
         [ExcludeFromCodeCoverage]

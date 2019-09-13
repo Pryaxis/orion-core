@@ -38,7 +38,7 @@ namespace Orion.Networking.Packets {
     public abstract class Packet {
         private static readonly IDictionary<PacketType, Func<Packet>> PacketConstructors =
             new Dictionary<PacketType, Func<Packet>> {
-                [PacketType.StartConnecting] = () => new StartConnectingPacket(),
+                [PacketType.PlayerConnect] = () => new PlayerConnectPacket(),
                 [PacketType.Disconnect] = () => new DisconnectPacket(),
                 [PacketType.ContinueConnecting] = () => new ContinueConnectingPacket(),
                 [PacketType.PlayerData] = () => new PlayerDataPacket(),
@@ -152,7 +152,7 @@ namespace Orion.Networking.Packets {
                 [PacketType.CombatText] = () => new CombatTextPacket()
             };
 
-        private protected abstract PacketType Type { get; }
+        internal abstract PacketType Type { get; }
 
         /// <summary>
         /// Reads a packet from the given stream with the specified context.

@@ -33,7 +33,7 @@ namespace Orion.Networking.Packets.World.TileEntities {
         /// </summary>
         public short SignY { get; set; }
 
-        private protected override PacketType Type => PacketType.RequestSign;
+        internal override PacketType Type => PacketType.RequestSign;
 
         /// <inheritdoc />
         [ExcludeFromCodeCoverage]

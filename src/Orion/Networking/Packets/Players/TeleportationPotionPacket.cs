@@ -23,7 +23,7 @@ namespace Orion.Networking.Packets.Players {
     /// Packet sent to use a teleportation potion.
     /// </summary>
     public sealed class TeleportationPotionPacket : Packet {
-        private protected override PacketType Type => PacketType.TeleportationPotion;
+        internal override PacketType Type => PacketType.TeleportationPotion;
 
         /// <inheritdoc />
         [ExcludeFromCodeCoverage]
