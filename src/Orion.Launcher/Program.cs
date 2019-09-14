@@ -16,7 +16,10 @@
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
 using System;
+using System.Collections.Generic;
 using System.IO;
+using System.Reflection;
+using Orion.Entities;
 using Orion.Launcher.Properties;
 using Serilog;
 using Serilog.Sinks.SystemConsole.Themes;
@@ -47,14 +50,36 @@ namespace Orion.Launcher {
                 Log.Fatal(eventArgs.ExceptionObject as Exception, Resources.UnhandledExceptionMessage);
             };
 
+            var itemTypeFields = typeof(ItemType).GetFields(BindingFlags.Public | BindingFlags.Static);
+            var itemIdToField = new Dictionary<int, FieldInfo>();
+            foreach (var field in itemTypeFields) {
+                if (!(field.GetValue(null) is ItemType itemType)) continue;
+
+                itemIdToField[itemType.Id] = field;
+            }
+
+            var itemRarityFields = typeof(ItemRarity).GetFields(BindingFlags.Public | BindingFlags.Static);
+            var rarityLevelToField = new Dictionary<int, FieldInfo>();
+            foreach (var field in itemRarityFields) {
+                if (!(field.GetValue(null) is ItemRarity itemRarity)) continue;
+
+                rarityLevelToField[itemRarity.Level] = field;
+            }
+
             LanguageManager.Instance.SetLanguage(GameCulture.English);
             Lang.InitializeLegacyLocalization();
             Terraria.Main.player[Terraria.Main.myPlayer] = new Player();
             for (var i = 0; i < ItemID.Count; ++i) {
                 var item = new Item();
                 item.SetDefaults(i);
-                if (item.thrown) {
-                    Log.Information("{Name}", item.Name);
+                if (ItemID.Sets.Deprecated[i]) continue;
+
+                try {
+                    if (item.maxStack != 1) {
+                        Log.Information("[{ItemType}] = {MaxStackSize},", itemIdToField[i].Name, item.maxStack);
+                    }
+                } catch {
+
                 }
             }
 
