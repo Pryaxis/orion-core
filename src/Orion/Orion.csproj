@@ -33,7 +33,8 @@
     </ItemGroup>
 
     <ItemGroup>
-      <Folder Include="Tiles\" />
+      <Folder Include="Entities\Impl\" />
+      <Folder Include="Services\Impl\" />
     </ItemGroup>
 
 </Project>

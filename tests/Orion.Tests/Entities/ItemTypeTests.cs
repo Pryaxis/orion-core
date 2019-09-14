@@ -15,13 +15,10 @@
 // You should have received a copy of the GNU General Public License
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
-using System;
-using System.Collections.Generic;
 using FluentAssertions;
 using Xunit;
 
 namespace Orion.Entities {
-    [Collection("TerrariaTestsCollection")]
     public class ItemTypeTests {
         [Fact]
         public void GetId_IsCorrect() {

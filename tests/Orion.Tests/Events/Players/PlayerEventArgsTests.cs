@@ -15,17 +15,31 @@
 // You should have received a copy of the GNU General Public License
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
-using Orion.Events;
-using Orion.Events.Players;
+using System;
+using FluentAssertions;
+using Moq;
+using Orion.Entities;
+using Xunit;
 
-namespace Orion.Services {
-    /// <summary>
-    /// Represents a player service. Provides access to player-related events and methods.
-    /// </summary>
-    public interface IPlayerService {
-        /// <summary>
-        /// Gets or sets the event handlers that run when a player connects. This event can be canceled.
-        /// </summary>
-        EventHandlerCollection<PlayerConnectEventArgs> PlayerConnect { get; set; }
+namespace Orion.Events.Players {
+    public class PlayerEventArgsTests {
+        [Fact]
+        public void Ctor_NullPlayer_ThrowsArgumentNullException() {
+            Func<PlayerEventArgs> func = () => new TestArgs(null);
+
+            func.Should().Throw<ArgumentNullException>();
+        }
+
+        [Fact]
+        public void GetPlayer_IsCorrect() {
+            var player = new Mock<IPlayer>().Object;
+            var args = new TestArgs(player);
+
+            args.Player.Should().BeSameAs(player);
+        }
+
+        private class TestArgs : PlayerEventArgs {
+            public TestArgs(IPlayer player) : base(player) { }
+        }
     }
 }
