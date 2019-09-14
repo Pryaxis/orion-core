@@ -15,9 +15,9 @@
 // You should have received a copy of the GNU General Public License
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
-namespace Orion.TileEntities {
+namespace Orion.World.TileEntities {
     /// <summary>
-    /// Represents a Terraria item frame.
+    /// Represents a Terraria logic sensor.
     /// </summary>
-    public interface IItemFrame : ITileEntity { }
+    public interface ILogicSensor : ITileEntity { }
 }

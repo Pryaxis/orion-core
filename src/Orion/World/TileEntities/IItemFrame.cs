@@ -15,9 +15,9 @@
 // You should have received a copy of the GNU General Public License
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
-namespace Orion.TileEntities {
+namespace Orion.World.TileEntities {
     /// <summary>
-    /// Represents a Terraria target dummy.
+    /// Represents a Terraria item frame.
     /// </summary>
-    public interface ITargetDummy : ITileEntity { }
+    public interface IItemFrame : ITileEntity { }
 }

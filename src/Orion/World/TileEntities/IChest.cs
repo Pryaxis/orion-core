@@ -15,26 +15,9 @@
 // You should have received a copy of the GNU General Public License
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
-using Orion.Utils;
-
-namespace Orion.TileEntities {
+namespace Orion.World.TileEntities {
     /// <summary>
-    /// Represents a (generalized) Terraria tile entity.
+    /// Represents a Terraria chest.
     /// </summary>
-    public interface ITileEntity : IAnnotatable {
-        /// <summary>
-        /// Gets the tile entity's index.
-        /// </summary>
-        int Index { get; }
-
-        /// <summary>
-        /// Gets or sets the tile entity's X coordinate.
-        /// </summary>
-        int X { get; set; }
-
-        /// <summary>
-        /// Gets or sets the tile entity's Y coordinate.
-        /// </summary>
-        int Y { get; set; }
-    }
+    public interface IChest : ITileEntity { }
 }
