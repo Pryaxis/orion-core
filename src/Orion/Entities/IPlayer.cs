@@ -59,5 +59,10 @@ namespace Orion.Entities {
     /// <summary>
     /// Represents a player's inventory.
     /// </summary>
-    public interface IPlayerInventory { }
+    public interface IPlayerInventory {
+        /// <summary>
+        /// Gets the player's held item.
+        /// </summary>
+        IItem HeldItem { get; }
+    }
 }

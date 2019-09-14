@@ -20,6 +20,9 @@ using System.IO;
 using Orion.Launcher.Properties;
 using Serilog;
 using Serilog.Sinks.SystemConsole.Themes;
+using Terraria;
+using Terraria.ID;
+using Terraria.Localization;
 
 namespace Orion.Launcher {
     internal class Program {
@@ -43,6 +46,17 @@ namespace Orion.Launcher {
             AppDomain.CurrentDomain.UnhandledException += (sender, eventArgs) => {
                 Log.Fatal(eventArgs.ExceptionObject as Exception, Resources.UnhandledExceptionMessage);
             };
+
+            LanguageManager.Instance.SetLanguage(GameCulture.English);
+            Lang.InitializeLegacyLocalization();
+            Terraria.Main.player[Terraria.Main.myPlayer] = new Player();
+            for (var i = 0; i < ItemID.Count; ++i) {
+                var item = new Item();
+                item.SetDefaults(i);
+                if (item.thrown) {
+                    Log.Information("{Name}", item.Name);
+                }
+            }
 
             using (var kernel = new OrionKernel()) {
                 Log.Information(Resources.LoadingPluginsMessage);
