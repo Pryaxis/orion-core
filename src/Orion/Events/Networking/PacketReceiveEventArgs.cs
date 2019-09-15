@@ -18,6 +18,7 @@
 using System;
 using Orion.Entities;
 using Orion.Networking;
+using Orion.Networking.Packets;
 
 namespace Orion.Events.Networking {
     /// <summary>

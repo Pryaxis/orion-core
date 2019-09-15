@@ -16,7 +16,7 @@
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
 using System;
-using Orion.Networking;
+using Orion.Networking.Packets;
 
 namespace Orion.Events.Networking {
     /// <summary>

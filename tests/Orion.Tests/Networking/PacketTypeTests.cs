@@ -16,6 +16,7 @@
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
 using FluentAssertions;
+using Orion.Networking.Packets;
 using Xunit;
 
 namespace Orion.Networking {

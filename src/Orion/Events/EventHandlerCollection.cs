@@ -36,14 +36,10 @@ namespace Orion.Events {
 
         // This constructor is provided for aiding testing only.
         internal EventHandlerCollection(EventHandler<TArgs> handler) {
-            Debug.Assert(handler != null, $"{nameof(handler)} should not be null.");
-
             _registrations = new HashSet<Registration> {new Registration(handler, EventPriority.Normal)};
         }
 
         private EventHandlerCollection(ISet<Registration> registrations) {
-            Debug.Assert(registrations != null, $"{nameof(registrations)} should not be null.");
-
             _registrations = registrations;
         }
 

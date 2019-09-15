@@ -18,7 +18,7 @@
 using System;
 using System.IO;
 using FluentAssertions;
-using Orion.Networking;
+using Orion.Networking.Packets;
 using Xunit;
 
 namespace Orion.Events.Networking {

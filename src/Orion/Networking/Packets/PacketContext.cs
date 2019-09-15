@@ -15,7 +15,7 @@
 // You should have received a copy of the GNU General Public License
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
-namespace Orion.Networking {
+namespace Orion.Networking.Packets {
     /// <summary>
     /// Specifies the context with which to process a packet.
     /// </summary>

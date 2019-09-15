@@ -17,6 +17,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Threading;
@@ -24,6 +25,7 @@ using Orion.Entities;
 using Orion.Events;
 using Orion.Events.Networking;
 using Orion.Events.Players;
+using Orion.Networking.Packets;
 using Orion.Networking.Packets.Players;
 
 namespace Orion.Networking.Impl {
@@ -79,6 +81,7 @@ namespace Orion.Networking.Impl {
             if (!args.Packet.DidLengthChange) {
                 stream.Position = 0;
                 packet.WriteToStream(stream, PacketContext.Client);
+                Debug.Assert(stream.Position == length + 2, "Dirty packet should have the same length.");
                 return OTAPI.HookResult.Continue;
             }
 

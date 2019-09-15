@@ -23,7 +23,7 @@ using System.IO;
 using System.Text;
 using Orion.Networking.Packets.Players;
 
-namespace Orion.Networking {
+namespace Orion.Networking.Packets {
     /// <summary>
     /// Represents a packet.
     /// </summary>

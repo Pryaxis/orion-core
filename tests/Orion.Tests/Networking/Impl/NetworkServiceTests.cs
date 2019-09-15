@@ -58,7 +58,7 @@ namespace Orion.Networking.Impl {
         public void PacketReceive_PlayerConnect_IsTriggered() {
             var player = new Mock<IPlayer>().Object;
             _mockPlayerService.Setup(ps => ps[1]).Returns(player);
-            
+
             var isRun = false;
             var playerConnect = new EventHandlerCollection<PlayerConnectEventArgs>((sender, args) => {
                 isRun = true;

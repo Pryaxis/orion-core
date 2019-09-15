@@ -17,7 +17,7 @@
 
 using System;
 
-namespace Orion.Networking {
+namespace Orion.Networking.Packets {
     /// <summary>
     /// Represents a packet's type.
     /// </summary>

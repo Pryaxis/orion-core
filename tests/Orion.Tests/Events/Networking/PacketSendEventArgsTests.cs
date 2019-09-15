@@ -20,7 +20,7 @@ using System.IO;
 using FluentAssertions;
 using Moq;
 using Orion.Entities;
-using Orion.Networking;
+using Orion.Networking.Packets;
 using Xunit;
 
 namespace Orion.Events.Networking {
