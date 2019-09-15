@@ -15,13 +15,14 @@
 // You should have received a copy of the GNU General Public License
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
-using System;
+using System.Collections.Generic;
+using System.Reflection;
 
 namespace Orion.Networking.Packets {
     /// <summary>
     /// Represents a packet's type.
     /// </summary>
-    public struct PacketType : IEquatable<PacketType> {
+    public sealed class PacketType {
 #pragma warning disable 1591
         public static PacketType PlayerConnect = new PacketType(1);
         public static PacketType PlayerDisconnect = new PacketType(2);
@@ -137,42 +138,50 @@ namespace Orion.Networking.Packets {
         public static PacketType CombatText = new PacketType(119);
 #pragma warning disable 1591
 
+        private static readonly IDictionary<byte, FieldInfo> IdToField = new Dictionary<byte, FieldInfo>();
+        private static readonly IDictionary<byte, PacketType> IdToPacketType = new Dictionary<byte, PacketType>();
+
         /// <summary>
         /// Gets the packet type's ID.
         /// </summary>
         public byte Id { get; }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="PacketType"/> structure with the specified ID.
+        /// Gets a value indicating whether the packet type is unknown.
         /// </summary>
-        /// <param name="id">The ID.</param>
-        public PacketType(byte id) {
-            Id = id;
+        public bool IsUnknown { get; }
+
+        // Initializes lookup tables.
+        static PacketType() {
+            var fields = typeof(PacketType).GetFields(BindingFlags.Public | BindingFlags.Static);
+            foreach (var field in fields) {
+                if (!(field.GetValue(null) is PacketType packetType)) continue;
+
+                IdToField[packetType.Id] = field;
+                IdToPacketType[packetType.Id] = packetType;
+            }
         }
 
-        /// <inheritdoc />
-        public bool Equals(PacketType other) => Id == other.Id;
+        private PacketType(byte id, bool isUnknown = false) {
+            Id = id;
+            IsUnknown = isUnknown;
+        }
+
+        /// <summary>
+        /// Returns a packet type converted from the given ID.
+        /// </summary>
+        /// <param name="id">The ID.</param>
+        /// <returns>The packet type.</returns>
+        public static PacketType FromId(byte id) =>
+            IdToPacketType.TryGetValue(id, out var buffType) ? buffType : new PacketType(id, true);
 
         /// <inheritdoc />
-        public override bool Equals(object obj) => obj is PacketType other && Equals(other);
+        public override bool Equals(object obj) => obj is PacketType other && Id == other.Id;
 
         /// <inheritdoc />
         public override int GetHashCode() => Id.GetHashCode();
 
-        /// <summary>
-        /// Returns whether two packet types are equal.
-        /// </summary>
-        /// <param name="left">The first packet type.</param>
-        /// <param name="right">The second packet type.</param>
-        /// <returns>A value indicating whether the two packet types are equal.</returns>
-        public static bool operator ==(PacketType left, PacketType right) => left.Equals(right);
-
-        /// <summary>
-        /// Returns whether two packet types are not equal.
-        /// </summary>
-        /// <param name="left">The first packet type.</param>
-        /// <param name="right">The second packet type.</param>
-        /// <returns>A value indicating whether the two packet types are not equal.</returns>
-        public static bool operator !=(PacketType left, PacketType right) => !left.Equals(right);
+        /// <inheritdoc />
+        public override string ToString() => IsUnknown ? "Unknown" : IdToField[Id].Name;
     }
 }

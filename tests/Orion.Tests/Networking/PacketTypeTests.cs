@@ -23,51 +23,25 @@ namespace Orion.Networking {
     public class PacketTypeTests {
         [Fact]
         public void GetId_IsCorrect() {
-            var packetType = new PacketType(100);
-
-            packetType.Id.Should().Be(100);
+            PacketType.FromId(100).Id.Should().Be(100);
         }
 
         [Fact]
-        public void Equals_IsCorrect() {
-            var packetType = new PacketType(100);
-            var packetType2 = new PacketType(100);
-            var packetType3 = new PacketType(101);
-
-            packetType.Equals(packetType2).Should().BeTrue();
-            packetType.Equals(packetType3).Should().BeFalse();
+        public void GetIsUnknown_IsCorrect() {
+            PacketType.PlayerConnect.IsUnknown.Should().BeFalse();
+            PacketType.FromId(byte.MaxValue).IsUnknown.Should().BeTrue();
         }
 
         [Fact]
         public void EqualsObject_IsCorrect() {
-            var packetType = new PacketType(100);
-            var packetType2 = new PacketType(100);
+            var packetType = PacketType.FromId(100);
+            var packetType2 = PacketType.FromId(100);
 
-            packetType.Equals((object)packetType2).Should().BeTrue();
+            packetType.Equals(packetType2).Should().BeTrue();
 
             // ReSharper disable once SuspiciousTypeConversion.Global
             packetType.Equals("null").Should().BeFalse();
             packetType.Equals(null).Should().BeFalse();
-        }
-
-        [Fact]
-        public void EqualsOperator_IsCorrect() {
-            var packetType = new PacketType(100);
-            var packetType2 = new PacketType(100);
-            var packetType3 = new PacketType(101);
-
-            (packetType == packetType2).Should().BeTrue();
-            (packetType == packetType3).Should().BeFalse();
-        }
-
-        [Fact]
-        public void NotEqualsOperator_IsCorrect() {
-            var packetType = new PacketType(100);
-            var packetType2 = new PacketType(100);
-            var packetType3 = new PacketType(101);
-
-            (packetType != packetType2).Should().BeFalse();
-            (packetType != packetType3).Should().BeTrue();
         }
     }
 }

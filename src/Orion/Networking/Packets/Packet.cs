@@ -179,7 +179,7 @@ namespace Orion.Networking.Packets {
 #else
             reader.ReadUInt16();
 #endif
-            var packetType = new PacketType(reader.ReadByte());
+            var packetType = PacketType.FromId(reader.ReadByte());
             var packet = PacketConstructors[packetType]();
             packet.ReadFromReader(reader, context);
 
