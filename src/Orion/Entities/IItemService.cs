@@ -15,9 +15,11 @@
 // You should have received a copy of the GNU General Public License
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
+using Orion.Utils;
+
 namespace Orion.Entities {
     /// <summary>
     /// Represents an item service. Provides access to item-related events and methods.
     /// </summary>
-    public interface IItemService { }
+    public interface IItemService : IReadOnlyArray<IItem> { }
 }

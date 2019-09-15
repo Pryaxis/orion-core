@@ -17,12 +17,13 @@
 
 using Orion.Events;
 using Orion.Events.Players;
+using Orion.Utils;
 
 namespace Orion.Entities {
     /// <summary>
     /// Represents a player service. Provides access to player-related events and methods.
     /// </summary>
-    public interface IPlayerService {
+    public interface IPlayerService : IReadOnlyArray<IPlayer> {
         /// <summary>
         /// Gets or sets the event handlers that run when a player connects. This event can be canceled.
         /// </summary>
