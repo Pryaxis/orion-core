@@ -234,15 +234,15 @@ namespace Orion.Entities {
         public static readonly BuffType BallistaPanic = new BuffType(205);
 #pragma warning restore 1591
 
-        private static readonly IDictionary<int, FieldInfo> IdToField = new Dictionary<int, FieldInfo>();
-        private static readonly IDictionary<int, BuffType> IdToBuffType = new Dictionary<int, BuffType>();
+        private static readonly IDictionary<byte, FieldInfo> IdToField = new Dictionary<byte, FieldInfo>();
+        private static readonly IDictionary<byte, BuffType> IdToBuffType = new Dictionary<byte, BuffType>();
 
         /// <summary>
         /// Gets the buff type's ID.
         /// </summary>
-        public int Id { get; }
+        public byte Id { get; }
 
-        private BuffType(int id) {
+        private BuffType(byte id) {
             Id = id;
         }
 
@@ -262,7 +262,8 @@ namespace Orion.Entities {
         /// </summary>
         /// <param name="id">The ID.</param>
         /// <returns>The buff type, or <c>null</c> if none exists.</returns>
-        public static BuffType FromId(int id) => IdToBuffType.TryGetValue(id, out var buffType) ? buffType : null;
+        public static BuffType FromId(byte id) =>
+            IdToBuffType.TryGetValue(id, out var buffType) ? buffType : new BuffType(id);
 
         /// <inheritdoc />
         public override bool Equals(object obj) => obj is BuffType other && Id == other.Id;
@@ -271,6 +272,6 @@ namespace Orion.Entities {
         public override int GetHashCode() => Id;
 
         /// <inheritdoc />
-        public override string ToString() => IdToField[Id].Name;
+        public override string ToString() => IdToField.TryGetValue(Id, out var field) ? field.Name : "Unknown";
     }
 }

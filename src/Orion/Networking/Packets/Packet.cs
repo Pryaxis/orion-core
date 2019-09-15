@@ -80,7 +80,7 @@ namespace Orion.Networking.Packets {
                 [PacketType.UnlockObject] = () => throw new NotImplementedException(),
                 [PacketType.BuffNpc] = () => throw new NotImplementedException(),
                 [PacketType.NpcBuffs] = () => throw new NotImplementedException(),
-                [PacketType.BuffPlayer] = () => throw new NotImplementedException(),
+                [PacketType.BuffPlayer] = () => new BuffPlayerPacket(),
                 [PacketType.NpcName] = () => throw new NotImplementedException(),
                 [PacketType.BiomeStats] = () => throw new NotImplementedException(),
                 [PacketType.PlayerHarpNote] = () => throw new NotImplementedException(),
