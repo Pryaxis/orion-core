@@ -15,7 +15,9 @@
 // You should have received a copy of the GNU General Public License
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
+using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Reflection;
 
 namespace Orion.Networking.Packets {
@@ -24,6 +26,7 @@ namespace Orion.Networking.Packets {
     /// </summary>
     public sealed class PacketType {
 #pragma warning disable 1591
+        public static PacketType None = new PacketType(0);
         public static PacketType PlayerConnect = new PacketType(1);
         public static PacketType PlayerDisconnect = new PacketType(2);
         public static PacketType PlayerContinueConnecting = new PacketType(3);
@@ -141,6 +144,9 @@ namespace Orion.Networking.Packets {
         private static readonly IDictionary<byte, FieldInfo> IdToField = new Dictionary<byte, FieldInfo>();
         private static readonly IDictionary<byte, PacketType> IdToPacketType = new Dictionary<byte, PacketType>();
 
+        private static readonly IDictionary<PacketType, Func<Packet>> PacketConstructors =
+            new Dictionary<PacketType, Func<Packet>>();
+
         /// <summary>
         /// Gets the packet type's ID.
         /// </summary>
@@ -151,6 +157,11 @@ namespace Orion.Networking.Packets {
         /// </summary>
         public bool IsUnknown { get; }
 
+        /// <summary>
+        /// Gets the packet type's constructor.
+        /// </summary>
+        public Func<Packet> Constructor => IsUnknown ? null : PacketConstructors[this];
+
         // Initializes lookup tables.
         static PacketType() {
             var fields = typeof(PacketType).GetFields(BindingFlags.Public | BindingFlags.Static);
@@ -159,6 +170,12 @@ namespace Orion.Networking.Packets {
 
                 IdToField[packetType.Id] = field;
                 IdToPacketType[packetType.Id] = packetType;
+            }
+
+            foreach (var type in typeof(Packet).Assembly.ExportedTypes
+                                               .Where(t => t.IsSubclassOf(typeof(Packet)) && t != typeof(Packet))) {
+                var packetType = ((Packet)Activator.CreateInstance(type)).Type;
+                PacketConstructors[packetType] = () => (Packet)Activator.CreateInstance(type);
             }
         }
 
@@ -176,7 +193,7 @@ namespace Orion.Networking.Packets {
             IdToPacketType.TryGetValue(id, out var buffType) ? buffType : new PacketType(id, true);
 
         /// <inheritdoc />
-        public override bool Equals(object obj) => obj is PacketType other && Id == other.Id;
+        public override bool Equals(object obj) => obj is PacketType packetType && Id == packetType.Id;
 
         /// <inheritdoc />
         public override int GetHashCode() => Id.GetHashCode();

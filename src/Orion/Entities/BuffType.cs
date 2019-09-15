@@ -272,7 +272,7 @@ namespace Orion.Entities {
             IdToBuffType.TryGetValue(id, out var buffType) ? buffType : new BuffType(id, true);
 
         /// <inheritdoc />
-        public override bool Equals(object obj) => obj is BuffType other && Id == other.Id;
+        public override bool Equals(object obj) => obj is BuffType buffType && Id == buffType.Id;
 
         /// <inheritdoc />
         public override int GetHashCode() => Id;

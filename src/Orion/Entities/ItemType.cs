@@ -25,8 +25,6 @@ namespace Orion.Entities {
     /// </summary>
     [ExcludeFromCodeCoverage]
     public sealed class ItemType {
-        #region Item Types
-
 #pragma warning disable 1591
         public static readonly ItemType None = new ItemType(0);
         public static readonly ItemType IronPickaxe = new ItemType(1);
@@ -3918,8 +3916,6 @@ namespace Orion.Entities {
         public static readonly ItemType LeinforsLuxuryShampoo = new ItemType(3929);
 #pragma warning restore 1591
 
-        #endregion
-
         private static readonly IDictionary<short, FieldInfo> IdToField = new Dictionary<short, FieldInfo>();
         private static readonly IDictionary<short, ItemType> IdToItemType = new Dictionary<short, ItemType>();
 
@@ -3958,7 +3954,7 @@ namespace Orion.Entities {
             IdToItemType.TryGetValue(id, out var itemType) ? itemType : new ItemType(id, true);
 
         /// <inheritdoc />
-        public override bool Equals(object obj) => obj is ItemType other && Id == other.Id;
+        public override bool Equals(object obj) => obj is ItemType itemType && Id == itemType.Id;
 
         /// <inheritdoc />
         public override int GetHashCode() => Id;

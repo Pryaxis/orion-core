@@ -97,7 +97,7 @@ namespace Orion.Entities {
             LevelToItemRarity.TryGetValue(level, out var itemRarity) ? itemRarity : null;
 
         /// <inheritdoc />
-        public override bool Equals(object obj) => obj is ItemRarity other && Level == other.Level;
+        public override bool Equals(object obj) => obj is ItemRarity itemRarity && Level == itemRarity.Level;
 
         /// <inheritdoc />
         public override int GetHashCode() => Level;
