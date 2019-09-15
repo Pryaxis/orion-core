@@ -43,14 +43,7 @@ namespace Orion.Networking.Packets.Players {
 
         [Fact]
         public void WriteToStream_IsCorrect() {
-            using (var stream = new MemoryStream(Bytes))
-            using (var stream2 = new MemoryStream()) {
-                var packet = Packet.ReadFromStream(stream, PacketContext.Server);
-
-                packet.WriteToStream(stream2, PacketContext.Server);
-
-                stream2.ToArray().Should().BeEquivalentTo(Bytes);
-            }
+            TestUtils.WriteToStream_SameBytes(Bytes);
         }
     }
 }

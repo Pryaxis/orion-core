@@ -16,6 +16,9 @@
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
 using System;
+using System.IO;
+using FluentAssertions;
+using Orion.Networking.Packets;
 using Xunit;
 
 namespace Orion {
@@ -25,6 +28,17 @@ namespace Orion {
             buffer.readBuffer = bytes;
             buffer.ResetReader();
             buffer.GetData(2, bytes.Length - 2, out _);
+        }
+
+        public static void WriteToStream_SameBytes(byte[] bytes) {
+            using (var inStream = new MemoryStream(bytes))
+            using (var outStream = new MemoryStream()) {
+                var packet = Packet.ReadFromStream(inStream, PacketContext.Server);
+
+                packet.WriteToStream(outStream, PacketContext.Server);
+
+                outStream.ToArray().Should().BeEquivalentTo(bytes);
+            }
         }
     }
 
