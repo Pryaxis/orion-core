@@ -48,7 +48,7 @@ namespace Orion.Events.Players {
         /// <paramref name="player"/> or <paramref name="packet"/> are <c>null</c>.
         /// </exception>
         public PlayerConnectEventArgs(IPlayer player, PlayerConnectPacket packet) : base(player) {
-            _packet = packet;
+            _packet = packet ?? throw new ArgumentNullException(nameof(packet));
         }
     }
 }
