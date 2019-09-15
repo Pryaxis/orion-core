@@ -15,22 +15,19 @@
 // You should have received a copy of the GNU General Public License
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
-using Orion.Events;
-using Orion.Events.Networking;
-
 namespace Orion.Networking {
     /// <summary>
-    /// Represents a network service. Provides network-related events and methods.
+    /// Specifies the context with which to process a packet.
     /// </summary>
-    public interface INetworkService {
+    public enum PacketContext {
         /// <summary>
-        /// Gets or sets the event handlers that run when a packet is received. This event can be canceled.
+        /// Indicates that the packet should be processed as the server.
         /// </summary>
-        EventHandlerCollection<PacketReceiveEventArgs> PacketReceive { get; set; }
+        Server,
 
         /// <summary>
-        /// Gets or sets the event handlers that run when a packet is sent. This event can be canceled.
+        /// Indicates that the packet should be processed as the client.
         /// </summary>
-        EventHandlerCollection<PacketSendEventArgs> PacketSend { get; set; }
+        Client
     }
 }

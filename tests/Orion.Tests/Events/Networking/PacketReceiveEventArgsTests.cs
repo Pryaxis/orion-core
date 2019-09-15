@@ -19,33 +19,30 @@ using System;
 using FluentAssertions;
 using Moq;
 using Orion.Entities;
+using Orion.Networking;
 using Xunit;
 
-namespace Orion.Events.Players {
-    public class PlayerConnectEventArgsTests {
+namespace Orion.Events.Networking {
+    public class PacketReceiveEventArgsTests {
         [Fact]
-        public void Ctor_NullPlayerVersionString_ThrowsArgumentNullException() {
-            var player = new Mock<IPlayer>().Object;
-            Func<PlayerConnectEventArgs> func = () => new PlayerConnectEventArgs(player, null);
+        public void Ctor_NullPlayer_ThrowsArgumentNullException() {
+            var packet = new TestPacket();
+            Func<PacketReceiveEventArgs> func = () => new PacketReceiveEventArgs(null, packet);
 
             func.Should().Throw<ArgumentNullException>();
         }
 
         [Fact]
-        public void GetPlayerVersionString_IsCorrect() {
-            var player = new Mock<IPlayer>().Object;
-            var args = new PlayerConnectEventArgs(player, "test");
+        public void GetPlayer_IsCorrect() {
+            var sender = new Mock<IPlayer>().Object;
+            var packet = new TestPacket();
+            var args = new PacketReceiveEventArgs(sender, packet);
 
-            args.PlayerVersionString.Should().Be("test");
+            args.Sender.Should().BeSameAs(sender);
         }
 
-        [Fact]
-        public void SetPlayerVersionString_NullValue_ThrowsArgumentNullException() {
-            var player = new Mock<IPlayer>().Object;
-            var args = new PlayerConnectEventArgs(player, "test");
-            Action action = () => args.PlayerVersionString = null;
-
-            action.Should().Throw<ArgumentNullException>();
+        private class TestPacket : Packet {
+            public override PacketType Type => throw new NotImplementedException();
         }
     }
 }

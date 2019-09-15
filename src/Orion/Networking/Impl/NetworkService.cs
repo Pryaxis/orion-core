@@ -15,22 +15,15 @@
 // You should have received a copy of the GNU General Public License
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
-using Orion.Events;
-using Orion.Events.Networking;
+using System;
+using Orion.Entities;
 
-namespace Orion.Networking {
-    /// <summary>
-    /// Represents a network service. Provides network-related events and methods.
-    /// </summary>
-    public interface INetworkService {
-        /// <summary>
-        /// Gets or sets the event handlers that run when a packet is received. This event can be canceled.
-        /// </summary>
-        EventHandlerCollection<PacketReceiveEventArgs> PacketReceive { get; set; }
+namespace Orion.Networking.Impl {
+    internal sealed class NetworkService : INetworkService {
+        private readonly Lazy<IPlayerService> _playerService;
 
-        /// <summary>
-        /// Gets or sets the event handlers that run when a packet is sent. This event can be canceled.
-        /// </summary>
-        EventHandlerCollection<PacketSendEventArgs> PacketSend { get; set; }
+        public NetworkService(Lazy<IPlayerService> playerService) {
+            _playerService = playerService;
+        }
     }
 }

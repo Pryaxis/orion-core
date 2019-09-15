@@ -22,20 +22,20 @@ using Xunit;
 namespace Orion.Events {
     public class EventHandlerCollectionTests {
         [Fact]
+        public void Invoke_ExceptionIsSwallowed() {
+            EventHandlerCollection<TestEventArgs> collection = null;
+            collection += TestHandler3;
+
+            collection.Invoke(this, new TestEventArgs());
+        }
+
+        [Fact]
         public void Invoke_NullArgs_ThrowsArgumentNullException() {
             EventHandlerCollection<TestEventArgs> collection = null;
             collection += TestHandler;
             Action action = () => collection.Invoke(this, null);
 
             action.Should().Throw<ArgumentNullException>();
-        }
-
-        [Fact]
-        public void Invoke_ExceptionIsSwallowed() {
-            EventHandlerCollection<TestEventArgs> collection = null;
-            collection += TestHandler3;
-
-            collection.Invoke(this, new TestEventArgs());
         }
 
         [Fact]
