@@ -15,15 +15,16 @@
 // You should have received a copy of the GNU General Public License
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
-using System;
+using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
+using System.Reflection;
 
 namespace Orion.Entities {
     /// <summary>
     /// Represent's an item's type.
     /// </summary>
     [ExcludeFromCodeCoverage]
-    public struct ItemType : IEquatable<ItemType> {
+    public sealed class ItemType {
         #region Item Types
 
 #pragma warning disable 1591
@@ -3918,42 +3919,38 @@ namespace Orion.Entities {
 
         #endregion
 
+        private static readonly IDictionary<int, ItemType> IdToItemType = new Dictionary<int, ItemType>();
+
         /// <summary>
         /// Gets the item type's ID.
         /// </summary>
         public int Id { get; }
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="ItemType"/> structure with the specified ID.
-        /// </summary>
-        /// <param name="id">The ID.</param>
-        public ItemType(int id) {
+        // Initializes IdToItemType.
+        static ItemType() {
+            var fields = typeof(ItemType).GetFields(BindingFlags.Public | BindingFlags.Static);
+            foreach (var field in fields) {
+                if (!(field.GetValue(null) is ItemType itemType)) continue;
+
+                IdToItemType[itemType.Id] = itemType;
+            }
+        }
+
+        private ItemType(int id) {
             Id = id;
         }
 
-        /// <inheritdoc />
-        public bool Equals(ItemType other) => Id == other.Id;
+        /// <summary>
+        /// Returns an item type converted from the given ID.
+        /// </summary>
+        /// <param name="id">The ID.</param>
+        /// <returns>The item type, or <c>null</c> if none exists.</returns>
+        public static ItemType FromId(int id) => IdToItemType.TryGetValue(id, out var itemType) ? itemType : null;
 
         /// <inheritdoc />
-        public override bool Equals(object obj) => obj is ItemType other && Equals(other);
+        public override bool Equals(object obj) => obj is ItemType other && Id == other.Id;
 
         /// <inheritdoc />
         public override int GetHashCode() => Id;
-
-        /// <summary>
-        /// Returns whether two item types are equal.
-        /// </summary>
-        /// <param name="left">The first item type.</param>
-        /// <param name="right">The second item type.</param>
-        /// <returns>A value indicating whether the two item types are equal.</returns>
-        public static bool operator ==(ItemType left, ItemType right) => left.Equals(right);
-
-        /// <summary>
-        /// Returns whether two item types are not equal.
-        /// </summary>
-        /// <param name="left">The first item type.</param>
-        /// <param name="right">The second item type.</param>
-        /// <returns>A value indicating whether the two item types are not equal.</returns>
-        public static bool operator !=(ItemType left, ItemType right) => !left.Equals(right);
     }
 }

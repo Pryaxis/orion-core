@@ -22,51 +22,21 @@ namespace Orion.Entities {
     public class ItemTypeTests {
         [Fact]
         public void GetId_IsCorrect() {
-            var itemType = new ItemType(100);
+            var itemType = ItemType.FromId(100);
 
             itemType.Id.Should().Be(100);
         }
 
         [Fact]
         public void Equals_IsCorrect() {
-            var itemType = new ItemType(100);
-            var itemType2 = new ItemType(100);
-            var itemType3 = new ItemType(101);
+            var itemType = ItemType.FromId(100);
+            var itemType2 = ItemType.FromId(100);
 
             itemType.Equals(itemType2).Should().BeTrue();
-            itemType.Equals(itemType3).Should().BeFalse();
-        }
-
-        [Fact]
-        public void EqualsObject_IsCorrect() {
-            var itemType = new ItemType(100);
-            var itemType2 = new ItemType(100);
-
-            itemType.Equals((object)itemType2).Should().BeTrue();
 
             // ReSharper disable once SuspiciousTypeConversion.Global
             itemType.Equals("null").Should().BeFalse();
             itemType.Equals(null).Should().BeFalse();
-        }
-
-        [Fact]
-        public void EqualsOperator_IsCorrect() {
-            var itemType = new ItemType(100);
-            var itemType2 = new ItemType(100);
-            var itemType3 = new ItemType(101);
-
-            (itemType == itemType2).Should().BeTrue();
-            (itemType == itemType3).Should().BeFalse();
-        }
-
-        [Fact]
-        public void NotEqualsOperator_IsCorrect() {
-            var itemType = new ItemType(100);
-            var itemType2 = new ItemType(100);
-            var itemType3 = new ItemType(101);
-
-            (itemType != itemType2).Should().BeFalse();
-            (itemType != itemType3).Should().BeTrue();
         }
     }
 }

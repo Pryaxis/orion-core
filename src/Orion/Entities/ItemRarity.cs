@@ -15,9 +15,9 @@
 // You should have received a copy of the GNU General Public License
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
-using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
+using System.Reflection;
 using Microsoft.Xna.Framework;
 
 namespace Orion.Entities {
@@ -25,7 +25,7 @@ namespace Orion.Entities {
     /// Specifies an item rarity.
     /// </summary>
     [ExcludeFromCodeCoverage]
-    public struct ItemRarity : IEquatable<ItemRarity> {
+    public sealed class ItemRarity {
 #pragma warning disable 1591
         public static readonly ItemRarity Rainbow = new ItemRarity(-12);
         public static readonly ItemRarity Amber = new ItemRarity(-11);
@@ -43,6 +43,8 @@ namespace Orion.Entities {
         public static readonly ItemRarity Red = new ItemRarity(10);
         public static readonly ItemRarity Purple = new ItemRarity(11);
 #pragma warning restore 1591
+
+        private static readonly IDictionary<int, ItemRarity> LevelToItemRarity = new Dictionary<int, ItemRarity>();
 
         private static readonly IDictionary<ItemRarity, Color> Colors = new Dictionary<ItemRarity, Color> {
             [Amber] = new Color(255, 175, 0),
@@ -70,37 +72,32 @@ namespace Orion.Entities {
         /// </summary>
         public Color Color => Colors.TryGetValue(this, out var color) ? color : Color.White;
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="ItemRarity"/> structure with the specified level.
-        /// </summary>
-        /// <param name="level">The level.</param>
-        public ItemRarity(int level) {
+        // Initializes LevelToItemRarity.
+        static ItemRarity() {
+            var fields = typeof(ItemRarity).GetFields(BindingFlags.Public | BindingFlags.Static);
+            foreach (var field in fields) {
+                if (!(field.GetValue(null) is ItemRarity itemRarity)) continue;
+
+                LevelToItemRarity[itemRarity.Level] = itemRarity;
+            }
+        }
+
+        private ItemRarity(int level) {
             Level = level;
         }
 
-        /// <inheritdoc />
-        public bool Equals(ItemRarity other) => Level == other.Level;
+        /// <summary>
+        /// Returns an item rarity converted from the given level.
+        /// </summary>
+        /// <param name="level">The level.</param>
+        /// <returns>The item rarity, or <c>null</c> if none exists.</returns>
+        public static ItemRarity FromLevel(int level) =>
+            LevelToItemRarity.TryGetValue(level, out var itemRarity) ? itemRarity : null;
 
         /// <inheritdoc />
-        public override bool Equals(object obj) => obj is ItemRarity other && Equals(other);
+        public override bool Equals(object obj) => obj is ItemRarity other && Level == other.Level;
 
         /// <inheritdoc />
         public override int GetHashCode() => Level;
-
-        /// <summary>
-        /// Returns whether two item rarities are equal.
-        /// </summary>
-        /// <param name="left">The first item rarity.</param>
-        /// <param name="right">The second item rarity.</param>
-        /// <returns>A value indicating whether the two item rarities are equal.</returns>
-        public static bool operator ==(ItemRarity left, ItemRarity right) => left.Equals(right);
-
-        /// <summary>
-        /// Returns whether two item rarities are not equal.
-        /// </summary>
-        /// <param name="left">The first item rarity.</param>
-        /// <param name="right">The second item rarity.</param>
-        /// <returns>A value indicating whether the two item rarities are not equal.</returns>
-        public static bool operator !=(ItemRarity left, ItemRarity right) => !left.Equals(right);
     }
 }
