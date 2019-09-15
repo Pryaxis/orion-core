@@ -22,9 +22,13 @@ namespace Orion.Entities {
     public class ItemTypeTests {
         [Fact]
         public void GetId_IsCorrect() {
-            var itemType = ItemType.FromId(100);
+            ItemType.FromId(100).Id.Should().Be(100);
+        }
 
-            itemType.Id.Should().Be(100);
+        [Fact]
+        public void GetIsUnknown_IsCorrect() {
+            ItemType.CopperShortsword.IsUnknown.Should().BeFalse();
+            ItemType.FromId(short.MaxValue).IsUnknown.Should().BeTrue();
         }
 
         [Fact]

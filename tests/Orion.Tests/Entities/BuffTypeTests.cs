@@ -22,9 +22,13 @@ namespace Orion.Entities {
     public class BuffTypeTests {
         [Fact]
         public void GetId_IsCorrect() {
-            var buffType = BuffType.FromId(100);
+            BuffType.FromId(100).Id.Should().Be(100);
+        }
 
-            buffType.Id.Should().Be(100);
+        [Fact]
+        public void GetIsUnknown_IsCorrect() {
+            BuffType.ObsidianSkin.IsUnknown.Should().BeFalse();
+            BuffType.FromId(byte.MaxValue).IsUnknown.Should().BeTrue();
         }
 
         [Fact]

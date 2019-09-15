@@ -22,9 +22,7 @@ namespace Orion.Entities {
     public class ItemRarityTests {
         [Fact]
         public void GetId_IsCorrect() {
-            var itemRarity = ItemRarity.FromLevel(1);
-
-            itemRarity.Level.Should().Be(1);
+            ItemRarity.FromLevel(1).Level.Should().Be(1);
         }
 
         [Fact]

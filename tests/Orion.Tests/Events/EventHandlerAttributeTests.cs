@@ -20,12 +20,11 @@ using Xunit;
 
 namespace Orion.Events {
     public class EventHandlerAttributeTests {
-        [Theory]
-        [InlineData(EventPriority.Normal)]
-        public void GetPriority_IsCorrect(EventPriority priority) {
-            var attribute = new EventHandlerAttribute(priority);
+        [Fact]
+        public void GetPriority_IsCorrect() {
+            var attribute = new EventHandlerAttribute(EventPriority.Normal);
 
-            attribute.Priority.Should().Be(priority);
+            attribute.Priority.Should().Be(EventPriority.Normal);
         }
     }
 }

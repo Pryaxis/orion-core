@@ -242,8 +242,14 @@ namespace Orion.Entities {
         /// </summary>
         public byte Id { get; }
 
-        private BuffType(byte id) {
+        /// <summary>
+        /// Gets a value indicating whether the buff type is unknown.
+        /// </summary>
+        public bool IsUnknown { get; }
+
+        private BuffType(byte id, bool isUnknown = false) {
             Id = id;
+            IsUnknown = isUnknown;
         }
 
         // Initializes lookup tables.
@@ -261,9 +267,9 @@ namespace Orion.Entities {
         /// Returns a buff type converted from the given ID.
         /// </summary>
         /// <param name="id">The ID.</param>
-        /// <returns>The buff type, or <c>null</c> if none exists.</returns>
+        /// <returns>The buff type.</returns>
         public static BuffType FromId(byte id) =>
-            IdToBuffType.TryGetValue(id, out var buffType) ? buffType : new BuffType(id);
+            IdToBuffType.TryGetValue(id, out var buffType) ? buffType : new BuffType(id, true);
 
         /// <inheritdoc />
         public override bool Equals(object obj) => obj is BuffType other && Id == other.Id;
@@ -272,6 +278,6 @@ namespace Orion.Entities {
         public override int GetHashCode() => Id;
 
         /// <inheritdoc />
-        public override string ToString() => IdToField.TryGetValue(Id, out var field) ? field.Name : "Unknown";
+        public override string ToString() => IsUnknown ? "Unknown" : IdToField[Id].Name;
     }
 }
