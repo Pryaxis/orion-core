@@ -3920,13 +3920,13 @@ namespace Orion.Entities {
 
         #endregion
 
-        private static readonly IDictionary<int, FieldInfo> IdToField = new Dictionary<int, FieldInfo>();
-        private static readonly IDictionary<int, ItemType> IdToItemType = new Dictionary<int, ItemType>();
+        private static readonly IDictionary<short, FieldInfo> IdToField = new Dictionary<short, FieldInfo>();
+        private static readonly IDictionary<short, ItemType> IdToItemType = new Dictionary<short, ItemType>();
 
         /// <summary>
         /// Gets the item type's ID.
         /// </summary>
-        public int Id { get; }
+        public short Id { get; }
 
         // Initializes lookup tables.
         static ItemType() {
@@ -3939,7 +3939,7 @@ namespace Orion.Entities {
             }
         }
 
-        private ItemType(int id) {
+        private ItemType(short id) {
             Id = id;
         }
 
@@ -3948,15 +3948,16 @@ namespace Orion.Entities {
         /// </summary>
         /// <param name="id">The ID.</param>
         /// <returns>The item type, or <c>null</c> if none exists.</returns>
-        public static ItemType FromId(int id) => IdToItemType.TryGetValue(id, out var itemType) ? itemType : null;
+        public static ItemType FromId(short id) =>
+            IdToItemType.TryGetValue(id, out var itemType) ? itemType : new ItemType(id);
 
         /// <inheritdoc />
         public override bool Equals(object obj) => obj is ItemType other && Id == other.Id;
 
         /// <inheritdoc />
         public override int GetHashCode() => Id;
-        
+
         /// <inheritdoc />
-        public override string ToString() => IdToField[Id].Name;
+        public override string ToString() => IdToField.TryGetValue(Id, out var field) ? field.Name : "Unknown";
     }
 }

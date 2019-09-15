@@ -132,7 +132,7 @@ namespace Orion.Networking.Packets {
                 [PacketType.Chat] = () => throw new NotImplementedException(),
                 [PacketType.CannonShot] = () => throw new NotImplementedException(),
                 [PacketType.RequestMassWireOperation] = () => throw new NotImplementedException(),
-                [PacketType.ConsumeItems] = () => throw new NotImplementedException(),
+                [PacketType.ConsumeItems] = () => new ConsumeItemsPacket(),
                 [PacketType.ToggleBirthdayParty] = () => throw new NotImplementedException(),
                 [PacketType.TreeGrowingEffect] = () => throw new NotImplementedException(),
                 [PacketType.StartOldOnesArmy] = () => throw new NotImplementedException(),
