@@ -16,11 +16,13 @@
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Orion.Entities {
     /// <summary>
     /// Represent's an item's type.
     /// </summary>
+    [ExcludeFromCodeCoverage]
     public struct ItemType : IEquatable<ItemType> {
         #region Item Types
 

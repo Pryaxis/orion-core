@@ -17,12 +17,14 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using Microsoft.Xna.Framework;
 
 namespace Orion.Entities {
     /// <summary>
     /// Specifies an item rarity.
     /// </summary>
+    [ExcludeFromCodeCoverage]
     public struct ItemRarity : IEquatable<ItemRarity> {
 #pragma warning disable 1591
         public static readonly ItemRarity Rainbow = new ItemRarity(-12);
