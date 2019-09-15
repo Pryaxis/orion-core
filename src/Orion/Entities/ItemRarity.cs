@@ -43,7 +43,8 @@ namespace Orion.Entities {
         public static readonly ItemRarity Red = new ItemRarity(10);
         public static readonly ItemRarity Purple = new ItemRarity(11);
 #pragma warning restore 1591
-
+        
+        private static readonly IDictionary<int, FieldInfo> LevelToField = new Dictionary<int, FieldInfo>();
         private static readonly IDictionary<int, ItemRarity> LevelToItemRarity = new Dictionary<int, ItemRarity>();
 
         private static readonly IDictionary<ItemRarity, Color> Colors = new Dictionary<ItemRarity, Color> {
@@ -72,12 +73,13 @@ namespace Orion.Entities {
         /// </summary>
         public Color Color => Colors.TryGetValue(this, out var color) ? color : Color.White;
 
-        // Initializes LevelToItemRarity.
+        // Initializes lookup tables.
         static ItemRarity() {
             var fields = typeof(ItemRarity).GetFields(BindingFlags.Public | BindingFlags.Static);
             foreach (var field in fields) {
                 if (!(field.GetValue(null) is ItemRarity itemRarity)) continue;
 
+                LevelToField[itemRarity.Level] = field;
                 LevelToItemRarity[itemRarity.Level] = itemRarity;
             }
         }
@@ -99,5 +101,8 @@ namespace Orion.Entities {
 
         /// <inheritdoc />
         public override int GetHashCode() => Level;
+        
+        /// <inheritdoc />
+        public override string ToString() => LevelToField[Level].Name;
     }
 }

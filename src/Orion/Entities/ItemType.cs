@@ -28,6 +28,7 @@ namespace Orion.Entities {
         #region Item Types
 
 #pragma warning disable 1591
+        public static readonly ItemType None = new ItemType(0);
         public static readonly ItemType IronPickaxe = new ItemType(1);
         public static readonly ItemType DirtBlock = new ItemType(2);
         public static readonly ItemType StoneBlock = new ItemType(3);
@@ -3919,6 +3920,7 @@ namespace Orion.Entities {
 
         #endregion
 
+        private static readonly IDictionary<int, FieldInfo> IdToField = new Dictionary<int, FieldInfo>();
         private static readonly IDictionary<int, ItemType> IdToItemType = new Dictionary<int, ItemType>();
 
         /// <summary>
@@ -3926,12 +3928,13 @@ namespace Orion.Entities {
         /// </summary>
         public int Id { get; }
 
-        // Initializes IdToItemType.
+        // Initializes lookup tables.
         static ItemType() {
             var fields = typeof(ItemType).GetFields(BindingFlags.Public | BindingFlags.Static);
             foreach (var field in fields) {
                 if (!(field.GetValue(null) is ItemType itemType)) continue;
 
+                IdToField[itemType.Id] = field;
                 IdToItemType[itemType.Id] = itemType;
             }
         }
@@ -3952,5 +3955,8 @@ namespace Orion.Entities {
 
         /// <inheritdoc />
         public override int GetHashCode() => Id;
+        
+        /// <inheritdoc />
+        public override string ToString() => IdToField[Id].Name;
     }
 }
