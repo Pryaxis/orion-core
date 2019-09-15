@@ -15,23 +15,19 @@
 // You should have received a copy of the GNU General Public License
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
-using Orion.Events;
-using Orion.Events.Players;
-using Orion.Utils;
+using System;
+using Orion.Entities;
 
-namespace Orion.Entities {
+namespace Orion.Events.Players {
     /// <summary>
-    /// Represents a player service. Provides access to player-related events and methods.
+    /// Provides data for the <see cref="IPlayerService.PlayerDisconnect"/> event.
     /// </summary>
-    public interface IPlayerService : IReadOnlyArray<IPlayer> {
+    public sealed class PlayerDisconnectEventArgs : PlayerEventArgs {
         /// <summary>
-        /// Gets or sets the event handlers that run when a player connects. This event can be canceled.
+        /// Initializes a new instance of the <see cref="PlayerDisconnectEventArgs"/> class with the specified player.
         /// </summary>
-        EventHandlerCollection<PlayerConnectEventArgs> PlayerConnect { get; set; }
-
-        /// <summary>
-        /// Gets or sets the event handlers that run when a player disconnects.
-        /// </summary>
-        EventHandlerCollection<PlayerDisconnectEventArgs> PlayerDisconnect { get; set; }
+        /// <param name="player">The player.</param>
+        /// <exception cref="ArgumentNullException"><paramref name="player"/> is <c>null</c>.</exception>
+        public PlayerDisconnectEventArgs(IPlayer player) : base(player) { }
     }
 }

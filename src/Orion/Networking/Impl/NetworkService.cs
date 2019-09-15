@@ -45,6 +45,7 @@ namespace Orion.Networking.Impl {
 
             OTAPI.Hooks.Net.ReceiveData = ReceiveDataHandler;
             OTAPI.Hooks.Net.SendBytes = SendBytesHandler;
+            OTAPI.Hooks.Net.RemoteClient.PreReset = PreResetHandler;
 
             _receiveHandlers[PacketType.PlayerConnect] = PlayerConnectHandler;
         }
@@ -117,6 +118,13 @@ namespace Orion.Networking.Impl {
             data = newStream.ToArray();
             offset = 0;
             size = data.Length;
+            return OTAPI.HookResult.Continue;
+        }
+
+        private OTAPI.HookResult PreResetHandler(Terraria.RemoteClient remoteClient) {
+            var player = _playerService.Value[remoteClient.Id];
+            var args = new PlayerDisconnectEventArgs(player);
+            _playerService.Value.PlayerDisconnect?.Invoke(this, args);
             return OTAPI.HookResult.Continue;
         }
 

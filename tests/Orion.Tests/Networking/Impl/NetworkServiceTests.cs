@@ -52,6 +52,9 @@ namespace Orion.Networking.Impl {
             TestUtils.FakeReceiveBytes(1, PlayerConnectPacketTests.Bytes);
 
             isRun.Should().BeTrue();
+            _mockPlayerService.VerifyGet(ps => ps[1]);
+            _mockPlayerService.VerifyGet(ps => ps.PlayerConnect);
+            _mockPlayerService.VerifyNoOtherCalls();
         }
 
         [Fact]
@@ -70,6 +73,30 @@ namespace Orion.Networking.Impl {
             TestUtils.FakeReceiveBytes(1, PlayerConnectPacketTests.Bytes);
 
             isRun.Should().BeTrue();
+            _mockPlayerService.VerifyGet(ps => ps[1]);
+            _mockPlayerService.VerifyGet(ps => ps.PlayerConnect);
+            _mockPlayerService.VerifyNoOtherCalls();
+        }
+
+        [Fact]
+        public void ResetClient_PlayerDisconnect_IsTriggered() {
+            var player = new Mock<IPlayer>().Object;
+            _mockPlayerService.Setup(ps => ps[1]).Returns(player);
+
+            var isRun = false;
+            var playerDisconnect = new EventHandlerCollection<PlayerDisconnectEventArgs>((sender, args) => {
+                isRun = true;
+                args.Player.Should().BeSameAs(player);
+            });
+            _mockPlayerService.Setup(ps => ps.PlayerDisconnect).Returns(playerDisconnect);
+            Terraria.Netplay.Clients[1].Id = 1;
+
+            Terraria.Netplay.Clients[1].Reset();
+
+            isRun.Should().BeTrue();
+            _mockPlayerService.VerifyGet(ps => ps[1]);
+            _mockPlayerService.VerifyGet(ps => ps.PlayerDisconnect);
+            _mockPlayerService.VerifyNoOtherCalls();
         }
     }
 }
