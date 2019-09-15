@@ -16,6 +16,7 @@
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
 using System;
+using System.IO;
 using FluentAssertions;
 using Moq;
 using Orion.Entities;
@@ -43,6 +44,12 @@ namespace Orion.Events.Networking {
 
         private class TestPacket : Packet {
             public override PacketType Type => throw new NotImplementedException();
+
+            private protected override void ReadFromReader(BinaryReader reader, PacketContext context) =>
+                throw new NotImplementedException();
+
+            private protected override void WriteToWriter(BinaryWriter writer, PacketContext context) =>
+                throw new NotImplementedException();
         }
     }
 }

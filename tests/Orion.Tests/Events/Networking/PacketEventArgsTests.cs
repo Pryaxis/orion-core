@@ -16,6 +16,7 @@
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
 using System;
+using System.IO;
 using FluentAssertions;
 using Orion.Networking;
 using Xunit;
@@ -63,12 +64,31 @@ namespace Orion.Events.Networking {
             action.Should().Throw<ArgumentNullException>();
         }
 
+        [Fact]
+        public void GetIsPacketDirty_IsCorrect() {
+            var packet = new TestPacket();
+            var args = new TestArgs(packet);
+            packet.MarkAsDirty();
+
+            args.IsPacketDirty.Should().BeTrue();
+        }
+
         private class TestArgs : PacketEventArgs {
             public TestArgs(Packet packet) : base(packet) { }
         }
 
         private class TestPacket : Packet {
             public override PacketType Type => throw new NotImplementedException();
+
+            public void MarkAsDirty() {
+                IsPacketDirty = true;
+            }
+
+            private protected override void ReadFromReader(BinaryReader reader, PacketContext context) =>
+                throw new NotImplementedException();
+
+            private protected override void WriteToWriter(BinaryWriter writer, PacketContext context) =>
+                throw new NotImplementedException();
         }
     }
 }

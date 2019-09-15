@@ -16,11 +16,18 @@
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 using Orion.Entities;
+using Orion.Events;
+using Orion.Events.Networking;
 
 namespace Orion.Networking.Impl {
-    internal sealed class NetworkService : INetworkService {
+    internal sealed class NetworkService : OrionService, INetworkService {
         private readonly Lazy<IPlayerService> _playerService;
+
+        [ExcludeFromCodeCoverage] public override string Author => "Pryaxis";
+        public EventHandlerCollection<PacketReceiveEventArgs> PacketReceive { get; set; }
+        public EventHandlerCollection<PacketSendEventArgs> PacketSend { get; set; }
 
         public NetworkService(Lazy<IPlayerService> playerService) {
             _playerService = playerService;
