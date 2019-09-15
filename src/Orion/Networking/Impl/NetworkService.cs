@@ -17,6 +17,8 @@
 
 using System;
 using System.Diagnostics.CodeAnalysis;
+using System.IO;
+using System.Threading;
 using Orion.Entities;
 using Orion.Events;
 using Orion.Events.Networking;
@@ -24,6 +26,7 @@ using Orion.Events.Networking;
 namespace Orion.Networking.Impl {
     internal sealed class NetworkService : OrionService, INetworkService {
         private readonly Lazy<IPlayerService> _playerService;
+        private readonly ThreadLocal<bool> _shouldIgnoreNextReceiveData = new ThreadLocal<bool>();
 
         [ExcludeFromCodeCoverage] public override string Author => "Pryaxis";
         public EventHandlerCollection<PacketReceiveEventArgs> PacketReceive { get; set; }
@@ -31,6 +34,60 @@ namespace Orion.Networking.Impl {
 
         public NetworkService(Lazy<IPlayerService> playerService) {
             _playerService = playerService;
+
+            OTAPI.Hooks.Net.ReceiveData = ReceiveDataHandler;
+            OTAPI.Hooks.Net.SendBytes = SendBytesHandler;
+        }
+
+        private OTAPI.HookResult ReceiveDataHandler(Terraria.MessageBuffer buffer, ref byte packetId,
+                                                    ref int readOffset, ref int start, ref int length) {
+            if (_shouldIgnoreNextReceiveData.Value) return OTAPI.HookResult.Continue;
+
+            // Offset start and length by two since the packet length field is not included.
+            var stream = new MemoryStream(buffer.readBuffer, start - 2, length + 2);
+            var sender = _playerService.Value[buffer.whoAmI];
+            var packet = Packet.ReadFromStream(stream, PacketContext.Server);
+            var args = new PacketReceiveEventArgs(sender, packet);
+            PacketReceive?.Invoke(this, args);
+            if (args.IsCanceled) return OTAPI.HookResult.Cancel;
+
+            if (args.IsPacketDirty) {
+                var oldBuffer = buffer.readBuffer;
+                var newStream = new MemoryStream();
+                args.Packet.WriteToStream(newStream, PacketContext.Client);
+
+                // Use _shouldIgnoreNextReceiveData so that we don't trigger this handler again.
+                _shouldIgnoreNextReceiveData.Value = true;
+                buffer.readBuffer = newStream.ToArray();
+                buffer.ResetReader();
+                buffer.GetData(2, (int)(newStream.Length - 2), out _);
+                buffer.readBuffer = oldBuffer;
+                buffer.ResetReader();
+                _shouldIgnoreNextReceiveData.Value = false;
+            }
+
+            return OTAPI.HookResult.Continue;
+        }
+
+        private OTAPI.HookResult SendBytesHandler(ref int remoteClient, ref byte[] data, ref int offset, ref int size,
+                                                  ref Terraria.Net.Sockets.SocketSendCallback callback,
+                                                  ref object state) {
+            var stream = new MemoryStream(data, offset, size);
+            var receiver = _playerService.Value[remoteClient];
+            var packet = Packet.ReadFromStream(stream, PacketContext.Client);
+            var args = new PacketSendEventArgs(receiver, packet);
+            PacketSend?.Invoke(this, args);
+            if (args.IsCanceled) return OTAPI.HookResult.Cancel;
+
+            if (args.IsPacketDirty) {
+                var newStream = new MemoryStream();
+                args.Packet.WriteToStream(newStream, PacketContext.Server);
+                data = newStream.ToArray();
+                offset = 0;
+                size = data.Length;
+            }
+
+            return OTAPI.HookResult.Continue;
         }
     }
 }
