@@ -16,17 +16,23 @@
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
 using System;
+using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Threading;
 using Orion.Entities;
 using Orion.Events;
 using Orion.Events.Networking;
+using Orion.Events.Players;
+using Orion.Networking.Packets.Players;
 
 namespace Orion.Networking.Impl {
     internal sealed class NetworkService : OrionService, INetworkService {
         private readonly Lazy<IPlayerService> _playerService;
         private readonly ThreadLocal<bool> _shouldIgnoreNextReceiveData = new ThreadLocal<bool>();
+
+        private readonly IDictionary<PacketType, Action<PacketReceiveEventArgs>> _receiveHandlers =
+            new Dictionary<PacketType, Action<PacketReceiveEventArgs>>();
 
         [ExcludeFromCodeCoverage] public override string Author => "Pryaxis";
         public EventHandlerCollection<PacketReceiveEventArgs> PacketReceive { get; set; }
@@ -37,6 +43,15 @@ namespace Orion.Networking.Impl {
 
             OTAPI.Hooks.Net.ReceiveData = ReceiveDataHandler;
             OTAPI.Hooks.Net.SendBytes = SendBytesHandler;
+
+            _receiveHandlers[PacketType.PlayerConnect] = PlayerConnectHandler;
+        }
+
+        protected override void Dispose(bool disposeManaged) {
+            if (!disposeManaged) return;
+
+            OTAPI.Hooks.Net.ReceiveData = null;
+            OTAPI.Hooks.Net.SendBytes = null;
         }
 
         private OTAPI.HookResult ReceiveDataHandler(Terraria.MessageBuffer buffer, ref byte packetId,
@@ -50,28 +65,36 @@ namespace Orion.Networking.Impl {
             var args = new PacketReceiveEventArgs(sender, packet);
             PacketReceive?.Invoke(this, args);
             if (args.IsCanceled) return OTAPI.HookResult.Cancel;
+            packet = args.Packet;
+
+            if (_receiveHandlers.TryGetValue(packet.Type, out var handler)) {
+                handler(args);
+                if (args.IsCanceled) return OTAPI.HookResult.Cancel;
+                packet = args.Packet;
+            }
+
             if (!args.IsPacketDirty) return OTAPI.HookResult.Continue;
 
             // Packets that didn't change in length can be modified very easily.
             if (!args.Packet.DidLengthChange) {
                 stream.Position = 0;
-                args.Packet.WriteToStream(stream, PacketContext.Client);
+                packet.WriteToStream(stream, PacketContext.Client);
                 return OTAPI.HookResult.Continue;
             }
 
             var oldBuffer = buffer.readBuffer;
             var newStream = new MemoryStream();
-            args.Packet.WriteToStream(newStream, PacketContext.Client);
+            packet.WriteToStream(newStream, PacketContext.Client);
 
             // Use _shouldIgnoreNextReceiveData so that we don't trigger this handler again, potentially causing a stack
             // overflow error.
-            _shouldIgnoreNextReceiveData.Value = true;
             buffer.readBuffer = newStream.ToArray();
             buffer.ResetReader();
+            _shouldIgnoreNextReceiveData.Value = true;
             buffer.GetData(2, (int)(newStream.Length - 2), out _);
+            _shouldIgnoreNextReceiveData.Value = false;
             buffer.readBuffer = oldBuffer;
             buffer.ResetReader();
-            _shouldIgnoreNextReceiveData.Value = false;
             return OTAPI.HookResult.Cancel;
         }
 
@@ -92,6 +115,13 @@ namespace Orion.Networking.Impl {
             offset = 0;
             size = data.Length;
             return OTAPI.HookResult.Continue;
+        }
+
+        private void PlayerConnectHandler(PacketReceiveEventArgs args_) {
+            var packet = (PlayerConnectPacket)args_.Packet;
+            var args = new PlayerConnectEventArgs(args_.Sender, packet);
+            _playerService.Value.PlayerConnect?.Invoke(this, args);
+            args_.IsCanceled = args.IsCanceled;
         }
     }
 }

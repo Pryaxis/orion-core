@@ -19,6 +19,8 @@ using System;
 using FluentAssertions;
 using Moq;
 using Orion.Entities;
+using Orion.Events;
+using Orion.Events.Players;
 using Orion.Networking.Packets.Players;
 using Xunit;
 
@@ -46,6 +48,24 @@ namespace Orion.Networking.Impl {
                 isRun = true;
                 args.Sender.Should().BeSameAs(player);
             };
+
+            TestUtils.FakeReceiveBytes(1, PlayerConnectPacketTests.Bytes);
+
+            isRun.Should().BeTrue();
+        }
+
+        [Fact]
+        public void PacketReceive_PlayerConnect_IsTriggered() {
+            var player = new Mock<IPlayer>().Object;
+            _mockPlayerService.Setup(ps => ps[1]).Returns(player);
+            
+            var isRun = false;
+            var playerConnect = new EventHandlerCollection<PlayerConnectEventArgs>((sender, args) => {
+                isRun = true;
+                args.Player.Should().BeSameAs(player);
+                args.PlayerVersionString.Should().Be("Terraria194");
+            });
+            _mockPlayerService.Setup(ps => ps.PlayerConnect).Returns(playerConnect);
 
             TestUtils.FakeReceiveBytes(1, PlayerConnectPacketTests.Bytes);
 

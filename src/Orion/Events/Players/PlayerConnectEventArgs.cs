@@ -17,33 +17,38 @@
 
 using System;
 using Orion.Entities;
+using Orion.Networking.Packets.Players;
 
 namespace Orion.Events.Players {
     /// <summary>
     /// Provides data for the <see cref="IPlayerService.PlayerConnect"/> event.
     /// </summary>
-    public sealed class PlayerConnectEventArgs : PlayerEventArgs {
-        private string _playerVersionString;
+    public sealed class PlayerConnectEventArgs : PlayerEventArgs, ICancelable {
+        private readonly PlayerConnectPacket _packet;
+
+        /// <inheritdoc />
+        public bool IsCanceled { get; set; }
 
         /// <summary>
         /// Gets the player's version string.
         /// </summary>
+        /// <exception cref="ArgumentNullException"><paramref name="value"/> is <c>null</c>.</exception>
         public string PlayerVersionString {
-            get => _playerVersionString;
-            set => _playerVersionString = value ?? throw new ArgumentNullException(nameof(value));
+            get => _packet.PlayerVersionString;
+            set => _packet.PlayerVersionString = value;
         }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="PlayerConnectEventArgs"/> class with the specified player and
-        /// version string.
+        /// packet.
         /// </summary>
         /// <param name="player">The player.</param>
-        /// <param name="playerVersionString">The version string.</param>
+        /// <param name="packet">The packet.</param>
         /// <exception cref="ArgumentNullException">
-        /// <paramref name="player"/> or <paramref name="playerVersionString"/> are <c>null</c>.
+        /// <paramref name="player"/> or <paramref name="packet"/> are <c>null</c>.
         /// </exception>
-        public PlayerConnectEventArgs(IPlayer player, string playerVersionString) : base(player) {
-            PlayerVersionString = playerVersionString;
+        public PlayerConnectEventArgs(IPlayer player, PlayerConnectPacket packet) : base(player) {
+            _packet = packet;
         }
     }
 }

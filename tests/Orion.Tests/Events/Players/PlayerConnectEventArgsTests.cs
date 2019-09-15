@@ -19,12 +19,13 @@ using System;
 using FluentAssertions;
 using Moq;
 using Orion.Entities;
+using Orion.Networking.Packets.Players;
 using Xunit;
 
 namespace Orion.Events.Players {
     public class PlayerConnectEventArgsTests {
         [Fact]
-        public void Ctor_NullPlayerVersionString_ThrowsArgumentNullException() {
+        public void Ctor_NullPacket_ThrowsArgumentNullException() {
             var player = new Mock<IPlayer>().Object;
             Func<PlayerConnectEventArgs> func = () => new PlayerConnectEventArgs(player, null);
 
@@ -34,7 +35,8 @@ namespace Orion.Events.Players {
         [Fact]
         public void GetPlayerVersionString_IsCorrect() {
             var player = new Mock<IPlayer>().Object;
-            var args = new PlayerConnectEventArgs(player, "test");
+            var packet = new PlayerConnectPacket {PlayerVersionString = "test"};
+            var args = new PlayerConnectEventArgs(player, packet);
 
             args.PlayerVersionString.Should().Be("test");
         }
@@ -42,7 +44,8 @@ namespace Orion.Events.Players {
         [Fact]
         public void SetPlayerVersionString_NullValue_ThrowsArgumentNullException() {
             var player = new Mock<IPlayer>().Object;
-            var args = new PlayerConnectEventArgs(player, "test");
+            var packet = new PlayerConnectPacket();
+            var args = new PlayerConnectEventArgs(player, packet);
             Action action = () => args.PlayerVersionString = null;
 
             action.Should().Throw<ArgumentNullException>();
