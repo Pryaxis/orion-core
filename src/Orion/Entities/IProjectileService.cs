@@ -15,17 +15,9 @@
 // You should have received a copy of the GNU General Public License
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
-using Orion.Events;
-using Orion.Events.Players;
-
-namespace Orion.Services {
+namespace Orion.Entities {
     /// <summary>
-    /// Represents a player service. Provides access to player-related events and methods.
+    /// Represents a projectile service. Provides access to projectile-related events and methods.
     /// </summary>
-    public interface IPlayerService {
-        /// <summary>
-        /// Gets or sets the event handlers that run when a player connects. This event can be canceled.
-        /// </summary>
-        EventHandlerCollection<PlayerConnectEventArgs> PlayerConnect { get; set; }
-    }
+    public interface IProjectileService { }
 }

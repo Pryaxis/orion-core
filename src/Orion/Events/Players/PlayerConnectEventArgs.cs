@@ -17,7 +17,6 @@
 
 using System;
 using Orion.Entities;
-using Orion.Services;
 
 namespace Orion.Events.Players {
     /// <summary>

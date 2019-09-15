@@ -15,9 +15,9 @@
 // You should have received a copy of the GNU General Public License
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
-namespace Orion.Services {
+namespace Orion.Entities {
     /// <summary>
-    /// Represents a chest service. Provides chest-related events and methods.
+    /// Represents an NPC service. Provides access to NPC-related events and methods.
     /// </summary>
-    public interface IChestService { }
+    public interface INpcService { }
 }

@@ -15,9 +15,9 @@
 // You should have received a copy of the GNU General Public License
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
-namespace Orion.Services {
+namespace Orion.Networking {
     /// <summary>
-    /// Represents an NPC service. Provides access to NPC-related events and methods.
+    /// Represents a network service. Provides network-related events and methods.
     /// </summary>
-    public interface INpcService { }
+    public interface INetworkService { }
 }

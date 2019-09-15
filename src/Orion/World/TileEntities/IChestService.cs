@@ -15,9 +15,9 @@
 // You should have received a copy of the GNU General Public License
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
-namespace Orion.Services {
+namespace Orion.World.TileEntities {
     /// <summary>
-    /// Represents a world service. Provides access to world-related events and methods.
+    /// Represents a chest service. Provides chest-related events and methods.
     /// </summary>
-    public interface IWorldService { }
+    public interface IChestService { }
 }

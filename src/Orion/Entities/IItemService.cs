@@ -15,9 +15,9 @@
 // You should have received a copy of the GNU General Public License
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
-namespace Orion.Services {
+namespace Orion.Entities {
     /// <summary>
-    /// Represents a sign service. Provides sign-related events and methods.
+    /// Represents an item service. Provides access to item-related events and methods.
     /// </summary>
-    public interface ISignService { }
+    public interface IItemService { }
 }

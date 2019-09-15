@@ -15,9 +15,9 @@
 // You should have received a copy of the GNU General Public License
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
-namespace Orion.Services {
+namespace Orion.World {
     /// <summary>
-    /// Represents a tile entity service. Provides tile entity-related hooks and methods.
+    /// Represents a world service. Provides access to world-related events and methods.
     /// </summary>
-    public interface ITileEntityService { }
+    public interface IWorldService { }
 }

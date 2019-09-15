@@ -15,9 +15,9 @@
 // You should have received a copy of the GNU General Public License
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
-namespace Orion.Services {
+namespace Orion.World.TileEntities {
     /// <summary>
-    /// Represents a projectile service. Provides access to projectile-related events and methods.
+    /// Represents a sign service. Provides sign-related events and methods.
     /// </summary>
-    public interface IProjectileService { }
+    public interface ISignService { }
 }
