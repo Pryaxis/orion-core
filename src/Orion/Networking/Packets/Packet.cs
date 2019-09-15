@@ -32,7 +32,8 @@ namespace Orion.Networking.Packets {
         public abstract PacketType Type { get; }
 
         /// <summary>
-        /// Gets a value indicating whether the packet is dirty.
+        /// Gets a value indicating whether the packet is dirty: i.e., whether the packet has changed since it was
+        /// constructed.
         /// </summary>
         public bool IsDirty { get; protected set; }
 

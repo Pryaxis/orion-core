@@ -79,7 +79,7 @@ namespace Orion.Networking.Impl {
             if (!args.IsPacketDirty) return OTAPI.HookResult.Continue;
 
             // Packets that didn't change in length can be modified very easily.
-            if (!args.Packet.DidLengthChange) {
+            if (!args.DidPacketLengthChange) {
                 stream.Position = 0;
                 packet.WriteToStream(stream, PacketContext.Client);
                 Debug.Assert(stream.Position == length + 2, "Dirty packet should have the same length.");

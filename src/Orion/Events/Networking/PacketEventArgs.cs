@@ -24,7 +24,7 @@ namespace Orion.Events.Networking {
     /// </summary>
     public class PacketEventArgs : EventArgs, ICancelable {
         private Packet _packet;
-        private bool _isPacketDirty;
+        private bool _isPacketModified;
 
         /// <inheritdoc />
         public bool IsCanceled { get; set; }
@@ -37,14 +37,20 @@ namespace Orion.Events.Networking {
             get => _packet;
             set {
                 _packet = value ?? throw new ArgumentNullException(nameof(value));
-                _isPacketDirty = true;
+                _isPacketModified = true;
             }
         }
 
         /// <summary>
-        /// Gets a value indicating whether the packet is dirty.
+        /// Gets a value indicating whether the packet is dirty: i.e., whether the packet has changed since it was
+        /// constructed.
         /// </summary>
-        public bool IsPacketDirty => _isPacketDirty || Packet.IsDirty;
+        public bool IsPacketDirty => _isPacketModified || Packet.IsDirty;
+
+        /// <summary>
+        /// Gets a value indicating whether the packet's length changed.
+        /// </summary>
+        public bool DidPacketLengthChange => _isPacketModified || Packet.DidLengthChange;
 
         private protected PacketEventArgs(Packet packet) {
             _packet = packet ?? throw new ArgumentNullException(nameof(packet));
