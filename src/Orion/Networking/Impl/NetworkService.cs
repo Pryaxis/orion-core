@@ -63,7 +63,8 @@ namespace Orion.Networking.Impl {
             var newStream = new MemoryStream();
             args.Packet.WriteToStream(newStream, PacketContext.Client);
 
-            // Use _shouldIgnoreNextReceiveData so that we don't trigger this handler again.
+            // Use _shouldIgnoreNextReceiveData so that we don't trigger this handler again, potentially causing a stack
+            // overflow error.
             _shouldIgnoreNextReceiveData.Value = true;
             buffer.readBuffer = newStream.ToArray();
             buffer.ResetReader();
@@ -83,15 +84,13 @@ namespace Orion.Networking.Impl {
             var args = new PacketSendEventArgs(receiver, packet);
             PacketSend?.Invoke(this, args);
             if (args.IsCanceled) return OTAPI.HookResult.Cancel;
+            if (!args.IsPacketDirty) return OTAPI.HookResult.Continue;
 
-            if (args.IsPacketDirty) {
-                var newStream = new MemoryStream();
-                args.Packet.WriteToStream(newStream, PacketContext.Server);
-                data = newStream.ToArray();
-                offset = 0;
-                size = data.Length;
-            }
-
+            var newStream = new MemoryStream();
+            args.Packet.WriteToStream(newStream, PacketContext.Server);
+            data = newStream.ToArray();
+            offset = 0;
+            size = data.Length;
             return OTAPI.HookResult.Continue;
         }
     }
