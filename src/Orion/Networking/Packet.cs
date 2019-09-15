@@ -30,8 +30,8 @@ namespace Orion.Networking {
         private static readonly IDictionary<PacketType, Func<Packet>> PacketConstructors =
             new Dictionary<PacketType, Func<Packet>> {
                 [PacketType.PlayerConnect] = () => new PlayerConnectPacket(),
-                [PacketType.PlayerDisconnect] = () => throw new NotImplementedException(),
-                [PacketType.ContinueConnecting] = () => throw new NotImplementedException(),
+                [PacketType.PlayerDisconnect] = () => new PlayerDisconnectPacket(),
+                [PacketType.PlayerContinueConnecting] = () => new PlayerContinueConnectingPacket(),
                 [PacketType.PlayerData] = () => throw new NotImplementedException(),
                 [PacketType.PlayerInventorySlot] = () => throw new NotImplementedException(),
                 [PacketType.FinishConnecting] = () => throw new NotImplementedException(),

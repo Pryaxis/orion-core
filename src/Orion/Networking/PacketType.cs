@@ -25,7 +25,7 @@ namespace Orion.Networking {
 #pragma warning disable 1591
         public static PacketType PlayerConnect = new PacketType(1);
         public static PacketType PlayerDisconnect = new PacketType(2);
-        public static PacketType ContinueConnecting = new PacketType(3);
+        public static PacketType PlayerContinueConnecting = new PacketType(3);
         public static PacketType PlayerData = new PacketType(4);
         public static PacketType PlayerInventorySlot = new PacketType(5);
         public static PacketType FinishConnecting = new PacketType(6);
