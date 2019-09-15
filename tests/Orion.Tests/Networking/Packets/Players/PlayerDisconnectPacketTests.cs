@@ -23,36 +23,35 @@ using Xunit;
 namespace Orion.Networking.Packets.Players {
     public class PlayerDisconnectPacketTests {
         [Fact]
-        public void SetReason_NullValue_ThrowsArgumentNullException() {
+        public void SetPlayerDisconnectReason_NullValue_ThrowsArgumentNullException() {
             var packet = new PlayerDisconnectPacket();
-            Action action = () => packet.DisconnectReason = null;
+            Action action = () => packet.PlayerDisconnectReason = null;
 
             action.Should().Throw<ArgumentNullException>();
         }
 
-        public static readonly byte[] PlayerDisconnectBytes = {
+        public static readonly byte[] Bytes = {
             21, 0, 2, 2, 15, 67, 76, 73, 46, 75, 105, 99, 107, 77, 101, 115, 115, 97, 103, 101, 0
         };
 
-
         [Fact]
         public void ReadFromStream_IsCorrect() {
-            using (var stream = new MemoryStream(PlayerDisconnectBytes)) {
+            using (var stream = new MemoryStream(Bytes)) {
                 var packet = (PlayerDisconnectPacket)Packet.ReadFromStream(stream, PacketContext.Server);
 
-                packet.DisconnectReason.ToString().Should().Be("CLI.KickMessage");
+                packet.PlayerDisconnectReason.ToString().Should().Be("CLI.KickMessage");
             }
         }
 
         [Fact]
         public void WriteToStream_IsCorrect() {
-            using (var stream = new MemoryStream(PlayerDisconnectBytes))
+            using (var stream = new MemoryStream(Bytes))
             using (var stream2 = new MemoryStream()) {
                 var packet = Packet.ReadFromStream(stream, PacketContext.Server);
 
                 packet.WriteToStream(stream2, PacketContext.Server);
 
-                stream2.ToArray().Should().BeEquivalentTo(PlayerDisconnectBytes);
+                stream2.ToArray().Should().BeEquivalentTo(Bytes);
             }
         }
     }

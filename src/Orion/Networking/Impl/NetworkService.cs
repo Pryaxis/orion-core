@@ -50,23 +50,28 @@ namespace Orion.Networking.Impl {
             var args = new PacketReceiveEventArgs(sender, packet);
             PacketReceive?.Invoke(this, args);
             if (args.IsCanceled) return OTAPI.HookResult.Cancel;
+            if (!args.IsPacketDirty) return OTAPI.HookResult.Continue;
 
-            if (args.IsPacketDirty) {
-                var oldBuffer = buffer.readBuffer;
-                var newStream = new MemoryStream();
-                args.Packet.WriteToStream(newStream, PacketContext.Client);
-
-                // Use _shouldIgnoreNextReceiveData so that we don't trigger this handler again.
-                _shouldIgnoreNextReceiveData.Value = true;
-                buffer.readBuffer = newStream.ToArray();
-                buffer.ResetReader();
-                buffer.GetData(2, (int)(newStream.Length - 2), out _);
-                buffer.readBuffer = oldBuffer;
-                buffer.ResetReader();
-                _shouldIgnoreNextReceiveData.Value = false;
+            // Packets that didn't change in length can be modified very easily.
+            if (!args.Packet.DidLengthChange) {
+                stream.Position = 0;
+                args.Packet.WriteToStream(stream, PacketContext.Client);
+                return OTAPI.HookResult.Continue;
             }
 
-            return OTAPI.HookResult.Continue;
+            var oldBuffer = buffer.readBuffer;
+            var newStream = new MemoryStream();
+            args.Packet.WriteToStream(newStream, PacketContext.Client);
+
+            // Use _shouldIgnoreNextReceiveData so that we don't trigger this handler again.
+            _shouldIgnoreNextReceiveData.Value = true;
+            buffer.readBuffer = newStream.ToArray();
+            buffer.ResetReader();
+            buffer.GetData(2, (int)(newStream.Length - 2), out _);
+            buffer.readBuffer = oldBuffer;
+            buffer.ResetReader();
+            _shouldIgnoreNextReceiveData.Value = false;
+            return OTAPI.HookResult.Cancel;
         }
 
         private OTAPI.HookResult SendBytesHandler(ref int remoteClient, ref byte[] data, ref int offset, ref int size,

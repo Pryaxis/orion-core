@@ -47,7 +47,7 @@ namespace Orion.Networking.Impl {
                 args.Sender.Should().BeSameAs(player);
             };
 
-            TestUtils.FakeReceiveBytes(1, PlayerConnectPacketTests.PlayerConnectBytes);
+            TestUtils.FakeReceiveBytes(1, PlayerConnectPacketTests.Bytes);
 
             isRun.Should().BeTrue();
         }

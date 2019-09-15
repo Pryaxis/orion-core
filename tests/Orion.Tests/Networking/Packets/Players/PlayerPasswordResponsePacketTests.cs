@@ -15,20 +15,29 @@
 // You should have received a copy of the GNU General Public License
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
+using System;
 using System.IO;
 using FluentAssertions;
 using Xunit;
 
 namespace Orion.Networking.Packets.Players {
-    public class PlayerContinueConnectingPacketTests {
-        public static readonly byte[] Bytes = {4, 0, 3, 0};
+    public class PlayerPasswordResponsePacketTests {
+        [Fact]
+        public void SetPlayerPassword_NullValue_ThrowsArgumentNullException() {
+            var packet = new PlayerPasswordResponsePacket();
+            Action action = () => packet.PlayerPassword = null;
+
+            action.Should().Throw<ArgumentNullException>();
+        }
+
+        public static readonly byte[] Bytes = {12, 0, 38, 8, 84, 101, 114, 114, 97, 114, 105, 97};
 
         [Fact]
         public void ReadFromStream_IsCorrect() {
             using (var stream = new MemoryStream(Bytes)) {
-                var packet = (PlayerContinueConnectingPacket)Packet.ReadFromStream(stream, PacketContext.Server);
+                var packet = (PlayerPasswordResponsePacket)Packet.ReadFromStream(stream, PacketContext.Server);
 
-                packet.PlayerIndex.Should().Be(0);
+                packet.PlayerPassword.Should().Be("Terraria");
             }
         }
 

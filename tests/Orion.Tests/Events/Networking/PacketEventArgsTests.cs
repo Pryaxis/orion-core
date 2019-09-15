@@ -81,7 +81,7 @@ namespace Orion.Events.Networking {
             public override PacketType Type => throw new NotImplementedException();
 
             public void MarkAsDirty() {
-                IsPacketDirty = true;
+                IsDirty = true;
             }
 
             private protected override void ReadFromReader(BinaryReader reader, PacketContext context) =>

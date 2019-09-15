@@ -23,35 +23,33 @@ using Xunit;
 namespace Orion.Networking.Packets.Players {
     public class PlayerConnectPacketTests {
         [Fact]
-        public void SetVersion_Null_ThrowsArgumentNullException() {
+        public void SetPlayerVersionString_Null_ThrowsArgumentNullException() {
             var packet = new PlayerConnectPacket();
-            Action action = () => packet.VersionString = null;
+            Action action = () => packet.PlayerVersionString = null;
 
             action.Should().Throw<ArgumentNullException>();
         }
 
-        public static readonly byte[] PlayerConnectBytes = {
-            15, 0, 1, 11, 84, 101, 114, 114, 97, 114, 105, 97, 49, 57, 52
-        };
+        public static readonly byte[] Bytes = {15, 0, 1, 11, 84, 101, 114, 114, 97, 114, 105, 97, 49, 57, 52};
 
         [Fact]
         public void ReadFromStream_IsCorrect() {
-            using (var stream = new MemoryStream(PlayerConnectBytes)) {
+            using (var stream = new MemoryStream(Bytes)) {
                 var packet = (PlayerConnectPacket)Packet.ReadFromStream(stream, PacketContext.Server);
 
-                packet.VersionString.Should().Be("Terraria194");
+                packet.PlayerVersionString.Should().Be("Terraria194");
             }
         }
 
         [Fact]
         public void WriteToStream_IsCorrect() {
-            using (var stream = new MemoryStream(PlayerConnectBytes))
+            using (var stream = new MemoryStream(Bytes))
             using (var stream2 = new MemoryStream()) {
                 var packet = Packet.ReadFromStream(stream, PacketContext.Server);
 
                 packet.WriteToStream(stream2, PacketContext.Server);
 
-                stream2.ToArray().Should().BeEquivalentTo(PlayerConnectBytes);
+                stream2.ToArray().Should().BeEquivalentTo(Bytes);
             }
         }
     }

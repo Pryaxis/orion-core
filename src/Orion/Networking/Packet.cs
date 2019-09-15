@@ -18,6 +18,7 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Text;
 using Orion.Networking.Packets.Players;
@@ -34,15 +35,15 @@ namespace Orion.Networking {
                 [PacketType.PlayerContinueConnecting] = () => new PlayerContinueConnectingPacket(),
                 [PacketType.PlayerData] = () => throw new NotImplementedException(),
                 [PacketType.PlayerInventorySlot] = () => throw new NotImplementedException(),
-                [PacketType.FinishConnecting] = () => throw new NotImplementedException(),
+                [PacketType.PlayerJoin] = () => new PlayerJoinPacket(),
                 [PacketType.WorldInfo] = () => throw new NotImplementedException(),
                 [PacketType.RequestSection] = () => throw new NotImplementedException(),
-                [PacketType.ClientStatus] = () => throw new NotImplementedException(),
+                [PacketType.PlayerStatus] = () => new PlayerStatusPacket(),
                 [PacketType.Section] = () => throw new NotImplementedException(),
                 [PacketType.SectionFrames] = () => throw new NotImplementedException(),
                 [PacketType.SpawnPlayer] = () => throw new NotImplementedException(),
                 [PacketType.PlayerInfo] = () => throw new NotImplementedException(),
-                [PacketType.PlayerStatus] = () => throw new NotImplementedException(),
+                [PacketType.PlayerActivity] = () => throw new NotImplementedException(),
                 [PacketType.PlayerHealth] = () => throw new NotImplementedException(),
                 [PacketType.TileModification] = () => throw new NotImplementedException(),
                 [PacketType.Time] = () => throw new NotImplementedException(),
@@ -62,8 +63,8 @@ namespace Orion.Networking {
                 [PacketType.ModifyChest] = () => throw new NotImplementedException(),
                 [PacketType.HealEffect] = () => throw new NotImplementedException(),
                 [PacketType.PlayerZones] = () => throw new NotImplementedException(),
-                [PacketType.RequestPassword] = () => throw new NotImplementedException(),
-                [PacketType.PasswordResponse] = () => throw new NotImplementedException(),
+                [PacketType.PlayerPasswordChallenge] = () => new PlayerPasswordChallengePacket(),
+                [PacketType.PlayerPasswordResponse] = () => new PlayerPasswordResponsePacket(),
                 [PacketType.RemoveItemOwner] = () => throw new NotImplementedException(),
                 [PacketType.PlayerTalkingToNpc] = () => throw new NotImplementedException(),
                 [PacketType.PlayerItemAnimation] = () => throw new NotImplementedException(),
@@ -91,7 +92,7 @@ namespace Orion.Networking {
                 [PacketType.PaintWall] = () => throw new NotImplementedException(),
                 [PacketType.EntityTeleportation] = () => throw new NotImplementedException(),
                 [PacketType.HealPlayer] = () => throw new NotImplementedException(),
-                [PacketType.ClientUuid] = () => throw new NotImplementedException(),
+                [PacketType.PlayerUuid] = () => new PlayerUuidPacket(),
                 [PacketType.ChestName] = () => throw new NotImplementedException(),
                 [PacketType.CatchNpc] = () => throw new NotImplementedException(),
                 [PacketType.ReleaseNpc] = () => throw new NotImplementedException(),
@@ -151,7 +152,15 @@ namespace Orion.Networking {
         /// <summary>
         /// Gets a value indicating whether the packet is dirty.
         /// </summary>
-        public bool IsPacketDirty { get; private protected set; }
+        public bool IsDirty { get; private protected set; }
+
+        /// <summary>
+        /// Gets a value indicating whether the packet's length changed.
+        /// </summary>
+        public bool DidLengthChange { get; private protected set; }
+
+        // Do not allow outside inheritance.
+        private protected Packet() { }
 
         /// <summary>
         /// Reads and returns a packet from the given stream with the specified context.
@@ -179,6 +188,10 @@ namespace Orion.Networking {
 #endif
             return packet;
         }
+
+        /// <inheritdoc />
+        [ExcludeFromCodeCoverage]
+        public override string ToString() => $"{Type}";
 
         /// <summary>
         /// Writes the packet to the given stream with the specified context.

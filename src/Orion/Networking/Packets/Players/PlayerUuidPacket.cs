@@ -15,41 +15,43 @@
 // You should have received a copy of the GNU General Public License
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
+using System;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
 
 namespace Orion.Networking.Packets.Players {
     /// <summary>
-    /// Packet sent from the server to the client to allow it to continue connecting. This is sent in response to either
-    /// a <see cref="PlayerConnectPacket"/> or a valid <see cref="PlayerPasswordResponsePacket"/>.
+    /// Packet sent from the client to the server to inform the server about the player's UUID. This is sent in response
+    /// to a <see cref="PlayerContinueConnectingPacket"/>.
     /// </summary>
-    public sealed class PlayerContinueConnectingPacket : Packet {
-        private byte _playerIndex;
+    public sealed class PlayerUuidPacket : Packet {
+        private string _playerUuid;
 
         /// <summary>
-        /// Gets or sets the player index that the player will be using.
+        /// Gets or sets the player's UUID.
         /// </summary>
-        public byte PlayerIndex {
-            get => _playerIndex;
+        public string PlayerUuid {
+            get => _playerUuid;
             set {
-                _playerIndex = value;
+                _playerUuid = value ?? throw new ArgumentNullException(nameof(value));
                 IsDirty = true;
+                DidLengthChange = true;
             }
         }
 
         /// <inheritdoc />
-        public override PacketType Type => PacketType.PlayerContinueConnecting;
+        public override PacketType Type => PacketType.PlayerUuid;
 
         /// <inheritdoc />
         [ExcludeFromCodeCoverage]
-        public override string ToString() => $"{Type}[#={PlayerIndex}]";
+        public override string ToString() => $"{Type}[{PlayerUuid}]";
 
         private protected override void ReadFromReader(BinaryReader reader, PacketContext context) {
-            _playerIndex = reader.ReadByte();
+            _playerUuid = reader.ReadString();
         }
 
         private protected override void WriteToWriter(BinaryWriter writer, PacketContext context) {
-            writer.Write(PlayerIndex);
+            writer.Write(PlayerUuid);
         }
     }
 }

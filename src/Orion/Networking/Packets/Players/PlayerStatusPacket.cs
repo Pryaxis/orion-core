@@ -22,38 +22,51 @@ using Orion.Networking.Packets.Extensions;
 
 namespace Orion.Networking.Packets.Players {
     /// <summary>
-    /// Packet sent from the server to the client to disconnect it. This is sent as a response to an invalid
-    /// <see cref="PlayerPasswordResponsePacket"/> or for various other reasons.
+    /// Packet sent from the server to the client to set the player's status.
     /// </summary>
-    public sealed class PlayerDisconnectPacket : Packet {
-        private Terraria.Localization.NetworkText _playerDisconnectReason = Terraria.Localization.NetworkText.Empty;
+    public sealed class PlayerStatusPacket : Packet {
+        private Terraria.Localization.NetworkText _playerStatusText = Terraria.Localization.NetworkText.Empty;
+        private int _playerStatusIncrease;
 
         /// <summary>
-        /// Gets or sets the player's disconnect reason.
+        /// Gets or sets the player's status increase.
+        /// </summary>
+        public int PlayerStatusIncrease {
+            get => _playerStatusIncrease;
+            set {
+                _playerStatusIncrease = value;
+                IsDirty = true;
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets the player's status text.
         /// </summary>
         /// <exception cref="ArgumentNullException"><paramref name="value"/> is <c>null</c>.</exception>
-        public Terraria.Localization.NetworkText PlayerDisconnectReason {
-            get => _playerDisconnectReason;
+        public Terraria.Localization.NetworkText PlayerStatusText {
+            get => _playerStatusText;
             set {
-                _playerDisconnectReason = value ?? throw new ArgumentNullException(nameof(value));
+                _playerStatusText = value ?? throw new ArgumentNullException(nameof(value));
                 IsDirty = true;
                 DidLengthChange = true;
             }
         }
 
         /// <inheritdoc />
-        public override PacketType Type => PacketType.PlayerDisconnect;
+        public override PacketType Type => PacketType.PlayerStatus;
 
         /// <inheritdoc />
         [ExcludeFromCodeCoverage]
-        public override string ToString() => $"{Type}[{PlayerDisconnectReason}]";
+        public override string ToString() => $"{Type}[{PlayerStatusText}, I={PlayerStatusIncrease}]";
 
         private protected override void ReadFromReader(BinaryReader reader, PacketContext context) {
-            _playerDisconnectReason = reader.ReadNetworkText();
+            _playerStatusIncrease = reader.ReadInt32();
+            _playerStatusText = reader.ReadNetworkText();
         }
 
         private protected override void WriteToWriter(BinaryWriter writer, PacketContext context) {
-            writer.Write(PlayerDisconnectReason);
+            writer.Write(PlayerStatusIncrease);
+            writer.Write(PlayerStatusText);
         }
     }
 }

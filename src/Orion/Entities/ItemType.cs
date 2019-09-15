@@ -16,7 +16,6 @@
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
 using System;
-using System.Collections.Generic;
 
 namespace Orion.Entities {
     /// <summary>
@@ -3946,7 +3945,7 @@ namespace Orion.Entities {
         /// <param name="right">The second item type.</param>
         /// <returns>A value indicating whether the two item types are equal.</returns>
         public static bool operator ==(ItemType left, ItemType right) => left.Equals(right);
-        
+
         /// <summary>
         /// Returns whether two item types are not equal.
         /// </summary>

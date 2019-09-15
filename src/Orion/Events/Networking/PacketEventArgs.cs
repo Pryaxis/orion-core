@@ -44,7 +44,7 @@ namespace Orion.Events.Networking {
         /// <summary>
         /// Gets a value indicating whether the packet is dirty.
         /// </summary>
-        public bool IsPacketDirty => _isPacketDirty || Packet.IsPacketDirty;
+        public bool IsPacketDirty => _isPacketDirty || Packet.IsDirty;
 
         private protected PacketEventArgs(Packet packet) {
             _packet = packet ?? throw new ArgumentNullException(nameof(packet));

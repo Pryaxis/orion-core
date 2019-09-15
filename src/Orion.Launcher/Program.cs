@@ -78,9 +78,7 @@ namespace Orion.Launcher {
                     if (item.maxStack != 1) {
                         Log.Information("[{ItemType}] = {MaxStackSize},", itemIdToField[i].Name, item.maxStack);
                     }
-                } catch {
-
-                }
+                } catch { }
             }
 
             using (var kernel = new OrionKernel()) {

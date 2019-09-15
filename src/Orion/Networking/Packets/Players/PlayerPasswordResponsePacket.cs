@@ -15,41 +15,44 @@
 // You should have received a copy of the GNU General Public License
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
+using System;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
 
 namespace Orion.Networking.Packets.Players {
     /// <summary>
-    /// Packet sent from the server to the client to allow it to continue connecting. This is sent in response to either
-    /// a <see cref="PlayerConnectPacket"/> or a valid <see cref="PlayerPasswordResponsePacket"/>.
+    /// Packet sent from the client to the server to try a password. This is sent in response to a
+    /// <see cref="PlayerPasswordChallengePacket"/>.
     /// </summary>
-    public sealed class PlayerContinueConnectingPacket : Packet {
-        private byte _playerIndex;
+    public sealed class PlayerPasswordResponsePacket : Packet {
+        private string _playerPassword = "";
 
         /// <summary>
-        /// Gets or sets the player index that the player will be using.
+        /// Gets or sets the player's password.
         /// </summary>
-        public byte PlayerIndex {
-            get => _playerIndex;
+        /// <exception cref="ArgumentNullException"><paramref name="value"/> is <c>null</c>.</exception>
+        public string PlayerPassword {
+            get => _playerPassword;
             set {
-                _playerIndex = value;
+                _playerPassword = value ?? throw new ArgumentNullException(nameof(value));
                 IsDirty = true;
+                DidLengthChange = true;
             }
         }
 
         /// <inheritdoc />
-        public override PacketType Type => PacketType.PlayerContinueConnecting;
+        public override PacketType Type => PacketType.PlayerPasswordResponse;
 
         /// <inheritdoc />
         [ExcludeFromCodeCoverage]
-        public override string ToString() => $"{Type}[#={PlayerIndex}]";
+        public override string ToString() => $"{Type}[{PlayerPassword}]";
 
         private protected override void ReadFromReader(BinaryReader reader, PacketContext context) {
-            _playerIndex = reader.ReadByte();
+            _playerPassword = reader.ReadString();
         }
 
         private protected override void WriteToWriter(BinaryWriter writer, PacketContext context) {
-            writer.Write(PlayerIndex);
+            writer.Write(PlayerPassword);
         }
     }
 }

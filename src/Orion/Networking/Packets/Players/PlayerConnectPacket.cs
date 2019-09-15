@@ -24,17 +24,18 @@ namespace Orion.Networking.Packets.Players {
     /// Packet sent from the client to the server to initiate a connection.
     /// </summary>
     public sealed class PlayerConnectPacket : Packet {
-        private string _versionString = "";
+        private string _playerVersionString = "";
 
         /// <summary>
-        /// Gets or sets the version. This is usually of the form <c>"Terraria###"</c>.
+        /// Gets or sets the player's verion string. This is usually of the form <c>"Terraria###"</c>.
         /// </summary>
         /// <exception cref="ArgumentNullException"><paramref name="value"/> is <c>null</c>.</exception>
-        public string VersionString {
-            get => _versionString;
+        public string PlayerVersionString {
+            get => _playerVersionString;
             set {
-                _versionString = value ?? throw new ArgumentNullException(nameof(value));
-                IsPacketDirty = true;
+                _playerVersionString = value ?? throw new ArgumentNullException(nameof(value));
+                IsDirty = true;
+                DidLengthChange = true;
             }
         }
 
@@ -43,14 +44,14 @@ namespace Orion.Networking.Packets.Players {
 
         /// <inheritdoc />
         [ExcludeFromCodeCoverage]
-        public override string ToString() => $"{Type}[{VersionString}]";
+        public override string ToString() => $"{Type}[{PlayerVersionString}]";
 
         private protected override void ReadFromReader(BinaryReader reader, PacketContext context) {
-            _versionString = reader.ReadString();
+            _playerVersionString = reader.ReadString();
         }
 
         private protected override void WriteToWriter(BinaryWriter writer, PacketContext context) {
-            writer.Write(VersionString);
+            writer.Write(PlayerVersionString);
         }
     }
 }
