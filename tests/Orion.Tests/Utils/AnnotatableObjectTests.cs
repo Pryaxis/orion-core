@@ -37,19 +37,19 @@ namespace Orion.Utils {
         }
 
         [Fact]
-        public void SetAnnotation_NullKey_ThrowsArgumentNullException() {
-            var annotatable = new AnnotatableObject();
-            Action action = () => annotatable.SetAnnotation(null, "");
-
-            action.Should().Throw<ArgumentNullException>();
-        }
-
-        [Fact]
         public void SetAnnotation_GetAnnotation_IsCorrect() {
             var annotatable = new AnnotatableObject();
             annotatable.SetAnnotation("test", 1);
 
             annotatable.GetAnnotation<int>("test").Should().Be(1);
+        }
+
+        [Fact]
+        public void SetAnnotation_NullKey_ThrowsArgumentNullException() {
+            var annotatable = new AnnotatableObject();
+            Action action = () => annotatable.SetAnnotation(null, "");
+
+            action.Should().Throw<ArgumentNullException>();
         }
 
         [Fact]
@@ -65,6 +65,14 @@ namespace Orion.Utils {
             var annotatable = new AnnotatableObject();
 
             annotatable.RemoveAnnotation("test").Should().BeFalse();
+        }
+
+        [Fact]
+        public void RemoveAnnotation_NullValue_ThrowsArgumentNullException() {
+            var annotatable = new AnnotatableObject();
+            Action action = () => annotatable.RemoveAnnotation(null);
+
+            action.Should().Throw<ArgumentNullException>();
         }
     }
 }
