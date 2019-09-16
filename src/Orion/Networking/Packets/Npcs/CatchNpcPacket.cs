@@ -15,58 +15,54 @@
 // You should have received a copy of the GNU General Public License
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
-using System;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
-using Orion.Entities;
 
-namespace Orion.Networking.Packets.Players {
+namespace Orion.Networking.Packets.Npcs {
     /// <summary>
-    /// Packet sent to add a buff to a player.
+    /// Packet sent to catch an NPC.
     /// </summary>
-    public sealed class BuffPlayerPacket : Packet {
-        private byte _playerIndex;
-        private Buff _playerBuff = new Buff(BuffType.None, TimeSpan.Zero);
+    public sealed class CatchNpcPacket : Packet {
+        private short _npcIndex;
+        private byte _npcCatcherPlayerIndex;
 
         /// <summary>
-        /// Gets or sets the player index.
+        /// Gets or sets the NPC index.
         /// </summary>
-        public byte PlayerIndex {
-            get => _playerIndex;
+        public short NpcIndex {
+            get => _npcIndex;
             set {
-                _playerIndex = value;
+                _npcIndex = value;
                 IsDirty = true;
             }
         }
 
         /// <summary>
-        /// Gets or sets the player's buff.
+        /// Gets or sets the NPC catcher's player index.
         /// </summary>
-        /// <exception cref="ArgumentNullException"><paramref name="value"/> is <c>null</c>.</exception>
-        public Buff PlayerBuff {
-            get => _playerBuff;
+        public byte NpcCatcherPlayerIndex {
+            get => _npcCatcherPlayerIndex;
             set {
-                _playerBuff = value ?? throw new ArgumentNullException(nameof(value));
+                _npcCatcherPlayerIndex = value;
                 IsDirty = true;
             }
         }
 
         /// <inheritdoc />
-        public override PacketType Type => PacketType.BuffPlayer;
+        public override PacketType Type => PacketType.CatchNpc;
 
         /// <inheritdoc />
         [ExcludeFromCodeCoverage]
-        public override string ToString() => $"{Type}[#={PlayerIndex}, {PlayerBuff}]";
+        public override string ToString() => $"{Type}[#={NpcIndex} by P={NpcCatcherPlayerIndex}]";
 
         private protected override void ReadFromReader(BinaryReader reader, PacketContext context) {
-            _playerIndex = reader.ReadByte();
-            _playerBuff = new Buff(BuffType.FromId(reader.ReadByte()), TimeSpan.FromSeconds(reader.ReadInt32() / 60.0));
+            _npcIndex = reader.ReadInt16();
+            _npcCatcherPlayerIndex = reader.ReadByte();
         }
 
         private protected override void WriteToWriter(BinaryWriter writer, PacketContext context) {
-            writer.Write(PlayerIndex);
-            writer.Write(PlayerBuff.BuffType.Id);
-            writer.Write((int)(PlayerBuff.Duration.TotalSeconds * 60.0));
+            writer.Write(NpcIndex);
+            writer.Write(NpcCatcherPlayerIndex);
         }
     }
 }

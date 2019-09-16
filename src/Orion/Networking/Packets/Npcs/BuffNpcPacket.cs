@@ -26,7 +26,7 @@ namespace Orion.Networking.Packets.Npcs {
     /// </summary>
     public sealed class BuffNpcPacket : Packet {
         private short _npcIndex;
-        private Buff _npcBuff;
+        private Buff _npcBuff = new Buff(BuffType.None, TimeSpan.Zero);
 
         /// <summary>
         /// Gets or sets the NPC index.
@@ -59,8 +59,8 @@ namespace Orion.Networking.Packets.Npcs {
         public override string ToString() => $"{Type}[#={NpcIndex}, {NpcBuff}]";
 
         private protected override void ReadFromReader(BinaryReader reader, PacketContext context) {
-            NpcIndex = reader.ReadInt16();
-            NpcBuff = new Buff(BuffType.FromId(reader.ReadByte()), TimeSpan.FromSeconds(reader.ReadInt16() / 60.0));
+            _npcIndex = reader.ReadInt16();
+            _npcBuff = new Buff(BuffType.FromId(reader.ReadByte()), TimeSpan.FromSeconds(reader.ReadInt16() / 60.0));
         }
 
         private protected override void WriteToWriter(BinaryWriter writer, PacketContext context) {
