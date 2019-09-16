@@ -70,9 +70,9 @@ namespace Orion.Networking.Packets.Players {
         public override string ToString() => $"{Type}[#={PlayerIndex}, {ItemType} x{ItemStackSize}]";
 
         private protected override void ReadFromReader(BinaryReader reader, PacketContext context) {
-            ItemType = ItemType.FromId(reader.ReadInt16());
-            ItemStackSize = reader.ReadInt16();
-            PlayerIndex = reader.ReadByte();
+            _itemType = ItemType.FromId(reader.ReadInt16());
+            _itemStackSize = reader.ReadInt16();
+            _playerIndex = reader.ReadByte();
         }
 
         private protected override void WriteToWriter(BinaryWriter writer, PacketContext context) {
