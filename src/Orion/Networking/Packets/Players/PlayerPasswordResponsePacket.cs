@@ -36,7 +36,6 @@ namespace Orion.Networking.Packets.Players {
             set {
                 _playerPassword = value ?? throw new ArgumentNullException(nameof(value));
                 IsDirty = true;
-                DidLengthChange = true;
             }
         }
 

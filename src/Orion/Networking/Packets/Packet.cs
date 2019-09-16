@@ -37,11 +37,6 @@ namespace Orion.Networking.Packets {
         /// </summary>
         public bool IsDirty { get; protected set; }
 
-        /// <summary>
-        /// Gets a value indicating whether the packet's length changed.
-        /// </summary>
-        public bool DidLengthChange { get; protected set; }
-
         // Do not allow outside inheritance.
         private protected Packet() { }
 

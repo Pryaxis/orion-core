@@ -35,7 +35,6 @@ namespace Orion.Networking.Packets.Players {
             set {
                 _playerUuid = value ?? throw new ArgumentNullException(nameof(value));
                 IsDirty = true;
-                DidLengthChange = true;
             }
         }
 

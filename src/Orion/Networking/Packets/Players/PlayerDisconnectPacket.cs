@@ -37,7 +37,6 @@ namespace Orion.Networking.Packets.Players {
             set {
                 _playerDisconnectReason = value ?? throw new ArgumentNullException(nameof(value));
                 IsDirty = true;
-                DidLengthChange = true;
             }
         }
 

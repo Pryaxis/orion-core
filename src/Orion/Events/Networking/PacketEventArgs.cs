@@ -47,11 +47,6 @@ namespace Orion.Events.Networking {
         /// </summary>
         public bool IsPacketDirty => _isPacketModified || Packet.IsDirty;
 
-        /// <summary>
-        /// Gets a value indicating whether the packet's length changed.
-        /// </summary>
-        public bool DidPacketLengthChange => _isPacketModified || Packet.DidLengthChange;
-
         private protected PacketEventArgs(Packet packet) {
             _packet = packet ?? throw new ArgumentNullException(nameof(packet));
         }

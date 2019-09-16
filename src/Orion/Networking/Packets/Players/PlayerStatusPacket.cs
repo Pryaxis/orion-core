@@ -48,7 +48,6 @@ namespace Orion.Networking.Packets.Players {
             set {
                 _playerStatusText = value ?? throw new ArgumentNullException(nameof(value));
                 IsDirty = true;
-                DidLengthChange = true;
             }
         }
 

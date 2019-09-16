@@ -55,7 +55,6 @@ namespace Orion.Networking.Packets.Players {
             set {
                 _playerDeathReason = value ?? throw new ArgumentNullException(nameof(value));
                 IsDirty = true;
-                DidLengthChange = true;
             }
         }
 
