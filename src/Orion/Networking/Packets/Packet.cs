@@ -63,6 +63,7 @@ namespace Orion.Networking.Packets {
 
 #if DEBUG
             Debug.Assert(stream.Position - oldPosition == packetLength, "Packet should have been consumed.");
+            Debug.Assert(!packet.IsDirty, "Packet should not be dirty.");
 #endif
             return packet;
         }
