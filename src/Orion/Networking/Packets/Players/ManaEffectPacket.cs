@@ -53,7 +53,7 @@ namespace Orion.Networking.Packets.Players {
 
         /// <inheritdoc />
         [ExcludeFromCodeCoverage]
-        public override string ToString() => $"{Type}[#={PlayerIndex} for {ManaAmount}]";
+        public override string ToString() => $"{Type}[#={PlayerIndex} for {ManaAmount} mp]";
 
         private protected override void ReadFromReader(BinaryReader reader, PacketContext context) {
             _playerIndex = reader.ReadByte();

@@ -43,7 +43,7 @@ namespace Orion.Networking.Packets.Players {
         }
 
         /// <summary>
-        /// Gets or sets the buff's buff type.
+        /// Gets or sets the buff's type.
         /// </summary>
         /// <exception cref="ArgumentNullException"><paramref name="value"/> is <c>null</c>.</exception>
         public BuffType BuffType {

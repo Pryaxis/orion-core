@@ -65,7 +65,7 @@ namespace Orion.Networking.Packets.Players {
         }
 
         /// <summary>
-        /// Gets or sets the item's item prefix.
+        /// Gets or sets the item's prefix.
         /// </summary>
         /// <exception cref="ArgumentNullException"><paramref name="value"/> is <c>null</c>.</exception>
         public ItemPrefix ItemPrefix {
@@ -77,7 +77,7 @@ namespace Orion.Networking.Packets.Players {
         }
 
         /// <summary>
-        /// Gets or sets the item's item type.
+        /// Gets or sets the item's type.
         /// </summary>
         /// <exception cref="ArgumentNullException"><paramref name="value"/> is <c>null</c>.</exception>
         public ItemType ItemType {

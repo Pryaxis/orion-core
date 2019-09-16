@@ -31,7 +31,7 @@ namespace Orion.Networking.Packets.Players {
         private byte _playerIndex;
 
         /// <summary>
-        /// Gets or sets the item's item type.
+        /// Gets or sets the item's type.
         /// </summary>
         /// <exception cref="ArgumentNullException"><paramref name="value"/> is <c>null</c>.</exception>
         public ItemType ItemType {
