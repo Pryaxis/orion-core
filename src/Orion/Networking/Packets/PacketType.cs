@@ -121,7 +121,7 @@ namespace Orion.Networking.Packets {
         public static PacketType PlayerMinionPosition = new PacketType(99);
         public static PacketType TeleportNpcPortal = new PacketType(100);
         public static PacketType PillarShieldStrengths = new PacketType(101);
-        public static PacketType NebulaBuff = new PacketType(102);
+        public static PacketType NebulaBuffPlayers = new PacketType(102);
         public static PacketType MoonLordCountdown = new PacketType(103);
         public static PacketType NpcShopSlot = new PacketType(104);
         public static PacketType ToggleGemLock = new PacketType(105);
