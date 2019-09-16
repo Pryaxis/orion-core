@@ -117,7 +117,7 @@ namespace Orion.Networking.Packets.Players {
 
         /// <inheritdoc />
         [ExcludeFromCodeCoverage]
-        public override string ToString() => $"{Type}[#={PlayerIndex} by {Damage}, ...]";
+        public override string ToString() => $"{Type}[#={PlayerIndex} for {Damage} hp, ...]";
 
         /// <inheritdoc />
         private protected override void ReadFromReader(BinaryReader reader, PacketContext context) {
