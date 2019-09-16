@@ -3916,7 +3916,7 @@ namespace Orion.Entities {
         public static readonly ItemType LeinforsLuxuryShampoo = new ItemType(3929);
 #pragma warning restore 1591
 
-        private static readonly IDictionary<short, FieldInfo> IdToField = new Dictionary<short, FieldInfo>();
+        internal static readonly IDictionary<short, FieldInfo> IdToField = new Dictionary<short, FieldInfo>();
         private static readonly IDictionary<short, ItemType> IdToItemType = new Dictionary<short, ItemType>();
 
         /// <summary>

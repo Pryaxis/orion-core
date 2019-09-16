@@ -21,6 +21,7 @@ using System.IO;
 using System.Reflection;
 using Orion.Entities;
 using Orion.Launcher.Properties;
+using Orion.World;
 using Serilog;
 using Serilog.Sinks.SystemConsole.Themes;
 using Terraria;
@@ -50,35 +51,33 @@ namespace Orion.Launcher {
                 Log.Fatal(eventArgs.ExceptionObject as Exception, Resources.UnhandledExceptionMessage);
             };
 
-            var itemTypeFields = typeof(ItemType).GetFields(BindingFlags.Public | BindingFlags.Static);
-            var itemIdToField = new Dictionary<int, FieldInfo>();
-            foreach (var field in itemTypeFields) {
-                if (!(field.GetValue(null) is ItemType itemType)) continue;
-
-                itemIdToField[itemType.Id] = field;
-            }
-
-            var itemRarityFields = typeof(ItemRarity).GetFields(BindingFlags.Public | BindingFlags.Static);
-            var rarityLevelToField = new Dictionary<int, FieldInfo>();
-            foreach (var field in itemRarityFields) {
-                if (!(field.GetValue(null) is ItemRarity itemRarity)) continue;
-
-                rarityLevelToField[itemRarity.Level] = field;
-            }
-
+            Terraria.Main main = new Main();
+            main.Initialize();
             LanguageManager.Instance.SetLanguage(GameCulture.English);
             Lang.InitializeLegacyLocalization();
             Terraria.Main.player[Terraria.Main.myPlayer] = new Player();
+            SortedDictionary<(int id, int style), FieldInfo> items =
+                new SortedDictionary<(int id, int style), FieldInfo>();
             for (var i = 0; i < ItemID.Count; ++i) {
                 var item = new Item();
                 item.SetDefaults(i);
-                if (ItemID.Sets.Deprecated[i]) continue;
 
-                try {
-                    if (item.maxStack != 1) {
-                        Log.Information("[{ItemType}] = {MaxStackSize},", itemIdToField[i].Name, item.maxStack);
+                if (item.createTile >= 0 && item.createTile == 139) {
+                    try {
+                        items.Add((item.createTile, item.placeStyle), ItemType.IdToField[(short)i]);
+                    } catch
+                    {
+
                     }
-                } catch { }
+                }
+            }
+
+            foreach (var kvp in items) {
+                if (kvp.Key.style == 0) {
+                    Log.Information("public static readonly BlockType {Name} = new BlockType({Id});", kvp.Value.Name, kvp.Key.id);
+                } else {
+                    Log.Information("public static readonly BlockType {Name} = new BlockType({Id}, {Style});", kvp.Value.Name, kvp.Key.id, kvp.Key.style);
+                }
             }
 
             using (var kernel = new OrionKernel()) {
