@@ -30,7 +30,7 @@ namespace Orion.Networking.Packets.Players {
         private byte _playerIndex;
 
         /// <summary>
-        /// Gets or sets the item's <see cref="Entities.ItemType"/>.
+        /// Gets or sets the item's item type.
         /// </summary>
         public ItemType ItemType {
             get => _itemType;
