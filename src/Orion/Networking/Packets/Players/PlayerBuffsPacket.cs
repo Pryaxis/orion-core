@@ -54,6 +54,10 @@ namespace Orion.Networking.Packets.Players {
         /// Initializes a new instance of the <see cref="PlayerBuffsPacket"/> class.
         /// </summary>
         public PlayerBuffsPacket() {
+            for (var i = 0; i < _playerBuffTypes.Length; ++i) {
+                _playerBuffTypes[i] = BuffType.None;
+            }
+
             PlayerBuffTypes = new BuffTypeArray(this);
         }
 

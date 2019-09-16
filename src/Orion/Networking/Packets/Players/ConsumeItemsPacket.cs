@@ -26,7 +26,7 @@ namespace Orion.Networking.Packets.Players {
     /// <see cref="RequestMassWireOperationPacket"/>.
     /// </summary>
     public sealed class ConsumeItemsPacket : Packet {
-        private ItemType _itemType;
+        private ItemType _itemType = ItemType.None;
         private short _itemStackSize;
         private byte _playerIndex;
 

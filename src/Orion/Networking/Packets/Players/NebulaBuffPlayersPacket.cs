@@ -28,7 +28,7 @@ namespace Orion.Networking.Packets.Players {
     /// </summary>
     public sealed class NebulaBuffPlayersPacket : Packet {
         private byte _playerIndex;
-        private BuffType _buffType;
+        private BuffType _buffType = BuffType.None;
         private Vector2 _buffPosition;
 
         /// <summary>

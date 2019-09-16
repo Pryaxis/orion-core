@@ -19,8 +19,7 @@ using System;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using Orion.Networking.Packets.Extensions;
-using Terraria;
-using Terraria.DataStructures;
+using TDS = Terraria.DataStructures;
 
 namespace Orion.Networking.Packets.Players {
     /// <summary>
@@ -28,7 +27,7 @@ namespace Orion.Networking.Packets.Players {
     /// </summary>
     public sealed class DamagePlayerPacket : Packet {
         private byte _playerIndex;
-        private PlayerDeathReason _playerDeathReason;
+        private TDS.PlayerDeathReason _playerDeathReason = TDS.PlayerDeathReason.LegacyEmpty();
         private short _damage;
         private int _hitDirection;
         private int _hitCooldown;
@@ -50,7 +49,7 @@ namespace Orion.Networking.Packets.Players {
         /// Gets or sets the reason for the player's (potential) death.
         /// </summary>
         /// <exception cref="ArgumentNullException"><paramref name="value"/> is <c>null</c>.</exception>
-        public PlayerDeathReason PlayerDeathReason {
+        public TDS.PlayerDeathReason PlayerDeathReason {
             get => _playerDeathReason;
             set {
                 _playerDeathReason = value ?? throw new ArgumentNullException(nameof(value));
@@ -126,7 +125,7 @@ namespace Orion.Networking.Packets.Players {
             _playerDeathReason = reader.ReadPlayerDeathReason();
             _damage = reader.ReadInt16();
             _hitDirection = reader.ReadByte() - 1;
-            BitsByte flags = reader.ReadByte();
+            Terraria.BitsByte flags = reader.ReadByte();
             _isHitCritical = flags[0];
             _isHitFromPvp = flags[1];
             _hitCooldown = reader.ReadSByte();
@@ -138,7 +137,7 @@ namespace Orion.Networking.Packets.Players {
             writer.Write(PlayerDeathReason);
             writer.Write(Damage);
             writer.Write((byte)(HitDirection + 1));
-            BitsByte flags = 0;
+            Terraria.BitsByte flags = 0;
             flags[0] = IsHitCritical;
             flags[1] = IsHitFromPvp;
             writer.Write(flags);

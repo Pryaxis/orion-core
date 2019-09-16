@@ -19,7 +19,7 @@ using System;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using Orion.Networking.Packets.Extensions;
-using Terraria.DataStructures;
+using TDS = Terraria.DataStructures;
 
 namespace Orion.Networking.Packets.Players {
     /// <summary>
@@ -27,7 +27,7 @@ namespace Orion.Networking.Packets.Players {
     /// </summary>
     public sealed class KillPlayerPacket : Packet {
         private byte _playerIndex;
-        private PlayerDeathReason _playerDeathReason;
+        private TDS.PlayerDeathReason _playerDeathReason = TDS.PlayerDeathReason.LegacyEmpty();
         private short _damage;
         private int _hitDirection;
         private bool _isDeathFromPvp;
@@ -47,7 +47,7 @@ namespace Orion.Networking.Packets.Players {
         /// Gets or sets the reason for the player's death.
         /// </summary>
         /// <exception cref="ArgumentNullException"><paramref name="value"/> is <c>null</c>.</exception>
-        public PlayerDeathReason PlayerDeathReason {
+        public TDS.PlayerDeathReason PlayerDeathReason {
             get => _playerDeathReason;
             set {
                 _playerDeathReason = value ?? throw new ArgumentNullException(nameof(value));
