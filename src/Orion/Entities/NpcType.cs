@@ -671,6 +671,46 @@ namespace Orion.Entities {
         private static readonly IDictionary<short, FieldInfo> IdToField = new Dictionary<short, FieldInfo>();
         private static readonly IDictionary<short, NpcType> IdToNpcType = new Dictionary<short, NpcType>();
 
+        private static readonly ISet<NpcType> Catchables = new HashSet<NpcType> {
+            Bunny,
+            Goldfish,
+            Bird,
+            Penguin,
+            BlackPenguin,
+            BlueJay,
+            Cardinal,
+            Squirrel,
+            Mouse,
+            Firefly,
+            Butterfly,
+            Worm,
+            LightningBug,
+            Snail,
+            GlowingSnail,
+            Frog,
+            Duck,
+            Duck2,
+            WhiteDuck,
+            WhiteDuck2,
+            BlackScorpion,
+            Scorpion,
+            TruffleWorm,
+            Grasshopper,
+            EnchantedNightcrawler,
+            Grubby,
+            Sluggy,
+            Buggy,
+            GoldBird,
+            GoldBunny,
+            GoldButterfly,
+            GoldFrog,
+            GoldGrasshopper,
+            GoldMouse,
+            GoldWorm,
+            RedSquirrel,
+            GoldSquirrel
+        };
+
         /// <summary>
         /// Gets the NPC type's ID.
         /// </summary>
@@ -680,6 +720,11 @@ namespace Orion.Entities {
         /// Gets a value indicating whether the NPC type is unknown.
         /// </summary>
         public bool IsUnknown { get; }
+
+        /// <summary>
+        /// Gets a value indicating whether the NPC type is catchable.
+        /// </summary>
+        public bool IsCatchable => Catchables.Contains(this);
 
         // Initializes lookup tables.
         static NpcType() {
