@@ -48,13 +48,13 @@ namespace Orion.Entities {
         /// <summary>
         /// Sets the item's type. This will update the item accordingly.
         /// </summary>
-        /// <param name="type"></param>
+        /// <param name="type">The item type.</param>
         void SetType(ItemType type);
 
         /// <summary>
         /// Sets the item's prefix. This will update the item accordingly.
         /// </summary>
-        /// <param name="prefix">The prefix.</param>
+        /// <param name="prefix">The item prefix.</param>
         void SetPrefix(ItemPrefix prefix);
     }
 }

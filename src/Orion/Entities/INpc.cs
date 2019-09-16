@@ -19,5 +19,16 @@ namespace Orion.Entities {
     /// <summary>
     /// Represents a Terraria NPC.
     /// </summary>
-    public interface INpc : IEntity { }
+    public interface INpc : IEntity {
+        /// <summary>
+        /// Gets the NPC's type.
+        /// </summary>
+        NpcType Type { get; }
+
+        /// <summary>
+        /// Sets the NPC's type. This will update the NPC accordingly.
+        /// </summary>
+        /// <param name="type">The NPC type.</param>
+        void SetType(NpcType type);
+    }
 }
