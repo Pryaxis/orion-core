@@ -15,6 +15,7 @@
 // You should have received a copy of the GNU General Public License
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
+using System;
 using System.IO;
 using FluentAssertions;
 using Microsoft.Xna.Framework;
@@ -23,6 +24,14 @@ using Xunit;
 
 namespace Orion.Networking.Packets.Players {
     public class NebulaBuffPacketTests {
+        [Fact]
+        public void SetBuffType_NullValue_ThrowsArgumentNullException() {
+            var packet = new NebulaBuffPlayersPacket();
+            Action action = () => packet.BuffType = null;
+
+            action.Should().Throw<ArgumentNullException>();
+        }
+
         public static readonly byte[] Bytes = {13, 0, 102, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0};
 
         [Fact]

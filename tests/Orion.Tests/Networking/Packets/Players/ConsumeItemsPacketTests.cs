@@ -15,6 +15,7 @@
 // You should have received a copy of the GNU General Public License
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
+using System;
 using System.IO;
 using FluentAssertions;
 using Orion.Entities;
@@ -22,6 +23,14 @@ using Xunit;
 
 namespace Orion.Networking.Packets.Players {
     public class ConsumeItemsPacketTests {
+        [Fact]
+        public void SetItemType_NullValue_ThrowsArgumentNullException() {
+            var packet = new ConsumeItemsPacket();
+            Action action = () => packet.ItemType = null;
+
+            action.Should().Throw<ArgumentNullException>();
+        }
+
         private static readonly byte[] Bytes = {8, 0, 110, 179, 13, 1, 0, 0};
 
         [Fact]

@@ -15,6 +15,7 @@
 // You should have received a copy of the GNU General Public License
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
+using System;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using Microsoft.Xna.Framework;
@@ -44,10 +45,11 @@ namespace Orion.Networking.Packets.Players {
         /// <summary>
         /// Gets or sets the buff's buff type.
         /// </summary>
+        /// <exception cref="ArgumentNullException"><paramref name="value"/> is <c>null</c>.</exception>
         public BuffType BuffType {
             get => _buffType;
             set {
-                _buffType = value;
+                _buffType = value ?? throw new ArgumentNullException(nameof(value));
                 IsDirty = true;
             }
         }

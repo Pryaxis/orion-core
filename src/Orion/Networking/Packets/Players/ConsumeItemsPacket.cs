@@ -15,6 +15,7 @@
 // You should have received a copy of the GNU General Public License
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
+using System;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using Orion.Entities;
@@ -32,10 +33,11 @@ namespace Orion.Networking.Packets.Players {
         /// <summary>
         /// Gets or sets the item's item type.
         /// </summary>
+        /// <exception cref="ArgumentNullException"><paramref name="value"/> is <c>null</c>.</exception>
         public ItemType ItemType {
             get => _itemType;
             set {
-                _itemType = value;
+                _itemType = value ?? throw new ArgumentNullException(nameof(value));
                 IsDirty = true;
             }
         }
