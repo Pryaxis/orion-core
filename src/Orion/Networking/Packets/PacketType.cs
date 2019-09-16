@@ -51,7 +51,7 @@ namespace Orion.Networking.Packets {
         public static PacketType ItemInfo = new PacketType(21);
         public static PacketType ItemOwner = new PacketType(22);
         public static PacketType NpcInfo = new PacketType(23);
-        public static PacketType DamageNpcWithItem = new PacketType(24);
+        public static PacketType DamageNpcHeldItem = new PacketType(24);
         public static PacketType ProjectileInfo = new PacketType(27);
         public static PacketType DamageNpc = new PacketType(28);
         public static PacketType RemoveProjectile = new PacketType(29);
