@@ -17,30 +17,31 @@
 
 using FluentAssertions;
 using Xunit;
+using Xunit.Abstractions;
 
 namespace Orion.Entities {
     public class NpcTypeTests {
-        [Fact]
-        public void GetId_IsCorrect() {
-            NpcType.FromId(100).Id.Should().Be(100);
+        private readonly ITestOutputHelper _output;
+
+        public NpcTypeTests(ITestOutputHelper output) {
+            _output = output;
         }
 
         [Fact]
-        public void GetIsUnknown_IsCorrect() {
-            NpcType.BlueSlime.IsUnknown.Should().BeFalse();
-            NpcType.FromId(short.MaxValue).IsUnknown.Should().BeTrue();
+        public void FromId_IsCorrect() {
+            for (short i = 0; i < Terraria.Main.maxNPCTypes; ++i) {
+                NpcType.FromId(i)?.Id.Should().Be(i);
+            }
+
+            NpcType.FromId(Terraria.Main.maxNPCTypes).Should().BeNull();
         }
 
         [Fact]
-        public void Equals_IsCorrect() {
-            var npcType = NpcType.FromId(100);
-            var npcType2 = NpcType.FromId(100);
+        public void FromId_ReturnsSameInstance() {
+            var npcType = NpcType.FromId(1);
+            var npcType2 = NpcType.FromId(1);
 
-            npcType.Equals(npcType2).Should().BeTrue();
-
-            // ReSharper disable once SuspiciousTypeConversion.Global
-            npcType.Equals("null").Should().BeFalse();
-            npcType.Equals(null).Should().BeFalse();
+            npcType.Should().BeSameAs(npcType2);
         }
     }
 }

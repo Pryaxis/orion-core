@@ -717,11 +717,6 @@ namespace Orion.Entities {
         public short Id { get; }
 
         /// <summary>
-        /// Gets a value indicating whether the NPC type is unknown.
-        /// </summary>
-        public bool IsUnknown { get; }
-
-        /// <summary>
         /// Gets a value indicating whether the NPC type is catchable.
         /// </summary>
         public bool IsCatchable => Catchables.Contains(this);
@@ -737,26 +732,18 @@ namespace Orion.Entities {
             }
         }
 
-        private NpcType(short id, bool isUnknown = false) {
+        private NpcType(short id) {
             Id = id;
-            IsUnknown = isUnknown;
         }
 
         /// <summary>
         /// Returns an NPC type converted from the given ID.
         /// </summary>
         /// <param name="id">The ID.</param>
-        /// <returns>The NPC type.</returns>
-        public static NpcType FromId(short id) =>
-            IdToNpcType.TryGetValue(id, out var npcType) ? npcType : new NpcType(id, true);
+        /// <returns>The NPC type, or <c>null</c> if none exists.</returns>
+        public static NpcType FromId(short id) => IdToNpcType.TryGetValue(id, out var npcType) ? npcType : null;
 
         /// <inheritdoc />
-        public override bool Equals(object obj) => obj is NpcType npcType && Id == npcType.Id;
-
-        /// <inheritdoc />
-        public override int GetHashCode() => Id;
-
-        /// <inheritdoc />
-        public override string ToString() => IsUnknown ? "Unknown" : IdToField[Id].Name;
+        public override string ToString() => IdToField[Id].Name;
     }
 }
