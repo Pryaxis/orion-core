@@ -87,6 +87,7 @@ namespace Orion.Entities {
         public static ItemPrefix Frenzying = new ItemPrefix(58);
         public static ItemPrefix Godly = new ItemPrefix(59);
         public static ItemPrefix Demonic = new ItemPrefix(60);
+        public static ItemPrefix Zealous = new ItemPrefix(61);
         public static ItemPrefix Hard = new ItemPrefix(62);
         public static ItemPrefix Guarding = new ItemPrefix(63);
         public static ItemPrefix Armored = new ItemPrefix(64);
@@ -119,11 +120,6 @@ namespace Orion.Entities {
         /// </summary>
         public int Id { get; }
 
-        /// <summary>
-        /// Gets a value indicating whether the item prefix is unknown.
-        /// </summary>
-        public bool IsUnknown { get; }
-
         // Initializes lookup tables.
         static ItemPrefix() {
             var fields = typeof(ItemPrefix).GetFields(BindingFlags.Public | BindingFlags.Static);
@@ -135,26 +131,18 @@ namespace Orion.Entities {
             }
         }
 
-        private ItemPrefix(int id, bool isUnknown = false) {
+        private ItemPrefix(int id) {
             Id = id;
-            IsUnknown = isUnknown;
         }
 
         /// <summary>
         /// Returns an item prefix converted from the given ID.
         /// </summary>
         /// <param name="id">The ID.</param>
-        /// <returns>The item prefix.</returns>
-        public static ItemPrefix FromId(int id) =>
-            IdToItemPrefix.TryGetValue(id, out var itemType) ? itemType : new ItemPrefix(id, true);
+        /// <returns>The item prefix, or <c>null</c> if none exists.</returns>
+        public static ItemPrefix FromId(int id) => IdToItemPrefix.TryGetValue(id, out var itemType) ? itemType : null;
 
         /// <inheritdoc />
-        public override bool Equals(object obj) => obj is ItemPrefix itemPrefix && Id == itemPrefix.Id;
-
-        /// <inheritdoc />
-        public override int GetHashCode() => Id;
-
-        /// <inheritdoc />
-        public override string ToString() => IsUnknown ? "Unknown" : IdToField[Id].Name;
+        public override string ToString() => IdToField[Id].Name;
     }
 }

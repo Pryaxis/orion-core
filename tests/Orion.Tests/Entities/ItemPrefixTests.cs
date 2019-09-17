@@ -21,26 +21,20 @@ using Xunit;
 namespace Orion.Entities {
     public class ItemPrefixTests {
         [Fact]
-        public void GetId_IsCorrect() {
-            ItemPrefix.FromId(82).Id.Should().Be(82);
+        public void FromId_IsCorrect() {
+            for (int i = -2; i < Terraria.ID.PrefixID.Count; ++i) {
+                ItemPrefix.FromId(i).Id.Should().Be(i);
+            }
+
+            ItemPrefix.FromId(Terraria.ID.PrefixID.Count).Should().BeNull();
         }
 
         [Fact]
-        public void GetIsUnknown_IsCorrect() {
-            ItemPrefix.Unreal.IsUnknown.Should().BeFalse();
-            ItemPrefix.FromId(int.MaxValue).IsUnknown.Should().BeTrue();
-        }
+        public void FromId_ReturnsSameInstance() {
+            var itemPrefix = ItemPrefix.FromId(1);
+            var itemPrefix2 = ItemPrefix.FromId(1);
 
-        [Fact]
-        public void Equals_IsCorrect() {
-            var itemPrefix = ItemPrefix.FromId(82);
-            var itemPrefix2 = ItemPrefix.FromId(82);
-
-            itemPrefix.Equals(itemPrefix2).Should().BeTrue();
-
-            // ReSharper disable once SuspiciousTypeConversion.Global
-            itemPrefix.Equals("null").Should().BeFalse();
-            itemPrefix.Equals(null).Should().BeFalse();
+            itemPrefix.Should().BeSameAs(itemPrefix2);
         }
     }
 }

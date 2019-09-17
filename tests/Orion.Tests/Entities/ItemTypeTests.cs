@@ -21,26 +21,20 @@ using Xunit;
 namespace Orion.Entities {
     public class ItemTypeTests {
         [Fact]
-        public void GetId_IsCorrect() {
-            ItemType.FromId(100).Id.Should().Be(100);
+        public void FromId_IsCorrect() {
+            for (short i = 0; i < Terraria.Main.maxItemTypes; ++i) {
+                ItemType.FromId(i)?.Id.Should().Be(i);
+            }
+
+            ItemType.FromId(Terraria.Main.maxItemTypes).Should().BeNull();
         }
 
         [Fact]
-        public void GetIsUnknown_IsCorrect() {
-            ItemType.CopperShortsword.IsUnknown.Should().BeFalse();
-            ItemType.FromId(short.MaxValue).IsUnknown.Should().BeTrue();
-        }
+        public void FromId_ReturnsSameInstance() {
+            var itemType = ItemType.FromId(1);
+            var itemType2 = ItemType.FromId(1);
 
-        [Fact]
-        public void Equals_IsCorrect() {
-            var itemType = ItemType.FromId(100);
-            var itemType2 = ItemType.FromId(100);
-
-            itemType.Equals(itemType2).Should().BeTrue();
-
-            // ReSharper disable once SuspiciousTypeConversion.Global
-            itemType.Equals("null").Should().BeFalse();
-            itemType.Equals(null).Should().BeFalse();
+            itemType.Should().BeSameAs(itemType2);
         }
     }
 }

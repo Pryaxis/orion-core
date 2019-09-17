@@ -3924,11 +3924,6 @@ namespace Orion.Entities {
         /// </summary>
         public short Id { get; }
 
-        /// <summary>
-        /// Gets a value indicating whether the item type is unknown.
-        /// </summary>
-        public bool IsUnknown { get; }
-
         // Initializes lookup tables.
         static ItemType() {
             var fields = typeof(ItemType).GetFields(BindingFlags.Public | BindingFlags.Static);
@@ -3940,26 +3935,18 @@ namespace Orion.Entities {
             }
         }
 
-        private ItemType(short id, bool isUnknown = false) {
+        private ItemType(short id) {
             Id = id;
-            IsUnknown = isUnknown;
         }
 
         /// <summary>
         /// Returns an item type converted from the given ID.
         /// </summary>
         /// <param name="id">The ID.</param>
-        /// <returns>The item type.</returns>
-        public static ItemType FromId(short id) =>
-            IdToItemType.TryGetValue(id, out var itemType) ? itemType : new ItemType(id, true);
+        /// <returns>The item type, or <c>null</c> if none exists.</returns>
+        public static ItemType FromId(short id) => IdToItemType.TryGetValue(id, out var itemType) ? itemType : null;
 
         /// <inheritdoc />
-        public override bool Equals(object obj) => obj is ItemType itemType && Id == itemType.Id;
-
-        /// <inheritdoc />
-        public override int GetHashCode() => Id;
-
-        /// <inheritdoc />
-        public override string ToString() => IsUnknown ? "Unknown" : IdToField[Id].Name;
+        public override string ToString() => IdToField[Id].Name;
     }
 }

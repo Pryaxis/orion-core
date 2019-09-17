@@ -320,7 +320,7 @@ namespace Orion.Entities {
         /// Returns a buff type converted from the given ID.
         /// </summary>
         /// <param name="id">The ID.</param>
-        /// <returns>The buff type.</returns>
+        /// <returns>The buff type, or <c>null</c> if none exists.</returns>
         public static BuffType FromId(byte id) => IdToBuffType.TryGetValue(id, out var buffType) ? buffType : null;
 
         /// <inheritdoc />
