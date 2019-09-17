@@ -21,20 +21,22 @@ using Xunit;
 namespace Orion.Entities {
     public class ItemRarityTests {
         [Fact]
-        public void GetId_IsCorrect() {
-            ItemRarity.FromLevel(1).Level.Should().Be(1);
+        public void FromId_IsCorrect() {
+            ItemRarity.FromLevel(-12).Level.Should().Be(-12);
+            ItemRarity.FromLevel(-11).Level.Should().Be(-11);
+            for (int i = -1; i < 12; ++i) {
+                ItemRarity.FromLevel(i).Level.Should().Be(i);
+            }
+
+            ItemRarity.FromLevel(12).Should().BeNull();
         }
 
         [Fact]
-        public void Equals_IsCorrect() {
+        public void FromId_ReturnsSameInstance() {
             var itemRarity = ItemRarity.FromLevel(1);
             var itemRarity2 = ItemRarity.FromLevel(1);
 
-            itemRarity.Equals(itemRarity2).Should().BeTrue();
-
-            // ReSharper disable once SuspiciousTypeConversion.Global
-            itemRarity.Equals("null").Should().BeFalse();
-            itemRarity.Equals(null).Should().BeFalse();
+            itemRarity.Should().BeSameAs(itemRarity2);
         }
     }
 }
