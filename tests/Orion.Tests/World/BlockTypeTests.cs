@@ -19,7 +19,6 @@ using FluentAssertions;
 using Xunit;
 
 namespace Orion.World {
-    [Collection("TerrariaTestsCollection")]
     public class BlockTypeTests {
         [Fact]
         public void FromId_IsCorrect() {

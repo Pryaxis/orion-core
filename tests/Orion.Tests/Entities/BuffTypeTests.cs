@@ -22,14 +22,20 @@ namespace Orion.Entities {
     [Collection("TerrariaTestsCollection")]
     public class BuffTypeTests {
         [Fact]
-        public void GetId_IsCorrect() {
-            BuffType.FromId(100).Id.Should().Be(100);
+        public void FromId_IsCorrect() {
+            for (byte i = 0; i < Terraria.Main.maxBuffTypes; ++i) {
+                BuffType.FromId(i).Id.Should().Be(i);
+            }
+
+            BuffType.FromId(Terraria.Main.maxBuffTypes).Should().BeNull();
         }
 
         [Fact]
-        public void GetIsUnknown_IsCorrect() {
-            BuffType.ObsidianSkin.IsUnknown.Should().BeFalse();
-            BuffType.FromId(byte.MaxValue).IsUnknown.Should().BeTrue();
+        public void FromId_ReturnsSameInstance() {
+            var buffType = BuffType.FromId(1);
+            var buffType2 = BuffType.FromId(1);
+
+            buffType.Should().BeSameAs(buffType2);
         }
 
         [Fact]
@@ -37,18 +43,6 @@ namespace Orion.Entities {
             for (byte i = 0; i < Terraria.Main.maxBuffTypes; ++i) {
                 BuffType.FromId(i).IsDebuff.Should().Be(Terraria.Main.debuff[i]);
             }
-        }
-
-        [Fact]
-        public void Equals_IsCorrect() {
-            var buffType = BuffType.FromId(100);
-            var buffType2 = BuffType.FromId(100);
-
-            buffType.Equals(buffType2).Should().BeTrue();
-
-            // ReSharper disable once SuspiciousTypeConversion.Global
-            buffType.Equals("null").Should().BeFalse();
-            buffType.Equals(null).Should().BeFalse();
         }
     }
 }

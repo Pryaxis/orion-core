@@ -297,18 +297,12 @@ namespace Orion.Entities {
         public byte Id { get; }
 
         /// <summary>
-        /// Gets a value indicating whether the buff type is unknown.
-        /// </summary>
-        public bool IsUnknown { get; }
-
-        /// <summary>
         /// Gets a value indicating whether the buff type is a debuff.
         /// </summary>
         public bool IsDebuff => Debuffs.Contains(this);
 
-        private BuffType(byte id, bool isUnknown = false) {
+        private BuffType(byte id) {
             Id = id;
-            IsUnknown = isUnknown;
         }
 
         // Initializes lookup tables.
@@ -327,16 +321,9 @@ namespace Orion.Entities {
         /// </summary>
         /// <param name="id">The ID.</param>
         /// <returns>The buff type.</returns>
-        public static BuffType FromId(byte id) =>
-            IdToBuffType.TryGetValue(id, out var buffType) ? buffType : new BuffType(id, true);
+        public static BuffType FromId(byte id) => IdToBuffType.TryGetValue(id, out var buffType) ? buffType : null;
 
         /// <inheritdoc />
-        public override bool Equals(object obj) => obj is BuffType buffType && Id == buffType.Id;
-
-        /// <inheritdoc />
-        public override int GetHashCode() => Id;
-
-        /// <inheritdoc />
-        public override string ToString() => IsUnknown ? "Unknown" : IdToField[Id].Name;
+        public override string ToString() => IdToField[Id].Name;
     }
 }
