@@ -15,9 +15,24 @@
 // You should have received a copy of the GNU General Public License
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
+using System;
+using Orion.Entities;
+using Orion.Utils;
+
 namespace Orion.World.TileEntities {
     /// <summary>
     /// Represents a Terraria chest.
     /// </summary>
-    public interface IChest : ITileEntity { }
+    public interface IChest : ITileEntity {
+        /// <summary>
+        /// Gets or sets the chest's name.
+        /// </summary>
+        /// <exception cref="ArgumentNullException"><paramref name="value"/> is <c>null</c>.</exception>
+        string Name { get; set; }
+
+        /// <summary>
+        /// Gets the chest's items.
+        /// </summary>
+        IReadOnlyArray<IItem> Items { get; }
+    }
 }

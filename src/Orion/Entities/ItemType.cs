@@ -21,7 +21,7 @@ using System.Reflection;
 
 namespace Orion.Entities {
     /// <summary>
-    /// Represent's an item's type.
+    /// Represent's an item type.
     /// </summary>
     public sealed class ItemType {
 #pragma warning disable 1591

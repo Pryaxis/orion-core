@@ -22,7 +22,7 @@ using Microsoft.Xna.Framework;
 
 namespace Orion.Entities {
     /// <summary>
-    /// Specifies an item rarity.
+    /// Represents an item rarity.
     /// </summary>
     public sealed class ItemRarity {
 #pragma warning disable 1591

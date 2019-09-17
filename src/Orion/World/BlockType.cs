@@ -20,7 +20,7 @@ using System.Reflection;
 
 namespace Orion.World {
     /// <summary>
-    /// Represents a block's type.
+    /// Represents a block type.
     /// </summary>
     public sealed class BlockType {
 #pragma warning disable 1591

@@ -15,9 +15,29 @@
 // You should have received a copy of the GNU General Public License
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
+using System;
+using Orion.Entities;
+
 namespace Orion.World.TileEntities {
     /// <summary>
     /// Represents a Terraria item frame.
     /// </summary>
-    public interface IItemFrame : ITileEntity { }
+    public interface IItemFrame : ITileEntity {
+        /// <summary>
+        /// Gets or sets the item's type.
+        /// </summary>
+        /// <exception cref="ArgumentNullException"><paramref name="value"/> is <c>null</c>.</exception>
+        ItemType ItemType { get; set; }
+
+        /// <summary>
+        /// Gets or sets the item's stack size.
+        /// </summary>
+        int ItemStackSize { get; set; }
+
+        /// <summary>
+        /// Gets or sets the item's prefix.
+        /// </summary>
+        /// <exception cref="ArgumentNullException"><paramref name="value"/> is <c>null</c>.</exception>
+        ItemPrefix ItemPrefix { get; set; }
+    }
 }

@@ -21,7 +21,7 @@ using System.Reflection;
 
 namespace Orion.Entities {
     /// <summary>
-    /// Represents an NPC's type.
+    /// Represents an NPC type.
     /// </summary>
     public sealed class NpcType {
 #pragma warning disable 1591

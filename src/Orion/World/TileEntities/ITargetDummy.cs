@@ -19,5 +19,10 @@ namespace Orion.World.TileEntities {
     /// <summary>
     /// Represents a Terraria target dummy.
     /// </summary>
-    public interface ITargetDummy : ITileEntity { }
+    public interface ITargetDummy : ITileEntity {
+        /// <summary>
+        /// Gets or sets the target dummy's NPC index.
+        /// </summary>
+        int NpcIndex { get; set; }
+    }
 }

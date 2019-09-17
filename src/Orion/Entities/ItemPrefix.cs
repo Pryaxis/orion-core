@@ -20,7 +20,7 @@ using System.Reflection;
 
 namespace Orion.Entities {
     /// <summary>
-    /// Represents an item's prefix.
+    /// Represents an item prefix.
     /// </summary>
     public sealed class ItemPrefix {
 #pragma warning disable 1591

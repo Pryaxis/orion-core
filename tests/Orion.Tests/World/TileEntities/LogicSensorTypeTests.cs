@@ -15,17 +15,26 @@
 // You should have received a copy of the GNU General Public License
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
-using System;
+using FluentAssertions;
+using Xunit;
 
 namespace Orion.World.TileEntities {
-    /// <summary>
-    /// Represents a Terraria sign.
-    /// </summary>
-    public interface ISign : ITileEntity {
-        /// <summary>
-        /// Gets or sets the sign's text.
-        /// </summary>
-        /// <exception cref="ArgumentNullException"><paramref name="value"/> is <c>null</c>.</exception>
-        string Text { get; set; }
+    public class LogicSensorTypeTests {
+        [Fact]
+        public void FromId_IsCorrect() {
+            for (byte i = 0; i < 8; ++i) {
+                LogicSensorType.FromId(i).Id.Should().Be(i);
+            }
+
+            LogicSensorType.FromId(8).Should().BeNull();
+        }
+
+        [Fact]
+        public void FromId_ReturnsSameInstance() {
+            var logicSensorType = LogicSensorType.FromId(1);
+            var logicSensorType2 = LogicSensorType.FromId(1);
+
+            logicSensorType.Should().BeSameAs(logicSensorType2);
+        }
     }
 }

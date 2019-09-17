@@ -23,7 +23,7 @@ using System.Reflection;
 
 namespace Orion.Networking.Packets {
     /// <summary>
-    /// Represents a packet's type.
+    /// Represents a packet type.
     /// </summary>
     public sealed class PacketType {
 #pragma warning disable 1591

@@ -21,7 +21,7 @@ using System.Reflection;
 
 namespace Orion.Entities {
     /// <summary>
-    /// Represents a buff's type.
+    /// Represents a buff type.
     /// </summary>
     public sealed class BuffType {
 #pragma warning disable 1591
