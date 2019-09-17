@@ -22,6 +22,13 @@ namespace Orion.Entities {
     [Collection("TerrariaTestsCollection")]
     public class BuffTypeTests {
         [Fact]
+        public void GetIsDebuff_IsCorrect() {
+            for (byte i = 0; i < Terraria.Main.maxBuffTypes; ++i) {
+                BuffType.FromId(i).IsDebuff.Should().Be(Terraria.Main.debuff[i]);
+            }
+        }
+
+        [Fact]
         public void FromId_IsCorrect() {
             for (byte i = 0; i < Terraria.Main.maxBuffTypes; ++i) {
                 BuffType.FromId(i).Id.Should().Be(i);
@@ -36,13 +43,6 @@ namespace Orion.Entities {
             var buffType2 = BuffType.FromId(1);
 
             buffType.Should().BeSameAs(buffType2);
-        }
-
-        [Fact]
-        public void GetIsDebuff_IsCorrect() {
-            for (byte i = 0; i < Terraria.Main.maxBuffTypes; ++i) {
-                BuffType.FromId(i).IsDebuff.Should().Be(Terraria.Main.debuff[i]);
-            }
         }
     }
 }

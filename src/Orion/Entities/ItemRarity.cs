@@ -24,7 +24,6 @@ namespace Orion.Entities {
     /// <summary>
     /// Specifies an item rarity.
     /// </summary>
-    [ExcludeFromCodeCoverage]
     public sealed class ItemRarity {
 #pragma warning disable 1591
         public static readonly ItemRarity Rainbow = new ItemRarity(-12);

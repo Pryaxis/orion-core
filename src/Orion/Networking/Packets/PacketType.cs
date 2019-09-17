@@ -25,7 +25,6 @@ namespace Orion.Networking.Packets {
     /// <summary>
     /// Represents a packet's type.
     /// </summary>
-    [ExcludeFromCodeCoverage]
     public sealed class PacketType {
 #pragma warning disable 1591
         public static PacketType None = new PacketType(0);

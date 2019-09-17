@@ -23,7 +23,6 @@ namespace Orion.Entities {
     /// <summary>
     /// Represents a buff's type.
     /// </summary>
-    [ExcludeFromCodeCoverage]
     public sealed class BuffType {
 #pragma warning disable 1591
         public static readonly BuffType None = new BuffType(0);

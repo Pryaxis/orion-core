@@ -22,6 +22,13 @@ namespace Orion.World {
     [Collection("TerrariaTestsCollection")]
     public class WallTypeTests {
         [Fact]
+        public void GetIsSafeForHouse_IsCorrect() {
+            for (byte i = 0; i < Terraria.Main.maxWallTypes; ++i) {
+                WallType.FromId(i).IsSafeForHouse.Should().Be(Terraria.Main.wallHouse[i]);
+            }
+        }
+
+        [Fact]
         public void FromId_IsCorrect() {
             for (byte i = 0; i < Terraria.Main.maxWallTypes; ++i) {
                 WallType.FromId(i).Id.Should().Be(i);
@@ -36,13 +43,6 @@ namespace Orion.World {
             var wallType2 = WallType.FromId(1);
 
             wallType.Should().BeSameAs(wallType2);
-        }
-
-        [Fact]
-        public void GetIsSafeForHouse_IsCorrect() {
-            for (byte i = 0; i < Terraria.Main.maxWallTypes; ++i) {
-                WallType.FromId(i).IsSafeForHouse.Should().Be(Terraria.Main.wallHouse[i]);
-            }
         }
     }
 }

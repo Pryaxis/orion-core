@@ -23,7 +23,6 @@ namespace Orion.Entities {
     /// <summary>
     /// Represent's an item's type.
     /// </summary>
-    [ExcludeFromCodeCoverage]
     public sealed class ItemType {
 #pragma warning disable 1591
         public static readonly ItemType None = new ItemType(0);

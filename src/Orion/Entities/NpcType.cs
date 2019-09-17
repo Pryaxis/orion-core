@@ -23,7 +23,6 @@ namespace Orion.Entities {
     /// <summary>
     /// Represents an NPC's type.
     /// </summary>
-    [ExcludeFromCodeCoverage]
     public sealed class NpcType {
 #pragma warning disable 1591
         public static readonly NpcType BigStingyHornet = new NpcType(-65);

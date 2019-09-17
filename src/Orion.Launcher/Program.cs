@@ -18,8 +18,10 @@
 using System;
 using System.IO;
 using Orion.Launcher.Properties;
+using Orion.World;
 using Serilog;
 using Serilog.Sinks.SystemConsole.Themes;
+using Terraria.ID;
 
 namespace Orion.Launcher {
     internal class Program {
@@ -43,6 +45,19 @@ namespace Orion.Launcher {
             AppDomain.CurrentDomain.UnhandledException += (sender, eventArgs) => {
                 Log.Fatal(eventArgs.ExceptionObject as Exception, Resources.UnhandledExceptionMessage);
             };
+
+            var main = new Terraria.Main();
+            main.Initialize();
+
+            for (var i = 0; i < TileID.Count; ++i) {
+                if (Terraria.Main.tileFrameImportant[i]) {
+                    try {
+                        Console.WriteLine(BlockType.IdToField[(ushort)i].Name);
+                    } catch {
+
+                    }
+                }
+            }
 
             using (var kernel = new OrionKernel()) {
                 Log.Information(Resources.LoadingPluginsMessage);

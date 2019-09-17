@@ -19,7 +19,15 @@ using FluentAssertions;
 using Xunit;
 
 namespace Orion.World {
+    [Collection("TerrariaTestsCollection")]
     public class BlockTypeTests {
+        [Fact]
+        public void GetAreFramesImportant_IsCorrect() {
+            for (ushort i = 0; i < Terraria.Main.maxTileSets; ++i) {
+                BlockType.FromId(i)?.AreFramesImportant.Should().Be(Terraria.Main.tileFrameImportant[i]);
+            }
+        }
+
         [Fact]
         public void FromId_IsCorrect() {
             for (ushort i = 0; i < Terraria.Main.maxTileSets; ++i) {
