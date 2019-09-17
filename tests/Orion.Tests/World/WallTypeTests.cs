@@ -27,7 +27,7 @@ namespace Orion.World {
                 WallType.FromId(i).Id.Should().Be(i);
             }
 
-            SlopeType.FromId(Terraria.Main.maxWallTypes).Should().BeNull();
+            WallType.FromId(Terraria.Main.maxWallTypes).Should().BeNull();
         }
 
         [Fact]

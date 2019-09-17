@@ -48,7 +48,7 @@ namespace Orion.World {
         public static readonly BlockType Chests = new BlockType(21);
         public static readonly BlockType DemoniteOre = new BlockType(22);
         public static readonly BlockType CorruptGrass = new BlockType(23);
-        public static readonly BlockType ShortCorruptionPlants = new BlockType(23);
+        public static readonly BlockType ShortCorruptionPlants = new BlockType(24);
         public static readonly BlockType Ebonstone = new BlockType(25);
         public static readonly BlockType Altars = new BlockType(26);
         public static readonly BlockType Sunflower = new BlockType(27);
@@ -495,7 +495,7 @@ namespace Orion.World {
         public static readonly BlockType CrystalTable = new BlockType(469);
 #pragma warning restore 1591
 
-        internal static readonly IDictionary<ushort, FieldInfo> IdToField = new Dictionary<ushort, FieldInfo>();
+        private static readonly IDictionary<ushort, FieldInfo> IdToField = new Dictionary<ushort, FieldInfo>();
         private static readonly IDictionary<ushort, BlockType> IdToBlockType = new Dictionary<ushort, BlockType>();
 
         /// <summary>
@@ -503,14 +503,8 @@ namespace Orion.World {
         /// </summary>
         public ushort Id { get; }
 
-        /// <summary>
-        /// Gets a value indicating whether the block type is unknown.
-        /// </summary>
-        public bool IsUnknown { get; }
-
-        private BlockType(ushort id, bool isUnknown = false) {
+        private BlockType(ushort id) {
             Id = id;
-            IsUnknown = isUnknown;
         }
 
         // Initializes lookup tables.
@@ -528,17 +522,11 @@ namespace Orion.World {
         /// Returns a block type converted from the given ID.
         /// </summary>
         /// <param name="id">The ID.</param>
-        /// <returns>The block type.</returns>
+        /// <returns>The block type, or <c>null</c> if none exists.</returns>
         public static BlockType FromId(ushort id) =>
-            IdToBlockType.TryGetValue(id, out var blockType) ? blockType : new BlockType(id, true);
+            IdToBlockType.TryGetValue(id, out var blockType) ? blockType : null;
 
         /// <inheritdoc />
-        public override bool Equals(object obj) => obj is BlockType blockType && Id == blockType.Id;
-
-        /// <inheritdoc />
-        public override int GetHashCode() => Id;
-
-        /// <inheritdoc />
-        public override string ToString() => IsUnknown ? "Unknown" : IdToField[Id].Name;
+        public override string ToString() => IdToField[Id].Name;
     }
 }

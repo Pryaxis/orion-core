@@ -22,26 +22,20 @@ namespace Orion.World {
     [Collection("TerrariaTestsCollection")]
     public class BlockTypeTests {
         [Fact]
-        public void GetId_IsCorrect() {
-            BlockType.FromId(100).Id.Should().Be(100);
+        public void FromId_IsCorrect() {
+            for (ushort i = 0; i < Terraria.Main.maxTileSets; ++i) {
+                BlockType.FromId(i)?.Id.Should().Be(i);
+            }
+
+            BlockType.FromId(Terraria.Main.maxTileSets).Should().BeNull();
         }
 
         [Fact]
-        public void GetIsUnknown_IsCorrect() {
-            BlockType.Stone.IsUnknown.Should().BeFalse();
-            BlockType.FromId(ushort.MaxValue).IsUnknown.Should().BeTrue();
-        }
+        public void FromId_ReturnsSameInstance() {
+            var blockType = BlockType.FromId(1);
+            var blockType2 = BlockType.FromId(1);
 
-        [Fact]
-        public void Equals_IsCorrect() {
-            var buffType = BlockType.FromId(100);
-            var buffType2 = BlockType.FromId(100);
-
-            buffType.Equals(buffType2).Should().BeTrue();
-
-            // ReSharper disable once SuspiciousTypeConversion.Global
-            buffType.Equals("null").Should().BeFalse();
-            buffType.Equals(null).Should().BeFalse();
+            blockType.Should().BeSameAs(blockType2);
         }
     }
 }

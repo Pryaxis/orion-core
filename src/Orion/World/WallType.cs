@@ -438,8 +438,7 @@ namespace Orion.World {
         /// </summary>
         /// <param name="id">The ID.</param>
         /// <returns>The wall type, or <c>null</c> if none exists.</returns>
-        public static WallType FromId(byte id) =>
-            IdToWallType.TryGetValue(id, out var wallType) ? wallType : null;
+        public static WallType FromId(byte id) => IdToWallType.TryGetValue(id, out var wallType) ? wallType : null;
 
         /// <inheritdoc />
         public override string ToString() => IdToField[Id].Name;
