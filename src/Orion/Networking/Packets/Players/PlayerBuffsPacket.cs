@@ -68,7 +68,8 @@ namespace Orion.Networking.Packets.Players {
         private protected override void ReadFromReader(BinaryReader reader, PacketContext context) {
             _playerIndex = reader.ReadByte();
             for (var i = 0; i < _playerBuffTypes.Length; ++i) {
-                _playerBuffTypes[i] = BuffType.FromId(reader.ReadByte());
+                _playerBuffTypes[i] = BuffType.FromId(reader.ReadByte()) ??
+                                      throw new PacketException("Buff type is invalid.");
             }
         }
 

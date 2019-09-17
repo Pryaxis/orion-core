@@ -49,7 +49,7 @@ namespace Orion.Networking.Packets.Npcs {
                 IsDirty = true;
             }
         }
-        
+
         /// <inheritdoc />
         public override PacketType Type => PacketType.NpcName;
 

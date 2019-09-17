@@ -63,7 +63,7 @@ namespace Orion.Networking.Packets.Players {
                 IsDirty = true;
             }
         }
-        
+
         /// <inheritdoc />
         public override PacketType Type => PacketType.ConsumeItems;
 
@@ -72,7 +72,7 @@ namespace Orion.Networking.Packets.Players {
         public override string ToString() => $"{Type}[#={PlayerIndex}, {ItemType} x{ItemStackSize}]";
 
         private protected override void ReadFromReader(BinaryReader reader, PacketContext context) {
-            _itemType = ItemType.FromId(reader.ReadInt16());
+            _itemType = ItemType.FromId(reader.ReadInt16()) ?? throw new PacketException("Item type is invalid.");
             _itemStackSize = reader.ReadInt16();
             _playerIndex = reader.ReadByte();
         }

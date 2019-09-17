@@ -22,26 +22,20 @@ using Xunit;
 namespace Orion.Networking {
     public class PacketTypeTests {
         [Fact]
-        public void GetId_IsCorrect() {
-            PacketType.FromId(100).Id.Should().Be(100);
+        public void FromId_IsCorrect() {
+            for (byte i = 0; i < Terraria.ID.MessageID.Count; ++i) {
+                PacketType.FromId(i)?.Id.Should().Be(i);
+            }
+
+            PacketType.FromId(Terraria.ID.MessageID.Count).Should().BeNull();
         }
 
         [Fact]
-        public void GetIsUnknown_IsCorrect() {
-            PacketType.PlayerConnect.IsUnknown.Should().BeFalse();
-            PacketType.FromId(byte.MaxValue).IsUnknown.Should().BeTrue();
-        }
+        public void FromId_ReturnsSameInstance() {
+            var packetType = PacketType.FromId(1);
+            var packetType2 = PacketType.FromId(1);
 
-        [Fact]
-        public void EqualsObject_IsCorrect() {
-            var packetType = PacketType.FromId(100);
-            var packetType2 = PacketType.FromId(100);
-
-            packetType.Equals(packetType2).Should().BeTrue();
-
-            // ReSharper disable once SuspiciousTypeConversion.Global
-            packetType.Equals("null").Should().BeFalse();
-            packetType.Equals(null).Should().BeFalse();
+            packetType.Should().BeSameAs(packetType2);
         }
     }
 }

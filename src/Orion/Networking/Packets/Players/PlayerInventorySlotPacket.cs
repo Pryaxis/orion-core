@@ -101,8 +101,8 @@ namespace Orion.Networking.Packets.Players {
             _playerIndex = reader.ReadByte();
             _playerInventorySlotIndex = reader.ReadByte();
             _itemStackSize = reader.ReadInt16();
-            _itemPrefix = ItemPrefix.FromId(reader.ReadByte());
-            _itemType = ItemType.FromId(reader.ReadInt16());
+            _itemPrefix = ItemPrefix.FromId(reader.ReadByte()) ?? throw new PacketException("Item prefix is invalid.");
+            _itemType = ItemType.FromId(reader.ReadInt16()) ?? throw new PacketException("Item type is invalid.");
         }
 
         private protected override void WriteToWriter(BinaryWriter writer, PacketContext context) {

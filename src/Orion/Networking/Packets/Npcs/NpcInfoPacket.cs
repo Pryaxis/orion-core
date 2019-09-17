@@ -216,7 +216,7 @@ namespace Orion.Networking.Packets.Npcs {
             _npcSpriteDirection = header[6];
             _isNpcAtMaxHealth = header[7];
 
-            _npcType = NpcType.FromId(reader.ReadInt16());
+            _npcType = NpcType.FromId(reader.ReadInt16()) ?? throw new PacketException("NPC type is invalid.");
 
             if (!IsNpcAtMaxHealth) {
                 _npcNumberOfHealthBytes = reader.ReadByte();

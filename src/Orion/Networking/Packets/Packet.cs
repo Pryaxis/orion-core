@@ -47,25 +47,32 @@ namespace Orion.Networking.Packets {
         /// <param name="context">The context with which to read the packet.</param>
         /// <returns>The resulting packet.</returns>
         /// <exception cref="ArgumentNullException"><paramref name="stream"/> is <c>null</c>.</exception>
+        /// <exception cref="PacketException">The packet could not be parsed correctly.</exception>
         public static Packet ReadFromStream(Stream stream, PacketContext context) {
             if (stream == null) throw new ArgumentNullException(nameof(stream));
 
-            var reader = new BinaryReader(stream, Encoding.UTF8, true);
+            try {
+                var reader = new BinaryReader(stream, Encoding.UTF8, true);
 #if DEBUG
-            var oldPosition = stream.Position;
-            var packetLength = reader.ReadUInt16();
+                var oldPosition = stream.Position;
+                var packetLength = reader.ReadUInt16();
 #else
             reader.ReadUInt16();
 #endif
-            var packetType = PacketType.FromId(reader.ReadByte());
-            var packet = packetType.Constructor();
-            packet.ReadFromReader(reader, context);
+                var packetType = PacketType.FromId(reader.ReadByte()) ??
+                                 throw new PacketException("Packet type is invalid.");
+                var packet = packetType.Constructor();
+
+                packet.ReadFromReader(reader, context);
 
 #if DEBUG
-            Debug.Assert(stream.Position - oldPosition == packetLength, "Packet should have been consumed.");
-            Debug.Assert(!packet.IsDirty, "Packet should not be dirty.");
+                Debug.Assert(stream.Position - oldPosition == packetLength, "Packet should have been consumed.");
+                Debug.Assert(!packet.IsDirty, "Packet should not be dirty.");
 #endif
-            return packet;
+                return packet;
+            } catch (Exception ex) when (!(ex is PacketException)) {
+                throw new PacketException("An exception occurred when parsing the packet.", ex);
+            }
         }
 
         /// <inheritdoc />
@@ -78,24 +85,29 @@ namespace Orion.Networking.Packets {
         /// <param name="stream">The stream.</param>
         /// <param name="context">The context with which to read the packet.</param>
         /// <exception cref="ArgumentNullException"><paramref name="stream"/> is <c>null</c>.</exception>
+        /// <exception cref="PacketException">The packet was too long.</exception>
         public void WriteToStream(Stream stream, PacketContext context) {
             if (stream == null) throw new ArgumentNullException(nameof(stream));
 
-            var writer = new BinaryWriter(stream, Encoding.UTF8, true);
-            var oldPosition = stream.Position;
-            writer.Write((short)0);
-            writer.Write(Type.Id);
-            WriteToWriter(writer, context);
+            try {
+                var writer = new BinaryWriter(stream, Encoding.UTF8, true);
+                var oldPosition = stream.Position;
+                writer.Write((short)0);
+                writer.Write(Type.Id);
+                WriteToWriter(writer, context);
 
-            var position = stream.Position;
-            var packetLength = position - oldPosition;
-            if (packetLength > ushort.MaxValue) {
-                throw new InvalidOperationException("Packet is too long.");
+                var position = stream.Position;
+                var packetLength = position - oldPosition;
+                if (packetLength > ushort.MaxValue) {
+                    throw new PacketException("Packet is too long.");
+                }
+
+                stream.Position = oldPosition;
+                writer.Write((ushort)packetLength);
+                stream.Position = position;
+            } catch (Exception ex) when (!(ex is PacketException)) {
+                throw new PacketException("An exception occurred when writing the packet.", ex);
             }
-
-            stream.Position = oldPosition;
-            writer.Write((ushort)packetLength);
-            stream.Position = position;
         }
 
         private protected abstract void ReadFromReader(BinaryReader reader, PacketContext context);

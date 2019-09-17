@@ -30,7 +30,7 @@ namespace Orion.Networking.Packets.Players {
 
             action.Should().Throw<ArgumentNullException>();
         }
-        
+
         [Fact]
         public void SetItemType_NullValue_ThrowsArgumentNullException() {
             var packet = new PlayerInventorySlotPacket();

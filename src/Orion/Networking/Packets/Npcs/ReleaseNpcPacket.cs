@@ -73,7 +73,7 @@ namespace Orion.Networking.Packets.Npcs {
 
         private protected override void ReadFromReader(BinaryReader reader, PacketContext context) {
             _npcPosition = new Vector2(reader.ReadInt32(), reader.ReadInt32());
-            _npcType = NpcType.FromId(reader.ReadInt16());
+            _npcType = NpcType.FromId(reader.ReadInt16()) ?? throw new PacketException("NPC type is invalid.");
             _npcStyle = reader.ReadByte();
         }
 

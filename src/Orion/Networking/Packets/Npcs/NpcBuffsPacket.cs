@@ -68,8 +68,9 @@ namespace Orion.Networking.Packets.Npcs {
         private protected override void ReadFromReader(BinaryReader reader, PacketContext context) {
             _npcIndex = reader.ReadInt16();
             for (var i = 0; i < _npcBuffs.Length; ++i) {
-                _npcBuffs[i] = new Buff(BuffType.FromId(reader.ReadByte()),
-                                        TimeSpan.FromSeconds(reader.ReadInt16() / 60.0));
+                _npcBuffs[i] =
+                    new Buff(BuffType.FromId(reader.ReadByte()) ?? throw new PacketException("Buff type is invalid."),
+                             TimeSpan.FromSeconds(reader.ReadInt16() / 60.0));
             }
         }
 

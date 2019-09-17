@@ -155,14 +155,9 @@ namespace Orion.Networking.Packets {
         public byte Id { get; }
 
         /// <summary>
-        /// Gets a value indicating whether the packet type is unknown.
-        /// </summary>
-        public bool IsUnknown { get; }
-
-        /// <summary>
         /// Gets the packet type's constructor.
         /// </summary>
-        public Func<Packet> Constructor => IsUnknown ? null : PacketConstructors[this];
+        public Func<Packet> Constructor => PacketConstructors[this];
 
         // Initializes lookup tables.
         static PacketType() {
@@ -181,9 +176,8 @@ namespace Orion.Networking.Packets {
             }
         }
 
-        private PacketType(byte id, bool isUnknown = false) {
+        private PacketType(byte id) {
             Id = id;
-            IsUnknown = isUnknown;
         }
 
         /// <summary>
@@ -192,15 +186,9 @@ namespace Orion.Networking.Packets {
         /// <param name="id">The ID.</param>
         /// <returns>The packet type.</returns>
         public static PacketType FromId(byte id) =>
-            IdToPacketType.TryGetValue(id, out var buffType) ? buffType : new PacketType(id, true);
+            IdToPacketType.TryGetValue(id, out var packetType) ? packetType : null;
 
         /// <inheritdoc />
-        public override bool Equals(object obj) => obj is PacketType packetType && Id == packetType.Id;
-
-        /// <inheritdoc />
-        public override int GetHashCode() => Id.GetHashCode();
-
-        /// <inheritdoc />
-        public override string ToString() => IsUnknown ? "Unknown" : IdToField[Id].Name;
+        public override string ToString() => IdToField[Id].Name;
     }
 }

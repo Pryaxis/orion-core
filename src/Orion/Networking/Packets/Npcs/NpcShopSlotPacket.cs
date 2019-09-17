@@ -97,9 +97,9 @@ namespace Orion.Networking.Packets.Npcs {
 
         private protected override void ReadFromReader(BinaryReader reader, PacketContext context) {
             _npcShopSlotIndex = reader.ReadByte();
-            _itemType = ItemType.FromId(reader.ReadInt16());
+            _itemType = ItemType.FromId(reader.ReadInt16()) ?? throw new PacketException("Item type is invalid.");
             _itemStackSize = reader.ReadInt16();
-            _itemPrefix = ItemPrefix.FromId(reader.ReadByte());
+            _itemPrefix = ItemPrefix.FromId(reader.ReadByte()) ?? throw new PacketException("Item prefix is invalid.");
             _itemValue = reader.ReadInt32();
         }
 

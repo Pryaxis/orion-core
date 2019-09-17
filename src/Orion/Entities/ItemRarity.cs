@@ -43,7 +43,7 @@ namespace Orion.Entities {
         public static readonly ItemRarity Red = new ItemRarity(10);
         public static readonly ItemRarity Purple = new ItemRarity(11);
 #pragma warning restore 1591
-        
+
         private static readonly IDictionary<int, FieldInfo> LevelToField = new Dictionary<int, FieldInfo>();
         private static readonly IDictionary<int, ItemRarity> LevelToItemRarity = new Dictionary<int, ItemRarity>();
 
@@ -101,7 +101,7 @@ namespace Orion.Entities {
 
         /// <inheritdoc />
         public override int GetHashCode() => Level;
-        
+
         /// <inheritdoc />
         public override string ToString() => LevelToField[Level].Name;
     }
