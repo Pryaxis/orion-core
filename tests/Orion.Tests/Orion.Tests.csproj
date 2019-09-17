@@ -21,7 +21,6 @@
 
   <ItemGroup>
     <Folder Include="Networking\Packets\Items\" />
-    <Folder Include="Networking\Packets\World\" />
   </ItemGroup>
 
 </Project>
