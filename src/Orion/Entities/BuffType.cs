@@ -234,10 +234,10 @@ namespace Orion.Entities {
         public static readonly BuffType BallistaPanic = new BuffType(205);
 #pragma warning restore 1591
 
-        internal static readonly IDictionary<byte, FieldInfo> IdToField = new Dictionary<byte, FieldInfo>();
+        private static readonly IDictionary<byte, FieldInfo> IdToField = new Dictionary<byte, FieldInfo>();
         private static readonly IDictionary<byte, BuffType> IdToBuffType = new Dictionary<byte, BuffType>();
 
-        private static ISet<BuffType> Debuffs = new HashSet<BuffType> {
+        private static readonly ISet<BuffType> Debuffs = new HashSet<BuffType> {
             Poisoned,
             PotionSickness,
             Darkness,
