@@ -72,7 +72,7 @@ namespace Orion.Networking.Packets {
         public static PacketType RequestSign = new PacketType(46);
         public static PacketType SignText = new PacketType(47);
         public static PacketType TileLiquid = new PacketType(48);
-        public static PacketType EnterWorld = new PacketType(49);
+        public static PacketType PlayerEnterWorld = new PacketType(49);
         public static PacketType PlayerBuffs = new PacketType(50);
         public static PacketType MiscAction = new PacketType(51);
         public static PacketType UnlockObject = new PacketType(52);
