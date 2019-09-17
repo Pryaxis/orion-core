@@ -495,7 +495,7 @@ namespace Orion.World {
         public static readonly BlockType CrystalTable = new BlockType(469);
 #pragma warning restore 1591
 
-        private static readonly IDictionary<ushort, FieldInfo> IdToField = new Dictionary<ushort, FieldInfo>();
+        internal static readonly IDictionary<ushort, FieldInfo> IdToField = new Dictionary<ushort, FieldInfo>();
         private static readonly IDictionary<ushort, BlockType> IdToBlockType = new Dictionary<ushort, BlockType>();
 
         /// <summary>
