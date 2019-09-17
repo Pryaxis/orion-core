@@ -15,43 +15,80 @@
 // You should have received a copy of the GNU General Public License
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
+using System.Collections.Generic;
+using System.Reflection;
+
 namespace Orion.World {
     /// <summary>
-    /// Specifies a paint color.
+    /// Represents a paint color.
     /// </summary>
-    public enum PaintColor : byte {
+    public sealed class PaintColor {
 #pragma warning disable 1591
-        None = 0,
-        Red = 1,
-        Orange = 2,
-        Yellow = 3,
-        Lime = 4,
-        Green = 5,
-        Teal = 6,
-        Cyan = 7,
-        SkyBlue = 8,
-        Blue = 9,
-        Purple = 10,
-        Violet = 11,
-        Pink = 12,
-        DeepRed = 13,
-        DeepOrange = 14,
-        DeepYellow = 15,
-        DeepLime = 16,
-        DeepGreen = 17,
-        DeepTeal = 18,
-        DeepCyan = 19,
-        DeepSkyBlue = 20,
-        DeepBlue = 21,
-        DeepPurple = 22,
-        DeepViolet = 23,
-        DeepPink = 24,
-        Black = 25,
-        White = 26,
-        Gray = 27,
-        Brown = 28,
-        Shadow = 29,
-        Negative = 30,
+        public static readonly PaintColor None = new PaintColor(0);
+        public static readonly PaintColor Red = new PaintColor(1);
+        public static readonly PaintColor Orange = new PaintColor(2);
+        public static readonly PaintColor Yellow = new PaintColor(3);
+        public static readonly PaintColor Lime = new PaintColor(4);
+        public static readonly PaintColor Green = new PaintColor(5);
+        public static readonly PaintColor Teal = new PaintColor(6);
+        public static readonly PaintColor Cyan = new PaintColor(7);
+        public static readonly PaintColor SkyBlue = new PaintColor(8);
+        public static readonly PaintColor Blue = new PaintColor(9);
+        public static readonly PaintColor Purple = new PaintColor(10);
+        public static readonly PaintColor Violet = new PaintColor(11);
+        public static readonly PaintColor Pink = new PaintColor(12);
+        public static readonly PaintColor DeepRed = new PaintColor(13);
+        public static readonly PaintColor DeepOrange = new PaintColor(14);
+        public static readonly PaintColor DeepYellow = new PaintColor(15);
+        public static readonly PaintColor DeepLime = new PaintColor(16);
+        public static readonly PaintColor DeepGreen = new PaintColor(17);
+        public static readonly PaintColor DeepTeal = new PaintColor(18);
+        public static readonly PaintColor DeepCyan = new PaintColor(19);
+        public static readonly PaintColor DeepSkyBlue = new PaintColor(20);
+        public static readonly PaintColor DeepBlue = new PaintColor(21);
+        public static readonly PaintColor DeepPurple = new PaintColor(22);
+        public static readonly PaintColor DeepViolet = new PaintColor(23);
+        public static readonly PaintColor DeepPink = new PaintColor(24);
+        public static readonly PaintColor Black = new PaintColor(25);
+        public static readonly PaintColor White = new PaintColor(26);
+        public static readonly PaintColor Gray = new PaintColor(27);
+        public static readonly PaintColor Brown = new PaintColor(28);
+        public static readonly PaintColor Shadow = new PaintColor(29);
+        public static readonly PaintColor Negative = new PaintColor(30);
 #pragma warning restore 1591
+
+        private static readonly IDictionary<byte, FieldInfo> IdToField = new Dictionary<byte, FieldInfo>();
+        private static readonly IDictionary<byte, PaintColor> IdToPaintColor = new Dictionary<byte, PaintColor>();
+
+        /// <summary>
+        /// Gets the paint color's ID.
+        /// </summary>
+        public byte Id { get; }
+
+        private PaintColor(byte id) {
+            Id = id;
+        }
+
+        // Initializes lookup tables.
+        static PaintColor() {
+            var fields = typeof(PaintColor).GetFields(BindingFlags.Public | BindingFlags.Static);
+            foreach (var field in fields) {
+                if (!(field.GetValue(null) is PaintColor paintColor)) continue;
+
+                IdToField[paintColor.Id] = field;
+                IdToPaintColor[paintColor.Id] = paintColor;
+            }
+        }
+
+        /// <summary>
+        /// Returns a paint color converted from the given ID.
+        /// </summary>
+        /// <param name="id">The ID.</param>
+        /// <returns>The paint color, or <c>null</c> if none exists.</returns>
+        public static PaintColor FromId(byte id) =>
+            IdToPaintColor.TryGetValue(id, out var paintColor) ? paintColor : null;
+
+        /// <inheritdoc />
+        public override string ToString() => IdToField[Id].Name;
     }
 }

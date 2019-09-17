@@ -75,9 +75,14 @@ namespace Orion.World {
         /// <summary>
         /// Gets or sets the tile's block color.
         /// </summary>
+        /// <exception cref="ArgumentNullException"><paramref name="value"/> is <c>null</c>.</exception>
         public PaintColor BlockColor {
-            get => (PaintColor)((ITile)this).color();
-            set => ((ITile)this).color((byte)value);
+            get => PaintColor.FromId(((ITile)this).color());
+            set {
+                if (value == null) throw new ArgumentNullException(nameof(value));
+
+                ((ITile)this).color(value.Id);
+            }
         }
 
         /// <summary>
@@ -152,9 +157,14 @@ namespace Orion.World {
         /// <summary>
         /// Gets or sets the tile's wall color.
         /// </summary>
+        /// <exception cref="ArgumentNullException"><paramref name="value"/> is <c>null</c>.</exception>
         public PaintColor WallColor {
-            get => (PaintColor)((ITile)this).wallColor();
-            set => ((ITile)this).wallColor((byte)value);
+            get => PaintColor.FromId(((ITile)this).wallColor());
+            set {
+                if (value == null) throw new ArgumentNullException(nameof(value));
+
+                ((ITile)this).wallColor(value.Id);
+            }
         }
 
         /// <summary>
