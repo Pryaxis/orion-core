@@ -234,8 +234,62 @@ namespace Orion.Entities {
         public static readonly BuffType BallistaPanic = new BuffType(205);
 #pragma warning restore 1591
 
-        private static readonly IDictionary<byte, FieldInfo> IdToField = new Dictionary<byte, FieldInfo>();
+        internal static readonly IDictionary<byte, FieldInfo> IdToField = new Dictionary<byte, FieldInfo>();
         private static readonly IDictionary<byte, BuffType> IdToBuffType = new Dictionary<byte, BuffType>();
+
+        private static ISet<BuffType> Debuffs = new HashSet<BuffType> {
+            Poisoned,
+            PotionSickness,
+            Darkness,
+            Cursed,
+            OnFire,
+            Tipsy,
+            Werewolf,
+            Bleeding,
+            Confused,
+            Slow,
+            Weak,
+            Merfolk,
+            Silenced,
+            BrokenArmor,
+            Horrified,
+            TheTongue,
+            CursedInferno,
+            Frostburn,
+            Chilled,
+            Frozen,
+            Burning,
+            Suffocation,
+            Ichor,
+            Venom,
+            Blackout,
+            WaterCandle,
+            CozyFire,
+            ChaosState,
+            HeartLamp,
+            ManaSickness,
+            Wet,
+            Lovestruck,
+            Stinky,
+            Slime,
+            Electrified,
+            MoonBite,
+            Happy,
+            Banner,
+            FeralBite,
+            Webbed,
+            Stoned,
+            PeaceCandle,
+            StarInABottle,
+            Dazed,
+            Obstructed,
+            Distorted,
+            MightyWind,
+            WitheredArmor,
+            WitheredWeapon,
+            Oozed,
+            CreativeShock
+        };
 
         /// <summary>
         /// Gets the buff type's ID.
@@ -246,6 +300,11 @@ namespace Orion.Entities {
         /// Gets a value indicating whether the buff type is unknown.
         /// </summary>
         public bool IsUnknown { get; }
+
+        /// <summary>
+        /// Gets a value indicating whether the buff type is a debuff.
+        /// </summary>
+        public bool IsDebuff => Debuffs.Contains(this);
 
         private BuffType(byte id, bool isUnknown = false) {
             Id = id;

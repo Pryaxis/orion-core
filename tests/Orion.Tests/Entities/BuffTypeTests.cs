@@ -19,6 +19,7 @@ using FluentAssertions;
 using Xunit;
 
 namespace Orion.Entities {
+    [Collection("TerrariaTestsCollection")]
     public class BuffTypeTests {
         [Fact]
         public void GetId_IsCorrect() {
@@ -29,6 +30,13 @@ namespace Orion.Entities {
         public void GetIsUnknown_IsCorrect() {
             BuffType.ObsidianSkin.IsUnknown.Should().BeFalse();
             BuffType.FromId(byte.MaxValue).IsUnknown.Should().BeTrue();
+        }
+
+        [Fact]
+        public void GetIsDebuff_IsCorrect() {
+            for (byte i = 0; i < Terraria.Main.maxBuffTypes; ++i) {
+                BuffType.FromId(i).IsDebuff.Should().Be(Terraria.Main.debuff[i]);
+            }
         }
 
         [Fact]
