@@ -414,18 +414,12 @@ namespace Orion.World {
         public byte Id { get; }
 
         /// <summary>
-        /// Gets a value indicating whether the wall type is unknown.
-        /// </summary>
-        public bool IsUnknown { get; }
-
-        /// <summary>
         /// Gets a value indicating whether the wall type is safe for use as a house.
         /// </summary>
         public bool IsSafeForHouse => SafeForHouse.Contains(this);
 
-        private WallType(byte id, bool isUnknown = false) {
+        private WallType(byte id) {
             Id = id;
-            IsUnknown = isUnknown;
         }
 
         // Initializes lookup tables.
@@ -443,17 +437,11 @@ namespace Orion.World {
         /// Returns a wall type converted from the given ID.
         /// </summary>
         /// <param name="id">The ID.</param>
-        /// <returns>The wall type.</returns>
+        /// <returns>The wall type, or <c>null</c> if none exists.</returns>
         public static WallType FromId(byte id) =>
-            IdToWallType.TryGetValue(id, out var wallType) ? wallType : new WallType(id, true);
+            IdToWallType.TryGetValue(id, out var wallType) ? wallType : null;
 
         /// <inheritdoc />
-        public override bool Equals(object obj) => obj is WallType wallType && Id == wallType.Id;
-
-        /// <inheritdoc />
-        public override int GetHashCode() => Id;
-
-        /// <inheritdoc />
-        public override string ToString() => IsUnknown ? "Unknown" : IdToField[Id].Name;
+        public override string ToString() => IdToField[Id].Name;
     }
 }

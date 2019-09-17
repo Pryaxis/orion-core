@@ -16,17 +16,10 @@
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
 using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Reflection;
-using Orion.Entities;
 using Orion.Launcher.Properties;
-using Orion.World;
 using Serilog;
 using Serilog.Sinks.SystemConsole.Themes;
-using Terraria;
-using Terraria.ID;
-using Terraria.Localization;
 
 namespace Orion.Launcher {
     internal class Program {
@@ -50,35 +43,6 @@ namespace Orion.Launcher {
             AppDomain.CurrentDomain.UnhandledException += (sender, eventArgs) => {
                 Log.Fatal(eventArgs.ExceptionObject as Exception, Resources.UnhandledExceptionMessage);
             };
-
-            Terraria.Main main = new Main();
-            main.Initialize();
-            LanguageManager.Instance.SetLanguage(GameCulture.English);
-            Lang.InitializeLegacyLocalization();
-            Terraria.Main.player[Terraria.Main.myPlayer] = new Player();
-            SortedDictionary<(int id, int style), FieldInfo> items =
-                new SortedDictionary<(int id, int style), FieldInfo>();
-            for (var i = 0; i < ItemID.Count; ++i) {
-                var item = new Item();
-                item.SetDefaults(i);
-
-                if (item.createTile >= 0 && item.createTile == 139) {
-                    try {
-                        items.Add((item.createTile, item.placeStyle), ItemType.IdToField[(short)i]);
-                    } catch
-                    {
-
-                    }
-                }
-            }
-
-            foreach (var kvp in items) {
-                if (kvp.Key.style == 0) {
-                    Log.Information("public static readonly BlockType {Name} = new BlockType({Id});", kvp.Value.Name, kvp.Key.id);
-                } else {
-                    Log.Information("public static readonly BlockType {Name} = new BlockType({Id}, {Style});", kvp.Value.Name, kvp.Key.id, kvp.Key.style);
-                }
-            }
 
             using (var kernel = new OrionKernel()) {
                 Log.Information(Resources.LoadingPluginsMessage);

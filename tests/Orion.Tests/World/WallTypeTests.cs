@@ -22,33 +22,27 @@ namespace Orion.World {
     [Collection("TerrariaTestsCollection")]
     public class WallTypeTests {
         [Fact]
-        public void GetId_IsCorrect() {
-            WallType.FromId(100).Id.Should().Be(100);
+        public void FromId_IsCorrect() {
+            for (byte i = 0; i < Terraria.Main.maxWallTypes; ++i) {
+                WallType.FromId(i).Id.Should().Be(i);
+            }
+
+            SlopeType.FromId(Terraria.Main.maxWallTypes).Should().BeNull();
         }
 
         [Fact]
-        public void GetIsUnknown_IsCorrect() {
-            WallType.Stone.IsUnknown.Should().BeFalse();
-            WallType.FromId(byte.MaxValue).IsUnknown.Should().BeTrue();
+        public void FromId_ReturnsSameInstance() {
+            var wallType = WallType.FromId(1);
+            var wallType2 = WallType.FromId(1);
+
+            wallType.Should().BeSameAs(wallType2);
         }
 
         [Fact]
         public void GetIsSafeForHouse_IsCorrect() {
-            for (var i = 0; i < Terraria.Main.maxWallTypes; ++i) {
-                WallType.FromId((byte)i).IsSafeForHouse.Should().Be(Terraria.Main.wallHouse[i]);
+            for (byte i = 0; i < Terraria.Main.maxWallTypes; ++i) {
+                WallType.FromId(i).IsSafeForHouse.Should().Be(Terraria.Main.wallHouse[i]);
             }
-        }
-
-        [Fact]
-        public void Equals_IsCorrect() {
-            var buffType = WallType.FromId(100);
-            var buffType2 = WallType.FromId(100);
-
-            buffType.Equals(buffType2).Should().BeTrue();
-
-            // ReSharper disable once SuspiciousTypeConversion.Global
-            buffType.Equals("null").Should().BeFalse();
-            buffType.Equals(null).Should().BeFalse();
         }
     }
 }
