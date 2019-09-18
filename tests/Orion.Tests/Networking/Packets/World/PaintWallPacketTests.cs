@@ -15,6 +15,7 @@
 // You should have received a copy of the GNU General Public License
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
+using System;
 using System.IO;
 using FluentAssertions;
 using Orion.World;
@@ -22,6 +23,14 @@ using Xunit;
 
 namespace Orion.Networking.Packets.World {
     public class PaintWallPacketTests {
+        [Fact]
+        public void SetWallColor_NullValue_ThrowsArgumentNullException() {
+            var packet = new PaintWallPacket();
+            Action action = () => packet.WallColor = null;
+
+            action.Should().Throw<ArgumentNullException>();
+        }
+
         public static readonly byte[] Bytes = {8, 0, 64, 0, 1, 100, 0, 1};
 
         [Fact]
