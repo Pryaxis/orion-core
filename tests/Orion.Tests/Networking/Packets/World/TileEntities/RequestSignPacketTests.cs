@@ -35,7 +35,7 @@ namespace Orion.Networking.Packets.World.TileEntities {
 
         [Fact]
         public void WriteToStream_IsCorrect() {
-            TestUtils.WriteToStream_SameBytes(Bytes);
+            Bytes.ShouldDeserializeAndSerializeSamePacket();
         }
     }
 }

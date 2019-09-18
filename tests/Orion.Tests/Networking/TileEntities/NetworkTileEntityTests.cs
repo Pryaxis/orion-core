@@ -17,40 +17,16 @@
 
 using System;
 using System.IO;
-using FluentAssertions;
 using Orion.World.TileEntities;
 using Xunit;
 
 namespace Orion.Networking.TileEntities {
     public class NetworkTileEntityTests {
         [Fact]
-        public void SetIndex_MarksDirty() {
+        public void SetDefaultableProperties_MarkAsDirty() {
             var tileEntity = new TestTileEntity();
-            tileEntity.Index = 0;
 
-            tileEntity.IsDirty.Should().BeTrue();
-            tileEntity.Clean();
-            tileEntity.IsDirty.Should().BeFalse();
-        }
-
-        [Fact]
-        public void SetX_MarksDirty() {
-            var tileEntity = new TestTileEntity();
-            tileEntity.X = 0;
-
-            tileEntity.IsDirty.Should().BeTrue();
-            tileEntity.Clean();
-            tileEntity.IsDirty.Should().BeFalse();
-        }
-
-        [Fact]
-        public void SetY_MarksDirty() {
-            var tileEntity = new TestTileEntity();
-            tileEntity.Y = 0;
-
-            tileEntity.IsDirty.Should().BeTrue();
-            tileEntity.Clean();
-            tileEntity.IsDirty.Should().BeFalse();
+            tileEntity.ShouldHaveDefaultablePropertiesMarkAsDirty();
         }
 
         public sealed class TestTileEntity : NetworkTileEntity {

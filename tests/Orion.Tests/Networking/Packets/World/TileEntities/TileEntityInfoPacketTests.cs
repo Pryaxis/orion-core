@@ -37,8 +37,8 @@ namespace Orion.Networking.Packets.World.TileEntities {
         }
 
         [Fact]
-        public void WriteToStream_Delete_IsCorrect() {
-            TestUtils.WriteToStream_SameBytes(Bytes);
+        public void DeserializeAndSerialize_SamePacket() {
+            Bytes.ShouldDeserializeAndSerializeSamePacket();
         }
 
         private static readonly byte[] Bytes2 = {15, 0, 86, 0, 0, 0, 0, 1, 0, 0, 1, 100, 0, 1, 0};
@@ -59,8 +59,8 @@ namespace Orion.Networking.Packets.World.TileEntities {
         }
 
         [Fact]
-        public void WriteToStream_TargetDummy_IsCorrect() {
-            TestUtils.WriteToStream_SameBytes(Bytes2);
+        public void DeserializeAndSerialize_SamePacket2() {
+            Bytes2.ShouldDeserializeAndSerializeSamePacket();
         }
 
         private static readonly byte[] Bytes3 = {
@@ -85,8 +85,8 @@ namespace Orion.Networking.Packets.World.TileEntities {
         }
 
         [Fact]
-        public void WriteToStream_ItemFrame_IsCorrect() {
-            TestUtils.WriteToStream_SameBytes(Bytes3);
+        public void DeserializeAndSerialize_SamePacket3() {
+            Bytes3.ShouldDeserializeAndSerializeSamePacket();
         }
 
         private static readonly byte[] Bytes4 = {15, 0, 86, 0, 0, 0, 0, 1, 2, 0, 1, 100, 0, 1, 1};
@@ -108,8 +108,8 @@ namespace Orion.Networking.Packets.World.TileEntities {
         }
 
         [Fact]
-        public void WriteToStream_LogicSensor_IsCorrect() {
-            TestUtils.WriteToStream_SameBytes(Bytes4);
+        public void DeserializeAndSerialize_SamePacket4() {
+            Bytes4.ShouldDeserializeAndSerializeSamePacket();
         }
     }
 }

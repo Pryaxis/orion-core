@@ -15,6 +15,7 @@
 // You should have received a copy of the GNU General Public License
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
+using System;
 using FluentAssertions;
 using Xunit;
 
@@ -25,9 +26,15 @@ namespace Orion.Networking.TileEntities {
             var chest = new NetworkChest();
             chest.Name = "";
 
-            chest.IsDirty.Should().BeTrue();
-            chest.Clean();
-            chest.IsDirty.Should().BeFalse();
+            chest.ShouldBeDirty();
+        }
+
+        [Fact]
+        public void SetText_NullValue_ThrowsArgumentNullException() {
+            var chest = new NetworkChest();
+            Action action = () => chest.Name = null;
+
+            action.Should().Throw<ArgumentNullException>();
         }
     }
 }

@@ -27,9 +27,7 @@ namespace Orion.Networking.TileEntities {
             var logicSensor = new NetworkLogicSensor();
             logicSensor.SensorType = LogicSensorType.Day;
 
-            logicSensor.IsDirty.Should().BeTrue();
-            logicSensor.Clean();
-            logicSensor.IsDirty.Should().BeFalse();
+            logicSensor.ShouldBeDirty();
         }
 
         [Fact]
@@ -45,9 +43,7 @@ namespace Orion.Networking.TileEntities {
             var logicSensor = new NetworkLogicSensor();
             logicSensor.IsActivated = false;
 
-            logicSensor.IsDirty.Should().BeTrue();
-            logicSensor.Clean();
-            logicSensor.IsDirty.Should().BeFalse();
+            logicSensor.ShouldBeDirty();
         }
     }
 }

@@ -25,9 +25,7 @@ namespace Orion.Networking.TileEntities {
             var targetDummy = new NetworkTargetDummy();
             targetDummy.NpcIndex = 0;
 
-            targetDummy.IsDirty.Should().BeTrue();
-            targetDummy.Clean();
-            targetDummy.IsDirty.Should().BeFalse();
+            targetDummy.ShouldBeDirty();
         }
     }
 }

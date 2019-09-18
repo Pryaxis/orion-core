@@ -43,7 +43,7 @@ namespace Orion.Networking.Packets.Npcs {
         }
 
         [Fact]
-        public void WriteToStream_ToClient_IsCorrect() {
+        public void DeserializeAndSerialize_SamePacket() {
             using (var stream = new MemoryStream(Bytes))
             using (var stream2 = new MemoryStream()) {
                 var packet = Packet.ReadFromStream(stream, PacketContext.Client);
@@ -67,7 +67,7 @@ namespace Orion.Networking.Packets.Npcs {
         }
 
         [Fact]
-        public void WriteToStream_ToServer_IsCorrect() {
+        public void DeserializeAndSerialize_SamePacket_Server() {
             using (var stream = new MemoryStream(Bytes2))
             using (var stream2 = new MemoryStream()) {
                 var packet = Packet.ReadFromStream(stream, PacketContext.Server);

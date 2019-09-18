@@ -17,7 +17,9 @@
 
 using System;
 using System.IO;
+using System.Reflection;
 using FluentAssertions;
+using Orion.Events;
 using Orion.Networking.Packets;
 using Xunit;
 
@@ -25,20 +27,11 @@ namespace Orion {
     public class TestUtils {
         public static void FakeReceiveBytes(int index, byte[] bytes) {
             var buffer = Terraria.NetMessage.buffer[index];
+            var oldBytes = buffer.readBuffer;
             buffer.readBuffer = bytes;
             buffer.ResetReader();
             buffer.GetData(2, bytes.Length - 2, out _);
-        }
-
-        public static void WriteToStream_SameBytes(byte[] bytes) {
-            using (var inStream = new MemoryStream(bytes))
-            using (var outStream = new MemoryStream()) {
-                var packet = Packet.ReadFromStream(inStream, PacketContext.Server);
-
-                packet.WriteToStream(outStream, PacketContext.Client);
-
-                outStream.ToArray().Should().BeEquivalentTo(bytes);
-            }
+            buffer.readBuffer = oldBytes;
         }
     }
 

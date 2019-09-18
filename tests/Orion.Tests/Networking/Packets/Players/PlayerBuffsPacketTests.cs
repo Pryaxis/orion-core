@@ -40,7 +40,7 @@ namespace Orion.Networking.Packets.Players {
 
         [Fact]
         public void WriteToStream_IsCorrect() {
-            TestUtils.WriteToStream_SameBytes(Bytes);
+            Bytes.ShouldDeserializeAndSerializeSamePacket();
         }
     }
 }

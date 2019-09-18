@@ -15,6 +15,7 @@
 // You should have received a copy of the GNU General Public License
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
+using System;
 using FluentAssertions;
 using Xunit;
 
@@ -25,9 +26,15 @@ namespace Orion.Networking.TileEntities {
             var sign = new NetworkSign();
             sign.Text = "";
 
-            sign.IsDirty.Should().BeTrue();
-            sign.Clean();
-            sign.IsDirty.Should().BeFalse();
+            sign.ShouldBeDirty();
+        }
+
+        [Fact]
+        public void SetText_NullValue_ThrowsArgumentNullException() {
+            var sign = new NetworkSign();
+            Action action = () => sign.Text = null;
+
+            action.Should().Throw<ArgumentNullException>();
         }
     }
 }

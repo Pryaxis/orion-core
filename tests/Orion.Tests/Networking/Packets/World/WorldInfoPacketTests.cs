@@ -125,8 +125,8 @@ namespace Orion.Networking.Packets.World {
         }
 
         [Fact]
-        public void WriteToStream_WorldInfo_IsCorrect() {
-            TestUtils.WriteToStream_SameBytes(Bytes);
+        public void DeserializeAndSerialize_SamePacket() {
+            Bytes.ShouldDeserializeAndSerializeSamePacket();
         }
     }
 }

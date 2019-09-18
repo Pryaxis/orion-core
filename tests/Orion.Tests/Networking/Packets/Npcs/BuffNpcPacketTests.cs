@@ -24,6 +24,22 @@ using Xunit;
 namespace Orion.Networking.Packets.Npcs {
     public class BuffNpcPacketTests {
         [Fact]
+        public void SetDefaultableProperties_MarkAsDirty() {
+            var packet = new BuffNpcPacket();
+
+            packet.ShouldHaveDefaultablePropertiesMarkAsDirty();
+        }
+
+        [Fact]
+        public void SetNpcBuff_MarksAsDirty() {
+            var packet = new BuffNpcPacket();
+
+            packet.NpcBuff = new Buff(BuffType.None, TimeSpan.Zero);
+
+            packet.ShouldBeDirty();
+        }
+
+        [Fact]
         public void SetNpcBuff_NullValue_ThrowsArgumentNullException() {
             var packet = new BuffNpcPacket();
             Action action = () => packet.NpcBuff = null;
@@ -45,7 +61,7 @@ namespace Orion.Networking.Packets.Npcs {
 
         [Fact]
         public void WriteToStream_IsCorrect() {
-            TestUtils.WriteToStream_SameBytes(Bytes);
+            Bytes.ShouldDeserializeAndSerializeSamePacket();
         }
     }
 }

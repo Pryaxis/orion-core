@@ -37,7 +37,7 @@ namespace Orion.Networking.Packets.Npcs {
 
         [Fact]
         public void WriteToStream_IsCorrect() {
-            TestUtils.WriteToStream_SameBytes(Bytes);
+            Bytes.ShouldDeserializeAndSerializeSamePacket();
         }
     }
 }

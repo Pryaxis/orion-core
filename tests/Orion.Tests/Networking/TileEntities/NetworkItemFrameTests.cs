@@ -27,9 +27,7 @@ namespace Orion.Networking.TileEntities {
             var itemFrame = new NetworkItemFrame();
             itemFrame.ItemType = ItemType.Sdmg;
 
-            itemFrame.IsDirty.Should().BeTrue();
-            itemFrame.Clean();
-            itemFrame.IsDirty.Should().BeFalse();
+            itemFrame.ShouldBeDirty();
         }
 
         [Fact]
@@ -45,9 +43,7 @@ namespace Orion.Networking.TileEntities {
             var itemFrame = new NetworkItemFrame();
             itemFrame.ItemStackSize = 0;
 
-            itemFrame.IsDirty.Should().BeTrue();
-            itemFrame.Clean();
-            itemFrame.IsDirty.Should().BeFalse();
+            itemFrame.ShouldBeDirty();
         }
 
         [Fact]
@@ -55,9 +51,7 @@ namespace Orion.Networking.TileEntities {
             var itemFrame = new NetworkItemFrame();
             itemFrame.ItemPrefix = ItemPrefix.Unreal;
 
-            itemFrame.IsDirty.Should().BeTrue();
-            itemFrame.Clean();
-            itemFrame.IsDirty.Should().BeFalse();
+            itemFrame.ShouldBeDirty();
         }
 
         [Fact]
