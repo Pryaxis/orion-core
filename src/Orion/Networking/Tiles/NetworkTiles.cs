@@ -19,7 +19,7 @@ using System;
 using System.Linq;
 using Orion.Events;
 
-namespace Orion.Networking {
+namespace Orion.Networking.Tiles {
     /// <summary>
     /// Represents a section of tiles that are transmitted over the network.
     /// </summary>

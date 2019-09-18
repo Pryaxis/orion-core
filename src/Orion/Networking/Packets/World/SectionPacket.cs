@@ -24,6 +24,8 @@ using System.IO.Compression;
 using System.Linq;
 using System.Text;
 using Orion.Events;
+using Orion.Networking.TileEntities;
+using Orion.Networking.Tiles;
 using Orion.World;
 using Orion.World.TileEntities;
 using Orion.World.Tiles;
@@ -415,10 +417,10 @@ namespace Orion.Networking.Packets.World {
             var notChestsOrSigns = new List<NetworkTileEntity>();
             foreach (var tileEntity in SectionTileEntities) {
                 switch (tileEntity) {
-                case NetChest _:
+                case NetworkChest _:
                     chests.Add(tileEntity);
                     break;
-                case NetSign _:
+                case NetworkSign _:
                     signs.Add(tileEntity);
                     break;
                 default:

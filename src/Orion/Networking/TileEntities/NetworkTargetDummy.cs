@@ -15,35 +15,34 @@
 // You should have received a copy of the GNU General Public License
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
-using System;
 using System.IO;
 using Orion.World.TileEntities;
 
-namespace Orion.Networking {
+namespace Orion.Networking.TileEntities {
     /// <summary>
-    /// Represents a sign that is transmitted over the network.
+    /// Represents a target dummy that is transmitted over the network.
     /// </summary>
-    public sealed class NetSign : NetworkTileEntity, ISign {
-        private string _name;
+    public sealed class NetworkTargetDummy : NetworkTileEntity, ITargetDummy {
+        private int _npcIndex;
 
         /// <inheritdoc />
-        public override TileEntityType Type => TileEntityType.Sign;
+        public override TileEntityType Type => TileEntityType.TargetDummy;
 
         /// <inheritdoc />
-        public string Text {
-            get => _name;
+        public int NpcIndex {
+            get => _npcIndex;
             set {
-                _name = value ?? throw new ArgumentNullException(nameof(value));
+                _npcIndex = value;
                 IsDirty = true;
             }
         }
 
         private protected override void ReadFromReaderImpl(BinaryReader reader) {
-            Text = reader.ReadString();
+            NpcIndex = reader.ReadInt16();
         }
 
         private protected override void WriteToWriterImpl(BinaryWriter writer) {
-            writer.Write(Text);
+            writer.Write((short)NpcIndex);
         }
     }
 }

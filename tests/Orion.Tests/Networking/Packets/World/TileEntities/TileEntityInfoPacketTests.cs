@@ -18,6 +18,7 @@
 using System.IO;
 using FluentAssertions;
 using Orion.Entities;
+using Orion.Networking.TileEntities;
 using Orion.World.TileEntities;
 using Xunit;
 

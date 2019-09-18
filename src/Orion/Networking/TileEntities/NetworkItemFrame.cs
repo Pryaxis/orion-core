@@ -21,7 +21,7 @@ using Orion.Entities;
 using Orion.Networking.Packets;
 using Orion.World.TileEntities;
 
-namespace Orion.Networking {
+namespace Orion.Networking.TileEntities {
     /// <summary>
     /// Represents an item frame that is transmitted over the network.
     /// </summary>

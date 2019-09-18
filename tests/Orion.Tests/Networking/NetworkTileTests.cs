@@ -17,6 +17,7 @@
 
 using System;
 using FluentAssertions;
+using Orion.Networking.Tiles;
 using Orion.World;
 using Orion.World.Tiles;
 using Xunit;

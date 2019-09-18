@@ -17,40 +17,47 @@
 
 using System;
 using System.IO;
-using Orion.Entities;
-using Orion.Utils;
+using Orion.Networking.Packets;
 using Orion.World.TileEntities;
 
-namespace Orion.Networking {
+namespace Orion.Networking.TileEntities {
     /// <summary>
-    /// Represents a chest that is transmitted over the network.
+    /// Represents a logic sensor that is transmitted over the network.
     /// </summary>
-    public sealed class NetChest : NetworkTileEntity, IChest {
-        private string _name;
+    public sealed class NetworkLogicSensor : NetworkTileEntity, ILogicSensor {
+        private LogicSensorType _sensorType;
+        private bool _isSensorActivated;
 
         /// <inheritdoc />
-        public override TileEntityType Type => TileEntityType.Chest;
+        public override TileEntityType Type => TileEntityType.LogicSensor;
 
         /// <inheritdoc />
-        public string Name {
-            get => _name;
+        public LogicSensorType SensorType {
+            get => _sensorType;
             set {
-                _name = value ?? throw new ArgumentNullException(nameof(value));
+                _sensorType = value ?? throw new ArgumentNullException(nameof(value));
                 IsDirty = true;
             }
         }
 
         /// <inheritdoc />
-        public IReadOnlyArray<IItem> Items => throw new InvalidOperationException();
-
-        /// <inheritdoc />
-        private protected override void ReadFromReaderImpl(BinaryReader reader) {
-            Name = reader.ReadString();
+        public bool IsSensorActivated {
+            get => _isSensorActivated;
+            set {
+                _isSensorActivated = value;
+                IsDirty = true;
+            }
         }
 
-        /// <inheritdoc />
+        private protected override void ReadFromReaderImpl(BinaryReader reader) {
+            SensorType = LogicSensorType.FromId(reader.ReadByte()) ??
+                         throw new PacketException("Logic sensor type is invalid.");
+            IsSensorActivated = reader.ReadBoolean();
+        }
+
         private protected override void WriteToWriterImpl(BinaryWriter writer) {
-            writer.Write(Name);
+            writer.Write(SensorType.Id);
+            writer.Write(IsSensorActivated);
         }
     }
 }

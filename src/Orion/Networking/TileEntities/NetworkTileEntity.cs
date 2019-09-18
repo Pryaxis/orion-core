@@ -24,15 +24,15 @@ using Orion.Networking.Packets;
 using Orion.Utils;
 using Orion.World.TileEntities;
 
-namespace Orion.Networking {
+namespace Orion.Networking.TileEntities {
     /// <summary>
     /// Represents a tile entity that is transmitted over the network.
     /// </summary>
     public abstract class NetworkTileEntity : AnnotatableObject, ITileEntity, IDirtiable {
         private static readonly Dictionary<TileEntityType, Func<NetworkTileEntity>> Constructors =
             new Dictionary<TileEntityType, Func<NetworkTileEntity>> {
-                [TileEntityType.Chest] = () => new NetChest(),
-                [TileEntityType.Sign] = () => new NetSign(),
+                [TileEntityType.Chest] = () => new NetworkChest(),
+                [TileEntityType.Sign] = () => new NetworkSign(),
                 [TileEntityType.TargetDummy] = () => new NetworkTargetDummy(),
                 [TileEntityType.ItemFrame] = () => new NetworkItemFrame(),
                 [TileEntityType.LogicSensor] = () => new NetworkLogicSensor()

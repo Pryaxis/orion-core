@@ -17,10 +17,9 @@
 
 using System;
 using Orion.Events;
-using Orion.World;
 using Orion.World.Tiles;
 
-namespace Orion.Networking {
+namespace Orion.Networking.Tiles {
     /// <summary>
     /// Represents a tile that is transmitted over the network.
     /// </summary>
