@@ -16,6 +16,7 @@
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using Orion.Entities;
 using Orion.Utils;
@@ -41,6 +42,7 @@ namespace Orion.Networking.TileEntities {
         }
 
         /// <inheritdoc />
+        [ExcludeFromCodeCoverage]
         public IReadOnlyArray<IItem> Items => throw new InvalidOperationException();
 
         /// <inheritdoc />

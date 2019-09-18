@@ -79,6 +79,7 @@ namespace Orion.Networking.TileEntities {
         private protected NetworkTileEntity() { }
 
         internal static NetworkTileEntity FromReader(BinaryReader reader, bool shouldIncludeIndex, TileEntityType typeHint = null) {
+            // The type hint allows us to reuse code for NetworkChests and NetworkSigns.
             var tileEntityType = typeHint ?? TileEntityType.FromId(reader.ReadByte()) ??
                                  throw new PacketException("Tile entity type is invalid.");
             var tileEntity = Constructors[tileEntityType]();
@@ -97,7 +98,7 @@ namespace Orion.Networking.TileEntities {
 
         private void ReadFromReader(BinaryReader reader, bool shouldIncludeIndex) {
             if (shouldIncludeIndex) {
-                // Chests and signs have an Int16 index.
+                // NetworkChests and NetworkSigns have an Int16 index.
                 Index = Type.Id == byte.MaxValue ? reader.ReadInt16() : reader.ReadInt32();
             }
 
@@ -107,7 +108,7 @@ namespace Orion.Networking.TileEntities {
         }
 
         internal void WriteToWriter(BinaryWriter writer, bool shouldIncludeIndex) {
-            // Chests and signs don't store type and have an Int16 index.
+            // NetworkChests and NetworkSigns don't store type and have an Int16 index.
             if (Type.Id == byte.MaxValue) {
                 if (shouldIncludeIndex) {
                     writer.Write((short)Index);

@@ -57,7 +57,7 @@ namespace Orion.Networking.Packets {
                 var oldPosition = stream.Position;
                 var packetLength = reader.ReadUInt16();
 #else
-            reader.ReadUInt16();
+                reader.ReadUInt16();
 #endif
                 var packetType = PacketType.FromId(reader.ReadByte()) ??
                                  throw new PacketException("Packet type is invalid.");

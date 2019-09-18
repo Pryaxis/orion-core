@@ -15,19 +15,19 @@
 // You should have received a copy of the GNU General Public License
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
-namespace Orion.World.TileEntities {
-    /// <summary>
-    /// Represents a Terraria logic sensor.
-    /// </summary>
-    public interface ILogicSensor : ITileEntity {
-        /// <summary>
-        /// Gets or sets the sensor's type.
-        /// </summary>
-        LogicSensorType SensorType { get; set; }
+using FluentAssertions;
+using Xunit;
 
-        /// <summary>
-        /// Gets or sets a value indicating whether the sensor is activated.
-        /// </summary>
-        bool IsActivated { get; set; }
+namespace Orion.Networking.TileEntities {
+    public class NetworkTargetDummyTests {
+        [Fact]
+        public void SetNpcIndex_MarksAsDirty() {
+            var targetDummy = new NetworkTargetDummy();
+            targetDummy.NpcIndex = 0;
+
+            targetDummy.IsDirty.Should().BeTrue();
+            targetDummy.Clean();
+            targetDummy.IsDirty.Should().BeFalse();
+        }
     }
 }

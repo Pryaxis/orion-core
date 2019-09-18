@@ -17,12 +17,10 @@
 
 using System;
 using FluentAssertions;
-using Orion.Networking.Tiles;
-using Orion.World;
 using Orion.World.Tiles;
 using Xunit;
 
-namespace Orion.Networking {
+namespace Orion.Networking.Tiles {
     public class NetworkTileTests {
         [Fact]
         public void SetBlockType_MarksAsDirty() {

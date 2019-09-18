@@ -26,7 +26,7 @@ namespace Orion.Networking.TileEntities {
     /// </summary>
     public sealed class NetworkLogicSensor : NetworkTileEntity, ILogicSensor {
         private LogicSensorType _sensorType;
-        private bool _isSensorActivated;
+        private bool _isActivated;
 
         /// <inheritdoc />
         public override TileEntityType Type => TileEntityType.LogicSensor;
@@ -41,10 +41,10 @@ namespace Orion.Networking.TileEntities {
         }
 
         /// <inheritdoc />
-        public bool IsSensorActivated {
-            get => _isSensorActivated;
+        public bool IsActivated {
+            get => _isActivated;
             set {
-                _isSensorActivated = value;
+                _isActivated = value;
                 IsDirty = true;
             }
         }
@@ -52,12 +52,12 @@ namespace Orion.Networking.TileEntities {
         private protected override void ReadFromReaderImpl(BinaryReader reader) {
             SensorType = LogicSensorType.FromId(reader.ReadByte()) ??
                          throw new PacketException("Logic sensor type is invalid.");
-            IsSensorActivated = reader.ReadBoolean();
+            IsActivated = reader.ReadBoolean();
         }
 
         private protected override void WriteToWriterImpl(BinaryWriter writer) {
             writer.Write(SensorType.Id);
-            writer.Write(IsSensorActivated);
+            writer.Write(IsActivated);
         }
     }
 }
