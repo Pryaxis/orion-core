@@ -129,7 +129,7 @@ namespace Orion.Networking.Packets {
         public static PacketType PoofOfSmoke = new PacketType(106);
         public static PacketType Chat = new PacketType(107);
         public static PacketType CannonShot = new PacketType(108);
-        public static PacketType RequestMassWireOperation = new PacketType(109);
+        public static PacketType MassWireOperation = new PacketType(109);
         public static PacketType ConsumeItems = new PacketType(110);
         public static PacketType ToggleBirthdayParty = new PacketType(111);
         public static PacketType TreeGrowingEffect = new PacketType(112);
