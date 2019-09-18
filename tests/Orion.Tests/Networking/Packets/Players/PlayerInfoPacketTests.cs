@@ -42,7 +42,7 @@ namespace Orion.Networking.Packets.Players {
                 packet.IsPlayerVortexStealthed.Should().BeFalse();
                 packet.IsPlayerRightSideUp.Should().BeTrue();
                 packet.IsPlayerRaisingShield.Should().BeFalse();
-                packet.PlayerSelectedItemIndex.Should().Be(0);
+                packet.PlayerHeldItemSlotIndex.Should().Be(0);
                 packet.PlayerPosition.Should().Be(new Vector2(67134, 6790));
                 packet.PlayerVelocity.Should().Be(Vector2.Zero);
             }

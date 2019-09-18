@@ -34,6 +34,9 @@ namespace Orion.Networking.Packets.Players {
         private bool _isHitCritical;
         private bool _isHitFromPvp;
 
+        /// <inheritdoc />
+        public override PacketType Type => PacketType.DamagePlayer;
+
         /// <summary>
         /// Gets or sets the player index.
         /// </summary>
@@ -41,7 +44,7 @@ namespace Orion.Networking.Packets.Players {
             get => _playerIndex;
             set {
                 _playerIndex = value;
-                IsDirty = true;
+                _isDirty = true;
             }
         }
 
@@ -53,7 +56,7 @@ namespace Orion.Networking.Packets.Players {
             get => _playerDeathReason;
             set {
                 _playerDeathReason = value ?? throw new ArgumentNullException(nameof(value));
-                IsDirty = true;
+                _isDirty = true;
             }
         }
 
@@ -64,7 +67,7 @@ namespace Orion.Networking.Packets.Players {
             get => _damage;
             set {
                 _damage = value;
-                IsDirty = true;
+                _isDirty = true;
             }
         }
 
@@ -75,7 +78,7 @@ namespace Orion.Networking.Packets.Players {
             get => _hitDirection;
             set {
                 _hitDirection = value;
-                IsDirty = true;
+                _isDirty = true;
             }
         }
 
@@ -86,7 +89,7 @@ namespace Orion.Networking.Packets.Players {
             get => _hitCooldown;
             set {
                 _hitCooldown = value;
-                IsDirty = true;
+                _isDirty = true;
             }
         }
 
@@ -97,7 +100,7 @@ namespace Orion.Networking.Packets.Players {
             get => _isHitCritical;
             set {
                 _isHitCritical = value;
-                IsDirty = true;
+                _isDirty = true;
             }
         }
 
@@ -108,12 +111,9 @@ namespace Orion.Networking.Packets.Players {
             get => _isHitFromPvp;
             set {
                 _isHitFromPvp = value;
-                IsDirty = true;
+                _isDirty = true;
             }
         }
-
-        /// <inheritdoc />
-        public override PacketType Type => PacketType.DamagePlayer;
 
         /// <inheritdoc />
         [ExcludeFromCodeCoverage]
@@ -121,14 +121,14 @@ namespace Orion.Networking.Packets.Players {
 
         /// <inheritdoc />
         private protected override void ReadFromReader(BinaryReader reader, PacketContext context) {
-            _playerIndex = reader.ReadByte();
-            _playerDeathReason = reader.ReadPlayerDeathReason();
-            _damage = reader.ReadInt16();
-            _hitDirection = reader.ReadByte() - 1;
-            Terraria.BitsByte flags = reader.ReadByte();
-            _isHitCritical = flags[0];
-            _isHitFromPvp = flags[1];
-            _hitCooldown = reader.ReadSByte();
+            PlayerIndex = reader.ReadByte();
+            PlayerDeathReason = reader.ReadPlayerDeathReason();
+            Damage = reader.ReadInt16();
+            HitDirection = reader.ReadByte() - 1;
+            Terraria.BitsByte flags = reader.ReadByte(); 
+            IsHitCritical = flags[0];
+            IsHitFromPvp = flags[1];
+            HitCooldown = reader.ReadSByte();
         }
 
         /// <inheritdoc />

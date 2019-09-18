@@ -39,9 +39,12 @@ namespace Orion.Networking.Packets.Players {
         private bool _isPlayerVortexStealthed;
         private bool _isPlayerRightSideUp;
         private bool _isPlayerRaisingShield;
-        private byte _playerSelectedItemIndex;
+        private byte _playerHeldItemSlotIndex;
         private Vector2 _playerPosition;
         private Vector2 _playerVelocity;
+
+        /// <inheritdoc />
+        public override PacketType Type => PacketType.PlayerInfo;
 
         /// <summary>
         /// Gets or sets the player index.
@@ -50,7 +53,7 @@ namespace Orion.Networking.Packets.Players {
             get => _playerIndex;
             set {
                 _playerIndex = value;
-                IsDirty = true;
+                _isDirty = true;
             }
         }
 
@@ -61,7 +64,7 @@ namespace Orion.Networking.Packets.Players {
             get => _isPlayerHoldingUp;
             set {
                 _isPlayerHoldingUp = value;
-                IsDirty = true;
+                _isDirty = true;
             }
         }
 
@@ -72,7 +75,7 @@ namespace Orion.Networking.Packets.Players {
             get => _isPlayerHoldingDown;
             set {
                 _isPlayerHoldingDown = value;
-                IsDirty = true;
+                _isDirty = true;
             }
         }
 
@@ -83,7 +86,7 @@ namespace Orion.Networking.Packets.Players {
             get => _isPlayerHoldingLeft;
             set {
                 _isPlayerHoldingLeft = value;
-                IsDirty = true;
+                _isDirty = true;
             }
         }
 
@@ -94,7 +97,7 @@ namespace Orion.Networking.Packets.Players {
             get => _isPlayerHoldingRight;
             set {
                 _isPlayerHoldingRight = value;
-                IsDirty = true;
+                _isDirty = true;
             }
         }
 
@@ -105,7 +108,7 @@ namespace Orion.Networking.Packets.Players {
             get => _isPlayerHoldingJump;
             set {
                 _isPlayerHoldingJump = value;
-                IsDirty = true;
+                _isDirty = true;
             }
         }
 
@@ -116,7 +119,7 @@ namespace Orion.Networking.Packets.Players {
             get => _isPlayerHoldingUseItem;
             set {
                 _isPlayerHoldingUseItem = value;
-                IsDirty = true;
+                _isDirty = true;
             }
         }
 
@@ -127,7 +130,7 @@ namespace Orion.Networking.Packets.Players {
             get => _playerDirection;
             set {
                 _playerDirection = value;
-                IsDirty = true;
+                _isDirty = true;
             }
         }
 
@@ -138,7 +141,7 @@ namespace Orion.Networking.Packets.Players {
             get => _isPlayerClimbingRope;
             set {
                 _isPlayerClimbingRope = value;
-                IsDirty = true;
+                _isDirty = true;
             }
         }
 
@@ -149,7 +152,7 @@ namespace Orion.Networking.Packets.Players {
             get => _playerClimbingRopeDirection;
             set {
                 _playerClimbingRopeDirection = value;
-                IsDirty = true;
+                _isDirty = true;
             }
         }
 
@@ -160,7 +163,7 @@ namespace Orion.Networking.Packets.Players {
             get => _isPlayerVortexStealthed;
             set {
                 _isPlayerVortexStealthed = value;
-                IsDirty = true;
+                _isDirty = true;
             }
         }
 
@@ -171,7 +174,7 @@ namespace Orion.Networking.Packets.Players {
             get => _isPlayerRightSideUp;
             set {
                 _isPlayerRightSideUp = value;
-                IsDirty = true;
+                _isDirty = true;
             }
         }
 
@@ -182,18 +185,18 @@ namespace Orion.Networking.Packets.Players {
             get => _isPlayerRaisingShield;
             set {
                 _isPlayerRaisingShield = value;
-                IsDirty = true;
+                _isDirty = true;
             }
         }
 
         /// <summary>
-        /// Gets or sets the player's selected item index.
+        /// Gets or sets the player's held item slot index.
         /// </summary>
-        public byte PlayerSelectedItemIndex {
-            get => _playerSelectedItemIndex;
+        public byte PlayerHeldItemSlotIndex {
+            get => _playerHeldItemSlotIndex;
             set {
-                _playerSelectedItemIndex = value;
-                IsDirty = true;
+                _playerHeldItemSlotIndex = value;
+                _isDirty = true;
             }
         }
 
@@ -204,7 +207,7 @@ namespace Orion.Networking.Packets.Players {
             get => _playerPosition;
             set {
                 _playerPosition = value;
-                IsDirty = true;
+                _isDirty = true;
             }
         }
 
@@ -215,38 +218,35 @@ namespace Orion.Networking.Packets.Players {
             get => _playerVelocity;
             set {
                 _playerVelocity = value;
-                IsDirty = true;
+                _isDirty = true;
             }
         }
-
-        /// <inheritdoc />
-        public override PacketType Type => PacketType.PlayerInfo;
 
         /// <inheritdoc />
         [ExcludeFromCodeCoverage]
         public override string ToString() => $"{Type}[#={PlayerIndex} @ {PlayerPosition}, ...]";
 
         private protected override void ReadFromReader(BinaryReader reader, PacketContext context) {
-            _playerIndex = reader.ReadByte();
+            PlayerIndex = reader.ReadByte();
 
             BitsByte flags = reader.ReadByte();
             BitsByte flags2 = reader.ReadByte();
-            _isPlayerHoldingUp = flags[0];
-            _isPlayerHoldingDown = flags[1];
-            _isPlayerHoldingLeft = flags[2];
-            _isPlayerHoldingRight = flags[3];
-            _isPlayerHoldingJump = flags[4];
-            _isPlayerHoldingUseItem = flags[5];
-            _playerDirection = flags[6];
-            _isPlayerClimbingRope = flags2[0];
-            _playerClimbingRopeDirection = flags2[1];
-            _isPlayerVortexStealthed = flags2[3];
-            _isPlayerRightSideUp = flags2[4];
-            _isPlayerRaisingShield = flags2[5];
+            IsPlayerHoldingUp = flags[0];
+            IsPlayerHoldingDown = flags[1];
+            IsPlayerHoldingLeft = flags[2];
+            IsPlayerHoldingRight = flags[3];
+            IsPlayerHoldingJump = flags[4];
+            IsPlayerHoldingUseItem = flags[5];
+            PlayerDirection = flags[6];
+            IsPlayerClimbingRope = flags2[0];
+            PlayerClimbingRopeDirection = flags2[1];
+            IsPlayerVortexStealthed = flags2[3];
+            IsPlayerRightSideUp = flags2[4];
+            IsPlayerRaisingShield = flags2[5];
 
-            _playerSelectedItemIndex = reader.ReadByte();
-            _playerPosition = BinaryExtensions.ReadVector2(reader);
-            if (flags2[2]) _playerVelocity = BinaryExtensions.ReadVector2(reader);
+            PlayerHeldItemSlotIndex = reader.ReadByte();
+            PlayerPosition = BinaryExtensions.ReadVector2(reader);
+            if (flags2[2]) PlayerVelocity = BinaryExtensions.ReadVector2(reader);
         }
 
         private protected override void WriteToWriter(BinaryWriter writer, PacketContext context) {
@@ -270,7 +270,7 @@ namespace Orion.Networking.Packets.Players {
             writer.Write(flags);
             writer.Write(flags2);
 
-            writer.Write(PlayerSelectedItemIndex);
+            writer.Write(PlayerHeldItemSlotIndex);
             writer.Write(PlayerPosition);
             if (flags2[2]) writer.Write(PlayerVelocity);
         }

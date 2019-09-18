@@ -26,6 +26,9 @@ namespace Orion.Networking.Packets.Players {
         private byte _playerIndex;
         private short _manaAmount;
 
+        /// <inheritdoc />
+        public override PacketType Type => PacketType.ManaEffect;
+
         /// <summary>
         /// Gets or sets the player index.
         /// </summary>
@@ -33,7 +36,7 @@ namespace Orion.Networking.Packets.Players {
             get => _playerIndex;
             set {
                 _playerIndex = value;
-                IsDirty = true;
+                _isDirty = true;
             }
         }
 
@@ -44,20 +47,17 @@ namespace Orion.Networking.Packets.Players {
             get => _manaAmount;
             set {
                 _manaAmount = value;
-                IsDirty = true;
+                _isDirty = true;
             }
         }
-
-        /// <inheritdoc />
-        public override PacketType Type => PacketType.ManaEffect;
 
         /// <inheritdoc />
         [ExcludeFromCodeCoverage]
         public override string ToString() => $"{Type}[#={PlayerIndex} for {ManaAmount} mp]";
 
         private protected override void ReadFromReader(BinaryReader reader, PacketContext context) {
-            _playerIndex = reader.ReadByte();
-            _manaAmount = reader.ReadInt16();
+            PlayerIndex = reader.ReadByte();
+            ManaAmount = reader.ReadInt16();
         }
 
         private protected override void WriteToWriter(BinaryWriter writer, PacketContext context) {

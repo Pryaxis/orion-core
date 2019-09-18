@@ -26,6 +26,9 @@ namespace Orion.Networking.Packets.Npcs {
         private short _npcIndex;
         private byte _damagerPlayerIndex;
 
+        /// <inheritdoc />
+        public override PacketType Type => PacketType.DamageNpcHeldItem;
+
         /// <summary>
         /// Gets or sets the NPC index.
         /// </summary>
@@ -33,7 +36,7 @@ namespace Orion.Networking.Packets.Npcs {
             get => _npcIndex;
             set {
                 _npcIndex = value;
-                IsDirty = true;
+                _isDirty = true;
             }
         }
 
@@ -44,20 +47,17 @@ namespace Orion.Networking.Packets.Npcs {
             get => _damagerPlayerIndex;
             set {
                 _damagerPlayerIndex = value;
-                IsDirty = true;
+                _isDirty = true;
             }
         }
-
-        /// <inheritdoc />
-        public override PacketType Type => PacketType.DamageNpcHeldItem;
 
         /// <inheritdoc />
         [ExcludeFromCodeCoverage]
         public override string ToString() => $"{Type}[#={NpcIndex} by P={DamagerPlayerIndex}]";
 
         private protected override void ReadFromReader(BinaryReader reader, PacketContext context) {
-            _npcIndex = reader.ReadInt16();
-            _damagerPlayerIndex = reader.ReadByte();
+            NpcIndex = reader.ReadInt16();
+            DamagerPlayerIndex = reader.ReadByte();
         }
 
         private protected override void WriteToWriter(BinaryWriter writer, PacketContext context) {

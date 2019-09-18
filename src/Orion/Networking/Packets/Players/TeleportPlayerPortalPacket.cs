@@ -30,6 +30,9 @@ namespace Orion.Networking.Packets.Players {
         private Vector2 _playerNewPosition;
         private Vector2 _playerNewVelocity;
 
+        /// <inheritdoc />
+        public override PacketType Type => PacketType.TeleportPlayerPortal;
+
         /// <summary>
         /// Gets or sets the player index.
         /// </summary>
@@ -37,7 +40,7 @@ namespace Orion.Networking.Packets.Players {
             get => _playerIndex;
             set {
                 _playerIndex = value;
-                IsDirty = true;
+                _isDirty = true;
             }
         }
 
@@ -48,7 +51,7 @@ namespace Orion.Networking.Packets.Players {
             get => _portalIndex;
             set {
                 _portalIndex = value;
-                IsDirty = true;
+                _isDirty = true;
             }
         }
 
@@ -59,7 +62,7 @@ namespace Orion.Networking.Packets.Players {
             get => _playerNewPosition;
             set {
                 _playerNewPosition = value;
-                IsDirty = true;
+                _isDirty = true;
             }
         }
 
@@ -70,22 +73,19 @@ namespace Orion.Networking.Packets.Players {
             get => _playerNewVelocity;
             set {
                 _playerNewVelocity = value;
-                IsDirty = true;
+                _isDirty = true;
             }
         }
-
-        /// <inheritdoc />
-        public override PacketType Type => PacketType.TeleportPlayerPortal;
 
         /// <inheritdoc />
         [ExcludeFromCodeCoverage]
         public override string ToString() => $"{Type}[#={PlayerIndex} @ {PlayerNewPosition}, ...]";
 
         private protected override void ReadFromReader(BinaryReader reader, PacketContext context) {
-            _playerIndex = reader.ReadByte();
-            _portalIndex = reader.ReadInt16();
-            _playerNewPosition = reader.ReadVector2();
-            _playerNewVelocity = reader.ReadVector2();
+            PlayerIndex = reader.ReadByte();
+            PortalIndex = reader.ReadInt16();
+            PlayerNewPosition = reader.ReadVector2();
+            PlayerNewVelocity = reader.ReadVector2();
         }
 
         private protected override void WriteToWriter(BinaryWriter writer, PacketContext context) {

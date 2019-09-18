@@ -26,6 +26,9 @@ namespace Orion.Networking.Packets.Npcs {
         private short _npcIndex;
         private byte _npcCatcherPlayerIndex;
 
+        /// <inheritdoc />
+        public override PacketType Type => PacketType.CatchNpc;
+
         /// <summary>
         /// Gets or sets the NPC index.
         /// </summary>
@@ -33,7 +36,7 @@ namespace Orion.Networking.Packets.Npcs {
             get => _npcIndex;
             set {
                 _npcIndex = value;
-                IsDirty = true;
+                _isDirty = true;
             }
         }
 
@@ -44,20 +47,17 @@ namespace Orion.Networking.Packets.Npcs {
             get => _npcCatcherPlayerIndex;
             set {
                 _npcCatcherPlayerIndex = value;
-                IsDirty = true;
+                _isDirty = true;
             }
         }
-
-        /// <inheritdoc />
-        public override PacketType Type => PacketType.CatchNpc;
 
         /// <inheritdoc />
         [ExcludeFromCodeCoverage]
         public override string ToString() => $"{Type}[#={NpcIndex} by P={NpcCatcherPlayerIndex}]";
 
         private protected override void ReadFromReader(BinaryReader reader, PacketContext context) {
-            _npcIndex = reader.ReadInt16();
-            _npcCatcherPlayerIndex = reader.ReadByte();
+            NpcIndex = reader.ReadInt16();
+            NpcCatcherPlayerIndex = reader.ReadByte();
         }
 
         private protected override void WriteToWriter(BinaryWriter writer, PacketContext context) {

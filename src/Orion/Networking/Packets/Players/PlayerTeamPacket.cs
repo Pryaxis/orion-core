@@ -27,6 +27,9 @@ namespace Orion.Networking.Packets.Players {
         private byte _playerIndex;
         private PlayerTeam _playerTeam;
 
+        /// <inheritdoc />
+        public override PacketType Type => PacketType.PlayerTeam;
+
         /// <summary>
         /// Gets or sets the player index.
         /// </summary>
@@ -34,7 +37,7 @@ namespace Orion.Networking.Packets.Players {
             get => _playerIndex;
             set {
                 _playerIndex = value;
-                IsDirty = true;
+                _isDirty = true;
             }
         }
 
@@ -45,20 +48,17 @@ namespace Orion.Networking.Packets.Players {
             get => _playerTeam;
             set {
                 _playerTeam = value;
-                IsDirty = true;
+                _isDirty = true;
             }
         }
-
-        /// <inheritdoc />
-        public override PacketType Type => PacketType.PlayerTeam;
 
         /// <inheritdoc />
         [ExcludeFromCodeCoverage]
         public override string ToString() => $"{Type}[#={PlayerIndex} is {PlayerTeam}]";
 
         private protected override void ReadFromReader(BinaryReader reader, PacketContext context) {
-            _playerIndex = reader.ReadByte();
-            _playerTeam = (PlayerTeam)reader.ReadByte();
+            PlayerIndex = reader.ReadByte();
+            PlayerTeam = (PlayerTeam)reader.ReadByte();
         }
 
         private protected override void WriteToWriter(BinaryWriter writer, PacketContext context) {

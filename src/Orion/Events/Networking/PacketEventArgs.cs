@@ -22,12 +22,15 @@ namespace Orion.Events.Networking {
     /// <summary>
     /// Provides data for packet-related events.
     /// </summary>
-    public class PacketEventArgs : EventArgs, ICancelable {
+    public class PacketEventArgs : EventArgs, ICancelable, IDirtiable {
         private Packet _packet;
-        private bool _isPacketModified;
+        private bool _isDirty;
 
         /// <inheritdoc />
         public bool IsCanceled { get; set; }
+
+        /// <inheritdoc />
+        public bool IsDirty => _isDirty || Packet.IsDirty;
 
         /// <summary>
         /// Gets or sets the packet.
@@ -37,18 +40,18 @@ namespace Orion.Events.Networking {
             get => _packet;
             set {
                 _packet = value ?? throw new ArgumentNullException(nameof(value));
-                _isPacketModified = true;
+                _isDirty = true;
             }
         }
 
-        /// <summary>
-        /// Gets a value indicating whether the packet is dirty: i.e., whether the packet has changed since it was
-        /// constructed.
-        /// </summary>
-        public bool IsPacketDirty => _isPacketModified || Packet.IsDirty;
-
         private protected PacketEventArgs(Packet packet) {
             _packet = packet ?? throw new ArgumentNullException(nameof(packet));
+        }
+
+        /// <inheritdoc />
+        public void Clean() {
+            _isDirty = false;
+            Packet.Clean();
         }
     }
 }

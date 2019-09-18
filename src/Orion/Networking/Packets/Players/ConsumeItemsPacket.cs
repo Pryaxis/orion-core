@@ -30,6 +30,9 @@ namespace Orion.Networking.Packets.Players {
         private short _itemStackSize;
         private byte _playerIndex;
 
+        /// <inheritdoc />
+        public override PacketType Type => PacketType.ConsumeItems;
+
         /// <summary>
         /// Gets or sets the item's type.
         /// </summary>
@@ -38,7 +41,7 @@ namespace Orion.Networking.Packets.Players {
             get => _itemType;
             set {
                 _itemType = value ?? throw new ArgumentNullException(nameof(value));
-                IsDirty = true;
+                _isDirty = true;
             }
         }
 
@@ -49,7 +52,7 @@ namespace Orion.Networking.Packets.Players {
             get => _itemStackSize;
             set {
                 _itemStackSize = value;
-                IsDirty = true;
+                _isDirty = true;
             }
         }
 
@@ -60,21 +63,18 @@ namespace Orion.Networking.Packets.Players {
             get => _playerIndex;
             set {
                 _playerIndex = value;
-                IsDirty = true;
+                _isDirty = true;
             }
         }
-
-        /// <inheritdoc />
-        public override PacketType Type => PacketType.ConsumeItems;
 
         /// <inheritdoc />
         [ExcludeFromCodeCoverage]
         public override string ToString() => $"{Type}[#={PlayerIndex}, {ItemType} x{ItemStackSize}]";
 
         private protected override void ReadFromReader(BinaryReader reader, PacketContext context) {
-            _itemType = ItemType.FromId(reader.ReadInt16()) ?? throw new PacketException("Item type is invalid.");
-            _itemStackSize = reader.ReadInt16();
-            _playerIndex = reader.ReadByte();
+            ItemType = ItemType.FromId(reader.ReadInt16()) ?? throw new PacketException("Item type is invalid.");
+            ItemStackSize = reader.ReadInt16();
+            PlayerIndex = reader.ReadByte();
         }
 
         private protected override void WriteToWriter(BinaryWriter writer, PacketContext context) {

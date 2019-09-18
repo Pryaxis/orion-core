@@ -22,11 +22,14 @@ using Orion.Entities;
 
 namespace Orion.Networking.Packets.Npcs {
     /// <summary>
-    /// Packet sent to add a buff to a npc.
+    /// Packet sent to add a buff to an NPC.
     /// </summary>
     public sealed class BuffNpcPacket : Packet {
         private short _npcIndex;
         private Buff _npcBuff = new Buff(BuffType.None, TimeSpan.Zero);
+
+        /// <inheritdoc />
+        public override PacketType Type => PacketType.BuffNpc;
 
         /// <summary>
         /// Gets or sets the NPC index.
@@ -35,7 +38,7 @@ namespace Orion.Networking.Packets.Npcs {
             get => _npcIndex;
             set {
                 _npcIndex = value;
-                IsDirty = true;
+                _isDirty = true;
             }
         }
 
@@ -47,20 +50,17 @@ namespace Orion.Networking.Packets.Npcs {
             get => _npcBuff;
             set {
                 _npcBuff = value ?? throw new ArgumentNullException(nameof(value));
-                IsDirty = true;
+                _isDirty = true;
             }
         }
-
-        /// <inheritdoc />
-        public override PacketType Type => PacketType.BuffNpc;
 
         /// <inheritdoc />
         [ExcludeFromCodeCoverage]
         public override string ToString() => $"{Type}[#={NpcIndex}, {NpcBuff}]";
 
         private protected override void ReadFromReader(BinaryReader reader, PacketContext context) {
-            _npcIndex = reader.ReadInt16();
-            _npcBuff = new Buff(
+            NpcIndex = reader.ReadInt16();
+            NpcBuff = new Buff(
                 BuffType.FromId(reader.ReadByte()) ?? throw new PacketException("Buff type is invalid."),
                 TimeSpan.FromSeconds(reader.ReadInt16() / 60.0));
         }

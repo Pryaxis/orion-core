@@ -26,6 +26,9 @@ namespace Orion.Networking.Packets.Players {
     public sealed class PlayerConnectPacket : Packet {
         private string _playerVersionString = "";
 
+        /// <inheritdoc />
+        public override PacketType Type => PacketType.PlayerConnect;
+
         /// <summary>
         /// Gets or sets the player's verion string. This is usually of the form <c>"Terraria###"</c>.
         /// </summary>
@@ -34,19 +37,16 @@ namespace Orion.Networking.Packets.Players {
             get => _playerVersionString;
             set {
                 _playerVersionString = value ?? throw new ArgumentNullException(nameof(value));
-                IsDirty = true;
+                _isDirty = true;
             }
         }
-
-        /// <inheritdoc />
-        public override PacketType Type => PacketType.PlayerConnect;
 
         /// <inheritdoc />
         [ExcludeFromCodeCoverage]
         public override string ToString() => $"{Type}[{PlayerVersionString}]";
 
         private protected override void ReadFromReader(BinaryReader reader, PacketContext context) {
-            _playerVersionString = reader.ReadString();
+            PlayerVersionString = reader.ReadString();
         }
 
         private protected override void WriteToWriter(BinaryWriter writer, PacketContext context) {

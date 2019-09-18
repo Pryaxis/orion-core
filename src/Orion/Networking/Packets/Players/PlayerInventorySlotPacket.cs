@@ -31,6 +31,9 @@ namespace Orion.Networking.Packets.Players {
         private ItemPrefix _itemPrefix = ItemPrefix.None;
         private ItemType _itemType = ItemType.None;
 
+        /// <inheritdoc />
+        public override PacketType Type => PacketType.PlayerInventorySlot;
+
         /// <summary>
         /// Gets or sets the player index.
         /// </summary>
@@ -38,7 +41,7 @@ namespace Orion.Networking.Packets.Players {
             get => _playerIndex;
             set {
                 _playerIndex = value;
-                IsDirty = true;
+                _isDirty = true;
             }
         }
 
@@ -49,7 +52,7 @@ namespace Orion.Networking.Packets.Players {
             get => _playerInventorySlotIndex;
             set {
                 _playerInventorySlotIndex = value;
-                IsDirty = true;
+                _isDirty = true;
             }
         }
 
@@ -60,7 +63,7 @@ namespace Orion.Networking.Packets.Players {
             get => _itemStackSize;
             set {
                 _itemStackSize = value;
-                IsDirty = true;
+                _isDirty = true;
             }
         }
 
@@ -72,7 +75,7 @@ namespace Orion.Networking.Packets.Players {
             get => _itemPrefix;
             set {
                 _itemPrefix = value ?? throw new ArgumentNullException(nameof(value));
-                IsDirty = true;
+                _isDirty = true;
             }
         }
 
@@ -84,12 +87,9 @@ namespace Orion.Networking.Packets.Players {
             get => _itemType;
             set {
                 _itemType = value ?? throw new ArgumentNullException(nameof(value));
-                IsDirty = true;
+                _isDirty = true;
             }
         }
-
-        /// <inheritdoc />
-        public override PacketType Type => PacketType.PlayerInventorySlot;
 
         /// <inheritdoc />
         [ExcludeFromCodeCoverage]
@@ -98,11 +98,11 @@ namespace Orion.Networking.Packets.Players {
             $"{(ItemPrefix.Equals(ItemPrefix.None) ? ItemPrefix + " " : "")}{ItemType} x{ItemStackSize}]";
 
         private protected override void ReadFromReader(BinaryReader reader, PacketContext context) {
-            _playerIndex = reader.ReadByte();
-            _playerInventorySlotIndex = reader.ReadByte();
-            _itemStackSize = reader.ReadInt16();
-            _itemPrefix = ItemPrefix.FromId(reader.ReadByte()) ?? throw new PacketException("Item prefix is invalid.");
-            _itemType = ItemType.FromId(reader.ReadInt16()) ?? throw new PacketException("Item type is invalid.");
+            PlayerIndex = reader.ReadByte();
+            PlayerInventorySlotIndex = reader.ReadByte();
+            ItemStackSize = reader.ReadInt16();
+            ItemPrefix = ItemPrefix.FromId(reader.ReadByte()) ?? throw new PacketException("Item prefix is invalid.");
+            ItemType = ItemType.FromId(reader.ReadInt16()) ?? throw new PacketException("Item type is invalid.");
         }
 
         private protected override void WriteToWriter(BinaryWriter writer, PacketContext context) {

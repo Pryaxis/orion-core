@@ -27,6 +27,9 @@ namespace Orion.Networking.Packets.Players {
         private short _playerSpawnX;
         private short _playerSpawnY;
 
+        /// <inheritdoc />
+        public override PacketType Type => PacketType.SpawnPlayer;
+
         /// <summary>
         /// Gets or sets the player index.
         /// </summary>
@@ -34,7 +37,7 @@ namespace Orion.Networking.Packets.Players {
             get => _playerIndex;
             set {
                 _playerIndex = value;
-                IsDirty = true;
+                _isDirty = true;
             }
         }
 
@@ -45,7 +48,7 @@ namespace Orion.Networking.Packets.Players {
             get => _playerSpawnX;
             set {
                 _playerSpawnX = value;
-                IsDirty = true;
+                _isDirty = true;
             }
         }
 
@@ -56,21 +59,18 @@ namespace Orion.Networking.Packets.Players {
             get => _playerSpawnY;
             set {
                 _playerSpawnY = value;
-                IsDirty = true;
+                _isDirty = true;
             }
         }
-
-        /// <inheritdoc />
-        public override PacketType Type => PacketType.SpawnPlayer;
 
         /// <inheritdoc />
         [ExcludeFromCodeCoverage]
         public override string ToString() => $"{Type}[#={PlayerIndex} @ ({PlayerSpawnX}, {PlayerSpawnY})]";
 
         private protected override void ReadFromReader(BinaryReader reader, PacketContext context) {
-            _playerIndex = reader.ReadByte();
-            _playerSpawnX = reader.ReadInt16();
-            _playerSpawnY = reader.ReadInt16();
+            PlayerIndex = reader.ReadByte();
+            PlayerSpawnX = reader.ReadInt16();
+            PlayerSpawnY = reader.ReadInt16();
         }
 
         private protected override void WriteToWriter(BinaryWriter writer, PacketContext context) {

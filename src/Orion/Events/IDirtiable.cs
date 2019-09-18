@@ -15,19 +15,20 @@
 // You should have received a copy of the GNU General Public License
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
-namespace Orion.Networking.Packets.Players {
+namespace Orion.Events {
     /// <summary>
-    /// Specifies the dodge type of a <see cref="PlayerDodgePacket"/>.
+    /// Represents something that can be dirtied and cleaned.
     /// </summary>
-    public enum PlayerDodgeType {
+    public interface IDirtiable {
         /// <summary>
-        /// Indicates a ninja dodge.
+        /// Gets a value indicating whether the object is dirty: i.e., whether it has been modified since it was last
+        /// cleaned.
         /// </summary>
-        NinjaDodge = 1,
+        bool IsDirty { get; }
 
         /// <summary>
-        /// Indicates a shadow dodge.
+        /// Cleans the object and marks it as not dirty.
         /// </summary>
-        ShadowDodge = 2
+        void Clean();
     }
 }

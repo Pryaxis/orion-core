@@ -27,6 +27,9 @@ namespace Orion.Networking.Packets.Players {
         private short _playerHealth;
         private short _playerMaxHealth;
 
+        /// <inheritdoc />
+        public override PacketType Type => PacketType.PlayerHealth;
+
         /// <summary>
         /// Gets or sets the player index.
         /// </summary>
@@ -34,7 +37,7 @@ namespace Orion.Networking.Packets.Players {
             get => _playerIndex;
             set {
                 _playerIndex = value;
-                IsDirty = true;
+                _isDirty = true;
             }
         }
 
@@ -45,7 +48,7 @@ namespace Orion.Networking.Packets.Players {
             get => _playerHealth;
             set {
                 _playerHealth = value;
-                IsDirty = true;
+                _isDirty = true;
             }
         }
 
@@ -56,21 +59,18 @@ namespace Orion.Networking.Packets.Players {
             get => _playerMaxHealth;
             set {
                 _playerMaxHealth = value;
-                IsDirty = true;
+                _isDirty = true;
             }
         }
-
-        /// <inheritdoc />
-        public override PacketType Type => PacketType.PlayerHealth;
 
         /// <inheritdoc />
         [ExcludeFromCodeCoverage]
         public override string ToString() => $"{Type}[#={PlayerIndex} has {PlayerHealth}/{PlayerMaxHealth} hp]";
 
         private protected override void ReadFromReader(BinaryReader reader, PacketContext context) {
-            _playerIndex = reader.ReadByte();
-            _playerHealth = reader.ReadInt16();
-            _playerMaxHealth = reader.ReadInt16();
+            PlayerIndex = reader.ReadByte();
+            PlayerHealth = reader.ReadInt16();
+            PlayerMaxHealth = reader.ReadInt16();
         }
 
         private protected override void WriteToWriter(BinaryWriter writer, PacketContext context) {

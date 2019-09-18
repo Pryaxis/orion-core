@@ -28,6 +28,9 @@ namespace Orion.Networking.Packets.Players {
         private byte _playerIndex;
         private Buff _playerBuff = new Buff(BuffType.None, TimeSpan.Zero);
 
+        /// <inheritdoc />
+        public override PacketType Type => PacketType.BuffPlayer;
+
         /// <summary>
         /// Gets or sets the player index.
         /// </summary>
@@ -35,7 +38,7 @@ namespace Orion.Networking.Packets.Players {
             get => _playerIndex;
             set {
                 _playerIndex = value;
-                IsDirty = true;
+                _isDirty = true;
             }
         }
 
@@ -47,20 +50,17 @@ namespace Orion.Networking.Packets.Players {
             get => _playerBuff;
             set {
                 _playerBuff = value ?? throw new ArgumentNullException(nameof(value));
-                IsDirty = true;
+                _isDirty = true;
             }
         }
-
-        /// <inheritdoc />
-        public override PacketType Type => PacketType.BuffPlayer;
 
         /// <inheritdoc />
         [ExcludeFromCodeCoverage]
         public override string ToString() => $"{Type}[#={PlayerIndex}, {PlayerBuff}]";
 
         private protected override void ReadFromReader(BinaryReader reader, PacketContext context) {
-            _playerIndex = reader.ReadByte();
-            _playerBuff =
+            PlayerIndex = reader.ReadByte();
+            PlayerBuff =
                 new Buff(BuffType.FromId(reader.ReadByte()) ?? throw new PacketException("Buff type is invalid."),
                          TimeSpan.FromSeconds(reader.ReadInt32() / 60.0));
         }

@@ -30,6 +30,9 @@ namespace Orion.Networking.Packets.Npcs {
         private Vector2 _newNpcPosition;
         private Vector2 _newNpcVelocity;
 
+        /// <inheritdoc />
+        public override PacketType Type => PacketType.TeleportNpcPortal;
+
         /// <summary>
         /// Gets or sets the NPC index.
         /// </summary>
@@ -37,7 +40,7 @@ namespace Orion.Networking.Packets.Npcs {
             get => _npcIndex;
             set {
                 _npcIndex = value;
-                IsDirty = true;
+                _isDirty = true;
             }
         }
 
@@ -48,7 +51,7 @@ namespace Orion.Networking.Packets.Npcs {
             get => _portalIndex;
             set {
                 _portalIndex = value;
-                IsDirty = true;
+                _isDirty = true;
             }
         }
 
@@ -59,7 +62,7 @@ namespace Orion.Networking.Packets.Npcs {
             get => _newNpcPosition;
             set {
                 _newNpcPosition = value;
-                IsDirty = true;
+                _isDirty = true;
             }
         }
 
@@ -70,22 +73,19 @@ namespace Orion.Networking.Packets.Npcs {
             get => _newNpcVelocity;
             set {
                 _newNpcVelocity = value;
-                IsDirty = true;
+                _isDirty = true;
             }
         }
-
-        /// <inheritdoc />
-        public override PacketType Type => PacketType.TeleportNpcPortal;
 
         /// <inheritdoc />
         [ExcludeFromCodeCoverage]
         public override string ToString() => $"{Type}[#={NpcIndex} @ {NewNpcPosition}, ...]";
 
         private protected override void ReadFromReader(BinaryReader reader, PacketContext context) {
-            _npcIndex = reader.ReadInt16();
-            _portalIndex = reader.ReadInt16();
-            _newNpcPosition = reader.ReadVector2();
-            _newNpcVelocity = reader.ReadVector2();
+            NpcIndex = reader.ReadInt16();
+            PortalIndex = reader.ReadInt16();
+            NewNpcPosition = reader.ReadVector2();
+            NewNpcVelocity = reader.ReadVector2();
         }
 
         private protected override void WriteToWriter(BinaryWriter writer, PacketContext context) {

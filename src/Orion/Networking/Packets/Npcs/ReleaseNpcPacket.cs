@@ -30,6 +30,9 @@ namespace Orion.Networking.Packets.Npcs {
         private NpcType _npcType = NpcType.None;
         private byte _npcStyle;
 
+        /// <inheritdoc />
+        public override PacketType Type => PacketType.ReleaseNpc;
+
         /// <summary>
         /// Gets or sets the NPC's position.
         /// </summary>
@@ -37,7 +40,7 @@ namespace Orion.Networking.Packets.Npcs {
             get => _npcPosition;
             set {
                 _npcPosition = value;
-                IsDirty = true;
+                _isDirty = true;
             }
         }
 
@@ -49,7 +52,7 @@ namespace Orion.Networking.Packets.Npcs {
             get => _npcType;
             set {
                 _npcType = value ?? throw new ArgumentNullException(nameof(value));
-                IsDirty = true;
+                _isDirty = true;
             }
         }
 
@@ -60,21 +63,18 @@ namespace Orion.Networking.Packets.Npcs {
             get => _npcStyle;
             set {
                 _npcStyle = value;
-                IsDirty = true;
+                _isDirty = true;
             }
         }
-
-        /// <inheritdoc />
-        public override PacketType Type => PacketType.ReleaseNpc;
 
         /// <inheritdoc />
         [ExcludeFromCodeCoverage]
         public override string ToString() => $"{Type}[{NpcType}_{NpcStyle} @ {NpcPosition}]";
 
         private protected override void ReadFromReader(BinaryReader reader, PacketContext context) {
-            _npcPosition = new Vector2(reader.ReadInt32(), reader.ReadInt32());
-            _npcType = NpcType.FromId(reader.ReadInt16()) ?? throw new PacketException("NPC type is invalid.");
-            _npcStyle = reader.ReadByte();
+            NpcPosition = new Vector2(reader.ReadInt32(), reader.ReadInt32());
+            NpcType = NpcType.FromId(reader.ReadInt16()) ?? throw new PacketException("NPC type is invalid.");
+            NpcStyle = reader.ReadByte();
         }
 
         private protected override void WriteToWriter(BinaryWriter writer, PacketContext context) {

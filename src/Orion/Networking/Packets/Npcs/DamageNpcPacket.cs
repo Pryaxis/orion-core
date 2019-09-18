@@ -29,6 +29,9 @@ namespace Orion.Networking.Packets.Npcs {
         private int _hitDirection;
         private bool _isCriticalHit;
 
+        /// <inheritdoc />
+        public override PacketType Type => PacketType.DamageNpc;
+
         /// <summary>
         /// Gets or sets the NPC index.
         /// </summary>
@@ -36,7 +39,7 @@ namespace Orion.Networking.Packets.Npcs {
             get => _npcIndex;
             set {
                 _npcIndex = value;
-                IsDirty = true;
+                _isDirty = true;
             }
         }
 
@@ -47,7 +50,7 @@ namespace Orion.Networking.Packets.Npcs {
             get => _damage;
             set {
                 _damage = value;
-                IsDirty = true;
+                _isDirty = true;
             }
         }
 
@@ -58,7 +61,7 @@ namespace Orion.Networking.Packets.Npcs {
             get => _knockback;
             set {
                 _knockback = value;
-                IsDirty = true;
+                _isDirty = true;
             }
         }
 
@@ -69,7 +72,7 @@ namespace Orion.Networking.Packets.Npcs {
             get => _hitDirection;
             set {
                 _hitDirection = value;
-                IsDirty = true;
+                _isDirty = true;
             }
         }
 
@@ -80,23 +83,20 @@ namespace Orion.Networking.Packets.Npcs {
             get => _isCriticalHit;
             set {
                 _isCriticalHit = value;
-                IsDirty = true;
+                _isDirty = true;
             }
         }
-
-        /// <inheritdoc />
-        public override PacketType Type => PacketType.DamageNpc;
 
         /// <inheritdoc />
         [ExcludeFromCodeCoverage]
         public override string ToString() => $"{Type}[#={NpcIndex} for {Damage} hp, ...]";
 
         private protected override void ReadFromReader(BinaryReader reader, PacketContext context) {
-            _npcIndex = reader.ReadInt16();
-            _damage = reader.ReadInt16();
-            _knockback = reader.ReadSingle();
-            _hitDirection = reader.ReadByte() - 1;
-            _isCriticalHit = reader.ReadBoolean();
+            NpcIndex = reader.ReadInt16();
+            Damage = reader.ReadInt16();
+            Knockback = reader.ReadSingle();
+            HitDirection = reader.ReadByte() - 1;
+            IsCriticalHit = reader.ReadBoolean();
         }
 
         private protected override void WriteToWriter(BinaryWriter writer, PacketContext context) {

@@ -28,6 +28,9 @@ namespace Orion.Networking.Packets.Npcs {
         private NpcType _npcType = NpcType.None;
         private int _npcTypeKillCount;
 
+        /// <inheritdoc />
+        public override PacketType Type => PacketType.NpcKillCount;
+
         /// <summary>
         /// Gets or sets the NPC type.
         /// </summary>
@@ -36,7 +39,7 @@ namespace Orion.Networking.Packets.Npcs {
             get => _npcType;
             set {
                 _npcType = value ?? throw new ArgumentNullException(nameof(value));
-                IsDirty = true;
+                _isDirty = true;
             }
         }
 
@@ -47,12 +50,9 @@ namespace Orion.Networking.Packets.Npcs {
             get => _npcTypeKillCount;
             set {
                 _npcTypeKillCount = value;
-                IsDirty = true;
+                _isDirty = true;
             }
         }
-
-        /// <inheritdoc />
-        public override PacketType Type => PacketType.NpcKillCount;
 
         /// <inheritdoc />
         [ExcludeFromCodeCoverage]
@@ -60,8 +60,8 @@ namespace Orion.Networking.Packets.Npcs {
 
         /// <inheritdoc />
         private protected override void ReadFromReader(BinaryReader reader, PacketContext context) {
-            _npcType = NpcType.FromId(reader.ReadInt16()) ?? throw new PacketException("NPC type is invalid.");
-            _npcTypeKillCount = reader.ReadInt32();
+            NpcType = NpcType.FromId(reader.ReadInt16()) ?? throw new PacketException("NPC type is invalid.");
+            NpcTypeKillCount = reader.ReadInt32();
         }
 
         /// <inheritdoc />

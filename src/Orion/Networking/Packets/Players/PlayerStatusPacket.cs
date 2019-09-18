@@ -28,6 +28,9 @@ namespace Orion.Networking.Packets.Players {
         private Terraria.Localization.NetworkText _playerStatusText = Terraria.Localization.NetworkText.Empty;
         private int _playerStatusIncrease;
 
+        /// <inheritdoc />
+        public override PacketType Type => PacketType.PlayerStatus;
+
         /// <summary>
         /// Gets or sets the player's status increase.
         /// </summary>
@@ -35,7 +38,7 @@ namespace Orion.Networking.Packets.Players {
             get => _playerStatusIncrease;
             set {
                 _playerStatusIncrease = value;
-                IsDirty = true;
+                _isDirty = true;
             }
         }
 
@@ -47,20 +50,17 @@ namespace Orion.Networking.Packets.Players {
             get => _playerStatusText;
             set {
                 _playerStatusText = value ?? throw new ArgumentNullException(nameof(value));
-                IsDirty = true;
+                _isDirty = true;
             }
         }
-
-        /// <inheritdoc />
-        public override PacketType Type => PacketType.PlayerStatus;
 
         /// <inheritdoc />
         [ExcludeFromCodeCoverage]
         public override string ToString() => $"{Type}[{PlayerStatusText}, I={PlayerStatusIncrease}]";
 
         private protected override void ReadFromReader(BinaryReader reader, PacketContext context) {
-            _playerStatusIncrease = reader.ReadInt32();
-            _playerStatusText = reader.ReadNetworkText();
+            PlayerStatusIncrease = reader.ReadInt32();
+            PlayerStatusText = reader.ReadNetworkText();
         }
 
         private protected override void WriteToWriter(BinaryWriter writer, PacketContext context) {

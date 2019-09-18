@@ -27,6 +27,9 @@ namespace Orion.Networking.Packets.Players {
         private float _playerItemRotation;
         private short _playerItemAnimation;
 
+        /// <inheritdoc />
+        public override PacketType Type => PacketType.PlayerItemAnimation;
+
         /// <summary>
         /// Gets or sets the player index.
         /// </summary>
@@ -34,7 +37,7 @@ namespace Orion.Networking.Packets.Players {
             get => _playerIndex;
             set {
                 _playerIndex = value;
-                IsDirty = true;
+                _isDirty = true;
             }
         }
 
@@ -45,7 +48,7 @@ namespace Orion.Networking.Packets.Players {
             get => _playerItemRotation;
             set {
                 _playerItemRotation = value;
-                IsDirty = true;
+                _isDirty = true;
             }
         }
 
@@ -56,21 +59,18 @@ namespace Orion.Networking.Packets.Players {
             get => _playerItemAnimation;
             set {
                 _playerItemAnimation = value;
-                IsDirty = true;
+                _isDirty = true;
             }
         }
-
-        /// <inheritdoc />
-        public override PacketType Type => PacketType.PlayerItemAnimation;
 
         /// <inheritdoc />
         [ExcludeFromCodeCoverage]
         public override string ToString() => $"{Type}[#={PlayerIndex}, ...]";
 
         private protected override void ReadFromReader(BinaryReader reader, PacketContext context) {
-            _playerIndex = reader.ReadByte();
-            _playerItemRotation = reader.ReadSingle();
-            _playerItemAnimation = reader.ReadInt16();
+            PlayerIndex = reader.ReadByte();
+            PlayerItemRotation = reader.ReadSingle();
+            PlayerItemAnimation = reader.ReadInt16();
         }
 
         private protected override void WriteToWriter(BinaryWriter writer, PacketContext context) {

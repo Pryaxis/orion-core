@@ -26,6 +26,9 @@ namespace Orion.Networking.Packets.Players {
         private byte _playerIndex;
         private bool _isPlayerActive;
 
+        /// <inheritdoc />
+        public override PacketType Type => PacketType.PlayerActivity;
+
         /// <summary>
         /// Gets or sets the player index.
         /// </summary>
@@ -33,7 +36,7 @@ namespace Orion.Networking.Packets.Players {
             get => _playerIndex;
             set {
                 _playerIndex = value;
-                IsDirty = true;
+                _isDirty = true;
             }
         }
 
@@ -44,20 +47,17 @@ namespace Orion.Networking.Packets.Players {
             get => _isPlayerActive;
             set {
                 _isPlayerActive = value;
-                IsDirty = true;
+                _isDirty = true;
             }
         }
-
-        /// <inheritdoc />
-        public override PacketType Type => PacketType.PlayerActivity;
 
         /// <inheritdoc />
         [ExcludeFromCodeCoverage]
         public override string ToString() => $"{Type}[#={PlayerIndex}, {IsPlayerActive}]";
 
         private protected override void ReadFromReader(BinaryReader reader, PacketContext context) {
-            _playerIndex = reader.ReadByte();
-            _isPlayerActive = reader.ReadByte() == 1;
+            PlayerIndex = reader.ReadByte();
+            IsPlayerActive = reader.ReadBoolean();
         }
 
         private protected override void WriteToWriter(BinaryWriter writer, PacketContext context) {

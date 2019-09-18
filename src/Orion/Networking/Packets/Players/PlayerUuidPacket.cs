@@ -27,6 +27,9 @@ namespace Orion.Networking.Packets.Players {
     public sealed class PlayerUuidPacket : Packet {
         private string _playerUuid;
 
+        /// <inheritdoc />
+        public override PacketType Type => PacketType.PlayerUuid;
+
         /// <summary>
         /// Gets or sets the player's UUID.
         /// </summary>
@@ -34,19 +37,16 @@ namespace Orion.Networking.Packets.Players {
             get => _playerUuid;
             set {
                 _playerUuid = value ?? throw new ArgumentNullException(nameof(value));
-                IsDirty = true;
+                _isDirty = true;
             }
         }
-
-        /// <inheritdoc />
-        public override PacketType Type => PacketType.PlayerUuid;
 
         /// <inheritdoc />
         [ExcludeFromCodeCoverage]
         public override string ToString() => $"{Type}[{PlayerUuid}]";
 
         private protected override void ReadFromReader(BinaryReader reader, PacketContext context) {
-            _playerUuid = reader.ReadString();
+            PlayerUuid = reader.ReadString();
         }
 
         private protected override void WriteToWriter(BinaryWriter writer, PacketContext context) {

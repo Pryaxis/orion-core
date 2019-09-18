@@ -31,6 +31,9 @@ namespace Orion.Networking.Packets.Npcs {
         private ItemPrefix _itemPrefix = ItemPrefix.None;
         private int _itemValue;
 
+        /// <inheritdoc />
+        public override PacketType Type => PacketType.NpcShopSlot;
+
         /// <summary>
         /// Gets or sets the NPC shop slot index.
         /// </summary>
@@ -38,7 +41,7 @@ namespace Orion.Networking.Packets.Npcs {
             get => _npcShopSlotIndex;
             set {
                 _npcShopSlotIndex = value;
-                IsDirty = true;
+                _isDirty = true;
             }
         }
 
@@ -50,7 +53,7 @@ namespace Orion.Networking.Packets.Npcs {
             get => _itemType;
             set {
                 _itemType = value ?? throw new ArgumentNullException(nameof(value));
-                IsDirty = true;
+                _isDirty = true;
             }
         }
 
@@ -61,7 +64,7 @@ namespace Orion.Networking.Packets.Npcs {
             get => _itemStackSize;
             set {
                 _itemStackSize = value;
-                IsDirty = true;
+                _isDirty = true;
             }
         }
 
@@ -73,7 +76,7 @@ namespace Orion.Networking.Packets.Npcs {
             get => _itemPrefix;
             set {
                 _itemPrefix = value ?? throw new ArgumentNullException(nameof(value));
-                IsDirty = true;
+                _isDirty = true;
             }
         }
 
@@ -84,23 +87,20 @@ namespace Orion.Networking.Packets.Npcs {
             get => _itemValue;
             set {
                 _itemValue = value;
-                IsDirty = true;
+                _isDirty = true;
             }
         }
-
-        /// <inheritdoc />
-        public override PacketType Type => PacketType.NpcShopSlot;
 
         /// <inheritdoc />
         [ExcludeFromCodeCoverage]
         public override string ToString() => $"{Type}[{ItemType} @ {NpcShopSlotIndex}, ...]";
 
         private protected override void ReadFromReader(BinaryReader reader, PacketContext context) {
-            _npcShopSlotIndex = reader.ReadByte();
-            _itemType = ItemType.FromId(reader.ReadInt16()) ?? throw new PacketException("Item type is invalid.");
-            _itemStackSize = reader.ReadInt16();
-            _itemPrefix = ItemPrefix.FromId(reader.ReadByte()) ?? throw new PacketException("Item prefix is invalid.");
-            _itemValue = reader.ReadInt32();
+            NpcShopSlotIndex = reader.ReadByte();
+            ItemType = ItemType.FromId(reader.ReadInt16()) ?? throw new PacketException("Item type is invalid.");
+            ItemStackSize = reader.ReadInt16();
+            ItemPrefix = ItemPrefix.FromId(reader.ReadByte()) ?? throw new PacketException("Item prefix is invalid.");
+            ItemValue = reader.ReadInt32();
         }
 
         private protected override void WriteToWriter(BinaryWriter writer, PacketContext context) {

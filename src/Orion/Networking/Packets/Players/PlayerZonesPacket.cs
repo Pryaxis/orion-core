@@ -51,6 +51,9 @@ namespace Orion.Networking.Packets.Players {
         private bool _isPlayerNearSandstormZone;
         private bool _isPlayerNearOldOnesArmyZone;
 
+        /// <inheritdoc />
+        public override PacketType Type => PacketType.PlayerZones;
+
         /// <summary>
         /// Gets or sets the player index.
         /// </summary>
@@ -58,7 +61,7 @@ namespace Orion.Networking.Packets.Players {
             get => _playerIndex;
             set {
                 _playerIndex = value;
-                IsDirty = true;
+                _isDirty = true;
             }
         }
 
@@ -69,7 +72,7 @@ namespace Orion.Networking.Packets.Players {
             get => _isPlayerNearDungeonZone;
             set {
                 _isPlayerNearDungeonZone = value;
-                IsDirty = true;
+                _isDirty = true;
             }
         }
 
@@ -80,7 +83,7 @@ namespace Orion.Networking.Packets.Players {
             get => _isPlayerNearCorruptionZone;
             set {
                 _isPlayerNearCorruptionZone = value;
-                IsDirty = true;
+                _isDirty = true;
             }
         }
 
@@ -91,7 +94,7 @@ namespace Orion.Networking.Packets.Players {
             get => _isPlayerNearHallowedZone;
             set {
                 _isPlayerNearHallowedZone = value;
-                IsDirty = true;
+                _isDirty = true;
             }
         }
 
@@ -102,7 +105,7 @@ namespace Orion.Networking.Packets.Players {
             get => _isPlayerNearMeteorZone;
             set {
                 _isPlayerNearMeteorZone = value;
-                IsDirty = true;
+                _isDirty = true;
             }
         }
 
@@ -113,7 +116,7 @@ namespace Orion.Networking.Packets.Players {
             get => _isPlayerNearJungleZone;
             set {
                 _isPlayerNearJungleZone = value;
-                IsDirty = true;
+                _isDirty = true;
             }
         }
 
@@ -124,7 +127,7 @@ namespace Orion.Networking.Packets.Players {
             get => _isPlayerNearSnowZone;
             set {
                 _isPlayerNearSnowZone = value;
-                IsDirty = true;
+                _isDirty = true;
             }
         }
 
@@ -135,7 +138,7 @@ namespace Orion.Networking.Packets.Players {
             get => _isPlayerNearCrimsonZone;
             set {
                 _isPlayerNearCrimsonZone = value;
-                IsDirty = true;
+                _isDirty = true;
             }
         }
 
@@ -146,7 +149,7 @@ namespace Orion.Networking.Packets.Players {
             get => _isPlayerNearWaterCandleZone;
             set {
                 _isPlayerNearWaterCandleZone = value;
-                IsDirty = true;
+                _isDirty = true;
             }
         }
 
@@ -157,7 +160,7 @@ namespace Orion.Networking.Packets.Players {
             get => _isPlayerNearPeaceCandleZone;
             set {
                 _isPlayerNearPeaceCandleZone = value;
-                IsDirty = true;
+                _isDirty = true;
             }
         }
 
@@ -168,7 +171,7 @@ namespace Orion.Networking.Packets.Players {
             get => _isPlayerNearSolarTowerZone;
             set {
                 _isPlayerNearSolarTowerZone = value;
-                IsDirty = true;
+                _isDirty = true;
             }
         }
 
@@ -179,7 +182,7 @@ namespace Orion.Networking.Packets.Players {
             get => _isPlayerNearVortexTowerZone;
             set {
                 _isPlayerNearVortexTowerZone = value;
-                IsDirty = true;
+                _isDirty = true;
             }
         }
 
@@ -190,7 +193,7 @@ namespace Orion.Networking.Packets.Players {
             get => _isPlayerNearNebulaTowerZone;
             set {
                 _isPlayerNearNebulaTowerZone = value;
-                IsDirty = true;
+                _isDirty = true;
             }
         }
 
@@ -201,7 +204,7 @@ namespace Orion.Networking.Packets.Players {
             get => _isPlayerNearStardustTowerZone;
             set {
                 _isPlayerNearStardustTowerZone = value;
-                IsDirty = true;
+                _isDirty = true;
             }
         }
 
@@ -212,7 +215,7 @@ namespace Orion.Networking.Packets.Players {
             get => _isPlayerNearDesertZone;
             set {
                 _isPlayerNearDesertZone = value;
-                IsDirty = true;
+                _isDirty = true;
             }
         }
 
@@ -223,7 +226,7 @@ namespace Orion.Networking.Packets.Players {
             get => _isPlayerNearGlowingMushroomZone;
             set {
                 _isPlayerNearGlowingMushroomZone = value;
-                IsDirty = true;
+                _isDirty = true;
             }
         }
 
@@ -234,7 +237,7 @@ namespace Orion.Networking.Packets.Players {
             get => _isPlayerNearUndergroundDesertZone;
             set {
                 _isPlayerNearUndergroundDesertZone = value;
-                IsDirty = true;
+                _isDirty = true;
             }
         }
 
@@ -245,7 +248,7 @@ namespace Orion.Networking.Packets.Players {
             get => _isPlayerNearSkyHeightZone;
             set {
                 _isPlayerNearSkyHeightZone = value;
-                IsDirty = true;
+                _isDirty = true;
             }
         }
 
@@ -256,7 +259,7 @@ namespace Orion.Networking.Packets.Players {
             get => _isPlayerNearOverworldHeightZone;
             set {
                 _isPlayerNearOverworldHeightZone = value;
-                IsDirty = true;
+                _isDirty = true;
             }
         }
 
@@ -267,7 +270,7 @@ namespace Orion.Networking.Packets.Players {
             get => _isPlayerNearDirtLayerHeightZone;
             set {
                 _isPlayerNearDirtLayerHeightZone = value;
-                IsDirty = true;
+                _isDirty = true;
             }
         }
 
@@ -278,7 +281,7 @@ namespace Orion.Networking.Packets.Players {
             get => _isPlayerNearRockLayerHeightZone;
             set {
                 _isPlayerNearRockLayerHeightZone = value;
-                IsDirty = true;
+                _isDirty = true;
             }
         }
 
@@ -289,7 +292,7 @@ namespace Orion.Networking.Packets.Players {
             get => _isPlayerNearUnderworldHeightZone;
             set {
                 _isPlayerNearUnderworldHeightZone = value;
-                IsDirty = true;
+                _isDirty = true;
             }
         }
 
@@ -300,7 +303,7 @@ namespace Orion.Networking.Packets.Players {
             get => _isPlayerNearBeachZone;
             set {
                 _isPlayerNearBeachZone = value;
-                IsDirty = true;
+                _isDirty = true;
             }
         }
 
@@ -311,7 +314,7 @@ namespace Orion.Networking.Packets.Players {
             get => _isPlayerNearRainZone;
             set {
                 _isPlayerNearRainZone = value;
-                IsDirty = true;
+                _isDirty = true;
             }
         }
 
@@ -322,7 +325,7 @@ namespace Orion.Networking.Packets.Players {
             get => _isPlayerNearSandstormZone;
             set {
                 _isPlayerNearSandstormZone = value;
-                IsDirty = true;
+                _isDirty = true;
             }
         }
 
@@ -333,12 +336,9 @@ namespace Orion.Networking.Packets.Players {
             get => _isPlayerNearOldOnesArmyZone;
             set {
                 _isPlayerNearOldOnesArmyZone = value;
-                IsDirty = true;
+                _isDirty = true;
             }
         }
-
-        /// <inheritdoc />
-        public override PacketType Type => PacketType.PlayerZones;
 
         /// <inheritdoc />
         [ExcludeFromCodeCoverage]
@@ -351,31 +351,31 @@ namespace Orion.Networking.Packets.Players {
             BitsByte zoneFlags2 = reader.ReadByte();
             BitsByte zoneFlags3 = reader.ReadByte();
             BitsByte zoneFlags4 = reader.ReadByte();
-            _isPlayerNearDungeonZone = zoneFlags[0];
-            _isPlayerNearCorruptionZone = zoneFlags[1];
-            _isPlayerNearHallowedZone = zoneFlags[2];
-            _isPlayerNearMeteorZone = zoneFlags[3];
-            _isPlayerNearJungleZone = zoneFlags[4];
-            _isPlayerNearSnowZone = zoneFlags[5];
-            _isPlayerNearCrimsonZone = zoneFlags[6];
-            _isPlayerNearWaterCandleZone = zoneFlags[7];
-            _isPlayerNearPeaceCandleZone = zoneFlags2[0];
-            _isPlayerNearSolarTowerZone = zoneFlags2[1];
-            _isPlayerNearVortexTowerZone = zoneFlags2[2];
-            _isPlayerNearNebulaTowerZone = zoneFlags2[3];
-            _isPlayerNearStardustTowerZone = zoneFlags2[4];
-            _isPlayerNearDesertZone = zoneFlags2[5];
-            _isPlayerNearGlowingMushroomZone = zoneFlags2[6];
-            _isPlayerNearUndergroundDesertZone = zoneFlags2[7];
-            _isPlayerNearSkyHeightZone = zoneFlags3[0];
-            _isPlayerNearOverworldHeightZone = zoneFlags3[1];
-            _isPlayerNearDirtLayerHeightZone = zoneFlags3[2];
-            _isPlayerNearRockLayerHeightZone = zoneFlags3[3];
-            _isPlayerNearUnderworldHeightZone = zoneFlags3[4];
-            _isPlayerNearBeachZone = zoneFlags3[5];
-            _isPlayerNearRainZone = zoneFlags3[6];
-            _isPlayerNearSandstormZone = zoneFlags3[7];
-            _isPlayerNearOldOnesArmyZone = zoneFlags4[0];
+            IsPlayerNearDungeonZone = zoneFlags[0];
+            IsPlayerNearCorruptionZone = zoneFlags[1];
+            IsPlayerNearHallowedZone = zoneFlags[2];
+            IsPlayerNearMeteorZone = zoneFlags[3];
+            IsPlayerNearJungleZone = zoneFlags[4];
+            IsPlayerNearSnowZone = zoneFlags[5];
+            IsPlayerNearCrimsonZone = zoneFlags[6];
+            IsPlayerNearWaterCandleZone = zoneFlags[7];
+            IsPlayerNearPeaceCandleZone = zoneFlags2[0];
+            IsPlayerNearSolarTowerZone = zoneFlags2[1];
+            IsPlayerNearVortexTowerZone = zoneFlags2[2];
+            IsPlayerNearNebulaTowerZone = zoneFlags2[3];
+            IsPlayerNearStardustTowerZone = zoneFlags2[4];
+            IsPlayerNearDesertZone = zoneFlags2[5];
+            IsPlayerNearGlowingMushroomZone = zoneFlags2[6];
+            IsPlayerNearUndergroundDesertZone = zoneFlags2[7];
+            IsPlayerNearSkyHeightZone = zoneFlags3[0];
+            IsPlayerNearOverworldHeightZone = zoneFlags3[1];
+            IsPlayerNearDirtLayerHeightZone = zoneFlags3[2];
+            IsPlayerNearRockLayerHeightZone = zoneFlags3[3];
+            IsPlayerNearUnderworldHeightZone = zoneFlags3[4];
+            IsPlayerNearBeachZone = zoneFlags3[5];
+            IsPlayerNearRainZone = zoneFlags3[6];
+            IsPlayerNearSandstormZone = zoneFlags3[7];
+            IsPlayerNearOldOnesArmyZone = zoneFlags4[0];
         }
 
         private protected override void WriteToWriter(BinaryWriter writer, PacketContext context) {

@@ -22,6 +22,7 @@ using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using Microsoft.Xna.Framework;
 using Orion.Entities;
+using Orion.Events;
 using Orion.Networking.Packets.Extensions;
 using Orion.Utils;
 
@@ -44,6 +45,12 @@ namespace Orion.Networking.Packets.Npcs {
         private int _npcHealth;
         private byte _npcReleaserPlayerIndex;
 
+        /// <inheritdoc />
+        public override bool IsDirty => _isDirty || NpcAiValues.IsDirty;
+
+        /// <inheritdoc />
+        public override PacketType Type => PacketType.NpcInfo;
+
         /// <summary>
         /// Gets or sets the NPC index.
         /// </summary>
@@ -51,7 +58,7 @@ namespace Orion.Networking.Packets.Npcs {
             get => _npcIndex;
             set {
                 _npcIndex = value;
-                IsDirty = true;
+                _isDirty = true;
             }
         }
 
@@ -62,7 +69,7 @@ namespace Orion.Networking.Packets.Npcs {
             get => _npcPosition;
             set {
                 _npcPosition = value;
-                IsDirty = true;
+                _isDirty = true;
             }
         }
 
@@ -73,7 +80,7 @@ namespace Orion.Networking.Packets.Npcs {
             get => _npcVelocity;
             set {
                 _npcVelocity = value;
-                IsDirty = true;
+                _isDirty = true;
             }
         }
 
@@ -86,7 +93,7 @@ namespace Orion.Networking.Packets.Npcs {
             get => _npcTargetIndex;
             set {
                 _npcTargetIndex = value;
-                IsDirty = true;
+                _isDirty = true;
             }
         }
 
@@ -97,7 +104,7 @@ namespace Orion.Networking.Packets.Npcs {
             get => _npcHorizontalDirection;
             set {
                 _npcHorizontalDirection = value;
-                IsDirty = true;
+                _isDirty = true;
             }
         }
 
@@ -108,14 +115,14 @@ namespace Orion.Networking.Packets.Npcs {
             get => _npcVerticalDirection;
             set {
                 _npcVerticalDirection = value;
-                IsDirty = true;
+                _isDirty = true;
             }
         }
 
         /// <summary>
         /// Gets the NPC's AI values.
         /// </summary>
-        public IArray<float> NpcAiValues { get; }
+        public AiValues NpcAiValues { get; }
 
         /// <summary>
         /// Gets or sets a value indicating the direction of the NPC sprite.
@@ -124,7 +131,7 @@ namespace Orion.Networking.Packets.Npcs {
             get => _npcSpriteDirection;
             set {
                 _npcSpriteDirection = value;
-                IsDirty = true;
+                _isDirty = true;
             }
         }
 
@@ -135,7 +142,7 @@ namespace Orion.Networking.Packets.Npcs {
             get => _isNpcAtMaxHealth;
             set {
                 _isNpcAtMaxHealth = value;
-                IsDirty = true;
+                _isDirty = true;
             }
         }
 
@@ -147,7 +154,7 @@ namespace Orion.Networking.Packets.Npcs {
             get => _npcType;
             set {
                 _npcType = value ?? throw new ArgumentNullException(nameof(value));
-                IsDirty = true;
+                _isDirty = true;
             }
         }
 
@@ -158,7 +165,7 @@ namespace Orion.Networking.Packets.Npcs {
             get => _npcNumberOfHealthBytes;
             set {
                 _npcNumberOfHealthBytes = value;
-                IsDirty = true;
+                _isDirty = true;
             }
         }
 
@@ -169,7 +176,7 @@ namespace Orion.Networking.Packets.Npcs {
             get => _npcHealth;
             set {
                 _npcHealth = value;
-                IsDirty = true;
+                _isDirty = true;
             }
         }
 
@@ -180,18 +187,21 @@ namespace Orion.Networking.Packets.Npcs {
             get => _npcReleaserPlayerIndex;
             set {
                 _npcReleaserPlayerIndex = value;
-                IsDirty = true;
+                _isDirty = true;
             }
         }
-
-        /// <inheritdoc />
-        public override PacketType Type => PacketType.NpcInfo;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="NpcInfoPacket"/> class.
         /// </summary>
         public NpcInfoPacket() {
-            NpcAiValues = new AiValueArray(this);
+            NpcAiValues = new AiValues(_npcAiValues);
+        }
+
+        /// <inheritdoc />
+        public override void Clean() {
+            base.Clean();
+            NpcAiValues.Clean();
         }
 
         /// <inheritdoc />
@@ -199,24 +209,24 @@ namespace Orion.Networking.Packets.Npcs {
         public override string ToString() => $"{Type}[#={NpcIndex}, {NpcType} @ {NpcPosition}, ...]";
 
         private protected override void ReadFromReader(BinaryReader reader, PacketContext context) {
-            _npcIndex = reader.ReadInt16();
-            _npcPosition = reader.ReadVector2();
-            _npcVelocity = reader.ReadVector2();
+            NpcIndex = reader.ReadInt16();
+            NpcPosition = reader.ReadVector2();
+            NpcVelocity = reader.ReadVector2();
 
             var targetIndex = reader.ReadUInt16();
-            _npcTargetIndex = targetIndex != ushort.MaxValue ? targetIndex : (ushort)0;
+            NpcTargetIndex = targetIndex != ushort.MaxValue ? targetIndex : (ushort)0;
 
             Terraria.BitsByte header = reader.ReadByte();
-            _npcHorizontalDirection = header[0];
-            _npcVerticalDirection = header[1];
-            if (header[2]) _npcAiValues[0] = reader.ReadSingle();
-            if (header[3]) _npcAiValues[1] = reader.ReadSingle();
-            if (header[4]) _npcAiValues[2] = reader.ReadSingle();
-            if (header[5]) _npcAiValues[3] = reader.ReadSingle();
-            _npcSpriteDirection = header[6];
-            _isNpcAtMaxHealth = header[7];
+            NpcHorizontalDirection = header[0];
+            NpcVerticalDirection = header[1];
+            if (header[2]) NpcAiValues[0] = reader.ReadSingle();
+            if (header[3]) NpcAiValues[1] = reader.ReadSingle();
+            if (header[4]) NpcAiValues[2] = reader.ReadSingle();
+            if (header[5]) NpcAiValues[3] = reader.ReadSingle();
+            NpcSpriteDirection = header[6];
+            IsNpcAtMaxHealth = header[7];
 
-            _npcType = NpcType.FromId(reader.ReadInt16()) ?? throw new PacketException("NPC type is invalid.");
+            NpcType = NpcType.FromId(reader.ReadInt16()) ?? throw new PacketException("NPC type is invalid.");
 
             if (!IsNpcAtMaxHealth) {
                 _npcNumberOfHealthBytes = reader.ReadByte();
@@ -282,30 +292,40 @@ namespace Orion.Networking.Packets.Npcs {
             }
         }
 
-        private class AiValueArray : IArray<float> {
-            private readonly NpcInfoPacket _packet;
+        /// <summary>
+        /// Represents the AI values in an <see cref="NpcInfoPacket"/>.
+        /// </summary>
+        public sealed class AiValues : IArray<float>, IDirtiable {
+            private readonly float[] _aiValues;
 
+            /// <inheritdoc cref="IArray{T}.this" />
             public float this[int index] {
-                get => _packet._npcAiValues[index];
+                get => _aiValues[index];
                 set {
-                    _packet._npcAiValues[index] = value;
-                    _packet.IsDirty = true;
+                    _aiValues[index] = value;
+                    IsDirty = true;
                 }
             }
 
-            public int Count => _packet._npcAiValues.Length;
+            /// <inheritdoc />
+            public int Count => _aiValues.Length;
 
-            public AiValueArray(NpcInfoPacket packet) {
-                _packet = packet;
+            /// <inheritdoc />
+            public bool IsDirty { get; private set; }
+
+            internal AiValues(float[] aiValues) {
+                _aiValues = aiValues;
             }
 
-            public IEnumerator<float> GetEnumerator() {
-                for (var i = 0; i < Count; ++i) {
-                    yield return this[i];
-                }
-            }
+            /// <inheritdoc />
+            public IEnumerator<float> GetEnumerator() => ((IEnumerable<float>)_aiValues).GetEnumerator();
 
             IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
+
+            /// <inheritdoc />
+            public void Clean() {
+                IsDirty = false;
+            }
         }
     }
 }

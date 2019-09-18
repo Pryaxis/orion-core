@@ -29,6 +29,9 @@ namespace Orion.Networking.Packets.World {
         private short _blockY;
         private PaintColor _blockColor;
 
+        /// <inheritdoc />
+        public override PacketType Type => PacketType.PaintBlock;
+
         /// <summary>
         /// Gets or sets the block's X coordinate.
         /// </summary>
@@ -36,7 +39,7 @@ namespace Orion.Networking.Packets.World {
             get => _blockX;
             set {
                 _blockX = value;
-                IsDirty = true;
+                _isDirty = true;
             }
         }
 
@@ -47,7 +50,7 @@ namespace Orion.Networking.Packets.World {
             get => _blockY;
             set {
                 _blockY = value;
-                IsDirty = true;
+                _isDirty = true;
             }
         }
 
@@ -59,21 +62,18 @@ namespace Orion.Networking.Packets.World {
             get => _blockColor;
             set {
                 _blockColor = value ?? throw new ArgumentNullException(nameof(value));
-                IsDirty = true;
+                _isDirty = true;
             }
         }
-
-        /// <inheritdoc />
-        public override PacketType Type => PacketType.PaintBlock;
 
         /// <inheritdoc />
         [ExcludeFromCodeCoverage]
         public override string ToString() => $"{Type}[{BlockColor} @ ({BlockX}, {BlockY})]";
 
         private protected override void ReadFromReader(BinaryReader reader, PacketContext context) {
-            _blockX = reader.ReadInt16();
-            _blockY = reader.ReadInt16();
-            _blockColor = PaintColor.FromId(reader.ReadByte()) ?? throw new PacketException("Paint color is invalid.");
+            BlockX = reader.ReadInt16();
+            BlockY = reader.ReadInt16();
+            BlockColor = PaintColor.FromId(reader.ReadByte()) ?? throw new PacketException("Paint color is invalid.");
         }
 
         private protected override void WriteToWriter(BinaryWriter writer, PacketContext context) {

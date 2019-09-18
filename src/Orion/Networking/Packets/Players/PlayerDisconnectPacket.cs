@@ -28,6 +28,9 @@ namespace Orion.Networking.Packets.Players {
     public sealed class PlayerDisconnectPacket : Packet {
         private Terraria.Localization.NetworkText _playerDisconnectReason = Terraria.Localization.NetworkText.Empty;
 
+        /// <inheritdoc />
+        public override PacketType Type => PacketType.PlayerDisconnect;
+
         /// <summary>
         /// Gets or sets the player's disconnect reason.
         /// </summary>
@@ -36,19 +39,16 @@ namespace Orion.Networking.Packets.Players {
             get => _playerDisconnectReason;
             set {
                 _playerDisconnectReason = value ?? throw new ArgumentNullException(nameof(value));
-                IsDirty = true;
+                _isDirty = true;
             }
         }
-
-        /// <inheritdoc />
-        public override PacketType Type => PacketType.PlayerDisconnect;
 
         /// <inheritdoc />
         [ExcludeFromCodeCoverage]
         public override string ToString() => $"{Type}[{PlayerDisconnectReason}]";
 
         private protected override void ReadFromReader(BinaryReader reader, PacketContext context) {
-            _playerDisconnectReason = reader.ReadNetworkText();
+            PlayerDisconnectReason = reader.ReadNetworkText();
         }
 
         private protected override void WriteToWriter(BinaryWriter writer, PacketContext context) {

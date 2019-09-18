@@ -20,24 +20,24 @@ using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Text;
+using Orion.Events;
 
 namespace Orion.Networking.Packets {
     /// <summary>
     /// Represents a packet.
     /// </summary>
-    public abstract class Packet {
+    public abstract class Packet : IDirtiable {
+        private protected bool _isDirty;
+
+        /// <inheritdoc />
+        public virtual bool IsDirty => _isDirty;
+
         /// <summary>
         /// Gets the packet's type.
         /// </summary>
         public abstract PacketType Type { get; }
 
-        /// <summary>
-        /// Gets a value indicating whether the packet is dirty: i.e., whether the packet has changed since it was
-        /// constructed.
-        /// </summary>
-        public bool IsDirty { get; protected set; }
-
-        // Do not allow outside inheritance.
+        // Prevent outside inheritance.
         private protected Packet() { }
 
         /// <summary>
@@ -64,7 +64,7 @@ namespace Orion.Networking.Packets {
                 var packet = packetType.Constructor();
 
                 packet.ReadFromReader(reader, context);
-
+                packet.Clean();
 #if DEBUG
                 Debug.Assert(stream.Position - oldPosition == packetLength, "Packet should have been consumed.");
                 Debug.Assert(!packet.IsDirty, "Packet should not be dirty.");
@@ -78,6 +78,11 @@ namespace Orion.Networking.Packets {
         /// <inheritdoc />
         [ExcludeFromCodeCoverage]
         public override string ToString() => $"{Type}";
+        
+        /// <inheritdoc />
+        public virtual void Clean() {
+            _isDirty = false;
+        }
 
         /// <summary>
         /// Writes the packet to the given stream with the specified context.

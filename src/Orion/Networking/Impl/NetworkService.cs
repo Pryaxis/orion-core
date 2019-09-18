@@ -75,7 +75,7 @@ namespace Orion.Networking.Impl {
                 packet = args.Packet;
             }
 
-            if (!args.IsPacketDirty) return OTAPI.HookResult.Continue;
+            if (!args.IsDirty) return OTAPI.HookResult.Continue;
 
             var oldBuffer = buffer.readBuffer;
             var newStream = new MemoryStream();
@@ -102,7 +102,7 @@ namespace Orion.Networking.Impl {
             var args = new PacketSendEventArgs(receiver, packet);
             PacketSend?.Invoke(this, args);
             if (args.IsCanceled) return OTAPI.HookResult.Cancel;
-            if (!args.IsPacketDirty) return OTAPI.HookResult.Continue;
+            if (!args.IsDirty) return OTAPI.HookResult.Continue;
 
             var newStream = new MemoryStream();
             args.Packet.WriteToStream(newStream, PacketContext.Server);

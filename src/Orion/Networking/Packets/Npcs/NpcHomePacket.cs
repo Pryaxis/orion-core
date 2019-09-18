@@ -28,6 +28,9 @@ namespace Orion.Networking.Packets.Npcs {
         private short _npcHomeY;
         private bool _isNpcHomeless;
 
+        /// <inheritdoc />
+        public override PacketType Type => PacketType.NpcHome;
+
         /// <summary>
         /// Gets or sets the NPC index.
         /// </summary>
@@ -35,7 +38,7 @@ namespace Orion.Networking.Packets.Npcs {
             get => _npcIndex;
             set {
                 _npcIndex = value;
-                IsDirty = true;
+                _isDirty = true;
             }
         }
 
@@ -46,7 +49,7 @@ namespace Orion.Networking.Packets.Npcs {
             get => _npcHomeX;
             set {
                 _npcHomeX = value;
-                IsDirty = true;
+                _isDirty = true;
             }
         }
 
@@ -57,7 +60,7 @@ namespace Orion.Networking.Packets.Npcs {
             get => _npcHomeY;
             set {
                 _npcHomeY = value;
-                IsDirty = true;
+                _isDirty = true;
             }
         }
 
@@ -68,22 +71,19 @@ namespace Orion.Networking.Packets.Npcs {
             get => _isNpcHomeless;
             set {
                 _isNpcHomeless = value;
-                IsDirty = true;
+                _isDirty = true;
             }
         }
-
-        /// <inheritdoc />
-        public override PacketType Type => PacketType.NpcHome;
 
         /// <inheritdoc />
         [ExcludeFromCodeCoverage]
         public override string ToString() => $"{Type}[#={NpcIndex} @ ({NpcHomeX}, {NpcHomeY}), ...]";
 
         private protected override void ReadFromReader(BinaryReader reader, PacketContext context) {
-            _npcIndex = reader.ReadInt16();
-            _npcHomeX = reader.ReadInt16();
-            _npcHomeY = reader.ReadInt16();
-            _isNpcHomeless = reader.ReadBoolean();
+            NpcIndex = reader.ReadInt16();
+            NpcHomeX = reader.ReadInt16();
+            NpcHomeY = reader.ReadInt16();
+            IsNpcHomeless = reader.ReadBoolean();
         }
 
         private protected override void WriteToWriter(BinaryWriter writer, PacketContext context) {

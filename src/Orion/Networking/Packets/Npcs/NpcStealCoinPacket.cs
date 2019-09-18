@@ -29,6 +29,9 @@ namespace Orion.Networking.Packets.Npcs {
         private float _npcStolenValue;
         private Vector2 _coinPosition;
 
+        /// <inheritdoc />
+        public override PacketType Type => PacketType.NpcStealCoin;
+
         /// <summary>
         /// Gets or sets the NPC index.
         /// </summary>
@@ -36,7 +39,7 @@ namespace Orion.Networking.Packets.Npcs {
             get => _npcIndex;
             set {
                 _npcIndex = value;
-                IsDirty = true;
+                _isDirty = true;
             }
         }
 
@@ -47,7 +50,7 @@ namespace Orion.Networking.Packets.Npcs {
             get => _npcStolenValue;
             set {
                 _npcStolenValue = value;
-                IsDirty = true;
+                _isDirty = true;
             }
         }
 
@@ -58,21 +61,18 @@ namespace Orion.Networking.Packets.Npcs {
             get => _coinPosition;
             set {
                 _coinPosition = value;
-                IsDirty = true;
+                _isDirty = true;
             }
         }
-
-        /// <inheritdoc />
-        public override PacketType Type => PacketType.NpcStealCoin;
 
         /// <inheritdoc />
         [ExcludeFromCodeCoverage]
         public override string ToString() => $"{Type}[#={NpcIndex}, V={NpcStolenValue} @ {CoinPosition}]";
 
         private protected override void ReadFromReader(BinaryReader reader, PacketContext context) {
-            _npcIndex = reader.ReadInt16();
-            _npcStolenValue = reader.ReadSingle();
-            _coinPosition = reader.ReadVector2();
+            NpcIndex = reader.ReadInt16();
+            NpcStolenValue = reader.ReadSingle();
+            CoinPosition = reader.ReadVector2();
         }
 
         private protected override void WriteToWriter(BinaryWriter writer, PacketContext context) {

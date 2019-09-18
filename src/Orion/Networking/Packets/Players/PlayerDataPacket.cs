@@ -43,6 +43,9 @@ namespace Orion.Networking.Packets.Players {
         private Color _playerShoeColor;
         private PlayerDifficulty _playerDifficulty;
 
+        /// <inheritdoc />
+        public override PacketType Type => PacketType.PlayerData;
+
         /// <summary>
         /// Gets or sets the player index.
         /// </summary>
@@ -50,7 +53,7 @@ namespace Orion.Networking.Packets.Players {
             get => _playerIndex;
             set {
                 _playerIndex = value;
-                IsDirty = true;
+                _isDirty = true;
             }
         }
 
@@ -61,7 +64,7 @@ namespace Orion.Networking.Packets.Players {
             get => _playerSkinType;
             set {
                 _playerSkinType = value;
-                IsDirty = true;
+                _isDirty = true;
             }
         }
 
@@ -72,7 +75,7 @@ namespace Orion.Networking.Packets.Players {
             get => _playerHairType;
             set {
                 _playerHairType = value;
-                IsDirty = true;
+                _isDirty = true;
             }
         }
 
@@ -84,7 +87,7 @@ namespace Orion.Networking.Packets.Players {
             get => _playerName;
             set {
                 _playerName = value ?? throw new ArgumentNullException(nameof(value));
-                IsDirty = true;
+                _isDirty = true;
             }
         }
 
@@ -95,7 +98,7 @@ namespace Orion.Networking.Packets.Players {
             get => _playerHairDye;
             set {
                 _playerHairDye = value;
-                IsDirty = true;
+                _isDirty = true;
             }
         }
 
@@ -106,7 +109,7 @@ namespace Orion.Networking.Packets.Players {
             get => _playerHiddenVisualsFlags;
             set {
                 _playerHiddenVisualsFlags = value;
-                IsDirty = true;
+                _isDirty = true;
             }
         }
 
@@ -117,7 +120,7 @@ namespace Orion.Networking.Packets.Players {
             get => _playerHiddenMiscFlags;
             set {
                 _playerHiddenMiscFlags = value;
-                IsDirty = true;
+                _isDirty = true;
             }
         }
 
@@ -128,7 +131,7 @@ namespace Orion.Networking.Packets.Players {
             get => _playerHairColor;
             set {
                 _playerHairColor = value;
-                IsDirty = true;
+                _isDirty = true;
             }
         }
 
@@ -139,7 +142,7 @@ namespace Orion.Networking.Packets.Players {
             get => _playerSkinColor;
             set {
                 _playerSkinColor = value;
-                IsDirty = true;
+                _isDirty = true;
             }
         }
 
@@ -150,7 +153,7 @@ namespace Orion.Networking.Packets.Players {
             get => _playerEyeColor;
             set {
                 _playerEyeColor = value;
-                IsDirty = true;
+                _isDirty = true;
             }
         }
 
@@ -161,7 +164,7 @@ namespace Orion.Networking.Packets.Players {
             get => _playerShirtColor;
             set {
                 _playerShirtColor = value;
-                IsDirty = true;
+                _isDirty = true;
             }
         }
 
@@ -172,7 +175,7 @@ namespace Orion.Networking.Packets.Players {
             get => _playerUndershirtColor;
             set {
                 _playerUndershirtColor = value;
-                IsDirty = true;
+                _isDirty = true;
             }
         }
 
@@ -183,7 +186,7 @@ namespace Orion.Networking.Packets.Players {
             get => _playerPantsColor;
             set {
                 _playerPantsColor = value;
-                IsDirty = true;
+                _isDirty = true;
             }
         }
 
@@ -194,7 +197,7 @@ namespace Orion.Networking.Packets.Players {
             get => _playerShoeColor;
             set {
                 _playerShoeColor = value;
-                IsDirty = true;
+                _isDirty = true;
             }
         }
 
@@ -205,33 +208,30 @@ namespace Orion.Networking.Packets.Players {
             get => _playerDifficulty;
             set {
                 _playerDifficulty = value;
-                IsDirty = true;
+                _isDirty = true;
             }
         }
-
-        /// <inheritdoc />
-        public override PacketType Type => PacketType.PlayerData;
 
         /// <inheritdoc />
         [ExcludeFromCodeCoverage]
         public override string ToString() => $"{Type}[#={PlayerIndex} is {PlayerName}, ...]";
 
         private protected override void ReadFromReader(BinaryReader reader, PacketContext context) {
-            _playerIndex = reader.ReadByte();
-            _playerSkinType = reader.ReadByte();
-            _playerHairType = reader.ReadByte();
-            _playerName = reader.ReadString();
-            _playerHairDye = reader.ReadByte();
-            _playerHiddenVisualsFlags = reader.ReadUInt16();
-            _playerHiddenMiscFlags = reader.ReadByte();
-            _playerHairColor = reader.ReadColor();
-            _playerSkinColor = reader.ReadColor();
-            _playerEyeColor = reader.ReadColor();
-            _playerShirtColor = reader.ReadColor();
-            _playerUndershirtColor = reader.ReadColor();
-            _playerPantsColor = reader.ReadColor();
-            _playerShoeColor = reader.ReadColor();
-            _playerDifficulty = (PlayerDifficulty)reader.ReadByte();
+            PlayerIndex = reader.ReadByte();
+            PlayerSkinType = reader.ReadByte();
+            PlayerHairType = reader.ReadByte();
+            PlayerName = reader.ReadString();
+            PlayerHairDye = reader.ReadByte();
+            PlayerHiddenVisualsFlags = reader.ReadUInt16();
+            PlayerHiddenMiscFlags = reader.ReadByte();
+            PlayerHairColor = reader.ReadColor();
+            PlayerSkinColor = reader.ReadColor();
+            PlayerEyeColor = reader.ReadColor();
+            PlayerShirtColor = reader.ReadColor();
+            PlayerUndershirtColor = reader.ReadColor();
+            PlayerPantsColor = reader.ReadColor();
+            PlayerShoeColor = reader.ReadColor();
+            PlayerDifficulty = (PlayerDifficulty)reader.ReadByte();
         }
 
         private protected override void WriteToWriter(BinaryWriter writer, PacketContext context) {

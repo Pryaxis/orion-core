@@ -25,6 +25,9 @@ namespace Orion.Networking.Packets.Players {
     public sealed class PlayerAnglerQuestsPacket : Packet {
         private int _playerNumberOfAnglerQuestsCompleted;
 
+        /// <inheritdoc />
+        public override PacketType Type => PacketType.PlayerAnglerQuests;
+
         /// <summary>
         /// Gets or sets the player's number of angler quests completed.
         /// </summary>
@@ -32,19 +35,16 @@ namespace Orion.Networking.Packets.Players {
             get => _playerNumberOfAnglerQuestsCompleted;
             set {
                 _playerNumberOfAnglerQuestsCompleted = value;
-                IsDirty = true;
+                _isDirty = true;
             }
         }
-
-        /// <inheritdoc />
-        public override PacketType Type => PacketType.PlayerAnglerQuests;
 
         /// <inheritdoc />
         [ExcludeFromCodeCoverage]
         public override string ToString() => $"{Type}[{PlayerNumberOfAnglerQuestsCompleted}]";
 
         private protected override void ReadFromReader(BinaryReader reader, PacketContext context) {
-            _playerNumberOfAnglerQuestsCompleted = reader.ReadInt32();
+            PlayerNumberOfAnglerQuestsCompleted = reader.ReadInt32();
         }
 
         private protected override void WriteToWriter(BinaryWriter writer, PacketContext context) {

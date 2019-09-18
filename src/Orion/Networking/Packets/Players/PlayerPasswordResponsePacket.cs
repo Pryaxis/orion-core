@@ -27,6 +27,9 @@ namespace Orion.Networking.Packets.Players {
     public sealed class PlayerPasswordResponsePacket : Packet {
         private string _playerPassword = "";
 
+        /// <inheritdoc />
+        public override PacketType Type => PacketType.PlayerPasswordResponse;
+
         /// <summary>
         /// Gets or sets the player's password.
         /// </summary>
@@ -35,19 +38,16 @@ namespace Orion.Networking.Packets.Players {
             get => _playerPassword;
             set {
                 _playerPassword = value ?? throw new ArgumentNullException(nameof(value));
-                IsDirty = true;
+                _isDirty = true;
             }
         }
-
-        /// <inheritdoc />
-        public override PacketType Type => PacketType.PlayerPasswordResponse;
 
         /// <inheritdoc />
         [ExcludeFromCodeCoverage]
         public override string ToString() => $"{Type}[{PlayerPassword}]";
 
         private protected override void ReadFromReader(BinaryReader reader, PacketContext context) {
-            _playerPassword = reader.ReadString();
+            PlayerPassword = reader.ReadString();
         }
 
         private protected override void WriteToWriter(BinaryWriter writer, PacketContext context) {

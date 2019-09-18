@@ -27,6 +27,9 @@ namespace Orion.Networking.Packets.World {
         private byte _corruptionAmount;
         private byte _crimsonAmount;
 
+        /// <inheritdoc />
+        public override PacketType Type => PacketType.BiomeStats;
+
         /// <summary>
         /// Gets or sets the hallowed biome amount.
         /// </summary>
@@ -34,7 +37,7 @@ namespace Orion.Networking.Packets.World {
             get => _hallowedAmount;
             set {
                 _hallowedAmount = value;
-                IsDirty = true;
+                _isDirty = true;
             }
         }
 
@@ -45,7 +48,7 @@ namespace Orion.Networking.Packets.World {
             get => _corruptionAmount;
             set {
                 _corruptionAmount = value;
-                IsDirty = true;
+                _isDirty = true;
             }
         }
 
@@ -56,12 +59,9 @@ namespace Orion.Networking.Packets.World {
             get => _crimsonAmount;
             set {
                 _crimsonAmount = value;
-                IsDirty = true;
+                _isDirty = true;
             }
         }
-
-        /// <inheritdoc />
-        public override PacketType Type => PacketType.BiomeStats;
 
         /// <inheritdoc />
         [ExcludeFromCodeCoverage]
@@ -70,9 +70,9 @@ namespace Orion.Networking.Packets.World {
 
         /// <inheritdoc />
         private protected override void ReadFromReader(BinaryReader reader, PacketContext context) {
-            _hallowedAmount = reader.ReadByte();
-            _corruptionAmount = reader.ReadByte();
-            _crimsonAmount = reader.ReadByte();
+            HallowedAmount = reader.ReadByte();
+            CorruptionAmount = reader.ReadByte();
+            CrimsonAmount = reader.ReadByte();
         }
 
         /// <inheritdoc />

@@ -28,7 +28,7 @@ namespace Orion.Events.Networking {
             var packet = new TestPacket();
             var args = new TestArgs(packet);
 
-            args.IsPacketDirty.Should().BeFalse();
+            args.IsDirty.Should().BeFalse();
         }
 
         [Fact]
@@ -52,7 +52,7 @@ namespace Orion.Events.Networking {
             var args = new TestArgs(packet);
             args.Packet = new TestPacket();
 
-            args.IsPacketDirty.Should().BeTrue();
+            args.IsDirty.Should().BeTrue();
         }
 
         [Fact]
@@ -65,12 +65,12 @@ namespace Orion.Events.Networking {
         }
 
         [Fact]
-        public void GetIsPacketDirty_IsCorrect() {
+        public void GetIsDirty_IsCorrect() {
             var packet = new TestPacket();
             var args = new TestArgs(packet);
             packet.MarkAsDirty();
 
-            args.IsPacketDirty.Should().BeTrue();
+            args.IsDirty.Should().BeTrue();
         }
 
         private class TestArgs : PacketEventArgs {
@@ -81,7 +81,7 @@ namespace Orion.Events.Networking {
             public override PacketType Type => throw new NotImplementedException();
 
             public void MarkAsDirty() {
-                IsDirty = true;
+                _isDirty = true;
             }
 
             private protected override void ReadFromReader(BinaryReader reader, PacketContext context) =>

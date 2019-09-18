@@ -26,6 +26,9 @@ namespace Orion.Networking.Packets.World {
         private short _wireY;
         private short _wireX;
 
+        /// <inheritdoc />
+        public override PacketType Type => PacketType.ActivateWire;
+
         /// <summary>
         /// Gets or sets the wire's X coordinate.
         /// </summary>
@@ -33,7 +36,7 @@ namespace Orion.Networking.Packets.World {
             get => _wireX;
             set {
                 _wireX = value;
-                IsDirty = true;
+                _isDirty = true;
             }
         }
 
@@ -44,20 +47,17 @@ namespace Orion.Networking.Packets.World {
             get => _wireY;
             set {
                 _wireY = value;
-                IsDirty = true;
+                _isDirty = true;
             }
         }
-
-        /// <inheritdoc />
-        public override PacketType Type => PacketType.ActivateWire;
 
         /// <inheritdoc />
         [ExcludeFromCodeCoverage]
         public override string ToString() => $"{Type}[({WireX}, {WireY})]";
 
         private protected override void ReadFromReader(BinaryReader reader, PacketContext context) {
-            _wireX = reader.ReadInt16();
-            _wireY = reader.ReadInt16();
+            WireX = reader.ReadInt16();
+            WireY = reader.ReadInt16();
         }
 
         private protected override void WriteToWriter(BinaryWriter writer, PacketContext context) {

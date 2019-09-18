@@ -26,6 +26,9 @@ namespace Orion.Networking.Packets.Players {
     public sealed class PlayerContinueConnectingPacket : Packet {
         private byte _playerIndex;
 
+        /// <inheritdoc />
+        public override PacketType Type => PacketType.PlayerContinueConnecting;
+
         /// <summary>
         /// Gets or sets the player index that the player will be using.
         /// </summary>
@@ -33,19 +36,16 @@ namespace Orion.Networking.Packets.Players {
             get => _playerIndex;
             set {
                 _playerIndex = value;
-                IsDirty = true;
+                _isDirty = true;
             }
         }
-
-        /// <inheritdoc />
-        public override PacketType Type => PacketType.PlayerContinueConnecting;
 
         /// <inheritdoc />
         [ExcludeFromCodeCoverage]
         public override string ToString() => $"{Type}[#={PlayerIndex}]";
 
         private protected override void ReadFromReader(BinaryReader reader, PacketContext context) {
-            _playerIndex = reader.ReadByte();
+            PlayerIndex = reader.ReadByte();
         }
 
         private protected override void WriteToWriter(BinaryWriter writer, PacketContext context) {

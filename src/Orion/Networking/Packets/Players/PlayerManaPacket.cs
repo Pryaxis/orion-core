@@ -27,6 +27,9 @@ namespace Orion.Networking.Packets.Players {
         private short _playerMana;
         private short _playerMaxMana;
 
+        /// <inheritdoc />
+        public override PacketType Type => PacketType.PlayerMana;
+
         /// <summary>
         /// Gets or sets the player index.
         /// </summary>
@@ -34,7 +37,7 @@ namespace Orion.Networking.Packets.Players {
             get => _playerIndex;
             set {
                 _playerIndex = value;
-                IsDirty = true;
+                _isDirty = true;
             }
         }
 
@@ -45,7 +48,7 @@ namespace Orion.Networking.Packets.Players {
             get => _playerMana;
             set {
                 _playerMana = value;
-                IsDirty = true;
+                _isDirty = true;
             }
         }
 
@@ -56,21 +59,18 @@ namespace Orion.Networking.Packets.Players {
             get => _playerMaxMana;
             set {
                 _playerMaxMana = value;
-                IsDirty = true;
+                _isDirty = true;
             }
         }
-
-        /// <inheritdoc />
-        public override PacketType Type => PacketType.PlayerMana;
 
         /// <inheritdoc />
         [ExcludeFromCodeCoverage]
         public override string ToString() => $"{Type}[#={PlayerIndex} has {PlayerMana}/{PlayerMaxMana} mp]";
 
         private protected override void ReadFromReader(BinaryReader reader, PacketContext context) {
-            _playerIndex = reader.ReadByte();
-            _playerMana = reader.ReadInt16();
-            _playerMaxMana = reader.ReadInt16();
+            PlayerIndex = reader.ReadByte();
+            PlayerMana = reader.ReadInt16();
+            PlayerMaxMana = reader.ReadInt16();
         }
 
         private protected override void WriteToWriter(BinaryWriter writer, PacketContext context) {

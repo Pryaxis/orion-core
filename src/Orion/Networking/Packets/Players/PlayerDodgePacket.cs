@@ -20,11 +20,11 @@ using System.IO;
 
 namespace Orion.Networking.Packets.Players {
     /// <summary>
-    /// Packet sent to show a player dodge effect.
+    /// Packet sent to show a player dodge.
     /// </summary>
     public sealed class PlayerDodgePacket : Packet {
         private byte _playerIndex;
-        private PlayerDodgeType _playerDodgeType;
+        private DodgeType _playerDodgeType;
 
         /// <summary>
         /// Gets or sets the player index.
@@ -33,18 +33,18 @@ namespace Orion.Networking.Packets.Players {
             get => _playerIndex;
             set {
                 _playerIndex = value;
-                IsDirty = true;
+                _isDirty = true;
             }
         }
 
         /// <summary>
-        /// Gets or sets the player's <see cref="Players.PlayerDodgeType"/>.
+        /// Gets or sets the player's dodge type.
         /// </summary>
-        public PlayerDodgeType PlayerDodgeType {
+        public DodgeType PlayerDodgeType {
             get => _playerDodgeType;
             set {
                 _playerDodgeType = value;
-                IsDirty = true;
+                _isDirty = true;
             }
         }
 
@@ -56,13 +56,42 @@ namespace Orion.Networking.Packets.Players {
         public override string ToString() => $"{Type}[#={PlayerIndex} {PlayerDodgeType}]";
 
         private protected override void ReadFromReader(BinaryReader reader, PacketContext context) {
-            _playerIndex = reader.ReadByte();
-            _playerDodgeType = (PlayerDodgeType)reader.ReadByte();
+            PlayerIndex = reader.ReadByte();
+            PlayerDodgeType = DodgeType.FromId(reader.ReadByte()) ??
+                              throw new PacketException("Dodge type is invalid.");
         }
 
         private protected override void WriteToWriter(BinaryWriter writer, PacketContext context) {
             writer.Write(PlayerIndex);
-            writer.Write((byte)PlayerDodgeType);
+            writer.Write(PlayerDodgeType.Id);
+        }
+
+        /// <summary>
+        /// Represents the dodge type of a <see cref="PlayerDodgePacket"/>.
+        /// </summary>
+        public sealed class DodgeType {
+#pragma warning disable 1591
+            public static readonly DodgeType NinjaDodge = new DodgeType(1);
+            public static readonly DodgeType ShadowDodge = new DodgeType(2);
+#pragma warning restore 1591
+
+            private static readonly DodgeType[] Types = {null, NinjaDodge, ShadowDodge};
+
+            /// <summary>
+            /// Gets the dodge type's ID.
+            /// </summary>
+            public byte Id { get; }
+
+            private DodgeType(byte id) {
+                Id = id;
+            }
+
+            /// <summary>
+            /// Returns a dodge type converted from the given ID.
+            /// </summary>
+            /// <param name="id">The ID.</param>
+            /// <returns>The dodge type, or <c>null</c> if none exists.</returns>
+            public static DodgeType FromId(byte id) => id < Types.Length ? Types[id] : null;
         }
     }
 }

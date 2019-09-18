@@ -31,6 +31,9 @@ namespace Orion.Networking.Packets.Players {
         private BuffType _buffType = BuffType.None;
         private Vector2 _buffPosition;
 
+        /// <inheritdoc />
+        public override PacketType Type => PacketType.NebulaBuffPlayers;
+
         /// <summary>
         /// Gets or set the player index.
         /// </summary>
@@ -38,7 +41,7 @@ namespace Orion.Networking.Packets.Players {
             get => _playerIndex;
             set {
                 _playerIndex = value;
-                IsDirty = true;
+                _isDirty = true;
             }
         }
 
@@ -50,7 +53,7 @@ namespace Orion.Networking.Packets.Players {
             get => _buffType;
             set {
                 _buffType = value ?? throw new ArgumentNullException(nameof(value));
-                IsDirty = true;
+                _isDirty = true;
             }
         }
 
@@ -61,21 +64,18 @@ namespace Orion.Networking.Packets.Players {
             get => _buffPosition;
             set {
                 _buffPosition = value;
-                IsDirty = true;
+                _isDirty = true;
             }
         }
-
-        /// <inheritdoc />
-        public override PacketType Type => PacketType.NebulaBuffPlayers;
 
         /// <inheritdoc />
         [ExcludeFromCodeCoverage]
         public override string ToString() => $"{Type}[#={PlayerIndex}, {BuffType} at ({BuffPosition})]";
 
         private protected override void ReadFromReader(BinaryReader reader, PacketContext context) {
-            _playerIndex = reader.ReadByte();
-            _buffType = BuffType.FromId(reader.ReadByte()) ?? throw new PacketException("Buff type is invalid.");
-            _buffPosition = reader.ReadVector2();
+            PlayerIndex = reader.ReadByte();
+            BuffType = BuffType.FromId(reader.ReadByte()) ?? throw new PacketException("Buff type is invalid.");
+            BuffPosition = reader.ReadVector2();
         }
 
         private protected override void WriteToWriter(BinaryWriter writer, PacketContext context) {

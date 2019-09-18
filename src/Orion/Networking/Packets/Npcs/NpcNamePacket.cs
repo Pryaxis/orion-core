@@ -27,6 +27,9 @@ namespace Orion.Networking.Packets.Npcs {
         private short _npcIndex;
         private string _npcName = "";
 
+        /// <inheritdoc />
+        public override PacketType Type => PacketType.NpcName;
+
         /// <summary>
         /// Gets or sets the NPC index.
         /// </summary>
@@ -34,7 +37,7 @@ namespace Orion.Networking.Packets.Npcs {
             get => _npcIndex;
             set {
                 _npcIndex = value;
-                IsDirty = true;
+                _isDirty = true;
             }
         }
 
@@ -46,23 +49,20 @@ namespace Orion.Networking.Packets.Npcs {
             get => _npcName;
             set {
                 _npcName = value ?? throw new ArgumentNullException(nameof(NpcName));
-                IsDirty = true;
+                _isDirty = true;
             }
         }
-
-        /// <inheritdoc />
-        public override PacketType Type => PacketType.NpcName;
 
         /// <inheritdoc />
         [ExcludeFromCodeCoverage]
         public override string ToString() => $"{Type}[#={NpcIndex} is {NpcName ?? "?"}]";
 
         private protected override void ReadFromReader(BinaryReader reader, PacketContext context) {
-            _npcIndex = reader.ReadInt16();
+            NpcIndex = reader.ReadInt16();
 
             // The packet includes the NPC name if it is read as the client.
             if (context == PacketContext.Client) {
-                _npcName = reader.ReadString();
+                NpcName = reader.ReadString();
             }
         }
 

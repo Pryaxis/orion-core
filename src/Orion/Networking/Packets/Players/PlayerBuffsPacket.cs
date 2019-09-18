@@ -15,12 +15,12 @@
 // You should have received a copy of the GNU General Public License
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using Orion.Entities;
+using Orion.Events;
 using Orion.Utils;
 
 namespace Orion.Networking.Packets.Players {
@@ -31,6 +31,12 @@ namespace Orion.Networking.Packets.Players {
         private readonly BuffType[] _playerBuffTypes = new BuffType[Terraria.Player.maxBuffs];
         private byte _playerIndex;
 
+        /// <inheritdoc />
+        public override bool IsDirty => _isDirty || PlayerBuffTypes.IsDirty;
+
+        /// <inheritdoc />
+        public override PacketType Type => PacketType.PlayerBuffs;
+
         /// <summary>
         /// Gets or sets the player index.
         /// </summary>
@@ -38,17 +44,14 @@ namespace Orion.Networking.Packets.Players {
             get => _playerIndex;
             set {
                 _playerIndex = value;
-                IsDirty = true;
+                _isDirty = true;
             }
         }
 
         /// <summary>
         /// Gets the player's buff types.
         /// </summary>
-        public IArray<BuffType> PlayerBuffTypes { get; }
-
-        /// <inheritdoc />
-        public override PacketType Type => PacketType.PlayerBuffs;
+        public BuffTypes PlayerBuffTypes { get; }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="PlayerBuffsPacket"/> class.
@@ -58,7 +61,13 @@ namespace Orion.Networking.Packets.Players {
                 _playerBuffTypes[i] = BuffType.None;
             }
 
-            PlayerBuffTypes = new BuffTypeArray(this);
+            PlayerBuffTypes = new BuffTypes(_playerBuffTypes);
+        }
+
+        /// <inheritdoc />
+        public override void Clean() {
+            base.Clean();
+            PlayerBuffTypes.Clean();
         }
 
         /// <inheritdoc />
@@ -66,10 +75,10 @@ namespace Orion.Networking.Packets.Players {
         public override string ToString() => $"{Type}[#={PlayerIndex}, ...]";
 
         private protected override void ReadFromReader(BinaryReader reader, PacketContext context) {
-            _playerIndex = reader.ReadByte();
+            PlayerIndex = reader.ReadByte();
             for (var i = 0; i < _playerBuffTypes.Length; ++i) {
-                _playerBuffTypes[i] = BuffType.FromId(reader.ReadByte()) ??
-                                      throw new PacketException("Buff type is invalid.");
+                PlayerBuffTypes[i] = BuffType.FromId(reader.ReadByte()) ??
+                                     throw new PacketException("Buff type is invalid.");
             }
         }
 
@@ -80,27 +89,40 @@ namespace Orion.Networking.Packets.Players {
             }
         }
 
-        private class BuffTypeArray : IArray<BuffType> {
-            private readonly PlayerBuffsPacket _packet;
+        /// <summary>
+        /// Represents the buff types in a <see cref="PlayerBuffsPacket"/>.
+        /// </summary>
+        public sealed class BuffTypes : IArray<BuffType>, IDirtiable {
+            private readonly BuffType[] _buffTypes;
 
+            /// <inheritdoc cref="IArray{T}.this" />
             public BuffType this[int index] {
-                get => _packet._playerBuffTypes[index];
+                get => _buffTypes[index];
                 set {
-                    _packet._playerBuffTypes[index] = value ?? throw new ArgumentNullException(nameof(value));
-                    _packet.IsDirty = true;
+                    _buffTypes[index] = value;
+                    IsDirty = true;
                 }
             }
 
-            public int Count => _packet._playerBuffTypes.Length;
+            /// <inheritdoc />
+            public int Count => _buffTypes.Length;
 
-            public BuffTypeArray(PlayerBuffsPacket packet) {
-                _packet = packet;
+            /// <inheritdoc />
+            public bool IsDirty { get; private set; }
+
+            internal BuffTypes(BuffType[] _buffTypes) {
+                this._buffTypes = _buffTypes;
             }
 
-            public IEnumerator<BuffType> GetEnumerator() =>
-                ((IEnumerable<BuffType>)_packet._playerBuffTypes).GetEnumerator();
+            /// <inheritdoc />
+            public IEnumerator<BuffType> GetEnumerator() => ((IEnumerable<BuffType>)_buffTypes).GetEnumerator();
 
             IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
+
+            /// <inheritdoc />
+            public void Clean() {
+                IsDirty = false;
+            }
         }
     }
 }

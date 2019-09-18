@@ -32,6 +32,9 @@ namespace Orion.Networking.Packets.Players {
         private int _hitDirection;
         private bool _isDeathFromPvp;
 
+        /// <inheritdoc />
+        public override PacketType Type => PacketType.KillPlayer;
+
         /// <summary>
         /// Gets or sets the player index.
         /// </summary>
@@ -39,7 +42,7 @@ namespace Orion.Networking.Packets.Players {
             get => _playerIndex;
             set {
                 _playerIndex = value;
-                IsDirty = true;
+                _isDirty = true;
             }
         }
 
@@ -51,7 +54,7 @@ namespace Orion.Networking.Packets.Players {
             get => _playerDeathReason;
             set {
                 _playerDeathReason = value ?? throw new ArgumentNullException(nameof(value));
-                IsDirty = true;
+                _isDirty = true;
             }
         }
 
@@ -62,7 +65,7 @@ namespace Orion.Networking.Packets.Players {
             get => _damage;
             set {
                 _damage = value;
-                IsDirty = true;
+                _isDirty = true;
             }
         }
 
@@ -73,7 +76,7 @@ namespace Orion.Networking.Packets.Players {
             get => _hitDirection;
             set {
                 _hitDirection = value;
-                IsDirty = true;
+                _isDirty = true;
             }
         }
 
@@ -84,12 +87,9 @@ namespace Orion.Networking.Packets.Players {
             get => _isDeathFromPvp;
             set {
                 _isDeathFromPvp = value;
-                IsDirty = true;
+                _isDirty = true;
             }
         }
-
-        /// <inheritdoc />
-        public override PacketType Type => PacketType.KillPlayer;
 
         /// <inheritdoc />
         [ExcludeFromCodeCoverage]
@@ -97,11 +97,11 @@ namespace Orion.Networking.Packets.Players {
 
         /// <inheritdoc />
         private protected override void ReadFromReader(BinaryReader reader, PacketContext context) {
-            _playerIndex = reader.ReadByte();
-            _playerDeathReason = reader.ReadPlayerDeathReason();
-            _damage = reader.ReadInt16();
-            _hitDirection = reader.ReadByte() - 1;
-            _isDeathFromPvp = reader.ReadBoolean();
+            PlayerIndex = reader.ReadByte();
+            PlayerDeathReason = reader.ReadPlayerDeathReason();
+            Damage = reader.ReadInt16();
+            HitDirection = reader.ReadByte() - 1;
+            IsDeathFromPvp = reader.ReadBoolean();
         }
 
         /// <inheritdoc />

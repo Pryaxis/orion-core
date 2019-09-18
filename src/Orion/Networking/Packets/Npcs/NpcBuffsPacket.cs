@@ -21,6 +21,7 @@ using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using Orion.Entities;
+using Orion.Events;
 using Orion.Utils;
 
 namespace Orion.Networking.Packets.Npcs {
@@ -31,6 +32,12 @@ namespace Orion.Networking.Packets.Npcs {
         private readonly Buff[] _npcBuffs = new Buff[Terraria.NPC.maxBuffs];
         private short _npcIndex;
 
+        /// <inheritdoc />
+        public override bool IsDirty => _isDirty || NpcBuffs.IsDirty;
+
+        /// <inheritdoc />
+        public override PacketType Type => PacketType.NpcBuffs;
+
         /// <summary>
         /// Gets or sets the NPC index.
         /// </summary>
@@ -38,17 +45,14 @@ namespace Orion.Networking.Packets.Npcs {
             get => _npcIndex;
             set {
                 _npcIndex = value;
-                IsDirty = true;
+                _isDirty = true;
             }
         }
 
         /// <summary>
         /// Gets the NPC's buffs.
         /// </summary>
-        public IArray<Buff> NpcBuffs { get; }
-
-        /// <inheritdoc />
-        public override PacketType Type => PacketType.NpcBuffs;
+        public Buffs NpcBuffs { get; }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="NpcBuffsPacket"/> class.
@@ -58,7 +62,13 @@ namespace Orion.Networking.Packets.Npcs {
                 _npcBuffs[i] = new Buff(BuffType.None, TimeSpan.Zero);
             }
 
-            NpcBuffs = new BuffArray(this);
+            NpcBuffs = new Buffs(_npcBuffs);
+        }
+
+        /// <inheritdoc />
+        public override void Clean() {
+            base.Clean();
+            NpcBuffs.Clean();
         }
 
         /// <inheritdoc />
@@ -66,9 +76,9 @@ namespace Orion.Networking.Packets.Npcs {
         public override string ToString() => $"{Type}[...]";
 
         private protected override void ReadFromReader(BinaryReader reader, PacketContext context) {
-            _npcIndex = reader.ReadInt16();
+            NpcIndex = reader.ReadInt16();
             for (var i = 0; i < _npcBuffs.Length; ++i) {
-                _npcBuffs[i] =
+                NpcBuffs[i] =
                     new Buff(BuffType.FromId(reader.ReadByte()) ?? throw new PacketException("Buff type is invalid."),
                              TimeSpan.FromSeconds(reader.ReadInt16() / 60.0));
             }
@@ -88,25 +98,40 @@ namespace Orion.Networking.Packets.Npcs {
             }
         }
 
-        private class BuffArray : IArray<Buff> {
-            private readonly NpcBuffsPacket _packet;
+        /// <summary>
+        /// Represents the buffs in an <see cref="NpcBuffsPacket"/>.
+        /// </summary>
+        public sealed class Buffs : IArray<Buff>, IDirtiable {
+            private readonly Buff[] _buffs;
 
+            /// <inheritdoc cref="IArray{T}.this" />
             public Buff this[int index] {
-                get => _packet._npcBuffs[index];
+                get => _buffs[index];
                 set {
-                    _packet._npcBuffs[index] = value ?? throw new ArgumentNullException(nameof(value));
-                    _packet.IsDirty = true;
+                    _buffs[index] = value ?? throw new ArgumentNullException(nameof(value));
+                    IsDirty = true;
                 }
             }
 
-            public int Count => _packet._npcBuffs.Length;
+            /// <inheritdoc />
+            public int Count => _buffs.Length;
 
-            public BuffArray(NpcBuffsPacket packet) {
-                _packet = packet;
+            /// <inheritdoc />
+            public bool IsDirty { get; private set; }
+
+            internal Buffs(Buff[] buffs) {
+                _buffs = buffs;
             }
 
-            public IEnumerator<Buff> GetEnumerator() => ((IEnumerable<Buff>)_packet._npcBuffs).GetEnumerator();
+            /// <inheritdoc />
+            public IEnumerator<Buff> GetEnumerator() => ((IEnumerable<Buff>)_buffs).GetEnumerator();
+
             IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
+
+            /// <inheritdoc />
+            public void Clean() {
+                IsDirty = false;
+            }
         }
     }
 }

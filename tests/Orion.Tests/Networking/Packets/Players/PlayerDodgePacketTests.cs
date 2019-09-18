@@ -29,7 +29,7 @@ namespace Orion.Networking.Packets.Players {
                 var packet = (PlayerDodgePacket)Packet.ReadFromStream(stream, PacketContext.Server);
 
                 packet.PlayerIndex.Should().Be(0);
-                packet.PlayerDodgeType.Should().Be(PlayerDodgeType.NinjaDodge);
+                packet.PlayerDodgeType.Should().BeSameAs(PlayerDodgePacket.DodgeType.NinjaDodge);
             }
         }
 
