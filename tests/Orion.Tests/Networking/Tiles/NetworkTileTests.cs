@@ -23,11 +23,18 @@ using Xunit;
 namespace Orion.Networking.Tiles {
     public class NetworkTileTests {
         [Fact]
+        public void SetDefaultableProperties_MarkAsDirty() {
+            var tile = new NetworkTile();
+
+            tile.ShouldHaveDefaultablePropertiesMarkAsDirty();
+        }
+
+        [Fact]
         public void SetBlockType_MarksAsDirty() {
             var tile = new NetworkTile();
             tile.BlockType = BlockType.Stone;
 
-            tile.IsDirty.Should().BeTrue();
+            tile.ShouldBeDirty();
         }
 
         [Fact]
@@ -42,8 +49,8 @@ namespace Orion.Networking.Tiles {
         public void SetWallType_MarksAsDirty() {
             var tile = new NetworkTile();
             tile.WallType = WallType.Stone;
-
-            tile.IsDirty.Should().BeTrue();
+            
+            tile.ShouldBeDirty();
         }
 
         [Fact]
@@ -52,62 +59,6 @@ namespace Orion.Networking.Tiles {
             Action action = () => tile.WallType = null;
 
             action.Should().Throw<ArgumentNullException>();
-        }
-
-        [Fact]
-        public void SetLiquidAmount_MarksAsDirty() {
-            var tile = new NetworkTile();
-            tile.LiquidAmount = 0;
-
-            tile.IsDirty.Should().BeTrue();
-        }
-
-        [Fact]
-        public void SetTileHeader_MarksAsDirty() {
-            var tile = new NetworkTile();
-            tile.TileHeader = 0;
-
-            tile.IsDirty.Should().BeTrue();
-        }
-
-        [Fact]
-        public void SetTileHeader2_MarksAsDirty() {
-            var tile = new NetworkTile();
-            tile.TileHeader2 = 0;
-
-            tile.IsDirty.Should().BeTrue();
-        }
-
-        [Fact]
-        public void SetTileHeader3_MarksAsDirty() {
-            var tile = new NetworkTile();
-            tile.TileHeader3 = 0;
-
-            tile.IsDirty.Should().BeTrue();
-        }
-
-        [Fact]
-        public void SetTileHeader4_MarksAsDirty() {
-            var tile = new NetworkTile();
-            tile.TileHeader4 = 0;
-
-            tile.IsDirty.Should().BeTrue();
-        }
-
-        [Fact]
-        public void SetBlockFrameX_MarksAsDirty() {
-            var tile = new NetworkTile();
-            tile.BlockFrameX = 0;
-
-            tile.IsDirty.Should().BeTrue();
-        }
-
-        [Fact]
-        public void SetBlockFrameY_MarksAsDirty() {
-            var tile = new NetworkTile();
-            tile.BlockFrameY = 0;
-
-            tile.IsDirty.Should().BeTrue();
         }
     }
 }

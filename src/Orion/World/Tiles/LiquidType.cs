@@ -15,9 +15,6 @@
 // You should have received a copy of the GNU General Public License
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
-using System.Collections.Generic;
-using System.Reflection;
-
 namespace Orion.World.Tiles {
     /// <summary>
     /// Represents a liquid type.
@@ -29,8 +26,8 @@ namespace Orion.World.Tiles {
         public static readonly LiquidType Honey = new LiquidType(2);
 #pragma warning restore 1591
 
-        private static readonly IDictionary<byte, FieldInfo> IdToField = new Dictionary<byte, FieldInfo>();
-        private static readonly IDictionary<byte, LiquidType> IdToLiquidType = new Dictionary<byte, LiquidType>();
+        private static readonly LiquidType[] Types = {Water, Lava, Honey};
+        private static readonly string[] Names = {nameof(Water), nameof(Lava), nameof(Honey)};
 
         /// <summary>
         /// Gets the liquid type's ID.
@@ -41,26 +38,14 @@ namespace Orion.World.Tiles {
             Id = id;
         }
 
-        // Initializes lookup tables.
-        static LiquidType() {
-            var fields = typeof(LiquidType).GetFields(BindingFlags.Public | BindingFlags.Static);
-            foreach (var field in fields) {
-                if (!(field.GetValue(null) is LiquidType liquidType)) continue;
-
-                IdToField[liquidType.Id] = field;
-                IdToLiquidType[liquidType.Id] = liquidType;
-            }
-        }
-
         /// <summary>
         /// Returns a liquid type converted from the given ID.
         /// </summary>
         /// <param name="id">The ID.</param>
         /// <returns>The liquid type, or <c>null</c> if none exists.</returns>
-        public static LiquidType FromId(byte id) =>
-            IdToLiquidType.TryGetValue(id, out var liquidType) ? liquidType : null;
+        public static LiquidType FromId(byte id) => id < Types.Length ? Types[id] : null;
 
         /// <inheritdoc />
-        public override string ToString() => IdToField[Id].Name;
+        public override string ToString() => Names[Id];
     }
 }
