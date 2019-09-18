@@ -21,17 +21,17 @@ using System.IO;
 using Microsoft.Xna.Framework;
 using Orion.Entities;
 
-namespace Orion.Networking.Packets.Npcs {
+namespace Orion.Networking.Packets.Players {
     /// <summary>
     /// Packet sent from the client to the server to release an NPC.
     /// </summary>
-    public sealed class ReleaseNpcPacket : Packet {
+    public sealed class PlayerReleaseNpcPacket : Packet {
         private Vector2 _npcPosition;
         private NpcType _npcType = NpcType.None;
         private byte _npcStyle;
 
         /// <inheritdoc />
-        public override PacketType Type => PacketType.ReleaseNpc;
+        public override PacketType Type => PacketType.PlayerReleaseNpc;
 
         /// <summary>
         /// Gets or sets the NPC's position.

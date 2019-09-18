@@ -44,7 +44,7 @@ namespace Orion.Networking.Packets.Npcs {
         }
 
         /// <summary>
-        /// Gets or sets the NPC kill count.
+        /// Gets or sets the NPC type kill count.
         /// </summary>
         public int NpcTypeKillCount {
             get => _npcTypeKillCount;

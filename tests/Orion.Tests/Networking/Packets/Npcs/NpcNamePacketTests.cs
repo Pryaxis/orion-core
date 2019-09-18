@@ -23,6 +23,13 @@ using Xunit;
 namespace Orion.Networking.Packets.Npcs {
     public class NpcNamePacketTests {
         [Fact]
+        public void SetDefaultableProperties_MarkAsDirty() {
+            var packet = new NpcNamePacket();
+
+            packet.ShouldHaveDefaultablePropertiesMarkAsDirty();
+        }
+
+        [Fact]
         public void SetNpcName_NullValue_ThrowsArgumentNullException() {
             var packet = new NpcNamePacket();
             Action action = () => packet.NpcName = null;
@@ -43,7 +50,7 @@ namespace Orion.Networking.Packets.Npcs {
         }
 
         [Fact]
-        public void DeserializeAndSerialize_SamePacket() {
+        public void DeserializeAndSerialize_SamePacket_Client() {
             using (var stream = new MemoryStream(Bytes))
             using (var stream2 = new MemoryStream()) {
                 var packet = Packet.ReadFromStream(stream, PacketContext.Client);

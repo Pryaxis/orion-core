@@ -25,6 +25,36 @@ using Xunit;
 namespace Orion.Networking.Packets.Npcs {
     public class NpcInfoPacketTests {
         [Fact]
+        public void AiValues_Set_MarksAsDirty() {
+            var packet = new NpcInfoPacket();
+            packet.NpcAiValues[0] = 0;
+
+            packet.ShouldBeDirty();
+        }
+
+        [Fact]
+        public void AiValues_Count_IsCorrect() {
+            var packet = new NpcInfoPacket();
+
+            packet.NpcAiValues.Count.Should().Be(Terraria.NPC.maxAI);
+        }
+
+        [Fact]
+        public void SetDefaultableProperties_MarkAsDirty() {
+            var packet = new NpcInfoPacket();
+
+            packet.ShouldHaveDefaultablePropertiesMarkAsDirty();
+        }
+
+        [Fact]
+        public void SetNpcType_MarksAsDirty() {
+            var packet = new NpcInfoPacket();
+            packet.NpcType = NpcType.BlueSlime;
+
+            packet.ShouldBeDirty();
+        }
+
+        [Fact]
         public void SetNpcType_NullValue_ThrowsArgumentNullException() {
             var packet = new NpcInfoPacket();
             Action action = () => packet.NpcType = null;
@@ -34,6 +64,10 @@ namespace Orion.Networking.Packets.Npcs {
 
         private static readonly byte[] Bytes = {
             26, 0, 23, 1, 0, 38, 209, 132, 71, 0, 0, 213, 69, 0, 0, 0, 0, 0, 0, 0, 0, 255, 0, 130, 22, 0
+        };
+
+        private static readonly byte[] InvalidNpcTypeBytes = {
+            26, 0, 23, 1, 0, 38, 209, 132, 71, 0, 0, 213, 69, 0, 0, 0, 0, 0, 0, 0, 0, 255, 0, 130, 255, 127
         };
 
         [Fact]
@@ -47,16 +81,31 @@ namespace Orion.Networking.Packets.Npcs {
                 packet.NpcTargetIndex.Should().Be(255);
                 packet.NpcHorizontalDirection.Should().BeFalse();
                 packet.NpcVerticalDirection.Should().BeTrue();
-                packet.NpcAiValues[0].Should().Be(0);
-                packet.NpcAiValues[1].Should().Be(0);
-                packet.NpcAiValues[2].Should().Be(0);
-                packet.NpcAiValues[3].Should().Be(0);
+
+                // Iterate two ways
+                for (var i = 0; i < packet.NpcAiValues.Count; ++i) {
+                    packet.NpcAiValues[i].Should().Be(0);
+                }
+
+                foreach (var aiValue in packet.NpcAiValues) {
+                    aiValue.Should().Be(0);
+                }
+
                 packet.NpcSpriteDirection.Should().BeFalse();
                 packet.IsNpcAtMaxHealth.Should().BeTrue();
                 packet.NpcType.Should().Be(NpcType.Guide);
                 packet.NpcNumberOfHealthBytes.Should().Be(0);
                 packet.NpcHealth.Should().Be(0);
                 packet.NpcReleaserPlayerIndex.Should().Be(0);
+            }
+        }
+
+        [Fact]
+        public void ReadFromStream_InvalidNpcType_ThrowsPacketException() {
+            using (var stream = new MemoryStream(InvalidNpcTypeBytes)) {
+                Func<Packet> func = () => Packet.ReadFromStream(stream, PacketContext.Server);
+
+                func.Should().Throw<PacketException>();
             }
         }
 

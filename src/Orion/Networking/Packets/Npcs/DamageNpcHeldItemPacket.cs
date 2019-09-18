@@ -41,7 +41,7 @@ namespace Orion.Networking.Packets.Npcs {
         }
 
         /// <summary>
-        /// Gets or sets the damaging's player index.
+        /// Gets or sets the damaging player index.
         /// </summary>
         public byte DamagingPlayerIndex {
             get => _damagingPlayerIndex;

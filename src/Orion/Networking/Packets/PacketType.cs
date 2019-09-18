@@ -92,7 +92,7 @@ namespace Orion.Networking.Packets {
         public static PacketType PlayerUuid = new PacketType(68);
         public static PacketType ChestName = new PacketType(69);
         public static PacketType CatchNpc = new PacketType(70);
-        public static PacketType ReleaseNpc = new PacketType(71);
+        public static PacketType PlayerReleaseNpc = new PacketType(71);
         public static PacketType TravelingMerchantShop = new PacketType(72);
         public static PacketType PlayerTeleportationPotion = new PacketType(73);
         public static PacketType AnglerQuest = new PacketType(74);

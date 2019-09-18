@@ -24,11 +24,34 @@ using Xunit;
 namespace Orion.Networking.Packets.Npcs {
     public class NpcShopSlotPacketTests {
         [Fact]
+        public void SetDefaultableProperties_MarkAsDirty() {
+            var packet = new NpcShopSlotPacket();
+
+            packet.ShouldHaveDefaultablePropertiesMarkAsDirty();
+        }
+
+        [Fact]
+        public void SetItemType_MarksAsDirty() {
+            var packet = new NpcShopSlotPacket();
+            packet.ItemType = ItemType.Sdmg;
+
+            packet.ShouldBeDirty();
+        }
+
+        [Fact]
         public void SetItemType_NullValue_ThrowsArgumentNullException() {
             var packet = new NpcShopSlotPacket();
             Action action = () => packet.ItemType = null;
 
             action.Should().Throw<ArgumentNullException>();
+        }
+
+        [Fact]
+        public void SetItemPrefix_MarksAsDirty() {
+            var packet = new NpcShopSlotPacket();
+            packet.ItemPrefix = ItemPrefix.Unreal;
+
+            packet.ShouldBeDirty();
         }
 
         [Fact]
@@ -40,6 +63,8 @@ namespace Orion.Networking.Packets.Npcs {
         }
 
         public static readonly byte[] Bytes = {13, 0, 104, 0, 17, 6, 1, 0, 82, 100, 0, 0, 0};
+        public static readonly byte[] InvalidItemTypeBytes = {13, 0, 104, 0, 255, 127, 1, 0, 82, 100, 0, 0, 0};
+        public static readonly byte[] InvalidItemPrefixBytes = {13, 0, 104, 0, 17, 6, 1, 0, 255, 100, 0, 0, 0};
 
         [Fact]
         public void ReadFromStream_IsCorrect() {
@@ -51,6 +76,24 @@ namespace Orion.Networking.Packets.Npcs {
                 packet.ItemStackSize.Should().Be(1);
                 packet.ItemPrefix.Should().Be(ItemPrefix.Unreal);
                 packet.ItemValue.Should().Be(100);
+            }
+        }
+
+        [Fact]
+        public void ReadFromStream_InvalidItemType_ThrowsPacketException() {
+            using (var stream = new MemoryStream(InvalidItemTypeBytes)) {
+                Func<Packet> func = () => Packet.ReadFromStream(stream, PacketContext.Server);
+
+                func.Should().Throw<PacketException>();
+            }
+        }
+
+        [Fact]
+        public void ReadFromStream_InvalidItemPrefix_ThrowsPacketException() {
+            using (var stream = new MemoryStream(InvalidItemPrefixBytes)) {
+                Func<Packet> func = () => Packet.ReadFromStream(stream, PacketContext.Server);
+
+                func.Should().Throw<PacketException>();
             }
         }
 

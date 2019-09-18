@@ -21,6 +21,13 @@ using Xunit;
 
 namespace Orion.Networking.Packets.Npcs {
     public class NpcHomePacketTests {
+        [Fact]
+        public void SetDefaultableProperties_MarkAsDirty() {
+            var packet = new NpcHomePacket();
+
+            packet.ShouldHaveDefaultablePropertiesMarkAsDirty();
+        }
+
         public static readonly byte[] Bytes = {10, 0, 60, 0, 0, 0, 1, 100, 0, 0};
 
         [Fact]

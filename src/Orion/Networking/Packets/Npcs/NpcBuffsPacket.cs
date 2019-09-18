@@ -29,11 +29,10 @@ namespace Orion.Networking.Packets.Npcs {
     /// Packet sent from the server to the client to set an NPC's buffs.
     /// </summary>
     public sealed class NpcBuffsPacket : Packet {
-        private readonly Buff[] _npcBuffs = new Buff[Terraria.NPC.maxBuffs];
         private short _npcIndex;
 
         /// <inheritdoc />
-        public override bool IsDirty => _isDirty || NpcBuffs.IsDirty;
+        public override bool IsDirty => base.IsDirty || NpcBuffs.IsDirty;
 
         /// <inheritdoc />
         public override PacketType Type => PacketType.NpcBuffs;
@@ -52,18 +51,7 @@ namespace Orion.Networking.Packets.Npcs {
         /// <summary>
         /// Gets the NPC's buffs.
         /// </summary>
-        public Buffs NpcBuffs { get; }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="NpcBuffsPacket"/> class.
-        /// </summary>
-        public NpcBuffsPacket() {
-            for (var i = 0; i < _npcBuffs.Length; ++i) {
-                _npcBuffs[i] = new Buff(BuffType.None, TimeSpan.Zero);
-            }
-
-            NpcBuffs = new Buffs(_npcBuffs);
-        }
+        public Buffs NpcBuffs { get; } = new Buffs();
 
         /// <inheritdoc />
         public override void Clean() {
@@ -77,7 +65,7 @@ namespace Orion.Networking.Packets.Npcs {
 
         private protected override void ReadFromReader(BinaryReader reader, PacketContext context) {
             NpcIndex = reader.ReadInt16();
-            for (var i = 0; i < _npcBuffs.Length; ++i) {
+            for (var i = 0; i < NpcBuffs.Count; ++i) {
                 NpcBuffs[i] =
                     new Buff(BuffType.FromId(reader.ReadByte()) ?? throw new PacketException("Buff type is invalid."),
                              TimeSpan.FromSeconds(reader.ReadInt16() / 60.0));
@@ -102,7 +90,7 @@ namespace Orion.Networking.Packets.Npcs {
         /// Represents the buffs in an <see cref="NpcBuffsPacket"/>.
         /// </summary>
         public sealed class Buffs : IArray<Buff>, IDirtiable {
-            private readonly Buff[] _buffs;
+            private readonly Buff[] _buffs = new Buff[Terraria.NPC.maxBuffs];
 
             /// <inheritdoc cref="IArray{T}.this" />
             public Buff this[int index] {
@@ -119,8 +107,10 @@ namespace Orion.Networking.Packets.Npcs {
             /// <inheritdoc />
             public bool IsDirty { get; private set; }
 
-            internal Buffs(Buff[] buffs) {
-                _buffs = buffs;
+            internal Buffs() {
+                for (var i = 0; i < _buffs.Length; ++i) {
+                    _buffs[i] = new Buff(BuffType.None, TimeSpan.Zero);
+                }
             }
 
             /// <inheritdoc />

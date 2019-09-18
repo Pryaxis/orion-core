@@ -28,10 +28,10 @@ namespace Orion {
             // Use reflection to check all properties with types that have default constructors. This is pretty terrible
             // if we don't do this...
             foreach (var property in dirtiable.GetType().GetProperties(BindingFlags.Public | BindingFlags.Instance)) {
-                if (!property.CanWrite) continue;
+                if (property.SetMethod?.IsPublic != true) continue;
 
                 var propertyType = property.PropertyType;
-                if (propertyType.GetConstructor(Type.EmptyTypes) == null) continue;
+                if (propertyType.GetConstructor(Type.EmptyTypes) == null && !propertyType.IsValueType) continue;
 
                 property.SetValue(dirtiable, Activator.CreateInstance(propertyType));
                 dirtiable.ShouldBeDirty();

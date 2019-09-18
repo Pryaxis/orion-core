@@ -31,7 +31,6 @@ namespace Orion.Networking.Packets.Npcs {
     /// Packet sent from the server to the client to set NPC information.
     /// </summary>
     public sealed class NpcInfoPacket : Packet {
-        private readonly float[] _npcAiValues = new float[Terraria.NPC.maxAI];
         private short _npcIndex;
         private Vector2 _npcPosition;
         private Vector2 _npcVelocity;
@@ -46,7 +45,7 @@ namespace Orion.Networking.Packets.Npcs {
         private byte _npcReleaserPlayerIndex;
 
         /// <inheritdoc />
-        public override bool IsDirty => _isDirty || NpcAiValues.IsDirty;
+        public override bool IsDirty => base.IsDirty || NpcAiValues.IsDirty;
 
         /// <inheritdoc />
         public override PacketType Type => PacketType.NpcInfo;
@@ -122,7 +121,7 @@ namespace Orion.Networking.Packets.Npcs {
         /// <summary>
         /// Gets the NPC's AI values.
         /// </summary>
-        public AiValues NpcAiValues { get; }
+        public AiValues NpcAiValues { get; } = new AiValues();
 
         /// <summary>
         /// Gets or sets a value indicating the direction of the NPC sprite.
@@ -189,13 +188,6 @@ namespace Orion.Networking.Packets.Npcs {
                 _npcReleaserPlayerIndex = value;
                 _isDirty = true;
             }
-        }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="NpcInfoPacket"/> class.
-        /// </summary>
-        public NpcInfoPacket() {
-            NpcAiValues = new AiValues(_npcAiValues);
         }
 
         /// <inheritdoc />
@@ -296,7 +288,7 @@ namespace Orion.Networking.Packets.Npcs {
         /// Represents the AI values in an <see cref="NpcInfoPacket"/>.
         /// </summary>
         public sealed class AiValues : IArray<float>, IDirtiable {
-            private readonly float[] _aiValues;
+            private readonly float[] _aiValues = new float[Terraria.NPC.maxAI];
 
             /// <inheritdoc cref="IArray{T}.this" />
             public float this[int index] {
@@ -313,13 +305,10 @@ namespace Orion.Networking.Packets.Npcs {
             /// <inheritdoc />
             public bool IsDirty { get; private set; }
 
-            internal AiValues(float[] aiValues) {
-                _aiValues = aiValues;
-            }
-
             /// <inheritdoc />
             public IEnumerator<float> GetEnumerator() => ((IEnumerable<float>)_aiValues).GetEnumerator();
 
+            [ExcludeFromCodeCoverage]
             IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
 
             /// <inheritdoc />
