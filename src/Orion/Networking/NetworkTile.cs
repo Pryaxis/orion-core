@@ -18,6 +18,7 @@
 using System;
 using Orion.Events;
 using Orion.World;
+using Orion.World.Tiles;
 
 namespace Orion.Networking {
     /// <summary>

@@ -19,6 +19,7 @@ using System;
 using System.IO;
 using Orion.Launcher.Properties;
 using Orion.World;
+using Orion.World.Tiles;
 using Serilog;
 using Serilog.Sinks.SystemConsole.Themes;
 using Terraria.ID;

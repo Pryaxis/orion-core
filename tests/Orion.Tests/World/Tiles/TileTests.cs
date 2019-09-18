@@ -20,7 +20,7 @@ using FluentAssertions;
 using OTAPI.Tile;
 using Xunit;
 
-namespace Orion.World {
+namespace Orion.World.Tiles {
     public class TileTests {
         [Fact]
         public void GetBlockType_IsCorrect() {

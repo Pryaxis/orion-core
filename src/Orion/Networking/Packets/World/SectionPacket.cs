@@ -26,6 +26,7 @@ using System.Text;
 using Orion.Events;
 using Orion.World;
 using Orion.World.TileEntities;
+using Orion.World.Tiles;
 using OTAPI.Tile;
 
 namespace Orion.Networking.Packets.World {

@@ -18,7 +18,7 @@
 using FluentAssertions;
 using Xunit;
 
-namespace Orion.World {
+namespace Orion.World.Tiles {
     [Collection("TerrariaTestsCollection")]
     public class WallTypeTests {
         [Fact]

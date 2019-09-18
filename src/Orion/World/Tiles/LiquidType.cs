@@ -18,7 +18,7 @@
 using System.Collections.Generic;
 using System.Reflection;
 
-namespace Orion.World {
+namespace Orion.World.Tiles {
     /// <summary>
     /// Represents a liquid type.
     /// </summary>

@@ -20,7 +20,7 @@ using Microsoft.Xna.Framework;
 using OTAPI.Tile;
 using Terraria;
 
-namespace Orion.World {
+namespace Orion.World.Tiles {
     /// <summary>
     /// Represents a Terraria tile.
     /// </summary>

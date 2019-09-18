@@ -18,7 +18,7 @@
 using FluentAssertions;
 using Xunit;
 
-namespace Orion.World {
+namespace Orion.World.Tiles {
     public class LiquidTypeTests {
         [Fact]
         public void FromId_IsCorrect() {

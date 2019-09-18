@@ -18,23 +18,23 @@
 using FluentAssertions;
 using Xunit;
 
-namespace Orion.World {
-    public class SlopeTypeTests {
+namespace Orion.World.Tiles {
+    public class PaintColorTests {
         [Fact]
         public void FromId_IsCorrect() {
-            for (byte i = 0; i < 5; ++i) {
-                SlopeType.FromId(i).Id.Should().Be(i);
+            for (byte i = 0; i < 31; ++i) {
+                PaintColor.FromId(i).Id.Should().Be(i);
             }
 
-            SlopeType.FromId(5).Should().BeNull();
+            PaintColor.FromId(31).Should().BeNull();
         }
 
         [Fact]
         public void FromId_ReturnsSameInstance() {
-            var slopeType = SlopeType.FromId(1);
-            var slopeType2 = SlopeType.FromId(1);
+            var paintColor = PaintColor.FromId(1);
+            var paintColor2 = PaintColor.FromId(1);
 
-            slopeType.Should().BeSameAs(slopeType2);
+            paintColor.Should().BeSameAs(paintColor2);
         }
     }
 }

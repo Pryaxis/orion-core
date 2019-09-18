@@ -19,6 +19,7 @@ using System;
 using System.IO;
 using FluentAssertions;
 using Orion.World;
+using Orion.World.Tiles;
 using Xunit;
 
 namespace Orion.Networking.Packets.World {

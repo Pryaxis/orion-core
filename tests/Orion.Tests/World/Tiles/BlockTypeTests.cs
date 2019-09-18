@@ -18,23 +18,31 @@
 using FluentAssertions;
 using Xunit;
 
-namespace Orion.World {
-    public class PaintColorTests {
+namespace Orion.World.Tiles {
+    [Collection("TerrariaTestsCollection")]
+    public class BlockTypeTests {
+        [Fact]
+        public void GetAreFramesImportant_IsCorrect() {
+            for (ushort i = 0; i < Terraria.Main.maxTileSets; ++i) {
+                BlockType.FromId(i)?.AreFramesImportant.Should().Be(Terraria.Main.tileFrameImportant[i]);
+            }
+        }
+
         [Fact]
         public void FromId_IsCorrect() {
-            for (byte i = 0; i < 31; ++i) {
-                PaintColor.FromId(i).Id.Should().Be(i);
+            for (ushort i = 0; i < Terraria.Main.maxTileSets; ++i) {
+                BlockType.FromId(i)?.Id.Should().Be(i);
             }
 
-            PaintColor.FromId(31).Should().BeNull();
+            BlockType.FromId(Terraria.Main.maxTileSets).Should().BeNull();
         }
 
         [Fact]
         public void FromId_ReturnsSameInstance() {
-            var paintColor = PaintColor.FromId(1);
-            var paintColor2 = PaintColor.FromId(1);
+            var blockType = BlockType.FromId(1);
+            var blockType2 = BlockType.FromId(1);
 
-            paintColor.Should().BeSameAs(paintColor2);
+            blockType.Should().BeSameAs(blockType2);
         }
     }
 }

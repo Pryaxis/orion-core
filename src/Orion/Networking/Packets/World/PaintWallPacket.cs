@@ -19,6 +19,7 @@ using System;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using Orion.World;
+using Orion.World.Tiles;
 
 namespace Orion.Networking.Packets.World {
     /// <summary>
