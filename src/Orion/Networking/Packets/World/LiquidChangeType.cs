@@ -15,31 +15,16 @@
 // You should have received a copy of the GNU General Public License
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
-using Orion.Utils;
-
-namespace Orion.World.TileEntities {
+namespace Orion.Networking.Packets.World {
     /// <summary>
-    /// Represents a (generalized) Terraria tile entity.
+    /// Specifies the liquid change type in a <see cref="SquareTilesPacket"/>.
     /// </summary>
-    public interface ITileEntity : IAnnotatable {
-        /// <summary>
-        /// Gets the tile entity's type.
-        /// </summary>
-        TileEntityType Type { get; }
-
-        /// <summary>
-        /// Gets the tile entity's index.
-        /// </summary>
-        int Index { get; }
-
-        /// <summary>
-        /// Gets or sets the tile entity's X coordinate.
-        /// </summary>
-        int X { get; set; }
-
-        /// <summary>
-        /// Gets or sets the tile entity's Y coordinate.
-        /// </summary>
-        int Y { get; set; }
+    public enum LiquidChangeType : byte {
+#pragma warning disable 1591
+        None = 0,
+        LavaToWater,
+        HoneyToWater,
+        HoneyToLava,
+#pragma warning restore 1591
     }
 }

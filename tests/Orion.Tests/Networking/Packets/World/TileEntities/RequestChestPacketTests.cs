@@ -15,31 +15,27 @@
 // You should have received a copy of the GNU General Public License
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
-using Orion.Utils;
+using System.IO;
+using FluentAssertions;
+using Xunit;
 
-namespace Orion.World.TileEntities {
-    /// <summary>
-    /// Represents a (generalized) Terraria tile entity.
-    /// </summary>
-    public interface ITileEntity : IAnnotatable {
-        /// <summary>
-        /// Gets the tile entity's type.
-        /// </summary>
-        TileEntityType Type { get; }
+namespace Orion.Networking.Packets.World.TileEntities {
+    public class RequestChestPacketTests {
+        private static readonly byte[] Bytes = {7, 0, 31, 100, 0, 100, 0};
 
-        /// <summary>
-        /// Gets the tile entity's index.
-        /// </summary>
-        int Index { get; }
+        [Fact]
+        public void ReadFromStream_IsCorrect() {
+            using (var stream = new MemoryStream(Bytes)) {
+                var packet = (RequestChestPacket)Packet.ReadFromStream(stream, PacketContext.Server);
 
-        /// <summary>
-        /// Gets or sets the tile entity's X coordinate.
-        /// </summary>
-        int X { get; set; }
+                packet.ChestX.Should().Be(100);
+                packet.ChestY.Should().Be(100);
+            }
+        }
 
-        /// <summary>
-        /// Gets or sets the tile entity's Y coordinate.
-        /// </summary>
-        int Y { get; set; }
+        [Fact]
+        public void WriteToStream_IsCorrect() {
+            TestUtils.WriteToStream_SameBytes(Bytes);
+        }
     }
 }

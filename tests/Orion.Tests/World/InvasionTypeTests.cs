@@ -15,31 +15,26 @@
 // You should have received a copy of the GNU General Public License
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
-using Orion.Utils;
+using FluentAssertions;
+using Xunit;
 
-namespace Orion.World.TileEntities {
-    /// <summary>
-    /// Represents a (generalized) Terraria tile entity.
-    /// </summary>
-    public interface ITileEntity : IAnnotatable {
-        /// <summary>
-        /// Gets the tile entity's type.
-        /// </summary>
-        TileEntityType Type { get; }
+namespace Orion.World {
+    public class InvasionTypeTests {
+        [Fact]
+        public void FromId_IsCorrect() {
+            for (byte i = 0; i < 5; ++i) {
+                InvasionType.FromId(i).Id.Should().Be(i);
+            }
 
-        /// <summary>
-        /// Gets the tile entity's index.
-        /// </summary>
-        int Index { get; }
+            InvasionType.FromId(5).Should().BeNull();
+        }
 
-        /// <summary>
-        /// Gets or sets the tile entity's X coordinate.
-        /// </summary>
-        int X { get; set; }
+        [Fact]
+        public void FromId_ReturnsSameInstance() {
+            var invasionType = InvasionType.FromId(1);
+            var invasionType2 = InvasionType.FromId(1);
 
-        /// <summary>
-        /// Gets or sets the tile entity's Y coordinate.
-        /// </summary>
-        int Y { get; set; }
+            invasionType.Should().BeSameAs(invasionType2);
+        }
     }
 }
