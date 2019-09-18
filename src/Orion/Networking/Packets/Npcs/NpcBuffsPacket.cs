@@ -126,6 +126,7 @@ namespace Orion.Networking.Packets.Npcs {
             /// <inheritdoc />
             public IEnumerator<Buff> GetEnumerator() => ((IEnumerable<Buff>)_buffs).GetEnumerator();
 
+            [ExcludeFromCodeCoverage]
             IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
 
             /// <inheritdoc />

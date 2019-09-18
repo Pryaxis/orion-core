@@ -23,6 +23,37 @@ using Xunit;
 
 namespace Orion.Networking.Packets.Npcs {
     public class NpcBuffsPacketTests {
+        [Fact]
+        public void SetDefaultableProperties_MarkAsDirty() {
+            var packet = new NpcBuffsPacket();
+
+            packet.ShouldHaveDefaultablePropertiesMarkAsDirty();
+        }
+
+        [Fact]
+        public void NpcBuffs_Set_MarksAsDirty() {
+            var packet = new NpcBuffsPacket();
+
+            packet.NpcBuffs[0] = new Buff(BuffType.None, TimeSpan.Zero);
+
+            packet.ShouldBeDirty();
+        }
+        
+        [Fact]
+        public void NpcBuffs_SetNullValue_ThrowsArgumentNullException() {
+            var packet = new NpcBuffsPacket();
+            Action action = () => packet.NpcBuffs[0] = null;
+
+            action.Should().Throw<ArgumentNullException>();
+        }
+
+        [Fact]
+        public void NpcBuffs_Count_IsCorrect() {
+            var packet = new NpcBuffsPacket();
+
+            packet.NpcBuffs.Count.Should().Be(Terraria.NPC.maxBuffs);
+        }
+
         public static readonly byte[] Bytes = {20, 0, 54, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
 
         [Fact]
@@ -31,6 +62,9 @@ namespace Orion.Networking.Packets.Npcs {
                 var packet = (NpcBuffsPacket)Packet.ReadFromStream(stream, PacketContext.Server);
 
                 packet.NpcIndex.Should().Be(0);
+                for (var i = 0; i < packet.NpcBuffs.Count; ++i) {
+                    packet.NpcBuffs[i].Should().BeEquivalentTo(new Buff(BuffType.None, TimeSpan.Zero));
+                }
                 foreach (var buff in packet.NpcBuffs) {
                     buff.Should().BeEquivalentTo(new Buff(BuffType.None, TimeSpan.Zero));
                 }

@@ -48,6 +48,7 @@ namespace Orion.Networking.Packets.Npcs {
         }
 
         public static readonly byte[] Bytes = {8, 0, 53, 0, 0, 1, 60, 0};
+        public static readonly byte[] InvalidBuffTypeBytes = {8, 0, 53, 0, 0, 255, 60, 0};
 
         [Fact]
         public void ReadFromStream_IsCorrect() {
@@ -56,6 +57,15 @@ namespace Orion.Networking.Packets.Npcs {
 
                 packet.NpcIndex.Should().Be(0);
                 packet.NpcBuff.Should().BeEquivalentTo(new Buff(BuffType.ObsidianSkin, TimeSpan.FromSeconds(1)));
+            }
+        }
+
+        [Fact]
+        public void ReadFromStream_InvalidBuffType_ThrowsPacketException() {
+            using (var stream = new MemoryStream(InvalidBuffTypeBytes)) {
+                Func<Packet> func = () => Packet.ReadFromStream(stream, PacketContext.Server);
+
+                func.Should().Throw<PacketException>();
             }
         }
 

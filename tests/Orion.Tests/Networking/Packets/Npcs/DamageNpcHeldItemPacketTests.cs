@@ -21,6 +21,13 @@ using Xunit;
 
 namespace Orion.Networking.Packets.Npcs {
     public class DamageNpcHeldItemPacketTests {
+        [Fact]
+        public void SetDefaultableProperties_MarkAsDirty() {
+            var packet = new DamageNpcHeldItemPacket();
+
+            packet.ShouldHaveDefaultablePropertiesMarkAsDirty();
+        }
+
         private static readonly byte[] Bytes = {6, 0, 24, 1, 0, 0};
 
         [Fact]
@@ -29,7 +36,7 @@ namespace Orion.Networking.Packets.Npcs {
                 var packet = (DamageNpcHeldItemPacket)Packet.ReadFromStream(stream, PacketContext.Server);
 
                 packet.NpcIndex.Should().Be(1);
-                packet.DamagerPlayerIndex.Should().Be(0);
+                packet.DamagingPlayerIndex.Should().Be(0);
             }
         }
 
