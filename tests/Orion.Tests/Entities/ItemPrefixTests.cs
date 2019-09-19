@@ -25,7 +25,8 @@ namespace Orion.Entities {
             for (int i = -2; i < Terraria.ID.PrefixID.Count; ++i) {
                 ItemPrefix.FromId(i).Id.Should().Be(i);
             }
-
+            
+            ItemPrefix.FromId(-3).Should().BeNull();
             ItemPrefix.FromId(Terraria.ID.PrefixID.Count).Should().BeNull();
         }
 

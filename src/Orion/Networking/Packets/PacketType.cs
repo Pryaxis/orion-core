@@ -16,7 +16,6 @@
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
 using System;
-using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Reflection;
@@ -141,11 +140,11 @@ namespace Orion.Networking.Packets {
         public static PacketType CombatText = new PacketType(119);
 #pragma warning disable 1591
 
-        private static readonly IDictionary<byte, FieldInfo> IdToField = new Dictionary<byte, FieldInfo>();
-        private static readonly IDictionary<byte, PacketType> IdToPacketType = new Dictionary<byte, PacketType>();
-
-        private static readonly IDictionary<PacketType, Func<Packet>> PacketConstructors =
-            new Dictionary<PacketType, Func<Packet>>();
+        private const int ArrayOffset = 0;
+        private const int ArraySize = ArrayOffset + Terraria.ID.MessageID.Count;
+        private static readonly PacketType[] Packets = new PacketType[ArraySize];
+        private static readonly string[] Names = new string[ArraySize];
+        private static readonly Func<Packet>[] Constructors = new Func<Packet>[ArraySize];
 
         /// <summary>
         /// Gets the packet type's ID.
@@ -155,22 +154,19 @@ namespace Orion.Networking.Packets {
         /// <summary>
         /// Gets the packet type's constructor.
         /// </summary>
-        public Func<Packet> Constructor => PacketConstructors[this];
+        public Func<Packet> Constructor => Constructors[Id];
 
-        // Initializes lookup tables.
         static PacketType() {
-            var fields = typeof(PacketType).GetFields(BindingFlags.Public | BindingFlags.Static);
-            foreach (var field in fields) {
-                if (!(field.GetValue(null) is PacketType packetType)) continue;
-
-                IdToField[packetType.Id] = field;
-                IdToPacketType[packetType.Id] = packetType;
+            foreach (var field in typeof(PacketType).GetFields(BindingFlags.Public | BindingFlags.Static)) {
+                var packetType = (PacketType)field.GetValue(null);
+                Packets[ArrayOffset + packetType.Id] = packetType;
+                Names[ArrayOffset + packetType.Id] = field.Name;
             }
 
             foreach (var type in typeof(Packet).Assembly.ExportedTypes
                                                .Where(t => t.IsSubclassOf(typeof(Packet)) && t != typeof(Packet))) {
                 var packetType = ((Packet)Activator.CreateInstance(type)).Type;
-                PacketConstructors[packetType] = () => (Packet)Activator.CreateInstance(type);
+                Constructors[ArrayOffset + packetType.Id] = () => (Packet)Activator.CreateInstance(type);
             }
         }
 
@@ -183,10 +179,10 @@ namespace Orion.Networking.Packets {
         /// </summary>
         /// <param name="id">The ID.</param>
         /// <returns>The packet type.</returns>
-        public static PacketType FromId(byte id) =>
-            IdToPacketType.TryGetValue(id, out var packetType) ? packetType : null;
+        public static PacketType FromId(byte id) => ArrayOffset + id < ArraySize ? Packets[ArrayOffset + id] : null;
 
         /// <inheritdoc />
-        public override string ToString() => IdToField[Id].Name;
+        [ExcludeFromCodeCoverage]
+        public override string ToString() => Names[ArrayOffset + Id];
     }
 }

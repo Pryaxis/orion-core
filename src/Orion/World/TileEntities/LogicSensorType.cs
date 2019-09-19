@@ -15,7 +15,6 @@
 // You should have received a copy of the GNU General Public License
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
-using System.Collections.Generic;
 using System.Reflection;
 
 namespace Orion.World.TileEntities {
@@ -34,10 +33,10 @@ namespace Orion.World.TileEntities {
         public static readonly LogicSensorType Liquid = new LogicSensorType(7);
 #pragma warning restore 1591
 
-        private static readonly IDictionary<byte, FieldInfo> IdToField = new Dictionary<byte, FieldInfo>();
-
-        private static readonly IDictionary<byte, LogicSensorType> IdToLogicSensorType =
-            new Dictionary<byte, LogicSensorType>();
+        private const int ArrayOffset = 0;
+        private const int ArraySize = ArrayOffset + 8;
+        private static readonly LogicSensorType[] LogicSensors = new LogicSensorType[ArraySize];
+        private static readonly string[] Names = new string[ArraySize];
 
         /// <summary>
         /// Gets the logic sensor type's ID.
@@ -48,14 +47,11 @@ namespace Orion.World.TileEntities {
             Id = id;
         }
 
-        // Initializes lookup tables.
         static LogicSensorType() {
-            var fields = typeof(LogicSensorType).GetFields(BindingFlags.Public | BindingFlags.Static);
-            foreach (var field in fields) {
-                if (!(field.GetValue(null) is LogicSensorType logicSensorType)) continue;
-
-                IdToField[logicSensorType.Id] = field;
-                IdToLogicSensorType[logicSensorType.Id] = logicSensorType;
+            foreach (var field in typeof(LogicSensorType).GetFields(BindingFlags.Public | BindingFlags.Static)) {
+                var logicSensorType = (LogicSensorType)field.GetValue(null);
+                LogicSensors[ArrayOffset + logicSensorType.Id] = logicSensorType;
+                Names[ArrayOffset + logicSensorType.Id] = field.Name;
             }
         }
 
@@ -65,9 +61,9 @@ namespace Orion.World.TileEntities {
         /// <param name="id">The ID.</param>
         /// <returns>The logic sensor type, or <c>null</c> if none exists.</returns>
         public static LogicSensorType FromId(byte id) =>
-            IdToLogicSensorType.TryGetValue(id, out var logicSensorType) ? logicSensorType : null;
+            ArrayOffset + id < ArraySize ? LogicSensors[ArrayOffset + id] : null;
 
         /// <inheritdoc />
-        public override string ToString() => IdToField[Id].Name;
+        public override string ToString() => Names[ArrayOffset + Id];
     }
 }

@@ -16,6 +16,7 @@
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
 using System.IO;
+using Orion.Networking.Packets.World;
 
 namespace Orion.Networking.Packets.Players {
     /// <summary>

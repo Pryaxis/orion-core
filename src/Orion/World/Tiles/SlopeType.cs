@@ -15,7 +15,7 @@
 // You should have received a copy of the GNU General Public License
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
-using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Reflection;
 
 namespace Orion.World.Tiles {
@@ -31,8 +31,10 @@ namespace Orion.World.Tiles {
         public static readonly SlopeType BottomLeft = new SlopeType(4);
 #pragma warning restore 1591
 
-        private static readonly IDictionary<byte, FieldInfo> IdToField = new Dictionary<byte, FieldInfo>();
-        private static readonly IDictionary<byte, SlopeType> IdToSlopeType = new Dictionary<byte, SlopeType>();
+        private const int ArrayOffset = 0;
+        private const int ArraySize = ArrayOffset + 5;
+        private static readonly SlopeType[] Slopes = new SlopeType[ArraySize];
+        private static readonly string[] Names = new string[ArraySize];
 
         /// <summary>
         /// Gets the slope type's ID.
@@ -43,14 +45,11 @@ namespace Orion.World.Tiles {
             Id = id;
         }
 
-        // Initializes lookup tables.
         static SlopeType() {
-            var fields = typeof(SlopeType).GetFields(BindingFlags.Public | BindingFlags.Static);
-            foreach (var field in fields) {
-                if (!(field.GetValue(null) is SlopeType slopeType)) continue;
-
-                IdToField[slopeType.Id] = field;
-                IdToSlopeType[slopeType.Id] = slopeType;
+            foreach (var field in typeof(SlopeType).GetFields(BindingFlags.Public | BindingFlags.Static)) {
+                var slopeType = (SlopeType)field.GetValue(null);
+                Slopes[ArrayOffset + slopeType.Id] = slopeType;
+                Names[ArrayOffset + slopeType.Id] = field.Name;
             }
         }
 
@@ -59,10 +58,10 @@ namespace Orion.World.Tiles {
         /// </summary>
         /// <param name="id">The ID.</param>
         /// <returns>The slope type, or <c>null</c> if none exists.</returns>
-        public static SlopeType FromId(byte id) =>
-            IdToSlopeType.TryGetValue(id, out var slopeType) ? slopeType : null;
+        public static SlopeType FromId(byte id) => ArrayOffset + id < ArraySize ? Slopes[ArrayOffset + id] : null;
 
         /// <inheritdoc />
-        public override string ToString() => IdToField[Id].Name;
+        [ExcludeFromCodeCoverage]
+        public override string ToString() => Names[ArrayOffset + Id];
     }
 }

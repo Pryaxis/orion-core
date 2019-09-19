@@ -15,7 +15,6 @@
 // You should have received a copy of the GNU General Public License
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
-using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Reflection;
 
@@ -233,62 +232,15 @@ namespace Orion.Entities {
         public static readonly BuffType BallistaPanic = new BuffType(205);
 #pragma warning restore 1591
 
-        private static readonly IDictionary<byte, FieldInfo> IdToField = new Dictionary<byte, FieldInfo>();
-        private static readonly IDictionary<byte, BuffType> IdToBuffType = new Dictionary<byte, BuffType>();
+        private const int ArrayOffset = 0;
+        private const int ArraySize = ArrayOffset + Terraria.ID.BuffID.Count;
+        private static readonly BuffType[] Buffs = new BuffType[ArraySize];
+        private static readonly string[] Names = new string[ArraySize];
 
-        private static readonly ISet<BuffType> Debuffs = new HashSet<BuffType> {
-            Poisoned,
-            PotionSickness,
-            Darkness,
-            Cursed,
-            OnFire,
-            Tipsy,
-            Werewolf,
-            Bleeding,
-            Confused,
-            Slow,
-            Weak,
-            Merfolk,
-            Silenced,
-            BrokenArmor,
-            Horrified,
-            TheTongue,
-            CursedInferno,
-            Frostburn,
-            Chilled,
-            Frozen,
-            Burning,
-            Suffocation,
-            Ichor,
-            Venom,
-            Blackout,
-            WaterCandle,
-            CozyFire,
-            ChaosState,
-            HeartLamp,
-            ManaSickness,
-            Wet,
-            Lovestruck,
-            Stinky,
-            Slime,
-            Electrified,
-            MoonBite,
-            Happy,
-            Banner,
-            FeralBite,
-            Webbed,
-            Stoned,
-            PeaceCandle,
-            StarInABottle,
-            Dazed,
-            Obstructed,
-            Distorted,
-            MightyWind,
-            WitheredArmor,
-            WitheredWeapon,
-            Oozed,
-            CreativeShock
-        };
+        private static readonly bool[] Debuff = new Terraria.ID.SetFactory(ArraySize).CreateBoolSet(
+            20, 21, 22, 23, 24, 25, 28, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 44, 46, 47, 67, 68, 69, 70, 80, 86, 87,
+            88, 89, 94, 103, 119, 120, 137, 144, 145, 146, 147, 148, 149, 156, 157, 158, 160, 163, 164, 194, 195, 196,
+            197, 199);
 
         /// <summary>
         /// Gets the buff type's ID.
@@ -298,20 +250,17 @@ namespace Orion.Entities {
         /// <summary>
         /// Gets a value indicating whether the buff type is a debuff.
         /// </summary>
-        public bool IsDebuff => Debuffs.Contains(this);
+        public bool IsDebuff => Debuff[ArrayOffset + Id];
 
         private BuffType(byte id) {
             Id = id;
         }
 
-        // Initializes lookup tables.
         static BuffType() {
-            var fields = typeof(BuffType).GetFields(BindingFlags.Public | BindingFlags.Static);
-            foreach (var field in fields) {
-                if (!(field.GetValue(null) is BuffType buffType)) continue;
-
-                IdToField[buffType.Id] = field;
-                IdToBuffType[buffType.Id] = buffType;
+            foreach (var field in typeof(BuffType).GetFields(BindingFlags.Public | BindingFlags.Static)) {
+                var buffType = (BuffType)field.GetValue(null);
+                Buffs[ArrayOffset + buffType.Id] = buffType;
+                Names[ArrayOffset + buffType.Id] = field.Name;
             }
         }
 
@@ -320,9 +269,10 @@ namespace Orion.Entities {
         /// </summary>
         /// <param name="id">The ID.</param>
         /// <returns>The buff type, or <c>null</c> if none exists.</returns>
-        public static BuffType FromId(byte id) => IdToBuffType.TryGetValue(id, out var buffType) ? buffType : null;
+        public static BuffType FromId(byte id) => ArrayOffset + id < ArraySize ? Buffs[ArrayOffset + id] : null;
 
         /// <inheritdoc />
-        public override string ToString() => IdToField[Id].Name;
+        [ExcludeFromCodeCoverage]
+        public override string ToString() => Names[ArrayOffset + Id];
     }
 }

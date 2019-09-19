@@ -50,13 +50,9 @@ namespace Orion.Launcher {
             var main = new Terraria.Main();
             main.Initialize();
 
-            for (var i = 0; i < TileID.Count; ++i) {
-                if (Terraria.Main.tileFrameImportant[i]) {
-                    try {
-                        Console.WriteLine(BlockType.IdToField[(ushort)i].Name);
-                    } catch {
-
-                    }
+            for (var i = 0; i < NPCID.Count; ++i) {
+                if (Terraria.Main.npcCatchable[i]) {
+                    Console.WriteLine(i);
                 }
             }
 

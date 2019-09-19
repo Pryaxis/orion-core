@@ -43,8 +43,10 @@ namespace Orion.Entities {
         public static readonly ItemRarity Purple = new ItemRarity(11);
 #pragma warning restore 1591
 
-        private static readonly IDictionary<int, FieldInfo> LevelToField = new Dictionary<int, FieldInfo>();
-        private static readonly IDictionary<int, ItemRarity> LevelToItemRarity = new Dictionary<int, ItemRarity>();
+        private const int ArrayOffset = 12;
+        private const int ArraySize = ArrayOffset + 12;
+        private static readonly ItemRarity[] ItemRarities = new ItemRarity[ArraySize];
+        private static readonly string[] Names = new string[ArraySize];
 
         private static readonly IDictionary<ItemRarity, Color> Colors = new Dictionary<ItemRarity, Color> {
             [Amber] = new Color(255, 175, 0),
@@ -72,14 +74,11 @@ namespace Orion.Entities {
         /// </summary>
         public Color Color => Colors.TryGetValue(this, out var color) ? color : Color.White;
 
-        // Initializes lookup tables.
         static ItemRarity() {
-            var fields = typeof(ItemRarity).GetFields(BindingFlags.Public | BindingFlags.Static);
-            foreach (var field in fields) {
-                if (!(field.GetValue(null) is ItemRarity itemRarity)) continue;
-
-                LevelToField[itemRarity.Level] = field;
-                LevelToItemRarity[itemRarity.Level] = itemRarity;
+            foreach (var field in typeof(ItemRarity).GetFields(BindingFlags.Public | BindingFlags.Static)) {
+                var itemRarity = (ItemRarity)field.GetValue(null);
+                ItemRarities[ArrayOffset + itemRarity.Level] = itemRarity;
+                Names[ArrayOffset + itemRarity.Level] = field.Name;
             }
         }
 
@@ -93,9 +92,10 @@ namespace Orion.Entities {
         /// <param name="level">The level.</param>
         /// <returns>The item rarity, or <c>null</c> if none exists.</returns>
         public static ItemRarity FromLevel(int level) =>
-            LevelToItemRarity.TryGetValue(level, out var itemRarity) ? itemRarity : null;
+            ArrayOffset + (uint)level < ArraySize ? ItemRarities[ArrayOffset + level] : null;
 
         /// <inheritdoc />
-        public override string ToString() => LevelToField[Level].Name;
+        [ExcludeFromCodeCoverage]
+        public override string ToString() => Names[ArrayOffset + Level];
     }
 }

@@ -29,10 +29,11 @@ namespace Orion.Entities {
 
         [Fact]
         public void FromId_IsCorrect() {
-            for (short i = 0; i < Terraria.Main.maxNPCTypes; ++i) {
+            for (short i = -65; i < Terraria.Main.maxNPCTypes; ++i) {
                 NpcType.FromId(i)?.Id.Should().Be(i);
             }
-
+            
+            NpcType.FromId(-66).Should().BeNull();
             NpcType.FromId(Terraria.Main.maxNPCTypes).Should().BeNull();
         }
 

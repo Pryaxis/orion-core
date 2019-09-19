@@ -30,8 +30,10 @@ namespace Orion.World {
         public static readonly InvasionType Martians = new InvasionType(4);
 #pragma warning restore 1591
 
-        private static readonly InvasionType[] Types = new InvasionType[5];
-        private static readonly string[] Names = new string[5];
+        private const int ArrayOffset = 0;
+        private const int ArraySize = ArrayOffset + Terraria.ID.InvasionID.Count;
+        private static readonly InvasionType[] Types = new InvasionType[ArraySize];
+        private static readonly string[] Names = new string[ArraySize];
 
         /// <summary>
         /// Gets the door action's ID.
@@ -41,8 +43,8 @@ namespace Orion.World {
         static InvasionType() {
             foreach (var field in typeof(InvasionType).GetFields(BindingFlags.Public | BindingFlags.Static)) {
                 var invasionType = (InvasionType)field.GetValue(null);
-                Types[invasionType.Id] = invasionType;
-                Names[invasionType.Id] = field.Name;
+                Types[ArrayOffset + invasionType.Id] = invasionType;
+                Names[ArrayOffset + invasionType.Id] = field.Name;
             }
         }
 
@@ -55,9 +57,9 @@ namespace Orion.World {
         /// </summary>
         /// <param name="id">The ID.</param>
         /// <returns>The invasion type, or <c>null</c> if none exists.</returns>
-        public static InvasionType FromId(byte id) => id < Types.Length ? Types[id] : null;
+        public static InvasionType FromId(byte id) => ArrayOffset + id < ArraySize ? Types[ArrayOffset + id] : null;
 
         /// <inheritdoc />
-        public override string ToString() => Names[Id];
+        public override string ToString() => Names[ArrayOffset + Id];
     }
 }

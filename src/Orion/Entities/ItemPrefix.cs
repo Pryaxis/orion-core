@@ -15,7 +15,7 @@
 // You should have received a copy of the GNU General Public License
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
-using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Reflection;
 
 namespace Orion.Entities {
@@ -112,22 +112,21 @@ namespace Orion.Entities {
         public static ItemPrefix Mythical = new ItemPrefix(83);
 #pragma warning restore 1591
 
-        private static readonly IDictionary<int, FieldInfo> IdToField = new Dictionary<int, FieldInfo>();
-        private static readonly IDictionary<int, ItemPrefix> IdToItemPrefix = new Dictionary<int, ItemPrefix>();
+        private const int ArrayOffset = 2;
+        private const int ArraySize = ArrayOffset + Terraria.ID.PrefixID.Count;
+        private static readonly ItemPrefix[] ItemPrefixes = new ItemPrefix[ArraySize];
+        private static readonly string[] Names = new string[ArraySize];
 
         /// <summary>
         /// Gets the item prefix's ID.
         /// </summary>
         public int Id { get; }
 
-        // Initializes lookup tables.
         static ItemPrefix() {
-            var fields = typeof(ItemPrefix).GetFields(BindingFlags.Public | BindingFlags.Static);
-            foreach (var field in fields) {
-                if (!(field.GetValue(null) is ItemPrefix itemPrefix)) continue;
-
-                IdToField[itemPrefix.Id] = field;
-                IdToItemPrefix[itemPrefix.Id] = itemPrefix;
+            foreach (var field in typeof(ItemPrefix).GetFields(BindingFlags.Public | BindingFlags.Static)) {
+                var itemPrefix = (ItemPrefix)field.GetValue(null);
+                ItemPrefixes[ArrayOffset + itemPrefix.Id] = itemPrefix;
+                Names[ArrayOffset + itemPrefix.Id] = field.Name;
             }
         }
 
@@ -140,9 +139,11 @@ namespace Orion.Entities {
         /// </summary>
         /// <param name="id">The ID.</param>
         /// <returns>The item prefix, or <c>null</c> if none exists.</returns>
-        public static ItemPrefix FromId(int id) => IdToItemPrefix.TryGetValue(id, out var itemType) ? itemType : null;
+        public static ItemPrefix FromId(int id) =>
+            ArrayOffset + (uint)id < ArraySize ? ItemPrefixes[ArrayOffset + id] : null;
 
         /// <inheritdoc />
-        public override string ToString() => IdToField[Id].Name;
+        [ExcludeFromCodeCoverage]
+        public override string ToString() => Names[ArrayOffset + Id];
     }
 }

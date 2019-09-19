@@ -31,10 +31,8 @@ namespace Orion.World.TileEntities {
         public static readonly TileEntityType LogicSensor = new TileEntityType(2);
 #pragma warning restore 1591
 
-        private static readonly TileEntityType[] Types = {TargetDummy, ItemFrame, LogicSensor};
-
-        private static readonly IDictionary<TileEntityType, string> TypeToName =
-            new Dictionary<TileEntityType, string>();
+        private static readonly TileEntityType[] TileEntities = {TargetDummy, ItemFrame, LogicSensor};
+        private static readonly IDictionary<TileEntityType, string> Names = new Dictionary<TileEntityType, string>();
 
         /// <summary>
         /// Gets the tile entity type's ID.
@@ -44,7 +42,7 @@ namespace Orion.World.TileEntities {
         static TileEntityType() {
             foreach (var field in typeof(TileEntityType).GetFields(BindingFlags.Public | BindingFlags.Static)) {
                 var tileEntityType = (TileEntityType)field.GetValue(null);
-                TypeToName[tileEntityType] = field.Name;
+                Names[tileEntityType] = field.Name;
             }
         }
 
@@ -57,9 +55,9 @@ namespace Orion.World.TileEntities {
         /// </summary>
         /// <param name="id">The ID.</param>
         /// <returns>The tile entity type, or <c>null</c> if none exists.</returns>
-        public static TileEntityType FromId(byte id) => id < Types.Length ? Types[id] : null;
+        public static TileEntityType FromId(byte id) => id < TileEntities.Length ? TileEntities[id] : null;
 
         /// <inheritdoc />
-        public override string ToString() => TypeToName[this];
+        public override string ToString() => Names[this];
     }
 }

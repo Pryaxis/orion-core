@@ -15,7 +15,7 @@
 // You should have received a copy of the GNU General Public License
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
-using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Reflection;
 
 namespace Orion.World.Tiles {
@@ -495,252 +495,23 @@ namespace Orion.World.Tiles {
         public static readonly BlockType CrystalTable = new BlockType(469);
 #pragma warning restore 1591
 
-        internal static readonly IDictionary<ushort, FieldInfo> IdToField = new Dictionary<ushort, FieldInfo>();
-        private static readonly IDictionary<ushort, BlockType> IdToBlockType = new Dictionary<ushort, BlockType>();
+        private const int ArrayOffset = 0;
+        private const int ArraySize = ArrayOffset + Terraria.ID.TileID.Count;
+        private static readonly BlockType[] Blocks = new BlockType[ArraySize];
+        private static readonly string[] Names = new string[ArraySize];
 
-        private static readonly ISet<BlockType> FramesImportant = new HashSet<BlockType> {
-            ShortGrassPlants,
-            Torches,
-            Trees,
-            ClosedDoors,
-            OpenDoors,
-            CrystalHeart,
-            Bottles,
-            Tables,
-            Chairs,
-            Anvils,
-            Furnace,
-            WorkBenches,
-            Platforms,
-            Saplings,
-            Chests,
-            ShortCorruptionPlants,
-            Altars,
-            Sunflower,
-            Pot,
-            PiggyBank,
-            ShadowOrbs,
-            Candles,
-            Chandeliers,
-            JackOLantern,
-            Present,
-            Lanterns,
-            Book,
-            Sign,
-            ShortJunglePlants,
-            MushroomPlants,
-            MushroomTrees,
-            TallGrassPlants,
-            TallJunglePlants,
-            Hellforge,
-            ClayPot,
-            Beds,
-            Coral,
-            GrowingHerbs,
-            MatureHerbs,
-            BloomingHerbs,
-            Tombstones,
-            Loom,
-            Pianos,
-            Dressers,
-            Benches,
-            Bathtubs,
-            Banners,
-            LampPost,
-            Lamps,
-            Keg,
-            ChineseLantern,
-            CookingPots,
-            Safe,
-            SkullLantern,
-            Candelabras,
-            Bookcases,
-            Throne,
-            Bowls,
-            Clocks,
-            Statues,
-            Sawmill,
-            ShortHallowedPlants,
-            TallHallowedPlants,
-            TinkerersWorkshop,
-            CrystalBall,
-            DiscoBall,
-            Mannequin,
-            CrystalShard,
-            Lever,
-            Forges,
-            HardmodeAnvils,
-            PressurePlates,
-            Switch,
-            Traps,
-            Boulder,
-            MusicBoxes,
-            Explosives,
-            InletPump,
-            OutletPump,
-            Timers,
-            ChristmasLights,
-            AmbientObjects,
-            ChristmasTree,
-            Sinks,
-            PlatinumCandelabra,
-            PlatinumCandle,
-            Gems,
-            MossGrowth,
-            SmallAmbientObjects,
-            LargeAmbientObjects,
-            LargeAmbientObjects2,
-            ShortCrimsonPlants,
-            WaterFountains,
-            Cannons,
-            LandMine,
-            SnowballLauncher,
-            Campfires,
-            Rockets,
-            BlendOMatic,
-            MeatGrinder,
-            Extractinator,
-            Solidifier,
-            DyePlants,
-            DyeVat,
-            Larva,
-            PlantDetritus,
-            Teleporter,
-            LifeFruit,
-            LihzahrdAltar,
-            PlanterasBulb,
-            MetalBars,
-            Paintings3x3,
-            Paintings4x3,
-            Paintings6x4,
-            ImbuingStation,
-            BubbleMachine,
-            Paintings2x3,
-            Paintings3x2,
-            Autohammer,
-            PumpkinPlants,
-            Womannequin,
-            FireflyInABottle,
-            LightningBugInABottle,
-            BunnyCage,
-            SquirrelCage,
-            MallardDuckCage,
-            DuckCage,
-            BirdCage,
-            BlueJayCage,
-            CardinalCage,
-            FishBowl,
-            HeavyWorkBench,
-            SnailCage,
-            GlowingSnailCage,
-            AmmoBox,
-            MonarchButterflyJar,
-            PurpleEmperorButterflyJar,
-            RedAdmiralButterflyJar,
-            UlyssesButterflyJar,
-            SulphurButterflyJar,
-            TreeNymphButterflyJar,
-            ZebraSwallowtailButterflyJar,
-            JuliaButterflyJar,
-            ScorpionCage,
-            BlackScorpionCage,
-            FrogCage,
-            MouseCage,
-            BoneWelder,
-            FleshCloningVat,
-            GlassKiln,
-            LihzahrdFurnace,
-            LivingLoom,
-            SkyMill,
-            IceMachine,
-            SteampunkBoiler,
-            HoneyDispenser,
-            PenguinCage,
-            WormCage,
-            MinecartTracks,
-            BlueJellyfishJar,
-            GreenJellyfishJar,
-            PinkJellyfishJar,
-            ShipInABottle,
-            SeaweedPlanter,
-            PalmTree,
-            BeachPiles,
-            WeaponRack,
-            FireworksBox,
-            LetterStatues,
-            FireworkFountain,
-            GrasshopperCage,
-            MushroomStatue,
-            BewitchingTable,
-            AlchemyTable,
-            EnchantedSundial,
-            GoldBirdCage,
-            GoldBunnyCage,
-            GoldButterflyJar,
-            GoldFrogCage,
-            GoldGrasshopperCage,
-            GoldMouseCage,
-            GoldWormCage,
-            PeaceCandle,
-            MagicWaterDropper,
-            MagicLavaDropper,
-            MagicHoneyDropper,
-            Crates,
-            SharpeningStation,
-            TargetDummy,
-            PlanterBoxes,
-            OpenTrapDoor,
-            ClosedTrapDoor,
-            ClosedTallGate,
-            OpenTallGate,
-            LavaLamp,
-            EnchantedNightcrawlerCage,
-            BuggyCage,
-            GrubbyCage,
-            SluggyCage,
-            ItemFrame,
-            Fireplace,
-            Chimney,
-            Monoliths,
-            Detonator,
-            AncientManipulator,
-            RedSquirrelCage,
-            GoldSquirrelCage,
-            LogicGateLamps,
-            LogicGates,
-            LogicSensors,
-            JunctionBox,
-            AnnouncementBox,
-            RedTeamPlatform,
-            WeightedPressurePlates,
-            WireBulb,
-            GreenTeamPlatform,
-            BlueTeamPlatform,
-            YellowTeamPlatform,
-            PinkTeamPlatform,
-            WhiteTeamPlatform,
-            GemLocks,
-            TrappedChests,
-            TealPressurePad,
-            Geyser,
-            Beehive,
-            PixelBox,
-            SillyBalloonMachine,
-            SillyTiedBalloons,
-            Pigronata,
-            PartyCenter,
-            SillyTiedBundleOfBalloons,
-            PartyPresent,
-            MagicSandDropper,
-            DesertSpiritLamp,
-            DefendersForge,
-            WarTable,
-            WarTableBanner,
-            EterniaCrystalStand,
-            Chests2,
-            TrappedChests2,
-            CrystalTable
-        };
+        private static readonly bool[] FramesImportant = new Terraria.ID.SetFactory(ArraySize).CreateBoolSet(
+            3, 4, 5, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 24, 26, 27, 28, 29, 31, 33, 34, 35, 36, 42, 50, 55,
+            61, 71, 72, 73, 74, 77, 78, 79, 81, 82, 83, 84, 85, 86, 87, 88, 89, 90, 91, 92, 93, 94, 95, 96, 97, 98, 99,
+            100, 101, 102, 103, 104, 105, 106, 110, 113, 114, 125, 126, 128, 129, 132, 133, 134, 135, 136, 137, 138,
+            139, 141, 142, 143, 144, 149, 165, 171, 172, 173, 174, 178, 184, 185, 186, 187, 201, 207, 209, 210, 212,
+            215, 216, 217, 218, 219, 220, 227, 228, 231, 233, 235, 236, 237, 238, 239, 240, 241, 242, 243, 244, 245,
+            246, 247, 254, 269, 270, 271, 275, 276, 277, 278, 279, 280, 281, 282, 283, 285, 286, 287, 288, 289, 290,
+            291, 292, 293, 294, 295, 296, 297, 298, 299, 300, 301, 302, 303, 304, 305, 306, 307, 308, 309, 310, 314,
+            316, 317, 318, 319, 320, 323, 324, 334, 335, 337, 338, 339, 349, 354, 355, 356, 358, 359, 360, 361, 362,
+            363, 364, 372, 373, 374, 375, 376, 377, 378, 380, 386, 387, 388, 389, 390, 391, 392, 393, 394, 395, 405,
+            406, 410, 411, 412, 413, 414, 419, 420, 423, 424, 425, 427, 428, 429, 435, 436, 437, 438, 439, 440, 441,
+            442, 443, 444, 445, 452, 453, 454, 455, 456, 457, 461, 462, 463, 464, 465, 466, 467, 468, 469);
 
         /// <summary>
         /// Gets the block type's ID.
@@ -750,20 +521,17 @@ namespace Orion.World.Tiles {
         /// <summary>
         /// Gets a value indicating whether the block type's block frames are important.
         /// </summary>
-        public bool AreFramesImportant => FramesImportant.Contains(this);
+        public bool AreFramesImportant => FramesImportant[Id];
 
         private BlockType(ushort id) {
             Id = id;
         }
 
-        // Initializes lookup tables.
         static BlockType() {
-            var fields = typeof(BlockType).GetFields(BindingFlags.Public | BindingFlags.Static);
-            foreach (var field in fields) {
-                if (!(field.GetValue(null) is BlockType blockType)) continue;
-
-                IdToField[blockType.Id] = field;
-                IdToBlockType[blockType.Id] = blockType;
+            foreach (var field in typeof(BlockType).GetFields(BindingFlags.Public | BindingFlags.Static)) {
+                var blockType = (BlockType)field.GetValue(null);
+                Blocks[ArrayOffset + blockType.Id] = blockType;
+                Names[ArrayOffset + blockType.Id] = field.Name;
             }
         }
 
@@ -772,10 +540,10 @@ namespace Orion.World.Tiles {
         /// </summary>
         /// <param name="id">The ID.</param>
         /// <returns>The block type, or <c>null</c> if none exists.</returns>
-        public static BlockType FromId(ushort id) =>
-            IdToBlockType.TryGetValue(id, out var blockType) ? blockType : null;
+        public static BlockType FromId(ushort id) => ArrayOffset + id < ArraySize ? Blocks[ArrayOffset + id] : null;
 
         /// <inheritdoc />
-        public override string ToString() => IdToField[Id].Name;
+        [ExcludeFromCodeCoverage]
+        public override string ToString() => Names[ArrayOffset + Id];
     }
 }

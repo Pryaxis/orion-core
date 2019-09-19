@@ -15,7 +15,7 @@
 // You should have received a copy of the GNU General Public License
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
-using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Reflection;
 
 namespace Orion.World.Tiles {
@@ -57,8 +57,10 @@ namespace Orion.World.Tiles {
         public static readonly PaintColor Negative = new PaintColor(30);
 #pragma warning restore 1591
 
-        private static readonly IDictionary<byte, FieldInfo> IdToField = new Dictionary<byte, FieldInfo>();
-        private static readonly IDictionary<byte, PaintColor> IdToPaintColor = new Dictionary<byte, PaintColor>();
+        private const int ArrayOffset = 0;
+        private const int ArraySize = ArrayOffset + 31;
+        private static readonly PaintColor[] Colors = new PaintColor[ArraySize];
+        private static readonly string[] Names = new string[ArraySize];
 
         /// <summary>
         /// Gets the paint color's ID.
@@ -69,14 +71,11 @@ namespace Orion.World.Tiles {
             Id = id;
         }
 
-        // Initializes lookup tables.
         static PaintColor() {
-            var fields = typeof(PaintColor).GetFields(BindingFlags.Public | BindingFlags.Static);
-            foreach (var field in fields) {
-                if (!(field.GetValue(null) is PaintColor paintColor)) continue;
-
-                IdToField[paintColor.Id] = field;
-                IdToPaintColor[paintColor.Id] = paintColor;
+            foreach (var field in typeof(PaintColor).GetFields(BindingFlags.Public | BindingFlags.Static)) {
+                var paintColor = (PaintColor)field.GetValue(null);
+                Colors[ArrayOffset + paintColor.Id] = paintColor;
+                Names[ArrayOffset + paintColor.Id] = field.Name;
             }
         }
 
@@ -85,10 +84,10 @@ namespace Orion.World.Tiles {
         /// </summary>
         /// <param name="id">The ID.</param>
         /// <returns>The paint color, or <c>null</c> if none exists.</returns>
-        public static PaintColor FromId(byte id) =>
-            IdToPaintColor.TryGetValue(id, out var paintColor) ? paintColor : null;
+        public static PaintColor FromId(byte id) => ArrayOffset + id < ArraySize ? Colors[ArrayOffset + id] : null;
 
         /// <inheritdoc />
-        public override string ToString() => IdToField[Id].Name;
+        [ExcludeFromCodeCoverage]
+        public override string ToString() => Names[ArrayOffset + Id];
     }
 }

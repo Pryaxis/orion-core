@@ -15,13 +15,12 @@
 // You should have received a copy of the GNU General Public License
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
-using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Reflection;
 
 namespace Orion.Entities {
     /// <summary>
-    /// Represent's an item type.
+    /// Represents an item type.
     /// </summary>
     public sealed class ItemType {
 #pragma warning disable 1591
@@ -3915,22 +3914,21 @@ namespace Orion.Entities {
         public static readonly ItemType LeinforsLuxuryShampoo = new ItemType(3929);
 #pragma warning restore 1591
 
-        internal static readonly IDictionary<short, FieldInfo> IdToField = new Dictionary<short, FieldInfo>();
-        private static readonly IDictionary<short, ItemType> IdToItemType = new Dictionary<short, ItemType>();
+        private const int ArrayOffset = 0;
+        private const int ArraySize = ArrayOffset + Terraria.ID.ItemID.Count;
+        private static readonly ItemType[] Items = new ItemType[ArraySize];
+        private static readonly string[] Names = new string[ArraySize];
 
         /// <summary>
         /// Gets the item type's ID.
         /// </summary>
         public short Id { get; }
 
-        // Initializes lookup tables.
         static ItemType() {
-            var fields = typeof(ItemType).GetFields(BindingFlags.Public | BindingFlags.Static);
-            foreach (var field in fields) {
-                if (!(field.GetValue(null) is ItemType itemType)) continue;
-
-                IdToField[itemType.Id] = field;
-                IdToItemType[itemType.Id] = itemType;
+            foreach (var field in typeof(ItemType).GetFields(BindingFlags.Public | BindingFlags.Static)) {
+                var itemType = (ItemType)field.GetValue(null);
+                Items[ArrayOffset + itemType.Id] = itemType;
+                Names[ArrayOffset + itemType.Id] = field.Name;
             }
         }
 
@@ -3943,9 +3941,11 @@ namespace Orion.Entities {
         /// </summary>
         /// <param name="id">The ID.</param>
         /// <returns>The item type, or <c>null</c> if none exists.</returns>
-        public static ItemType FromId(short id) => IdToItemType.TryGetValue(id, out var itemType) ? itemType : null;
+        public static ItemType FromId(short id) =>
+            ArrayOffset + (ushort)id < ArraySize ? Items[ArrayOffset + id] : null;
 
         /// <inheritdoc />
-        public override string ToString() => IdToField[Id].Name;
+        [ExcludeFromCodeCoverage]
+        public override string ToString() => Names[ArrayOffset + Id];
     }
 }

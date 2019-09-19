@@ -16,6 +16,7 @@
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Orion.Entities {
     /// <summary>
@@ -49,6 +50,7 @@ namespace Orion.Entities {
         }
 
         /// <inheritdoc />
+        [ExcludeFromCodeCoverage]
         public override string ToString() => $"{BuffType} for {Duration}";
     }
 }

@@ -15,6 +15,9 @@
 // You should have received a copy of the GNU General Public License
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
+using System.Diagnostics.CodeAnalysis;
+using System.Reflection;
+
 namespace Orion.World.Tiles {
     /// <summary>
     /// Represents a liquid type.
@@ -26,13 +29,23 @@ namespace Orion.World.Tiles {
         public static readonly LiquidType Honey = new LiquidType(2);
 #pragma warning restore 1591
 
-        private static readonly LiquidType[] Types = {Water, Lava, Honey};
-        private static readonly string[] Names = {nameof(Water), nameof(Lava), nameof(Honey)};
+        private const int ArrayOffset = 0;
+        private const int ArraySize = ArrayOffset + 3;
+        private static readonly LiquidType[] Liquids = new LiquidType[ArraySize];
+        private static readonly string[] Names = new string[ArraySize];
 
         /// <summary>
         /// Gets the liquid type's ID.
         /// </summary>
         public byte Id { get; }
+
+        static LiquidType() {
+            foreach (var field in typeof(LiquidType).GetFields(BindingFlags.Public | BindingFlags.Static)) {
+                var liquidType = (LiquidType)field.GetValue(null);
+                Liquids[ArrayOffset + liquidType.Id] = liquidType;
+                Names[ArrayOffset + liquidType.Id] = field.Name;
+            }
+        }
 
         private LiquidType(byte id) {
             Id = id;
@@ -43,9 +56,10 @@ namespace Orion.World.Tiles {
         /// </summary>
         /// <param name="id">The ID.</param>
         /// <returns>The liquid type, or <c>null</c> if none exists.</returns>
-        public static LiquidType FromId(byte id) => id < Types.Length ? Types[id] : null;
+        public static LiquidType FromId(byte id) => ArrayOffset + id < ArraySize ? Liquids[ArrayOffset + id] : null;
 
         /// <inheritdoc />
-        public override string ToString() => Names[Id];
+        [ExcludeFromCodeCoverage]
+        public override string ToString() => Names[ArrayOffset + Id];
     }
 }

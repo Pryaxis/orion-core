@@ -15,7 +15,6 @@
 // You should have received a copy of the GNU General Public License
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
-using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Reflection;
 
@@ -47,7 +46,7 @@ namespace Orion.Entities {
         public static readonly NpcType SmallSkeleton = new NpcType(-46);
         public static readonly NpcType BigFemaleZombie = new NpcType(-45);
         public static readonly NpcType SmallFemaleZombie = new NpcType(-44);
-        public static readonly NpcType DemonDemonEye2 = new NpcType(-43);
+        public static readonly NpcType DemonEye2 = new NpcType(-43);
         public static readonly NpcType PurpleDemonEye2 = new NpcType(-42);
         public static readonly NpcType GreenDemonEye2 = new NpcType(-41);
         public static readonly NpcType DialatedDemonEye2 = new NpcType(-40);
@@ -667,48 +666,14 @@ namespace Orion.Entities {
         public static readonly NpcType UnconsciousTavernkeep = new NpcType(579);
 #pragma warning restore 1591
 
-        private static readonly IDictionary<short, FieldInfo> IdToField = new Dictionary<short, FieldInfo>();
-        private static readonly IDictionary<short, NpcType> IdToNpcType = new Dictionary<short, NpcType>();
+        private const int ArrayOffset = 65;
+        private const int ArraySize = ArrayOffset + Terraria.ID.NPCID.Count;
+        private static readonly NpcType[] Npcs = new NpcType[ArraySize];
+        private static readonly string[] Names = new string[ArraySize];
 
-        private static readonly ISet<NpcType> Catchables = new HashSet<NpcType> {
-            Bunny,
-            Goldfish,
-            Bird,
-            Penguin,
-            BlackPenguin,
-            BlueJay,
-            Cardinal,
-            Squirrel,
-            Mouse,
-            Firefly,
-            Butterfly,
-            Worm,
-            LightningBug,
-            Snail,
-            GlowingSnail,
-            Frog,
-            Duck,
-            Duck2,
-            WhiteDuck,
-            WhiteDuck2,
-            BlackScorpion,
-            Scorpion,
-            TruffleWorm,
-            Grasshopper,
-            EnchantedNightcrawler,
-            Grubby,
-            Sluggy,
-            Buggy,
-            GoldBird,
-            GoldBunny,
-            GoldButterfly,
-            GoldFrog,
-            GoldGrasshopper,
-            GoldMouse,
-            GoldWorm,
-            RedSquirrel,
-            GoldSquirrel
-        };
+        private static readonly bool[] Catchable = new Terraria.ID.SetFactory(ArraySize).CreateBoolSet(
+            46, 55, 74, 148, 149, 297, 298, 299, 300, 355, 356, 357, 358, 359, 360, 361, 362, 363, 364, 365, 366, 367,
+            374, 377, 442, 443, 444, 445, 446, 447, 448, 484, 485, 486, 487, 538, 539);
 
         /// <summary>
         /// Gets the NPC type's ID.
@@ -718,16 +683,13 @@ namespace Orion.Entities {
         /// <summary>
         /// Gets a value indicating whether the NPC type is catchable.
         /// </summary>
-        public bool IsCatchable => Catchables.Contains(this);
+        public bool IsCatchable => Catchable[ArrayOffset + Id];
 
-        // Initializes lookup tables.
         static NpcType() {
-            var fields = typeof(NpcType).GetFields(BindingFlags.Public | BindingFlags.Static);
-            foreach (var field in fields) {
-                if (!(field.GetValue(null) is NpcType npcType)) continue;
-
-                IdToField[npcType.Id] = field;
-                IdToNpcType[npcType.Id] = npcType;
+            foreach (var field in typeof(NpcType).GetFields(BindingFlags.Public | BindingFlags.Static)) {
+                var npcType = (NpcType)field.GetValue(null);
+                Npcs[ArrayOffset + npcType.Id] = npcType;
+                Names[ArrayOffset + npcType.Id] = field.Name;
             }
         }
 
@@ -740,9 +702,10 @@ namespace Orion.Entities {
         /// </summary>
         /// <param name="id">The ID.</param>
         /// <returns>The NPC type, or <c>null</c> if none exists.</returns>
-        public static NpcType FromId(short id) => IdToNpcType.TryGetValue(id, out var npcType) ? npcType : null;
+        public static NpcType FromId(short id) => ArrayOffset + (ushort)id < ArraySize ? Npcs[ArrayOffset + id] : null;
 
         /// <inheritdoc />
-        public override string ToString() => IdToField[Id].Name;
+        [ExcludeFromCodeCoverage]
+        public override string ToString() => Names[ArrayOffset + Id];
     }
 }

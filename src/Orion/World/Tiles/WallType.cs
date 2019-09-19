@@ -15,7 +15,7 @@
 // You should have received a copy of the GNU General Public License
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
-using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Reflection;
 
 namespace Orion.World.Tiles {
@@ -257,156 +257,19 @@ namespace Orion.World.Tiles {
         public static readonly WallType SillyGreenBalloon = new WallType(230);
 #pragma warning restore 1591
 
-        private static readonly IDictionary<byte, FieldInfo> IdToField = new Dictionary<byte, FieldInfo>();
-        private static readonly IDictionary<byte, WallType> IdToWallType = new Dictionary<byte, WallType>();
+        private const int ArrayOffset = 0;
+        private const int ArraySize = ArrayOffset + Terraria.ID.WallID.Count;
+        private static readonly WallType[] Walls = new WallType[ArraySize];
+        private static readonly string[] Names = new string[ArraySize];
 
-        private static readonly ISet<WallType> SafeForHouse = new HashSet<WallType> {
-            Stone,
-            Wood,
-            GrayBrick,
-            RedBrick,
-            GoldBrick,
-            SilverBrick,
-            CopperBrick,
-            Dirt,
-            BlueBrick,
-            GreenBrick,
-            PinkBrick,
-            ObsidianBrick,
-            Glass,
-            PearlstoneBrick,
-            IridescentBrick,
-            MudstoneBrick,
-            CobaltBrick,
-            MythrilBrick,
-            Planked,
-            CandyCane,
-            GreenCandyCane,
-            SnowBrick,
-            AdamantiteBeam,
-            DemoniteBrick,
-            SandstoneBrick,
-            EbonstoneBrick,
-            RedStucco,
-            YellowStucco,
-            GreenStucco,
-            Gray,
-            Ebonwood,
-            RichMahogany,
-            Pearlwood,
-            RainbowBrick,
-            TinBrick,
-            TungstenBrick,
-            PlatinumBrick,
-            LivingLeaf,
-            Grass,
-            Jungle,
-            Flower,
-            Cactus,
-            Cloud,
-            Mushroom,
-            BoneBlock,
-            SlimeBlock,
-            FleshBlock,
-            LivingWood,
-            DiscWall,
-            IceBrick,
-            Shadewood,
-            PurpleStainedGlass,
-            YellowStainedGlass,
-            BlueStainedGlass,
-            GreenStainedGlass,
-            RedStainedGlass,
-            MulticoloredStainedGlass,
-            BlueSlab,
-            BlueTiled,
-            PinkSlab,
-            PinkTiled,
-            GreenSlab,
-            GreenTiled,
-            WoodenFence,
-            LeadFence,
-            Hive,
-            PalladiumColumn,
-            BubblegumBlock,
-            TitanstoneBlock,
-            LihzahrdBrick,
-            Pumpkin,
-            Hay,
-            SpookyWood,
-            ChristmasTreeWallpaper,
-            OrnamentWallpaper,
-            CandyCaneWallpaper,
-            FestiveWallpaper,
-            StarsWallpaper,
-            SquigglesWallpaper,
-            SnowflakeWallpaper,
-            KrampusHornWallpaper,
-            BluegreenWallpaper,
-            GrinchFingerWallpaper,
-            FancyGrayWallpaper,
-            IceFloeWallpaper,
-            MusicWallpaper,
-            PurpleRainWallpaper,
-            RainbowWallpaper,
-            SparkleStoneWallpaper,
-            StarlitHeavenWallpaper,
-            BubbleWallpaper,
-            CopperPipeWallpaper,
-            DuckyWallpaper,
-            Waterfall,
-            Lavafall,
-            EbonwoodFence,
-            RichMahoganyFence,
-            PearlwoodFence,
-            ShadewoodFence,
-            WhiteDynasty,
-            BlueDynasty,
-            ArcaneRune,
-            CopperPlating,
-            StoneSlab,
-            BorealWood,
-            BorealWoodFence,
-            PalmWood,
-            PalmWoodFence,
-            AmberGemspark,
-            AmethystGemspark,
-            DiamondGemspark,
-            EmeraldGemspark,
-            OfflineAmberGemspark,
-            OfflineAmethystGemspark,
-            OfflineDiamondGemspark,
-            OfflineEmeraldGemspark,
-            OfflineRubyGemspark,
-            OfflineSapphireGemspark,
-            OfflineTopazGemspark,
-            RubyGemspark,
-            SapphireGemspark,
-            TopazGemspark,
-            TinPlating,
-            Confetti,
-            MidnightConfetti,
-            Honeyfall,
-            ChlorophyteBrick,
-            CrimtaneBrick,
-            ShroomitePlating,
-            MartianConduit,
-            HellstoneBrick,
-            SmoothMarble,
-            SmoothGranite,
-            MeteoriteBrick,
-            Marble,
-            Granite,
-            CrystalBlock,
-            DesertFossil,
-            LunarBrick,
-            Cog,
-            Sandfall,
-            Snowfall,
-            SillyPinkBalloon,
-            SillyPurpleBalloon,
-            SillyGreenBalloon
-        };
+        private static readonly bool[] SafeForHouse = new Terraria.ID.SetFactory(ArraySize).CreateBoolSet(
+            1, 4, 5, 6, 10, 11, 12, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 29, 30, 31, 32, 33, 34, 35, 36, 37,
+            38, 39, 41, 42, 43, 44, 45, 46, 47, 60, 66, 67, 68, 72, 73, 74, 75, 76, 77, 78, 82, 84, 85, 88, 89, 90, 91,
+            92, 93, 100, 101, 102, 103, 104, 105, 106, 107, 108, 109, 110, 111, 112, 113, 114, 115, 116, 117, 118, 119,
+            120, 121, 122, 123, 124, 125, 126, 127, 128, 129, 130, 131, 132, 133, 134, 135, 136, 137, 138, 139, 140,
+            141, 142, 143, 144, 146, 147, 149, 150, 151, 152, 153, 154, 155, 156, 157, 158, 159, 160, 161, 162, 163,
+            164, 165, 166, 167, 168, 169, 172, 173, 174, 175, 176, 177, 179, 181, 182, 183, 184, 186, 223, 224, 225,
+            226, 227, 228, 229, 230);
 
         /// <summary>
         /// Gets the wall type's ID.
@@ -416,20 +279,17 @@ namespace Orion.World.Tiles {
         /// <summary>
         /// Gets a value indicating whether the wall type is safe for use as a house.
         /// </summary>
-        public bool IsSafeForHouse => SafeForHouse.Contains(this);
+        public bool IsSafeForHouse => SafeForHouse[Id];
 
         private WallType(byte id) {
             Id = id;
         }
 
-        // Initializes lookup tables.
         static WallType() {
-            var fields = typeof(WallType).GetFields(BindingFlags.Public | BindingFlags.Static);
-            foreach (var field in fields) {
-                if (!(field.GetValue(null) is WallType wallType)) continue;
-
-                IdToField[wallType.Id] = field;
-                IdToWallType[wallType.Id] = wallType;
+            foreach (var field in typeof(WallType).GetFields(BindingFlags.Public | BindingFlags.Static)) {
+                var wallType = (WallType)field.GetValue(null);
+                Walls[ArrayOffset + wallType.Id] = wallType;
+                Names[ArrayOffset + wallType.Id] = field.Name;
             }
         }
 
@@ -438,9 +298,10 @@ namespace Orion.World.Tiles {
         /// </summary>
         /// <param name="id">The ID.</param>
         /// <returns>The wall type, or <c>null</c> if none exists.</returns>
-        public static WallType FromId(byte id) => IdToWallType.TryGetValue(id, out var wallType) ? wallType : null;
+        public static WallType FromId(byte id) => ArrayOffset + id < ArraySize ? Walls[ArrayOffset + id] : null;
 
         /// <inheritdoc />
-        public override string ToString() => IdToField[Id].Name;
+        [ExcludeFromCodeCoverage]
+        public override string ToString() => Names[ArrayOffset + Id];
     }
 }

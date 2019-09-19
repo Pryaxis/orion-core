@@ -19,11 +19,12 @@ using System;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using Orion.Entities;
+using Orion.Networking.Packets.World;
 
 namespace Orion.Networking.Packets.Players {
     /// <summary>
     /// Packet sent from the server to the client to consume a player's items. This is sent in response to a
-    /// <see cref="RequestMassWireOperationPacket"/>.
+    /// <see cref="MassWireOperationPacket"/>.
     /// </summary>
     public sealed class ConsumeItemsPacket : Packet {
         private ItemType _itemType = ItemType.None;
