@@ -23,7 +23,32 @@ using Xunit;
 
 namespace Orion.Networking.Packets.Players {
     public class BuffPlayerPacketTests {
+        [Fact]
+        public void SetDefaultableProperties_MarkAsDirty() {
+            var packet = new BuffPlayerPacket();
+
+            packet.ShouldHaveDefaultablePropertiesMarkAsDirty();
+        }
+
+        [Fact]
+        public void SetPlayerBuff_MarksAsDirty() {
+            var packet = new BuffPlayerPacket();
+
+            packet.PlayerBuff = new Buff(BuffType.None, TimeSpan.Zero);
+
+            packet.ShouldBeDirty();
+        }
+
+        [Fact]
+        public void SetPlayerBuff_NullValue_ThrowsArgumentNullException() {
+            var packet = new BuffPlayerPacket();
+            Action action = () => packet.PlayerBuff = null;
+
+            action.Should().Throw<ArgumentNullException>();
+        }
+
         public static readonly byte[] Bytes = {9, 0, 55, 0, 1, 60, 0, 0, 0};
+        public static readonly byte[] InvalidBuffTypeBytes = {9, 0, 55, 0, 255, 60, 0, 0, 0};
 
         [Fact]
         public void ReadFromStream_IsCorrect() {
@@ -32,6 +57,15 @@ namespace Orion.Networking.Packets.Players {
 
                 packet.PlayerIndex.Should().Be(0);
                 packet.PlayerBuff.Should().BeEquivalentTo(new Buff(BuffType.ObsidianSkin, TimeSpan.FromSeconds(1)));
+            }
+        }
+
+        [Fact]
+        public void ReadFromStream_InvalidBuffType_ThrowsPacketException() {
+            using (var stream = new MemoryStream(InvalidBuffTypeBytes)) {
+                Func<Packet> func = () => Packet.ReadFromStream(stream, PacketContext.Server);
+
+                func.Should().Throw<PacketException>();
             }
         }
 
