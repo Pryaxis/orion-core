@@ -33,10 +33,10 @@ namespace Orion.Networking.Packets.World {
         private NetworkTiles _tiles = new NetworkTiles(0, 0);
 
         /// <inheritdoc />
-        public override PacketType Type => PacketType.SquareTiles;
+        public override bool IsDirty => base.IsDirty || _tiles.IsDirty;
 
         /// <inheritdoc />
-        public override bool IsDirty => base.IsDirty || _tiles.IsDirty;
+        public override PacketType Type => PacketType.SquareTiles;
 
         /// <summary>
         /// Gets or sets the size of the square.
@@ -96,6 +96,7 @@ namespace Orion.Networking.Packets.World {
         private protected override void ReadFromReader(BinaryReader reader, PacketContext context) {
             var size = reader.ReadUInt16();
             if ((size & 32768) == 32768) {
+                // This byte is basically useless, but we'll keep track of it anyways.
                 _data = reader.ReadByte();
             }
 

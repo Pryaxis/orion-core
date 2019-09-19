@@ -42,11 +42,11 @@ namespace Orion.Networking.Impl {
         public NetworkService(Lazy<IPlayerService> playerService) {
             _playerService = playerService;
 
+            _receiveHandlers[PacketType.PlayerConnect] = PlayerConnectHandler;
+
             OTAPI.Hooks.Net.ReceiveData = ReceiveDataHandler;
             OTAPI.Hooks.Net.SendBytes = SendBytesHandler;
             OTAPI.Hooks.Net.RemoteClient.PreReset = PreResetHandler;
-
-            _receiveHandlers[PacketType.PlayerConnect] = PlayerConnectHandler;
         }
 
         protected override void Dispose(bool disposeManaged) {

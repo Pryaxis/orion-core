@@ -98,7 +98,7 @@ namespace Orion.Networking.Packets.World {
         }
 
         /// <summary>
-        /// Represents the door action in a <see cref="ToggleDoorPacket"/>.
+        /// Represents a door action in a <see cref="ToggleDoorPacket"/>.
         /// </summary>
         public sealed class DoorAction {
 #pragma warning disable 1591
@@ -110,8 +110,10 @@ namespace Orion.Networking.Packets.World {
             public static readonly DoorAction CloseTallGate = new DoorAction(5);
 #pragma warning restore 1591
 
-            private static readonly DoorAction[] Types = new DoorAction[6];
-            private static readonly string[] Names = new string[6];
+            private const int ArrayOffset = 0;
+            private const int ArraySize = ArrayOffset + 6;
+            private static readonly DoorAction[] Actions = new DoorAction[ArraySize];
+            private static readonly string[] Names = new string[ArraySize];
 
             /// <summary>
             /// Gets the door action's ID.
@@ -121,8 +123,8 @@ namespace Orion.Networking.Packets.World {
             static DoorAction() {
                 foreach (var field in typeof(DoorAction).GetFields(BindingFlags.Public | BindingFlags.Static)) {
                     var doorAction = (DoorAction)field.GetValue(null);
-                    Types[doorAction.Id] = doorAction;
-                    Names[doorAction.Id] = field.Name;
+                    Actions[ArrayOffset + doorAction.Id] = doorAction;
+                    Names[ArrayOffset + doorAction.Id] = field.Name;
                 }
             }
 
@@ -135,10 +137,11 @@ namespace Orion.Networking.Packets.World {
             /// </summary>
             /// <param name="id">The ID.</param>
             /// <returns>The door action, or <c>null</c> if none exists.</returns>
-            public static DoorAction FromId(byte id) => id < Types.Length ? Types[id] : null;
+            public static DoorAction FromId(byte id) => ArrayOffset + id < ArraySize ? Actions[ArrayOffset + id] : null;
 
             /// <inheritdoc />
-            public override string ToString() => Names[Id];
+            [ExcludeFromCodeCoverage]
+            public override string ToString() => Names[ArrayOffset + Id];
         }
     }
 }

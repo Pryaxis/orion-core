@@ -24,6 +24,22 @@ using Xunit;
 namespace Orion.Networking.Packets.World {
     public class PlaceObjectPacketTests {
         [Fact]
+        public void SetDefaultableProperties_MarkAsDirty() {
+            var packet = new PlaceObjectPacket();
+
+            packet.ShouldHaveDefaultablePropertiesMarkAsDirty();
+        }
+
+        [Fact]
+        public void SetObjectType_MarksAsDirty() {
+            var packet = new PlaceObjectPacket();
+
+            packet.ObjectType = BlockType.Stone;
+
+            packet.ShouldBeDirty();
+        }
+
+        [Fact]
         public void SetObjectType_NullValue_ThrowsArgumentNullException() {
             var packet = new PlaceObjectPacket();
             Action action = () => packet.ObjectType = null;
@@ -32,6 +48,7 @@ namespace Orion.Networking.Packets.World {
         }
 
         public static readonly byte[] Bytes = {14, 0, 79, 0, 1, 100, 0, 21, 0, 1, 0, 0, 255, 1};
+        public static readonly byte[] InvalidBlockTypeBytes = {14, 0, 79, 0, 1, 100, 0, 255, 255, 1, 0, 0, 255, 1};
 
         [Fact]
         public void ReadFromStream_IsCorrect() {
@@ -44,6 +61,15 @@ namespace Orion.Networking.Packets.World {
                 packet.ObjectStyle.Should().Be(1);
                 packet.ObjectRandomState.Should().Be(-1);
                 packet.ObjectDirection.Should().BeTrue();
+            }
+        }
+
+        [Fact]
+        public void ReadFromStream_InvalidBlockType_ThrowsPacketException() {
+            using (var stream = new MemoryStream(InvalidBlockTypeBytes)) {
+                Func<Packet> func = () => Packet.ReadFromStream(stream, PacketContext.Server);
+
+                func.Should().Throw<PacketException>();
             }
         }
 

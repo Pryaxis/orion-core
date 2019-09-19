@@ -21,6 +21,13 @@ using Xunit;
 
 namespace Orion.Networking.Packets.World {
     public class BiomeStatsPacketTests {
+        [Fact]
+        public void SetDefaultableProperties_MarkAsDirty() {
+            var packet = new BiomeStatsPacket();
+
+            packet.ShouldHaveDefaultablePropertiesMarkAsDirty();
+        }
+
         public static readonly byte[] Bytes = {6, 0, 57, 1, 2, 3};
 
         [Fact]

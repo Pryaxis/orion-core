@@ -21,6 +21,13 @@ using Xunit;
 
 namespace Orion.Networking.Packets.World {
     public class TreeGrowingEffectPacketTests {
+        [Fact]
+        public void SetDefaultableProperties_MarkAsDirty() {
+            var packet = new TreeGrowingEffectPacket();
+
+            packet.ShouldHaveDefaultablePropertiesMarkAsDirty();
+        }
+
         private static readonly byte[] Bytes = {11, 0, 112, 1, 0, 1, 100, 0, 10, 1, 0};
 
         [Fact]

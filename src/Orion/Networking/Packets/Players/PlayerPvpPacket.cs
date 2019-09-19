@@ -20,7 +20,7 @@ using System.IO;
 
 namespace Orion.Networking.Packets.Players {
     /// <summary>
-    /// Packet used to set a player's PvP status.
+    /// Packet sent to set a player's PvP status.
     /// </summary>
     public sealed class PlayerPvpPacket : Packet {
         private byte _playerIndex;

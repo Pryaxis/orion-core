@@ -24,9 +24,74 @@ using Xunit;
 namespace Orion.Networking.Packets.World {
     public class WorldInfoPacketTests {
         [Fact]
+        public void SetDefaultableProperties_MarkAsDirty() {
+            var packet = new ToggleDoorPacket();
+
+            packet.ShouldHaveDefaultablePropertiesMarkAsDirty();
+        }
+
+        [Fact]
+        public void SetWorldName_MarksAsDirty() {
+            var packet = new WorldInfoPacket();
+
+            packet.WorldName = "";
+
+            packet.ShouldBeDirty();
+        }
+
+        [Fact]
         public void SetWorldName_NullValue_ThrowsArgumentNullException() {
             var packet = new WorldInfoPacket();
             Action action = () => packet.WorldName = null;
+
+            action.Should().Throw<ArgumentNullException>();
+        }
+
+        [Fact]
+        public void StyleBoundaries_Set_MarksAsDirty() {
+            var packet = new WorldInfoPacket();
+
+            packet.TreeStyleBoundaries[0] = 0;
+
+            packet.ShouldBeDirty();
+        }
+
+        [Fact]
+        public void StyleBoundaries_Count_IsCorrect() {
+            var packet = new WorldInfoPacket();
+
+            packet.TreeStyleBoundaries.Count.Should().Be(3);
+        }
+
+        [Fact]
+        public void Styles_Set_MarksAsDirty() {
+            var packet = new WorldInfoPacket();
+
+            packet.TreeStyles[0] = 0;
+
+            packet.ShouldBeDirty();
+        }
+
+        [Fact]
+        public void Styles_Count_IsCorrect() {
+            var packet = new WorldInfoPacket();
+
+            packet.TreeStyles.Count.Should().Be(4);
+        }
+
+        [Fact]
+        public void SetInvasionType_MarksAsDirty() {
+            var packet = new WorldInfoPacket();
+
+            packet.InvasionType = InvasionType.Goblins;
+
+            packet.ShouldBeDirty();
+        }
+
+        [Fact]
+        public void SetInvasionType_NullValue_ThrowsArgumentNullException() {
+            var packet = new WorldInfoPacket();
+            Action action = () => packet.InvasionType = null;
 
             action.Should().Throw<ArgumentNullException>();
         }
@@ -36,6 +101,14 @@ namespace Orion.Networking.Packets.World {
             129, 163, 174, 200, 216, 57, 65, 188, 220, 22, 170, 161, 45, 221, 99, 1, 0, 0, 0, 194, 0, 0, 0, 0, 51, 0, 1,
             2, 1, 0, 1, 2, 3, 0, 0, 217, 206, 151, 62, 0, 37, 4, 0, 0, 104, 16, 0, 0, 104, 16, 0, 0, 3, 2, 0, 0, 248, 4,
             0, 0, 104, 16, 0, 0, 104, 16, 0, 0, 7, 1, 0, 6, 0, 0, 0, 0, 0, 32, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+            0, 0
+        };
+
+        private static readonly byte[] InvalidInvasionTypeBytes = {
+            122, 0, 7, 141, 127, 0, 0, 1, 0, 104, 16, 176, 4, 54, 8, 102, 1, 129, 1, 53, 2, 24, 49, 0, 9, 1, 102, 63,
+            129, 163, 174, 200, 216, 57, 65, 188, 220, 22, 170, 161, 45, 221, 99, 1, 0, 0, 0, 194, 0, 0, 0, 0, 51, 0, 1,
+            2, 1, 0, 1, 2, 3, 0, 0, 217, 206, 151, 62, 0, 37, 4, 0, 0, 104, 16, 0, 0, 104, 16, 0, 0, 3, 2, 0, 0, 248, 4,
+            0, 0, 104, 16, 0, 0, 104, 16, 0, 0, 7, 1, 0, 6, 0, 0, 0, 0, 0, 32, 0, 0, 0, 255, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
             0, 0
         };
 
@@ -121,6 +194,15 @@ namespace Orion.Networking.Packets.World {
                 packet.InvasionType.Should().BeSameAs(InvasionType.None);
                 packet.LobbyId.Should().Be(0);
                 packet.SandstormIntensity.Should().Be(0);
+            }
+        }
+
+        [Fact]
+        public void ReadFromStream_InvalidInvasionType_ThrowsPacketException() {
+            using (var stream = new MemoryStream(InvalidInvasionTypeBytes)) {
+                Func<Packet> func = () => Packet.ReadFromStream(stream, PacketContext.Server);
+
+                func.Should().Throw<PacketException>();
             }
         }
 

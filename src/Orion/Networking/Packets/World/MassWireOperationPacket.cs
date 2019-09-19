@@ -28,7 +28,7 @@ namespace Orion.Networking.Packets.World {
         private short _startTileY;
         private short _endTileX;
         private short _endTileY;
-        private Operations _wireOperations;
+        private WireOperations _massWireOperations;
 
         /// <inheritdoc />
         public override PacketType Type => PacketType.MassWireOperation;
@@ -78,12 +78,12 @@ namespace Orion.Networking.Packets.World {
         }
 
         /// <summary>
-        /// Gets or sets the wire operations.
+        /// Gets or sets the mass wire operations.
         /// </summary>
-        public Operations WireOperations {
-            get => _wireOperations;
+        public WireOperations MassWireOperations {
+            get => _massWireOperations;
             set {
-                _wireOperations = value;
+                _massWireOperations = value;
                 _isDirty = true;
             }
         }
@@ -91,14 +91,14 @@ namespace Orion.Networking.Packets.World {
         /// <inheritdoc />
         [ExcludeFromCodeCoverage]
         public override string ToString() =>
-            $"{Type}[{WireOperations:F} from ({StartTileX}, {StartTileY}) to ({EndTileX}, {EndTileY})]";
+            $"{Type}[{MassWireOperations:F} from ({StartTileX}, {StartTileY}) to ({EndTileX}, {EndTileY})]";
 
         private protected override void ReadFromReader(BinaryReader reader, PacketContext context) {
             StartTileX = reader.ReadInt16();
             StartTileY = reader.ReadInt16();
             EndTileX = reader.ReadInt16();
             EndTileY = reader.ReadInt16();
-            WireOperations = (Operations)reader.ReadByte();
+            MassWireOperations = (WireOperations)reader.ReadByte();
         }
 
         private protected override void WriteToWriter(BinaryWriter writer, PacketContext context) {
@@ -106,14 +106,14 @@ namespace Orion.Networking.Packets.World {
             writer.Write(StartTileY);
             writer.Write(EndTileX);
             writer.Write(EndTileY);
-            writer.Write((byte)WireOperations);
+            writer.Write((byte)MassWireOperations);
         }
 
         /// <summary>
-        /// Specifies the operations in a <see cref="MassWireOperationPacket"/>.
+        /// Specifies the wire operations in a <see cref="MassWireOperationPacket"/>.
         /// </summary>
         [Flags]
-        public enum Operations : byte {
+        public enum WireOperations : byte {
             /// <summary>
             /// Indicates nothing.
             /// </summary>

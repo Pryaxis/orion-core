@@ -29,6 +29,7 @@ namespace Orion.Networking.Packets.World {
         private short _objectY;
         private BlockType _objectType;
         private short _objectStyle;
+        private byte _data;
         private sbyte _objectRandomState;
         private bool _objectDirection;
 
@@ -112,7 +113,9 @@ namespace Orion.Networking.Packets.World {
             ObjectY = reader.ReadInt16();
             ObjectType = BlockType.FromId(reader.ReadUInt16()) ?? throw new PacketException("Object type is invalid.");
             ObjectStyle = reader.ReadInt16();
-            reader.ReadByte();
+
+            // This byte is basically useless, but we'll keep track of it anyways.
+            _data = reader.ReadByte();
             ObjectRandomState = reader.ReadSByte();
             ObjectDirection = reader.ReadBoolean();
         }
@@ -123,7 +126,7 @@ namespace Orion.Networking.Packets.World {
             writer.Write(ObjectY);
             writer.Write(ObjectType.Id);
             writer.Write(ObjectStyle);
-            writer.Write((byte)0);
+            writer.Write(_data);
             writer.Write(ObjectRandomState);
             writer.Write(ObjectDirection);
         }

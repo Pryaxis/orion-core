@@ -19,6 +19,7 @@ using System;
 using System.IO;
 using FluentAssertions;
 using Xunit;
+using static Orion.Networking.Packets.Players.PlayerDodgePacket;
 
 namespace Orion.Networking.Packets.Players {
     public class PlayerDodgePacketTests {
@@ -33,7 +34,7 @@ namespace Orion.Networking.Packets.Players {
         public void SetPlayerDodgeType_MarksAsDirty() {
             var packet = new PlayerDodgePacket();
 
-            packet.PlayerDodgeType = PlayerDodgePacket.DodgeType.NinjaDodge;
+            packet.PlayerDodgeType = DodgeType.NinjaDodge;
 
             packet.ShouldBeDirty();
         }
@@ -55,7 +56,7 @@ namespace Orion.Networking.Packets.Players {
                 var packet = (PlayerDodgePacket)Packet.ReadFromStream(stream, PacketContext.Server);
 
                 packet.PlayerIndex.Should().Be(0);
-                packet.PlayerDodgeType.Should().BeSameAs(PlayerDodgePacket.DodgeType.NinjaDodge);
+                packet.PlayerDodgeType.Should().BeSameAs(DodgeType.NinjaDodge);
             }
         }
 
@@ -76,17 +77,17 @@ namespace Orion.Networking.Packets.Players {
         [Fact]
         public void DodgeType_FromId_IsCorrect() {
             for (byte i = 1; i < 3; ++i) {
-                PlayerDodgePacket.DodgeType.FromId(i).Id.Should().Be(i);
+                DodgeType.FromId(i).Id.Should().Be(i);
             }
 
-            PlayerDodgePacket.DodgeType.FromId(0).Should().BeNull();
-            PlayerDodgePacket.DodgeType.FromId(3).Should().BeNull();
+            DodgeType.FromId(0).Should().BeNull();
+            DodgeType.FromId(3).Should().BeNull();
         }
 
         [Fact]
         public void DodgeType_FromId_ReturnsSameInstance() {
-            var dodgeType = PlayerDodgePacket.DodgeType.FromId(1);
-            var dodgeType2 = PlayerDodgePacket.DodgeType.FromId(1);
+            var dodgeType = DodgeType.FromId(1);
+            var dodgeType2 = DodgeType.FromId(1);
 
             dodgeType.Should().BeSameAs(dodgeType2);
         }

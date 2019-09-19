@@ -18,52 +18,52 @@
 using System;
 using System.IO;
 using FluentAssertions;
-using Orion.World.Tiles;
+using Microsoft.Xna.Framework;
+using Orion.Entities;
 using Xunit;
 
-namespace Orion.Networking.Packets.World {
-    public class PaintWallPacketTests {
+namespace Orion.Networking.Packets.Npcs {
+    public class ReleaseNpcPacketTests {
         [Fact]
         public void SetDefaultableProperties_MarkAsDirty() {
-            var packet = new PaintWallPacket();
+            var packet = new ReleaseNpcPacket();
 
             packet.ShouldHaveDefaultablePropertiesMarkAsDirty();
         }
 
         [Fact]
-        public void SetWallColor_MarksAsDirty() {
-            var packet = new PaintWallPacket();
-
-            packet.WallColor = PaintColor.Red;
+        public void SetNpcType_MarksAsDirty() {
+            var packet = new ReleaseNpcPacket();
+            packet.NpcType = NpcType.BlueSlime;
 
             packet.ShouldBeDirty();
         }
 
         [Fact]
-        public void SetWallColor_NullValue_ThrowsArgumentNullException() {
-            var packet = new PaintWallPacket();
-            Action action = () => packet.WallColor = null;
+        public void SetNpcType_NullValue_ThrowsArgumentNullException() {
+            var packet = new ReleaseNpcPacket();
+            Action action = () => packet.NpcType = null;
 
             action.Should().Throw<ArgumentNullException>();
         }
 
-        public static readonly byte[] Bytes = {8, 0, 64, 0, 1, 100, 0, 1};
-        public static readonly byte[] InvalidPaintColorBytes = {8, 0, 64, 0, 1, 100, 0, 255};
+        public static readonly byte[] Bytes = {14, 0, 71, 0, 1, 0, 0, 100, 0, 0, 0, 1, 0, 0};
+        public static readonly byte[] InvalidNpcTypeBytes = {14, 0, 71, 0, 1, 0, 0, 100, 0, 0, 0, 255, 127, 0};
 
         [Fact]
         public void ReadFromStream_IsCorrect() {
             using (var stream = new MemoryStream(Bytes)) {
-                var packet = (PaintWallPacket)Packet.ReadFromStream(stream, PacketContext.Server);
+                var packet = (ReleaseNpcPacket)Packet.ReadFromStream(stream, PacketContext.Server);
 
-                packet.WallX.Should().Be(256);
-                packet.WallY.Should().Be(100);
-                packet.WallColor.Should().BeSameAs(PaintColor.Red);
+                packet.NpcPosition.Should().Be(new Vector2(256, 100));
+                packet.NpcType.Should().Be(NpcType.BlueSlime);
+                packet.NpcStyle.Should().Be(0);
             }
         }
 
         [Fact]
-        public void ReadFromStream_InvalidPaintColor_ThrowsPacketException() {
-            using (var stream = new MemoryStream(InvalidPaintColorBytes)) {
+        public void ReadFromStream_InvalidNpcType_ThrowsPacketException() {
+            using (var stream = new MemoryStream(InvalidNpcTypeBytes)) {
                 Func<Packet> func = () => Packet.ReadFromStream(stream, PacketContext.Server);
 
                 func.Should().Throw<PacketException>();

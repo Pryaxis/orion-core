@@ -15,12 +15,102 @@
 // You should have received a copy of the GNU General Public License
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
+using System;
 using System.IO;
 using FluentAssertions;
+using Orion.Networking.TileEntities;
+using Orion.Networking.Tiles;
 using Xunit;
 
 namespace Orion.Networking.Packets.World {
     public class SectionPacketTests {
+        [Fact]
+        public void SetDefaultableProperties_MarkAsDirty() {
+            var packet = new SectionPacket();
+
+            packet.ShouldHaveDefaultablePropertiesMarkAsDirty();
+        }
+
+        [Fact]
+        public void SectionTiles_Set_MarksAsDirty() {
+            var packet = new SectionPacket();
+            packet.SectionTiles = new NetworkTiles(1, 1);
+            packet.ShouldBeDirty();
+
+            packet.SectionTiles[0, 0] = new NetworkTile();
+
+            packet.ShouldBeDirty();
+        }
+
+        [Fact]
+        public void SetSectionTiles_NullValue_ThrowsArgumentNullException() {
+            var packet = new SectionPacket();
+            Action action = () => packet.SectionTiles = null;
+
+            action.Should().Throw<ArgumentNullException>();
+        }
+
+        [Fact]
+        public void SectionTileEntities_Count_IsCorrect() {
+            var packet = new SectionPacket();
+            packet.SectionTileEntities.Add(new NetworkChest());
+
+            packet.SectionTileEntities.Count.Should().Be(1);
+        }
+
+        [Fact]
+        public void SectionTileEntities_IsReadOnly_IsCorrect() {
+            var packet = new SectionPacket();
+
+            packet.SectionTileEntities.IsReadOnly.Should().BeFalse();
+        }
+
+        [Fact]
+        public void SectionTileEntities_MarksAsDirty() {
+            var packet = new SectionPacket();
+            var chest = new NetworkChest();
+
+            packet.SectionTileEntities.Add(chest);
+            packet.ShouldBeDirty();
+            packet.SectionTileEntities.Remove(chest);
+            packet.ShouldBeDirty();
+            packet.SectionTileEntities.Insert(0, chest);
+            packet.ShouldBeDirty();
+            packet.SectionTileEntities.RemoveAt(0);
+            packet.ShouldBeDirty();
+            packet.SectionTileEntities.Add(chest);
+            packet.ShouldBeDirty();
+            packet.SectionTileEntities[0] = chest;
+            packet.ShouldBeDirty();
+            packet.SectionTileEntities.Clear();
+            packet.ShouldBeDirty();
+        }
+
+        [Fact]
+        public void SectionTileEntities_SetNullItem_ThrowsArgumentNullException() {
+            var packet = new SectionPacket();
+            packet.SectionTileEntities.Add(new NetworkChest());
+            Action action = () => packet.SectionTileEntities[0] = null;
+
+            action.Should().Throw<ArgumentNullException>();
+        }
+
+        [Fact]
+        public void SectionTileEntities_AddNullItem_ThrowsArgumentNullException() {
+            var packet = new SectionPacket();
+            Action action = () => packet.SectionTileEntities.Add(null);
+
+            action.Should().Throw<ArgumentNullException>();
+        }
+
+        [Fact]
+        public void SectionTileEntities_InsertNullItem_ThrowsArgumentNullException() {
+            var packet = new SectionPacket();
+            Action action = () => packet.SectionTileEntities.Insert(0, null);
+
+            action.Should().Throw<ArgumentNullException>();
+        }
+
         private static readonly byte[] Bytes = {
             254, 7, 10, 1, 109, 87, 189, 143, 28, 73, 21, 175, 170, 254, 152, 158, 153, 253, 152, 237, 195, 189, 235,
             51, 8, 99, 6, 123, 56, 77, 96, 144, 88, 7, 67, 48, 106, 208, 178, 23, 64, 2, 18, 163, 11, 64, 66, 156, 124,

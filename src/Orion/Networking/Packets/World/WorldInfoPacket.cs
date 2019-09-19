@@ -32,10 +32,6 @@ namespace Orion.Networking.Packets.World {
     /// <see cref="PlayerJoinPacket"/> and is also sent periodically.
     /// </summary>
     public sealed class WorldInfoPacket : Packet {
-        private readonly int[] _treeStyleBoundaries = new int[3];
-        private readonly byte[] _treeStyles = new byte[4];
-        private readonly int[] _caveBackgroundStyleBoundaries = new int[3];
-        private readonly byte[] _caveBackgroundStyles = new byte[4];
         private int _time;
         private bool _isDaytime;
         private bool _isBloodMoon;
@@ -111,11 +107,11 @@ namespace Orion.Networking.Packets.World {
         private float _sandstormIntensity;
 
         /// <inheritdoc />
-        public override PacketType Type => PacketType.WorldInfo;
+        public override bool IsDirty => base.IsDirty || TreeStyleBoundaries.IsDirty || TreeStyles.IsDirty ||
+                                        CaveBackgroundStyleBoundaries.IsDirty || CaveBackgroundStyles.IsDirty;
 
         /// <inheritdoc />
-        public override bool IsDirty => _isDirty || TreeStyleBoundaries.IsDirty || TreeStyles.IsDirty ||
-                                        CaveBackgroundStyleBoundaries.IsDirty || CaveBackgroundStyles.IsDirty;
+        public override PacketType Type => PacketType.WorldInfo;
 
         /// <summary>
         /// Gets or sets the time.
@@ -440,22 +436,22 @@ namespace Orion.Networking.Packets.World {
         /// <summary>
         /// Get the tree style boundaries.
         /// </summary>
-        public Boundaries TreeStyleBoundaries { get; }
+        public StyleBoundaries TreeStyleBoundaries { get; } = new StyleBoundaries();
 
         /// <summary>
         /// Gets the tree styles.
         /// </summary>
-        public Styles TreeStyles { get; }
+        public Styles TreeStyles { get; } = new Styles();
 
         /// <summary>
         /// Gets the cave background style boundaries.
         /// </summary>
-        public Boundaries CaveBackgroundStyleBoundaries { get; private set; }
+        public StyleBoundaries CaveBackgroundStyleBoundaries { get; } = new StyleBoundaries();
 
         /// <summary>
         /// Gets the cave background styles.
         /// </summary>
-        public Styles CaveBackgroundStyles { get; private set; }
+        public Styles CaveBackgroundStyles { get; } = new Styles();
 
         /// <summary>
         /// Gets or sets the rain.
@@ -943,16 +939,6 @@ namespace Orion.Networking.Packets.World {
             }
         }
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="WorldInfoPacket"/> class.
-        /// </summary>
-        public WorldInfoPacket() {
-            TreeStyleBoundaries = new Boundaries(_treeStyleBoundaries);
-            TreeStyles = new Styles(_treeStyles);
-            CaveBackgroundStyleBoundaries = new Boundaries(_caveBackgroundStyleBoundaries);
-            CaveBackgroundStyles = new Styles(_caveBackgroundStyles);
-        }
-
         /// <inheritdoc />
         public override void Clean() {
             base.Clean();
@@ -1180,10 +1166,10 @@ namespace Orion.Networking.Packets.World {
         }
 
         /// <summary>
-        /// Represents the tree and cave background boundaries in a <see cref="WorldInfoPacket"/>.
+        /// Represents the tree and cave background style boundaries in a <see cref="WorldInfoPacket"/>.
         /// </summary>
-        public class Boundaries : IArray<int>, IDirtiable {
-            private readonly int[] _boundaries;
+        public class StyleBoundaries : IArray<int>, IDirtiable {
+            private readonly int[] _boundaries = new int[3];
 
             /// <inheritdoc cref="IArray{T}.this" />
             public int this[int index] {
@@ -1200,13 +1186,10 @@ namespace Orion.Networking.Packets.World {
             /// <inheritdoc />
             public bool IsDirty { get; private set; }
 
-            internal Boundaries(int[] boundaries) {
-                _boundaries = boundaries;
-            }
-
             /// <inheritdoc />
             public IEnumerator<int> GetEnumerator() => ((IEnumerable<int>)_boundaries).GetEnumerator();
 
+            [ExcludeFromCodeCoverage]
             IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
 
             /// <inheritdoc />
@@ -1219,7 +1202,7 @@ namespace Orion.Networking.Packets.World {
         /// Represents the tree and cave background styles in a <see cref="WorldInfoPacket"/>.
         /// </summary>
         public class Styles : IArray<byte>, IDirtiable {
-            private readonly byte[] _styles;
+            private readonly byte[] _styles = new byte[4];
 
             /// <inheritdoc cref="IArray{T}.this" />
             public byte this[int index] {
@@ -1236,13 +1219,10 @@ namespace Orion.Networking.Packets.World {
             /// <inheritdoc />
             public bool IsDirty { get; private set; }
 
-            internal Styles(byte[] styles) {
-                _styles = styles;
-            }
-
             /// <inheritdoc />
             public IEnumerator<byte> GetEnumerator() => ((IEnumerable<byte>)_styles).GetEnumerator();
 
+            [ExcludeFromCodeCoverage]
             IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
 
             /// <inheritdoc />

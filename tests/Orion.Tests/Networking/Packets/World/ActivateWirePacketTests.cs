@@ -21,6 +21,13 @@ using Xunit;
 
 namespace Orion.Networking.Packets.World {
     public class ActivateWirePacketTests {
+        [Fact]
+        public void SetDefaultableProperties_MarkAsDirty() {
+            var packet = new ActivateWirePacket();
+
+            packet.ShouldHaveDefaultablePropertiesMarkAsDirty();
+        }
+
         public static readonly byte[] Bytes = {7, 0, 59, 0, 1, 100, 0};
 
         [Fact]

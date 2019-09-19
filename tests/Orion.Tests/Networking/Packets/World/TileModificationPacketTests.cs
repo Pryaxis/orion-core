@@ -19,9 +19,26 @@ using System;
 using System.IO;
 using FluentAssertions;
 using Xunit;
+using static Orion.Networking.Packets.World.TileModificationPacket;
 
 namespace Orion.Networking.Packets.World {
     public class TileModificationPacketTests {
+        [Fact]
+        public void SetDefaultableProperties_MarkAsDirty() {
+            var packet = new TileModificationPacket();
+
+            packet.ShouldHaveDefaultablePropertiesMarkAsDirty();
+        }
+
+        [Fact]
+        public void SetTileModificationType_MarksAsDirty() {
+            var packet = new TileModificationPacket();
+
+            packet.TileModificationType = ModificationType.DestroyBlock;
+
+            packet.ShouldBeDirty();
+        }
+
         [Fact]
         public void SetTileModificationType_NullValue_ThrowsArgumentNullException() {
             var packet = new TileModificationPacket();
@@ -31,13 +48,14 @@ namespace Orion.Networking.Packets.World {
         }
 
         private static readonly byte[] Bytes = {11, 0, 17, 0, 16, 14, 194, 1, 1, 0, 0};
+        private static readonly byte[] InvalidModificationTypeBytes = {11, 0, 17, 255, 16, 14, 194, 1, 1, 0, 0};
 
         [Fact]
         public void ReadFromStream_IsCorrect() {
             using (var stream = new MemoryStream(Bytes)) {
                 var packet = (TileModificationPacket)Packet.ReadFromStream(stream, PacketContext.Server);
 
-                packet.TileModificationType.Should().BeSameAs(TileModificationPacket.ModificationType.DestroyBlock);
+                packet.TileModificationType.Should().BeSameAs(ModificationType.DestroyBlock);
                 packet.TileX.Should().Be(3600);
                 packet.TileY.Should().Be(450);
                 packet.TileModificationData.Should().Be(1);
@@ -46,8 +64,34 @@ namespace Orion.Networking.Packets.World {
         }
 
         [Fact]
+        public void ReadFromStream_InvalidModificationType_ThrowsPacketException() {
+            using (var stream = new MemoryStream(InvalidModificationTypeBytes)) {
+                Func<Packet> func = () => Packet.ReadFromStream(stream, PacketContext.Server);
+
+                func.Should().Throw<PacketException>();
+            }
+        }
+
+        [Fact]
         public void WriteToStream_IsCorrect() {
             Bytes.ShouldDeserializeAndSerializeSamePacket();
+        }
+
+        [Fact]
+        public void ModificationType_FromId_IsCorrect() {
+            for (byte i = 0; i < 20; ++i) {
+                ModificationType.FromId(i).Id.Should().Be(i);
+            }
+
+            ModificationType.FromId(20).Should().BeNull();
+        }
+
+        [Fact]
+        public void ModificationType_FromId_ReturnsSameInstance() {
+            var modificationType = ModificationType.FromId(1);
+            var modificationType2 = ModificationType.FromId(1);
+
+            modificationType.Should().BeSameAs(modificationType2);
         }
     }
 }

@@ -18,55 +18,49 @@
 using System;
 using System.IO;
 using FluentAssertions;
-using Microsoft.Xna.Framework;
-using Orion.Entities;
+using Orion.Networking.Tiles;
 using Xunit;
 
-namespace Orion.Networking.Packets.Players {
-    public class PlayerReleaseNpcPacketTests {
+namespace Orion.Networking.Packets.World {
+    public class SquareTilesPacketTests {
         [Fact]
         public void SetDefaultableProperties_MarkAsDirty() {
-            var packet = new PlayerReleaseNpcPacket();
+            var packet = new SquareTilesPacket();
 
             packet.ShouldHaveDefaultablePropertiesMarkAsDirty();
         }
 
         [Fact]
-        public void SetNpcType_MarksAsDirty() {
-            var packet = new PlayerReleaseNpcPacket();
-            packet.NpcType = NpcType.BlueSlime;
+        public void Tiles_Set_MarksAsDirty() {
+            var packet = new SquareTilesPacket();
+            packet.Tiles = new NetworkTiles(1, 1);
+            packet.ShouldBeDirty();
+
+            packet.Tiles[0, 0] = new NetworkTile();
 
             packet.ShouldBeDirty();
         }
 
         [Fact]
-        public void SetNpcType_NullValue_ThrowsArgumentNullException() {
-            var packet = new PlayerReleaseNpcPacket();
-            Action action = () => packet.NpcType = null;
+        public void SetTiles_NullValue_ThrowsArgumentNullException() {
+            var packet = new SquareTilesPacket();
+            Action action = () => packet.Tiles = null;
 
             action.Should().Throw<ArgumentNullException>();
         }
 
-        public static readonly byte[] Bytes = {14, 0, 71, 0, 1, 0, 0, 100, 0, 0, 0, 1, 0, 0};
-        public static readonly byte[] InvalidNpcTypeBytes = {14, 0, 71, 0, 1, 0, 0, 100, 0, 0, 0, 255, 127, 0};
+        private static readonly byte[] Bytes = {17, 0, 20, 1, 0, 153, 16, 171, 1, 1, 0, 3, 0, 72, 0, 0, 0};
 
         [Fact]
         public void ReadFromStream_IsCorrect() {
             using (var stream = new MemoryStream(Bytes)) {
-                var packet = (PlayerReleaseNpcPacket)Packet.ReadFromStream(stream, PacketContext.Server);
+                var packet = (SquareTilesPacket)Packet.ReadFromStream(stream, PacketContext.Server);
 
-                packet.NpcPosition.Should().Be(new Vector2(256, 100));
-                packet.NpcType.Should().Be(NpcType.BlueSlime);
-                packet.NpcStyle.Should().Be(0);
-            }
-        }
-
-        [Fact]
-        public void ReadFromStream_InvalidNpcType_ThrowsPacketException() {
-            using (var stream = new MemoryStream(InvalidNpcTypeBytes)) {
-                Func<Packet> func = () => Packet.ReadFromStream(stream, PacketContext.Server);
-
-                func.Should().Throw<PacketException>();
+                packet.SquareSize.Should().Be(1);
+                packet.TileX.Should().Be(4249);
+                packet.TileY.Should().Be(427);
+                packet.Tiles.Width.Should().Be(1);
+                packet.Tiles.Height.Should().Be(1);
             }
         }
 

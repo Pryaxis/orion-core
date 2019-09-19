@@ -23,6 +23,7 @@ namespace Orion.Networking.Packets.World {
     /// Packet sent to show a tree growing effect.
     /// </summary>
     public sealed class TreeGrowingEffectPacket : Packet {
+        private byte _data;
         private short _treeX;
         private short _treeY;
         private byte _treeHeight;
@@ -80,7 +81,8 @@ namespace Orion.Networking.Packets.World {
         public override string ToString() => $"{Type}[({TreeX}, {TreeY}), ...]";
 
         private protected override void ReadFromReader(BinaryReader reader, PacketContext context) {
-            reader.ReadByte();
+            // This byte is basically useless, but we'll keep track of it anyways.
+            _data = reader.ReadByte();
             TreeX = reader.ReadInt16();
             TreeY = reader.ReadInt16();
             TreeHeight = reader.ReadByte();
@@ -88,7 +90,7 @@ namespace Orion.Networking.Packets.World {
         }
 
         private protected override void WriteToWriter(BinaryWriter writer, PacketContext context) {
-            writer.Write((byte)1);
+            writer.Write(_data);
             writer.Write(TreeX);
             writer.Write(TreeY);
             writer.Write(TreeHeight);

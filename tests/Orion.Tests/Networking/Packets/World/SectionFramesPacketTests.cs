@@ -21,6 +21,13 @@ using Xunit;
 
 namespace Orion.Networking.Packets.World {
     public class SectionFramesPacketTests {
+        [Fact]
+        public void SetDefaultableProperties_MarkAsDirty() {
+            var packet = new SectionFramesPacket();
+
+            packet.ShouldHaveDefaultablePropertiesMarkAsDirty();
+        }
+
         private static readonly byte[] Bytes = {11, 0, 11, 18, 0, 1, 0, 22, 0, 3, 0};
 
         [Fact]

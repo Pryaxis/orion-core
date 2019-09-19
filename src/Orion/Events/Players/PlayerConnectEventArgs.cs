@@ -30,7 +30,7 @@ namespace Orion.Events.Players {
         public bool IsCanceled { get; set; }
 
         /// <summary>
-        /// Gets the player's version string.
+        /// Gets or sets the player's version string.
         /// </summary>
         /// <exception cref="ArgumentNullException"><paramref name="value"/> is <c>null</c>.</exception>
         public string PlayerVersionString {

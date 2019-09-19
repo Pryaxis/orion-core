@@ -15,6 +15,7 @@
 // You should have received a copy of the GNU General Public License
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
+using System;
 using System.IO;
 using FluentAssertions;
 using Orion.World.Tiles;
@@ -22,7 +23,32 @@ using Xunit;
 
 namespace Orion.Networking.Packets.World {
     public class TileLiquidPacketTests {
+        [Fact]
+        public void SetDefaultableProperties_MarkAsDirty() {
+            var packet = new TileLiquidPacket();
+
+            packet.ShouldHaveDefaultablePropertiesMarkAsDirty();
+        }
+
+        [Fact]
+        public void SetLiquidType_MarksAsDirty() {
+            var packet = new TileLiquidPacket();
+
+            packet.LiquidType = LiquidType.Water;
+
+            packet.ShouldBeDirty();
+        }
+
+        [Fact]
+        public void SetLiquidType_NullValue_ThrowsArgumentNullException() {
+            var packet = new TileLiquidPacket();
+            Action action = () => packet.LiquidType = null;
+
+            action.Should().Throw<ArgumentNullException>();
+        }
+
         public static readonly byte[] Bytes = {9, 0, 48, 0, 1, 100, 0, 255, 0};
+        public static readonly byte[] InvalidLiquidTypeBytes = {9, 0, 48, 0, 1, 100, 0, 255, 255};
 
         [Fact]
         public void ReadFromStream_IsCorrect() {
@@ -33,6 +59,15 @@ namespace Orion.Networking.Packets.World {
                 packet.TileY.Should().Be(100);
                 packet.LiquidAmount.Should().Be(255);
                 packet.LiquidType.Should().Be(LiquidType.Water);
+            }
+        }
+
+        [Fact]
+        public void ReadFromStream_InvalidLiquidType_ThrowsPacketException() {
+            using (var stream = new MemoryStream(InvalidLiquidTypeBytes)) {
+                Func<Packet> func = () => Packet.ReadFromStream(stream, PacketContext.Server);
+
+                func.Should().Throw<PacketException>();
             }
         }
 

@@ -32,11 +32,10 @@ using OTAPI.Tile;
 
 namespace Orion.Networking.Packets.World {
     /// <summary>
-    /// Packet sent from the server to the client to provide a section of the world. This is sent in response to a
+    /// Packet sent from the server to the client to set a section of the world. This is sent in response to a
     /// <see cref="RequestSectionPacket"/>.
     /// </summary>
     public sealed class SectionPacket : Packet {
-        private readonly IList<NetworkTileEntity> _sectionTileEntities = new List<NetworkTileEntity>();
         private bool _isSectionCompressed;
         private int _startTileX;
         private int _startTileY;
@@ -45,10 +44,10 @@ namespace Orion.Networking.Packets.World {
         private NetworkTiles _sectionTiles = new NetworkTiles(0, 0);
 
         /// <inheritdoc />
-        public override PacketType Type => PacketType.Section;
+        public override bool IsDirty => base.IsDirty || SectionTiles.IsDirty || SectionTileEntities.IsDirty;
 
         /// <inheritdoc />
-        public override bool IsDirty => base.IsDirty || SectionTiles.IsDirty || SectionTileEntities.IsDirty;
+        public override PacketType Type => PacketType.Section;
 
         /// <summary>
         /// Gets or sets a value indicating whether the section is compressed.
@@ -120,14 +119,7 @@ namespace Orion.Networking.Packets.World {
         /// <summary>
         /// Gets the section's tile entities.
         /// </summary>
-        public TileEntities SectionTileEntities { get; }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="SectionPacket"/> class.
-        /// </summary>
-        public SectionPacket() {
-            SectionTileEntities = new TileEntities(_sectionTileEntities);
-        }
+        public TileEntities SectionTileEntities { get; } = new TileEntities();
 
         /// <inheritdoc />
         public override void Clean() {
@@ -444,7 +436,7 @@ namespace Orion.Networking.Packets.World {
         /// Represents the tile entities in a <see cref="SectionPacket"/>.
         /// </summary>
         public class TileEntities : IList<NetworkTileEntity>, IDirtiable {
-            private readonly IList<NetworkTileEntity> _tileEntities;
+            private readonly IList<NetworkTileEntity> _tileEntities = new List<NetworkTileEntity>();
             private bool _isDirty;
 
             /// <inheritdoc />
@@ -465,17 +457,17 @@ namespace Orion.Networking.Packets.World {
             /// <inheritdoc />
             public bool IsDirty => _isDirty || _tileEntities.Any(t => t.IsDirty);
 
-            internal TileEntities(IList<NetworkTileEntity> tileEntities) {
-                _tileEntities = tileEntities;
-            }
-
             /// <inheritdoc />
             public IEnumerator<NetworkTileEntity> GetEnumerator() => _tileEntities.GetEnumerator();
 
+            [ExcludeFromCodeCoverage]
             IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
 
             /// <inheritdoc />
+            /// <exception cref="ArgumentNullException"><paramref name="item"/> is <c>null</c>.</exception>
             public void Add(NetworkTileEntity item) {
+                if (item == null) throw new ArgumentNullException(nameof(item));
+
                 _tileEntities.Add(item);
                 _isDirty = true;
             }
@@ -504,7 +496,10 @@ namespace Orion.Networking.Packets.World {
             public int IndexOf(NetworkTileEntity item) => _tileEntities.IndexOf(item);
 
             /// <inheritdoc />
+            /// <exception cref="ArgumentNullException"><paramref name="item"/> is <c>null</c>.</exception>
             public void Insert(int index, NetworkTileEntity item) {
+                if (item == null) throw new ArgumentNullException(nameof(item));
+
                 _tileEntities.Insert(index, item);
                 _isDirty = true;
             }

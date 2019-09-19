@@ -15,6 +15,7 @@
 // You should have received a copy of the GNU General Public License
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
+using System;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using Orion.World.Tiles;
@@ -68,10 +69,11 @@ namespace Orion.Networking.Packets.World {
         /// <summary>
         /// Gets or sets the liquid type.
         /// </summary>
+        /// <exception cref="ArgumentNullException"><paramref name="value"/> is <c>null</c>.</exception>
         public LiquidType LiquidType {
             get => _liquidType;
             set {
-                _liquidType = value;
+                _liquidType = value ?? throw new ArgumentNullException(nameof(value));
                 _isDirty = true;
             }
         }

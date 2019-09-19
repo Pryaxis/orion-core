@@ -112,7 +112,7 @@ namespace Orion.Networking.Packets.World {
         }
 
         /// <summary>
-        /// Represents the modification type in a <see cref="TileModificationPacket"/>.
+        /// Represents a modification type in a <see cref="TileModificationPacket"/>.
         /// </summary>
         public class ModificationType {
 #pragma warning disable 1591
@@ -138,8 +138,10 @@ namespace Orion.Networking.Packets.World {
             public static ModificationType ActuateBlock = new ModificationType(19);
 #pragma warning restore 1591
 
-            private static readonly ModificationType[] Types = new ModificationType[20];
-            private static readonly string[] Names = new string[20];
+            private const int ArrayOffset = 0;
+            private const int ArraySize = ArrayOffset + 20;
+            private static readonly ModificationType[] Modifications = new ModificationType[ArraySize];
+            private static readonly string[] Names = new string[ArraySize];
 
             /// <summary>
             /// Gets the modification type's ID.
@@ -149,8 +151,8 @@ namespace Orion.Networking.Packets.World {
             static ModificationType() {
                 foreach (var field in typeof(ModificationType).GetFields(BindingFlags.Public | BindingFlags.Static)) {
                     var modificationType = (ModificationType)field.GetValue(null);
-                    Types[modificationType.Id] = modificationType;
-                    Names[modificationType.Id] = field.Name;
+                    Modifications[ArrayOffset + modificationType.Id] = modificationType;
+                    Names[ArrayOffset + modificationType.Id] = field.Name;
                 }
             }
 
@@ -163,10 +165,12 @@ namespace Orion.Networking.Packets.World {
             /// </summary>
             /// <param name="id">The ID.</param>
             /// <returns>The modification type, or <c>null</c> if none exists.</returns>
-            public static ModificationType FromId(byte id) => id < Types.Length ? Types[id] : null;
+            public static ModificationType FromId(byte id) =>
+                ArrayOffset + id < ArraySize ? Modifications[ArrayOffset + id] : null;
 
             /// <inheritdoc />
-            public override string ToString() => Names[Id];
+            [ExcludeFromCodeCoverage]
+            public override string ToString() => Names[ArrayOffset + Id];
         }
     }
 }

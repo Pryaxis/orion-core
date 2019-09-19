@@ -28,7 +28,7 @@ namespace Orion.Networking.Tiles {
         private bool _isDirty;
 
         /// <inheritdoc />
-        public bool IsDirty => _isDirty || _tiles.Cast<NetworkTile>().Any(t => t.IsDirty);
+        public bool IsDirty => _isDirty || _tiles.Cast<NetworkTile>().Any(t => t?.IsDirty == true);
 
         /// <summary>
         /// Gets or sets the tile at the given coordinates.
@@ -74,7 +74,7 @@ namespace Orion.Networking.Tiles {
         public void Clean() {
             _isDirty = false;
             foreach (var tile in _tiles.Cast<NetworkTile>()) {
-                tile.Clean();
+                tile?.Clean();
             }
         }
     }

@@ -84,7 +84,7 @@ namespace Orion.Networking.Packets.World {
         }
 
         /// <summary>
-        /// Represents the object type in an <see cref="UnlockObjectPacket"/>.
+        /// Represents an object type in an <see cref="UnlockObjectPacket"/>.
         /// </summary>
         public sealed class ObjectType {
 #pragma warning disable 1591
@@ -92,19 +92,21 @@ namespace Orion.Networking.Packets.World {
             public static readonly ObjectType Door = new ObjectType(2);
 #pragma warning restore 1591
 
-            private static readonly ObjectType[] Types = new ObjectType[3];
-            private static readonly string[] Names = new string[3];
+            private const int ArrayOffset = 0;
+            private const int ArraySize = ArrayOffset + 3;
+            private static readonly ObjectType[] Objects = new ObjectType[ArraySize];
+            private static readonly string[] Names = new string[ArraySize];
 
             /// <summary>
-            /// Gets the door action's ID.
+            /// Gets the object type's ID.
             /// </summary>
             public byte Id { get; }
 
             static ObjectType() {
                 foreach (var field in typeof(ObjectType).GetFields(BindingFlags.Public | BindingFlags.Static)) {
-                    var doorAction = (ObjectType)field.GetValue(null);
-                    Types[doorAction.Id] = doorAction;
-                    Names[doorAction.Id] = field.Name;
+                    var objectType = (ObjectType)field.GetValue(null);
+                    Objects[ArrayOffset + objectType.Id] = objectType;
+                    Names[ArrayOffset + objectType.Id] = field.Name;
                 }
             }
 
@@ -117,10 +119,10 @@ namespace Orion.Networking.Packets.World {
             /// </summary>
             /// <param name="id">The ID.</param>
             /// <returns>The object type, or <c>null</c> if none exists.</returns>
-            public static ObjectType FromId(byte id) => id < Types.Length ? Types[id] : null;
+            public static ObjectType FromId(byte id) => ArrayOffset + id < ArraySize ? Objects[ArrayOffset + id] : null;
 
             /// <inheritdoc />
-            public override string ToString() => Names[Id];
+            public override string ToString() => Names[ArrayOffset + Id];
         }
     }
 }
