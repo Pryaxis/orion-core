@@ -22,6 +22,13 @@ using Xunit;
 
 namespace Orion.Networking.Packets.Players {
     public class TeleportPlayerPortalPacketTests {
+        [Fact]
+        public void SetDefaultableProperties_MarkAsDirty() {
+            var packet = new TeleportPlayerPortalPacket();
+
+            packet.ShouldHaveDefaultablePropertiesMarkAsDirty();
+        }
+
         public static readonly byte[] Bytes = {22, 0, 96, 100, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
 
         [Fact]

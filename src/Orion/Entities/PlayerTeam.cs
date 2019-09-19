@@ -15,39 +15,66 @@
 // You should have received a copy of the GNU General Public License
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
+using System.Diagnostics.CodeAnalysis;
+using System.Reflection;
+using Microsoft.Xna.Framework;
+
 namespace Orion.Entities {
     /// <summary>
-    /// Specifies a player's team.
+    /// Represents a player team.
     /// </summary>
-    public enum PlayerTeam : byte {
-        /// <summary>
-        /// Indicates no team.
-        /// </summary>
-        None = 0,
+    public sealed class PlayerTeam {
+#pragma warning disable 1591
+        public static readonly PlayerTeam None = new PlayerTeam(0);
+        public static readonly PlayerTeam Red = new PlayerTeam(1);
+        public static readonly PlayerTeam Green = new PlayerTeam(2);
+        public static readonly PlayerTeam Blue = new PlayerTeam(3);
+        public static readonly PlayerTeam Yellow = new PlayerTeam(4);
+        public static readonly PlayerTeam Pink = new PlayerTeam(5);
+#pragma warning restore 1591
+
+        private const int ArrayOffset = 0;
+        private const int ArraySize = ArrayOffset + 6;
+        private static readonly PlayerTeam[] Teams = new PlayerTeam[ArraySize];
+        private static readonly string[] Names = new string[ArraySize];
+
+        private static readonly Color[] Colors = {
+            Color.White, new Color(218, 59, 59), new Color(59, 218, 85), new Color(59, 149, 218),
+            new Color(242, 221, 100), new Color(224, 100, 242)
+        };
 
         /// <summary>
-        /// Indicates the red team.
+        /// Gets the player team's ID.
         /// </summary>
-        Red = 1,
+        public byte Id { get; }
 
         /// <summary>
-        /// Indicates the green team.
+        /// Gets the player team's color.
         /// </summary>
-        Green = 2,
+        public Color Color => Colors[ArrayOffset + Id];
+
+        static PlayerTeam() {
+            foreach (var field in typeof(PlayerTeam).GetFields(BindingFlags.Public | BindingFlags.Static)) {
+                var playerTeam = (PlayerTeam)field.GetValue(null);
+                Teams[ArrayOffset + playerTeam.Id] = playerTeam;
+                Names[ArrayOffset + playerTeam.Id] = field.Name;
+            }
+        }
+
+        private PlayerTeam(byte id) {
+            Id = id;
+        }
 
         /// <summary>
-        /// Indicates the blue team.
+        /// Returns a player team converted from the given ID.
         /// </summary>
-        Blue = 3,
+        /// <param name="id">The ID.</param>
+        /// <returns>The player team, or <c>null</c> if none exists.</returns>
+        public static PlayerTeam FromId(byte id) =>
+            ArrayOffset + (uint)id < ArraySize ? Teams[ArrayOffset + id] : null;
 
-        /// <summary>
-        /// Indicates the yellow team.
-        /// </summary>
-        Yellow = 4,
-
-        /// <summary>
-        /// Indicates the pink team.
-        /// </summary>
-        Pink = 5
+        /// <inheritdoc />
+        [ExcludeFromCodeCoverage]
+        public override string ToString() => Names[ArrayOffset + Id];
     }
 }

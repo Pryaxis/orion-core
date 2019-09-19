@@ -21,6 +21,13 @@ using Xunit;
 
 namespace Orion.Networking.Packets.Players {
     public class PlayerZonesPacketTests {
+        [Fact]
+        public void SetDefaultableProperties_MarkAsDirty() {
+            var packet = new PlayerZonesPacket();
+
+            packet.ShouldHaveDefaultablePropertiesMarkAsDirty();
+        }
+
         private static readonly byte[] Bytes = {8, 0, 36, 1, 0, 0, 0, 0};
 
         [Fact]

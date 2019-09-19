@@ -21,6 +21,13 @@ using Xunit;
 
 namespace Orion.Networking.Packets.Players {
     public class PlayerMinionNpcPacketTests {
+        [Fact]
+        public void SetDefaultableProperties_MarkAsDirty() {
+            var packet = new PlayerMinionNpcPacket();
+
+            packet.ShouldHaveDefaultablePropertiesMarkAsDirty();
+        }
+
         public static readonly byte[] Bytes = {6, 0, 115, 1, 100, 0};
 
         [Fact]

@@ -49,7 +49,7 @@ namespace Orion.Networking.Tiles {
         public void SetWallType_MarksAsDirty() {
             var tile = new NetworkTile();
             tile.WallType = WallType.Stone;
-            
+
             tile.ShouldBeDirty();
         }
 

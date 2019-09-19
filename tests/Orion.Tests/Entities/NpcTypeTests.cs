@@ -17,22 +17,15 @@
 
 using FluentAssertions;
 using Xunit;
-using Xunit.Abstractions;
 
 namespace Orion.Entities {
     public class NpcTypeTests {
-        private readonly ITestOutputHelper _output;
-
-        public NpcTypeTests(ITestOutputHelper output) {
-            _output = output;
-        }
-
         [Fact]
         public void FromId_IsCorrect() {
             for (short i = -65; i < Terraria.Main.maxNPCTypes; ++i) {
                 NpcType.FromId(i)?.Id.Should().Be(i);
             }
-            
+
             NpcType.FromId(-66).Should().BeNull();
             NpcType.FromId(Terraria.Main.maxNPCTypes).Should().BeNull();
         }

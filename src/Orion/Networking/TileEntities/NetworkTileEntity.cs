@@ -78,7 +78,8 @@ namespace Orion.Networking.TileEntities {
         // Prevent outside inheritance.
         private protected NetworkTileEntity() { }
 
-        internal static NetworkTileEntity FromReader(BinaryReader reader, bool shouldIncludeIndex, TileEntityType typeHint = null) {
+        internal static NetworkTileEntity FromReader(BinaryReader reader, bool shouldIncludeIndex,
+                                                     TileEntityType typeHint = null) {
             // The type hint allows us to reuse code for NetworkChests and NetworkSigns.
             var tileEntityType = typeHint ?? TileEntityType.FromId(reader.ReadByte()) ??
                                  throw new PacketException("Tile entity type is invalid.");

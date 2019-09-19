@@ -22,25 +22,50 @@ using Orion.Entities;
 using Xunit;
 
 namespace Orion.Networking.Packets.Players {
-    public class ConsumeItemsPacketTests {
+    public class ConsumePlayerItemsPacketTests {
+        [Fact]
+        public void SetDefaultableProperties_MarkAsDirty() {
+            var packet = new ConsumePlayerItemsPacket();
+
+            packet.ShouldHaveDefaultablePropertiesMarkAsDirty();
+        }
+
+        [Fact]
+        public void SetItemType_MarksAsDirty() {
+            var packet = new ConsumePlayerItemsPacket();
+            packet.ItemType = ItemType.Sdmg;
+
+            packet.ShouldBeDirty();
+        }
+
         [Fact]
         public void SetItemType_NullValue_ThrowsArgumentNullException() {
-            var packet = new ConsumeItemsPacket();
+            var packet = new ConsumePlayerItemsPacket();
             Action action = () => packet.ItemType = null;
 
             action.Should().Throw<ArgumentNullException>();
         }
 
         private static readonly byte[] Bytes = {8, 0, 110, 179, 13, 1, 0, 0};
+        private static readonly byte[] ItemTypeInvalidBytes = {8, 0, 110, 255, 127, 1, 0, 0};
 
         [Fact]
         public void ReadFromStream_IsCorrect() {
             using (var stream = new MemoryStream(Bytes)) {
-                var packet = (ConsumeItemsPacket)Packet.ReadFromStream(stream, PacketContext.Server);
+                var packet = (ConsumePlayerItemsPacket)Packet.ReadFromStream(stream, PacketContext.Server);
 
                 packet.PlayerIndex.Should().Be(0);
                 packet.ItemStackSize.Should().Be(1);
                 packet.ItemType.Should().BeSameAs(ItemType.CopperShortsword);
+            }
+        }
+
+        [Fact]
+        public void ReadFromStream_InvalidItemType_ThrowsPacketException() {
+            using (var stream = new MemoryStream(ItemTypeInvalidBytes)) {
+                Func<Packet> func = () => Packet.ReadFromStream(stream, PacketContext.Server);
+
+                func.Should().Throw<PacketException>();
             }
         }
 

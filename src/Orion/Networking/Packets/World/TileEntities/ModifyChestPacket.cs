@@ -92,7 +92,8 @@ namespace Orion.Networking.Packets.World.TileEntities {
 
         /// <inheritdoc />
         [ExcludeFromCodeCoverage]
-        public override string ToString() => $"{Type}[{ChestModificationType}, #={ChestIndex} @ ({ChestX}, {ChestY}), ...]";
+        public override string ToString() =>
+            $"{Type}[{ChestModificationType}, #={ChestIndex} @ ({ChestX}, {ChestY}), ...]";
 
         private protected override void ReadFromReader(BinaryReader reader, PacketContext context) {
             ChestModificationType = ModificationType.FromId(reader.ReadByte()) ??

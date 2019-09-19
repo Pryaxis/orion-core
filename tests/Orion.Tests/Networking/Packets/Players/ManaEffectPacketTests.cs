@@ -21,6 +21,13 @@ using Xunit;
 
 namespace Orion.Networking.Packets.Players {
     public class ManaEffectPacketTests {
+        [Fact]
+        public void SetDefaultableProperties_MarkAsDirty() {
+            var packet = new ManaEffectPacket();
+
+            packet.ShouldHaveDefaultablePropertiesMarkAsDirty();
+        }
+
         public static readonly byte[] Bytes = {6, 0, 43, 0, 100, 0};
 
         [Fact]

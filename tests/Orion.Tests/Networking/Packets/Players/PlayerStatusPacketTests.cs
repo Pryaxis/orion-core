@@ -21,7 +21,23 @@ using FluentAssertions;
 using Xunit;
 
 namespace Orion.Networking.Packets.Players {
-    public class ClientStatusPacketTests {
+    public class PlayerStatusPacketTests {
+        [Fact]
+        public void SetDefaultableProperties_MarkAsDirty() {
+            var packet = new PlayerStatusPacket();
+
+            packet.ShouldHaveDefaultablePropertiesMarkAsDirty();
+        }
+
+        [Fact]
+        public void SetPlayerStatusText_MarksAsDirty() {
+            var packet = new PlayerStatusPacket();
+
+            packet.PlayerStatusText = Terraria.Localization.NetworkText.Empty;
+
+            packet.ShouldBeDirty();
+        }
+
         [Fact]
         public void SetPlayerStatusText_NullValue_ThrowsArgumentNullException() {
             var packet = new PlayerStatusPacket();

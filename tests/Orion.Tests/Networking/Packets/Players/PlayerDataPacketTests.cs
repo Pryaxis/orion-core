@@ -25,9 +25,42 @@ using Xunit;
 namespace Orion.Networking.Packets.Players {
     public class PlayerDataPacketTests {
         [Fact]
-        public void SetName_NullValue_ThrowsArgumentNullException() {
+        public void SetDefaultableProperties_MarkAsDirty() {
+            var packet = new PlayerDataPacket();
+
+            packet.ShouldHaveDefaultablePropertiesMarkAsDirty();
+        }
+
+        [Fact]
+        public void SetPlayerName_MarksAsDirty() {
+            var packet = new PlayerDataPacket();
+
+            packet.PlayerName = "";
+
+            packet.ShouldBeDirty();
+        }
+
+        [Fact]
+        public void SetPlayerName_NullValue_ThrowsArgumentNullException() {
             var packet = new PlayerDataPacket();
             Action action = () => packet.PlayerName = null;
+
+            action.Should().Throw<ArgumentNullException>();
+        }
+
+        [Fact]
+        public void SetPlayerDifficulty_MarksAsDirty() {
+            var packet = new PlayerDataPacket();
+
+            packet.PlayerDifficulty = PlayerDifficulty.Softcore;
+
+            packet.ShouldBeDirty();
+        }
+
+        [Fact]
+        public void SetPlayerDifficulty_NullValue_ThrowsArgumentNullException() {
+            var packet = new PlayerDataPacket();
+            Action action = () => packet.PlayerDifficulty = null;
 
             action.Should().Throw<ArgumentNullException>();
         }
@@ -35,6 +68,11 @@ namespace Orion.Networking.Packets.Players {
         public static readonly byte[] Bytes = {
             34, 0, 4, 0, 2, 50, 1, 102, 0, 0, 0, 0, 26, 131, 54, 158, 74, 51, 47, 39, 88, 184, 58, 43, 69, 8, 97, 162,
             167, 255, 212, 159, 76, 0
+        };
+
+        public static readonly byte[] InvalidPlayerDifficultyBytes = {
+            34, 0, 4, 0, 2, 50, 1, 102, 0, 0, 0, 0, 26, 131, 54, 158, 74, 51, 47, 39, 88, 184, 58, 43, 69, 8, 97, 162,
+            167, 255, 212, 159, 76, 255
         };
 
         [Fact]
@@ -56,6 +94,15 @@ namespace Orion.Networking.Packets.Players {
                 packet.PlayerPantsColor.Should().Be(new Color(162, 167, 255));
                 packet.PlayerShoeColor.Should().Be(new Color(212, 159, 76));
                 packet.PlayerDifficulty.Should().Be(PlayerDifficulty.Softcore);
+            }
+        }
+
+        [Fact]
+        public void ReadFromStream_InvalidPlayerDifficulty_ThrowsPacketException() {
+            using (var stream = new MemoryStream(InvalidPlayerDifficultyBytes)) {
+                Func<Packet> func = () => Packet.ReadFromStream(stream, PacketContext.Server);
+
+                func.Should().Throw<PacketException>();
             }
         }
 

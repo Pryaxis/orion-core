@@ -26,13 +26,13 @@ namespace Orion.Networking.Packets.Players {
     /// Packet sent from the server to the client to consume a player's items. This is sent in response to a
     /// <see cref="MassWireOperationPacket"/>.
     /// </summary>
-    public sealed class ConsumeItemsPacket : Packet {
+    public sealed class ConsumePlayerItemsPacket : Packet {
         private ItemType _itemType = ItemType.None;
         private short _itemStackSize;
         private byte _playerIndex;
 
         /// <inheritdoc />
-        public override PacketType Type => PacketType.ConsumeItems;
+        public override PacketType Type => PacketType.ConsumePlayerItems;
 
         /// <summary>
         /// Gets or sets the item's type.

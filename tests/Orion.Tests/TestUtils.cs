@@ -16,11 +16,6 @@
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
 using System;
-using System.IO;
-using System.Reflection;
-using FluentAssertions;
-using Orion.Events;
-using Orion.Networking.Packets;
 using Xunit;
 
 namespace Orion {

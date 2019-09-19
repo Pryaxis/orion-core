@@ -21,6 +21,13 @@ using Xunit;
 
 namespace Orion.Networking.Packets.Players {
     public class HealPlayerPacketTests {
+        [Fact]
+        public void SetDefaultableProperties_MarkAsDirty() {
+            var packet = new HealPlayerPacket();
+
+            packet.ShouldHaveDefaultablePropertiesMarkAsDirty();
+        }
+
         public static readonly byte[] Bytes = {6, 0, 66, 0, 100, 0};
 
         [Fact]

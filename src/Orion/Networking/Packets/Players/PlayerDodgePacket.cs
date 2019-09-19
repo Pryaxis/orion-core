@@ -15,8 +15,10 @@
 // You should have received a copy of the GNU General Public License
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
+using System;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
+using System.Reflection;
 
 namespace Orion.Networking.Packets.Players {
     /// <summary>
@@ -40,10 +42,11 @@ namespace Orion.Networking.Packets.Players {
         /// <summary>
         /// Gets or sets the player's dodge type.
         /// </summary>
+        /// <exception cref="ArgumentNullException"><paramref name="value"/> is <c>null</c>.</exception>
         public DodgeType PlayerDodgeType {
             get => _playerDodgeType;
             set {
-                _playerDodgeType = value;
+                _playerDodgeType = value ?? throw new ArgumentNullException(nameof(value));
                 _isDirty = true;
             }
         }
@@ -67,7 +70,7 @@ namespace Orion.Networking.Packets.Players {
         }
 
         /// <summary>
-        /// Represents the dodge type of a <see cref="PlayerDodgePacket"/>.
+        /// Represents a dodge type in a <see cref="PlayerDodgePacket"/>.
         /// </summary>
         public sealed class DodgeType {
 #pragma warning disable 1591
@@ -75,12 +78,23 @@ namespace Orion.Networking.Packets.Players {
             public static readonly DodgeType ShadowDodge = new DodgeType(2);
 #pragma warning restore 1591
 
-            private static readonly DodgeType[] Types = {null, NinjaDodge, ShadowDodge};
+            private const int ArrayOffset = 0;
+            private const int ArraySize = ArrayOffset + 3;
+            private static readonly DodgeType[] Dodges = new DodgeType[ArraySize];
+            private static readonly string[] Names = new string[ArraySize];
 
             /// <summary>
             /// Gets the dodge type's ID.
             /// </summary>
             public byte Id { get; }
+
+            static DodgeType() {
+                foreach (var field in typeof(DodgeType).GetFields(BindingFlags.Public | BindingFlags.Static)) {
+                    var dodgeType = (DodgeType)field.GetValue(null);
+                    Dodges[ArrayOffset + dodgeType.Id] = dodgeType;
+                    Names[ArrayOffset + dodgeType.Id] = field.Name;
+                }
+            }
 
             private DodgeType(byte id) {
                 Id = id;
@@ -91,7 +105,11 @@ namespace Orion.Networking.Packets.Players {
             /// </summary>
             /// <param name="id">The ID.</param>
             /// <returns>The dodge type, or <c>null</c> if none exists.</returns>
-            public static DodgeType FromId(byte id) => id < Types.Length ? Types[id] : null;
+            public static DodgeType FromId(byte id) => ArrayOffset + id < ArraySize ? Dodges[ArrayOffset + id] : null;
+
+            /// <inheritdoc />
+            [ExcludeFromCodeCoverage]
+            public override string ToString() => Names[ArrayOffset + Id];
         }
     }
 }

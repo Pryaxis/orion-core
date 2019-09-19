@@ -23,6 +23,22 @@ using Xunit;
 namespace Orion.Networking.Packets.Players {
     public class KillPlayerPacketTests {
         [Fact]
+        public void SetDefaultableProperties_MarkAsDirty() {
+            var packet = new KillPlayerPacket();
+
+            packet.ShouldHaveDefaultablePropertiesMarkAsDirty();
+        }
+
+        [Fact]
+        public void SetPlayerDeathReason_MarksAsDirty() {
+            var packet = new KillPlayerPacket();
+
+            packet.PlayerDeathReason = Terraria.DataStructures.PlayerDeathReason.ByCustomReason("test");
+
+            packet.ShouldBeDirty();
+        }
+
+        [Fact]
         public void SetPlayerDeathReason_NullValue_ThrowsArgumentNullException() {
             var packet = new KillPlayerPacket();
             Action action = () => packet.PlayerDeathReason = null;

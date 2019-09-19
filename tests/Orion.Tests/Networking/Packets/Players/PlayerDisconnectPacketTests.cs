@@ -23,6 +23,15 @@ using Xunit;
 namespace Orion.Networking.Packets.Players {
     public class PlayerDisconnectPacketTests {
         [Fact]
+        public void SetPlayerDisconnectReason_MarksAsDirty() {
+            var packet = new PlayerDisconnectPacket();
+
+            packet.PlayerDisconnectReason = Terraria.Localization.NetworkText.Empty;
+
+            packet.ShouldBeDirty();
+        }
+
+        [Fact]
         public void SetPlayerDisconnectReason_NullValue_ThrowsArgumentNullException() {
             var packet = new PlayerDisconnectPacket();
             Action action = () => packet.PlayerDisconnectReason = null;

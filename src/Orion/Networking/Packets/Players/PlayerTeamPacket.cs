@@ -15,6 +15,7 @@
 // You should have received a copy of the GNU General Public License
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
+using System;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using Orion.Entities;
@@ -44,10 +45,11 @@ namespace Orion.Networking.Packets.Players {
         /// <summary>
         /// Gets or sets the player's team.
         /// </summary>
+        /// <exception cref="ArgumentNullException"><paramref name="value"/> is <c>null</c>.</exception>
         public PlayerTeam PlayerTeam {
             get => _playerTeam;
             set {
-                _playerTeam = value;
+                _playerTeam = value ?? throw new ArgumentNullException(nameof(value));
                 _isDirty = true;
             }
         }
@@ -58,12 +60,12 @@ namespace Orion.Networking.Packets.Players {
 
         private protected override void ReadFromReader(BinaryReader reader, PacketContext context) {
             PlayerIndex = reader.ReadByte();
-            PlayerTeam = (PlayerTeam)reader.ReadByte();
+            PlayerTeam = PlayerTeam.FromId(reader.ReadByte()) ?? throw new PacketException("Player team is invalid.");
         }
 
         private protected override void WriteToWriter(BinaryWriter writer, PacketContext context) {
             writer.Write(PlayerIndex);
-            writer.Write((byte)PlayerTeam);
+            writer.Write(PlayerTeam.Id);
         }
     }
 }

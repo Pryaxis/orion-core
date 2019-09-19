@@ -204,10 +204,11 @@ namespace Orion.Networking.Packets.Players {
         /// <summary>
         /// Gets or sets the player's difficulty.
         /// </summary>
+        /// <exception cref="ArgumentNullException"><paramref name="value"/> is <c>null</c>.</exception>
         public PlayerDifficulty PlayerDifficulty {
             get => _playerDifficulty;
             set {
-                _playerDifficulty = value;
+                _playerDifficulty = value ?? throw new ArgumentNullException(nameof(value));
                 _isDirty = true;
             }
         }
@@ -231,7 +232,8 @@ namespace Orion.Networking.Packets.Players {
             PlayerUndershirtColor = reader.ReadColor();
             PlayerPantsColor = reader.ReadColor();
             PlayerShoeColor = reader.ReadColor();
-            PlayerDifficulty = (PlayerDifficulty)reader.ReadByte();
+            PlayerDifficulty = PlayerDifficulty.FromId(reader.ReadByte()) ??
+                               throw new PacketException("Player difficulty is invalid.");
         }
 
         private protected override void WriteToWriter(BinaryWriter writer, PacketContext context) {
@@ -249,7 +251,7 @@ namespace Orion.Networking.Packets.Players {
             writer.Write(PlayerUndershirtColor);
             writer.Write(PlayerPantsColor);
             writer.Write(PlayerShoeColor);
-            writer.Write((byte)PlayerDifficulty);
+            writer.Write(PlayerDifficulty.Id);
         }
     }
 }

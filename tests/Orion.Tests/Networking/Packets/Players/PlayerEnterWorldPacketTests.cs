@@ -20,7 +20,7 @@ using FluentAssertions;
 using Xunit;
 
 namespace Orion.Networking.Packets.Players {
-    public class EnterWorldPacketTests {
+    public class PlayerEnterWorldPacketTests {
         public static readonly byte[] Bytes = {3, 0, 49};
 
         [Fact]

@@ -15,6 +15,7 @@
 // You should have received a copy of the GNU General Public License
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
@@ -28,11 +29,10 @@ namespace Orion.Networking.Packets.Players {
     /// Packet sent to set a player's buffs. Each buff will be set for one second.
     /// </summary>
     public sealed class PlayerBuffsPacket : Packet {
-        private readonly BuffType[] _playerBuffTypes = new BuffType[Terraria.Player.maxBuffs];
         private byte _playerIndex;
 
         /// <inheritdoc />
-        public override bool IsDirty => _isDirty || PlayerBuffTypes.IsDirty;
+        public override bool IsDirty => base.IsDirty || PlayerBuffTypes.IsDirty;
 
         /// <inheritdoc />
         public override PacketType Type => PacketType.PlayerBuffs;
@@ -51,18 +51,7 @@ namespace Orion.Networking.Packets.Players {
         /// <summary>
         /// Gets the player's buff types.
         /// </summary>
-        public BuffTypes PlayerBuffTypes { get; }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="PlayerBuffsPacket"/> class.
-        /// </summary>
-        public PlayerBuffsPacket() {
-            for (var i = 0; i < _playerBuffTypes.Length; ++i) {
-                _playerBuffTypes[i] = BuffType.None;
-            }
-
-            PlayerBuffTypes = new BuffTypes(_playerBuffTypes);
-        }
+        public BuffTypes PlayerBuffTypes { get; } = new BuffTypes();
 
         /// <inheritdoc />
         public override void Clean() {
@@ -76,7 +65,7 @@ namespace Orion.Networking.Packets.Players {
 
         private protected override void ReadFromReader(BinaryReader reader, PacketContext context) {
             PlayerIndex = reader.ReadByte();
-            for (var i = 0; i < _playerBuffTypes.Length; ++i) {
+            for (var i = 0; i < PlayerBuffTypes.Count; ++i) {
                 PlayerBuffTypes[i] = BuffType.FromId(reader.ReadByte()) ??
                                      throw new PacketException("Buff type is invalid.");
             }
@@ -93,13 +82,13 @@ namespace Orion.Networking.Packets.Players {
         /// Represents the buff types in a <see cref="PlayerBuffsPacket"/>.
         /// </summary>
         public sealed class BuffTypes : IArray<BuffType>, IDirtiable {
-            private readonly BuffType[] _buffTypes;
+            private readonly BuffType[] _buffTypes = new BuffType[Terraria.Player.maxBuffs];
 
             /// <inheritdoc cref="IArray{T}.this" />
             public BuffType this[int index] {
                 get => _buffTypes[index];
                 set {
-                    _buffTypes[index] = value;
+                    _buffTypes[index] = value ?? throw new ArgumentNullException(nameof(value));
                     IsDirty = true;
                 }
             }
@@ -110,13 +99,16 @@ namespace Orion.Networking.Packets.Players {
             /// <inheritdoc />
             public bool IsDirty { get; private set; }
 
-            internal BuffTypes(BuffType[] _buffTypes) {
-                this._buffTypes = _buffTypes;
+            internal BuffTypes() {
+                for (var i = 0; i < _buffTypes.Length; ++i) {
+                    _buffTypes[i] = BuffType.None;
+                }
             }
 
             /// <inheritdoc />
             public IEnumerator<BuffType> GetEnumerator() => ((IEnumerable<BuffType>)_buffTypes).GetEnumerator();
 
+            [ExcludeFromCodeCoverage]
             IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
 
             /// <inheritdoc />

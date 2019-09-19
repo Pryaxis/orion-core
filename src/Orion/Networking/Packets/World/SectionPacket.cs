@@ -26,7 +26,6 @@ using System.Text;
 using Orion.Events;
 using Orion.Networking.TileEntities;
 using Orion.Networking.Tiles;
-using Orion.World;
 using Orion.World.TileEntities;
 using Orion.World.Tiles;
 using OTAPI.Tile;
@@ -228,7 +227,7 @@ namespace Orion.Networking.Packets.World {
                 tile.HasRedWire = (header2 & 2) == 2;
                 tile.HasBlueWire = (header2 & 4) == 4;
                 tile.HasGreenWire = (header2 & 8) == 8;
-                
+
                 // TODO: there was a tileSolid check here, but it doesn't seem necessary?
                 var blockShape = (header2 & 112) >> 4;
                 if (blockShape != 0) {

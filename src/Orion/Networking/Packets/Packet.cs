@@ -78,7 +78,7 @@ namespace Orion.Networking.Packets {
         /// <inheritdoc />
         [ExcludeFromCodeCoverage]
         public override string ToString() => $"{Type}";
-        
+
         /// <inheritdoc />
         public virtual void Clean() {
             _isDirty = false;

@@ -63,9 +63,7 @@ namespace Orion.Networking.Packets.World.TileEntities {
             Bytes2.ShouldDeserializeAndSerializeSamePacket();
         }
 
-        private static readonly byte[] Bytes3 = {
-            18, 0, 86, 0, 0, 0, 0, 1, 1, 0, 1, 100, 0, 17, 6, 82, 1, 0
-        };
+        private static readonly byte[] Bytes3 = {18, 0, 86, 0, 0, 0, 0, 1, 1, 0, 1, 100, 0, 17, 6, 82, 1, 0};
 
         [Fact]
         public void ReadFromStream_ItemFrame_IsCorrect() {

@@ -30,7 +30,7 @@ namespace Orion.Networking.Packets.Players {
 
             packet.ShouldHaveDefaultablePropertiesMarkAsDirty();
         }
-        
+
         [Fact]
         public void SetNpcType_MarksAsDirty() {
             var packet = new PlayerReleaseNpcPacket();

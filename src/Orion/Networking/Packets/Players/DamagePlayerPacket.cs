@@ -125,7 +125,7 @@ namespace Orion.Networking.Packets.Players {
             PlayerDeathReason = reader.ReadPlayerDeathReason();
             Damage = reader.ReadInt16();
             HitDirection = reader.ReadByte() - 1;
-            Terraria.BitsByte flags = reader.ReadByte(); 
+            Terraria.BitsByte flags = reader.ReadByte();
             IsHitCritical = flags[0];
             IsHitFromPvp = flags[1];
             HitCooldown = reader.ReadSByte();

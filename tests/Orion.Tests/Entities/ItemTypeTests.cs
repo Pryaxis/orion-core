@@ -25,7 +25,7 @@ namespace Orion.Entities {
             for (short i = 0; i < Terraria.Main.maxItemTypes; ++i) {
                 ItemType.FromId(i)?.Id.Should().Be(i);
             }
-            
+
             ItemType.FromId(-1).Should().BeNull();
             ItemType.FromId(Terraria.Main.maxItemTypes).Should().BeNull();
         }

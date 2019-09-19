@@ -15,34 +15,26 @@
 // You should have received a copy of the GNU General Public License
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
-using System.IO;
 using FluentAssertions;
 using Xunit;
 
-namespace Orion.Networking.Packets.Players {
-    public class PlayerHarpNotePacketTests {
+namespace Orion.Entities {
+    public class PlayerDifficultyTests {
         [Fact]
-        public void SetDefaultableProperties_MarkAsDirty() {
-            var packet = new PlayerHarpNotePacket();
-
-            packet.ShouldHaveDefaultablePropertiesMarkAsDirty();
-        }
-
-        public static readonly byte[] Bytes = {8, 0, 58, 0, 205, 204, 128, 64};
-
-        [Fact]
-        public void ReadFromStream_IsCorrect() {
-            using (var stream = new MemoryStream(Bytes)) {
-                var packet = (PlayerHarpNotePacket)Packet.ReadFromStream(stream, PacketContext.Server);
-
-                packet.PlayerIndex.Should().Be(0);
-                packet.PlayerHarpNote.Should().Be(4.025f);
+        public void FromId_IsCorrect() {
+            for (byte i = 0; i < 3; ++i) {
+                PlayerDifficulty.FromId(i).Id.Should().Be(i);
             }
+
+            PlayerDifficulty.FromId(3).Should().BeNull();
         }
 
         [Fact]
-        public void WriteToStream_IsCorrect() {
-            Bytes.ShouldDeserializeAndSerializeSamePacket();
+        public void FromId_ReturnsSameInstance() {
+            var playerDifficulty = PlayerDifficulty.FromId(1);
+            var playerDifficulty2 = PlayerDifficulty.FromId(1);
+
+            playerDifficulty.Should().BeSameAs(playerDifficulty2);
         }
     }
 }

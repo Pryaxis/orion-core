@@ -15,13 +15,39 @@
 // You should have received a copy of the GNU General Public License
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
+using System;
 using System.IO;
 using FluentAssertions;
 using Xunit;
 
 namespace Orion.Networking.Packets.Players {
     public class PlayerDodgePacketTests {
+        [Fact]
+        public void SetDefaultableProperties_MarkAsDirty() {
+            var packet = new PlayerDodgePacket();
+
+            packet.ShouldHaveDefaultablePropertiesMarkAsDirty();
+        }
+
+        [Fact]
+        public void SetPlayerDodgeType_MarksAsDirty() {
+            var packet = new PlayerDodgePacket();
+
+            packet.PlayerDodgeType = PlayerDodgePacket.DodgeType.NinjaDodge;
+
+            packet.ShouldBeDirty();
+        }
+
+        [Fact]
+        public void SetPlayerDodgeType_NullValue_ThrowsArgumentNullException() {
+            var packet = new PlayerDodgePacket();
+            Action action = () => packet.PlayerDodgeType = null;
+
+            action.Should().Throw<ArgumentNullException>();
+        }
+
         public static readonly byte[] Bytes = {5, 0, 62, 0, 1};
+        public static readonly byte[] InvalidDodgeTypeBytes = {5, 0, 62, 0, 255};
 
         [Fact]
         public void ReadFromStream_IsCorrect() {
@@ -34,8 +60,35 @@ namespace Orion.Networking.Packets.Players {
         }
 
         [Fact]
+        public void ReadFromStream_InvalidDodgeType_ThrowsPacketException() {
+            using (var stream = new MemoryStream(InvalidDodgeTypeBytes)) {
+                Func<Packet> func = () => Packet.ReadFromStream(stream, PacketContext.Server);
+
+                func.Should().Throw<PacketException>();
+            }
+        }
+
+        [Fact]
         public void WriteToStream_IsCorrect() {
             Bytes.ShouldDeserializeAndSerializeSamePacket();
+        }
+
+        [Fact]
+        public void DodgeType_FromId_IsCorrect() {
+            for (byte i = 1; i < 3; ++i) {
+                PlayerDodgePacket.DodgeType.FromId(i).Id.Should().Be(i);
+            }
+
+            PlayerDodgePacket.DodgeType.FromId(0).Should().BeNull();
+            PlayerDodgePacket.DodgeType.FromId(3).Should().BeNull();
+        }
+
+        [Fact]
+        public void DodgeType_FromId_ReturnsSameInstance() {
+            var dodgeType = PlayerDodgePacket.DodgeType.FromId(1);
+            var dodgeType2 = PlayerDodgePacket.DodgeType.FromId(1);
+
+            dodgeType.Should().BeSameAs(dodgeType2);
         }
     }
 }
