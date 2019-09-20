@@ -55,8 +55,8 @@ namespace Orion.Networking.Packets {
         public static PacketType PlayerPvp = new PacketType(30);
         public static PacketType RequestChest = new PacketType(31);
         public static PacketType ChestContentsSlot = new PacketType(32);
-        public static PacketType PlayerChest = new PacketType(33);
-        public static PacketType ModifyChest = new PacketType(34);
+        public static PacketType ChestInfo = new PacketType(33);
+        public static PacketType ChestModification = new PacketType(34);
         public static PacketType HealEffect = new PacketType(35);
         public static PacketType PlayerZones = new PacketType(36);
         public static PacketType PlayerPasswordChallenge = new PacketType(37);
@@ -68,7 +68,7 @@ namespace Orion.Networking.Packets {
         public static PacketType ManaEffect = new PacketType(43);
         public static PacketType PlayerTeam = new PacketType(45);
         public static PacketType RequestSign = new PacketType(46);
-        public static PacketType SignText = new PacketType(47);
+        public static PacketType SignInfo = new PacketType(47);
         public static PacketType TileLiquid = new PacketType(48);
         public static PacketType PlayerEnterWorld = new PacketType(49);
         public static PacketType PlayerBuffs = new PacketType(50);
@@ -100,12 +100,12 @@ namespace Orion.Networking.Packets {
         public static PacketType TileAnimation = new PacketType(77);
         public static PacketType InvasionInfo = new PacketType(78);
         public static PacketType PlaceObject = new PacketType(79);
-        public static PacketType SyncPlayerChest = new PacketType(80);
+        public static PacketType PlayerChest = new PacketType(80);
         public static PacketType CombatNumber = new PacketType(81);
         public static PacketType Module = new PacketType(82);
         public static PacketType NpcKillCount = new PacketType(83);
         public static PacketType PlayerStealth = new PacketType(84);
-        public static PacketType MoveIntoChest = new PacketType(85);
+        public static PacketType QuickStackChest = new PacketType(85);
         public static PacketType TileEntityInfo = new PacketType(86);
         public static PacketType PlaceTileEntity = new PacketType(87);
         public static PacketType AlterItem = new PacketType(88);

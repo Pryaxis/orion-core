@@ -85,14 +85,22 @@ namespace Orion.Networking.Packets.World.TileEntities {
             ChestIndex = reader.ReadInt16();
             ChestX = reader.ReadInt16();
             ChestY = reader.ReadInt16();
-            ChestName = reader.ReadString();
+
+            // The packet includes the chest name if it is read as the client.
+            if (context == PacketContext.Client) {
+                ChestName = reader.ReadString();
+            }
         }
 
         private protected override void WriteToWriter(BinaryWriter writer, PacketContext context) {
             writer.Write(ChestIndex);
             writer.Write(ChestX);
             writer.Write(ChestY);
-            writer.Write(ChestName);
+
+            // The packet includes the chest name if it is written as the server.
+            if (context == PacketContext.Server) {
+                writer.Write(ChestName);
+            }
         }
     }
 }

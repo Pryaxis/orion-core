@@ -31,7 +31,7 @@ namespace Orion.Networking.Packets.World.TileEntities {
         public override PacketType Type => PacketType.TileEntityInfo;
 
         /// <inheritdoc />
-        public override bool IsDirty => base.IsDirty || _tileEntity?.IsDirty == true;
+        public override bool IsDirty => base.IsDirty || TileEntity?.IsDirty == true;
 
         /// <summary>
         /// Gets or sets the tile entity index.
@@ -58,7 +58,7 @@ namespace Orion.Networking.Packets.World.TileEntities {
         /// <inheritdoc />
         public override void Clean() {
             base.Clean();
-            _tileEntity?.Clean();
+            TileEntity?.Clean();
         }
 
         /// <inheritdoc />

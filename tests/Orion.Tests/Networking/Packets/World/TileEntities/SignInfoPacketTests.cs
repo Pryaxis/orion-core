@@ -21,10 +21,26 @@ using FluentAssertions;
 using Xunit;
 
 namespace Orion.Networking.Packets.World.TileEntities {
-    public class SignTextPacketTests {
+    public class SignInfoPacketTests {
+        [Fact]
+        public void SetDefaultableProperties_MarkAsDirty() {
+            var packet = new SignInfoPacket();
+
+            packet.ShouldHaveDefaultablePropertiesMarkAsDirty();
+        }
+
+        [Fact]
+        public void SetSignText_MarksAsDirty() {
+            var packet = new SignInfoPacket();
+
+            packet.SignText = "";
+
+            packet.ShouldBeDirty();
+        }
+
         [Fact]
         public void SetSignText_NullValue_ThrowsArgumentNullException() {
-            var packet = new SignTextPacket();
+            var packet = new SignInfoPacket();
             Action action = () => packet.SignText = null;
 
             action.Should().Throw<ArgumentNullException>();
@@ -35,7 +51,7 @@ namespace Orion.Networking.Packets.World.TileEntities {
         [Fact]
         public void ReadFromStream_IsCorrect() {
             using (var stream = new MemoryStream(Bytes)) {
-                var packet = (SignTextPacket)Packet.ReadFromStream(stream, PacketContext.Server);
+                var packet = (SignInfoPacket)Packet.ReadFromStream(stream, PacketContext.Server);
 
                 packet.SignIndex.Should().Be(0);
                 packet.SignX.Should().Be(256);
@@ -45,7 +61,7 @@ namespace Orion.Networking.Packets.World.TileEntities {
         }
 
         [Fact]
-        public void WriteToStream_IsCorrect() {
+        public void DeserializeAndSerialize_SamePacket() {
             Bytes.ShouldDeserializeAndSerializeSamePacket();
         }
     }

@@ -71,7 +71,7 @@ namespace Orion.Networking.Packets.World {
         }
 
         [Fact]
-        public void WriteToStream_IsCorrect() {
+        public void DeserializeAndSerialize_SamePacket() {
             Bytes.ShouldDeserializeAndSerializeSamePacket();
         }
 
@@ -80,7 +80,7 @@ namespace Orion.Networking.Packets.World {
             for (byte i = 1; i < 3; ++i) {
                 ObjectType.FromId(i).Id.Should().Be(i);
             }
-            
+
             ObjectType.FromId(0).Should().BeNull();
             ObjectType.FromId(3).Should().BeNull();
         }

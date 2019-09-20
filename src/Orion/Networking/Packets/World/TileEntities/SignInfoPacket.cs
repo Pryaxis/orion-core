@@ -21,16 +21,16 @@ using System.IO;
 
 namespace Orion.Networking.Packets.World.TileEntities {
     /// <summary>
-    /// Packet sent to set a sign's text. This is sent in response to a <see cref="RequestSignPacket"/>.
+    /// Packet sent to set sign information. This is sent in response to a <see cref="RequestSignPacket"/>.
     /// </summary>
-    public sealed class SignTextPacket : Packet {
+    public sealed class SignInfoPacket : Packet {
         private short _signIndex;
         private short _signX;
         private short _signY;
         private string _signText;
 
         /// <inheritdoc />
-        public override PacketType Type => PacketType.SignText;
+        public override PacketType Type => PacketType.SignInfo;
 
         /// <summary>
         /// Gets or sets the sign's index.

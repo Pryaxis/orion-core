@@ -19,25 +19,29 @@ using System.IO;
 using FluentAssertions;
 using Xunit;
 
-namespace Orion.Networking.Packets.World.TileEntities {
-    public class ModifyChestPacketTests {
-        private static readonly byte[] Bytes = {12, 0, 34, 0, 100, 0, 100, 0, 1, 0, 0, 0};
+namespace Orion.Networking.Packets.Players {
+    public class PlayerChestPacketTests {
+        [Fact]
+        public void SetDefaultableProperties_MarkAsDirty() {
+            var packet = new PlayerChestPacket();
+
+            packet.ShouldHaveDefaultablePropertiesMarkAsDirty();
+        }
+
+        public static readonly byte[] Bytes = {6, 0, 80, 0, 255, 255};
 
         [Fact]
         public void ReadFromStream_IsCorrect() {
             using (var stream = new MemoryStream(Bytes)) {
-                var packet = (ModifyChestPacket)Packet.ReadFromStream(stream, PacketContext.Server);
+                var packet = (PlayerChestPacket)Packet.ReadFromStream(stream, PacketContext.Server);
 
-                packet.ChestModificationType.Should().BeSameAs(ModifyChestPacket.ModificationType.PlaceChest);
-                packet.ChestX.Should().Be(100);
-                packet.ChestY.Should().Be(100);
-                packet.ChestStyle.Should().Be(1);
-                packet.ChestIndex.Should().Be(0);
+                packet.PlayerIndex.Should().Be(0);
+                packet.PlayerChestIndex.Should().Be(-1);
             }
         }
 
         [Fact]
-        public void WriteToStream_IsCorrect() {
+        public void DeserializeAndSerialize_SamePacket() {
             Bytes.ShouldDeserializeAndSerializeSamePacket();
         }
     }

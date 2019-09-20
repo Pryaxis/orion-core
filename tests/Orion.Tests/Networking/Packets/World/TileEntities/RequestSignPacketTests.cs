@@ -21,6 +21,13 @@ using Xunit;
 
 namespace Orion.Networking.Packets.World.TileEntities {
     public class RequestSignPacketTests {
+        [Fact]
+        public void SetDefaultableProperties_MarkAsDirty() {
+            var packet = new RequestSignPacket();
+
+            packet.ShouldHaveDefaultablePropertiesMarkAsDirty();
+        }
+
         public static readonly byte[] Bytes = {7, 0, 46, 0, 1, 100, 0};
 
         [Fact]
@@ -34,7 +41,7 @@ namespace Orion.Networking.Packets.World.TileEntities {
         }
 
         [Fact]
-        public void WriteToStream_IsCorrect() {
+        public void DeserializeAndSerialize_SamePacket() {
             Bytes.ShouldDeserializeAndSerializeSamePacket();
         }
     }

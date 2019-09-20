@@ -30,6 +30,15 @@ namespace Orion.Networking.Packets.Npcs {
         }
 
         [Fact]
+        public void SetNpcName_MarksAsDirty() {
+            var packet = new NpcNamePacket();
+
+            packet.NpcName = "";
+
+            packet.ShouldBeDirty();
+        }
+
+        [Fact]
         public void SetNpcName_NullValue_ThrowsArgumentNullException() {
             var packet = new NpcNamePacket();
             Action action = () => packet.NpcName = null;

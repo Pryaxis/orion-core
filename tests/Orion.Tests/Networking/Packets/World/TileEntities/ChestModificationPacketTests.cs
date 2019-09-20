@@ -19,47 +19,47 @@ using System;
 using System.IO;
 using FluentAssertions;
 using Xunit;
-using static Orion.Networking.Packets.World.TileModificationPacket;
+using static Orion.Networking.Packets.World.TileEntities.ChestModificationPacket;
 
-namespace Orion.Networking.Packets.World {
-    public class TileModificationPacketTests {
+namespace Orion.Networking.Packets.World.TileEntities {
+    public class ChestModificationPacketTests {
         [Fact]
         public void SetDefaultableProperties_MarkAsDirty() {
-            var packet = new TileModificationPacket();
+            var packet = new ChestModificationPacket();
 
             packet.ShouldHaveDefaultablePropertiesMarkAsDirty();
         }
 
         [Fact]
-        public void SetTileModificationType_MarksAsDirty() {
-            var packet = new TileModificationPacket();
+        public void SetChestModificationType_MarksAsDirty() {
+            var packet = new ChestModificationPacket();
 
-            packet.TileModificationType = ModificationType.DestroyBlock;
+            packet.ChestModificationType = ModificationType.BreakChest;
 
             packet.ShouldBeDirty();
         }
 
         [Fact]
-        public void SetTileModificationType_NullValue_ThrowsArgumentNullException() {
-            var packet = new TileModificationPacket();
-            Action action = () => packet.TileModificationType = null;
+        public void SetChestModificationType_NullValue_ThrowsArgumentNullException() {
+            var packet = new ChestModificationPacket();
+            Action action = () => packet.ChestModificationType = null;
 
             action.Should().Throw<ArgumentNullException>();
         }
 
-        private static readonly byte[] Bytes = {11, 0, 17, 0, 16, 14, 194, 1, 1, 0, 0};
-        private static readonly byte[] InvalidModificationTypeBytes = {11, 0, 17, 255, 16, 14, 194, 1, 1, 0, 0};
+        private static readonly byte[] Bytes = {12, 0, 34, 0, 100, 0, 100, 0, 1, 0, 0, 0};
+        private static readonly byte[] InvalidModificationTypeBytes = {12, 0, 34, 255, 100, 0, 100, 0, 1, 0, 0, 0};
 
         [Fact]
         public void ReadFromStream_IsCorrect() {
             using (var stream = new MemoryStream(Bytes)) {
-                var packet = (TileModificationPacket)Packet.ReadFromStream(stream, PacketContext.Server);
+                var packet = (ChestModificationPacket)Packet.ReadFromStream(stream, PacketContext.Server);
 
-                packet.TileModificationType.Should().BeSameAs(ModificationType.DestroyBlock);
-                packet.TileX.Should().Be(3600);
-                packet.TileY.Should().Be(450);
-                packet.TileModificationData.Should().Be(1);
-                packet.TileModificationStyle.Should().Be(0);
+                packet.ChestModificationType.Should().BeSameAs(ModificationType.PlaceChest);
+                packet.ChestX.Should().Be(100);
+                packet.ChestY.Should().Be(100);
+                packet.ChestStyle.Should().Be(1);
+                packet.ChestIndex.Should().Be(0);
             }
         }
 
@@ -79,11 +79,11 @@ namespace Orion.Networking.Packets.World {
 
         [Fact]
         public void ModificationType_FromId_IsCorrect() {
-            for (byte i = 0; i < 20; ++i) {
+            for (byte i = 0; i < 6; ++i) {
                 ModificationType.FromId(i).Id.Should().Be(i);
             }
 
-            ModificationType.FromId(20).Should().BeNull();
+            ModificationType.FromId(6).Should().BeNull();
         }
 
         [Fact]

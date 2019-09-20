@@ -22,9 +22,9 @@ using System.Reflection;
 
 namespace Orion.Networking.Packets.World.TileEntities {
     /// <summary>
-    /// Packet sent to modify a chest.
+    /// Packet sent to perform a chest modification.
     /// </summary>
-    public sealed class ModifyChestPacket : Packet {
+    public sealed class ChestModificationPacket : Packet {
         private ModificationType _chestModificationType;
         private short _chestX;
         private short _chestY;
@@ -32,7 +32,7 @@ namespace Orion.Networking.Packets.World.TileEntities {
         private short _chestIndex;
 
         /// <inheritdoc />
-        public override PacketType Type => PacketType.ModifyChest;
+        public override PacketType Type => PacketType.ChestModification;
 
         /// <summary>
         /// Gets or sets the chest modification type.
@@ -113,7 +113,7 @@ namespace Orion.Networking.Packets.World.TileEntities {
         }
 
         /// <summary>
-        /// Represents the modification type in a <see cref="ModifyChestPacket"/>.
+        /// Represents a modification type in a <see cref="ChestModificationPacket"/>.
         /// </summary>
         public class ModificationType {
 #pragma warning disable 1591
@@ -125,8 +125,10 @@ namespace Orion.Networking.Packets.World.TileEntities {
             public static ModificationType BreakChest2 = new ModificationType(5);
 #pragma warning restore 1591
 
-            private static readonly ModificationType[] Types = new ModificationType[6];
-            private static readonly string[] Names = new string[6];
+            private const int ArrayOffset = 0;
+            private const int ArraySize = ArrayOffset + 6;
+            private static readonly ModificationType[] Types = new ModificationType[ArraySize];
+            private static readonly string[] Names = new string[ArraySize];
 
             /// <summary>
             /// Gets the modification type's ID.
@@ -136,8 +138,8 @@ namespace Orion.Networking.Packets.World.TileEntities {
             static ModificationType() {
                 foreach (var field in typeof(ModificationType).GetFields(BindingFlags.Public | BindingFlags.Static)) {
                     var modificationType = (ModificationType)field.GetValue(null);
-                    Types[modificationType.Id] = modificationType;
-                    Names[modificationType.Id] = field.Name;
+                    Types[ArrayOffset + modificationType.Id] = modificationType;
+                    Names[ArrayOffset + modificationType.Id] = field.Name;
                 }
             }
 
@@ -150,10 +152,12 @@ namespace Orion.Networking.Packets.World.TileEntities {
             /// </summary>
             /// <param name="id">The ID.</param>
             /// <returns>The modification type, or <c>null</c> if none exists.</returns>
-            public static ModificationType FromId(byte id) => id < Types.Length ? Types[id] : null;
+            public static ModificationType FromId(byte id) =>
+                ArrayOffset + id < ArraySize ? Types[ArrayOffset + id] : null;
 
             /// <inheritdoc />
-            public override string ToString() => Names[Id];
+            [ExcludeFromCodeCoverage]
+            public override string ToString() => Names[ArrayOffset + Id];
         }
     }
 }

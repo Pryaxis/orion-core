@@ -20,20 +20,39 @@ using FluentAssertions;
 using Xunit;
 
 namespace Orion.Networking.Packets.World.TileEntities {
-    public class MoveIntoChestPacketTests {
-        public static readonly byte[] Bytes = {4, 0, 85, 1};
+    public class ChestInfoPacketTests {
+        [Fact]
+        public void SetDefaultableProperties_MarkAsDirty() {
+            var packet = new ChestInfoPacket();
+
+            packet.ShouldHaveDefaultablePropertiesMarkAsDirty();
+        }
+
+        [Fact]
+        public void SetChestName_MarksAsDirty() {
+            var packet = new ChestInfoPacket();
+
+            packet.ChestName = "";
+
+            packet.ShouldBeDirty();
+        }
+
+        private static readonly byte[] Bytes = {10, 0, 33, 0, 0, 100, 0, 100, 0, 0};
 
         [Fact]
         public void ReadFromStream_IsCorrect() {
             using (var stream = new MemoryStream(Bytes)) {
-                var packet = (MoveIntoChestPacket)Packet.ReadFromStream(stream, PacketContext.Server);
+                var packet = (ChestInfoPacket)Packet.ReadFromStream(stream, PacketContext.Server);
 
-                packet.PlayerInventorySlotIndex.Should().Be(1);
+                packet.ChestIndex.Should().Be(0);
+                packet.ChestX.Should().Be(100);
+                packet.ChestY.Should().Be(100);
+                packet.ChestName.Should().BeNull();
             }
         }
 
         [Fact]
-        public void WriteToStream_IsCorrect() {
+        public void DeserializeAndSerialize_SamePacket() {
             Bytes.ShouldDeserializeAndSerializeSamePacket();
         }
     }

@@ -18,37 +18,51 @@
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
 
-namespace Orion.Networking.Packets.World.TileEntities {
+namespace Orion.Networking.Packets.Players {
     /// <summary>
-    /// Packet sent from the client to the server to move an inventory slot into the current chest.
+    /// Packet sent from the server to the client to set a player's chest index.
     /// </summary>
-    public sealed class MoveIntoChestPacket : Packet {
-        private byte _playerInventorySlotIndex;
+    public sealed class PlayerChestPacket : Packet {
+        private byte _playerIndex;
+        private short _playerChestIndex;
 
         /// <inheritdoc />
-        public override PacketType Type => PacketType.MoveIntoChest;
+        public override PacketType Type => PacketType.PlayerChest;
 
         /// <summary>
-        /// Gets or sets the player inventory slot index.
+        /// Gets or sets the player index.
         /// </summary>
-        public byte PlayerInventorySlotIndex {
-            get => _playerInventorySlotIndex;
+        public byte PlayerIndex {
+            get => _playerIndex;
             set {
-                _playerInventorySlotIndex = value;
+                _playerIndex = value;
+                _isDirty = true;
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets the player's chest index.
+        /// </summary>
+        public short PlayerChestIndex {
+            get => _playerChestIndex;
+            set {
+                _playerChestIndex = value;
                 _isDirty = true;
             }
         }
 
         /// <inheritdoc />
         [ExcludeFromCodeCoverage]
-        public override string ToString() => $"{Type}[...]";
+        public override string ToString() => $"{Type}[#={PlayerIndex}, C={PlayerChestIndex}]";
 
         private protected override void ReadFromReader(BinaryReader reader, PacketContext context) {
-            PlayerInventorySlotIndex = reader.ReadByte();
+            PlayerIndex = reader.ReadByte();
+            PlayerChestIndex = reader.ReadInt16();
         }
 
         private protected override void WriteToWriter(BinaryWriter writer, PacketContext context) {
-            writer.Write(PlayerInventorySlotIndex);
+            writer.Write(PlayerIndex);
+            writer.Write(PlayerChestIndex);
         }
     }
 }

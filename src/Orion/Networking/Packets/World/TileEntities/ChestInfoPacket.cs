@@ -21,16 +21,16 @@ using Terraria;
 
 namespace Orion.Networking.Packets.World.TileEntities {
     /// <summary>
-    /// Packet sent to set a player's chest.
+    /// Packet sent to set chest information.
     /// </summary>
-    public sealed class PlayerChestPacket : Packet {
+    public sealed class ChestInfoPacket : Packet {
         private short _chestIndex;
         private short _chestX;
         private short _chestY;
         private string _chestName;
 
         /// <inheritdoc />
-        public override PacketType Type => PacketType.PlayerChest;
+        public override PacketType Type => PacketType.ChestInfo;
 
         /// <summary>
         /// Gets or sets the chest index.

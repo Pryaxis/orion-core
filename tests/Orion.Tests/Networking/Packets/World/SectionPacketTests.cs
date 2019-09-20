@@ -217,7 +217,7 @@ namespace Orion.Networking.Packets.World {
         }
 
         [Fact]
-        public void WriteToStream_IsCorrect() {
+        public void DeserializeAndSerialize_SamePacket() {
             using (var stream = new MemoryStream(Bytes))
             using (var stream2 = new MemoryStream())
             using (var stream3 = new MemoryStream()) {
