@@ -796,9 +796,9 @@ namespace Orion.Entities {
         public static readonly ItemType SlimeBlockWall = new ItemType(769);
         public static readonly ItemType FleshBlockWall = new ItemType(770);
         public static readonly ItemType RocketI = new ItemType(771);
-        public static readonly ItemType RocketIi = new ItemType(772);
-        public static readonly ItemType RocketIii = new ItemType(773);
-        public static readonly ItemType RocketIv = new ItemType(774);
+        public static readonly ItemType RocketII = new ItemType(772);
+        public static readonly ItemType RocketIII = new ItemType(773);
+        public static readonly ItemType RocketIV = new ItemType(774);
         public static readonly ItemType AsphaltBlock = new ItemType(775);
         public static readonly ItemType CobaltPickaxe = new ItemType(776);
         public static readonly ItemType MythrilPickaxe = new ItemType(777);
