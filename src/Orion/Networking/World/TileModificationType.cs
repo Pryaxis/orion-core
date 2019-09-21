@@ -59,9 +59,9 @@ namespace Orion.Networking.World {
 
         static TileModificationType() {
             foreach (var field in typeof(TileModificationType).GetFields(BindingFlags.Public | BindingFlags.Static)) {
-                var modificationType = (TileModificationType)field.GetValue(null);
-                Modifications[ArrayOffset + modificationType.Id] = modificationType;
-                Names[ArrayOffset + modificationType.Id] = field.Name;
+                var tileModificationType = (TileModificationType)field.GetValue(null);
+                Modifications[ArrayOffset + tileModificationType.Id] = tileModificationType;
+                Names[ArrayOffset + tileModificationType.Id] = field.Name;
             }
         }
 

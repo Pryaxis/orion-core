@@ -18,14 +18,14 @@
 using System;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
-using System.Reflection;
+using Orion.Networking.World;
 
 namespace Orion.Networking.Packets.World {
     /// <summary>
     /// Packet sent to toggle the state of a door.
     /// </summary>
     public sealed class ToggleDoorPacket : Packet {
-        private DoorAction _toggleDoorAction;
+        private ToggleDoorAction _toggleDoorAction;
         private short _doorX;
         private short _doorY;
         private bool _toggleDirection;
@@ -37,7 +37,7 @@ namespace Orion.Networking.Packets.World {
         /// Gets or sets the door action.
         /// </summary>
         /// <exception cref="ArgumentNullException"><paramref name="value"/> is <c>null</c>.</exception>
-        public DoorAction ToggleDoorAction {
+        public ToggleDoorAction ToggleDoorAction {
             get => _toggleDoorAction;
             set {
                 _toggleDoorAction = value ?? throw new ArgumentNullException(nameof(value));
@@ -83,7 +83,7 @@ namespace Orion.Networking.Packets.World {
         public override string ToString() => $"{Type}[{ToggleDoorAction} @ ({DoorX}, {DoorY}), ...]";
 
         private protected override void ReadFromReader(BinaryReader reader, PacketContext context) {
-            ToggleDoorAction = DoorAction.FromId(reader.ReadByte()) ??
+            ToggleDoorAction = ToggleDoorAction.FromId(reader.ReadByte()) ??
                                throw new PacketException("Door action is invalid.");
             DoorX = reader.ReadInt16();
             DoorY = reader.ReadInt16();
@@ -95,53 +95,6 @@ namespace Orion.Networking.Packets.World {
             writer.Write(DoorX);
             writer.Write(DoorY);
             writer.Write(ToggleDirection);
-        }
-
-        /// <summary>
-        /// Represents a door action in a <see cref="ToggleDoorPacket"/>.
-        /// </summary>
-        public sealed class DoorAction {
-#pragma warning disable 1591
-            public static readonly DoorAction OpenDoor = new DoorAction(0);
-            public static readonly DoorAction CloseDoor = new DoorAction(1);
-            public static readonly DoorAction OpenTrapdoor = new DoorAction(2);
-            public static readonly DoorAction CloseTrapdoor = new DoorAction(3);
-            public static readonly DoorAction OpenTallGate = new DoorAction(4);
-            public static readonly DoorAction CloseTallGate = new DoorAction(5);
-#pragma warning restore 1591
-
-            private const int ArrayOffset = 0;
-            private const int ArraySize = ArrayOffset + 6;
-            private static readonly DoorAction[] Actions = new DoorAction[ArraySize];
-            private static readonly string[] Names = new string[ArraySize];
-
-            /// <summary>
-            /// Gets the door action's ID.
-            /// </summary>
-            public byte Id { get; }
-
-            static DoorAction() {
-                foreach (var field in typeof(DoorAction).GetFields(BindingFlags.Public | BindingFlags.Static)) {
-                    var doorAction = (DoorAction)field.GetValue(null);
-                    Actions[ArrayOffset + doorAction.Id] = doorAction;
-                    Names[ArrayOffset + doorAction.Id] = field.Name;
-                }
-            }
-
-            private DoorAction(byte id) {
-                Id = id;
-            }
-
-            /// <summary>
-            /// Returns a door action converted from the given ID.
-            /// </summary>
-            /// <param name="id">The ID.</param>
-            /// <returns>The door action, or <c>null</c> if none exists.</returns>
-            public static DoorAction FromId(byte id) => ArrayOffset + id < ArraySize ? Actions[ArrayOffset + id] : null;
-
-            /// <inheritdoc />
-            [ExcludeFromCodeCoverage]
-            public override string ToString() => Names[ArrayOffset + Id];
         }
     }
 }

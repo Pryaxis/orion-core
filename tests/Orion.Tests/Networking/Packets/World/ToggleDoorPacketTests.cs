@@ -18,6 +18,7 @@
 using System;
 using System.IO;
 using FluentAssertions;
+using Orion.Networking.World;
 using Xunit;
 using static Orion.Networking.Packets.World.ToggleDoorPacket;
 
@@ -34,7 +35,7 @@ namespace Orion.Networking.Packets.World {
         public void SetToggleDoorAction_MarksAsDirty() {
             var packet = new ToggleDoorPacket();
 
-            packet.ToggleDoorAction = DoorAction.CloseDoor;
+            packet.ToggleDoorAction = ToggleDoorAction.CloseDoor;
 
             packet.ShouldBeDirty();
         }
@@ -55,7 +56,7 @@ namespace Orion.Networking.Packets.World {
             using (var stream = new MemoryStream(Bytes)) {
                 var packet = (ToggleDoorPacket)Packet.ReadFromStream(stream, PacketContext.Server);
 
-                packet.ToggleDoorAction.Should().BeSameAs(DoorAction.OpenDoor);
+                packet.ToggleDoorAction.Should().BeSameAs(ToggleDoorAction.OpenDoor);
                 packet.DoorX.Should().Be(3600);
                 packet.DoorY.Should().Be(450);
                 packet.ToggleDirection.Should().BeTrue();
@@ -74,23 +75,6 @@ namespace Orion.Networking.Packets.World {
         [Fact]
         public void DeserializeAndSerialize_SamePacket() {
             Bytes.ShouldDeserializeAndSerializeSamePacket();
-        }
-
-        [Fact]
-        public void DoorAction_FromId_IsCorrect() {
-            for (byte i = 0; i < 6; ++i) {
-                DoorAction.FromId(i).Id.Should().Be(i);
-            }
-
-            DoorAction.FromId(6).Should().BeNull();
-        }
-
-        [Fact]
-        public void DoorAction_FromId_ReturnsSameInstance() {
-            var doorAction = DoorAction.FromId(1);
-            var doorAction2 = DoorAction.FromId(1);
-
-            doorAction.Should().BeSameAs(doorAction2);
         }
     }
 }
