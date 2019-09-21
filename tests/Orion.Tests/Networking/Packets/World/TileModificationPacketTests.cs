@@ -31,18 +31,18 @@ namespace Orion.Networking.Packets.World {
         }
 
         [Fact]
-        public void SetTileModificationType_MarksAsDirty() {
+        public void SetTileModification_MarksAsDirty() {
             var packet = new TileModificationPacket();
 
-            packet.TileModificationType = TileModificationType.DestroyBlock;
+            packet.TileModification = TileModification.DestroyBlock;
 
             packet.ShouldBeDirty();
         }
 
         [Fact]
-        public void SetTileModificationType_NullValue_ThrowsArgumentNullException() {
+        public void SetTileModification_NullValue_ThrowsArgumentNullException() {
             var packet = new TileModificationPacket();
-            Action action = () => packet.TileModificationType = null;
+            Action action = () => packet.TileModification = null;
 
             action.Should().Throw<ArgumentNullException>();
         }
@@ -55,7 +55,7 @@ namespace Orion.Networking.Packets.World {
             using (var stream = new MemoryStream(Bytes)) {
                 var packet = (TileModificationPacket)Packet.ReadFromStream(stream, PacketContext.Server);
 
-                packet.TileModificationType.Should().BeSameAs(TileModificationType.DestroyBlock);
+                packet.TileModification.Should().BeSameAs(TileModification.DestroyBlock);
                 packet.TileX.Should().Be(3600);
                 packet.TileY.Should().Be(450);
                 packet.TileModificationData.Should().Be(1);

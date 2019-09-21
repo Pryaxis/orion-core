@@ -25,7 +25,7 @@ namespace Orion.Networking.Packets.World {
     /// Packet sent to perform a tile modification.
     /// </summary>
     public sealed class TileModificationPacket : Packet {
-        private TileModificationType _tileModificationType;
+        private TileModification _tileModification;
         private short _tileX;
         private short _tileY;
         private short _tileModificationData;
@@ -38,10 +38,10 @@ namespace Orion.Networking.Packets.World {
         /// Gets or sets the tile modification type.
         /// </summary>
         /// <exception cref="ArgumentNullException"><paramref name="value"/> is <c>null</c>.</exception>
-        public TileModificationType TileModificationType {
-            get => _tileModificationType;
+        public TileModification TileModification {
+            get => _tileModification;
             set {
-                _tileModificationType = value ?? throw new ArgumentNullException(nameof(value));
+                _tileModification = value ?? throw new ArgumentNullException(nameof(value));
                 _isDirty = true;
             }
         }
@@ -92,10 +92,10 @@ namespace Orion.Networking.Packets.World {
 
         /// <inheritdoc />
         [ExcludeFromCodeCoverage]
-        public override string ToString() => $"{Type}[{TileModificationType} @ ({TileX}, {TileY}), ...]";
+        public override string ToString() => $"{Type}[{TileModification} @ ({TileX}, {TileY}), ...]";
 
         private protected override void ReadFromReader(BinaryReader reader, PacketContext context) {
-            TileModificationType = TileModificationType.FromId(reader.ReadByte()) ??
+            TileModification = TileModification.FromId(reader.ReadByte()) ??
                                    throw new PacketException("Modification type is invalid.");
             TileX = reader.ReadInt16();
             TileY = reader.ReadInt16();
@@ -104,7 +104,7 @@ namespace Orion.Networking.Packets.World {
         }
 
         private protected override void WriteToWriter(BinaryWriter writer, PacketContext context) {
-            writer.Write(TileModificationType.Id);
+            writer.Write(TileModification.Id);
             writer.Write(TileX);
             writer.Write(TileY);
             writer.Write(TileModificationData);

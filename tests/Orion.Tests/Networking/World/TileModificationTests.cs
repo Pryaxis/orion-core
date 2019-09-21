@@ -23,16 +23,16 @@ namespace Orion.Networking.World {
         [Fact]
         public void FromId_IsCorrect() {
             for (byte i = 0; i < 20; ++i) {
-                TileModificationType.FromId(i).Id.Should().Be(i);
+                TileModification.FromId(i).Id.Should().Be(i);
             }
 
-            TileModificationType.FromId(20).Should().BeNull();
+            TileModification.FromId(20).Should().BeNull();
         }
 
         [Fact]
         public void FromId_ReturnsSameInstance() {
-            var tileModificationType = TileModificationType.FromId(1);
-            var tileModificationType2 = TileModificationType.FromId(1);
+            var tileModificationType = TileModification.FromId(1);
+            var tileModificationType2 = TileModification.FromId(1);
 
             tileModificationType.Should().BeSameAs(tileModificationType2);
         }
