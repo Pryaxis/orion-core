@@ -20,7 +20,12 @@ using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Text;
-using Orion.Events;
+using Orion.Networking.Packets.Entities;
+using Orion.Networking.Packets.Misc;
+using Orion.Networking.Packets.Modules;
+using Orion.Networking.Packets.World;
+using Orion.Networking.Packets.World.TileEntities;
+using Orion.Networking.Packets.World.Tiles;
 using Orion.Utils;
 
 namespace Orion.Networking.Packets {
@@ -28,6 +33,129 @@ namespace Orion.Networking.Packets {
     /// Represents a packet.
     /// </summary>
     public abstract class Packet : IDirtiable {
+        private static readonly Func<Packet>[] Constructors = {
+            /* 000 */ null,
+            /* 001 */ () => new PlayerConnectPacket(),
+            /* 002 */ () => new PlayerDisconnectPacket(),
+            /* 003 */ () => new PlayerContinueConnectingPacket(),
+            /* 004 */ () => new PlayerDataPacket(),
+            /* 005 */ () => new PlayerInventorySlotPacket(),
+            /* 006 */ () => new PlayerJoinPacket(),
+            /* 007 */ () => new WorldInfoPacket(),
+            /* 008 */ () => new RequestSectionPacket(),
+            /* 009 */ () => new PlayerStatusPacket(),
+            /* 010 */ () => new SectionPacket(),
+            /* 011 */ () => new SectionFramesPacket(),
+            /* 012 */ () => new SpawnPlayerPacket(),
+            /* 013 */ () => new PlayerInfoPacket(),
+            /* 014 */ () => new PlayerActivityPacket(),
+            /* 015 */ null,
+            /* 016 */ () => new PlayerHealthPacket(),
+            /* 017 */ () => new TileModificationPacket(),
+            /* 018 */ () => new TimePacket(),
+            /* 019 */ () => new ToggleDoorPacket(),
+            /* 020 */ () => new SquareTilesPacket(),
+            /* 021 */ () => new ItemInfoPacket(),
+            /* 022 */ () => new ItemOwnerPacket(),
+            /* 023 */ () => new NpcInfoPacket(),
+            /* 024 */ () => new DamageNpcHeldItemPacket(),
+            /* 025 */ null,
+            /* 026 */ null,
+            /* 027 */ () => new ProjectileInfoPacket(),
+            /* 028 */ () => new DamageNpcPacket(),
+            /* 029 */ () => new RemoveProjectilePacket(),
+            /* 030 */ () => new PlayerPvpPacket(),
+            /* 031 */ () => new RequestChestPacket(),
+            /* 032 */ () => new ChestContentsSlotPacket(),
+            /* 033 */ () => new ChestInfoPacket(),
+            /* 034 */ () => new ChestModificationPacket(),
+            /* 035 */ () => new HealEffectPacket(),
+            /* 036 */ () => new PlayerZonesPacket(),
+            /* 037 */ () => new PlayerPasswordChallengePacket(),
+            /* 038 */ () => new PlayerPasswordResponsePacket(),
+            /* 039 */ () => new RemoveItemOwnerPacket(),
+            /* 040 */ () => new PlayerTalkingToNpcPacket(),
+            /* 041 */ () => new PlayerItemAnimationPacket(),
+            /* 042 */ () => new PlayerManaPacket(),
+            /* 043 */ () => new ManaEffectPacket(),
+            /* 044 */ null,
+            /* 045 */ () => new PlayerTeamPacket(),
+            /* 046 */ () => new RequestSignPacket(),
+            /* 047 */ () => new SignInfoPacket(),
+            /* 048 */ () => new TileLiquidPacket(),
+            /* 049 */ () => new PlayerEnterWorldPacket(),
+            /* 050 */ () => new PlayerBuffsPacket(),
+            /* 051 */ () => new MiscActionPacket(),
+            /* 052 */ () => new UnlockObjectPacket(),
+            /* 053 */ () => new BuffNpcPacket(),
+            /* 054 */ () => new NpcBuffsPacket(),
+            /* 055 */ () => new BuffPlayerPacket(),
+            /* 056 */ () => new NpcNamePacket(),
+            /* 057 */ () => new BiomeStatsPacket(),
+            /* 058 */ () => new PlayerHarpNotePacket(),
+            /* 059 */ () => new ActivateWirePacket(),
+            /* 060 */ () => new NpcHomePacket(),
+            /* 061 */ () => new BossOrInvasionPacket(),
+            /* 062 */ () => new PlayerDodgePacket(),
+            /* 063 */ () => new PaintBlockPacket(),
+            /* 064 */ () => new PaintWallPacket(),
+            /* 065 */ () => new EntityTeleportationPacket(),
+            /* 066 */ () => new HealPlayerPacket(),
+            /* 067 */ null,
+            /* 068 */ () => new PlayerUuidPacket(),
+            /* 069 */ () => new ChestNamePacket(),
+            /* 070 */ () => new CatchNpcPacket(),
+            /* 071 */ () => new ReleaseNpcPacket(),
+            /* 072 */ () => new TravelingMerchantShopPacket(),
+            /* 073 */ () => new PlayerTeleportationPotionPacket(),
+            /* 074 */ () => new AnglerQuestPacket(),
+            /* 075 */ () => new PlayerFinishAnglerQuestPacket(),
+            /* 076 */ () => new PlayerAnglerQuestsPacket(),
+            /* 077 */ () => new TileAnimationPacket(),
+            /* 078 */ () => new InvasionInfoPacket(),
+            /* 079 */ () => new PlaceObjectPacket(),
+            /* 080 */ () => new PlayerChestPacket(),
+            /* 081 */ () => new CombatNumberPacket(),
+            /* 082 */ () => new ModulePacket(),
+            /* 083 */ () => new NpcKillCountPacket(),
+            /* 084 */ () => new PlayerStealthPacket(),
+            /* 085 */ () => new QuickStackChestPacket(),
+            /* 086 */ () => new TileEntityInfoPacket(),
+            /* 087 */ () => new PlaceTileEntityPacket(),
+            /* 088 */ () => new AlterItemPacket(),
+            /* 089 */ () => new ItemFramePacket(),
+            /* 090 */ () => new InstancedItemInfoPacket(),
+            /* 091 */ () => new EmoteBubblePacket(),
+            /* 092 */ () => new NpcStealCoinPacket(),
+            /* 093 */ null,
+            /* 094 */ null,
+            /* 095 */ () => new RemovePortalPacket(),
+            /* 096 */ () => new TeleportPlayerPortalPacket(),
+            /* 097 */ () => new NpcTypeKilledPacket(),
+            /* 098 */ () => new ProgressionEventPacket(),
+            /* 099 */ () => new PlayerMinionPositionPacket(),
+            /* 100 */ () => new TeleportNpcPortalPacket(),
+            /* 101 */ () => new PillarShieldStrengthsPacket(),
+            /* 102 */ () => new NebulaBuffPlayersPacket(),
+            /* 103 */ () => new MoonLordCountdownPacket(),
+            /* 104 */ () => new NpcShopSlotPacket(),
+            /* 105 */ () => new ToggleGemLockPacket(),
+            /* 106 */ () => new PoofOfSmokePacket(),
+            /* 107 */ () => new ChatPacket(),
+            /* 108 */ () => new CannonShotPacket(),
+            /* 109 */ () => new MassWireOperationPacket(),
+            /* 110 */ () => new ConsumePlayerItemsPacket(),
+            /* 111 */ () => new ToggleBirthdayPartyPacket(),
+            /* 112 */ () => new TreeGrowingEffectPacket(),
+            /* 113 */ () => new StartOldOnesArmyPacket(),
+            /* 114 */ () => new EndOldOnesArmyPacket(),
+            /* 115 */ () => new PlayerMinionNpcPacket(),
+            /* 116 */ () => new OldOnesArmyInfoPacket(),
+            /* 117 */ () => new DamagePlayerPacket(),
+            /* 118 */ () => new KillPlayerPacket(),
+            /* 119 */ () => new CombatTextPacket(),
+        };
+
         private protected bool _isDirty;
 
         /// <inheritdoc />
@@ -62,7 +190,7 @@ namespace Orion.Networking.Packets {
 #endif
                 var packetType = PacketType.FromId(reader.ReadByte()) ??
                                  throw new PacketException("Packet type is invalid.");
-                var packet = packetType.Constructor();
+                var packet = Constructors[packetType.Id]();
 
                 packet.ReadFromReader(reader, context);
                 packet.Clean();
