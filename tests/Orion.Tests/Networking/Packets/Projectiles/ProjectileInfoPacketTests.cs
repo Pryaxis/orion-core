@@ -48,7 +48,7 @@ namespace Orion.Networking.Packets.Projectiles {
         }
 
         [Fact]
-        public void ProjectileAiValues_Set_MarksAsDirty() {
+        public void ProjectileAiValues_SetItem_MarksAsDirty() {
             var packet = new ProjectileInfoPacket();
             packet.ProjectileAiValues[0] = 0;
 

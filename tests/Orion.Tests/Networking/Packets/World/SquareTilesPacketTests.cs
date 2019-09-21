@@ -31,7 +31,7 @@ namespace Orion.Networking.Packets.World {
         }
 
         [Fact]
-        public void Tiles_Set_MarksAsDirty() {
+        public void Tiles_SetItem_MarksAsDirty() {
             var packet = new SquareTilesPacket();
             packet.Tiles = new NetworkTiles(1, 1);
             packet.ShouldBeDirty();

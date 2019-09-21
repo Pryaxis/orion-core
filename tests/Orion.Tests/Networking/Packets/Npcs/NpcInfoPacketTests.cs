@@ -32,7 +32,7 @@ namespace Orion.Networking.Packets.Npcs {
         }
 
         [Fact]
-        public void NpcAiValues_Set_MarksAsDirty() {
+        public void NpcAiValues_SetItem_MarksAsDirty() {
             var packet = new NpcInfoPacket();
             packet.NpcAiValues[0] = 0;
 

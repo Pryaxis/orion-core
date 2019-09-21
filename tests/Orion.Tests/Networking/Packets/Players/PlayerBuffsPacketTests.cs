@@ -31,7 +31,7 @@ namespace Orion.Networking.Packets.Players {
         }
 
         [Fact]
-        public void PlayerBuffTypes_Set_MarksAsDirty() {
+        public void PlayerBuffTypes_SetItem_MarksAsDirty() {
             var packet = new PlayerBuffsPacket();
 
             packet.PlayerBuffTypes[0] = BuffType.ObsidianSkin;

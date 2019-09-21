@@ -48,7 +48,7 @@ namespace Orion.Networking.Packets.World {
         }
 
         [Fact]
-        public void StyleBoundaries_Set_MarksAsDirty() {
+        public void TreeStyleBoundaries_SetItem_MarksAsDirty() {
             var packet = new WorldInfoPacket();
 
             packet.TreeStyleBoundaries[0] = 0;
@@ -57,14 +57,14 @@ namespace Orion.Networking.Packets.World {
         }
 
         [Fact]
-        public void StyleBoundaries_Count_IsCorrect() {
+        public void TreeStyleBoundaries_Count_IsCorrect() {
             var packet = new WorldInfoPacket();
 
             packet.TreeStyleBoundaries.Count.Should().Be(3);
         }
 
         [Fact]
-        public void Styles_Set_MarksAsDirty() {
+        public void TreeStyles_SetItem_MarksAsDirty() {
             var packet = new WorldInfoPacket();
 
             packet.TreeStyles[0] = 0;
@@ -73,10 +73,42 @@ namespace Orion.Networking.Packets.World {
         }
 
         [Fact]
-        public void Styles_Count_IsCorrect() {
+        public void TreeStyles_Count_IsCorrect() {
             var packet = new WorldInfoPacket();
 
             packet.TreeStyles.Count.Should().Be(4);
+        }
+
+        [Fact]
+        public void CaveBackgroundStyleBoundaries_SetItem_MarksAsDirty() {
+            var packet = new WorldInfoPacket();
+
+            packet.CaveBackgroundStyleBoundaries[0] = 0;
+
+            packet.ShouldBeDirty();
+        }
+
+        [Fact]
+        public void CaveBackgroundStyleBoundaries_Count_IsCorrect() {
+            var packet = new WorldInfoPacket();
+
+            packet.CaveBackgroundStyleBoundaries.Count.Should().Be(3);
+        }
+
+        [Fact]
+        public void CaveBackgroundStyles_SetItem_MarksAsDirty() {
+            var packet = new WorldInfoPacket();
+
+            packet.CaveBackgroundStyles[0] = 0;
+
+            packet.ShouldBeDirty();
+        }
+
+        [Fact]
+        public void CaveBackgroundStyles_Count_IsCorrect() {
+            var packet = new WorldInfoPacket();
+
+            packet.CaveBackgroundStyles.Count.Should().Be(4);
         }
 
         [Fact]

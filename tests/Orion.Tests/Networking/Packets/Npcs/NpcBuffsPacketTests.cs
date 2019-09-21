@@ -31,7 +31,7 @@ namespace Orion.Networking.Packets.Npcs {
         }
 
         [Fact]
-        public void NpcBuffs_Set_MarksAsDirty() {
+        public void NpcBuffs_SetItem_MarksAsDirty() {
             var packet = new NpcBuffsPacket();
 
             packet.NpcBuffs[0] = new Buff(BuffType.None, TimeSpan.Zero);

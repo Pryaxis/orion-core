@@ -32,7 +32,7 @@ namespace Orion.Networking.Packets.World {
         }
 
         [Fact]
-        public void SectionTiles_Set_MarksAsDirty() {
+        public void SectionTiles_SetItem_MarksAsDirty() {
             var packet = new SectionPacket();
             packet.SectionTiles = new NetworkTiles(1, 1);
             packet.ShouldBeDirty();
