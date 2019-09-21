@@ -95,7 +95,7 @@ namespace Orion.Networking.Packets {
         public static PacketType TravelingMerchantShop = new PacketType(72);
         public static PacketType PlayerTeleportationPotion = new PacketType(73);
         public static PacketType AnglerQuest = new PacketType(74);
-        public static PacketType FinishAnglerQuest = new PacketType(75);
+        public static PacketType PlayerFinishAnglerQuest = new PacketType(75);
         public static PacketType PlayerAnglerQuests = new PacketType(76);
         public static PacketType TileAnimation = new PacketType(77);
         public static PacketType InvasionInfo = new PacketType(78);
@@ -115,7 +115,7 @@ namespace Orion.Networking.Packets {
         public static PacketType NpcStealCoin = new PacketType(92);
         public static PacketType RemovePortal = new PacketType(95);
         public static PacketType TeleportPlayerPortal = new PacketType(96);
-        public static PacketType NpcTypeKilledEvent = new PacketType(97);
+        public static PacketType NpcTypeKilled = new PacketType(97);
         public static PacketType ProgressionEvent = new PacketType(98);
         public static PacketType PlayerMinionPosition = new PacketType(99);
         public static PacketType TeleportNpcPortal = new PacketType(100);
