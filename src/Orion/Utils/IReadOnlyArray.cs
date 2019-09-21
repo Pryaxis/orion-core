@@ -25,15 +25,15 @@ namespace Orion.Utils {
     /// <typeparam name="T">The type of element.</typeparam>
     public interface IReadOnlyArray<out T> : IEnumerable<T> {
         /// <summary>
+        /// Gets the count of elements.
+        /// </summary>
+        int Count { get; }
+
+        /// <summary>
         /// Gets the element at the given index.
         /// </summary>
         /// <param name="index">The index.</param>
         /// <exception cref="IndexOutOfRangeException"><paramref name="index"/> is out of range.</exception>
         T this[int index] { get; }
-
-        /// <summary>
-        /// Gets the count of elements.
-        /// </summary>
-        int Count { get; }
     }
 }
