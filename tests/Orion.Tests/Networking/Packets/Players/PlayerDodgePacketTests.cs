@@ -18,8 +18,8 @@
 using System;
 using System.IO;
 using FluentAssertions;
+using Orion.Networking.Players;
 using Xunit;
-using static Orion.Networking.Packets.Players.PlayerDodgePacket;
 
 namespace Orion.Networking.Packets.Players {
     public class PlayerDodgePacketTests {
@@ -31,18 +31,18 @@ namespace Orion.Networking.Packets.Players {
         }
 
         [Fact]
-        public void SetPlayerDodgeType_MarksAsDirty() {
+        public void SetPlayerDodge_MarksAsDirty() {
             var packet = new PlayerDodgePacket();
 
-            packet.PlayerDodgeType = DodgeType.NinjaDodge;
+            packet.PlayerDodge = PlayerDodge.NinjaDodge;
 
             packet.ShouldBeDirty();
         }
 
         [Fact]
-        public void SetPlayerDodgeType_NullValue_ThrowsArgumentNullException() {
+        public void SetPlayerDodge_NullValue_ThrowsArgumentNullException() {
             var packet = new PlayerDodgePacket();
-            Action action = () => packet.PlayerDodgeType = null;
+            Action action = () => packet.PlayerDodge = null;
 
             action.Should().Throw<ArgumentNullException>();
         }
@@ -56,7 +56,7 @@ namespace Orion.Networking.Packets.Players {
                 var packet = (PlayerDodgePacket)Packet.ReadFromStream(stream, PacketContext.Server);
 
                 packet.PlayerIndex.Should().Be(0);
-                packet.PlayerDodgeType.Should().BeSameAs(DodgeType.NinjaDodge);
+                packet.PlayerDodge.Should().BeSameAs(PlayerDodge.NinjaDodge);
             }
         }
 
@@ -72,24 +72,6 @@ namespace Orion.Networking.Packets.Players {
         [Fact]
         public void DeserializeAndSerialize_SamePacket() {
             Bytes.ShouldDeserializeAndSerializeSamePacket();
-        }
-
-        [Fact]
-        public void DodgeType_FromId_IsCorrect() {
-            for (byte i = 1; i < 3; ++i) {
-                DodgeType.FromId(i).Id.Should().Be(i);
-            }
-
-            DodgeType.FromId(0).Should().BeNull();
-            DodgeType.FromId(3).Should().BeNull();
-        }
-
-        [Fact]
-        public void DodgeType_FromId_ReturnsSameInstance() {
-            var dodgeType = DodgeType.FromId(1);
-            var dodgeType2 = DodgeType.FromId(1);
-
-            dodgeType.Should().BeSameAs(dodgeType2);
         }
     }
 }
