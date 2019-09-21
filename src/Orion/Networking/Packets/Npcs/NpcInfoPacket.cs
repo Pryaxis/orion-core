@@ -121,7 +121,7 @@ namespace Orion.Networking.Packets.Npcs {
         /// <summary>
         /// Gets the NPC's AI values.
         /// </summary>
-        public AiValues NpcAiValues { get; } = new AiValues();
+        public DirtiableArray<float> NpcAiValues { get; } = new DirtiableArray<float>(Terraria.NPC.maxAI);
 
         /// <summary>
         /// Gets or sets a value indicating the direction of the NPC sprite.
@@ -281,39 +281,6 @@ namespace Orion.Networking.Packets.Npcs {
 
             if (NpcType.IsCatchable) {
                 writer.Write(NpcReleaserPlayerIndex);
-            }
-        }
-
-        /// <summary>
-        /// Represents the AI values in an <see cref="NpcInfoPacket"/>.
-        /// </summary>
-        public sealed class AiValues : IArray<float>, IDirtiable {
-            private readonly float[] _aiValues = new float[Terraria.NPC.maxAI];
-
-            /// <inheritdoc cref="IArray{T}.this" />
-            public float this[int index] {
-                get => _aiValues[index];
-                set {
-                    _aiValues[index] = value;
-                    IsDirty = true;
-                }
-            }
-
-            /// <inheritdoc />
-            public int Count => _aiValues.Length;
-
-            /// <inheritdoc />
-            public bool IsDirty { get; private set; }
-
-            /// <inheritdoc />
-            public IEnumerator<float> GetEnumerator() => ((IEnumerable<float>)_aiValues).GetEnumerator();
-
-            [ExcludeFromCodeCoverage]
-            IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
-
-            /// <inheritdoc />
-            public void Clean() {
-                IsDirty = false;
             }
         }
     }

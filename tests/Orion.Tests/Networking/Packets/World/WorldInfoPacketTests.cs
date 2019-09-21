@@ -25,7 +25,7 @@ namespace Orion.Networking.Packets.World {
     public class WorldInfoPacketTests {
         [Fact]
         public void SetDefaultableProperties_MarkAsDirty() {
-            var packet = new ToggleDoorPacket();
+            var packet = new WorldInfoPacket();
 
             packet.ShouldHaveDefaultablePropertiesMarkAsDirty();
         }

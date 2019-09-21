@@ -436,22 +436,22 @@ namespace Orion.Networking.Packets.World {
         /// <summary>
         /// Get the tree style boundaries.
         /// </summary>
-        public StyleBoundaries TreeStyleBoundaries { get; } = new StyleBoundaries();
+        public DirtiableArray<int> TreeStyleBoundaries { get; } = new DirtiableArray<int>(3);
 
         /// <summary>
         /// Gets the tree styles.
         /// </summary>
-        public Styles TreeStyles { get; } = new Styles();
+        public DirtiableArray<byte> TreeStyles { get; } = new DirtiableArray<byte>(4);
 
         /// <summary>
         /// Gets the cave background style boundaries.
         /// </summary>
-        public StyleBoundaries CaveBackgroundStyleBoundaries { get; } = new StyleBoundaries();
+        public DirtiableArray<int>  CaveBackgroundStyleBoundaries { get; } = new DirtiableArray<int>(3);
 
         /// <summary>
         /// Gets the cave background styles.
         /// </summary>
-        public Styles CaveBackgroundStyles { get; } = new Styles();
+        public DirtiableArray<byte> CaveBackgroundStyles { get; } = new DirtiableArray<byte>(4);
 
         /// <summary>
         /// Gets or sets the rain.
@@ -1163,72 +1163,6 @@ namespace Orion.Networking.Packets.World {
             writer.Write((sbyte)InvasionType.Id);
             writer.Write(LobbyId);
             writer.Write(SandstormIntensity);
-        }
-
-        /// <summary>
-        /// Represents the tree and cave background style boundaries in a <see cref="WorldInfoPacket"/>.
-        /// </summary>
-        public class StyleBoundaries : IArray<int>, IDirtiable {
-            private readonly int[] _boundaries = new int[3];
-
-            /// <inheritdoc cref="IArray{T}.this" />
-            public int this[int index] {
-                get => _boundaries[index];
-                set {
-                    _boundaries[index] = value;
-                    IsDirty = true;
-                }
-            }
-
-            /// <inheritdoc />
-            public int Count => _boundaries.Length;
-
-            /// <inheritdoc />
-            public bool IsDirty { get; private set; }
-
-            /// <inheritdoc />
-            public IEnumerator<int> GetEnumerator() => ((IEnumerable<int>)_boundaries).GetEnumerator();
-
-            [ExcludeFromCodeCoverage]
-            IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
-
-            /// <inheritdoc />
-            public void Clean() {
-                IsDirty = false;
-            }
-        }
-
-        /// <summary>
-        /// Represents the tree and cave background styles in a <see cref="WorldInfoPacket"/>.
-        /// </summary>
-        public class Styles : IArray<byte>, IDirtiable {
-            private readonly byte[] _styles = new byte[4];
-
-            /// <inheritdoc cref="IArray{T}.this" />
-            public byte this[int index] {
-                get => _styles[index];
-                set {
-                    _styles[index] = value;
-                    IsDirty = true;
-                }
-            }
-
-            /// <inheritdoc />
-            public int Count => _styles.Length;
-
-            /// <inheritdoc />
-            public bool IsDirty { get; private set; }
-
-            /// <inheritdoc />
-            public IEnumerator<byte> GetEnumerator() => ((IEnumerable<byte>)_styles).GetEnumerator();
-
-            [ExcludeFromCodeCoverage]
-            IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
-
-            /// <inheritdoc />
-            public void Clean() {
-                IsDirty = false;
-            }
         }
     }
 }

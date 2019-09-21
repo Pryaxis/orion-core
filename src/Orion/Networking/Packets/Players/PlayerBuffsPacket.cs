@@ -15,13 +15,9 @@
 // You should have received a copy of the GNU General Public License
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using Orion.Entities;
-using Orion.Events;
 using Orion.Utils;
 
 namespace Orion.Networking.Packets.Players {
@@ -51,7 +47,8 @@ namespace Orion.Networking.Packets.Players {
         /// <summary>
         /// Gets the player's buff types.
         /// </summary>
-        public BuffTypes PlayerBuffTypes { get; } = new BuffTypes();
+        public DirtiableArray<BuffType> PlayerBuffTypes { get; } =
+            new DirtiableArray<BuffType>(Terraria.Player.maxBuffs);
 
         /// <inheritdoc />
         public override void Clean() {
@@ -75,45 +72,6 @@ namespace Orion.Networking.Packets.Players {
             writer.Write(PlayerIndex);
             foreach (var buffType in PlayerBuffTypes) {
                 writer.Write(buffType.Id);
-            }
-        }
-
-        /// <summary>
-        /// Represents the buff types in a <see cref="PlayerBuffsPacket"/>.
-        /// </summary>
-        public sealed class BuffTypes : IArray<BuffType>, IDirtiable {
-            private readonly BuffType[] _buffTypes = new BuffType[Terraria.Player.maxBuffs];
-
-            /// <inheritdoc cref="IArray{T}.this" />
-            public BuffType this[int index] {
-                get => _buffTypes[index];
-                set {
-                    _buffTypes[index] = value ?? throw new ArgumentNullException(nameof(value));
-                    IsDirty = true;
-                }
-            }
-
-            /// <inheritdoc />
-            public int Count => _buffTypes.Length;
-
-            /// <inheritdoc />
-            public bool IsDirty { get; private set; }
-
-            internal BuffTypes() {
-                for (var i = 0; i < _buffTypes.Length; ++i) {
-                    _buffTypes[i] = BuffType.None;
-                }
-            }
-
-            /// <inheritdoc />
-            public IEnumerator<BuffType> GetEnumerator() => ((IEnumerable<BuffType>)_buffTypes).GetEnumerator();
-
-            [ExcludeFromCodeCoverage]
-            IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
-
-            /// <inheritdoc />
-            public void Clean() {
-                IsDirty = false;
             }
         }
     }

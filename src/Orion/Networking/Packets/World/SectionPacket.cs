@@ -26,6 +26,7 @@ using System.Text;
 using Orion.Events;
 using Orion.Networking.TileEntities;
 using Orion.Networking.Tiles;
+using Orion.Utils;
 using Orion.World.TileEntities;
 using Orion.World.Tiles;
 using OTAPI.Tile;
@@ -119,7 +120,7 @@ namespace Orion.Networking.Packets.World {
         /// <summary>
         /// Gets the section's tile entities.
         /// </summary>
-        public TileEntities SectionTileEntities { get; } = new TileEntities();
+        public DirtiableList<NetworkTileEntity> SectionTileEntities { get; } = new DirtiableList<NetworkTileEntity>();
 
         /// <inheritdoc />
         public override void Clean() {
@@ -430,93 +431,6 @@ namespace Orion.Networking.Packets.World {
             WriteTileEntities(chests);
             WriteTileEntities(signs);
             WriteTileEntities(notChestsOrSigns);
-        }
-
-        /// <summary>
-        /// Represents the tile entities in a <see cref="SectionPacket"/>.
-        /// </summary>
-        public class TileEntities : IList<NetworkTileEntity>, IDirtiable {
-            private readonly IList<NetworkTileEntity> _tileEntities = new List<NetworkTileEntity>();
-            private bool _isDirty;
-
-            /// <inheritdoc />
-            public NetworkTileEntity this[int index] {
-                get => _tileEntities[index];
-                set {
-                    _tileEntities[index] = value ?? throw new ArgumentNullException(nameof(value));
-                    _isDirty = true;
-                }
-            }
-
-            /// <inheritdoc />
-            public int Count => _tileEntities.Count;
-
-            /// <inheritdoc />
-            public bool IsReadOnly => _tileEntities.IsReadOnly;
-
-            /// <inheritdoc />
-            public bool IsDirty => _isDirty || _tileEntities.Any(t => t.IsDirty);
-
-            /// <inheritdoc />
-            public IEnumerator<NetworkTileEntity> GetEnumerator() => _tileEntities.GetEnumerator();
-
-            [ExcludeFromCodeCoverage]
-            IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
-
-            /// <inheritdoc />
-            /// <exception cref="ArgumentNullException"><paramref name="item"/> is <c>null</c>.</exception>
-            public void Add(NetworkTileEntity item) {
-                if (item == null) throw new ArgumentNullException(nameof(item));
-
-                _tileEntities.Add(item);
-                _isDirty = true;
-            }
-
-            /// <inheritdoc />
-            public void Clear() {
-                _tileEntities.Clear();
-                _isDirty = true;
-            }
-
-            /// <inheritdoc />
-            public bool Contains(NetworkTileEntity item) => _tileEntities.Contains(item);
-
-            /// <inheritdoc />
-            public void CopyTo(NetworkTileEntity[] array, int arrayIndex) {
-                _tileEntities.CopyTo(array, arrayIndex);
-            }
-
-            /// <inheritdoc />
-            public bool Remove(NetworkTileEntity item) {
-                _isDirty = true;
-                return _tileEntities.Remove(item);
-            }
-
-            /// <inheritdoc />
-            public int IndexOf(NetworkTileEntity item) => _tileEntities.IndexOf(item);
-
-            /// <inheritdoc />
-            /// <exception cref="ArgumentNullException"><paramref name="item"/> is <c>null</c>.</exception>
-            public void Insert(int index, NetworkTileEntity item) {
-                if (item == null) throw new ArgumentNullException(nameof(item));
-
-                _tileEntities.Insert(index, item);
-                _isDirty = true;
-            }
-
-            /// <inheritdoc />
-            public void RemoveAt(int index) {
-                _tileEntities.RemoveAt(index);
-                _isDirty = true;
-            }
-
-            /// <inheritdoc />
-            public void Clean() {
-                _isDirty = false;
-                foreach (var tileEntity in _tileEntities) {
-                    tileEntity.Clean();
-                }
-            }
         }
     }
 }

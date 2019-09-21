@@ -16,12 +16,9 @@
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using Orion.Entities;
-using Orion.Events;
 using Orion.Utils;
 
 namespace Orion.Networking.Packets.Npcs {
@@ -51,7 +48,7 @@ namespace Orion.Networking.Packets.Npcs {
         /// <summary>
         /// Gets the NPC's buffs.
         /// </summary>
-        public Buffs NpcBuffs { get; } = new Buffs();
+        public DirtiableArray<Buff> NpcBuffs { get; } = new DirtiableArray<Buff>(Terraria.NPC.maxBuffs);
 
         /// <inheritdoc />
         public override void Clean() {
@@ -83,45 +80,6 @@ namespace Orion.Networking.Packets.Npcs {
                 } else {
                     writer.Write((short)ticks);
                 }
-            }
-        }
-
-        /// <summary>
-        /// Represents the buffs in an <see cref="NpcBuffsPacket"/>.
-        /// </summary>
-        public sealed class Buffs : IArray<Buff>, IDirtiable {
-            private readonly Buff[] _buffs = new Buff[Terraria.NPC.maxBuffs];
-
-            /// <inheritdoc cref="IArray{T}.this" />
-            public Buff this[int index] {
-                get => _buffs[index];
-                set {
-                    _buffs[index] = value ?? throw new ArgumentNullException(nameof(value));
-                    IsDirty = true;
-                }
-            }
-
-            /// <inheritdoc />
-            public int Count => _buffs.Length;
-
-            /// <inheritdoc />
-            public bool IsDirty { get; private set; }
-
-            internal Buffs() {
-                for (var i = 0; i < _buffs.Length; ++i) {
-                    _buffs[i] = new Buff(BuffType.None, TimeSpan.Zero);
-                }
-            }
-
-            /// <inheritdoc />
-            public IEnumerator<Buff> GetEnumerator() => ((IEnumerable<Buff>)_buffs).GetEnumerator();
-
-            [ExcludeFromCodeCoverage]
-            IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
-
-            /// <inheritdoc />
-            public void Clean() {
-                IsDirty = false;
             }
         }
     }

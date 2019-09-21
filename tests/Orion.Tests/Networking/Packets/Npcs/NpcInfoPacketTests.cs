@@ -25,7 +25,14 @@ using Xunit;
 namespace Orion.Networking.Packets.Npcs {
     public class NpcInfoPacketTests {
         [Fact]
-        public void AiValues_Set_MarksAsDirty() {
+        public void SetDefaultableProperties_MarkAsDirty() {
+            var packet = new NpcInfoPacket();
+
+            packet.ShouldHaveDefaultablePropertiesMarkAsDirty();
+        }
+
+        [Fact]
+        public void NpcAiValues_Set_MarksAsDirty() {
             var packet = new NpcInfoPacket();
             packet.NpcAiValues[0] = 0;
 
@@ -33,17 +40,10 @@ namespace Orion.Networking.Packets.Npcs {
         }
 
         [Fact]
-        public void AiValues_Count_IsCorrect() {
+        public void NpcAiValues_Count_IsCorrect() {
             var packet = new NpcInfoPacket();
 
             packet.NpcAiValues.Count.Should().Be(Terraria.NPC.maxAI);
-        }
-
-        [Fact]
-        public void SetDefaultableProperties_MarkAsDirty() {
-            var packet = new NpcInfoPacket();
-
-            packet.ShouldHaveDefaultablePropertiesMarkAsDirty();
         }
 
         [Fact]
@@ -81,11 +81,6 @@ namespace Orion.Networking.Packets.Npcs {
                 packet.NpcTargetIndex.Should().Be(255);
                 packet.NpcHorizontalDirection.Should().BeFalse();
                 packet.NpcVerticalDirection.Should().BeTrue();
-
-                // Iterate two ways
-                for (var i = 0; i < packet.NpcAiValues.Count; ++i) {
-                    packet.NpcAiValues[i].Should().Be(0);
-                }
 
                 foreach (var aiValue in packet.NpcAiValues) {
                     aiValue.Should().Be(0);

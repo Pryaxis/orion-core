@@ -66,12 +66,6 @@ namespace Orion.Networking.Packets.Npcs {
                 var packet = (NpcBuffsPacket)Packet.ReadFromStream(stream, PacketContext.Server);
 
                 packet.NpcIndex.Should().Be(0);
-
-                // Iterate two ways.
-                for (var i = 0; i < packet.NpcBuffs.Count; ++i) {
-                    packet.NpcBuffs[i].Should().BeEquivalentTo(new Buff(BuffType.None, TimeSpan.Zero));
-                }
-
                 foreach (var buff in packet.NpcBuffs) {
                     buff.Should().BeEquivalentTo(new Buff(BuffType.None, TimeSpan.Zero));
                 }

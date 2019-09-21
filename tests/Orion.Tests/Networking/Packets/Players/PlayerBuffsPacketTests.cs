@@ -69,13 +69,8 @@ namespace Orion.Networking.Packets.Players {
 
                 packet.PlayerIndex.Should().Be(0);
 
-                // Iterate two ways.
                 for (var i = 0; i < packet.PlayerBuffTypes.Count; ++i) {
                     packet.PlayerBuffTypes[i].Should().BeSameAs(BuffType.None);
-                }
-
-                foreach (var buffType in packet.PlayerBuffTypes) {
-                    buffType.Should().BeSameAs(BuffType.None);
                 }
             }
         }

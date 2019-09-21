@@ -61,12 +61,37 @@ namespace Orion.Utils {
         }
 
         [Fact]
+        public void GetItem_NullElement_DoesNotAllowNull_ThrowsInvalidOperationException() {
+            var array = new DirtiableArray<string>(1);
+            Func<string> func = () => array[0];
+
+            func.Should().Throw<InvalidOperationException>();
+        }
+
+        [Fact]
         public void SetItem_MarksAsDirty() {
             var array = new DirtiableArray<int>(1);
 
             array[0] = 100;
 
             array.ShouldBeDirty();
+        }
+
+        [Fact]
+        public void SetItem_NullValue_DoesNotAllowNull_ThrowsArgumentNullException() {
+            var array = new DirtiableArray<string>(1);
+            Action action = () => array[0] = null;
+
+            action.Should().Throw<ArgumentNullException>();
+        }
+
+        [Fact]
+        public void SetItem_NullValue_AllowsNull_IsCorrect() {
+            var array = new DirtiableArray<string>(1, true);
+
+            array[0] = null;
+
+            array[0].Should().BeNull();
         }
 
         [Fact]
