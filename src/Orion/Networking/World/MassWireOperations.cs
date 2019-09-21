@@ -20,7 +20,7 @@ using Orion.Networking.Packets.World;
 
 namespace Orion.Networking.World {
     /// <summary>
-    /// Specifies the wire operations in a <see cref="MassWireOperationPacket"/>.
+    /// Specifies the mass wire operations in a <see cref="MassWireOperationPacket"/>.
     /// </summary>
     [Flags]
     public enum MassWireOperations : byte {

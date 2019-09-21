@@ -35,7 +35,7 @@ namespace Orion.Networking.Packets.World {
         public override PacketType Type => PacketType.TileModification;
 
         /// <summary>
-        /// Gets or sets the tile modification type.
+        /// Gets or sets the tile modification.
         /// </summary>
         /// <exception cref="ArgumentNullException"><paramref name="value"/> is <c>null</c>.</exception>
         public TileModification TileModification {

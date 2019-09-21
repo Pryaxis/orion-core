@@ -34,7 +34,7 @@ namespace Orion.Networking.Packets.World {
         public override PacketType Type => PacketType.ToggleDoor;
 
         /// <summary>
-        /// Gets or sets the door action.
+        /// Gets or sets the toggle door action.
         /// </summary>
         /// <exception cref="ArgumentNullException"><paramref name="value"/> is <c>null</c>.</exception>
         public ToggleDoorAction ToggleDoorAction {

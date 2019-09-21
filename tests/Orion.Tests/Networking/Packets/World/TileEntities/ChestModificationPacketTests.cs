@@ -18,8 +18,8 @@
 using System;
 using System.IO;
 using FluentAssertions;
+using Orion.Networking.World.TileEntities;
 using Xunit;
-using static Orion.Networking.Packets.World.TileEntities.ChestModificationPacket;
 
 namespace Orion.Networking.Packets.World.TileEntities {
     public class ChestModificationPacketTests {
@@ -31,18 +31,18 @@ namespace Orion.Networking.Packets.World.TileEntities {
         }
 
         [Fact]
-        public void SetChestModificationType_MarksAsDirty() {
+        public void SetChestModification_MarksAsDirty() {
             var packet = new ChestModificationPacket();
 
-            packet.ChestModificationType = ModificationType.BreakChest;
+            packet.ChestModification = ChestModification.BreakChest;
 
             packet.ShouldBeDirty();
         }
 
         [Fact]
-        public void SetChestModificationType_NullValue_ThrowsArgumentNullException() {
+        public void SetChestModification_NullValue_ThrowsArgumentNullException() {
             var packet = new ChestModificationPacket();
-            Action action = () => packet.ChestModificationType = null;
+            Action action = () => packet.ChestModification = null;
 
             action.Should().Throw<ArgumentNullException>();
         }
@@ -55,7 +55,7 @@ namespace Orion.Networking.Packets.World.TileEntities {
             using (var stream = new MemoryStream(Bytes)) {
                 var packet = (ChestModificationPacket)Packet.ReadFromStream(stream, PacketContext.Server);
 
-                packet.ChestModificationType.Should().BeSameAs(ModificationType.PlaceChest);
+                packet.ChestModification.Should().BeSameAs(ChestModification.PlaceChest);
                 packet.ChestX.Should().Be(100);
                 packet.ChestY.Should().Be(100);
                 packet.ChestStyle.Should().Be(1);
@@ -75,23 +75,6 @@ namespace Orion.Networking.Packets.World.TileEntities {
         [Fact]
         public void DeserializeAndSerialize_SamePacket() {
             Bytes.ShouldDeserializeAndSerializeSamePacket();
-        }
-
-        [Fact]
-        public void ModificationType_FromId_IsCorrect() {
-            for (byte i = 0; i < 6; ++i) {
-                ModificationType.FromId(i).Id.Should().Be(i);
-            }
-
-            ModificationType.FromId(6).Should().BeNull();
-        }
-
-        [Fact]
-        public void ModificationType_FromId_ReturnsSameInstance() {
-            var modificationType = ModificationType.FromId(1);
-            var modificationType2 = ModificationType.FromId(1);
-
-            modificationType.Should().BeSameAs(modificationType2);
         }
     }
 }

@@ -34,7 +34,7 @@ namespace Orion.Networking.Packets.World {
         public override PacketType Type => PacketType.UnlockObject;
 
         /// <summary>
-        /// Gets or sets the unlockable object type.
+        /// Gets or sets the unlockable object.
         /// </summary>
         /// <exception cref="ArgumentNullException"><paramref name="value"/> is <c>null</c>.</exception>
         public UnlockableObject UnlockableObject {
