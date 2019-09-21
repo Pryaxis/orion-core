@@ -21,6 +21,13 @@ using Xunit;
 
 namespace Orion.Networking.Packets.World {
     public class AnglerQuestPacketTests {
+        [Fact]
+        public void SetDefaultableProperties_MarkAsDirty() {
+            var packet = new AnglerQuestPacket();
+
+            packet.ShouldHaveDefaultablePropertiesMarkAsDirty();
+        }
+
         public static readonly byte[] Bytes = {5, 0, 74, 1, 1};
 
         [Fact]

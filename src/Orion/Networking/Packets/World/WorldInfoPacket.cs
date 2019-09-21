@@ -986,19 +986,19 @@ namespace Orion.Networking.Packets.World {
             WindSpeed = reader.ReadSingle();
             NumberOfClouds = reader.ReadByte();
 
-            for (var i = 0; i < 3; ++i) {
+            for (var i = 0; i < TreeStyleBoundaries.Count; ++i) {
                 TreeStyleBoundaries[i] = reader.ReadInt32();
             }
 
-            for (var i = 0; i < 4; ++i) {
+            for (var i = 0; i < TreeStyles.Count; ++i) {
                 TreeStyles[i] = reader.ReadByte();
             }
 
-            for (var i = 0; i < 3; ++i) {
+            for (var i = 0; i < CaveBackgroundStyleBoundaries.Count; ++i) {
                 CaveBackgroundStyleBoundaries[i] = reader.ReadInt32();
             }
 
-            for (var i = 0; i < 4; ++i) {
+            for (var i = 0; i < CaveBackgroundStyles.Count; ++i) {
                 CaveBackgroundStyles[i] = reader.ReadByte();
             }
 
