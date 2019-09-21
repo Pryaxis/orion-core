@@ -21,7 +21,7 @@ using FluentAssertions;
 using Orion.World.Tiles;
 using Xunit;
 
-namespace Orion.Networking.Packets.World {
+namespace Orion.Networking.Packets.World.Tiles {
     public class PlaceObjectPacketTests {
         [Fact]
         public void SetDefaultableProperties_MarkAsDirty() {

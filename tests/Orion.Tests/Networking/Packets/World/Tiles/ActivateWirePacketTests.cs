@@ -15,26 +15,34 @@
 // You should have received a copy of the GNU General Public License
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
+using System.IO;
 using FluentAssertions;
 using Xunit;
 
-namespace Orion.Networking.World {
-    public class ToggleDoorActionTests {
+namespace Orion.Networking.Packets.World.Tiles {
+    public class ActivateWirePacketTests {
         [Fact]
-        public void FromId_IsCorrect() {
-            for (byte i = 0; i < 6; ++i) {
-                ToggleDoorAction.FromId(i).Id.Should().Be(i);
-            }
+        public void SetDefaultableProperties_MarkAsDirty() {
+            var packet = new ActivateWirePacket();
 
-            ToggleDoorAction.FromId(6).Should().BeNull();
+            packet.ShouldHaveDefaultablePropertiesMarkAsDirty();
+        }
+
+        public static readonly byte[] Bytes = {7, 0, 59, 0, 1, 100, 0};
+
+        [Fact]
+        public void ReadFromStream_IsCorrect() {
+            using (var stream = new MemoryStream(Bytes)) {
+                var packet = (ActivateWirePacket)Packet.ReadFromStream(stream, PacketContext.Server);
+
+                packet.WireX.Should().Be(256);
+                packet.WireY.Should().Be(100);
+            }
         }
 
         [Fact]
-        public void FromId_ReturnsSameInstance() {
-            var toggleDoorAction = ToggleDoorAction.FromId(1);
-            var toggleDoorAction2 = ToggleDoorAction.FromId(1);
-
-            toggleDoorAction.Should().BeSameAs(toggleDoorAction2);
+        public void DeserializeAndSerialize_SamePacket() {
+            Bytes.ShouldDeserializeAndSerializeSamePacket();
         }
     }
 }

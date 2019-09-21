@@ -18,65 +18,51 @@
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
 
-namespace Orion.Networking.Packets.World {
+namespace Orion.Networking.Packets.World.Tiles {
     /// <summary>
-    /// Packet sent to toggle a gem lock.
+    /// Packet sent to activate wire at a specific position.
     /// </summary>
-    public sealed class ToggleGemLockPacket : Packet {
-        private short _gemLockX;
-        private short _gemLockY;
-        private bool _isGemLockLocked;
+    public sealed class ActivateWirePacket : Packet {
+        private short _wireY;
+        private short _wireX;
 
         /// <inheritdoc />
-        public override PacketType Type => PacketType.ToggleGemLock;
+        public override PacketType Type => PacketType.ActivateWire;
 
         /// <summary>
-        /// Gets or sets the gem lock's X coordinate.
+        /// Gets or sets the wire's X coordinate.
         /// </summary>
-        public short GemLockX {
-            get => _gemLockX;
+        public short WireX {
+            get => _wireX;
             set {
-                _gemLockX = value;
+                _wireX = value;
                 _isDirty = true;
             }
         }
 
         /// <summary>
-        /// Gets or sets the gem lock's Y coordinate.
+        /// Gets or sets the wire's Y coordinate.
         /// </summary>
-        public short GemLockY {
-            get => _gemLockY;
+        public short WireY {
+            get => _wireY;
             set {
-                _gemLockY = value;
-                _isDirty = true;
-            }
-        }
-
-        /// <summary>
-        /// Gets or sets a value indicating whether the gem lock is locked.
-        /// </summary>
-        public bool IsGemLockLocked {
-            get => _isGemLockLocked;
-            set {
-                _isGemLockLocked = value;
+                _wireY = value;
                 _isDirty = true;
             }
         }
 
         /// <inheritdoc />
         [ExcludeFromCodeCoverage]
-        public override string ToString() => $"{Type}[{IsGemLockLocked} @ ({GemLockX}, {GemLockY})]";
+        public override string ToString() => $"{Type}[({WireX}, {WireY})]";
 
         private protected override void ReadFromReader(BinaryReader reader, PacketContext context) {
-            GemLockX = reader.ReadInt16();
-            GemLockY = reader.ReadInt16();
-            IsGemLockLocked = reader.ReadBoolean();
+            WireX = reader.ReadInt16();
+            WireY = reader.ReadInt16();
         }
 
         private protected override void WriteToWriter(BinaryWriter writer, PacketContext context) {
-            writer.Write(GemLockX);
-            writer.Write(GemLockY);
-            writer.Write(IsGemLockLocked);
+            writer.Write(WireX);
+            writer.Write(WireY);
         }
     }
 }

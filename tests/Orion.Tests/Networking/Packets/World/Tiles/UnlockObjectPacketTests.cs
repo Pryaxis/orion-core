@@ -19,53 +19,52 @@ using System;
 using System.IO;
 using FluentAssertions;
 using Orion.Networking.World;
+using Orion.Networking.World.Tiles;
 using Xunit;
-using static Orion.Networking.Packets.World.ToggleDoorPacket;
 
-namespace Orion.Networking.Packets.World {
-    public class ToggleDoorPacketTests {
+namespace Orion.Networking.Packets.World.Tiles {
+    public class UnlockObjectPacketTests {
         [Fact]
         public void SetDefaultableProperties_MarkAsDirty() {
-            var packet = new ToggleDoorPacket();
+            var packet = new UnlockObjectPacket();
 
             packet.ShouldHaveDefaultablePropertiesMarkAsDirty();
         }
 
         [Fact]
-        public void SetToggleDoorAction_MarksAsDirty() {
-            var packet = new ToggleDoorPacket();
+        public void SetUnlockableObject_MarksAsDirty() {
+            var packet = new UnlockObjectPacket();
 
-            packet.ToggleDoorAction = ToggleDoorAction.CloseDoor;
+            packet.UnlockableObject = UnlockableObject.Chest;
 
             packet.ShouldBeDirty();
         }
 
         [Fact]
-        public void SetToggleDoorAction_NullValue_ThrowsArgumentNullException() {
-            var packet = new ToggleDoorPacket();
-            Action action = () => packet.ToggleDoorAction = null;
+        public void SetUnlockableObject_NullValue_ThrowsArgumentNullException() {
+            var packet = new UnlockObjectPacket();
+            Action action = () => packet.UnlockableObject = null;
 
             action.Should().Throw<ArgumentNullException>();
         }
 
-        private static readonly byte[] Bytes = {9, 0, 19, 0, 16, 14, 194, 1, 1};
-        private static readonly byte[] InvalidDoorActionBytes = {9, 0, 19, 255, 16, 14, 194, 1, 1};
+        public static readonly byte[] Bytes = {8, 0, 52, 1, 0, 1, 100, 0};
+        public static readonly byte[] InvalidObjectTypeBytes = {8, 0, 52, 255, 0, 1, 100, 0};
 
         [Fact]
         public void ReadFromStream_IsCorrect() {
             using (var stream = new MemoryStream(Bytes)) {
-                var packet = (ToggleDoorPacket)Packet.ReadFromStream(stream, PacketContext.Server);
+                var packet = (UnlockObjectPacket)Packet.ReadFromStream(stream, PacketContext.Server);
 
-                packet.ToggleDoorAction.Should().BeSameAs(ToggleDoorAction.OpenDoor);
-                packet.DoorX.Should().Be(3600);
-                packet.DoorY.Should().Be(450);
-                packet.ToggleDirection.Should().BeTrue();
+                packet.UnlockableObject.Should().BeSameAs(UnlockableObject.Chest);
+                packet.ObjectX.Should().Be(256);
+                packet.ObjectY.Should().Be(100);
             }
         }
 
         [Fact]
-        public void ReadFromStream_InvalidDoorAction_ThrowsPacketException() {
-            using (var stream = new MemoryStream(InvalidDoorActionBytes)) {
+        public void ReadFromStream_InvalidObjectType_ThrowsPacketException() {
+            using (var stream = new MemoryStream(InvalidObjectTypeBytes)) {
                 Func<Packet> func = () => Packet.ReadFromStream(stream, PacketContext.Server);
 
                 func.Should().Throw<PacketException>();

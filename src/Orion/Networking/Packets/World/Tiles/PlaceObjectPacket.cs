@@ -20,7 +20,7 @@ using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using Orion.World.Tiles;
 
-namespace Orion.Networking.Packets.World {
+namespace Orion.Networking.Packets.World.Tiles {
     /// <summary>
     /// Packet sent to place an object.
     /// </summary>

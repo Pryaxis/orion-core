@@ -15,27 +15,26 @@
 // You should have received a copy of the GNU General Public License
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
-using System.IO;
 using FluentAssertions;
 using Xunit;
 
-namespace Orion.Networking.Packets.World {
-    public class AnglerQuestPacketTests {
-        public static readonly byte[] Bytes = {5, 0, 74, 1, 1};
-
+namespace Orion.Networking.World.Tiles {
+    public class ToggleDoorActionTests {
         [Fact]
-        public void ReadFromStream_IsCorrect() {
-            using (var stream = new MemoryStream(Bytes)) {
-                var packet = (AnglerQuestPacket)Packet.ReadFromStream(stream, PacketContext.Server);
-
-                packet.CurrentAnglerQuest.Should().Be(1);
-                packet.IsAnglerQuestFinished.Should().BeTrue();
+        public void FromId_IsCorrect() {
+            for (byte i = 0; i < 6; ++i) {
+                ToggleDoorAction.FromId(i).Id.Should().Be(i);
             }
+
+            ToggleDoorAction.FromId(6).Should().BeNull();
         }
 
         [Fact]
-        public void WriteToStream_IsCorrect() {
-            Bytes.ShouldDeserializeAndSerializeSamePacket();
+        public void FromId_ReturnsSameInstance() {
+            var toggleDoorAction = ToggleDoorAction.FromId(1);
+            var toggleDoorAction2 = ToggleDoorAction.FromId(1);
+
+            toggleDoorAction.Should().BeSameAs(toggleDoorAction2);
         }
     }
 }

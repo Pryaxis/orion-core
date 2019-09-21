@@ -18,7 +18,7 @@
 using FluentAssertions;
 using Xunit;
 
-namespace Orion.Networking.World {
+namespace Orion.Networking.World.Tiles {
     public class UnlockableObjectTests {
         [Fact]
         public void FromId_IsCorrect() {

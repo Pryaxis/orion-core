@@ -19,24 +19,25 @@ using System.IO;
 using FluentAssertions;
 using Xunit;
 
-namespace Orion.Networking.Packets.World {
-    public class ActivateWirePacketTests {
+namespace Orion.Networking.Packets.World.Tiles {
+    public class ToggleGemLockPacketTests {
         [Fact]
         public void SetDefaultableProperties_MarkAsDirty() {
-            var packet = new ActivateWirePacket();
+            var packet = new ToggleGemLockPacket();
 
             packet.ShouldHaveDefaultablePropertiesMarkAsDirty();
         }
 
-        public static readonly byte[] Bytes = {7, 0, 59, 0, 1, 100, 0};
+        public static readonly byte[] Bytes = {8, 0, 105, 0, 1, 100, 0, 1};
 
         [Fact]
         public void ReadFromStream_IsCorrect() {
             using (var stream = new MemoryStream(Bytes)) {
-                var packet = (ActivateWirePacket)Packet.ReadFromStream(stream, PacketContext.Server);
+                var packet = (ToggleGemLockPacket)Packet.ReadFromStream(stream, PacketContext.Server);
 
-                packet.WireX.Should().Be(256);
-                packet.WireY.Should().Be(100);
+                packet.GemLockX.Should().Be(256);
+                packet.GemLockY.Should().Be(100);
+                packet.IsGemLockLocked.Should().BeTrue();
             }
         }
 
