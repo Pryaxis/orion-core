@@ -15,23 +15,19 @@
 // You should have received a copy of the GNU General Public License
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
-using Orion.Events;
-using Orion.Events.Entities;
-using Orion.Utils;
+using System.IO;
+using Orion.Networking.Packets.World;
 
-namespace Orion.Entities {
+namespace Orion.Networking.Packets.Entities {
     /// <summary>
-    /// Represents a player service. Provides access to player-related events and methods.
+    /// Packet sent from the server to the client to enter the world. This is sent in response to a
+    /// <see cref="RequestSectionPacket"/>.
     /// </summary>
-    public interface IPlayerService : IReadOnlyArray<IPlayer> {
-        /// <summary>
-        /// Gets or sets the event handlers that run when a player connects. This event can be canceled.
-        /// </summary>
-        EventHandlerCollection<PlayerConnectEventArgs> PlayerConnect { get; set; }
+    public sealed class PlayerEnterWorldPacket : Packet {
+        /// <inheritdoc />
+        public override PacketType Type => PacketType.PlayerEnterWorld;
 
-        /// <summary>
-        /// Gets or sets the event handlers that run when a player disconnects.
-        /// </summary>
-        EventHandlerCollection<PlayerDisconnectEventArgs> PlayerDisconnect { get; set; }
+        private protected override void ReadFromReader(BinaryReader reader, PacketContext context) { }
+        private protected override void WriteToWriter(BinaryWriter writer, PacketContext context) { }
     }
 }

@@ -19,8 +19,4 @@
     <ProjectReference Include="..\..\src\Orion\Orion.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Networking\Packets\Items\" />
-  </ItemGroup>
-
 </Project>

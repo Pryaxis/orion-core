@@ -34,7 +34,6 @@
 
     <ItemGroup>
       <Folder Include="Entities\Impl\" />
-      <Folder Include="Networking\Packets\Items\" />
       <Folder Include="World\Impl\" />
       <Folder Include="World\TileEntities\Impl\" />
     </ItemGroup>

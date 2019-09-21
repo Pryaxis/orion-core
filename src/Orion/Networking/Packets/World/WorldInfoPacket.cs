@@ -21,7 +21,7 @@ using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using Orion.Events;
-using Orion.Networking.Packets.Players;
+using Orion.Networking.Packets.Entities;
 using Orion.Utils;
 using Orion.World;
 using Terraria;

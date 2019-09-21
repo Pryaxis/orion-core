@@ -15,23 +15,25 @@
 // You should have received a copy of the GNU General Public License
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
-using Orion.Events;
-using Orion.Events.Entities;
-using Orion.Utils;
+using System.IO;
+using FluentAssertions;
+using Xunit;
 
-namespace Orion.Entities {
-    /// <summary>
-    /// Represents a player service. Provides access to player-related events and methods.
-    /// </summary>
-    public interface IPlayerService : IReadOnlyArray<IPlayer> {
-        /// <summary>
-        /// Gets or sets the event handlers that run when a player connects. This event can be canceled.
-        /// </summary>
-        EventHandlerCollection<PlayerConnectEventArgs> PlayerConnect { get; set; }
+namespace Orion.Networking.Packets.Entities {
+    public class PlayerTeleportationPotionPacketTests {
+        public static readonly byte[] Bytes = {3, 0, 73};
 
-        /// <summary>
-        /// Gets or sets the event handlers that run when a player disconnects.
-        /// </summary>
-        EventHandlerCollection<PlayerDisconnectEventArgs> PlayerDisconnect { get; set; }
+        [Fact]
+        public void ReadFromStream_IsCorrect() {
+            using (var stream = new MemoryStream(Bytes)) {
+                Packet.ReadFromStream(stream, PacketContext.Server).Should()
+                      .BeOfType<PlayerTeleportationPotionPacket>();
+            }
+        }
+
+        [Fact]
+        public void DeserializeAndSerialize_SamePacket() {
+            Bytes.ShouldDeserializeAndSerializeSamePacket();
+        }
     }
 }

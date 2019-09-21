@@ -22,10 +22,10 @@ using System.IO;
 using System.Threading;
 using Orion.Entities;
 using Orion.Events;
+using Orion.Events.Entities;
 using Orion.Events.Networking;
-using Orion.Events.Players;
 using Orion.Networking.Packets;
-using Orion.Networking.Packets.Players;
+using Orion.Networking.Packets.Entities;
 
 namespace Orion.Networking.Impl {
     internal sealed class NetworkService : OrionService, INetworkService {

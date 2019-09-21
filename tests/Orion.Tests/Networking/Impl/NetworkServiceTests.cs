@@ -20,8 +20,8 @@ using FluentAssertions;
 using Moq;
 using Orion.Entities;
 using Orion.Events;
-using Orion.Events.Players;
-using Orion.Networking.Packets.Players;
+using Orion.Events.Entities;
+using Orion.Networking.Packets.Entities;
 using Xunit;
 
 namespace Orion.Networking.Impl {
