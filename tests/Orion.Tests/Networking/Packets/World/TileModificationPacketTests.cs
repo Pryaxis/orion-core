@@ -18,8 +18,8 @@
 using System;
 using System.IO;
 using FluentAssertions;
+using Orion.Networking.World;
 using Xunit;
-using static Orion.Networking.Packets.World.TileModificationPacket;
 
 namespace Orion.Networking.Packets.World {
     public class TileModificationPacketTests {
@@ -34,7 +34,7 @@ namespace Orion.Networking.Packets.World {
         public void SetTileModificationType_MarksAsDirty() {
             var packet = new TileModificationPacket();
 
-            packet.TileModificationType = ModificationType.DestroyBlock;
+            packet.TileModificationType = TileModificationType.DestroyBlock;
 
             packet.ShouldBeDirty();
         }
@@ -55,7 +55,7 @@ namespace Orion.Networking.Packets.World {
             using (var stream = new MemoryStream(Bytes)) {
                 var packet = (TileModificationPacket)Packet.ReadFromStream(stream, PacketContext.Server);
 
-                packet.TileModificationType.Should().BeSameAs(ModificationType.DestroyBlock);
+                packet.TileModificationType.Should().BeSameAs(TileModificationType.DestroyBlock);
                 packet.TileX.Should().Be(3600);
                 packet.TileY.Should().Be(450);
                 packet.TileModificationData.Should().Be(1);
@@ -75,23 +75,6 @@ namespace Orion.Networking.Packets.World {
         [Fact]
         public void DeserializeAndSerialize_SamePacket() {
             Bytes.ShouldDeserializeAndSerializeSamePacket();
-        }
-
-        [Fact]
-        public void ModificationType_FromId_IsCorrect() {
-            for (byte i = 0; i < 20; ++i) {
-                ModificationType.FromId(i).Id.Should().Be(i);
-            }
-
-            ModificationType.FromId(20).Should().BeNull();
-        }
-
-        [Fact]
-        public void ModificationType_FromId_ReturnsSameInstance() {
-            var modificationType = ModificationType.FromId(1);
-            var modificationType2 = ModificationType.FromId(1);
-
-            modificationType.Should().BeSameAs(modificationType2);
         }
     }
 }
