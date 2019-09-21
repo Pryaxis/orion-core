@@ -19,7 +19,7 @@ using System.IO;
 using FluentAssertions;
 using Xunit;
 
-namespace Orion.Networking.Packets.World {
+namespace Orion.Networking.Packets.World.Tiles {
     public class RequestSectionPacketTests {
         [Fact]
         public void SetDefaultableProperties_MarkAsDirty() {

@@ -16,14 +16,11 @@
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.IO.Compression;
-using System.Linq;
 using System.Text;
-using Orion.Events;
 using Orion.Networking.World.TileEntities;
 using Orion.Networking.World.Tiles;
 using Orion.Utils;
@@ -31,7 +28,7 @@ using Orion.World.TileEntities;
 using Orion.World.Tiles;
 using OTAPI.Tile;
 
-namespace Orion.Networking.Packets.World {
+namespace Orion.Networking.Packets.World.Tiles {
     /// <summary>
     /// Packet sent from the server to the client to set a section of the world. This is sent in response to a
     /// <see cref="RequestSectionPacket"/>.

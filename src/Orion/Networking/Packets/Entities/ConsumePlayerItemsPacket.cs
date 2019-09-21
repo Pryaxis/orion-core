@@ -20,6 +20,7 @@ using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using Orion.Entities;
 using Orion.Networking.Packets.World;
+using Orion.Networking.Packets.World.Tiles;
 
 namespace Orion.Networking.Packets.Entities {
     /// <summary>

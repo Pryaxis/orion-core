@@ -22,7 +22,7 @@ using Orion.Networking.World.TileEntities;
 using Orion.Networking.World.Tiles;
 using Xunit;
 
-namespace Orion.Networking.Packets.World {
+namespace Orion.Networking.Packets.World.Tiles {
     public class SectionPacketTests {
         [Fact]
         public void SetDefaultableProperties_MarkAsDirty() {

@@ -18,7 +18,7 @@
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
 
-namespace Orion.Networking.Packets.World {
+namespace Orion.Networking.Packets.World.Tiles {
     /// <summary>
     /// Packet sent from the server to the client to synchronize tile frames. This is sent following every
     /// <see cref="SectionPacket"/>.

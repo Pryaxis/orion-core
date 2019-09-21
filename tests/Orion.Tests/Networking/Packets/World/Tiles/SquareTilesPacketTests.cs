@@ -15,32 +15,52 @@
 // You should have received a copy of the GNU General Public License
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
+using System;
 using System.IO;
 using FluentAssertions;
-using Orion.Networking.World;
+using Orion.Networking.World.Tiles;
 using Xunit;
 
-namespace Orion.Networking.Packets.World {
-    public class MassWireOperationPacketTests {
+namespace Orion.Networking.Packets.World.Tiles {
+    public class SquareTilesPacketTests {
         [Fact]
         public void SetDefaultableProperties_MarkAsDirty() {
-            var packet = new MassWireOperationPacket();
+            var packet = new SquareTilesPacket();
 
             packet.ShouldHaveDefaultablePropertiesMarkAsDirty();
         }
 
-        public static readonly byte[] Bytes = {12, 0, 109, 0, 0, 0, 0, 0, 1, 100, 0, 1};
+        [Fact]
+        public void Tiles_SetItem_MarksAsDirty() {
+            var packet = new SquareTilesPacket();
+            packet.Tiles = new NetworkTiles(1, 1);
+            packet.ShouldBeDirty();
+
+            packet.Tiles[0, 0] = new NetworkTile();
+
+            packet.ShouldBeDirty();
+        }
+
+        [Fact]
+        public void SetTiles_NullValue_ThrowsArgumentNullException() {
+            var packet = new SquareTilesPacket();
+            Action action = () => packet.Tiles = null;
+
+            action.Should().Throw<ArgumentNullException>();
+        }
+
+        private static readonly byte[] Bytes = {17, 0, 20, 1, 0, 153, 16, 171, 1, 1, 0, 3, 0, 72, 0, 0, 0};
 
         [Fact]
         public void ReadFromStream_IsCorrect() {
             using (var stream = new MemoryStream(Bytes)) {
-                var packet = (MassWireOperationPacket)Packet.ReadFromStream(stream, PacketContext.Server);
+                var packet = (SquareTilesPacket)Packet.ReadFromStream(stream, PacketContext.Server);
 
-                packet.StartTileX.Should().Be(0);
-                packet.StartTileY.Should().Be(0);
-                packet.EndTileX.Should().Be(256);
-                packet.EndTileY.Should().Be(100);
-                packet.MassWireOperations.Should().Be(MassWireOperations.RedWire);
+                packet.SquareSize.Should().Be(1);
+                packet.TileX.Should().Be(4249);
+                packet.TileY.Should().Be(427);
+                packet.Tiles.Width.Should().Be(1);
+                packet.Tiles.Height.Should().Be(1);
             }
         }
 

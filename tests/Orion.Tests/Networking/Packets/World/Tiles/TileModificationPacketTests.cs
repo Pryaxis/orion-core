@@ -18,52 +18,54 @@
 using System;
 using System.IO;
 using FluentAssertions;
-using Orion.World.Tiles;
+using Orion.Networking.World.Tiles;
 using Xunit;
 
-namespace Orion.Networking.Packets.World {
-    public class PaintWallPacketTests {
+namespace Orion.Networking.Packets.World.Tiles {
+    public class TileModificationPacketTests {
         [Fact]
         public void SetDefaultableProperties_MarkAsDirty() {
-            var packet = new PaintWallPacket();
+            var packet = new TileModificationPacket();
 
             packet.ShouldHaveDefaultablePropertiesMarkAsDirty();
         }
 
         [Fact]
-        public void SetWallColor_MarksAsDirty() {
-            var packet = new PaintWallPacket();
+        public void SetTileModification_MarksAsDirty() {
+            var packet = new TileModificationPacket();
 
-            packet.WallColor = PaintColor.Red;
+            packet.TileModification = TileModification.DestroyBlock;
 
             packet.ShouldBeDirty();
         }
 
         [Fact]
-        public void SetWallColor_NullValue_ThrowsArgumentNullException() {
-            var packet = new PaintWallPacket();
-            Action action = () => packet.WallColor = null;
+        public void SetTileModification_NullValue_ThrowsArgumentNullException() {
+            var packet = new TileModificationPacket();
+            Action action = () => packet.TileModification = null;
 
             action.Should().Throw<ArgumentNullException>();
         }
 
-        public static readonly byte[] Bytes = {8, 0, 64, 0, 1, 100, 0, 1};
-        public static readonly byte[] InvalidPaintColorBytes = {8, 0, 64, 0, 1, 100, 0, 255};
+        private static readonly byte[] Bytes = {11, 0, 17, 0, 16, 14, 194, 1, 1, 0, 0};
+        private static readonly byte[] InvalidModificationTypeBytes = {11, 0, 17, 255, 16, 14, 194, 1, 1, 0, 0};
 
         [Fact]
         public void ReadFromStream_IsCorrect() {
             using (var stream = new MemoryStream(Bytes)) {
-                var packet = (PaintWallPacket)Packet.ReadFromStream(stream, PacketContext.Server);
+                var packet = (TileModificationPacket)Packet.ReadFromStream(stream, PacketContext.Server);
 
-                packet.WallX.Should().Be(256);
-                packet.WallY.Should().Be(100);
-                packet.WallColor.Should().BeSameAs(PaintColor.Red);
+                packet.TileModification.Should().BeSameAs(TileModification.DestroyBlock);
+                packet.TileX.Should().Be(3600);
+                packet.TileY.Should().Be(450);
+                packet.TileModificationData.Should().Be(1);
+                packet.TileModificationStyle.Should().Be(0);
             }
         }
 
         [Fact]
-        public void ReadFromStream_InvalidPaintColor_ThrowsPacketException() {
-            using (var stream = new MemoryStream(InvalidPaintColorBytes)) {
+        public void ReadFromStream_InvalidModificationType_ThrowsPacketException() {
+            using (var stream = new MemoryStream(InvalidModificationTypeBytes)) {
                 Func<Packet> func = () => Packet.ReadFromStream(stream, PacketContext.Server);
 
                 func.Should().Throw<PacketException>();

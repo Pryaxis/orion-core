@@ -20,66 +20,66 @@ using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using Orion.World.Tiles;
 
-namespace Orion.Networking.Packets.World {
+namespace Orion.Networking.Packets.World.Tiles {
     /// <summary>
-    /// Packet sent to paint a wall.
+    /// Packet sent to paint a block.
     /// </summary>
-    public sealed class PaintWallPacket : Packet {
-        private short _wallX;
-        private short _wallY;
-        private PaintColor _wallColor;
+    public sealed class PaintBlockPacket : Packet {
+        private short _blockX;
+        private short _blockY;
+        private PaintColor _blockColor;
 
         /// <inheritdoc />
-        public override PacketType Type => PacketType.PaintWall;
+        public override PacketType Type => PacketType.PaintBlock;
 
         /// <summary>
-        /// Gets or sets the wall's X coordinate.
+        /// Gets or sets the block's X coordinate.
         /// </summary>
-        public short WallX {
-            get => _wallX;
+        public short BlockX {
+            get => _blockX;
             set {
-                _wallX = value;
+                _blockX = value;
                 _isDirty = true;
             }
         }
 
         /// <summary>
-        /// Gets or sets the wall's Y coordinate.
+        /// Gets or sets the block's Y coordinate.
         /// </summary>
-        public short WallY {
-            get => _wallY;
+        public short BlockY {
+            get => _blockY;
             set {
-                _wallY = value;
+                _blockY = value;
                 _isDirty = true;
             }
         }
 
         /// <summary>
-        /// Gets or sets the wall color.
+        /// Gets or sets the block color.
         /// </summary>
         /// <exception cref="ArgumentNullException"><paramref name="value"/> is <c>null</c>.</exception>
-        public PaintColor WallColor {
-            get => _wallColor;
+        public PaintColor BlockColor {
+            get => _blockColor;
             set {
-                _wallColor = value ?? throw new ArgumentNullException(nameof(value));
+                _blockColor = value ?? throw new ArgumentNullException(nameof(value));
                 _isDirty = true;
             }
         }
 
         /// <inheritdoc />
         [ExcludeFromCodeCoverage]
-        public override string ToString() => $"{Type}[{WallColor} @ ({WallX}, {WallY})]";
+        public override string ToString() => $"{Type}[{BlockColor} @ ({BlockX}, {BlockY})]";
 
         private protected override void ReadFromReader(BinaryReader reader, PacketContext context) {
-            WallX = reader.ReadInt16();
-            WallY = reader.ReadInt16();
-            WallColor = PaintColor.FromId(reader.ReadByte()) ?? throw new PacketException("Paint color is invalid.");
+            BlockX = reader.ReadInt16();
+            BlockY = reader.ReadInt16();
+            BlockColor = PaintColor.FromId(reader.ReadByte()) ?? throw new PacketException("Paint color is invalid.");
         }
 
         private protected override void WriteToWriter(BinaryWriter writer, PacketContext context) {
-            writer.Write(WallX);
-            writer.Write(WallY);
-            writer.Write(WallColor.Id);
+            writer.Write(BlockX);
+            writer.Write(BlockY);
+            writer.Write(BlockColor.Id);
         }
     }
 }

@@ -17,6 +17,7 @@
 
 using System.IO;
 using Orion.Networking.Packets.World;
+using Orion.Networking.Packets.World.Tiles;
 
 namespace Orion.Networking.Packets.Entities {
     /// <summary>

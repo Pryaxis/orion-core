@@ -17,9 +17,9 @@
 
 using System.Diagnostics.CodeAnalysis;
 using System.Reflection;
-using Orion.Networking.Packets.World;
+using Orion.Networking.Packets.World.Tiles;
 
-namespace Orion.Networking.World {
+namespace Orion.Networking.World.Tiles {
     /// <summary>
     /// Represents a tile modification in a <see cref="TileModificationPacket"/>.
     /// </summary>

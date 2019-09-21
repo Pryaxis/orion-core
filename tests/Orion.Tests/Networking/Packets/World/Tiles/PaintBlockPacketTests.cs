@@ -18,47 +18,52 @@
 using System;
 using System.IO;
 using FluentAssertions;
-using Orion.Networking.World.Tiles;
 using Orion.World.Tiles;
 using Xunit;
 
-namespace Orion.Networking.Packets.World {
-    public class TileLiquidPacketTests {
+namespace Orion.Networking.Packets.World.Tiles {
+    public class PaintBlockPacketTests {
         [Fact]
-        public void SetTileLiquid_MarksAsDirty() {
-            var packet = new TileLiquidPacket();
+        public void SetDefaultableProperties_MarkAsDirty() {
+            var packet = new PaintBlockPacket();
 
-            packet.TileLiquid = new NetworkLiquid();
+            packet.ShouldHaveDefaultablePropertiesMarkAsDirty();
+        }
+
+        [Fact]
+        public void SetBlockColor_MarksAsDirty() {
+            var packet = new PaintBlockPacket();
+
+            packet.BlockColor = PaintColor.Red;
 
             packet.ShouldBeDirty();
         }
 
         [Fact]
-        public void SetTileLiquid_NullValue_ThrowsArgumentNullException() {
-            var packet = new TileLiquidPacket();
-            Action action = () => packet.TileLiquid = null;
+        public void SetBlockColor_NullValue_ThrowsArgumentNullException() {
+            var packet = new PaintBlockPacket();
+            Action action = () => packet.BlockColor = null;
 
             action.Should().Throw<ArgumentNullException>();
         }
 
-        public static readonly byte[] Bytes = {9, 0, 48, 0, 1, 100, 0, 255, 0};
-        public static readonly byte[] InvalidLiquidTypeBytes = {9, 0, 48, 0, 1, 100, 0, 255, 255};
+        public static readonly byte[] Bytes = {8, 0, 63, 0, 1, 100, 0, 1};
+        public static readonly byte[] InvalidPaintColorBytes = {8, 0, 63, 0, 1, 100, 0, 255};
 
         [Fact]
         public void ReadFromStream_IsCorrect() {
             using (var stream = new MemoryStream(Bytes)) {
-                var packet = (TileLiquidPacket)Packet.ReadFromStream(stream, PacketContext.Server);
+                var packet = (PaintBlockPacket)Packet.ReadFromStream(stream, PacketContext.Server);
 
-                packet.TileLiquid.TileX.Should().Be(256);
-                packet.TileLiquid.TileY.Should().Be(100);
-                packet.TileLiquid.LiquidAmount.Should().Be(255);
-                packet.TileLiquid.LiquidType.Should().BeSameAs(LiquidType.Water);
+                packet.BlockX.Should().Be(256);
+                packet.BlockY.Should().Be(100);
+                packet.BlockColor.Should().BeSameAs(PaintColor.Red);
             }
         }
 
         [Fact]
-        public void ReadFromStream_InvalidLiquidType_ThrowsPacketException() {
-            using (var stream = new MemoryStream(InvalidLiquidTypeBytes)) {
+        public void ReadFromStream_InvalidPaintColor_ThrowsPacketException() {
+            using (var stream = new MemoryStream(InvalidPaintColorBytes)) {
                 Func<Packet> func = () => Packet.ReadFromStream(stream, PacketContext.Server);
 
                 func.Should().Throw<PacketException>();

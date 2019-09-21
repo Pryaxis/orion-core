@@ -18,9 +18,9 @@
 using System;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
-using Orion.Networking.World;
+using Orion.Networking.World.Tiles;
 
-namespace Orion.Networking.Packets.World {
+namespace Orion.Networking.Packets.World.Tiles {
     /// <summary>
     /// Packet sent to perform a tile modification.
     /// </summary>

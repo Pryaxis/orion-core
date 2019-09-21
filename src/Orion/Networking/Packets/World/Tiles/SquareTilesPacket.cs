@@ -21,7 +21,7 @@ using System.IO;
 using Orion.Networking.World.Tiles;
 using Orion.World.Tiles;
 
-namespace Orion.Networking.Packets.World {
+namespace Orion.Networking.Packets.World.Tiles {
     /// <summary>
     /// Packet sent to set a square of tiles.
     /// </summary>

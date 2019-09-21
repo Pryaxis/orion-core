@@ -18,7 +18,7 @@
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
 
-namespace Orion.Networking.Packets.World {
+namespace Orion.Networking.Packets.World.Tiles {
     /// <summary>
     /// Packet sent from the client to the server to request a section of the world.
     /// </summary>

@@ -16,9 +16,9 @@
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
 using System;
-using Orion.Networking.Packets.World;
+using Orion.Networking.Packets.World.Tiles;
 
-namespace Orion.Networking.World {
+namespace Orion.Networking.World.Tiles {
     /// <summary>
     /// Specifies the mass wire operations in a <see cref="MassWireOperationPacket"/>.
     /// </summary>

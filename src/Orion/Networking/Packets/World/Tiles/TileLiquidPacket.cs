@@ -20,7 +20,7 @@ using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using Orion.Networking.World.Tiles;
 
-namespace Orion.Networking.Packets.World {
+namespace Orion.Networking.Packets.World.Tiles {
     /// <summary>
     /// Packet sent to set a tile's liquid.
     /// </summary>

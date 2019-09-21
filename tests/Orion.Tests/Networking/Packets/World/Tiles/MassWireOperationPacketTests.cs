@@ -17,28 +17,30 @@
 
 using System.IO;
 using FluentAssertions;
+using Orion.Networking.World.Tiles;
 using Xunit;
 
-namespace Orion.Networking.Packets.World {
-    public class SectionFramesPacketTests {
+namespace Orion.Networking.Packets.World.Tiles {
+    public class MassWireOperationPacketTests {
         [Fact]
         public void SetDefaultableProperties_MarkAsDirty() {
-            var packet = new SectionFramesPacket();
+            var packet = new MassWireOperationPacket();
 
             packet.ShouldHaveDefaultablePropertiesMarkAsDirty();
         }
 
-        private static readonly byte[] Bytes = {11, 0, 11, 18, 0, 1, 0, 22, 0, 3, 0};
+        public static readonly byte[] Bytes = {12, 0, 109, 0, 0, 0, 0, 0, 1, 100, 0, 1};
 
         [Fact]
         public void ReadFromStream_IsCorrect() {
             using (var stream = new MemoryStream(Bytes)) {
-                var packet = (SectionFramesPacket)Packet.ReadFromStream(stream, PacketContext.Server);
+                var packet = (MassWireOperationPacket)Packet.ReadFromStream(stream, PacketContext.Server);
 
-                packet.StartSectionX.Should().Be(18);
-                packet.StartSectionY.Should().Be(1);
-                packet.EndSectionX.Should().Be(22);
-                packet.EndSectionY.Should().Be(3);
+                packet.StartTileX.Should().Be(0);
+                packet.StartTileY.Should().Be(0);
+                packet.EndTileX.Should().Be(256);
+                packet.EndTileY.Should().Be(100);
+                packet.MassWireOperations.Should().Be(MassWireOperations.RedWire);
             }
         }
 

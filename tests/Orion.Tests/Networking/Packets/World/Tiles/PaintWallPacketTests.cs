@@ -21,43 +21,43 @@ using FluentAssertions;
 using Orion.World.Tiles;
 using Xunit;
 
-namespace Orion.Networking.Packets.World {
-    public class PaintBlockPacketTests {
+namespace Orion.Networking.Packets.World.Tiles {
+    public class PaintWallPacketTests {
         [Fact]
         public void SetDefaultableProperties_MarkAsDirty() {
-            var packet = new PaintBlockPacket();
+            var packet = new PaintWallPacket();
 
             packet.ShouldHaveDefaultablePropertiesMarkAsDirty();
         }
 
         [Fact]
-        public void SetBlockColor_MarksAsDirty() {
-            var packet = new PaintBlockPacket();
+        public void SetWallColor_MarksAsDirty() {
+            var packet = new PaintWallPacket();
 
-            packet.BlockColor = PaintColor.Red;
+            packet.WallColor = PaintColor.Red;
 
             packet.ShouldBeDirty();
         }
 
         [Fact]
-        public void SetBlockColor_NullValue_ThrowsArgumentNullException() {
-            var packet = new PaintBlockPacket();
-            Action action = () => packet.BlockColor = null;
+        public void SetWallColor_NullValue_ThrowsArgumentNullException() {
+            var packet = new PaintWallPacket();
+            Action action = () => packet.WallColor = null;
 
             action.Should().Throw<ArgumentNullException>();
         }
 
-        public static readonly byte[] Bytes = {8, 0, 63, 0, 1, 100, 0, 1};
-        public static readonly byte[] InvalidPaintColorBytes = {8, 0, 63, 0, 1, 100, 0, 255};
+        public static readonly byte[] Bytes = {8, 0, 64, 0, 1, 100, 0, 1};
+        public static readonly byte[] InvalidPaintColorBytes = {8, 0, 64, 0, 1, 100, 0, 255};
 
         [Fact]
         public void ReadFromStream_IsCorrect() {
             using (var stream = new MemoryStream(Bytes)) {
-                var packet = (PaintBlockPacket)Packet.ReadFromStream(stream, PacketContext.Server);
+                var packet = (PaintWallPacket)Packet.ReadFromStream(stream, PacketContext.Server);
 
-                packet.BlockX.Should().Be(256);
-                packet.BlockY.Should().Be(100);
-                packet.BlockColor.Should().BeSameAs(PaintColor.Red);
+                packet.WallX.Should().Be(256);
+                packet.WallY.Should().Be(100);
+                packet.WallColor.Should().BeSameAs(PaintColor.Red);
             }
         }
 
