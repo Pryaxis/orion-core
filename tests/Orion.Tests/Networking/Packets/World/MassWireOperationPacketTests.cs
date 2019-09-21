@@ -17,8 +17,8 @@
 
 using System.IO;
 using FluentAssertions;
+using Orion.Networking.World;
 using Xunit;
-using static Orion.Networking.Packets.World.MassWireOperationPacket;
 
 namespace Orion.Networking.Packets.World {
     public class MassWireOperationPacketTests {
@@ -40,7 +40,7 @@ namespace Orion.Networking.Packets.World {
                 packet.StartTileY.Should().Be(0);
                 packet.EndTileX.Should().Be(256);
                 packet.EndTileY.Should().Be(100);
-                packet.MassWireOperations.Should().Be(WireOperations.RedWire);
+                packet.MassWireOperations.Should().Be(MassWireOperations.RedWire);
             }
         }
 

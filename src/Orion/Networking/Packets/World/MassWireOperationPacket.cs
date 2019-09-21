@@ -18,6 +18,7 @@
 using System;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
+using Orion.Networking.World;
 
 namespace Orion.Networking.Packets.World {
     /// <summary>
@@ -28,7 +29,7 @@ namespace Orion.Networking.Packets.World {
         private short _startTileY;
         private short _endTileX;
         private short _endTileY;
-        private WireOperations _massWireOperations;
+        private MassWireOperations _massWireOperations;
 
         /// <inheritdoc />
         public override PacketType Type => PacketType.MassWireOperation;
@@ -80,7 +81,7 @@ namespace Orion.Networking.Packets.World {
         /// <summary>
         /// Gets or sets the mass wire operations.
         /// </summary>
-        public WireOperations MassWireOperations {
+        public MassWireOperations MassWireOperations {
             get => _massWireOperations;
             set {
                 _massWireOperations = value;
@@ -98,7 +99,7 @@ namespace Orion.Networking.Packets.World {
             StartTileY = reader.ReadInt16();
             EndTileX = reader.ReadInt16();
             EndTileY = reader.ReadInt16();
-            MassWireOperations = (WireOperations)reader.ReadByte();
+            MassWireOperations = (MassWireOperations)reader.ReadByte();
         }
 
         private protected override void WriteToWriter(BinaryWriter writer, PacketContext context) {
@@ -107,47 +108,6 @@ namespace Orion.Networking.Packets.World {
             writer.Write(EndTileX);
             writer.Write(EndTileY);
             writer.Write((byte)MassWireOperations);
-        }
-
-        /// <summary>
-        /// Specifies the wire operations in a <see cref="MassWireOperationPacket"/>.
-        /// </summary>
-        [Flags]
-        public enum WireOperations : byte {
-            /// <summary>
-            /// Indicates nothing.
-            /// </summary>
-            None = 0,
-
-            /// <summary>
-            /// Indicates that red wires should be modified.
-            /// </summary>
-            RedWire = 1,
-
-            /// <summary>
-            /// Indicates that green wires should be modified.
-            /// </summary>
-            GreenWire = 2,
-
-            /// <summary>
-            /// Indicates that blue wires should be modified.
-            /// </summary>
-            BlueWire = 4,
-
-            /// <summary>
-            /// Indicates that yellow wires should be modified.
-            /// </summary>
-            YellowWire = 8,
-
-            /// <summary>
-            /// Indicates that actuators should be modified.
-            /// </summary>
-            Actuator = 16,
-
-            /// <summary>
-            /// Indicates that components should be removed.
-            /// </summary>
-            Remove = 32
         }
     }
 }
