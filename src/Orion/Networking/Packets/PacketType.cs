@@ -15,174 +15,124 @@
 // You should have received a copy of the GNU General Public License
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
-using System;
-using System.Diagnostics.CodeAnalysis;
-using System.Linq;
-using System.Reflection;
-
 namespace Orion.Networking.Packets {
     /// <summary>
-    /// Represents a packet type.
+    /// Specifies a packet type.
     /// </summary>
-    public sealed class PacketType {
+    public enum PacketType : byte {
 #pragma warning disable 1591
-        public static PacketType PlayerConnect = new PacketType(1);
-        public static PacketType PlayerDisconnect = new PacketType(2);
-        public static PacketType PlayerContinueConnecting = new PacketType(3);
-        public static PacketType PlayerData = new PacketType(4);
-        public static PacketType PlayerInventorySlot = new PacketType(5);
-        public static PacketType PlayerJoin = new PacketType(6);
-        public static PacketType WorldInfo = new PacketType(7);
-        public static PacketType RequestSection = new PacketType(8);
-        public static PacketType PlayerStatus = new PacketType(9);
-        public static PacketType Section = new PacketType(10);
-        public static PacketType SectionFrames = new PacketType(11);
-        public static PacketType SpawnPlayer = new PacketType(12);
-        public static PacketType PlayerInfo = new PacketType(13);
-        public static PacketType PlayerActivity = new PacketType(14);
-        public static PacketType PlayerHealth = new PacketType(16);
-        public static PacketType TileModification = new PacketType(17);
-        public static PacketType Time = new PacketType(18);
-        public static PacketType ToggleDoor = new PacketType(19);
-        public static PacketType SquareTiles = new PacketType(20);
-        public static PacketType ItemInfo = new PacketType(21);
-        public static PacketType ItemOwner = new PacketType(22);
-        public static PacketType NpcInfo = new PacketType(23);
-        public static PacketType DamageNpcHeldItem = new PacketType(24);
-        public static PacketType ProjectileInfo = new PacketType(27);
-        public static PacketType DamageNpc = new PacketType(28);
-        public static PacketType RemoveProjectile = new PacketType(29);
-        public static PacketType PlayerPvp = new PacketType(30);
-        public static PacketType RequestChest = new PacketType(31);
-        public static PacketType ChestContentsSlot = new PacketType(32);
-        public static PacketType ChestInfo = new PacketType(33);
-        public static PacketType ChestModification = new PacketType(34);
-        public static PacketType HealEffect = new PacketType(35);
-        public static PacketType PlayerZones = new PacketType(36);
-        public static PacketType PlayerPasswordChallenge = new PacketType(37);
-        public static PacketType PlayerPasswordResponse = new PacketType(38);
-        public static PacketType RemoveItemOwner = new PacketType(39);
-        public static PacketType PlayerTalkingToNpc = new PacketType(40);
-        public static PacketType PlayerItemAnimation = new PacketType(41);
-        public static PacketType PlayerMana = new PacketType(42);
-        public static PacketType ManaEffect = new PacketType(43);
-        public static PacketType PlayerTeam = new PacketType(45);
-        public static PacketType RequestSign = new PacketType(46);
-        public static PacketType SignInfo = new PacketType(47);
-        public static PacketType TileLiquid = new PacketType(48);
-        public static PacketType PlayerEnterWorld = new PacketType(49);
-        public static PacketType PlayerBuffs = new PacketType(50);
-        public static PacketType MiscAction = new PacketType(51);
-        public static PacketType UnlockObject = new PacketType(52);
-        public static PacketType BuffNpc = new PacketType(53);
-        public static PacketType NpcBuffs = new PacketType(54);
-        public static PacketType BuffPlayer = new PacketType(55);
-        public static PacketType NpcName = new PacketType(56);
-        public static PacketType BiomeStats = new PacketType(57);
-        public static PacketType PlayerHarpNote = new PacketType(58);
-        public static PacketType ActivateWire = new PacketType(59);
-        public static PacketType NpcHome = new PacketType(60);
-        public static PacketType BossOrInvasion = new PacketType(61);
-        public static PacketType PlayerDodge = new PacketType(62);
-        public static PacketType PaintBlock = new PacketType(63);
-        public static PacketType PaintWall = new PacketType(64);
-        public static PacketType EntityTeleportation = new PacketType(65);
-        public static PacketType HealPlayer = new PacketType(66);
-        public static PacketType PlayerUuid = new PacketType(68);
-        public static PacketType ChestName = new PacketType(69);
-        public static PacketType CatchNpc = new PacketType(70);
-        public static PacketType ReleaseNpc = new PacketType(71);
-        public static PacketType TravelingMerchantShop = new PacketType(72);
-        public static PacketType PlayerTeleportationPotion = new PacketType(73);
-        public static PacketType AnglerQuest = new PacketType(74);
-        public static PacketType PlayerFinishAnglerQuest = new PacketType(75);
-        public static PacketType PlayerAnglerQuests = new PacketType(76);
-        public static PacketType TileAnimation = new PacketType(77);
-        public static PacketType InvasionInfo = new PacketType(78);
-        public static PacketType PlaceObject = new PacketType(79);
-        public static PacketType PlayerChest = new PacketType(80);
-        public static PacketType CombatNumber = new PacketType(81);
-        public static PacketType Module = new PacketType(82);
-        public static PacketType NpcKillCount = new PacketType(83);
-        public static PacketType PlayerStealth = new PacketType(84);
-        public static PacketType QuickStackChest = new PacketType(85);
-        public static PacketType TileEntityInfo = new PacketType(86);
-        public static PacketType PlaceTileEntity = new PacketType(87);
-        public static PacketType AlterItem = new PacketType(88);
-        public static PacketType ItemFrame = new PacketType(89);
-        public static PacketType InstancedItemInfo = new PacketType(90);
-        public static PacketType EmoteBubble = new PacketType(91);
-        public static PacketType NpcStealCoin = new PacketType(92);
-        public static PacketType RemovePortal = new PacketType(95);
-        public static PacketType TeleportPlayerPortal = new PacketType(96);
-        public static PacketType NpcTypeKilled = new PacketType(97);
-        public static PacketType ProgressionEvent = new PacketType(98);
-        public static PacketType PlayerMinionPosition = new PacketType(99);
-        public static PacketType TeleportNpcPortal = new PacketType(100);
-        public static PacketType PillarShieldStrengths = new PacketType(101);
-        public static PacketType NebulaBuffPlayers = new PacketType(102);
-        public static PacketType MoonLordCountdown = new PacketType(103);
-        public static PacketType NpcShopSlot = new PacketType(104);
-        public static PacketType ToggleGemLock = new PacketType(105);
-        public static PacketType PoofOfSmoke = new PacketType(106);
-        public static PacketType Chat = new PacketType(107);
-        public static PacketType CannonShot = new PacketType(108);
-        public static PacketType MassWireOperation = new PacketType(109);
-        public static PacketType ConsumePlayerItems = new PacketType(110);
-        public static PacketType ToggleBirthdayParty = new PacketType(111);
-        public static PacketType TreeGrowingEffect = new PacketType(112);
-        public static PacketType StartOldOnesArmy = new PacketType(113);
-        public static PacketType EndOldOnesArmy = new PacketType(114);
-        public static PacketType PlayerMinionNpc = new PacketType(115);
-        public static PacketType OldOnesArmyInfo = new PacketType(116);
-        public static PacketType DamagePlayer = new PacketType(117);
-        public static PacketType KillPlayer = new PacketType(118);
-        public static PacketType CombatText = new PacketType(119);
+        PlayerConnect = 1,
+        PlayerDisconnect = 2,
+        PlayerContinueConnecting = 3,
+        PlayerData = 4,
+        PlayerInventorySlot = 5,
+        PlayerJoin = 6,
+        WorldInfo = 7,
+        RequestSection = 8,
+        PlayerStatus = 9,
+        Section = 10,
+        SectionFrames = 11,
+        SpawnPlayer = 12,
+        PlayerInfo = 13,
+        PlayerActivity = 14,
+        PlayerHealth = 16,
+        TileModification = 17,
+        Time = 18,
+        ToggleDoor = 19,
+        SquareTiles = 20,
+        ItemInfo = 21,
+        ItemOwner = 22,
+        NpcInfo = 23,
+        DamageNpcHeldItem = 24,
+        ProjectileInfo = 27,
+        DamageNpc = 28,
+        RemoveProjectile = 29,
+        PlayerPvp = 30,
+        RequestChest = 31,
+        ChestContentsSlot = 32,
+        ChestInfo = 33,
+        ChestModification = 34,
+        HealEffect = 35,
+        PlayerZones = 36,
+        PlayerPasswordChallenge = 37,
+        PlayerPasswordResponse = 38,
+        RemoveItemOwner = 39,
+        PlayerTalkingToNpc = 40,
+        PlayerItemAnimation = 41,
+        PlayerMana = 42,
+        ManaEffect = 43,
+        PlayerTeam = 45,
+        RequestSign = 46,
+        SignInfo = 47,
+        TileLiquid = 48,
+        PlayerEnterWorld = 49,
+        PlayerBuffs = 50,
+        MiscAction = 51,
+        UnlockObject = 52,
+        BuffNpc = 53,
+        NpcBuffs = 54,
+        BuffPlayer = 55,
+        NpcName = 56,
+        BiomeStats = 57,
+        PlayerHarpNote = 58,
+        ActivateWire = 59,
+        NpcHome = 60,
+        BossOrInvasion = 61,
+        PlayerDodge = 62,
+        PaintBlock = 63,
+        PaintWall = 64,
+        EntityTeleportation = 65,
+        HealPlayer = 66,
+        PlayerUuid = 68,
+        ChestName = 69,
+        CatchNpc = 70,
+        ReleaseNpc = 71,
+        TravelingMerchantShop = 72,
+        PlayerTeleportationPotion = 73,
+        AnglerQuest = 74,
+        PlayerFinishAnglerQuest = 75,
+        PlayerAnglerQuests = 76,
+        TileAnimation = 77,
+        InvasionInfo = 78,
+        PlaceObject = 79,
+        PlayerChest = 80,
+        CombatNumber = 81,
+        Module = 82,
+        NpcKillCount = 83,
+        PlayerStealth = 84,
+        QuickStackChest = 85,
+        TileEntityInfo = 86,
+        PlaceTileEntity = 87,
+        AlterItem = 88,
+        ItemFrame = 89,
+        InstancedItemInfo = 90,
+        EmoteBubble = 91,
+        NpcStealCoin = 92,
+        RemovePortal = 95,
+        TeleportPlayerPortal = 96,
+        NpcTypeKilled = 97,
+        ProgressionEvent = 98,
+        PlayerMinionPosition = 99,
+        TeleportNpcPortal = 100,
+        PillarShieldStrengths = 101,
+        NebulaBuffPlayers = 102,
+        MoonLordCountdown = 103,
+        NpcShopSlot = 104,
+        ToggleGemLock = 105,
+        PoofOfSmoke = 106,
+        Chat = 107,
+        CannonShot = 108,
+        MassWireOperation = 109,
+        ConsumePlayerItems = 110,
+        ToggleBirthdayParty = 111,
+        TreeGrowingEffect = 112,
+        StartOldOnesArmy = 113,
+        EndOldOnesArmy = 114,
+        PlayerMinionNpc = 115,
+        OldOnesArmyInfo = 116,
+        DamagePlayer = 117,
+        KillPlayer = 118,
+        CombatText = 119
 #pragma warning disable 1591
-
-        private const int ArrayOffset = 0;
-        private const int ArraySize = ArrayOffset + Terraria.ID.MessageID.Count;
-        private static readonly PacketType[] Packets = new PacketType[ArraySize];
-        private static readonly string[] Names = new string[ArraySize];
-        private static readonly Func<Packet>[] Constructors = new Func<Packet>[ArraySize];
-
-        /// <summary>
-        /// Gets the packet type's ID.
-        /// </summary>
-        public byte Id { get; }
-
-        /// <summary>
-        /// Gets the packet type's constructor.
-        /// </summary>
-        public Func<Packet> Constructor => Constructors[Id];
-
-        static PacketType() {
-            foreach (var field in typeof(PacketType).GetFields(BindingFlags.Public | BindingFlags.Static)) {
-                var packetType = (PacketType)field.GetValue(null);
-                Packets[ArrayOffset + packetType.Id] = packetType;
-                Names[ArrayOffset + packetType.Id] = field.Name;
-            }
-
-            foreach (var type in typeof(Packet).Assembly.ExportedTypes
-                                               .Where(t => t.IsSubclassOf(typeof(Packet)) && t != typeof(Packet))) {
-                var packetType = ((Packet)Activator.CreateInstance(type)).Type;
-                Constructors[ArrayOffset + packetType.Id] = () => (Packet)Activator.CreateInstance(type);
-            }
-        }
-
-        private PacketType(byte id) {
-            Id = id;
-        }
-
-        /// <summary>
-        /// Returns a packet type converted from the given ID.
-        /// </summary>
-        /// <param name="id">The ID.</param>
-        /// <returns>The packet type.</returns>
-        public static PacketType FromId(byte id) => ArrayOffset + id < ArraySize ? Packets[ArrayOffset + id] : null;
-
-        /// <inheritdoc />
-        [ExcludeFromCodeCoverage]
-        public override string ToString() => Names[ArrayOffset + Id];
     }
 }

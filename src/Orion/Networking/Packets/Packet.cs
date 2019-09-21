@@ -33,7 +33,7 @@ namespace Orion.Networking.Packets {
     /// Represents a packet.
     /// </summary>
     public abstract class Packet : IDirtiable {
-        private static readonly Func<Packet>[] Constructors = {
+        private static readonly Func<Packet>[] PacketConstructors = {
             /* 000 */ null,
             /* 001 */ () => new PlayerConnectPacket(),
             /* 002 */ () => new PlayerDisconnectPacket(),
@@ -188,10 +188,12 @@ namespace Orion.Networking.Packets {
 #else
                 reader.ReadUInt16();
 #endif
-                var packetType = PacketType.FromId(reader.ReadByte()) ??
-                                 throw new PacketException("Packet type is invalid.");
-                var packet = Constructors[packetType.Id]();
+                Func<Packet> GetPacketConstructor(byte packetTypeId) =>
+                    packetTypeId < PacketConstructors.Length ? PacketConstructors[packetTypeId] : null;
 
+                var packetConstructor = GetPacketConstructor(reader.ReadByte()) ??
+                                        throw new PacketException("Packet type is invalid.");
+                var packet = packetConstructor();
                 packet.ReadFromReader(reader, context);
                 packet.Clean();
 #if DEBUG
@@ -227,7 +229,7 @@ namespace Orion.Networking.Packets {
                 var writer = new BinaryWriter(stream, Encoding.UTF8, true);
                 var oldPosition = stream.Position;
                 stream.Position += 2;
-                writer.Write(Type.Id);
+                writer.Write((byte)Type);
                 WriteToWriter(writer, context);
 
                 var position = stream.Position;
