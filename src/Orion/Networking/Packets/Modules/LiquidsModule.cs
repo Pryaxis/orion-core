@@ -15,43 +15,49 @@
 // You should have received a copy of the GNU General Public License
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
-using System;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using Orion.Networking.Tiles;
+using Orion.Utils;
 
-namespace Orion.Networking.Packets.World {
+namespace Orion.Networking.Packets.Modules {
     /// <summary>
-    /// Packet sent to set a tile's liquid.
+    /// Module sent for liquids.
     /// </summary>
-    public sealed class TileLiquidPacket : Packet {
-        private NetworkLiquid _tileLiquid;
+    public class LiquidsModule : Module {
+        /// <inheritdoc />
+        public override bool IsDirty => base.IsDirty || Liquids.IsDirty;
 
         /// <inheritdoc />
-        public override PacketType Type => PacketType.TileLiquid;
+        public override ModuleType Type => ModuleType.LiquidChanges;
 
         /// <summary>
-        /// Gets or sets the tile's liquid.
+        /// Gets the liquids.
         /// </summary>
-        /// <exception cref="ArgumentNullException"><paramref name="value"/> is <c>null</c>.</exception>
-        public NetworkLiquid TileLiquid {
-            get => _tileLiquid;
-            set {
-                _tileLiquid = value ?? throw new ArgumentNullException(nameof(value));
-                _isDirty = true;
-            }
+        public DirtiableList<NetworkLiquid> Liquids { get; } = new DirtiableList<NetworkLiquid>();
+
+        /// <inheritdoc />
+        public override void Clean() {
+            base.Clean();
+            Liquids.Clean();
         }
 
         /// <inheritdoc />
         [ExcludeFromCodeCoverage]
-        public override string ToString() => $"{Type}[{TileLiquid}]";
+        public override string ToString() => $"{nameof(ModuleType.LiquidChanges)}[...]";
 
         private protected override void ReadFromReader(BinaryReader reader, PacketContext context) {
-            TileLiquid = NetworkLiquid.ReadFromStream(reader.BaseStream);
+            var numberOfLiquidChanges = reader.ReadUInt16();
+            for (var i = 0; i < numberOfLiquidChanges; ++i) {
+                Liquids.Add(NetworkLiquid.ReadFromStream(reader.BaseStream, true));
+            }
         }
 
         private protected override void WriteToWriter(BinaryWriter writer, PacketContext context) {
-            TileLiquid.WriteToStream(writer.BaseStream);
+            writer.Write((ushort)Liquids.Count);
+            foreach (var liquid in Liquids) {
+                liquid.WriteToStream(writer.BaseStream, true);
+            }
         }
     }
 }

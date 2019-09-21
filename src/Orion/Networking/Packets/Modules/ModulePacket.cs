@@ -16,42 +16,48 @@
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
 using System;
-using System.Diagnostics.CodeAnalysis;
 using System.IO;
-using Orion.Networking.Tiles;
 
-namespace Orion.Networking.Packets.World {
+namespace Orion.Networking.Packets.Modules {
     /// <summary>
-    /// Packet sent to set a tile's liquid.
+    /// Packet sent in the form of a module.
     /// </summary>
-    public sealed class TileLiquidPacket : Packet {
-        private NetworkLiquid _tileLiquid;
+    public sealed class ModulePacket : Packet {
+        private Module _module;
 
         /// <inheritdoc />
-        public override PacketType Type => PacketType.TileLiquid;
+        public override bool IsDirty => base.IsDirty || Module.IsDirty;
+
+        /// <inheritdoc />
+        public override PacketType Type => PacketType.Module;
 
         /// <summary>
-        /// Gets or sets the tile's liquid.
+        /// Gets or sets the module.
         /// </summary>
         /// <exception cref="ArgumentNullException"><paramref name="value"/> is <c>null</c>.</exception>
-        public NetworkLiquid TileLiquid {
-            get => _tileLiquid;
+        public Module Module {
+            get => _module;
             set {
-                _tileLiquid = value ?? throw new ArgumentNullException(nameof(value));
+                _module = value ?? throw new ArgumentNullException(nameof(value));
                 _isDirty = true;
             }
         }
 
         /// <inheritdoc />
-        [ExcludeFromCodeCoverage]
-        public override string ToString() => $"{Type}[{TileLiquid}]";
+        public override void Clean() {
+            base.Clean();
+            Module.Clean();
+        }
+
+        /// <inheritdoc />
+        public override string ToString() => $"{Type}[{Module}]";
 
         private protected override void ReadFromReader(BinaryReader reader, PacketContext context) {
-            TileLiquid = NetworkLiquid.ReadFromStream(reader.BaseStream);
+            Module = Module.ReadFromStream(reader.BaseStream, context);
         }
 
         private protected override void WriteToWriter(BinaryWriter writer, PacketContext context) {
-            TileLiquid.WriteToStream(writer.BaseStream);
+            Module.WriteToStream(writer.BaseStream, context);
         }
     }
 }

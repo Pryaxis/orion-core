@@ -18,31 +18,25 @@
 using System;
 using System.IO;
 using FluentAssertions;
+using Orion.Networking.Tiles;
 using Orion.World.Tiles;
 using Xunit;
 
 namespace Orion.Networking.Packets.World {
     public class TileLiquidPacketTests {
         [Fact]
-        public void SetDefaultableProperties_MarkAsDirty() {
+        public void SetTileLiquid_MarksAsDirty() {
             var packet = new TileLiquidPacket();
 
-            packet.ShouldHaveDefaultablePropertiesMarkAsDirty();
-        }
-
-        [Fact]
-        public void SetLiquidType_MarksAsDirty() {
-            var packet = new TileLiquidPacket();
-
-            packet.LiquidType = LiquidType.Water;
+            packet.TileLiquid = new NetworkLiquid();
 
             packet.ShouldBeDirty();
         }
 
         [Fact]
-        public void SetLiquidType_NullValue_ThrowsArgumentNullException() {
+        public void SetTileLiquid_NullValue_ThrowsArgumentNullException() {
             var packet = new TileLiquidPacket();
-            Action action = () => packet.LiquidType = null;
+            Action action = () => packet.TileLiquid = null;
 
             action.Should().Throw<ArgumentNullException>();
         }
@@ -55,10 +49,10 @@ namespace Orion.Networking.Packets.World {
             using (var stream = new MemoryStream(Bytes)) {
                 var packet = (TileLiquidPacket)Packet.ReadFromStream(stream, PacketContext.Server);
 
-                packet.TileX.Should().Be(256);
-                packet.TileY.Should().Be(100);
-                packet.LiquidAmount.Should().Be(255);
-                packet.LiquidType.Should().Be(LiquidType.Water);
+                packet.TileLiquid.TileX.Should().Be(256);
+                packet.TileLiquid.TileY.Should().Be(100);
+                packet.TileLiquid.LiquidAmount.Should().Be(255);
+                packet.TileLiquid.LiquidType.Should().BeSameAs(LiquidType.Water);
             }
         }
 
