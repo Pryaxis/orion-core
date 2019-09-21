@@ -27,15 +27,15 @@ namespace Orion.Events {
     /// Represents a collection of event handlers. Provides the ability to register and unregister event handlers. This
     /// class is immutable.
     /// </summary>
-    /// <typeparam name="TArgs">The type of event arguments.</typeparam>
-    public class EventHandlerCollection<TArgs> where TArgs : EventArgs {
+    /// <typeparam name="TEventArgs">The type of event arguments.</typeparam>
+    public class EventHandlerCollection<TEventArgs> where TEventArgs : EventArgs {
         private static IComparer<Registration> RegistrationComparer =>
             Comparer<Registration>.Create((r1, r2) => r1.Priority.CompareTo(r2.Priority));
 
         private readonly ISet<Registration> _registrations;
 
-        // This constructor is provided for aiding testing only.
-        internal EventHandlerCollection(EventHandler<TArgs> handler) {
+        // This constructor is provided for testing only.
+        internal EventHandlerCollection(EventHandler<TEventArgs> handler) {
             _registrations = new HashSet<Registration> {new Registration(handler, EventPriority.Normal)};
         }
 
@@ -49,19 +49,19 @@ namespace Orion.Events {
         /// <param name="sender">The sender. This is usually the object that initiated the event.</param>
         /// <param name="args">The event arguments.</param>
         /// <exception cref="ArgumentNullException"><paramref name="args"/> is <c>null</c>.</exception>
-        public void Invoke(object sender, TArgs args) {
+        public void Invoke(object sender, TEventArgs args) {
             if (args == null) throw new ArgumentNullException(nameof(args));
 
-            Log.Debug("Calling {Event} handlers", typeof(TArgs).Name);
+            Log.Debug("Calling {Event} handlers", typeof(TEventArgs).Name);
 
             foreach (var handler in _registrations.Select(r => r.Handler)) {
                 Log.Debug("Calling {Event} handler registered by {Registrator}",
-                          typeof(TArgs).Name, handler.Method.DeclaringType?.Name ?? "Unknown");
+                          typeof(TEventArgs).Name, handler.Method.DeclaringType?.Name ?? "Unknown");
 
                 try {
                     handler(sender, args);
                 } catch (Exception ex) {
-                    Log.Error(ex, "{Event} handler threw an exception", typeof(TArgs).Name);
+                    Log.Error(ex, "{Event} handler threw an exception", typeof(TEventArgs).Name);
                 }
             }
         }
@@ -73,12 +73,12 @@ namespace Orion.Events {
         /// <param name="handler">The handler.</param>
         /// <returns>The resulting collection.</returns>
         /// <exception cref="ArgumentNullException"><paramref name="handler"/> is <c>null</c>.</exception>
-        public static EventHandlerCollection<TArgs> operator +(EventHandlerCollection<TArgs> collection,
-                                                               EventHandler<TArgs> handler) {
+        public static EventHandlerCollection<TEventArgs> operator +(EventHandlerCollection<TEventArgs> collection,
+                                                               EventHandler<TEventArgs> handler) {
             if (handler == null) throw new ArgumentNullException(nameof(handler));
 
             Log.Debug("Registering {Event} handler from {Registrator}",
-                      typeof(TArgs).Name, handler.Method.DeclaringType?.Name ?? "Unknown");
+                      typeof(TEventArgs).Name, handler.Method.DeclaringType?.Name ?? "Unknown");
 
             var attribute = handler.Method.GetCustomAttribute<EventHandlerAttribute>();
             var priority = attribute?.Priority ?? EventPriority.Normal;
@@ -86,7 +86,7 @@ namespace Orion.Events {
             var registrations =
                 new SortedSet<Registration>(collection?._registrations ?? Enumerable.Empty<Registration>(),
                                             RegistrationComparer) {registration};
-            return new EventHandlerCollection<TArgs>(registrations);
+            return new EventHandlerCollection<TEventArgs>(registrations);
         }
 
         /// <summary>
@@ -97,8 +97,8 @@ namespace Orion.Events {
         /// <returns>The resulting collection.</returns>
         /// <exception cref="ArgumentException"><paramref name="handler"/> is not registered.</exception>
         /// <exception cref="ArgumentNullException"><paramref name="handler"/> is <c>null</c>.</exception>
-        public static EventHandlerCollection<TArgs> operator -(EventHandlerCollection<TArgs> collection,
-                                                               EventHandler<TArgs> handler) {
+        public static EventHandlerCollection<TEventArgs> operator -(EventHandlerCollection<TEventArgs> collection,
+                                                               EventHandler<TEventArgs> handler) {
             if (handler == null) throw new ArgumentNullException(nameof(handler));
 
             var attribute = handler.Method.GetCustomAttribute<EventHandlerAttribute>();
@@ -112,18 +112,18 @@ namespace Orion.Events {
             }
 
             Log.Debug("Unregistering {Event} handler from {Registrator}",
-                      typeof(TArgs).Name, handler.Method.DeclaringType?.Name ?? "Unknown");
+                      typeof(TEventArgs).Name, handler.Method.DeclaringType?.Name ?? "Unknown");
 
             registrations.Remove(registration);
-            return new EventHandlerCollection<TArgs>(registrations);
+            return new EventHandlerCollection<TEventArgs>(registrations);
         }
 
 
         private class Registration {
-            public EventHandler<TArgs> Handler { get; }
+            public EventHandler<TEventArgs> Handler { get; }
             public EventPriority Priority { get; }
 
-            public Registration(EventHandler<TArgs> handler, EventPriority priority) {
+            public Registration(EventHandler<TEventArgs> handler, EventPriority priority) {
                 Debug.Assert(handler != null, $"{nameof(handler)} should not be null.");
 
                 Handler = handler;
