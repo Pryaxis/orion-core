@@ -20,42 +20,42 @@ using Orion.Networking.Packets.World;
 
 namespace Orion.Networking.World {
     /// <summary>
-    /// Represents an unlockable object type in an <see cref="UnlockObjectPacket"/>.
+    /// Represents an unlockable object in an <see cref="UnlockObjectPacket"/>.
     /// </summary>
-    public sealed class UnlockableObjectType {
+    public sealed class UnlockableObject {
 #pragma warning disable 1591
-        public static readonly UnlockableObjectType Chest = new UnlockableObjectType(1);
-        public static readonly UnlockableObjectType Door = new UnlockableObjectType(2);
+        public static readonly UnlockableObject Chest = new UnlockableObject(1);
+        public static readonly UnlockableObject Door = new UnlockableObject(2);
 #pragma warning restore 1591
 
         private const int ArrayOffset = 0;
         private const int ArraySize = ArrayOffset + 3;
-        private static readonly UnlockableObjectType[] Objects = new UnlockableObjectType[ArraySize];
+        private static readonly UnlockableObject[] Objects = new UnlockableObject[ArraySize];
         private static readonly string[] Names = new string[ArraySize];
 
         /// <summary>
-        /// Gets the unlockable object type's ID.
+        /// Gets the unlockable object's ID.
         /// </summary>
         public byte Id { get; }
 
-        static UnlockableObjectType() {
-            foreach (var field in typeof(UnlockableObjectType).GetFields(BindingFlags.Public | BindingFlags.Static)) {
-                var unlockableObjectType = (UnlockableObjectType)field.GetValue(null);
+        static UnlockableObject() {
+            foreach (var field in typeof(UnlockableObject).GetFields(BindingFlags.Public | BindingFlags.Static)) {
+                var unlockableObjectType = (UnlockableObject)field.GetValue(null);
                 Objects[ArrayOffset + unlockableObjectType.Id] = unlockableObjectType;
                 Names[ArrayOffset + unlockableObjectType.Id] = field.Name;
             }
         }
 
-        private UnlockableObjectType(byte id) {
+        private UnlockableObject(byte id) {
             Id = id;
         }
 
         /// <summary>
-        /// Returns an unlockable object type converted from the given ID.
+        /// Returns an unlockable object converted from the given ID.
         /// </summary>
         /// <param name="id">The ID.</param>
-        /// <returns>The unlock object type, or <c>null</c> if none exists.</returns>
-        public static UnlockableObjectType FromId(byte id) => ArrayOffset + id < ArraySize ? Objects[ArrayOffset + id] : null;
+        /// <returns>The unlockable object, or <c>null</c> if none exists.</returns>
+        public static UnlockableObject FromId(byte id) => ArrayOffset + id < ArraySize ? Objects[ArrayOffset + id] : null;
 
         /// <inheritdoc />
         public override string ToString() => Names[ArrayOffset + Id];

@@ -19,21 +19,21 @@ using FluentAssertions;
 using Xunit;
 
 namespace Orion.Networking.World {
-    public class UnlockableObjectTypeTests {
+    public class UnlockableObjectTests {
         [Fact]
         public void FromId_IsCorrect() {
             for (byte i = 1; i < 3; ++i) {
-                UnlockableObjectType.FromId(i).Id.Should().Be(i);
+                UnlockableObject.FromId(i).Id.Should().Be(i);
             }
 
-            UnlockableObjectType.FromId(0).Should().BeNull();
-            UnlockableObjectType.FromId(3).Should().BeNull();
+            UnlockableObject.FromId(0).Should().BeNull();
+            UnlockableObject.FromId(3).Should().BeNull();
         }
 
         [Fact]
         public void FromId_ReturnsSameInstance() {
-            var unlockableObjectType = UnlockableObjectType.FromId(1);
-            var unlockableObjectType2 = UnlockableObjectType.FromId(1);
+            var unlockableObjectType = UnlockableObject.FromId(1);
+            var unlockableObjectType2 = UnlockableObject.FromId(1);
 
             unlockableObjectType.Should().BeSameAs(unlockableObjectType2);
         }

@@ -26,7 +26,7 @@ namespace Orion.Networking.Packets.World {
     /// Packet sent to unlock an object (chest, door, etc.).
     /// </summary>
     public sealed class UnlockObjectPacket : Packet {
-        private UnlockableObjectType _unlockableObjectType;
+        private UnlockableObject _unlockableObject;
         private short _objectX;
         private short _objectY;
 
@@ -37,10 +37,10 @@ namespace Orion.Networking.Packets.World {
         /// Gets or sets the unlockable object type.
         /// </summary>
         /// <exception cref="ArgumentNullException"><paramref name="value"/> is <c>null</c>.</exception>
-        public UnlockableObjectType UnlockableObjectType {
-            get => _unlockableObjectType;
+        public UnlockableObject UnlockableObject {
+            get => _unlockableObject;
             set {
-                _unlockableObjectType = value ?? throw new ArgumentNullException(nameof(value));
+                _unlockableObject = value ?? throw new ArgumentNullException(nameof(value));
                 _isDirty = true;
             }
         }
@@ -69,17 +69,17 @@ namespace Orion.Networking.Packets.World {
 
         /// <inheritdoc />
         [ExcludeFromCodeCoverage]
-        public override string ToString() => $"{Type}[{UnlockableObjectType} @ ({ObjectX}, {ObjectY})]";
+        public override string ToString() => $"{Type}[{UnlockableObject} @ ({ObjectX}, {ObjectY})]";
 
         private protected override void ReadFromReader(BinaryReader reader, PacketContext context) {
-            UnlockableObjectType = UnlockableObjectType.FromId(reader.ReadByte()) ??
+            UnlockableObject = UnlockableObject.FromId(reader.ReadByte()) ??
                                throw new PacketException("Object type is invalid.");
             ObjectX = reader.ReadInt16();
             ObjectY = reader.ReadInt16();
         }
 
         private protected override void WriteToWriter(BinaryWriter writer, PacketContext context) {
-            writer.Write(UnlockableObjectType.Id);
+            writer.Write(UnlockableObject.Id);
             writer.Write(ObjectX);
             writer.Write(ObjectY);
         }

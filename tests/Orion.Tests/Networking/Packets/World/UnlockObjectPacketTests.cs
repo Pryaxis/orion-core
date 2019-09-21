@@ -31,18 +31,18 @@ namespace Orion.Networking.Packets.World {
         }
 
         [Fact]
-        public void SetUnlockableObjectType_MarksAsDirty() {
+        public void SetUnlockableObject_MarksAsDirty() {
             var packet = new UnlockObjectPacket();
 
-            packet.UnlockableObjectType = UnlockableObjectType.Chest;
+            packet.UnlockableObject = UnlockableObject.Chest;
 
             packet.ShouldBeDirty();
         }
 
         [Fact]
-        public void SetUnlockableObjectType_NullValue_ThrowsArgumentNullException() {
+        public void SetUnlockableObject_NullValue_ThrowsArgumentNullException() {
             var packet = new UnlockObjectPacket();
-            Action action = () => packet.UnlockableObjectType = null;
+            Action action = () => packet.UnlockableObject = null;
 
             action.Should().Throw<ArgumentNullException>();
         }
@@ -55,7 +55,7 @@ namespace Orion.Networking.Packets.World {
             using (var stream = new MemoryStream(Bytes)) {
                 var packet = (UnlockObjectPacket)Packet.ReadFromStream(stream, PacketContext.Server);
 
-                packet.UnlockableObjectType.Should().BeSameAs(UnlockableObjectType.Chest);
+                packet.UnlockableObject.Should().BeSameAs(UnlockableObject.Chest);
                 packet.ObjectX.Should().Be(256);
                 packet.ObjectY.Should().Be(100);
             }
