@@ -20,130 +20,96 @@ using System.Reflection;
 
 namespace Orion.Entities {
     /// <summary>
-    /// Represents an item prefix.
+    /// Specifies an item prefix.
     /// </summary>
-    public sealed class ItemPrefix {
+    public enum ItemPrefix : sbyte {
 #pragma warning disable 1591
-        public static ItemPrefix Reforge = new ItemPrefix(-2);
-        public static ItemPrefix Random = new ItemPrefix(-1);
-        public static ItemPrefix None = new ItemPrefix(0);
-        public static ItemPrefix Large = new ItemPrefix(1);
-        public static ItemPrefix Massive = new ItemPrefix(2);
-        public static ItemPrefix Dangerous = new ItemPrefix(3);
-        public static ItemPrefix Savage = new ItemPrefix(4);
-        public static ItemPrefix Sharp = new ItemPrefix(5);
-        public static ItemPrefix Pointy = new ItemPrefix(6);
-        public static ItemPrefix Tiny = new ItemPrefix(7);
-        public static ItemPrefix Terrible = new ItemPrefix(8);
-        public static ItemPrefix Small = new ItemPrefix(9);
-        public static ItemPrefix Dull = new ItemPrefix(10);
-        public static ItemPrefix Unhappy = new ItemPrefix(11);
-        public static ItemPrefix Bulky = new ItemPrefix(12);
-        public static ItemPrefix Shameful = new ItemPrefix(13);
-        public static ItemPrefix Heavy = new ItemPrefix(14);
-        public static ItemPrefix Light = new ItemPrefix(15);
-        public static ItemPrefix Sighted = new ItemPrefix(16);
-        public static ItemPrefix Rapid = new ItemPrefix(17);
-        public static ItemPrefix HastyRangedWeapon = new ItemPrefix(18);
-        public static ItemPrefix Intimidating = new ItemPrefix(19);
-        public static ItemPrefix DeadlyRangedWeapon = new ItemPrefix(20);
-        public static ItemPrefix Staunch = new ItemPrefix(21);
-        public static ItemPrefix Awful = new ItemPrefix(22);
-        public static ItemPrefix Lethargic = new ItemPrefix(23);
-        public static ItemPrefix Awkward = new ItemPrefix(24);
-        public static ItemPrefix Powerful = new ItemPrefix(25);
-        public static ItemPrefix Mystic = new ItemPrefix(26);
-        public static ItemPrefix Adept = new ItemPrefix(27);
-        public static ItemPrefix Masterful = new ItemPrefix(28);
-        public static ItemPrefix Inept = new ItemPrefix(29);
-        public static ItemPrefix Ignorant = new ItemPrefix(30);
-        public static ItemPrefix Deranged = new ItemPrefix(31);
-        public static ItemPrefix Intense = new ItemPrefix(32);
-        public static ItemPrefix Taboo = new ItemPrefix(33);
-        public static ItemPrefix Celestial = new ItemPrefix(34);
-        public static ItemPrefix Furious = new ItemPrefix(35);
-        public static ItemPrefix Keen = new ItemPrefix(36);
-        public static ItemPrefix Superior = new ItemPrefix(37);
-        public static ItemPrefix Forceful = new ItemPrefix(38);
-        public static ItemPrefix Broken = new ItemPrefix(39);
-        public static ItemPrefix Damaged = new ItemPrefix(40);
-        public static ItemPrefix Shoddy = new ItemPrefix(41);
-        public static ItemPrefix QuickWeapon = new ItemPrefix(42);
-        public static ItemPrefix DeadlyAccessory = new ItemPrefix(43);
-        public static ItemPrefix Agile = new ItemPrefix(44);
-        public static ItemPrefix Nimble = new ItemPrefix(45);
-        public static ItemPrefix Murderous = new ItemPrefix(46);
-        public static ItemPrefix Slow = new ItemPrefix(47);
-        public static ItemPrefix Sluggish = new ItemPrefix(48);
-        public static ItemPrefix Lazy = new ItemPrefix(49);
-        public static ItemPrefix Annoying = new ItemPrefix(50);
-        public static ItemPrefix Nasty = new ItemPrefix(51);
-        public static ItemPrefix Manic = new ItemPrefix(52);
-        public static ItemPrefix Hurtful = new ItemPrefix(53);
-        public static ItemPrefix Strong = new ItemPrefix(54);
-        public static ItemPrefix Unpleasant = new ItemPrefix(55);
-        public static ItemPrefix Weak = new ItemPrefix(56);
-        public static ItemPrefix Ruthless = new ItemPrefix(57);
-        public static ItemPrefix Frenzying = new ItemPrefix(58);
-        public static ItemPrefix Godly = new ItemPrefix(59);
-        public static ItemPrefix Demonic = new ItemPrefix(60);
-        public static ItemPrefix Zealous = new ItemPrefix(61);
-        public static ItemPrefix Hard = new ItemPrefix(62);
-        public static ItemPrefix Guarding = new ItemPrefix(63);
-        public static ItemPrefix Armored = new ItemPrefix(64);
-        public static ItemPrefix Warding = new ItemPrefix(65);
-        public static ItemPrefix Arcane = new ItemPrefix(66);
-        public static ItemPrefix Precise = new ItemPrefix(67);
-        public static ItemPrefix Lucky = new ItemPrefix(68);
-        public static ItemPrefix Jagged = new ItemPrefix(69);
-        public static ItemPrefix Spiked = new ItemPrefix(70);
-        public static ItemPrefix Angry = new ItemPrefix(71);
-        public static ItemPrefix Menacing = new ItemPrefix(72);
-        public static ItemPrefix Brisk = new ItemPrefix(73);
-        public static ItemPrefix Fleeting = new ItemPrefix(74);
-        public static ItemPrefix HastyAccessory = new ItemPrefix(75);
-        public static ItemPrefix QuickAccessory = new ItemPrefix(76);
-        public static ItemPrefix Wild = new ItemPrefix(77);
-        public static ItemPrefix Rash = new ItemPrefix(78);
-        public static ItemPrefix Intrepid = new ItemPrefix(79);
-        public static ItemPrefix Violent = new ItemPrefix(80);
-        public static ItemPrefix Legendary = new ItemPrefix(81);
-        public static ItemPrefix Unreal = new ItemPrefix(82);
-        public static ItemPrefix Mythical = new ItemPrefix(83);
+        Reforge = -2,
+        Random = -1,
+        None = 0,
+        Large = 1,
+        Massive = 2,
+        Dangerous = 3,
+        Savage = 4,
+        Sharp = 5,
+        Pointy = 6,
+        Tiny = 7,
+        Terrible = 8,
+        Small = 9,
+        Dull = 10,
+        Unhappy = 11,
+        Bulky = 12,
+        Shameful = 13,
+        Heavy = 14,
+        Light = 15,
+        Sighted = 16,
+        Rapid = 17,
+        HastyRangedWeapon = 18,
+        Intimidating = 19,
+        DeadlyRangedWeapon = 20,
+        Staunch = 21,
+        Awful = 22,
+        Lethargic = 23,
+        Awkward = 24,
+        Powerful = 25,
+        Mystic = 26,
+        Adept = 27,
+        Masterful = 28,
+        Inept = 29,
+        Ignorant = 30,
+        Deranged = 31,
+        Intense = 32,
+        Taboo = 33,
+        Celestial = 34,
+        Furious = 35,
+        Keen = 36,
+        Superior = 37,
+        Forceful = 38,
+        Broken = 39,
+        Damaged = 40,
+        Shoddy = 41,
+        QuickWeapon = 42,
+        DeadlyAccessory = 43,
+        Agile = 44,
+        Nimble = 45,
+        Murderous = 46,
+        Slow = 47,
+        Sluggish = 48,
+        Lazy = 49,
+        Annoying = 50,
+        Nasty = 51,
+        Manic = 52,
+        Hurtful = 53,
+        Strong = 54,
+        Unpleasant = 55,
+        Weak = 56,
+        Ruthless = 57,
+        Frenzying = 58,
+        Godly = 59,
+        Demonic = 60,
+        Zealous = 61,
+        Hard = 62,
+        Guarding = 63,
+        Armored = 64,
+        Warding = 65,
+        Arcane = 66,
+        Precise = 67,
+        Lucky = 68,
+        Jagged = 69,
+        Spiked = 70,
+        Angry = 71,
+        Menacing = 72,
+        Brisk = 73,
+        Fleeting = 74,
+        HastyAccessory = 75,
+        QuickAccessory = 76,
+        Wild = 77,
+        Rash = 78,
+        Intrepid = 79,
+        Violent = 80,
+        Legendary = 81,
+        Unreal = 82,
+        Mythical = 83
 #pragma warning restore 1591
-
-        private const int ArrayOffset = 2;
-        private const int ArraySize = ArrayOffset + Terraria.ID.PrefixID.Count;
-        private static readonly ItemPrefix[] ItemPrefixes = new ItemPrefix[ArraySize];
-        private static readonly string[] Names = new string[ArraySize];
-
-        /// <summary>
-        /// Gets the item prefix's ID.
-        /// </summary>
-        public int Id { get; }
-
-        static ItemPrefix() {
-            foreach (var field in typeof(ItemPrefix).GetFields(BindingFlags.Public | BindingFlags.Static)) {
-                var itemPrefix = (ItemPrefix)field.GetValue(null);
-                ItemPrefixes[ArrayOffset + itemPrefix.Id] = itemPrefix;
-                Names[ArrayOffset + itemPrefix.Id] = field.Name;
-            }
-        }
-
-        private ItemPrefix(int id) {
-            Id = id;
-        }
-
-        /// <summary>
-        /// Returns an item prefix converted from the given ID.
-        /// </summary>
-        /// <param name="id">The ID.</param>
-        /// <returns>The item prefix, or <c>null</c> if none exists.</returns>
-        public static ItemPrefix FromId(int id) =>
-            ArrayOffset + (uint)id < ArraySize ? ItemPrefixes[ArrayOffset + id] : null;
-
-        /// <inheritdoc />
-        [ExcludeFromCodeCoverage]
-        public override string ToString() => Names[ArrayOffset + Id];
     }
 }

@@ -32,23 +32,6 @@ namespace Orion.Networking.Packets.Entities {
         }
 
         [Fact]
-        public void SetItemPrefix_MarksAsDirty() {
-            var packet = new ItemInfoPacket();
-
-            packet.ItemPrefix = ItemPrefix.Unreal;
-
-            packet.ShouldBeDirty();
-        }
-
-        [Fact]
-        public void SetItemPrefix_NullValue_ThrowsArgumentNullException() {
-            var packet = new ItemInfoPacket();
-            Action action = () => packet.ItemPrefix = null;
-
-            action.Should().Throw<ArgumentNullException>();
-        }
-
-        [Fact]
         public void SetItemType_MarksAsDirty() {
             var packet = new ItemInfoPacket();
 
@@ -69,10 +52,6 @@ namespace Orion.Networking.Packets.Entities {
             27, 0, 21, 144, 1, 128, 51, 131, 71, 0, 112, 212, 69, 0, 0, 128, 64, 0, 0, 0, 192, 1, 0, 82, 0, 17, 6
         };
 
-        private static readonly byte[] InvalidItemPrefixBytes = {
-            27, 0, 21, 144, 1, 128, 51, 131, 71, 0, 112, 212, 69, 0, 0, 128, 64, 0, 0, 0, 192, 1, 0, 255, 0, 17, 6
-        };
-
         private static readonly byte[] InvalidItemTypeBytes = {
             27, 0, 21, 144, 1, 128, 51, 131, 71, 0, 112, 212, 69, 0, 0, 128, 64, 0, 0, 0, 192, 1, 0, 82, 0, 255, 127
         };
@@ -86,18 +65,9 @@ namespace Orion.Networking.Packets.Entities {
                 packet.ItemPosition.Should().Be(new Vector2(67175, 6798));
                 packet.ItemVelocity.Should().Be(new Vector2(4, -2));
                 packet.ItemStackSize.Should().Be(1);
-                packet.ItemPrefix.Should().BeSameAs(ItemPrefix.Unreal);
+                packet.ItemPrefix.Should().Be(ItemPrefix.Unreal);
                 packet.ShouldDisownItem.Should().BeFalse();
                 packet.ItemType.Should().BeSameAs(ItemType.Sdmg);
-            }
-        }
-
-        [Fact]
-        public void ReadFromStream_InvalidItemPrefix_ThrowsPacketException() {
-            using (var stream = new MemoryStream(InvalidItemPrefixBytes)) {
-                Func<Packet> func = () => Packet.ReadFromStream(stream, PacketContext.Server);
-
-                func.Should().Throw<PacketException>();
             }
         }
 

@@ -85,11 +85,10 @@ namespace Orion.Networking.Packets.Entities {
         /// <summary>
         /// Gets or sets the item's prefix.
         /// </summary>
-        /// <exception cref="ArgumentNullException"><paramref name="value"/> is <c>null</c>.</exception>
         public ItemPrefix ItemPrefix {
             get => _itemPrefix;
             set {
-                _itemPrefix = value ?? throw new ArgumentNullException(nameof(value));
+                _itemPrefix = value;
                 _isDirty = true;
             }
         }
@@ -128,7 +127,7 @@ namespace Orion.Networking.Packets.Entities {
             ItemPosition = reader.ReadVector2();
             ItemVelocity = reader.ReadVector2();
             ItemStackSize = reader.ReadInt16();
-            ItemPrefix = ItemPrefix.FromId(reader.ReadByte()) ?? throw new PacketException("Item prefix is invalid.");
+            ItemPrefix = (ItemPrefix)reader.ReadByte();
             ShouldDisownItem = reader.ReadBoolean();
             ItemType = ItemType.FromId(reader.ReadInt16()) ?? throw new PacketException("Item type is invalid.");
         }
@@ -138,7 +137,7 @@ namespace Orion.Networking.Packets.Entities {
             writer.Write(ItemPosition);
             writer.Write(ItemVelocity);
             writer.Write(ItemStackSize);
-            writer.Write((byte)ItemPrefix.Id);
+            writer.Write((byte)ItemPrefix);
             writer.Write(ShouldDisownItem);
             writer.Write(ItemType.Id);
         }

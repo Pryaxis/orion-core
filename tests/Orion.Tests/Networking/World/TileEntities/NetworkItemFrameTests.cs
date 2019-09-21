@@ -45,21 +45,5 @@ namespace Orion.Networking.World.TileEntities {
 
             itemFrame.ShouldBeDirty();
         }
-
-        [Fact]
-        public void SetItemPrefix_MarksAsDirty() {
-            var itemFrame = new NetworkItemFrame();
-            itemFrame.ItemPrefix = ItemPrefix.Unreal;
-
-            itemFrame.ShouldBeDirty();
-        }
-
-        [Fact]
-        public void SetItemPrefix_NullValue_ThrowsArgumentNullException() {
-            var itemFrame = new NetworkItemFrame();
-            Action action = () => itemFrame.ItemPrefix = null;
-
-            action.Should().Throw<ArgumentNullException>();
-        }
     }
 }

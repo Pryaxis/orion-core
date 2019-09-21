@@ -31,23 +31,6 @@ namespace Orion.Networking.Packets.World.TileEntities {
         }
 
         [Fact]
-        public void SetItemPrefix_MarksAsDirty() {
-            var packet = new ChestContentsSlotPacket();
-
-            packet.ItemPrefix = ItemPrefix.Unreal;
-
-            packet.ShouldBeDirty();
-        }
-
-        [Fact]
-        public void SetItemPrefix_NullValue_ThrowsArgumentNullException() {
-            var packet = new ChestContentsSlotPacket();
-            Action action = () => packet.ItemPrefix = null;
-
-            action.Should().Throw<ArgumentNullException>();
-        }
-
-        [Fact]
         public void SetItemType_MarksAsDirty() {
             var packet = new ChestContentsSlotPacket();
 
@@ -65,7 +48,6 @@ namespace Orion.Networking.Packets.World.TileEntities {
         }
 
         private static readonly byte[] Bytes = {11, 0, 32, 0, 0, 0, 1, 0, 0, 17, 6};
-        private static readonly byte[] InvalidItemPrefixBytes = {11, 0, 32, 0, 0, 0, 1, 0, 255, 17, 6};
         private static readonly byte[] InvalidItemTypeBytes = {11, 0, 32, 0, 0, 0, 1, 0, 0, 255, 127};
 
         [Fact]
@@ -76,17 +58,8 @@ namespace Orion.Networking.Packets.World.TileEntities {
                 packet.ChestIndex.Should().Be(0);
                 packet.ChestContentsSlotIndex.Should().Be(0);
                 packet.ItemStackSize.Should().Be(1);
-                packet.ItemPrefix.Should().BeSameAs(ItemPrefix.None);
+                packet.ItemPrefix.Should().Be(ItemPrefix.None);
                 packet.ItemType.Should().BeSameAs(ItemType.Sdmg);
-            }
-        }
-
-        [Fact]
-        public void ReadFromStream_InvalidItemPrefix_ThrowsPacketException() {
-            using (var stream = new MemoryStream(InvalidItemPrefixBytes)) {
-                Func<Packet> func = () => Packet.ReadFromStream(stream, PacketContext.Server);
-
-                func.Should().Throw<PacketException>();
             }
         }
 

@@ -70,11 +70,10 @@ namespace Orion.Networking.Packets.World.TileEntities {
         /// <summary>
         /// Gets or sets the item's prefix.
         /// </summary>
-        /// <exception cref="ArgumentNullException"><paramref name="value"/> is <c>null</c>.</exception>
         public ItemPrefix ItemPrefix {
             get => _itemPrefix;
             set {
-                _itemPrefix = value ?? throw new ArgumentNullException(nameof(value));
+                _itemPrefix = value;
                 _isDirty = true;
             }
         }
@@ -101,7 +100,7 @@ namespace Orion.Networking.Packets.World.TileEntities {
             ChestIndex = reader.ReadInt16();
             ChestContentsSlotIndex = reader.ReadByte();
             ItemStackSize = reader.ReadInt16();
-            ItemPrefix = ItemPrefix.FromId(reader.ReadByte()) ?? throw new PacketException("Item prefix is invalid.");
+            ItemPrefix = (ItemPrefix)reader.ReadByte();
             ItemType = ItemType.FromId(reader.ReadInt16()) ?? throw new PacketException("Item type is invalid.");
         }
 
@@ -109,7 +108,7 @@ namespace Orion.Networking.Packets.World.TileEntities {
             writer.Write(ChestIndex);
             writer.Write(ChestContentsSlotIndex);
             writer.Write(ItemStackSize);
-            writer.Write((byte)ItemPrefix.Id);
+            writer.Write((byte)ItemPrefix);
             writer.Write(ItemType.Id);
         }
     }

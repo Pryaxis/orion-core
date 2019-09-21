@@ -31,23 +31,6 @@ namespace Orion.Networking.Packets.Entities {
         }
 
         [Fact]
-        public void SetItemPrefix_MarksAsDirty() {
-            var packet = new PlayerInventorySlotPacket();
-
-            packet.ItemPrefix = ItemPrefix.Unreal;
-
-            packet.ShouldBeDirty();
-        }
-
-        [Fact]
-        public void SetItemPrefix_NullValue_ThrowsArgumentNullException() {
-            var packet = new PlayerInventorySlotPacket();
-            Action action = () => packet.ItemPrefix = null;
-
-            action.Should().Throw<ArgumentNullException>();
-        }
-
-        [Fact]
         public void SetItemType_MarksAsDirty() {
             var packet = new PlayerInventorySlotPacket();
 
@@ -65,7 +48,6 @@ namespace Orion.Networking.Packets.Entities {
         }
 
         private static readonly byte[] Bytes = {10, 0, 5, 0, 0, 1, 0, 59, 179, 13};
-        private static readonly byte[] InvalidItemPrefixBytes = {10, 0, 5, 0, 0, 1, 0, 255, 179, 13};
         private static readonly byte[] InvalidItemTypeBytes = {10, 0, 5, 0, 0, 1, 0, 59, 255, 127};
 
         [Fact]
@@ -78,15 +60,6 @@ namespace Orion.Networking.Packets.Entities {
                 packet.ItemStackSize.Should().Be(1);
                 packet.ItemPrefix.Should().Be(ItemPrefix.Godly);
                 packet.ItemType.Should().Be(ItemType.CopperShortsword);
-            }
-        }
-
-        [Fact]
-        public void ReadFromStream_InvalidItemPrefix_ThrowsPacketException() {
-            using (var stream = new MemoryStream(InvalidItemPrefixBytes)) {
-                Func<Packet> func = () => Packet.ReadFromStream(stream, PacketContext.Server);
-
-                func.Should().Throw<PacketException>();
             }
         }
 

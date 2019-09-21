@@ -55,20 +55,20 @@ namespace Orion.Networking.World.TileEntities {
         public ItemPrefix ItemPrefix {
             get => _itemPrefix;
             set {
-                _itemPrefix = value ?? throw new ArgumentNullException(nameof(value));
+                _itemPrefix = value;
                 IsDirty = true;
             }
         }
 
         private protected override void ReadFromReaderImpl(BinaryReader reader) {
             ItemType = ItemType.FromId(reader.ReadInt16()) ?? throw new PacketException("Item type is invalid.");
-            ItemPrefix = ItemPrefix.FromId(reader.ReadByte()) ?? throw new PacketException("Item prefix is invalid.");
+            ItemPrefix = (ItemPrefix)reader.ReadByte();
             ItemStackSize = reader.ReadInt16();
         }
 
         private protected override void WriteToWriterImpl(BinaryWriter writer) {
             writer.Write(ItemType.Id);
-            writer.Write((byte)ItemPrefix.Id);
+            writer.Write((byte)ItemPrefix);
             writer.Write((short)ItemStackSize);
         }
     }

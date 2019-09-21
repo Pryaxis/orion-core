@@ -77,7 +77,7 @@ namespace Orion.Networking.Packets.World.TileEntities {
                 packet.TileEntity.Y.Should().Be(100);
                 packet.TileEntity.Should().BeOfType<NetworkItemFrame>();
                 packet.TileEntity.As<NetworkItemFrame>().ItemType.Should().BeSameAs(ItemType.Sdmg);
-                packet.TileEntity.As<NetworkItemFrame>().ItemPrefix.Should().BeSameAs(ItemPrefix.Unreal);
+                packet.TileEntity.As<NetworkItemFrame>().ItemPrefix.Should().Be(ItemPrefix.Unreal);
                 packet.TileEntity.As<NetworkItemFrame>().ItemStackSize.Should().Be(1);
             }
         }
