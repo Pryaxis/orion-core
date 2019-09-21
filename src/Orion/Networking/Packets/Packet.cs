@@ -90,14 +90,14 @@ namespace Orion.Networking.Packets {
         /// <param name="stream">The stream.</param>
         /// <param name="context">The context with which to read the packet.</param>
         /// <exception cref="ArgumentNullException"><paramref name="stream"/> is <c>null</c>.</exception>
-        /// <exception cref="PacketException">The packet was too long.</exception>
+        /// <exception cref="PacketException">The packet could not be written correctly.</exception>
         public void WriteToStream(Stream stream, PacketContext context) {
             if (stream == null) throw new ArgumentNullException(nameof(stream));
 
             try {
                 var writer = new BinaryWriter(stream, Encoding.UTF8, true);
                 var oldPosition = stream.Position;
-                writer.Write((short)0);
+                stream.Position += 2;
                 writer.Write(Type.Id);
                 WriteToWriter(writer, context);
 
