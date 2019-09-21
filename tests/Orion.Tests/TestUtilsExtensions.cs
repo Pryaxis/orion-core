@@ -21,6 +21,7 @@ using System.Reflection;
 using FluentAssertions;
 using Orion.Events;
 using Orion.Networking.Packets;
+using Orion.Utils;
 
 namespace Orion {
     public static class TestUtilsExtensions {

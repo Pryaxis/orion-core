@@ -19,6 +19,7 @@ using System;
 using System.IO;
 using System.Text;
 using Orion.Events;
+using Orion.Utils;
 
 namespace Orion.Networking.Packets.Modules {
     /// <summary>

@@ -21,6 +21,7 @@ using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Text;
 using Orion.Events;
+using Orion.Utils;
 
 namespace Orion.Networking.Packets {
     /// <summary>
