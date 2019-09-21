@@ -19,13 +19,14 @@ using System;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Reflection;
+using Orion.Networking.World;
 
 namespace Orion.Networking.Packets.World {
     /// <summary>
     /// Packet sent to unlock an object (chest, door, etc.).
     /// </summary>
     public sealed class UnlockObjectPacket : Packet {
-        private ObjectType _unlockObjectType;
+        private UnlockableObjectType _unlockableObjectType;
         private short _objectX;
         private short _objectY;
 
@@ -33,13 +34,13 @@ namespace Orion.Networking.Packets.World {
         public override PacketType Type => PacketType.UnlockObject;
 
         /// <summary>
-        /// Gets or sets the unlock object type.
+        /// Gets or sets the unlockable object type.
         /// </summary>
         /// <exception cref="ArgumentNullException"><paramref name="value"/> is <c>null</c>.</exception>
-        public ObjectType UnlockObjectType {
-            get => _unlockObjectType;
+        public UnlockableObjectType UnlockableObjectType {
+            get => _unlockableObjectType;
             set {
-                _unlockObjectType = value ?? throw new ArgumentNullException(nameof(value));
+                _unlockableObjectType = value ?? throw new ArgumentNullException(nameof(value));
                 _isDirty = true;
             }
         }
@@ -68,61 +69,19 @@ namespace Orion.Networking.Packets.World {
 
         /// <inheritdoc />
         [ExcludeFromCodeCoverage]
-        public override string ToString() => $"{Type}[{UnlockObjectType} @ ({ObjectX}, {ObjectY})]";
+        public override string ToString() => $"{Type}[{UnlockableObjectType} @ ({ObjectX}, {ObjectY})]";
 
         private protected override void ReadFromReader(BinaryReader reader, PacketContext context) {
-            UnlockObjectType = ObjectType.FromId(reader.ReadByte()) ??
+            UnlockableObjectType = UnlockableObjectType.FromId(reader.ReadByte()) ??
                                throw new PacketException("Object type is invalid.");
             ObjectX = reader.ReadInt16();
             ObjectY = reader.ReadInt16();
         }
 
         private protected override void WriteToWriter(BinaryWriter writer, PacketContext context) {
-            writer.Write(UnlockObjectType.Id);
+            writer.Write(UnlockableObjectType.Id);
             writer.Write(ObjectX);
             writer.Write(ObjectY);
-        }
-
-        /// <summary>
-        /// Represents an object type in an <see cref="UnlockObjectPacket"/>.
-        /// </summary>
-        public sealed class ObjectType {
-#pragma warning disable 1591
-            public static readonly ObjectType Chest = new ObjectType(1);
-            public static readonly ObjectType Door = new ObjectType(2);
-#pragma warning restore 1591
-
-            private const int ArrayOffset = 0;
-            private const int ArraySize = ArrayOffset + 3;
-            private static readonly ObjectType[] Objects = new ObjectType[ArraySize];
-            private static readonly string[] Names = new string[ArraySize];
-
-            /// <summary>
-            /// Gets the object type's ID.
-            /// </summary>
-            public byte Id { get; }
-
-            static ObjectType() {
-                foreach (var field in typeof(ObjectType).GetFields(BindingFlags.Public | BindingFlags.Static)) {
-                    var objectType = (ObjectType)field.GetValue(null);
-                    Objects[ArrayOffset + objectType.Id] = objectType;
-                    Names[ArrayOffset + objectType.Id] = field.Name;
-                }
-            }
-
-            private ObjectType(byte id) {
-                Id = id;
-            }
-
-            /// <summary>
-            /// Returns an object type converted from the given ID.
-            /// </summary>
-            /// <param name="id">The ID.</param>
-            /// <returns>The object type, or <c>null</c> if none exists.</returns>
-            public static ObjectType FromId(byte id) => ArrayOffset + id < ArraySize ? Objects[ArrayOffset + id] : null;
-
-            /// <inheritdoc />
-            public override string ToString() => Names[ArrayOffset + Id];
         }
     }
 }

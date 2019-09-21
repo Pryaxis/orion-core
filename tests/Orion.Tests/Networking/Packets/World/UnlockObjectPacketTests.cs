@@ -18,8 +18,8 @@
 using System;
 using System.IO;
 using FluentAssertions;
+using Orion.Networking.World;
 using Xunit;
-using static Orion.Networking.Packets.World.UnlockObjectPacket;
 
 namespace Orion.Networking.Packets.World {
     public class UnlockObjectPacketTests {
@@ -31,18 +31,18 @@ namespace Orion.Networking.Packets.World {
         }
 
         [Fact]
-        public void SetUnlockObjectType_MarksAsDirty() {
+        public void SetUnlockableObjectType_MarksAsDirty() {
             var packet = new UnlockObjectPacket();
 
-            packet.UnlockObjectType = ObjectType.Chest;
+            packet.UnlockableObjectType = UnlockableObjectType.Chest;
 
             packet.ShouldBeDirty();
         }
 
         [Fact]
-        public void SetUnlockObjectType_NullValue_ThrowsArgumentNullException() {
+        public void SetUnlockableObjectType_NullValue_ThrowsArgumentNullException() {
             var packet = new UnlockObjectPacket();
-            Action action = () => packet.UnlockObjectType = null;
+            Action action = () => packet.UnlockableObjectType = null;
 
             action.Should().Throw<ArgumentNullException>();
         }
@@ -55,7 +55,7 @@ namespace Orion.Networking.Packets.World {
             using (var stream = new MemoryStream(Bytes)) {
                 var packet = (UnlockObjectPacket)Packet.ReadFromStream(stream, PacketContext.Server);
 
-                packet.UnlockObjectType.Should().BeSameAs(ObjectType.Chest);
+                packet.UnlockableObjectType.Should().BeSameAs(UnlockableObjectType.Chest);
                 packet.ObjectX.Should().Be(256);
                 packet.ObjectY.Should().Be(100);
             }
@@ -73,24 +73,6 @@ namespace Orion.Networking.Packets.World {
         [Fact]
         public void DeserializeAndSerialize_SamePacket() {
             Bytes.ShouldDeserializeAndSerializeSamePacket();
-        }
-
-        [Fact]
-        public void ObjectType_FromId_IsCorrect() {
-            for (byte i = 1; i < 3; ++i) {
-                ObjectType.FromId(i).Id.Should().Be(i);
-            }
-
-            ObjectType.FromId(0).Should().BeNull();
-            ObjectType.FromId(3).Should().BeNull();
-        }
-
-        [Fact]
-        public void ObjectType_FromId_ReturnsSameInstance() {
-            var objectType = ObjectType.FromId(1);
-            var objectType2 = ObjectType.FromId(1);
-
-            objectType.Should().BeSameAs(objectType2);
         }
     }
 }
