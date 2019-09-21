@@ -16,24 +16,21 @@
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
 using System;
-using System.Diagnostics.CodeAnalysis;
 using System.IO;
-using Orion.Entities;
-using Orion.Utils;
 using Orion.World.TileEntities;
 
-namespace Orion.Networking.TileEntities {
+namespace Orion.Networking.World.TileEntities {
     /// <summary>
-    /// Represents a chest that is transmitted over the network.
+    /// Represents a sign that is transmitted over the network.
     /// </summary>
-    public sealed class NetworkChest : NetworkTileEntity, IChest {
+    public sealed class NetworkSign : NetworkTileEntity, ISign {
         private string _name;
 
         /// <inheritdoc />
-        public override TileEntityType Type => TileEntityType.Chest;
+        public override TileEntityType Type => TileEntityType.Sign;
 
         /// <inheritdoc />
-        public string Name {
+        public string Text {
             get => _name;
             set {
                 _name = value ?? throw new ArgumentNullException(nameof(value));
@@ -41,18 +38,12 @@ namespace Orion.Networking.TileEntities {
             }
         }
 
-        /// <inheritdoc />
-        [ExcludeFromCodeCoverage]
-        public IReadOnlyArray<IItem> Items => throw new InvalidOperationException();
-
-        /// <inheritdoc />
         private protected override void ReadFromReaderImpl(BinaryReader reader) {
-            Name = reader.ReadString();
+            Text = reader.ReadString();
         }
 
-        /// <inheritdoc />
         private protected override void WriteToWriterImpl(BinaryWriter writer) {
-            writer.Write(Name);
+            writer.Write(Text);
         }
     }
 }

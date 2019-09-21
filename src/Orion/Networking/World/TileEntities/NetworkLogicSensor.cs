@@ -15,34 +15,49 @@
 // You should have received a copy of the GNU General Public License
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
+using System;
 using System.IO;
+using Orion.Networking.Packets;
 using Orion.World.TileEntities;
 
-namespace Orion.Networking.TileEntities {
+namespace Orion.Networking.World.TileEntities {
     /// <summary>
-    /// Represents a target dummy that is transmitted over the network.
+    /// Represents a logic sensor that is transmitted over the network.
     /// </summary>
-    public sealed class NetworkTargetDummy : NetworkTileEntity, ITargetDummy {
-        private int _npcIndex;
+    public sealed class NetworkLogicSensor : NetworkTileEntity, ILogicSensor {
+        private LogicSensorType _sensorType;
+        private bool _isActivated;
 
         /// <inheritdoc />
-        public override TileEntityType Type => TileEntityType.TargetDummy;
+        public override TileEntityType Type => TileEntityType.LogicSensor;
 
         /// <inheritdoc />
-        public int NpcIndex {
-            get => _npcIndex;
+        public LogicSensorType SensorType {
+            get => _sensorType;
             set {
-                _npcIndex = value;
+                _sensorType = value ?? throw new ArgumentNullException(nameof(value));
+                IsDirty = true;
+            }
+        }
+
+        /// <inheritdoc />
+        public bool IsActivated {
+            get => _isActivated;
+            set {
+                _isActivated = value;
                 IsDirty = true;
             }
         }
 
         private protected override void ReadFromReaderImpl(BinaryReader reader) {
-            NpcIndex = reader.ReadInt16();
+            SensorType = LogicSensorType.FromId(reader.ReadByte()) ??
+                         throw new PacketException("Logic sensor type is invalid.");
+            IsActivated = reader.ReadBoolean();
         }
 
         private protected override void WriteToWriterImpl(BinaryWriter writer) {
-            writer.Write((short)NpcIndex);
+            writer.Write(SensorType.Id);
+            writer.Write(IsActivated);
         }
     }
 }

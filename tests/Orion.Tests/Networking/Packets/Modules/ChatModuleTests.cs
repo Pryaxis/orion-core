@@ -17,11 +17,9 @@
 
 using System.IO;
 using FluentAssertions;
-using Orion.Networking.Packets;
-using Orion.Networking.Packets.Modules;
 using Xunit;
 
-namespace Orion.Tests.Networking.Packets.Modules {
+namespace Orion.Networking.Packets.Modules {
     public class ChatModuleTests {
         [Fact]
         public void SetDefaultableProperties_MarkAsDirty() {

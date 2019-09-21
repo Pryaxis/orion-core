@@ -16,29 +16,34 @@
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
 using System;
-using System.IO;
+using FluentAssertions;
 using Orion.World.TileEntities;
 using Xunit;
 
-namespace Orion.Networking.TileEntities {
-    public class NetworkTileEntityTests {
+namespace Orion.Networking.World.TileEntities {
+    public class NetworkLogicSensorTests {
         [Fact]
-        public void SetDefaultableProperties_MarkAsDirty() {
-            var tileEntity = new TestTileEntity();
+        public void SetSensorType_MarksAsDirty() {
+            var logicSensor = new NetworkLogicSensor();
+            logicSensor.SensorType = LogicSensorType.Day;
 
-            tileEntity.ShouldHaveDefaultablePropertiesMarkAsDirty();
+            logicSensor.ShouldBeDirty();
         }
 
-        public sealed class TestTileEntity : NetworkTileEntity {
-            public override TileEntityType Type => throw new NotImplementedException();
+        [Fact]
+        public void SetSensorType_NullValue_ThrowsArgumentNullException() {
+            var logicSensor = new NetworkLogicSensor();
+            Action action = () => logicSensor.SensorType = null;
 
-            private protected override void ReadFromReaderImpl(BinaryReader reader) {
-                throw new NotImplementedException();
-            }
+            action.Should().Throw<ArgumentNullException>();
+        }
 
-            private protected override void WriteToWriterImpl(BinaryWriter writer) {
-                throw new NotImplementedException();
-            }
+        [Fact]
+        public void SetIsActivated_MarksAsDirty() {
+            var logicSensor = new NetworkLogicSensor();
+            logicSensor.IsActivated = false;
+
+            logicSensor.ShouldBeDirty();
         }
     }
 }

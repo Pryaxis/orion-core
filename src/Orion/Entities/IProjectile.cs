@@ -19,5 +19,16 @@ namespace Orion.Entities {
     /// <summary>
     /// Represents a Terraria projectile.
     /// </summary>
-    public interface IProjectile : IEntity { }
+    public interface IProjectile : IEntity {
+        /// <summary>
+        /// Gets the projectile's type.
+        /// </summary>
+        ProjectileType Type { get; }
+
+        /// <summary>
+        /// Sets the projectile's type. This will update the projectile accordingly.
+        /// </summary>
+        /// <param name="type">The projectile type.</param>
+        void SetType(ProjectileType type);
+    }
 }

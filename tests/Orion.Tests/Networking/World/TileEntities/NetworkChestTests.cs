@@ -19,20 +19,20 @@ using System;
 using FluentAssertions;
 using Xunit;
 
-namespace Orion.Networking.TileEntities {
-    public class NetworkSignTests {
+namespace Orion.Networking.World.TileEntities {
+    public class NetworkChestTests {
         [Fact]
-        public void SetText_MarksAsDirty() {
-            var sign = new NetworkSign();
-            sign.Text = "";
+        public void SetName_MarksAsDirty() {
+            var chest = new NetworkChest();
+            chest.Name = "";
 
-            sign.ShouldBeDirty();
+            chest.ShouldBeDirty();
         }
 
         [Fact]
         public void SetText_NullValue_ThrowsArgumentNullException() {
-            var sign = new NetworkSign();
-            Action action = () => sign.Text = null;
+            var chest = new NetworkChest();
+            Action action = () => chest.Name = null;
 
             action.Should().Throw<ArgumentNullException>();
         }

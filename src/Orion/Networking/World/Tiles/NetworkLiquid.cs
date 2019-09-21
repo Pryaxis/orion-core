@@ -23,7 +23,7 @@ using Orion.Events;
 using Orion.Networking.Packets;
 using Orion.World.Tiles;
 
-namespace Orion.Networking.Tiles {
+namespace Orion.Networking.World.Tiles {
     /// <summary>
     /// Represents a liquid transmitted over the network.
     /// </summary>

@@ -20,7 +20,7 @@ using FluentAssertions;
 using Orion.Entities;
 using Xunit;
 
-namespace Orion.Networking.TileEntities {
+namespace Orion.Networking.World.TileEntities {
     public class NetworkItemFrameTests {
         [Fact]
         public void SetItemType_MarksAsDirty() {

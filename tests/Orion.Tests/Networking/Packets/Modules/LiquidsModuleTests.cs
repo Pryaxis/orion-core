@@ -18,13 +18,10 @@
 using System;
 using System.IO;
 using FluentAssertions;
-using Orion.Networking.Packets;
-using Orion.Networking.Packets.Modules;
-using Orion.Networking.Tiles;
-using Orion.World.Tiles;
+using Orion.Networking.World.Tiles;
 using Xunit;
 
-namespace Orion.Tests.Networking.Packets.Modules {
+namespace Orion.Networking.Packets.Modules {
     public class LiquidsModuleTests {
         [Fact]
         public void Liquids_Count_IsCorrect() {

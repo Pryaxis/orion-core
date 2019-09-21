@@ -17,13 +17,12 @@
 
 using System;
 using System.IO;
-using System.Text;
 using FluentAssertions;
 using Orion.Networking.Packets;
 using Orion.World.Tiles;
 using Xunit;
 
-namespace Orion.Networking.Tiles {
+namespace Orion.Networking.World.Tiles {
     public class NetworkLiquidTests {
         [Fact]
         public void SetDefaultableProperties_MarkAsDirty() {

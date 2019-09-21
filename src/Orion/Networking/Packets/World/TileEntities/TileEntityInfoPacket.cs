@@ -17,7 +17,7 @@
 
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
-using Orion.Networking.TileEntities;
+using Orion.Networking.World.TileEntities;
 
 namespace Orion.Networking.Packets.World.TileEntities {
     /// <summary>

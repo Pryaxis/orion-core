@@ -16,48 +16,43 @@
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 using System.IO;
-using Orion.Networking.Packets;
+using Orion.Entities;
+using Orion.Utils;
 using Orion.World.TileEntities;
 
-namespace Orion.Networking.TileEntities {
+namespace Orion.Networking.World.TileEntities {
     /// <summary>
-    /// Represents a logic sensor that is transmitted over the network.
+    /// Represents a chest that is transmitted over the network.
     /// </summary>
-    public sealed class NetworkLogicSensor : NetworkTileEntity, ILogicSensor {
-        private LogicSensorType _sensorType;
-        private bool _isActivated;
+    public sealed class NetworkChest : NetworkTileEntity, IChest {
+        private string _name;
 
         /// <inheritdoc />
-        public override TileEntityType Type => TileEntityType.LogicSensor;
+        public override TileEntityType Type => TileEntityType.Chest;
 
         /// <inheritdoc />
-        public LogicSensorType SensorType {
-            get => _sensorType;
+        public string Name {
+            get => _name;
             set {
-                _sensorType = value ?? throw new ArgumentNullException(nameof(value));
+                _name = value ?? throw new ArgumentNullException(nameof(value));
                 IsDirty = true;
             }
         }
 
         /// <inheritdoc />
-        public bool IsActivated {
-            get => _isActivated;
-            set {
-                _isActivated = value;
-                IsDirty = true;
-            }
-        }
+        [ExcludeFromCodeCoverage]
+        public IReadOnlyArray<IItem> Items => throw new InvalidOperationException();
 
+        /// <inheritdoc />
         private protected override void ReadFromReaderImpl(BinaryReader reader) {
-            SensorType = LogicSensorType.FromId(reader.ReadByte()) ??
-                         throw new PacketException("Logic sensor type is invalid.");
-            IsActivated = reader.ReadBoolean();
+            Name = reader.ReadString();
         }
 
+        /// <inheritdoc />
         private protected override void WriteToWriterImpl(BinaryWriter writer) {
-            writer.Write(SensorType.Id);
-            writer.Write(IsActivated);
+            writer.Write(Name);
         }
     }
 }

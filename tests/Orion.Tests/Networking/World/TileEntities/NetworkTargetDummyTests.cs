@@ -17,7 +17,7 @@
 
 using Xunit;
 
-namespace Orion.Networking.TileEntities {
+namespace Orion.Networking.World.TileEntities {
     public class NetworkTargetDummyTests {
         [Fact]
         public void SetNpcIndex_MarksAsDirty() {

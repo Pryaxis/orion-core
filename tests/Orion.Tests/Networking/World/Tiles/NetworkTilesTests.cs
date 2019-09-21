@@ -20,7 +20,7 @@ using FluentAssertions;
 using Orion.World.Tiles;
 using Xunit;
 
-namespace Orion.Networking.Tiles {
+namespace Orion.Networking.World.Tiles {
     public class NetworkTilesTests {
         [Fact]
         public void Ctor_WidthNegative_ThrowsArgumentOutOfRangeException() {

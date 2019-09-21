@@ -17,7 +17,7 @@
 
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
-using Orion.Networking.Tiles;
+using Orion.Networking.World.Tiles;
 using Orion.Utils;
 
 namespace Orion.Networking.Packets.Modules {

@@ -24,7 +24,7 @@ using Orion.Networking.Packets;
 using Orion.Utils;
 using Orion.World.TileEntities;
 
-namespace Orion.Networking.TileEntities {
+namespace Orion.Networking.World.TileEntities {
     /// <summary>
     /// Represents a tile entity that is transmitted over the network.
     /// </summary>
