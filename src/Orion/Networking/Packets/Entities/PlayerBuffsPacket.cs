@@ -49,6 +49,15 @@ namespace Orion.Networking.Packets.Entities {
         /// </summary>
         public DirtiableArray<BuffType> PlayerBuffTypes { get; } =
             new DirtiableArray<BuffType>(Terraria.Player.maxBuffs);
+        
+        /// <summary>
+        /// Initializes a new instance of the <see cref="PlayerBuffsPacket"/> class.
+        /// </summary>
+        public PlayerBuffsPacket() {
+            for (var i = 0; i < PlayerBuffTypes.Count; ++i) {
+                PlayerBuffTypes[i] = BuffType.None;
+            }
+        }
 
         /// <inheritdoc />
         public override void Clean() {
