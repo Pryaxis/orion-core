@@ -17,11 +17,13 @@
 
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
+using JetBrains.Annotations;
 
 namespace Orion.Networking.Packets.Entities {
     /// <summary>
     /// Packet sent to set the number of angler quests a player has completed.
     /// </summary>
+    [PublicAPI]
     public sealed class PlayerAnglerQuestsPacket : Packet {
         private int _playerNumberOfAnglerQuestsCompleted;
 
@@ -44,11 +46,11 @@ namespace Orion.Networking.Packets.Entities {
         public override string ToString() => $"{Type}[{PlayerNumberOfAnglerQuestsCompleted}]";
 
         private protected override void ReadFromReader(BinaryReader reader, PacketContext context) {
-            PlayerNumberOfAnglerQuestsCompleted = reader.ReadInt32();
+            _playerNumberOfAnglerQuestsCompleted = reader.ReadInt32();
         }
 
         private protected override void WriteToWriter(BinaryWriter writer, PacketContext context) {
-            writer.Write(PlayerNumberOfAnglerQuestsCompleted);
+            writer.Write(_playerNumberOfAnglerQuestsCompleted);
         }
     }
 }
