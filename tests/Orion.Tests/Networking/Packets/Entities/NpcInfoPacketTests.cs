@@ -46,28 +46,8 @@ namespace Orion.Networking.Packets.Entities {
             packet.NpcAiValues.Count.Should().Be(Terraria.NPC.maxAI);
         }
 
-        [Fact]
-        public void SetNpcType_MarksAsDirty() {
-            var packet = new NpcInfoPacket();
-            packet.NpcType = NpcType.BlueSlime;
-
-            packet.ShouldBeDirty();
-        }
-
-        [Fact]
-        public void SetNpcType_NullValue_ThrowsArgumentNullException() {
-            var packet = new NpcInfoPacket();
-            Action action = () => packet.NpcType = null;
-
-            action.Should().Throw<ArgumentNullException>();
-        }
-
         private static readonly byte[] Bytes = {
             26, 0, 23, 1, 0, 38, 209, 132, 71, 0, 0, 213, 69, 0, 0, 0, 0, 0, 0, 0, 0, 255, 0, 130, 22, 0
-        };
-
-        private static readonly byte[] InvalidNpcTypeBytes = {
-            26, 0, 23, 1, 0, 38, 209, 132, 71, 0, 0, 213, 69, 0, 0, 0, 0, 0, 0, 0, 0, 255, 0, 130, 255, 127
         };
 
         [Fact]
@@ -92,15 +72,6 @@ namespace Orion.Networking.Packets.Entities {
                 packet.NpcNumberOfHealthBytes.Should().Be(0);
                 packet.NpcHealth.Should().Be(0);
                 packet.NpcReleaserPlayerIndex.Should().Be(0);
-            }
-        }
-
-        [Fact]
-        public void ReadFromStream_InvalidNpcType_ThrowsPacketException() {
-            using (var stream = new MemoryStream(InvalidNpcTypeBytes)) {
-                Func<Packet> func = () => Packet.ReadFromStream(stream, PacketContext.Server);
-
-                func.Should().Throw<PacketException>();
             }
         }
 

@@ -33,11 +33,10 @@ namespace Orion.Networking.Packets.Entities {
         /// <summary>
         /// Gets or sets the NPC type that was killed.
         /// </summary>
-        /// <exception cref="ArgumentNullException"><paramref name="value"/> is <c>null</c>.</exception>
         public NpcType NpcTypeKilled {
             get => _npcTypeKilled;
             set {
-                _npcTypeKilled = value ?? throw new ArgumentNullException(nameof(value));
+                _npcTypeKilled = value;
                 _isDirty = true;
             }
         }
@@ -47,11 +46,11 @@ namespace Orion.Networking.Packets.Entities {
         public override string ToString() => $"{Type}[{NpcTypeKilled}]";
 
         private protected override void ReadFromReader(BinaryReader reader, PacketContext context) {
-            NpcTypeKilled = NpcType.FromId(reader.ReadInt16()) ?? throw new PacketException("NPC type is invalid.");
+            NpcTypeKilled = (NpcType)reader.ReadInt16();
         }
 
         private protected override void WriteToWriter(BinaryWriter writer, PacketContext context) {
-            writer.Write(NpcTypeKilled.Id);
+            writer.Write((short)NpcTypeKilled);
         }
     }
 }

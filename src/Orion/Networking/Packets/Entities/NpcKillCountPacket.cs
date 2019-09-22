@@ -25,7 +25,7 @@ namespace Orion.Networking.Packets.Entities {
     /// Packet sent to set the kill count of an NPC type.
     /// </summary>
     public sealed class NpcKillCountPacket : Packet {
-        private NpcType _npcType = NpcType.None;
+        private NpcType _npcType;
         private int _npcTypeKillCount;
 
         /// <inheritdoc />
@@ -34,11 +34,10 @@ namespace Orion.Networking.Packets.Entities {
         /// <summary>
         /// Gets or sets the NPC type.
         /// </summary>
-        /// <exception cref="ArgumentNullException"><paramref name="value"/> is <c>null</c>.</exception>
         public NpcType NpcType {
             get => _npcType;
             set {
-                _npcType = value ?? throw new ArgumentNullException(nameof(value));
+                _npcType = value;
                 _isDirty = true;
             }
         }
@@ -60,13 +59,13 @@ namespace Orion.Networking.Packets.Entities {
 
         /// <inheritdoc />
         private protected override void ReadFromReader(BinaryReader reader, PacketContext context) {
-            NpcType = NpcType.FromId(reader.ReadInt16()) ?? throw new PacketException("NPC type is invalid.");
+            NpcType = (NpcType)reader.ReadInt16();
             NpcTypeKillCount = reader.ReadInt32();
         }
 
         /// <inheritdoc />
         private protected override void WriteToWriter(BinaryWriter writer, PacketContext context) {
-            writer.Write(NpcType.Id);
+            writer.Write((short)NpcType);
             writer.Write(NpcTypeKillCount);
         }
     }

@@ -24,39 +24,20 @@ using Xunit;
 namespace Orion.Networking.Packets.Entities {
     public class NpcTypeKilledPacketTests {
         [Fact]
-        public void SetNpcTypeKilled_MarksAsDirty() {
+        public void SetDefaultableProperties_MarkAsDirty() {
             var packet = new NpcTypeKilledPacket();
-            packet.NpcTypeKilled = NpcType.BlueSlime;
 
-            packet.ShouldBeDirty();
-        }
-
-        [Fact]
-        public void SetNpcTypeKilled_NullValue_ThrowsArgumentNullException() {
-            var packet = new NpcTypeKilledPacket();
-            Action action = () => packet.NpcTypeKilled = null;
-
-            action.Should().Throw<ArgumentNullException>();
+            packet.ShouldHaveDefaultablePropertiesMarkAsDirty();
         }
 
         public static readonly byte[] Bytes = {5, 0, 97, 1, 0};
-        public static readonly byte[] InvalidNpcTypeBytes = {5, 0, 97, 255, 127};
 
         [Fact]
         public void ReadFromStream_IsCorrect() {
             using (var stream = new MemoryStream(Bytes)) {
                 var packet = (NpcTypeKilledPacket)Packet.ReadFromStream(stream, PacketContext.Server);
 
-                packet.NpcTypeKilled.Should().BeSameAs(NpcType.BlueSlime);
-            }
-        }
-
-        [Fact]
-        public void ReadFromStream_InvalidNpcType_ThrowsPacketException() {
-            using (var stream = new MemoryStream(InvalidNpcTypeBytes)) {
-                Func<Packet> func = () => Packet.ReadFromStream(stream, PacketContext.Server);
-
-                func.Should().Throw<PacketException>();
+                packet.NpcTypeKilled.Should().Be(NpcType.BlueSlime);
             }
         }
 

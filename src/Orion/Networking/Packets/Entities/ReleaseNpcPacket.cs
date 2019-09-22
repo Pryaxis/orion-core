@@ -47,11 +47,10 @@ namespace Orion.Networking.Packets.Entities {
         /// <summary>
         /// Gets or sets the NPC's type.
         /// </summary>
-        /// <exception cref="ArgumentNullException"><paramref name="value"/> is <c>null</c>.</exception>
         public NpcType NpcType {
             get => _npcType;
             set {
-                _npcType = value ?? throw new ArgumentNullException(nameof(value));
+                _npcType = value;
                 _isDirty = true;
             }
         }
@@ -73,14 +72,14 @@ namespace Orion.Networking.Packets.Entities {
 
         private protected override void ReadFromReader(BinaryReader reader, PacketContext context) {
             NpcPosition = new Vector2(reader.ReadInt32(), reader.ReadInt32());
-            NpcType = NpcType.FromId(reader.ReadInt16()) ?? throw new PacketException("NPC type is invalid.");
+            NpcType = (NpcType)reader.ReadInt16();
             NpcStyle = reader.ReadByte();
         }
 
         private protected override void WriteToWriter(BinaryWriter writer, PacketContext context) {
             writer.Write((int)NpcPosition.X);
             writer.Write((int)NpcPosition.Y);
-            writer.Write(NpcType.Id);
+            writer.Write((short)NpcType);
             writer.Write(NpcStyle);
         }
     }

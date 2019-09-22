@@ -20,6 +20,7 @@ using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using Microsoft.Xna.Framework;
 using Orion.Entities;
+using Orion.Entities.Extensions;
 using Orion.Networking.Packets.Extensions;
 using Orion.Utils;
 
@@ -36,7 +37,7 @@ namespace Orion.Networking.Packets.Entities {
         private bool _npcVerticalDirection;
         private bool _npcSpriteDirection;
         private bool _isNpcAtMaxHealth;
-        private NpcType _npcType = NpcType.None;
+        private NpcType _npcType;
         private byte _npcNumberOfHealthBytes;
         private int _npcHealth;
         private byte _npcReleaserPlayerIndex;
@@ -145,11 +146,10 @@ namespace Orion.Networking.Packets.Entities {
         /// <summary>
         /// Gets or sets the NPC's type.
         /// </summary>
-        /// <exception cref="ArgumentNullException"><paramref name="value"/> is <c>null</c>.</exception>
         public NpcType NpcType {
             get => _npcType;
             set {
-                _npcType = value ?? throw new ArgumentNullException(nameof(value));
+                _npcType = value;
                 _isDirty = true;
             }
         }
@@ -215,7 +215,7 @@ namespace Orion.Networking.Packets.Entities {
             NpcSpriteDirection = header[6];
             IsNpcAtMaxHealth = header[7];
 
-            NpcType = NpcType.FromId(reader.ReadInt16()) ?? throw new PacketException("NPC type is invalid.");
+            NpcType = (NpcType)reader.ReadInt16();
 
             if (!IsNpcAtMaxHealth) {
                 _npcNumberOfHealthBytes = reader.ReadByte();
@@ -232,7 +232,7 @@ namespace Orion.Networking.Packets.Entities {
                 }
             }
 
-            if (NpcType.IsCatchable) {
+            if (NpcType.IsCatchable()) {
                 NpcReleaserPlayerIndex = reader.ReadByte();
             }
         }
@@ -259,7 +259,7 @@ namespace Orion.Networking.Packets.Entities {
             if (header[4]) writer.Write(NpcAiValues[2]);
             if (header[5]) writer.Write(NpcAiValues[3]);
 
-            writer.Write(NpcType.Id);
+            writer.Write((short)NpcType);
 
             if (!IsNpcAtMaxHealth) {
                 writer.Write(NpcNumberOfHealthBytes);
@@ -276,7 +276,7 @@ namespace Orion.Networking.Packets.Entities {
                 }
             }
 
-            if (NpcType.IsCatchable) {
+            if (NpcType.IsCatchable()) {
                 writer.Write(NpcReleaserPlayerIndex);
             }
         }

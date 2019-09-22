@@ -60,12 +60,10 @@ namespace Orion.Networking.Packets.World {
             get {
                 if (!IsBoss) throw new InvalidOperationException();
 
-                return NpcType.FromId(_type);
+                return (NpcType)_type;
             }
             set {
-                if (value == null) throw new ArgumentNullException(nameof(value));
-
-                _type = value.Id;
+                _type = (short)value;
                 _isDirty = true;
             }
         }
@@ -101,7 +99,7 @@ namespace Orion.Networking.Packets.World {
             if (type < 0) {
                 Invasion = NetworkInvasion.FromId(type) ?? throw new PacketException("Invasion is invalid.");
             } else {
-                Boss = NpcType.FromId(type) ?? throw new PacketException("NPC type is invalid.");
+                Boss = (NpcType)type;
             }
         }
 

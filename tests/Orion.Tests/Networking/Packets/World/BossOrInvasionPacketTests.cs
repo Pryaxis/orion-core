@@ -63,14 +63,6 @@ namespace Orion.Networking.Packets.World {
         }
 
         [Fact]
-        public void SetBoss_NullValue_ThrowsArgumentNullException() {
-            var packet = new BossOrInvasionPacket();
-            Action action = () => packet.Boss = null;
-
-            action.Should().Throw<ArgumentNullException>();
-        }
-
-        [Fact]
         public void GetInvasionType_IsNotInvasion_ThrowsInvalidOperationException() {
             var packet = new BossOrInvasionPacket {Boss = NpcType.BlueSlime};
             Func<NetworkInvasion> func = () => packet.Invasion;
@@ -123,7 +115,6 @@ namespace Orion.Networking.Packets.World {
         }
 
         public static readonly byte[] BossBytes = {7, 0, 61, 0, 0, 1, 0};
-        public static readonly byte[] InvalidNpcTypeBytes = {7, 0, 61, 0, 0, 255, 127};
 
         [Fact]
         public void ReadFromStream_Boss_IsCorrect() {
@@ -132,15 +123,6 @@ namespace Orion.Networking.Packets.World {
 
                 packet.SummmonOnPlayerIndex.Should().Be(0);
                 packet.Boss.Should().Be(NpcType.BlueSlime);
-            }
-        }
-
-        [Fact]
-        public void ReadFromStream_InvalidNpcType_ThrowsPacketException() {
-            using (var stream = new MemoryStream(InvalidNpcTypeBytes)) {
-                Func<Packet> func = () => Packet.ReadFromStream(stream, PacketContext.Server);
-
-                func.Should().Throw<PacketException>();
             }
         }
 

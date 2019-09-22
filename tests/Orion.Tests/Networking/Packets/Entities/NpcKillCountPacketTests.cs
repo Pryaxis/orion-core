@@ -30,24 +30,7 @@ namespace Orion.Networking.Packets.Entities {
             packet.ShouldHaveDefaultablePropertiesMarkAsDirty();
         }
 
-        [Fact]
-        public void SetNpcType_MarksAsDirty() {
-            var packet = new NpcKillCountPacket();
-            packet.NpcType = NpcType.BlueSlime;
-
-            packet.ShouldBeDirty();
-        }
-
-        [Fact]
-        public void SetNpcType_NullValue_ThrowsArgumentNullException() {
-            var packet = new NpcKillCountPacket();
-            Action action = () => packet.NpcType = null;
-
-            action.Should().Throw<ArgumentNullException>();
-        }
-
         public static readonly byte[] Bytes = {9, 0, 83, 1, 0, 100, 0, 0, 0};
-        public static readonly byte[] InvalidNpcTypeBytes = {9, 0, 83, 255, 127, 100, 0, 0, 0};
 
         [Fact]
         public void ReadFromStream_IsCorrect() {
@@ -56,15 +39,6 @@ namespace Orion.Networking.Packets.Entities {
 
                 packet.NpcType.Should().Be(NpcType.BlueSlime);
                 packet.NpcTypeKillCount.Should().Be(100);
-            }
-        }
-
-        [Fact]
-        public void ReadFromStream_InvalidNpcType_ThrowsPacketException() {
-            using (var stream = new MemoryStream(InvalidNpcTypeBytes)) {
-                Func<Packet> func = () => Packet.ReadFromStream(stream, PacketContext.Server);
-
-                func.Should().Throw<PacketException>();
             }
         }
 
