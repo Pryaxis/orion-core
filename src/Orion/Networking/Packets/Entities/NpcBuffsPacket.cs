@@ -18,6 +18,7 @@
 using System;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
+using JetBrains.Annotations;
 using Orion.Entities;
 using Orion.Utils;
 
@@ -25,6 +26,7 @@ namespace Orion.Networking.Packets.Entities {
     /// <summary>
     /// Packet sent from the server to the client to set an NPC's buffs.
     /// </summary>
+    [PublicAPI]
     public sealed class NpcBuffsPacket : Packet {
         private short _npcIndex;
 
@@ -48,6 +50,7 @@ namespace Orion.Networking.Packets.Entities {
         /// <summary>
         /// Gets the NPC's buffs.
         /// </summary>
+        [NotNull]
         public DirtiableArray<Buff> NpcBuffs { get; } = new DirtiableArray<Buff>(Terraria.NPC.maxBuffs);
 
         /// <inheritdoc />
@@ -61,14 +64,15 @@ namespace Orion.Networking.Packets.Entities {
         public override string ToString() => $"{Type}[...]";
 
         private protected override void ReadFromReader(BinaryReader reader, PacketContext context) {
-            NpcIndex = reader.ReadInt16();
+            _npcIndex = reader.ReadInt16();
             for (var i = 0; i < NpcBuffs.Count; ++i) {
-                NpcBuffs[i] = new Buff((BuffType)reader.ReadByte(), TimeSpan.FromSeconds(reader.ReadInt16() / 60.0));
+                NpcBuffs._array[i] = new Buff((BuffType)reader.ReadByte(),
+                                              TimeSpan.FromSeconds(reader.ReadInt16() / 60.0));
             }
         }
 
         private protected override void WriteToWriter(BinaryWriter writer, PacketContext context) {
-            writer.Write(NpcIndex);
+            writer.Write(_npcIndex);
             foreach (var buff in NpcBuffs) {
                 writer.Write((byte)buff.BuffType);
 
