@@ -23,7 +23,7 @@ namespace Orion.Networking.Packets.Entities {
     public class ItemOwnerPacketTests {
         [Fact]
         public void SetDefaultableProperties_MarkAsDirty() {
-            var packet = new BuffNpcPacket();
+            var packet = new NpcBuffPacket();
 
             packet.ShouldHaveDefaultablePropertiesMarkAsDirty();
         }

@@ -18,13 +18,15 @@
 using System;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
+using JetBrains.Annotations;
 using Orion.Entities;
 
 namespace Orion.Networking.Packets.Entities {
     /// <summary>
     /// Packet sent to add a buff to an NPC.
     /// </summary>
-    public sealed class BuffNpcPacket : Packet {
+    [PublicAPI]
+    public sealed class NpcBuffPacket : Packet {
         private short _npcIndex;
         private Buff _npcBuff;
 
@@ -58,15 +60,15 @@ namespace Orion.Networking.Packets.Entities {
         public override string ToString() => $"{Type}[#={NpcIndex}, {NpcBuff}]";
 
         private protected override void ReadFromReader(BinaryReader reader, PacketContext context) {
-            NpcIndex = reader.ReadInt16();
-            NpcBuff = new Buff((BuffType)reader.ReadByte(), TimeSpan.FromSeconds(reader.ReadInt16() / 60.0));
+            _npcIndex = reader.ReadInt16();
+            _npcBuff = new Buff((BuffType)reader.ReadByte(), TimeSpan.FromSeconds(reader.ReadInt16() / 60.0));
         }
 
         private protected override void WriteToWriter(BinaryWriter writer, PacketContext context) {
-            writer.Write(NpcIndex);
-            writer.Write((byte)NpcBuff.BuffType);
+            writer.Write(_npcIndex);
+            writer.Write((byte)_npcBuff.BuffType);
 
-            var ticks = (int)(NpcBuff.Duration.TotalSeconds * 60.0);
+            var ticks = (int)(_npcBuff.Duration.TotalSeconds * 60.0);
             if (ticks >= short.MaxValue) {
                 writer.Write(short.MaxValue);
             } else {
