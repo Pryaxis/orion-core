@@ -20,10 +20,10 @@ using FluentAssertions;
 using Xunit;
 
 namespace Orion.Networking.Packets.Entities {
-    public class DamageNpcHeldItemPacketTests {
+    public class NpcDamageHeldItemPacketTests {
         [Fact]
         public void SetDefaultableProperties_MarkAsDirty() {
-            var packet = new DamageNpcHeldItemPacket();
+            var packet = new NpcDamageHeldItemPacket();
 
             packet.ShouldHaveDefaultablePropertiesMarkAsDirty();
         }
@@ -33,10 +33,10 @@ namespace Orion.Networking.Packets.Entities {
         [Fact]
         public void ReadFromStream_IsCorrect() {
             using (var stream = new MemoryStream(Bytes)) {
-                var packet = (DamageNpcHeldItemPacket)Packet.ReadFromStream(stream, PacketContext.Server);
+                var packet = (NpcDamageHeldItemPacket)Packet.ReadFromStream(stream, PacketContext.Server);
 
                 packet.NpcIndex.Should().Be(1);
-                packet.DamagingPlayerIndex.Should().Be(0);
+                packet.NpcDamagerPlayerIndex.Should().Be(0);
             }
         }
 

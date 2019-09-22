@@ -17,17 +17,19 @@
 
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
+using JetBrains.Annotations;
 
 namespace Orion.Networking.Packets.Entities {
     /// <summary>
     /// Packet sent to damage an NPC with a player's held item.
     /// </summary>
-    public sealed class DamageNpcHeldItemPacket : Packet {
+    [PublicAPI]
+    public sealed class NpcDamageHeldItemPacket : Packet {
         private short _npcIndex;
-        private byte _damagingPlayerIndex;
+        private byte _npcDamagerPlayerIndex;
 
         /// <inheritdoc />
-        public override PacketType Type => PacketType.DamageNpcHeldItem;
+        public override PacketType Type => PacketType.NpcDamageHeldItem;
 
         /// <summary>
         /// Gets or sets the NPC index.
@@ -41,28 +43,28 @@ namespace Orion.Networking.Packets.Entities {
         }
 
         /// <summary>
-        /// Gets or sets the damaging player index.
+        /// Gets or sets the NPC damager's player index.
         /// </summary>
-        public byte DamagingPlayerIndex {
-            get => _damagingPlayerIndex;
+        public byte NpcDamagerPlayerIndex {
+            get => _npcDamagerPlayerIndex;
             set {
-                _damagingPlayerIndex = value;
+                _npcDamagerPlayerIndex = value;
                 _isDirty = true;
             }
         }
 
         /// <inheritdoc />
         [ExcludeFromCodeCoverage]
-        public override string ToString() => $"{Type}[#={NpcIndex} by P={DamagingPlayerIndex}]";
+        public override string ToString() => $"{Type}[#={NpcIndex} by P={NpcDamagerPlayerIndex}]";
 
         private protected override void ReadFromReader(BinaryReader reader, PacketContext context) {
-            NpcIndex = reader.ReadInt16();
-            DamagingPlayerIndex = reader.ReadByte();
+            _npcIndex = reader.ReadInt16();
+            _npcDamagerPlayerIndex = reader.ReadByte();
         }
 
         private protected override void WriteToWriter(BinaryWriter writer, PacketContext context) {
-            writer.Write(NpcIndex);
-            writer.Write(DamagingPlayerIndex);
+            writer.Write(_npcIndex);
+            writer.Write(_npcDamagerPlayerIndex);
         }
     }
 }

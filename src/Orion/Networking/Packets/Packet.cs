@@ -58,7 +58,7 @@ namespace Orion.Networking.Packets {
             /* 021 */ () => new ItemInfoPacket(),
             /* 022 */ () => new ItemOwnerPacket(),
             /* 023 */ () => new NpcInfoPacket(),
-            /* 024 */ () => new DamageNpcHeldItemPacket(),
+            /* 024 */ () => new NpcDamageHeldItemPacket(),
             /* 025 */ null,
             /* 026 */ null,
             /* 027 */ () => new ProjectileInfoPacket(),

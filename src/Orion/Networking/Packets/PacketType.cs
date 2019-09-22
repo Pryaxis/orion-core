@@ -43,7 +43,7 @@ namespace Orion.Networking.Packets {
         ItemInfo = 21,
         ItemOwner = 22,
         NpcInfo = 23,
-        DamageNpcHeldItem = 24,
+        NpcDamageHeldItem = 24,
         ProjectileInfo = 27,
         DamageNpc = 28,
         RemoveProjectile = 29,
