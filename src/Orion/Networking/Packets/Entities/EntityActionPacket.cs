@@ -15,72 +15,55 @@
 // You should have received a copy of the GNU General Public License
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
-using System;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
-using Microsoft.Xna.Framework;
-using Orion.Entities;
+using Orion.Networking.Entities;
 
 namespace Orion.Networking.Packets.Entities {
     /// <summary>
-    /// Packet sent from the client to the server to release an NPC.
+    /// Packet sent to perform an entity action.
     /// </summary>
-    public sealed class ReleaseNpcPacket : Packet {
-        private Vector2 _npcPosition;
-        private NpcType _npcType = NpcType.None;
-        private byte _npcStyle;
+    public sealed class EntityActionPacket : Packet {
+        private byte _entityIndex;
+        private EntityAction _entityAction;
 
         /// <inheritdoc />
-        public override PacketType Type => PacketType.ReleaseNpc;
+        public override PacketType Type => PacketType.EntityAction;
 
         /// <summary>
-        /// Gets or sets the NPC's position.
+        /// Gets or sets the entity index.
         /// </summary>
-        public Vector2 NpcPosition {
-            get => _npcPosition;
+        public byte EntityIndex {
+            get => _entityIndex;
             set {
-                _npcPosition = value;
+                _entityIndex = value;
                 _isDirty = true;
             }
         }
 
         /// <summary>
-        /// Gets or sets the NPC's type.
+        /// Gets or sets the entity action.
         /// </summary>
-        public NpcType NpcType {
-            get => _npcType;
+        public EntityAction EntityAction {
+            get => _entityAction;
             set {
-                _npcType = value;
-                _isDirty = true;
-            }
-        }
-
-        /// <summary>
-        /// Gets or sets the NPC's style.
-        /// </summary>
-        public byte NpcStyle {
-            get => _npcStyle;
-            set {
-                _npcStyle = value;
+                _entityAction = value;
                 _isDirty = true;
             }
         }
 
         /// <inheritdoc />
         [ExcludeFromCodeCoverage]
-        public override string ToString() => $"{Type}[{NpcType}_{NpcStyle} @ {NpcPosition}]";
+        public override string ToString() => $"{Type}[{EntityAction} by #={EntityIndex}]";
 
         private protected override void ReadFromReader(BinaryReader reader, PacketContext context) {
-            NpcPosition = new Vector2(reader.ReadInt32(), reader.ReadInt32());
-            NpcType = (NpcType)reader.ReadInt16();
-            NpcStyle = reader.ReadByte();
+            _entityIndex = reader.ReadByte();
+            _entityAction = (EntityAction)reader.ReadByte();
         }
 
         private protected override void WriteToWriter(BinaryWriter writer, PacketContext context) {
-            writer.Write((int)NpcPosition.X);
-            writer.Write((int)NpcPosition.Y);
-            writer.Write((short)NpcType);
-            writer.Write(NpcStyle);
+            writer.Write(_entityIndex);
+            writer.Write((byte)_entityAction);
         }
     }
 }

@@ -16,11 +16,13 @@
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
 using System.IO;
+using JetBrains.Annotations;
 
 namespace Orion.Networking.Packets.Entities {
     /// <summary>
     /// Packet sent to use a teleportation potion.
     /// </summary>
+    [PublicAPI]
     public sealed class PlayerTeleportationPotionPacket : Packet {
         /// <inheritdoc />
         public override PacketType Type => PacketType.PlayerTeleportationPotion;

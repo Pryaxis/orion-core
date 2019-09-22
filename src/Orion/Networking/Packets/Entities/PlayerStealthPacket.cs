@@ -17,11 +17,13 @@
 
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
+using JetBrains.Annotations;
 
 namespace Orion.Networking.Packets.Entities {
     /// <summary>
     /// Packet sent to set a player's stealth.
     /// </summary>
+    [PublicAPI]
     public sealed class PlayerStealthPacket : Packet {
         private byte _playerIndex;
         private float _playerStealthStatus;
@@ -56,13 +58,13 @@ namespace Orion.Networking.Packets.Entities {
         public override string ToString() => $"{Type}[#={PlayerIndex}, ...]";
 
         private protected override void ReadFromReader(BinaryReader reader, PacketContext context) {
-            PlayerIndex = reader.ReadByte();
-            PlayerStealthStatus = reader.ReadSingle();
+            _playerIndex = reader.ReadByte();
+            _playerStealthStatus = reader.ReadSingle();
         }
 
         private protected override void WriteToWriter(BinaryWriter writer, PacketContext context) {
-            writer.Write(PlayerIndex);
-            writer.Write(PlayerStealthStatus);
+            writer.Write(_playerIndex);
+            writer.Write(_playerStealthStatus);
         }
     }
 }

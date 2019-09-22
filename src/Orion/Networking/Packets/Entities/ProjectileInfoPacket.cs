@@ -15,9 +15,9 @@
 // You should have received a copy of the GNU General Public License
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
-using System;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
+using JetBrains.Annotations;
 using Microsoft.Xna.Framework;
 using Orion.Entities;
 using Orion.Networking.Packets.Extensions;
@@ -27,6 +27,7 @@ namespace Orion.Networking.Packets.Entities {
     /// <summary>
     /// Packet sent to set a projectile's information.
     /// </summary>
+    [PublicAPI]
     public sealed class ProjectileInfoPacket : Packet {
         private short _projectileIdentity;
         private Vector2 _projectilePosition;
@@ -123,6 +124,7 @@ namespace Orion.Networking.Packets.Entities {
         /// <summary>
         /// Gets the projectile's AI values.
         /// </summary>
+        [NotNull]
         public DirtiableArray<float> ProjectileAiValues { get; } = new DirtiableArray<float>(Terraria.Projectile.maxAI);
 
         /// <summary>
@@ -148,39 +150,39 @@ namespace Orion.Networking.Packets.Entities {
             $"{Type}[#={ProjectileIdentity}, {ProjectileType} @ ({ProjectilePosition}), ...]";
 
         private protected override void ReadFromReader(BinaryReader reader, PacketContext context) {
-            ProjectileIdentity = reader.ReadInt16();
-            ProjectilePosition = reader.ReadVector2();
-            ProjectileVelocity = reader.ReadVector2();
-            ProjectileKnockback = reader.ReadSingle();
-            ProjectileDamage = reader.ReadInt16();
-            ProjectileOwnerPlayerIndex = reader.ReadByte();
-            ProjectileType = (ProjectileType)reader.ReadInt16();
+            _projectileIdentity = reader.ReadInt16();
+            _projectilePosition = reader.ReadVector2();
+            _projectileVelocity = reader.ReadVector2();
+            _projectileKnockback = reader.ReadSingle();
+            _projectileDamage = reader.ReadInt16();
+            _projectileOwnerPlayerIndex = reader.ReadByte();
+            _projectileType = (ProjectileType)reader.ReadInt16();
 
             Terraria.BitsByte header = reader.ReadByte();
-            if (header[0]) ProjectileAiValues[0] = reader.ReadSingle();
-            if (header[1]) ProjectileAiValues[1] = reader.ReadSingle();
-            if (header[2]) ProjectileUuid = reader.ReadInt16();
+            if (header[0]) ProjectileAiValues._array[0] = reader.ReadSingle();
+            if (header[1]) ProjectileAiValues._array[1] = reader.ReadSingle();
+            if (header[2]) _projectileUuid = reader.ReadInt16();
         }
 
         [SuppressMessage("ReSharper", "CompareOfFloatsByEqualityOperator")]
         private protected override void WriteToWriter(BinaryWriter writer, PacketContext context) {
-            writer.Write(ProjectileIdentity);
-            writer.Write(ProjectilePosition);
-            writer.Write(ProjectileVelocity);
-            writer.Write(ProjectileKnockback);
-            writer.Write(ProjectileDamage);
-            writer.Write(ProjectileOwnerPlayerIndex);
-            writer.Write((short)ProjectileType);
+            writer.Write(_projectileIdentity);
+            writer.Write(_projectilePosition);
+            writer.Write(_projectileVelocity);
+            writer.Write(_projectileKnockback);
+            writer.Write(_projectileDamage);
+            writer.Write(_projectileOwnerPlayerIndex);
+            writer.Write((short)_projectileType);
 
             Terraria.BitsByte header = 0;
-            header[0] = ProjectileAiValues[0] != 0;
-            header[1] = ProjectileAiValues[1] != 0;
-            header[2] = ProjectileUuid >= 0;
+            header[0] = ProjectileAiValues._array[0] != 0;
+            header[1] = ProjectileAiValues._array[1] != 0;
+            header[2] = _projectileUuid >= 0;
 
             writer.Write(header);
-            if (header[0]) writer.Write(ProjectileAiValues[0]);
-            if (header[1]) writer.Write(ProjectileAiValues[1]);
-            if (header[2]) writer.Write(ProjectileUuid);
+            if (header[0]) writer.Write(ProjectileAiValues._array[0]);
+            if (header[1]) writer.Write(ProjectileAiValues._array[1]);
+            if (header[2]) writer.Write(_projectileUuid);
         }
     }
 }

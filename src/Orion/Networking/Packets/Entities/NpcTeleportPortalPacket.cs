@@ -17,6 +17,7 @@
 
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
+using JetBrains.Annotations;
 using Microsoft.Xna.Framework;
 using Orion.Networking.Packets.Extensions;
 
@@ -24,7 +25,8 @@ namespace Orion.Networking.Packets.Entities {
     /// <summary>
     /// Packet sent to teleport an NPC through a portal.
     /// </summary>
-    public sealed class TeleportNpcPortalPacket : Packet {
+    [PublicAPI]
+    public sealed class NpcTeleportPortalPacket : Packet {
         private short _npcIndex;
         private short _portalIndex;
         private Vector2 _newNpcPosition;
@@ -82,17 +84,17 @@ namespace Orion.Networking.Packets.Entities {
         public override string ToString() => $"{Type}[#={NpcIndex} @ {NewNpcPosition}, ...]";
 
         private protected override void ReadFromReader(BinaryReader reader, PacketContext context) {
-            NpcIndex = reader.ReadInt16();
-            PortalIndex = reader.ReadInt16();
-            NewNpcPosition = reader.ReadVector2();
-            NewNpcVelocity = reader.ReadVector2();
+            _npcIndex = reader.ReadInt16();
+            _portalIndex = reader.ReadInt16();
+            _newNpcPosition = reader.ReadVector2();
+            _newNpcVelocity = reader.ReadVector2();
         }
 
         private protected override void WriteToWriter(BinaryWriter writer, PacketContext context) {
-            writer.Write(NpcIndex);
-            writer.Write(PortalIndex);
-            writer.Write(NewNpcPosition);
-            writer.Write(NewNpcVelocity);
+            writer.Write(_npcIndex);
+            writer.Write(_portalIndex);
+            writer.Write(_newNpcPosition);
+            writer.Write(_newNpcVelocity);
         }
     }
 }

@@ -15,28 +15,20 @@
 // You should have received a copy of the GNU General Public License
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
-using FluentAssertions;
-using Orion.Networking.Misc;
-using Xunit;
+using JetBrains.Annotations;
+using Orion.Networking.Packets.Entities;
 
 namespace Orion.Networking.Entities {
-    public class MiscActionTests {
-        [Fact]
-        public void FromId_IsCorrect() {
-            for (byte i = 1; i < 5; ++i) {
-                MiscAction.FromId(i).Id.Should().Be(i);
-            }
-
-            MiscAction.FromId(0).Should().BeNull();
-            MiscAction.FromId(5).Should().BeNull();
-        }
-
-        [Fact]
-        public void FromId_ReturnsSameInstance() {
-            var miscAction = MiscAction.FromId(1);
-            var miscAction2 = MiscAction.FromId(1);
-
-            miscAction.Should().BeSameAs(miscAction2);
-        }
+    /// <summary>
+    /// Specifies an entity action in a <see cref="EntityActionPacket"/>.
+    /// </summary>
+    [PublicAPI]
+    public enum EntityAction : byte {
+#pragma warning disable 1591
+        PlayerSpawnSkeletron = 1,
+        PlayerGrappleSound = 2,
+        PlayerUseSundial = 3,
+        NpcCreateMimicSmoke = 4
+#pragma warning restore 1591
     }
 }

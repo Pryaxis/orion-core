@@ -17,12 +17,14 @@
 
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
+using JetBrains.Annotations;
 using Terraria;
 
 namespace Orion.Networking.Packets.Entities {
     /// <summary>
     /// Packet sent to set a player's zones.
     /// </summary>
+    [PublicAPI]
     public sealed class PlayerZonesPacket : Packet {
         private byte _playerIndex;
         private bool _isPlayerNearDungeonZone;
@@ -351,65 +353,65 @@ namespace Orion.Networking.Packets.Entities {
             BitsByte zoneFlags2 = reader.ReadByte();
             BitsByte zoneFlags3 = reader.ReadByte();
             BitsByte zoneFlags4 = reader.ReadByte();
-            IsPlayerNearDungeonZone = zoneFlags[0];
-            IsPlayerNearCorruptionZone = zoneFlags[1];
-            IsPlayerNearHallowedZone = zoneFlags[2];
-            IsPlayerNearMeteorZone = zoneFlags[3];
-            IsPlayerNearJungleZone = zoneFlags[4];
-            IsPlayerNearSnowZone = zoneFlags[5];
-            IsPlayerNearCrimsonZone = zoneFlags[6];
-            IsPlayerNearWaterCandleZone = zoneFlags[7];
-            IsPlayerNearPeaceCandleZone = zoneFlags2[0];
-            IsPlayerNearSolarTowerZone = zoneFlags2[1];
-            IsPlayerNearVortexTowerZone = zoneFlags2[2];
-            IsPlayerNearNebulaTowerZone = zoneFlags2[3];
-            IsPlayerNearStardustTowerZone = zoneFlags2[4];
-            IsPlayerNearDesertZone = zoneFlags2[5];
-            IsPlayerNearGlowingMushroomZone = zoneFlags2[6];
-            IsPlayerNearUndergroundDesertZone = zoneFlags2[7];
-            IsPlayerNearSkyHeightZone = zoneFlags3[0];
-            IsPlayerNearOverworldHeightZone = zoneFlags3[1];
-            IsPlayerNearDirtLayerHeightZone = zoneFlags3[2];
-            IsPlayerNearRockLayerHeightZone = zoneFlags3[3];
-            IsPlayerNearUnderworldHeightZone = zoneFlags3[4];
-            IsPlayerNearBeachZone = zoneFlags3[5];
-            IsPlayerNearRainZone = zoneFlags3[6];
-            IsPlayerNearSandstormZone = zoneFlags3[7];
-            IsPlayerNearOldOnesArmyZone = zoneFlags4[0];
+            _isPlayerNearDungeonZone = zoneFlags[0];
+            _isPlayerNearCorruptionZone = zoneFlags[1];
+            _isPlayerNearHallowedZone = zoneFlags[2];
+            _isPlayerNearMeteorZone = zoneFlags[3];
+            _isPlayerNearJungleZone = zoneFlags[4];
+            _isPlayerNearSnowZone = zoneFlags[5];
+            _isPlayerNearCrimsonZone = zoneFlags[6];
+            _isPlayerNearWaterCandleZone = zoneFlags[7];
+            _isPlayerNearPeaceCandleZone = zoneFlags2[0];
+            _isPlayerNearSolarTowerZone = zoneFlags2[1];
+            _isPlayerNearVortexTowerZone = zoneFlags2[2];
+            _isPlayerNearNebulaTowerZone = zoneFlags2[3];
+            _isPlayerNearStardustTowerZone = zoneFlags2[4];
+            _isPlayerNearDesertZone = zoneFlags2[5];
+            _isPlayerNearGlowingMushroomZone = zoneFlags2[6];
+            _isPlayerNearUndergroundDesertZone = zoneFlags2[7];
+            _isPlayerNearSkyHeightZone = zoneFlags3[0];
+            _isPlayerNearOverworldHeightZone = zoneFlags3[1];
+            _isPlayerNearDirtLayerHeightZone = zoneFlags3[2];
+            _isPlayerNearRockLayerHeightZone = zoneFlags3[3];
+            _isPlayerNearUnderworldHeightZone = zoneFlags3[4];
+            _isPlayerNearBeachZone = zoneFlags3[5];
+            _isPlayerNearRainZone = zoneFlags3[6];
+            _isPlayerNearSandstormZone = zoneFlags3[7];
+            _isPlayerNearOldOnesArmyZone = zoneFlags4[0];
         }
 
         private protected override void WriteToWriter(BinaryWriter writer, PacketContext context) {
-            writer.Write(PlayerIndex);
+            writer.Write(_playerIndex);
 
             BitsByte zoneFlags = 0;
             BitsByte zoneFlags2 = 0;
             BitsByte zoneFlags3 = 0;
             BitsByte zoneFlags4 = 0;
-            zoneFlags[0] = IsPlayerNearDungeonZone;
-            zoneFlags[1] = IsPlayerNearCorruptionZone;
-            zoneFlags[2] = IsPlayerNearHallowedZone;
-            zoneFlags[3] = IsPlayerNearMeteorZone;
-            zoneFlags[4] = IsPlayerNearJungleZone;
-            zoneFlags[5] = IsPlayerNearSnowZone;
-            zoneFlags[6] = IsPlayerNearCrimsonZone;
-            zoneFlags[7] = IsPlayerNearWaterCandleZone;
-            zoneFlags2[0] = IsPlayerNearPeaceCandleZone;
-            zoneFlags2[1] = IsPlayerNearSolarTowerZone;
-            zoneFlags2[2] = IsPlayerNearVortexTowerZone;
-            zoneFlags2[3] = IsPlayerNearNebulaTowerZone;
-            zoneFlags2[4] = IsPlayerNearStardustTowerZone;
-            zoneFlags2[5] = IsPlayerNearDesertZone;
-            zoneFlags2[6] = IsPlayerNearGlowingMushroomZone;
-            zoneFlags2[7] = IsPlayerNearUndergroundDesertZone;
-            zoneFlags3[0] = IsPlayerNearSkyHeightZone;
-            zoneFlags3[1] = IsPlayerNearOverworldHeightZone;
-            zoneFlags3[2] = IsPlayerNearDirtLayerHeightZone;
-            zoneFlags3[3] = IsPlayerNearRockLayerHeightZone;
-            zoneFlags3[4] = IsPlayerNearUnderworldHeightZone;
-            zoneFlags3[5] = IsPlayerNearBeachZone;
-            zoneFlags3[6] = IsPlayerNearRainZone;
-            zoneFlags3[7] = IsPlayerNearSandstormZone;
-            zoneFlags4[0] = IsPlayerNearOldOnesArmyZone;
+            zoneFlags[0] = _isPlayerNearDungeonZone;
+            zoneFlags[1] = _isPlayerNearCorruptionZone;
+            zoneFlags[2] = _isPlayerNearHallowedZone;
+            zoneFlags[3] = _isPlayerNearMeteorZone;
+            zoneFlags[4] = _isPlayerNearJungleZone;
+            zoneFlags[5] = _isPlayerNearSnowZone;
+            zoneFlags[6] = _isPlayerNearCrimsonZone;
+            zoneFlags[7] = _isPlayerNearWaterCandleZone;
+            zoneFlags2[0] = _isPlayerNearPeaceCandleZone;
+            zoneFlags2[1] = _isPlayerNearSolarTowerZone;
+            zoneFlags2[2] = _isPlayerNearVortexTowerZone;
+            zoneFlags2[3] = _isPlayerNearNebulaTowerZone;
+            zoneFlags2[4] = _isPlayerNearStardustTowerZone;
+            zoneFlags2[5] = _isPlayerNearDesertZone;
+            zoneFlags2[6] = _isPlayerNearGlowingMushroomZone;
+            zoneFlags2[7] = _isPlayerNearUndergroundDesertZone;
+            zoneFlags3[0] = _isPlayerNearSkyHeightZone;
+            zoneFlags3[1] = _isPlayerNearOverworldHeightZone;
+            zoneFlags3[2] = _isPlayerNearDirtLayerHeightZone;
+            zoneFlags3[3] = _isPlayerNearRockLayerHeightZone;
+            zoneFlags3[4] = _isPlayerNearUnderworldHeightZone;
+            zoneFlags3[5] = _isPlayerNearBeachZone;
+            zoneFlags3[6] = _isPlayerNearRainZone;
+            zoneFlags3[7] = _isPlayerNearSandstormZone;
+            zoneFlags4[0] = _isPlayerNearOldOnesArmyZone;
             writer.Write(zoneFlags);
             writer.Write(zoneFlags2);
             writer.Write(zoneFlags3);

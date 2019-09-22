@@ -17,66 +17,71 @@
 
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
+using JetBrains.Annotations;
+using Microsoft.Xna.Framework;
+using Orion.Entities;
 
 namespace Orion.Networking.Packets.Entities {
     /// <summary>
-    /// Packet sent to spawn a player.
+    /// Packet sent from the client to the server to release an NPC.
     /// </summary>
-    public sealed class SpawnPlayerPacket : Packet {
-        private byte _playerIndex;
-        private short _playerSpawnX;
-        private short _playerSpawnY;
+    [PublicAPI]
+    public sealed class NpcReleasePacket : Packet {
+        private Vector2 _npcPosition;
+        private NpcType _npcType = NpcType.None;
+        private byte _npcStyle;
 
         /// <inheritdoc />
-        public override PacketType Type => PacketType.SpawnPlayer;
+        public override PacketType Type => PacketType.NpcRelease;
 
         /// <summary>
-        /// Gets or sets the player index.
+        /// Gets or sets the NPC's position.
         /// </summary>
-        public byte PlayerIndex {
-            get => _playerIndex;
+        public Vector2 NpcPosition {
+            get => _npcPosition;
             set {
-                _playerIndex = value;
+                _npcPosition = value;
                 _isDirty = true;
             }
         }
 
         /// <summary>
-        /// Gets or sets the player spawn's X coordinate. A negative value results in the world spawn.
+        /// Gets or sets the NPC's type.
         /// </summary>
-        public short PlayerSpawnX {
-            get => _playerSpawnX;
+        public NpcType NpcType {
+            get => _npcType;
             set {
-                _playerSpawnX = value;
+                _npcType = value;
                 _isDirty = true;
             }
         }
 
         /// <summary>
-        /// Gets or sets the player spawn's Y coordinate. A negative value results in the world spawn.
+        /// Gets or sets the NPC's style.
         /// </summary>
-        public short PlayerSpawnY {
-            get => _playerSpawnY;
+        public byte NpcStyle {
+            get => _npcStyle;
             set {
-                _playerSpawnY = value;
+                _npcStyle = value;
                 _isDirty = true;
             }
         }
 
         /// <inheritdoc />
         [ExcludeFromCodeCoverage]
-        public override string ToString() => $"{Type}[#={PlayerIndex} @ ({PlayerSpawnX}, {PlayerSpawnY})]";
+        public override string ToString() => $"{Type}[{NpcType}_{NpcStyle} @ {NpcPosition}]";
 
         private protected override void ReadFromReader(BinaryReader reader, PacketContext context) {
-            PlayerIndex = reader.ReadByte();
-            PlayerSpawnX = reader.ReadInt16();
-            PlayerSpawnY = reader.ReadInt16();
+            _npcPosition = new Vector2(reader.ReadInt32(), reader.ReadInt32());
+            _npcType = (NpcType)reader.ReadInt16();
+            _npcStyle = reader.ReadByte();
         }
 
         private protected override void WriteToWriter(BinaryWriter writer, PacketContext context) {
-            writer.Write(PlayerIndex);
-            writer.Write(PlayerSpawnX);
-            writer.Write(PlayerSpawnY);
+            writer.Write((int)_npcPosition.X);
+            writer.Write((int)_npcPosition.Y);
+            writer.Write((short)_npcType);
+            writer.Write(_npcStyle);
         }
     }
 }

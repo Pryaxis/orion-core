@@ -18,12 +18,14 @@
 using System;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
+using JetBrains.Annotations;
 using Orion.Networking.Packets.Extensions;
 
 namespace Orion.Networking.Packets.Entities {
     /// <summary>
     /// Packet sent from the server to the client to set the player's status.
     /// </summary>
+    [PublicAPI]
     public sealed class PlayerStatusPacket : Packet {
         private Terraria.Localization.NetworkText _playerStatusText = Terraria.Localization.NetworkText.Empty;
         private int _playerStatusIncrease;
@@ -46,6 +48,7 @@ namespace Orion.Networking.Packets.Entities {
         /// Gets or sets the player's status text.
         /// </summary>
         /// <exception cref="ArgumentNullException"><paramref name="value"/> is <c>null</c>.</exception>
+        [NotNull]
         public Terraria.Localization.NetworkText PlayerStatusText {
             get => _playerStatusText;
             set {
@@ -59,13 +62,13 @@ namespace Orion.Networking.Packets.Entities {
         public override string ToString() => $"{Type}[{PlayerStatusText}, I={PlayerStatusIncrease}]";
 
         private protected override void ReadFromReader(BinaryReader reader, PacketContext context) {
-            PlayerStatusIncrease = reader.ReadInt32();
-            PlayerStatusText = reader.ReadNetworkText();
+            _playerStatusIncrease = reader.ReadInt32();
+            _playerStatusText = reader.ReadNetworkText();
         }
 
         private protected override void WriteToWriter(BinaryWriter writer, PacketContext context) {
-            writer.Write(PlayerStatusIncrease);
-            writer.Write(PlayerStatusText);
+            writer.Write(_playerStatusIncrease);
+            writer.Write(_playerStatusText);
         }
     }
 }

@@ -18,12 +18,14 @@
 using System;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
+using JetBrains.Annotations;
 
 namespace Orion.Networking.Packets.Entities {
     /// <summary>
     /// Packet sent from the client to the server to try a password. This is sent in response to a
     /// <see cref="PlayerPasswordChallengePacket"/>.
     /// </summary>
+    [PublicAPI]
     public sealed class PlayerPasswordResponsePacket : Packet {
         private string _playerPassword = "";
 
@@ -34,6 +36,7 @@ namespace Orion.Networking.Packets.Entities {
         /// Gets or sets the player's password.
         /// </summary>
         /// <exception cref="ArgumentNullException"><paramref name="value"/> is <c>null</c>.</exception>
+        [NotNull]
         public string PlayerPassword {
             get => _playerPassword;
             set {
@@ -47,11 +50,11 @@ namespace Orion.Networking.Packets.Entities {
         public override string ToString() => $"{Type}[{PlayerPassword}]";
 
         private protected override void ReadFromReader(BinaryReader reader, PacketContext context) {
-            PlayerPassword = reader.ReadString();
+            _playerPassword = reader.ReadString();
         }
 
         private protected override void WriteToWriter(BinaryWriter writer, PacketContext context) {
-            writer.Write(PlayerPassword);
+            writer.Write(_playerPassword);
         }
     }
 }

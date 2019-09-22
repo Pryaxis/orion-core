@@ -20,28 +20,28 @@ using FluentAssertions;
 using Xunit;
 
 namespace Orion.Networking.Packets.Entities {
-    public class RemoveProjectilePacketTests {
+    public class PlayerMinionTargetNpcPacketTests {
         [Fact]
         public void SetDefaultableProperties_MarkAsDirty() {
-            var packet = new RemoveProjectilePacket();
+            var packet = new PlayerMinionTargetNpcPacket();
 
             packet.ShouldHaveDefaultablePropertiesMarkAsDirty();
         }
 
-        private static readonly byte[] Bytes = {6, 0, 29, 1, 0, 0};
+        public static readonly byte[] Bytes = {6, 0, 115, 1, 100, 0};
 
         [Fact]
         public void ReadFromStream_IsCorrect() {
             using (var stream = new MemoryStream(Bytes)) {
-                var packet = (RemoveProjectilePacket)Packet.ReadFromStream(stream, PacketContext.Server);
+                var packet = (PlayerMinionTargetNpcPacket)Packet.ReadFromStream(stream, PacketContext.Server);
 
-                packet.ProjectileIdentity.Should().Be(1);
-                packet.ProjectileOwnerPlayerIndex.Should().Be(0);
+                packet.PlayerIndex.Should().Be(1);
+                packet.PlayerMinionTargetNpcIndex.Should().Be(100);
             }
         }
 
         [Fact]
-        public void WriteToStream_IsCorrect() {
+        public void DeserializeAndSerialize_SamePacket() {
             Bytes.ShouldDeserializeAndSerializeSamePacket();
         }
     }

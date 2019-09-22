@@ -17,11 +17,13 @@
 
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
+using JetBrains.Annotations;
 
 namespace Orion.Networking.Packets.Entities {
     /// <summary>
     /// Packet sent to set a player's item animation.
     /// </summary>
+    [PublicAPI]
     public sealed class PlayerItemAnimationPacket : Packet {
         private byte _playerIndex;
         private float _playerItemRotation;
@@ -68,15 +70,15 @@ namespace Orion.Networking.Packets.Entities {
         public override string ToString() => $"{Type}[#={PlayerIndex}, ...]";
 
         private protected override void ReadFromReader(BinaryReader reader, PacketContext context) {
-            PlayerIndex = reader.ReadByte();
-            PlayerItemRotation = reader.ReadSingle();
-            PlayerItemAnimation = reader.ReadInt16();
+            _playerIndex = reader.ReadByte();
+            _playerItemRotation = reader.ReadSingle();
+            _playerItemAnimation = reader.ReadInt16();
         }
 
         private protected override void WriteToWriter(BinaryWriter writer, PacketContext context) {
-            writer.Write(PlayerIndex);
-            writer.Write(PlayerItemRotation);
-            writer.Write(PlayerItemAnimation);
+            writer.Write(_playerIndex);
+            writer.Write(_playerItemRotation);
+            writer.Write(_playerItemAnimation);
         }
     }
 }

@@ -17,38 +17,40 @@
 
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
+using JetBrains.Annotations;
 
 namespace Orion.Networking.Packets.Entities {
     /// <summary>
-    /// Packet sent to the server to remove a portal.
+    /// Packet sent from the server to the client to remove the owner of an item.
     /// </summary>
-    public sealed class RemovePortalPacket : Packet {
-        private short _portalProjectileIndex;
+    [PublicAPI]
+    public sealed class ItemRemoveOwnerPacket : Packet {
+        private short _itemIndex;
 
         /// <inheritdoc />
-        public override PacketType Type => PacketType.RemovePortal;
+        public override PacketType Type => PacketType.ItemRemoveOwner;
 
         /// <summary>
-        /// Gets or sets the portal's projectile index.
+        /// Gets or sets the item index.
         /// </summary>
-        public short PortalProjectileIndex {
-            get => _portalProjectileIndex;
+        public short ItemIndex {
+            get => _itemIndex;
             set {
-                _portalProjectileIndex = value;
+                _itemIndex = value;
                 _isDirty = true;
             }
         }
 
         /// <inheritdoc />
         [ExcludeFromCodeCoverage]
-        public override string ToString() => $"{Type}[#={PortalProjectileIndex}), ...]";
+        public override string ToString() => $"{Type}[#={ItemIndex}]";
 
         private protected override void ReadFromReader(BinaryReader reader, PacketContext context) {
-            PortalProjectileIndex = reader.ReadInt16();
+            _itemIndex = reader.ReadInt16();
         }
 
         private protected override void WriteToWriter(BinaryWriter writer, PacketContext context) {
-            writer.Write(PortalProjectileIndex);
+            writer.Write(_itemIndex);
         }
     }
 }

@@ -17,17 +17,20 @@
 
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
+using JetBrains.Annotations;
 
 namespace Orion.Networking.Packets.Entities {
     /// <summary>
-    /// Packet sent to set a player's minion's target NPC.
+    /// Packet sent to spawn a player.
     /// </summary>
-    public sealed class PlayerMinionNpcPacket : Packet {
+    [PublicAPI]
+    public sealed class PlayerSpawnPacket : Packet {
         private byte _playerIndex;
-        private short _playerMinionTargetNpcIndex;
+        private short _playerSpawnX;
+        private short _playerSpawnY;
 
         /// <inheritdoc />
-        public override PacketType Type => PacketType.PlayerMinionNpc;
+        public override PacketType Type => PacketType.PlayerSpawn;
 
         /// <summary>
         /// Gets or sets the player index.
@@ -41,28 +44,41 @@ namespace Orion.Networking.Packets.Entities {
         }
 
         /// <summary>
-        /// Gets or sets the player's minions' target NPC index.
+        /// Gets or sets the player spawn's X coordinate. A negative value results in the world spawn.
         /// </summary>
-        public short PlayerMinionTargetNpcIndex {
-            get => _playerMinionTargetNpcIndex;
+        public short PlayerSpawnX {
+            get => _playerSpawnX;
             set {
-                _playerMinionTargetNpcIndex = value;
+                _playerSpawnX = value;
+                _isDirty = true;
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets the player spawn's Y coordinate. A negative value results in the world spawn.
+        /// </summary>
+        public short PlayerSpawnY {
+            get => _playerSpawnY;
+            set {
+                _playerSpawnY = value;
                 _isDirty = true;
             }
         }
 
         /// <inheritdoc />
         [ExcludeFromCodeCoverage]
-        public override string ToString() => $"{Type}[#={PlayerIndex} to N={PlayerMinionTargetNpcIndex}]";
+        public override string ToString() => $"{Type}[#={PlayerIndex} @ ({PlayerSpawnX}, {PlayerSpawnY})]";
 
         private protected override void ReadFromReader(BinaryReader reader, PacketContext context) {
-            PlayerIndex = reader.ReadByte();
-            PlayerMinionTargetNpcIndex = reader.ReadInt16();
+            _playerIndex = reader.ReadByte();
+            _playerSpawnX = reader.ReadInt16();
+            _playerSpawnY = reader.ReadInt16();
         }
 
         private protected override void WriteToWriter(BinaryWriter writer, PacketContext context) {
-            writer.Write(PlayerIndex);
-            writer.Write(PlayerMinionTargetNpcIndex);
+            writer.Write(_playerIndex);
+            writer.Write(_playerSpawnX);
+            writer.Write(_playerSpawnY);
         }
     }
 }

@@ -17,11 +17,13 @@
 
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
+using JetBrains.Annotations;
 
 namespace Orion.Networking.Packets.Entities {
     /// <summary>
     /// Packet sent to set a player's PvP status.
     /// </summary>
+    [PublicAPI]
     public sealed class PlayerPvpPacket : Packet {
         private byte _playerIndex;
         private bool _playerIsInPvp;
@@ -56,13 +58,13 @@ namespace Orion.Networking.Packets.Entities {
         public override string ToString() => $"{Type}[#={PlayerIndex}, {PlayerIsInPvp}]";
 
         private protected override void ReadFromReader(BinaryReader reader, PacketContext context) {
-            PlayerIndex = reader.ReadByte();
-            PlayerIsInPvp = reader.ReadBoolean();
+            _playerIndex = reader.ReadByte();
+            _playerIsInPvp = reader.ReadBoolean();
         }
 
         private protected override void WriteToWriter(BinaryWriter writer, PacketContext context) {
-            writer.Write(PlayerIndex);
-            writer.Write(PlayerIsInPvp);
+            writer.Write(_playerIndex);
+            writer.Write(_playerIsInPvp);
         }
     }
 }

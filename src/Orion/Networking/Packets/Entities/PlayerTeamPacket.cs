@@ -15,15 +15,16 @@
 // You should have received a copy of the GNU General Public License
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
-using System;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
+using JetBrains.Annotations;
 using Orion.Entities;
 
 namespace Orion.Networking.Packets.Entities {
     /// <summary>
     /// Packet sent to set a player's team.
     /// </summary>
+    [PublicAPI]
     public sealed class PlayerTeamPacket : Packet {
         private byte _playerIndex;
         private PlayerTeam _playerTeam;
@@ -58,13 +59,13 @@ namespace Orion.Networking.Packets.Entities {
         public override string ToString() => $"{Type}[#={PlayerIndex} is {PlayerTeam}]";
 
         private protected override void ReadFromReader(BinaryReader reader, PacketContext context) {
-            PlayerIndex = reader.ReadByte();
-            PlayerTeam = (PlayerTeam)reader.ReadByte();
+            _playerIndex = reader.ReadByte();
+            _playerTeam = (PlayerTeam)reader.ReadByte();
         }
 
         private protected override void WriteToWriter(BinaryWriter writer, PacketContext context) {
-            writer.Write(PlayerIndex);
-            writer.Write((byte)PlayerTeam);
+            writer.Write(_playerIndex);
+            writer.Write((byte)_playerTeam);
         }
     }
 }

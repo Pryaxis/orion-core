@@ -17,11 +17,13 @@
 
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
+using JetBrains.Annotations;
 
 namespace Orion.Networking.Packets.Entities {
     /// <summary>
     /// Packet sent to set the NPC that a player is talking to.
     /// </summary>
+    [PublicAPI]
     public sealed class PlayerTalkingToNpcPacket : Packet {
         private byte _playerIndex;
         private short _playerTalkingToNpcIndex;
@@ -56,13 +58,13 @@ namespace Orion.Networking.Packets.Entities {
         public override string ToString() => $"{Type}[#={PlayerIndex} to N={PlayerTalkingToNpcIndex}]";
 
         private protected override void ReadFromReader(BinaryReader reader, PacketContext context) {
-            PlayerIndex = reader.ReadByte();
-            PlayerTalkingToNpcIndex = reader.ReadInt16();
+            _playerIndex = reader.ReadByte();
+            _playerTalkingToNpcIndex = reader.ReadInt16();
         }
 
         private protected override void WriteToWriter(BinaryWriter writer, PacketContext context) {
-            writer.Write(PlayerIndex);
-            writer.Write(PlayerTalkingToNpcIndex);
+            writer.Write(_playerIndex);
+            writer.Write(_playerTalkingToNpcIndex);
         }
     }
 }

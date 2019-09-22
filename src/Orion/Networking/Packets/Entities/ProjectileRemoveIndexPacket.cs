@@ -17,54 +17,40 @@
 
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
-using Microsoft.Xna.Framework;
-using Orion.Networking.Packets.Extensions;
+using JetBrains.Annotations;
 
 namespace Orion.Networking.Packets.Entities {
     /// <summary>
-    /// Packet sent to set a player's minion target position.
+    /// Packet sent to the server to remove a projectile by index.
     /// </summary>
-    public sealed class PlayerMinionPositionPacket : Packet {
-        private byte _playerIndex;
-        private Vector2 _playerMinionTargetPosition;
+    [PublicAPI]
+    public sealed class ProjectileRemoveIndexPacket : Packet {
+        private short _projectileIndex;
 
         /// <inheritdoc />
-        public override PacketType Type => PacketType.PlayerMinionPosition;
+        public override PacketType Type => PacketType.ProjectileRemoveIndex;
 
         /// <summary>
-        /// Gets or sets the player index.
+        /// Gets or sets the projectile index.
         /// </summary>
-        public byte PlayerIndex {
-            get => _playerIndex;
+        public short ProjectileIndex {
+            get => _projectileIndex;
             set {
-                _playerIndex = value;
-                _isDirty = true;
-            }
-        }
-
-        /// <summary>
-        /// Gets or sets the player's minion target position.
-        /// </summary>
-        public Vector2 PlayerMinionTargetPosition {
-            get => _playerMinionTargetPosition;
-            set {
-                _playerMinionTargetPosition = value;
+                _projectileIndex = value;
                 _isDirty = true;
             }
         }
 
         /// <inheritdoc />
         [ExcludeFromCodeCoverage]
-        public override string ToString() => $"{Type}[#={PlayerIndex} to ({PlayerMinionTargetPosition})]";
+        public override string ToString() => $"{Type}[#={ProjectileIndex}), ...]";
 
         private protected override void ReadFromReader(BinaryReader reader, PacketContext context) {
-            PlayerIndex = reader.ReadByte();
-            PlayerMinionTargetPosition = reader.ReadVector2();
+            _projectileIndex = reader.ReadInt16();
         }
 
         private protected override void WriteToWriter(BinaryWriter writer, PacketContext context) {
-            writer.Write(PlayerIndex);
-            writer.Write(PlayerMinionTargetPosition);
+            writer.Write(_projectileIndex);
         }
     }
 }

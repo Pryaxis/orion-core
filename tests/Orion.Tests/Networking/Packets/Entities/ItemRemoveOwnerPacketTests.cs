@@ -17,32 +17,30 @@
 
 using System.IO;
 using FluentAssertions;
-using Microsoft.Xna.Framework;
 using Xunit;
 
 namespace Orion.Networking.Packets.Entities {
-    public class PlayerMinionPositionPacketTests {
+    public class ItemRemoveOwnerPacketTests {
         [Fact]
         public void SetDefaultableProperties_MarkAsDirty() {
-            var packet = new PlayerMinionPositionPacket();
+            var packet = new ItemRemoveOwnerPacket();
 
             packet.ShouldHaveDefaultablePropertiesMarkAsDirty();
         }
 
-        public static readonly byte[] Bytes = {12, 0, 99, 1, 0, 0, 0, 0, 0, 0, 0, 0};
+        public static readonly byte[] Bytes = {5, 0, 39, 1, 0};
 
         [Fact]
         public void ReadFromStream_IsCorrect() {
             using (var stream = new MemoryStream(Bytes)) {
-                var packet = (PlayerMinionPositionPacket)Packet.ReadFromStream(stream, PacketContext.Server);
+                var packet = (ItemRemoveOwnerPacket)Packet.ReadFromStream(stream, PacketContext.Server);
 
-                packet.PlayerIndex.Should().Be(1);
-                packet.PlayerMinionTargetPosition.Should().Be(Vector2.Zero);
+                packet.ItemIndex.Should().Be(1);
             }
         }
 
         [Fact]
-        public void DeserializeAndSerialize_SamePacket() {
+        public void WriteToStream_IsCorrect() {
             Bytes.ShouldDeserializeAndSerializeSamePacket();
         }
     }

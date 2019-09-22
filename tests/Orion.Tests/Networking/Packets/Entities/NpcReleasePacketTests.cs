@@ -23,10 +23,10 @@ using Orion.Entities;
 using Xunit;
 
 namespace Orion.Networking.Packets.Entities {
-    public class ReleaseNpcPacketTests {
+    public class NpcReleasePacketTests {
         [Fact]
         public void SetDefaultableProperties_MarkAsDirty() {
-            var packet = new ReleaseNpcPacket();
+            var packet = new NpcReleasePacket();
 
             packet.ShouldHaveDefaultablePropertiesMarkAsDirty();
         }
@@ -36,7 +36,7 @@ namespace Orion.Networking.Packets.Entities {
         [Fact]
         public void ReadFromStream_IsCorrect() {
             using (var stream = new MemoryStream(Bytes)) {
-                var packet = (ReleaseNpcPacket)Packet.ReadFromStream(stream, PacketContext.Server);
+                var packet = (NpcReleasePacket)Packet.ReadFromStream(stream, PacketContext.Server);
 
                 packet.NpcPosition.Should().Be(new Vector2(256, 100));
                 packet.NpcType.Should().Be(NpcType.BlueSlime);

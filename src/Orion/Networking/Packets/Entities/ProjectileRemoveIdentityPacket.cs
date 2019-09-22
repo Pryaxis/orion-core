@@ -15,57 +15,56 @@
 // You should have received a copy of the GNU General Public License
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
-using System;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
-using Orion.Networking.Misc;
+using JetBrains.Annotations;
 
-namespace Orion.Networking.Packets.Misc {
+namespace Orion.Networking.Packets.Entities {
     /// <summary>
-    /// Packet sent to perform a miscellaneous action.
+    /// Packet sent to remove a projectile by identity.
     /// </summary>
-    public sealed class MiscActionPacket : Packet {
-        private byte _playerOrNpcIndex;
-        private MiscAction _action;
+    [PublicAPI]
+    public sealed class ProjectileRemoveIdentityPacket : Packet {
+        private short _projectileIdentity;
+        private byte _projectileOwnerPlayerIndex;
 
         /// <inheritdoc />
-        public override PacketType Type => PacketType.MiscAction;
+        public override PacketType Type => PacketType.ProjectileRemoveIdentity;
 
         /// <summary>
-        /// Gets or sets the player or NPC index.
+        /// Gets or sets the projectile identity.
         /// </summary>
-        public byte PlayerOrNpcIndex {
-            get => _playerOrNpcIndex;
+        public short ProjectileIdentity {
+            get => _projectileIdentity;
             set {
-                _playerOrNpcIndex = value;
+                _projectileIdentity = value;
                 _isDirty = true;
             }
         }
 
         /// <summary>
-        /// Gets or sets the action.
+        /// Gets or sets the projectile owner's player index.
         /// </summary>
-        /// <exception cref="ArgumentNullException"><paramref name="value"/> is <c>null</c>.</exception>
-        public MiscAction Action {
-            get => _action;
+        public byte ProjectileOwnerPlayerIndex {
+            get => _projectileOwnerPlayerIndex;
             set {
-                _action = value ?? throw new ArgumentNullException(nameof(value));
+                _projectileOwnerPlayerIndex = value;
                 _isDirty = true;
             }
         }
 
         /// <inheritdoc />
         [ExcludeFromCodeCoverage]
-        public override string ToString() => $"{Type}[{Action} by #={PlayerOrNpcIndex}]";
+        public override string ToString() => $"{Type}[#={ProjectileIdentity}), P={ProjectileOwnerPlayerIndex}]";
 
         private protected override void ReadFromReader(BinaryReader reader, PacketContext context) {
-            PlayerOrNpcIndex = reader.ReadByte();
-            Action = MiscAction.FromId(reader.ReadByte()) ?? throw new PacketException("Entity action is invalid.");
+            _projectileIdentity = reader.ReadInt16();
+            _projectileOwnerPlayerIndex = reader.ReadByte();
         }
 
         private protected override void WriteToWriter(BinaryWriter writer, PacketContext context) {
-            writer.Write(PlayerOrNpcIndex);
-            writer.Write(Action.Id);
+            writer.Write(_projectileIdentity);
+            writer.Write(_projectileOwnerPlayerIndex);
         }
     }
 }

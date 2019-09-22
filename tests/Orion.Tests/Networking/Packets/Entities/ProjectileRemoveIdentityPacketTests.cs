@@ -20,22 +20,23 @@ using FluentAssertions;
 using Xunit;
 
 namespace Orion.Networking.Packets.Entities {
-    public class RemovePortalPacketTests {
+    public class ProjectileRemoveIdentityPacketTests {
         [Fact]
         public void SetDefaultableProperties_MarkAsDirty() {
-            var packet = new RemovePortalPacket();
+            var packet = new ProjectileRemoveIdentityPacket();
 
             packet.ShouldHaveDefaultablePropertiesMarkAsDirty();
         }
 
-        private static readonly byte[] Bytes = {5, 0, 95, 100, 0};
+        private static readonly byte[] Bytes = {6, 0, 29, 1, 0, 0};
 
         [Fact]
         public void ReadFromStream_IsCorrect() {
             using (var stream = new MemoryStream(Bytes)) {
-                var packet = (RemovePortalPacket)Packet.ReadFromStream(stream, PacketContext.Server);
+                var packet = (ProjectileRemoveIdentityPacket)Packet.ReadFromStream(stream, PacketContext.Server);
 
-                packet.PortalProjectileIndex.Should().Be(100);
+                packet.ProjectileIdentity.Should().Be(1);
+                packet.ProjectileOwnerPlayerIndex.Should().Be(0);
             }
         }
 

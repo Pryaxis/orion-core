@@ -17,11 +17,13 @@
 
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
+using JetBrains.Annotations;
 
 namespace Orion.Networking.Packets.Entities {
     /// <summary>
     /// Packet sent to set a player's mana and maximum mana.
     /// </summary>
+    [PublicAPI]
     public sealed class PlayerManaPacket : Packet {
         private byte _playerIndex;
         private short _playerMana;
@@ -68,15 +70,15 @@ namespace Orion.Networking.Packets.Entities {
         public override string ToString() => $"{Type}[#={PlayerIndex} has {PlayerMana}/{PlayerMaxMana} mp]";
 
         private protected override void ReadFromReader(BinaryReader reader, PacketContext context) {
-            PlayerIndex = reader.ReadByte();
-            PlayerMana = reader.ReadInt16();
-            PlayerMaxMana = reader.ReadInt16();
+            _playerIndex = reader.ReadByte();
+            _playerMana = reader.ReadInt16();
+            _playerMaxMana = reader.ReadInt16();
         }
 
         private protected override void WriteToWriter(BinaryWriter writer, PacketContext context) {
-            writer.Write(PlayerIndex);
-            writer.Write(PlayerMana);
-            writer.Write(PlayerMaxMana);
+            writer.Write(_playerIndex);
+            writer.Write(_playerMana);
+            writer.Write(_playerMaxMana);
         }
     }
 }

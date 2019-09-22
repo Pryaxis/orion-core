@@ -15,15 +15,16 @@
 // You should have received a copy of the GNU General Public License
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
-using System;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
+using JetBrains.Annotations;
 using Orion.Entities;
 
 namespace Orion.Networking.Packets.Entities {
     /// <summary>
     /// Packet sent to set a player's inventory slot.
     /// </summary>
+    [PublicAPI]
     public sealed class PlayerInventorySlotPacket : Packet {
         private byte _playerIndex;
         private byte _playerInventorySlotIndex;
@@ -96,19 +97,19 @@ namespace Orion.Networking.Packets.Entities {
             $"{(ItemPrefix.Equals(ItemPrefix.None) ? ItemPrefix + " " : "")}{ItemType} x{ItemStackSize}]";
 
         private protected override void ReadFromReader(BinaryReader reader, PacketContext context) {
-            PlayerIndex = reader.ReadByte();
-            PlayerInventorySlotIndex = reader.ReadByte();
-            ItemStackSize = reader.ReadInt16();
-            ItemPrefix = (ItemPrefix)reader.ReadByte();
-            ItemType = (ItemType)reader.ReadInt16();
+            _playerIndex = reader.ReadByte();
+            _playerInventorySlotIndex = reader.ReadByte();
+            _itemStackSize = reader.ReadInt16();
+            _itemPrefix = (ItemPrefix)reader.ReadByte();
+            _itemType = (ItemType)reader.ReadInt16();
         }
 
         private protected override void WriteToWriter(BinaryWriter writer, PacketContext context) {
             writer.Write(PlayerIndex);
             writer.Write(PlayerInventorySlotIndex);
-            writer.Write(ItemStackSize);
-            writer.Write((byte)ItemPrefix);
-            writer.Write((short)ItemType);
+            writer.Write(_itemStackSize);
+            writer.Write((byte)_itemPrefix);
+            writer.Write((short)_itemType);
         }
     }
 }

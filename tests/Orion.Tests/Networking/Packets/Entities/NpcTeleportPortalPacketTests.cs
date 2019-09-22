@@ -21,25 +21,27 @@ using Microsoft.Xna.Framework;
 using Xunit;
 
 namespace Orion.Networking.Packets.Entities {
-    public class TeleportPlayerPortalPacketTests {
+    public class NpcTeleportPortalPacketTests {
         [Fact]
         public void SetDefaultableProperties_MarkAsDirty() {
-            var packet = new TeleportPlayerPortalPacket();
+            var packet = new NpcTeleportPortalPacket();
 
             packet.ShouldHaveDefaultablePropertiesMarkAsDirty();
         }
 
-        public static readonly byte[] Bytes = {22, 0, 96, 100, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
+        public static readonly byte[] Bytes = {
+            23, 0, 100, 100, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+        };
 
         [Fact]
         public void ReadFromStream_IsCorrect() {
             using (var stream = new MemoryStream(Bytes)) {
-                var packet = (TeleportPlayerPortalPacket)Packet.ReadFromStream(stream, PacketContext.Server);
+                var packet = (NpcTeleportPortalPacket)Packet.ReadFromStream(stream, PacketContext.Server);
 
-                packet.PlayerIndex.Should().Be(100);
+                packet.NpcIndex.Should().Be(100);
                 packet.PortalIndex.Should().Be(2);
-                packet.PlayerNewPosition.Should().Be(Vector2.Zero);
-                packet.PlayerNewVelocity.Should().Be(Vector2.Zero);
+                packet.NewNpcPosition.Should().Be(Vector2.Zero);
+                packet.NewNpcVelocity.Should().Be(Vector2.Zero);
             }
         }
 

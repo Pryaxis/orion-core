@@ -20,29 +20,27 @@ using FluentAssertions;
 using Xunit;
 
 namespace Orion.Networking.Packets.Entities {
-    public class SpawnPlayerPacketTests {
+    public class ProjectileRemoveIndexPacketTests {
         [Fact]
         public void SetDefaultableProperties_MarkAsDirty() {
-            var packet = new SpawnPlayerPacket();
+            var packet = new ProjectileRemoveIndexPacket();
 
             packet.ShouldHaveDefaultablePropertiesMarkAsDirty();
         }
 
-        private static readonly byte[] Bytes = {8, 0, 12, 0, 255, 255, 255, 255};
+        private static readonly byte[] Bytes = {5, 0, 95, 100, 0};
 
         [Fact]
         public void ReadFromStream_IsCorrect() {
             using (var stream = new MemoryStream(Bytes)) {
-                var packet = (SpawnPlayerPacket)Packet.ReadFromStream(stream, PacketContext.Server);
+                var packet = (ProjectileRemoveIndexPacket)Packet.ReadFromStream(stream, PacketContext.Server);
 
-                packet.PlayerIndex.Should().Be(0);
-                packet.PlayerSpawnX.Should().Be(-1);
-                packet.PlayerSpawnY.Should().Be(-1);
+                packet.ProjectileIndex.Should().Be(100);
             }
         }
 
         [Fact]
-        public void DeserializeAndSerialize_SamePacket() {
+        public void WriteToStream_IsCorrect() {
             Bytes.ShouldDeserializeAndSerializeSamePacket();
         }
     }

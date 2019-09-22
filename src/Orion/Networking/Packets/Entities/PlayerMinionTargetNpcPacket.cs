@@ -17,38 +17,54 @@
 
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
+using JetBrains.Annotations;
 
 namespace Orion.Networking.Packets.Entities {
     /// <summary>
-    /// Packet sent from the server to the client to remove the owner of an item.
+    /// Packet sent to set a player's minion's target NPC.
     /// </summary>
-    public sealed class RemoveItemOwnerPacket : Packet {
-        private short _itemIndex;
+    [PublicAPI]
+    public sealed class PlayerMinionTargetNpcPacket : Packet {
+        private byte _playerIndex;
+        private short _playerMinionTargetNpcIndex;
 
         /// <inheritdoc />
-        public override PacketType Type => PacketType.RemoveItemOwner;
+        public override PacketType Type => PacketType.PlayerMinionTargetNpc;
 
         /// <summary>
-        /// Gets or sets the item index.
+        /// Gets or sets the player index.
         /// </summary>
-        public short ItemIndex {
-            get => _itemIndex;
+        public byte PlayerIndex {
+            get => _playerIndex;
             set {
-                _itemIndex = value;
+                _playerIndex = value;
+                _isDirty = true;
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets the player's minions' target NPC index.
+        /// </summary>
+        public short PlayerMinionTargetNpcIndex {
+            get => _playerMinionTargetNpcIndex;
+            set {
+                _playerMinionTargetNpcIndex = value;
                 _isDirty = true;
             }
         }
 
         /// <inheritdoc />
         [ExcludeFromCodeCoverage]
-        public override string ToString() => $"{Type}[#={ItemIndex}]";
+        public override string ToString() => $"{Type}[#={PlayerIndex} to N={PlayerMinionTargetNpcIndex}]";
 
         private protected override void ReadFromReader(BinaryReader reader, PacketContext context) {
-            ItemIndex = reader.ReadInt16();
+            _playerIndex = reader.ReadByte();
+            _playerMinionTargetNpcIndex = reader.ReadInt16();
         }
 
         private protected override void WriteToWriter(BinaryWriter writer, PacketContext context) {
-            writer.Write(ItemIndex);
+            writer.Write(_playerIndex);
+            writer.Write(_playerMinionTargetNpcIndex);
         }
     }
 }

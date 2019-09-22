@@ -17,6 +17,7 @@
 
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
+using JetBrains.Annotations;
 using Microsoft.Xna.Framework;
 using Orion.Networking.Packets.Extensions;
 
@@ -24,6 +25,7 @@ namespace Orion.Networking.Packets.Entities {
     /// <summary>
     /// Packet sent to teleport a player through a portal.
     /// </summary>
+    [PublicAPI]
     public sealed class TeleportPlayerPortalPacket : Packet {
         private byte _playerIndex;
         private short _portalIndex;
@@ -82,17 +84,17 @@ namespace Orion.Networking.Packets.Entities {
         public override string ToString() => $"{Type}[#={PlayerIndex} @ {PlayerNewPosition}, ...]";
 
         private protected override void ReadFromReader(BinaryReader reader, PacketContext context) {
-            PlayerIndex = reader.ReadByte();
-            PortalIndex = reader.ReadInt16();
-            PlayerNewPosition = reader.ReadVector2();
-            PlayerNewVelocity = reader.ReadVector2();
+            _playerIndex = reader.ReadByte();
+            _portalIndex = reader.ReadInt16();
+            _playerNewPosition = reader.ReadVector2();
+            _playerNewVelocity = reader.ReadVector2();
         }
 
         private protected override void WriteToWriter(BinaryWriter writer, PacketContext context) {
-            writer.Write(PlayerIndex);
-            writer.Write(PortalIndex);
-            writer.Write(PlayerNewPosition);
-            writer.Write(PlayerNewVelocity);
+            writer.Write(_playerIndex);
+            writer.Write(_portalIndex);
+            writer.Write(_playerNewPosition);
+            writer.Write(_playerNewVelocity);
         }
     }
 }

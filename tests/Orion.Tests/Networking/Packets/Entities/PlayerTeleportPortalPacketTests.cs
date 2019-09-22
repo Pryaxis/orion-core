@@ -17,30 +17,34 @@
 
 using System.IO;
 using FluentAssertions;
+using Microsoft.Xna.Framework;
 using Xunit;
 
 namespace Orion.Networking.Packets.Entities {
-    public class RemoveItemOwnerPacketTests {
+    public class PlayerTeleportPortalPacketTests {
         [Fact]
         public void SetDefaultableProperties_MarkAsDirty() {
-            var packet = new RemoveItemOwnerPacket();
+            var packet = new TeleportPlayerPortalPacket();
 
             packet.ShouldHaveDefaultablePropertiesMarkAsDirty();
         }
 
-        public static readonly byte[] Bytes = {5, 0, 39, 1, 0};
+        public static readonly byte[] Bytes = {22, 0, 96, 100, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
 
         [Fact]
         public void ReadFromStream_IsCorrect() {
             using (var stream = new MemoryStream(Bytes)) {
-                var packet = (RemoveItemOwnerPacket)Packet.ReadFromStream(stream, PacketContext.Server);
+                var packet = (TeleportPlayerPortalPacket)Packet.ReadFromStream(stream, PacketContext.Server);
 
-                packet.ItemIndex.Should().Be(1);
+                packet.PlayerIndex.Should().Be(100);
+                packet.PortalIndex.Should().Be(2);
+                packet.PlayerNewPosition.Should().Be(Vector2.Zero);
+                packet.PlayerNewVelocity.Should().Be(Vector2.Zero);
             }
         }
 
         [Fact]
-        public void WriteToStream_IsCorrect() {
+        public void DeserializeAndSerialize_SamePacket() {
             Bytes.ShouldDeserializeAndSerializeSamePacket();
         }
     }

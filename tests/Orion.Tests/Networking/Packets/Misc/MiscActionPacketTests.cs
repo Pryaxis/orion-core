@@ -18,54 +18,28 @@
 using System;
 using System.IO;
 using FluentAssertions;
-using Orion.Networking.Misc;
+using Orion.Networking.Entities;
+using Orion.Networking.Packets.Entities;
 using Xunit;
 
 namespace Orion.Networking.Packets.Misc {
     public class MiscActionPacketTests {
         [Fact]
         public void SetDefaultableProperties_MarkAsDirty() {
-            var packet = new MiscActionPacket();
+            var packet = new EntityActionPacket();
 
             packet.ShouldHaveDefaultablePropertiesMarkAsDirty();
         }
 
-        [Fact]
-        public void SetEntityAction_MarksAsDirty() {
-            var packet = new MiscActionPacket();
-
-            packet.Action = MiscAction.CreateMimicSmoke;
-
-            packet.ShouldBeDirty();
-        }
-
-        [Fact]
-        public void SetEntityAction_NullValue_ThrowsArgumentNullException() {
-            var packet = new MiscActionPacket();
-            Action action = () => packet.Action = null;
-
-            action.Should().Throw<ArgumentNullException>();
-        }
-
         public static readonly byte[] Bytes = {5, 0, 51, 0, 1};
-        public static readonly byte[] InvalidEntityActionBytes = {5, 0, 51, 0, 255};
 
         [Fact]
         public void ReadFromStream_IsCorrect() {
             using (var stream = new MemoryStream(Bytes)) {
-                var packet = (MiscActionPacket)Packet.ReadFromStream(stream, PacketContext.Server);
+                var packet = (EntityActionPacket)Packet.ReadFromStream(stream, PacketContext.Server);
 
-                packet.PlayerOrNpcIndex.Should().Be(0);
-                packet.Action.Should().Be(MiscAction.SpawnSkeletron);
-            }
-        }
-
-        [Fact]
-        public void ReadFromStream_InvalidEntityAction_ThrowsPacketException() {
-            using (var stream = new MemoryStream(InvalidEntityActionBytes)) {
-                Func<Packet> func = () => Packet.ReadFromStream(stream, PacketContext.Server);
-
-                func.Should().Throw<PacketException>();
+                packet.EntityIndex.Should().Be(0);
+                packet.EntityAction.Should().Be(EntityAction.PlayerSpawnSkeletron);
             }
         }
 
