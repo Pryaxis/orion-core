@@ -44,6 +44,7 @@ namespace Orion.Networking.Impl {
             _playerService = playerService;
 
             _receiveHandlers[PacketType.PlayerConnect] = PlayerConnectHandler;
+            _receiveHandlers[PacketType.PlayerData] = PlayerDataHandler;
 
             OTAPI.Hooks.Net.ReceiveData = ReceiveDataHandler;
             OTAPI.Hooks.Net.SendBytes = SendBytesHandler;
@@ -57,7 +58,7 @@ namespace Orion.Networking.Impl {
             OTAPI.Hooks.Net.SendBytes = null;
         }
 
-        private OTAPI.HookResult ReceiveDataHandler(Terraria.MessageBuffer buffer, ref byte packetId,
+        private OTAPI.HookResult ReceiveDataHandler([NotNull] Terraria.MessageBuffer buffer, ref byte packetId,
                                                     ref int readOffset, ref int start, ref int length) {
             if (_shouldIgnoreNextReceiveData.Value) return OTAPI.HookResult.Continue;
 
@@ -95,8 +96,8 @@ namespace Orion.Networking.Impl {
         }
 
         private OTAPI.HookResult SendBytesHandler(ref int remoteClient, ref byte[] data, ref int offset, ref int size,
-                                                  ref Terraria.Net.Sockets.SocketSendCallback callback,
-                                                  ref object state) {
+                                                  [CanBeNull] ref Terraria.Net.Sockets.SocketSendCallback callback,
+                                                  [CanBeNull] ref object state) {
             var stream = new MemoryStream(data, offset, size);
             var receiver = _playerService.Value[remoteClient];
             var packet = Packet.ReadFromStream(stream, PacketContext.Client);
@@ -113,17 +114,24 @@ namespace Orion.Networking.Impl {
             return OTAPI.HookResult.Continue;
         }
 
-        private OTAPI.HookResult PreResetHandler(Terraria.RemoteClient remoteClient) {
+        private OTAPI.HookResult PreResetHandler([NotNull] Terraria.RemoteClient remoteClient) {
             var player = _playerService.Value[remoteClient.Id];
             var args = new PlayerDisconnectEventArgs(player);
             _playerService.Value.PlayerDisconnect?.Invoke(this, args);
             return OTAPI.HookResult.Continue;
         }
 
-        private void PlayerConnectHandler(PacketReceiveEventArgs args_) {
+        private void PlayerConnectHandler([NotNull] PacketReceiveEventArgs args_) {
             var packet = (PlayerConnectPacket)args_.Packet;
             var args = new PlayerConnectEventArgs(args_.Sender, packet);
             _playerService.Value.PlayerConnect?.Invoke(this, args);
+            args_.IsCanceled = args.IsCanceled;
+        }
+
+        private void PlayerDataHandler([NotNull] PacketReceiveEventArgs args_) {
+            var packet = (PlayerDataPacket)args_.Packet;
+            var args = new PlayerDataEventArgs(args_.Sender, packet);
+            _playerService.Value.PlayerData?.Invoke(this, args);
             args_.IsCanceled = args.IsCanceled;
         }
     }

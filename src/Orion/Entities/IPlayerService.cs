@@ -33,6 +33,12 @@ namespace Orion.Entities {
         EventHandlerCollection<PlayerConnectEventArgs> PlayerConnect { get; set; }
 
         /// <summary>
+        /// Gets or sets the event handlers that run when a player's data is received. This event can be canceled.
+        /// </summary>
+        [CanBeNull]
+        EventHandlerCollection<PlayerDataEventArgs> PlayerData { get; set; }
+
+        /// <summary>
         /// Gets or sets the event handlers that run when a player disconnects.
         /// </summary>
         [CanBeNull]
