@@ -16,10 +16,10 @@
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
 using System;
-using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Text;
+using JetBrains.Annotations;
 using Orion.Networking.Packets.Entities;
 using Orion.Networking.Packets.Misc;
 using Orion.Networking.Packets.Modules;
@@ -32,8 +32,9 @@ namespace Orion.Networking.Packets {
     /// <summary>
     /// Represents a packet.
     /// </summary>
+    [PublicAPI]
     public abstract class Packet : IDirtiable {
-        private static readonly Func<Packet>[] PacketConstructors = {
+        [NotNull] private static readonly Func<Packet>[] PacketConstructors = {
             /* 000 */ null,
             /* 001 */ () => new PlayerConnectPacket(),
             /* 002 */ () => new PlayerDisconnectPacket(),
@@ -52,7 +53,7 @@ namespace Orion.Networking.Packets {
             /* 015 */ null,
             /* 016 */ () => new PlayerHealthPacket(),
             /* 017 */ () => new TileModificationPacket(),
-            /* 018 */ () => new TimePacket(),
+            /* 018 */ () => new WorldTimePacket(),
             /* 019 */ () => new ToggleDoorPacket(),
             /* 020 */ () => new TileSquarePacket(),
             /* 021 */ () => new ItemInfoPacket(),
@@ -91,7 +92,7 @@ namespace Orion.Networking.Packets {
             /* 054 */ () => new NpcBuffsPacket(),
             /* 055 */ () => new PlayerBuffPacket(),
             /* 056 */ () => new NpcNamePacket(),
-            /* 057 */ () => new BiomeStatsPacket(),
+            /* 057 */ () => new WorldBiomeStatsPacket(),
             /* 058 */ () => new PlayerInstrumentNotePacket(),
             /* 059 */ () => new WireActivatePacket(),
             /* 060 */ () => new NpcHomePacket(),
@@ -108,7 +109,7 @@ namespace Orion.Networking.Packets {
             /* 071 */ () => new NpcReleasePacket(),
             /* 072 */ () => new TravelingMerchantShopPacket(),
             /* 073 */ () => new PlayerTeleportationPotionPacket(),
-            /* 074 */ () => new AnglerQuestPacket(),
+            /* 074 */ () => new WorldAnglerQuestPacket(),
             /* 075 */ () => new PlayerFinishAnglerQuestPacket(),
             /* 076 */ () => new PlayerAnglerQuestsPacket(),
             /* 077 */ () => new TileAnimationPacket(),
@@ -125,7 +126,7 @@ namespace Orion.Networking.Packets {
             /* 088 */ () => new ItemAlterationPacket(),
             /* 089 */ () => new ItemFramePacket(),
             /* 090 */ () => new ItemInstanceInfoPacket(),
-            /* 091 */ () => new EmoteBubblePacket(),
+            /* 091 */ () => new EmoteInfoPacket(),
             /* 092 */ () => new NpcStealCoinsPacket(),
             /* 093 */ null,
             /* 094 */ null,
@@ -147,8 +148,8 @@ namespace Orion.Networking.Packets {
             /* 110 */ () => new PlayerConsumeItemsPacket(),
             /* 111 */ () => new ToggleBirthdayPartyPacket(),
             /* 112 */ () => new TreeGrowingEffectPacket(),
-            /* 113 */ () => new StartOldOnesArmyPacket(),
-            /* 114 */ () => new EndOldOnesArmyPacket(),
+            /* 113 */ () => new OldOnesArmyStartPacket(),
+            /* 114 */ () => new OldOnesArmyEndPacket(),
             /* 115 */ () => new PlayerMinionTargetNpcPacket(),
             /* 116 */ () => new OldOnesArmyInfoPacket(),
             /* 117 */ () => new PlayerDamagePacket(),
@@ -177,7 +178,8 @@ namespace Orion.Networking.Packets {
         /// <returns>The resulting packet.</returns>
         /// <exception cref="ArgumentNullException"><paramref name="stream"/> is <c>null</c>.</exception>
         /// <exception cref="PacketException">The packet could not be parsed correctly.</exception>
-        public static Packet ReadFromStream(Stream stream, PacketContext context) {
+        [NotNull]
+        public static Packet ReadFromStream([NotNull] Stream stream, PacketContext context) {
             if (stream == null) throw new ArgumentNullException(nameof(stream));
 
             try {
@@ -195,7 +197,6 @@ namespace Orion.Networking.Packets {
                                         throw new PacketException("Packet type is invalid.");
                 var packet = packetConstructor();
                 packet.ReadFromReader(reader, context);
-                packet.Clean();
 #if DEBUG
                 Debug.Assert(stream.Position - oldPosition == packetLength, "Packet should have been consumed.");
                 Debug.Assert(!packet.IsDirty, "Packet should not be dirty.");
@@ -222,7 +223,7 @@ namespace Orion.Networking.Packets {
         /// <param name="context">The context with which to read the packet.</param>
         /// <exception cref="ArgumentNullException"><paramref name="stream"/> is <c>null</c>.</exception>
         /// <exception cref="PacketException">The packet could not be written correctly.</exception>
-        public void WriteToStream(Stream stream, PacketContext context) {
+        public void WriteToStream([NotNull] Stream stream, PacketContext context) {
             if (stream == null) throw new ArgumentNullException(nameof(stream));
 
             try {
@@ -246,7 +247,7 @@ namespace Orion.Networking.Packets {
             }
         }
 
-        private protected abstract void ReadFromReader(BinaryReader reader, PacketContext context);
-        private protected abstract void WriteToWriter(BinaryWriter writer, PacketContext context);
+        private protected abstract void ReadFromReader([NotNull] BinaryReader reader, PacketContext context);
+        private protected abstract void WriteToWriter([NotNull] BinaryWriter writer, PacketContext context);
     }
 }

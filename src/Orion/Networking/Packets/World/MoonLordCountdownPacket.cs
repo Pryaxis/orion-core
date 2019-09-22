@@ -18,11 +18,13 @@
 using System;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
+using JetBrains.Annotations;
 
 namespace Orion.Networking.Packets.World {
     /// <summary>
     /// Packet sent from the server to the client to set the Moon Lord countdown.
     /// </summary>
+    [PublicAPI]
     public sealed class MoonLordCountdownPacket : Packet {
         private TimeSpan _moonLordCountdown;
 
@@ -45,11 +47,11 @@ namespace Orion.Networking.Packets.World {
         public override string ToString() => $"{Type}[{MoonLordCountdown}]";
 
         private protected override void ReadFromReader(BinaryReader reader, PacketContext context) {
-            MoonLordCountdown = TimeSpan.FromSeconds(reader.ReadInt32() / 60.0);
+            _moonLordCountdown = TimeSpan.FromSeconds(reader.ReadInt32() / 60.0);
         }
 
         private protected override void WriteToWriter(BinaryWriter writer, PacketContext context) {
-            writer.Write((int)(MoonLordCountdown.TotalSeconds * 60.0));
+            writer.Write((int)(_moonLordCountdown.TotalSeconds * 60.0));
         }
     }
 }

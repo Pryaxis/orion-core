@@ -17,48 +17,40 @@
 
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
+using JetBrains.Annotations;
 
 namespace Orion.Networking.Packets.World {
     /// <summary>
-    /// Packet sent from the server to the client to set the biome stats.
+    /// Packet sent from the server to the client to set the angler quest.
     /// </summary>
-    public sealed class BiomeStatsPacket : Packet {
-        private byte _hallowedAmount;
-        private byte _corruptionAmount;
-        private byte _crimsonAmount;
+    [PublicAPI]
+    public sealed class WorldAnglerQuestPacket : Packet {
+        private byte _currentAnglerQuest;
+        private bool _isAnglerQuestFinished;
 
         /// <inheritdoc />
-        public override PacketType Type => PacketType.BiomeStats;
+        public override PacketType Type => PacketType.WorldAnglerQuest;
 
         /// <summary>
-        /// Gets or sets the hallowed biome amount.
+        /// Gets or sets the angler quest.
         /// </summary>
-        public byte HallowedAmount {
-            get => _hallowedAmount;
+
+        // TODO: implement enum for this.
+        public byte CurrentAnglerQuest {
+            get => _currentAnglerQuest;
             set {
-                _hallowedAmount = value;
+                _currentAnglerQuest = value;
                 _isDirty = true;
             }
         }
 
         /// <summary>
-        /// Gets or sets the corruption biome amount.
+        /// Gets or sets a value indicating whether the angler quest is finished.
         /// </summary>
-        public byte CorruptionAmount {
-            get => _corruptionAmount;
+        public bool IsAnglerQuestFinished {
+            get => _isAnglerQuestFinished;
             set {
-                _corruptionAmount = value;
-                _isDirty = true;
-            }
-        }
-
-        /// <summary>
-        /// Gets or sets the crimson biome amount.
-        /// </summary>
-        public byte CrimsonAmount {
-            get => _crimsonAmount;
-            set {
-                _crimsonAmount = value;
+                _isAnglerQuestFinished = value;
                 _isDirty = true;
             }
         }
@@ -66,20 +58,16 @@ namespace Orion.Networking.Packets.World {
         /// <inheritdoc />
         [ExcludeFromCodeCoverage]
         public override string ToString() =>
-            $"{Type}[H={HallowedAmount} vs. (C={CorruptionAmount} or C'={CrimsonAmount})]";
+            $"{Type}[{CurrentAnglerQuest}, F={IsAnglerQuestFinished}]";
 
-        /// <inheritdoc />
         private protected override void ReadFromReader(BinaryReader reader, PacketContext context) {
-            HallowedAmount = reader.ReadByte();
-            CorruptionAmount = reader.ReadByte();
-            CrimsonAmount = reader.ReadByte();
+            _currentAnglerQuest = reader.ReadByte();
+            _isAnglerQuestFinished = reader.ReadBoolean();
         }
 
-        /// <inheritdoc />
         private protected override void WriteToWriter(BinaryWriter writer, PacketContext context) {
-            writer.Write(HallowedAmount);
-            writer.Write(CorruptionAmount);
-            writer.Write(CrimsonAmount);
+            writer.Write(_currentAnglerQuest);
+            writer.Write(_isAnglerQuestFinished);
         }
     }
 }

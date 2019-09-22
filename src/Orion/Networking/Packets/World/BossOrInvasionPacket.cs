@@ -15,21 +15,19 @@
 // You should have received a copy of the GNU General Public License
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
-using System;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
-using Orion.Entities;
+using JetBrains.Annotations;
 using Orion.Networking.World;
 
 namespace Orion.Networking.Packets.World {
     /// <summary>
     /// Packet sent to summon a boss or an invasion.
     /// </summary>
-
-    // TODO: maybe rethink how this is stored. Either? Or just make a Invasion/Boss enum.
+    [PublicAPI]
     public sealed class BossOrInvasionPacket : Packet {
         private byte _summmonOnPlayerIndex;
-        private short _type;
+        private NetworkBossOrInvasion _networkBossOrInvasion;
 
         /// <inheritdoc />
         public override PacketType Type => PacketType.BossOrInvasion;
@@ -46,66 +44,28 @@ namespace Orion.Networking.Packets.World {
         }
 
         /// <summary>
-        /// Gets a value indicating whether the packet is for a boss.
+        /// Gets or sets the network boss or invasion.
         /// </summary>
-        public bool IsBoss => _type > 0;
-
-        /// <summary>
-        /// Gets or sets the boss type.
-        /// </summary>
-        /// <exception cref="InvalidOperationException">
-        /// The value is being retrieved and <see cref="IsBoss"/> is <c>false</c>.
-        /// </exception>
-        public NpcType Boss {
-            get {
-                if (!IsBoss) throw new InvalidOperationException();
-
-                return (NpcType)_type;
-            }
+        public NetworkBossOrInvasion NetworkBossOrInvasion {
+            get => _networkBossOrInvasion;
             set {
-                _type = (short)value;
-                _isDirty = true;
-            }
-        }
-
-        /// <summary>
-        /// Gets or sets the invasion type.
-        /// </summary>
-        /// <exception cref="InvalidOperationException">
-        /// The value is being retrieved and <see cref="IsBoss"/> is <c>true</c>.
-        /// </exception>
-        public NetworkInvasion Invasion {
-            get {
-                if (IsBoss) throw new InvalidOperationException();
-
-                return NetworkInvasion.FromId(_type);
-            }
-            set {
-                if (value == null) throw new ArgumentNullException(nameof(value));
-
-                _type = value.Id;
+                _networkBossOrInvasion = value;
                 _isDirty = true;
             }
         }
 
         /// <inheritdoc />
         [ExcludeFromCodeCoverage]
-        public override string ToString() => IsBoss ? $"{Type}[{Boss}]" : $"{Type}[{Invasion}]";
+        public override string ToString() => $"{Type}[#={SummmonOnPlayerIndex}, {NetworkBossOrInvasion}]";
 
         private protected override void ReadFromReader(BinaryReader reader, PacketContext context) {
-            SummmonOnPlayerIndex = (byte)reader.ReadInt16();
-
-            var type = reader.ReadInt16();
-            if (type < 0) {
-                Invasion = NetworkInvasion.FromId(type) ?? throw new PacketException("Invasion is invalid.");
-            } else {
-                Boss = (NpcType)type;
-            }
+            _summmonOnPlayerIndex = (byte)reader.ReadInt16();
+            _networkBossOrInvasion = (NetworkBossOrInvasion)reader.ReadInt16();
         }
 
         private protected override void WriteToWriter(BinaryWriter writer, PacketContext context) {
-            writer.Write((short)SummmonOnPlayerIndex);
-            writer.Write(_type);
+            writer.Write((short)_summmonOnPlayerIndex);
+            writer.Write((short)_networkBossOrInvasion);
         }
     }
 }

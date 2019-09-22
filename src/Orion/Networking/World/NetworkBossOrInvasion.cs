@@ -17,15 +17,36 @@
 
 using JetBrains.Annotations;
 
-namespace Orion.Networking.Packets.Modules {
+namespace Orion.Networking.World {
     /// <summary>
-    /// Represents a module type.
+    /// Specifies a boss or invasion that is transmitted over the network.
     /// </summary>
     [PublicAPI]
-    public enum ModuleType : ushort {
+    public enum NetworkBossOrInvasion : short {
 #pragma warning disable 1591
-        Liquids = 0,
-        Chat = 1
-#pragma warning disable 1591
+        MoonLord = -8,
+        Martians = -7,
+        Eclipse = -6,
+        FrostMoon = -5,
+        PumpkinMoon = -4,
+        Pirates = -3,
+        FrostLegion = -2,
+        Goblins = -1,
+        EyeOfCthulhu = 4,
+        EaterOfWorlds = 13,
+        Skeletron = 50,
+        Retinazer = 125,
+        Spazmatism = 126,
+        SkeletronPrime = 127,
+        PrimeCannon = 128,
+        PrimeSaw = 129,
+        PrimeVice = 130,
+        PrimeLaser = 131,
+        TheDestroyer = 134,
+        QueenBee = 222,
+        Golem = 245,
+        BrainOfCthulhu = 266,
+        DukeFishron = 370
+#pragma warning restore 1591
     }
 }

@@ -16,21 +16,19 @@
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
-using Orion.Events;
+using JetBrains.Annotations;
 using Orion.Networking.Packets.Entities;
 using Orion.Utils;
 using Orion.World;
-using Terraria;
 
 namespace Orion.Networking.Packets.World {
     /// <summary>
     /// Packet sent from the server to the client to set world information. This is sent in response to a
     /// <see cref="PlayerJoinPacket"/> and is also sent periodically.
     /// </summary>
+    [PublicAPI]
     public sealed class WorldInfoPacket : Packet {
         private int _time;
         private bool _isDaytime;
@@ -44,7 +42,7 @@ namespace Orion.Networking.Packets.World {
         private short _surfaceY;
         private short _rockLayerY;
         private int _worldId;
-        private string _worldName = "";
+        [NotNull] private string _worldName = "";
         private Guid _worldGuid;
         private ulong _worldGeneratorVersion;
         private byte _moonType;
@@ -249,6 +247,7 @@ namespace Orion.Networking.Packets.World {
         /// Gets or sets the world name.
         /// </summary>
         /// <exception cref="ArgumentNullException"><paramref name="value"/> is <c>null</c>.</exception>
+        [NotNull]
         public string WorldName {
             get => _worldName;
             set {
@@ -436,21 +435,25 @@ namespace Orion.Networking.Packets.World {
         /// <summary>
         /// Get the tree style boundaries.
         /// </summary>
+        [NotNull]
         public DirtiableArray<int> TreeStyleBoundaries { get; } = new DirtiableArray<int>(3);
 
         /// <summary>
         /// Gets the tree styles.
         /// </summary>
+        [NotNull]
         public DirtiableArray<byte> TreeStyles { get; } = new DirtiableArray<byte>(4);
 
         /// <summary>
         /// Gets the cave background style boundaries.
         /// </summary>
-        public DirtiableArray<int>  CaveBackgroundStyleBoundaries { get; } = new DirtiableArray<int>(3);
+        [NotNull]
+        public DirtiableArray<int> CaveBackgroundStyleBoundaries { get; } = new DirtiableArray<int>(3);
 
         /// <summary>
         /// Gets the cave background styles.
         /// </summary>
+        [NotNull]
         public DirtiableArray<byte> CaveBackgroundStyles { get; } = new DirtiableArray<byte>(4);
 
         /// <summary>
@@ -952,142 +955,142 @@ namespace Orion.Networking.Packets.World {
         public override string ToString() => $"{Type}[{WorldName}, ...]";
 
         private protected override void ReadFromReader(BinaryReader reader, PacketContext context) {
-            Time = reader.ReadInt32();
+            _time = reader.ReadInt32();
 
-            BitsByte timeFlags = reader.ReadByte();
-            IsDaytime = timeFlags[0];
-            IsBloodMoon = timeFlags[1];
-            IsEclipse = timeFlags[2];
+            Terraria.BitsByte timeFlags = reader.ReadByte();
+            _isDaytime = timeFlags[0];
+            _isBloodMoon = timeFlags[1];
+            _isEclipse = timeFlags[2];
 
-            MoonPhase = reader.ReadByte();
-            WorldWidth = reader.ReadInt16();
-            WorldHeight = reader.ReadInt16();
-            SpawnX = reader.ReadInt16();
-            SpawnY = reader.ReadInt16();
-            SurfaceY = reader.ReadInt16();
-            RockLayerY = reader.ReadInt16();
-            WorldId = reader.ReadInt32();
-            WorldName = reader.ReadString();
-            WorldGuid = new Guid(reader.ReadBytes(16));
-            WorldGeneratorVersion = reader.ReadUInt64();
-            MoonType = reader.ReadByte();
-            TreeBackgroundStyle = reader.ReadByte();
-            CorruptionBackgroundStyle = reader.ReadByte();
-            JungleBackgroundStyle = reader.ReadByte();
-            SnowBackgroundStyle = reader.ReadByte();
-            HallowBackgroundStyle = reader.ReadByte();
-            CrimsonBackgroundStyle = reader.ReadByte();
-            DesertBackgroundStyle = reader.ReadByte();
-            OceanBackgroundStyle = reader.ReadByte();
-            IceCaveBackgroundStyle = reader.ReadByte();
-            UndergroundJungleBackgroundStyle = reader.ReadByte();
-            HellBackgroundStyle = reader.ReadByte();
-            WindSpeed = reader.ReadSingle();
-            NumberOfClouds = reader.ReadByte();
+            _moonPhase = reader.ReadByte();
+            _worldWidth = reader.ReadInt16();
+            _worldHeight = reader.ReadInt16();
+            _spawnX = reader.ReadInt16();
+            _spawnY = reader.ReadInt16();
+            _surfaceY = reader.ReadInt16();
+            _rockLayerY = reader.ReadInt16();
+            _worldId = reader.ReadInt32();
+            _worldName = reader.ReadString();
+            _worldGuid = new Guid(reader.ReadBytes(16));
+            _worldGeneratorVersion = reader.ReadUInt64();
+            _moonType = reader.ReadByte();
+            _treeBackgroundStyle = reader.ReadByte();
+            _corruptionBackgroundStyle = reader.ReadByte();
+            _jungleBackgroundStyle = reader.ReadByte();
+            _snowBackgroundStyle = reader.ReadByte();
+            _hallowBackgroundStyle = reader.ReadByte();
+            _crimsonBackgroundStyle = reader.ReadByte();
+            _desertBackgroundStyle = reader.ReadByte();
+            _oceanBackgroundStyle = reader.ReadByte();
+            _iceCaveBackgroundStyle = reader.ReadByte();
+            _undergroundJungleBackgroundStyle = reader.ReadByte();
+            _hellBackgroundStyle = reader.ReadByte();
+            _windSpeed = reader.ReadSingle();
+            _numberOfClouds = reader.ReadByte();
 
             for (var i = 0; i < TreeStyleBoundaries.Count; ++i) {
-                TreeStyleBoundaries[i] = reader.ReadInt32();
+                TreeStyleBoundaries._array[i] = reader.ReadInt32();
             }
 
             for (var i = 0; i < TreeStyles.Count; ++i) {
-                TreeStyles[i] = reader.ReadByte();
+                TreeStyles._array[i] = reader.ReadByte();
             }
 
             for (var i = 0; i < CaveBackgroundStyleBoundaries.Count; ++i) {
-                CaveBackgroundStyleBoundaries[i] = reader.ReadInt32();
+                CaveBackgroundStyleBoundaries._array[i] = reader.ReadInt32();
             }
 
             for (var i = 0; i < CaveBackgroundStyles.Count; ++i) {
-                CaveBackgroundStyles[i] = reader.ReadByte();
+                CaveBackgroundStyles._array[i] = reader.ReadByte();
             }
 
-            Rain = reader.ReadSingle();
+            _rain = reader.ReadSingle();
 
-            BitsByte worldFlags = reader.ReadByte();
-            BitsByte worldFlags2 = reader.ReadByte();
-            BitsByte worldFlags3 = reader.ReadByte();
-            BitsByte worldFlags4 = reader.ReadByte();
-            BitsByte worldFlags5 = reader.ReadByte();
-            HasSmashedShadowOrb = worldFlags[0];
-            HasDefeatedEyeOfCthulhu = worldFlags[1];
-            HasDefeatedEvilBoss = worldFlags[2];
-            HasDefeatedSkeletron = worldFlags[3];
-            IsHardMode = worldFlags[4];
-            HasDefeatedClown = worldFlags[5];
-            IsServerSideCharacter = worldFlags[6];
-            HasDefeatedPlantera = worldFlags[7];
-            HasDefeatedDestroyer = worldFlags2[0];
-            HasDefeatedTwins = worldFlags2[1];
-            HasDefeatedSkeletronPrime = worldFlags2[2];
-            HasDefeatedMechanicalBoss = worldFlags2[3];
-            IsCloudBackgroundActive = worldFlags2[4];
-            IsCrimson = worldFlags2[5];
-            IsPumpkinMoon = worldFlags2[6];
-            IsFrostMoon = worldFlags2[7];
-            IsExpertMode = worldFlags3[0];
-            IsFastForwardingTime = worldFlags3[1];
-            IsSlimeRain = worldFlags3[2];
-            HasDefeatedKingSlime = worldFlags3[3];
-            HasDefeatedQueenBee = worldFlags3[4];
-            HasDefeatedDukeFishron = worldFlags3[5];
-            HasDefeatedMartians = worldFlags3[6];
-            HasDefeatedAncientCultist = worldFlags3[7];
-            HasDefeatedMoonLord = worldFlags4[0];
-            HasDefeatedPumpking = worldFlags4[1];
-            HasDefeatedMourningWood = worldFlags4[2];
-            HasDefeatedIceQueen = worldFlags4[3];
-            HasDefeatedSantank = worldFlags4[4];
-            HasDefeatedEverscream = worldFlags4[5];
-            HasDefeatedGolem = worldFlags4[6];
-            IsBirthdayParty = worldFlags4[7];
-            HasDefeatedPirates = worldFlags5[0];
-            HasDefeatedFrostLegion = worldFlags5[1];
-            HasDefeatedGoblins = worldFlags5[2];
-            IsSandstorm = worldFlags5[3];
-            IsOldOnesArmy = worldFlags5[4];
-            HasDefeatedOldOnesArmyTier1 = worldFlags5[5];
-            HasDefeatedOldOnesArmyTier2 = worldFlags5[6];
-            HasDefeatedOldOnesArmyTier3 = worldFlags5[7];
+            Terraria.BitsByte worldFlags = reader.ReadByte();
+            Terraria.BitsByte worldFlags2 = reader.ReadByte();
+            Terraria.BitsByte worldFlags3 = reader.ReadByte();
+            Terraria.BitsByte worldFlags4 = reader.ReadByte();
+            Terraria.BitsByte worldFlags5 = reader.ReadByte();
+            _hasSmashedShadowOrb = worldFlags[0];
+            _hasDefeatedEyeOfCthulhu = worldFlags[1];
+            _hasDefeatedEvilBoss = worldFlags[2];
+            _hasDefeatedSkeletron = worldFlags[3];
+            _isHardMode = worldFlags[4];
+            _hasDefeatedClown = worldFlags[5];
+            _isServerSideCharacter = worldFlags[6];
+            _hasDefeatedPlantera = worldFlags[7];
+            _hasDefeatedDestroyer = worldFlags2[0];
+            _hasDefeatedTwins = worldFlags2[1];
+            _hasDefeatedSkeletronPrime = worldFlags2[2];
+            _hasDefeatedMechanicalBoss = worldFlags2[3];
+            _isCloudBackgroundActive = worldFlags2[4];
+            _isCrimson = worldFlags2[5];
+            _isPumpkinMoon = worldFlags2[6];
+            _isFrostMoon = worldFlags2[7];
+            _isExpertMode = worldFlags3[0];
+            _isFastForwardingTime = worldFlags3[1];
+            _isSlimeRain = worldFlags3[2];
+            _hasDefeatedKingSlime = worldFlags3[3];
+            _hasDefeatedQueenBee = worldFlags3[4];
+            _hasDefeatedDukeFishron = worldFlags3[5];
+            _hasDefeatedMartians = worldFlags3[6];
+            _hasDefeatedAncientCultist = worldFlags3[7];
+            _hasDefeatedMoonLord = worldFlags4[0];
+            _hasDefeatedPumpking = worldFlags4[1];
+            _hasDefeatedMourningWood = worldFlags4[2];
+            _hasDefeatedIceQueen = worldFlags4[3];
+            _hasDefeatedSantank = worldFlags4[4];
+            _hasDefeatedEverscream = worldFlags4[5];
+            _hasDefeatedGolem = worldFlags4[6];
+            _isBirthdayParty = worldFlags4[7];
+            _hasDefeatedPirates = worldFlags5[0];
+            _hasDefeatedFrostLegion = worldFlags5[1];
+            _hasDefeatedGoblins = worldFlags5[2];
+            _isSandstorm = worldFlags5[3];
+            _isOldOnesArmy = worldFlags5[4];
+            _hasDefeatedOldOnesArmyTier1 = worldFlags5[5];
+            _hasDefeatedOldOnesArmyTier2 = worldFlags5[6];
+            _hasDefeatedOldOnesArmyTier3 = worldFlags5[7];
 
-            CurrentInvasion = (Invasion)reader.ReadSByte();
-            LobbyId = reader.ReadUInt64();
-            SandstormIntensity = reader.ReadSingle();
+            _currentInvasion = (Invasion)reader.ReadSByte();
+            _lobbyId = reader.ReadUInt64();
+            _sandstormIntensity = reader.ReadSingle();
         }
 
         private protected override void WriteToWriter(BinaryWriter writer, PacketContext context) {
-            writer.Write(Time);
+            writer.Write(_time);
 
-            BitsByte timeFlags = 0;
-            timeFlags[0] = IsDaytime;
-            timeFlags[1] = IsBloodMoon;
-            timeFlags[2] = IsEclipse;
+            Terraria.BitsByte timeFlags = 0;
+            timeFlags[0] = _isDaytime;
+            timeFlags[1] = _isBloodMoon;
+            timeFlags[2] = _isEclipse;
             writer.Write(timeFlags);
 
-            writer.Write(MoonPhase);
-            writer.Write(WorldWidth);
-            writer.Write(WorldHeight);
-            writer.Write(SpawnX);
-            writer.Write(SpawnY);
-            writer.Write(SurfaceY);
-            writer.Write(RockLayerY);
-            writer.Write(WorldId);
-            writer.Write(WorldName);
-            writer.Write(WorldGuid.ToByteArray());
-            writer.Write(WorldGeneratorVersion);
-            writer.Write(MoonType);
-            writer.Write(TreeBackgroundStyle);
-            writer.Write(CorruptionBackgroundStyle);
-            writer.Write(JungleBackgroundStyle);
-            writer.Write(SnowBackgroundStyle);
-            writer.Write(HallowBackgroundStyle);
-            writer.Write(CrimsonBackgroundStyle);
-            writer.Write(DesertBackgroundStyle);
-            writer.Write(OceanBackgroundStyle);
-            writer.Write(IceCaveBackgroundStyle);
-            writer.Write(UndergroundJungleBackgroundStyle);
-            writer.Write(HellBackgroundStyle);
-            writer.Write(WindSpeed);
-            writer.Write(NumberOfClouds);
+            writer.Write(_moonPhase);
+            writer.Write(_worldWidth);
+            writer.Write(_worldHeight);
+            writer.Write(_spawnX);
+            writer.Write(_spawnY);
+            writer.Write(_surfaceY);
+            writer.Write(_rockLayerY);
+            writer.Write(_worldId);
+            writer.Write(_worldName);
+            writer.Write(_worldGuid.ToByteArray());
+            writer.Write(_worldGeneratorVersion);
+            writer.Write(_moonType);
+            writer.Write(_treeBackgroundStyle);
+            writer.Write(_corruptionBackgroundStyle);
+            writer.Write(_jungleBackgroundStyle);
+            writer.Write(_snowBackgroundStyle);
+            writer.Write(_hallowBackgroundStyle);
+            writer.Write(_crimsonBackgroundStyle);
+            writer.Write(_desertBackgroundStyle);
+            writer.Write(_oceanBackgroundStyle);
+            writer.Write(_iceCaveBackgroundStyle);
+            writer.Write(_undergroundJungleBackgroundStyle);
+            writer.Write(_hellBackgroundStyle);
+            writer.Write(_windSpeed);
+            writer.Write(_numberOfClouds);
 
             foreach (var boundary in TreeStyleBoundaries) {
                 writer.Write(boundary);
@@ -1105,62 +1108,62 @@ namespace Orion.Networking.Packets.World {
                 writer.Write(style);
             }
 
-            writer.Write(Rain);
+            writer.Write(_rain);
 
-            BitsByte worldFlags = 0;
-            BitsByte worldFlags2 = 0;
-            BitsByte worldFlags3 = 0;
-            BitsByte worldFlags4 = 0;
-            BitsByte worldFlags5 = 0;
-            worldFlags[0] = HasSmashedShadowOrb;
-            worldFlags[1] = HasDefeatedEyeOfCthulhu;
-            worldFlags[2] = HasDefeatedEvilBoss;
-            worldFlags[3] = HasDefeatedSkeletron;
-            worldFlags[4] = IsHardMode;
-            worldFlags[5] = HasDefeatedClown;
-            worldFlags[6] = IsServerSideCharacter;
-            worldFlags[7] = HasDefeatedPlantera;
-            worldFlags2[0] = HasDefeatedDestroyer;
-            worldFlags2[1] = HasDefeatedTwins;
-            worldFlags2[2] = HasDefeatedSkeletronPrime;
-            worldFlags2[3] = HasDefeatedMechanicalBoss;
-            worldFlags2[4] = IsCloudBackgroundActive;
-            worldFlags2[5] = IsCrimson;
-            worldFlags2[6] = IsPumpkinMoon;
-            worldFlags2[7] = IsFrostMoon;
-            worldFlags3[0] = IsExpertMode;
-            worldFlags3[1] = IsFastForwardingTime;
-            worldFlags3[2] = IsSlimeRain;
-            worldFlags3[3] = HasDefeatedKingSlime;
-            worldFlags3[4] = HasDefeatedQueenBee;
-            worldFlags3[5] = HasDefeatedDukeFishron;
-            worldFlags3[6] = HasDefeatedMartians;
-            worldFlags3[7] = HasDefeatedAncientCultist;
-            worldFlags4[0] = HasDefeatedMoonLord;
-            worldFlags4[1] = HasDefeatedPumpking;
-            worldFlags4[2] = HasDefeatedMourningWood;
-            worldFlags4[3] = HasDefeatedIceQueen;
-            worldFlags4[4] = HasDefeatedSantank;
-            worldFlags4[5] = HasDefeatedEverscream;
-            worldFlags4[6] = HasDefeatedGolem;
-            worldFlags4[7] = IsBirthdayParty;
-            worldFlags5[0] = HasDefeatedPirates;
-            worldFlags5[1] = HasDefeatedFrostLegion;
-            worldFlags5[2] = HasDefeatedGoblins;
-            worldFlags5[3] = IsSandstorm;
-            worldFlags5[4] = IsOldOnesArmy;
-            worldFlags5[5] = HasDefeatedOldOnesArmyTier1;
-            worldFlags5[6] = HasDefeatedOldOnesArmyTier2;
-            worldFlags5[7] = HasDefeatedOldOnesArmyTier3;
+            Terraria.BitsByte worldFlags = 0;
+            Terraria.BitsByte worldFlags2 = 0;
+            Terraria.BitsByte worldFlags3 = 0;
+            Terraria.BitsByte worldFlags4 = 0;
+            Terraria.BitsByte worldFlags5 = 0;
+            worldFlags[0] = _hasSmashedShadowOrb;
+            worldFlags[1] = _hasDefeatedEyeOfCthulhu;
+            worldFlags[2] = _hasDefeatedEvilBoss;
+            worldFlags[3] = _hasDefeatedSkeletron;
+            worldFlags[4] = _isHardMode;
+            worldFlags[5] = _hasDefeatedClown;
+            worldFlags[6] = _isServerSideCharacter;
+            worldFlags[7] = _hasDefeatedPlantera;
+            worldFlags2[0] = _hasDefeatedDestroyer;
+            worldFlags2[1] = _hasDefeatedTwins;
+            worldFlags2[2] = _hasDefeatedSkeletronPrime;
+            worldFlags2[3] = _hasDefeatedMechanicalBoss;
+            worldFlags2[4] = _isCloudBackgroundActive;
+            worldFlags2[5] = _isCrimson;
+            worldFlags2[6] = _isPumpkinMoon;
+            worldFlags2[7] = _isFrostMoon;
+            worldFlags3[0] = _isExpertMode;
+            worldFlags3[1] = _isFastForwardingTime;
+            worldFlags3[2] = _isSlimeRain;
+            worldFlags3[3] = _hasDefeatedKingSlime;
+            worldFlags3[4] = _hasDefeatedQueenBee;
+            worldFlags3[5] = _hasDefeatedDukeFishron;
+            worldFlags3[6] = _hasDefeatedMartians;
+            worldFlags3[7] = _hasDefeatedAncientCultist;
+            worldFlags4[0] = _hasDefeatedMoonLord;
+            worldFlags4[1] = _hasDefeatedPumpking;
+            worldFlags4[2] = _hasDefeatedMourningWood;
+            worldFlags4[3] = _hasDefeatedIceQueen;
+            worldFlags4[4] = _hasDefeatedSantank;
+            worldFlags4[5] = _hasDefeatedEverscream;
+            worldFlags4[6] = _hasDefeatedGolem;
+            worldFlags4[7] = _isBirthdayParty;
+            worldFlags5[0] = _hasDefeatedPirates;
+            worldFlags5[1] = _hasDefeatedFrostLegion;
+            worldFlags5[2] = _hasDefeatedGoblins;
+            worldFlags5[3] = _isSandstorm;
+            worldFlags5[4] = _isOldOnesArmy;
+            worldFlags5[5] = _hasDefeatedOldOnesArmyTier1;
+            worldFlags5[6] = _hasDefeatedOldOnesArmyTier2;
+            worldFlags5[7] = _hasDefeatedOldOnesArmyTier3;
             writer.Write(worldFlags);
             writer.Write(worldFlags2);
             writer.Write(worldFlags3);
             writer.Write(worldFlags4);
             writer.Write(worldFlags5);
 
-            writer.Write((sbyte)CurrentInvasion);
-            writer.Write(LobbyId);
-            writer.Write(SandstormIntensity);
+            writer.Write((sbyte)_currentInvasion);
+            writer.Write(_lobbyId);
+            writer.Write(_sandstormIntensity);
         }
     }
 }

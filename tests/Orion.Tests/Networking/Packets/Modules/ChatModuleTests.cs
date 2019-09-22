@@ -15,6 +15,7 @@
 // You should have received a copy of the GNU General Public License
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
+using System;
 using System.IO;
 using FluentAssertions;
 using Xunit;
@@ -28,13 +29,64 @@ namespace Orion.Networking.Packets.Modules {
             module.ShouldHaveDefaultablePropertiesMarkAsDirty();
         }
 
-        public static readonly byte[] ChatBytes = {
+        [Fact]
+        public void SetClientChatCommand_MarksAsDirty() {
+            var module = new ChatModule();
+
+            module.ClientChatCommand = "";
+
+            module.ShouldBeDirty();
+        }
+
+        [Fact]
+        public void SetClientChatCommand_NullValue_ThrowsArgumentNullException() {
+            var module = new ChatModule();
+            Action action = () => module.ClientChatCommand = null;
+
+            action.Should().Throw<ArgumentNullException>();
+        }
+
+        [Fact]
+        public void SetClientChatText_MarksAsDirty() {
+            var module = new ChatModule();
+
+            module.ClientChatText = "";
+
+            module.ShouldBeDirty();
+        }
+
+        [Fact]
+        public void SetClientChatText_NullValue_ThrowsArgumentNullException() {
+            var module = new ChatModule();
+            Action action = () => module.ClientChatText = null;
+
+            action.Should().Throw<ArgumentNullException>();
+        }
+
+        [Fact]
+        public void SetServerChatText_MarksAsDirty() {
+            var module = new ChatModule();
+
+            module.ServerChatText = Terraria.Localization.NetworkText.Empty;
+
+            module.ShouldBeDirty();
+        }
+
+        [Fact]
+        public void SetServerChatText_NullValue_ThrowsArgumentNullException() {
+            var module = new ChatModule();
+            Action action = () => module.ServerChatText = null;
+
+            action.Should().Throw<ArgumentNullException>();
+        }
+
+        public static readonly byte[] Bytes = {
             23, 0, 82, 1, 0, 3, 83, 97, 121, 13, 47, 99, 111, 109, 109, 97, 110, 100, 32, 116, 101, 115, 116
         };
 
         [Fact]
         public void ReadFromStream_IsCorrect_Client() {
-            using (var stream = new MemoryStream(ChatBytes)) {
+            using (var stream = new MemoryStream(Bytes)) {
                 var packet = (ModulePacket)Packet.ReadFromStream(stream, PacketContext.Server);
 
                 packet.Module.Should().BeOfType<ChatModule>();
@@ -45,14 +97,7 @@ namespace Orion.Networking.Packets.Modules {
 
         [Fact]
         public void WriteToStream_IsCorrect_Client() {
-            using (var stream = new MemoryStream(ChatBytes))
-            using (var stream2 = new MemoryStream()) {
-                var packet = Packet.ReadFromStream(stream, PacketContext.Server);
-
-                packet.WriteToStream(stream2, PacketContext.Client);
-
-                stream2.ToArray().Should().BeEquivalentTo(ChatBytes);
-            }
+            Bytes.ShouldDeserializeAndSerializeSamePacket();
         }
     }
 }

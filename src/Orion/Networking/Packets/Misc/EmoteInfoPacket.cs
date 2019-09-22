@@ -17,12 +17,14 @@
 
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
+using JetBrains.Annotations;
 
 namespace Orion.Networking.Packets.Misc {
     /// <summary>
     /// Packet sent to the client to set an emote bubble.
     /// </summary>
-    public sealed class EmoteBubblePacket : Packet {
+    [PublicAPI]
+    public sealed class EmoteInfoPacket : Packet {
         private int _emoteIndex;
         private byte _anchorType;
         private ushort _anchorIndex;
@@ -31,7 +33,7 @@ namespace Orion.Networking.Packets.Misc {
         private ushort _emoteMetadata;
 
         /// <inheritdoc />
-        public override PacketType Type => PacketType.EmoteBubble;
+        public override PacketType Type => PacketType.EmoteInfo;
 
         /// <summary>
         /// Gets or sets the emote index.
@@ -106,28 +108,28 @@ namespace Orion.Networking.Packets.Misc {
         public override string ToString() => $"{Type}[#={EmoteIndex}, ...]";
 
         private protected override void ReadFromReader(BinaryReader reader, PacketContext context) {
-            EmoteIndex = reader.ReadInt32();
-            AnchorType = reader.ReadByte();
-            if (AnchorType == byte.MaxValue) return;
+            _emoteIndex = reader.ReadInt32();
+            _anchorType = reader.ReadByte();
+            if (_anchorType == byte.MaxValue) return;
 
-            AnchorIndex = reader.ReadUInt16();
-            EmoteLifetime = reader.ReadByte();
-            EmoteEmotion = reader.ReadSByte();
-            if (EmoteEmotion < 0) {
-                EmoteMetadata = reader.ReadUInt16();
+            _anchorIndex = reader.ReadUInt16();
+            _emoteLifetime = reader.ReadByte();
+            _emoteEmotion = reader.ReadSByte();
+            if (_emoteEmotion < 0) {
+                _emoteMetadata = reader.ReadUInt16();
             }
         }
 
         private protected override void WriteToWriter(BinaryWriter writer, PacketContext context) {
-            writer.Write(EmoteIndex);
-            writer.Write(AnchorType);
-            if (AnchorType == byte.MaxValue) return;
+            writer.Write(_emoteIndex);
+            writer.Write(_anchorType);
+            if (_anchorType == byte.MaxValue) return;
 
-            writer.Write(AnchorIndex);
-            writer.Write(EmoteLifetime);
-            writer.Write((sbyte)EmoteEmotion);
-            if (EmoteEmotion < 0) {
-                writer.Write(EmoteMetadata);
+            writer.Write(_anchorIndex);
+            writer.Write(_emoteLifetime);
+            writer.Write((sbyte)_emoteEmotion);
+            if (_emoteEmotion < 0) {
+                writer.Write(_emoteMetadata);
             }
         }
     }

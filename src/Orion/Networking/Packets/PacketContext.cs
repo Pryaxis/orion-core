@@ -15,10 +15,13 @@
 // You should have received a copy of the GNU General Public License
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
+using JetBrains.Annotations;
+
 namespace Orion.Networking.Packets {
     /// <summary>
     /// Specifies the context with which to process a packet.
     /// </summary>
+    [PublicAPI]
     public enum PacketContext {
         /// <summary>
         /// Indicates that the packet should be processed as the server.

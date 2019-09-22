@@ -20,30 +20,28 @@ using FluentAssertions;
 using Xunit;
 
 namespace Orion.Networking.Packets.World {
-    public class TimePacketTests {
+    public class WorldAnglerQuestPacketTests {
         [Fact]
         public void SetDefaultableProperties_MarkAsDirty() {
-            var packet = new TimePacket();
+            var packet = new WorldAnglerQuestPacket();
 
             packet.ShouldHaveDefaultablePropertiesMarkAsDirty();
         }
 
-        private static readonly byte[] Bytes = {12, 0, 18, 1, 0, 128, 0, 0, 200, 0, 200, 0};
+        public static readonly byte[] Bytes = {5, 0, 74, 1, 1};
 
         [Fact]
         public void ReadFromStream_IsCorrect() {
             using (var stream = new MemoryStream(Bytes)) {
-                var packet = (TimePacket)Packet.ReadFromStream(stream, PacketContext.Server);
+                var packet = (WorldAnglerQuestPacket)Packet.ReadFromStream(stream, PacketContext.Server);
 
-                packet.IsDaytime.Should().BeTrue();
-                packet.Time.Should().Be(32768);
-                packet.SunY.Should().Be(200);
-                packet.MoonY.Should().Be(200);
+                packet.CurrentAnglerQuest.Should().Be(1);
+                packet.IsAnglerQuestFinished.Should().BeTrue();
             }
         }
 
         [Fact]
-        public void DeserializeAndSerialize_SamePacket() {
+        public void WriteToStream_IsCorrect() {
             Bytes.ShouldDeserializeAndSerializeSamePacket();
         }
     }

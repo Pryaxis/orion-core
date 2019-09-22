@@ -60,13 +60,13 @@ namespace Orion.Networking.Packets.Entities {
         public override string ToString() => $"{Type}[#={PlayerIndex} {PlayerDodgeType}]";
 
         private protected override void ReadFromReader(BinaryReader reader, PacketContext context) {
-            PlayerIndex = reader.ReadByte();
-            PlayerDodgeType = (PlayerDodgeType)reader.ReadByte();
+            _playerIndex = reader.ReadByte();
+            _playerDodgeType = (PlayerDodgeType)reader.ReadByte();
         }
 
         private protected override void WriteToWriter(BinaryWriter writer, PacketContext context) {
-            writer.Write(PlayerIndex);
-            writer.Write((byte)PlayerDodgeType);
+            writer.Write(_playerIndex);
+            writer.Write((byte)_playerDodgeType);
         }
     }
 }

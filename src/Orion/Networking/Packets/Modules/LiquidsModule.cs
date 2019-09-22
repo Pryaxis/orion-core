@@ -17,6 +17,7 @@
 
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
+using JetBrains.Annotations;
 using Orion.Networking.World.Tiles;
 using Orion.Utils;
 
@@ -24,16 +25,18 @@ namespace Orion.Networking.Packets.Modules {
     /// <summary>
     /// Module sent for liquids.
     /// </summary>
+    [PublicAPI]
     public class LiquidsModule : Module {
         /// <inheritdoc />
         public override bool IsDirty => base.IsDirty || Liquids.IsDirty;
 
         /// <inheritdoc />
-        public override ModuleType Type => ModuleType.LiquidChanges;
+        public override ModuleType Type => ModuleType.Liquids;
 
         /// <summary>
         /// Gets the liquids.
         /// </summary>
+        [NotNull, ItemNotNull]
         public DirtiableList<NetworkLiquid> Liquids { get; } = new DirtiableList<NetworkLiquid>();
 
         /// <inheritdoc />
@@ -44,12 +47,12 @@ namespace Orion.Networking.Packets.Modules {
 
         /// <inheritdoc />
         [ExcludeFromCodeCoverage]
-        public override string ToString() => $"{nameof(ModuleType.LiquidChanges)}[...]";
+        public override string ToString() => $"{Type}[...]";
 
         private protected override void ReadFromReader(BinaryReader reader, PacketContext context) {
             var numberOfLiquidChanges = reader.ReadUInt16();
             for (var i = 0; i < numberOfLiquidChanges; ++i) {
-                Liquids.Add(NetworkLiquid.ReadFromReader(reader, true));
+                Liquids._list.Add(NetworkLiquid.ReadFromReader(reader, true));
             }
         }
 

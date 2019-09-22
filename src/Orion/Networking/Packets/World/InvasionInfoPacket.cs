@@ -17,11 +17,13 @@
 
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
+using JetBrains.Annotations;
 
 namespace Orion.Networking.Packets.World {
     /// <summary>
     /// Packet sent from the server to the client to set invasion information.
     /// </summary>
+    [PublicAPI]
     public sealed class InvasionInfoPacket : Packet {
         private int _numberOfKills;
         private int _numberOfKillsToProgress;
@@ -83,17 +85,17 @@ namespace Orion.Networking.Packets.World {
             $"{Type}[#={InvasionWaveNumber}: {NumberOfKills}/{NumberOfKillsToProgress}, ...]";
 
         private protected override void ReadFromReader(BinaryReader reader, PacketContext context) {
-            NumberOfKills = reader.ReadInt32();
-            NumberOfKillsToProgress = reader.ReadInt32();
-            InvasionIconType = reader.ReadInt32();
-            InvasionWaveNumber = reader.ReadInt32();
+            _numberOfKills = reader.ReadInt32();
+            _numberOfKillsToProgress = reader.ReadInt32();
+            _invasionIconType = reader.ReadInt32();
+            _invasionWaveNumber = reader.ReadInt32();
         }
 
         private protected override void WriteToWriter(BinaryWriter writer, PacketContext context) {
-            writer.Write(NumberOfKills);
-            writer.Write(NumberOfKillsToProgress);
-            writer.Write(InvasionIconType);
-            writer.Write(InvasionWaveNumber);
+            writer.Write(_numberOfKills);
+            writer.Write(_numberOfKillsToProgress);
+            writer.Write(_invasionIconType);
+            writer.Write(_invasionWaveNumber);
         }
     }
 }

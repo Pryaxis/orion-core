@@ -17,26 +17,27 @@
 
 using System.IO;
 using FluentAssertions;
+using Orion.Networking.Entities;
 using Xunit;
 
-namespace Orion.Networking.Packets.World {
-    public class StartOldOnesArmyPacketTests {
+namespace Orion.Networking.Packets.Entities {
+    public class EntityActionPacketTests {
         [Fact]
         public void SetDefaultableProperties_MarkAsDirty() {
-            var packet = new StartOldOnesArmyPacket();
+            var packet = new EntityActionPacket();
 
             packet.ShouldHaveDefaultablePropertiesMarkAsDirty();
         }
 
-        public static readonly byte[] Bytes = {7, 0, 113, 0, 1, 100, 0};
+        public static readonly byte[] Bytes = {5, 0, 51, 0, 1};
 
         [Fact]
         public void ReadFromStream_IsCorrect() {
             using (var stream = new MemoryStream(Bytes)) {
-                var packet = (StartOldOnesArmyPacket)Packet.ReadFromStream(stream, PacketContext.Server);
+                var packet = (EntityActionPacket)Packet.ReadFromStream(stream, PacketContext.Server);
 
-                packet.CrystalX.Should().Be(256);
-                packet.CrystalY.Should().Be(100);
+                packet.EntityIndex.Should().Be(0);
+                packet.EntityAction.Should().Be(EntityAction.PlayerSpawnSkeletron);
             }
         }
 

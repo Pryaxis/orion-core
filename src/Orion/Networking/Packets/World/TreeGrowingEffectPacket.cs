@@ -17,11 +17,13 @@
 
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
+using JetBrains.Annotations;
 
 namespace Orion.Networking.Packets.World {
     /// <summary>
     /// Packet sent to show a tree growing effect.
     /// </summary>
+    [PublicAPI]
     public sealed class TreeGrowingEffectPacket : Packet {
         private byte _data;
         private short _treeX;
@@ -83,18 +85,18 @@ namespace Orion.Networking.Packets.World {
         private protected override void ReadFromReader(BinaryReader reader, PacketContext context) {
             // This byte is basically useless, but we'll keep track of it anyways.
             _data = reader.ReadByte();
-            TreeX = reader.ReadInt16();
-            TreeY = reader.ReadInt16();
-            TreeHeight = reader.ReadByte();
-            TreeType = reader.ReadInt16();
+            _treeX = reader.ReadInt16();
+            _treeY = reader.ReadInt16();
+            _treeHeight = reader.ReadByte();
+            _treeType = reader.ReadInt16();
         }
 
         private protected override void WriteToWriter(BinaryWriter writer, PacketContext context) {
             writer.Write(_data);
-            writer.Write(TreeX);
-            writer.Write(TreeY);
-            writer.Write(TreeHeight);
-            writer.Write(TreeType);
+            writer.Write(_treeX);
+            writer.Write(_treeY);
+            writer.Write(_treeHeight);
+            writer.Write(_treeType);
         }
     }
 }

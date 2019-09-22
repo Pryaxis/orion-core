@@ -17,11 +17,13 @@
 
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
+using JetBrains.Annotations;
 
 namespace Orion.Networking.Packets.World {
     /// <summary>
     /// Packet sent from the server to the client to set the pillars' shield strengths.
     /// </summary>
+    [PublicAPI]
     public sealed class PillarShieldStrengthsPacket : Packet {
         private ushort _solarPillarShieldStrength;
         private ushort _vortexPillarShieldStrength;
@@ -82,17 +84,17 @@ namespace Orion.Networking.Packets.World {
             $"V={VortexPillarShieldStrength}, N={NebulaPillarShieldStrength}, T={StardustPillarShieldStrength}]";
 
         private protected override void ReadFromReader(BinaryReader reader, PacketContext context) {
-            SolarPillarShieldStrength = reader.ReadUInt16();
-            VortexPillarShieldStrength = reader.ReadUInt16();
-            NebulaPillarShieldStrength = reader.ReadUInt16();
-            StardustPillarShieldStrength = reader.ReadUInt16();
+            _solarPillarShieldStrength = reader.ReadUInt16();
+            _vortexPillarShieldStrength = reader.ReadUInt16();
+            _nebulaPillarShieldStrength = reader.ReadUInt16();
+            _stardustPillarShieldStrength = reader.ReadUInt16();
         }
 
         private protected override void WriteToWriter(BinaryWriter writer, PacketContext context) {
-            writer.Write(SolarPillarShieldStrength);
-            writer.Write(VortexPillarShieldStrength);
-            writer.Write(NebulaPillarShieldStrength);
-            writer.Write(StardustPillarShieldStrength);
+            writer.Write(_solarPillarShieldStrength);
+            writer.Write(_vortexPillarShieldStrength);
+            writer.Write(_nebulaPillarShieldStrength);
+            writer.Write(_stardustPillarShieldStrength);
         }
     }
 }

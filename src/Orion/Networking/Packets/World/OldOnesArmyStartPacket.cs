@@ -17,17 +17,19 @@
 
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
+using JetBrains.Annotations;
 
 namespace Orion.Networking.Packets.World {
     /// <summary>
     /// Packet sent from the client to the server to start the Old One's Army event.
     /// </summary>
-    public sealed class StartOldOnesArmyPacket : Packet {
+    [PublicAPI]
+    public sealed class OldOnesArmyStartPacket : Packet {
         private short _crystalX;
         private short _crystalY;
 
         /// <inheritdoc />
-        public override PacketType Type => PacketType.StartOldOnesArmy;
+        public override PacketType Type => PacketType.OldOnesArmyStart;
 
         /// <summary>
         /// Gets or sets the crystal's X coordinate.
@@ -56,13 +58,13 @@ namespace Orion.Networking.Packets.World {
         public override string ToString() => $"{Type}[({CrystalX}, {CrystalY})]";
 
         private protected override void ReadFromReader(BinaryReader reader, PacketContext context) {
-            CrystalX = reader.ReadInt16();
-            CrystalY = reader.ReadInt16();
+            _crystalX = reader.ReadInt16();
+            _crystalY = reader.ReadInt16();
         }
 
         private protected override void WriteToWriter(BinaryWriter writer, PacketContext context) {
-            writer.Write(CrystalX);
-            writer.Write(CrystalY);
+            writer.Write(_crystalX);
+            writer.Write(_crystalY);
         }
     }
 }

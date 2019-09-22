@@ -15,10 +15,13 @@
 // You should have received a copy of the GNU General Public License
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
+using JetBrains.Annotations;
+
 namespace Orion.Networking.Packets {
     /// <summary>
     /// Specifies a packet type.
     /// </summary>
+    [PublicAPI]
     public enum PacketType : byte {
 #pragma warning disable 1591
         PlayerConnect = 1,
@@ -37,7 +40,7 @@ namespace Orion.Networking.Packets {
         PlayerActivity = 14,
         PlayerHealth = 16,
         TileModification = 17,
-        Time = 18,
+        WorldTime = 18,
         ToggleDoor = 19,
         TileSquare = 20,
         ItemInfo = 21,
@@ -73,7 +76,7 @@ namespace Orion.Networking.Packets {
         NpcBuffs = 54,
         PlayerBuff = 55,
         NpcName = 56,
-        BiomeStats = 57,
+        WorldBiomeStats = 57,
         PlayerInstrumentNote = 58,
         WireActivate = 59,
         NpcHome = 60,
@@ -89,7 +92,7 @@ namespace Orion.Networking.Packets {
         NpcRelease = 71,
         TravelingMerchantShop = 72,
         PlayerTeleportationPotion = 73,
-        AnglerQuest = 74,
+        WorldAnglerQuest = 74,
         PlayerFinishAnglerQuest = 75,
         PlayerAnglerQuests = 76,
         TileAnimation = 77,
@@ -106,7 +109,7 @@ namespace Orion.Networking.Packets {
         ItemAlteration = 88,
         ItemFrame = 89,
         ItemInstanceInfo = 90,
-        EmoteBubble = 91,
+        EmoteInfo = 91,
         NpcStealCoins = 92,
         ProjectileRemoveIndex = 95,
         TeleportPlayerPortal = 96,
@@ -126,8 +129,8 @@ namespace Orion.Networking.Packets {
         PlayerConsumeItems = 110,
         ToggleBirthdayParty = 111,
         TreeGrowingEffect = 112,
-        StartOldOnesArmy = 113,
-        EndOldOnesArmy = 114,
+        OldOnesArmyStart = 113,
+        OldOnesArmyEnd = 114,
         PlayerMinionTargetNpc = 115,
         OldOnesArmyInfo = 116,
         PlayerDamage = 117,

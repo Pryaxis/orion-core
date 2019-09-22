@@ -229,7 +229,7 @@ namespace Orion.Networking.Packets.Entities {
         public override string ToString() => $"{Type}[#={PlayerIndex} @ {PlayerPosition}, ...]";
 
         private protected override void ReadFromReader(BinaryReader reader, PacketContext context) {
-            PlayerIndex = reader.ReadByte();
+            _playerIndex = reader.ReadByte();
 
             BitsByte flags = reader.ReadByte();
             BitsByte flags2 = reader.ReadByte();
@@ -252,7 +252,7 @@ namespace Orion.Networking.Packets.Entities {
         }
 
         private protected override void WriteToWriter(BinaryWriter writer, PacketContext context) {
-            writer.Write(PlayerIndex);
+            writer.Write(_playerIndex);
 
             BitsByte flags = 0;
             BitsByte flags2 = 0;

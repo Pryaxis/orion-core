@@ -17,6 +17,7 @@
 
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
+using JetBrains.Annotations;
 using Orion.Entities;
 using Orion.Utils;
 
@@ -24,6 +25,7 @@ namespace Orion.Networking.Packets.World {
     /// <summary>
     /// Packet sent from the server to the client to set the traveling merchant's shop.
     /// </summary>
+    [PublicAPI]
     public sealed class TravelingMerchantShopPacket : Packet {
         /// <inheritdoc />
         public override bool IsDirty => base.IsDirty || ShopItemTypes.IsDirty;
@@ -34,16 +36,8 @@ namespace Orion.Networking.Packets.World {
         /// <summary>
         /// Gets the shop's <see cref="ItemType"/>s.
         /// </summary>
+        [NotNull]
         public DirtiableArray<ItemType> ShopItemTypes { get; } = new DirtiableArray<ItemType>(Terraria.Chest.maxItems);
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="TravelingMerchantShopPacket"/> class.
-        /// </summary>
-        public TravelingMerchantShopPacket() {
-            for (var i = 0; i < ShopItemTypes.Count; ++i) {
-                ShopItemTypes[i] = ItemType.None;
-            }
-        }
 
         /// <inheritdoc />
         [ExcludeFromCodeCoverage]
@@ -57,7 +51,7 @@ namespace Orion.Networking.Packets.World {
 
         private protected override void ReadFromReader(BinaryReader reader, PacketContext context) {
             for (var i = 0; i < ShopItemTypes.Count; ++i) {
-                ShopItemTypes[i] = (ItemType)reader.ReadInt16();
+                ShopItemTypes._array[i] = (ItemType)reader.ReadInt16();
             }
         }
 

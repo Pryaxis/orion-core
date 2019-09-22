@@ -35,7 +35,7 @@ namespace Orion.Networking.Packets.World {
             using (var stream = new MemoryStream(Bytes)) {
                 var packet = (ProgressionEventPacket)Packet.ReadFromStream(stream, PacketContext.Server);
 
-                packet.EventId.Should().Be(1);
+                packet.ProgressionEventId.Should().Be(1);
             }
         }
 

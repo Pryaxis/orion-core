@@ -16,11 +16,13 @@
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
 using System.IO;
+using JetBrains.Annotations;
 
 namespace Orion.Networking.Packets.World {
     /// <summary>
     /// Packet sent from the client to the server to toggle the birthday party.
     /// </summary>
+    [PublicAPI]
     public sealed class ToggleBirthdayPartyPacket : Packet {
         /// <inheritdoc />
         public override PacketType Type => PacketType.ToggleBirthdayParty;

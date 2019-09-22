@@ -18,6 +18,7 @@
 using System;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
+using JetBrains.Annotations;
 using Microsoft.Xna.Framework;
 using Orion.Networking.Packets.Extensions;
 
@@ -25,10 +26,11 @@ namespace Orion.Networking.Packets.Misc {
     /// <summary>
     /// Packet sent from the server to the client to show combat text.
     /// </summary>
+    [PublicAPI]
     public sealed class CombatTextPacket : Packet {
         private Vector2 _textPosition;
         private Color _textColor;
-        private Terraria.Localization.NetworkText _text = Terraria.Localization.NetworkText.Empty;
+        [NotNull] private Terraria.Localization.NetworkText _text = Terraria.Localization.NetworkText.Empty;
 
         /// <inheritdoc />
         public override PacketType Type => PacketType.CombatText;
@@ -59,6 +61,7 @@ namespace Orion.Networking.Packets.Misc {
         /// Gets or sets the text.
         /// </summary>
         /// <exception cref="ArgumentNullException"><paramref name="value"/> is <c>null</c>.</exception>
+        [NotNull]
         public Terraria.Localization.NetworkText Text {
             get => _text;
             set {
@@ -72,15 +75,15 @@ namespace Orion.Networking.Packets.Misc {
         public override string ToString() => $"{Type}[{Text} ({TextColor}) @ {TextPosition}]";
 
         private protected override void ReadFromReader(BinaryReader reader, PacketContext context) {
-            TextPosition = reader.ReadVector2();
-            TextColor = reader.ReadColor();
-            Text = reader.ReadNetworkText();
+            _textPosition = reader.ReadVector2();
+            _textColor = reader.ReadColor();
+            _text = reader.ReadNetworkText();
         }
 
         private protected override void WriteToWriter(BinaryWriter writer, PacketContext context) {
-            writer.Write(TextPosition);
-            writer.Write(TextColor);
-            writer.Write(Text);
+            writer.Write(_textPosition);
+            writer.Write(_textColor);
+            writer.Write(_text);
         }
     }
 }

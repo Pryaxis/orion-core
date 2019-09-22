@@ -15,21 +15,23 @@
 // You should have received a copy of the GNU General Public License
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
+using System;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
+using JetBrains.Annotations;
 using Microsoft.Xna.Framework;
 using Orion.Networking.Packets.Extensions;
-using Terraria.Localization;
 
 namespace Orion.Networking.Packets.Modules {
     /// <summary>
     /// Module sent for chat.
     /// </summary>
+    [PublicAPI]
     public sealed class ChatModule : Module {
-        private string _clientChatCommand;
-        private string _clientChatText;
+        [NotNull] private string _clientChatCommand = "";
+        [NotNull] private string _clientChatText = "";
         private byte _serverChattingPlayerIndex;
-        private NetworkText _serverChatText;
+        [NotNull] private Terraria.Localization.NetworkText _serverChatText = Terraria.Localization.NetworkText.Empty;
         private Color _serverChatColor;
 
         /// <inheritdoc />
@@ -38,10 +40,12 @@ namespace Orion.Networking.Packets.Modules {
         /// <summary>
         /// Gets or sets the client chat's command. Only applicable when received in the Server context.
         /// </summary>
+        /// <exception cref="ArgumentNullException"><paramref name="value"/> is <c>null</c>.</exception>
+        [NotNull]
         public string ClientChatCommand {
             get => _clientChatCommand;
             set {
-                _clientChatCommand = value;
+                _clientChatCommand = value ?? throw new ArgumentNullException(nameof(value));
                 _isDirty = true;
             }
         }
@@ -49,10 +53,12 @@ namespace Orion.Networking.Packets.Modules {
         /// <summary>
         /// Gets or sets the client chat's text. Only applicable when received in the Server context.
         /// </summary>
+        /// <exception cref="ArgumentNullException"><paramref name="value"/> is <c>null</c>.</exception>
+        [NotNull]
         public string ClientChatText {
             get => _clientChatText;
             set {
-                _clientChatText = value;
+                _clientChatText = value ?? throw new ArgumentNullException(nameof(value));
                 _isDirty = true;
             }
         }
@@ -64,17 +70,19 @@ namespace Orion.Networking.Packets.Modules {
             get => _serverChattingPlayerIndex;
             set {
                 _serverChattingPlayerIndex = value;
-                _isDirty= true;
+                _isDirty = true;
             }
         }
 
         /// <summary>
         /// Gets or sets the server chat's text. Only applicable when sent in the Server context.
         /// </summary>
-        public NetworkText ServerChatText {
+        /// <exception cref="ArgumentNullException"><paramref name="value"/> is <c>null</c>.</exception>
+        [NotNull]
+        public Terraria.Localization.NetworkText ServerChatText {
             get => _serverChatText;
             set {
-                _serverChatText = value;
+                _serverChatText = value ?? throw new ArgumentNullException(nameof(value));
                 _isDirty = true;
             }
         }
@@ -92,34 +100,30 @@ namespace Orion.Networking.Packets.Modules {
 
         /// <inheritdoc />
         [ExcludeFromCodeCoverage]
-        public override string ToString() {
-            var beginning = $"{nameof(ModuleType.Chat)}[";
-            if (ClientChatCommand != null) {
-                return beginning + $"{ClientChatCommand}, T={ClientChatText}]";
-            }
-
-            return beginning + $"{ServerChatText}, #={ServerChattingPlayerIndex}, C={ServerChatColor}]";
-        }
+        public override string ToString() =>
+            string.IsNullOrEmpty(ClientChatText)
+                ? $"{Type}[{ServerChatText}, #={ServerChattingPlayerIndex}, C={ServerChatColor}]"
+                : $"{Type}[{ClientChatCommand}, T={ClientChatText}]";
 
         private protected override void ReadFromReader(BinaryReader reader, PacketContext context) {
             if (context == PacketContext.Server) {
-                ClientChatCommand = reader.ReadString();
-                ClientChatText = reader.ReadString();
+                _clientChatCommand = reader.ReadString();
+                _clientChatText = reader.ReadString();
             } else {
-                ServerChattingPlayerIndex = reader.ReadByte();
-                ServerChatText = reader.ReadNetworkText();
-                ServerChatColor = reader.ReadColor();
+                _serverChattingPlayerIndex = reader.ReadByte();
+                _serverChatText = reader.ReadNetworkText();
+                _serverChatColor = reader.ReadColor();
             }
         }
 
         private protected override void WriteToWriter(BinaryWriter writer, PacketContext context) {
             if (context == PacketContext.Server) {
-                writer.Write(ServerChattingPlayerIndex);
-                writer.Write(ServerChatText);
-                writer.Write(ServerChatColor);
+                writer.Write(_serverChattingPlayerIndex);
+                writer.Write(_serverChatText);
+                writer.Write(_serverChatColor);
             } else {
-                writer.Write(ClientChatCommand);
-                writer.Write(ClientChatText);
+                writer.Write(_clientChatCommand);
+                writer.Write(_clientChatText);
             }
         }
     }

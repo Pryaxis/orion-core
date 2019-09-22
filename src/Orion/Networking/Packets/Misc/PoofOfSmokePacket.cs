@@ -17,12 +17,14 @@
 
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
+using JetBrains.Annotations;
 using Microsoft.Xna.Framework.Graphics.PackedVector;
 
 namespace Orion.Networking.Packets.Misc {
     /// <summary>
     /// Packet sent from the server to the client to show a poof of smoke.
     /// </summary>
+    [PublicAPI]
     public sealed class PoofOfSmokePacket : Packet {
         private HalfVector2 _smokePosition;
 
@@ -45,13 +47,11 @@ namespace Orion.Networking.Packets.Misc {
         public override string ToString() => $"{Type}[({SmokePosition})]";
 
         private protected override void ReadFromReader(BinaryReader reader, PacketContext context) {
-            SmokePosition = new HalfVector2 {
-                PackedValue = reader.ReadUInt32()
-            };
+            _smokePosition = new HalfVector2 {PackedValue = reader.ReadUInt32()};
         }
 
         private protected override void WriteToWriter(BinaryWriter writer, PacketContext context) {
-            writer.Write(SmokePosition.PackedValue);
+            writer.Write(_smokePosition.PackedValue);
         }
     }
 }

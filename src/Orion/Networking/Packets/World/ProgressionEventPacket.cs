@@ -17,40 +17,42 @@
 
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
+using JetBrains.Annotations;
 
 namespace Orion.Networking.Packets.World {
     /// <summary>
     /// Packet sent from the server to the client to notify a progression event.
     /// </summary>
+    [PublicAPI]
     public sealed class ProgressionEventPacket : Packet {
-        private short _eventId;
+        private short _progressionEventId;
 
         /// <inheritdoc />
         public override PacketType Type => PacketType.ProgressionEvent;
 
         /// <summary>
-        /// Gets or sets the event ID.
+        /// Gets or sets the progression event ID.
         /// </summary>
 
         // TODO: implement enum for this.
-        public short EventId {
-            get => _eventId;
+        public short ProgressionEventId {
+            get => _progressionEventId;
             set {
-                _eventId = value;
+                _progressionEventId = value;
                 _isDirty = true;
             }
         }
 
         /// <inheritdoc />
         [ExcludeFromCodeCoverage]
-        public override string ToString() => $"{Type}[{EventId}]";
+        public override string ToString() => $"{Type}[{ProgressionEventId}]";
 
         private protected override void ReadFromReader(BinaryReader reader, PacketContext context) {
-            EventId = reader.ReadInt16();
+            _progressionEventId = reader.ReadInt16();
         }
 
         private protected override void WriteToWriter(BinaryWriter writer, PacketContext context) {
-            writer.Write(EventId);
+            writer.Write(_progressionEventId);
         }
     }
 }

@@ -30,6 +30,9 @@ namespace Orion.Networking.Packets.World.Tiles {
         [NotNull] private NetworkLiquid _tileLiquid = new NetworkLiquid();
 
         /// <inheritdoc />
+        public override bool IsDirty => base.IsDirty || TileLiquid.IsDirty;
+
+        /// <inheritdoc />
         public override PacketType Type => PacketType.TileLiquid;
 
         /// <summary>
@@ -43,6 +46,12 @@ namespace Orion.Networking.Packets.World.Tiles {
                 _tileLiquid = value ?? throw new ArgumentNullException(nameof(value));
                 _isDirty = true;
             }
+        }
+
+        /// <inheritdoc />
+        public override void Clean() {
+            base.Clean();
+            TileLiquid.Clean();
         }
 
         /// <inheritdoc />

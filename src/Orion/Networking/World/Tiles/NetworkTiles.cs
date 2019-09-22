@@ -29,11 +29,11 @@ namespace Orion.Networking.World.Tiles {
     /// </summary>
     [PublicAPI]
     public class NetworkTiles : IEnumerable<NetworkTile>, IDirtiable {
-        [ItemNotNull, NotNull] internal readonly NetworkTile[,] _tiles;
+        [NotNull, ItemNotNull] internal readonly NetworkTile[,] _tiles;
         private bool _isDirty;
 
         /// <inheritdoc />
-        public bool IsDirty => _isDirty || this.Any(t => t?.IsDirty == true);
+        public bool IsDirty => _isDirty || this.Any(t => t.IsDirty == true);
 
         /// <summary>
         /// Gets or sets the tile at the given coordinates.
@@ -91,7 +91,7 @@ namespace Orion.Networking.World.Tiles {
         public void Clean() {
             _isDirty = false;
             foreach (var tile in this) {
-                tile?.Clean();
+                tile.Clean();
             }
         }
     }

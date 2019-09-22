@@ -17,82 +17,71 @@
 
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
+using JetBrains.Annotations;
 
 namespace Orion.Networking.Packets.World {
     /// <summary>
-    /// Packet sent to set the time.
+    /// Packet sent from the server to the client to set the biome stats.
     /// </summary>
-    public sealed class TimePacket : Packet {
-        private bool _isDaytime;
-        private int _time;
-        private short _sunY;
-        private short _moonY;
+    [PublicAPI]
+    public sealed class WorldBiomeStatsPacket : Packet {
+        private byte _hallowedAmount;
+        private byte _corruptionAmount;
+        private byte _crimsonAmount;
 
         /// <inheritdoc />
-        public override PacketType Type => PacketType.Time;
+        public override PacketType Type => PacketType.WorldBiomeStats;
 
         /// <summary>
-        /// Gets or sets a value indicating whether it is daytime.
+        /// Gets or sets the hallowed biome amount.
         /// </summary>
-        public bool IsDaytime {
-            get => _isDaytime;
+        public byte HallowedAmount {
+            get => _hallowedAmount;
             set {
-                _isDaytime = value;
+                _hallowedAmount = value;
                 _isDirty = true;
             }
         }
 
         /// <summary>
-        /// Gets or sets the time.
+        /// Gets or sets the corruption biome amount.
         /// </summary>
-        public int Time {
-            get => _time;
+        public byte CorruptionAmount {
+            get => _corruptionAmount;
             set {
-                _time = value;
+                _corruptionAmount = value;
                 _isDirty = true;
             }
         }
 
         /// <summary>
-        /// Gets or sets the sun's Y position.
+        /// Gets or sets the crimson biome amount.
         /// </summary>
-        public short SunY {
-            get => _sunY;
+        public byte CrimsonAmount {
+            get => _crimsonAmount;
             set {
-                _sunY = value;
-                _isDirty = true;
-            }
-        }
-
-        /// <summary>
-        /// Gets or sets the moon's Y position.
-        /// </summary>
-        public short MoonY {
-            get => _moonY;
-            set {
-                _moonY = value;
+                _crimsonAmount = value;
                 _isDirty = true;
             }
         }
 
         /// <inheritdoc />
         [ExcludeFromCodeCoverage]
-        public override string ToString() => $"{Type}[{Time} @ {(IsDaytime ? "day" : "night")}, ...]";
+        public override string ToString() =>
+            $"{Type}[H={HallowedAmount} vs. (C={CorruptionAmount} or C'={CrimsonAmount})]";
 
         /// <inheritdoc />
         private protected override void ReadFromReader(BinaryReader reader, PacketContext context) {
-            IsDaytime = reader.ReadBoolean();
-            Time = reader.ReadInt32();
-            SunY = reader.ReadInt16();
-            MoonY = reader.ReadInt16();
+            _hallowedAmount = reader.ReadByte();
+            _corruptionAmount = reader.ReadByte();
+            _crimsonAmount = reader.ReadByte();
         }
 
         /// <inheritdoc />
         private protected override void WriteToWriter(BinaryWriter writer, PacketContext context) {
-            writer.Write(IsDaytime);
-            writer.Write(Time);
-            writer.Write(SunY);
-            writer.Write(MoonY);
+            writer.Write(_hallowedAmount);
+            writer.Write(_corruptionAmount);
+            writer.Write(_crimsonAmount);
         }
     }
 }

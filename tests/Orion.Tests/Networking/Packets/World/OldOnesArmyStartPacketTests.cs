@@ -15,31 +15,28 @@
 // You should have received a copy of the GNU General Public License
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
-using System;
 using System.IO;
 using FluentAssertions;
-using Orion.Networking.Entities;
-using Orion.Networking.Packets.Entities;
 using Xunit;
 
-namespace Orion.Networking.Packets.Misc {
-    public class MiscActionPacketTests {
+namespace Orion.Networking.Packets.World {
+    public class OldOnesArmyStartPacketTests {
         [Fact]
         public void SetDefaultableProperties_MarkAsDirty() {
-            var packet = new EntityActionPacket();
+            var packet = new OldOnesArmyStartPacket();
 
             packet.ShouldHaveDefaultablePropertiesMarkAsDirty();
         }
 
-        public static readonly byte[] Bytes = {5, 0, 51, 0, 1};
+        public static readonly byte[] Bytes = {7, 0, 113, 0, 1, 100, 0};
 
         [Fact]
         public void ReadFromStream_IsCorrect() {
             using (var stream = new MemoryStream(Bytes)) {
-                var packet = (EntityActionPacket)Packet.ReadFromStream(stream, PacketContext.Server);
+                var packet = (OldOnesArmyStartPacket)Packet.ReadFromStream(stream, PacketContext.Server);
 
-                packet.EntityIndex.Should().Be(0);
-                packet.EntityAction.Should().Be(EntityAction.PlayerSpawnSkeletron);
+                packet.CrystalX.Should().Be(256);
+                packet.CrystalY.Should().Be(100);
             }
         }
 

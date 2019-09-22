@@ -17,16 +17,18 @@
 
 using System;
 using System.IO;
+using JetBrains.Annotations;
 
 namespace Orion.Networking.Packets.Modules {
     /// <summary>
     /// Packet sent in the form of a module.
     /// </summary>
+    [PublicAPI]
     public sealed class ModulePacket : Packet {
-        private Module _module;
+        [CanBeNull] private Module _module;
 
         /// <inheritdoc />
-        public override bool IsDirty => base.IsDirty || Module.IsDirty;
+        public override bool IsDirty => base.IsDirty || Module?.IsDirty == true;
 
         /// <inheritdoc />
         public override PacketType Type => PacketType.Module;
@@ -35,6 +37,7 @@ namespace Orion.Networking.Packets.Modules {
         /// Gets or sets the module.
         /// </summary>
         /// <exception cref="ArgumentNullException"><paramref name="value"/> is <c>null</c>.</exception>
+        [CanBeNull]
         public Module Module {
             get => _module;
             set {
@@ -46,18 +49,23 @@ namespace Orion.Networking.Packets.Modules {
         /// <inheritdoc />
         public override void Clean() {
             base.Clean();
-            Module.Clean();
+            Module?.Clean();
         }
 
         /// <inheritdoc />
         public override string ToString() => $"{Type}[{Module}]";
 
         private protected override void ReadFromReader(BinaryReader reader, PacketContext context) {
-            Module = Module.ReadFromStream(reader.BaseStream, context);
+            _module = Module.ReadFromStream(reader.BaseStream, context);
         }
 
         private protected override void WriteToWriter(BinaryWriter writer, PacketContext context) {
-            Module.WriteToStream(writer.BaseStream, context);
+            // Satisfy the contract with a null module by writing an invalid module type.
+            if (_module == null) {
+                writer.Write(ushort.MaxValue);
+            } else {
+                _module.WriteToStream(writer.BaseStream, context);
+            }
         }
     }
 }

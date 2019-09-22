@@ -84,11 +84,11 @@ namespace Orion.Networking.Packets.Modules {
             action.Should().Throw<ArgumentNullException>();
         }
 
-        public static readonly byte[] LiquidChangesBytes = {13, 0, 82, 0, 0, 1, 0, 100, 0, 0, 1, 255, 0};
+        public static readonly byte[] Bytes = {13, 0, 82, 0, 0, 1, 0, 100, 0, 0, 1, 255, 0};
 
         [Fact]
         public void ReadFromStream_IsCorrect() {
-            using (var stream = new MemoryStream(LiquidChangesBytes)) {
+            using (var stream = new MemoryStream(Bytes)) {
                 var module = (ModulePacket)Packet.ReadFromStream(stream, PacketContext.Server);
 
                 module.Module.Should().BeOfType<LiquidsModule>();
@@ -98,14 +98,7 @@ namespace Orion.Networking.Packets.Modules {
 
         [Fact]
         public void WriteToStream_IsCorrect() {
-            using (var stream = new MemoryStream(LiquidChangesBytes))
-            using (var stream2 = new MemoryStream()) {
-                var module = Packet.ReadFromStream(stream, PacketContext.Server);
-
-                module.WriteToStream(stream2, PacketContext.Client);
-
-                stream2.ToArray().Should().BeEquivalentTo(LiquidChangesBytes);
-            }
+            Bytes.ShouldDeserializeAndSerializeSamePacket();
         }
     }
 }

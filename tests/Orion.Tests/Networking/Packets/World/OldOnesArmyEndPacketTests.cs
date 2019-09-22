@@ -20,29 +20,18 @@ using FluentAssertions;
 using Xunit;
 
 namespace Orion.Networking.Packets.World {
-    public class BiomeStatsPacketTests {
-        [Fact]
-        public void SetDefaultableProperties_MarkAsDirty() {
-            var packet = new BiomeStatsPacket();
-
-            packet.ShouldHaveDefaultablePropertiesMarkAsDirty();
-        }
-
-        public static readonly byte[] Bytes = {6, 0, 57, 1, 2, 3};
+    public class OldOnesArmyEndPacketTests {
+        public static readonly byte[] Bytes = {3, 0, 114};
 
         [Fact]
         public void ReadFromStream_IsCorrect() {
             using (var stream = new MemoryStream(Bytes)) {
-                var packet = (BiomeStatsPacket)Packet.ReadFromStream(stream, PacketContext.Server);
-
-                packet.HallowedAmount.Should().Be(1);
-                packet.CorruptionAmount.Should().Be(2);
-                packet.CrimsonAmount.Should().Be(3);
+                Packet.ReadFromStream(stream, PacketContext.Server).Should().BeOfType<OldOnesArmyEndPacket>();
             }
         }
 
         [Fact]
-        public void DeserializeAndSerialize_SamePacket() {
+        public void WriteToStream_IsCorrect() {
             Bytes.ShouldDeserializeAndSerializeSamePacket();
         }
     }

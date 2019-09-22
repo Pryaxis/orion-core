@@ -18,11 +18,13 @@
 using System;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
+using JetBrains.Annotations;
 
 namespace Orion.Networking.Packets.World {
     /// <summary>
     /// Packet sent from the server to the client to set Old One's Army information.
     /// </summary>
+    [PublicAPI]
     public sealed class OldOnesArmyInfoPacket : Packet {
         private TimeSpan _timeBetweenWaves;
 
@@ -45,11 +47,11 @@ namespace Orion.Networking.Packets.World {
         public override string ToString() => $"{Type}[T={TimeBetweenWaves}]";
 
         private protected override void ReadFromReader(BinaryReader reader, PacketContext context) {
-            TimeBetweenWaves = TimeSpan.FromSeconds(reader.ReadInt32() / 60.0);
+            _timeBetweenWaves = TimeSpan.FromSeconds(reader.ReadInt32() / 60.0);
         }
 
         private protected override void WriteToWriter(BinaryWriter writer, PacketContext context) {
-            writer.Write((int)(TimeBetweenWaves.TotalSeconds * 60.0));
+            writer.Write((int)(_timeBetweenWaves.TotalSeconds * 60.0));
         }
     }
 }

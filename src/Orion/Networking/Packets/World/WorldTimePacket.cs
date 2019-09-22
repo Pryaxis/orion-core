@@ -18,69 +18,83 @@
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using JetBrains.Annotations;
-using Microsoft.Xna.Framework;
-using Orion.Networking.Packets.Extensions;
 
-namespace Orion.Networking.Packets.Misc {
+namespace Orion.Networking.Packets.World {
     /// <summary>
-    /// Packet sent from the server to the client to show a combat number.
+    /// Packet sent to set the time.
     /// </summary>
     [PublicAPI]
-    public sealed class CombatNumberPacket : Packet {
-        private Vector2 _numberPosition;
-        private Color _numberColor;
-        private int _number;
+    public sealed class WorldTimePacket : Packet {
+        private bool _isDaytime;
+        private int _time;
+        private short _sunY;
+        private short _moonY;
 
         /// <inheritdoc />
-        public override PacketType Type => PacketType.CombatNumber;
+        public override PacketType Type => PacketType.WorldTime;
 
         /// <summary>
-        /// Gets or sets the number's position.
+        /// Gets or sets a value indicating whether it is daytime.
         /// </summary>
-        public Vector2 NumberPosition {
-            get => _numberPosition;
+        public bool IsDaytime {
+            get => _isDaytime;
             set {
-                _numberPosition = value;
+                _isDaytime = value;
                 _isDirty = true;
             }
         }
 
         /// <summary>
-        /// Gets or sets the number's color.
+        /// Gets or sets the time.
         /// </summary>
-        public Color NumberColor {
-            get => _numberColor;
+        public int Time {
+            get => _time;
             set {
-                _numberColor = value;
+                _time = value;
                 _isDirty = true;
             }
         }
 
         /// <summary>
-        /// Gets or sets the number.
+        /// Gets or sets the sun's Y position.
         /// </summary>
-        public int Number {
-            get => _number;
+        public short SunY {
+            get => _sunY;
             set {
-                _number = value;
+                _sunY = value;
+                _isDirty = true;
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets the moon's Y position.
+        /// </summary>
+        public short MoonY {
+            get => _moonY;
+            set {
+                _moonY = value;
                 _isDirty = true;
             }
         }
 
         /// <inheritdoc />
         [ExcludeFromCodeCoverage]
-        public override string ToString() => $"{Type}[{Number} ({NumberColor}) @ {NumberPosition}]";
+        public override string ToString() => $"{Type}[{Time} @ {(IsDaytime ? "day" : "night")}, ...]";
 
+        /// <inheritdoc />
         private protected override void ReadFromReader(BinaryReader reader, PacketContext context) {
-            _numberPosition = reader.ReadVector2();
-            _numberColor = reader.ReadColor();
-            _number = reader.ReadInt32();
+            _isDaytime = reader.ReadBoolean();
+            _time = reader.ReadInt32();
+            _sunY = reader.ReadInt16();
+            _moonY = reader.ReadInt16();
         }
 
+        /// <inheritdoc />
         private protected override void WriteToWriter(BinaryWriter writer, PacketContext context) {
-            writer.Write(_numberPosition);
-            writer.Write(_numberColor);
-            writer.Write(_number);
+            writer.Write(_isDaytime);
+            writer.Write(_time);
+            writer.Write(_sunY);
+            writer.Write(_moonY);
         }
     }
 }

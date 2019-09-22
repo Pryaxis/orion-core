@@ -20,13 +20,13 @@ using FluentAssertions;
 using Xunit;
 
 namespace Orion.Networking.Packets.Misc {
-    public class EmoteBubblePacketTests {
+    public class EmoteInfoPacketTests {
         public static readonly byte[] EmoteBubbleBytes = {12, 0, 91, 1, 0, 0, 0, 0, 100, 0, 255, 1};
 
         [Fact]
         public void ReadFromStream_Normal_IsCorrect() {
             using (var stream = new MemoryStream(EmoteBubbleBytes)) {
-                var packet = (EmoteBubblePacket)Packet.ReadFromStream(stream, PacketContext.Server);
+                var packet = (EmoteInfoPacket)Packet.ReadFromStream(stream, PacketContext.Server);
 
                 packet.EmoteIndex.Should().Be(1);
                 packet.AnchorType.Should().Be(0);
@@ -46,7 +46,7 @@ namespace Orion.Networking.Packets.Misc {
         [Fact]
         public void ReadFromStream_Remove_IsCorrect() {
             using (var stream = new MemoryStream(EmoteBubbleBytes2)) {
-                var packet = (EmoteBubblePacket)Packet.ReadFromStream(stream, PacketContext.Server);
+                var packet = (EmoteInfoPacket)Packet.ReadFromStream(stream, PacketContext.Server);
 
                 packet.EmoteIndex.Should().Be(1);
                 packet.AnchorType.Should().Be(255);
@@ -63,7 +63,7 @@ namespace Orion.Networking.Packets.Misc {
         [Fact]
         public void ReadFromStream_WithMetadata_IsCorrect() {
             using (var stream = new MemoryStream(EmoteBubbleBytes3)) {
-                var packet = (EmoteBubblePacket)Packet.ReadFromStream(stream, PacketContext.Server);
+                var packet = (EmoteInfoPacket)Packet.ReadFromStream(stream, PacketContext.Server);
 
                 packet.EmoteIndex.Should().Be(1);
                 packet.AnchorType.Should().Be(0);

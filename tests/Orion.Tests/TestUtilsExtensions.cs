@@ -49,6 +49,7 @@ namespace Orion {
             using (var inStream = new MemoryStream(bytes))
             using (var outStream = new MemoryStream()) {
                 var packet = Packet.ReadFromStream(inStream, PacketContext.Server);
+                packet.IsDirty.Should().BeFalse();
 
                 packet.WriteToStream(outStream, PacketContext.Client);
 

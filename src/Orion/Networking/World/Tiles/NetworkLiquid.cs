@@ -96,10 +96,10 @@ namespace Orion.Networking.World.Tiles {
             var coord1 = reader.ReadInt16();
             var coord2 = reader.ReadInt16();
             return new NetworkLiquid {
-                TileX = shouldSwapCoords ? coord2 : coord1,
-                TileY = shouldSwapCoords ? coord1 : coord2,
-                LiquidAmount = reader.ReadByte(),
-                LiquidType = (LiquidType)reader.ReadByte()
+                _tileX = shouldSwapCoords ? coord2 : coord1,
+                _tileY = shouldSwapCoords ? coord1 : coord2,
+                _liquidAmount = reader.ReadByte(),
+                _liquidType = (LiquidType)reader.ReadByte()
             };
         }
 
@@ -121,10 +121,10 @@ namespace Orion.Networking.World.Tiles {
         public void WriteToWriter([NotNull] BinaryWriter writer, bool shouldSwapCoords = false) {
             if (writer == null) throw new ArgumentNullException(nameof(writer));
 
-            writer.Write(shouldSwapCoords ? TileY : TileX);
-            writer.Write(shouldSwapCoords ? TileX : TileY);
-            writer.Write(LiquidAmount);
-            writer.Write((byte)LiquidType);
+            writer.Write(shouldSwapCoords ? _tileY : _tileX);
+            writer.Write(shouldSwapCoords ? _tileX : _tileY);
+            writer.Write(_liquidAmount);
+            writer.Write((byte)_liquidType);
         }
     }
 }
