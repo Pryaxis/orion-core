@@ -122,7 +122,7 @@ namespace Orion.Networking.Packets {
             /* 085 */ () => new QuickStackChestPacket(),
             /* 086 */ () => new TileEntityInfoPacket(),
             /* 087 */ () => new PlaceTileEntityPacket(),
-            /* 088 */ () => new AlterItemPacket(),
+            /* 088 */ () => new ItemAlterationPacket(),
             /* 089 */ () => new ItemFramePacket(),
             /* 090 */ () => new InstancedItemInfoPacket(),
             /* 091 */ () => new EmoteBubblePacket(),

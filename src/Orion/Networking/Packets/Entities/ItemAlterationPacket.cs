@@ -17,16 +17,18 @@
 
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
+using JetBrains.Annotations;
 using Microsoft.Xna.Framework;
 using Orion.Entities;
 
 namespace Orion.Networking.Packets.Entities {
     /// <summary>
-    /// Packet sent from the server to the client to alter an item.
+    /// Packet sent from the server to the client to perform an item alteration.
     /// </summary>
 
-    // TODO: write tests for this.
-    public sealed class AlterItemPacket : Packet {
+    // TODO: write tests for this class.
+    [PublicAPI]
+    public sealed class ItemAlterationPacket : Packet {
         private short _itemIndex;
         private Color? _itemColorOverride;
         private ushort? _itemDamageOverride;
@@ -43,7 +45,7 @@ namespace Orion.Networking.Packets.Entities {
         private bool? _itemIsNotAmmoOverride;
 
         /// <inheritdoc />
-        public override PacketType Type => PacketType.AlterItem;
+        public override PacketType Type => PacketType.ItemAlteration;
 
         /// <summary>
         /// Gets or sets the item index.
@@ -59,6 +61,7 @@ namespace Orion.Networking.Packets.Entities {
         /// <summary>
         /// Gets or sets the override for the item's color. A value of <c>null</c> indicates no override.
         /// </summary>
+        [CanBeNull]
         public Color? ItemColorOverride {
             get => _itemColorOverride;
             set {
@@ -70,6 +73,7 @@ namespace Orion.Networking.Packets.Entities {
         /// <summary>
         /// Gets or sets the override for the item's damage. A value of <c>null</c> indicates no override.
         /// </summary>
+        [CanBeNull]
         public ushort? ItemDamageOverride {
             get => _itemDamageOverride;
             set {
@@ -81,6 +85,7 @@ namespace Orion.Networking.Packets.Entities {
         /// <summary>
         /// Gets or sets the override for the item's knockback. A value of <c>null</c> indicates no override.
         /// </summary>
+        [CanBeNull]
         public float? ItemKnockbackOverride {
             get => _itemKnockbackOverride;
             set {
@@ -92,6 +97,7 @@ namespace Orion.Networking.Packets.Entities {
         /// <summary>
         /// Gets or sets the override for the item's animation time. A value of <c>null</c> indicates no override.
         /// </summary>
+        [CanBeNull]
         public ushort? ItemAnimationTimeOverride {
             get => _itemAnimationTimeOverride;
             set {
@@ -103,6 +109,7 @@ namespace Orion.Networking.Packets.Entities {
         /// <summary>
         /// Gets or sets the override for the item's use time. A value of <c>null</c> indicates no override.
         /// </summary>
+        [CanBeNull]
         public ushort? ItemUseTimeOverride {
             get => _itemUseTimeOverride;
             set {
@@ -114,6 +121,7 @@ namespace Orion.Networking.Packets.Entities {
         /// <summary>
         /// Gets or sets the override for the item's projectile type. A value of <c>null</c> indicates no override.
         /// </summary>
+        [CanBeNull]
         public ProjectileType? ItemProjectileTypeOverride {
             get => _itemProjectileTypeOverride;
             set {
@@ -125,6 +133,7 @@ namespace Orion.Networking.Packets.Entities {
         /// <summary>
         /// Gets or sets the override for the item's projectile speed. A value of <c>null</c> indicates no override.
         /// </summary>
+        [CanBeNull]
         public float? ItemProjectileSpeedOverride {
             get => _itemProjectileSpeedOverride;
             set {
@@ -136,6 +145,7 @@ namespace Orion.Networking.Packets.Entities {
         /// <summary>
         /// Gets or sets the override for the item's width. A value of <c>null</c> indicates no override.
         /// </summary>
+        [CanBeNull]
         public short? ItemWidthOverride {
             get => _itemWidthOverride;
             set {
@@ -147,6 +157,7 @@ namespace Orion.Networking.Packets.Entities {
         /// <summary>
         /// Gets or sets the override for the item's height. A value of <c>null</c> indicates no override.
         /// </summary>
+        [CanBeNull]
         public short? ItemHeightOverride {
             get => _itemHeightOverride;
             set {
@@ -158,6 +169,7 @@ namespace Orion.Networking.Packets.Entities {
         /// <summary>
         /// Gets or sets the override for the item's scale. A value of <c>null</c> indicates no override.
         /// </summary>
+        [CanBeNull]
         public float? ItemScaleOverride {
             get => _itemScaleOverride;
             set {
@@ -169,6 +181,7 @@ namespace Orion.Networking.Packets.Entities {
         /// <summary>
         /// Gets or sets the override for the item's ammo type. A value of <c>null</c> indicates no override.
         /// </summary>
+        [CanBeNull]
         public ItemType? ItemAmmoTypeOverride {
             get => _itemAmmoTypeOverride;
             set {
@@ -180,6 +193,7 @@ namespace Orion.Networking.Packets.Entities {
         /// <summary>
         /// Gets or sets the override for the ammo type that the item uses. A value of <c>null</c> indicates no override.
         /// </summary>
+        [CanBeNull]
         public ItemType? ItemUsesAmmoTypeOverride {
             get => _itemUsesAmmoTypeOverride;
             set {
@@ -192,6 +206,7 @@ namespace Orion.Networking.Packets.Entities {
         /// Gets or sets the override for the value indicating whether the item is not ammo. A value of <c>null</c>
         /// indicates no override.
         /// </summary>
+        [CanBeNull]
         public bool? ItemIsNotAmmoOverride {
             get => _itemIsNotAmmoOverride;
             set {

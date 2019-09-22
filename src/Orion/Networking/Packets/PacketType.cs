@@ -103,7 +103,7 @@ namespace Orion.Networking.Packets {
         QuickStackChest = 85,
         TileEntityInfo = 86,
         PlaceTileEntity = 87,
-        AlterItem = 88,
+        ItemAlteration = 88,
         ItemFrame = 89,
         InstancedItemInfo = 90,
         EmoteBubble = 91,
