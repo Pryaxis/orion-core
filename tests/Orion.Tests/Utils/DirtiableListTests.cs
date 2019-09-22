@@ -15,10 +15,8 @@
 // You should have received a copy of the GNU General Public License
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
-using System;
 using FluentAssertions;
 using Moq;
-using Orion.Events;
 using Xunit;
 
 namespace Orion.Utils {

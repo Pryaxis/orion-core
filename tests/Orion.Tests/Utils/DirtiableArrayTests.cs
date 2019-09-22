@@ -18,7 +18,6 @@
 using System;
 using FluentAssertions;
 using Moq;
-using Orion.Events;
 using Xunit;
 
 namespace Orion.Utils {

@@ -43,6 +43,7 @@ namespace Orion.World.TileEntities {
         /// Indicates a chest.
         /// </summary>
         Chest = short.MaxValue - 1,
+
         /// <summary>
         /// Indicates a sign.
         /// </summary>

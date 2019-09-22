@@ -42,7 +42,7 @@ namespace Orion.Networking.Packets.World {
             get => _chatColor;
             set {
                 _chatColor = value;
-                _isDirty=true;
+                _isDirty = true;
             }
         }
 
@@ -50,7 +50,7 @@ namespace Orion.Networking.Packets.World {
         /// Gets or sets the chat's text.
         /// </summary>
         /// <exception cref="ArgumentNullException"><paramref name="value"/> is <c>null</c>.</exception>
-        [NotNull] 
+        [NotNull]
         public Terraria.Localization.NetworkText ChatText {
             get => _chatText;
             set {

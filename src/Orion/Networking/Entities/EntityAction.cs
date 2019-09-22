@@ -28,7 +28,7 @@ namespace Orion.Networking.Entities {
         /// Indicates that Skeletron should be spawned. This is caused by talking to the Old Man.
         /// </summary>
         PlayerSpawnSkeletron = 1,
-        
+
         /// <summary>
         /// Indicates that a grappling sound should be played.
         /// </summary>

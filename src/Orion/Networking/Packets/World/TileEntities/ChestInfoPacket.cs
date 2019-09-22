@@ -98,7 +98,7 @@ namespace Orion.Networking.Packets.World.TileEntities {
             writer.Write(_chestIndex);
             writer.Write(_chestX);
             writer.Write(_chestY);
-            
+
             // This packet's logic is actually insane... why is it set up this way?
             if (_chestName == null) {
                 writer.Write((byte)0);

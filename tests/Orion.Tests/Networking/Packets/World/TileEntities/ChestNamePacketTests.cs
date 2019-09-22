@@ -71,7 +71,9 @@ namespace Orion.Networking.Packets.World.TileEntities {
             }
         }
 
-        public static readonly byte[] ClientBytes = {18, 0, 69, 0, 0, 0, 1, 100, 0, 8, 84, 101, 114, 114, 97, 114, 105, 97};
+        public static readonly byte[] ClientBytes = {
+            18, 0, 69, 0, 0, 0, 1, 100, 0, 8, 84, 101, 114, 114, 97, 114, 105, 97
+        };
 
         [Fact]
         public void ReadFromStream_Client_IsCorrect() {

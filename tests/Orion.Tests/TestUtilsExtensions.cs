@@ -19,7 +19,6 @@ using System;
 using System.IO;
 using System.Reflection;
 using FluentAssertions;
-using Orion.Events;
 using Orion.Networking.Packets;
 using Orion.Utils;
 

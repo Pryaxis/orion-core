@@ -52,7 +52,7 @@ namespace Orion.Networking.Packets.Entities {
         [NotNull]
         public DirtiableArray<BuffType> PlayerBuffTypes { get; } =
             new DirtiableArray<BuffType>(Terraria.Player.maxBuffs);
-        
+
         /// <inheritdoc />
         public override void Clean() {
             base.Clean();
