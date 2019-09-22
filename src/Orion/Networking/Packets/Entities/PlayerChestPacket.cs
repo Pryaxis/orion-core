@@ -17,11 +17,13 @@
 
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
+using JetBrains.Annotations;
 
 namespace Orion.Networking.Packets.Entities {
     /// <summary>
     /// Packet sent from the server to the client to set a player's chest index.
     /// </summary>
+    [PublicAPI]
     public sealed class PlayerChestPacket : Packet {
         private byte _playerIndex;
         private short _playerChestIndex;
@@ -56,13 +58,13 @@ namespace Orion.Networking.Packets.Entities {
         public override string ToString() => $"{Type}[#={PlayerIndex}, C={PlayerChestIndex}]";
 
         private protected override void ReadFromReader(BinaryReader reader, PacketContext context) {
-            PlayerIndex = reader.ReadByte();
-            PlayerChestIndex = reader.ReadInt16();
+            _playerIndex = reader.ReadByte();
+            _playerChestIndex = reader.ReadInt16();
         }
 
         private protected override void WriteToWriter(BinaryWriter writer, PacketContext context) {
-            writer.Write(PlayerIndex);
-            writer.Write(PlayerChestIndex);
+            writer.Write(_playerIndex);
+            writer.Write(_playerChestIndex);
         }
     }
 }
