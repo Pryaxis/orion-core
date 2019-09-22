@@ -23,10 +23,10 @@ using Orion.Entities;
 using Xunit;
 
 namespace Orion.Networking.Packets.Entities {
-    public class NebulaBuffPacketTests {
+    public class PlayerNebulaBuffPacketTests {
         [Fact]
         public void SetDefaultableProperties_MarkAsDirty() {
-            var packet = new NebulaBuffPlayersPacket();
+            var packet = new PlayerNebulaBuffPacket();
 
             packet.ShouldHaveDefaultablePropertiesMarkAsDirty();
         }
@@ -36,7 +36,7 @@ namespace Orion.Networking.Packets.Entities {
         [Fact]
         public void ReadFromStream_IsCorrect() {
             using (var stream = new MemoryStream(Bytes)) {
-                var packet = (NebulaBuffPlayersPacket)Packet.ReadFromStream(stream, PacketContext.Server);
+                var packet = (PlayerNebulaBuffPacket)Packet.ReadFromStream(stream, PacketContext.Server);
 
                 packet.PlayerIndex.Should().Be(0);
                 packet.BuffType.Should().Be(BuffType.ObsidianSkin);

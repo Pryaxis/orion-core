@@ -15,9 +15,9 @@
 // You should have received a copy of the GNU General Public License
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
-using System;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
+using JetBrains.Annotations;
 using Microsoft.Xna.Framework;
 using Orion.Entities;
 using Orion.Networking.Packets.Extensions;
@@ -26,13 +26,14 @@ namespace Orion.Networking.Packets.Entities {
     /// <summary>
     /// Packet sent to spread Nebula Armor buffs to nearby players.
     /// </summary>
-    public sealed class NebulaBuffPlayersPacket : Packet {
+    [PublicAPI]
+    public sealed class PlayerNebulaBuffPacket : Packet {
         private byte _playerIndex;
-        private BuffType _buffType = BuffType.None;
+        private BuffType _buffType;
         private Vector2 _buffPosition;
 
         /// <inheritdoc />
-        public override PacketType Type => PacketType.NebulaBuffPlayers;
+        public override PacketType Type => PacketType.PlayerNebulaBuff;
 
         /// <summary>
         /// Gets or set the player index.
@@ -72,15 +73,15 @@ namespace Orion.Networking.Packets.Entities {
         public override string ToString() => $"{Type}[#={PlayerIndex}, {BuffType} at ({BuffPosition})]";
 
         private protected override void ReadFromReader(BinaryReader reader, PacketContext context) {
-            PlayerIndex = reader.ReadByte();
-            BuffType = (BuffType)reader.ReadByte();
-            BuffPosition = reader.ReadVector2();
+            _playerIndex = reader.ReadByte();
+            _buffType = (BuffType)reader.ReadByte();
+            _buffPosition = reader.ReadVector2();
         }
 
         private protected override void WriteToWriter(BinaryWriter writer, PacketContext context) {
-            writer.Write(PlayerIndex);
-            writer.Write((byte)BuffType);
-            writer.Write(BuffPosition);
+            writer.Write(_playerIndex);
+            writer.Write((byte)_buffType);
+            writer.Write(_buffPosition);
         }
     }
 }

@@ -136,7 +136,7 @@ namespace Orion.Networking.Packets {
             /* 099 */ () => new PlayerMinionPositionPacket(),
             /* 100 */ () => new TeleportNpcPortalPacket(),
             /* 101 */ () => new PillarShieldStrengthsPacket(),
-            /* 102 */ () => new NebulaBuffPlayersPacket(),
+            /* 102 */ () => new PlayerNebulaBuffPacket(),
             /* 103 */ () => new MoonLordCountdownPacket(),
             /* 104 */ () => new NpcShopSlotPacket(),
             /* 105 */ () => new ToggleGemLockPacket(),

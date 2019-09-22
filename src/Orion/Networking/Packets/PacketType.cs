@@ -115,7 +115,7 @@ namespace Orion.Networking.Packets {
         PlayerMinionPosition = 99,
         TeleportNpcPortal = 100,
         PillarShieldStrengths = 101,
-        NebulaBuffPlayers = 102,
+        PlayerNebulaBuff = 102,
         MoonLordCountdown = 103,
         NpcShopSlot = 104,
         ToggleGemLock = 105,
