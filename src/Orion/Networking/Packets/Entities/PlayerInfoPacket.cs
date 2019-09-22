@@ -17,6 +17,7 @@
 
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
+using JetBrains.Annotations;
 using Microsoft.Xna.Framework;
 using Orion.Networking.Packets.Extensions;
 using Terraria;
@@ -25,6 +26,7 @@ namespace Orion.Networking.Packets.Entities {
     /// <summary>
     /// Packet sent to set player information.
     /// </summary>
+    [PublicAPI]
     public sealed class PlayerInfoPacket : Packet {
         private byte _playerIndex;
         private bool _isPlayerHoldingUp;
@@ -231,22 +233,22 @@ namespace Orion.Networking.Packets.Entities {
 
             BitsByte flags = reader.ReadByte();
             BitsByte flags2 = reader.ReadByte();
-            IsPlayerHoldingUp = flags[0];
-            IsPlayerHoldingDown = flags[1];
-            IsPlayerHoldingLeft = flags[2];
-            IsPlayerHoldingRight = flags[3];
-            IsPlayerHoldingJump = flags[4];
-            IsPlayerHoldingUseItem = flags[5];
-            PlayerDirection = flags[6];
-            IsPlayerClimbingRope = flags2[0];
-            PlayerClimbingRopeDirection = flags2[1];
-            IsPlayerVortexStealthed = flags2[3];
-            IsPlayerRightSideUp = flags2[4];
-            IsPlayerRaisingShield = flags2[5];
+            _isPlayerHoldingUp = flags[0];
+            _isPlayerHoldingDown = flags[1];
+            _isPlayerHoldingLeft = flags[2];
+            _isPlayerHoldingRight = flags[3];
+            _isPlayerHoldingJump = flags[4];
+            _isPlayerHoldingUseItem = flags[5];
+            _playerDirection = flags[6];
+            _isPlayerClimbingRope = flags2[0];
+            _playerClimbingRopeDirection = flags2[1];
+            _isPlayerVortexStealthed = flags2[3];
+            _isPlayerRightSideUp = flags2[4];
+            _isPlayerRaisingShield = flags2[5];
 
-            PlayerHeldItemSlotIndex = reader.ReadByte();
-            PlayerPosition = BinaryExtensions.ReadVector2(reader);
-            if (flags2[2]) PlayerVelocity = BinaryExtensions.ReadVector2(reader);
+            _playerHeldItemSlotIndex = reader.ReadByte();
+            _playerPosition = BinaryExtensions.ReadVector2(reader);
+            if (flags2[2]) _playerVelocity = BinaryExtensions.ReadVector2(reader);
         }
 
         private protected override void WriteToWriter(BinaryWriter writer, PacketContext context) {
@@ -254,25 +256,25 @@ namespace Orion.Networking.Packets.Entities {
 
             BitsByte flags = 0;
             BitsByte flags2 = 0;
-            flags[0] = IsPlayerHoldingUp;
-            flags[1] = IsPlayerHoldingDown;
-            flags[2] = IsPlayerHoldingLeft;
-            flags[3] = IsPlayerHoldingRight;
-            flags[4] = IsPlayerHoldingJump;
-            flags[5] = IsPlayerHoldingUseItem;
-            flags[6] = PlayerDirection;
-            flags2[0] = IsPlayerClimbingRope;
-            flags2[1] = PlayerClimbingRopeDirection;
-            flags2[2] = PlayerVelocity != Vector2.Zero;
-            flags2[3] = IsPlayerVortexStealthed;
-            flags2[4] = IsPlayerRightSideUp;
-            flags2[5] = IsPlayerRaisingShield;
+            flags[0] = _isPlayerHoldingUp;
+            flags[1] = _isPlayerHoldingDown;
+            flags[2] = _isPlayerHoldingLeft;
+            flags[3] = _isPlayerHoldingRight;
+            flags[4] = _isPlayerHoldingJump;
+            flags[5] = _isPlayerHoldingUseItem;
+            flags[6] = _playerDirection;
+            flags2[0] = _isPlayerClimbingRope;
+            flags2[1] = _playerClimbingRopeDirection;
+            flags2[2] = _playerVelocity != Vector2.Zero;
+            flags2[3] = _isPlayerVortexStealthed;
+            flags2[4] = _isPlayerRightSideUp;
+            flags2[5] = _isPlayerRaisingShield;
             writer.Write(flags);
             writer.Write(flags2);
 
-            writer.Write(PlayerHeldItemSlotIndex);
-            writer.Write(PlayerPosition);
-            if (flags2[2]) writer.Write(PlayerVelocity);
+            writer.Write(_playerHeldItemSlotIndex);
+            writer.Write(_playerPosition);
+            if (flags2[2]) writer.Write(_playerVelocity);
         }
     }
 }

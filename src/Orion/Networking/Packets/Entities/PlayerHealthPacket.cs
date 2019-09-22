@@ -17,11 +17,13 @@
 
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
+using JetBrains.Annotations;
 
 namespace Orion.Networking.Packets.Entities {
     /// <summary>
     /// Packet sent to set a player's health and maximum health.
     /// </summary>
+    [PublicAPI]
     public sealed class PlayerHealthPacket : Packet {
         private byte _playerIndex;
         private short _playerHealth;
@@ -68,15 +70,15 @@ namespace Orion.Networking.Packets.Entities {
         public override string ToString() => $"{Type}[#={PlayerIndex} has {PlayerHealth}/{PlayerMaxHealth} hp]";
 
         private protected override void ReadFromReader(BinaryReader reader, PacketContext context) {
-            PlayerIndex = reader.ReadByte();
-            PlayerHealth = reader.ReadInt16();
-            PlayerMaxHealth = reader.ReadInt16();
+            _playerIndex = reader.ReadByte();
+            _playerHealth = reader.ReadInt16();
+            _playerMaxHealth = reader.ReadInt16();
         }
 
         private protected override void WriteToWriter(BinaryWriter writer, PacketContext context) {
-            writer.Write(PlayerIndex);
-            writer.Write(PlayerHealth);
-            writer.Write(PlayerMaxHealth);
+            writer.Write(_playerIndex);
+            writer.Write(_playerHealth);
+            writer.Write(_playerMaxHealth);
         }
     }
 }
