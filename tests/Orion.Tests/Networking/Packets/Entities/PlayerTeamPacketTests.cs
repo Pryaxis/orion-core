@@ -30,25 +30,7 @@ namespace Orion.Networking.Packets.Entities {
             packet.ShouldHaveDefaultablePropertiesMarkAsDirty();
         }
 
-        [Fact]
-        public void SetPlayerTeam_MarksAsDirty() {
-            var packet = new PlayerTeamPacket();
-
-            packet.PlayerTeam = PlayerTeam.Red;
-
-            packet.ShouldBeDirty();
-        }
-
-        [Fact]
-        public void SetPlayerTeam_NullValue_ThrowsArgumentNullException() {
-            var packet = new PlayerTeamPacket();
-            Action action = () => packet.PlayerTeam = null;
-
-            action.Should().Throw<ArgumentNullException>();
-        }
-
         public static readonly byte[] Bytes = {5, 0, 45, 0, 1};
-        public static readonly byte[] InvalidPlayerTeamBytes = {5, 0, 45, 0, 255};
 
         [Fact]
         public void ReadFromStream_IsCorrect() {
@@ -57,15 +39,6 @@ namespace Orion.Networking.Packets.Entities {
 
                 packet.PlayerIndex.Should().Be(0);
                 packet.PlayerTeam.Should().BeSameAs(PlayerTeam.Red);
-            }
-        }
-
-        [Fact]
-        public void ReadFromStream_InvalidPlayerTeam_ThrowsPacketException() {
-            using (var stream = new MemoryStream(InvalidPlayerTeamBytes)) {
-                Func<Packet> func = () => Packet.ReadFromStream(stream, PacketContext.Server);
-
-                func.Should().Throw<PacketException>();
             }
         }
 

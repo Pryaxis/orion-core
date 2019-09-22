@@ -45,11 +45,10 @@ namespace Orion.Networking.Packets.Entities {
         /// <summary>
         /// Gets or sets the player's team.
         /// </summary>
-        /// <exception cref="ArgumentNullException"><paramref name="value"/> is <c>null</c>.</exception>
         public PlayerTeam PlayerTeam {
             get => _playerTeam;
             set {
-                _playerTeam = value ?? throw new ArgumentNullException(nameof(value));
+                _playerTeam = value;
                 _isDirty = true;
             }
         }
@@ -60,12 +59,12 @@ namespace Orion.Networking.Packets.Entities {
 
         private protected override void ReadFromReader(BinaryReader reader, PacketContext context) {
             PlayerIndex = reader.ReadByte();
-            PlayerTeam = PlayerTeam.FromId(reader.ReadByte()) ?? throw new PacketException("Player team is invalid.");
+            PlayerTeam = (PlayerTeam)reader.ReadByte();
         }
 
         private protected override void WriteToWriter(BinaryWriter writer, PacketContext context) {
             writer.Write(PlayerIndex);
-            writer.Write(PlayerTeam.Id);
+            writer.Write((byte)PlayerTeam);
         }
     }
 }
