@@ -18,12 +18,14 @@
 using System;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
+using JetBrains.Annotations;
 using Orion.Entities;
 
 namespace Orion.Networking.Packets.Entities {
     /// <summary>
     /// Packet sent from the server to the client to notify that an NPC type was killed.
     /// </summary>
+    [PublicAPI]
     public sealed class NpcTypeKilledPacket : Packet {
         private NpcType _npcTypeKilled;
 
@@ -46,11 +48,11 @@ namespace Orion.Networking.Packets.Entities {
         public override string ToString() => $"{Type}[{NpcTypeKilled}]";
 
         private protected override void ReadFromReader(BinaryReader reader, PacketContext context) {
-            NpcTypeKilled = (NpcType)reader.ReadInt16();
+            _npcTypeKilled = (NpcType)reader.ReadInt16();
         }
 
         private protected override void WriteToWriter(BinaryWriter writer, PacketContext context) {
-            writer.Write((short)NpcTypeKilled);
+            writer.Write((short)_npcTypeKilled);
         }
     }
 }
