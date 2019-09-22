@@ -45,15 +45,6 @@ namespace Orion.Launcher {
                 Log.Fatal(eventArgs.ExceptionObject as Exception, Resources.UnhandledExceptionMessage);
             };
 
-            var main = new Terraria.Main();
-            main.Initialize();
-
-            for (var i = 0; i < NPCID.Count; ++i) {
-                if (Terraria.Main.npcCatchable[i]) {
-                    Console.WriteLine(i);
-                }
-            }
-
             using (var kernel = new OrionKernel()) {
                 Log.Information(Resources.LoadingPluginsMessage);
 
@@ -68,8 +59,7 @@ namespace Orion.Launcher {
                 }
 
                 kernel.FinishLoadingPlugins(
-                    plugin => Log.Information(Resources.LoadedPluginMessage, plugin.Name, plugin.Version,
-                                              plugin.Author));
+                    p => Log.Information(Resources.LoadedPluginMessage, p.Name, p.Version, p.Author));
 
                 Console.ResetColor();
                 Console.WriteLine();
