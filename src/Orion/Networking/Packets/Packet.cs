@@ -124,7 +124,7 @@ namespace Orion.Networking.Packets {
             /* 087 */ () => new PlaceTileEntityPacket(),
             /* 088 */ () => new ItemAlterationPacket(),
             /* 089 */ () => new ItemFramePacket(),
-            /* 090 */ () => new InstancedItemInfoPacket(),
+            /* 090 */ () => new ItemInstanceInfoPacket(),
             /* 091 */ () => new EmoteBubblePacket(),
             /* 092 */ () => new NpcStealCoinPacket(),
             /* 093 */ null,

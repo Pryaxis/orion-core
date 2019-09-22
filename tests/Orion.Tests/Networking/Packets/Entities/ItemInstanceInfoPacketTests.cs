@@ -23,10 +23,10 @@ using Orion.Entities;
 using Xunit;
 
 namespace Orion.Networking.Packets.Entities {
-    public class InstancedItemInfoPacketTests {
+    public class ItemInstanceInfoPacketTests {
         [Fact]
         public void SetDefaultableProperties_MarkAsDirty() {
-            var packet = new InstancedItemInfoPacket();
+            var packet = new ItemInstanceInfoPacket();
 
             packet.ShouldHaveDefaultablePropertiesMarkAsDirty();
         }
@@ -38,7 +38,7 @@ namespace Orion.Networking.Packets.Entities {
         [Fact]
         public void ReadFromStream_IsCorrect() {
             using (var stream = new MemoryStream(Bytes)) {
-                var packet = (InstancedItemInfoPacket)Packet.ReadFromStream(stream, PacketContext.Server);
+                var packet = (ItemInstanceInfoPacket)Packet.ReadFromStream(stream, PacketContext.Server);
 
                 packet.ItemIndex.Should().Be(400);
                 packet.ItemPosition.Should().Be(new Vector2(67175, 6798));

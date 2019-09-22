@@ -18,15 +18,17 @@
 using System;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
+using JetBrains.Annotations;
 using Microsoft.Xna.Framework;
 using Orion.Entities;
 using Orion.Networking.Packets.Extensions;
 
 namespace Orion.Networking.Packets.Entities {
     /// <summary>
-    /// Packet sent to set instanced item information.
+    /// Packet sent to set item instance information.
     /// </summary>
-    public sealed class InstancedItemInfoPacket : Packet {
+    [PublicAPI]
+    public sealed class ItemInstanceInfoPacket : Packet {
         private short _itemIndex;
         private Vector2 _itemPosition;
         private Vector2 _itemVelocity;
@@ -36,7 +38,7 @@ namespace Orion.Networking.Packets.Entities {
         private ItemType _itemType;
 
         /// <inheritdoc />
-        public override PacketType Type => PacketType.InstancedItemInfo;
+        public override PacketType Type => PacketType.ItemInstanceInfo;
 
         /// <summary>
         /// Gets or sets the item index.

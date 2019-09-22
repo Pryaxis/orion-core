@@ -105,7 +105,7 @@ namespace Orion.Networking.Packets {
         PlaceTileEntity = 87,
         ItemAlteration = 88,
         ItemFrame = 89,
-        InstancedItemInfo = 90,
+        ItemInstanceInfo = 90,
         EmoteBubble = 91,
         NpcStealCoin = 92,
         RemovePortal = 95,
