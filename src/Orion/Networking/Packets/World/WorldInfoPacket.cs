@@ -102,7 +102,7 @@ namespace Orion.Networking.Packets.World {
         private bool _hasDefeatedOldOnesArmyTier1;
         private bool _hasDefeatedOldOnesArmyTier2;
         private bool _hasDefeatedOldOnesArmyTier3;
-        private InvasionType _invasionType = InvasionType.None;
+        private Invasion _currentInvasion;
         private ulong _lobbyId;
         private float _sandstormIntensity;
 
@@ -906,13 +906,12 @@ namespace Orion.Networking.Packets.World {
         }
 
         /// <summary>
-        /// Gets or sets the invasion type.
+        /// Gets or sets the current invasion.
         /// </summary>
-        /// <exception cref="ArgumentNullException"><paramref name="value"/> is <c>null</c>.</exception>
-        public InvasionType InvasionType {
-            get => _invasionType;
+        public Invasion CurrentInvasion {
+            get => _currentInvasion;
             set {
-                _invasionType = value ?? throw new ArgumentNullException(nameof(value));
+                _currentInvasion = value;
                 _isDirty = true;
             }
         }
@@ -1050,8 +1049,7 @@ namespace Orion.Networking.Packets.World {
             HasDefeatedOldOnesArmyTier2 = worldFlags5[6];
             HasDefeatedOldOnesArmyTier3 = worldFlags5[7];
 
-            InvasionType = InvasionType.FromId((byte)reader.ReadSByte()) ??
-                           throw new PacketException("Invasion type is invalid.");
+            CurrentInvasion = (Invasion)reader.ReadSByte();
             LobbyId = reader.ReadUInt64();
             SandstormIntensity = reader.ReadSingle();
         }
@@ -1160,7 +1158,7 @@ namespace Orion.Networking.Packets.World {
             writer.Write(worldFlags4);
             writer.Write(worldFlags5);
 
-            writer.Write((sbyte)InvasionType.Id);
+            writer.Write((sbyte)CurrentInvasion);
             writer.Write(LobbyId);
             writer.Write(SandstormIntensity);
         }

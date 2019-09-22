@@ -15,26 +15,19 @@
 // You should have received a copy of the GNU General Public License
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
-using FluentAssertions;
-using Xunit;
+using System.Reflection;
 
 namespace Orion.World {
-    public class InvasionTypeTests {
-        [Fact]
-        public void FromId_IsCorrect() {
-            for (byte i = 0; i < 5; ++i) {
-                InvasionType.FromId(i).Id.Should().Be(i);
-            }
-
-            InvasionType.FromId(5).Should().BeNull();
-        }
-
-        [Fact]
-        public void FromId_ReturnsSameInstance() {
-            var invasionType = InvasionType.FromId(1);
-            var invasionType2 = InvasionType.FromId(1);
-
-            invasionType.Should().BeSameAs(invasionType2);
-        }
+    /// <summary>
+    /// Specifies an invasion.
+    /// </summary>
+    public enum Invasion : sbyte {
+#pragma warning disable 1591
+        None = 0,
+        Goblins = 1,
+        FrostLegion = 2,
+        Pirates = 3,
+        Martians = 4
+#pragma warning restore 1591
     }
 }
