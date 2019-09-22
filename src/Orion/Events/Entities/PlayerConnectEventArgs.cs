@@ -31,10 +31,7 @@ namespace Orion.Events.Entities {
         /// <inheritdoc />
         public bool IsCanceled { get; set; }
 
-        /// <summary>
-        /// Gets or sets the player's version string.
-        /// </summary>
-        /// <exception cref="ArgumentNullException"><paramref name="value"/> is <c>null</c>.</exception>
+        /// <inheritdoc cref="PlayerConnectPacket.PlayerVersionString"/>
         [NotNull]
         public string PlayerVersionString {
             get => _packet.PlayerVersionString;

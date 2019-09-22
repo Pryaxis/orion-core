@@ -32,115 +32,86 @@ namespace Orion.Events.Entities {
         /// <inheritdoc />
         public bool IsCanceled { get; set; }
 
-        /// <summary>
-        /// Gets or sets the player's skin type.
-        /// </summary>
+        /// <inheritdoc cref="PlayerDataPacket.PlayerSkinType"/>
         public byte PlayerSkinType {
             get => _packet.PlayerSkinType;
             set => _packet.PlayerSkinType = value;
         }
-
-        /// <summary>
-        /// Gets or sets the player's hair type.
-        /// </summary>
+        
+        /// <inheritdoc cref="PlayerDataPacket.PlayerHairType"/>
         public byte PlayerHairType {
             get => _packet.PlayerHairType;
             set => _packet.PlayerHairType = value;
         }
-
-        /// <summary>
-        /// Gets or sets the player's name.
-        /// </summary>
-        /// <exception cref="ArgumentNullException"><paramref name="value"/> is <c>null</c>.</exception>
+        
+        /// <inheritdoc cref="PlayerDataPacket.PlayerName"/>
         [NotNull]
         public string PlayerName {
             get => _packet.PlayerName;
             set => _packet.PlayerName = value;
         }
-
-        /// <summary>
-        /// Gets or sets the player's hair dye.
-        /// </summary>
+        
+        /// <inheritdoc cref="PlayerDataPacket.PlayerHairDye"/>
         public byte PlayerHairDye {
             get => _packet.PlayerHairDye;
             set => _packet.PlayerHairDye = value;
         }
-
-        /// <summary>
-        /// Gets or sets the player's hidden visuals flags.
-        /// </summary>
+        
+        /// <inheritdoc cref="PlayerDataPacket.PlayerHiddenVisualsFlags"/>
         public ushort PlayerHiddenVisualsFlags {
             get => _packet.PlayerHiddenVisualsFlags;
             set => _packet.PlayerHiddenVisualsFlags = value;
         }
-
-        /// <summary>
-        /// Gets or sets the player's hidden misc flags.
-        /// </summary>
+        
+        /// <inheritdoc cref="PlayerDataPacket.PlayerHiddenMiscFlags"/>
         public byte PlayerHiddenMiscFlags {
             get => _packet.PlayerHiddenMiscFlags;
             set => _packet.PlayerHiddenMiscFlags = value;
         }
-
-        /// <summary>
-        /// Gets or sets the player's hair color.
-        /// </summary>
+        
+        /// <inheritdoc cref="PlayerDataPacket.PlayerHairColor"/>
         public Color PlayerHairColor {
             get => _packet.PlayerHairColor;
             set => _packet.PlayerHairColor = value;
         }
-
-        /// <summary>
-        /// Gets or sets the player's skin color.
-        /// </summary>
+        
+        /// <inheritdoc cref="PlayerDataPacket.PlayerSkinColor"/>
         public Color PlayerSkinColor {
             get => _packet.PlayerSkinColor;
             set => _packet.PlayerSkinColor = value;
         }
-
-        /// <summary>
-        /// Gets or sets the player's eye color.
-        /// </summary>
+        
+        /// <inheritdoc cref="PlayerDataPacket.PlayerEyeColor"/>
         public Color PlayerEyeColor {
             get => _packet.PlayerEyeColor;
             set => _packet.PlayerEyeColor = value;
         }
-
-        /// <summary>
-        /// Gets or sets the player's shirt color.
-        /// </summary>
+        
+        /// <inheritdoc cref="PlayerDataPacket.PlayerShirtColor"/>
         public Color PlayerShirtColor {
             get => _packet.PlayerShirtColor;
             set => _packet.PlayerShirtColor = value;
         }
-
-        /// <summary>
-        /// Gets or sets the player's undershirt color.
-        /// </summary>
+        
+        /// <inheritdoc cref="PlayerDataPacket.PlayerUndershirtColor"/>
         public Color PlayerUndershirtColor {
             get => _packet.PlayerUndershirtColor;
             set => _packet.PlayerUndershirtColor = value;
         }
-
-        /// <summary>
-        /// Gets or sets the player's pants color.
-        /// </summary>
+        
+        /// <inheritdoc cref="PlayerDataPacket.PlayerPantsColor"/>
         public Color PlayerPantsColor {
             get => _packet.PlayerPantsColor;
             set => _packet.PlayerPantsColor = value;
         }
-
-        /// <summary>
-        /// Gets or sets the player's shoe color.
-        /// </summary>
+        
+        /// <inheritdoc cref="PlayerDataPacket.PlayerShoeColor"/>
         public Color PlayerShoeColor {
             get => _packet.PlayerShoeColor;
             set => _packet.PlayerShoeColor = value;
         }
-
-        /// <summary>
-        /// Gets or sets the player's difficulty.
-        /// </summary>
+        
+        /// <inheritdoc cref="PlayerDataPacket.PlayerDifficulty"/>
         public PlayerDifficulty PlayerDifficulty {
             get => _packet.PlayerDifficulty;
             set => _packet.PlayerDifficulty = value;

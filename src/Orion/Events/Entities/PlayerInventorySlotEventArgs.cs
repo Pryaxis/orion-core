@@ -30,31 +30,23 @@ namespace Orion.Events.Entities {
 
         /// <inheritdoc />
         public bool IsCanceled { get; set; }
-
-        /// <summary>
-        /// Gets the player's inventory slot index.
-        /// </summary>
+        
+        /// <inheritdoc cref="PlayerInventorySlotPacket.PlayerInventorySlotIndex"/>
         public byte PlayerInventorySlotIndex => _packet.PlayerInventorySlotIndex;
-
-        /// <summary>
-        /// Gets or sets the item's stack size.
-        /// </summary>
+        
+        /// <inheritdoc cref="PlayerInventorySlotPacket.ItemStackSize"/>
         public short ItemStackSize {
             get => _packet.ItemStackSize;
             set => _packet.ItemStackSize = value;
         }
-
-        /// <summary>
-        /// Gets or sets the item's prefix.
-        /// </summary>
+        
+        /// <inheritdoc cref="PlayerInventorySlotPacket.ItemPrefix"/>
         public ItemPrefix ItemPrefix {
             get => _packet.ItemPrefix;
             set => _packet.ItemPrefix = value;
         }
-
-        /// <summary>
-        /// Gets or sets the item's type.
-        /// </summary>
+        
+        /// <inheritdoc cref="PlayerInventorySlotPacket.ItemType"/>
         public ItemType ItemType {
             get => _packet.ItemType;
             set => _packet.ItemType = value;
