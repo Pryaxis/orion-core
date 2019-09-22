@@ -17,6 +17,7 @@
 
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
+using JetBrains.Annotations;
 using Orion.Entities;
 using Orion.Utils;
 
@@ -24,6 +25,7 @@ namespace Orion.Networking.Packets.Entities {
     /// <summary>
     /// Packet sent to set a player's buffs. Each buff will be set for one second.
     /// </summary>
+    [PublicAPI]
     public sealed class PlayerBuffsPacket : Packet {
         private byte _playerIndex;
 
@@ -47,18 +49,10 @@ namespace Orion.Networking.Packets.Entities {
         /// <summary>
         /// Gets the player's buff types.
         /// </summary>
+        [NotNull]
         public DirtiableArray<BuffType> PlayerBuffTypes { get; } =
             new DirtiableArray<BuffType>(Terraria.Player.maxBuffs);
         
-        /// <summary>
-        /// Initializes a new instance of the <see cref="PlayerBuffsPacket"/> class.
-        /// </summary>
-        public PlayerBuffsPacket() {
-            for (var i = 0; i < PlayerBuffTypes.Count; ++i) {
-                PlayerBuffTypes[i] = BuffType.None;
-            }
-        }
-
         /// <inheritdoc />
         public override void Clean() {
             base.Clean();
@@ -70,14 +64,14 @@ namespace Orion.Networking.Packets.Entities {
         public override string ToString() => $"{Type}[#={PlayerIndex}, ...]";
 
         private protected override void ReadFromReader(BinaryReader reader, PacketContext context) {
-            PlayerIndex = reader.ReadByte();
+            _playerIndex = reader.ReadByte();
             for (var i = 0; i < PlayerBuffTypes.Count; ++i) {
-                PlayerBuffTypes[i] = (BuffType)reader.ReadByte();
+                PlayerBuffTypes._array[i] = (BuffType)reader.ReadByte();
             }
         }
 
         private protected override void WriteToWriter(BinaryWriter writer, PacketContext context) {
-            writer.Write(PlayerIndex);
+            writer.Write(_playerIndex);
             foreach (var buffType in PlayerBuffTypes) {
                 writer.Write((byte)buffType);
             }
