@@ -20,7 +20,7 @@ using System.Reflection;
 
 namespace Orion.Entities {
     /// <summary>
-    /// Represents an item type.
+    /// Specifies an item type.
     /// </summary>
     public enum ItemType : short {
 #pragma warning disable 1591
