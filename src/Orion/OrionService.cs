@@ -17,12 +17,14 @@
 
 using System;
 using System.Diagnostics.CodeAnalysis;
+using JetBrains.Annotations;
 
 namespace Orion {
     /// <summary>
     /// Represents the base class for an Orion service. Services provide concrete functionality to clients, and are
     /// injected using a dependency injection framework.
     /// </summary>
+    [PublicAPI]
     public abstract class OrionService : IService {
         /// <inheritdoc />
         /// <remarks>By default, the service's author is Anonymous. This should probably be modified.</remarks>

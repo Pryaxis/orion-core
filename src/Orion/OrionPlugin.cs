@@ -16,16 +16,19 @@
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
 using System;
+using JetBrains.Annotations;
 
 namespace Orion {
     /// <summary>
     /// Represents the base class for an Orion plugin, which is a thin wrapper around an <see cref="OrionService"/>.
     /// Plugins are injected using a dependency injection framework.
     /// </summary>
+    [PublicAPI]
     public abstract class OrionPlugin : OrionService {
         /// <summary>
         /// Gets the <see cref="OrionKernel"/> instance.
         /// </summary>
+        [NotNull]
         protected OrionKernel Kernel { get; }
 
         /// <summary>
@@ -34,7 +37,7 @@ namespace Orion {
         /// </summary>
         /// <param name="kernel">The kernel instance.</param>
         /// <exception cref="ArgumentNullException"><paramref name="kernel"/> is <c>null</c>.</exception>
-        protected OrionPlugin(OrionKernel kernel) {
+        protected OrionPlugin([NotNull] OrionKernel kernel) {
             Kernel = kernel ?? throw new ArgumentNullException(nameof(kernel));
         }
     }

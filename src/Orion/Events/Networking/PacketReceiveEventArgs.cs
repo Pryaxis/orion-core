@@ -16,6 +16,7 @@
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
 using System;
+using JetBrains.Annotations;
 using Orion.Entities;
 using Orion.Networking;
 using Orion.Networking.Packets;
@@ -24,10 +25,12 @@ namespace Orion.Events.Networking {
     /// <summary>
     /// Provides data for the <see cref="INetworkService.PacketReceive"/> event.
     /// </summary>
+    [PublicAPI]
     public sealed class PacketReceiveEventArgs : PacketEventArgs {
         /// <summary>
         /// Gets the sender.
         /// </summary>
+        [NotNull]
         public IPlayer Sender { get; }
 
         /// <summary>
@@ -39,7 +42,7 @@ namespace Orion.Events.Networking {
         /// <exception cref="ArgumentNullException">
         /// <paramref name="sender"/> or <paramref name="packet"/> are <c>null</c>.
         /// </exception>
-        public PacketReceiveEventArgs(IPlayer sender, Packet packet) : base(packet) {
+        public PacketReceiveEventArgs([NotNull] IPlayer sender, [NotNull] Packet packet) : base(packet) {
             Sender = sender ?? throw new ArgumentNullException(nameof(sender));
         }
     }

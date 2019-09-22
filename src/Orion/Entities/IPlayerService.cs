@@ -15,6 +15,7 @@
 // You should have received a copy of the GNU General Public License
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
+using JetBrains.Annotations;
 using Orion.Events;
 using Orion.Events.Entities;
 using Orion.Utils;
@@ -23,15 +24,18 @@ namespace Orion.Entities {
     /// <summary>
     /// Represents a player service. Provides access to player-related events and methods.
     /// </summary>
+    [PublicAPI]
     public interface IPlayerService : IReadOnlyArray<IPlayer> {
         /// <summary>
         /// Gets or sets the event handlers that run when a player connects. This event can be canceled.
         /// </summary>
+        [CanBeNull]
         EventHandlerCollection<PlayerConnectEventArgs> PlayerConnect { get; set; }
 
         /// <summary>
         /// Gets or sets the event handlers that run when a player disconnects.
         /// </summary>
+        [CanBeNull]
         EventHandlerCollection<PlayerDisconnectEventArgs> PlayerDisconnect { get; set; }
     }
 }

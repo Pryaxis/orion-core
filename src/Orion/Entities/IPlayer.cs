@@ -26,11 +26,13 @@ namespace Orion.Entities {
         /// <summary>
         /// Gets the player's statistics.
         /// </summary>
+        [NotNull]
         IPlayerStats Stats { get; }
 
         /// <summary>
         /// Gets the player's inventory.
         /// </summary>
+        [NotNull]
         IPlayerInventory Inventory { get; }
     }
 

@@ -40,6 +40,7 @@ namespace Orion.Entities {
         /// Gets or sets the entity's name.
         /// </summary>
         /// <exception cref="ArgumentNullException"><paramref name="value"/> is <c>null</c>.</exception>
+        [NotNull]
         string Name { get; set; }
 
         /// <summary>

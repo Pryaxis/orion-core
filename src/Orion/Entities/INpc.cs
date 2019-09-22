@@ -15,10 +15,13 @@
 // You should have received a copy of the GNU General Public License
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
+using JetBrains.Annotations;
+
 namespace Orion.Entities {
     /// <summary>
     /// Represents a Terraria NPC.
     /// </summary>
+    [PublicAPI]
     public interface INpc : IEntity {
         /// <summary>
         /// Gets the NPC's type.

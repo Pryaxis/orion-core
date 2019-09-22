@@ -16,18 +16,20 @@
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
 using System;
+using JetBrains.Annotations;
 using Orion.Entities;
 
 namespace Orion.Events.Entities {
     /// <summary>
     /// Provides data for the <see cref="IPlayerService.PlayerDisconnect"/> event.
     /// </summary>
+    [PublicAPI]
     public sealed class PlayerDisconnectEventArgs : PlayerEventArgs {
         /// <summary>
         /// Initializes a new instance of the <see cref="PlayerDisconnectEventArgs"/> class with the specified player.
         /// </summary>
         /// <param name="player">The player.</param>
         /// <exception cref="ArgumentNullException"><paramref name="player"/> is <c>null</c>.</exception>
-        public PlayerDisconnectEventArgs(IPlayer player) : base(player) { }
+        public PlayerDisconnectEventArgs([NotNull] IPlayer player) : base(player) { }
     }
 }

@@ -23,6 +23,7 @@ namespace Orion {
     /// An attribute that can be applied to a service's implementation class to indicate that it is has instanced
     /// lifetime, not static lifetime.
     /// </summary>
+    [PublicAPI]
     [AttributeUsage(AttributeTargets.Class)]
     [BaseTypeRequired(typeof(IService))]
     public sealed class InstancedServiceAttribute : Attribute { }

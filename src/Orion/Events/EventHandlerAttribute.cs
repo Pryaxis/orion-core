@@ -16,11 +16,13 @@
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
 using System;
+using JetBrains.Annotations;
 
 namespace Orion.Events {
     /// <summary>
     /// An attribute that can be applied to a event handler to indicate its priority.
     /// </summary>
+    [PublicAPI]
     [AttributeUsage(AttributeTargets.Method)]
     public sealed class EventHandlerAttribute : Attribute {
         /// <summary>

@@ -16,19 +16,22 @@
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
 using System;
+using JetBrains.Annotations;
 using Orion.Entities;
 
 namespace Orion.Events.Entities {
     /// <summary>
     /// Provides data for player-related events.
     /// </summary>
+    [PublicAPI]
     public abstract class PlayerEventArgs : EventArgs {
         /// <summary>
         /// Gets the player.
         /// </summary>
+        [NotNull]
         public IPlayer Player { get; }
 
-        private protected PlayerEventArgs(IPlayer player) {
+        private protected PlayerEventArgs([NotNull] IPlayer player) {
             Player = player ?? throw new ArgumentNullException(nameof(player));
         }
     }

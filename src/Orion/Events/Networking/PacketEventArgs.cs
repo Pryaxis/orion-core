@@ -16,6 +16,7 @@
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
 using System;
+using JetBrains.Annotations;
 using Orion.Networking.Packets;
 using Orion.Utils;
 
@@ -23,8 +24,9 @@ namespace Orion.Events.Networking {
     /// <summary>
     /// Provides data for packet-related events.
     /// </summary>
+    [PublicAPI]
     public class PacketEventArgs : EventArgs, ICancelable, IDirtiable {
-        private Packet _packet;
+        [NotNull] private Packet _packet;
         private bool _isDirty;
 
         /// <inheritdoc />
@@ -37,6 +39,7 @@ namespace Orion.Events.Networking {
         /// Gets or sets the packet.
         /// </summary>
         /// <exception cref="ArgumentNullException"><paramref name="value"/> is <c>null</c>.</exception>
+        [NotNull]
         public Packet Packet {
             get => _packet;
             set {
@@ -45,7 +48,7 @@ namespace Orion.Events.Networking {
             }
         }
 
-        private protected PacketEventArgs(Packet packet) {
+        private protected PacketEventArgs([NotNull] Packet packet) {
             _packet = packet ?? throw new ArgumentNullException(nameof(packet));
         }
 

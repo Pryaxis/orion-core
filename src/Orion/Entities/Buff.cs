@@ -17,11 +17,13 @@
 
 using System;
 using System.Diagnostics.CodeAnalysis;
+using JetBrains.Annotations;
 
 namespace Orion.Entities {
     /// <summary>
     /// Represents a buff.
     /// </summary>
+    [PublicAPI]
     public struct Buff {
         /// <summary>
         /// Gets the buff type.
