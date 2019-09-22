@@ -19,7 +19,7 @@ using System.IO;
 using FluentAssertions;
 using Xunit;
 
-namespace Orion.Networking.Packets.Entities {
+namespace Orion.Networking.Packets.World {
     public class CannonShotPacketTests {
         [Fact]
         public void SetDefaultableProperties_MarkAsDirty() {
@@ -37,8 +37,8 @@ namespace Orion.Networking.Packets.Entities {
 
                 packet.ShotDamage.Should().Be(100);
                 packet.ShotKnockback.Should().Be(0);
-                packet.CannonTileX.Should().Be(256);
-                packet.CannonTileY.Should().Be(100);
+                packet.CannonX.Should().Be(256);
+                packet.CannonY.Should().Be(100);
                 packet.ShotAngle.Should().Be(0);
                 packet.ShotAmmoType.Should().Be(0);
                 packet.ShooterPlayerIndex.Should().Be(1);

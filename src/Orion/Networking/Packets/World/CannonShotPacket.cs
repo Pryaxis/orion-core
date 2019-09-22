@@ -17,16 +17,18 @@
 
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
+using JetBrains.Annotations;
 
-namespace Orion.Networking.Packets.Entities {
+namespace Orion.Networking.Packets.World {
     /// <summary>
     /// Packet sent from the server to the client to shoot from a cannon.
     /// </summary>
+    [PublicAPI]
     public sealed class CannonShotPacket : Packet {
         private short _shotDamage;
         private float _shotKnockback;
-        private short _cannonTileX;
-        private short _cannonTileY;
+        private short _cannonX;
+        private short _cannonY;
         private short _shotAngle;
         private short _shotAmmoType;
         private byte _shooterPlayerIndex;
@@ -57,23 +59,23 @@ namespace Orion.Networking.Packets.Entities {
         }
 
         /// <summary>
-        /// Gets or sets the cannon tile's X coordinate.
+        /// Gets or sets the cannon's X coordinate.
         /// </summary>
-        public short CannonTileX {
-            get => _cannonTileX;
+        public short CannonX {
+            get => _cannonX;
             set {
-                _cannonTileX = value;
+                _cannonX = value;
                 _isDirty = true;
             }
         }
 
         /// <summary>
-        /// Gets or sets the cannon tile's Y coordinate.
+        /// Gets or sets the cannon's Y coordinate.
         /// </summary>
-        public short CannonTileY {
-            get => _cannonTileY;
+        public short CannonY {
+            get => _cannonY;
             set {
-                _cannonTileY = value;
+                _cannonY = value;
                 _isDirty = true;
             }
         }
@@ -116,26 +118,26 @@ namespace Orion.Networking.Packets.Entities {
         /// <inheritdoc />
         [ExcludeFromCodeCoverage]
         public override string ToString() =>
-            $"{Type}[#={ShooterPlayerIndex}, {ShotAmmoType} @ ({CannonTileX}, {CannonTileY}), ...]";
+            $"{Type}[#={ShooterPlayerIndex}, {ShotAmmoType} @ ({CannonX}, {CannonY}), ...]";
 
         private protected override void ReadFromReader(BinaryReader reader, PacketContext context) {
-            ShotDamage = reader.ReadInt16();
-            ShotKnockback = reader.ReadSingle();
-            CannonTileX = reader.ReadInt16();
-            CannonTileY = reader.ReadInt16();
-            ShotAngle = reader.ReadInt16();
-            ShotAmmoType = reader.ReadInt16();
-            ShooterPlayerIndex = reader.ReadByte();
+            _shotDamage = reader.ReadInt16();
+            _shotKnockback = reader.ReadSingle();
+            _cannonX = reader.ReadInt16();
+            _cannonY = reader.ReadInt16();
+            _shotAngle = reader.ReadInt16();
+            _shotAmmoType = reader.ReadInt16();
+            _shooterPlayerIndex = reader.ReadByte();
         }
 
         private protected override void WriteToWriter(BinaryWriter writer, PacketContext context) {
-            writer.Write(ShotDamage);
-            writer.Write(ShotKnockback);
-            writer.Write(CannonTileX);
-            writer.Write(CannonTileY);
-            writer.Write(ShotAngle);
-            writer.Write(ShotAmmoType);
-            writer.Write(ShooterPlayerIndex);
+            writer.Write(_shotDamage);
+            writer.Write(_shotKnockback);
+            writer.Write(_cannonX);
+            writer.Write(_cannonY);
+            writer.Write(_shotAngle);
+            writer.Write(_shotAmmoType);
+            writer.Write(_shooterPlayerIndex);
         }
     }
 }
