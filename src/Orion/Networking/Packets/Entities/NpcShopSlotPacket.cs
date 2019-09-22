@@ -18,12 +18,14 @@
 using System;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
+using JetBrains.Annotations;
 using Orion.Entities;
 
 namespace Orion.Networking.Packets.Entities {
     /// <summary>
     /// Packet sent from the server to the client to set an NPC's shop slot.
     /// </summary>
+    [PublicAPI]
     public sealed class NpcShopSlotPacket : Packet {
         private byte _npcShopSlotIndex;
         private ItemType _itemType;
@@ -94,19 +96,19 @@ namespace Orion.Networking.Packets.Entities {
         public override string ToString() => $"{Type}[{ItemType} @ {NpcShopSlotIndex}, ...]";
 
         private protected override void ReadFromReader(BinaryReader reader, PacketContext context) {
-            NpcShopSlotIndex = reader.ReadByte();
-            ItemType = (ItemType)reader.ReadInt16();
-            ItemStackSize = reader.ReadInt16();
-            ItemPrefix = (ItemPrefix)reader.ReadByte();
-            ItemValue = reader.ReadInt32();
+            _npcShopSlotIndex = reader.ReadByte();
+            _itemType = (ItemType)reader.ReadInt16();
+            _itemStackSize = reader.ReadInt16();
+            _itemPrefix = (ItemPrefix)reader.ReadByte();
+            _itemValue = reader.ReadInt32();
         }
 
         private protected override void WriteToWriter(BinaryWriter writer, PacketContext context) {
-            writer.Write(NpcShopSlotIndex);
-            writer.Write((short)ItemType);
-            writer.Write(ItemStackSize);
-            writer.Write((byte)ItemPrefix);
-            writer.Write(ItemValue);
+            writer.Write(_npcShopSlotIndex);
+            writer.Write((short)_itemType);
+            writer.Write(_itemStackSize);
+            writer.Write((byte)_itemPrefix);
+            writer.Write(_itemValue);
         }
     }
 }
