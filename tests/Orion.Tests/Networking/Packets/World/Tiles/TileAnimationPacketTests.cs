@@ -45,7 +45,7 @@ namespace Orion.Networking.Packets.World.Tiles {
         }
 
         [Fact]
-        public void WriteToStream_IsCorrect() {
+        public void DeserializeAndSerialize_SamePacket() {
             Bytes.ShouldDeserializeAndSerializeSamePacket();
         }
     }

@@ -85,7 +85,7 @@ namespace Orion.Networking.Packets.Modules {
         };
 
         [Fact]
-        public void ReadFromStream_IsCorrect_Client() {
+        public void ReadFromStream_Client_IsCorrect() {
             using (var stream = new MemoryStream(Bytes)) {
                 var packet = (ModulePacket)Packet.ReadFromStream(stream, PacketContext.Server);
 
@@ -96,7 +96,7 @@ namespace Orion.Networking.Packets.Modules {
         }
 
         [Fact]
-        public void WriteToStream_IsCorrect_Client() {
+        public void DeserializeAndSerialize_Client_SamePacket() {
             Bytes.ShouldDeserializeAndSerializeSamePacket();
         }
     }

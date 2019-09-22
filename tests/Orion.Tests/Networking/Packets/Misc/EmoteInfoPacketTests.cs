@@ -21,11 +21,11 @@ using Xunit;
 
 namespace Orion.Networking.Packets.Misc {
     public class EmoteInfoPacketTests {
-        public static readonly byte[] EmoteBubbleBytes = {12, 0, 91, 1, 0, 0, 0, 0, 100, 0, 255, 1};
+        public static readonly byte[] NormalBytes = {12, 0, 91, 1, 0, 0, 0, 0, 100, 0, 255, 1};
 
         [Fact]
         public void ReadFromStream_Normal_IsCorrect() {
-            using (var stream = new MemoryStream(EmoteBubbleBytes)) {
+            using (var stream = new MemoryStream(NormalBytes)) {
                 var packet = (EmoteInfoPacket)Packet.ReadFromStream(stream, PacketContext.Server);
 
                 packet.EmoteIndex.Should().Be(1);
@@ -37,15 +37,15 @@ namespace Orion.Networking.Packets.Misc {
         }
 
         [Fact]
-        public void WriteToStream_Normal_IsCorrect() {
-            EmoteBubbleBytes.ShouldDeserializeAndSerializeSamePacket();
+        public void DeserializeAndSerialize_Normal_SamePacket() {
+            NormalBytes.ShouldDeserializeAndSerializeSamePacket();
         }
 
-        public static readonly byte[] EmoteBubbleBytes2 = {8, 0, 91, 1, 0, 0, 0, 255};
+        public static readonly byte[] RemoveBytes = {8, 0, 91, 1, 0, 0, 0, 255};
 
         [Fact]
         public void ReadFromStream_Remove_IsCorrect() {
-            using (var stream = new MemoryStream(EmoteBubbleBytes2)) {
+            using (var stream = new MemoryStream(RemoveBytes)) {
                 var packet = (EmoteInfoPacket)Packet.ReadFromStream(stream, PacketContext.Server);
 
                 packet.EmoteIndex.Should().Be(1);
@@ -54,15 +54,15 @@ namespace Orion.Networking.Packets.Misc {
         }
 
         [Fact]
-        public void WriteToStream_Remove_IsCorrect() {
-            EmoteBubbleBytes2.ShouldDeserializeAndSerializeSamePacket();
+        public void DeserializeAndSerialize_Remove_SamePacket() {
+            RemoveBytes.ShouldDeserializeAndSerializeSamePacket();
         }
 
-        public static readonly byte[] EmoteBubbleBytes3 = {14, 0, 91, 1, 0, 0, 0, 0, 100, 0, 255, 255, 1, 0};
+        public static readonly byte[] MetadataBytes = {14, 0, 91, 1, 0, 0, 0, 0, 100, 0, 255, 255, 1, 0};
 
         [Fact]
-        public void ReadFromStream_WithMetadata_IsCorrect() {
-            using (var stream = new MemoryStream(EmoteBubbleBytes3)) {
+        public void ReadFromStream_IsCorrect_WithMetadata() {
+            using (var stream = new MemoryStream(MetadataBytes)) {
                 var packet = (EmoteInfoPacket)Packet.ReadFromStream(stream, PacketContext.Server);
 
                 packet.EmoteIndex.Should().Be(1);
@@ -75,8 +75,8 @@ namespace Orion.Networking.Packets.Misc {
         }
 
         [Fact]
-        public void WriteToStream_WithMetadata_IsCorrect() {
-            EmoteBubbleBytes3.ShouldDeserializeAndSerializeSamePacket();
+        public void DeserializeAndSerialize_WithMetadata_SamePacket() {
+            MetadataBytes.ShouldDeserializeAndSerializeSamePacket();
         }
     }
 }

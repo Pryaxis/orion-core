@@ -24,11 +24,11 @@ using Xunit;
 
 namespace Orion.Networking.Packets.World.TileEntities {
     public class TileEntityInfoPacketTests {
-        private static readonly byte[] Bytes = {8, 0, 86, 0, 0, 0, 0, 0};
+        private static readonly byte[] RemoveBytes = {8, 0, 86, 0, 0, 0, 0, 0};
 
         [Fact]
-        public void ReadFromStream_Delete_IsCorrect() {
-            using (var stream = new MemoryStream(Bytes)) {
+        public void ReadFromStream_Remove_IsCorrect() {
+            using (var stream = new MemoryStream(RemoveBytes)) {
                 var packet = (TileEntityInfoPacket)Packet.ReadFromStream(stream, PacketContext.Server);
 
                 packet.TileEntityIndex.Should().Be(0);
@@ -37,15 +37,15 @@ namespace Orion.Networking.Packets.World.TileEntities {
         }
 
         [Fact]
-        public void DeserializeAndSerialize_SamePacket() {
-            Bytes.ShouldDeserializeAndSerializeSamePacket();
+        public void DeserializeAndSerialize_Remove_SamePacket() {
+            RemoveBytes.ShouldDeserializeAndSerializeSamePacket();
         }
 
-        private static readonly byte[] Bytes2 = {15, 0, 86, 0, 0, 0, 0, 1, 0, 0, 1, 100, 0, 1, 0};
+        private static readonly byte[] TargetDummyBytes = {15, 0, 86, 0, 0, 0, 0, 1, 0, 0, 1, 100, 0, 1, 0};
 
         [Fact]
         public void ReadFromStream_TargetDummy_IsCorrect() {
-            using (var stream = new MemoryStream(Bytes2)) {
+            using (var stream = new MemoryStream(TargetDummyBytes)) {
                 var packet = (TileEntityInfoPacket)Packet.ReadFromStream(stream, PacketContext.Server);
 
                 packet.TileEntityIndex.Should().Be(0);
@@ -59,15 +59,15 @@ namespace Orion.Networking.Packets.World.TileEntities {
         }
 
         [Fact]
-        public void DeserializeAndSerialize_SamePacket2() {
-            Bytes2.ShouldDeserializeAndSerializeSamePacket();
+        public void DeserializeAndSerialize_TargetDummy_SamePacket() {
+            TargetDummyBytes.ShouldDeserializeAndSerializeSamePacket();
         }
 
-        private static readonly byte[] Bytes3 = {18, 0, 86, 0, 0, 0, 0, 1, 1, 0, 1, 100, 0, 17, 6, 82, 1, 0};
+        private static readonly byte[] ItemFrameBytes = {18, 0, 86, 0, 0, 0, 0, 1, 1, 0, 1, 100, 0, 17, 6, 82, 1, 0};
 
         [Fact]
         public void ReadFromStream_ItemFrame_IsCorrect() {
-            using (var stream = new MemoryStream(Bytes3)) {
+            using (var stream = new MemoryStream(ItemFrameBytes)) {
                 var packet = (TileEntityInfoPacket)Packet.ReadFromStream(stream, PacketContext.Server);
 
                 packet.TileEntityIndex.Should().Be(0);
@@ -83,15 +83,15 @@ namespace Orion.Networking.Packets.World.TileEntities {
         }
 
         [Fact]
-        public void DeserializeAndSerialize_SamePacket3() {
-            Bytes3.ShouldDeserializeAndSerializeSamePacket();
+        public void DeserializeAndSerialize_ItemFrame_SamePacket() {
+            ItemFrameBytes.ShouldDeserializeAndSerializeSamePacket();
         }
 
-        private static readonly byte[] Bytes4 = {15, 0, 86, 0, 0, 0, 0, 1, 2, 0, 1, 100, 0, 1, 1};
+        private static readonly byte[] LogicSensorBytes = {15, 0, 86, 0, 0, 0, 0, 1, 2, 0, 1, 100, 0, 1, 1};
 
         [Fact]
         public void ReadFromStream_LogicSensor_IsCorrect() {
-            using (var stream = new MemoryStream(Bytes4)) {
+            using (var stream = new MemoryStream(LogicSensorBytes)) {
                 var packet = (TileEntityInfoPacket)Packet.ReadFromStream(stream, PacketContext.Server);
 
                 packet.TileEntityIndex.Should().Be(0);
@@ -106,8 +106,8 @@ namespace Orion.Networking.Packets.World.TileEntities {
         }
 
         [Fact]
-        public void DeserializeAndSerialize_SamePacket4() {
-            Bytes4.ShouldDeserializeAndSerializeSamePacket();
+        public void DeserializeAndSerialize_LogicSensor_SamePacket() {
+            LogicSensorBytes.ShouldDeserializeAndSerializeSamePacket();
         }
     }
 }

@@ -46,11 +46,11 @@ namespace Orion.Networking.Packets.World.TileEntities {
             action.Should().Throw<ArgumentNullException>();
         }
 
-        public static readonly byte[] Bytes = {9, 0, 69, 0, 0, 0, 1, 100, 0};
+        public static readonly byte[] ServerBytes = {9, 0, 69, 0, 0, 0, 1, 100, 0};
 
         [Fact]
-        public void ReadFromStream_ToServer_IsCorrect() {
-            using (var stream = new MemoryStream(Bytes)) {
+        public void ReadFromStream_Server_IsCorrect() {
+            using (var stream = new MemoryStream(ServerBytes)) {
                 var packet = (ChestNamePacket)Packet.ReadFromStream(stream, PacketContext.Server);
 
                 packet.ChestIndex.Should().Be(0);
@@ -60,22 +60,22 @@ namespace Orion.Networking.Packets.World.TileEntities {
         }
 
         [Fact]
-        public void DeserializeAndSerialize_SamePacket_Server() {
-            using (var stream = new MemoryStream(Bytes))
+        public void DeserializeAndSerialize_Server_SamePacket() {
+            using (var stream = new MemoryStream(ServerBytes))
             using (var stream2 = new MemoryStream()) {
                 var packet = Packet.ReadFromStream(stream, PacketContext.Server);
 
                 packet.WriteToStream(stream2, PacketContext.Client);
 
-                stream2.ToArray().Should().BeEquivalentTo(Bytes);
+                stream2.ToArray().Should().BeEquivalentTo(ServerBytes);
             }
         }
 
-        public static readonly byte[] Bytes2 = {18, 0, 69, 0, 0, 0, 1, 100, 0, 8, 84, 101, 114, 114, 97, 114, 105, 97};
+        public static readonly byte[] ClientBytes = {18, 0, 69, 0, 0, 0, 1, 100, 0, 8, 84, 101, 114, 114, 97, 114, 105, 97};
 
         [Fact]
-        public void ReadFromStream_ToClient_IsCorrect() {
-            using (var stream = new MemoryStream(Bytes2)) {
+        public void ReadFromStream_Client_IsCorrect() {
+            using (var stream = new MemoryStream(ClientBytes)) {
                 var packet = (ChestNamePacket)Packet.ReadFromStream(stream, PacketContext.Client);
 
                 packet.ChestIndex.Should().Be(0);
@@ -86,14 +86,14 @@ namespace Orion.Networking.Packets.World.TileEntities {
         }
 
         [Fact]
-        public void DeserializeAndSerialize_SamePacket_Client() {
-            using (var stream = new MemoryStream(Bytes2))
+        public void DeserializeAndSerialize_Client_SamePacket() {
+            using (var stream = new MemoryStream(ClientBytes))
             using (var stream2 = new MemoryStream()) {
                 var packet = Packet.ReadFromStream(stream, PacketContext.Client);
 
                 packet.WriteToStream(stream2, PacketContext.Server);
 
-                stream2.ToArray().Should().BeEquivalentTo(Bytes2);
+                stream2.ToArray().Should().BeEquivalentTo(ClientBytes);
             }
         }
     }

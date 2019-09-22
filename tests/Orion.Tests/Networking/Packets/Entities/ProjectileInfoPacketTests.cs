@@ -73,7 +73,7 @@ namespace Orion.Networking.Packets.Entities {
         }
 
         [Fact]
-        public void WriteToStream_IsCorrect() {
+        public void DeserializeAndSerialize_SamePacket() {
             Bytes.ShouldDeserializeAndSerializeSamePacket();
         }
     }
