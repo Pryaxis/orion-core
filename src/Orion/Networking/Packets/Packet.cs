@@ -104,7 +104,7 @@ namespace Orion.Networking.Packets {
             /* 067 */ null,
             /* 068 */ () => new PlayerUuidPacket(),
             /* 069 */ () => new ChestNamePacket(),
-            /* 070 */ () => new CatchNpcPacket(),
+            /* 070 */ () => new NpcCatchPacket(),
             /* 071 */ () => new ReleaseNpcPacket(),
             /* 072 */ () => new TravelingMerchantShopPacket(),
             /* 073 */ () => new PlayerTeleportationPotionPacket(),

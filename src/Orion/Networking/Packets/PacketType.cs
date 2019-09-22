@@ -85,7 +85,7 @@ namespace Orion.Networking.Packets {
         HealPlayer = 66,
         PlayerUuid = 68,
         ChestName = 69,
-        CatchNpc = 70,
+        NpcCatch = 70,
         ReleaseNpc = 71,
         TravelingMerchantShop = 72,
         PlayerTeleportationPotion = 73,

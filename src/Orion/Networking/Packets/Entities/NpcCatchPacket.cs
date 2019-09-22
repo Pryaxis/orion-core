@@ -17,17 +17,19 @@
 
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
+using JetBrains.Annotations;
 
 namespace Orion.Networking.Packets.Entities {
     /// <summary>
     /// Packet sent to catch an NPC.
     /// </summary>
-    public sealed class CatchNpcPacket : Packet {
+    [PublicAPI]
+    public sealed class NpcCatchPacket : Packet {
         private short _npcIndex;
         private byte _npcCatcherPlayerIndex;
 
         /// <inheritdoc />
-        public override PacketType Type => PacketType.CatchNpc;
+        public override PacketType Type => PacketType.NpcCatch;
 
         /// <summary>
         /// Gets or sets the NPC index.
@@ -56,13 +58,13 @@ namespace Orion.Networking.Packets.Entities {
         public override string ToString() => $"{Type}[#={NpcIndex} by P={NpcCatcherPlayerIndex}]";
 
         private protected override void ReadFromReader(BinaryReader reader, PacketContext context) {
-            NpcIndex = reader.ReadInt16();
-            NpcCatcherPlayerIndex = reader.ReadByte();
+            _npcIndex = reader.ReadInt16();
+            _npcCatcherPlayerIndex = reader.ReadByte();
         }
 
         private protected override void WriteToWriter(BinaryWriter writer, PacketContext context) {
-            writer.Write(NpcIndex);
-            writer.Write(NpcCatcherPlayerIndex);
+            writer.Write(_npcIndex);
+            writer.Write(_npcCatcherPlayerIndex);
         }
     }
 }
