@@ -15,11 +15,10 @@
 // You should have received a copy of the GNU General Public License
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
-using System;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
+using JetBrains.Annotations;
 using Orion.Entities;
-using Orion.Networking.Packets.World;
 using Orion.Networking.Packets.World.Tiles;
 
 namespace Orion.Networking.Packets.Entities {
@@ -27,13 +26,14 @@ namespace Orion.Networking.Packets.Entities {
     /// Packet sent from the server to the client to consume a player's items. This is sent in response to a
     /// <see cref="MassWireOperationPacket"/>.
     /// </summary>
-    public sealed class ConsumePlayerItemsPacket : Packet {
+    [PublicAPI]
+    public sealed class PlayerConsumeItemsPacket : Packet {
         private ItemType _itemType;
         private short _itemStackSize;
         private byte _playerIndex;
 
         /// <inheritdoc />
-        public override PacketType Type => PacketType.ConsumePlayerItems;
+        public override PacketType Type => PacketType.PlayerConsumeItems;
 
         /// <summary>
         /// Gets or sets the item's type.
@@ -73,15 +73,15 @@ namespace Orion.Networking.Packets.Entities {
         public override string ToString() => $"{Type}[#={PlayerIndex}, {ItemType} x{ItemStackSize}]";
 
         private protected override void ReadFromReader(BinaryReader reader, PacketContext context) {
-            ItemType = (ItemType)reader.ReadInt16();
-            ItemStackSize = reader.ReadInt16();
-            PlayerIndex = reader.ReadByte();
+            _itemType = (ItemType)reader.ReadInt16();
+            _itemStackSize = reader.ReadInt16();
+            _playerIndex = reader.ReadByte();
         }
 
         private protected override void WriteToWriter(BinaryWriter writer, PacketContext context) {
-            writer.Write((short)ItemType);
-            writer.Write(ItemStackSize);
-            writer.Write(PlayerIndex);
+            writer.Write((short)_itemType);
+            writer.Write(_itemStackSize);
+            writer.Write(_playerIndex);
         }
     }
 }

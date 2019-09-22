@@ -123,7 +123,7 @@ namespace Orion.Networking.Packets {
         Chat = 107,
         CannonShot = 108,
         MassWireOperation = 109,
-        ConsumePlayerItems = 110,
+        PlayerConsumeItems = 110,
         ToggleBirthdayParty = 111,
         TreeGrowingEffect = 112,
         StartOldOnesArmy = 113,

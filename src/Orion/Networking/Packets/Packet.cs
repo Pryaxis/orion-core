@@ -144,7 +144,7 @@ namespace Orion.Networking.Packets {
             /* 107 */ () => new ChatPacket(),
             /* 108 */ () => new CannonShotPacket(),
             /* 109 */ () => new MassWireOperationPacket(),
-            /* 110 */ () => new ConsumePlayerItemsPacket(),
+            /* 110 */ () => new PlayerConsumeItemsPacket(),
             /* 111 */ () => new ToggleBirthdayPartyPacket(),
             /* 112 */ () => new TreeGrowingEffectPacket(),
             /* 113 */ () => new StartOldOnesArmyPacket(),
