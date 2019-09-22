@@ -17,11 +17,13 @@
 
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
+using JetBrains.Annotations;
 
 namespace Orion.Networking.Packets.Entities {
     /// <summary>
-    /// Packet sent to set an item's owner.
+    /// Packet sent to set an item's owner: i.e., the player who is picking up the item.
     /// </summary>
+    [PublicAPI]
     public sealed class ItemOwnerPacket : Packet {
         private short _itemIndex;
         private byte _itemOwnerPlayerIndex;
@@ -56,13 +58,13 @@ namespace Orion.Networking.Packets.Entities {
         public override string ToString() => $"{Type}[#={ItemIndex}, P={ItemOwnerPlayerIndex}]";
 
         private protected override void ReadFromReader(BinaryReader reader, PacketContext context) {
-            ItemIndex = reader.ReadInt16();
-            ItemOwnerPlayerIndex = reader.ReadByte();
+            _itemIndex = reader.ReadInt16();
+            _itemOwnerPlayerIndex = reader.ReadByte();
         }
 
         private protected override void WriteToWriter(BinaryWriter writer, PacketContext context) {
-            writer.Write(ItemIndex);
-            writer.Write(ItemOwnerPlayerIndex);
+            writer.Write(_itemIndex);
+            writer.Write(_itemOwnerPlayerIndex);
         }
     }
 }
