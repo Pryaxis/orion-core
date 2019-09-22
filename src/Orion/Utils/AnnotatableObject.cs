@@ -15,25 +15,37 @@
 // You should have received a copy of the GNU General Public License
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
+using System;
 using System.Collections.Generic;
+using JetBrains.Annotations;
 
 namespace Orion.Utils {
     /// <summary>
     /// Provides the base class for an object implementing <see cref="IAnnotatable"/>.
     /// </summary>
+    [PublicAPI]
     public class AnnotatableObject : IAnnotatable {
-        private readonly IDictionary<string, object> _annotations = new Dictionary<string, object>();
+        [NotNull] private readonly IDictionary<string, object> _annotations = new Dictionary<string, object>();
 
         /// <inheritdoc />
-        public T GetAnnotation<T>(string key, T defaultValue = default) =>
-            _annotations.TryGetValue(key, out var value) ? (T)value : defaultValue;
+        public T GetAnnotation<T>(string key, T defaultValue = default) {
+            if (key == null) throw new ArgumentNullException(nameof(key));
+
+            return _annotations.TryGetValue(key, out var value) ? (T)value : defaultValue;
+        }
 
         /// <inheritdoc />
         public void SetAnnotation<T>(string key, T value) {
+            if (key == null) throw new ArgumentNullException(nameof(key));
+
             _annotations[key] = value;
         }
 
         /// <inheritdoc />
-        public bool RemoveAnnotation(string key) => _annotations.Remove(key);
+        public bool RemoveAnnotation(string key) {
+            if (key == null) throw new ArgumentNullException(nameof(key));
+
+            return _annotations.Remove(key);
+        }
     }
 }
