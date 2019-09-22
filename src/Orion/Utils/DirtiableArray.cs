@@ -20,15 +20,16 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
-using Orion.Events;
+using JetBrains.Annotations;
 
 namespace Orion.Utils {
     /// <summary>
     /// Represents a dirtiable array of objects.
     /// </summary>
-    /// <typeparam name="T"></typeparam>
+    /// <typeparam name="T">The type of element.</typeparam>
+    [PublicAPI]
     public sealed class DirtiableArray<T> : IArray<T>, IDirtiable {
-        internal readonly T[] _array;
+        [NotNull] internal readonly T[] _array;
         private bool _isDirty;
 
         private static bool ContainsDirtiableElements => typeof(IDirtiable).IsAssignableFrom(typeof(T));
@@ -37,22 +38,9 @@ namespace Orion.Utils {
         public int Count => _array.Length;
 
         /// <inheritdoc cref="IArray{T}.this" />
-        /// <exception cref="ArgumentNullException">
-        /// The array does not allow <c>null</c> elements and <paramref name="value"/> is <c>null</c>.
-        /// </exception>
-        /// <exception cref="InvalidOperationException">
-        /// The array does not allow <c>null</c> elements and the element is <c>null</c>.
-        /// </exception>
         public T this[int index] {
-            get {
-                var value = _array[index];
-                if (!AllowsNull && value == null) throw new InvalidOperationException("Element is null.");
-
-                return value;
-            }
+            get => _array[index];
             set {
-                if (!AllowsNull && value == null) throw new ArgumentNullException(nameof(value));
-
                 _array[index] = value;
                 _isDirty = true;
             }
@@ -63,24 +51,16 @@ namespace Orion.Utils {
             _isDirty || ContainsDirtiableElements && this.Cast<IDirtiable>().Any(d => d?.IsDirty == true);
 
         /// <summary>
-        /// Gets a value indicating whether the array allows <c>null</c> elements.
-        /// </summary>
-        public bool AllowsNull { get; }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="DirtiableArray{T}"/> class with the specified count and option
-        /// to allow <c>null</c> elements.
+        /// Initializes a new instance of the <see cref="DirtiableArray{T}"/> class with the specified count.
         /// </summary>
         /// <param name="count">The count.</param>
-        /// <param name="allowsNull">A value indicating whether to allow <c>null</c> elements.</param>
         /// <exception cref="ArgumentOutOfRangeException"><paramref name="count"/> is negative.</exception>
-        public DirtiableArray(int count, bool allowsNull = false) {
+        public DirtiableArray(int count) {
             if (count <= 0) {
                 throw new ArgumentOutOfRangeException(nameof(count), "Count is negative.");
             }
 
             _array = new T[count];
-            AllowsNull = allowsNull;
         }
 
         /// <inheritdoc />

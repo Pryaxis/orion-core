@@ -57,26 +57,5 @@ namespace Orion.Networking.Packets.Entities {
         public void DeserializeAndSerialize_Remove_SamePacket() {
             RemoveBytes.ShouldDeserializeAndSerializeSamePacket();
         }
-
-        public static readonly byte[] MetadataBytes = {14, 0, 91, 1, 0, 0, 0, 0, 100, 0, 255, 255, 1, 0};
-
-        [Fact]
-        public void ReadFromStream_IsCorrect_WithMetadata() {
-            using (var stream = new MemoryStream(MetadataBytes)) {
-                var packet = (EmoteInfoPacket)Packet.ReadFromStream(stream, PacketContext.Server);
-
-                packet.EmoteIndex.Should().Be(1);
-                packet.AnchorType.Should().Be(0);
-                packet.AnchorEntityIndex.Should().Be(100);
-                packet.EmoteLifetime.Should().Be(255);
-                packet.EmoteType.Should().Be(-1);
-                packet.EmoteMetadata.Should().Be(1);
-            }
-        }
-
-        [Fact]
-        public void DeserializeAndSerialize_WithMetadata_SamePacket() {
-            MetadataBytes.ShouldDeserializeAndSerializeSamePacket();
-        }
     }
 }

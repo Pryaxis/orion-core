@@ -59,31 +59,6 @@ namespace Orion.Networking.Packets.Modules {
             module.ShouldBeDirty();
         }
 
-        [Fact]
-        public void Liquids_SetNullItem_ThrowsArgumentNullException() {
-            var module = new LiquidsModule();
-            module.Liquids.Add(new NetworkLiquid());
-            Action action = () => module.Liquids[0] = null;
-
-            action.Should().Throw<ArgumentNullException>();
-        }
-
-        [Fact]
-        public void Liquids_AddNullItem_ThrowsArgumentNullException() {
-            var module = new LiquidsModule();
-            Action action = () => module.Liquids.Add(null);
-
-            action.Should().Throw<ArgumentNullException>();
-        }
-
-        [Fact]
-        public void Liquids_InsertNullItem_ThrowsArgumentNullException() {
-            var module = new LiquidsModule();
-            Action action = () => module.Liquids.Insert(0, null);
-
-            action.Should().Throw<ArgumentNullException>();
-        }
-
         public static readonly byte[] Bytes = {13, 0, 82, 0, 0, 1, 0, 100, 0, 0, 1, 255, 0};
 
         [Fact]

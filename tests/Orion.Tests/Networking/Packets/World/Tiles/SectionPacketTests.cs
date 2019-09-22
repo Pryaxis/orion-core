@@ -86,31 +86,6 @@ namespace Orion.Networking.Packets.World.Tiles {
             packet.ShouldBeDirty();
         }
 
-        [Fact]
-        public void SectionTileEntities_SetNullItem_ThrowsArgumentNullException() {
-            var packet = new SectionPacket();
-            packet.SectionTileEntities.Add(new NetworkChest());
-            Action action = () => packet.SectionTileEntities[0] = null;
-
-            action.Should().Throw<ArgumentNullException>();
-        }
-
-        [Fact]
-        public void SectionTileEntities_AddNullItem_ThrowsArgumentNullException() {
-            var packet = new SectionPacket();
-            Action action = () => packet.SectionTileEntities.Add(null);
-
-            action.Should().Throw<ArgumentNullException>();
-        }
-
-        [Fact]
-        public void SectionTileEntities_InsertNullItem_ThrowsArgumentNullException() {
-            var packet = new SectionPacket();
-            Action action = () => packet.SectionTileEntities.Insert(0, null);
-
-            action.Should().Throw<ArgumentNullException>();
-        }
-
         private static readonly byte[] Bytes = {
             254, 7, 10, 1, 109, 87, 189, 143, 28, 73, 21, 175, 170, 254, 152, 158, 153, 253, 152, 237, 195, 189, 235,
             51, 8, 99, 6, 123, 56, 77, 96, 144, 88, 7, 67, 48, 106, 208, 178, 23, 64, 2, 18, 163, 11, 64, 66, 156, 124,

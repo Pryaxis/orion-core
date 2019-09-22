@@ -72,23 +72,6 @@ namespace Orion.Utils {
         }
 
         [Fact]
-        public void SetItem_NullValue_DoesNotAllowNull_ThrowsArgumentNullException() {
-            var list = new DirtiableList<string> {"test"};
-            Action action = () => list[0] = null;
-
-            action.Should().Throw<ArgumentNullException>();
-        }
-
-        [Fact]
-        public void SetItem_NullValue_AllowsNull_IsCorrect() {
-            var list = new DirtiableList<string>(true) {"test"};
-
-            list[0] = null;
-
-            list[0].Should().BeNull();
-        }
-
-        [Fact]
         public void GetEnumerator_IsCorrect() {
             var list = new DirtiableList<int> {0};
 
@@ -104,23 +87,6 @@ namespace Orion.Utils {
             list[0].Should().Be(0);
             list.Count.Should().Be(1);
             list.ShouldBeDirty();
-        }
-
-        [Fact]
-        public void Add_NullItem_DoesNotAllowNull_ThrowsArgumentNullException() {
-            var list = new DirtiableList<string>();
-            Action action = () => list.Add(null);
-
-            action.Should().Throw<ArgumentNullException>();
-        }
-
-        [Fact]
-        public void Add_NullItem_AllowsNull_IsCorrect() {
-            var list = new DirtiableList<string>(true);
-
-            list.Add(null);
-
-            list[0].Should().BeNull();
         }
 
         [Fact]
@@ -184,23 +150,6 @@ namespace Orion.Utils {
             list.Count.Should().Be(2);
             list[1].Should().Be(101);
             list.ShouldBeDirty();
-        }
-
-        [Fact]
-        public void Insert_NullItem_DoesNotAllowNull_ThrowsArgumentNullException() {
-            var list = new DirtiableList<string>();
-            Action action = () => list.Insert(0, null);
-
-            action.Should().Throw<ArgumentNullException>();
-        }
-
-        [Fact]
-        public void Insert_NullItem_AllowsNull_IsCorrect() {
-            var list = new DirtiableList<string>(true);
-
-            list.Insert(0, null);
-
-            list[0].Should().BeNull();
         }
 
         [Fact]

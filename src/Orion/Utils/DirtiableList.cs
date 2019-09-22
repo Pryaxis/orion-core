@@ -20,15 +20,16 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
-using Orion.Events;
+using JetBrains.Annotations;
 
 namespace Orion.Utils {
     /// <summary>
     /// Represents a dirtiable list of objects.
     /// </summary>
     /// <typeparam name="T">The type of element.</typeparam>
+    [PublicAPI]
     public sealed class DirtiableList<T> : IList<T>, IDirtiable {
-        internal readonly IList<T> _list = new List<T>();
+        [NotNull] internal readonly IList<T> _list = new List<T>();
         private bool _isDirty;
 
         private static bool ContainsDirtiableElements => typeof(IDirtiable).IsAssignableFrom(typeof(T));
@@ -44,31 +45,12 @@ namespace Orion.Utils {
             _isDirty || ContainsDirtiableElements && this.Cast<IDirtiable>().Any(d => d?.IsDirty == true);
 
         /// <inheritdoc />
-        /// <exception cref="ArgumentNullException">
-        /// The list does not allow <c>null</c> elements and <paramref name="value"/> is <c>null</c>.
-        /// </exception>
         public T this[int index] {
             get => _list[index];
             set {
-                if (!AllowsNull && value == null) throw new ArgumentNullException(nameof(value));
-
                 _list[index] = value;
                 _isDirty = true;
             }
-        }
-
-        /// <summary>
-        /// Gets a value indicating whether the list allows <c>null</c> elements.
-        /// </summary>
-        public bool AllowsNull { get; }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="DirtiableList{T}"/> class with the specified option to allow
-        /// <c>null</c> elements.
-        /// </summary>
-        /// <param name="allowsNull">A value indicating whether to allow <c>null</c> elements.</param>
-        public DirtiableList(bool allowsNull = false) {
-            AllowsNull = allowsNull;
         }
 
         /// <inheritdoc />
@@ -78,12 +60,7 @@ namespace Orion.Utils {
         IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
 
         /// <inheritdoc />
-        /// <exception cref="ArgumentNullException">
-        /// The list does not allow <c>null</c> elements and <paramref name="item"/> is <c>null</c>.
-        /// </exception>
         public void Add(T item) {
-            if (!AllowsNull && item == null) throw new ArgumentNullException(nameof(item));
-
             _list.Add(item);
             _isDirty = true;
         }
@@ -113,12 +90,7 @@ namespace Orion.Utils {
         public int IndexOf(T item) => _list.IndexOf(item);
 
         /// <inheritdoc />
-        /// <exception cref="ArgumentNullException">
-        /// The list does not allow <c>null</c> elements and <paramref name="item"/> is <c>null</c>.
-        /// </exception>
         public void Insert(int index, T item) {
-            if (!AllowsNull && item == null) throw new ArgumentNullException(nameof(item));
-
             _list.Insert(index, item);
             _isDirty = true;
         }
