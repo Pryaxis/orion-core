@@ -45,7 +45,7 @@ namespace Orion.Networking.Packets.Entities {
                 packet.ItemVelocity.Should().Be(new Vector2(4, -2));
                 packet.ItemStackSize.Should().Be(1);
                 packet.ItemPrefix.Should().Be(ItemPrefix.Unreal);
-                packet.ShouldDisownItem.Should().BeFalse();
+                packet.CanPickUpImmediately.Should().BeFalse();
                 packet.ItemType.Should().Be(ItemType.Sdmg);
             }
         }

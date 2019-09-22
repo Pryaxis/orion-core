@@ -18,6 +18,7 @@
 using System;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
+using JetBrains.Annotations;
 using Microsoft.Xna.Framework;
 using Orion.Entities;
 using Orion.Networking.Packets.Extensions;
@@ -26,13 +27,14 @@ namespace Orion.Networking.Packets.Entities {
     /// <summary>
     /// Packet sent to set item information.
     /// </summary>
+    [PublicAPI]
     public sealed class ItemInfoPacket : Packet {
         private short _itemIndex;
         private Vector2 _itemPosition;
         private Vector2 _itemVelocity;
         private short _itemStackSize;
         private ItemPrefix _itemPrefix;
-        private bool _shouldDisownItem;
+        private bool _canPickUpImmediately;
         private ItemType _itemType;
 
         /// <inheritdoc />
@@ -94,12 +96,12 @@ namespace Orion.Networking.Packets.Entities {
         }
 
         /// <summary>
-        /// Gets or sets a value indicating whether the item should be disowned.
+        /// Gets or sets a value indicating whether the item can be picked up immediately.
         /// </summary>
-        public bool ShouldDisownItem {
-            get => _shouldDisownItem;
+        public bool CanPickUpImmediately {
+            get => _canPickUpImmediately;
             set {
-                _shouldDisownItem = value;
+                _canPickUpImmediately = value;
                 _isDirty = true;
             }
         }
@@ -122,23 +124,23 @@ namespace Orion.Networking.Packets.Entities {
             $"x{ItemStackSize} @ {ItemPosition}, ...]";
 
         private protected override void ReadFromReader(BinaryReader reader, PacketContext context) {
-            ItemIndex = reader.ReadInt16();
-            ItemPosition = reader.ReadVector2();
-            ItemVelocity = reader.ReadVector2();
-            ItemStackSize = reader.ReadInt16();
-            ItemPrefix = (ItemPrefix)reader.ReadByte();
-            ShouldDisownItem = reader.ReadBoolean();
-            ItemType = (ItemType)reader.ReadInt16();
+            _itemIndex = reader.ReadInt16();
+            _itemPosition = reader.ReadVector2();
+            _itemVelocity = reader.ReadVector2();
+            _itemStackSize = reader.ReadInt16();
+            _itemPrefix = (ItemPrefix)reader.ReadByte();
+            _canPickUpImmediately = reader.ReadBoolean();
+            _itemType = (ItemType)reader.ReadInt16();
         }
 
         private protected override void WriteToWriter(BinaryWriter writer, PacketContext context) {
-            writer.Write(ItemIndex);
-            writer.Write(ItemPosition);
-            writer.Write(ItemVelocity);
-            writer.Write(ItemStackSize);
-            writer.Write((byte)ItemPrefix);
-            writer.Write(ShouldDisownItem);
-            writer.Write((short)ItemType);
+            writer.Write(_itemIndex);
+            writer.Write(_itemPosition);
+            writer.Write(_itemVelocity);
+            writer.Write(_itemStackSize);
+            writer.Write((byte)_itemPrefix);
+            writer.Write(_canPickUpImmediately);
+            writer.Write((short)_itemType);
         }
     }
 }
