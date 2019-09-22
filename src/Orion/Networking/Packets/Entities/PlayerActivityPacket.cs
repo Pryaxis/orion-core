@@ -17,11 +17,13 @@
 
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
+using JetBrains.Annotations;
 
 namespace Orion.Networking.Packets.Entities {
     /// <summary>
     /// Packet sent from the server to the client to set a player's activity.
     /// </summary>
+    [PublicAPI]
     public sealed class PlayerActivityPacket : Packet {
         private byte _playerIndex;
         private bool _isPlayerActive;
@@ -56,13 +58,13 @@ namespace Orion.Networking.Packets.Entities {
         public override string ToString() => $"{Type}[#={PlayerIndex}, {IsPlayerActive}]";
 
         private protected override void ReadFromReader(BinaryReader reader, PacketContext context) {
-            PlayerIndex = reader.ReadByte();
-            IsPlayerActive = reader.ReadBoolean();
+            _playerIndex = reader.ReadByte();
+            _isPlayerActive = reader.ReadBoolean();
         }
 
         private protected override void WriteToWriter(BinaryWriter writer, PacketContext context) {
-            writer.Write(PlayerIndex);
-            writer.Write(IsPlayerActive);
+            writer.Write(_playerIndex);
+            writer.Write(_isPlayerActive);
         }
     }
 }
