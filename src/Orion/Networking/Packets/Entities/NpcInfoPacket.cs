@@ -15,9 +15,9 @@
 // You should have received a copy of the GNU General Public License
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
-using System;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
+using JetBrains.Annotations;
 using Microsoft.Xna.Framework;
 using Orion.Entities;
 using Orion.Entities.Extensions;
@@ -28,6 +28,7 @@ namespace Orion.Networking.Packets.Entities {
     /// <summary>
     /// Packet sent from the server to the client to set NPC information.
     /// </summary>
+    [PublicAPI]
     public sealed class NpcInfoPacket : Packet {
         private short _npcIndex;
         private Vector2 _npcPosition;
@@ -119,6 +120,7 @@ namespace Orion.Networking.Packets.Entities {
         /// <summary>
         /// Gets the NPC's AI values.
         /// </summary>
+        [NotNull]
         public DirtiableArray<float> NpcAiValues { get; } = new DirtiableArray<float>(Terraria.NPC.maxAI);
 
         /// <summary>
@@ -198,28 +200,28 @@ namespace Orion.Networking.Packets.Entities {
         public override string ToString() => $"{Type}[#={NpcIndex}, {NpcType} @ {NpcPosition}, ...]";
 
         private protected override void ReadFromReader(BinaryReader reader, PacketContext context) {
-            NpcIndex = reader.ReadInt16();
-            NpcPosition = reader.ReadVector2();
-            NpcVelocity = reader.ReadVector2();
+            _npcIndex = reader.ReadInt16();
+            _npcPosition = reader.ReadVector2();
+            _npcVelocity = reader.ReadVector2();
 
             var targetIndex = reader.ReadUInt16();
-            NpcTargetIndex = targetIndex != ushort.MaxValue ? targetIndex : (ushort)0;
+            _npcTargetIndex = targetIndex != ushort.MaxValue ? targetIndex : (ushort)0;
 
             Terraria.BitsByte header = reader.ReadByte();
-            NpcHorizontalDirection = header[0];
-            NpcVerticalDirection = header[1];
-            if (header[2]) NpcAiValues[0] = reader.ReadSingle();
-            if (header[3]) NpcAiValues[1] = reader.ReadSingle();
-            if (header[4]) NpcAiValues[2] = reader.ReadSingle();
-            if (header[5]) NpcAiValues[3] = reader.ReadSingle();
-            NpcSpriteDirection = header[6];
-            IsNpcAtMaxHealth = header[7];
+            _npcHorizontalDirection = header[0];
+            _npcVerticalDirection = header[1];
+            if (header[2]) NpcAiValues._array[0] = reader.ReadSingle();
+            if (header[3]) NpcAiValues._array[1] = reader.ReadSingle();
+            if (header[4]) NpcAiValues._array[2] = reader.ReadSingle();
+            if (header[5]) NpcAiValues._array[3] = reader.ReadSingle();
+            _npcSpriteDirection = header[6];
+            _isNpcAtMaxHealth = header[7];
 
-            NpcType = (NpcType)reader.ReadInt16();
+            _npcType = (NpcType)reader.ReadInt16();
 
-            if (!IsNpcAtMaxHealth) {
+            if (!_isNpcAtMaxHealth) {
                 _npcNumberOfHealthBytes = reader.ReadByte();
-                switch (NpcNumberOfHealthBytes) {
+                switch (_npcNumberOfHealthBytes) {
                 case 2:
                     _npcHealth = reader.ReadInt16();
                     break;
@@ -232,53 +234,53 @@ namespace Orion.Networking.Packets.Entities {
                 }
             }
 
-            if (NpcType.IsCatchable()) {
-                NpcReleaserPlayerIndex = reader.ReadByte();
+            if (_npcType.IsCatchable()) {
+                _npcReleaserPlayerIndex = reader.ReadByte();
             }
         }
 
         [SuppressMessage("ReSharper", "CompareOfFloatsByEqualityOperator")]
         private protected override void WriteToWriter(BinaryWriter writer, PacketContext context) {
-            writer.Write(NpcIndex);
-            writer.Write(NpcPosition);
-            writer.Write(NpcVelocity);
-            writer.Write(NpcTargetIndex);
+            writer.Write(_npcIndex);
+            writer.Write(_npcPosition);
+            writer.Write(_npcVelocity);
+            writer.Write(_npcTargetIndex);
 
             Terraria.BitsByte header = 0;
-            header[0] = NpcHorizontalDirection;
-            header[1] = NpcVerticalDirection;
-            header[2] = NpcAiValues[0] != 0;
-            header[3] = NpcAiValues[1] != 0;
-            header[4] = NpcAiValues[2] != 0;
-            header[5] = NpcAiValues[3] != 0;
-            header[6] = NpcSpriteDirection;
-            header[7] = IsNpcAtMaxHealth;
+            header[0] = _npcHorizontalDirection;
+            header[1] = _npcVerticalDirection;
+            header[2] = NpcAiValues._array[0] != 0;
+            header[3] = NpcAiValues._array[1] != 0;
+            header[4] = NpcAiValues._array[2] != 0;
+            header[5] = NpcAiValues._array[3] != 0;
+            header[6] = _npcSpriteDirection;
+            header[7] = _isNpcAtMaxHealth;
 
             writer.Write(header);
-            if (header[2]) writer.Write(NpcAiValues[0]);
-            if (header[3]) writer.Write(NpcAiValues[1]);
-            if (header[4]) writer.Write(NpcAiValues[2]);
-            if (header[5]) writer.Write(NpcAiValues[3]);
+            if (header[2]) writer.Write(NpcAiValues._array[0]);
+            if (header[3]) writer.Write(NpcAiValues._array[1]);
+            if (header[4]) writer.Write(NpcAiValues._array[2]);
+            if (header[5]) writer.Write(NpcAiValues._array[3]);
 
-            writer.Write((short)NpcType);
+            writer.Write((short)_npcType);
 
-            if (!IsNpcAtMaxHealth) {
-                writer.Write(NpcNumberOfHealthBytes);
-                switch (NpcNumberOfHealthBytes) {
+            if (!_isNpcAtMaxHealth) {
+                writer.Write(_npcNumberOfHealthBytes);
+                switch (_npcNumberOfHealthBytes) {
                 case 4:
-                    writer.Write(NpcHealth);
+                    writer.Write(_npcHealth);
                     break;
                 case 2:
-                    writer.Write((short)NpcHealth);
+                    writer.Write((short)_npcHealth);
                     break;
                 default:
-                    writer.Write((byte)NpcHealth);
+                    writer.Write((byte)_npcHealth);
                     break;
                 }
             }
 
-            if (NpcType.IsCatchable()) {
-                writer.Write(NpcReleaserPlayerIndex);
+            if (_npcType.IsCatchable()) {
+                writer.Write(_npcReleaserPlayerIndex);
             }
         }
     }
