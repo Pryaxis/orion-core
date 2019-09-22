@@ -193,8 +193,7 @@ namespace Orion.Networking.Packets.World.Tiles {
                     }
 
                     if ((header3 & 8) == 8) {
-                        tile.BlockColor = PaintColor.FromId(reader.ReadByte()) ??
-                                          throw new PacketException("Paint color is invalid.");
+                        tile.BlockColor = (PaintColor)reader.ReadByte();
                     }
                 }
 
@@ -202,8 +201,7 @@ namespace Orion.Networking.Packets.World.Tiles {
                     tile.WallType = WallType.FromId(reader.ReadByte()) ??
                                     throw new PacketException("Wall type is invalid.");
                     if ((header3 & 16) == 16) {
-                        tile.WallColor = PaintColor.FromId(reader.ReadByte()) ??
-                                         throw new PacketException("Paint color is invalid.");
+                        tile.WallColor = (PaintColor)reader.ReadByte();
                     }
                 }
 
@@ -321,7 +319,7 @@ namespace Orion.Networking.Packets.World.Tiles {
 
                     if (tile.BlockColor != PaintColor.None) {
                         header3 |= 8;
-                        buffer[bodyIndex++] = tile.BlockColor.Id;
+                        buffer[bodyIndex++] = (byte)tile.BlockColor;
                     }
                 }
 
@@ -331,7 +329,7 @@ namespace Orion.Networking.Packets.World.Tiles {
 
                     if (tile.WallColor != PaintColor.None) {
                         header3 |= 16;
-                        buffer[bodyIndex++] = tile.WallColor.Id;
+                        buffer[bodyIndex++] = (byte)tile.WallColor;
                     }
                 }
 

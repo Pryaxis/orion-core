@@ -57,11 +57,10 @@ namespace Orion.Networking.Packets.World.Tiles {
         /// <summary>
         /// Gets or sets the block color.
         /// </summary>
-        /// <exception cref="ArgumentNullException"><paramref name="value"/> is <c>null</c>.</exception>
         public PaintColor BlockColor {
             get => _blockColor;
             set {
-                _blockColor = value ?? throw new ArgumentNullException(nameof(value));
+                _blockColor = value;
                 _isDirty = true;
             }
         }
@@ -73,13 +72,13 @@ namespace Orion.Networking.Packets.World.Tiles {
         private protected override void ReadFromReader(BinaryReader reader, PacketContext context) {
             BlockX = reader.ReadInt16();
             BlockY = reader.ReadInt16();
-            BlockColor = PaintColor.FromId(reader.ReadByte()) ?? throw new PacketException("Paint color is invalid.");
+            BlockColor = (PaintColor)reader.ReadByte();
         }
 
         private protected override void WriteToWriter(BinaryWriter writer, PacketContext context) {
             writer.Write(BlockX);
             writer.Write(BlockY);
-            writer.Write(BlockColor.Id);
+            writer.Write((byte)BlockColor);
         }
     }
 }

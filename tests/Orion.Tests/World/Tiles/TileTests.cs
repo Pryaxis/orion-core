@@ -197,9 +197,9 @@ namespace Orion.World.Tiles {
         public void GetBlockColor_IsCorrect() {
             var tile = new TestTile();
             var itile = (ITile)tile;
-            itile.color(PaintColor.DeepRed.Id);
+            itile.color((byte)PaintColor.DeepRed);
 
-            tile.BlockColor.Should().BeSameAs(PaintColor.DeepRed);
+            tile.BlockColor.Should().Be(PaintColor.DeepRed);
         }
 
         [Fact]
@@ -209,15 +209,7 @@ namespace Orion.World.Tiles {
 
             tile.BlockColor = PaintColor.DeepRed;
 
-            itile.color().Should().Be(PaintColor.DeepRed.Id);
-        }
-
-        [Fact]
-        public void SetBlockColor_NullValue_ThrowsArgumentNullException() {
-            var tile = new TestTile();
-            Action action = () => tile.BlockColor = null;
-
-            action.Should().Throw<ArgumentNullException>();
+            itile.color().Should().Be((byte)PaintColor.DeepRed);
         }
 
         [Theory]
@@ -404,9 +396,9 @@ namespace Orion.World.Tiles {
         public void GetWallColor_IsCorrect() {
             var tile = new TestTile();
             var itile = (ITile)tile;
-            itile.wallColor(PaintColor.DeepRed.Id);
+            itile.wallColor((byte)PaintColor.DeepRed);
 
-            tile.WallColor.Should().BeSameAs(PaintColor.DeepRed);
+            tile.WallColor.Should().Be(PaintColor.DeepRed);
         }
 
         [Fact]
@@ -416,15 +408,7 @@ namespace Orion.World.Tiles {
 
             tile.WallColor = PaintColor.DeepRed;
 
-            itile.wallColor().Should().Be(PaintColor.DeepRed.Id);
-        }
-
-        [Fact]
-        public void SetWallColor_NullValue_ThrowsArgumentNullException() {
-            var tile = new TestTile();
-            Action action = () => tile.WallColor = null;
-
-            action.Should().Throw<ArgumentNullException>();
+            itile.wallColor().Should().Be((byte)PaintColor.DeepRed);
         }
 
         [Theory]

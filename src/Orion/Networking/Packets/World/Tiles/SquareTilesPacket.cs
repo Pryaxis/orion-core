@@ -120,13 +120,11 @@ namespace Orion.Networking.Packets.World.Tiles {
                 tile.HasYellowWire = header2[7];
 
                 if (header2[2]) {
-                    tile.BlockColor = PaintColor.FromId(reader.ReadByte()) ??
-                                      throw new PacketException("Paint color is invalid.");
+                    tile.BlockColor = (PaintColor)reader.ReadByte();
                 }
 
                 if (header2[3]) {
-                    tile.WallColor = PaintColor.FromId(reader.ReadByte()) ??
-                                     throw new PacketException("Paint color is invalid.");
+                    tile.WallColor = (PaintColor)reader.ReadByte();
                 }
 
                 if (header[0]) {

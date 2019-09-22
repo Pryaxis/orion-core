@@ -28,7 +28,6 @@ namespace Orion.World.Tiles {
         /// <summary>
         /// Gets or sets the tile's block type.
         /// </summary>
-        /// <exception cref="ArgumentNullException"><paramref name="value"/> is <c>null</c>.</exception>
         public abstract BlockType BlockType { get; set; }
 
         /// <summary>
@@ -75,14 +74,9 @@ namespace Orion.World.Tiles {
         /// <summary>
         /// Gets or sets the tile's block color.
         /// </summary>
-        /// <exception cref="ArgumentNullException"><paramref name="value"/> is <c>null</c>.</exception>
         public PaintColor BlockColor {
-            get => PaintColor.FromId(((ITile)this).color());
-            set {
-                if (value == null) throw new ArgumentNullException(nameof(value));
-
-                ((ITile)this).color(value.Id);
-            }
+            get => (PaintColor)((ITile)this).color();
+            set => ((ITile)this).color((byte)value);
         }
 
         /// <summary>
@@ -144,7 +138,6 @@ namespace Orion.World.Tiles {
         /// <summary>
         /// Gets or sets the tile's slope type.
         /// </summary>
-        /// <exception cref="ArgumentNullException"><paramref name="value"/> is <c>null</c>.</exception>
         public Slope Slope {
             get => (Slope)((ITile)this).slope();
             set => ((ITile)this).slope((byte)value);
@@ -153,14 +146,9 @@ namespace Orion.World.Tiles {
         /// <summary>
         /// Gets or sets the tile's wall color.
         /// </summary>
-        /// <exception cref="ArgumentNullException"><paramref name="value"/> is <c>null</c>.</exception>
         public PaintColor WallColor {
-            get => PaintColor.FromId(((ITile)this).wallColor());
-            set {
-                if (value == null) throw new ArgumentNullException(nameof(value));
-
-                ((ITile)this).wallColor(value.Id);
-            }
+            get => (PaintColor)((ITile)this).wallColor();
+            set => ((ITile)this).wallColor((byte)value);
         }
 
         /// <summary>

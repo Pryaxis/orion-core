@@ -30,25 +30,7 @@ namespace Orion.Networking.Packets.World.Tiles {
             packet.ShouldHaveDefaultablePropertiesMarkAsDirty();
         }
 
-        [Fact]
-        public void SetBlockColor_MarksAsDirty() {
-            var packet = new PaintBlockPacket();
-
-            packet.BlockColor = PaintColor.Red;
-
-            packet.ShouldBeDirty();
-        }
-
-        [Fact]
-        public void SetBlockColor_NullValue_ThrowsArgumentNullException() {
-            var packet = new PaintBlockPacket();
-            Action action = () => packet.BlockColor = null;
-
-            action.Should().Throw<ArgumentNullException>();
-        }
-
         public static readonly byte[] Bytes = {8, 0, 63, 0, 1, 100, 0, 1};
-        public static readonly byte[] InvalidPaintColorBytes = {8, 0, 63, 0, 1, 100, 0, 255};
 
         [Fact]
         public void ReadFromStream_IsCorrect() {
@@ -57,16 +39,7 @@ namespace Orion.Networking.Packets.World.Tiles {
 
                 packet.BlockX.Should().Be(256);
                 packet.BlockY.Should().Be(100);
-                packet.BlockColor.Should().BeSameAs(PaintColor.Red);
-            }
-        }
-
-        [Fact]
-        public void ReadFromStream_InvalidPaintColor_ThrowsPacketException() {
-            using (var stream = new MemoryStream(InvalidPaintColorBytes)) {
-                Func<Packet> func = () => Packet.ReadFromStream(stream, PacketContext.Server);
-
-                func.Should().Throw<PacketException>();
+                packet.BlockColor.Should().Be(PaintColor.Red);
             }
         }
 
