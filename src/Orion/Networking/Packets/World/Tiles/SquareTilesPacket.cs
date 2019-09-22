@@ -154,8 +154,7 @@ namespace Orion.Networking.Packets.World.Tiles {
 
                 if (header[3]) {
                     tile.LiquidAmount = reader.ReadByte();
-                    tile.LiquidType = LiquidType.FromId(reader.ReadByte()) ??
-                                      throw new PacketException("Liquid type is invalid.");
+                    tile.LiquidType = (LiquidType)reader.ReadByte();
                 }
 
                 return tile;
@@ -213,7 +212,7 @@ namespace Orion.Networking.Packets.World.Tiles {
 
                 if (header[3]) {
                     writer.Write(tile.LiquidAmount);
-                    writer.Write(tile.LiquidType.Id);
+                    writer.Write((byte)tile.LiquidType);
                 }
             }
 

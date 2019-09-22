@@ -184,12 +184,8 @@ namespace Orion.World.Tiles {
         /// </summary>
         /// <exception cref="ArgumentNullException"><paramref name="value"/> is <c>null</c>.</exception>
         public LiquidType LiquidType {
-            get => LiquidType.FromId(((ITile)this).liquidType());
-            set {
-                if (value == null) throw new ArgumentNullException(nameof(value));
-
-                ((ITile)this).liquidType(value.Id);
-            }
+            get => (LiquidType)((ITile)this).liquidType();
+            set => ((ITile)this).liquidType((byte)value);
         }
 
         /// <summary>

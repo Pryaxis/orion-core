@@ -210,8 +210,7 @@ namespace Orion.Networking.Packets.World.Tiles {
                 var liquidType = (header & 24) >> 3;
                 if (liquidType > 0) {
                     tile.LiquidAmount = reader.ReadByte();
-                    tile.LiquidType = LiquidType.FromId((byte)(liquidType - 1)) ??
-                                      throw new PacketException("Liquid type is invalid.");
+                    tile.LiquidType = (LiquidType)(liquidType - 1);
                 }
 
                 tile.HasRedWire = (header2 & 2) == 2;
@@ -337,7 +336,7 @@ namespace Orion.Networking.Packets.World.Tiles {
                 }
 
                 if (tile.LiquidAmount > 0) {
-                    header |= (byte)((tile.LiquidType.Id + 1) << 3);
+                    header |= (byte)(((byte)tile.LiquidType + 1) << 3);
                     buffer[bodyIndex++] = tile.LiquidAmount;
                 }
 

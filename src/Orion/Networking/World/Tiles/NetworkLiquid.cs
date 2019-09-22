@@ -32,7 +32,7 @@ namespace Orion.Networking.World.Tiles {
         private short _tileX;
         private short _tileY;
         private byte _liquidAmount;
-        private LiquidType _liquidType = LiquidType.Water;
+        private LiquidType _liquidType;
 
         /// <inheritdoc />
         public bool IsDirty { get; private set; }
@@ -73,11 +73,10 @@ namespace Orion.Networking.World.Tiles {
         /// <summary>
         /// Gets or sets the liquid type.
         /// </summary>
-        /// <exception cref="ArgumentNullException"><paramref name="value"/> is <c>null</c>.</exception>
         public LiquidType LiquidType {
             get => _liquidType;
             set {
-                _liquidType = value ?? throw new ArgumentNullException(nameof(value));
+                _liquidType = value;
                 IsDirty = true;
             }
         }
@@ -100,8 +99,7 @@ namespace Orion.Networking.World.Tiles {
                 TileX = shouldSwapXY ? coord2 : coord1,
                 TileY = shouldSwapXY ? coord1 : coord2,
                 LiquidAmount = reader.ReadByte(),
-                LiquidType = LiquidType.FromId(reader.ReadByte()) ??
-                             throw new PacketException("Liquid type is invalid.")
+                LiquidType = (LiquidType)reader.ReadByte()
             };
         }
 
@@ -127,7 +125,7 @@ namespace Orion.Networking.World.Tiles {
             writer.Write(shouldSwapXY ? TileY : TileX);
             writer.Write(shouldSwapXY ? TileX : TileY);
             writer.Write(LiquidAmount);
-            writer.Write(LiquidType.Id);
+            writer.Write((byte)LiquidType);
         }
     }
 }

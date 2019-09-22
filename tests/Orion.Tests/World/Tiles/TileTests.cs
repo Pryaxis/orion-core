@@ -500,7 +500,7 @@ namespace Orion.World.Tiles {
         public void GetLiquidType_IsCorrect() {
             var tile = new TestTile();
             var itile = (ITile)tile;
-            itile.liquidType(LiquidType.Honey.Id);
+            itile.liquidType((byte)LiquidType.Honey);
 
             tile.LiquidType.Should().Be(LiquidType.Honey);
         }
@@ -512,15 +512,7 @@ namespace Orion.World.Tiles {
 
             tile.LiquidType = LiquidType.Honey;
 
-            itile.liquidType().Should().Be(LiquidType.Honey.Id);
-        }
-
-        [Fact]
-        public void SetLiquidType_NullValue_ThrowsArgumentNullException() {
-            var tile = new TestTile();
-            Action action = () => tile.LiquidType = null;
-
-            action.Should().Throw<ArgumentNullException>();
+            itile.liquidType().Should().Be((byte)LiquidType.Honey);
         }
 
         [Theory]

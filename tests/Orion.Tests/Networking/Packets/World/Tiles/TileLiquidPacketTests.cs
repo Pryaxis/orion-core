@@ -42,7 +42,6 @@ namespace Orion.Networking.Packets.World.Tiles {
         }
 
         public static readonly byte[] Bytes = {9, 0, 48, 0, 1, 100, 0, 255, 0};
-        public static readonly byte[] InvalidLiquidTypeBytes = {9, 0, 48, 0, 1, 100, 0, 255, 255};
 
         [Fact]
         public void ReadFromStream_IsCorrect() {
@@ -52,16 +51,7 @@ namespace Orion.Networking.Packets.World.Tiles {
                 packet.TileLiquid.TileX.Should().Be(256);
                 packet.TileLiquid.TileY.Should().Be(100);
                 packet.TileLiquid.LiquidAmount.Should().Be(255);
-                packet.TileLiquid.LiquidType.Should().BeSameAs(LiquidType.Water);
-            }
-        }
-
-        [Fact]
-        public void ReadFromStream_InvalidLiquidType_ThrowsPacketException() {
-            using (var stream = new MemoryStream(InvalidLiquidTypeBytes)) {
-                Func<Packet> func = () => Packet.ReadFromStream(stream, PacketContext.Server);
-
-                func.Should().Throw<PacketException>();
+                packet.TileLiquid.LiquidType.Should().Be(LiquidType.Water);
             }
         }
 

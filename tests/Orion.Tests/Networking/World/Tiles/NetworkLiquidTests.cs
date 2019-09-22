@@ -31,24 +31,8 @@ namespace Orion.Networking.World.Tiles {
             liquid.ShouldHaveDefaultablePropertiesMarkAsDirty();
         }
 
-        [Fact]
-        public void SetWLiquidType_MarksAsDirty() {
-            var liquid = new NetworkLiquid();
-
-            liquid.LiquidType = LiquidType.Water;
-        }
-
-        [Fact]
-        public void SetLiquidType_NullValue_ThrowsArgumentNullException() {
-            var liquid = new NetworkLiquid();
-            Action action = () => liquid.LiquidType = null;
-
-            action.Should().Throw<ArgumentNullException>();
-        }
-
 
         public static byte[] Bytes = {100, 0, 0, 1, 255, 0};
-        public static byte[] InvalidLiquidTypeBytes = {100, 0, 0, 1, 255, 255};
 
         [Theory]
         [InlineData(true)]
@@ -60,16 +44,7 @@ namespace Orion.Networking.World.Tiles {
                 liquid.TileX.Should().Be((short)(shouldSwapXY ? 256 : 100));
                 liquid.TileY.Should().Be((short)(shouldSwapXY ? 100 : 256));
                 liquid.LiquidAmount.Should().Be(255);
-                liquid.LiquidType.Should().BeSameAs(LiquidType.Water);
-            }
-        }
-
-        [Fact]
-        public void ReadFromReader_InvalidLiquidType_ThrowsPacketException() {
-            using (var stream = new MemoryStream(InvalidLiquidTypeBytes)) {
-                Func<NetworkLiquid> func = () => NetworkLiquid.ReadFromStream(stream);
-
-                func.Should().Throw<PacketException>();
+                liquid.LiquidType.Should().Be(LiquidType.Water);
             }
         }
 
