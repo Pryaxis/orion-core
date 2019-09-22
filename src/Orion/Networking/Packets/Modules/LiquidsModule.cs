@@ -49,14 +49,14 @@ namespace Orion.Networking.Packets.Modules {
         private protected override void ReadFromReader(BinaryReader reader, PacketContext context) {
             var numberOfLiquidChanges = reader.ReadUInt16();
             for (var i = 0; i < numberOfLiquidChanges; ++i) {
-                Liquids.Add(NetworkLiquid.ReadFromStream(reader.BaseStream, true));
+                Liquids.Add(NetworkLiquid.ReadFromReader(reader, true));
             }
         }
 
         private protected override void WriteToWriter(BinaryWriter writer, PacketContext context) {
             writer.Write((ushort)Liquids.Count);
             foreach (var liquid in Liquids) {
-                liquid.WriteToStream(writer.BaseStream, true);
+                liquid.WriteToWriter(writer, true);
             }
         }
     }

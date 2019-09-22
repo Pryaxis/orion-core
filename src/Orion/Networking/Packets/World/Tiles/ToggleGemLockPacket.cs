@@ -17,11 +17,13 @@
 
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
+using JetBrains.Annotations;
 
 namespace Orion.Networking.Packets.World.Tiles {
     /// <summary>
     /// Packet sent to toggle a gem lock.
     /// </summary>
+    [PublicAPI]
     public sealed class ToggleGemLockPacket : Packet {
         private short _gemLockX;
         private short _gemLockY;
@@ -68,15 +70,15 @@ namespace Orion.Networking.Packets.World.Tiles {
         public override string ToString() => $"{Type}[{IsGemLockLocked} @ ({GemLockX}, {GemLockY})]";
 
         private protected override void ReadFromReader(BinaryReader reader, PacketContext context) {
-            GemLockX = reader.ReadInt16();
-            GemLockY = reader.ReadInt16();
-            IsGemLockLocked = reader.ReadBoolean();
+            _gemLockX = reader.ReadInt16();
+            _gemLockY = reader.ReadInt16();
+            _isGemLockLocked = reader.ReadBoolean();
         }
 
         private protected override void WriteToWriter(BinaryWriter writer, PacketContext context) {
-            writer.Write(GemLockX);
-            writer.Write(GemLockY);
-            writer.Write(IsGemLockLocked);
+            writer.Write(_gemLockX);
+            writer.Write(_gemLockY);
+            writer.Write(_isGemLockLocked);
         }
     }
 }

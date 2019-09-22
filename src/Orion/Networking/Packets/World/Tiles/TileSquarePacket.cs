@@ -18,6 +18,7 @@
 using System;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
+using JetBrains.Annotations;
 using Orion.Networking.World.Tiles;
 using Orion.World.Tiles;
 using Orion.World.Tiles.Extensions;
@@ -26,18 +27,19 @@ namespace Orion.Networking.Packets.World.Tiles {
     /// <summary>
     /// Packet sent to set a square of tiles.
     /// </summary>
-    public sealed class SquareTilesPacket : Packet {
+    [PublicAPI]
+    public sealed class TileSquarePacket : Packet {
         private short _squareSize;
         private byte _data;
         private short _tileX;
         private short _tileY;
-        private NetworkTiles _tiles = new NetworkTiles(0, 0);
+        [NotNull, ItemNotNull] private NetworkTiles _tiles = new NetworkTiles(0, 0);
 
         /// <inheritdoc />
         public override bool IsDirty => base.IsDirty || _tiles.IsDirty;
 
         /// <inheritdoc />
-        public override PacketType Type => PacketType.SquareTiles;
+        public override PacketType Type => PacketType.TileSquare;
 
         /// <summary>
         /// Gets or sets the size of the square.
@@ -76,6 +78,7 @@ namespace Orion.Networking.Packets.World.Tiles {
         /// Gets or sets the tiles.
         /// </summary>
         /// <exception cref="ArgumentNullException"><paramref name="value"/> is <c>null</c>.</exception>
+        [NotNull, ItemNotNull]
         public NetworkTiles Tiles {
             get => _tiles;
             set {
@@ -101,13 +104,12 @@ namespace Orion.Networking.Packets.World.Tiles {
                 _data = reader.ReadByte();
             }
 
-            SquareSize = (short)(size & short.MaxValue);
-            TileX = reader.ReadInt16();
-            TileY = reader.ReadInt16();
-            Tiles = new NetworkTiles(SquareSize, SquareSize);
+            _squareSize = (short)(size & short.MaxValue);
+            _tileX = reader.ReadInt16();
+            _tileY = reader.ReadInt16();
+            _tiles = new NetworkTiles(_squareSize, _squareSize);
 
-            NetworkTile ReadTile() {
-                var tile = new NetworkTile();
+            void ReadTile(NetworkTile tile) {
                 var header = (Terraria.BitsByte)reader.ReadByte();
                 var header2 = (Terraria.BitsByte)reader.ReadByte();
 
@@ -124,13 +126,13 @@ namespace Orion.Networking.Packets.World.Tiles {
 
                 if (header[0]) {
                     tile.IsBlockActive = true;
-                    tile.BlockType = (BlockType)reader.ReadUInt16();
-                    if (tile.BlockType.AreFramesImportant()) {
-                        tile.BlockFrameX = reader.ReadInt16();
-                        tile.BlockFrameY = reader.ReadInt16();
+                    tile._blockType = (BlockType)reader.ReadUInt16();
+                    if (tile._blockType.AreFramesImportant()) {
+                        tile._blockFrameX = reader.ReadInt16();
+                        tile._blockFrameY = reader.ReadInt16();
                     } else {
-                        tile.BlockFrameX = -1;
-                        tile.BlockFrameY = -1;
+                        tile._blockFrameX = -1;
+                        tile._blockFrameY = -1;
                     }
 
                     byte slope = 0;
@@ -140,39 +142,39 @@ namespace Orion.Networking.Packets.World.Tiles {
                     tile.Slope = (Slope)slope;
                 }
 
-                if (header[2]) tile.WallType = (WallType)reader.ReadByte();
+                if (header[2]) tile._wallType = (WallType)reader.ReadByte();
 
                 if (header[3]) {
-                    tile.LiquidAmount = reader.ReadByte();
+                    tile._liquidAmount = reader.ReadByte();
                     tile.LiquidType = (LiquidType)reader.ReadByte();
                 }
 
-                return tile;
+                tile.Clean();
             }
 
             for (int x = 0; x < SquareSize; ++x) {
                 for (int y = 0; y < SquareSize; ++y) {
-                    Tiles[x, y] = ReadTile();
+                    ReadTile(_tiles._tiles[x, y]);
                 }
             }
         }
 
         private protected override void WriteToWriter(BinaryWriter writer, PacketContext context) {
             if (_data > 0) {
-                writer.Write((ushort)(SquareSize | 32768));
+                writer.Write((ushort)(_squareSize | 32768));
                 writer.Write(_data);
             } else {
-                writer.Write(SquareSize);
+                writer.Write(_squareSize);
             }
 
-            writer.Write(TileX);
-            writer.Write(TileY);
+            writer.Write(_tileX);
+            writer.Write(_tileY);
 
-            void WriteTile(Tile tile) {
+            void WriteTile(NetworkTile tile) {
                 Terraria.BitsByte header = 0;
                 Terraria.BitsByte header2 = 0;
                 header[0] = tile.IsBlockActive;
-                header[2] = tile.WallType != WallType.None;
+                header[2] = tile._wallType != WallType.None;
                 header[3] = tile.LiquidAmount > 0;
                 header[4] = tile.HasRedWire;
                 header[5] = tile.IsBlockHalved;
@@ -189,24 +191,24 @@ namespace Orion.Networking.Packets.World.Tiles {
                 writer.Write(header2);
 
                 if (header[0]) {
-                    writer.Write((ushort)tile.BlockType);
-                    if (tile.BlockType.AreFramesImportant()) {
-                        writer.Write(tile.BlockFrameX);
-                        writer.Write(tile.BlockFrameY);
+                    writer.Write((ushort)tile._blockType);
+                    if (tile._blockType.AreFramesImportant()) {
+                        writer.Write(tile._blockFrameX);
+                        writer.Write(tile._blockFrameY);
                     }
                 }
 
-                if (header[2]) writer.Write((byte)tile.WallType);
+                if (header[2]) writer.Write((byte)tile._wallType);
 
                 if (header[3]) {
-                    writer.Write(tile.LiquidAmount);
+                    writer.Write(tile._liquidAmount);
                     writer.Write((byte)tile.LiquidType);
                 }
             }
 
             for (int x = 0; x < SquareSize; ++x) {
                 for (int y = 0; y < SquareSize; ++y) {
-                    WriteTile(Tiles[x, y]);
+                    WriteTile(_tiles._tiles[x, y]);
                 }
             }
         }

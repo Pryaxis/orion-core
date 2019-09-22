@@ -16,20 +16,24 @@
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
 using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
-using Orion.Events;
+using JetBrains.Annotations;
 using Orion.Utils;
 
 namespace Orion.Networking.World.Tiles {
     /// <summary>
     /// Represents a section of tiles that are transmitted over the network.
     /// </summary>
-    public class NetworkTiles : IDirtiable {
-        private readonly NetworkTile[,] _tiles;
+    [PublicAPI]
+    public class NetworkTiles : IEnumerable<NetworkTile>, IDirtiable {
+        [ItemNotNull, NotNull] internal readonly NetworkTile[,] _tiles;
         private bool _isDirty;
 
         /// <inheritdoc />
-        public bool IsDirty => _isDirty || _tiles.Cast<NetworkTile>().Any(t => t?.IsDirty == true);
+        public bool IsDirty => _isDirty || this.Any(t => t?.IsDirty == true);
 
         /// <summary>
         /// Gets or sets the tile at the given coordinates.
@@ -38,6 +42,7 @@ namespace Orion.Networking.World.Tiles {
         /// <param name="y">The Y coordinate.</param>
         /// <returns>The tile.</returns>
         /// <exception cref="ArgumentNullException"><paramref name="value"/> is <c>null</c>.</exception>
+        [NotNull]
         public NetworkTile this[int x, int y] {
             get => _tiles[x, y];
             set {
@@ -69,12 +74,23 @@ namespace Orion.Networking.World.Tiles {
             if (height < 0) throw new ArgumentOutOfRangeException(nameof(height), "Height is negative.");
 
             _tiles = new NetworkTile[width, height];
+            for (var i = 0; i < width; ++i) {
+                for (var j = 0; j < height; ++j) {
+                    _tiles[i, j] = new NetworkTile();
+                }
+            }
         }
+
+        /// <inheritdoc />
+        public IEnumerator<NetworkTile> GetEnumerator() => _tiles.Cast<NetworkTile>().GetEnumerator();
+
+        [ExcludeFromCodeCoverage]
+        IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
 
         /// <inheritdoc />
         public void Clean() {
             _isDirty = false;
-            foreach (var tile in _tiles.Cast<NetworkTile>()) {
+            foreach (var tile in this) {
                 tile?.Clean();
             }
         }

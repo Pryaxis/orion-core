@@ -15,70 +15,56 @@
 // You should have received a copy of the GNU General Public License
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
-using System;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
-using Orion.World.Tiles;
+using JetBrains.Annotations;
 
 namespace Orion.Networking.Packets.World.Tiles {
     /// <summary>
-    /// Packet sent to paint a wall.
+    /// Packet sent to activate wire at a specific position.
     /// </summary>
-    public sealed class PaintWallPacket : Packet {
-        private short _wallX;
-        private short _wallY;
-        private PaintColor _wallColor;
+    [PublicAPI]
+    public sealed class WireActivatePacket : Packet {
+        private short _wireY;
+        private short _wireX;
 
         /// <inheritdoc />
-        public override PacketType Type => PacketType.PaintWall;
+        public override PacketType Type => PacketType.WireActivate;
 
         /// <summary>
-        /// Gets or sets the wall's X coordinate.
+        /// Gets or sets the wire's X coordinate.
         /// </summary>
-        public short WallX {
-            get => _wallX;
+        public short WireX {
+            get => _wireX;
             set {
-                _wallX = value;
+                _wireX = value;
                 _isDirty = true;
             }
         }
 
         /// <summary>
-        /// Gets or sets the wall's Y coordinate.
+        /// Gets or sets the wire's Y coordinate.
         /// </summary>
-        public short WallY {
-            get => _wallY;
+        public short WireY {
+            get => _wireY;
             set {
-                _wallY = value;
-                _isDirty = true;
-            }
-        }
-
-        /// <summary>
-        /// Gets or sets the wall color.
-        /// </summary>
-        public PaintColor WallColor {
-            get => _wallColor;
-            set {
-                _wallColor = value;
+                _wireY = value;
                 _isDirty = true;
             }
         }
 
         /// <inheritdoc />
         [ExcludeFromCodeCoverage]
-        public override string ToString() => $"{Type}[{WallColor} @ ({WallX}, {WallY})]";
+        public override string ToString() => $"{Type}[({WireX}, {WireY})]";
 
         private protected override void ReadFromReader(BinaryReader reader, PacketContext context) {
-            WallX = reader.ReadInt16();
-            WallY = reader.ReadInt16();
-            WallColor = (PaintColor)reader.ReadByte();
+            _wireX = reader.ReadInt16();
+            _wireY = reader.ReadInt16();
         }
 
         private protected override void WriteToWriter(BinaryWriter writer, PacketContext context) {
-            writer.Write(WallX);
-            writer.Write(WallY);
-            writer.Write((byte)WallColor);
+            writer.Write(_wireX);
+            writer.Write(_wireY);
         }
     }
 }

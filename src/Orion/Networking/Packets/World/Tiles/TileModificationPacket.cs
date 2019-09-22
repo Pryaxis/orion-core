@@ -15,15 +15,16 @@
 // You should have received a copy of the GNU General Public License
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
-using System;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
+using JetBrains.Annotations;
 using Orion.Networking.World.Tiles;
 
 namespace Orion.Networking.Packets.World.Tiles {
     /// <summary>
     /// Packet sent to perform a tile modification.
     /// </summary>
+    [PublicAPI]
     public sealed class TileModificationPacket : Packet {
         private TileModification _tileModification;
         private short _tileX;
@@ -37,11 +38,10 @@ namespace Orion.Networking.Packets.World.Tiles {
         /// <summary>
         /// Gets or sets the tile modification.
         /// </summary>
-        /// <exception cref="ArgumentNullException"><paramref name="value"/> is <c>null</c>.</exception>
         public TileModification TileModification {
             get => _tileModification;
             set {
-                _tileModification = value ?? throw new ArgumentNullException(nameof(value));
+                _tileModification = value;
                 _isDirty = true;
             }
         }
@@ -95,20 +95,19 @@ namespace Orion.Networking.Packets.World.Tiles {
         public override string ToString() => $"{Type}[{TileModification} @ ({TileX}, {TileY}), ...]";
 
         private protected override void ReadFromReader(BinaryReader reader, PacketContext context) {
-            TileModification = TileModification.FromId(reader.ReadByte()) ??
-                                   throw new PacketException("Modification type is invalid.");
-            TileX = reader.ReadInt16();
-            TileY = reader.ReadInt16();
-            TileModificationData = reader.ReadInt16();
-            TileModificationStyle = reader.ReadByte();
+            _tileModification = (TileModification)reader.ReadByte();
+            _tileX = reader.ReadInt16();
+            _tileY = reader.ReadInt16();
+            _tileModificationData = reader.ReadInt16();
+            _tileModificationStyle = reader.ReadByte();
         }
 
         private protected override void WriteToWriter(BinaryWriter writer, PacketContext context) {
-            writer.Write(TileModification.Id);
-            writer.Write(TileX);
-            writer.Write(TileY);
-            writer.Write(TileModificationData);
-            writer.Write(TileModificationStyle);
+            writer.Write((byte)_tileModification);
+            writer.Write(_tileX);
+            writer.Write(_tileY);
+            writer.Write(_tileModificationData);
+            writer.Write(_tileModificationStyle);
         }
     }
 }

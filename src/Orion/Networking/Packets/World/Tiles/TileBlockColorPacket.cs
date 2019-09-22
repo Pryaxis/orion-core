@@ -18,70 +18,69 @@
 using System;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
-using Orion.Networking.World;
-using Orion.Networking.World.Tiles;
+using JetBrains.Annotations;
+using Orion.World.Tiles;
 
 namespace Orion.Networking.Packets.World.Tiles {
     /// <summary>
-    /// Packet sent to unlock an object (chest, door, etc.).
+    /// Packet sent to set a tile's block color.
     /// </summary>
-    public sealed class UnlockObjectPacket : Packet {
-        private UnlockableObject _unlockableObject;
-        private short _objectX;
-        private short _objectY;
+    [PublicAPI]
+    public sealed class TileBlockColorPacket : Packet {
+        private short _blockX;
+        private short _blockY;
+        private PaintColor _blockColor;
 
         /// <inheritdoc />
-        public override PacketType Type => PacketType.UnlockObject;
+        public override PacketType Type => PacketType.TileBlockColor;
 
         /// <summary>
-        /// Gets or sets the unlockable object.
+        /// Gets or sets the block's X coordinate.
         /// </summary>
-        /// <exception cref="ArgumentNullException"><paramref name="value"/> is <c>null</c>.</exception>
-        public UnlockableObject UnlockableObject {
-            get => _unlockableObject;
+        public short BlockX {
+            get => _blockX;
             set {
-                _unlockableObject = value ?? throw new ArgumentNullException(nameof(value));
+                _blockX = value;
                 _isDirty = true;
             }
         }
 
         /// <summary>
-        /// Gets or sets the object's X coordinate.
+        /// Gets or sets the block's Y coordinate.
         /// </summary>
-        public short ObjectX {
-            get => _objectX;
+        public short BlockY {
+            get => _blockY;
             set {
-                _objectX = value;
+                _blockY = value;
                 _isDirty = true;
             }
         }
 
         /// <summary>
-        /// Gets or sets the object's Y coordinate.
+        /// Gets or sets the block color.
         /// </summary>
-        public short ObjectY {
-            get => _objectY;
+        public PaintColor BlockColor {
+            get => _blockColor;
             set {
-                _objectY = value;
+                _blockColor = value;
                 _isDirty = true;
             }
         }
 
         /// <inheritdoc />
         [ExcludeFromCodeCoverage]
-        public override string ToString() => $"{Type}[{UnlockableObject} @ ({ObjectX}, {ObjectY})]";
+        public override string ToString() => $"{Type}[{BlockColor} @ ({BlockX}, {BlockY})]";
 
         private protected override void ReadFromReader(BinaryReader reader, PacketContext context) {
-            UnlockableObject = UnlockableObject.FromId(reader.ReadByte()) ??
-                               throw new PacketException("Object type is invalid.");
-            ObjectX = reader.ReadInt16();
-            ObjectY = reader.ReadInt16();
+            _blockX = reader.ReadInt16();
+            _blockY = reader.ReadInt16();
+            _blockColor = (PaintColor)reader.ReadByte();
         }
 
         private protected override void WriteToWriter(BinaryWriter writer, PacketContext context) {
-            writer.Write(UnlockableObject.Id);
-            writer.Write(ObjectX);
-            writer.Write(ObjectY);
+            writer.Write(_blockX);
+            writer.Write(_blockY);
+            writer.Write((byte)_blockColor);
         }
     }
 }

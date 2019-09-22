@@ -18,14 +18,16 @@
 using System;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
+using JetBrains.Annotations;
 using Orion.Networking.World.Tiles;
 
 namespace Orion.Networking.Packets.World.Tiles {
     /// <summary>
     /// Packet sent to set a tile's liquid.
     /// </summary>
+    [PublicAPI]
     public sealed class TileLiquidPacket : Packet {
-        private NetworkLiquid _tileLiquid;
+        [NotNull] private NetworkLiquid _tileLiquid = new NetworkLiquid();
 
         /// <inheritdoc />
         public override PacketType Type => PacketType.TileLiquid;
@@ -34,6 +36,7 @@ namespace Orion.Networking.Packets.World.Tiles {
         /// Gets or sets the tile's liquid.
         /// </summary>
         /// <exception cref="ArgumentNullException"><paramref name="value"/> is <c>null</c>.</exception>
+        [NotNull]
         public NetworkLiquid TileLiquid {
             get => _tileLiquid;
             set {
@@ -47,11 +50,11 @@ namespace Orion.Networking.Packets.World.Tiles {
         public override string ToString() => $"{Type}[{TileLiquid}]";
 
         private protected override void ReadFromReader(BinaryReader reader, PacketContext context) {
-            TileLiquid = NetworkLiquid.ReadFromStream(reader.BaseStream);
+            _tileLiquid = NetworkLiquid.ReadFromReader(reader);
         }
 
         private protected override void WriteToWriter(BinaryWriter writer, PacketContext context) {
-            TileLiquid.WriteToStream(writer.BaseStream);
+            _tileLiquid.WriteToWriter(writer);
         }
     }
 }

@@ -15,8 +15,7 @@
 // You should have received a copy of the GNU General Public License
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
-using System;
-using Orion.Events;
+using JetBrains.Annotations;
 using Orion.Utils;
 using Orion.World.Tiles;
 
@@ -24,16 +23,17 @@ namespace Orion.Networking.World.Tiles {
     /// <summary>
     /// Represents a tile that is transmitted over the network.
     /// </summary>
+    [PublicAPI]
     public sealed class NetworkTile : Tile, IDirtiable {
-        private BlockType _blockType;
-        private WallType _wallType;
-        private byte _liquidAmount;
-        private short _tileHeader;
-        private byte _tileHeader2;
-        private byte _tileHeader3;
-        private byte _tileHeader4;
-        private short _blockFrameX;
-        private short _blockFrameY;
+        internal BlockType _blockType;
+        internal WallType _wallType;
+        internal byte _liquidAmount;
+        internal short _tileHeader;
+        internal byte _tileHeader2;
+        internal byte _tileHeader3;
+        internal byte _tileHeader4;
+        internal short _blockFrameX;
+        internal short _blockFrameY;
 
         /// <inheritdoc />
         public override BlockType BlockType {

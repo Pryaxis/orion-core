@@ -18,28 +18,49 @@
 using System;
 using System.IO;
 using FluentAssertions;
-using Orion.World.Tiles;
+using Orion.Networking.World.Tiles;
 using Xunit;
 
 namespace Orion.Networking.Packets.World.Tiles {
-    public class PaintBlockPacketTests {
+    public class TileSquarePacketTests {
         [Fact]
         public void SetDefaultableProperties_MarkAsDirty() {
-            var packet = new PaintBlockPacket();
+            var packet = new TileSquarePacket();
 
             packet.ShouldHaveDefaultablePropertiesMarkAsDirty();
         }
 
-        public static readonly byte[] Bytes = {8, 0, 63, 0, 1, 100, 0, 1};
+        [Fact]
+        public void Tiles_SetItem_MarksAsDirty() {
+            var packet = new TileSquarePacket();
+            packet.Tiles = new NetworkTiles(1, 1);
+            packet.ShouldBeDirty();
+
+            packet.Tiles[0, 0] = new NetworkTile();
+
+            packet.ShouldBeDirty();
+        }
+
+        [Fact]
+        public void SetTiles_NullValue_ThrowsArgumentNullException() {
+            var packet = new TileSquarePacket();
+            Action action = () => packet.Tiles = null;
+
+            action.Should().Throw<ArgumentNullException>();
+        }
+
+        private static readonly byte[] Bytes = {17, 0, 20, 1, 0, 153, 16, 171, 1, 1, 0, 3, 0, 72, 0, 0, 0};
 
         [Fact]
         public void ReadFromStream_IsCorrect() {
             using (var stream = new MemoryStream(Bytes)) {
-                var packet = (PaintBlockPacket)Packet.ReadFromStream(stream, PacketContext.Server);
+                var packet = (TileSquarePacket)Packet.ReadFromStream(stream, PacketContext.Server);
 
-                packet.BlockX.Should().Be(256);
-                packet.BlockY.Should().Be(100);
-                packet.BlockColor.Should().Be(PaintColor.Red);
+                packet.SquareSize.Should().Be(1);
+                packet.TileX.Should().Be(4249);
+                packet.TileY.Should().Be(427);
+                packet.Tiles.Width.Should().Be(1);
+                packet.Tiles.Height.Should().Be(1);
             }
         }
 

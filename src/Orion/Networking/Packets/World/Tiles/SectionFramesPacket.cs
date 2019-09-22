@@ -17,12 +17,14 @@
 
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
+using JetBrains.Annotations;
 
 namespace Orion.Networking.Packets.World.Tiles {
     /// <summary>
     /// Packet sent from the server to the client to synchronize tile frames. This is sent following every
     /// <see cref="SectionPacket"/>.
     /// </summary>
+    [PublicAPI]
     public sealed class SectionFramesPacket : Packet {
         private short _startSectionX;
         private short _startSectionY;
@@ -82,17 +84,17 @@ namespace Orion.Networking.Packets.World.Tiles {
             $"{Type}[({StartSectionX}, {StartSectionY}) to ({EndSectionX}, {EndSectionY})]";
 
         private protected override void ReadFromReader(BinaryReader reader, PacketContext context) {
-            StartSectionX = reader.ReadInt16();
-            StartSectionY = reader.ReadInt16();
-            EndSectionX = reader.ReadInt16();
-            EndSectionY = reader.ReadInt16();
+            _startSectionX = reader.ReadInt16();
+            _startSectionY = reader.ReadInt16();
+            _endSectionX = reader.ReadInt16();
+            _endSectionY = reader.ReadInt16();
         }
 
         private protected override void WriteToWriter(BinaryWriter writer, PacketContext context) {
-            writer.Write(StartSectionX);
-            writer.Write(StartSectionY);
-            writer.Write(EndSectionX);
-            writer.Write(EndSectionY);
+            writer.Write(_startSectionX);
+            writer.Write(_startSectionY);
+            writer.Write(_endSectionX);
+            writer.Write(_endSectionY);
         }
     }
 }

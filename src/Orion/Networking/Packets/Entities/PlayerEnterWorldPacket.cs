@@ -23,7 +23,7 @@ using Orion.Networking.Packets.World.Tiles;
 namespace Orion.Networking.Packets.Entities {
     /// <summary>
     /// Packet sent from the server to the client to enter the world. This is sent in response to a
-    /// <see cref="RequestSectionPacket"/>.
+    /// <see cref="SectionRequestPacket"/>.
     /// </summary>
     [PublicAPI]
     public sealed class PlayerEnterWorldPacket : Packet {

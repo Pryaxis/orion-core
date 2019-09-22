@@ -15,16 +15,16 @@
 // You should have received a copy of the GNU General Public License
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
-using System;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
-using Orion.Networking.World;
+using JetBrains.Annotations;
 using Orion.Networking.World.Tiles;
 
 namespace Orion.Networking.Packets.World.Tiles {
     /// <summary>
     /// Packet sent to toggle the state of a door.
     /// </summary>
+    [PublicAPI]
     public sealed class ToggleDoorPacket : Packet {
         private ToggleDoorAction _toggleDoorAction;
         private short _doorX;
@@ -37,11 +37,10 @@ namespace Orion.Networking.Packets.World.Tiles {
         /// <summary>
         /// Gets or sets the toggle door action.
         /// </summary>
-        /// <exception cref="ArgumentNullException"><paramref name="value"/> is <c>null</c>.</exception>
         public ToggleDoorAction ToggleDoorAction {
             get => _toggleDoorAction;
             set {
-                _toggleDoorAction = value ?? throw new ArgumentNullException(nameof(value));
+                _toggleDoorAction = value;
                 _isDirty = true;
             }
         }
@@ -84,18 +83,17 @@ namespace Orion.Networking.Packets.World.Tiles {
         public override string ToString() => $"{Type}[{ToggleDoorAction} @ ({DoorX}, {DoorY}), ...]";
 
         private protected override void ReadFromReader(BinaryReader reader, PacketContext context) {
-            ToggleDoorAction = ToggleDoorAction.FromId(reader.ReadByte()) ??
-                               throw new PacketException("Door action is invalid.");
-            DoorX = reader.ReadInt16();
-            DoorY = reader.ReadInt16();
-            ToggleDirection = reader.ReadByte() == 1;
+            _toggleDoorAction = (ToggleDoorAction)reader.ReadByte();
+            _doorX = reader.ReadInt16();
+            _doorY = reader.ReadInt16();
+            _toggleDirection = reader.ReadBoolean();
         }
 
         private protected override void WriteToWriter(BinaryWriter writer, PacketContext context) {
-            writer.Write(ToggleDoorAction.Id);
-            writer.Write(DoorX);
-            writer.Write(DoorY);
-            writer.Write(ToggleDirection);
+            writer.Write((byte)_toggleDoorAction);
+            writer.Write(_doorX);
+            writer.Write(_doorY);
+            writer.Write(_toggleDirection);
         }
     }
 }

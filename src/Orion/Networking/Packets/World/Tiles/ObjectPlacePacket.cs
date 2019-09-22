@@ -15,16 +15,17 @@
 // You should have received a copy of the GNU General Public License
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
-using System;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
+using JetBrains.Annotations;
 using Orion.World.Tiles;
 
 namespace Orion.Networking.Packets.World.Tiles {
     /// <summary>
     /// Packet sent to place an object.
     /// </summary>
-    public sealed class PlaceObjectPacket : Packet {
+    [PublicAPI]
+    public sealed class ObjectPlacePacket : Packet {
         private short _objectX;
         private short _objectY;
         private BlockType _objectType;
@@ -34,7 +35,7 @@ namespace Orion.Networking.Packets.World.Tiles {
         private bool _objectDirection;
 
         /// <inheritdoc />
-        public override PacketType Type => PacketType.PlaceObject;
+        public override PacketType Type => PacketType.ObjectPlace;
 
         /// <summary>
         /// Gets or sets the object's X coordinate.
@@ -108,26 +109,26 @@ namespace Orion.Networking.Packets.World.Tiles {
 
         /// <inheritdoc />
         private protected override void ReadFromReader(BinaryReader reader, PacketContext context) {
-            ObjectX = reader.ReadInt16();
-            ObjectY = reader.ReadInt16();
-            ObjectType = (BlockType)reader.ReadUInt16();
-            ObjectStyle = reader.ReadInt16();
+            _objectX = reader.ReadInt16();
+            _objectY = reader.ReadInt16();
+            _objectType = (BlockType)reader.ReadUInt16();
+            _objectStyle = reader.ReadInt16();
 
             // This byte is basically useless, but we'll keep track of it anyways.
             _data = reader.ReadByte();
-            ObjectRandomState = reader.ReadSByte();
-            ObjectDirection = reader.ReadBoolean();
+            _objectRandomState = reader.ReadSByte();
+            _objectDirection = reader.ReadBoolean();
         }
 
         /// <inheritdoc />
         private protected override void WriteToWriter(BinaryWriter writer, PacketContext context) {
-            writer.Write(ObjectX);
-            writer.Write(ObjectY);
-            writer.Write((ushort)ObjectType);
-            writer.Write(ObjectStyle);
+            writer.Write(_objectX);
+            writer.Write(_objectY);
+            writer.Write((ushort)_objectType);
+            writer.Write(_objectStyle);
             writer.Write(_data);
-            writer.Write(ObjectRandomState);
-            writer.Write(ObjectDirection);
+            writer.Write(_objectRandomState);
+            writer.Write(_objectDirection);
         }
     }
 }

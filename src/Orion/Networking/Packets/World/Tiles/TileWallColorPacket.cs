@@ -17,52 +17,69 @@
 
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
+using JetBrains.Annotations;
+using Orion.World.Tiles;
 
 namespace Orion.Networking.Packets.World.Tiles {
     /// <summary>
-    /// Packet sent from the client to the server to request a section of the world.
+    /// Packet sent to set a tile's wall color.
     /// </summary>
-    public sealed class RequestSectionPacket : Packet {
-        private int _sectionX;
-        private int _sectionY;
+    [PublicAPI]
+    public sealed class TileWallColorPacket : Packet {
+        private short _wallX;
+        private short _wallY;
+        private PaintColor _wallColor;
 
         /// <inheritdoc />
-        public override PacketType Type => PacketType.RequestSection;
+        public override PacketType Type => PacketType.TileWallColor;
 
         /// <summary>
-        /// Gets or sets the section's X index. An invalid value results in only the spawn section being sent.
+        /// Gets or sets the wall's X coordinate.
         /// </summary>
-        public int SectionX {
-            get => _sectionX;
+        public short WallX {
+            get => _wallX;
             set {
-                _sectionX = value;
+                _wallX = value;
                 _isDirty = true;
             }
         }
 
         /// <summary>
-        /// Gets or sets the section's Y index. An invalid value results in only the spawn section being sent.
+        /// Gets or sets the wall's Y coordinate.
         /// </summary>
-        public int SectionY {
-            get => _sectionY;
+        public short WallY {
+            get => _wallY;
             set {
-                _sectionY = value;
+                _wallY = value;
+                _isDirty = true;
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets the wall color.
+        /// </summary>
+        public PaintColor WallColor {
+            get => _wallColor;
+            set {
+                _wallColor = value;
                 _isDirty = true;
             }
         }
 
         /// <inheritdoc />
         [ExcludeFromCodeCoverage]
-        public override string ToString() => $"{Type}[({SectionX}, {SectionY})]";
+        public override string ToString() => $"{Type}[{WallColor} @ ({WallX}, {WallY})]";
 
         private protected override void ReadFromReader(BinaryReader reader, PacketContext context) {
-            SectionX = reader.ReadInt32();
-            SectionY = reader.ReadInt32();
+            _wallX = reader.ReadInt16();
+            _wallY = reader.ReadInt16();
+            _wallColor = (PaintColor)reader.ReadByte();
         }
 
         private protected override void WriteToWriter(BinaryWriter writer, PacketContext context) {
-            writer.Write(SectionX);
-            writer.Write(SectionY);
+            writer.Write(_wallX);
+            writer.Write(_wallY);
+            writer.Write((byte)_wallColor);
         }
     }
 }

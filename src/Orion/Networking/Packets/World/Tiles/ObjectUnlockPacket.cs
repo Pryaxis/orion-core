@@ -17,52 +17,69 @@
 
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
+using JetBrains.Annotations;
+using Orion.Networking.World.Tiles;
 
 namespace Orion.Networking.Packets.World.Tiles {
     /// <summary>
-    /// Packet sent to activate wire at a specific position.
+    /// Packet sent to unlock an object (chest, door, etc.).
     /// </summary>
-    public sealed class ActivateWirePacket : Packet {
-        private short _wireY;
-        private short _wireX;
+    [PublicAPI]
+    public sealed class ObjectUnlockPacket : Packet {
+        private UnlockableObjectType _unlockableObjectType;
+        private short _objectX;
+        private short _objectY;
 
         /// <inheritdoc />
-        public override PacketType Type => PacketType.ActivateWire;
+        public override PacketType Type => PacketType.ObjectUnlock;
 
         /// <summary>
-        /// Gets or sets the wire's X coordinate.
+        /// Gets or sets the unlockable object type.
         /// </summary>
-        public short WireX {
-            get => _wireX;
+        public UnlockableObjectType UnlockableObjectType {
+            get => _unlockableObjectType;
             set {
-                _wireX = value;
+                _unlockableObjectType = value;
                 _isDirty = true;
             }
         }
 
         /// <summary>
-        /// Gets or sets the wire's Y coordinate.
+        /// Gets or sets the object's X coordinate.
         /// </summary>
-        public short WireY {
-            get => _wireY;
+        public short ObjectX {
+            get => _objectX;
             set {
-                _wireY = value;
+                _objectX = value;
+                _isDirty = true;
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets the object's Y coordinate.
+        /// </summary>
+        public short ObjectY {
+            get => _objectY;
+            set {
+                _objectY = value;
                 _isDirty = true;
             }
         }
 
         /// <inheritdoc />
         [ExcludeFromCodeCoverage]
-        public override string ToString() => $"{Type}[({WireX}, {WireY})]";
+        public override string ToString() => $"{Type}[{UnlockableObjectType} @ ({ObjectX}, {ObjectY})]";
 
         private protected override void ReadFromReader(BinaryReader reader, PacketContext context) {
-            WireX = reader.ReadInt16();
-            WireY = reader.ReadInt16();
+            _unlockableObjectType = (UnlockableObjectType)reader.ReadByte();
+            _objectX = reader.ReadInt16();
+            _objectY = reader.ReadInt16();
         }
 
         private protected override void WriteToWriter(BinaryWriter writer, PacketContext context) {
-            writer.Write(WireX);
-            writer.Write(WireY);
+            writer.Write((byte)_unlockableObjectType);
+            writer.Write(_objectX);
+            writer.Write(_objectY);
         }
     }
 }

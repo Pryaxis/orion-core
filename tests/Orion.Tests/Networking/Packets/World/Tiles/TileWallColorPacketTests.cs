@@ -22,10 +22,10 @@ using Orion.World.Tiles;
 using Xunit;
 
 namespace Orion.Networking.Packets.World.Tiles {
-    public class PaintWallPacketTests {
+    public class TileWallColorPacketTests {
         [Fact]
         public void SetDefaultableProperties_MarkAsDirty() {
-            var packet = new PaintWallPacket();
+            var packet = new TileWallColorPacket();
 
             packet.ShouldHaveDefaultablePropertiesMarkAsDirty();
         }
@@ -35,7 +35,7 @@ namespace Orion.Networking.Packets.World.Tiles {
         [Fact]
         public void ReadFromStream_IsCorrect() {
             using (var stream = new MemoryStream(Bytes)) {
-                var packet = (PaintWallPacket)Packet.ReadFromStream(stream, PacketContext.Server);
+                var packet = (TileWallColorPacket)Packet.ReadFromStream(stream, PacketContext.Server);
 
                 packet.WallX.Should().Be(256);
                 packet.WallY.Should().Be(100);

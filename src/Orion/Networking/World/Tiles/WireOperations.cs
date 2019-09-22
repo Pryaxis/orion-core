@@ -21,11 +21,11 @@ using Orion.Networking.Packets.World.Tiles;
 
 namespace Orion.Networking.World.Tiles {
     /// <summary>
-    /// Specifies the mass wire operations in a <see cref="MassWireOperationPacket"/>.
+    /// Specifies the wire operations in a <see cref="WireMassOperationPacket"/>.
     /// </summary>
     [Flags]
     [PublicAPI]
-    public enum MassWireOperations : byte {
+    public enum WireOperations : byte {
         /// <summary>
         /// Indicates nothing.
         /// </summary>

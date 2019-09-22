@@ -18,8 +18,7 @@
 using System;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
-using System.Text;
-using Orion.Events;
+using JetBrains.Annotations;
 using Orion.Networking.Packets;
 using Orion.Utils;
 using Orion.World.Tiles;
@@ -28,6 +27,7 @@ namespace Orion.Networking.World.Tiles {
     /// <summary>
     /// Represents a liquid transmitted over the network.
     /// </summary>
+    [PublicAPI]
     public sealed class NetworkLiquid : IDirtiable {
         private short _tileX;
         private short _tileY;
@@ -82,22 +82,22 @@ namespace Orion.Networking.World.Tiles {
         }
 
         /// <summary>
-        /// Reads and returns a network liquid from the given stream.
+        /// Reads and returns a network liquid from the given reader.
         /// </summary>
-        /// <param name="stream">The stream.</param>
-        /// <param name="shouldSwapXY">A value indicating whether the X and Y values should be swapped.</param>
+        /// <param name="reader">The reader.</param>
+        /// <param name="shouldSwapCoords">A value indicating whether the coordinates should be swapped.</param>
         /// <returns>The resulting network tile liquid.</returns>
-        /// <exception cref="ArgumentNullException"><paramref name="stream"/> is <c>null</c>.</exception>
+        /// <exception cref="ArgumentNullException"><paramref name="reader"/> is <c>null</c>.</exception>
         /// <exception cref="PacketException">The liquid type was invalid.</exception>
-        public static NetworkLiquid ReadFromStream(Stream stream, bool shouldSwapXY = false) {
-            if (stream == null) throw new ArgumentNullException(nameof(stream));
+        [NotNull]
+        public static NetworkLiquid ReadFromReader([NotNull] BinaryReader reader, bool shouldSwapCoords = false) {
+            if (reader == null) throw new ArgumentNullException(nameof(reader));
 
-            var reader = new BinaryReader(stream, Encoding.UTF8, true);
             var coord1 = reader.ReadInt16();
             var coord2 = reader.ReadInt16();
             return new NetworkLiquid {
-                TileX = shouldSwapXY ? coord2 : coord1,
-                TileY = shouldSwapXY ? coord1 : coord2,
+                TileX = shouldSwapCoords ? coord2 : coord1,
+                TileY = shouldSwapCoords ? coord1 : coord2,
                 LiquidAmount = reader.ReadByte(),
                 LiquidType = (LiquidType)reader.ReadByte()
             };
@@ -113,17 +113,16 @@ namespace Orion.Networking.World.Tiles {
         public override string ToString() => $"{LiquidType} x{LiquidAmount} @ ({TileX}, {TileY})";
 
         /// <summary>
-        /// Writes the network liquid to the given stream.
+        /// Writes the network liquid to the given writer.
         /// </summary>
-        /// <param name="stream">The stream.</param>
-        /// <param name="shouldSwapXY">A value indicating whether the X and Y values should be swapped.</param>
-        /// <exception cref="ArgumentNullException"><paramref name="stream"/> is <c>null</c>.</exception>
-        public void WriteToStream(Stream stream, bool shouldSwapXY = false) {
-            if (stream == null) throw new ArgumentNullException(nameof(stream));
+        /// <param name="writer">The writer.</param>
+        /// <param name="shouldSwapCoords">A value indicating whether the X and Y values should be swapped.</param>
+        /// <exception cref="ArgumentNullException"><paramref name="writer"/> is <c>null</c>.</exception>
+        public void WriteToWriter([NotNull] BinaryWriter writer, bool shouldSwapCoords = false) {
+            if (writer == null) throw new ArgumentNullException(nameof(writer));
 
-            var writer = new BinaryWriter(stream, Encoding.UTF8, true);
-            writer.Write(shouldSwapXY ? TileY : TileX);
-            writer.Write(shouldSwapXY ? TileX : TileY);
+            writer.Write(shouldSwapCoords ? TileY : TileX);
+            writer.Write(shouldSwapCoords ? TileX : TileY);
             writer.Write(LiquidAmount);
             writer.Write((byte)LiquidType);
         }

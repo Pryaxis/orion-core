@@ -21,6 +21,7 @@ using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.IO.Compression;
 using System.Text;
+using JetBrains.Annotations;
 using Orion.Networking.World.TileEntities;
 using Orion.Networking.World.Tiles;
 using Orion.Utils;
@@ -32,15 +33,16 @@ using OTAPI.Tile;
 namespace Orion.Networking.Packets.World.Tiles {
     /// <summary>
     /// Packet sent from the server to the client to set a section of the world. This is sent in response to a
-    /// <see cref="RequestSectionPacket"/>.
+    /// <see cref="SectionRequestPacket"/>.
     /// </summary>
+    [PublicAPI]
     public sealed class SectionPacket : Packet {
         private bool _isSectionCompressed;
         private int _startTileX;
         private int _startTileY;
         private short _sectionWidth;
         private short _sectionHeight;
-        private NetworkTiles _sectionTiles = new NetworkTiles(0, 0);
+        [NotNull, ItemNotNull] private NetworkTiles _sectionTiles = new NetworkTiles(0, 0);
 
         /// <inheritdoc />
         public override bool IsDirty => base.IsDirty || SectionTiles.IsDirty || SectionTileEntities.IsDirty;
@@ -107,6 +109,7 @@ namespace Orion.Networking.Packets.World.Tiles {
         /// Gets or sets the section's tiles.
         /// </summary>
         /// <exception cref="ArgumentNullException"><paramref name="value"/> is <c>null</c>.</exception>
+        [NotNull, ItemNotNull]
         public NetworkTiles SectionTiles {
             get => _sectionTiles;
             set {
@@ -118,6 +121,7 @@ namespace Orion.Networking.Packets.World.Tiles {
         /// <summary>
         /// Gets the section's tile entities.
         /// </summary>
+        [NotNull, ItemNotNull]
         public DirtiableList<NetworkTileEntity> SectionTileEntities { get; } = new DirtiableList<NetworkTileEntity>();
 
         /// <inheritdoc />
@@ -133,8 +137,8 @@ namespace Orion.Networking.Packets.World.Tiles {
             $"{Type}[{SectionWidth}x{SectionHeight} @ ({StartTileX}, {StartTileY}), ...]";
 
         private protected override void ReadFromReader(BinaryReader reader, PacketContext context) {
-            IsSectionCompressed = reader.ReadByte() == 1;
-            if (!IsSectionCompressed) {
+            _isSectionCompressed = reader.ReadByte() == 1;
+            if (!_isSectionCompressed) {
                 ReadFromReaderImpl(reader);
                 return;
             }
@@ -146,8 +150,8 @@ namespace Orion.Networking.Packets.World.Tiles {
         }
 
         private protected override void WriteToWriter(BinaryWriter writer, PacketContext context) {
-            writer.Write(IsSectionCompressed);
-            if (!IsSectionCompressed) {
+            writer.Write(_isSectionCompressed);
+            if (!_isSectionCompressed) {
                 WriteToWriterImpl(writer);
                 return;
             }
@@ -167,29 +171,28 @@ namespace Orion.Networking.Packets.World.Tiles {
         }
 
         private void ReadFromReaderImpl(BinaryReader reader) {
-            StartTileX = reader.ReadInt32();
-            StartTileY = reader.ReadInt32();
-            SectionWidth = reader.ReadInt16();
-            SectionHeight = reader.ReadInt16();
-            SectionTiles = new NetworkTiles(SectionWidth, SectionHeight);
+            _startTileX = reader.ReadInt32();
+            _startTileY = reader.ReadInt32();
+            _sectionWidth = reader.ReadInt16();
+            _sectionHeight = reader.ReadInt16();
+            _sectionTiles = new NetworkTiles(SectionWidth, SectionHeight);
 
             ReadTilesFromReaderImpl(reader);
             ReadTileEntitiesFromReaderImpl(reader);
         }
 
         private void ReadTilesFromReaderImpl(BinaryReader reader) {
-            NetworkTile ReadTile(byte header, byte header2, byte header3) {
-                var tile = new NetworkTile();
+            void ReadTile(NetworkTile tile, byte header, byte header2, byte header3) {
                 if ((header & 2) == 2) {
                     tile.IsBlockActive = true;
 
-                    tile.BlockType = (BlockType)((header & 32) == 32 ? reader.ReadUInt16() : reader.ReadByte());
-                    if (tile.BlockType.AreFramesImportant()) {
-                        tile.BlockFrameX = reader.ReadInt16();
-                        tile.BlockFrameY = reader.ReadInt16();
+                    tile._blockType = (BlockType)((header & 32) == 32 ? reader.ReadUInt16() : reader.ReadByte());
+                    if (tile._blockType.AreFramesImportant()) {
+                        tile._blockFrameX = reader.ReadInt16();
+                        tile._blockFrameY = reader.ReadInt16();
                     } else {
-                        tile.BlockFrameX = -1;
-                        tile.BlockFrameY = -1;
+                        tile._blockFrameX = -1;
+                        tile._blockFrameY = -1;
                     }
 
                     if ((header3 & 8) == 8) {
@@ -198,7 +201,7 @@ namespace Orion.Networking.Packets.World.Tiles {
                 }
 
                 if ((header & 4) == 4) {
-                    tile.WallType = (WallType)reader.ReadByte();
+                    tile._wallType = (WallType)reader.ReadByte();
                     if ((header3 & 16) == 16) {
                         tile.WallColor = (PaintColor)reader.ReadByte();
                     }
@@ -206,7 +209,7 @@ namespace Orion.Networking.Packets.World.Tiles {
 
                 var liquidType = (header & 24) >> 3;
                 if (liquidType > 0) {
-                    tile.LiquidAmount = reader.ReadByte();
+                    tile._liquidAmount = reader.ReadByte();
                     tile.LiquidType = (LiquidType)(liquidType - 1);
                 }
 
@@ -227,7 +230,7 @@ namespace Orion.Networking.Packets.World.Tiles {
                 tile.HasActuator = (header3 & 2) == 2;
                 tile.IsBlockActuated = (header3 & 4) == 4;
                 tile.HasYellowWire = (header3 & 32) == 32;
-                return tile;
+                tile.Clean();
             }
 
             int ReadRunLength(byte header) {
@@ -245,8 +248,8 @@ namespace Orion.Networking.Packets.World.Tiles {
                 for (int x = 0; x < SectionWidth; ++x) {
                     if (runLength > 0) {
                         --runLength;
-                        SectionTiles[x, y] = new NetworkTile();
-                        ((ITile)SectionTiles[x, y]).CopyFrom(previousTile);
+                        ((ITile)_sectionTiles._tiles[x, y]).CopyFrom(previousTile);
+                        _sectionTiles._tiles[x, y].Clean();
                         continue;
                     }
 
@@ -254,10 +257,9 @@ namespace Orion.Networking.Packets.World.Tiles {
                     byte header2 = (header & 1) == 1 ? reader.ReadByte() : (byte)0;
                     byte header3 = (header2 & 1) == 1 ? reader.ReadByte() : (byte)0;
 
-                    var tile = ReadTile(header, header2, header3);
-                    SectionTiles[x, y] = tile;
+                    ReadTile(_sectionTiles._tiles[x, y], header, header2, header3);
                     runLength = ReadRunLength(header);
-                    previousTile = tile;
+                    previousTile = _sectionTiles._tiles[x, y];
                 }
             }
         }
@@ -273,13 +275,14 @@ namespace Orion.Networking.Packets.World.Tiles {
             ReadTileEntities(TileEntityType.Chest);
             ReadTileEntities(TileEntityType.Sign);
             ReadTileEntities();
+            SectionTileEntities.Clean();
         }
 
         private void WriteToWriterImpl(BinaryWriter writer) {
-            writer.Write(StartTileX);
-            writer.Write(StartTileY);
-            writer.Write(SectionWidth);
-            writer.Write(SectionHeight);
+            writer.Write(_startTileX);
+            writer.Write(_startTileY);
+            writer.Write(_sectionWidth);
+            writer.Write(_sectionHeight);
 
             WriteTilesToWriterImpl(writer);
             WriteTileEntitiesToWriterImpl(writer);
@@ -293,7 +296,7 @@ namespace Orion.Networking.Packets.World.Tiles {
             NetworkTile previousTile = null;
             var runLength = 0;
 
-            void WritePartialTile(Tile tile) {
+            void WritePartialTile(NetworkTile tile) {
                 header = 0;
                 byte header2 = 0;
                 byte header3 = 0;
@@ -302,18 +305,18 @@ namespace Orion.Networking.Packets.World.Tiles {
                 if (tile.IsBlockActive) {
                     header |= 2;
 
-                    var type = (ushort)tile.BlockType;
+                    var type = (ushort)tile._blockType;
                     buffer[bodyIndex++] = (byte)type;
                     if (type > byte.MaxValue) {
                         header |= 32;
                         buffer[bodyIndex++] = (byte)(type >> 8);
                     }
 
-                    if (tile.BlockType.AreFramesImportant()) {
-                        buffer[bodyIndex++] = (byte)tile.BlockFrameX;
-                        buffer[bodyIndex++] = (byte)(tile.BlockFrameX >> 8);
-                        buffer[bodyIndex++] = (byte)tile.BlockFrameY;
-                        buffer[bodyIndex++] = (byte)(tile.BlockFrameY >> 8);
+                    if (tile._blockType.AreFramesImportant()) {
+                        buffer[bodyIndex++] = (byte)tile._blockFrameX;
+                        buffer[bodyIndex++] = (byte)(tile._blockFrameX >> 8);
+                        buffer[bodyIndex++] = (byte)tile._blockFrameY;
+                        buffer[bodyIndex++] = (byte)(tile._blockFrameY >> 8);
                     }
 
                     if (tile.BlockColor != PaintColor.None) {
@@ -322,9 +325,9 @@ namespace Orion.Networking.Packets.World.Tiles {
                     }
                 }
 
-                if (tile.WallType != WallType.None) {
+                if (tile._wallType != WallType.None) {
                     header |= 4;
-                    buffer[bodyIndex++] = (byte)tile.WallType;
+                    buffer[bodyIndex++] = (byte)tile._wallType;
 
                     if (tile.WallColor != PaintColor.None) {
                         header3 |= 16;
@@ -375,9 +378,9 @@ namespace Orion.Networking.Packets.World.Tiles {
                 runLength = 0;
             }
 
-            for (int y = 0; y < SectionHeight; ++y) {
-                for (int x = 0; x < SectionWidth; ++x) {
-                    var tile = SectionTiles[x, y];
+            for (int y = 0; y < _sectionHeight; ++y) {
+                for (int x = 0; x < _sectionWidth; ++x) {
+                    var tile = _sectionTiles._tiles[x, y];
                     if (((ITile)tile).isTheSameAs(previousTile)) {
                         ++runLength;
                         continue;

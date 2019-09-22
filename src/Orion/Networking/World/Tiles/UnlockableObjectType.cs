@@ -15,26 +15,18 @@
 // You should have received a copy of the GNU General Public License
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
-using FluentAssertions;
-using Xunit;
+using JetBrains.Annotations;
+using Orion.Networking.Packets.World.Tiles;
 
 namespace Orion.Networking.World.Tiles {
-    public class TileModificationTypeTests {
-        [Fact]
-        public void FromId_IsCorrect() {
-            for (byte i = 0; i < 20; ++i) {
-                TileModification.FromId(i).Id.Should().Be(i);
-            }
-
-            TileModification.FromId(20).Should().BeNull();
-        }
-
-        [Fact]
-        public void FromId_ReturnsSameInstance() {
-            var tileModificationType = TileModification.FromId(1);
-            var tileModificationType2 = TileModification.FromId(1);
-
-            tileModificationType.Should().BeSameAs(tileModificationType2);
-        }
+    /// <summary>
+    /// Specifies an unlockable object type in an <see cref="ObjectUnlockPacket"/>.
+    /// </summary>
+    [PublicAPI]
+    public enum UnlockableObjectType : byte {
+#pragma warning disable 1591
+        Chest = 1,
+        Door = 2
+#pragma warning restore 1591
     }
 }

@@ -17,26 +17,28 @@
 
 using System.IO;
 using FluentAssertions;
+using Orion.Networking.World.Tiles;
 using Xunit;
 
 namespace Orion.Networking.Packets.World.Tiles {
-    public class RequestSectionPacketTests {
+    public class ObjectUnlockPacketTests {
         [Fact]
         public void SetDefaultableProperties_MarkAsDirty() {
-            var packet = new RequestSectionPacket();
+            var packet = new ObjectUnlockPacket();
 
             packet.ShouldHaveDefaultablePropertiesMarkAsDirty();
         }
 
-        private static readonly byte[] Bytes = {11, 0, 8, 255, 255, 255, 255, 255, 255, 255, 255};
+        public static readonly byte[] Bytes = {8, 0, 52, 1, 0, 1, 100, 0};
 
         [Fact]
         public void ReadFromStream_IsCorrect() {
             using (var stream = new MemoryStream(Bytes)) {
-                var packet = (RequestSectionPacket)Packet.ReadFromStream(stream, PacketContext.Server);
+                var packet = (ObjectUnlockPacket)Packet.ReadFromStream(stream, PacketContext.Server);
 
-                packet.SectionX.Should().Be(-1);
-                packet.SectionY.Should().Be(-1);
+                packet.UnlockableObjectType.Should().Be(UnlockableObjectType.Chest);
+                packet.ObjectX.Should().Be(256);
+                packet.ObjectY.Should().Be(100);
             }
         }
 

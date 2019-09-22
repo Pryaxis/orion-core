@@ -15,10 +15,9 @@
 // You should have received a copy of the GNU General Public License
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
-using System;
 using System.IO;
+using System.Text;
 using FluentAssertions;
-using Orion.Networking.Packets;
 using Orion.World.Tiles;
 using Xunit;
 
@@ -31,15 +30,15 @@ namespace Orion.Networking.World.Tiles {
             liquid.ShouldHaveDefaultablePropertiesMarkAsDirty();
         }
 
-
         public static byte[] Bytes = {100, 0, 0, 1, 255, 0};
 
         [Theory]
         [InlineData(true)]
         [InlineData(false)]
         public void ReadFromReader_IsCorrect(bool shouldSwapXY) {
-            using (var stream = new MemoryStream(Bytes)) {
-                var liquid = NetworkLiquid.ReadFromStream(stream, shouldSwapXY);
+            using (var stream = new MemoryStream(Bytes))
+            using (var reader = new BinaryReader(stream, Encoding.UTF8)) {
+                var liquid = NetworkLiquid.ReadFromReader(reader, shouldSwapXY);
 
                 liquid.TileX.Should().Be((short)(shouldSwapXY ? 256 : 100));
                 liquid.TileY.Should().Be((short)(shouldSwapXY ? 100 : 256));
@@ -52,10 +51,12 @@ namespace Orion.Networking.World.Tiles {
         [InlineData(true)]
         [InlineData(false)]
         public void DeserializeAndSerialize_SameTileLiquid(bool shouldSwapXY) {
-            using (var inStream = new MemoryStream(Bytes)) 
-            using (var outStream = new MemoryStream()) {
-                var liquid = NetworkLiquid.ReadFromStream(inStream, shouldSwapXY);
-                liquid.WriteToStream(outStream, shouldSwapXY);
+            using (var inStream = new MemoryStream(Bytes))
+            using (var reader = new BinaryReader(inStream, Encoding.UTF8))
+            using (var outStream = new MemoryStream())
+            using (var writer = new BinaryWriter(outStream, Encoding.UTF8)) {
+                var liquid = NetworkLiquid.ReadFromReader(reader, shouldSwapXY);
+                liquid.WriteToWriter(writer, shouldSwapXY);
 
                 outStream.ToArray().Should().BeEquivalentTo(Bytes);
             }

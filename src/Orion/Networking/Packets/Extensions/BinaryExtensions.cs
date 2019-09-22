@@ -16,39 +16,43 @@
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
 using System.IO;
+using JetBrains.Annotations;
 using Microsoft.Xna.Framework;
 using Terraria.Localization;
 using TDS = Terraria.DataStructures;
 
 namespace Orion.Networking.Packets.Extensions {
     internal static class BinaryExtensions {
-        public static Color ReadColor(this BinaryReader reader) =>
+        public static Color ReadColor([NotNull] this BinaryReader reader) =>
             new Color(reader.ReadByte(), reader.ReadByte(), reader.ReadByte());
 
-        public static NetworkText ReadNetworkText(this BinaryReader reader) =>
+        [NotNull]
+        public static NetworkText ReadNetworkText([NotNull] this BinaryReader reader) =>
             NetworkText.Deserialize(reader);
 
-        public static TDS.PlayerDeathReason ReadPlayerDeathReason(this BinaryReader reader) =>
+        [NotNull]
+        public static TDS.PlayerDeathReason ReadPlayerDeathReason([NotNull] this BinaryReader reader) =>
             TDS.PlayerDeathReason.FromReader(reader);
 
-        public static Vector2 ReadVector2(this BinaryReader reader) =>
+        public static Vector2 ReadVector2([NotNull] this BinaryReader reader) =>
             new Vector2(reader.ReadSingle(), reader.ReadSingle());
 
-        public static void Write(this BinaryWriter writer, Color color) {
+        public static void Write([NotNull] this BinaryWriter writer, Color color) {
             writer.Write(color.R);
             writer.Write(color.G);
             writer.Write(color.B);
         }
 
-        public static void Write(this BinaryWriter writer, TDS.PlayerDeathReason playerDeathReason) {
+        public static void Write([NotNull] this BinaryWriter writer,
+                                 [NotNull] TDS.PlayerDeathReason playerDeathReason) {
             playerDeathReason.WriteSelfTo(writer);
         }
 
-        public static void Write(this BinaryWriter writer, NetworkText text) {
+        public static void Write([NotNull] this BinaryWriter writer, [NotNull] NetworkText text) {
             text.Serialize(writer);
         }
 
-        public static void Write(this BinaryWriter writer, Vector2 vector) {
+        public static void Write([NotNull] this BinaryWriter writer, Vector2 vector) {
             writer.Write(vector.X);
             writer.Write(vector.Y);
         }

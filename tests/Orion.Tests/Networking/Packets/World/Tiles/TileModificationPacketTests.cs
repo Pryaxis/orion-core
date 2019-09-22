@@ -30,45 +30,18 @@ namespace Orion.Networking.Packets.World.Tiles {
             packet.ShouldHaveDefaultablePropertiesMarkAsDirty();
         }
 
-        [Fact]
-        public void SetTileModification_MarksAsDirty() {
-            var packet = new TileModificationPacket();
-
-            packet.TileModification = TileModification.DestroyBlock;
-
-            packet.ShouldBeDirty();
-        }
-
-        [Fact]
-        public void SetTileModification_NullValue_ThrowsArgumentNullException() {
-            var packet = new TileModificationPacket();
-            Action action = () => packet.TileModification = null;
-
-            action.Should().Throw<ArgumentNullException>();
-        }
-
         private static readonly byte[] Bytes = {11, 0, 17, 0, 16, 14, 194, 1, 1, 0, 0};
-        private static readonly byte[] InvalidModificationTypeBytes = {11, 0, 17, 255, 16, 14, 194, 1, 1, 0, 0};
 
         [Fact]
         public void ReadFromStream_IsCorrect() {
             using (var stream = new MemoryStream(Bytes)) {
                 var packet = (TileModificationPacket)Packet.ReadFromStream(stream, PacketContext.Server);
 
-                packet.TileModification.Should().BeSameAs(TileModification.DestroyBlock);
+                packet.TileModification.Should().Be(TileModification.BreakBlock);
                 packet.TileX.Should().Be(3600);
                 packet.TileY.Should().Be(450);
                 packet.TileModificationData.Should().Be(1);
                 packet.TileModificationStyle.Should().Be(0);
-            }
-        }
-
-        [Fact]
-        public void ReadFromStream_InvalidModificationType_ThrowsPacketException() {
-            using (var stream = new MemoryStream(InvalidModificationTypeBytes)) {
-                Func<Packet> func = () => Packet.ReadFromStream(stream, PacketContext.Server);
-
-                func.Should().Throw<PacketException>();
             }
         }
 

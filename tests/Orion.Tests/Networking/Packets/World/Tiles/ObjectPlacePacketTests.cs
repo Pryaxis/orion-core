@@ -18,56 +18,31 @@
 using System;
 using System.IO;
 using FluentAssertions;
-using Orion.Networking.World;
-using Orion.Networking.World.Tiles;
+using Orion.World.Tiles;
 using Xunit;
 
 namespace Orion.Networking.Packets.World.Tiles {
-    public class UnlockObjectPacketTests {
+    public class ObjectPlacePacketTests {
         [Fact]
         public void SetDefaultableProperties_MarkAsDirty() {
-            var packet = new UnlockObjectPacket();
+            var packet = new ObjectPlacePacket();
 
             packet.ShouldHaveDefaultablePropertiesMarkAsDirty();
         }
 
-        [Fact]
-        public void SetUnlockableObject_MarksAsDirty() {
-            var packet = new UnlockObjectPacket();
-
-            packet.UnlockableObject = UnlockableObject.Chest;
-
-            packet.ShouldBeDirty();
-        }
-
-        [Fact]
-        public void SetUnlockableObject_NullValue_ThrowsArgumentNullException() {
-            var packet = new UnlockObjectPacket();
-            Action action = () => packet.UnlockableObject = null;
-
-            action.Should().Throw<ArgumentNullException>();
-        }
-
-        public static readonly byte[] Bytes = {8, 0, 52, 1, 0, 1, 100, 0};
-        public static readonly byte[] InvalidObjectTypeBytes = {8, 0, 52, 255, 0, 1, 100, 0};
+        public static readonly byte[] Bytes = {14, 0, 79, 0, 1, 100, 0, 21, 0, 1, 0, 0, 255, 1};
 
         [Fact]
         public void ReadFromStream_IsCorrect() {
             using (var stream = new MemoryStream(Bytes)) {
-                var packet = (UnlockObjectPacket)Packet.ReadFromStream(stream, PacketContext.Server);
+                var packet = (ObjectPlacePacket)Packet.ReadFromStream(stream, PacketContext.Server);
 
-                packet.UnlockableObject.Should().BeSameAs(UnlockableObject.Chest);
                 packet.ObjectX.Should().Be(256);
                 packet.ObjectY.Should().Be(100);
-            }
-        }
-
-        [Fact]
-        public void ReadFromStream_InvalidObjectType_ThrowsPacketException() {
-            using (var stream = new MemoryStream(InvalidObjectTypeBytes)) {
-                Func<Packet> func = () => Packet.ReadFromStream(stream, PacketContext.Server);
-
-                func.Should().Throw<PacketException>();
+                packet.ObjectType.Should().Be(BlockType.Chests);
+                packet.ObjectStyle.Should().Be(1);
+                packet.ObjectRandomState.Should().Be(-1);
+                packet.ObjectDirection.Should().BeTrue();
             }
         }
 

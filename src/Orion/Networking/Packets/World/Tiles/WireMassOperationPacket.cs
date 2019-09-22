@@ -17,21 +17,23 @@
 
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
+using JetBrains.Annotations;
 using Orion.Networking.World.Tiles;
 
 namespace Orion.Networking.Packets.World.Tiles {
     /// <summary>
     /// Packet sent from the client to the server to perform a mass wire operation.
     /// </summary>
-    public sealed class MassWireOperationPacket : Packet {
+    [PublicAPI]
+    public sealed class WireMassOperationPacket : Packet {
         private short _startTileX;
         private short _startTileY;
         private short _endTileX;
         private short _endTileY;
-        private MassWireOperations _massWireOperations;
+        private WireOperations _wireOperations;
 
         /// <inheritdoc />
-        public override PacketType Type => PacketType.MassWireOperation;
+        public override PacketType Type => PacketType.WireMassOperation;
 
         /// <summary>
         /// Gets or sets the starting tile's X position.
@@ -78,12 +80,12 @@ namespace Orion.Networking.Packets.World.Tiles {
         }
 
         /// <summary>
-        /// Gets or sets the mass wire operations.
+        /// Gets or sets the wire operations.
         /// </summary>
-        public MassWireOperations MassWireOperations {
-            get => _massWireOperations;
+        public WireOperations WireOperations {
+            get => _wireOperations;
             set {
-                _massWireOperations = value;
+                _wireOperations = value;
                 _isDirty = true;
             }
         }
@@ -91,22 +93,22 @@ namespace Orion.Networking.Packets.World.Tiles {
         /// <inheritdoc />
         [ExcludeFromCodeCoverage]
         public override string ToString() =>
-            $"{Type}[{MassWireOperations:F} from ({StartTileX}, {StartTileY}) to ({EndTileX}, {EndTileY})]";
+            $"{Type}[{WireOperations:F} from ({StartTileX}, {StartTileY}) to ({EndTileX}, {EndTileY})]";
 
         private protected override void ReadFromReader(BinaryReader reader, PacketContext context) {
-            StartTileX = reader.ReadInt16();
-            StartTileY = reader.ReadInt16();
-            EndTileX = reader.ReadInt16();
-            EndTileY = reader.ReadInt16();
-            MassWireOperations = (MassWireOperations)reader.ReadByte();
+            _startTileX = reader.ReadInt16();
+            _startTileY = reader.ReadInt16();
+            _endTileX = reader.ReadInt16();
+            _endTileY = reader.ReadInt16();
+            _wireOperations = (WireOperations)reader.ReadByte();
         }
 
         private protected override void WriteToWriter(BinaryWriter writer, PacketContext context) {
-            writer.Write(StartTileX);
-            writer.Write(StartTileY);
-            writer.Write(EndTileX);
-            writer.Write(EndTileY);
-            writer.Write((byte)MassWireOperations);
+            writer.Write(_startTileX);
+            writer.Write(_startTileY);
+            writer.Write(_endTileX);
+            writer.Write(_endTileY);
+            writer.Write((byte)_wireOperations);
         }
     }
 }
