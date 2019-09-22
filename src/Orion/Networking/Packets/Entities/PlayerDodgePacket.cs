@@ -18,15 +18,17 @@
 using System;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
+using JetBrains.Annotations;
 using Orion.Networking.Entities;
 
 namespace Orion.Networking.Packets.Entities {
     /// <summary>
     /// Packet sent to show a player dodge.
     /// </summary>
+    [PublicAPI]
     public sealed class PlayerDodgePacket : Packet {
         private byte _playerIndex;
-        private PlayerDodge _playerDodge;
+        private PlayerDodgeType _playerDodgeType;
 
         /// <summary>
         /// Gets or sets the player index.
@@ -40,13 +42,12 @@ namespace Orion.Networking.Packets.Entities {
         }
 
         /// <summary>
-        /// Gets or sets the player's dodge.
+        /// Gets or sets the player's dodge type.
         /// </summary>
-        /// <exception cref="ArgumentNullException"><paramref name="value"/> is <c>null</c>.</exception>
-        public PlayerDodge PlayerDodge {
-            get => _playerDodge;
+        public PlayerDodgeType PlayerDodgeType {
+            get => _playerDodgeType;
             set {
-                _playerDodge = value ?? throw new ArgumentNullException(nameof(value));
+                _playerDodgeType = value;
                 _isDirty = true;
             }
         }
@@ -56,17 +57,16 @@ namespace Orion.Networking.Packets.Entities {
 
         /// <inheritdoc />
         [ExcludeFromCodeCoverage]
-        public override string ToString() => $"{Type}[#={PlayerIndex} {PlayerDodge}]";
+        public override string ToString() => $"{Type}[#={PlayerIndex} {PlayerDodgeType}]";
 
         private protected override void ReadFromReader(BinaryReader reader, PacketContext context) {
             PlayerIndex = reader.ReadByte();
-            PlayerDodge = PlayerDodge.FromId(reader.ReadByte()) ??
-                          throw new PacketException("Dodge type is invalid.");
+            PlayerDodgeType = (PlayerDodgeType)reader.ReadByte();
         }
 
         private protected override void WriteToWriter(BinaryWriter writer, PacketContext context) {
             writer.Write(PlayerIndex);
-            writer.Write(PlayerDodge.Id);
+            writer.Write((byte)PlayerDodgeType);
         }
     }
 }

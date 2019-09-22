@@ -17,12 +17,14 @@
 
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
+using JetBrains.Annotations;
 
 namespace Orion.Networking.Packets.Entities {
     /// <summary>
     /// Packet sent from the server to the client to allow it to continue connecting. This is sent in response to either
     /// a <see cref="PlayerConnectPacket"/> or a valid <see cref="PlayerPasswordResponsePacket"/>.
     /// </summary>
+    [PublicAPI]
     public sealed class PlayerContinueConnectingPacket : Packet {
         private byte _playerIndex;
 
@@ -45,11 +47,11 @@ namespace Orion.Networking.Packets.Entities {
         public override string ToString() => $"{Type}[#={PlayerIndex}]";
 
         private protected override void ReadFromReader(BinaryReader reader, PacketContext context) {
-            PlayerIndex = reader.ReadByte();
+            _playerIndex = reader.ReadByte();
         }
 
         private protected override void WriteToWriter(BinaryWriter writer, PacketContext context) {
-            writer.Write(PlayerIndex);
+            writer.Write(_playerIndex);
         }
     }
 }

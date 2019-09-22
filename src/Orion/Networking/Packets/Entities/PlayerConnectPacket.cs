@@ -18,11 +18,13 @@
 using System;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
+using JetBrains.Annotations;
 
 namespace Orion.Networking.Packets.Entities {
     /// <summary>
     /// Packet sent from the client to the server to initiate a connection.
     /// </summary>
+    [PublicAPI]
     public sealed class PlayerConnectPacket : Packet {
         private string _playerVersionString = "";
 
@@ -33,6 +35,7 @@ namespace Orion.Networking.Packets.Entities {
         /// Gets or sets the player's verion string. This is usually of the form <c>"Terraria###"</c>.
         /// </summary>
         /// <exception cref="ArgumentNullException"><paramref name="value"/> is <c>null</c>.</exception>
+        [NotNull]
         public string PlayerVersionString {
             get => _playerVersionString;
             set {
@@ -46,11 +49,11 @@ namespace Orion.Networking.Packets.Entities {
         public override string ToString() => $"{Type}[{PlayerVersionString}]";
 
         private protected override void ReadFromReader(BinaryReader reader, PacketContext context) {
-            PlayerVersionString = reader.ReadString();
+            _playerVersionString = reader.ReadString();
         }
 
         private protected override void WriteToWriter(BinaryWriter writer, PacketContext context) {
-            writer.Write(PlayerVersionString);
+            writer.Write(_playerVersionString);
         }
     }
 }

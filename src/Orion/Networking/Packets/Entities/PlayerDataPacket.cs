@@ -18,6 +18,7 @@
 using System;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
+using JetBrains.Annotations;
 using Microsoft.Xna.Framework;
 using Orion.Entities;
 using Orion.Networking.Packets.Extensions;
@@ -26,6 +27,7 @@ namespace Orion.Networking.Packets.Entities {
     /// <summary>
     /// Packet sent to set player data.
     /// </summary>
+    [PublicAPI]
     public sealed class PlayerDataPacket : Packet {
         private byte _playerIndex;
         private byte _playerSkinType;
@@ -83,6 +85,7 @@ namespace Orion.Networking.Packets.Entities {
         /// Gets or sets the player's name.
         /// </summary>
         /// <exception cref="ArgumentNullException"><paramref name="value"/> is <c>null</c>.</exception>
+        [NotNull]
         public string PlayerName {
             get => _playerName;
             set {
@@ -217,39 +220,39 @@ namespace Orion.Networking.Packets.Entities {
         public override string ToString() => $"{Type}[#={PlayerIndex} is {PlayerName}, ...]";
 
         private protected override void ReadFromReader(BinaryReader reader, PacketContext context) {
-            PlayerIndex = reader.ReadByte();
-            PlayerSkinType = reader.ReadByte();
-            PlayerHairType = reader.ReadByte();
-            PlayerName = reader.ReadString();
-            PlayerHairDye = reader.ReadByte();
-            PlayerHiddenVisualsFlags = reader.ReadUInt16();
-            PlayerHiddenMiscFlags = reader.ReadByte();
-            PlayerHairColor = reader.ReadColor();
-            PlayerSkinColor = reader.ReadColor();
-            PlayerEyeColor = reader.ReadColor();
-            PlayerShirtColor = reader.ReadColor();
-            PlayerUndershirtColor = reader.ReadColor();
-            PlayerPantsColor = reader.ReadColor();
-            PlayerShoeColor = reader.ReadColor();
-            PlayerDifficulty = (PlayerDifficulty)reader.ReadByte();
+            _playerIndex = reader.ReadByte();
+            _playerSkinType = reader.ReadByte();
+            _playerHairType = reader.ReadByte();
+            _playerName = reader.ReadString();
+            _playerHairDye = reader.ReadByte();
+            _playerHiddenVisualsFlags = reader.ReadUInt16();
+            _playerHiddenMiscFlags = reader.ReadByte();
+            _playerHairColor = reader.ReadColor();
+            _playerSkinColor = reader.ReadColor();
+            _playerEyeColor = reader.ReadColor();
+            _playerShirtColor = reader.ReadColor();
+            _playerUndershirtColor = reader.ReadColor();
+            _playerPantsColor = reader.ReadColor();
+            _playerShoeColor = reader.ReadColor();
+            _playerDifficulty = (PlayerDifficulty)reader.ReadByte();
         }
 
         private protected override void WriteToWriter(BinaryWriter writer, PacketContext context) {
-            writer.Write(PlayerIndex);
-            writer.Write(PlayerSkinType);
-            writer.Write(PlayerHairType);
-            writer.Write(PlayerName);
-            writer.Write(PlayerHairDye);
-            writer.Write(PlayerHiddenVisualsFlags);
-            writer.Write(PlayerHiddenMiscFlags);
-            writer.Write(PlayerHairColor);
-            writer.Write(PlayerSkinColor);
-            writer.Write(PlayerEyeColor);
-            writer.Write(PlayerShirtColor);
-            writer.Write(PlayerUndershirtColor);
-            writer.Write(PlayerPantsColor);
-            writer.Write(PlayerShoeColor);
-            writer.Write((byte)PlayerDifficulty);
+            writer.Write(_playerIndex);
+            writer.Write(_playerSkinType);
+            writer.Write(_playerHairType);
+            writer.Write(_playerName);
+            writer.Write(_playerHairDye);
+            writer.Write(_playerHiddenVisualsFlags);
+            writer.Write(_playerHiddenMiscFlags);
+            writer.Write(_playerHairColor);
+            writer.Write(_playerSkinColor);
+            writer.Write(_playerEyeColor);
+            writer.Write(_playerShirtColor);
+            writer.Write(_playerUndershirtColor);
+            writer.Write(_playerPantsColor);
+            writer.Write(_playerShoeColor);
+            writer.Write((byte)_playerDifficulty);
         }
     }
 }

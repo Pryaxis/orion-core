@@ -18,6 +18,7 @@
 using System;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
+using JetBrains.Annotations;
 using Orion.Networking.Packets.Extensions;
 
 namespace Orion.Networking.Packets.Entities {
@@ -25,6 +26,7 @@ namespace Orion.Networking.Packets.Entities {
     /// Packet sent from the server to the client to disconnect it. This is sent as a response to an invalid
     /// <see cref="PlayerPasswordResponsePacket"/> or for various other reasons.
     /// </summary>
+    [PublicAPI]
     public sealed class PlayerDisconnectPacket : Packet {
         private Terraria.Localization.NetworkText _playerDisconnectReason = Terraria.Localization.NetworkText.Empty;
 
@@ -35,6 +37,7 @@ namespace Orion.Networking.Packets.Entities {
         /// Gets or sets the player's disconnect reason.
         /// </summary>
         /// <exception cref="ArgumentNullException"><paramref name="value"/> is <c>null</c>.</exception>
+        [NotNull]
         public Terraria.Localization.NetworkText PlayerDisconnectReason {
             get => _playerDisconnectReason;
             set {
@@ -48,11 +51,11 @@ namespace Orion.Networking.Packets.Entities {
         public override string ToString() => $"{Type}[{PlayerDisconnectReason}]";
 
         private protected override void ReadFromReader(BinaryReader reader, PacketContext context) {
-            PlayerDisconnectReason = reader.ReadNetworkText();
+            _playerDisconnectReason = reader.ReadNetworkText();
         }
 
         private protected override void WriteToWriter(BinaryWriter writer, PacketContext context) {
-            writer.Write(PlayerDisconnectReason);
+            writer.Write(_playerDisconnectReason);
         }
     }
 }

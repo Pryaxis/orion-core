@@ -15,27 +15,18 @@
 // You should have received a copy of the GNU General Public License
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
-using FluentAssertions;
-using Xunit;
+using JetBrains.Annotations;
+using Orion.Networking.Packets.Entities;
 
 namespace Orion.Networking.Entities {
-    public class PlayerDodgeTests {
-        [Fact]
-        public void FromId_IsCorrect() {
-            for (byte i = 1; i < 3; ++i) {
-                PlayerDodge.FromId(i).Id.Should().Be(i);
-            }
-
-            PlayerDodge.FromId(0).Should().BeNull();
-            PlayerDodge.FromId(3).Should().BeNull();
-        }
-
-        [Fact]
-        public void FromId_ReturnsSameInstance() {
-            var playerDodge = PlayerDodge.FromId(1);
-            var playerDodge2 = PlayerDodge.FromId(1);
-
-            playerDodge.Should().BeSameAs(playerDodge2);
-        }
+    /// <summary>
+    /// Specifies a player dodge type in a <see cref="PlayerDodgePacket"/>.
+    /// </summary>
+    [PublicAPI]
+    public enum PlayerDodgeType : byte {
+#pragma warning disable 1591
+        Ninja = 1,
+        Shadow = 2
+#pragma warning restore 1591
     }
 }

@@ -30,25 +30,7 @@ namespace Orion.Networking.Packets.Entities {
             packet.ShouldHaveDefaultablePropertiesMarkAsDirty();
         }
 
-        [Fact]
-        public void SetPlayerDodge_MarksAsDirty() {
-            var packet = new PlayerDodgePacket();
-
-            packet.PlayerDodge = PlayerDodge.NinjaDodge;
-
-            packet.ShouldBeDirty();
-        }
-
-        [Fact]
-        public void SetPlayerDodge_NullValue_ThrowsArgumentNullException() {
-            var packet = new PlayerDodgePacket();
-            Action action = () => packet.PlayerDodge = null;
-
-            action.Should().Throw<ArgumentNullException>();
-        }
-
         public static readonly byte[] Bytes = {5, 0, 62, 0, 1};
-        public static readonly byte[] InvalidDodgeTypeBytes = {5, 0, 62, 0, 255};
 
         [Fact]
         public void ReadFromStream_IsCorrect() {
@@ -56,16 +38,7 @@ namespace Orion.Networking.Packets.Entities {
                 var packet = (PlayerDodgePacket)Packet.ReadFromStream(stream, PacketContext.Server);
 
                 packet.PlayerIndex.Should().Be(0);
-                packet.PlayerDodge.Should().BeSameAs(PlayerDodge.NinjaDodge);
-            }
-        }
-
-        [Fact]
-        public void ReadFromStream_InvalidDodgeType_ThrowsPacketException() {
-            using (var stream = new MemoryStream(InvalidDodgeTypeBytes)) {
-                Func<Packet> func = () => Packet.ReadFromStream(stream, PacketContext.Server);
-
-                func.Should().Throw<PacketException>();
+                packet.PlayerDodgeType.Should().BeSameAs(PlayerDodgeType.Ninja);
             }
         }
 
