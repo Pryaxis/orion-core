@@ -27,16 +27,16 @@ using Xunit;
 
 namespace Orion.Networking.Impl {
     [Collection("TerrariaTestsCollection")]
-    public class NetworkServiceTests : IDisposable {
+    public class OrionNetworkServiceTests : IDisposable {
         private readonly Mock<IPlayerService> _mockPlayerService = new Mock<IPlayerService>();
-        private readonly NetworkService _networkService;
+        private readonly OrionNetworkService _orionNetworkService;
 
-        public NetworkServiceTests() {
-            _networkService = new NetworkService(new Lazy<IPlayerService>(() => _mockPlayerService.Object));
+        public OrionNetworkServiceTests() {
+            _orionNetworkService = new OrionNetworkService(new Lazy<IPlayerService>(() => _mockPlayerService.Object));
         }
 
         public void Dispose() {
-            _networkService.Dispose();
+            _orionNetworkService.Dispose();
         }
 
         [Fact]
@@ -45,7 +45,7 @@ namespace Orion.Networking.Impl {
             _mockPlayerService.Setup(ps => ps[1]).Returns(player);
 
             var isRun = false;
-            _networkService.PacketReceive += (sender, args) => {
+            _orionNetworkService.PacketReceive += (sender, args) => {
                 isRun = true;
                 args.Sender.Should().BeSameAs(player);
             };

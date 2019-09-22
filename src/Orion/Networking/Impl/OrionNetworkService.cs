@@ -29,7 +29,7 @@ using Orion.Networking.Packets;
 using Orion.Networking.Packets.Entities;
 
 namespace Orion.Networking.Impl {
-    internal sealed class NetworkService : OrionService, INetworkService {
+    internal sealed class OrionNetworkService : OrionService, INetworkService {
         [NotNull] private readonly Lazy<IPlayerService> _playerService;
         [NotNull] private readonly ThreadLocal<bool> _shouldIgnoreNextReceiveData = new ThreadLocal<bool>();
 
@@ -40,7 +40,7 @@ namespace Orion.Networking.Impl {
         public EventHandlerCollection<PacketReceiveEventArgs> PacketReceive { get; set; }
         public EventHandlerCollection<PacketSendEventArgs> PacketSend { get; set; }
 
-        public NetworkService([NotNull] Lazy<IPlayerService> playerService) {
+        public OrionNetworkService([NotNull] Lazy<IPlayerService> playerService) {
             _playerService = playerService;
 
             _receiveHandlers[PacketType.PlayerConnect] = PlayerConnectHandler;
