@@ -152,7 +152,7 @@ namespace Orion.Networking.Packets {
             /* 115 */ () => new PlayerMinionNpcPacket(),
             /* 116 */ () => new OldOnesArmyInfoPacket(),
             /* 117 */ () => new PlayerDamagePacket(),
-            /* 118 */ () => new KillPlayerPacket(),
+            /* 118 */ () => new PlayerKillPacket(),
             /* 119 */ () => new CombatTextPacket()
         };
 

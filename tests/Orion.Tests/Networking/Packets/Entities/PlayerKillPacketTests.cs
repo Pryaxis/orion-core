@@ -21,17 +21,17 @@ using FluentAssertions;
 using Xunit;
 
 namespace Orion.Networking.Packets.Entities {
-    public class KillPlayerPacketTests {
+    public class PlayerKillPacketTests {
         [Fact]
         public void SetDefaultableProperties_MarkAsDirty() {
-            var packet = new KillPlayerPacket();
+            var packet = new PlayerKillPacket();
 
             packet.ShouldHaveDefaultablePropertiesMarkAsDirty();
         }
 
         [Fact]
         public void SetPlayerDeathReason_MarksAsDirty() {
-            var packet = new KillPlayerPacket();
+            var packet = new PlayerKillPacket();
 
             packet.PlayerDeathReason = Terraria.DataStructures.PlayerDeathReason.ByCustomReason("test");
 
@@ -40,7 +40,7 @@ namespace Orion.Networking.Packets.Entities {
 
         [Fact]
         public void SetPlayerDeathReason_NullValue_ThrowsArgumentNullException() {
-            var packet = new KillPlayerPacket();
+            var packet = new PlayerKillPacket();
             Action action = () => packet.PlayerDeathReason = null;
 
             action.Should().Throw<ArgumentNullException>();
@@ -51,7 +51,7 @@ namespace Orion.Networking.Packets.Entities {
         [Fact]
         public void ReadFromStream_IsCorrect() {
             using (var stream = new MemoryStream(Bytes)) {
-                var packet = (KillPlayerPacket)Packet.ReadFromStream(stream, PacketContext.Server);
+                var packet = (PlayerKillPacket)Packet.ReadFromStream(stream, PacketContext.Server);
 
                 packet.PlayerIndex.Should().Be(0);
                 packet.PlayerDeathReason.SourceCustomReason.Should().Be("test");

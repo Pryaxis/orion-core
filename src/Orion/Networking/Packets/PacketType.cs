@@ -131,7 +131,7 @@ namespace Orion.Networking.Packets {
         PlayerMinionNpc = 115,
         OldOnesArmyInfo = 116,
         PlayerDamage = 117,
-        KillPlayer = 118,
+        PlayerKill = 118,
         CombatText = 119
 #pragma warning disable 1591
     }

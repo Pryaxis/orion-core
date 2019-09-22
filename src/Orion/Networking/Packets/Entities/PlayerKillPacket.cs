@@ -18,6 +18,7 @@
 using System;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
+using JetBrains.Annotations;
 using Orion.Networking.Packets.Extensions;
 using TDS = Terraria.DataStructures;
 
@@ -25,7 +26,8 @@ namespace Orion.Networking.Packets.Entities {
     /// <summary>
     /// Packet sent to kill a player.
     /// </summary>
-    public sealed class KillPlayerPacket : Packet {
+    [PublicAPI]
+    public sealed class PlayerKillPacket : Packet {
         private byte _playerIndex;
         private TDS.PlayerDeathReason _playerDeathReason = TDS.PlayerDeathReason.LegacyEmpty();
         private short _damage;
@@ -33,7 +35,7 @@ namespace Orion.Networking.Packets.Entities {
         private bool _isDeathFromPvp;
 
         /// <inheritdoc />
-        public override PacketType Type => PacketType.KillPlayer;
+        public override PacketType Type => PacketType.PlayerKill;
 
         /// <summary>
         /// Gets or sets the player index.
@@ -50,6 +52,7 @@ namespace Orion.Networking.Packets.Entities {
         /// Gets or sets the reason for the player's death.
         /// </summary>
         /// <exception cref="ArgumentNullException"><paramref name="value"/> is <c>null</c>.</exception>
+        [NotNull]
         public TDS.PlayerDeathReason PlayerDeathReason {
             get => _playerDeathReason;
             set {
@@ -97,20 +100,20 @@ namespace Orion.Networking.Packets.Entities {
 
         /// <inheritdoc />
         private protected override void ReadFromReader(BinaryReader reader, PacketContext context) {
-            PlayerIndex = reader.ReadByte();
-            PlayerDeathReason = reader.ReadPlayerDeathReason();
-            Damage = reader.ReadInt16();
-            HitDirection = reader.ReadByte() - 1;
-            IsDeathFromPvp = reader.ReadBoolean();
+            _playerIndex = reader.ReadByte();
+            _playerDeathReason = reader.ReadPlayerDeathReason();
+            _damage = reader.ReadInt16();
+            _hitDirection = reader.ReadByte() - 1;
+            _isDeathFromPvp = reader.ReadBoolean();
         }
 
         /// <inheritdoc />
         private protected override void WriteToWriter(BinaryWriter writer, PacketContext context) {
-            writer.Write(PlayerIndex);
-            writer.Write(PlayerDeathReason);
-            writer.Write(Damage);
-            writer.Write((byte)(HitDirection + 1));
-            writer.Write(IsDeathFromPvp);
+            writer.Write(_playerIndex);
+            writer.Write(_playerDeathReason);
+            writer.Write(_damage);
+            writer.Write((byte)(_hitDirection + 1));
+            writer.Write(_isDeathFromPvp);
         }
     }
 }
