@@ -20,10 +20,10 @@ using FluentAssertions;
 using Xunit;
 
 namespace Orion.Networking.Packets.Entities {
-    public class PlayerHarpNotePacketTests {
+    public class PlayerInstrumentNotePacketTests {
         [Fact]
         public void SetDefaultableProperties_MarkAsDirty() {
-            var packet = new PlayerHarpNotePacket();
+            var packet = new PlayerInstrumentNotePacket();
 
             packet.ShouldHaveDefaultablePropertiesMarkAsDirty();
         }
@@ -33,10 +33,10 @@ namespace Orion.Networking.Packets.Entities {
         [Fact]
         public void ReadFromStream_IsCorrect() {
             using (var stream = new MemoryStream(Bytes)) {
-                var packet = (PlayerHarpNotePacket)Packet.ReadFromStream(stream, PacketContext.Server);
+                var packet = (PlayerInstrumentNotePacket)Packet.ReadFromStream(stream, PacketContext.Server);
 
                 packet.PlayerIndex.Should().Be(0);
-                packet.PlayerHarpNote.Should().Be(4.025f);
+                packet.PlayerInstrumentNote.Should().Be(4.025f);
             }
         }
 

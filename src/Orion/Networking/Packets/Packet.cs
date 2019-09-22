@@ -92,7 +92,7 @@ namespace Orion.Networking.Packets {
             /* 055 */ () => new PlayerBuffPacket(),
             /* 056 */ () => new NpcNamePacket(),
             /* 057 */ () => new BiomeStatsPacket(),
-            /* 058 */ () => new PlayerHarpNotePacket(),
+            /* 058 */ () => new PlayerInstrumentNotePacket(),
             /* 059 */ () => new ActivateWirePacket(),
             /* 060 */ () => new NpcHomePacket(),
             /* 061 */ () => new BossOrInvasionPacket(),

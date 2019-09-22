@@ -17,17 +17,19 @@
 
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
+using JetBrains.Annotations;
 
 namespace Orion.Networking.Packets.Entities {
     /// <summary>
-    /// Packet sent to play a harp note from a player.
+    /// Packet sent to play an instrument note from a player.
     /// </summary>
-    public sealed class PlayerHarpNotePacket : Packet {
+    [PublicAPI]
+    public sealed class PlayerInstrumentNotePacket : Packet {
         private byte _playerIndex;
-        private float _playerHarpNote;
+        private float _playerInstrumentNote;
 
         /// <inheritdoc />
-        public override PacketType Type => PacketType.PlayerHarpNote;
+        public override PacketType Type => PacketType.PlayerInstrumentNote;
 
         /// <summary>
         /// Gets or sets the player index.
@@ -41,12 +43,12 @@ namespace Orion.Networking.Packets.Entities {
         }
 
         /// <summary>
-        /// Gets or sets the player's harp note.
+        /// Gets or sets the player's instrument note.
         /// </summary>
-        public float PlayerHarpNote {
-            get => _playerHarpNote;
+        public float PlayerInstrumentNote {
+            get => _playerInstrumentNote;
             set {
-                _playerHarpNote = value;
+                _playerInstrumentNote = value;
                 _isDirty = true;
             }
         }
@@ -56,13 +58,13 @@ namespace Orion.Networking.Packets.Entities {
         public override string ToString() => $"{Type}[#={PlayerIndex}, ...]";
 
         private protected override void ReadFromReader(BinaryReader reader, PacketContext context) {
-            PlayerIndex = reader.ReadByte();
-            PlayerHarpNote = reader.ReadSingle();
+            _playerIndex = reader.ReadByte();
+            _playerInstrumentNote = reader.ReadSingle();
         }
 
         private protected override void WriteToWriter(BinaryWriter writer, PacketContext context) {
-            writer.Write(PlayerIndex);
-            writer.Write(PlayerHarpNote);
+            writer.Write(_playerIndex);
+            writer.Write(_playerInstrumentNote);
         }
     }
 }

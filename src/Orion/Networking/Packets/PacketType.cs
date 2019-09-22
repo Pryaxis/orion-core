@@ -74,7 +74,7 @@ namespace Orion.Networking.Packets {
         PlayerBuff = 55,
         NpcName = 56,
         BiomeStats = 57,
-        PlayerHarpNote = 58,
+        PlayerInstrumentNote = 58,
         ActivateWire = 59,
         NpcHome = 60,
         BossOrInvasion = 61,

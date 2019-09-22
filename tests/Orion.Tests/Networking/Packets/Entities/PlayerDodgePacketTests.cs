@@ -38,7 +38,7 @@ namespace Orion.Networking.Packets.Entities {
                 var packet = (PlayerDodgePacket)Packet.ReadFromStream(stream, PacketContext.Server);
 
                 packet.PlayerIndex.Should().Be(0);
-                packet.PlayerDodgeType.Should().BeSameAs(PlayerDodgeType.Ninja);
+                packet.PlayerDodgeType.Should().Be(PlayerDodgeType.Ninja);
             }
         }
 
