@@ -39,6 +39,13 @@ namespace Orion.Entities {
         EventHandlerCollection<PlayerDataEventArgs> PlayerData { get; set; }
 
         /// <summary>
+        /// Gets or sets the event handlers that run when a player's inventory slot is received. This event can be
+        /// canceled.
+        /// </summary>
+        [CanBeNull]
+        EventHandlerCollection<PlayerInventorySlotEventArgs> PlayerInventorySlot { get; set; }
+
+        /// <summary>
         /// Gets or sets the event handlers that run when a player disconnects.
         /// </summary>
         [CanBeNull]

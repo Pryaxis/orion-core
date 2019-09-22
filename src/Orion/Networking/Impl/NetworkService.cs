@@ -45,6 +45,7 @@ namespace Orion.Networking.Impl {
 
             _receiveHandlers[PacketType.PlayerConnect] = PlayerConnectHandler;
             _receiveHandlers[PacketType.PlayerData] = PlayerDataHandler;
+            _receiveHandlers[PacketType.PlayerInventorySlot] = PlayerInventorySlotHandler;
 
             OTAPI.Hooks.Net.ReceiveData = ReceiveDataHandler;
             OTAPI.Hooks.Net.SendBytes = SendBytesHandler;
@@ -132,6 +133,13 @@ namespace Orion.Networking.Impl {
             var packet = (PlayerDataPacket)args_.Packet;
             var args = new PlayerDataEventArgs(args_.Sender, packet);
             _playerService.Value.PlayerData?.Invoke(this, args);
+            args_.IsCanceled = args.IsCanceled;
+        }
+
+        private void PlayerInventorySlotHandler([NotNull] PacketReceiveEventArgs args_) {
+            var packet = (PlayerInventorySlotPacket)args_.Packet;
+            var args = new PlayerInventorySlotEventArgs(args_.Sender, packet);
+            _playerService.Value.PlayerInventorySlot?.Invoke(this, args);
             args_.IsCanceled = args.IsCanceled;
         }
     }

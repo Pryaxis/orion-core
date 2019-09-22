@@ -113,6 +113,30 @@ namespace Orion.Networking.Impl {
         }
 
         [Fact]
+        public void PacketReceive_PlayerInventorySlot_IsTriggered() {
+            var player = new Mock<IPlayer>().Object;
+            _mockPlayerService.Setup(ps => ps[1]).Returns(player);
+
+            var isRun = false;
+            _mockPlayerService.Setup(ps => ps.PlayerInventorySlot).Returns(
+                new EventHandlerCollection<PlayerInventorySlotEventArgs>((sender, args) => {
+                    isRun = true;
+                    args.Player.Should().BeSameAs(player);
+                    args.PlayerInventorySlotIndex.Should().Be(0);
+                    args.ItemStackSize.Should().Be(1);
+                    args.ItemPrefix.Should().Be(ItemPrefix.Godly);
+                    args.ItemType.Should().Be(ItemType.CopperShortsword);
+                }));
+
+            TestUtils.FakeReceiveBytes(1, PlayerInventorySlotPacketTests.Bytes);
+
+            isRun.Should().BeTrue();
+            _mockPlayerService.VerifyGet(ps => ps[1]);
+            _mockPlayerService.VerifyGet(ps => ps.PlayerInventorySlot);
+            _mockPlayerService.VerifyNoOtherCalls();
+        }
+
+        [Fact]
         public void ResetClient_PlayerDisconnect_IsTriggered() {
             var player = new Mock<IPlayer>().Object;
             _mockPlayerService.Setup(ps => ps[1]).Returns(player);
