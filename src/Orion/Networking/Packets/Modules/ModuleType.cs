@@ -41,11 +41,6 @@ namespace Orion.Networking.Packets.Modules {
         /// </summary>
         public ushort Id { get; }
 
-        /// <summary>
-        /// Gets the module type's constructor.
-        /// </summary>
-        public Func<Module> Constructor => Constructors[Id];
-
         static ModuleType() {
             foreach (var field in typeof(ModuleType).GetFields(BindingFlags.Public | BindingFlags.Static)) {
                 var moduleType = (ModuleType)field.GetValue(null);

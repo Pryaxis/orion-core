@@ -17,11 +17,13 @@
 
 using System.Diagnostics.CodeAnalysis;
 using System.Reflection;
+using JetBrains.Annotations;
 
 namespace Orion.Entities {
     /// <summary>
     /// Specifies an item prefix.
     /// </summary>
+    [PublicAPI]
     public enum ItemPrefix : sbyte {
 #pragma warning disable 1591
         Reforge = -2,

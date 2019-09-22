@@ -17,11 +17,13 @@
 
 using System.Diagnostics.CodeAnalysis;
 using System.Reflection;
+using JetBrains.Annotations;
 
 namespace Orion.World.Tiles {
     /// <summary>
     /// Specifies a block type.
     /// </summary>
+    [PublicAPI]
     public enum BlockType : ushort {
 #pragma warning disable 1591
         Dirt = 0,

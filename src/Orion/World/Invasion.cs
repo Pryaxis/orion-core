@@ -16,11 +16,13 @@
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
 using System.Reflection;
+using JetBrains.Annotations;
 
 namespace Orion.World {
     /// <summary>
     /// Specifies an invasion.
     /// </summary>
+    [PublicAPI]
     public enum Invasion : sbyte {
 #pragma warning disable 1591
         None = 0,

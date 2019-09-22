@@ -17,11 +17,13 @@
 
 using System.Diagnostics.CodeAnalysis;
 using System.Reflection;
+using JetBrains.Annotations;
 
 namespace Orion.Entities {
     /// <summary>
     /// Specifies an NPC type.
     /// </summary>
+    [PublicAPI]
     public enum NpcType : short {
 #pragma warning disable 1591
         BigStingyHornet = -65,

@@ -59,7 +59,7 @@ namespace Orion.Entities.Extensions {
             (NpcType)486,
             (NpcType)487,
             (NpcType)538,
-            (NpcType)539,
+            (NpcType)539
         };
 
         /// <summary>

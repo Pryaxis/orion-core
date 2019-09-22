@@ -15,10 +15,13 @@
 // You should have received a copy of the GNU General Public License
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
+using JetBrains.Annotations;
+
 namespace Orion.World.TileEntities {
     /// <summary>
     /// Represents a Terraria target dummy.
     /// </summary>
+    [PublicAPI]
     public interface ITargetDummy : ITileEntity {
         /// <summary>
         /// Gets or sets the target dummy's NPC index.

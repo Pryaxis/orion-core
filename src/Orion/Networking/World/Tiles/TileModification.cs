@@ -17,12 +17,14 @@
 
 using System.Diagnostics.CodeAnalysis;
 using System.Reflection;
+using JetBrains.Annotations;
 using Orion.Networking.Packets.World.Tiles;
 
 namespace Orion.Networking.World.Tiles {
     /// <summary>
     /// Represents a tile modification in a <see cref="TileModificationPacket"/>.
     /// </summary>
+    [PublicAPI]
     public sealed class TileModification {
 #pragma warning disable 1591
         public static TileModification DestroyBlock = new TileModification(0);

@@ -1,19 +1,10 @@
 ﻿<wpf:ResourceDictionary xml:space="preserve" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:s="clr-namespace:System;assembly=mscorlib" xmlns:ss="urn:shemas-jetbrains-com:settings-storage-xaml" xmlns:wpf="http://schemas.microsoft.com/winfx/2006/xaml/presentation">
 	<s:String x:Key="/Default/CodeInspection/ExcludedFiles/FilesAndFoldersToSkip2/=BAF61F61_002D2584_002D4B08_002DBCF2_002D088284F6C679/@EntryIndexedValue">ExplicitlyExcluded</s:String>
 	<s:String x:Key="/Default/CodeInspection/Highlighting/InspectionSeverities/=CommentTypo/@EntryIndexedValue">DO_NOT_SHOW</s:String>
-	<s:String x:Key="/Default/CodeInspection/Highlighting/InspectionSeverities/=CompareOfFloatsByEqualityOperator/@EntryIndexedValue">DO_NOT_SHOW</s:String>
-	<s:String x:Key="/Default/CodeInspection/Highlighting/InspectionSeverities/=IdentifierTypo/@EntryIndexedValue">DO_NOT_SHOW</s:String>
-	<s:String x:Key="/Default/CodeInspection/Highlighting/InspectionSeverities/=ImplicitlyCapturedClosure/@EntryIndexedValue">DO_NOT_SHOW</s:String>
 	<s:String x:Key="/Default/CodeInspection/Highlighting/InspectionSeverities/=InconsistentNaming/@EntryIndexedValue">DO_NOT_SHOW</s:String>
 	<s:String x:Key="/Default/CodeInspection/Highlighting/InspectionSeverities/=InvertIf/@EntryIndexedValue">DO_NOT_SHOW</s:String>
 	<s:String x:Key="/Default/CodeInspection/Highlighting/InspectionSeverities/=MarkupAttributeTypo/@EntryIndexedValue">DO_NOT_SHOW</s:String>
-	<s:String x:Key="/Default/CodeInspection/Highlighting/InspectionSeverities/=RedundantCommaInEnumDeclaration/@EntryIndexedValue">DO_NOT_SHOW</s:String>
-	<s:String x:Key="/Default/CodeInspection/Highlighting/InspectionSeverities/=RedundantCommaInInitializer/@EntryIndexedValue">DO_NOT_SHOW</s:String>
 	<s:String x:Key="/Default/CodeInspection/Highlighting/InspectionSeverities/=StringLiteralTypo/@EntryIndexedValue">DO_NOT_SHOW</s:String>
-	<s:String x:Key="/Default/CodeInspection/Highlighting/InspectionSeverities/=SwitchStatementMissingSomeCases/@EntryIndexedValue">DO_NOT_SHOW</s:String>
-	<s:String x:Key="/Default/CodeInspection/Highlighting/InspectionSeverities/=UnusedMemberInSuper_002EGlobal/@EntryIndexedValue">DO_NOT_SHOW</s:String>
-	<s:String x:Key="/Default/CodeInspection/Highlighting/InspectionSeverities/=UnusedMember_002EGlobal/@EntryIndexedValue">DO_NOT_SHOW</s:String>
-	<s:String x:Key="/Default/CodeInspection/Highlighting/InspectionSeverities/=UseObjectOrCollectionInitializer/@EntryIndexedValue">DO_NOT_SHOW</s:String>
 	<s:String x:Key="/Default/CodeStyle/FileHeader/FileHeaderText/@EntryValue">Copyright (c) 2015-2019 Pryaxis &amp; Orion Contributors&#xD;
 &#xD;
 This file is part of Orion.&#xD;

@@ -15,11 +15,13 @@
 // You should have received a copy of the GNU General Public License
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
+using JetBrains.Annotations;
 using Orion.Utils;
 
 namespace Orion.Entities {
     /// <summary>
     /// Represents an NPC service. Provides access to NPC-related events and methods.
     /// </summary>
+    [PublicAPI]
     public interface INpcService : IReadOnlyArray<INpc> { }
 }

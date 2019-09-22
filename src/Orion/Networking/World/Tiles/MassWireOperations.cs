@@ -16,6 +16,7 @@
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
 using System;
+using JetBrains.Annotations;
 using Orion.Networking.Packets.World.Tiles;
 
 namespace Orion.Networking.World.Tiles {
@@ -23,6 +24,7 @@ namespace Orion.Networking.World.Tiles {
     /// Specifies the mass wire operations in a <see cref="MassWireOperationPacket"/>.
     /// </summary>
     [Flags]
+    [PublicAPI]
     public enum MassWireOperations : byte {
         /// <summary>
         /// Indicates nothing.

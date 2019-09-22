@@ -15,9 +15,12 @@
 // You should have received a copy of the GNU General Public License
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
+using JetBrains.Annotations;
+
 namespace Orion.World {
     /// <summary>
     /// Represents a world service. Provides access to world-related events and methods.
     /// </summary>
+    [PublicAPI]
     public interface IWorldService { }
 }

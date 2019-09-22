@@ -20,6 +20,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Reflection;
+using JetBrains.Annotations;
 using Ninject;
 using Ninject.Extensions.NamedScope;
 
@@ -28,6 +29,7 @@ namespace Orion {
     /// Represents Orion's dependency injection container. Provides methods to manipulate <see cref="OrionPlugin"/>
     /// instances.
     /// </summary>
+    [PublicAPI]
     public sealed class OrionKernel : StandardKernel {
         private static ISet<Type> InterfaceTypesToIgnore => new HashSet<Type> {
             typeof(IDisposable),

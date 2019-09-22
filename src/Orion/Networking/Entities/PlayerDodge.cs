@@ -17,12 +17,14 @@
 
 using System.Diagnostics.CodeAnalysis;
 using System.Reflection;
+using JetBrains.Annotations;
 using Orion.Networking.Packets.Entities;
 
 namespace Orion.Networking.Entities {
     /// <summary>
     /// Represents a player dodge in a <see cref="PlayerDodgePacket"/>.
     /// </summary>
+    [PublicAPI]
     public sealed class PlayerDodge {
 #pragma warning disable 1591
         public static readonly PlayerDodge NinjaDodge = new PlayerDodge(1);

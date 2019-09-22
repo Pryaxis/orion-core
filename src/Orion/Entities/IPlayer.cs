@@ -15,10 +15,13 @@
 // You should have received a copy of the GNU General Public License
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
+using JetBrains.Annotations;
+
 namespace Orion.Entities {
     /// <summary>
     /// Represents a Terraria player.
     /// </summary>
+    [PublicAPI]
     public interface IPlayer : IEntity {
         /// <summary>
         /// Gets the player's statistics.
@@ -34,6 +37,7 @@ namespace Orion.Entities {
     /// <summary>
     /// Represents a player's statistics.
     /// </summary>
+    [PublicAPI]
     public interface IPlayerStats {
         /// <summary>
         /// Gets or sets the player's health.
@@ -59,6 +63,7 @@ namespace Orion.Entities {
     /// <summary>
     /// Represents a player's inventory.
     /// </summary>
+    [PublicAPI]
     public interface IPlayerInventory {
         /// <summary>
         /// Gets the player's held item.

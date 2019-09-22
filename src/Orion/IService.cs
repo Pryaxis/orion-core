@@ -16,6 +16,7 @@
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
 using System;
+using JetBrains.Annotations;
 
 namespace Orion {
     /// <summary>
@@ -26,6 +27,7 @@ namespace Orion {
     /// Services may have either static or instanced lifetimes, depending on whether
     /// <see cref="InstancedServiceAttribute"/> is applied to the service's implementation.
     /// </remarks>
+    [PublicAPI]
     public interface IService : IDisposable {
         /// <summary>
         /// Gets the service's author.

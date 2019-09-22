@@ -16,11 +16,13 @@
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
 using System;
+using JetBrains.Annotations;
 
 namespace Orion.Utils {
     /// <summary>
     /// Provides methods with which to get, set, and remove annotations.
     /// </summary>
+    [PublicAPI]
     public interface IAnnotatable {
         /// <summary>
         /// Gets the annotation of a type with the given key, returning a default value if the key does not exist.

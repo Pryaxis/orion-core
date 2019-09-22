@@ -17,12 +17,14 @@
 
 using System.Diagnostics.CodeAnalysis;
 using System.Reflection;
+using JetBrains.Annotations;
 using Orion.Networking.Packets.Misc;
 
 namespace Orion.Networking.Misc {
     /// <summary>
     /// Represents a misc action in a <see cref="MiscActionPacket"/>.
     /// </summary>
+    [PublicAPI]
     public sealed class MiscAction {
 #pragma warning disable 1591
         public static readonly MiscAction SpawnSkeletron = new MiscAction(1);

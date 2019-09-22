@@ -343,7 +343,9 @@ namespace Orion.World.Tiles {
                 return;
             case 2:
                 ((ITile)this).honey(true);
-                break;
+                return;
+            default:
+                return;
             }
         }
 

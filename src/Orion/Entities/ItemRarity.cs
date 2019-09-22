@@ -15,10 +15,13 @@
 // You should have received a copy of the GNU General Public License
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
+using JetBrains.Annotations;
+
 namespace Orion.Entities {
     /// <summary>
     /// Specifies an item rarity.
     /// </summary>
+    [PublicAPI]
     public enum ItemRarity {
 #pragma warning disable 1591
         Rainbow = -12,

@@ -16,11 +16,13 @@
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
 using System.Reflection;
+using JetBrains.Annotations;
 
 namespace Orion.World.TileEntities {
     /// <summary>
     /// Represents a logic sensor type.
     /// </summary>
+    [PublicAPI]
     public sealed class LogicSensorType {
 #pragma warning disable 1591
         public static readonly LogicSensorType None = new LogicSensorType(0);

@@ -237,6 +237,7 @@ namespace Orion.Networking.Packets.Entities {
             }
         }
 
+        [SuppressMessage("ReSharper", "CompareOfFloatsByEqualityOperator")]
         private protected override void WriteToWriter(BinaryWriter writer, PacketContext context) {
             writer.Write(NpcIndex);
             writer.Write(NpcPosition);

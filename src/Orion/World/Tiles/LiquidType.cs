@@ -15,10 +15,13 @@
 // You should have received a copy of the GNU General Public License
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
+using JetBrains.Annotations;
+
 namespace Orion.World.Tiles {
     /// <summary>
     /// Specifies a liquid type.
     /// </summary>
+    [PublicAPI]
     public enum LiquidType {
 #pragma warning disable 1591
         Water = 0,

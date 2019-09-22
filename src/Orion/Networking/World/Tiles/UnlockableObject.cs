@@ -16,12 +16,14 @@
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
 using System.Reflection;
+using JetBrains.Annotations;
 using Orion.Networking.Packets.World.Tiles;
 
 namespace Orion.Networking.World.Tiles {
     /// <summary>
     /// Represents an unlockable object in an <see cref="UnlockObjectPacket"/>.
     /// </summary>
+    [PublicAPI]
     public sealed class UnlockableObject {
 #pragma warning disable 1591
         public static readonly UnlockableObject Chest = new UnlockableObject(1);

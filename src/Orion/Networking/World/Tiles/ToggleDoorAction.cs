@@ -17,12 +17,14 @@
 
 using System.Diagnostics.CodeAnalysis;
 using System.Reflection;
+using JetBrains.Annotations;
 using Orion.Networking.Packets.World.Tiles;
 
 namespace Orion.Networking.World.Tiles {
     /// <summary>
     /// Represents a toggle door action in a <see cref="ToggleDoorPacket"/>.
     /// </summary>
+    [PublicAPI]
     public sealed class ToggleDoorAction {
 #pragma warning disable 1591
         public static readonly ToggleDoorAction OpenDoor = new ToggleDoorAction(0);

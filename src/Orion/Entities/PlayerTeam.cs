@@ -15,10 +15,13 @@
 // You should have received a copy of the GNU General Public License
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
+using JetBrains.Annotations;
+
 namespace Orion.Entities {
     /// <summary>
     /// Specifies a player team.
     /// </summary>
+    [PublicAPI]
     public enum PlayerTeam : byte {
 #pragma warning disable 1591
         None = 0,

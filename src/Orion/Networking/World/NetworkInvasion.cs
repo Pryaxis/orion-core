@@ -17,11 +17,13 @@
 
 using System.Diagnostics.CodeAnalysis;
 using System.Reflection;
+using JetBrains.Annotations;
 
 namespace Orion.Networking.World {
     /// <summary>
     /// Represents an invasion that is transmitted over the network.
     /// </summary>
+    [PublicAPI]
     public sealed class NetworkInvasion {
 #pragma warning disable 1591
         public static readonly NetworkInvasion MoonLord = new NetworkInvasion(-8);

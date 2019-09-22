@@ -17,11 +17,13 @@
 
 using System.Diagnostics.CodeAnalysis;
 using System.Reflection;
+using JetBrains.Annotations;
 
 namespace Orion.World.Tiles {
     /// <summary>
     /// Specifies a wall type.
     /// </summary>
+    [PublicAPI]
     public enum WallType : byte {
 #pragma warning disable 1591
         None = 0,

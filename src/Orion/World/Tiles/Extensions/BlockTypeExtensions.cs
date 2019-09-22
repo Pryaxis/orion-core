@@ -264,7 +264,7 @@ namespace Orion.World.Tiles.Extensions {
             (BlockType)466,
             (BlockType)467,
             (BlockType)468,
-            (BlockType)469,
+            (BlockType)469
         };
 
         /// <summary>

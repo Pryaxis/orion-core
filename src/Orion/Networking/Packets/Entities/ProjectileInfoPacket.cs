@@ -162,6 +162,7 @@ namespace Orion.Networking.Packets.Entities {
             if (header[2]) ProjectileUuid = reader.ReadInt16();
         }
 
+        [SuppressMessage("ReSharper", "CompareOfFloatsByEqualityOperator")]
         private protected override void WriteToWriter(BinaryWriter writer, PacketContext context) {
             writer.Write(ProjectileIdentity);
             writer.Write(ProjectilePosition);

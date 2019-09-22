@@ -15,9 +15,12 @@
 // You should have received a copy of the GNU General Public License
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
+using JetBrains.Annotations;
+
 namespace Orion.World.TileEntities {
     /// <summary>
     /// Represents a chest service. Provides chest-related events and methods.
     /// </summary>
+    [PublicAPI]
     public interface IChestService { }
 }

@@ -17,12 +17,14 @@
 
 using System.Diagnostics.CodeAnalysis;
 using System.Reflection;
+using JetBrains.Annotations;
 using Orion.Networking.Packets.World.TileEntities;
 
 namespace Orion.Networking.World.TileEntities {
     /// <summary>
     /// Represents a chest modification in a <see cref="ChestModificationPacket"/>.
     /// </summary>
+    [PublicAPI]
     public class ChestModification {
 #pragma warning disable 1591
         public static ChestModification PlaceChest = new ChestModification(0);

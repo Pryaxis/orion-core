@@ -153,7 +153,7 @@ namespace Orion.Networking.Packets {
             /* 116 */ () => new OldOnesArmyInfoPacket(),
             /* 117 */ () => new DamagePlayerPacket(),
             /* 118 */ () => new KillPlayerPacket(),
-            /* 119 */ () => new CombatTextPacket(),
+            /* 119 */ () => new CombatTextPacket()
         };
 
         private protected bool _isDirty;
