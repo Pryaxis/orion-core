@@ -22,7 +22,6 @@ using System.Linq;
 using System.Reflection;
 using JetBrains.Annotations;
 using Ninject;
-using Ninject.Extensions.NamedScope;
 
 namespace Orion {
     /// <summary>
@@ -31,13 +30,6 @@ namespace Orion {
     /// </summary>
     [PublicAPI]
     public sealed class OrionKernel : StandardKernel {
-        [NotNull, ItemNotNull]
-        private static ISet<Type> InterfaceTypesToIgnore => new HashSet<Type> {
-            typeof(IDisposable),
-            typeof(IReadOnlyList<>),
-            typeof(IService)
-        };
-
         [NotNull, ItemNotNull] private readonly ISet<Assembly> _pluginAssemblies = new HashSet<Assembly>();
         [NotNull, ItemNotNull] private readonly ISet<Type> _pluginTypesToLoad = new HashSet<Type>();
         [NotNull, ItemNotNull] private readonly ISet<OrionPlugin> _plugins = new HashSet<OrionPlugin>();
@@ -71,35 +63,12 @@ namespace Orion {
             var assembly = Assembly.Load(File.ReadAllBytes(assemblyPath));
             _pluginAssemblies.Add(assembly);
 
-            // Because GetExportedTypes returns closed generic types, we may potentially need to get unbound open
-            // versions.
-            Type GetOpenGenericTypeMaybe(Type type) => type.IsGenericType ? type.GetGenericTypeDefinition() : type;
-
-            foreach (var serviceType in assembly.GetExportedTypes()
-                                                .Where(s => s.IsSubclassOf(typeof(OrionService)))
-                                                .Select(GetOpenGenericTypeMaybe)) {
-                if (serviceType.IsSubclassOf(typeof(OrionPlugin))) {
-                    // Bind all plugin types to themselves, allowing plugins to properly depend on other plugins
-                    // without reliance on static state.
-                    _pluginTypesToLoad.Add(serviceType);
-                    Bind(serviceType).ToSelf().InSingletonScope();
-                    continue;
-                }
-
-                var isInstanced = serviceType.GetCustomAttribute<InstancedServiceAttribute>() != null;
-
-                // Bind all service interfaces to the implementation. We use a contextual binding here which will
-                // override any default bindings that we've set in the constructor.
-                foreach (var interfaceType in serviceType.GetInterfaces()
-                                                         .Where(i => !InterfaceTypesToIgnore.Contains(i))
-                                                         .Select(GetOpenGenericTypeMaybe)) {
-                    var bind = Bind(interfaceType).To(serviceType).When(r => _pluginAssemblies.Contains(assembly));
-                    if (isInstanced) {
-                        bind.InParentScope();
-                    } else {
-                        bind.InSingletonScope();
-                    }
-                }
+            foreach (var pluginType in assembly.GetExportedTypes()
+                                               .Where(s => s.IsSubclassOf(typeof(OrionPlugin)))) {
+                // Bind all plugin types to themselves, allowing plugins to properly depend on other plugins
+                // without reliance on static state.
+                _pluginTypesToLoad.Add(pluginType);
+                Bind(pluginType).ToSelf().InSingletonScope();
             }
         }
 
