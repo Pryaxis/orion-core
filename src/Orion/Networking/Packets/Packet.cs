@@ -77,7 +77,7 @@ namespace Orion.Networking.Packets {
             /* 040 */ () => new PlayerTalkingToNpcPacket(),
             /* 041 */ () => new PlayerItemAnimationPacket(),
             /* 042 */ () => new PlayerManaPacket(),
-            /* 043 */ () => new ManaEffectPacket(),
+            /* 043 */ () => new PlayerManaEffectPacket(),
             /* 044 */ null,
             /* 045 */ () => new PlayerTeamPacket(),
             /* 046 */ () => new RequestSignPacket(),

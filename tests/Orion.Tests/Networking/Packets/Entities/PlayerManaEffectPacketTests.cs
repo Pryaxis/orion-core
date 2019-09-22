@@ -20,10 +20,10 @@ using FluentAssertions;
 using Xunit;
 
 namespace Orion.Networking.Packets.Entities {
-    public class ManaEffectPacketTests {
+    public class PlayerManaEffectPacketTests {
         [Fact]
         public void SetDefaultableProperties_MarkAsDirty() {
-            var packet = new ManaEffectPacket();
+            var packet = new PlayerManaEffectPacket();
 
             packet.ShouldHaveDefaultablePropertiesMarkAsDirty();
         }
@@ -33,7 +33,7 @@ namespace Orion.Networking.Packets.Entities {
         [Fact]
         public void ReadFromStream_IsCorrect() {
             using (var stream = new MemoryStream(Bytes)) {
-                var packet = (ManaEffectPacket)Packet.ReadFromStream(stream, PacketContext.Server);
+                var packet = (PlayerManaEffectPacket)Packet.ReadFromStream(stream, PacketContext.Server);
 
                 packet.PlayerIndex.Should().Be(0);
                 packet.ManaAmount.Should().Be(100);

@@ -60,7 +60,7 @@ namespace Orion.Networking.Packets {
         PlayerTalkingToNpc = 40,
         PlayerItemAnimation = 41,
         PlayerMana = 42,
-        ManaEffect = 43,
+        PlayerManaEffect = 43,
         PlayerTeam = 45,
         RequestSign = 46,
         SignInfo = 47,

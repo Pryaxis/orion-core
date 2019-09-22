@@ -17,17 +17,19 @@
 
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
+using JetBrains.Annotations;
 
 namespace Orion.Networking.Packets.Entities {
     /// <summary>
     /// Packet sent to show a mana effect on a player.
     /// </summary>
-    public sealed class ManaEffectPacket : Packet {
+    [PublicAPI]
+    public sealed class PlayerManaEffectPacket : Packet {
         private byte _playerIndex;
         private short _manaAmount;
 
         /// <inheritdoc />
-        public override PacketType Type => PacketType.ManaEffect;
+        public override PacketType Type => PacketType.PlayerManaEffect;
 
         /// <summary>
         /// Gets or sets the player index.
@@ -56,13 +58,13 @@ namespace Orion.Networking.Packets.Entities {
         public override string ToString() => $"{Type}[#={PlayerIndex} for {ManaAmount} mp]";
 
         private protected override void ReadFromReader(BinaryReader reader, PacketContext context) {
-            PlayerIndex = reader.ReadByte();
-            ManaAmount = reader.ReadInt16();
+            _playerIndex = reader.ReadByte();
+            _manaAmount = reader.ReadInt16();
         }
 
         private protected override void WriteToWriter(BinaryWriter writer, PacketContext context) {
-            writer.Write(PlayerIndex);
-            writer.Write(ManaAmount);
+            writer.Write(_playerIndex);
+            writer.Write(_manaAmount);
         }
     }
 }
