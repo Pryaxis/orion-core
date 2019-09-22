@@ -69,7 +69,7 @@ namespace Orion.Networking.Packets {
             /* 032 */ () => new ChestContentsSlotPacket(),
             /* 033 */ () => new ChestInfoPacket(),
             /* 034 */ () => new ChestModificationPacket(),
-            /* 035 */ () => new HealEffectPacket(),
+            /* 035 */ () => new PlayerHealEffectPacket(),
             /* 036 */ () => new PlayerZonesPacket(),
             /* 037 */ () => new PlayerPasswordChallengePacket(),
             /* 038 */ () => new PlayerPasswordResponsePacket(),

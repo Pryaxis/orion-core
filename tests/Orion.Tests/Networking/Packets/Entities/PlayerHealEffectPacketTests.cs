@@ -20,10 +20,10 @@ using FluentAssertions;
 using Xunit;
 
 namespace Orion.Networking.Packets.Entities {
-    public class HealEffectPacketTests {
+    public class PlayerHealEffectPacketTests {
         [Fact]
         public void SetDefaultableProperties_MarkAsDirty() {
-            var packet = new HealEffectPacket();
+            var packet = new PlayerHealEffectPacket();
 
             packet.ShouldHaveDefaultablePropertiesMarkAsDirty();
         }
@@ -33,7 +33,7 @@ namespace Orion.Networking.Packets.Entities {
         [Fact]
         public void ReadFromStream_IsCorrect() {
             using (var stream = new MemoryStream(Bytes)) {
-                var packet = (HealEffectPacket)Packet.ReadFromStream(stream, PacketContext.Server);
+                var packet = (PlayerHealEffectPacket)Packet.ReadFromStream(stream, PacketContext.Server);
 
                 packet.PlayerIndex.Should().Be(0);
                 packet.HealAmount.Should().Be(100);

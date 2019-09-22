@@ -52,7 +52,7 @@ namespace Orion.Networking.Packets {
         ChestContentsSlot = 32,
         ChestInfo = 33,
         ChestModification = 34,
-        HealEffect = 35,
+        PlayerHealEffect = 35,
         PlayerZones = 36,
         PlayerPasswordChallenge = 37,
         PlayerPasswordResponse = 38,
