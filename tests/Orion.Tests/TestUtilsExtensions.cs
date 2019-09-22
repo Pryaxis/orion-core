@@ -20,6 +20,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Reflection;
 using FluentAssertions;
+using Microsoft.Xna.Framework;
 using Orion.Networking.Packets;
 using Orion.Utils;
 
@@ -35,11 +36,13 @@ namespace Orion {
             [typeof(uint)] = 123456789U,
             [typeof(long)] = -123456789101112L,
             [typeof(ulong)] = 123456789101112UL,
-            [typeof(string)] = "test"
+            [typeof(string)] = "test",
+            [typeof(Color)] = new Color(111, 222, 333)
         };
 
         public static void GetSetPropertiesShouldReflectInPacket(this EventArgs args) {
-            var packet = args.GetType().GetField("_packet", BindingFlags.NonPublic | BindingFlags.Instance);
+            var packet = args.GetType().GetField("_packet", BindingFlags.NonPublic | BindingFlags.Instance)
+                             .GetValue(args);
             packet.Should().NotBeNull();
 
             foreach (var property in args.GetType().GetProperties(BindingFlags.Public | BindingFlags.Instance)) {

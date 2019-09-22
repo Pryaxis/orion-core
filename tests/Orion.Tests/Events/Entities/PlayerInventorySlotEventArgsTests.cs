@@ -23,11 +23,11 @@ using Orion.Networking.Packets.Entities;
 using Xunit;
 
 namespace Orion.Events.Entities {
-    public class PlayerConnectEventArgsTests {
+    public class PlayerInventorySlotEventArgsTests {
         [Fact]
         public void Ctor_NullPacket_ThrowsArgumentNullException() {
             var player = new Mock<IPlayer>().Object;
-            Func<PlayerConnectEventArgs> func = () => new PlayerConnectEventArgs(player, null);
+            Func<PlayerInventorySlotEventArgs> func = () => new PlayerInventorySlotEventArgs(player, null);
 
             func.Should().Throw<ArgumentNullException>();
         }
@@ -35,20 +35,10 @@ namespace Orion.Events.Entities {
         [Fact]
         public void GetSetProperties_ReflectsInPacket() {
             var player = new Mock<IPlayer>().Object;
-            var packet = new PlayerConnectPacket();
-            var args = new PlayerConnectEventArgs(player, packet);
+            var packet = new PlayerInventorySlotPacket();
+            var args = new PlayerInventorySlotEventArgs(player, packet);
 
             args.GetSetPropertiesShouldReflectInPacket();
-        }
-
-        [Fact]
-        public void SetPlayerVersionString_NullValue_ThrowsArgumentNullException() {
-            var player = new Mock<IPlayer>().Object;
-            var packet = new PlayerConnectPacket();
-            var args = new PlayerConnectEventArgs(player, packet);
-            Action action = () => args.PlayerVersionString = null;
-
-            action.Should().Throw<ArgumentNullException>();
         }
     }
 }
