@@ -15,55 +15,19 @@
 // You should have received a copy of the GNU General Public License
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
-using System.Diagnostics.CodeAnalysis;
-using System.Reflection;
+using JetBrains.Annotations;
 using Orion.Networking.Packets.Entities;
-using Orion.Networking.Packets.Misc;
 
 namespace Orion.Networking.Entities {
     /// <summary>
-    /// Represents an entity teleportation type in a <see cref="EntityTeleportationPacket"/>.
+    /// Specifies an entity teleportation type in a <see cref="EntityTeleportationPacket"/>.
     /// </summary>
-    public sealed class EntityTeleportationType {
+    [PublicAPI]
+    public enum EntityTeleportationType : byte {
 #pragma warning disable 1591
-        public static readonly EntityTeleportationType Player = new EntityTeleportationType(0);
-        public static readonly EntityTeleportationType Npc = new EntityTeleportationType(1);
-        public static readonly EntityTeleportationType PlayerToPlayer = new EntityTeleportationType(2);
+        Player = 0,
+        Npc = 1,
+        PlayerToPlayer = 2,
 #pragma warning restore 1591
-
-        private const int ArrayOffset = 0;
-        private const int ArraySize = ArrayOffset + 3;
-        private static readonly EntityTeleportationType[] Actions = new EntityTeleportationType[ArraySize];
-        private static readonly string[] Names = new string[ArraySize];
-
-        /// <summary>
-        /// Gets the entity teleportation type's ID.
-        /// </summary>
-        public byte Id { get; }
-
-        static EntityTeleportationType() {
-            foreach (var field in typeof(EntityTeleportationType).GetFields(BindingFlags.Public |
-                                                                            BindingFlags.Static)) {
-                var entityTeleportationType = (EntityTeleportationType)field.GetValue(null);
-                Actions[ArrayOffset + entityTeleportationType.Id] = entityTeleportationType;
-                Names[ArrayOffset + entityTeleportationType.Id] = field.Name;
-            }
-        }
-
-        private EntityTeleportationType(byte id) {
-            Id = id;
-        }
-
-        /// <summary>
-        /// Returns an entity teleportation type converted from the given ID.
-        /// </summary>
-        /// <param name="id">The ID.</param>
-        /// <returns>The entity teleportation type, or <c>null</c> if none exists.</returns>
-        public static EntityTeleportationType FromId(byte id) =>
-            ArrayOffset + id < ArraySize ? Actions[ArrayOffset + id] : null;
-
-        /// <inheritdoc />
-        [ExcludeFromCodeCoverage]
-        public override string ToString() => Names[ArrayOffset + Id];
     }
 }

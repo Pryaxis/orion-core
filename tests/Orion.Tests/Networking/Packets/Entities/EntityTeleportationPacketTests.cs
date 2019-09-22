@@ -31,23 +31,6 @@ namespace Orion.Networking.Packets.Entities {
             packet.ShouldHaveDefaultablePropertiesMarkAsDirty();
         }
 
-        [Fact]
-        public void SetEntityTeleportationType_MarksAsDirty() {
-            var packet = new EntityTeleportationPacket();
-
-            packet.TeleportationType = EntityTeleportationType.PlayerToPlayer;
-
-            packet.ShouldBeDirty();
-        }
-
-        [Fact]
-        public void SetEntityTeleportationType_NullValue_ThrowsArgumentNullException() {
-            var packet = new EntityTeleportationPacket();
-            Action action = () => packet.TeleportationType = null;
-
-            action.Should().Throw<ArgumentNullException>();
-        }
-
         public static readonly byte[] Bytes = {14, 0, 65, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
 
         [Fact]
@@ -55,8 +38,8 @@ namespace Orion.Networking.Packets.Entities {
             using (var stream = new MemoryStream(Bytes)) {
                 var packet = (EntityTeleportationPacket)Packet.ReadFromStream(stream, PacketContext.Server);
 
-                packet.TeleportationType.Should().BeSameAs(EntityTeleportationType.PlayerToPlayer);
-                packet.TeleportationStyle.Should().Be(0);
+                packet.EntityTeleportationType.Should().Be(EntityTeleportationType.PlayerToPlayer);
+                packet.EntityTeleportationStyle.Should().Be(0);
                 packet.EntityIndex.Should().Be(0);
                 packet.EntityNewPosition.Should().Be(Vector2.Zero);
             }

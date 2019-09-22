@@ -15,9 +15,9 @@
 // You should have received a copy of the GNU General Public License
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
-using System;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
+using JetBrains.Annotations;
 using Microsoft.Xna.Framework;
 using Orion.Networking.Entities;
 using Orion.Networking.Packets.Extensions;
@@ -26,9 +26,10 @@ namespace Orion.Networking.Packets.Entities {
     /// <summary>
     /// Packet sent to teleport an entity.
     /// </summary>
+    [PublicAPI]
     public sealed class EntityTeleportationPacket : Packet {
-        private EntityTeleportationType _teleportationType = EntityTeleportationType.Player;
-        private byte _teleportationStyle;
+        private EntityTeleportationType _entityTeleportationType = EntityTeleportationType.Player;
+        private byte _entityTeleportationStyle;
         private short _entityIndex;
         private Vector2 _entityNewPosition;
 
@@ -36,24 +37,23 @@ namespace Orion.Networking.Packets.Entities {
         public override PacketType Type => PacketType.EntityTeleportation;
 
         /// <summary>
-        /// Gets or sets the teleportation type.
+        /// Gets or sets the entity teleportation type.
         /// </summary>
-        /// <exception cref="ArgumentNullException"><paramref name="value"/> is <c>null</c>.</exception>
-        public EntityTeleportationType TeleportationType {
-            get => _teleportationType;
+        public EntityTeleportationType EntityTeleportationType {
+            get => _entityTeleportationType;
             set {
-                _teleportationType = value ?? throw new ArgumentNullException(nameof(value));
+                _entityTeleportationType = value;
                 _isDirty = true;
             }
         }
 
         /// <summary>
-        /// Gets or sets the teleportation style.
+        /// Gets or sets the entity teleportation style.
         /// </summary>
-        public byte TeleportationStyle {
-            get => _teleportationStyle;
+        public byte EntityTeleportationStyle {
+            get => _entityTeleportationStyle;
             set {
-                _teleportationStyle = value;
+                _entityTeleportationStyle = value;
                 _isDirty = true;
             }
         }
@@ -70,7 +70,7 @@ namespace Orion.Networking.Packets.Entities {
         }
 
         /// <summary>
-        /// Gets or sets the position.
+        /// Gets or sets the entity's new position.
         /// </summary>
         public Vector2 EntityNewPosition {
             get => _entityNewPosition;
@@ -83,25 +83,23 @@ namespace Orion.Networking.Packets.Entities {
         /// <inheritdoc />
         [ExcludeFromCodeCoverage]
         public override string ToString() =>
-            $"{Type}[#={EntityIndex} to {EntityNewPosition} ({TeleportationType}_{TeleportationStyle})]";
+            $"{Type}[#={EntityIndex} to {EntityNewPosition} ({EntityTeleportationType}_{EntityTeleportationStyle})]";
 
         private protected override void ReadFromReader(BinaryReader reader, PacketContext context) {
             var header = reader.ReadByte();
-            TeleportationType = EntityTeleportationType.FromId((byte)(header & 3));
-            TeleportationStyle = (byte)((header >> 2) & 3);
-
-            EntityIndex = reader.ReadInt16();
-            EntityNewPosition = reader.ReadVector2();
+            _entityTeleportationType = (EntityTeleportationType)(header & 3);
+            _entityTeleportationStyle = (byte)((header >> 2) & 3);
+            _entityIndex = reader.ReadInt16();
+            _entityNewPosition = reader.ReadVector2();
         }
 
         private protected override void WriteToWriter(BinaryWriter writer, PacketContext context) {
             byte header = 0;
-            header |= TeleportationType.Id;
-            header |= (byte)((TeleportationStyle & 3) << 2);
+            header |= (byte)((byte)_entityTeleportationType & 3);
+            header |= (byte)((_entityTeleportationStyle & 3) << 2);
             writer.Write(header);
-
-            writer.Write(EntityIndex);
-            writer.Write(EntityNewPosition);
+            writer.Write(_entityIndex);
+            writer.Write(_entityNewPosition);
         }
     }
 }
