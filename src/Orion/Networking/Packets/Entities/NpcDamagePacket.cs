@@ -17,12 +17,14 @@
 
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
+using JetBrains.Annotations;
 
 namespace Orion.Networking.Packets.Entities {
     /// <summary>
     /// Packet sent to damage an NPC.
     /// </summary>
-    public sealed class DamageNpcPacket : Packet {
+    [PublicAPI]
+    public sealed class NpcDamagePacket : Packet {
         private short _npcIndex;
         private short _damage;
         private float _knockback;
@@ -30,7 +32,7 @@ namespace Orion.Networking.Packets.Entities {
         private bool _isCriticalHit;
 
         /// <inheritdoc />
-        public override PacketType Type => PacketType.DamageNpc;
+        public override PacketType Type => PacketType.NpcDamage;
 
         /// <summary>
         /// Gets or sets the NPC index.
@@ -92,18 +94,18 @@ namespace Orion.Networking.Packets.Entities {
         public override string ToString() => $"{Type}[#={NpcIndex} for {Damage} hp, ...]";
 
         private protected override void ReadFromReader(BinaryReader reader, PacketContext context) {
-            NpcIndex = reader.ReadInt16();
-            Damage = reader.ReadInt16();
-            Knockback = reader.ReadSingle();
-            HitDirection = reader.ReadByte() - 1;
-            IsCriticalHit = reader.ReadBoolean();
+            _npcIndex = reader.ReadInt16();
+            _damage = reader.ReadInt16();
+            _knockback = reader.ReadSingle();
+            _hitDirection = reader.ReadByte() - 1;
+            _isCriticalHit = reader.ReadBoolean();
         }
 
         private protected override void WriteToWriter(BinaryWriter writer, PacketContext context) {
-            writer.Write(NpcIndex);
-            writer.Write(Damage);
-            writer.Write(Knockback);
-            writer.Write((byte)(HitDirection + 1));
+            writer.Write(_npcIndex);
+            writer.Write(_damage);
+            writer.Write(_knockback);
+            writer.Write((byte)(_hitDirection + 1));
             writer.Write(IsCriticalHit);
         }
     }

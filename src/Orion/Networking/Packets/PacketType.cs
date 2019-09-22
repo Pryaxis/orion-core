@@ -45,7 +45,7 @@ namespace Orion.Networking.Packets {
         NpcInfo = 23,
         NpcDamageHeldItem = 24,
         ProjectileInfo = 27,
-        DamageNpc = 28,
+        NpcDamage = 28,
         RemoveProjectile = 29,
         PlayerPvp = 30,
         RequestChest = 31,

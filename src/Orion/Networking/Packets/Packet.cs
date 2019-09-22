@@ -62,7 +62,7 @@ namespace Orion.Networking.Packets {
             /* 025 */ null,
             /* 026 */ null,
             /* 027 */ () => new ProjectileInfoPacket(),
-            /* 028 */ () => new DamageNpcPacket(),
+            /* 028 */ () => new NpcDamagePacket(),
             /* 029 */ () => new RemoveProjectilePacket(),
             /* 030 */ () => new PlayerPvpPacket(),
             /* 031 */ () => new RequestChestPacket(),
