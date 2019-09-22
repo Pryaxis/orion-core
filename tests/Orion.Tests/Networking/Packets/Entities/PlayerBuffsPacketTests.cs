@@ -40,14 +40,6 @@ namespace Orion.Networking.Packets.Entities {
         }
 
         [Fact]
-        public void PlayerBuffTypes_SetNullValue_ThrowsArgumentNullException() {
-            var packet = new PlayerBuffsPacket();
-            Action action = () => packet.PlayerBuffTypes[0] = null;
-
-            action.Should().Throw<ArgumentNullException>();
-        }
-
-        [Fact]
         public void PlayerBuffTypes_Count_IsCorrect() {
             var packet = new PlayerBuffsPacket();
 
@@ -58,10 +50,6 @@ namespace Orion.Networking.Packets.Entities {
             26, 0, 50, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
         };
 
-        public static readonly byte[] InvalidBuffTypeBytes = {
-            26, 0, 50, 0, 255, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-        };
-
         [Fact]
         public void ReadFromStream_IsCorrect() {
             using (var stream = new MemoryStream(Bytes)) {
@@ -70,17 +58,8 @@ namespace Orion.Networking.Packets.Entities {
                 packet.PlayerIndex.Should().Be(0);
 
                 for (var i = 0; i < packet.PlayerBuffTypes.Count; ++i) {
-                    packet.PlayerBuffTypes[i].Should().BeSameAs(BuffType.None);
+                    packet.PlayerBuffTypes[i].Should().Be(BuffType.None);
                 }
-            }
-        }
-
-        [Fact]
-        public void ReadFromStream_InvalidBuffType_ThrowsPacketException() {
-            using (var stream = new MemoryStream(InvalidBuffTypeBytes)) {
-                Func<Packet> func = () => Packet.ReadFromStream(stream, PacketContext.Server);
-
-                func.Should().Throw<PacketException>();
             }
         }
 

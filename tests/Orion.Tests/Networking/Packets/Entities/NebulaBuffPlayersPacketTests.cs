@@ -31,25 +31,7 @@ namespace Orion.Networking.Packets.Entities {
             packet.ShouldHaveDefaultablePropertiesMarkAsDirty();
         }
 
-        [Fact]
-        public void SetBuffType_MarksAsDirty() {
-            var packet = new NebulaBuffPlayersPacket();
-
-            packet.BuffType = BuffType.ObsidianSkin;
-
-            packet.ShouldBeDirty();
-        }
-
-        [Fact]
-        public void SetBuffType_NullValue_ThrowsArgumentNullException() {
-            var packet = new NebulaBuffPlayersPacket();
-            Action action = () => packet.BuffType = null;
-
-            action.Should().Throw<ArgumentNullException>();
-        }
-
         public static readonly byte[] Bytes = {13, 0, 102, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0};
-        public static readonly byte[] InvalidBuffTypeBytes = {13, 0, 102, 0, 255, 0, 0, 0, 0, 0, 0, 0, 0};
 
         [Fact]
         public void ReadFromStream_IsCorrect() {
@@ -59,15 +41,6 @@ namespace Orion.Networking.Packets.Entities {
                 packet.PlayerIndex.Should().Be(0);
                 packet.BuffType.Should().Be(BuffType.ObsidianSkin);
                 packet.BuffPosition.Should().Be(Vector2.Zero);
-            }
-        }
-
-        [Fact]
-        public void ReadFromStream_InvalidBuffType_ThrowsPacketException() {
-            using (var stream = new MemoryStream(InvalidBuffTypeBytes)) {
-                Func<Packet> func = () => Packet.ReadFromStream(stream, PacketContext.Server);
-
-                func.Should().Throw<PacketException>();
             }
         }
 

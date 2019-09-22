@@ -48,11 +48,10 @@ namespace Orion.Networking.Packets.Entities {
         /// <summary>
         /// Gets or sets the buff's type.
         /// </summary>
-        /// <exception cref="ArgumentNullException"><paramref name="value"/> is <c>null</c>.</exception>
         public BuffType BuffType {
             get => _buffType;
             set {
-                _buffType = value ?? throw new ArgumentNullException(nameof(value));
+                _buffType = value;
                 _isDirty = true;
             }
         }
@@ -74,13 +73,13 @@ namespace Orion.Networking.Packets.Entities {
 
         private protected override void ReadFromReader(BinaryReader reader, PacketContext context) {
             PlayerIndex = reader.ReadByte();
-            BuffType = BuffType.FromId(reader.ReadByte()) ?? throw new PacketException("Buff type is invalid.");
+            BuffType = (BuffType)reader.ReadByte();
             BuffPosition = reader.ReadVector2();
         }
 
         private protected override void WriteToWriter(BinaryWriter writer, PacketContext context) {
             writer.Write(PlayerIndex);
-            writer.Write(BuffType.Id);
+            writer.Write((byte)BuffType);
             writer.Write(BuffPosition);
         }
     }

@@ -38,14 +38,13 @@ namespace Orion.Entities {
         /// </summary>
         /// <param name="buffType">The buff type.</param>
         /// <param name="duration">The duration.</param>
-        /// <exception cref="ArgumentNullException"><paramref name="buffType"/> is <c>null</c>.</exception>
         /// <exception cref="ArgumentOutOfRangeException"><paramref name="duration"/> is negative.</exception>
         public Buff(BuffType buffType, TimeSpan duration) {
             if (duration < TimeSpan.Zero) {
                 throw new ArgumentOutOfRangeException(nameof(duration), "Duration cannot be negative.");
             }
 
-            BuffType = buffType ?? throw new ArgumentNullException(nameof(buffType));
+            BuffType = buffType;
             Duration = duration;
         }
 

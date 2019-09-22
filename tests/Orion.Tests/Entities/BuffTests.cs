@@ -32,7 +32,7 @@ namespace Orion.Entities {
         public void GetBuffType_IsCorrect() {
             var buff = new Buff(BuffType.ObsidianSkin, TimeSpan.MaxValue);
 
-            buff.BuffType.Should().BeSameAs(BuffType.ObsidianSkin);
+            buff.BuffType.Should().Be(BuffType.ObsidianSkin);
         }
 
         [Fact]

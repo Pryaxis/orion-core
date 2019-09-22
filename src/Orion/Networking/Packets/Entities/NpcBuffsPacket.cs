@@ -72,16 +72,14 @@ namespace Orion.Networking.Packets.Entities {
         private protected override void ReadFromReader(BinaryReader reader, PacketContext context) {
             NpcIndex = reader.ReadInt16();
             for (var i = 0; i < NpcBuffs.Count; ++i) {
-                NpcBuffs[i] =
-                    new Buff(BuffType.FromId(reader.ReadByte()) ?? throw new PacketException("Buff type is invalid."),
-                             TimeSpan.FromSeconds(reader.ReadInt16() / 60.0));
+                NpcBuffs[i] = new Buff((BuffType)reader.ReadByte(), TimeSpan.FromSeconds(reader.ReadInt16() / 60.0));
             }
         }
 
         private protected override void WriteToWriter(BinaryWriter writer, PacketContext context) {
             writer.Write(NpcIndex);
             foreach (var buff in NpcBuffs) {
-                writer.Write(buff.BuffType.Id);
+                writer.Write((byte)buff.BuffType);
 
                 var ticks = (int)(buff.Duration.TotalSeconds * 60.0);
                 if (ticks >= short.MaxValue) {

@@ -72,15 +72,14 @@ namespace Orion.Networking.Packets.Entities {
         private protected override void ReadFromReader(BinaryReader reader, PacketContext context) {
             PlayerIndex = reader.ReadByte();
             for (var i = 0; i < PlayerBuffTypes.Count; ++i) {
-                PlayerBuffTypes[i] = BuffType.FromId(reader.ReadByte()) ??
-                                     throw new PacketException("Buff type is invalid.");
+                PlayerBuffTypes[i] = (BuffType)reader.ReadByte();
             }
         }
 
         private protected override void WriteToWriter(BinaryWriter writer, PacketContext context) {
             writer.Write(PlayerIndex);
             foreach (var buffType in PlayerBuffTypes) {
-                writer.Write(buffType.Id);
+                writer.Write((byte)buffType);
             }
         }
     }

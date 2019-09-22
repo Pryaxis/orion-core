@@ -60,14 +60,12 @@ namespace Orion.Networking.Packets.Entities {
 
         private protected override void ReadFromReader(BinaryReader reader, PacketContext context) {
             PlayerIndex = reader.ReadByte();
-            PlayerBuff =
-                new Buff(BuffType.FromId(reader.ReadByte()) ?? throw new PacketException("Buff type is invalid."),
-                         TimeSpan.FromSeconds(reader.ReadInt32() / 60.0));
+            PlayerBuff = new Buff((BuffType)reader.ReadByte(), TimeSpan.FromSeconds(reader.ReadInt32() / 60.0));
         }
 
         private protected override void WriteToWriter(BinaryWriter writer, PacketContext context) {
             writer.Write(PlayerIndex);
-            writer.Write(PlayerBuff.BuffType.Id);
+            writer.Write((byte)PlayerBuff.BuffType);
             writer.Write((int)(PlayerBuff.Duration.TotalSeconds * 60.0));
         }
     }
