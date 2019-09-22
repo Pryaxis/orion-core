@@ -18,7 +18,6 @@
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using JetBrains.Annotations;
-using Terraria;
 
 namespace Orion.Networking.Packets.Entities {
     /// <summary>
@@ -349,10 +348,10 @@ namespace Orion.Networking.Packets.Entities {
         private protected override void ReadFromReader(BinaryReader reader, PacketContext context) {
             _playerIndex = reader.ReadByte();
 
-            BitsByte zoneFlags = reader.ReadByte();
-            BitsByte zoneFlags2 = reader.ReadByte();
-            BitsByte zoneFlags3 = reader.ReadByte();
-            BitsByte zoneFlags4 = reader.ReadByte();
+            Terraria.BitsByte zoneFlags = reader.ReadByte();
+            Terraria.BitsByte zoneFlags2 = reader.ReadByte();
+            Terraria.BitsByte zoneFlags3 = reader.ReadByte();
+            Terraria.BitsByte zoneFlags4 = reader.ReadByte();
             _isPlayerNearDungeonZone = zoneFlags[0];
             _isPlayerNearCorruptionZone = zoneFlags[1];
             _isPlayerNearHallowedZone = zoneFlags[2];
@@ -383,10 +382,10 @@ namespace Orion.Networking.Packets.Entities {
         private protected override void WriteToWriter(BinaryWriter writer, PacketContext context) {
             writer.Write(_playerIndex);
 
-            BitsByte zoneFlags = 0;
-            BitsByte zoneFlags2 = 0;
-            BitsByte zoneFlags3 = 0;
-            BitsByte zoneFlags4 = 0;
+            Terraria.BitsByte zoneFlags = 0;
+            Terraria.BitsByte zoneFlags2 = 0;
+            Terraria.BitsByte zoneFlags3 = 0;
+            Terraria.BitsByte zoneFlags4 = 0;
             zoneFlags[0] = _isPlayerNearDungeonZone;
             zoneFlags[1] = _isPlayerNearCorruptionZone;
             zoneFlags[2] = _isPlayerNearHallowedZone;

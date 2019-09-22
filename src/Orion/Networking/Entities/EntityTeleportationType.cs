@@ -37,6 +37,6 @@ namespace Orion.Networking.Entities {
         /// <summary>
         /// Indicates that a player should be teleported to another player. This is caused by a Wormhole Potion.
         /// </summary>
-        PlayerToPlayer = 2,
+        PlayerToPlayer = 2
     }
 }

@@ -33,7 +33,7 @@ namespace Orion.Networking.World.Tiles {
         private bool _isDirty;
 
         /// <inheritdoc />
-        public bool IsDirty => _isDirty || this.Any(t => t.IsDirty == true);
+        public bool IsDirty => _isDirty || this.Any(t => t.IsDirty);
 
         /// <summary>
         /// Gets or sets the tile at the given coordinates.

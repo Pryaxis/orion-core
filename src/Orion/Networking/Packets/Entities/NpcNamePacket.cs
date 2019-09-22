@@ -59,7 +59,7 @@ namespace Orion.Networking.Packets.Entities {
 
         /// <inheritdoc />
         [ExcludeFromCodeCoverage]
-        public override string ToString() => $"{Type}[#={NpcIndex} is {NpcName ?? "?"}]";
+        public override string ToString() => $"{Type}[#={NpcIndex} is {NpcName}]";
 
         private protected override void ReadFromReader(BinaryReader reader, PacketContext context) {
             _npcIndex = reader.ReadInt16();

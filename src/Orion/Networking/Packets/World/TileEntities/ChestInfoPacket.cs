@@ -18,7 +18,6 @@
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using JetBrains.Annotations;
-using Terraria;
 
 namespace Orion.Networking.Packets.World.TileEntities {
     /// <summary>
@@ -90,7 +89,7 @@ namespace Orion.Networking.Packets.World.TileEntities {
             _chestY = reader.ReadInt16();
             var nameLength = reader.ReadByte();
 
-            if (nameLength > 0 && nameLength <= Chest.MaxNameLength) {
+            if (nameLength > 0 && nameLength <= Terraria.Chest.MaxNameLength) {
                 _chestName = reader.ReadString();
             }
         }

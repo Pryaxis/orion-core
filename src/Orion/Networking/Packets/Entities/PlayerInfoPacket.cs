@@ -20,7 +20,6 @@ using System.IO;
 using JetBrains.Annotations;
 using Microsoft.Xna.Framework;
 using Orion.Networking.Packets.Extensions;
-using Terraria;
 
 namespace Orion.Networking.Packets.Entities {
     /// <summary>
@@ -231,8 +230,8 @@ namespace Orion.Networking.Packets.Entities {
         private protected override void ReadFromReader(BinaryReader reader, PacketContext context) {
             _playerIndex = reader.ReadByte();
 
-            BitsByte flags = reader.ReadByte();
-            BitsByte flags2 = reader.ReadByte();
+            Terraria.BitsByte flags = reader.ReadByte();
+            Terraria.BitsByte flags2 = reader.ReadByte();
             _isPlayerHoldingUp = flags[0];
             _isPlayerHoldingDown = flags[1];
             _isPlayerHoldingLeft = flags[2];
@@ -247,15 +246,15 @@ namespace Orion.Networking.Packets.Entities {
             _isPlayerRaisingShield = flags2[5];
 
             _playerHeldItemSlotIndex = reader.ReadByte();
-            _playerPosition = BinaryExtensions.ReadVector2(reader);
-            if (flags2[2]) _playerVelocity = BinaryExtensions.ReadVector2(reader);
+            _playerPosition = reader.ReadVector2();
+            if (flags2[2]) _playerVelocity = reader.ReadVector2();
         }
 
         private protected override void WriteToWriter(BinaryWriter writer, PacketContext context) {
             writer.Write(_playerIndex);
 
-            BitsByte flags = 0;
-            BitsByte flags2 = 0;
+            Terraria.BitsByte flags = 0;
+            Terraria.BitsByte flags2 = 0;
             flags[0] = _isPlayerHoldingUp;
             flags[1] = _isPlayerHoldingDown;
             flags[2] = _isPlayerHoldingLeft;

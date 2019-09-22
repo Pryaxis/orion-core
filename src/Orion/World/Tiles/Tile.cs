@@ -18,8 +18,8 @@
 using System;
 using JetBrains.Annotations;
 using Microsoft.Xna.Framework;
+using Orion.World.Tiles.Extensions;
 using OTAPI.Tile;
-using Terraria;
 
 namespace Orion.World.Tiles {
     /// <summary>
@@ -210,7 +210,7 @@ namespace Orion.World.Tiles {
                     return 2 + ((ITile)this).slope();
                 }
 
-                if (Main.tileSolid[((ITile)this).type] && !Main.tileSolidTop[((ITile)this).type]) {
+                if (Terraria.Main.tileSolid[((ITile)this).type] && !Terraria.Main.tileSolidTop[((ITile)this).type]) {
                     return 1;
                 }
 
@@ -304,7 +304,7 @@ namespace Orion.World.Tiles {
             if (((ITile)this).active()) {
                 if (((ITile)this).type != compTile.type) return false;
 
-                if (Main.tileFrameImportant[((ITile)this).type] &&
+                if (((BlockType)((ITile)this).type).AreFramesImportant() &&
                     (((ITile)this).frameX != compTile.frameX || ((ITile)this).frameY != compTile.frameY)) {
                     return false;
                 }

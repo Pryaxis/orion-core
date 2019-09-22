@@ -18,7 +18,6 @@
 using System.IO;
 using JetBrains.Annotations;
 using Microsoft.Xna.Framework;
-using Terraria.Localization;
 using TDS = Terraria.DataStructures;
 
 namespace Orion.Networking.Packets.Extensions {
@@ -27,8 +26,8 @@ namespace Orion.Networking.Packets.Extensions {
             new Color(reader.ReadByte(), reader.ReadByte(), reader.ReadByte());
 
         [NotNull]
-        public static NetworkText ReadNetworkText([NotNull] this BinaryReader reader) =>
-            NetworkText.Deserialize(reader);
+        public static Terraria.Localization.NetworkText ReadNetworkText([NotNull] this BinaryReader reader) =>
+            Terraria.Localization.NetworkText.Deserialize(reader);
 
         [NotNull]
         public static TDS.PlayerDeathReason ReadPlayerDeathReason([NotNull] this BinaryReader reader) =>
@@ -48,7 +47,7 @@ namespace Orion.Networking.Packets.Extensions {
             playerDeathReason.WriteSelfTo(writer);
         }
 
-        public static void Write([NotNull] this BinaryWriter writer, [NotNull] NetworkText text) {
+        public static void Write([NotNull] this BinaryWriter writer, [NotNull] Terraria.Localization.NetworkText text) {
             text.Serialize(writer);
         }
 
