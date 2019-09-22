@@ -18,11 +18,13 @@
 using System;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
+using JetBrains.Annotations;
 
 namespace Orion.Networking.Packets.Entities {
     /// <summary>
     /// Packet sent to either request or set an NPC's name.
     /// </summary>
+    [PublicAPI]
     public sealed class NpcNamePacket : Packet {
         private short _npcIndex;
         private string _npcName = "";
@@ -45,6 +47,7 @@ namespace Orion.Networking.Packets.Entities {
         /// Gets or sets the NPC's name.
         /// </summary>
         /// <exception cref="ArgumentNullException"><paramref name="value"/> is <c>null</c>.</exception>
+        [NotNull]
         public string NpcName {
             get => _npcName;
             set {
@@ -58,20 +61,20 @@ namespace Orion.Networking.Packets.Entities {
         public override string ToString() => $"{Type}[#={NpcIndex} is {NpcName ?? "?"}]";
 
         private protected override void ReadFromReader(BinaryReader reader, PacketContext context) {
-            NpcIndex = reader.ReadInt16();
+            _npcIndex = reader.ReadInt16();
 
             // The packet includes the NPC name if it is read as the client.
             if (context == PacketContext.Client) {
-                NpcName = reader.ReadString();
+                _npcName = reader.ReadString();
             }
         }
 
         private protected override void WriteToWriter(BinaryWriter writer, PacketContext context) {
-            writer.Write(NpcIndex);
+            writer.Write(_npcIndex);
 
             // The packet includes the NPC name if it is written as the server.
             if (context == PacketContext.Server) {
-                writer.Write(NpcName);
+                writer.Write(_npcName);
             }
         }
     }
