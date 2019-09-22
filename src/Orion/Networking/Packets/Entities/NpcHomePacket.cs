@@ -17,11 +17,13 @@
 
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
+using JetBrains.Annotations;
 
 namespace Orion.Networking.Packets.Entities {
     /// <summary>
     /// Packet sent to set an NPC's home.
     /// </summary>
+    [PublicAPI]
     public sealed class NpcHomePacket : Packet {
         private short _npcIndex;
         private short _npcHomeX;
@@ -80,17 +82,17 @@ namespace Orion.Networking.Packets.Entities {
         public override string ToString() => $"{Type}[#={NpcIndex} @ ({NpcHomeX}, {NpcHomeY}), ...]";
 
         private protected override void ReadFromReader(BinaryReader reader, PacketContext context) {
-            NpcIndex = reader.ReadInt16();
-            NpcHomeX = reader.ReadInt16();
-            NpcHomeY = reader.ReadInt16();
-            IsNpcHomeless = reader.ReadBoolean();
+            _npcIndex = reader.ReadInt16();
+            _npcHomeX = reader.ReadInt16();
+            _npcHomeY = reader.ReadInt16();
+            _isNpcHomeless = reader.ReadBoolean();
         }
 
         private protected override void WriteToWriter(BinaryWriter writer, PacketContext context) {
-            writer.Write(NpcIndex);
-            writer.Write(NpcHomeX);
-            writer.Write(NpcHomeY);
-            writer.Write(IsNpcHomeless);
+            writer.Write(_npcIndex);
+            writer.Write(_npcHomeX);
+            writer.Write(_npcHomeY);
+            writer.Write(_isNpcHomeless);
         }
     }
 }
