@@ -107,7 +107,7 @@ namespace Orion.Networking.Packets {
         ItemFrame = 89,
         ItemInstanceInfo = 90,
         EmoteBubble = 91,
-        NpcStealCoin = 92,
+        NpcStealCoins = 92,
         RemovePortal = 95,
         TeleportPlayerPortal = 96,
         NpcTypeKilled = 97,

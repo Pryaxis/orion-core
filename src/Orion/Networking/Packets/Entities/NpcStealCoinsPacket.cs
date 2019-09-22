@@ -17,6 +17,7 @@
 
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
+using JetBrains.Annotations;
 using Microsoft.Xna.Framework;
 using Orion.Networking.Packets.Extensions;
 
@@ -24,13 +25,14 @@ namespace Orion.Networking.Packets.Entities {
     /// <summary>
     /// Packet sent to cause an NPC to steal a coin.
     /// </summary>
-    public sealed class NpcStealCoinPacket : Packet {
+    [PublicAPI]
+    public sealed class NpcStealCoinsPacket : Packet {
         private short _npcIndex;
         private float _npcStolenValue;
-        private Vector2 _coinPosition;
+        private Vector2 _coinsPosition;
 
         /// <inheritdoc />
-        public override PacketType Type => PacketType.NpcStealCoin;
+        public override PacketType Type => PacketType.NpcStealCoins;
 
         /// <summary>
         /// Gets or sets the NPC index.
@@ -55,30 +57,30 @@ namespace Orion.Networking.Packets.Entities {
         }
 
         /// <summary>
-        /// Gets or sets the coin's position.
+        /// Gets or sets the coins' position.
         /// </summary>
-        public Vector2 CoinPosition {
-            get => _coinPosition;
+        public Vector2 CoinsPosition {
+            get => _coinsPosition;
             set {
-                _coinPosition = value;
+                _coinsPosition = value;
                 _isDirty = true;
             }
         }
 
         /// <inheritdoc />
         [ExcludeFromCodeCoverage]
-        public override string ToString() => $"{Type}[#={NpcIndex}, V={NpcStolenValue} @ {CoinPosition}]";
+        public override string ToString() => $"{Type}[#={NpcIndex} stole {NpcStolenValue} @ {CoinsPosition}]";
 
         private protected override void ReadFromReader(BinaryReader reader, PacketContext context) {
-            NpcIndex = reader.ReadInt16();
-            NpcStolenValue = reader.ReadSingle();
-            CoinPosition = reader.ReadVector2();
+            _npcIndex = reader.ReadInt16();
+            _npcStolenValue = reader.ReadSingle();
+            _coinsPosition = reader.ReadVector2();
         }
 
         private protected override void WriteToWriter(BinaryWriter writer, PacketContext context) {
-            writer.Write(NpcIndex);
-            writer.Write(NpcStolenValue);
-            writer.Write(CoinPosition);
+            writer.Write(_npcIndex);
+            writer.Write(_npcStolenValue);
+            writer.Write(_coinsPosition);
         }
     }
 }

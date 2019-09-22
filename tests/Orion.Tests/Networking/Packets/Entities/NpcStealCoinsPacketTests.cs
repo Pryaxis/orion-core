@@ -21,10 +21,10 @@ using Microsoft.Xna.Framework;
 using Xunit;
 
 namespace Orion.Networking.Packets.Entities {
-    public class NpcStealCoinPacketTests {
+    public class NpcStealCoinsPacketTests {
         [Fact]
         public void SetDefaultableProperties_MarkAsDirty() {
-            var packet = new NpcStealCoinPacket();
+            var packet = new NpcStealCoinsPacket();
 
             packet.ShouldHaveDefaultablePropertiesMarkAsDirty();
         }
@@ -34,11 +34,11 @@ namespace Orion.Networking.Packets.Entities {
         [Fact]
         public void ReadFromStream_IsCorrect() {
             using (var stream = new MemoryStream(Bytes)) {
-                var packet = (NpcStealCoinPacket)Packet.ReadFromStream(stream, PacketContext.Server);
+                var packet = (NpcStealCoinsPacket)Packet.ReadFromStream(stream, PacketContext.Server);
 
                 packet.NpcIndex.Should().Be(0);
                 packet.NpcStolenValue.Should().Be(0);
-                packet.CoinPosition.Should().Be(new Vector2(0));
+                packet.CoinsPosition.Should().Be(new Vector2(0));
             }
         }
 

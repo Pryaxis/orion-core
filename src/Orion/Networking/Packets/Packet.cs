@@ -126,7 +126,7 @@ namespace Orion.Networking.Packets {
             /* 089 */ () => new ItemFramePacket(),
             /* 090 */ () => new ItemInstanceInfoPacket(),
             /* 091 */ () => new EmoteBubblePacket(),
-            /* 092 */ () => new NpcStealCoinPacket(),
+            /* 092 */ () => new NpcStealCoinsPacket(),
             /* 093 */ null,
             /* 094 */ null,
             /* 095 */ () => new RemovePortalPacket(),
