@@ -16,6 +16,7 @@
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
 using System;
+using JetBrains.Annotations;
 using Microsoft.Xna.Framework;
 using OTAPI.Tile;
 using Terraria;
@@ -24,6 +25,7 @@ namespace Orion.World.Tiles {
     /// <summary>
     /// Represents a Terraria tile.
     /// </summary>
+    [PublicAPI]
     public abstract class Tile : ITile {
         /// <summary>
         /// Gets or sets the tile's block type.

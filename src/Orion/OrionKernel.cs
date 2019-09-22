@@ -31,15 +31,16 @@ namespace Orion {
     /// </summary>
     [PublicAPI]
     public sealed class OrionKernel : StandardKernel {
+        [NotNull, ItemNotNull]
         private static ISet<Type> InterfaceTypesToIgnore => new HashSet<Type> {
             typeof(IDisposable),
             typeof(IReadOnlyList<>),
             typeof(IService)
         };
 
-        private readonly ISet<Assembly> _pluginAssemblies = new HashSet<Assembly>();
-        private readonly ISet<Type> _pluginTypesToLoad = new HashSet<Type>();
-        private readonly ISet<OrionPlugin> _plugins = new HashSet<OrionPlugin>();
+        [NotNull, ItemNotNull] private readonly ISet<Assembly> _pluginAssemblies = new HashSet<Assembly>();
+        [NotNull, ItemNotNull] private readonly ISet<Type> _pluginTypesToLoad = new HashSet<Type>();
+        [NotNull, ItemNotNull] private readonly ISet<OrionPlugin> _plugins = new HashSet<OrionPlugin>();
 
         internal OrionKernel() {
             Bind<OrionKernel>().ToConstant(this).InSingletonScope();

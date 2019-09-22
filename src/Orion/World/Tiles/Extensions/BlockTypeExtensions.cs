@@ -16,13 +16,15 @@
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
 using System.Collections.Generic;
+using JetBrains.Annotations;
 
 namespace Orion.World.Tiles.Extensions {
     /// <summary>
     /// Provides extensions for the <see cref="BlockType"/> enumeration.
     /// </summary>
+    [PublicAPI]
     public static class BlockTypeExtensions {
-        private static readonly ISet<BlockType> FramesImportantBlockTypes = new HashSet<BlockType> {
+        [NotNull] private static readonly ISet<BlockType> FramesImportantBlockTypes = new HashSet<BlockType> {
             (BlockType)3,
             (BlockType)4,
             (BlockType)5,

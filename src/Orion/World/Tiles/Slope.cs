@@ -23,12 +23,29 @@ namespace Orion.World.Tiles {
     /// </summary>
     [PublicAPI]
     public enum Slope : byte {
-#pragma warning disable 1591
+        /// <summary>
+        /// Indicates no slope.
+        /// </summary>
         None = 0,
+
+        /// <summary>
+        /// Indicates a top-right slope.
+        /// </summary>
         TopRight = 1,
+
+        /// <summary>
+        /// Indicates a top-left slope.
+        /// </summary>
         TopLeft = 2,
+
+        /// <summary>
+        /// Indicates a bottom-right slope.
+        /// </summary>
         BottomRight = 3,
+
+        /// <summary>
+        /// Indicates a bottom-left slope.
+        /// </summary>
         BottomLeft = 4
-#pragma warning restore 1591
     }
 }

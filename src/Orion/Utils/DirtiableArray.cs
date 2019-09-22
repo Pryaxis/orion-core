@@ -29,7 +29,7 @@ namespace Orion.Utils {
     /// <typeparam name="T">The type of element.</typeparam>
     [PublicAPI]
     public sealed class DirtiableArray<T> : IArray<T>, IDirtiable {
-        [NotNull] internal readonly T[] _array;
+        [NotNull, ItemCanBeNull] internal readonly T[] _array;
         private bool _isDirty;
 
         private static bool ContainsDirtiableElements => typeof(IDirtiable).IsAssignableFrom(typeof(T));

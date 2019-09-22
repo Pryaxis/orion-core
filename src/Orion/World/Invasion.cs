@@ -15,7 +15,6 @@
 // You should have received a copy of the GNU General Public License
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
-using System.Reflection;
 using JetBrains.Annotations;
 
 namespace Orion.World {
@@ -24,12 +23,29 @@ namespace Orion.World {
     /// </summary>
     [PublicAPI]
     public enum Invasion : sbyte {
-#pragma warning disable 1591
+        /// <summary>
+        /// Indicates no invasion.
+        /// </summary>
         None = 0,
+
+        /// <summary>
+        /// Indicates the Goblins.
+        /// </summary>
         Goblins = 1,
+
+        /// <summary>
+        /// Indicates the Frost Legion.
+        /// </summary>
         FrostLegion = 2,
+
+        /// <summary>
+        /// Indicates the Pirates.
+        /// </summary>
         Pirates = 3,
+
+        /// <summary>
+        /// Indicates the Martians.
+        /// </summary>
         Martians = 4
-#pragma warning restore 1591
     }
 }

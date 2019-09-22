@@ -23,15 +23,44 @@ namespace Orion.World.TileEntities {
     /// </summary>
     [PublicAPI]
     public enum LogicSensorType : byte {
-#pragma warning disable 1591
+        /// <summary>
+        /// Indicates nothing.
+        /// </summary>
         None = 0,
-        Day = 1,
-        Night = 2,
+
+        /// <summary>
+        /// Indicates a daytime sensor.
+        /// </summary>
+        Daytime = 1,
+
+        /// <summary>
+        /// Indicates a nighttime sensor.
+        /// </summary>
+        Nighttime = 2,
+
+        /// <summary>
+        /// Indicates a player above sensor.
+        /// </summary>
         PlayerAbove = 3,
+
+        /// <summary>
+        /// Indicates a water sensor.
+        /// </summary>
         Water = 4,
+
+        /// <summary>
+        /// Indicates a lava sensor.
+        /// </summary>
         Lava = 5,
+
+        /// <summary>
+        /// Indicates a honey sensor.
+        /// </summary>
         Honey = 6,
+
+        /// <summary>
+        /// Indicates a liquid sensor.
+        /// </summary>
         Liquid = 7
-#pragma warning restore 1591
     }
 }

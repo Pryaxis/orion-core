@@ -20,28 +20,27 @@ using JetBrains.Annotations;
 
 namespace Orion {
     /// <summary>
-    /// Represents a service. Services provide concrete units of functionality to clients, and are injected using a
-    /// dependency injection framework.
+    /// Represents a service. Services provide concrete units of functionality to clients and are injected using a
+    /// dependency injection framework. They may be made instanced using an <see cref="InstancedServiceAttribute"/>.
     /// </summary>
-    /// <remarks>
-    /// Services may have either static or instanced lifetimes, depending on whether
-    /// <see cref="InstancedServiceAttribute"/> is applied to the service's implementation.
-    /// </remarks>
     [PublicAPI]
     public interface IService : IDisposable {
         /// <summary>
         /// Gets the service's author.
         /// </summary>
+        [NotNull]
         string Author { get; }
 
         /// <summary>
         /// Gets the service's name.
         /// </summary>
+        [NotNull]
         string Name { get; }
 
         /// <summary>
         /// Gets the service's version.
         /// </summary>
+        [NotNull]
         Version Version { get; }
     }
 }

@@ -16,6 +16,7 @@
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
 using System;
+using JetBrains.Annotations;
 
 namespace Orion {
     /// <summary>
@@ -23,5 +24,6 @@ namespace Orion {
     /// lifetime, not static lifetime.
     /// </summary>
     [AttributeUsage(AttributeTargets.Class)]
+    [BaseTypeRequired(typeof(IService))]
     public sealed class InstancedServiceAttribute : Attribute { }
 }
