@@ -23,12 +23,10 @@ using Xunit;
 namespace Orion.Networking.Packets.Entities {
     public class PlayerUuidPacketTests {
         [Fact]
-        public void SetPlayerUuid_MarksAsDirty() {
+        public void SetSimpleProperties_MarkAsDirty() {
             var packet = new PlayerUuidPacket();
 
-            packet.PlayerUuid = "";
-
-            packet.ShouldBeDirty();
+            packet.SetSimplePropertiesShouldMarkAsDirty();
         }
 
         [Fact]

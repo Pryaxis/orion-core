@@ -24,10 +24,10 @@ using Xunit;
 namespace Orion.Networking.Packets.Entities {
     public class NpcBuffsPacketTests {
         [Fact]
-        public void SetDefaultableProperties_MarkAsDirty() {
+        public void SetSimpleProperties_MarkAsDirty() {
             var packet = new NpcBuffsPacket();
 
-            packet.ShouldHaveDefaultablePropertiesMarkAsDirty();
+            packet.SetSimplePropertiesShouldMarkAsDirty();
         }
 
         [Fact]

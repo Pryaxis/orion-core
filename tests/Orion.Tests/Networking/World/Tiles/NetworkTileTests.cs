@@ -20,10 +20,10 @@ using Xunit;
 namespace Orion.Networking.World.Tiles {
     public class NetworkTileTests {
         [Fact]
-        public void SetDefaultableProperties_MarkAsDirty() {
+        public void SetSimpleProperties_MarkAsDirty() {
             var tile = new NetworkTile();
 
-            tile.ShouldHaveDefaultablePropertiesMarkAsDirty();
+            tile.SetSimplePropertiesShouldMarkAsDirty();
         }
     }
 }

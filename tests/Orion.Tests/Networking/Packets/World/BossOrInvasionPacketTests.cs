@@ -23,10 +23,10 @@ using Xunit;
 namespace Orion.Networking.Packets.World {
     public class BossOrInvasionPacketTests {
         [Fact]
-        public void SetDefaultableProperties_MarkAsDirty() {
+        public void SetSimpleProperties_MarkAsDirty() {
             var packet = new BossOrInvasionPacket();
 
-            packet.ShouldHaveDefaultablePropertiesMarkAsDirty();
+            packet.SetSimplePropertiesShouldMarkAsDirty();
         }
 
         public static readonly byte[] Bytes = {7, 0, 61, 0, 0, 255, 255};

@@ -22,10 +22,10 @@ using Xunit;
 namespace Orion.Networking.Packets.World {
     public class PillarShieldStrengthsPacketTests {
         [Fact]
-        public void SetDefaultableProperties_MarkAsDirty() {
+        public void SetSimpleProperties_MarkAsDirty() {
             var packet = new PillarShieldStrengthsPacket();
 
-            packet.ShouldHaveDefaultablePropertiesMarkAsDirty();
+            packet.SetSimplePropertiesShouldMarkAsDirty();
         }
 
         private static readonly byte[] Bytes = {11, 0, 101, 1, 0, 2, 0, 3, 0, 4, 0};

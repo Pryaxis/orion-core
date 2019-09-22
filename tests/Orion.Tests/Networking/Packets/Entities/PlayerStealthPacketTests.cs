@@ -22,10 +22,10 @@ using Xunit;
 namespace Orion.Networking.Packets.Entities {
     public class PlayerStealthPacketTests {
         [Fact]
-        public void SetDefaultableProperties_MarkAsDirty() {
+        public void SetSimpleProperties_MarkAsDirty() {
             var packet = new PlayerStealthPacket();
 
-            packet.ShouldHaveDefaultablePropertiesMarkAsDirty();
+            packet.SetSimplePropertiesShouldMarkAsDirty();
         }
 
         public static readonly byte[] Bytes = {8, 0, 84, 0, 0, 0, 0, 0};

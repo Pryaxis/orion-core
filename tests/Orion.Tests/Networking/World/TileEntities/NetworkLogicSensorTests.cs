@@ -20,10 +20,10 @@ using Xunit;
 namespace Orion.Networking.World.TileEntities {
     public class NetworkLogicSensorTests {
         [Fact]
-        public void SetDefaultableProperties_MarkAsDirty() {
+        public void SetSimpleProperties_MarkAsDirty() {
             var logicSensor = new NetworkLogicSensor();
 
-            logicSensor.ShouldHaveDefaultablePropertiesMarkAsDirty();
+            logicSensor.SetSimplePropertiesShouldMarkAsDirty();
         }
     }
 }

@@ -23,10 +23,10 @@ using Xunit;
 namespace Orion.Networking.Packets.World.TileEntities {
     public class ItemFramePacketTests {
         [Fact]
-        public void SetDefaultableProperties_MarkAsDirty() {
+        public void SetSimpleProperties_MarkAsDirty() {
             var packet = new ItemFramePacket();
 
-            packet.ShouldHaveDefaultablePropertiesMarkAsDirty();
+            packet.SetSimplePropertiesShouldMarkAsDirty();
         }
 
         private static readonly byte[] Bytes = {12, 0, 89, 0, 1, 100, 0, 17, 6, 82, 1, 0};

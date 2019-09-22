@@ -22,10 +22,10 @@ using Xunit;
 namespace Orion.Networking.Packets.World.Tiles {
     public class SectionRequestPacketTests {
         [Fact]
-        public void SetDefaultableProperties_MarkAsDirty() {
+        public void SetSimpleProperties_MarkAsDirty() {
             var packet = new SectionRequestPacket();
 
-            packet.ShouldHaveDefaultablePropertiesMarkAsDirty();
+            packet.SetSimplePropertiesShouldMarkAsDirty();
         }
 
         private static readonly byte[] Bytes = {11, 0, 8, 255, 255, 255, 255, 255, 255, 255, 255};

@@ -23,12 +23,10 @@ using Xunit;
 namespace Orion.Networking.Packets.Entities {
     public class PlayerPasswordResponsePacketTests {
         [Fact]
-        public void SetPlayerPassword_MarksAsDirty() {
+        public void SetSimpleProperties_MarkAsDirty() {
             var packet = new PlayerPasswordResponsePacket();
 
-            packet.PlayerPassword = "";
-
-            packet.ShouldBeDirty();
+            packet.SetSimplePropertiesShouldMarkAsDirty();
         }
 
         [Fact]

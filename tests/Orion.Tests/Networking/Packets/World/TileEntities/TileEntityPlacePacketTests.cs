@@ -23,10 +23,10 @@ using Xunit;
 namespace Orion.Networking.Packets.World.TileEntities {
     public class TileEntityPlacePacketTests {
         [Fact]
-        public void SetDefaultableProperties_MarkAsDirty() {
+        public void SetSimpleProperties_MarkAsDirty() {
             var packet = new TileEntityPlacePacket();
 
-            packet.ShouldHaveDefaultablePropertiesMarkAsDirty();
+            packet.SetSimplePropertiesShouldMarkAsDirty();
         }
 
         private static readonly byte[] Bytes = {8, 0, 87, 0, 1, 100, 0, 1};

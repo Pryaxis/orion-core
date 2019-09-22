@@ -22,10 +22,10 @@ using Xunit;
 namespace Orion.Networking.Packets.World {
     public class ProgressionEventPacketTests {
         [Fact]
-        public void SetDefaultableProperties_MarkAsDirty() {
+        public void SetSimpleProperties_MarkAsDirty() {
             var packet = new ProgressionEventPacket();
 
-            packet.ShouldHaveDefaultablePropertiesMarkAsDirty();
+            packet.SetSimplePropertiesShouldMarkAsDirty();
         }
 
         public static readonly byte[] Bytes = {5, 0, 98, 1, 0};

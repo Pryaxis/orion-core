@@ -24,19 +24,10 @@ using Xunit;
 namespace Orion.Networking.Packets.World {
     public class ChatPacketTests {
         [Fact]
-        public void SetDefaultableProperties_MarkAsDirty() {
+        public void SetSimpleProperties_MarkAsDirty() {
             var packet = new ChatPacket();
 
-            packet.ShouldHaveDefaultablePropertiesMarkAsDirty();
-        }
-
-        [Fact]
-        public void SetChatText_MarksAsDirty() {
-            var packet = new ChatPacket();
-
-            packet.ChatText = Terraria.Localization.NetworkText.Empty;
-
-            packet.ShouldBeDirty();
+            packet.SetSimplePropertiesShouldMarkAsDirty();
         }
 
         [Fact]

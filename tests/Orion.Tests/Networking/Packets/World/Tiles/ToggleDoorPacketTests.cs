@@ -23,10 +23,10 @@ using Xunit;
 namespace Orion.Networking.Packets.World.Tiles {
     public class ToggleDoorPacketTests {
         [Fact]
-        public void SetDefaultableProperties_MarkAsDirty() {
+        public void SetSimpleProperties_MarkAsDirty() {
             var packet = new ToggleDoorPacket();
 
-            packet.ShouldHaveDefaultablePropertiesMarkAsDirty();
+            packet.SetSimplePropertiesShouldMarkAsDirty();
         }
 
         private static readonly byte[] Bytes = {9, 0, 19, 0, 16, 14, 194, 1, 1};

@@ -23,10 +23,10 @@ using Xunit;
 namespace Orion.Networking.Packets.World {
     public class PoofOfSmokePacketTests {
         [Fact]
-        public void SetDefaultableProperties_MarkAsDirty() {
+        public void SetSimpleProperties_MarkAsDirty() {
             var packet = new PoofOfSmokePacket();
 
-            packet.ShouldHaveDefaultablePropertiesMarkAsDirty();
+            packet.SetSimplePropertiesShouldMarkAsDirty();
         }
 
         public static readonly byte[] Bytes = {7, 0, 106, 0, 0, 0, 0};

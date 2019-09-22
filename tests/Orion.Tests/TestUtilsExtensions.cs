@@ -16,6 +16,7 @@
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Reflection;
 using FluentAssertions;
@@ -24,16 +25,57 @@ using Orion.Utils;
 
 namespace Orion {
     public static class TestUtilsExtensions {
-        public static void ShouldHaveDefaultablePropertiesMarkAsDirty(this IDirtiable dirtiable) {
-            // Use reflection to check all properties with types that have default constructors. This is pretty terrible
-            // if we don't do this...
+        private static readonly IDictionary<Type, object> DefaultValues = new Dictionary<Type, object> {
+            [typeof(bool)] = true,
+            [typeof(sbyte)] = (sbyte)-100,
+            [typeof(byte)] = (byte)100,
+            [typeof(short)] = (short)-12345,
+            [typeof(ushort)] = (ushort)12345,
+            [typeof(int)] = -123456789,
+            [typeof(uint)] = 123456789U,
+            [typeof(long)] = -123456789101112L,
+            [typeof(ulong)] = 123456789101112UL,
+            [typeof(string)] = "test"
+        };
+
+        public static void GetSetPropertiesShouldReflectInPacket(this EventArgs args) {
+            var packet = args.GetType().GetField("_packet", BindingFlags.NonPublic | BindingFlags.Instance);
+            packet.Should().NotBeNull();
+
+            foreach (var property in args.GetType().GetProperties(BindingFlags.Public | BindingFlags.Instance)) {
+                var packetProperty = packet.GetType().GetProperty(property.Name);
+                if (packetProperty == null) continue;
+
+                var propertyType = property.PropertyType;
+                if (!DefaultValues.TryGetValue(propertyType, out var value)) {
+                    if (propertyType.GetConstructor(Type.EmptyTypes) == null && !propertyType.IsValueType) continue;
+
+                    value = Activator.CreateInstance(propertyType);
+                }
+
+                // Test getter.
+                packetProperty.SetValue(packet, value);
+                property.GetValue(args).Should().Be(value);
+
+                // Test setter, if applicable.
+                if (!property.CanWrite) continue;
+                property.SetValue(args, value);
+                packetProperty.GetValue(packet).Should().Be(value);
+            }
+        }
+
+        public static void SetSimplePropertiesShouldMarkAsDirty(this IDirtiable dirtiable) {
             foreach (var property in dirtiable.GetType().GetProperties(BindingFlags.Public | BindingFlags.Instance)) {
                 if (property.SetMethod?.IsPublic != true) continue;
 
                 var propertyType = property.PropertyType;
-                if (propertyType.GetConstructor(Type.EmptyTypes) == null && !propertyType.IsValueType) continue;
+                if (!DefaultValues.TryGetValue(propertyType, out var value)) {
+                    if (propertyType.GetConstructor(Type.EmptyTypes) == null && !propertyType.IsValueType) continue;
 
-                property.SetValue(dirtiable, Activator.CreateInstance(propertyType));
+                    value = Activator.CreateInstance(propertyType);
+                }
+
+                property.SetValue(dirtiable, value);
                 dirtiable.ShouldBeDirty();
             }
         }

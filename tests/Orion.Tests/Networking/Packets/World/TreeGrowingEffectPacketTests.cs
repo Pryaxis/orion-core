@@ -22,10 +22,10 @@ using Xunit;
 namespace Orion.Networking.Packets.World {
     public class TreeGrowingEffectPacketTests {
         [Fact]
-        public void SetDefaultableProperties_MarkAsDirty() {
+        public void SetSimpleProperties_MarkAsDirty() {
             var packet = new TreeGrowingEffectPacket();
 
-            packet.ShouldHaveDefaultablePropertiesMarkAsDirty();
+            packet.SetSimplePropertiesShouldMarkAsDirty();
         }
 
         private static readonly byte[] Bytes = {11, 0, 112, 1, 0, 1, 100, 0, 10, 1, 0};

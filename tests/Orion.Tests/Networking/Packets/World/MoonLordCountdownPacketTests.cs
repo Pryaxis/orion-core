@@ -23,10 +23,10 @@ using Xunit;
 namespace Orion.Networking.Packets.World {
     public class MoonLordCountdownPacketTests {
         [Fact]
-        public void SetDefaultableProperties_MarkAsDirty() {
+        public void SetSimpleProperties_MarkAsDirty() {
             var packet = new MoonLordCountdownPacket();
 
-            packet.ShouldHaveDefaultablePropertiesMarkAsDirty();
+            packet.SetSimplePropertiesShouldMarkAsDirty();
         }
 
         private static readonly byte[] Bytes = {7, 0, 103, 60, 0, 0, 0};

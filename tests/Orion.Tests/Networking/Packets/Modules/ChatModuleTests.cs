@@ -23,19 +23,10 @@ using Xunit;
 namespace Orion.Networking.Packets.Modules {
     public class ChatModuleTests {
         [Fact]
-        public void SetDefaultableProperties_MarkAsDirty() {
+        public void SetSimpleProperties_MarkAsDirty() {
             var module = new ChatModule();
 
-            module.ShouldHaveDefaultablePropertiesMarkAsDirty();
-        }
-
-        [Fact]
-        public void SetClientChatCommand_MarksAsDirty() {
-            var module = new ChatModule();
-
-            module.ClientChatCommand = "";
-
-            module.ShouldBeDirty();
+            module.SetSimplePropertiesShouldMarkAsDirty();
         }
 
         [Fact]
@@ -47,29 +38,11 @@ namespace Orion.Networking.Packets.Modules {
         }
 
         [Fact]
-        public void SetClientChatText_MarksAsDirty() {
-            var module = new ChatModule();
-
-            module.ClientChatText = "";
-
-            module.ShouldBeDirty();
-        }
-
-        [Fact]
         public void SetClientChatText_NullValue_ThrowsArgumentNullException() {
             var module = new ChatModule();
             Action action = () => module.ClientChatText = null;
 
             action.Should().Throw<ArgumentNullException>();
-        }
-
-        [Fact]
-        public void SetServerChatText_MarksAsDirty() {
-            var module = new ChatModule();
-
-            module.ServerChatText = Terraria.Localization.NetworkText.Empty;
-
-            module.ShouldBeDirty();
         }
 
         [Fact]

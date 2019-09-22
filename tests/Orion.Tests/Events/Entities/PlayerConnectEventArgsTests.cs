@@ -33,12 +33,12 @@ namespace Orion.Events.Entities {
         }
 
         [Fact]
-        public void GetPlayerVersionString_IsCorrect() {
+        public void GetSetProperties_ReflectsInPacket() {
             var player = new Mock<IPlayer>().Object;
             var packet = new PlayerConnectPacket {PlayerVersionString = "test"};
             var args = new PlayerConnectEventArgs(player, packet);
 
-            args.PlayerVersionString.Should().Be("test");
+            args.GetSetPropertiesShouldReflectInPacket();
         }
 
         [Fact]

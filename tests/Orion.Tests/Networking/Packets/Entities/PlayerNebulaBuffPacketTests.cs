@@ -24,10 +24,10 @@ using Xunit;
 namespace Orion.Networking.Packets.Entities {
     public class PlayerNebulaBuffPacketTests {
         [Fact]
-        public void SetDefaultableProperties_MarkAsDirty() {
+        public void SetSimpleProperties_MarkAsDirty() {
             var packet = new PlayerNebulaBuffPacket();
 
-            packet.ShouldHaveDefaultablePropertiesMarkAsDirty();
+            packet.SetSimplePropertiesShouldMarkAsDirty();
         }
 
         public static readonly byte[] Bytes = {13, 0, 102, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0};

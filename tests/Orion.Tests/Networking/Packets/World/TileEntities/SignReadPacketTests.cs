@@ -22,10 +22,10 @@ using Xunit;
 namespace Orion.Networking.Packets.World.TileEntities {
     public class SignReadPacketTests {
         [Fact]
-        public void SetDefaultableProperties_MarkAsDirty() {
+        public void SetSimpleProperties_MarkAsDirty() {
             var packet = new SignReadPacket();
 
-            packet.ShouldHaveDefaultablePropertiesMarkAsDirty();
+            packet.SetSimplePropertiesShouldMarkAsDirty();
         }
 
         public static readonly byte[] Bytes = {7, 0, 46, 0, 1, 100, 0};

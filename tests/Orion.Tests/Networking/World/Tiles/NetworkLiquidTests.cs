@@ -24,10 +24,10 @@ using Xunit;
 namespace Orion.Networking.World.Tiles {
     public class NetworkLiquidTests {
         [Fact]
-        public void SetDefaultableProperties_MarkAsDirty() {
+        public void SetSimpleProperties_MarkAsDirty() {
             var liquid = new NetworkLiquid();
 
-            liquid.ShouldHaveDefaultablePropertiesMarkAsDirty();
+            liquid.SetSimplePropertiesShouldMarkAsDirty();
         }
 
         public static byte[] Bytes = {100, 0, 0, 1, 255, 0};

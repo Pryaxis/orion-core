@@ -20,10 +20,10 @@ using Xunit;
 namespace Orion.Networking.World.TileEntities {
     public class NetworkItemFrameTests {
         [Fact]
-        public void SetDefaultableProperties_MarkAsDirty() {
+        public void SetSimpleProperties_MarkAsDirty() {
             var itemFrame = new NetworkItemFrame();
 
-            itemFrame.ShouldHaveDefaultablePropertiesMarkAsDirty();
+            itemFrame.SetSimplePropertiesShouldMarkAsDirty();
         }
     }
 }

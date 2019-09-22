@@ -25,19 +25,10 @@ using Xunit;
 namespace Orion.Networking.Packets.Entities {
     public class PlayerDataPacketTests {
         [Fact]
-        public void SetDefaultableProperties_MarkAsDirty() {
+        public void SetSimpleProperties_MarkAsDirty() {
             var packet = new PlayerDataPacket();
 
-            packet.ShouldHaveDefaultablePropertiesMarkAsDirty();
-        }
-
-        [Fact]
-        public void SetPlayerName_MarksAsDirty() {
-            var packet = new PlayerDataPacket();
-
-            packet.PlayerName = "";
-
-            packet.ShouldBeDirty();
+            packet.SetSimplePropertiesShouldMarkAsDirty();
         }
 
         [Fact]

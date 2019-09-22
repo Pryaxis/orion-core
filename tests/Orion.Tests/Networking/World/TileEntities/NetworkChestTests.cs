@@ -22,10 +22,10 @@ using Xunit;
 namespace Orion.Networking.World.TileEntities {
     public class NetworkChestTests {
         [Fact]
-        public void SetDefaultableProperties_MarkAsDirty() {
+        public void SetSimpleProperties_MarkAsDirty() {
             var chest = new NetworkChest();
 
-            chest.ShouldHaveDefaultablePropertiesMarkAsDirty();
+            chest.SetSimplePropertiesShouldMarkAsDirty();
         }
 
         [Fact]

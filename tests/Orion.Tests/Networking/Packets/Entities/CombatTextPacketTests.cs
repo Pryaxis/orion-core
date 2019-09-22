@@ -24,19 +24,10 @@ using Xunit;
 namespace Orion.Networking.Packets.Entities {
     public class CombatTextPacketTests {
         [Fact]
-        public void SetDefaultableProperties_MarkAsDirty() {
+        public void SetSimpleProperties_MarkAsDirty() {
             var packet = new CombatTextPacket();
 
-            packet.ShouldHaveDefaultablePropertiesMarkAsDirty();
-        }
-
-        [Fact]
-        public void SetText_MarksAsDirty() {
-            var packet = new CombatTextPacket();
-
-            packet.Text = Terraria.Localization.NetworkText.Empty;
-
-            packet.ShouldBeDirty();
+            packet.SetSimplePropertiesShouldMarkAsDirty();
         }
 
         [Fact]

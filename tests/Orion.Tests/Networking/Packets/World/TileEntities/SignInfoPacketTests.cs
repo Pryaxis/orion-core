@@ -23,19 +23,10 @@ using Xunit;
 namespace Orion.Networking.Packets.World.TileEntities {
     public class SignInfoPacketTests {
         [Fact]
-        public void SetDefaultableProperties_MarkAsDirty() {
+        public void SetSimpleProperties_MarkAsDirty() {
             var packet = new SignInfoPacket();
 
-            packet.ShouldHaveDefaultablePropertiesMarkAsDirty();
-        }
-
-        [Fact]
-        public void SetSignText_MarksAsDirty() {
-            var packet = new SignInfoPacket();
-
-            packet.SignText = "";
-
-            packet.ShouldBeDirty();
+            packet.SetSimplePropertiesShouldMarkAsDirty();
         }
 
         [Fact]
