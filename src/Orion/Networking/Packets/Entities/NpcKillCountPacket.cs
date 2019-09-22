@@ -18,12 +18,14 @@
 using System;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
+using JetBrains.Annotations;
 using Orion.Entities;
 
 namespace Orion.Networking.Packets.Entities {
     /// <summary>
     /// Packet sent to set the kill count of an NPC type.
     /// </summary>
+    [PublicAPI]
     public sealed class NpcKillCountPacket : Packet {
         private NpcType _npcType;
         private int _npcTypeKillCount;
@@ -59,14 +61,14 @@ namespace Orion.Networking.Packets.Entities {
 
         /// <inheritdoc />
         private protected override void ReadFromReader(BinaryReader reader, PacketContext context) {
-            NpcType = (NpcType)reader.ReadInt16();
-            NpcTypeKillCount = reader.ReadInt32();
+            _npcType = (NpcType)reader.ReadInt16();
+            _npcTypeKillCount = reader.ReadInt32();
         }
 
         /// <inheritdoc />
         private protected override void WriteToWriter(BinaryWriter writer, PacketContext context) {
-            writer.Write((short)NpcType);
-            writer.Write(NpcTypeKillCount);
+            writer.Write((short)_npcType);
+            writer.Write(_npcTypeKillCount);
         }
     }
 }
