@@ -18,31 +18,14 @@
 using FluentAssertions;
 using Xunit;
 
-namespace Orion.World.Tiles {
+namespace Orion.World.Tiles.Extensions {
     [Collection("TerrariaTestsCollection")]
-    public class BlockTypeTests {
+    public class BlockTypeExtensionsTests {
         [Fact]
-        public void GetAreFramesImportant_IsCorrect() {
+        public void AreFramesImportant_IsCorrect() {
             for (ushort i = 0; i < Terraria.Main.maxTileSets; ++i) {
-                BlockType.FromId(i)?.AreFramesImportant.Should().Be(Terraria.Main.tileFrameImportant[i]);
+                ((BlockType)i).AreFramesImportant().Should().Be(Terraria.Main.tileFrameImportant[i]);
             }
-        }
-
-        [Fact]
-        public void FromId_IsCorrect() {
-            for (ushort i = 0; i < Terraria.Main.maxTileSets; ++i) {
-                BlockType.FromId(i)?.Id.Should().Be(i);
-            }
-
-            BlockType.FromId(Terraria.Main.maxTileSets).Should().BeNull();
-        }
-
-        [Fact]
-        public void FromId_ReturnsSameInstance() {
-            var blockType = BlockType.FromId(1);
-            var blockType2 = BlockType.FromId(1);
-
-            blockType.Should().BeSameAs(blockType2);
         }
     }
 }

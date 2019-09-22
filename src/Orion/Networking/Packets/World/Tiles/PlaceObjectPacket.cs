@@ -61,11 +61,10 @@ namespace Orion.Networking.Packets.World.Tiles {
         /// <summary>
         /// Gets or sets the object type.
         /// </summary>
-        /// <exception cref="ArgumentNullException"><paramref name="value"/> is <c>null</c>.</exception>
         public BlockType ObjectType {
             get => _objectType;
             set {
-                _objectType = value ?? throw new ArgumentNullException(nameof(value));
+                _objectType = value;
                 _isDirty = true;
             }
         }
@@ -111,7 +110,7 @@ namespace Orion.Networking.Packets.World.Tiles {
         private protected override void ReadFromReader(BinaryReader reader, PacketContext context) {
             ObjectX = reader.ReadInt16();
             ObjectY = reader.ReadInt16();
-            ObjectType = BlockType.FromId(reader.ReadUInt16()) ?? throw new PacketException("Object type is invalid.");
+            ObjectType = (BlockType)reader.ReadUInt16();
             ObjectStyle = reader.ReadInt16();
 
             // This byte is basically useless, but we'll keep track of it anyways.
@@ -124,7 +123,7 @@ namespace Orion.Networking.Packets.World.Tiles {
         private protected override void WriteToWriter(BinaryWriter writer, PacketContext context) {
             writer.Write(ObjectX);
             writer.Write(ObjectY);
-            writer.Write(ObjectType.Id);
+            writer.Write((ushort)ObjectType);
             writer.Write(ObjectStyle);
             writer.Write(_data);
             writer.Write(ObjectRandomState);

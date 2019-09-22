@@ -20,6 +20,7 @@ using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using Orion.Networking.World.Tiles;
 using Orion.World.Tiles;
+using Orion.World.Tiles.Extensions;
 
 namespace Orion.Networking.Packets.World.Tiles {
     /// <summary>
@@ -130,9 +131,8 @@ namespace Orion.Networking.Packets.World.Tiles {
 
                 if (header[0]) {
                     tile.IsBlockActive = true;
-                    tile.BlockType = BlockType.FromId(reader.ReadUInt16()) ??
-                                     throw new PacketException("Block type is invalid.");
-                    if (tile.BlockType.AreFramesImportant) {
+                    tile.BlockType = (BlockType)reader.ReadUInt16();
+                    if (tile.BlockType.AreFramesImportant()) {
                         tile.BlockFrameX = reader.ReadInt16();
                         tile.BlockFrameY = reader.ReadInt16();
                     } else {
@@ -200,8 +200,8 @@ namespace Orion.Networking.Packets.World.Tiles {
                 writer.Write(header2);
 
                 if (header[0]) {
-                    writer.Write(tile.BlockType.Id);
-                    if (tile.BlockType.AreFramesImportant) {
+                    writer.Write((ushort)tile.BlockType);
+                    if (tile.BlockType.AreFramesImportant()) {
                         writer.Write(tile.BlockFrameX);
                         writer.Write(tile.BlockFrameY);
                     }

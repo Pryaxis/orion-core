@@ -26,6 +26,7 @@ using Orion.Networking.World.Tiles;
 using Orion.Utils;
 using Orion.World.TileEntities;
 using Orion.World.Tiles;
+using Orion.World.Tiles.Extensions;
 using OTAPI.Tile;
 
 namespace Orion.Networking.Packets.World.Tiles {
@@ -182,9 +183,8 @@ namespace Orion.Networking.Packets.World.Tiles {
                 if ((header & 2) == 2) {
                     tile.IsBlockActive = true;
 
-                    tile.BlockType = BlockType.FromId((header & 32) == 32 ? reader.ReadUInt16() : reader.ReadByte()) ??
-                                     throw new PacketException("Block type is invalid.");
-                    if (tile.BlockType.AreFramesImportant) {
+                    tile.BlockType = (BlockType)((header & 32) == 32 ? reader.ReadUInt16() : reader.ReadByte());
+                    if (tile.BlockType.AreFramesImportant()) {
                         tile.BlockFrameX = reader.ReadInt16();
                         tile.BlockFrameY = reader.ReadInt16();
                     } else {
@@ -307,14 +307,14 @@ namespace Orion.Networking.Packets.World.Tiles {
                 if (tile.IsBlockActive) {
                     header |= 2;
 
-                    var type = tile.BlockType.Id;
+                    var type = (ushort)tile.BlockType;
                     buffer[bodyIndex++] = (byte)type;
                     if (type > byte.MaxValue) {
                         header |= 32;
                         buffer[bodyIndex++] = (byte)(type >> 8);
                     }
 
-                    if (tile.BlockType.AreFramesImportant) {
+                    if (tile.BlockType.AreFramesImportant()) {
                         buffer[bodyIndex++] = (byte)tile.BlockFrameX;
                         buffer[bodyIndex++] = (byte)(tile.BlockFrameX >> 8);
                         buffer[bodyIndex++] = (byte)tile.BlockFrameY;

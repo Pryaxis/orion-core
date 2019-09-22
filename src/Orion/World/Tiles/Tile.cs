@@ -238,8 +238,8 @@ namespace Orion.World.Tiles {
         }
 
         ushort ITile.type {
-            get => BlockType.Id;
-            set => BlockType = BlockType.FromId(value);
+            get => (ushort)BlockType;
+            set => BlockType = (BlockType)value;
         }
 
         byte ITile.wall {

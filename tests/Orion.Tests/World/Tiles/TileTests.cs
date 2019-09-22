@@ -28,7 +28,7 @@ namespace Orion.World.Tiles {
             var itile = (ITile)tile;
             itile.type = 1;
 
-            tile.BlockType.Should().BeSameAs(BlockType.Stone);
+            tile.BlockType.Should().Be(BlockType.Stone);
         }
 
         [Fact]

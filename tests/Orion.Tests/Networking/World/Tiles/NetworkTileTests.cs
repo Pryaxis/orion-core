@@ -30,22 +30,6 @@ namespace Orion.Networking.World.Tiles {
         }
 
         [Fact]
-        public void SetBlockType_MarksAsDirty() {
-            var tile = new NetworkTile();
-            tile.BlockType = BlockType.Stone;
-
-            tile.ShouldBeDirty();
-        }
-
-        [Fact]
-        public void SetBlockType_NullValue_ThrowsArgumentNullException() {
-            var tile = new NetworkTile();
-            Action action = () => tile.BlockType = null;
-
-            action.Should().Throw<ArgumentNullException>();
-        }
-
-        [Fact]
         public void SetWallType_MarksAsDirty() {
             var tile = new NetworkTile();
             tile.WallType = WallType.Stone;

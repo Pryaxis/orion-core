@@ -30,25 +30,7 @@ namespace Orion.Networking.Packets.World.Tiles {
             packet.ShouldHaveDefaultablePropertiesMarkAsDirty();
         }
 
-        [Fact]
-        public void SetBlockType_MarksAsDirty() {
-            var packet = new TileAnimationPacket();
-
-            packet.BlockType = BlockType.Stone;
-
-            packet.ShouldBeDirty();
-        }
-
-        [Fact]
-        public void SetBlockType_NullValue_ThrowsArgumentNullException() {
-            var packet = new TileAnimationPacket();
-            Action action = () => packet.BlockType = null;
-
-            action.Should().Throw<ArgumentNullException>();
-        }
-
         public static readonly byte[] Bytes = {11, 0, 77, 1, 0, 1, 0, 0, 1, 100, 0};
-        public static readonly byte[] InvalidBlockTypeBytes = {11, 0, 77, 1, 0, 255, 255, 0, 1, 100, 0};
 
         [Fact]
         public void ReadFromStream_IsCorrect() {
@@ -59,15 +41,6 @@ namespace Orion.Networking.Packets.World.Tiles {
                 packet.BlockType.Should().Be(BlockType.Stone);
                 packet.TileX.Should().Be(256);
                 packet.TileY.Should().Be(100);
-            }
-        }
-
-        [Fact]
-        public void ReadFromStream_InvalidBlockType_ThrowsPacketException() {
-            using (var stream = new MemoryStream(InvalidBlockTypeBytes)) {
-                Func<Packet> func = () => Packet.ReadFromStream(stream, PacketContext.Server);
-
-                func.Should().Throw<PacketException>();
             }
         }
 

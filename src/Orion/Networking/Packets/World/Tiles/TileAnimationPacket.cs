@@ -49,11 +49,10 @@ namespace Orion.Networking.Packets.World.Tiles {
         /// <summary>
         /// Gets or sets the block type.
         /// </summary>
-        /// <exception cref="ArgumentNullException"><paramref name="value"/> is <c>null</c>.</exception>
         public BlockType BlockType {
             get => _blockType;
             set {
-                _blockType = value ?? throw new ArgumentNullException(nameof(value));
+                _blockType = value;
                 _isDirty = true;
             }
         }
@@ -86,14 +85,14 @@ namespace Orion.Networking.Packets.World.Tiles {
 
         private protected override void ReadFromReader(BinaryReader reader, PacketContext context) {
             AnimationType = reader.ReadInt16();
-            BlockType = BlockType.FromId(reader.ReadUInt16()) ?? throw new PacketException("Block type is invalid.");
+            BlockType = (BlockType)reader.ReadUInt16();
             TileX = reader.ReadInt16();
             TileY = reader.ReadInt16();
         }
 
         private protected override void WriteToWriter(BinaryWriter writer, PacketContext context) {
             writer.Write(AnimationType);
-            writer.Write(BlockType.Id);
+            writer.Write((ushort)BlockType);
             writer.Write(TileX);
             writer.Write(TileY);
         }

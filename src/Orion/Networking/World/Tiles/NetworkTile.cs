@@ -25,7 +25,7 @@ namespace Orion.Networking.World.Tiles {
     /// Represents a tile that is transmitted over the network.
     /// </summary>
     public sealed class NetworkTile : Tile, IDirtiable {
-        private BlockType _blockType = BlockType.Dirt;
+        private BlockType _blockType;
         private WallType _wallType = WallType.None;
         private byte _liquidAmount;
         private short _tileHeader;
@@ -39,7 +39,7 @@ namespace Orion.Networking.World.Tiles {
         public override BlockType BlockType {
             get => _blockType;
             set {
-                _blockType = value ?? throw new ArgumentNullException(nameof(value));
+                _blockType = value;
                 IsDirty = true;
             }
         }
