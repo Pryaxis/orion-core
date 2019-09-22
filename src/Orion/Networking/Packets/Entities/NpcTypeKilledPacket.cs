@@ -15,7 +15,6 @@
 // You should have received a copy of the GNU General Public License
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
-using System;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using JetBrains.Annotations;
@@ -23,7 +22,7 @@ using Orion.Entities;
 
 namespace Orion.Networking.Packets.Entities {
     /// <summary>
-    /// Packet sent from the server to the client to notify that an NPC type was killed.
+    /// Packet sent from the server to the client to notify that an NPC type was killed. This is used for achievements.
     /// </summary>
     [PublicAPI]
     public sealed class NpcTypeKilledPacket : Packet {

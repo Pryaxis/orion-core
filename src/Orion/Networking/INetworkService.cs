@@ -15,6 +15,7 @@
 // You should have received a copy of the GNU General Public License
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
+using JetBrains.Annotations;
 using Orion.Events;
 using Orion.Events.Networking;
 
@@ -26,11 +27,13 @@ namespace Orion.Networking {
         /// <summary>
         /// Gets or sets the event handlers that run when a packet is received. This event can be canceled.
         /// </summary>
+        [CanBeNull]
         EventHandlerCollection<PacketReceiveEventArgs> PacketReceive { get; set; }
 
         /// <summary>
         /// Gets or sets the event handlers that run when a packet is sent. This event can be canceled.
         /// </summary>
+        [CanBeNull]
         EventHandlerCollection<PacketSendEventArgs> PacketSend { get; set; }
     }
 }

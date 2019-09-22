@@ -16,12 +16,12 @@
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
 using System;
+using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Text;
 using JetBrains.Annotations;
 using Orion.Networking.Packets.Entities;
-using Orion.Networking.Packets.Misc;
 using Orion.Networking.Packets.Modules;
 using Orion.Networking.Packets.World;
 using Orion.Networking.Packets.World.TileEntities;
@@ -30,7 +30,7 @@ using Orion.Utils;
 
 namespace Orion.Networking.Packets {
     /// <summary>
-    /// Represents a packet.
+    /// Represents a packet. This is the form of communication between the server and clients.
     /// </summary>
     [PublicAPI]
     public abstract class Packet : IDirtiable {
@@ -88,9 +88,9 @@ namespace Orion.Networking.Packets {
             /* 050 */ () => new PlayerBuffsPacket(),
             /* 051 */ () => new EntityActionPacket(),
             /* 052 */ () => new ObjectUnlockPacket(),
-            /* 053 */ () => new NpcBuffPacket(),
+            /* 053 */ () => new NpcAddBuffPacket(),
             /* 054 */ () => new NpcBuffsPacket(),
-            /* 055 */ () => new PlayerBuffPacket(),
+            /* 055 */ () => new PlayerAddBuffPacket(),
             /* 056 */ () => new NpcNamePacket(),
             /* 057 */ () => new WorldBiomeStatsPacket(),
             /* 058 */ () => new PlayerInstrumentNotePacket(),
@@ -131,7 +131,7 @@ namespace Orion.Networking.Packets {
             /* 093 */ null,
             /* 094 */ null,
             /* 095 */ () => new ProjectileRemoveIndexPacket(),
-            /* 096 */ () => new TeleportPlayerPortalPacket(),
+            /* 096 */ () => new PlayerTeleportPortalPacket(),
             /* 097 */ () => new NpcTypeKilledPacket(),
             /* 098 */ () => new ProgressionEventPacket(),
             /* 099 */ () => new PlayerMinionTargetPositionPacket(),

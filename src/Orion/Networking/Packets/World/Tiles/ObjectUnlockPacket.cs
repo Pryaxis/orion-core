@@ -22,7 +22,8 @@ using Orion.Networking.World.Tiles;
 
 namespace Orion.Networking.Packets.World.Tiles {
     /// <summary>
-    /// Packet sent to unlock an object (chest, door, etc.).
+    /// Packet sent to unlock an object (chest, door, etc.). See
+    /// <see cref="Networking.World.Tiles.UnlockableObjectType"/> for a list of unlockable object types.
     /// </summary>
     [PublicAPI]
     public sealed class ObjectUnlockPacket : Packet {

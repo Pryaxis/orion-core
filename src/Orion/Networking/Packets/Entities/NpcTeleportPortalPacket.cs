@@ -23,7 +23,7 @@ using Orion.Networking.Packets.Extensions;
 
 namespace Orion.Networking.Packets.Entities {
     /// <summary>
-    /// Packet sent to teleport an NPC through a portal.
+    /// Packet sent from the client to the server to teleport an NPC through a portal.
     /// </summary>
     [PublicAPI]
     public sealed class NpcTeleportPortalPacket : Packet {

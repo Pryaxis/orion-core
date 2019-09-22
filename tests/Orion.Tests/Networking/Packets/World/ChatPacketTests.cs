@@ -15,30 +15,50 @@
 // You should have received a copy of the GNU General Public License
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
+using System;
 using System.IO;
 using FluentAssertions;
 using Microsoft.Xna.Framework;
 using Xunit;
 
-namespace Orion.Networking.Packets.Misc {
-    public class CombatNumberPacketTests {
+namespace Orion.Networking.Packets.World {
+    public class ChatPacketTests {
         [Fact]
         public void SetDefaultableProperties_MarkAsDirty() {
-            var packet = new CombatNumberPacket();
+            var packet = new ChatPacket();
 
             packet.ShouldHaveDefaultablePropertiesMarkAsDirty();
         }
 
-        public static readonly byte[] Bytes = {18, 0, 81, 0, 0, 0, 0, 0, 0, 0, 0, 255, 255, 255, 100, 0, 0, 0};
+        [Fact]
+        public void SetChatText_MarksAsDirty() {
+            var packet = new ChatPacket();
+
+            packet.ChatText = Terraria.Localization.NetworkText.Empty;
+
+            packet.ShouldBeDirty();
+        }
+
+        [Fact]
+        public void SetChatText_NullValue_ThrowsArgumentNullException() {
+            var packet = new ChatPacket();
+            Action action = () => packet.ChatText = null;
+
+            action.Should().Throw<ArgumentNullException>();
+        }
+
+        public static readonly byte[] Bytes = {
+            18, 0, 107, 255, 255, 255, 0, 8, 84, 101, 114, 114, 97, 114, 105, 97, 100, 0
+        };
 
         [Fact]
         public void ReadFromStream_IsCorrect() {
             using (var stream = new MemoryStream(Bytes)) {
-                var packet = (CombatNumberPacket)Packet.ReadFromStream(stream, PacketContext.Server);
+                var packet = (ChatPacket)Packet.ReadFromStream(stream, PacketContext.Server);
 
-                packet.NumberPosition.Should().Be(Vector2.Zero);
-                packet.NumberColor.Should().Be(Color.White);
-                packet.Number.Should().Be(100);
+                packet.ChatColor.Should().Be(Color.White);
+                packet.ChatText.ToString().Should().Be("Terraria");
+                packet.ChatLineWidth.Should().Be(100);
             }
         }
 

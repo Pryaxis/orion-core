@@ -15,65 +15,72 @@
 // You should have received a copy of the GNU General Public License
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
-using System;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using JetBrains.Annotations;
-using Orion.Entities;
+using Microsoft.Xna.Framework;
+using Orion.Networking.Packets.Extensions;
 
 namespace Orion.Networking.Packets.Entities {
     /// <summary>
-    /// Packet sent to add a buff to an NPC.
+    /// Packet sent from the server to the client to show a combat number.
     /// </summary>
     [PublicAPI]
-    public sealed class NpcBuffPacket : Packet {
-        private short _npcIndex;
-        private Buff _npcBuff;
+    public sealed class CombatNumberPacket : Packet {
+        private Vector2 _numberPosition;
+        private Color _numberColor;
+        private int _number;
 
         /// <inheritdoc />
-        public override PacketType Type => PacketType.NpcBuff;
+        public override PacketType Type => PacketType.CombatNumber;
 
         /// <summary>
-        /// Gets or sets the NPC index.
+        /// Gets or sets the number's position.
         /// </summary>
-        public short NpcIndex {
-            get => _npcIndex;
+        public Vector2 NumberPosition {
+            get => _numberPosition;
             set {
-                _npcIndex = value;
+                _numberPosition = value;
                 _isDirty = true;
             }
         }
 
         /// <summary>
-        /// Gets or sets the NPC's buff. The buff duration is limited to approximately 546.1 seconds.
+        /// Gets or sets the number's color.
         /// </summary>
-        public Buff NpcBuff {
-            get => _npcBuff;
+        public Color NumberColor {
+            get => _numberColor;
             set {
-                _npcBuff = value;
+                _numberColor = value;
+                _isDirty = true;
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets the number.
+        /// </summary>
+        public int Number {
+            get => _number;
+            set {
+                _number = value;
                 _isDirty = true;
             }
         }
 
         /// <inheritdoc />
         [ExcludeFromCodeCoverage]
-        public override string ToString() => $"{Type}[#={NpcIndex}, {NpcBuff}]";
+        public override string ToString() => $"{Type}[{Number} ({NumberColor}) @ {NumberPosition}]";
 
         private protected override void ReadFromReader(BinaryReader reader, PacketContext context) {
-            _npcIndex = reader.ReadInt16();
-            _npcBuff = new Buff((BuffType)reader.ReadByte(), TimeSpan.FromSeconds(reader.ReadInt16() / 60.0));
+            _numberPosition = reader.ReadVector2();
+            _numberColor = reader.ReadColor();
+            _number = reader.ReadInt32();
         }
 
         private protected override void WriteToWriter(BinaryWriter writer, PacketContext context) {
-            writer.Write(_npcIndex);
-            writer.Write((byte)_npcBuff.BuffType);
-
-            var ticks = (int)(_npcBuff.Duration.TotalSeconds * 60.0);
-            if (ticks >= short.MaxValue) {
-                writer.Write(short.MaxValue);
-            } else {
-                writer.Write((short)ticks);
-            }
+            writer.Write(_numberPosition);
+            writer.Write(_numberColor);
+            writer.Write(_number);
         }
     }
 }

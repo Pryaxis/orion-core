@@ -22,7 +22,8 @@ using Orion.Networking.World.TileEntities;
 
 namespace Orion.Networking.Packets.World.TileEntities {
     /// <summary>
-    /// Packet sent to perform a chest modification.
+    /// Packet sent to perform a chest modification. See <see cref="Networking.World.TileEntities.ChestModification"/>
+    /// for a list of chest modifications.
     /// </summary>
     [PublicAPI]
     public sealed class ChestModificationPacket : Packet {

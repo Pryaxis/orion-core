@@ -16,27 +16,18 @@
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
 using JetBrains.Annotations;
-using Orion.Networking.Packets.Entities;
 
-namespace Orion.Networking.Entities {
+namespace Orion.Entities {
     /// <summary>
-    /// Specifies an entity teleportation type in a <see cref="EntityTeleportationPacket"/>.
+    /// Specifies an emote anchor type.
     /// </summary>
     [PublicAPI]
-    public enum EntityTeleportationType : byte {
-        /// <summary>
-        /// Indicates that a player should be teleported.
-        /// </summary>
-        Player = 0,
-
-        /// <summary>
-        /// Indicates that an NPC should be teleported.
-        /// </summary>
-        Npc = 1,
-
-        /// <summary>
-        /// Indicates that a player should be teleported to another player. This is caused by a Wormhole Potion.
-        /// </summary>
-        PlayerToPlayer = 2,
+    public enum EmoteAnchorType : byte {
+#pragma warning disable 1591
+        Npc = 0,
+        Player = 1,
+        Projectile = 2,
+        Remove = 255
+#pragma warning restore 1591
     }
 }

@@ -22,7 +22,8 @@ using Orion.Networking.World;
 
 namespace Orion.Networking.Packets.World {
     /// <summary>
-    /// Packet sent to summon a boss or an invasion.
+    /// Packet sent to summon a boss or an invasion. See <see cref="Networking.World.NetworkBossOrInvasion"/> for the
+    /// list of bosses or invasions.
     /// </summary>
     [PublicAPI]
     public sealed class BossOrInvasionPacket : Packet {

@@ -23,51 +23,57 @@ using Orion.Entities;
 
 namespace Orion.Networking.Packets.Entities {
     /// <summary>
-    /// Packet sent to add a buff to a player.
+    /// Packet sent to add a buff to an NPC.
     /// </summary>
     [PublicAPI]
-    public sealed class PlayerBuffPacket : Packet {
-        private byte _playerIndex;
-        private Buff _playerBuff;
+    public sealed class NpcAddBuffPacket : Packet {
+        private short _npcIndex;
+        private Buff _npcBuff;
 
         /// <inheritdoc />
-        public override PacketType Type => PacketType.PlayerBuff;
+        public override PacketType Type => PacketType.NpcAddBuff;
 
         /// <summary>
-        /// Gets or sets the player index.
+        /// Gets or sets the NPC index.
         /// </summary>
-        public byte PlayerIndex {
-            get => _playerIndex;
+        public short NpcIndex {
+            get => _npcIndex;
             set {
-                _playerIndex = value;
+                _npcIndex = value;
                 _isDirty = true;
             }
         }
 
         /// <summary>
-        /// Gets or sets the player's buff.
+        /// Gets or sets the NPC's buff. The buff duration is limited to approximately 546.1 seconds.
         /// </summary>
-        public Buff PlayerBuff {
-            get => _playerBuff;
+        public Buff NpcBuff {
+            get => _npcBuff;
             set {
-                _playerBuff = value;
+                _npcBuff = value;
                 _isDirty = true;
             }
         }
 
         /// <inheritdoc />
         [ExcludeFromCodeCoverage]
-        public override string ToString() => $"{Type}[#={PlayerIndex}, {PlayerBuff}]";
+        public override string ToString() => $"{Type}[#={NpcIndex}, {NpcBuff}]";
 
         private protected override void ReadFromReader(BinaryReader reader, PacketContext context) {
-            _playerIndex = reader.ReadByte();
-            _playerBuff = new Buff((BuffType)reader.ReadByte(), TimeSpan.FromSeconds(reader.ReadInt32() / 60.0));
+            _npcIndex = reader.ReadInt16();
+            _npcBuff = new Buff((BuffType)reader.ReadByte(), TimeSpan.FromSeconds(reader.ReadInt16() / 60.0));
         }
 
         private protected override void WriteToWriter(BinaryWriter writer, PacketContext context) {
-            writer.Write(_playerIndex);
-            writer.Write((byte)_playerBuff.BuffType);
-            writer.Write((int)(_playerBuff.Duration.TotalSeconds * 60.0));
+            writer.Write(_npcIndex);
+            writer.Write((byte)_npcBuff.BuffType);
+
+            var ticks = (int)(_npcBuff.Duration.TotalSeconds * 60.0);
+            if (ticks >= short.MaxValue) {
+                writer.Write(short.MaxValue);
+            } else {
+                writer.Write((short)ticks);
+            }
         }
     }
 }

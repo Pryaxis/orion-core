@@ -21,7 +21,7 @@ using JetBrains.Annotations;
 
 namespace Orion.Networking.Packets.World.TileEntities {
     /// <summary>
-    /// Packet sent from the client to the server to request a sign.
+    /// Packet sent from the client to the server to read a sign.
     /// </summary>
     [PublicAPI]
     public sealed class SignReadPacket : Packet {

@@ -24,7 +24,7 @@ namespace Orion.Networking.Packets.Entities {
     public class PlayerTeleportPortalPacketTests {
         [Fact]
         public void SetDefaultableProperties_MarkAsDirty() {
-            var packet = new TeleportPlayerPortalPacket();
+            var packet = new PlayerTeleportPortalPacket();
 
             packet.ShouldHaveDefaultablePropertiesMarkAsDirty();
         }
@@ -34,7 +34,7 @@ namespace Orion.Networking.Packets.Entities {
         [Fact]
         public void ReadFromStream_IsCorrect() {
             using (var stream = new MemoryStream(Bytes)) {
-                var packet = (TeleportPlayerPortalPacket)Packet.ReadFromStream(stream, PacketContext.Server);
+                var packet = (PlayerTeleportPortalPacket)Packet.ReadFromStream(stream, PacketContext.Server);
 
                 packet.PlayerIndex.Should().Be(100);
                 packet.PortalIndex.Should().Be(2);

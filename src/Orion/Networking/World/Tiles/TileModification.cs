@@ -24,27 +24,104 @@ namespace Orion.Networking.World.Tiles {
     /// </summary>
     [PublicAPI]
     public enum TileModification : byte {
-#pragma warning disable 1591
+        /// <summary>
+        /// Indicates that a block should be broken.
+        /// </summary>
         BreakBlock = 0,
+
+        /// <summary>
+        /// Indicates that a block should be placed.
+        /// </summary>
         PlaceBlock = 1,
+
+        /// <summary>
+        /// Indicates that a wall should be broken.
+        /// </summary>
         BreakWall = 2,
+
+        /// <summary>
+        /// Indicates that a wall should be placed.
+        /// </summary>
         PlaceWall = 3,
+
+        /// <summary>
+        /// Indicates that a block should be broken with no items dropping.
+        /// </summary>
         BreakBlockNoItems = 4,
+
+        /// <summary>
+        /// Indicates that red wire should be placed.
+        /// </summary>
         PlaceRedWire = 5,
+
+        /// <summary>
+        /// Indicates that red wire should be removed.
+        /// </summary>
         RemoveRedWire = 6,
+
+        /// <summary>
+        /// Indicates that a block should be halved.
+        /// </summary>
         HalveBlock = 7,
+
+        /// <summary>
+        /// Indicates that an actuator should be placed.
+        /// </summary>
         PlaceActuator = 8,
+
+        /// <summary>
+        /// Indicates that an actuator should be removed.
+        /// </summary>
         RemoveActuator = 9,
+
+        /// <summary>
+        /// Indicates that blue wire should be placed.
+        /// </summary>
         PlaceBlueWire = 10,
+
+        /// <summary>
+        /// Indicates that blue wire should be removed.
+        /// </summary>
         RemoveBlueWire = 11,
+
+        /// <summary>
+        /// Indicates that green wire should be placed.
+        /// </summary>
         PlaceGreenWire = 12,
+
+        /// <summary>
+        /// Indicates that green wire should be removed.
+        /// </summary>
         RemoveGreenWire = 13,
+
+        /// <summary>
+        /// Indicates that a block should be sloped.
+        /// </summary>
         SlopeBlock = 14,
-        FrameTrack = 15,
+
+        /// <summary>
+        /// Indicates that a minecart track should be modified.
+        /// </summary>
+        ModifyMinecartTrack = 15,
+
+        /// <summary>
+        /// Indicates that yellow wire should be placed.
+        /// </summary>
         PlaceYellowWire = 16,
+
+        /// <summary>
+        /// Indicates that yellow wire should be removed.
+        /// </summary>
         RemoveYellowWire = 17,
-        PokeLogicGate = 18,
+
+        /// <summary>
+        /// Indicates that a logic gate should be modified.
+        /// </summary>
+        ModifyLogicGate = 18,
+
+        /// <summary>
+        /// Indicates that a block should be actuated.
+        /// </summary>
         ActuateBlock = 19
-#pragma warning restore 1591
     }
 }

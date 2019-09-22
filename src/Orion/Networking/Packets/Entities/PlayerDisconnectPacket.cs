@@ -23,12 +23,13 @@ using Orion.Networking.Packets.Extensions;
 
 namespace Orion.Networking.Packets.Entities {
     /// <summary>
-    /// Packet sent from the server to the client to disconnect it. This is sent as a response to an invalid
+    /// Packet sent from the server to the client to disconnect it. This is sent in response to an invalid
     /// <see cref="PlayerPasswordResponsePacket"/> or for various other reasons.
     /// </summary>
     [PublicAPI]
     public sealed class PlayerDisconnectPacket : Packet {
-        private Terraria.Localization.NetworkText _playerDisconnectReason = Terraria.Localization.NetworkText.Empty;
+        [NotNull] private Terraria.Localization.NetworkText _playerDisconnectReason =
+            Terraria.Localization.NetworkText.Empty;
 
         /// <inheritdoc />
         public override PacketType Type => PacketType.PlayerDisconnect;

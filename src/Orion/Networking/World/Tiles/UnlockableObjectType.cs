@@ -24,9 +24,14 @@ namespace Orion.Networking.World.Tiles {
     /// </summary>
     [PublicAPI]
     public enum UnlockableObjectType : byte {
-#pragma warning disable 1591
+        /// <summary>
+        /// Indicates that a chest should be unlocked.
+        /// </summary>
         Chest = 1,
+
+        /// <summary>
+        /// Indicates that a door should be unlocked.
+        /// </summary>
         Door = 2
-#pragma warning restore 1591
     }
 }

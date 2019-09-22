@@ -20,6 +20,7 @@ using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Threading;
+using JetBrains.Annotations;
 using Orion.Entities;
 using Orion.Events;
 using Orion.Events.Entities;
@@ -29,17 +30,17 @@ using Orion.Networking.Packets.Entities;
 
 namespace Orion.Networking.Impl {
     internal sealed class NetworkService : OrionService, INetworkService {
-        private readonly Lazy<IPlayerService> _playerService;
-        private readonly ThreadLocal<bool> _shouldIgnoreNextReceiveData = new ThreadLocal<bool>();
+        [NotNull] private readonly Lazy<IPlayerService> _playerService;
+        [NotNull] private readonly ThreadLocal<bool> _shouldIgnoreNextReceiveData = new ThreadLocal<bool>();
 
-        private readonly IDictionary<PacketType, Action<PacketReceiveEventArgs>> _receiveHandlers =
+        [NotNull] private readonly IDictionary<PacketType, Action<PacketReceiveEventArgs>> _receiveHandlers =
             new Dictionary<PacketType, Action<PacketReceiveEventArgs>>();
 
         [ExcludeFromCodeCoverage] public override string Author => "Pryaxis";
         public EventHandlerCollection<PacketReceiveEventArgs> PacketReceive { get; set; }
         public EventHandlerCollection<PacketSendEventArgs> PacketSend { get; set; }
 
-        public NetworkService(Lazy<IPlayerService> playerService) {
+        public NetworkService([NotNull] Lazy<IPlayerService> playerService) {
             _playerService = playerService;
 
             _receiveHandlers[PacketType.PlayerConnect] = PlayerConnectHandler;

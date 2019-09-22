@@ -27,7 +27,7 @@ namespace Orion.Networking.Packets.Entities {
     /// </summary>
     [PublicAPI]
     public sealed class PlayerUuidPacket : Packet {
-        private string _playerUuid;
+        [NotNull] private string _playerUuid = "";
 
         /// <inheritdoc />
         public override PacketType Type => PacketType.PlayerUuid;

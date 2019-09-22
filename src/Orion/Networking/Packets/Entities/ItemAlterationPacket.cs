@@ -23,26 +23,27 @@ using Orion.Entities;
 
 namespace Orion.Networking.Packets.Entities {
     /// <summary>
-    /// Packet sent from the server to the client to perform an item alteration.
+    /// Packet sent from the server to the client to perform an item alteration. This can be used to provide "custom"
+    /// items to a vanilla client.
     /// </summary>
 
     // TODO: write tests for this class.
     [PublicAPI]
     public sealed class ItemAlterationPacket : Packet {
         private short _itemIndex;
-        private Color? _itemColorOverride;
-        private ushort? _itemDamageOverride;
-        private float? _itemKnockbackOverride;
-        private ushort? _itemAnimationTimeOverride;
-        private ushort? _itemUseTimeOverride;
-        private ProjectileType? _itemProjectileTypeOverride;
-        private float? _itemProjectileSpeedOverride;
-        private short? _itemWidthOverride;
-        private short? _itemHeightOverride;
-        private float? _itemScaleOverride;
-        private ItemType? _itemAmmoTypeOverride;
-        private ItemType? _itemUsesAmmoTypeOverride;
-        private bool? _itemIsNotAmmoOverride;
+        [CanBeNull] private Color? _itemColorOverride;
+        [CanBeNull] private ushort? _itemDamageOverride;
+        [CanBeNull] private float? _itemKnockbackOverride;
+        [CanBeNull] private ushort? _itemAnimationTimeOverride;
+        [CanBeNull] private ushort? _itemUseTimeOverride;
+        [CanBeNull] private ProjectileType? _itemProjectileTypeOverride;
+        [CanBeNull] private float? _itemProjectileSpeedOverride;
+        [CanBeNull] private short? _itemWidthOverride;
+        [CanBeNull] private short? _itemHeightOverride;
+        [CanBeNull] private float? _itemScaleOverride;
+        [CanBeNull] private ItemType? _itemAmmoTypeOverride;
+        [CanBeNull] private ItemType? _itemUsesAmmoTypeOverride;
+        [CanBeNull] private bool? _itemIsNotAmmoOverride;
 
         /// <inheritdoc />
         public override PacketType Type => PacketType.ItemAlteration;

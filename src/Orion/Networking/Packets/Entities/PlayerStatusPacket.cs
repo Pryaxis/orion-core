@@ -27,7 +27,7 @@ namespace Orion.Networking.Packets.Entities {
     /// </summary>
     [PublicAPI]
     public sealed class PlayerStatusPacket : Packet {
-        private Terraria.Localization.NetworkText _playerStatusText = Terraria.Localization.NetworkText.Empty;
+        [NotNull] private Terraria.Localization.NetworkText _playerStatusText = Terraria.Localization.NetworkText.Empty;
         private int _playerStatusIncrease;
 
         /// <inheritdoc />

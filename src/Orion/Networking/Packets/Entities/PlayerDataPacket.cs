@@ -25,14 +25,14 @@ using Orion.Networking.Packets.Extensions;
 
 namespace Orion.Networking.Packets.Entities {
     /// <summary>
-    /// Packet sent to set player data.
+    /// Packet sent to set player data. This is sent in response to a <see cref="PlayerContinueConnectingPacket"/>.
     /// </summary>
     [PublicAPI]
     public sealed class PlayerDataPacket : Packet {
         private byte _playerIndex;
         private byte _playerSkinType;
         private byte _playerHairType;
-        private string _playerName = "";
+        [NotNull] private string _playerName = "";
         private byte _playerHairDye;
         private ushort _playerHiddenVisualsFlags;
         private byte _playerHiddenMiscFlags;

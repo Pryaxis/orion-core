@@ -21,7 +21,7 @@ using JetBrains.Annotations;
 
 namespace Orion.Networking.Packets.World.TileEntities {
     /// <summary>
-    /// Packet sent from the client to the server to request a chest's contents.
+    /// Packet sent from the client to the server to open a chest.
     /// </summary>
     [PublicAPI]
     public sealed class ChestOpenPacket : Packet {

@@ -22,7 +22,8 @@ using Orion.Networking.World.Tiles;
 
 namespace Orion.Networking.Packets.World.Tiles {
     /// <summary>
-    /// Packet sent to toggle the state of a door.
+    /// Packet sent to toggle the state of a door. See <see cref="Networking.World.Tiles.ToggleDoorAction"/> for a list
+    /// of toggle door actions.
     /// </summary>
     [PublicAPI]
     public sealed class ToggleDoorPacket : Packet {

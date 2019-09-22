@@ -15,7 +15,6 @@
 // You should have received a copy of the GNU General Public License
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
-using System;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using JetBrains.Annotations;
@@ -23,7 +22,8 @@ using Orion.Networking.Entities;
 
 namespace Orion.Networking.Packets.Entities {
     /// <summary>
-    /// Packet sent to show a player dodge.
+    /// Packet sent to show a player dodge. See <see cref="Networking.Entities.PlayerDodgeType"/> for the list of
+    /// possible dodge types.
     /// </summary>
     [PublicAPI]
     public sealed class PlayerDodgePacket : Packet {

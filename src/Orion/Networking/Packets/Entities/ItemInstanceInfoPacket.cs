@@ -15,7 +15,6 @@
 // You should have received a copy of the GNU General Public License
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
-using System;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using JetBrains.Annotations;
@@ -25,7 +24,8 @@ using Orion.Networking.Packets.Extensions;
 
 namespace Orion.Networking.Packets.Entities {
     /// <summary>
-    /// Packet sent to set item instance information.
+    /// Packet sent to set item instance information. This is similar to an <see cref="ItemInfoPacket"/>, but instanced
+    /// items are not visible to other players.
     /// </summary>
     [PublicAPI]
     public sealed class ItemInstanceInfoPacket : Packet {
@@ -94,7 +94,7 @@ namespace Orion.Networking.Packets.Entities {
                 _isDirty = true;
             }
         }
-        
+
         /// <summary>
         /// Gets or sets a value indicating whether the item can be picked up immediately.
         /// </summary>

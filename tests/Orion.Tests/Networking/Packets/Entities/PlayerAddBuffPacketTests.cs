@@ -18,47 +18,36 @@
 using System;
 using System.IO;
 using FluentAssertions;
-using Microsoft.Xna.Framework;
+using Orion.Entities;
 using Xunit;
 
-namespace Orion.Networking.Packets.Misc {
-    public class ChatPacketTests {
+namespace Orion.Networking.Packets.Entities {
+    public class PlayerAddBuffPacketTests {
         [Fact]
         public void SetDefaultableProperties_MarkAsDirty() {
-            var packet = new ChatPacket();
+            var packet = new PlayerAddBuffPacket();
 
             packet.ShouldHaveDefaultablePropertiesMarkAsDirty();
         }
 
         [Fact]
-        public void SetChatText_MarksAsDirty() {
-            var packet = new ChatPacket();
+        public void SetPlayerBuff_MarksAsDirty() {
+            var packet = new PlayerAddBuffPacket();
 
-            packet.ChatText = Terraria.Localization.NetworkText.Empty;
+            packet.PlayerBuff = new Buff(BuffType.None, TimeSpan.Zero);
 
             packet.ShouldBeDirty();
         }
 
-        [Fact]
-        public void SetChatText_NullValue_ThrowsArgumentNullException() {
-            var packet = new ChatPacket();
-            Action action = () => packet.ChatText = null;
-
-            action.Should().Throw<ArgumentNullException>();
-        }
-
-        public static readonly byte[] Bytes = {
-            18, 0, 107, 255, 255, 255, 0, 8, 84, 101, 114, 114, 97, 114, 105, 97, 100, 0
-        };
+        public static readonly byte[] Bytes = {9, 0, 55, 0, 1, 60, 0, 0, 0};
 
         [Fact]
         public void ReadFromStream_IsCorrect() {
             using (var stream = new MemoryStream(Bytes)) {
-                var packet = (ChatPacket)Packet.ReadFromStream(stream, PacketContext.Server);
+                var packet = (PlayerAddBuffPacket)Packet.ReadFromStream(stream, PacketContext.Server);
 
-                packet.ChatColor.Should().Be(Color.White);
-                packet.ChatText.ToString().Should().Be("Terraria");
-                packet.ChatLineWidth.Should().Be(100);
+                packet.PlayerIndex.Should().Be(0);
+                packet.PlayerBuff.Should().Be(new Buff(BuffType.ObsidianSkin, TimeSpan.FromSeconds(1)));
             }
         }
 

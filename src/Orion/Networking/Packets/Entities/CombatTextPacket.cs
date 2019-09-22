@@ -22,68 +22,68 @@ using JetBrains.Annotations;
 using Microsoft.Xna.Framework;
 using Orion.Networking.Packets.Extensions;
 
-namespace Orion.Networking.Packets.Misc {
+namespace Orion.Networking.Packets.Entities {
     /// <summary>
-    /// Packet sent from the server to the client to show chat.
+    /// Packet sent from the server to the client to show combat text. This is currently not naturally sent.
     /// </summary>
     [PublicAPI]
-    public sealed class ChatPacket : Packet {
-        private Color _chatColor;
-        [NotNull] private Terraria.Localization.NetworkText _chatText = Terraria.Localization.NetworkText.Empty;
-        private short _chatLineWidth;
+    public sealed class CombatTextPacket : Packet {
+        private Vector2 _textPosition;
+        private Color _textColor;
+        [NotNull] private Terraria.Localization.NetworkText _text = Terraria.Localization.NetworkText.Empty;
 
         /// <inheritdoc />
-        public override PacketType Type => PacketType.Chat;
+        public override PacketType Type => PacketType.CombatText;
 
         /// <summary>
-        /// Gets or sets the chat's color.
+        /// Gets or sets the text's position.
         /// </summary>
-        public Color ChatColor {
-            get => _chatColor;
+        public Vector2 TextPosition {
+            get => _textPosition;
             set {
-                _chatColor = value;
-                _isDirty=true;
-            }
-        }
-
-        /// <summary>
-        /// Gets or sets the chat's text.
-        /// </summary>
-        /// <exception cref="ArgumentNullException"><paramref name="value"/> is <c>null</c>.</exception>
-        [NotNull] 
-        public Terraria.Localization.NetworkText ChatText {
-            get => _chatText;
-            set {
-                _chatText = value ?? throw new ArgumentNullException(nameof(value));
+                _textPosition = value;
                 _isDirty = true;
             }
         }
 
         /// <summary>
-        /// Gets or sets the chat's line width.
+        /// Gets or sets the text's color.
         /// </summary>
-        public short ChatLineWidth {
-            get => _chatLineWidth;
+        public Color TextColor {
+            get => _textColor;
             set {
-                _chatLineWidth = value;
+                _textColor = value;
+                _isDirty = true;
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets the text.
+        /// </summary>
+        /// <exception cref="ArgumentNullException"><paramref name="value"/> is <c>null</c>.</exception>
+        [NotNull]
+        public Terraria.Localization.NetworkText Text {
+            get => _text;
+            set {
+                _text = value ?? throw new ArgumentNullException(nameof(value));
                 _isDirty = true;
             }
         }
 
         /// <inheritdoc />
         [ExcludeFromCodeCoverage]
-        public override string ToString() => $"{Type}[{ChatText}, C={ChatColor}, ...]";
+        public override string ToString() => $"{Type}[{Text} ({TextColor}) @ {TextPosition}]";
 
         private protected override void ReadFromReader(BinaryReader reader, PacketContext context) {
-            _chatColor = reader.ReadColor();
-            _chatText = reader.ReadNetworkText();
-            _chatLineWidth = reader.ReadInt16();
+            _textPosition = reader.ReadVector2();
+            _textColor = reader.ReadColor();
+            _text = reader.ReadNetworkText();
         }
 
         private protected override void WriteToWriter(BinaryWriter writer, PacketContext context) {
-            writer.Write(_chatColor);
-            writer.Write(_chatText);
-            writer.Write(_chatLineWidth);
+            writer.Write(_textPosition);
+            writer.Write(_textColor);
+            writer.Write(_text);
         }
     }
 }

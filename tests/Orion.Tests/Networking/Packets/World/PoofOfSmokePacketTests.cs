@@ -15,39 +15,28 @@
 // You should have received a copy of the GNU General Public License
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
-using System;
 using System.IO;
 using FluentAssertions;
-using Orion.Entities;
+using Microsoft.Xna.Framework.Graphics.PackedVector;
 using Xunit;
 
-namespace Orion.Networking.Packets.Entities {
-    public class PlayerBuffPacketTests {
+namespace Orion.Networking.Packets.World {
+    public class PoofOfSmokePacketTests {
         [Fact]
         public void SetDefaultableProperties_MarkAsDirty() {
-            var packet = new PlayerBuffPacket();
+            var packet = new PoofOfSmokePacket();
 
             packet.ShouldHaveDefaultablePropertiesMarkAsDirty();
         }
 
-        [Fact]
-        public void SetPlayerBuff_MarksAsDirty() {
-            var packet = new PlayerBuffPacket();
-
-            packet.PlayerBuff = new Buff(BuffType.None, TimeSpan.Zero);
-
-            packet.ShouldBeDirty();
-        }
-
-        public static readonly byte[] Bytes = {9, 0, 55, 0, 1, 60, 0, 0, 0};
+        public static readonly byte[] Bytes = {7, 0, 106, 0, 0, 0, 0};
 
         [Fact]
         public void ReadFromStream_IsCorrect() {
             using (var stream = new MemoryStream(Bytes)) {
-                var packet = (PlayerBuffPacket)Packet.ReadFromStream(stream, PacketContext.Server);
+                var packet = (PoofOfSmokePacket)Packet.ReadFromStream(stream, PacketContext.Server);
 
-                packet.PlayerIndex.Should().Be(0);
-                packet.PlayerBuff.Should().Be(new Buff(BuffType.ObsidianSkin, TimeSpan.FromSeconds(1)));
+                packet.SmokePosition.Should().Be(new HalfVector2());
             }
         }
 

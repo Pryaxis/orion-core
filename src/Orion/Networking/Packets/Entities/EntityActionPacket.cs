@@ -22,7 +22,7 @@ using Orion.Networking.Entities;
 
 namespace Orion.Networking.Packets.Entities {
     /// <summary>
-    /// Packet sent to perform an entity action.
+    /// Packet sent to perform an entity action. See <see cref="Networking.Entities.EntityAction"/> for the list of possible actions.
     /// </summary>
     [PublicAPI]
     public sealed class EntityActionPacket : Packet {

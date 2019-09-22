@@ -27,7 +27,7 @@ namespace Orion.Networking.Packets.Entities {
     /// </summary>
     [PublicAPI]
     public sealed class PlayerPasswordResponsePacket : Packet {
-        private string _playerPassword = "";
+        [NotNull] private string _playerPassword = "";
 
         /// <inheritdoc />
         public override PacketType Type => PacketType.PlayerPasswordResponse;

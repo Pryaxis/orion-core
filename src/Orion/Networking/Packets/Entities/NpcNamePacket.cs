@@ -22,12 +22,13 @@ using JetBrains.Annotations;
 
 namespace Orion.Networking.Packets.Entities {
     /// <summary>
-    /// Packet sent to either request or set an NPC's name.
+    /// Packet sent from the client to the server to request an NPC's name and from the server to the client to set an
+    /// NPC's name.
     /// </summary>
     [PublicAPI]
     public sealed class NpcNamePacket : Packet {
         private short _npcIndex;
-        private string _npcName = "";
+        [NotNull] private string _npcName = "";
 
         /// <inheritdoc />
         public override PacketType Type => PacketType.NpcName;

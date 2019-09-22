@@ -15,7 +15,6 @@
 // You should have received a copy of the GNU General Public License
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
-using System;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using JetBrains.Annotations;
@@ -23,7 +22,7 @@ using Orion.Entities;
 
 namespace Orion.Networking.Packets.Entities {
     /// <summary>
-    /// Packet sent to set the kill count of an NPC type.
+    /// Packet sent from the server to the client to set the kill count of an NPC type.
     /// </summary>
     [PublicAPI]
     public sealed class NpcKillCountPacket : Packet {

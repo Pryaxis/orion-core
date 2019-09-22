@@ -21,7 +21,7 @@ using JetBrains.Annotations;
 
 namespace Orion.Networking.Packets.Entities {
     /// <summary>
-    /// Packet sent to set the number of angler quests a player has completed.
+    /// Packet sent to set the number of angler quests a player has completed. This is currently not naturally sent.
     /// </summary>
     [PublicAPI]
     public sealed class PlayerAnglerQuestsPacket : Packet {

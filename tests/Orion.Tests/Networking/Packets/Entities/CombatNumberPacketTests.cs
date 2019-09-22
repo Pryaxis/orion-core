@@ -15,39 +15,30 @@
 // You should have received a copy of the GNU General Public License
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
-using System;
 using System.IO;
 using FluentAssertions;
-using Orion.Entities;
+using Microsoft.Xna.Framework;
 using Xunit;
 
 namespace Orion.Networking.Packets.Entities {
-    public class NpcBuffPacketTests {
+    public class CombatNumberPacketTests {
         [Fact]
         public void SetDefaultableProperties_MarkAsDirty() {
-            var packet = new NpcBuffPacket();
+            var packet = new CombatNumberPacket();
 
             packet.ShouldHaveDefaultablePropertiesMarkAsDirty();
         }
 
-        [Fact]
-        public void SetNpcBuff_MarksAsDirty() {
-            var packet = new NpcBuffPacket();
-
-            packet.NpcBuff = new Buff(BuffType.None, TimeSpan.Zero);
-
-            packet.ShouldBeDirty();
-        }
-
-        public static readonly byte[] Bytes = {8, 0, 53, 0, 0, 1, 60, 0};
+        public static readonly byte[] Bytes = {18, 0, 81, 0, 0, 0, 0, 0, 0, 0, 0, 255, 255, 255, 100, 0, 0, 0};
 
         [Fact]
         public void ReadFromStream_IsCorrect() {
             using (var stream = new MemoryStream(Bytes)) {
-                var packet = (NpcBuffPacket)Packet.ReadFromStream(stream, PacketContext.Server);
+                var packet = (CombatNumberPacket)Packet.ReadFromStream(stream, PacketContext.Server);
 
-                packet.NpcIndex.Should().Be(0);
-                packet.NpcBuff.Should().Be(new Buff(BuffType.ObsidianSkin, TimeSpan.FromSeconds(1)));
+                packet.NumberPosition.Should().Be(Vector2.Zero);
+                packet.NumberColor.Should().Be(Color.White);
+                packet.Number.Should().Be(100);
             }
         }
 

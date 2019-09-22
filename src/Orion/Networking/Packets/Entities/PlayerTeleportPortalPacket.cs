@@ -23,17 +23,17 @@ using Orion.Networking.Packets.Extensions;
 
 namespace Orion.Networking.Packets.Entities {
     /// <summary>
-    /// Packet sent to teleport a player through a portal.
+    /// Packet sent from the client to the server to teleport a player through a portal.
     /// </summary>
     [PublicAPI]
-    public sealed class TeleportPlayerPortalPacket : Packet {
+    public sealed class PlayerTeleportPortalPacket : Packet {
         private byte _playerIndex;
         private short _portalIndex;
         private Vector2 _playerNewPosition;
         private Vector2 _playerNewVelocity;
 
         /// <inheritdoc />
-        public override PacketType Type => PacketType.TeleportPlayerPortal;
+        public override PacketType Type => PacketType.PlayerTeleportPortal;
 
         /// <summary>
         /// Gets or sets the player index.

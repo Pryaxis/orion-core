@@ -21,7 +21,7 @@ using JetBrains.Annotations;
 
 namespace Orion.Networking.Packets.Entities {
     /// <summary>
-    /// Packet sent to catch an NPC.
+    /// Packet sent from the client to the server to catch an NPC.
     /// </summary>
     [PublicAPI]
     public sealed class NpcCatchPacket : Packet {
@@ -43,7 +43,7 @@ namespace Orion.Networking.Packets.Entities {
         }
 
         /// <summary>
-        /// Gets or sets the NPC catcher's player index.
+        /// Gets or sets the NPC catcher's player index. This should be the same as the sender's player index.
         /// </summary>
         public byte NpcCatcherPlayerIndex {
             get => _npcCatcherPlayerIndex;

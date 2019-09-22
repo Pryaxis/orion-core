@@ -24,9 +24,14 @@ namespace Orion.Networking.Entities {
     /// </summary>
     [PublicAPI]
     public enum PlayerDodgeType : byte {
-#pragma warning disable 1591
+        /// <summary>
+        /// Indicates a ninja dodge. This is caused by a Tabi or Master Ninja Gear.
+        /// </summary>
         Ninja = 1,
+
+        /// <summary>
+        /// Indicates a shadow dodge. This is caused by Titanium Armor.
+        /// </summary>
         Shadow = 2
-#pragma warning restore 1591
     }
 }

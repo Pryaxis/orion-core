@@ -57,7 +57,7 @@ namespace Orion.Networking.Packets.Entities {
         }
 
         /// <summary>
-        /// Gets or sets the NPC's style.
+        /// Gets or sets the NPC's style. This only affects butterflies.
         /// </summary>
         public byte NpcStyle {
             get => _npcStyle;

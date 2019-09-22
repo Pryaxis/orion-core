@@ -24,13 +24,34 @@ namespace Orion.Networking.World.Tiles {
     /// </summary>
     [PublicAPI]
     public enum ToggleDoorAction : byte {
-#pragma warning disable 1591
+        /// <summary>
+        /// Indicates that a door should be opened.
+        /// </summary>
         OpenDoor = 0,
+
+        /// <summary>
+        /// Indicates that a door should be closed.
+        /// </summary>
         CloseDoor = 1,
+
+        /// <summary>
+        /// Indicates that a trapdoor should be opened.
+        /// </summary>
         OpenTrapdoor = 2,
+
+        /// <summary>
+        /// Indicates that a trapdoor should be closed.
+        /// </summary>
         CloseTrapdoor = 3,
+
+        /// <summary>
+        /// Indicates that a tall gate should be opened.
+        /// </summary>
         OpenTallGate = 4,
+
+        /// <summary>
+        /// Indicates that a tall gate should be closed.
+        /// </summary>
         CloseTallGate = 5
-#pragma warning restore 1591
     }
 }

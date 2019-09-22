@@ -34,7 +34,7 @@ namespace Orion.Networking.Packets.World {
         public override PacketType Type => PacketType.TravelingMerchantShop;
 
         /// <summary>
-        /// Gets the shop's <see cref="ItemType"/>s.
+        /// Gets the shop's item types.
         /// </summary>
         [NotNull]
         public DirtiableArray<ItemType> ShopItemTypes { get; } = new DirtiableArray<ItemType>(Terraria.Chest.maxItems);

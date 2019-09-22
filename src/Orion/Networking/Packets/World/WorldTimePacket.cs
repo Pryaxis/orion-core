@@ -21,7 +21,7 @@ using JetBrains.Annotations;
 
 namespace Orion.Networking.Packets.World {
     /// <summary>
-    /// Packet sent to set the time.
+    /// Packet sent to set the time. This is currently not naturally sent.
     /// </summary>
     [PublicAPI]
     public sealed class WorldTimePacket : Packet {

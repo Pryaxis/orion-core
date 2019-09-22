@@ -22,7 +22,8 @@ using JetBrains.Annotations;
 
 namespace Orion.Networking.Packets.World.TileEntities {
     /// <summary>
-    /// Packet sent to request or set a chest's name.
+    /// Packet sent from the client to the server to request a chest's name or from the server to the client to set a
+    /// chest's name.
     /// </summary>
     [PublicAPI]
     public sealed class ChestNamePacket : Packet {

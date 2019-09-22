@@ -21,7 +21,7 @@ using JetBrains.Annotations;
 
 namespace Orion.Networking.Packets.World {
     /// <summary>
-    /// Packet sent from the server to the client to notify a progression event.
+    /// Packet sent from the server to the client to notify a progression event. This is used for achievements.
     /// </summary>
     [PublicAPI]
     public sealed class ProgressionEventPacket : Packet {

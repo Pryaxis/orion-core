@@ -157,7 +157,7 @@ namespace Orion.Networking.Packets.Entities {
         }
 
         /// <summary>
-        /// Gets or sets the number of bytes that represent the NPC's health.
+        /// Gets or sets the number of bytes that represent the NPC's health. Values are 1, 2, or 4.
         /// </summary>
         public byte NpcNumberOfHealthBytes {
             get => _npcNumberOfHealthBytes;

@@ -22,7 +22,7 @@ using Orion.Networking.World.TileEntities;
 
 namespace Orion.Networking.Packets.World.TileEntities {
     /// <summary>
-    /// Packet sent to set a tile entity's information.
+    /// Packet sent to set tile entity information.
     /// </summary>
     [PublicAPI]
     public sealed class TileEntityInfoPacket : Packet {
@@ -47,7 +47,7 @@ namespace Orion.Networking.Packets.World.TileEntities {
         }
 
         /// <summary>
-        /// Gets or sets the tile entity. A value of <c>null</c> indicates a deletion.
+        /// Gets or sets the tile entity. A value of <c>null</c> indicates a removal.
         /// </summary>
         [CanBeNull]
         public NetworkTileEntity TileEntity {

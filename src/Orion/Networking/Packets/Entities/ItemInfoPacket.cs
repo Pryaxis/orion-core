@@ -15,7 +15,6 @@
 // You should have received a copy of the GNU General Public License
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
-using System;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using JetBrains.Annotations;
@@ -25,7 +24,7 @@ using Orion.Networking.Packets.Extensions;
 
 namespace Orion.Networking.Packets.Entities {
     /// <summary>
-    /// Packet sent to set item information.
+    /// Packet sent to set item information. This is sent for item drops, updates, and pickups.
     /// </summary>
     [PublicAPI]
     public sealed class ItemInfoPacket : Packet {

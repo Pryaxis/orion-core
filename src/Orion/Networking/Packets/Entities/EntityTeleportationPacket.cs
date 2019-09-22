@@ -28,7 +28,7 @@ namespace Orion.Networking.Packets.Entities {
     /// </summary>
     [PublicAPI]
     public sealed class EntityTeleportationPacket : Packet {
-        private EntityTeleportationType _entityTeleportationType = EntityTeleportationType.Player;
+        private EntityTeleportationType _entityTeleportationType;
         private byte _entityTeleportationStyle;
         private short _entityIndex;
         private Vector2 _entityNewPosition;
@@ -48,7 +48,7 @@ namespace Orion.Networking.Packets.Entities {
         }
 
         /// <summary>
-        /// Gets or sets the entity teleportation style.
+        /// Gets or sets the entity teleportation style, or how the teleportation looks.
         /// </summary>
         public byte EntityTeleportationStyle {
             get => _entityTeleportationStyle;

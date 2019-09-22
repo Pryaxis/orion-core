@@ -21,7 +21,7 @@ using JetBrains.Annotations;
 
 namespace Orion.Networking.Packets.Entities {
     /// <summary>
-    /// Packet sent to damage an NPC with a player's held item.
+    /// Packet sent to damage an NPC with a player's held item. This is currently not naturally sent.
     /// </summary>
     [PublicAPI]
     public sealed class NpcDamageHeldItemPacket : Packet {

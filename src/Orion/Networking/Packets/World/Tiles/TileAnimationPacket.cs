@@ -22,7 +22,7 @@ using Orion.World.Tiles;
 
 namespace Orion.Networking.Packets.World.Tiles {
     /// <summary>
-    /// Packet sent to show a tile animation.
+    /// Packet sent to show a tile animation such as a fake chest opening or a mushroom statue being powered.
     /// </summary>
     [PublicAPI]
     public sealed class TileAnimationPacket : Packet {

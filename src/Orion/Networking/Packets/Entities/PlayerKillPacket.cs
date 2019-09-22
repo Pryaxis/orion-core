@@ -29,9 +29,9 @@ namespace Orion.Networking.Packets.Entities {
     [PublicAPI]
     public sealed class PlayerKillPacket : Packet {
         private byte _playerIndex;
-        private TDS.PlayerDeathReason _playerDeathReason = TDS.PlayerDeathReason.LegacyEmpty();
+        [NotNull] private TDS.PlayerDeathReason _playerDeathReason = TDS.PlayerDeathReason.LegacyEmpty();
         private short _damage;
-        private int _hitDirection;
+        private sbyte _hitDirection;
         private bool _isDeathFromPvp;
 
         /// <inheritdoc />
@@ -73,9 +73,9 @@ namespace Orion.Networking.Packets.Entities {
         }
 
         /// <summary>
-        /// Gets or sets the hit direction.
+        /// Gets or sets the hit direction. Values are -1 or 1.
         /// </summary>
-        public int HitDirection {
+        public sbyte HitDirection {
             get => _hitDirection;
             set {
                 _hitDirection = value;
@@ -103,7 +103,7 @@ namespace Orion.Networking.Packets.Entities {
             _playerIndex = reader.ReadByte();
             _playerDeathReason = reader.ReadPlayerDeathReason();
             _damage = reader.ReadInt16();
-            _hitDirection = reader.ReadByte() - 1;
+            _hitDirection = (sbyte)(reader.ReadByte() - 1);
             _isDeathFromPvp = reader.ReadBoolean();
         }
 

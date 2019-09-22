@@ -28,7 +28,7 @@ namespace Orion.Networking.Packets.Entities {
         private short _npcIndex;
         private short _damage;
         private float _knockback;
-        private int _hitDirection;
+        private sbyte _hitDirection;
         private bool _isCriticalHit;
 
         /// <inheritdoc />
@@ -68,9 +68,9 @@ namespace Orion.Networking.Packets.Entities {
         }
 
         /// <summary>
-        /// Gets or sets the hit direction.
+        /// Gets or sets the hit direction. Values are -1 or 1.
         /// </summary>
-        public int HitDirection {
+        public sbyte HitDirection {
             get => _hitDirection;
             set {
                 _hitDirection = value;
@@ -97,7 +97,7 @@ namespace Orion.Networking.Packets.Entities {
             _npcIndex = reader.ReadInt16();
             _damage = reader.ReadInt16();
             _knockback = reader.ReadSingle();
-            _hitDirection = reader.ReadByte() - 1;
+            _hitDirection = (sbyte)(reader.ReadByte() - 1);
             _isCriticalHit = reader.ReadBoolean();
         }
 

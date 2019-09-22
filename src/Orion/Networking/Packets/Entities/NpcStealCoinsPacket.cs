@@ -23,7 +23,8 @@ using Orion.Networking.Packets.Extensions;
 
 namespace Orion.Networking.Packets.Entities {
     /// <summary>
-    /// Packet sent to cause an NPC to steal a coin.
+    /// Packet sent to cause an NPC to steal a coin. This is sent from clients and the logic occurs clientside, but the
+    /// server echoes the packet back to clients, which may cause desync issues.
     /// </summary>
     [PublicAPI]
     public sealed class NpcStealCoinsPacket : Packet {

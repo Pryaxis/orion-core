@@ -48,7 +48,7 @@ namespace Orion.Networking.Packets.Entities {
         }
 
         /// <summary>
-        /// Gets the NPC's buffs.
+        /// Gets the NPC's buffs. The buff durations are limited to approximately 546.1 seconds.
         /// </summary>
         [NotNull]
         public DirtiableArray<Buff> NpcBuffs { get; } = new DirtiableArray<Buff>(Terraria.NPC.maxBuffs);

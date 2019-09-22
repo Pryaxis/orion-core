@@ -25,7 +25,7 @@ using Orion.Utils;
 
 namespace Orion.Networking.Packets.Entities {
     /// <summary>
-    /// Packet sent to set a projectile's information.
+    /// Packet sent to set projectile information.
     /// </summary>
     [PublicAPI]
     public sealed class ProjectileInfoPacket : Packet {

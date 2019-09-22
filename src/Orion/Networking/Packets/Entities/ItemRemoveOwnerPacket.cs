@@ -21,7 +21,8 @@ using JetBrains.Annotations;
 
 namespace Orion.Networking.Packets.Entities {
     /// <summary>
-    /// Packet sent from the server to the client to remove the owner of an item.
+    /// Packet sent from the server to the client to remove the owner of an item. This is sent if an item is 'claimed'
+    /// but not picked up for too long.
     /// </summary>
     [PublicAPI]
     public sealed class ItemRemoveOwnerPacket : Packet {

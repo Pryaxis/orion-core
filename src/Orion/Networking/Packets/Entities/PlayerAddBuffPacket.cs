@@ -15,57 +15,59 @@
 // You should have received a copy of the GNU General Public License
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
+using System;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using JetBrains.Annotations;
+using Orion.Entities;
 
 namespace Orion.Networking.Packets.Entities {
     /// <summary>
-    /// Packet sent to remove a projectile by identity. For the server, the identity is the absolute source of truth on
-    /// projectile indices.
+    /// Packet sent to add a buff to a player.
     /// </summary>
     [PublicAPI]
-    public sealed class ProjectileRemoveIdentityPacket : Packet {
-        private short _projectileIdentity;
-        private byte _projectileOwnerPlayerIndex;
+    public sealed class PlayerAddBuffPacket : Packet {
+        private byte _playerIndex;
+        private Buff _playerBuff;
 
         /// <inheritdoc />
-        public override PacketType Type => PacketType.ProjectileRemoveIdentity;
+        public override PacketType Type => PacketType.PlayerAddBuff;
 
         /// <summary>
-        /// Gets or sets the projectile identity.
+        /// Gets or sets the player index.
         /// </summary>
-        public short ProjectileIdentity {
-            get => _projectileIdentity;
+        public byte PlayerIndex {
+            get => _playerIndex;
             set {
-                _projectileIdentity = value;
+                _playerIndex = value;
                 _isDirty = true;
             }
         }
 
         /// <summary>
-        /// Gets or sets the projectile owner's player index.
+        /// Gets or sets the player's buff.
         /// </summary>
-        public byte ProjectileOwnerPlayerIndex {
-            get => _projectileOwnerPlayerIndex;
+        public Buff PlayerBuff {
+            get => _playerBuff;
             set {
-                _projectileOwnerPlayerIndex = value;
+                _playerBuff = value;
                 _isDirty = true;
             }
         }
 
         /// <inheritdoc />
         [ExcludeFromCodeCoverage]
-        public override string ToString() => $"{Type}[#={ProjectileIdentity}), P={ProjectileOwnerPlayerIndex}]";
+        public override string ToString() => $"{Type}[#={PlayerIndex}, {PlayerBuff}]";
 
         private protected override void ReadFromReader(BinaryReader reader, PacketContext context) {
-            _projectileIdentity = reader.ReadInt16();
-            _projectileOwnerPlayerIndex = reader.ReadByte();
+            _playerIndex = reader.ReadByte();
+            _playerBuff = new Buff((BuffType)reader.ReadByte(), TimeSpan.FromSeconds(reader.ReadInt32() / 60.0));
         }
 
         private protected override void WriteToWriter(BinaryWriter writer, PacketContext context) {
-            writer.Write(_projectileIdentity);
-            writer.Write(_projectileOwnerPlayerIndex);
+            writer.Write(_playerIndex);
+            writer.Write((byte)_playerBuff.BuffType);
+            writer.Write((int)(_playerBuff.Duration.TotalSeconds * 60.0));
         }
     }
 }

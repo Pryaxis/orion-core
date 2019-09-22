@@ -20,7 +20,7 @@ using JetBrains.Annotations;
 
 namespace Orion.Networking.Packets.Entities {
     /// <summary>
-    /// Packet sent to use a teleportation potion.
+    /// Packet sent from the client to to the server to use a teleportation potion.
     /// </summary>
     [PublicAPI]
     public sealed class PlayerTeleportationPotionPacket : Packet {

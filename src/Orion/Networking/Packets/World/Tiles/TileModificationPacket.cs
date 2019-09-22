@@ -22,7 +22,8 @@ using Orion.Networking.World.Tiles;
 
 namespace Orion.Networking.Packets.World.Tiles {
     /// <summary>
-    /// Packet sent to perform a tile modification.
+    /// Packet sent to perform a tile modification. See <see cref="Networking.World.Tiles.TileModification"/> for a list
+    /// of tile modifications.
     /// </summary>
     [PublicAPI]
     public sealed class TileModificationPacket : Packet {

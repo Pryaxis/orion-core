@@ -24,11 +24,24 @@ namespace Orion.Networking.Entities {
     /// </summary>
     [PublicAPI]
     public enum EntityAction : byte {
-#pragma warning disable 1591
+        /// <summary>
+        /// Indicates that Skeletron should be spawned. This is caused by talking to the Old Man.
+        /// </summary>
         PlayerSpawnSkeletron = 1,
+        
+        /// <summary>
+        /// Indicates that a grappling sound should be played.
+        /// </summary>
         PlayerGrappleSound = 2,
+
+        /// <summary>
+        /// Indicates that the Enchanted Sundial should be used.
+        /// </summary>
         PlayerUseSundial = 3,
+
+        /// <summary>
+        /// Indicates that mimic smoke should be created.
+        /// </summary>
         NpcCreateMimicSmoke = 4
-#pragma warning restore 1591
     }
 }

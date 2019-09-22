@@ -24,13 +24,34 @@ namespace Orion.Networking.World.TileEntities {
     /// </summary>
     [PublicAPI]
     public enum ChestModification : byte {
-#pragma warning disable 1591
+        /// <summary>
+        /// Indicates that a chest should be placed.
+        /// </summary>
         PlaceChest = 0,
+
+        /// <summary>
+        /// Indicates that a chest should be broken.
+        /// </summary>
         BreakChest = 1,
+
+        /// <summary>
+        /// Indicates that a dresser should be placed.
+        /// </summary>
         PlaceDresser = 2,
+
+        /// <summary>
+        /// Indicates that a dresser should be broken.
+        /// </summary>
         BreakDresser = 3,
+
+        /// <summary>
+        /// Indicates that a chest should be placed.
+        /// </summary>
         PlaceChest2 = 4,
+
+        /// <summary>
+        /// Indicates that a chest should be removed.
+        /// </summary>
         BreakChest2 = 5
-#pragma warning restore 1591
     }
 }

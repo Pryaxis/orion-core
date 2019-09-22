@@ -18,18 +18,19 @@
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using JetBrains.Annotations;
+using Orion.Entities;
 
-namespace Orion.Networking.Packets.Misc {
+namespace Orion.Networking.Packets.Entities {
     /// <summary>
-    /// Packet sent to the client to set an emote bubble.
+    /// Packet sent from the server to the client to set emote information.
     /// </summary>
     [PublicAPI]
     public sealed class EmoteInfoPacket : Packet {
         private int _emoteIndex;
-        private byte _anchorType;
-        private ushort _anchorIndex;
+        private EmoteAnchorType _anchorType;
+        private ushort _anchorEntityIndex;
         private byte _emoteLifetime;
-        private int _emoteEmotion;
+        private EmoteType _emoteType;
         private ushort _emoteMetadata;
 
         /// <inheritdoc />
@@ -49,7 +50,7 @@ namespace Orion.Networking.Packets.Misc {
         /// <summary>
         /// Gets or sets the anchor type.
         /// </summary>
-        public byte AnchorType {
+        public EmoteAnchorType AnchorType {
             get => _anchorType;
             set {
                 _anchorType = value;
@@ -58,12 +59,12 @@ namespace Orion.Networking.Packets.Misc {
         }
 
         /// <summary>
-        /// Gets or sets the anchor index.
+        /// Gets or sets the anchor's entity index.
         /// </summary>
-        public ushort AnchorIndex {
-            get => _anchorIndex;
+        public ushort AnchorEntityIndex {
+            get => _anchorEntityIndex;
             set {
-                _anchorIndex = value;
+                _anchorEntityIndex = value;
                 _isDirty = true;
             }
         }
@@ -80,14 +81,12 @@ namespace Orion.Networking.Packets.Misc {
         }
 
         /// <summary>
-        /// Gets or sets the emote's emotion.
+        /// Gets or sets the emote's type.
         /// </summary>
-
-        // TODO: implement enum for this.
-        public int EmoteEmotion {
-            get => _emoteEmotion;
+        public EmoteType EmoteType {
+            get => _emoteType;
             set {
-                _emoteEmotion = value;
+                _emoteType = value;
                 _isDirty = true;
             }
         }
@@ -109,26 +108,30 @@ namespace Orion.Networking.Packets.Misc {
 
         private protected override void ReadFromReader(BinaryReader reader, PacketContext context) {
             _emoteIndex = reader.ReadInt32();
-            _anchorType = reader.ReadByte();
-            if (_anchorType == byte.MaxValue) return;
+            _anchorType = (EmoteAnchorType)reader.ReadByte();
+            if (_anchorType == EmoteAnchorType.Remove) return;
 
-            _anchorIndex = reader.ReadUInt16();
+            _anchorEntityIndex = reader.ReadUInt16();
             _emoteLifetime = reader.ReadByte();
-            _emoteEmotion = reader.ReadSByte();
-            if (_emoteEmotion < 0) {
+
+            _emoteType = (EmoteType)reader.ReadByte();
+
+            // NOTE: this is never possible and is a bug with Terraria.
+            if (_emoteType < 0) {
                 _emoteMetadata = reader.ReadUInt16();
             }
         }
 
         private protected override void WriteToWriter(BinaryWriter writer, PacketContext context) {
             writer.Write(_emoteIndex);
-            writer.Write(_anchorType);
-            if (_anchorType == byte.MaxValue) return;
+            writer.Write((byte)_anchorType);
+            if (_anchorType == EmoteAnchorType.Remove) return;
 
-            writer.Write(_anchorIndex);
+            writer.Write(_anchorEntityIndex);
             writer.Write(_emoteLifetime);
-            writer.Write((sbyte)_emoteEmotion);
-            if (_emoteEmotion < 0) {
+
+            writer.Write((byte)_emoteType);
+            if (_emoteType < 0) {
                 writer.Write(_emoteMetadata);
             }
         }

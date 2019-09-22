@@ -22,11 +22,11 @@ using JetBrains.Annotations;
 
 namespace Orion.Networking.Packets.Entities {
     /// <summary>
-    /// Packet sent from the client to the server to initiate a connection.
+    /// Packet sent from the client to the server to start connecting.
     /// </summary>
     [PublicAPI]
     public sealed class PlayerConnectPacket : Packet {
-        private string _playerVersionString = "";
+        [NotNull] private string _playerVersionString = "";
 
         /// <inheritdoc />
         public override PacketType Type => PacketType.PlayerConnect;

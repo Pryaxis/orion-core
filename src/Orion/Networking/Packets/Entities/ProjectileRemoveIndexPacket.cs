@@ -21,7 +21,7 @@ using JetBrains.Annotations;
 
 namespace Orion.Networking.Packets.Entities {
     /// <summary>
-    /// Packet sent to the server to remove a projectile by index.
+    /// Packet sent from the client to the server to remove a projectile by index.
     /// </summary>
     [PublicAPI]
     public sealed class ProjectileRemoveIndexPacket : Packet {

@@ -20,7 +20,7 @@ using JetBrains.Annotations;
 
 namespace Orion.Networking.Packets.Entities {
     /// <summary>
-    /// Packet sent from the client to the server to finish the angler quest.
+    /// Packet sent from the client to the server to finish the current angler quest.
     /// </summary>
     [PublicAPI]
     public sealed class PlayerFinishAnglerQuestPacket : Packet {
