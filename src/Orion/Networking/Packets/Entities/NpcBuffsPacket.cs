@@ -50,15 +50,6 @@ namespace Orion.Networking.Packets.Entities {
         /// </summary>
         public DirtiableArray<Buff> NpcBuffs { get; } = new DirtiableArray<Buff>(Terraria.NPC.maxBuffs);
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="NpcBuffsPacket"/> class.
-        /// </summary>
-        public NpcBuffsPacket() {
-            for (var i = 0; i < NpcBuffs.Count; ++i) {
-                NpcBuffs[i] = new Buff(BuffType.None, TimeSpan.Zero);
-            }
-        }
-
         /// <inheritdoc />
         public override void Clean() {
             base.Clean();

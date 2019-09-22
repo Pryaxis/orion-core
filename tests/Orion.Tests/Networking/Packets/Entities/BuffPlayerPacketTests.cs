@@ -39,14 +39,6 @@ namespace Orion.Networking.Packets.Entities {
             packet.ShouldBeDirty();
         }
 
-        [Fact]
-        public void SetPlayerBuff_NullValue_ThrowsArgumentNullException() {
-            var packet = new BuffPlayerPacket();
-            Action action = () => packet.PlayerBuff = null;
-
-            action.Should().Throw<ArgumentNullException>();
-        }
-
         public static readonly byte[] Bytes = {9, 0, 55, 0, 1, 60, 0, 0, 0};
 
         [Fact]
@@ -55,7 +47,7 @@ namespace Orion.Networking.Packets.Entities {
                 var packet = (BuffPlayerPacket)Packet.ReadFromStream(stream, PacketContext.Server);
 
                 packet.PlayerIndex.Should().Be(0);
-                packet.PlayerBuff.Should().BeEquivalentTo(new Buff(BuffType.ObsidianSkin, TimeSpan.FromSeconds(1)));
+                packet.PlayerBuff.Should().Be(new Buff(BuffType.ObsidianSkin, TimeSpan.FromSeconds(1)));
             }
         }
 

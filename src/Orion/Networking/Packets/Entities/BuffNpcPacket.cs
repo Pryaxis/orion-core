@@ -26,7 +26,7 @@ namespace Orion.Networking.Packets.Entities {
     /// </summary>
     public sealed class BuffNpcPacket : Packet {
         private short _npcIndex;
-        private Buff _npcBuff = new Buff(BuffType.None, TimeSpan.Zero);
+        private Buff _npcBuff;
 
         /// <inheritdoc />
         public override PacketType Type => PacketType.BuffNpc;
@@ -45,11 +45,10 @@ namespace Orion.Networking.Packets.Entities {
         /// <summary>
         /// Gets or sets the NPC's buff. The buff duration is limited to approximately 546.1 seconds.
         /// </summary>
-        /// <exception cref="ArgumentNullException"><paramref name="value"/> is <c>null</c>.</exception>
         public Buff NpcBuff {
             get => _npcBuff;
             set {
-                _npcBuff = value ?? throw new ArgumentNullException(nameof(value));
+                _npcBuff = value;
                 _isDirty = true;
             }
         }

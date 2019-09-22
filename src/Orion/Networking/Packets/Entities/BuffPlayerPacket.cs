@@ -26,7 +26,7 @@ namespace Orion.Networking.Packets.Entities {
     /// </summary>
     public sealed class BuffPlayerPacket : Packet {
         private byte _playerIndex;
-        private Buff _playerBuff = new Buff(BuffType.None, TimeSpan.Zero);
+        private Buff _playerBuff;
 
         /// <inheritdoc />
         public override PacketType Type => PacketType.BuffPlayer;
@@ -45,11 +45,10 @@ namespace Orion.Networking.Packets.Entities {
         /// <summary>
         /// Gets or sets the player's buff.
         /// </summary>
-        /// <exception cref="ArgumentNullException"><paramref name="value"/> is <c>null</c>.</exception>
         public Buff PlayerBuff {
             get => _playerBuff;
             set {
-                _playerBuff = value ?? throw new ArgumentNullException(nameof(value));
+                _playerBuff = value;
                 _isDirty = true;
             }
         }

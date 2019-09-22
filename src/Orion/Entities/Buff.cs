@@ -22,7 +22,7 @@ namespace Orion.Entities {
     /// <summary>
     /// Represents a buff.
     /// </summary>
-    public sealed class Buff {
+    public struct Buff {
         /// <summary>
         /// Gets the buff type.
         /// </summary>

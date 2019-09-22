@@ -40,14 +40,6 @@ namespace Orion.Networking.Packets.Entities {
         }
 
         [Fact]
-        public void NpcBuffs_SetNullValue_ThrowsArgumentNullException() {
-            var packet = new NpcBuffsPacket();
-            Action action = () => packet.NpcBuffs[0] = null;
-
-            action.Should().Throw<ArgumentNullException>();
-        }
-
-        [Fact]
         public void NpcBuffs_Count_IsCorrect() {
             var packet = new NpcBuffsPacket();
 
@@ -63,7 +55,7 @@ namespace Orion.Networking.Packets.Entities {
 
                 packet.NpcIndex.Should().Be(0);
                 foreach (var buff in packet.NpcBuffs) {
-                    buff.Should().BeEquivalentTo(new Buff(BuffType.None, TimeSpan.Zero));
+                    buff.Should().Be(new Buff(BuffType.None, TimeSpan.Zero));
                 }
             }
         }
