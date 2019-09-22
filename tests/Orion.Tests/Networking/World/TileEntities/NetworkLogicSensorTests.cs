@@ -15,35 +15,15 @@
 // You should have received a copy of the GNU General Public License
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
-using System;
-using FluentAssertions;
-using Orion.World.TileEntities;
 using Xunit;
 
 namespace Orion.Networking.World.TileEntities {
     public class NetworkLogicSensorTests {
         [Fact]
-        public void SetSensorType_MarksAsDirty() {
+        public void SetDefaultableProperties_MarkAsDirty() {
             var logicSensor = new NetworkLogicSensor();
-            logicSensor.SensorType = LogicSensorType.Day;
 
-            logicSensor.ShouldBeDirty();
-        }
-
-        [Fact]
-        public void SetSensorType_NullValue_ThrowsArgumentNullException() {
-            var logicSensor = new NetworkLogicSensor();
-            Action action = () => logicSensor.SensorType = null;
-
-            action.Should().Throw<ArgumentNullException>();
-        }
-
-        [Fact]
-        public void SetIsActivated_MarksAsDirty() {
-            var logicSensor = new NetworkLogicSensor();
-            logicSensor.IsActivated = false;
-
-            logicSensor.ShouldBeDirty();
+            logicSensor.ShouldHaveDefaultablePropertiesMarkAsDirty();
         }
     }
 }

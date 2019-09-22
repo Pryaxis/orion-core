@@ -17,17 +17,19 @@
 
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
+using JetBrains.Annotations;
 using Terraria;
 
 namespace Orion.Networking.Packets.World.TileEntities {
     /// <summary>
     /// Packet sent to set chest information.
     /// </summary>
+    [PublicAPI]
     public sealed class ChestInfoPacket : Packet {
         private short _chestIndex;
         private short _chestX;
         private short _chestY;
-        private string _chestName;
+        [CanBeNull] private string _chestName;
 
         /// <inheritdoc />
         public override PacketType Type => PacketType.ChestInfo;
@@ -68,6 +70,7 @@ namespace Orion.Networking.Packets.World.TileEntities {
         /// <summary>
         /// Gets or sets the chest's name.
         /// </summary>
+        [CanBeNull]
         public string ChestName {
             get => _chestName;
             set {
@@ -82,31 +85,29 @@ namespace Orion.Networking.Packets.World.TileEntities {
             $"{Type}[#={ChestIndex} @ ({ChestX}, {ChestY}) is {ChestName ?? "un-named"}]";
 
         private protected override void ReadFromReader(BinaryReader reader, PacketContext context) {
-            ChestIndex = reader.ReadInt16();
-            ChestX = reader.ReadInt16();
-            ChestY = reader.ReadInt16();
+            _chestIndex = reader.ReadInt16();
+            _chestX = reader.ReadInt16();
+            _chestY = reader.ReadInt16();
             var nameLength = reader.ReadByte();
 
             if (nameLength > 0 && nameLength <= Chest.MaxNameLength) {
-                ChestName = reader.ReadString();
+                _chestName = reader.ReadString();
             }
         }
 
         private protected override void WriteToWriter(BinaryWriter writer, PacketContext context) {
-            writer.Write(ChestIndex);
-            writer.Write(ChestX);
-            writer.Write(ChestY);
-
-            if (ChestName != null) {
-                var nameLength = ChestName.Length;
-                if (nameLength == 0 || nameLength > Chest.MaxNameLength) {
-                    nameLength = byte.MaxValue;
-                }
-
-                writer.Write((byte)nameLength);
-                writer.Write(ChestName);
-            } else {
+            writer.Write(_chestIndex);
+            writer.Write(_chestX);
+            writer.Write(_chestY);
+            
+            // This packet's logic is actually insane... why is it set up this way?
+            if (_chestName == null) {
                 writer.Write((byte)0);
+            } else if (_chestName.Length == 0 || _chestName.Length > Terraria.Chest.MaxNameLength) {
+                writer.Write(byte.MaxValue);
+            } else {
+                writer.Write((byte)_chestName.Length);
+                writer.Write(_chestName);
             }
         }
     }

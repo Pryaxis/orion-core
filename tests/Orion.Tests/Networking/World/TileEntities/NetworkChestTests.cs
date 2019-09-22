@@ -22,6 +22,13 @@ using Xunit;
 namespace Orion.Networking.World.TileEntities {
     public class NetworkChestTests {
         [Fact]
+        public void SetDefaultableProperties_MarkAsDirty() {
+            var chest = new NetworkChest();
+
+            chest.ShouldHaveDefaultablePropertiesMarkAsDirty();
+        }
+
+        [Fact]
         public void SetName_MarksAsDirty() {
             var chest = new NetworkChest();
             chest.Name = "";
@@ -30,7 +37,7 @@ namespace Orion.Networking.World.TileEntities {
         }
 
         [Fact]
-        public void SetText_NullValue_ThrowsArgumentNullException() {
+        public void SetName_NullValue_ThrowsArgumentNullException() {
             var chest = new NetworkChest();
             Action action = () => chest.Name = null;
 

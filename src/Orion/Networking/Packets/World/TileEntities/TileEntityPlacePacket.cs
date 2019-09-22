@@ -17,52 +17,69 @@
 
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
+using JetBrains.Annotations;
+using Orion.World.TileEntities;
 
 namespace Orion.Networking.Packets.World.TileEntities {
     /// <summary>
-    /// Packet sent from the client to the server to request a sign.
+    /// Packet sent from the client to the server to place a tile entity.
     /// </summary>
-    public sealed class RequestSignPacket : Packet {
-        private short _signX;
-        private short _signY;
+    [PublicAPI]
+    public sealed class TileEntityPlacePacket : Packet {
+        private short _tileEntityX;
+        private short _tileEntityY;
+        private TileEntityType _tileEntityType;
 
         /// <inheritdoc />
-        public override PacketType Type => PacketType.RequestSign;
+        public override PacketType Type => PacketType.TileEntityPlace;
 
         /// <summary>
-        /// Gets or sets the sign's X coordinate.
+        /// Gets or sets the tile entity's X coordinate.
         /// </summary>
-        public short SignX {
-            get => _signX;
+        public short TileEntityX {
+            get => _tileEntityX;
             set {
-                _signX = value;
+                _tileEntityX = value;
                 _isDirty = true;
             }
         }
 
         /// <summary>
-        /// Gets or sets the sign's Y coordinate.
+        /// Gets or sets the tile entity's Y coordinate.
         /// </summary>
-        public short SignY {
-            get => _signY;
+        public short TileEntityY {
+            get => _tileEntityY;
             set {
-                _signY = value;
+                _tileEntityY = value;
+                _isDirty = true;
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets the tile entity's type.
+        /// </summary>
+        public TileEntityType TileEntityType {
+            get => _tileEntityType;
+            set {
+                _tileEntityType = value;
                 _isDirty = true;
             }
         }
 
         /// <inheritdoc />
         [ExcludeFromCodeCoverage]
-        public override string ToString() => $"{Type}[({SignX}, {SignY})]";
+        public override string ToString() => $"{Type}[{TileEntityType} @ ({TileEntityX}, {TileEntityY})]";
 
         private protected override void ReadFromReader(BinaryReader reader, PacketContext context) {
-            SignX = reader.ReadInt16();
-            SignY = reader.ReadInt16();
+            _tileEntityX = reader.ReadInt16();
+            _tileEntityY = reader.ReadInt16();
+            _tileEntityType = (TileEntityType)reader.ReadByte();
         }
 
         private protected override void WriteToWriter(BinaryWriter writer, PacketContext context) {
-            writer.Write(SignX);
-            writer.Write(SignY);
+            writer.Write(_tileEntityX);
+            writer.Write(_tileEntityY);
+            writer.Write((byte)_tileEntityType);
         }
     }
 }

@@ -20,22 +20,23 @@ using FluentAssertions;
 using Xunit;
 
 namespace Orion.Networking.Packets.World.TileEntities {
-    public class QuickStackChestPacketTests {
+    public class ChestOpenPacketTests {
         [Fact]
         public void SetDefaultableProperties_MarkAsDirty() {
-            var packet = new QuickStackChestPacket();
+            var packet = new ChestOpenPacket();
 
             packet.ShouldHaveDefaultablePropertiesMarkAsDirty();
         }
 
-        public static readonly byte[] Bytes = {4, 0, 85, 1};
+        private static readonly byte[] Bytes = {7, 0, 31, 100, 0, 100, 0};
 
         [Fact]
         public void ReadFromStream_IsCorrect() {
             using (var stream = new MemoryStream(Bytes)) {
-                var packet = (QuickStackChestPacket)Packet.ReadFromStream(stream, PacketContext.Server);
+                var packet = (ChestOpenPacket)Packet.ReadFromStream(stream, PacketContext.Server);
 
-                packet.PlayerInventorySlotIndex.Should().Be(1);
+                packet.ChestX.Should().Be(100);
+                packet.ChestY.Should().Be(100);
             }
         }
 

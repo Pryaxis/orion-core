@@ -17,15 +17,17 @@
 
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
+using JetBrains.Annotations;
 using Orion.Networking.World.TileEntities;
 
 namespace Orion.Networking.Packets.World.TileEntities {
     /// <summary>
     /// Packet sent to set a tile entity's information.
     /// </summary>
+    [PublicAPI]
     public sealed class TileEntityInfoPacket : Packet {
         private int _tileEntityIndex;
-        private NetworkTileEntity _tileEntity;
+        [CanBeNull] private NetworkTileEntity _tileEntity;
 
         /// <inheritdoc />
         public override PacketType Type => PacketType.TileEntityInfo;
@@ -47,6 +49,7 @@ namespace Orion.Networking.Packets.World.TileEntities {
         /// <summary>
         /// Gets or sets the tile entity. A value of <c>null</c> indicates a deletion.
         /// </summary>
+        [CanBeNull]
         public NetworkTileEntity TileEntity {
             get => _tileEntity;
             set {
@@ -66,17 +69,17 @@ namespace Orion.Networking.Packets.World.TileEntities {
         public override string ToString() => $"{Type}[#={TileEntityIndex}, {TileEntity}]";
 
         private protected override void ReadFromReader(BinaryReader reader, PacketContext context) {
-            TileEntityIndex = reader.ReadInt32();
+            _tileEntityIndex = reader.ReadInt32();
             if (!reader.ReadBoolean()) return;
 
-            TileEntity = NetworkTileEntity.FromReader(reader, false);
-            TileEntity.Index = TileEntityIndex;
+            _tileEntity = NetworkTileEntity.ReadFromReader(reader, false);
+            _tileEntity._index = TileEntityIndex;
         }
 
         private protected override void WriteToWriter(BinaryWriter writer, PacketContext context) {
-            writer.Write(TileEntityIndex);
-            writer.Write(TileEntity != null);
-            TileEntity?.WriteToWriter(writer, false);
+            writer.Write(_tileEntityIndex);
+            writer.Write(_tileEntity != null);
+            _tileEntity?.WriteToWriter(writer, false);
         }
     }
 }

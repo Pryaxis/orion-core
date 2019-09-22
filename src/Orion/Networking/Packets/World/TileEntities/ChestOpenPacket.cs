@@ -17,17 +17,19 @@
 
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
+using JetBrains.Annotations;
 
 namespace Orion.Networking.Packets.World.TileEntities {
     /// <summary>
     /// Packet sent from the client to the server to request a chest's contents.
     /// </summary>
-    public sealed class RequestChestPacket : Packet {
+    [PublicAPI]
+    public sealed class ChestOpenPacket : Packet {
         private short _chestX;
         private short _chestY;
 
         /// <inheritdoc />
-        public override PacketType Type => PacketType.RequestChest;
+        public override PacketType Type => PacketType.ChestOpen;
 
         /// <summary>
         /// Gets or sets the chest's X coordinate.
@@ -56,13 +58,13 @@ namespace Orion.Networking.Packets.World.TileEntities {
         public override string ToString() => $"{Type}[({ChestX}, {ChestY})]";
 
         private protected override void ReadFromReader(BinaryReader reader, PacketContext context) {
-            ChestX = reader.ReadInt16();
-            ChestY = reader.ReadInt16();
+            _chestX = reader.ReadInt16();
+            _chestY = reader.ReadInt16();
         }
 
         private protected override void WriteToWriter(BinaryWriter writer, PacketContext context) {
-            writer.Write(ChestX);
-            writer.Write(ChestY);
+            writer.Write(_chestX);
+            writer.Write(_chestY);
         }
     }
 }

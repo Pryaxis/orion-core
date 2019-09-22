@@ -20,11 +20,10 @@ using Xunit;
 namespace Orion.Networking.World.TileEntities {
     public class NetworkTargetDummyTests {
         [Fact]
-        public void SetNpcIndex_MarksAsDirty() {
+        public void SetDefaultableProperties_MarkAsDirty() {
             var targetDummy = new NetworkTargetDummy();
-            targetDummy.NpcIndex = 0;
 
-            targetDummy.ShouldBeDirty();
+            targetDummy.ShouldHaveDefaultablePropertiesMarkAsDirty();
         }
     }
 }

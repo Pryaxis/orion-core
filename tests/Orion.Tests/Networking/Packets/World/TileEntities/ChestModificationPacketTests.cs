@@ -30,45 +30,18 @@ namespace Orion.Networking.Packets.World.TileEntities {
             packet.ShouldHaveDefaultablePropertiesMarkAsDirty();
         }
 
-        [Fact]
-        public void SetChestModification_MarksAsDirty() {
-            var packet = new ChestModificationPacket();
-
-            packet.ChestModification = ChestModification.BreakChest;
-
-            packet.ShouldBeDirty();
-        }
-
-        [Fact]
-        public void SetChestModification_NullValue_ThrowsArgumentNullException() {
-            var packet = new ChestModificationPacket();
-            Action action = () => packet.ChestModification = null;
-
-            action.Should().Throw<ArgumentNullException>();
-        }
-
         private static readonly byte[] Bytes = {12, 0, 34, 0, 100, 0, 100, 0, 1, 0, 0, 0};
-        private static readonly byte[] InvalidModificationTypeBytes = {12, 0, 34, 255, 100, 0, 100, 0, 1, 0, 0, 0};
 
         [Fact]
         public void ReadFromStream_IsCorrect() {
             using (var stream = new MemoryStream(Bytes)) {
                 var packet = (ChestModificationPacket)Packet.ReadFromStream(stream, PacketContext.Server);
 
-                packet.ChestModification.Should().BeSameAs(ChestModification.PlaceChest);
+                packet.ChestModification.Should().Be(ChestModification.PlaceChest);
                 packet.ChestX.Should().Be(100);
                 packet.ChestY.Should().Be(100);
                 packet.ChestStyle.Should().Be(1);
                 packet.ChestIndex.Should().Be(0);
-            }
-        }
-
-        [Fact]
-        public void ReadFromStream_InvalidModificationType_ThrowsPacketException() {
-            using (var stream = new MemoryStream(InvalidModificationTypeBytes)) {
-                Func<Packet> func = () => Packet.ReadFromStream(stream, PacketContext.Server);
-
-                func.Should().Throw<PacketException>();
             }
         }
 

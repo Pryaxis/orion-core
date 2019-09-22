@@ -15,15 +15,16 @@
 // You should have received a copy of the GNU General Public License
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
-using System;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
+using JetBrains.Annotations;
 using Orion.Networking.World.TileEntities;
 
 namespace Orion.Networking.Packets.World.TileEntities {
     /// <summary>
     /// Packet sent to perform a chest modification.
     /// </summary>
+    [PublicAPI]
     public sealed class ChestModificationPacket : Packet {
         private ChestModification _chestModification;
         private short _chestX;
@@ -37,11 +38,10 @@ namespace Orion.Networking.Packets.World.TileEntities {
         /// <summary>
         /// Gets or sets the chest modification.
         /// </summary>
-        /// <exception cref="ArgumentNullException"><paramref name="value"/> is <c>null</c>.</exception>
         public ChestModification ChestModification {
             get => _chestModification;
             set {
-                _chestModification = value ?? throw new ArgumentNullException(nameof(value));
+                _chestModification = value;
                 _isDirty = true;
             }
         }
@@ -96,20 +96,19 @@ namespace Orion.Networking.Packets.World.TileEntities {
             $"{Type}[{ChestModification}, #={ChestIndex} @ ({ChestX}, {ChestY}), ...]";
 
         private protected override void ReadFromReader(BinaryReader reader, PacketContext context) {
-            ChestModification = ChestModification.FromId(reader.ReadByte()) ??
-                                    throw new PacketException("Modification type is invalid.");
-            ChestX = reader.ReadInt16();
-            ChestY = reader.ReadInt16();
-            ChestStyle = reader.ReadInt16();
-            ChestIndex = reader.ReadInt16();
+            _chestModification = (ChestModification)reader.ReadByte();
+            _chestX = reader.ReadInt16();
+            _chestY = reader.ReadInt16();
+            _chestStyle = reader.ReadInt16();
+            _chestIndex = reader.ReadInt16();
         }
 
         private protected override void WriteToWriter(BinaryWriter writer, PacketContext context) {
-            writer.Write(ChestModification.Id);
-            writer.Write(ChestX);
-            writer.Write(ChestY);
-            writer.Write(ChestStyle);
-            writer.Write(ChestIndex);
+            writer.Write((byte)_chestModification);
+            writer.Write(_chestX);
+            writer.Write(_chestY);
+            writer.Write(_chestStyle);
+            writer.Write(_chestIndex);
         }
     }
 }

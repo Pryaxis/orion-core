@@ -26,7 +26,7 @@ namespace Orion.World.TileEntities {
         /// <summary>
         /// Gets or sets the sensor's type.
         /// </summary>
-        LogicSensorType SensorType { get; set; }
+        LogicSensorType LogicSensorType { get; set; }
 
         /// <summary>
         /// Gets or sets a value indicating whether the sensor is activated.

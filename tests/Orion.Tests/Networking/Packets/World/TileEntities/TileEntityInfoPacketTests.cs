@@ -100,7 +100,7 @@ namespace Orion.Networking.Packets.World.TileEntities {
                 packet.TileEntity.X.Should().Be(256);
                 packet.TileEntity.Y.Should().Be(100);
                 packet.TileEntity.Should().BeOfType<NetworkLogicSensor>();
-                packet.TileEntity.As<NetworkLogicSensor>().SensorType.Should().Be(LogicSensorType.Day);
+                packet.TileEntity.As<NetworkLogicSensor>().LogicSensorType.Should().Be(LogicSensorType.Day);
                 packet.TileEntity.As<NetworkLogicSensor>().IsActivated.Should().BeTrue();
             }
         }

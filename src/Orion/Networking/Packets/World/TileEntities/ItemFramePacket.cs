@@ -15,15 +15,16 @@
 // You should have received a copy of the GNU General Public License
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
-using System;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
+using JetBrains.Annotations;
 using Orion.Entities;
 
 namespace Orion.Networking.Packets.World.TileEntities {
     /// <summary>
     /// Packet sent from the client to the server to set an item frame.
     /// </summary>
+    [PublicAPI]
     public sealed class ItemFramePacket : Packet {
         private short _itemFrameX;
         private short _itemFrameY;
@@ -96,19 +97,19 @@ namespace Orion.Networking.Packets.World.TileEntities {
             $"{(ItemPrefix != ItemPrefix.None ? ItemPrefix + " " : "")}{ItemType} x{ItemStackSize}]";
 
         private protected override void ReadFromReader(BinaryReader reader, PacketContext context) {
-            ItemFrameX = reader.ReadInt16();
-            ItemFrameY = reader.ReadInt16();
-            ItemType = (ItemType)reader.ReadInt16();
-            ItemPrefix = (ItemPrefix)reader.ReadByte();
-            ItemStackSize = reader.ReadInt16();
+            _itemFrameX = reader.ReadInt16();
+            _itemFrameY = reader.ReadInt16();
+            _itemType = (ItemType)reader.ReadInt16();
+            _itemPrefix = (ItemPrefix)reader.ReadByte();
+            _itemStackSize = reader.ReadInt16();
         }
 
         private protected override void WriteToWriter(BinaryWriter writer, PacketContext context) {
-            writer.Write(ItemFrameX);
-            writer.Write(ItemFrameY);
-            writer.Write((short)ItemType);
-            writer.Write((byte)ItemPrefix);
-            writer.Write(ItemStackSize);
+            writer.Write(_itemFrameX);
+            writer.Write(_itemFrameY);
+            writer.Write((short)_itemType);
+            writer.Write((byte)_itemPrefix);
+            writer.Write(_itemStackSize);
         }
     }
 }

@@ -15,15 +15,16 @@
 // You should have received a copy of the GNU General Public License
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
-using System;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
+using JetBrains.Annotations;
 using Orion.Entities;
 
 namespace Orion.Networking.Packets.World.TileEntities {
     /// <summary>
-    /// Packet sent to set a chest contents slot. This is sent in response to a <see cref="RequestChestPacket"/>.
+    /// Packet sent to set a chest contents slot. This is sent in response to a <see cref="ChestOpenPacket"/>.
     /// </summary>
+    [PublicAPI]
     public sealed class ChestContentsSlotPacket : Packet {
         private short _chestIndex;
         private byte _chestContentsSlotIndex;
@@ -96,19 +97,19 @@ namespace Orion.Networking.Packets.World.TileEntities {
             $"{(ItemPrefix != ItemPrefix.None ? ItemPrefix + " " : "")}{ItemType} x{ItemStackSize}]";
 
         private protected override void ReadFromReader(BinaryReader reader, PacketContext context) {
-            ChestIndex = reader.ReadInt16();
-            ChestContentsSlotIndex = reader.ReadByte();
-            ItemStackSize = reader.ReadInt16();
-            ItemPrefix = (ItemPrefix)reader.ReadByte();
-            ItemType = (ItemType)reader.ReadInt16();
+            _chestIndex = reader.ReadInt16();
+            _chestContentsSlotIndex = reader.ReadByte();
+            _itemStackSize = reader.ReadInt16();
+            _itemPrefix = (ItemPrefix)reader.ReadByte();
+            _itemType = (ItemType)reader.ReadInt16();
         }
 
         private protected override void WriteToWriter(BinaryWriter writer, PacketContext context) {
-            writer.Write(ChestIndex);
-            writer.Write(ChestContentsSlotIndex);
-            writer.Write(ItemStackSize);
-            writer.Write((byte)ItemPrefix);
-            writer.Write((short)ItemType);
+            writer.Write(_chestIndex);
+            writer.Write(_chestContentsSlotIndex);
+            writer.Write(_itemStackSize);
+            writer.Write((byte)_itemPrefix);
+            writer.Write((short)_itemType);
         }
     }
 }

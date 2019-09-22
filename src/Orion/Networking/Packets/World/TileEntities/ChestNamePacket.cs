@@ -18,16 +18,18 @@
 using System;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
+using JetBrains.Annotations;
 
 namespace Orion.Networking.Packets.World.TileEntities {
     /// <summary>
     /// Packet sent to request or set a chest's name.
     /// </summary>
+    [PublicAPI]
     public sealed class ChestNamePacket : Packet {
-        private string _chestName = "";
         private short _chestIndex;
         private short _chestX;
         private short _chestY;
+        [NotNull] private string _chestName = "";
 
         /// <inheritdoc />
         public override PacketType Type => PacketType.ChestName;
@@ -69,6 +71,7 @@ namespace Orion.Networking.Packets.World.TileEntities {
         /// Gets or sets the chest's name.
         /// </summary>
         /// <exception cref="ArgumentNullException"><paramref name="value"/> is <c>null</c>.</exception>
+        [NotNull]
         public string ChestName {
             get => _chestName;
             set {
@@ -82,24 +85,24 @@ namespace Orion.Networking.Packets.World.TileEntities {
         public override string ToString() => $"{Type}[#={ChestIndex} @ ({ChestX}, {ChestY}) is {ChestName}]";
 
         private protected override void ReadFromReader(BinaryReader reader, PacketContext context) {
-            ChestIndex = reader.ReadInt16();
-            ChestX = reader.ReadInt16();
-            ChestY = reader.ReadInt16();
+            _chestIndex = reader.ReadInt16();
+            _chestX = reader.ReadInt16();
+            _chestY = reader.ReadInt16();
 
             // The packet includes the chest name if it is read as the client.
             if (context == PacketContext.Client) {
-                ChestName = reader.ReadString();
+                _chestName = reader.ReadString();
             }
         }
 
         private protected override void WriteToWriter(BinaryWriter writer, PacketContext context) {
-            writer.Write(ChestIndex);
-            writer.Write(ChestX);
-            writer.Write(ChestY);
+            writer.Write(_chestIndex);
+            writer.Write(_chestX);
+            writer.Write(_chestY);
 
             // The packet includes the chest name if it is written as the server.
             if (context == PacketContext.Server) {
-                writer.Write(ChestName);
+                writer.Write(_chestName);
             }
         }
     }

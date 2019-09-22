@@ -23,11 +23,10 @@ using Xunit;
 namespace Orion.Networking.World.TileEntities {
     public class NetworkItemFrameTests {
         [Fact]
-        public void SetItemStackSize_MarksAsDirty() {
+        public void SetDefaultableProperties_MarkAsDirty() {
             var itemFrame = new NetworkItemFrame();
-            itemFrame.ItemStackSize = 0;
 
-            itemFrame.ShouldBeDirty();
+            itemFrame.ShouldHaveDefaultablePropertiesMarkAsDirty();
         }
     }
 }

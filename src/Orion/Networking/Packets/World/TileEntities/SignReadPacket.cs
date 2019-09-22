@@ -17,38 +17,54 @@
 
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
+using JetBrains.Annotations;
 
 namespace Orion.Networking.Packets.World.TileEntities {
     /// <summary>
-    /// Packet sent from the client to the server to quick stack an inventory slot into a nearby chest.
+    /// Packet sent from the client to the server to request a sign.
     /// </summary>
-    public sealed class QuickStackChestPacket : Packet {
-        private byte _playerInventorySlotIndex;
+    [PublicAPI]
+    public sealed class SignReadPacket : Packet {
+        private short _signX;
+        private short _signY;
 
         /// <inheritdoc />
-        public override PacketType Type => PacketType.QuickStackChest;
+        public override PacketType Type => PacketType.SignRead;
 
         /// <summary>
-        /// Gets or sets the player inventory slot index.
+        /// Gets or sets the sign's X coordinate.
         /// </summary>
-        public byte PlayerInventorySlotIndex {
-            get => _playerInventorySlotIndex;
+        public short SignX {
+            get => _signX;
             set {
-                _playerInventorySlotIndex = value;
+                _signX = value;
+                _isDirty = true;
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets the sign's Y coordinate.
+        /// </summary>
+        public short SignY {
+            get => _signY;
+            set {
+                _signY = value;
                 _isDirty = true;
             }
         }
 
         /// <inheritdoc />
         [ExcludeFromCodeCoverage]
-        public override string ToString() => $"{Type}[...]";
+        public override string ToString() => $"{Type}[({SignX}, {SignY})]";
 
         private protected override void ReadFromReader(BinaryReader reader, PacketContext context) {
-            PlayerInventorySlotIndex = reader.ReadByte();
+            _signX = reader.ReadInt16();
+            _signY = reader.ReadInt16();
         }
 
         private protected override void WriteToWriter(BinaryWriter writer, PacketContext context) {
-            writer.Write(PlayerInventorySlotIndex);
+            writer.Write(_signX);
+            writer.Write(_signY);
         }
     }
 }

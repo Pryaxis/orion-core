@@ -263,10 +263,10 @@ namespace Orion.Networking.Packets.World.Tiles {
         }
 
         private void ReadTileEntitiesFromReaderImpl(BinaryReader reader) {
-            void ReadTileEntities(TileEntityType typeHint = null) {
+            void ReadTileEntities(TileEntityType? typeHint = null) {
                 var number = reader.ReadInt16();
                 for (var i = 0; i < number; ++i) {
-                    SectionTileEntities.Add(NetworkTileEntity.FromReader(reader, true, typeHint));
+                    SectionTileEntities.Add(NetworkTileEntity.ReadFromReader(reader, true, typeHint));
                 }
             }
 

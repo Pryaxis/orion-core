@@ -22,6 +22,13 @@ using Xunit;
 namespace Orion.Networking.World.TileEntities {
     public class NetworkSignTests {
         [Fact]
+        public void SetDefaultableProperties_MarkAsDirty() {
+            var sign = new NetworkSign();
+
+            sign.ShouldHaveDefaultablePropertiesMarkAsDirty();
+        }
+
+        [Fact]
         public void SetText_MarksAsDirty() {
             var sign = new NetworkSign();
             sign.Text = "";

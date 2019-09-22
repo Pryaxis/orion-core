@@ -15,27 +15,27 @@
 // You should have received a copy of the GNU General Public License
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
-using System;
 using System.IO;
-using Orion.Networking.Packets;
+using JetBrains.Annotations;
 using Orion.World.TileEntities;
 
 namespace Orion.Networking.World.TileEntities {
     /// <summary>
     /// Represents a logic sensor that is transmitted over the network.
     /// </summary>
+    [PublicAPI]
     public sealed class NetworkLogicSensor : NetworkTileEntity, ILogicSensor {
-        private LogicSensorType _sensorType;
+        private LogicSensorType _logicSensorType;
         private bool _isActivated;
 
         /// <inheritdoc />
         public override TileEntityType Type => TileEntityType.LogicSensor;
 
         /// <inheritdoc />
-        public LogicSensorType SensorType {
-            get => _sensorType;
+        public LogicSensorType LogicSensorType {
+            get => _logicSensorType;
             set {
-                _sensorType = value ?? throw new ArgumentNullException(nameof(value));
+                _logicSensorType = value;
                 IsDirty = true;
             }
         }
@@ -50,14 +50,13 @@ namespace Orion.Networking.World.TileEntities {
         }
 
         private protected override void ReadFromReaderImpl(BinaryReader reader) {
-            SensorType = LogicSensorType.FromId(reader.ReadByte()) ??
-                         throw new PacketException("Logic sensor type is invalid.");
-            IsActivated = reader.ReadBoolean();
+            _logicSensorType = (LogicSensorType)reader.ReadByte();
+            _isActivated = reader.ReadBoolean();
         }
 
         private protected override void WriteToWriterImpl(BinaryWriter writer) {
-            writer.Write(SensorType.Id);
-            writer.Write(IsActivated);
+            writer.Write((byte)_logicSensorType);
+            writer.Write(_isActivated);
         }
     }
 }

@@ -17,33 +17,35 @@
 
 using System;
 using System.IO;
+using JetBrains.Annotations;
 using Orion.World.TileEntities;
 
 namespace Orion.Networking.World.TileEntities {
     /// <summary>
     /// Represents a sign that is transmitted over the network.
     /// </summary>
+    [PublicAPI]
     public sealed class NetworkSign : NetworkTileEntity, ISign {
-        private string _name;
+        [NotNull] private string _text = "";
 
         /// <inheritdoc />
         public override TileEntityType Type => TileEntityType.Sign;
 
         /// <inheritdoc />
         public string Text {
-            get => _name;
+            get => _text;
             set {
-                _name = value ?? throw new ArgumentNullException(nameof(value));
+                _text = value ?? throw new ArgumentNullException(nameof(value));
                 IsDirty = true;
             }
         }
 
         private protected override void ReadFromReaderImpl(BinaryReader reader) {
-            Text = reader.ReadString();
+            _text = reader.ReadString();
         }
 
         private protected override void WriteToWriterImpl(BinaryWriter writer) {
-            writer.Write(Text);
+            writer.Write(_text);
         }
     }
 }

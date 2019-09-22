@@ -20,10 +20,10 @@ using FluentAssertions;
 using Xunit;
 
 namespace Orion.Networking.Packets.World.TileEntities {
-    public class RequestSignPacketTests {
+    public class SignReadPacketTests {
         [Fact]
         public void SetDefaultableProperties_MarkAsDirty() {
-            var packet = new RequestSignPacket();
+            var packet = new SignReadPacket();
 
             packet.ShouldHaveDefaultablePropertiesMarkAsDirty();
         }
@@ -33,7 +33,7 @@ namespace Orion.Networking.Packets.World.TileEntities {
         [Fact]
         public void ReadFromStream_IsCorrect() {
             using (var stream = new MemoryStream(Bytes)) {
-                var packet = (RequestSignPacket)Packet.ReadFromStream(stream, PacketContext.Server);
+                var packet = (SignReadPacket)Packet.ReadFromStream(stream, PacketContext.Server);
 
                 packet.SignX.Should().Be(256);
                 packet.SignY.Should().Be(100);

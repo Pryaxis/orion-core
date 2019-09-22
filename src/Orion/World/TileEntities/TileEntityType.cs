@@ -15,49 +15,22 @@
 // You should have received a copy of the GNU General Public License
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
-using System.Collections.Generic;
-using System.Reflection;
+using JetBrains.Annotations;
 
 namespace Orion.World.TileEntities {
     /// <summary>
     /// Represents a (generalized) tile entity type.
     /// </summary>
-    public sealed class TileEntityType {
+    [PublicAPI]
+    public enum TileEntityType : short {
 #pragma warning disable 1591
-        public static readonly TileEntityType Chest = new TileEntityType(byte.MaxValue);
-        public static readonly TileEntityType Sign = new TileEntityType(byte.MaxValue);
-        public static readonly TileEntityType TargetDummy = new TileEntityType(0);
-        public static readonly TileEntityType ItemFrame = new TileEntityType(1);
-        public static readonly TileEntityType LogicSensor = new TileEntityType(2);
+        TargetDummy = 0,
+        ItemFrame = 1,
+        LogicSensor = 2,
+
+        // Use large values to represent chests and signs, as they are not *actually* tile entities in Terraria.
+        Chest = short.MaxValue - 1,
+        Sign = short.MaxValue
 #pragma warning restore 1591
-
-        private static readonly TileEntityType[] TileEntities = {TargetDummy, ItemFrame, LogicSensor};
-        private static readonly IDictionary<TileEntityType, string> Names = new Dictionary<TileEntityType, string>();
-
-        /// <summary>
-        /// Gets the tile entity type's ID.
-        /// </summary>
-        public byte Id { get; }
-
-        static TileEntityType() {
-            foreach (var field in typeof(TileEntityType).GetFields(BindingFlags.Public | BindingFlags.Static)) {
-                var tileEntityType = (TileEntityType)field.GetValue(null);
-                Names[tileEntityType] = field.Name;
-            }
-        }
-
-        private TileEntityType(byte id) {
-            Id = id;
-        }
-
-        /// <summary>
-        /// Returns a tile entity type converted from the given ID.
-        /// </summary>
-        /// <param name="id">The ID.</param>
-        /// <returns>The tile entity type, or <c>null</c> if none exists.</returns>
-        public static TileEntityType FromId(byte id) => id < TileEntities.Length ? TileEntities[id] : null;
-
-        /// <inheritdoc />
-        public override string ToString() => Names[this];
     }
 }

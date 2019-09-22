@@ -15,26 +15,33 @@
 // You should have received a copy of the GNU General Public License
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
+using System.IO;
 using FluentAssertions;
 using Xunit;
 
-namespace Orion.World.TileEntities {
-    public class LogicSensorTypeTests {
+namespace Orion.Networking.Packets.Entities {
+    public class PlayerQuickStackPacketTests {
         [Fact]
-        public void FromId_IsCorrect() {
-            for (byte i = 0; i < 8; ++i) {
-                LogicSensorType.FromId(i).Id.Should().Be(i);
-            }
+        public void SetDefaultableProperties_MarkAsDirty() {
+            var packet = new PlayerQuickStackPacket();
 
-            LogicSensorType.FromId(8).Should().BeNull();
+            packet.ShouldHaveDefaultablePropertiesMarkAsDirty();
+        }
+
+        public static readonly byte[] Bytes = {4, 0, 85, 1};
+
+        [Fact]
+        public void ReadFromStream_IsCorrect() {
+            using (var stream = new MemoryStream(Bytes)) {
+                var packet = (PlayerQuickStackPacket)Packet.ReadFromStream(stream, PacketContext.Server);
+
+                packet.PlayerInventorySlotIndex.Should().Be(1);
+            }
         }
 
         [Fact]
-        public void FromId_ReturnsSameInstance() {
-            var logicSensorType = LogicSensorType.FromId(1);
-            var logicSensorType2 = LogicSensorType.FromId(1);
-
-            logicSensorType.Should().BeSameAs(logicSensorType2);
+        public void DeserializeAndSerialize_SamePacket() {
+            Bytes.ShouldDeserializeAndSerializeSamePacket();
         }
     }
 }

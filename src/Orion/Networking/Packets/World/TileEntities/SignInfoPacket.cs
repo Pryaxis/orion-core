@@ -18,16 +18,18 @@
 using System;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
+using JetBrains.Annotations;
 
 namespace Orion.Networking.Packets.World.TileEntities {
     /// <summary>
-    /// Packet sent to set sign information. This is sent in response to a <see cref="RequestSignPacket"/>.
+    /// Packet sent to set sign information. This is sent in response to a <see cref="SignReadPacket"/>.
     /// </summary>
+    [PublicAPI]
     public sealed class SignInfoPacket : Packet {
         private short _signIndex;
         private short _signX;
         private short _signY;
-        private string _signText;
+        [NotNull] private string _signText = "";
 
         /// <inheritdoc />
         public override PacketType Type => PacketType.SignInfo;
@@ -69,6 +71,7 @@ namespace Orion.Networking.Packets.World.TileEntities {
         /// Gets or sets the sign's text.
         /// </summary>
         /// <exception cref="ArgumentNullException"><paramref name="value"/> is <c>null</c>.</exception>
+        [NotNull]
         public string SignText {
             get => _signText;
             set {
@@ -82,17 +85,17 @@ namespace Orion.Networking.Packets.World.TileEntities {
         public override string ToString() => $"{Type}[#={SignIndex} @ ({SignX}, {SignY}): \"{SignText}\"]";
 
         private protected override void ReadFromReader(BinaryReader reader, PacketContext context) {
-            SignIndex = reader.ReadInt16();
-            SignX = reader.ReadInt16();
-            SignY = reader.ReadInt16();
+            _signIndex = reader.ReadInt16();
+            _signX = reader.ReadInt16();
+            _signY = reader.ReadInt16();
             _signText = reader.ReadString();
         }
 
         private protected override void WriteToWriter(BinaryWriter writer, PacketContext context) {
-            writer.Write(SignIndex);
-            writer.Write(SignX);
-            writer.Write(SignY);
-            writer.Write(SignText);
+            writer.Write(_signIndex);
+            writer.Write(_signX);
+            writer.Write(_signY);
+            writer.Write(_signText);
         }
     }
 }

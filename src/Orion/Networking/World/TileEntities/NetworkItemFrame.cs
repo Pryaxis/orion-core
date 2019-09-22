@@ -15,16 +15,16 @@
 // You should have received a copy of the GNU General Public License
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
-using System;
 using System.IO;
+using JetBrains.Annotations;
 using Orion.Entities;
-using Orion.Networking.Packets;
 using Orion.World.TileEntities;
 
 namespace Orion.Networking.World.TileEntities {
     /// <summary>
     /// Represents an item frame that is transmitted over the network.
     /// </summary>
+    [PublicAPI]
     public sealed class NetworkItemFrame : NetworkTileEntity, IItemFrame {
         private ItemType _itemType;
         private int _itemStackSize;
@@ -61,15 +61,15 @@ namespace Orion.Networking.World.TileEntities {
         }
 
         private protected override void ReadFromReaderImpl(BinaryReader reader) {
-            ItemType = (ItemType)reader.ReadInt16();
-            ItemPrefix = (ItemPrefix)reader.ReadByte();
-            ItemStackSize = reader.ReadInt16();
+            _itemType = (ItemType)reader.ReadInt16();
+            _itemPrefix = (ItemPrefix)reader.ReadByte();
+            _itemStackSize = reader.ReadInt16();
         }
 
         private protected override void WriteToWriterImpl(BinaryWriter writer) {
-            writer.Write((short)ItemType);
-            writer.Write((byte)ItemPrefix);
-            writer.Write((short)ItemStackSize);
+            writer.Write((short)_itemType);
+            writer.Write((byte)_itemPrefix);
+            writer.Write((short)_itemStackSize);
         }
     }
 }

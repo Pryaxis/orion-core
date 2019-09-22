@@ -15,46 +15,42 @@
 // You should have received a copy of the GNU General Public License
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
-using System;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using JetBrains.Annotations;
-using Orion.Entities;
-using Orion.Utils;
-using Orion.World.TileEntities;
 
-namespace Orion.Networking.World.TileEntities {
+namespace Orion.Networking.Packets.Entities {
     /// <summary>
-    /// Represents a chest that is transmitted over the network.
+    /// Packet sent from the client to the server to quick stack an inventory slot into a nearby chest.
     /// </summary>
     [PublicAPI]
-    public sealed class NetworkChest : NetworkTileEntity, IChest {
-        [NotNull] private string _name = "";
+    public sealed class PlayerQuickStackPacket : Packet {
+        private byte _playerInventorySlotIndex;
 
         /// <inheritdoc />
-        public override TileEntityType Type => TileEntityType.Chest;
+        public override PacketType Type => PacketType.PlayerQuickStack;
 
-        /// <inheritdoc />
-        public string Name {
-            get => _name;
+        /// <summary>
+        /// Gets or sets the player inventory slot index.
+        /// </summary>
+        public byte PlayerInventorySlotIndex {
+            get => _playerInventorySlotIndex;
             set {
-                _name = value ?? throw new ArgumentNullException(nameof(value));
-                IsDirty = true;
+                _playerInventorySlotIndex = value;
+                _isDirty = true;
             }
         }
 
         /// <inheritdoc />
         [ExcludeFromCodeCoverage]
-        public IReadOnlyArray<IItem> Items => throw new InvalidOperationException();
+        public override string ToString() => $"{Type}[...]";
 
-        /// <inheritdoc />
-        private protected override void ReadFromReaderImpl(BinaryReader reader) {
-            _name = reader.ReadString();
+        private protected override void ReadFromReader(BinaryReader reader, PacketContext context) {
+            _playerInventorySlotIndex = reader.ReadByte();
         }
 
-        /// <inheritdoc />
-        private protected override void WriteToWriterImpl(BinaryWriter writer) {
-            writer.Write(_name);
+        private protected override void WriteToWriter(BinaryWriter writer, PacketContext context) {
+            writer.Write(_playerInventorySlotIndex);
         }
     }
 }
