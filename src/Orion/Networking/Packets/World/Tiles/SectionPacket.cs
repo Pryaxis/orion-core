@@ -198,8 +198,7 @@ namespace Orion.Networking.Packets.World.Tiles {
                 }
 
                 if ((header & 4) == 4) {
-                    tile.WallType = WallType.FromId(reader.ReadByte()) ??
-                                    throw new PacketException("Wall type is invalid.");
+                    tile.WallType = (WallType)reader.ReadByte();
                     if ((header3 & 16) == 16) {
                         tile.WallColor = (PaintColor)reader.ReadByte();
                     }
@@ -325,7 +324,7 @@ namespace Orion.Networking.Packets.World.Tiles {
 
                 if (tile.WallType != WallType.None) {
                     header |= 4;
-                    buffer[bodyIndex++] = tile.WallType.Id;
+                    buffer[bodyIndex++] = (byte)tile.WallType;
 
                     if (tile.WallColor != PaintColor.None) {
                         header3 |= 16;

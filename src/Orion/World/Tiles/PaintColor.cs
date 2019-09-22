@@ -17,7 +17,7 @@
 
 namespace Orion.World.Tiles {
     /// <summary>
-    /// Represents a paint color.
+    /// Specifies a paint color.
     /// </summary>
     public enum PaintColor : byte {
 #pragma warning disable 1591

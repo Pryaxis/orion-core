@@ -33,7 +33,6 @@ namespace Orion.World.Tiles {
         /// <summary>
         /// Gets or sets the tile's wall type.
         /// </summary>
-        /// <exception cref="ArgumentNullException"><paramref name="value"/> is <c>null</c>.</exception>
         public abstract WallType WallType { get; set; }
 
         /// <summary>
@@ -223,8 +222,8 @@ namespace Orion.World.Tiles {
         }
 
         byte ITile.wall {
-            get => WallType.Id;
-            set => WallType = WallType.FromId(value);
+            get => (byte)WallType;
+            set => WallType = (WallType)value;
         }
 
         byte ITile.liquid {

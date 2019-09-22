@@ -26,7 +26,7 @@ namespace Orion.Networking.World.Tiles {
     /// </summary>
     public sealed class NetworkTile : Tile, IDirtiable {
         private BlockType _blockType;
-        private WallType _wallType = WallType.None;
+        private WallType _wallType;
         private byte _liquidAmount;
         private short _tileHeader;
         private byte _tileHeader2;
@@ -48,7 +48,7 @@ namespace Orion.Networking.World.Tiles {
         public override WallType WallType {
             get => _wallType;
             set {
-                _wallType = value ?? throw new ArgumentNullException(nameof(value));
+                _wallType = value;
                 IsDirty = true;
             }
         }

@@ -119,13 +119,8 @@ namespace Orion.Networking.Packets.World.Tiles {
                 tile.HasGreenWire = header2[1];
                 tile.HasYellowWire = header2[7];
 
-                if (header2[2]) {
-                    tile.BlockColor = (PaintColor)reader.ReadByte();
-                }
-
-                if (header2[3]) {
-                    tile.WallColor = (PaintColor)reader.ReadByte();
-                }
+                if (header2[2]) tile.BlockColor = (PaintColor)reader.ReadByte();
+                if (header2[3]) tile.WallColor = (PaintColor)reader.ReadByte();
 
                 if (header[0]) {
                     tile.IsBlockActive = true;
@@ -145,10 +140,7 @@ namespace Orion.Networking.Packets.World.Tiles {
                     tile.Slope = (Slope)slope;
                 }
 
-                if (header[2]) {
-                    tile.WallType = WallType.FromId(reader.ReadByte()) ??
-                                    throw new PacketException("Wall type is invalid.");
-                }
+                if (header[2]) tile.WallType = (WallType)reader.ReadByte();
 
                 if (header[3]) {
                     tile.LiquidAmount = reader.ReadByte();
@@ -204,9 +196,7 @@ namespace Orion.Networking.Packets.World.Tiles {
                     }
                 }
 
-                if (header[2]) {
-                    writer.Write(tile.WallType.Id);
-                }
+                if (header[2]) writer.Write((byte)tile.WallType);
 
                 if (header[3]) {
                     writer.Write(tile.LiquidAmount);

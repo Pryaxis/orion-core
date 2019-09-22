@@ -28,21 +28,5 @@ namespace Orion.Networking.World.Tiles {
 
             tile.ShouldHaveDefaultablePropertiesMarkAsDirty();
         }
-
-        [Fact]
-        public void SetWallType_MarksAsDirty() {
-            var tile = new NetworkTile();
-            tile.WallType = WallType.Stone;
-
-            tile.ShouldBeDirty();
-        }
-
-        [Fact]
-        public void SetWallType_NullValue_ThrowsArgumentNullException() {
-            var tile = new NetworkTile();
-            Action action = () => tile.WallType = null;
-
-            action.Should().Throw<ArgumentNullException>();
-        }
     }
 }
