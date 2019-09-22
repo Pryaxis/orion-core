@@ -18,18 +18,20 @@
 using System;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
+using JetBrains.Annotations;
 using Orion.Entities;
 
 namespace Orion.Networking.Packets.Entities {
     /// <summary>
     /// Packet sent to add a buff to a player.
     /// </summary>
-    public sealed class BuffPlayerPacket : Packet {
+    [PublicAPI]
+    public sealed class PlayerBuffPacket : Packet {
         private byte _playerIndex;
         private Buff _playerBuff;
 
         /// <inheritdoc />
-        public override PacketType Type => PacketType.BuffPlayer;
+        public override PacketType Type => PacketType.PlayerBuff;
 
         /// <summary>
         /// Gets or sets the player index.
@@ -58,14 +60,14 @@ namespace Orion.Networking.Packets.Entities {
         public override string ToString() => $"{Type}[#={PlayerIndex}, {PlayerBuff}]";
 
         private protected override void ReadFromReader(BinaryReader reader, PacketContext context) {
-            PlayerIndex = reader.ReadByte();
-            PlayerBuff = new Buff((BuffType)reader.ReadByte(), TimeSpan.FromSeconds(reader.ReadInt32() / 60.0));
+            _playerIndex = reader.ReadByte();
+            _playerBuff = new Buff((BuffType)reader.ReadByte(), TimeSpan.FromSeconds(reader.ReadInt32() / 60.0));
         }
 
         private protected override void WriteToWriter(BinaryWriter writer, PacketContext context) {
-            writer.Write(PlayerIndex);
-            writer.Write((byte)PlayerBuff.BuffType);
-            writer.Write((int)(PlayerBuff.Duration.TotalSeconds * 60.0));
+            writer.Write(_playerIndex);
+            writer.Write((byte)_playerBuff.BuffType);
+            writer.Write((int)(_playerBuff.Duration.TotalSeconds * 60.0));
         }
     }
 }

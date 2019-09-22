@@ -31,7 +31,7 @@ namespace Orion.Networking.Packets.Entities {
         private Buff _npcBuff;
 
         /// <inheritdoc />
-        public override PacketType Type => PacketType.BuffNpc;
+        public override PacketType Type => PacketType.NpcBuff;
 
         /// <summary>
         /// Gets or sets the NPC index.

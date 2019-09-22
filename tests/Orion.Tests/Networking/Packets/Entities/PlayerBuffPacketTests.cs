@@ -22,17 +22,17 @@ using Orion.Entities;
 using Xunit;
 
 namespace Orion.Networking.Packets.Entities {
-    public class BuffPlayerPacketTests {
+    public class PlayerBuffPacketTests {
         [Fact]
         public void SetDefaultableProperties_MarkAsDirty() {
-            var packet = new BuffPlayerPacket();
+            var packet = new PlayerBuffPacket();
 
             packet.ShouldHaveDefaultablePropertiesMarkAsDirty();
         }
 
         [Fact]
         public void SetPlayerBuff_MarksAsDirty() {
-            var packet = new BuffPlayerPacket();
+            var packet = new PlayerBuffPacket();
 
             packet.PlayerBuff = new Buff(BuffType.None, TimeSpan.Zero);
 
@@ -44,7 +44,7 @@ namespace Orion.Networking.Packets.Entities {
         [Fact]
         public void ReadFromStream_IsCorrect() {
             using (var stream = new MemoryStream(Bytes)) {
-                var packet = (BuffPlayerPacket)Packet.ReadFromStream(stream, PacketContext.Server);
+                var packet = (PlayerBuffPacket)Packet.ReadFromStream(stream, PacketContext.Server);
 
                 packet.PlayerIndex.Should().Be(0);
                 packet.PlayerBuff.Should().Be(new Buff(BuffType.ObsidianSkin, TimeSpan.FromSeconds(1)));
