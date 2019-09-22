@@ -137,6 +137,26 @@ namespace Orion.Networking.Impl {
         }
 
         [Fact]
+        public void PacketReceive_PlayerJoin_IsTriggered() {
+            var player = new Mock<IPlayer>().Object;
+            _mockPlayerService.Setup(ps => ps[1]).Returns(player);
+
+            var isRun = false;
+            _mockPlayerService.Setup(ps => ps.PlayerJoin).Returns(
+                new EventHandlerCollection<PlayerJoinEventArgs>((sender, args) => {
+                    isRun = true;
+                    args.Player.Should().BeSameAs(player);
+                }));
+
+            TestUtils.FakeReceiveBytes(1, PlayerJoinPacketTests.Bytes);
+
+            isRun.Should().BeTrue();
+            _mockPlayerService.VerifyGet(ps => ps[1]);
+            _mockPlayerService.VerifyGet(ps => ps.PlayerJoin);
+            _mockPlayerService.VerifyNoOtherCalls();
+        }
+
+        [Fact]
         public void ResetClient_PlayerDisconnect_IsTriggered() {
             var player = new Mock<IPlayer>().Object;
             _mockPlayerService.Setup(ps => ps[1]).Returns(player);
