@@ -17,17 +17,19 @@
 
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
+using JetBrains.Annotations;
 
 namespace Orion.Networking.Packets.Entities {
     /// <summary>
     /// Packet sent to heal a player.
     /// </summary>
-    public sealed class HealPlayerPacket : Packet {
+    [PublicAPI]
+    public sealed class PlayerHealPacket : Packet {
         private byte _playerIndex;
         private short _healAmount;
 
         /// <inheritdoc />
-        public override PacketType Type => PacketType.HealPlayer;
+        public override PacketType Type => PacketType.PlayerHeal;
 
         /// <summary>
         /// Gets or sets the player index.
@@ -57,14 +59,14 @@ namespace Orion.Networking.Packets.Entities {
 
         /// <inheritdoc />
         private protected override void ReadFromReader(BinaryReader reader, PacketContext context) {
-            PlayerIndex = reader.ReadByte();
-            HealAmount = reader.ReadInt16();
+            _playerIndex = reader.ReadByte();
+            _healAmount = reader.ReadInt16();
         }
 
         /// <inheritdoc />
         private protected override void WriteToWriter(BinaryWriter writer, PacketContext context) {
-            writer.Write(PlayerIndex);
-            writer.Write(HealAmount);
+            writer.Write(_playerIndex);
+            writer.Write(_healAmount);
         }
     }
 }

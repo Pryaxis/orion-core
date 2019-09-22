@@ -82,7 +82,7 @@ namespace Orion.Networking.Packets {
         PaintBlock = 63,
         PaintWall = 64,
         EntityTeleportation = 65,
-        HealPlayer = 66,
+        PlayerHeal = 66,
         PlayerUuid = 68,
         ChestName = 69,
         NpcCatch = 70,

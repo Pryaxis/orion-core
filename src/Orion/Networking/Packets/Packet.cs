@@ -100,7 +100,7 @@ namespace Orion.Networking.Packets {
             /* 063 */ () => new PaintBlockPacket(),
             /* 064 */ () => new PaintWallPacket(),
             /* 065 */ () => new EntityTeleportationPacket(),
-            /* 066 */ () => new HealPlayerPacket(),
+            /* 066 */ () => new PlayerHealPacket(),
             /* 067 */ null,
             /* 068 */ () => new PlayerUuidPacket(),
             /* 069 */ () => new ChestNamePacket(),
