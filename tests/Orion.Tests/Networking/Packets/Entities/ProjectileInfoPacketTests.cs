@@ -32,22 +32,6 @@ namespace Orion.Networking.Packets.Entities {
         }
 
         [Fact]
-        public void SetProjectileType_MarksAsDirty() {
-            var packet = new ProjectileInfoPacket();
-            packet.ProjectileType = ProjectileType.CrystalBullet;
-
-            packet.ShouldBeDirty();
-        }
-
-        [Fact]
-        public void SetProjectileType_NullValue_ThrowsArgumentNullException() {
-            var packet = new ProjectileInfoPacket();
-            Action action = () => packet.ProjectileType = null;
-
-            action.Should().Throw<ArgumentNullException>();
-        }
-
-        [Fact]
         public void ProjectileAiValues_SetItem_MarksAsDirty() {
             var packet = new ProjectileInfoPacket();
             packet.ProjectileAiValues[0] = 0;
@@ -68,11 +52,6 @@ namespace Orion.Networking.Packets.Entities {
             99, 0, 0, 89, 0, 0
         };
 
-        private static readonly byte[] InvalidProjectileTypeBytes = {
-            31, 0, 27, 0, 0, 128, 57, 131, 71, 0, 200, 212, 69, 254, 14, 40, 65, 147, 84, 121, 193, 205, 204, 128, 64,
-            99, 0, 0, 255, 127, 0
-        };
-
         [Fact]
         public void ReadFromStream_IsCorrect() {
             using (var stream = new MemoryStream(Bytes)) {
@@ -83,22 +62,13 @@ namespace Orion.Networking.Packets.Entities {
                 packet.ProjectileKnockback.Should().Be(4.025f);
                 packet.ProjectileDamage.Should().Be(99);
                 packet.ProjectileOwnerPlayerIndex.Should().Be(0);
-                packet.ProjectileType.Should().BeSameAs(ProjectileType.CrystalBullet);
+                packet.ProjectileType.Should().Be(ProjectileType.CrystalBullet);
 
                 for (var i = 0; i < packet.ProjectileAiValues.Count; ++i) {
                     packet.ProjectileAiValues[i].Should().Be(0);
                 }
 
                 packet.ProjectileUuid.Should().Be(-1);
-            }
-        }
-
-        [Fact]
-        public void ReadFromStream_InvalidProjectileType_ThrowsPacketException() {
-            using (var stream = new MemoryStream(InvalidProjectileTypeBytes)) {
-                Func<Packet> func = () => Packet.ReadFromStream(stream, PacketContext.Server);
-
-                func.Should().Throw<PacketException>();
             }
         }
 

@@ -112,11 +112,10 @@ namespace Orion.Networking.Packets.Entities {
         /// <summary>
         /// Gets or sets the projectile's type.
         /// </summary>
-        /// <exception cref="ArgumentNullException"><paramref name="value"/> is <c>null</c>.</exception>
         public ProjectileType ProjectileType {
             get => _projectileType;
             set {
-                _projectileType = value ?? throw new ArgumentNullException(nameof(value));
+                _projectileType = value;
                 _isDirty = true;
             }
         }
@@ -155,8 +154,7 @@ namespace Orion.Networking.Packets.Entities {
             ProjectileKnockback = reader.ReadSingle();
             ProjectileDamage = reader.ReadInt16();
             ProjectileOwnerPlayerIndex = reader.ReadByte();
-            ProjectileType = ProjectileType.FromId(reader.ReadInt16()) ??
-                             throw new PacketException("Projectile type is invalid.");
+            ProjectileType = (ProjectileType)reader.ReadInt16();
 
             Terraria.BitsByte header = reader.ReadByte();
             if (header[0]) ProjectileAiValues[0] = reader.ReadSingle();
@@ -171,7 +169,7 @@ namespace Orion.Networking.Packets.Entities {
             writer.Write(ProjectileKnockback);
             writer.Write(ProjectileDamage);
             writer.Write(ProjectileOwnerPlayerIndex);
-            writer.Write(ProjectileType.Id);
+            writer.Write((short)ProjectileType);
 
             Terraria.BitsByte header = 0;
             header[0] = ProjectileAiValues[0] != 0;

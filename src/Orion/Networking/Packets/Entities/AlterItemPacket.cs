@@ -33,7 +33,7 @@ namespace Orion.Networking.Packets.Entities {
         private float? _itemKnockbackOverride;
         private ushort? _itemAnimationTimeOverride;
         private ushort? _itemUseTimeOverride;
-        private ProjectileType _itemProjectileTypeOverride;
+        private ProjectileType? _itemProjectileTypeOverride;
         private float? _itemProjectileSpeedOverride;
         private short? _itemWidthOverride;
         private short? _itemHeightOverride;
@@ -114,7 +114,7 @@ namespace Orion.Networking.Packets.Entities {
         /// <summary>
         /// Gets or sets the override for the item's projectile type. A value of <c>null</c> indicates no override.
         /// </summary>
-        public ProjectileType ItemProjectileTypeOverride {
+        public ProjectileType? ItemProjectileTypeOverride {
             get => _itemProjectileTypeOverride;
             set {
                 _itemProjectileTypeOverride = value;
@@ -213,12 +213,7 @@ namespace Orion.Networking.Packets.Entities {
             if (flags[2]) ItemKnockbackOverride = reader.ReadSingle();
             if (flags[3]) ItemAnimationTimeOverride = reader.ReadUInt16();
             if (flags[4]) ItemUseTimeOverride = reader.ReadUInt16();
-
-            if (flags[5]) {
-                ItemProjectileTypeOverride = ProjectileType.FromId(reader.ReadInt16()) ??
-                                             throw new PacketException("Projectile type is invalid.");
-            }
-
+            if (flags[5]) ItemProjectileTypeOverride = (ProjectileType)reader.ReadInt16();
             if (flags[6]) ItemProjectileSpeedOverride = reader.ReadSingle();
             if (!flags[7]) return;
 
@@ -259,7 +254,7 @@ namespace Orion.Networking.Packets.Entities {
             if (flags[2]) writer.Write(ItemKnockbackOverride.Value);
             if (flags[3]) writer.Write(ItemAnimationTimeOverride.Value);
             if (flags[4]) writer.Write(ItemUseTimeOverride.Value);
-            if (flags[5]) writer.Write(ItemProjectileTypeOverride.Id);
+            if (flags[5]) writer.Write((short)ItemProjectileTypeOverride);
             if (flags[6]) writer.Write(ItemProjectileSpeedOverride.Value);
             if (flags[7]) writer.Write(flags2);
 
