@@ -144,7 +144,7 @@ namespace Orion.Networking.Packets.World.Tiles {
                     if (header2[4]) slope += 1;
                     if (header2[5]) slope += 2;
                     if (header2[6]) slope += 4;
-                    tile.SlopeType = SlopeType.FromId(slope) ?? throw new PacketException("Slope type is invalid.");
+                    tile.Slope = (Slope)slope;
                 }
 
                 if (header[2]) {
@@ -193,7 +193,7 @@ namespace Orion.Networking.Packets.World.Tiles {
                 header2[1] = tile.HasGreenWire;
                 header2[2] = tile.BlockColor != PaintColor.None;
                 header2[3] = tile.WallColor != PaintColor.None;
-                header2 = (byte)(header2 + tile.SlopeType.Id << 4);
+                header2 = (byte)(header2 + (byte)tile.Slope << 4);
                 header2[7] = tile.HasYellowWire;
 
                 writer.Write(header);

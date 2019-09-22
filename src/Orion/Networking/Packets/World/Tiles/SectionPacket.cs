@@ -224,8 +224,7 @@ namespace Orion.Networking.Packets.World.Tiles {
                     if (blockShape == 1) {
                         tile.IsBlockHalved = true;
                     } else {
-                        tile.SlopeType = SlopeType.FromId((byte)(blockShape - 1)) ??
-                                         throw new PacketException("Slope type is invalid.");
+                        tile.Slope = (Slope)(blockShape - 1);
                     }
                 }
 

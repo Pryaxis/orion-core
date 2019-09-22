@@ -145,13 +145,9 @@ namespace Orion.World.Tiles {
         /// Gets or sets the tile's slope type.
         /// </summary>
         /// <exception cref="ArgumentNullException"><paramref name="value"/> is <c>null</c>.</exception>
-        public SlopeType SlopeType {
-            get => SlopeType.FromId(((ITile)this).slope());
-            set {
-                if (value == null) throw new ArgumentNullException(nameof(value));
-
-                ((ITile)this).slope(value.Id);
-            }
+        public Slope Slope {
+            get => (Slope)((ITile)this).slope();
+            set => ((ITile)this).slope((byte)value);
         }
 
         /// <summary>

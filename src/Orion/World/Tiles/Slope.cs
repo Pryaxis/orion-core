@@ -15,26 +15,17 @@
 // You should have received a copy of the GNU General Public License
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
-using FluentAssertions;
-using Xunit;
-
 namespace Orion.World.Tiles {
-    public class SlopeTypeTests {
-        [Fact]
-        public void FromId_IsCorrect() {
-            for (byte i = 0; i < 5; ++i) {
-                SlopeType.FromId(i).Id.Should().Be(i);
-            }
-
-            SlopeType.FromId(5).Should().BeNull();
-        }
-
-        [Fact]
-        public void FromId_ReturnsSameInstance() {
-            var slopeType = SlopeType.FromId(1);
-            var slopeType2 = SlopeType.FromId(1);
-
-            slopeType.Should().BeSameAs(slopeType2);
-        }
+    /// <summary>
+    /// Specifies a slope.
+    /// </summary>
+    public enum Slope : byte {
+#pragma warning disable 1591
+        None = 0,
+        TopRight = 1,
+        TopLeft = 2,
+        BottomRight = 3,
+        BottomLeft = 4
+#pragma warning restore 1591
     }
 }

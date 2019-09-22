@@ -382,30 +382,22 @@ namespace Orion.World.Tiles {
         }
 
         [Fact]
-        public void GetSlopeType_IsCorrect() {
+        public void GetSlope_IsCorrect() {
             var tile = new TestTile();
             var itile = (ITile)tile;
-            itile.slope(SlopeType.TopLeft.Id);
+            itile.slope((byte)Slope.TopLeft);
 
-            tile.SlopeType.Should().Be(SlopeType.TopLeft);
+            tile.Slope.Should().Be(Slope.TopLeft);
         }
 
         [Fact]
-        public void SetSlopeType_IsCorrect() {
+        public void SetSlope_IsCorrect() {
             var tile = new TestTile();
             var itile = (ITile)tile;
 
-            tile.SlopeType = SlopeType.TopLeft;
+            tile.Slope = Slope.TopLeft;
 
-            itile.slope().Should().Be(SlopeType.TopLeft.Id);
-        }
-
-        [Fact]
-        public void SetSlopeType_NullValue_ThrowsArgumentNullException() {
-            var tile = new TestTile();
-            Action action = () => tile.SlopeType = null;
-
-            action.Should().Throw<ArgumentNullException>();
+            itile.slope().Should().Be((byte)Slope.TopLeft);
         }
 
         [Fact]
