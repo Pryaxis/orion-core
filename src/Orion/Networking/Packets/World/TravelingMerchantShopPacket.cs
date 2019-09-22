@@ -57,14 +57,13 @@ namespace Orion.Networking.Packets.World {
 
         private protected override void ReadFromReader(BinaryReader reader, PacketContext context) {
             for (var i = 0; i < ShopItemTypes.Count; ++i) {
-                ShopItemTypes[i] = ItemType.FromId(reader.ReadInt16()) ??
-                                   throw new PacketException("Item type is invalid.");
+                ShopItemTypes[i] = (ItemType)reader.ReadInt16();
             }
         }
 
         private protected override void WriteToWriter(BinaryWriter writer, PacketContext context) {
             foreach (var itemType in ShopItemTypes) {
-                writer.Write(itemType.Id);
+                writer.Write((short)itemType);
             }
         }
     }

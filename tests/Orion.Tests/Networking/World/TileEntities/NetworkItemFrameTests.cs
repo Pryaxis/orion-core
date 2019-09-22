@@ -23,22 +23,6 @@ using Xunit;
 namespace Orion.Networking.World.TileEntities {
     public class NetworkItemFrameTests {
         [Fact]
-        public void SetItemType_MarksAsDirty() {
-            var itemFrame = new NetworkItemFrame();
-            itemFrame.ItemType = ItemType.Sdmg;
-
-            itemFrame.ShouldBeDirty();
-        }
-
-        [Fact]
-        public void SetItemType_NullValue_ThrowsArgumentNullException() {
-            var itemFrame = new NetworkItemFrame();
-            Action action = () => itemFrame.ItemType = null;
-
-            action.Should().Throw<ArgumentNullException>();
-        }
-
-        [Fact]
         public void SetItemStackSize_MarksAsDirty() {
             var itemFrame = new NetworkItemFrame();
             itemFrame.ItemStackSize = 0;

@@ -38,8 +38,8 @@ namespace Orion.Networking.Packets.Entities {
         private short? _itemWidthOverride;
         private short? _itemHeightOverride;
         private float? _itemScaleOverride;
-        private ItemType _itemAmmoTypeOverride;
-        private ItemType _itemUsesAmmoTypeOverride;
+        private ItemType? _itemAmmoTypeOverride;
+        private ItemType? _itemUsesAmmoTypeOverride;
         private bool? _itemIsNotAmmoOverride;
 
         /// <inheritdoc />
@@ -169,7 +169,7 @@ namespace Orion.Networking.Packets.Entities {
         /// <summary>
         /// Gets or sets the override for the item's ammo type. A value of <c>null</c> indicates no override.
         /// </summary>
-        public ItemType ItemAmmoTypeOverride {
+        public ItemType? ItemAmmoTypeOverride {
             get => _itemAmmoTypeOverride;
             set {
                 _itemAmmoTypeOverride = value;
@@ -180,7 +180,7 @@ namespace Orion.Networking.Packets.Entities {
         /// <summary>
         /// Gets or sets the override for the ammo type that the item uses. A value of <c>null</c> indicates no override.
         /// </summary>
-        public ItemType ItemUsesAmmoTypeOverride {
+        public ItemType? ItemUsesAmmoTypeOverride {
             get => _itemUsesAmmoTypeOverride;
             set {
                 _itemUsesAmmoTypeOverride = value;
@@ -226,16 +226,8 @@ namespace Orion.Networking.Packets.Entities {
             if (flags2[0]) ItemWidthOverride = reader.ReadInt16();
             if (flags2[1]) ItemHeightOverride = reader.ReadInt16();
             if (flags2[2]) ItemScaleOverride = reader.ReadSingle();
-
-            if (flags2[3]) {
-                ItemAmmoTypeOverride = ItemType.FromId(reader.ReadInt16()) ??
-                                       throw new PacketException("Item type is invalid.");
-            }
-
-            if (flags2[4]) {
-                ItemUsesAmmoTypeOverride = ItemType.FromId(reader.ReadInt16()) ??
-                                           throw new PacketException("Item type is invalid.");
-            }
+            if (flags2[3]) ItemAmmoTypeOverride = (ItemType)reader.ReadInt16();
+            if (flags2[4]) ItemUsesAmmoTypeOverride = (ItemType)reader.ReadInt16();
 
             if (flags2[5]) ItemIsNotAmmoOverride = reader.ReadBoolean();
         }
@@ -274,8 +266,8 @@ namespace Orion.Networking.Packets.Entities {
             if (flags2[0]) writer.Write(ItemWidthOverride.Value);
             if (flags2[1]) writer.Write(ItemHeightOverride.Value);
             if (flags2[2]) writer.Write(ItemScaleOverride.Value);
-            if (flags2[3]) writer.Write(ItemAmmoTypeOverride.Id);
-            if (flags2[4]) writer.Write(ItemUsesAmmoTypeOverride.Id);
+            if (flags2[3]) writer.Write((short)ItemAmmoTypeOverride);
+            if (flags2[4]) writer.Write((short)ItemUsesAmmoTypeOverride);
             if (flags2[5]) writer.Write(ItemIsNotAmmoOverride.Value);
         }
     }

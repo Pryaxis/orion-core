@@ -30,25 +30,7 @@ namespace Orion.Networking.Packets.World.TileEntities {
             packet.ShouldHaveDefaultablePropertiesMarkAsDirty();
         }
 
-        [Fact]
-        public void SetItemType_MarksAsDirty() {
-            var packet = new ChestContentsSlotPacket();
-
-            packet.ItemType = ItemType.Sdmg;
-
-            packet.ShouldBeDirty();
-        }
-
-        [Fact]
-        public void SetItemType_NullValue_ThrowsArgumentNullException() {
-            var packet = new ChestContentsSlotPacket();
-            Action action = () => packet.ItemType = null;
-
-            action.Should().Throw<ArgumentNullException>();
-        }
-
         private static readonly byte[] Bytes = {11, 0, 32, 0, 0, 0, 1, 0, 0, 17, 6};
-        private static readonly byte[] InvalidItemTypeBytes = {11, 0, 32, 0, 0, 0, 1, 0, 0, 255, 127};
 
         [Fact]
         public void ReadFromStream_IsCorrect() {
@@ -59,16 +41,7 @@ namespace Orion.Networking.Packets.World.TileEntities {
                 packet.ChestContentsSlotIndex.Should().Be(0);
                 packet.ItemStackSize.Should().Be(1);
                 packet.ItemPrefix.Should().Be(ItemPrefix.None);
-                packet.ItemType.Should().BeSameAs(ItemType.Sdmg);
-            }
-        }
-
-        [Fact]
-        public void ReadFromStream_InvalidItemType_ThrowsPacketException() {
-            using (var stream = new MemoryStream(InvalidItemTypeBytes)) {
-                Func<Packet> func = () => Packet.ReadFromStream(stream, PacketContext.Server);
-
-                func.Should().Throw<PacketException>();
+                packet.ItemType.Should().Be(ItemType.Sdmg);
             }
         }
 

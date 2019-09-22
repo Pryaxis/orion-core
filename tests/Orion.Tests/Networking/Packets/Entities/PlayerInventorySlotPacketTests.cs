@@ -30,25 +30,7 @@ namespace Orion.Networking.Packets.Entities {
             packet.ShouldHaveDefaultablePropertiesMarkAsDirty();
         }
 
-        [Fact]
-        public void SetItemType_MarksAsDirty() {
-            var packet = new PlayerInventorySlotPacket();
-
-            packet.ItemType = ItemType.Sdmg;
-
-            packet.ShouldBeDirty();
-        }
-
-        [Fact]
-        public void SetItemType_NullValue_ThrowsArgumentNullException() {
-            var packet = new PlayerInventorySlotPacket();
-            Action action = () => packet.ItemType = null;
-
-            action.Should().Throw<ArgumentNullException>();
-        }
-
         private static readonly byte[] Bytes = {10, 0, 5, 0, 0, 1, 0, 59, 179, 13};
-        private static readonly byte[] InvalidItemTypeBytes = {10, 0, 5, 0, 0, 1, 0, 59, 255, 127};
 
         [Fact]
         public void ReadFromStream_IsCorrect() {
@@ -60,15 +42,6 @@ namespace Orion.Networking.Packets.Entities {
                 packet.ItemStackSize.Should().Be(1);
                 packet.ItemPrefix.Should().Be(ItemPrefix.Godly);
                 packet.ItemType.Should().Be(ItemType.CopperShortsword);
-            }
-        }
-
-        [Fact]
-        public void ReadFromStream_InvalidItemType_ThrowsPacketException() {
-            using (var stream = new MemoryStream(InvalidItemTypeBytes)) {
-                Func<Packet> func = () => Packet.ReadFromStream(stream, PacketContext.Server);
-
-                func.Should().Throw<PacketException>();
             }
         }
 

@@ -59,11 +59,10 @@ namespace Orion.Networking.Packets.World.TileEntities {
         /// <summary>
         /// Gets or sets the item's type.
         /// </summary>
-        /// <exception cref="ArgumentNullException"><paramref name="value"/> is <c>null</c>.</exception>
         public ItemType ItemType {
             get => _itemType;
             set {
-                _itemType = value ?? throw new ArgumentNullException(nameof(value));
+                _itemType = value;
                 _isDirty = true;
             }
         }
@@ -99,7 +98,7 @@ namespace Orion.Networking.Packets.World.TileEntities {
         private protected override void ReadFromReader(BinaryReader reader, PacketContext context) {
             ItemFrameX = reader.ReadInt16();
             ItemFrameY = reader.ReadInt16();
-            ItemType = ItemType.FromId(reader.ReadInt16()) ?? throw new PacketException("Item type is invalid.");
+            ItemType = (ItemType)reader.ReadInt16();
             ItemPrefix = (ItemPrefix)reader.ReadByte();
             ItemStackSize = reader.ReadInt16();
         }
@@ -107,7 +106,7 @@ namespace Orion.Networking.Packets.World.TileEntities {
         private protected override void WriteToWriter(BinaryWriter writer, PacketContext context) {
             writer.Write(ItemFrameX);
             writer.Write(ItemFrameY);
-            writer.Write(ItemType.Id);
+            writer.Write((short)ItemType);
             writer.Write((byte)ItemPrefix);
             writer.Write(ItemStackSize);
         }

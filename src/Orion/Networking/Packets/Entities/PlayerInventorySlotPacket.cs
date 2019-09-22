@@ -29,7 +29,7 @@ namespace Orion.Networking.Packets.Entities {
         private byte _playerInventorySlotIndex;
         private short _itemStackSize;
         private ItemPrefix _itemPrefix;
-        private ItemType _itemType = ItemType.None;
+        private ItemType _itemType;
 
         /// <inheritdoc />
         public override PacketType Type => PacketType.PlayerInventorySlot;
@@ -81,11 +81,10 @@ namespace Orion.Networking.Packets.Entities {
         /// <summary>
         /// Gets or sets the item's type.
         /// </summary>
-        /// <exception cref="ArgumentNullException"><paramref name="value"/> is <c>null</c>.</exception>
         public ItemType ItemType {
             get => _itemType;
             set {
-                _itemType = value ?? throw new ArgumentNullException(nameof(value));
+                _itemType = value;
                 _isDirty = true;
             }
         }
@@ -101,7 +100,7 @@ namespace Orion.Networking.Packets.Entities {
             PlayerInventorySlotIndex = reader.ReadByte();
             ItemStackSize = reader.ReadInt16();
             ItemPrefix = (ItemPrefix)reader.ReadByte();
-            ItemType = ItemType.FromId(reader.ReadInt16()) ?? throw new PacketException("Item type is invalid.");
+            ItemType = (ItemType)reader.ReadInt16();
         }
 
         private protected override void WriteToWriter(BinaryWriter writer, PacketContext context) {
@@ -109,7 +108,7 @@ namespace Orion.Networking.Packets.Entities {
             writer.Write(PlayerInventorySlotIndex);
             writer.Write(ItemStackSize);
             writer.Write((byte)ItemPrefix);
-            writer.Write(ItemType.Id);
+            writer.Write((short)ItemType);
         }
     }
 }

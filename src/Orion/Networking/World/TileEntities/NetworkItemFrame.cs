@@ -37,7 +37,7 @@ namespace Orion.Networking.World.TileEntities {
         public ItemType ItemType {
             get => _itemType;
             set {
-                _itemType = value ?? throw new ArgumentNullException(nameof(value));
+                _itemType = value;
                 IsDirty = true;
             }
         }
@@ -61,13 +61,13 @@ namespace Orion.Networking.World.TileEntities {
         }
 
         private protected override void ReadFromReaderImpl(BinaryReader reader) {
-            ItemType = ItemType.FromId(reader.ReadInt16()) ?? throw new PacketException("Item type is invalid.");
+            ItemType = (ItemType)reader.ReadInt16();
             ItemPrefix = (ItemPrefix)reader.ReadByte();
             ItemStackSize = reader.ReadInt16();
         }
 
         private protected override void WriteToWriterImpl(BinaryWriter writer) {
-            writer.Write(ItemType.Id);
+            writer.Write((short)ItemType);
             writer.Write((byte)ItemPrefix);
             writer.Write((short)ItemStackSize);
         }

@@ -24,22 +24,6 @@ using Xunit;
 namespace Orion.Networking.Packets.World {
     public class TravelingMerchantShopPacketTests {
         [Fact]
-        public void ShopItemTypes_SetItem_MarksAsDirty() {
-            var packet = new TravelingMerchantShopPacket();
-            packet.ShopItemTypes[0] = ItemType.Sdmg;
-
-            packet.ShouldBeDirty();
-        }
-
-        [Fact]
-        public void ShopItemTypes_SetItem_NullValue_ThrowsArgumentNullException() {
-            var packet = new TravelingMerchantShopPacket();
-            Action action = () => packet.ShopItemTypes[0] = null;
-
-            action.Should().Throw<ArgumentNullException>();
-        }
-
-        [Fact]
         public void ShopItemTypes_Count_IsCorrect() {
             var packet = new TravelingMerchantShopPacket();
 
@@ -52,29 +36,14 @@ namespace Orion.Networking.Packets.World {
             0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
         };
 
-        public static readonly byte[] InvalidItemTypeBytes = {
-            83, 0, 72, 255, 127, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-            0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-            0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-        };
-
         [Fact]
         public void ReadFromStream_IsCorrect() {
             using (var stream = new MemoryStream(Bytes)) {
                 var packet = (TravelingMerchantShopPacket)Packet.ReadFromStream(stream, PacketContext.Server);
 
                 foreach (var itemType in packet.ShopItemTypes) {
-                    itemType.Should().BeSameAs(ItemType.None);
+                    itemType.Should().Be(ItemType.None);
                 }
-            }
-        }
-
-        [Fact]
-        public void ReadFromStream_InvalidItemType_ThrowsPacketException() {
-            using (var stream = new MemoryStream(InvalidItemTypeBytes)) {
-                Func<Packet> func = () => Packet.ReadFromStream(stream, PacketContext.Server);
-
-                func.Should().Throw<PacketException>();
             }
         }
 

@@ -31,29 +31,8 @@ namespace Orion.Networking.Packets.Entities {
             packet.ShouldHaveDefaultablePropertiesMarkAsDirty();
         }
 
-        [Fact]
-        public void SetItemType_MarksAsDirty() {
-            var packet = new InstancedItemInfoPacket();
-
-            packet.ItemType = ItemType.Sdmg;
-
-            packet.ShouldBeDirty();
-        }
-
-        [Fact]
-        public void SetItemType_NullValue_ThrowsArgumentNullException() {
-            var packet = new InstancedItemInfoPacket();
-            Action action = () => packet.ItemType = null;
-
-            action.Should().Throw<ArgumentNullException>();
-        }
-
         private static readonly byte[] Bytes = {
             27, 0, 90, 144, 1, 128, 51, 131, 71, 0, 112, 212, 69, 0, 0, 128, 64, 0, 0, 0, 192, 1, 0, 82, 0, 17, 6
-        };
-
-        private static readonly byte[] InvalidItemTypeBytes = {
-            27, 0, 90, 144, 1, 128, 51, 131, 71, 0, 112, 212, 69, 0, 0, 128, 64, 0, 0, 0, 192, 1, 0, 82, 0, 255, 127
         };
 
         [Fact]
@@ -67,16 +46,7 @@ namespace Orion.Networking.Packets.Entities {
                 packet.ItemStackSize.Should().Be(1);
                 packet.ItemPrefix.Should().Be(ItemPrefix.Unreal);
                 packet.ShouldDisownItem.Should().BeFalse();
-                packet.ItemType.Should().BeSameAs(ItemType.Sdmg);
-            }
-        }
-
-        [Fact]
-        public void ReadFromStream_InvalidItemType_ThrowsPacketException() {
-            using (var stream = new MemoryStream(InvalidItemTypeBytes)) {
-                Func<Packet> func = () => Packet.ReadFromStream(stream, PacketContext.Server);
-
-                func.Should().Throw<PacketException>();
+                packet.ItemType.Should().Be(ItemType.Sdmg);
             }
         }
 
