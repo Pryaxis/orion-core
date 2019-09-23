@@ -162,8 +162,8 @@ namespace Orion.Networking.Impl {
             _mockPlayerService.Setup(ps => ps[1]).Returns(player);
 
             var isRun = false;
-            _mockPlayerService.Setup(ps => ps.PlayerDisconnect).Returns(
-                new EventHandlerCollection<PlayerDisconnectEventArgs>((sender, args) => {
+            _mockPlayerService.Setup(ps => ps.PlayerDisconnected).Returns(
+                new EventHandlerCollection<PlayerDisconnectedEventArgs>((sender, args) => {
                     isRun = true;
                     args.Player.Should().BeSameAs(player);
                 }));
@@ -173,7 +173,7 @@ namespace Orion.Networking.Impl {
 
             isRun.Should().BeTrue();
             _mockPlayerService.VerifyGet(ps => ps[1]);
-            _mockPlayerService.VerifyGet(ps => ps.PlayerDisconnect);
+            _mockPlayerService.VerifyGet(ps => ps.PlayerDisconnected);
             _mockPlayerService.VerifyNoOtherCalls();
         }
     }

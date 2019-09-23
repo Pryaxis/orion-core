@@ -17,7 +17,10 @@
 
 using System;
 using System.IO;
+using Ninject;
+using Orion.Entities;
 using Orion.Launcher.Properties;
+using Orion.Networking;
 using Serilog;
 using Serilog.Sinks.SystemConsole.Themes;
 using Terraria.ID;
@@ -63,6 +66,8 @@ namespace Orion.Launcher {
 
                 Console.ResetColor();
                 Console.WriteLine();
+
+                kernel.Get<IItemService>();
 
                 // Set SkipAssemblyLoad so that we don't JIT the social API.
                 Terraria.Main.SkipAssemblyLoad = true;

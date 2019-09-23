@@ -21,27 +21,15 @@ using Orion.Entities;
 
 namespace Orion.Events.Entities {
     /// <summary>
-    /// Provides data for the <see cref="IItemService.ItemSetDefaults"/> event.
+    /// Provides data for the <see cref="INpcService.NpcKilled"/> event.
     /// </summary>
     [PublicAPI]
-    public sealed class ItemSetDefaultsEventArgs : ItemEventArgs, ICancelable {
-        /// <inheritdoc />
-        public bool IsCanceled { get; set; }
-
+    public sealed class NpcKilledEventArgs : NpcEventArgs {
         /// <summary>
-        /// Gets or sets the item type.
+        /// Initializes a new instance of the <see cref="NpcKilledEventArgs"/> class with the specified NPC.
         /// </summary>
-        public ItemType ItemType { get; set; }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="ItemSetDefaultsEventArgs"/> class with the specified item and
-        /// item type.
-        /// </summary>
-        /// <param name="item">The item.</param>
-        /// <param name="itemType">The item type.</param>
-        /// <exception cref="ArgumentNullException"><paramref name="item"/> is <c>null</c>.</exception>
-        public ItemSetDefaultsEventArgs([NotNull] IItem item, ItemType itemType) : base(item) {
-            ItemType = itemType;
-        }
+        /// <param name="npc">The NPC.</param>
+        /// <exception cref="ArgumentNullException"><paramref name="npc"/> is <c>null</c>.</exception>
+        public NpcKilledEventArgs([NotNull] INpc npc) : base(npc) { }
     }
 }

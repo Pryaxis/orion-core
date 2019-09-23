@@ -18,11 +18,9 @@
 using System;
 using FluentAssertions;
 using Microsoft.Xna.Framework;
-using Orion.Entities;
-using Orion.Entities.Impl;
 using Xunit;
 
-namespace Orion.Tests.Items {
+namespace Orion.Entities.Impl {
     public class OrionItemTests {
         [Fact]
         public void GetIndex_IsCorrect() {

@@ -54,6 +54,6 @@ namespace Orion.Entities {
         /// Gets or sets the event handlers that run when a player disconnects.
         /// </summary>
         [CanBeNull]
-        EventHandlerCollection<PlayerDisconnectEventArgs> PlayerDisconnect { get; set; }
+        EventHandlerCollection<PlayerDisconnectedEventArgs> PlayerDisconnected { get; set; }
     }
 }

@@ -15,7 +15,11 @@
 // You should have received a copy of the GNU General Public License
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
+using System;
 using JetBrains.Annotations;
+using Microsoft.Xna.Framework;
+using Orion.Events;
+using Orion.Events.Entities;
 using Orion.Utils;
 
 namespace Orion.Entities {
@@ -23,5 +27,52 @@ namespace Orion.Entities {
     /// Represents an NPC service. Provides access to NPC-related events and methods.
     /// </summary>
     [PublicAPI]
-    public interface INpcService : IReadOnlyArray<INpc> { }
+    public interface INpcService : IReadOnlyArray<INpc> {
+        /// <summary>
+        /// Gets or sets the event handlers that occur when an NPC's defaults are being set. This event can be canceled.
+        /// </summary>
+        EventHandlerCollection<NpcSetDefaultsEventArgs> NpcSetDefaults { get; set; }
+
+        /// <summary>
+        /// Gets or sets the event handlers that occur when an NPC is spawning. This event can be canceled.
+        /// </summary>
+        EventHandlerCollection<NpcSpawnEventArgs> NpcSpawn { get; set; }
+
+        /// <summary>
+        /// Gets or sets the event handlers that occur when an NPC is updating. This event can be canceled.
+        /// </summary>
+        EventHandlerCollection<NpcUpdateEventArgs> NpcUpdate { get; set; }
+
+        /// <summary>
+        /// Gets or sets the event handlers that occur when an NPC is transforming. This event can be canceled.
+        /// </summary>
+        EventHandlerCollection<NpcUpdateEventArgs> NpcTransform { get; set; }
+
+        /// <summary>
+        /// Gets or sets the event handlers that occur when an NPC is being damaged. This event can be canceled.
+        /// </summary>
+        EventHandlerCollection<NpcDamageEventArgs> NpcDamage { get; set; }
+
+        /// <summary>
+        /// Gets or sets the event handlers that occur when an NPC is dropping a loot item. This event can be canceled.
+        /// </summary>
+        EventHandlerCollection<NpcDamageEventArgs> NpcDropLootItem { get; set; }
+
+        /// <summary>
+        /// Gets or sets the event handlers that occur when an NPC is killed.
+        /// </summary>
+        EventHandlerCollection<NpcKilledEventArgs> NpcKilled { get; set; }
+
+        /// <summary>
+        /// Spawns an NPC with the given type at the specified position with the AI values.
+        /// </summary>
+        /// <param name="npcType">The NPC type.</param>
+        /// <param name="position">The position.</param>
+        /// <param name="aiValues">
+        /// The AI values to use, or <c>null</c> for none. If not <c>null</c>, this should have length 4.
+        /// </param>
+        /// <returns>The resulting NPC, or <c>null</c> if none was spawned.</returns>
+        /// <exception cref="ArgumentException"><paramref name="aiValues"/> does not have length 4.</exception>
+        INpc SpawnNpc(NpcType npcType, Vector2 position, float[] aiValues = null);
+    }
 }

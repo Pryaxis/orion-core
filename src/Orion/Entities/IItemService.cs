@@ -34,7 +34,7 @@ namespace Orion.Entities {
         EventHandlerCollection<ItemSetDefaultsEventArgs> ItemSetDefaults { get; set; }
 
         /// <summary>
-        /// Gets or sets the event handlers that occur when an item is being updated. This event can be canceled.
+        /// Gets or sets the event handlers that occur when an item is updating. This event can be canceled.
         /// </summary>
         EventHandlerCollection<ItemUpdateEventArgs> ItemUpdate { get; set; }
 

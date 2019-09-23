@@ -21,15 +21,18 @@ using Orion.Entities;
 
 namespace Orion.Events.Entities {
     /// <summary>
-    /// Provides data for the <see cref="IPlayerService.PlayerDisconnect"/> event.
+    /// Provides data for the <see cref="INpcService.NpcSpawn"/> event.
     /// </summary>
     [PublicAPI]
-    public sealed class PlayerDisconnectEventArgs : PlayerEventArgs {
+    public sealed class NpcSpawnEventArgs : NpcEventArgs, ICancelable {
+        /// <inheritdoc />
+        public bool IsCanceled { get; set; }
+
         /// <summary>
-        /// Initializes a new instance of the <see cref="PlayerDisconnectEventArgs"/> class with the specified player.
+        /// Initializes a new instance of the <see cref="NpcSpawnEventArgs"/> class with the specified NPC.
         /// </summary>
-        /// <param name="player">The player.</param>
-        /// <exception cref="ArgumentNullException"><paramref name="player"/> is <c>null</c>.</exception>
-        public PlayerDisconnectEventArgs([NotNull] IPlayer player) : base(player) { }
+        /// <param name="npc">The NPC.</param>
+        /// <exception cref="ArgumentNullException"><paramref name="npc"/> is <c>null</c>.</exception>
+        public NpcSpawnEventArgs([NotNull] INpc npc) : base(npc) { }
     }
 }

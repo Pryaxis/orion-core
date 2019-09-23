@@ -119,8 +119,8 @@ namespace Orion.Networking.Impl {
 
         private OTAPI.HookResult PreResetHandler([NotNull] Terraria.RemoteClient remoteClient) {
             var player = _playerService.Value[remoteClient.Id];
-            var args = new PlayerDisconnectEventArgs(player);
-            _playerService.Value.PlayerDisconnect?.Invoke(this, args);
+            var args = new PlayerDisconnectedEventArgs(player);
+            _playerService.Value.PlayerDisconnected?.Invoke(this, args);
             return OTAPI.HookResult.Continue;
         }
 

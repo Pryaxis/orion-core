@@ -22,6 +22,10 @@ using System.Linq;
 using System.Reflection;
 using JetBrains.Annotations;
 using Ninject;
+using Orion.Entities;
+using Orion.Entities.Impl;
+using Orion.Networking;
+using Orion.Networking.Impl;
 
 namespace Orion {
     /// <summary>
@@ -36,6 +40,8 @@ namespace Orion {
 
         internal OrionKernel() {
             Bind<OrionKernel>().ToConstant(this).InSingletonScope();
+            Bind<IItemService>().To<OrionItemService>().InSingletonScope();
+            Bind<INetworkService>().To<OrionNetworkService>().InSingletonScope();
 
             // Because we're using Assembly.Load, we'll need to have an AssemblyResolve handler to deal with any issues
             // that may pop up.

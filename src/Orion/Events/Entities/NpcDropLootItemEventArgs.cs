@@ -21,27 +21,33 @@ using Orion.Entities;
 
 namespace Orion.Events.Entities {
     /// <summary>
-    /// Provides data for the <see cref="IItemService.ItemSetDefaults"/> event.
+    /// Provides data for the <see cref="INpcService.NpcDropLootItem"/> event.
     /// </summary>
     [PublicAPI]
-    public sealed class ItemSetDefaultsEventArgs : ItemEventArgs, ICancelable {
+    public sealed class NpcDropLootItemEventArgs : NpcEventArgs, ICancelable {
         /// <inheritdoc />
         public bool IsCanceled { get; set; }
 
         /// <summary>
-        /// Gets or sets the item type.
+        /// Gets or sets the loot item's type.
         /// </summary>
-        public ItemType ItemType { get; set; }
+        public ItemType LootItemType { get; set; }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="ItemSetDefaultsEventArgs"/> class with the specified item and
-        /// item type.
+        /// Gets or sets the loot item's stack size.
         /// </summary>
-        /// <param name="item">The item.</param>
-        /// <param name="itemType">The item type.</param>
-        /// <exception cref="ArgumentNullException"><paramref name="item"/> is <c>null</c>.</exception>
-        public ItemSetDefaultsEventArgs([NotNull] IItem item, ItemType itemType) : base(item) {
-            ItemType = itemType;
-        }
+        public int LootItemStackSize { get; set; }
+
+        /// <summary>
+        /// Gets or sets the loot item's prefix.
+        /// </summary>
+        public ItemPrefix LootItemPrefix { get; set; }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="NpcDropLootItemEventArgs"/> class with the specified NPC.
+        /// </summary>
+        /// <param name="npc">The NPC.</param>
+        /// <exception cref="ArgumentNullException"><paramref name="npc"/> is null.</exception>
+        public NpcDropLootItemEventArgs([NotNull] INpc npc) : base(npc) { }
     }
 }
