@@ -34,19 +34,15 @@ namespace Orion.Entities {
         int StackSize { get; set; }
 
         /// <summary>
-        /// Gets the item's maximum stack size.
-        /// </summary>
-        int MaxStackSize { get; }
-
-        /// <summary>
         /// Gets the item's prefix.
         /// </summary>
         ItemPrefix Prefix { get; }
 
         /// <summary>
-        /// Gets the item's rarity.
+        /// Gets the item's stats.
         /// </summary>
-        ItemRarity Rarity { get; }
+        [NotNull]
+        IItemStats Stats { get; }
 
         /// <summary>
         /// Sets the item's type. This will update the item accordingly.

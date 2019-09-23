@@ -16,12 +16,21 @@
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
 using JetBrains.Annotations;
-using Orion.Utils;
 
 namespace Orion.Entities {
     /// <summary>
-    /// Represents an item service. Provides access to item-related events and methods.
+    /// Represents an item's stats.
     /// </summary>
     [PublicAPI]
-    public interface IItemService : IReadOnlyArray<IItem>, IService { }
+    public interface IItemStats {
+        /// <summary>
+        /// Gets the item's maximum stack size.
+        /// </summary>
+        int MaxStackSize { get; }
+
+        /// <summary>
+        /// Gets the item's rarity.
+        /// </summary>
+        ItemRarity Rarity { get; }
+    }
 }

@@ -15,13 +15,25 @@
 // You should have received a copy of the GNU General Public License
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
-using JetBrains.Annotations;
-using Orion.Utils;
+using FluentAssertions;
+using Xunit;
 
-namespace Orion.Entities {
-    /// <summary>
-    /// Represents an item service. Provides access to item-related events and methods.
-    /// </summary>
-    [PublicAPI]
-    public interface IItemService : IReadOnlyArray<IItem>, IService { }
+namespace Orion.Entities.Impl {
+    public class OrionItemStatsTests {
+        [Fact]
+        public void GetMaxStackSize_IsCorrect() {
+            var terrariaItem = new Terraria.Item {maxStack = 100};
+            var itemStats = new OrionItemStats(terrariaItem);
+
+            itemStats.MaxStackSize.Should().Be(100);
+        }
+
+        [Fact]
+        public void GetRarity_IsCorrect() {
+            var terrariaItem = new Terraria.Item {rare = (int)ItemRarity.Red};
+            var itemStats = new OrionItemStats(terrariaItem);
+
+            itemStats.Rarity.Should().Be(ItemRarity.Red);
+        }
+    }
 }

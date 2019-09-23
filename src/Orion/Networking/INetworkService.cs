@@ -23,7 +23,7 @@ namespace Orion.Networking {
     /// <summary>
     /// Represents a network service. Provides network-related events and methods.
     /// </summary>
-    public interface INetworkService {
+    public interface INetworkService : IService {
         /// <summary>
         /// Gets or sets the event handlers that run when a packet is received. This event can be canceled.
         /// </summary>

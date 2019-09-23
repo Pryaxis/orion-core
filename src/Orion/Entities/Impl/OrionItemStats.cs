@@ -16,12 +16,16 @@
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
 using JetBrains.Annotations;
-using Orion.Utils;
 
-namespace Orion.Entities {
-    /// <summary>
-    /// Represents an item service. Provides access to item-related events and methods.
-    /// </summary>
-    [PublicAPI]
-    public interface IItemService : IReadOnlyArray<IItem>, IService { }
+namespace Orion.Entities.Impl {
+    internal sealed class OrionItemStats : IItemStats {
+        [NotNull] private readonly Terraria.Item _wrapped;
+
+        public int MaxStackSize => _wrapped.maxStack;
+        public ItemRarity Rarity => (ItemRarity)_wrapped.rare;
+
+        public OrionItemStats([NotNull] Terraria.Item terrariaItem) {
+            _wrapped = terrariaItem;
+        }
+    }
 }
