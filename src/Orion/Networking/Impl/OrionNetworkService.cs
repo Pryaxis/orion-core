@@ -37,6 +37,7 @@ namespace Orion.Networking.Impl {
             new Dictionary<PacketType, Action<PacketReceiveEventArgs>>();
 
         [ExcludeFromCodeCoverage] public override string Author => "Pryaxis";
+
         public EventHandlerCollection<PacketReceiveEventArgs> PacketReceive { get; set; }
         public EventHandlerCollection<PacketSendEventArgs> PacketSend { get; set; }
 

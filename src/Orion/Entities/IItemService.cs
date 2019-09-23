@@ -42,12 +42,12 @@ namespace Orion.Entities {
         /// Spawns and returns an item with the given item type at the specified position with the stack
         /// size and item prefix.
         /// </summary>
-        /// <param name="type">The item type.</param>
+        /// <param name="itemType">The item type.</param>
         /// <param name="position">The position.</param>
         /// <param name="stackSize">The stack size.</param>
         /// <param name="prefix">The item prefix..</param>
         /// <returns>The resulting item, or <c>null</c> if none was spawned.</returns>
         [CanBeNull]
-        IItem SpawnItem(ItemType type, Vector2 position, int stackSize = 1, ItemPrefix prefix = ItemPrefix.None);
+        IItem SpawnItem(ItemType itemType, Vector2 position, int stackSize = 1, ItemPrefix prefix = ItemPrefix.None);
     }
 }
