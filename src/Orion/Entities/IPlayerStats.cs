@@ -15,33 +15,32 @@
 // You should have received a copy of the GNU General Public License
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
-using System;
 using JetBrains.Annotations;
-using Orion.Networking.Packets;
 
 namespace Orion.Entities {
     /// <summary>
-    /// Represents a Terraria player.
+    /// Represents a player's statistics.
     /// </summary>
     [PublicAPI]
-    public interface IPlayer : IEntity {
+    public interface IPlayerStats {
         /// <summary>
-        /// Gets the player's statistics.
+        /// Gets or sets the player's health.
         /// </summary>
-        [NotNull]
-        IPlayerStats Stats { get; }
+        int Health { get; set; }
 
         /// <summary>
-        /// Gets the player's inventory.
+        /// Gets or sets the player's maximum health.
         /// </summary>
-        [NotNull]
-        IPlayerInventory Inventory { get; }
+        int MaxHealth { get; set; }
 
         /// <summary>
-        /// Sends a packet to the player.
+        /// Gets or sets the player's mana.
         /// </summary>
-        /// <param name="packet">The packet.</param>
-        /// <exception cref="ArgumentNullException"><paramref name="packet"/> is <c>null</c>.</exception>
-        void SendPacket([NotNull] Packet packet);
+        int Mana { get; set; }
+
+        /// <summary>
+        /// Gets or sets the player's maximum mana.
+        /// </summary>
+        int MaxMana { get; set; }
     }
 }
