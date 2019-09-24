@@ -25,7 +25,7 @@ namespace Orion.Entities {
     /// Represents a player service. Provides access to player-related events and methods.
     /// </summary>
     [PublicAPI]
-    public interface IPlayerService : IReadOnlyArray<IPlayer> {
+    public interface IPlayerService : IReadOnlyArray<IPlayer>, IService {
         /// <summary>
         /// Gets or sets the event handlers that run when a player connects. This event can be canceled.
         /// </summary>

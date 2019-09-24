@@ -18,7 +18,9 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
+using System.Linq;
 using System.Threading;
 using JetBrains.Annotations;
 using Microsoft.Xna.Framework;
@@ -35,8 +37,9 @@ namespace Orion.Entities.Impl {
         [ExcludeFromCodeCoverage] public override string Author => "Pryaxis";
 
         // Subtract 1 from the count. This is because Terraria has an extra slot.
-        public int Count => _terrariaNpcs.Count - 1;
+        public int Count => _npcs.Count - 1;
 
+        [NotNull]
         public INpc this[int index] {
             get {
                 if (index < 0 || index >= Count) throw new IndexOutOfRangeException();
@@ -45,6 +48,7 @@ namespace Orion.Entities.Impl {
                     _npcs[index] = new OrionNpc(_terrariaNpcs[index]);
                 }
 
+                Debug.Assert(_npcs[index] != null, "_npcs[index] != null");
                 return _npcs[index];
             }
         }
@@ -58,6 +62,9 @@ namespace Orion.Entities.Impl {
         public EventHandlerCollection<NpcKilledEventArgs> NpcKilled { get; set; }
 
         public OrionNpcService() {
+            Debug.Assert(Terraria.Main.npc != null, "Terraria.Main.npc != null");
+            Debug.Assert(Terraria.Main.npc.All(n => n != null), "Terraria.Main.npc.All(n => n != null)");
+
             _terrariaNpcs = Terraria.Main.npc;
             _npcs = new OrionNpc[_terrariaNpcs.Count];
 

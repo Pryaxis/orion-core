@@ -20,6 +20,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
+using System.Linq;
 using JetBrains.Annotations;
 using Microsoft.Xna.Framework;
 using Orion.Events;
@@ -34,7 +35,7 @@ namespace Orion.Entities.Impl {
         [ExcludeFromCodeCoverage] public override string Author => "Pryaxis";
 
         // Subtract 1 from the count. This is because Terraria has an extra slot.
-        public int Count => _terrariaItems.Count - 1;
+        public int Count => _items.Count - 1;
 
         [NotNull]
         public IItem this[int index] {
@@ -55,6 +56,7 @@ namespace Orion.Entities.Impl {
 
         public OrionItemService() {
             Debug.Assert(Terraria.Main.item != null, "Terraria.Main.item != null");
+            Debug.Assert(Terraria.Main.item.All(i => i != null), "Terraria.Main.item.All(i => i != null)");
 
             _terrariaItems = Terraria.Main.item;
             _items = new OrionItem[_terrariaItems.Count];

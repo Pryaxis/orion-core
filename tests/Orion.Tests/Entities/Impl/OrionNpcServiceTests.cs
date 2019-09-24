@@ -294,7 +294,7 @@ namespace Orion.Entities.Impl {
         [InlineData(3)]
         [InlineData(5)]
         public void SpawnNpc_AiValuesWrongLength_ThrowsArgumentException(int aiValuesLength) {
-            Func<INpc> func = () => _npcService.SpawnNpc(NpcType.BlueSlime, Vector2.Zero, new float[aiValuesLength]);   
+            Func<INpc> func = () => _npcService.SpawnNpc(NpcType.BlueSlime, Vector2.Zero, new float[aiValuesLength]);
 
             func.Should().Throw<ArgumentException>();
         }
