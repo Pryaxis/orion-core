@@ -70,6 +70,18 @@ namespace Orion.Entities.Impl {
             Hooks.Npc.Killed = KilledHandler;
         }
 
+        protected override void Dispose(bool disposeManaged) {
+            if (!disposeManaged) return;
+
+            Hooks.Npc.PreSetDefaultsById = null;
+            Hooks.Npc.Spawn = null;
+            Hooks.Npc.PreUpdate = null;
+            Hooks.Npc.PreTransform = null;
+            Hooks.Npc.Strike = null;
+            Hooks.Npc.PreDropLoot = null;
+            Hooks.Npc.Killed = null;
+        }
+
         public IEnumerator<INpc> GetEnumerator() {
             for (var i = 0; i < Count; ++i) {
                 yield return this[i];

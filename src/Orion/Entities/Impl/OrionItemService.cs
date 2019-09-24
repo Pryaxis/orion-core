@@ -63,6 +63,13 @@ namespace Orion.Entities.Impl {
             Hooks.Item.PreUpdate = PreUpdateHandler;
         }
 
+        protected override void Dispose(bool disposeManaged) {
+            if (!disposeManaged) return;
+
+            Hooks.Item.PreSetDefaultsById = null;
+            Hooks.Item.PreUpdate = null;
+        }
+
         public IEnumerator<IItem> GetEnumerator() {
             for (var i = 0; i < Count; ++i) {
                 yield return this[i];
