@@ -18,7 +18,7 @@
 using System;
 using JetBrains.Annotations;
 using Orion.Entities;
-using Orion.Networking.Packets;
+using Orion.Packets;
 
 namespace Orion.Events.Packets {
     /// <summary>

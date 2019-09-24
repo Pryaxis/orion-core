@@ -20,10 +20,8 @@ using System.IO;
 using Ninject;
 using Orion.Entities;
 using Orion.Launcher.Properties;
-using Orion.Networking;
 using Serilog;
 using Serilog.Sinks.SystemConsole.Themes;
-using Terraria.ID;
 
 namespace Orion.Launcher {
     internal class Program {

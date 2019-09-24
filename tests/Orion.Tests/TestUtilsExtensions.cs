@@ -21,7 +21,7 @@ using System.IO;
 using System.Reflection;
 using FluentAssertions;
 using Microsoft.Xna.Framework;
-using Orion.Networking.Packets;
+using Orion.Packets;
 using Orion.Utils;
 
 namespace Orion {

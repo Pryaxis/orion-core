@@ -19,7 +19,7 @@ using System;
 using System.Linq;
 using FluentAssertions;
 using Microsoft.Xna.Framework;
-using Orion.Networking.Packets.Entities;
+using Orion.Packets.Entities;
 using Xunit;
 
 namespace Orion.Entities.Impl {

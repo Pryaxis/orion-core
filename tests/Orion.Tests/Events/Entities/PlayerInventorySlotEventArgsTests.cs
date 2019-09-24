@@ -19,7 +19,7 @@ using System;
 using FluentAssertions;
 using Moq;
 using Orion.Entities;
-using Orion.Networking.Packets.Entities;
+using Orion.Packets.Entities;
 using Xunit;
 
 namespace Orion.Events.Entities {

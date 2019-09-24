@@ -27,8 +27,8 @@ using JetBrains.Annotations;
 using Orion.Events;
 using Orion.Events.Entities;
 using Orion.Events.Packets;
-using Orion.Networking.Packets;
-using Orion.Networking.Packets.Entities;
+using Orion.Packets;
+using Orion.Packets.Entities;
 using OTAPI;
 
 namespace Orion.Entities.Impl {

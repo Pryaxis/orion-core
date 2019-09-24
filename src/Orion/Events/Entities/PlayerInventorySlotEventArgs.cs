@@ -18,7 +18,7 @@
 using System;
 using JetBrains.Annotations;
 using Orion.Entities;
-using Orion.Networking.Packets.Entities;
+using Orion.Packets.Entities;
 
 namespace Orion.Events.Entities {
     /// <summary>
@@ -30,22 +30,22 @@ namespace Orion.Events.Entities {
 
         /// <inheritdoc />
         public bool IsCanceled { get; set; }
-        
+
         /// <inheritdoc cref="PlayerInventorySlotPacket.PlayerInventorySlotIndex"/>
         public byte PlayerInventorySlotIndex => _packet.PlayerInventorySlotIndex;
-        
+
         /// <inheritdoc cref="PlayerInventorySlotPacket.ItemStackSize"/>
         public short ItemStackSize {
             get => _packet.ItemStackSize;
             set => _packet.ItemStackSize = value;
         }
-        
+
         /// <inheritdoc cref="PlayerInventorySlotPacket.ItemPrefix"/>
         public ItemPrefix ItemPrefix {
             get => _packet.ItemPrefix;
             set => _packet.ItemPrefix = value;
         }
-        
+
         /// <inheritdoc cref="PlayerInventorySlotPacket.ItemType"/>
         public ItemType ItemType {
             get => _packet.ItemType;
