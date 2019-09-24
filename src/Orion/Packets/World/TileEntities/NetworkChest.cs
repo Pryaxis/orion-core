@@ -19,7 +19,7 @@ using System;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using JetBrains.Annotations;
-using Orion.Entities;
+using Orion.Items;
 using Orion.Utils;
 using Orion.World.TileEntities;
 

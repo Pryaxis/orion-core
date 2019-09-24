@@ -18,7 +18,7 @@
 using System;
 using System.IO;
 using Ninject;
-using Orion.Entities;
+using Orion.Items;
 using Orion.Launcher.Properties;
 using Serilog;
 using Serilog.Sinks.SystemConsole.Themes;

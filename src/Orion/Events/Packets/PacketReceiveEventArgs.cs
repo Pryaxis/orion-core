@@ -17,8 +17,8 @@
 
 using System;
 using JetBrains.Annotations;
-using Orion.Entities;
 using Orion.Packets;
+using Orion.Players;
 
 namespace Orion.Events.Packets {
     /// <summary>

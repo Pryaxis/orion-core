@@ -22,8 +22,8 @@ using System.Linq;
 using System.Reflection;
 using JetBrains.Annotations;
 using Ninject;
-using Orion.Entities;
-using Orion.Entities.Impl;
+using Orion.Items;
+using Orion.Players;
 
 namespace Orion {
     /// <summary>

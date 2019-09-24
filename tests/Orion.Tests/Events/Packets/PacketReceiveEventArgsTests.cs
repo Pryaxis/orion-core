@@ -19,8 +19,8 @@ using System;
 using System.IO;
 using FluentAssertions;
 using Moq;
-using Orion.Entities;
 using Orion.Packets;
+using Orion.Players;
 using Xunit;
 
 namespace Orion.Events.Packets {

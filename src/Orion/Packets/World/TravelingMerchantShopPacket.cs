@@ -18,7 +18,7 @@
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using JetBrains.Annotations;
-using Orion.Entities;
+using Orion.Items;
 using Orion.Utils;
 
 namespace Orion.Packets.World {

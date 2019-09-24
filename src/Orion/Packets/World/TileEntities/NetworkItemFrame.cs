@@ -17,7 +17,7 @@
 
 using System.IO;
 using JetBrains.Annotations;
-using Orion.Entities;
+using Orion.Items;
 using Orion.World.TileEntities;
 
 namespace Orion.Packets.World.TileEntities {
