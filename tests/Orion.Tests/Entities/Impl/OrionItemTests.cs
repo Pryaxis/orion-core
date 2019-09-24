@@ -83,6 +83,14 @@ namespace Orion.Entities.Impl {
         }
 
         [Fact]
+        public void GetStats_IsCorrect() {
+            var terrariaItem = new Terraria.Item {prefix = (byte)ItemPrefix.Unreal};
+            var item = new OrionItem(terrariaItem);
+
+            ((OrionItemStats)item.Stats).Wrapped.Should().BeSameAs(terrariaItem);
+        }
+
+        [Fact]
         public void SetType_IsCorrect() {
             var terrariaItem = new Terraria.Item();
             var item = new OrionItem(terrariaItem);

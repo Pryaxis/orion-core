@@ -29,8 +29,11 @@ namespace Orion.Networking.Packets.Entities {
     public sealed class PlayerBuffsPacket : Packet {
         private byte _playerIndex;
 
+        [NotNull] private readonly DirtiableArray<BuffType> _playerBuffTypes =
+            new DirtiableArray<BuffType>(Terraria.Player.maxBuffs);
+
         /// <inheritdoc />
-        public override bool IsDirty => base.IsDirty || PlayerBuffTypes.IsDirty;
+        public override bool IsDirty => base.IsDirty || _playerBuffTypes.IsDirty;
 
         /// <inheritdoc />
         public override PacketType Type => PacketType.PlayerBuffs;
@@ -50,13 +53,12 @@ namespace Orion.Networking.Packets.Entities {
         /// Gets the player's buff types.
         /// </summary>
         [NotNull]
-        public DirtiableArray<BuffType> PlayerBuffTypes { get; } =
-            new DirtiableArray<BuffType>(Terraria.Player.maxBuffs);
+        public IArray<BuffType> PlayerBuffTypes => _playerBuffTypes;
 
         /// <inheritdoc />
         public override void Clean() {
             base.Clean();
-            PlayerBuffTypes.Clean();
+            _playerBuffTypes.Clean();
         }
 
         /// <inheritdoc />
@@ -65,14 +67,14 @@ namespace Orion.Networking.Packets.Entities {
 
         private protected override void ReadFromReader(BinaryReader reader, PacketContext context) {
             _playerIndex = reader.ReadByte();
-            for (var i = 0; i < PlayerBuffTypes.Count; ++i) {
-                PlayerBuffTypes._array[i] = (BuffType)reader.ReadByte();
+            for (var i = 0; i < _playerBuffTypes.Count; ++i) {
+                _playerBuffTypes._array[i] = (BuffType)reader.ReadByte();
             }
         }
 
         private protected override void WriteToWriter(BinaryWriter writer, PacketContext context) {
             writer.Write(_playerIndex);
-            foreach (var buffType in PlayerBuffTypes) {
+            foreach (var buffType in _playerBuffTypes) {
                 writer.Write((byte)buffType);
             }
         }

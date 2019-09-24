@@ -37,9 +37,10 @@ namespace Orion.Networking.Packets.Entities {
         private byte _projectileOwnerPlayerIndex;
         private ProjectileType _projectileType;
         private short _projectileUuid = -1;
+        [NotNull] private readonly DirtiableArray<float> _projectileAiValues = new DirtiableArray<float>(Terraria.Projectile.maxAI);
 
         /// <inheritdoc />
-        public override bool IsDirty => base.IsDirty || ProjectileAiValues.IsDirty;
+        public override bool IsDirty => base.IsDirty || _projectileAiValues.IsDirty;
 
         /// <inheritdoc />
         public override PacketType Type => PacketType.ProjectileInfo;
@@ -125,7 +126,7 @@ namespace Orion.Networking.Packets.Entities {
         /// Gets the projectile's AI values.
         /// </summary>
         [NotNull]
-        public DirtiableArray<float> ProjectileAiValues { get; } = new DirtiableArray<float>(Terraria.Projectile.maxAI);
+        public IArray<float> ProjectileAiValues => _projectileAiValues;
 
         /// <summary>
         /// Gets or sets the projectile's UUID.
@@ -141,7 +142,7 @@ namespace Orion.Networking.Packets.Entities {
         /// <inheritdoc />
         public override void Clean() {
             base.Clean();
-            ProjectileAiValues.Clean();
+            _projectileAiValues.Clean();
         }
 
         /// <inheritdoc />
@@ -159,8 +160,8 @@ namespace Orion.Networking.Packets.Entities {
             _projectileType = (ProjectileType)reader.ReadInt16();
 
             Terraria.BitsByte header = reader.ReadByte();
-            if (header[0]) ProjectileAiValues._array[0] = reader.ReadSingle();
-            if (header[1]) ProjectileAiValues._array[1] = reader.ReadSingle();
+            if (header[0]) _projectileAiValues._array[0] = reader.ReadSingle();
+            if (header[1]) _projectileAiValues._array[1] = reader.ReadSingle();
             if (header[2]) _projectileUuid = reader.ReadInt16();
         }
 
@@ -175,13 +176,13 @@ namespace Orion.Networking.Packets.Entities {
             writer.Write((short)_projectileType);
 
             Terraria.BitsByte header = 0;
-            header[0] = ProjectileAiValues._array[0] != 0;
-            header[1] = ProjectileAiValues._array[1] != 0;
+            header[0] = _projectileAiValues._array[0] != 0;
+            header[1] = _projectileAiValues._array[1] != 0;
             header[2] = _projectileUuid >= 0;
 
             writer.Write(header);
-            if (header[0]) writer.Write(ProjectileAiValues._array[0]);
-            if (header[1]) writer.Write(ProjectileAiValues._array[1]);
+            if (header[0]) writer.Write(_projectileAiValues._array[0]);
+            if (header[1]) writer.Write(_projectileAiValues._array[1]);
             if (header[2]) writer.Write(_projectileUuid);
         }
     }

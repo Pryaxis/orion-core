@@ -42,9 +42,10 @@ namespace Orion.Networking.Packets.Entities {
         private byte _npcNumberOfHealthBytes;
         private int _npcHealth;
         private byte _npcReleaserPlayerIndex;
+        [NotNull] private readonly DirtiableArray<float> _npcAiValues = new DirtiableArray<float>(Terraria.NPC.maxAI);
 
         /// <inheritdoc />
-        public override bool IsDirty => base.IsDirty || NpcAiValues.IsDirty;
+        public override bool IsDirty => base.IsDirty || _npcAiValues.IsDirty;
 
         /// <inheritdoc />
         public override PacketType Type => PacketType.NpcInfo;
@@ -121,7 +122,7 @@ namespace Orion.Networking.Packets.Entities {
         /// Gets the NPC's AI values.
         /// </summary>
         [NotNull]
-        public DirtiableArray<float> NpcAiValues { get; } = new DirtiableArray<float>(Terraria.NPC.maxAI);
+        public IArray<float> NpcAiValues => _npcAiValues;
 
         /// <summary>
         /// Gets or sets a value indicating the direction of the NPC sprite.
@@ -192,7 +193,7 @@ namespace Orion.Networking.Packets.Entities {
         /// <inheritdoc />
         public override void Clean() {
             base.Clean();
-            NpcAiValues.Clean();
+            _npcAiValues.Clean();
         }
 
         /// <inheritdoc />
@@ -210,10 +211,10 @@ namespace Orion.Networking.Packets.Entities {
             Terraria.BitsByte header = reader.ReadByte();
             _npcHorizontalDirection = header[0];
             _npcVerticalDirection = header[1];
-            if (header[2]) NpcAiValues._array[0] = reader.ReadSingle();
-            if (header[3]) NpcAiValues._array[1] = reader.ReadSingle();
-            if (header[4]) NpcAiValues._array[2] = reader.ReadSingle();
-            if (header[5]) NpcAiValues._array[3] = reader.ReadSingle();
+            if (header[2]) _npcAiValues._array[0] = reader.ReadSingle();
+            if (header[3]) _npcAiValues._array[1] = reader.ReadSingle();
+            if (header[4]) _npcAiValues._array[2] = reader.ReadSingle();
+            if (header[5]) _npcAiValues._array[3] = reader.ReadSingle();
             _npcSpriteDirection = header[6];
             _isNpcAtMaxHealth = header[7];
 
@@ -249,18 +250,18 @@ namespace Orion.Networking.Packets.Entities {
             Terraria.BitsByte header = 0;
             header[0] = _npcHorizontalDirection;
             header[1] = _npcVerticalDirection;
-            header[2] = NpcAiValues._array[0] != 0;
-            header[3] = NpcAiValues._array[1] != 0;
-            header[4] = NpcAiValues._array[2] != 0;
-            header[5] = NpcAiValues._array[3] != 0;
+            header[2] = _npcAiValues._array[0] != 0;
+            header[3] = _npcAiValues._array[1] != 0;
+            header[4] = _npcAiValues._array[2] != 0;
+            header[5] = _npcAiValues._array[3] != 0;
             header[6] = _npcSpriteDirection;
             header[7] = _isNpcAtMaxHealth;
 
             writer.Write(header);
-            if (header[2]) writer.Write(NpcAiValues._array[0]);
-            if (header[3]) writer.Write(NpcAiValues._array[1]);
-            if (header[4]) writer.Write(NpcAiValues._array[2]);
-            if (header[5]) writer.Write(NpcAiValues._array[3]);
+            if (header[2]) writer.Write(_npcAiValues._array[0]);
+            if (header[3]) writer.Write(_npcAiValues._array[1]);
+            if (header[4]) writer.Write(_npcAiValues._array[2]);
+            if (header[5]) writer.Write(_npcAiValues._array[3]);
 
             writer.Write((short)_npcType);
 

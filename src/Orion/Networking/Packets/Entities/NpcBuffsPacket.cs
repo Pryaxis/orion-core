@@ -29,9 +29,10 @@ namespace Orion.Networking.Packets.Entities {
     [PublicAPI]
     public sealed class NpcBuffsPacket : Packet {
         private short _npcIndex;
+        [NotNull] private readonly DirtiableArray<Buff> _npcBuffs = new DirtiableArray<Buff>(Terraria.NPC.maxBuffs);
 
         /// <inheritdoc />
-        public override bool IsDirty => base.IsDirty || NpcBuffs.IsDirty;
+        public override bool IsDirty => base.IsDirty || _npcBuffs.IsDirty;
 
         /// <inheritdoc />
         public override PacketType Type => PacketType.NpcBuffs;
@@ -51,12 +52,12 @@ namespace Orion.Networking.Packets.Entities {
         /// Gets the NPC's buffs. The buff durations are limited to approximately 546.1 seconds.
         /// </summary>
         [NotNull]
-        public DirtiableArray<Buff> NpcBuffs { get; } = new DirtiableArray<Buff>(Terraria.NPC.maxBuffs);
+        public IArray<Buff> NpcBuffs => _npcBuffs;
 
         /// <inheritdoc />
         public override void Clean() {
             base.Clean();
-            NpcBuffs.Clean();
+            _npcBuffs.Clean();
         }
 
         /// <inheritdoc />
@@ -65,15 +66,15 @@ namespace Orion.Networking.Packets.Entities {
 
         private protected override void ReadFromReader(BinaryReader reader, PacketContext context) {
             _npcIndex = reader.ReadInt16();
-            for (var i = 0; i < NpcBuffs.Count; ++i) {
-                NpcBuffs._array[i] = new Buff((BuffType)reader.ReadByte(),
-                                              TimeSpan.FromSeconds(reader.ReadInt16() / 60.0));
+            for (var i = 0; i < _npcBuffs.Count; ++i) {
+                _npcBuffs._array[i] = new Buff((BuffType)reader.ReadByte(),
+                                               TimeSpan.FromSeconds(reader.ReadInt16() / 60.0));
             }
         }
 
         private protected override void WriteToWriter(BinaryWriter writer, PacketContext context) {
             writer.Write(_npcIndex);
-            foreach (var buff in NpcBuffs) {
+            foreach (var buff in _npcBuffs) {
                 writer.Write((byte)buff.BuffType);
 
                 var ticks = (int)(buff.Duration.TotalSeconds * 60.0);

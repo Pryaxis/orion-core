@@ -27,8 +27,11 @@ namespace Orion.Networking.Packets.World {
     /// </summary>
     [PublicAPI]
     public sealed class TravelingMerchantShopPacket : Packet {
+        [NotNull] private readonly DirtiableArray<ItemType> _shopItemTypes =
+            new DirtiableArray<ItemType>(Terraria.Chest.maxItems);
+
         /// <inheritdoc />
-        public override bool IsDirty => base.IsDirty || ShopItemTypes.IsDirty;
+        public override bool IsDirty => base.IsDirty || _shopItemTypes.IsDirty;
 
         /// <inheritdoc />
         public override PacketType Type => PacketType.TravelingMerchantShop;
@@ -37,7 +40,7 @@ namespace Orion.Networking.Packets.World {
         /// Gets the shop's item types.
         /// </summary>
         [NotNull]
-        public DirtiableArray<ItemType> ShopItemTypes { get; } = new DirtiableArray<ItemType>(Terraria.Chest.maxItems);
+        public IArray<ItemType> ShopItemTypes => _shopItemTypes;
 
         /// <inheritdoc />
         [ExcludeFromCodeCoverage]
@@ -46,17 +49,17 @@ namespace Orion.Networking.Packets.World {
         /// <inheritdoc />
         public override void Clean() {
             base.Clean();
-            ShopItemTypes.Clean();
+            _shopItemTypes.Clean();
         }
 
         private protected override void ReadFromReader(BinaryReader reader, PacketContext context) {
-            for (var i = 0; i < ShopItemTypes.Count; ++i) {
-                ShopItemTypes._array[i] = (ItemType)reader.ReadInt16();
+            for (var i = 0; i < _shopItemTypes.Count; ++i) {
+                _shopItemTypes._array[i] = (ItemType)reader.ReadInt16();
             }
         }
 
         private protected override void WriteToWriter(BinaryWriter writer, PacketContext context) {
-            foreach (var itemType in ShopItemTypes) {
+            foreach (var itemType in _shopItemTypes) {
                 writer.Write((short)itemType);
             }
         }

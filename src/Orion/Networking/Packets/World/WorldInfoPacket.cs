@@ -59,6 +59,10 @@ namespace Orion.Networking.Packets.World {
         private byte _hellBackgroundStyle;
         private float _windSpeed;
         private byte _numberOfClouds;
+        [NotNull] private readonly DirtiableArray<int> _treeStyleBoundaries = new DirtiableArray<int>(3);
+        [NotNull] private readonly DirtiableArray<byte> _treeStyles = new DirtiableArray<byte>(4);
+        [NotNull] private readonly DirtiableArray<int> _caveBackgroundStyleBoundaries = new DirtiableArray<int>(3);
+        [NotNull] private readonly DirtiableArray<byte> _caveBackgroundStyles = new DirtiableArray<byte>(4);
         private float _rain;
         private bool _hasSmashedShadowOrb;
         private bool _hasDefeatedEyeOfCthulhu;
@@ -105,8 +109,8 @@ namespace Orion.Networking.Packets.World {
         private float _sandstormIntensity;
 
         /// <inheritdoc />
-        public override bool IsDirty => base.IsDirty || TreeStyleBoundaries.IsDirty || TreeStyles.IsDirty ||
-                                        CaveBackgroundStyleBoundaries.IsDirty || CaveBackgroundStyles.IsDirty;
+        public override bool IsDirty => base.IsDirty || _treeStyleBoundaries.IsDirty || _treeStyles.IsDirty ||
+                                        _caveBackgroundStyleBoundaries.IsDirty || _caveBackgroundStyles.IsDirty;
 
         /// <inheritdoc />
         public override PacketType Type => PacketType.WorldInfo;
@@ -436,25 +440,25 @@ namespace Orion.Networking.Packets.World {
         /// Get the tree style boundaries.
         /// </summary>
         [NotNull]
-        public DirtiableArray<int> TreeStyleBoundaries { get; } = new DirtiableArray<int>(3);
+        public IArray<int> TreeStyleBoundaries => _treeStyleBoundaries;
 
         /// <summary>
         /// Gets the tree styles.
         /// </summary>
         [NotNull]
-        public DirtiableArray<byte> TreeStyles { get; } = new DirtiableArray<byte>(4);
+        public IArray<byte> TreeStyles => _treeStyles;
 
         /// <summary>
         /// Gets the cave background style boundaries.
         /// </summary>
         [NotNull]
-        public DirtiableArray<int> CaveBackgroundStyleBoundaries { get; } = new DirtiableArray<int>(3);
+        public IArray<int> CaveBackgroundStyleBoundaries => _caveBackgroundStyleBoundaries;
 
         /// <summary>
         /// Gets the cave background styles.
         /// </summary>
         [NotNull]
-        public DirtiableArray<byte> CaveBackgroundStyles { get; } = new DirtiableArray<byte>(4);
+        public IArray<byte> CaveBackgroundStyles => _caveBackgroundStyles;
 
         /// <summary>
         /// Gets or sets the rain.
@@ -944,10 +948,10 @@ namespace Orion.Networking.Packets.World {
         /// <inheritdoc />
         public override void Clean() {
             base.Clean();
-            TreeStyleBoundaries.Clean();
-            TreeStyles.Clean();
-            CaveBackgroundStyleBoundaries.Clean();
-            CaveBackgroundStyles.Clean();
+            _treeStyleBoundaries.Clean();
+            _treeStyles.Clean();
+            _caveBackgroundStyleBoundaries.Clean();
+            _caveBackgroundStyles.Clean();
         }
 
         /// <inheritdoc />
@@ -989,19 +993,19 @@ namespace Orion.Networking.Packets.World {
             _numberOfClouds = reader.ReadByte();
 
             for (var i = 0; i < TreeStyleBoundaries.Count; ++i) {
-                TreeStyleBoundaries._array[i] = reader.ReadInt32();
+                _treeStyleBoundaries._array[i] = reader.ReadInt32();
             }
 
             for (var i = 0; i < TreeStyles.Count; ++i) {
-                TreeStyles._array[i] = reader.ReadByte();
+                _treeStyles._array[i] = reader.ReadByte();
             }
 
             for (var i = 0; i < CaveBackgroundStyleBoundaries.Count; ++i) {
-                CaveBackgroundStyleBoundaries._array[i] = reader.ReadInt32();
+                _caveBackgroundStyleBoundaries._array[i] = reader.ReadInt32();
             }
 
             for (var i = 0; i < CaveBackgroundStyles.Count; ++i) {
-                CaveBackgroundStyles._array[i] = reader.ReadByte();
+                _caveBackgroundStyles._array[i] = reader.ReadByte();
             }
 
             _rain = reader.ReadSingle();
@@ -1092,19 +1096,19 @@ namespace Orion.Networking.Packets.World {
             writer.Write(_windSpeed);
             writer.Write(_numberOfClouds);
 
-            foreach (var boundary in TreeStyleBoundaries) {
+            foreach (var boundary in _treeStyleBoundaries) {
                 writer.Write(boundary);
             }
 
-            foreach (var style in TreeStyles) {
+            foreach (var style in _treeStyles) {
                 writer.Write(style);
             }
 
-            foreach (var boundary in CaveBackgroundStyleBoundaries) {
+            foreach (var boundary in _caveBackgroundStyleBoundaries) {
                 writer.Write(boundary);
             }
 
-            foreach (var style in CaveBackgroundStyles) {
+            foreach (var style in _caveBackgroundStyles) {
                 writer.Write(style);
             }
 

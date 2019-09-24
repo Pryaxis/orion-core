@@ -44,8 +44,11 @@ namespace Orion.Networking.Packets.World.Tiles {
         private short _sectionHeight;
         [NotNull, ItemNotNull] private NetworkTiles _sectionTiles = new NetworkTiles(0, 0);
 
+        [NotNull] [ItemNotNull]
+        private readonly DirtiableList<NetworkTileEntity> _sectionTileEntities = new DirtiableList<NetworkTileEntity>();
+
         /// <inheritdoc />
-        public override bool IsDirty => base.IsDirty || SectionTiles.IsDirty || SectionTileEntities.IsDirty;
+        public override bool IsDirty => base.IsDirty || SectionTiles.IsDirty || _sectionTileEntities.IsDirty;
 
         /// <inheritdoc />
         public override PacketType Type => PacketType.Section;
@@ -122,13 +125,13 @@ namespace Orion.Networking.Packets.World.Tiles {
         /// Gets the section's tile entities.
         /// </summary>
         [NotNull, ItemNotNull]
-        public DirtiableList<NetworkTileEntity> SectionTileEntities { get; } = new DirtiableList<NetworkTileEntity>();
+        public IList<NetworkTileEntity> SectionTileEntities => _sectionTileEntities;
 
         /// <inheritdoc />
         public override void Clean() {
             base.Clean();
             SectionTiles.Clean();
-            SectionTileEntities.Clean();
+            _sectionTileEntities.Clean();
         }
 
         /// <inheritdoc />
@@ -268,14 +271,13 @@ namespace Orion.Networking.Packets.World.Tiles {
             void ReadTileEntities(TileEntityType? typeHint = null) {
                 var number = reader.ReadInt16();
                 for (var i = 0; i < number; ++i) {
-                    SectionTileEntities.Add(NetworkTileEntity.ReadFromReader(reader, true, typeHint));
+                    _sectionTileEntities._list.Add(NetworkTileEntity.ReadFromReader(reader, true, typeHint));
                 }
             }
 
             ReadTileEntities(TileEntityType.Chest);
             ReadTileEntities(TileEntityType.Sign);
             ReadTileEntities();
-            SectionTileEntities.Clean();
         }
 
         private void WriteToWriterImpl(BinaryWriter writer) {
@@ -402,7 +404,7 @@ namespace Orion.Networking.Packets.World.Tiles {
             var chests = new List<NetworkTileEntity>();
             var signs = new List<NetworkTileEntity>();
             var notChestsOrSigns = new List<NetworkTileEntity>();
-            foreach (var tileEntity in SectionTileEntities) {
+            foreach (var tileEntity in _sectionTileEntities) {
                 switch (tileEntity) {
                 case NetworkChest _:
                     chests.Add(tileEntity);

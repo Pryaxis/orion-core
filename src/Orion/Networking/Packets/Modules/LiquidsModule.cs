@@ -15,6 +15,7 @@
 // You should have received a copy of the GNU General Public License
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
+using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using JetBrains.Annotations;
@@ -27,8 +28,11 @@ namespace Orion.Networking.Packets.Modules {
     /// </summary>
     [PublicAPI]
     public class LiquidsModule : Module {
+        [NotNull] [ItemNotNull]
+        private readonly DirtiableList<NetworkLiquid> _liquids = new DirtiableList<NetworkLiquid>();
+
         /// <inheritdoc />
-        public override bool IsDirty => base.IsDirty || Liquids.IsDirty;
+        public override bool IsDirty => base.IsDirty || _liquids.IsDirty;
 
         /// <inheritdoc />
         public override ModuleType Type => ModuleType.Liquids;
@@ -37,12 +41,12 @@ namespace Orion.Networking.Packets.Modules {
         /// Gets the liquids.
         /// </summary>
         [NotNull, ItemNotNull]
-        public DirtiableList<NetworkLiquid> Liquids { get; } = new DirtiableList<NetworkLiquid>();
+        public IList<NetworkLiquid> Liquids => _liquids;
 
         /// <inheritdoc />
         public override void Clean() {
             base.Clean();
-            Liquids.Clean();
+            _liquids.Clean();
         }
 
         /// <inheritdoc />
@@ -52,13 +56,13 @@ namespace Orion.Networking.Packets.Modules {
         private protected override void ReadFromReader(BinaryReader reader, PacketContext context) {
             var numberOfLiquidChanges = reader.ReadUInt16();
             for (var i = 0; i < numberOfLiquidChanges; ++i) {
-                Liquids._list.Add(NetworkLiquid.ReadFromReader(reader, true));
+                _liquids._list.Add(NetworkLiquid.ReadFromReader(reader, true));
             }
         }
 
         private protected override void WriteToWriter(BinaryWriter writer, PacketContext context) {
-            writer.Write((ushort)Liquids.Count);
-            foreach (var liquid in Liquids) {
+            writer.Write((ushort)_liquids.Count);
+            foreach (var liquid in _liquids) {
                 liquid.WriteToWriter(writer, true);
             }
         }
