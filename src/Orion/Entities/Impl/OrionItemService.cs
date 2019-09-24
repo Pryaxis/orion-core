@@ -23,6 +23,7 @@ using JetBrains.Annotations;
 using Microsoft.Xna.Framework;
 using Orion.Events;
 using Orion.Events.Entities;
+using OTAPI;
 
 namespace Orion.Entities.Impl {
     internal sealed class OrionItemService : OrionService, IItemService {
@@ -53,8 +54,8 @@ namespace Orion.Entities.Impl {
             _terrariaItems = Terraria.Main.item;
             _items = new OrionItem[_terrariaItems.Count];
 
-            OTAPI.Hooks.Item.PreSetDefaultsById = PreSetDefaultsByIdHandler;
-            OTAPI.Hooks.Item.PreUpdate = PreUpdateHandler;
+            Hooks.Item.PreSetDefaultsById = PreSetDefaultsByIdHandler;
+            Hooks.Item.PreUpdate = PreUpdateHandler;
         }
 
         public IEnumerator<IItem> GetEnumerator() {
@@ -80,20 +81,20 @@ namespace Orion.Entities.Impl {
             return itemIndex >= 0 && itemIndex < Count ? this[itemIndex] : null;
         }
 
-        private OTAPI.HookResult PreSetDefaultsByIdHandler([NotNull] Terraria.Item terrariaItem, ref int type,
-                                                           ref bool noMaterialCheck) {
+        private HookResult PreSetDefaultsByIdHandler([NotNull] Terraria.Item terrariaItem, ref int type,
+                                                     ref bool noMaterialCheck) {
             var item = new OrionItem(terrariaItem);
             var args = new ItemSetDefaultsEventArgs(item, (ItemType)type);
             ItemSetDefaults?.Invoke(this, args);
             type = (int)args.ItemType;
-            return args.IsCanceled ? OTAPI.HookResult.Cancel : OTAPI.HookResult.Continue;
+            return args.IsCanceled ? HookResult.Cancel : HookResult.Continue;
         }
 
-        private OTAPI.HookResult PreUpdateHandler([NotNull] Terraria.Item terrariaItem, ref int i) {
+        private HookResult PreUpdateHandler([NotNull] Terraria.Item terrariaItem, ref int i) {
             var item = new OrionItem(terrariaItem);
             var args = new ItemUpdateEventArgs(item);
             ItemUpdate?.Invoke(this, args);
-            return args.IsCanceled ? OTAPI.HookResult.Cancel : OTAPI.HookResult.Continue;
+            return args.IsCanceled ? HookResult.Cancel : HookResult.Continue;
         }
     }
 }

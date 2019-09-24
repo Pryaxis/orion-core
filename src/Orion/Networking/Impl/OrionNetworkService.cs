@@ -27,6 +27,7 @@ using Orion.Events.Entities;
 using Orion.Events.Networking;
 using Orion.Networking.Packets;
 using Orion.Networking.Packets.Entities;
+using OTAPI;
 
 namespace Orion.Networking.Impl {
     internal sealed class OrionNetworkService : OrionService, INetworkService {
@@ -49,21 +50,21 @@ namespace Orion.Networking.Impl {
             _receiveHandlers[PacketType.PlayerInventorySlot] = PlayerInventorySlotHandler;
             _receiveHandlers[PacketType.PlayerJoin] = PlayerJoinHandler;
 
-            OTAPI.Hooks.Net.ReceiveData = ReceiveDataHandler;
-            OTAPI.Hooks.Net.SendBytes = SendBytesHandler;
-            OTAPI.Hooks.Net.RemoteClient.PreReset = PreResetHandler;
+            Hooks.Net.ReceiveData = ReceiveDataHandler;
+            Hooks.Net.SendBytes = SendBytesHandler;
+            Hooks.Net.RemoteClient.PreReset = PreResetHandler;
         }
 
         protected override void Dispose(bool disposeManaged) {
             if (!disposeManaged) return;
 
-            OTAPI.Hooks.Net.ReceiveData = null;
-            OTAPI.Hooks.Net.SendBytes = null;
+            Hooks.Net.ReceiveData = null;
+            Hooks.Net.SendBytes = null;
         }
 
-        private OTAPI.HookResult ReceiveDataHandler([NotNull] Terraria.MessageBuffer buffer, ref byte packetId,
-                                                    ref int readOffset, ref int start, ref int length) {
-            if (_shouldIgnoreNextReceiveData.Value) return OTAPI.HookResult.Continue;
+        private HookResult ReceiveDataHandler([NotNull] Terraria.MessageBuffer buffer, ref byte packetId,
+                                              ref int readOffset, ref int start, ref int length) {
+            if (_shouldIgnoreNextReceiveData.Value) return HookResult.Continue;
 
             // Offset start and length by two since the packet length field is not included.
             var stream = new MemoryStream(buffer.readBuffer, start - 2, length + 2);
@@ -71,16 +72,16 @@ namespace Orion.Networking.Impl {
             var packet = Packet.ReadFromStream(stream, PacketContext.Server);
             var args = new PacketReceiveEventArgs(sender, packet);
             PacketReceive?.Invoke(this, args);
-            if (args.IsCanceled) return OTAPI.HookResult.Cancel;
+            if (args.IsCanceled) return HookResult.Cancel;
             packet = args.Packet;
 
             if (_receiveHandlers.TryGetValue(packet.Type, out var handler)) {
                 handler(args);
-                if (args.IsCanceled) return OTAPI.HookResult.Cancel;
+                if (args.IsCanceled) return HookResult.Cancel;
                 packet = args.Packet;
             }
 
-            if (!args.IsDirty) return OTAPI.HookResult.Continue;
+            if (!args.IsDirty) return HookResult.Continue;
 
             var oldBuffer = buffer.readBuffer;
             var newStream = new MemoryStream();
@@ -95,33 +96,33 @@ namespace Orion.Networking.Impl {
             _shouldIgnoreNextReceiveData.Value = false;
             buffer.readBuffer = oldBuffer;
             buffer.ResetReader();
-            return OTAPI.HookResult.Cancel;
+            return HookResult.Cancel;
         }
 
-        private OTAPI.HookResult SendBytesHandler(ref int remoteClient, ref byte[] data, ref int offset, ref int size,
-                                                  [CanBeNull] ref Terraria.Net.Sockets.SocketSendCallback callback,
-                                                  [CanBeNull] ref object state) {
+        private HookResult SendBytesHandler(ref int remoteClient, ref byte[] data, ref int offset, ref int size,
+                                            [CanBeNull] ref Terraria.Net.Sockets.SocketSendCallback callback,
+                                            [CanBeNull] ref object state) {
             var stream = new MemoryStream(data, offset, size);
             var receiver = _playerService.Value[remoteClient];
             var packet = Packet.ReadFromStream(stream, PacketContext.Client);
             var args = new PacketSendEventArgs(receiver, packet);
             PacketSend?.Invoke(this, args);
-            if (args.IsCanceled) return OTAPI.HookResult.Cancel;
-            if (!args.IsDirty) return OTAPI.HookResult.Continue;
+            if (args.IsCanceled) return HookResult.Cancel;
+            if (!args.IsDirty) return HookResult.Continue;
 
             var newStream = new MemoryStream();
             args.Packet.WriteToStream(newStream, PacketContext.Server);
             data = newStream.ToArray();
             offset = 0;
             size = data.Length;
-            return OTAPI.HookResult.Continue;
+            return HookResult.Continue;
         }
 
-        private OTAPI.HookResult PreResetHandler([NotNull] Terraria.RemoteClient remoteClient) {
+        private HookResult PreResetHandler([NotNull] Terraria.RemoteClient remoteClient) {
             var player = _playerService.Value[remoteClient.Id];
             var args = new PlayerDisconnectedEventArgs(player);
             _playerService.Value.PlayerDisconnected?.Invoke(this, args);
-            return OTAPI.HookResult.Continue;
+            return HookResult.Continue;
         }
 
         private void PlayerConnectHandler([NotNull] PacketReceiveEventArgs args_) {

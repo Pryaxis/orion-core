@@ -63,6 +63,66 @@ namespace Orion.Entities.Impl {
             func.Should().Throw<IndexOutOfRangeException>();
         }
 
+        [Fact]
+        public void ItemSetDefaults_IsCorrect() {
+            OrionItem argsItem = null;
+            _itemService.ItemSetDefaults += (sender, args) => {
+                argsItem = (OrionItem)args.Item;
+                args.ItemType.Should().Be(ItemType.Sdmg);
+            };
+
+            Terraria.Main.item[0].SetDefaults((int)ItemType.Sdmg);
+
+            argsItem.Should().NotBeNull();
+            argsItem.Wrapped.Should().BeSameAs(Terraria.Main.item[0]);
+        }
+
+        [Theory]
+        [InlineData(ItemType.CopperPickaxe, ItemType.IronPickaxe)]
+        [InlineData(ItemType.StoneBlock, ItemType.None)]
+        public void ItemSetDefaults_ModifyType_IsCorrect(ItemType oldType, ItemType newType) {
+            _itemService.ItemSetDefaults += (sender, args) => {
+                args.ItemType = newType;
+            };
+
+            Terraria.Main.item[0].SetDefaults((int)oldType);
+
+            Terraria.Main.item[0].type.Should().Be((int)newType);
+        }
+
+        [Fact]
+        public void ItemSetDefaults_Canceled_IsCorrect() {
+            _itemService.ItemSetDefaults += (sender, args) => {
+                args.IsCanceled = true;
+            };
+
+            Terraria.Main.item[0].SetDefaults((int)ItemType.Sdmg);
+
+            Terraria.Main.item[0].type.Should().Be(0);
+        }
+
+        [Fact]
+        public void ItemUpdate_IsCorrect() {
+            OrionItem argsItem = null;
+            _itemService.ItemUpdate += (sender, args) => {
+                argsItem = (OrionItem)args.Item;
+            };
+
+            Terraria.Main.item[0].UpdateItem(0);
+
+            argsItem.Should().NotBeNull();
+            argsItem.Wrapped.Should().BeSameAs(Terraria.Main.item[0]);
+        }
+
+        [Fact]
+        public void GetEnumerator_IsCorrect() {
+            var items = _itemService.ToList();
+
+            for (var i = 0; i < items.Count; ++i) {
+                ((OrionItem)items[i]).Wrapped.Should().BeSameAs(Terraria.Main.item[i]);
+            }
+        }
+
         public static readonly IEnumerable<object[]> SpawnItemData = new List<object[]> {
             new object[] {ItemType.StoneBlock, 100, ItemPrefix.None},
             new object[] {ItemType.Sdmg, 1, ItemPrefix.Unreal},
@@ -89,66 +149,6 @@ namespace Orion.Entities.Impl {
             item.Type.Should().Be(type);
             item.StackSize.Should().Be(stackSize);
             item.Prefix.Should().Be(prefix);
-        }
-
-        [Fact]
-        public void ItemSetDefaults_IsCorrect() {
-            OrionItem argsItem = null;
-            _itemService.ItemSetDefaults += (sender, args) => {
-                argsItem = (OrionItem)args.Item;
-            };
-
-            var item = (OrionItem)_itemService.SpawnItem(ItemType.Sdmg, Vector2.Zero, 1, ItemPrefix.Unreal);
-
-            argsItem.Should().NotBeNull();
-            argsItem.Wrapped.Should().BeSameAs(item.Wrapped);
-        }
-
-        [Theory]
-        [InlineData(ItemType.CopperPickaxe, ItemType.IronPickaxe)]
-        [InlineData(ItemType.StoneBlock, ItemType.None)]
-        public void ItemSetDefaults_ModifyType_IsCorrect(ItemType oldType, ItemType newType) {
-            _itemService.ItemSetDefaults += (sender, args) => {
-                args.ItemType = newType;
-            };
-
-            var item = _itemService.SpawnItem(oldType, Vector2.Zero);
-
-            item.Type.Should().Be(newType);
-        }
-
-        [Fact]
-        public void ItemSetDefaults_Canceled_IsCorrect() {
-            _itemService.ItemSetDefaults += (sender, args) => {
-                args.IsCanceled = true;
-            };
-
-            var item = _itemService.SpawnItem(ItemType.Sdmg, Vector2.Zero);
-
-            item.Type.Should().Be(ItemType.None);
-        }
-
-        [Fact]
-        public void ItemUpdate_IsCorrect() {
-            OrionItem argsItem = null;
-            _itemService.ItemUpdate += (sender, args) => {
-                argsItem = (OrionItem)args.Item;
-            };
-            var item = (OrionItem)_itemService.SpawnItem(ItemType.Sdmg, Vector2.Zero);
-
-            item.Wrapped.UpdateItem(item.Index);
-
-            argsItem.Should().NotBeNull();
-            argsItem.Wrapped.Should().BeSameAs(item.Wrapped);
-        }
-
-        [Fact]
-        public void GetEnumerator_IsCorrect() {
-            var items = _itemService.ToList();
-
-            for (var i = 0; i < items.Count; ++i) {
-                ((OrionItem)items[i]).Wrapped.Should().BeSameAs(Terraria.Main.item[i]);
-            }
         }
     }
 }

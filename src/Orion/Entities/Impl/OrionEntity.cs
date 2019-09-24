@@ -49,8 +49,8 @@ namespace Orion.Entities.Impl {
         [NotNull]
         internal TTerrariaEntity Wrapped { get; }
 
-        protected OrionEntity([NotNull] TTerrariaEntity terrariaItem) {
-            Wrapped = terrariaItem;
+        protected OrionEntity([NotNull] TTerrariaEntity terrariaEntity) {
+            Wrapped = terrariaEntity;
         }
     }
 }

@@ -29,19 +29,19 @@ namespace Orion.Events.Entities {
         public bool IsCanceled { get; set; }
 
         /// <summary>
-        /// Gets or sets the NPC type.
+        /// Gets or sets the NPC's new type.
         /// </summary>
-        public NpcType NpcType { get; set; }
+        public NpcType NpcNewType { get; set; }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="NpcTransformEventArgs"/> class with the specified NPC and NPC
-        /// type.
+        /// Initializes a new instance of the <see cref="NpcTransformEventArgs"/> class with the specified NPC and NPC's
+        /// new type.
         /// </summary>
         /// <param name="npc">The NPC.</param>
-        /// <param name="npcType">The NPC type.</param>
+        /// <param name="npcNewType">The NPC's new type.</param>
         /// <exception cref="ArgumentNullException"><paramref name="npc"/> is <c>null</c>.</exception>
-        public NpcTransformEventArgs([NotNull] INpc npc, NpcType npcType) : base(npc) {
-            NpcType = npcType;
+        public NpcTransformEventArgs([NotNull] INpc npc, NpcType npcNewType) : base(npc) {
+            NpcNewType = npcNewType;
         }
     }
 }

@@ -17,41 +17,10 @@
 
 using System;
 using FluentAssertions;
-using Microsoft.Xna.Framework;
 using Xunit;
 
 namespace Orion.Entities.Impl {
     public class OrionItemTests {
-        [Fact]
-        public void GetIndex_IsCorrect() {
-            var terrariaItem = new Terraria.Item {whoAmI = 100};
-            var item = new OrionItem(terrariaItem);
-
-            item.Index.Should().Be(100);
-        }
-
-        [Theory]
-        [InlineData(true)]
-        [InlineData(false)]
-        public void GetIsActive_IsCorrect(bool isActive) {
-            var terrariaItem = new Terraria.Item {active = isActive};
-            var item = new OrionItem(terrariaItem);
-
-            item.IsActive.Should().Be(isActive);
-        }
-
-        [Theory]
-        [InlineData(true)]
-        [InlineData(false)]
-        public void SetIsActive_IsCorrect(bool isActive) {
-            var terrariaItem = new Terraria.Item();
-            var item = new OrionItem(terrariaItem);
-
-            item.IsActive = isActive;
-
-            terrariaItem.active.Should().Be(isActive);
-        }
-
         [Fact]
         public void GetName_IsCorrect() {
             var terrariaItem = new Terraria.Item {_nameOverride = "test"};
@@ -77,60 +46,6 @@ namespace Orion.Entities.Impl {
             Action action = () => item.Name = null;
 
             action.Should().Throw<ArgumentNullException>();
-        }
-
-        [Fact]
-        public void GetPosition_IsCorrect() {
-            var terrariaItem = new Terraria.Item {position = new Vector2(100, 100)};
-            var item = new OrionItem(terrariaItem);
-
-            item.Position.Should().Be(new Vector2(100, 100));
-        }
-
-        [Fact]
-        public void SetPosition_IsCorrect() {
-            var terrariaItem = new Terraria.Item();
-            var item = new OrionItem(terrariaItem);
-
-            item.Position = new Vector2(100, 100);
-
-            terrariaItem.position.Should().Be(new Vector2(100, 100));
-        }
-
-        [Fact]
-        public void GetVelocity_IsCorrect() {
-            var terrariaItem = new Terraria.Item {velocity = new Vector2(100, 100)};
-            var item = new OrionItem(terrariaItem);
-
-            item.Velocity.Should().Be(new Vector2(100, 100));
-        }
-
-        [Fact]
-        public void SetVelocity_IsCorrect() {
-            var terrariaItem = new Terraria.Item();
-            var item = new OrionItem(terrariaItem);
-
-            item.Velocity = new Vector2(100, 100);
-
-            terrariaItem.velocity.Should().Be(new Vector2(100, 100));
-        }
-
-        [Fact]
-        public void GetSize_IsCorrect() {
-            var terrariaItem = new Terraria.Item {Size = new Vector2(100, 100)};
-            var item = new OrionItem(terrariaItem);
-
-            item.Size.Should().Be(new Vector2(100, 100));
-        }
-
-        [Fact]
-        public void SetSize_IsCorrect() {
-            var terrariaItem = new Terraria.Item();
-            var item = new OrionItem(terrariaItem);
-
-            item.Size = new Vector2(100, 100);
-
-            terrariaItem.Size.Should().Be(new Vector2(100, 100));
         }
 
         [Fact]

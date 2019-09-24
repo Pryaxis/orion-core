@@ -15,17 +15,22 @@
 // You should have received a copy of the GNU General Public License
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
+using System;
 using JetBrains.Annotations;
 
 namespace Orion.Entities.Impl {
-    internal sealed class OrionItemStats : IItemStats {
-        [NotNull] internal Terraria.Item Wrapped { get; }
+    internal class OrionNpc : OrionEntity<Terraria.NPC>, INpc {
+        public override string Name {
+            get => Wrapped.GivenOrTypeName;
+            set => Wrapped._givenName = value ?? throw new ArgumentNullException(nameof(value));
+        }
 
-        public int MaxStackSize => Wrapped.maxStack;
-        public ItemRarity Rarity => (ItemRarity)Wrapped.rare;
+        public NpcType Type => (NpcType)Wrapped.netID;
 
-        public OrionItemStats([NotNull] Terraria.Item terrariaItem) {
-            Wrapped = terrariaItem;
+        public OrionNpc([NotNull] Terraria.NPC terrariaNpc) : base(terrariaNpc) { }
+
+        public void SetType(NpcType type) {
+            Wrapped.SetDefaults((int)type);
         }
     }
 }

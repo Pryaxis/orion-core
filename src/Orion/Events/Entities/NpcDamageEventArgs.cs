@@ -49,12 +49,6 @@ namespace Orion.Events.Entities {
         public bool IsCriticalHit { get; set; }
 
         /// <summary>
-        /// Gets or sets the damaging player.
-        /// </summary>
-        [CanBeNull]
-        public IPlayer DamagingPlayer { get; set; }
-
-        /// <summary>
         /// Initializes a new instance of the <see cref="NpcDamageEventArgs"/> class with the specified NPC.
         /// </summary>
         /// <param name="npc">The NPC.</param>
