@@ -21,7 +21,7 @@ using FluentAssertions;
 using Orion.Networking.Packets;
 using Xunit;
 
-namespace Orion.Events.Networking {
+namespace Orion.Events.Packets {
     public class PacketEventArgsTests {
         [Fact]
         public void Ctor_NotDirty() {

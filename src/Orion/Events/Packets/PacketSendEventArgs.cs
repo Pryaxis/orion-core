@@ -18,32 +18,31 @@
 using System;
 using JetBrains.Annotations;
 using Orion.Entities;
-using Orion.Networking;
 using Orion.Networking.Packets;
 
-namespace Orion.Events.Networking {
+namespace Orion.Events.Packets {
     /// <summary>
-    /// Provides data for the <see cref="INetworkService.PacketReceive"/> event.
+    /// Provides data for the <see cref="IPlayerService.PacketSend"/> event.
     /// </summary>
     [PublicAPI]
-    public sealed class PacketReceiveEventArgs : PacketEventArgs {
+    public sealed class PacketSendEventArgs : PacketEventArgs {
         /// <summary>
-        /// Gets the sender.
+        /// Gets the receiver.
         /// </summary>
         [NotNull]
-        public IPlayer Sender { get; }
+        public IPlayer Receiver { get; }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="PacketReceiveEventArgs"/> class with the given sender and
+        /// Initializes a new instance of the <see cref="PacketSendEventArgs"/> class with the given receiver and
         /// packet.
         /// </summary>
-        /// <param name="sender">The sender.</param>
+        /// <param name="receiver">The receiver.</param>
         /// <param name="packet">The packet.</param>
         /// <exception cref="ArgumentNullException">
-        /// <paramref name="sender"/> or <paramref name="packet"/> are <c>null</c>.
+        /// <paramref name="receiver"/> or <paramref name="packet"/> are <c>null</c>.
         /// </exception>
-        public PacketReceiveEventArgs([NotNull] IPlayer sender, [NotNull] Packet packet) : base(packet) {
-            Sender = sender ?? throw new ArgumentNullException(nameof(sender));
+        public PacketSendEventArgs([NotNull] IPlayer receiver, [NotNull] Packet packet) : base(packet) {
+            Receiver = receiver ?? throw new ArgumentNullException(nameof(receiver));
         }
     }
 }

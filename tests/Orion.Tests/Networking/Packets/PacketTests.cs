@@ -18,10 +18,9 @@
 using System;
 using System.IO;
 using FluentAssertions;
-using Orion.Networking.Packets;
 using Xunit;
 
-namespace Orion.Networking {
+namespace Orion.Networking.Packets {
     public class PacketTests {
         [Fact]
         public void ReadFromStream_NullStream_ThrowsArgumentNullException() {

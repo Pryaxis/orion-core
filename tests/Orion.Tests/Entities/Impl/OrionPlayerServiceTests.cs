@@ -18,6 +18,8 @@
 using System;
 using System.Linq;
 using FluentAssertions;
+using Microsoft.Xna.Framework;
+using Orion.Networking.Packets.Entities;
 using Xunit;
 
 namespace Orion.Entities.Impl {
@@ -68,6 +70,103 @@ namespace Orion.Entities.Impl {
             for (var i = 0; i < players.Count; ++i) {
                 ((OrionPlayer)players[i]).Wrapped.Should().BeSameAs(Terraria.Main.player[i]);
             }
+        }
+
+        [Fact]
+        public void PacketReceive_IsTriggered() {
+            var isRun = false;
+            _playerService.PacketReceive += (sender, args) => {
+                isRun = true;
+                args.Sender.Should().BeSameAs(_playerService[1]);
+            };
+
+            TestUtils.FakeReceiveBytes(1, PlayerConnectPacketTests.Bytes);
+
+            isRun.Should().BeTrue();
+        }
+
+        [Fact]
+        public void PacketReceive_PlayerConnect_IsTriggered() {
+            var isRun = false;
+            _playerService.PlayerConnect += (sender, args) => {
+                isRun = true;
+                args.Player.Should().BeSameAs(_playerService[1]);
+                args.PlayerVersionString.Should().Be("Terraria194");
+            };
+
+            TestUtils.FakeReceiveBytes(1, PlayerConnectPacketTests.Bytes);
+
+            isRun.Should().BeTrue();
+        }
+
+        [Fact]
+        public void PacketReceive_PlayerData_IsTriggered() {
+            var isRun = false;
+            _playerService.PlayerData += (sender, args) => {
+                isRun = true;
+                args.Player.Should().BeSameAs(_playerService[1]);
+                args.PlayerSkinType.Should().Be(2);
+                args.PlayerName.Should().Be("f");
+                args.PlayerHairDye.Should().Be(0);
+                args.PlayerHiddenVisualsFlags.Should().Be(0);
+                args.PlayerHiddenMiscFlags.Should().Be(0);
+                args.PlayerHairColor.Should().Be(new Color(26, 131, 54));
+                args.PlayerSkinColor.Should().Be(new Color(158, 74, 51));
+                args.PlayerEyeColor.Should().Be(new Color(47, 39, 88));
+                args.PlayerShirtColor.Should().Be(new Color(184, 58, 43));
+                args.PlayerUndershirtColor.Should().Be(new Color(69, 8, 97));
+                args.PlayerPantsColor.Should().Be(new Color(162, 167, 255));
+                args.PlayerShoeColor.Should().Be(new Color(212, 159, 76));
+                args.PlayerDifficulty.Should().Be(PlayerDifficulty.Softcore);
+            };
+
+            TestUtils.FakeReceiveBytes(1, PlayerDataPacketTests.Bytes);
+
+            isRun.Should().BeTrue();
+        }
+
+        [Fact]
+        public void PacketReceive_PlayerInventorySlot_IsTriggered() {
+            var isRun = false;
+            _playerService.PlayerInventorySlot += (sender, args) => {
+                isRun = true;
+                args.Player.Should().BeSameAs(_playerService[1]);
+                args.PlayerInventorySlotIndex.Should().Be(0);
+                args.ItemStackSize.Should().Be(1);
+                args.ItemPrefix.Should().Be(ItemPrefix.Godly);
+                args.ItemType.Should().Be(ItemType.CopperShortsword);
+            };
+
+            TestUtils.FakeReceiveBytes(1, PlayerInventorySlotPacketTests.Bytes);
+
+            isRun.Should().BeTrue();
+        }
+
+        [Fact]
+        public void PacketReceive_PlayerJoin_IsTriggered() {
+            var isRun = false;
+            _playerService.PlayerJoin += (sender, args) => {
+                isRun = true;
+                args.Player.Should().BeSameAs(_playerService[1]);
+            };
+
+            TestUtils.FakeReceiveBytes(1, PlayerJoinPacketTests.Bytes);
+
+            isRun.Should().BeTrue();
+        }
+
+        [Fact]
+        public void ResetClient_PlayerDisconnected_IsTriggered() {
+            var isRun = false;
+            _playerService.PlayerDisconnected += (sender, args) => {
+                isRun = true;
+                args.Player.Should().BeSameAs(_playerService[1]);
+            };
+            Terraria.Netplay.Clients[1].Id = 1;
+
+            Terraria.Netplay.Clients[1].Reset();
+
+            isRun.Should().BeTrue();
         }
     }
 }

@@ -18,6 +18,7 @@
 using JetBrains.Annotations;
 using Orion.Events;
 using Orion.Events.Entities;
+using Orion.Events.Packets;
 using Orion.Utils;
 
 namespace Orion.Entities {
@@ -26,6 +27,18 @@ namespace Orion.Entities {
     /// </summary>
     [PublicAPI]
     public interface IPlayerService : IReadOnlyArray<IPlayer>, IService {
+        /// <summary>
+        /// Gets or sets the event handlers that run when receiving a packet. This event can be canceled.
+        /// </summary>
+        [CanBeNull]
+        EventHandlerCollection<PacketReceiveEventArgs> PacketReceive { get; set; }
+
+        /// <summary>
+        /// Gets or sets the event handlers that run when sending a packet. This event can be canceled.
+        /// </summary>
+        [CanBeNull]
+        EventHandlerCollection<PacketSendEventArgs> PacketSend { get; set; }
+
         /// <summary>
         /// Gets or sets the event handlers that run when a player connects. This event can be canceled.
         /// </summary>

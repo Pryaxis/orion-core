@@ -20,7 +20,7 @@ using JetBrains.Annotations;
 using Orion.Networking.Packets;
 using Orion.Utils;
 
-namespace Orion.Events.Networking {
+namespace Orion.Events.Packets {
     /// <summary>
     /// Provides data for packet-related events.
     /// </summary>
