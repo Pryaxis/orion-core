@@ -18,6 +18,7 @@
 using System;
 using System.Linq;
 using FluentAssertions;
+using Microsoft.Xna.Framework;
 using Xunit;
 
 namespace Orion.Entities.Impl {
@@ -273,6 +274,29 @@ namespace Orion.Entities.Impl {
             for (var i = 0; i < npcs.Count; ++i) {
                 ((OrionNpc)npcs[i]).Wrapped.Should().BeSameAs(Terraria.Main.npc[i]);
             }
+        }
+
+        [Fact]
+        public void SpawnNpc_IsCorrect() {
+            var npc = _npcService.SpawnNpc(NpcType.BlueSlime, Vector2.Zero);
+
+            npc.Type.Should().Be(NpcType.BlueSlime);
+        }
+
+        [Fact]
+        public void SpawnNpc_AiValues_IsCorrect() {
+            var npc = _npcService.SpawnNpc(NpcType.BlueSlime, Vector2.Zero, new float[] {1, 2, 3, 4});
+
+            npc.Type.Should().Be(NpcType.BlueSlime);
+        }
+
+        [Theory]
+        [InlineData(3)]
+        [InlineData(5)]
+        public void SpawnNpc_AiValuesWrongLength_ThrowsArgumentException(int aiValuesLength) {
+            Func<INpc> func = () => _npcService.SpawnNpc(NpcType.BlueSlime, Vector2.Zero, new float[aiValuesLength]);   
+
+            func.Should().Throw<ArgumentException>();
         }
     }
 }

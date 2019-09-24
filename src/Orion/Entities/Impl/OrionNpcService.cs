@@ -80,7 +80,16 @@ namespace Orion.Entities.Impl {
         IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
 
         public INpc SpawnNpc(NpcType npcType, Vector2 position, float[] aiValues = null) {
-            throw new NotImplementedException();
+            if (aiValues != null && aiValues.Length != 4) {
+                throw new ArgumentException("Array does not have length 4.", nameof(aiValues));
+            }
+
+            var ai0 = aiValues?[0] ?? 0;
+            var ai1 = aiValues?[1] ?? 0;
+            var ai2 = aiValues?[2] ?? 0;
+            var ai3 = aiValues?[3] ?? 0;
+            var npcIndex = Terraria.NPC.NewNPC((int)position.X, (int)position.Y, (int)npcType, 0, ai0, ai1, ai2, ai3);
+            return npcIndex >= 0 && npcIndex < Count ? this[npcIndex] : null;
         }
 
         private HookResult PreSetDefaultsByIdHandler([NotNull] Terraria.NPC terrariaNpc, ref int type,
