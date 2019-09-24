@@ -23,5 +23,5 @@ namespace Orion.Projectiles {
     /// Represents a projectile service. Provides access to projectile-related events and methods.
     /// </summary>
     [PublicAPI]
-    public interface IProjectileService : IReadOnlyArray<IProjectile> { }
+    public interface IProjectileService : IReadOnlyArray<IProjectile>, IService { }
 }

@@ -22,5 +22,5 @@ namespace Orion.World {
     /// Represents a world service. Provides access to world-related events and methods.
     /// </summary>
     [PublicAPI]
-    public interface IWorldService { }
+    public interface IWorldService : IService { }
 }
