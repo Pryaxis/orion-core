@@ -29,21 +29,21 @@ namespace Orion.Utils {
 
         /// <inheritdoc />
         public T GetAnnotation<T>(string key, T defaultValue = default) {
-            if (key == null) throw new ArgumentNullException(nameof(key));
+            if (key is null) throw new ArgumentNullException(nameof(key));
 
             return _annotations.TryGetValue(key, out var value) ? (T)value : defaultValue;
         }
 
         /// <inheritdoc />
         public void SetAnnotation<T>(string key, T value) {
-            if (key == null) throw new ArgumentNullException(nameof(key));
+            if (key is null) throw new ArgumentNullException(nameof(key));
 
             _annotations[key] = value;
         }
 
         /// <inheritdoc />
         public bool RemoveAnnotation(string key) {
-            if (key == null) throw new ArgumentNullException(nameof(key));
+            if (key is null) throw new ArgumentNullException(nameof(key));
 
             return _annotations.Remove(key);
         }

@@ -18,6 +18,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using JetBrains.Annotations;
 using Microsoft.Xna.Framework;
@@ -35,6 +36,7 @@ namespace Orion.Entities.Impl {
         // Subtract 1 from the count. This is because Terraria has an extra slot.
         public int Count => _terrariaItems.Count - 1;
 
+        [NotNull]
         public IItem this[int index] {
             get {
                 if (index < 0 || index >= Count) throw new IndexOutOfRangeException();
@@ -43,6 +45,7 @@ namespace Orion.Entities.Impl {
                     _items[index] = new OrionItem(_terrariaItems[index]);
                 }
 
+                Debug.Assert(_items[index] != null, "_items[index] != null");
                 return _items[index];
             }
         }
@@ -51,6 +54,8 @@ namespace Orion.Entities.Impl {
         public EventHandlerCollection<ItemUpdateEventArgs> ItemUpdate { get; set; }
 
         public OrionItemService() {
+            Debug.Assert(Terraria.Main.item != null, "Terraria.Main.item != null");
+
             _terrariaItems = Terraria.Main.item;
             _items = new OrionItem[_terrariaItems.Count];
 

@@ -91,7 +91,7 @@ namespace Orion.Networking.World.Tiles {
         /// <exception cref="PacketException">The liquid type was invalid.</exception>
         [NotNull]
         public static NetworkLiquid ReadFromReader([NotNull] BinaryReader reader, bool shouldSwapCoords = false) {
-            if (reader == null) throw new ArgumentNullException(nameof(reader));
+            if (reader is null) throw new ArgumentNullException(nameof(reader));
 
             var coord1 = reader.ReadInt16();
             var coord2 = reader.ReadInt16();
@@ -119,7 +119,7 @@ namespace Orion.Networking.World.Tiles {
         /// <param name="shouldSwapCoords">A value indicating whether the X and Y values should be swapped.</param>
         /// <exception cref="ArgumentNullException"><paramref name="writer"/> is <c>null</c>.</exception>
         public void WriteToWriter([NotNull] BinaryWriter writer, bool shouldSwapCoords = false) {
-            if (writer == null) throw new ArgumentNullException(nameof(writer));
+            if (writer is null) throw new ArgumentNullException(nameof(writer));
 
             writer.Write(shouldSwapCoords ? _tileY : _tileX);
             writer.Write(shouldSwapCoords ? _tileX : _tileY);

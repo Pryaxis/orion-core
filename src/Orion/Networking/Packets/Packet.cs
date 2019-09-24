@@ -180,7 +180,7 @@ namespace Orion.Networking.Packets {
         /// <exception cref="PacketException">The packet could not be parsed correctly.</exception>
         [NotNull]
         public static Packet ReadFromStream([NotNull] Stream stream, PacketContext context) {
-            if (stream == null) throw new ArgumentNullException(nameof(stream));
+            if (stream is null) throw new ArgumentNullException(nameof(stream));
 
             try {
                 var reader = new BinaryReader(stream, Encoding.UTF8, true);
@@ -224,7 +224,7 @@ namespace Orion.Networking.Packets {
         /// <exception cref="ArgumentNullException"><paramref name="stream"/> is <c>null</c>.</exception>
         /// <exception cref="PacketException">The packet could not be written correctly.</exception>
         public void WriteToStream([NotNull] Stream stream, PacketContext context) {
-            if (stream == null) throw new ArgumentNullException(nameof(stream));
+            if (stream is null) throw new ArgumentNullException(nameof(stream));
 
             try {
                 var writer = new BinaryWriter(stream, Encoding.UTF8, true);

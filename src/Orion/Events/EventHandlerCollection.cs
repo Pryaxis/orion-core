@@ -38,11 +38,11 @@ namespace Orion.Events {
         [NotNull, ItemNotNull] private readonly ISet<Registration> _registrations;
 
         // This constructor is provided for testing only.
-        internal EventHandlerCollection(EventHandler<TEventArgs> handler) {
+        internal EventHandlerCollection([NotNull] EventHandler<TEventArgs> handler) {
             _registrations = new HashSet<Registration> {new Registration(handler, EventPriority.Normal)};
         }
 
-        private EventHandlerCollection(ISet<Registration> registrations) {
+        private EventHandlerCollection([NotNull] ISet<Registration> registrations) {
             _registrations = registrations;
         }
 
@@ -53,7 +53,7 @@ namespace Orion.Events {
         /// <param name="args">The event arguments.</param>
         /// <exception cref="ArgumentNullException"><paramref name="args"/> is <c>null</c>.</exception>
         public void Invoke([NotNull] object sender, [NotNull] TEventArgs args) {
-            if (args == null) throw new ArgumentNullException(nameof(args));
+            if (args is null) throw new ArgumentNullException(nameof(args));
 
             Log.Debug("Calling {Event} handlers", typeof(TEventArgs).Name);
 
@@ -80,7 +80,7 @@ namespace Orion.Events {
         public static EventHandlerCollection<TEventArgs> operator +(
             [CanBeNull] EventHandlerCollection<TEventArgs> collection,
             [NotNull] EventHandler<TEventArgs> handler) {
-            if (handler == null) throw new ArgumentNullException(nameof(handler));
+            if (handler is null) throw new ArgumentNullException(nameof(handler));
 
             Log.Debug("Registering {Event} handler from {Registrator}",
                       typeof(TEventArgs).Name, handler.Method.DeclaringType?.Name ?? "Unknown");
@@ -106,7 +106,7 @@ namespace Orion.Events {
         public static EventHandlerCollection<TEventArgs> operator -(
             [CanBeNull] EventHandlerCollection<TEventArgs> collection,
             [NotNull] EventHandler<TEventArgs> handler) {
-            if (handler == null) throw new ArgumentNullException(nameof(handler));
+            if (handler is null) throw new ArgumentNullException(nameof(handler));
 
             var attribute = handler.Method.GetCustomAttribute<EventHandlerAttribute>();
             var priority = attribute?.Priority ?? EventPriority.Normal;

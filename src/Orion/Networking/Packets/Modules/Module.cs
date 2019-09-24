@@ -54,7 +54,7 @@ namespace Orion.Networking.Packets.Modules {
         /// <returns>The resulting <see cref="Module"/> instance.</returns>
         [NotNull]
         public static Module ReadFromStream([NotNull] Stream stream, PacketContext context) {
-            if (stream == null) throw new ArgumentNullException(nameof(stream));
+            if (stream is null) throw new ArgumentNullException(nameof(stream));
 
             var reader = new BinaryReader(stream, Encoding.UTF8, true);
 
@@ -80,7 +80,7 @@ namespace Orion.Networking.Packets.Modules {
         /// <param name="context">The context with which to write the packet to.</param>
         /// <exception cref="ArgumentNullException"><paramref name="stream"/> is <c>null</c>.</exception>
         public void WriteToStream([NotNull] Stream stream, PacketContext context) {
-            if (stream == null) throw new ArgumentNullException(nameof(stream));
+            if (stream is null) throw new ArgumentNullException(nameof(stream));
 
             using (var writer = new BinaryWriter(stream, Encoding.UTF8, true)) {
                 writer.Write((ushort)Type);

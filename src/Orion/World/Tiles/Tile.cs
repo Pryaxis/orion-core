@@ -298,7 +298,7 @@ namespace Orion.World.Tiles {
         }
 
         bool ITile.isTheSameAs(ITile compTile) {
-            if (compTile == null) return false;
+            if (compTile is null) return false;
             if (((ITile)this).sTileHeader != compTile.sTileHeader) return false;
 
             if (((ITile)this).active()) {

@@ -100,7 +100,7 @@ namespace Orion.Networking.Packets.World.TileEntities {
             writer.Write(_chestY);
 
             // This packet's logic is actually insane... why is it set up this way?
-            if (_chestName == null) {
+            if (_chestName is null) {
                 writer.Write((byte)0);
             } else if (_chestName.Length == 0 || _chestName.Length > Terraria.Chest.MaxNameLength) {
                 writer.Write(byte.MaxValue);

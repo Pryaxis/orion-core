@@ -62,7 +62,7 @@ namespace Orion {
         /// <param name="assemblyPath">The assembly path.</param>
         /// <exception cref="ArgumentNullException"><paramref name="assemblyPath"/> is <c>null</c>.</exception>
         public void QueuePluginsFromPath([NotNull] string assemblyPath) {
-            if (assemblyPath == null) throw new ArgumentNullException(nameof(assemblyPath));
+            if (assemblyPath is null) throw new ArgumentNullException(nameof(assemblyPath));
 
             // Load the assembly from the path. We're using Assembly.Load with the bytes of the file so that we don't
             // hold a lock on the path, allowing the user to delete or upgrade the path.
@@ -101,7 +101,7 @@ namespace Orion {
         /// A value indicating whether the <see cref="OrionPlugin"/> instance was successfully unloaded.
         /// </returns>
         public bool UnloadPlugin([NotNull] OrionPlugin plugin) {
-            if (plugin == null) throw new ArgumentNullException(nameof(plugin));
+            if (plugin is null) throw new ArgumentNullException(nameof(plugin));
             if (!_plugins.Contains(plugin)) return false;
 
             var pluginType = plugin.GetType();

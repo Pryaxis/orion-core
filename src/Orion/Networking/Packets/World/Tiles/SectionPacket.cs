@@ -184,7 +184,7 @@ namespace Orion.Networking.Packets.World.Tiles {
             ReadTileEntitiesFromReaderImpl(reader);
         }
 
-        private void ReadTilesFromReaderImpl(BinaryReader reader) {
+        private void ReadTilesFromReaderImpl([NotNull] BinaryReader reader) {
             void ReadTile(NetworkTile tile, byte header, byte header2, byte header3) {
                 if ((header & 2) == 2) {
                     tile.IsBlockActive = true;
@@ -267,7 +267,7 @@ namespace Orion.Networking.Packets.World.Tiles {
             }
         }
 
-        private void ReadTileEntitiesFromReaderImpl(BinaryReader reader) {
+        private void ReadTileEntitiesFromReaderImpl([NotNull] BinaryReader reader) {
             void ReadTileEntities(TileEntityType? typeHint = null) {
                 var number = reader.ReadInt16();
                 for (var i = 0; i < number; ++i) {
@@ -280,7 +280,7 @@ namespace Orion.Networking.Packets.World.Tiles {
             ReadTileEntities();
         }
 
-        private void WriteToWriterImpl(BinaryWriter writer) {
+        private void WriteToWriterImpl([NotNull] BinaryWriter writer) {
             writer.Write(_startTileX);
             writer.Write(_startTileY);
             writer.Write(_sectionWidth);
@@ -290,7 +290,7 @@ namespace Orion.Networking.Packets.World.Tiles {
             WriteTileEntitiesToWriterImpl(writer);
         }
 
-        private void WriteTilesToWriterImpl(BinaryWriter writer) {
+        private void WriteTilesToWriterImpl([NotNull] BinaryWriter writer) {
             var buffer = new byte[15];
             var headerIndex = 0;
             byte header = 0;

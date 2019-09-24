@@ -61,7 +61,7 @@ namespace Orion.Networking.Packets.Modules {
 
         private protected override void WriteToWriter(BinaryWriter writer, PacketContext context) {
             // Satisfy the contract with a null module by writing an invalid module type.
-            if (_module == null) {
+            if (_module is null) {
                 writer.Write(ushort.MaxValue);
             } else {
                 _module.WriteToStream(writer.BaseStream, context);
