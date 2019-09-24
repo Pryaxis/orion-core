@@ -23,6 +23,8 @@ namespace Orion.Entities {
     /// <summary>
     /// Represents a buff.
     /// </summary>
+
+    // TODO: write WriterToWriter and ReadFromReader methods.
     [PublicAPI]
     public struct Buff {
         /// <summary>

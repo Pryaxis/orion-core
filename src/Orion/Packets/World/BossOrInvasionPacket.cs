@@ -21,13 +21,13 @@ using JetBrains.Annotations;
 
 namespace Orion.Packets.World {
     /// <summary>
-    /// Packet sent to summon a boss or an invasion. See <see cref="World.NetworkBossOrInvasion"/> for the
+    /// Packet sent to summon a boss or an invasion. See <see cref="BossOrInvasion"/> for the
     /// list of bosses or invasions.
     /// </summary>
     [PublicAPI]
     public sealed class BossOrInvasionPacket : Packet {
         private byte _summmonOnPlayerIndex;
-        private NetworkBossOrInvasion _networkBossOrInvasion;
+        private BossOrInvasion _bossOrInvasion;
 
         /// <inheritdoc />
         public override PacketType Type => PacketType.BossOrInvasion;
@@ -44,28 +44,28 @@ namespace Orion.Packets.World {
         }
 
         /// <summary>
-        /// Gets or sets the network boss or invasion.
+        /// Gets or sets the boss or invasion.
         /// </summary>
-        public NetworkBossOrInvasion NetworkBossOrInvasion {
-            get => _networkBossOrInvasion;
+        public BossOrInvasion BossOrInvasion {
+            get => _bossOrInvasion;
             set {
-                _networkBossOrInvasion = value;
+                _bossOrInvasion = value;
                 _isDirty = true;
             }
         }
 
         /// <inheritdoc />
         [ExcludeFromCodeCoverage]
-        public override string ToString() => $"{Type}[#={SummmonOnPlayerIndex}, {NetworkBossOrInvasion}]";
+        public override string ToString() => $"{Type}[#={SummmonOnPlayerIndex}, {BossOrInvasion}]";
 
         private protected override void ReadFromReader(BinaryReader reader, PacketContext context) {
             _summmonOnPlayerIndex = (byte)reader.ReadInt16();
-            _networkBossOrInvasion = (NetworkBossOrInvasion)reader.ReadInt16();
+            _bossOrInvasion = (BossOrInvasion)reader.ReadInt16();
         }
 
         private protected override void WriteToWriter(BinaryWriter writer, PacketContext context) {
             writer.Write((short)_summmonOnPlayerIndex);
-            writer.Write((short)_networkBossOrInvasion);
+            writer.Write((short)_bossOrInvasion);
         }
     }
 }

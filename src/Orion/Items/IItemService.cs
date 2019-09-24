@@ -31,11 +31,13 @@ namespace Orion.Items {
         /// Gets or sets the event handlers that occur when an item's defaults are being set. This event can be
         /// canceled.
         /// </summary>
+        [CanBeNull]
         EventHandlerCollection<ItemSetDefaultsEventArgs> ItemSetDefaults { get; set; }
 
         /// <summary>
         /// Gets or sets the event handlers that occur when an item is updating. This event can be canceled.
         /// </summary>
+        [CanBeNull]
         EventHandlerCollection<ItemUpdateEventArgs> ItemUpdate { get; set; }
 
         /// <summary>

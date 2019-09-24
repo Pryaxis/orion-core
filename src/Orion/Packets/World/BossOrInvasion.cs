@@ -19,10 +19,10 @@ using JetBrains.Annotations;
 
 namespace Orion.Packets.World {
     /// <summary>
-    /// Specifies a boss or invasion that is transmitted over the network.
+    /// Specifies a boss or invasion in a <see cref="BossOrInvasionPacket"/>.
     /// </summary>
     [PublicAPI]
-    public enum NetworkBossOrInvasion : short {
+    public enum BossOrInvasion : short {
         /// <summary>
         /// Indicates that the Moon Lord should be summoned.
         /// </summary>
