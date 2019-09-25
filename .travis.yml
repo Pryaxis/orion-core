@@ -4,10 +4,10 @@ matrix:
   include:
     - os: linux
       dist: xenial
-      dotnet: 2.2.401
+      dotnet: 3.0.100
       mono: none
 
 script:
   - dotnet restore
-  - dotnet build -f netstandard2.0 -c Release src/Orion/Orion.csproj
-  - dotnet test -f netcoreapp2.2 -c Release tests/Orion.Tests/Orion.Tests.csproj
+  - dotnet build -f netstandard2.1 -c Release src/Orion/Orion.csproj
+  - dotnet test -f netcoreapp3.0 -c Release tests/Orion.Tests/Orion.Tests.csproj
