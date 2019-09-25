@@ -15,10 +15,12 @@
 // You should have received a copy of the GNU General Public License
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
+using System;
 using JetBrains.Annotations;
 using Orion.Events;
 using Orion.Events.Packets;
 using Orion.Events.Players;
+using Orion.Packets;
 using Orion.Utils;
 
 namespace Orion.Players {
@@ -68,5 +70,12 @@ namespace Orion.Players {
         /// </summary>
         [CanBeNull]
         EventHandlerCollection<PlayerDisconnectedEventArgs> PlayerDisconnected { get; set; }
+
+        /// <summary>
+        /// Broadcasts the given packet.
+        /// </summary>
+        /// <param name="packet">The packet.</param>
+        /// <exception cref="ArgumentNullException"><paramref name="packet"/> is <c>null</c>.</exception>
+        void BroadcastPacket([NotNull] Packet packet);
     }
 }

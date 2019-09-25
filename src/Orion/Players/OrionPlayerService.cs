@@ -91,6 +91,10 @@ namespace Orion.Players {
         [ExcludeFromCodeCoverage]
         IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
 
+        public void BroadcastPacket(Packet packet) {
+            throw new NotImplementedException();
+        }
+
         private HookResult ReceiveDataHandler([NotNull] Terraria.MessageBuffer buffer, ref byte packetId,
                                               ref int readOffset, ref int start, ref int length) {
             if (_shouldIgnoreNextReceiveData.Value) return HookResult.Continue;
