@@ -29,12 +29,12 @@ namespace Orion.Items {
         /// Gets or sets the event handlers that occur when an item's defaults are being set. This event can be
         /// canceled.
         /// </summary>
-        EventHandlerCollection<ItemSetDefaultsEventArgs> ItemSetDefaults { get; set; }
+        EventHandlerCollection<ItemSetDefaultsEventArgs>? ItemSetDefaults { get; set; }
 
         /// <summary>
         /// Gets or sets the event handlers that occur when an item is updating. This event can be canceled.
         /// </summary>
-        EventHandlerCollection<ItemUpdateEventArgs> ItemUpdate { get; set; }
+        EventHandlerCollection<ItemUpdateEventArgs>? ItemUpdate { get; set; }
 
         /// <summary>
         /// Spawns and returns an item with the given item type at the specified position with the stack
@@ -45,6 +45,6 @@ namespace Orion.Items {
         /// <param name="stackSize">The stack size.</param>
         /// <param name="prefix">The item prefix..</param>
         /// <returns>The resulting item, or <c>null</c> if none was spawned.</returns>
-        IItem SpawnItem(ItemType itemType, Vector2 position, int stackSize = 1, ItemPrefix prefix = ItemPrefix.None);
+        IItem? SpawnItem(ItemType itemType, Vector2 position, int stackSize = 1, ItemPrefix prefix = ItemPrefix.None);
     }
 }

@@ -36,7 +36,7 @@ namespace Orion.Packets {
     /// Represents a packet. This is the form of communication between the server and clients.
     /// </summary>
     public abstract class Packet : IDirtiable {
-        private static readonly Func<Packet>[] PacketConstructors = {
+        private static readonly Func<Packet>?[] PacketConstructors = {
             /* 000 */ null,
             /* 001 */ () => new PlayerConnectPacket(),
             /* 002 */ () => new PlayerDisconnectPacket(),
@@ -191,7 +191,7 @@ namespace Orion.Packets {
 #else
                 reader.ReadUInt16();
 #endif
-                Func<Packet> GetPacketConstructor(byte packetTypeId) =>
+                Func<Packet>? GetPacketConstructor(byte packetTypeId) =>
                     packetTypeId < PacketConstructors.Length ? PacketConstructors[packetTypeId] : null;
 
                 var packetConstructor = GetPacketConstructor(reader.ReadByte()) ??

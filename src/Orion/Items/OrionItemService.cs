@@ -49,8 +49,8 @@ namespace Orion.Items {
             }
         }
 
-        public EventHandlerCollection<ItemSetDefaultsEventArgs> ItemSetDefaults { get; set; }
-        public EventHandlerCollection<ItemUpdateEventArgs> ItemUpdate { get; set; }
+        public EventHandlerCollection<ItemSetDefaultsEventArgs>? ItemSetDefaults { get; set; }
+        public EventHandlerCollection<ItemUpdateEventArgs>? ItemUpdate { get; set; }
 
         public OrionItemService() {
             Debug.Assert(Terraria.Main.item != null, "Terraria.Main.item != null");
@@ -80,8 +80,8 @@ namespace Orion.Items {
         IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
 
         /// <inheritdoc />
-        public IItem SpawnItem(ItemType itemType, Vector2 position, int stackSize = 1,
-                               ItemPrefix prefix = ItemPrefix.None) {
+        public IItem? SpawnItem(ItemType itemType, Vector2 position, int stackSize = 1,
+                                ItemPrefix prefix = ItemPrefix.None) {
             // Terraria has a mechanism of item caching which allows, for instance, The Plan to drop all wires at once.
             // We need to disable that temporarily so that our item *definitely* spawns.
             var oldItemCache = Terraria.Item.itemCaches[(int)itemType];

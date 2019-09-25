@@ -56,13 +56,13 @@ namespace Orion.Players {
             }
         }
 
-        public EventHandlerCollection<PacketReceiveEventArgs> PacketReceive { get; set; }
-        public EventHandlerCollection<PacketSendEventArgs> PacketSend { get; set; }
-        public EventHandlerCollection<PlayerConnectEventArgs> PlayerConnect { get; set; }
-        public EventHandlerCollection<PlayerDataEventArgs> PlayerData { get; set; }
-        public EventHandlerCollection<PlayerInventorySlotEventArgs> PlayerInventorySlot { get; set; }
-        public EventHandlerCollection<PlayerJoinEventArgs> PlayerJoin { get; set; }
-        public EventHandlerCollection<PlayerDisconnectedEventArgs> PlayerDisconnected { get; set; }
+        public EventHandlerCollection<PacketReceiveEventArgs>? PacketReceive { get; set; }
+        public EventHandlerCollection<PacketSendEventArgs>? PacketSend { get; set; }
+        public EventHandlerCollection<PlayerConnectEventArgs>? PlayerConnect { get; set; }
+        public EventHandlerCollection<PlayerDataEventArgs>? PlayerData { get; set; }
+        public EventHandlerCollection<PlayerInventorySlotEventArgs>? PlayerInventorySlot { get; set; }
+        public EventHandlerCollection<PlayerJoinEventArgs>? PlayerJoin { get; set; }
+        public EventHandlerCollection<PlayerDisconnectedEventArgs>? PlayerDisconnected { get; set; }
 
         public OrionPlayerService() {
             Debug.Assert(Terraria.Main.player != null, "Terraria.Main.player != null");

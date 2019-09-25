@@ -29,37 +29,37 @@ namespace Orion.Npcs {
         /// <summary>
         /// Gets or sets the event handlers that occur when an NPC's defaults are being set. This event can be canceled.
         /// </summary>
-        EventHandlerCollection<NpcSetDefaultsEventArgs> NpcSetDefaults { get; set; }
+        EventHandlerCollection<NpcSetDefaultsEventArgs>? NpcSetDefaults { get; set; }
 
         /// <summary>
         /// Gets or sets the event handlers that occur when an NPC is spawning. This event can be canceled.
         /// </summary>
-        EventHandlerCollection<NpcSpawnEventArgs> NpcSpawn { get; set; }
+        EventHandlerCollection<NpcSpawnEventArgs>? NpcSpawn { get; set; }
 
         /// <summary>
         /// Gets or sets the event handlers that occur when an NPC is updating. This event can be canceled.
         /// </summary>
-        EventHandlerCollection<NpcUpdateEventArgs> NpcUpdate { get; set; }
+        EventHandlerCollection<NpcUpdateEventArgs>? NpcUpdate { get; set; }
 
         /// <summary>
         /// Gets or sets the event handlers that occur when an NPC is transforming. This event can be canceled.
         /// </summary>
-        EventHandlerCollection<NpcTransformEventArgs> NpcTransform { get; set; }
+        EventHandlerCollection<NpcTransformEventArgs>? NpcTransform { get; set; }
 
         /// <summary>
         /// Gets or sets the event handlers that occur when an NPC is being damaged. This event can be canceled.
         /// </summary>
-        EventHandlerCollection<NpcDamageEventArgs> NpcDamage { get; set; }
+        EventHandlerCollection<NpcDamageEventArgs>? NpcDamage { get; set; }
 
         /// <summary>
         /// Gets or sets the event handlers that occur when an NPC is dropping a loot item. This event can be canceled.
         /// </summary>
-        EventHandlerCollection<NpcDropLootItemEventArgs> NpcDropLootItem { get; set; }
+        EventHandlerCollection<NpcDropLootItemEventArgs>? NpcDropLootItem { get; set; }
 
         /// <summary>
         /// Gets or sets the event handlers that occur when an NPC is killed.
         /// </summary>
-        EventHandlerCollection<NpcKilledEventArgs> NpcKilled { get; set; }
+        EventHandlerCollection<NpcKilledEventArgs>? NpcKilled { get; set; }
 
         /// <summary>
         /// Spawns an NPC with the given type at the specified position with the AI values.
@@ -71,6 +71,6 @@ namespace Orion.Npcs {
         /// </param>
         /// <returns>The resulting NPC, or <c>null</c> if none was spawned.</returns>
         /// <exception cref="ArgumentException"><paramref name="aiValues"/> does not have length 4.</exception>
-        INpc SpawnNpc(NpcType npcType, Vector2 position, float[] aiValues = null);
+        INpc? SpawnNpc(NpcType npcType, Vector2 position, float[]? aiValues = null);
     }
 }

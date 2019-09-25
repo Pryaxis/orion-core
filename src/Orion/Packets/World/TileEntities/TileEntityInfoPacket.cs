@@ -24,7 +24,7 @@ namespace Orion.Packets.World.TileEntities {
     /// </summary>
     public sealed class TileEntityInfoPacket : Packet {
         private int _tileEntityIndex;
-        private NetworkTileEntity _tileEntity;
+        private NetworkTileEntity? _tileEntity;
 
         /// <inheritdoc />
         public override PacketType Type => PacketType.TileEntityInfo;
@@ -46,7 +46,7 @@ namespace Orion.Packets.World.TileEntities {
         /// <summary>
         /// Gets or sets the tile entity. A value of <c>null</c> indicates a removal.
         /// </summary>
-        public NetworkTileEntity TileEntity {
+        public NetworkTileEntity? TileEntity {
             get => _tileEntity;
             set {
                 _tileEntity = value;

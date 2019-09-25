@@ -78,7 +78,7 @@ namespace Orion {
         /// Finishes loading <see cref="OrionPlugin"/> instances, running the given action for each plugin loaded.
         /// </summary>
         /// <param name="action">The action to run.</param>
-        public void FinishLoadingPlugins(Action<OrionPlugin> action = null) {
+        public void FinishLoadingPlugins(Action<OrionPlugin>? action = null) {
             foreach (var pluginType in _pluginTypesToLoad.Reverse()) {
                 var plugin = (OrionPlugin)this.Get(pluginType);
                 _plugins.Add(plugin);

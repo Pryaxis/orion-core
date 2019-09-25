@@ -30,37 +30,37 @@ namespace Orion.Players {
         /// <summary>
         /// Gets or sets the event handlers that run when receiving a packet. This event can be canceled.
         /// </summary>
-        EventHandlerCollection<PacketReceiveEventArgs> PacketReceive { get; set; }
+        EventHandlerCollection<PacketReceiveEventArgs>? PacketReceive { get; set; }
 
         /// <summary>
         /// Gets or sets the event handlers that run when sending a packet. This event can be canceled.
         /// </summary>
-        EventHandlerCollection<PacketSendEventArgs> PacketSend { get; set; }
+        EventHandlerCollection<PacketSendEventArgs>? PacketSend { get; set; }
 
         /// <summary>
         /// Gets or sets the event handlers that run when a player connects. This event can be canceled.
         /// </summary>
-        EventHandlerCollection<PlayerConnectEventArgs> PlayerConnect { get; set; }
+        EventHandlerCollection<PlayerConnectEventArgs>? PlayerConnect { get; set; }
 
         /// <summary>
         /// Gets or sets the event handlers that run when a player sends data. This event can be canceled.
         /// </summary>
-        EventHandlerCollection<PlayerDataEventArgs> PlayerData { get; set; }
+        EventHandlerCollection<PlayerDataEventArgs>? PlayerData { get; set; }
 
         /// <summary>
         /// Gets or sets the event handlers that run when a player sends an inventory slot. This event can be canceled.
         /// </summary>
-        EventHandlerCollection<PlayerInventorySlotEventArgs> PlayerInventorySlot { get; set; }
+        EventHandlerCollection<PlayerInventorySlotEventArgs>? PlayerInventorySlot { get; set; }
 
         /// <summary>
         /// Gets or sets the event handlers that run when a player joins. This event can be canceled.
         /// </summary>
-        EventHandlerCollection<PlayerJoinEventArgs> PlayerJoin { get; set; }
+        EventHandlerCollection<PlayerJoinEventArgs>? PlayerJoin { get; set; }
 
         /// <summary>
         /// Gets or sets the event handlers that run when a player disconnects.
         /// </summary>
-        EventHandlerCollection<PlayerDisconnectedEventArgs> PlayerDisconnected { get; set; }
+        EventHandlerCollection<PlayerDisconnectedEventArgs>? PlayerDisconnected { get; set; }
 
         /// <summary>
         /// Broadcasts the given packet.

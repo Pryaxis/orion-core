@@ -239,7 +239,7 @@ namespace Orion.Packets.World.Tiles {
                 }
             }
 
-            NetworkTile previousTile = null;
+            NetworkTile? previousTile = null;
             var runLength = 0;
             for (int y = 0; y < SectionHeight; ++y) {
                 for (int x = 0; x < SectionWidth; ++x) {
@@ -289,7 +289,7 @@ namespace Orion.Packets.World.Tiles {
             var headerIndex = 0;
             byte header = 0;
             var bodyIndex = 0;
-            NetworkTile previousTile = null;
+            NetworkTile? previousTile = null;
             var runLength = 0;
 
             void WritePartialTile(NetworkTile tile) {

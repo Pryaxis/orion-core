@@ -26,7 +26,7 @@ namespace Orion.Packets.World.TileEntities {
         private short _chestIndex;
         private short _chestX;
         private short _chestY;
-        private string _chestName;
+        private string? _chestName;
 
         /// <inheritdoc />
         public override PacketType Type => PacketType.ChestInfo;
@@ -67,7 +67,7 @@ namespace Orion.Packets.World.TileEntities {
         /// <summary>
         /// Gets or sets the chest's name.
         /// </summary>
-        public string ChestName {
+        public string? ChestName {
             get => _chestName;
             set {
                 _chestName = value;

@@ -52,13 +52,13 @@ namespace Orion.Npcs {
             }
         }
 
-        public EventHandlerCollection<NpcSetDefaultsEventArgs> NpcSetDefaults { get; set; }
-        public EventHandlerCollection<NpcSpawnEventArgs> NpcSpawn { get; set; }
-        public EventHandlerCollection<NpcUpdateEventArgs> NpcUpdate { get; set; }
-        public EventHandlerCollection<NpcTransformEventArgs> NpcTransform { get; set; }
-        public EventHandlerCollection<NpcDamageEventArgs> NpcDamage { get; set; }
-        public EventHandlerCollection<NpcDropLootItemEventArgs> NpcDropLootItem { get; set; }
-        public EventHandlerCollection<NpcKilledEventArgs> NpcKilled { get; set; }
+        public EventHandlerCollection<NpcSetDefaultsEventArgs>? NpcSetDefaults { get; set; }
+        public EventHandlerCollection<NpcSpawnEventArgs>? NpcSpawn { get; set; }
+        public EventHandlerCollection<NpcUpdateEventArgs>? NpcUpdate { get; set; }
+        public EventHandlerCollection<NpcTransformEventArgs>? NpcTransform { get; set; }
+        public EventHandlerCollection<NpcDamageEventArgs>? NpcDamage { get; set; }
+        public EventHandlerCollection<NpcDropLootItemEventArgs>? NpcDropLootItem { get; set; }
+        public EventHandlerCollection<NpcKilledEventArgs>? NpcKilled { get; set; }
 
         public OrionNpcService() {
             Debug.Assert(Terraria.Main.npc != null, "Terraria.Main.npc != null");
@@ -97,7 +97,7 @@ namespace Orion.Npcs {
         [ExcludeFromCodeCoverage]
         IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
 
-        public INpc SpawnNpc(NpcType npcType, Vector2 position, float[] aiValues = null) {
+        public INpc? SpawnNpc(NpcType npcType, Vector2 position, float[]? aiValues = null) {
             if (aiValues != null && aiValues.Length != 4) {
                 throw new ArgumentException("Array does not have length 4.", nameof(aiValues));
             }
@@ -110,8 +110,7 @@ namespace Orion.Npcs {
             return npcIndex >= 0 && npcIndex < Count ? this[npcIndex] : null;
         }
 
-        private HookResult PreSetDefaultsByIdHandler(Terraria.NPC terrariaNpc, ref int type,
-                                                     ref float scaleOverride) {
+        private HookResult PreSetDefaultsByIdHandler(Terraria.NPC terrariaNpc, ref int type, ref float scaleOverride) {
             if (_setDefaultsToIgnore.Value > 0) {
                 --_setDefaultsToIgnore.Value;
                 return HookResult.Continue;
@@ -181,8 +180,8 @@ namespace Orion.Npcs {
             return HookResult.Continue;
         }
 
-        private HookResult PreDropLootHandler(Terraria.NPC terrariaNpc, ref int itemIndex, ref int x,
-                                              ref int y, ref int width, ref int height, ref int type, ref int stack,
+        private HookResult PreDropLootHandler(Terraria.NPC terrariaNpc, ref int itemIndex, ref int x, ref int y,
+                                              ref int width, ref int height, ref int type, ref int stack,
                                               ref bool noBroadcast, ref int prefix, ref bool noGrabDelay,
                                               ref bool reverseLookup) {
             var npc = new OrionNpc(terrariaNpc);

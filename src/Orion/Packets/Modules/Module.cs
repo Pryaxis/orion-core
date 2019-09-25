@@ -25,7 +25,7 @@ namespace Orion.Packets.Modules {
     /// Represents a module. This is sent in a <see cref="ModulePacket"/>.
     /// </summary>
     public abstract class Module : IDirtiable {
-        private static readonly Func<Module>[] ModuleConstructors = {
+        private static readonly Func<Module>?[] ModuleConstructors = {
             /* 000 */ () => new LiquidsModule(),
             /* 001 */ () => new ChatModule()
         };
@@ -55,7 +55,7 @@ namespace Orion.Packets.Modules {
 
             var reader = new BinaryReader(stream, Encoding.UTF8, true);
 
-            Func<Module> GetModuleConstructor(ushort moduleTypeId) =>
+            Func<Module>? GetModuleConstructor(ushort moduleTypeId) =>
                 moduleTypeId < ModuleConstructors.Length ? ModuleConstructors[moduleTypeId] : null;
 
             var moduleConstructor = GetModuleConstructor(reader.ReadUInt16()) ??

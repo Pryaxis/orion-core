@@ -23,7 +23,7 @@ namespace Orion.Packets.Modules {
     /// Packet sent in the form of a module.
     /// </summary>
     public sealed class ModulePacket : Packet {
-        private Module _module;
+        private Module? _module;
 
         /// <inheritdoc />
         public override bool IsDirty => base.IsDirty || Module?.IsDirty == true;
@@ -35,7 +35,7 @@ namespace Orion.Packets.Modules {
         /// Gets or sets the module.
         /// </summary>
         /// <exception cref="ArgumentNullException"><paramref name="value"/> is <c>null</c>.</exception>
-        public Module Module {
+        public Module? Module {
             get => _module;
             set {
                 _module = value ?? throw new ArgumentNullException(nameof(value));
