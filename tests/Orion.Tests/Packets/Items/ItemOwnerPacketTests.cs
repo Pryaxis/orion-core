@@ -33,12 +33,11 @@ namespace Orion.Packets.Items {
 
         [Fact]
         public void ReadFromStream_IsCorrect() {
-            using (var stream = new MemoryStream(Bytes)) {
-                var packet = (ItemOwnerPacket)Packet.ReadFromStream(stream, PacketContext.Server);
+            using var stream = new MemoryStream(Bytes);
+            var packet = (ItemOwnerPacket)Packet.ReadFromStream(stream, PacketContext.Server);
 
-                packet.ItemIndex.Should().Be(400);
-                packet.ItemOwnerPlayerIndex.Should().Be(0);
-            }
+            packet.ItemIndex.Should().Be(400);
+            packet.ItemOwnerPlayerIndex.Should().Be(0);
         }
 
         [Fact]

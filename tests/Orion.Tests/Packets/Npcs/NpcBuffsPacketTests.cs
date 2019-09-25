@@ -50,13 +50,12 @@ namespace Orion.Packets.Npcs {
 
         [Fact]
         public void ReadFromStream_IsCorrect() {
-            using (var stream = new MemoryStream(Bytes)) {
-                var packet = (NpcBuffsPacket)Packet.ReadFromStream(stream, PacketContext.Server);
+            using var stream = new MemoryStream(Bytes);
+            var packet = (NpcBuffsPacket)Packet.ReadFromStream(stream, PacketContext.Server);
 
-                packet.NpcIndex.Should().Be(0);
-                foreach (var buff in packet.NpcBuffs) {
-                    buff.Should().Be(new Buff(BuffType.None, TimeSpan.Zero));
-                }
+            packet.NpcIndex.Should().Be(0);
+            foreach (var buff in packet.NpcBuffs) {
+                buff.Should().Be(new Buff(BuffType.None, TimeSpan.Zero));
             }
         }
 

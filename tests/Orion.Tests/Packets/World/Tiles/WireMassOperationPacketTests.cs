@@ -32,15 +32,14 @@ namespace Orion.Packets.World.Tiles {
 
         [Fact]
         public void ReadFromStream_IsCorrect() {
-            using (var stream = new MemoryStream(Bytes)) {
-                var packet = (WireMassOperationPacket)Packet.ReadFromStream(stream, PacketContext.Server);
+            using var stream = new MemoryStream(Bytes);
+            var packet = (WireMassOperationPacket)Packet.ReadFromStream(stream, PacketContext.Server);
 
-                packet.StartTileX.Should().Be(0);
-                packet.StartTileY.Should().Be(0);
-                packet.EndTileX.Should().Be(256);
-                packet.EndTileY.Should().Be(100);
-                packet.WireOperations.Should().Be(WireOperations.RedWire);
-            }
+            packet.StartTileX.Should().Be(0);
+            packet.StartTileY.Should().Be(0);
+            packet.EndTileX.Should().Be(256);
+            packet.EndTileY.Should().Be(100);
+            packet.WireOperations.Should().Be(WireOperations.RedWire);
         }
 
         [Fact]

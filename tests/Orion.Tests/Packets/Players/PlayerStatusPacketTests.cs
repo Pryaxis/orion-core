@@ -53,12 +53,11 @@ namespace Orion.Packets.Players {
 
         [Fact]
         public void ReadFromStream_IsCorrect() {
-            using (var stream = new MemoryStream(Bytes)) {
-                var packet = (PlayerStatusPacket)Packet.ReadFromStream(stream, PacketContext.Server);
+            using var stream = new MemoryStream(Bytes);
+            var packet = (PlayerStatusPacket)Packet.ReadFromStream(stream, PacketContext.Server);
 
-                packet.PlayerStatusIncrease.Should().Be(15);
-                packet.PlayerStatusText.ToString().Should().Be("LegacyInterface.44");
-            }
+            packet.PlayerStatusIncrease.Should().Be(15);
+            packet.PlayerStatusText.ToString().Should().Be("LegacyInterface.44");
         }
 
         [Fact]

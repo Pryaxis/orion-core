@@ -33,15 +33,14 @@ namespace Orion.Packets.Npcs {
 
         [Fact]
         public void ReadFromStream_IsCorrect() {
-            using (var stream = new MemoryStream(Bytes)) {
-                var packet = (NpcShopSlotPacket)Packet.ReadFromStream(stream, PacketContext.Server);
+            using var stream = new MemoryStream(Bytes);
+            var packet = (NpcShopSlotPacket)Packet.ReadFromStream(stream, PacketContext.Server);
 
-                packet.NpcShopSlotIndex.Should().Be(0);
-                packet.ItemType.Should().Be(ItemType.Sdmg);
-                packet.ItemStackSize.Should().Be(1);
-                packet.ItemPrefix.Should().Be(ItemPrefix.Unreal);
-                packet.ItemValue.Should().Be(100);
-            }
+            packet.NpcShopSlotIndex.Should().Be(0);
+            packet.ItemType.Should().Be(ItemType.Sdmg);
+            packet.ItemStackSize.Should().Be(1);
+            packet.ItemPrefix.Should().Be(ItemPrefix.Unreal);
+            packet.ItemValue.Should().Be(100);
         }
 
         [Fact]

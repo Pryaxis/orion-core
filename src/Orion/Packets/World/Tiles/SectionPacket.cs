@@ -140,10 +140,8 @@ namespace Orion.Packets.World.Tiles {
                 return;
             }
 
-            using (var deflateStream = new DeflateStream(reader.BaseStream, CompressionMode.Decompress, true))
-            using (var deflateReader = new BinaryReader(deflateStream, Encoding.UTF8, true)) {
-                ReadFromReaderImpl(deflateReader);
-            }
+            using var deflateStream = new DeflateStream(reader.BaseStream, CompressionMode.Decompress, true);
+            ReadFromReaderImpl(new BinaryReader(deflateStream, Encoding.UTF8, true));
         }
 
         private protected override void WriteToWriter(BinaryWriter writer, PacketContext context) {
@@ -157,11 +155,10 @@ namespace Orion.Packets.World.Tiles {
             WriteToWriterImpl(new BinaryWriter(stream, Encoding.UTF8, true));
 
             var compressedStream = new MemoryStream();
-            using (var deflateStream = new DeflateStream(compressedStream, CompressionMode.Compress, true)) {
-                stream.Position = 0;
-                stream.CopyTo(deflateStream);
-                deflateStream.Close();
-            }
+            var deflateStream = new DeflateStream(compressedStream, CompressionMode.Compress, true);
+            stream.Position = 0;
+            stream.CopyTo(deflateStream);
+            deflateStream.Close();
 
             compressedStream.Position = 0;
             compressedStream.CopyTo(writer.BaseStream);
@@ -230,14 +227,12 @@ namespace Orion.Packets.World.Tiles {
                 tile.Clean();
             }
 
-            int ReadRunLength(byte header) {
-                switch ((header & 192) >> 6) {
-                case 0: return 0;
-                case 1: return reader.ReadByte();
-                case 2: return reader.ReadInt16();
-                default: throw new InvalidOperationException();
-                }
-            }
+            int ReadRunLength(byte header) => ((header & 192) >> 6) switch {
+                0 => 0,
+                1 => reader.ReadByte(),
+                2 => reader.ReadInt16(),
+                _ => throw new InvalidOperationException()
+            };
 
             NetworkTile? previousTile = null;
             var runLength = 0;

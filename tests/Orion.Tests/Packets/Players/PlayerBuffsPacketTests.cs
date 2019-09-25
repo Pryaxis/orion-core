@@ -51,14 +51,13 @@ namespace Orion.Packets.Players {
 
         [Fact]
         public void ReadFromStream_IsCorrect() {
-            using (var stream = new MemoryStream(Bytes)) {
-                var packet = (PlayerBuffsPacket)Packet.ReadFromStream(stream, PacketContext.Server);
+            using var stream = new MemoryStream(Bytes);
+            var packet = (PlayerBuffsPacket)Packet.ReadFromStream(stream, PacketContext.Server);
 
-                packet.PlayerIndex.Should().Be(0);
+            packet.PlayerIndex.Should().Be(0);
 
-                for (var i = 0; i < packet.PlayerBuffTypes.Count; ++i) {
-                    packet.PlayerBuffTypes[i].Should().Be(BuffType.None);
-                }
+            for (var i = 0; i < packet.PlayerBuffTypes.Count; ++i) {
+                packet.PlayerBuffTypes[i].Should().Be(BuffType.None);
             }
         }
 

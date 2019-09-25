@@ -32,14 +32,13 @@ namespace Orion.Packets.World {
 
         [Fact]
         public void ReadFromStream_IsCorrect() {
-            using (var stream = new MemoryStream(Bytes)) {
-                var packet = (TreeGrowingEffectPacket)Packet.ReadFromStream(stream, PacketContext.Server);
+            using var stream = new MemoryStream(Bytes);
+            var packet = (TreeGrowingEffectPacket)Packet.ReadFromStream(stream, PacketContext.Server);
 
-                packet.TreeX.Should().Be(256);
-                packet.TreeY.Should().Be(100);
-                packet.TreeHeight.Should().Be(10);
-                packet.TreeType.Should().Be(1);
-            }
+            packet.TreeX.Should().Be(256);
+            packet.TreeY.Should().Be(100);
+            packet.TreeHeight.Should().Be(10);
+            packet.TreeType.Should().Be(1);
         }
 
         [Fact]

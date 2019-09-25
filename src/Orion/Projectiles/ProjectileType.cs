@@ -15,10 +15,13 @@
 // You should have received a copy of the GNU General Public License
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
+using System.Diagnostics.CodeAnalysis;
+
 namespace Orion.Projectiles {
     /// <summary>
     /// Specifies a projectile type.
     /// </summary>
+    [SuppressMessage("ReSharper", "UnusedMember.Global")]
     public enum ProjectileType : short {
 #pragma warning disable 1591
         None = 0,

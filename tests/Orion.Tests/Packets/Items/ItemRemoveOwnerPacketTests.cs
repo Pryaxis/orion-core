@@ -32,11 +32,10 @@ namespace Orion.Packets.Items {
 
         [Fact]
         public void ReadFromStream_IsCorrect() {
-            using (var stream = new MemoryStream(Bytes)) {
-                var packet = (ItemRemoveOwnerPacket)Packet.ReadFromStream(stream, PacketContext.Server);
+            using var stream = new MemoryStream(Bytes);
+            var packet = (ItemRemoveOwnerPacket)Packet.ReadFromStream(stream, PacketContext.Server);
 
-                packet.ItemIndex.Should().Be(1);
-            }
+            packet.ItemIndex.Should().Be(1);
         }
 
         [Fact]

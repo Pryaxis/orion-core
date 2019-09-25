@@ -50,17 +50,16 @@ namespace Orion.Packets.Players {
 
         [Fact]
         public void ReadFromStream_IsCorrect() {
-            using (var stream = new MemoryStream(Bytes)) {
-                var packet = (PlayerDamagePacket)Packet.ReadFromStream(stream, PacketContext.Server);
+            using var stream = new MemoryStream(Bytes);
+            var packet = (PlayerDamagePacket)Packet.ReadFromStream(stream, PacketContext.Server);
 
-                packet.PlayerIndex.Should().Be(0);
-                packet.PlayerDeathReason.SourceCustomReason.Should().Be("test");
-                packet.Damage.Should().Be(100);
-                packet.HitDirection.Should().Be(0);
-                packet.IsHitCritical.Should().BeTrue();
-                packet.IsHitFromPvp.Should().BeFalse();
-                packet.HitCooldown.Should().Be(0);
-            }
+            packet.PlayerIndex.Should().Be(0);
+            packet.PlayerDeathReason.SourceCustomReason.Should().Be("test");
+            packet.Damage.Should().Be(100);
+            packet.HitDirection.Should().Be(0);
+            packet.IsHitCritical.Should().BeTrue();
+            packet.IsHitFromPvp.Should().BeFalse();
+            packet.HitCooldown.Should().Be(0);
         }
 
         [Fact]

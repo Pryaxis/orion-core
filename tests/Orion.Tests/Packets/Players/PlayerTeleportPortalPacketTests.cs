@@ -33,14 +33,13 @@ namespace Orion.Packets.Players {
 
         [Fact]
         public void ReadFromStream_IsCorrect() {
-            using (var stream = new MemoryStream(Bytes)) {
-                var packet = (PlayerTeleportPortalPacket)Packet.ReadFromStream(stream, PacketContext.Server);
+            using var stream = new MemoryStream(Bytes);
+            var packet = (PlayerTeleportPortalPacket)Packet.ReadFromStream(stream, PacketContext.Server);
 
-                packet.PlayerIndex.Should().Be(100);
-                packet.PortalIndex.Should().Be(2);
-                packet.PlayerNewPosition.Should().Be(Vector2.Zero);
-                packet.PlayerNewVelocity.Should().Be(Vector2.Zero);
-            }
+            packet.PlayerIndex.Should().Be(100);
+            packet.PortalIndex.Should().Be(2);
+            packet.PlayerNewPosition.Should().Be(Vector2.Zero);
+            packet.PlayerNewVelocity.Should().Be(Vector2.Zero);
         }
 
         [Fact]

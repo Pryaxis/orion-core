@@ -32,13 +32,12 @@ namespace Orion.Packets.World {
 
         [Fact]
         public void ReadFromStream_IsCorrect() {
-            using (var stream = new MemoryStream(Bytes)) {
-                var packet = (WorldBiomeStatsPacket)Packet.ReadFromStream(stream, PacketContext.Server);
+            using var stream = new MemoryStream(Bytes);
+            var packet = (WorldBiomeStatsPacket)Packet.ReadFromStream(stream, PacketContext.Server);
 
-                packet.HallowedAmount.Should().Be(1);
-                packet.CorruptionAmount.Should().Be(2);
-                packet.CrimsonAmount.Should().Be(3);
-            }
+            packet.HallowedAmount.Should().Be(1);
+            packet.CorruptionAmount.Should().Be(2);
+            packet.CrimsonAmount.Should().Be(3);
         }
 
         [Fact]

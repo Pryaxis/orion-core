@@ -33,13 +33,12 @@ namespace Orion.Packets.Npcs {
 
         [Fact]
         public void ReadFromStream_IsCorrect() {
-            using (var stream = new MemoryStream(Bytes)) {
-                var packet = (NpcStealCoinsPacket)Packet.ReadFromStream(stream, PacketContext.Server);
+            using var stream = new MemoryStream(Bytes);
+            var packet = (NpcStealCoinsPacket)Packet.ReadFromStream(stream, PacketContext.Server);
 
-                packet.NpcIndex.Should().Be(0);
-                packet.NpcStolenValue.Should().Be(0);
-                packet.CoinsPosition.Should().Be(new Vector2(0));
-            }
+            packet.NpcIndex.Should().Be(0);
+            packet.NpcStolenValue.Should().Be(0);
+            packet.CoinsPosition.Should().Be(new Vector2(0));
         }
 
         [Fact]

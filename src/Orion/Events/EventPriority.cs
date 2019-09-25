@@ -15,10 +15,13 @@
 // You should have received a copy of the GNU General Public License
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
+using System.Diagnostics.CodeAnalysis;
+
 namespace Orion.Events {
     /// <summary>
     /// Specifies the priority of a event handler.
     /// </summary>
+    [SuppressMessage("ReSharper", "UnusedMember.Global")]
     public enum EventPriority {
         /// <summary>
         /// Indicates that the event handler should have the lowest priority.

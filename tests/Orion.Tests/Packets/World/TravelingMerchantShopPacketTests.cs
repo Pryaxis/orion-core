@@ -37,12 +37,11 @@ namespace Orion.Packets.World {
 
         [Fact]
         public void ReadFromStream_IsCorrect() {
-            using (var stream = new MemoryStream(Bytes)) {
-                var packet = (TravelingMerchantShopPacket)Packet.ReadFromStream(stream, PacketContext.Server);
+            using var stream = new MemoryStream(Bytes);
+            var packet = (TravelingMerchantShopPacket)Packet.ReadFromStream(stream, PacketContext.Server);
 
-                foreach (var itemType in packet.ShopItemTypes) {
-                    itemType.Should().Be(ItemType.None);
-                }
+            foreach (var itemType in packet.ShopItemTypes) {
+                itemType.Should().Be(ItemType.None);
             }
         }
 

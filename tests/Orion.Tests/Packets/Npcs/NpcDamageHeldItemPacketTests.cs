@@ -32,12 +32,11 @@ namespace Orion.Packets.Npcs {
 
         [Fact]
         public void ReadFromStream_IsCorrect() {
-            using (var stream = new MemoryStream(Bytes)) {
-                var packet = (NpcDamageHeldItemPacket)Packet.ReadFromStream(stream, PacketContext.Server);
+            using var stream = new MemoryStream(Bytes);
+            var packet = (NpcDamageHeldItemPacket)Packet.ReadFromStream(stream, PacketContext.Server);
 
-                packet.NpcIndex.Should().Be(1);
-                packet.NpcDamagerPlayerIndex.Should().Be(0);
-            }
+            packet.NpcIndex.Should().Be(1);
+            packet.NpcDamagerPlayerIndex.Should().Be(0);
         }
 
         [Fact]

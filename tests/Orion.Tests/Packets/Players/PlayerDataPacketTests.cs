@@ -46,24 +46,23 @@ namespace Orion.Packets.Players {
 
         [Fact]
         public void ReadFromStream_IsCorrect() {
-            using (var stream = new MemoryStream(Bytes)) {
-                var packet = (PlayerDataPacket)Packet.ReadFromStream(stream, PacketContext.Server);
+            using var stream = new MemoryStream(Bytes);
+            var packet = (PlayerDataPacket)Packet.ReadFromStream(stream, PacketContext.Server);
 
-                packet.PlayerIndex.Should().Be(0);
-                packet.PlayerSkinType.Should().Be(2);
-                packet.PlayerName.Should().Be("f");
-                packet.PlayerHairDye.Should().Be(0);
-                packet.PlayerHiddenVisualsFlags.Should().Be(0);
-                packet.PlayerHiddenMiscFlags.Should().Be(0);
-                packet.PlayerHairColor.Should().Be(new Color(26, 131, 54));
-                packet.PlayerSkinColor.Should().Be(new Color(158, 74, 51));
-                packet.PlayerEyeColor.Should().Be(new Color(47, 39, 88));
-                packet.PlayerShirtColor.Should().Be(new Color(184, 58, 43));
-                packet.PlayerUndershirtColor.Should().Be(new Color(69, 8, 97));
-                packet.PlayerPantsColor.Should().Be(new Color(162, 167, 255));
-                packet.PlayerShoeColor.Should().Be(new Color(212, 159, 76));
-                packet.PlayerDifficulty.Should().Be(PlayerDifficulty.Softcore);
-            }
+            packet.PlayerIndex.Should().Be(0);
+            packet.PlayerSkinType.Should().Be(2);
+            packet.PlayerName.Should().Be("f");
+            packet.PlayerHairDye.Should().Be(0);
+            packet.PlayerHiddenVisualsFlags.Should().Be(0);
+            packet.PlayerHiddenMiscFlags.Should().Be(0);
+            packet.PlayerHairColor.Should().Be(new Color(26, 131, 54));
+            packet.PlayerSkinColor.Should().Be(new Color(158, 74, 51));
+            packet.PlayerEyeColor.Should().Be(new Color(47, 39, 88));
+            packet.PlayerShirtColor.Should().Be(new Color(184, 58, 43));
+            packet.PlayerUndershirtColor.Should().Be(new Color(69, 8, 97));
+            packet.PlayerPantsColor.Should().Be(new Color(162, 167, 255));
+            packet.PlayerShoeColor.Should().Be(new Color(212, 159, 76));
+            packet.PlayerDifficulty.Should().Be(PlayerDifficulty.Softcore);
         }
 
         [Fact]

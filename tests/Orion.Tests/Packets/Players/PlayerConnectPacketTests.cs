@@ -41,11 +41,10 @@ namespace Orion.Packets.Players {
 
         [Fact]
         public void ReadFromStream_IsCorrect() {
-            using (var stream = new MemoryStream(Bytes)) {
-                var packet = (PlayerConnectPacket)Packet.ReadFromStream(stream, PacketContext.Server);
+            using var stream = new MemoryStream(Bytes);
+            var packet = (PlayerConnectPacket)Packet.ReadFromStream(stream, PacketContext.Server);
 
-                packet.PlayerVersionString.Should().Be("Terraria194");
-            }
+            packet.PlayerVersionString.Should().Be("Terraria194");
         }
 
         [Fact]

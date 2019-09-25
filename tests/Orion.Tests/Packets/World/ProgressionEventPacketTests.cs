@@ -32,11 +32,10 @@ namespace Orion.Packets.World {
 
         [Fact]
         public void ReadFromStream_IsCorrect() {
-            using (var stream = new MemoryStream(Bytes)) {
-                var packet = (ProgressionEventPacket)Packet.ReadFromStream(stream, PacketContext.Server);
+            using var stream = new MemoryStream(Bytes);
+            var packet = (ProgressionEventPacket)Packet.ReadFromStream(stream, PacketContext.Server);
 
-                packet.ProgressionEventId.Should().Be(1);
-            }
+            packet.ProgressionEventId.Should().Be(1);
         }
 
         [Fact]

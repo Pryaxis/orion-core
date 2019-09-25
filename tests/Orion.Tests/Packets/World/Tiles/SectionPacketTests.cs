@@ -178,34 +178,32 @@ namespace Orion.Packets.World.Tiles {
 
         [Fact]
         public void ReadFromStream_IsCorrect() {
-            using (var stream = new MemoryStream(Bytes)) {
-                var packet = (SectionPacket)Packet.ReadFromStream(stream, PacketContext.Server);
+            using var stream = new MemoryStream(Bytes);
+            var packet = (SectionPacket)Packet.ReadFromStream(stream, PacketContext.Server);
 
-                packet.IsSectionCompressed.Should().BeTrue();
-                packet.StartTileX.Should().Be(4200);
-                packet.StartTileY.Should().Be(300);
-                packet.SectionWidth.Should().Be(200);
-                packet.SectionHeight.Should().Be(150);
-                packet.SectionTileEntities.Should().HaveCount(7);
-            }
+            packet.IsSectionCompressed.Should().BeTrue();
+            packet.StartTileX.Should().Be(4200);
+            packet.StartTileY.Should().Be(300);
+            packet.SectionWidth.Should().Be(200);
+            packet.SectionHeight.Should().Be(150);
+            packet.SectionTileEntities.Should().HaveCount(7);
         }
 
         [Fact]
         public void DeserializeAndSerialize_SamePacket() {
-            using (var stream = new MemoryStream(Bytes))
-            using (var stream2 = new MemoryStream())
-            using (var stream3 = new MemoryStream()) {
-                var packet = (SectionPacket)Packet.ReadFromStream(stream, PacketContext.Server);
+            using var stream = new MemoryStream(Bytes);
+            using var stream2 = new MemoryStream();
+            using var stream3 = new MemoryStream();
+            var packet = (SectionPacket)Packet.ReadFromStream(stream, PacketContext.Server);
 
-                packet.WriteToStream(stream2, PacketContext.Server);
+            packet.WriteToStream(stream2, PacketContext.Server);
 
-                stream2.Position = 0;
-                var packet2 = (SectionPacket)Packet.ReadFromStream(stream2, PacketContext.Server);
+            stream2.Position = 0;
+            var packet2 = (SectionPacket)Packet.ReadFromStream(stream2, PacketContext.Server);
 
-                packet2.WriteToStream(stream3, PacketContext.Server);
+            packet2.WriteToStream(stream3, PacketContext.Server);
 
-                stream2.ToArray().Should().BeEquivalentTo(stream3.ToArray());
-            }
+            stream2.ToArray().Should().BeEquivalentTo(stream3.ToArray());
         }
     }
 }

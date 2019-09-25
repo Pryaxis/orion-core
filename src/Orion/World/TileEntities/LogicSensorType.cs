@@ -15,10 +15,13 @@
 // You should have received a copy of the GNU General Public License
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
+using System.Diagnostics.CodeAnalysis;
+
 namespace Orion.World.TileEntities {
     /// <summary>
     /// Specifies a logic sensor type.
     /// </summary>
+    [SuppressMessage("ReSharper", "UnusedMember.Global")]
     public enum LogicSensorType : byte {
         /// <summary>
         /// Indicates nothing.

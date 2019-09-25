@@ -15,10 +15,13 @@
 // You should have received a copy of the GNU General Public License
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
+using System.Diagnostics.CodeAnalysis;
+
 namespace Orion.Packets.World.TileEntities {
     /// <summary>
     /// Specifies a chest modification in a <see cref="ChestModificationPacket"/>.
     /// </summary>
+    [SuppressMessage("ReSharper", "UnusedMember.Global")]
     public enum ChestModification : byte {
         /// <summary>
         /// Indicates that a chest should be placed.

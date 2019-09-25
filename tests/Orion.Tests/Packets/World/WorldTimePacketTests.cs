@@ -32,14 +32,13 @@ namespace Orion.Packets.World {
 
         [Fact]
         public void ReadFromStream_IsCorrect() {
-            using (var stream = new MemoryStream(Bytes)) {
-                var packet = (WorldTimePacket)Packet.ReadFromStream(stream, PacketContext.Server);
+            using var stream = new MemoryStream(Bytes);
+            var packet = (WorldTimePacket)Packet.ReadFromStream(stream, PacketContext.Server);
 
-                packet.IsDaytime.Should().BeTrue();
-                packet.Time.Should().Be(32768);
-                packet.SunY.Should().Be(200);
-                packet.MoonY.Should().Be(200);
-            }
+            packet.IsDaytime.Should().BeTrue();
+            packet.Time.Should().Be(32768);
+            packet.SunY.Should().Be(200);
+            packet.MoonY.Should().Be(200);
         }
 
         [Fact]

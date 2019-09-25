@@ -32,14 +32,13 @@ namespace Orion.Packets.World {
 
         [Fact]
         public void ReadFromStream_IsCorrect() {
-            using (var stream = new MemoryStream(Bytes)) {
-                var packet = (InvasionInfoPacket)Packet.ReadFromStream(stream, PacketContext.Server);
+            using var stream = new MemoryStream(Bytes);
+            var packet = (InvasionInfoPacket)Packet.ReadFromStream(stream, PacketContext.Server);
 
-                packet.NumberOfKills.Should().Be(1);
-                packet.NumberOfKillsToProgress.Should().Be(256);
-                packet.InvasionIconType.Should().Be(1);
-                packet.InvasionWaveNumber.Should().Be(2);
-            }
+            packet.NumberOfKills.Should().Be(1);
+            packet.NumberOfKillsToProgress.Should().Be(256);
+            packet.InvasionIconType.Should().Be(1);
+            packet.InvasionWaveNumber.Should().Be(2);
         }
 
         [Fact]

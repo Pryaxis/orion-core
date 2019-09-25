@@ -33,13 +33,12 @@ namespace Orion.Packets.World.Tiles {
 
         [Fact]
         public void ReadFromStream_IsCorrect() {
-            using (var stream = new MemoryStream(Bytes)) {
-                var packet = (TileBlockColorPacket)Packet.ReadFromStream(stream, PacketContext.Server);
+            using var stream = new MemoryStream(Bytes);
+            var packet = (TileBlockColorPacket)Packet.ReadFromStream(stream, PacketContext.Server);
 
-                packet.BlockX.Should().Be(256);
-                packet.BlockY.Should().Be(100);
-                packet.BlockColor.Should().Be(PaintColor.Red);
-            }
+            packet.BlockX.Should().Be(256);
+            packet.BlockY.Should().Be(100);
+            packet.BlockColor.Should().Be(PaintColor.Red);
         }
 
         [Fact]

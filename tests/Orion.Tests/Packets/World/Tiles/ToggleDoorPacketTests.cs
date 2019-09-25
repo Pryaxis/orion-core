@@ -32,14 +32,13 @@ namespace Orion.Packets.World.Tiles {
 
         [Fact]
         public void ReadFromStream_IsCorrect() {
-            using (var stream = new MemoryStream(Bytes)) {
-                var packet = (ToggleDoorPacket)Packet.ReadFromStream(stream, PacketContext.Server);
+            using var stream = new MemoryStream(Bytes);
+            var packet = (ToggleDoorPacket)Packet.ReadFromStream(stream, PacketContext.Server);
 
-                packet.ToggleDoorAction.Should().Be(ToggleDoorAction.OpenDoor);
-                packet.DoorX.Should().Be(3600);
-                packet.DoorY.Should().Be(450);
-                packet.ToggleDirection.Should().BeTrue();
-            }
+            packet.ToggleDoorAction.Should().Be(ToggleDoorAction.OpenDoor);
+            packet.DoorX.Should().Be(3600);
+            packet.DoorY.Should().Be(450);
+            packet.ToggleDirection.Should().BeTrue();
         }
 
         [Fact]

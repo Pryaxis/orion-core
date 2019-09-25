@@ -53,22 +53,21 @@ namespace Orion.Packets.Projectiles {
 
         [Fact]
         public void ReadFromStream_IsCorrect() {
-            using (var stream = new MemoryStream(Bytes)) {
-                var packet = (ProjectileInfoPacket)Packet.ReadFromStream(stream, PacketContext.Server);
+            using var stream = new MemoryStream(Bytes);
+            var packet = (ProjectileInfoPacket)Packet.ReadFromStream(stream, PacketContext.Server);
 
-                packet.ProjectileIdentity.Should().Be(0);
-                packet.ProjectilePosition.Should().Be(new Vector2(67187, 6809));
-                packet.ProjectileKnockback.Should().Be(4.025f);
-                packet.ProjectileDamage.Should().Be(99);
-                packet.ProjectileOwnerPlayerIndex.Should().Be(0);
-                packet.ProjectileType.Should().Be(ProjectileType.CrystalBullet);
+            packet.ProjectileIdentity.Should().Be(0);
+            packet.ProjectilePosition.Should().Be(new Vector2(67187, 6809));
+            packet.ProjectileKnockback.Should().Be(4.025f);
+            packet.ProjectileDamage.Should().Be(99);
+            packet.ProjectileOwnerPlayerIndex.Should().Be(0);
+            packet.ProjectileType.Should().Be(ProjectileType.CrystalBullet);
 
-                for (var i = 0; i < packet.ProjectileAiValues.Count; ++i) {
-                    packet.ProjectileAiValues[i].Should().Be(0);
-                }
-
-                packet.ProjectileUuid.Should().Be(-1);
+            for (var i = 0; i < packet.ProjectileAiValues.Count; ++i) {
+                packet.ProjectileAiValues[i].Should().Be(0);
             }
+
+            packet.ProjectileUuid.Should().Be(-1);
         }
 
         [Fact]

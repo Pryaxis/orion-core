@@ -33,11 +33,10 @@ namespace Orion.Packets.World {
 
         [Fact]
         public void ReadFromStream_IsCorrect() {
-            using (var stream = new MemoryStream(Bytes)) {
-                var packet = (PoofOfSmokePacket)Packet.ReadFromStream(stream, PacketContext.Server);
+            using var stream = new MemoryStream(Bytes);
+            var packet = (PoofOfSmokePacket)Packet.ReadFromStream(stream, PacketContext.Server);
 
-                packet.SmokePosition.Should().Be(new HalfVector2());
-            }
+            packet.SmokePosition.Should().Be(new HalfVector2());
         }
 
         [Fact]

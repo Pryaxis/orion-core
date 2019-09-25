@@ -32,12 +32,11 @@ namespace Orion.Packets.World {
 
         [Fact]
         public void ReadFromStream_IsCorrect() {
-            using (var stream = new MemoryStream(Bytes)) {
-                var packet = (WorldAnglerQuestPacket)Packet.ReadFromStream(stream, PacketContext.Server);
+            using var stream = new MemoryStream(Bytes);
+            var packet = (WorldAnglerQuestPacket)Packet.ReadFromStream(stream, PacketContext.Server);
 
-                packet.CurrentAnglerQuest.Should().Be(1);
-                packet.IsAnglerQuestFinished.Should().BeTrue();
-            }
+            packet.CurrentAnglerQuest.Should().Be(1);
+            packet.IsAnglerQuestFinished.Should().BeTrue();
         }
 
         [Fact]

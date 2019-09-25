@@ -32,11 +32,10 @@ namespace Orion.Packets.Players {
 
         [Fact]
         public void ReadFromStream_IsCorrect() {
-            using (var stream = new MemoryStream(Bytes)) {
-                var packet = (PlayerQuickStackPacket)Packet.ReadFromStream(stream, PacketContext.Server);
+            using var stream = new MemoryStream(Bytes);
+            var packet = (PlayerQuickStackPacket)Packet.ReadFromStream(stream, PacketContext.Server);
 
-                packet.PlayerInventorySlotIndex.Should().Be(1);
-            }
+            packet.PlayerInventorySlotIndex.Should().Be(1);
         }
 
         [Fact]

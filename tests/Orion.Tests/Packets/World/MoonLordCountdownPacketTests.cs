@@ -33,11 +33,10 @@ namespace Orion.Packets.World {
 
         [Fact]
         public void ReadFromStream_IsCorrect() {
-            using (var stream = new MemoryStream(Bytes)) {
-                var packet = (MoonLordCountdownPacket)Packet.ReadFromStream(stream, PacketContext.Server);
+            using var stream = new MemoryStream(Bytes);
+            var packet = (MoonLordCountdownPacket)Packet.ReadFromStream(stream, PacketContext.Server);
 
-                packet.MoonLordCountdown.Should().Be(TimeSpan.FromSeconds(1));
-            }
+            packet.MoonLordCountdown.Should().Be(TimeSpan.FromSeconds(1));
         }
 
         [Fact]

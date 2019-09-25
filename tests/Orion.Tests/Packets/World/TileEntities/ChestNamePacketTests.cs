@@ -50,25 +50,23 @@ namespace Orion.Packets.World.TileEntities {
 
         [Fact]
         public void ReadFromStream_Server_IsCorrect() {
-            using (var stream = new MemoryStream(ServerBytes)) {
-                var packet = (ChestNamePacket)Packet.ReadFromStream(stream, PacketContext.Server);
+            using var stream = new MemoryStream(ServerBytes);
+            var packet = (ChestNamePacket)Packet.ReadFromStream(stream, PacketContext.Server);
 
-                packet.ChestIndex.Should().Be(0);
-                packet.ChestX.Should().Be(256);
-                packet.ChestY.Should().Be(100);
-            }
+            packet.ChestIndex.Should().Be(0);
+            packet.ChestX.Should().Be(256);
+            packet.ChestY.Should().Be(100);
         }
 
         [Fact]
         public void DeserializeAndSerialize_Server_SamePacket() {
-            using (var stream = new MemoryStream(ServerBytes))
-            using (var stream2 = new MemoryStream()) {
-                var packet = Packet.ReadFromStream(stream, PacketContext.Server);
+            using var stream = new MemoryStream(ServerBytes);
+            using var stream2 = new MemoryStream();
+            var packet = Packet.ReadFromStream(stream, PacketContext.Server);
 
-                packet.WriteToStream(stream2, PacketContext.Client);
+            packet.WriteToStream(stream2, PacketContext.Client);
 
-                stream2.ToArray().Should().BeEquivalentTo(ServerBytes);
-            }
+            stream2.ToArray().Should().BeEquivalentTo(ServerBytes);
         }
 
         public static readonly byte[] ClientBytes = {
@@ -77,26 +75,24 @@ namespace Orion.Packets.World.TileEntities {
 
         [Fact]
         public void ReadFromStream_Client_IsCorrect() {
-            using (var stream = new MemoryStream(ClientBytes)) {
-                var packet = (ChestNamePacket)Packet.ReadFromStream(stream, PacketContext.Client);
+            using var stream = new MemoryStream(ClientBytes);
+            var packet = (ChestNamePacket)Packet.ReadFromStream(stream, PacketContext.Client);
 
-                packet.ChestIndex.Should().Be(0);
-                packet.ChestX.Should().Be(256);
-                packet.ChestY.Should().Be(100);
-                packet.ChestName.Should().Be("Terraria");
-            }
+            packet.ChestIndex.Should().Be(0);
+            packet.ChestX.Should().Be(256);
+            packet.ChestY.Should().Be(100);
+            packet.ChestName.Should().Be("Terraria");
         }
 
         [Fact]
         public void DeserializeAndSerialize_Client_SamePacket() {
-            using (var stream = new MemoryStream(ClientBytes))
-            using (var stream2 = new MemoryStream()) {
-                var packet = Packet.ReadFromStream(stream, PacketContext.Client);
+            using var stream = new MemoryStream(ClientBytes);
+            using var stream2 = new MemoryStream();
+            var packet = Packet.ReadFromStream(stream, PacketContext.Client);
 
-                packet.WriteToStream(stream2, PacketContext.Server);
+            packet.WriteToStream(stream2, PacketContext.Server);
 
-                stream2.ToArray().Should().BeEquivalentTo(ClientBytes);
-            }
+            stream2.ToArray().Should().BeEquivalentTo(ClientBytes);
         }
     }
 }

@@ -15,10 +15,13 @@
 // You should have received a copy of the GNU General Public License
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
+using System.Diagnostics.CodeAnalysis;
+
 namespace Orion.World.Tiles {
     /// <summary>
     /// Specifies a slope.
     /// </summary>
+    [SuppressMessage("ReSharper", "UnusedMember.Global")]
     public enum Slope : byte {
         /// <summary>
         /// Indicates no slope.

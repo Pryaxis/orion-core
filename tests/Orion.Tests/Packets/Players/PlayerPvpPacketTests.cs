@@ -32,12 +32,11 @@ namespace Orion.Packets.Players {
 
         [Fact]
         public void ReadFromStream_IsCorrect() {
-            using (var stream = new MemoryStream(Bytes)) {
-                var packet = (PlayerPvpPacket)Packet.ReadFromStream(stream, PacketContext.Server);
+            using var stream = new MemoryStream(Bytes);
+            var packet = (PlayerPvpPacket)Packet.ReadFromStream(stream, PacketContext.Server);
 
-                packet.PlayerIndex.Should().Be(0);
-                packet.PlayerIsInPvp.Should().BeTrue();
-            }
+            packet.PlayerIndex.Should().Be(0);
+            packet.PlayerIsInPvp.Should().BeTrue();
         }
 
         [Fact]

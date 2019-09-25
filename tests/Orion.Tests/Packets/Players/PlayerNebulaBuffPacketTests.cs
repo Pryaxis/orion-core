@@ -34,13 +34,12 @@ namespace Orion.Packets.Players {
 
         [Fact]
         public void ReadFromStream_IsCorrect() {
-            using (var stream = new MemoryStream(Bytes)) {
-                var packet = (PlayerNebulaBuffPacket)Packet.ReadFromStream(stream, PacketContext.Server);
+            using var stream = new MemoryStream(Bytes);
+            var packet = (PlayerNebulaBuffPacket)Packet.ReadFromStream(stream, PacketContext.Server);
 
-                packet.PlayerIndex.Should().Be(0);
-                packet.BuffType.Should().Be(BuffType.ObsidianSkin);
-                packet.BuffPosition.Should().Be(Vector2.Zero);
-            }
+            packet.PlayerIndex.Should().Be(0);
+            packet.BuffType.Should().Be(BuffType.ObsidianSkin);
+            packet.BuffPosition.Should().Be(Vector2.Zero);
         }
 
         [Fact]

@@ -25,22 +25,20 @@ namespace Orion {
 
         [Fact]
         public void QueuePluginsFromPath_NullAssemblyPath_ThrowsArgumentNullException() {
-            using (var kernel = new OrionKernel()) {
-                // ReSharper disable once AccessToDisposedClosure
-                Action action = () => kernel.QueuePluginsFromPath(null);
+            using var kernel = new OrionKernel();
 
-                action.Should().Throw<ArgumentNullException>();
-            }
+            Action action = () => kernel.QueuePluginsFromPath(null);
+
+            action.Should().Throw<ArgumentNullException>();
         }
 
         [Fact]
         public void UnloadPlugin_NullPlugin_ThrowsArgumentNullException() {
-            using (var kernel = new OrionKernel()) {
-                // ReSharper disable once AccessToDisposedClosure
-                Action action = () => kernel.UnloadPlugin(null);
+            using var kernel = new OrionKernel();
 
-                action.Should().Throw<ArgumentNullException>();
-            }
+            Action action = () => kernel.UnloadPlugin(null);
+
+            action.Should().Throw<ArgumentNullException>();
         }
     }
 }

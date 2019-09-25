@@ -33,13 +33,12 @@ namespace Orion.Packets.World.TileEntities {
 
         [Fact]
         public void ReadFromStream_Delete_IsCorrect() {
-            using (var stream = new MemoryStream(Bytes)) {
-                var packet = (TileEntityPlacePacket)Packet.ReadFromStream(stream, PacketContext.Server);
+            using var stream = new MemoryStream(Bytes);
+            var packet = (TileEntityPlacePacket)Packet.ReadFromStream(stream, PacketContext.Server);
 
-                packet.TileEntityX.Should().Be(256);
-                packet.TileEntityY.Should().Be(100);
-                packet.TileEntityType.Should().Be(TileEntityType.ItemFrame);
-            }
+            packet.TileEntityX.Should().Be(256);
+            packet.TileEntityY.Should().Be(100);
+            packet.TileEntityType.Should().Be(TileEntityType.ItemFrame);
         }
 
         [Fact]

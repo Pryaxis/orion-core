@@ -32,12 +32,11 @@ namespace Orion.Packets.Players {
 
         [Fact]
         public void ReadFromStream_IsCorrect() {
-            using (var stream = new MemoryStream(Bytes)) {
-                var packet = (PlayerActivityPacket)Packet.ReadFromStream(stream, PacketContext.Server);
+            using var stream = new MemoryStream(Bytes);
+            var packet = (PlayerActivityPacket)Packet.ReadFromStream(stream, PacketContext.Server);
 
-                packet.PlayerIndex.Should().Be(0);
-                packet.IsPlayerActive.Should().BeTrue();
-            }
+            packet.PlayerIndex.Should().Be(0);
+            packet.IsPlayerActive.Should().BeTrue();
         }
 
         [Fact]

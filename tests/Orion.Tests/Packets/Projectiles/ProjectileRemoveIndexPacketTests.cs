@@ -32,11 +32,10 @@ namespace Orion.Packets.Projectiles {
 
         [Fact]
         public void ReadFromStream_IsCorrect() {
-            using (var stream = new MemoryStream(Bytes)) {
-                var packet = (ProjectileRemoveIndexPacket)Packet.ReadFromStream(stream, PacketContext.Server);
+            using var stream = new MemoryStream(Bytes);
+            var packet = (ProjectileRemoveIndexPacket)Packet.ReadFromStream(stream, PacketContext.Server);
 
-                packet.ProjectileIndex.Should().Be(100);
-            }
+            packet.ProjectileIndex.Should().Be(100);
         }
 
         [Fact]

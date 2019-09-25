@@ -35,14 +35,13 @@ namespace Orion.Packets.Npcs {
 
         [Fact]
         public void ReadFromStream_IsCorrect() {
-            using (var stream = new MemoryStream(Bytes)) {
-                var packet = (NpcTeleportPortalPacket)Packet.ReadFromStream(stream, PacketContext.Server);
+            using var stream = new MemoryStream(Bytes);
+            var packet = (NpcTeleportPortalPacket)Packet.ReadFromStream(stream, PacketContext.Server);
 
-                packet.NpcIndex.Should().Be(100);
-                packet.PortalIndex.Should().Be(2);
-                packet.NewNpcPosition.Should().Be(Vector2.Zero);
-                packet.NewNpcVelocity.Should().Be(Vector2.Zero);
-            }
+            packet.NpcIndex.Should().Be(100);
+            packet.PortalIndex.Should().Be(2);
+            packet.NewNpcPosition.Should().Be(Vector2.Zero);
+            packet.NewNpcVelocity.Should().Be(Vector2.Zero);
         }
 
         [Fact]

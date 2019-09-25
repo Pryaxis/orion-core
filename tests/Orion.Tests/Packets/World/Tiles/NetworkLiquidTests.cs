@@ -36,30 +36,28 @@ namespace Orion.Packets.World.Tiles {
         [InlineData(true)]
         [InlineData(false)]
         public void ReadFromReader_IsCorrect(bool shouldSwapXY) {
-            using (var stream = new MemoryStream(Bytes))
-            using (var reader = new BinaryReader(stream, Encoding.UTF8)) {
-                var liquid = NetworkLiquid.ReadFromReader(reader, shouldSwapXY);
+            using var stream = new MemoryStream(Bytes);
+            using var reader = new BinaryReader(stream, Encoding.UTF8);
+            var liquid = NetworkLiquid.ReadFromReader(reader, shouldSwapXY);
 
-                liquid.TileX.Should().Be((short)(shouldSwapXY ? 256 : 100));
-                liquid.TileY.Should().Be((short)(shouldSwapXY ? 100 : 256));
-                liquid.LiquidAmount.Should().Be(255);
-                liquid.LiquidType.Should().Be(LiquidType.Water);
-            }
+            liquid.TileX.Should().Be((short)(shouldSwapXY ? 256 : 100));
+            liquid.TileY.Should().Be((short)(shouldSwapXY ? 100 : 256));
+            liquid.LiquidAmount.Should().Be(255);
+            liquid.LiquidType.Should().Be(LiquidType.Water);
         }
 
         [Theory]
         [InlineData(true)]
         [InlineData(false)]
         public void DeserializeAndSerialize_SameTileLiquid(bool shouldSwapXY) {
-            using (var inStream = new MemoryStream(Bytes))
-            using (var reader = new BinaryReader(inStream, Encoding.UTF8))
-            using (var outStream = new MemoryStream())
-            using (var writer = new BinaryWriter(outStream, Encoding.UTF8)) {
-                var liquid = NetworkLiquid.ReadFromReader(reader, shouldSwapXY);
-                liquid.WriteToWriter(writer, shouldSwapXY);
+            using var inStream = new MemoryStream(Bytes);
+            using var reader = new BinaryReader(inStream, Encoding.UTF8);
+            using var outStream = new MemoryStream();
+            using var writer = new BinaryWriter(outStream, Encoding.UTF8);
+            var liquid = NetworkLiquid.ReadFromReader(reader, shouldSwapXY);
+            liquid.WriteToWriter(writer, shouldSwapXY);
 
-                outStream.ToArray().Should().BeEquivalentTo(Bytes);
-            }
+            outStream.ToArray().Should().BeEquivalentTo(Bytes);
         }
     }
 }

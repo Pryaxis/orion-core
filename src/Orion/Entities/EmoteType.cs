@@ -15,10 +15,13 @@
 // You should have received a copy of the GNU General Public License
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
+using System.Diagnostics.CodeAnalysis;
+
 namespace Orion.Entities {
     /// <summary>
     /// Specifies an emote type.
     /// </summary>
+    [SuppressMessage("ReSharper", "UnusedMember.Global")]
     public enum EmoteType : short {
 #pragma warning disable 1591
         NpcHead = -1,

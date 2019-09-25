@@ -32,14 +32,13 @@ namespace Orion.Packets.World.TileEntities {
 
         [Fact]
         public void ReadFromStream_IsCorrect() {
-            using (var stream = new MemoryStream(Bytes)) {
-                var packet = (ChestInfoPacket)Packet.ReadFromStream(stream, PacketContext.Server);
+            using var stream = new MemoryStream(Bytes);
+            var packet = (ChestInfoPacket)Packet.ReadFromStream(stream, PacketContext.Server);
 
-                packet.ChestIndex.Should().Be(0);
-                packet.ChestX.Should().Be(100);
-                packet.ChestY.Should().Be(100);
-                packet.ChestName.Should().BeNull();
-            }
+            packet.ChestIndex.Should().Be(0);
+            packet.ChestX.Should().Be(100);
+            packet.ChestY.Should().Be(100);
+            packet.ChestName.Should().BeNull();
         }
 
         [Fact]

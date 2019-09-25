@@ -32,11 +32,10 @@ namespace Orion.Packets.Players {
 
         [Fact]
         public void ReadFromStream_IsCorrect() {
-            using (var stream = new MemoryStream(Bytes)) {
-                var packet = (PlayerAnglerQuestsPacket)Packet.ReadFromStream(stream, PacketContext.Server);
+            using var stream = new MemoryStream(Bytes);
+            var packet = (PlayerAnglerQuestsPacket)Packet.ReadFromStream(stream, PacketContext.Server);
 
-                packet.PlayerNumberOfAnglerQuestsCompleted.Should().Be(257);
-            }
+            packet.PlayerNumberOfAnglerQuestsCompleted.Should().Be(257);
         }
 
         [Fact]

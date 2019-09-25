@@ -32,14 +32,13 @@ namespace Orion.Packets.World {
 
         [Fact]
         public void ReadFromStream_IsCorrect() {
-            using (var stream = new MemoryStream(Bytes)) {
-                var packet = (PillarShieldStrengthsPacket)Packet.ReadFromStream(stream, PacketContext.Server);
+            using var stream = new MemoryStream(Bytes);
+            var packet = (PillarShieldStrengthsPacket)Packet.ReadFromStream(stream, PacketContext.Server);
 
-                packet.SolarPillarShieldStrength.Should().Be(1);
-                packet.VortexPillarShieldStrength.Should().Be(2);
-                packet.NebulaPillarShieldStrength.Should().Be(3);
-                packet.StardustPillarShieldStrength.Should().Be(4);
-            }
+            packet.SolarPillarShieldStrength.Should().Be(1);
+            packet.VortexPillarShieldStrength.Should().Be(2);
+            packet.NebulaPillarShieldStrength.Should().Be(3);
+            packet.StardustPillarShieldStrength.Should().Be(4);
         }
 
         [Fact]

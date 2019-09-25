@@ -79,10 +79,9 @@ namespace Orion.Packets.Modules {
         public void WriteToStream(Stream stream, PacketContext context) {
             if (stream is null) throw new ArgumentNullException(nameof(stream));
 
-            using (var writer = new BinaryWriter(stream, Encoding.UTF8, true)) {
-                writer.Write((ushort)Type);
-                WriteToWriter(writer, context);
-            }
+            var writer = new BinaryWriter(stream, Encoding.UTF8, true);
+            writer.Write((ushort)Type);
+            WriteToWriter(writer, context);
         }
 
         private protected abstract void ReadFromReader(BinaryReader reader, PacketContext context);

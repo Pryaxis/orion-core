@@ -44,14 +44,13 @@ namespace Orion.Packets.World.Tiles {
 
         [Fact]
         public void ReadFromStream_IsCorrect() {
-            using (var stream = new MemoryStream(Bytes)) {
-                var packet = (TileLiquidPacket)Packet.ReadFromStream(stream, PacketContext.Server);
+            using var stream = new MemoryStream(Bytes);
+            var packet = (TileLiquidPacket)Packet.ReadFromStream(stream, PacketContext.Server);
 
-                packet.TileLiquid.TileX.Should().Be(256);
-                packet.TileLiquid.TileY.Should().Be(100);
-                packet.TileLiquid.LiquidAmount.Should().Be(255);
-                packet.TileLiquid.LiquidType.Should().Be(LiquidType.Water);
-            }
+            packet.TileLiquid.TileX.Should().Be(256);
+            packet.TileLiquid.TileY.Should().Be(100);
+            packet.TileLiquid.LiquidAmount.Should().Be(255);
+            packet.TileLiquid.LiquidType.Should().Be(LiquidType.Water);
         }
 
         [Fact]

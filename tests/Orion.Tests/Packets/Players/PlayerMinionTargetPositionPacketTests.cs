@@ -33,12 +33,11 @@ namespace Orion.Packets.Players {
 
         [Fact]
         public void ReadFromStream_IsCorrect() {
-            using (var stream = new MemoryStream(Bytes)) {
-                var packet = (PlayerMinionTargetPositionPacket)Packet.ReadFromStream(stream, PacketContext.Server);
+            using var stream = new MemoryStream(Bytes);
+            var packet = (PlayerMinionTargetPositionPacket)Packet.ReadFromStream(stream, PacketContext.Server);
 
-                packet.PlayerIndex.Should().Be(1);
-                packet.PlayerMinionTargetPosition.Should().Be(Vector2.Zero);
-            }
+            packet.PlayerIndex.Should().Be(1);
+            packet.PlayerMinionTargetPosition.Should().Be(Vector2.Zero);
         }
 
         [Fact]

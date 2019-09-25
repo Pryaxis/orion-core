@@ -62,12 +62,11 @@ namespace Orion.Packets.Modules {
 
         [Fact]
         public void ReadFromStream_IsCorrect() {
-            using (var stream = new MemoryStream(Bytes)) {
-                var module = (ModulePacket)Packet.ReadFromStream(stream, PacketContext.Server);
+            using var stream = new MemoryStream(Bytes);
+            var module = (ModulePacket)Packet.ReadFromStream(stream, PacketContext.Server);
 
-                module.Module.Should().BeOfType<LiquidsModule>();
-                module.Module.As<LiquidsModule>().Liquids.Should().HaveCount(1);
-            }
+            module.Module.Should().BeOfType<LiquidsModule>();
+            module.Module.As<LiquidsModule>().Liquids.Should().HaveCount(1);
         }
 
         [Fact]

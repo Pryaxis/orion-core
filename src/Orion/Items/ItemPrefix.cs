@@ -15,10 +15,13 @@
 // You should have received a copy of the GNU General Public License
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
+using System.Diagnostics.CodeAnalysis;
+
 namespace Orion.Items {
     /// <summary>
     /// Specifies an item prefix.
     /// </summary>
+    [SuppressMessage("ReSharper", "UnusedMember.Global")]
     public enum ItemPrefix : sbyte {
 #pragma warning disable 1591
         Reforge = -2,

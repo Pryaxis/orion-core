@@ -45,11 +45,10 @@ namespace Orion.Packets.Players {
 
         [Fact]
         public void ReadFromStream_IsCorrect() {
-            using (var stream = new MemoryStream(Bytes)) {
-                var packet = (PlayerDisconnectPacket)Packet.ReadFromStream(stream, PacketContext.Server);
+            using var stream = new MemoryStream(Bytes);
+            var packet = (PlayerDisconnectPacket)Packet.ReadFromStream(stream, PacketContext.Server);
 
-                packet.PlayerDisconnectReason.ToString().Should().Be("CLI.KickMessage");
-            }
+            packet.PlayerDisconnectReason.ToString().Should().Be("CLI.KickMessage");
         }
 
         [Fact]

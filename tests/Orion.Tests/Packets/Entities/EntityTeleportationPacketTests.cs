@@ -33,14 +33,13 @@ namespace Orion.Packets.Entities {
 
         [Fact]
         public void ReadFromStream_IsCorrect() {
-            using (var stream = new MemoryStream(Bytes)) {
-                var packet = (EntityTeleportationPacket)Packet.ReadFromStream(stream, PacketContext.Server);
+            using var stream = new MemoryStream(Bytes);
+            var packet = (EntityTeleportationPacket)Packet.ReadFromStream(stream, PacketContext.Server);
 
-                packet.EntityTeleportationType.Should().Be(EntityTeleportationType.PlayerToPlayer);
-                packet.EntityTeleportationStyle.Should().Be(0);
-                packet.EntityIndex.Should().Be(0);
-                packet.EntityNewPosition.Should().Be(Vector2.Zero);
-            }
+            packet.EntityTeleportationType.Should().Be(EntityTeleportationType.PlayerToPlayer);
+            packet.EntityTeleportationStyle.Should().Be(0);
+            packet.EntityIndex.Should().Be(0);
+            packet.EntityNewPosition.Should().Be(Vector2.Zero);
         }
 
         [Fact]

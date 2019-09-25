@@ -32,12 +32,11 @@ namespace Orion.Packets.World {
 
         [Fact]
         public void ReadFromStream_IsCorrect() {
-            using (var stream = new MemoryStream(Bytes)) {
-                var packet = (BossOrInvasionPacket)Packet.ReadFromStream(stream, PacketContext.Server);
+            using var stream = new MemoryStream(Bytes);
+            var packet = (BossOrInvasionPacket)Packet.ReadFromStream(stream, PacketContext.Server);
 
-                packet.SummmonOnPlayerIndex.Should().Be(0);
-                packet.BossOrInvasion.Should().Be(BossOrInvasion.Goblins);
-            }
+            packet.SummmonOnPlayerIndex.Should().Be(0);
+            packet.BossOrInvasion.Should().Be(BossOrInvasion.Goblins);
         }
 
         [Fact]

@@ -33,12 +33,11 @@ namespace Orion.Packets.Npcs {
 
         [Fact]
         public void ReadFromStream_IsCorrect() {
-            using (var stream = new MemoryStream(Bytes)) {
-                var packet = (NpcKillCountPacket)Packet.ReadFromStream(stream, PacketContext.Server);
+            using var stream = new MemoryStream(Bytes);
+            var packet = (NpcKillCountPacket)Packet.ReadFromStream(stream, PacketContext.Server);
 
-                packet.NpcType.Should().Be(NpcType.BlueSlime);
-                packet.NpcTypeKillCount.Should().Be(100);
-            }
+            packet.NpcType.Should().Be(NpcType.BlueSlime);
+            packet.NpcTypeKillCount.Should().Be(100);
         }
 
         [Fact]

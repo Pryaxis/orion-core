@@ -27,12 +27,11 @@ namespace Orion.Packets.World.TileEntities {
 
         [Fact]
         public void ReadFromStream_Remove_IsCorrect() {
-            using (var stream = new MemoryStream(RemoveBytes)) {
-                var packet = (TileEntityInfoPacket)Packet.ReadFromStream(stream, PacketContext.Server);
+            using var stream = new MemoryStream(RemoveBytes);
+            var packet = (TileEntityInfoPacket)Packet.ReadFromStream(stream, PacketContext.Server);
 
-                packet.TileEntityIndex.Should().Be(0);
-                packet.TileEntity.Should().BeNull();
-            }
+            packet.TileEntityIndex.Should().Be(0);
+            packet.TileEntity.Should().BeNull();
         }
 
         [Fact]
@@ -44,17 +43,16 @@ namespace Orion.Packets.World.TileEntities {
 
         [Fact]
         public void ReadFromStream_TargetDummy_IsCorrect() {
-            using (var stream = new MemoryStream(TargetDummyBytes)) {
-                var packet = (TileEntityInfoPacket)Packet.ReadFromStream(stream, PacketContext.Server);
+            using var stream = new MemoryStream(TargetDummyBytes);
+            var packet = (TileEntityInfoPacket)Packet.ReadFromStream(stream, PacketContext.Server);
 
-                packet.TileEntityIndex.Should().Be(0);
-                packet.TileEntity.Should().NotBeNull();
-                packet.TileEntity.Index.Should().Be(0);
-                packet.TileEntity.X.Should().Be(256);
-                packet.TileEntity.Y.Should().Be(100);
-                packet.TileEntity.Should().BeOfType<NetworkTargetDummy>();
-                packet.TileEntity.As<NetworkTargetDummy>().NpcIndex.Should().Be(1);
-            }
+            packet.TileEntityIndex.Should().Be(0);
+            packet.TileEntity.Should().NotBeNull();
+            packet.TileEntity.Index.Should().Be(0);
+            packet.TileEntity.X.Should().Be(256);
+            packet.TileEntity.Y.Should().Be(100);
+            packet.TileEntity.Should().BeOfType<NetworkTargetDummy>();
+            packet.TileEntity.As<NetworkTargetDummy>().NpcIndex.Should().Be(1);
         }
 
         [Fact]
@@ -66,19 +64,18 @@ namespace Orion.Packets.World.TileEntities {
 
         [Fact]
         public void ReadFromStream_ItemFrame_IsCorrect() {
-            using (var stream = new MemoryStream(ItemFrameBytes)) {
-                var packet = (TileEntityInfoPacket)Packet.ReadFromStream(stream, PacketContext.Server);
+            using var stream = new MemoryStream(ItemFrameBytes);
+            var packet = (TileEntityInfoPacket)Packet.ReadFromStream(stream, PacketContext.Server);
 
-                packet.TileEntityIndex.Should().Be(0);
-                packet.TileEntity.Should().NotBeNull();
-                packet.TileEntity.Index.Should().Be(0);
-                packet.TileEntity.X.Should().Be(256);
-                packet.TileEntity.Y.Should().Be(100);
-                packet.TileEntity.Should().BeOfType<NetworkItemFrame>();
-                packet.TileEntity.As<NetworkItemFrame>().ItemType.Should().Be(ItemType.Sdmg);
-                packet.TileEntity.As<NetworkItemFrame>().ItemPrefix.Should().Be(ItemPrefix.Unreal);
-                packet.TileEntity.As<NetworkItemFrame>().ItemStackSize.Should().Be(1);
-            }
+            packet.TileEntityIndex.Should().Be(0);
+            packet.TileEntity.Should().NotBeNull();
+            packet.TileEntity.Index.Should().Be(0);
+            packet.TileEntity.X.Should().Be(256);
+            packet.TileEntity.Y.Should().Be(100);
+            packet.TileEntity.Should().BeOfType<NetworkItemFrame>();
+            packet.TileEntity.As<NetworkItemFrame>().ItemType.Should().Be(ItemType.Sdmg);
+            packet.TileEntity.As<NetworkItemFrame>().ItemPrefix.Should().Be(ItemPrefix.Unreal);
+            packet.TileEntity.As<NetworkItemFrame>().ItemStackSize.Should().Be(1);
         }
 
         [Fact]
@@ -90,18 +87,17 @@ namespace Orion.Packets.World.TileEntities {
 
         [Fact]
         public void ReadFromStream_LogicSensor_IsCorrect() {
-            using (var stream = new MemoryStream(LogicSensorBytes)) {
-                var packet = (TileEntityInfoPacket)Packet.ReadFromStream(stream, PacketContext.Server);
+            using var stream = new MemoryStream(LogicSensorBytes);
+            var packet = (TileEntityInfoPacket)Packet.ReadFromStream(stream, PacketContext.Server);
 
-                packet.TileEntityIndex.Should().Be(0);
-                packet.TileEntity.Should().NotBeNull();
-                packet.TileEntity.Index.Should().Be(0);
-                packet.TileEntity.X.Should().Be(256);
-                packet.TileEntity.Y.Should().Be(100);
-                packet.TileEntity.Should().BeOfType<NetworkLogicSensor>();
-                packet.TileEntity.As<NetworkLogicSensor>().LogicSensorType.Should().Be(LogicSensorType.Daytime);
-                packet.TileEntity.As<NetworkLogicSensor>().IsActivated.Should().BeTrue();
-            }
+            packet.TileEntityIndex.Should().Be(0);
+            packet.TileEntity.Should().NotBeNull();
+            packet.TileEntity.Index.Should().Be(0);
+            packet.TileEntity.X.Should().Be(256);
+            packet.TileEntity.Y.Should().Be(100);
+            packet.TileEntity.Should().BeOfType<NetworkLogicSensor>();
+            packet.TileEntity.As<NetworkLogicSensor>().LogicSensorType.Should().Be(LogicSensorType.Daytime);
+            packet.TileEntity.As<NetworkLogicSensor>().IsActivated.Should().BeTrue();
         }
 
         [Fact]

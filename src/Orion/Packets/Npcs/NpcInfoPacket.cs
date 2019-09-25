@@ -218,17 +218,11 @@ namespace Orion.Packets.Npcs {
 
             if (!_isNpcAtMaxHealth) {
                 _npcNumberOfHealthBytes = reader.ReadByte();
-                switch (_npcNumberOfHealthBytes) {
-                case 2:
-                    _npcHealth = reader.ReadInt16();
-                    break;
-                case 4:
-                    _npcHealth = reader.ReadInt32();
-                    break;
-                default:
-                    _npcHealth = reader.ReadSByte();
-                    break;
-                }
+                _npcHealth = _npcNumberOfHealthBytes switch {
+                    2 => reader.ReadInt16(),
+                    4 => reader.ReadInt32(),
+                    _ => reader.ReadSByte()
+                };
             }
 
             if (_npcType.IsCatchable()) {

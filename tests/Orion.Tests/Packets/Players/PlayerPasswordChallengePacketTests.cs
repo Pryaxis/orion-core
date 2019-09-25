@@ -25,9 +25,8 @@ namespace Orion.Packets.Players {
 
         [Fact]
         public void ReadFromStream_IsCorrect() {
-            using (var stream = new MemoryStream(Bytes)) {
-                Packet.ReadFromStream(stream, PacketContext.Server).Should().BeOfType<PlayerPasswordChallengePacket>();
-            }
+            using var stream = new MemoryStream(Bytes);
+            Packet.ReadFromStream(stream, PacketContext.Server).Should().BeOfType<PlayerPasswordChallengePacket>();
         }
 
         [Fact]

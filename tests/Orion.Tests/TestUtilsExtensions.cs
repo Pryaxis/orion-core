@@ -90,15 +90,14 @@ namespace Orion {
         }
 
         public static void ShouldDeserializeAndSerializeSamePacket(this byte[] bytes) {
-            using (var inStream = new MemoryStream(bytes))
-            using (var outStream = new MemoryStream()) {
-                var packet = Packet.ReadFromStream(inStream, PacketContext.Server);
-                packet.IsDirty.Should().BeFalse();
+            using var inStream = new MemoryStream(bytes);
+            using var outStream = new MemoryStream();
+            var packet = Packet.ReadFromStream(inStream, PacketContext.Server);
+            packet.IsDirty.Should().BeFalse();
 
-                packet.WriteToStream(outStream, PacketContext.Client);
+            packet.WriteToStream(outStream, PacketContext.Client);
 
-                outStream.ToArray().Should().BeEquivalentTo(bytes);
-            }
+            outStream.ToArray().Should().BeEquivalentTo(bytes);
         }
     }
 }

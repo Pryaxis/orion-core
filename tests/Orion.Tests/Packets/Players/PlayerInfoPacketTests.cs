@@ -33,26 +33,25 @@ namespace Orion.Packets.Players {
 
         [Fact]
         public void ReadFromStream_IsCorrect() {
-            using (var stream = new MemoryStream(Bytes)) {
-                var packet = (PlayerInfoPacket)Packet.ReadFromStream(stream, PacketContext.Server);
+            using var stream = new MemoryStream(Bytes);
+            var packet = (PlayerInfoPacket)Packet.ReadFromStream(stream, PacketContext.Server);
 
-                packet.PlayerIndex.Should().Be(0);
-                packet.IsPlayerHoldingUp.Should().BeFalse();
-                packet.IsPlayerHoldingDown.Should().BeFalse();
-                packet.IsPlayerHoldingLeft.Should().BeFalse();
-                packet.IsPlayerHoldingRight.Should().BeTrue();
-                packet.IsPlayerHoldingJump.Should().BeFalse();
-                packet.IsPlayerHoldingUseItem.Should().BeFalse();
-                packet.PlayerDirection.Should().BeTrue();
-                packet.IsPlayerClimbingRope.Should().BeFalse();
-                packet.PlayerClimbingRopeDirection.Should().BeFalse();
-                packet.IsPlayerVortexStealthed.Should().BeFalse();
-                packet.IsPlayerRightSideUp.Should().BeTrue();
-                packet.IsPlayerRaisingShield.Should().BeFalse();
-                packet.PlayerHeldItemSlotIndex.Should().Be(0);
-                packet.PlayerPosition.Should().Be(new Vector2(67134, 6790));
-                packet.PlayerVelocity.Should().Be(Vector2.Zero);
-            }
+            packet.PlayerIndex.Should().Be(0);
+            packet.IsPlayerHoldingUp.Should().BeFalse();
+            packet.IsPlayerHoldingDown.Should().BeFalse();
+            packet.IsPlayerHoldingLeft.Should().BeFalse();
+            packet.IsPlayerHoldingRight.Should().BeTrue();
+            packet.IsPlayerHoldingJump.Should().BeFalse();
+            packet.IsPlayerHoldingUseItem.Should().BeFalse();
+            packet.PlayerDirection.Should().BeTrue();
+            packet.IsPlayerClimbingRope.Should().BeFalse();
+            packet.PlayerClimbingRopeDirection.Should().BeFalse();
+            packet.IsPlayerVortexStealthed.Should().BeFalse();
+            packet.IsPlayerRightSideUp.Should().BeTrue();
+            packet.IsPlayerRaisingShield.Should().BeFalse();
+            packet.PlayerHeldItemSlotIndex.Should().Be(0);
+            packet.PlayerPosition.Should().Be(new Vector2(67134, 6790));
+            packet.PlayerVelocity.Should().Be(Vector2.Zero);
         }
 
         [Fact]

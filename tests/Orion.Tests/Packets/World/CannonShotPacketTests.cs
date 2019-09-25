@@ -32,17 +32,16 @@ namespace Orion.Packets.World {
 
         [Fact]
         public void ReadFromStream_IsCorrect() {
-            using (var stream = new MemoryStream(Bytes)) {
-                var packet = (CannonShotPacket)Packet.ReadFromStream(stream, PacketContext.Server);
+            using var stream = new MemoryStream(Bytes);
+            var packet = (CannonShotPacket)Packet.ReadFromStream(stream, PacketContext.Server);
 
-                packet.ShotDamage.Should().Be(100);
-                packet.ShotKnockback.Should().Be(0);
-                packet.CannonX.Should().Be(256);
-                packet.CannonY.Should().Be(100);
-                packet.ShotAngle.Should().Be(0);
-                packet.ShotAmmoType.Should().Be(0);
-                packet.ShooterPlayerIndex.Should().Be(1);
-            }
+            packet.ShotDamage.Should().Be(100);
+            packet.ShotKnockback.Should().Be(0);
+            packet.CannonX.Should().Be(256);
+            packet.CannonY.Should().Be(100);
+            packet.ShotAngle.Should().Be(0);
+            packet.ShotAmmoType.Should().Be(0);
+            packet.ShooterPlayerIndex.Should().Be(1);
         }
 
         [Fact]

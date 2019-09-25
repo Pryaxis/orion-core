@@ -25,15 +25,14 @@ namespace Orion.Packets.Entities {
 
         [Fact]
         public void ReadFromStream_Normal_IsCorrect() {
-            using (var stream = new MemoryStream(NormalBytes)) {
-                var packet = (EmoteInfoPacket)Packet.ReadFromStream(stream, PacketContext.Server);
+            using var stream = new MemoryStream(NormalBytes);
+            var packet = (EmoteInfoPacket)Packet.ReadFromStream(stream, PacketContext.Server);
 
-                packet.EmoteIndex.Should().Be(1);
-                packet.AnchorType.Should().Be(0);
-                packet.AnchorEntityIndex.Should().Be(100);
-                packet.EmoteLifetime.Should().Be(255);
-                packet.EmoteType.Should().Be(1);
-            }
+            packet.EmoteIndex.Should().Be(1);
+            packet.AnchorType.Should().Be(0);
+            packet.AnchorEntityIndex.Should().Be(100);
+            packet.EmoteLifetime.Should().Be(255);
+            packet.EmoteType.Should().Be(1);
         }
 
         [Fact]
@@ -45,12 +44,11 @@ namespace Orion.Packets.Entities {
 
         [Fact]
         public void ReadFromStream_Remove_IsCorrect() {
-            using (var stream = new MemoryStream(RemoveBytes)) {
-                var packet = (EmoteInfoPacket)Packet.ReadFromStream(stream, PacketContext.Server);
+            using var stream = new MemoryStream(RemoveBytes);
+            var packet = (EmoteInfoPacket)Packet.ReadFromStream(stream, PacketContext.Server);
 
-                packet.EmoteIndex.Should().Be(1);
-                packet.AnchorType.Should().Be(255);
-            }
+            packet.EmoteIndex.Should().Be(1);
+            packet.AnchorType.Should().Be(255);
         }
 
         [Fact]

@@ -51,27 +51,26 @@ namespace Orion.Packets.Npcs {
 
         [Fact]
         public void ReadFromStream_IsCorrect() {
-            using (var stream = new MemoryStream(Bytes)) {
-                var packet = (NpcInfoPacket)Packet.ReadFromStream(stream, PacketContext.Server);
+            using var stream = new MemoryStream(Bytes);
+            var packet = (NpcInfoPacket)Packet.ReadFromStream(stream, PacketContext.Server);
 
-                packet.NpcIndex.Should().Be(1);
-                packet.NpcPosition.Should().Be(new Vector2(68002.3f, 6816));
-                packet.NpcVelocity.Should().Be(Vector2.Zero);
-                packet.NpcTargetIndex.Should().Be(255);
-                packet.NpcHorizontalDirection.Should().BeFalse();
-                packet.NpcVerticalDirection.Should().BeTrue();
+            packet.NpcIndex.Should().Be(1);
+            packet.NpcPosition.Should().Be(new Vector2(68002.3f, 6816));
+            packet.NpcVelocity.Should().Be(Vector2.Zero);
+            packet.NpcTargetIndex.Should().Be(255);
+            packet.NpcHorizontalDirection.Should().BeFalse();
+            packet.NpcVerticalDirection.Should().BeTrue();
 
-                foreach (var aiValue in packet.NpcAiValues) {
-                    aiValue.Should().Be(0);
-                }
-
-                packet.NpcSpriteDirection.Should().BeFalse();
-                packet.IsNpcAtMaxHealth.Should().BeTrue();
-                packet.NpcType.Should().Be(NpcType.Guide);
-                packet.NpcNumberOfHealthBytes.Should().Be(0);
-                packet.NpcHealth.Should().Be(0);
-                packet.NpcReleaserPlayerIndex.Should().Be(0);
+            foreach (var aiValue in packet.NpcAiValues) {
+                aiValue.Should().Be(0);
             }
+
+            packet.NpcSpriteDirection.Should().BeFalse();
+            packet.IsNpcAtMaxHealth.Should().BeTrue();
+            packet.NpcType.Should().Be(NpcType.Guide);
+            packet.NpcNumberOfHealthBytes.Should().Be(0);
+            packet.NpcHealth.Should().Be(0);
+            packet.NpcReleaserPlayerIndex.Should().Be(0);
         }
 
         [Fact]

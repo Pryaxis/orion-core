@@ -41,14 +41,13 @@ namespace Orion.Packets.World.TileEntities {
 
         [Fact]
         public void ReadFromStream_IsCorrect() {
-            using (var stream = new MemoryStream(Bytes)) {
-                var packet = (SignInfoPacket)Packet.ReadFromStream(stream, PacketContext.Server);
+            using var stream = new MemoryStream(Bytes);
+            var packet = (SignInfoPacket)Packet.ReadFromStream(stream, PacketContext.Server);
 
-                packet.SignIndex.Should().Be(0);
-                packet.SignX.Should().Be(256);
-                packet.SignY.Should().Be(100);
-                packet.SignText.Should().Be("Terraria");
-            }
+            packet.SignIndex.Should().Be(0);
+            packet.SignX.Should().Be(256);
+            packet.SignY.Should().Be(100);
+            packet.SignText.Should().Be("Terraria");
         }
 
         [Fact]

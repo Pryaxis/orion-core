@@ -49,53 +49,49 @@ namespace Orion.Packets.Extensions {
         [Theory]
         [MemberData(nameof(ColorData))]
         public void WriteColor_ReadColor_IsCorrect(Color color) {
-            using (var stream = new MemoryStream())
-            using (var writer = new BinaryWriter(stream, Encoding.UTF8))
-            using (var reader = new BinaryReader(stream, Encoding.UTF8)) {
-                writer.Write(color);
-                stream.Position = 0;
+            using var stream = new MemoryStream();
+            using var writer = new BinaryWriter(stream, Encoding.UTF8);
+            using var reader = new BinaryReader(stream, Encoding.UTF8);
+            writer.Write(color);
+            stream.Position = 0;
 
-                reader.ReadColor().Should().Be(color);
-            }
+            reader.ReadColor().Should().Be(color);
         }
 
         [Theory]
         [MemberData(nameof(NetworkTextData))]
         public void WriteNetworkText_ReadNetworkText_IsCorrect(NetworkText text) {
-            using (var stream = new MemoryStream())
-            using (var writer = new BinaryWriter(stream, Encoding.UTF8))
-            using (var reader = new BinaryReader(stream, Encoding.UTF8)) {
-                writer.Write(text);
-                stream.Position = 0;
+            using var stream = new MemoryStream();
+            using var writer = new BinaryWriter(stream, Encoding.UTF8);
+            using var reader = new BinaryReader(stream, Encoding.UTF8);
+            writer.Write(text);
+            stream.Position = 0;
 
-                reader.ReadNetworkText().ToString().Should().Be(text.ToString());
-            }
+            reader.ReadNetworkText().ToString().Should().Be(text.ToString());
         }
 
         [Theory]
         [MemberData(nameof(PlayerDeathReasonData))]
         public void WritePlayerDeathReason_ReadPlayerDeathReason_IsCorrect(TDS.PlayerDeathReason playerDeathReason) {
-            using (var stream = new MemoryStream())
-            using (var writer = new BinaryWriter(stream, Encoding.UTF8))
-            using (var reader = new BinaryReader(stream, Encoding.UTF8)) {
-                writer.Write(playerDeathReason);
-                stream.Position = 0;
+            using var stream = new MemoryStream();
+            using var writer = new BinaryWriter(stream, Encoding.UTF8);
+            using var reader = new BinaryReader(stream, Encoding.UTF8);
+            writer.Write(playerDeathReason);
+            stream.Position = 0;
 
-                reader.ReadPlayerDeathReason().Should().BeEquivalentTo(playerDeathReason);
-            }
+            reader.ReadPlayerDeathReason().Should().BeEquivalentTo(playerDeathReason);
         }
 
         [Theory]
         [MemberData(nameof(Vector2Data))]
         public void WriteVector2_ReadVector2_IsCorrect(Vector2 vector) {
-            using (var stream = new MemoryStream())
-            using (var writer = new BinaryWriter(stream, Encoding.UTF8))
-            using (var reader = new BinaryReader(stream, Encoding.UTF8)) {
-                writer.Write(vector);
-                stream.Position = 0;
+            using var stream = new MemoryStream();
+            using var writer = new BinaryWriter(stream, Encoding.UTF8);
+            using var reader = new BinaryReader(stream, Encoding.UTF8);
+            writer.Write(vector);
+            stream.Position = 0;
 
-                reader.ReadVector2().Should().Be(vector);
-            }
+            reader.ReadVector2().Should().Be(vector);
         }
     }
 }

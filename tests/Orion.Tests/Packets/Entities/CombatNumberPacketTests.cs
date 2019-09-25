@@ -33,13 +33,12 @@ namespace Orion.Packets.Entities {
 
         [Fact]
         public void ReadFromStream_IsCorrect() {
-            using (var stream = new MemoryStream(Bytes)) {
-                var packet = (CombatNumberPacket)Packet.ReadFromStream(stream, PacketContext.Server);
+            using var stream = new MemoryStream(Bytes);
+            var packet = (CombatNumberPacket)Packet.ReadFromStream(stream, PacketContext.Server);
 
-                packet.NumberPosition.Should().Be(Vector2.Zero);
-                packet.NumberColor.Should().Be(Color.White);
-                packet.Number.Should().Be(100);
-            }
+            packet.NumberPosition.Should().Be(Vector2.Zero);
+            packet.NumberColor.Should().Be(Color.White);
+            packet.Number.Should().Be(100);
         }
 
         [Fact]

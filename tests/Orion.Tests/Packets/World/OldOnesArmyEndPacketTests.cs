@@ -25,9 +25,8 @@ namespace Orion.Packets.World {
 
         [Fact]
         public void ReadFromStream_IsCorrect() {
-            using (var stream = new MemoryStream(Bytes)) {
-                Packet.ReadFromStream(stream, PacketContext.Server).Should().BeOfType<OldOnesArmyEndPacket>();
-            }
+            using var stream = new MemoryStream(Bytes);
+            Packet.ReadFromStream(stream, PacketContext.Server).Should().BeOfType<OldOnesArmyEndPacket>();
         }
 
         [Fact]

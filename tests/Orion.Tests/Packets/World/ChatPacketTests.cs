@@ -44,13 +44,12 @@ namespace Orion.Packets.World {
 
         [Fact]
         public void ReadFromStream_IsCorrect() {
-            using (var stream = new MemoryStream(Bytes)) {
-                var packet = (ChatPacket)Packet.ReadFromStream(stream, PacketContext.Server);
+            using var stream = new MemoryStream(Bytes);
+            var packet = (ChatPacket)Packet.ReadFromStream(stream, PacketContext.Server);
 
-                packet.ChatColor.Should().Be(Color.White);
-                packet.ChatText.ToString().Should().Be("Terraria");
-                packet.ChatLineWidth.Should().Be(100);
-            }
+            packet.ChatColor.Should().Be(Color.White);
+            packet.ChatText.ToString().Should().Be("Terraria");
+            packet.ChatLineWidth.Should().Be(100);
         }
 
         [Fact]

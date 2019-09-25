@@ -34,13 +34,12 @@ namespace Orion.Packets.Npcs {
 
         [Fact]
         public void ReadFromStream_IsCorrect() {
-            using (var stream = new MemoryStream(Bytes)) {
-                var packet = (NpcReleasePacket)Packet.ReadFromStream(stream, PacketContext.Server);
+            using var stream = new MemoryStream(Bytes);
+            var packet = (NpcReleasePacket)Packet.ReadFromStream(stream, PacketContext.Server);
 
-                packet.NpcPosition.Should().Be(new Vector2(256, 100));
-                packet.NpcType.Should().Be(NpcType.BlueSlime);
-                packet.NpcStyle.Should().Be(0);
-            }
+            packet.NpcPosition.Should().Be(new Vector2(256, 100));
+            packet.NpcType.Should().Be(NpcType.BlueSlime);
+            packet.NpcStyle.Should().Be(0);
         }
 
         [Fact]

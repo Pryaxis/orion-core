@@ -32,12 +32,11 @@ namespace Orion.Packets.Entities {
 
         [Fact]
         public void ReadFromStream_IsCorrect() {
-            using (var stream = new MemoryStream(Bytes)) {
-                var packet = (EntityActionPacket)Packet.ReadFromStream(stream, PacketContext.Server);
+            using var stream = new MemoryStream(Bytes);
+            var packet = (EntityActionPacket)Packet.ReadFromStream(stream, PacketContext.Server);
 
-                packet.EntityIndex.Should().Be(0);
-                packet.EntityAction.Should().Be(EntityAction.PlayerSpawnSkeletron);
-            }
+            packet.EntityIndex.Should().Be(0);
+            packet.EntityAction.Should().Be(EntityAction.PlayerSpawnSkeletron);
         }
 
         [Fact]

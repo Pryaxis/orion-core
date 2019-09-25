@@ -59,13 +59,12 @@ namespace Orion.Packets.Modules {
 
         [Fact]
         public void ReadFromStream_Client_IsCorrect() {
-            using (var stream = new MemoryStream(Bytes)) {
-                var packet = (ModulePacket)Packet.ReadFromStream(stream, PacketContext.Server);
+            using var stream = new MemoryStream(Bytes);
+            var packet = (ModulePacket)Packet.ReadFromStream(stream, PacketContext.Server);
 
-                packet.Module.Should().BeOfType<ChatModule>();
-                packet.Module.As<ChatModule>().ClientChatCommand.Should().Be("Say");
-                packet.Module.As<ChatModule>().ClientChatText.Should().Be("/command test");
-            }
+            packet.Module.Should().BeOfType<ChatModule>();
+            packet.Module.As<ChatModule>().ClientChatCommand.Should().Be("Say");
+            packet.Module.As<ChatModule>().ClientChatText.Should().Be("/command test");
         }
 
         [Fact]
