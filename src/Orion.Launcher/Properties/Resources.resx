@@ -132,7 +132,7 @@
   <data name="LogsDirectory" xml:space="preserve">
     <value>logs</value>
   </data>
-  <data name="PluginDirectory" xml:space="preserve">
+  <data name="PluginsDirectory" xml:space="preserve">
     <value>plugins</value>
   </data>
   <data name="UnhandledExceptionMessage" xml:space="preserve">

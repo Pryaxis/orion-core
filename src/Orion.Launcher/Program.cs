@@ -17,18 +17,19 @@
 
 using System;
 using System.IO;
-using Ninject;
-using Orion.Items;
+using System.Text;
+using System.Threading;
 using Orion.Launcher.Properties;
 using Serilog;
 using Serilog.Sinks.SystemConsole.Themes;
 
 namespace Orion.Launcher {
     internal class Program {
-        internal static void Main(string[] args) {
-            Directory.CreateDirectory(Resources.LogsDirectory);
-            Directory.CreateDirectory(Resources.PluginDirectory);
+        private static void SetupLogging() {
+            Console.InputEncoding = Encoding.UTF8;
+            Console.OutputEncoding = Encoding.UTF8;
 
+            Directory.CreateDirectory(Resources.LogsDirectory);
             Log.Logger = new LoggerConfiguration()
 #if DEBUG
                          .MinimumLevel.Verbose()
@@ -45,32 +46,47 @@ namespace Orion.Launcher {
             AppDomain.CurrentDomain.UnhandledException += (sender, eventArgs) => {
                 Log.Fatal(eventArgs.ExceptionObject as Exception, Resources.UnhandledExceptionMessage);
             };
+        }
 
-            using (var kernel = new OrionKernel()) {
-                Log.Information(Resources.LoadingPluginsMessage);
+        private static void SetupPlugins(OrionKernel kernel) {
+            Directory.CreateDirectory(Resources.PluginsDirectory);
+            Log.Information(Resources.LoadingPluginsMessage);
 
-                foreach (var path in Directory.EnumerateFiles(Resources.PluginDirectory, "*.dll")) {
-                    try {
-                        Log.Information(Resources.LoadingPluginMessage, path);
+            foreach (var path in Directory.EnumerateFiles(Resources.PluginsDirectory, "*.dll")) {
+                try {
+                    Log.Information(Resources.LoadingPluginMessage, path);
 
-                        kernel.QueuePluginsFromPath(path);
-                    } catch (Exception ex) when (ex is BadImageFormatException || ex is IOException) {
-                        Log.Information(ex, Resources.FailedToLoadPluginMessage, path);
-                    }
+                    kernel.QueuePluginsFromPath(path);
+                } catch (Exception ex) when (ex is BadImageFormatException || ex is IOException) {
+                    Log.Information(ex, Resources.FailedToLoadPluginMessage, path);
                 }
-
-                kernel.FinishLoadingPlugins(
-                    p => Log.Information(Resources.LoadedPluginMessage, p.Name, p.Version, p.Author));
-
-                Console.ResetColor();
-                Console.WriteLine();
-
-                kernel.Get<IItemService>();
-
-                // Set SkipAssemblyLoad so that we don't JIT the social API.
-                Terraria.Main.SkipAssemblyLoad = true;
-                Terraria.Program.LaunchGame(args);
             }
+
+            kernel.FinishLoadingPlugins(
+                p => Log.Information(Resources.LoadedPluginMessage, p.Name, p.Version, p.Author));
+            Console.ResetColor();
+            Console.WriteLine();
+        }
+
+        private static void SetupLanguage() {
+            // Save cultures since LanguageManager.SetLanguage overrides them.
+            var previousCulture = Thread.CurrentThread.CurrentCulture;
+            var previousUICulture = Thread.CurrentThread.CurrentUICulture;
+            Terraria.Localization.LanguageManager.Instance.SetLanguage(previousUICulture.Name);
+            Terraria.Lang.InitializeLegacyLocalization();
+            Thread.CurrentThread.CurrentCulture = previousCulture;
+            Thread.CurrentThread.CurrentUICulture = previousUICulture;
+        }
+
+        internal static void Main(string[] args) {
+            using var kernel = new OrionKernel();
+
+            SetupLogging();
+            SetupPlugins(kernel);
+            SetupLanguage();
+
+            using var game = new Terraria.Main();
+            game.DedServ();
         }
     }
 }

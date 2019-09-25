@@ -35,7 +35,7 @@ namespace Orion {
         [NotNull, ItemNotNull] private readonly ISet<Assembly> _pluginAssemblies = new HashSet<Assembly>();
         [NotNull, ItemNotNull] private readonly ISet<Type> _pluginTypesToLoad = new HashSet<Type>();
         [NotNull, ItemNotNull] private readonly ISet<OrionPlugin> _plugins = new HashSet<OrionPlugin>();
-
+        
         internal OrionKernel() {
             Bind<OrionKernel>().ToConstant(this).InSingletonScope();
             Bind<IItemService>().To<OrionItemService>().InSingletonScope();
@@ -43,8 +43,9 @@ namespace Orion {
 
             // Because we're using Assembly.Load, we'll need to have an AssemblyResolve handler to deal with any issues
             // that may pop up.
-            AppDomain.CurrentDomain.AssemblyResolve +=
-                (sender, args) => _pluginAssemblies.First(a => a.FullName == args.Name);
+            AppDomain.CurrentDomain.AssemblyResolve += (sender, args) => {
+                return _pluginAssemblies.FirstOrDefault(a => a.FullName == args.Name);
+            };
         }
 
         /// <summary>
