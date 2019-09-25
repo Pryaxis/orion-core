@@ -18,19 +18,17 @@
 using System;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
-using JetBrains.Annotations;
 
 namespace Orion.Packets.World.TileEntities {
     /// <summary>
     /// Packet sent from the client to the server to request a chest's name or from the server to the client to set a
     /// chest's name.
     /// </summary>
-    [PublicAPI]
     public sealed class ChestNamePacket : Packet {
         private short _chestIndex;
         private short _chestX;
         private short _chestY;
-        [NotNull] private string _chestName = "";
+        private string _chestName = "";
 
         /// <inheritdoc />
         public override PacketType Type => PacketType.ChestName;
@@ -72,7 +70,6 @@ namespace Orion.Packets.World.TileEntities {
         /// Gets or sets the chest's name.
         /// </summary>
         /// <exception cref="ArgumentNullException"><paramref name="value"/> is <c>null</c>.</exception>
-        [NotNull]
         public string ChestName {
             get => _chestName;
             set {

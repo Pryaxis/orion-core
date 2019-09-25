@@ -17,14 +17,12 @@
 
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
-using JetBrains.Annotations;
 
 namespace Orion.Packets.World.Tiles {
     /// <summary>
     /// Packet sent to unlock an object (chest, door, etc.). See
     /// <see cref="Tiles.UnlockableObjectType"/> for a list of unlockable object types.
     /// </summary>
-    [PublicAPI]
     public sealed class ObjectUnlockPacket : Packet {
         private UnlockableObjectType _unlockableObjectType;
         private short _objectX;

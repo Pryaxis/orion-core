@@ -17,13 +17,11 @@
 
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
-using JetBrains.Annotations;
 
 namespace Orion.Packets.World {
     /// <summary>
     /// Packet sent to show a tree growing effect.
     /// </summary>
-    [PublicAPI]
     public sealed class TreeGrowingEffectPacket : Packet {
         private byte _data;
         private short _treeX;

@@ -15,13 +15,10 @@
 // You should have received a copy of the GNU General Public License
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
-using JetBrains.Annotations;
-
 namespace Orion.Packets.Entities {
     /// <summary>
     /// Specifies an entity teleportation type in a <see cref="EntityTeleportationPacket"/>.
     /// </summary>
-    [PublicAPI]
     public enum EntityTeleportationType : byte {
         /// <summary>
         /// Indicates that a player should be teleported.

@@ -17,13 +17,11 @@
 
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
-using JetBrains.Annotations;
 
 namespace Orion.Packets.World {
     /// <summary>
     /// Packet sent from the server to the client to set the pillars' shield strengths.
     /// </summary>
-    [PublicAPI]
     public sealed class PillarShieldStrengthsPacket : Packet {
         private ushort _solarPillarShieldStrength;
         private ushort _vortexPillarShieldStrength;

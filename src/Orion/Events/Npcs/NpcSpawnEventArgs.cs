@@ -16,14 +16,12 @@
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
 using System;
-using JetBrains.Annotations;
 using Orion.Npcs;
 
 namespace Orion.Events.Npcs {
     /// <summary>
     /// Provides data for the <see cref="INpcService.NpcSpawn"/> event.
     /// </summary>
-    [PublicAPI]
     public sealed class NpcSpawnEventArgs : NpcEventArgs, ICancelable {
         /// <inheritdoc />
         public bool IsCanceled { get; set; }
@@ -33,6 +31,6 @@ namespace Orion.Events.Npcs {
         /// </summary>
         /// <param name="npc">The NPC.</param>
         /// <exception cref="ArgumentNullException"><paramref name="npc"/> is <c>null</c>.</exception>
-        public NpcSpawnEventArgs([NotNull] INpc npc) : base(npc) { }
+        public NpcSpawnEventArgs(INpc npc) : base(npc) { }
     }
 }

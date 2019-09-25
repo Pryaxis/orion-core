@@ -15,13 +15,10 @@
 // You should have received a copy of the GNU General Public License
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
-using JetBrains.Annotations;
-
 namespace Orion.Items {
     /// <summary>
     /// Represents an item's stats.
     /// </summary>
-    [PublicAPI]
     public interface IItemStats {
         /// <summary>
         /// Gets the item's maximum stack size.

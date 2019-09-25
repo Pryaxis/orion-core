@@ -17,14 +17,12 @@
 
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
-using JetBrains.Annotations;
 using Orion.Items;
 
 namespace Orion.Packets.World.TileEntities {
     /// <summary>
     /// Packet sent to set a chest contents slot. This is sent in response to a <see cref="ChestOpenPacket"/>.
     /// </summary>
-    [PublicAPI]
     public sealed class ChestContentsSlotPacket : Packet {
         private short _chestIndex;
         private byte _chestContentsSlotIndex;

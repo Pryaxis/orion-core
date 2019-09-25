@@ -78,6 +78,7 @@ namespace Orion.Launcher {
             Thread.CurrentThread.CurrentUICulture = previousUICulture;
         }
 
+        // TODO: provide event to use these arguments.
         internal static void Main(string[] args) {
             using var kernel = new OrionKernel();
 

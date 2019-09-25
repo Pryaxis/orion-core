@@ -16,22 +16,19 @@
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
 using System;
-using JetBrains.Annotations;
 using Orion.Npcs;
 
 namespace Orion.Events.Npcs {
     /// <summary>
     /// Provides data for NPC-related events.
     /// </summary>
-    [PublicAPI]
     public abstract class NpcEventArgs : EventArgs {
         /// <summary>
         /// Gets the NPC.
         /// </summary>
-        [NotNull]
         public INpc Npc { get; }
 
-        private protected NpcEventArgs([NotNull] INpc npc) {
+        private protected NpcEventArgs(INpc npc) {
             Npc = npc ?? throw new ArgumentNullException(nameof(npc));
         }
     }

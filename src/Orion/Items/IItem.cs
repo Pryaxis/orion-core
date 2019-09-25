@@ -15,14 +15,12 @@
 // You should have received a copy of the GNU General Public License
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
-using JetBrains.Annotations;
 using Orion.Entities;
 
 namespace Orion.Items {
     /// <summary>
     /// Represents a Terraria item.
     /// </summary>
-    [PublicAPI]
     public interface IItem : IEntity {
         /// <summary>
         /// Gets the item's type.
@@ -42,7 +40,6 @@ namespace Orion.Items {
         /// <summary>
         /// Gets the item's stats.
         /// </summary>
-        [NotNull]
         IItemStats Stats { get; }
 
         /// <summary>

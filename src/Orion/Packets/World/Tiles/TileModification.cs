@@ -15,13 +15,10 @@
 // You should have received a copy of the GNU General Public License
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
-using JetBrains.Annotations;
-
 namespace Orion.Packets.World.Tiles {
     /// <summary>
     /// Specifies a tile modification in a <see cref="TileModificationPacket"/>.
     /// </summary>
-    [PublicAPI]
     public enum TileModification : byte {
         /// <summary>
         /// Indicates that a block should be broken.

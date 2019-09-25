@@ -17,13 +17,11 @@
 
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
-using JetBrains.Annotations;
 
 namespace Orion.Packets.Items {
     /// <summary>
     /// Packet sent to set an item's owner: i.e., the player who is picking up the item.
     /// </summary>
-    [PublicAPI]
     public sealed class ItemOwnerPacket : Packet {
         private short _itemIndex;
         private byte _itemOwnerPlayerIndex;

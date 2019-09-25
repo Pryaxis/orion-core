@@ -17,14 +17,12 @@
 
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
-using JetBrains.Annotations;
 using Orion.World.TileEntities;
 
 namespace Orion.Packets.World.TileEntities {
     /// <summary>
     /// Packet sent from the client to the server to place a tile entity.
     /// </summary>
-    [PublicAPI]
     public sealed class TileEntityPlacePacket : Packet {
         private short _tileEntityX;
         private short _tileEntityY;

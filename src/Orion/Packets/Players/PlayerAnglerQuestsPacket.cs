@@ -17,13 +17,11 @@
 
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
-using JetBrains.Annotations;
 
 namespace Orion.Packets.Players {
     /// <summary>
     /// Packet sent to set the number of angler quests a player has completed. This is currently not naturally sent.
     /// </summary>
-    [PublicAPI]
     public sealed class PlayerAnglerQuestsPacket : Packet {
         private int _playerNumberOfAnglerQuestsCompleted;
 

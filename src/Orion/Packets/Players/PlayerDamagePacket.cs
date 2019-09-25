@@ -18,7 +18,6 @@
 using System;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
-using JetBrains.Annotations;
 using Orion.Packets.Extensions;
 using TDS = Terraria.DataStructures;
 
@@ -26,10 +25,9 @@ namespace Orion.Packets.Players {
     /// <summary>
     /// Packet sent to damage a player.
     /// </summary>
-    [PublicAPI]
     public sealed class PlayerDamagePacket : Packet {
         private byte _playerIndex;
-        [NotNull] private TDS.PlayerDeathReason _playerDeathReason = TDS.PlayerDeathReason.LegacyEmpty();
+        private TDS.PlayerDeathReason _playerDeathReason = TDS.PlayerDeathReason.LegacyEmpty();
         private short _damage;
         private sbyte _hitDirection;
         private int _hitCooldown;
@@ -54,7 +52,6 @@ namespace Orion.Packets.Players {
         /// Gets or sets the reason for the player's (potential) death.
         /// </summary>
         /// <exception cref="ArgumentNullException"><paramref name="value"/> is <c>null</c>.</exception>
-        [NotNull]
         public TDS.PlayerDeathReason PlayerDeathReason {
             get => _playerDeathReason;
             set {

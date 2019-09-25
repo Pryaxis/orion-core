@@ -15,14 +15,12 @@
 // You should have received a copy of the GNU General Public License
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
-using JetBrains.Annotations;
 using Orion.Entities;
 
 namespace Orion.Projectiles {
     /// <summary>
     /// Represents a Terraria projectile.
     /// </summary>
-    [PublicAPI]
     public interface IProjectile : IEntity {
         /// <summary>
         /// Gets the projectile's type.

@@ -16,14 +16,12 @@
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
 using System.IO;
-using JetBrains.Annotations;
 using Orion.World.TileEntities;
 
 namespace Orion.Packets.World.TileEntities {
     /// <summary>
     /// Represents a target dummy that is transmitted over the network.
     /// </summary>
-    [PublicAPI]
     public sealed class NetworkTargetDummy : NetworkTileEntity, ITargetDummy {
         private int _npcIndex;
 

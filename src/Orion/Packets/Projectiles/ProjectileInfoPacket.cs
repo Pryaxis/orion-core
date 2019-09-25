@@ -17,7 +17,6 @@
 
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
-using JetBrains.Annotations;
 using Microsoft.Xna.Framework;
 using Orion.Packets.Extensions;
 using Orion.Projectiles;
@@ -27,7 +26,6 @@ namespace Orion.Packets.Projectiles {
     /// <summary>
     /// Packet sent to set projectile information.
     /// </summary>
-    [PublicAPI]
     public sealed class ProjectileInfoPacket : Packet {
         private short _projectileIdentity;
         private Vector2 _projectilePosition;
@@ -38,7 +36,7 @@ namespace Orion.Packets.Projectiles {
         private ProjectileType _projectileType;
         private short _projectileUuid = -1;
 
-        [NotNull] private readonly DirtiableArray<float> _projectileAiValues =
+        private readonly DirtiableArray<float> _projectileAiValues =
             new DirtiableArray<float>(Terraria.Projectile.maxAI);
 
         /// <inheritdoc />
@@ -127,7 +125,6 @@ namespace Orion.Packets.Projectiles {
         /// <summary>
         /// Gets the projectile's AI values.
         /// </summary>
-        [NotNull]
         public IArray<float> ProjectileAiValues => _projectileAiValues;
 
         /// <summary>

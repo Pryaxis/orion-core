@@ -15,7 +15,6 @@
 // You should have received a copy of the GNU General Public License
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
-using JetBrains.Annotations;
 using Orion.Utils;
 using Orion.World.Tiles;
 
@@ -23,7 +22,6 @@ namespace Orion.Packets.World.Tiles {
     /// <summary>
     /// Represents a tile that is transmitted over the network.
     /// </summary>
-    [PublicAPI]
     public sealed class NetworkTile : Tile, IDirtiable {
         internal BlockType _blockType;
         internal WallType _wallType;

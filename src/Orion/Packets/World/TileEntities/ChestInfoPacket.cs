@@ -17,18 +17,16 @@
 
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
-using JetBrains.Annotations;
 
 namespace Orion.Packets.World.TileEntities {
     /// <summary>
     /// Packet sent to set chest information.
     /// </summary>
-    [PublicAPI]
     public sealed class ChestInfoPacket : Packet {
         private short _chestIndex;
         private short _chestX;
         private short _chestY;
-        [CanBeNull] private string _chestName;
+        private string _chestName;
 
         /// <inheritdoc />
         public override PacketType Type => PacketType.ChestInfo;
@@ -69,7 +67,6 @@ namespace Orion.Packets.World.TileEntities {
         /// <summary>
         /// Gets or sets the chest's name.
         /// </summary>
-        [CanBeNull]
         public string ChestName {
             get => _chestName;
             set {

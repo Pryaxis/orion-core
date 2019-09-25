@@ -17,7 +17,6 @@
 
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
-using JetBrains.Annotations;
 using Microsoft.Xna.Framework;
 using Orion.Packets.Extensions;
 
@@ -25,7 +24,6 @@ namespace Orion.Packets.Npcs {
     /// <summary>
     /// Packet sent from the client to the server to teleport an NPC through a portal.
     /// </summary>
-    [PublicAPI]
     public sealed class NpcTeleportPortalPacket : Packet {
         private short _npcIndex;
         private short _portalIndex;

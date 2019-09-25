@@ -17,13 +17,11 @@
 
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
-using JetBrains.Annotations;
 
 namespace Orion.Packets.World {
     /// <summary>
     /// Packet sent from the server to the client to set the angler quest.
     /// </summary>
-    [PublicAPI]
     public sealed class WorldAnglerQuestPacket : Packet {
         private byte _currentAnglerQuest;
         private bool _isAnglerQuestFinished;
@@ -34,7 +32,6 @@ namespace Orion.Packets.World {
         /// <summary>
         /// Gets or sets the angler quest.
         /// </summary>
-
         // TODO: implement enum for this.
         public byte CurrentAnglerQuest {
             get => _currentAnglerQuest;

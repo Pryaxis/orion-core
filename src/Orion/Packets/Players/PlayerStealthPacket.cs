@@ -17,13 +17,11 @@
 
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
-using JetBrains.Annotations;
 
 namespace Orion.Packets.Players {
     /// <summary>
     /// Packet sent to set a player's stealth.
     /// </summary>
-    [PublicAPI]
     public sealed class PlayerStealthPacket : Packet {
         private byte _playerIndex;
         private float _playerStealthStatus;

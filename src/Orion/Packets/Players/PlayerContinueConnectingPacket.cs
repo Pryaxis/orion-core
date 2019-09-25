@@ -17,14 +17,12 @@
 
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
-using JetBrains.Annotations;
 
 namespace Orion.Packets.Players {
     /// <summary>
     /// Packet sent from the server to the client to allow it to continue connecting. This is sent in response to either
     /// a <see cref="PlayerConnectPacket"/> or a valid <see cref="PlayerPasswordResponsePacket"/>.
     /// </summary>
-    [PublicAPI]
     public sealed class PlayerContinueConnectingPacket : Packet {
         private byte _playerIndex;
 

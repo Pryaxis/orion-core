@@ -16,7 +16,6 @@
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
 using System;
-using JetBrains.Annotations;
 using Orion.Entities;
 
 namespace Orion.Items {
@@ -36,7 +35,7 @@ namespace Orion.Items {
         public ItemPrefix Prefix => (ItemPrefix)Wrapped.prefix;
         public IItemStats Stats { get; }
 
-        public OrionItem([NotNull] Terraria.Item terrariaItem) : base(terrariaItem) {
+        public OrionItem(Terraria.Item terrariaItem) : base(terrariaItem) {
             Stats = new OrionItemStats(terrariaItem);
         }
 

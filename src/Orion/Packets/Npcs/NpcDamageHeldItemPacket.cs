@@ -17,13 +17,11 @@
 
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
-using JetBrains.Annotations;
 
 namespace Orion.Packets.Npcs {
     /// <summary>
     /// Packet sent to damage an NPC with a player's held item. This is currently not naturally sent.
     /// </summary>
-    [PublicAPI]
     public sealed class NpcDamageHeldItemPacket : Packet {
         private short _npcIndex;
         private byte _npcDamagerPlayerIndex;

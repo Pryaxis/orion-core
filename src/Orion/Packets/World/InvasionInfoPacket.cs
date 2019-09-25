@@ -17,13 +17,11 @@
 
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
-using JetBrains.Annotations;
 
 namespace Orion.Packets.World {
     /// <summary>
     /// Packet sent from the server to the client to set invasion information.
     /// </summary>
-    [PublicAPI]
     public sealed class InvasionInfoPacket : Packet {
         private int _numberOfKills;
         private int _numberOfKillsToProgress;
@@ -58,7 +56,6 @@ namespace Orion.Packets.World {
         /// <summary>
         /// Gets or sets the invasion icon type.
         /// </summary>
-
         // TODO: implement enum for this.
         public int InvasionIconType {
             get => _invasionIconType;

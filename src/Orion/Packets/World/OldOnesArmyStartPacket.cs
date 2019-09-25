@@ -17,13 +17,11 @@
 
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
-using JetBrains.Annotations;
 
 namespace Orion.Packets.World {
     /// <summary>
     /// Packet sent from the client to the server to start the Old One's Army event.
     /// </summary>
-    [PublicAPI]
     public sealed class OldOnesArmyStartPacket : Packet {
         private short _crystalX;
         private short _crystalY;

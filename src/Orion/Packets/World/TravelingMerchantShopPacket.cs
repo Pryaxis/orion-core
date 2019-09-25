@@ -17,7 +17,6 @@
 
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
-using JetBrains.Annotations;
 using Orion.Items;
 using Orion.Utils;
 
@@ -25,9 +24,8 @@ namespace Orion.Packets.World {
     /// <summary>
     /// Packet sent from the server to the client to set the traveling merchant's shop.
     /// </summary>
-    [PublicAPI]
     public sealed class TravelingMerchantShopPacket : Packet {
-        [NotNull] private readonly DirtiableArray<ItemType> _shopItemTypes =
+        private readonly DirtiableArray<ItemType> _shopItemTypes =
             new DirtiableArray<ItemType>(Terraria.Chest.maxItems);
 
         /// <inheritdoc />
@@ -39,7 +37,6 @@ namespace Orion.Packets.World {
         /// <summary>
         /// Gets the shop's item types.
         /// </summary>
-        [NotNull]
         public IArray<ItemType> ShopItemTypes => _shopItemTypes;
 
         /// <inheritdoc />

@@ -17,14 +17,12 @@
 
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
-using JetBrains.Annotations;
 using Orion.Items;
 
 namespace Orion.Packets.Players {
     /// <summary>
     /// Packet sent to set a player's inventory slot.
     /// </summary>
-    [PublicAPI]
     public sealed class PlayerInventorySlotPacket : Packet {
         private byte _playerIndex;
         private byte _playerInventorySlotIndex;

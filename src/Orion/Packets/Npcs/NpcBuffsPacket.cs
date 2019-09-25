@@ -18,7 +18,6 @@
 using System;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
-using JetBrains.Annotations;
 using Orion.Entities;
 using Orion.Utils;
 
@@ -26,10 +25,9 @@ namespace Orion.Packets.Npcs {
     /// <summary>
     /// Packet sent from the server to the client to set an NPC's buffs.
     /// </summary>
-    [PublicAPI]
     public sealed class NpcBuffsPacket : Packet {
         private short _npcIndex;
-        [NotNull] private readonly DirtiableArray<Buff> _npcBuffs = new DirtiableArray<Buff>(Terraria.NPC.maxBuffs);
+        private readonly DirtiableArray<Buff> _npcBuffs = new DirtiableArray<Buff>(Terraria.NPC.maxBuffs);
 
         /// <inheritdoc />
         public override bool IsDirty => base.IsDirty || _npcBuffs.IsDirty;
@@ -51,7 +49,6 @@ namespace Orion.Packets.Npcs {
         /// <summary>
         /// Gets the NPC's buffs. The buff durations are limited to approximately 546.1 seconds.
         /// </summary>
-        [NotNull]
         public IArray<Buff> NpcBuffs => _npcBuffs;
 
         /// <inheritdoc />

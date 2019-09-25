@@ -16,7 +16,6 @@
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
 using System.IO;
-using JetBrains.Annotations;
 using Orion.Items;
 using Orion.World.TileEntities;
 
@@ -24,7 +23,6 @@ namespace Orion.Packets.World.TileEntities {
     /// <summary>
     /// Represents an item frame that is transmitted over the network.
     /// </summary>
-    [PublicAPI]
     public sealed class NetworkItemFrame : NetworkTileEntity, IItemFrame {
         private ItemType _itemType;
         private int _itemStackSize;

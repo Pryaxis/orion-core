@@ -21,7 +21,6 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
-using JetBrains.Annotations;
 using Microsoft.Xna.Framework;
 using Orion.Events;
 using Orion.Events.Items;
@@ -29,15 +28,14 @@ using OTAPI;
 
 namespace Orion.Items {
     internal sealed class OrionItemService : OrionService, IItemService {
-        [NotNull, ItemNotNull] private readonly IList<Terraria.Item> _terrariaItems;
-        [NotNull, ItemCanBeNull] private readonly IList<OrionItem> _items;
+        private readonly IList<Terraria.Item> _terrariaItems;
+        private readonly IList<OrionItem> _items;
 
         [ExcludeFromCodeCoverage] public override string Author => "Pryaxis";
 
         // Subtract 1 from the count. This is because Terraria has an extra slot.
         public int Count => _items.Count - 1;
 
-        [NotNull]
         public IItem this[int index] {
             get {
                 if (index < 0 || index >= Count) throw new IndexOutOfRangeException();
@@ -95,7 +93,7 @@ namespace Orion.Items {
             return itemIndex >= 0 && itemIndex < Count ? this[itemIndex] : null;
         }
 
-        private HookResult PreSetDefaultsByIdHandler([NotNull] Terraria.Item terrariaItem, ref int type,
+        private HookResult PreSetDefaultsByIdHandler(Terraria.Item terrariaItem, ref int type,
                                                      ref bool noMaterialCheck) {
             var item = new OrionItem(terrariaItem);
             var args = new ItemSetDefaultsEventArgs(item, (ItemType)type);
@@ -104,7 +102,7 @@ namespace Orion.Items {
             return args.IsCanceled ? HookResult.Cancel : HookResult.Continue;
         }
 
-        private HookResult PreUpdateHandler([NotNull] Terraria.Item terrariaItem, ref int i) {
+        private HookResult PreUpdateHandler(Terraria.Item terrariaItem, ref int i) {
             var item = new OrionItem(terrariaItem);
             var args = new ItemUpdateEventArgs(item);
             ItemUpdate?.Invoke(this, args);

@@ -16,7 +16,6 @@
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
 using System;
-using JetBrains.Annotations;
 using Orion.Entities;
 
 namespace Orion.Npcs {
@@ -28,7 +27,7 @@ namespace Orion.Npcs {
 
         public NpcType Type => (NpcType)Wrapped.netID;
 
-        public OrionNpc([NotNull] Terraria.NPC terrariaNpc) : base(terrariaNpc) { }
+        public OrionNpc(Terraria.NPC terrariaNpc) : base(terrariaNpc) { }
 
         public void SetType(NpcType type) {
             Wrapped.SetDefaults((int)type);

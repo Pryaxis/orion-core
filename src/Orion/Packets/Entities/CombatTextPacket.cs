@@ -18,7 +18,6 @@
 using System;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
-using JetBrains.Annotations;
 using Microsoft.Xna.Framework;
 using Orion.Packets.Extensions;
 
@@ -26,11 +25,10 @@ namespace Orion.Packets.Entities {
     /// <summary>
     /// Packet sent from the server to the client to show combat text. This is currently not naturally sent.
     /// </summary>
-    [PublicAPI]
     public sealed class CombatTextPacket : Packet {
         private Vector2 _textPosition;
         private Color _textColor;
-        [NotNull] private Terraria.Localization.NetworkText _text = Terraria.Localization.NetworkText.Empty;
+        private Terraria.Localization.NetworkText _text = Terraria.Localization.NetworkText.Empty;
 
         /// <inheritdoc />
         public override PacketType Type => PacketType.CombatText;
@@ -61,7 +59,6 @@ namespace Orion.Packets.Entities {
         /// Gets or sets the text.
         /// </summary>
         /// <exception cref="ArgumentNullException"><paramref name="value"/> is <c>null</c>.</exception>
-        [NotNull]
         public Terraria.Localization.NetworkText Text {
             get => _text;
             set {

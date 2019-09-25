@@ -17,14 +17,12 @@
 
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
-using JetBrains.Annotations;
 using Orion.Items;
 
 namespace Orion.Packets.World.TileEntities {
     /// <summary>
     /// Packet sent from the client to the server to set an item frame.
     /// </summary>
-    [PublicAPI]
     public sealed class ItemFramePacket : Packet {
         private short _itemFrameX;
         private short _itemFrameY;

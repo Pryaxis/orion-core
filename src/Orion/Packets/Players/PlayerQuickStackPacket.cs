@@ -17,13 +17,11 @@
 
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
-using JetBrains.Annotations;
 
 namespace Orion.Packets.Players {
     /// <summary>
     /// Packet sent from the client to the server to quick stack an inventory slot into a nearby chest.
     /// </summary>
-    [PublicAPI]
     public sealed class PlayerQuickStackPacket : Packet {
         private byte _playerInventorySlotIndex;
 

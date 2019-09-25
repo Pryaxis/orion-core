@@ -17,14 +17,12 @@
 
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
-using JetBrains.Annotations;
 using Microsoft.Xna.Framework.Graphics.PackedVector;
 
 namespace Orion.Packets.World {
     /// <summary>
     /// Packet sent from the server to the client to show a poof of smoke.
     /// </summary>
-    [PublicAPI]
     public sealed class PoofOfSmokePacket : Packet {
         private HalfVector2 _smokePosition;
 

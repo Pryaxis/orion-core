@@ -17,13 +17,11 @@
 
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
-using JetBrains.Annotations;
 
 namespace Orion.Packets.World.Tiles {
     /// <summary>
     /// Packet sent to toggle a gem lock.
     /// </summary>
-    [PublicAPI]
     public sealed class ToggleGemLockPacket : Packet {
         private short _gemLockX;
         private short _gemLockY;

@@ -16,14 +16,12 @@
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
 using System;
-using JetBrains.Annotations;
 using Orion.Items;
 
 namespace Orion.Events.Items {
     /// <summary>
     /// Provides data for the <see cref="IItemService.ItemSetDefaults"/> event.
     /// </summary>
-    [PublicAPI]
     public sealed class ItemSetDefaultsEventArgs : ItemEventArgs, ICancelable {
         /// <inheritdoc />
         public bool IsCanceled { get; set; }
@@ -40,7 +38,7 @@ namespace Orion.Events.Items {
         /// <param name="item">The item.</param>
         /// <param name="itemType">The item type.</param>
         /// <exception cref="ArgumentNullException"><paramref name="item"/> is <c>null</c>.</exception>
-        public ItemSetDefaultsEventArgs([NotNull] IItem item, ItemType itemType) : base(item) {
+        public ItemSetDefaultsEventArgs(IItem item, ItemType itemType) : base(item) {
             ItemType = itemType;
         }
     }

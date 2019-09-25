@@ -16,14 +16,12 @@
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
 using System;
-using JetBrains.Annotations;
 
 namespace Orion.Packets.World.Tiles {
     /// <summary>
     /// Specifies the wire operations in a <see cref="WireMassOperationPacket"/>.
     /// </summary>
     [Flags]
-    [PublicAPI]
     public enum WireOperations : byte {
         /// <summary>
         /// Indicates nothing.

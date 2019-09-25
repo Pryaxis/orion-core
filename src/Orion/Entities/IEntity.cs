@@ -16,7 +16,6 @@
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
 using System;
-using JetBrains.Annotations;
 using Microsoft.Xna.Framework;
 using Orion.Utils;
 
@@ -24,7 +23,6 @@ namespace Orion.Entities {
     /// <summary>
     /// Represents a Terraria entity.
     /// </summary>
-    [PublicAPI]
     public interface IEntity : IAnnotatable {
         /// <summary>
         /// Gets the entity's index.
@@ -40,7 +38,6 @@ namespace Orion.Entities {
         /// Gets or sets the entity's name.
         /// </summary>
         /// <exception cref="ArgumentNullException"><paramref name="value"/> is <c>null</c>.</exception>
-        [NotNull]
         string Name { get; set; }
 
         /// <summary>

@@ -18,17 +18,15 @@
 using System;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
-using JetBrains.Annotations;
 
 namespace Orion.Packets.Npcs {
     /// <summary>
     /// Packet sent from the client to the server to request an NPC's name and from the server to the client to set an
     /// NPC's name.
     /// </summary>
-    [PublicAPI]
     public sealed class NpcNamePacket : Packet {
         private short _npcIndex;
-        [NotNull] private string _npcName = "";
+        private string _npcName = "";
 
         /// <inheritdoc />
         public override PacketType Type => PacketType.NpcName;
@@ -48,7 +46,6 @@ namespace Orion.Packets.Npcs {
         /// Gets or sets the NPC's name.
         /// </summary>
         /// <exception cref="ArgumentNullException"><paramref name="value"/> is <c>null</c>.</exception>
-        [NotNull]
         public string NpcName {
             get => _npcName;
             set {

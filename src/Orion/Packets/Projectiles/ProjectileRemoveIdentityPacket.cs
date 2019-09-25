@@ -17,14 +17,12 @@
 
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
-using JetBrains.Annotations;
 
 namespace Orion.Packets.Projectiles {
     /// <summary>
     /// Packet sent to remove a projectile by identity. For the server, the identity is the absolute source of truth on
     /// projectile indices.
     /// </summary>
-    [PublicAPI]
     public sealed class ProjectileRemoveIdentityPacket : Packet {
         private short _projectileIdentity;
         private byte _projectileOwnerPlayerIndex;

@@ -20,16 +20,14 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
-using JetBrains.Annotations;
 using Orion.Utils;
 
 namespace Orion.Packets.World.Tiles {
     /// <summary>
     /// Represents a section of tiles that are transmitted over the network.
     /// </summary>
-    [PublicAPI]
     public class NetworkTiles : IEnumerable<NetworkTile>, IDirtiable {
-        [NotNull, ItemNotNull] internal readonly NetworkTile[,] _tiles;
+        internal readonly NetworkTile[,] _tiles;
         private bool _isDirty;
 
         /// <inheritdoc />
@@ -42,7 +40,6 @@ namespace Orion.Packets.World.Tiles {
         /// <param name="y">The Y coordinate.</param>
         /// <returns>The tile.</returns>
         /// <exception cref="ArgumentNullException"><paramref name="value"/> is <c>null</c>.</exception>
-        [NotNull]
         public NetworkTile this[int x, int y] {
             get => _tiles[x, y];
             set {

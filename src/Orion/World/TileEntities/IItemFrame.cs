@@ -16,14 +16,12 @@
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
 using System;
-using JetBrains.Annotations;
 using Orion.Items;
 
 namespace Orion.World.TileEntities {
     /// <summary>
     /// Represents a Terraria item frame.
     /// </summary>
-    [PublicAPI]
     public interface IItemFrame : ITileEntity {
         /// <summary>
         /// Gets or sets the item's type.

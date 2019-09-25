@@ -17,13 +17,11 @@
 
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
-using JetBrains.Annotations;
 
 namespace Orion.Packets.Npcs {
     /// <summary>
     /// Packet sent to set an NPC's home.
     /// </summary>
-    [PublicAPI]
     public sealed class NpcHomePacket : Packet {
         private short _npcIndex;
         private short _npcHomeX;

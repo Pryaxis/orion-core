@@ -5,6 +5,8 @@ VisualStudioVersion = 16.0.29215.179
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Orion", "src\Orion\Orion.csproj", "{2739ECCB-09C1-45DC-8EF8-864F964905CB}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Orion.Launcher", "src\Orion.Launcher\Orion.Launcher.csproj", "{566B29C8-DB3A-43DC-8611-EC75A93D721F}"
+EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Orion.Tests", "tests\Orion.Tests\Orion.Tests.csproj", "{BAF61F61-2584-4B08-BCF2-088284F6C679}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{CD524E77-4123-4056-8727-0F7C61E25EBB}"
@@ -14,8 +16,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		COPYING = COPYING
 		NOTICE = NOTICE
 	EndProjectSection
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Orion.Launcher", "src\Orion.Launcher\Orion.Launcher.csproj", "{566B29C8-DB3A-43DC-8611-EC75A93D721F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

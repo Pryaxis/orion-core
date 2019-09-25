@@ -18,7 +18,6 @@
 using System;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
-using JetBrains.Annotations;
 using Microsoft.Xna.Framework;
 using Orion.Packets.Extensions;
 using Orion.Players;
@@ -27,12 +26,11 @@ namespace Orion.Packets.Players {
     /// <summary>
     /// Packet sent to set player data. This is sent in response to a <see cref="PlayerContinueConnectingPacket"/>.
     /// </summary>
-    [PublicAPI]
     public sealed class PlayerDataPacket : Packet {
         private byte _playerIndex;
         private byte _playerSkinType;
         private byte _playerHairType;
-        [NotNull] private string _playerName = "";
+        private string _playerName = "";
         private byte _playerHairDye;
         private ushort _playerHiddenVisualsFlags;
         private byte _playerHiddenMiscFlags;
@@ -85,7 +83,6 @@ namespace Orion.Packets.Players {
         /// Gets or sets the player's name.
         /// </summary>
         /// <exception cref="ArgumentNullException"><paramref name="value"/> is <c>null</c>.</exception>
-        [NotNull]
         public string PlayerName {
             get => _playerName;
             set {

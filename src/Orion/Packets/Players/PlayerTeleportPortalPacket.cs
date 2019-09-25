@@ -17,7 +17,6 @@
 
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
-using JetBrains.Annotations;
 using Microsoft.Xna.Framework;
 using Orion.Packets.Extensions;
 
@@ -25,7 +24,6 @@ namespace Orion.Packets.Players {
     /// <summary>
     /// Packet sent from the client to the server to teleport a player through a portal.
     /// </summary>
-    [PublicAPI]
     public sealed class PlayerTeleportPortalPacket : Packet {
         private byte _playerIndex;
         private short _portalIndex;

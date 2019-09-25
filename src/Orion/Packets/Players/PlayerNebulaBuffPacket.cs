@@ -17,7 +17,6 @@
 
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
-using JetBrains.Annotations;
 using Microsoft.Xna.Framework;
 using Orion.Entities;
 using Orion.Packets.Extensions;
@@ -26,7 +25,6 @@ namespace Orion.Packets.Players {
     /// <summary>
     /// Packet sent to spread Nebula Armor buffs to nearby players.
     /// </summary>
-    [PublicAPI]
     public sealed class PlayerNebulaBuffPacket : Packet {
         private byte _playerIndex;
         private BuffType _buffType;

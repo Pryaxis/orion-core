@@ -17,7 +17,6 @@
 
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
-using JetBrains.Annotations;
 using Microsoft.Xna.Framework;
 using Orion.Items;
 using Orion.Packets.Extensions;
@@ -27,7 +26,6 @@ namespace Orion.Packets.Items {
     /// Packet sent to set item instance information. This is similar to an <see cref="ItemInfoPacket"/>, but instanced
     /// items are not visible to other players.
     /// </summary>
-    [PublicAPI]
     public sealed class ItemInstanceInfoPacket : Packet {
         private short _itemIndex;
         private Vector2 _itemPosition;

@@ -17,14 +17,12 @@
 
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
-using JetBrains.Annotations;
 
 namespace Orion.Packets.World.TileEntities {
     /// <summary>
     /// Packet sent to perform a chest modification. See <see cref="TileEntities.ChestModification"/>
     /// for a list of chest modifications.
     /// </summary>
-    [PublicAPI]
     public sealed class ChestModificationPacket : Packet {
         private ChestModification _chestModification;
         private short _chestX;

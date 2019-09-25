@@ -17,14 +17,12 @@
 
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
-using JetBrains.Annotations;
 
 namespace Orion.Packets.Players {
     /// <summary>
     /// Packet sent from the server to the client to set a player's activity. This is used to synchronize joins and
     /// disconnects.
     /// </summary>
-    [PublicAPI]
     public sealed class PlayerActivityPacket : Packet {
         private byte _playerIndex;
         private bool _isPlayerActive;

@@ -22,7 +22,6 @@ using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Threading;
-using JetBrains.Annotations;
 using Microsoft.Xna.Framework;
 using Orion.Events;
 using Orion.Events.Npcs;
@@ -31,16 +30,15 @@ using OTAPI;
 
 namespace Orion.Npcs {
     internal sealed class OrionNpcService : OrionService, INpcService {
-        [NotNull, ItemNotNull] private readonly IList<Terraria.NPC> _terrariaNpcs;
-        [NotNull, ItemCanBeNull] private readonly IList<OrionNpc> _npcs;
-        [NotNull] private readonly ThreadLocal<int> _setDefaultsToIgnore = new ThreadLocal<int>();
+        private readonly IList<Terraria.NPC> _terrariaNpcs;
+        private readonly IList<OrionNpc> _npcs;
+        private readonly ThreadLocal<int> _setDefaultsToIgnore = new ThreadLocal<int>();
 
         [ExcludeFromCodeCoverage] public override string Author => "Pryaxis";
 
         // Subtract 1 from the count. This is because Terraria has an extra slot.
         public int Count => _npcs.Count - 1;
 
-        [NotNull]
         public INpc this[int index] {
             get {
                 if (index < 0 || index >= Count) throw new IndexOutOfRangeException();
@@ -112,7 +110,7 @@ namespace Orion.Npcs {
             return npcIndex >= 0 && npcIndex < Count ? this[npcIndex] : null;
         }
 
-        private HookResult PreSetDefaultsByIdHandler([NotNull] Terraria.NPC terrariaNpc, ref int type,
+        private HookResult PreSetDefaultsByIdHandler(Terraria.NPC terrariaNpc, ref int type,
                                                      ref float scaleOverride) {
             if (_setDefaultsToIgnore.Value > 0) {
                 --_setDefaultsToIgnore.Value;
@@ -146,14 +144,14 @@ namespace Orion.Npcs {
             return HookResult.Continue;
         }
 
-        private HookResult PreUpdateHandler([NotNull] Terraria.NPC terrariaNpc, ref int npcIndex) {
+        private HookResult PreUpdateHandler(Terraria.NPC terrariaNpc, ref int npcIndex) {
             var npc = new OrionNpc(terrariaNpc);
             var args = new NpcUpdateEventArgs(npc);
             NpcUpdate?.Invoke(this, args);
             return args.IsCanceled ? HookResult.Cancel : HookResult.Continue;
         }
 
-        private HookResult PreTransformHandler([NotNull] Terraria.NPC terrariaNpc, ref int newType) {
+        private HookResult PreTransformHandler(Terraria.NPC terrariaNpc, ref int newType) {
             var npc = new OrionNpc(terrariaNpc);
             var args = new NpcTransformEventArgs(npc, (NpcType)newType);
             NpcTransform?.Invoke(this, args);
@@ -163,7 +161,7 @@ namespace Orion.Npcs {
             return HookResult.Continue;
         }
 
-        private HookResult StrikeHandler([NotNull] Terraria.NPC terrariaNpc, ref double cancelResult, ref int damage,
+        private HookResult StrikeHandler(Terraria.NPC terrariaNpc, ref double cancelResult, ref int damage,
                                          ref float knockback, ref int hitDirection, ref bool isCriticalHit,
                                          ref bool noEffect, ref bool fromNetwork, Terraria.Entity damagingEntity) {
             var npc = new OrionNpc(terrariaNpc);
@@ -183,7 +181,7 @@ namespace Orion.Npcs {
             return HookResult.Continue;
         }
 
-        private HookResult PreDropLootHandler([NotNull] Terraria.NPC terrariaNpc, ref int itemIndex, ref int x,
+        private HookResult PreDropLootHandler(Terraria.NPC terrariaNpc, ref int itemIndex, ref int x,
                                               ref int y, ref int width, ref int height, ref int type, ref int stack,
                                               ref bool noBroadcast, ref int prefix, ref bool noGrabDelay,
                                               ref bool reverseLookup) {
@@ -202,7 +200,7 @@ namespace Orion.Npcs {
             return HookResult.Continue;
         }
 
-        private void KilledHandler([NotNull] Terraria.NPC terrariaNpc) {
+        private void KilledHandler(Terraria.NPC terrariaNpc) {
             var npc = new OrionNpc(terrariaNpc);
             var args = new NpcKilledEventArgs(npc);
             NpcKilled?.Invoke(this, args);

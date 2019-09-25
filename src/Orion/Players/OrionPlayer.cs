@@ -16,7 +16,6 @@
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
 using System;
-using JetBrains.Annotations;
 using Orion.Entities;
 using Orion.Packets;
 
@@ -30,7 +29,7 @@ namespace Orion.Players {
         public IPlayerStats Stats => throw new NotImplementedException();
         public IPlayerInventory Inventory => throw new NotImplementedException();
 
-        public OrionPlayer([NotNull] Terraria.Player terrariaPlayer) : base(terrariaPlayer) { }
+        public OrionPlayer(Terraria.Player terrariaPlayer) : base(terrariaPlayer) { }
 
         /// <inheritdoc />
         public void SendPacket(Packet packet) {

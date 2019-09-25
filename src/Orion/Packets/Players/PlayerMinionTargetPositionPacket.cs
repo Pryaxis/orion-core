@@ -17,7 +17,6 @@
 
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
-using JetBrains.Annotations;
 using Microsoft.Xna.Framework;
 using Orion.Packets.Extensions;
 
@@ -25,7 +24,6 @@ namespace Orion.Packets.Players {
     /// <summary>
     /// Packet sent to set a player's minion target position.
     /// </summary>
-    [PublicAPI]
     public sealed class PlayerMinionTargetPositionPacket : Packet {
         private byte _playerIndex;
         private Vector2 _playerMinionTargetPosition;

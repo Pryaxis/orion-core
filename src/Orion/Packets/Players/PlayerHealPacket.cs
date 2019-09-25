@@ -17,13 +17,11 @@
 
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
-using JetBrains.Annotations;
 
 namespace Orion.Packets.Players {
     /// <summary>
     /// Packet sent to heal a player.
     /// </summary>
-    [PublicAPI]
     public sealed class PlayerHealPacket : Packet {
         private byte _playerIndex;
         private short _healAmount;

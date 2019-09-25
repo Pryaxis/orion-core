@@ -19,7 +19,6 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
-using JetBrains.Annotations;
 using Orion.Utils;
 using Orion.World.TileEntities;
 
@@ -27,9 +26,8 @@ namespace Orion.Packets.World.TileEntities {
     /// <summary>
     /// Represents a tile entity that is transmitted over the network.
     /// </summary>
-    [PublicAPI]
     public abstract class NetworkTileEntity : AnnotatableObject, ITileEntity, IDirtiable {
-        [NotNull] private static readonly Dictionary<TileEntityType, Func<NetworkTileEntity>> Constructors =
+        private static readonly Dictionary<TileEntityType, Func<NetworkTileEntity>> Constructors =
             new Dictionary<TileEntityType, Func<NetworkTileEntity>> {
                 [TileEntityType.TargetDummy] = () => new NetworkTargetDummy(),
                 [TileEntityType.ItemFrame] = () => new NetworkItemFrame(),
@@ -78,9 +76,9 @@ namespace Orion.Packets.World.TileEntities {
         // Prevent outside inheritance.
         private protected NetworkTileEntity() { }
 
-        [NotNull]
-        internal static NetworkTileEntity ReadFromReader([NotNull] BinaryReader reader, bool shouldIncludeIndex,
-                                                         [CanBeNull] TileEntityType? typeHint = null) {
+
+        internal static NetworkTileEntity ReadFromReader(BinaryReader reader, bool shouldIncludeIndex,
+                                                         TileEntityType? typeHint = null) {
             // The type hint allows us to reuse code for NetworkChests and NetworkSigns.
             var tileEntityType = typeHint ?? (TileEntityType)reader.ReadByte();
             if (!Constructors.TryGetValue(tileEntityType, out var tileEntityConstructor)) {
@@ -101,7 +99,7 @@ namespace Orion.Packets.World.TileEntities {
         [ExcludeFromCodeCoverage]
         public override string ToString() => $"{Type} @ ({X}, {Y})";
 
-        private void ReadFromReaderImpl([NotNull] BinaryReader reader, bool shouldIncludeIndex) {
+        private void ReadFromReaderImpl(BinaryReader reader, bool shouldIncludeIndex) {
             if (shouldIncludeIndex) {
                 // NetworkChests and NetworkSigns have an Int16 index.
                 _index = (short)Type > byte.MaxValue ? reader.ReadInt16() : reader.ReadInt32();
@@ -112,7 +110,7 @@ namespace Orion.Packets.World.TileEntities {
             ReadFromReaderImpl(reader);
         }
 
-        internal void WriteToWriter([NotNull] BinaryWriter writer, bool shouldIncludeIndex) {
+        internal void WriteToWriter(BinaryWriter writer, bool shouldIncludeIndex) {
             // NetworkChests and NetworkSigns don't store type and have an Int16 index.
             if ((short)Type > byte.MaxValue) {
                 if (shouldIncludeIndex) {
@@ -130,7 +128,7 @@ namespace Orion.Packets.World.TileEntities {
             WriteToWriterImpl(writer);
         }
 
-        private protected abstract void ReadFromReaderImpl([NotNull] BinaryReader reader);
-        private protected abstract void WriteToWriterImpl([NotNull] BinaryWriter writer);
+        private protected abstract void ReadFromReaderImpl(BinaryReader reader);
+        private protected abstract void WriteToWriterImpl(BinaryWriter writer);
     }
 }

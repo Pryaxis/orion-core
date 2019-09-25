@@ -18,14 +18,12 @@
 using System;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
-using JetBrains.Annotations;
 using Orion.Entities;
 
 namespace Orion.Packets.Npcs {
     /// <summary>
     /// Packet sent to add a buff to an NPC.
     /// </summary>
-    [PublicAPI]
     public sealed class NpcAddBuffPacket : Packet {
         private short _npcIndex;
         private Buff _npcBuff;

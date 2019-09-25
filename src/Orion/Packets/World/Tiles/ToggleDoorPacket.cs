@@ -17,14 +17,12 @@
 
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
-using JetBrains.Annotations;
 
 namespace Orion.Packets.World.Tiles {
     /// <summary>
     /// Packet sent to toggle the state of a door. See <see cref="Tiles.ToggleDoorAction"/> for a list
     /// of toggle door actions.
     /// </summary>
-    [PublicAPI]
     public sealed class ToggleDoorPacket : Packet {
         private ToggleDoorAction _toggleDoorAction;
         private short _doorX;

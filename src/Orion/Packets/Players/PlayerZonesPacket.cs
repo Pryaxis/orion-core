@@ -17,13 +17,11 @@
 
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
-using JetBrains.Annotations;
 
 namespace Orion.Packets.Players {
     /// <summary>
     /// Packet sent to set a player's zones.
     /// </summary>
-    [PublicAPI]
     public sealed class PlayerZonesPacket : Packet {
         private byte _playerIndex;
         private bool _isPlayerNearDungeonZone;

@@ -16,15 +16,13 @@
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
 using System.Collections.Generic;
-using JetBrains.Annotations;
 
 namespace Orion.Npcs.Extensions {
     /// <summary>
     /// Provides extensions for the <see cref="NpcType"/> enumeration.
     /// </summary>
-    [PublicAPI]
     public static class NpcTypeExtensions {
-        [NotNull] private static readonly ISet<NpcType> CatchableNpcTypes = new HashSet<NpcType> {
+        private static readonly ISet<NpcType> CatchableNpcTypes = new HashSet<NpcType> {
             (NpcType)46,
             (NpcType)55,
             (NpcType)74,

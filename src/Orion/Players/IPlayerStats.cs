@@ -15,13 +15,10 @@
 // You should have received a copy of the GNU General Public License
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
-using JetBrains.Annotations;
-
 namespace Orion.Players {
     /// <summary>
     /// Represents a player's statistics.
     /// </summary>
-    [PublicAPI]
     public interface IPlayerStats {
         /// <summary>
         /// Gets or sets the player's health.

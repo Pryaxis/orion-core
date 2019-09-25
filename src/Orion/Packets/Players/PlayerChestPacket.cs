@@ -17,13 +17,11 @@
 
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
-using JetBrains.Annotations;
 
 namespace Orion.Packets.Players {
     /// <summary>
     /// Packet sent from the server to the client to set a player's chest index.
     /// </summary>
-    [PublicAPI]
     public sealed class PlayerChestPacket : Packet {
         private byte _playerIndex;
         private short _playerChestIndex;

@@ -17,14 +17,12 @@
 
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
-using JetBrains.Annotations;
 
 namespace Orion.Packets.Items {
     /// <summary>
     /// Packet sent from the server to the client to remove the owner of an item. This is sent if an item is 'claimed'
     /// but not picked up for too long.
     /// </summary>
-    [PublicAPI]
     public sealed class ItemRemoveOwnerPacket : Packet {
         private short _itemIndex;
 

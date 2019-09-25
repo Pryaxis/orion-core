@@ -15,13 +15,10 @@
 // You should have received a copy of the GNU General Public License
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
-using JetBrains.Annotations;
-
 namespace Orion.World.TileEntities {
     /// <summary>
     /// Represents a Terraria logic sensor.
     /// </summary>
-    [PublicAPI]
     public interface ILogicSensor : ITileEntity {
         /// <summary>
         /// Gets or sets the sensor's type.

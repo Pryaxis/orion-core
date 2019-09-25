@@ -18,16 +18,14 @@
 using System;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
-using JetBrains.Annotations;
 
 namespace Orion.Packets.Players {
     /// <summary>
     /// Packet sent from the client to the server to try a password. This is sent in response to a
     /// <see cref="PlayerPasswordChallengePacket"/>.
     /// </summary>
-    [PublicAPI]
     public sealed class PlayerPasswordResponsePacket : Packet {
-        [NotNull] private string _playerPassword = "";
+        private string _playerPassword = "";
 
         /// <inheritdoc />
         public override PacketType Type => PacketType.PlayerPasswordResponse;
@@ -36,7 +34,6 @@ namespace Orion.Packets.Players {
         /// Gets or sets the player's password.
         /// </summary>
         /// <exception cref="ArgumentNullException"><paramref name="value"/> is <c>null</c>.</exception>
-        [NotNull]
         public string PlayerPassword {
             get => _playerPassword;
             set {

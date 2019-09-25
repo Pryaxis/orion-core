@@ -17,7 +17,6 @@
 
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
-using JetBrains.Annotations;
 using Microsoft.Xna.Framework;
 using Orion.Npcs;
 
@@ -25,7 +24,6 @@ namespace Orion.Packets.Npcs {
     /// <summary>
     /// Packet sent from the client to the server to release an NPC.
     /// </summary>
-    [PublicAPI]
     public sealed class NpcReleasePacket : Packet {
         private Vector2 _npcPosition;
         private NpcType _npcType = NpcType.None;

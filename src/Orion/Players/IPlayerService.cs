@@ -16,7 +16,6 @@
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
 using System;
-using JetBrains.Annotations;
 using Orion.Events;
 using Orion.Events.Packets;
 using Orion.Events.Players;
@@ -27,48 +26,40 @@ namespace Orion.Players {
     /// <summary>
     /// Represents a player service. Provides access to player-related events and methods.
     /// </summary>
-    [PublicAPI]
     public interface IPlayerService : IReadOnlyArray<IPlayer>, IService {
         /// <summary>
         /// Gets or sets the event handlers that run when receiving a packet. This event can be canceled.
         /// </summary>
-        [CanBeNull]
         EventHandlerCollection<PacketReceiveEventArgs> PacketReceive { get; set; }
 
         /// <summary>
         /// Gets or sets the event handlers that run when sending a packet. This event can be canceled.
         /// </summary>
-        [CanBeNull]
         EventHandlerCollection<PacketSendEventArgs> PacketSend { get; set; }
 
         /// <summary>
         /// Gets or sets the event handlers that run when a player connects. This event can be canceled.
         /// </summary>
-        [CanBeNull]
         EventHandlerCollection<PlayerConnectEventArgs> PlayerConnect { get; set; }
 
         /// <summary>
         /// Gets or sets the event handlers that run when a player sends data. This event can be canceled.
         /// </summary>
-        [CanBeNull]
         EventHandlerCollection<PlayerDataEventArgs> PlayerData { get; set; }
 
         /// <summary>
         /// Gets or sets the event handlers that run when a player sends an inventory slot. This event can be canceled.
         /// </summary>
-        [CanBeNull]
         EventHandlerCollection<PlayerInventorySlotEventArgs> PlayerInventorySlot { get; set; }
 
         /// <summary>
         /// Gets or sets the event handlers that run when a player joins. This event can be canceled.
         /// </summary>
-        [CanBeNull]
         EventHandlerCollection<PlayerJoinEventArgs> PlayerJoin { get; set; }
 
         /// <summary>
         /// Gets or sets the event handlers that run when a player disconnects.
         /// </summary>
-        [CanBeNull]
         EventHandlerCollection<PlayerDisconnectedEventArgs> PlayerDisconnected { get; set; }
 
         /// <summary>
@@ -76,6 +67,6 @@ namespace Orion.Players {
         /// </summary>
         /// <param name="packet">The packet.</param>
         /// <exception cref="ArgumentNullException"><paramref name="packet"/> is <c>null</c>.</exception>
-        void BroadcastPacket([NotNull] Packet packet);
+        void BroadcastPacket(Packet packet);
     }
 }

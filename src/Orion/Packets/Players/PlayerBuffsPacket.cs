@@ -17,7 +17,6 @@
 
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
-using JetBrains.Annotations;
 using Orion.Entities;
 using Orion.Utils;
 
@@ -25,11 +24,10 @@ namespace Orion.Packets.Players {
     /// <summary>
     /// Packet sent to set a player's buffs. Each buff will be set for one second.
     /// </summary>
-    [PublicAPI]
     public sealed class PlayerBuffsPacket : Packet {
         private byte _playerIndex;
 
-        [NotNull] private readonly DirtiableArray<BuffType> _playerBuffTypes =
+        private readonly DirtiableArray<BuffType> _playerBuffTypes =
             new DirtiableArray<BuffType>(Terraria.Player.maxBuffs);
 
         /// <inheritdoc />
@@ -52,7 +50,6 @@ namespace Orion.Packets.Players {
         /// <summary>
         /// Gets the player's buff types.
         /// </summary>
-        [NotNull]
         public IArray<BuffType> PlayerBuffTypes => _playerBuffTypes;
 
         /// <inheritdoc />

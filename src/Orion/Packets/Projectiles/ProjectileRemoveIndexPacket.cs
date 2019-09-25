@@ -17,13 +17,11 @@
 
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
-using JetBrains.Annotations;
 
 namespace Orion.Packets.Projectiles {
     /// <summary>
     /// Packet sent from the client to the server to remove a projectile by index.
     /// </summary>
-    [PublicAPI]
     public sealed class ProjectileRemoveIndexPacket : Packet {
         private short _projectileIndex;
 

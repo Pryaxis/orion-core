@@ -18,7 +18,6 @@
 using System;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
-using JetBrains.Annotations;
 using Orion.World.Tiles;
 using Orion.World.Tiles.Extensions;
 
@@ -26,13 +25,12 @@ namespace Orion.Packets.World.Tiles {
     /// <summary>
     /// Packet sent to set a square of tiles.
     /// </summary>
-    [PublicAPI]
     public sealed class TileSquarePacket : Packet {
         private short _squareSize;
         private byte _data;
         private short _tileX;
         private short _tileY;
-        [NotNull, ItemNotNull] private NetworkTiles _tiles = new NetworkTiles(0, 0);
+        private NetworkTiles _tiles = new NetworkTiles(0, 0);
 
         /// <inheritdoc />
         public override bool IsDirty => base.IsDirty || _tiles.IsDirty;
@@ -77,7 +75,6 @@ namespace Orion.Packets.World.Tiles {
         /// Gets or sets the tiles.
         /// </summary>
         /// <exception cref="ArgumentNullException"><paramref name="value"/> is <c>null</c>.</exception>
-        [NotNull, ItemNotNull]
         public NetworkTiles Tiles {
             get => _tiles;
             set {

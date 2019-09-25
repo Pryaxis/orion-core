@@ -16,13 +16,11 @@
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
 using System.IO;
-using JetBrains.Annotations;
 
 namespace Orion.Packets.World {
     /// <summary>
     /// Packet sent from the server to the client to end the Old One's Army event.
     /// </summary>
-    [PublicAPI]
     public sealed class OldOnesArmyEndPacket : Packet {
         /// <inheritdoc />
         public override PacketType Type => PacketType.OldOnesArmyEnd;

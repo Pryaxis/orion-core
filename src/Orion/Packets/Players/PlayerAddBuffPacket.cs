@@ -18,14 +18,12 @@
 using System;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
-using JetBrains.Annotations;
 using Orion.Entities;
 
 namespace Orion.Packets.Players {
     /// <summary>
     /// Packet sent to add a buff to a player.
     /// </summary>
-    [PublicAPI]
     public sealed class PlayerAddBuffPacket : Packet {
         private byte _playerIndex;
         private Buff _playerBuff;

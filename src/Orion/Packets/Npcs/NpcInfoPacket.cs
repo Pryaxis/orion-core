@@ -17,7 +17,6 @@
 
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
-using JetBrains.Annotations;
 using Microsoft.Xna.Framework;
 using Orion.Npcs;
 using Orion.Npcs.Extensions;
@@ -28,7 +27,6 @@ namespace Orion.Packets.Npcs {
     /// <summary>
     /// Packet sent from the server to the client to set NPC information.
     /// </summary>
-    [PublicAPI]
     public sealed class NpcInfoPacket : Packet {
         private short _npcIndex;
         private Vector2 _npcPosition;
@@ -42,7 +40,7 @@ namespace Orion.Packets.Npcs {
         private byte _npcNumberOfHealthBytes;
         private int _npcHealth;
         private byte _npcReleaserPlayerIndex;
-        [NotNull] private readonly DirtiableArray<float> _npcAiValues = new DirtiableArray<float>(Terraria.NPC.maxAI);
+        private readonly DirtiableArray<float> _npcAiValues = new DirtiableArray<float>(Terraria.NPC.maxAI);
 
         /// <inheritdoc />
         public override bool IsDirty => base.IsDirty || _npcAiValues.IsDirty;
@@ -86,7 +84,6 @@ namespace Orion.Packets.Npcs {
         /// <summary>
         /// Gets or sets the NPC's target index.
         /// </summary>
-
         // TODO: convert this to a specific type
         public ushort NpcTargetIndex {
             get => _npcTargetIndex;
@@ -121,7 +118,6 @@ namespace Orion.Packets.Npcs {
         /// <summary>
         /// Gets the NPC's AI values.
         /// </summary>
-        [NotNull]
         public IArray<float> NpcAiValues => _npcAiValues;
 
         /// <summary>

@@ -17,13 +17,11 @@
 
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
-using JetBrains.Annotations;
 
 namespace Orion.Packets.World.Tiles {
     /// <summary>
     /// Packet sent to activate wire at a specific position.
     /// </summary>
-    [PublicAPI]
     public sealed class WireActivatePacket : Packet {
         private short _wireY;
         private short _wireX;

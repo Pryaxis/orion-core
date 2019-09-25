@@ -16,14 +16,12 @@
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
 using System;
-using JetBrains.Annotations;
 using Orion.Npcs;
 
 namespace Orion.Events.Npcs {
     /// <summary>
     /// Provides data for the <see cref="INpcService.NpcTransform"/> event.
     /// </summary>
-    [PublicAPI]
     public sealed class NpcTransformEventArgs : NpcEventArgs, ICancelable {
         /// <inheritdoc />
         public bool IsCanceled { get; set; }
@@ -40,7 +38,7 @@ namespace Orion.Events.Npcs {
         /// <param name="npc">The NPC.</param>
         /// <param name="npcNewType">The NPC's new type.</param>
         /// <exception cref="ArgumentNullException"><paramref name="npc"/> is <c>null</c>.</exception>
-        public NpcTransformEventArgs([NotNull] INpc npc, NpcType npcNewType) : base(npc) {
+        public NpcTransformEventArgs(INpc npc, NpcType npcNewType) : base(npc) {
             NpcNewType = npcNewType;
         }
     }

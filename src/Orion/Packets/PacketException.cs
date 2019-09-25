@@ -16,13 +16,11 @@
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
 using System;
-using JetBrains.Annotations;
 
 namespace Orion.Packets {
     /// <summary>
     /// The exception thrown when a packet fails to be processed properly.
     /// </summary>
-    [PublicAPI]
     public sealed class PacketException : Exception {
         /// <summary>
         /// Initializes a new instance of the <see cref="PacketException"/> class.

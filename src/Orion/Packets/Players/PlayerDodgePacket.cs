@@ -17,14 +17,12 @@
 
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
-using JetBrains.Annotations;
 
 namespace Orion.Packets.Players {
     /// <summary>
     /// Packet sent to show a player dodge. See <see cref="Players.PlayerDodgeType"/> for the list of
     /// possible dodge types.
     /// </summary>
-    [PublicAPI]
     public sealed class PlayerDodgePacket : Packet {
         private byte _playerIndex;
         private PlayerDodgeType _playerDodgeType;

@@ -17,16 +17,14 @@
 
 using System;
 using System.IO;
-using JetBrains.Annotations;
 using Orion.World.TileEntities;
 
 namespace Orion.Packets.World.TileEntities {
     /// <summary>
     /// Represents a sign that is transmitted over the network.
     /// </summary>
-    [PublicAPI]
     public sealed class NetworkSign : NetworkTileEntity, ISign {
-        [NotNull] private string _text = "";
+        private string _text = "";
 
         /// <inheritdoc />
         public override TileEntityType Type => TileEntityType.Sign;

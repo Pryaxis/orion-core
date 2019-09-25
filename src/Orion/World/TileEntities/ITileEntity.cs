@@ -15,14 +15,12 @@
 // You should have received a copy of the GNU General Public License
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
-using JetBrains.Annotations;
 using Orion.Utils;
 
 namespace Orion.World.TileEntities {
     /// <summary>
     /// Represents a (generalized) Terraria tile entity.
     /// </summary>
-    [PublicAPI]
     public interface ITileEntity : IAnnotatable {
         /// <summary>
         /// Gets the tile entity's type.

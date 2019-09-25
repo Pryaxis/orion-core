@@ -18,7 +18,6 @@
 using System;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
-using JetBrains.Annotations;
 using Orion.Packets.Players;
 using Orion.Utils;
 using Orion.World;
@@ -28,7 +27,6 @@ namespace Orion.Packets.World {
     /// Packet sent from the server to the client to set world information. This is sent in response to a
     /// <see cref="PlayerJoinPacket"/> and is also sent periodically.
     /// </summary>
-    [PublicAPI]
     public sealed class WorldInfoPacket : Packet {
         private int _time;
         private bool _isDaytime;
@@ -42,7 +40,7 @@ namespace Orion.Packets.World {
         private short _surfaceY;
         private short _rockLayerY;
         private int _worldId;
-        [NotNull] private string _worldName = "";
+        private string _worldName = "";
         private Guid _worldGuid;
         private ulong _worldGeneratorVersion;
         private byte _moonType;
@@ -59,10 +57,10 @@ namespace Orion.Packets.World {
         private byte _hellBackgroundStyle;
         private float _windSpeed;
         private byte _numberOfClouds;
-        [NotNull] private readonly DirtiableArray<int> _treeStyleBoundaries = new DirtiableArray<int>(3);
-        [NotNull] private readonly DirtiableArray<byte> _treeStyles = new DirtiableArray<byte>(4);
-        [NotNull] private readonly DirtiableArray<int> _caveBackgroundStyleBoundaries = new DirtiableArray<int>(3);
-        [NotNull] private readonly DirtiableArray<byte> _caveBackgroundStyles = new DirtiableArray<byte>(4);
+        private readonly DirtiableArray<int> _treeStyleBoundaries = new DirtiableArray<int>(3);
+        private readonly DirtiableArray<byte> _treeStyles = new DirtiableArray<byte>(4);
+        private readonly DirtiableArray<int> _caveBackgroundStyleBoundaries = new DirtiableArray<int>(3);
+        private readonly DirtiableArray<byte> _caveBackgroundStyles = new DirtiableArray<byte>(4);
         private float _rain;
         private bool _hasSmashedShadowOrb;
         private bool _hasDefeatedEyeOfCthulhu;
@@ -251,7 +249,6 @@ namespace Orion.Packets.World {
         /// Gets or sets the world name.
         /// </summary>
         /// <exception cref="ArgumentNullException"><paramref name="value"/> is <c>null</c>.</exception>
-        [NotNull]
         public string WorldName {
             get => _worldName;
             set {
@@ -439,25 +436,21 @@ namespace Orion.Packets.World {
         /// <summary>
         /// Get the tree style boundaries.
         /// </summary>
-        [NotNull]
         public IArray<int> TreeStyleBoundaries => _treeStyleBoundaries;
 
         /// <summary>
         /// Gets the tree styles.
         /// </summary>
-        [NotNull]
         public IArray<byte> TreeStyles => _treeStyles;
 
         /// <summary>
         /// Gets the cave background style boundaries.
         /// </summary>
-        [NotNull]
         public IArray<int> CaveBackgroundStyleBoundaries => _caveBackgroundStyleBoundaries;
 
         /// <summary>
         /// Gets the cave background styles.
         /// </summary>
-        [NotNull]
         public IArray<byte> CaveBackgroundStyles => _caveBackgroundStyles;
 
         /// <summary>

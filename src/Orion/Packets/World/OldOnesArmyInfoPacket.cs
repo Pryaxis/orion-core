@@ -18,13 +18,11 @@
 using System;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
-using JetBrains.Annotations;
 
 namespace Orion.Packets.World {
     /// <summary>
     /// Packet sent from the server to the client to set Old One's Army information.
     /// </summary>
-    [PublicAPI]
     public sealed class OldOnesArmyInfoPacket : Packet {
         private TimeSpan _timeBetweenWaves;
 

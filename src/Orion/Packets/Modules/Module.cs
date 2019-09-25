@@ -18,16 +18,14 @@
 using System;
 using System.IO;
 using System.Text;
-using JetBrains.Annotations;
 using Orion.Utils;
 
 namespace Orion.Packets.Modules {
     /// <summary>
     /// Represents a module. This is sent in a <see cref="ModulePacket"/>.
     /// </summary>
-    [PublicAPI]
     public abstract class Module : IDirtiable {
-        [NotNull] private static readonly Func<Module>[] ModuleConstructors = {
+        private static readonly Func<Module>[] ModuleConstructors = {
             /* 000 */ () => new LiquidsModule(),
             /* 001 */ () => new ChatModule()
         };
@@ -52,8 +50,7 @@ namespace Orion.Packets.Modules {
         /// <param name="context">The context with which to read the module from.</param>
         /// <exception cref="ArgumentNullException"><paramref name="stream"/> is <c>null</c>.</exception>
         /// <returns>The resulting <see cref="Module"/> instance.</returns>
-        [NotNull]
-        public static Module ReadFromStream([NotNull] Stream stream, PacketContext context) {
+        public static Module ReadFromStream(Stream stream, PacketContext context) {
             if (stream is null) throw new ArgumentNullException(nameof(stream));
 
             var reader = new BinaryReader(stream, Encoding.UTF8, true);
@@ -79,7 +76,7 @@ namespace Orion.Packets.Modules {
         /// <param name="stream">The stream.</param>
         /// <param name="context">The context with which to write the packet to.</param>
         /// <exception cref="ArgumentNullException"><paramref name="stream"/> is <c>null</c>.</exception>
-        public void WriteToStream([NotNull] Stream stream, PacketContext context) {
+        public void WriteToStream(Stream stream, PacketContext context) {
             if (stream is null) throw new ArgumentNullException(nameof(stream));
 
             using (var writer = new BinaryWriter(stream, Encoding.UTF8, true)) {
@@ -88,7 +85,7 @@ namespace Orion.Packets.Modules {
             }
         }
 
-        private protected abstract void ReadFromReader([NotNull] BinaryReader reader, PacketContext context);
-        private protected abstract void WriteToWriter([NotNull] BinaryWriter writer, PacketContext context);
+        private protected abstract void ReadFromReader(BinaryReader reader, PacketContext context);
+        private protected abstract void WriteToWriter(BinaryWriter writer, PacketContext context);
     }
 }

@@ -17,14 +17,12 @@
 
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
-using JetBrains.Annotations;
 using Orion.Npcs;
 
 namespace Orion.Packets.Npcs {
     /// <summary>
     /// Packet sent from the server to the client to set the kill count of an NPC type.
     /// </summary>
-    [PublicAPI]
     public sealed class NpcKillCountPacket : Packet {
         private NpcType _npcType;
         private int _npcTypeKillCount;

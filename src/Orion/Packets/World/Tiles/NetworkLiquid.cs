@@ -18,7 +18,6 @@
 using System;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
-using JetBrains.Annotations;
 using Orion.Utils;
 using Orion.World.Tiles;
 
@@ -26,7 +25,6 @@ namespace Orion.Packets.World.Tiles {
     /// <summary>
     /// Represents a liquid transmitted over the network.
     /// </summary>
-    [PublicAPI]
     public sealed class NetworkLiquid : IDirtiable {
         private short _tileX;
         private short _tileY;
@@ -88,8 +86,7 @@ namespace Orion.Packets.World.Tiles {
         /// <returns>The resulting network tile liquid.</returns>
         /// <exception cref="ArgumentNullException"><paramref name="reader"/> is <c>null</c>.</exception>
         /// <exception cref="PacketException">The liquid type was invalid.</exception>
-        [NotNull]
-        public static NetworkLiquid ReadFromReader([NotNull] BinaryReader reader, bool shouldSwapCoords = false) {
+        public static NetworkLiquid ReadFromReader(BinaryReader reader, bool shouldSwapCoords = false) {
             if (reader is null) throw new ArgumentNullException(nameof(reader));
 
             var coord1 = reader.ReadInt16();
@@ -117,7 +114,7 @@ namespace Orion.Packets.World.Tiles {
         /// <param name="writer">The writer.</param>
         /// <param name="shouldSwapCoords">A value indicating whether the X and Y values should be swapped.</param>
         /// <exception cref="ArgumentNullException"><paramref name="writer"/> is <c>null</c>.</exception>
-        public void WriteToWriter([NotNull] BinaryWriter writer, bool shouldSwapCoords = false) {
+        public void WriteToWriter(BinaryWriter writer, bool shouldSwapCoords = false) {
             if (writer is null) throw new ArgumentNullException(nameof(writer));
 
             writer.Write(shouldSwapCoords ? _tileY : _tileX);

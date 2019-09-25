@@ -20,7 +20,6 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Reflection;
-using JetBrains.Annotations;
 using Ninject;
 using Orion.Items;
 using Orion.Players;
@@ -30,12 +29,11 @@ namespace Orion {
     /// Represents Orion's dependency injection container. Provides methods to manipulate <see cref="OrionPlugin"/>
     /// instances.
     /// </summary>
-    [PublicAPI]
     public sealed class OrionKernel : StandardKernel {
-        [NotNull, ItemNotNull] private readonly ISet<Assembly> _pluginAssemblies = new HashSet<Assembly>();
-        [NotNull, ItemNotNull] private readonly ISet<Type> _pluginTypesToLoad = new HashSet<Type>();
-        [NotNull, ItemNotNull] private readonly ISet<OrionPlugin> _plugins = new HashSet<OrionPlugin>();
-        
+        private readonly ISet<Assembly> _pluginAssemblies = new HashSet<Assembly>();
+        private readonly ISet<Type> _pluginTypesToLoad = new HashSet<Type>();
+        private readonly ISet<OrionPlugin> _plugins = new HashSet<OrionPlugin>();
+
         internal OrionKernel() {
             Bind<OrionKernel>().ToConstant(this).InSingletonScope();
             Bind<IItemService>().To<OrionItemService>().InSingletonScope();
@@ -52,7 +50,6 @@ namespace Orion {
         /// Gets the loaded <see cref="OrionPlugin"/> instances.
         /// </summary>
         /// <returns>The loaded <see cref="OrionPlugin"/> instances.</returns>
-        [NotNull, ItemNotNull]
         public IEnumerable<OrionPlugin> GetLoadedPlugins() => new HashSet<OrionPlugin>(_plugins);
 
         /// <summary>
@@ -60,7 +57,7 @@ namespace Orion {
         /// </summary>
         /// <param name="assemblyPath">The assembly path.</param>
         /// <exception cref="ArgumentNullException"><paramref name="assemblyPath"/> is <c>null</c>.</exception>
-        public void QueuePluginsFromPath([NotNull] string assemblyPath) {
+        public void QueuePluginsFromPath(string assemblyPath) {
             if (assemblyPath is null) throw new ArgumentNullException(nameof(assemblyPath));
 
             // Load the assembly from the path. We're using Assembly.Load with the bytes of the file so that we don't
@@ -81,7 +78,7 @@ namespace Orion {
         /// Finishes loading <see cref="OrionPlugin"/> instances, running the given action for each plugin loaded.
         /// </summary>
         /// <param name="action">The action to run.</param>
-        public void FinishLoadingPlugins([CanBeNull] Action<OrionPlugin> action = null) {
+        public void FinishLoadingPlugins(Action<OrionPlugin> action = null) {
             foreach (var pluginType in _pluginTypesToLoad.Reverse()) {
                 var plugin = (OrionPlugin)this.Get(pluginType);
                 _plugins.Add(plugin);
@@ -99,7 +96,7 @@ namespace Orion {
         /// <returns>
         /// A value indicating whether the <see cref="OrionPlugin"/> instance was successfully unloaded.
         /// </returns>
-        public bool UnloadPlugin([NotNull] OrionPlugin plugin) {
+        public bool UnloadPlugin(OrionPlugin plugin) {
             if (plugin is null) throw new ArgumentNullException(nameof(plugin));
             if (!_plugins.Contains(plugin)) return false;
 

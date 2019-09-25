@@ -17,7 +17,6 @@
 
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
-using JetBrains.Annotations;
 using Microsoft.Xna.Framework;
 using Orion.Packets.Extensions;
 
@@ -25,7 +24,6 @@ namespace Orion.Packets.Entities {
     /// <summary>
     /// Packet sent to teleport an entity.
     /// </summary>
-    [PublicAPI]
     public sealed class EntityTeleportationPacket : Packet {
         private EntityTeleportationType _entityTeleportationType;
         private byte _entityTeleportationStyle;

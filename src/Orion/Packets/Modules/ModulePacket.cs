@@ -17,15 +17,13 @@
 
 using System;
 using System.IO;
-using JetBrains.Annotations;
 
 namespace Orion.Packets.Modules {
     /// <summary>
     /// Packet sent in the form of a module.
     /// </summary>
-    [PublicAPI]
     public sealed class ModulePacket : Packet {
-        [CanBeNull] private Module _module;
+        private Module _module;
 
         /// <inheritdoc />
         public override bool IsDirty => base.IsDirty || Module?.IsDirty == true;
@@ -37,7 +35,6 @@ namespace Orion.Packets.Modules {
         /// Gets or sets the module.
         /// </summary>
         /// <exception cref="ArgumentNullException"><paramref name="value"/> is <c>null</c>.</exception>
-        [CanBeNull]
         public Module Module {
             get => _module;
             set {

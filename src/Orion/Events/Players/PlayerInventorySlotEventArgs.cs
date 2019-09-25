@@ -16,7 +16,6 @@
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
 using System;
-using JetBrains.Annotations;
 using Orion.Items;
 using Orion.Packets.Players;
 using Orion.Players;
@@ -25,9 +24,8 @@ namespace Orion.Events.Players {
     /// <summary>
     /// Provides data for the <see cref="IPlayerService.PlayerInventorySlot"/> event.
     /// </summary>
-    [PublicAPI]
     public sealed class PlayerInventorySlotEventArgs : PlayerEventArgs, ICancelable {
-        [NotNull] private readonly PlayerInventorySlotPacket _packet;
+        private readonly PlayerInventorySlotPacket _packet;
 
         /// <inheritdoc />
         public bool IsCanceled { get; set; }
@@ -62,8 +60,7 @@ namespace Orion.Events.Players {
         /// <exception cref="ArgumentNullException">
         /// <paramref name="player"/> or <paramref name="packet"/> are <c>null</c>.
         /// </exception>
-        public PlayerInventorySlotEventArgs([NotNull] IPlayer player,
-                                            [NotNull] PlayerInventorySlotPacket packet) : base(player) {
+        public PlayerInventorySlotEventArgs(IPlayer player, PlayerInventorySlotPacket packet) : base(player) {
             _packet = packet ?? throw new ArgumentNullException(nameof(packet));
         }
     }

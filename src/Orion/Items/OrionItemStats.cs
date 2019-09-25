@@ -15,16 +15,14 @@
 // You should have received a copy of the GNU General Public License
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
-using JetBrains.Annotations;
-
 namespace Orion.Items {
     internal sealed class OrionItemStats : IItemStats {
-        [NotNull] internal Terraria.Item Wrapped { get; }
+        internal Terraria.Item Wrapped { get; }
 
         public int MaxStackSize => Wrapped.maxStack;
         public ItemRarity Rarity => (ItemRarity)Wrapped.rare;
 
-        public OrionItemStats([NotNull] Terraria.Item terrariaItem) {
+        public OrionItemStats(Terraria.Item terrariaItem) {
             Wrapped = terrariaItem;
         }
     }

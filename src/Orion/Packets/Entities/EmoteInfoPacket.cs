@@ -17,14 +17,12 @@
 
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
-using JetBrains.Annotations;
 using Orion.Entities;
 
 namespace Orion.Packets.Entities {
     /// <summary>
     /// Packet sent from the server to the client to set emote information.
     /// </summary>
-    [PublicAPI]
     public sealed class EmoteInfoPacket : Packet {
         private int _emoteIndex;
         private EmoteAnchorType _anchorType;

@@ -17,13 +17,11 @@
 
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
-using JetBrains.Annotations;
 
 namespace Orion.Packets.World {
     /// <summary>
     /// Packet sent from the server to the client to shoot from a cannon.
     /// </summary>
-    [PublicAPI]
     public sealed class CannonShotPacket : Packet {
         private short _shotDamage;
         private float _shotKnockback;
@@ -94,7 +92,6 @@ namespace Orion.Packets.World {
         /// <summary>
         /// Gets or sets the shot's ammo type.
         /// </summary>
-
         // TODO: implement an enum for this.
         public short ShotAmmoType {
             get => _shotAmmoType;

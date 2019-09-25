@@ -17,14 +17,12 @@
 
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
-using JetBrains.Annotations;
 
 namespace Orion.Packets.World {
     /// <summary>
     /// Packet sent to summon a boss or an invasion. See <see cref="BossOrInvasion"/> for the
     /// list of bosses or invasions.
     /// </summary>
-    [PublicAPI]
     public sealed class BossOrInvasionPacket : Packet {
         private byte _summmonOnPlayerIndex;
         private BossOrInvasion _bossOrInvasion;

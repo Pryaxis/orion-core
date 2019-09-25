@@ -16,14 +16,12 @@
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
 using System.IO;
-using JetBrains.Annotations;
 using Orion.World.TileEntities;
 
 namespace Orion.Packets.World.TileEntities {
     /// <summary>
     /// Represents a logic sensor that is transmitted over the network.
     /// </summary>
-    [PublicAPI]
     public sealed class NetworkLogicSensor : NetworkTileEntity, ILogicSensor {
         private LogicSensorType _logicSensorType;
         private bool _isActivated;

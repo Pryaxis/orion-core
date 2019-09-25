@@ -16,20 +16,18 @@
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
 using System;
-using JetBrains.Annotations;
 using Orion.Npcs;
 
 namespace Orion.Events.Npcs {
     /// <summary>
     /// Provides data for the <see cref="INpcService.NpcKilled"/> event.
     /// </summary>
-    [PublicAPI]
     public sealed class NpcKilledEventArgs : NpcEventArgs {
         /// <summary>
         /// Initializes a new instance of the <see cref="NpcKilledEventArgs"/> class with the specified NPC.
         /// </summary>
         /// <param name="npc">The NPC.</param>
         /// <exception cref="ArgumentNullException"><paramref name="npc"/> is <c>null</c>.</exception>
-        public NpcKilledEventArgs([NotNull] INpc npc) : base(npc) { }
+        public NpcKilledEventArgs(INpc npc) : base(npc) { }
     }
 }

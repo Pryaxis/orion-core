@@ -17,13 +17,11 @@
 
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
-using JetBrains.Annotations;
 
 namespace Orion.Packets.Npcs {
     /// <summary>
     /// Packet sent to damage an NPC.
     /// </summary>
-    [PublicAPI]
     public sealed class NpcDamagePacket : Packet {
         private short _npcIndex;
         private short _damage;

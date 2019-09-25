@@ -17,13 +17,11 @@
 
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
-using JetBrains.Annotations;
 
 namespace Orion.Packets.World.TileEntities {
     /// <summary>
     /// Packet sent from the client to the server to read a sign.
     /// </summary>
-    [PublicAPI]
     public sealed class SignReadPacket : Packet {
         private short _signX;
         private short _signY;

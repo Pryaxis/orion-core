@@ -17,13 +17,11 @@
 
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
-using JetBrains.Annotations;
 
 namespace Orion.Packets.World {
     /// <summary>
     /// Packet sent from the server to the client to notify a progression event. This is used for achievements.
     /// </summary>
-    [PublicAPI]
     public sealed class ProgressionEventPacket : Packet {
         private short _progressionEventId;
 
@@ -33,7 +31,6 @@ namespace Orion.Packets.World {
         /// <summary>
         /// Gets or sets the progression event ID.
         /// </summary>
-
         // TODO: implement enum for this.
         public short ProgressionEventId {
             get => _progressionEventId;

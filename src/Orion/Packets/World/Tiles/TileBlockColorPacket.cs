@@ -17,14 +17,12 @@
 
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
-using JetBrains.Annotations;
 using Orion.World.Tiles;
 
 namespace Orion.Packets.World.Tiles {
     /// <summary>
     /// Packet sent to set a tile's block color.
     /// </summary>
-    [PublicAPI]
     public sealed class TileBlockColorPacket : Packet {
         private short _blockX;
         private short _blockY;

@@ -15,13 +15,10 @@
 // You should have received a copy of the GNU General Public License
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
-using JetBrains.Annotations;
-
 namespace Orion.Utils {
     /// <summary>
     /// Represents something that can be dirtied and cleaned.
     /// </summary>
-    [PublicAPI]
     public interface IDirtiable {
         /// <summary>
         /// Gets a value indicating whether the object is dirty: i.e., whether it has been modified since it was last

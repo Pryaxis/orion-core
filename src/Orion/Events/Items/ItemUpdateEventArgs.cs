@@ -16,14 +16,12 @@
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
 using System;
-using JetBrains.Annotations;
 using Orion.Items;
 
 namespace Orion.Events.Items {
     /// <summary>
     /// Provides data for the <see cref="IItemService.ItemUpdate"/> event.
     /// </summary>
-    [PublicAPI]
     public sealed class ItemUpdateEventArgs : ItemEventArgs, ICancelable {
         /// <inheritdoc />
         public bool IsCanceled { get; set; }
@@ -33,6 +31,6 @@ namespace Orion.Events.Items {
         /// </summary>
         /// <param name="item">The item.</param>
         /// <exception cref="ArgumentNullException"><paramref name="item"/> is <c>null</c>.</exception>
-        public ItemUpdateEventArgs([NotNull] IItem item) : base(item) { }
+        public ItemUpdateEventArgs(IItem item) : base(item) { }
     }
 }

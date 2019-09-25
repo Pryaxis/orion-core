@@ -20,7 +20,6 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Reflection;
-using JetBrains.Annotations;
 using Serilog;
 
 namespace Orion.Events {
@@ -29,20 +28,18 @@ namespace Orion.Events {
     /// class is immutable.
     /// </summary>
     /// <typeparam name="TEventArgs">The type of event arguments.</typeparam>
-    [PublicAPI]
     public class EventHandlerCollection<TEventArgs> where TEventArgs : EventArgs {
-        [NotNull]
         private static IComparer<Registration> RegistrationComparer =>
             Comparer<Registration>.Create((r1, r2) => r1.Priority.CompareTo(r2.Priority));
 
-        [NotNull, ItemNotNull] private readonly ISet<Registration> _registrations;
+        private readonly ISet<Registration> _registrations;
 
         // This constructor is provided for testing only.
-        internal EventHandlerCollection([NotNull] EventHandler<TEventArgs> handler) {
+        internal EventHandlerCollection(EventHandler<TEventArgs> handler) {
             _registrations = new HashSet<Registration> {new Registration(handler, EventPriority.Normal)};
         }
 
-        private EventHandlerCollection([NotNull] ISet<Registration> registrations) {
+        private EventHandlerCollection(ISet<Registration> registrations) {
             _registrations = registrations;
         }
 
@@ -52,7 +49,7 @@ namespace Orion.Events {
         /// <param name="sender">The sender. This is usually the object that initiated the event.</param>
         /// <param name="args">The event arguments.</param>
         /// <exception cref="ArgumentNullException"><paramref name="args"/> is <c>null</c>.</exception>
-        public void Invoke([NotNull] object sender, [NotNull] TEventArgs args) {
+        public void Invoke(object sender, TEventArgs args) {
             if (args is null) throw new ArgumentNullException(nameof(args));
 
             Log.Debug("Calling {Event} handlers", typeof(TEventArgs).Name);
@@ -76,10 +73,8 @@ namespace Orion.Events {
         /// <param name="handler">The handler.</param>
         /// <returns>The resulting collection.</returns>
         /// <exception cref="ArgumentNullException"><paramref name="handler"/> is <c>null</c>.</exception>
-        [NotNull]
-        public static EventHandlerCollection<TEventArgs> operator +(
-            [CanBeNull] EventHandlerCollection<TEventArgs> collection,
-            [NotNull] EventHandler<TEventArgs> handler) {
+        public static EventHandlerCollection<TEventArgs> operator +(EventHandlerCollection<TEventArgs> collection,
+                                                                    EventHandler<TEventArgs> handler) {
             if (handler is null) throw new ArgumentNullException(nameof(handler));
 
             Log.Debug("Registering {Event} handler from {Registrator}",
@@ -102,10 +97,8 @@ namespace Orion.Events {
         /// <returns>The resulting collection.</returns>
         /// <exception cref="ArgumentException"><paramref name="handler"/> is not registered.</exception>
         /// <exception cref="ArgumentNullException"><paramref name="handler"/> is <c>null</c>.</exception>
-        [NotNull]
-        public static EventHandlerCollection<TEventArgs> operator -(
-            [CanBeNull] EventHandlerCollection<TEventArgs> collection,
-            [NotNull] EventHandler<TEventArgs> handler) {
+        public static EventHandlerCollection<TEventArgs> operator -(EventHandlerCollection<TEventArgs> collection,
+                                                                    EventHandler<TEventArgs> handler) {
             if (handler is null) throw new ArgumentNullException(nameof(handler));
 
             var attribute = handler.Method.GetCustomAttribute<EventHandlerAttribute>();
@@ -127,10 +120,10 @@ namespace Orion.Events {
 
 
         private class Registration {
-            [NotNull] public EventHandler<TEventArgs> Handler { get; }
+            public EventHandler<TEventArgs> Handler { get; }
             public EventPriority Priority { get; }
 
-            public Registration([NotNull] EventHandler<TEventArgs> handler, EventPriority priority) {
+            public Registration(EventHandler<TEventArgs> handler, EventPriority priority) {
                 Debug.Assert(handler != null, $"{nameof(handler)} should not be null.");
 
                 Handler = handler;

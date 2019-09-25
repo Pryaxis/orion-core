@@ -18,16 +18,14 @@
 using System;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
-using JetBrains.Annotations;
 
 namespace Orion.Packets.Players {
     /// <summary>
     /// Packet sent from the client to the server to inform the server about the player's UUID. This is sent in response
     /// to a <see cref="PlayerContinueConnectingPacket"/>.
     /// </summary>
-    [PublicAPI]
     public sealed class PlayerUuidPacket : Packet {
-        [NotNull] private string _playerUuid = "";
+        private string _playerUuid = "";
 
         /// <inheritdoc />
         public override PacketType Type => PacketType.PlayerUuid;
@@ -35,7 +33,6 @@ namespace Orion.Packets.Players {
         /// <summary>
         /// Gets or sets the player's UUID.
         /// </summary>
-        [NotNull]
         public string PlayerUuid {
             get => _playerUuid;
             set {

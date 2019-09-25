@@ -17,13 +17,11 @@
 
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
-using JetBrains.Annotations;
 
 namespace Orion.Packets.World {
     /// <summary>
     /// Packet sent from the server to the client to set the world's biome stats.
     /// </summary>
-    [PublicAPI]
     public sealed class WorldBiomeStatsPacket : Packet {
         private byte _hallowedAmount;
         private byte _corruptionAmount;

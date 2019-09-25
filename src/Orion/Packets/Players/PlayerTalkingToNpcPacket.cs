@@ -17,13 +17,11 @@
 
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
-using JetBrains.Annotations;
 
 namespace Orion.Packets.Players {
     /// <summary>
     /// Packet sent to set the NPC that a player is talking to.
     /// </summary>
-    [PublicAPI]
     public sealed class PlayerTalkingToNpcPacket : Packet {
         private byte _playerIndex;
         private short _playerTalkingToNpcIndex;

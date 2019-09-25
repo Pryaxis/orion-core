@@ -16,13 +16,11 @@
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
 using System;
-using JetBrains.Annotations;
 
 namespace Orion.Utils {
     /// <summary>
     /// Provides methods with which to get, set, and remove annotations.
     /// </summary>
-    [PublicAPI]
     public interface IAnnotatable {
         /// <summary>
         /// Gets the annotation of a type with the given key, returning a default value if the key does not exist.
@@ -32,8 +30,7 @@ namespace Orion.Utils {
         /// <param name="defaultValue">The default value.</param>
         /// <returns>The metadata, or a default value if the key does not exist.</returns>
         /// <exception cref="ArgumentNullException"><paramref name="key"/> is <c>null</c>.</exception>
-        [CanBeNull]
-        T GetAnnotation<T>([NotNull] string key, [CanBeNull] T defaultValue = default);
+        T GetAnnotation<T>(string key, T defaultValue = default);
 
         /// <summary>
         /// Sets the annotation of a type with the given key to the specified value.
@@ -42,7 +39,7 @@ namespace Orion.Utils {
         /// <param name="key">The key.</param>
         /// <param name="value">The value.</param>
         /// <exception cref="ArgumentNullException"><paramref name="key"/> is <c>null</c>.</exception>
-        void SetAnnotation<T>([NotNull] string key, [CanBeNull] T value);
+        void SetAnnotation<T>(string key, T value);
 
         /// <summary>
         /// Removes the annotation with the given key and returns a success value.
@@ -50,6 +47,6 @@ namespace Orion.Utils {
         /// <param name="key">The key.</param>
         /// <returns>A value indicating whether the key was successfully removed.</returns>
         /// <exception cref="ArgumentNullException"><paramref name="key"/> is <c>null</c>.</exception>
-        bool RemoveAnnotation([NotNull] string key);
+        bool RemoveAnnotation(string key);
     }
 }

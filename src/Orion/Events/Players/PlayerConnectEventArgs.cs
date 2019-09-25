@@ -16,7 +16,6 @@
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
 using System;
-using JetBrains.Annotations;
 using Orion.Packets.Players;
 using Orion.Players;
 
@@ -24,15 +23,13 @@ namespace Orion.Events.Players {
     /// <summary>
     /// Provides data for the <see cref="IPlayerService.PlayerConnect"/> event.
     /// </summary>
-    [PublicAPI]
     public sealed class PlayerConnectEventArgs : PlayerEventArgs, ICancelable {
-        [NotNull] private readonly PlayerConnectPacket _packet;
+        private readonly PlayerConnectPacket _packet;
 
         /// <inheritdoc />
         public bool IsCanceled { get; set; }
 
         /// <inheritdoc cref="PlayerConnectPacket.PlayerVersionString"/>
-        [NotNull]
         public string PlayerVersionString {
             get => _packet.PlayerVersionString;
             set => _packet.PlayerVersionString = value;
@@ -47,7 +44,7 @@ namespace Orion.Events.Players {
         /// <exception cref="ArgumentNullException">
         /// <paramref name="player"/> or <paramref name="packet"/> are <c>null</c>.
         /// </exception>
-        public PlayerConnectEventArgs([NotNull] IPlayer player, [NotNull] PlayerConnectPacket packet) : base(player) {
+        public PlayerConnectEventArgs(IPlayer player, PlayerConnectPacket packet) : base(player) {
             _packet = packet ?? throw new ArgumentNullException(nameof(packet));
         }
     }

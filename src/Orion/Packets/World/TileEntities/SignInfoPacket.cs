@@ -18,18 +18,16 @@
 using System;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
-using JetBrains.Annotations;
 
 namespace Orion.Packets.World.TileEntities {
     /// <summary>
     /// Packet sent to set sign information. This is sent in response to a <see cref="SignReadPacket"/>.
     /// </summary>
-    [PublicAPI]
     public sealed class SignInfoPacket : Packet {
         private short _signIndex;
         private short _signX;
         private short _signY;
-        [NotNull] private string _signText = "";
+        private string _signText = "";
 
         /// <inheritdoc />
         public override PacketType Type => PacketType.SignInfo;
@@ -71,7 +69,6 @@ namespace Orion.Packets.World.TileEntities {
         /// Gets or sets the sign's text.
         /// </summary>
         /// <exception cref="ArgumentNullException"><paramref name="value"/> is <c>null</c>.</exception>
-        [NotNull]
         public string SignText {
             get => _signText;
             set {

@@ -17,13 +17,11 @@
 
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
-using JetBrains.Annotations;
 
 namespace Orion.Packets.Players {
     /// <summary>
     /// Packet sent to set a player's health and maximum health.
     /// </summary>
-    [PublicAPI]
     public sealed class PlayerHealthPacket : Packet {
         private byte _playerIndex;
         private short _playerHealth;

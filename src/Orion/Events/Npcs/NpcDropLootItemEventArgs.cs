@@ -16,7 +16,6 @@
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
 using System;
-using JetBrains.Annotations;
 using Orion.Items;
 using Orion.Npcs;
 
@@ -24,7 +23,6 @@ namespace Orion.Events.Npcs {
     /// <summary>
     /// Provides data for the <see cref="INpcService.NpcDropLootItem"/> event.
     /// </summary>
-    [PublicAPI]
     public sealed class NpcDropLootItemEventArgs : NpcEventArgs, ICancelable {
         /// <inheritdoc />
         public bool IsCanceled { get; set; }
@@ -49,6 +47,6 @@ namespace Orion.Events.Npcs {
         /// </summary>
         /// <param name="npc">The NPC.</param>
         /// <exception cref="ArgumentNullException"><paramref name="npc"/> is null.</exception>
-        public NpcDropLootItemEventArgs([NotNull] INpc npc) : base(npc) { }
+        public NpcDropLootItemEventArgs(INpc npc) : base(npc) { }
     }
 }

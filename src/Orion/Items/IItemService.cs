@@ -15,7 +15,6 @@
 // You should have received a copy of the GNU General Public License
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
-using JetBrains.Annotations;
 using Microsoft.Xna.Framework;
 using Orion.Events;
 using Orion.Events.Items;
@@ -25,19 +24,16 @@ namespace Orion.Items {
     /// <summary>
     /// Represents an item service. Provides access to item-related events and methods.
     /// </summary>
-    [PublicAPI]
     public interface IItemService : IReadOnlyArray<IItem>, IService {
         /// <summary>
         /// Gets or sets the event handlers that occur when an item's defaults are being set. This event can be
         /// canceled.
         /// </summary>
-        [CanBeNull]
         EventHandlerCollection<ItemSetDefaultsEventArgs> ItemSetDefaults { get; set; }
 
         /// <summary>
         /// Gets or sets the event handlers that occur when an item is updating. This event can be canceled.
         /// </summary>
-        [CanBeNull]
         EventHandlerCollection<ItemUpdateEventArgs> ItemUpdate { get; set; }
 
         /// <summary>
@@ -49,7 +45,6 @@ namespace Orion.Items {
         /// <param name="stackSize">The stack size.</param>
         /// <param name="prefix">The item prefix..</param>
         /// <returns>The resulting item, or <c>null</c> if none was spawned.</returns>
-        [CanBeNull]
         IItem SpawnItem(ItemType itemType, Vector2 position, int stackSize = 1, ItemPrefix prefix = ItemPrefix.None);
     }
 }

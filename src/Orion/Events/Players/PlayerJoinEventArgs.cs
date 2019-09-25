@@ -16,14 +16,12 @@
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
 using System;
-using JetBrains.Annotations;
 using Orion.Players;
 
 namespace Orion.Events.Players {
     /// <summary>
     /// Provides data for the <see cref="IPlayerService.PlayerJoin"/> event.
     /// </summary>
-    [PublicAPI]
     public sealed class PlayerJoinEventArgs : PlayerEventArgs, ICancelable {
         /// <inheritdoc />
         public bool IsCanceled { get; set; }
@@ -33,6 +31,6 @@ namespace Orion.Events.Players {
         /// </summary>
         /// <param name="player">The player.</param>
         /// <exception cref="ArgumentNullException"><paramref name="player"/> is <c>null</c>.</exception>
-        public PlayerJoinEventArgs([NotNull] IPlayer player) : base(player) { }
+        public PlayerJoinEventArgs(IPlayer player) : base(player) { }
     }
 }

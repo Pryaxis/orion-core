@@ -17,13 +17,11 @@
 
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
-using JetBrains.Annotations;
 
 namespace Orion.Packets.World {
     /// <summary>
     /// Packet sent to set the time. This is currently not naturally sent.
     /// </summary>
-    [PublicAPI]
     public sealed class WorldTimePacket : Packet {
         private bool _isDaytime;
         private int _time;

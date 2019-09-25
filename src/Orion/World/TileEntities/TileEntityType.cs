@@ -15,13 +15,10 @@
 // You should have received a copy of the GNU General Public License
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
-using JetBrains.Annotations;
-
 namespace Orion.World.TileEntities {
     /// <summary>
     /// Represents a (generalized) tile entity type.
     /// </summary>
-    [PublicAPI]
     public enum TileEntityType : short {
         /// <summary>
         /// Indicates a target dummy.

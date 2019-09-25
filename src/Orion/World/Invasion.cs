@@ -15,13 +15,10 @@
 // You should have received a copy of the GNU General Public License
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
-using JetBrains.Annotations;
-
 namespace Orion.World {
     /// <summary>
     /// Specifies an invasion.
     /// </summary>
-    [PublicAPI]
     public enum Invasion : sbyte {
         /// <summary>
         /// Indicates no invasion.

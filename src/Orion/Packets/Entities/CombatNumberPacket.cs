@@ -17,7 +17,6 @@
 
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
-using JetBrains.Annotations;
 using Microsoft.Xna.Framework;
 using Orion.Packets.Extensions;
 
@@ -25,7 +24,6 @@ namespace Orion.Packets.Entities {
     /// <summary>
     /// Packet sent from the server to the client to show a combat number.
     /// </summary>
-    [PublicAPI]
     public sealed class CombatNumberPacket : Packet {
         private Vector2 _numberPosition;
         private Color _numberColor;

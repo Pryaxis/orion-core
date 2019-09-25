@@ -15,13 +15,10 @@
 // You should have received a copy of the GNU General Public License
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
-using JetBrains.Annotations;
-
 namespace Orion.Events {
     /// <summary>
     /// Represents something that can be canceled.
     /// </summary>
-    [PublicAPI]
     public interface ICancelable {
         /// <summary>
         /// Gets or sets a value indicating whether the object is canceled.

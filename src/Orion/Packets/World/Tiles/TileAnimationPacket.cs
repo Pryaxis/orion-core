@@ -17,14 +17,12 @@
 
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
-using JetBrains.Annotations;
 using Orion.World.Tiles;
 
 namespace Orion.Packets.World.Tiles {
     /// <summary>
     /// Packet sent to show a tile animation such as a fake chest opening or a mushroom statue being powered.
     /// </summary>
-    [PublicAPI]
     public sealed class TileAnimationPacket : Packet {
         private short _animationType;
         private BlockType _blockType;
@@ -37,7 +35,6 @@ namespace Orion.Packets.World.Tiles {
         /// <summary>
         /// Gets or sets the animation type.
         /// </summary>
-
         // TODO: implement enum for this.
         public short AnimationType {
             get => _animationType;

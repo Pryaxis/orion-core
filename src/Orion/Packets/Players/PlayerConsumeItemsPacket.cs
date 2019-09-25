@@ -17,7 +17,6 @@
 
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
-using JetBrains.Annotations;
 using Orion.Items;
 using Orion.Packets.World.Tiles;
 
@@ -26,7 +25,6 @@ namespace Orion.Packets.Players {
     /// Packet sent from the server to the client to consume a player's items. This is sent in response to a
     /// <see cref="WireMassOperationPacket"/>.
     /// </summary>
-    [PublicAPI]
     public sealed class PlayerConsumeItemsPacket : Packet {
         private ItemType _itemType;
         private short _itemStackSize;

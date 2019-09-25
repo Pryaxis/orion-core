@@ -15,7 +15,6 @@
 // You should have received a copy of the GNU General Public License
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
-using JetBrains.Annotations;
 using Microsoft.Xna.Framework;
 using Orion.Utils;
 
@@ -46,9 +45,9 @@ namespace Orion.Entities {
             set => Wrapped.Size = value;
         }
 
-        [NotNull] internal TTerrariaEntity Wrapped { get; }
+        internal TTerrariaEntity Wrapped { get; }
 
-        protected OrionEntity([NotNull] TTerrariaEntity terrariaEntity) {
+        protected OrionEntity(TTerrariaEntity terrariaEntity) {
             Wrapped = terrariaEntity;
         }
     }

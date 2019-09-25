@@ -17,14 +17,12 @@
 
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
-using JetBrains.Annotations;
 
 namespace Orion.Packets.World.Tiles {
     /// <summary>
     /// Packet sent from the server to the client to synchronize tile frames. This is sent following every
     /// <see cref="SectionPacket"/>.
     /// </summary>
-    [PublicAPI]
     public sealed class SectionFramesPacket : Packet {
         private short _startSectionX;
         private short _startSectionY;

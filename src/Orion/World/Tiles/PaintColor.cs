@@ -15,13 +15,10 @@
 // You should have received a copy of the GNU General Public License
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
-using JetBrains.Annotations;
-
 namespace Orion.World.Tiles {
     /// <summary>
     /// Specifies a paint color.
     /// </summary>
-    [PublicAPI]
     public enum PaintColor : byte {
 #pragma warning disable 1591
         None = 0,

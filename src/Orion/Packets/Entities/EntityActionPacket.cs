@@ -17,13 +17,11 @@
 
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
-using JetBrains.Annotations;
 
 namespace Orion.Packets.Entities {
     /// <summary>
     /// Packet sent to perform an entity action. See <see cref="Entities.EntityAction"/> for the list of possible actions.
     /// </summary>
-    [PublicAPI]
     public sealed class EntityActionPacket : Packet {
         private byte _entityIndex;
         private EntityAction _entityAction;

@@ -16,7 +16,6 @@
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
 using System;
-using JetBrains.Annotations;
 using Orion.Items;
 using Orion.Utils;
 
@@ -24,19 +23,16 @@ namespace Orion.World.TileEntities {
     /// <summary>
     /// Represents a Terraria chest.
     /// </summary>
-    [PublicAPI]
     public interface IChest : ITileEntity {
         /// <summary>
         /// Gets or sets the chest's name.
         /// </summary>
         /// <exception cref="ArgumentNullException"><paramref name="value"/> is <c>null</c>.</exception>
-        [NotNull]
         string Name { get; set; }
 
         /// <summary>
         /// Gets the chest's items.
         /// </summary>
-        [NotNull, ItemNotNull]
         IReadOnlyArray<IItem> Items { get; }
     }
 }

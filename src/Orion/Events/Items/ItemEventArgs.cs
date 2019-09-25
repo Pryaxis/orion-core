@@ -16,22 +16,19 @@
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
 using System;
-using JetBrains.Annotations;
 using Orion.Items;
 
 namespace Orion.Events.Items {
     /// <summary>
     /// Provides data for item-related events.
     /// </summary>
-    [PublicAPI]
     public abstract class ItemEventArgs : EventArgs {
         /// <summary>
         /// Gets the item.
         /// </summary>
-        [NotNull]
         public IItem Item { get; }
 
-        private protected ItemEventArgs([NotNull] IItem item) {
+        private protected ItemEventArgs(IItem item) {
             Item = item ?? throw new ArgumentNullException(nameof(item));
         }
     }

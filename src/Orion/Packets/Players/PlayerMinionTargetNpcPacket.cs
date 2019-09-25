@@ -17,13 +17,11 @@
 
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
-using JetBrains.Annotations;
 
 namespace Orion.Packets.Players {
     /// <summary>
     /// Packet sent to set a player's minion's target NPC.
     /// </summary>
-    [PublicAPI]
     public sealed class PlayerMinionTargetNpcPacket : Packet {
         private byte _playerIndex;
         private short _playerMinionTargetNpcIndex;

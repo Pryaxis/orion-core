@@ -18,7 +18,6 @@
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
-using JetBrains.Annotations;
 using Orion.Packets.World.Tiles;
 using Orion.Utils;
 
@@ -26,9 +25,7 @@ namespace Orion.Packets.Modules {
     /// <summary>
     /// Module sent for liquids.
     /// </summary>
-    [PublicAPI]
     public class LiquidsModule : Module {
-        [NotNull] [ItemNotNull]
         private readonly DirtiableList<NetworkLiquid> _liquids = new DirtiableList<NetworkLiquid>();
 
         /// <inheritdoc />
@@ -40,7 +37,6 @@ namespace Orion.Packets.Modules {
         /// <summary>
         /// Gets the liquids.
         /// </summary>
-        [NotNull, ItemNotNull]
         public IList<NetworkLiquid> Liquids => _liquids;
 
         /// <inheritdoc />

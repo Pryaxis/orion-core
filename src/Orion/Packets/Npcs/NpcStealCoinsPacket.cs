@@ -17,7 +17,6 @@
 
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
-using JetBrains.Annotations;
 using Microsoft.Xna.Framework;
 using Orion.Packets.Extensions;
 
@@ -26,7 +25,6 @@ namespace Orion.Packets.Npcs {
     /// Packet sent to cause an NPC to steal a coin. This is sent from clients and the logic occurs clientside, but the
     /// server echoes the packet back to clients, which may cause desync issues.
     /// </summary>
-    [PublicAPI]
     public sealed class NpcStealCoinsPacket : Packet {
         private short _npcIndex;
         private float _npcStolenValue;

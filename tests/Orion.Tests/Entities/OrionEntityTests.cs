@@ -16,7 +16,7 @@
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
 using FluentAssertions;
-using JetBrains.Annotations;
+
 using Microsoft.Xna.Framework;
 using Xunit;
 
@@ -109,7 +109,7 @@ namespace Orion.Entities {
         private class TestOrionEntity : OrionEntity<TestTerrariaEntity> {
             public override string Name { get; set; }
 
-            public TestOrionEntity([NotNull] TestTerrariaEntity terrariaEntity) : base(terrariaEntity) { }
+            public TestOrionEntity( TestTerrariaEntity terrariaEntity) : base(terrariaEntity) { }
         }
 
         private class TestTerrariaEntity : Terraria.Entity { }

@@ -17,13 +17,11 @@
 
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
-using JetBrains.Annotations;
 
 namespace Orion.Packets.World.Tiles {
     /// <summary>
     /// Packet sent from the client to the server to request a section of the world.
     /// </summary>
-    [PublicAPI]
     public sealed class SectionRequestPacket : Packet {
         private int _sectionX;
         private int _sectionY;

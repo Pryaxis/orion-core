@@ -16,13 +16,11 @@
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
 using System.IO;
-using JetBrains.Annotations;
 
 namespace Orion.Packets.Players {
     /// <summary>
     /// Packet sent from the client to the server to finish the current angler quest.
     /// </summary>
-    [PublicAPI]
     public sealed class PlayerFinishAnglerQuestPacket : Packet {
         /// <inheritdoc />
         public override PacketType Type => PacketType.PlayerFinishAnglerQuest;

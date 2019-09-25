@@ -18,7 +18,6 @@
 using System;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
-using JetBrains.Annotations;
 using Microsoft.Xna.Framework;
 using Orion.Packets.Extensions;
 
@@ -26,12 +25,11 @@ namespace Orion.Packets.Modules {
     /// <summary>
     /// Module sent for chat.
     /// </summary>
-    [PublicAPI]
     public sealed class ChatModule : Module {
-        [NotNull] private string _clientChatCommand = "";
-        [NotNull] private string _clientChatText = "";
+        private string _clientChatCommand = "";
+        private string _clientChatText = "";
         private byte _serverChattingPlayerIndex;
-        [NotNull] private Terraria.Localization.NetworkText _serverChatText = Terraria.Localization.NetworkText.Empty;
+        private Terraria.Localization.NetworkText _serverChatText = Terraria.Localization.NetworkText.Empty;
         private Color _serverChatColor;
 
         /// <inheritdoc />
@@ -41,7 +39,6 @@ namespace Orion.Packets.Modules {
         /// Gets or sets the client chat's command. Only applicable when received in the Server context.
         /// </summary>
         /// <exception cref="ArgumentNullException"><paramref name="value"/> is <c>null</c>.</exception>
-        [NotNull]
         public string ClientChatCommand {
             get => _clientChatCommand;
             set {
@@ -54,7 +51,6 @@ namespace Orion.Packets.Modules {
         /// Gets or sets the client chat's text. Only applicable when received in the Server context.
         /// </summary>
         /// <exception cref="ArgumentNullException"><paramref name="value"/> is <c>null</c>.</exception>
-        [NotNull]
         public string ClientChatText {
             get => _clientChatText;
             set {
@@ -78,7 +74,6 @@ namespace Orion.Packets.Modules {
         /// Gets or sets the server chat's text. Only applicable when sent in the Server context.
         /// </summary>
         /// <exception cref="ArgumentNullException"><paramref name="value"/> is <c>null</c>.</exception>
-        [NotNull]
         public Terraria.Localization.NetworkText ServerChatText {
             get => _serverChatText;
             set {

@@ -18,15 +18,13 @@
 using System;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
-using JetBrains.Annotations;
 
 namespace Orion.Packets.World.Tiles {
     /// <summary>
     /// Packet sent to set a tile's liquid.
     /// </summary>
-    [PublicAPI]
     public sealed class TileLiquidPacket : Packet {
-        [NotNull] private NetworkLiquid _tileLiquid = new NetworkLiquid();
+        private NetworkLiquid _tileLiquid = new NetworkLiquid();
 
         /// <inheritdoc />
         public override bool IsDirty => base.IsDirty || TileLiquid.IsDirty;
@@ -38,7 +36,6 @@ namespace Orion.Packets.World.Tiles {
         /// Gets or sets the tile's liquid.
         /// </summary>
         /// <exception cref="ArgumentNullException"><paramref name="value"/> is <c>null</c>.</exception>
-        [NotNull]
         public NetworkLiquid TileLiquid {
             get => _tileLiquid;
             set {

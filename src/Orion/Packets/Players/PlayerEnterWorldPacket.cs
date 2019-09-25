@@ -16,7 +16,6 @@
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
 using System.IO;
-using JetBrains.Annotations;
 using Orion.Packets.World.Tiles;
 
 namespace Orion.Packets.Players {
@@ -24,7 +23,6 @@ namespace Orion.Packets.Players {
     /// Packet sent from the server to the client to enter the world. This is sent in response to a
     /// <see cref="SectionRequestPacket"/>.
     /// </summary>
-    [PublicAPI]
     public sealed class PlayerEnterWorldPacket : Packet {
         /// <inheritdoc />
         public override PacketType Type => PacketType.PlayerEnterWorld;

@@ -23,7 +23,6 @@ using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Linq;
 using System.Threading;
-using JetBrains.Annotations;
 using Orion.Events;
 using Orion.Events.Packets;
 using Orion.Events.Players;
@@ -33,17 +32,17 @@ using OTAPI;
 
 namespace Orion.Players {
     internal sealed class OrionPlayerService : OrionService, IPlayerService {
-        [NotNull, ItemNotNull] private readonly IList<Terraria.Player> _terrariaPlayers;
-        [NotNull, ItemCanBeNull] private readonly IList<OrionPlayer> _players;
-        [NotNull] private readonly ThreadLocal<bool> _shouldIgnoreNextReceiveData = new ThreadLocal<bool>();
+        private readonly IList<Terraria.Player> _terrariaPlayers;
+        private readonly IList<OrionPlayer> _players;
+        private readonly ThreadLocal<bool> _shouldIgnoreNextReceiveData = new ThreadLocal<bool>();
 
-        [NotNull] private readonly IDictionary<PacketType, Action<PacketReceiveEventArgs>> _packetReceiveHandlers =
+        private readonly IDictionary<PacketType, Action<PacketReceiveEventArgs>> _packetReceiveHandlers =
             new Dictionary<PacketType, Action<PacketReceiveEventArgs>>();
 
         // Subtract 1 from the count. This is because Terraria has an extra slot.
         public int Count => _players.Count - 1;
 
-        [NotNull]
+
         public IPlayer this[int index] {
             get {
                 if (index < 0 || index >= Count) throw new IndexOutOfRangeException();
@@ -95,7 +94,7 @@ namespace Orion.Players {
             throw new NotImplementedException();
         }
 
-        private HookResult ReceiveDataHandler([NotNull] Terraria.MessageBuffer buffer, ref byte packetId,
+        private HookResult ReceiveDataHandler(Terraria.MessageBuffer buffer, ref byte packetId,
                                               ref int readOffset, ref int start, ref int length) {
             if (_shouldIgnoreNextReceiveData.Value) return HookResult.Continue;
 
@@ -133,8 +132,8 @@ namespace Orion.Players {
         }
 
         private HookResult SendBytesHandler(ref int remoteClient, ref byte[] data, ref int offset, ref int size,
-                                            [CanBeNull] ref Terraria.Net.Sockets.SocketSendCallback callback,
-                                            [CanBeNull] ref object state) {
+                                            ref Terraria.Net.Sockets.SocketSendCallback callback,
+                                            ref object state) {
             var stream = new MemoryStream(data, offset, size);
             var receiver = this[remoteClient];
             var packet = Packet.ReadFromStream(stream, PacketContext.Client);
@@ -151,35 +150,35 @@ namespace Orion.Players {
             return HookResult.Continue;
         }
 
-        private HookResult PreResetHandler([NotNull] Terraria.RemoteClient remoteClient) {
+        private HookResult PreResetHandler(Terraria.RemoteClient remoteClient) {
             var player = this[remoteClient.Id];
             var args = new PlayerDisconnectedEventArgs(player);
             PlayerDisconnected?.Invoke(this, args);
             return HookResult.Continue;
         }
 
-        private void PlayerConnectHandler([NotNull] PacketReceiveEventArgs args_) {
+        private void PlayerConnectHandler(PacketReceiveEventArgs args_) {
             var packet = (PlayerConnectPacket)args_.Packet;
             var args = new PlayerConnectEventArgs(args_.Sender, packet);
             PlayerConnect?.Invoke(this, args);
             args_.IsCanceled = args.IsCanceled;
         }
 
-        private void PlayerDataHandler([NotNull] PacketReceiveEventArgs args_) {
+        private void PlayerDataHandler(PacketReceiveEventArgs args_) {
             var packet = (PlayerDataPacket)args_.Packet;
             var args = new PlayerDataEventArgs(args_.Sender, packet);
             PlayerData?.Invoke(this, args);
             args_.IsCanceled = args.IsCanceled;
         }
 
-        private void PlayerInventorySlotHandler([NotNull] PacketReceiveEventArgs args_) {
+        private void PlayerInventorySlotHandler(PacketReceiveEventArgs args_) {
             var packet = (PlayerInventorySlotPacket)args_.Packet;
             var args = new PlayerInventorySlotEventArgs(args_.Sender, packet);
             PlayerInventorySlot?.Invoke(this, args);
             args_.IsCanceled = args.IsCanceled;
         }
 
-        private void PlayerJoinHandler([NotNull] PacketReceiveEventArgs args_) {
+        private void PlayerJoinHandler(PacketReceiveEventArgs args_) {
             var args = new PlayerJoinEventArgs(args_.Sender);
             PlayerJoin?.Invoke(this, args);
             args_.IsCanceled = args.IsCanceled;

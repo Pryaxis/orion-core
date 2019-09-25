@@ -17,14 +17,12 @@
 
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
-using JetBrains.Annotations;
 
 namespace Orion.Packets.World.Tiles {
     /// <summary>
     /// Packet sent to perform a tile modification. See <see cref="Tiles.TileModification"/> for a list
     /// of tile modifications.
     /// </summary>
-    [PublicAPI]
     public sealed class TileModificationPacket : Packet {
         private TileModification _tileModification;
         private short _tileX;

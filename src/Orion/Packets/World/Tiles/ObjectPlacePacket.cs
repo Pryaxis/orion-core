@@ -17,14 +17,12 @@
 
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
-using JetBrains.Annotations;
 using Orion.World.Tiles;
 
 namespace Orion.Packets.World.Tiles {
     /// <summary>
     /// Packet sent to place an object.
     /// </summary>
-    [PublicAPI]
     public sealed class ObjectPlacePacket : Packet {
         private short _objectX;
         private short _objectY;

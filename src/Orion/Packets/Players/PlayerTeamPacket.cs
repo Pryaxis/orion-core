@@ -17,14 +17,12 @@
 
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
-using JetBrains.Annotations;
 using Orion.Players;
 
 namespace Orion.Packets.Players {
     /// <summary>
     /// Packet sent to set a player's team.
     /// </summary>
-    [PublicAPI]
     public sealed class PlayerTeamPacket : Packet {
         private byte _playerIndex;
         private PlayerTeam _playerTeam;

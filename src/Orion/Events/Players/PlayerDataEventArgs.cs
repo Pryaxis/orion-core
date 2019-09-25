@@ -16,7 +16,6 @@
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
 using System;
-using JetBrains.Annotations;
 using Microsoft.Xna.Framework;
 using Orion.Packets.Players;
 using Orion.Players;
@@ -25,9 +24,8 @@ namespace Orion.Events.Players {
     /// <summary>
     /// Provides data for the <see cref="IPlayerService.PlayerData"/> event.
     /// </summary>
-    [PublicAPI]
     public sealed class PlayerDataEventArgs : PlayerEventArgs, ICancelable {
-        [NotNull] private readonly PlayerDataPacket _packet;
+        private readonly PlayerDataPacket _packet;
 
         /// <inheritdoc />
         public bool IsCanceled { get; set; }
@@ -45,7 +43,6 @@ namespace Orion.Events.Players {
         }
 
         /// <inheritdoc cref="PlayerDataPacket.PlayerName"/>
-        [NotNull]
         public string PlayerName {
             get => _packet.PlayerName;
             set => _packet.PlayerName = value;
@@ -126,7 +123,7 @@ namespace Orion.Events.Players {
         /// <exception cref="ArgumentNullException">
         /// <paramref name="player"/> or <paramref name="packet"/> are <c>null</c>.
         /// </exception>
-        public PlayerDataEventArgs([NotNull] IPlayer player, [NotNull] PlayerDataPacket packet) : base(player) {
+        public PlayerDataEventArgs(IPlayer player, PlayerDataPacket packet) : base(player) {
             _packet = packet ?? throw new ArgumentNullException(nameof(packet));
         }
     }

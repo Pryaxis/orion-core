@@ -16,14 +16,12 @@
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
 using System.IO;
-using JetBrains.Annotations;
 
 namespace Orion.Packets.Players {
     /// <summary>
     /// Packet sent from the server to the client as a password challenge. This may be sent in response to a
     /// <see cref="PlayerConnectPacket"/>.
     /// </summary>
-    [PublicAPI]
     public sealed class PlayerPasswordChallengePacket : Packet {
         /// <inheritdoc />
         public override PacketType Type => PacketType.PlayerPasswordChallenge;

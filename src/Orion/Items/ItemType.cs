@@ -15,13 +15,10 @@
 // You should have received a copy of the GNU General Public License
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
-using JetBrains.Annotations;
-
 namespace Orion.Items {
     /// <summary>
     /// Specifies an item type.
     /// </summary>
-    [PublicAPI]
     public enum ItemType : short {
 #pragma warning disable 1591
         None = 0,

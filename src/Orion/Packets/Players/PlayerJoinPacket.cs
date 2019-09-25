@@ -16,14 +16,12 @@
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
 using System.IO;
-using JetBrains.Annotations;
 
 namespace Orion.Packets.Players {
     /// <summary>
     /// Packet sent from the client to the server to finish connecting and join. This is sent in response to a
     /// <see cref="PlayerContinueConnectingPacket"/>.
     /// </summary>
-    [PublicAPI]
     public sealed class PlayerJoinPacket : Packet {
         /// <inheritdoc />
         public override PacketType Type => PacketType.PlayerJoin;

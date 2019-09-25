@@ -17,14 +17,12 @@
 
 using System;
 using System.Collections.Generic;
-using JetBrains.Annotations;
 
 namespace Orion.Utils {
     /// <summary>
     /// Provides read-only access to a strongly-typed array of elements.
     /// </summary>
     /// <typeparam name="T">The type of element.</typeparam>
-    [PublicAPI]
     public interface IReadOnlyArray<out T> : IEnumerable<T> {
         /// <summary>
         /// Gets the count of elements.

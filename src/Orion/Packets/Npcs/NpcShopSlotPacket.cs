@@ -17,14 +17,12 @@
 
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
-using JetBrains.Annotations;
 using Orion.Items;
 
 namespace Orion.Packets.Npcs {
     /// <summary>
     /// Packet sent from the server to the client to set an NPC's shop slot. This is currently not naturally sent.
     /// </summary>
-    [PublicAPI]
     public sealed class NpcShopSlotPacket : Packet {
         private byte _npcShopSlotIndex;
         private ItemType _itemType;

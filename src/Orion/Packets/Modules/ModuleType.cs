@@ -15,13 +15,10 @@
 // You should have received a copy of the GNU General Public License
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
-using JetBrains.Annotations;
-
 namespace Orion.Packets.Modules {
     /// <summary>
     /// Represents a module type.
     /// </summary>
-    [PublicAPI]
     public enum ModuleType : ushort {
 #pragma warning disable 1591
         Liquids = 0,

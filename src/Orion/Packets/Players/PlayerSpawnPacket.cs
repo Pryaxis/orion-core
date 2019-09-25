@@ -17,13 +17,11 @@
 
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
-using JetBrains.Annotations;
 
 namespace Orion.Packets.Players {
     /// <summary>
     /// Packet sent to spawn a player.
     /// </summary>
-    [PublicAPI]
     public sealed class PlayerSpawnPacket : Packet {
         private byte _playerIndex;
         private short _playerSpawnX;

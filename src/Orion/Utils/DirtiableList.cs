@@ -19,16 +19,14 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
-using JetBrains.Annotations;
 
 namespace Orion.Utils {
     /// <summary>
     /// Represents a dirtiable list of objects.
     /// </summary>
     /// <typeparam name="T">The type of element.</typeparam>
-    [PublicAPI]
     public sealed class DirtiableList<T> : IList<T>, IDirtiable {
-        [NotNull, ItemCanBeNull] internal readonly IList<T> _list = new List<T>();
+        internal readonly IList<T> _list = new List<T>();
         private bool _isDirty;
 
         private static bool ContainsDirtiableElements => typeof(IDirtiable).IsAssignableFrom(typeof(T));

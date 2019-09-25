@@ -17,7 +17,6 @@
 
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
-using JetBrains.Annotations;
 using Microsoft.Xna.Framework;
 using Orion.Items;
 using Orion.Projectiles;
@@ -27,24 +26,22 @@ namespace Orion.Packets.Items {
     /// Packet sent from the server to the client to perform an item alteration. This can be used to provide "custom"
     /// items to a vanilla client.
     /// </summary>
-
     // TODO: write tests for this class.
-    [PublicAPI]
     public sealed class ItemAlterationPacket : Packet {
         private short _itemIndex;
-        [CanBeNull] private Color? _itemColorOverride;
-        [CanBeNull] private ushort? _itemDamageOverride;
-        [CanBeNull] private float? _itemKnockbackOverride;
-        [CanBeNull] private ushort? _itemAnimationTimeOverride;
-        [CanBeNull] private ushort? _itemUseTimeOverride;
-        [CanBeNull] private ProjectileType? _itemProjectileTypeOverride;
-        [CanBeNull] private float? _itemProjectileSpeedOverride;
-        [CanBeNull] private short? _itemWidthOverride;
-        [CanBeNull] private short? _itemHeightOverride;
-        [CanBeNull] private float? _itemScaleOverride;
-        [CanBeNull] private ItemType? _itemAmmoTypeOverride;
-        [CanBeNull] private ItemType? _itemUsesAmmoTypeOverride;
-        [CanBeNull] private bool? _itemIsNotAmmoOverride;
+        private Color? _itemColorOverride;
+        private ushort? _itemDamageOverride;
+        private float? _itemKnockbackOverride;
+        private ushort? _itemAnimationTimeOverride;
+        private ushort? _itemUseTimeOverride;
+        private ProjectileType? _itemProjectileTypeOverride;
+        private float? _itemProjectileSpeedOverride;
+        private short? _itemWidthOverride;
+        private short? _itemHeightOverride;
+        private float? _itemScaleOverride;
+        private ItemType? _itemAmmoTypeOverride;
+        private ItemType? _itemUsesAmmoTypeOverride;
+        private bool? _itemIsNotAmmoOverride;
 
         /// <inheritdoc />
         public override PacketType Type => PacketType.ItemAlteration;
@@ -63,7 +60,6 @@ namespace Orion.Packets.Items {
         /// <summary>
         /// Gets or sets the override for the item's color. A value of <c>null</c> indicates no override.
         /// </summary>
-        [CanBeNull]
         public Color? ItemColorOverride {
             get => _itemColorOverride;
             set {
@@ -75,7 +71,6 @@ namespace Orion.Packets.Items {
         /// <summary>
         /// Gets or sets the override for the item's damage. A value of <c>null</c> indicates no override.
         /// </summary>
-        [CanBeNull]
         public ushort? ItemDamageOverride {
             get => _itemDamageOverride;
             set {
@@ -87,7 +82,6 @@ namespace Orion.Packets.Items {
         /// <summary>
         /// Gets or sets the override for the item's knockback. A value of <c>null</c> indicates no override.
         /// </summary>
-        [CanBeNull]
         public float? ItemKnockbackOverride {
             get => _itemKnockbackOverride;
             set {
@@ -99,7 +93,6 @@ namespace Orion.Packets.Items {
         /// <summary>
         /// Gets or sets the override for the item's animation time. A value of <c>null</c> indicates no override.
         /// </summary>
-        [CanBeNull]
         public ushort? ItemAnimationTimeOverride {
             get => _itemAnimationTimeOverride;
             set {
@@ -111,7 +104,6 @@ namespace Orion.Packets.Items {
         /// <summary>
         /// Gets or sets the override for the item's use time. A value of <c>null</c> indicates no override.
         /// </summary>
-        [CanBeNull]
         public ushort? ItemUseTimeOverride {
             get => _itemUseTimeOverride;
             set {
@@ -123,7 +115,6 @@ namespace Orion.Packets.Items {
         /// <summary>
         /// Gets or sets the override for the item's projectile type. A value of <c>null</c> indicates no override.
         /// </summary>
-        [CanBeNull]
         public ProjectileType? ItemProjectileTypeOverride {
             get => _itemProjectileTypeOverride;
             set {
@@ -135,7 +126,6 @@ namespace Orion.Packets.Items {
         /// <summary>
         /// Gets or sets the override for the item's projectile speed. A value of <c>null</c> indicates no override.
         /// </summary>
-        [CanBeNull]
         public float? ItemProjectileSpeedOverride {
             get => _itemProjectileSpeedOverride;
             set {
@@ -147,7 +137,6 @@ namespace Orion.Packets.Items {
         /// <summary>
         /// Gets or sets the override for the item's width. A value of <c>null</c> indicates no override.
         /// </summary>
-        [CanBeNull]
         public short? ItemWidthOverride {
             get => _itemWidthOverride;
             set {
@@ -159,7 +148,6 @@ namespace Orion.Packets.Items {
         /// <summary>
         /// Gets or sets the override for the item's height. A value of <c>null</c> indicates no override.
         /// </summary>
-        [CanBeNull]
         public short? ItemHeightOverride {
             get => _itemHeightOverride;
             set {
@@ -171,7 +159,6 @@ namespace Orion.Packets.Items {
         /// <summary>
         /// Gets or sets the override for the item's scale. A value of <c>null</c> indicates no override.
         /// </summary>
-        [CanBeNull]
         public float? ItemScaleOverride {
             get => _itemScaleOverride;
             set {
@@ -183,7 +170,6 @@ namespace Orion.Packets.Items {
         /// <summary>
         /// Gets or sets the override for the item's ammo type. A value of <c>null</c> indicates no override.
         /// </summary>
-        [CanBeNull]
         public ItemType? ItemAmmoTypeOverride {
             get => _itemAmmoTypeOverride;
             set {
@@ -195,7 +181,6 @@ namespace Orion.Packets.Items {
         /// <summary>
         /// Gets or sets the override for the ammo type that the item uses. A value of <c>null</c> indicates no override.
         /// </summary>
-        [CanBeNull]
         public ItemType? ItemUsesAmmoTypeOverride {
             get => _itemUsesAmmoTypeOverride;
             set {
@@ -208,7 +193,6 @@ namespace Orion.Packets.Items {
         /// Gets or sets the override for the value indicating whether the item is not ammo. A value of <c>null</c>
         /// indicates no override.
         /// </summary>
-        [CanBeNull]
         public bool? ItemIsNotAmmoOverride {
             get => _itemIsNotAmmoOverride;
             set {

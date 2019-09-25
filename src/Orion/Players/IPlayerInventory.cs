@@ -15,14 +15,12 @@
 // You should have received a copy of the GNU General Public License
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
-using JetBrains.Annotations;
 using Orion.Items;
 
 namespace Orion.Players {
     /// <summary>
     /// Represents a player's inventory.
     /// </summary>
-    [PublicAPI]
     public interface IPlayerInventory {
         /// <summary>
         /// Gets the player's held item.

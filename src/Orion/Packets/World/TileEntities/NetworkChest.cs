@@ -18,7 +18,6 @@
 using System;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
-using JetBrains.Annotations;
 using Orion.Items;
 using Orion.Utils;
 using Orion.World.TileEntities;
@@ -27,9 +26,8 @@ namespace Orion.Packets.World.TileEntities {
     /// <summary>
     /// Represents a chest that is transmitted over the network.
     /// </summary>
-    [PublicAPI]
     public sealed class NetworkChest : NetworkTileEntity, IChest {
-        [NotNull] private string _name = "";
+        private string _name = "";
 
         /// <inheritdoc />
         public override TileEntityType Type => TileEntityType.Chest;

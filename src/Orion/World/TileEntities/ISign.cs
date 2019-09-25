@@ -16,19 +16,16 @@
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
 using System;
-using JetBrains.Annotations;
 
 namespace Orion.World.TileEntities {
     /// <summary>
     /// Represents a Terraria sign.
     /// </summary>
-    [PublicAPI]
     public interface ISign : ITileEntity {
         /// <summary>
         /// Gets or sets the sign's text.
         /// </summary>
         /// <exception cref="ArgumentNullException"><paramref name="value"/> is <c>null</c>.</exception>
-        [NotNull]
         string Text { get; set; }
     }
 }

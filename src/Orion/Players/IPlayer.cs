@@ -16,7 +16,6 @@
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
 using System;
-using JetBrains.Annotations;
 using Orion.Entities;
 using Orion.Packets;
 
@@ -24,18 +23,15 @@ namespace Orion.Players {
     /// <summary>
     /// Represents a Terraria player.
     /// </summary>
-    [PublicAPI]
     public interface IPlayer : IEntity {
         /// <summary>
         /// Gets the player's statistics.
         /// </summary>
-        [NotNull]
         IPlayerStats Stats { get; }
 
         /// <summary>
         /// Gets the player's inventory.
         /// </summary>
-        [NotNull]
         IPlayerInventory Inventory { get; }
 
         /// <summary>
@@ -43,6 +39,6 @@ namespace Orion.Players {
         /// </summary>
         /// <param name="packet">The packet.</param>
         /// <exception cref="ArgumentNullException"><paramref name="packet"/> is <c>null</c>.</exception>
-        void SendPacket([NotNull] Packet packet);
+        void SendPacket(Packet packet);
     }
 }

@@ -17,7 +17,6 @@
 
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
-using JetBrains.Annotations;
 using Microsoft.Xna.Framework;
 using Orion.Items;
 using Orion.Packets.Extensions;
@@ -26,7 +25,6 @@ namespace Orion.Packets.Items {
     /// <summary>
     /// Packet sent to set item information. This is sent for item drops, updates, and pickups.
     /// </summary>
-    [PublicAPI]
     public sealed class ItemInfoPacket : Packet {
         private short _itemIndex;
         private Vector2 _itemPosition;
