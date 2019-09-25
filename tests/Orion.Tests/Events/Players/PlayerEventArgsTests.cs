@@ -25,7 +25,7 @@ namespace Orion.Events.Players {
     public class PlayerEventArgsTests {
         [Fact]
         public void Ctor_NullPlayer_ThrowsArgumentNullException() {
-            Func<PlayerEventArgs> func = () => new TestArgs(null);
+            Func<PlayerEventArgs> func = () => new TestArgs(null!);
 
             func.Should().Throw<ArgumentNullException>();
         }

@@ -34,7 +34,7 @@ namespace Orion.Packets.Players {
         [Fact]
         public void SetPlayerDisconnectReason_NullValue_ThrowsArgumentNullException() {
             var packet = new PlayerDisconnectPacket();
-            Action action = () => packet.PlayerDisconnectReason = null;
+            Action action = () => packet.PlayerDisconnectReason = null!;
 
             action.Should().Throw<ArgumentNullException>();
         }

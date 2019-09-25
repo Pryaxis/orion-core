@@ -39,7 +39,7 @@ namespace Orion.Packets.World.TileEntities {
         [Fact]
         public void SetText_NullValue_ThrowsArgumentNullException() {
             var sign = new NetworkSign();
-            Action action = () => sign.Text = null;
+            Action action = () => sign.Text = null!;
 
             action.Should().Throw<ArgumentNullException>();
         }

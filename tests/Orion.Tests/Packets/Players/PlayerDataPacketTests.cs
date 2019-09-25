@@ -34,7 +34,7 @@ namespace Orion.Packets.Players {
         [Fact]
         public void SetPlayerName_NullValue_ThrowsArgumentNullException() {
             var packet = new PlayerDataPacket();
-            Action action = () => packet.PlayerName = null;
+            Action action = () => packet.PlayerName = null!;
 
             action.Should().Throw<ArgumentNullException>();
         }
@@ -51,6 +51,7 @@ namespace Orion.Packets.Players {
 
             packet.PlayerIndex.Should().Be(0);
             packet.PlayerSkinType.Should().Be(2);
+            packet.PlayerHairType.Should().Be(50);
             packet.PlayerName.Should().Be("f");
             packet.PlayerHairDye.Should().Be(0);
             packet.PlayerHiddenVisualsFlags.Should().Be(0);

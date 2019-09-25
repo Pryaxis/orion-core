@@ -32,7 +32,7 @@ namespace Orion.Packets.World.TileEntities {
         [Fact]
         public void SetSignText_NullValue_ThrowsArgumentNullException() {
             var packet = new SignInfoPacket();
-            Action action = () => packet.SignText = null;
+            Action action = () => packet.SignText = null!;
 
             action.Should().Throw<ArgumentNullException>();
         }

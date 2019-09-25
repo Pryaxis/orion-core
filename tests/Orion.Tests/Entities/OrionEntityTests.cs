@@ -107,7 +107,7 @@ namespace Orion.Entities {
         }
 
         private class TestOrionEntity : OrionEntity<TestTerrariaEntity> {
-            public override string Name { get; set; }
+            public override string Name { get; set; } = "test";
 
             public TestOrionEntity( TestTerrariaEntity terrariaEntity) : base(terrariaEntity) { }
         }

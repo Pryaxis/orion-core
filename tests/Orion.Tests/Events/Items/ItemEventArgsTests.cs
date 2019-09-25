@@ -25,7 +25,7 @@ namespace Orion.Events.Items {
     public class ItemEventArgsTests {
         [Fact]
         public void Ctor_NullItem_ThrowsArgumentNullException() {
-            Func<ItemEventArgs> func = () => new TestArgs(null);
+            Func<ItemEventArgs> func = () => new TestArgs(null!);
 
             func.Should().Throw<ArgumentNullException>();
         }

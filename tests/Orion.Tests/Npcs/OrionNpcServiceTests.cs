@@ -16,6 +16,7 @@
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
 using System;
+using System.Diagnostics;
 using System.Linq;
 using FluentAssertions;
 using Microsoft.Xna.Framework;
@@ -118,7 +119,7 @@ namespace Orion.Npcs {
 
         [Fact]
         public void NpcSpawn_IsCorrect() {
-            INpc argsNpc = null;
+            INpc? argsNpc = null;
             _npcService.NpcSpawn += (sender, args) => {
                 argsNpc = args.Npc;
             };
@@ -126,7 +127,7 @@ namespace Orion.Npcs {
             var npcIndex = Terraria.NPC.NewNPC(0, 0, (int)NpcType.BlueSlime);
 
             argsNpc.Should().NotBeNull();
-            ((OrionNpc)argsNpc).Wrapped.Should().Be(Terraria.Main.npc[npcIndex]);
+            ((OrionNpc)argsNpc!).Wrapped.Should().Be(Terraria.Main.npc[npcIndex]);
         }
 
         [Fact]
@@ -280,6 +281,7 @@ namespace Orion.Npcs {
         public void SpawnNpc_IsCorrect() {
             var npc = _npcService.SpawnNpc(NpcType.BlueSlime, Vector2.Zero);
 
+            Debug.Assert(npc != null);
             npc.Type.Should().Be(NpcType.BlueSlime);
         }
 
@@ -287,6 +289,7 @@ namespace Orion.Npcs {
         public void SpawnNpc_AiValues_IsCorrect() {
             var npc = _npcService.SpawnNpc(NpcType.BlueSlime, Vector2.Zero, new float[] {1, 2, 3, 4});
 
+            Debug.Assert(npc != null);
             npc.Type.Should().Be(NpcType.BlueSlime);
         }
 
@@ -294,7 +297,7 @@ namespace Orion.Npcs {
         [InlineData(3)]
         [InlineData(5)]
         public void SpawnNpc_AiValuesWrongLength_ThrowsArgumentException(int aiValuesLength) {
-            Func<INpc> func = () => _npcService.SpawnNpc(NpcType.BlueSlime, Vector2.Zero, new float[aiValuesLength]);
+            Func<INpc?> func = () => _npcService.SpawnNpc(NpcType.BlueSlime, Vector2.Zero, new float[aiValuesLength]);
 
             func.Should().Throw<ArgumentException>();
         }

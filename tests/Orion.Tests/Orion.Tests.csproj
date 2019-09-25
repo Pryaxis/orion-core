@@ -4,6 +4,7 @@
     <TargetFramework>netcoreapp3.0</TargetFramework>
     <IsPackable>false</IsPackable>
     <NoWarn>NU1701</NoWarn>
+    <Nullable>enable</Nullable>
     <RootNamespace>Orion</RootNamespace>
   </PropertyGroup>
 

@@ -39,7 +39,7 @@ namespace Orion.Packets.World.TileEntities {
         [Fact]
         public void SetName_NullValue_ThrowsArgumentNullException() {
             var chest = new NetworkChest();
-            Action action = () => chest.Name = null;
+            Action action = () => chest.Name = null!;
 
             action.Should().Throw<ArgumentNullException>();
         }

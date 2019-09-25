@@ -28,7 +28,7 @@ namespace Orion.Events.Packets {
         [Fact]
         public void Ctor_NullPlayer_ThrowsArgumentNullException() {
             var packet = new TestPacket();
-            Func<PacketSendEventArgs> func = () => new PacketSendEventArgs(null, packet);
+            Func<PacketSendEventArgs> func = () => new PacketSendEventArgs(null!, packet);
 
             func.Should().Throw<ArgumentNullException>();
         }

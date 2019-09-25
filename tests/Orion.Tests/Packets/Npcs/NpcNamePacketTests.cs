@@ -41,7 +41,7 @@ namespace Orion.Packets.Npcs {
         [Fact]
         public void SetNpcName_NullValue_ThrowsArgumentNullException() {
             var packet = new NpcNamePacket();
-            Action action = () => packet.NpcName = null;
+            Action action = () => packet.NpcName = null!;
 
             action.Should().Throw<ArgumentNullException>();
         }

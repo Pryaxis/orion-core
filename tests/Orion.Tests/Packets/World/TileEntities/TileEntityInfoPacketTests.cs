@@ -15,6 +15,7 @@
 // You should have received a copy of the GNU General Public License
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
+using System.Diagnostics;
 using System.IO;
 using FluentAssertions;
 using Orion.Items;
@@ -47,7 +48,7 @@ namespace Orion.Packets.World.TileEntities {
             var packet = (TileEntityInfoPacket)Packet.ReadFromStream(stream, PacketContext.Server);
 
             packet.TileEntityIndex.Should().Be(0);
-            packet.TileEntity.Should().NotBeNull();
+            Debug.Assert(packet.TileEntity != null);
             packet.TileEntity.Index.Should().Be(0);
             packet.TileEntity.X.Should().Be(256);
             packet.TileEntity.Y.Should().Be(100);
@@ -68,7 +69,7 @@ namespace Orion.Packets.World.TileEntities {
             var packet = (TileEntityInfoPacket)Packet.ReadFromStream(stream, PacketContext.Server);
 
             packet.TileEntityIndex.Should().Be(0);
-            packet.TileEntity.Should().NotBeNull();
+            Debug.Assert(packet.TileEntity != null);
             packet.TileEntity.Index.Should().Be(0);
             packet.TileEntity.X.Should().Be(256);
             packet.TileEntity.Y.Should().Be(100);
@@ -91,7 +92,7 @@ namespace Orion.Packets.World.TileEntities {
             var packet = (TileEntityInfoPacket)Packet.ReadFromStream(stream, PacketContext.Server);
 
             packet.TileEntityIndex.Should().Be(0);
-            packet.TileEntity.Should().NotBeNull();
+            Debug.Assert(packet.TileEntity != null);
             packet.TileEntity.Index.Should().Be(0);
             packet.TileEntity.X.Should().Be(256);
             packet.TileEntity.Y.Should().Be(100);

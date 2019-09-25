@@ -47,7 +47,7 @@ namespace Orion.Utils {
         [Fact]
         public void SetAnnotation_NullKey_ThrowsArgumentNullException() {
             var annotatable = new AnnotatableObject();
-            Action action = () => annotatable.SetAnnotation(null, "");
+            Action action = () => annotatable.SetAnnotation(null!, "");
 
             action.Should().Throw<ArgumentNullException>();
         }
@@ -70,7 +70,7 @@ namespace Orion.Utils {
         [Fact]
         public void RemoveAnnotation_NullValue_ThrowsArgumentNullException() {
             var annotatable = new AnnotatableObject();
-            Action action = () => annotatable.RemoveAnnotation(null);
+            Action action = () => annotatable.RemoveAnnotation(null!);
 
             action.Should().Throw<ArgumentNullException>();
         }

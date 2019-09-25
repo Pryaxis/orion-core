@@ -33,7 +33,7 @@ namespace Orion.Packets.Entities {
         [Fact]
         public void SetText_NullValue_ThrowsArgumentNullException() {
             var packet = new CombatTextPacket();
-            Action action = () => packet.Text = null;
+            Action action = () => packet.Text = null!;
 
             action.Should().Throw<ArgumentNullException>();
         }

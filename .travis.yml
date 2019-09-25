@@ -8,6 +8,5 @@ matrix:
       mono: none
 
 script:
-  - dotnet restore
   - dotnet build -f netstandard2.1 -c Release src/Orion/Orion.csproj
   - dotnet test -f netcoreapp3.0 -c Release tests/Orion.Tests/Orion.Tests.csproj

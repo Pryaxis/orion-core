@@ -107,6 +107,7 @@ namespace Orion.Players {
                 isRun = true;
                 args.Player.Should().BeSameAs(_playerService[1]);
                 args.PlayerSkinType.Should().Be(2);
+                args.PlayerHairType.Should().Be(50);
                 args.PlayerName.Should().Be("f");
                 args.PlayerHairDye.Should().Be(0);
                 args.PlayerHiddenVisualsFlags.Should().Be(0);

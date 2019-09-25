@@ -4,6 +4,7 @@
     <OutputType>Exe</OutputType>
     <TargetFramework>netcoreapp3.0</TargetFramework>
     <UseWindowsForms>true</UseWindowsForms>
+    <Nullable>enable</Nullable>
     <StartupObject>Orion.Launcher.Program</StartupObject>
     <Authors>orion-contributors</Authors>
     <Company>Pryaxis</Company>

@@ -17,6 +17,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Reflection;
 using FluentAssertions;
@@ -42,8 +43,8 @@ namespace Orion {
 
         public static void GetSetPropertiesShouldReflectInPacket(this EventArgs args) {
             var packet = args.GetType().GetField("_packet", BindingFlags.NonPublic | BindingFlags.Instance)
-                             .GetValue(args);
-            packet.Should().NotBeNull();
+                             ?.GetValue(args);
+            Debug.Assert(packet != null);
 
             foreach (var property in args.GetType().GetProperties(BindingFlags.Public | BindingFlags.Instance)) {
                 var packetProperty = packet.GetType().GetProperty(property.Name);

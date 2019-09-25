@@ -41,7 +41,7 @@ namespace Orion.Packets.Players {
         [Fact]
         public void SetPlayerDeathReason_NullValue_ThrowsArgumentNullException() {
             var packet = new PlayerKillPacket();
-            Action action = () => packet.PlayerDeathReason = null;
+            Action action = () => packet.PlayerDeathReason = null!;
 
             action.Should().Throw<ArgumentNullException>();
         }

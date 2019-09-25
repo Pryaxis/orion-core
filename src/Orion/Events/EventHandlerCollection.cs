@@ -34,11 +34,6 @@ namespace Orion.Events {
 
         private readonly ISet<Registration> _registrations;
 
-        // This constructor is provided for testing only.
-        internal EventHandlerCollection(EventHandler<TEventArgs> handler) {
-            _registrations = new HashSet<Registration> {new Registration(handler, EventPriority.Normal)};
-        }
-
         private EventHandlerCollection(ISet<Registration> registrations) {
             _registrations = registrations;
         }
@@ -49,7 +44,7 @@ namespace Orion.Events {
         /// <param name="sender">The sender. This is usually the object that initiated the event.</param>
         /// <param name="args">The event arguments.</param>
         /// <exception cref="ArgumentNullException"><paramref name="args"/> is <c>null</c>.</exception>
-        public void Invoke(object sender, TEventArgs args) {
+        public void Invoke(object? sender, TEventArgs args) {
             if (args is null) throw new ArgumentNullException(nameof(args));
 
             Log.Debug("Calling {Event} handlers", typeof(TEventArgs).Name);
@@ -73,7 +68,7 @@ namespace Orion.Events {
         /// <param name="handler">The handler.</param>
         /// <returns>The resulting collection.</returns>
         /// <exception cref="ArgumentNullException"><paramref name="handler"/> is <c>null</c>.</exception>
-        public static EventHandlerCollection<TEventArgs> operator +(EventHandlerCollection<TEventArgs> collection,
+        public static EventHandlerCollection<TEventArgs> operator +(EventHandlerCollection<TEventArgs>? collection,
                                                                     EventHandler<TEventArgs> handler) {
             if (handler is null) throw new ArgumentNullException(nameof(handler));
 
@@ -97,7 +92,7 @@ namespace Orion.Events {
         /// <returns>The resulting collection.</returns>
         /// <exception cref="ArgumentException"><paramref name="handler"/> is not registered.</exception>
         /// <exception cref="ArgumentNullException"><paramref name="handler"/> is <c>null</c>.</exception>
-        public static EventHandlerCollection<TEventArgs> operator -(EventHandlerCollection<TEventArgs> collection,
+        public static EventHandlerCollection<TEventArgs> operator -(EventHandlerCollection<TEventArgs>? collection,
                                                                     EventHandler<TEventArgs> handler) {
             if (handler is null) throw new ArgumentNullException(nameof(handler));
 

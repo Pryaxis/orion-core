@@ -41,7 +41,7 @@ namespace Orion.Packets.Players {
         [Fact]
         public void SetPlayerStatusText_NullValue_ThrowsArgumentNullException() {
             var packet = new PlayerStatusPacket();
-            Action action = () => packet.PlayerStatusText = null;
+            Action action = () => packet.PlayerStatusText = null!;
 
             action.Should().Throw<ArgumentNullException>();
         }

@@ -25,7 +25,7 @@ namespace Orion.Events.Npcs {
     public class NpcEventArgsTests {
         [Fact]
         public void Ctor_NullNpc_ThrowsArgumentNullException() {
-            Func<NpcEventArgs> func = () => new TestArgs(null);
+            Func<NpcEventArgs> func = () => new TestArgs(null!);
 
             func.Should().Throw<ArgumentNullException>();
         }
