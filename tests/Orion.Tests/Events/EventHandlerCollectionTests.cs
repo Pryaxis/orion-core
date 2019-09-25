@@ -77,7 +77,7 @@ namespace Orion.Events {
             collection -= TestHandler2;
             var args = new TestEventArgs();
 
-            collection.Invoke(this, args);
+            collection!.Invoke(this, args);
 
             args.Value.Should().Be(100);
         }
@@ -85,7 +85,7 @@ namespace Orion.Events {
         [Fact]
         public void Minus_NullHandler_ThrowsArgumentNullException() {
             EventHandlerCollection<TestEventArgs>? collection = null;
-            Func<EventHandlerCollection<TestEventArgs>> func = () => collection -= null!;
+            Func<EventHandlerCollection<TestEventArgs>?> func = () => collection -= null!;
 
             func.Should().Throw<ArgumentNullException>();
         }
@@ -93,7 +93,7 @@ namespace Orion.Events {
         [Fact]
         public void Minus_InvalidHandler_ThrowsArgumentException() {
             EventHandlerCollection<TestEventArgs>? collection = null;
-            Func<EventHandlerCollection<TestEventArgs>> func = () => collection -= TestHandler;
+            Func<EventHandlerCollection<TestEventArgs>?> func = () => collection -= TestHandler;
 
             func.Should().Throw<ArgumentException>();
         }

@@ -35,6 +35,8 @@ namespace Orion.Events {
         private readonly ISet<Registration> _registrations;
 
         private EventHandlerCollection(ISet<Registration> registrations) {
+            Debug.Assert(registrations != null, "registrations != null");
+
             _registrations = registrations;
         }
 
@@ -92,8 +94,8 @@ namespace Orion.Events {
         /// <returns>The resulting collection.</returns>
         /// <exception cref="ArgumentException"><paramref name="handler"/> is not registered.</exception>
         /// <exception cref="ArgumentNullException"><paramref name="handler"/> is <c>null</c>.</exception>
-        public static EventHandlerCollection<TEventArgs> operator -(EventHandlerCollection<TEventArgs>? collection,
-                                                                    EventHandler<TEventArgs> handler) {
+        public static EventHandlerCollection<TEventArgs>? operator -(EventHandlerCollection<TEventArgs>? collection,
+                                                                     EventHandler<TEventArgs> handler) {
             if (handler is null) throw new ArgumentNullException(nameof(handler));
 
             var attribute = handler.Method.GetCustomAttribute<EventHandlerAttribute>();
@@ -110,7 +112,7 @@ namespace Orion.Events {
                       typeof(TEventArgs).Name, handler.Method.DeclaringType?.Name ?? "Unknown");
 
             registrations.Remove(registration);
-            return new EventHandlerCollection<TEventArgs>(registrations);
+            return registrations.Count == 0 ? null : new EventHandlerCollection<TEventArgs>(registrations);
         }
 
 
@@ -119,7 +121,7 @@ namespace Orion.Events {
             public EventPriority Priority { get; }
 
             public Registration(EventHandler<TEventArgs> handler, EventPriority priority) {
-                Debug.Assert(handler != null, $"{nameof(handler)} should not be null.");
+                Debug.Assert(handler != null, "handler != null");
 
                 Handler = handler;
                 Priority = priority;

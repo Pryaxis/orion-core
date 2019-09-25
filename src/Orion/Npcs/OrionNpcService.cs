@@ -111,6 +111,8 @@ namespace Orion.Npcs {
         }
 
         private HookResult PreSetDefaultsByIdHandler(Terraria.NPC terrariaNpc, ref int type, ref float scaleOverride) {
+            Debug.Assert(terrariaNpc != null, "terrariaNpc != null");
+
             if (_setDefaultsToIgnore.Value > 0) {
                 --_setDefaultsToIgnore.Value;
                 return HookResult.Continue;
@@ -130,6 +132,8 @@ namespace Orion.Npcs {
         }
 
         private HookResult SpawnHandler(ref int npcIndex) {
+            Debug.Assert(npcIndex >= 0 && npcIndex < Count, "npcIndex >= 0 && npcIndex < Count");
+
             var npc = this[npcIndex];
             var args = new NpcSpawnEventArgs(npc);
             NpcSpawn?.Invoke(this, args);
@@ -144,6 +148,8 @@ namespace Orion.Npcs {
         }
 
         private HookResult PreUpdateHandler(Terraria.NPC terrariaNpc, ref int npcIndex) {
+            Debug.Assert(terrariaNpc != null, "terrariaNpc != null");
+
             var npc = new OrionNpc(terrariaNpc);
             var args = new NpcUpdateEventArgs(npc);
             NpcUpdate?.Invoke(this, args);
@@ -151,6 +157,8 @@ namespace Orion.Npcs {
         }
 
         private HookResult PreTransformHandler(Terraria.NPC terrariaNpc, ref int newType) {
+            Debug.Assert(terrariaNpc != null, "terrariaNpc != null");
+
             var npc = new OrionNpc(terrariaNpc);
             var args = new NpcTransformEventArgs(npc, (NpcType)newType);
             NpcTransform?.Invoke(this, args);
@@ -163,6 +171,8 @@ namespace Orion.Npcs {
         private HookResult StrikeHandler(Terraria.NPC terrariaNpc, ref double cancelResult, ref int damage,
                                          ref float knockback, ref int hitDirection, ref bool isCriticalHit,
                                          ref bool noEffect, ref bool fromNetwork, Terraria.Entity damagingEntity) {
+            Debug.Assert(terrariaNpc != null, "terrariaNpc != null");
+
             var npc = new OrionNpc(terrariaNpc);
             var args = new NpcDamageEventArgs(npc) {
                 Damage = damage,
@@ -184,6 +194,8 @@ namespace Orion.Npcs {
                                               ref int width, ref int height, ref int type, ref int stack,
                                               ref bool noBroadcast, ref int prefix, ref bool noGrabDelay,
                                               ref bool reverseLookup) {
+            Debug.Assert(terrariaNpc != null, "terrariaNpc != null");
+
             var npc = new OrionNpc(terrariaNpc);
             var args = new NpcDropLootItemEventArgs(npc) {
                 LootItemType = (ItemType)type,
@@ -200,6 +212,8 @@ namespace Orion.Npcs {
         }
 
         private void KilledHandler(Terraria.NPC terrariaNpc) {
+            Debug.Assert(terrariaNpc != null, "terrariaNpc != null");
+
             var npc = new OrionNpc(terrariaNpc);
             var args = new NpcKilledEventArgs(npc);
             NpcKilled?.Invoke(this, args);

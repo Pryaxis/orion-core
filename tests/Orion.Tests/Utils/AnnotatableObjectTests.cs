@@ -23,22 +23,22 @@ namespace Orion.Utils {
     public class AnnotatableObjectTests {
         [Fact]
         public void GetAnnotation_KeyDoesNotExist_ReturnsDefaultValue() {
-            var annotatable = new AnnotatableObject();
+            IAnnotatable annotatable = new AnnotatableObject();
 
             annotatable.GetAnnotation("test", 1).Should().Be(1);
         }
 
         [Fact]
         public void GetAnnotation_NullKey_ThrowsArgumentNullException() {
-            var annotatable = new AnnotatableObject();
-            Action action = () => annotatable.GetAnnotation<int>(null);
+            IAnnotatable annotatable = new AnnotatableObject();
+            Action action = () => annotatable.GetAnnotation<int>(null!);
 
             action.Should().Throw<ArgumentNullException>();
         }
 
         [Fact]
         public void SetAnnotation_GetAnnotation_IsCorrect() {
-            var annotatable = new AnnotatableObject();
+            IAnnotatable annotatable = new AnnotatableObject();
             annotatable.SetAnnotation("test", 1);
 
             annotatable.GetAnnotation<int>("test").Should().Be(1);
@@ -46,7 +46,7 @@ namespace Orion.Utils {
 
         [Fact]
         public void SetAnnotation_NullKey_ThrowsArgumentNullException() {
-            var annotatable = new AnnotatableObject();
+            IAnnotatable annotatable = new AnnotatableObject();
             Action action = () => annotatable.SetAnnotation(null!, "");
 
             action.Should().Throw<ArgumentNullException>();
@@ -54,7 +54,7 @@ namespace Orion.Utils {
 
         [Fact]
         public void RemoveAnnotation_KeyExists_IsCorrect() {
-            var annotatable = new AnnotatableObject();
+            IAnnotatable annotatable = new AnnotatableObject();
             annotatable.SetAnnotation("test", 1);
 
             annotatable.RemoveAnnotation("test").Should().BeTrue();
@@ -62,14 +62,14 @@ namespace Orion.Utils {
 
         [Fact]
         public void RemoveAnnotation_KeyDoesntExist_IsCorrect() {
-            var annotatable = new AnnotatableObject();
+            IAnnotatable annotatable = new AnnotatableObject();
 
             annotatable.RemoveAnnotation("test").Should().BeFalse();
         }
 
         [Fact]
         public void RemoveAnnotation_NullValue_ThrowsArgumentNullException() {
-            var annotatable = new AnnotatableObject();
+            IAnnotatable annotatable = new AnnotatableObject();
             Action action = () => annotatable.RemoveAnnotation(null!);
 
             action.Should().Throw<ArgumentNullException>();

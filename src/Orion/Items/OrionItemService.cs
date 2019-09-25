@@ -95,6 +95,8 @@ namespace Orion.Items {
 
         private HookResult PreSetDefaultsByIdHandler(Terraria.Item terrariaItem, ref int type,
                                                      ref bool noMaterialCheck) {
+            Debug.Assert(terrariaItem != null, "terrariaItem != null");
+
             var item = new OrionItem(terrariaItem);
             var args = new ItemSetDefaultsEventArgs(item, (ItemType)type);
             ItemSetDefaults?.Invoke(this, args);
@@ -103,6 +105,8 @@ namespace Orion.Items {
         }
 
         private HookResult PreUpdateHandler(Terraria.Item terrariaItem, ref int i) {
+            Debug.Assert(terrariaItem != null, "terrariaItem != null");
+
             var item = new OrionItem(terrariaItem);
             var args = new ItemUpdateEventArgs(item);
             ItemUpdate?.Invoke(this, args);

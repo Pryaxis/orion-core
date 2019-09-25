@@ -15,6 +15,8 @@
 // You should have received a copy of the GNU General Public License
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
+using System.Diagnostics;
+
 namespace Orion.Items {
     internal sealed class OrionItemStats : IItemStats {
         internal Terraria.Item Wrapped { get; }
@@ -23,6 +25,8 @@ namespace Orion.Items {
         public ItemRarity Rarity => (ItemRarity)Wrapped.rare;
 
         public OrionItemStats(Terraria.Item terrariaItem) {
+            Debug.Assert(terrariaItem != null, "terrariaItem != null");
+
             Wrapped = terrariaItem;
         }
     }

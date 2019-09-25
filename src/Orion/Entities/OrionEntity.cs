@@ -15,6 +15,7 @@
 // You should have received a copy of the GNU General Public License
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
+using System.Diagnostics;
 using Microsoft.Xna.Framework;
 using Orion.Utils;
 
@@ -48,6 +49,8 @@ namespace Orion.Entities {
         internal TTerrariaEntity Wrapped { get; }
 
         protected OrionEntity(TTerrariaEntity terrariaEntity) {
+            Debug.Assert(terrariaEntity != null, "terrariaEntity != null");
+
             Wrapped = terrariaEntity;
         }
     }

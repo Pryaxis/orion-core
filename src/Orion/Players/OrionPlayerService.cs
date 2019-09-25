@@ -96,7 +96,13 @@ namespace Orion.Players {
 
         private HookResult ReceiveDataHandler(Terraria.MessageBuffer buffer, ref byte packetId,
                                               ref int readOffset, ref int start, ref int length) {
-            if (_shouldIgnoreNextReceiveData.Value) return HookResult.Continue;
+            Debug.Assert(buffer != null, "buffer != null");
+            Debug.Assert(buffer.whoAmI >= 0 && buffer.whoAmI < Count, "buffer.whoAmI >= 0 && buffer.whoAmI < Count");
+
+            if (_shouldIgnoreNextReceiveData.Value) {
+                _shouldIgnoreNextReceiveData.Value = false;
+                return HookResult.Continue;
+            }
 
             // Offset start and length by two since the packet length field is not included.
             var stream = new MemoryStream(buffer.readBuffer, start - 2, length + 2);
@@ -125,7 +131,6 @@ namespace Orion.Players {
             buffer.ResetReader();
             _shouldIgnoreNextReceiveData.Value = true;
             buffer.GetData(2, (int)(newStream.Length - 2), out _);
-            _shouldIgnoreNextReceiveData.Value = false;
             buffer.readBuffer = oldBuffer;
             buffer.ResetReader();
             return HookResult.Cancel;
@@ -134,6 +139,8 @@ namespace Orion.Players {
         private HookResult SendBytesHandler(ref int remoteClient, ref byte[] data, ref int offset, ref int size,
                                             ref Terraria.Net.Sockets.SocketSendCallback callback,
                                             ref object state) {
+            Debug.Assert(remoteClient >= 0 && remoteClient < Count, "remoteClient >= 0 && remoteClient < Count");
+
             var stream = new MemoryStream(data, offset, size);
             var receiver = this[remoteClient];
             var packet = Packet.ReadFromStream(stream, PacketContext.Client);
@@ -151,6 +158,10 @@ namespace Orion.Players {
         }
 
         private HookResult PreResetHandler(Terraria.RemoteClient remoteClient) {
+            Debug.Assert(remoteClient != null, "remoteClient != null");
+            Debug.Assert(remoteClient.Id >= 0 && remoteClient.Id < Count,
+                         "remoteClient.Id >= 0 && remoteClient.Id < Count");
+
             var player = this[remoteClient.Id];
             var args = new PlayerDisconnectedEventArgs(player);
             PlayerDisconnected?.Invoke(this, args);

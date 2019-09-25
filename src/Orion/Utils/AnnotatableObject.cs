@@ -25,14 +25,12 @@ namespace Orion.Utils {
     public class AnnotatableObject : IAnnotatable {
         private readonly IDictionary<string, object?> _annotations = new Dictionary<string, object?>();
 
-#nullable disable
         /// <inheritdoc />
         public T GetAnnotation<T>(string key, T defaultValue = default) {
             if (key is null) throw new ArgumentNullException(nameof(key));
 
-            return _annotations.TryGetValue(key, out var value) ? (T)value : defaultValue;
+            return _annotations.TryGetValue(key, out var value) ? (T)value! : defaultValue;
         }
-#nullable enable
 
         /// <inheritdoc />
         public void SetAnnotation<T>(string key, T value) {
