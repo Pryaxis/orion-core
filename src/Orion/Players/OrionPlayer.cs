@@ -31,7 +31,6 @@ namespace Orion.Players {
 
         public OrionPlayer(Terraria.Player terrariaPlayer) : base(terrariaPlayer) { }
 
-        /// <inheritdoc />
         public void SendPacket(Packet packet) {
             throw new NotImplementedException();
         }

@@ -90,10 +90,6 @@ namespace Orion.Players {
         [ExcludeFromCodeCoverage]
         IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
 
-        public void BroadcastPacket(Packet packet) {
-            throw new NotImplementedException();
-        }
-
         private HookResult ReceiveDataHandler(Terraria.MessageBuffer buffer, ref byte packetId,
                                               ref int readOffset, ref int start, ref int length) {
             Debug.Assert(buffer != null, "buffer != null");
@@ -124,11 +120,10 @@ namespace Orion.Players {
             var oldBuffer = buffer.readBuffer;
             var newStream = new MemoryStream();
             packet.WriteToStream(newStream, PacketContext.Client);
-
-            // Use _shouldIgnoreNextReceiveData so that we don't trigger this handler again, potentially causing a stack
-            // overflow error.
             buffer.readBuffer = newStream.ToArray();
             buffer.ResetReader();
+
+            // Ignore the next ReceiveDataHandler call.
             _shouldIgnoreNextReceiveData.Value = true;
             buffer.GetData(2, (int)(newStream.Length - 2), out _);
             buffer.readBuffer = oldBuffer;
