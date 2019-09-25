@@ -41,9 +41,9 @@ namespace Orion.Items {
 
         [Fact]
         public void GetItem_IsCorrect() {
-            var item = (OrionItem)_itemService[0];
+            var item = _itemService[0];
 
-            item.Wrapped.Should().BeSameAs(Terraria.Main.item[0]);
+            ((OrionItem)item).Wrapped.Should().BeSameAs(Terraria.Main.item[0]);
         }
 
         [Fact]
@@ -65,16 +65,16 @@ namespace Orion.Items {
 
         [Fact]
         public void ItemSetDefaults_IsCorrect() {
-            OrionItem argsItem = null;
+            var isRun = false;
             _itemService.ItemSetDefaults += (sender, args) => {
-                argsItem = (OrionItem)args.Item;
+                isRun = true;
+                ((OrionItem)args.Item).Wrapped.Should().BeSameAs(Terraria.Main.item[0]);
                 args.ItemType.Should().Be(ItemType.Sdmg);
             };
 
             Terraria.Main.item[0].SetDefaults((int)ItemType.Sdmg);
 
-            argsItem.Should().NotBeNull();
-            argsItem.Wrapped.Should().BeSameAs(Terraria.Main.item[0]);
+            isRun.Should().BeTrue();
         }
 
         [Theory]
@@ -103,15 +103,15 @@ namespace Orion.Items {
 
         [Fact]
         public void ItemUpdate_IsCorrect() {
-            OrionItem argsItem = null;
+            var isRun = false;
             _itemService.ItemUpdate += (sender, args) => {
-                argsItem = (OrionItem)args.Item;
+                isRun = true;
+                ((OrionItem)args.Item).Wrapped.Should().BeSameAs(Terraria.Main.item[0]);
             };
 
             Terraria.Main.item[0].UpdateItem(0);
 
-            argsItem.Should().NotBeNull();
-            argsItem.Wrapped.Should().BeSameAs(Terraria.Main.item[0]);
+            isRun.Should().BeTrue();
         }
 
         [Fact]

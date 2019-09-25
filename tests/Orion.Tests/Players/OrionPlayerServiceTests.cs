@@ -42,9 +42,9 @@ namespace Orion.Players {
 
         [Fact]
         public void GetItem_IsCorrect() {
-            var player = (OrionPlayer)_playerService[0];
+            var player = _playerService[0];
 
-            player.Wrapped.Should().BeSameAs(Terraria.Main.player[0]);
+            ((OrionPlayer)player).Wrapped.Should().BeSameAs(Terraria.Main.player[0]);
         }
 
         [Fact]

@@ -24,7 +24,7 @@ namespace Orion.Players {
         [Fact]
         public void GetName_IsCorrect() {
             var terrariaPlayer = new Terraria.Player {name = "test"};
-            var player = new OrionPlayer(terrariaPlayer);
+            IPlayer player = new OrionPlayer(terrariaPlayer);
 
             player.Name.Should().Be("test");
         }
@@ -32,7 +32,7 @@ namespace Orion.Players {
         [Fact]
         public void SetName_IsCorrect() {
             var terrariaPlayer = new Terraria.Player();
-            var player = new OrionPlayer(terrariaPlayer);
+            IPlayer player = new OrionPlayer(terrariaPlayer);
 
             player.Name = "test";
 
@@ -42,7 +42,7 @@ namespace Orion.Players {
         [Fact]
         public void SetName_NullValue_ThrowsArgumentNullException() {
             var terrariaPlayer = new Terraria.Player();
-            var player = new OrionPlayer(terrariaPlayer);
+            IPlayer player = new OrionPlayer(terrariaPlayer);
             Action action = () => player.Name = null;
 
             action.Should().Throw<ArgumentNullException>();

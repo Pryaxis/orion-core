@@ -24,7 +24,7 @@ namespace Orion.Npcs {
         [Fact]
         public void GetName_IsCorrect() {
             var terrariaNpc = new Terraria.NPC {_givenName = "test"};
-            var npc = new OrionNpc(terrariaNpc);
+            INpc npc = new OrionNpc(terrariaNpc);
 
             npc.Name.Should().Be("test");
         }
@@ -32,7 +32,7 @@ namespace Orion.Npcs {
         [Fact]
         public void SetName_IsCorrect() {
             var terrariaNpc = new Terraria.NPC();
-            var npc = new OrionNpc(terrariaNpc);
+            INpc npc = new OrionNpc(terrariaNpc);
 
             npc.Name = "test";
 
@@ -42,7 +42,7 @@ namespace Orion.Npcs {
         [Fact]
         public void SetName_NullValue_ThrowsArgumentNullException() {
             var terrariaNpc = new Terraria.NPC();
-            var npc = new OrionNpc(terrariaNpc);
+            INpc npc = new OrionNpc(terrariaNpc);
             Action action = () => npc.Name = null;
 
             action.Should().Throw<ArgumentNullException>();
@@ -51,7 +51,7 @@ namespace Orion.Npcs {
         [Fact]
         public void GetType_IsCorrect() {
             var terrariaNpc = new Terraria.NPC {netID = (int)NpcType.BlueSlime};
-            var npc = new OrionNpc(terrariaNpc);
+            INpc npc = new OrionNpc(terrariaNpc);
 
             npc.Type.Should().Be(NpcType.BlueSlime);
         }
@@ -59,7 +59,7 @@ namespace Orion.Npcs {
         [Fact]
         public void SetType_IsCorrect() {
             var terrariaNpc = new Terraria.NPC();
-            var npc = new OrionNpc(terrariaNpc);
+            INpc npc = new OrionNpc(terrariaNpc);
 
             npc.SetType(NpcType.BlueSlime);
 
