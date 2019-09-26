@@ -131,7 +131,7 @@ namespace Orion.Npcs {
         }
 
         [Fact]
-        public void NpcSpawned_Canceled_IsCorrect() {
+        public void NpcSpawn_Canceled_IsCorrect() {
             _npcService.NpcSpawn += (sender, args) => {
                 args.IsCanceled = true;
             };
