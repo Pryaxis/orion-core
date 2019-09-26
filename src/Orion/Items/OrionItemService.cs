@@ -93,18 +93,18 @@ namespace Orion.Items {
             return itemIndex >= 0 && itemIndex < Count ? this[itemIndex] : null;
         }
 
-        private HookResult PreSetDefaultsByIdHandler(Terraria.Item terrariaItem, ref int type,
+        private HookResult PreSetDefaultsByIdHandler(Terraria.Item terrariaItem, ref int itemType,
                                                      ref bool noMaterialCheck) {
             Debug.Assert(terrariaItem != null, "terrariaItem != null");
 
             var item = new OrionItem(terrariaItem);
-            var args = new ItemSetDefaultsEventArgs(item, (ItemType)type);
+            var args = new ItemSetDefaultsEventArgs(item, (ItemType)itemType);
             ItemSetDefaults?.Invoke(this, args);
-            type = (int)args.ItemType;
+            itemType = (int)args.ItemType;
             return args.IsCanceled ? HookResult.Cancel : HookResult.Continue;
         }
 
-        private HookResult PreUpdateHandler(Terraria.Item terrariaItem, ref int i) {
+        private HookResult PreUpdateHandler(Terraria.Item terrariaItem, ref int itemIndex) {
             Debug.Assert(terrariaItem != null, "terrariaItem != null");
 
             var item = new OrionItem(terrariaItem);

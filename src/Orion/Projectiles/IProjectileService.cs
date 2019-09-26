@@ -15,11 +15,50 @@
 // You should have received a copy of the GNU General Public License
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
+using System;
+using Microsoft.Xna.Framework;
+using Orion.Events;
+using Orion.Events.Projectiles;
 using Orion.Utils;
 
 namespace Orion.Projectiles {
     /// <summary>
     /// Represents a projectile service. Provides access to projectile-related events and methods.
     /// </summary>
-    public interface IProjectileService : IReadOnlyArray<IProjectile>, IService { }
+    public interface IProjectileService : IReadOnlyArray<IProjectile>, IService {
+        /// <summary>
+        /// Gets or sets the event handlers that occur when a projectile's defaults are being set. This event can be
+        /// canceled.
+        /// </summary>
+        EventHandlerCollection<ProjectileSetDefaultsEventArgs>? ProjectileSetDefaults { get; set; }
+
+        /// <summary>
+        /// Gets or sets the event handlers that occur when a projectile is updating. This event can be canceled.
+        /// </summary>
+        EventHandlerCollection<ProjectileUpdateEventArgs>? ProjectileUpdate { get; set; }
+
+        /// <summary>
+        /// Gets or sets the event handlers that occur when a projectile is being removed. This event can be canceled.
+        /// </summary>
+        EventHandlerCollection<ProjectileRemoveEventArgs>? ProjectileRemove { get; set; }
+
+        /// <summary>
+        /// Spawns and returns a projectile with the given projectile type at the specified position with the velocity,
+        /// damage, knockback, and AI values.
+        /// </summary>
+        /// <param name="projectileType">The projectile type.</param>
+        /// <param name="position">The position.</param>
+        /// <param name="velocity">The velocity.</param>
+        /// <param name="damage">The damage.</param>
+        /// <param name="knockback">The knockback.</param>
+        /// <param name="aiValues">
+        /// The AI values, or <c>null</c> for none. If not <c>null</c>, this should have length 2.
+        /// </param>
+        /// <returns>The resulting projectile, or <c>null</c> if none was spawned.</returns>
+        /// <exception cref="ArgumentException">
+        /// <paramref name="aiValues"/> is not <c>null</c> and does not have length 2.
+        /// </exception>
+        IProjectile? SpawnProjectile(ProjectileType projectileType, Vector2 position, Vector2 velocity, int damage,
+                                     float knockback, float[]? aiValues = null);
+    }
 }

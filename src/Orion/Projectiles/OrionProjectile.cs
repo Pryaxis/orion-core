@@ -17,7 +17,6 @@
 
 using System;
 using Orion.Entities;
-using Terraria;
 
 namespace Orion.Projectiles {
     internal sealed class OrionProjectile : OrionEntity<Terraria.Projectile>, IProjectile {
@@ -30,7 +29,7 @@ namespace Orion.Projectiles {
 
         public ProjectileType Type => (ProjectileType)Wrapped.type;
 
-        public OrionProjectile(Projectile terrariaEntity) : base(terrariaEntity) { }
+        public OrionProjectile(Terraria.Projectile terrariaEntity) : base(terrariaEntity) { }
 
         public void SetType(ProjectileType type) {
             Wrapped.SetDefaults((int)type);

@@ -98,8 +98,8 @@ namespace Orion.Npcs {
         IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
 
         public INpc? SpawnNpc(NpcType npcType, Vector2 position, float[]? aiValues = null) {
-            if (aiValues != null && aiValues.Length != 4) {
-                throw new ArgumentException("Array does not have length 4.", nameof(aiValues));
+            if (aiValues != null && aiValues.Length != Terraria.NPC.maxAI) {
+                throw new ArgumentException($"Array does not have length {Terraria.NPC.maxAI}.", nameof(aiValues));
             }
 
             var ai0 = aiValues?[0] ?? 0;
