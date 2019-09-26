@@ -26,6 +26,11 @@ namespace Orion.Players {
             set => Wrapped.name = value ?? throw new ArgumentNullException(nameof(value));
         }
 
+        public PlayerTeam Team {
+            get => (PlayerTeam)Wrapped.team;
+            set => Wrapped.team = (int)value;
+        }
+
         public IPlayerStats Stats => throw new NotImplementedException();
         public IPlayerInventory Inventory => throw new NotImplementedException();
 

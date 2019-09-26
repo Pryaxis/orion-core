@@ -25,6 +25,11 @@ namespace Orion.Players {
     /// </summary>
     public interface IPlayer : IEntity {
         /// <summary>
+        /// Gets or sets the player's team.
+        /// </summary>
+        PlayerTeam Team { get; set; }
+
+        /// <summary>
         /// Gets the player's statistics.
         /// </summary>
         IPlayerStats Stats { get; }

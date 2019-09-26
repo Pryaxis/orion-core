@@ -47,5 +47,23 @@ namespace Orion.Players {
 
             action.Should().Throw<ArgumentNullException>();
         }
+
+        [Fact]
+        public void GetTeam_IsCorrect() {
+            var terrariaPlayer = new Terraria.Player {team = (int)PlayerTeam.Red};
+            IPlayer player = new OrionPlayer(terrariaPlayer);
+
+            player.Team.Should().Be(PlayerTeam.Red);
+        }
+
+        [Fact]
+        public void SetTeam_IsCorrect() {
+            var terrariaPlayer = new Terraria.Player();
+            IPlayer player = new OrionPlayer(terrariaPlayer);
+
+            player.Team = PlayerTeam.Red;
+
+            terrariaPlayer.team.Should().Be((int)PlayerTeam.Red);
+        }
     }
 }
