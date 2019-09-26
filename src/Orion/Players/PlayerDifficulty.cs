@@ -23,10 +23,19 @@ namespace Orion.Players {
     /// </summary>
     [SuppressMessage("ReSharper", "UnusedMember.Global")]
     public enum PlayerDifficulty : byte {
-#pragma warning disable 1591
+        /// <summary>
+        /// Indicates softcore. This is the normal difficulty.
+        /// </summary>
         Softcore = 0,
+
+        /// <summary>
+        /// Indicates mediumcore. All items are dropped on death.
+        /// </summary>
         Mediumcore = 1,
+
+        /// <summary>
+        /// Indicates hardcore. Death is permanent.
+        /// </summary>
         Hardcore = 2
-#pragma warning restore 1591
     }
 }

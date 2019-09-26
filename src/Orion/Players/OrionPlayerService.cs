@@ -42,7 +42,6 @@ namespace Orion.Players {
         // Subtract 1 from the count. This is because Terraria has an extra slot.
         public int Count => _players.Count - 1;
 
-
         public IPlayer this[int index] {
             get {
                 if (index < 0 || index >= Count) throw new IndexOutOfRangeException();
@@ -79,6 +78,16 @@ namespace Orion.Players {
             Hooks.Net.ReceiveData = ReceiveDataHandler;
             Hooks.Net.SendBytes = SendBytesHandler;
             Hooks.Net.RemoteClient.PreReset = PreResetHandler;
+        }
+
+        protected override void Dispose(bool disposeManaged) {
+            _shouldIgnoreNextReceiveData.Dispose();
+
+            if (!disposeManaged) return;
+            
+            Hooks.Net.ReceiveData = null;
+            Hooks.Net.SendBytes = null;
+            Hooks.Net.RemoteClient.PreReset = null;
         }
 
         public IEnumerator<IPlayer> GetEnumerator() {
@@ -164,6 +173,8 @@ namespace Orion.Players {
         }
 
         private void PlayerConnectHandler(PacketReceiveEventArgs args_) {
+            Debug.Assert(args_ != null, "args_ != null");
+
             var packet = (PlayerConnectPacket)args_.Packet;
             var args = new PlayerConnectEventArgs(args_.Sender, packet);
             PlayerConnect?.Invoke(this, args);
@@ -171,6 +182,8 @@ namespace Orion.Players {
         }
 
         private void PlayerDataHandler(PacketReceiveEventArgs args_) {
+            Debug.Assert(args_ != null, "args_ != null");
+
             var packet = (PlayerDataPacket)args_.Packet;
             var args = new PlayerDataEventArgs(args_.Sender, packet);
             PlayerData?.Invoke(this, args);
@@ -178,6 +191,8 @@ namespace Orion.Players {
         }
 
         private void PlayerInventorySlotHandler(PacketReceiveEventArgs args_) {
+            Debug.Assert(args_ != null, "args_ != null");
+
             var packet = (PlayerInventorySlotPacket)args_.Packet;
             var args = new PlayerInventorySlotEventArgs(args_.Sender, packet);
             PlayerInventorySlot?.Invoke(this, args);
@@ -185,6 +200,8 @@ namespace Orion.Players {
         }
 
         private void PlayerJoinHandler(PacketReceiveEventArgs args_) {
+            Debug.Assert(args_ != null, "args_ != null");
+
             var args = new PlayerJoinEventArgs(args_.Sender);
             PlayerJoin?.Invoke(this, args);
             args_.IsCanceled = args.IsCanceled;

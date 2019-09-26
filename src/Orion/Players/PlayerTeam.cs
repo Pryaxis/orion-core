@@ -24,11 +24,34 @@ namespace Orion.Players {
     [SuppressMessage("ReSharper", "UnusedMember.Global")]
     public enum PlayerTeam : byte {
 #pragma warning disable 1591
+        /// <summary>
+        /// Indicates no team.
+        /// </summary>
         None = 0,
+
+        /// <summary>
+        /// Indicates the red team.
+        /// </summary>
         Red = 1,
+
+        /// <summary>
+        /// Indicates the green team.
+        /// </summary>
         Green = 2,
+
+        /// <summary>
+        /// Indicates the blue team.
+        /// </summary>
         Blue = 3,
+
+        /// <summary>
+        /// Indicates the yellow team.
+        /// </summary>
         Yellow = 4,
+
+        /// <summary>
+        /// Indicates the pink team.
+        /// </summary>
         Pink = 5
 #pragma warning restore 1591
     }

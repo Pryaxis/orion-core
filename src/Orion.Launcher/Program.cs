@@ -28,8 +28,8 @@ namespace Orion.Launcher {
         private static void SetupLogging() {
             Console.InputEncoding = Encoding.UTF8;
             Console.OutputEncoding = Encoding.UTF8;
-
-            Directory.CreateDirectory(Resources.LogsDirectory);
+            
+            Directory.CreateDirectory("logs");
             Log.Logger = new LoggerConfiguration()
 #if DEBUG
                          .MinimumLevel.Verbose()
@@ -37,7 +37,7 @@ namespace Orion.Launcher {
                          .MinimumLevel.Information()
 #endif
                          .WriteTo.Console(theme: AnsiConsoleTheme.Code)
-                         .WriteTo.File(Path.Combine(Resources.LogsDirectory, "log-.txt"),
+                         .WriteTo.File(Path.Combine("logs", "log-.txt"),
                                        rollingInterval: RollingInterval.Day,
                                        rollOnFileSizeLimit: true,
                                        fileSizeLimitBytes: 2 << 20)
@@ -49,10 +49,10 @@ namespace Orion.Launcher {
         }
 
         private static void SetupPlugins(OrionKernel kernel) {
-            Directory.CreateDirectory(Resources.PluginsDirectory);
+            Directory.CreateDirectory("plugins");
             Log.Information(Resources.LoadingPluginsMessage);
 
-            foreach (var path in Directory.EnumerateFiles(Resources.PluginsDirectory, "*.dll")) {
+            foreach (var path in Directory.EnumerateFiles("plugins", "*.dll")) {
                 try {
                     Log.Information(Resources.LoadingPluginMessage, path);
 
@@ -81,7 +81,7 @@ namespace Orion.Launcher {
         // TODO: provide event to use these arguments.
         internal static void Main(string[] args) {
             using var kernel = new OrionKernel();
-
+            
             SetupLogging();
             SetupPlugins(kernel);
             SetupLanguage();

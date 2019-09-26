@@ -5,7 +5,6 @@
     <NoWarn>NU1701</NoWarn>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <Nullable>enable</Nullable>
-    <LangVersion>8.0</LangVersion>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <Authors>orion-contributors</Authors>
     <Company>Pryaxis</Company>
