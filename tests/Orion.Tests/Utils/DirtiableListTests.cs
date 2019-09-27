@@ -15,6 +15,7 @@
 // You should have received a copy of the GNU General Public License
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
+using System.Collections.Generic;
 using FluentAssertions;
 using Moq;
 using Xunit;
@@ -48,7 +49,7 @@ namespace Orion.Utils {
 
         [Fact]
         public void IsReadOnly_IsCorrect() {
-            var list = new DirtiableList<int>();
+            ICollection<int> list = new DirtiableList<int>();
 
             list.IsReadOnly.Should().BeFalse();
         }

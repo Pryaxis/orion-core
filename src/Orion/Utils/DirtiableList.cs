@@ -35,9 +35,6 @@ namespace Orion.Utils {
         public int Count => _list.Count;
 
         /// <inheritdoc />
-        public bool IsReadOnly => false;
-
-        /// <inheritdoc />
         public bool IsDirty =>
             _isDirty || ContainsDirtiableElements && this.Cast<IDirtiable>().Any(d => d?.IsDirty == true);
 
@@ -49,6 +46,8 @@ namespace Orion.Utils {
                 _isDirty = true;
             }
         }
+
+        bool ICollection<T>.IsReadOnly => false;
 
         /// <inheritdoc />
         public IEnumerator<T> GetEnumerator() => _list.GetEnumerator();
