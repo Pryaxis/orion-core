@@ -21,6 +21,7 @@ namespace Orion.Packets {
     /// <summary>
     /// The exception thrown when a packet fails to be processed properly.
     /// </summary>
+    [Serializable]
     public sealed class PacketException : Exception {
         /// <summary>
         /// Initializes a new instance of the <see cref="PacketException"/> class.
