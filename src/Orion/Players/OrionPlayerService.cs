@@ -1,4 +1,4 @@
-﻿// Copyright (c) 2015-2019 Pryaxis & Orion Contributors
+﻿// Copyright (c) 2019 Pryaxis & Orion Contributors
 // 
 // This file is part of Orion.
 // 
@@ -82,10 +82,10 @@ namespace Orion.Players {
         }
 
         protected override void Dispose(bool disposeManaged) {
+            if (!disposeManaged) return;
+
             _shouldIgnoreNextReceiveData.Dispose();
 
-            if (!disposeManaged) return;
-            
             Hooks.Net.ReceiveData = null;
             Hooks.Net.SendBytes = null;
             Hooks.Net.RemoteClient.PreReset = null;

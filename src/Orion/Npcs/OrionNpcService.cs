@@ -1,4 +1,4 @@
-﻿// Copyright (c) 2015-2019 Pryaxis & Orion Contributors
+﻿// Copyright (c) 2019 Pryaxis & Orion Contributors
 // 
 // This file is part of Orion.
 // 
@@ -78,9 +78,9 @@ namespace Orion.Npcs {
         }
 
         protected override void Dispose(bool disposeManaged) {
-            _setDefaultsToIgnore.Dispose();
-
             if (!disposeManaged) return;
+            
+            _setDefaultsToIgnore.Dispose();
 
             Hooks.Npc.PreSetDefaultsById = null;
             Hooks.Npc.Spawn = null;
@@ -126,7 +126,8 @@ namespace Orion.Npcs {
             NpcSetDefaults?.Invoke(this, args);
             if (args.IsCanceled()) return HookResult.Cancel;
 
-            // Ignore two calls to SetDefaults() if type is negative.
+            // Ignore two calls to SetDefaults() if type is negative. This is because SetDefaults gets called twice:
+            // once with 0, and once with the base type.
             if ((type = (int)args.NpcType) < 0) {
                 _setDefaultsToIgnore.Value = 2;
             }

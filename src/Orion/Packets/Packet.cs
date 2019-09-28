@@ -1,4 +1,4 @@
-﻿// Copyright (c) 2015-2019 Pryaxis & Orion Contributors
+﻿// Copyright (c) 2019 Pryaxis & Orion Contributors
 // 
 // This file is part of Orion.
 // 
@@ -191,7 +191,7 @@ namespace Orion.Packets {
 #else
                 reader.ReadUInt16();
 #endif
-                Func<Packet>? GetPacketConstructor(byte packetTypeId) =>
+                static Func<Packet>? GetPacketConstructor(byte packetTypeId) =>
                     packetTypeId < PacketConstructors.Length ? PacketConstructors[packetTypeId] : null;
 
                 var packetConstructor = GetPacketConstructor(reader.ReadByte()) ??

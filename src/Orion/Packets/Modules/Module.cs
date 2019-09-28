@@ -1,4 +1,4 @@
-﻿// Copyright (c) 2015-2019 Pryaxis & Orion Contributors
+﻿// Copyright (c) 2019 Pryaxis & Orion Contributors
 // 
 // This file is part of Orion.
 // 
@@ -55,7 +55,7 @@ namespace Orion.Packets.Modules {
 
             var reader = new BinaryReader(stream, Encoding.UTF8, true);
 
-            Func<Module>? GetModuleConstructor(ushort moduleTypeId) =>
+            static Func<Module>? GetModuleConstructor(ushort moduleTypeId) =>
                 moduleTypeId < ModuleConstructors.Length ? ModuleConstructors[moduleTypeId] : null;
 
             var moduleConstructor = GetModuleConstructor(reader.ReadUInt16()) ??

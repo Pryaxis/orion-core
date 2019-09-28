@@ -1,4 +1,4 @@
-﻿// Copyright (c) 2015-2019 Pryaxis & Orion Contributors
+﻿// Copyright (c) 2019 Pryaxis & Orion Contributors
 // 
 // This file is part of Orion.
 // 
@@ -101,8 +101,10 @@ namespace Orion.Items {
             var item = new OrionItem(terrariaItem);
             var args = new ItemSetDefaultsEventArgs(item, (ItemType)itemType);
             ItemSetDefaults?.Invoke(this, args);
+            if (args.IsCanceled()) return HookResult.Cancel;
+
             itemType = (int)args.ItemType;
-            return args.IsCanceled() ? HookResult.Cancel : HookResult.Continue;
+            return HookResult.Continue;
         }
 
         private HookResult PreUpdateHandler(Terraria.Item terrariaItem, ref int itemIndex) {

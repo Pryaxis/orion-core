@@ -1,4 +1,4 @@
-﻿// Copyright (c) 2015-2019 Pryaxis & Orion Contributors
+﻿// Copyright (c) 2019 Pryaxis & Orion Contributors
 // 
 // This file is part of Orion.
 // 
@@ -20,6 +20,7 @@ using Microsoft.Xna.Framework;
 using Orion.Utils;
 
 namespace Orion.Entities {
+    // OrionEntity is generic so that we only use a single wrapped field instead of two wrapped fields per entity.
     internal abstract class OrionEntity<TTerrariaEntity> : AnnotatableObject, IEntity
         where TTerrariaEntity : Terraria.Entity {
         public int Index => Wrapped.whoAmI;
@@ -46,6 +47,7 @@ namespace Orion.Entities {
             set => Wrapped.Size = value;
         }
 
+        // internal for testing purposes.
         internal TTerrariaEntity Wrapped { get; }
 
         protected OrionEntity(TTerrariaEntity terrariaEntity) {

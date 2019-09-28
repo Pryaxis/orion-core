@@ -1,4 +1,4 @@
-﻿// Copyright (c) 2015-2019 Pryaxis & Orion Contributors
+﻿// Copyright (c) 2019 Pryaxis & Orion Contributors
 // 
 // This file is part of Orion.
 // 
@@ -89,9 +89,15 @@ namespace Orion.World {
             public int Height => Terraria.Main.maxTilesY;
 
             public ITile this[int x, int y] {
-                // To make Tile compatible with ITile, we need to use a bridge type. Implementing ITile on a struct is
-                // a bad idea due to boxing. Unfortunately, this means that access to Terraria.Main.tile is a good bit
-                // slower than normal access to the world service, but this is the best that we can do.
+                /*
+                 * To make Tile compatible with ITile, the best solution is to use a bridge type. It's a bad idea to
+                 * actually implement ITile on the struct, since we'll end up boxing and defeating the whole purpose
+                 * of making Tile a struct.
+                 *
+                 * Unfortunately, this means that repeated accesses to Terraria.Main.tile results in a lot of garbage
+                 * being generated due to these ephemeral TileBridges, but this is the best that we can do while
+                 * still preserving OTAPI compatibility.
+                 */
                 get => new TileBridge(GetPointer(x, y));
 
                 // TODO: this can be optimized by not creating any objects on the heap
@@ -99,7 +105,7 @@ namespace Orion.World {
             }
 
             public TileCollection() {
-                // Using unmanaged memory allows us not to worry about pinning.
+                // Using unmanaged memory allows us to not worry about pinning.
                 _tilesPtr = (Tile*)Marshal.AllocHGlobal(sizeof(Tile) * (Width + 1) * (Height + 1));
             }
 

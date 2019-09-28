@@ -1,4 +1,4 @@
-﻿// Copyright (c) 2015-2019 Pryaxis & Orion Contributors
+﻿// Copyright (c) 2019 Pryaxis & Orion Contributors
 // 
 // This file is part of Orion.
 // 
@@ -22,13 +22,19 @@ using Orion.World.Tiles.Extensions;
 
 namespace Orion.World.Tiles {
     /// <summary>
-    /// Represents a Terraria tile.
+    /// Represents a highly optimized Terraria tile.
     /// </summary>
     [StructLayout(LayoutKind.Explicit)]
     public unsafe struct Tile {
         private const int SlopeShift = 12;
         private const int WallColorShift = 16;
         private const int LiquidTypeShift = 21;
+
+        /*
+         * Masks for the tile header. We *could* theoretically squeeze the header into 3 bytes instead of 4, but this
+         * means that sizeof(Tile) is 11, which would result in a whole bunch of alignment issues. This is probably
+         * not worth the ~8% savings in memory usage.
+         */
 
         private const int BlockColorMask /*       */ = 0b_00000000_00000000_00000000_00011111;
         private const int IsBlockActiveMask /*    */ = 0b_00000000_00000000_00000000_00100000;
@@ -47,6 +53,8 @@ namespace Orion.World.Tiles {
         private const int IsCheckingLiquidMask /* */ = 0b_00001000_00000000_00000000_00000000;
         private const int ShouldSkipLiquidMask /* */ = 0b_00010000_00000000_00000000_00000000;
 
+        // We use fields instead of properties because Tile should just be a POD.
+
         /// <summary>
         /// The tile's block type.
         /// </summary>
@@ -63,14 +71,16 @@ namespace Orion.World.Tiles {
         [FieldOffset(3)] public byte LiquidAmount;
 
         /// <summary>
-        /// The tile's block X frame.
+        /// The tile's block's X frame.
         /// </summary>
         [FieldOffset(8)] public short BlockFrameX;
 
         /// <summary>
-        /// The tile's block Y frame.
+        /// The tile's block's Y frame.
         /// </summary>
         [FieldOffset(10)] public short BlockFrameY;
+
+        // Type punning here allows us to easily provide ITile compatibility and integer bit arithmetic.
 
         [FieldOffset(4)] internal short _sTileHeader;
         [FieldOffset(6)] internal byte _bTileHeader;
@@ -89,6 +99,12 @@ namespace Orion.World.Tiles {
                 _tileHeader = (_tileHeader & ~BlockColorMask) | (int)value;
             }
         }
+
+        /*
+         * For the following bool-valued setters, *(int*)&value is by far the fastest way of converting the bool into
+         * either a 1 or 0. The resulting code is still very readable, so we might as well use it... These setters could
+         * very easily end up in a tight loop.
+         */
 
         /// <summary>
         /// Gets or sets a value indicating whether the tile's block is active.
