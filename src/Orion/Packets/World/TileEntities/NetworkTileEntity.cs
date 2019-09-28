@@ -36,6 +36,7 @@ namespace Orion.Packets.World.TileEntities {
                 [TileEntityType.Sign] = () => new NetworkSign()
             };
 
+        // internal for modification without dirtying.
         internal int _index;
         private int _x;
         private int _y;

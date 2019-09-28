@@ -27,10 +27,11 @@ namespace Orion.Utils {
     /// </summary>
     /// <typeparam name="T">The type of element.</typeparam>
     public sealed class DirtiableArray<T> : IArray<T>, IDirtiable {
+        private static readonly bool _containsDirtiableElements = typeof(IDirtiable).IsAssignableFrom(typeof(T));
+
+        // internal for array modification without dirtying.
         internal readonly T[] _array;
         private bool _isDirty;
-
-        private static bool ContainsDirtiableElements => typeof(IDirtiable).IsAssignableFrom(typeof(T));
 
         /// <inheritdoc />
         public int Count => _array.Length;
@@ -46,7 +47,7 @@ namespace Orion.Utils {
 
         /// <inheritdoc />
         public bool IsDirty =>
-            _isDirty || ContainsDirtiableElements && this.Cast<IDirtiable>().Any(d => d?.IsDirty == true);
+            _isDirty || _containsDirtiableElements && this.Cast<IDirtiable>().Any(d => d?.IsDirty == true);
 
         /// <summary>
         /// Initializes a new instance of the <see cref="DirtiableArray{T}"/> class with the specified count.
@@ -70,7 +71,7 @@ namespace Orion.Utils {
         /// <inheritdoc />
         public void Clean() {
             _isDirty = false;
-            if (!ContainsDirtiableElements) return;
+            if (!_containsDirtiableElements) return;
 
             foreach (var dirtiable in this.Cast<IDirtiable>()) {
                 dirtiable?.Clean();

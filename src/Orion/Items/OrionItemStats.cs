@@ -19,6 +19,7 @@ using System.Diagnostics;
 
 namespace Orion.Items {
     internal sealed class OrionItemStats : IItemStats {
+        // internal for testing purposes.
         internal Terraria.Item Wrapped { get; }
 
         public int MaxStackSize => Wrapped.maxStack;

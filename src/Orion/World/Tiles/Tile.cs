@@ -80,8 +80,8 @@ namespace Orion.World.Tiles {
         /// </summary>
         [FieldOffset(10)] public short BlockFrameY;
 
-        // Type punning here allows us to easily provide ITile compatibility and integer bit arithmetic.
-
+        // internal and type punning here allows us to easily provide ITile compatibility while preserving integer bit
+        // arithmetic.
         [FieldOffset(4)] internal short _sTileHeader;
         [FieldOffset(6)] internal byte _bTileHeader;
         [FieldOffset(7)] internal byte _bTileHeader2;
