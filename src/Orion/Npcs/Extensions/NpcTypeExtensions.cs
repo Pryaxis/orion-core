@@ -16,6 +16,7 @@
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
 using System.Collections.Generic;
+using System.Diagnostics.Contracts;
 
 namespace Orion.Npcs.Extensions {
     /// <summary>
@@ -67,6 +68,7 @@ namespace Orion.Npcs.Extensions {
         /// </summary>
         /// <param name="npcType">The NPC type.</param>
         /// <returns>A value indicating whether the NPC type is catchable.</returns>
+        [Pure]
         public static bool IsCatchable(this NpcType npcType) => CatchableNpcTypes.Contains(npcType);
     }
 }

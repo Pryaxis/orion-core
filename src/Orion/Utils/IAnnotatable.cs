@@ -16,6 +16,7 @@
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
 using System;
+using System.Diagnostics.Contracts;
 
 namespace Orion.Utils {
     /// <summary>
@@ -30,6 +31,7 @@ namespace Orion.Utils {
         /// <param name="defaultValue">The default value.</param>
         /// <returns>The metadata, or a default value if the key does not exist.</returns>
         /// <exception cref="ArgumentNullException"><paramref name="key"/> is <c>null</c>.</exception>
+        [Pure]
         T GetAnnotation<T>(string key, T defaultValue = default);
 
         /// <summary>

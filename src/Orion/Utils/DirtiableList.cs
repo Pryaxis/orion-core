@@ -18,6 +18,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
+using System.Diagnostics.Contracts;
 using System.Linq;
 
 namespace Orion.Utils {
@@ -68,6 +69,7 @@ namespace Orion.Utils {
         }
 
         /// <inheritdoc />
+        [Pure]
         public bool Contains(T item) => _list.Contains(item);
 
         /// <inheritdoc />

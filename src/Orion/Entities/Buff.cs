@@ -17,6 +17,7 @@
 
 using System;
 using System.Diagnostics.CodeAnalysis;
+using System.Diagnostics.Contracts;
 
 namespace Orion.Entities {
     /// <summary>
@@ -50,7 +51,7 @@ namespace Orion.Entities {
         }
 
         /// <inheritdoc />
-        [ExcludeFromCodeCoverage]
+        [Pure, ExcludeFromCodeCoverage]
         public override string ToString() => $"{BuffType} for {Duration}";
     }
 }

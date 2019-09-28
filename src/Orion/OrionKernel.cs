@@ -22,7 +22,9 @@ using System.Linq;
 using System.Reflection;
 using Ninject;
 using Orion.Items;
+using Orion.Npcs;
 using Orion.Players;
+using Orion.Projectiles;
 
 namespace Orion {
     /// <summary>
@@ -34,10 +36,17 @@ namespace Orion {
         private readonly ISet<Type> _pluginTypesToLoad = new HashSet<Type>();
         private readonly ISet<OrionPlugin> _plugins = new HashSet<OrionPlugin>();
 
+        /// <summary>
+        /// Gets the loaded plugins.
+        /// </summary>
+        public IEnumerable<OrionPlugin> LoadedPlugins => new HashSet<OrionPlugin>(_plugins);
+
         internal OrionKernel() {
             Bind<OrionKernel>().ToConstant(this).InSingletonScope();
             Bind<IItemService>().To<OrionItemService>().InSingletonScope();
+            Bind<INpcService>().To<OrionNpcService>().InSingletonScope();
             Bind<IPlayerService>().To<OrionPlayerService>().InSingletonScope();
+            Bind<IProjectileService>().To<OrionProjectileService>().InSingletonScope();
 
             // Because we're using Assembly.Load, we'll need to have an AssemblyResolve handler to deal with any issues
             // that may pop up.
@@ -47,13 +56,7 @@ namespace Orion {
         }
 
         /// <summary>
-        /// Gets the loaded <see cref="OrionPlugin"/> instances.
-        /// </summary>
-        /// <returns>The loaded <see cref="OrionPlugin"/> instances.</returns>
-        public IEnumerable<OrionPlugin> GetLoadedPlugins() => new HashSet<OrionPlugin>(_plugins);
-
-        /// <summary>
-        /// Queues <see cref="OrionPlugin"/> instances to be loaded from the given assembly path.
+        /// Queues plugins to be loaded from the given assembly path.
         /// </summary>
         /// <param name="assemblyPath">The assembly path.</param>
         /// <exception cref="ArgumentNullException"><paramref name="assemblyPath"/> is <c>null</c>.</exception>
@@ -75,7 +78,7 @@ namespace Orion {
         }
 
         /// <summary>
-        /// Finishes loading <see cref="OrionPlugin"/> instances, running the given action for each plugin loaded.
+        /// Finishes loading plugins, running the given action for each plugin loaded.
         /// </summary>
         /// <param name="action">The action to run.</param>
         public void FinishLoadingPlugins(Action<OrionPlugin>? action = null) {
@@ -89,13 +92,11 @@ namespace Orion {
         }
 
         /// <summary>
-        /// Unloads the given <see cref="OrionPlugin"/> instance and returns a value indicating success.
+        /// Unloads the given plugin and returns a value indicating success.
         /// </summary>
-        /// <param name="plugin">The <see cref="OrionPlugin"/> instance.</param>
+        /// <param name="plugin">The plugin.</param>
         /// <exception cref="ArgumentNullException"><paramref name="plugin"/> is <c>null</c>.</exception>
-        /// <returns>
-        /// A value indicating whether the <see cref="OrionPlugin"/> instance was successfully unloaded.
-        /// </returns>
+        /// <returns>A value indicating whether the plugin was successfully unloaded.</returns>
         public bool UnloadPlugin(OrionPlugin plugin) {
             if (plugin is null) throw new ArgumentNullException(nameof(plugin));
             if (!_plugins.Contains(plugin)) return false;

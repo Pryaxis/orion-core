@@ -52,7 +52,7 @@ namespace Orion {
 
                 var propertyType = property.PropertyType;
                 if (!DefaultValues.TryGetValue(propertyType, out var value)) {
-                    if (propertyType.GetConstructor(Type.EmptyTypes) == null && !propertyType.IsValueType) continue;
+                    if (propertyType.GetConstructor(Type.EmptyTypes) is null && !propertyType.IsValueType) continue;
 
                     value = Activator.CreateInstance(propertyType);
                 }
@@ -74,7 +74,7 @@ namespace Orion {
 
                 var propertyType = property.PropertyType;
                 if (!DefaultValues.TryGetValue(propertyType, out var value)) {
-                    if (propertyType.GetConstructor(Type.EmptyTypes) == null && !propertyType.IsValueType) continue;
+                    if (propertyType.GetConstructor(Type.EmptyTypes) is null && !propertyType.IsValueType) continue;
 
                     value = Activator.CreateInstance(propertyType);
                 }
