@@ -120,6 +120,7 @@ namespace Orion.Players {
                 args.PlayerPantsColor.Should().Be(new Color(162, 167, 255));
                 args.PlayerShoeColor.Should().Be(new Color(212, 159, 76));
                 args.PlayerDifficulty.Should().Be(PlayerDifficulty.Softcore);
+                args.PlayerHasExtraAccessory.Should().BeFalse();
             };
 
             TestUtils.FakeReceiveBytes(1, PlayerDataPacketTests.Bytes);

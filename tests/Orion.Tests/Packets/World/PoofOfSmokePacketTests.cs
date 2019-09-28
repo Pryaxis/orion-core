@@ -17,7 +17,7 @@
 
 using System.IO;
 using FluentAssertions;
-using Microsoft.Xna.Framework.Graphics.PackedVector;
+using Microsoft.Xna.Framework;
 using Xunit;
 
 namespace Orion.Packets.World {
@@ -36,7 +36,7 @@ namespace Orion.Packets.World {
             using var stream = new MemoryStream(Bytes);
             var packet = (PoofOfSmokePacket)Packet.ReadFromStream(stream, PacketContext.Server);
 
-            packet.SmokePosition.Should().Be(new HalfVector2());
+            packet.SmokePosition.Should().Be(Vector2.Zero);
         }
 
         [Fact]

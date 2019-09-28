@@ -64,6 +64,7 @@ namespace Orion.Packets.Players {
             packet.PlayerPantsColor.Should().Be(new Color(162, 167, 255));
             packet.PlayerShoeColor.Should().Be(new Color(212, 159, 76));
             packet.PlayerDifficulty.Should().Be(PlayerDifficulty.Softcore);
+            packet.PlayerHasExtraAccessory.Should().BeFalse();
         }
 
         [Fact]

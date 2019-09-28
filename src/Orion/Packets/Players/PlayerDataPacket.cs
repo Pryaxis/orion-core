@@ -42,6 +42,7 @@ namespace Orion.Packets.Players {
         private Color _playerPantsColor;
         private Color _playerShoeColor;
         private PlayerDifficulty _playerDifficulty;
+        private bool _playerHasExtraAccessory;
 
         /// <inheritdoc />
         public override PacketType Type => PacketType.PlayerData;
@@ -212,6 +213,17 @@ namespace Orion.Packets.Players {
             }
         }
 
+        /// <summary>
+        /// Gets or sets a value indicating whether the player has an extra accessory.
+        /// </summary>
+        public bool PlayerHasExtraAccessory {
+            get => _playerHasExtraAccessory;
+            set {
+                _playerHasExtraAccessory = value;
+                _isDirty = true;
+            }
+        }
+
         /// <inheritdoc />
         [ExcludeFromCodeCoverage]
         public override string ToString() => $"{Type}[#={PlayerIndex} is {PlayerName}, ...]";
@@ -231,7 +243,11 @@ namespace Orion.Packets.Players {
             _playerUndershirtColor = reader.ReadColor();
             _playerPantsColor = reader.ReadColor();
             _playerShoeColor = reader.ReadColor();
-            _playerDifficulty = (PlayerDifficulty)reader.ReadByte();
+
+            Terraria.BitsByte flags = reader.ReadByte();
+            if (flags[0]) _playerDifficulty = PlayerDifficulty.Mediumcore;
+            if (flags[1]) _playerDifficulty = PlayerDifficulty.Hardcore;
+            if (flags[2]) _playerHasExtraAccessory = true;
         }
 
         private protected override void WriteToWriter(BinaryWriter writer, PacketContext context) {
@@ -249,7 +265,12 @@ namespace Orion.Packets.Players {
             writer.Write(_playerUndershirtColor);
             writer.Write(_playerPantsColor);
             writer.Write(_playerShoeColor);
-            writer.Write((byte)_playerDifficulty);
+
+            Terraria.BitsByte flags = 0;
+            flags[0] = _playerDifficulty == PlayerDifficulty.Mediumcore;
+            flags[1] = _playerDifficulty == PlayerDifficulty.Hardcore;
+            flags[2] = _playerHasExtraAccessory;
+            writer.Write(flags);
         }
     }
 }

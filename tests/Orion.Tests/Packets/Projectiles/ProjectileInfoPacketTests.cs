@@ -58,6 +58,7 @@ namespace Orion.Packets.Projectiles {
 
             packet.ProjectileIdentity.Should().Be(0);
             packet.ProjectilePosition.Should().Be(new Vector2(67187, 6809));
+            packet.ProjectileVelocity.Should().Be(new Vector2(10.50366f, -15.583148f));
             packet.ProjectileKnockback.Should().Be(4.025f);
             packet.ProjectileDamage.Should().Be(99);
             packet.ProjectileOwnerPlayerIndex.Should().Be(0);

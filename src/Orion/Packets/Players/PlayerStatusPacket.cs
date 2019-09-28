@@ -46,10 +46,12 @@ namespace Orion.Packets.Players {
         /// Gets or sets the player's status text.
         /// </summary>
         /// <exception cref="ArgumentNullException"><paramref name="value"/> is <c>null</c>.</exception>
-        public Terraria.Localization.NetworkText PlayerStatusText {
-            get => _playerStatusText;
+        public string PlayerStatusText {
+            get => _playerStatusText.ToString();
             set {
-                _playerStatusText = value ?? throw new ArgumentNullException(nameof(value));
+                _playerStatusText =
+                    Terraria.Localization.NetworkText.FromLiteral(
+                        value ?? throw new ArgumentNullException(nameof(value)));
                 _isDirty = true;
             }
         }

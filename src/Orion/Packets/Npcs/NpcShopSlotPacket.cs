@@ -29,6 +29,7 @@ namespace Orion.Packets.Npcs {
         private short _itemStackSize;
         private ItemPrefix _itemPrefix;
         private int _itemValue;
+        private bool _canBuyItemOnce;
 
         /// <inheritdoc />
         public override PacketType Type => PacketType.NpcShopSlot;
@@ -88,6 +89,17 @@ namespace Orion.Packets.Npcs {
             }
         }
 
+        /// <summary>
+        /// Gets or sets a value indicating whether the item can be bought only once.
+        /// </summary>
+        public bool CanBuyItemOnce {
+            get => _canBuyItemOnce;
+            set {
+                _canBuyItemOnce = value;
+                _isDirty = true;
+            }
+        }
+
         /// <inheritdoc />
         [ExcludeFromCodeCoverage]
         public override string ToString() => $"{Type}[{ItemType} @ {NpcShopSlotIndex}, ...]";
@@ -98,6 +110,9 @@ namespace Orion.Packets.Npcs {
             _itemStackSize = reader.ReadInt16();
             _itemPrefix = (ItemPrefix)reader.ReadByte();
             _itemValue = reader.ReadInt32();
+
+            Terraria.BitsByte flags = reader.ReadByte();
+            if (flags[0]) _canBuyItemOnce = true;
         }
 
         private protected override void WriteToWriter(BinaryWriter writer, PacketContext context) {
@@ -106,6 +121,10 @@ namespace Orion.Packets.Npcs {
             writer.Write(_itemStackSize);
             writer.Write((byte)_itemPrefix);
             writer.Write(_itemValue);
+
+            Terraria.BitsByte flags = 0;
+            flags[0] = _canBuyItemOnce;
+            writer.Write(flags);
         }
     }
 }

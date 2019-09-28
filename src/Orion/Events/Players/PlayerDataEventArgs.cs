@@ -114,6 +114,12 @@ namespace Orion.Events.Players {
             set => _packet.PlayerDifficulty = value;
         }
 
+        /// <inheritdoc cref="PlayerDataPacket.PlayerHasExtraAccessory"/>
+        public bool PlayerHasExtraAccessory {
+            get => _packet.PlayerHasExtraAccessory;
+            set => _packet.PlayerHasExtraAccessory = value;
+        }
+
         /// <summary>
         /// Initializes a new instance of the <see cref="PlayerDataEventArgs"/> class with the specified player and
         /// packet.

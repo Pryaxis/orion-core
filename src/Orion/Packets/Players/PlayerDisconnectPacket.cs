@@ -36,10 +36,12 @@ namespace Orion.Packets.Players {
         /// Gets or sets the player's disconnect reason.
         /// </summary>
         /// <exception cref="ArgumentNullException"><paramref name="value"/> is <c>null</c>.</exception>
-        public Terraria.Localization.NetworkText PlayerDisconnectReason {
-            get => _playerDisconnectReason;
+        public string PlayerDisconnectReason {
+            get => _playerDisconnectReason.ToString();
             set {
-                _playerDisconnectReason = value ?? throw new ArgumentNullException(nameof(value));
+                _playerDisconnectReason =
+                    Terraria.Localization.NetworkText.FromLiteral(
+                        value ?? throw new ArgumentNullException(nameof(value)));
                 _isDirty = true;
             }
         }

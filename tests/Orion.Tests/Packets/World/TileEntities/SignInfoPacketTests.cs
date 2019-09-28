@@ -37,7 +37,7 @@ namespace Orion.Packets.World.TileEntities {
             action.Should().Throw<ArgumentNullException>();
         }
 
-        public static readonly byte[] Bytes = {18, 0, 47, 0, 0, 0, 1, 100, 0, 8, 84, 101, 114, 114, 97, 114, 105, 97};
+        public static readonly byte[] Bytes = {19, 0, 47, 0, 0, 0, 1, 100, 0, 8, 84, 101, 114, 114, 97, 114, 105, 97, 0};
 
         [Fact]
         public void ReadFromStream_IsCorrect() {
@@ -48,6 +48,7 @@ namespace Orion.Packets.World.TileEntities {
             packet.SignX.Should().Be(256);
             packet.SignY.Should().Be(100);
             packet.SignText.Should().Be("Terraria");
+            packet.ModifierPlayerIndex.Should().Be(0);
         }
 
         [Fact]

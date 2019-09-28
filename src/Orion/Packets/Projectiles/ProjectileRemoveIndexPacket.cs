@@ -23,7 +23,7 @@ namespace Orion.Packets.Projectiles {
     /// Packet sent from the client to the server to remove a projectile by index.
     /// </summary>
     public sealed class ProjectileRemoveIndexPacket : Packet {
-        private short _projectileIndex;
+        private ushort _projectileIndex;
 
         /// <inheritdoc />
         public override PacketType Type => PacketType.ProjectileRemoveIndex;
@@ -31,7 +31,7 @@ namespace Orion.Packets.Projectiles {
         /// <summary>
         /// Gets or sets the projectile index.
         /// </summary>
-        public short ProjectileIndex {
+        public ushort ProjectileIndex {
             get => _projectileIndex;
             set {
                 _projectileIndex = value;
@@ -44,7 +44,7 @@ namespace Orion.Packets.Projectiles {
         public override string ToString() => $"{Type}[#={ProjectileIndex}), ...]";
 
         private protected override void ReadFromReader(BinaryReader reader, PacketContext context) {
-            _projectileIndex = reader.ReadInt16();
+            _projectileIndex = reader.ReadUInt16();
         }
 
         private protected override void WriteToWriter(BinaryWriter writer, PacketContext context) {

@@ -48,7 +48,7 @@ namespace Orion.Packets.World {
             var packet = (ChatPacket)Packet.ReadFromStream(stream, PacketContext.Server);
 
             packet.ChatColor.Should().Be(Color.White);
-            packet.ChatText.ToString().Should().Be("Terraria");
+            packet.ChatText.Should().Be("Terraria");
             packet.ChatLineWidth.Should().Be(100);
         }
 

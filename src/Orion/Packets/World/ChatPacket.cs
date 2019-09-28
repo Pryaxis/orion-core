@@ -48,10 +48,11 @@ namespace Orion.Packets.World {
         /// Gets or sets the chat's text.
         /// </summary>
         /// <exception cref="ArgumentNullException"><paramref name="value"/> is <c>null</c>.</exception>
-        public Terraria.Localization.NetworkText ChatText {
-            get => _chatText;
+        public string ChatText {
+            get => _chatText.ToString();
             set {
-                _chatText = value ?? throw new ArgumentNullException(nameof(value));
+                _chatText = Terraria.Localization.NetworkText.FromLiteral(
+                    value ?? throw new ArgumentNullException(nameof(value)));
                 _isDirty = true;
             }
         }

@@ -41,7 +41,8 @@ namespace Orion.Packets.Players {
         }
 
         /// <summary>
-        /// Gets or sets the player's chest index.
+        /// Gets or sets the player's chest index. A value of -1 indicates the Piggy Bank, -2 indicates the Safe, and
+        /// -3 indicates the Defender's Forge.
         /// </summary>
         public short PlayerChestIndex {
             get => _playerChestIndex;

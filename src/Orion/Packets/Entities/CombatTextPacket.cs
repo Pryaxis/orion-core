@@ -59,10 +59,11 @@ namespace Orion.Packets.Entities {
         /// Gets or sets the text.
         /// </summary>
         /// <exception cref="ArgumentNullException"><paramref name="value"/> is <c>null</c>.</exception>
-        public Terraria.Localization.NetworkText Text {
-            get => _text;
+        public string Text {
+            get => _text.ToString();
             set {
-                _text = value ?? throw new ArgumentNullException(nameof(value));
+                _text = Terraria.Localization.NetworkText.FromLiteral(
+                    value ?? throw new ArgumentNullException(nameof(value)));
                 _isDirty = true;
             }
         }

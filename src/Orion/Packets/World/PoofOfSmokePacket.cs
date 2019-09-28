@@ -17,6 +17,7 @@
 
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics.PackedVector;
 
 namespace Orion.Packets.World {
@@ -24,7 +25,7 @@ namespace Orion.Packets.World {
     /// Packet sent from the server to the client to show a poof of smoke.
     /// </summary>
     public sealed class PoofOfSmokePacket : Packet {
-        private HalfVector2 _smokePosition;
+        private Vector2 _smokePosition;
 
         /// <inheritdoc />
         public override PacketType Type => PacketType.PoofOfSmoke;
@@ -32,7 +33,7 @@ namespace Orion.Packets.World {
         /// <summary>
         /// Gets or sets the smoke's position.
         /// </summary>
-        public HalfVector2 SmokePosition {
+        public Vector2 SmokePosition {
             get => _smokePosition;
             set {
                 _smokePosition = value;
@@ -45,11 +46,11 @@ namespace Orion.Packets.World {
         public override string ToString() => $"{Type}[({SmokePosition})]";
 
         private protected override void ReadFromReader(BinaryReader reader, PacketContext context) {
-            _smokePosition = new HalfVector2 {PackedValue = reader.ReadUInt32()};
+            _smokePosition = new HalfVector2 {PackedValue = reader.ReadUInt32()}.ToVector2();
         }
 
         private protected override void WriteToWriter(BinaryWriter writer, PacketContext context) {
-            writer.Write(_smokePosition.PackedValue);
+            writer.Write(new HalfVector2(SmokePosition).PackedValue);
         }
     }
 }

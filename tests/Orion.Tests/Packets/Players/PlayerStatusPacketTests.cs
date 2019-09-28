@@ -30,15 +30,6 @@ namespace Orion.Packets.Players {
         }
 
         [Fact]
-        public void SetPlayerStatusText_MarksAsDirty() {
-            var packet = new PlayerStatusPacket();
-
-            packet.PlayerStatusText = Terraria.Localization.NetworkText.Empty;
-
-            packet.ShouldBeDirty();
-        }
-
-        [Fact]
         public void SetPlayerStatusText_NullValue_ThrowsArgumentNullException() {
             var packet = new PlayerStatusPacket();
             Action action = () => packet.PlayerStatusText = null!;
@@ -57,7 +48,7 @@ namespace Orion.Packets.Players {
             var packet = (PlayerStatusPacket)Packet.ReadFromStream(stream, PacketContext.Server);
 
             packet.PlayerStatusIncrease.Should().Be(15);
-            packet.PlayerStatusText.ToString().Should().Be("LegacyInterface.44");
+            packet.PlayerStatusText.Should().Be("LegacyInterface.44");
         }
 
         [Fact]

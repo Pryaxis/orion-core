@@ -83,14 +83,14 @@ namespace Orion.Packets.Npcs {
             _npcIndex = reader.ReadInt16();
             _npcHomeX = reader.ReadInt16();
             _npcHomeY = reader.ReadInt16();
-            _isNpcHomeless = reader.ReadBoolean();
+            _isNpcHomeless = reader.ReadByte() == 1;
         }
 
         private protected override void WriteToWriter(BinaryWriter writer, PacketContext context) {
             writer.Write(_npcIndex);
             writer.Write(_npcHomeX);
             writer.Write(_npcHomeY);
-            writer.Write(_isNpcHomeless);
+            writer.Write((byte)(_isNpcHomeless ? 1 : 2));
         }
     }
 }

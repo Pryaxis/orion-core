@@ -23,12 +23,10 @@ using Xunit;
 namespace Orion.Packets.Players {
     public class PlayerDisconnectPacketTests {
         [Fact]
-        public void SetPlayerDisconnectReason_MarksAsDirty() {
+        public void SetSimpleProperties_MarkAsDirty() {
             var packet = new PlayerDisconnectPacket();
 
-            packet.PlayerDisconnectReason = Terraria.Localization.NetworkText.Empty;
-
-            packet.ShouldBeDirty();
+            packet.SetSimplePropertiesShouldMarkAsDirty();
         }
 
         [Fact]
@@ -48,7 +46,7 @@ namespace Orion.Packets.Players {
             using var stream = new MemoryStream(Bytes);
             var packet = (PlayerDisconnectPacket)Packet.ReadFromStream(stream, PacketContext.Server);
 
-            packet.PlayerDisconnectReason.ToString().Should().Be("CLI.KickMessage");
+            packet.PlayerDisconnectReason.Should().Be("CLI.KickMessage");
         }
 
         [Fact]

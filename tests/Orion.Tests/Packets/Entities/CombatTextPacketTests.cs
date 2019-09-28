@@ -49,7 +49,7 @@ namespace Orion.Packets.Entities {
 
             packet.TextPosition.Should().Be(Vector2.Zero);
             packet.TextColor.Should().Be(Color.White);
-            packet.Text.ToString().Should().Be("Terraria");
+            packet.Text.Should().Be("Terraria");
         }
 
         [Fact]

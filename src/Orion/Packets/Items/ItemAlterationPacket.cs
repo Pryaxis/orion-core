@@ -206,7 +206,7 @@ namespace Orion.Packets.Items {
         public override string ToString() => $"{Type}[#={ItemIndex}, ...]";
 
         private protected override void ReadFromReader(BinaryReader reader, PacketContext context) {
-            ItemIndex = reader.ReadInt16();
+            _itemIndex = reader.ReadInt16();
 
             Terraria.BitsByte flags = reader.ReadByte();
             if (flags[0]) _itemColorOverride = new Color(reader.ReadUInt32());
@@ -228,7 +228,7 @@ namespace Orion.Packets.Items {
         }
 
         private protected override void WriteToWriter(BinaryWriter writer, PacketContext context) {
-            writer.Write(ItemIndex);
+            writer.Write(_itemIndex);
 
             Terraria.BitsByte flags2 = 0;
             flags2[0] = _itemWidthOverride != null;

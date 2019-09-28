@@ -29,7 +29,7 @@ namespace Orion.Packets.Npcs {
             packet.SetSimplePropertiesShouldMarkAsDirty();
         }
 
-        public static readonly byte[] Bytes = {13, 0, 104, 0, 17, 6, 1, 0, 82, 100, 0, 0, 0};
+        public static readonly byte[] Bytes = {14, 0, 104, 0, 17, 6, 1, 0, 82, 100, 0, 0, 0, 1};
 
         [Fact]
         public void ReadFromStream_IsCorrect() {
@@ -41,6 +41,7 @@ namespace Orion.Packets.Npcs {
             packet.ItemStackSize.Should().Be(1);
             packet.ItemPrefix.Should().Be(ItemPrefix.Unreal);
             packet.ItemValue.Should().Be(100);
+            packet.CanBuyItemOnce.Should().BeTrue();
         }
 
         [Fact]

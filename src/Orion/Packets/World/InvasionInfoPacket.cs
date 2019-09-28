@@ -25,8 +25,8 @@ namespace Orion.Packets.World {
     public sealed class InvasionInfoPacket : Packet {
         private int _numberOfKills;
         private int _numberOfKillsToProgress;
-        private int _invasionIconType;
-        private int _invasionWaveNumber;
+        private sbyte _invasionIconType;
+        private sbyte _invasionWaveNumber;
 
         /// <inheritdoc />
         public override PacketType Type => PacketType.InvasionInfo;
@@ -57,7 +57,7 @@ namespace Orion.Packets.World {
         /// Gets or sets the invasion icon type.
         /// </summary>
         // TODO: implement enum for this.
-        public int InvasionIconType {
+        public sbyte InvasionIconType {
             get => _invasionIconType;
             set {
                 _invasionIconType = value;
@@ -68,7 +68,7 @@ namespace Orion.Packets.World {
         /// <summary>
         /// Gets or sets the wave number.
         /// </summary>
-        public int InvasionWaveNumber {
+        public sbyte InvasionWaveNumber {
             get => _invasionWaveNumber;
             set {
                 _invasionWaveNumber = value;
@@ -84,8 +84,8 @@ namespace Orion.Packets.World {
         private protected override void ReadFromReader(BinaryReader reader, PacketContext context) {
             _numberOfKills = reader.ReadInt32();
             _numberOfKillsToProgress = reader.ReadInt32();
-            _invasionIconType = reader.ReadInt32();
-            _invasionWaveNumber = reader.ReadInt32();
+            _invasionIconType = reader.ReadSByte();
+            _invasionWaveNumber = reader.ReadSByte();
         }
 
         private protected override void WriteToWriter(BinaryWriter writer, PacketContext context) {

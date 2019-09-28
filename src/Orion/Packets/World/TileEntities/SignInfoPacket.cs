@@ -28,6 +28,7 @@ namespace Orion.Packets.World.TileEntities {
         private short _signX;
         private short _signY;
         private string _signText = "";
+        private byte _modifierPlayerIndex;
 
         /// <inheritdoc />
         public override PacketType Type => PacketType.SignInfo;
@@ -77,6 +78,17 @@ namespace Orion.Packets.World.TileEntities {
             }
         }
 
+        /// <summary>
+        /// Gets or sets the modifier's player index.
+        /// </summary>
+        public byte ModifierPlayerIndex {
+            get => _modifierPlayerIndex;
+            set {
+                _modifierPlayerIndex = value;
+                _isDirty = true;
+            }
+        }
+
         /// <inheritdoc />
         [ExcludeFromCodeCoverage]
         public override string ToString() => $"{Type}[#={SignIndex} @ ({SignX}, {SignY}): \"{SignText}\"]";
@@ -86,6 +98,7 @@ namespace Orion.Packets.World.TileEntities {
             _signX = reader.ReadInt16();
             _signY = reader.ReadInt16();
             _signText = reader.ReadString();
+            _modifierPlayerIndex = reader.ReadByte();
         }
 
         private protected override void WriteToWriter(BinaryWriter writer, PacketContext context) {
@@ -93,6 +106,7 @@ namespace Orion.Packets.World.TileEntities {
             writer.Write(_signX);
             writer.Write(_signY);
             writer.Write(_signText);
+            writer.Write(_modifierPlayerIndex);
         }
     }
 }
