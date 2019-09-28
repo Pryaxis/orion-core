@@ -16,8 +16,10 @@
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using FluentAssertions;
+using Orion.World.Tiles;
 using Xunit;
 
 namespace Orion.Packets.World.Tiles {
@@ -30,12 +32,14 @@ namespace Orion.Packets.World.Tiles {
         }
 
         [Fact]
-        public void Tiles_SetItem_MarksAsDirty() {
+        [SuppressMessage("ReSharper", "UseObjectOrCollectionInitializer")]
+        [SuppressMessage("Style", "IDE0017:Simplify object initialization", Justification = "Testing")]
+        public void Tiles_GetItem_Mutate_MarksAsDirty() {
             var packet = new TileSquarePacket();
             packet.Tiles = new NetworkTiles(1, 1);
             packet.ShouldBeDirty();
 
-            packet.Tiles[0, 0] = new NetworkTile();
+            packet.Tiles[0, 0] = new Tile {BlockType = BlockType.Stone};
 
             packet.ShouldBeDirty();
         }

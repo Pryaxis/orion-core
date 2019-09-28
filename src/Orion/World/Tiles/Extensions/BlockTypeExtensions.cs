@@ -16,6 +16,7 @@
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
 using System.Collections.Generic;
+using System.Diagnostics.Contracts;
 
 namespace Orion.World.Tiles.Extensions {
     /// <summary>
@@ -272,6 +273,7 @@ namespace Orion.World.Tiles.Extensions {
         /// </summary>
         /// <param name="blockType">The block type.</param>
         /// <returns>A value indicating whether frames are important.</returns>
+        [Pure]
         public static bool AreFramesImportant(this BlockType blockType) =>
             FramesImportantBlockTypes.Contains(blockType);
     }

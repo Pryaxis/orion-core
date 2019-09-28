@@ -26,7 +26,6 @@ using Orion.Utils;
 using Orion.World.TileEntities;
 using Orion.World.Tiles;
 using Orion.World.Tiles.Extensions;
-using OTAPI.Tile;
 
 namespace Orion.Packets.World.Tiles {
     /// <summary>
@@ -144,6 +143,8 @@ namespace Orion.Packets.World.Tiles {
             ReadFromReaderImpl(new BinaryReader(deflateStream, Encoding.UTF8, true));
         }
 
+        [SuppressMessage("Code Quality", "IDE0068:Use recommended dispose pattern", Justification =
+            "BinaryWriter does not need to be disposed")]
         private protected override void WriteToWriter(BinaryWriter writer, PacketContext context) {
             writer.Write(_isSectionCompressed);
             if (!_isSectionCompressed) {
@@ -176,17 +177,17 @@ namespace Orion.Packets.World.Tiles {
         }
 
         private void ReadTilesFromReaderImpl(BinaryReader reader) {
-            void ReadTile(NetworkTile tile, byte header, byte header2, byte header3) {
+            void ReadTile(ref Tile tile, byte header, byte header2, byte header3) {
                 if ((header & 2) == 2) {
                     tile.IsBlockActive = true;
 
-                    tile._blockType = (BlockType)((header & 32) == 32 ? reader.ReadUInt16() : reader.ReadByte());
-                    if (tile._blockType.AreFramesImportant()) {
-                        tile._blockFrameX = reader.ReadInt16();
-                        tile._blockFrameY = reader.ReadInt16();
+                    tile.BlockType = (BlockType)((header & 32) == 32 ? reader.ReadUInt16() : reader.ReadByte());
+                    if (tile.BlockType.AreFramesImportant()) {
+                        tile.BlockFrameX = reader.ReadInt16();
+                        tile.BlockFrameY = reader.ReadInt16();
                     } else {
-                        tile._blockFrameX = -1;
-                        tile._blockFrameY = -1;
+                        tile.BlockFrameX = -1;
+                        tile.BlockFrameY = -1;
                     }
 
                     if ((header3 & 8) == 8) {
@@ -195,7 +196,7 @@ namespace Orion.Packets.World.Tiles {
                 }
 
                 if ((header & 4) == 4) {
-                    tile._wallType = (WallType)reader.ReadByte();
+                    tile.WallType = (WallType)reader.ReadByte();
                     if ((header3 & 16) == 16) {
                         tile.WallColor = (PaintColor)reader.ReadByte();
                     }
@@ -203,7 +204,7 @@ namespace Orion.Packets.World.Tiles {
 
                 var liquidType = (header & 24) >> 3;
                 if (liquidType > 0) {
-                    tile._liquidAmount = reader.ReadByte();
+                    tile.LiquidAmount = reader.ReadByte();
                     tile.LiquidType = (LiquidType)(liquidType - 1);
                 }
 
@@ -224,7 +225,6 @@ namespace Orion.Packets.World.Tiles {
                 tile.HasActuator = (header3 & 2) == 2;
                 tile.IsBlockActuated = (header3 & 4) == 4;
                 tile.HasYellowWire = (header3 & 32) == 32;
-                tile.Clean();
             }
 
             int ReadRunLength(byte header) => ((header & 192) >> 6) switch {
@@ -234,14 +234,13 @@ namespace Orion.Packets.World.Tiles {
                 _ => throw new InvalidOperationException()
             };
 
-            NetworkTile? previousTile = null;
+            var previousTile = new Tile();
             var runLength = 0;
             for (int y = 0; y < SectionHeight; ++y) {
                 for (int x = 0; x < SectionWidth; ++x) {
                     if (runLength > 0) {
                         --runLength;
-                        ((ITile)_sectionTiles._tiles[x, y]).CopyFrom(previousTile);
-                        _sectionTiles._tiles[x, y].Clean();
+                        _sectionTiles[x, y] = previousTile;
                         continue;
                     }
 
@@ -249,11 +248,13 @@ namespace Orion.Packets.World.Tiles {
                     byte header2 = (header & 1) == 1 ? reader.ReadByte() : (byte)0;
                     byte header3 = (header2 & 1) == 1 ? reader.ReadByte() : (byte)0;
 
-                    ReadTile(_sectionTiles._tiles[x, y], header, header2, header3);
+                    ReadTile(ref _sectionTiles[x, y], header, header2, header3);
                     runLength = ReadRunLength(header);
-                    previousTile = _sectionTiles._tiles[x, y];
+                    previousTile = _sectionTiles[x, y];
                 }
             }
+
+            _sectionTiles.Clean();
         }
 
         private void ReadTileEntitiesFromReaderImpl(BinaryReader reader) {
@@ -284,10 +285,11 @@ namespace Orion.Packets.World.Tiles {
             var headerIndex = 0;
             byte header = 0;
             var bodyIndex = 0;
-            NetworkTile? previousTile = null;
+            Tile? previousTile = null;
             var runLength = 0;
 
-            void WritePartialTile(NetworkTile tile) {
+
+            void WritePartialTile(ref Tile tile) {
                 header = 0;
                 byte header2 = 0;
                 byte header3 = 0;
@@ -296,18 +298,18 @@ namespace Orion.Packets.World.Tiles {
                 if (tile.IsBlockActive) {
                     header |= 2;
 
-                    var type = (ushort)tile._blockType;
+                    var type = (ushort)tile.BlockType;
                     buffer[bodyIndex++] = (byte)type;
                     if (type > byte.MaxValue) {
                         header |= 32;
                         buffer[bodyIndex++] = (byte)(type >> 8);
                     }
 
-                    if (tile._blockType.AreFramesImportant()) {
-                        buffer[bodyIndex++] = (byte)tile._blockFrameX;
-                        buffer[bodyIndex++] = (byte)(tile._blockFrameX >> 8);
-                        buffer[bodyIndex++] = (byte)tile._blockFrameY;
-                        buffer[bodyIndex++] = (byte)(tile._blockFrameY >> 8);
+                    if (tile.BlockType.AreFramesImportant()) {
+                        buffer[bodyIndex++] = (byte)tile.BlockFrameX;
+                        buffer[bodyIndex++] = (byte)(tile.BlockFrameX >> 8);
+                        buffer[bodyIndex++] = (byte)tile.BlockFrameY;
+                        buffer[bodyIndex++] = (byte)(tile.BlockFrameY >> 8);
                     }
 
                     if (tile.BlockColor != PaintColor.None) {
@@ -316,9 +318,9 @@ namespace Orion.Packets.World.Tiles {
                     }
                 }
 
-                if (tile._wallType != WallType.None) {
+                if (tile.WallType != WallType.None) {
                     header |= 4;
-                    buffer[bodyIndex++] = (byte)tile._wallType;
+                    buffer[bodyIndex++] = (byte)tile.WallType;
 
                     if (tile.WallColor != PaintColor.None) {
                         header3 |= 16;
@@ -334,7 +336,12 @@ namespace Orion.Packets.World.Tiles {
                 header2 |= (byte)(tile.HasRedWire ? 2 : 0);
                 header2 |= (byte)(tile.HasGreenWire ? 4 : 0);
                 header2 |= (byte)(tile.HasBlueWire ? 8 : 0);
-                header2 |= (byte)(((ITile)tile).blockType() << 4);
+
+                if (tile.IsBlockHalved) {
+                    header2 |= 16;
+                } else if (tile.Slope != Slope.None) {
+                    header2 |= (byte)(((byte)tile.Slope + 1) << 4);
+                }
 
                 header3 |= (byte)(tile.HasActuator ? 2 : 0);
                 header3 |= (byte)(tile.IsBlockActuated ? 4 : 0);
@@ -371,8 +378,8 @@ namespace Orion.Packets.World.Tiles {
 
             for (int y = 0; y < _sectionHeight; ++y) {
                 for (int x = 0; x < _sectionWidth; ++x) {
-                    var tile = _sectionTiles._tiles[x, y];
-                    if (((ITile)tile).isTheSameAs(previousTile)) {
+                    ref var tile = ref _sectionTiles[x, y];
+                    if (previousTile != null && tile.IsTheSameAs(previousTile.Value)) {
                         ++runLength;
                         continue;
                     }
@@ -381,7 +388,7 @@ namespace Orion.Packets.World.Tiles {
                         WriteRunLength();
                     }
 
-                    WritePartialTile(tile);
+                    WritePartialTile(ref tile);
                     previousTile = tile;
                 }
             }

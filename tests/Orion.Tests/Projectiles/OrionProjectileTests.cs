@@ -17,6 +17,7 @@
 
 using System;
 using FluentAssertions;
+using Orion.World.Tiles;
 using Xunit;
 
 namespace Orion.Projectiles {
@@ -69,6 +70,17 @@ namespace Orion.Projectiles {
             projectile.SetType(ProjectileType.CrystalBullet);
 
             terrariaProjectile.type.Should().Be((int)ProjectileType.CrystalBullet);
+        }
+
+        public Tile[] tiles = new Tile[10];
+
+        private ref Tile GetTile(int index) => ref tiles[index];
+
+        [Fact]
+        public void Test() {
+            GetTile(0).LiquidAmount = 255;
+
+            tiles[0].LiquidAmount.Should().Be(255);
         }
     }
 }

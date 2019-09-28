@@ -16,47 +16,54 @@
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
 using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
-using System.Linq;
+using System.Runtime.InteropServices;
 using Orion.Utils;
+using Orion.World.Tiles;
 
 namespace Orion.Packets.World.Tiles {
     /// <summary>
     /// Represents a section of tiles that are transmitted over the network.
     /// </summary>
-    public class NetworkTiles : IEnumerable<NetworkTile>, IDirtiable {
-        internal readonly NetworkTile[,] _tiles;
-        private bool _isDirty;
+    public class NetworkTiles : IDirtiable {
+        private readonly Tile[] _tiles;
+        private readonly Tile[] _cleanTiles;
 
         /// <inheritdoc />
-        public bool IsDirty => _isDirty || this.Any(t => t.IsDirty);
+        public bool IsDirty {
+            get {
+                var span = MemoryMarshal.Cast<Tile, byte>(new ReadOnlySpan<Tile>(_tiles));
+                var cleanSpan = MemoryMarshal.Cast<Tile, byte>(new ReadOnlySpan<Tile>(_cleanTiles));
+                return !span.SequenceEqual(cleanSpan);
+            }
+        }
 
         /// <summary>
-        /// Gets or sets the tile at the given coordinates.
+        /// Gets a reference to the tile at the given coordinates.
         /// </summary>
         /// <param name="x">The X coordinate.</param>
         /// <param name="y">The Y coordinate.</param>
-        /// <returns>The tile.</returns>
-        /// <exception cref="ArgumentNullException"><paramref name="value"/> is <c>null</c>.</exception>
-        public NetworkTile this[int x, int y] {
-            get => _tiles[x, y];
-            set {
-                _tiles[x, y] = value ?? throw new ArgumentNullException(nameof(value));
-                _isDirty = true;
+        /// <returns>A reference to the tile.</returns>
+        /// <exception cref="ArgumentOutOfRangeException">
+        /// <paramref name="x"/> or <paramref name="y"/> are out of range.
+        /// </exception>
+        public ref Tile this[int x, int y] {
+            get {
+                if (x < 0 || x >= Width) throw new ArgumentOutOfRangeException(nameof(x));
+                if (y < 0 || y >= Height) throw new ArgumentOutOfRangeException(nameof(y));
+
+                return ref _tiles[y * Width + x];
             }
         }
 
         /// <summary>
         /// Gets the width.
         /// </summary>
-        public int Width => _tiles.GetLength(0);
+        public int Width { get; }
 
         /// <summary>
         /// Gets the height.
         /// </summary>
-        public int Height => _tiles.GetLength(1);
+        public int Height { get; }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="NetworkTiles"/> class with the specified dimensions.
@@ -70,26 +77,17 @@ namespace Orion.Packets.World.Tiles {
             if (width < 0) throw new ArgumentOutOfRangeException(nameof(width), "Width is negative.");
             if (height < 0) throw new ArgumentOutOfRangeException(nameof(height), "Height is negative.");
 
-            _tiles = new NetworkTile[width, height];
-            for (var i = 0; i < width; ++i) {
-                for (var j = 0; j < height; ++j) {
-                    _tiles[i, j] = new NetworkTile();
-                }
-            }
+            _tiles = new Tile[width * height];
+            _cleanTiles = new Tile[width * height];
+            Width = width;
+            Height = height;
         }
 
         /// <inheritdoc />
-        public IEnumerator<NetworkTile> GetEnumerator() => _tiles.Cast<NetworkTile>().GetEnumerator();
-
-        [ExcludeFromCodeCoverage]
-        IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
-
-        /// <inheritdoc />
         public void Clean() {
-            _isDirty = false;
-            foreach (var tile in this) {
-                tile.Clean();
-            }
+            var span = MemoryMarshal.Cast<Tile, byte>(new ReadOnlySpan<Tile>(_tiles));
+            var cleanSpan = MemoryMarshal.Cast<Tile, byte>(_cleanTiles);
+            span.CopyTo(cleanSpan);
         }
     }
 }

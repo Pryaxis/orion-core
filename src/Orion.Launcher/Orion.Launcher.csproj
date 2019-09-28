@@ -5,6 +5,7 @@
     <TargetFramework>netcoreapp3.0</TargetFramework>
     <UseWindowsForms>true</UseWindowsForms>
     <Nullable>enable</Nullable>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <StartupObject>Orion.Launcher.Program</StartupObject>
     <Authors>orion-contributors</Authors>
     <Company>Pryaxis</Company>
@@ -19,7 +20,6 @@
   <ItemGroup>
     <PackageReference Include="Serilog.Sinks.Console" Version="3.1.1" />
     <PackageReference Include="Serilog.Sinks.File" Version="4.0.0" />
-    <PackageReference Include="System.IO.Packaging" Version="4.5.0" />
   </ItemGroup>
 
   <ItemGroup>

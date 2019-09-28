@@ -105,7 +105,7 @@ namespace Orion.Packets.World.Tiles {
             _tileY = reader.ReadInt16();
             _tiles = new NetworkTiles(_squareSize, _squareSize);
 
-            void ReadTile(NetworkTile tile) {
+            void ReadTile(ref Tile tile) {
                 var header = (Terraria.BitsByte)reader.ReadByte();
                 var header2 = (Terraria.BitsByte)reader.ReadByte();
 
@@ -122,13 +122,13 @@ namespace Orion.Packets.World.Tiles {
 
                 if (header[0]) {
                     tile.IsBlockActive = true;
-                    tile._blockType = (BlockType)reader.ReadUInt16();
-                    if (tile._blockType.AreFramesImportant()) {
-                        tile._blockFrameX = reader.ReadInt16();
-                        tile._blockFrameY = reader.ReadInt16();
+                    tile.BlockType = (BlockType)reader.ReadUInt16();
+                    if (tile.BlockType.AreFramesImportant()) {
+                        tile.BlockFrameX = reader.ReadInt16();
+                        tile.BlockFrameY = reader.ReadInt16();
                     } else {
-                        tile._blockFrameX = -1;
-                        tile._blockFrameY = -1;
+                        tile.BlockFrameX = -1;
+                        tile.BlockFrameY = -1;
                     }
 
                     byte slope = 0;
@@ -138,21 +138,21 @@ namespace Orion.Packets.World.Tiles {
                     tile.Slope = (Slope)slope;
                 }
 
-                if (header[2]) tile._wallType = (WallType)reader.ReadByte();
+                if (header[2]) tile.WallType = (WallType)reader.ReadByte();
 
                 if (header[3]) {
-                    tile._liquidAmount = reader.ReadByte();
+                    tile.LiquidAmount = reader.ReadByte();
                     tile.LiquidType = (LiquidType)reader.ReadByte();
                 }
-
-                tile.Clean();
             }
 
             for (int x = 0; x < SquareSize; ++x) {
                 for (int y = 0; y < SquareSize; ++y) {
-                    ReadTile(_tiles._tiles[x, y]);
+                    ReadTile(ref _tiles[x, y]);
                 }
             }
+
+            _tiles.Clean();
         }
 
         private protected override void WriteToWriter(BinaryWriter writer, PacketContext context) {
@@ -166,11 +166,11 @@ namespace Orion.Packets.World.Tiles {
             writer.Write(_tileX);
             writer.Write(_tileY);
 
-            void WriteTile(NetworkTile tile) {
+            void WriteTile(ref Tile tile) {
                 Terraria.BitsByte header = 0;
                 Terraria.BitsByte header2 = 0;
                 header[0] = tile.IsBlockActive;
-                header[2] = tile._wallType != WallType.None;
+                header[2] = tile.WallType != WallType.None;
                 header[3] = tile.LiquidAmount > 0;
                 header[4] = tile.HasRedWire;
                 header[5] = tile.IsBlockHalved;
@@ -187,24 +187,24 @@ namespace Orion.Packets.World.Tiles {
                 writer.Write(header2);
 
                 if (header[0]) {
-                    writer.Write((ushort)tile._blockType);
-                    if (tile._blockType.AreFramesImportant()) {
-                        writer.Write(tile._blockFrameX);
-                        writer.Write(tile._blockFrameY);
+                    writer.Write((ushort)tile.BlockType);
+                    if (tile.BlockType.AreFramesImportant()) {
+                        writer.Write(tile.BlockFrameX);
+                        writer.Write(tile.BlockFrameY);
                     }
                 }
 
-                if (header[2]) writer.Write((byte)tile._wallType);
+                if (header[2]) writer.Write((byte)tile.WallType);
 
                 if (header[3]) {
-                    writer.Write(tile._liquidAmount);
+                    writer.Write(tile.LiquidAmount);
                     writer.Write((byte)tile.LiquidType);
                 }
             }
 
             for (int x = 0; x < SquareSize; ++x) {
                 for (int y = 0; y < SquareSize; ++y) {
-                    WriteTile(_tiles._tiles[x, y]);
+                    WriteTile(ref _tiles[x, y]);
                 }
             }
         }

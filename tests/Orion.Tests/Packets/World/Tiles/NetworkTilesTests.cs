@@ -16,6 +16,7 @@
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 using FluentAssertions;
 using Orion.World.Tiles;
 using Xunit;
@@ -37,33 +38,12 @@ namespace Orion.Packets.World.Tiles {
         }
 
         [Fact]
-        public void GetTile_Mutate_MarksAsDirty() {
+        [SuppressMessage("ReSharper", "UseObjectOrCollectionInitializer")]
+        public void GetItem_Mutate_MarksAsDirty() {
             var tiles = new NetworkTiles(1, 1);
-            tiles[0, 0] = new NetworkTile();
-            tiles.Clean();
-            tiles[0, 0].BlockType = BlockType.Stone;
+            tiles[0, 0] = new Tile {BlockType = BlockType.Stone};
 
-            tiles.IsDirty.Should().BeTrue();
-            tiles.Clean();
-            tiles.IsDirty.Should().BeFalse();
-        }
-
-        [Fact]
-        public void Set_MarksAsDirty() {
-            var tiles = new NetworkTiles(1, 1);
-            tiles[0, 0] = new NetworkTile();
-
-            tiles.IsDirty.Should().BeTrue();
-            tiles.Clean();
-            tiles.IsDirty.Should().BeFalse();
-        }
-
-        [Fact]
-        public void Set_NullValue_ThrowsArgumentNullException() {
-            var tiles = new NetworkTiles(1, 1);
-            Action action = () => tiles[0, 0] = null!;
-
-            action.Should().Throw<ArgumentNullException>();
+            tiles.ShouldBeDirty();
         }
     }
 }

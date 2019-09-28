@@ -15,9 +15,23 @@
 // You should have received a copy of the GNU General Public License
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
+using System;
+using Orion.World.Tiles;
+
 namespace Orion.World {
     /// <summary>
     /// Represents a world service. Provides access to world-related events and methods.
     /// </summary>
-    public interface IWorldService : IService { }
+    public interface IWorldService : IService {
+        /// <summary>
+        /// Gets a reference to the tile at the given coordinates.
+        /// </summary>
+        /// <param name="x">The X coordinate.</param>
+        /// <param name="y">The Y coordinate.</param>
+        /// <returns>A reference to the tile.</returns>
+        /// <exception cref="IndexOutOfRangeException">
+        /// <paramref name="x"/> or <paramref name="y"/> are out of range.
+        /// </exception>
+        ref Tile this[int x, int y] { get; }
+    }
 }

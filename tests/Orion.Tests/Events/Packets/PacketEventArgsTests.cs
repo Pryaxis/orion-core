@@ -52,7 +52,7 @@ namespace Orion.Events.Packets {
             var args = new TestArgs(packet);
             args.Packet = new TestPacket();
 
-            args.IsDirty.Should().BeTrue();
+            args.ShouldBeDirty();
         }
 
         [Fact]
@@ -69,8 +69,8 @@ namespace Orion.Events.Packets {
             var packet = new TestPacket();
             var args = new TestArgs(packet);
             packet.MarkAsDirty();
-
-            args.IsDirty.Should().BeTrue();
+            
+            args.ShouldBeDirty();
         }
 
         private class TestArgs : PacketEventArgs {
