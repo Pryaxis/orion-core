@@ -16,6 +16,7 @@
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using FluentAssertions;
 using Xunit;
@@ -30,6 +31,8 @@ namespace Orion.Packets.Players {
         }
 
         [Fact]
+        [SuppressMessage("ReSharper", "UseObjectOrCollectionInitializer")]
+        [SuppressMessage("Style", "IDE0017:Simplify object initialization", Justification = "Testing")]
         public void SetPlayerDeathReason_MarksAsDirty() {
             var packet = new PlayerKillPacket();
 

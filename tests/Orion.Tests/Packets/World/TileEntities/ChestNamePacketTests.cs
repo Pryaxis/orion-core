@@ -30,15 +30,6 @@ namespace Orion.Packets.World.TileEntities {
         }
 
         [Fact]
-        public void SetChestName_MarksAsDirty() {
-            var packet = new ChestNamePacket();
-
-            packet.ChestName = "";
-
-            packet.ShouldBeDirty();
-        }
-
-        [Fact]
         public void SetChestName_NullValue_ThrowsArgumentNullException() {
             var packet = new ChestNamePacket();
             Action action = () => packet.ChestName = null!;

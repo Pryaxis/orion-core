@@ -31,9 +31,9 @@ namespace Orion.Utils {
         [Fact]
         public void GetAnnotation_NullKey_ThrowsArgumentNullException() {
             IAnnotatable annotatable = new AnnotatableObject();
-            Action action = () => annotatable.GetAnnotation<int>(null!);
+            Func<int> func = () => annotatable.GetAnnotation<int>(null!);
 
-            action.Should().Throw<ArgumentNullException>();
+            func.Should().Throw<ArgumentNullException>();
         }
 
         [Fact]

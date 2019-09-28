@@ -16,6 +16,7 @@
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using FluentAssertions;
 using Moq;
 using Xunit;
@@ -78,6 +79,8 @@ namespace Orion.Utils {
         }
 
         [Fact]
+        [SuppressMessage("ReSharper", "UseObjectOrCollectionInitializer")]
+        [SuppressMessage("Style", "IDE0028:Simplify collection initialization", Justification = "Testing")]
         public void Add_IsCorrect() {
             var list = new DirtiableList<int>();
 

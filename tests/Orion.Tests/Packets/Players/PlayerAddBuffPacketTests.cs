@@ -30,15 +30,6 @@ namespace Orion.Packets.Players {
             packet.SetSimplePropertiesShouldMarkAsDirty();
         }
 
-        [Fact]
-        public void SetPlayerBuff_MarksAsDirty() {
-            var packet = new PlayerAddBuffPacket();
-
-            packet.PlayerBuff = new Buff(BuffType.None, TimeSpan.Zero);
-
-            packet.ShouldBeDirty();
-        }
-
         public static readonly byte[] Bytes = {9, 0, 55, 0, 1, 60, 0, 0, 0};
 
         [Fact]

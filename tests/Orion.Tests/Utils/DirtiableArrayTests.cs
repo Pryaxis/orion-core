@@ -16,6 +16,7 @@
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 using FluentAssertions;
 using Moq;
 using Xunit;
@@ -30,6 +31,8 @@ namespace Orion.Utils {
         }
 
         [Fact]
+        [SuppressMessage("ReSharper", "UseObjectOrCollectionInitializer")]
+        [SuppressMessage("Style", "IDE0017:Simplify object initialization", Justification = "Testing")]
         public void TIsIDirtiable_IsCorrect() {
             var isDirty = true;
             var mockDirtiable = new Mock<IDirtiable>();
@@ -60,6 +63,8 @@ namespace Orion.Utils {
         }
 
         [Fact]
+        [SuppressMessage("ReSharper", "UseObjectOrCollectionInitializer")]
+        [SuppressMessage("Style", "IDE0017:Simplify object initialization", Justification = "Testing")]
         public void SetItem_MarksAsDirty() {
             var array = new DirtiableArray<int>(1);
 

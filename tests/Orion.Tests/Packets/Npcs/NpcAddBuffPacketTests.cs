@@ -30,15 +30,6 @@ namespace Orion.Packets.Npcs {
             packet.SetSimplePropertiesShouldMarkAsDirty();
         }
 
-        [Fact]
-        public void SetNpcBuff_MarksAsDirty() {
-            var packet = new NpcAddBuffPacket();
-
-            packet.NpcBuff = new Buff(BuffType.None, TimeSpan.Zero);
-
-            packet.ShouldBeDirty();
-        }
-
         public static readonly byte[] Bytes = {8, 0, 53, 0, 0, 1, 60, 0};
 
         [Fact]

@@ -29,14 +29,6 @@ namespace Orion.Packets.World.TileEntities {
         }
 
         [Fact]
-        public void SetText_MarksAsDirty() {
-            var sign = new NetworkSign();
-            sign.Text = "";
-
-            sign.ShouldBeDirty();
-        }
-
-        [Fact]
         public void SetText_NullValue_ThrowsArgumentNullException() {
             var sign = new NetworkSign();
             Action action = () => sign.Text = null!;

@@ -25,17 +25,14 @@ namespace Orion {
     /// </summary>
     public abstract class OrionService : IService {
         /// <inheritdoc />
-        /// <remarks>By default, the service's author is Anonymous. This should probably be modified.</remarks>
         [ExcludeFromCodeCoverage]
         public virtual string Author => "Anonymous";
 
         /// <inheritdoc />
-        /// <remarks>By default, the service's name is the type name.</remarks>
         [ExcludeFromCodeCoverage]
         public virtual string Name => GetType().Name;
 
         /// <inheritdoc />
-        /// <remarks>By default, the service's version is the assembly's version.</remarks>
         [ExcludeFromCodeCoverage]
         public virtual Version Version => GetType().Assembly.GetName().Version;
 

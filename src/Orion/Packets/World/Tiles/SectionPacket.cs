@@ -212,7 +212,6 @@ namespace Orion.Packets.World.Tiles {
                 tile.HasBlueWire = (header2 & 4) == 4;
                 tile.HasGreenWire = (header2 & 8) == 8;
 
-                // TODO: there was a tileSolid check here, but it doesn't seem necessary?
                 var blockShape = (header2 & 112) >> 4;
                 if (blockShape != 0) {
                     if (blockShape == 1) {

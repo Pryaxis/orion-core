@@ -16,6 +16,7 @@
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using FluentAssertions;
 using Orion.Packets;
@@ -47,9 +48,12 @@ namespace Orion.Events.Packets {
         }
 
         [Fact]
+        [SuppressMessage("ReSharper", "UseObjectOrCollectionInitializer")]
+        [SuppressMessage("Style", "IDE0017:Simplify object initialization", Justification = "Testing")]
         public void SetPacket_MarksAsDirty() {
             var packet = new TestPacket();
             var args = new TestArgs(packet);
+
             args.Packet = new TestPacket();
 
             args.ShouldBeDirty();

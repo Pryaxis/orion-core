@@ -17,6 +17,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Reflection;
@@ -42,7 +43,10 @@ namespace Orion {
         /// </summary>
         public IEnumerable<OrionPlugin> LoadedPlugins => new HashSet<OrionPlugin>(_plugins);
 
-        internal OrionKernel() {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="OrionKernel"/> class.
+        /// </summary>
+        public OrionKernel() {
             Bind<OrionKernel>().ToConstant(this).InSingletonScope();
             Bind<IItemService>().To<OrionItemService>().InSingletonScope();
             Bind<INpcService>().To<OrionNpcService>().InSingletonScope();
@@ -50,10 +54,23 @@ namespace Orion {
             Bind<IProjectileService>().To<OrionProjectileService>().InSingletonScope();
             Bind<IWorldService>().To<OrionWorldService>().InSingletonScope();
 
-            // Because we're using Assembly.Load, we'll need to have an AssemblyResolve handler to deal with any issues
-            // that may pop up.
-            AppDomain.CurrentDomain.AssemblyResolve += (sender, args) =>
-                _pluginAssemblies.FirstOrDefault(a => a.FullName == args.Name);
+            // Create bindings for Lazy<T> so that we can have lazily loaded services, allowing plugins to override
+            // service bindings if necessary.
+            var getLazy = GetType().GetMethod(nameof(GetLazy), BindingFlags.NonPublic | BindingFlags.Instance);
+            Debug.Assert(getLazy != null, "getLazy != null");
+            Bind(typeof(Lazy<>)).ToMethod(ctx => getLazy.MakeGenericMethod(ctx.GenericArguments?[0])
+                                                        .Invoke(this, Array.Empty<object>()));
+
+            // Because we're using Assembly.Load, we'll need to have an AssemblyResolve handler to deal with assembly
+            // resolution issues.
+            AppDomain.CurrentDomain.AssemblyResolve += AssemblyResolveHandler;
+        }
+
+        /// <inheritdoc />
+        public override void Dispose(bool disposing) {
+            base.Dispose(disposing);
+
+            AppDomain.CurrentDomain.AssemblyResolve -= AssemblyResolveHandler;
         }
 
         /// <summary>
@@ -71,8 +88,8 @@ namespace Orion {
 
             foreach (var pluginType in assembly.GetExportedTypes()
                                                .Where(s => s.IsSubclassOf(typeof(OrionPlugin)))) {
-                // Bind all plugin types to themselves, allowing plugins to properly depend on other plugins
-                // without reliance on static state.
+                // Bind all plugin types to themselves, allowing plugins to properly depend on other plugins without
+                // reliance on static state.
                 _pluginTypesToLoad.Add(pluginType);
                 Bind(pluginType).ToSelf().InSingletonScope();
             }
@@ -83,7 +100,7 @@ namespace Orion {
         /// </summary>
         /// <param name="action">The action to run.</param>
         public void FinishLoadingPlugins(Action<OrionPlugin>? action = null) {
-            foreach (var pluginType in _pluginTypesToLoad.Reverse()) {
+            foreach (var pluginType in _pluginTypesToLoad) {
                 var plugin = (OrionPlugin)this.Get(pluginType);
                 _plugins.Add(plugin);
                 action?.Invoke(plugin);
@@ -110,5 +127,10 @@ namespace Orion {
             Unbind(pluginType);
             return true;
         }
+
+        private Assembly AssemblyResolveHandler(object sender, ResolveEventArgs args) =>
+            _pluginAssemblies.FirstOrDefault(a => a.FullName == args.Name);
+
+        private Lazy<T> GetLazy<T>() => new Lazy<T>(() => this.Get<T>());
     }
 }

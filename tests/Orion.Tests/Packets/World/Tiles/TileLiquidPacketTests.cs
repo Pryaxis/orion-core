@@ -16,6 +16,7 @@
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using FluentAssertions;
 using Orion.World.Tiles;
@@ -24,6 +25,8 @@ using Xunit;
 namespace Orion.Packets.World.Tiles {
     public class TileLiquidPacketTests {
         [Fact]
+        [SuppressMessage("ReSharper", "UseObjectOrCollectionInitializer")]
+        [SuppressMessage("Style", "IDE0017:Simplify object initialization", Justification = "Testing")]
         public void SetTileLiquid_MarksAsDirty() {
             var packet = new TileLiquidPacket();
 
