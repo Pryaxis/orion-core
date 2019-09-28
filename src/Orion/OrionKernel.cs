@@ -25,6 +25,7 @@ using Orion.Items;
 using Orion.Npcs;
 using Orion.Players;
 using Orion.Projectiles;
+using Orion.World;
 
 namespace Orion {
     /// <summary>
@@ -47,6 +48,7 @@ namespace Orion {
             Bind<INpcService>().To<OrionNpcService>().InSingletonScope();
             Bind<IPlayerService>().To<OrionPlayerService>().InSingletonScope();
             Bind<IProjectileService>().To<OrionProjectileService>().InSingletonScope();
+            Bind<IWorldService>().To<OrionWorldService>().InSingletonScope();
 
             // Because we're using Assembly.Load, we'll need to have an AssemblyResolve handler to deal with any issues
             // that may pop up.

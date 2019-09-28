@@ -19,7 +19,9 @@ using System;
 using System.IO;
 using System.Text;
 using System.Threading;
+using Ninject;
 using Orion.Launcher.Properties;
+using Orion.World;
 using Orion.World.Tiles;
 using Serilog;
 using Serilog.Sinks.SystemConsole.Themes;
@@ -82,7 +84,8 @@ namespace Orion.Launcher {
         // TODO: provide event to use these arguments.
         internal static void Main(string[] args) {
             using var kernel = new OrionKernel();
-            
+            kernel.Get<IWorldService>();
+
             SetupLogging();
             SetupPlugins(kernel);
             SetupLanguage();

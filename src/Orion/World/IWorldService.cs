@@ -16,6 +16,8 @@
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
 using System;
+using Orion.Events;
+using Orion.Events.World;
 using Orion.World.Tiles;
 
 namespace Orion.World {
@@ -23,6 +25,16 @@ namespace Orion.World {
     /// Represents a world service. Provides access to world-related events and methods.
     /// </summary>
     public interface IWorldService : IService {
+        /// <summary>
+        /// Gets the world's width.
+        /// </summary>
+        int WorldWidth { get; }
+
+        /// <summary>
+        /// Gets the world's height.
+        /// </summary>
+        int WorldHeight { get; }
+
         /// <summary>
         /// Gets a reference to the tile at the given coordinates.
         /// </summary>
@@ -33,5 +45,15 @@ namespace Orion.World {
         /// <paramref name="x"/> or <paramref name="y"/> are out of range.
         /// </exception>
         ref Tile this[int x, int y] { get; }
+
+        /// <summary>
+        /// Gets or sets the event handlers that occur when a world is loading.
+        /// </summary>
+        EventHandlerCollection<WorldLoadEventArgs>? WorldLoad { get; set; }
+        
+        /// <summary>
+        /// Gets or sets the event handlers that occur when a world is saving. This event can be canceled.
+        /// </summary>
+        EventHandlerCollection<WorldSaveEventArgs>? WorldSave { get; set; }
     }
 }

@@ -19,6 +19,7 @@ using System.Diagnostics;
 using System.Diagnostics.Contracts;
 using System.Runtime.InteropServices;
 using Orion.World.Tiles.Extensions;
+using OTAPI.Tile;
 
 namespace Orion.World.Tiles {
     /// <summary>
