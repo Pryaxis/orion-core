@@ -31,8 +31,13 @@ namespace Orion.Packets.World.Tiles {
         /// <inheritdoc />
         public bool IsDirty {
             get {
-                var span = MemoryMarshal.Cast<Tile, byte>(new ReadOnlySpan<Tile>(_tiles));
-                var cleanSpan = MemoryMarshal.Cast<Tile, byte>(new ReadOnlySpan<Tile>(_cleanTiles));
+                /*
+                 * Convert the tiles to a span of bytes, and the clean tiles to a span of bytes. This allows us to use
+                 * SequenceEqual, which is highly optimized for the purpose of comparing the two. This is significantly
+                 * faster than just comparing the two naively.
+                 */
+                var span = MemoryMarshal.AsBytes(new ReadOnlySpan<Tile>(_tiles));
+                var cleanSpan = MemoryMarshal.AsBytes(new ReadOnlySpan<Tile>(_cleanTiles));
                 return !span.SequenceEqual(cleanSpan);
             }
         }
@@ -85,8 +90,13 @@ namespace Orion.Packets.World.Tiles {
 
         /// <inheritdoc />
         public void Clean() {
-            var span = MemoryMarshal.Cast<Tile, byte>(new ReadOnlySpan<Tile>(_tiles));
-            var cleanSpan = MemoryMarshal.Cast<Tile, byte>(_cleanTiles);
+            /*
+             * Convert the tiles to a span of bytes, and the clean tiles to a span of bytes. This allows us to use
+             * CopyTo, which is highly optimized for the purpose of copying. This is significantly faster than just
+             * copying naively.
+             */
+            var span = MemoryMarshal.AsBytes(new ReadOnlySpan<Tile>(_tiles));
+            var cleanSpan = MemoryMarshal.AsBytes<Tile>(_cleanTiles);
             span.CopyTo(cleanSpan);
         }
     }
