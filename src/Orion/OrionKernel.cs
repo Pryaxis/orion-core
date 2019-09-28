@@ -52,9 +52,8 @@ namespace Orion {
 
             // Because we're using Assembly.Load, we'll need to have an AssemblyResolve handler to deal with any issues
             // that may pop up.
-            AppDomain.CurrentDomain.AssemblyResolve += (sender, args) => {
-                return _pluginAssemblies.FirstOrDefault(a => a.FullName == args.Name);
-            };
+            AppDomain.CurrentDomain.AssemblyResolve += (sender, args) =>
+                _pluginAssemblies.FirstOrDefault(a => a.FullName == args.Name);
         }
 
         /// <summary>

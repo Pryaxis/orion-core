@@ -22,7 +22,6 @@ using System.Threading;
 using Ninject;
 using Orion.Launcher.Properties;
 using Orion.World;
-using Orion.World.Tiles;
 using Serilog;
 using Serilog.Sinks.SystemConsole.Themes;
 

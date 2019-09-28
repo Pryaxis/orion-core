@@ -102,7 +102,7 @@ namespace Orion.Packets.World {
         private bool _hasDefeatedOldOnesArmyTier1;
         private bool _hasDefeatedOldOnesArmyTier2;
         private bool _hasDefeatedOldOnesArmyTier3;
-        private Invasion _currentInvasion;
+        private InvasionType _currentInvasionType;
         private ulong _lobbyId;
         private float _sandstormIntensity;
 
@@ -906,12 +906,12 @@ namespace Orion.Packets.World {
         }
 
         /// <summary>
-        /// Gets or sets the current invasion.
+        /// Gets or sets the current invasion type.
         /// </summary>
-        public Invasion CurrentInvasion {
-            get => _currentInvasion;
+        public InvasionType CurrentInvasionType {
+            get => _currentInvasionType;
             set {
-                _currentInvasion = value;
+                _currentInvasionType = value;
                 _isDirty = true;
             }
         }
@@ -1049,7 +1049,7 @@ namespace Orion.Packets.World {
             _hasDefeatedOldOnesArmyTier2 = worldFlags5[6];
             _hasDefeatedOldOnesArmyTier3 = worldFlags5[7];
 
-            _currentInvasion = (Invasion)reader.ReadSByte();
+            _currentInvasionType = (InvasionType)reader.ReadSByte();
             _lobbyId = reader.ReadUInt64();
             _sandstormIntensity = reader.ReadSingle();
         }
@@ -1158,7 +1158,7 @@ namespace Orion.Packets.World {
             writer.Write(worldFlags4);
             writer.Write(worldFlags5);
 
-            writer.Write((sbyte)_currentInvasion);
+            writer.Write((sbyte)_currentInvasionType);
             writer.Write(_lobbyId);
             writer.Write(_sandstormIntensity);
         }

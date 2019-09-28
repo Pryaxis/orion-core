@@ -128,7 +128,7 @@ namespace Orion.Items {
         public static readonly IEnumerable<object[]> SpawnItemData = new List<object[]> {
             new object[] {ItemType.StoneBlock, 100, ItemPrefix.None},
             new object[] {ItemType.Sdmg, 1, ItemPrefix.Unreal},
-            new object[] {ItemType.Meowmere, 1, ItemPrefix.Legendary},
+            new object[] {ItemType.Meowmere, 1, ItemPrefix.Legendary}
         };
 
         [Theory]

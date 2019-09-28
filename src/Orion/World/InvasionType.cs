@@ -19,10 +19,10 @@ using System.Diagnostics.CodeAnalysis;
 
 namespace Orion.World {
     /// <summary>
-    /// Specifies an invasion.
+    /// Specifies an invasion type.
     /// </summary>
     [SuppressMessage("ReSharper", "UnusedMember.Global")]
-    public enum Invasion : sbyte {
+    public enum InvasionType : sbyte {
         /// <summary>
         /// Indicates no invasion.
         /// </summary>

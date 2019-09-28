@@ -189,7 +189,7 @@ namespace Orion.Packets.World {
             packet.HasDefeatedOldOnesArmyTier1.Should().BeFalse();
             packet.HasDefeatedOldOnesArmyTier2.Should().BeFalse();
             packet.HasDefeatedOldOnesArmyTier3.Should().BeFalse();
-            packet.CurrentInvasion.Should().Be(Invasion.None);
+            packet.CurrentInvasionType.Should().Be(InvasionType.None);
             packet.LobbyId.Should().Be(0);
             packet.SandstormIntensity.Should().Be(0);
         }

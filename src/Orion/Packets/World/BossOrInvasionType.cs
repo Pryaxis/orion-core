@@ -19,10 +19,10 @@ using System.Diagnostics.CodeAnalysis;
 
 namespace Orion.Packets.World {
     /// <summary>
-    /// Specifies a boss or invasion in a <see cref="BossOrInvasionPacket"/>.
+    /// Specifies a boss or invasion type in a <see cref="BossOrInvasionPacket"/>.
     /// </summary>
     [SuppressMessage("ReSharper", "UnusedMember.Global")]
-    public enum BossOrInvasion : short {
+    public enum BossOrInvasionType : short {
         /// <summary>
         /// Indicates that the Moon Lord should be summoned.
         /// </summary>

@@ -51,6 +51,13 @@ namespace Orion.World {
 
             _worldService.WorldHeight.Should().Be(1000);
         }
+
+        [Fact]
+        public void GetCurrentInvasionType_IsCorrect() {
+            Terraria.Main.invasionType = (int)InvasionType.Goblins;
+
+            _worldService.CurrentInvasionType.Should().Be(InvasionType.Goblins);
+        }
         
         [Fact]
         public void Maintile_Gettype_IsCorrect() {

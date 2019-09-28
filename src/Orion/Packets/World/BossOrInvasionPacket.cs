@@ -20,12 +20,12 @@ using System.IO;
 
 namespace Orion.Packets.World {
     /// <summary>
-    /// Packet sent to summon a boss or an invasion. See <see cref="BossOrInvasion"/> for the
+    /// Packet sent to summon a boss or an invasion. See <see cref="BossOrInvasionType"/> for the
     /// list of bosses or invasions.
     /// </summary>
     public sealed class BossOrInvasionPacket : Packet {
         private byte _summmonOnPlayerIndex;
-        private BossOrInvasion _bossOrInvasion;
+        private BossOrInvasionType _bossOrInvasionType;
 
         /// <inheritdoc />
         public override PacketType Type => PacketType.BossOrInvasion;
@@ -42,28 +42,28 @@ namespace Orion.Packets.World {
         }
 
         /// <summary>
-        /// Gets or sets the boss or invasion.
+        /// Gets or sets the boss or invasion type.
         /// </summary>
-        public BossOrInvasion BossOrInvasion {
-            get => _bossOrInvasion;
+        public BossOrInvasionType BossOrInvasionType {
+            get => _bossOrInvasionType;
             set {
-                _bossOrInvasion = value;
+                _bossOrInvasionType = value;
                 _isDirty = true;
             }
         }
 
         /// <inheritdoc />
         [ExcludeFromCodeCoverage]
-        public override string ToString() => $"{Type}[#={SummmonOnPlayerIndex}, {BossOrInvasion}]";
+        public override string ToString() => $"{Type}[#={SummmonOnPlayerIndex}, {BossOrInvasionType}]";
 
         private protected override void ReadFromReader(BinaryReader reader, PacketContext context) {
             _summmonOnPlayerIndex = (byte)reader.ReadInt16();
-            _bossOrInvasion = (BossOrInvasion)reader.ReadInt16();
+            _bossOrInvasionType = (BossOrInvasionType)reader.ReadInt16();
         }
 
         private protected override void WriteToWriter(BinaryWriter writer, PacketContext context) {
             writer.Write((short)_summmonOnPlayerIndex);
-            writer.Write((short)_bossOrInvasion);
+            writer.Write((short)_bossOrInvasionType);
         }
     }
 }

@@ -36,7 +36,7 @@ namespace Orion.Packets.World {
             var packet = (BossOrInvasionPacket)Packet.ReadFromStream(stream, PacketContext.Server);
 
             packet.SummmonOnPlayerIndex.Should().Be(0);
-            packet.BossOrInvasion.Should().Be(BossOrInvasion.Goblins);
+            packet.BossOrInvasionType.Should().Be(BossOrInvasionType.Goblins);
         }
 
         [Fact]

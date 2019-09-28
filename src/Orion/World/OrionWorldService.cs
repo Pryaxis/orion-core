@@ -45,6 +45,8 @@ namespace Orion.World {
             }
         }
 
+        public InvasionType CurrentInvasionType => (InvasionType)Terraria.Main.invasionType;
+
         public EventHandlerCollection<WorldLoadEventArgs>? WorldLoad { get; set; }
         public EventHandlerCollection<WorldSaveEventArgs>? WorldSave { get; set; }
 

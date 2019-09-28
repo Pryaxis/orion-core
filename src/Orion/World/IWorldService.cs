@@ -47,6 +47,11 @@ namespace Orion.World {
         ref Tile this[int x, int y] { get; }
 
         /// <summary>
+        /// Gets the current invasion.
+        /// </summary>
+        InvasionType CurrentInvasionType { get; }
+
+        /// <summary>
         /// Gets or sets the event handlers that occur when a world is loading.
         /// </summary>
         EventHandlerCollection<WorldLoadEventArgs>? WorldLoad { get; set; }
