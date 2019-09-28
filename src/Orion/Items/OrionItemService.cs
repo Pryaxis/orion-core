@@ -23,6 +23,7 @@ using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using Microsoft.Xna.Framework;
 using Orion.Events;
+using Orion.Events.Extensions;
 using Orion.Events.Items;
 using OTAPI;
 
@@ -101,7 +102,7 @@ namespace Orion.Items {
             var args = new ItemSetDefaultsEventArgs(item, (ItemType)itemType);
             ItemSetDefaults?.Invoke(this, args);
             itemType = (int)args.ItemType;
-            return args.IsCanceled ? HookResult.Cancel : HookResult.Continue;
+            return args.IsCanceled() ? HookResult.Cancel : HookResult.Continue;
         }
 
         private HookResult PreUpdateHandler(Terraria.Item terrariaItem, ref int itemIndex) {
@@ -110,7 +111,7 @@ namespace Orion.Items {
             var item = new OrionItem(terrariaItem);
             var args = new ItemUpdateEventArgs(item);
             ItemUpdate?.Invoke(this, args);
-            return args.IsCanceled ? HookResult.Cancel : HookResult.Continue;
+            return args.IsCanceled() ? HookResult.Cancel : HookResult.Continue;
         }
     }
 }

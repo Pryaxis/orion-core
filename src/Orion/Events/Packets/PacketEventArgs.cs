@@ -26,9 +26,9 @@ namespace Orion.Events.Packets {
     public class PacketEventArgs : EventArgs, ICancelable, IDirtiable {
         private Packet _packet;
         private bool _isDirty;
-
+        
         /// <inheritdoc />
-        public bool IsCanceled { get; set; }
+        public string? CancellationReason { get; set; }
 
         /// <inheritdoc />
         public bool IsDirty => _isDirty || Packet.IsDirty;

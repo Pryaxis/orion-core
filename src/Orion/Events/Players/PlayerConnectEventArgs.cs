@@ -27,7 +27,7 @@ namespace Orion.Events.Players {
         private readonly PlayerConnectPacket _packet;
 
         /// <inheritdoc />
-        public bool IsCanceled { get; set; }
+        public string? CancellationReason { get; set; }
 
         /// <inheritdoc cref="PlayerConnectPacket.PlayerVersionString"/>
         public string PlayerVersionString {

@@ -24,6 +24,7 @@ using System.Linq;
 using System.Threading;
 using Microsoft.Xna.Framework;
 using Orion.Events;
+using Orion.Events.Extensions;
 using Orion.Events.Npcs;
 using Orion.Items;
 using OTAPI;
@@ -77,6 +78,8 @@ namespace Orion.Npcs {
         }
 
         protected override void Dispose(bool disposeManaged) {
+            _setDefaultsToIgnore.Dispose();
+
             if (!disposeManaged) return;
 
             Hooks.Npc.PreSetDefaultsById = null;
@@ -121,7 +124,7 @@ namespace Orion.Npcs {
             var npc = new OrionNpc(terrariaNpc);
             var args = new NpcSetDefaultsEventArgs(npc, (NpcType)type);
             NpcSetDefaults?.Invoke(this, args);
-            if (args.IsCanceled) return HookResult.Cancel;
+            if (args.IsCanceled()) return HookResult.Cancel;
 
             // Ignore two calls to SetDefaults() if type is negative.
             if ((type = (int)args.NpcType) < 0) {
@@ -137,7 +140,7 @@ namespace Orion.Npcs {
             var npc = this[npcIndex];
             var args = new NpcSpawnEventArgs(npc);
             NpcSpawn?.Invoke(this, args);
-            if (args.IsCanceled) {
+            if (args.IsCanceled()) {
                 // To cancel the event, we should remove the NPC and return the failure index.
                 npc.IsActive = false;
                 npcIndex = Count;
@@ -153,7 +156,7 @@ namespace Orion.Npcs {
             var npc = new OrionNpc(terrariaNpc);
             var args = new NpcUpdateEventArgs(npc);
             NpcUpdate?.Invoke(this, args);
-            return args.IsCanceled ? HookResult.Cancel : HookResult.Continue;
+            return args.IsCanceled() ? HookResult.Cancel : HookResult.Continue;
         }
 
         private HookResult PreTransformHandler(Terraria.NPC terrariaNpc, ref int newType) {
@@ -162,7 +165,7 @@ namespace Orion.Npcs {
             var npc = new OrionNpc(terrariaNpc);
             var args = new NpcTransformEventArgs(npc, (NpcType)newType);
             NpcTransform?.Invoke(this, args);
-            if (args.IsCanceled) return HookResult.Cancel;
+            if (args.IsCanceled()) return HookResult.Cancel;
 
             newType = (int)args.NpcNewType;
             return HookResult.Continue;
@@ -181,7 +184,7 @@ namespace Orion.Npcs {
                 IsCriticalHit = isCriticalHit
             };
             NpcDamage?.Invoke(this, args);
-            if (args.IsCanceled) return HookResult.Cancel;
+            if (args.IsCanceled()) return HookResult.Cancel;
 
             damage = args.Damage;
             knockback = args.Knockback;
@@ -203,7 +206,7 @@ namespace Orion.Npcs {
                 LootItemPrefix = (ItemPrefix)prefix
             };
             NpcDropLootItem?.Invoke(this, args);
-            if (args.IsCanceled) return HookResult.Cancel;
+            if (args.IsCanceled()) return HookResult.Cancel;
 
             type = (int)args.LootItemType;
             stack = args.LootItemStackSize;

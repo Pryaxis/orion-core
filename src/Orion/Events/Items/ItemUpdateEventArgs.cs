@@ -24,7 +24,7 @@ namespace Orion.Events.Items {
     /// </summary>
     public sealed class ItemUpdateEventArgs : ItemEventArgs, ICancelable {
         /// <inheritdoc />
-        public bool IsCanceled { get; set; }
+        public string? CancellationReason { get; set; }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ItemUpdateEventArgs"/> class with the specified item.

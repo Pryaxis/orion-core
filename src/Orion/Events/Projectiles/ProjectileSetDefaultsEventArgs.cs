@@ -24,7 +24,7 @@ namespace Orion.Events.Projectiles {
     /// </summary>
     public sealed class ProjectileSetDefaultsEventArgs : ProjectileEventArgs, ICancelable {
         /// <inheritdoc />
-        public bool IsCanceled { get; set; }
+        public string? CancellationReason { get; set; }
 
         /// <summary>
         /// Gets or sets the projectile type.

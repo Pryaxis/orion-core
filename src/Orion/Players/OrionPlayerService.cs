@@ -24,6 +24,7 @@ using System.IO;
 using System.Linq;
 using System.Threading;
 using Orion.Events;
+using Orion.Events.Extensions;
 using Orion.Events.Packets;
 using Orion.Events.Players;
 using Orion.Packets;
@@ -115,12 +116,12 @@ namespace Orion.Players {
             var packet = Packet.ReadFromStream(stream, PacketContext.Server);
             var args = new PacketReceiveEventArgs(sender, packet);
             PacketReceive?.Invoke(this, args);
-            if (args.IsCanceled) return HookResult.Cancel;
+            if (args.IsCanceled()) return HookResult.Cancel;
             packet = args.Packet;
 
             if (_packetReceiveHandlers.TryGetValue(packet.Type, out var handler)) {
                 handler(args);
-                if (args.IsCanceled) return HookResult.Cancel;
+                if (args.IsCanceled()) return HookResult.Cancel;
                 packet = args.Packet;
             }
 
@@ -150,7 +151,7 @@ namespace Orion.Players {
             var packet = Packet.ReadFromStream(stream, PacketContext.Client);
             var args = new PacketSendEventArgs(receiver, packet);
             PacketSend?.Invoke(this, args);
-            if (args.IsCanceled) return HookResult.Cancel;
+            if (args.IsCanceled()) return HookResult.Cancel;
             if (!args.IsDirty) return HookResult.Continue;
 
             var newStream = new MemoryStream();
@@ -178,7 +179,7 @@ namespace Orion.Players {
             var packet = (PlayerConnectPacket)args_.Packet;
             var args = new PlayerConnectEventArgs(args_.Sender, packet);
             PlayerConnect?.Invoke(this, args);
-            args_.IsCanceled = args.IsCanceled;
+            args_.CancellationReason = args.CancellationReason;
         }
 
         private void PlayerDataHandler(PacketReceiveEventArgs args_) {
@@ -187,7 +188,7 @@ namespace Orion.Players {
             var packet = (PlayerDataPacket)args_.Packet;
             var args = new PlayerDataEventArgs(args_.Sender, packet);
             PlayerData?.Invoke(this, args);
-            args_.IsCanceled = args.IsCanceled;
+            args_.CancellationReason = args.CancellationReason;
         }
 
         private void PlayerInventorySlotHandler(PacketReceiveEventArgs args_) {
@@ -196,7 +197,7 @@ namespace Orion.Players {
             var packet = (PlayerInventorySlotPacket)args_.Packet;
             var args = new PlayerInventorySlotEventArgs(args_.Sender, packet);
             PlayerInventorySlot?.Invoke(this, args);
-            args_.IsCanceled = args.IsCanceled;
+            args_.CancellationReason = args.CancellationReason;
         }
 
         private void PlayerJoinHandler(PacketReceiveEventArgs args_) {
@@ -204,7 +205,7 @@ namespace Orion.Players {
 
             var args = new PlayerJoinEventArgs(args_.Sender);
             PlayerJoin?.Invoke(this, args);
-            args_.IsCanceled = args.IsCanceled;
+            args_.CancellationReason = args.CancellationReason;
         }
     }
 }

@@ -24,7 +24,7 @@ namespace Orion.Events.Projectiles {
     /// </summary>
     public sealed class ProjectileUpdateEventArgs : ProjectileEventArgs, ICancelable {
         /// <inheritdoc />
-        public bool IsCanceled { get; set; }
+        public string? CancellationReason { get; set; }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ProjectileUpdateEventArgs"/> class with the specified

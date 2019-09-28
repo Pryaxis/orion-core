@@ -25,7 +25,7 @@ namespace Orion.Events.Npcs {
     /// </summary>
     public sealed class NpcDropLootItemEventArgs : NpcEventArgs, ICancelable {
         /// <inheritdoc />
-        public bool IsCanceled { get; set; }
+        public string? CancellationReason { get; set; }
 
         /// <summary>
         /// Gets or sets the loot item's type.

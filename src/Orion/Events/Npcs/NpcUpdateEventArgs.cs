@@ -24,7 +24,7 @@ namespace Orion.Events.Npcs {
     /// </summary>
     public sealed class NpcUpdateEventArgs : NpcEventArgs, ICancelable {
         /// <inheritdoc />
-        public bool IsCanceled { get; set; }
+        public string? CancellationReason { get; set; }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="NpcUpdateEventArgs"/> class with the specified NPC.

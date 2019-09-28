@@ -20,6 +20,7 @@ using System.Diagnostics;
 using System.Linq;
 using FluentAssertions;
 using Microsoft.Xna.Framework;
+using Orion.Events.Extensions;
 using Xunit;
 
 namespace Orion.Npcs {
@@ -109,7 +110,7 @@ namespace Orion.Npcs {
         [Fact]
         public void NpcSetDefaults_Canceled_IsCorrect() {
             _npcService.NpcSetDefaults += (sender, args) => {
-                args.IsCanceled = true;
+                args.Cancel();
             };
 
             Terraria.Main.npc[0].SetDefaults((int)NpcType.BlueSlime);
@@ -133,7 +134,7 @@ namespace Orion.Npcs {
         [Fact]
         public void NpcSpawn_Canceled_IsCorrect() {
             _npcService.NpcSpawn += (sender, args) => {
-                args.IsCanceled = true;
+                args.Cancel();
             };
 
             var npcIndex = Terraria.NPC.NewNPC(0, 0, (int)NpcType.BlueSlime);
@@ -188,7 +189,7 @@ namespace Orion.Npcs {
         [Fact]
         public void NpcTransform_Canceled_IsCorrect() {
             _npcService.NpcTransform += (sender, args) => {
-                args.IsCanceled = true;
+                args.Cancel();
             };
 
             Terraria.Main.npc[0].Transform((int)NpcType.BlueSlime);
@@ -216,7 +217,7 @@ namespace Orion.Npcs {
         [Fact]
         public void NpcDamage_Canceled_IsCorrect() {
             _npcService.NpcDamage += (sender, args) => {
-                args.IsCanceled = true;
+                args.Cancel();
             };
             Terraria.Main.npc[0].SetDefaults((int)NpcType.BlueSlime);
 
@@ -243,7 +244,7 @@ namespace Orion.Npcs {
         [Fact]
         public void NpcDropLootItem_Canceled_IsCorrect() {
             _npcService.NpcDropLootItem += (sender, args) => {
-                args.IsCanceled = true;
+                args.Cancel();
             };
             Terraria.Main.npc[0].SetDefaults((int)NpcType.BlueSlime);
             Terraria.Main.npc[0].life = 0;

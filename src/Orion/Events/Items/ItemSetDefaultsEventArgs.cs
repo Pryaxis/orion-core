@@ -24,7 +24,7 @@ namespace Orion.Events.Items {
     /// </summary>
     public sealed class ItemSetDefaultsEventArgs : ItemEventArgs, ICancelable {
         /// <inheritdoc />
-        public bool IsCanceled { get; set; }
+        public string? CancellationReason { get; set; }
 
         /// <summary>
         /// Gets or sets the item type.

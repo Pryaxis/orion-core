@@ -20,6 +20,7 @@ using System.Diagnostics;
 using System.Linq;
 using FluentAssertions;
 using Microsoft.Xna.Framework;
+using Orion.Events.Extensions;
 using Xunit;
 
 namespace Orion.Projectiles {
@@ -93,7 +94,7 @@ namespace Orion.Projectiles {
         [Fact]
         public void ProjectileSetDefaults_Canceled_IsCorrect() {
             _projectileService.ProjectileSetDefaults += (sender, args) => {
-                args.IsCanceled = true;
+                args.Cancel();
             };
 
             Terraria.Main.projectile[0].SetDefaults((int)ProjectileType.CrystalBullet);
@@ -130,7 +131,7 @@ namespace Orion.Projectiles {
         [Fact]
         public void ProjectileRemove_Canceled_IsCorrect() {
             _projectileService.ProjectileRemove += (sender, args) => {
-                args.IsCanceled = true;
+                args.Cancel();
             };
             Terraria.Main.projectile[0].SetDefaults((int)ProjectileType.CrystalBullet);
 

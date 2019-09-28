@@ -23,6 +23,7 @@ using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using Microsoft.Xna.Framework;
 using Orion.Events;
+using Orion.Events.Extensions;
 using Orion.Events.Projectiles;
 using OTAPI;
 
@@ -103,7 +104,7 @@ namespace Orion.Projectiles {
             var projectile = new OrionProjectile(terrariaProjectile);
             var args = new ProjectileSetDefaultsEventArgs(projectile, (ProjectileType)projectileType);
             ProjectileSetDefaults?.Invoke(this, args);
-            if (args.IsCanceled) return HookResult.Cancel;
+            if (args.IsCanceled()) return HookResult.Cancel;
 
             projectileType = (int)args.ProjectileType;
             return HookResult.Continue;
@@ -115,7 +116,7 @@ namespace Orion.Projectiles {
             var projectile = new OrionProjectile(terrariaProjectile);
             var args = new ProjectileUpdateEventArgs(projectile);
             ProjectileUpdate?.Invoke(this, args);
-            return args.IsCanceled ? HookResult.Cancel : HookResult.Continue;
+            return args.IsCanceled() ? HookResult.Cancel : HookResult.Continue;
         }
 
         private HookResult PreKillHandler(Terraria.Projectile terrariaProjectile) {
@@ -124,7 +125,7 @@ namespace Orion.Projectiles {
             var projectile = new OrionProjectile(terrariaProjectile);
             var args = new ProjectileRemoveEventArgs(projectile);
             ProjectileRemove?.Invoke(this, args);
-            return args.IsCanceled ? HookResult.Cancel : HookResult.Continue;
+            return args.IsCanceled() ? HookResult.Cancel : HookResult.Continue;
         }
     }
 }

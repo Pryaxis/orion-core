@@ -24,7 +24,7 @@ namespace Orion.Events.Players {
     /// </summary>
     public sealed class PlayerJoinEventArgs : PlayerEventArgs, ICancelable {
         /// <inheritdoc />
-        public bool IsCanceled { get; set; }
+        public string? CancellationReason { get; set; }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="PlayerJoinEventArgs"/> class with the specified player.

@@ -21,6 +21,7 @@ using System.Diagnostics;
 using System.Linq;
 using FluentAssertions;
 using Microsoft.Xna.Framework;
+using Orion.Events.Extensions;
 using Xunit;
 
 namespace Orion.Items {
@@ -94,7 +95,7 @@ namespace Orion.Items {
         [Fact]
         public void ItemSetDefaults_Canceled_IsCorrect() {
             _itemService.ItemSetDefaults += (sender, args) => {
-                args.IsCanceled = true;
+                args.Cancel();
             };
 
             Terraria.Main.item[0].SetDefaults((int)ItemType.Sdmg);
