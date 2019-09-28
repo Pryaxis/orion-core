@@ -41,7 +41,7 @@ namespace Orion.World {
         public unsafe ref Tile this[int x, int y] {
             get {
                 var span = new Span<Tile>(_tileCollection.GetPointer(x, y), 1);
-                return ref MemoryMarshal.GetReference(span);
+                return ref span[0];
             }
         }
 
@@ -90,7 +90,7 @@ namespace Orion.World {
 
             public ITile this[int x, int y] {
                 /*
-                 * To make Tile compatible with ITile, the best solution is to use a bridge type. It's a bad idea to
+                 * To make Tile compatible with ITile, the best solution is to use an adapter. It's a bad idea to
                  * actually implement ITile on the struct, since we'll end up boxing and defeating the whole purpose
                  * of making Tile a struct.
                  *
@@ -98,7 +98,7 @@ namespace Orion.World {
                  * being generated due to these ephemeral TileBridges, but this is the best that we can do while
                  * still preserving OTAPI compatibility.
                  */
-                get => new TileBridge(GetPointer(x, y));
+                get => new TileAdapter(GetPointer(x, y));
 
                 // TODO: this can be optimized by not creating any objects on the heap
                 set => this[x, y].CopyFrom(value);
@@ -123,7 +123,7 @@ namespace Orion.World {
             }
         }
 
-        private sealed unsafe class TileBridge : ITile {
+        private sealed unsafe class TileAdapter : ITile {
             private readonly Tile* _tile;
 
             public ushort type {
@@ -186,7 +186,7 @@ namespace Orion.World {
                 }
             }
 
-            public TileBridge(Tile* tile) {
+            public TileAdapter(Tile* tile) {
                 Debug.Assert(tile != null, "tile != null");
 
                 _tile = tile;
@@ -195,10 +195,10 @@ namespace Orion.World {
             [Pure, ExcludeFromCodeCoverage]
             public object Clone() => MemberwiseClone();
 
-            public void CopyFrom(ITile from) {
-                if (from is TileBridge bridge) {
+            public void CopyFrom(ITile otherTile) {
+                if (otherTile is TileAdapter otherAdapter) {
                     byte* toPtr = (byte*)_tile;
-                    byte* fromPtr = (byte*)bridge._tile;
+                    byte* fromPtr = (byte*)otherAdapter._tile;
 
                     *(int*)toPtr = *(int*)fromPtr;
                     *(int*)(toPtr + 4) = *(int*)(fromPtr + 4);
@@ -206,14 +206,14 @@ namespace Orion.World {
                     return;
                 }
 
-                type = from.type;
-                wall = from.wall;
-                liquid = from.liquid;
-                sTileHeader = from.sTileHeader;
-                bTileHeader = from.bTileHeader;
-                bTileHeader3 = from.bTileHeader3;
-                frameX = from.frameX;
-                frameY = from.frameY;
+                type = otherTile.type;
+                wall = otherTile.wall;
+                liquid = otherTile.liquid;
+                sTileHeader = otherTile.sTileHeader;
+                bTileHeader = otherTile.bTileHeader;
+                bTileHeader3 = otherTile.bTileHeader3;
+                frameX = otherTile.frameX;
+                frameY = otherTile.frameY;
             }
 
             public void ClearEverything() {
@@ -380,7 +380,7 @@ namespace Orion.World {
             }
 
             [Pure]
-            public bool HasSameSlope(ITile tile) => (sTileHeader & 29696) == (tile.sTileHeader & 29696);
+            public bool HasSameSlope(ITile otherTile) => (sTileHeader & 29696) == (otherTile.sTileHeader & 29696);
 
             [Pure]
             public int blockType() {
