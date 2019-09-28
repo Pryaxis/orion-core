@@ -27,8 +27,8 @@ namespace Orion.World {
     [Collection("TerrariaTestsCollection")]
     [SuppressMessage("ReSharper", "UseObjectOrCollectionInitializer")]
     [SuppressMessage("Style", "IDE0017:Simplify object initialization", Justification = "Testing")]
-    public unsafe class OrionWorldServiceTests : IDisposable {
-        private readonly OrionWorldService _worldService;
+    public class OrionWorldServiceTests : IDisposable {
+        private readonly IWorldService _worldService;
 
         public OrionWorldServiceTests() {
             _worldService = new OrionWorldService();
