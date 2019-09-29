@@ -40,8 +40,7 @@ namespace Orion.World.TileEntities {
             set => Wrapped.text = value ?? throw new ArgumentNullException(nameof(value));
         }
 
-        // internal for testing.
-        internal Terraria.Sign Wrapped { get; }
+        public Terraria.Sign Wrapped { get; }
 
         public OrionSign(int signIndex, Terraria.Sign terrariaSign) {
             Debug.Assert(signIndex >= 0 && signIndex < Terraria.Main.maxChests,

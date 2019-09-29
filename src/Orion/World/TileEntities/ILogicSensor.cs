@@ -15,11 +15,13 @@
 // You should have received a copy of the GNU General Public License
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
+using Orion.Utils;
+
 namespace Orion.World.TileEntities {
     /// <summary>
     /// Represents a Terraria logic sensor.
     /// </summary>
-    public interface ILogicSensor : ITileEntity {
+    public interface ILogicSensor : ITileEntity, IWrapped<Terraria.GameContent.Tile_Entities.TELogicSensor> {
         /// <summary>
         /// Gets or sets the sensor's type.
         /// </summary>

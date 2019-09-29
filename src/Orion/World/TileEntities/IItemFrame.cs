@@ -17,12 +17,13 @@
 
 using System;
 using Orion.Items;
+using Orion.Utils;
 
 namespace Orion.World.TileEntities {
     /// <summary>
     /// Represents a Terraria item frame.
     /// </summary>
-    public interface IItemFrame : ITileEntity {
+    public interface IItemFrame : ITileEntity, IWrapped<Terraria.GameContent.Tile_Entities.TEItemFrame> {
         /// <summary>
         /// Gets or sets the item's type.
         /// </summary>

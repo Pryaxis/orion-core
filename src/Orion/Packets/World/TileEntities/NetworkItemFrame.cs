@@ -23,7 +23,7 @@ namespace Orion.Packets.World.TileEntities {
     /// <summary>
     /// Represents an item frame that is transmitted over the network.
     /// </summary>
-    public sealed class NetworkItemFrame : NetworkTileEntity, IItemFrame {
+    public sealed class NetworkItemFrame : NetworkTileEntity {
         private ItemType _itemType;
         private int _itemStackSize;
         private ItemPrefix _itemPrefix;
@@ -31,7 +31,7 @@ namespace Orion.Packets.World.TileEntities {
         /// <inheritdoc />
         public override TileEntityType Type => TileEntityType.ItemFrame;
 
-        /// <inheritdoc />
+        /// <inheritdoc cref="IItemFrame.ItemType"/>
         public ItemType ItemType {
             get => _itemType;
             set {
@@ -40,7 +40,7 @@ namespace Orion.Packets.World.TileEntities {
             }
         }
 
-        /// <inheritdoc />
+        /// <inheritdoc cref="IItemFrame.ItemStackSize"/>
         public int ItemStackSize {
             get => _itemStackSize;
             set {
@@ -49,7 +49,7 @@ namespace Orion.Packets.World.TileEntities {
             }
         }
 
-        /// <inheritdoc />
+        /// <inheritdoc cref="IItemFrame.ItemPrefix"/>
         public ItemPrefix ItemPrefix {
             get => _itemPrefix;
             set {

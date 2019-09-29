@@ -47,8 +47,7 @@ namespace Orion.Entities {
             set => Wrapped.Size = value;
         }
 
-        // internal for testing purposes.
-        internal TTerrariaEntity Wrapped { get; }
+        public TTerrariaEntity Wrapped { get; }
 
         private protected OrionEntity(TTerrariaEntity terrariaEntity) {
             Debug.Assert(terrariaEntity != null, "terrariaEntity != null");

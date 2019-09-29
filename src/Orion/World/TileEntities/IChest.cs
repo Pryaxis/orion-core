@@ -23,7 +23,7 @@ namespace Orion.World.TileEntities {
     /// <summary>
     /// Represents a Terraria chest.
     /// </summary>
-    public interface IChest : ITileEntity {
+    public interface IChest : ITileEntity, IWrapped<Terraria.Chest> {
         /// <summary>
         /// Gets or sets the chest's name.
         /// </summary>

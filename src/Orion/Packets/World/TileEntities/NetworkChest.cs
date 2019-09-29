@@ -26,13 +26,13 @@ namespace Orion.Packets.World.TileEntities {
     /// <summary>
     /// Represents a chest that is transmitted over the network.
     /// </summary>
-    public sealed class NetworkChest : NetworkTileEntity, IChest {
+    public sealed class NetworkChest : NetworkTileEntity {
         private string _name = "";
 
         /// <inheritdoc />
         public override TileEntityType Type => TileEntityType.Chest;
 
-        /// <inheritdoc />
+        /// <inheritdoc cref="IChest.Name"/>
         public string Name {
             get => _name;
             set {
@@ -40,10 +40,6 @@ namespace Orion.Packets.World.TileEntities {
                 IsDirty = true;
             }
         }
-
-        /// <inheritdoc />
-        [ExcludeFromCodeCoverage]
-        public IReadOnlyArray<IItem> Items => throw new InvalidOperationException();
 
         /// <inheritdoc />
         private protected override void ReadFromReaderImpl(BinaryReader reader) {

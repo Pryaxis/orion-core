@@ -26,12 +26,12 @@ namespace Orion.World.TileEntities {
         /// <summary>
         /// Gets the chests.
         /// </summary>
-        IReadOnlyArray<IChest> Chests { get; }
+        IReadOnlyArray<IChest?> Chests { get; }
 
         /// <summary>
         /// Gets the signs.
         /// </summary>
-        IReadOnlyArray<ISign> Signs { get; }
+        IReadOnlyArray<ISign?> Signs { get; }
 
         /// <summary>
         /// Adds and returns a tile entity with the given type at the specified coordinates.

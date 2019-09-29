@@ -16,12 +16,13 @@
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
 using Orion.Entities;
+using Orion.Utils;
 
 namespace Orion.Items {
     /// <summary>
     /// Represents a Terraria item.
     /// </summary>
-    public interface IItem : IEntity {
+    public interface IItem : IEntity, IWrapped<Terraria.Item> {
         /// <summary>
         /// Gets the item's type.
         /// </summary>

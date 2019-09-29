@@ -16,12 +16,13 @@
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
 using System;
+using Orion.Utils;
 
 namespace Orion.World.TileEntities {
     /// <summary>
     /// Represents a Terraria sign.
     /// </summary>
-    public interface ISign : ITileEntity {
+    public interface ISign : ITileEntity, IWrapped<Terraria.Sign> {
         /// <summary>
         /// Gets or sets the sign's text.
         /// </summary>

@@ -36,8 +36,7 @@ namespace Orion.World.TileEntities {
             set => Wrapped.Position = new Terraria.DataStructures.Point16(X, value);
         }
 
-        // internal for testing.
-        internal TTerrariaTileEntity Wrapped { get; }
+        public TTerrariaTileEntity Wrapped { get; }
 
         private protected OrionTileEntity(TTerrariaTileEntity terrariaTileEntity) {
             Debug.Assert(terrariaTileEntity != null, "terrariaTileEntity != null");

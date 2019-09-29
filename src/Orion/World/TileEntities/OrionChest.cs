@@ -43,8 +43,7 @@ namespace Orion.World.TileEntities {
 
         public IReadOnlyArray<IItem> Items { get; }
 
-        // internal for testing.
-        internal Terraria.Chest Wrapped { get; }
+        public Terraria.Chest Wrapped { get; }
 
         public OrionChest(int chestIndex, Terraria.Chest terrariaChest) {
             Debug.Assert(chestIndex >= 0 && chestIndex < Terraria.Main.maxChests,

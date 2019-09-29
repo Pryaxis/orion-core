@@ -23,13 +23,13 @@ namespace Orion.Packets.World.TileEntities {
     /// <summary>
     /// Represents a sign that is transmitted over the network.
     /// </summary>
-    public sealed class NetworkSign : NetworkTileEntity, ISign {
+    public sealed class NetworkSign : NetworkTileEntity {
         private string _text = "";
 
         /// <inheritdoc />
         public override TileEntityType Type => TileEntityType.Sign;
 
-        /// <inheritdoc />
+        /// <inheritdoc cref="ISign.Text"/>
         public string Text {
             get => _text;
             set {

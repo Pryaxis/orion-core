@@ -22,14 +22,14 @@ namespace Orion.Packets.World.TileEntities {
     /// <summary>
     /// Represents a logic sensor that is transmitted over the network.
     /// </summary>
-    public sealed class NetworkLogicSensor : NetworkTileEntity, ILogicSensor {
+    public sealed class NetworkLogicSensor : NetworkTileEntity {
         private LogicSensorType _logicSensorType;
         private bool _isActivated;
 
         /// <inheritdoc />
         public override TileEntityType Type => TileEntityType.LogicSensor;
 
-        /// <inheritdoc />
+        /// <inheritdoc cref="ILogicSensor.LogicSensorType"/>
         public LogicSensorType LogicSensorType {
             get => _logicSensorType;
             set {
@@ -37,8 +37,8 @@ namespace Orion.Packets.World.TileEntities {
                 IsDirty = true;
             }
         }
-
-        /// <inheritdoc />
+        
+        /// <inheritdoc cref="ILogicSensor.IsActivated"/>
         public bool IsActivated {
             get => _isActivated;
             set {

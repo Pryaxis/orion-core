@@ -15,12 +15,14 @@
 // You should have received a copy of the GNU General Public License
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
+using System.Diagnostics.CodeAnalysis;
 using FluentAssertions;
 
 using Microsoft.Xna.Framework;
 using Xunit;
 
 namespace Orion.Entities {
+    [SuppressMessage("Style", "IDE0017:Simplify object initialization", Justification = "Testing")]
     public class OrionEntityTests {
         [Fact]
         public void GetIndex_IsCorrect() {

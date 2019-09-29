@@ -16,12 +16,13 @@
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
 using Orion.Entities;
+using Orion.Utils;
 
 namespace Orion.Projectiles {
     /// <summary>
     /// Represents a Terraria projectile.
     /// </summary>
-    public interface IProjectile : IEntity {
+    public interface IProjectile : IEntity, IWrapped<Terraria.Projectile> {
         /// <summary>
         /// Gets the projectile's type.
         /// </summary>

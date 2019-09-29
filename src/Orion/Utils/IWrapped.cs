@@ -15,23 +15,15 @@
 // You should have received a copy of the GNU General Public License
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
-using Orion.Entities;
-using Orion.Utils;
-
-namespace Orion.Npcs {
+namespace Orion.Utils {
     /// <summary>
-    /// Represents a Terraria NPC.
+    /// Represents an object that wraps another type of object.
     /// </summary>
-    public interface INpc : IEntity, IWrapped<Terraria.NPC> {
+    /// <typeparam name="TWrapped">The wrapped type.</typeparam>
+    public interface IWrapped<out TWrapped> where TWrapped : class {
         /// <summary>
-        /// Gets the NPC's type.
+        /// Gets the wrapped object. This is not required to succeed, so use should be avoided where possible!
         /// </summary>
-        NpcType Type { get; }
-
-        /// <summary>
-        /// Sets the NPC's type. This will update the NPC accordingly.
-        /// </summary>
-        /// <param name="type">The NPC type.</param>
-        void SetType(NpcType type);
+        TWrapped Wrapped { get; }
     }
 }

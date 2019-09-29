@@ -22,13 +22,13 @@ namespace Orion.Packets.World.TileEntities {
     /// <summary>
     /// Represents a target dummy that is transmitted over the network.
     /// </summary>
-    public sealed class NetworkTargetDummy : NetworkTileEntity, ITargetDummy {
+    public sealed class NetworkTargetDummy : NetworkTileEntity {
         private int _npcIndex;
 
         /// <inheritdoc />
         public override TileEntityType Type => TileEntityType.TargetDummy;
 
-        /// <inheritdoc />
+        /// <inheritdoc cref="ITargetDummy.NpcIndex"/>
         public int NpcIndex {
             get => _npcIndex;
             set {

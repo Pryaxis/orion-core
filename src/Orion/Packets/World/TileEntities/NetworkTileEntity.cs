@@ -26,7 +26,7 @@ namespace Orion.Packets.World.TileEntities {
     /// <summary>
     /// Represents a tile entity that is transmitted over the network.
     /// </summary>
-    public abstract class NetworkTileEntity : AnnotatableObject, ITileEntity, IDirtiable {
+    public abstract class NetworkTileEntity : IDirtiable {
         private static readonly Dictionary<TileEntityType, Func<NetworkTileEntity>> Constructors =
             new Dictionary<TileEntityType, Func<NetworkTileEntity>> {
                 [TileEntityType.TargetDummy] = () => new NetworkTargetDummy(),
@@ -41,10 +41,10 @@ namespace Orion.Packets.World.TileEntities {
         private int _x;
         private int _y;
 
-        /// <inheritdoc />
+        /// <inheritdoc cref="ITileEntity.Type"/>
         public abstract TileEntityType Type { get; }
-
-        /// <inheritdoc />
+        
+        /// <inheritdoc cref="ITileEntity.Index"/>
         public int Index {
             get => _index;
             set {
@@ -52,8 +52,8 @@ namespace Orion.Packets.World.TileEntities {
                 IsDirty = true;
             }
         }
-
-        /// <inheritdoc />
+        
+        /// <inheritdoc cref="ITileEntity.X"/>
         public int X {
             get => _x;
             set {
@@ -61,8 +61,8 @@ namespace Orion.Packets.World.TileEntities {
                 IsDirty = true;
             }
         }
-
-        /// <inheritdoc />
+        
+        /// <inheritdoc cref="ITileEntity.Y"/>
         public int Y {
             get => _y;
             set {
@@ -76,7 +76,6 @@ namespace Orion.Packets.World.TileEntities {
 
         // Prevent outside inheritance.
         private protected NetworkTileEntity() { }
-
 
         internal static NetworkTileEntity ReadFromReader(BinaryReader reader, bool shouldIncludeIndex,
                                                          TileEntityType? typeHint = null) {
