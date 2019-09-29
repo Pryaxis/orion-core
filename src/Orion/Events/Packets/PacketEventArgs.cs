@@ -23,7 +23,7 @@ namespace Orion.Events.Packets {
     /// <summary>
     /// Provides data for packet-related events.
     /// </summary>
-    public class PacketEventArgs : EventArgs, ICancelable, IDirtiable {
+    public abstract class PacketEventArgs : EventArgs, ICancelable, IDirtiable {
         private Packet _packet;
         private bool _isDirty;
         

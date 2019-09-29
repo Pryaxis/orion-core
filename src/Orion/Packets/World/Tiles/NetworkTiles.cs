@@ -24,7 +24,7 @@ namespace Orion.Packets.World.Tiles {
     /// <summary>
     /// Represents a section of tiles that are transmitted over the network.
     /// </summary>
-    public class NetworkTiles : IDirtiable {
+    public sealed class NetworkTiles : IDirtiable {
         private readonly Tile[] _tiles;
         private readonly Tile[] _cleanTiles;
 

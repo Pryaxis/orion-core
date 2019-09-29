@@ -25,7 +25,7 @@ namespace Orion.Packets.Modules {
     /// <summary>
     /// Module sent for liquids.
     /// </summary>
-    public class LiquidsModule : Module {
+    public sealed class LiquidsModule : Module {
         private readonly DirtiableList<NetworkLiquid> _liquids = new DirtiableList<NetworkLiquid>();
 
         /// <inheritdoc />

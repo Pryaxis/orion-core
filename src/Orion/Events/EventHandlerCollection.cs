@@ -27,7 +27,7 @@ namespace Orion.Events {
     /// class is immutable.
     /// </summary>
     /// <typeparam name="TEventArgs">The type of event arguments.</typeparam>
-    public class EventHandlerCollection<TEventArgs> where TEventArgs : EventArgs {
+    public sealed class EventHandlerCollection<TEventArgs> where TEventArgs : EventArgs {
         private static readonly IComparer<Registration> _registrationComparer =
             Comparer<Registration>.Create((r1, r2) => r1.Priority.CompareTo(r2.Priority));
 
