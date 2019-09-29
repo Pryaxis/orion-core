@@ -25,11 +25,11 @@ namespace Orion.Utils {
     internal sealed class WrappedNullableReadOnlyArray<T, TWrapped> : IReadOnlyArray<T?>
         where T : class, IWrapped<TWrapped>
         where TWrapped : class {
-        private readonly IList<TWrapped?> _wrappedItems;
+        private readonly TWrapped?[] _wrappedItems;
         private readonly Func<int, TWrapped, T> _converter;
-        private readonly IList<T?> _items;
+        private readonly T?[] _items;
 
-        public int Count => _items.Count;
+        public int Count => _items.Length;
 
         public T? this[int index] {
             get {
@@ -38,21 +38,22 @@ namespace Orion.Utils {
                 var wrappedItem = _wrappedItems[index];
                 if (wrappedItem is null) return null;
 
-                if (_items[index]?.Wrapped != wrappedItem) {
-                    _items[index] = _converter(index, wrappedItem);
+                ref var item = ref _items[index];
+                if (item?.Wrapped != wrappedItem) {
+                    return item = _converter(index, wrappedItem);
                 }
 
-                return _items[index];
+                return item;
             }
         }
 
-        public WrappedNullableReadOnlyArray(IList<TWrapped?> wrappedItems, Func<int, TWrapped, T> converter) {
+        public WrappedNullableReadOnlyArray(TWrapped?[] wrappedItems, Func<int, TWrapped, T> converter) {
             Debug.Assert(wrappedItems != null, "wrappedItems != null");
             Debug.Assert(converter != null, "converter != null");
 
             _wrappedItems = wrappedItems;
             _converter = converter;
-            _items = new T?[_wrappedItems.Count];
+            _items = new T?[_wrappedItems.Length];
         }
 
         public IEnumerator<T?> GetEnumerator() {

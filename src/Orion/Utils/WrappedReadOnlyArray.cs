@@ -26,35 +26,35 @@ namespace Orion.Utils {
     internal sealed class WrappedReadOnlyArray<T, TWrapped> : IReadOnlyArray<T>
         where T : class, IWrapped<TWrapped>
         where TWrapped : class {
-        private readonly IList<TWrapped> _wrappedItems;
+        private readonly TWrapped[] _wrappedItems;
         private readonly Func<int, TWrapped, T> _converter;
-        private readonly IList<T?> _items;
+        private readonly T?[] _items;
 
-        public int Count => _items.Count;
+        public int Count => _items.Length;
 
         public T this[int index] {
             get {
                 if (index < 0 || index >= Count) throw new IndexOutOfRangeException();
 
                 var wrappedItem = _wrappedItems[index];
-                if (_items[index]?.Wrapped != wrappedItem) {
-                    _items[index] = _converter(index, wrappedItem);
+                ref var item = ref _items[index];
+                if (item?.Wrapped != wrappedItem) {
+                    return item = _converter(index, wrappedItem);
                 }
 
-                var item = _items[index];
                 Debug.Assert(item != null, "_items[index] != null");
                 return item;
             }
         }
 
-        public WrappedReadOnlyArray(IList<TWrapped> wrappedItems, Func<int, TWrapped, T> converter) {
+        public WrappedReadOnlyArray(TWrapped[] wrappedItems, Func<int, TWrapped, T> converter) {
             Debug.Assert(wrappedItems != null, "wrappedItems != null");
             Debug.Assert(wrappedItems.All(i => i != null), "wrappedItems.All(i => i != null)");
             Debug.Assert(converter != null, "converter != null");
 
             _wrappedItems = wrappedItems;
             _converter = converter;
-            _items = new T?[_wrappedItems.Count];
+            _items = new T?[_wrappedItems.Length];
         }
 
         public IEnumerator<T> GetEnumerator() {
