@@ -50,7 +50,7 @@ namespace Orion.Entities {
         // internal for testing purposes.
         internal TTerrariaEntity Wrapped { get; }
 
-        protected OrionEntity(TTerrariaEntity terrariaEntity) {
+        private protected OrionEntity(TTerrariaEntity terrariaEntity) {
             Debug.Assert(terrariaEntity != null, "terrariaEntity != null");
 
             Wrapped = terrariaEntity;
