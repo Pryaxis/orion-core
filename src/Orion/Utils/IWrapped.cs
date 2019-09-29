@@ -15,6 +15,8 @@
 // You should have received a copy of the GNU General Public License
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
+using System;
+
 namespace Orion.Utils {
     /// <summary>
     /// Represents an object that wraps another type of object.
@@ -24,6 +26,7 @@ namespace Orion.Utils {
         /// <summary>
         /// Gets the wrapped object. This is not required to succeed, so use should be avoided where possible!
         /// </summary>
+        [Obsolete("Avoid this property if possible.")]
         TWrapped Wrapped { get; }
     }
 }

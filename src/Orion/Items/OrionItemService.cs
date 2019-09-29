@@ -16,49 +16,28 @@
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
-using System.Linq;
 using Microsoft.Xna.Framework;
 using Orion.Events;
 using Orion.Events.Extensions;
 using Orion.Events.Items;
+using Orion.Utils;
 using OTAPI;
 
 namespace Orion.Items {
     internal sealed class OrionItemService : OrionService, IItemService {
-        private readonly IList<Terraria.Item> _terrariaItems;
-        private readonly IList<OrionItem> _items;
-
         [ExcludeFromCodeCoverage] public override string Author => "Pryaxis";
 
-        // Subtract 1 from the count. This is because Terraria has an extra slot.
-        public int Count => _items.Count - 1;
-
-        public IItem this[int index] {
-            get {
-                if (index < 0 || index >= Count) throw new IndexOutOfRangeException();
-
-                if (_items[index]?.Wrapped != _terrariaItems[index]) {
-                    _items[index] = new OrionItem(_terrariaItems[index]);
-                }
-
-                Debug.Assert(_items[index] != null, "_items[index] != null");
-                return _items[index];
-            }
-        }
-
+        public IReadOnlyArray<IItem> Items { get; }
         public EventHandlerCollection<ItemSetDefaultsEventArgs>? ItemSetDefaults { get; set; }
         public EventHandlerCollection<ItemUpdateEventArgs>? ItemUpdate { get; set; }
 
         public OrionItemService() {
-            Debug.Assert(Terraria.Main.item != null, "Terraria.Main.item != null");
-            Debug.Assert(Terraria.Main.item.All(i => i != null), "Terraria.Main.item.All(i => i != null)");
-
-            _terrariaItems = Terraria.Main.item;
-            _items = new OrionItem[_terrariaItems.Count];
+            // Ignore the last item since it is used as a failure slot.
+            Items = new WrappedReadOnlyArray<OrionItem, Terraria.Item>(
+                Terraria.Main.item.AsMemory(..^1),
+                (_, terrariaItem) => new OrionItem(terrariaItem));
 
             Hooks.Item.PreSetDefaultsById = PreSetDefaultsByIdHandler;
             Hooks.Item.PreUpdate = PreUpdateHandler;
@@ -71,15 +50,6 @@ namespace Orion.Items {
             Hooks.Item.PreUpdate = null;
         }
 
-        public IEnumerator<IItem> GetEnumerator() {
-            for (var i = 0; i < Count; ++i) {
-                yield return this[i];
-            }
-        }
-
-        [ExcludeFromCodeCoverage]
-        IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
-
         /// <inheritdoc />
         public IItem? SpawnItem(ItemType itemType, Vector2 position, int stackSize = 1,
                                 ItemPrefix prefix = ItemPrefix.None) {
@@ -91,7 +61,7 @@ namespace Orion.Items {
             var itemIndex =
                 Terraria.Item.NewItem(position, Vector2.Zero, (int)itemType, stackSize, prefixGiven: (int)prefix);
             Terraria.Item.itemCaches[(int)itemType] = oldItemCache;
-            return itemIndex >= 0 && itemIndex < Count ? this[itemIndex] : null;
+            return itemIndex >= 0 && itemIndex < Items.Count ? Items[itemIndex] : null;
         }
 
         private HookResult PreSetDefaultsByIdHandler(Terraria.Item terrariaItem, ref int itemType,

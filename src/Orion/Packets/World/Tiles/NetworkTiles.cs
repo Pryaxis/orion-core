@@ -36,8 +36,8 @@ namespace Orion.Packets.World.Tiles {
                  * SequenceEqual, which is highly optimized for the purpose of comparing the two. This is significantly
                  * faster than just comparing the two naively.
                  */
-                var span = MemoryMarshal.AsBytes(new ReadOnlySpan<Tile>(_tiles));
-                var cleanSpan = MemoryMarshal.AsBytes(new ReadOnlySpan<Tile>(_cleanTiles));
+                var span = MemoryMarshal.AsBytes(_tiles.AsSpan());
+                var cleanSpan = MemoryMarshal.AsBytes(_cleanTiles.AsSpan());
                 return !span.SequenceEqual(cleanSpan);
             }
         }
@@ -95,8 +95,8 @@ namespace Orion.Packets.World.Tiles {
              * CopyTo, which is highly optimized for the purpose of copying. This is significantly faster than just
              * copying naively.
              */
-            var span = MemoryMarshal.AsBytes(new ReadOnlySpan<Tile>(_tiles));
-            var cleanSpan = MemoryMarshal.AsBytes<Tile>(_cleanTiles);
+            var span = MemoryMarshal.AsBytes(_tiles.AsSpan());
+            var cleanSpan = MemoryMarshal.AsBytes(_cleanTiles.AsSpan());
             span.CopyTo(cleanSpan);
         }
     }

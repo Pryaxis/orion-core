@@ -20,13 +20,12 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
-using System.Linq;
 
 namespace Orion.Utils {
     internal sealed class WrappedReadOnlyArray<T, TWrapped> : IReadOnlyArray<T>
         where T : class, IWrapped<TWrapped>
         where TWrapped : class {
-        private readonly TWrapped[] _wrappedItems;
+        private readonly Memory<TWrapped> _wrappedItems;
         private readonly Func<int, TWrapped, T> _converter;
         private readonly T?[] _items;
 
@@ -36,9 +35,11 @@ namespace Orion.Utils {
             get {
                 if (index < 0 || index >= Count) throw new IndexOutOfRangeException();
 
-                var wrappedItem = _wrappedItems[index];
+                ref var wrappedItem = ref _wrappedItems.Span[index];
                 ref var item = ref _items[index];
+#pragma warning disable 618
                 if (item?.Wrapped != wrappedItem) {
+#pragma warning restore 618
                     return item = _converter(index, wrappedItem);
                 }
 
@@ -47,9 +48,11 @@ namespace Orion.Utils {
             }
         }
 
-        public WrappedReadOnlyArray(TWrapped[] wrappedItems, Func<int, TWrapped, T> converter) {
-            Debug.Assert(wrappedItems != null, "wrappedItems != null");
-            Debug.Assert(wrappedItems.All(i => i != null), "wrappedItems.All(i => i != null)");
+        public WrappedReadOnlyArray(Memory<TWrapped> wrappedItems, Func<int, TWrapped, T> converter) {
+            foreach (var wrappedItem in wrappedItems.Span) {
+                Debug.Assert(wrappedItem != null, "wrappedItem != null");
+            }
+
             Debug.Assert(converter != null, "converter != null");
 
             _wrappedItems = wrappedItems;

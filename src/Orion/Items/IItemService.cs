@@ -24,7 +24,12 @@ namespace Orion.Items {
     /// <summary>
     /// Represents an item service. Provides access to item-related events and methods.
     /// </summary>
-    public interface IItemService : IReadOnlyArray<IItem>, IService {
+    public interface IItemService : IService {
+        /// <summary>
+        /// Gets the items.
+        /// </summary>
+        IReadOnlyArray<IItem> Items { get; }
+
         /// <summary>
         /// Gets or sets the event handlers that occur when an item's defaults are being set. This event can be
         /// canceled.

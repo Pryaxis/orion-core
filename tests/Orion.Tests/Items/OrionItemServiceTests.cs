@@ -42,16 +42,16 @@ namespace Orion.Items {
         }
 
         [Fact]
-        public void GetItem_IsCorrect() {
-            var item = _itemService[0];
+        public void Items_GetItem_IsCorrect() {
+            var item = _itemService.Items[0];
 
             ((OrionItem)item).Wrapped.Should().BeSameAs(Terraria.Main.item[0]);
         }
 
         [Fact]
-        public void GetItem_MultipleTimes_ReturnsSameInstance() {
-            var item = _itemService[0];
-            var item2 = _itemService[0];
+        public void Items_GetItem_MultipleTimes_ReturnsSameInstance() {
+            var item = _itemService.Items[0];
+            var item2 = _itemService.Items[0];
 
             item.Should().BeSameAs(item2);
         }
@@ -59,10 +59,19 @@ namespace Orion.Items {
         [Theory]
         [InlineData(-1)]
         [InlineData(10000)]
-        public void GetItem_InvalidIndex_ThrowsIndexOutOfRangeException(int index) {
-            Func<IItem> func = () => _itemService[index];
+        public void Items_GetItem_InvalidIndex_ThrowsIndexOutOfRangeException(int index) {
+            Func<IItem> func = () => _itemService.Items[index];
 
             func.Should().Throw<IndexOutOfRangeException>();
+        }
+
+        [Fact]
+        public void Items_GetEnumerator_IsCorrect() {
+            var items = _itemService.Items.ToList();
+
+            for (var i = 0; i < items.Count; ++i) {
+                ((OrionItem)items[i]).Wrapped.Should().BeSameAs(Terraria.Main.item[i]);
+            }
         }
 
         [Fact]
@@ -114,15 +123,6 @@ namespace Orion.Items {
             Terraria.Main.item[0].UpdateItem(0);
 
             isRun.Should().BeTrue();
-        }
-
-        [Fact]
-        public void GetEnumerator_IsCorrect() {
-            var items = _itemService.ToList();
-
-            for (var i = 0; i < items.Count; ++i) {
-                ((OrionItem)items[i]).Wrapped.Should().BeSameAs(Terraria.Main.item[i]);
-            }
         }
 
         public static readonly IEnumerable<object[]> SpawnItemData = new List<object[]> {

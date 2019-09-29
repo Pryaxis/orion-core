@@ -25,7 +25,7 @@ namespace Orion.Utils {
     internal sealed class WrappedNullableReadOnlyArray<T, TWrapped> : IReadOnlyArray<T?>
         where T : class, IWrapped<TWrapped>
         where TWrapped : class {
-        private readonly TWrapped?[] _wrappedItems;
+        private readonly Memory<TWrapped?> _wrappedItems;
         private readonly Func<int, TWrapped, T> _converter;
         private readonly T?[] _items;
 
@@ -35,11 +35,13 @@ namespace Orion.Utils {
             get {
                 if (index < 0 || index >= Count) throw new IndexOutOfRangeException();
 
-                var wrappedItem = _wrappedItems[index];
+                ref var wrappedItem = ref _wrappedItems.Span[index];
                 if (wrappedItem is null) return null;
 
                 ref var item = ref _items[index];
+#pragma warning disable 618
                 if (item?.Wrapped != wrappedItem) {
+#pragma warning restore 618
                     return item = _converter(index, wrappedItem);
                 }
 
@@ -47,8 +49,7 @@ namespace Orion.Utils {
             }
         }
 
-        public WrappedNullableReadOnlyArray(TWrapped?[] wrappedItems, Func<int, TWrapped, T> converter) {
-            Debug.Assert(wrappedItems != null, "wrappedItems != null");
+        public WrappedNullableReadOnlyArray(Memory<TWrapped?> wrappedItems, Func<int, TWrapped, T> converter) {
             Debug.Assert(converter != null, "converter != null");
 
             _wrappedItems = wrappedItems;
