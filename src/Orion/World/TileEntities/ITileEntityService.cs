@@ -34,44 +34,13 @@ namespace Orion.World.TileEntities {
         IReadOnlyArray<ISign> Signs { get; }
 
         /// <summary>
-        /// Adds and returns a chest at the given coordinates.
+        /// Adds and returns a tile entity with the given type at the specified coordinates.
         /// </summary>
+        /// <param name="tileEntityType">The tile entity type.</param>
         /// <param name="x">The X coordinate.</param>
         /// <param name="y">The Y coordinate.</param>
-        /// <returns>The resulting chest, or <c>null</c> if none was added.</returns>
-        IChest? AddChest(int x, int y);
-
-        /// <summary>
-        /// Adds and returns a sign at the given coordinates.
-        /// </summary>
-        /// <param name="x">The X coordinate.</param>
-        /// <param name="y">The Y coordinate.</param>
-        /// <returns>The resulting sign, or <c>null</c> if none was added.</returns>
-        ISign? AddSign(int x, int y);
-
-        /// <summary>
-        /// Adds and returns a target dummy at the given coordinates.
-        /// </summary>
-        /// <param name="x">The X coordinate.</param>
-        /// <param name="y">The Y coordinate.</param>
-        /// <returns>The resulting target dummy, or <c>null</c> if none was added.</returns>
-        ITargetDummy? AddTargetDummy(int x, int y);
-
-        /// <summary>
-        /// Adds and returns an item frame at the given coordinates.
-        /// </summary>
-        /// <param name="x">The X coordinate.</param>
-        /// <param name="y">The Y coordinate.</param>
-        /// <returns>The resulting item frame, or <c>null</c> if none was added.</returns>
-        IItemFrame? AddItemFrame(int x, int y);
-
-        /// <summary>
-        /// Adds and returns a logic sensor at the given coordinates.
-        /// </summary>
-        /// <param name="x">The X coordinate.</param>
-        /// <param name="y">The Y coordinate.</param>
-        /// <returns>The resulting logic sensor, or <c>null</c> if none was added.</returns>
-        ILogicSensor? AddLogicSensor(int x, int y);
+        /// <returns>The resulting tile entity, or <c>null</c> if none was found.</returns>
+        ITileEntity? AddTileEntity(TileEntityType tileEntityType, int x, int y);
 
         /// <summary>
         /// Returns the tile entity at the given coordinates.
