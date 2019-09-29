@@ -22,14 +22,6 @@ using Xunit;
 namespace Orion.Events {
     public class EventHandlerCollectionTests {
         [Fact]
-        public void Invoke_ExceptionIsSwallowed() {
-            EventHandlerCollection<TestEventArgs>? collection = null;
-            collection += TestHandler3;
-
-            collection.Invoke(this, new TestEventArgs());
-        }
-
-        [Fact]
         public void Invoke_NullArgs_ThrowsArgumentNullException() {
             EventHandlerCollection<TestEventArgs>? collection = null;
             collection += TestHandler;
@@ -106,10 +98,6 @@ namespace Orion.Events {
         [EventHandler(EventPriority.Highest)]
         private static void TestHandler2(object? sender, TestEventArgs args) {
             args.Value = 200;
-        }
-
-        private static void TestHandler3(object? sender, TestEventArgs args) {
-            throw new InvalidOperationException();
         }
 
         private class TestEventArgs : EventArgs {

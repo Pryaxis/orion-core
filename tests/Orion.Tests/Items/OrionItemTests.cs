@@ -16,10 +16,12 @@
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 using FluentAssertions;
 using Xunit;
 
 namespace Orion.Items {
+    [SuppressMessage("Style", "IDE0017:Simplify object initialization", Justification = "Testing")]
     public class OrionItemTests {
         [Fact]
         public void GetName_IsCorrect() {

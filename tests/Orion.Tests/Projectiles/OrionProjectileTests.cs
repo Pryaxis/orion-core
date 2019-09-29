@@ -16,12 +16,14 @@
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 using FluentAssertions;
 using Orion.World.Tiles;
 using Xunit;
 
 namespace Orion.Projectiles {
     [Collection("TerrariaTestsCollection")]
+    [SuppressMessage("Style", "IDE0017:Simplify object initialization", Justification = "Testing")]
     public class OrionProjectileTests {
         /*
          * TODO: this test requires language localization, which fails for .NET core projects currently
