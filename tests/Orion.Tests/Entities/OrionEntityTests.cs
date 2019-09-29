@@ -26,8 +26,8 @@ namespace Orion.Entities {
     public class OrionEntityTests {
         [Fact]
         public void GetIndex_IsCorrect() {
-            var terrariaEntity = new TestTerrariaEntity {whoAmI = 100};
-            IEntity entity = new TestOrionEntity(terrariaEntity);
+            var terrariaEntity = new TestTerrariaEntity();
+            IEntity entity = new TestOrionEntity(100, terrariaEntity);
 
             entity.Index.Should().Be(100);
         }
@@ -111,7 +111,10 @@ namespace Orion.Entities {
         private class TestOrionEntity : OrionEntity<TestTerrariaEntity> {
             public override string Name { get; set; } = "test";
 
-            public TestOrionEntity( TestTerrariaEntity terrariaEntity) : base(terrariaEntity) { }
+            public TestOrionEntity(TestTerrariaEntity terrariaEntity) : this(-1, terrariaEntity) { }
+
+            public TestOrionEntity(int entityIndex, TestTerrariaEntity terrariaEntity)
+                : base(entityIndex, terrariaEntity) { }
         }
 
         private class TestTerrariaEntity : TerrariaEntity { }

@@ -45,9 +45,10 @@ namespace Orion.Items {
 
         [Fact]
         public void Items_GetItem_IsCorrect() {
-            var item = _itemService.Items[0];
-
-            ((OrionItem)item).Wrapped.Should().BeSameAs(Main.item[0]);
+            var item = _itemService.Items[1];
+            
+            item.Index.Should().Be(1);
+            ((OrionItem)item).Wrapped.Should().BeSameAs(Main.item[1]);
         }
 
         [Fact]

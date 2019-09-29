@@ -22,9 +22,9 @@ using TerrariaEntity = Terraria.Entity;
 
 namespace Orion.Entities {
     // OrionEntity is generic so that we only use a single wrapped field instead of two wrapped fields per entity.
-    internal abstract class OrionEntity<TTerrariaEntity> : AnnotatableObject, IEntity
+    internal abstract class OrionEntity<TTerrariaEntity> : AnnotatableObject, IEntity, IWrapping<TTerrariaEntity>
         where TTerrariaEntity : TerrariaEntity {
-        public int Index => Wrapped.whoAmI;
+        public int Index { get; }
 
         public bool IsActive {
             get => Wrapped.active;
@@ -50,9 +50,10 @@ namespace Orion.Entities {
 
         public TTerrariaEntity Wrapped { get; }
 
-        private protected OrionEntity(TTerrariaEntity terrariaEntity) {
+        private protected OrionEntity(int entityIndex, TTerrariaEntity terrariaEntity) {
             Debug.Assert(terrariaEntity != null, "terrariaEntity != null");
 
+            Index = entityIndex;
             Wrapped = terrariaEntity;
         }
     }

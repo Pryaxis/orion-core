@@ -44,9 +44,10 @@ namespace Orion.Players {
 
         [Fact]
         public void Players_GetItem_IsCorrect() {
-            var player = _playerService.Players[0];
+            var player = _playerService.Players[1];
 
-            ((OrionPlayer)player).Wrapped.Should().BeSameAs(Main.player[0]);
+            player.Index.Should().Be(1);
+            ((OrionPlayer)player).Wrapped.Should().BeSameAs(Main.player[1]);
         }
 
         [Fact]

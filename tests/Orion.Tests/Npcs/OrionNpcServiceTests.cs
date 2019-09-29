@@ -60,9 +60,10 @@ namespace Orion.Npcs {
 
         [Fact]
         public void Npcs_GetItem_IsCorrect() {
-            var npc = _npcService.Npcs[0];
+            var npc = _npcService.Npcs[1];
 
-            ((OrionNpc)npc).Wrapped.Should().BeSameAs(Main.npc[0]);
+            npc.Index.Should().Be(1);
+            ((OrionNpc)npc).Wrapped.Should().BeSameAs(Main.npc[1]);
         }
 
         [Fact]

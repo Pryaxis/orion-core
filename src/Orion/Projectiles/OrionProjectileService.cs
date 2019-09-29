@@ -40,7 +40,7 @@ namespace Orion.Projectiles {
             // Ignore the last projectile since it is used as a failure slot.
             Projectiles = new WrappedReadOnlyArray<OrionProjectile, TerrariaProjectile>(
                 Main.projectile.AsMemory(..^1),
-                (_, terrariaProjectile) => new OrionProjectile(terrariaProjectile));
+                (projectileIndex, terrariaProjectile) => new OrionProjectile(projectileIndex, terrariaProjectile));
 
             Hooks.Projectile.PreSetDefaultsById = PreSetDefaultsByIdHandler;
             Hooks.Projectile.PreUpdate = PreUpdateHandler;
@@ -70,10 +70,19 @@ namespace Orion.Projectiles {
             return projectileIndex >= 0 && projectileIndex < Projectiles.Count ? Projectiles[projectileIndex] : null;
         }
 
+        private IProjectile GetProjectile(TerrariaProjectile terrariaProjectile) {
+            Debug.Assert(terrariaProjectile.whoAmI >= 0 && terrariaProjectile.whoAmI < Projectiles.Count,
+                         "terrariaProjectile.whoAmI >= 0 && terrariaProjectile.whoAmI < Projectiles.Count");
+
+            return terrariaProjectile == Main.projectile[terrariaProjectile.whoAmI]
+                ? Projectiles[terrariaProjectile.whoAmI]
+                : new OrionProjectile(terrariaProjectile);
+        }
+
         private HookResult PreSetDefaultsByIdHandler(TerrariaProjectile terrariaProjectile, ref int projectileType) {
             Debug.Assert(terrariaProjectile != null, "terrariaProjectile != null");
 
-            var projectile = new OrionProjectile(terrariaProjectile);
+            var projectile = GetProjectile(terrariaProjectile);
             var args = new ProjectileSetDefaultsEventArgs(projectile, (ProjectileType)projectileType);
             ProjectileSetDefaults?.Invoke(this, args);
             if (args.IsCanceled()) return HookResult.Cancel;
@@ -82,11 +91,11 @@ namespace Orion.Projectiles {
             return HookResult.Continue;
         }
 
-        private HookResult PreUpdateHandler(TerrariaProjectile terrariaProjectile, ref int projectileIndex) {
-            Debug.Assert(terrariaProjectile != null, "terrariaProjectile != null");
+        private HookResult PreUpdateHandler(TerrariaProjectile _, ref int projectileIndex) {
+            Debug.Assert(projectileIndex >= 0 && projectileIndex < Projectiles.Count,
+                         "projectileIndex >= 0 && projectileIndex < Projectiles.Count");
 
-            var projectile = new OrionProjectile(terrariaProjectile);
-            var args = new ProjectileUpdateEventArgs(projectile);
+            var args = new ProjectileUpdateEventArgs(Projectiles[projectileIndex]);
             ProjectileUpdate?.Invoke(this, args);
             return args.IsCanceled() ? HookResult.Cancel : HookResult.Continue;
         }
@@ -94,7 +103,7 @@ namespace Orion.Projectiles {
         private HookResult PreKillHandler(TerrariaProjectile terrariaProjectile) {
             Debug.Assert(terrariaProjectile != null, "terrariaProjectile != null");
 
-            var projectile = new OrionProjectile(terrariaProjectile);
+            var projectile = GetProjectile(terrariaProjectile);
             var args = new ProjectileRemoveEventArgs(projectile);
             ProjectileRemove?.Invoke(this, args);
             return args.IsCanceled() ? HookResult.Cancel : HookResult.Continue;

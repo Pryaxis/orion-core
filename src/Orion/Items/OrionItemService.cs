@@ -39,7 +39,7 @@ namespace Orion.Items {
             // Ignore the last item since it is used as a failure slot.
             Items = new WrappedReadOnlyArray<OrionItem, TerrariaItem>(
                 Main.item.AsMemory(..^1),
-                (_, terrariaItem) => new OrionItem(terrariaItem));
+                (itemIndex, terrariaItem) => new OrionItem(itemIndex, terrariaItem));
 
             Hooks.Item.PreSetDefaultsById = PreSetDefaultsByIdHandler;
             Hooks.Item.PreUpdate = PreUpdateHandler;
@@ -52,11 +52,10 @@ namespace Orion.Items {
             Hooks.Item.PreUpdate = null;
         }
 
-        /// <inheritdoc />
         public IItem? SpawnItem(ItemType itemType, Vector2 position, int stackSize = 1,
                                 ItemPrefix prefix = ItemPrefix.None) {
-            // Terraria has a mechanism of item caching which allows, for instance, The Plan to drop all wires at once.
-            // We need to disable that temporarily so that our item *definitely* spawns.
+            // Terraria has a mechanism of item caching which allows, for instance, the Grand Design to drop all wires
+            // at once. We need to disable that temporarily so that our item *definitely* spawns.
             var oldItemCache = TerrariaItem.itemCaches[(int)itemType];
             TerrariaItem.itemCaches[(int)itemType] = -1;
 
@@ -66,11 +65,19 @@ namespace Orion.Items {
             return itemIndex >= 0 && itemIndex < Items.Count ? Items[itemIndex] : null;
         }
 
-        private HookResult PreSetDefaultsByIdHandler(TerrariaItem terrariaItem, ref int itemType,
-                                                     ref bool noMaterialCheck) {
+        private IItem GetItem(TerrariaItem terrariaItem) {
+            Debug.Assert(terrariaItem.whoAmI >= 0 && terrariaItem.whoAmI < Items.Count,
+                         "terrariaItem.whoAmI >= 0 && terrariaItem.whoAmI < Items.Count");
+
+            return terrariaItem == Main.item[terrariaItem.whoAmI]
+                ? Items[terrariaItem.whoAmI]
+                : new OrionItem(terrariaItem);
+        }
+
+        private HookResult PreSetDefaultsByIdHandler(TerrariaItem terrariaItem, ref int itemType, ref bool _) {
             Debug.Assert(terrariaItem != null, "terrariaItem != null");
 
-            var item = new OrionItem(terrariaItem);
+            var item = GetItem(terrariaItem);
             var args = new ItemSetDefaultsEventArgs(item, (ItemType)itemType);
             ItemSetDefaults?.Invoke(this, args);
             if (args.IsCanceled()) return HookResult.Cancel;
@@ -81,9 +88,12 @@ namespace Orion.Items {
 
         private HookResult PreUpdateHandler(TerrariaItem terrariaItem, ref int itemIndex) {
             Debug.Assert(terrariaItem != null, "terrariaItem != null");
+            Debug.Assert(itemIndex >= 0 && itemIndex < Items.Count, "itemIndex >= 0 && itemIndex < Items.Count");
 
-            var item = new OrionItem(terrariaItem);
-            var args = new ItemUpdateEventArgs(item);
+            // Set terrariaItem.whoAmI since this is never done in vanilla.
+            terrariaItem.whoAmI = itemIndex;
+
+            var args = new ItemUpdateEventArgs(Items[itemIndex]);
             ItemUpdate?.Invoke(this, args);
             return args.IsCanceled() ? HookResult.Cancel : HookResult.Continue;
         }

@@ -30,7 +30,10 @@ namespace Orion.Projectiles {
 
         public ProjectileType Type => (ProjectileType)Wrapped.type;
 
-        public OrionProjectile(TerrariaProjectile terrariaEntity) : base(terrariaEntity) { }
+        public OrionProjectile(TerrariaProjectile terrariaProjectile) : this(-1, terrariaProjectile) { }
+
+        public OrionProjectile(int projectileIndex, TerrariaProjectile terrariaProjectile)
+            : base(projectileIndex, terrariaProjectile) { }
 
         public void SetType(ProjectileType type) {
             Wrapped.SetDefaults((int)type);

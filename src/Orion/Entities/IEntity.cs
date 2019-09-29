@@ -25,7 +25,7 @@ namespace Orion.Entities {
     /// </summary>
     public interface IEntity : IAnnotatable {
         /// <summary>
-        /// Gets the entity's index.
+        /// Gets the entity's index. A value of -1 indicates that the entity is not "real".
         /// </summary>
         int Index { get; }
 

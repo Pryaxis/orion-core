@@ -44,9 +44,10 @@ namespace Orion.Projectiles {
 
         [Fact]
         public void Projectiles_GetItem_IsCorrect() {
-            var projectile = _projectileService.Projectiles[0];
+            var projectile = _projectileService.Projectiles[1];
 
-            ((OrionProjectile)projectile).Wrapped.Should().BeSameAs(Main.projectile[0]);
+            projectile.Index.Should().Be(1);
+            ((OrionProjectile)projectile).Wrapped.Should().BeSameAs(Main.projectile[1]);
         }
 
         [Fact]

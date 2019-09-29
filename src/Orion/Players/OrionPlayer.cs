@@ -35,7 +35,8 @@ namespace Orion.Players {
         public IPlayerStats Stats => throw new NotImplementedException();
         public IPlayerInventory Inventory => throw new NotImplementedException();
 
-        public OrionPlayer(TerrariaPlayer terrariaPlayer) : base(terrariaPlayer) { }
+        public OrionPlayer(TerrariaPlayer terrariaPlayer) : this(-1, terrariaPlayer) { }
+        public OrionPlayer(int playerIndex, TerrariaPlayer terrariaPlayer) : base(playerIndex, terrariaPlayer) { }
 
         public void SendPacket(Packet packet) {
             throw new NotImplementedException();

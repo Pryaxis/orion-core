@@ -49,7 +49,7 @@ namespace Orion.Npcs {
             // Ignore the last NPC since it is used as a failure slot.
             Npcs = new WrappedReadOnlyArray<OrionNpc, TerrariaNpc>(
                 Main.npc.AsMemory(..^1),
-                (_, terrariaNpc) => new OrionNpc(terrariaNpc));
+                (npcIndex, terrariaNpc) => new OrionNpc(npcIndex, terrariaNpc));
 
             Hooks.Npc.PreSetDefaultsById = PreSetDefaultsByIdHandler;
             Hooks.Npc.Spawn = SpawnHandler;
@@ -87,7 +87,16 @@ namespace Orion.Npcs {
             return npcIndex >= 0 && npcIndex < Npcs.Count ? Npcs[npcIndex] : null;
         }
 
-        private HookResult PreSetDefaultsByIdHandler(TerrariaNpc terrariaNpc, ref int type, ref float scaleOverride) {
+        private INpc GetNpc(TerrariaNpc terrariaNpc) {
+            Debug.Assert(terrariaNpc.whoAmI >= 0 && terrariaNpc.whoAmI < Npcs.Count,
+                         "terrariaNpc.whoAmI >= 0 && terrariaNpc.whoAmI < Npcs.Count");
+
+            return terrariaNpc == Main.npc[terrariaNpc.whoAmI]
+                ? Npcs[terrariaNpc.whoAmI]
+                : new OrionNpc(terrariaNpc);
+        }
+
+        private HookResult PreSetDefaultsByIdHandler(TerrariaNpc terrariaNpc, ref int npcType, ref float _) {
             Debug.Assert(terrariaNpc != null, "terrariaNpc != null");
 
             if (_setDefaultsToIgnore.Value > 0) {
@@ -95,14 +104,14 @@ namespace Orion.Npcs {
                 return HookResult.Continue;
             }
 
-            var npc = new OrionNpc(terrariaNpc);
-            var args = new NpcSetDefaultsEventArgs(npc, (NpcType)type);
+            var npc = GetNpc(terrariaNpc);
+            var args = new NpcSetDefaultsEventArgs(npc, (NpcType)npcType);
             NpcSetDefaults?.Invoke(this, args);
             if (args.IsCanceled()) return HookResult.Cancel;
 
             // Ignore two calls to SetDefaults() if type is negative. This is because SetDefaults gets called twice:
             // once with 0, and once with the base type.
-            if ((type = (int)args.NpcType) < 0) {
+            if ((npcType = (int)args.NpcType) < 0) {
                 _setDefaultsToIgnore.Value = 2;
             }
 
@@ -125,33 +134,32 @@ namespace Orion.Npcs {
             return HookResult.Continue;
         }
 
-        private HookResult PreUpdateHandler(TerrariaNpc terrariaNpc, ref int npcIndex) {
-            Debug.Assert(terrariaNpc != null, "terrariaNpc != null");
+        private HookResult PreUpdateHandler(TerrariaNpc _, ref int npcIndex) {
+            Debug.Assert(npcIndex >= 0 && npcIndex < Npcs.Count, "npcIndex >= 0 && npcIndex < Npcs.Count");
 
-            var npc = new OrionNpc(terrariaNpc);
-            var args = new NpcUpdateEventArgs(npc);
+            var args = new NpcUpdateEventArgs(Npcs[npcIndex]);
             NpcUpdate?.Invoke(this, args);
             return args.IsCanceled() ? HookResult.Cancel : HookResult.Continue;
         }
 
-        private HookResult PreTransformHandler(TerrariaNpc terrariaNpc, ref int newType) {
+        private HookResult PreTransformHandler(TerrariaNpc terrariaNpc, ref int npcNewType) {
             Debug.Assert(terrariaNpc != null, "terrariaNpc != null");
 
-            var npc = new OrionNpc(terrariaNpc);
-            var args = new NpcTransformEventArgs(npc, (NpcType)newType);
+            var npc = GetNpc(terrariaNpc);
+            var args = new NpcTransformEventArgs(npc, (NpcType)npcNewType);
             NpcTransform?.Invoke(this, args);
             if (args.IsCanceled()) return HookResult.Cancel;
 
-            newType = (int)args.NpcNewType;
+            npcNewType = (int)args.NpcNewType;
             return HookResult.Continue;
         }
 
-        private HookResult StrikeHandler(TerrariaNpc terrariaNpc, ref double cancelResult, ref int damage,
-                                         ref float knockback, ref int hitDirection, ref bool isCriticalHit,
-                                         ref bool noEffect, ref bool fromNetwork, TerrariaEntity damagingEntity) {
+        private HookResult StrikeHandler(TerrariaNpc terrariaNpc, ref double _, ref int damage, ref float knockback,
+                                         ref int hitDirection, ref bool isCriticalHit, ref bool _2, ref bool _3,
+                                         TerrariaEntity _4) {
             Debug.Assert(terrariaNpc != null, "terrariaNpc != null");
 
-            var npc = new OrionNpc(terrariaNpc);
+            var npc = GetNpc(terrariaNpc);
             var args = new NpcDamageEventArgs(npc) {
                 Damage = damage,
                 Knockback = knockback,
@@ -168,31 +176,30 @@ namespace Orion.Npcs {
             return HookResult.Continue;
         }
 
-        private HookResult PreDropLootHandler(TerrariaNpc terrariaNpc, ref int itemIndex, ref int x, ref int y,
-                                              ref int width, ref int height, ref int type, ref int stack,
-                                              ref bool noBroadcast, ref int prefix, ref bool noGrabDelay,
-                                              ref bool reverseLookup) {
+        private HookResult PreDropLootHandler(TerrariaNpc terrariaNpc, ref int _, ref int _2, ref int _3, ref int _4,
+                                              ref int _5, ref int itemType, ref int itemStackSize, ref bool _6,
+                                              ref int itemPrefix, ref bool _7, ref bool _8) {
             Debug.Assert(terrariaNpc != null, "terrariaNpc != null");
 
-            var npc = new OrionNpc(terrariaNpc);
+            var npc = GetNpc(terrariaNpc);
             var args = new NpcDropLootItemEventArgs(npc) {
-                LootItemType = (ItemType)type,
-                LootItemStackSize = stack,
-                LootItemPrefix = (ItemPrefix)prefix
+                LootItemType = (ItemType)itemType,
+                LootItemStackSize = itemStackSize,
+                LootItemPrefix = (ItemPrefix)itemPrefix
             };
             NpcDropLootItem?.Invoke(this, args);
             if (args.IsCanceled()) return HookResult.Cancel;
 
-            type = (int)args.LootItemType;
-            stack = args.LootItemStackSize;
-            prefix = (int)args.LootItemPrefix;
+            itemType = (int)args.LootItemType;
+            itemStackSize = args.LootItemStackSize;
+            itemPrefix = (int)args.LootItemPrefix;
             return HookResult.Continue;
         }
 
         private void KilledHandler(TerrariaNpc terrariaNpc) {
             Debug.Assert(terrariaNpc != null, "terrariaNpc != null");
 
-            var npc = new OrionNpc(terrariaNpc);
+            var npc = GetNpc(terrariaNpc);
             var args = new NpcKilledEventArgs(npc);
             NpcKilled?.Invoke(this, args);
         }
