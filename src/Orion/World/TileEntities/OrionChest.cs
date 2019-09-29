@@ -52,7 +52,8 @@ namespace Orion.World.TileEntities {
 
             Index = chestIndex;
             Wrapped = terrariaChest;
-            Items = new OrionItemArray(Wrapped.item);
+            Items = new WrappedReadOnlyArray<OrionItem, Terraria.Item>(
+                Wrapped.item, (_, terrariaItem) => new OrionItem(terrariaItem));
         }
     }
 }

@@ -28,10 +28,10 @@ namespace Orion.World.TileEntities {
             Debug.Assert(Terraria.Main.chest != null, "Terraria.Main.chest != null");
             Debug.Assert(Terraria.Main.sign != null, "Terraria.Main.sign != null");
 
-            Chests = new WrappedReadOnlyArray<OrionChest, Terraria.Chest>(
+            Chests = new WrappedNullableReadOnlyArray<OrionChest, Terraria.Chest>(
                 Terraria.Main.chest,
                 (chestIndex, terrariaChest) => new OrionChest(chestIndex, terrariaChest));
-            Signs = new WrappedReadOnlyArray<OrionSign, Terraria.Sign>(
+            Signs = new WrappedNullableReadOnlyArray<OrionSign, Terraria.Sign>(
                 Terraria.Main.sign,
                 (signIndex, terrariaSign) => new OrionSign(signIndex, terrariaSign));
         }

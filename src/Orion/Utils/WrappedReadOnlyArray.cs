@@ -20,33 +20,36 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
+using System.Linq;
 
 namespace Orion.Utils {
-    internal sealed class WrappedReadOnlyArray<T, TWrapped> : IReadOnlyArray<T?> where T : class, IWrapped<TWrapped> 
-                                                                                 where TWrapped : class {
-        private readonly IList<TWrapped?> _wrappedItems;
+    internal sealed class WrappedReadOnlyArray<T, TWrapped> : IReadOnlyArray<T>
+        where T : class, IWrapped<TWrapped>
+        where TWrapped : class {
+        private readonly IList<TWrapped> _wrappedItems;
         private readonly Func<int, TWrapped, T> _converter;
         private readonly IList<T?> _items;
 
         public int Count => _items.Count;
 
-        public T? this[int index] {
+        public T this[int index] {
             get {
                 if (index < 0 || index >= Count) throw new IndexOutOfRangeException();
 
                 var wrappedItem = _wrappedItems[index];
-                if (wrappedItem is null) return null;
-
                 if (_items[index]?.Wrapped != wrappedItem) {
                     _items[index] = _converter(index, wrappedItem);
                 }
 
-                return _items[index];
+                var item = _items[index];
+                Debug.Assert(item != null, "_items[index] != null");
+                return item;
             }
         }
 
-        public WrappedReadOnlyArray(IList<TWrapped?> wrappedItems, Func<int, TWrapped, T> converter) {
+        public WrappedReadOnlyArray(IList<TWrapped> wrappedItems, Func<int, TWrapped, T> converter) {
             Debug.Assert(wrappedItems != null, "wrappedItems != null");
+            Debug.Assert(wrappedItems.All(i => i != null), "wrappedItems.All(i => i != null)");
             Debug.Assert(converter != null, "converter != null");
 
             _wrappedItems = wrappedItems;
@@ -54,7 +57,7 @@ namespace Orion.Utils {
             _items = new T?[_wrappedItems.Count];
         }
 
-        public IEnumerator<T?> GetEnumerator() {
+        public IEnumerator<T> GetEnumerator() {
             for (var i = 0; i < Count; ++i) {
                 yield return this[i];
             }
