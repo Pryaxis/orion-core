@@ -19,12 +19,13 @@ using System;
 using Orion.Entities;
 using Orion.Packets;
 using Orion.Utils;
+using TerrariaPlayer = Terraria.Player;
 
 namespace Orion.Players {
     /// <summary>
     /// Represents a Terraria player.
     /// </summary>
-    public interface IPlayer : IEntity, IWrapping<Terraria.Player> {
+    public interface IPlayer : IEntity, IWrapping<TerrariaPlayer> {
         /// <summary>
         /// Gets or sets the player's team.
         /// </summary>

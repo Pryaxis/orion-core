@@ -24,6 +24,7 @@ using Orion.Launcher.Properties;
 using Orion.World;
 using Serilog;
 using Serilog.Sinks.SystemConsole.Themes;
+using Main = Terraria.Main;
 
 namespace Orion.Launcher {
     internal class Program {
@@ -89,7 +90,7 @@ namespace Orion.Launcher {
             SetupPlugins(kernel);
             SetupLanguage();
 
-            using var game = new Terraria.Main();
+            using var game = new Main();
             game.DedServ();
         }
     }

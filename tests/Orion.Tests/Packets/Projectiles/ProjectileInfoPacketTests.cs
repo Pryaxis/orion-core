@@ -20,6 +20,7 @@ using FluentAssertions;
 using Microsoft.Xna.Framework;
 using Orion.Projectiles;
 using Xunit;
+using TerrariaProjectile = Terraria.Projectile;
 
 namespace Orion.Packets.Projectiles {
     public class ProjectileInfoPacketTests {
@@ -42,7 +43,7 @@ namespace Orion.Packets.Projectiles {
         public void ProjectileAiValues_Count_IsCorrect() {
             var packet = new ProjectileInfoPacket();
 
-            packet.ProjectileAiValues.Count.Should().Be(Terraria.Projectile.maxAI);
+            packet.ProjectileAiValues.Count.Should().Be(TerrariaProjectile.maxAI);
         }
 
 

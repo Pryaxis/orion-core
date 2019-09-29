@@ -22,6 +22,8 @@ using Microsoft.Xna.Framework;
 using Orion.Items;
 using Orion.Packets.Players;
 using Xunit;
+using Main = Terraria.Main;
+using TerrariaPlayer = Terraria.Player;
 
 namespace Orion.Players {
     [Collection("TerrariaTestsCollection")]
@@ -29,8 +31,8 @@ namespace Orion.Players {
         private readonly IPlayerService _playerService;
 
         public OrionPlayerServiceTests() {
-            for (var i = 0; i < Terraria.Main.player.Length; ++i) {
-                Terraria.Main.player[i] = new Terraria.Player {whoAmI = i};
+            for (var i = 0; i < Main.player.Length; ++i) {
+                Main.player[i] = new TerrariaPlayer {whoAmI = i};
             }
 
             _playerService = new OrionPlayerService();
@@ -44,7 +46,7 @@ namespace Orion.Players {
         public void Players_GetItem_IsCorrect() {
             var player = _playerService.Players[0];
 
-            ((OrionPlayer)player).Wrapped.Should().BeSameAs(Terraria.Main.player[0]);
+            ((OrionPlayer)player).Wrapped.Should().BeSameAs(Main.player[0]);
         }
 
         [Fact]
@@ -69,7 +71,7 @@ namespace Orion.Players {
             var players = _playerService.Players.ToList();
 
             for (var i = 0; i < players.Count; ++i) {
-                ((OrionPlayer)players[i]).Wrapped.Should().BeSameAs(Terraria.Main.player[i]);
+                ((OrionPlayer)players[i]).Wrapped.Should().BeSameAs(Main.player[i]);
             }
         }
 

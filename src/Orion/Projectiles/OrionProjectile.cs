@@ -17,9 +17,10 @@
 
 using System;
 using Orion.Entities;
+using TerrariaProjectile = Terraria.Projectile;
 
 namespace Orion.Projectiles {
-    internal sealed class OrionProjectile : OrionEntity<Terraria.Projectile>, IProjectile {
+    internal sealed class OrionProjectile : OrionEntity<TerrariaProjectile>, IProjectile {
         private string? _nameOverride;
 
         public override string Name {
@@ -29,7 +30,7 @@ namespace Orion.Projectiles {
 
         public ProjectileType Type => (ProjectileType)Wrapped.type;
 
-        public OrionProjectile(Terraria.Projectile terrariaEntity) : base(terrariaEntity) { }
+        public OrionProjectile(TerrariaProjectile terrariaEntity) : base(terrariaEntity) { }
 
         public void SetType(ProjectileType type) {
             Wrapped.SetDefaults((int)type);

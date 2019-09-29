@@ -18,9 +18,10 @@
 using System;
 using Orion.Entities;
 using Orion.Packets;
+using TerrariaPlayer = Terraria.Player;
 
 namespace Orion.Players {
-    internal sealed class OrionPlayer : OrionEntity<Terraria.Player>, IPlayer {
+    internal sealed class OrionPlayer : OrionEntity<TerrariaPlayer>, IPlayer {
         public override string Name {
             get => Wrapped.name;
             set => Wrapped.name = value ?? throw new ArgumentNullException(nameof(value));
@@ -34,7 +35,7 @@ namespace Orion.Players {
         public IPlayerStats Stats => throw new NotImplementedException();
         public IPlayerInventory Inventory => throw new NotImplementedException();
 
-        public OrionPlayer(Terraria.Player terrariaPlayer) : base(terrariaPlayer) { }
+        public OrionPlayer(TerrariaPlayer terrariaPlayer) : base(terrariaPlayer) { }
 
         public void SendPacket(Packet packet) {
             throw new NotImplementedException();

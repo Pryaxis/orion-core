@@ -28,6 +28,7 @@ using Orion.World.Tiles;
 using Orion.World.Tiles.Extensions;
 using OTAPI;
 using OTAPI.Tile;
+using Main = Terraria.Main;
 
 namespace Orion.World {
     internal sealed class OrionWorldService : OrionService, IWorldService {
@@ -45,18 +46,18 @@ namespace Orion.World {
             }
         }
 
-        public InvasionType CurrentInvasionType => (InvasionType)Terraria.Main.invasionType;
+        public InvasionType CurrentInvasionType => (InvasionType)Main.invasionType;
 
         public EventHandlerCollection<WorldLoadEventArgs>? WorldLoad { get; set; }
         public EventHandlerCollection<WorldSaveEventArgs>? WorldSave { get; set; }
 
         public OrionWorldService() {
-            // Try to interpret the current Terraria.Main.tile as a TileCollection. This is only really useful for
-            // tests. We don't bother with Hooks.Tile.CreateCollection since we can just set Terraria.Main.tile.
-            if (Terraria.Main.tile is TileCollection tileCollection) {
+            // Try to interpret the current Main.tile as a TileCollection. This is only really useful for tests. We
+            // don't bother with Hooks.Tile.CreateCollection since we can just set Main.tile.
+            if (Main.tile is TileCollection tileCollection) {
                 _tileCollection = tileCollection;
             } else {
-                Terraria.Main.tile = _tileCollection = new TileCollection();
+                Main.tile = _tileCollection = new TileCollection();
             }
 
             Hooks.World.IO.PreLoadWorld = PreLoadWorldHandler;
@@ -85,8 +86,8 @@ namespace Orion.World {
         private unsafe class TileCollection : ITileCollection {
             private readonly Tile* _tilesPtr;
 
-            public int Width => Terraria.Main.maxTilesX;
-            public int Height => Terraria.Main.maxTilesY;
+            public int Width => Main.maxTilesX;
+            public int Height => Main.maxTilesY;
 
             public ITile this[int x, int y] {
                 /*
@@ -94,9 +95,9 @@ namespace Orion.World {
                  * actually implement ITile on the struct, since we'll end up boxing and defeating the whole purpose
                  * of making Tile a struct.
                  *
-                 * Unfortunately, this means that repeated accesses to Terraria.Main.tile results in a lot of garbage
-                 * being generated due to these ephemeral TileBridges, but this is the best that we can do while
-                 * still preserving OTAPI compatibility.
+                 * Unfortunately, this means that repeated accesses to Main.tile results in a lot of garbage being
+                 * generated due to these ephemeral TileAdapters, but this is the best that we can do while still
+                 * preserving OTAPI compatibility.
                  */
                 get => new TileAdapter(GetPointer(x, y));
 
@@ -182,7 +183,7 @@ namespace Orion.World {
                     var slope = this.slope();
                     if (slope > 0) return slope + 2;
 
-                    return Terraria.Main.tileSolid[type] && !Terraria.Main.tileSolid[type] ? 1 : -1;
+                    return Main.tileSolid[type] && !Main.tileSolid[type] ? 1 : -1;
                 }
             }
 

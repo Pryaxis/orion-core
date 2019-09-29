@@ -19,14 +19,16 @@ using System.Diagnostics.CodeAnalysis;
 using FluentAssertions;
 using Orion.Items;
 using Xunit;
+using TerrariaItem = Terraria.Item;
+using TerrariaItemFrame = Terraria.GameContent.Tile_Entities.TEItemFrame;
 
 namespace Orion.World.TileEntities {
     [SuppressMessage("Style", "IDE0017:Simplify object initialization", Justification = "Testing")]
     public class OrionItemFrameTests {
         [Fact]
         public void GetItemType_IsCorrect() {
-            var terrariaItemFrame = new Terraria.GameContent.Tile_Entities.TEItemFrame {
-                item = new Terraria.Item {type = (int)ItemType.Sdmg}
+            var terrariaItemFrame = new TerrariaItemFrame {
+                item = new TerrariaItem {type = (int)ItemType.Sdmg}
             };
             IItemFrame itemFrame = new OrionItemFrame(terrariaItemFrame);
 
@@ -35,7 +37,7 @@ namespace Orion.World.TileEntities {
 
         [Fact]
         public void SetItemType_IsCorrect() {
-            var terrariaItemFrame = new Terraria.GameContent.Tile_Entities.TEItemFrame {item = new Terraria.Item()};
+            var terrariaItemFrame = new TerrariaItemFrame {item = new TerrariaItem()};
             IItemFrame itemFrame = new OrionItemFrame(terrariaItemFrame);
             itemFrame.ItemType = ItemType.Sdmg;
 
@@ -44,8 +46,8 @@ namespace Orion.World.TileEntities {
 
         [Fact]
         public void GetItemStackSize_IsCorrect() {
-            var terrariaItemFrame = new Terraria.GameContent.Tile_Entities.TEItemFrame {
-                item = new Terraria.Item {stack = 1}
+            var terrariaItemFrame = new TerrariaItemFrame {
+                item = new TerrariaItem {stack = 1}
             };
             IItemFrame itemFrame = new OrionItemFrame(terrariaItemFrame);
 
@@ -54,7 +56,7 @@ namespace Orion.World.TileEntities {
 
         [Fact]
         public void SetItemStackSize_IsCorrect() {
-            var terrariaItemFrame = new Terraria.GameContent.Tile_Entities.TEItemFrame {item = new Terraria.Item()};
+            var terrariaItemFrame = new TerrariaItemFrame {item = new TerrariaItem()};
             IItemFrame itemFrame = new OrionItemFrame(terrariaItemFrame);
 
             itemFrame.ItemStackSize = 1;
@@ -64,8 +66,8 @@ namespace Orion.World.TileEntities {
 
         [Fact]
         public void GetItemPrefix_IsCorrect() {
-            var terrariaItemFrame = new Terraria.GameContent.Tile_Entities.TEItemFrame {
-                item = new Terraria.Item {prefix = (byte)ItemPrefix.Unreal}
+            var terrariaItemFrame = new TerrariaItemFrame {
+                item = new TerrariaItem {prefix = (byte)ItemPrefix.Unreal}
             };
             IItemFrame itemFrame = new OrionItemFrame(terrariaItemFrame);
 
@@ -74,7 +76,7 @@ namespace Orion.World.TileEntities {
 
         [Fact]
         public void SetItemPrefix_IsCorrect() {
-            var terrariaItemFrame = new Terraria.GameContent.Tile_Entities.TEItemFrame {item = new Terraria.Item()};
+            var terrariaItemFrame = new TerrariaItemFrame {item = new TerrariaItem()};
             IItemFrame itemFrame = new OrionItemFrame(terrariaItemFrame);
 
             itemFrame.ItemPrefix = ItemPrefix.Unreal;

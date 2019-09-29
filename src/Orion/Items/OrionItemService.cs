@@ -24,6 +24,8 @@ using Orion.Events.Extensions;
 using Orion.Events.Items;
 using Orion.Utils;
 using OTAPI;
+using Main = Terraria.Main;
+using TerrariaItem = Terraria.Item;
 
 namespace Orion.Items {
     internal sealed class OrionItemService : OrionService, IItemService {
@@ -35,8 +37,8 @@ namespace Orion.Items {
 
         public OrionItemService() {
             // Ignore the last item since it is used as a failure slot.
-            Items = new WrappedReadOnlyArray<OrionItem, Terraria.Item>(
-                Terraria.Main.item.AsMemory(..^1),
+            Items = new WrappedReadOnlyArray<OrionItem, TerrariaItem>(
+                Main.item.AsMemory(..^1),
                 (_, terrariaItem) => new OrionItem(terrariaItem));
 
             Hooks.Item.PreSetDefaultsById = PreSetDefaultsByIdHandler;
@@ -55,16 +57,16 @@ namespace Orion.Items {
                                 ItemPrefix prefix = ItemPrefix.None) {
             // Terraria has a mechanism of item caching which allows, for instance, The Plan to drop all wires at once.
             // We need to disable that temporarily so that our item *definitely* spawns.
-            var oldItemCache = Terraria.Item.itemCaches[(int)itemType];
-            Terraria.Item.itemCaches[(int)itemType] = -1;
+            var oldItemCache = TerrariaItem.itemCaches[(int)itemType];
+            TerrariaItem.itemCaches[(int)itemType] = -1;
 
             var itemIndex =
-                Terraria.Item.NewItem(position, Vector2.Zero, (int)itemType, stackSize, prefixGiven: (int)prefix);
-            Terraria.Item.itemCaches[(int)itemType] = oldItemCache;
+                TerrariaItem.NewItem(position, Vector2.Zero, (int)itemType, stackSize, prefixGiven: (int)prefix);
+            TerrariaItem.itemCaches[(int)itemType] = oldItemCache;
             return itemIndex >= 0 && itemIndex < Items.Count ? Items[itemIndex] : null;
         }
 
-        private HookResult PreSetDefaultsByIdHandler(Terraria.Item terrariaItem, ref int itemType,
+        private HookResult PreSetDefaultsByIdHandler(TerrariaItem terrariaItem, ref int itemType,
                                                      ref bool noMaterialCheck) {
             Debug.Assert(terrariaItem != null, "terrariaItem != null");
 
@@ -77,7 +79,7 @@ namespace Orion.Items {
             return HookResult.Continue;
         }
 
-        private HookResult PreUpdateHandler(Terraria.Item terrariaItem, ref int itemIndex) {
+        private HookResult PreUpdateHandler(TerrariaItem terrariaItem, ref int itemIndex) {
             Debug.Assert(terrariaItem != null, "terrariaItem != null");
 
             var item = new OrionItem(terrariaItem);

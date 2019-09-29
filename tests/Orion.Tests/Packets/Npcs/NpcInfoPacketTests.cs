@@ -20,6 +20,7 @@ using FluentAssertions;
 using Microsoft.Xna.Framework;
 using Orion.Npcs;
 using Xunit;
+using TerrariaNpc = Terraria.NPC;
 
 namespace Orion.Packets.Npcs {
     public class NpcInfoPacketTests {
@@ -42,7 +43,7 @@ namespace Orion.Packets.Npcs {
         public void NpcAiValues_Count_IsCorrect() {
             var packet = new NpcInfoPacket();
 
-            packet.NpcAiValues.Count.Should().Be(Terraria.NPC.maxAI);
+            packet.NpcAiValues.Count.Should().Be(TerrariaNpc.maxAI);
         }
 
         private static readonly byte[] Bytes = {

@@ -22,6 +22,10 @@ using FluentAssertions;
 using Microsoft.Xna.Framework;
 using Orion.Events.Extensions;
 using Xunit;
+using Main = Terraria.Main;
+using TerrariaNpc = Terraria.NPC;
+using TerrariaItem = Terraria.Item;
+using TerrariaPlayer = Terraria.Player;
 
 namespace Orion.Npcs {
     [Collection("TerrariaTestsCollection")]
@@ -29,23 +33,23 @@ namespace Orion.Npcs {
         private readonly INpcService _npcService;
 
         public OrionNpcServiceTests() {
-            for (var i = 0; i < Terraria.Main.npc.Length; ++i) {
-                Terraria.Main.npc[i] = new Terraria.NPC {whoAmI = i};
+            for (var i = 0; i < Main.npc.Length; ++i) {
+                Main.npc[i] = new TerrariaNpc {whoAmI = i};
             }
 
-            for (var i = 0; i < Terraria.Main.combatText.Length; ++i) {
-                Terraria.Main.combatText[i] = new Terraria.CombatText {active = true};
+            for (var i = 0; i < Main.combatText.Length; ++i) {
+                Main.combatText[i] = new Terraria.CombatText {active = true};
             }
 
-            for (var i = 0; i < Terraria.Main.item.Length; ++i) {
-                Terraria.Main.item[i] = new Terraria.Item {whoAmI = i};
+            for (var i = 0; i < Main.item.Length; ++i) {
+                Main.item[i] = new TerrariaItem {whoAmI = i};
             }
 
-            for (var i = 0; i < Terraria.Main.player.Length; ++i) {
-                Terraria.Main.player[i] = new Terraria.Player {whoAmI = i};
+            for (var i = 0; i < Main.player.Length; ++i) {
+                Main.player[i] = new TerrariaPlayer {whoAmI = i};
             }
 
-            Terraria.Main.rand = new Terraria.Utilities.UnifiedRandom();
+            Main.rand = new Terraria.Utilities.UnifiedRandom();
 
             _npcService = new OrionNpcService();
         }
@@ -58,7 +62,7 @@ namespace Orion.Npcs {
         public void Npcs_GetItem_IsCorrect() {
             var npc = _npcService.Npcs[0];
 
-            ((OrionNpc)npc).Wrapped.Should().BeSameAs(Terraria.Main.npc[0]);
+            ((OrionNpc)npc).Wrapped.Should().BeSameAs(Main.npc[0]);
         }
 
         [Fact]
@@ -83,7 +87,7 @@ namespace Orion.Npcs {
             var npcs = _npcService.Npcs.ToList();
 
             for (var i = 0; i < npcs.Count; ++i) {
-                ((OrionNpc)npcs[i]).Wrapped.Should().BeSameAs(Terraria.Main.npc[i]);
+                ((OrionNpc)npcs[i]).Wrapped.Should().BeSameAs(Main.npc[i]);
             }
         }
 
@@ -94,11 +98,11 @@ namespace Orion.Npcs {
             var isRun = false;
             _npcService.NpcSetDefaults += (sender, args) => {
                 isRun = true;
-                ((OrionNpc)args.Npc).Wrapped.Should().BeSameAs(Terraria.Main.npc[0]);
+                ((OrionNpc)args.Npc).Wrapped.Should().BeSameAs(Main.npc[0]);
                 args.NpcType.Should().Be(npcType);
             };
 
-            Terraria.Main.npc[0].SetDefaults((int)npcType);
+            Main.npc[0].SetDefaults((int)npcType);
 
             isRun.Should().BeTrue();
         }
@@ -111,9 +115,9 @@ namespace Orion.Npcs {
                 args.NpcType = newType;
             };
 
-            Terraria.Main.npc[0].SetDefaults((int)oldType);
+            Main.npc[0].SetDefaults((int)oldType);
 
-            Terraria.Main.npc[0].netID.Should().Be((int)newType);
+            Main.npc[0].netID.Should().Be((int)newType);
         }
 
         [Fact]
@@ -122,9 +126,9 @@ namespace Orion.Npcs {
                 args.Cancel();
             };
 
-            Terraria.Main.npc[0].SetDefaults((int)NpcType.BlueSlime);
+            Main.npc[0].SetDefaults((int)NpcType.BlueSlime);
 
-            Terraria.Main.npc[0].type.Should().Be(0);
+            Main.npc[0].type.Should().Be(0);
         }
 
         [Fact]
@@ -134,10 +138,10 @@ namespace Orion.Npcs {
                 argsNpc = args.Npc;
             };
 
-            var npcIndex = Terraria.NPC.NewNPC(0, 0, (int)NpcType.BlueSlime);
+            var npcIndex = TerrariaNpc.NewNPC(0, 0, (int)NpcType.BlueSlime);
 
             argsNpc.Should().NotBeNull();
-            ((OrionNpc)argsNpc!).Wrapped.Should().Be(Terraria.Main.npc[npcIndex]);
+            ((OrionNpc)argsNpc!).Wrapped.Should().Be(Main.npc[npcIndex]);
         }
 
         [Fact]
@@ -146,10 +150,10 @@ namespace Orion.Npcs {
                 args.Cancel();
             };
 
-            var npcIndex = Terraria.NPC.NewNPC(0, 0, (int)NpcType.BlueSlime);
+            var npcIndex = TerrariaNpc.NewNPC(0, 0, (int)NpcType.BlueSlime);
 
             npcIndex.Should().BeGreaterOrEqualTo(_npcService.Npcs.Count);
-            Terraria.Main.npc[0].active.Should().BeFalse();
+            Main.npc[0].active.Should().BeFalse();
         }
 
         [Fact]
@@ -157,10 +161,10 @@ namespace Orion.Npcs {
             var isRun = false;
             _npcService.NpcUpdate += (sender, args) => {
                 isRun = true;
-                ((OrionNpc)args.Npc).Wrapped.Should().BeSameAs(Terraria.Main.npc[0]);
+                ((OrionNpc)args.Npc).Wrapped.Should().BeSameAs(Main.npc[0]);
             };
 
-            Terraria.Main.npc[0].UpdateNPC(0);
+            Main.npc[0].UpdateNPC(0);
             
             isRun.Should().BeTrue();
         }
@@ -172,11 +176,11 @@ namespace Orion.Npcs {
             var isRun = false;
             _npcService.NpcTransform += (sender, args) => {
                 isRun = true;
-                ((OrionNpc)args.Npc).Wrapped.Should().BeSameAs(Terraria.Main.npc[0]);
+                ((OrionNpc)args.Npc).Wrapped.Should().BeSameAs(Main.npc[0]);
                 args.NpcNewType.Should().Be(npcType);
             };
 
-            Terraria.Main.npc[0].Transform((int)npcType);
+            Main.npc[0].Transform((int)npcType);
             
             isRun.Should().BeTrue();
         }
@@ -188,11 +192,11 @@ namespace Orion.Npcs {
             _npcService.NpcTransform += (sender, args) => {
                 args.NpcNewType = newType;
             };
-            Terraria.Main.npc[0].SetDefaults((int)oldType);
+            Main.npc[0].SetDefaults((int)oldType);
 
-            Terraria.Main.npc[0].Transform((int)newType);
+            Main.npc[0].Transform((int)newType);
 
-            Terraria.Main.npc[0].netID.Should().Be((int)newType);
+            Main.npc[0].netID.Should().Be((int)newType);
         }
 
         [Fact]
@@ -201,9 +205,9 @@ namespace Orion.Npcs {
                 args.Cancel();
             };
 
-            Terraria.Main.npc[0].Transform((int)NpcType.BlueSlime);
+            Main.npc[0].Transform((int)NpcType.BlueSlime);
 
-            Terraria.Main.npc[0].netID.Should().NotBe((int)NpcType.BlueSlime);
+            Main.npc[0].netID.Should().NotBe((int)NpcType.BlueSlime);
         }
 
         [Fact]
@@ -211,14 +215,14 @@ namespace Orion.Npcs {
             var isRun = false;
             _npcService.NpcDamage += (sender, args) => {
                 isRun = true;
-                ((OrionNpc)args.Npc).Wrapped.Should().BeSameAs(Terraria.Main.npc[0]);
+                ((OrionNpc)args.Npc).Wrapped.Should().BeSameAs(Main.npc[0]);
                 args.Damage.Should().Be(100);
                 args.Knockback.Should().Be(5.0f);
                 args.HitDirection.Should().Be(1);
                 args.IsCriticalHit.Should().BeTrue();
             };
 
-            Terraria.Main.npc[0].StrikeNPC(100, 5.0f, 1, true);
+            Main.npc[0].StrikeNPC(100, 5.0f, 1, true);
             
             isRun.Should().BeTrue();
         }
@@ -228,11 +232,11 @@ namespace Orion.Npcs {
             _npcService.NpcDamage += (sender, args) => {
                 args.Cancel();
             };
-            Terraria.Main.npc[0].SetDefaults((int)NpcType.BlueSlime);
+            Main.npc[0].SetDefaults((int)NpcType.BlueSlime);
 
-            Terraria.Main.npc[0].StrikeNPC(10000, 0, 1);
+            Main.npc[0].StrikeNPC(10000, 0, 1);
 
-            Terraria.Main.npc[0].active.Should().BeTrue();
+            Main.npc[0].active.Should().BeTrue();
         }
 
         [Fact]
@@ -240,12 +244,12 @@ namespace Orion.Npcs {
             var isRun = false;
             _npcService.NpcDropLootItem += (sender, args) => {
                 isRun = true;
-                ((OrionNpc)args.Npc).Wrapped.Should().BeSameAs(Terraria.Main.npc[0]);
+                ((OrionNpc)args.Npc).Wrapped.Should().BeSameAs(Main.npc[0]);
             };
-            Terraria.Main.npc[0].SetDefaults((int)NpcType.BlueSlime);
-            Terraria.Main.npc[0].life = 0;
+            Main.npc[0].SetDefaults((int)NpcType.BlueSlime);
+            Main.npc[0].life = 0;
 
-            Terraria.Main.npc[0].checkDead();
+            Main.npc[0].checkDead();
             
             isRun.Should().BeTrue();
         }
@@ -255,12 +259,12 @@ namespace Orion.Npcs {
             _npcService.NpcDropLootItem += (sender, args) => {
                 args.Cancel();
             };
-            Terraria.Main.npc[0].SetDefaults((int)NpcType.BlueSlime);
-            Terraria.Main.npc[0].life = 0;
+            Main.npc[0].SetDefaults((int)NpcType.BlueSlime);
+            Main.npc[0].life = 0;
 
-            Terraria.Main.npc[0].checkDead();
+            Main.npc[0].checkDead();
 
-            Terraria.Main.item[0].active.Should().BeFalse();
+            Main.item[0].active.Should().BeFalse();
         }
 
         [Fact]
@@ -268,12 +272,12 @@ namespace Orion.Npcs {
             var isRun = false;
             _npcService.NpcKilled += (sender, args) => {
                 isRun = true;
-                ((OrionNpc)args.Npc).Wrapped.Should().BeSameAs(Terraria.Main.npc[0]);
+                ((OrionNpc)args.Npc).Wrapped.Should().BeSameAs(Main.npc[0]);
             };
-            Terraria.Main.npc[0].SetDefaults((int)NpcType.BlueSlime);
-            Terraria.Main.npc[0].life = 0;
+            Main.npc[0].SetDefaults((int)NpcType.BlueSlime);
+            Main.npc[0].life = 0;
 
-            Terraria.Main.npc[0].checkDead();
+            Main.npc[0].checkDead();
             
             isRun.Should().BeTrue();
         }

@@ -18,11 +18,12 @@
 using System.Diagnostics;
 using Microsoft.Xna.Framework;
 using Orion.Utils;
+using TerrariaEntity = Terraria.Entity;
 
 namespace Orion.Entities {
     // OrionEntity is generic so that we only use a single wrapped field instead of two wrapped fields per entity.
     internal abstract class OrionEntity<TTerrariaEntity> : AnnotatableObject, IEntity
-        where TTerrariaEntity : Terraria.Entity {
+        where TTerrariaEntity : TerrariaEntity {
         public int Index => Wrapped.whoAmI;
 
         public bool IsActive {

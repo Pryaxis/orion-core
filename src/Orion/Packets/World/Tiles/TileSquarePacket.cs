@@ -106,8 +106,8 @@ namespace Orion.Packets.World.Tiles {
             _tiles = new NetworkTiles(_squareSize, _squareSize);
 
             void ReadTile(ref Tile tile) {
-                var header = (Terraria.BitsByte)reader.ReadByte();
-                var header2 = (Terraria.BitsByte)reader.ReadByte();
+                Terraria.BitsByte header = reader.ReadByte();
+                Terraria.BitsByte header2 = reader.ReadByte();
 
                 tile.HasRedWire = header[4];
                 tile.IsBlockHalved = header[5];

@@ -18,6 +18,7 @@
 using System;
 using System.Diagnostics;
 using Orion.Utils;
+using TerrariaSign = Terraria.Sign;
 
 namespace Orion.World.TileEntities {
     internal sealed class OrionSign : AnnotatableObject, ISign {
@@ -40,12 +41,12 @@ namespace Orion.World.TileEntities {
             set => Wrapped.text = value ?? throw new ArgumentNullException(nameof(value));
         }
 
-        public Terraria.Sign Wrapped { get; }
+        public TerrariaSign Wrapped { get; }
 
-        public OrionSign(int signIndex, Terraria.Sign terrariaSign) {
-            Debug.Assert(signIndex >= 0 && signIndex < Terraria.Main.maxChests,
-                         "chestIndex >= 0 && chestIndex < Terraria.Main.maxChests");
-            Debug.Assert(terrariaSign != null, "terrariaChest != null");
+        public OrionSign(int signIndex, TerrariaSign terrariaSign) {
+            Debug.Assert(signIndex >= 0 && signIndex < TerrariaSign.maxSigns,
+                         "signIndex >= 0 && signIndex < TerrariaSign.maxSigns");
+            Debug.Assert(terrariaSign != null, "terrariaSign != null");
 
             Index = signIndex;
             Wrapped = terrariaSign;

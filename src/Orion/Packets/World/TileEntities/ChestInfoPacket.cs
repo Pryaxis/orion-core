@@ -17,6 +17,7 @@
 
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
+using TerrariaChest = Terraria.Chest;
 
 namespace Orion.Packets.World.TileEntities {
     /// <summary>
@@ -86,7 +87,7 @@ namespace Orion.Packets.World.TileEntities {
             _chestY = reader.ReadInt16();
             var nameLength = reader.ReadByte();
 
-            if (nameLength > 0 && nameLength <= Terraria.Chest.MaxNameLength) {
+            if (nameLength > 0 && nameLength <= TerrariaChest.MaxNameLength) {
                 _chestName = reader.ReadString();
             }
         }
@@ -99,7 +100,7 @@ namespace Orion.Packets.World.TileEntities {
             // This packet's logic is actually insane... why is it set up this way?
             if (_chestName is null) {
                 writer.Write((byte)0);
-            } else if (_chestName.Length == 0 || _chestName.Length > Terraria.Chest.MaxNameLength) {
+            } else if (_chestName.Length == 0 || _chestName.Length > TerrariaChest.MaxNameLength) {
                 writer.Write(byte.MaxValue);
             } else {
                 writer.Write((byte)_chestName.Length);

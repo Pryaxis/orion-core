@@ -19,13 +19,14 @@ using System;
 using System.Diagnostics.CodeAnalysis;
 using FluentAssertions;
 using Xunit;
+using TerrariaPlayer = Terraria.Player;
 
 namespace Orion.Players {
     [SuppressMessage("Style", "IDE0017:Simplify object initialization", Justification = "Testing")]
     public class OrionPlayerTests {
         [Fact]
         public void GetName_IsCorrect() {
-            var terrariaPlayer = new Terraria.Player {name = "test"};
+            var terrariaPlayer = new TerrariaPlayer {name = "test"};
             IPlayer player = new OrionPlayer(terrariaPlayer);
 
             player.Name.Should().Be("test");
@@ -33,7 +34,7 @@ namespace Orion.Players {
 
         [Fact]
         public void SetName_IsCorrect() {
-            var terrariaPlayer = new Terraria.Player();
+            var terrariaPlayer = new TerrariaPlayer();
             IPlayer player = new OrionPlayer(terrariaPlayer);
 
             player.Name = "test";
@@ -43,7 +44,7 @@ namespace Orion.Players {
 
         [Fact]
         public void SetName_NullValue_ThrowsArgumentNullException() {
-            var terrariaPlayer = new Terraria.Player();
+            var terrariaPlayer = new TerrariaPlayer();
             IPlayer player = new OrionPlayer(terrariaPlayer);
             Action action = () => player.Name = null!;
 
@@ -52,7 +53,7 @@ namespace Orion.Players {
 
         [Fact]
         public void GetTeam_IsCorrect() {
-            var terrariaPlayer = new Terraria.Player {team = (int)PlayerTeam.Red};
+            var terrariaPlayer = new TerrariaPlayer {team = (int)PlayerTeam.Red};
             IPlayer player = new OrionPlayer(terrariaPlayer);
 
             player.Team.Should().Be(PlayerTeam.Red);
@@ -60,7 +61,7 @@ namespace Orion.Players {
 
         [Fact]
         public void SetTeam_IsCorrect() {
-            var terrariaPlayer = new Terraria.Player();
+            var terrariaPlayer = new TerrariaPlayer();
             IPlayer player = new OrionPlayer(terrariaPlayer);
 
             player.Team = PlayerTeam.Red;

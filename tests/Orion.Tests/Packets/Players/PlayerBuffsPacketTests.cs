@@ -19,6 +19,7 @@ using System.IO;
 using FluentAssertions;
 using Orion.Entities;
 using Xunit;
+using TerrariaPlayer = Terraria.Player;
 
 namespace Orion.Packets.Players {
     public class PlayerBuffsPacketTests {
@@ -42,7 +43,7 @@ namespace Orion.Packets.Players {
         public void PlayerBuffTypes_Count_IsCorrect() {
             var packet = new PlayerBuffsPacket();
 
-            packet.PlayerBuffTypes.Count.Should().Be(Terraria.Player.maxBuffs);
+            packet.PlayerBuffTypes.Count.Should().Be(TerrariaPlayer.maxBuffs);
         }
 
         public static readonly byte[] Bytes = {

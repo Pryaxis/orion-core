@@ -17,12 +17,13 @@
 
 using Orion.Entities;
 using Orion.Utils;
+using TerrariaProjectile = Terraria.Projectile;
 
 namespace Orion.Projectiles {
     /// <summary>
     /// Represents a Terraria projectile.
     /// </summary>
-    public interface IProjectile : IEntity, IWrapping<Terraria.Projectile> {
+    public interface IProjectile : IEntity, IWrapping<TerrariaProjectile> {
         /// <summary>
         /// Gets the projectile's type.
         /// </summary>

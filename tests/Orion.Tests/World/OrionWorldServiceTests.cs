@@ -22,6 +22,7 @@ using Moq;
 using Orion.World.Tiles;
 using OTAPI.Tile;
 using Xunit;
+using Main = Terraria.Main;
 
 namespace Orion.World {
     [Collection("TerrariaTestsCollection")]
@@ -40,21 +41,21 @@ namespace Orion.World {
 
         [Fact]
         public void GetWorldWidth_IsCorrect() {
-            Terraria.Main.maxTilesX = 1000;
+            Main.maxTilesX = 1000;
 
             _worldService.WorldWidth.Should().Be(1000);
         }
 
         [Fact]
         public void GetWorldHeight_IsCorrect() {
-            Terraria.Main.maxTilesY = 1000;
+            Main.maxTilesY = 1000;
 
             _worldService.WorldHeight.Should().Be(1000);
         }
 
         [Fact]
         public void GetCurrentInvasionType_IsCorrect() {
-            Terraria.Main.invasionType = (int)InvasionType.Goblins;
+            Main.invasionType = (int)InvasionType.Goblins;
 
             _worldService.CurrentInvasionType.Should().Be(InvasionType.Goblins);
         }
@@ -63,12 +64,12 @@ namespace Orion.World {
         public void Maintile_Gettype_IsCorrect() {
             _worldService[0, 0] = new Tile {BlockType = BlockType.Stone};
 
-            Terraria.Main.tile[0, 0].type.Should().Be((ushort)BlockType.Stone);
+            Main.tile[0, 0].type.Should().Be((ushort)BlockType.Stone);
         }
 
         [Fact]
         public void Maintile_Settype_IsCorrect() {
-            Terraria.Main.tile[0, 0].type = (ushort)BlockType.Stone;
+            Main.tile[0, 0].type = (ushort)BlockType.Stone;
 
             _worldService[0, 0].BlockType.Should().Be(BlockType.Stone);
         }
@@ -77,12 +78,12 @@ namespace Orion.World {
         public void Maintile_Getwall_IsCorrect() {
             _worldService[0, 0] = new Tile {WallType = WallType.Stone};
 
-            Terraria.Main.tile[0, 0].wall.Should().Be((byte)WallType.Stone);
+            Main.tile[0, 0].wall.Should().Be((byte)WallType.Stone);
         }
 
         [Fact]
         public void Maintile_Setwall_IsCorrect() {
-            Terraria.Main.tile[0, 0].wall = (byte)WallType.Stone;
+            Main.tile[0, 0].wall = (byte)WallType.Stone;
 
             _worldService[0, 0].WallType.Should().Be(WallType.Stone);
         }
@@ -91,12 +92,12 @@ namespace Orion.World {
         public void Maintile_Getliquid_IsCorrect() {
             _worldService[0, 0] = new Tile {LiquidAmount = 100};
 
-            Terraria.Main.tile[0, 0].liquid.Should().Be(100);
+            Main.tile[0, 0].liquid.Should().Be(100);
         }
 
         [Fact]
         public void Maintile_Setliquid_IsCorrect() {
-            Terraria.Main.tile[0, 0].liquid = 100;
+            Main.tile[0, 0].liquid = 100;
 
             _worldService[0, 0].LiquidAmount.Should().Be(100);
         }
@@ -105,12 +106,12 @@ namespace Orion.World {
         public void Maintile_GetsTileHeader_IsCorrect() {
             _worldService[0, 0] = new Tile {_sTileHeader = 12345};
 
-            Terraria.Main.tile[0, 0].sTileHeader.Should().Be(12345);
+            Main.tile[0, 0].sTileHeader.Should().Be(12345);
         }
 
         [Fact]
         public void Maintile_SetsTileHeader_IsCorrect() {
-            Terraria.Main.tile[0, 0].sTileHeader = 12345;
+            Main.tile[0, 0].sTileHeader = 12345;
 
             _worldService[0, 0]._sTileHeader.Should().Be(12345);
         }
@@ -119,12 +120,12 @@ namespace Orion.World {
         public void Maintile_GetbTileHeader_IsCorrect() {
             _worldService[0, 0] = new Tile {_bTileHeader = 100};
 
-            Terraria.Main.tile[0, 0].bTileHeader.Should().Be(100);
+            Main.tile[0, 0].bTileHeader.Should().Be(100);
         }
 
         [Fact]
         public void Maintile_SetbTileHeader_IsCorrect() {
-            Terraria.Main.tile[0, 0].bTileHeader = 100;
+            Main.tile[0, 0].bTileHeader = 100;
 
             _worldService[0, 0]._bTileHeader.Should().Be(100);
         }
@@ -133,12 +134,12 @@ namespace Orion.World {
         public void Maintile_GetbTileHeader3_IsCorrect() {
             _worldService[0, 0] = new Tile {_bTileHeader2 = 100};
 
-            Terraria.Main.tile[0, 0].bTileHeader3.Should().Be(100);
+            Main.tile[0, 0].bTileHeader3.Should().Be(100);
         }
 
         [Fact]
         public void Maintile_SetbTileHeader3_IsCorrect() {
-            Terraria.Main.tile[0, 0].bTileHeader3 = 100;
+            Main.tile[0, 0].bTileHeader3 = 100;
 
             _worldService[0, 0]._bTileHeader2.Should().Be(100);
         }
@@ -147,12 +148,12 @@ namespace Orion.World {
         public void Maintile_GetframeX_IsCorrect() {
             _worldService[0, 0] = new Tile {BlockFrameX = 12345};
 
-            Terraria.Main.tile[0, 0].frameX.Should().Be(12345);
+            Main.tile[0, 0].frameX.Should().Be(12345);
         }
 
         [Fact]
         public void Maintile_SetframeX_IsCorrect() {
-            Terraria.Main.tile[0, 0].frameX = 12345;
+            Main.tile[0, 0].frameX = 12345;
 
             _worldService[0, 0].BlockFrameX.Should().Be(12345);
         }
@@ -161,12 +162,12 @@ namespace Orion.World {
         public void Maintile_GetframeY_IsCorrect() {
             _worldService[0, 0] = new Tile {BlockFrameY = 12345};
 
-            Terraria.Main.tile[0, 0].frameY.Should().Be(12345);
+            Main.tile[0, 0].frameY.Should().Be(12345);
         }
 
         [Fact]
         public void Maintile_SetframeY_IsCorrect() {
-            Terraria.Main.tile[0, 0].frameY = 12345;
+            Main.tile[0, 0].frameY = 12345;
 
             _worldService[0, 0].BlockFrameY.Should().Be(12345);
         }
@@ -183,7 +184,7 @@ namespace Orion.World {
             mockTile.SetupGet(t => t.frameX).Returns(4);
             mockTile.SetupGet(t => t.frameY).Returns(5);
 
-            Terraria.Main.tile[0, 0].CopyFrom(mockTile.Object);
+            Main.tile[0, 0].CopyFrom(mockTile.Object);
 
             _worldService[0, 0].BlockType.Should().Be((BlockType)1);
             _worldService[0, 0].WallType.Should().Be((WallType)2);
@@ -217,7 +218,7 @@ namespace Orion.World {
                 BlockFrameY = 5
             };
 
-            Terraria.Main.tile[0, 1].CopyFrom(Terraria.Main.tile[0, 0]);
+            Main.tile[0, 1].CopyFrom(Main.tile[0, 0]);
 
             _worldService[0, 1].BlockType.Should().Be((BlockType)1);
             _worldService[0, 1].WallType.Should().Be((WallType)2);
@@ -242,7 +243,7 @@ namespace Orion.World {
                 BlockFrameY = 5
             };
 
-            Terraria.Main.tile[0, 0].ClearEverything();
+            Main.tile[0, 0].ClearEverything();
 
             _worldService[0, 0].BlockType.Should().Be(0);
             _worldService[0, 0].WallType.Should().Be(0);
@@ -262,7 +263,7 @@ namespace Orion.World {
                 IsBlockActive = true
             };
 
-            Terraria.Main.tile[0, 0].ClearTile();
+            Main.tile[0, 0].ClearTile();
 
             _worldService[0, 0].Slope.Should().Be(0);
             _worldService[0, 0].IsBlockHalved.Should().BeFalse();
@@ -282,7 +283,7 @@ namespace Orion.World {
                 BlockFrameY = 5
             };
 
-            Terraria.Main.tile[0, 0].ResetToType((ushort)BlockType.Stone);
+            Main.tile[0, 0].ResetToType((ushort)BlockType.Stone);
 
             _worldService[0, 0].BlockType.Should().Be(BlockType.Stone);
             _worldService[0, 0].WallType.Should().Be(0);
@@ -307,7 +308,7 @@ namespace Orion.World {
                 BlockFrameY = 5
             };
 
-            Terraria.Main.tile[0, 0].ClearMetadata();
+            Main.tile[0, 0].ClearMetadata();
 
             _worldService[0, 0].BlockType.Should().Be((BlockType)1);
             _worldService[0, 0].WallType.Should().Be((WallType)2);
@@ -321,7 +322,7 @@ namespace Orion.World {
 
         [Fact]
         public void Maintile_isTheSameAs_NullTile_ReturnsFalse() {
-            Terraria.Main.tile[0, 0].isTheSameAs(null).Should().BeFalse();
+            Main.tile[0, 0].isTheSameAs(null).Should().BeFalse();
         }
 
         [Fact]
@@ -329,7 +330,7 @@ namespace Orion.World {
             _worldService[0, 0] = new Tile {IsBlockActive = true};
             _worldService[0, 1] = new Tile();
 
-            Terraria.Main.tile[0, 0].isTheSameAs(Terraria.Main.tile[0, 1]).Should().BeFalse();
+            Main.tile[0, 0].isTheSameAs(Main.tile[0, 1]).Should().BeFalse();
         }
 
         [Fact]
@@ -343,7 +344,7 @@ namespace Orion.World {
                 BlockType = BlockType.Dirt
             };
             
-            Terraria.Main.tile[0, 0].isTheSameAs(Terraria.Main.tile[0, 1]).Should().BeFalse();
+            Main.tile[0, 0].isTheSameAs(Main.tile[0, 1]).Should().BeFalse();
         }
 
         [Fact]
@@ -351,7 +352,7 @@ namespace Orion.World {
             _worldService[0, 0] = new Tile {BlockType = BlockType.Stone};
             _worldService[0, 1] = new Tile {BlockType = BlockType.Dirt};
 
-            Terraria.Main.tile[0, 0].isTheSameAs(Terraria.Main.tile[0, 1]).Should().BeTrue();
+            Main.tile[0, 0].isTheSameAs(Main.tile[0, 1]).Should().BeTrue();
         }
 
         [Fact]
@@ -367,7 +368,7 @@ namespace Orion.World {
                 BlockFrameX = 2
             };
 
-            Terraria.Main.tile[0, 0].isTheSameAs(Terraria.Main.tile[0, 1]).Should().BeFalse();
+            Main.tile[0, 0].isTheSameAs(Main.tile[0, 1]).Should().BeFalse();
         }
 
         [Fact]
@@ -383,7 +384,7 @@ namespace Orion.World {
                 BlockFrameY = 2
             };
 
-            Terraria.Main.tile[0, 0].isTheSameAs(Terraria.Main.tile[0, 1]).Should().BeFalse();
+            Main.tile[0, 0].isTheSameAs(Main.tile[0, 1]).Should().BeFalse();
         }
 
         [Fact]
@@ -401,7 +402,7 @@ namespace Orion.World {
                 BlockFrameY = 2
             };
 
-            Terraria.Main.tile[0, 0].isTheSameAs(Terraria.Main.tile[0, 1]).Should().BeTrue();
+            Main.tile[0, 0].isTheSameAs(Main.tile[0, 1]).Should().BeTrue();
         }
 
         [Fact]
@@ -409,7 +410,7 @@ namespace Orion.World {
             _worldService[0, 0] = new Tile {WallType = WallType.Stone};
             _worldService[0, 1] = new Tile {WallType = WallType.NaturalDirt};
 
-            Terraria.Main.tile[0, 0].isTheSameAs(Terraria.Main.tile[0, 1]).Should().BeFalse();
+            Main.tile[0, 0].isTheSameAs(Main.tile[0, 1]).Should().BeFalse();
         }
 
         [Fact]
@@ -417,7 +418,7 @@ namespace Orion.World {
             _worldService[0, 0] = new Tile {LiquidAmount = 1};
             _worldService[0, 1] = new Tile {LiquidAmount = 2};
 
-            Terraria.Main.tile[0, 0].isTheSameAs(Terraria.Main.tile[0, 1]).Should().BeFalse();
+            Main.tile[0, 0].isTheSameAs(Main.tile[0, 1]).Should().BeFalse();
         }
 
         [Fact]
@@ -425,7 +426,7 @@ namespace Orion.World {
             _worldService[0, 0] = new Tile {WallColor = PaintColor.Red};
             _worldService[0, 1] = new Tile {WallColor = PaintColor.DeepRed};
 
-            Terraria.Main.tile[0, 0].isTheSameAs(Terraria.Main.tile[0, 1]).Should().BeFalse();
+            Main.tile[0, 0].isTheSameAs(Main.tile[0, 1]).Should().BeFalse();
         }
 
         [Fact]
@@ -433,7 +434,7 @@ namespace Orion.World {
             _worldService[0, 0] = new Tile {HasYellowWire = true};
             _worldService[0, 1] = new Tile();
 
-            Terraria.Main.tile[0, 0].isTheSameAs(Terraria.Main.tile[0, 1]).Should().BeFalse();
+            Main.tile[0, 0].isTheSameAs(Main.tile[0, 1]).Should().BeFalse();
         }
 
         [Fact]
@@ -447,16 +448,16 @@ namespace Orion.World {
                 _bTileHeader = 2
             };
 
-            Terraria.Main.tile[0, 0].isTheSameAs(Terraria.Main.tile[0, 1]).Should().BeFalse();
+            Main.tile[0, 0].isTheSameAs(Main.tile[0, 1]).Should().BeFalse();
         }
 
         [Fact]
         public void Maintile_color_IsCorrect() {
             _worldService[0, 0] = new Tile {BlockColor = PaintColor.Red};
 
-            Terraria.Main.tile[0, 0].color().Should().Be((byte)PaintColor.Red);
+            Main.tile[0, 0].color().Should().Be((byte)PaintColor.Red);
 
-            Terraria.Main.tile[0, 0].color((byte)PaintColor.DeepRed);
+            Main.tile[0, 0].color((byte)PaintColor.DeepRed);
 
             _worldService[0, 0].BlockColor.Should().Be(PaintColor.DeepRed);
         }
@@ -465,9 +466,9 @@ namespace Orion.World {
         public void Maintile_active_IsCorrect() {
             _worldService[0, 0] = new Tile {IsBlockActive = true};
 
-            Terraria.Main.tile[0, 0].active().Should().BeTrue();
+            Main.tile[0, 0].active().Should().BeTrue();
 
-            Terraria.Main.tile[0, 0].active(false);
+            Main.tile[0, 0].active(false);
 
             _worldService[0, 0].IsBlockActive.Should().BeFalse();
         }
@@ -476,9 +477,9 @@ namespace Orion.World {
         public void Maintile_inActive_IsCorrect() {
             _worldService[0, 0] = new Tile {IsBlockActuated = true};
 
-            Terraria.Main.tile[0, 0].inActive().Should().BeTrue();
+            Main.tile[0, 0].inActive().Should().BeTrue();
 
-            Terraria.Main.tile[0, 0].inActive(false);
+            Main.tile[0, 0].inActive(false);
 
             _worldService[0, 0].IsBlockActuated.Should().BeFalse();
         }
@@ -487,9 +488,9 @@ namespace Orion.World {
         public void Maintile_wire_IsCorrect() {
             _worldService[0, 0] = new Tile {HasRedWire = true};
 
-            Terraria.Main.tile[0, 0].wire().Should().BeTrue();
+            Main.tile[0, 0].wire().Should().BeTrue();
 
-            Terraria.Main.tile[0, 0].wire(false);
+            Main.tile[0, 0].wire(false);
 
             _worldService[0, 0].HasRedWire.Should().BeFalse();
         }
@@ -498,9 +499,9 @@ namespace Orion.World {
         public void Maintile_wire2_IsCorrect() {
             _worldService[0, 0] = new Tile {HasBlueWire = true};
 
-            Terraria.Main.tile[0, 0].wire2().Should().BeTrue();
+            Main.tile[0, 0].wire2().Should().BeTrue();
 
-            Terraria.Main.tile[0, 0].wire2(false);
+            Main.tile[0, 0].wire2(false);
 
             _worldService[0, 0].HasBlueWire.Should().BeFalse();
         }
@@ -509,9 +510,9 @@ namespace Orion.World {
         public void Maintile_wire3_IsCorrect() {
             _worldService[0, 0] = new Tile {HasGreenWire = true};
 
-            Terraria.Main.tile[0, 0].wire3().Should().BeTrue();
+            Main.tile[0, 0].wire3().Should().BeTrue();
 
-            Terraria.Main.tile[0, 0].wire3(false);
+            Main.tile[0, 0].wire3(false);
 
             _worldService[0, 0].HasGreenWire.Should().BeFalse();
         }
@@ -520,9 +521,9 @@ namespace Orion.World {
         public void Maintile_halfBrick_IsCorrect() {
             _worldService[0, 0] = new Tile {IsBlockHalved = true};
 
-            Terraria.Main.tile[0, 0].halfBrick().Should().BeTrue();
+            Main.tile[0, 0].halfBrick().Should().BeTrue();
 
-            Terraria.Main.tile[0, 0].halfBrick(false);
+            Main.tile[0, 0].halfBrick(false);
 
             _worldService[0, 0].IsBlockHalved.Should().BeFalse();
         }
@@ -531,9 +532,9 @@ namespace Orion.World {
         public void Maintile_actuator_IsCorrect() {
             _worldService[0, 0] = new Tile {HasActuator = true};
 
-            Terraria.Main.tile[0, 0].actuator().Should().BeTrue();
+            Main.tile[0, 0].actuator().Should().BeTrue();
 
-            Terraria.Main.tile[0, 0].actuator(false);
+            Main.tile[0, 0].actuator(false);
 
             _worldService[0, 0].HasActuator.Should().BeFalse();
         }
@@ -542,9 +543,9 @@ namespace Orion.World {
         public void Maintile_slope_IsCorrect() {
             _worldService[0, 0] = new Tile {Slope = Slope.BottomRight};
 
-            Terraria.Main.tile[0, 0].slope().Should().Be((byte)Slope.BottomRight);
+            Main.tile[0, 0].slope().Should().Be((byte)Slope.BottomRight);
 
-            Terraria.Main.tile[0, 0].slope((byte)Slope.BottomLeft);
+            Main.tile[0, 0].slope((byte)Slope.BottomLeft);
 
             _worldService[0, 0].Slope.Should().Be(Slope.BottomLeft);
         }
@@ -553,9 +554,9 @@ namespace Orion.World {
         public void Maintile_wallColor_IsCorrect() {
             _worldService[0, 0] = new Tile {WallColor = PaintColor.Red};
 
-            Terraria.Main.tile[0, 0].wallColor().Should().Be((byte)PaintColor.Red);
+            Main.tile[0, 0].wallColor().Should().Be((byte)PaintColor.Red);
 
-            Terraria.Main.tile[0, 0].wallColor((byte)PaintColor.DeepRed);
+            Main.tile[0, 0].wallColor((byte)PaintColor.DeepRed);
 
             _worldService[0, 0].WallColor.Should().Be(PaintColor.DeepRed);
         }
@@ -564,9 +565,9 @@ namespace Orion.World {
         public void Maintile_lava_IsCorrect() {
             _worldService[0, 0] = new Tile {IsLava = true};
 
-            Terraria.Main.tile[0, 0].lava().Should().BeTrue();
+            Main.tile[0, 0].lava().Should().BeTrue();
 
-            Terraria.Main.tile[0, 0].lava(false);
+            Main.tile[0, 0].lava(false);
 
             _worldService[0, 0].IsLava.Should().BeFalse();
         }
@@ -575,9 +576,9 @@ namespace Orion.World {
         public void Maintile_honey_IsCorrect() {
             _worldService[0, 0] = new Tile {IsHoney = true};
 
-            Terraria.Main.tile[0, 0].honey().Should().BeTrue();
+            Main.tile[0, 0].honey().Should().BeTrue();
 
-            Terraria.Main.tile[0, 0].honey(false);
+            Main.tile[0, 0].honey(false);
 
             _worldService[0, 0].IsHoney.Should().BeFalse();
         }
@@ -586,9 +587,9 @@ namespace Orion.World {
         public void Maintile_liquidType_IsCorrect() {
             _worldService[0, 0] = new Tile {LiquidType = LiquidType.Lava};
 
-            Terraria.Main.tile[0, 0].liquidType().Should().Be((byte)LiquidType.Lava);
+            Main.tile[0, 0].liquidType().Should().Be((byte)LiquidType.Lava);
 
-            Terraria.Main.tile[0, 0].liquidType((int)LiquidType.Honey);
+            Main.tile[0, 0].liquidType((int)LiquidType.Honey);
 
             _worldService[0, 0].LiquidType.Should().Be(LiquidType.Honey);
         }
@@ -597,9 +598,9 @@ namespace Orion.World {
         public void Maintile_wire4_IsCorrect() {
             _worldService[0, 0] = new Tile {HasYellowWire = true};
 
-            Terraria.Main.tile[0, 0].wire4().Should().BeTrue();
+            Main.tile[0, 0].wire4().Should().BeTrue();
 
-            Terraria.Main.tile[0, 0].wire4(false);
+            Main.tile[0, 0].wire4(false);
 
             _worldService[0, 0].HasYellowWire.Should().BeFalse();
         }
@@ -608,9 +609,9 @@ namespace Orion.World {
         public void Maintile_checkingLiquid_IsCorrect() {
             _worldService[0, 0] = new Tile {IsCheckingLiquid = true};
 
-            Terraria.Main.tile[0, 0].checkingLiquid().Should().BeTrue();
+            Main.tile[0, 0].checkingLiquid().Should().BeTrue();
 
-            Terraria.Main.tile[0, 0].checkingLiquid(false);
+            Main.tile[0, 0].checkingLiquid(false);
 
             _worldService[0, 0].IsCheckingLiquid.Should().BeFalse();
         }
@@ -619,9 +620,9 @@ namespace Orion.World {
         public void Maintile_skipLiquid_IsCorrect() {
             _worldService[0, 0] = new Tile {ShouldSkipLiquid = true};
 
-            Terraria.Main.tile[0, 0].skipLiquid().Should().BeTrue();
+            Main.tile[0, 0].skipLiquid().Should().BeTrue();
 
-            Terraria.Main.tile[0, 0].skipLiquid(false);
+            Main.tile[0, 0].skipLiquid(false);
 
             _worldService[0, 0].ShouldSkipLiquid.Should().BeFalse();
         }
@@ -630,11 +631,11 @@ namespace Orion.World {
         public void Maintile_nactive_IsCorrect() {
             _worldService[0, 0] = new Tile {IsBlockActive = true};
 
-            Terraria.Main.tile[0, 0].nactive().Should().BeTrue();
+            Main.tile[0, 0].nactive().Should().BeTrue();
 
             _worldService[0, 0].IsBlockActuated = true;
 
-            Terraria.Main.tile[0, 0].nactive().Should().BeFalse();
+            Main.tile[0, 0].nactive().Should().BeFalse();
         }
 
         [Theory]
@@ -646,7 +647,7 @@ namespace Orion.World {
         public void Maintile_topSlope_IsCorrect(Slope slope, bool value) {
             _worldService[0, 0] = new Tile {Slope = slope};
 
-            Terraria.Main.tile[0, 0].topSlope().Should().Be(value);
+            Main.tile[0, 0].topSlope().Should().Be(value);
         }
 
         [Theory]
@@ -658,7 +659,7 @@ namespace Orion.World {
         public void Maintile_bottomSlope_IsCorrect(Slope slope, bool value) {
             _worldService[0, 0] = new Tile {Slope = slope};
 
-            Terraria.Main.tile[0, 0].bottomSlope().Should().Be(value);
+            Main.tile[0, 0].bottomSlope().Should().Be(value);
         }
 
         [Theory]
@@ -670,7 +671,7 @@ namespace Orion.World {
         public void Maintile_leftSlope_IsCorrect(Slope slope, bool value) {
             _worldService[0, 0] = new Tile {Slope = slope};
 
-            Terraria.Main.tile[0, 0].leftSlope().Should().Be(value);
+            Main.tile[0, 0].leftSlope().Should().Be(value);
         }
 
         [Theory]
@@ -682,7 +683,7 @@ namespace Orion.World {
         public void Maintile_rightSlope_IsCorrect(Slope slope, bool value) {
             _worldService[0, 0] = new Tile {Slope = slope};
 
-            Terraria.Main.tile[0, 0].rightSlope().Should().Be(value);
+            Main.tile[0, 0].rightSlope().Should().Be(value);
         }
 
         [Fact]
@@ -690,32 +691,32 @@ namespace Orion.World {
             _worldService[0, 0] = new Tile {Slope = Slope.BottomRight};
             _worldService[0, 1] = new Tile {Slope = Slope.BottomRight};
 
-            Terraria.Main.tile[0, 0].HasSameSlope(Terraria.Main.tile[0, 1]).Should().BeTrue();
+            Main.tile[0, 0].HasSameSlope(Main.tile[0, 1]).Should().BeTrue();
 
             _worldService[0, 1].Slope = Slope.BottomLeft;
 
-            Terraria.Main.tile[0, 0].HasSameSlope(Terraria.Main.tile[0, 1]).Should().BeFalse();
+            Main.tile[0, 0].HasSameSlope(Main.tile[0, 1]).Should().BeFalse();
         }
 
         [Fact]
         public void Maintile_blockType_IsCorrect() {
             _worldService[0, 0] = new Tile();
 
-            Terraria.Main.tile[0, 0].blockType().Should().Be(0);
+            Main.tile[0, 0].blockType().Should().Be(0);
         }
 
         [Fact]
         public void Maintile_blockType_Halved_IsCorrect() {
             _worldService[0, 0] = new Tile {IsBlockHalved = true};
             
-            Terraria.Main.tile[0, 0].blockType().Should().Be(1);
+            Main.tile[0, 0].blockType().Should().Be(1);
         }
 
         [Fact]
         public void Maintile_blockType_Slope_IsCorrect() {
             _worldService[0, 0] = new Tile {Slope = Slope.BottomRight};
             
-            Terraria.Main.tile[0, 0].blockType().Should().Be((int)Slope.BottomRight + 1);
+            Main.tile[0, 0].blockType().Should().Be((int)Slope.BottomRight + 1);
         }
     }
 }

@@ -22,6 +22,7 @@ using Orion.Npcs;
 using Orion.Npcs.Extensions;
 using Orion.Packets.Extensions;
 using Orion.Utils;
+using TerrariaNpc = Terraria.NPC;
 
 namespace Orion.Packets.Npcs {
     /// <summary>
@@ -40,7 +41,7 @@ namespace Orion.Packets.Npcs {
         private byte _npcNumberOfHealthBytes;
         private int _npcHealth;
         private byte _npcReleaserPlayerIndex;
-        private readonly DirtiableArray<float> _npcAiValues = new DirtiableArray<float>(Terraria.NPC.maxAI);
+        private readonly DirtiableArray<float> _npcAiValues = new DirtiableArray<float>(TerrariaNpc.maxAI);
 
         /// <inheritdoc />
         public override bool IsDirty => base.IsDirty || _npcAiValues.IsDirty;

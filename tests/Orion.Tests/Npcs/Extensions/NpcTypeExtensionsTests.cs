@@ -17,6 +17,7 @@
 
 using FluentAssertions;
 using Xunit;
+using Main = Terraria.Main;
 
 namespace Orion.Npcs.Extensions {
     [Collection("TerrariaTestsCollection")]
@@ -24,7 +25,7 @@ namespace Orion.Npcs.Extensions {
         [Fact]
         public void IsCatchable_IsCorrect() {
             for (short i = 0; i < Terraria.ID.NPCID.Count; ++i) {
-                ((NpcType)i).IsCatchable().Should().Be(Terraria.Main.npcCatchable[i]);
+                ((NpcType)i).IsCatchable().Should().Be(Main.npcCatchable[i]);
             }
         }
     }

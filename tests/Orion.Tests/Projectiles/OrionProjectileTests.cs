@@ -20,6 +20,7 @@ using System.Diagnostics.CodeAnalysis;
 using FluentAssertions;
 using Orion.World.Tiles;
 using Xunit;
+using TerrariaProjectile = Terraria.Projectile;
 
 namespace Orion.Projectiles {
     [Collection("TerrariaTestsCollection")]
@@ -39,7 +40,7 @@ namespace Orion.Projectiles {
 
         [Fact]
         public void SetName_IsCorrect() {
-            var terrariaProjectile = new Terraria.Projectile();
+            var terrariaProjectile = new TerrariaProjectile();
             IProjectile projectile = new OrionProjectile(terrariaProjectile);
 
             projectile.Name = "test";
@@ -49,7 +50,7 @@ namespace Orion.Projectiles {
 
         [Fact]
         public void SetName_NullValue_ThrowsArgumentNullException() {
-            var terrariaProjectile = new Terraria.Projectile();
+            var terrariaProjectile = new TerrariaProjectile();
             IProjectile projectile = new OrionProjectile(terrariaProjectile);
             Action action = () => projectile.Name = null!;
 
@@ -58,7 +59,7 @@ namespace Orion.Projectiles {
 
         [Fact]
         public void GetType_IsCorrect() {
-            var terrariaProjectile = new Terraria.Projectile {type = (int)ProjectileType.CrystalBullet};
+            var terrariaProjectile = new TerrariaProjectile {type = (int)ProjectileType.CrystalBullet};
             IProjectile projectile = new OrionProjectile(terrariaProjectile);
 
             projectile.Type.Should().Be(ProjectileType.CrystalBullet);
@@ -66,23 +67,12 @@ namespace Orion.Projectiles {
 
         [Fact]
         public void SetType_IsCorrect() {
-            var terrariaProjectile = new Terraria.Projectile();
+            var terrariaProjectile = new TerrariaProjectile();
             IProjectile projectile = new OrionProjectile(terrariaProjectile);
 
             projectile.SetType(ProjectileType.CrystalBullet);
 
             terrariaProjectile.type.Should().Be((int)ProjectileType.CrystalBullet);
-        }
-
-        public Tile[] tiles = new Tile[10];
-
-        private ref Tile GetTile(int index) => ref tiles[index];
-
-        [Fact]
-        public void Test() {
-            GetTile(0).LiquidAmount = 255;
-
-            tiles[0].LiquidAmount.Should().Be(255);
         }
     }
 }

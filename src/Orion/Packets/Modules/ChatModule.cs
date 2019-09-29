@@ -20,6 +20,7 @@ using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using Microsoft.Xna.Framework;
 using Orion.Packets.Extensions;
+using TerrariaNetworkText = Terraria.Localization.NetworkText;
 
 namespace Orion.Packets.Modules {
     /// <summary>
@@ -29,7 +30,7 @@ namespace Orion.Packets.Modules {
         private string _clientChatCommand = "";
         private string _clientChatText = "";
         private byte _serverChattingPlayerIndex;
-        private Terraria.Localization.NetworkText _serverChatText = Terraria.Localization.NetworkText.Empty;
+        private TerrariaNetworkText _serverChatText = TerrariaNetworkText.Empty;
         private Color _serverChatColor;
 
         /// <inheritdoc />
@@ -74,10 +75,11 @@ namespace Orion.Packets.Modules {
         /// Gets or sets the server chat's text. Only applicable when sent in the Server context.
         /// </summary>
         /// <exception cref="ArgumentNullException"><paramref name="value"/> is <c>null</c>.</exception>
-        public Terraria.Localization.NetworkText ServerChatText {
-            get => _serverChatText;
+        public string ServerChatText {
+            get => _serverChatText.ToString();
             set {
-                _serverChatText = value ?? throw new ArgumentNullException(nameof(value));
+                _serverChatText =
+                    TerrariaNetworkText.FromLiteral(value ?? throw new ArgumentNullException(nameof(value)));
                 _isDirty = true;
             }
         }

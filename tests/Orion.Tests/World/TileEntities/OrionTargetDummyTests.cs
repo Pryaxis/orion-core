@@ -18,13 +18,14 @@
 using System.Diagnostics.CodeAnalysis;
 using FluentAssertions;
 using Xunit;
+using TerrariaTargetDummy = Terraria.GameContent.Tile_Entities.TETrainingDummy;
 
 namespace Orion.World.TileEntities {
     [SuppressMessage("Style", "IDE0017:Simplify object initialization", Justification = "Testing")]
     public class OrionTargetDummyTests {
         [Fact]
         public void GetNpcIndex_IsCorrect() {
-            var terrariaTargetDummy = new Terraria.GameContent.Tile_Entities.TETrainingDummy {npc = 100};
+            var terrariaTargetDummy = new TerrariaTargetDummy {npc = 100};
             ITargetDummy targetDummy = new OrionTargetDummy(terrariaTargetDummy);
 
             targetDummy.NpcIndex.Should().Be(100);
@@ -32,7 +33,7 @@ namespace Orion.World.TileEntities {
 
         [Fact]
         public void SetNpcIndex_IsCorrect() {
-            var terrariaTargetDummy = new Terraria.GameContent.Tile_Entities.TETrainingDummy();
+            var terrariaTargetDummy = new TerrariaTargetDummy();
             ITargetDummy targetDummy = new OrionTargetDummy(terrariaTargetDummy);
 
             targetDummy.NpcIndex = 100;

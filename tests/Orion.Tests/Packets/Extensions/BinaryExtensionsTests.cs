@@ -22,7 +22,6 @@ using FluentAssertions;
 using Microsoft.Xna.Framework;
 using Terraria.Localization;
 using Xunit;
-using TDS = Terraria.DataStructures;
 
 namespace Orion.Packets.Extensions {
     public class BinaryExtensionTests {
@@ -38,7 +37,7 @@ namespace Orion.Packets.Extensions {
         };
 
         public static readonly IEnumerable<object[]> PlayerDeathReasonData = new List<object[]> {
-            new object[] {TDS.PlayerDeathReason.ByCustomReason("test")}
+            new object[] {Terraria.DataStructures.PlayerDeathReason.ByCustomReason("test")}
         };
 
         public static readonly IEnumerable<object[]> Vector2Data = new List<object[]> {
@@ -72,7 +71,8 @@ namespace Orion.Packets.Extensions {
 
         [Theory]
         [MemberData(nameof(PlayerDeathReasonData))]
-        public void WritePlayerDeathReason_ReadPlayerDeathReason_IsCorrect(TDS.PlayerDeathReason playerDeathReason) {
+        public void WritePlayerDeathReason_ReadPlayerDeathReason_IsCorrect(
+            Terraria.DataStructures.PlayerDeathReason playerDeathReason) {
             using var stream = new MemoryStream();
             using var writer = new BinaryWriter(stream, Encoding.UTF8);
             using var reader = new BinaryReader(stream, Encoding.UTF8);

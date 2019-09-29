@@ -15,15 +15,15 @@
 // You should have received a copy of the GNU General Public License
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
+using TerrariaTargetDummy = Terraria.GameContent.Tile_Entities.TETrainingDummy;
+
 namespace Orion.World.TileEntities {
-    internal sealed class OrionTargetDummy : OrionTileEntity<Terraria.GameContent.Tile_Entities.TETrainingDummy>,
-                                             ITargetDummy {
+    internal sealed class OrionTargetDummy : OrionTileEntity<TerrariaTargetDummy>, ITargetDummy {
         public int NpcIndex {
             get => Wrapped.npc;
             set => Wrapped.npc = value;
         }
 
-        internal OrionTargetDummy(Terraria.GameContent.Tile_Entities.TETrainingDummy terrariaTrainingDummy)
-            : base(terrariaTrainingDummy) { }
+        public OrionTargetDummy(TerrariaTargetDummy terrariaTrainingDummy) : base(terrariaTrainingDummy) { }
     }
 }

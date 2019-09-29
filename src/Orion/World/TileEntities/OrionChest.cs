@@ -19,6 +19,8 @@ using System;
 using System.Diagnostics;
 using Orion.Items;
 using Orion.Utils;
+using Main = Terraria.Main;
+using TerrariaChest = Terraria.Chest;
 
 namespace Orion.World.TileEntities {
     internal sealed class OrionChest : AnnotatableObject, IChest {
@@ -43,11 +45,11 @@ namespace Orion.World.TileEntities {
 
         public IReadOnlyArray<IItem> Items { get; }
 
-        public Terraria.Chest Wrapped { get; }
+        public TerrariaChest Wrapped { get; }
 
-        public OrionChest(int chestIndex, Terraria.Chest terrariaChest) {
-            Debug.Assert(chestIndex >= 0 && chestIndex < Terraria.Main.maxChests,
-                         "chestIndex >= 0 && chestIndex < Terraria.Main.maxChests");
+        public OrionChest(int chestIndex, TerrariaChest terrariaChest) {
+            Debug.Assert(chestIndex >= 0 && chestIndex < Main.maxChests,
+                         "chestIndex >= 0 && chestIndex < Main.maxChests");
             Debug.Assert(terrariaChest != null, "terrariaChest != null");
 
             Index = chestIndex;

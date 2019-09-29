@@ -20,6 +20,7 @@ using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using Microsoft.Xna.Framework;
 using Orion.Packets.Extensions;
+using TerrariaNetworkText = Terraria.Localization.NetworkText;
 
 namespace Orion.Packets.Entities {
     /// <summary>
@@ -28,7 +29,7 @@ namespace Orion.Packets.Entities {
     public sealed class CombatTextPacket : Packet {
         private Vector2 _textPosition;
         private Color _textColor;
-        private Terraria.Localization.NetworkText _text = Terraria.Localization.NetworkText.Empty;
+        private TerrariaNetworkText _text = TerrariaNetworkText.Empty;
 
         /// <inheritdoc />
         public override PacketType Type => PacketType.CombatText;
@@ -62,8 +63,7 @@ namespace Orion.Packets.Entities {
         public string Text {
             get => _text.ToString();
             set {
-                _text = Terraria.Localization.NetworkText.FromLiteral(
-                    value ?? throw new ArgumentNullException(nameof(value)));
+                _text = TerrariaNetworkText.FromLiteral(value ?? throw new ArgumentNullException(nameof(value)));
                 _isDirty = true;
             }
         }

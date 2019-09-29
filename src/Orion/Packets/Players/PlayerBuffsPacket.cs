@@ -19,6 +19,7 @@ using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using Orion.Entities;
 using Orion.Utils;
+using TerrariaPlayer = Terraria.Player;
 
 namespace Orion.Packets.Players {
     /// <summary>
@@ -28,7 +29,7 @@ namespace Orion.Packets.Players {
         private byte _playerIndex;
 
         private readonly DirtiableArray<BuffType> _playerBuffTypes =
-            new DirtiableArray<BuffType>(Terraria.Player.maxBuffs);
+            new DirtiableArray<BuffType>(TerrariaPlayer.maxBuffs);
 
         /// <inheritdoc />
         public override bool IsDirty => base.IsDirty || _playerBuffTypes.IsDirty;

@@ -18,14 +18,15 @@
 using System.Diagnostics.CodeAnalysis;
 using FluentAssertions;
 using Xunit;
+using TerrariaLogicSensor = Terraria.GameContent.Tile_Entities.TELogicSensor;
 
 namespace Orion.World.TileEntities {
     [SuppressMessage("Style", "IDE0017:Simplify object initialization", Justification = "Testing")]
     public class OrionLogicSensorTests {
         [Fact]
         public void GetLogicSensorType_IsCorrect() {
-            var terrariaLogicSensor = new Terraria.GameContent.Tile_Entities.TELogicSensor {
-                logicCheck = Terraria.GameContent.Tile_Entities.TELogicSensor.LogicCheckType.Water
+            var terrariaLogicSensor = new TerrariaLogicSensor {
+                logicCheck = TerrariaLogicSensor.LogicCheckType.Water
             };
             ILogicSensor logicSensor = new OrionLogicSensor(terrariaLogicSensor);
 
@@ -34,20 +35,20 @@ namespace Orion.World.TileEntities {
 
         [Fact]
         public void SetLogicSensorType_IsCorrect() {
-            var terrariaLogicSensor = new Terraria.GameContent.Tile_Entities.TELogicSensor();
+            var terrariaLogicSensor = new TerrariaLogicSensor();
             ILogicSensor logicSensor = new OrionLogicSensor(terrariaLogicSensor);
 
             logicSensor.LogicSensorType = LogicSensorType.Water;
 
             terrariaLogicSensor.logicCheck.Should()
-                               .Be(Terraria.GameContent.Tile_Entities.TELogicSensor.LogicCheckType.Water);
+                               .Be(TerrariaLogicSensor.LogicCheckType.Water);
         }
 
         [Theory]
         [InlineData(true)]
         [InlineData(false)]
         public void GetIsActivated_IsCorrect(bool isActivated) {
-            var terrariaLogicSensor = new Terraria.GameContent.Tile_Entities.TELogicSensor {On = isActivated};
+            var terrariaLogicSensor = new TerrariaLogicSensor {On = isActivated};
             ILogicSensor logicSensor = new OrionLogicSensor(terrariaLogicSensor);
 
             logicSensor.IsActivated.Should().Be(isActivated);
@@ -57,7 +58,7 @@ namespace Orion.World.TileEntities {
         [InlineData(true)]
         [InlineData(false)]
         public void SetIsActivated_IsCorrect(bool isActivated) {
-            var terrariaLogicSensor = new Terraria.GameContent.Tile_Entities.TELogicSensor();
+            var terrariaLogicSensor = new TerrariaLogicSensor();
             ILogicSensor logicSensor = new OrionLogicSensor(terrariaLogicSensor);
 
             logicSensor.IsActivated = isActivated;

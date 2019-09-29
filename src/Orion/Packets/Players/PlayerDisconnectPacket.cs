@@ -19,6 +19,7 @@ using System;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using Orion.Packets.Extensions;
+using TerrariaNetworkText = Terraria.Localization.NetworkText;
 
 namespace Orion.Packets.Players {
     /// <summary>
@@ -26,8 +27,7 @@ namespace Orion.Packets.Players {
     /// <see cref="PlayerPasswordResponsePacket"/> or for various other reasons.
     /// </summary>
     public sealed class PlayerDisconnectPacket : Packet {
-        private Terraria.Localization.NetworkText _playerDisconnectReason =
-            Terraria.Localization.NetworkText.Empty;
+        private TerrariaNetworkText _playerDisconnectReason = TerrariaNetworkText.Empty;
 
         /// <inheritdoc />
         public override PacketType Type => PacketType.PlayerDisconnect;
@@ -40,8 +40,7 @@ namespace Orion.Packets.Players {
             get => _playerDisconnectReason.ToString();
             set {
                 _playerDisconnectReason =
-                    Terraria.Localization.NetworkText.FromLiteral(
-                        value ?? throw new ArgumentNullException(nameof(value)));
+                    TerrariaNetworkText.FromLiteral(value ?? throw new ArgumentNullException(nameof(value)));
                 _isDirty = true;
             }
         }

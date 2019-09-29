@@ -17,9 +17,9 @@
 
 using System.Diagnostics.CodeAnalysis;
 using FluentAssertions;
-
 using Microsoft.Xna.Framework;
 using Xunit;
+using TerrariaEntity = Terraria.Entity;
 
 namespace Orion.Entities {
     [SuppressMessage("Style", "IDE0017:Simplify object initialization", Justification = "Testing")]
@@ -114,6 +114,6 @@ namespace Orion.Entities {
             public TestOrionEntity( TestTerrariaEntity terrariaEntity) : base(terrariaEntity) { }
         }
 
-        private class TestTerrariaEntity : Terraria.Entity { }
+        private class TestTerrariaEntity : TerrariaEntity { }
     }
 }

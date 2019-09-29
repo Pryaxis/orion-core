@@ -17,12 +17,13 @@
 
 using Orion.Entities;
 using Orion.Utils;
+using TerrariaNpc = Terraria.NPC;
 
 namespace Orion.Npcs {
     /// <summary>
     /// Represents a Terraria NPC.
     /// </summary>
-    public interface INpc : IEntity, IWrapping<Terraria.NPC> {
+    public interface INpc : IEntity, IWrapping<TerrariaNpc> {
         /// <summary>
         /// Gets the NPC's type.
         /// </summary>

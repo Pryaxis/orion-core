@@ -17,9 +17,10 @@
 
 using System;
 using Orion.Entities;
+using TerrariaItem = Terraria.Item;
 
 namespace Orion.Items {
-    internal sealed class OrionItem : OrionEntity<Terraria.Item>, IItem {
+    internal sealed class OrionItem : OrionEntity<TerrariaItem>, IItem {
         public override string Name {
             get => Wrapped.Name;
             set => Wrapped._nameOverride = value ?? throw new ArgumentNullException(nameof(value));
@@ -35,7 +36,7 @@ namespace Orion.Items {
         public ItemPrefix Prefix => (ItemPrefix)Wrapped.prefix;
         public IItemStats Stats { get; }
 
-        public OrionItem(Terraria.Item terrariaItem) : base(terrariaItem) {
+        public OrionItem(TerrariaItem terrariaItem) : base(terrariaItem) {
             Stats = new OrionItemStats(terrariaItem);
         }
 

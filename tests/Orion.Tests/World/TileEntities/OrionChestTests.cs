@@ -20,15 +20,17 @@ using System.Diagnostics.CodeAnalysis;
 using FluentAssertions;
 using Orion.Items;
 using Xunit;
+using TerrariaChest = Terraria.Chest;
+using TerrariaItem = Terraria.Item;
 
 namespace Orion.World.TileEntities {
     [SuppressMessage("Style", "IDE0017:Simplify object initialization", Justification = "Testing")]
     public class OrionChestTests {
         [Fact]
         public void GetX_IsCorrect() {
-            var terrariaChest = new Terraria.Chest {x = 100};
+            var terrariaChest = new TerrariaChest {x = 100};
             for (var i = 0; i < terrariaChest.item.Length; ++i) {
-                terrariaChest.item[i] = new Terraria.Item();
+                terrariaChest.item[i] = new TerrariaItem();
             }
 
             IChest chest = new OrionChest(0, terrariaChest);
@@ -38,9 +40,9 @@ namespace Orion.World.TileEntities {
 
         [Fact]
         public void SetX_IsCorrect() {
-            var terrariaChest = new Terraria.Chest();
+            var terrariaChest = new TerrariaChest();
             for (var i = 0; i < terrariaChest.item.Length; ++i) {
-                terrariaChest.item[i] = new Terraria.Item();
+                terrariaChest.item[i] = new TerrariaItem();
             }
 
             IChest chest = new OrionChest(0, terrariaChest);
@@ -52,9 +54,9 @@ namespace Orion.World.TileEntities {
 
         [Fact]
         public void GetY_IsCorrect() {
-            var terrariaChest = new Terraria.Chest {y = 100};
+            var terrariaChest = new TerrariaChest {y = 100};
             for (var i = 0; i < terrariaChest.item.Length; ++i) {
-                terrariaChest.item[i] = new Terraria.Item();
+                terrariaChest.item[i] = new TerrariaItem();
             }
 
             IChest chest = new OrionChest(0, terrariaChest);
@@ -64,9 +66,9 @@ namespace Orion.World.TileEntities {
 
         [Fact]
         public void SetY_IsCorrect() {
-            var terrariaChest = new Terraria.Chest();
+            var terrariaChest = new TerrariaChest();
             for (var i = 0; i < terrariaChest.item.Length; ++i) {
-                terrariaChest.item[i] = new Terraria.Item();
+                terrariaChest.item[i] = new TerrariaItem();
             }
 
             IChest chest = new OrionChest(0, terrariaChest);
@@ -78,9 +80,9 @@ namespace Orion.World.TileEntities {
 
         [Fact]
         public void GetName_IsCorrect() {
-            var terrariaChest = new Terraria.Chest {name = "test"};
+            var terrariaChest = new TerrariaChest {name = "test"};
             for (var i = 0; i < terrariaChest.item.Length; ++i) {
-                terrariaChest.item[i] = new Terraria.Item();
+                terrariaChest.item[i] = new TerrariaItem();
             }
 
             IChest chest = new OrionChest(0, terrariaChest);
@@ -90,9 +92,9 @@ namespace Orion.World.TileEntities {
 
         [Fact]
         public void SetName_IsCorrect() {
-            var terrariaChest = new Terraria.Chest();
+            var terrariaChest = new TerrariaChest();
             for (var i = 0; i < terrariaChest.item.Length; ++i) {
-                terrariaChest.item[i] = new Terraria.Item();
+                terrariaChest.item[i] = new TerrariaItem();
             }
 
             IChest chest = new OrionChest(0, terrariaChest);
@@ -104,9 +106,9 @@ namespace Orion.World.TileEntities {
 
         [Fact]
         public void SetName_NullValue_ThrowsArgumentNullException() {
-            var terrariaChest = new Terraria.Chest();
+            var terrariaChest = new TerrariaChest();
             for (var i = 0; i < terrariaChest.item.Length; ++i) {
-                terrariaChest.item[i] = new Terraria.Item();
+                terrariaChest.item[i] = new TerrariaItem();
             }
 
             IChest chest = new OrionChest(0, terrariaChest);
@@ -117,12 +119,12 @@ namespace Orion.World.TileEntities {
 
         [Fact]
         public void GetItems_IsCorrect() {
-            var terrariaChest = new Terraria.Chest();
+            var terrariaChest = new TerrariaChest();
             for (var i = 0; i < terrariaChest.item.Length; ++i) {
-                terrariaChest.item[i] = new Terraria.Item();
+                terrariaChest.item[i] = new TerrariaItem();
             }
 
-            terrariaChest.item[0] = new Terraria.Item {
+            terrariaChest.item[0] = new TerrariaItem {
                 type = (int)ItemType.Sdmg,
                 stack = 1,
                 prefix = (byte)ItemPrefix.Unreal

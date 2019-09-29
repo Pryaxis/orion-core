@@ -21,6 +21,7 @@ using Microsoft.Xna.Framework;
 using Orion.Packets.Extensions;
 using Orion.Projectiles;
 using Orion.Utils;
+using TerrariaProjectile = Terraria.Projectile;
 
 namespace Orion.Packets.Projectiles {
     /// <summary>
@@ -37,7 +38,7 @@ namespace Orion.Packets.Projectiles {
         private short _projectileUuid = -1;
 
         private readonly DirtiableArray<float> _projectileAiValues =
-            new DirtiableArray<float>(Terraria.Projectile.maxAI);
+            new DirtiableArray<float>(TerrariaProjectile.maxAI);
 
         /// <inheritdoc />
         public override bool IsDirty => base.IsDirty || _projectileAiValues.IsDirty;

@@ -22,6 +22,8 @@ using FluentAssertions;
 using Microsoft.Xna.Framework;
 using Orion.Events.Extensions;
 using Xunit;
+using Main = Terraria.Main;
+using TerrariaProjectile = Terraria.Projectile;
 
 namespace Orion.Projectiles {
     [Collection("TerrariaTestsCollection")]
@@ -29,8 +31,8 @@ namespace Orion.Projectiles {
         private readonly IProjectileService _projectileService;
 
         public OrionProjectileServiceTests() {
-            for (var i = 0; i < Terraria.Main.projectile.Length; ++i) {
-                Terraria.Main.projectile[i] = new Terraria.Projectile {whoAmI = i};
+            for (var i = 0; i < Main.projectile.Length; ++i) {
+                Main.projectile[i] = new TerrariaProjectile {whoAmI = i};
             }
 
             _projectileService = new OrionProjectileService();
@@ -44,7 +46,7 @@ namespace Orion.Projectiles {
         public void Projectiles_GetItem_IsCorrect() {
             var projectile = _projectileService.Projectiles[0];
 
-            ((OrionProjectile)projectile).Wrapped.Should().BeSameAs(Terraria.Main.projectile[0]);
+            ((OrionProjectile)projectile).Wrapped.Should().BeSameAs(Main.projectile[0]);
         }
 
         [Fact]
@@ -69,7 +71,7 @@ namespace Orion.Projectiles {
             var projectiles = _projectileService.Projectiles.ToList();
 
             for (var i = 0; i < projectiles.Count; ++i) {
-                ((OrionProjectile)projectiles[i]).Wrapped.Should().BeSameAs(Terraria.Main.projectile[i]);
+                ((OrionProjectile)projectiles[i]).Wrapped.Should().BeSameAs(Main.projectile[i]);
             }
         }
 
@@ -78,11 +80,11 @@ namespace Orion.Projectiles {
             var isRun = false;
             _projectileService.ProjectileSetDefaults += (sender, args) => {
                 isRun = true;
-                ((OrionProjectile)args.Projectile).Wrapped.Should().BeSameAs(Terraria.Main.projectile[0]);
+                ((OrionProjectile)args.Projectile).Wrapped.Should().BeSameAs(Main.projectile[0]);
                 args.ProjectileType.Should().Be(ProjectileType.CrystalBullet);
             };
 
-            Terraria.Main.projectile[0].SetDefaults((int)ProjectileType.CrystalBullet);
+            Main.projectile[0].SetDefaults((int)ProjectileType.CrystalBullet);
 
             isRun.Should().BeTrue();
         }
@@ -95,9 +97,9 @@ namespace Orion.Projectiles {
                 args.ProjectileType = newType;
             };
 
-            Terraria.Main.projectile[0].SetDefaults((int)oldType);
+            Main.projectile[0].SetDefaults((int)oldType);
 
-            Terraria.Main.projectile[0].type.Should().Be((int)newType);
+            Main.projectile[0].type.Should().Be((int)newType);
         }
 
         [Fact]
@@ -106,9 +108,9 @@ namespace Orion.Projectiles {
                 args.Cancel();
             };
 
-            Terraria.Main.projectile[0].SetDefaults((int)ProjectileType.CrystalBullet);
+            Main.projectile[0].SetDefaults((int)ProjectileType.CrystalBullet);
 
-            Terraria.Main.projectile[0].type.Should().Be(0);
+            Main.projectile[0].type.Should().Be(0);
         }
 
         [Fact]
@@ -116,10 +118,10 @@ namespace Orion.Projectiles {
             var isRun = false;
             _projectileService.ProjectileUpdate += (sender, args) => {
                 isRun = true;
-                ((OrionProjectile)args.Projectile).Wrapped.Should().BeSameAs(Terraria.Main.projectile[0]);
+                ((OrionProjectile)args.Projectile).Wrapped.Should().BeSameAs(Main.projectile[0]);
             };
 
-            Terraria.Main.projectile[0].Update(0);
+            Main.projectile[0].Update(0);
             
             isRun.Should().BeTrue();
         }
@@ -129,10 +131,10 @@ namespace Orion.Projectiles {
             var isRun = false;
             _projectileService.ProjectileRemove += (sender, args) => {
                 isRun = true;
-                ((OrionProjectile)args.Projectile).Wrapped.Should().BeSameAs(Terraria.Main.projectile[0]);
+                ((OrionProjectile)args.Projectile).Wrapped.Should().BeSameAs(Main.projectile[0]);
             };
 
-            Terraria.Main.projectile[0].Kill();
+            Main.projectile[0].Kill();
             
             isRun.Should().BeTrue();
         }
@@ -142,11 +144,11 @@ namespace Orion.Projectiles {
             _projectileService.ProjectileRemove += (sender, args) => {
                 args.Cancel();
             };
-            Terraria.Main.projectile[0].SetDefaults((int)ProjectileType.CrystalBullet);
+            Main.projectile[0].SetDefaults((int)ProjectileType.CrystalBullet);
 
-            Terraria.Main.projectile[0].Kill();
+            Main.projectile[0].Kill();
 
-            Terraria.Main.projectile[0].active.Should().BeTrue();
+            Main.projectile[0].active.Should().BeTrue();
         }
 
         [Fact]

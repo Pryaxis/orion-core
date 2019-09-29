@@ -20,6 +20,7 @@ using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using Microsoft.Xna.Framework;
 using Orion.Packets.Extensions;
+using TerrariaNetworkText = Terraria.Localization.NetworkText;
 
 namespace Orion.Packets.World {
     /// <summary>
@@ -27,7 +28,7 @@ namespace Orion.Packets.World {
     /// </summary>
     public sealed class ChatPacket : Packet {
         private Color _chatColor;
-        private Terraria.Localization.NetworkText _chatText = Terraria.Localization.NetworkText.Empty;
+        private TerrariaNetworkText _chatText = TerrariaNetworkText.Empty;
         private short _chatLineWidth;
 
         /// <inheritdoc />
@@ -51,8 +52,7 @@ namespace Orion.Packets.World {
         public string ChatText {
             get => _chatText.ToString();
             set {
-                _chatText = Terraria.Localization.NetworkText.FromLiteral(
-                    value ?? throw new ArgumentNullException(nameof(value)));
+                _chatText = TerrariaNetworkText.FromLiteral(value ?? throw new ArgumentNullException(nameof(value)));
                 _isDirty = true;
             }
         }

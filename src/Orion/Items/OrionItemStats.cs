@@ -16,16 +16,17 @@
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
 using System.Diagnostics;
+using TerrariaItem = Terraria.Item;
 
 namespace Orion.Items {
     internal sealed class OrionItemStats : IItemStats {
         // internal for testing purposes.
-        internal Terraria.Item Wrapped { get; }
+        internal TerrariaItem Wrapped { get; }
 
         public int MaxStackSize => Wrapped.maxStack;
         public ItemRarity Rarity => (ItemRarity)Wrapped.rare;
 
-        public OrionItemStats(Terraria.Item terrariaItem) {
+        public OrionItemStats(TerrariaItem terrariaItem) {
             Debug.Assert(terrariaItem != null, "terrariaItem != null");
 
             Wrapped = terrariaItem;

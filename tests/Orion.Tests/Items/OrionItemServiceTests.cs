@@ -23,6 +23,8 @@ using FluentAssertions;
 using Microsoft.Xna.Framework;
 using Orion.Events.Extensions;
 using Xunit;
+using Main = Terraria.Main;
+using TerrariaItem = Terraria.Item;
 
 namespace Orion.Items {
     [Collection("TerrariaTestsCollection")]
@@ -30,8 +32,8 @@ namespace Orion.Items {
         private readonly IItemService _itemService;
 
         public OrionItemServiceTests() {
-            for (var i = 0; i < Terraria.Main.item.Length; ++i) {
-                Terraria.Main.item[i] = new Terraria.Item {whoAmI = i};
+            for (var i = 0; i < Main.item.Length; ++i) {
+                Main.item[i] = new TerrariaItem {whoAmI = i};
             }
 
             _itemService = new OrionItemService();
@@ -45,7 +47,7 @@ namespace Orion.Items {
         public void Items_GetItem_IsCorrect() {
             var item = _itemService.Items[0];
 
-            ((OrionItem)item).Wrapped.Should().BeSameAs(Terraria.Main.item[0]);
+            ((OrionItem)item).Wrapped.Should().BeSameAs(Main.item[0]);
         }
 
         [Fact]
@@ -70,7 +72,7 @@ namespace Orion.Items {
             var items = _itemService.Items.ToList();
 
             for (var i = 0; i < items.Count; ++i) {
-                ((OrionItem)items[i]).Wrapped.Should().BeSameAs(Terraria.Main.item[i]);
+                ((OrionItem)items[i]).Wrapped.Should().BeSameAs(Main.item[i]);
             }
         }
 
@@ -79,11 +81,11 @@ namespace Orion.Items {
             var isRun = false;
             _itemService.ItemSetDefaults += (sender, args) => {
                 isRun = true;
-                ((OrionItem)args.Item).Wrapped.Should().BeSameAs(Terraria.Main.item[0]);
+                ((OrionItem)args.Item).Wrapped.Should().BeSameAs(Main.item[0]);
                 args.ItemType.Should().Be(ItemType.Sdmg);
             };
 
-            Terraria.Main.item[0].SetDefaults((int)ItemType.Sdmg);
+            Main.item[0].SetDefaults((int)ItemType.Sdmg);
 
             isRun.Should().BeTrue();
         }
@@ -96,9 +98,9 @@ namespace Orion.Items {
                 args.ItemType = newType;
             };
 
-            Terraria.Main.item[0].SetDefaults((int)oldType);
+            Main.item[0].SetDefaults((int)oldType);
 
-            Terraria.Main.item[0].type.Should().Be((int)newType);
+            Main.item[0].type.Should().Be((int)newType);
         }
 
         [Fact]
@@ -107,9 +109,9 @@ namespace Orion.Items {
                 args.Cancel();
             };
 
-            Terraria.Main.item[0].SetDefaults((int)ItemType.Sdmg);
+            Main.item[0].SetDefaults((int)ItemType.Sdmg);
 
-            Terraria.Main.item[0].type.Should().Be(0);
+            Main.item[0].type.Should().Be(0);
         }
 
         [Fact]
@@ -117,10 +119,10 @@ namespace Orion.Items {
             var isRun = false;
             _itemService.ItemUpdate += (sender, args) => {
                 isRun = true;
-                ((OrionItem)args.Item).Wrapped.Should().BeSameAs(Terraria.Main.item[0]);
+                ((OrionItem)args.Item).Wrapped.Should().BeSameAs(Main.item[0]);
             };
 
-            Terraria.Main.item[0].UpdateItem(0);
+            Main.item[0].UpdateItem(0);
 
             isRun.Should().BeTrue();
         }
@@ -145,7 +147,7 @@ namespace Orion.Items {
         [Theory]
         [MemberData(nameof(SpawnItemData))]
         public void SpawnItem_CachedItem_IsCorrect(ItemType type, int stackSize, ItemPrefix prefix) {
-            Terraria.Item.itemCaches[(int)type] = 0;
+            TerrariaItem.itemCaches[(int)type] = 0;
 
             var item = _itemService.SpawnItem(type, Vector2.Zero, stackSize, prefix);
 

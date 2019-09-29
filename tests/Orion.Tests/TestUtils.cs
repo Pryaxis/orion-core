@@ -17,6 +17,7 @@
 
 using System;
 using Xunit;
+using Main = Terraria.Main;
 
 namespace Orion {
     public class TestUtils {
@@ -31,10 +32,10 @@ namespace Orion {
     }
 
     public class TerrariaTestsFixture : IDisposable {
-        private readonly Terraria.Main _main;
+        private readonly Main _main;
 
         public TerrariaTestsFixture() {
-            _main = new Terraria.Main();
+            _main = new Main();
 
             _main.Initialize();
         }

@@ -20,6 +20,7 @@ using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using Orion.Entities;
 using Orion.Utils;
+using TerrariaNpc = Terraria.NPC;
 
 namespace Orion.Packets.Npcs {
     /// <summary>
@@ -27,7 +28,7 @@ namespace Orion.Packets.Npcs {
     /// </summary>
     public sealed class NpcBuffsPacket : Packet {
         private short _npcIndex;
-        private readonly DirtiableArray<Buff> _npcBuffs = new DirtiableArray<Buff>(Terraria.NPC.maxBuffs);
+        private readonly DirtiableArray<Buff> _npcBuffs = new DirtiableArray<Buff>(TerrariaNpc.maxBuffs);
 
         /// <inheritdoc />
         public override bool IsDirty => base.IsDirty || _npcBuffs.IsDirty;

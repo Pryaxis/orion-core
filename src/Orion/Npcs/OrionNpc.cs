@@ -17,9 +17,10 @@
 
 using System;
 using Orion.Entities;
+using TerrariaNpc = Terraria.NPC;
 
 namespace Orion.Npcs {
-    internal class OrionNpc : OrionEntity<Terraria.NPC>, INpc {
+    internal class OrionNpc : OrionEntity<TerrariaNpc>, INpc {
         public override string Name {
             get => Wrapped.GivenOrTypeName;
             set => Wrapped._givenName = value ?? throw new ArgumentNullException(nameof(value));
@@ -27,7 +28,7 @@ namespace Orion.Npcs {
 
         public NpcType Type => (NpcType)Wrapped.netID;
 
-        public OrionNpc(Terraria.NPC terrariaNpc) : base(terrariaNpc) { }
+        public OrionNpc(TerrariaNpc terrariaNpc) : base(terrariaNpc) { }
 
         public void SetType(NpcType type) {
             Wrapped.SetDefaults((int)type);

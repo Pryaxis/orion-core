@@ -19,13 +19,14 @@ using System;
 using System.Diagnostics.CodeAnalysis;
 using FluentAssertions;
 using Xunit;
+using TerrariaSign = Terraria.Sign;
 
 namespace Orion.World.TileEntities {
     [SuppressMessage("Style", "IDE0017:Simplify object initialization", Justification = "Testing")]
     public class OrionSignTests {
         [Fact]
         public void GetX_IsCorrect() {
-            var terrariaSign = new Terraria.Sign {x = 100};
+            var terrariaSign = new TerrariaSign {x = 100};
             ISign sign = new OrionSign(0, terrariaSign);
 
             sign.X.Should().Be(100);
@@ -33,7 +34,7 @@ namespace Orion.World.TileEntities {
 
         [Fact]
         public void SetX_IsCorrect() {
-            var terrariaSign = new Terraria.Sign();
+            var terrariaSign = new TerrariaSign();
             ISign sign = new OrionSign(0, terrariaSign);
 
             sign.X = 100;
@@ -43,7 +44,7 @@ namespace Orion.World.TileEntities {
 
         [Fact]
         public void GetY_IsCorrect() {
-            var terrariaSign = new Terraria.Sign {y = 100};
+            var terrariaSign = new TerrariaSign {y = 100};
             ISign sign = new OrionSign(0, terrariaSign);
 
             sign.Y.Should().Be(100);
@@ -51,7 +52,7 @@ namespace Orion.World.TileEntities {
 
         [Fact]
         public void SetY_IsCorrect() {
-            var terrariaSign = new Terraria.Sign();
+            var terrariaSign = new TerrariaSign();
             ISign sign = new OrionSign(0, terrariaSign);
 
             sign.Y = 100;
@@ -61,7 +62,7 @@ namespace Orion.World.TileEntities {
 
         [Fact]
         public void GetText_IsCorrect() {
-            var terrariaSign = new Terraria.Sign {text = "test"};
+            var terrariaSign = new TerrariaSign {text = "test"};
             ISign sign = new OrionSign(0, terrariaSign);
 
             sign.Text.Should().Be("test");
@@ -69,7 +70,7 @@ namespace Orion.World.TileEntities {
 
         [Fact]
         public void SetText_IsCorrect() {
-            var terrariaSign = new Terraria.Sign();
+            var terrariaSign = new TerrariaSign();
             ISign sign = new OrionSign(0, terrariaSign);
 
             sign.Text = "test";
@@ -79,7 +80,7 @@ namespace Orion.World.TileEntities {
 
         [Fact]
         public void SetText_NullValue_ThrowsArgumentNullException() {
-            var terrariaSign = new Terraria.Sign();
+            var terrariaSign = new TerrariaSign();
             ISign sign = new OrionSign(0, terrariaSign);
             Action action = () => sign.Text = null!;
 

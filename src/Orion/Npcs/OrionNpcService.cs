@@ -26,6 +26,9 @@ using Orion.Events.Npcs;
 using Orion.Items;
 using Orion.Utils;
 using OTAPI;
+using Main = Terraria.Main;
+using TerrariaEntity = Terraria.Entity;
+using TerrariaNpc = Terraria.NPC;
 
 namespace Orion.Npcs {
     internal sealed class OrionNpcService : OrionService, INpcService {
@@ -44,8 +47,8 @@ namespace Orion.Npcs {
 
         public OrionNpcService() {
             // Ignore the last NPC since it is used as a failure slot.
-            Npcs = new WrappedReadOnlyArray<OrionNpc, Terraria.NPC>(
-                Terraria.Main.npc.AsMemory(..^1),
+            Npcs = new WrappedReadOnlyArray<OrionNpc, TerrariaNpc>(
+                Main.npc.AsMemory(..^1),
                 (_, terrariaNpc) => new OrionNpc(terrariaNpc));
 
             Hooks.Npc.PreSetDefaultsById = PreSetDefaultsByIdHandler;
@@ -72,19 +75,19 @@ namespace Orion.Npcs {
         }
 
         public INpc? SpawnNpc(NpcType npcType, Vector2 position, float[]? aiValues = null) {
-            if (aiValues != null && aiValues.Length != Terraria.NPC.maxAI) {
-                throw new ArgumentException($"Array does not have length {Terraria.NPC.maxAI}.", nameof(aiValues));
+            if (aiValues != null && aiValues.Length != TerrariaNpc.maxAI) {
+                throw new ArgumentException($"Array does not have length {TerrariaNpc.maxAI}.", nameof(aiValues));
             }
 
             var ai0 = aiValues?[0] ?? 0;
             var ai1 = aiValues?[1] ?? 0;
             var ai2 = aiValues?[2] ?? 0;
             var ai3 = aiValues?[3] ?? 0;
-            var npcIndex = Terraria.NPC.NewNPC((int)position.X, (int)position.Y, (int)npcType, 0, ai0, ai1, ai2, ai3);
+            var npcIndex = TerrariaNpc.NewNPC((int)position.X, (int)position.Y, (int)npcType, 0, ai0, ai1, ai2, ai3);
             return npcIndex >= 0 && npcIndex < Npcs.Count ? Npcs[npcIndex] : null;
         }
 
-        private HookResult PreSetDefaultsByIdHandler(Terraria.NPC terrariaNpc, ref int type, ref float scaleOverride) {
+        private HookResult PreSetDefaultsByIdHandler(TerrariaNpc terrariaNpc, ref int type, ref float scaleOverride) {
             Debug.Assert(terrariaNpc != null, "terrariaNpc != null");
 
             if (_setDefaultsToIgnore.Value > 0) {
@@ -122,7 +125,7 @@ namespace Orion.Npcs {
             return HookResult.Continue;
         }
 
-        private HookResult PreUpdateHandler(Terraria.NPC terrariaNpc, ref int npcIndex) {
+        private HookResult PreUpdateHandler(TerrariaNpc terrariaNpc, ref int npcIndex) {
             Debug.Assert(terrariaNpc != null, "terrariaNpc != null");
 
             var npc = new OrionNpc(terrariaNpc);
@@ -131,7 +134,7 @@ namespace Orion.Npcs {
             return args.IsCanceled() ? HookResult.Cancel : HookResult.Continue;
         }
 
-        private HookResult PreTransformHandler(Terraria.NPC terrariaNpc, ref int newType) {
+        private HookResult PreTransformHandler(TerrariaNpc terrariaNpc, ref int newType) {
             Debug.Assert(terrariaNpc != null, "terrariaNpc != null");
 
             var npc = new OrionNpc(terrariaNpc);
@@ -143,9 +146,9 @@ namespace Orion.Npcs {
             return HookResult.Continue;
         }
 
-        private HookResult StrikeHandler(Terraria.NPC terrariaNpc, ref double cancelResult, ref int damage,
+        private HookResult StrikeHandler(TerrariaNpc terrariaNpc, ref double cancelResult, ref int damage,
                                          ref float knockback, ref int hitDirection, ref bool isCriticalHit,
-                                         ref bool noEffect, ref bool fromNetwork, Terraria.Entity damagingEntity) {
+                                         ref bool noEffect, ref bool fromNetwork, TerrariaEntity damagingEntity) {
             Debug.Assert(terrariaNpc != null, "terrariaNpc != null");
 
             var npc = new OrionNpc(terrariaNpc);
@@ -165,7 +168,7 @@ namespace Orion.Npcs {
             return HookResult.Continue;
         }
 
-        private HookResult PreDropLootHandler(Terraria.NPC terrariaNpc, ref int itemIndex, ref int x, ref int y,
+        private HookResult PreDropLootHandler(TerrariaNpc terrariaNpc, ref int itemIndex, ref int x, ref int y,
                                               ref int width, ref int height, ref int type, ref int stack,
                                               ref bool noBroadcast, ref int prefix, ref bool noGrabDelay,
                                               ref bool reverseLookup) {
@@ -186,7 +189,7 @@ namespace Orion.Npcs {
             return HookResult.Continue;
         }
 
-        private void KilledHandler(Terraria.NPC terrariaNpc) {
+        private void KilledHandler(TerrariaNpc terrariaNpc) {
             Debug.Assert(terrariaNpc != null, "terrariaNpc != null");
 
             var npc = new OrionNpc(terrariaNpc);

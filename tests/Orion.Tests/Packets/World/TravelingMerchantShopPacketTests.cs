@@ -19,6 +19,7 @@ using System.IO;
 using FluentAssertions;
 using Orion.Items;
 using Xunit;
+using TerrariaChest = Terraria.Chest;
 
 namespace Orion.Packets.World {
     public class TravelingMerchantShopPacketTests {
@@ -26,7 +27,7 @@ namespace Orion.Packets.World {
         public void ShopItemTypes_Count_IsCorrect() {
             var packet = new TravelingMerchantShopPacket();
 
-            packet.ShopItemTypes.Count.Should().Be(Terraria.Chest.maxItems);
+            packet.ShopItemTypes.Count.Should().Be(TerrariaChest.maxItems);
         }
 
         public static readonly byte[] Bytes = {

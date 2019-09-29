@@ -17,12 +17,13 @@
 
 using FluentAssertions;
 using Xunit;
+using TerrariaItem = Terraria.Item;
 
 namespace Orion.Items {
     public class OrionItemStatsTests {
         [Fact]
         public void GetMaxStackSize_IsCorrect() {
-            var terrariaItem = new Terraria.Item {maxStack = 100};
+            var terrariaItem = new TerrariaItem {maxStack = 100};
             IItemStats itemStats = new OrionItemStats(terrariaItem);
 
             itemStats.MaxStackSize.Should().Be(100);
@@ -30,7 +31,7 @@ namespace Orion.Items {
 
         [Fact]
         public void GetRarity_IsCorrect() {
-            var terrariaItem = new Terraria.Item {rare = (int)ItemRarity.Red};
+            var terrariaItem = new TerrariaItem {rare = (int)ItemRarity.Red};
             IItemStats itemStats = new OrionItemStats(terrariaItem);
 
             itemStats.Rarity.Should().Be(ItemRarity.Red);

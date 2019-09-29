@@ -17,12 +17,13 @@
 
 using Orion.Entities;
 using Orion.Utils;
+using TerrariaItem = Terraria.Item;
 
 namespace Orion.Items {
     /// <summary>
     /// Represents a Terraria item.
     /// </summary>
-    public interface IItem : IEntity, IWrapping<Terraria.Item> {
+    public interface IItem : IEntity, IWrapping<TerrariaItem> {
         /// <summary>
         /// Gets the item's type.
         /// </summary>

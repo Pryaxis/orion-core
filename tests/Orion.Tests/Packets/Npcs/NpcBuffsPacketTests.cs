@@ -20,6 +20,7 @@ using System.IO;
 using FluentAssertions;
 using Orion.Entities;
 using Xunit;
+using TerrariaNpc = Terraria.NPC;
 
 namespace Orion.Packets.Npcs {
     public class NpcBuffsPacketTests {
@@ -43,7 +44,7 @@ namespace Orion.Packets.Npcs {
         public void NpcBuffs_Count_IsCorrect() {
             var packet = new NpcBuffsPacket();
 
-            packet.NpcBuffs.Count.Should().Be(Terraria.NPC.maxBuffs);
+            packet.NpcBuffs.Count.Should().Be(TerrariaNpc.maxBuffs);
         }
 
         public static readonly byte[] Bytes = {20, 0, 54, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};

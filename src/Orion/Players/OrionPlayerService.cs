@@ -28,6 +28,8 @@ using Orion.Packets;
 using Orion.Packets.Players;
 using Orion.Utils;
 using OTAPI;
+using Main = Terraria.Main;
+using TerrariaPlayer = Terraria.Player;
 
 namespace Orion.Players {
     internal sealed class OrionPlayerService : OrionService, IPlayerService {
@@ -47,8 +49,8 @@ namespace Orion.Players {
 
         public OrionPlayerService() {
             // Ignore the last player since it is used as a failure slot.
-            Players = new WrappedReadOnlyArray<OrionPlayer, Terraria.Player>(
-                Terraria.Main.player.AsMemory(..^1),
+            Players = new WrappedReadOnlyArray<OrionPlayer, TerrariaPlayer>(
+                Main.player.AsMemory(..^1),
                 (_, terrariaPlayer) => new OrionPlayer(terrariaPlayer));
 
             _packetReceiveHandlers[PacketType.PlayerConnect] = PlayerConnectHandler;

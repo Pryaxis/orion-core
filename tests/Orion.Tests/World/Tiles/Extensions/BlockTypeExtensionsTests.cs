@@ -17,14 +17,15 @@
 
 using FluentAssertions;
 using Xunit;
+using Main = Terraria.Main;
 
 namespace Orion.World.Tiles.Extensions {
     [Collection("TerrariaTestsCollection")]
     public class BlockTypeExtensionsTests {
         [Fact]
         public void AreFramesImportant_IsCorrect() {
-            for (ushort i = 0; i < Terraria.Main.maxTileSets; ++i) {
-                ((BlockType)i).AreFramesImportant().Should().Be(Terraria.Main.tileFrameImportant[i]);
+            for (ushort i = 0; i < Terraria.ID.TileID.Count; ++i) {
+                ((BlockType)i).AreFramesImportant().Should().Be(Main.tileFrameImportant[i]);
             }
         }
     }

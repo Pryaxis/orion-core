@@ -19,6 +19,7 @@ using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using Orion.Items;
 using Orion.Utils;
+using TerrariaChest = Terraria.Chest;
 
 namespace Orion.Packets.World {
     /// <summary>
@@ -26,7 +27,7 @@ namespace Orion.Packets.World {
     /// </summary>
     public sealed class TravelingMerchantShopPacket : Packet {
         private readonly DirtiableArray<ItemType> _shopItemTypes =
-            new DirtiableArray<ItemType>(Terraria.Chest.maxItems);
+            new DirtiableArray<ItemType>(TerrariaChest.maxItems);
 
         /// <inheritdoc />
         public override bool IsDirty => base.IsDirty || _shopItemTypes.IsDirty;

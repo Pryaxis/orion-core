@@ -15,12 +15,13 @@
 // You should have received a copy of the GNU General Public License
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
+using TerrariaLogicSensor = Terraria.GameContent.Tile_Entities.TELogicSensor;
+
 namespace Orion.World.TileEntities {
-    internal sealed class OrionLogicSensor : OrionTileEntity<Terraria.GameContent.Tile_Entities.TELogicSensor>,
-                                             ILogicSensor {
+    internal sealed class OrionLogicSensor : OrionTileEntity<TerrariaLogicSensor>, ILogicSensor {
         public LogicSensorType LogicSensorType {
             get => (LogicSensorType)Wrapped.logicCheck;
-            set => Wrapped.logicCheck = (Terraria.GameContent.Tile_Entities.TELogicSensor.LogicCheckType)value;
+            set => Wrapped.logicCheck = (TerrariaLogicSensor.LogicCheckType)value;
         }
 
         public bool IsActivated {
@@ -28,7 +29,6 @@ namespace Orion.World.TileEntities {
             set => Wrapped.On = value;
         }
 
-        public OrionLogicSensor(Terraria.GameContent.Tile_Entities.TELogicSensor terrariaLogicSensor)
-            : base(terrariaLogicSensor) { }
+        public OrionLogicSensor(TerrariaLogicSensor terrariaLogicSensor) : base(terrariaLogicSensor) { }
     }
 }

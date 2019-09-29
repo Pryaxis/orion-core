@@ -18,12 +18,13 @@
 using System;
 using Orion.Items;
 using Orion.Utils;
+using TerrariaChest = Terraria.Chest;
 
 namespace Orion.World.TileEntities {
     /// <summary>
     /// Represents a Terraria chest.
     /// </summary>
-    public interface IChest : ITileEntity, IWrapping<Terraria.Chest> {
+    public interface IChest : ITileEntity, IWrapping<TerrariaChest> {
         /// <summary>
         /// Gets or sets the chest's name.
         /// </summary>

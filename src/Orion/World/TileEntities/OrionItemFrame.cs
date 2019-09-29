@@ -16,10 +16,10 @@
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
 using Orion.Items;
+using TerrariaItemFrame = Terraria.GameContent.Tile_Entities.TEItemFrame;
 
 namespace Orion.World.TileEntities {
-    internal sealed class OrionItemFrame : OrionTileEntity<Terraria.GameContent.Tile_Entities.TEItemFrame>,
-                                           IItemFrame {
+    internal sealed class OrionItemFrame : OrionTileEntity<TerrariaItemFrame>, IItemFrame {
         public ItemType ItemType {
             get => (ItemType)Wrapped.item.type;
             set => Wrapped.item.type = (int)value;
@@ -35,7 +35,6 @@ namespace Orion.World.TileEntities {
             set => Wrapped.item.prefix = (byte)value;
         }
 
-        public OrionItemFrame(Terraria.GameContent.Tile_Entities.TEItemFrame terrariaItemFrame)
-            : base(terrariaItemFrame) { }
+        public OrionItemFrame(TerrariaItemFrame terrariaItemFrame) : base(terrariaItemFrame) { }
     }
 }

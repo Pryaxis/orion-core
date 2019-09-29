@@ -18,6 +18,7 @@
 using System.Diagnostics.CodeAnalysis;
 using FluentAssertions;
 using Xunit;
+using TerrariaTileEntity = Terraria.DataStructures.TileEntity;
 
 namespace Orion.World.TileEntities {
     [SuppressMessage("Style", "IDE0017:Simplify object initialization", Justification = "Testing")]
@@ -80,6 +81,6 @@ namespace Orion.World.TileEntities {
             public TestOrionTileEntity(TestTerrariaTileEntity terrariaTileEntity) : base(terrariaTileEntity) { }
         }
 
-        private class TestTerrariaTileEntity : Terraria.DataStructures.TileEntity { }
+        private class TestTerrariaTileEntity : TerrariaTileEntity { }
     }
 }

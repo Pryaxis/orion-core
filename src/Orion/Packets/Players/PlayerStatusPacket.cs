@@ -19,13 +19,14 @@ using System;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using Orion.Packets.Extensions;
+using TerrariaNetworkText = Terraria.Localization.NetworkText;
 
 namespace Orion.Packets.Players {
     /// <summary>
     /// Packet sent from the server to the client to set the player's status.
     /// </summary>
     public sealed class PlayerStatusPacket : Packet {
-        private Terraria.Localization.NetworkText _playerStatusText = Terraria.Localization.NetworkText.Empty;
+        private TerrariaNetworkText _playerStatusText = TerrariaNetworkText.Empty;
         private int _playerStatusIncrease;
 
         /// <inheritdoc />
@@ -50,8 +51,7 @@ namespace Orion.Packets.Players {
             get => _playerStatusText.ToString();
             set {
                 _playerStatusText =
-                    Terraria.Localization.NetworkText.FromLiteral(
-                        value ?? throw new ArgumentNullException(nameof(value)));
+                    TerrariaNetworkText.FromLiteral(value ?? throw new ArgumentNullException(nameof(value)));
                 _isDirty = true;
             }
         }
