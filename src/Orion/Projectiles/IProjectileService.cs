@@ -25,7 +25,12 @@ namespace Orion.Projectiles {
     /// <summary>
     /// Represents a projectile service. Provides access to projectile-related events and methods.
     /// </summary>
-    public interface IProjectileService : IReadOnlyArray<IProjectile>, IService {
+    public interface IProjectileService : IService {
+        /// <summary>
+        /// Gets the projectiles.
+        /// </summary>
+        IReadOnlyArray<IProjectile> Projectiles { get; }
+
         /// <summary>
         /// Gets or sets the event handlers that occur when a projectile's defaults are being set. This event can be
         /// canceled.

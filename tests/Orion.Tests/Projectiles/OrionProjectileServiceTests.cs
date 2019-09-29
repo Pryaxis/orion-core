@@ -41,16 +41,16 @@ namespace Orion.Projectiles {
         }
 
         [Fact]
-        public void GetItem_IsCorrect() {
-            var projectile = _projectileService[0];
+        public void Projectiles_GetItem_IsCorrect() {
+            var projectile = _projectileService.Projectiles[0];
 
             ((OrionProjectile)projectile).Wrapped.Should().BeSameAs(Terraria.Main.projectile[0]);
         }
 
         [Fact]
-        public void GetItem_MultipleTimes_ReturnsSameInstance() {
-            var projectile = _projectileService[0];
-            var projectile2 = _projectileService[0];
+        public void Projectiles_GetItem_MultipleTimes_ReturnsSameInstance() {
+            var projectile = _projectileService.Projectiles[0];
+            var projectile2 = _projectileService.Projectiles[0];
 
             projectile.Should().BeSameAs(projectile2);
         }
@@ -58,10 +58,19 @@ namespace Orion.Projectiles {
         [Theory]
         [InlineData(-1)]
         [InlineData(10000)]
-        public void GetItem_InvalidIndex_ThrowsIndexOutOfRangeException(int index) {
-            Func<IProjectile> func = () => _projectileService[index];
+        public void Projectiles_GetItem_InvalidIndex_ThrowsIndexOutOfRangeException(int index) {
+            Func<IProjectile> func = () => _projectileService.Projectiles[index];
 
             func.Should().Throw<IndexOutOfRangeException>();
+        }
+
+        [Fact]
+        public void Projectiles_GetEnumerator_IsCorrect() {
+            var projectiles = _projectileService.Projectiles.ToList();
+
+            for (var i = 0; i < projectiles.Count; ++i) {
+                ((OrionProjectile)projectiles[i]).Wrapped.Should().BeSameAs(Terraria.Main.projectile[i]);
+            }
         }
 
         [Fact]
@@ -138,15 +147,6 @@ namespace Orion.Projectiles {
             Terraria.Main.projectile[0].Kill();
 
             Terraria.Main.projectile[0].active.Should().BeTrue();
-        }
-
-        [Fact]
-        public void GetEnumerator_IsCorrect() {
-            var projectiles = _projectileService.ToList();
-
-            for (var i = 0; i < projectiles.Count; ++i) {
-                ((OrionProjectile)projectiles[i]).Wrapped.Should().BeSameAs(Terraria.Main.projectile[i]);
-            }
         }
 
         [Fact]

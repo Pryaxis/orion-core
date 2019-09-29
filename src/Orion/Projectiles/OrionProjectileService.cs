@@ -16,50 +16,29 @@
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
-using System.Linq;
 using Microsoft.Xna.Framework;
 using Orion.Events;
 using Orion.Events.Extensions;
 using Orion.Events.Projectiles;
+using Orion.Utils;
 using OTAPI;
 
 namespace Orion.Projectiles {
     internal sealed class OrionProjectileService : OrionService, IProjectileService {
-        private readonly IList<Terraria.Projectile> _terrariaProjectiles;
-        private readonly IList<OrionProjectile> _projectiles;
-
         [ExcludeFromCodeCoverage] public override string Author => "Pryaxis";
 
-        // Subtract 1 from the count. This is because Terraria has an extra slot.
-        public int Count => _projectiles.Count - 1;
-
-        public IProjectile this[int index] {
-            get {
-                if (index < 0 || index >= Count) throw new IndexOutOfRangeException();
-
-                if (_projectiles[index]?.Wrapped != _terrariaProjectiles[index]) {
-                    _projectiles[index] = new OrionProjectile(_terrariaProjectiles[index]);
-                }
-
-                Debug.Assert(_projectiles[index] != null, "_projectiles[index] != null");
-                return _projectiles[index];
-            }
-        }
-
+        public IReadOnlyArray<IProjectile> Projectiles { get; }
         public EventHandlerCollection<ProjectileSetDefaultsEventArgs>? ProjectileSetDefaults { get; set; }
         public EventHandlerCollection<ProjectileUpdateEventArgs>? ProjectileUpdate { get; set; }
         public EventHandlerCollection<ProjectileRemoveEventArgs>? ProjectileRemove { get; set; }
 
         public OrionProjectileService() {
-            Debug.Assert(Terraria.Main.projectile != null, "Terraria.Main.projectile != null");
-            Debug.Assert(Terraria.Main.projectile.All(p => p != null), "Terraria.Main.projectile.All(p => p != null)");
-
-            _terrariaProjectiles = Terraria.Main.projectile;
-            _projectiles = new OrionProjectile[_terrariaProjectiles.Count];
+            // Ignore the last projectile since it is used as a failure slot.
+            Projectiles = new WrappedReadOnlyArray<OrionProjectile, Terraria.Projectile>(
+                Terraria.Main.projectile.AsMemory(..^1),
+                (_, terrariaProjectile) => new OrionProjectile(terrariaProjectile));
 
             Hooks.Projectile.PreSetDefaultsById = PreSetDefaultsByIdHandler;
             Hooks.Projectile.PreUpdate = PreUpdateHandler;
@@ -68,20 +47,11 @@ namespace Orion.Projectiles {
 
         protected override void Dispose(bool disposeManaged) {
             if (!disposeManaged) return;
-            
+
             Hooks.Projectile.PreSetDefaultsById = null;
             Hooks.Projectile.PreUpdate = null;
             Hooks.Projectile.PreKill = null;
         }
-
-        public IEnumerator<IProjectile> GetEnumerator() {
-            for (var i = 0; i < Count; ++i) {
-                yield return this[i];
-            }
-        }
-
-        [ExcludeFromCodeCoverage]
-        IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
 
         public IProjectile? SpawnProjectile(ProjectileType projectileType, Vector2 position, Vector2 velocity,
                                             int damage, float knockback, float[]? aiValues = null) {
@@ -95,7 +65,7 @@ namespace Orion.Projectiles {
             var projectileIndex =
                 Terraria.Projectile.NewProjectile(position, velocity, (int)projectileType, damage, knockback, 255, ai0,
                                                   ai1);
-            return projectileIndex >= 0 && projectileIndex < Count ? this[projectileIndex] : null;
+            return projectileIndex >= 0 && projectileIndex < Projectiles.Count ? Projectiles[projectileIndex] : null;
         }
 
         private HookResult PreSetDefaultsByIdHandler(Terraria.Projectile terrariaProjectile, ref int projectileType) {
