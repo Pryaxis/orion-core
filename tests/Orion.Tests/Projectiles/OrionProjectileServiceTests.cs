@@ -156,7 +156,7 @@ namespace Orion.Projectiles {
             var projectile =
                 _projectileService.SpawnProjectile(ProjectileType.CrystalBullet, Vector2.Zero, Vector2.Zero, 100, 0);
 
-            Debug.Assert(projectile != null);
+            projectile.Should().NotBeNull();
             projectile.Type.Should().Be(ProjectileType.CrystalBullet);
         }
 
@@ -164,8 +164,8 @@ namespace Orion.Projectiles {
         public void SpawnProjectile_AiValues_IsCorrect() {
             var projectile = _projectileService.SpawnProjectile(ProjectileType.CrystalBullet, Vector2.Zero,
                                                                 Vector2.Zero, 100, 0, new float[] {1, 2});
-
-            Debug.Assert(projectile != null);
+            
+            projectile.Should().NotBeNull();
             projectile.Type.Should().Be(ProjectileType.CrystalBullet);
         }
 
@@ -173,7 +173,7 @@ namespace Orion.Projectiles {
         [InlineData(1)]
         [InlineData(3)]
         public void SpawnProjectile_AiValuesWrongLength_ThrowsArgumentException(int aiValuesLength) {
-            Func<IProjectile?> func = () =>
+            Func<IProjectile> func = () =>
                 _projectileService.SpawnProjectile(ProjectileType.CrystalBullet, Vector2.Zero, Vector2.Zero, 100, 0,
                                                    new float[aiValuesLength]);
 

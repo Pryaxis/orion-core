@@ -82,7 +82,7 @@ namespace Orion.World.TileEntities {
         public void SetText_NullValue_ThrowsArgumentNullException() {
             var terrariaSign = new TerrariaSign();
             ISign sign = new OrionSign(0, terrariaSign);
-            Action action = () => sign.Text = null!;
+            Action action = () => sign.Text = null;
 
             action.Should().Throw<ArgumentNullException>();
         }

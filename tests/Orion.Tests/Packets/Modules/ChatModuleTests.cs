@@ -32,7 +32,7 @@ namespace Orion.Packets.Modules {
         [Fact]
         public void SetClientChatCommand_NullValue_ThrowsArgumentNullException() {
             var module = new ChatModule();
-            Action action = () => module.ClientChatCommand = null!;
+            Action action = () => module.ClientChatCommand = null;
 
             action.Should().Throw<ArgumentNullException>();
         }
@@ -40,7 +40,7 @@ namespace Orion.Packets.Modules {
         [Fact]
         public void SetClientChatText_NullValue_ThrowsArgumentNullException() {
             var module = new ChatModule();
-            Action action = () => module.ClientChatText = null!;
+            Action action = () => module.ClientChatText = null;
 
             action.Should().Throw<ArgumentNullException>();
         }
@@ -48,7 +48,7 @@ namespace Orion.Packets.Modules {
         [Fact]
         public void SetServerChatText_NullValue_ThrowsArgumentNullException() {
             var module = new ChatModule();
-            Action action = () => module.ServerChatText = null!;
+            Action action = () => module.ServerChatText = null;
 
             action.Should().Throw<ArgumentNullException>();
         }

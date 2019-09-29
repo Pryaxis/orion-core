@@ -38,7 +38,7 @@ namespace Orion.Packets.World.Tiles {
         [Fact]
         public void SetTileLiquid_NullValue_ThrowsArgumentNullException() {
             var packet = new TileLiquidPacket();
-            Action action = () => packet.TileLiquid = null!;
+            Action action = () => packet.TileLiquid = null;
 
             action.Should().Throw<ArgumentNullException>();
         }

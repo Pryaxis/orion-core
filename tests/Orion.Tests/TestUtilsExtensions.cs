@@ -44,7 +44,7 @@ namespace Orion {
         public static void GetSetPropertiesShouldReflectInPacket(this EventArgs args) {
             var packet = args.GetType().GetField("_packet", BindingFlags.NonPublic | BindingFlags.Instance)
                              ?.GetValue(args);
-            Debug.Assert(packet != null);
+            packet.Should().NotBeNull();
 
             foreach (var property in args.GetType().GetProperties(BindingFlags.Public | BindingFlags.Instance)) {
                 var packetProperty = packet.GetType().GetProperty(property.Name);

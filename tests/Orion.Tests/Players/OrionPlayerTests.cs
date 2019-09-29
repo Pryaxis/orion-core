@@ -46,7 +46,7 @@ namespace Orion.Players {
         public void SetName_NullValue_ThrowsArgumentNullException() {
             var terrariaPlayer = new TerrariaPlayer();
             IPlayer player = new OrionPlayer(terrariaPlayer);
-            Action action = () => player.Name = null!;
+            Action action = () => player.Name = null;
 
             action.Should().Throw<ArgumentNullException>();
         }

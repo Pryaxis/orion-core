@@ -26,7 +26,7 @@ namespace Orion.Utils {
         [Fact]
         public void GetCount_IsCorrect() {
             var wrappedItems = new TestWrappedClass[10];
-            IReadOnlyArray<TestClass?> array = new WrappedNullableReadOnlyArray<TestClass, TestWrappedClass>(
+            IReadOnlyArray<TestClass> array = new WrappedNullableReadOnlyArray<TestClass, TestWrappedClass>(
                 wrappedItems, (_, testWrappedClass) => new TestClass(testWrappedClass));
 
             array.Count.Should().Be(10);
@@ -36,19 +36,19 @@ namespace Orion.Utils {
         public void GetItem_IsCorrect() {
             var wrappedItems = new TestWrappedClass[10];
             wrappedItems[1] = new TestWrappedClass();
-            IReadOnlyArray<TestClass?> array = new WrappedNullableReadOnlyArray<TestClass, TestWrappedClass>(
+            IReadOnlyArray<TestClass> array = new WrappedNullableReadOnlyArray<TestClass, TestWrappedClass>(
                 wrappedItems, (_, testWrappedClass) => new TestClass(testWrappedClass));
 
             var item = array[1];
 
-            Debug.Assert(item != null, "item != null");
+            item.Should().NotBeNull();
             item.Wrapped.Should().BeSameAs(wrappedItems[1]);
         }
 
         [Fact]
         public void GetItem_NullWrappedItem_IsCorrect() {
             var wrappedItems = new TestWrappedClass[10];
-            IReadOnlyArray<TestClass?> array = new WrappedNullableReadOnlyArray<TestClass, TestWrappedClass>(
+            IReadOnlyArray<TestClass> array = new WrappedNullableReadOnlyArray<TestClass, TestWrappedClass>(
                 wrappedItems, (_, testWrappedClass) => new TestClass(testWrappedClass));
 
             array[1].Should().BeNull();
@@ -58,7 +58,7 @@ namespace Orion.Utils {
         public void GetItem_MultipleTimes_ReturnsSameInstance() {
             var wrappedItems = new TestWrappedClass[10];
             wrappedItems[1] = new TestWrappedClass();
-            IReadOnlyArray<TestClass?> array = new WrappedNullableReadOnlyArray<TestClass, TestWrappedClass>(
+            IReadOnlyArray<TestClass> array = new WrappedNullableReadOnlyArray<TestClass, TestWrappedClass>(
                 wrappedItems, (_, testWrappedClass) => new TestClass(testWrappedClass));
 
             var item = array[1];
@@ -72,10 +72,10 @@ namespace Orion.Utils {
         [InlineData(1000)]
         public void GetItem_IndexOutOfRange_ThrowsArgumentOutOfRangeException(int index) {
             var wrappedItems = new TestWrappedClass[10];
-            IReadOnlyArray<TestClass?> array = new WrappedNullableReadOnlyArray<TestClass, TestWrappedClass>(
+            IReadOnlyArray<TestClass> array = new WrappedNullableReadOnlyArray<TestClass, TestWrappedClass>(
                 wrappedItems, (_, testWrappedClass) => new TestClass(testWrappedClass));
 
-            Func<TestClass?> func = () => array[index];
+            Func<TestClass> func = () => array[index];
 
             func.Should().Throw<IndexOutOfRangeException>();
         }
@@ -90,9 +90,8 @@ namespace Orion.Utils {
             var items = new WrappedNullableReadOnlyArray<TestClass, TestWrappedClass>(
                 wrappedItems, (_, testWrappedClass) => new TestClass(testWrappedClass)).ToList();
             for (var i = 0; i < 10; ++i) {
-                var item = items[i];
-                Debug.Assert(item != null, "item != null");
-                item.Wrapped.Should().BeSameAs(wrappedItems[i]);
+                items[i].Should().NotBeNull();
+                items[i].Wrapped.Should().BeSameAs(wrappedItems[i]);
             }
         }
 

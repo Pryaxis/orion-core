@@ -36,7 +36,7 @@ namespace Orion.Events.Extensions {
         [Fact]
         public void IsCanceled_No_ReturnsFalse() {
             var mockCancelable = new Mock<ICancelable>();
-            mockCancelable.SetupGet(c => c.CancellationReason).Returns((string?)null);
+            mockCancelable.SetupGet(c => c.CancellationReason).Returns((string)null);
 
             mockCancelable.Object.IsCanceled().Should().BeFalse();
 
@@ -46,7 +46,7 @@ namespace Orion.Events.Extensions {
 
         [Fact]
         public void IsCanceled_NullCancelable_ThrowsArgumentNullException() {
-            Func<bool> func = () => CancelableExtensions.IsCanceled(null!);
+            Func<bool> func = () => CancelableExtensions.IsCanceled(null);
 
             func.Should().Throw<ArgumentNullException>();
         }
@@ -64,7 +64,7 @@ namespace Orion.Events.Extensions {
 
         [Fact]
         public void Cancel_NullCancelable_ThrowsArgumentNullException() {
-            Action action = () => CancelableExtensions.Cancel(null!);
+            Action action = () => CancelableExtensions.Cancel(null);
 
             action.Should().Throw<ArgumentNullException>();
         }
@@ -72,7 +72,7 @@ namespace Orion.Events.Extensions {
         [Fact]
         public void Cancel_NullCancellation_Reason_ThrowsArgumentNullException() {
             var cancelable = new Mock<ICancelable>().Object;
-            Action action = () => cancelable.Cancel(null!);
+            Action action = () => cancelable.Cancel(null);
 
             action.Should().Throw<ArgumentNullException>();
         }
@@ -90,7 +90,7 @@ namespace Orion.Events.Extensions {
 
         [Fact]
         public void Uncancel_NullCancelable_ThrowsArgumentNullException() {
-            Action action = () => CancelableExtensions.Uncancel(null!);
+            Action action = () => CancelableExtensions.Uncancel(null);
 
             action.Should().Throw<ArgumentNullException>();
         }

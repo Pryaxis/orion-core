@@ -27,7 +27,7 @@ namespace Orion.Events.Players {
         [Fact]
         public void Ctor_NullPacket_ThrowsArgumentNullException() {
             var player = new Mock<IPlayer>().Object;
-            Func<PlayerInventorySlotEventArgs> func = () => new PlayerInventorySlotEventArgs(player, null!);
+            Func<PlayerInventorySlotEventArgs> func = () => new PlayerInventorySlotEventArgs(player, null);
 
             func.Should().Throw<ArgumentNullException>();
         }

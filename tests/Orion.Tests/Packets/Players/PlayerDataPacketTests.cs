@@ -34,7 +34,7 @@ namespace Orion.Packets.Players {
         [Fact]
         public void SetPlayerName_NullValue_ThrowsArgumentNullException() {
             var packet = new PlayerDataPacket();
-            Action action = () => packet.PlayerName = null!;
+            Action action = () => packet.PlayerName = null;
 
             action.Should().Throw<ArgumentNullException>();
         }

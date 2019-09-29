@@ -24,7 +24,7 @@ namespace Orion.Packets {
     public class PacketTests {
         [Fact]
         public void ReadFromStream_NullStream_ThrowsArgumentNullException() {
-            Func<Packet> func = () => Packet.ReadFromStream(null!, PacketContext.Server);
+            Func<Packet> func = () => Packet.ReadFromStream(null, PacketContext.Server);
 
             func.Should().Throw<ArgumentNullException>();
         }
@@ -32,7 +32,7 @@ namespace Orion.Packets {
         [Fact]
         public void WriteToStream_NullStream_ThrowsArgumentNullException() {
             var packet = new TestPacket();
-            Action action = () => packet.WriteToStream(null!, PacketContext.Server);
+            Action action = () => packet.WriteToStream(null, PacketContext.Server);
 
             action.Should().Throw<ArgumentNullException>();
         }

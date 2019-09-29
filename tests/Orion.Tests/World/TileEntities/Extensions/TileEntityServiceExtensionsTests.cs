@@ -36,7 +36,7 @@ namespace Orion.World.TileEntities.Extensions {
 
         [Fact]
         public void AddChest_NullTileEntityService_ThrowsArgumentNullException() {
-            Func<IChest?> func = () => TileEntityServiceExtensions.AddChest(null!, 0, 0);
+            Func<IChest> func = () => TileEntityServiceExtensions.AddChest(null, 0, 0);
 
             func.Should().Throw<ArgumentNullException>();
         }
@@ -55,7 +55,7 @@ namespace Orion.World.TileEntities.Extensions {
 
         [Fact]
         public void AddSign_NullTileEntityService_ThrowsArgumentNullException() {
-            Func<ISign?> func = () => TileEntityServiceExtensions.AddSign(null!, 0, 0);
+            Func<ISign> func = () => TileEntityServiceExtensions.AddSign(null, 0, 0);
 
             func.Should().Throw<ArgumentNullException>();
         }
@@ -75,7 +75,7 @@ namespace Orion.World.TileEntities.Extensions {
 
         [Fact]
         public void AddTargetDummy_NullTileEntityService_ThrowsArgumentNullException() {
-            Func<ITargetDummy?> func = () => TileEntityServiceExtensions.AddTargetDummy(null!, 0, 0);
+            Func<ITargetDummy> func = () => TileEntityServiceExtensions.AddTargetDummy(null, 0, 0);
 
             func.Should().Throw<ArgumentNullException>();
         }
@@ -94,7 +94,7 @@ namespace Orion.World.TileEntities.Extensions {
 
         [Fact]
         public void AddItemFrame_NullTileEntityService_ThrowsArgumentNullException() {
-            Func<IItemFrame?> func = () => TileEntityServiceExtensions.AddItemFrame(null!, 0, 0);
+            Func<IItemFrame> func = () => TileEntityServiceExtensions.AddItemFrame(null, 0, 0);
 
             func.Should().Throw<ArgumentNullException>();
         }
@@ -114,7 +114,7 @@ namespace Orion.World.TileEntities.Extensions {
 
         [Fact]
         public void AddLogicSensor_NullTileEntityService_ThrowsArgumentNullException() {
-            Func<ILogicSensor?> func = () => TileEntityServiceExtensions.AddLogicSensor(null!, 0, 0);
+            Func<ILogicSensor> func = () => TileEntityServiceExtensions.AddLogicSensor(null, 0, 0);
 
             func.Should().Throw<ArgumentNullException>();
         }

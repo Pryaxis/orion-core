@@ -46,7 +46,7 @@ namespace Orion.Items {
         public void SetName_NullValue_ThrowsArgumentNullException() {
             var terrariaItem = new TerrariaItem();
             IItem item = new OrionItem(terrariaItem);
-            Action action = () => item.Name = null!;
+            Action action = () => item.Name = null;
 
             action.Should().Throw<ArgumentNullException>();
         }

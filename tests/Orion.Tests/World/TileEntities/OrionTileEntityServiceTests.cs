@@ -62,7 +62,7 @@ namespace Orion.World.TileEntities {
 
             var chest = _tileEntityService.Chests[0];
 
-            Debug.Assert(chest != null, "chest != null");
+            chest.Should().NotBeNull();
             ((OrionChest)chest).Wrapped.Should().BeSameAs(Main.chest[0]);
         }
 
@@ -83,7 +83,7 @@ namespace Orion.World.TileEntities {
         [InlineData(-1)]
         [InlineData(10000)]
         public void Chests_GetItem_InvalidIndex_ThrowsIndexOutOfRangeException(int index) {
-            Func<IChest?> func = () => _tileEntityService.Chests[index];
+            Func<IChest> func = () => _tileEntityService.Chests[index];
 
             func.Should().Throw<IndexOutOfRangeException>();
         }
@@ -100,9 +100,8 @@ namespace Orion.World.TileEntities {
             var chests = _tileEntityService.Chests.ToList();
 
             for (var i = 0; i < chests.Count; ++i) {
-                var chest = chests[i];
-                Debug.Assert(chest != null, "chest != null");
-                ((OrionChest)chest).Wrapped.Should().BeSameAs(Main.chest[i]);
+                chests[i].Should().NotBeNull();
+                ((OrionChest)chests[i]).Wrapped.Should().BeSameAs(Main.chest[i]);
             }
         }
 
@@ -110,8 +109,8 @@ namespace Orion.World.TileEntities {
         public void Signs_GetItem_IsCorrect() {
             Main.sign[0] = new TerrariaSign();
             var sign = _tileEntityService.Signs[0];
-
-            Debug.Assert(sign != null, "sign != null");
+            
+            sign.Should().NotBeNull();
             ((OrionSign)sign).Wrapped.Should().BeSameAs(Main.sign[0]);
         }
 
@@ -128,7 +127,7 @@ namespace Orion.World.TileEntities {
         [InlineData(-1)]
         [InlineData(10000)]
         public void Signs_GetItem_InvalidIndex_ThrowsIndexOutOfRangeException(int index) {
-            Func<ISign?> func = () => _tileEntityService.Signs[index];
+            Func<ISign> func = () => _tileEntityService.Signs[index];
 
             func.Should().Throw<IndexOutOfRangeException>();
         }
@@ -142,18 +141,16 @@ namespace Orion.World.TileEntities {
             var signs = _tileEntityService.Signs.ToList();
 
             for (var i = 0; i < signs.Count; ++i) {
-                var sign = signs[i];
-                Debug.Assert(sign != null, "sign != null");
-                ((OrionSign)sign).Wrapped.Should().BeSameAs(Main.sign[i]);
+                signs[i].Should().NotBeNull();
+                ((OrionSign)signs[i]).Wrapped.Should().BeSameAs(Main.sign[i]);
             }
         }
 
         [Fact]
         public void AddTileEntity_Chest_IsCorrect() {
-            var chest = (IChest?)_tileEntityService.AddTileEntity(TileEntityType.Chest, 1, 2);
-
-            Debug.Assert(chest != null, "chest != null");
-
+            var chest = (IChest)_tileEntityService.AddTileEntity(TileEntityType.Chest, 1, 2);
+            
+            chest.Should().NotBeNull();
             chest.Index.Should().Be(0);
             chest.X.Should().Be(1);
             chest.Y.Should().Be(2);
@@ -166,17 +163,16 @@ namespace Orion.World.TileEntities {
                 Main.chest[i] = new TerrariaChest();
             }
 
-            var chest = (IChest?)_tileEntityService.AddTileEntity(TileEntityType.Chest, 1, 2);
+            var chest = (IChest)_tileEntityService.AddTileEntity(TileEntityType.Chest, 1, 2);
 
             chest.Should().BeNull();
         }
 
         [Fact]
         public void AddTileEntity_Sign_IsCorrect() {
-            var sign = (ISign?)_tileEntityService.AddTileEntity(TileEntityType.Sign, 1, 2);
-
-            Debug.Assert(sign != null, "sign != null");
-
+            var sign = (ISign)_tileEntityService.AddTileEntity(TileEntityType.Sign, 1, 2);
+            
+            sign.Should().NotBeNull();
             sign.Index.Should().Be(0);
             sign.X.Should().Be(1);
             sign.Y.Should().Be(2);
@@ -189,17 +185,16 @@ namespace Orion.World.TileEntities {
                 Main.sign[i] = new TerrariaSign();
             }
 
-            var sign = (ISign?)_tileEntityService.AddTileEntity(TileEntityType.Sign, 1, 2);
+            var sign = (ISign)_tileEntityService.AddTileEntity(TileEntityType.Sign, 1, 2);
 
             sign.Should().BeNull();
         }
 
         [Fact]
         public void AddTileEntity_TargetDummy_IsCorrect() {
-            var targetDummy = (ITargetDummy?)_tileEntityService.AddTileEntity(TileEntityType.TargetDummy, 1, 2);
-
-            Debug.Assert(targetDummy != null, "targetDummy != null");
-
+            var targetDummy = (ITargetDummy)_tileEntityService.AddTileEntity(TileEntityType.TargetDummy, 1, 2);
+            
+            targetDummy.Should().NotBeNull();
             targetDummy.Index.Should().Be(0);
             targetDummy.X.Should().Be(1);
             targetDummy.Y.Should().Be(2);
@@ -208,10 +203,9 @@ namespace Orion.World.TileEntities {
 
         [Fact]
         public void AddTileEntity_ItemFrame_IsCorrect() {
-            var itemFrame = (IItemFrame?)_tileEntityService.AddTileEntity(TileEntityType.ItemFrame, 1, 2);
-
-            Debug.Assert(itemFrame != null, "itemFrame != null");
-
+            var itemFrame = (IItemFrame)_tileEntityService.AddTileEntity(TileEntityType.ItemFrame, 1, 2);
+            
+            itemFrame.Should().NotBeNull();
             itemFrame.Index.Should().Be(0);
             itemFrame.X.Should().Be(1);
             itemFrame.Y.Should().Be(2);
@@ -220,10 +214,9 @@ namespace Orion.World.TileEntities {
 
         [Fact]
         public void AddTileEntity_LogicSensor_IsCorrect() {
-            var logicSensor = (ILogicSensor?)_tileEntityService.AddTileEntity(TileEntityType.LogicSensor, 1, 2);
-
-            Debug.Assert(logicSensor != null, "logicSensor != null");
-
+            var logicSensor = (ILogicSensor)_tileEntityService.AddTileEntity(TileEntityType.LogicSensor, 1, 2);
+            
+            logicSensor.Should().NotBeNull();
             logicSensor.Index.Should().Be(0);
             logicSensor.X.Should().Be(1);
             logicSensor.Y.Should().Be(2);
@@ -247,9 +240,9 @@ namespace Orion.World.TileEntities {
                 Main.chest[1].item[i] = new TerrariaItem();
             }
 
-            var chest = (IChest?)_tileEntityService.GetTileEntity(1, 2);
-
-            Debug.Assert(chest != null, "chest != null");
+            var chest = (IChest)_tileEntityService.GetTileEntity(1, 2);
+            
+            chest.Should().NotBeNull();
             chest.Index.Should().Be(1);
             chest.X.Should().Be(1);
             chest.Y.Should().Be(2);
@@ -263,9 +256,9 @@ namespace Orion.World.TileEntities {
                 text = "test"
             };
 
-            var sign = (ISign?)_tileEntityService.GetTileEntity(1, 2);
-
-            Debug.Assert(sign != null, "sign != null");
+            var sign = (ISign)_tileEntityService.GetTileEntity(1, 2);
+            
+            sign.Should().NotBeNull();
             sign.Index.Should().Be(1);
             sign.X.Should().Be(1);
             sign.Y.Should().Be(2);
@@ -276,9 +269,9 @@ namespace Orion.World.TileEntities {
         public void GetTileEntity_TargetDummy_IsCorrect() {
             var targetDummyIndex = TerrariaTargetDummy.Place(1, 2);
 
-            var targetDummy = (ITargetDummy?)_tileEntityService.GetTileEntity(1, 2);
-
-            Debug.Assert(targetDummy != null, "targetDummy != null");
+            var targetDummy = (ITargetDummy)_tileEntityService.GetTileEntity(1, 2);
+            
+            targetDummy.Should().NotBeNull();
             targetDummy.Index.Should().Be(targetDummyIndex);
             targetDummy.X.Should().Be(1);
             targetDummy.Y.Should().Be(2);
@@ -288,9 +281,9 @@ namespace Orion.World.TileEntities {
         public void GetTileEntity_ItemFrame_IsCorrect() {
             var itemFrameIndex = TerrariaItemFrame.Place(1, 2);
 
-            var itemFrame = (IItemFrame?)_tileEntityService.GetTileEntity(1, 2);
-
-            Debug.Assert(itemFrame != null, "itemFrame != null");
+            var itemFrame = (IItemFrame)_tileEntityService.GetTileEntity(1, 2);
+            
+            itemFrame.Should().NotBeNull();
             itemFrame.Index.Should().Be(itemFrameIndex);
             itemFrame.X.Should().Be(1);
             itemFrame.Y.Should().Be(2);
@@ -300,9 +293,9 @@ namespace Orion.World.TileEntities {
         public void GetTileEntity_LogicSensor_IsCorrect() {
             var logicSensorIndex = TerrariaLogicSensor.Place(1, 2);
 
-            var logicSensor = (ILogicSensor?)_tileEntityService.GetTileEntity(1, 2);
-
-            Debug.Assert(logicSensor != null, "logicSensor != null");
+            var logicSensor = (ILogicSensor)_tileEntityService.GetTileEntity(1, 2);
+            
+            logicSensor.Should().NotBeNull();
             logicSensor.Index.Should().Be(logicSensorIndex);
             logicSensor.X.Should().Be(1);
             logicSensor.Y.Should().Be(2);

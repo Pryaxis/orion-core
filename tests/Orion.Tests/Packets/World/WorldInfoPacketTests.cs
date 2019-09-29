@@ -33,7 +33,7 @@ namespace Orion.Packets.World {
         [Fact]
         public void SetWorldName_NullValue_ThrowsArgumentNullException() {
             var packet = new WorldInfoPacket();
-            Action action = () => packet.WorldName = null!;
+            Action action = () => packet.WorldName = null;
 
             action.Should().Throw<ArgumentNullException>();
         }

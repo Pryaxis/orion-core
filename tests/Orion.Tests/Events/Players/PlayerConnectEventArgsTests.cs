@@ -27,7 +27,7 @@ namespace Orion.Events.Players {
         [Fact]
         public void Ctor_NullPacket_ThrowsArgumentNullException() {
             var player = new Mock<IPlayer>().Object;
-            Func<PlayerConnectEventArgs> func = () => new PlayerConnectEventArgs(player, null!);
+            Func<PlayerConnectEventArgs> func = () => new PlayerConnectEventArgs(player, null);
 
             func.Should().Throw<ArgumentNullException>();
         }
@@ -46,7 +46,7 @@ namespace Orion.Events.Players {
             var player = new Mock<IPlayer>().Object;
             var packet = new PlayerConnectPacket();
             var args = new PlayerConnectEventArgs(player, packet);
-            Action action = () => args.PlayerVersionString = null!;
+            Action action = () => args.PlayerVersionString = null;
 
             action.Should().Throw<ArgumentNullException>();
         }

@@ -46,7 +46,7 @@ namespace Orion.Npcs {
         public void SetName_NullValue_ThrowsArgumentNullException() {
             var terrariaNpc = new TerrariaNpc();
             INpc npc = new OrionNpc(terrariaNpc);
-            Action action = () => npc.Name = null!;
+            Action action = () => npc.Name = null;
 
             action.Should().Throw<ArgumentNullException>();
         }

@@ -34,7 +34,7 @@ namespace Orion.Events.Packets {
 
         [Fact]
         public void Ctor_NullPacket_ThrowsArgumentNullException() {
-            Func<PacketEventArgs> func = () => new TestArgs(null!);
+            Func<PacketEventArgs> func = () => new TestArgs(null);
 
             func.Should().Throw<ArgumentNullException>();
         }
@@ -63,7 +63,7 @@ namespace Orion.Events.Packets {
         public void SetPacket_NullValue_ThrowsArgumentNullException() {
             var packet = new TestPacket();
             var args = new TestArgs(packet);
-            Action action = () => args.Packet = null!;
+            Action action = () => args.Packet = null;
 
             action.Should().Throw<ArgumentNullException>();
         }

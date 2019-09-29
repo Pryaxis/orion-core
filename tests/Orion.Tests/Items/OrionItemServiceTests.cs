@@ -137,8 +137,8 @@ namespace Orion.Items {
         [MemberData(nameof(SpawnItemData))]
         public void SpawnItem_IsCorrect(ItemType type, int stackSize, ItemPrefix prefix) {
             var item = _itemService.SpawnItem(type, Vector2.Zero, stackSize, prefix);
-
-            Debug.Assert(item != null);
+            
+            item.Should().NotBeNull();
             item.Type.Should().Be(type);
             item.StackSize.Should().Be(stackSize);
             item.Prefix.Should().Be(prefix);
@@ -151,7 +151,7 @@ namespace Orion.Items {
 
             var item = _itemService.SpawnItem(type, Vector2.Zero, stackSize, prefix);
 
-            Debug.Assert(item != null);
+            item.Should().NotBeNull();
             item.Type.Should().Be(type);
             item.StackSize.Should().Be(stackSize);
             item.Prefix.Should().Be(prefix);

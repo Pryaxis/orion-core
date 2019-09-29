@@ -47,7 +47,7 @@ namespace Orion.Packets.World.Tiles {
         [Fact]
         public void SetTiles_NullValue_ThrowsArgumentNullException() {
             var packet = new TileSquarePacket();
-            Action action = () => packet.Tiles = null!;
+            Action action = () => packet.Tiles = null;
 
             action.Should().Throw<ArgumentNullException>();
         }

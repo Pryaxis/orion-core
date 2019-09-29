@@ -27,7 +27,7 @@ namespace Orion {
         public void QueuePluginsFromPath_NullAssemblyPath_ThrowsArgumentNullException() {
             using var kernel = new OrionKernel();
 
-            Action action = () => kernel.QueuePluginsFromPath(null!);
+            Action action = () => kernel.QueuePluginsFromPath(null);
 
             action.Should().Throw<ArgumentNullException>();
         }
@@ -36,7 +36,7 @@ namespace Orion {
         public void UnloadPlugin_NullPlugin_ThrowsArgumentNullException() {
             using var kernel = new OrionKernel();
 
-            Action action = () => kernel.UnloadPlugin(null!);
+            Action action = () => kernel.UnloadPlugin(null);
 
             action.Should().Throw<ArgumentNullException>();
         }

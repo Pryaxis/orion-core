@@ -33,7 +33,7 @@ namespace Orion.Packets.World {
         [Fact]
         public void SetChatText_NullValue_ThrowsArgumentNullException() {
             var packet = new ChatPacket();
-            Action action = () => packet.ChatText = null!;
+            Action action = () => packet.ChatText = null;
 
             action.Should().Throw<ArgumentNullException>();
         }

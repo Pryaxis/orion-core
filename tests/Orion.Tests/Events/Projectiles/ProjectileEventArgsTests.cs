@@ -25,7 +25,7 @@ namespace Orion.Events.Projectiles {
     public class ProjectileEventArgsTests {
         [Fact]
         public void Ctor_NullProjectile_ThrowsArgumentNullException() {
-            Func<ProjectileEventArgs> func = () => new TestArgs(null!);
+            Func<ProjectileEventArgs> func = () => new TestArgs(null);
 
             func.Should().Throw<ArgumentNullException>();
         }

@@ -32,7 +32,7 @@ namespace Orion.Packets.Players {
         [Fact]
         public void SetPlayerUuid_NullValue_ThrowsArgumentNullException() {
             var packet = new PlayerUuidPacket();
-            Action action = () => packet.PlayerUuid = null!;
+            Action action = () => packet.PlayerUuid = null;
 
             action.Should().Throw<ArgumentNullException>();
         }

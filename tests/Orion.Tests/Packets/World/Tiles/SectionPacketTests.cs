@@ -48,7 +48,7 @@ namespace Orion.Packets.World.Tiles {
         [Fact]
         public void SetSectionTiles_NullValue_ThrowsArgumentNullException() {
             var packet = new SectionPacket();
-            Action action = () => packet.SectionTiles = null!;
+            Action action = () => packet.SectionTiles = null;
 
             action.Should().Throw<ArgumentNullException>();
         }

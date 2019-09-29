@@ -112,7 +112,7 @@ namespace Orion.World.TileEntities {
             }
 
             IChest chest = new OrionChest(0, terrariaChest);
-            Action action = () => chest.Name = null!;
+            Action action = () => chest.Name = null;
 
             action.Should().Throw<ArgumentNullException>();
         }

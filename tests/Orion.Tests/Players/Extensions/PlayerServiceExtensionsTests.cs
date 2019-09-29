@@ -49,7 +49,7 @@ namespace Orion.Players.Extensions {
         [Fact]
         public void BroadcastPacket_NullPlayerService_ThrowsArgumentNullException() {
             var packet = new PlayerDisconnectPacket();
-            Action action = () => PlayerServiceExtensions.BroadcastPacket(null!, packet);
+            Action action = () => PlayerServiceExtensions.BroadcastPacket(null, packet);
 
             action.Should().Throw<ArgumentNullException>();
         }
@@ -57,7 +57,7 @@ namespace Orion.Players.Extensions {
         [Fact]
         public void BroadcastPacket_NullPacket_ThrowsArgumentNullException() {
             var playerService = new Mock<IPlayerService>().Object;
-            Action action = () => playerService.BroadcastPacket(null!);
+            Action action = () => playerService.BroadcastPacket(null);
 
             action.Should().Throw<ArgumentNullException>();
         }
