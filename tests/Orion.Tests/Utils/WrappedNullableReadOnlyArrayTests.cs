@@ -96,7 +96,7 @@ namespace Orion.Utils {
             }
         }
 
-        private class TestClass : IWrapped<TestWrappedClass> {
+        private class TestClass : IWrapping<TestWrappedClass> {
             public TestWrappedClass Wrapped { get; }
 
             public TestClass(TestWrappedClass testWrappedClass) {

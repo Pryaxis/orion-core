@@ -21,7 +21,7 @@ namespace Orion.World.TileEntities {
     /// <summary>
     /// Represents a Terraria logic sensor.
     /// </summary>
-    public interface ILogicSensor : ITileEntity, IWrapped<Terraria.GameContent.Tile_Entities.TELogicSensor> {
+    public interface ILogicSensor : ITileEntity, IWrapping<Terraria.GameContent.Tile_Entities.TELogicSensor> {
         /// <summary>
         /// Gets or sets the sensor's type.
         /// </summary>

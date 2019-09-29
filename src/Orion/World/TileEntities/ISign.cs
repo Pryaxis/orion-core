@@ -22,7 +22,7 @@ namespace Orion.World.TileEntities {
     /// <summary>
     /// Represents a Terraria sign.
     /// </summary>
-    public interface ISign : ITileEntity, IWrapped<Terraria.Sign> {
+    public interface ISign : ITileEntity, IWrapping<Terraria.Sign> {
         /// <summary>
         /// Gets or sets the sign's text.
         /// </summary>

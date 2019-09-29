@@ -23,7 +23,7 @@ using System.Diagnostics.CodeAnalysis;
 
 namespace Orion.Utils {
     internal sealed class WrappedNullableReadOnlyArray<T, TWrapped> : IReadOnlyArray<T?>
-        where T : class, IWrapped<TWrapped>
+        where T : class, IWrapping<TWrapped>
         where TWrapped : class {
         private readonly Memory<TWrapped?> _wrappedItems;
         private readonly Func<int, TWrapped, T> _converter;

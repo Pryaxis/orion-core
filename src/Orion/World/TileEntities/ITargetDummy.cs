@@ -21,7 +21,7 @@ namespace Orion.World.TileEntities {
     /// <summary>
     /// Represents a Terraria target dummy.
     /// </summary>
-    public interface ITargetDummy : ITileEntity, IWrapped<Terraria.GameContent.Tile_Entities.TETrainingDummy> {
+    public interface ITargetDummy : ITileEntity, IWrapping<Terraria.GameContent.Tile_Entities.TETrainingDummy> {
         /// <summary>
         /// Gets or sets the target dummy's NPC index.
         /// </summary>

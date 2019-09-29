@@ -22,7 +22,7 @@ namespace Orion.Npcs {
     /// <summary>
     /// Represents a Terraria NPC.
     /// </summary>
-    public interface INpc : IEntity, IWrapped<Terraria.NPC> {
+    public interface INpc : IEntity, IWrapping<Terraria.NPC> {
         /// <summary>
         /// Gets the NPC's type.
         /// </summary>

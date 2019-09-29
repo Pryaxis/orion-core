@@ -22,7 +22,7 @@ namespace Orion.Items {
     /// <summary>
     /// Represents a Terraria item.
     /// </summary>
-    public interface IItem : IEntity, IWrapped<Terraria.Item> {
+    public interface IItem : IEntity, IWrapping<Terraria.Item> {
         /// <summary>
         /// Gets the item's type.
         /// </summary>

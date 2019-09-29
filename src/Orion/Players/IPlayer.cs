@@ -24,7 +24,7 @@ namespace Orion.Players {
     /// <summary>
     /// Represents a Terraria player.
     /// </summary>
-    public interface IPlayer : IEntity, IWrapped<Terraria.Player> {
+    public interface IPlayer : IEntity, IWrapping<Terraria.Player> {
         /// <summary>
         /// Gets or sets the player's team.
         /// </summary>

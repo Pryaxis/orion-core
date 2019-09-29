@@ -22,7 +22,7 @@ namespace Orion.Projectiles {
     /// <summary>
     /// Represents a Terraria projectile.
     /// </summary>
-    public interface IProjectile : IEntity, IWrapped<Terraria.Projectile> {
+    public interface IProjectile : IEntity, IWrapping<Terraria.Projectile> {
         /// <summary>
         /// Gets the projectile's type.
         /// </summary>
