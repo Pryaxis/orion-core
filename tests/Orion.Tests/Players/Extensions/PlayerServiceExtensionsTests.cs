@@ -19,6 +19,7 @@ using System;
 using FluentAssertions;
 using Moq;
 using Orion.Packets.Players;
+using Orion.Utils;
 using Xunit;
 
 namespace Orion.Players.Extensions {
@@ -28,16 +29,21 @@ namespace Orion.Players.Extensions {
             var packet = new PlayerDisconnectPacket();
             var mockPlayer = new Mock<IPlayer>();
             mockPlayer.Setup(p => p.SendPacket(packet));
+            var mockPlayers = new Mock<IReadOnlyArray<IPlayer>>();
+            mockPlayers.SetupGet(p => p.Count).Returns(1);
+            mockPlayers.SetupGet(p => p[0]).Returns(mockPlayer.Object);
             var mockPlayerService = new Mock<IPlayerService>();
-            mockPlayerService.Setup(ps => ps.Count).Returns(1);
-            mockPlayerService.Setup(ps => ps[0]).Returns(mockPlayer.Object);
+            mockPlayerService.Setup(p => p.Players).Returns(mockPlayers.Object);
 
             mockPlayerService.Object.BroadcastPacket(packet);
 
             mockPlayer.Verify(p => p.SendPacket(packet));
             mockPlayer.VerifyNoOtherCalls();
-            mockPlayerService.VerifyGet(p => p.Count);
-            mockPlayerService.VerifyGet(p => p[0]);
+            mockPlayers.VerifyGet(p => p.Count);
+            mockPlayers.VerifyGet(p => p[0]);
+            mockPlayers.VerifyNoOtherCalls();
+            mockPlayerService.VerifyGet(ps => ps.Players);
+            mockPlayerService.VerifyNoOtherCalls();
         }
 
         [Fact]

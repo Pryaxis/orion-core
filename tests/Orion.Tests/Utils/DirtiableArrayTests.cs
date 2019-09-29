@@ -36,7 +36,7 @@ namespace Orion.Utils {
         public void TIsIDirtiable_IsCorrect() {
             var isDirty = true;
             var mockDirtiable = new Mock<IDirtiable>();
-            mockDirtiable.Setup(d => d.IsDirty).Returns(() => isDirty);
+            mockDirtiable.SetupGet(d => d.IsDirty).Returns(() => isDirty);
             mockDirtiable.Setup(d => d.Clean()).Callback(() => isDirty = false);
             var array = new DirtiableArray<IDirtiable>(1);
             array[0] = mockDirtiable.Object;

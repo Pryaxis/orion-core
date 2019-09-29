@@ -16,12 +16,9 @@
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.Diagnostics.CodeAnalysis;
 using System.IO;
-using System.Linq;
 using System.Threading;
 using Orion.Events;
 using Orion.Events.Extensions;
@@ -29,33 +26,17 @@ using Orion.Events.Packets;
 using Orion.Events.Players;
 using Orion.Packets;
 using Orion.Packets.Players;
+using Orion.Utils;
 using OTAPI;
 
 namespace Orion.Players {
     internal sealed class OrionPlayerService : OrionService, IPlayerService {
-        private readonly IList<Terraria.Player> _terrariaPlayers;
-        private readonly IList<OrionPlayer> _players;
         private readonly ThreadLocal<bool> _shouldIgnoreNextReceiveData = new ThreadLocal<bool>();
 
         private readonly IDictionary<PacketType, Action<PacketReceiveEventArgs>> _packetReceiveHandlers =
             new Dictionary<PacketType, Action<PacketReceiveEventArgs>>();
 
-        // Subtract 1 from the count. This is because Terraria has an extra slot.
-        public int Count => _players.Count - 1;
-
-        public IPlayer this[int index] {
-            get {
-                if (index < 0 || index >= Count) throw new IndexOutOfRangeException();
-
-                if (_players[index]?.Wrapped != _terrariaPlayers[index]) {
-                    _players[index] = new OrionPlayer(_terrariaPlayers[index]);
-                }
-
-                Debug.Assert(_players[index] != null, "_players[index] != null");
-                return _players[index];
-            }
-        }
-
+        public IReadOnlyArray<IPlayer> Players { get; }
         public EventHandlerCollection<PacketReceiveEventArgs>? PacketReceive { get; set; }
         public EventHandlerCollection<PacketSendEventArgs>? PacketSend { get; set; }
         public EventHandlerCollection<PlayerConnectEventArgs>? PlayerConnect { get; set; }
@@ -65,11 +46,10 @@ namespace Orion.Players {
         public EventHandlerCollection<PlayerDisconnectedEventArgs>? PlayerDisconnected { get; set; }
 
         public OrionPlayerService() {
-            Debug.Assert(Terraria.Main.player != null, "Terraria.Main.player != null");
-            Debug.Assert(Terraria.Main.player.All(p => p != null), "Terraria.Main.player.All(p => p != null)");
-
-            _terrariaPlayers = Terraria.Main.player;
-            _players = new OrionPlayer[_terrariaPlayers.Count];
+            // Ignore the last player since it is used as a failure slot.
+            Players = new WrappedReadOnlyArray<OrionPlayer, Terraria.Player>(
+                Terraria.Main.player.AsMemory(..^1),
+                (_, terrariaPlayer) => new OrionPlayer(terrariaPlayer));
 
             _packetReceiveHandlers[PacketType.PlayerConnect] = PlayerConnectHandler;
             _packetReceiveHandlers[PacketType.PlayerData] = PlayerDataHandler;
@@ -91,19 +71,11 @@ namespace Orion.Players {
             Hooks.Net.RemoteClient.PreReset = null;
         }
 
-        public IEnumerator<IPlayer> GetEnumerator() {
-            for (var i = 0; i < Count; ++i) {
-                yield return this[i];
-            }
-        }
-
-        [ExcludeFromCodeCoverage]
-        IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
-
         private HookResult ReceiveDataHandler(Terraria.MessageBuffer buffer, ref byte packetId,
                                               ref int readOffset, ref int start, ref int length) {
             Debug.Assert(buffer != null, "buffer != null");
-            Debug.Assert(buffer.whoAmI >= 0 && buffer.whoAmI < Count, "buffer.whoAmI >= 0 && buffer.whoAmI < Count");
+            Debug.Assert(buffer.whoAmI >= 0 && buffer.whoAmI < Players.Count,
+                         "buffer.whoAmI >= 0 && buffer.whoAmI < Players.Count");
 
             if (_shouldIgnoreNextReceiveData.Value) {
                 _shouldIgnoreNextReceiveData.Value = false;
@@ -112,7 +84,7 @@ namespace Orion.Players {
 
             // Offset start and length by two since the packet length field is not included.
             var stream = new MemoryStream(buffer.readBuffer, start - 2, length + 2);
-            var sender = this[buffer.whoAmI];
+            var sender = Players[buffer.whoAmI];
             var packet = Packet.ReadFromStream(stream, PacketContext.Server);
             var args = new PacketReceiveEventArgs(sender, packet);
             PacketReceive?.Invoke(this, args);
@@ -144,10 +116,11 @@ namespace Orion.Players {
         private HookResult SendBytesHandler(ref int remoteClient, ref byte[] data, ref int offset, ref int size,
                                             ref Terraria.Net.Sockets.SocketSendCallback callback,
                                             ref object state) {
-            Debug.Assert(remoteClient >= 0 && remoteClient < Count, "remoteClient >= 0 && remoteClient < Count");
+            Debug.Assert(remoteClient >= 0 && remoteClient < Players.Count,
+                         "remoteClient >= 0 && remoteClient < Players.Count");
 
             var stream = new MemoryStream(data, offset, size);
-            var receiver = this[remoteClient];
+            var receiver = Players[remoteClient];
             var packet = Packet.ReadFromStream(stream, PacketContext.Client);
             var args = new PacketSendEventArgs(receiver, packet);
             PacketSend?.Invoke(this, args);
@@ -164,10 +137,10 @@ namespace Orion.Players {
 
         private HookResult PreResetHandler(Terraria.RemoteClient remoteClient) {
             Debug.Assert(remoteClient != null, "remoteClient != null");
-            Debug.Assert(remoteClient.Id >= 0 && remoteClient.Id < Count,
-                         "remoteClient.Id >= 0 && remoteClient.Id < Count");
+            Debug.Assert(remoteClient.Id >= 0 && remoteClient.Id < Players.Count,
+                         "remoteClient.Id >= 0 && remoteClient.Id < Players.Count");
 
-            var player = this[remoteClient.Id];
+            var player = Players[remoteClient.Id];
             var args = new PlayerDisconnectedEventArgs(player);
             PlayerDisconnected?.Invoke(this, args);
             return HookResult.Continue;

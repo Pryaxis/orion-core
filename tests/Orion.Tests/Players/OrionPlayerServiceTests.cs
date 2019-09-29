@@ -41,16 +41,16 @@ namespace Orion.Players {
         }
 
         [Fact]
-        public void GetItem_IsCorrect() {
-            var player = _playerService[0];
+        public void Players_GetItem_IsCorrect() {
+            var player = _playerService.Players[0];
 
             ((OrionPlayer)player).Wrapped.Should().BeSameAs(Terraria.Main.player[0]);
         }
 
         [Fact]
-        public void GetItem_MultipleTimes_ReturnsSameInstance() {
-            var player = _playerService[0];
-            var player2 = _playerService[0];
+        public void Players_GetItem_MultipleTimes_ReturnsSameInstance() {
+            var player = _playerService.Players[0];
+            var player2 = _playerService.Players[0];
 
             player.Should().BeSameAs(player2);
         }
@@ -58,15 +58,15 @@ namespace Orion.Players {
         [Theory]
         [InlineData(-1)]
         [InlineData(10000)]
-        public void GetItem_InvalidIndex_ThrowsIndexOutOfRangeException(int index) {
-            Func<IPlayer> func = () => _playerService[index];
+        public void Players_GetItem_InvalidIndex_ThrowsIndexOutOfRangeException(int index) {
+            Func<IPlayer> func = () => _playerService.Players[index];
 
             func.Should().Throw<IndexOutOfRangeException>();
         }
 
         [Fact]
-        public void GetEnumerator_IsCorrect() {
-            var players = _playerService.ToList();
+        public void Players_GetEnumerator_IsCorrect() {
+            var players = _playerService.Players.ToList();
 
             for (var i = 0; i < players.Count; ++i) {
                 ((OrionPlayer)players[i]).Wrapped.Should().BeSameAs(Terraria.Main.player[i]);
@@ -78,7 +78,7 @@ namespace Orion.Players {
             var isRun = false;
             _playerService.PacketReceive += (sender, args) => {
                 isRun = true;
-                args.Sender.Should().BeSameAs(_playerService[1]);
+                args.Sender.Should().BeSameAs(_playerService.Players[1]);
             };
 
             TestUtils.FakeReceiveBytes(1, PlayerConnectPacketTests.Bytes);
@@ -91,7 +91,7 @@ namespace Orion.Players {
             var isRun = false;
             _playerService.PlayerConnect += (sender, args) => {
                 isRun = true;
-                args.Player.Should().BeSameAs(_playerService[1]);
+                args.Player.Should().BeSameAs(_playerService.Players[1]);
                 args.PlayerVersionString.Should().Be("Terraria194");
             };
 
@@ -105,7 +105,7 @@ namespace Orion.Players {
             var isRun = false;
             _playerService.PlayerData += (sender, args) => {
                 isRun = true;
-                args.Player.Should().BeSameAs(_playerService[1]);
+                args.Player.Should().BeSameAs(_playerService.Players[1]);
                 args.PlayerSkinType.Should().Be(2);
                 args.PlayerHairType.Should().Be(50);
                 args.PlayerName.Should().Be("f");
@@ -133,7 +133,7 @@ namespace Orion.Players {
             var isRun = false;
             _playerService.PlayerInventorySlot += (sender, args) => {
                 isRun = true;
-                args.Player.Should().BeSameAs(_playerService[1]);
+                args.Player.Should().BeSameAs(_playerService.Players[1]);
                 args.PlayerInventorySlotIndex.Should().Be(0);
                 args.ItemStackSize.Should().Be(1);
                 args.ItemPrefix.Should().Be(ItemPrefix.Godly);
@@ -150,7 +150,7 @@ namespace Orion.Players {
             var isRun = false;
             _playerService.PlayerJoin += (sender, args) => {
                 isRun = true;
-                args.Player.Should().BeSameAs(_playerService[1]);
+                args.Player.Should().BeSameAs(_playerService.Players[1]);
             };
 
             TestUtils.FakeReceiveBytes(1, PlayerJoinPacketTests.Bytes);
@@ -163,7 +163,7 @@ namespace Orion.Players {
             var isRun = false;
             _playerService.PlayerDisconnected += (sender, args) => {
                 isRun = true;
-                args.Player.Should().BeSameAs(_playerService[1]);
+                args.Player.Should().BeSameAs(_playerService.Players[1]);
             };
             Terraria.Netplay.Clients[1].Id = 1;
 

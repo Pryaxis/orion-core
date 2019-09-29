@@ -24,7 +24,12 @@ namespace Orion.Players {
     /// <summary>
     /// Represents a player service. Provides access to player-related events and methods.
     /// </summary>
-    public interface IPlayerService : IReadOnlyArray<IPlayer>, IService {
+    public interface IPlayerService : IService {
+        /// <summary>
+        /// Gets the players.
+        /// </summary>
+        IReadOnlyArray<IPlayer> Players { get; }
+
         /// <summary>
         /// Gets or sets the event handlers that run when receiving a packet. This event can be canceled.
         /// </summary>

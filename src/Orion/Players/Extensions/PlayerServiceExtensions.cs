@@ -35,8 +35,9 @@ namespace Orion.Players.Extensions {
             if (playerService is null) throw new ArgumentNullException(nameof(playerService));
             if (packet is null) throw new ArgumentNullException(nameof(packet));
 
-            for (var i = 0; i < playerService.Count; ++i) {
-                playerService[i].SendPacket(packet);
+            var players = playerService.Players;
+            for (var i = 0; i < players.Count; ++i) {
+                players[i].SendPacket(packet);
             }
         }
     }
