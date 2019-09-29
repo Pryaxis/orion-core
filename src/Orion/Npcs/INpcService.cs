@@ -25,7 +25,12 @@ namespace Orion.Npcs {
     /// <summary>
     /// Represents an NPC service. Provides access to NPC-related events and methods.
     /// </summary>
-    public interface INpcService : IReadOnlyArray<INpc>, IService {
+    public interface INpcService : IService {
+        /// <summary>
+        /// Gets the NPCs.
+        /// </summary>
+        IReadOnlyArray<INpc> Npcs { get; }
+
         /// <summary>
         /// Gets or sets the event handlers that occur when an NPC's defaults are being set. This event can be canceled.
         /// </summary>

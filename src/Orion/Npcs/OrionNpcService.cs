@@ -16,43 +16,24 @@
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
-using System.Linq;
 using System.Threading;
 using Microsoft.Xna.Framework;
 using Orion.Events;
 using Orion.Events.Extensions;
 using Orion.Events.Npcs;
 using Orion.Items;
+using Orion.Utils;
 using OTAPI;
 
 namespace Orion.Npcs {
     internal sealed class OrionNpcService : OrionService, INpcService {
-        private readonly IList<Terraria.NPC> _terrariaNpcs;
-        private readonly IList<OrionNpc> _npcs;
         private readonly ThreadLocal<int> _setDefaultsToIgnore = new ThreadLocal<int>();
 
         [ExcludeFromCodeCoverage] public override string Author => "Pryaxis";
 
-        // Subtract 1 from the count. This is because Terraria has an extra slot.
-        public int Count => _npcs.Count - 1;
-
-        public INpc this[int index] {
-            get {
-                if (index < 0 || index >= Count) throw new IndexOutOfRangeException();
-
-                if (_npcs[index]?.Wrapped != _terrariaNpcs[index]) {
-                    _npcs[index] = new OrionNpc(_terrariaNpcs[index]);
-                }
-
-                Debug.Assert(_npcs[index] != null, "_npcs[index] != null");
-                return _npcs[index];
-            }
-        }
-
+        public IReadOnlyArray<INpc> Npcs { get; }
         public EventHandlerCollection<NpcSetDefaultsEventArgs>? NpcSetDefaults { get; set; }
         public EventHandlerCollection<NpcSpawnEventArgs>? NpcSpawn { get; set; }
         public EventHandlerCollection<NpcUpdateEventArgs>? NpcUpdate { get; set; }
@@ -62,11 +43,10 @@ namespace Orion.Npcs {
         public EventHandlerCollection<NpcKilledEventArgs>? NpcKilled { get; set; }
 
         public OrionNpcService() {
-            Debug.Assert(Terraria.Main.npc != null, "Terraria.Main.npc != null");
-            Debug.Assert(Terraria.Main.npc.All(n => n != null), "Terraria.Main.npc.All(n => n != null)");
-
-            _terrariaNpcs = Terraria.Main.npc;
-            _npcs = new OrionNpc[_terrariaNpcs.Count];
+            // Ignore the last NPC since it is used as a failure slot.
+            Npcs = new WrappedReadOnlyArray<OrionNpc, Terraria.NPC>(
+                Terraria.Main.npc.AsMemory(..^1),
+                (_, terrariaNpc) => new OrionNpc(terrariaNpc));
 
             Hooks.Npc.PreSetDefaultsById = PreSetDefaultsByIdHandler;
             Hooks.Npc.Spawn = SpawnHandler;
@@ -79,7 +59,7 @@ namespace Orion.Npcs {
 
         protected override void Dispose(bool disposeManaged) {
             if (!disposeManaged) return;
-            
+
             _setDefaultsToIgnore.Dispose();
 
             Hooks.Npc.PreSetDefaultsById = null;
@@ -91,15 +71,6 @@ namespace Orion.Npcs {
             Hooks.Npc.Killed = null;
         }
 
-        public IEnumerator<INpc> GetEnumerator() {
-            for (var i = 0; i < Count; ++i) {
-                yield return this[i];
-            }
-        }
-
-        [ExcludeFromCodeCoverage]
-        IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
-
         public INpc? SpawnNpc(NpcType npcType, Vector2 position, float[]? aiValues = null) {
             if (aiValues != null && aiValues.Length != Terraria.NPC.maxAI) {
                 throw new ArgumentException($"Array does not have length {Terraria.NPC.maxAI}.", nameof(aiValues));
@@ -110,7 +81,7 @@ namespace Orion.Npcs {
             var ai2 = aiValues?[2] ?? 0;
             var ai3 = aiValues?[3] ?? 0;
             var npcIndex = Terraria.NPC.NewNPC((int)position.X, (int)position.Y, (int)npcType, 0, ai0, ai1, ai2, ai3);
-            return npcIndex >= 0 && npcIndex < Count ? this[npcIndex] : null;
+            return npcIndex >= 0 && npcIndex < Npcs.Count ? Npcs[npcIndex] : null;
         }
 
         private HookResult PreSetDefaultsByIdHandler(Terraria.NPC terrariaNpc, ref int type, ref float scaleOverride) {
@@ -136,15 +107,15 @@ namespace Orion.Npcs {
         }
 
         private HookResult SpawnHandler(ref int npcIndex) {
-            Debug.Assert(npcIndex >= 0 && npcIndex < Count, "npcIndex >= 0 && npcIndex < Count");
+            Debug.Assert(npcIndex >= 0 && npcIndex < Npcs.Count, "npcIndex >= 0 && npcIndex < Count");
 
-            var npc = this[npcIndex];
+            var npc = Npcs[npcIndex];
             var args = new NpcSpawnEventArgs(npc);
             NpcSpawn?.Invoke(this, args);
             if (args.IsCanceled()) {
                 // To cancel the event, we should remove the NPC and return the failure index.
                 npc.IsActive = false;
-                npcIndex = Count;
+                npcIndex = Npcs.Count;
                 return HookResult.Cancel;
             }
 

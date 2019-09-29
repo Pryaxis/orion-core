@@ -55,16 +55,16 @@ namespace Orion.Npcs {
         }
 
         [Fact]
-        public void GetItem_IsCorrect() {
-            var npc = _npcService[0];
+        public void Npcs_GetItem_IsCorrect() {
+            var npc = _npcService.Npcs[0];
 
             ((OrionNpc)npc).Wrapped.Should().BeSameAs(Terraria.Main.npc[0]);
         }
 
         [Fact]
-        public void GetItem_MultipleTimes_ReturnsSameInstance() {
-            var npc = _npcService[0];
-            var npc2 = _npcService[0];
+        public void Npcs_GetItem_MultipleTimes_ReturnsSameInstance() {
+            var npc = _npcService.Npcs[0];
+            var npc2 = _npcService.Npcs[0];
 
             npc.Should().BeSameAs(npc2);
         }
@@ -72,10 +72,19 @@ namespace Orion.Npcs {
         [Theory]
         [InlineData(-1)]
         [InlineData(10000)]
-        public void GetItem_InvalidIndex_ThrowsIndexOutOfRangeException(int index) {
-            Func<INpc> func = () => _npcService[index];
+        public void Npcs_GetItem_InvalidIndex_ThrowsIndexOutOfRangeException(int index) {
+            Func<INpc> func = () => _npcService.Npcs[index];
 
             func.Should().Throw<IndexOutOfRangeException>();
+        }
+
+        [Fact]
+        public void Npcs_GetEnumerator_IsCorrect() {
+            var npcs = _npcService.Npcs.ToList();
+
+            for (var i = 0; i < npcs.Count; ++i) {
+                ((OrionNpc)npcs[i]).Wrapped.Should().BeSameAs(Terraria.Main.npc[i]);
+            }
         }
 
         [Theory]
@@ -139,7 +148,7 @@ namespace Orion.Npcs {
 
             var npcIndex = Terraria.NPC.NewNPC(0, 0, (int)NpcType.BlueSlime);
 
-            npcIndex.Should().BeGreaterOrEqualTo(_npcService.Count);
+            npcIndex.Should().BeGreaterOrEqualTo(_npcService.Npcs.Count);
             Terraria.Main.npc[0].active.Should().BeFalse();
         }
 
@@ -267,15 +276,6 @@ namespace Orion.Npcs {
             Terraria.Main.npc[0].checkDead();
             
             isRun.Should().BeTrue();
-        }
-
-        [Fact]
-        public void GetEnumerator_IsCorrect() {
-            var npcs = _npcService.ToList();
-
-            for (var i = 0; i < npcs.Count; ++i) {
-                ((OrionNpc)npcs[i]).Wrapped.Should().BeSameAs(Terraria.Main.npc[i]);
-            }
         }
 
         [Fact]
