@@ -21,6 +21,7 @@ using Orion.Items;
 using Orion.Utils;
 using Main = Terraria.Main;
 using TerrariaChest = Terraria.Chest;
+using TerrariaItem = Terraria.Item;
 
 namespace Orion.World.TileEntities {
     internal sealed class OrionChest : AnnotatableObject, IChest {
@@ -54,7 +55,7 @@ namespace Orion.World.TileEntities {
 
             Index = chestIndex;
             Wrapped = terrariaChest;
-            Items = new WrappedReadOnlyArray<OrionItem, Terraria.Item>(
+            Items = new WrappedReadOnlyArray<OrionItem, TerrariaItem>(
                 Wrapped.item, (_, terrariaItem) => new OrionItem(terrariaItem));
         }
     }

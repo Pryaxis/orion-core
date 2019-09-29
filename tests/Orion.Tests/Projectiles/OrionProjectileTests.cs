@@ -18,7 +18,6 @@
 using System;
 using System.Diagnostics.CodeAnalysis;
 using FluentAssertions;
-using Orion.World.Tiles;
 using Xunit;
 using TerrariaProjectile = Terraria.Projectile;
 
@@ -31,7 +30,7 @@ namespace Orion.Projectiles {
          *
         [Fact(Skip = "Localization")]
         public void GetName_IsCorrect() {
-            var terrariaProjectile = new Terraria.Projectile {type = (int)ProjectileType.WoodenArrow};
+            var terrariaProjectile = new TerrariaProjectile {type = (int)ProjectileType.WoodenArrow};
             IProjectile projectile = new OrionProjectile(terrariaProjectile);
 
             projectile.Name.Should().Be("Wooden Arrow");
