@@ -23,7 +23,7 @@ using Xunit;
 namespace Orion.Events.Extensions {
     public class CancelableExtensionsTests {
         [Fact]
-        public void IsCanceled_True_IsCorrect() {
+        public void IsCanceled_Yes_ReturnsTrue() {
             var mockCancelable = new Mock<ICancelable>();
             mockCancelable.SetupGet(c => c.CancellationReason).Returns("");
 
@@ -34,7 +34,7 @@ namespace Orion.Events.Extensions {
         }
 
         [Fact]
-        public void IsCanceled_False_IsCorrect() {
+        public void IsCanceled_No_ReturnsFalse() {
             var mockCancelable = new Mock<ICancelable>();
             mockCancelable.SetupGet(c => c.CancellationReason).Returns((string?)null);
 

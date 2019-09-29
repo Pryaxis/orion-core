@@ -16,12 +16,13 @@
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Orion.Packets {
     /// <summary>
     /// The exception thrown when a packet fails to be processed properly.
     /// </summary>
-    [Serializable]
+    [Serializable, ExcludeFromCodeCoverage]
     public sealed class PacketException : Exception {
         /// <summary>
         /// Initializes a new instance of the <see cref="PacketException"/> class.

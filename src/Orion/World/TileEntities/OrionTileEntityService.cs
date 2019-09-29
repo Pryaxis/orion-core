@@ -17,8 +17,9 @@
 
 using System;
 using System.Diagnostics;
+using System.Diagnostics.CodeAnalysis;
 using Orion.Utils;
-using Terraria;
+using Main = Terraria.Main;
 using TerrariaChest = Terraria.Chest;
 using TerrariaTargetDummy = Terraria.GameContent.Tile_Entities.TETrainingDummy;
 using TerrariaItem = Terraria.Item;
@@ -29,6 +30,8 @@ using TerrariaTileEntity = Terraria.DataStructures.TileEntity;
 
 namespace Orion.World.TileEntities {
     internal sealed class OrionTileEntityService : OrionService, ITileEntityService {
+        [ExcludeFromCodeCoverage] public override string Author => "Pryaxis";
+
         public IReadOnlyArray<IChest?> Chests { get; }
         public IReadOnlyArray<ISign?> Signs { get; }
 
@@ -47,9 +50,9 @@ namespace Orion.World.TileEntities {
         public ITileEntity? AddTileEntity(TileEntityType tileEntityType, int x, int y) {
             if (GetTileEntity(x, y) != null) return null;
 
-            static ITileEntity? AddChest(int x, int y) {
+            static IChest? AddChest(int x, int y) {
                 for (var i = 0; i < Main.chest.Length; ++i) {
-                    ref var terrariaChest = ref Main.chest[i];
+                    ref TerrariaChest? terrariaChest = ref Main.chest[i];
                     if (terrariaChest == null) {
                         terrariaChest = new TerrariaChest {
                             x = x,
@@ -66,9 +69,9 @@ namespace Orion.World.TileEntities {
                 return null;
             }
 
-            static ITileEntity? AddSign(int x, int y) {
+            static ISign? AddSign(int x, int y) {
                 for (var i = 0; i < Main.sign.Length; ++i) {
-                    ref var terrariaSign = ref Main.sign[i];
+                    ref TerrariaSign? terrariaSign = ref Main.sign[i];
                     if (terrariaSign == null) {
                         terrariaSign = new TerrariaSign {
                             x = x,
@@ -83,17 +86,17 @@ namespace Orion.World.TileEntities {
                 return null;
             }
 
-            static ITileEntity AddTargetDummy(int x, int y) {
+            static ITargetDummy AddTargetDummy(int x, int y) {
                 var targetDummyIndex = TerrariaTargetDummy.Place(x, y);
                 return new OrionTargetDummy((TerrariaTargetDummy)TerrariaTileEntity.ByID[targetDummyIndex]);
             }
 
-            static ITileEntity AddItemFrame(int x, int y) {
+            static IItemFrame AddItemFrame(int x, int y) {
                 var targetDummyIndex = TerrariaItemFrame.Place(x, y);
                 return new OrionItemFrame((TerrariaItemFrame)TerrariaTileEntity.ByID[targetDummyIndex]);
             }
 
-            static ITileEntity AddLogicSensor(int x, int y) {
+            static ILogicSensor AddLogicSensor(int x, int y) {
                 var targetDummyIndex = TerrariaLogicSensor.Place(x, y);
                 return new OrionLogicSensor((TerrariaLogicSensor)TerrariaTileEntity.ByID[targetDummyIndex]);
             }
@@ -109,11 +112,81 @@ namespace Orion.World.TileEntities {
         }
 
         public ITileEntity? GetTileEntity(int x, int y) {
-            throw new NotImplementedException();
+            static IChest? GetChest(int x, int y) {
+                for (var i = 0; i < Main.chest.Length; ++i) {
+                    TerrariaChest? terrariaChest = Main.chest[i];
+                    if (terrariaChest != null && terrariaChest.x == x && terrariaChest.y == y) {
+                        return new OrionChest(i, terrariaChest);
+                    }
+                }
+
+                return null;
+            }
+
+            static ISign? GetSign(int x, int y) {
+                for (var i = 0; i < Main.sign.Length; ++i) {
+                    TerrariaSign? terrariaSign = Main.sign[i];
+                    if (terrariaSign != null && terrariaSign.x == x && terrariaSign.y == y) {
+                        return new OrionSign(i, terrariaSign);
+                    }
+                }
+
+                return null;
+            }
+
+            static ITileEntity? GetTerrariaTileEntity(int x, int y) {
+                if (!TerrariaTileEntity.ByPosition.TryGetValue(new Terraria.DataStructures.Point16(x, y),
+                                                               out var terrariaTileEntity)) {
+                    return null;
+                }
+
+                return terrariaTileEntity switch {
+                    TerrariaTargetDummy terrariaTargetDummy => new OrionTargetDummy(terrariaTargetDummy),
+                    TerrariaItemFrame terrariaItemFrame => new OrionItemFrame(terrariaItemFrame),
+                    TerrariaLogicSensor terrariaLogicSensor => new OrionLogicSensor(terrariaLogicSensor),
+                    _ => throw new InvalidOperationException("Tile entity is invalid.")
+                };
+            }
+
+            return GetChest(x, y) ?? GetSign(x, y) ?? GetTerrariaTileEntity(x, y);
         }
 
         public bool RemoveTileEntity(ITileEntity tileEntity) {
-            throw new NotImplementedException();
+            if (tileEntity is null) throw new ArgumentNullException(nameof(tileEntity));
+
+            static bool RemoveChest(IChest chest) {
+                ref TerrariaChest? terrariaChest = ref Main.chest[chest.Index];
+                if (terrariaChest != null && terrariaChest.x == chest.X && terrariaChest.y == chest.Y) {
+                    terrariaChest = null;
+                    return true;
+                }
+
+                return false;
+            }
+
+            static bool RemoveSign(ISign sign) {
+                ref TerrariaSign? terrariaSign = ref Main.sign[sign.Index];
+                if (terrariaSign != null && terrariaSign.x == sign.X && terrariaSign.y == sign.Y) {
+                    terrariaSign = null;
+                    return true;
+                }
+
+                return false;
+            }
+
+            static bool RemoveTerrariaTileEntity(ITileEntity tileEntity) {
+                var position = new Terraria.DataStructures.Point16(tileEntity.X, tileEntity.Y);
+
+                // Use the & operator here instead of && since both expressions should always be evaluated.
+                return TerrariaTileEntity.ByID.Remove(tileEntity.Index) &
+                       TerrariaTileEntity.ByPosition.Remove(position);
+            }
+
+            return tileEntity switch {
+                IChest chest => RemoveChest(chest),
+                ISign sign => RemoveSign(sign),
+                _ => RemoveTerrariaTileEntity(tileEntity)
+            };
         }
     }
 }

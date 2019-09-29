@@ -110,6 +110,7 @@ namespace Orion.World {
                 _tilesPtr = (Tile*)Marshal.AllocHGlobal(sizeof(Tile) * (Width + 1) * (Height + 1));
             }
 
+            [ExcludeFromCodeCoverage]
             ~TileCollection() {
                 Marshal.FreeHGlobal((IntPtr)_tilesPtr);
             }
@@ -175,6 +176,7 @@ namespace Orion.World {
             }
 
             // This property isn't even accessed normally, but we'll still implement it.
+            [ExcludeFromCodeCoverage]
             public int collisionType {
                 get {
                     if (!active()) return 0;
