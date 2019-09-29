@@ -35,7 +35,7 @@ namespace Orion.Utils {
             get {
                 if (index < 0 || index >= Count) throw new IndexOutOfRangeException();
 
-                ref var wrappedItem = ref _wrappedItems.Span[index];
+                var wrappedItem = _wrappedItems.Span[index];
                 ref var item = ref _items[index];
 #pragma warning disable 618
                 if (item?.Wrapped != wrappedItem) {
