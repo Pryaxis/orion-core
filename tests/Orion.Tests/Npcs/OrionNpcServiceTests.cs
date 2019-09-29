@@ -59,7 +59,7 @@ namespace Orion.Npcs {
         }
 
         [Fact]
-        public void Npcs_GetItem_IsCorrect() {
+        public void Npcs_Item_Get_IsCorrect() {
             var npc = _npcService.Npcs[1];
 
             npc.Index.Should().Be(1);
@@ -67,7 +67,7 @@ namespace Orion.Npcs {
         }
 
         [Fact]
-        public void Npcs_GetItem_MultipleTimes_ReturnsSameInstance() {
+        public void Npcs_Item_GetMultipleTimes_ReturnsSameInstance() {
             var npc = _npcService.Npcs[0];
             var npc2 = _npcService.Npcs[0];
 
@@ -77,7 +77,7 @@ namespace Orion.Npcs {
         [Theory]
         [InlineData(-1)]
         [InlineData(10000)]
-        public void Npcs_GetItem_InvalidIndex_ThrowsIndexOutOfRangeException(int index) {
+        public void Npcs_Item_GetInvalidIndex_ThrowsIndexOutOfRangeException(int index) {
             Func<INpc> func = () => _npcService.Npcs[index];
 
             func.Should().Throw<IndexOutOfRangeException>();

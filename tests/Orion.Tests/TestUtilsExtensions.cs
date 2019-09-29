@@ -41,7 +41,7 @@ namespace Orion {
             [typeof(Color)] = new Color(111, 222, 333)
         };
 
-        public static void GetSetPropertiesShouldReflectInPacket(this EventArgs args) {
+        public static void Properties_GetSetShouldReflectInPacket(this EventArgs args) {
             var packet = args.GetType().GetField("_packet", BindingFlags.NonPublic | BindingFlags.Instance)
                              ?.GetValue(args);
             packet.Should().NotBeNull();

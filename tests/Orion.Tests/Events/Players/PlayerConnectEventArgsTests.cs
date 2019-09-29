@@ -38,7 +38,7 @@ namespace Orion.Events.Players {
             var packet = new PlayerConnectPacket();
             var args = new PlayerConnectEventArgs(player, packet);
 
-            args.GetSetPropertiesShouldReflectInPacket();
+            args.Properties_GetSetShouldReflectInPacket();
         }
 
         [Fact]

@@ -38,7 +38,7 @@ namespace Orion.Events.Players {
             var packet = new PlayerDataPacket();
             var args = new PlayerDataEventArgs(player, packet);
 
-            args.GetSetPropertiesShouldReflectInPacket();
+            args.Properties_GetSetShouldReflectInPacket();
         }
 
         [Fact]

@@ -54,7 +54,7 @@ namespace Orion.World.TileEntities {
         }
 
         [Fact]
-        public void Chests_GetItem_IsCorrect() {
+        public void Chests_Item_Get_IsCorrect() {
             Main.chest[0] = new TerrariaChest();
             for (var i = 0; i < TerrariaChest.maxItems; ++i) {
                 Main.chest[0].item[i] = new TerrariaItem();
@@ -67,7 +67,7 @@ namespace Orion.World.TileEntities {
         }
 
         [Fact]
-        public void Chests_GetItem_MultipleTimes_ReturnsSameInstance() {
+        public void Chests_Item_GetMultipleTimes_ReturnsSameInstance() {
             Main.chest[0] = new TerrariaChest();
             for (var i = 0; i < TerrariaChest.maxItems; ++i) {
                 Main.chest[0].item[i] = new TerrariaItem();
@@ -82,7 +82,7 @@ namespace Orion.World.TileEntities {
         [Theory]
         [InlineData(-1)]
         [InlineData(10000)]
-        public void Chests_GetItem_InvalidIndex_ThrowsIndexOutOfRangeException(int index) {
+        public void Chests_Item_GetInvalidIndex_ThrowsIndexOutOfRangeException(int index) {
             Func<IChest> func = () => _tileEntityService.Chests[index];
 
             func.Should().Throw<IndexOutOfRangeException>();
@@ -106,7 +106,7 @@ namespace Orion.World.TileEntities {
         }
 
         [Fact]
-        public void Signs_GetItem_IsCorrect() {
+        public void Signs_Item_Get_IsCorrect() {
             Main.sign[0] = new TerrariaSign();
             var sign = _tileEntityService.Signs[0];
             
@@ -115,7 +115,7 @@ namespace Orion.World.TileEntities {
         }
 
         [Fact]
-        public void Signs_GetItem_MultipleTimes_ReturnsSameInstance() {
+        public void Signs_Item_GetMultipleTimes_ReturnsSameInstance() {
             Main.sign[0] = new TerrariaSign();
             var sign = _tileEntityService.Signs[0];
             var sign2 = _tileEntityService.Signs[0];
@@ -126,7 +126,7 @@ namespace Orion.World.TileEntities {
         [Theory]
         [InlineData(-1)]
         [InlineData(10000)]
-        public void Signs_GetItem_InvalidIndex_ThrowsIndexOutOfRangeException(int index) {
+        public void Signs_Item_GetInvalidIndex_ThrowsIndexOutOfRangeException(int index) {
             Func<ISign> func = () => _tileEntityService.Signs[index];
 
             func.Should().Throw<IndexOutOfRangeException>();
@@ -231,7 +231,7 @@ namespace Orion.World.TileEntities {
         }
 
         [Fact]
-        public void TileEntity_Get_Chest_IsCorrect() {
+        public void GetTileEntity_Chest_IsCorrect() {
             Main.chest[1] = new TerrariaChest {
                 x = 1,
                 y = 2
@@ -249,7 +249,7 @@ namespace Orion.World.TileEntities {
         }
 
         [Fact]
-        public void TileEntity_Get_Sign_IsCorrect() {
+        public void GetTileEntity_Sign_IsCorrect() {
             Main.sign[1] = new TerrariaSign {
                 x = 1,
                 y = 2,
@@ -266,7 +266,7 @@ namespace Orion.World.TileEntities {
         }
 
         [Fact]
-        public void TileEntity_Get_TargetDummy_IsCorrect() {
+        public void GetTileEntity_TargetDummy_IsCorrect() {
             var targetDummyIndex = TerrariaTargetDummy.Place(1, 2);
 
             var targetDummy = (ITargetDummy)_tileEntityService.GetTileEntity(1, 2);
@@ -278,7 +278,7 @@ namespace Orion.World.TileEntities {
         }
 
         [Fact]
-        public void TileEntity_Get_ItemFrame_IsCorrect() {
+        public void GetTileEntity_ItemFrame_IsCorrect() {
             var itemFrameIndex = TerrariaItemFrame.Place(1, 2);
 
             var itemFrame = (IItemFrame)_tileEntityService.GetTileEntity(1, 2);
@@ -290,7 +290,7 @@ namespace Orion.World.TileEntities {
         }
 
         [Fact]
-        public void TileEntity_Get_LogicSensor_IsCorrect() {
+        public void GetTileEntity_LogicSensor_IsCorrect() {
             var logicSensorIndex = TerrariaLogicSensor.Place(1, 2);
 
             var logicSensor = (ILogicSensor)_tileEntityService.GetTileEntity(1, 2);
@@ -302,7 +302,7 @@ namespace Orion.World.TileEntities {
         }
 
         [Fact]
-        public void TileEntity_Get_NoTileEntity_ReturnsNull() {
+        public void GetTileEntity_NoTileEntity_ReturnsNull() {
             _tileEntityService.GetTileEntity(1, 2).Should().BeNull();
         }
 

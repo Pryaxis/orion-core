@@ -15,17 +15,21 @@
 // You should have received a copy of the GNU General Public License
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
-using Xunit;
+using System;
+using Main = Terraria.Main;
 
 namespace Orion {
-    public class TestUtils {
-        public static void FakeReceiveBytes(int index, byte[] bytes) {
-            var buffer = Terraria.NetMessage.buffer[index];
-            var oldBytes = buffer.readBuffer;
-            buffer.readBuffer = bytes;
-            buffer.ResetReader();
-            buffer.GetData(2, bytes.Length - 2, out _);
-            buffer.readBuffer = oldBytes;
+    public class TerrariaTestsFixture : IDisposable {
+        private readonly Main _main;
+
+        public TerrariaTestsFixture() {
+            _main = new Main();
+
+            _main.Initialize();
+        }
+
+        public void Dispose() {
+            _main.Dispose();
         }
     }
 }

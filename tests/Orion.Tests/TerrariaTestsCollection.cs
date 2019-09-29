@@ -18,14 +18,8 @@
 using Xunit;
 
 namespace Orion {
-    public class TestUtils {
-        public static void FakeReceiveBytes(int index, byte[] bytes) {
-            var buffer = Terraria.NetMessage.buffer[index];
-            var oldBytes = buffer.readBuffer;
-            buffer.readBuffer = bytes;
-            buffer.ResetReader();
-            buffer.GetData(2, bytes.Length - 2, out _);
-            buffer.readBuffer = oldBytes;
-        }
-    }
+    // These tests cannot run in parallel since they interact heavily with Terraria's static state. So we have to run
+    // these in series.
+    [CollectionDefinition("TerrariaTestsCollection", DisableParallelization = true)]
+    public class TerrariaTestsCollection : ICollectionFixture<TerrariaTestsFixture> { }
 }

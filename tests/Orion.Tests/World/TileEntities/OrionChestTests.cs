@@ -160,7 +160,7 @@ namespace Orion.World.TileEntities {
         }
 
         [Fact]
-        public void Items_GetItem_IsCorrect() {
+        public void Items_Item_Get_IsCorrect() {
             var terrariaChest = new TerrariaChest();
             for (var i = 0; i < terrariaChest.item.Length; ++i) {
                 terrariaChest.item[i] = new TerrariaItem();

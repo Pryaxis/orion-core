@@ -43,7 +43,7 @@ namespace Orion.Projectiles {
         }
 
         [Fact]
-        public void Projectiles_GetItem_IsCorrect() {
+        public void Projectiles_Item_Get_IsCorrect() {
             var projectile = _projectileService.Projectiles[1];
 
             projectile.Index.Should().Be(1);
@@ -51,7 +51,7 @@ namespace Orion.Projectiles {
         }
 
         [Fact]
-        public void Projectiles_GetItem_MultipleTimes_ReturnsSameInstance() {
+        public void Projectiles_Item_GetMultipleTimes_ReturnsSameInstance() {
             var projectile = _projectileService.Projectiles[0];
             var projectile2 = _projectileService.Projectiles[0];
 
@@ -61,7 +61,7 @@ namespace Orion.Projectiles {
         [Theory]
         [InlineData(-1)]
         [InlineData(10000)]
-        public void Projectiles_GetItem_InvalidIndex_ThrowsIndexOutOfRangeException(int index) {
+        public void Projectiles_Item_GetInvalidIndex_ThrowsIndexOutOfRangeException(int index) {
             Func<IProjectile> func = () => _projectileService.Projectiles[index];
 
             func.Should().Throw<IndexOutOfRangeException>();

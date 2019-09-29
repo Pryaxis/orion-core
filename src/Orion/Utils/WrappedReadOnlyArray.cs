@@ -42,16 +42,12 @@ namespace Orion.Utils {
                     return item = _converter(index, wrappedItem);
                 }
 
-                Debug.Assert(item != null, "_items[index] != null");
+                Debug.Assert(item != null, "item != null");
                 return item;
             }
         }
 
         public WrappedReadOnlyArray(Memory<TWrapped> wrappedItems, Func<int, TWrapped, T> converter) {
-            foreach (var wrappedItem in wrappedItems.Span) {
-                Debug.Assert(wrappedItem != null, "wrappedItem != null");
-            }
-
             Debug.Assert(converter != null, "converter != null");
 
             _wrappedItems = wrappedItems;

@@ -44,7 +44,7 @@ namespace Orion.Items {
         }
 
         [Fact]
-        public void Items_GetItem_IsCorrect() {
+        public void Items_Item_Get_IsCorrect() {
             var item = _itemService.Items[1];
             
             item.Index.Should().Be(1);
@@ -52,7 +52,7 @@ namespace Orion.Items {
         }
 
         [Fact]
-        public void Items_GetItem_MultipleTimes_ReturnsSameInstance() {
+        public void Items_Item_GetMultipleTimes_ReturnsSameInstance() {
             var item = _itemService.Items[0];
             var item2 = _itemService.Items[0];
 
@@ -62,7 +62,7 @@ namespace Orion.Items {
         [Theory]
         [InlineData(-1)]
         [InlineData(10000)]
-        public void Items_GetItem_InvalidIndex_ThrowsIndexOutOfRangeException(int index) {
+        public void Items_Item_GetInvalidIndex_ThrowsIndexOutOfRangeException(int index) {
             Func<IItem> func = () => _itemService.Items[index];
 
             func.Should().Throw<IndexOutOfRangeException>();

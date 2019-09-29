@@ -72,7 +72,7 @@ namespace Orion.Utils {
         }
 
         [Fact]
-        public void Enumerator_Get_IsCorrect() {
+        public void GetEnumerator_IsCorrect() {
             var list = new DirtiableList<int> {0};
 
             list.Should().BeEquivalentTo(0);

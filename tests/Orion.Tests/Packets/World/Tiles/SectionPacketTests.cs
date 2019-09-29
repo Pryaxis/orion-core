@@ -35,7 +35,7 @@ namespace Orion.Packets.World.Tiles {
         [Fact]
         [SuppressMessage("ReSharper", "UseObjectOrCollectionInitializer")]
         [SuppressMessage("Style", "IDE0017:Simplify object initialization", Justification = "Testing")]
-        public void SectionTiles_GetItem_Mutate_MarksAsDirty() {
+        public void SectionTiles_Item_GetMutate_MarksAsDirty() {
             var packet = new SectionPacket();
             packet.SectionTiles = new NetworkTiles(1, 1);
             packet.ShouldBeDirty();

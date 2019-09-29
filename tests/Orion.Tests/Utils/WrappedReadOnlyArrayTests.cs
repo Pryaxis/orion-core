@@ -53,7 +53,7 @@ namespace Orion.Utils {
         }
 
         [Fact]
-        public void Item_Get_MultipleTimes_ReturnsSameInstance() {
+        public void Item_GetMultipleTimes_ReturnsSameInstance() {
             var wrappedItems = new TestWrappedClass[10];
             for (var i = 0; i < 10; ++i) {
                 wrappedItems[i] = new TestWrappedClass();
@@ -71,7 +71,7 @@ namespace Orion.Utils {
         [Theory]
         [InlineData(-1)]
         [InlineData(1000)]
-        public void Item_Get_IndexOutOfRange_ThrowsArgumentOutOfRangeException(int index) {
+        public void Item_GetIndexOutOfRange_ThrowsArgumentOutOfRangeException(int index) {
             var wrappedItems = new TestWrappedClass[10];
             for (var i = 0; i < 10; ++i) {
                 wrappedItems[i] = new TestWrappedClass();
@@ -86,7 +86,7 @@ namespace Orion.Utils {
         }
 
         [Fact]
-        public void Enumerator_Get_IsCorrect() {
+        public void GetEnumerator_IsCorrect() {
             var wrappedItems = new TestWrappedClass[10];
             for (var i = 0; i < 10; ++i) {
                 wrappedItems[i] = new TestWrappedClass();

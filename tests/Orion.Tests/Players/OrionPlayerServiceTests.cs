@@ -43,7 +43,7 @@ namespace Orion.Players {
         }
 
         [Fact]
-        public void Players_GetItem_IsCorrect() {
+        public void Players_Item_Get_IsCorrect() {
             var player = _playerService.Players[1];
 
             player.Index.Should().Be(1);
@@ -51,7 +51,7 @@ namespace Orion.Players {
         }
 
         [Fact]
-        public void Players_GetItem_MultipleTimes_ReturnsSameInstance() {
+        public void Players_Item_GetMultipleTimes_ReturnsSameInstance() {
             var player = _playerService.Players[0];
             var player2 = _playerService.Players[0];
 
@@ -61,7 +61,7 @@ namespace Orion.Players {
         [Theory]
         [InlineData(-1)]
         [InlineData(10000)]
-        public void Players_GetItem_InvalidIndex_ThrowsIndexOutOfRangeException(int index) {
+        public void Players_Item_GetInvalidIndex_ThrowsIndexOutOfRangeException(int index) {
             Func<IPlayer> func = () => _playerService.Players[index];
 
             func.Should().Throw<IndexOutOfRangeException>();

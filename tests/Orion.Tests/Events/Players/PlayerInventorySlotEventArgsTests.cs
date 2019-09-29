@@ -38,7 +38,7 @@ namespace Orion.Events.Players {
             var packet = new PlayerInventorySlotPacket();
             var args = new PlayerInventorySlotEventArgs(player, packet);
 
-            args.GetSetPropertiesShouldReflectInPacket();
+            args.Properties_GetSetShouldReflectInPacket();
         }
     }
 }

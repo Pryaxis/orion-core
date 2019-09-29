@@ -72,7 +72,7 @@ namespace Orion.Utils {
         }
 
         [Fact]
-        public void Enumerator_Get_IsCorrect() {
+        public void GetEnumerator_IsCorrect() {
             var array = new DirtiableArray<int>(1);
             array[0] = 1;
 
