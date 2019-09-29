@@ -40,21 +40,21 @@ namespace Orion.World {
         }
 
         [Fact]
-        public void GetWorldWidth_IsCorrect() {
+        public void WorldWidth_Get_IsCorrect() {
             Main.maxTilesX = 1000;
 
             _worldService.WorldWidth.Should().Be(1000);
         }
 
         [Fact]
-        public void GetWorldHeight_IsCorrect() {
+        public void WorldHeight_Get_IsCorrect() {
             Main.maxTilesY = 1000;
 
             _worldService.WorldHeight.Should().Be(1000);
         }
 
         [Fact]
-        public void GetCurrentInvasionType_IsCorrect() {
+        public void CurrentInvasionType_Get_IsCorrect() {
             Main.invasionType = (int)InvasionType.Goblins;
 
             _worldService.CurrentInvasionType.Should().Be(InvasionType.Goblins);

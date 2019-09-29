@@ -24,7 +24,7 @@ using TerrariaPlayer = Terraria.Player;
 namespace Orion.Packets.Players {
     public class PlayerBuffsPacketTests {
         [Fact]
-        public void SetSimpleProperties_MarkAsDirty() {
+        public void SimpleProperties_Set_MarkAsDirty() {
             var packet = new PlayerBuffsPacket();
 
             packet.SetSimplePropertiesShouldMarkAsDirty();

@@ -24,7 +24,7 @@ using Xunit;
 namespace Orion.Packets.Players {
     public class PlayerAddBuffPacketTests {
         [Fact]
-        public void SetSimpleProperties_MarkAsDirty() {
+        public void SimpleProperties_Set_MarkAsDirty() {
             var packet = new PlayerAddBuffPacket();
 
             packet.SetSimplePropertiesShouldMarkAsDirty();

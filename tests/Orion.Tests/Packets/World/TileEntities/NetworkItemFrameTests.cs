@@ -20,7 +20,7 @@ using Xunit;
 namespace Orion.Packets.World.TileEntities {
     public class NetworkItemFrameTests {
         [Fact]
-        public void SetSimpleProperties_MarkAsDirty() {
+        public void SimpleProperties_Set_MarkAsDirty() {
             var itemFrame = new NetworkItemFrame();
 
             itemFrame.SetSimplePropertiesShouldMarkAsDirty();

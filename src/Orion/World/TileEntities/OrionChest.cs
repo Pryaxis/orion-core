@@ -16,7 +16,11 @@
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
 using System;
+using System.Collections;
+using System.Collections.Generic;
 using System.Diagnostics;
+using System.Diagnostics.CodeAnalysis;
+using System.Linq;
 using Orion.Items;
 using Orion.Utils;
 using Main = Terraria.Main;
@@ -30,33 +34,66 @@ namespace Orion.World.TileEntities {
         public int Index { get; }
 
         public int X {
-            get => Wrapped.x;
-            set => Wrapped.x = value;
+            get => Wrapped?.x ?? 0;
+            set {
+                if (Wrapped == null) return;
+
+                Wrapped.x = value;
+            }
         }
 
         public int Y {
-            get => Wrapped.y;
-            set => Wrapped.y = value;
+            get => Wrapped?.y ?? 0;
+            set {
+                if (Wrapped == null) return;
+
+                Wrapped.y = value;
+            }
         }
 
+        public bool IsActive => Wrapped != null;
+
         public string Name {
-            get => Wrapped.name;
-            set => Wrapped.name = value ?? throw new ArgumentNullException(nameof(value));
+            get => Wrapped?.name ?? "";
+            set {
+                if (Wrapped == null) return;
+
+                Wrapped.name = value ?? throw new ArgumentNullException(nameof(value));
+            }
         }
 
         public IReadOnlyArray<IItem> Items { get; }
 
-        public TerrariaChest Wrapped { get; }
+        public TerrariaChest? Wrapped { get; }
 
-        public OrionChest(int chestIndex, TerrariaChest terrariaChest) {
+        public OrionChest(int chestIndex, TerrariaChest? terrariaChest) {
             Debug.Assert(chestIndex >= 0 && chestIndex < Main.maxChests,
                          "chestIndex >= 0 && chestIndex < Main.maxChests");
-            Debug.Assert(terrariaChest != null, "terrariaChest != null");
 
             Index = chestIndex;
+            if (terrariaChest == null) {
+                Items = EmptyItemArray.Instance;
+            } else {
+                Items = new WrappedReadOnlyArray<OrionItem, TerrariaItem>(
+                    terrariaChest.item,
+                    (_, terrariaItem) => new OrionItem(terrariaItem));
+            }
+
             Wrapped = terrariaChest;
-            Items = new WrappedReadOnlyArray<OrionItem, TerrariaItem>(
-                Wrapped.item, (_, terrariaItem) => new OrionItem(terrariaItem));
+        }
+
+        private class EmptyItemArray : IReadOnlyArray<IItem> {
+            public static readonly EmptyItemArray Instance = new EmptyItemArray();
+
+            public int Count => 0;
+            public IItem this[int index] => throw new IndexOutOfRangeException();
+
+            public IEnumerator<IItem> GetEnumerator() => Enumerable.Empty<IItem>().GetEnumerator();
+
+            [ExcludeFromCodeCoverage]
+            IEnumerator IEnumerable.GetEnumerator() {
+                return GetEnumerator();
+            }
         }
     }
 }

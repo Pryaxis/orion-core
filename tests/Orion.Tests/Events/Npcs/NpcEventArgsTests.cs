@@ -31,7 +31,7 @@ namespace Orion.Events.Npcs {
         }
 
         [Fact]
-        public void GetNpc_IsCorrect() {
+        public void Npc_Get_IsCorrect() {
             var npc = new Mock<INpc>().Object;
             var args = new TestArgs(npc);
 

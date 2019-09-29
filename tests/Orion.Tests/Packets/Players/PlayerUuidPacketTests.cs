@@ -23,14 +23,14 @@ using Xunit;
 namespace Orion.Packets.Players {
     public class PlayerUuidPacketTests {
         [Fact]
-        public void SetSimpleProperties_MarkAsDirty() {
+        public void SimpleProperties_Set_MarkAsDirty() {
             var packet = new PlayerUuidPacket();
 
             packet.SetSimplePropertiesShouldMarkAsDirty();
         }
 
         [Fact]
-        public void SetPlayerUuid_NullValue_ThrowsArgumentNullException() {
+        public void PlayerUuid_Set_NullValue_ThrowsArgumentNullException() {
             var packet = new PlayerUuidPacket();
             Action action = () => packet.PlayerUuid = null;
 

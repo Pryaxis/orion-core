@@ -25,7 +25,7 @@ using TerrariaProjectile = Terraria.Projectile;
 namespace Orion.Packets.Projectiles {
     public class ProjectileInfoPacketTests {
         [Fact]
-        public void SetSimpleProperties_MarkAsDirty() {
+        public void SimpleProperties_Set_MarkAsDirty() {
             var packet = new ProjectileInfoPacket();
 
             packet.SetSimplePropertiesShouldMarkAsDirty();

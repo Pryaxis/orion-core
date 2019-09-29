@@ -40,7 +40,7 @@ namespace Orion.Events.Packets {
         }
 
         [Fact]
-        public void GetPacket_IsCorrect() {
+        public void Packet_Get_IsCorrect() {
             var packet = new TestPacket();
             var args = new TestArgs(packet);
 
@@ -50,7 +50,7 @@ namespace Orion.Events.Packets {
         [Fact]
         [SuppressMessage("ReSharper", "UseObjectOrCollectionInitializer")]
         [SuppressMessage("Style", "IDE0017:Simplify object initialization", Justification = "Testing")]
-        public void SetPacket_MarksAsDirty() {
+        public void Packet_Set_MarksAsDirty() {
             var packet = new TestPacket();
             var args = new TestArgs(packet);
 
@@ -60,7 +60,7 @@ namespace Orion.Events.Packets {
         }
 
         [Fact]
-        public void SetPacket_NullValue_ThrowsArgumentNullException() {
+        public void Packet_Set_NullValue_ThrowsArgumentNullException() {
             var packet = new TestPacket();
             var args = new TestArgs(packet);
             Action action = () => args.Packet = null;
@@ -69,7 +69,7 @@ namespace Orion.Events.Packets {
         }
 
         [Fact]
-        public void GetIsDirty_IsCorrect() {
+        public void IsDirty_Get_IsCorrect() {
             var packet = new TestPacket();
             var args = new TestArgs(packet);
             packet.MarkAsDirty();

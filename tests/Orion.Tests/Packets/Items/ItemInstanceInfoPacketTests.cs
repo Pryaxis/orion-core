@@ -24,7 +24,7 @@ using Xunit;
 namespace Orion.Packets.Items {
     public class ItemInstanceInfoPacketTests {
         [Fact]
-        public void SetSimpleProperties_MarkAsDirty() {
+        public void SimpleProperties_Set_MarkAsDirty() {
             var packet = new ItemInstanceInfoPacket();
 
             packet.SetSimplePropertiesShouldMarkAsDirty();

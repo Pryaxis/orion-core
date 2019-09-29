@@ -23,7 +23,7 @@ using Xunit;
 namespace Orion.Packets.Items {
     public class ItemOwnerPacketTests {
         [Fact]
-        public void SetSimpleProperties_MarkAsDirty() {
+        public void SimpleProperties_Set_MarkAsDirty() {
             var packet = new NpcAddBuffPacket();
 
             packet.SetSimplePropertiesShouldMarkAsDirty();

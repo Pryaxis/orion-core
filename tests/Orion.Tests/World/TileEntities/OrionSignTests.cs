@@ -25,7 +25,15 @@ namespace Orion.World.TileEntities {
     [SuppressMessage("Style", "IDE0017:Simplify object initialization", Justification = "Testing")]
     public class OrionSignTests {
         [Fact]
-        public void GetX_IsCorrect() {
+        public void Index_Get_IsCorrect() {
+            var terrariaSign = new TerrariaSign();
+            ISign sign = new OrionSign(1, terrariaSign);
+
+            sign.Index.Should().Be(1);
+        }
+
+        [Fact]
+        public void X_Get_IsCorrect() {
             var terrariaSign = new TerrariaSign {x = 100};
             ISign sign = new OrionSign(0, terrariaSign);
 
@@ -33,7 +41,14 @@ namespace Orion.World.TileEntities {
         }
 
         [Fact]
-        public void SetX_IsCorrect() {
+        public void X_GetNotActive_IsCorrect() {
+            ISign sign = new OrionSign(0, null);
+
+            sign.X.Should().Be(0);
+        }
+
+        [Fact]
+        public void X_Set_IsCorrect() {
             var terrariaSign = new TerrariaSign();
             ISign sign = new OrionSign(0, terrariaSign);
 
@@ -43,7 +58,14 @@ namespace Orion.World.TileEntities {
         }
 
         [Fact]
-        public void GetY_IsCorrect() {
+        public void X_SetNotActive_IsCorrect() {
+            ISign sign = new OrionSign(0, null);
+
+            sign.X = 0;
+        }
+
+        [Fact]
+        public void Y_Get_IsCorrect() {
             var terrariaSign = new TerrariaSign {y = 100};
             ISign sign = new OrionSign(0, terrariaSign);
 
@@ -51,7 +73,14 @@ namespace Orion.World.TileEntities {
         }
 
         [Fact]
-        public void SetY_IsCorrect() {
+        public void Y_GetNotActive_IsCorrect() {
+            ISign sign = new OrionSign(0, null);
+
+            sign.Y.Should().Be(0);
+        }
+
+        [Fact]
+        public void Y_Set_IsCorrect() {
             var terrariaSign = new TerrariaSign();
             ISign sign = new OrionSign(0, terrariaSign);
 
@@ -61,7 +90,14 @@ namespace Orion.World.TileEntities {
         }
 
         [Fact]
-        public void GetText_IsCorrect() {
+        public void Y_SetNotActive_IsCorrect() {
+            ISign sign = new OrionSign(0, null);
+
+            sign.Y = 0;
+        }
+
+        [Fact]
+        public void Text_Get_IsCorrect() {
             var terrariaSign = new TerrariaSign {text = "test"};
             ISign sign = new OrionSign(0, terrariaSign);
 
@@ -69,7 +105,14 @@ namespace Orion.World.TileEntities {
         }
 
         [Fact]
-        public void SetText_IsCorrect() {
+        public void Text_GetNotActive_IsCorrect() {
+            ISign sign = new OrionSign(0, null);
+
+            sign.Text.Should().Be("");
+        }
+
+        [Fact]
+        public void Text_Set_IsCorrect() {
             var terrariaSign = new TerrariaSign();
             ISign sign = new OrionSign(0, terrariaSign);
 
@@ -79,7 +122,14 @@ namespace Orion.World.TileEntities {
         }
 
         [Fact]
-        public void SetText_NullValue_ThrowsArgumentNullException() {
+        public void Text_SetNotActive_IsCorrect() {
+            ISign sign = new OrionSign(0, null);
+
+            sign.Text = "";
+        }
+
+        [Fact]
+        public void Text_SetNullValue_ThrowsArgumentNullException() {
             var terrariaSign = new TerrariaSign();
             ISign sign = new OrionSign(0, terrariaSign);
             Action action = () => sign.Text = null;

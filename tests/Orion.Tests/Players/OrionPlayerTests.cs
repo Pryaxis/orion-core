@@ -25,7 +25,7 @@ namespace Orion.Players {
     [SuppressMessage("Style", "IDE0017:Simplify object initialization", Justification = "Testing")]
     public class OrionPlayerTests {
         [Fact]
-        public void GetName_IsCorrect() {
+        public void Name_Get_IsCorrect() {
             var terrariaPlayer = new TerrariaPlayer {name = "test"};
             IPlayer player = new OrionPlayer(terrariaPlayer);
 
@@ -33,7 +33,7 @@ namespace Orion.Players {
         }
 
         [Fact]
-        public void SetName_IsCorrect() {
+        public void Name_Set_IsCorrect() {
             var terrariaPlayer = new TerrariaPlayer();
             IPlayer player = new OrionPlayer(terrariaPlayer);
 
@@ -43,7 +43,7 @@ namespace Orion.Players {
         }
 
         [Fact]
-        public void SetName_NullValue_ThrowsArgumentNullException() {
+        public void Name_Set_NullValue_ThrowsArgumentNullException() {
             var terrariaPlayer = new TerrariaPlayer();
             IPlayer player = new OrionPlayer(terrariaPlayer);
             Action action = () => player.Name = null;
@@ -52,7 +52,7 @@ namespace Orion.Players {
         }
 
         [Fact]
-        public void GetTeam_IsCorrect() {
+        public void Team_Get_IsCorrect() {
             var terrariaPlayer = new TerrariaPlayer {team = (int)PlayerTeam.Red};
             IPlayer player = new OrionPlayer(terrariaPlayer);
 
@@ -60,7 +60,7 @@ namespace Orion.Players {
         }
 
         [Fact]
-        public void SetTeam_IsCorrect() {
+        public void Team_Set_IsCorrect() {
             var terrariaPlayer = new TerrariaPlayer();
             IPlayer player = new OrionPlayer(terrariaPlayer);
 

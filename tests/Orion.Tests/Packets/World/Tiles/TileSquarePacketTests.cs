@@ -25,7 +25,7 @@ using Xunit;
 namespace Orion.Packets.World.Tiles {
     public class TileSquarePacketTests {
         [Fact]
-        public void SetSimpleProperties_MarkAsDirty() {
+        public void SimpleProperties_Set_MarkAsDirty() {
             var packet = new TileSquarePacket();
 
             packet.SetSimplePropertiesShouldMarkAsDirty();
@@ -45,7 +45,7 @@ namespace Orion.Packets.World.Tiles {
         }
 
         [Fact]
-        public void SetTiles_NullValue_ThrowsArgumentNullException() {
+        public void Tiles_Set_NullValue_ThrowsArgumentNullException() {
             var packet = new TileSquarePacket();
             Action action = () => packet.Tiles = null;
 

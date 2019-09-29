@@ -22,7 +22,7 @@ using Xunit;
 namespace Orion.Packets.World.TileEntities {
     public class SignReadPacketTests {
         [Fact]
-        public void SetSimpleProperties_MarkAsDirty() {
+        public void SimpleProperties_Set_MarkAsDirty() {
             var packet = new SignReadPacket();
 
             packet.SetSimplePropertiesShouldMarkAsDirty();

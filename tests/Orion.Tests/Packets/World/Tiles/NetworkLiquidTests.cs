@@ -24,7 +24,7 @@ using Xunit;
 namespace Orion.Packets.World.Tiles {
     public class NetworkLiquidTests {
         [Fact]
-        public void SetSimpleProperties_MarkAsDirty() {
+        public void SimpleProperties_Set_MarkAsDirty() {
             var liquid = new NetworkLiquid();
 
             liquid.SetSimplePropertiesShouldMarkAsDirty();

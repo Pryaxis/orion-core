@@ -24,14 +24,14 @@ using Xunit;
 namespace Orion.Packets.World {
     public class ChatPacketTests {
         [Fact]
-        public void SetSimpleProperties_MarkAsDirty() {
+        public void SimpleProperties_Set_MarkAsDirty() {
             var packet = new ChatPacket();
 
             packet.SetSimplePropertiesShouldMarkAsDirty();
         }
 
         [Fact]
-        public void SetChatText_NullValue_ThrowsArgumentNullException() {
+        public void ChatText_Set_NullValue_ThrowsArgumentNullException() {
             var packet = new ChatPacket();
             Action action = () => packet.ChatText = null;
 

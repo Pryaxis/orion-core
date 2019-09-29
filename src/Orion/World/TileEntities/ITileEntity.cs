@@ -28,9 +28,14 @@ namespace Orion.World.TileEntities {
         TileEntityType Type { get; }
 
         /// <summary>
-        /// Gets the tile entity's index.
+        /// Gets the tile entity's index. A value of -1 indicates that the tile entity is not "real".
         /// </summary>
         int Index { get; }
+
+        /// <summary>
+        /// Gets a value indicating whether the tile entity is active.
+        /// </summary>
+        bool IsActive { get; }
 
         /// <summary>
         /// Gets or sets the tile entity's X coordinate.

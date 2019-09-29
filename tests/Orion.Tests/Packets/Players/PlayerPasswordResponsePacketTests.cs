@@ -23,14 +23,14 @@ using Xunit;
 namespace Orion.Packets.Players {
     public class PlayerPasswordResponsePacketTests {
         [Fact]
-        public void SetSimpleProperties_MarkAsDirty() {
+        public void SimpleProperties_Set_MarkAsDirty() {
             var packet = new PlayerPasswordResponsePacket();
 
             packet.SetSimplePropertiesShouldMarkAsDirty();
         }
 
         [Fact]
-        public void SetPlayerPassword_NullValue_ThrowsArgumentNullException() {
+        public void PlayerPassword_Set_NullValue_ThrowsArgumentNullException() {
             var packet = new PlayerPasswordResponsePacket();
             Action action = () => packet.PlayerPassword = null;
 

@@ -31,7 +31,7 @@ namespace Orion.Events.Items {
         }
 
         [Fact]
-        public void GetItem_IsCorrect() {
+        public void Item_Get_IsCorrect() {
             var item = new Mock<IItem>().Object;
             var args = new TestArgs(item);
 

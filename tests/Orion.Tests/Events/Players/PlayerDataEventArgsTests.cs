@@ -33,7 +33,7 @@ namespace Orion.Events.Players {
         }
 
         [Fact]
-        public void GetSetProperties_ReflectsInPacket() {
+        public void SetProperties_Get_ReflectsInPacket() {
             var player = new Mock<IPlayer>().Object;
             var packet = new PlayerDataPacket();
             var args = new PlayerDataEventArgs(player, packet);
@@ -42,7 +42,7 @@ namespace Orion.Events.Players {
         }
 
         [Fact]
-        public void SetPlayerName_NullValue_ThrowsArgumentNullException() {
+        public void PlayerName_Set_NullValue_ThrowsArgumentNullException() {
             var player = new Mock<IPlayer>().Object;
             var packet = new PlayerDataPacket();
             var args = new PlayerDataEventArgs(player, packet);

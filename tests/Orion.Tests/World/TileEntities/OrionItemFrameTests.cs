@@ -26,7 +26,7 @@ namespace Orion.World.TileEntities {
     [SuppressMessage("Style", "IDE0017:Simplify object initialization", Justification = "Testing")]
     public class OrionItemFrameTests {
         [Fact]
-        public void GetItemType_IsCorrect() {
+        public void ItemType_Get_IsCorrect() {
             var terrariaItemFrame = new TerrariaItemFrame {
                 item = new TerrariaItem {type = (int)ItemType.Sdmg}
             };
@@ -36,7 +36,7 @@ namespace Orion.World.TileEntities {
         }
 
         [Fact]
-        public void SetItemType_IsCorrect() {
+        public void ItemType_Set_IsCorrect() {
             var terrariaItemFrame = new TerrariaItemFrame {item = new TerrariaItem()};
             IItemFrame itemFrame = new OrionItemFrame(terrariaItemFrame);
             itemFrame.ItemType = ItemType.Sdmg;
@@ -45,7 +45,7 @@ namespace Orion.World.TileEntities {
         }
 
         [Fact]
-        public void GetItemStackSize_IsCorrect() {
+        public void ItemStackSize_Get_IsCorrect() {
             var terrariaItemFrame = new TerrariaItemFrame {
                 item = new TerrariaItem {stack = 1}
             };
@@ -55,7 +55,7 @@ namespace Orion.World.TileEntities {
         }
 
         [Fact]
-        public void SetItemStackSize_IsCorrect() {
+        public void ItemStackSize_Set_IsCorrect() {
             var terrariaItemFrame = new TerrariaItemFrame {item = new TerrariaItem()};
             IItemFrame itemFrame = new OrionItemFrame(terrariaItemFrame);
 
@@ -65,7 +65,7 @@ namespace Orion.World.TileEntities {
         }
 
         [Fact]
-        public void GetItemPrefix_IsCorrect() {
+        public void ItemPrefix_Get_IsCorrect() {
             var terrariaItemFrame = new TerrariaItemFrame {
                 item = new TerrariaItem {prefix = (byte)ItemPrefix.Unreal}
             };
@@ -75,7 +75,7 @@ namespace Orion.World.TileEntities {
         }
 
         [Fact]
-        public void SetItemPrefix_IsCorrect() {
+        public void ItemPrefix_Set_IsCorrect() {
             var terrariaItemFrame = new TerrariaItemFrame {item = new TerrariaItem()};
             IItemFrame itemFrame = new OrionItemFrame(terrariaItemFrame);
 

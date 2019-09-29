@@ -231,7 +231,7 @@ namespace Orion.World.TileEntities {
         }
 
         [Fact]
-        public void GetTileEntity_Chest_IsCorrect() {
+        public void TileEntity_Get_Chest_IsCorrect() {
             Main.chest[1] = new TerrariaChest {
                 x = 1,
                 y = 2
@@ -249,7 +249,7 @@ namespace Orion.World.TileEntities {
         }
 
         [Fact]
-        public void GetTileEntity_Sign_IsCorrect() {
+        public void TileEntity_Get_Sign_IsCorrect() {
             Main.sign[1] = new TerrariaSign {
                 x = 1,
                 y = 2,
@@ -266,7 +266,7 @@ namespace Orion.World.TileEntities {
         }
 
         [Fact]
-        public void GetTileEntity_TargetDummy_IsCorrect() {
+        public void TileEntity_Get_TargetDummy_IsCorrect() {
             var targetDummyIndex = TerrariaTargetDummy.Place(1, 2);
 
             var targetDummy = (ITargetDummy)_tileEntityService.GetTileEntity(1, 2);
@@ -278,7 +278,7 @@ namespace Orion.World.TileEntities {
         }
 
         [Fact]
-        public void GetTileEntity_ItemFrame_IsCorrect() {
+        public void TileEntity_Get_ItemFrame_IsCorrect() {
             var itemFrameIndex = TerrariaItemFrame.Place(1, 2);
 
             var itemFrame = (IItemFrame)_tileEntityService.GetTileEntity(1, 2);
@@ -290,7 +290,7 @@ namespace Orion.World.TileEntities {
         }
 
         [Fact]
-        public void GetTileEntity_LogicSensor_IsCorrect() {
+        public void TileEntity_Get_LogicSensor_IsCorrect() {
             var logicSensorIndex = TerrariaLogicSensor.Place(1, 2);
 
             var logicSensor = (ILogicSensor)_tileEntityService.GetTileEntity(1, 2);
@@ -302,7 +302,7 @@ namespace Orion.World.TileEntities {
         }
 
         [Fact]
-        public void GetTileEntity_NoTileEntity_ReturnsNull() {
+        public void TileEntity_Get_NoTileEntity_ReturnsNull() {
             _tileEntityService.GetTileEntity(1, 2).Should().BeNull();
         }
 

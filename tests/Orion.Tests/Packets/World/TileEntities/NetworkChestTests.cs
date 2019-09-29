@@ -22,14 +22,14 @@ using Xunit;
 namespace Orion.Packets.World.TileEntities {
     public class NetworkChestTests {
         [Fact]
-        public void SetSimpleProperties_MarkAsDirty() {
+        public void SimpleProperties_Set_MarkAsDirty() {
             var chest = new NetworkChest();
 
             chest.SetSimplePropertiesShouldMarkAsDirty();
         }
 
         [Fact]
-        public void SetName_NullValue_ThrowsArgumentNullException() {
+        public void Name_Set_NullValue_ThrowsArgumentNullException() {
             var chest = new NetworkChest();
             Action action = () => chest.Name = null;
 

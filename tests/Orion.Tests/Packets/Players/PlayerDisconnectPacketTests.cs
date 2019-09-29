@@ -23,14 +23,14 @@ using Xunit;
 namespace Orion.Packets.Players {
     public class PlayerDisconnectPacketTests {
         [Fact]
-        public void SetSimpleProperties_MarkAsDirty() {
+        public void SimpleProperties_Set_MarkAsDirty() {
             var packet = new PlayerDisconnectPacket();
 
             packet.SetSimplePropertiesShouldMarkAsDirty();
         }
 
         [Fact]
-        public void SetPlayerDisconnectReason_NullValue_ThrowsArgumentNullException() {
+        public void PlayerDisconnectReason_Set_NullValue_ThrowsArgumentNullException() {
             var packet = new PlayerDisconnectPacket();
             Action action = () => packet.PlayerDisconnectReason = null;
 

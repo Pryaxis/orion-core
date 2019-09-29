@@ -22,7 +22,7 @@ using Xunit;
 namespace Orion.Packets.World {
     public class BossOrInvasionPacketTests {
         [Fact]
-        public void SetSimpleProperties_MarkAsDirty() {
+        public void SimpleProperties_Set_MarkAsDirty() {
             var packet = new BossOrInvasionPacket();
 
             packet.SetSimplePropertiesShouldMarkAsDirty();

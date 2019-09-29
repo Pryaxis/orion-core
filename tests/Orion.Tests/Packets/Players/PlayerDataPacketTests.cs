@@ -25,14 +25,14 @@ using Xunit;
 namespace Orion.Packets.Players {
     public class PlayerDataPacketTests {
         [Fact]
-        public void SetSimpleProperties_MarkAsDirty() {
+        public void SimpleProperties_Set_MarkAsDirty() {
             var packet = new PlayerDataPacket();
 
             packet.SetSimplePropertiesShouldMarkAsDirty();
         }
 
         [Fact]
-        public void SetPlayerName_NullValue_ThrowsArgumentNullException() {
+        public void PlayerName_Set_NullValue_ThrowsArgumentNullException() {
             var packet = new PlayerDataPacket();
             Action action = () => packet.PlayerName = null;
 

@@ -22,14 +22,14 @@ using Xunit;
 namespace Orion.Packets.World.TileEntities {
     public class NetworkSignTests {
         [Fact]
-        public void SetSimpleProperties_MarkAsDirty() {
+        public void SimpleProperties_Set_MarkAsDirty() {
             var sign = new NetworkSign();
 
             sign.SetSimplePropertiesShouldMarkAsDirty();
         }
 
         [Fact]
-        public void SetText_NullValue_ThrowsArgumentNullException() {
+        public void Text_Set_NullValue_ThrowsArgumentNullException() {
             var sign = new NetworkSign();
             Action action = () => sign.Text = null;
 

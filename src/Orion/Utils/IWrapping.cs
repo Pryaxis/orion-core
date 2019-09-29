@@ -22,7 +22,7 @@ namespace Orion.Utils {
     /// Represents an object that wraps another type of object.
     /// </summary>
     /// <typeparam name="TWrapped">The wrapped type.</typeparam>
-    public interface IWrapping<out TWrapped> where TWrapped : class {
+    public interface IWrapping<out TWrapped> {
         /// <summary>
         /// Gets the wrapped object. This is not required to succeed.
         /// </summary>

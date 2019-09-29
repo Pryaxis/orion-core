@@ -24,7 +24,7 @@ using Xunit;
 namespace Orion.Packets.Npcs {
     public class NpcAddBuffPacketTests {
         [Fact]
-        public void SetSimpleProperties_MarkAsDirty() {
+        public void SimpleProperties_Set_MarkAsDirty() {
             var packet = new NpcAddBuffPacket();
 
             packet.SetSimplePropertiesShouldMarkAsDirty();

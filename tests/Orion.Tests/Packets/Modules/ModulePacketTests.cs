@@ -22,7 +22,7 @@ using Xunit;
 namespace Orion.Packets.Modules {
     public class ModulePacketTests {
         [Fact]
-        public void SetModule_NullValue_ThrowsArgumentNullException() {
+        public void Module_Set_NullValue_ThrowsArgumentNullException() {
             var packet = new ModulePacket();
             Action action = () => packet.Module = null;
 

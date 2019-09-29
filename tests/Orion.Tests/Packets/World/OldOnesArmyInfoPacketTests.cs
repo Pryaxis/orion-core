@@ -23,7 +23,7 @@ using Xunit;
 namespace Orion.Packets.World {
     public class OldOnesArmyInfoPacketTests {
         [Fact]
-        public void SetSimpleProperties_MarkAsDirty() {
+        public void SimpleProperties_Set_MarkAsDirty() {
             var packet = new OldOnesArmyInfoPacket();
 
             packet.SetSimplePropertiesShouldMarkAsDirty();

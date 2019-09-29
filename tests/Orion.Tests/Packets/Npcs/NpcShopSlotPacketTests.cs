@@ -23,7 +23,7 @@ using Xunit;
 namespace Orion.Packets.Npcs {
     public class NpcShopSlotPacketTests {
         [Fact]
-        public void SetSimpleProperties_MarkAsDirty() {
+        public void SimpleProperties_Set_MarkAsDirty() {
             var packet = new NpcShopSlotPacket();
 
             packet.SetSimplePropertiesShouldMarkAsDirty();

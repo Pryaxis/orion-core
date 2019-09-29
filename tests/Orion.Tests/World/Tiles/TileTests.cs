@@ -24,7 +24,7 @@ namespace Orion.World.Tiles {
     [SuppressMessage("Style", "IDE0017:Simplify object initialization", Justification = "Testing")]
     public class TileTests {
         [Fact]
-        public void SetGetBlockColor_IsCorrect() {
+        public void GetBlockColor_Set_IsCorrect() {
             var tile = new Tile();
 
             tile.BlockColor = PaintColor.Red;
@@ -34,7 +34,7 @@ namespace Orion.World.Tiles {
         [Theory]
         [InlineData(true)]
         [InlineData(false)]
-        public void SetGetIsBlockActive_IsCorrect(bool isBlockActive) {
+        public void GetIsBlockActive_Set_IsCorrect(bool isBlockActive) {
             var tile = new Tile();
 
             tile.IsBlockActive = isBlockActive;
@@ -44,7 +44,7 @@ namespace Orion.World.Tiles {
         [Theory]
         [InlineData(true)]
         [InlineData(false)]
-        public void SetGetIsBlockActuated_IsCorrect(bool isBlockActuated) {
+        public void GetIsBlockActuated_Set_IsCorrect(bool isBlockActuated) {
             var tile = new Tile();
 
             tile.IsBlockActuated = isBlockActuated;
@@ -54,7 +54,7 @@ namespace Orion.World.Tiles {
         [Theory]
         [InlineData(true)]
         [InlineData(false)]
-        public void SetGetHasRedWire_IsCorrect(bool hasRedWire) {
+        public void GetHasRedWire_Set_IsCorrect(bool hasRedWire) {
             var tile = new Tile();
 
             tile.HasRedWire = hasRedWire;
@@ -64,7 +64,7 @@ namespace Orion.World.Tiles {
         [Theory]
         [InlineData(true)]
         [InlineData(false)]
-        public void SetGetHasBlueWire_IsCorrect(bool hasBlueWire) {
+        public void GetHasBlueWire_Set_IsCorrect(bool hasBlueWire) {
             var tile = new Tile();
 
             tile.HasBlueWire = hasBlueWire;
@@ -74,7 +74,7 @@ namespace Orion.World.Tiles {
         [Theory]
         [InlineData(true)]
         [InlineData(false)]
-        public void SetGetHasGreenWire_IsCorrect(bool hasGreenWire) {
+        public void GetHasGreenWire_Set_IsCorrect(bool hasGreenWire) {
             var tile = new Tile();
 
             tile.HasGreenWire = hasGreenWire;
@@ -84,7 +84,7 @@ namespace Orion.World.Tiles {
         [Theory]
         [InlineData(true)]
         [InlineData(false)]
-        public void SetGetIsBlockHalved_IsCorrect(bool isBlockHalved) {
+        public void GetIsBlockHalved_Set_IsCorrect(bool isBlockHalved) {
             var tile = new Tile();
 
             tile.IsBlockHalved = isBlockHalved;
@@ -94,7 +94,7 @@ namespace Orion.World.Tiles {
         [Theory]
         [InlineData(true)]
         [InlineData(false)]
-        public void SetGetHasActuator_IsCorrect(bool hasActuator) {
+        public void GetHasActuator_Set_IsCorrect(bool hasActuator) {
             var tile = new Tile();
 
             tile.HasActuator = hasActuator;
@@ -102,7 +102,7 @@ namespace Orion.World.Tiles {
         }
 
         [Fact]
-        public void SetGetSlope_IsCorrect() {
+        public void GetSlope_Set_IsCorrect() {
             var tile = new Tile();
 
             tile.Slope = Slope.TopLeft;
@@ -110,7 +110,7 @@ namespace Orion.World.Tiles {
         }
 
         [Fact]
-        public void SetGetWallColor_IsCorrect() {
+        public void GetWallColor_Set_IsCorrect() {
             var tile = new Tile();
 
             tile.WallColor = PaintColor.Red;
@@ -120,7 +120,7 @@ namespace Orion.World.Tiles {
         [Theory]
         [InlineData(true)]
         [InlineData(false)]
-        public void SetGetIsLava_IsCorrect(bool isLava) {
+        public void GetIsLava_Set_IsCorrect(bool isLava) {
             var tile = new Tile();
 
             tile.IsLava = isLava;
@@ -130,7 +130,7 @@ namespace Orion.World.Tiles {
         [Theory]
         [InlineData(true)]
         [InlineData(false)]
-        public void SetGetIsHoney_IsCorrect(bool isHoney) {
+        public void GetIsHoney_Set_IsCorrect(bool isHoney) {
             var tile = new Tile();
 
             tile.IsHoney = isHoney;
@@ -140,7 +140,7 @@ namespace Orion.World.Tiles {
         [Theory]
         [InlineData(true)]
         [InlineData(false)]
-        public void SetGetHasYellowWire_IsCorrect(bool hasYellowWire) {
+        public void GetHasYellowWire_Set_IsCorrect(bool hasYellowWire) {
             var tile = new Tile();
 
             tile.HasYellowWire = hasYellowWire;
@@ -148,7 +148,7 @@ namespace Orion.World.Tiles {
         }
 
         [Fact]
-        public void SetGetLiquidType_IsCorrect() {
+        public void GetLiquidType_Set_IsCorrect() {
             var tile = new Tile();
 
             tile.LiquidType = LiquidType.Honey;
@@ -158,7 +158,7 @@ namespace Orion.World.Tiles {
         [Theory]
         [InlineData(true)]
         [InlineData(false)]
-        public void SetGetIsCheckingLiquid_IsCorrect(bool isCheckingLiquid) {
+        public void GetIsCheckingLiquid_Set_IsCorrect(bool isCheckingLiquid) {
             var tile = new Tile();
 
             tile.IsCheckingLiquid = isCheckingLiquid;
@@ -168,7 +168,7 @@ namespace Orion.World.Tiles {
         [Theory]
         [InlineData(true)]
         [InlineData(false)]
-        public void SetGetShouldSkipLiquid_IsCorrect(bool shouldSkipLiquid) {
+        public void GetShouldSkipLiquid_Set_IsCorrect(bool shouldSkipLiquid) {
             var tile = new Tile();
 
             tile.ShouldSkipLiquid = shouldSkipLiquid;

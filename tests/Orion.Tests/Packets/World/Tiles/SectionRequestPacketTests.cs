@@ -22,7 +22,7 @@ using Xunit;
 namespace Orion.Packets.World.Tiles {
     public class SectionRequestPacketTests {
         [Fact]
-        public void SetSimpleProperties_MarkAsDirty() {
+        public void SimpleProperties_Set_MarkAsDirty() {
             var packet = new SectionRequestPacket();
 
             packet.SetSimplePropertiesShouldMarkAsDirty();

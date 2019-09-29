@@ -29,14 +29,14 @@ namespace Orion.Entities {
         }
 
         [Fact]
-        public void GetBuffType_IsCorrect() {
+        public void BuffType_Get_IsCorrect() {
             var buff = new Buff(BuffType.ObsidianSkin, TimeSpan.MaxValue);
 
             buff.BuffType.Should().Be(BuffType.ObsidianSkin);
         }
 
         [Fact]
-        public void GetDuration_IsCorrect() {
+        public void Duration_Get_IsCorrect() {
             var duration = TimeSpan.FromHours(1);
             var buff = new Buff(BuffType.ObsidianSkin, duration);
 

@@ -23,14 +23,14 @@ using Xunit;
 namespace Orion.Packets.Modules {
     public class ChatModuleTests {
         [Fact]
-        public void SetSimpleProperties_MarkAsDirty() {
+        public void SimpleProperties_Set_MarkAsDirty() {
             var module = new ChatModule();
 
             module.SetSimplePropertiesShouldMarkAsDirty();
         }
 
         [Fact]
-        public void SetClientChatCommand_NullValue_ThrowsArgumentNullException() {
+        public void ClientChatCommand_Set_NullValue_ThrowsArgumentNullException() {
             var module = new ChatModule();
             Action action = () => module.ClientChatCommand = null;
 
@@ -38,7 +38,7 @@ namespace Orion.Packets.Modules {
         }
 
         [Fact]
-        public void SetClientChatText_NullValue_ThrowsArgumentNullException() {
+        public void ClientChatText_Set_NullValue_ThrowsArgumentNullException() {
             var module = new ChatModule();
             Action action = () => module.ClientChatText = null;
 
@@ -46,7 +46,7 @@ namespace Orion.Packets.Modules {
         }
 
         [Fact]
-        public void SetServerChatText_NullValue_ThrowsArgumentNullException() {
+        public void ServerChatText_Set_NullValue_ThrowsArgumentNullException() {
             var module = new ChatModule();
             Action action = () => module.ServerChatText = null;
 

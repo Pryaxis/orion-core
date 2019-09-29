@@ -56,14 +56,14 @@ namespace Orion.Utils {
         }
 
         [Fact]
-        public void GetItem_IsCorrect() {
+        public void Item_Get_IsCorrect() {
             var array = new DirtiableArray<int>(1);
 
             array[0].Should().Be(0);
         }
 
         [Fact]
-        public void SetItem_MarksAsDirty() {
+        public void Item_Set_MarksAsDirty() {
             var array = new DirtiableArray<int>(1);
 
             array[0] = 100;
@@ -72,7 +72,7 @@ namespace Orion.Utils {
         }
 
         [Fact]
-        public void GetEnumerator_IsCorrect() {
+        public void Enumerator_Get_IsCorrect() {
             var array = new DirtiableArray<int>(1);
             array[0] = 1;
 

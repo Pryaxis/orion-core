@@ -39,7 +39,7 @@ namespace Orion.Packets.World.Tiles {
 
         [Fact]
         [SuppressMessage("ReSharper", "UseObjectOrCollectionInitializer")]
-        public void GetItem_Mutate_MarksAsDirty() {
+        public void Item_Get_Mutate_MarksAsDirty() {
             var tiles = new NetworkTiles(1, 1);
             tiles[0, 0] = new Tile {BlockType = BlockType.Stone};
 

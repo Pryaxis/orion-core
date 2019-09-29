@@ -22,7 +22,7 @@ using Xunit;
 namespace Orion.Packets.World {
     public class WorldBiomeStatsPacketTests {
         [Fact]
-        public void SetSimpleProperties_MarkAsDirty() {
+        public void SimpleProperties_Set_MarkAsDirty() {
             var packet = new WorldBiomeStatsPacket();
 
             packet.SetSimplePropertiesShouldMarkAsDirty();

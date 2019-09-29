@@ -23,8 +23,7 @@ using System.Diagnostics.CodeAnalysis;
 
 namespace Orion.Utils {
     internal sealed class WrappedReadOnlyArray<T, TWrapped> : IReadOnlyArray<T>
-        where T : class, IWrapping<TWrapped>
-        where TWrapped : class {
+        where T : class, IWrapping<TWrapped> {
         private readonly Memory<TWrapped> _wrappedItems;
         private readonly Func<int, TWrapped, T> _converter;
         private readonly T?[] _items;
@@ -38,7 +37,7 @@ namespace Orion.Utils {
                 var wrappedItem = _wrappedItems.Span[index];
                 ref var item = ref _items[index];
 #pragma warning disable 618
-                if (item?.Wrapped != wrappedItem) {
+                if (item == null || !ReferenceEquals(item.Wrapped, wrappedItem)) {
 #pragma warning restore 618
                     return item = _converter(index, wrappedItem);
                 }

@@ -24,7 +24,7 @@ namespace Orion.World.TileEntities {
     [SuppressMessage("Style", "IDE0017:Simplify object initialization", Justification = "Testing")]
     public class OrionLogicSensorTests {
         [Fact]
-        public void GetLogicSensorType_IsCorrect() {
+        public void LogicSensorType_Get_IsCorrect() {
             var terrariaLogicSensor = new TerrariaLogicSensor {
                 logicCheck = TerrariaLogicSensor.LogicCheckType.Water
             };
@@ -34,7 +34,7 @@ namespace Orion.World.TileEntities {
         }
 
         [Fact]
-        public void SetLogicSensorType_IsCorrect() {
+        public void LogicSensorType_Set_IsCorrect() {
             var terrariaLogicSensor = new TerrariaLogicSensor();
             ILogicSensor logicSensor = new OrionLogicSensor(terrariaLogicSensor);
 
@@ -47,7 +47,7 @@ namespace Orion.World.TileEntities {
         [Theory]
         [InlineData(true)]
         [InlineData(false)]
-        public void GetIsActivated_IsCorrect(bool isActivated) {
+        public void IsActivated_Get_IsCorrect(bool isActivated) {
             var terrariaLogicSensor = new TerrariaLogicSensor {On = isActivated};
             ILogicSensor logicSensor = new OrionLogicSensor(terrariaLogicSensor);
 
@@ -57,7 +57,7 @@ namespace Orion.World.TileEntities {
         [Theory]
         [InlineData(true)]
         [InlineData(false)]
-        public void SetIsActivated_IsCorrect(bool isActivated) {
+        public void IsActivated_Set_IsCorrect(bool isActivated) {
             var terrariaLogicSensor = new TerrariaLogicSensor();
             ILogicSensor logicSensor = new OrionLogicSensor(terrariaLogicSensor);
 

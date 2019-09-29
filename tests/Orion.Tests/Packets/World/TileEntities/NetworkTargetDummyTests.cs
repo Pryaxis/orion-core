@@ -20,7 +20,7 @@ using Xunit;
 namespace Orion.Packets.World.TileEntities {
     public class NetworkTargetDummyTests {
         [Fact]
-        public void SetSimpleProperties_MarkAsDirty() {
+        public void SimpleProperties_Set_MarkAsDirty() {
             var targetDummy = new NetworkTargetDummy();
 
             targetDummy.SetSimplePropertiesShouldMarkAsDirty();

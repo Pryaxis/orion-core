@@ -25,7 +25,7 @@ using TerrariaNpc = Terraria.NPC;
 namespace Orion.Packets.Npcs {
     public class NpcBuffsPacketTests {
         [Fact]
-        public void SetSimpleProperties_MarkAsDirty() {
+        public void SimpleProperties_Set_MarkAsDirty() {
             var packet = new NpcBuffsPacket();
 
             packet.SetSimplePropertiesShouldMarkAsDirty();

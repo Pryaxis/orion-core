@@ -39,10 +39,10 @@ namespace Orion.World.TileEntities {
             Debug.Assert(Main.chest != null, "Main.chest != null");
             Debug.Assert(Main.sign != null, "Main.sign != null");
 
-            Chests = new WrappedNullableReadOnlyArray<OrionChest, TerrariaChest>(
+            Chests = new WrappedReadOnlyArray<OrionChest, TerrariaChest?>(
                 Main.chest,
                 (chestIndex, terrariaChest) => new OrionChest(chestIndex, terrariaChest));
-            Signs = new WrappedNullableReadOnlyArray<OrionSign, TerrariaSign>(
+            Signs = new WrappedReadOnlyArray<OrionSign, TerrariaSign?>(
                 Main.sign,
                 (signIndex, terrariaSign) => new OrionSign(signIndex, terrariaSign));
         }

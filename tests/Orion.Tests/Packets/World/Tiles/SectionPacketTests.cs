@@ -26,7 +26,7 @@ using Xunit;
 namespace Orion.Packets.World.Tiles {
     public class SectionPacketTests {
         [Fact]
-        public void SetSimpleProperties_MarkAsDirty() {
+        public void SimpleProperties_Set_MarkAsDirty() {
             var packet = new SectionPacket();
 
             packet.SetSimplePropertiesShouldMarkAsDirty();
@@ -46,7 +46,7 @@ namespace Orion.Packets.World.Tiles {
         }
 
         [Fact]
-        public void SetSectionTiles_NullValue_ThrowsArgumentNullException() {
+        public void SectionTiles_Set_NullValue_ThrowsArgumentNullException() {
             var packet = new SectionPacket();
             Action action = () => packet.SectionTiles = null;
 

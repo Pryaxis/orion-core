@@ -22,7 +22,7 @@ using Xunit;
 namespace Orion.Packets.Items {
     public class ItemRemoveOwnerPacketTests {
         [Fact]
-        public void SetSimpleProperties_MarkAsDirty() {
+        public void SimpleProperties_Set_MarkAsDirty() {
             var packet = new ItemRemoveOwnerPacket();
 
             packet.SetSimplePropertiesShouldMarkAsDirty();

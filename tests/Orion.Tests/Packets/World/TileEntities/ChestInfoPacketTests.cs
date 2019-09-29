@@ -22,7 +22,7 @@ using Xunit;
 namespace Orion.Packets.World.TileEntities {
     public class ChestInfoPacketTests {
         [Fact]
-        public void SetSimpleProperties_MarkAsDirty() {
+        public void SimpleProperties_Set_MarkAsDirty() {
             var packet = new ChestInfoPacket();
 
             packet.SetSimplePropertiesShouldMarkAsDirty();

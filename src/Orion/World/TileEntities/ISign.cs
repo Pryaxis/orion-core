@@ -17,12 +17,13 @@
 
 using System;
 using Orion.Utils;
+using TerrariaSign = Terraria.Sign;
 
 namespace Orion.World.TileEntities {
     /// <summary>
     /// Represents a Terraria sign.
     /// </summary>
-    public interface ISign : ITileEntity, IWrapping<Terraria.Sign> {
+    public interface ISign : ITileEntity, IWrapping<TerrariaSign?> {
         /// <summary>
         /// Gets or sets the sign's text.
         /// </summary>

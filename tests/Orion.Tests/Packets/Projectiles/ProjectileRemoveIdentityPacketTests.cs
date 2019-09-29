@@ -22,7 +22,7 @@ using Xunit;
 namespace Orion.Packets.Projectiles {
     public class ProjectileRemoveIdentityPacketTests {
         [Fact]
-        public void SetSimpleProperties_MarkAsDirty() {
+        public void SimpleProperties_Set_MarkAsDirty() {
             var packet = new ProjectileRemoveIdentityPacket();
 
             packet.SetSimplePropertiesShouldMarkAsDirty();

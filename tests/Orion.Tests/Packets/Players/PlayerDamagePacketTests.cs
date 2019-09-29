@@ -24,7 +24,7 @@ using Xunit;
 namespace Orion.Packets.Players {
     public class PlayerDamagePacketTests {
         [Fact]
-        public void SetSimpleProperties_MarkAsDirty() {
+        public void SimpleProperties_Set_MarkAsDirty() {
             var packet = new PlayerDamagePacket();
 
             packet.SetSimplePropertiesShouldMarkAsDirty();
@@ -33,7 +33,7 @@ namespace Orion.Packets.Players {
         [Fact]
         [SuppressMessage("ReSharper", "UseObjectOrCollectionInitializer")]
         [SuppressMessage("Style", "IDE0017:Simplify object initialization", Justification = "Testing")]
-        public void SetPlayerDeathReason_MarksAsDirty() {
+        public void PlayerDeathReason_Set_MarksAsDirty() {
             var packet = new PlayerDamagePacket();
 
             packet.PlayerDeathReason = Terraria.DataStructures.PlayerDeathReason.ByCustomReason("test");
@@ -42,7 +42,7 @@ namespace Orion.Packets.Players {
         }
 
         [Fact]
-        public void SetPlayerDeathReason_NullValue_ThrowsArgumentNullException() {
+        public void PlayerDeathReason_Set_NullValue_ThrowsArgumentNullException() {
             var packet = new PlayerDamagePacket();
             Action action = () => packet.PlayerDeathReason = null;
 

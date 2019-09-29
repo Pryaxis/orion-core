@@ -22,7 +22,7 @@ using Xunit;
 namespace Orion.Packets.Npcs {
     public class NpcDamageHeldItemPacketTests {
         [Fact]
-        public void SetSimpleProperties_MarkAsDirty() {
+        public void SimpleProperties_Set_MarkAsDirty() {
             var packet = new NpcDamageHeldItemPacket();
 
             packet.SetSimplePropertiesShouldMarkAsDirty();

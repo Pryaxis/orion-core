@@ -23,7 +23,7 @@ using Xunit;
 namespace Orion.Packets.World.Tiles {
     public class ObjectPlacePacketTests {
         [Fact]
-        public void SetSimpleProperties_MarkAsDirty() {
+        public void SimpleProperties_Set_MarkAsDirty() {
             var packet = new ObjectPlacePacket();
 
             packet.SetSimplePropertiesShouldMarkAsDirty();

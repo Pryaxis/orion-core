@@ -22,7 +22,7 @@ using Xunit;
 namespace Orion.Packets.Entities {
     public class EntityActionPacketTests {
         [Fact]
-        public void SetSimpleProperties_MarkAsDirty() {
+        public void SimpleProperties_Set_MarkAsDirty() {
             var packet = new EntityActionPacket();
 
             packet.SetSimplePropertiesShouldMarkAsDirty();

@@ -24,14 +24,14 @@ using Xunit;
 namespace Orion.Packets.Entities {
     public class CombatTextPacketTests {
         [Fact]
-        public void SetSimpleProperties_MarkAsDirty() {
+        public void SimpleProperties_Set_MarkAsDirty() {
             var packet = new CombatTextPacket();
 
             packet.SetSimplePropertiesShouldMarkAsDirty();
         }
 
         [Fact]
-        public void SetText_NullValue_ThrowsArgumentNullException() {
+        public void Text_Set_NullValue_ThrowsArgumentNullException() {
             var packet = new CombatTextPacket();
             Action action = () => packet.Text = null;
 

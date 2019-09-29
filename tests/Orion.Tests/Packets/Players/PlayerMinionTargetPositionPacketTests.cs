@@ -23,7 +23,7 @@ using Xunit;
 namespace Orion.Packets.Players {
     public class PlayerMinionTargetPositionPacketTests {
         [Fact]
-        public void SetSimpleProperties_MarkAsDirty() {
+        public void SimpleProperties_Set_MarkAsDirty() {
             var packet = new PlayerMinionTargetPositionPacket();
 
             packet.SetSimplePropertiesShouldMarkAsDirty();

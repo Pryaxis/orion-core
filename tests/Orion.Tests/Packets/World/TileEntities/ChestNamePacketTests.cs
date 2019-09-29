@@ -23,14 +23,14 @@ using Xunit;
 namespace Orion.Packets.World.TileEntities {
     public class ChestNamePacketTests {
         [Fact]
-        public void SetSimpleProperties_MarkAsDirty() {
+        public void SimpleProperties_Set_MarkAsDirty() {
             var packet = new ChestNamePacket();
 
             packet.SetSimplePropertiesShouldMarkAsDirty();
         }
 
         [Fact]
-        public void SetChestName_NullValue_ThrowsArgumentNullException() {
+        public void ChestName_Set_NullValue_ThrowsArgumentNullException() {
             var packet = new ChestNamePacket();
             Action action = () => packet.ChestName = null;
 

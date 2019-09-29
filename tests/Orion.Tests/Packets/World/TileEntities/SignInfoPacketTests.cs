@@ -23,14 +23,14 @@ using Xunit;
 namespace Orion.Packets.World.TileEntities {
     public class SignInfoPacketTests {
         [Fact]
-        public void SetSimpleProperties_MarkAsDirty() {
+        public void SimpleProperties_Set_MarkAsDirty() {
             var packet = new SignInfoPacket();
 
             packet.SetSimplePropertiesShouldMarkAsDirty();
         }
 
         [Fact]
-        public void SetSignText_NullValue_ThrowsArgumentNullException() {
+        public void SignText_Set_NullValue_ThrowsArgumentNullException() {
             var packet = new SignInfoPacket();
             Action action = () => packet.SignText = null;
 

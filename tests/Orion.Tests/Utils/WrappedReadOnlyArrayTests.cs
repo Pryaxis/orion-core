@@ -24,7 +24,7 @@ using Xunit;
 namespace Orion.Utils {
     public class WrappedReadOnlyArrayTests {
         [Fact]
-        public void GetCount_IsCorrect() {
+        public void Count_Get_IsCorrect() {
             var wrappedItems = new TestWrappedClass[10];
             for (var i = 0; i < 10; ++i) {
                 wrappedItems[i] = new TestWrappedClass();
@@ -37,7 +37,7 @@ namespace Orion.Utils {
         }
 
         [Fact]
-        public void GetItem_IsCorrect() {
+        public void Item_Get_IsCorrect() {
             var wrappedItems = new TestWrappedClass[10];
             for (var i = 0; i < 10; ++i) {
                 wrappedItems[i] = new TestWrappedClass();
@@ -53,7 +53,7 @@ namespace Orion.Utils {
         }
 
         [Fact]
-        public void GetItem_MultipleTimes_ReturnsSameInstance() {
+        public void Item_Get_MultipleTimes_ReturnsSameInstance() {
             var wrappedItems = new TestWrappedClass[10];
             for (var i = 0; i < 10; ++i) {
                 wrappedItems[i] = new TestWrappedClass();
@@ -71,7 +71,7 @@ namespace Orion.Utils {
         [Theory]
         [InlineData(-1)]
         [InlineData(1000)]
-        public void GetItem_IndexOutOfRange_ThrowsArgumentOutOfRangeException(int index) {
+        public void Item_Get_IndexOutOfRange_ThrowsArgumentOutOfRangeException(int index) {
             var wrappedItems = new TestWrappedClass[10];
             for (var i = 0; i < 10; ++i) {
                 wrappedItems[i] = new TestWrappedClass();
@@ -86,7 +86,7 @@ namespace Orion.Utils {
         }
 
         [Fact]
-        public void GetEnumerator_IsCorrect() {
+        public void Enumerator_Get_IsCorrect() {
             var wrappedItems = new TestWrappedClass[10];
             for (var i = 0; i < 10; ++i) {
                 wrappedItems[i] = new TestWrappedClass();

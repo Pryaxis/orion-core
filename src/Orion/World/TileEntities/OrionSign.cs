@@ -26,27 +26,40 @@ namespace Orion.World.TileEntities {
 
         public int Index { get; }
 
+        public bool IsActive => Wrapped != null;
+
         public int X {
-            get => Wrapped.x;
-            set => Wrapped.x = value;
+            get => Wrapped?.x ?? 0;
+            set {
+                if (Wrapped == null) return;
+                
+                Wrapped.x = value;
+            }
         }
 
         public int Y {
-            get => Wrapped.y;
-            set => Wrapped.y = value;
+            get => Wrapped?.y ?? 0;
+            set {
+                if (Wrapped == null) return;
+
+                Wrapped.y = value;
+            }
         }
 
         public string Text {
-            get => Wrapped.text;
-            set => Wrapped.text = value ?? throw new ArgumentNullException(nameof(value));
+            get => Wrapped?.text ?? "";
+            set {
+                if (Wrapped == null) return;
+                
+                Wrapped.text = value ?? throw new ArgumentNullException(nameof(value));
+            }
         }
 
-        public TerrariaSign Wrapped { get; }
+        public TerrariaSign? Wrapped { get; }
 
-        public OrionSign(int signIndex, TerrariaSign terrariaSign) {
+        public OrionSign(int signIndex, TerrariaSign? terrariaSign) {
             Debug.Assert(signIndex >= 0 && signIndex < TerrariaSign.maxSigns,
                          "signIndex >= 0 && signIndex < TerrariaSign.maxSigns");
-            Debug.Assert(terrariaSign != null, "terrariaSign != null");
 
             Index = signIndex;
             Wrapped = terrariaSign;

@@ -26,6 +26,7 @@ namespace Orion.World.TileEntities {
         public TileEntityType Type => (TileEntityType)Wrapped.type;
 
         public int Index => Wrapped.ID;
+        public bool IsActive => true;
 
         public int X {
             get => Wrapped.Position.X;

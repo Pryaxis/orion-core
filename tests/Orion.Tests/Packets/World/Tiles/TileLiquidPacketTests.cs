@@ -27,7 +27,7 @@ namespace Orion.Packets.World.Tiles {
         [Fact]
         [SuppressMessage("ReSharper", "UseObjectOrCollectionInitializer")]
         [SuppressMessage("Style", "IDE0017:Simplify object initialization", Justification = "Testing")]
-        public void SetTileLiquid_MarksAsDirty() {
+        public void TileLiquid_Set_MarksAsDirty() {
             var packet = new TileLiquidPacket();
 
             packet.TileLiquid = new NetworkLiquid();
@@ -36,7 +36,7 @@ namespace Orion.Packets.World.Tiles {
         }
 
         [Fact]
-        public void SetTileLiquid_NullValue_ThrowsArgumentNullException() {
+        public void TileLiquid_Set_NullValue_ThrowsArgumentNullException() {
             var packet = new TileLiquidPacket();
             Action action = () => packet.TileLiquid = null;
 

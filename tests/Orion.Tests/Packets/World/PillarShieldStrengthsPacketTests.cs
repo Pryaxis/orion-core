@@ -22,7 +22,7 @@ using Xunit;
 namespace Orion.Packets.World {
     public class PillarShieldStrengthsPacketTests {
         [Fact]
-        public void SetSimpleProperties_MarkAsDirty() {
+        public void SimpleProperties_Set_MarkAsDirty() {
             var packet = new PillarShieldStrengthsPacket();
 
             packet.SetSimplePropertiesShouldMarkAsDirty();

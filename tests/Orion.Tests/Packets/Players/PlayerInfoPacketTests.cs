@@ -23,7 +23,7 @@ using Xunit;
 namespace Orion.Packets.Players {
     public class PlayerInfoPacketTests {
         [Fact]
-        public void SetSimpleProperties_MarkAsDirty() {
+        public void SimpleProperties_Set_MarkAsDirty() {
             var packet = new PlayerInfoPacket();
 
             packet.SetSimplePropertiesShouldMarkAsDirty();

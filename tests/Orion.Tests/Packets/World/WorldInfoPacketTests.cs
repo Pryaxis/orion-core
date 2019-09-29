@@ -24,14 +24,14 @@ using Xunit;
 namespace Orion.Packets.World {
     public class WorldInfoPacketTests {
         [Fact]
-        public void SetSimpleProperties_MarkAsDirty() {
+        public void SimpleProperties_Set_MarkAsDirty() {
             var packet = new WorldInfoPacket();
 
             packet.SetSimplePropertiesShouldMarkAsDirty();
         }
 
         [Fact]
-        public void SetWorldName_NullValue_ThrowsArgumentNullException() {
+        public void WorldName_Set_NullValue_ThrowsArgumentNullException() {
             var packet = new WorldInfoPacket();
             Action action = () => packet.WorldName = null;
 
