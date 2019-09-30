@@ -36,5 +36,10 @@ namespace Orion {
         protected OrionPlugin(OrionKernel kernel) {
             Kernel = kernel ?? throw new ArgumentNullException(nameof(kernel));
         }
+
+        /// <summary>
+        /// Initializes the plugin.
+        /// </summary>
+        protected internal abstract void Initialize();
     }
 }

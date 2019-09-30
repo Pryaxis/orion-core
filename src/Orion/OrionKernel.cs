@@ -102,6 +102,7 @@ namespace Orion {
         public void FinishLoadingPlugins(Action<OrionPlugin>? action = null) {
             foreach (var pluginType in _pluginTypesToLoad) {
                 var plugin = (OrionPlugin)this.Get(pluginType);
+                plugin.Initialize();
                 _plugins.Add(plugin);
                 action?.Invoke(plugin);
             }
