@@ -15,13 +15,10 @@
 // You should have received a copy of the GNU General Public License
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
-using System.Diagnostics.CodeAnalysis;
-
 namespace Orion.Packets {
     /// <summary>
     /// Specifies a packet type.
     /// </summary>
-    [SuppressMessage("ReSharper", "UnusedMember.Global")]
     public enum PacketType : byte {
 #pragma warning disable 1591
         PlayerConnect = 1,

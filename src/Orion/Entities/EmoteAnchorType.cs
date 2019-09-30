@@ -15,13 +15,13 @@
 // You should have received a copy of the GNU General Public License
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
-using System.Diagnostics.CodeAnalysis;
+using JetBrains.Annotations;
 
 namespace Orion.Entities {
     /// <summary>
     /// Specifies an emote anchor type.
     /// </summary>
-    [SuppressMessage("ReSharper", "UnusedMember.Global")]
+    [PublicAPI]
     public enum EmoteAnchorType : byte {
 #pragma warning disable 1591
         Npc = 0,

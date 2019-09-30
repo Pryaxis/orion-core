@@ -15,13 +15,10 @@
 // You should have received a copy of the GNU General Public License
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
-using System.Diagnostics.CodeAnalysis;
-
 namespace Orion.Packets {
     /// <summary>
     /// Specifies the context with which to process a packet.
     /// </summary>
-    [SuppressMessage("ReSharper", "UnusedMember.Global")]
     public enum PacketContext {
         /// <summary>
         /// Indicates that the packet should be processed as the server.

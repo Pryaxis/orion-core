@@ -15,13 +15,13 @@
 // You should have received a copy of the GNU General Public License
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
-using System.Diagnostics.CodeAnalysis;
+using JetBrains.Annotations;
 
 namespace Orion.Packets.Entities {
     /// <summary>
     /// Specifies an entity action in a <see cref="EntityActionPacket"/>.
     /// </summary>
-    [SuppressMessage("ReSharper", "UnusedMember.Global")]
+    [PublicAPI]
     public enum EntityAction : byte {
         /// <summary>
         /// Indicates that Skeletron should be spawned. This is caused by talking to the Old Man.

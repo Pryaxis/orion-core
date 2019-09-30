@@ -15,13 +15,10 @@
 // You should have received a copy of the GNU General Public License
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
-using System.Diagnostics.CodeAnalysis;
-
 namespace Orion.Players {
     /// <summary>
     /// Specifies a player difficulty.
     /// </summary>
-    [SuppressMessage("ReSharper", "UnusedMember.Global")]
     public enum PlayerDifficulty : byte {
         /// <summary>
         /// Indicates softcore. This is the normal difficulty.
