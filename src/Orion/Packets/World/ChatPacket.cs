@@ -58,7 +58,7 @@ namespace Orion.Packets.World {
         }
 
         /// <summary>
-        /// Gets or sets the chat's line width.
+        /// Gets or sets the chat's line width. A value of -1 indicates that the screen width should be used.
         /// </summary>
         public short ChatLineWidth {
             get => _chatLineWidth;
