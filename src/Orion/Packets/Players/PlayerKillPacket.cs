@@ -51,7 +51,7 @@ namespace Orion.Packets.Players {
         /// <summary>
         /// Gets or sets the reason for the player's death.
         /// </summary>
-        /// <exception cref="ArgumentNullException"><paramref name="value"/> is <c>null</c>.</exception>
+        /// <exception cref="ArgumentNullException"><paramref name="value"/> is <see langword="null" />.</exception>
         public Terraria.DataStructures.PlayerDeathReason PlayerDeathReason {
             get => _playerDeathReason;
             set {

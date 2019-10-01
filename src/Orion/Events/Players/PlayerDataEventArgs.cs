@@ -127,7 +127,7 @@ namespace Orion.Events.Players {
         /// <param name="player">The player.</param>
         /// <param name="packet">The packet.</param>
         /// <exception cref="ArgumentNullException">
-        /// <paramref name="player"/> or <paramref name="packet"/> are <c>null</c>.
+        /// <paramref name="player"/> or <paramref name="packet"/> are <see langword="null" />.
         /// </exception>
         public PlayerDataEventArgs(IPlayer player, PlayerDataPacket packet) : base(player) {
             _packet = packet ?? throw new ArgumentNullException(nameof(packet));

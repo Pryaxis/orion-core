@@ -30,9 +30,9 @@ namespace Orion.Packets.Players {
         public override PacketType Type => PacketType.PlayerConnect;
 
         /// <summary>
-        /// Gets or sets the player's verion string. This is usually of the form <c>"Terraria###"</c>.
+        /// Gets or sets the player's verion string. This is usually of the form "Terraria###".
         /// </summary>
-        /// <exception cref="ArgumentNullException"><paramref name="value"/> is <c>null</c>.</exception>
+        /// <exception cref="ArgumentNullException"><paramref name="value"/> is <see langword="null" />.</exception>
         public string PlayerVersionString {
             get => _playerVersionString;
             set {

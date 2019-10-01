@@ -28,7 +28,7 @@ namespace Orion.World.TileEntities {
         /// <summary>
         /// Gets or sets the chest's name.
         /// </summary>
-        /// <exception cref="ArgumentNullException"><paramref name="value"/> is <c>null</c>.</exception>
+        /// <exception cref="ArgumentNullException"><paramref name="value"/> is <see langword="null" />.</exception>
         string Name { get; set; }
 
         /// <summary>

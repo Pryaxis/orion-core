@@ -39,7 +39,7 @@ namespace Orion.Packets.Modules {
         /// <summary>
         /// Gets or sets the client chat's command. Only applicable when received in the Server context.
         /// </summary>
-        /// <exception cref="ArgumentNullException"><paramref name="value"/> is <c>null</c>.</exception>
+        /// <exception cref="ArgumentNullException"><paramref name="value"/> is <see langword="null" />.</exception>
         public string ClientChatCommand {
             get => _clientChatCommand;
             set {
@@ -51,7 +51,7 @@ namespace Orion.Packets.Modules {
         /// <summary>
         /// Gets or sets the client chat's text. Only applicable when received in the Server context.
         /// </summary>
-        /// <exception cref="ArgumentNullException"><paramref name="value"/> is <c>null</c>.</exception>
+        /// <exception cref="ArgumentNullException"><paramref name="value"/> is <see langword="null" />.</exception>
         public string ClientChatText {
             get => _clientChatText;
             set {
@@ -74,7 +74,7 @@ namespace Orion.Packets.Modules {
         /// <summary>
         /// Gets or sets the server chat's text. Only applicable when sent in the Server context.
         /// </summary>
-        /// <exception cref="ArgumentNullException"><paramref name="value"/> is <c>null</c>.</exception>
+        /// <exception cref="ArgumentNullException"><paramref name="value"/> is <see langword="null" />.</exception>
         public string ServerChatText {
             get => _serverChatText.ToString();
             set {

@@ -45,7 +45,7 @@ namespace Orion.Players {
         /// Sends a packet to the player.
         /// </summary>
         /// <param name="packet">The packet.</param>
-        /// <exception cref="ArgumentNullException"><paramref name="packet"/> is <c>null</c>.</exception>
+        /// <exception cref="ArgumentNullException"><paramref name="packet"/> is <see langword="null" />.</exception>
         void SendPacket(Packet packet);
     }
 }

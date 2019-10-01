@@ -44,7 +44,7 @@ namespace Orion.Packets.World.TileEntities {
         }
 
         /// <summary>
-        /// Gets or sets the tile entity. A value of <c>null</c> indicates a removal.
+        /// Gets or sets the tile entity. A value of <see langword="null" /> indicates a removal.
         /// </summary>
         public NetworkTileEntity? TileEntity {
             get => _tileEntity;

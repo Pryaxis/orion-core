@@ -39,7 +39,7 @@ namespace Orion.World.TileEntities {
         /// <param name="tileEntityType">The tile entity type.</param>
         /// <param name="x">The X coordinate.</param>
         /// <param name="y">The Y coordinate.</param>
-        /// <returns>The resulting tile entity, or <c>null</c> if none was found.</returns>
+        /// <returns>The resulting tile entity, or <see langword="null" /> if none was found.</returns>
         ITileEntity? AddTileEntity(TileEntityType tileEntityType, int x, int y);
 
         /// <summary>
@@ -47,7 +47,7 @@ namespace Orion.World.TileEntities {
         /// </summary>
         /// <param name="x">The X coordinate.</param>
         /// <param name="y">The Y coordinate.</param>
-        /// <returns>The tile entity, or <c>null</c> if none was found.</returns>
+        /// <returns>The tile entity, or <see langword="null" /> if none was found.</returns>
         ITileEntity? GetTileEntity(int x, int y);
 
         /// <summary>
@@ -55,7 +55,9 @@ namespace Orion.World.TileEntities {
         /// </summary>
         /// <param name="tileEntity">The tile entity.</param>
         /// <returns>A value indicating whether the tile entity was successfully removed.</returns>
-        /// <exception cref="ArgumentNullException"><paramref name="tileEntity"/> is <c>null</c>.</exception>
+        /// <exception cref="ArgumentNullException">
+        /// <paramref name="tileEntity"/> is <see langword="null" />.
+        /// </exception>
         bool RemoveTileEntity(ITileEntity tileEntity);
     }
 }

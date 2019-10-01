@@ -57,11 +57,12 @@ namespace Orion.Projectiles {
         /// <param name="damage">The damage.</param>
         /// <param name="knockback">The knockback.</param>
         /// <param name="aiValues">
-        /// The AI values, or <c>null</c> for none. If not <c>null</c>, this should have length 2.
+        /// The AI values, or <see langword="null" /> for none. If not <see langword="null" />, this should have length
+        /// 2.
         /// </param>
-        /// <returns>The resulting projectile, or <c>null</c> if none was spawned.</returns>
+        /// <returns>The resulting projectile, or <see langword="null" /> if none was spawned.</returns>
         /// <exception cref="ArgumentException">
-        /// <paramref name="aiValues"/> is not <c>null</c> and does not have length 2.
+        /// <paramref name="aiValues"/> is not <see langword="null" /> and does not have length 2.
         /// </exception>
         IProjectile? SpawnProjectile(ProjectileType projectileType, Vector2 position, Vector2 velocity, int damage,
                                      float knockback, float[]? aiValues = null);

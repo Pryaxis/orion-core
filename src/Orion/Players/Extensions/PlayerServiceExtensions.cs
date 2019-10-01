@@ -29,7 +29,7 @@ namespace Orion.Players.Extensions {
         /// <param name="playerService">The player service.</param>
         /// <param name="packet">The packet.</param>
         /// <exception cref="ArgumentNullException">
-        /// <paramref name="playerService"/> or <paramref name="packet"/> are <c>null</c>.
+        /// <paramref name="playerService"/> or <paramref name="packet"/> are <see langword="null" />.
         /// </exception>
         public static void BroadcastPacket(this IPlayerService playerService, Packet packet) {
             if (playerService is null) throw new ArgumentNullException(nameof(playerService));

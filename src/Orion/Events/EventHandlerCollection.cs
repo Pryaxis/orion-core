@@ -44,7 +44,7 @@ namespace Orion.Events {
         /// </summary>
         /// <param name="sender">The sender. This is usually the object that initiated the event.</param>
         /// <param name="args">The event arguments.</param>
-        /// <exception cref="ArgumentNullException"><paramref name="args"/> is <c>null</c>.</exception>
+        /// <exception cref="ArgumentNullException"><paramref name="args"/> is <see langword="null" />.</exception>
         public void Invoke(object? sender, TEventArgs args) {
             if (args is null) throw new ArgumentNullException(nameof(args));
 
@@ -59,7 +59,7 @@ namespace Orion.Events {
         /// <param name="collection">The collection.</param>
         /// <param name="handler">The handler.</param>
         /// <returns>The resulting collection.</returns>
-        /// <exception cref="ArgumentNullException"><paramref name="handler"/> is <c>null</c>.</exception>
+        /// <exception cref="ArgumentNullException"><paramref name="handler"/> is <see langword="null" />.</exception>
         public static EventHandlerCollection<TEventArgs> operator +(EventHandlerCollection<TEventArgs>? collection,
                                                                     EventHandler<TEventArgs> handler) {
             if (handler is null) throw new ArgumentNullException(nameof(handler));
@@ -80,7 +80,7 @@ namespace Orion.Events {
         /// <param name="handler">The handler.</param>
         /// <returns>The resulting collection.</returns>
         /// <exception cref="ArgumentException"><paramref name="handler"/> is not registered.</exception>
-        /// <exception cref="ArgumentNullException"><paramref name="handler"/> is <c>null</c>.</exception>
+        /// <exception cref="ArgumentNullException"><paramref name="handler"/> is <see langword="null" />.</exception>
         public static EventHandlerCollection<TEventArgs>? operator -(EventHandlerCollection<TEventArgs>? collection,
                                                                      EventHandler<TEventArgs> handler) {
             if (handler is null) throw new ArgumentNullException(nameof(handler));

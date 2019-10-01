@@ -32,7 +32,7 @@ namespace Orion {
         /// Initializes a new instance of the <see cref="OrionPlugin"/> class with the specified Orion kernel.
         /// </summary>
         /// <param name="kernel">The Orion kernel.</param>
-        /// <exception cref="ArgumentNullException"><paramref name="kernel"/> is <c>null</c>.</exception>
+        /// <exception cref="ArgumentNullException"><paramref name="kernel"/> is <see langword="null" />.</exception>
         protected OrionPlugin(OrionKernel kernel) {
             Kernel = kernel ?? throw new ArgumentNullException(nameof(kernel));
         }

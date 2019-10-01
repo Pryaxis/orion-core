@@ -46,7 +46,7 @@ namespace Orion.Packets.Players {
         /// <summary>
         /// Gets or sets the player's status text.
         /// </summary>
-        /// <exception cref="ArgumentNullException"><paramref name="value"/> is <c>null</c>.</exception>
+        /// <exception cref="ArgumentNullException"><paramref name="value"/> is <see langword="null" />.</exception>
         public string PlayerStatusText {
             get => _playerStatusText.ToString();
             set {

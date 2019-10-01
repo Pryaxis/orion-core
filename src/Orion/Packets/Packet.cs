@@ -178,7 +178,7 @@ namespace Orion.Packets {
         /// <param name="stream">The stream.</param>
         /// <param name="context">The context with which to read the packet.</param>
         /// <returns>The resulting packet.</returns>
-        /// <exception cref="ArgumentNullException"><paramref name="stream"/> is <c>null</c>.</exception>
+        /// <exception cref="ArgumentNullException"><paramref name="stream"/> is <see langword="null" />.</exception>
         /// <exception cref="PacketException">The packet could not be parsed correctly.</exception>
         public static Packet ReadFromStream(Stream stream, PacketContext context) {
             if (stream is null) throw new ArgumentNullException(nameof(stream));
@@ -222,7 +222,7 @@ namespace Orion.Packets {
         /// </summary>
         /// <param name="stream">The stream.</param>
         /// <param name="context">The context with which to read the packet.</param>
-        /// <exception cref="ArgumentNullException"><paramref name="stream"/> is <c>null</c>.</exception>
+        /// <exception cref="ArgumentNullException"><paramref name="stream"/> is <see langword="null" />.</exception>
         /// <exception cref="PacketException">The packet could not be written correctly.</exception>
         public void WriteToStream(Stream stream, PacketContext context) {
             if (stream is null) throw new ArgumentNullException(nameof(stream));

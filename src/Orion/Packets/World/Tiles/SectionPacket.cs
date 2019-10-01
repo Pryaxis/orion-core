@@ -106,7 +106,7 @@ namespace Orion.Packets.World.Tiles {
         /// <summary>
         /// Gets or sets the section's tiles.
         /// </summary>
-        /// <exception cref="ArgumentNullException"><paramref name="value"/> is <c>null</c>.</exception>
+        /// <exception cref="ArgumentNullException"><paramref name="value"/> is <see langword="null" />.</exception>
         public NetworkTiles SectionTiles {
             get => _sectionTiles;
             set {

@@ -27,7 +27,7 @@ namespace Orion.Events.Players {
         /// Initializes a new instance of the <see cref="PlayerDisconnectedEventArgs"/> class with the specified player.
         /// </summary>
         /// <param name="player">The player.</param>
-        /// <exception cref="ArgumentNullException"><paramref name="player"/> is <c>null</c>.</exception>
+        /// <exception cref="ArgumentNullException"><paramref name="player"/> is <see langword="null" />.</exception>
         public PlayerDisconnectedEventArgs(IPlayer player) : base(player) { }
     }
 }

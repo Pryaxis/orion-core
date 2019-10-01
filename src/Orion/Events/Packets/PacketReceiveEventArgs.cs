@@ -36,7 +36,7 @@ namespace Orion.Events.Packets {
         /// <param name="sender">The sender.</param>
         /// <param name="packet">The packet.</param>
         /// <exception cref="ArgumentNullException">
-        /// <paramref name="sender"/> or <paramref name="packet"/> are <c>null</c>.
+        /// <paramref name="sender"/> or <paramref name="packet"/> are <see langword="null" />.
         /// </exception>
         public PacketReceiveEventArgs(IPlayer sender, Packet packet) : base(packet) {
             Sender = sender ?? throw new ArgumentNullException(nameof(sender));

@@ -77,7 +77,9 @@ namespace Orion {
         /// Queues plugins to be loaded from the given assembly path.
         /// </summary>
         /// <param name="assemblyPath">The assembly path.</param>
-        /// <exception cref="ArgumentNullException"><paramref name="assemblyPath"/> is <c>null</c>.</exception>
+        /// <exception cref="ArgumentNullException">
+        /// <paramref name="assemblyPath"/> is <see langword="null" />.
+        /// </exception>
         public void QueuePluginsFromPath(string assemblyPath) {
             if (assemblyPath is null) throw new ArgumentNullException(nameof(assemblyPath));
 
@@ -114,7 +116,7 @@ namespace Orion {
         /// Unloads the given plugin and returns a value indicating success.
         /// </summary>
         /// <param name="plugin">The plugin.</param>
-        /// <exception cref="ArgumentNullException"><paramref name="plugin"/> is <c>null</c>.</exception>
+        /// <exception cref="ArgumentNullException"><paramref name="plugin"/> is <see langword="null" />.</exception>
         /// <returns>A value indicating whether the plugin was successfully unloaded.</returns>
         public bool UnloadPlugin(OrionPlugin plugin) {
             if (plugin is null) throw new ArgumentNullException(nameof(plugin));

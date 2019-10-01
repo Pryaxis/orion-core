@@ -30,7 +30,7 @@ namespace Orion.Utils {
         /// <param name="key">The key.</param>
         /// <param name="defaultValue">The default value.</param>
         /// <returns>The metadata, or a default value if the key does not exist.</returns>
-        /// <exception cref="ArgumentNullException"><paramref name="key"/> is <c>null</c>.</exception>
+        /// <exception cref="ArgumentNullException"><paramref name="key"/> is <see langword="null" />.</exception>
         [Pure]
         T GetAnnotation<T>(string key, T defaultValue = default);
 
@@ -40,7 +40,7 @@ namespace Orion.Utils {
         /// <typeparam name="T">The type.</typeparam>
         /// <param name="key">The key.</param>
         /// <param name="value">The value.</param>
-        /// <exception cref="ArgumentNullException"><paramref name="key"/> is <c>null</c>.</exception>
+        /// <exception cref="ArgumentNullException"><paramref name="key"/> is <see langword="null" />.</exception>
         void SetAnnotation<T>(string key, T value);
 
         /// <summary>
@@ -48,7 +48,7 @@ namespace Orion.Utils {
         /// </summary>
         /// <param name="key">The key.</param>
         /// <returns>A value indicating whether the key was successfully removed.</returns>
-        /// <exception cref="ArgumentNullException"><paramref name="key"/> is <c>null</c>.</exception>
+        /// <exception cref="ArgumentNullException"><paramref name="key"/> is <see langword="null" />.</exception>
         bool RemoveAnnotation(string key);
     }
 }

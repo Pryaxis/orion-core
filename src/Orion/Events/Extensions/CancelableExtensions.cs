@@ -28,7 +28,9 @@ namespace Orion.Events.Extensions {
         /// </summary>
         /// <param name="cancelable">The cancelable object.</param>
         /// <returns>A value indicating whether the object is canceled.</returns>
-        /// <exception cref="ArgumentNullException"><paramref name="cancelable"/> is <c>null</c>.</exception>
+        /// <exception cref="ArgumentNullException">
+        /// <paramref name="cancelable"/> is <see langword="null" />.
+        /// </exception>
         [Pure]
         public static bool IsCanceled(this ICancelable cancelable) {
             if (cancelable is null) throw new ArgumentNullException(nameof(cancelable));
@@ -42,7 +44,7 @@ namespace Orion.Events.Extensions {
         /// <param name="cancelable">The cancelable object.</param>
         /// <param name="cancellationReason">The cancellation reason.</param>
         /// <exception cref="ArgumentNullException">
-        /// <paramref name="cancelable"/> or <paramref name="cancellationReason"/> are <c>null</c>.
+        /// <paramref name="cancelable"/> or <paramref name="cancellationReason"/> are <see langword="null" />.
         /// </exception>
         public static void Cancel(this ICancelable cancelable, string cancellationReason = "") {
             if (cancelable is null) throw new ArgumentNullException(nameof(cancelable));
@@ -55,7 +57,9 @@ namespace Orion.Events.Extensions {
         /// Uncancels the object.
         /// </summary>
         /// <param name="cancelable">The cancelable object.</param>
-        /// <exception cref="ArgumentNullException"><paramref name="cancelable"/> is <c>null</c>.</exception>
+        /// <exception cref="ArgumentNullException">
+        /// <paramref name="cancelable"/> is <see langword="null" />.
+        /// </exception>
         public static void Uncancel(this ICancelable cancelable) {
             if (cancelable is null) throw new ArgumentNullException(nameof(cancelable));
 

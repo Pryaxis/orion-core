@@ -28,8 +28,10 @@ namespace Orion.World.TileEntities.Extensions {
         /// <param name="tileEntityService">The tile entity service.</param>
         /// <param name="x">The X coordinate.</param>
         /// <param name="y">The Y coordinate.</param>
-        /// <returns>The resulting chest, or <c>null</c> if none was added.</returns>
-        /// <exception cref="ArgumentNullException"><paramref name="tileEntityService"/> is <c>null</c>.</exception>
+        /// <returns>The resulting chest, or <see langword="null" /> if none was added.</returns>
+        /// <exception cref="ArgumentNullException">
+        /// <paramref name="tileEntityService"/> is <see langword="null" />.
+        /// </exception>
         public static IChest? AddChest(this ITileEntityService tileEntityService, int x, int y) {
             if (tileEntityService is null) throw new ArgumentNullException(nameof(tileEntityService));
 
@@ -42,8 +44,10 @@ namespace Orion.World.TileEntities.Extensions {
         /// <param name="tileEntityService">The tile entity service.</param>
         /// <param name="x">The X coordinate.</param>
         /// <param name="y">The Y coordinate.</param>
-        /// <returns>The resulting sign, or <c>null</c> if none was added.</returns>
-        /// <exception cref="ArgumentNullException"><paramref name="tileEntityService"/> is <c>null</c>.</exception>
+        /// <returns>The resulting sign, or <see langword="null" /> if none was added.</returns>
+        /// <exception cref="ArgumentNullException">
+        /// <paramref name="tileEntityService"/> is <see langword="null" />.
+        /// </exception>
         public static ISign? AddSign(this ITileEntityService tileEntityService, int x, int y) {
             if (tileEntityService is null) throw new ArgumentNullException(nameof(tileEntityService));
 
@@ -56,8 +60,10 @@ namespace Orion.World.TileEntities.Extensions {
         /// <param name="tileEntityService">The tile entity service.</param>
         /// <param name="x">The X coordinate.</param>
         /// <param name="y">The Y coordinate.</param>
-        /// <returns>The resulting target dummy, or <c>null</c> if none was added.</returns>
-        /// <exception cref="ArgumentNullException"><paramref name="tileEntityService"/> is <c>null</c>.</exception>
+        /// <returns>The resulting target dummy, or <see langword="null" /> if none was added.</returns>
+        /// <exception cref="ArgumentNullException">
+        /// <paramref name="tileEntityService"/> is <see langword="null" />.
+        /// </exception>
         public static ITargetDummy? AddTargetDummy(this ITileEntityService tileEntityService, int x, int y) {
             if (tileEntityService is null) throw new ArgumentNullException(nameof(tileEntityService));
 
@@ -70,8 +76,10 @@ namespace Orion.World.TileEntities.Extensions {
         /// <param name="tileEntityService">The tile entity service.</param>
         /// <param name="x">The X coordinate.</param>
         /// <param name="y">The Y coordinate.</param>
-        /// <returns>The resulting item frame, or <c>null</c> if none was added.</returns>
-        /// <exception cref="ArgumentNullException"><paramref name="tileEntityService"/> is <c>null</c>.</exception>
+        /// <returns>The resulting item frame, or <see langword="null" /> if none was added.</returns>
+        /// <exception cref="ArgumentNullException">
+        /// <paramref name="tileEntityService"/> is <see langword="null" />.
+        /// </exception>
         public static IItemFrame? AddItemFrame(this ITileEntityService tileEntityService, int x, int y) {
             if (tileEntityService is null) throw new ArgumentNullException(nameof(tileEntityService));
 
@@ -84,8 +92,10 @@ namespace Orion.World.TileEntities.Extensions {
         /// <param name="tileEntityService">The tile entity service.</param>
         /// <param name="x">The X coordinate.</param>
         /// <param name="y">The Y coordinate.</param>
-        /// <returns>The resulting logic sensor, or <c>null</c> if none was added.</returns>
-        /// <exception cref="ArgumentNullException"><paramref name="tileEntityService"/> is <c>null</c>.</exception>
+        /// <returns>The resulting logic sensor, or <see langword="null" /> if none was added.</returns>
+        /// <exception cref="ArgumentNullException">
+        /// <paramref name="tileEntityService"/> is <see langword="null" />.
+        /// </exception>
         public static ILogicSensor? AddLogicSensor(this ITileEntityService tileEntityService, int x, int y) {
             if (tileEntityService is null) throw new ArgumentNullException(nameof(tileEntityService));
 

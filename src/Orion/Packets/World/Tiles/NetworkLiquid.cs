@@ -84,7 +84,7 @@ namespace Orion.Packets.World.Tiles {
         /// <param name="reader">The reader.</param>
         /// <param name="shouldSwapCoords">A value indicating whether the coordinates should be swapped.</param>
         /// <returns>The resulting network tile liquid.</returns>
-        /// <exception cref="ArgumentNullException"><paramref name="reader"/> is <c>null</c>.</exception>
+        /// <exception cref="ArgumentNullException"><paramref name="reader"/> is <see langword="null" />.</exception>
         /// <exception cref="PacketException">The liquid type was invalid.</exception>
         public static NetworkLiquid ReadFromReader(BinaryReader reader, bool shouldSwapCoords = false) {
             if (reader is null) throw new ArgumentNullException(nameof(reader));
@@ -113,7 +113,7 @@ namespace Orion.Packets.World.Tiles {
         /// </summary>
         /// <param name="writer">The writer.</param>
         /// <param name="shouldSwapCoords">A value indicating whether the X and Y values should be swapped.</param>
-        /// <exception cref="ArgumentNullException"><paramref name="writer"/> is <c>null</c>.</exception>
+        /// <exception cref="ArgumentNullException"><paramref name="writer"/> is <see langword="null" />.</exception>
         public void WriteToWriter(BinaryWriter writer, bool shouldSwapCoords = false) {
             if (writer is null) throw new ArgumentNullException(nameof(writer));
 

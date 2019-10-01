@@ -37,7 +37,9 @@ namespace Orion.Events.Projectiles {
         /// </summary>
         /// <param name="projectile">The projectile.</param>
         /// <param name="projectileType">The projectile type.</param>
-        /// <exception cref="ArgumentNullException"><paramref name="projectile"/> is <c>null</c>.</exception>
+        /// <exception cref="ArgumentNullException">
+        /// <paramref name="projectile"/> is <see langword="null" />.
+        /// </exception>
         public ProjectileSetDefaultsEventArgs(IProjectile projectile,
                                               ProjectileType projectileType) : base(projectile) {
             ProjectileType = projectileType;

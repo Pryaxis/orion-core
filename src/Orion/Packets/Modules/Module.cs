@@ -48,7 +48,7 @@ namespace Orion.Packets.Modules {
         /// </summary>
         /// <param name="stream">The stream.</param>
         /// <param name="context">The context with which to read the module from.</param>
-        /// <exception cref="ArgumentNullException"><paramref name="stream"/> is <c>null</c>.</exception>
+        /// <exception cref="ArgumentNullException"><paramref name="stream"/> is <see langword="null" />.</exception>
         /// <returns>The resulting <see cref="Module"/> instance.</returns>
         public static Module ReadFromStream(Stream stream, PacketContext context) {
             if (stream is null) throw new ArgumentNullException(nameof(stream));
@@ -75,7 +75,7 @@ namespace Orion.Packets.Modules {
         /// </summary>
         /// <param name="stream">The stream.</param>
         /// <param name="context">The context with which to write the packet to.</param>
-        /// <exception cref="ArgumentNullException"><paramref name="stream"/> is <c>null</c>.</exception>
+        /// <exception cref="ArgumentNullException"><paramref name="stream"/> is <see langword="null" />.</exception>
         public void WriteToStream(Stream stream, PacketContext context) {
             if (stream is null) throw new ArgumentNullException(nameof(stream));
 

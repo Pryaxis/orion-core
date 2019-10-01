@@ -36,7 +36,7 @@ namespace Orion.Events.Packets {
         /// <summary>
         /// Gets or sets the packet.
         /// </summary>
-        /// <exception cref="ArgumentNullException"><paramref name="value"/> is <c>null</c>.</exception>
+        /// <exception cref="ArgumentNullException"><paramref name="value"/> is <see langword="null" />.</exception>
         public Packet Packet {
             get => _packet;
             set {
