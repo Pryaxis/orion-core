@@ -199,8 +199,11 @@ namespace Orion.Packets {
                 var packet = packetConstructor();
                 packet.ReadFromReader(reader, context);
 #if DEBUG
-                Debug.Assert(stream.Position - oldPosition == packetLength, "Packet should have been consumed.");
-                Debug.Assert(!packet.IsDirty, "Packet should not be dirty.");
+                // SectionPacket might have extra data for some reason, so we need to exclude that from the following
+                // check...
+                Debug.Assert(packet.Type == PacketType.Section || stream.Position - oldPosition == packetLength,
+                             "packet.Type == PacketType.Section || stream.Position - oldPosition == packetLength");
+                Debug.Assert(!packet.IsDirty, "!packet.IsDirty");
 #endif
                 return packet;
             } catch (Exception ex) when (!(ex is PacketException)) {
