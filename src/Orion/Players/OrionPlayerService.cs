@@ -51,7 +51,7 @@ namespace Orion.Players {
             // Ignore the last player since it is used as a failure slot.
             Players = new WrappedReadOnlyArray<OrionPlayer, TerrariaPlayer>(
                 Main.player.AsMemory(..^1),
-                (playerIndex, terrariaPlayer) => new OrionPlayer(playerIndex, terrariaPlayer));
+                (playerIndex, terrariaPlayer) => new OrionPlayer(this, playerIndex, terrariaPlayer));
 
             _packetReceiveHandlers[PacketType.PlayerConnect] = PlayerConnectHandler;
             _packetReceiveHandlers[PacketType.PlayerData] = PlayerDataHandler;

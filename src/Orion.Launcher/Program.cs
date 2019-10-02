@@ -110,8 +110,6 @@ namespace Orion.Launcher {
             SetupPlugins(kernel);
             SetupLanguage();
 
-            Console.WriteLine("\x1b[38;2;255;200;0mThis is a red \x1b[38;2;255;255;0mmessage?\x1b[0;mNow ok");
-
             using var game = new Main();
             game.DedServ();
         }

@@ -16,12 +16,18 @@
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
 using System;
+using System.Diagnostics;
+using System.IO;
 using Orion.Entities;
+using Orion.Events.Extensions;
+using Orion.Events.Packets;
 using Orion.Packets;
 using TerrariaPlayer = Terraria.Player;
 
 namespace Orion.Players {
     internal sealed class OrionPlayer : OrionEntity<TerrariaPlayer>, IPlayer {
+        private readonly IPlayerService _playerService;
+
         public override string Name {
             get => Wrapped.name;
             set => Wrapped.name = value ?? throw new ArgumentNullException(nameof(value));
@@ -35,11 +41,27 @@ namespace Orion.Players {
         public IPlayerStats Stats => throw new NotImplementedException();
         public IPlayerInventory Inventory => throw new NotImplementedException();
 
-        public OrionPlayer(TerrariaPlayer terrariaPlayer) : this(-1, terrariaPlayer) { }
-        public OrionPlayer(int playerIndex, TerrariaPlayer terrariaPlayer) : base(playerIndex, terrariaPlayer) { }
+        public OrionPlayer(IPlayerService playerService, TerrariaPlayer terrariaPlayer)
+            : this(playerService, -1, terrariaPlayer) { }
+
+        public OrionPlayer(IPlayerService playerService, int playerIndex, TerrariaPlayer terrariaPlayer)
+            : base(playerIndex, terrariaPlayer) {
+            Debug.Assert(playerService != null, "playerService != null");
+
+            _playerService = playerService;
+        }
 
         public void SendPacket(Packet packet) {
-            throw new NotImplementedException();
+            var args = new PacketSendEventArgs(this, packet);
+            _playerService.PacketSend?.Invoke(this, args);
+            if (args.IsCanceled()) return;
+            packet = args.Packet;
+
+            var stream = new MemoryStream();
+            packet.WriteToStream(stream, PacketContext.Server);
+            var terrariaClient = Terraria.Netplay.Clients[Index];
+            terrariaClient.Socket?.AsyncSend(stream.ToArray(), 0, (int)stream.Length,
+                                             terrariaClient.ServerWriteCallBack);
         }
     }
 }
