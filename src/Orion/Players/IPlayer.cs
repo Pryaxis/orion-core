@@ -18,6 +18,7 @@
 using System;
 using Orion.Entities;
 using Orion.Packets;
+using Orion.Packets.Players;
 using Orion.Utils;
 using TerrariaPlayer = Terraria.Player;
 
@@ -47,5 +48,16 @@ namespace Orion.Players {
         /// <param name="packet">The packet.</param>
         /// <exception cref="ArgumentNullException"><paramref name="packet"/> is <see langword="null" />.</exception>
         void SendPacket(Packet packet);
+
+        /// <summary>
+        /// Disconnects the player with the given reason.
+        /// </summary>
+        /// <param name="reason">The reason.</param>
+        /// <exception cref="ArgumentNullException"><paramref name="reason"/> is <see langword="null" />.</exception>
+        void Disconnect(string reason) {
+            if (reason is null) throw new ArgumentNullException(nameof(reason));
+
+            SendPacket(new PlayerDisconnectPacket {PlayerDisconnectReason = reason});
+        }
     }
 }
