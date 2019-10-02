@@ -16,9 +16,12 @@
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
 using System;
+using JetBrains.Annotations;
+using Microsoft.Xna.Framework;
 using Orion.Entities;
 using Orion.Packets;
 using Orion.Packets.Players;
+using Orion.Packets.World;
 using Orion.Utils;
 using TerrariaPlayer = Terraria.Player;
 
@@ -26,6 +29,7 @@ namespace Orion.Players {
     /// <summary>
     /// Represents a Terraria player.
     /// </summary>
+    [PublicAPI]
     public interface IPlayer : IEntity, IWrapping<TerrariaPlayer> {
         /// <summary>
         /// Gets or sets the player's team.
@@ -58,6 +62,20 @@ namespace Orion.Players {
             if (reason is null) throw new ArgumentNullException(nameof(reason));
 
             SendPacket(new PlayerDisconnectPacket {PlayerDisconnectReason = reason});
+        }
+
+        /// <summary>
+        /// Sends a message to the player with the given color.
+        /// </summary>
+        /// <param name="message">The message.</param>
+        /// <param name="color">The color.</param>
+        /// <exception cref="ArgumentNullException"><paramref name="message"/> is <see langword="null" />.</exception>
+        void SendMessage(string message, Color color) {
+            SendPacket(new ChatPacket {
+                ChatColor = color,
+                ChatLineWidth = -1,
+                ChatText = message ?? throw new ArgumentNullException(nameof(message))
+            });
         }
     }
 }
