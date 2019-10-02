@@ -16,12 +16,14 @@
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
 using System;
+using JetBrains.Annotations;
 using Orion.Utils;
 
 namespace Orion.World.TileEntities {
     /// <summary>
     /// Represents a tile entity service. Provides tile entity-related hooks and methods.
     /// </summary>
+    [PublicAPI]
     public interface ITileEntityService : IService {
         /// <summary>
         /// Gets the chests.
@@ -39,8 +41,48 @@ namespace Orion.World.TileEntities {
         /// <param name="tileEntityType">The tile entity type.</param>
         /// <param name="x">The X coordinate.</param>
         /// <param name="y">The Y coordinate.</param>
-        /// <returns>The resulting tile entity, or <see langword="null" /> if none was found.</returns>
+        /// <returns>The resulting tile entity, or <see langword="null" /> if none was added.</returns>
         ITileEntity? AddTileEntity(TileEntityType tileEntityType, int x, int y);
+
+        /// <summary>
+        /// Adds and returns a chest with the given coordinates.
+        /// </summary>
+        /// <param name="x">The X coordinate.</param>
+        /// <param name="y">The Y coordinate.</param>
+        /// <returns>The resulting chest, or <see langword="null" /> if none was added.</returns>
+        IChest? AddChest(int x, int y) => AddTileEntity(TileEntityType.Chest, x, y) as IChest;
+
+        /// <summary>
+        /// Adds and returns a sign with the given coordinates.
+        /// </summary>
+        /// <param name="x">The X coordinate.</param>
+        /// <param name="y">The Y coordinate.</param>
+        /// <returns>The resulting sign, or <see langword="null" /> if none was added.</returns>
+        ISign? AddSign(int x, int y) => AddTileEntity(TileEntityType.Sign, x, y) as ISign;
+
+        /// <summary>
+        /// Adds and returns a target dummy with the given coordinates.
+        /// </summary>
+        /// <param name="x">The X coordinate.</param>
+        /// <param name="y">The Y coordinate.</param>
+        /// <returns>The resulting target dummy, or <see langword="null" /> if none was added.</returns>
+        ITargetDummy? AddTargetDummy(int x, int y) => AddTileEntity(TileEntityType.TargetDummy, x, y) as ITargetDummy;
+
+        /// <summary>
+        /// Adds and returns a sign with the given coordinates.
+        /// </summary>
+        /// <param name="x">The X coordinate.</param>
+        /// <param name="y">The Y coordinate.</param>
+        /// <returns>The resulting item frame, or <see langword="null" /> if none was added.</returns>
+        IItemFrame? AddItemFrame(int x, int y) => AddTileEntity(TileEntityType.ItemFrame, x, y) as IItemFrame;
+
+        /// <summary>
+        /// Adds and returns a logic sensor with the given coordinates.
+        /// </summary>
+        /// <param name="x">The X coordinate.</param>
+        /// <param name="y">The Y coordinate.</param>
+        /// <returns>The resulting logic sensor, or <see langword="null" /> if none was added.</returns>
+        ILogicSensor? AddLogicSensor(int x, int y) => AddTileEntity(TileEntityType.LogicSensor, x, y) as ILogicSensor;
 
         /// <summary>
         /// Returns the tile entity at the given coordinates.

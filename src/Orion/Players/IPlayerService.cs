@@ -15,9 +15,11 @@
 // You should have received a copy of the GNU General Public License
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
+using System;
 using Orion.Events;
 using Orion.Events.Packets;
 using Orion.Events.Players;
+using Orion.Packets;
 using Orion.Utils;
 
 namespace Orion.Players {
@@ -64,5 +66,18 @@ namespace Orion.Players {
         /// Gets or sets the event handlers that run when a player disconnects.
         /// </summary>
         EventHandlerCollection<PlayerDisconnectedEventArgs>? PlayerDisconnected { get; set; }
+
+        /// <summary>
+        /// Broadcasts the given packet.
+        /// </summary>
+        /// <param name="packet">The packet.</param>
+        /// <exception cref="ArgumentNullException"><paramref name="packet"/> are <see langword="null" />.</exception>
+        void BroadcastPacket(Packet packet) {
+            if (packet is null) throw new ArgumentNullException(nameof(packet));
+
+            for (var i = 0; i < Players.Count; ++i) {
+                Players[i].SendPacket(packet);
+            }
+        }
     }
 }
