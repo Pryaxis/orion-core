@@ -34,7 +34,7 @@ namespace Orion.Events.Packets {
         }
 
         [Fact]
-        public void Player_Get_IsCorrect() {
+        public void Player_Get() {
             var receiver = new Mock<IPlayer>().Object;
             var packet = new TestPacket();
             var args = new PacketSendEventArgs(receiver, packet);

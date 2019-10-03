@@ -22,7 +22,7 @@ using TerrariaItem = Terraria.Item;
 namespace Orion.Items {
     public class OrionItemStatsTests {
         [Fact]
-        public void MaxStackSize_Get_IsCorrect() {
+        public void MaxStackSize_Get() {
             var terrariaItem = new TerrariaItem {maxStack = 100};
             IItemStats itemStats = new OrionItemStats(terrariaItem);
 
@@ -30,7 +30,7 @@ namespace Orion.Items {
         }
 
         [Fact]
-        public void Rarity_Get_IsCorrect() {
+        public void Rarity_Get() {
             var terrariaItem = new TerrariaItem {rare = (int)ItemRarity.Red};
             IItemStats itemStats = new OrionItemStats(terrariaItem);
 

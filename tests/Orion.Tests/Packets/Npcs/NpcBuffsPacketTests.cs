@@ -41,7 +41,7 @@ namespace Orion.Packets.Npcs {
         }
 
         [Fact]
-        public void NpcBuffs_Count_IsCorrect() {
+        public void NpcBuffs_Count() {
             var packet = new NpcBuffsPacket();
 
             packet.NpcBuffs.Count.Should().Be(TerrariaNpc.maxBuffs);
@@ -50,7 +50,7 @@ namespace Orion.Packets.Npcs {
         public static readonly byte[] Bytes = {20, 0, 54, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
 
         [Fact]
-        public void ReadFromStream_IsCorrect() {
+        public void ReadFromStream() {
             using var stream = new MemoryStream(Bytes);
             var packet = (NpcBuffsPacket)Packet.ReadFromStream(stream, PacketContext.Server);
 

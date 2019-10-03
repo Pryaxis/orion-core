@@ -32,7 +32,7 @@ namespace Orion.Packets.Npcs {
         public static readonly byte[] Bytes = {9, 0, 83, 1, 0, 100, 0, 0, 0};
 
         [Fact]
-        public void ReadFromStream_IsCorrect() {
+        public void ReadFromStream() {
             using var stream = new MemoryStream(Bytes);
             var packet = (NpcKillCountPacket)Packet.ReadFromStream(stream, PacketContext.Server);
 

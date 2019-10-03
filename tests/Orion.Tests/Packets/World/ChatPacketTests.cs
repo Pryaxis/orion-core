@@ -43,7 +43,7 @@ namespace Orion.Packets.World {
         };
 
         [Fact]
-        public void ReadFromStream_IsCorrect() {
+        public void ReadFromStream() {
             using var stream = new MemoryStream(Bytes);
             var packet = (ChatPacket)Packet.ReadFromStream(stream, PacketContext.Server);
 

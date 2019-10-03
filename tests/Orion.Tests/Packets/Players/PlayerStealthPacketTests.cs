@@ -31,7 +31,7 @@ namespace Orion.Packets.Players {
         public static readonly byte[] Bytes = {8, 0, 84, 0, 0, 0, 0, 0};
 
         [Fact]
-        public void ReadFromStream_IsCorrect() {
+        public void ReadFromStream() {
             using var stream = new MemoryStream(Bytes);
             var packet = (PlayerStealthPacket)Packet.ReadFromStream(stream, PacketContext.Server);
 

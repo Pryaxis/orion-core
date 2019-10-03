@@ -31,7 +31,7 @@ namespace Orion.Packets.Players {
         public static readonly byte[] Bytes = {7, 0, 76, 1, 1, 0, 0};
 
         [Fact]
-        public void ReadFromStream_IsCorrect() {
+        public void ReadFromStream() {
             using var stream = new MemoryStream(Bytes);
             var packet = (PlayerAnglerQuestsPacket)Packet.ReadFromStream(stream, PacketContext.Server);
 

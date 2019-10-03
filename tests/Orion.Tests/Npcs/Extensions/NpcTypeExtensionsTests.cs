@@ -23,7 +23,7 @@ namespace Orion.Npcs.Extensions {
     [Collection("TerrariaTestsCollection")]
     public class NpcTypeExtensionsTests {
         [Fact]
-        public void IsCatchable_IsCorrect() {
+        public void IsCatchable() {
             for (short i = 0; i < Terraria.ID.NPCID.Count; ++i) {
                 ((NpcType)i).IsCatchable().Should().Be(Main.npcCatchable[i]);
             }

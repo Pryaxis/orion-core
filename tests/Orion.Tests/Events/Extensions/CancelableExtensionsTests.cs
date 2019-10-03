@@ -52,7 +52,7 @@ namespace Orion.Events.Extensions {
         }
 
         [Fact]
-        public void Cancel_IsCorrect() {
+        public void Cancel() {
             var mockCancelable = new Mock<ICancelable>();
             mockCancelable.SetupSet(c => c.CancellationReason = "test");
 
@@ -78,7 +78,7 @@ namespace Orion.Events.Extensions {
         }
 
         [Fact]
-        public void Uncancel_IsCorrect() {
+        public void Uncancel() {
             var mockCancelable = new Mock<ICancelable>();
             mockCancelable.SetupSet(c => c.CancellationReason = null);
 

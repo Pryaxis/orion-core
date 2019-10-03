@@ -31,7 +31,7 @@ namespace Orion.Packets.Entities {
         public static readonly byte[] Bytes = {5, 0, 51, 0, 1};
 
         [Fact]
-        public void ReadFromStream_IsCorrect() {
+        public void ReadFromStream() {
             using var stream = new MemoryStream(Bytes);
             var packet = (EntityActionPacket)Packet.ReadFromStream(stream, PacketContext.Server);
 

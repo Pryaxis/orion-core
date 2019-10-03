@@ -40,7 +40,7 @@ namespace Orion.Packets.World.TileEntities {
         public static readonly byte[] ServerBytes = {9, 0, 69, 0, 0, 0, 1, 100, 0};
 
         [Fact]
-        public void ReadFromStream_Server_IsCorrect() {
+        public void ReadFromStream_Server() {
             using var stream = new MemoryStream(ServerBytes);
             var packet = (ChestNamePacket)Packet.ReadFromStream(stream, PacketContext.Server);
 
@@ -65,7 +65,7 @@ namespace Orion.Packets.World.TileEntities {
         };
 
         [Fact]
-        public void ReadFromStream_Client_IsCorrect() {
+        public void ReadFromStream_Client() {
             using var stream = new MemoryStream(ClientBytes);
             var packet = (ChestNamePacket)Packet.ReadFromStream(stream, PacketContext.Client);
 

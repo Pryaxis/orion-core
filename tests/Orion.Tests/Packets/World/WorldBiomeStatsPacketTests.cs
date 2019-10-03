@@ -31,7 +31,7 @@ namespace Orion.Packets.World {
         public static readonly byte[] Bytes = {6, 0, 57, 1, 2, 3};
 
         [Fact]
-        public void ReadFromStream_IsCorrect() {
+        public void ReadFromStream() {
             using var stream = new MemoryStream(Bytes);
             var packet = (WorldBiomeStatsPacket)Packet.ReadFromStream(stream, PacketContext.Server);
 

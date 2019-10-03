@@ -40,140 +40,140 @@ namespace Orion.World {
         }
 
         [Fact]
-        public void WorldWidth_Get_IsCorrect() {
+        public void WorldWidth_Get() {
             Main.maxTilesX = 1000;
 
             _worldService.WorldWidth.Should().Be(1000);
         }
 
         [Fact]
-        public void WorldHeight_Get_IsCorrect() {
+        public void WorldHeight_Get() {
             Main.maxTilesY = 1000;
 
             _worldService.WorldHeight.Should().Be(1000);
         }
 
         [Fact]
-        public void CurrentInvasionType_Get_IsCorrect() {
+        public void CurrentInvasionType_Get() {
             Main.invasionType = (int)InvasionType.Goblins;
 
             _worldService.CurrentInvasionType.Should().Be(InvasionType.Goblins);
         }
         
         [Fact]
-        public void Maintile_Gettype_IsCorrect() {
+        public void Maintile_Gettype() {
             _worldService[0, 0] = new Tile {BlockType = BlockType.Stone};
 
             Main.tile[0, 0].type.Should().Be((ushort)BlockType.Stone);
         }
 
         [Fact]
-        public void Maintile_Settype_IsCorrect() {
+        public void Maintile_Settype() {
             Main.tile[0, 0].type = (ushort)BlockType.Stone;
 
             _worldService[0, 0].BlockType.Should().Be(BlockType.Stone);
         }
 
         [Fact]
-        public void Maintile_Getwall_IsCorrect() {
+        public void Maintile_Getwall() {
             _worldService[0, 0] = new Tile {WallType = WallType.Stone};
 
             Main.tile[0, 0].wall.Should().Be((byte)WallType.Stone);
         }
 
         [Fact]
-        public void Maintile_Setwall_IsCorrect() {
+        public void Maintile_Setwall() {
             Main.tile[0, 0].wall = (byte)WallType.Stone;
 
             _worldService[0, 0].WallType.Should().Be(WallType.Stone);
         }
 
         [Fact]
-        public void Maintile_Getliquid_IsCorrect() {
+        public void Maintile_Getliquid() {
             _worldService[0, 0] = new Tile {LiquidAmount = 100};
 
             Main.tile[0, 0].liquid.Should().Be(100);
         }
 
         [Fact]
-        public void Maintile_Setliquid_IsCorrect() {
+        public void Maintile_Setliquid() {
             Main.tile[0, 0].liquid = 100;
 
             _worldService[0, 0].LiquidAmount.Should().Be(100);
         }
 
         [Fact]
-        public void Maintile_GetsTileHeader_IsCorrect() {
+        public void Maintile_GetsTileHeader() {
             _worldService[0, 0] = new Tile {_sTileHeader = 12345};
 
             Main.tile[0, 0].sTileHeader.Should().Be(12345);
         }
 
         [Fact]
-        public void Maintile_SetsTileHeader_IsCorrect() {
+        public void Maintile_SetsTileHeader() {
             Main.tile[0, 0].sTileHeader = 12345;
 
             _worldService[0, 0]._sTileHeader.Should().Be(12345);
         }
 
         [Fact]
-        public void Maintile_GetbTileHeader_IsCorrect() {
+        public void Maintile_GetbTileHeader() {
             _worldService[0, 0] = new Tile {_bTileHeader = 100};
 
             Main.tile[0, 0].bTileHeader.Should().Be(100);
         }
 
         [Fact]
-        public void Maintile_SetbTileHeader_IsCorrect() {
+        public void Maintile_SetbTileHeader() {
             Main.tile[0, 0].bTileHeader = 100;
 
             _worldService[0, 0]._bTileHeader.Should().Be(100);
         }
 
         [Fact]
-        public void Maintile_GetbTileHeader3_IsCorrect() {
+        public void Maintile_GetbTileHeader3() {
             _worldService[0, 0] = new Tile {_bTileHeader2 = 100};
 
             Main.tile[0, 0].bTileHeader3.Should().Be(100);
         }
 
         [Fact]
-        public void Maintile_SetbTileHeader3_IsCorrect() {
+        public void Maintile_SetbTileHeader3() {
             Main.tile[0, 0].bTileHeader3 = 100;
 
             _worldService[0, 0]._bTileHeader2.Should().Be(100);
         }
 
         [Fact]
-        public void Maintile_GetframeX_IsCorrect() {
+        public void Maintile_GetframeX() {
             _worldService[0, 0] = new Tile {BlockFrameX = 12345};
 
             Main.tile[0, 0].frameX.Should().Be(12345);
         }
 
         [Fact]
-        public void Maintile_SetframeX_IsCorrect() {
+        public void Maintile_SetframeX() {
             Main.tile[0, 0].frameX = 12345;
 
             _worldService[0, 0].BlockFrameX.Should().Be(12345);
         }
 
         [Fact]
-        public void Maintile_GetframeY_IsCorrect() {
+        public void Maintile_GetframeY() {
             _worldService[0, 0] = new Tile {BlockFrameY = 12345};
 
             Main.tile[0, 0].frameY.Should().Be(12345);
         }
 
         [Fact]
-        public void Maintile_SetframeY_IsCorrect() {
+        public void Maintile_SetframeY() {
             Main.tile[0, 0].frameY = 12345;
 
             _worldService[0, 0].BlockFrameY.Should().Be(12345);
         }
 
         [Fact]
-        public void Maintile_CopyFrom_IsCorrect() {
+        public void Maintile_CopyFrom() {
             var mockTile = new Mock<ITile>();
             mockTile.SetupGet(t => t.type).Returns(1);
             mockTile.SetupGet(t => t.wall).Returns(2);
@@ -206,7 +206,7 @@ namespace Orion.World {
         }
 
         [Fact]
-        public void Maintile_CopyFrom_Bridge_IsCorrect() {
+        public void Maintile_CopyFrom_Bridge() {
             _worldService[0, 0] = new Tile {
                 BlockType = (BlockType)1,
                 WallType = (WallType)2,
@@ -231,7 +231,7 @@ namespace Orion.World {
         }
 
         [Fact]
-        public void Maintile_ClearEverything_IsCorrect() {
+        public void Maintile_ClearEverything() {
             _worldService[0, 0] = new Tile {
                 BlockType = (BlockType)1,
                 WallType = (WallType)2,
@@ -256,7 +256,7 @@ namespace Orion.World {
         }
 
         [Fact]
-        public void Maintile_ClearTile_IsCorrect() {
+        public void Maintile_ClearTile() {
             _worldService[0, 0] = new Tile {
                 Slope = Slope.BottomRight,
                 IsBlockHalved = true,
@@ -271,7 +271,7 @@ namespace Orion.World {
         }
 
         [Fact]
-        public void Maintile_ResetToType_IsCorrect() {
+        public void Maintile_ResetToType() {
             _worldService[0, 0] = new Tile {
                 BlockType = (BlockType)1,
                 WallType = (WallType)2,
@@ -296,7 +296,7 @@ namespace Orion.World {
         }
 
         [Fact]
-        public void Maintile_ClearMetadata_IsCorrect() {
+        public void Maintile_ClearMetadata() {
             _worldService[0, 0] = new Tile {
                 BlockType = (BlockType)1,
                 WallType = (WallType)2,
@@ -452,7 +452,7 @@ namespace Orion.World {
         }
 
         [Fact]
-        public void Maintile_color_IsCorrect() {
+        public void Maintile_color() {
             _worldService[0, 0] = new Tile {BlockColor = PaintColor.Red};
 
             Main.tile[0, 0].color().Should().Be((byte)PaintColor.Red);
@@ -463,7 +463,7 @@ namespace Orion.World {
         }
 
         [Fact]
-        public void Maintile_active_IsCorrect() {
+        public void Maintile_active() {
             _worldService[0, 0] = new Tile {IsBlockActive = true};
 
             Main.tile[0, 0].active().Should().BeTrue();
@@ -474,7 +474,7 @@ namespace Orion.World {
         }
 
         [Fact]
-        public void Maintile_inActive_IsCorrect() {
+        public void Maintile_inActive() {
             _worldService[0, 0] = new Tile {IsBlockActuated = true};
 
             Main.tile[0, 0].inActive().Should().BeTrue();
@@ -485,7 +485,7 @@ namespace Orion.World {
         }
 
         [Fact]
-        public void Maintile_wire_IsCorrect() {
+        public void Maintile_wire() {
             _worldService[0, 0] = new Tile {HasRedWire = true};
 
             Main.tile[0, 0].wire().Should().BeTrue();
@@ -496,7 +496,7 @@ namespace Orion.World {
         }
 
         [Fact]
-        public void Maintile_wire2_IsCorrect() {
+        public void Maintile_wire2() {
             _worldService[0, 0] = new Tile {HasBlueWire = true};
 
             Main.tile[0, 0].wire2().Should().BeTrue();
@@ -507,7 +507,7 @@ namespace Orion.World {
         }
 
         [Fact]
-        public void Maintile_wire3_IsCorrect() {
+        public void Maintile_wire3() {
             _worldService[0, 0] = new Tile {HasGreenWire = true};
 
             Main.tile[0, 0].wire3().Should().BeTrue();
@@ -518,7 +518,7 @@ namespace Orion.World {
         }
 
         [Fact]
-        public void Maintile_halfBrick_IsCorrect() {
+        public void Maintile_halfBrick() {
             _worldService[0, 0] = new Tile {IsBlockHalved = true};
 
             Main.tile[0, 0].halfBrick().Should().BeTrue();
@@ -529,7 +529,7 @@ namespace Orion.World {
         }
 
         [Fact]
-        public void Maintile_actuator_IsCorrect() {
+        public void Maintile_actuator() {
             _worldService[0, 0] = new Tile {HasActuator = true};
 
             Main.tile[0, 0].actuator().Should().BeTrue();
@@ -540,7 +540,7 @@ namespace Orion.World {
         }
 
         [Fact]
-        public void Maintile_slope_IsCorrect() {
+        public void Maintile_slope() {
             _worldService[0, 0] = new Tile {Slope = Slope.BottomRight};
 
             Main.tile[0, 0].slope().Should().Be((byte)Slope.BottomRight);
@@ -551,7 +551,7 @@ namespace Orion.World {
         }
 
         [Fact]
-        public void Maintile_wallColor_IsCorrect() {
+        public void Maintile_wallColor() {
             _worldService[0, 0] = new Tile {WallColor = PaintColor.Red};
 
             Main.tile[0, 0].wallColor().Should().Be((byte)PaintColor.Red);
@@ -562,7 +562,7 @@ namespace Orion.World {
         }
 
         [Fact]
-        public void Maintile_lava_IsCorrect() {
+        public void Maintile_lava() {
             _worldService[0, 0] = new Tile {IsLava = true};
 
             Main.tile[0, 0].lava().Should().BeTrue();
@@ -573,7 +573,7 @@ namespace Orion.World {
         }
 
         [Fact]
-        public void Maintile_honey_IsCorrect() {
+        public void Maintile_honey() {
             _worldService[0, 0] = new Tile {IsHoney = true};
 
             Main.tile[0, 0].honey().Should().BeTrue();
@@ -584,7 +584,7 @@ namespace Orion.World {
         }
 
         [Fact]
-        public void Maintile_liquidType_IsCorrect() {
+        public void Maintile_liquidType() {
             _worldService[0, 0] = new Tile {LiquidType = LiquidType.Lava};
 
             Main.tile[0, 0].liquidType().Should().Be((byte)LiquidType.Lava);
@@ -595,7 +595,7 @@ namespace Orion.World {
         }
 
         [Fact]
-        public void Maintile_wire4_IsCorrect() {
+        public void Maintile_wire4() {
             _worldService[0, 0] = new Tile {HasYellowWire = true};
 
             Main.tile[0, 0].wire4().Should().BeTrue();
@@ -606,7 +606,7 @@ namespace Orion.World {
         }
 
         [Fact]
-        public void Maintile_checkingLiquid_IsCorrect() {
+        public void Maintile_checkingLiquid() {
             _worldService[0, 0] = new Tile {IsCheckingLiquid = true};
 
             Main.tile[0, 0].checkingLiquid().Should().BeTrue();
@@ -617,7 +617,7 @@ namespace Orion.World {
         }
 
         [Fact]
-        public void Maintile_skipLiquid_IsCorrect() {
+        public void Maintile_skipLiquid() {
             _worldService[0, 0] = new Tile {ShouldSkipLiquid = true};
 
             Main.tile[0, 0].skipLiquid().Should().BeTrue();
@@ -628,7 +628,7 @@ namespace Orion.World {
         }
 
         [Fact]
-        public void Maintile_nactive_IsCorrect() {
+        public void Maintile_nactive() {
             _worldService[0, 0] = new Tile {IsBlockActive = true};
 
             Main.tile[0, 0].nactive().Should().BeTrue();
@@ -687,7 +687,7 @@ namespace Orion.World {
         }
 
         [Fact]
-        public void Maintile_HasSameSlope_IsCorrect() {
+        public void Maintile_HasSameSlope() {
             _worldService[0, 0] = new Tile {Slope = Slope.BottomRight};
             _worldService[0, 1] = new Tile {Slope = Slope.BottomRight};
 
@@ -699,21 +699,21 @@ namespace Orion.World {
         }
 
         [Fact]
-        public void Maintile_blockType_IsCorrect() {
+        public void Maintile_blockType() {
             _worldService[0, 0] = new Tile();
 
             Main.tile[0, 0].blockType().Should().Be(0);
         }
 
         [Fact]
-        public void Maintile_blockType_Halved_IsCorrect() {
+        public void Maintile_blockType_Halved() {
             _worldService[0, 0] = new Tile {IsBlockHalved = true};
             
             Main.tile[0, 0].blockType().Should().Be(1);
         }
 
         [Fact]
-        public void Maintile_blockType_Slope_IsCorrect() {
+        public void Maintile_blockType_Slope() {
             _worldService[0, 0] = new Tile {Slope = Slope.BottomRight};
             
             Main.tile[0, 0].blockType().Should().Be((int)Slope.BottomRight + 1);

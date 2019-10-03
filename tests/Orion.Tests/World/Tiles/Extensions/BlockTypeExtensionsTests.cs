@@ -23,7 +23,7 @@ namespace Orion.World.Tiles.Extensions {
     [Collection("TerrariaTestsCollection")]
     public class BlockTypeExtensionsTests {
         [Fact]
-        public void AreFramesImportant_IsCorrect() {
+        public void AreFramesImportant() {
             for (ushort i = 0; i < Terraria.ID.TileID.Count; ++i) {
                 ((BlockType)i).AreFramesImportant().Should().Be(Main.tileFrameImportant[i]);
             }

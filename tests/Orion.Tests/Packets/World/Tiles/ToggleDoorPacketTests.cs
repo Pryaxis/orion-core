@@ -31,7 +31,7 @@ namespace Orion.Packets.World.Tiles {
         private static readonly byte[] Bytes = {9, 0, 19, 0, 16, 14, 194, 1, 1};
 
         [Fact]
-        public void ReadFromStream_IsCorrect() {
+        public void ReadFromStream() {
             using var stream = new MemoryStream(Bytes);
             var packet = (ToggleDoorPacket)Packet.ReadFromStream(stream, PacketContext.Server);
 

@@ -24,7 +24,7 @@ using Xunit;
 namespace Orion.Utils {
     public class DirtiableListTests {
         [Fact]
-        public void TIsIDirtiable_IsCorrect() {
+        public void TIsIDirtiable() {
             var isDirty = true;
             var mockDirtiable = new Mock<IDirtiable>();
             mockDirtiable.SetupGet(d => d.IsDirty).Returns(() => isDirty);
@@ -39,7 +39,7 @@ namespace Orion.Utils {
         }
 
         [Fact]
-        public void Count_IsCorrect() {
+        public void Count() {
             var list = new DirtiableList<int>();
             for (var i = 0; i < 100; ++i) {
                 list.Add(0);
@@ -49,14 +49,14 @@ namespace Orion.Utils {
         }
 
         [Fact]
-        public void IsReadOnly_IsCorrect() {
+        public void IsReadOnly() {
             ICollection<int> list = new DirtiableList<int>();
 
             list.IsReadOnly.Should().BeFalse();
         }
 
         [Fact]
-        public void Item_Get_IsCorrect() {
+        public void Item_Get() {
             var list = new DirtiableList<int> {100};
 
             list[0].Should().Be(100);
@@ -72,7 +72,7 @@ namespace Orion.Utils {
         }
 
         [Fact]
-        public void GetEnumerator_IsCorrect() {
+        public void GetEnumerator() {
             var list = new DirtiableList<int> {0};
 
             list.Should().BeEquivalentTo(0);
@@ -81,7 +81,7 @@ namespace Orion.Utils {
         [Fact]
         [SuppressMessage("ReSharper", "UseObjectOrCollectionInitializer")]
         [SuppressMessage("Style", "IDE0028:Simplify collection initialization", Justification = "Testing")]
-        public void Add_IsCorrect() {
+        public void Add() {
             var list = new DirtiableList<int>();
 
             list.Add(0);
@@ -92,7 +92,7 @@ namespace Orion.Utils {
         }
 
         [Fact]
-        public void Clear_IsCorrect() {
+        public void Clear() {
             var list = new DirtiableList<int> {0};
             list.Clean();
 
@@ -103,14 +103,14 @@ namespace Orion.Utils {
         }
 
         [Fact]
-        public void Contains_IsCorrect() {
+        public void Contains() {
             var list = new DirtiableList<int> {100};
 
             list.Contains(100).Should().BeTrue();
         }
 
         [Fact]
-        public void CopyTo_IsCorrect() {
+        public void CopyTo() {
             var list = new DirtiableList<int> {100};
             var array = new int[1];
 
@@ -120,7 +120,7 @@ namespace Orion.Utils {
         }
 
         [Fact]
-        public void Remove_IsCorrect() {
+        public void Remove() {
             var list = new DirtiableList<int> {100};
             list.Clean();
 
@@ -135,7 +135,7 @@ namespace Orion.Utils {
         }
 
         [Fact]
-        public void IndexOf_IsCorrect() {
+        public void IndexOf() {
             var list = new DirtiableList<int> {100};
 
             list.IndexOf(0).Should().Be(-1);
@@ -143,7 +143,7 @@ namespace Orion.Utils {
         }
 
         [Fact]
-        public void Insert_IsCorrect() {
+        public void Insert() {
             var list = new DirtiableList<int> {100};
             list.Clean();
 
@@ -155,7 +155,7 @@ namespace Orion.Utils {
         }
 
         [Fact]
-        public void RemoveAt_IsCorrect() {
+        public void RemoveAt() {
             var list = new DirtiableList<int> {100};
             list.Clean();
 

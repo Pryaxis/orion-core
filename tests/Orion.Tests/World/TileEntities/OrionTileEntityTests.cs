@@ -24,7 +24,7 @@ namespace Orion.World.TileEntities {
     [SuppressMessage("Style", "IDE0017:Simplify object initialization", Justification = "Testing")]
     public class OrionTileEntityTests {
         [Fact]
-        public void Type_Get_IsCorrect() {
+        public void Type_Get() {
             var terrariaTileEntity = new TestTerrariaTileEntity {type = (byte)TileEntityType.ItemFrame};
             ITileEntity tileEntity = new TestOrionTileEntity(terrariaTileEntity);
 
@@ -32,7 +32,7 @@ namespace Orion.World.TileEntities {
         }
 
         [Fact]
-        public void Index_Get_IsCorrect() {
+        public void Index_Get() {
             var terrariaTileEntity = new TestTerrariaTileEntity {ID = 100};
             ITileEntity tileEntity = new TestOrionTileEntity(terrariaTileEntity);
 
@@ -40,7 +40,7 @@ namespace Orion.World.TileEntities {
         }
 
         [Fact]
-        public void X_Get_IsCorrect() {
+        public void X_Get() {
             var terrariaTileEntity =
                 new TestTerrariaTileEntity {Position = new Terraria.DataStructures.Point16(100, 0)};
             ITileEntity tileEntity = new TestOrionTileEntity(terrariaTileEntity);
@@ -49,7 +49,7 @@ namespace Orion.World.TileEntities {
         }
 
         [Fact]
-        public void X_Set_IsCorrect() {
+        public void X_Set() {
             var terrariaTileEntity = new TestTerrariaTileEntity();
             ITileEntity tileEntity = new TestOrionTileEntity(terrariaTileEntity);
 
@@ -59,7 +59,7 @@ namespace Orion.World.TileEntities {
         }
 
         [Fact]
-        public void Y_Get_IsCorrect() {
+        public void Y_Get() {
             var terrariaTileEntity =
                 new TestTerrariaTileEntity {Position = new Terraria.DataStructures.Point16(0, 100)};
             ITileEntity tileEntity = new TestOrionTileEntity(terrariaTileEntity);
@@ -68,7 +68,7 @@ namespace Orion.World.TileEntities {
         }
 
         [Fact]
-        public void Y_Set_IsCorrect() {
+        public void Y_Set() {
             var terrariaTileEntity = new TestTerrariaTileEntity();
             ITileEntity tileEntity = new TestOrionTileEntity(terrariaTileEntity);
 

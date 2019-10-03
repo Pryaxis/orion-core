@@ -24,7 +24,7 @@ using TerrariaChest = Terraria.Chest;
 namespace Orion.Packets.World {
     public class TravelingMerchantShopPacketTests {
         [Fact]
-        public void ShopItemTypes_Count_IsCorrect() {
+        public void ShopItemTypes_Count() {
             var packet = new TravelingMerchantShopPacket();
 
             packet.ShopItemTypes.Count.Should().Be(TerrariaChest.maxItems);
@@ -37,7 +37,7 @@ namespace Orion.Packets.World {
         };
 
         [Fact]
-        public void ReadFromStream_IsCorrect() {
+        public void ReadFromStream() {
             using var stream = new MemoryStream(Bytes);
             var packet = (TravelingMerchantShopPacket)Packet.ReadFromStream(stream, PacketContext.Server);
 

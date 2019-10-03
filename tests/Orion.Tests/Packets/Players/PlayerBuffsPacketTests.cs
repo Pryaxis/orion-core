@@ -40,7 +40,7 @@ namespace Orion.Packets.Players {
         }
 
         [Fact]
-        public void PlayerBuffTypes_Count_IsCorrect() {
+        public void PlayerBuffTypes_Count() {
             var packet = new PlayerBuffsPacket();
 
             packet.PlayerBuffTypes.Count.Should().Be(TerrariaPlayer.maxBuffs);
@@ -51,7 +51,7 @@ namespace Orion.Packets.Players {
         };
 
         [Fact]
-        public void ReadFromStream_IsCorrect() {
+        public void ReadFromStream() {
             using var stream = new MemoryStream(Bytes);
             var packet = (PlayerBuffsPacket)Packet.ReadFromStream(stream, PacketContext.Server);
 

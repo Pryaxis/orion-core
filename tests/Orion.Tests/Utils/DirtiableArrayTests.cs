@@ -33,7 +33,7 @@ namespace Orion.Utils {
         }
 
         [Fact]
-        public void TIsIDirtiable_IsCorrect() {
+        public void TIsIDirtiable() {
             var isDirty = true;
             var mockDirtiable = new Mock<IDirtiable>();
             mockDirtiable.SetupGet(d => d.IsDirty).Returns(() => isDirty);
@@ -49,14 +49,14 @@ namespace Orion.Utils {
         }
 
         [Fact]
-        public void Count_IsCorrect() {
+        public void Count() {
             var array = new DirtiableArray<int>(100);
 
             array.Count.Should().Be(100);
         }
 
         [Fact]
-        public void Item_Get_IsCorrect() {
+        public void Item_Get() {
             var array = new DirtiableArray<int>(1);
 
             array[0].Should().Be(0);
@@ -72,7 +72,7 @@ namespace Orion.Utils {
         }
 
         [Fact]
-        public void GetEnumerator_IsCorrect() {
+        public void GetEnumerator() {
             var array = new DirtiableArray<int>(1);
             array[0] = 1;
 

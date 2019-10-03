@@ -31,7 +31,7 @@ namespace Orion.Packets.World {
         private static readonly byte[] Bytes = {11, 0, 112, 1, 0, 1, 100, 0, 10, 1, 0};
 
         [Fact]
-        public void ReadFromStream_IsCorrect() {
+        public void ReadFromStream() {
             using var stream = new MemoryStream(Bytes);
             var packet = (TreeGrowingEffectPacket)Packet.ReadFromStream(stream, PacketContext.Server);
 

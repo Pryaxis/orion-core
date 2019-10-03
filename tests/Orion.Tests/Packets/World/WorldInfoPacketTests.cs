@@ -48,7 +48,7 @@ namespace Orion.Packets.World {
         }
 
         [Fact]
-        public void TreeStyleBoundaries_Count_IsCorrect() {
+        public void TreeStyleBoundaries_Count() {
             var packet = new WorldInfoPacket();
 
             packet.TreeStyleBoundaries.Count.Should().Be(3);
@@ -64,7 +64,7 @@ namespace Orion.Packets.World {
         }
 
         [Fact]
-        public void TreeStyles_Count_IsCorrect() {
+        public void TreeStyles_Count() {
             var packet = new WorldInfoPacket();
 
             packet.TreeStyles.Count.Should().Be(4);
@@ -80,7 +80,7 @@ namespace Orion.Packets.World {
         }
 
         [Fact]
-        public void CaveBackgroundStyleBoundaries_Count_IsCorrect() {
+        public void CaveBackgroundStyleBoundaries_Count() {
             var packet = new WorldInfoPacket();
 
             packet.CaveBackgroundStyleBoundaries.Count.Should().Be(3);
@@ -96,7 +96,7 @@ namespace Orion.Packets.World {
         }
 
         [Fact]
-        public void CaveBackgroundStyles_Count_IsCorrect() {
+        public void CaveBackgroundStyles_Count() {
             var packet = new WorldInfoPacket();
 
             packet.CaveBackgroundStyles.Count.Should().Be(4);
@@ -111,7 +111,7 @@ namespace Orion.Packets.World {
         };
 
         [Fact]
-        public void ReadFromStream_WorldInfo_IsCorrect() {
+        public void ReadFromStream_WorldInfo() {
             using var stream = new MemoryStream(Bytes);
             var packet = (WorldInfoPacket)Packet.ReadFromStream(stream, PacketContext.Server);
 

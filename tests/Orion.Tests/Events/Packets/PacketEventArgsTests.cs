@@ -40,7 +40,7 @@ namespace Orion.Events.Packets {
         }
 
         [Fact]
-        public void Packet_Get_IsCorrect() {
+        public void Packet_Get() {
             var packet = new TestPacket();
             var args = new TestArgs(packet);
 
@@ -69,7 +69,7 @@ namespace Orion.Events.Packets {
         }
 
         [Fact]
-        public void IsDirty_Get_IsCorrect() {
+        public void IsDirty_Get() {
             var packet = new TestPacket();
             var args = new TestArgs(packet);
             packet.MarkAsDirty();

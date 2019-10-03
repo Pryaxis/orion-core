@@ -29,7 +29,7 @@ namespace Orion.Projectiles {
          * TODO: this test requires language localization, which fails for .NET core projects currently
          *
         [Fact(Skip = "Localization")]
-        public void Name_Get_IsCorrect() {
+        public void Name_Get() {
             var terrariaProjectile = new TerrariaProjectile {type = (int)ProjectileType.WoodenArrow};
             IProjectile projectile = new OrionProjectile(terrariaProjectile);
 
@@ -38,7 +38,7 @@ namespace Orion.Projectiles {
         */
 
         [Fact]
-        public void Name_Set_IsCorrect() {
+        public void Name_Set() {
             var terrariaProjectile = new TerrariaProjectile();
             IProjectile projectile = new OrionProjectile(terrariaProjectile);
 
@@ -57,7 +57,7 @@ namespace Orion.Projectiles {
         }
 
         [Fact]
-        public void Type_Get_IsCorrect() {
+        public void Type_Get() {
             var terrariaProjectile = new TerrariaProjectile {type = (int)ProjectileType.CrystalBullet};
             IProjectile projectile = new OrionProjectile(terrariaProjectile);
 
@@ -65,7 +65,7 @@ namespace Orion.Projectiles {
         }
 
         [Fact]
-        public void Type_Set_IsCorrect() {
+        public void Type_Set() {
             var terrariaProjectile = new TerrariaProjectile();
             IProjectile projectile = new OrionProjectile(terrariaProjectile);
 

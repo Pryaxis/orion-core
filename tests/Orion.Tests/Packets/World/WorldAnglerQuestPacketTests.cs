@@ -31,7 +31,7 @@ namespace Orion.Packets.World {
         public static readonly byte[] Bytes = {5, 0, 74, 1, 1};
 
         [Fact]
-        public void ReadFromStream_IsCorrect() {
+        public void ReadFromStream() {
             using var stream = new MemoryStream(Bytes);
             var packet = (WorldAnglerQuestPacket)Packet.ReadFromStream(stream, PacketContext.Server);
 

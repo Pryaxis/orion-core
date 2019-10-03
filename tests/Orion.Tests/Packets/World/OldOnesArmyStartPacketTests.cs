@@ -31,7 +31,7 @@ namespace Orion.Packets.World {
         public static readonly byte[] Bytes = {7, 0, 113, 0, 1, 100, 0};
 
         [Fact]
-        public void ReadFromStream_IsCorrect() {
+        public void ReadFromStream() {
             using var stream = new MemoryStream(Bytes);
             var packet = (OldOnesArmyStartPacket)Packet.ReadFromStream(stream, PacketContext.Server);
 

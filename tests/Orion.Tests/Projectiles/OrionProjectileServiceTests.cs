@@ -43,7 +43,7 @@ namespace Orion.Projectiles {
         }
 
         [Fact]
-        public void Projectiles_Item_Get_IsCorrect() {
+        public void Projectiles_Item_Get() {
             var projectile = _projectileService.Projectiles[1];
 
             projectile.Index.Should().Be(1);
@@ -68,7 +68,7 @@ namespace Orion.Projectiles {
         }
 
         [Fact]
-        public void Projectiles_GetEnumerator_IsCorrect() {
+        public void Projectiles_GetEnumerator() {
             var projectiles = _projectileService.Projectiles.ToList();
 
             for (var i = 0; i < projectiles.Count; ++i) {
@@ -77,7 +77,7 @@ namespace Orion.Projectiles {
         }
 
         [Fact]
-        public void ProjectileSetDefaults_IsCorrect() {
+        public void ProjectileSetDefaults() {
             var isRun = false;
             _projectileService.ProjectileSetDefaults += (sender, args) => {
                 isRun = true;
@@ -104,7 +104,7 @@ namespace Orion.Projectiles {
         }
 
         [Fact]
-        public void ProjectileSetDefaults_Canceled_IsCorrect() {
+        public void ProjectileSetDefaults_Canceled() {
             _projectileService.ProjectileSetDefaults += (sender, args) => {
                 args.Cancel();
             };
@@ -115,7 +115,7 @@ namespace Orion.Projectiles {
         }
 
         [Fact]
-        public void ProjectileUpdate_IsCorrect() {
+        public void ProjectileUpdate() {
             var isRun = false;
             _projectileService.ProjectileUpdate += (sender, args) => {
                 isRun = true;
@@ -128,7 +128,7 @@ namespace Orion.Projectiles {
         }
 
         [Fact]
-        public void ProjectileRemove_IsCorrect() {
+        public void ProjectileRemove() {
             var isRun = false;
             _projectileService.ProjectileRemove += (sender, args) => {
                 isRun = true;
@@ -141,7 +141,7 @@ namespace Orion.Projectiles {
         }
 
         [Fact]
-        public void ProjectileRemove_Canceled_IsCorrect() {
+        public void ProjectileRemove_Canceled() {
             _projectileService.ProjectileRemove += (sender, args) => {
                 args.Cancel();
             };
@@ -153,7 +153,7 @@ namespace Orion.Projectiles {
         }
 
         [Fact]
-        public void SpawnProjectile_IsCorrect() {
+        public void SpawnProjectile() {
             var projectile =
                 _projectileService.SpawnProjectile(ProjectileType.CrystalBullet, Vector2.Zero, Vector2.Zero, 100, 0);
 
@@ -162,7 +162,7 @@ namespace Orion.Projectiles {
         }
 
         [Fact]
-        public void SpawnProjectile_AiValues_IsCorrect() {
+        public void SpawnProjectile_AiValues() {
             var projectile = _projectileService.SpawnProjectile(ProjectileType.CrystalBullet, Vector2.Zero,
                                                                 Vector2.Zero, 100, 0, new float[] {1, 2});
             

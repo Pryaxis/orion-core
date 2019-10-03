@@ -54,7 +54,7 @@ namespace Orion.Packets.World.Tiles {
         }
 
         [Fact]
-        public void SectionTileEntities_Count_IsCorrect() {
+        public void SectionTileEntities_Count() {
             var packet = new SectionPacket();
             packet.SectionTileEntities.Add(new NetworkChest());
 
@@ -62,7 +62,7 @@ namespace Orion.Packets.World.Tiles {
         }
 
         [Fact]
-        public void SectionTileEntities_IsReadOnly_IsCorrect() {
+        public void SectionTileEntities_IsReadOnly() {
             var packet = new SectionPacket();
 
             packet.SectionTileEntities.IsReadOnly.Should().BeFalse();
@@ -181,7 +181,7 @@ namespace Orion.Packets.World.Tiles {
         };
 
         [Fact]
-        public void ReadFromStream_IsCorrect() {
+        public void ReadFromStream() {
             using var stream = new MemoryStream(Bytes);
             var packet = (SectionPacket)Packet.ReadFromStream(stream, PacketContext.Server);
 

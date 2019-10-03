@@ -31,7 +31,7 @@ namespace Orion.Packets.Players {
         public static readonly byte[] Bytes = {6, 0, 43, 0, 100, 0};
 
         [Fact]
-        public void ReadFromStream_IsCorrect() {
+        public void ReadFromStream() {
             using var stream = new MemoryStream(Bytes);
             var packet = (PlayerManaEffectPacket)Packet.ReadFromStream(stream, PacketContext.Server);
 

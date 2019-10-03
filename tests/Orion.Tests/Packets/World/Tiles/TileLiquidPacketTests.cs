@@ -46,7 +46,7 @@ namespace Orion.Packets.World.Tiles {
         public static readonly byte[] Bytes = {9, 0, 48, 0, 1, 100, 0, 255, 0};
 
         [Fact]
-        public void ReadFromStream_IsCorrect() {
+        public void ReadFromStream() {
             using var stream = new MemoryStream(Bytes);
             var packet = (TileLiquidPacket)Packet.ReadFromStream(stream, PacketContext.Server);
 

@@ -32,7 +32,7 @@ namespace Orion.Packets.World.Tiles {
         public static readonly byte[] Bytes = {8, 0, 63, 0, 1, 100, 0, 1};
 
         [Fact]
-        public void ReadFromStream_IsCorrect() {
+        public void ReadFromStream() {
             using var stream = new MemoryStream(Bytes);
             var packet = (TileBlockColorPacket)Packet.ReadFromStream(stream, PacketContext.Server);
 

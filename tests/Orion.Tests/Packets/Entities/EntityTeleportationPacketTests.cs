@@ -32,7 +32,7 @@ namespace Orion.Packets.Entities {
         public static readonly byte[] Bytes = {14, 0, 65, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
 
         [Fact]
-        public void ReadFromStream_IsCorrect() {
+        public void ReadFromStream() {
             using var stream = new MemoryStream(Bytes);
             var packet = (EntityTeleportationPacket)Packet.ReadFromStream(stream, PacketContext.Server);
 

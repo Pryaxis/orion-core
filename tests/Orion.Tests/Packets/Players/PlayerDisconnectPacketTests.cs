@@ -42,7 +42,7 @@ namespace Orion.Packets.Players {
         };
 
         [Fact]
-        public void ReadFromStream_IsCorrect() {
+        public void ReadFromStream() {
             using var stream = new MemoryStream(Bytes);
             var packet = (PlayerDisconnectPacket)Packet.ReadFromStream(stream, PacketContext.Server);
 

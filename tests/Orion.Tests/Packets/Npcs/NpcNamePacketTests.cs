@@ -40,7 +40,7 @@ namespace Orion.Packets.Npcs {
         public static readonly byte[] ClientBytes = {14, 0, 56, 0, 0, 8, 84, 101, 114, 114, 97, 114, 105, 97};
 
         [Fact]
-        public void ReadFromStream_Client_IsCorrect() {
+        public void ReadFromStream_Client() {
             using var stream = new MemoryStream(ClientBytes);
             var packet = (NpcNamePacket)Packet.ReadFromStream(stream, PacketContext.Client);
 
@@ -62,7 +62,7 @@ namespace Orion.Packets.Npcs {
         public static readonly byte[] ServerBytes = {5, 0, 56, 0, 0};
 
         [Fact]
-        public void ReadFromStream_Server_IsCorrect() {
+        public void ReadFromStream_Server() {
             using var stream = new MemoryStream(ServerBytes);
             var packet = (NpcNamePacket)Packet.ReadFromStream(stream, PacketContext.Server);
 

@@ -29,7 +29,7 @@ namespace Orion {
         }
 
         [Fact]
-        public void Kernel_Get_IsCorrect() {
+        public void Kernel_Get() {
             var kernel = new OrionKernel();
             using var plugin = new TestOrionPlugin(kernel);
 

@@ -44,7 +44,7 @@ namespace Orion.Items {
         }
 
         [Fact]
-        public void Items_Item_Get_IsCorrect() {
+        public void Items_Item_Get() {
             var item = _itemService.Items[1];
             
             item.Index.Should().Be(1);
@@ -69,7 +69,7 @@ namespace Orion.Items {
         }
 
         [Fact]
-        public void Items_GetEnumerator_IsCorrect() {
+        public void Items_GetEnumerator() {
             var items = _itemService.Items.ToList();
 
             for (var i = 0; i < items.Count; ++i) {
@@ -78,7 +78,7 @@ namespace Orion.Items {
         }
 
         [Fact]
-        public void ItemSetDefaults_IsCorrect() {
+        public void ItemSetDefaults() {
             var isRun = false;
             _itemService.ItemSetDefaults += (sender, args) => {
                 isRun = true;
@@ -105,7 +105,7 @@ namespace Orion.Items {
         }
 
         [Fact]
-        public void ItemSetDefaults_Canceled_IsCorrect() {
+        public void ItemSetDefaults_Canceled() {
             _itemService.ItemSetDefaults += (sender, args) => {
                 args.Cancel();
             };
@@ -116,7 +116,7 @@ namespace Orion.Items {
         }
 
         [Fact]
-        public void ItemUpdate_IsCorrect() {
+        public void ItemUpdate() {
             var isRun = false;
             _itemService.ItemUpdate += (sender, args) => {
                 isRun = true;

@@ -35,7 +35,7 @@ namespace Orion.Packets.Items {
         };
 
         [Fact]
-        public void ReadFromStream_IsCorrect() {
+        public void ReadFromStream() {
             using var stream = new MemoryStream(Bytes);
             var packet = (ItemInstanceInfoPacket)Packet.ReadFromStream(stream, PacketContext.Server);
 

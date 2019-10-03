@@ -54,7 +54,7 @@ namespace Orion.World.TileEntities {
         }
 
         [Fact]
-        public void Chests_Item_Get_IsCorrect() {
+        public void Chests_Item_Get() {
             Main.chest[0] = new TerrariaChest();
             for (var i = 0; i < TerrariaChest.maxItems; ++i) {
                 Main.chest[0].item[i] = new TerrariaItem();
@@ -89,7 +89,7 @@ namespace Orion.World.TileEntities {
         }
 
         [Fact]
-        public void Chests_GetEnumerator_IsCorrect() {
+        public void Chests_GetEnumerator() {
             for (var i = 0; i < Main.chest.Length; ++i) {
                 Main.chest[i] = new TerrariaChest();
                 for (var j = 0; j < TerrariaChest.maxItems; ++j) {
@@ -106,7 +106,7 @@ namespace Orion.World.TileEntities {
         }
 
         [Fact]
-        public void Signs_Item_Get_IsCorrect() {
+        public void Signs_Item_Get() {
             Main.sign[0] = new TerrariaSign();
             var sign = _tileEntityService.Signs[0];
             
@@ -133,7 +133,7 @@ namespace Orion.World.TileEntities {
         }
 
         [Fact]
-        public void Signs_GetEnumerator_IsCorrect() {
+        public void Signs_GetEnumerator() {
             for (var i = 0; i < Main.sign.Length; ++i) {
                 Main.sign[i] = new TerrariaSign();
             }
@@ -147,7 +147,7 @@ namespace Orion.World.TileEntities {
         }
 
         [Fact]
-        public void AddTileEntity_Chest_IsCorrect() {
+        public void AddTileEntity_Chest() {
             var chest = (IChest)_tileEntityService.AddTileEntity(TileEntityType.Chest, 1, 2);
             
             chest.Should().NotBeNull();
@@ -169,7 +169,7 @@ namespace Orion.World.TileEntities {
         }
 
         [Fact]
-        public void AddTileEntity_Sign_IsCorrect() {
+        public void AddTileEntity_Sign() {
             var sign = (ISign)_tileEntityService.AddTileEntity(TileEntityType.Sign, 1, 2);
             
             sign.Should().NotBeNull();
@@ -191,7 +191,7 @@ namespace Orion.World.TileEntities {
         }
 
         [Fact]
-        public void AddTileEntity_TargetDummy_IsCorrect() {
+        public void AddTileEntity_TargetDummy() {
             var targetDummy = (ITargetDummy)_tileEntityService.AddTileEntity(TileEntityType.TargetDummy, 1, 2);
             
             targetDummy.Should().NotBeNull();
@@ -202,7 +202,7 @@ namespace Orion.World.TileEntities {
         }
 
         [Fact]
-        public void AddTileEntity_ItemFrame_IsCorrect() {
+        public void AddTileEntity_ItemFrame() {
             var itemFrame = (IItemFrame)_tileEntityService.AddTileEntity(TileEntityType.ItemFrame, 1, 2);
             
             itemFrame.Should().NotBeNull();
@@ -213,7 +213,7 @@ namespace Orion.World.TileEntities {
         }
 
         [Fact]
-        public void AddTileEntity_LogicSensor_IsCorrect() {
+        public void AddTileEntity_LogicSensor() {
             var logicSensor = (ILogicSensor)_tileEntityService.AddTileEntity(TileEntityType.LogicSensor, 1, 2);
             
             logicSensor.Should().NotBeNull();
@@ -231,7 +231,7 @@ namespace Orion.World.TileEntities {
         }
 
         [Fact]
-        public void GetTileEntity_Chest_IsCorrect() {
+        public void GetTileEntity_Chest() {
             Main.chest[1] = new TerrariaChest {
                 x = 1,
                 y = 2
@@ -249,7 +249,7 @@ namespace Orion.World.TileEntities {
         }
 
         [Fact]
-        public void GetTileEntity_Sign_IsCorrect() {
+        public void GetTileEntity_Sign() {
             Main.sign[1] = new TerrariaSign {
                 x = 1,
                 y = 2,
@@ -266,7 +266,7 @@ namespace Orion.World.TileEntities {
         }
 
         [Fact]
-        public void GetTileEntity_TargetDummy_IsCorrect() {
+        public void GetTileEntity_TargetDummy() {
             var targetDummyIndex = TerrariaTargetDummy.Place(1, 2);
 
             var targetDummy = (ITargetDummy)_tileEntityService.GetTileEntity(1, 2);
@@ -278,7 +278,7 @@ namespace Orion.World.TileEntities {
         }
 
         [Fact]
-        public void GetTileEntity_ItemFrame_IsCorrect() {
+        public void GetTileEntity_ItemFrame() {
             var itemFrameIndex = TerrariaItemFrame.Place(1, 2);
 
             var itemFrame = (IItemFrame)_tileEntityService.GetTileEntity(1, 2);
@@ -290,7 +290,7 @@ namespace Orion.World.TileEntities {
         }
 
         [Fact]
-        public void GetTileEntity_LogicSensor_IsCorrect() {
+        public void GetTileEntity_LogicSensor() {
             var logicSensorIndex = TerrariaLogicSensor.Place(1, 2);
 
             var logicSensor = (ILogicSensor)_tileEntityService.GetTileEntity(1, 2);
@@ -307,7 +307,7 @@ namespace Orion.World.TileEntities {
         }
 
         [Fact]
-        public void RemoveTileEntity_Chest_IsCorrect() {
+        public void RemoveTileEntity_Chest() {
             Main.chest[1] = new TerrariaChest {
                 x = 1,
                 y = 2
@@ -328,7 +328,7 @@ namespace Orion.World.TileEntities {
         }
 
         [Fact]
-        public void RemoveTileEntity_Sign_IsCorrect() {
+        public void RemoveTileEntity_Sign() {
             Main.sign[1] = new TerrariaSign {
                 x = 1,
                 y = 2,
@@ -346,7 +346,7 @@ namespace Orion.World.TileEntities {
         }
 
         [Fact]
-        public void RemoveTileEntity_TerrariaTileEntity_IsCorrect() {
+        public void RemoveTileEntity_TerrariaTileEntity() {
             var targetDummyIndex = TerrariaTargetDummy.Place(1, 2);
 
             var mockTargetDummy = new Mock<ITargetDummy>();

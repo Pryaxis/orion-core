@@ -25,7 +25,7 @@ namespace Orion.Npcs {
     [SuppressMessage("Style", "IDE0017:Simplify object initialization", Justification = "Testing")]
     public class OrionNpcTests {
         [Fact]
-        public void Name_Get_IsCorrect() {
+        public void Name_Get() {
             var terrariaNpc = new TerrariaNpc {_givenName = "test"};
             INpc npc = new OrionNpc(terrariaNpc);
 
@@ -33,7 +33,7 @@ namespace Orion.Npcs {
         }
 
         [Fact]
-        public void Name_Set_IsCorrect() {
+        public void Name_Set() {
             var terrariaNpc = new TerrariaNpc();
             INpc npc = new OrionNpc(terrariaNpc);
 
@@ -52,7 +52,7 @@ namespace Orion.Npcs {
         }
 
         [Fact]
-        public void Type_Get_IsCorrect() {
+        public void Type_Get() {
             var terrariaNpc = new TerrariaNpc {netID = (int)NpcType.BlueSlime};
             INpc npc = new OrionNpc(terrariaNpc);
 
@@ -60,7 +60,7 @@ namespace Orion.Npcs {
         }
 
         [Fact]
-        public void Type_Set_IsCorrect() {
+        public void Type_Set() {
             var terrariaNpc = new TerrariaNpc();
             INpc npc = new OrionNpc(terrariaNpc);
 

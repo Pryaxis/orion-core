@@ -32,7 +32,7 @@ namespace Orion.Packets.Players {
         public static readonly byte[] Bytes = {5, 0, 45, 0, 1};
 
         [Fact]
-        public void ReadFromStream_IsCorrect() {
+        public void ReadFromStream() {
             using var stream = new MemoryStream(Bytes);
             var packet = (PlayerTeamPacket)Packet.ReadFromStream(stream, PacketContext.Server);
 

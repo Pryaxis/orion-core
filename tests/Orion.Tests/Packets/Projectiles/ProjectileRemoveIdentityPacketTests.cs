@@ -31,7 +31,7 @@ namespace Orion.Packets.Projectiles {
         private static readonly byte[] Bytes = {6, 0, 29, 1, 0, 0};
 
         [Fact]
-        public void ReadFromStream_IsCorrect() {
+        public void ReadFromStream() {
             using var stream = new MemoryStream(Bytes);
             var packet = (ProjectileRemoveIdentityPacket)Packet.ReadFromStream(stream, PacketContext.Server);
 

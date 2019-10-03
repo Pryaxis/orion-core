@@ -32,7 +32,7 @@ namespace Orion.Packets.Players {
         public static readonly byte[] Bytes = {22, 0, 96, 100, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
 
         [Fact]
-        public void ReadFromStream_IsCorrect() {
+        public void ReadFromStream() {
             using var stream = new MemoryStream(Bytes);
             var packet = (PlayerTeleportPortalPacket)Packet.ReadFromStream(stream, PacketContext.Server);
 

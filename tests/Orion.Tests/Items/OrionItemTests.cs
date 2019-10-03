@@ -25,7 +25,7 @@ namespace Orion.Items {
     [SuppressMessage("Style", "IDE0017:Simplify object initialization", Justification = "Testing")]
     public class OrionItemTests {
         [Fact]
-        public void Name_Get_IsCorrect() {
+        public void Name_Get() {
             var terrariaItem = new TerrariaItem {_nameOverride = "test"};
             IItem item = new OrionItem(terrariaItem);
 
@@ -33,7 +33,7 @@ namespace Orion.Items {
         }
 
         [Fact]
-        public void Name_Set_IsCorrect() {
+        public void Name_Set() {
             var terrariaItem = new TerrariaItem();
             IItem item = new OrionItem(terrariaItem);
 
@@ -52,7 +52,7 @@ namespace Orion.Items {
         }
 
         [Fact]
-        public void Type_Get_IsCorrect() {
+        public void Type_Get() {
             var terrariaItem = new TerrariaItem {type = (int)ItemType.Sdmg};
             IItem item = new OrionItem(terrariaItem);
 
@@ -60,7 +60,7 @@ namespace Orion.Items {
         }
 
         [Fact]
-        public void StackSize_Get_IsCorrect() {
+        public void StackSize_Get() {
             var terrariaItem = new TerrariaItem {stack = 100};
             IItem item = new OrionItem(terrariaItem);
 
@@ -68,7 +68,7 @@ namespace Orion.Items {
         }
 
         [Fact]
-        public void StackSize_Set_IsCorrect() {
+        public void StackSize_Set() {
             var terrariaItem = new TerrariaItem();
             IItem item = new OrionItem(terrariaItem);
 
@@ -78,7 +78,7 @@ namespace Orion.Items {
         }
 
         [Fact]
-        public void Prefix_Get_IsCorrect() {
+        public void Prefix_Get() {
             var terrariaItem = new TerrariaItem {prefix = (byte)ItemPrefix.Unreal};
             IItem item = new OrionItem(terrariaItem);
 
@@ -86,7 +86,7 @@ namespace Orion.Items {
         }
 
         [Fact]
-        public void Stats_Get_IsCorrect() {
+        public void Stats_Get() {
             var terrariaItem = new TerrariaItem {prefix = (byte)ItemPrefix.Unreal};
             IItem item = new OrionItem(terrariaItem);
 
@@ -94,7 +94,7 @@ namespace Orion.Items {
         }
 
         [Fact]
-        public void Type_Set_IsCorrect() {
+        public void Type_Set() {
             var terrariaItem = new TerrariaItem();
             IItem item = new OrionItem(terrariaItem);
 
@@ -104,7 +104,7 @@ namespace Orion.Items {
         }
 
         [Fact]
-        public void Prefix_Set_IsCorrect() {
+        public void Prefix_Set() {
             var terrariaItem = new TerrariaItem();
             terrariaItem.SetDefaults((int)ItemType.Sdmg);
             IItem item = new OrionItem(terrariaItem);

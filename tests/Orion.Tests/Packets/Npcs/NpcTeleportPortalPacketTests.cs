@@ -34,7 +34,7 @@ namespace Orion.Packets.Npcs {
         };
 
         [Fact]
-        public void ReadFromStream_IsCorrect() {
+        public void ReadFromStream() {
             using var stream = new MemoryStream(Bytes);
             var packet = (NpcTeleportPortalPacket)Packet.ReadFromStream(stream, PacketContext.Server);
 

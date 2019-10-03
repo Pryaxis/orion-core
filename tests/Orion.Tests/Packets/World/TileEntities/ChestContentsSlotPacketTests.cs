@@ -32,7 +32,7 @@ namespace Orion.Packets.World.TileEntities {
         private static readonly byte[] Bytes = {11, 0, 32, 0, 0, 0, 1, 0, 0, 17, 6};
 
         [Fact]
-        public void ReadFromStream_IsCorrect() {
+        public void ReadFromStream() {
             using var stream = new MemoryStream(Bytes);
             var packet = (ChestContentsSlotPacket)Packet.ReadFromStream(stream, PacketContext.Server);
 

@@ -40,7 +40,7 @@ namespace Orion.Packets.Npcs {
         }
 
         [Fact]
-        public void NpcAiValues_Count_IsCorrect() {
+        public void NpcAiValues_Count() {
             var packet = new NpcInfoPacket();
 
             packet.NpcAiValues.Count.Should().Be(TerrariaNpc.maxAI);
@@ -51,7 +51,7 @@ namespace Orion.Packets.Npcs {
         };
 
         [Fact]
-        public void ReadFromStream_IsCorrect() {
+        public void ReadFromStream() {
             using var stream = new MemoryStream(Bytes);
             var packet = (NpcInfoPacket)Packet.ReadFromStream(stream, PacketContext.Server);
 

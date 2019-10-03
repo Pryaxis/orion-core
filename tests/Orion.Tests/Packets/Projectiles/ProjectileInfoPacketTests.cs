@@ -40,7 +40,7 @@ namespace Orion.Packets.Projectiles {
         }
 
         [Fact]
-        public void ProjectileAiValues_Count_IsCorrect() {
+        public void ProjectileAiValues_Count() {
             var packet = new ProjectileInfoPacket();
 
             packet.ProjectileAiValues.Count.Should().Be(TerrariaProjectile.maxAI);
@@ -53,7 +53,7 @@ namespace Orion.Packets.Projectiles {
         };
 
         [Fact]
-        public void ReadFromStream_IsCorrect() {
+        public void ReadFromStream() {
             using var stream = new MemoryStream(Bytes);
             var packet = (ProjectileInfoPacket)Packet.ReadFromStream(stream, PacketContext.Server);
 

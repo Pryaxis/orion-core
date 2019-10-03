@@ -24,7 +24,7 @@ using Xunit;
 namespace Orion.Utils {
     public class WrappedReadOnlyArrayTests {
         [Fact]
-        public void Count_Get_IsCorrect() {
+        public void Count_Get() {
             var wrappedItems = new TestWrappedClass[10];
             for (var i = 0; i < 10; ++i) {
                 wrappedItems[i] = new TestWrappedClass();
@@ -37,7 +37,7 @@ namespace Orion.Utils {
         }
 
         [Fact]
-        public void Item_Get_IsCorrect() {
+        public void Item_Get() {
             var wrappedItems = new TestWrappedClass[10];
             for (var i = 0; i < 10; ++i) {
                 wrappedItems[i] = new TestWrappedClass();
@@ -86,7 +86,7 @@ namespace Orion.Utils {
         }
 
         [Fact]
-        public void GetEnumerator_IsCorrect() {
+        public void GetEnumerator() {
             var wrappedItems = new TestWrappedClass[10];
             for (var i = 0; i < 10; ++i) {
                 wrappedItems[i] = new TestWrappedClass();

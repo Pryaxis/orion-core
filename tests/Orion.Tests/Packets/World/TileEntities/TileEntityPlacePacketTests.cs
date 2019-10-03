@@ -32,7 +32,7 @@ namespace Orion.Packets.World.TileEntities {
         private static readonly byte[] Bytes = {8, 0, 87, 0, 1, 100, 0, 1};
 
         [Fact]
-        public void ReadFromStream_Delete_IsCorrect() {
+        public void ReadFromStream_Delete() {
             using var stream = new MemoryStream(Bytes);
             var packet = (TileEntityPlacePacket)Packet.ReadFromStream(stream, PacketContext.Server);
 

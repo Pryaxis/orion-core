@@ -23,7 +23,7 @@ using Xunit;
 namespace Orion.Packets.Modules {
     public class LiquidsModuleTests {
         [Fact]
-        public void Liquids_Count_IsCorrect() {
+        public void Liquids_Count() {
             var module = new LiquidsModule();
             module.Liquids.Add(new NetworkLiquid());
 
@@ -31,7 +31,7 @@ namespace Orion.Packets.Modules {
         }
 
         [Fact]
-        public void Liquids_IsReadOnly_IsCorrect() {
+        public void Liquids_IsReadOnly() {
             var module = new LiquidsModule();
 
             module.Liquids.IsReadOnly.Should().BeFalse();
@@ -61,7 +61,7 @@ namespace Orion.Packets.Modules {
         public static readonly byte[] Bytes = {13, 0, 82, 0, 0, 1, 0, 100, 0, 0, 1, 255, 0};
 
         [Fact]
-        public void ReadFromStream_IsCorrect() {
+        public void ReadFromStream() {
             using var stream = new MemoryStream(Bytes);
             var module = (ModulePacket)Packet.ReadFromStream(stream, PacketContext.Server);
 

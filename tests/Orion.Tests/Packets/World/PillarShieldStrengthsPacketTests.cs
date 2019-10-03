@@ -31,7 +31,7 @@ namespace Orion.Packets.World {
         private static readonly byte[] Bytes = {11, 0, 101, 1, 0, 2, 0, 3, 0, 4, 0};
 
         [Fact]
-        public void ReadFromStream_IsCorrect() {
+        public void ReadFromStream() {
             using var stream = new MemoryStream(Bytes);
             var packet = (PillarShieldStrengthsPacket)Packet.ReadFromStream(stream, PacketContext.Server);
 

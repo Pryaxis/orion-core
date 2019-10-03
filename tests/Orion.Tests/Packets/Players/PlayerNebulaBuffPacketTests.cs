@@ -33,7 +33,7 @@ namespace Orion.Packets.Players {
         public static readonly byte[] Bytes = {13, 0, 102, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0};
 
         [Fact]
-        public void ReadFromStream_IsCorrect() {
+        public void ReadFromStream() {
             using var stream = new MemoryStream(Bytes);
             var packet = (PlayerNebulaBuffPacket)Packet.ReadFromStream(stream, PacketContext.Server);
 

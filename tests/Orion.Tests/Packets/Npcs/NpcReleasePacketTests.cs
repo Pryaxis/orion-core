@@ -33,7 +33,7 @@ namespace Orion.Packets.Npcs {
         public static readonly byte[] Bytes = {14, 0, 71, 0, 1, 0, 0, 100, 0, 0, 0, 1, 0, 0};
 
         [Fact]
-        public void ReadFromStream_IsCorrect() {
+        public void ReadFromStream() {
             using var stream = new MemoryStream(Bytes);
             var packet = (NpcReleasePacket)Packet.ReadFromStream(stream, PacketContext.Server);
 

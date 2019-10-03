@@ -27,7 +27,7 @@ namespace Orion.Packets.World.TileEntities {
         private static readonly byte[] RemoveBytes = {8, 0, 86, 0, 0, 0, 0, 0};
 
         [Fact]
-        public void ReadFromStream_Remove_IsCorrect() {
+        public void ReadFromStream_Remove() {
             using var stream = new MemoryStream(RemoveBytes);
             var packet = (TileEntityInfoPacket)Packet.ReadFromStream(stream, PacketContext.Server);
 
@@ -43,7 +43,7 @@ namespace Orion.Packets.World.TileEntities {
         private static readonly byte[] TargetDummyBytes = {15, 0, 86, 0, 0, 0, 0, 1, 0, 0, 1, 100, 0, 1, 0};
 
         [Fact]
-        public void ReadFromStream_TargetDummy_IsCorrect() {
+        public void ReadFromStream_TargetDummy() {
             using var stream = new MemoryStream(TargetDummyBytes);
             var packet = (TileEntityInfoPacket)Packet.ReadFromStream(stream, PacketContext.Server);
 
@@ -64,7 +64,7 @@ namespace Orion.Packets.World.TileEntities {
         private static readonly byte[] ItemFrameBytes = {18, 0, 86, 0, 0, 0, 0, 1, 1, 0, 1, 100, 0, 17, 6, 82, 1, 0};
 
         [Fact]
-        public void ReadFromStream_ItemFrame_IsCorrect() {
+        public void ReadFromStream_ItemFrame() {
             using var stream = new MemoryStream(ItemFrameBytes);
             var packet = (TileEntityInfoPacket)Packet.ReadFromStream(stream, PacketContext.Server);
 
@@ -87,7 +87,7 @@ namespace Orion.Packets.World.TileEntities {
         private static readonly byte[] LogicSensorBytes = {15, 0, 86, 0, 0, 0, 0, 1, 2, 0, 1, 100, 0, 1, 1};
 
         [Fact]
-        public void ReadFromStream_LogicSensor_IsCorrect() {
+        public void ReadFromStream_LogicSensor() {
             using var stream = new MemoryStream(LogicSensorBytes);
             var packet = (TileEntityInfoPacket)Packet.ReadFromStream(stream, PacketContext.Server);
 

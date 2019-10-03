@@ -31,7 +31,7 @@ namespace Orion.Events.Projectiles {
         }
 
         [Fact]
-        public void Projectile_Get_IsCorrect() {
+        public void Projectile_Get() {
             var projectile = new Mock<IProjectile>().Object;
             var args = new TestArgs(projectile);
 

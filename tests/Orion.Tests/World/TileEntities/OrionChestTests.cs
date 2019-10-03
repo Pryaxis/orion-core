@@ -27,7 +27,7 @@ namespace Orion.World.TileEntities {
     [SuppressMessage("Style", "IDE0017:Simplify object initialization", Justification = "Testing")]
     public class OrionChestTests {
         [Fact]
-        public void X_Get_IsCorrect() {
+        public void X_Get() {
             var terrariaChest = new TerrariaChest {x = 100};
             for (var i = 0; i < terrariaChest.item.Length; ++i) {
                 terrariaChest.item[i] = new TerrariaItem();
@@ -39,14 +39,14 @@ namespace Orion.World.TileEntities {
         }
 
         [Fact]
-        public void X_GetNotActive_IsCorrect() {
+        public void X_GetNotActive() {
             IChest chest = new OrionChest(0, null);
 
             chest.X.Should().Be(0);
         }
 
         [Fact]
-        public void X_Set_IsCorrect() {
+        public void X_Set() {
             var terrariaChest = new TerrariaChest();
             for (var i = 0; i < terrariaChest.item.Length; ++i) {
                 terrariaChest.item[i] = new TerrariaItem();
@@ -60,7 +60,7 @@ namespace Orion.World.TileEntities {
         }
 
         [Fact]
-        public void X_SetNotActive_IsCorrect() {
+        public void X_SetNotActive() {
             IChest chest = new OrionChest(0, null);
 
             chest.X = 0;
@@ -79,14 +79,14 @@ namespace Orion.World.TileEntities {
         }
 
         [Fact]
-        public void Y_GetNotActive_IsCorrect() {
+        public void Y_GetNotActive() {
             IChest chest = new OrionChest(0, null);
 
             chest.Y.Should().Be(0);
         }
 
         [Fact]
-        public void Y_Set_IsCorrect() {
+        public void Y_Set() {
             var terrariaChest = new TerrariaChest();
             for (var i = 0; i < terrariaChest.item.Length; ++i) {
                 terrariaChest.item[i] = new TerrariaItem();
@@ -100,14 +100,14 @@ namespace Orion.World.TileEntities {
         }
 
         [Fact]
-        public void Y_SetNotActive_IsCorrect() {
+        public void Y_SetNotActive() {
             IChest chest = new OrionChest(0, null);
 
             chest.Y = 0;
         }
 
         [Fact]
-        public void Name_Get_IsCorrect() {
+        public void Name_Get() {
             var terrariaChest = new TerrariaChest {name = "test"};
             for (var i = 0; i < terrariaChest.item.Length; ++i) {
                 terrariaChest.item[i] = new TerrariaItem();
@@ -119,14 +119,14 @@ namespace Orion.World.TileEntities {
         }
 
         [Fact]
-        public void Name_GetNotActive_IsCorrect() {
+        public void Name_GetNotActive() {
             IChest chest = new OrionChest(0, null);
 
             chest.Name.Should().Be("");
         }
 
         [Fact]
-        public void Name_Set_IsCorrect() {
+        public void Name_Set() {
             var terrariaChest = new TerrariaChest();
             for (var i = 0; i < terrariaChest.item.Length; ++i) {
                 terrariaChest.item[i] = new TerrariaItem();
@@ -140,7 +140,7 @@ namespace Orion.World.TileEntities {
         }
 
         [Fact]
-        public void Name_SetNotActive_IsCorrect() {
+        public void Name_SetNotActive() {
             IChest chest = new OrionChest(0, null);
 
             chest.Name = "";
@@ -160,7 +160,7 @@ namespace Orion.World.TileEntities {
         }
 
         [Fact]
-        public void Items_Item_Get_IsCorrect() {
+        public void Items_Item_Get() {
             var terrariaChest = new TerrariaChest();
             for (var i = 0; i < terrariaChest.item.Length; ++i) {
                 terrariaChest.item[i] = new TerrariaItem();
@@ -180,7 +180,7 @@ namespace Orion.World.TileEntities {
         }
 
         [Fact]
-        public void Items_GetNotActive_IsCorrect() {
+        public void Items_GetNotActive() {
             IChest chest = new OrionChest(0, null);
 
             var items = chest.Items;

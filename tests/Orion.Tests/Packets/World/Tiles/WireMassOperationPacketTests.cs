@@ -31,7 +31,7 @@ namespace Orion.Packets.World.Tiles {
         public static readonly byte[] Bytes = {12, 0, 109, 0, 0, 0, 0, 0, 1, 100, 0, 1};
 
         [Fact]
-        public void ReadFromStream_IsCorrect() {
+        public void ReadFromStream() {
             using var stream = new MemoryStream(Bytes);
             var packet = (WireMassOperationPacket)Packet.ReadFromStream(stream, PacketContext.Server);
 

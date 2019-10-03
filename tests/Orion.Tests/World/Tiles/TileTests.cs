@@ -24,7 +24,7 @@ namespace Orion.World.Tiles {
     [SuppressMessage("Style", "IDE0017:Simplify object initialization", Justification = "Testing")]
     public class TileTests {
         [Fact]
-        public void GetBlockColor_Set_IsCorrect() {
+        public void GetBlockColor_Set() {
             var tile = new Tile();
 
             tile.BlockColor = PaintColor.Red;
@@ -102,7 +102,7 @@ namespace Orion.World.Tiles {
         }
 
         [Fact]
-        public void GetSlope_Set_IsCorrect() {
+        public void GetSlope_Set() {
             var tile = new Tile();
 
             tile.Slope = Slope.TopLeft;
@@ -110,7 +110,7 @@ namespace Orion.World.Tiles {
         }
 
         [Fact]
-        public void GetWallColor_Set_IsCorrect() {
+        public void GetWallColor_Set() {
             var tile = new Tile();
 
             tile.WallColor = PaintColor.Red;
@@ -148,7 +148,7 @@ namespace Orion.World.Tiles {
         }
 
         [Fact]
-        public void GetLiquidType_Set_IsCorrect() {
+        public void GetLiquidType_Set() {
             var tile = new Tile();
 
             tile.LiquidType = LiquidType.Honey;

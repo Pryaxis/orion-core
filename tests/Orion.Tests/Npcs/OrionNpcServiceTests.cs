@@ -59,7 +59,7 @@ namespace Orion.Npcs {
         }
 
         [Fact]
-        public void Npcs_Item_Get_IsCorrect() {
+        public void Npcs_Item_Get() {
             var npc = _npcService.Npcs[1];
 
             npc.Index.Should().Be(1);
@@ -84,7 +84,7 @@ namespace Orion.Npcs {
         }
 
         [Fact]
-        public void Npcs_GetEnumerator_IsCorrect() {
+        public void Npcs_GetEnumerator() {
             var npcs = _npcService.Npcs.ToList();
 
             for (var i = 0; i < npcs.Count; ++i) {
@@ -122,7 +122,7 @@ namespace Orion.Npcs {
         }
 
         [Fact]
-        public void NpcSetDefaults_Canceled_IsCorrect() {
+        public void NpcSetDefaults_Canceled() {
             _npcService.NpcSetDefaults += (sender, args) => {
                 args.Cancel();
             };
@@ -133,7 +133,7 @@ namespace Orion.Npcs {
         }
 
         [Fact]
-        public void NpcSpawn_IsCorrect() {
+        public void NpcSpawn() {
             INpc argsNpc = null;
             _npcService.NpcSpawn += (sender, args) => {
                 argsNpc = args.Npc;
@@ -146,7 +146,7 @@ namespace Orion.Npcs {
         }
 
         [Fact]
-        public void NpcSpawn_Canceled_IsCorrect() {
+        public void NpcSpawn_Canceled() {
             _npcService.NpcSpawn += (sender, args) => {
                 args.Cancel();
             };
@@ -158,7 +158,7 @@ namespace Orion.Npcs {
         }
 
         [Fact]
-        public void NpcUpdate_IsCorrect() {
+        public void NpcUpdate() {
             var isRun = false;
             _npcService.NpcUpdate += (sender, args) => {
                 isRun = true;
@@ -201,7 +201,7 @@ namespace Orion.Npcs {
         }
 
         [Fact]
-        public void NpcTransform_Canceled_IsCorrect() {
+        public void NpcTransform_Canceled() {
             _npcService.NpcTransform += (sender, args) => {
                 args.Cancel();
             };
@@ -212,7 +212,7 @@ namespace Orion.Npcs {
         }
 
         [Fact]
-        public void NpcDamage_IsCorrect() {
+        public void NpcDamage() {
             var isRun = false;
             _npcService.NpcDamage += (sender, args) => {
                 isRun = true;
@@ -229,7 +229,7 @@ namespace Orion.Npcs {
         }
 
         [Fact]
-        public void NpcDamage_Canceled_IsCorrect() {
+        public void NpcDamage_Canceled() {
             _npcService.NpcDamage += (sender, args) => {
                 args.Cancel();
             };
@@ -241,7 +241,7 @@ namespace Orion.Npcs {
         }
 
         [Fact]
-        public void NpcDropLootItem_IsCorrect() {
+        public void NpcDropLootItem() {
             var isRun = false;
             _npcService.NpcDropLootItem += (sender, args) => {
                 isRun = true;
@@ -256,7 +256,7 @@ namespace Orion.Npcs {
         }
 
         [Fact]
-        public void NpcDropLootItem_Canceled_IsCorrect() {
+        public void NpcDropLootItem_Canceled() {
             _npcService.NpcDropLootItem += (sender, args) => {
                 args.Cancel();
             };
@@ -269,7 +269,7 @@ namespace Orion.Npcs {
         }
 
         [Fact]
-        public void NpcKilled_IsCorrect() {
+        public void NpcKilled() {
             var isRun = false;
             _npcService.NpcKilled += (sender, args) => {
                 isRun = true;
@@ -284,7 +284,7 @@ namespace Orion.Npcs {
         }
 
         [Fact]
-        public void SpawnNpc_IsCorrect() {
+        public void SpawnNpc() {
             var npc = _npcService.SpawnNpc(NpcType.BlueSlime, Vector2.Zero);
 
             npc.Should().NotBeNull();
@@ -292,7 +292,7 @@ namespace Orion.Npcs {
         }
 
         [Fact]
-        public void SpawnNpc_AiValues_IsCorrect() {
+        public void SpawnNpc_AiValues() {
             var npc = _npcService.SpawnNpc(NpcType.BlueSlime, Vector2.Zero, new float[] {1, 2, 3, 4});
             
             npc.Should().NotBeNull();

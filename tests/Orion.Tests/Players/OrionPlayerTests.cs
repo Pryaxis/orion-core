@@ -28,7 +28,7 @@ namespace Orion.Players {
         private readonly Mock<IPlayerService> mockPlayerService = new Mock<IPlayerService>();
 
         [Fact]
-        public void Name_Get_IsCorrect() {
+        public void Name_Get() {
             var terrariaPlayer = new TerrariaPlayer {name = "test"};
             IPlayer player = new OrionPlayer(mockPlayerService.Object, terrariaPlayer);
 
@@ -36,7 +36,7 @@ namespace Orion.Players {
         }
 
         [Fact]
-        public void Name_Set_IsCorrect() {
+        public void Name_Set() {
             var terrariaPlayer = new TerrariaPlayer();
             IPlayer player = new OrionPlayer(mockPlayerService.Object, terrariaPlayer);
 
@@ -55,7 +55,7 @@ namespace Orion.Players {
         }
 
         [Fact]
-        public void Team_Get_IsCorrect() {
+        public void Team_Get() {
             var terrariaPlayer = new TerrariaPlayer {team = (int)PlayerTeam.Red};
             IPlayer player = new OrionPlayer(mockPlayerService.Object, terrariaPlayer);
 
@@ -63,7 +63,7 @@ namespace Orion.Players {
         }
 
         [Fact]
-        public void Team_Set_IsCorrect() {
+        public void Team_Set() {
             var terrariaPlayer = new TerrariaPlayer();
             IPlayer player = new OrionPlayer(mockPlayerService.Object, terrariaPlayer);
 

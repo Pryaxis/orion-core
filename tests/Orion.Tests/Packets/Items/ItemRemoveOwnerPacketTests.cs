@@ -31,7 +31,7 @@ namespace Orion.Packets.Items {
         public static readonly byte[] Bytes = {5, 0, 39, 1, 0};
 
         [Fact]
-        public void ReadFromStream_IsCorrect() {
+        public void ReadFromStream() {
             using var stream = new MemoryStream(Bytes);
             var packet = (ItemRemoveOwnerPacket)Packet.ReadFromStream(stream, PacketContext.Server);
 

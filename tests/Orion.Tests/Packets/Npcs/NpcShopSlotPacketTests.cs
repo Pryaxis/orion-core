@@ -32,7 +32,7 @@ namespace Orion.Packets.Npcs {
         public static readonly byte[] Bytes = {14, 0, 104, 0, 17, 6, 1, 0, 82, 100, 0, 0, 0, 1};
 
         [Fact]
-        public void ReadFromStream_IsCorrect() {
+        public void ReadFromStream() {
             using var stream = new MemoryStream(Bytes);
             var packet = (NpcShopSlotPacket)Packet.ReadFromStream(stream, PacketContext.Server);
 

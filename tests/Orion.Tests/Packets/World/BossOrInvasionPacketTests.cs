@@ -31,7 +31,7 @@ namespace Orion.Packets.World {
         public static readonly byte[] Bytes = {7, 0, 61, 0, 0, 255, 255};
 
         [Fact]
-        public void ReadFromStream_IsCorrect() {
+        public void ReadFromStream() {
             using var stream = new MemoryStream(Bytes);
             var packet = (BossOrInvasionPacket)Packet.ReadFromStream(stream, PacketContext.Server);
 

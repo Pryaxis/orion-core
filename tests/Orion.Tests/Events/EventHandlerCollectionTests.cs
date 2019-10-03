@@ -31,7 +31,7 @@ namespace Orion.Events {
         }
 
         [Fact]
-        public void Plus_IsCorrect() {
+        public void Plus() {
             EventHandlerCollection<TestEventArgs> collection = null;
             collection += TestHandler;
             var args = new TestEventArgs();
@@ -42,7 +42,7 @@ namespace Orion.Events {
         }
 
         [Fact]
-        public void Plus_Priority_IsCorrect() {
+        public void Plus_Priority() {
             EventHandlerCollection<TestEventArgs> collection = null;
             collection += TestHandler2;
             collection += TestHandler;
@@ -62,7 +62,7 @@ namespace Orion.Events {
         }
 
         [Fact]
-        public void Minus_IsCorrect() {
+        public void Minus() {
             EventHandlerCollection<TestEventArgs> collection = null;
             collection += TestHandler2;
             collection += TestHandler;

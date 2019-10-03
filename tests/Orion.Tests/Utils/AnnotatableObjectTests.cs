@@ -37,7 +37,7 @@ namespace Orion.Utils {
         }
 
         [Fact]
-        public void SetAnnotation_GetAnnotation_IsCorrect() {
+        public void SetAnnotation_GetAnnotation() {
             IAnnotatable annotatable = new AnnotatableObject();
             annotatable.SetAnnotation("test", 1);
 
@@ -53,7 +53,7 @@ namespace Orion.Utils {
         }
 
         [Fact]
-        public void RemoveAnnotation_KeyExists_IsCorrect() {
+        public void RemoveAnnotation_KeyExists() {
             IAnnotatable annotatable = new AnnotatableObject();
             annotatable.SetAnnotation("test", 1);
 
@@ -61,7 +61,7 @@ namespace Orion.Utils {
         }
 
         [Fact]
-        public void RemoveAnnotation_KeyDoesntExist_IsCorrect() {
+        public void RemoveAnnotation_KeyDoesntExist() {
             IAnnotatable annotatable = new AnnotatableObject();
 
             annotatable.RemoveAnnotation("test").Should().BeFalse();

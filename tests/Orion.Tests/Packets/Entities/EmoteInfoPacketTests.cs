@@ -24,7 +24,7 @@ namespace Orion.Packets.Entities {
         public static readonly byte[] NormalBytes = {12, 0, 91, 1, 0, 0, 0, 0, 100, 0, 255, 1};
 
         [Fact]
-        public void ReadFromStream_Normal_IsCorrect() {
+        public void ReadFromStream_Normal() {
             using var stream = new MemoryStream(NormalBytes);
             var packet = (EmoteInfoPacket)Packet.ReadFromStream(stream, PacketContext.Server);
 
@@ -43,7 +43,7 @@ namespace Orion.Packets.Entities {
         public static readonly byte[] RemoveBytes = {8, 0, 91, 1, 0, 0, 0, 255};
 
         [Fact]
-        public void ReadFromStream_Remove_IsCorrect() {
+        public void ReadFromStream_Remove() {
             using var stream = new MemoryStream(RemoveBytes);
             var packet = (EmoteInfoPacket)Packet.ReadFromStream(stream, PacketContext.Server);
 

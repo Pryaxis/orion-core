@@ -43,7 +43,7 @@ namespace Orion.Players {
         }
 
         [Fact]
-        public void Players_Item_Get_IsCorrect() {
+        public void Players_Item_Get() {
             var player = _playerService.Players[1];
 
             player.Index.Should().Be(1);
@@ -68,7 +68,7 @@ namespace Orion.Players {
         }
 
         [Fact]
-        public void Players_GetEnumerator_IsCorrect() {
+        public void Players_GetEnumerator() {
             var players = _playerService.Players.ToList();
 
             for (var i = 0; i < players.Count; ++i) {

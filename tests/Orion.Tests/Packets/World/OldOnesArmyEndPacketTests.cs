@@ -24,7 +24,7 @@ namespace Orion.Packets.World {
         public static readonly byte[] Bytes = {3, 0, 114};
 
         [Fact]
-        public void ReadFromStream_IsCorrect() {
+        public void ReadFromStream() {
             using var stream = new MemoryStream(Bytes);
             Packet.ReadFromStream(stream, PacketContext.Server).Should().BeOfType<OldOnesArmyEndPacket>();
         }

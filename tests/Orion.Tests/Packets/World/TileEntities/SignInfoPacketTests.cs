@@ -40,7 +40,7 @@ namespace Orion.Packets.World.TileEntities {
         public static readonly byte[] Bytes = {19, 0, 47, 0, 0, 0, 1, 100, 0, 8, 84, 101, 114, 114, 97, 114, 105, 97, 0};
 
         [Fact]
-        public void ReadFromStream_IsCorrect() {
+        public void ReadFromStream() {
             using var stream = new MemoryStream(Bytes);
             var packet = (SignInfoPacket)Packet.ReadFromStream(stream, PacketContext.Server);
 
