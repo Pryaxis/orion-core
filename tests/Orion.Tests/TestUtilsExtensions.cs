@@ -17,7 +17,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.IO;
 using System.Reflection;
 using FluentAssertions;
@@ -41,13 +40,14 @@ namespace Orion {
             [typeof(Color)] = new Color(111, 222, 333)
         };
 
-        public static void Properties_GetSetShouldReflectInPacket(this EventArgs args) {
-            var packet = args.GetType().GetField("_packet", BindingFlags.NonPublic | BindingFlags.Instance)
-                             ?.GetValue(args);
-            packet.Should().NotBeNull();
+        public static void Properties_GetSetShouldReflect(this EventArgs args, string fieldName) {
+            // ReSharper disable once PossibleNullReferenceException
+            var field = args.GetType().GetField(fieldName, BindingFlags.NonPublic | BindingFlags.Instance)
+                            .GetValue(args);
+            field.Should().NotBeNull();
 
             foreach (var property in args.GetType().GetProperties(BindingFlags.Public | BindingFlags.Instance)) {
-                var packetProperty = packet.GetType().GetProperty(property.Name);
+                var packetProperty = field.GetType().GetProperty(property.Name);
                 if (packetProperty is null) continue;
 
                 var propertyType = property.PropertyType;
@@ -58,13 +58,13 @@ namespace Orion {
                 }
 
                 // Test getter.
-                packetProperty.SetValue(packet, value);
+                packetProperty.SetValue(field, value);
                 property.GetValue(args).Should().Be(value);
 
                 // Test setter, if applicable.
                 if (!property.CanWrite) continue;
                 property.SetValue(args, value);
-                packetProperty.GetValue(packet).Should().Be(value);
+                packetProperty.GetValue(field).Should().Be(value);
             }
         }
 

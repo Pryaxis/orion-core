@@ -18,35 +18,43 @@
 using System;
 using FluentAssertions;
 using Moq;
-using Orion.Packets.Players;
+using Orion.Packets.Modules;
 using Orion.Players;
 using Xunit;
 
 namespace Orion.Events.Players {
-    public class PlayerDataEventArgsTests {
-        [Fact]
-        public void Ctor_NullPacket_ThrowsArgumentNullException() {
+    public class PlayerChatEventArgsTests {
+        private readonly PlayerChatEventArgs _args;
+
+        public PlayerChatEventArgsTests() {
             var player = new Mock<IPlayer>().Object;
-            Func<PlayerDataEventArgs> func = () => new PlayerDataEventArgs(player, null);
+            var module = new ChatModule();
+            _args = new PlayerChatEventArgs(player, module);
+        }
+
+        [Fact]
+        public void Ctor_NullModule_ThrowsArgumentNullException() {
+            var player = new Mock<IPlayer>().Object;
+            Func<PlayerChatEventArgs> func = () => new PlayerChatEventArgs(player, null);
 
             func.Should().Throw<ArgumentNullException>();
         }
 
         [Fact]
-        public void SetGetProperties_ReflectsInPacket() {
-            var player = new Mock<IPlayer>().Object;
-            var packet = new PlayerDataPacket();
-            var args = new PlayerDataEventArgs(player, packet);
-
-            args.Properties_GetSetShouldReflect("_packet");
+        public void SetGetProperties_ReflectsInModule() {
+            _args.Properties_GetSetShouldReflect("_module");
         }
-
+        
         [Fact]
-        public void PlayerName_Set_NullValue_ThrowsArgumentNullException() {
-            var player = new Mock<IPlayer>().Object;
-            var packet = new PlayerDataPacket();
-            var args = new PlayerDataEventArgs(player, packet);
-            Action action = () => args.PlayerName = null;
+        public void SetChatCommand_NullValue_ThrowsArgumentNullException() {
+            Action action = () => _args.ChatCommand = null;
+
+            action.Should().Throw<ArgumentNullException>();
+        }
+        
+        [Fact]
+        public void SetChatText_NullValue_ThrowsArgumentNullException() {
+            Action action = () => _args.ChatText = null;
 
             action.Should().Throw<ArgumentNullException>();
         }

@@ -19,7 +19,9 @@ using System;
 using System.Linq;
 using FluentAssertions;
 using Microsoft.Xna.Framework;
+using Orion.Events.Extensions;
 using Orion.Items;
+using Orion.Packets.Modules;
 using Orion.Packets.Players;
 using Xunit;
 using Main = Terraria.Main;
@@ -82,6 +84,7 @@ namespace Orion.Players {
             _playerService.PacketReceive += (sender, args) => {
                 isRun = true;
                 args.Sender.Should().BeSameAs(_playerService.Players[1]);
+                args.Cancel();
             };
 
             TestUtils.FakeReceiveBytes(1, PlayerConnectPacketTests.Bytes);
@@ -96,6 +99,7 @@ namespace Orion.Players {
                 isRun = true;
                 args.Player.Should().BeSameAs(_playerService.Players[1]);
                 args.PlayerVersionString.Should().Be("Terraria194");
+                args.Cancel();
             };
 
             TestUtils.FakeReceiveBytes(1, PlayerConnectPacketTests.Bytes);
@@ -124,6 +128,7 @@ namespace Orion.Players {
                 args.PlayerShoeColor.Should().Be(new Color(212, 159, 76));
                 args.PlayerDifficulty.Should().Be(PlayerDifficulty.Softcore);
                 args.PlayerHasExtraAccessory.Should().BeFalse();
+                args.Cancel();
             };
 
             TestUtils.FakeReceiveBytes(1, PlayerDataPacketTests.Bytes);
@@ -141,6 +146,7 @@ namespace Orion.Players {
                 args.ItemStackSize.Should().Be(1);
                 args.ItemPrefix.Should().Be(ItemPrefix.Godly);
                 args.ItemType.Should().Be(ItemType.CopperShortsword);
+                args.Cancel();
             };
 
             TestUtils.FakeReceiveBytes(1, PlayerInventorySlotPacketTests.Bytes);
@@ -154,9 +160,25 @@ namespace Orion.Players {
             _playerService.PlayerJoin += (sender, args) => {
                 isRun = true;
                 args.Player.Should().BeSameAs(_playerService.Players[1]);
+                args.Cancel();
             };
 
             TestUtils.FakeReceiveBytes(1, PlayerJoinPacketTests.Bytes);
+
+            isRun.Should().BeTrue();
+        }
+
+        [Fact]
+        public void PacketReceive_PlayerChat_IsTriggered() {
+            var isRun = false;
+            _playerService.PlayerChat += (sender, args) => {
+                isRun = true;
+                args.ChatCommand.Should().Be("Say");
+                args.ChatText.Should().Be("/command test");
+                args.Cancel();
+            };
+
+            TestUtils.FakeReceiveBytes(1, ChatModuleTests.Bytes);
 
             isRun.Should().BeTrue();
         }

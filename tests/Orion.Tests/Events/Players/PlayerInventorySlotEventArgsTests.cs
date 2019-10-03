@@ -33,12 +33,12 @@ namespace Orion.Events.Players {
         }
 
         [Fact]
-        public void SetProperties_Get_ReflectsInPacket() {
+        public void SetGetProperties_ReflectsInPacket() {
             var player = new Mock<IPlayer>().Object;
             var packet = new PlayerInventorySlotPacket();
             var args = new PlayerInventorySlotEventArgs(player, packet);
-
-            args.Properties_GetSetShouldReflectInPacket();
+            
+            args.Properties_GetSetShouldReflect("_packet");
         }
     }
 }

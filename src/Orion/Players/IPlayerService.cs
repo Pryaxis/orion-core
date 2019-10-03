@@ -63,6 +63,11 @@ namespace Orion.Players {
         EventHandlerCollection<PlayerJoinEventArgs>? PlayerJoin { get; set; }
 
         /// <summary>
+        /// Gets or sets the event handlers that run when a player chats. This event can be canceled.
+        /// </summary>
+        EventHandlerCollection<PlayerChatEventArgs>? PlayerChat { get; set; }
+
+        /// <summary>
         /// Gets or sets the event handlers that run when a player disconnects.
         /// </summary>
         EventHandlerCollection<PlayerDisconnectedEventArgs>? PlayerDisconnected { get; set; }

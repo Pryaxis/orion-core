@@ -25,6 +25,7 @@ using Orion.Events.Extensions;
 using Orion.Events.Packets;
 using Orion.Events.Players;
 using Orion.Packets;
+using Orion.Packets.Modules;
 using Orion.Packets.Players;
 using Orion.Utils;
 using OTAPI;
@@ -45,6 +46,7 @@ namespace Orion.Players {
         public EventHandlerCollection<PlayerDataEventArgs>? PlayerData { get; set; }
         public EventHandlerCollection<PlayerInventorySlotEventArgs>? PlayerInventorySlot { get; set; }
         public EventHandlerCollection<PlayerJoinEventArgs>? PlayerJoin { get; set; }
+        public EventHandlerCollection<PlayerChatEventArgs>? PlayerChat { get; set; }
         public EventHandlerCollection<PlayerDisconnectedEventArgs>? PlayerDisconnected { get; set; }
 
         public OrionPlayerService() {
@@ -57,6 +59,7 @@ namespace Orion.Players {
             _packetReceiveHandlers[PacketType.PlayerData] = PlayerDataHandler;
             _packetReceiveHandlers[PacketType.PlayerInventorySlot] = PlayerInventorySlotHandler;
             _packetReceiveHandlers[PacketType.PlayerJoin] = PlayerJoinHandler;
+            _packetReceiveHandlers[PacketType.Module] = ModuleHandler;
 
             Hooks.Net.ReceiveData = ReceiveDataHandler;
             Hooks.Net.SendBytes = SendBytesHandler;
@@ -181,6 +184,17 @@ namespace Orion.Players {
             var args = new PlayerJoinEventArgs(args_.Sender);
             PlayerJoin?.Invoke(this, args);
             args_.CancellationReason = args.CancellationReason;
+        }
+
+        private void ModuleHandler(PacketReceiveEventArgs args_) {
+            Debug.Assert(args_ != null, "args_ != null");
+
+            var module = ((ModulePacket)args_.Packet).Module;
+            if (module is ChatModule chatModule) {
+                var args = new PlayerChatEventArgs(args_.Sender, chatModule);
+                PlayerChat?.Invoke(this, args);
+                args_.CancellationReason = args.CancellationReason;
+            }
         }
     }
 }
