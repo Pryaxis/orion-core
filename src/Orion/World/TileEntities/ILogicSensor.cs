@@ -16,12 +16,13 @@
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
 using Orion.Utils;
+using TerrariaLogicSensor = Terraria.GameContent.Tile_Entities.TELogicSensor;
 
 namespace Orion.World.TileEntities {
     /// <summary>
     /// Represents a Terraria logic sensor.
     /// </summary>
-    public interface ILogicSensor : ITileEntity, IWrapping<Terraria.GameContent.Tile_Entities.TELogicSensor> {
+    public interface ILogicSensor : ITileEntity, IWrapping<TerrariaLogicSensor> {
         /// <summary>
         /// Gets or sets the sensor's type.
         /// </summary>

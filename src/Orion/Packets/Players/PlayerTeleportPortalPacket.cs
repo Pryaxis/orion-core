@@ -56,7 +56,7 @@ namespace Orion.Packets.Players {
         }
 
         /// <summary>
-        /// Gets or sets the player's new position.
+        /// Gets or sets the player's new position. The components are pixel-based.
         /// </summary>
         public Vector2 PlayerNewPosition {
             get => _playerNewPosition;
@@ -67,7 +67,7 @@ namespace Orion.Packets.Players {
         }
 
         /// <summary>
-        /// Gets or sets the player's new velocity.
+        /// Gets or sets the player's new velocity. The components are pixel-based.
         /// </summary>
         public Vector2 PlayerNewVelocity {
             get => _playerNewVelocity;

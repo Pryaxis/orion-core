@@ -53,8 +53,6 @@ namespace Orion.Packets.Entities {
         }
 
         [Fact]
-        public void DeserializeAndSerialize_SamePacket() {
-            Bytes.ShouldDeserializeAndSerializeSamePacket();
-        }
+        public void DeserializeAndSerialize_SamePacket() => Bytes.ShouldDeserializeAndSerializeSamePacket();
     }
 }

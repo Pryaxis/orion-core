@@ -56,7 +56,7 @@ namespace Orion.Packets.Players {
         }
 
         /// <summary>
-        /// Gets or sets the buff's position.
+        /// Gets or sets the buff's position. The components are pixel-based.
         /// </summary>
         public Vector2 BuffPosition {
             get => _buffPosition;

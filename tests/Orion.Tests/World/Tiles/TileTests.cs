@@ -177,7 +177,7 @@ namespace Orion.World.Tiles {
 
         [Fact]
         public void isTheSameAs_DifferentSTileHeader_ReturnsFalse() {
-            var tile = new Tile {IsBlockActive = true};
+            var tile = new Tile { IsBlockActive = true };
             var tile2 = new Tile();
 
             tile.IsTheSameAs(tile2).Should().BeFalse();
@@ -199,8 +199,8 @@ namespace Orion.World.Tiles {
 
         [Fact]
         public void isTheSameAs_DifferentTypeNotActive_ReturnsTrue() {
-            var tile = new Tile {BlockType = BlockType.Stone};
-            var tile2 = new Tile {BlockType = BlockType.Dirt};
+            var tile = new Tile { BlockType = BlockType.Stone };
+            var tile2 = new Tile { BlockType = BlockType.Dirt };
 
             tile.IsTheSameAs(tile2).Should().BeTrue();
         }
@@ -257,31 +257,31 @@ namespace Orion.World.Tiles {
 
         [Fact]
         public void isTheSameAs_DifferentWall_ReturnsFalse() {
-            var tile = new Tile {WallType = WallType.Stone};
-            var tile2 = new Tile {WallType = WallType.NaturalDirt};
+            var tile = new Tile { WallType = WallType.Stone };
+            var tile2 = new Tile { WallType = WallType.NaturalDirt };
 
             tile.IsTheSameAs(tile2).Should().BeFalse();
         }
 
         [Fact]
         public void isTheSameAs_DifferentLiquid_ReturnsFalse() {
-            var tile = new Tile {LiquidAmount = 1};
-            var tile2 = new Tile {LiquidAmount = 2};
+            var tile = new Tile { LiquidAmount = 1 };
+            var tile2 = new Tile { LiquidAmount = 2 };
 
             tile.IsTheSameAs(tile2).Should().BeFalse();
         }
 
         [Fact]
         public void isTheSameAs_DifferentWallColor_ReturnsFalse() {
-            var tile = new Tile {WallColor = PaintColor.Red};
-            var tile2 = new Tile {WallColor = PaintColor.DeepRed};
+            var tile = new Tile { WallColor = PaintColor.Red };
+            var tile2 = new Tile { WallColor = PaintColor.DeepRed };
 
             tile.IsTheSameAs(tile2).Should().BeFalse();
         }
 
         [Fact]
         public void isTheSameAs_DifferentYellowWire_ReturnsFalse() {
-            var tile = new Tile {HasYellowWire = true};
+            var tile = new Tile { HasYellowWire = true };
             var tile2 = new Tile();
 
             tile.IsTheSameAs(tile2).Should().BeFalse();

@@ -23,16 +23,16 @@ using TerrariaSign = Terraria.Sign;
 namespace Orion.World.TileEntities {
     internal sealed class OrionSign : AnnotatableObject, ISign {
         public TileEntityType Type => TileEntityType.Sign;
-
         public int Index { get; }
-
         public bool IsActive => Wrapped != null;
 
         public int X {
             get => Wrapped?.x ?? 0;
             set {
-                if (Wrapped == null) return;
-                
+                if (Wrapped == null) {
+                    return;
+                }
+
                 Wrapped.x = value;
             }
         }
@@ -40,7 +40,9 @@ namespace Orion.World.TileEntities {
         public int Y {
             get => Wrapped?.y ?? 0;
             set {
-                if (Wrapped == null) return;
+                if (Wrapped == null) {
+                    return;
+                }
 
                 Wrapped.y = value;
             }
@@ -49,8 +51,10 @@ namespace Orion.World.TileEntities {
         public string Text {
             get => Wrapped?.text ?? "";
             set {
-                if (Wrapped == null) return;
-                
+                if (Wrapped == null) {
+                    return;
+                }
+
                 Wrapped.text = value ?? throw new ArgumentNullException(nameof(value));
             }
         }
@@ -58,8 +62,7 @@ namespace Orion.World.TileEntities {
         public TerrariaSign? Wrapped { get; }
 
         public OrionSign(int signIndex, TerrariaSign? terrariaSign) {
-            Debug.Assert(signIndex >= 0 && signIndex < TerrariaSign.maxSigns,
-                         "signIndex >= 0 && signIndex < TerrariaSign.maxSigns");
+            Debug.Assert(signIndex >= 0 && signIndex < TerrariaSign.maxSigns, "sign index should be valid");
 
             Index = signIndex;
             Wrapped = terrariaSign;

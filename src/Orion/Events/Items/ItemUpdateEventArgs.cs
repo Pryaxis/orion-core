@@ -30,7 +30,7 @@ namespace Orion.Events.Items {
         /// Initializes a new instance of the <see cref="ItemUpdateEventArgs"/> class with the specified item.
         /// </summary>
         /// <param name="item">The item.</param>
-        /// <exception cref="ArgumentNullException"><paramref name="item"/> is <see langword="null" />.</exception>
+        /// <exception cref="ArgumentNullException"><paramref name="item"/> is <see langword="null"/>.</exception>
         public ItemUpdateEventArgs(IItem item) : base(item) { }
     }
 }

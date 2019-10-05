@@ -21,7 +21,7 @@ using Xunit;
 
 namespace Orion.Packets.Entities {
     public class EmoteInfoPacketTests {
-        public static readonly byte[] NormalBytes = {12, 0, 91, 1, 0, 0, 0, 0, 100, 0, 255, 1};
+        public static readonly byte[] NormalBytes = { 12, 0, 91, 1, 0, 0, 0, 0, 100, 0, 255, 1 };
 
         [Fact]
         public void ReadFromStream_Normal() {
@@ -36,11 +36,10 @@ namespace Orion.Packets.Entities {
         }
 
         [Fact]
-        public void DeserializeAndSerialize_Normal_SamePacket() {
+        public void DeserializeAndSerialize_Normal_SamePacket() =>
             NormalBytes.ShouldDeserializeAndSerializeSamePacket();
-        }
 
-        public static readonly byte[] RemoveBytes = {8, 0, 91, 1, 0, 0, 0, 255};
+        public static readonly byte[] RemoveBytes = { 8, 0, 91, 1, 0, 0, 0, 255 };
 
         [Fact]
         public void ReadFromStream_Remove() {
@@ -52,8 +51,7 @@ namespace Orion.Packets.Entities {
         }
 
         [Fact]
-        public void DeserializeAndSerialize_Remove_SamePacket() {
+        public void DeserializeAndSerialize_Remove_SamePacket() =>
             RemoveBytes.ShouldDeserializeAndSerializeSamePacket();
-        }
     }
 }

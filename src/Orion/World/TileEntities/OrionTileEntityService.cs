@@ -36,8 +36,8 @@ namespace Orion.World.TileEntities {
         public IReadOnlyArray<ISign?> Signs { get; }
 
         public OrionTileEntityService() {
-            Debug.Assert(Main.chest != null, "Main.chest != null");
-            Debug.Assert(Main.sign != null, "Main.sign != null");
+            Debug.Assert(Main.chest != null, "Terraria chests should not be null");
+            Debug.Assert(Main.sign != null, "Terraria signs should not be null");
 
             Chests = new WrappedReadOnlyArray<OrionChest, TerrariaChest?>(
                 Main.chest,
@@ -48,7 +48,9 @@ namespace Orion.World.TileEntities {
         }
 
         public ITileEntity? AddTileEntity(TileEntityType tileEntityType, int x, int y) {
-            if (GetTileEntity(x, y) != null) return null;
+            if (GetTileEntity(x, y) != null) {
+                return null;
+            }
 
             static IChest? AddChest(int x, int y) {
                 for (var i = 0; i < Main.chest.Length; ++i) {
@@ -135,8 +137,8 @@ namespace Orion.World.TileEntities {
             }
 
             static ITileEntity? GetTerrariaTileEntity(int x, int y) {
-                if (!TerrariaTileEntity.ByPosition.TryGetValue(new Terraria.DataStructures.Point16(x, y),
-                                                               out var terrariaTileEntity)) {
+                if (!TerrariaTileEntity.ByPosition.TryGetValue(
+                        new Terraria.DataStructures.Point16(x, y), out var terrariaTileEntity)) {
                     return null;
                 }
 
@@ -152,7 +154,9 @@ namespace Orion.World.TileEntities {
         }
 
         public bool RemoveTileEntity(ITileEntity tileEntity) {
-            if (tileEntity is null) throw new ArgumentNullException(nameof(tileEntity));
+            if (tileEntity is null) {
+                throw new ArgumentNullException(nameof(tileEntity));
+            }
 
             static bool RemoveChest(IChest chest) {
                 ref TerrariaChest? terrariaChest = ref Main.chest[chest.Index];
@@ -179,7 +183,7 @@ namespace Orion.World.TileEntities {
 
                 // Use the & operator here instead of && since both expressions should always be evaluated.
                 return TerrariaTileEntity.ByID.Remove(tileEntity.Index) &
-                       TerrariaTileEntity.ByPosition.Remove(position);
+                    TerrariaTileEntity.ByPosition.Remove(position);
             }
 
             return tileEntity switch {

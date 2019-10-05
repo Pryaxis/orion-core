@@ -65,19 +65,21 @@ namespace Orion.World {
         }
 
         protected override void Dispose(bool disposeManaged) {
-            if (!disposeManaged) return;
+            if (!disposeManaged) {
+                return;
+            }
 
             Hooks.World.IO.PreLoadWorld = null;
             Hooks.World.IO.PreSaveWorld = null;
         }
 
-        private HookResult PreLoadWorldHandler(ref bool loadFromCloud) {
+        private HookResult PreLoadWorldHandler(ref bool _) {
             var args = new WorldLoadEventArgs();
             WorldLoad?.Invoke(this, args);
             return HookResult.Continue;
         }
 
-        private HookResult PreSaveWorldHandler(ref bool useCloudSaving, ref bool resetTime) {
+        private HookResult PreSaveWorldHandler(ref bool _, ref bool _2) {
             var args = new WorldSaveEventArgs();
             WorldSave?.Invoke(this, args);
             return args.IsCanceled() ? HookResult.Cancel : HookResult.Continue;
@@ -117,8 +119,8 @@ namespace Orion.World {
 
             [Pure]
             public Tile* GetPointer(int x, int y) {
-                Debug.Assert(x >= 0 && x < Width, "x >= 0 && x < Width");
-                Debug.Assert(y >= 0 && y < Height, "y >= 0 && y < Height");
+                Debug.Assert(x >= 0 && x < Width, "X should be valid");
+                Debug.Assert(y >= 0 && y < Height, "Y should be valid");
 
                 var offset = y * Width + x;
                 return _tilesPtr + offset;
@@ -251,11 +253,14 @@ namespace Orion.World {
 
             [Pure]
             public bool isTheSameAs(ITile? compTile) {
-                if (compTile is null) return false;
-                if (sTileHeader != compTile.sTileHeader) return false;
+                if (compTile is null || sTileHeader != compTile.sTileHeader) {
+                    return false;
+                }
 
                 if (active()) {
-                    if (type != compTile.type) return false;
+                    if (type != compTile.type) {
+                        return false;
+                    }
 
                     if (((BlockType)type).AreFramesImportant() &&
                         (frameX != compTile.frameX || frameY != compTile.frameY)) {
@@ -263,11 +268,14 @@ namespace Orion.World {
                     }
                 }
 
-                if (wall != compTile.wall || liquid != compTile.liquid) return false;
+                if (wall != compTile.wall || liquid != compTile.liquid) {
+                    return false;
+                }
 
                 if (compTile.liquid == 0) {
-                    if (wallColor() != compTile.wallColor()) return false;
-                    if (wire4() != compTile.wire4()) return false;
+                    if (wallColor() != compTile.wallColor() || wire4() != compTile.wire4()) {
+                        return false;
+                    }
                 } else if (bTileHeader != compTile.bTileHeader) {
                     return false;
                 }
@@ -275,117 +283,63 @@ namespace Orion.World {
                 return true;
             }
 
-            [Pure]
             public byte color() => (byte)_tile->BlockColor;
-
             public void color(byte color) => _tile->BlockColor = (PaintColor)color;
-
-            [Pure]
             public bool active() => _tile->IsBlockActive;
-
             public void active(bool active) => _tile->IsBlockActive = active;
-
-            [Pure]
             public bool inActive() => _tile->IsBlockActuated;
-
             public void inActive(bool inActive) => _tile->IsBlockActuated = inActive;
-
-            [Pure]
             public bool wire() => _tile->HasRedWire;
-
             public void wire(bool wire) => _tile->HasRedWire = wire;
-
-            [Pure]
             public bool wire2() => _tile->HasBlueWire;
-
             public void wire2(bool wire2) => _tile->HasBlueWire = wire2;
-
-            [Pure]
             public bool wire3() => _tile->HasGreenWire;
-
             public void wire3(bool wire3) => _tile->HasGreenWire = wire3;
-
-            [Pure]
             public bool halfBrick() => _tile->IsBlockHalved;
-
             public void halfBrick(bool halfBrick) => _tile->IsBlockHalved = halfBrick;
-
-            [Pure]
             public bool actuator() => _tile->HasActuator;
-
             public void actuator(bool actuator) => _tile->HasActuator = actuator;
-
-            [Pure]
             public byte slope() => (byte)_tile->Slope;
-
             public void slope(byte slope) => _tile->Slope = (Slope)slope;
-
-            [Pure]
             public byte wallColor() => (byte)_tile->WallColor;
-
             public void wallColor(byte wallColor) => _tile->WallColor = (PaintColor)wallColor;
-
-            [Pure]
             public bool lava() => _tile->IsLava;
-
             public void lava(bool lava) => _tile->IsLava = lava;
-
-            [Pure]
             public bool honey() => _tile->IsHoney;
-
             public void honey(bool honey) => _tile->IsHoney = honey;
-
-            [Pure]
             public byte liquidType() => (byte)_tile->LiquidType;
-
             public void liquidType(int liquidType) => _tile->LiquidType = (LiquidType)liquidType;
-
-            [Pure]
             public bool wire4() => _tile->HasYellowWire;
-
             public void wire4(bool wire4) => _tile->HasYellowWire = wire4;
-
-            [Pure]
             public bool checkingLiquid() => _tile->IsCheckingLiquid;
-
             public void checkingLiquid(bool checkingLiquid) => _tile->IsCheckingLiquid = checkingLiquid;
-
-            [Pure]
             public bool skipLiquid() => _tile->ShouldSkipLiquid;
-
             public void skipLiquid(bool skipLiquid) => _tile->ShouldSkipLiquid = skipLiquid;
 
-            [Pure]
             public bool nactive() => (sTileHeader & 96) == 32;
 
-            [Pure]
             public bool topSlope() {
                 var slope = this.slope();
                 return slope == 1 || slope == 2;
             }
 
-            [Pure]
             public bool bottomSlope() {
                 var slope = this.slope();
                 return slope == 3 || slope == 4;
             }
 
-            [Pure]
             public bool leftSlope() {
                 var slope = this.slope();
                 return slope == 2 || slope == 4;
             }
 
-            [Pure]
             public bool rightSlope() {
                 var slope = this.slope();
                 return slope == 1 || slope == 3;
             }
 
-            [Pure]
             public bool HasSameSlope(ITile otherTile) => (sTileHeader & 29696) == (otherTile.sTileHeader & 29696);
 
-            [Pure]
             public int blockType() {
                 if (halfBrick()) return 1;
 
@@ -394,31 +348,31 @@ namespace Orion.World {
             }
 
             // These are no-ops since their values are not observable.
-            [Pure, ExcludeFromCodeCoverage]
+            [ExcludeFromCodeCoverage]
             public int wallFrameX() => 0;
 
             [ExcludeFromCodeCoverage]
             public void wallFrameX(int wallFrameX) { }
 
-            [Pure, ExcludeFromCodeCoverage]
+            [ExcludeFromCodeCoverage]
             public byte frameNumber() => 0;
 
             [ExcludeFromCodeCoverage]
             public void frameNumber(byte frameNumber) { }
 
-            [Pure, ExcludeFromCodeCoverage]
+            [ExcludeFromCodeCoverage]
             public byte wallFrameNumber() => 0;
 
             [ExcludeFromCodeCoverage]
             public void wallFrameNumber(byte wallFrameNumber) { }
 
-            [Pure, ExcludeFromCodeCoverage]
+            [ExcludeFromCodeCoverage]
             public int wallFrameY() => 0;
 
             [ExcludeFromCodeCoverage]
             public void wallFrameY(int wallFrameY) { }
 
-            [Pure, ExcludeFromCodeCoverage]
+            [ExcludeFromCodeCoverage]
             public Color actColor(Color oldColor) => default;
         }
     }

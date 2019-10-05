@@ -30,7 +30,7 @@ namespace Orion.Packets.World.Tiles {
             liquid.SetSimplePropertiesShouldMarkAsDirty();
         }
 
-        public static byte[] Bytes = {100, 0, 0, 1, 255, 0};
+        public static byte[] Bytes = { 100, 0, 0, 1, 255, 0 };
 
         [Theory]
         [InlineData(true)]

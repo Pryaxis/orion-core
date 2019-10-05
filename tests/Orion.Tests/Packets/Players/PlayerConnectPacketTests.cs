@@ -37,7 +37,7 @@ namespace Orion.Packets.Players {
             action.Should().Throw<ArgumentNullException>();
         }
 
-        public static readonly byte[] Bytes = {15, 0, 1, 11, 84, 101, 114, 114, 97, 114, 105, 97, 49, 57, 52};
+        public static readonly byte[] Bytes = { 15, 0, 1, 11, 84, 101, 114, 114, 97, 114, 105, 97, 49, 57, 52 };
 
         [Fact]
         public void ReadFromStream() {
@@ -48,8 +48,6 @@ namespace Orion.Packets.Players {
         }
 
         [Fact]
-        public void DeserializeAndSerialize_SamePacket() {
-            Bytes.ShouldDeserializeAndSerializeSamePacket();
-        }
+        public void DeserializeAndSerialize_SamePacket() => Bytes.ShouldDeserializeAndSerializeSamePacket();
     }
 }

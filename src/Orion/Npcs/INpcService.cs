@@ -27,12 +27,13 @@ namespace Orion.Npcs {
     /// </summary>
     public interface INpcService : IService {
         /// <summary>
-        /// Gets the NPCs.
+        /// Gets the NPCs in the world.
         /// </summary>
         IReadOnlyArray<INpc> Npcs { get; }
 
         /// <summary>
-        /// Gets or sets the event handlers that occur when an NPC's defaults are being set. This event can be canceled.
+        /// Gets or sets the event handlers that occur when an NPC's defaults are being set, which is when NPC data is
+        /// initialized. This event can be canceled.
         /// </summary>
         EventHandlerCollection<NpcSetDefaultsEventArgs>? NpcSetDefaults { get; set; }
 
@@ -67,16 +68,19 @@ namespace Orion.Npcs {
         EventHandlerCollection<NpcKilledEventArgs>? NpcKilled { get; set; }
 
         /// <summary>
-        /// Spawns an NPC with the given type at the specified position with the AI values.
+        /// Spawns an NPC with the given <paramref name="type"/> at the specified <paramref name="position"/> with the
+        /// <paramref name="aiValues"/>.
         /// </summary>
-        /// <param name="npcType">The NPC type.</param>
+        /// <param name="type">The NPC type.</param>
         /// <param name="position">The position.</param>
         /// <param name="aiValues">
-        /// The AI values to use, or <see langword="null" /> for none. If not <see langword="null" />, this should have
-        /// length 4.
+        /// The AI values to use, or <see langword="null"/> for none. If not <see langword="null"/>, this should have
+        /// length 4. These AI values are values that control type-specific behavior.
         /// </param>
-        /// <returns>The resulting NPC, or <see langword="null" /> if none was spawned.</returns>
-        /// <exception cref="ArgumentException"><paramref name="aiValues"/> does not have length 4.</exception>
-        INpc? SpawnNpc(NpcType npcType, Vector2 position, float[]? aiValues = null);
+        /// <returns>The resulting NPC, or <see langword="null"/> if none was spawned.</returns>
+        /// <exception cref="ArgumentException">
+        /// <paramref name="aiValues"/> is not <see langword="null"/> and does not have length 4.
+        /// </exception>
+        INpc? SpawnNpc(NpcType type, Vector2 position, float[]? aiValues = null);
     }
 }

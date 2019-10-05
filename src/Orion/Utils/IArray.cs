@@ -24,7 +24,7 @@ namespace Orion.Utils {
     /// <typeparam name="T">The type of element.</typeparam>
     public interface IArray<T> : IReadOnlyArray<T> {
         /// <summary>
-        /// Gets or sets the element at the given index.
+        /// Gets or sets the element at the given <paramref name="index"/>.
         /// </summary>
         /// <param name="index">The index.</param>
         /// <exception cref="IndexOutOfRangeException"><paramref name="index"/> is out of range.</exception>

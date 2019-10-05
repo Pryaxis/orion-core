@@ -45,7 +45,7 @@ namespace Orion.Packets.Npcs {
         /// <summary>
         /// Gets or sets the NPC's name.
         /// </summary>
-        /// <exception cref="ArgumentNullException"><paramref name="value"/> is <see langword="null" />.</exception>
+        /// <exception cref="ArgumentNullException"><paramref name="value"/> is <see langword="null"/>.</exception>
         public string NpcName {
             get => _npcName;
             set {

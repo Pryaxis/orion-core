@@ -28,7 +28,7 @@ namespace Orion.World.TileEntities {
     public class OrionChestTests {
         [Fact]
         public void X_Get() {
-            var terrariaChest = new TerrariaChest {x = 100};
+            var terrariaChest = new TerrariaChest { x = 100 };
             for (var i = 0; i < terrariaChest.item.Length; ++i) {
                 terrariaChest.item[i] = new TerrariaItem();
             }
@@ -68,7 +68,7 @@ namespace Orion.World.TileEntities {
 
         [Fact]
         public void Y_GetIsCorrect() {
-            var terrariaChest = new TerrariaChest {y = 100};
+            var terrariaChest = new TerrariaChest { y = 100 };
             for (var i = 0; i < terrariaChest.item.Length; ++i) {
                 terrariaChest.item[i] = new TerrariaItem();
             }
@@ -108,7 +108,7 @@ namespace Orion.World.TileEntities {
 
         [Fact]
         public void Name_Get() {
-            var terrariaChest = new TerrariaChest {name = "test"};
+            var terrariaChest = new TerrariaChest { name = "test" };
             for (var i = 0; i < terrariaChest.item.Length; ++i) {
                 terrariaChest.item[i] = new TerrariaItem();
             }

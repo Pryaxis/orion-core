@@ -37,7 +37,7 @@ namespace Orion.Events.Players {
             var player = new Mock<IPlayer>().Object;
             var packet = new PlayerInventorySlotPacket();
             var args = new PlayerInventorySlotEventArgs(player, packet);
-            
+
             args.Properties_GetSetShouldReflect("_packet");
         }
     }

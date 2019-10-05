@@ -28,8 +28,6 @@ namespace Orion {
             _main.Initialize();
         }
 
-        public void Dispose() {
-            _main.Dispose();
-        }
+        public void Dispose() => _main.Dispose();
     }
 }

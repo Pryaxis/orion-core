@@ -48,7 +48,7 @@ namespace Orion.Events.Players {
         /// <param name="player">The player.</param>
         /// <param name="module">The module.</param>
         /// <exception cref="ArgumentNullException">
-        /// <paramref name="player"/> or <paramref name="module"/> are <see langword="null" />.
+        /// <paramref name="player"/> or <paramref name="module"/> are <see langword="null"/>.
         /// </exception>
         public PlayerChatEventArgs(IPlayer player, ChatModule module) : base(player) {
             _module = module ?? throw new ArgumentNullException(nameof(module));

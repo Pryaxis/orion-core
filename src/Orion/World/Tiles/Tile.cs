@@ -22,7 +22,7 @@ using Orion.World.Tiles.Extensions;
 
 namespace Orion.World.Tiles {
     /// <summary>
-    /// Represents a highly optimized Terraria tile.
+    /// Represents an optimized Terraria tile. Tiles are represented as structures for optimal packing and GC overhead.
     /// </summary>
     [StructLayout(LayoutKind.Explicit)]
     public unsafe struct Tile {
@@ -30,12 +30,9 @@ namespace Orion.World.Tiles {
         private const int WallColorShift = 16;
         private const int LiquidTypeShift = 21;
 
-        /*
-         * Masks for the tile header. We *could* theoretically squeeze the header into 3 bytes instead of 4, but this
-         * means that sizeof(Tile) is 11, which would result in a whole bunch of alignment issues. This is probably
-         * not worth the ~8% savings in memory usage.
-         */
-
+        // Masks for the tile header. We *could* theoretically squeeze the header into 3 bytes instead of 4, but this
+        // means that sizeof(Tile) is 11, which would result in a whole bunch of alignment issues. This is probably
+        // not worth the ~8% savings in memory usage.
         private const int BlockColorMask /*       */ = 0b_00000000_00000000_00000000_00011111;
         private const int IsBlockActiveMask /*    */ = 0b_00000000_00000000_00000000_00100000;
         private const int IsBlockActuatedMask /*  */ = 0b_00000000_00000000_00000000_01000000;
@@ -52,8 +49,6 @@ namespace Orion.World.Tiles {
         private const int HasYellowWireMask /*    */ = 0b_00000000_10000000_00000000_00000000;
         private const int IsCheckingLiquidMask /* */ = 0b_00001000_00000000_00000000_00000000;
         private const int ShouldSkipLiquidMask /* */ = 0b_00010000_00000000_00000000_00000000;
-
-        // We use fields instead of properties because Tile should just be a POD.
 
         /// <summary>
         /// The tile's block type.
@@ -94,17 +89,15 @@ namespace Orion.World.Tiles {
         public PaintColor BlockColor {
             readonly get => (PaintColor)(_tileHeader & BlockColorMask);
             set {
-                Debug.Assert((int)value >= 0 && (int)value <= 31, "(int)value >= 0 && (int)value <= 31");
+                Debug.Assert((int)value >= 0 && (int)value <= 31, "value should be valid");
 
                 _tileHeader = (_tileHeader & ~BlockColorMask) | (int)value;
             }
         }
 
-        /*
-         * For the following bool-valued setters, *(int*)&value is by far the fastest way of converting the bool into
-         * either a 1 or 0. The resulting code is still very readable, so we might as well use it... These setters could
-         * very easily end up in a tight loop.
-         */
+        // For the following bool-valued setters, *(int*)&value is by far the fastest way of converting the bool into
+        // either a 1 or 0. The resulting code is still very readable, so we might as well use it... These setters could
+        // very easily end up in a tight loop.
 
         /// <summary>
         /// Gets or sets a value indicating whether the tile's block is active.
@@ -168,7 +161,7 @@ namespace Orion.World.Tiles {
         public Slope Slope {
             readonly get => (Slope)((_tileHeader & SlopeMask) >> SlopeShift);
             set {
-                Debug.Assert((int)value >= 0 && (int)value <= 7, "(int)value >= 0 && (int)value <= 7");
+                Debug.Assert((int)value >= 0 && (int)value <= 7, "value should be valid");
 
                 _tileHeader = (_tileHeader & ~SlopeMask) | ((int)value << SlopeShift);
             }
@@ -180,7 +173,7 @@ namespace Orion.World.Tiles {
         public PaintColor WallColor {
             readonly get => (PaintColor)((_tileHeader & WallColorMask) >> WallColorShift);
             set {
-                Debug.Assert((int)value >= 0 && (int)value <= 31, "(int)value >= 0 && (int)value <= 31");
+                Debug.Assert((int)value >= 0 && (int)value <= 31, "value should be valid");
 
                 _tileHeader = (_tileHeader & ~WallColorMask) | ((int)value << WallColorShift);
             }
@@ -208,7 +201,7 @@ namespace Orion.World.Tiles {
         public LiquidType LiquidType {
             readonly get => (LiquidType)((_tileHeader & LiquidTypeMask) >> LiquidTypeShift);
             set {
-                Debug.Assert((int)value >= 0 && (int)value <= 3, "(int)value >= 0 && (int)value <= 3");
+                Debug.Assert((int)value >= 0 && (int)value <= 3, "value should be valid");
 
                 _tileHeader = (_tileHeader & ~LiquidTypeMask) | ((int)value << LiquidTypeShift);
             }
@@ -239,16 +232,21 @@ namespace Orion.World.Tiles {
         }
 
         /// <summary>
-        /// Returns a value indicating whether the tile is the same as the given other tile.
+        /// Returns a value indicating whether the tile is the same as the given <paramref name="otherTile"/>.
         /// </summary>
         /// <param name="otherTile">The other tile.</param>
-        /// <returns>A value indicating whether the tile is the same.</returns>
+        /// <returns><see langword="true"/> if the tiles are the same; otherwise, <see langword="false"/>.</returns>
         [Pure]
         public readonly bool IsTheSameAs(in Tile otherTile) {
-            if (_sTileHeader != otherTile._sTileHeader) return false;
+            // TODO: this method can be optimized due to structure layout
+            if (_sTileHeader != otherTile._sTileHeader) {
+                return false;
+            }
 
             if (IsBlockActive) {
-                if (BlockType != otherTile.BlockType) return false;
+                if (BlockType != otherTile.BlockType) {
+                    return false;
+                }
 
                 if (BlockType.AreFramesImportant() &&
                     (BlockFrameX != otherTile.BlockFrameX || BlockFrameY != otherTile.BlockFrameY)) {
@@ -256,11 +254,14 @@ namespace Orion.World.Tiles {
                 }
             }
 
-            if (WallType != otherTile.WallType || LiquidAmount != otherTile.LiquidAmount) return false;
+            if (WallType != otherTile.WallType || LiquidAmount != otherTile.LiquidAmount) {
+                return false;
+            }
 
             if (LiquidAmount == 0) {
-                if (WallColor != otherTile.WallColor) return false;
-                if (HasYellowWire != otherTile.HasYellowWire) return false;
+                if (WallColor != otherTile.WallColor || HasYellowWire != otherTile.HasYellowWire) {
+                    return false;
+                }
             } else if (_bTileHeader != otherTile._bTileHeader) {
                 return false;
             }

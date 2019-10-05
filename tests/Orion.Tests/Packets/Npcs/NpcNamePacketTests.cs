@@ -37,7 +37,7 @@ namespace Orion.Packets.Npcs {
             action.Should().Throw<ArgumentNullException>();
         }
 
-        public static readonly byte[] ClientBytes = {14, 0, 56, 0, 0, 8, 84, 101, 114, 114, 97, 114, 105, 97};
+        public static readonly byte[] ClientBytes = { 14, 0, 56, 0, 0, 8, 84, 101, 114, 114, 97, 114, 105, 97 };
 
         [Fact]
         public void ReadFromStream_Client() {
@@ -59,7 +59,7 @@ namespace Orion.Packets.Npcs {
             stream2.ToArray().Should().BeEquivalentTo(ClientBytes);
         }
 
-        public static readonly byte[] ServerBytes = {5, 0, 56, 0, 0};
+        public static readonly byte[] ServerBytes = { 5, 0, 56, 0, 0 };
 
         [Fact]
         public void ReadFromStream_Server() {

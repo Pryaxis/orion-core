@@ -37,7 +37,7 @@ namespace Orion.Events.Items {
         /// </summary>
         /// <param name="item">The item.</param>
         /// <param name="itemType">The item type.</param>
-        /// <exception cref="ArgumentNullException"><paramref name="item"/> is <see langword="null" />.</exception>
+        /// <exception cref="ArgumentNullException"><paramref name="item"/> is <see langword="null"/>.</exception>
         public ItemSetDefaultsEventArgs(IItem item, ItemType itemType) : base(item) {
             ItemType = itemType;
         }

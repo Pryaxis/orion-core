@@ -27,7 +27,7 @@ namespace Orion.Items {
         public TerrariaItem Wrapped { get; }
 
         public OrionItemStats(TerrariaItem terrariaItem) {
-            Debug.Assert(terrariaItem != null, "terrariaItem != null");
+            Debug.Assert(terrariaItem != null, "Terraria item should not be null");
 
             Wrapped = terrariaItem;
         }

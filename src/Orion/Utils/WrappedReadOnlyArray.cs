@@ -16,10 +16,8 @@
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.Diagnostics.CodeAnalysis;
 
 namespace Orion.Utils {
     internal sealed class WrappedReadOnlyArray<T, TWrapped> : IReadOnlyArray<T>
@@ -42,13 +40,12 @@ namespace Orion.Utils {
                     return item = _converter(index, wrappedItem);
                 }
 
-                Debug.Assert(item != null, "item != null");
                 return item;
             }
         }
 
         public WrappedReadOnlyArray(Memory<TWrapped> wrappedItems, Func<int, TWrapped, T> converter) {
-            Debug.Assert(converter != null, "converter != null");
+            Debug.Assert(converter != null, "converter should not be null");
 
             _wrappedItems = wrappedItems;
             _converter = converter;
@@ -60,8 +57,5 @@ namespace Orion.Utils {
                 yield return this[i];
             }
         }
-
-        [ExcludeFromCodeCoverage]
-        IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
     }
 }

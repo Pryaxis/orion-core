@@ -69,7 +69,7 @@ namespace Orion.Packets.World.TileEntities {
         /// <summary>
         /// Gets or sets the sign's text.
         /// </summary>
-        /// <exception cref="ArgumentNullException"><paramref name="value"/> is <see langword="null" />.</exception>
+        /// <exception cref="ArgumentNullException"><paramref name="value"/> is <see langword="null"/>.</exception>
         public string SignText {
             get => _signText;
             set {

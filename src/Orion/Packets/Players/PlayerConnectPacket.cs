@@ -32,7 +32,7 @@ namespace Orion.Packets.Players {
         /// <summary>
         /// Gets or sets the player's verion string. This is usually of the form "Terraria###".
         /// </summary>
-        /// <exception cref="ArgumentNullException"><paramref name="value"/> is <see langword="null" />.</exception>
+        /// <exception cref="ArgumentNullException"><paramref name="value"/> is <see langword="null"/>.</exception>
         public string PlayerVersionString {
             get => _playerVersionString;
             set {

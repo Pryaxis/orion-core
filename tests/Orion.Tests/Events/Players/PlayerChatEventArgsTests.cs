@@ -41,17 +41,15 @@ namespace Orion.Events.Players {
         }
 
         [Fact]
-        public void SetGetProperties_ReflectsInModule() {
-            _args.Properties_GetSetShouldReflect("_module");
-        }
-        
+        public void SetGetProperties_ReflectsInModule() => _args.Properties_GetSetShouldReflect("_module");
+
         [Fact]
         public void SetChatCommand_NullValue_ThrowsArgumentNullException() {
             Action action = () => _args.ChatCommand = null;
 
             action.Should().Throw<ArgumentNullException>();
         }
-        
+
         [Fact]
         public void SetChatText_NullValue_ThrowsArgumentNullException() {
             Action action = () => _args.ChatText = null;

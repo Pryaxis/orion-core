@@ -35,7 +35,7 @@ namespace Orion.Packets.World.Tiles {
         /// <summary>
         /// Gets or sets the tile's liquid.
         /// </summary>
-        /// <exception cref="ArgumentNullException"><paramref name="value"/> is <see langword="null" />.</exception>
+        /// <exception cref="ArgumentNullException"><paramref name="value"/> is <see langword="null"/>.</exception>
         public NetworkLiquid TileLiquid {
             get => _tileLiquid;
             set {

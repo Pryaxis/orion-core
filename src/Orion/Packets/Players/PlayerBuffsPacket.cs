@@ -26,10 +26,10 @@ namespace Orion.Packets.Players {
     /// Packet sent to set a player's buffs. Each buff will be set for one second.
     /// </summary>
     public sealed class PlayerBuffsPacket : Packet {
-        private byte _playerIndex;
-
         private readonly DirtiableArray<BuffType> _playerBuffTypes =
             new DirtiableArray<BuffType>(TerrariaPlayer.maxBuffs);
+
+        private byte _playerIndex;
 
         /// <inheritdoc />
         public override bool IsDirty => base.IsDirty || _playerBuffTypes.IsDirty;

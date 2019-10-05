@@ -27,7 +27,7 @@ namespace Orion.World.TileEntities {
         /// <summary>
         /// Gets or sets the sign's text.
         /// </summary>
-        /// <exception cref="ArgumentNullException"><paramref name="value"/> is <see langword="null" />.</exception>
+        /// <exception cref="ArgumentNullException"><paramref name="value"/> is <see langword="null"/>.</exception>
         string Text { get; set; }
     }
 }

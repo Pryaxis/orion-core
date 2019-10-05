@@ -56,7 +56,7 @@ namespace Orion.Packets.Npcs {
         }
 
         /// <summary>
-        /// Gets or sets the NPC's new position.
+        /// Gets or sets the NPC's new position. The components are pixel-based.
         /// </summary>
         public Vector2 NewNpcPosition {
             get => _newNpcPosition;
@@ -67,7 +67,7 @@ namespace Orion.Packets.Npcs {
         }
 
         /// <summary>
-        /// Gets or sets the NPC's new velocity.
+        /// Gets or sets the NPC's new velocity. The components are pixel-based.
         /// </summary>
         public Vector2 NewNpcVelocity {
             get => _newNpcVelocity;

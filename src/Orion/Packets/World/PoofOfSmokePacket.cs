@@ -31,7 +31,7 @@ namespace Orion.Packets.World {
         public override PacketType Type => PacketType.PoofOfSmoke;
 
         /// <summary>
-        /// Gets or sets the smoke's position.
+        /// Gets or sets the smoke's position. The components are pixel-based.
         /// </summary>
         public Vector2 SmokePosition {
             get => _smokePosition;

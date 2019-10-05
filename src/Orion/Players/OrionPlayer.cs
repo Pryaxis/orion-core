@@ -40,28 +40,35 @@ namespace Orion.Players {
 
         public IPlayerStats Stats => throw new NotImplementedException();
         public IPlayerInventory Inventory => throw new NotImplementedException();
-
+        
+        // We need to inject ICommandService so that we can trigger its PacketSend event.
         public OrionPlayer(IPlayerService playerService, TerrariaPlayer terrariaPlayer)
             : this(playerService, -1, terrariaPlayer) { }
 
         public OrionPlayer(IPlayerService playerService, int playerIndex, TerrariaPlayer terrariaPlayer)
             : base(playerIndex, terrariaPlayer) {
-            Debug.Assert(playerService != null, "playerService != null");
+            Debug.Assert(playerService != null, "player service should not be null");
 
             _playerService = playerService;
         }
 
         public void SendPacket(Packet packet) {
+            var terrariaClient = Terraria.Netplay.Clients[Index];
+            if (terrariaClient.IsActive) {
+                return;
+            }
+
             var args = new PacketSendEventArgs(this, packet);
             _playerService.PacketSend?.Invoke(this, args);
-            if (args.IsCanceled()) return;
-            packet = args.Packet;
+            if (args.IsCanceled()) {
+                return;
+            }
 
+            // TODO: consider MemoryStream allocation vs reusing buffer here
             var stream = new MemoryStream();
-            packet.WriteToStream(stream, PacketContext.Server);
-            var terrariaClient = Terraria.Netplay.Clients[Index];
-            terrariaClient.Socket?.AsyncSend(stream.ToArray(), 0, (int)stream.Length,
-                                             terrariaClient.ServerWriteCallBack);
+            args.Packet.WriteToStream(stream, PacketContext.Server);
+            terrariaClient.Socket?.AsyncSend(
+                stream.ToArray(), 0, (int)stream.Length, terrariaClient.ServerWriteCallBack);
         }
     }
 }

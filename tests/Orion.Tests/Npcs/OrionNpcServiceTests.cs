@@ -16,15 +16,14 @@
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
 using System;
-using System.Diagnostics;
 using System.Linq;
 using FluentAssertions;
 using Microsoft.Xna.Framework;
 using Orion.Events.Extensions;
 using Xunit;
 using Main = Terraria.Main;
-using TerrariaNpc = Terraria.NPC;
 using TerrariaItem = Terraria.Item;
+using TerrariaNpc = Terraria.NPC;
 using TerrariaPlayer = Terraria.Player;
 
 namespace Orion.Npcs {
@@ -34,19 +33,19 @@ namespace Orion.Npcs {
 
         public OrionNpcServiceTests() {
             for (var i = 0; i < Main.npc.Length; ++i) {
-                Main.npc[i] = new TerrariaNpc {whoAmI = i};
+                Main.npc[i] = new TerrariaNpc { whoAmI = i };
             }
 
             for (var i = 0; i < Main.combatText.Length; ++i) {
-                Main.combatText[i] = new Terraria.CombatText {active = true};
+                Main.combatText[i] = new Terraria.CombatText { active = true };
             }
 
             for (var i = 0; i < Main.item.Length; ++i) {
-                Main.item[i] = new TerrariaItem {whoAmI = i};
+                Main.item[i] = new TerrariaItem { whoAmI = i };
             }
 
             for (var i = 0; i < Main.player.Length; ++i) {
-                Main.player[i] = new TerrariaPlayer {whoAmI = i};
+                Main.player[i] = new TerrariaPlayer { whoAmI = i };
             }
 
             Main.rand = new Terraria.Utilities.UnifiedRandom();
@@ -54,9 +53,7 @@ namespace Orion.Npcs {
             _npcService = new OrionNpcService();
         }
 
-        public void Dispose() {
-            _npcService.Dispose();
-        }
+        public void Dispose() => _npcService.Dispose();
 
         [Fact]
         public void Npcs_Item_Get() {
@@ -166,7 +163,7 @@ namespace Orion.Npcs {
             };
 
             Main.npc[0].UpdateNPC(0);
-            
+
             isRun.Should().BeTrue();
         }
 
@@ -182,7 +179,7 @@ namespace Orion.Npcs {
             };
 
             Main.npc[0].Transform((int)npcType);
-            
+
             isRun.Should().BeTrue();
         }
 
@@ -224,7 +221,7 @@ namespace Orion.Npcs {
             };
 
             Main.npc[0].StrikeNPC(100, 5.0f, 1, true);
-            
+
             isRun.Should().BeTrue();
         }
 
@@ -251,7 +248,7 @@ namespace Orion.Npcs {
             Main.npc[0].life = 0;
 
             Main.npc[0].checkDead();
-            
+
             isRun.Should().BeTrue();
         }
 
@@ -279,7 +276,7 @@ namespace Orion.Npcs {
             Main.npc[0].life = 0;
 
             Main.npc[0].checkDead();
-            
+
             isRun.Should().BeTrue();
         }
 
@@ -293,8 +290,8 @@ namespace Orion.Npcs {
 
         [Fact]
         public void SpawnNpc_AiValues() {
-            var npc = _npcService.SpawnNpc(NpcType.BlueSlime, Vector2.Zero, new float[] {1, 2, 3, 4});
-            
+            var npc = _npcService.SpawnNpc(NpcType.BlueSlime, Vector2.Zero, new float[] { 1, 2, 3, 4 });
+
             npc.Should().NotBeNull();
             npc.Type.Should().Be(NpcType.BlueSlime);
         }

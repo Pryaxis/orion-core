@@ -21,7 +21,7 @@ using System.Diagnostics.Contracts;
 
 namespace Orion.Entities {
     /// <summary>
-    /// Represents a buff.
+    /// Represents a buff, which consists of a buff type along with a duration.
     /// </summary>
     // TODO: write WriterToWriter and ReadFromReader methods.
     public readonly struct Buff {

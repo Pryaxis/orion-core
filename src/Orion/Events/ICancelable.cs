@@ -21,7 +21,7 @@ namespace Orion.Events {
     /// </summary>
     public interface ICancelable {
         /// <summary>
-        /// Gets or sets the cancelation reason.
+        /// Gets or sets the cancelation reason. If <see langword="null"/>, then the object is not canceled.
         /// </summary>
         string? CancellationReason { get; set; }
     }

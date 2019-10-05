@@ -34,7 +34,7 @@ namespace Orion.Packets.Modules {
         /// <summary>
         /// Gets or sets the module.
         /// </summary>
-        /// <exception cref="ArgumentNullException"><paramref name="value"/> is <see langword="null" />.</exception>
+        /// <exception cref="ArgumentNullException"><paramref name="value"/> is <see langword="null"/>.</exception>
         public Module? Module {
             get => _module;
             set {

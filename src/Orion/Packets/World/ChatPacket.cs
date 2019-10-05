@@ -48,7 +48,7 @@ namespace Orion.Packets.World {
         /// <summary>
         /// Gets or sets the chat's text.
         /// </summary>
-        /// <exception cref="ArgumentNullException"><paramref name="value"/> is <see langword="null" />.</exception>
+        /// <exception cref="ArgumentNullException"><paramref name="value"/> is <see langword="null"/>.</exception>
         public string ChatText {
             get => _chatText.ToString();
             set {

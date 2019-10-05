@@ -36,14 +36,12 @@ namespace Orion.World {
         int WorldHeight { get; }
 
         /// <summary>
-        /// Gets a reference to the tile at the given coordinates.
+        /// Gets a reference to the tile at the given coordinates. For optimization purposes, there will be no range
+        /// checking.
         /// </summary>
         /// <param name="x">The X coordinate.</param>
         /// <param name="y">The Y coordinate.</param>
         /// <returns>A reference to the tile.</returns>
-        /// <exception cref="IndexOutOfRangeException">
-        /// <paramref name="x"/> or <paramref name="y"/> are out of range.
-        /// </exception>
         ref Tile this[int x, int y] { get; }
 
         /// <summary>
@@ -52,12 +50,12 @@ namespace Orion.World {
         InvasionType CurrentInvasionType { get; }
 
         /// <summary>
-        /// Gets or sets the event handlers that occur when a world is loading.
+        /// Gets or sets the event handlers that occur when the world is loading.
         /// </summary>
         EventHandlerCollection<WorldLoadEventArgs>? WorldLoad { get; set; }
         
         /// <summary>
-        /// Gets or sets the event handlers that occur when a world is saving. This event can be canceled.
+        /// Gets or sets the event handlers that occur when the world is saving. This event can be canceled.
         /// </summary>
         EventHandlerCollection<WorldSaveEventArgs>? WorldSave { get; set; }
     }

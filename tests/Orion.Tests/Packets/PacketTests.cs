@@ -18,6 +18,7 @@
 using System;
 using System.IO;
 using FluentAssertions;
+using Moq;
 using Xunit;
 
 namespace Orion.Packets {
@@ -31,20 +32,10 @@ namespace Orion.Packets {
 
         [Fact]
         public void WriteToStream_NullStream_ThrowsArgumentNullException() {
-            var packet = new TestPacket();
+            var packet = new Mock<Packet>().Object;
             Action action = () => packet.WriteToStream(null, PacketContext.Server);
 
             action.Should().Throw<ArgumentNullException>();
-        }
-
-        private class TestPacket : Packet {
-            public override PacketType Type => throw new NotImplementedException();
-
-            private protected override void ReadFromReader(BinaryReader reader, PacketContext context) =>
-                throw new NotImplementedException();
-
-            private protected override void WriteToWriter(BinaryWriter writer, PacketContext context) =>
-                throw new NotImplementedException();
         }
     }
 }

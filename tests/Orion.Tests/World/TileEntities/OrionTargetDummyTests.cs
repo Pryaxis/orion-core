@@ -25,7 +25,7 @@ namespace Orion.World.TileEntities {
     public class OrionTargetDummyTests {
         [Fact]
         public void NpcIndex_Get() {
-            var terrariaTargetDummy = new TerrariaTargetDummy {npc = 100};
+            var terrariaTargetDummy = new TerrariaTargetDummy { npc = 100 };
             ITargetDummy targetDummy = new OrionTargetDummy(terrariaTargetDummy);
 
             targetDummy.NpcIndex.Should().Be(100);

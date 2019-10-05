@@ -48,11 +48,15 @@ namespace Orion {
 
             foreach (var property in args.GetType().GetProperties(BindingFlags.Public | BindingFlags.Instance)) {
                 var packetProperty = field.GetType().GetProperty(property.Name);
-                if (packetProperty is null) continue;
+                if (packetProperty is null) {
+                    continue;
+                }
 
                 var propertyType = property.PropertyType;
                 if (!DefaultValues.TryGetValue(propertyType, out var value)) {
-                    if (propertyType.GetConstructor(Type.EmptyTypes) is null && !propertyType.IsValueType) continue;
+                    if (propertyType.GetConstructor(Type.EmptyTypes) is null && !propertyType.IsValueType) {
+                        continue;
+                    }
 
                     value = Activator.CreateInstance(propertyType);
                 }
@@ -62,7 +66,10 @@ namespace Orion {
                 property.GetValue(args).Should().Be(value);
 
                 // Test setter, if applicable.
-                if (!property.CanWrite) continue;
+                if (!property.CanWrite) {
+                    continue;
+                }
+
                 property.SetValue(args, value);
                 packetProperty.GetValue(field).Should().Be(value);
             }
@@ -70,11 +77,15 @@ namespace Orion {
 
         public static void SetSimplePropertiesShouldMarkAsDirty(this IDirtiable dirtiable) {
             foreach (var property in dirtiable.GetType().GetProperties(BindingFlags.Public | BindingFlags.Instance)) {
-                if (property.SetMethod?.IsPublic != true) continue;
+                if (property.SetMethod?.IsPublic != true) {
+                    continue;
+                }
 
                 var propertyType = property.PropertyType;
                 if (!DefaultValues.TryGetValue(propertyType, out var value)) {
-                    if (propertyType.GetConstructor(Type.EmptyTypes) is null && !propertyType.IsValueType) continue;
+                    if (propertyType.GetConstructor(Type.EmptyTypes) is null && !propertyType.IsValueType) {
+                        continue;
+                    }
 
                     value = Activator.CreateInstance(propertyType);
                 }

@@ -41,7 +41,7 @@ namespace Orion.Packets.World.Tiles {
         [SuppressMessage("ReSharper", "UseObjectOrCollectionInitializer")]
         public void Item_Get_Mutate_MarksAsDirty() {
             var tiles = new NetworkTiles(1, 1);
-            tiles[0, 0] = new Tile {BlockType = BlockType.Stone};
+            tiles[0, 0] = new Tile { BlockType = BlockType.Stone };
 
             tiles.ShouldBeDirty();
         }

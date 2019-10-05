@@ -67,7 +67,9 @@ namespace Orion.Players {
         }
 
         protected override void Dispose(bool disposeManaged) {
-            if (!disposeManaged) return;
+            if (!disposeManaged) {
+                return;
+            }
 
             _shouldIgnoreNextReceiveData.Dispose();
 
@@ -76,11 +78,10 @@ namespace Orion.Players {
             Hooks.Net.RemoteClient.PreReset = null;
         }
 
-        private HookResult ReceiveDataHandler(Terraria.MessageBuffer buffer, ref byte packetId,
-                                              ref int readOffset, ref int start, ref int length) {
-            Debug.Assert(buffer != null, "buffer != null");
-            Debug.Assert(buffer.whoAmI >= 0 && buffer.whoAmI < Players.Count,
-                         "buffer.whoAmI >= 0 && buffer.whoAmI < Players.Count");
+        private HookResult ReceiveDataHandler(Terraria.MessageBuffer buffer, ref byte packetId, ref int readOffset,
+                ref int start, ref int length) {
+            Debug.Assert(buffer != null, "buffer should not be null");
+            Debug.Assert(buffer.whoAmI >= 0 && buffer.whoAmI < Players.Count, "buffer should have a valid index");
 
             if (_shouldIgnoreNextReceiveData.Value) {
                 _shouldIgnoreNextReceiveData.Value = false;
@@ -93,18 +94,28 @@ namespace Orion.Players {
             var packet = Packet.ReadFromStream(stream, PacketContext.Server);
             var args = new PacketReceiveEventArgs(sender, packet);
             PacketReceive?.Invoke(this, args);
-            if (args.IsCanceled()) return HookResult.Cancel;
+
+            if (args.IsCanceled()) {
+                return HookResult.Cancel;
+            }
+
             packet = args.Packet;
 
             if (_packetReceiveHandlers.TryGetValue(packet.Type, out var handler)) {
                 handler(args);
-                if (args.IsCanceled()) return HookResult.Cancel;
+                if (args.IsCanceled()) {
+                    return HookResult.Cancel;
+                }
+
                 packet = args.Packet;
             }
 
-            if (!args.IsDirty) return HookResult.Continue;
+            if (!args.IsDirty) {
+                return HookResult.Continue;
+            }
 
             var oldBuffer = buffer.readBuffer;
+            // TODO: consider reusing buffers here
             var newStream = new MemoryStream();
             packet.WriteToStream(newStream, PacketContext.Client);
             buffer.readBuffer = newStream.ToArray();
@@ -119,19 +130,23 @@ namespace Orion.Players {
         }
 
         private HookResult SendBytesHandler(ref int remoteClient, ref byte[] data, ref int offset, ref int size,
-                                            ref Terraria.Net.Sockets.SocketSendCallback callback,
-                                            ref object state) {
-            Debug.Assert(remoteClient >= 0 && remoteClient < Players.Count,
-                         "remoteClient >= 0 && remoteClient < Players.Count");
+                ref Terraria.Net.Sockets.SocketSendCallback callback, ref object state) {
+            Debug.Assert(remoteClient >= 0 && remoteClient < Players.Count, "remote client should be a valid index");
 
             var stream = new MemoryStream(data, offset, size);
             var receiver = Players[remoteClient];
             var packet = Packet.ReadFromStream(stream, PacketContext.Client);
             var args = new PacketSendEventArgs(receiver, packet);
             PacketSend?.Invoke(this, args);
-            if (args.IsCanceled()) return HookResult.Cancel;
-            if (!args.IsDirty) return HookResult.Continue;
+            if (args.IsCanceled()) {
+                return HookResult.Cancel;
+            }
 
+            if (!args.IsDirty) {
+                return HookResult.Continue;
+            }
+
+            // TODO: consider reusing buffers here
             var newStream = new MemoryStream();
             args.Packet.WriteToStream(newStream, PacketContext.Server);
             data = newStream.ToArray();
@@ -141,9 +156,9 @@ namespace Orion.Players {
         }
 
         private HookResult PreResetHandler(Terraria.RemoteClient remoteClient) {
-            Debug.Assert(remoteClient != null, "remoteClient != null");
+            Debug.Assert(remoteClient != null, "remote client should not be null");
             Debug.Assert(remoteClient.Id >= 0 && remoteClient.Id < Players.Count,
-                         "remoteClient.Id >= 0 && remoteClient.Id < Players.Count");
+                "remote client should have a valid index");
 
             var player = Players[remoteClient.Id];
             var args = new PlayerDisconnectedEventArgs(player);
@@ -152,8 +167,6 @@ namespace Orion.Players {
         }
 
         private void PlayerConnectHandler(PacketReceiveEventArgs args_) {
-            Debug.Assert(args_ != null, "args_ != null");
-
             var packet = (PlayerConnectPacket)args_.Packet;
             var args = new PlayerConnectEventArgs(args_.Sender, packet);
             PlayerConnect?.Invoke(this, args);
@@ -161,8 +174,6 @@ namespace Orion.Players {
         }
 
         private void PlayerDataHandler(PacketReceiveEventArgs args_) {
-            Debug.Assert(args_ != null, "args_ != null");
-
             var packet = (PlayerDataPacket)args_.Packet;
             var args = new PlayerDataEventArgs(args_.Sender, packet);
             PlayerData?.Invoke(this, args);
@@ -170,8 +181,6 @@ namespace Orion.Players {
         }
 
         private void PlayerInventorySlotHandler(PacketReceiveEventArgs args_) {
-            Debug.Assert(args_ != null, "args_ != null");
-
             var packet = (PlayerInventorySlotPacket)args_.Packet;
             var args = new PlayerInventorySlotEventArgs(args_.Sender, packet);
             PlayerInventorySlot?.Invoke(this, args);
@@ -179,16 +188,12 @@ namespace Orion.Players {
         }
 
         private void PlayerJoinHandler(PacketReceiveEventArgs args_) {
-            Debug.Assert(args_ != null, "args_ != null");
-
             var args = new PlayerJoinEventArgs(args_.Sender);
             PlayerJoin?.Invoke(this, args);
             args_.CancellationReason = args.CancellationReason;
         }
 
         private void ModuleHandler(PacketReceiveEventArgs args_) {
-            Debug.Assert(args_ != null, "args_ != null");
-
             var module = ((ModulePacket)args_.Packet).Module;
             if (module is ChatModule chatModule) {
                 var args = new PlayerChatEventArgs(args_.Sender, chatModule);

@@ -37,7 +37,7 @@ namespace Orion.Events.Npcs {
         /// </summary>
         /// <param name="npc">The NPC.</param>
         /// <param name="npcNewType">The NPC's new type.</param>
-        /// <exception cref="ArgumentNullException"><paramref name="npc"/> is <see langword="null" />.</exception>
+        /// <exception cref="ArgumentNullException"><paramref name="npc"/> is <see langword="null"/>.</exception>
         public NpcTransformEventArgs(INpc npc, NpcType npcNewType) : base(npc) {
             NpcNewType = npcNewType;
         }

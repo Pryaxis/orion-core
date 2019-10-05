@@ -58,7 +58,7 @@ namespace Orion.Packets.Modules {
             module.ShouldBeDirty();
         }
 
-        public static readonly byte[] Bytes = {13, 0, 82, 0, 0, 1, 0, 100, 0, 0, 1, 255, 0};
+        public static readonly byte[] Bytes = { 13, 0, 82, 0, 0, 1, 0, 100, 0, 0, 1, 255, 0 };
 
         [Fact]
         public void ReadFromStream() {
@@ -70,8 +70,6 @@ namespace Orion.Packets.Modules {
         }
 
         [Fact]
-        public void DeserializeAndSerialize_SamePacket() {
-            Bytes.ShouldDeserializeAndSerializeSamePacket();
-        }
+        public void DeserializeAndSerialize_SamePacket() => Bytes.ShouldDeserializeAndSerializeSamePacket();
     }
 }

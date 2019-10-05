@@ -21,7 +21,7 @@ using TerrariaProjectile = Terraria.Projectile;
 
 namespace Orion.Projectiles {
     /// <summary>
-    /// Represents a Terraria projectile.
+    /// Represents a Terraria projectile. Projectiles are shot from items and NPCs.
     /// </summary>
     public interface IProjectile : IEntity, IWrapping<TerrariaProjectile> {
         /// <summary>

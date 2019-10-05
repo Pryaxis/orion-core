@@ -22,9 +22,8 @@ using TerrariaTileEntity = Terraria.DataStructures.TileEntity;
 namespace Orion.World.TileEntities {
     // OrionTileEntity is generic so that we only use a single wrapped field instead of two wrapped fields per entity.
     internal abstract class OrionTileEntity<TTerrariaTileEntity> : AnnotatableObject, ITileEntity
-        where TTerrariaTileEntity : TerrariaTileEntity {
+            where TTerrariaTileEntity : TerrariaTileEntity {
         public TileEntityType Type => (TileEntityType)Wrapped.type;
-
         public int Index => Wrapped.ID;
         public bool IsActive => true;
 

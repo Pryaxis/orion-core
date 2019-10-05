@@ -34,19 +34,22 @@ namespace Orion.Events {
         private readonly ISet<Registration> _registrations;
 
         private EventHandlerCollection(ISet<Registration> registrations) {
-            Debug.Assert(registrations != null, "registrations != null");
+            Debug.Assert(registrations != null, "registrations should not be null");
 
             _registrations = registrations;
         }
 
         /// <summary>
-        /// Invokes the collection of handlers in order of their priorities with the given arguments.
+        /// Invokes the collection of handlers in order of their priorities using the given <paramref name="sender"/>
+        /// and <paramref name="args"/>.
         /// </summary>
-        /// <param name="sender">The sender. This is usually the object that initiated the event.</param>
+        /// <param name="sender">The sender. This is the object that is initiating the event.</param>
         /// <param name="args">The event arguments.</param>
-        /// <exception cref="ArgumentNullException"><paramref name="args"/> is <see langword="null" />.</exception>
+        /// <exception cref="ArgumentNullException"><paramref name="args"/> is <see langword="null"/>.</exception>
         public void Invoke(object? sender, TEventArgs args) {
-            if (args is null) throw new ArgumentNullException(nameof(args));
+            if (args is null) {
+                throw new ArgumentNullException(nameof(args));
+            }
 
             foreach (var handler in _registrations.Select(r => r.Handler)) {
                 handler(sender, args);
@@ -54,58 +57,55 @@ namespace Orion.Events {
         }
 
         /// <summary>
-        /// Registers the given handler to the collection.
+        /// Registers the given <paramref name="handler"/> to <paramref name="collection"/>.
         /// </summary>
         /// <param name="collection">The collection.</param>
         /// <param name="handler">The handler.</param>
         /// <returns>The resulting collection.</returns>
-        /// <exception cref="ArgumentNullException"><paramref name="handler"/> is <see langword="null" />.</exception>
-        public static EventHandlerCollection<TEventArgs> operator +(EventHandlerCollection<TEventArgs>? collection,
-                                                                    EventHandler<TEventArgs> handler) {
-            if (handler is null) throw new ArgumentNullException(nameof(handler));
+        /// <exception cref="ArgumentNullException"><paramref name="handler"/> is <see langword="null"/>.</exception>
+        public static EventHandlerCollection<TEventArgs> operator +(
+                EventHandlerCollection<TEventArgs>? collection, EventHandler<TEventArgs> handler) {
+            if (handler is null) {
+                throw new ArgumentNullException(nameof(handler));
+            }
 
             var attribute = handler.Method.GetCustomAttribute<EventHandlerAttribute>();
             var priority = attribute?.Priority ?? EventPriority.Normal;
             var registration = new Registration(handler, priority);
-            var registrations =
-                new SortedSet<Registration>(collection?._registrations ?? Enumerable.Empty<Registration>(),
-                                            _registrationComparer) {registration};
+            var registrations = new SortedSet<Registration>(
+                collection?._registrations ?? Enumerable.Empty<Registration>(), _registrationComparer) {registration};
             return new EventHandlerCollection<TEventArgs>(registrations);
         }
 
         /// <summary>
-        /// Unregisters the given handler from the collection.
+        /// Unregisters the given <paramref name="handler"/> from <paramref name="collection"/>.
         /// </summary>
         /// <param name="collection">The collection.</param>
         /// <param name="handler">The handler.</param>
         /// <returns>The resulting collection.</returns>
-        /// <exception cref="ArgumentException"><paramref name="handler"/> is not registered.</exception>
-        /// <exception cref="ArgumentNullException"><paramref name="handler"/> is <see langword="null" />.</exception>
-        public static EventHandlerCollection<TEventArgs>? operator -(EventHandlerCollection<TEventArgs>? collection,
-                                                                     EventHandler<TEventArgs> handler) {
-            if (handler is null) throw new ArgumentNullException(nameof(handler));
+        /// <exception cref="ArgumentNullException"><paramref name="handler"/> is <see langword="null"/>.</exception>
+        public static EventHandlerCollection<TEventArgs>? operator -(
+                EventHandlerCollection<TEventArgs>? collection, EventHandler<TEventArgs> handler) {
+            if (handler is null) {
+                throw new ArgumentNullException(nameof(handler));
+            }
 
             var attribute = handler.Method.GetCustomAttribute<EventHandlerAttribute>();
             var priority = attribute?.Priority ?? EventPriority.Normal;
             var registration = new Registration(handler, priority);
-            var registrations =
-                new SortedSet<Registration>(collection?._registrations ?? Enumerable.Empty<Registration>(),
-                                            _registrationComparer);
-            if (!registrations.Contains(registration)) {
-                throw new ArgumentException("Handler is not registered in the collection.", nameof(handler));
-            }
-
+            var registrations = new SortedSet<Registration>(
+                collection?._registrations ?? Enumerable.Empty<Registration>(), _registrationComparer);
             registrations.Remove(registration);
             return registrations.Count == 0 ? null : new EventHandlerCollection<TEventArgs>(registrations);
         }
 
-
+        // Keeps track of handlers along with their priorities.
         private class Registration {
             public EventHandler<TEventArgs> Handler { get; }
             public EventPriority Priority { get; }
 
             public Registration(EventHandler<TEventArgs> handler, EventPriority priority) {
-                Debug.Assert(handler != null, "handler != null");
+                Debug.Assert(handler != null, "handler should not be null");
 
                 Handler = handler;
                 Priority = priority;

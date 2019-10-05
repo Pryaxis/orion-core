@@ -21,7 +21,7 @@ using Xunit;
 
 namespace Orion.Packets.Players {
     public class PlayerTeleportationPotionPacketTests {
-        public static readonly byte[] Bytes = {3, 0, 73};
+        public static readonly byte[] Bytes = { 3, 0, 73 };
 
         [Fact]
         public void ReadFromStream() {
@@ -31,8 +31,6 @@ namespace Orion.Packets.Players {
         }
 
         [Fact]
-        public void DeserializeAndSerialize_SamePacket() {
-            Bytes.ShouldDeserializeAndSerializeSamePacket();
-        }
+        public void DeserializeAndSerialize_SamePacket() => Bytes.ShouldDeserializeAndSerializeSamePacket();
     }
 }

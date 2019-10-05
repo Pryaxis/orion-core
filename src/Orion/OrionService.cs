@@ -56,7 +56,7 @@ namespace Orion {
         /// Disposes the service and any of its unmanaged resources, optionally including its managed resources.
         /// </summary>
         /// <param name="disposeManaged">
-        /// <see langword="true" /> to dispose managed resources, <see langword="false" /> otherwise.
+        /// <see langword="true"/> to dispose managed resources, otherwise, <see langword="false"/>.
         /// </param>
         protected virtual void Dispose(bool disposeManaged) { }
     }

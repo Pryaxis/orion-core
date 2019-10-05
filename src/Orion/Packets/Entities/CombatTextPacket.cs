@@ -35,7 +35,7 @@ namespace Orion.Packets.Entities {
         public override PacketType Type => PacketType.CombatText;
 
         /// <summary>
-        /// Gets or sets the text's position.
+        /// Gets or sets the text's position. The components are pixel-based.
         /// </summary>
         public Vector2 TextPosition {
             get => _textPosition;
@@ -59,7 +59,7 @@ namespace Orion.Packets.Entities {
         /// <summary>
         /// Gets or sets the text.
         /// </summary>
-        /// <exception cref="ArgumentNullException"><paramref name="value"/> is <see langword="null" />.</exception>
+        /// <exception cref="ArgumentNullException"><paramref name="value"/> is <see langword="null"/>.</exception>
         public string Text {
             get => _text.ToString();
             set {

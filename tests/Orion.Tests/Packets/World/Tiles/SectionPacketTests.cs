@@ -40,7 +40,7 @@ namespace Orion.Packets.World.Tiles {
             packet.SectionTiles = new NetworkTiles(1, 1);
             packet.ShouldBeDirty();
 
-            packet.SectionTiles[0, 0] = new Tile {BlockType = BlockType.Stone};
+            packet.SectionTiles[0, 0] = new Tile { BlockType = BlockType.Stone };
 
             packet.ShouldBeDirty();
         }

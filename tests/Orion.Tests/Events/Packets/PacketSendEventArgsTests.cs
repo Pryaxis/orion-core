@@ -16,7 +16,6 @@
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
 using System;
-using System.IO;
 using FluentAssertions;
 using Moq;
 using Orion.Packets;
@@ -27,7 +26,7 @@ namespace Orion.Events.Packets {
     public class PacketSendEventArgsTests {
         [Fact]
         public void Ctor_NullPlayer_ThrowsArgumentNullException() {
-            var packet = new TestPacket();
+            var packet = new Mock<Packet>().Object;
             Func<PacketSendEventArgs> func = () => new PacketSendEventArgs(null, packet);
 
             func.Should().Throw<ArgumentNullException>();
@@ -36,20 +35,10 @@ namespace Orion.Events.Packets {
         [Fact]
         public void Player_Get() {
             var receiver = new Mock<IPlayer>().Object;
-            var packet = new TestPacket();
+            var packet = new Mock<Packet>().Object;
             var args = new PacketSendEventArgs(receiver, packet);
 
             args.Receiver.Should().BeSameAs(receiver);
-        }
-
-        private class TestPacket : Packet {
-            public override PacketType Type => throw new NotImplementedException();
-
-            private protected override void ReadFromReader(BinaryReader reader, PacketContext context) =>
-                throw new NotImplementedException();
-
-            private protected override void WriteToWriter(BinaryWriter writer, PacketContext context) =>
-                throw new NotImplementedException();
         }
     }
 }

@@ -16,12 +16,13 @@
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
 using Orion.Utils;
+using TerrariaTargetDummy = Terraria.GameContent.Tile_Entities.TETrainingDummy;
 
 namespace Orion.World.TileEntities {
     /// <summary>
     /// Represents a Terraria target dummy.
     /// </summary>
-    public interface ITargetDummy : ITileEntity, IWrapping<Terraria.GameContent.Tile_Entities.TETrainingDummy> {
+    public interface ITargetDummy : ITileEntity, IWrapping<TerrariaTargetDummy> {
         /// <summary>
         /// Gets or sets the target dummy's NPC index.
         /// </summary>

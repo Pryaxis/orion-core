@@ -28,7 +28,7 @@ namespace Orion.World.TileEntities {
         /// <summary>
         /// Gets or sets the item's type.
         /// </summary>
-        /// <exception cref="ArgumentNullException"><paramref name="value"/> is <see langword="null" />.</exception>
+        /// <exception cref="ArgumentNullException"><paramref name="value"/> is <see langword="null"/>.</exception>
         ItemType ItemType { get; set; }
 
         /// <summary>
@@ -39,7 +39,7 @@ namespace Orion.World.TileEntities {
         /// <summary>
         /// Gets or sets the item's prefix.
         /// </summary>
-        /// <exception cref="ArgumentNullException"><paramref name="value"/> is <see langword="null" />.</exception>
+        /// <exception cref="ArgumentNullException"><paramref name="value"/> is <see langword="null"/>.</exception>
         ItemPrefix ItemPrefix { get; set; }
     }
 }

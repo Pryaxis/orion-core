@@ -41,7 +41,7 @@ namespace Orion.Packets.Npcs {
         }
 
         /// <summary>
-        /// Gets or sets the NPC catcher's player index. This should be the same as the sender's player index.
+        /// Gets or sets the NPC catcher's player index.
         /// </summary>
         public byte NpcCatcherPlayerIndex {
             get => _npcCatcherPlayerIndex;

@@ -31,8 +31,6 @@ namespace Orion.Npcs {
         public OrionNpc(TerrariaNpc terrariaNpc) : this(-1, terrariaNpc) { }
         public OrionNpc(int npcIndex, TerrariaNpc terrariaNpc) : base(npcIndex, terrariaNpc) { }
 
-        public void SetType(NpcType type) {
-            Wrapped.SetDefaults((int)type);
-        }
+        public void SetType(NpcType type) => Wrapped.SetDefaults((int)type);
     }
 }

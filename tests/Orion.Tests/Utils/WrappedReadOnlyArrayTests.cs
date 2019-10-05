@@ -16,7 +16,6 @@
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
 using System;
-using System.Diagnostics;
 using System.Linq;
 using FluentAssertions;
 using Xunit;
@@ -47,7 +46,7 @@ namespace Orion.Utils {
                 wrappedItems, (_, testWrappedClass) => new TestClass(testWrappedClass));
 
             var item = array[1];
-            
+
             item.Should().NotBeNull();
             item.Wrapped.Should().BeSameAs(wrappedItems[1]);
         }

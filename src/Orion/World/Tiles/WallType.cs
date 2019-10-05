@@ -15,13 +15,10 @@
 // You should have received a copy of the GNU General Public License
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
-using JetBrains.Annotations;
-
 namespace Orion.World.Tiles {
     /// <summary>
     /// Specifies a wall type.
     /// </summary>
-    [PublicAPI]
     public enum WallType : byte {
 #pragma warning disable 1591
         None = 0,

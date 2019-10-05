@@ -34,15 +34,13 @@ namespace Orion.Players {
 
         public OrionPlayerServiceTests() {
             for (var i = 0; i < Main.player.Length; ++i) {
-                Main.player[i] = new TerrariaPlayer {whoAmI = i};
+                Main.player[i] = new TerrariaPlayer { whoAmI = i };
             }
 
             _playerService = new OrionPlayerService();
         }
 
-        public void Dispose() {
-            _playerService.Dispose();
-        }
+        public void Dispose() => _playerService.Dispose();
 
         [Fact]
         public void Players_Item_Get() {

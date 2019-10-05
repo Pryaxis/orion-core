@@ -29,7 +29,7 @@ namespace Orion.Packets.Players {
             packet.SetSimplePropertiesShouldMarkAsDirty();
         }
 
-        public static readonly byte[] Bytes = {10, 0, 5, 0, 0, 1, 0, 59, 179, 13};
+        public static readonly byte[] Bytes = { 10, 0, 5, 0, 0, 1, 0, 59, 179, 13 };
 
         [Fact]
         public void ReadFromStream() {
@@ -44,8 +44,6 @@ namespace Orion.Packets.Players {
         }
 
         [Fact]
-        public void DeserializeAndSerialize_SamePacket() {
-            Bytes.ShouldDeserializeAndSerializeSamePacket();
-        }
+        public void DeserializeAndSerialize_SamePacket() => Bytes.ShouldDeserializeAndSerializeSamePacket();
     }
 }

@@ -16,10 +16,8 @@
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using Orion.Items;
 using Orion.Utils;
@@ -30,13 +28,15 @@ using TerrariaItem = Terraria.Item;
 namespace Orion.World.TileEntities {
     internal sealed class OrionChest : AnnotatableObject, IChest {
         public TileEntityType Type => TileEntityType.Chest;
-
         public int Index { get; }
+        public bool IsActive => Wrapped != null;
 
         public int X {
             get => Wrapped?.x ?? 0;
             set {
-                if (Wrapped == null) return;
+                if (Wrapped == null) {
+                    return;
+                }
 
                 Wrapped.x = value;
             }
@@ -45,18 +45,20 @@ namespace Orion.World.TileEntities {
         public int Y {
             get => Wrapped?.y ?? 0;
             set {
-                if (Wrapped == null) return;
+                if (Wrapped == null) {
+                    return;
+                }
 
                 Wrapped.y = value;
             }
         }
 
-        public bool IsActive => Wrapped != null;
-
         public string Name {
             get => Wrapped?.name ?? "";
             set {
-                if (Wrapped == null) return;
+                if (Wrapped == null) {
+                    return;
+                }
 
                 Wrapped.name = value ?? throw new ArgumentNullException(nameof(value));
             }
@@ -67,11 +69,10 @@ namespace Orion.World.TileEntities {
         public TerrariaChest? Wrapped { get; }
 
         public OrionChest(int chestIndex, TerrariaChest? terrariaChest) {
-            Debug.Assert(chestIndex >= 0 && chestIndex < Main.maxChests,
-                         "chestIndex >= 0 && chestIndex < Main.maxChests");
+            Debug.Assert(chestIndex >= 0 && chestIndex < Main.maxChests, "chest index should be valid");
 
             Index = chestIndex;
-            if (terrariaChest == null) {
+            if (terrariaChest is null) {
                 Items = EmptyItemArray.Instance;
             } else {
                 Items = new WrappedReadOnlyArray<OrionItem, TerrariaItem>(
@@ -89,11 +90,6 @@ namespace Orion.World.TileEntities {
             public IItem this[int index] => throw new IndexOutOfRangeException();
 
             public IEnumerator<IItem> GetEnumerator() => Enumerable.Empty<IItem>().GetEnumerator();
-
-            [ExcludeFromCodeCoverage]
-            IEnumerator IEnumerable.GetEnumerator() {
-                return GetEnumerator();
-            }
         }
     }
 }

@@ -47,7 +47,7 @@ namespace Orion.Packets.Npcs {
             packet.NpcBuffs.Count.Should().Be(TerrariaNpc.maxBuffs);
         }
 
-        public static readonly byte[] Bytes = {20, 0, 54, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
+        public static readonly byte[] Bytes = { 20, 0, 54, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
 
         [Fact]
         public void ReadFromStream() {
@@ -61,8 +61,6 @@ namespace Orion.Packets.Npcs {
         }
 
         [Fact]
-        public void DeserializeAndSerialize_SamePacket() {
-            Bytes.ShouldDeserializeAndSerializeSamePacket();
-        }
+        public void DeserializeAndSerialize_SamePacket() => Bytes.ShouldDeserializeAndSerializeSamePacket();
     }
 }

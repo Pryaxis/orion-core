@@ -36,6 +36,7 @@ namespace Orion.World.TileEntities {
         LogicSensor = 2,
 
         // Use large values to represent chests and signs, as they are not *actually* tile entities in Terraria.
+
         /// <summary>
         /// Indicates a chest.
         /// </summary>

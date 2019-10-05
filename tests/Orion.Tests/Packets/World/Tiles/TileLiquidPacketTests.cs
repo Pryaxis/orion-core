@@ -43,7 +43,7 @@ namespace Orion.Packets.World.Tiles {
             action.Should().Throw<ArgumentNullException>();
         }
 
-        public static readonly byte[] Bytes = {9, 0, 48, 0, 1, 100, 0, 255, 0};
+        public static readonly byte[] Bytes = { 9, 0, 48, 0, 1, 100, 0, 255, 0 };
 
         [Fact]
         public void ReadFromStream() {
@@ -57,8 +57,6 @@ namespace Orion.Packets.World.Tiles {
         }
 
         [Fact]
-        public void DeserializeAndSerialize_SamePacket() {
-            Bytes.ShouldDeserializeAndSerializeSamePacket();
-        }
+        public void DeserializeAndSerialize_SamePacket() => Bytes.ShouldDeserializeAndSerializeSamePacket();
     }
 }

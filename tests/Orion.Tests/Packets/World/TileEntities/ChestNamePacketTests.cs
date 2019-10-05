@@ -37,7 +37,7 @@ namespace Orion.Packets.World.TileEntities {
             action.Should().Throw<ArgumentNullException>();
         }
 
-        public static readonly byte[] ServerBytes = {9, 0, 69, 0, 0, 0, 1, 100, 0};
+        public static readonly byte[] ServerBytes = { 9, 0, 69, 0, 0, 0, 1, 100, 0 };
 
         [Fact]
         public void ReadFromStream_Server() {

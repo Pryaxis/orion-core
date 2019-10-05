@@ -69,7 +69,7 @@ namespace Orion.Packets.World.TileEntities {
         /// <summary>
         /// Gets or sets the chest's name.
         /// </summary>
-        /// <exception cref="ArgumentNullException"><paramref name="value"/> is <see langword="null" />.</exception>
+        /// <exception cref="ArgumentNullException"><paramref name="value"/> is <see langword="null"/>.</exception>
         public string ChestName {
             get => _chestName;
             set {

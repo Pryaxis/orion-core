@@ -92,7 +92,7 @@ namespace Orion.Packets.Npcs {
         /// <summary>
         /// Gets or sets a value indicating whether the item can be bought only once.
         /// </summary>
-        public bool CanBuyItemOnce {
+        public bool CanBuyItemOnlyOnce {
             get => _canBuyItemOnce;
             set {
                 _canBuyItemOnce = value;

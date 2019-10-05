@@ -35,6 +35,8 @@ namespace Orion.Packets {
     /// <summary>
     /// Represents a packet. This is the form of communication between the server and clients.
     /// </summary>
+    
+    // TODO: provide good comments for all packets.
     public abstract class Packet : IDirtiable {
         private static readonly Func<Packet>?[] PacketConstructors = {
             /* 000 */ null,
@@ -169,19 +171,19 @@ namespace Orion.Packets {
         /// </summary>
         public abstract PacketType Type { get; }
 
-        // Prevent outside inheritance.
-        private protected Packet() { }
-
         /// <summary>
-        /// Reads and returns a packet from the given stream with the specified context.
+        /// Reads and returns a packet from the given <paramref name="stream"/> with the specified
+        /// <paramref name="context"/>.
         /// </summary>
         /// <param name="stream">The stream.</param>
         /// <param name="context">The context with which to read the packet.</param>
         /// <returns>The resulting packet.</returns>
-        /// <exception cref="ArgumentNullException"><paramref name="stream"/> is <see langword="null" />.</exception>
+        /// <exception cref="ArgumentNullException"><paramref name="stream"/> is <see langword="null"/>.</exception>
         /// <exception cref="PacketException">The packet could not be parsed correctly.</exception>
         public static Packet ReadFromStream(Stream stream, PacketContext context) {
-            if (stream is null) throw new ArgumentNullException(nameof(stream));
+            if (stream is null) {
+                throw new ArgumentNullException(nameof(stream));
+            }
 
             try {
                 var reader = new BinaryReader(stream, Encoding.UTF8, true);
@@ -195,15 +197,15 @@ namespace Orion.Packets {
                     packetTypeId < PacketConstructors.Length ? PacketConstructors[packetTypeId] : null;
 
                 var packetConstructor = GetPacketConstructor(reader.ReadByte()) ??
-                                        throw new PacketException("Packet type is invalid.");
+                    throw new PacketException("Packet type is invalid.");
                 var packet = packetConstructor();
                 packet.ReadFromReader(reader, context);
 #if DEBUG
                 // SectionPacket might have extra data for some reason, so we need to exclude that from the following
                 // check...
                 Debug.Assert(packet.Type == PacketType.Section || stream.Position - oldPosition == packetLength,
-                             "packet.Type == PacketType.Section || stream.Position - oldPosition == packetLength");
-                Debug.Assert(!packet.IsDirty, "!packet.IsDirty");
+                    "packet should be fully consumed");
+                Debug.Assert(!packet.IsDirty, "packet should not be dirty");
 #endif
                 return packet;
             } catch (Exception ex) when (!(ex is PacketException)) {
@@ -221,14 +223,16 @@ namespace Orion.Packets {
         }
 
         /// <summary>
-        /// Writes the packet to the given stream with the specified context.
+        /// Writes the packet to the given <paramref name="stream"/> with the specified <paramref name="context"/>.
         /// </summary>
         /// <param name="stream">The stream.</param>
         /// <param name="context">The context with which to read the packet.</param>
-        /// <exception cref="ArgumentNullException"><paramref name="stream"/> is <see langword="null" />.</exception>
+        /// <exception cref="ArgumentNullException"><paramref name="stream"/> is <see langword="null"/>.</exception>
         /// <exception cref="PacketException">The packet could not be written correctly.</exception>
         public void WriteToStream(Stream stream, PacketContext context) {
-            if (stream is null) throw new ArgumentNullException(nameof(stream));
+            if (stream is null) {
+                throw new ArgumentNullException(nameof(stream));
+            }
 
             try {
                 var writer = new BinaryWriter(stream, Encoding.UTF8, true);

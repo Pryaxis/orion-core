@@ -58,7 +58,7 @@ namespace Orion.Packets.Items {
         }
 
         /// <summary>
-        /// Gets or sets the override for the item's color. A value of <see langword="null" /> indicates no override.
+        /// Gets or sets the override for the item's color. A value of <see langword="null"/> indicates no override.
         /// </summary>
         public Color? ItemColorOverride {
             get => _itemColorOverride;
@@ -69,7 +69,7 @@ namespace Orion.Packets.Items {
         }
 
         /// <summary>
-        /// Gets or sets the override for the item's damage. A value of <see langword="null" /> indicates no override.
+        /// Gets or sets the override for the item's damage. A value of <see langword="null"/> indicates no override.
         /// </summary>
         public ushort? ItemDamageOverride {
             get => _itemDamageOverride;
@@ -80,8 +80,7 @@ namespace Orion.Packets.Items {
         }
 
         /// <summary>
-        /// Gets or sets the override for the item's knockback. A value of <see langword="null" /> indicates no
-        /// override.
+        /// Gets or sets the override for the item's knockback. A value of <see langword="null"/> indicates no override.
         /// </summary>
         public float? ItemKnockbackOverride {
             get => _itemKnockbackOverride;
@@ -92,7 +91,7 @@ namespace Orion.Packets.Items {
         }
 
         /// <summary>
-        /// Gets or sets the override for the item's animation time. A value of <see langword="null" /> indicates no
+        /// Gets or sets the override for the item's animation time. A value of <see langword="null"/> indicates no
         /// override.
         /// </summary>
         public ushort? ItemAnimationTimeOverride {
@@ -104,7 +103,7 @@ namespace Orion.Packets.Items {
         }
 
         /// <summary>
-        /// Gets or sets the override for the item's use time. A value of <see langword="null" /> indicates no override.
+        /// Gets or sets the override for the item's use time. A value of <see langword="null"/> indicates no override.
         /// </summary>
         public ushort? ItemUseTimeOverride {
             get => _itemUseTimeOverride;
@@ -115,7 +114,7 @@ namespace Orion.Packets.Items {
         }
 
         /// <summary>
-        /// Gets or sets the override for the item's projectile type. A value of <see langword="null" /> indicates no
+        /// Gets or sets the override for the item's projectile type. A value of <see langword="null"/> indicates no
         /// override.
         /// </summary>
         public ProjectileType? ItemProjectileTypeOverride {
@@ -127,7 +126,7 @@ namespace Orion.Packets.Items {
         }
 
         /// <summary>
-        /// Gets or sets the override for the item's projectile speed. A value of <see langword="null" /> indicates no
+        /// Gets or sets the override for the item's projectile speed. A value of <see langword="null"/> indicates no
         /// override.
         /// </summary>
         public float? ItemProjectileSpeedOverride {
@@ -139,7 +138,7 @@ namespace Orion.Packets.Items {
         }
 
         /// <summary>
-        /// Gets or sets the override for the item's width. A value of <see langword="null" /> indicates no override.
+        /// Gets or sets the override for the item's width. A value of <see langword="null"/> indicates no override.
         /// </summary>
         public short? ItemWidthOverride {
             get => _itemWidthOverride;
@@ -150,7 +149,7 @@ namespace Orion.Packets.Items {
         }
 
         /// <summary>
-        /// Gets or sets the override for the item's height. A value of <see langword="null" /> indicates no override.
+        /// Gets or sets the override for the item's height. A value of <see langword="null"/> indicates no override.
         /// </summary>
         public short? ItemHeightOverride {
             get => _itemHeightOverride;
@@ -161,7 +160,7 @@ namespace Orion.Packets.Items {
         }
 
         /// <summary>
-        /// Gets or sets the override for the item's scale. A value of <see langword="null" /> indicates no override.
+        /// Gets or sets the override for the item's scale. A value of <see langword="null"/> indicates no override.
         /// </summary>
         public float? ItemScaleOverride {
             get => _itemScaleOverride;
@@ -172,8 +171,7 @@ namespace Orion.Packets.Items {
         }
 
         /// <summary>
-        /// Gets or sets the override for the item's ammo type. A value of <see langword="null" /> indicates no
-        /// override.
+        /// Gets or sets the override for the item's ammo type. A value of <see langword="null"/> indicates no override.
         /// </summary>
         public ItemType? ItemAmmoTypeOverride {
             get => _itemAmmoTypeOverride;
@@ -184,7 +182,7 @@ namespace Orion.Packets.Items {
         }
 
         /// <summary>
-        /// Gets or sets the override for the ammo type that the item uses. A value of <see langword="null" /> indicates
+        /// Gets or sets the override for the ammo type that the item uses. A value of <see langword="null"/> indicates
         /// no override.
         /// </summary>
         public ItemType? ItemUsesAmmoTypeOverride {
@@ -197,7 +195,7 @@ namespace Orion.Packets.Items {
 
         /// <summary>
         /// Gets or sets the override for the value indicating whether the item is not ammo. A value of
-        /// <see langword="null" /> indicates no override.
+        /// <see langword="null"/> indicates no override.
         /// </summary>
         public bool? ItemIsNotAmmoOverride {
             get => _itemIsNotAmmoOverride;

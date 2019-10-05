@@ -26,7 +26,7 @@ namespace Orion.Npcs {
     public class OrionNpcTests {
         [Fact]
         public void Name_Get() {
-            var terrariaNpc = new TerrariaNpc {_givenName = "test"};
+            var terrariaNpc = new TerrariaNpc { _givenName = "test" };
             INpc npc = new OrionNpc(terrariaNpc);
 
             npc.Name.Should().Be("test");
@@ -53,7 +53,7 @@ namespace Orion.Npcs {
 
         [Fact]
         public void Type_Get() {
-            var terrariaNpc = new TerrariaNpc {netID = (int)NpcType.BlueSlime};
+            var terrariaNpc = new TerrariaNpc { netID = (int)NpcType.BlueSlime };
             INpc npc = new OrionNpc(terrariaNpc);
 
             npc.Type.Should().Be(NpcType.BlueSlime);

@@ -30,7 +30,7 @@ namespace Orion.Events.Players {
         /// Initializes a new instance of the <see cref="PlayerJoinEventArgs"/> class with the specified player.
         /// </summary>
         /// <param name="player">The player.</param>
-        /// <exception cref="ArgumentNullException"><paramref name="player"/> is <see langword="null" />.</exception>
+        /// <exception cref="ArgumentNullException"><paramref name="player"/> is <see langword="null"/>.</exception>
         public PlayerJoinEventArgs(IPlayer player) : base(player) { }
     }
 }

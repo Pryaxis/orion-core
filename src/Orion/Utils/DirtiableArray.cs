@@ -16,9 +16,7 @@
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
 using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 
 namespace Orion.Utils {
@@ -65,13 +63,12 @@ namespace Orion.Utils {
         /// <inheritdoc />
         public IEnumerator<T> GetEnumerator() => ((IEnumerable<T>)_array).GetEnumerator();
 
-        [ExcludeFromCodeCoverage]
-        IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
-
         /// <inheritdoc />
         public void Clean() {
             _isDirty = false;
-            if (!_containsDirtiableElements) return;
+            if (!_containsDirtiableElements) {
+                return;
+            }
 
             foreach (var dirtiable in this.Cast<IDirtiable>()) {
                 dirtiable?.Clean();

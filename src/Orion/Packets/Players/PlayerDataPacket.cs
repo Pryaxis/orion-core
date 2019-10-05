@@ -83,7 +83,7 @@ namespace Orion.Packets.Players {
         /// <summary>
         /// Gets or sets the player's name.
         /// </summary>
-        /// <exception cref="ArgumentNullException"><paramref name="value"/> is <see langword="null" />.</exception>
+        /// <exception cref="ArgumentNullException"><paramref name="value"/> is <see langword="null"/>.</exception>
         public string PlayerName {
             get => _playerName;
             set {

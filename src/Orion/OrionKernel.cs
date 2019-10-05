@@ -57,9 +57,10 @@ namespace Orion {
             // Create bindings for Lazy<T> so that we can have lazily loaded services, allowing plugins to override
             // service bindings if necessary.
             var getLazy = GetType().GetMethod(nameof(GetLazy), BindingFlags.NonPublic | BindingFlags.Instance);
-            Debug.Assert(getLazy != null, "getLazy != null");
-            Bind(typeof(Lazy<>)).ToMethod(ctx => getLazy.MakeGenericMethod(ctx.GenericArguments?[0])
-                                                        .Invoke(this, Array.Empty<object>()));
+            Debug.Assert(getLazy != null, "getLazy method should exist");
+            Bind(typeof(Lazy<>)).ToMethod(ctx => getLazy
+                .MakeGenericMethod(ctx.GenericArguments?[0])
+                .Invoke(this, Array.Empty<object>()));
 
             // Because we're using Assembly.Load, we'll need to have an AssemblyResolve handler to deal with assembly
             // resolution issues.
@@ -74,22 +75,25 @@ namespace Orion {
         }
 
         /// <summary>
-        /// Queues plugins to be loaded from the given assembly path.
+        /// Queues plugins to be loaded from the given <paramref name="assemblyPath"/>.
         /// </summary>
         /// <param name="assemblyPath">The assembly path.</param>
         /// <exception cref="ArgumentNullException">
-        /// <paramref name="assemblyPath"/> is <see langword="null" />.
+        /// <paramref name="assemblyPath"/> is <see langword="null"/>.
         /// </exception>
         public void QueuePluginsFromPath(string assemblyPath) {
-            if (assemblyPath is null) throw new ArgumentNullException(nameof(assemblyPath));
+            if (assemblyPath is null) {
+                throw new ArgumentNullException(nameof(assemblyPath));
+            }
 
             // Load the assembly from the path. We're using Assembly.Load with the bytes of the file so that we don't
             // hold a lock on the path, allowing the user to delete or upgrade the path.
             var assembly = Assembly.Load(File.ReadAllBytes(assemblyPath));
             _pluginAssemblies.Add(assembly);
 
-            foreach (var pluginType in assembly.GetExportedTypes()
-                                               .Where(s => s.IsSubclassOf(typeof(OrionPlugin)))) {
+            foreach (var pluginType in assembly
+                    .GetExportedTypes()
+                    .Where(s => s.IsSubclassOf(typeof(OrionPlugin)))) {
                 // Bind all plugin types to themselves, allowing plugins to properly depend on other plugins without
                 // reliance on static state.
                 _pluginTypesToLoad.Add(pluginType);
@@ -98,7 +102,7 @@ namespace Orion {
         }
 
         /// <summary>
-        /// Finishes loading plugins, running the given action for each plugin loaded.
+        /// Finishes loading plugins, running the given <paramref name="action"/> for each plugin loaded.
         /// </summary>
         /// <param name="action">The action to run.</param>
         public void FinishLoadingPlugins(Action<OrionPlugin>? action = null) {
@@ -113,14 +117,19 @@ namespace Orion {
         }
 
         /// <summary>
-        /// Unloads the given plugin and returns a value indicating success.
+        /// Unloads the given <paramref name="plugin"/> and returns a value indicating success.
         /// </summary>
         /// <param name="plugin">The plugin.</param>
-        /// <exception cref="ArgumentNullException"><paramref name="plugin"/> is <see langword="null" />.</exception>
-        /// <returns>A value indicating whether the plugin was successfully unloaded.</returns>
+        /// <exception cref="ArgumentNullException"><paramref name="plugin"/> is <see langword="null"/>.</exception>
+        /// <returns><see langword="true"/> if the plugin was unloaded; otherwise, <see langword="false"/>.</returns>
         public bool UnloadPlugin(OrionPlugin plugin) {
-            if (plugin is null) throw new ArgumentNullException(nameof(plugin));
-            if (!_plugins.Contains(plugin)) return false;
+            if (plugin is null) {
+                throw new ArgumentNullException(nameof(plugin));
+            }
+
+            if (!_plugins.Contains(plugin)) {
+                return false;
+            }
 
             var pluginType = plugin.GetType();
             _pluginAssemblies.Remove(pluginType.Assembly);

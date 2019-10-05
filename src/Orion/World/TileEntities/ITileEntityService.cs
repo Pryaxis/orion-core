@@ -41,7 +41,7 @@ namespace Orion.World.TileEntities {
         /// <param name="tileEntityType">The tile entity type.</param>
         /// <param name="x">The X coordinate.</param>
         /// <param name="y">The Y coordinate.</param>
-        /// <returns>The resulting tile entity, or <see langword="null" /> if none was added.</returns>
+        /// <returns>The resulting tile entity, or <see langword="null"/> if none was added.</returns>
         ITileEntity? AddTileEntity(TileEntityType tileEntityType, int x, int y);
 
         /// <summary>
@@ -49,7 +49,7 @@ namespace Orion.World.TileEntities {
         /// </summary>
         /// <param name="x">The X coordinate.</param>
         /// <param name="y">The Y coordinate.</param>
-        /// <returns>The resulting chest, or <see langword="null" /> if none was added.</returns>
+        /// <returns>The resulting chest, or <see langword="null"/> if none was added.</returns>
         IChest? AddChest(int x, int y) => AddTileEntity(TileEntityType.Chest, x, y) as IChest;
 
         /// <summary>
@@ -57,7 +57,7 @@ namespace Orion.World.TileEntities {
         /// </summary>
         /// <param name="x">The X coordinate.</param>
         /// <param name="y">The Y coordinate.</param>
-        /// <returns>The resulting sign, or <see langword="null" /> if none was added.</returns>
+        /// <returns>The resulting sign, or <see langword="null"/> if none was added.</returns>
         ISign? AddSign(int x, int y) => AddTileEntity(TileEntityType.Sign, x, y) as ISign;
 
         /// <summary>
@@ -65,7 +65,7 @@ namespace Orion.World.TileEntities {
         /// </summary>
         /// <param name="x">The X coordinate.</param>
         /// <param name="y">The Y coordinate.</param>
-        /// <returns>The resulting target dummy, or <see langword="null" /> if none was added.</returns>
+        /// <returns>The resulting target dummy, or <see langword="null"/> if none was added.</returns>
         ITargetDummy? AddTargetDummy(int x, int y) => AddTileEntity(TileEntityType.TargetDummy, x, y) as ITargetDummy;
 
         /// <summary>
@@ -73,7 +73,7 @@ namespace Orion.World.TileEntities {
         /// </summary>
         /// <param name="x">The X coordinate.</param>
         /// <param name="y">The Y coordinate.</param>
-        /// <returns>The resulting item frame, or <see langword="null" /> if none was added.</returns>
+        /// <returns>The resulting item frame, or <see langword="null"/> if none was added.</returns>
         IItemFrame? AddItemFrame(int x, int y) => AddTileEntity(TileEntityType.ItemFrame, x, y) as IItemFrame;
 
         /// <summary>
@@ -81,7 +81,7 @@ namespace Orion.World.TileEntities {
         /// </summary>
         /// <param name="x">The X coordinate.</param>
         /// <param name="y">The Y coordinate.</param>
-        /// <returns>The resulting logic sensor, or <see langword="null" /> if none was added.</returns>
+        /// <returns>The resulting logic sensor, or <see langword="null"/> if none was added.</returns>
         ILogicSensor? AddLogicSensor(int x, int y) => AddTileEntity(TileEntityType.LogicSensor, x, y) as ILogicSensor;
 
         /// <summary>
@@ -89,7 +89,7 @@ namespace Orion.World.TileEntities {
         /// </summary>
         /// <param name="x">The X coordinate.</param>
         /// <param name="y">The Y coordinate.</param>
-        /// <returns>The tile entity, or <see langword="null" /> if none was found.</returns>
+        /// <returns>The tile entity, or <see langword="null"/> if none was found.</returns>
         ITileEntity? GetTileEntity(int x, int y);
 
         /// <summary>
@@ -98,7 +98,7 @@ namespace Orion.World.TileEntities {
         /// <param name="tileEntity">The tile entity.</param>
         /// <returns>A value indicating whether the tile entity was successfully removed.</returns>
         /// <exception cref="ArgumentNullException">
-        /// <paramref name="tileEntity"/> is <see langword="null" />.
+        /// <paramref name="tileEntity"/> is <see langword="null"/>.
         /// </exception>
         bool RemoveTileEntity(ITileEntity tileEntity);
     }

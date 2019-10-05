@@ -15,8 +15,6 @@
 // You should have received a copy of the GNU General Public License
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
-using Xunit;
-
 namespace Orion {
     public class TestUtils {
         public static void FakeReceiveBytes(int index, byte[] bytes) {

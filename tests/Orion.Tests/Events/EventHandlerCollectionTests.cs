@@ -82,23 +82,11 @@ namespace Orion.Events {
             func.Should().Throw<ArgumentNullException>();
         }
 
-        [Fact]
-        public void Minus_InvalidHandler_ThrowsArgumentException() {
-            EventHandlerCollection<TestEventArgs> collection = null;
-            Func<EventHandlerCollection<TestEventArgs>> func = () => collection -= TestHandler;
-
-            func.Should().Throw<ArgumentException>();
-        }
-
         [EventHandler(EventPriority.Lowest)]
-        private static void TestHandler(object sender, TestEventArgs args) {
-            args.Value = 100;
-        }
+        private static void TestHandler(object sender, TestEventArgs args) => args.Value = 100;
 
         [EventHandler(EventPriority.Highest)]
-        private static void TestHandler2(object sender, TestEventArgs args) {
-            args.Value = 200;
-        }
+        private static void TestHandler2(object sender, TestEventArgs args) => args.Value = 200;
 
         private class TestEventArgs : EventArgs {
             public int Value { get; set; }

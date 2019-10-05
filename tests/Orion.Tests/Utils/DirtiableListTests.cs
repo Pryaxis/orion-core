@@ -29,7 +29,7 @@ namespace Orion.Utils {
             var mockDirtiable = new Mock<IDirtiable>();
             mockDirtiable.SetupGet(d => d.IsDirty).Returns(() => isDirty);
             mockDirtiable.Setup(d => d.Clean()).Callback(() => isDirty = false);
-            var list = new DirtiableList<IDirtiable> {mockDirtiable.Object};
+            var list = new DirtiableList<IDirtiable> { mockDirtiable.Object };
 
             list.ShouldBeDirty();
 
@@ -57,14 +57,14 @@ namespace Orion.Utils {
 
         [Fact]
         public void Item_Get() {
-            var list = new DirtiableList<int> {100};
+            var list = new DirtiableList<int> { 100 };
 
             list[0].Should().Be(100);
         }
 
         [Fact]
         public void Item_Set_MarksAsDirty() {
-            var list = new DirtiableList<int> {0};
+            var list = new DirtiableList<int> { 0 };
 
             list[0] = 100;
 
@@ -73,7 +73,7 @@ namespace Orion.Utils {
 
         [Fact]
         public void GetEnumerator() {
-            var list = new DirtiableList<int> {0};
+            var list = new DirtiableList<int> { 0 };
 
             list.Should().BeEquivalentTo(0);
         }
@@ -93,7 +93,7 @@ namespace Orion.Utils {
 
         [Fact]
         public void Clear() {
-            var list = new DirtiableList<int> {0};
+            var list = new DirtiableList<int> { 0 };
             list.Clean();
 
             list.Clear();
@@ -104,14 +104,14 @@ namespace Orion.Utils {
 
         [Fact]
         public void Contains() {
-            var list = new DirtiableList<int> {100};
+            var list = new DirtiableList<int> { 100 };
 
             list.Contains(100).Should().BeTrue();
         }
 
         [Fact]
         public void CopyTo() {
-            var list = new DirtiableList<int> {100};
+            var list = new DirtiableList<int> { 100 };
             var array = new int[1];
 
             list.CopyTo(array, 0);
@@ -121,7 +121,7 @@ namespace Orion.Utils {
 
         [Fact]
         public void Remove() {
-            var list = new DirtiableList<int> {100};
+            var list = new DirtiableList<int> { 100 };
             list.Clean();
 
             list.Remove(0).Should().BeFalse();
@@ -136,7 +136,7 @@ namespace Orion.Utils {
 
         [Fact]
         public void IndexOf() {
-            var list = new DirtiableList<int> {100};
+            var list = new DirtiableList<int> { 100 };
 
             list.IndexOf(0).Should().Be(-1);
             list.IndexOf(100).Should().Be(0);
@@ -144,7 +144,7 @@ namespace Orion.Utils {
 
         [Fact]
         public void Insert() {
-            var list = new DirtiableList<int> {100};
+            var list = new DirtiableList<int> { 100 };
             list.Clean();
 
             list.Insert(1, 101);
@@ -156,7 +156,7 @@ namespace Orion.Utils {
 
         [Fact]
         public void RemoveAt() {
-            var list = new DirtiableList<int> {100};
+            var list = new DirtiableList<int> { 100 };
             list.Clean();
 
             list.RemoveAt(0);

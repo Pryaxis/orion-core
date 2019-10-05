@@ -27,7 +27,7 @@ namespace Orion.Utils {
         bool IsDirty { get; }
 
         /// <summary>
-        /// Cleans the object and marks it as not dirty.
+        /// Cleans the object, marking it as not dirty.
         /// </summary>
         void Clean();
     }

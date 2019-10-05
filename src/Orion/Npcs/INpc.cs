@@ -21,7 +21,7 @@ using TerrariaNpc = Terraria.NPC;
 
 namespace Orion.Npcs {
     /// <summary>
-    /// Represents a Terraria NPC.
+    /// Represents a Terraria NPC. NPCs are equivalent to "mobs", and may either be friendly or hostile.
     /// </summary>
     public interface INpc : IEntity, IWrapping<TerrariaNpc> {
         /// <summary>

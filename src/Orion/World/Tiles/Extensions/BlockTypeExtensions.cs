@@ -272,7 +272,7 @@ namespace Orion.World.Tiles.Extensions {
         /// Returns a value indicating whether frames are important for the block type.
         /// </summary>
         /// <param name="blockType">The block type.</param>
-        /// <returns>A value indicating whether frames are important.</returns>
+        /// <returns><see langword="true"/> if frames are important; otherwise, <see langword="false"/>.</returns>
         [Pure]
         public static bool AreFramesImportant(this BlockType blockType) =>
             FramesImportantBlockTypes.Contains(blockType);

@@ -17,6 +17,7 @@
 
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
+using Orion.Items;
 
 namespace Orion.Packets.Players {
     /// <summary>
@@ -41,8 +42,8 @@ namespace Orion.Packets.Players {
         }
 
         /// <summary>
-        /// Gets or sets the player's chest index. A value of -1 indicates the Piggy Bank, -2 indicates the Safe, and
-        /// -3 indicates the Defender's Forge.
+        /// Gets or sets the player's chest index. A value of -1 indicates a <see cref="ItemType.PiggyBank"/>, -2
+        /// indicates a <see cref="ItemType.Safe"/>, and -3 indicates a <see cref="ItemType.DefendersForge"/>.
         /// </summary>
         public short PlayerChestIndex {
             get => _playerChestIndex;

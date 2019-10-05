@@ -48,7 +48,9 @@ namespace Orion.Projectiles {
         }
 
         protected override void Dispose(bool disposeManaged) {
-            if (!disposeManaged) return;
+            if (!disposeManaged) {
+                return;
+            }
 
             Hooks.Projectile.PreSetDefaultsById = null;
             Hooks.Projectile.PreUpdate = null;
@@ -56,36 +58,39 @@ namespace Orion.Projectiles {
         }
 
         public IProjectile? SpawnProjectile(ProjectileType projectileType, Vector2 position, Vector2 velocity,
-                                            int damage, float knockback, float[]? aiValues = null) {
+                int damage, float knockback, float[]? aiValues = null) {
             if (aiValues != null && aiValues.Length != TerrariaProjectile.maxAI) {
-                throw new ArgumentException($"Array does not have length {TerrariaProjectile.maxAI}.",
-                                            nameof(aiValues));
+                throw new ArgumentException(
+                    $"Array does not have length {TerrariaProjectile.maxAI}.", nameof(aiValues));
             }
 
             var ai0 = aiValues?[0] ?? 0;
             var ai1 = aiValues?[1] ?? 0;
-            var projectileIndex =
-                TerrariaProjectile.NewProjectile(position, velocity, (int)projectileType, damage, knockback, 255, ai0,
-                                                 ai1);
+            var projectileIndex = TerrariaProjectile.NewProjectile(position, velocity, (int)projectileType,
+                damage, knockback, 255, ai0, ai1);
             return projectileIndex >= 0 && projectileIndex < Projectiles.Count ? Projectiles[projectileIndex] : null;
         }
 
         private IProjectile GetProjectile(TerrariaProjectile terrariaProjectile) {
             Debug.Assert(terrariaProjectile.whoAmI >= 0 && terrariaProjectile.whoAmI < Projectiles.Count,
-                         "terrariaProjectile.whoAmI >= 0 && terrariaProjectile.whoAmI < Projectiles.Count");
-
+                "Terraria projectile should have a valid index");
+            
+            // We want to retrieve the world projectile if this projectile is real. Otherwise, return a "fake"
+            // projectile.
             return terrariaProjectile == Main.projectile[terrariaProjectile.whoAmI]
                 ? Projectiles[terrariaProjectile.whoAmI]
                 : new OrionProjectile(terrariaProjectile);
         }
 
         private HookResult PreSetDefaultsByIdHandler(TerrariaProjectile terrariaProjectile, ref int projectileType) {
-            Debug.Assert(terrariaProjectile != null, "terrariaProjectile != null");
+            Debug.Assert(terrariaProjectile != null, "Terraria projectile should not be null");
 
             var projectile = GetProjectile(terrariaProjectile);
             var args = new ProjectileSetDefaultsEventArgs(projectile, (ProjectileType)projectileType);
             ProjectileSetDefaults?.Invoke(this, args);
-            if (args.IsCanceled()) return HookResult.Cancel;
+            if (args.IsCanceled()) {
+                return HookResult.Cancel;
+            }
 
             projectileType = (int)args.ProjectileType;
             return HookResult.Continue;
@@ -93,7 +98,7 @@ namespace Orion.Projectiles {
 
         private HookResult PreUpdateHandler(TerrariaProjectile _, ref int projectileIndex) {
             Debug.Assert(projectileIndex >= 0 && projectileIndex < Projectiles.Count,
-                         "projectileIndex >= 0 && projectileIndex < Projectiles.Count");
+                "projectile index should be valid");
 
             var args = new ProjectileUpdateEventArgs(Projectiles[projectileIndex]);
             ProjectileUpdate?.Invoke(this, args);
@@ -101,7 +106,7 @@ namespace Orion.Projectiles {
         }
 
         private HookResult PreKillHandler(TerrariaProjectile terrariaProjectile) {
-            Debug.Assert(terrariaProjectile != null, "terrariaProjectile != null");
+            Debug.Assert(terrariaProjectile != null, "Terraria projectile should not be null");
 
             var projectile = GetProjectile(terrariaProjectile);
             var args = new ProjectileRemoveEventArgs(projectile);

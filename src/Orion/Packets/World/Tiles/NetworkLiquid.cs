@@ -79,15 +79,17 @@ namespace Orion.Packets.World.Tiles {
         }
 
         /// <summary>
-        /// Reads and returns a network liquid from the given reader.
+        /// Reads and returns a network liquid from the given <paramref name="reader"/>.
         /// </summary>
         /// <param name="reader">The reader.</param>
         /// <param name="shouldSwapCoords">A value indicating whether the coordinates should be swapped.</param>
         /// <returns>The resulting network tile liquid.</returns>
-        /// <exception cref="ArgumentNullException"><paramref name="reader"/> is <see langword="null" />.</exception>
+        /// <exception cref="ArgumentNullException"><paramref name="reader"/> is <see langword="null"/>.</exception>
         /// <exception cref="PacketException">The liquid type was invalid.</exception>
         public static NetworkLiquid ReadFromReader(BinaryReader reader, bool shouldSwapCoords = false) {
-            if (reader is null) throw new ArgumentNullException(nameof(reader));
+            if (reader is null) {
+                throw new ArgumentNullException(nameof(reader));
+            }
 
             var coord1 = reader.ReadInt16();
             var coord2 = reader.ReadInt16();
@@ -109,13 +111,15 @@ namespace Orion.Packets.World.Tiles {
         public override string ToString() => $"{LiquidType} x{LiquidAmount} @ ({TileX}, {TileY})";
 
         /// <summary>
-        /// Writes the network liquid to the given writer.
+        /// Writes the network liquid to the given <paramref name="writer"/>.
         /// </summary>
         /// <param name="writer">The writer.</param>
         /// <param name="shouldSwapCoords">A value indicating whether the X and Y values should be swapped.</param>
-        /// <exception cref="ArgumentNullException"><paramref name="writer"/> is <see langword="null" />.</exception>
+        /// <exception cref="ArgumentNullException"><paramref name="writer"/> is <see langword="null"/>.</exception>
         public void WriteToWriter(BinaryWriter writer, bool shouldSwapCoords = false) {
-            if (writer is null) throw new ArgumentNullException(nameof(writer));
+            if (writer is null) {
+                throw new ArgumentNullException(nameof(writer));
+            }
 
             writer.Write(shouldSwapCoords ? _tileY : _tileX);
             writer.Write(shouldSwapCoords ? _tileX : _tileY);

@@ -19,7 +19,7 @@ using Orion.Utils;
 
 namespace Orion.World.TileEntities {
     /// <summary>
-    /// Represents a (generalized) Terraria tile entity.
+    /// Represents a (generalized) Terraria tile entity. Tile entities are tiles which require extra functionality.
     /// </summary>
     public interface ITileEntity : IAnnotatable {
         /// <summary>
@@ -28,7 +28,8 @@ namespace Orion.World.TileEntities {
         TileEntityType Type { get; }
 
         /// <summary>
-        /// Gets the tile entity's index. A value of -1 indicates that the tile entity is not "real".
+        /// Gets the tile entity's index. A value of -1 indicates that the tile entity is not "real". i.e., it is not
+        /// tied to the game state.
         /// </summary>
         int Index { get; }
 

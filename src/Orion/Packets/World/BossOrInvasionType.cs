@@ -15,13 +15,10 @@
 // You should have received a copy of the GNU General Public License
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
-using JetBrains.Annotations;
-
 namespace Orion.Packets.World {
     /// <summary>
     /// Specifies a boss or invasion type in a <see cref="BossOrInvasionPacket"/>.
     /// </summary>
-    [PublicAPI]
     public enum BossOrInvasionType : short {
         /// <summary>
         /// Indicates that the Moon Lord should be summoned.

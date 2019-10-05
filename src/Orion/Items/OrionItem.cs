@@ -42,12 +42,7 @@ namespace Orion.Items {
             Stats = new OrionItemStats(terrariaItem);
         }
 
-        public void SetType(ItemType type) {
-            Wrapped.SetDefaults((int)type);
-        }
-
-        public void SetPrefix(ItemPrefix prefix) {
-            Wrapped.Prefix((int)prefix);
-        }
+        public void SetType(ItemType type) => Wrapped.SetDefaults((int)type);
+        public void SetPrefix(ItemPrefix prefix) => Wrapped.Prefix((int)prefix);
     }
 }

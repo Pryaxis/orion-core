@@ -103,7 +103,9 @@ namespace Orion.Utils {
         /// <inheritdoc />
         public void Clean() {
             _isDirty = false;
-            if (!_containsDirtiableElements) return;
+            if (!_containsDirtiableElements) {
+                return;
+            }
 
             foreach (var dirtiable in this.Cast<IDirtiable>()) {
                 dirtiable?.Clean();

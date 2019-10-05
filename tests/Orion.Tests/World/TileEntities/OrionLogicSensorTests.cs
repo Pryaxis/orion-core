@@ -48,7 +48,7 @@ namespace Orion.World.TileEntities {
         [InlineData(true)]
         [InlineData(false)]
         public void IsActivated_Get_IsCorrect(bool isActivated) {
-            var terrariaLogicSensor = new TerrariaLogicSensor {On = isActivated};
+            var terrariaLogicSensor = new TerrariaLogicSensor { On = isActivated };
             ILogicSensor logicSensor = new OrionLogicSensor(terrariaLogicSensor);
 
             logicSensor.IsActivated.Should().Be(isActivated);

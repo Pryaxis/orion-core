@@ -56,7 +56,7 @@ namespace Orion.Packets.Npcs {
         }
 
         /// <summary>
-        /// Gets or sets the coins' position.
+        /// Gets or sets the coins' position. The components are pixel-based.
         /// </summary>
         public Vector2 CoinsPosition {
             get => _coinsPosition;

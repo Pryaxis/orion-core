@@ -27,13 +27,13 @@ namespace Orion.Projectiles {
     /// </summary>
     public interface IProjectileService : IService {
         /// <summary>
-        /// Gets the projectiles.
+        /// Gets the projectiles in the world.
         /// </summary>
         IReadOnlyArray<IProjectile> Projectiles { get; }
 
         /// <summary>
-        /// Gets or sets the event handlers that occur when a projectile's defaults are being set. This event can be
-        /// canceled.
+        /// Gets or sets the event handlers that occur when a projectile's defaults are being set, which is when
+        /// projectile data is initialized. This event can be canceled.
         /// </summary>
         EventHandlerCollection<ProjectileSetDefaultsEventArgs>? ProjectileSetDefaults { get; set; }
 
@@ -48,23 +48,24 @@ namespace Orion.Projectiles {
         EventHandlerCollection<ProjectileRemoveEventArgs>? ProjectileRemove { get; set; }
 
         /// <summary>
-        /// Spawns and returns a projectile with the given projectile type at the specified position with the velocity,
-        /// damage, knockback, and AI values.
+        /// Spawns and returns a projectile with the given <paramref name="type"/> at the specified
+        /// <paramref name="position"/> with the <paramref name="velocity"/>, <paramref name="damage"/>,
+        /// <paramref name="knockback"/>, and <paramref name="aiValues"/>.
         /// </summary>
-        /// <param name="projectileType">The projectile type.</param>
+        /// <param name="type">The projectile type.</param>
         /// <param name="position">The position.</param>
         /// <param name="velocity">The velocity.</param>
         /// <param name="damage">The damage.</param>
         /// <param name="knockback">The knockback.</param>
         /// <param name="aiValues">
-        /// The AI values, or <see langword="null" /> for none. If not <see langword="null" />, this should have length
-        /// 2.
+        /// The AI values, or <see langword="null"/> for none. If not <see langword="null"/>, this should have length
+        /// 2. These AI values are values that control type-specific behavior.
         /// </param>
-        /// <returns>The resulting projectile, or <see langword="null" /> if none was spawned.</returns>
+        /// <returns>The resulting projectile, or <see langword="null"/> if none was spawned.</returns>
         /// <exception cref="ArgumentException">
-        /// <paramref name="aiValues"/> is not <see langword="null" /> and does not have length 2.
+        /// <paramref name="aiValues"/> is not <see langword="null"/> and does not have length 2.
         /// </exception>
-        IProjectile? SpawnProjectile(ProjectileType projectileType, Vector2 position, Vector2 velocity, int damage,
-                                     float knockback, float[]? aiValues = null);
+        IProjectile? SpawnProjectile(ProjectileType type, Vector2 position, Vector2 velocity,
+            int damage, float knockback, float[]? aiValues = null);
     }
 }

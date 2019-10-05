@@ -74,7 +74,7 @@ namespace Orion.Packets.World.Tiles {
         /// <summary>
         /// Gets or sets the tiles.
         /// </summary>
-        /// <exception cref="ArgumentNullException"><paramref name="value"/> is <see langword="null" />.</exception>
+        /// <exception cref="ArgumentNullException"><paramref name="value"/> is <see langword="null"/>.</exception>
         public NetworkTiles Tiles {
             get => _tiles;
             set {

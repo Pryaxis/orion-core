@@ -29,7 +29,7 @@ namespace Orion.Packets.Npcs {
             packet.SetSimplePropertiesShouldMarkAsDirty();
         }
 
-        public static readonly byte[] Bytes = {14, 0, 104, 0, 17, 6, 1, 0, 82, 100, 0, 0, 0, 1};
+        public static readonly byte[] Bytes = { 14, 0, 104, 0, 17, 6, 1, 0, 82, 100, 0, 0, 0, 1 };
 
         [Fact]
         public void ReadFromStream() {
@@ -41,12 +41,10 @@ namespace Orion.Packets.Npcs {
             packet.ItemStackSize.Should().Be(1);
             packet.ItemPrefix.Should().Be(ItemPrefix.Unreal);
             packet.ItemValue.Should().Be(100);
-            packet.CanBuyItemOnce.Should().BeTrue();
+            packet.CanBuyItemOnlyOnce.Should().BeTrue();
         }
 
         [Fact]
-        public void DeserializeAndSerialize_SamePacket() {
-            Bytes.ShouldDeserializeAndSerializeSamePacket();
-        }
+        public void DeserializeAndSerialize_SamePacket() => Bytes.ShouldDeserializeAndSerializeSamePacket();
     }
 }

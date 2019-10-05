@@ -16,7 +16,9 @@
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
 using System;
+using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Orion.Utils {
     /// <summary>
@@ -24,13 +26,16 @@ namespace Orion.Utils {
     /// </summary>
     /// <typeparam name="T">The type of element.</typeparam>
     public interface IReadOnlyArray<out T> : IEnumerable<T> {
+        [ExcludeFromCodeCoverage]
+        IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
+
         /// <summary>
         /// Gets the count of elements.
         /// </summary>
         int Count { get; }
 
         /// <summary>
-        /// Gets the element at the given index.
+        /// Gets the element at the given <paramref name="index"/>.
         /// </summary>
         /// <param name="index">The index.</param>
         /// <exception cref="IndexOutOfRangeException"><paramref name="index"/> is out of range.</exception>

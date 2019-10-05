@@ -24,7 +24,7 @@ namespace Orion.Events {
     [AttributeUsage(AttributeTargets.Method)]
     public sealed class EventHandlerAttribute : Attribute {
         /// <summary>
-        /// Gets the priority of the handler.
+        /// Gets the priority of the event handler.
         /// </summary>
         public EventPriority Priority { get; }
 

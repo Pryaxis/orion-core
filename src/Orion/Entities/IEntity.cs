@@ -21,11 +21,13 @@ using Orion.Utils;
 
 namespace Orion.Entities {
     /// <summary>
-    /// Represents a Terraria entity.
+    /// Represents a Terraria entity. Entities are the base of every Terraria object, and have common properties such as
+    /// position, velocity, etc.
     /// </summary>
     public interface IEntity : IAnnotatable {
         /// <summary>
-        /// Gets the entity's index. A value of -1 indicates that the entity is not "real".
+        /// Gets the entity's index. A value of -1 indicates that the entity is not "real": i.e., it is not tied to the
+        /// game state.
         /// </summary>
         int Index { get; }
 
@@ -37,21 +39,21 @@ namespace Orion.Entities {
         /// <summary>
         /// Gets or sets the entity's name.
         /// </summary>
-        /// <exception cref="ArgumentNullException"><paramref name="value"/> is <see langword="null" />.</exception>
+        /// <exception cref="ArgumentNullException"><paramref name="value"/> is <see langword="null"/>.</exception>
         string Name { get; set; }
 
         /// <summary>
-        /// Gets or sets the entity's position.
+        /// Gets or sets the entity's position. The components are pixel-based.
         /// </summary>
         Vector2 Position { get; set; }
 
         /// <summary>
-        /// Gets or sets the entity's velocity.
+        /// Gets or sets the entity's velocity. The components are pixel-based.
         /// </summary>
         Vector2 Velocity { get; set; }
 
         /// <summary>
-        /// Gets or sets the entity's size.
+        /// Gets or sets the entity's size. The components are pixel-based.
         /// </summary>
         Vector2 Size { get; set; }
     }

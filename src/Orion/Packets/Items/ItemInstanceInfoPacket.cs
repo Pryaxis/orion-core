@@ -50,7 +50,7 @@ namespace Orion.Packets.Items {
         }
 
         /// <summary>
-        /// Gets or sets the item's position.
+        /// Gets or sets the item's position. The components are pixel-based.
         /// </summary>
         public Vector2 ItemPosition {
             get => _itemPosition;
@@ -61,7 +61,7 @@ namespace Orion.Packets.Items {
         }
 
         /// <summary>
-        /// Gets or sets the item's velocity.
+        /// Gets or sets the item's velocity. The components are pixel-based.
         /// </summary>
         public Vector2 ItemVelocity {
             get => _itemVelocity;

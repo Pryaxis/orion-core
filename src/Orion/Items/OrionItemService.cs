@@ -46,49 +46,54 @@ namespace Orion.Items {
         }
 
         protected override void Dispose(bool disposeManaged) {
-            if (!disposeManaged) return;
+            if (!disposeManaged) {
+                return;
+            }
 
             Hooks.Item.PreSetDefaultsById = null;
             Hooks.Item.PreUpdate = null;
         }
 
-        public IItem? SpawnItem(ItemType itemType, Vector2 position, int stackSize = 1,
-                                ItemPrefix prefix = ItemPrefix.None) {
+        public IItem? SpawnItem(ItemType type, Vector2 position,
+                int stackSize = 1, ItemPrefix prefix = ItemPrefix.None) {
             // Terraria has a mechanism of item caching which allows, for instance, the Grand Design to drop all wires
             // at once. We need to disable that temporarily so that our item *definitely* spawns.
-            var oldItemCache = TerrariaItem.itemCaches[(int)itemType];
-            TerrariaItem.itemCaches[(int)itemType] = -1;
+            var oldItemCache = TerrariaItem.itemCaches[(int)type];
+            TerrariaItem.itemCaches[(int)type] = -1;
 
             var itemIndex =
-                TerrariaItem.NewItem(position, Vector2.Zero, (int)itemType, stackSize, prefixGiven: (int)prefix);
-            TerrariaItem.itemCaches[(int)itemType] = oldItemCache;
+                TerrariaItem.NewItem(position, Vector2.Zero, (int)type, stackSize, prefixGiven: (int)prefix);
+            TerrariaItem.itemCaches[(int)type] = oldItemCache;
             return itemIndex >= 0 && itemIndex < Items.Count ? Items[itemIndex] : null;
         }
 
         private IItem GetItem(TerrariaItem terrariaItem) {
             Debug.Assert(terrariaItem.whoAmI >= 0 && terrariaItem.whoAmI < Items.Count,
-                         "terrariaItem.whoAmI >= 0 && terrariaItem.whoAmI < Items.Count");
-
+                "Terraria item index should be valid");
+            
+            // We want to retrieve the world item if this item is real. Otherwise, return a "fake" item.
             return terrariaItem == Main.item[terrariaItem.whoAmI]
                 ? Items[terrariaItem.whoAmI]
                 : new OrionItem(terrariaItem);
         }
 
         private HookResult PreSetDefaultsByIdHandler(TerrariaItem terrariaItem, ref int itemType, ref bool _) {
-            Debug.Assert(terrariaItem != null, "terrariaItem != null");
+            Debug.Assert(terrariaItem != null, "Terraria item should not be null");
 
             var item = GetItem(terrariaItem);
             var args = new ItemSetDefaultsEventArgs(item, (ItemType)itemType);
             ItemSetDefaults?.Invoke(this, args);
-            if (args.IsCanceled()) return HookResult.Cancel;
+            if (args.IsCanceled()) {
+                return HookResult.Cancel;
+            }
 
             itemType = (int)args.ItemType;
             return HookResult.Continue;
         }
 
         private HookResult PreUpdateHandler(TerrariaItem terrariaItem, ref int itemIndex) {
-            Debug.Assert(terrariaItem != null, "terrariaItem != null");
-            Debug.Assert(itemIndex >= 0 && itemIndex < Items.Count, "itemIndex >= 0 && itemIndex < Items.Count");
+            Debug.Assert(terrariaItem != null, "Terraria item should not be null");
+            Debug.Assert(itemIndex >= 0 && itemIndex < Items.Count, "item index should be valid");
 
             // Set terrariaItem.whoAmI since this is never done in vanilla.
             terrariaItem.whoAmI = itemIndex;

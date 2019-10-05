@@ -24,31 +24,34 @@ namespace Orion.Utils {
     /// </summary>
     public interface IAnnotatable {
         /// <summary>
-        /// Gets the annotation of a type with the given key, returning a default value if the key does not exist.
+        /// Gets the annotation of a type with the given <paramref name="key"/>, returning
+        /// <paramref name="defaultValue"/> if the key does not exist.
         /// </summary>
         /// <typeparam name="T">The type.</typeparam>
         /// <param name="key">The key.</param>
         /// <param name="defaultValue">The default value.</param>
-        /// <returns>The metadata, or a default value if the key does not exist.</returns>
-        /// <exception cref="ArgumentNullException"><paramref name="key"/> is <see langword="null" />.</exception>
+        /// <returns>The metadata, or <paramref name="defaultValue"/> if the key does not exist.</returns>
+        /// <exception cref="ArgumentNullException"><paramref name="key"/> is <see langword="null"/>.</exception>
         [Pure]
         T GetAnnotation<T>(string key, T defaultValue = default);
 
         /// <summary>
-        /// Sets the annotation of a type with the given key to the specified value.
+        /// Sets the annotation of a type with the given <paramref name="key"/> to the specified <paramref name="value"/>.
         /// </summary>
         /// <typeparam name="T">The type.</typeparam>
         /// <param name="key">The key.</param>
         /// <param name="value">The value.</param>
-        /// <exception cref="ArgumentNullException"><paramref name="key"/> is <see langword="null" />.</exception>
+        /// <exception cref="ArgumentNullException"><paramref name="key"/> is <see langword="null"/>.</exception>
         void SetAnnotation<T>(string key, T value);
 
         /// <summary>
-        /// Removes the annotation with the given key and returns a success value.
+        /// Removes the annotation with the given <paramref name="key"/> and returns a success value.
         /// </summary>
         /// <param name="key">The key.</param>
-        /// <returns>A value indicating whether the key was successfully removed.</returns>
-        /// <exception cref="ArgumentNullException"><paramref name="key"/> is <see langword="null" />.</exception>
+        /// <returns>
+        /// <see langword="true"/> if the annotation was removed; otherwise, <see langword="false"/>.
+        /// </returns>
+        /// <exception cref="ArgumentNullException"><paramref name="key"/> is <see langword="null"/>.</exception>
         bool RemoveAnnotation(string key);
     }
 }

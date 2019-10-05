@@ -21,7 +21,7 @@ using Xunit;
 
 namespace Orion.Packets.World {
     public class OldOnesArmyEndPacketTests {
-        public static readonly byte[] Bytes = {3, 0, 114};
+        public static readonly byte[] Bytes = { 3, 0, 114 };
 
         [Fact]
         public void ReadFromStream() {
@@ -30,8 +30,6 @@ namespace Orion.Packets.World {
         }
 
         [Fact]
-        public void DeserializeAndSerialize_SamePacket() {
-            Bytes.ShouldDeserializeAndSerializeSamePacket();
-        }
+        public void DeserializeAndSerialize_SamePacket() => Bytes.ShouldDeserializeAndSerializeSamePacket();
     }
 }

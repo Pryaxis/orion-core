@@ -16,7 +16,6 @@
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
 using System;
-using System.Diagnostics;
 using System.Linq;
 using FluentAssertions;
 using Microsoft.Xna.Framework;
@@ -32,15 +31,13 @@ namespace Orion.Projectiles {
 
         public OrionProjectileServiceTests() {
             for (var i = 0; i < Main.projectile.Length; ++i) {
-                Main.projectile[i] = new TerrariaProjectile {whoAmI = i};
+                Main.projectile[i] = new TerrariaProjectile { whoAmI = i };
             }
 
             _projectileService = new OrionProjectileService();
         }
 
-        public void Dispose() {
-            _projectileService.Dispose();
-        }
+        public void Dispose() => _projectileService.Dispose();
 
         [Fact]
         public void Projectiles_Item_Get() {
@@ -93,7 +90,8 @@ namespace Orion.Projectiles {
         [Theory]
         [InlineData(ProjectileType.CrystalBullet, ProjectileType.WoodenArrow)]
         [InlineData(ProjectileType.CrystalBullet, ProjectileType.None)]
-        public void ProjectileSetDefaults_ModifyProjectileType_IsCorrect(ProjectileType oldType, ProjectileType newType) {
+        public void ProjectileSetDefaults_ModifyProjectileType_IsCorrect(
+                ProjectileType oldType, ProjectileType newType) {
             _projectileService.ProjectileSetDefaults += (sender, args) => {
                 args.ProjectileType = newType;
             };
@@ -123,7 +121,7 @@ namespace Orion.Projectiles {
             };
 
             Main.projectile[0].Update(0);
-            
+
             isRun.Should().BeTrue();
         }
 
@@ -136,7 +134,7 @@ namespace Orion.Projectiles {
             };
 
             Main.projectile[0].Kill();
-            
+
             isRun.Should().BeTrue();
         }
 
@@ -164,8 +162,8 @@ namespace Orion.Projectiles {
         [Fact]
         public void SpawnProjectile_AiValues() {
             var projectile = _projectileService.SpawnProjectile(ProjectileType.CrystalBullet, Vector2.Zero,
-                                                                Vector2.Zero, 100, 0, new float[] {1, 2});
-            
+                                                                Vector2.Zero, 100, 0, new float[] { 1, 2 });
+
             projectile.Should().NotBeNull();
             projectile.Type.Should().Be(ProjectileType.CrystalBullet);
         }

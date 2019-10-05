@@ -68,8 +68,6 @@ namespace Orion.Packets.Modules {
         }
 
         [Fact]
-        public void DeserializeAndSerialize_Client_SamePacket() {
-            Bytes.ShouldDeserializeAndSerializeSamePacket();
-        }
+        public void DeserializeAndSerialize_Client_SamePacket() => Bytes.ShouldDeserializeAndSerializeSamePacket();
     }
 }

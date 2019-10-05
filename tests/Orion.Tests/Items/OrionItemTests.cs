@@ -26,7 +26,7 @@ namespace Orion.Items {
     public class OrionItemTests {
         [Fact]
         public void Name_Get() {
-            var terrariaItem = new TerrariaItem {_nameOverride = "test"};
+            var terrariaItem = new TerrariaItem { _nameOverride = "test" };
             IItem item = new OrionItem(terrariaItem);
 
             item.Name.Should().Be("test");
@@ -53,7 +53,7 @@ namespace Orion.Items {
 
         [Fact]
         public void Type_Get() {
-            var terrariaItem = new TerrariaItem {type = (int)ItemType.Sdmg};
+            var terrariaItem = new TerrariaItem { type = (int)ItemType.Sdmg };
             IItem item = new OrionItem(terrariaItem);
 
             item.Type.Should().Be(ItemType.Sdmg);
@@ -61,7 +61,7 @@ namespace Orion.Items {
 
         [Fact]
         public void StackSize_Get() {
-            var terrariaItem = new TerrariaItem {stack = 100};
+            var terrariaItem = new TerrariaItem { stack = 100 };
             IItem item = new OrionItem(terrariaItem);
 
             item.StackSize.Should().Be(100);
@@ -79,7 +79,7 @@ namespace Orion.Items {
 
         [Fact]
         public void Prefix_Get() {
-            var terrariaItem = new TerrariaItem {prefix = (byte)ItemPrefix.Unreal};
+            var terrariaItem = new TerrariaItem { prefix = (byte)ItemPrefix.Unreal };
             IItem item = new OrionItem(terrariaItem);
 
             item.Prefix.Should().Be(ItemPrefix.Unreal);
@@ -87,7 +87,7 @@ namespace Orion.Items {
 
         [Fact]
         public void Stats_Get() {
-            var terrariaItem = new TerrariaItem {prefix = (byte)ItemPrefix.Unreal};
+            var terrariaItem = new TerrariaItem { prefix = (byte)ItemPrefix.Unreal };
             IItem item = new OrionItem(terrariaItem);
 
             ((OrionItemStats)item.Stats).Wrapped.Should().BeSameAs(terrariaItem);

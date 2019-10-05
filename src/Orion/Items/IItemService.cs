@@ -26,13 +26,13 @@ namespace Orion.Items {
     /// </summary>
     public interface IItemService : IService {
         /// <summary>
-        /// Gets the items.
+        /// Gets the items in the world.
         /// </summary>
         IReadOnlyArray<IItem> Items { get; }
 
         /// <summary>
-        /// Gets or sets the event handlers that occur when an item's defaults are being set. This event can be
-        /// canceled.
+        /// Gets or sets the event handlers that occur when an item's defaults are being set, which is when item data is
+        /// initialized. This event can be canceled.
         /// </summary>
         EventHandlerCollection<ItemSetDefaultsEventArgs>? ItemSetDefaults { get; set; }
 
@@ -42,14 +42,14 @@ namespace Orion.Items {
         EventHandlerCollection<ItemUpdateEventArgs>? ItemUpdate { get; set; }
 
         /// <summary>
-        /// Spawns and returns an item with the given item type at the specified position with the stack
-        /// size and item prefix.
+        /// Spawns and returns an item with the given <paramref name="type"/> at the specified
+        /// <paramref name="position"/> with <paramref name="stackSize"/> and <paramref name="prefix"/>.
         /// </summary>
-        /// <param name="itemType">The item type.</param>
+        /// <param name="type">The item type.</param>
         /// <param name="position">The position.</param>
         /// <param name="stackSize">The stack size.</param>
         /// <param name="prefix">The item prefix..</param>
-        /// <returns>The resulting item, or <see langword="null" /> if none was spawned.</returns>
-        IItem? SpawnItem(ItemType itemType, Vector2 position, int stackSize = 1, ItemPrefix prefix = ItemPrefix.None);
+        /// <returns>The resulting item, or <see langword="null"/> if none was spawned.</returns>
+        IItem? SpawnItem(ItemType type, Vector2 position, int stackSize = 1, ItemPrefix prefix = ItemPrefix.None);
     }
 }

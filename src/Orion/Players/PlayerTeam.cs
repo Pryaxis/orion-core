@@ -15,15 +15,11 @@
 // You should have received a copy of the GNU General Public License
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
-using JetBrains.Annotations;
-
 namespace Orion.Players {
     /// <summary>
     /// Specifies a player team.
     /// </summary>
-    [PublicAPI]
     public enum PlayerTeam : byte {
-#pragma warning disable 1591
         /// <summary>
         /// Indicates no team.
         /// </summary>
@@ -53,6 +49,5 @@ namespace Orion.Players {
         /// Indicates the pink team.
         /// </summary>
         Pink = 5
-#pragma warning restore 1591
     }
 }

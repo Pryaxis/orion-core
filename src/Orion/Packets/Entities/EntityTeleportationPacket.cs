@@ -67,7 +67,7 @@ namespace Orion.Packets.Entities {
         }
 
         /// <summary>
-        /// Gets or sets the entity's new position.
+        /// Gets or sets the entity's new position. The components are pixel-based.
         /// </summary>
         public Vector2 EntityNewPosition {
             get => _entityNewPosition;

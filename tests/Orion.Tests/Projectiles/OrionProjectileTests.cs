@@ -58,7 +58,7 @@ namespace Orion.Projectiles {
 
         [Fact]
         public void Type_Get() {
-            var terrariaProjectile = new TerrariaProjectile {type = (int)ProjectileType.CrystalBullet};
+            var terrariaProjectile = new TerrariaProjectile { type = (int)ProjectileType.CrystalBullet };
             IProjectile projectile = new OrionProjectile(terrariaProjectile);
 
             projectile.Type.Should().Be(ProjectileType.CrystalBullet);

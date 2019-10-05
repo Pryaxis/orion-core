@@ -58,7 +58,7 @@ namespace Orion.Packets.Projectiles {
         }
 
         /// <summary>
-        /// Gets or sets the projectile's position.
+        /// Gets or sets the projectile's position. The components are pixel-based.
         /// </summary>
         public Vector2 ProjectilePosition {
             get => _projectilePosition;
@@ -69,7 +69,7 @@ namespace Orion.Packets.Projectiles {
         }
 
         /// <summary>
-        /// Gets or sets the projectile's velocity.
+        /// Gets or sets the projectile's velocity. The components are pixel-based.
         /// </summary>
         public Vector2 ProjectileVelocity {
             get => _projectileVelocity;
@@ -165,7 +165,6 @@ namespace Orion.Packets.Projectiles {
             if (header[2]) _projectileUuid = reader.ReadInt16();
         }
 
-        [SuppressMessage("ReSharper", "CompareOfFloatsByEqualityOperator")]
         private protected override void WriteToWriter(BinaryWriter writer, PacketContext context) {
             writer.Write(_projectileIdentity);
             writer.Write(_projectilePosition);

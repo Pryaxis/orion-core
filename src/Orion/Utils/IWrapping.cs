@@ -26,7 +26,7 @@ namespace Orion.Utils {
         /// <summary>
         /// Gets the wrapped object. This is not required to succeed.
         /// </summary>
-        [Obsolete("Avoid this property if possible.")]
+        [Obsolete("Avoid this property outside of Orion if possible.")]
         TWrapped Wrapped { get; }
     }
 }

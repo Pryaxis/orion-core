@@ -35,7 +35,7 @@ namespace Orion.Packets.Players {
         /// <summary>
         /// Gets or sets the player's disconnect reason.
         /// </summary>
-        /// <exception cref="ArgumentNullException"><paramref name="value"/> is <see langword="null" />.</exception>
+        /// <exception cref="ArgumentNullException"><paramref name="value"/> is <see langword="null"/>.</exception>
         public string PlayerDisconnectReason {
             get => _playerDisconnectReason.ToString();
             set {

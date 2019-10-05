@@ -17,8 +17,8 @@
 
 using System;
 using System.Diagnostics.CodeAnalysis;
-using System.IO;
 using FluentAssertions;
+using Moq;
 using Orion.Packets;
 using Xunit;
 
@@ -26,7 +26,7 @@ namespace Orion.Events.Packets {
     public class PacketEventArgsTests {
         [Fact]
         public void Ctor_NotDirty() {
-            var packet = new TestPacket();
+            var packet = new Mock<Packet>().Object;
             var args = new TestArgs(packet);
 
             args.IsDirty.Should().BeFalse();
@@ -41,7 +41,7 @@ namespace Orion.Events.Packets {
 
         [Fact]
         public void Packet_Get() {
-            var packet = new TestPacket();
+            var packet = new Mock<Packet>().Object;
             var args = new TestArgs(packet);
 
             args.Packet.Should().BeSameAs(packet);
@@ -51,17 +51,17 @@ namespace Orion.Events.Packets {
         [SuppressMessage("ReSharper", "UseObjectOrCollectionInitializer")]
         [SuppressMessage("Style", "IDE0017:Simplify object initialization", Justification = "Testing")]
         public void Packet_Set_MarksAsDirty() {
-            var packet = new TestPacket();
+            var packet = new Mock<Packet>().Object;
             var args = new TestArgs(packet);
 
-            args.Packet = new TestPacket();
+            args.Packet = new Mock<Packet>().Object;
 
             args.ShouldBeDirty();
         }
 
         [Fact]
         public void Packet_Set_NullValue_ThrowsArgumentNullException() {
-            var packet = new TestPacket();
+            var packet = new Mock<Packet>().Object;
             var args = new TestArgs(packet);
             Action action = () => args.Packet = null;
 
@@ -70,29 +70,17 @@ namespace Orion.Events.Packets {
 
         [Fact]
         public void IsDirty_Get() {
-            var packet = new TestPacket();
-            var args = new TestArgs(packet);
-            packet.MarkAsDirty();
-            
+            var isDirty = true;
+            var mockPacket = new Mock<Packet>();
+            mockPacket.SetupGet(p => p.IsDirty).Returns(() => isDirty);
+            mockPacket.Setup(p => p.Clean()).Callback(() => isDirty = false);
+            var args = new TestArgs(mockPacket.Object);
+
             args.ShouldBeDirty();
         }
 
         private class TestArgs : PacketEventArgs {
             public TestArgs(Packet packet) : base(packet) { }
-        }
-
-        private class TestPacket : Packet {
-            public override PacketType Type => throw new NotImplementedException();
-
-            public void MarkAsDirty() {
-                _isDirty = true;
-            }
-
-            private protected override void ReadFromReader(BinaryReader reader, PacketContext context) =>
-                throw new NotImplementedException();
-
-            private protected override void WriteToWriter(BinaryWriter writer, PacketContext context) =>
-                throw new NotImplementedException();
         }
     }
 }

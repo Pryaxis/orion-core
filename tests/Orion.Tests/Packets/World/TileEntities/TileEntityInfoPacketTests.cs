@@ -15,7 +15,6 @@
 // You should have received a copy of the GNU General Public License
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
-using System.Diagnostics;
 using System.IO;
 using FluentAssertions;
 using Orion.Items;
@@ -24,7 +23,7 @@ using Xunit;
 
 namespace Orion.Packets.World.TileEntities {
     public class TileEntityInfoPacketTests {
-        private static readonly byte[] RemoveBytes = {8, 0, 86, 0, 0, 0, 0, 0};
+        private static readonly byte[] RemoveBytes = { 8, 0, 86, 0, 0, 0, 0, 0 };
 
         [Fact]
         public void ReadFromStream_Remove() {
@@ -36,11 +35,10 @@ namespace Orion.Packets.World.TileEntities {
         }
 
         [Fact]
-        public void DeserializeAndSerialize_Remove_SamePacket() {
+        public void DeserializeAndSerialize_Remove_SamePacket() =>
             RemoveBytes.ShouldDeserializeAndSerializeSamePacket();
-        }
 
-        private static readonly byte[] TargetDummyBytes = {15, 0, 86, 0, 0, 0, 0, 1, 0, 0, 1, 100, 0, 1, 0};
+        private static readonly byte[] TargetDummyBytes = { 15, 0, 86, 0, 0, 0, 0, 1, 0, 0, 1, 100, 0, 1, 0 };
 
         [Fact]
         public void ReadFromStream_TargetDummy() {
@@ -57,11 +55,10 @@ namespace Orion.Packets.World.TileEntities {
         }
 
         [Fact]
-        public void DeserializeAndSerialize_TargetDummy_SamePacket() {
+        public void DeserializeAndSerialize_TargetDummy_SamePacket() =>
             TargetDummyBytes.ShouldDeserializeAndSerializeSamePacket();
-        }
 
-        private static readonly byte[] ItemFrameBytes = {18, 0, 86, 0, 0, 0, 0, 1, 1, 0, 1, 100, 0, 17, 6, 82, 1, 0};
+        private static readonly byte[] ItemFrameBytes = { 18, 0, 86, 0, 0, 0, 0, 1, 1, 0, 1, 100, 0, 17, 6, 82, 1, 0 };
 
         [Fact]
         public void ReadFromStream_ItemFrame() {
@@ -80,11 +77,10 @@ namespace Orion.Packets.World.TileEntities {
         }
 
         [Fact]
-        public void DeserializeAndSerialize_ItemFrame_SamePacket() {
+        public void DeserializeAndSerialize_ItemFrame_SamePacket() =>
             ItemFrameBytes.ShouldDeserializeAndSerializeSamePacket();
-        }
 
-        private static readonly byte[] LogicSensorBytes = {15, 0, 86, 0, 0, 0, 0, 1, 2, 0, 1, 100, 0, 1, 1};
+        private static readonly byte[] LogicSensorBytes = { 15, 0, 86, 0, 0, 0, 0, 1, 2, 0, 1, 100, 0, 1, 1 };
 
         [Fact]
         public void ReadFromStream_LogicSensor() {
@@ -102,8 +98,7 @@ namespace Orion.Packets.World.TileEntities {
         }
 
         [Fact]
-        public void DeserializeAndSerialize_LogicSensor_SamePacket() {
-            LogicSensorBytes.ShouldDeserializeAndSerializeSamePacket();
-        }
+        public void DeserializeAndSerialize_LogicSensor_SamePacket()
+            => LogicSensorBytes.ShouldDeserializeAndSerializeSamePacket();
     }
 }

@@ -58,7 +58,7 @@ namespace Orion.Events.Players {
         /// <param name="player">The player.</param>
         /// <param name="packet">The packet.</param>
         /// <exception cref="ArgumentNullException">
-        /// <paramref name="player"/> or <paramref name="packet"/> are <see langword="null" />.
+        /// <paramref name="player"/> or <paramref name="packet"/> are <see langword="null"/>.
         /// </exception>
         public PlayerInventorySlotEventArgs(IPlayer player, PlayerInventorySlotPacket packet) : base(player) {
             _packet = packet ?? throw new ArgumentNullException(nameof(packet));

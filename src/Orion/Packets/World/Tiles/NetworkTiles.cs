@@ -31,11 +31,9 @@ namespace Orion.Packets.World.Tiles {
         /// <inheritdoc />
         public bool IsDirty {
             get {
-                /*
-                 * Convert the tiles to a span of bytes, and the clean tiles to a span of bytes. This allows us to use
-                 * SequenceEqual, which is highly optimized for the purpose of comparing the two. This is significantly
-                 * faster than just comparing the two naively.
-                 */
+                // Convert the tiles to a span of bytes, and the clean tiles to a span of bytes. This allows us to use
+                // SequenceEqual, which is highly optimized for the purpose of comparing the two. This is significantly
+                // faster than just comparing the two naively.
                 var span = MemoryMarshal.AsBytes(_tiles.AsSpan());
                 var cleanSpan = MemoryMarshal.AsBytes(_cleanTiles.AsSpan());
                 return !span.SequenceEqual(cleanSpan);
@@ -53,8 +51,13 @@ namespace Orion.Packets.World.Tiles {
         /// </exception>
         public ref Tile this[int x, int y] {
             get {
-                if (x < 0 || x >= Width) throw new ArgumentOutOfRangeException(nameof(x));
-                if (y < 0 || y >= Height) throw new ArgumentOutOfRangeException(nameof(y));
+                if (x < 0 || x >= Width) {
+                    throw new ArgumentOutOfRangeException(nameof(x));
+                }
+
+                if (y < 0 || y >= Height) {
+                    throw new ArgumentOutOfRangeException(nameof(y));
+                }
 
                 return ref _tiles[y * Width + x];
             }
@@ -79,8 +82,13 @@ namespace Orion.Packets.World.Tiles {
         /// <paramref name="width"/> or <paramref name="height"/> are negative.
         /// </exception>
         public NetworkTiles(int width, int height) {
-            if (width < 0) throw new ArgumentOutOfRangeException(nameof(width), "Width is negative.");
-            if (height < 0) throw new ArgumentOutOfRangeException(nameof(height), "Height is negative.");
+            if (width < 0) {
+                throw new ArgumentOutOfRangeException(nameof(width), "Width is negative.");
+            }
+
+            if (height < 0) {
+                throw new ArgumentOutOfRangeException(nameof(height), "Height is negative.");
+            }
 
             _tiles = new Tile[width * height];
             _cleanTiles = new Tile[width * height];
@@ -90,11 +98,9 @@ namespace Orion.Packets.World.Tiles {
 
         /// <inheritdoc />
         public void Clean() {
-            /*
-             * Convert the tiles to a span of bytes, and the clean tiles to a span of bytes. This allows us to use
-             * CopyTo, which is highly optimized for the purpose of copying. This is significantly faster than just
-             * copying naively.
-             */
+            // Convert the tiles to a span of bytes, and the clean tiles to a span of bytes. This allows us to use
+            // CopyTo, which is highly optimized for the purpose of copying. This is significantly faster than just
+            // copying naively.
             var span = MemoryMarshal.AsBytes(_tiles.AsSpan());
             var cleanSpan = MemoryMarshal.AsBytes(_cleanTiles.AsSpan());
             span.CopyTo(cleanSpan);

@@ -248,7 +248,7 @@ namespace Orion.Packets.World {
         /// <summary>
         /// Gets or sets the world name.
         /// </summary>
-        /// <exception cref="ArgumentNullException"><paramref name="value"/> is <see langword="null" />.</exception>
+        /// <exception cref="ArgumentNullException"><paramref name="value"/> is <see langword="null"/>.</exception>
         public string WorldName {
             get => _worldName;
             set {

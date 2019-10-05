@@ -47,34 +47,40 @@ namespace Orion.Players {
         IPlayerInventory Inventory { get; }
 
         /// <summary>
-        /// Sends a packet to the player.
+        /// Sends a <paramref name="packet"/> to the player.
         /// </summary>
         /// <param name="packet">The packet.</param>
-        /// <exception cref="ArgumentNullException"><paramref name="packet"/> is <see langword="null" />.</exception>
+        /// <exception cref="ArgumentNullException"><paramref name="packet"/> is <see langword="null"/>.</exception>
         void SendPacket(Packet packet);
 
         /// <summary>
-        /// Disconnects the player with the given reason.
+        /// Disconnects the player with the given <paramref name="reason"/>.
         /// </summary>
         /// <param name="reason">The reason.</param>
-        /// <exception cref="ArgumentNullException"><paramref name="reason"/> is <see langword="null" />.</exception>
+        /// <exception cref="ArgumentNullException"><paramref name="reason"/> is <see langword="null"/>.</exception>
         void Disconnect(string reason) {
-            if (reason is null) throw new ArgumentNullException(nameof(reason));
+            if (reason is null) {
+                throw new ArgumentNullException(nameof(reason));
+            }
 
             SendPacket(new PlayerDisconnectPacket {PlayerDisconnectReason = reason});
         }
 
         /// <summary>
-        /// Sends a message to the player with the given color.
+        /// Sends a <paramref name="message"/> to the player with the given <paramref name="color"/>.
         /// </summary>
         /// <param name="message">The message.</param>
         /// <param name="color">The color.</param>
-        /// <exception cref="ArgumentNullException"><paramref name="message"/> is <see langword="null" />.</exception>
+        /// <exception cref="ArgumentNullException"><paramref name="message"/> is <see langword="null"/>.</exception>
         void SendMessage(string message, Color color) {
+            if (message is null) {
+                throw new ArgumentNullException(nameof(message));
+            }
+
             SendPacket(new ChatPacket {
                 ChatColor = color,
                 ChatLineWidth = -1,
-                ChatText = message ?? throw new ArgumentNullException(nameof(message))
+                ChatText = message
             });
         }
     }

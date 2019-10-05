@@ -29,7 +29,7 @@ namespace Orion.Players {
 
         [Fact]
         public void Name_Get() {
-            var terrariaPlayer = new TerrariaPlayer {name = "test"};
+            var terrariaPlayer = new TerrariaPlayer { name = "test" };
             IPlayer player = new OrionPlayer(mockPlayerService.Object, terrariaPlayer);
 
             player.Name.Should().Be("test");
@@ -56,7 +56,7 @@ namespace Orion.Players {
 
         [Fact]
         public void Team_Get() {
-            var terrariaPlayer = new TerrariaPlayer {team = (int)PlayerTeam.Red};
+            var terrariaPlayer = new TerrariaPlayer { team = (int)PlayerTeam.Red };
             IPlayer player = new OrionPlayer(mockPlayerService.Object, terrariaPlayer);
 
             player.Team.Should().Be(PlayerTeam.Red);

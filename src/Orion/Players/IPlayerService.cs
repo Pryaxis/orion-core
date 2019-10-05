@@ -28,7 +28,7 @@ namespace Orion.Players {
     /// </summary>
     public interface IPlayerService : IService {
         /// <summary>
-        /// Gets the players.
+        /// Gets the players in the world.
         /// </summary>
         IReadOnlyArray<IPlayer> Players { get; }
 
@@ -48,7 +48,8 @@ namespace Orion.Players {
         EventHandlerCollection<PlayerConnectEventArgs>? PlayerConnect { get; set; }
 
         /// <summary>
-        /// Gets or sets the event handlers that run when a player sends data. This event can be canceled.
+        /// Gets or sets the event handlers that run when a player sends their player data: e.g., clothing colors, name,
+        /// etc. This event can be canceled.
         /// </summary>
         EventHandlerCollection<PlayerDataEventArgs>? PlayerData { get; set; }
 
@@ -73,12 +74,14 @@ namespace Orion.Players {
         EventHandlerCollection<PlayerDisconnectedEventArgs>? PlayerDisconnected { get; set; }
 
         /// <summary>
-        /// Broadcasts the given packet.
+        /// Broadcasts the given <paramref name="packet"/> to all players.
         /// </summary>
         /// <param name="packet">The packet.</param>
-        /// <exception cref="ArgumentNullException"><paramref name="packet"/> are <see langword="null" />.</exception>
+        /// <exception cref="ArgumentNullException"><paramref name="packet"/> is <see langword="null"/>.</exception>
         void BroadcastPacket(Packet packet) {
-            if (packet is null) throw new ArgumentNullException(nameof(packet));
+            if (packet is null) {
+                throw new ArgumentNullException(nameof(packet));
+            }
 
             for (var i = 0; i < Players.Count; ++i) {
                 Players[i].SendPacket(packet);

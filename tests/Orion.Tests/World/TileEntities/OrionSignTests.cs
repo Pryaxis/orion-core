@@ -34,7 +34,7 @@ namespace Orion.World.TileEntities {
 
         [Fact]
         public void X_Get() {
-            var terrariaSign = new TerrariaSign {x = 100};
+            var terrariaSign = new TerrariaSign { x = 100 };
             ISign sign = new OrionSign(0, terrariaSign);
 
             sign.X.Should().Be(100);
@@ -66,7 +66,7 @@ namespace Orion.World.TileEntities {
 
         [Fact]
         public void Y_Get() {
-            var terrariaSign = new TerrariaSign {y = 100};
+            var terrariaSign = new TerrariaSign { y = 100 };
             ISign sign = new OrionSign(0, terrariaSign);
 
             sign.Y.Should().Be(100);
@@ -98,7 +98,7 @@ namespace Orion.World.TileEntities {
 
         [Fact]
         public void Text_Get() {
-            var terrariaSign = new TerrariaSign {text = "test"};
+            var terrariaSign = new TerrariaSign { text = "test" };
             ISign sign = new OrionSign(0, terrariaSign);
 
             sign.Text.Should().Be("test");

@@ -17,7 +17,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
 using FluentAssertions;
 using Microsoft.Xna.Framework;
@@ -33,20 +32,18 @@ namespace Orion.Items {
 
         public OrionItemServiceTests() {
             for (var i = 0; i < Main.item.Length; ++i) {
-                Main.item[i] = new TerrariaItem {whoAmI = i};
+                Main.item[i] = new TerrariaItem { whoAmI = i };
             }
 
             _itemService = new OrionItemService();
         }
 
-        public void Dispose() {
-            _itemService.Dispose();
-        }
+        public void Dispose() => _itemService.Dispose();
 
         [Fact]
         public void Items_Item_Get() {
             var item = _itemService.Items[1];
-            
+
             item.Index.Should().Be(1);
             ((OrionItem)item).Wrapped.Should().BeSameAs(Main.item[1]);
         }
@@ -138,7 +135,7 @@ namespace Orion.Items {
         [MemberData(nameof(SpawnItemData))]
         public void SpawnItem_IsCorrect(ItemType type, int stackSize, ItemPrefix prefix) {
             var item = _itemService.SpawnItem(type, Vector2.Zero, stackSize, prefix);
-            
+
             item.Should().NotBeNull();
             item.Type.Should().Be(type);
             item.StackSize.Should().Be(stackSize);

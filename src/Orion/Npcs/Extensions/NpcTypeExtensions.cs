@@ -17,6 +17,7 @@
 
 using System.Collections.Generic;
 using System.Diagnostics.Contracts;
+using Orion.Items;
 
 namespace Orion.Npcs.Extensions {
     /// <summary>
@@ -64,11 +65,14 @@ namespace Orion.Npcs.Extensions {
         };
 
         /// <summary>
-        /// Returns a value indicating whether the NPC type is catchable.
+        /// Returns a value indicating whether the NPC <paramref name="type"/> is catchable using a
+        /// <see cref="ItemType.BugNet"/> or <see cref="ItemType.GoldenBugNet"/>.
         /// </summary>
-        /// <param name="npcType">The NPC type.</param>
-        /// <returns>A value indicating whether the NPC type is catchable.</returns>
+        /// <param name="type">The NPC type.</param>
+        /// <returns>
+        /// <see langword="true"/> if the NPC <paramref name="type"/> is catchable; otherwise, <see langword="false"/>.
+        /// </returns>
         [Pure]
-        public static bool IsCatchable(this NpcType npcType) => CatchableNpcTypes.Contains(npcType);
+        public static bool IsCatchable(this NpcType type) => CatchableNpcTypes.Contains(type);
     }
 }

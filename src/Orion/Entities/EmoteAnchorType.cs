@@ -15,13 +15,11 @@
 // You should have received a copy of the GNU General Public License
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
-using JetBrains.Annotations;
-
 namespace Orion.Entities {
     /// <summary>
-    /// Specifies an emote anchor type.
+    /// Specifies an emote anchor type. An emote anchor is an entity that an emote stays attached to during the course
+    /// of its lifetime.
     /// </summary>
-    [PublicAPI]
     public enum EmoteAnchorType : byte {
 #pragma warning disable 1591
         Npc = 0,
