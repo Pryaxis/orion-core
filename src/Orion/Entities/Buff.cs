@@ -24,6 +24,8 @@ namespace Orion.Entities {
     /// Represents a buff, which consists of a buff type along with a duration.
     /// </summary>
     // TODO: write WriterToWriter and ReadFromReader methods.
+    [SuppressMessage("Performance", "CA1815:Override equals and operator equals on value types",
+        Justification = "Buffs will not be compared.")]
     public readonly struct Buff {
         /// <summary>
         /// Gets the buff type.

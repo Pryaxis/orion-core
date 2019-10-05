@@ -25,8 +25,11 @@ namespace Orion.Utils {
     /// Provides read-only access to a strongly-typed array of elements.
     /// </summary>
     /// <typeparam name="T">The type of element.</typeparam>
+    [SuppressMessage("Naming", "CA1710:Identifiers should have correct suffix", Justification = "Type is an array")]
     public interface IReadOnlyArray<out T> : IEnumerable<T> {
         [ExcludeFromCodeCoverage]
+        [SuppressMessage("Design", "CA1033:Interface methods should be callable by child types",
+            Justification = "Non-generic GetEnumerator")]
         IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
 
         /// <summary>

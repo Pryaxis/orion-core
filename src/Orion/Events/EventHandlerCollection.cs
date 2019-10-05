@@ -18,6 +18,7 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Reflection;
 
@@ -56,6 +57,7 @@ namespace Orion.Events {
             }
         }
 
+
         /// <summary>
         /// Registers the given <paramref name="handler"/> to <paramref name="collection"/>.
         /// </summary>
@@ -63,6 +65,8 @@ namespace Orion.Events {
         /// <param name="handler">The handler.</param>
         /// <returns>The resulting collection.</returns>
         /// <exception cref="ArgumentNullException"><paramref name="handler"/> is <see langword="null"/>.</exception>
+        [SuppressMessage("Usage", "CA2225:Operator overloads have named alternates",
+            Justification = "Preserve += syntax")]
         public static EventHandlerCollection<TEventArgs> operator +(
                 EventHandlerCollection<TEventArgs>? collection, EventHandler<TEventArgs> handler) {
             if (handler is null) {
@@ -84,6 +88,8 @@ namespace Orion.Events {
         /// <param name="handler">The handler.</param>
         /// <returns>The resulting collection.</returns>
         /// <exception cref="ArgumentNullException"><paramref name="handler"/> is <see langword="null"/>.</exception>
+        [SuppressMessage("Usage", "CA2225:Operator overloads have named alternates",
+            Justification = "Preserve -= syntax")]
         public static EventHandlerCollection<TEventArgs>? operator -(
                 EventHandlerCollection<TEventArgs>? collection, EventHandler<TEventArgs> handler) {
             if (handler is null) {

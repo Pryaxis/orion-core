@@ -26,6 +26,7 @@ namespace Orion.Utils {
     /// Represents a dirtiable list of objects.
     /// </summary>
     /// <typeparam name="T">The type of element.</typeparam>
+    [SuppressMessage("Naming", "CA1710:Identifiers should have correct suffix", Justification = "Type is a list")]
     public sealed class DirtiableList<T> : IList<T>, IDirtiable {
         private static readonly bool _containsDirtiableElements = typeof(IDirtiable).IsAssignableFrom(typeof(T));
 

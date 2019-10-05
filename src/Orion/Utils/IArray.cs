@@ -16,12 +16,14 @@
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Orion.Utils {
     /// <summary>
     /// Provides access to a strongly-typed array of elements.
     /// </summary>
     /// <typeparam name="T">The type of element.</typeparam>
+    [SuppressMessage("Naming", "CA1710:Identifiers should have correct suffix", Justification = "Type is an array")]
     public interface IArray<T> : IReadOnlyArray<T> {
         /// <summary>
         /// Gets or sets the element at the given <paramref name="index"/>.

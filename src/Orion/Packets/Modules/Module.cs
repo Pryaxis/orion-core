@@ -16,6 +16,7 @@
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Text;
 using Orion.Utils;
@@ -24,6 +25,7 @@ namespace Orion.Packets.Modules {
     /// <summary>
     /// Represents a module. This is sent in a <see cref="ModulePacket"/>.
     /// </summary>
+    [SuppressMessage("Naming", "CA1716:Identifiers should not match keywords", Justification = "Consumers are C#")]
     public abstract class Module : IDirtiable {
         private static readonly Func<Module>?[] ModuleConstructors = {
             /* 000 */ () => new LiquidsModule(),
@@ -50,16 +52,17 @@ namespace Orion.Packets.Modules {
         /// <param name="context">The context with which to read the module from.</param>
         /// <exception cref="ArgumentNullException"><paramref name="stream"/> is <see langword="null"/>.</exception>
         /// <returns>The resulting <see cref="Module"/> instance.</returns>
+        [SuppressMessage("Reliability", "CA2000:Dispose objects before losing scope",
+            Justification = "BinaryReader does not need to be disposed")]
         public static Module ReadFromStream(Stream stream, PacketContext context) {
             if (stream is null) {
                 throw new ArgumentNullException(nameof(stream));
             }
 
-            var reader = new BinaryReader(stream, Encoding.UTF8, true);
-
             static Func<Module>? GetModuleConstructor(ushort moduleTypeId) =>
                 moduleTypeId < ModuleConstructors.Length ? ModuleConstructors[moduleTypeId] : null;
 
+            var reader = new BinaryReader(stream, Encoding.UTF8, true);
             var moduleConstructor = GetModuleConstructor(reader.ReadUInt16()) ??
                                     throw new PacketException("Module type is invalid.");
             var module = moduleConstructor();
@@ -76,6 +79,8 @@ namespace Orion.Packets.Modules {
         /// <param name="stream">The stream.</param>
         /// <param name="context">The context with which to write the packet to.</param>
         /// <exception cref="ArgumentNullException"><paramref name="stream"/> is <see langword="null"/>.</exception>
+        [SuppressMessage("Reliability", "CA2000:Dispose objects before losing scope",
+            Justification = "BinaryWriter does not need to be disposed")]
         public void WriteToStream(Stream stream, PacketContext context) {
             if (stream is null) {
                 throw new ArgumentNullException(nameof(stream));

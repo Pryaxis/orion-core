@@ -143,8 +143,10 @@ namespace Orion.Packets.World.Tiles {
             ReadFromReaderImpl(new BinaryReader(deflateStream, Encoding.UTF8, true));
         }
 
-        [SuppressMessage("Code Quality", "IDE0068:Use recommended dispose pattern", Justification =
-            "BinaryWriter does not need to be disposed")]
+        [SuppressMessage("Code Quality", "IDE0068:Use recommended dispose pattern",
+            Justification = "BinaryWriter does not need to be disposed")]
+        [SuppressMessage("Reliability", "CA2000:Dispose objects before losing scope",
+            Justification = "BinaryWriter does not need to be disposed")]
         private protected override void WriteToWriter(BinaryWriter writer, PacketContext context) {
             writer.Write(_isSectionCompressed);
             if (!_isSectionCompressed) {

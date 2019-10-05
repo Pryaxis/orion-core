@@ -32,13 +32,13 @@ namespace Orion.Events.Players {
         /// <inheritdoc cref="ChatModule.ClientChatCommand"/>
         public string ChatCommand {
             get => _module.ClientChatCommand;
-            set => _module.ClientChatCommand = value ?? throw new ArgumentNullException();
+            set => _module.ClientChatCommand = value ?? throw new ArgumentNullException(nameof(value));
         }
 
         /// <inheritdoc cref="ChatModule.ClientChatText"/>
         public string ChatText {
             get => _module.ClientChatText;
-            set => _module.ClientChatText = value ?? throw new ArgumentNullException();
+            set => _module.ClientChatText = value ?? throw new ArgumentNullException(nameof(value));
         }
 
         /// <summary>

@@ -16,6 +16,7 @@
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
 using System.Diagnostics;
+using System.Diagnostics.CodeAnalysis;
 using System.Diagnostics.Contracts;
 using System.Runtime.InteropServices;
 using Orion.World.Tiles.Extensions;
@@ -25,6 +26,11 @@ namespace Orion.World.Tiles {
     /// Represents an optimized Terraria tile. Tiles are represented as structures for optimal packing and GC overhead.
     /// </summary>
     [StructLayout(LayoutKind.Explicit)]
+    [SuppressMessage("Design", "CA1051:Do not declare visible instance fields", Justification = "Performance")]
+    [SuppressMessage("Naming", "CA1724:Type names should not match namespaces",
+        Justification = "OTAPI.Tile should not be used")]
+    [SuppressMessage("Performance", "CA1815:Override equals and operator equals on value types",
+        Justification = "Tiles will not be compared")]
     public unsafe struct Tile {
         private const int SlopeShift = 12;
         private const int WallColorShift = 16;

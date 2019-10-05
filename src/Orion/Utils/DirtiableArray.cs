@@ -17,6 +17,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 
 namespace Orion.Utils {
@@ -24,6 +25,7 @@ namespace Orion.Utils {
     /// Represents a dirtiable array of objects.
     /// </summary>
     /// <typeparam name="T">The type of element.</typeparam>
+    [SuppressMessage("Naming", "CA1710:Identifiers should have correct suffix", Justification = "Type is an array")]
     public sealed class DirtiableArray<T> : IArray<T>, IDirtiable {
         private static readonly bool _containsDirtiableElements = typeof(IDirtiable).IsAssignableFrom(typeof(T));
 
