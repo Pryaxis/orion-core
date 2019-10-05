@@ -16,6 +16,7 @@
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
 using System;
+using Microsoft.Xna.Framework;
 using Orion.Events;
 using Orion.Events.Packets;
 using Orion.Events.Players;
@@ -85,6 +86,22 @@ namespace Orion.Players {
 
             for (var i = 0; i < Players.Count; ++i) {
                 Players[i].SendPacket(packet);
+            }
+        }
+
+        /// <summary>
+        /// Broadcasts a <paramref name="message"/> to all players with the given <paramref name="color"/>.
+        /// </summary>
+        /// <param name="message">The message.</param>
+        /// <param name="color">The color.</param>
+        /// <exception cref="ArgumentNullException"><paramref name="message"/> is <see langword="null"/>.</exception>
+        void BroadcastMessage(string message, Color color) {
+            if (message is null) {
+                throw new ArgumentNullException(nameof(message));
+            }
+
+            for (var i = 0; i < Players.Count; ++i) {
+                Players[i].SendMessage(message, color);
             }
         }
     }
