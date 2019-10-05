@@ -22,6 +22,7 @@ namespace Orion.Packets.Modules {
     /// <summary>
     /// Packet sent in the form of a module.
     /// </summary>
+    // TODO: check nullability possibilities
     public sealed class ModulePacket : Packet {
         private Module? _module;
 
@@ -52,9 +53,8 @@ namespace Orion.Packets.Modules {
         /// <inheritdoc />
         public override string ToString() => $"{Type}[{Module}]";
 
-        private protected override void ReadFromReader(BinaryReader reader, PacketContext context) {
+        private protected override void ReadFromReader(BinaryReader reader, PacketContext context) =>
             _module = Module.ReadFromStream(reader.BaseStream, context);
-        }
 
         private protected override void WriteToWriter(BinaryWriter writer, PacketContext context) {
             // Satisfy the contract with a null module by writing an invalid module type.

@@ -37,7 +37,7 @@ namespace Orion.Packets.World.TileEntities {
                 IsDirty = true;
             }
         }
-        
+
         /// <inheritdoc cref="ILogicSensor.IsActivated"/>
         public bool IsActivated {
             get => _isActivated;

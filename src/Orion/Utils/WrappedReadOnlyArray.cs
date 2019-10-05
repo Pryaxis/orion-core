@@ -21,7 +21,7 @@ using System.Diagnostics;
 
 namespace Orion.Utils {
     internal sealed class WrappedReadOnlyArray<T, TWrapped> : IReadOnlyArray<T>
-        where T : class, IWrapping<TWrapped> {
+            where T : class, IWrapping<TWrapped> {
         private readonly Memory<TWrapped> _wrappedItems;
         private readonly Func<int, TWrapped, T> _converter;
         private readonly T?[] _items;
@@ -30,7 +30,9 @@ namespace Orion.Utils {
 
         public T this[int index] {
             get {
-                if (index < 0 || index >= Count) throw new IndexOutOfRangeException();
+                if (index < 0 || index >= Count) {
+                    throw new IndexOutOfRangeException();
+                }
 
                 var wrappedItem = _wrappedItems.Span[index];
                 ref var item = ref _items[index];

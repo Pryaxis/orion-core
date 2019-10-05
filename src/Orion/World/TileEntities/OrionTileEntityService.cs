@@ -21,11 +21,11 @@ using System.Diagnostics.CodeAnalysis;
 using Orion.Utils;
 using Main = Terraria.Main;
 using TerrariaChest = Terraria.Chest;
-using TerrariaTargetDummy = Terraria.GameContent.Tile_Entities.TETrainingDummy;
 using TerrariaItem = Terraria.Item;
 using TerrariaItemFrame = Terraria.GameContent.Tile_Entities.TEItemFrame;
 using TerrariaLogicSensor = Terraria.GameContent.Tile_Entities.TELogicSensor;
 using TerrariaSign = Terraria.Sign;
+using TerrariaTargetDummy = Terraria.GameContent.Tile_Entities.TETrainingDummy;
 using TerrariaTileEntity = Terraria.DataStructures.TileEntity;
 
 namespace Orion.World.TileEntities {
@@ -116,7 +116,7 @@ namespace Orion.World.TileEntities {
         public ITileEntity? GetTileEntity(int x, int y) {
             static IChest? GetChest(int x, int y) {
                 for (var i = 0; i < Main.chest.Length; ++i) {
-                    TerrariaChest? terrariaChest = Main.chest[i];
+                    var terrariaChest = Main.chest[i];
                     if (terrariaChest != null && terrariaChest.x == x && terrariaChest.y == y) {
                         return new OrionChest(i, terrariaChest);
                     }
@@ -127,7 +127,7 @@ namespace Orion.World.TileEntities {
 
             static ISign? GetSign(int x, int y) {
                 for (var i = 0; i < Main.sign.Length; ++i) {
-                    TerrariaSign? terrariaSign = Main.sign[i];
+                    var terrariaSign = Main.sign[i];
                     if (terrariaSign != null && terrariaSign.x == x && terrariaSign.y == y) {
                         return new OrionSign(i, terrariaSign);
                     }

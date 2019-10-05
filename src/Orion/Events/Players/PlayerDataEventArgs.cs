@@ -26,7 +26,7 @@ namespace Orion.Events.Players {
     /// </summary>
     public sealed class PlayerDataEventArgs : PlayerEventArgs, ICancelable {
         private readonly PlayerDataPacket _packet;
-        
+
         /// <inheritdoc />
         public string? CancellationReason { get; set; }
 

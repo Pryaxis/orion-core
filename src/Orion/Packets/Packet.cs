@@ -35,7 +35,7 @@ namespace Orion.Packets {
     /// <summary>
     /// Represents a packet. This is the form of communication between the server and clients.
     /// </summary>
-    
+
     // TODO: provide good comments for all packets.
     public abstract class Packet : IDirtiable {
         private static readonly Func<Packet>?[] PacketConstructors = {
@@ -218,9 +218,7 @@ namespace Orion.Packets {
         public override string ToString() => $"{Type}";
 
         /// <inheritdoc />
-        public virtual void Clean() {
-            _isDirty = false;
-        }
+        public virtual void Clean() => _isDirty = false;
 
         /// <summary>
         /// Writes the packet to the given <paramref name="stream"/> with the specified <paramref name="context"/>.

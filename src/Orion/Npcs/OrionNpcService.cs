@@ -110,7 +110,9 @@ namespace Orion.Npcs {
             var npc = GetNpc(terrariaNpc);
             var args = new NpcSetDefaultsEventArgs(npc, (NpcType)npcType);
             NpcSetDefaults?.Invoke(this, args);
-            if (args.IsCanceled()) return HookResult.Cancel;
+            if (args.IsCanceled()) {
+                return HookResult.Cancel;
+            }
 
             // Ignore two calls to SetDefaults() if type is negative. This is because SetDefaults gets called twice:
             // once with 0, and once with the base type.

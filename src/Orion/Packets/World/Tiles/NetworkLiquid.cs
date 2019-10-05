@@ -102,9 +102,7 @@ namespace Orion.Packets.World.Tiles {
         }
 
         /// <inheritdoc />
-        public void Clean() {
-            IsDirty = false;
-        }
+        public void Clean() => IsDirty = false;
 
         /// <inheritdoc />
         [ExcludeFromCodeCoverage]

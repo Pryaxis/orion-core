@@ -181,11 +181,18 @@ namespace Orion.World {
             [ExcludeFromCodeCoverage]
             public int collisionType {
                 get {
-                    if (!active()) return 0;
-                    if (halfBrick()) return 2;
+                    if (!active()) {
+                        return 0;
+                    }
+
+                    if (halfBrick()) {
+                        return 2;
+                    }
 
                     var slope = this.slope();
-                    if (slope > 0) return slope + 2;
+                    if (slope > 0) {
+                        return slope + 2;
+                    }
 
                     return Main.tileSolid[type] && !Main.tileSolid[type] ? 1 : -1;
                 }
@@ -202,8 +209,8 @@ namespace Orion.World {
 
             public void CopyFrom(ITile otherTile) {
                 if (otherTile is TileAdapter otherAdapter) {
-                    byte* toPtr = (byte*)_tile;
-                    byte* fromPtr = (byte*)otherAdapter._tile;
+                    var toPtr = (byte*)_tile;
+                    var fromPtr = (byte*)otherAdapter._tile;
 
                     *(int*)toPtr = *(int*)fromPtr;
                     *(int*)(toPtr + 4) = *(int*)(fromPtr + 4);
@@ -222,7 +229,7 @@ namespace Orion.World {
             }
 
             public void ClearEverything() {
-                byte* ptr = (byte*)_tile;
+                var ptr = (byte*)_tile;
 
                 *(int*)ptr = 0;
                 *(int*)(ptr + 4) = 0;
@@ -236,7 +243,7 @@ namespace Orion.World {
             }
 
             public void ResetToType(ushort newType) {
-                byte* ptr = (byte*)_tile;
+                var ptr = (byte*)_tile;
 
                 *(int*)ptr = newType;
                 *(int*)(ptr + 4) = 32;
@@ -244,7 +251,7 @@ namespace Orion.World {
             }
 
             public void ClearMetadata() {
-                byte* ptr = (byte*)_tile;
+                var ptr = (byte*)_tile;
 
                 *(ptr + 3) = 0;
                 *(int*)(ptr + 4) = 0;
@@ -341,7 +348,9 @@ namespace Orion.World {
             public bool HasSameSlope(ITile otherTile) => (sTileHeader & 29696) == (otherTile.sTileHeader & 29696);
 
             public int blockType() {
-                if (halfBrick()) return 1;
+                if (halfBrick()) {
+                    return 1;
+                }
 
                 var slope = this.slope();
                 return slope > 0 ? slope + 1 : 0;

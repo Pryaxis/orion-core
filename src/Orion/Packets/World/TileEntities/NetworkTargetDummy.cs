@@ -37,12 +37,7 @@ namespace Orion.Packets.World.TileEntities {
             }
         }
 
-        private protected override void ReadFromReaderImpl(BinaryReader reader) {
-            _npcIndex = reader.ReadInt16();
-        }
-
-        private protected override void WriteToWriterImpl(BinaryWriter writer) {
-            writer.Write((short)_npcIndex);
-        }
+        private protected override void ReadFromReaderImpl(BinaryReader reader) => _npcIndex = reader.ReadInt16();
+        private protected override void WriteToWriterImpl(BinaryWriter writer) => writer.Write((short)_npcIndex);
     }
 }

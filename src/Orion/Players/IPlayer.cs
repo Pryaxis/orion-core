@@ -63,7 +63,7 @@ namespace Orion.Players {
                 throw new ArgumentNullException(nameof(reason));
             }
 
-            SendPacket(new PlayerDisconnectPacket {PlayerDisconnectReason = reason});
+            SendPacket(new PlayerDisconnectPacket { PlayerDisconnectReason = reason });
         }
 
         /// <summary>

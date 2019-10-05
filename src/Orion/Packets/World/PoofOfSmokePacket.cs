@@ -45,12 +45,10 @@ namespace Orion.Packets.World {
         [ExcludeFromCodeCoverage]
         public override string ToString() => $"{Type}[({SmokePosition})]";
 
-        private protected override void ReadFromReader(BinaryReader reader, PacketContext context) {
-            _smokePosition = new HalfVector2 {PackedValue = reader.ReadUInt32()}.ToVector2();
-        }
+        private protected override void ReadFromReader(BinaryReader reader, PacketContext context) =>
+            _smokePosition = new HalfVector2 { PackedValue = reader.ReadUInt32() }.ToVector2();
 
-        private protected override void WriteToWriter(BinaryWriter writer, PacketContext context) {
+        private protected override void WriteToWriter(BinaryWriter writer, PacketContext context) =>
             writer.Write(new HalfVector2(SmokePosition).PackedValue);
-        }
     }
 }

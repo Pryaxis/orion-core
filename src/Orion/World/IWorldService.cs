@@ -15,7 +15,6 @@
 // You should have received a copy of the GNU General Public License
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
-using System;
 using Orion.Events;
 using Orion.Events.World;
 using Orion.World.Tiles;
@@ -53,7 +52,7 @@ namespace Orion.World {
         /// Gets or sets the event handlers that occur when the world is loading.
         /// </summary>
         EventHandlerCollection<WorldLoadEventArgs>? WorldLoad { get; set; }
-        
+
         /// <summary>
         /// Gets or sets the event handlers that occur when the world is saving. This event can be canceled.
         /// </summary>

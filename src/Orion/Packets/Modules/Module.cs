@@ -51,7 +51,9 @@ namespace Orion.Packets.Modules {
         /// <exception cref="ArgumentNullException"><paramref name="stream"/> is <see langword="null"/>.</exception>
         /// <returns>The resulting <see cref="Module"/> instance.</returns>
         public static Module ReadFromStream(Stream stream, PacketContext context) {
-            if (stream is null) throw new ArgumentNullException(nameof(stream));
+            if (stream is null) {
+                throw new ArgumentNullException(nameof(stream));
+            }
 
             var reader = new BinaryReader(stream, Encoding.UTF8, true);
 
@@ -66,9 +68,7 @@ namespace Orion.Packets.Modules {
         }
 
         /// <inheritdoc />
-        public virtual void Clean() {
-            _isDirty = false;
-        }
+        public virtual void Clean() => _isDirty = false;
 
         /// <summary>
         /// Writes the module to the given stream with the specified context.
@@ -77,7 +77,9 @@ namespace Orion.Packets.Modules {
         /// <param name="context">The context with which to write the packet to.</param>
         /// <exception cref="ArgumentNullException"><paramref name="stream"/> is <see langword="null"/>.</exception>
         public void WriteToStream(Stream stream, PacketContext context) {
-            if (stream is null) throw new ArgumentNullException(nameof(stream));
+            if (stream is null) {
+                throw new ArgumentNullException(nameof(stream));
+            }
 
             var writer = new BinaryWriter(stream, Encoding.UTF8, true);
             writer.Write((ushort)Type);

@@ -235,17 +235,17 @@ namespace Orion.Packets.World.Tiles {
 
             var previousTile = new Tile();
             var runLength = 0;
-            for (int y = 0; y < SectionHeight; ++y) {
-                for (int x = 0; x < SectionWidth; ++x) {
+            for (var y = 0; y < SectionHeight; ++y) {
+                for (var x = 0; x < SectionWidth; ++x) {
                     if (runLength > 0) {
                         --runLength;
                         _sectionTiles[x, y] = previousTile;
                         continue;
                     }
 
-                    byte header = reader.ReadByte();
-                    byte header2 = (header & 1) == 1 ? reader.ReadByte() : (byte)0;
-                    byte header3 = (header2 & 1) == 1 ? reader.ReadByte() : (byte)0;
+                    var header = reader.ReadByte();
+                    var header2 = (header & 1) == 1 ? reader.ReadByte() : (byte)0;
+                    var header3 = (header2 & 1) == 1 ? reader.ReadByte() : (byte)0;
 
                     ReadTile(ref _sectionTiles[x, y], header, header2, header3);
                     runLength = ReadRunLength(header);
@@ -375,8 +375,8 @@ namespace Orion.Packets.World.Tiles {
                 runLength = 0;
             }
 
-            for (int y = 0; y < _sectionHeight; ++y) {
-                for (int x = 0; x < _sectionWidth; ++x) {
+            for (var y = 0; y < _sectionHeight; ++y) {
+                for (var x = 0; x < _sectionWidth; ++x) {
                     ref var tile = ref _sectionTiles[x, y];
                     if (previousTile != null && tile.IsTheSameAs(previousTile.Value)) {
                         ++runLength;

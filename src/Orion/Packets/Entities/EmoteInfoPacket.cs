@@ -107,7 +107,9 @@ namespace Orion.Packets.Entities {
         private protected override void ReadFromReader(BinaryReader reader, PacketContext context) {
             _emoteIndex = reader.ReadInt32();
             _anchorType = (EmoteAnchorType)reader.ReadByte();
-            if (_anchorType == EmoteAnchorType.Remove) return;
+            if (_anchorType == EmoteAnchorType.Remove) {
+                return;
+            }
 
             _anchorEntityIndex = reader.ReadUInt16();
             _emoteLifetime = reader.ReadByte();
@@ -123,7 +125,9 @@ namespace Orion.Packets.Entities {
         private protected override void WriteToWriter(BinaryWriter writer, PacketContext context) {
             writer.Write(_emoteIndex);
             writer.Write((byte)_anchorType);
-            if (_anchorType == EmoteAnchorType.Remove) return;
+            if (_anchorType == EmoteAnchorType.Remove) {
+                return;
+            }
 
             writer.Write(_anchorEntityIndex);
             writer.Write(_emoteLifetime);

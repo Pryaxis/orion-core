@@ -82,7 +82,7 @@ namespace Orion.World.Tiles {
         [FieldOffset(7)] internal byte _bTileHeader2;
 
         [FieldOffset(4)] private int _tileHeader;
-        
+
         /// <summary>
         /// Gets or sets the tile's block color.
         /// </summary>
@@ -201,7 +201,7 @@ namespace Orion.World.Tiles {
         public LiquidType LiquidType {
             readonly get => (LiquidType)((_tileHeader & LiquidTypeMask) >> LiquidTypeShift);
             set {
-                Debug.Assert((int)value >= 0 && (int)value <= 3, "value should be valid");
+                Debug.Assert(value >= 0 && (int)value <= 3, "value should be valid");
 
                 _tileHeader = (_tileHeader & ~LiquidTypeMask) | ((int)value << LiquidTypeShift);
             }

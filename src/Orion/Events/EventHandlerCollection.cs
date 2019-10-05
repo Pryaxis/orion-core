@@ -73,7 +73,7 @@ namespace Orion.Events {
             var priority = attribute?.Priority ?? EventPriority.Normal;
             var registration = new Registration(handler, priority);
             var registrations = new SortedSet<Registration>(
-                collection?._registrations ?? Enumerable.Empty<Registration>(), _registrationComparer) {registration};
+                collection?._registrations ?? Enumerable.Empty<Registration>(), _registrationComparer) { registration };
             return new EventHandlerCollection<TEventArgs>(registrations);
         }
 

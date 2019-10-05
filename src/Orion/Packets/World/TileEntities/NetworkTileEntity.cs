@@ -43,7 +43,7 @@ namespace Orion.Packets.World.TileEntities {
 
         /// <inheritdoc cref="ITileEntity.Type"/>
         public abstract TileEntityType Type { get; }
-        
+
         /// <inheritdoc cref="ITileEntity.Index"/>
         public int Index {
             get => _index;
@@ -52,7 +52,7 @@ namespace Orion.Packets.World.TileEntities {
                 IsDirty = true;
             }
         }
-        
+
         /// <inheritdoc cref="ITileEntity.X"/>
         public int X {
             get => _x;
@@ -61,7 +61,7 @@ namespace Orion.Packets.World.TileEntities {
                 IsDirty = true;
             }
         }
-        
+
         /// <inheritdoc cref="ITileEntity.Y"/>
         public int Y {
             get => _y;
@@ -91,9 +91,7 @@ namespace Orion.Packets.World.TileEntities {
         }
 
         /// <inheritdoc />
-        public void Clean() {
-            IsDirty = false;
-        }
+        public void Clean() => IsDirty = false;
 
         /// <inheritdoc />
         [ExcludeFromCodeCoverage]

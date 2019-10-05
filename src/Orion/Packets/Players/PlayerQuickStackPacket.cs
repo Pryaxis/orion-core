@@ -43,12 +43,10 @@ namespace Orion.Packets.Players {
         [ExcludeFromCodeCoverage]
         public override string ToString() => $"{Type}[...]";
 
-        private protected override void ReadFromReader(BinaryReader reader, PacketContext context) {
+        private protected override void ReadFromReader(BinaryReader reader, PacketContext context) =>
             _playerInventorySlotIndex = reader.ReadByte();
-        }
 
-        private protected override void WriteToWriter(BinaryWriter writer, PacketContext context) {
+        private protected override void WriteToWriter(BinaryWriter writer, PacketContext context) =>
             writer.Write(_playerInventorySlotIndex);
-        }
     }
 }

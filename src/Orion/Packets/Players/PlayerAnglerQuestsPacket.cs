@@ -43,12 +43,10 @@ namespace Orion.Packets.Players {
         [ExcludeFromCodeCoverage]
         public override string ToString() => $"{Type}[{PlayerNumberOfAnglerQuestsCompleted}]";
 
-        private protected override void ReadFromReader(BinaryReader reader, PacketContext context) {
+        private protected override void ReadFromReader(BinaryReader reader, PacketContext context) =>
             _playerNumberOfAnglerQuestsCompleted = reader.ReadInt32();
-        }
 
-        private protected override void WriteToWriter(BinaryWriter writer, PacketContext context) {
+        private protected override void WriteToWriter(BinaryWriter writer, PacketContext context) =>
             writer.Write(_playerNumberOfAnglerQuestsCompleted);
-        }
     }
 }

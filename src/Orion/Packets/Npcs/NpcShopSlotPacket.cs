@@ -112,7 +112,9 @@ namespace Orion.Packets.Npcs {
             _itemValue = reader.ReadInt32();
 
             Terraria.BitsByte flags = reader.ReadByte();
-            if (flags[0]) _canBuyItemOnce = true;
+            if (flags[0]) {
+                _canBuyItemOnce = true;
+            }
         }
 
         private protected override void WriteToWriter(BinaryWriter writer, PacketContext context) {

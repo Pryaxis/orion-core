@@ -43,12 +43,10 @@ namespace Orion.Packets.Projectiles {
         [ExcludeFromCodeCoverage]
         public override string ToString() => $"{Type}[#={ProjectileIndex}), ...]";
 
-        private protected override void ReadFromReader(BinaryReader reader, PacketContext context) {
+        private protected override void ReadFromReader(BinaryReader reader, PacketContext context) =>
             _projectileIndex = reader.ReadUInt16();
-        }
 
-        private protected override void WriteToWriter(BinaryWriter writer, PacketContext context) {
+        private protected override void WriteToWriter(BinaryWriter writer, PacketContext context) =>
             writer.Write(_projectileIndex);
-        }
     }
 }

@@ -146,8 +146,8 @@ namespace Orion.Packets.World.Tiles {
                 }
             }
 
-            for (int x = 0; x < SquareSize; ++x) {
-                for (int y = 0; y < SquareSize; ++y) {
+            for (var x = 0; x < SquareSize; ++x) {
+                for (var y = 0; y < SquareSize; ++y) {
                     ReadTile(ref _tiles[x, y]);
                 }
             }
@@ -202,8 +202,8 @@ namespace Orion.Packets.World.Tiles {
                 }
             }
 
-            for (int x = 0; x < SquareSize; ++x) {
-                for (int y = 0; y < SquareSize; ++y) {
+            for (var x = 0; x < SquareSize; ++x) {
+                for (var y = 0; y < SquareSize; ++y) {
                     WriteTile(ref _tiles[x, y]);
                 }
             }

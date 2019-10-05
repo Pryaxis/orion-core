@@ -54,12 +54,10 @@ namespace Orion.Packets.World.Tiles {
         [ExcludeFromCodeCoverage]
         public override string ToString() => $"{Type}[{TileLiquid}]";
 
-        private protected override void ReadFromReader(BinaryReader reader, PacketContext context) {
+        private protected override void ReadFromReader(BinaryReader reader, PacketContext context) =>
             _tileLiquid = NetworkLiquid.ReadFromReader(reader);
-        }
 
-        private protected override void WriteToWriter(BinaryWriter writer, PacketContext context) {
+        private protected override void WriteToWriter(BinaryWriter writer, PacketContext context) =>
             _tileLiquid.WriteToWriter(writer);
-        }
     }
 }

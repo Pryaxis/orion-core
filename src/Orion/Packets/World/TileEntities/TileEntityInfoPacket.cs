@@ -66,7 +66,9 @@ namespace Orion.Packets.World.TileEntities {
 
         private protected override void ReadFromReader(BinaryReader reader, PacketContext context) {
             _tileEntityIndex = reader.ReadInt32();
-            if (!reader.ReadBoolean()) return;
+            if (!reader.ReadBoolean()) {
+                return;
+            }
 
             _tileEntity = NetworkTileEntity.ReadFromReader(reader, false);
             _tileEntity._index = TileEntityIndex;

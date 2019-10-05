@@ -74,9 +74,7 @@ namespace Orion.Utils {
         public bool Contains(T item) => _list.Contains(item);
 
         /// <inheritdoc />
-        public void CopyTo(T[] array, int arrayIndex) {
-            _list.CopyTo(array, arrayIndex);
-        }
+        public void CopyTo(T[] array, int arrayIndex) => _list.CopyTo(array, arrayIndex);
 
         /// <inheritdoc />
         public bool Remove(T item) {

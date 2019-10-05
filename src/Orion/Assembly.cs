@@ -21,4 +21,4 @@ using System.Runtime.CompilerServices;
 [assembly: InternalsVisibleTo("Orion.Tests")]
 
 // For mocking internal types.
-[assembly: InternalsVisibleTo("DynamicProxyGenAssembly2")] 
+[assembly: InternalsVisibleTo("DynamicProxyGenAssembly2")]

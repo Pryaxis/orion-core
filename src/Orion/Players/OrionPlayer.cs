@@ -40,7 +40,7 @@ namespace Orion.Players {
 
         public IPlayerStats Stats => throw new NotImplementedException();
         public IPlayerInventory Inventory => throw new NotImplementedException();
-        
+
         // We need to inject ICommandService so that we can trigger its PacketSend event.
         public OrionPlayer(IPlayerService playerService, TerrariaPlayer terrariaPlayer)
             : this(playerService, -1, terrariaPlayer) { }

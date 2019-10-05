@@ -44,12 +44,10 @@ namespace Orion.Packets.Items {
         [ExcludeFromCodeCoverage]
         public override string ToString() => $"{Type}[#={ItemIndex}]";
 
-        private protected override void ReadFromReader(BinaryReader reader, PacketContext context) {
+        private protected override void ReadFromReader(BinaryReader reader, PacketContext context) =>
             _itemIndex = reader.ReadInt16();
-        }
 
-        private protected override void WriteToWriter(BinaryWriter writer, PacketContext context) {
+        private protected override void WriteToWriter(BinaryWriter writer, PacketContext context) =>
             writer.Write(_itemIndex);
-        }
     }
 }

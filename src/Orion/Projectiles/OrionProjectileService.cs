@@ -74,7 +74,7 @@ namespace Orion.Projectiles {
         private IProjectile GetProjectile(TerrariaProjectile terrariaProjectile) {
             Debug.Assert(terrariaProjectile.whoAmI >= 0 && terrariaProjectile.whoAmI < Projectiles.Count,
                 "Terraria projectile should have a valid index");
-            
+
             // We want to retrieve the world projectile if this projectile is real. Otherwise, return a "fake"
             // projectile.
             return terrariaProjectile == Main.projectile[terrariaProjectile.whoAmI]

@@ -70,7 +70,7 @@ namespace Orion.Items {
         private IItem GetItem(TerrariaItem terrariaItem) {
             Debug.Assert(terrariaItem.whoAmI >= 0 && terrariaItem.whoAmI < Items.Count,
                 "Terraria item index should be valid");
-            
+
             // We want to retrieve the world item if this item is real. Otherwise, return a "fake" item.
             return terrariaItem == Main.item[terrariaItem.whoAmI]
                 ? Items[terrariaItem.whoAmI]

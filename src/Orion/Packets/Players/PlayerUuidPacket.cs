@@ -45,12 +45,10 @@ namespace Orion.Packets.Players {
         [ExcludeFromCodeCoverage]
         public override string ToString() => $"{Type}[{PlayerUuid}]";
 
-        private protected override void ReadFromReader(BinaryReader reader, PacketContext context) {
+        private protected override void ReadFromReader(BinaryReader reader, PacketContext context) =>
             _playerUuid = reader.ReadString();
-        }
 
-        private protected override void WriteToWriter(BinaryWriter writer, PacketContext context) {
+        private protected override void WriteToWriter(BinaryWriter writer, PacketContext context) =>
             writer.Write(_playerUuid);
-        }
     }
 }

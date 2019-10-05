@@ -44,12 +44,10 @@ namespace Orion.Packets.Npcs {
         [ExcludeFromCodeCoverage]
         public override string ToString() => $"{Type}[{NpcTypeKilled}]";
 
-        private protected override void ReadFromReader(BinaryReader reader, PacketContext context) {
+        private protected override void ReadFromReader(BinaryReader reader, PacketContext context) =>
             _npcTypeKilled = (NpcType)reader.ReadInt16();
-        }
 
-        private protected override void WriteToWriter(BinaryWriter writer, PacketContext context) {
+        private protected override void WriteToWriter(BinaryWriter writer, PacketContext context) =>
             writer.Write((short)_npcTypeKilled);
-        }
     }
 }

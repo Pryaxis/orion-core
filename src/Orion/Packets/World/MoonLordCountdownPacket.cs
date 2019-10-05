@@ -44,12 +44,10 @@ namespace Orion.Packets.World {
         [ExcludeFromCodeCoverage]
         public override string ToString() => $"{Type}[{MoonLordCountdown}]";
 
-        private protected override void ReadFromReader(BinaryReader reader, PacketContext context) {
+        private protected override void ReadFromReader(BinaryReader reader, PacketContext context) =>
             _moonLordCountdown = TimeSpan.FromSeconds(reader.ReadInt32() / 60.0);
-        }
 
-        private protected override void WriteToWriter(BinaryWriter writer, PacketContext context) {
+        private protected override void WriteToWriter(BinaryWriter writer, PacketContext context) =>
             writer.Write((int)(_moonLordCountdown.TotalSeconds * 60.0));
-        }
     }
 }
