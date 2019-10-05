@@ -26,7 +26,6 @@ using Main = Terraria.Main;
 
 namespace Orion.World {
     [Collection("TerrariaTestsCollection")]
-    [SuppressMessage("ReSharper", "UseObjectOrCollectionInitializer")]
     [SuppressMessage("Style", "IDE0017:Simplify object initialization", Justification = "Testing")]
     public class OrionWorldServiceTests : IDisposable {
         private readonly IWorldService _worldService;

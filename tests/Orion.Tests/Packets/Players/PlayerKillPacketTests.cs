@@ -31,7 +31,6 @@ namespace Orion.Packets.Players {
         }
 
         [Fact]
-        [SuppressMessage("ReSharper", "UseObjectOrCollectionInitializer")]
         [SuppressMessage("Style", "IDE0017:Simplify object initialization", Justification = "Testing")]
         public void PlayerDeathReason_Set_MarksAsDirty() {
             var packet = new PlayerKillPacket();

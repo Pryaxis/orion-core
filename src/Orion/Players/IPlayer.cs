@@ -16,7 +16,6 @@
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
 using System;
-using JetBrains.Annotations;
 using Microsoft.Xna.Framework;
 using Orion.Entities;
 using Orion.Packets;
@@ -29,7 +28,6 @@ namespace Orion.Players {
     /// <summary>
     /// Represents a Terraria player.
     /// </summary>
-    [PublicAPI]
     public interface IPlayer : IEntity, IWrapping<TerrariaPlayer> {
         /// <summary>
         /// Gets or sets the player's team.

@@ -79,7 +79,6 @@ namespace Orion.Utils {
         }
 
         [Fact]
-        [SuppressMessage("ReSharper", "UseObjectOrCollectionInitializer")]
         [SuppressMessage("Style", "IDE0028:Simplify collection initialization", Justification = "Testing")]
         public void Add() {
             var list = new DirtiableList<int>();

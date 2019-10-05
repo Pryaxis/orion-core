@@ -48,7 +48,6 @@ namespace Orion.Events.Packets {
         }
 
         [Fact]
-        [SuppressMessage("ReSharper", "UseObjectOrCollectionInitializer")]
         [SuppressMessage("Style", "IDE0017:Simplify object initialization", Justification = "Testing")]
         public void Packet_Set_MarksAsDirty() {
             var packet = new Mock<Packet>().Object;

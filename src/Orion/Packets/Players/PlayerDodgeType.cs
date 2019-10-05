@@ -15,13 +15,10 @@
 // You should have received a copy of the GNU General Public License
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
-using JetBrains.Annotations;
-
 namespace Orion.Packets.Players {
     /// <summary>
     /// Specifies a player dodge type in a <see cref="PlayerDodgePacket"/>.
     /// </summary>
-    [PublicAPI]
     public enum PlayerDodgeType : byte {
         /// <summary>
         /// Indicates a ninja dodge. This is caused by a Tabi or Master Ninja Gear.

@@ -16,14 +16,12 @@
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
 using System;
-using JetBrains.Annotations;
 using Orion.Utils;
 
 namespace Orion.World.TileEntities {
     /// <summary>
     /// Represents a tile entity service. Provides tile entity-related hooks and methods.
     /// </summary>
-    [PublicAPI]
     public interface ITileEntityService : IService {
         /// <summary>
         /// Gets the chests.

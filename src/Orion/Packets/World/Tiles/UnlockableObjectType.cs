@@ -15,13 +15,10 @@
 // You should have received a copy of the GNU General Public License
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
-using JetBrains.Annotations;
-
 namespace Orion.Packets.World.Tiles {
     /// <summary>
     /// Specifies an unlockable object type in an <see cref="ObjectUnlockPacket"/>.
     /// </summary>
-    [PublicAPI]
     public enum UnlockableObjectType : byte {
         /// <summary>
         /// Indicates that a chest should be unlocked.

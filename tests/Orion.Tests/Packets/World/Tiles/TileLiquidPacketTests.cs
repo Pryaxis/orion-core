@@ -25,7 +25,6 @@ using Xunit;
 namespace Orion.Packets.World.Tiles {
     public class TileLiquidPacketTests {
         [Fact]
-        [SuppressMessage("ReSharper", "UseObjectOrCollectionInitializer")]
         [SuppressMessage("Style", "IDE0017:Simplify object initialization", Justification = "Testing")]
         public void TileLiquid_Set_MarksAsDirty() {
             var packet = new TileLiquidPacket();

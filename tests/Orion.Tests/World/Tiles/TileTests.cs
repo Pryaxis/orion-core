@@ -20,7 +20,6 @@ using FluentAssertions;
 using Xunit;
 
 namespace Orion.World.Tiles {
-    [SuppressMessage("ReSharper", "UseObjectOrCollectionInitializer")]
     [SuppressMessage("Style", "IDE0017:Simplify object initialization", Justification = "Testing")]
     public class TileTests {
         [Fact]

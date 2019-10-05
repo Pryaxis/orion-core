@@ -41,9 +41,9 @@ namespace Orion {
         };
 
         public static void Properties_GetSetShouldReflect(this EventArgs args, string fieldName) {
-            // ReSharper disable once PossibleNullReferenceException
-            var field = args.GetType().GetField(fieldName, BindingFlags.NonPublic | BindingFlags.Instance)
-                            .GetValue(args);
+            var field = args.GetType()
+                .GetField(fieldName, BindingFlags.NonPublic | BindingFlags.Instance)
+                .GetValue(args);
             field.Should().NotBeNull();
 
             foreach (var property in args.GetType().GetProperties(BindingFlags.Public | BindingFlags.Instance)) {

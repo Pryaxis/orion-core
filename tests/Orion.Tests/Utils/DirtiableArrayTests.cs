@@ -22,7 +22,6 @@ using Moq;
 using Xunit;
 
 namespace Orion.Utils {
-    [SuppressMessage("ReSharper", "UseObjectOrCollectionInitializer")]
     [SuppressMessage("Style", "IDE0017:Simplify object initialization", Justification = "Testing")]
     public class DirtiableArrayTests {
         [Fact]
