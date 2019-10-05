@@ -16,10 +16,16 @@
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
 using System;
+using FluentAssertions;
+using Xunit;
 
 namespace Orion.Events.Server {
-    /// <summary>
-    /// Provides data for the <see cref="OrionKernel.ServerUpdate"/> event.
-    /// </summary>
-    public sealed class ServerUpdateEventArgs : ServerEventArgs { }
+    public class ServerCommandEventArgsTests {
+        [Fact]
+        public void Ctor_NullInput_ThrowsArgumentNullException() {
+            Func<ServerCommandEventArgs> func = () => new ServerCommandEventArgs(null);
+
+            func.Should().Throw<ArgumentNullException>();
+        }
+    }
 }

@@ -21,5 +21,5 @@ namespace Orion.Events.Server {
     /// <summary>
     /// Provides data for the <see cref="OrionKernel.ServerStart"/> event.
     /// </summary>
-    public sealed class ServerStartEventArgs : EventArgs { }
+    public sealed class ServerStartEventArgs : ServerEventArgs { }
 }

@@ -23,6 +23,7 @@ using System.Reflection;
 using Microsoft.Xna.Framework;
 using Ninject;
 using Orion.Events;
+using Orion.Events.Extensions;
 using Orion.Events.Server;
 using Orion.Items;
 using Orion.Npcs;
@@ -62,6 +63,11 @@ namespace Orion {
         public EventHandlerCollection<ServerUpdateEventArgs>? ServerUpdate { get; set; }
 
         /// <summary>
+        /// Gets or sets the events that occur when the server executes a command. This event can be canceled.
+        /// </summary>
+        public EventHandlerCollection<ServerCommandEventArgs>? ServerCommand { get; set; }
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="OrionKernel"/> class.
         /// </summary>
         public OrionKernel() {
@@ -86,6 +92,7 @@ namespace Orion {
             Hooks.Game.PreInitialize += PreInitializeHandler;
             Hooks.Game.Started += StartedHandler;
             Hooks.Game.PreUpdate += PreUpdateHandler;
+            Hooks.Command.Process += ProcessHandler;
         }
 
         /// <inheritdoc />
@@ -183,6 +190,12 @@ namespace Orion {
         private void PreUpdateHandler(ref GameTime _) {
             var args = new ServerUpdateEventArgs();
             ServerUpdate?.Invoke(this, args);
+        }
+
+        private HookResult ProcessHandler(string _, string input) {
+            var args = new ServerCommandEventArgs(input);
+            ServerCommand?.Invoke(this, args);
+            return args.IsCanceled() ? HookResult.Cancel : HookResult.Continue;
         }
     }
 }

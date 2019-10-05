@@ -19,7 +19,23 @@ using System;
 
 namespace Orion.Events.Server {
     /// <summary>
-    /// Provides data for the <see cref="OrionKernel.ServerUpdate"/> event.
+    /// Provides data for the <see cref="OrionKernel.ServerCommand"/> event.
     /// </summary>
-    public sealed class ServerUpdateEventArgs : ServerEventArgs { }
+    public sealed class ServerCommandEventArgs : ServerEventArgs, ICancelable {
+        /// <inheritdoc />
+        public string? CancellationReason { get; set; }
+
+        /// <summary>
+        /// Gets the input.
+        /// </summary>
+        public string Input { get; }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ServerCommandEventArgs"/> class with the specified input.
+        /// </summary>
+        /// <param name="input">The input.</param>
+        public ServerCommandEventArgs(string input) {
+            Input = input ?? throw new ArgumentNullException(nameof(input));
+        }
+    }
 }
