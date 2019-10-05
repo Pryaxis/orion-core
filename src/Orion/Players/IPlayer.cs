@@ -52,7 +52,7 @@ namespace Orion.Players {
         void SendPacket(Packet packet);
 
         /// <summary>
-        /// Disconnects the player with the given <paramref name="reason"/>.
+        /// Disconnects the player with a <paramref name="reason"/>.
         /// </summary>
         /// <param name="reason">The reason.</param>
         /// <exception cref="ArgumentNullException"><paramref name="reason"/> is <see langword="null"/>.</exception>

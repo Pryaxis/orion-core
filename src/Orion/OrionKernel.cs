@@ -17,16 +17,19 @@
 
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Reflection;
+using Microsoft.Xna.Framework;
 using Ninject;
+using Orion.Events;
+using Orion.Events.Server;
 using Orion.Items;
 using Orion.Npcs;
 using Orion.Players;
 using Orion.Projectiles;
 using Orion.World;
+using OTAPI;
 
 namespace Orion {
     /// <summary>
@@ -44,6 +47,21 @@ namespace Orion {
         public IEnumerable<OrionPlugin> LoadedPlugins => new HashSet<OrionPlugin>(_plugins);
 
         /// <summary>
+        /// Gets or sets the events that occur when the server initializes.
+        /// </summary>
+        public EventHandlerCollection<ServerInitializeEventArgs>? ServerInitialize { get; set; }
+
+        /// <summary>
+        /// Gets or sets the events that occur when the server starts.
+        /// </summary>
+        public EventHandlerCollection<ServerStartEventArgs>? ServerStart { get; set; }
+
+        /// <summary>
+        /// Gets or sets the events that occur when the server updates.
+        /// </summary>
+        public EventHandlerCollection<ServerUpdateEventArgs>? ServerUpdate { get; set; }
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="OrionKernel"/> class.
         /// </summary>
         public OrionKernel() {
@@ -57,7 +75,6 @@ namespace Orion {
             // Create bindings for Lazy<T> so that we can have lazily loaded services, allowing plugins to override
             // service bindings if necessary.
             var getLazy = GetType().GetMethod(nameof(GetLazy), BindingFlags.NonPublic | BindingFlags.Instance);
-            Debug.Assert(getLazy != null, "getLazy method should exist");
             Bind(typeof(Lazy<>)).ToMethod(ctx => getLazy
                 .MakeGenericMethod(ctx.GenericArguments?[0])
                 .Invoke(this, Array.Empty<object>()));
@@ -65,6 +82,10 @@ namespace Orion {
             // Because we're using Assembly.Load, we'll need to have an AssemblyResolve handler to deal with assembly
             // resolution issues.
             AppDomain.CurrentDomain.AssemblyResolve += AssemblyResolveHandler;
+
+            Hooks.Game.PreInitialize += PreInitializeHandler;
+            Hooks.Game.Started += StartedHandler;
+            Hooks.Game.PreUpdate += PreUpdateHandler;
         }
 
         /// <inheritdoc />
@@ -72,10 +93,14 @@ namespace Orion {
             base.Dispose(disposing);
 
             AppDomain.CurrentDomain.AssemblyResolve -= AssemblyResolveHandler;
+
+            Hooks.Game.PreInitialize -= PreInitializeHandler;
+            Hooks.Game.Started -= StartedHandler;
+            Hooks.Game.PreUpdate -= PreUpdateHandler;
         }
 
         /// <summary>
-        /// Queues plugins to be loaded from the given <paramref name="assemblyPath"/>.
+        /// Queues plugins to be loaded from <paramref name="assemblyPath"/>.
         /// </summary>
         /// <param name="assemblyPath">The assembly path.</param>
         /// <exception cref="ArgumentNullException">
@@ -117,7 +142,7 @@ namespace Orion {
         }
 
         /// <summary>
-        /// Unloads the given <paramref name="plugin"/> and returns a value indicating success.
+        /// Unloads <paramref name="plugin"/> and returns a value indicating success.
         /// </summary>
         /// <param name="plugin">The plugin.</param>
         /// <exception cref="ArgumentNullException"><paramref name="plugin"/> is <see langword="null"/>.</exception>
@@ -140,9 +165,24 @@ namespace Orion {
             return true;
         }
 
+        private Lazy<T> GetLazy<T>() => new Lazy<T>(() => this.Get<T>());
+
         private Assembly AssemblyResolveHandler(object sender, ResolveEventArgs args) =>
             _pluginAssemblies.FirstOrDefault(a => a.FullName == args.Name);
 
-        private Lazy<T> GetLazy<T>() => new Lazy<T>(() => this.Get<T>());
+        private void PreInitializeHandler() {
+            var args = new ServerInitializeEventArgs();
+            ServerInitialize?.Invoke(this, args);
+        }
+
+        private void StartedHandler() {
+            var args = new ServerStartEventArgs();
+            ServerStart?.Invoke(this, args);
+        }
+
+        private void PreUpdateHandler(ref GameTime _) {
+            var args = new ServerUpdateEventArgs();
+            ServerUpdate?.Invoke(this, args);
+        }
     }
 }

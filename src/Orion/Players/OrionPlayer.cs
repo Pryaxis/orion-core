@@ -54,7 +54,7 @@ namespace Orion.Players {
 
         public void SendPacket(Packet packet) {
             var terrariaClient = Terraria.Netplay.Clients[Index];
-            if (terrariaClient.IsActive) {
+            if (!terrariaClient.IsActive) {
                 return;
             }
 

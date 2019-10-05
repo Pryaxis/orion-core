@@ -173,8 +173,7 @@ namespace Orion.Packets {
 
 
         /// <summary>
-        /// Reads and returns a packet from the given <paramref name="stream"/> with the specified
-        /// <paramref name="context"/>.
+        /// Reads and returns a packet from <paramref name="stream"/> with the specified <paramref name="context"/>.
         /// </summary>
         /// <param name="stream">The stream.</param>
         /// <param name="context">The context with which to read the packet.</param>
@@ -224,8 +223,7 @@ namespace Orion.Packets {
         public virtual void Clean() => _isDirty = false;
 
         /// <summary>
-        /// Writes the packet to the given <paramref name="stream"/> with the specified <paramref name="context"/>.
-        /// </summary>
+        /// Writes the packet to <paramref name="stream"/> with the specified <paramref name="context"/>. </summary>
         /// <param name="stream">The stream.</param>
         /// <param name="context">The context with which to read the packet.</param>
         /// <exception cref="ArgumentNullException"><paramref name="stream"/> is <see langword="null"/>.</exception>

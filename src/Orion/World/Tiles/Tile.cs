@@ -87,7 +87,9 @@ namespace Orion.World.Tiles {
         [FieldOffset(6)] internal byte _bTileHeader;
         [FieldOffset(7)] internal byte _bTileHeader2;
 
+        [FieldOffset(2)] private short _wallAndLiquid;
         [FieldOffset(4)] private int _tileHeader;
+        [FieldOffset(8)] private int _blockFrames;
 
         /// <summary>
         /// Gets or sets the tile's block color.
@@ -238,13 +240,12 @@ namespace Orion.World.Tiles {
         }
 
         /// <summary>
-        /// Returns a value indicating whether the tile is the same as the given <paramref name="otherTile"/>.
+        /// Returns a value indicating whether the tile is the same as <paramref name="otherTile"/>.
         /// </summary>
         /// <param name="otherTile">The other tile.</param>
         /// <returns><see langword="true"/> if the tiles are the same; otherwise, <see langword="false"/>.</returns>
         [Pure]
         public readonly bool IsTheSameAs(in Tile otherTile) {
-            // TODO: this method can be optimized due to structure layout
             if (_sTileHeader != otherTile._sTileHeader) {
                 return false;
             }
@@ -254,13 +255,12 @@ namespace Orion.World.Tiles {
                     return false;
                 }
 
-                if (BlockType.AreFramesImportant() &&
-                    (BlockFrameX != otherTile.BlockFrameX || BlockFrameY != otherTile.BlockFrameY)) {
+                if (BlockType.AreFramesImportant() && _blockFrames != otherTile._blockFrames) {
                     return false;
                 }
             }
 
-            if (WallType != otherTile.WallType || LiquidAmount != otherTile.LiquidAmount) {
+            if (_wallAndLiquid != otherTile._wallAndLiquid) {
                 return false;
             }
 

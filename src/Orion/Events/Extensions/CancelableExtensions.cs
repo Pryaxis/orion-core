@@ -41,8 +41,8 @@ namespace Orion.Events.Extensions {
         }
 
         /// <summary>
-        /// Cancels the object, optionally with the given <paramref name="reason"/>. Reasons should be provided if
-        /// possible, as they allow consumers to learn why the cancellation occurred.
+        /// Cancels the object, optionally with a <paramref name="reason"/>. Reasons should be provided if possible, as
+        /// they allow consumers to learn why the cancellation occurred.
         /// </summary>
         /// <param name="cancelable">The cancelable object.</param>
         /// <param name="reason">The reason.</param>

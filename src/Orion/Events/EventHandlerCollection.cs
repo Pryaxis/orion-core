@@ -59,7 +59,7 @@ namespace Orion.Events {
 
 
         /// <summary>
-        /// Registers the given <paramref name="handler"/> to <paramref name="collection"/>.
+        /// Registers <paramref name="handler"/> to <paramref name="collection"/>.
         /// </summary>
         /// <param name="collection">The collection.</param>
         /// <param name="handler">The handler.</param>
@@ -82,7 +82,7 @@ namespace Orion.Events {
         }
 
         /// <summary>
-        /// Unregisters the given <paramref name="handler"/> from <paramref name="collection"/>.
+        /// Unregisters <paramref name="handler"/> from <paramref name="collection"/>.
         /// </summary>
         /// <param name="collection">The collection.</param>
         /// <param name="handler">The handler.</param>

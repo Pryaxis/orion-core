@@ -74,7 +74,7 @@ namespace Orion.Players {
         EventHandlerCollection<PlayerDisconnectedEventArgs>? PlayerDisconnected { get; set; }
 
         /// <summary>
-        /// Broadcasts the given <paramref name="packet"/> to all players.
+        /// Broadcasts a <paramref name="packet"/> to all players.
         /// </summary>
         /// <param name="packet">The packet.</param>
         /// <exception cref="ArgumentNullException"><paramref name="packet"/> is <see langword="null"/>.</exception>

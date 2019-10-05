@@ -79,7 +79,7 @@ namespace Orion.Packets.World.Tiles {
         }
 
         /// <summary>
-        /// Reads and returns a network liquid from the given <paramref name="reader"/>.
+        /// Reads and returns a network liquid from <paramref name="reader"/>.
         /// </summary>
         /// <param name="reader">The reader.</param>
         /// <param name="shouldSwapCoords">A value indicating whether the coordinates should be swapped.</param>
@@ -109,7 +109,7 @@ namespace Orion.Packets.World.Tiles {
         public override string ToString() => $"{LiquidType} x{LiquidAmount} @ ({TileX}, {TileY})";
 
         /// <summary>
-        /// Writes the network liquid to the given <paramref name="writer"/>.
+        /// Writes the network liquid to <paramref name="writer"/>.
         /// </summary>
         /// <param name="writer">The writer.</param>
         /// <param name="shouldSwapCoords">A value indicating whether the X and Y values should be swapped.</param>
