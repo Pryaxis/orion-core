@@ -48,23 +48,24 @@ namespace Orion.Launcher {
             // If Windows, we should enable 256-color mode.
             if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows)) {
                 var stdoutHandle = GetStdHandle(STD_OUTPUT_HANDLE);
-                GetConsoleMode(stdoutHandle, out var mode);
-                SetConsoleMode(stdoutHandle, mode | ENABLE_VIRTUAL_TERMINAL_PROCESSING);
+                if (stdoutHandle != (IntPtr)(-1) && GetConsoleMode(stdoutHandle, out var mode)) {
+                    SetConsoleMode(stdoutHandle, mode | ENABLE_VIRTUAL_TERMINAL_PROCESSING);
+                }
             }
-            
+
             Directory.CreateDirectory("logs");
             Log.Logger = new LoggerConfiguration()
 #if DEBUG
-                         .MinimumLevel.Verbose()
+                .MinimumLevel.Verbose()
 #else
-                         .MinimumLevel.Information()
+                .MinimumLevel.Information()
 #endif
-                         .WriteTo.Console(theme: AnsiConsoleTheme.Code)
-                         .WriteTo.File(Path.Combine("logs", "log-.txt"),
-                                       rollingInterval: RollingInterval.Day,
-                                       rollOnFileSizeLimit: true,
-                                       fileSizeLimitBytes: 2 << 20)
-                         .CreateLogger();
+                .WriteTo.Console(theme: AnsiConsoleTheme.Code)
+                .WriteTo.File(Path.Combine("logs", "log-.txt"),
+                    rollingInterval: RollingInterval.Day,
+                    rollOnFileSizeLimit: true,
+                    fileSizeLimitBytes: 2 << 20)
+                .CreateLogger();
 
             AppDomain.CurrentDomain.UnhandledException += (sender, eventArgs) => {
                 Log.Fatal(eventArgs.ExceptionObject as Exception, Resources.UnhandledExceptionMessage);
