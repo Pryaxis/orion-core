@@ -23,7 +23,7 @@ namespace Orion.World.Tiles.Extensions {
     /// Provides extensions for the <see cref="BlockType"/> enumeration.
     /// </summary>
     public static class BlockTypeExtensions {
-        private static readonly ISet<BlockType> FramesImportantBlockTypes = new HashSet<BlockType> {
+        private static readonly ISet<BlockType> _framesImportantBlockTypes = new HashSet<BlockType> {
             (BlockType)3,
             (BlockType)4,
             (BlockType)5,
@@ -275,6 +275,6 @@ namespace Orion.World.Tiles.Extensions {
         /// <returns><see langword="true"/> if frames are important; otherwise, <see langword="false"/>.</returns>
         [Pure]
         public static bool AreFramesImportant(this BlockType blockType) =>
-            FramesImportantBlockTypes.Contains(blockType);
+            _framesImportantBlockTypes.Contains(blockType);
     }
 }

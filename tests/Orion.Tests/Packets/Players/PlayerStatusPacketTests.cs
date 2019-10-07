@@ -37,7 +37,7 @@ namespace Orion.Packets.Players {
             action.Should().Throw<ArgumentNullException>();
         }
 
-        private static readonly byte[] Bytes = {
+        public static readonly byte[] Bytes = {
             28, 0, 9, 15, 0, 0, 0, 2, 18, 76, 101, 103, 97, 99, 121, 73, 110, 116, 101, 114, 102, 97, 99, 101, 46, 52,
             52, 0
         };

@@ -28,7 +28,7 @@ namespace Orion.Packets.World.Tiles {
             packet.SetSimplePropertiesShouldMarkAsDirty();
         }
 
-        private static readonly byte[] Bytes = { 11, 0, 8, 255, 255, 255, 255, 255, 255, 255, 255 };
+        public static readonly byte[] Bytes = { 11, 0, 8, 255, 255, 255, 255, 255, 255, 255, 255 };
 
         [Fact]
         public void ReadFromStream() {

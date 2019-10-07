@@ -38,7 +38,7 @@ namespace Orion.Packets {
 
     // TODO: provide good comments for all packets.
     public abstract class Packet : IDirtiable {
-        private static readonly Func<Packet>?[] PacketConstructors = {
+        private static readonly Func<Packet>?[] _constructors = {
             /* 000 */ null,
             /* 001 */ () => new PlayerConnectPacket(),
             /* 002 */ () => new PlayerDisconnectPacket(),
@@ -196,7 +196,7 @@ namespace Orion.Packets {
                 reader.ReadUInt16();
 #endif
                 static Func<Packet>? GetPacketConstructor(byte packetTypeId) =>
-                    packetTypeId < PacketConstructors.Length ? PacketConstructors[packetTypeId] : null;
+                    packetTypeId < _constructors.Length ? _constructors[packetTypeId] : null;
 
                 var packetConstructor = GetPacketConstructor(reader.ReadByte()) ??
                     throw new PacketException("Packet type is invalid.");

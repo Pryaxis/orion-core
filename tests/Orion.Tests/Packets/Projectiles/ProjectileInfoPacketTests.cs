@@ -47,7 +47,7 @@ namespace Orion.Packets.Projectiles {
         }
 
 
-        private static readonly byte[] Bytes = {
+        public static readonly byte[] Bytes = {
             31, 0, 27, 0, 0, 128, 57, 131, 71, 0, 200, 212, 69, 254, 14, 40, 65, 147, 84, 121, 193, 205, 204, 128, 64,
             99, 0, 0, 89, 0, 0
         };

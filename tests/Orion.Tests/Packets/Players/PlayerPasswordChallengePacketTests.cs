@@ -21,7 +21,7 @@ using Xunit;
 
 namespace Orion.Packets.Players {
     public class PlayerPasswordChallengePacketTests {
-        private static readonly byte[] Bytes = { 3, 0, 37 };
+        public static readonly byte[] Bytes = { 3, 0, 37 };
 
         [Fact]
         public void ReadFromStream() {

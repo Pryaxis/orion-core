@@ -27,7 +27,7 @@ namespace Orion.Packets.Modules {
     /// </summary>
     [SuppressMessage("Naming", "CA1716:Identifiers should not match keywords", Justification = "Consumers are C#")]
     public abstract class Module : IDirtiable {
-        private static readonly Func<Module>?[] ModuleConstructors = {
+        private static readonly Func<Module>?[] _constructors = {
             /* 000 */ () => new LiquidsModule(),
             /* 001 */ () => new ChatModule()
         };
@@ -60,7 +60,7 @@ namespace Orion.Packets.Modules {
             }
 
             static Func<Module>? GetModuleConstructor(ushort moduleTypeId) =>
-                moduleTypeId < ModuleConstructors.Length ? ModuleConstructors[moduleTypeId] : null;
+                moduleTypeId < _constructors.Length ? _constructors[moduleTypeId] : null;
 
             var reader = new BinaryReader(stream, Encoding.UTF8, true);
             var moduleConstructor = GetModuleConstructor(reader.ReadUInt16()) ??

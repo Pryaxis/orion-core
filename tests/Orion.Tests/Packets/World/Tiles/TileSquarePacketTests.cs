@@ -51,7 +51,7 @@ namespace Orion.Packets.World.Tiles {
             action.Should().Throw<ArgumentNullException>();
         }
 
-        private static readonly byte[] Bytes = { 17, 0, 20, 1, 0, 153, 16, 171, 1, 1, 0, 3, 0, 72, 0, 0, 0 };
+        public static readonly byte[] Bytes = { 17, 0, 20, 1, 0, 153, 16, 171, 1, 1, 0, 3, 0, 72, 0, 0, 0 };
 
         [Fact]
         public void ReadFromStream() {

@@ -24,7 +24,7 @@ namespace Orion.Npcs.Extensions {
     /// Provides extensions for the <see cref="NpcType"/> enumeration.
     /// </summary>
     public static class NpcTypeExtensions {
-        private static readonly ISet<NpcType> CatchableNpcTypes = new HashSet<NpcType> {
+        private static readonly ISet<NpcType> _catchableNpcTypes = new HashSet<NpcType> {
             (NpcType)46,
             (NpcType)55,
             (NpcType)74,
@@ -73,6 +73,6 @@ namespace Orion.Npcs.Extensions {
         /// <see langword="true"/> if the NPC <paramref name="type"/> is catchable; otherwise, <see langword="false"/>.
         /// </returns>
         [Pure]
-        public static bool IsCatchable(this NpcType type) => CatchableNpcTypes.Contains(type);
+        public static bool IsCatchable(this NpcType type) => _catchableNpcTypes.Contains(type);
     }
 }

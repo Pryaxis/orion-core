@@ -29,7 +29,7 @@ namespace Orion.Packets.World.TileEntities {
             packet.SetSimplePropertiesShouldMarkAsDirty();
         }
 
-        private static readonly byte[] Bytes = { 11, 0, 32, 0, 0, 0, 1, 0, 0, 17, 6 };
+        public static readonly byte[] Bytes = { 11, 0, 32, 0, 0, 0, 1, 0, 0, 17, 6 };
 
         [Fact]
         public void ReadFromStream() {

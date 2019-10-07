@@ -46,7 +46,7 @@ namespace Orion.Packets.Npcs {
             packet.NpcAiValues.Count.Should().Be(TerrariaNpc.maxAI);
         }
 
-        private static readonly byte[] Bytes = {
+        public static readonly byte[] Bytes = {
             26, 0, 23, 1, 0, 38, 209, 132, 71, 0, 0, 213, 69, 0, 0, 0, 0, 0, 0, 0, 0, 255, 0, 130, 22, 0
         };
 

@@ -19,6 +19,7 @@ using System;
 using Microsoft.Xna.Framework;
 using Orion.Entities;
 using Orion.Packets;
+using Orion.Packets.Modules;
 using Orion.Packets.Players;
 using Orion.Packets.World;
 using Orion.Utils;
@@ -79,6 +80,31 @@ namespace Orion.Players {
                 ChatColor = color,
                 ChatLineWidth = -1,
                 ChatText = message
+            });
+        }
+
+        /// <summary>
+        /// Sends a <paramref name="message"/> to the player from <paramref name="fromPlayer"/> with the given
+        /// <paramref name="color"/>. This results in overhead chat.
+        /// </summary>
+        /// <param name="fromPlayer">The player to receive the <paramref name="message"/> from.</param>
+        /// <param name="message">The message.</param>
+        /// <param name="color">The color.</param>
+        void SendMessageFrom(IPlayer fromPlayer, string message, Color color) {
+            if (fromPlayer is null) {
+                throw new ArgumentNullException(nameof(fromPlayer));
+            }
+
+            if (message is null) {
+                throw new ArgumentNullException(nameof(message));
+            }
+
+            SendPacket(new ModulePacket {
+                Module = new ChatModule {
+                    ServerChattingPlayerIndex = (byte)fromPlayer.Index,
+                    ServerChatText = message,
+                    ServerChatColor = color
+                }
             });
         }
     }

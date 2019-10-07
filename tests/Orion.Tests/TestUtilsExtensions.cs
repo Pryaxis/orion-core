@@ -26,7 +26,7 @@ using Orion.Utils;
 
 namespace Orion {
     public static class TestUtilsExtensions {
-        private static readonly IDictionary<Type, object> DefaultValues = new Dictionary<Type, object> {
+        private static readonly IDictionary<Type, object> _defaultValues = new Dictionary<Type, object> {
             [typeof(bool)] = true,
             [typeof(sbyte)] = (sbyte)-100,
             [typeof(byte)] = (byte)100,
@@ -53,7 +53,7 @@ namespace Orion {
                 }
 
                 var propertyType = property.PropertyType;
-                if (!DefaultValues.TryGetValue(propertyType, out var value)) {
+                if (!_defaultValues.TryGetValue(propertyType, out var value)) {
                     if (propertyType.GetConstructor(Type.EmptyTypes) is null && !propertyType.IsValueType) {
                         continue;
                     }
@@ -82,7 +82,7 @@ namespace Orion {
                 }
 
                 var propertyType = property.PropertyType;
-                if (!DefaultValues.TryGetValue(propertyType, out var value)) {
+                if (!_defaultValues.TryGetValue(propertyType, out var value)) {
                     if (propertyType.GetConstructor(Type.EmptyTypes) is null && !propertyType.IsValueType) {
                         continue;
                     }

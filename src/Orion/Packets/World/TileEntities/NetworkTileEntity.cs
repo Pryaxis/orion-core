@@ -27,7 +27,7 @@ namespace Orion.Packets.World.TileEntities {
     /// Represents a tile entity that is transmitted over the network.
     /// </summary>
     public abstract class NetworkTileEntity : IDirtiable {
-        private static readonly Dictionary<TileEntityType, Func<NetworkTileEntity>> Constructors =
+        private static readonly Dictionary<TileEntityType, Func<NetworkTileEntity>> _constructors =
             new Dictionary<TileEntityType, Func<NetworkTileEntity>> {
                 [TileEntityType.TargetDummy] = () => new NetworkTargetDummy(),
                 [TileEntityType.ItemFrame] = () => new NetworkItemFrame(),
@@ -81,7 +81,7 @@ namespace Orion.Packets.World.TileEntities {
                                                          TileEntityType? typeHint = null) {
             // The type hint allows us to reuse code for NetworkChests and NetworkSigns.
             var tileEntityType = typeHint ?? (TileEntityType)reader.ReadByte();
-            if (!Constructors.TryGetValue(tileEntityType, out var tileEntityConstructor)) {
+            if (!_constructors.TryGetValue(tileEntityType, out var tileEntityConstructor)) {
                 throw new PacketException("Tile entity type is invalid.");
             }
 
