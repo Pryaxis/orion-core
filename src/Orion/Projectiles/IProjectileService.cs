@@ -27,7 +27,8 @@ namespace Orion.Projectiles {
     /// </summary>
     public interface IProjectileService : IService {
         /// <summary>
-        /// Gets the projectiles in the world.
+        /// Gets the projectiles in the world. All projectiles are returned, regardless of whether or not they are
+        /// actually active.
         /// </summary>
         IReadOnlyArray<IProjectile> Projectiles { get; }
 

@@ -104,6 +104,7 @@ namespace Orion {
             Hooks.Game.PreInitialize -= PreInitializeHandler;
             Hooks.Game.Started -= StartedHandler;
             Hooks.Game.PreUpdate -= PreUpdateHandler;
+            Hooks.Command.Process -= ProcessHandler;
         }
 
         /// <summary>
@@ -123,9 +124,7 @@ namespace Orion {
             var assembly = Assembly.Load(File.ReadAllBytes(assemblyPath));
             _pluginAssemblies.Add(assembly);
 
-            foreach (var pluginType in assembly
-                    .GetExportedTypes()
-                    .Where(s => s.IsSubclassOf(typeof(OrionPlugin)))) {
+            foreach (var pluginType in assembly.ExportedTypes.Where(s => s.IsSubclassOf(typeof(OrionPlugin)))) {
                 // Bind all plugin types to themselves, allowing plugins to properly depend on other plugins without
                 // reliance on static state.
                 _pluginTypesToLoad.Add(pluginType);
