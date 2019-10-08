@@ -20,7 +20,7 @@ using System;
 namespace Orion {
     /// <summary>
     /// Represents a service. Services provide concrete units of functionality to clients and are injected using a
-    /// dependency injection framework. They may be made instanced using an <see cref="InstancedServiceAttribute"/>.
+    /// dependency injection framework.
     /// </summary>
     public interface IService : IDisposable {
         /// <summary>
