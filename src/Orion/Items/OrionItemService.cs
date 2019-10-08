@@ -37,8 +37,7 @@ namespace Orion.Items {
         public OrionItemService() {
             // Ignore the last item since it is used as a failure slot.
             Items = new WrappedReadOnlyArray<OrionItem, TerrariaItem>(
-                Main.item.AsMemory(..^1),
-                (itemIndex, terrariaItem) => new OrionItem(itemIndex, terrariaItem));
+                Main.item.AsMemory(..^1), (itemIndex, terrariaItem) => new OrionItem(itemIndex, terrariaItem));
 
             Hooks.Item.PreSetDefaultsById = PreSetDefaultsByIdHandler;
             Hooks.Item.PreUpdate = PreUpdateHandler;

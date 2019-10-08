@@ -76,8 +76,7 @@ namespace Orion.World.TileEntities {
                 Items = EmptyItemArray.Instance;
             } else {
                 Items = new WrappedReadOnlyArray<OrionItem, TerrariaItem>(
-                    terrariaChest.item,
-                    (_, terrariaItem) => new OrionItem(terrariaItem));
+                    terrariaChest.item, (_, terrariaItem) => new OrionItem(terrariaItem));
             }
 
             Wrapped = terrariaChest;

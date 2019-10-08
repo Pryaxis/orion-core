@@ -40,11 +40,9 @@ namespace Orion.World.TileEntities {
             Debug.Assert(Main.sign != null, "Terraria signs should not be null");
 
             Chests = new WrappedReadOnlyArray<OrionChest, TerrariaChest?>(
-                Main.chest,
-                (chestIndex, terrariaChest) => new OrionChest(chestIndex, terrariaChest));
+                Main.chest, (chestIndex, terrariaChest) => new OrionChest(chestIndex, terrariaChest));
             Signs = new WrappedReadOnlyArray<OrionSign, TerrariaSign?>(
-                Main.sign,
-                (signIndex, terrariaSign) => new OrionSign(signIndex, terrariaSign));
+                Main.sign, (signIndex, terrariaSign) => new OrionSign(signIndex, terrariaSign));
         }
 
         public ITileEntity? AddTileEntity(TileEntityType tileEntityType, int x, int y) {

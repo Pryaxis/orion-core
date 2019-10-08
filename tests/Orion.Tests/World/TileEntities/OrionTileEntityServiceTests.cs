@@ -35,8 +35,6 @@ namespace Orion.World.TileEntities {
         private readonly ITileEntityService _tileEntityService;
 
         public OrionTileEntityServiceTests() {
-            _tileEntityService = new OrionTileEntityService();
-
             for (var i = 0; i < Main.chest.Length; ++i) {
                 Main.chest[i] = null;
             }
@@ -46,6 +44,8 @@ namespace Orion.World.TileEntities {
             }
 
             TerrariaTileEntity.Clear();
+
+            _tileEntityService = new OrionTileEntityService();
         }
 
         public void Dispose() => _tileEntityService.Dispose();

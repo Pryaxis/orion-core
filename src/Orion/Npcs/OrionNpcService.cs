@@ -47,8 +47,7 @@ namespace Orion.Npcs {
         public OrionNpcService() {
             // Ignore the last NPC since it is used as a failure slot.
             Npcs = new WrappedReadOnlyArray<OrionNpc, TerrariaNpc>(
-                Main.npc.AsMemory(..^1),
-                (npcIndex, terrariaNpc) => new OrionNpc(npcIndex, terrariaNpc));
+                Main.npc.AsMemory(..^1), (npcIndex, terrariaNpc) => new OrionNpc(npcIndex, terrariaNpc));
 
             Hooks.Npc.PreSetDefaultsById = PreSetDefaultsByIdHandler;
             Hooks.Npc.Spawn = SpawnHandler;
