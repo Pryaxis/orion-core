@@ -51,32 +51,47 @@ namespace Orion.Players {
         /// <param name="packet">The packet.</param>
         /// <exception cref="ArgumentNullException"><paramref name="packet"/> is <see langword="null"/>.</exception>
         void SendPacket(Packet packet);
+    }
 
+    /// <summary>
+    /// Provides extensions for the <see cref="IPlayer"/> interface.
+    /// </summary>
+    public static class PlayerExtensions {
         /// <summary>
-        /// Disconnects the player with a <paramref name="reason"/>.
+        /// Disconnects the <paramref name="player"/> with a <paramref name="reason"/>.
         /// </summary>
+        /// <param name="player">The player.</param>
         /// <param name="reason">The reason.</param>
         /// <exception cref="ArgumentNullException"><paramref name="reason"/> is <see langword="null"/>.</exception>
-        void Disconnect(string reason) {
+        public static void Disconnect(this IPlayer player, string reason) {
+            if (player is null) {
+                throw new ArgumentNullException(nameof(player));
+            }
+
             if (reason is null) {
                 throw new ArgumentNullException(nameof(reason));
             }
 
-            SendPacket(new PlayerDisconnectPacket { PlayerDisconnectReason = reason });
+            player.SendPacket(new PlayerDisconnectPacket { PlayerDisconnectReason = reason });
         }
 
         /// <summary>
-        /// Sends a <paramref name="message"/> to the player with the given <paramref name="color"/>.
+        /// Sends a <paramref name="message"/> to the <paramref name="player"/> with the given <paramref name="color"/>.
         /// </summary>
+        /// <param name="player">The player.</param>
         /// <param name="message">The message.</param>
         /// <param name="color">The color.</param>
         /// <exception cref="ArgumentNullException"><paramref name="message"/> is <see langword="null"/>.</exception>
-        void SendMessage(string message, Color color) {
+        public static void SendMessage(this IPlayer player, string message, Color color) {
+            if (player is null) {
+                throw new ArgumentNullException(nameof(player));
+            }
+
             if (message is null) {
                 throw new ArgumentNullException(nameof(message));
             }
 
-            SendPacket(new ChatPacket {
+            player.SendPacket(new ChatPacket {
                 ChatColor = color,
                 ChatLineWidth = -1,
                 ChatText = message
@@ -84,13 +99,18 @@ namespace Orion.Players {
         }
 
         /// <summary>
-        /// Sends a <paramref name="message"/> to the player from <paramref name="fromPlayer"/> with the given
-        /// <paramref name="color"/>. This results in overhead chat.
+        /// Sends a <paramref name="message"/> to the <paramref name="player"/> from <paramref name="fromPlayer"/> with
+        /// the given <paramref name="color"/>. This results in overhead chat.
         /// </summary>
+        /// <param name="player">The player.</param>
         /// <param name="fromPlayer">The player to receive the <paramref name="message"/> from.</param>
         /// <param name="message">The message.</param>
         /// <param name="color">The color.</param>
-        void SendMessageFrom(IPlayer fromPlayer, string message, Color color) {
+        public static void SendMessageFrom(this IPlayer player, IPlayer fromPlayer, string message, Color color) {
+            if (player is null) {
+                throw new ArgumentNullException(nameof(player));
+            }
+
             if (fromPlayer is null) {
                 throw new ArgumentNullException(nameof(fromPlayer));
             }
@@ -99,7 +119,7 @@ namespace Orion.Players {
                 throw new ArgumentNullException(nameof(message));
             }
 
-            SendPacket(new ModulePacket {
+            player.SendPacket(new ModulePacket {
                 Module = new ChatModule {
                     ServerChattingPlayerIndex = (byte)fromPlayer.Index,
                     ServerChatText = message,
