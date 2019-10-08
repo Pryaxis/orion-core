@@ -47,7 +47,7 @@ namespace Orion.Packets.Extensions {
 
         [Theory]
         [MemberData(nameof(ColorData))]
-        public void WriteColor_ReadColor_IsCorrect(Color color) {
+        public void WriteColor_ReadColor(Color color) {
             using var stream = new MemoryStream();
             using var writer = new BinaryWriter(stream, Encoding.UTF8);
             using var reader = new BinaryReader(stream, Encoding.UTF8);
@@ -59,7 +59,7 @@ namespace Orion.Packets.Extensions {
 
         [Theory]
         [MemberData(nameof(NetworkTextData))]
-        public void WriteNetworkText_ReadNetworkText_IsCorrect(NetworkText text) {
+        public void WriteNetworkText_ReadNetworkText(NetworkText text) {
             using var stream = new MemoryStream();
             using var writer = new BinaryWriter(stream, Encoding.UTF8);
             using var reader = new BinaryReader(stream, Encoding.UTF8);
@@ -71,7 +71,7 @@ namespace Orion.Packets.Extensions {
 
         [Theory]
         [MemberData(nameof(PlayerDeathReasonData))]
-        public void WritePlayerDeathReason_ReadPlayerDeathReason_IsCorrect(
+        public void WritePlayerDeathReason_ReadPlayerDeathReason(
             Terraria.DataStructures.PlayerDeathReason playerDeathReason) {
             using var stream = new MemoryStream();
             using var writer = new BinaryWriter(stream, Encoding.UTF8);
@@ -84,7 +84,7 @@ namespace Orion.Packets.Extensions {
 
         [Theory]
         [MemberData(nameof(Vector2Data))]
-        public void WriteVector2_ReadVector2_IsCorrect(Vector2 vector) {
+        public void WriteVector2_ReadVector2(Vector2 vector) {
             using var stream = new MemoryStream();
             using var writer = new BinaryWriter(stream, Encoding.UTF8);
             using var reader = new BinaryReader(stream, Encoding.UTF8);

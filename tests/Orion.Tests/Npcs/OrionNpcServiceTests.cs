@@ -92,7 +92,7 @@ namespace Orion.Npcs {
         [Theory]
         [InlineData(NpcType.BlueSlime)]
         [InlineData(NpcType.GreenSlime)]
-        public void NpcSetDefaults_IsCorrect(NpcType npcType) {
+        public void NpcSetDefaults(NpcType npcType) {
             var isRun = false;
             _npcService.NpcSetDefaults += (sender, args) => {
                 isRun = true;
@@ -108,7 +108,7 @@ namespace Orion.Npcs {
         [Theory]
         [InlineData(NpcType.BlueSlime, NpcType.GreenSlime)]
         [InlineData(NpcType.BlueSlime, NpcType.None)]
-        public void NpcSetDefaults_ModifyNpcType_IsCorrect(NpcType oldType, NpcType newType) {
+        public void NpcSetDefaults_ModifyNpcType(NpcType oldType, NpcType newType) {
             _npcService.NpcSetDefaults += (sender, args) => {
                 args.NpcType = newType;
             };
@@ -170,7 +170,7 @@ namespace Orion.Npcs {
         [Theory]
         [InlineData(NpcType.BlueSlime)]
         [InlineData(NpcType.GreenSlime)]
-        public void NpcTransform_IsCorrect(NpcType npcType) {
+        public void NpcTransform(NpcType npcType) {
             var isRun = false;
             _npcService.NpcTransform += (sender, args) => {
                 isRun = true;
@@ -186,7 +186,7 @@ namespace Orion.Npcs {
         [Theory]
         [InlineData(NpcType.BlueSlime, NpcType.GreenSlime)]
         [InlineData(NpcType.BlueSlime, NpcType.None)]
-        public void NpcTransform_ModifyNpcNewType_IsCorrect(NpcType oldType, NpcType newType) {
+        public void NpcTransform_ModifyNpcNewType(NpcType oldType, NpcType newType) {
             _npcService.NpcTransform += (sender, args) => {
                 args.NpcNewType = newType;
             };

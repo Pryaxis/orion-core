@@ -640,7 +640,7 @@ namespace Orion.World {
         [InlineData(Slope.TopRight, true)]
         [InlineData(Slope.BottomLeft, false)]
         [InlineData(Slope.BottomRight, false)]
-        public void Maintile_topSlope_IsCorrect(Slope slope, bool value) {
+        public void Maintile_topSlope(Slope slope, bool value) {
             _worldService[0, 0] = new Tile { Slope = slope };
 
             Main.tile[0, 0].topSlope().Should().Be(value);
@@ -652,7 +652,7 @@ namespace Orion.World {
         [InlineData(Slope.TopRight, false)]
         [InlineData(Slope.BottomLeft, true)]
         [InlineData(Slope.BottomRight, true)]
-        public void Maintile_bottomSlope_IsCorrect(Slope slope, bool value) {
+        public void Maintile_bottomSlope(Slope slope, bool value) {
             _worldService[0, 0] = new Tile { Slope = slope };
 
             Main.tile[0, 0].bottomSlope().Should().Be(value);
@@ -664,7 +664,7 @@ namespace Orion.World {
         [InlineData(Slope.TopRight, false)]
         [InlineData(Slope.BottomLeft, true)]
         [InlineData(Slope.BottomRight, false)]
-        public void Maintile_leftSlope_IsCorrect(Slope slope, bool value) {
+        public void Maintile_leftSlope(Slope slope, bool value) {
             _worldService[0, 0] = new Tile { Slope = slope };
 
             Main.tile[0, 0].leftSlope().Should().Be(value);
@@ -676,7 +676,7 @@ namespace Orion.World {
         [InlineData(Slope.TopRight, true)]
         [InlineData(Slope.BottomLeft, false)]
         [InlineData(Slope.BottomRight, true)]
-        public void Maintile_rightSlope_IsCorrect(Slope slope, bool value) {
+        public void Maintile_rightSlope(Slope slope, bool value) {
             _worldService[0, 0] = new Tile { Slope = slope };
 
             Main.tile[0, 0].rightSlope().Should().Be(value);

@@ -90,7 +90,7 @@ namespace Orion.Projectiles {
         [Theory]
         [InlineData(ProjectileType.CrystalBullet, ProjectileType.WoodenArrow)]
         [InlineData(ProjectileType.CrystalBullet, ProjectileType.None)]
-        public void ProjectileSetDefaults_ModifyProjectileType_IsCorrect(
+        public void ProjectileSetDefaults_ModifyProjectileType(
                 ProjectileType oldType, ProjectileType newType) {
             _projectileService.ProjectileSetDefaults += (sender, args) => {
                 args.ProjectileType = newType;

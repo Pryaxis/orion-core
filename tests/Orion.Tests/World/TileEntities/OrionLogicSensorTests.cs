@@ -47,7 +47,7 @@ namespace Orion.World.TileEntities {
         [Theory]
         [InlineData(true)]
         [InlineData(false)]
-        public void IsActivated_Get_IsCorrect(bool isActivated) {
+        public void IsActivated_Get(bool isActivated) {
             var terrariaLogicSensor = new TerrariaLogicSensor { On = isActivated };
             ILogicSensor logicSensor = new OrionLogicSensor(terrariaLogicSensor);
 
@@ -57,7 +57,7 @@ namespace Orion.World.TileEntities {
         [Theory]
         [InlineData(true)]
         [InlineData(false)]
-        public void IsActivated_Set_IsCorrect(bool isActivated) {
+        public void IsActivated_Set(bool isActivated) {
             var terrariaLogicSensor = new TerrariaLogicSensor();
             ILogicSensor logicSensor = new OrionLogicSensor(terrariaLogicSensor);
 

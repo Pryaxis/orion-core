@@ -35,7 +35,7 @@ namespace Orion.Packets.World.Tiles {
         [Theory]
         [InlineData(true)]
         [InlineData(false)]
-        public void ReadFromReader_IsCorrect(bool shouldSwapXY) {
+        public void ReadFromReader(bool shouldSwapXY) {
             using var stream = new MemoryStream(Bytes);
             using var reader = new BinaryReader(stream, Encoding.UTF8);
             var liquid = NetworkLiquid.ReadFromReader(reader, shouldSwapXY);

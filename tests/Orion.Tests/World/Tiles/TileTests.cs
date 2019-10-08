@@ -33,7 +33,7 @@ namespace Orion.World.Tiles {
         [Theory]
         [InlineData(true)]
         [InlineData(false)]
-        public void GetIsBlockActive_Set_IsCorrect(bool isBlockActive) {
+        public void GetIsBlockActive_Set(bool isBlockActive) {
             var tile = new Tile();
 
             tile.IsBlockActive = isBlockActive;
@@ -43,7 +43,7 @@ namespace Orion.World.Tiles {
         [Theory]
         [InlineData(true)]
         [InlineData(false)]
-        public void GetIsBlockActuated_Set_IsCorrect(bool isBlockActuated) {
+        public void GetIsBlockActuated_Set(bool isBlockActuated) {
             var tile = new Tile();
 
             tile.IsBlockActuated = isBlockActuated;
@@ -53,7 +53,7 @@ namespace Orion.World.Tiles {
         [Theory]
         [InlineData(true)]
         [InlineData(false)]
-        public void GetHasRedWire_Set_IsCorrect(bool hasRedWire) {
+        public void GetHasRedWire_Set(bool hasRedWire) {
             var tile = new Tile();
 
             tile.HasRedWire = hasRedWire;
@@ -63,7 +63,7 @@ namespace Orion.World.Tiles {
         [Theory]
         [InlineData(true)]
         [InlineData(false)]
-        public void GetHasBlueWire_Set_IsCorrect(bool hasBlueWire) {
+        public void GetHasBlueWire_Set(bool hasBlueWire) {
             var tile = new Tile();
 
             tile.HasBlueWire = hasBlueWire;
@@ -73,7 +73,7 @@ namespace Orion.World.Tiles {
         [Theory]
         [InlineData(true)]
         [InlineData(false)]
-        public void GetHasGreenWire_Set_IsCorrect(bool hasGreenWire) {
+        public void GetHasGreenWire_Set(bool hasGreenWire) {
             var tile = new Tile();
 
             tile.HasGreenWire = hasGreenWire;
@@ -83,7 +83,7 @@ namespace Orion.World.Tiles {
         [Theory]
         [InlineData(true)]
         [InlineData(false)]
-        public void GetIsBlockHalved_Set_IsCorrect(bool isBlockHalved) {
+        public void GetIsBlockHalved_Set(bool isBlockHalved) {
             var tile = new Tile();
 
             tile.IsBlockHalved = isBlockHalved;
@@ -93,7 +93,7 @@ namespace Orion.World.Tiles {
         [Theory]
         [InlineData(true)]
         [InlineData(false)]
-        public void GetHasActuator_Set_IsCorrect(bool hasActuator) {
+        public void GetHasActuator_Set(bool hasActuator) {
             var tile = new Tile();
 
             tile.HasActuator = hasActuator;
@@ -119,7 +119,7 @@ namespace Orion.World.Tiles {
         [Theory]
         [InlineData(true)]
         [InlineData(false)]
-        public void GetIsLava_Set_IsCorrect(bool isLava) {
+        public void GetIsLava_Set(bool isLava) {
             var tile = new Tile();
 
             tile.IsLava = isLava;
@@ -129,7 +129,7 @@ namespace Orion.World.Tiles {
         [Theory]
         [InlineData(true)]
         [InlineData(false)]
-        public void GetIsHoney_Set_IsCorrect(bool isHoney) {
+        public void GetIsHoney_Set(bool isHoney) {
             var tile = new Tile();
 
             tile.IsHoney = isHoney;
@@ -139,7 +139,7 @@ namespace Orion.World.Tiles {
         [Theory]
         [InlineData(true)]
         [InlineData(false)]
-        public void GetHasYellowWire_Set_IsCorrect(bool hasYellowWire) {
+        public void GetHasYellowWire_Set(bool hasYellowWire) {
             var tile = new Tile();
 
             tile.HasYellowWire = hasYellowWire;
@@ -157,7 +157,7 @@ namespace Orion.World.Tiles {
         [Theory]
         [InlineData(true)]
         [InlineData(false)]
-        public void GetIsCheckingLiquid_Set_IsCorrect(bool isCheckingLiquid) {
+        public void GetIsCheckingLiquid_Set(bool isCheckingLiquid) {
             var tile = new Tile();
 
             tile.IsCheckingLiquid = isCheckingLiquid;
@@ -167,7 +167,7 @@ namespace Orion.World.Tiles {
         [Theory]
         [InlineData(true)]
         [InlineData(false)]
-        public void GetShouldSkipLiquid_Set_IsCorrect(bool shouldSkipLiquid) {
+        public void GetShouldSkipLiquid_Set(bool shouldSkipLiquid) {
             var tile = new Tile();
 
             tile.ShouldSkipLiquid = shouldSkipLiquid;

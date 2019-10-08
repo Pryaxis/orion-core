@@ -35,7 +35,7 @@ namespace Orion.Entities {
         [Theory]
         [InlineData(true)]
         [InlineData(false)]
-        public void IsActive_Get_IsCorrect(bool isActive) {
+        public void IsActive_Get(bool isActive) {
             var terrariaEntity = new TestTerrariaEntity { active = isActive };
             IEntity entity = new TestOrionEntity(terrariaEntity);
 
@@ -45,7 +45,7 @@ namespace Orion.Entities {
         [Theory]
         [InlineData(true)]
         [InlineData(false)]
-        public void IsActive_Set_IsCorrect(bool isActive) {
+        public void IsActive_Set(bool isActive) {
             var terrariaEntity = new TestTerrariaEntity();
             IEntity entity = new TestOrionEntity(terrariaEntity);
 

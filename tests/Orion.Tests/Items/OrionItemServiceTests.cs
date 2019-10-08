@@ -91,7 +91,7 @@ namespace Orion.Items {
         [Theory]
         [InlineData(ItemType.CopperPickaxe, ItemType.IronPickaxe)]
         [InlineData(ItemType.StoneBlock, ItemType.None)]
-        public void ItemSetDefaults_ModifyType_IsCorrect(ItemType oldType, ItemType newType) {
+        public void ItemSetDefaults_ModifyType(ItemType oldType, ItemType newType) {
             _itemService.ItemSetDefaults += (sender, args) => {
                 args.ItemType = newType;
             };
@@ -133,7 +133,7 @@ namespace Orion.Items {
 
         [Theory]
         [MemberData(nameof(SpawnItemData))]
-        public void SpawnItem_IsCorrect(ItemType type, int stackSize, ItemPrefix prefix) {
+        public void SpawnItem(ItemType type, int stackSize, ItemPrefix prefix) {
             var item = _itemService.SpawnItem(type, Vector2.Zero, stackSize, prefix);
 
             item.Should().NotBeNull();
@@ -144,7 +144,7 @@ namespace Orion.Items {
 
         [Theory]
         [MemberData(nameof(SpawnItemData))]
-        public void SpawnItem_CachedItem_IsCorrect(ItemType type, int stackSize, ItemPrefix prefix) {
+        public void SpawnItem_CachedItem(ItemType type, int stackSize, ItemPrefix prefix) {
             TerrariaItem.itemCaches[(int)type] = 0;
 
             var item = _itemService.SpawnItem(type, Vector2.Zero, stackSize, prefix);
