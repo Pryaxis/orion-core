@@ -21,7 +21,6 @@ using System.Diagnostics;
 using System.IO;
 using System.Threading;
 using Orion.Events;
-using Orion.Events.Extensions;
 using Orion.Events.Packets;
 using Orion.Events.Players;
 using Orion.Packets;

@@ -20,8 +20,8 @@ using FluentAssertions;
 using Moq;
 using Xunit;
 
-namespace Orion.Events.Extensions {
-    public class CancelableExtensionsTests {
+namespace Orion.Events {
+    public class CancelableTests {
         [Fact]
         public void IsCanceled_Yes_ReturnsTrue() {
             var mockCancelable = new Mock<ICancelable>();

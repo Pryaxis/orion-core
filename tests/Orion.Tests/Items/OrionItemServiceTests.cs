@@ -20,7 +20,7 @@ using System.Collections.Generic;
 using System.Linq;
 using FluentAssertions;
 using Microsoft.Xna.Framework;
-using Orion.Events.Extensions;
+using Orion.Events;
 using Xunit;
 using Main = Terraria.Main;
 using TerrariaItem = Terraria.Item;

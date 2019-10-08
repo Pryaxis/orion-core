@@ -23,7 +23,6 @@ using System.Reflection;
 using Microsoft.Xna.Framework;
 using Ninject;
 using Orion.Events;
-using Orion.Events.Extensions;
 using Orion.Events.Server;
 using Orion.Items;
 using Orion.Npcs;

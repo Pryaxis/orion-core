@@ -21,7 +21,6 @@ using System.Diagnostics.CodeAnalysis;
 using System.Threading;
 using Microsoft.Xna.Framework;
 using Orion.Events;
-using Orion.Events.Extensions;
 using Orion.Events.Npcs;
 using Orion.Items;
 using Orion.Utils;

@@ -20,7 +20,6 @@ using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using Microsoft.Xna.Framework;
 using Orion.Events;
-using Orion.Events.Extensions;
 using Orion.Events.Projectiles;
 using Orion.Utils;
 using OTAPI;

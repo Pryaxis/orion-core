@@ -19,7 +19,7 @@ using System;
 using System.Linq;
 using FluentAssertions;
 using Microsoft.Xna.Framework;
-using Orion.Events.Extensions;
+using Orion.Events;
 using Orion.Items;
 using Orion.Packets.Modules;
 using Orion.Packets.Players;
