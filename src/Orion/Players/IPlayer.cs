@@ -62,7 +62,9 @@ namespace Orion.Players {
         /// </summary>
         /// <param name="player">The player.</param>
         /// <param name="reason">The reason.</param>
-        /// <exception cref="ArgumentNullException"><paramref name="reason"/> is <see langword="null"/>.</exception>
+        /// <exception cref="ArgumentNullException">
+        /// <paramref name="player"/> or <paramref name="reason"/> are <see langword="null"/>.
+        /// </exception>
         public static void Disconnect(this IPlayer player, string reason) {
             if (player is null) {
                 throw new ArgumentNullException(nameof(player));
@@ -81,7 +83,9 @@ namespace Orion.Players {
         /// <param name="player">The player.</param>
         /// <param name="message">The message.</param>
         /// <param name="color">The color.</param>
-        /// <exception cref="ArgumentNullException"><paramref name="message"/> is <see langword="null"/>.</exception>
+        /// <exception cref="ArgumentNullException">
+        /// <paramref name="player"/> or <paramref name="message"/> are <see langword="null"/>.
+        /// </exception>
         public static void SendMessage(this IPlayer player, string message, Color color) {
             if (player is null) {
                 throw new ArgumentNullException(nameof(player));
@@ -106,6 +110,10 @@ namespace Orion.Players {
         /// <param name="fromPlayer">The player to receive the <paramref name="message"/> from.</param>
         /// <param name="message">The message.</param>
         /// <param name="color">The color.</param>
+        /// <exception cref="ArgumentNullException">
+        /// <paramref name="player"/>, <paramref name="fromPlayer"/>, or <paramref name="message"/> are
+        /// <see langword="null"/>.
+        /// </exception>
         public static void SendMessageFrom(this IPlayer player, IPlayer fromPlayer, string message, Color color) {
             if (player is null) {
                 throw new ArgumentNullException(nameof(player));

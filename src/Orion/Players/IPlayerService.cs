@@ -74,35 +74,56 @@ namespace Orion.Players {
         /// Gets or sets the event handlers that run when a player disconnects.
         /// </summary>
         EventHandlerCollection<PlayerDisconnectedEventArgs>? PlayerDisconnected { get; set; }
+    }
 
+    /// <summary>
+    /// Provides extensions for the <see cref="IPlayerService"/> interface.
+    /// </summary>
+    public static class PlayerServiceExtensions {
         /// <summary>
         /// Broadcasts a <paramref name="packet"/> to all players.
         /// </summary>
+        /// <param name="playerService">The player service.</param>
         /// <param name="packet">The packet.</param>
-        /// <exception cref="ArgumentNullException"><paramref name="packet"/> is <see langword="null"/>.</exception>
-        void BroadcastPacket(Packet packet) {
+        /// <exception cref="ArgumentNullException">
+        /// <paramref name="playerService"/> or <paramref name="packet"/> are <see langword="null"/>.
+        /// </exception>
+        public static void BroadcastPacket(this IPlayerService playerService, Packet packet) {
+            if (playerService is null) {
+                throw new ArgumentNullException(nameof(playerService));
+            }
+
             if (packet is null) {
                 throw new ArgumentNullException(nameof(packet));
             }
 
-            for (var i = 0; i < Players.Count; ++i) {
-                Players[i].SendPacket(packet);
+            var players = playerService.Players;
+            for (var i = 0; i < players.Count; ++i) {
+                players[i].SendPacket(packet);
             }
         }
 
         /// <summary>
         /// Broadcasts a <paramref name="message"/> to all players with the given <paramref name="color"/>.
         /// </summary>
+        /// <param name="playerService">The player service.</param>
         /// <param name="message">The message.</param>
         /// <param name="color">The color.</param>
-        /// <exception cref="ArgumentNullException"><paramref name="message"/> is <see langword="null"/>.</exception>
-        void BroadcastMessage(string message, Color color) {
+        /// <exception cref="ArgumentNullException">
+        /// <paramref name="playerService"/> or <paramref name="message"/> are <see langword="null"/>.
+        /// </exception>
+        public static void BroadcastMessage(this IPlayerService playerService, string message, Color color) {
+            if (playerService is null) {
+                throw new ArgumentNullException(nameof(playerService));
+            }
+
             if (message is null) {
                 throw new ArgumentNullException(nameof(message));
             }
-
-            for (var i = 0; i < Players.Count; ++i) {
-                Players[i].SendMessage(message, color);
+            
+            var players = playerService.Players;
+            for (var i = 0; i < players.Count; ++i) {
+                players[i].SendMessage(message, color);
             }
         }
     }
