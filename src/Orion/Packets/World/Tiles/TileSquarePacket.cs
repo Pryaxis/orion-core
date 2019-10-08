@@ -19,7 +19,6 @@ using System;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using Orion.World.Tiles;
-using Orion.World.Tiles.Extensions;
 
 namespace Orion.Packets.World.Tiles {
     /// <summary>

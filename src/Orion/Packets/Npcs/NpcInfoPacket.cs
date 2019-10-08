@@ -19,7 +19,6 @@ using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using Microsoft.Xna.Framework;
 using Orion.Npcs;
-using Orion.Npcs.Extensions;
 using Orion.Packets.Extensions;
 using Orion.Utils;
 using TerrariaNpc = Terraria.NPC;

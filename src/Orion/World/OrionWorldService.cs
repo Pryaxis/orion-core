@@ -24,7 +24,6 @@ using Microsoft.Xna.Framework;
 using Orion.Events;
 using Orion.Events.World;
 using Orion.World.Tiles;
-using Orion.World.Tiles.Extensions;
 using OTAPI;
 using OTAPI.Tile;
 using Main = Terraria.Main;

@@ -19,13 +19,13 @@ using FluentAssertions;
 using Xunit;
 using Main = Terraria.Main;
 
-namespace Orion.World.Tiles.Extensions {
+namespace Orion.Npcs {
     [Collection("TerrariaTestsCollection")]
-    public class BlockTypeExtensionsTests {
+    public class NpcTypeTests {
         [Fact]
-        public void AreFramesImportant() {
-            for (ushort i = 0; i < Terraria.ID.TileID.Count; ++i) {
-                ((BlockType)i).AreFramesImportant().Should().Be(Main.tileFrameImportant[i]);
+        public void IsCatchable() {
+            for (short i = 0; i < Terraria.ID.NPCID.Count; ++i) {
+                ((NpcType)i).IsCatchable().Should().Be(Main.npcCatchable[i]);
             }
         }
     }

@@ -25,7 +25,6 @@ using Orion.Packets.World.TileEntities;
 using Orion.Utils;
 using Orion.World.TileEntities;
 using Orion.World.Tiles;
-using Orion.World.Tiles.Extensions;
 
 namespace Orion.Packets.World.Tiles {
     /// <summary>

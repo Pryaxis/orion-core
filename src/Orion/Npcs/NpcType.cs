@@ -15,6 +15,10 @@
 // You should have received a copy of the GNU General Public License
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
+using System.Collections.Generic;
+using System.Diagnostics.Contracts;
+using Orion.Items;
+
 namespace Orion.Npcs {
     /// <summary>
     /// Specifies an NPC type.
@@ -662,5 +666,61 @@ namespace Orion.Npcs {
         EtherianLightningBug = 578,
         UnconsciousTavernkeep = 579
 #pragma warning restore 1591
+    }
+    
+    /// <summary>
+    /// Provides extensions for the <see cref="NpcType"/> enumeration.
+    /// </summary>
+    public static class NpcTypeExtensions {
+        private static readonly ISet<NpcType> _catchableNpcTypes = new HashSet<NpcType> {
+            (NpcType)46,
+            (NpcType)55,
+            (NpcType)74,
+            (NpcType)148,
+            (NpcType)149,
+            (NpcType)297,
+            (NpcType)298,
+            (NpcType)299,
+            (NpcType)300,
+            (NpcType)355,
+            (NpcType)356,
+            (NpcType)357,
+            (NpcType)358,
+            (NpcType)359,
+            (NpcType)360,
+            (NpcType)361,
+            (NpcType)362,
+            (NpcType)363,
+            (NpcType)364,
+            (NpcType)365,
+            (NpcType)366,
+            (NpcType)367,
+            (NpcType)374,
+            (NpcType)377,
+            (NpcType)442,
+            (NpcType)443,
+            (NpcType)444,
+            (NpcType)445,
+            (NpcType)446,
+            (NpcType)447,
+            (NpcType)448,
+            (NpcType)484,
+            (NpcType)485,
+            (NpcType)486,
+            (NpcType)487,
+            (NpcType)538,
+            (NpcType)539
+        };
+
+        /// <summary>
+        /// Returns a value indicating whether the NPC <paramref name="type"/> is catchable using a
+        /// <see cref="ItemType.BugNet"/> or <see cref="ItemType.GoldenBugNet"/>.
+        /// </summary>
+        /// <param name="type">The NPC type.</param>
+        /// <returns>
+        /// <see langword="true"/> if the NPC <paramref name="type"/> is catchable; otherwise, <see langword="false"/>.
+        /// </returns>
+        [Pure]
+        public static bool IsCatchable(this NpcType type) => _catchableNpcTypes.Contains(type);
     }
 }

@@ -28,7 +28,6 @@ namespace Orion.Packets.Extensions {
             return new Color(reader.ReadByte(), reader.ReadByte(), reader.ReadByte());
         }
 
-
         public static TerrariaNetworkText ReadNetworkText(this BinaryReader reader) {
             Debug.Assert(reader != null, "reader should not be null");
 

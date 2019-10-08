@@ -19,7 +19,6 @@ using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.Diagnostics.Contracts;
 using System.Runtime.InteropServices;
-using Orion.World.Tiles.Extensions;
 
 namespace Orion.World.Tiles {
     /// <summary>
@@ -87,9 +86,9 @@ namespace Orion.World.Tiles {
         [FieldOffset(6)] internal byte _bTileHeader;
         [FieldOffset(7)] internal byte _bTileHeader2;
 
-        [FieldOffset(2)] private short _wallAndLiquid;
+        [FieldOffset(2)] private readonly short _wallAndLiquid;
         [FieldOffset(4)] private int _tileHeader;
-        [FieldOffset(8)] private int _blockFrames;
+        [FieldOffset(8)] private readonly int _blockFrames;
 
         /// <summary>
         /// Gets or sets the tile's block color.
