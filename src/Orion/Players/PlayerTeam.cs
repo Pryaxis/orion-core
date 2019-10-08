@@ -15,6 +15,10 @@
 // You should have received a copy of the GNU General Public License
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
+using System.Collections;
+using System.Collections.Generic;
+using Microsoft.Xna.Framework;
+
 namespace Orion.Players {
     /// <summary>
     /// Specifies a player team.
@@ -49,5 +53,26 @@ namespace Orion.Players {
         /// Indicates the pink team.
         /// </summary>
         Pink = 5
+    }
+
+    /// <summary>
+    /// Provides extensions for the <see cref="PlayerTeam"/> enumeration.
+    /// </summary>
+    public static class PlayerTeamExtensions {
+        private static readonly IDictionary<PlayerTeam, Color> _colors = new Dictionary<PlayerTeam, Color> {
+            [PlayerTeam.Red] = new Color(0xda, 0x3b, 0x3b),
+            [PlayerTeam.Green] = new Color(0x3b, 0xda, 0x55),
+            [PlayerTeam.Blue] = new Color(0x3b, 0x95, 0xda),
+            [PlayerTeam.Yellow] = new Color(0xf2, 0xdd, 0x64),
+            [PlayerTeam.Pink] = new Color(0xe0, 0x64, 0xf2)
+        };
+
+        /// <summary>
+        /// Returns the color for the <paramref name="team"/>.
+        /// </summary>
+        /// <param name="team">The team.</param>
+        /// <returns>The color.</returns>
+        public static Color Color(this PlayerTeam team) =>
+            _colors.TryGetValue(team, out var color) ? color : Microsoft.Xna.Framework.Color.White;
     }
 }
