@@ -33,20 +33,20 @@ namespace Orion.Projectiles {
         IReadOnlyArray<IProjectile> Projectiles { get; }
 
         /// <summary>
-        /// Gets or sets the event handlers that occur when a projectile's defaults are being set, which is when
-        /// projectile data is initialized. This event can be canceled.
+        /// Gets the event handlers that occur when a projectile's defaults are being set, which is when projectile
+        /// data is initialized. This event can be canceled.
         /// </summary>
-        EventHandlerCollection<ProjectileSetDefaultsEventArgs>? ProjectileSetDefaults { get; set; }
+        EventHandlerCollection<ProjectileSetDefaultsEventArgs> ProjectileSetDefaults { get; }
 
         /// <summary>
-        /// Gets or sets the event handlers that occur when a projectile is updating. This event can be canceled.
+        /// Gets the event handlers that occur when a projectile is updating. This event can be canceled.
         /// </summary>
-        EventHandlerCollection<ProjectileUpdateEventArgs>? ProjectileUpdate { get; set; }
+        EventHandlerCollection<ProjectileUpdateEventArgs> ProjectileUpdate { get; }
 
         /// <summary>
-        /// Gets or sets the event handlers that occur when a projectile is being removed. This event can be canceled.
+        /// Gets the event handlers that occur when a projectile is being removed. This event can be canceled.
         /// </summary>
-        EventHandlerCollection<ProjectileRemoveEventArgs>? ProjectileRemove { get; set; }
+        EventHandlerCollection<ProjectileRemoveEventArgs> ProjectileRemove { get; }
 
         /// <summary>
         /// Spawns and returns a projectile with the given <paramref name="type"/> at the specified

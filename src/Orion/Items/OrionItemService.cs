@@ -31,8 +31,12 @@ namespace Orion.Items {
         [ExcludeFromCodeCoverage] public override string Author => "Pryaxis";
 
         public IReadOnlyArray<IItem> Items { get; }
-        public EventHandlerCollection<ItemSetDefaultsEventArgs>? ItemSetDefaults { get; set; }
-        public EventHandlerCollection<ItemUpdateEventArgs>? ItemUpdate { get; set; }
+
+        public EventHandlerCollection<ItemSetDefaultsEventArgs> ItemSetDefaults { get; }
+            = new EventHandlerCollection<ItemSetDefaultsEventArgs>();
+
+        public EventHandlerCollection<ItemUpdateEventArgs> ItemUpdate { get; }
+            = new EventHandlerCollection<ItemUpdateEventArgs>();
 
         public OrionItemService() {
             // Ignore the last item since it is used as a failure slot.

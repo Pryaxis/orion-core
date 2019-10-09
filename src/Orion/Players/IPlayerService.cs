@@ -35,45 +35,45 @@ namespace Orion.Players {
         IReadOnlyArray<IPlayer> Players { get; }
 
         /// <summary>
-        /// Gets or sets the event handlers that run when receiving a packet. This event can be canceled.
+        /// Gets the event handlers that run when receiving a packet. This event can be canceled.
         /// </summary>
-        EventHandlerCollection<PacketReceiveEventArgs>? PacketReceive { get; set; }
+        EventHandlerCollection<PacketReceiveEventArgs> PacketReceive { get; }
 
         /// <summary>
-        /// Gets or sets the event handlers that run when sending a packet. This event can be canceled.
+        /// Gets the event handlers that run when sending a packet. This event can be canceled.
         /// </summary>
-        EventHandlerCollection<PacketSendEventArgs>? PacketSend { get; set; }
+        EventHandlerCollection<PacketSendEventArgs> PacketSend { get; }
 
         /// <summary>
-        /// Gets or sets the event handlers that run when a player connects. This event can be canceled.
+        /// Gets the event handlers that run when a player connects. This event can be canceled.
         /// </summary>
-        EventHandlerCollection<PlayerConnectEventArgs>? PlayerConnect { get; set; }
+        EventHandlerCollection<PlayerConnectEventArgs> PlayerConnect { get; }
 
         /// <summary>
-        /// Gets or sets the event handlers that run when a player sends their player data: e.g., clothing colors, name,
+        /// Gets the event handlers that run when a player sends their player data: e.g., clothing colors, name,
         /// etc. This event can be canceled.
         /// </summary>
-        EventHandlerCollection<PlayerDataEventArgs>? PlayerData { get; set; }
+        EventHandlerCollection<PlayerDataEventArgs> PlayerData { get; }
 
         /// <summary>
-        /// Gets or sets the event handlers that run when a player sends an inventory slot. This event can be canceled.
+        /// Gets the event handlers that run when a player sends an inventory slot. This event can be canceled.
         /// </summary>
-        EventHandlerCollection<PlayerInventorySlotEventArgs>? PlayerInventorySlot { get; set; }
+        EventHandlerCollection<PlayerInventorySlotEventArgs> PlayerInventorySlot { get; }
 
         /// <summary>
-        /// Gets or sets the event handlers that run when a player joins. This event can be canceled.
+        /// Gets the event handlers that run when a player joins. This event can be canceled.
         /// </summary>
-        EventHandlerCollection<PlayerJoinEventArgs>? PlayerJoin { get; set; }
+        EventHandlerCollection<PlayerJoinEventArgs> PlayerJoin { get; }
 
         /// <summary>
-        /// Gets or sets the event handlers that run when a player chats. This event can be canceled.
+        /// Gets the event handlers that run when a player chats. This event can be canceled.
         /// </summary>
-        EventHandlerCollection<PlayerChatEventArgs>? PlayerChat { get; set; }
+        EventHandlerCollection<PlayerChatEventArgs> PlayerChat { get; }
 
         /// <summary>
-        /// Gets or sets the event handlers that run when a player disconnects.
+        /// Gets the event handlers that run when a player disconnects.
         /// </summary>
-        EventHandlerCollection<PlayerDisconnectedEventArgs>? PlayerDisconnected { get; set; }
+        EventHandlerCollection<PlayerDisconnectedEventArgs> PlayerDisconnected { get; }
     }
 
     /// <summary>

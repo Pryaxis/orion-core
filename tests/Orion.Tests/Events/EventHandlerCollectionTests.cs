@@ -23,17 +23,17 @@ namespace Orion.Events {
     public class EventHandlerCollectionTests {
         [Fact]
         public void Invoke_NullArgs_ThrowsArgumentNullException() {
-            EventHandlerCollection<TestEventArgs> collection = null;
-            collection += TestHandler;
+            var collection = new EventHandlerCollection<TestEventArgs>();
+            collection.RegisterHandler(TestHandler);
             Action action = () => collection.Invoke(this, null);
 
             action.Should().Throw<ArgumentNullException>();
         }
 
         [Fact]
-        public void Plus() {
-            EventHandlerCollection<TestEventArgs> collection = null;
-            collection += TestHandler;
+        public void RegisterHandler() {
+            var collection = new EventHandlerCollection<TestEventArgs>();
+            collection.RegisterHandler(TestHandler);
             var args = new TestEventArgs();
 
             collection.Invoke(this, args);
@@ -42,10 +42,10 @@ namespace Orion.Events {
         }
 
         [Fact]
-        public void Plus_Priority() {
-            EventHandlerCollection<TestEventArgs> collection = null;
-            collection += TestHandler2;
-            collection += TestHandler;
+        public void RegisterHandler_Priority() {
+            var collection = new EventHandlerCollection<TestEventArgs>();
+            collection.RegisterHandler(TestHandler2);
+            collection.RegisterHandler(TestHandler);
             var args = new TestEventArgs();
 
             collection.Invoke(this, args);
@@ -54,32 +54,32 @@ namespace Orion.Events {
         }
 
         [Fact]
-        public void Plus_NullHandler_ThrowsArgumentNullException() {
-            EventHandlerCollection<TestEventArgs> collection = null;
-            Func<EventHandlerCollection<TestEventArgs>> func = () => collection += null;
+        public void RegisterHandler_NullHandler_ThrowsArgumentNullException() {
+            var collection = new EventHandlerCollection<TestEventArgs>();
+            Action action = () => collection.RegisterHandler(null);
 
-            func.Should().Throw<ArgumentNullException>();
+            action.Should().Throw<ArgumentNullException>();
         }
 
         [Fact]
-        public void Minus() {
-            EventHandlerCollection<TestEventArgs> collection = null;
-            collection += TestHandler2;
-            collection += TestHandler;
-            collection -= TestHandler2;
+        public void UnregisterHandler() {
+            var collection = new EventHandlerCollection<TestEventArgs>();
+            collection.RegisterHandler(TestHandler2);
+            collection.RegisterHandler(TestHandler);
+            collection.UnregisterHandler(TestHandler2);
             var args = new TestEventArgs();
 
-            collection!.Invoke(this, args);
+            collection.Invoke(this, args);
 
             args.Value.Should().Be(100);
         }
 
         [Fact]
-        public void Minus_NullHandler_ThrowsArgumentNullException() {
-            EventHandlerCollection<TestEventArgs> collection = null;
-            Func<EventHandlerCollection<TestEventArgs>> func = () => collection -= null;
+        public void UnregisterHandler_NullHandler_ThrowsArgumentNullException() {
+            var collection = new EventHandlerCollection<TestEventArgs>();
+            Action action = () => collection.UnregisterHandler(null);
 
-            func.Should().Throw<ArgumentNullException>();
+            action.Should().Throw<ArgumentNullException>();
         }
 
         [EventHandler(EventPriority.Lowest)]

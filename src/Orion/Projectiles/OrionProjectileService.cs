@@ -31,9 +31,15 @@ namespace Orion.Projectiles {
         [ExcludeFromCodeCoverage] public override string Author => "Pryaxis";
 
         public IReadOnlyArray<IProjectile> Projectiles { get; }
-        public EventHandlerCollection<ProjectileSetDefaultsEventArgs>? ProjectileSetDefaults { get; set; }
-        public EventHandlerCollection<ProjectileUpdateEventArgs>? ProjectileUpdate { get; set; }
-        public EventHandlerCollection<ProjectileRemoveEventArgs>? ProjectileRemove { get; set; }
+
+        public EventHandlerCollection<ProjectileSetDefaultsEventArgs> ProjectileSetDefaults { get; }
+            = new EventHandlerCollection<ProjectileSetDefaultsEventArgs>();
+
+        public EventHandlerCollection<ProjectileUpdateEventArgs> ProjectileUpdate { get; }
+            = new EventHandlerCollection<ProjectileUpdateEventArgs>();
+
+        public EventHandlerCollection<ProjectileRemoveEventArgs> ProjectileRemove { get; }
+            = new EventHandlerCollection<ProjectileRemoveEventArgs>();
 
         public OrionProjectileService() {
             // Ignore the last projectile since it is used as a failure slot.

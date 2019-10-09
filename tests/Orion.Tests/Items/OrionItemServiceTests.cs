@@ -77,11 +77,11 @@ namespace Orion.Items {
         [Fact]
         public void ItemSetDefaults() {
             var isRun = false;
-            _itemService.ItemSetDefaults += (sender, args) => {
+            _itemService.ItemSetDefaults.RegisterHandler((sender, args) => {
                 isRun = true;
                 ((OrionItem)args.Item).Wrapped.Should().BeSameAs(Main.item[0]);
                 args.ItemType.Should().Be(ItemType.Sdmg);
-            };
+            });
 
             Main.item[0].SetDefaults((int)ItemType.Sdmg);
 
@@ -92,9 +92,9 @@ namespace Orion.Items {
         [InlineData(ItemType.CopperPickaxe, ItemType.IronPickaxe)]
         [InlineData(ItemType.StoneBlock, ItemType.None)]
         public void ItemSetDefaults_ModifyType(ItemType oldType, ItemType newType) {
-            _itemService.ItemSetDefaults += (sender, args) => {
+            _itemService.ItemSetDefaults.RegisterHandler((sender, args) => {
                 args.ItemType = newType;
-            };
+            });
 
             Main.item[0].SetDefaults((int)oldType);
 
@@ -103,9 +103,9 @@ namespace Orion.Items {
 
         [Fact]
         public void ItemSetDefaults_Canceled() {
-            _itemService.ItemSetDefaults += (sender, args) => {
+            _itemService.ItemSetDefaults.RegisterHandler((sender, args) => {
                 args.Cancel();
-            };
+            });
 
             Main.item[0].SetDefaults((int)ItemType.Sdmg);
 
@@ -115,10 +115,10 @@ namespace Orion.Items {
         [Fact]
         public void ItemUpdate() {
             var isRun = false;
-            _itemService.ItemUpdate += (sender, args) => {
+            _itemService.ItemUpdate.RegisterHandler((sender, args) => {
                 isRun = true;
                 ((OrionItem)args.Item).Wrapped.Should().BeSameAs(Main.item[0]);
-            };
+            });
 
             Main.item[0].UpdateItem(0);
 

@@ -49,22 +49,26 @@ namespace Orion {
         /// <summary>
         /// Gets or sets the events that occur when the server initializes.
         /// </summary>
-        public EventHandlerCollection<ServerInitializeEventArgs>? ServerInitialize { get; set; }
+        public EventHandlerCollection<ServerInitializeEventArgs> ServerInitialize { get; set; }
+            = new EventHandlerCollection<ServerInitializeEventArgs>();
 
         /// <summary>
         /// Gets or sets the events that occur when the server starts.
         /// </summary>
-        public EventHandlerCollection<ServerStartEventArgs>? ServerStart { get; set; }
+        public EventHandlerCollection<ServerStartEventArgs> ServerStart { get; set; }
+            = new EventHandlerCollection<ServerStartEventArgs>();
 
         /// <summary>
         /// Gets or sets the events that occur when the server updates.
         /// </summary>
-        public EventHandlerCollection<ServerUpdateEventArgs>? ServerUpdate { get; set; }
+        public EventHandlerCollection<ServerUpdateEventArgs> ServerUpdate { get; set; }
+            = new EventHandlerCollection<ServerUpdateEventArgs>();
 
         /// <summary>
         /// Gets or sets the events that occur when the server executes a command. This event can be canceled.
         /// </summary>
-        public EventHandlerCollection<ServerCommandEventArgs>? ServerCommand { get; set; }
+        public EventHandlerCollection<ServerCommandEventArgs> ServerCommand { get; set; }
+            = new EventHandlerCollection<ServerCommandEventArgs>();
 
         /// <summary>
         /// Initializes a new instance of the <see cref="OrionKernel"/> class.

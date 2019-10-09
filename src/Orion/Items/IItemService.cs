@@ -31,15 +31,15 @@ namespace Orion.Items {
         IReadOnlyArray<IItem> Items { get; }
 
         /// <summary>
-        /// Gets or sets the event handlers that occur when an item's defaults are being set, which is when item data is
+        /// Gets the event handlers that occur when an item's defaults are being set, which is when item data is
         /// initialized. This event can be canceled.
         /// </summary>
-        EventHandlerCollection<ItemSetDefaultsEventArgs>? ItemSetDefaults { get; set; }
+        EventHandlerCollection<ItemSetDefaultsEventArgs> ItemSetDefaults { get; }
 
         /// <summary>
-        /// Gets or sets the event handlers that occur when an item is updating. This event can be canceled.
+        /// Gets the event handlers that occur when an item is updating. This event can be canceled.
         /// </summary>
-        EventHandlerCollection<ItemUpdateEventArgs>? ItemUpdate { get; set; }
+        EventHandlerCollection<ItemUpdateEventArgs> ItemUpdate { get; }
 
         /// <summary>
         /// Spawns and returns an item with the given <paramref name="type"/> at the specified

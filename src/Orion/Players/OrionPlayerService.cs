@@ -39,14 +39,30 @@ namespace Orion.Players {
             new Dictionary<PacketType, Action<PacketReceiveEventArgs>>();
 
         public IReadOnlyArray<IPlayer> Players { get; }
-        public EventHandlerCollection<PacketReceiveEventArgs>? PacketReceive { get; set; }
-        public EventHandlerCollection<PacketSendEventArgs>? PacketSend { get; set; }
-        public EventHandlerCollection<PlayerConnectEventArgs>? PlayerConnect { get; set; }
-        public EventHandlerCollection<PlayerDataEventArgs>? PlayerData { get; set; }
-        public EventHandlerCollection<PlayerInventorySlotEventArgs>? PlayerInventorySlot { get; set; }
-        public EventHandlerCollection<PlayerJoinEventArgs>? PlayerJoin { get; set; }
-        public EventHandlerCollection<PlayerChatEventArgs>? PlayerChat { get; set; }
-        public EventHandlerCollection<PlayerDisconnectedEventArgs>? PlayerDisconnected { get; set; }
+
+        public EventHandlerCollection<PacketReceiveEventArgs> PacketReceive { get; }
+            = new EventHandlerCollection<PacketReceiveEventArgs>();
+
+        public EventHandlerCollection<PacketSendEventArgs> PacketSend { get; }
+            = new EventHandlerCollection<PacketSendEventArgs>();
+
+        public EventHandlerCollection<PlayerConnectEventArgs> PlayerConnect { get; }
+            = new EventHandlerCollection<PlayerConnectEventArgs>();
+
+        public EventHandlerCollection<PlayerDataEventArgs> PlayerData { get; }
+            = new EventHandlerCollection<PlayerDataEventArgs>();
+
+        public EventHandlerCollection<PlayerInventorySlotEventArgs> PlayerInventorySlot { get; }
+            = new EventHandlerCollection<PlayerInventorySlotEventArgs>();
+
+        public EventHandlerCollection<PlayerJoinEventArgs> PlayerJoin { get; }
+            = new EventHandlerCollection<PlayerJoinEventArgs>();
+
+        public EventHandlerCollection<PlayerChatEventArgs> PlayerChat { get; }
+            = new EventHandlerCollection<PlayerChatEventArgs>();
+
+        public EventHandlerCollection<PlayerDisconnectedEventArgs> PlayerDisconnected { get; }
+            = new EventHandlerCollection<PlayerDisconnectedEventArgs>();
 
         public OrionPlayerService() {
             // Ignore the last player since it is used as a failure slot.

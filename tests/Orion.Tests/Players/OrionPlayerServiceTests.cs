@@ -79,11 +79,11 @@ namespace Orion.Players {
         [Fact]
         public void PacketReceive_IsTriggered() {
             var isRun = false;
-            _playerService.PacketReceive += (sender, args) => {
+            _playerService.PacketReceive.RegisterHandler((sender, args) => {
                 isRun = true;
                 args.Sender.Should().BeSameAs(_playerService.Players[1]);
                 args.Cancel();
-            };
+            });
 
             TestUtils.FakeReceiveBytes(1, PlayerConnectPacketTests.Bytes);
 
@@ -93,12 +93,12 @@ namespace Orion.Players {
         [Fact]
         public void PacketReceive_PlayerConnect_IsTriggered() {
             var isRun = false;
-            _playerService.PlayerConnect += (sender, args) => {
+            _playerService.PlayerConnect.RegisterHandler((sender, args) => {
                 isRun = true;
                 args.Player.Should().BeSameAs(_playerService.Players[1]);
                 args.PlayerVersionString.Should().Be("Terraria194");
                 args.Cancel();
-            };
+            });
 
             TestUtils.FakeReceiveBytes(1, PlayerConnectPacketTests.Bytes);
 
@@ -108,7 +108,7 @@ namespace Orion.Players {
         [Fact]
         public void PacketReceive_PlayerData_IsTriggered() {
             var isRun = false;
-            _playerService.PlayerData += (sender, args) => {
+            _playerService.PlayerData.RegisterHandler((sender, args) => {
                 isRun = true;
                 args.Player.Should().BeSameAs(_playerService.Players[1]);
                 args.PlayerSkinType.Should().Be(2);
@@ -127,7 +127,7 @@ namespace Orion.Players {
                 args.PlayerDifficulty.Should().Be(PlayerDifficulty.Softcore);
                 args.PlayerHasExtraAccessory.Should().BeFalse();
                 args.Cancel();
-            };
+            });
 
             TestUtils.FakeReceiveBytes(1, PlayerDataPacketTests.Bytes);
 
@@ -137,7 +137,7 @@ namespace Orion.Players {
         [Fact]
         public void PacketReceive_PlayerInventorySlot_IsTriggered() {
             var isRun = false;
-            _playerService.PlayerInventorySlot += (sender, args) => {
+            _playerService.PlayerInventorySlot.RegisterHandler((sender, args) => {
                 isRun = true;
                 args.Player.Should().BeSameAs(_playerService.Players[1]);
                 args.PlayerInventorySlotIndex.Should().Be(0);
@@ -145,7 +145,7 @@ namespace Orion.Players {
                 args.ItemPrefix.Should().Be(ItemPrefix.Godly);
                 args.ItemType.Should().Be(ItemType.CopperShortsword);
                 args.Cancel();
-            };
+            });
 
             TestUtils.FakeReceiveBytes(1, PlayerInventorySlotPacketTests.Bytes);
 
@@ -155,11 +155,11 @@ namespace Orion.Players {
         [Fact]
         public void PacketReceive_PlayerJoin_IsTriggered() {
             var isRun = false;
-            _playerService.PlayerJoin += (sender, args) => {
+            _playerService.PlayerJoin.RegisterHandler((sender, args) => {
                 isRun = true;
                 args.Player.Should().BeSameAs(_playerService.Players[1]);
                 args.Cancel();
-            };
+            });
 
             TestUtils.FakeReceiveBytes(1, PlayerJoinPacketTests.Bytes);
 
@@ -169,12 +169,12 @@ namespace Orion.Players {
         [Fact]
         public void PacketReceive_PlayerChat_IsTriggered() {
             var isRun = false;
-            _playerService.PlayerChat += (sender, args) => {
+            _playerService.PlayerChat.RegisterHandler((sender, args) => {
                 isRun = true;
                 args.ChatCommand.Should().Be("Say");
                 args.ChatText.Should().Be("/command test");
                 args.Cancel();
-            };
+            });
 
             TestUtils.FakeReceiveBytes(1, ChatModuleTests.Bytes);
 
@@ -184,10 +184,10 @@ namespace Orion.Players {
         [Fact]
         public void ResetClient_PlayerDisconnected_IsTriggered() {
             var isRun = false;
-            _playerService.PlayerDisconnected += (sender, args) => {
+            _playerService.PlayerDisconnected.RegisterHandler((sender, args) => {
                 isRun = true;
                 args.Player.Should().BeSameAs(_playerService.Players[1]);
-            };
+            });
             Terraria.Netplay.Clients[1].Id = 1;
 
             Terraria.Netplay.Clients[1].Reset();

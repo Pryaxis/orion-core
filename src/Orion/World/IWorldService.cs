@@ -49,13 +49,13 @@ namespace Orion.World {
         InvasionType CurrentInvasionType { get; }
 
         /// <summary>
-        /// Gets or sets the event handlers that occur when the world is loading.
+        /// Gets the event handlers that occur when the world is loading.
         /// </summary>
-        EventHandlerCollection<WorldLoadEventArgs>? WorldLoad { get; set; }
+        EventHandlerCollection<WorldLoadEventArgs> WorldLoad { get; }
 
         /// <summary>
-        /// Gets or sets the event handlers that occur when the world is saving. This event can be canceled.
+        /// Gets the event handlers that occur when the world is saving. This event can be canceled.
         /// </summary>
-        EventHandlerCollection<WorldSaveEventArgs>? WorldSave { get; set; }
+        EventHandlerCollection<WorldSaveEventArgs> WorldSave { get; }
     }
 }

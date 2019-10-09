@@ -18,27 +18,23 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Reflection;
 
 namespace Orion.Events {
     /// <summary>
     /// Represents a collection of event handlers. Provides the ability to register and unregister event handlers. This
-    /// class is immutable.
+    /// class is thread-safe.
     /// </summary>
     /// <typeparam name="TEventArgs">The type of event arguments.</typeparam>
     public sealed class EventHandlerCollection<TEventArgs> where TEventArgs : EventArgs {
-        private static readonly IComparer<Registration> _registrationComparer =
-            Comparer<Registration>.Create((r1, r2) => r1.Priority.CompareTo(r2.Priority));
+        private readonly object _lock = new object();
 
-        private readonly ISet<Registration> _registrations;
+        private readonly ISet<Registration> _registrations =
+            new SortedSet<Registration>(Comparer<Registration>.Create((r1, r2) => r1.Priority.CompareTo(r2.Priority)));
 
-        private EventHandlerCollection(ISet<Registration> registrations) {
-            Debug.Assert(registrations != null, "registrations should not be null");
-
-            _registrations = registrations;
-        }
+        private readonly IDictionary<EventHandler<TEventArgs>, Registration> _handlerToRegistration =
+            new Dictionary<EventHandler<TEventArgs>, Registration>();
 
         /// <summary>
         /// Invokes the collection of handlers in order of their priorities using the given <paramref name="sender"/>
@@ -57,52 +53,44 @@ namespace Orion.Events {
             }
         }
 
-
         /// <summary>
-        /// Registers <paramref name="handler"/> to <paramref name="collection"/>.
+        /// Registers the given <paramref name="handler"/>.
         /// </summary>
-        /// <param name="collection">The collection.</param>
         /// <param name="handler">The handler.</param>
-        /// <returns>The resulting collection.</returns>
         /// <exception cref="ArgumentNullException"><paramref name="handler"/> is <see langword="null"/>.</exception>
-        [SuppressMessage("Usage", "CA2225:Operator overloads have named alternates",
-            Justification = "Preserve += syntax")]
-        public static EventHandlerCollection<TEventArgs> operator +(
-                EventHandlerCollection<TEventArgs>? collection, EventHandler<TEventArgs> handler) {
+        public void RegisterHandler(EventHandler<TEventArgs> handler) {
             if (handler is null) {
                 throw new ArgumentNullException(nameof(handler));
             }
 
-            var attribute = handler.Method.GetCustomAttribute<EventHandlerAttribute>();
-            var priority = attribute?.Priority ?? EventPriority.Normal;
-            var registration = new Registration(handler, priority);
-            var registrations = new SortedSet<Registration>(
-                collection?._registrations ?? Enumerable.Empty<Registration>(), _registrationComparer) { registration };
-            return new EventHandlerCollection<TEventArgs>(registrations);
+            var priority = handler.Method.GetCustomAttribute<EventHandlerAttribute>()?.Priority ?? EventPriority.Normal;
+            lock (_lock) {
+                var registration = new Registration(handler, priority);
+                _handlerToRegistration[handler] = registration;
+                _registrations.Add(registration);
+            }
         }
 
         /// <summary>
-        /// Unregisters <paramref name="handler"/> from <paramref name="collection"/>.
+        /// Unregisters the given <paramref name="handler"/>.
         /// </summary>
-        /// <param name="collection">The collection.</param>
         /// <param name="handler">The handler.</param>
-        /// <returns>The resulting collection.</returns>
+        /// <returns>
+        /// <see langword="true"/> if <paramref name="handler"/> was unregistered; otherwise, <see langword="false"/>.
+        /// </returns>
         /// <exception cref="ArgumentNullException"><paramref name="handler"/> is <see langword="null"/>.</exception>
-        [SuppressMessage("Usage", "CA2225:Operator overloads have named alternates",
-            Justification = "Preserve -= syntax")]
-        public static EventHandlerCollection<TEventArgs>? operator -(
-                EventHandlerCollection<TEventArgs>? collection, EventHandler<TEventArgs> handler) {
+        public bool UnregisterHandler(EventHandler<TEventArgs> handler) {
             if (handler is null) {
                 throw new ArgumentNullException(nameof(handler));
             }
 
-            var attribute = handler.Method.GetCustomAttribute<EventHandlerAttribute>();
-            var priority = attribute?.Priority ?? EventPriority.Normal;
-            var registration = new Registration(handler, priority);
-            var registrations = new SortedSet<Registration>(
-                collection?._registrations ?? Enumerable.Empty<Registration>(), _registrationComparer);
-            registrations.Remove(registration);
-            return registrations.Count == 0 ? null : new EventHandlerCollection<TEventArgs>(registrations);
+            lock (_lock) {
+                if (!_handlerToRegistration.TryGetValue(handler, out var registration)) {
+                    return false;
+                }
+
+                return _handlerToRegistration.Remove(handler) & _registrations.Remove(registration);
+            }
         }
 
         // Keeps track of handlers along with their priorities.
@@ -111,8 +99,6 @@ namespace Orion.Events {
             public EventPriority Priority { get; }
 
             public Registration(EventHandler<TEventArgs> handler, EventPriority priority) {
-                Debug.Assert(handler != null, "handler should not be null");
-
                 Handler = handler;
                 Priority = priority;
             }

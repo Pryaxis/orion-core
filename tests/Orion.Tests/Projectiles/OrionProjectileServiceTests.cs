@@ -76,11 +76,11 @@ namespace Orion.Projectiles {
         [Fact]
         public void ProjectileSetDefaults() {
             var isRun = false;
-            _projectileService.ProjectileSetDefaults += (sender, args) => {
+            _projectileService.ProjectileSetDefaults.RegisterHandler((sender, args) => {
                 isRun = true;
                 ((OrionProjectile)args.Projectile).Wrapped.Should().BeSameAs(Main.projectile[0]);
                 args.ProjectileType.Should().Be(ProjectileType.CrystalBullet);
-            };
+            });
 
             Main.projectile[0].SetDefaults((int)ProjectileType.CrystalBullet);
 
@@ -92,9 +92,9 @@ namespace Orion.Projectiles {
         [InlineData(ProjectileType.CrystalBullet, ProjectileType.None)]
         public void ProjectileSetDefaults_ModifyProjectileType(
                 ProjectileType oldType, ProjectileType newType) {
-            _projectileService.ProjectileSetDefaults += (sender, args) => {
+            _projectileService.ProjectileSetDefaults.RegisterHandler((sender, args) => {
                 args.ProjectileType = newType;
-            };
+            });
 
             Main.projectile[0].SetDefaults((int)oldType);
 
@@ -103,9 +103,9 @@ namespace Orion.Projectiles {
 
         [Fact]
         public void ProjectileSetDefaults_Canceled() {
-            _projectileService.ProjectileSetDefaults += (sender, args) => {
+            _projectileService.ProjectileSetDefaults.RegisterHandler((sender, args) => {
                 args.Cancel();
-            };
+            });
 
             Main.projectile[0].SetDefaults((int)ProjectileType.CrystalBullet);
 
@@ -115,10 +115,10 @@ namespace Orion.Projectiles {
         [Fact]
         public void ProjectileUpdate() {
             var isRun = false;
-            _projectileService.ProjectileUpdate += (sender, args) => {
+            _projectileService.ProjectileUpdate.RegisterHandler((sender, args) => {
                 isRun = true;
                 ((OrionProjectile)args.Projectile).Wrapped.Should().BeSameAs(Main.projectile[0]);
-            };
+            });
 
             Main.projectile[0].Update(0);
 
@@ -128,10 +128,10 @@ namespace Orion.Projectiles {
         [Fact]
         public void ProjectileRemove() {
             var isRun = false;
-            _projectileService.ProjectileRemove += (sender, args) => {
+            _projectileService.ProjectileRemove.RegisterHandler((sender, args) => {
                 isRun = true;
                 ((OrionProjectile)args.Projectile).Wrapped.Should().BeSameAs(Main.projectile[0]);
-            };
+            });
 
             Main.projectile[0].Kill();
 
@@ -140,9 +140,9 @@ namespace Orion.Projectiles {
 
         [Fact]
         public void ProjectileRemove_Canceled() {
-            _projectileService.ProjectileRemove += (sender, args) => {
+            _projectileService.ProjectileRemove.RegisterHandler((sender, args) => {
                 args.Cancel();
-            };
+            });
             Main.projectile[0].SetDefaults((int)ProjectileType.CrystalBullet);
 
             Main.projectile[0].Kill();

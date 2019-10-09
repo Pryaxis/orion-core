@@ -32,40 +32,40 @@ namespace Orion.Npcs {
         IReadOnlyArray<INpc> Npcs { get; }
 
         /// <summary>
-        /// Gets or sets the event handlers that occur when an NPC's defaults are being set, which is when NPC data is
+        /// Gets the event handlers that occur when an NPC's defaults are being set, which is when NPC data is
         /// initialized. This event can be canceled.
         /// </summary>
-        EventHandlerCollection<NpcSetDefaultsEventArgs>? NpcSetDefaults { get; set; }
+        EventHandlerCollection<NpcSetDefaultsEventArgs> NpcSetDefaults { get; }
 
         /// <summary>
-        /// Gets or sets the event handlers that occur when an NPC is spawning. This event can be canceled.
+        /// Gets the event handlers that occur when an NPC is spawning. This event can be canceled.
         /// </summary>
-        EventHandlerCollection<NpcSpawnEventArgs>? NpcSpawn { get; set; }
+        EventHandlerCollection<NpcSpawnEventArgs> NpcSpawn { get; }
 
         /// <summary>
-        /// Gets or sets the event handlers that occur when an NPC is updating. This event can be canceled.
+        /// Gets the event handlers that occur when an NPC is updating. This event can be canceled.
         /// </summary>
-        EventHandlerCollection<NpcUpdateEventArgs>? NpcUpdate { get; set; }
+        EventHandlerCollection<NpcUpdateEventArgs> NpcUpdate { get; }
 
         /// <summary>
-        /// Gets or sets the event handlers that occur when an NPC is transforming. This event can be canceled.
+        /// Gets the event handlers that occur when an NPC is transforming. This event can be canceled.
         /// </summary>
-        EventHandlerCollection<NpcTransformEventArgs>? NpcTransform { get; set; }
+        EventHandlerCollection<NpcTransformEventArgs> NpcTransform { get; }
 
         /// <summary>
-        /// Gets or sets the event handlers that occur when an NPC is being damaged. This event can be canceled.
+        /// Gets the event handlers that occur when an NPC is being damaged. This event can be canceled.
         /// </summary>
-        EventHandlerCollection<NpcDamageEventArgs>? NpcDamage { get; set; }
+        EventHandlerCollection<NpcDamageEventArgs> NpcDamage { get; }
 
         /// <summary>
-        /// Gets or sets the event handlers that occur when an NPC is dropping a loot item. This event can be canceled.
+        /// Gets the event handlers that occur when an NPC is dropping a loot item. This event can be canceled.
         /// </summary>
-        EventHandlerCollection<NpcDropLootItemEventArgs>? NpcDropLootItem { get; set; }
+        EventHandlerCollection<NpcDropLootItemEventArgs> NpcDropLootItem { get; }
 
         /// <summary>
-        /// Gets or sets the event handlers that occur when an NPC is killed.
+        /// Gets the event handlers that occur when an NPC is killed.
         /// </summary>
-        EventHandlerCollection<NpcKilledEventArgs>? NpcKilled { get; set; }
+        EventHandlerCollection<NpcKilledEventArgs> NpcKilled { get; }
 
         /// <summary>
         /// Spawns an NPC with the given <paramref name="type"/> at the specified <paramref name="position"/> with the

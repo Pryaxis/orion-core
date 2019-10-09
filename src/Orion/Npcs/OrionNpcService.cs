@@ -36,13 +36,27 @@ namespace Orion.Npcs {
         [ExcludeFromCodeCoverage] public override string Author => "Pryaxis";
 
         public IReadOnlyArray<INpc> Npcs { get; }
-        public EventHandlerCollection<NpcSetDefaultsEventArgs>? NpcSetDefaults { get; set; }
-        public EventHandlerCollection<NpcSpawnEventArgs>? NpcSpawn { get; set; }
-        public EventHandlerCollection<NpcUpdateEventArgs>? NpcUpdate { get; set; }
-        public EventHandlerCollection<NpcTransformEventArgs>? NpcTransform { get; set; }
-        public EventHandlerCollection<NpcDamageEventArgs>? NpcDamage { get; set; }
-        public EventHandlerCollection<NpcDropLootItemEventArgs>? NpcDropLootItem { get; set; }
-        public EventHandlerCollection<NpcKilledEventArgs>? NpcKilled { get; set; }
+
+        public EventHandlerCollection<NpcSetDefaultsEventArgs> NpcSetDefaults { get; }
+            = new EventHandlerCollection<NpcSetDefaultsEventArgs>();
+
+        public EventHandlerCollection<NpcSpawnEventArgs> NpcSpawn { get; }
+            = new EventHandlerCollection<NpcSpawnEventArgs>();
+
+        public EventHandlerCollection<NpcUpdateEventArgs> NpcUpdate { get; }
+            = new EventHandlerCollection<NpcUpdateEventArgs>();
+
+        public EventHandlerCollection<NpcTransformEventArgs> NpcTransform { get; }
+            = new EventHandlerCollection<NpcTransformEventArgs>();
+
+        public EventHandlerCollection<NpcDamageEventArgs> NpcDamage { get; }
+            = new EventHandlerCollection<NpcDamageEventArgs>();
+
+        public EventHandlerCollection<NpcDropLootItemEventArgs> NpcDropLootItem { get; }
+            = new EventHandlerCollection<NpcDropLootItemEventArgs>();
+
+        public EventHandlerCollection<NpcKilledEventArgs> NpcKilled { get; }
+            = new EventHandlerCollection<NpcKilledEventArgs>();
 
         public OrionNpcService() {
             // Ignore the last NPC since it is used as a failure slot.

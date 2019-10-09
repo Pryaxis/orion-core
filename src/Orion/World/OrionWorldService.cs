@@ -46,8 +46,11 @@ namespace Orion.World {
 
         public InvasionType CurrentInvasionType => (InvasionType)Main.invasionType;
 
-        public EventHandlerCollection<WorldLoadEventArgs>? WorldLoad { get; set; }
-        public EventHandlerCollection<WorldSaveEventArgs>? WorldSave { get; set; }
+        public EventHandlerCollection<WorldLoadEventArgs> WorldLoad { get; }
+            = new EventHandlerCollection<WorldLoadEventArgs>();
+
+        public EventHandlerCollection<WorldSaveEventArgs> WorldSave { get; }
+            = new EventHandlerCollection<WorldSaveEventArgs>();
 
         public OrionWorldService() {
             // Try to interpret the current Main.tile as a TileCollection. This is only really useful for tests. We
