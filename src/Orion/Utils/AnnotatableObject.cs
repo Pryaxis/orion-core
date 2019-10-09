@@ -28,12 +28,16 @@ namespace Orion.Utils {
 
         /// <inheritdoc/>
         [Pure]
-        public T GetAnnotation<T>(string key, T defaultValue = default) {
+        public T GetAnnotationOrDefault<T>(string key, T defaultValue = default, bool createIfNotExists = false) {
             if (key is null) {
                 throw new ArgumentNullException(nameof(key));
             }
 
-            return _annotations.TryGetValue(key, out var value) ? (T)value! : defaultValue;
+            if (_annotations.TryGetValue(key, out var value)) {
+                return (T)value!;
+            }
+
+            return createIfNotExists ? (T)(_annotations[key] = defaultValue)! : defaultValue;
         }
 
         /// <inheritdoc/>

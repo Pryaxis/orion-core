@@ -22,26 +22,35 @@ using Xunit;
 namespace Orion.Utils {
     public class AnnotatableObjectTests {
         [Fact]
-        public void GetAnnotation_KeyDoesNotExist_ReturnsDefaultValue() {
+        public void GetAnnotationOrDefault_KeyDoesNotExist_ReturnsDefaultValue() {
             IAnnotatable annotatable = new AnnotatableObject();
 
-            annotatable.GetAnnotation("test", 1).Should().Be(1);
+            annotatable.GetAnnotationOrDefault("test", 1).Should().Be(1);
         }
 
         [Fact]
-        public void GetAnnotation_NullKey_ThrowsArgumentNullException() {
+        public void GetAnnotationOrDefault_Create() {
             IAnnotatable annotatable = new AnnotatableObject();
-            Func<int> func = () => annotatable.GetAnnotation<int>(null);
+
+            annotatable.GetAnnotationOrDefault("test", 10, true).Should().Be(10);
+            
+            annotatable.GetAnnotationOrDefault("test", 1).Should().Be(10);
+        }
+
+        [Fact]
+        public void GetAnnotationOrDefault_NullKey_ThrowsArgumentNullException() {
+            IAnnotatable annotatable = new AnnotatableObject();
+            Func<int> func = () => annotatable.GetAnnotationOrDefault<int>(null);
 
             func.Should().Throw<ArgumentNullException>();
         }
 
         [Fact]
-        public void SetAnnotation_GetAnnotation() {
+        public void SetAnnotation_GetAnnotationOrDefault() {
             IAnnotatable annotatable = new AnnotatableObject();
             annotatable.SetAnnotation("test", 1);
 
-            annotatable.GetAnnotation<int>("test").Should().Be(1);
+            annotatable.GetAnnotationOrDefault<int>("test").Should().Be(1);
         }
 
         [Fact]

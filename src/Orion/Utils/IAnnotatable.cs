@@ -30,10 +30,13 @@ namespace Orion.Utils {
         /// <typeparam name="T">The type.</typeparam>
         /// <param name="key">The key.</param>
         /// <param name="defaultValue">The default value.</param>
-        /// <returns>The metadata, or <paramref name="defaultValue"/> if the key does not exist.</returns>
+        /// <param name="createIfNotExists">
+        /// <see langword="true"/> to create the annotation if it does not exist; otherwise, <see langword="false"/>.
+        /// </param>
+        /// <returns>The annotation, or <paramref name="defaultValue"/> if the key does not exist.</returns>
         /// <exception cref="ArgumentNullException"><paramref name="key"/> is <see langword="null"/>.</exception>
         [Pure]
-        T GetAnnotation<T>(string key, T defaultValue = default);
+        T GetAnnotationOrDefault<T>(string key, T defaultValue = default, bool createIfNotExists = false);
 
         /// <summary>
         /// Sets the annotation of a type with the given <paramref name="key"/> to the specified <paramref name="value"/>.
