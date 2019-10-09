@@ -17,7 +17,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
 using System.Reflection;
 
@@ -48,7 +47,12 @@ namespace Orion.Events {
                 throw new ArgumentNullException(nameof(args));
             }
 
-            foreach (var handler in _registrations.Select(r => r.Handler)) {
+            IList<EventHandler<TEventArgs>> handlers;
+            lock (_lock) {
+                handlers = _registrations.Select(r => r.Handler).ToList();
+            }
+
+            foreach (var handler in handlers) {
                 handler(sender, args);
             }
         }
