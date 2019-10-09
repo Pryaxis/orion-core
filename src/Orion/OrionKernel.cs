@@ -144,7 +144,7 @@ namespace Orion {
                 var plugin = (OrionPlugin)this.Get(pluginType);
                 plugin.Initialize();
                 _plugins.Add(plugin);
-                action.Invoke(plugin);
+                action?.Invoke(plugin);
             }
 
             _pluginTypesToLoad.Clear();
