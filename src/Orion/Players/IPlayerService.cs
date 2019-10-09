@@ -25,7 +25,8 @@ using Orion.Utils;
 
 namespace Orion.Players {
     /// <summary>
-    /// Represents a player service. Provides access to player-related events and methods.
+    /// Represents a player service. Provides access to player-related events and methods, and in a thread-safe manner
+    /// if not specified otherwise.
     /// </summary>
     public interface IPlayerService : IService {
         /// <summary>

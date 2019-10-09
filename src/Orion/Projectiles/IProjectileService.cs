@@ -23,7 +23,8 @@ using Orion.Utils;
 
 namespace Orion.Projectiles {
     /// <summary>
-    /// Represents a projectile service. Provides access to projectile-related events and methods.
+    /// Represents a projectile service. Provides access to projectile-related events and methods, and in a thread-safe
+    /// manner unless specified otherwise.
     /// </summary>
     public interface IProjectileService : IService {
         /// <summary>
@@ -51,7 +52,7 @@ namespace Orion.Projectiles {
         /// <summary>
         /// Spawns and returns a projectile with the given <paramref name="type"/> at the specified
         /// <paramref name="position"/> with the <paramref name="velocity"/>, <paramref name="damage"/>,
-        /// <paramref name="knockback"/>, and <paramref name="aiValues"/>.
+        /// <paramref name="knockback"/>, and <paramref name="aiValues"/>. This method is not thread-safe.
         /// </summary>
         /// <param name="type">The projectile type.</param>
         /// <param name="position">The position.</param>

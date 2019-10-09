@@ -30,10 +30,6 @@ namespace Orion.Utils {
 
         public T this[int index] {
             get {
-                if (index < 0 || index >= Count) {
-                    throw new IndexOutOfRangeException();
-                }
-
                 var wrappedItem = _wrappedItems.Span[index];
                 ref var item = ref _items[index];
 #pragma warning disable 618

@@ -23,7 +23,8 @@ using Orion.Utils;
 
 namespace Orion.Npcs {
     /// <summary>
-    /// Represents an NPC service. Provides access to NPC-related events and methods.
+    /// Represents an NPC service. Provides access to NPC-related events and methods, and in a thread-safe manner unless
+    /// specified otherwise.
     /// </summary>
     public interface INpcService : IService {
         /// <summary>
@@ -69,7 +70,7 @@ namespace Orion.Npcs {
 
         /// <summary>
         /// Spawns an NPC with the given <paramref name="type"/> at the specified <paramref name="position"/> with the
-        /// <paramref name="aiValues"/>.
+        /// <paramref name="aiValues"/>. This method is not thread-safe.
         /// </summary>
         /// <param name="type">The NPC type.</param>
         /// <param name="position">The position.</param>
