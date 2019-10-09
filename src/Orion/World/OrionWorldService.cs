@@ -76,13 +76,13 @@ namespace Orion.World {
 
         private HookResult PreLoadWorldHandler(ref bool _) {
             var args = new WorldLoadEventArgs();
-            WorldLoad?.Invoke(this, args);
+            WorldLoad.Invoke(this, args);
             return HookResult.Continue;
         }
 
         private HookResult PreSaveWorldHandler(ref bool _, ref bool _2) {
             var args = new WorldSaveEventArgs();
-            WorldSave?.Invoke(this, args);
+            WorldSave.Invoke(this, args);
             return args.IsCanceled() ? HookResult.Cancel : HookResult.Continue;
         }
 

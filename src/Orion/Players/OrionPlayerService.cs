@@ -108,7 +108,7 @@ namespace Orion.Players {
             var sender = Players[buffer.whoAmI];
             var packet = Packet.ReadFromStream(stream, PacketContext.Server);
             var args = new PacketReceiveEventArgs(sender, packet);
-            PacketReceive?.Invoke(this, args);
+            PacketReceive.Invoke(this, args);
 
             if (args.IsCanceled()) {
                 return HookResult.Cancel;
@@ -152,7 +152,7 @@ namespace Orion.Players {
             var receiver = Players[remoteClient];
             var packet = Packet.ReadFromStream(stream, PacketContext.Client);
             var args = new PacketSendEventArgs(receiver, packet);
-            PacketSend?.Invoke(this, args);
+            PacketSend.Invoke(this, args);
             if (args.IsCanceled()) {
                 return HookResult.Cancel;
             }
@@ -177,34 +177,34 @@ namespace Orion.Players {
 
             var player = Players[remoteClient.Id];
             var args = new PlayerDisconnectedEventArgs(player);
-            PlayerDisconnected?.Invoke(this, args);
+            PlayerDisconnected.Invoke(this, args);
             return HookResult.Continue;
         }
 
         private void PlayerConnectHandler(PacketReceiveEventArgs args_) {
             var packet = (PlayerConnectPacket)args_.Packet;
             var args = new PlayerConnectEventArgs(args_.Sender, packet);
-            PlayerConnect?.Invoke(this, args);
+            PlayerConnect.Invoke(this, args);
             args_.CancellationReason = args.CancellationReason;
         }
 
         private void PlayerDataHandler(PacketReceiveEventArgs args_) {
             var packet = (PlayerDataPacket)args_.Packet;
             var args = new PlayerDataEventArgs(args_.Sender, packet);
-            PlayerData?.Invoke(this, args);
+            PlayerData.Invoke(this, args);
             args_.CancellationReason = args.CancellationReason;
         }
 
         private void PlayerInventorySlotHandler(PacketReceiveEventArgs args_) {
             var packet = (PlayerInventorySlotPacket)args_.Packet;
             var args = new PlayerInventorySlotEventArgs(args_.Sender, packet);
-            PlayerInventorySlot?.Invoke(this, args);
+            PlayerInventorySlot.Invoke(this, args);
             args_.CancellationReason = args.CancellationReason;
         }
 
         private void PlayerJoinHandler(PacketReceiveEventArgs args_) {
             var args = new PlayerJoinEventArgs(args_.Sender);
-            PlayerJoin?.Invoke(this, args);
+            PlayerJoin.Invoke(this, args);
             args_.CancellationReason = args.CancellationReason;
         }
 
@@ -212,7 +212,7 @@ namespace Orion.Players {
             var module = ((ModulePacket)args_.Packet).Module;
             if (module is ChatModule chatModule) {
                 var args = new PlayerChatEventArgs(args_.Sender, chatModule);
-                PlayerChat?.Invoke(this, args);
+                PlayerChat.Invoke(this, args);
                 args_.CancellationReason = args.CancellationReason;
             }
         }

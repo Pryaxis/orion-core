@@ -92,7 +92,7 @@ namespace Orion.Projectiles {
 
             var projectile = GetProjectile(terrariaProjectile);
             var args = new ProjectileSetDefaultsEventArgs(projectile, (ProjectileType)projectileType);
-            ProjectileSetDefaults?.Invoke(this, args);
+            ProjectileSetDefaults.Invoke(this, args);
             if (args.IsCanceled()) {
                 return HookResult.Cancel;
             }
@@ -106,7 +106,7 @@ namespace Orion.Projectiles {
                 "projectile index should be valid");
 
             var args = new ProjectileUpdateEventArgs(Projectiles[projectileIndex]);
-            ProjectileUpdate?.Invoke(this, args);
+            ProjectileUpdate.Invoke(this, args);
             return args.IsCanceled() ? HookResult.Cancel : HookResult.Continue;
         }
 
@@ -115,7 +115,7 @@ namespace Orion.Projectiles {
 
             var projectile = GetProjectile(terrariaProjectile);
             var args = new ProjectileRemoveEventArgs(projectile);
-            ProjectileRemove?.Invoke(this, args);
+            ProjectileRemove.Invoke(this, args);
             return args.IsCanceled() ? HookResult.Cancel : HookResult.Continue;
         }
     }

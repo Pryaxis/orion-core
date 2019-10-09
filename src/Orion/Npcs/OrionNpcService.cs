@@ -121,7 +121,7 @@ namespace Orion.Npcs {
 
             var npc = GetNpc(terrariaNpc);
             var args = new NpcSetDefaultsEventArgs(npc, (NpcType)npcType);
-            NpcSetDefaults?.Invoke(this, args);
+            NpcSetDefaults.Invoke(this, args);
             if (args.IsCanceled()) {
                 return HookResult.Cancel;
             }
@@ -140,7 +140,7 @@ namespace Orion.Npcs {
 
             var npc = Npcs[npcIndex];
             var args = new NpcSpawnEventArgs(npc);
-            NpcSpawn?.Invoke(this, args);
+            NpcSpawn.Invoke(this, args);
             if (args.IsCanceled()) {
                 // To cancel the event, we should remove the NPC and return the failure index.
                 npc.IsActive = false;
@@ -155,7 +155,7 @@ namespace Orion.Npcs {
             Debug.Assert(npcIndex >= 0 && npcIndex < Npcs.Count, "NPC index should be valid");
 
             var args = new NpcUpdateEventArgs(Npcs[npcIndex]);
-            NpcUpdate?.Invoke(this, args);
+            NpcUpdate.Invoke(this, args);
             return args.IsCanceled() ? HookResult.Cancel : HookResult.Continue;
         }
 
@@ -164,7 +164,7 @@ namespace Orion.Npcs {
 
             var npc = GetNpc(terrariaNpc);
             var args = new NpcTransformEventArgs(npc, (NpcType)npcNewType);
-            NpcTransform?.Invoke(this, args);
+            NpcTransform.Invoke(this, args);
             if (args.IsCanceled()) {
                 return HookResult.Cancel;
             }
@@ -184,7 +184,7 @@ namespace Orion.Npcs {
                 HitDirection = (sbyte)hitDirection,
                 IsCriticalHit = isCriticalHit
             };
-            NpcDamage?.Invoke(this, args);
+            NpcDamage.Invoke(this, args);
             if (args.IsCanceled()) {
                 return HookResult.Cancel;
             }
@@ -207,7 +207,7 @@ namespace Orion.Npcs {
                 LootItemStackSize = itemStackSize,
                 LootItemPrefix = (ItemPrefix)itemPrefix
             };
-            NpcDropLootItem?.Invoke(this, args);
+            NpcDropLootItem.Invoke(this, args);
             if (args.IsCanceled()) {
                 return HookResult.Cancel;
             }
@@ -223,7 +223,7 @@ namespace Orion.Npcs {
 
             var npc = GetNpc(terrariaNpc);
             var args = new NpcKilledEventArgs(npc);
-            NpcKilled?.Invoke(this, args);
+            NpcKilled.Invoke(this, args);
         }
     }
 }

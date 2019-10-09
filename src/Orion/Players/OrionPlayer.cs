@@ -59,7 +59,7 @@ namespace Orion.Players {
             }
 
             var args = new PacketSendEventArgs(this, packet);
-            _playerService.PacketSend?.Invoke(this, args);
+            _playerService.PacketSend.Invoke(this, args);
             if (args.IsCanceled()) {
                 return;
             }

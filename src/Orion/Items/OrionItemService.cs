@@ -84,7 +84,7 @@ namespace Orion.Items {
 
             var item = GetItem(terrariaItem);
             var args = new ItemSetDefaultsEventArgs(item, (ItemType)itemType);
-            ItemSetDefaults?.Invoke(this, args);
+            ItemSetDefaults.Invoke(this, args);
             if (args.IsCanceled()) {
                 return HookResult.Cancel;
             }
@@ -101,7 +101,7 @@ namespace Orion.Items {
             terrariaItem.whoAmI = itemIndex;
 
             var args = new ItemUpdateEventArgs(Items[itemIndex]);
-            ItemUpdate?.Invoke(this, args);
+            ItemUpdate.Invoke(this, args);
             return args.IsCanceled() ? HookResult.Cancel : HookResult.Continue;
         }
     }

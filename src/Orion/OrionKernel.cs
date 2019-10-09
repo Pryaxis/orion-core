@@ -144,7 +144,7 @@ namespace Orion {
                 var plugin = (OrionPlugin)this.Get(pluginType);
                 plugin.Initialize();
                 _plugins.Add(plugin);
-                action?.Invoke(plugin);
+                action.Invoke(plugin);
             }
 
             _pluginTypesToLoad.Clear();
@@ -181,22 +181,22 @@ namespace Orion {
 
         private void PreInitializeHandler() {
             var args = new ServerInitializeEventArgs();
-            ServerInitialize?.Invoke(this, args);
+            ServerInitialize.Invoke(this, args);
         }
 
         private void StartedHandler() {
             var args = new ServerStartEventArgs();
-            ServerStart?.Invoke(this, args);
+            ServerStart.Invoke(this, args);
         }
 
         private void PreUpdateHandler(ref GameTime _) {
             var args = new ServerUpdateEventArgs();
-            ServerUpdate?.Invoke(this, args);
+            ServerUpdate.Invoke(this, args);
         }
 
         private HookResult ProcessHandler(string _, string input) {
             var args = new ServerCommandEventArgs(input);
-            ServerCommand?.Invoke(this, args);
+            ServerCommand.Invoke(this, args);
             return args.IsCanceled() ? HookResult.Cancel : HookResult.Continue;
         }
     }
