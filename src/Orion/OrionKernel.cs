@@ -34,7 +34,7 @@ using OTAPI;
 namespace Orion {
     /// <summary>
     /// Represents Orion's dependency injection container. Provides methods to manipulate <see cref="OrionPlugin"/>
-    /// instances.
+    /// instances. This class is not thread-safe.
     /// </summary>
     public sealed class OrionKernel : StandardKernel {
         private readonly ISet<Assembly> _pluginAssemblies = new HashSet<Assembly>();
