@@ -16,7 +16,6 @@
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
 using System;
-using System.Diagnostics.Contracts;
 
 namespace Orion.Utils {
     /// <summary>
@@ -24,19 +23,24 @@ namespace Orion.Utils {
     /// </summary>
     public interface IAnnotatable {
         /// <summary>
-        /// Gets the annotation of a type with the given <paramref name="key"/>, returning
-        /// <paramref name="defaultValue"/> if the key does not exist.
+        /// Gets the annotation of type <typeparamref name="T"/> with the given <paramref name="key"/>, using the given
+        /// <paramref name="defaultValueProvider"/> if the key does not exist.
         /// </summary>
         /// <typeparam name="T">The type.</typeparam>
         /// <param name="key">The key.</param>
-        /// <param name="defaultValue">The default value.</param>
+        /// <param name="defaultValueProvider">
+        /// The default value provider. If <see langword="null"/>, then the provider will return a default instance of
+        /// <typeparamref name="T"/>.
+        /// </param>
         /// <param name="createIfNotExists">
         /// <see langword="true"/> to create the annotation if it does not exist; otherwise, <see langword="false"/>.
         /// </param>
-        /// <returns>The annotation, or <paramref name="defaultValue"/> if the key does not exist.</returns>
+        /// <returns>
+        /// The annotation, or a default instance provided by <paramref name="defaultValueProvider"/> if the key does
+        /// not exist.
+        /// </returns>
         /// <exception cref="ArgumentNullException"><paramref name="key"/> is <see langword="null"/>.</exception>
-        [Pure]
-        T GetAnnotationOrDefault<T>(string key, T defaultValue = default, bool createIfNotExists = false);
+        T GetAnnotationOrDefault<T>(string key, Func<T>? defaultValueProvider = null, bool createIfNotExists = false);
 
         /// <summary>
         /// Sets the annotation of a type with the given <paramref name="key"/> to the specified <paramref name="value"/>.

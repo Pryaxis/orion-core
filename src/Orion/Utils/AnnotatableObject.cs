@@ -17,7 +17,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Diagnostics.Contracts;
 
 namespace Orion.Utils {
     /// <summary>
@@ -27,8 +26,8 @@ namespace Orion.Utils {
         private readonly IDictionary<string, object?> _annotations = new Dictionary<string, object?>();
 
         /// <inheritdoc/>
-        [Pure]
-        public T GetAnnotationOrDefault<T>(string key, T defaultValue = default, bool createIfNotExists = false) {
+        public T GetAnnotationOrDefault<T>(string key, Func<T>? defaultValueProvider = null,
+                bool createIfNotExists = false) {
             if (key is null) {
                 throw new ArgumentNullException(nameof(key));
             }
@@ -37,7 +36,8 @@ namespace Orion.Utils {
                 return (T)value!;
             }
 
-            return createIfNotExists ? (T)(_annotations[key] = defaultValue)! : defaultValue;
+            var provider = defaultValueProvider ?? (() => default!);
+            return createIfNotExists ? (T)(_annotations[key] = provider())! : provider();
         }
 
         /// <inheritdoc/>
