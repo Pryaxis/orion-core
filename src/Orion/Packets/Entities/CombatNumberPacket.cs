@@ -30,7 +30,7 @@ namespace Orion.Packets.Entities {
         private Color _numberColor;
         private int _number;
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         public override PacketType Type => PacketType.CombatNumber;
 
         /// <summary>
@@ -66,7 +66,7 @@ namespace Orion.Packets.Entities {
             }
         }
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [ExcludeFromCodeCoverage]
         public override string ToString() => $"{Type}[{Number} ({NumberColor}) @ {NumberPosition}]";
 

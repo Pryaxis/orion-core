@@ -31,7 +31,7 @@ namespace Orion.Packets.World.Tiles {
         private byte _liquidAmount;
         private LiquidType _liquidType;
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         public bool IsDirty { get; private set; }
 
         /// <summary>
@@ -101,10 +101,10 @@ namespace Orion.Packets.World.Tiles {
             };
         }
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         public void Clean() => IsDirty = false;
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [ExcludeFromCodeCoverage]
         public override string ToString() => $"{LiquidType} x{LiquidAmount} @ ({TileX}, {TileY})";
 

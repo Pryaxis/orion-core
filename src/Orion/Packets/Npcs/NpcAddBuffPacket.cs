@@ -28,7 +28,7 @@ namespace Orion.Packets.Npcs {
         private short _npcIndex;
         private Buff _npcBuff;
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         public override PacketType Type => PacketType.NpcAddBuff;
 
         /// <summary>
@@ -53,7 +53,7 @@ namespace Orion.Packets.Npcs {
             }
         }
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [ExcludeFromCodeCoverage]
         public override string ToString() => $"{Type}[#={NpcIndex}, {NpcBuff}]";
 

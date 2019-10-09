@@ -34,7 +34,7 @@ namespace Orion.Packets.Modules {
 
         private protected bool _isDirty;
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         public virtual bool IsDirty => _isDirty;
 
         /// <summary>
@@ -70,7 +70,7 @@ namespace Orion.Packets.Modules {
             return module;
         }
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         public virtual void Clean() => _isDirty = false;
 
         /// <summary>

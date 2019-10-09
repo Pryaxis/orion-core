@@ -26,7 +26,7 @@ namespace Orion.Packets.Players {
     public sealed class PlayerConnectPacket : Packet {
         private string _playerVersionString = "";
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         public override PacketType Type => PacketType.PlayerConnect;
 
         /// <summary>
@@ -41,7 +41,7 @@ namespace Orion.Packets.Players {
             }
         }
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [ExcludeFromCodeCoverage]
         public override string ToString() => $"{Type}[{PlayerVersionString}]";
 

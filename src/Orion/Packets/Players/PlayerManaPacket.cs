@@ -27,7 +27,7 @@ namespace Orion.Packets.Players {
         private short _playerMana;
         private short _playerMaxMana;
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         public override PacketType Type => PacketType.PlayerMana;
 
         /// <summary>
@@ -63,7 +63,7 @@ namespace Orion.Packets.Players {
             }
         }
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [ExcludeFromCodeCoverage]
         public override string ToString() => $"{Type}[#={PlayerIndex} has {PlayerMana}/{PlayerMaxMana} mp]";
 

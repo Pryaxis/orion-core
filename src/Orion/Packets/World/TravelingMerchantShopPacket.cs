@@ -29,10 +29,10 @@ namespace Orion.Packets.World {
         private readonly DirtiableArray<ItemType> _shopItemTypes =
             new DirtiableArray<ItemType>(TerrariaChest.maxItems);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         public override bool IsDirty => base.IsDirty || _shopItemTypes.IsDirty;
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         public override PacketType Type => PacketType.TravelingMerchantShop;
 
         /// <summary>
@@ -40,11 +40,11 @@ namespace Orion.Packets.World {
         /// </summary>
         public IArray<ItemType> ShopItemTypes => _shopItemTypes;
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [ExcludeFromCodeCoverage]
         public override string ToString() => $"{Type}[...]";
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         public override void Clean() {
             base.Clean();
             _shopItemTypes.Clean();

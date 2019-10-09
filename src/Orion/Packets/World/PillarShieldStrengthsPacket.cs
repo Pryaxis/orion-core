@@ -28,7 +28,7 @@ namespace Orion.Packets.World {
         private ushort _nebulaPillarShieldStrength;
         private ushort _stardustPillarShieldStrength;
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         public override PacketType Type => PacketType.PillarShieldStrengths;
 
         /// <summary>
@@ -75,7 +75,7 @@ namespace Orion.Packets.World {
             }
         }
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [ExcludeFromCodeCoverage]
         public override string ToString() =>
             $"{Type}[S={SolarPillarShieldStrength}, " +

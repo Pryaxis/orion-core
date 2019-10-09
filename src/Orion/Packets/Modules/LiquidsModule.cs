@@ -28,10 +28,10 @@ namespace Orion.Packets.Modules {
     public sealed class LiquidsModule : Module {
         private readonly DirtiableList<NetworkLiquid> _liquids = new DirtiableList<NetworkLiquid>();
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         public override bool IsDirty => base.IsDirty || _liquids.IsDirty;
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         public override ModuleType Type => ModuleType.Liquids;
 
         /// <summary>
@@ -39,13 +39,13 @@ namespace Orion.Packets.Modules {
         /// </summary>
         public IList<NetworkLiquid> Liquids => _liquids;
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         public override void Clean() {
             base.Clean();
             _liquids.Clean();
         }
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [ExcludeFromCodeCoverage]
         public override string ToString() => $"{Type}[...]";
 

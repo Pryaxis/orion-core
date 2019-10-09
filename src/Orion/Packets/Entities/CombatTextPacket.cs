@@ -31,7 +31,7 @@ namespace Orion.Packets.Entities {
         private Color _textColor;
         private TerrariaNetworkText _text = TerrariaNetworkText.Empty;
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         public override PacketType Type => PacketType.CombatText;
 
         /// <summary>
@@ -68,7 +68,7 @@ namespace Orion.Packets.Entities {
             }
         }
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [ExcludeFromCodeCoverage]
         public override string ToString() => $"{Type}[{Text} ({TextColor}) @ {TextPosition}]";
 

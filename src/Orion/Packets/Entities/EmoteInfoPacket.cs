@@ -31,7 +31,7 @@ namespace Orion.Packets.Entities {
         private EmoteType _emoteType;
         private ushort _emoteMetadata;
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         public override PacketType Type => PacketType.EmoteInfo;
 
         /// <summary>
@@ -100,7 +100,7 @@ namespace Orion.Packets.Entities {
             }
         }
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [ExcludeFromCodeCoverage]
         public override string ToString() => $"{Type}[#={EmoteIndex}, ...]";
 

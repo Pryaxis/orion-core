@@ -35,7 +35,7 @@ namespace Orion.Packets.Items {
         private bool _canBePickedUpImmediately;
         private ItemType _itemType;
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         public override PacketType Type => PacketType.ItemInstanceInfo;
 
         /// <summary>
@@ -115,7 +115,7 @@ namespace Orion.Packets.Items {
             }
         }
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [ExcludeFromCodeCoverage]
         public override string ToString() =>
             $"{Type}[#={ItemIndex}, {(ItemPrefix != ItemPrefix.None ? ItemPrefix + " " : "")}{ItemType} " +

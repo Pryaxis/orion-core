@@ -27,7 +27,7 @@ namespace Orion.Packets.Players {
     public sealed class PlayerUuidPacket : Packet {
         private string _playerUuid = "";
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         public override PacketType Type => PacketType.PlayerUuid;
 
         /// <summary>
@@ -41,7 +41,7 @@ namespace Orion.Packets.Players {
             }
         }
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [ExcludeFromCodeCoverage]
         public override string ToString() => $"{Type}[{PlayerUuid}]";
 

@@ -25,7 +25,7 @@ namespace Orion.Packets.Players {
     public sealed class PlayerQuickStackPacket : Packet {
         private byte _playerInventorySlotIndex;
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         public override PacketType Type => PacketType.PlayerQuickStack;
 
         /// <summary>
@@ -39,7 +39,7 @@ namespace Orion.Packets.Players {
             }
         }
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [ExcludeFromCodeCoverage]
         public override string ToString() => $"{Type}[...]";
 

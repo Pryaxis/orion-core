@@ -26,7 +26,7 @@ namespace Orion.Packets.World.TileEntities {
     public sealed class NetworkSign : NetworkTileEntity {
         private string _text = "";
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         public override TileEntityType Type => TileEntityType.Sign;
 
         /// <inheritdoc cref="ISign.Text"/>

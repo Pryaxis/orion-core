@@ -26,7 +26,7 @@ namespace Orion.Packets.Players {
         private byte _playerIndex;
         private short _playerMinionTargetNpcIndex;
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         public override PacketType Type => PacketType.PlayerMinionTargetNpc;
 
         /// <summary>
@@ -51,7 +51,7 @@ namespace Orion.Packets.Players {
             }
         }
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [ExcludeFromCodeCoverage]
         public override string ToString() => $"{Type}[#={PlayerIndex} to N={PlayerMinionTargetNpcIndex}]";
 

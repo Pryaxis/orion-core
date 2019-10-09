@@ -30,10 +30,10 @@ namespace Orion.Packets.Npcs {
         private short _npcIndex;
         private readonly DirtiableArray<Buff> _npcBuffs = new DirtiableArray<Buff>(TerrariaNpc.maxBuffs);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         public override bool IsDirty => base.IsDirty || _npcBuffs.IsDirty;
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         public override PacketType Type => PacketType.NpcBuffs;
 
         /// <summary>
@@ -52,13 +52,13 @@ namespace Orion.Packets.Npcs {
         /// </summary>
         public IArray<Buff> NpcBuffs => _npcBuffs;
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         public override void Clean() {
             base.Clean();
             _npcBuffs.Clean();
         }
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [ExcludeFromCodeCoverage]
         public override string ToString() => $"{Type}[...]";
 

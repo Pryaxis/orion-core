@@ -41,10 +41,10 @@ namespace Orion.Packets.World.Tiles {
 
         private readonly DirtiableList<NetworkTileEntity> _sectionTileEntities = new DirtiableList<NetworkTileEntity>();
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         public override bool IsDirty => base.IsDirty || SectionTiles.IsDirty || _sectionTileEntities.IsDirty;
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         public override PacketType Type => PacketType.Section;
 
         /// <summary>
@@ -119,14 +119,14 @@ namespace Orion.Packets.World.Tiles {
         /// </summary>
         public IList<NetworkTileEntity> SectionTileEntities => _sectionTileEntities;
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         public override void Clean() {
             base.Clean();
             SectionTiles.Clean();
             _sectionTileEntities.Clean();
         }
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [ExcludeFromCodeCoverage]
         public override string ToString() =>
             $"{Type}[{SectionWidth}x{SectionHeight} @ ({StartTileX}, {StartTileY}), ...]";

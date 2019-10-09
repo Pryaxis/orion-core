@@ -29,7 +29,7 @@ namespace Orion.Packets.Players {
     public sealed class PlayerDisconnectPacket : Packet {
         private TerrariaNetworkText _playerDisconnectReason = TerrariaNetworkText.Empty;
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         public override PacketType Type => PacketType.PlayerDisconnect;
 
         /// <summary>
@@ -45,7 +45,7 @@ namespace Orion.Packets.Players {
             }
         }
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [ExcludeFromCodeCoverage]
         public override string ToString() => $"{Type}[{PlayerDisconnectReason}]";
 

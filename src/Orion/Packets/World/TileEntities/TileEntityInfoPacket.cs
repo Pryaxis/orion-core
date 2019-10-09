@@ -26,10 +26,10 @@ namespace Orion.Packets.World.TileEntities {
         private int _tileEntityIndex;
         private NetworkTileEntity? _tileEntity;
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         public override PacketType Type => PacketType.TileEntityInfo;
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         public override bool IsDirty => base.IsDirty || TileEntity?.IsDirty == true;
 
         /// <summary>
@@ -54,13 +54,13 @@ namespace Orion.Packets.World.TileEntities {
             }
         }
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         public override void Clean() {
             base.Clean();
             TileEntity?.Clean();
         }
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [ExcludeFromCodeCoverage]
         public override string ToString() => $"{Type}[#={TileEntityIndex}, {TileEntity}]";
 

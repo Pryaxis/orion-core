@@ -31,10 +31,10 @@ namespace Orion.Packets.Players {
 
         private byte _playerIndex;
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         public override bool IsDirty => base.IsDirty || _playerBuffTypes.IsDirty;
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         public override PacketType Type => PacketType.PlayerBuffs;
 
         /// <summary>
@@ -53,13 +53,13 @@ namespace Orion.Packets.Players {
         /// </summary>
         public IArray<BuffType> PlayerBuffTypes => _playerBuffTypes;
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         public override void Clean() {
             base.Clean();
             _playerBuffTypes.Clean();
         }
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [ExcludeFromCodeCoverage]
         public override string ToString() => $"{Type}[#={PlayerIndex}, ...]";
 

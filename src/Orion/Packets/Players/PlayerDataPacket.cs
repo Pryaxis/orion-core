@@ -44,7 +44,7 @@ namespace Orion.Packets.Players {
         private PlayerDifficulty _playerDifficulty;
         private bool _playerHasExtraAccessory;
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         public override PacketType Type => PacketType.PlayerData;
 
         /// <summary>
@@ -224,7 +224,7 @@ namespace Orion.Packets.Players {
             }
         }
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [ExcludeFromCodeCoverage]
         public override string ToString() => $"{Type}[#={PlayerIndex} is {PlayerName}, ...]";
 

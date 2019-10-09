@@ -26,7 +26,7 @@ namespace Orion.Packets.Players {
         private byte _playerIndex;
         private short _healAmount;
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         public override PacketType Type => PacketType.PlayerHeal;
 
         /// <summary>
@@ -51,17 +51,17 @@ namespace Orion.Packets.Players {
             }
         }
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [ExcludeFromCodeCoverage]
         public override string ToString() => $"{Type}[#={PlayerIndex} by {HealAmount} hp, ...]";
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         private protected override void ReadFromReader(BinaryReader reader, PacketContext context) {
             _playerIndex = reader.ReadByte();
             _healAmount = reader.ReadInt16();
         }
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         private protected override void WriteToWriter(BinaryWriter writer, PacketContext context) {
             writer.Write(_playerIndex);
             writer.Write(_healAmount);

@@ -28,7 +28,7 @@ namespace Orion.Packets.World {
         private short _sunY;
         private short _moonY;
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         public override PacketType Type => PacketType.WorldTime;
 
         /// <summary>
@@ -75,11 +75,11 @@ namespace Orion.Packets.World {
             }
         }
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [ExcludeFromCodeCoverage]
         public override string ToString() => $"{Type}[{Time} @ {(IsDaytime ? "day" : "night")}, ...]";
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         private protected override void ReadFromReader(BinaryReader reader, PacketContext context) {
             _isDaytime = reader.ReadBoolean();
             _time = reader.ReadInt32();
@@ -87,7 +87,7 @@ namespace Orion.Packets.World {
             _moonY = reader.ReadInt16();
         }
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         private protected override void WriteToWriter(BinaryWriter writer, PacketContext context) {
             writer.Write(_isDaytime);
             writer.Write(_time);

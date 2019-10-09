@@ -28,7 +28,7 @@ namespace Orion.Packets.World.Tiles {
         private short _objectX;
         private short _objectY;
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         public override PacketType Type => PacketType.ObjectUnlock;
 
         /// <summary>
@@ -64,7 +64,7 @@ namespace Orion.Packets.World.Tiles {
             }
         }
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [ExcludeFromCodeCoverage]
         public override string ToString() => $"{Type}[{UnlockableObjectType} @ ({ObjectX}, {ObjectY})]";
 

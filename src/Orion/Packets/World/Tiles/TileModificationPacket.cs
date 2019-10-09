@@ -30,7 +30,7 @@ namespace Orion.Packets.World.Tiles {
         private short _tileModificationData;
         private byte _tileModificationStyle;
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         public override PacketType Type => PacketType.TileModification;
 
         /// <summary>
@@ -88,7 +88,7 @@ namespace Orion.Packets.World.Tiles {
             }
         }
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [ExcludeFromCodeCoverage]
         public override string ToString() => $"{Type}[{TileModification} @ ({TileX}, {TileY}), ...]";
 

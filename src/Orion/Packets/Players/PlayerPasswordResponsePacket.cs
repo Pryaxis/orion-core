@@ -27,7 +27,7 @@ namespace Orion.Packets.Players {
     public sealed class PlayerPasswordResponsePacket : Packet {
         private string _playerPassword = "";
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         public override PacketType Type => PacketType.PlayerPasswordResponse;
 
         /// <summary>
@@ -42,7 +42,7 @@ namespace Orion.Packets.Players {
             }
         }
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [ExcludeFromCodeCoverage]
         public override string ToString() => $"{Type}[{PlayerPassword}]";
 

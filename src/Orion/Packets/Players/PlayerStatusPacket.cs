@@ -29,7 +29,7 @@ namespace Orion.Packets.Players {
         private TerrariaNetworkText _playerStatusText = TerrariaNetworkText.Empty;
         private int _playerStatusIncrease;
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         public override PacketType Type => PacketType.PlayerStatus;
 
         /// <summary>
@@ -56,7 +56,7 @@ namespace Orion.Packets.Players {
             }
         }
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [ExcludeFromCodeCoverage]
         public override string ToString() => $"{Type}[{PlayerStatusText}, I={PlayerStatusIncrease}]";
 

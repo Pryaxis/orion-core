@@ -31,7 +31,7 @@ namespace Orion.Packets.World {
         private TerrariaNetworkText _chatText = TerrariaNetworkText.Empty;
         private short _chatLineWidth;
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         public override PacketType Type => PacketType.Chat;
 
         /// <summary>
@@ -68,7 +68,7 @@ namespace Orion.Packets.World {
             }
         }
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [ExcludeFromCodeCoverage]
         public override string ToString() => $"{Type}[{ChatText}, C={ChatColor}, ...]";
 

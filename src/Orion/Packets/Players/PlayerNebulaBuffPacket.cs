@@ -30,7 +30,7 @@ namespace Orion.Packets.Players {
         private BuffType _buffType;
         private Vector2 _buffPosition;
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         public override PacketType Type => PacketType.PlayerNebulaBuff;
 
         /// <summary>
@@ -66,7 +66,7 @@ namespace Orion.Packets.Players {
             }
         }
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [ExcludeFromCodeCoverage]
         public override string ToString() => $"{Type}[#={PlayerIndex}, {BuffType} at ({BuffPosition})]";
 

@@ -42,10 +42,10 @@ namespace Orion.Packets.Npcs {
         private byte _npcReleaserPlayerIndex;
         private readonly DirtiableArray<float> _npcAiValues = new DirtiableArray<float>(TerrariaNpc.maxAI);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         public override bool IsDirty => base.IsDirty || _npcAiValues.IsDirty;
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         public override PacketType Type => PacketType.NpcInfo;
 
         /// <summary>
@@ -186,13 +186,13 @@ namespace Orion.Packets.Npcs {
             }
         }
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         public override void Clean() {
             base.Clean();
             _npcAiValues.Clean();
         }
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [ExcludeFromCodeCoverage]
         public override string ToString() => $"{Type}[#={NpcIndex}, {NpcType} @ {NpcPosition}, ...]";
 

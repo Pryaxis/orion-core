@@ -26,7 +26,7 @@ namespace Orion.Packets.World.TileEntities {
         private LogicSensorType _logicSensorType;
         private bool _isActivated;
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         public override TileEntityType Type => TileEntityType.LogicSensor;
 
         /// <inheritdoc cref="ILogicSensor.LogicSensorType"/>

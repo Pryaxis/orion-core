@@ -25,7 +25,7 @@ namespace Orion.Packets.World.TileEntities {
     public sealed class NetworkTargetDummy : NetworkTileEntity {
         private int _npcIndex;
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         public override TileEntityType Type => TileEntityType.TargetDummy;
 
         /// <inheritdoc cref="ITargetDummy.NpcIndex"/>

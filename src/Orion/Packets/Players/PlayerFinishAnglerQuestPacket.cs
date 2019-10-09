@@ -22,7 +22,7 @@ namespace Orion.Packets.Players {
     /// Packet sent from the client to the server to finish the current angler quest.
     /// </summary>
     public sealed class PlayerFinishAnglerQuestPacket : Packet {
-        /// <inheritdoc />
+        /// <inheritdoc/>
         public override PacketType Type => PacketType.PlayerFinishAnglerQuest;
 
         private protected override void ReadFromReader(BinaryReader reader, PacketContext context) { }

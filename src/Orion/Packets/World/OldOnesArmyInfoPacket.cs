@@ -26,7 +26,7 @@ namespace Orion.Packets.World {
     public sealed class OldOnesArmyInfoPacket : Packet {
         private TimeSpan _timeBetweenWaves;
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         public override PacketType Type => PacketType.OldOnesArmyInfo;
 
         /// <summary>
@@ -40,7 +40,7 @@ namespace Orion.Packets.World {
             }
         }
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [ExcludeFromCodeCoverage]
         public override string ToString() => $"{Type}[T={TimeBetweenWaves}]";
 

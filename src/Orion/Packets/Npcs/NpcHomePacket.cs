@@ -28,7 +28,7 @@ namespace Orion.Packets.Npcs {
         private short _npcHomeY;
         private bool _isNpcHomeless;
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         public override PacketType Type => PacketType.NpcHome;
 
         /// <summary>
@@ -75,7 +75,7 @@ namespace Orion.Packets.Npcs {
             }
         }
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [ExcludeFromCodeCoverage]
         public override string ToString() => $"{Type}[#={NpcIndex} @ ({NpcHomeX}, {NpcHomeY}), ...]";
 

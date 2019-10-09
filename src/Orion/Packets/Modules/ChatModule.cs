@@ -33,7 +33,7 @@ namespace Orion.Packets.Modules {
         private TerrariaNetworkText _serverChatText = TerrariaNetworkText.Empty;
         private Color _serverChatColor;
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         public override ModuleType Type => ModuleType.Chat;
 
         /// <summary>
@@ -95,7 +95,7 @@ namespace Orion.Packets.Modules {
             }
         }
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [ExcludeFromCodeCoverage]
         public override string ToString() =>
             string.IsNullOrEmpty(ClientChatText)

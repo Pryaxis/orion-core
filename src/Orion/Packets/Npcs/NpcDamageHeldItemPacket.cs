@@ -26,7 +26,7 @@ namespace Orion.Packets.Npcs {
         private short _npcIndex;
         private byte _npcDamagerPlayerIndex;
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         public override PacketType Type => PacketType.NpcDamageHeldItem;
 
         /// <summary>
@@ -51,7 +51,7 @@ namespace Orion.Packets.Npcs {
             }
         }
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [ExcludeFromCodeCoverage]
         public override string ToString() => $"{Type}[#={NpcIndex} by P={NpcDamagerPlayerIndex}]";
 

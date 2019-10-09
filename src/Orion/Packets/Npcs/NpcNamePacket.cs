@@ -28,7 +28,7 @@ namespace Orion.Packets.Npcs {
         private short _npcIndex;
         private string _npcName = "";
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         public override PacketType Type => PacketType.NpcName;
 
         /// <summary>
@@ -54,7 +54,7 @@ namespace Orion.Packets.Npcs {
             }
         }
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [ExcludeFromCodeCoverage]
         public override string ToString() => $"{Type}[#={NpcIndex} is {NpcName}]";
 

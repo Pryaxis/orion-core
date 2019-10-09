@@ -27,7 +27,7 @@ namespace Orion.Packets.Players {
         private short _playerHealth;
         private short _playerMaxHealth;
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         public override PacketType Type => PacketType.PlayerHealth;
 
         /// <summary>
@@ -63,7 +63,7 @@ namespace Orion.Packets.Players {
             }
         }
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [ExcludeFromCodeCoverage]
         public override string ToString() => $"{Type}[#={PlayerIndex} has {PlayerHealth}/{PlayerMaxHealth} hp]";
 

@@ -26,7 +26,7 @@ namespace Orion.Packets.Entities {
         private byte _entityIndex;
         private EntityAction _entityAction;
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         public override PacketType Type => PacketType.EntityAction;
 
         /// <summary>
@@ -51,7 +51,7 @@ namespace Orion.Packets.Entities {
             }
         }
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [ExcludeFromCodeCoverage]
         public override string ToString() => $"{Type}[{EntityAction} by #={EntityIndex}]";
 

@@ -26,7 +26,7 @@ namespace Orion.Packets.World {
         private short _crystalX;
         private short _crystalY;
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         public override PacketType Type => PacketType.OldOnesArmyStart;
 
         /// <summary>
@@ -51,7 +51,7 @@ namespace Orion.Packets.World {
             }
         }
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [ExcludeFromCodeCoverage]
         public override string ToString() => $"{Type}[({CrystalX}, {CrystalY})]";
 

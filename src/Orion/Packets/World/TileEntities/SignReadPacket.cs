@@ -26,7 +26,7 @@ namespace Orion.Packets.World.TileEntities {
         private short _signX;
         private short _signY;
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         public override PacketType Type => PacketType.SignRead;
 
         /// <summary>
@@ -51,7 +51,7 @@ namespace Orion.Packets.World.TileEntities {
             }
         }
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [ExcludeFromCodeCoverage]
         public override string ToString() => $"{Type}[({SignX}, {SignY})]";
 

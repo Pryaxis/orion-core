@@ -23,7 +23,7 @@ namespace Orion.Packets.Players {
     /// <see cref="PlayerContinueConnectingPacket"/>.
     /// </summary>
     public sealed class PlayerJoinPacket : Packet {
-        /// <inheritdoc />
+        /// <inheritdoc/>
         public override PacketType Type => PacketType.PlayerJoin;
 
         private protected override void ReadFromReader(BinaryReader reader, PacketContext context) { }

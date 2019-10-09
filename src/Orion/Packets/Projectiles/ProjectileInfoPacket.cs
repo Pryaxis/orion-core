@@ -40,10 +40,10 @@ namespace Orion.Packets.Projectiles {
         private readonly DirtiableArray<float> _projectileAiValues =
             new DirtiableArray<float>(TerrariaProjectile.maxAI);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         public override bool IsDirty => base.IsDirty || _projectileAiValues.IsDirty;
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         public override PacketType Type => PacketType.ProjectileInfo;
 
         /// <summary>
@@ -139,13 +139,13 @@ namespace Orion.Packets.Projectiles {
             }
         }
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         public override void Clean() {
             base.Clean();
             _projectileAiValues.Clean();
         }
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [ExcludeFromCodeCoverage]
         public override string ToString() =>
             $"{Type}[#={ProjectileIdentity}, {ProjectileType} @ ({ProjectilePosition}), ...]";

@@ -71,7 +71,7 @@ namespace Orion.Packets.World.TileEntities {
             }
         }
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         public bool IsDirty { get; private protected set; }
 
         // Prevent outside inheritance.
@@ -90,10 +90,10 @@ namespace Orion.Packets.World.TileEntities {
             return tileEntity;
         }
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         public void Clean() => IsDirty = false;
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [ExcludeFromCodeCoverage]
         public override string ToString() => $"{Type} @ ({X}, {Y})";
 

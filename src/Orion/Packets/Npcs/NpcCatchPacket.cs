@@ -26,7 +26,7 @@ namespace Orion.Packets.Npcs {
         private short _npcIndex;
         private byte _npcCatcherPlayerIndex;
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         public override PacketType Type => PacketType.NpcCatch;
 
         /// <summary>
@@ -51,7 +51,7 @@ namespace Orion.Packets.Npcs {
             }
         }
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [ExcludeFromCodeCoverage]
         public override string ToString() => $"{Type}[#={NpcIndex} by P={NpcCatcherPlayerIndex}]";
 

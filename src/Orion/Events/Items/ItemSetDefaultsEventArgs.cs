@@ -23,7 +23,7 @@ namespace Orion.Events.Items {
     /// Provides data for the <see cref="IItemService.ItemSetDefaults"/> event.
     /// </summary>
     public sealed class ItemSetDefaultsEventArgs : ItemEventArgs, ICancelable {
-        /// <inheritdoc />
+        /// <inheritdoc/>
         public string? CancellationReason { get; set; }
 
         /// <summary>

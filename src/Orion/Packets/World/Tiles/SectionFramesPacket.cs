@@ -29,7 +29,7 @@ namespace Orion.Packets.World.Tiles {
         private short _endSectionX;
         private short _endSectionY;
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         public override PacketType Type => PacketType.SectionFrames;
 
         /// <summary>
@@ -76,7 +76,7 @@ namespace Orion.Packets.World.Tiles {
             }
         }
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [ExcludeFromCodeCoverage]
         public override string ToString() =>
             $"{Type}[({StartSectionX}, {StartSectionY}) to ({EndSectionX}, {EndSectionY})]";

@@ -28,7 +28,7 @@ namespace Orion.Packets.World.Tiles {
         private readonly Tile[] _tiles;
         private readonly Tile[] _cleanTiles;
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         public bool IsDirty {
             get {
                 // Convert the tiles to a span of bytes, and the clean tiles to a span of bytes. This allows us to use
@@ -96,7 +96,7 @@ namespace Orion.Packets.World.Tiles {
             Height = height;
         }
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         public void Clean() {
             // Convert the tiles to a span of bytes, and the clean tiles to a span of bytes. This allows us to use
             // CopyTo, which is highly optimized for the purpose of copying. This is significantly faster than just

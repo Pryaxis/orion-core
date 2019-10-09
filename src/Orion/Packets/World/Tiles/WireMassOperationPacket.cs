@@ -29,7 +29,7 @@ namespace Orion.Packets.World.Tiles {
         private short _endTileY;
         private WireOperations _wireOperations;
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         public override PacketType Type => PacketType.WireMassOperation;
 
         /// <summary>
@@ -87,7 +87,7 @@ namespace Orion.Packets.World.Tiles {
             }
         }
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [ExcludeFromCodeCoverage]
         public override string ToString() =>
             $"{Type}[{WireOperations:F} from ({StartTileX}, {StartTileY}) to ({EndTileX}, {EndTileY})]";

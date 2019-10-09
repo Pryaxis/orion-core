@@ -28,7 +28,7 @@ namespace Orion.Packets.World {
         private sbyte _invasionIconType;
         private sbyte _invasionWaveNumber;
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         public override PacketType Type => PacketType.InvasionInfo;
 
         /// <summary>
@@ -76,7 +76,7 @@ namespace Orion.Packets.World {
             }
         }
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [ExcludeFromCodeCoverage]
         public override string ToString() =>
             $"{Type}[#={InvasionWaveNumber}: {NumberOfKills}/{NumberOfKillsToProgress}, ...]";

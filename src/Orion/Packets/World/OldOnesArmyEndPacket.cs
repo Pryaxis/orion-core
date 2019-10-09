@@ -22,7 +22,7 @@ namespace Orion.Packets.World {
     /// Packet sent from the server to the client to end the Old One's Army event.
     /// </summary>
     public sealed class OldOnesArmyEndPacket : Packet {
-        /// <inheritdoc />
+        /// <inheritdoc/>
         public override PacketType Type => PacketType.OldOnesArmyEnd;
 
         private protected override void ReadFromReader(BinaryReader reader, PacketContext context) { }

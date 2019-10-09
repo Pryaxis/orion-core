@@ -27,7 +27,7 @@ namespace Orion.Packets.Players {
         private short _playerSpawnX;
         private short _playerSpawnY;
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         public override PacketType Type => PacketType.PlayerSpawn;
 
         /// <summary>
@@ -63,7 +63,7 @@ namespace Orion.Packets.Players {
             }
         }
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [ExcludeFromCodeCoverage]
         public override string ToString() => $"{Type}[#={PlayerIndex} @ ({PlayerSpawnX}, {PlayerSpawnY})]";
 

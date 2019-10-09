@@ -30,7 +30,7 @@ namespace Orion.Packets.Npcs {
         private Vector2 _newNpcPosition;
         private Vector2 _newNpcVelocity;
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         public override PacketType Type => PacketType.TeleportNpcPortal;
 
         /// <summary>
@@ -77,7 +77,7 @@ namespace Orion.Packets.Npcs {
             }
         }
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [ExcludeFromCodeCoverage]
         public override string ToString() => $"{Type}[#={NpcIndex} @ {NewNpcPosition}, ...]";
 

@@ -27,7 +27,7 @@ namespace Orion.Packets.Players {
         private byte _playerIndex;
         private PlayerTeam _playerTeam;
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         public override PacketType Type => PacketType.PlayerTeam;
 
         /// <summary>
@@ -52,7 +52,7 @@ namespace Orion.Packets.Players {
             }
         }
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [ExcludeFromCodeCoverage]
         public override string ToString() => $"{Type}[#={PlayerIndex} is {PlayerTeam}]";
 

@@ -27,7 +27,7 @@ namespace Orion.Packets.World {
     public sealed class PoofOfSmokePacket : Packet {
         private Vector2 _smokePosition;
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         public override PacketType Type => PacketType.PoofOfSmoke;
 
         /// <summary>
@@ -41,7 +41,7 @@ namespace Orion.Packets.World {
             }
         }
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [ExcludeFromCodeCoverage]
         public override string ToString() => $"{Type}[({SmokePosition})]";
 

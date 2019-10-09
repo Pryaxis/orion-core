@@ -29,7 +29,7 @@ namespace Orion.Packets.World.Tiles {
         private short _doorY;
         private bool _toggleDirection;
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         public override PacketType Type => PacketType.ToggleDoor;
 
         /// <summary>
@@ -76,7 +76,7 @@ namespace Orion.Packets.World.Tiles {
             }
         }
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [ExcludeFromCodeCoverage]
         public override string ToString() => $"{Type}[{ToggleDoorAction} @ ({DoorX}, {DoorY}), ...]";
 

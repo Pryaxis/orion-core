@@ -23,7 +23,7 @@ namespace Orion.Packets.Players {
     /// <see cref="PlayerConnectPacket"/>.
     /// </summary>
     public sealed class PlayerPasswordChallengePacket : Packet {
-        /// <inheritdoc />
+        /// <inheritdoc/>
         public override PacketType Type => PacketType.PlayerPasswordChallenge;
 
         private protected override void ReadFromReader(BinaryReader reader, PacketContext context) { }

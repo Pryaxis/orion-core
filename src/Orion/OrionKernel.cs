@@ -94,7 +94,7 @@ namespace Orion {
             Hooks.Command.Process += ProcessHandler;
         }
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         public override void Dispose(bool disposing) {
             base.Dispose(disposing);
 

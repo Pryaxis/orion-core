@@ -28,7 +28,7 @@ namespace Orion.Packets.World.TileEntities {
         private int _itemStackSize;
         private ItemPrefix _itemPrefix;
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         public override TileEntityType Type => TileEntityType.ItemFrame;
 
         /// <inheritdoc cref="IItemFrame.ItemType"/>

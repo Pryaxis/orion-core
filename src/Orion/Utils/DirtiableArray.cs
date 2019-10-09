@@ -33,10 +33,10 @@ namespace Orion.Utils {
         internal readonly T[] _array;
         private bool _isDirty;
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         public int Count => _array.Length;
 
-        /// <inheritdoc cref="IArray{T}.this" />
+        /// <inheritdoc cref="IArray{T}.this"/>
         public T this[int index] {
             get => _array[index];
             set {
@@ -45,7 +45,7 @@ namespace Orion.Utils {
             }
         }
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         public bool IsDirty =>
             _isDirty || _containsDirtiableElements && this.Cast<IDirtiable>().Any(d => d?.IsDirty == true);
 
@@ -62,10 +62,10 @@ namespace Orion.Utils {
             _array = new T[count];
         }
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         public IEnumerator<T> GetEnumerator() => ((IEnumerable<T>)_array).GetEnumerator();
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         public void Clean() {
             _isDirty = false;
             if (!_containsDirtiableElements) {

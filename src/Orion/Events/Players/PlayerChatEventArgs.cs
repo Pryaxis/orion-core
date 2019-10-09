@@ -26,7 +26,7 @@ namespace Orion.Events.Players {
     public sealed class PlayerChatEventArgs : PlayerEventArgs, ICancelable {
         private readonly ChatModule _module;
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         public string? CancellationReason { get; set; }
 
         /// <inheritdoc cref="ChatModule.ClientChatCommand"/>

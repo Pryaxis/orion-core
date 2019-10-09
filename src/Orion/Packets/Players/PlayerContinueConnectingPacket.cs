@@ -26,7 +26,7 @@ namespace Orion.Packets.Players {
     public sealed class PlayerContinueConnectingPacket : Packet {
         private byte _playerIndex;
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         public override PacketType Type => PacketType.PlayerContinueConnecting;
 
         /// <summary>
@@ -40,7 +40,7 @@ namespace Orion.Packets.Players {
             }
         }
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [ExcludeFromCodeCoverage]
         public override string ToString() => $"{Type}[#={PlayerIndex}]";
 

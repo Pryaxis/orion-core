@@ -22,7 +22,7 @@ namespace Orion.Packets.Players {
     /// Packet sent from the client to to the server to use a teleportation potion.
     /// </summary>
     public sealed class PlayerTeleportationPotionPacket : Packet {
-        /// <inheritdoc />
+        /// <inheritdoc/>
         public override PacketType Type => PacketType.PlayerTeleportationPotion;
 
         private protected override void ReadFromReader(BinaryReader reader, PacketContext context) { }

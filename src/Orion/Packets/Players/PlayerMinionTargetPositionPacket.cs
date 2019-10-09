@@ -28,7 +28,7 @@ namespace Orion.Packets.Players {
         private byte _playerIndex;
         private Vector2 _playerMinionTargetPosition;
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         public override PacketType Type => PacketType.PlayerMinionTargetPosition;
 
         /// <summary>
@@ -53,7 +53,7 @@ namespace Orion.Packets.Players {
             }
         }
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [ExcludeFromCodeCoverage]
         public override string ToString() => $"{Type}[#={PlayerIndex} to ({PlayerMinionTargetPosition})]";
 

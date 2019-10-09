@@ -29,7 +29,7 @@ namespace Orion.Packets.World {
         private byte _treeHeight;
         private short _treeType;
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         public override PacketType Type => PacketType.TreeGrowingEffect;
 
         /// <summary>
@@ -76,7 +76,7 @@ namespace Orion.Packets.World {
             }
         }
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [ExcludeFromCodeCoverage]
         public override string ToString() => $"{Type}[({TreeX}, {TreeY}), ...]";
 

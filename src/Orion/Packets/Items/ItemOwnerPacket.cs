@@ -26,7 +26,7 @@ namespace Orion.Packets.Items {
         private short _itemIndex;
         private byte _itemOwnerPlayerIndex;
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         public override PacketType Type => PacketType.ItemOwner;
 
         /// <summary>
@@ -51,7 +51,7 @@ namespace Orion.Packets.Items {
             }
         }
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [ExcludeFromCodeCoverage]
         public override string ToString() => $"{Type}[#={ItemIndex}, P={ItemOwnerPlayerIndex}]";
 

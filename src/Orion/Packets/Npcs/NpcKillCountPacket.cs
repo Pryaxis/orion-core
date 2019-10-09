@@ -27,7 +27,7 @@ namespace Orion.Packets.Npcs {
         private NpcType _npcType;
         private int _npcTypeKillCount;
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         public override PacketType Type => PacketType.NpcKillCount;
 
         /// <summary>
@@ -52,17 +52,17 @@ namespace Orion.Packets.Npcs {
             }
         }
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [ExcludeFromCodeCoverage]
         public override string ToString() => $"{Type}[{NpcType} x{NpcTypeKillCount}]";
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         private protected override void ReadFromReader(BinaryReader reader, PacketContext context) {
             _npcType = (NpcType)reader.ReadInt16();
             _npcTypeKillCount = reader.ReadInt32();
         }
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         private protected override void WriteToWriter(BinaryWriter writer, PacketContext context) {
             writer.Write((short)_npcType);
             writer.Write(_npcTypeKillCount);

@@ -27,10 +27,10 @@ namespace Orion.Events.Packets {
         private Packet _packet;
         private bool _isDirty;
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         public string? CancellationReason { get; set; }
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         public bool IsDirty => _isDirty || Packet.IsDirty;
 
         /// <summary>
@@ -49,7 +49,7 @@ namespace Orion.Events.Packets {
             _packet = packet ?? throw new ArgumentNullException(nameof(packet));
         }
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         public void Clean() {
             _isDirty = false;
             Packet.Clean();

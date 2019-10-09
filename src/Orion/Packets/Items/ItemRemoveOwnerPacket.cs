@@ -26,7 +26,7 @@ namespace Orion.Packets.Items {
     public sealed class ItemRemoveOwnerPacket : Packet {
         private short _itemIndex;
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         public override PacketType Type => PacketType.ItemRemoveOwner;
 
         /// <summary>
@@ -40,7 +40,7 @@ namespace Orion.Packets.Items {
             }
         }
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [ExcludeFromCodeCoverage]
         public override string ToString() => $"{Type}[#={ItemIndex}]";
 

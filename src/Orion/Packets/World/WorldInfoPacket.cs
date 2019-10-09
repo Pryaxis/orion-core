@@ -106,11 +106,11 @@ namespace Orion.Packets.World {
         private ulong _lobbyId;
         private float _sandstormIntensity;
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         public override bool IsDirty => base.IsDirty || _treeStyleBoundaries.IsDirty || _treeStyles.IsDirty ||
                                         _caveBackgroundStyleBoundaries.IsDirty || _caveBackgroundStyles.IsDirty;
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         public override PacketType Type => PacketType.WorldInfo;
 
         /// <summary>
@@ -938,7 +938,7 @@ namespace Orion.Packets.World {
             }
         }
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         public override void Clean() {
             base.Clean();
             _treeStyleBoundaries.Clean();
@@ -947,7 +947,7 @@ namespace Orion.Packets.World {
             _caveBackgroundStyles.Clean();
         }
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [ExcludeFromCodeCoverage]
         public override string ToString() => $"{Type}[{WorldName}, ...]";
 

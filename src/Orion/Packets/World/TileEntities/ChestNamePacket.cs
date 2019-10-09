@@ -30,7 +30,7 @@ namespace Orion.Packets.World.TileEntities {
         private short _chestY;
         private string _chestName = "";
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         public override PacketType Type => PacketType.ChestName;
 
         /// <summary>
@@ -78,7 +78,7 @@ namespace Orion.Packets.World.TileEntities {
             }
         }
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [ExcludeFromCodeCoverage]
         public override string ToString() => $"{Type}[#={ChestIndex} @ ({ChestX}, {ChestY}) is {ChestName}]";
 

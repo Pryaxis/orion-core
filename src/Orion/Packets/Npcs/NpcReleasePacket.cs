@@ -29,7 +29,7 @@ namespace Orion.Packets.Npcs {
         private NpcType _npcType = NpcType.None;
         private byte _npcStyle;
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         public override PacketType Type => PacketType.NpcRelease;
 
         /// <summary>
@@ -65,7 +65,7 @@ namespace Orion.Packets.Npcs {
             }
         }
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [ExcludeFromCodeCoverage]
         public override string ToString() => $"{Type}[{NpcType}_{NpcStyle} @ {NpcPosition}]";
 

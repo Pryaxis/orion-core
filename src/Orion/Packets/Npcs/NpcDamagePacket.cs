@@ -29,7 +29,7 @@ namespace Orion.Packets.Npcs {
         private sbyte _hitDirection;
         private bool _isCriticalHit;
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         public override PacketType Type => PacketType.NpcDamage;
 
         /// <summary>
@@ -87,7 +87,7 @@ namespace Orion.Packets.Npcs {
             }
         }
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [ExcludeFromCodeCoverage]
         public override string ToString() => $"{Type}[#={NpcIndex} for {Damage} hp, ...]";
 

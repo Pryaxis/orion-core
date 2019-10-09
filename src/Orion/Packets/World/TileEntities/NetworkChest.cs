@@ -26,7 +26,7 @@ namespace Orion.Packets.World.TileEntities {
     public sealed class NetworkChest : NetworkTileEntity {
         private string _name = "";
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         public override TileEntityType Type => TileEntityType.Chest;
 
         /// <inheritdoc cref="IChest.Name"/>

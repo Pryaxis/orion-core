@@ -27,7 +27,7 @@ namespace Orion.Packets.World {
         private byte _corruptionAmount;
         private byte _crimsonAmount;
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         public override PacketType Type => PacketType.WorldBiomeStats;
 
         /// <summary>
@@ -63,19 +63,19 @@ namespace Orion.Packets.World {
             }
         }
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [ExcludeFromCodeCoverage]
         public override string ToString() =>
             $"{Type}[H={HallowedAmount} vs. (C={CorruptionAmount} or C'={CrimsonAmount})]";
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         private protected override void ReadFromReader(BinaryReader reader, PacketContext context) {
             _hallowedAmount = reader.ReadByte();
             _corruptionAmount = reader.ReadByte();
             _crimsonAmount = reader.ReadByte();
         }
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         private protected override void WriteToWriter(BinaryWriter writer, PacketContext context) {
             writer.Write(_hallowedAmount);
             writer.Write(_corruptionAmount);

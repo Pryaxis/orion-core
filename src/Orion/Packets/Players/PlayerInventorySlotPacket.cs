@@ -30,7 +30,7 @@ namespace Orion.Packets.Players {
         private ItemPrefix _itemPrefix;
         private ItemType _itemType;
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         public override PacketType Type => PacketType.PlayerInventorySlot;
 
         /// <summary>
@@ -88,7 +88,7 @@ namespace Orion.Packets.Players {
             }
         }
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [ExcludeFromCodeCoverage]
         public override string ToString() =>
             $"{Type}[#={PlayerIndex}, {PlayerInventorySlotIndex} is " +

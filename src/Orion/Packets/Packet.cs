@@ -163,7 +163,7 @@ namespace Orion.Packets {
 
         private protected bool _isDirty;
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         public virtual bool IsDirty => _isDirty;
 
         /// <summary>
@@ -215,11 +215,11 @@ namespace Orion.Packets {
             }
         }
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [ExcludeFromCodeCoverage]
         public override string ToString() => $"{Type}";
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         public virtual void Clean() => _isDirty = false;
 
         /// <summary>

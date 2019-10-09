@@ -26,7 +26,7 @@ namespace Orion.Packets.World {
     public sealed class MoonLordCountdownPacket : Packet {
         private TimeSpan _moonLordCountdown;
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         public override PacketType Type => PacketType.MoonLordCountdown;
 
         /// <summary>
@@ -40,7 +40,7 @@ namespace Orion.Packets.World {
             }
         }
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [ExcludeFromCodeCoverage]
         public override string ToString() => $"{Type}[{MoonLordCountdown}]";
 

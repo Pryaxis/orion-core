@@ -30,7 +30,7 @@ namespace Orion.Packets.World.TileEntities {
         private string _signText = "";
         private byte _modifierPlayerIndex;
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         public override PacketType Type => PacketType.SignInfo;
 
         /// <summary>
@@ -89,7 +89,7 @@ namespace Orion.Packets.World.TileEntities {
             }
         }
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [ExcludeFromCodeCoverage]
         public override string ToString() => $"{Type}[#={SignIndex} @ ({SignX}, {SignY}): \"{SignText}\"]";
 

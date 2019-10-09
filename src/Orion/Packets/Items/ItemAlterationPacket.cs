@@ -43,7 +43,7 @@ namespace Orion.Packets.Items {
         private ItemType? _itemUsesAmmoTypeOverride;
         private bool? _itemIsNotAmmoOverride;
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         public override PacketType Type => PacketType.ItemAlteration;
 
         /// <summary>
@@ -205,7 +205,7 @@ namespace Orion.Packets.Items {
             }
         }
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [ExcludeFromCodeCoverage]
         public override string ToString() => $"{Type}[#={ItemIndex}, ...]";
 

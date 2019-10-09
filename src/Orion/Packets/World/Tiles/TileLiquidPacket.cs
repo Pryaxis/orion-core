@@ -26,10 +26,10 @@ namespace Orion.Packets.World.Tiles {
     public sealed class TileLiquidPacket : Packet {
         private NetworkLiquid _tileLiquid = new NetworkLiquid();
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         public override bool IsDirty => base.IsDirty || TileLiquid.IsDirty;
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         public override PacketType Type => PacketType.TileLiquid;
 
         /// <summary>
@@ -44,13 +44,13 @@ namespace Orion.Packets.World.Tiles {
             }
         }
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         public override void Clean() {
             base.Clean();
             TileLiquid.Clean();
         }
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [ExcludeFromCodeCoverage]
         public override string ToString() => $"{Type}[{TileLiquid}]";
 

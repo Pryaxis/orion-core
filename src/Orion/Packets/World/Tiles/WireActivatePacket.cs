@@ -26,7 +26,7 @@ namespace Orion.Packets.World.Tiles {
         private short _wireY;
         private short _wireX;
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         public override PacketType Type => PacketType.WireActivate;
 
         /// <summary>
@@ -51,7 +51,7 @@ namespace Orion.Packets.World.Tiles {
             }
         }
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [ExcludeFromCodeCoverage]
         public override string ToString() => $"{Type}[({WireX}, {WireY})]";
 

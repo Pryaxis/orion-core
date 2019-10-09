@@ -26,7 +26,7 @@ namespace Orion.Packets.World {
         private byte _currentAnglerQuest;
         private bool _isAnglerQuestFinished;
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         public override PacketType Type => PacketType.WorldAnglerQuest;
 
         /// <summary>
@@ -52,7 +52,7 @@ namespace Orion.Packets.World {
             }
         }
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [ExcludeFromCodeCoverage]
         public override string ToString() =>
             $"{Type}[{CurrentAnglerQuest}, F={IsAnglerQuestFinished}]";

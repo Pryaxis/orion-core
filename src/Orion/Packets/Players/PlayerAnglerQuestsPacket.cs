@@ -25,7 +25,7 @@ namespace Orion.Packets.Players {
     public sealed class PlayerAnglerQuestsPacket : Packet {
         private int _playerNumberOfAnglerQuestsCompleted;
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         public override PacketType Type => PacketType.PlayerAnglerQuests;
 
         /// <summary>
@@ -39,7 +39,7 @@ namespace Orion.Packets.Players {
             }
         }
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [ExcludeFromCodeCoverage]
         public override string ToString() => $"{Type}[{PlayerNumberOfAnglerQuestsCompleted}]";
 

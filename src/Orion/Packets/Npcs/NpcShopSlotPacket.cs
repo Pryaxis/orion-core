@@ -31,7 +31,7 @@ namespace Orion.Packets.Npcs {
         private int _itemValue;
         private bool _canBuyItemOnce;
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         public override PacketType Type => PacketType.NpcShopSlot;
 
         /// <summary>
@@ -100,7 +100,7 @@ namespace Orion.Packets.Npcs {
             }
         }
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [ExcludeFromCodeCoverage]
         public override string ToString() => $"{Type}[{ItemType} @ {NpcShopSlotIndex}, ...]";
 

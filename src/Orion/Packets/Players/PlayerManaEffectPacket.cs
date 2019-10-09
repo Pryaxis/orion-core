@@ -26,7 +26,7 @@ namespace Orion.Packets.Players {
         private byte _playerIndex;
         private short _manaAmount;
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         public override PacketType Type => PacketType.PlayerManaEffect;
 
         /// <summary>
@@ -51,7 +51,7 @@ namespace Orion.Packets.Players {
             }
         }
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [ExcludeFromCodeCoverage]
         public override string ToString() => $"{Type}[#={PlayerIndex} for {ManaAmount} mp]";
 

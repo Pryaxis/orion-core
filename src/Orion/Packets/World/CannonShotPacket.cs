@@ -31,7 +31,7 @@ namespace Orion.Packets.World {
         private short _shotAmmoType;
         private byte _shooterPlayerIndex;
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         public override PacketType Type => PacketType.CannonShot;
 
         /// <summary>
@@ -112,7 +112,7 @@ namespace Orion.Packets.World {
             }
         }
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [ExcludeFromCodeCoverage]
         public override string ToString() =>
             $"{Type}[#={ShooterPlayerIndex}, {ShotAmmoType} @ ({CannonX}, {CannonY}), ...]";

@@ -23,7 +23,7 @@ namespace Orion.Events.Players {
     /// Provides data for the <see cref="IPlayerService.PlayerJoin"/> event.
     /// </summary>
     public sealed class PlayerJoinEventArgs : PlayerEventArgs, ICancelable {
-        /// <inheritdoc />
+        /// <inheritdoc/>
         public string? CancellationReason { get; set; }
 
         /// <summary>

@@ -36,7 +36,7 @@ namespace Orion.Packets.Players {
         private bool _isHitCritical;
         private bool _isHitFromPvp;
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         public override PacketType Type => PacketType.PlayerDamage;
 
         /// <summary>
@@ -117,11 +117,11 @@ namespace Orion.Packets.Players {
             }
         }
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [ExcludeFromCodeCoverage]
         public override string ToString() => $"{Type}[#={PlayerIndex} for {Damage} hp, ...]";
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         private protected override void ReadFromReader(BinaryReader reader, PacketContext context) {
             _playerIndex = reader.ReadByte();
             _playerDeathReason = reader.ReadPlayerDeathReason();
@@ -133,7 +133,7 @@ namespace Orion.Packets.Players {
             _hitCooldown = reader.ReadSByte();
         }
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         private protected override void WriteToWriter(BinaryWriter writer, PacketContext context) {
             writer.Write(_playerIndex);
             writer.Write(_playerDeathReason);

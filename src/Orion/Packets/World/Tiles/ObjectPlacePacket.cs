@@ -32,7 +32,7 @@ namespace Orion.Packets.World.Tiles {
         private sbyte _objectRandomState;
         private bool _objectDirection;
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         public override PacketType Type => PacketType.ObjectPlace;
 
         /// <summary>
@@ -101,11 +101,11 @@ namespace Orion.Packets.World.Tiles {
             }
         }
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [ExcludeFromCodeCoverage]
         public override string ToString() => $"{Type}[{ObjectType}_{ObjectStyle} @ ({ObjectX}, {ObjectY}), ...]";
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         private protected override void ReadFromReader(BinaryReader reader, PacketContext context) {
             _objectX = reader.ReadInt16();
             _objectY = reader.ReadInt16();
@@ -118,7 +118,7 @@ namespace Orion.Packets.World.Tiles {
             _objectDirection = reader.ReadBoolean();
         }
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         private protected override void WriteToWriter(BinaryWriter writer, PacketContext context) {
             writer.Write(_objectX);
             writer.Write(_objectY);

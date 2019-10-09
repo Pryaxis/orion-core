@@ -26,7 +26,7 @@ namespace Orion.Packets.Npcs {
     public sealed class NpcTypeKilledPacket : Packet {
         private NpcType _npcTypeKilled;
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         public override PacketType Type => PacketType.NpcTypeKilled;
 
         /// <summary>
@@ -40,7 +40,7 @@ namespace Orion.Packets.Npcs {
             }
         }
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [ExcludeFromCodeCoverage]
         public override string ToString() => $"{Type}[{NpcTypeKilled}]";
 

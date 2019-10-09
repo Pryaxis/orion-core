@@ -27,7 +27,7 @@ namespace Orion.Packets.Players {
         private float _playerItemRotation;
         private short _playerItemAnimation;
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         public override PacketType Type => PacketType.PlayerItemAnimation;
 
         /// <summary>
@@ -63,7 +63,7 @@ namespace Orion.Packets.Players {
             }
         }
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [ExcludeFromCodeCoverage]
         public override string ToString() => $"{Type}[#={PlayerIndex}, ...]";
 

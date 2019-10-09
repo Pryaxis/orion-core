@@ -30,7 +30,7 @@ namespace Orion.Packets.Players {
         private short _itemStackSize;
         private byte _playerIndex;
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         public override PacketType Type => PacketType.PlayerConsumeItems;
 
         /// <summary>
@@ -66,7 +66,7 @@ namespace Orion.Packets.Players {
             }
         }
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [ExcludeFromCodeCoverage]
         public override string ToString() => $"{Type}[#={PlayerIndex}, {ItemType} x{ItemStackSize}]";
 

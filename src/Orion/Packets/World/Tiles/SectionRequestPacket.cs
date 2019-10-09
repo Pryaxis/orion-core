@@ -26,7 +26,7 @@ namespace Orion.Packets.World.Tiles {
         private int _sectionX;
         private int _sectionY;
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         public override PacketType Type => PacketType.SectionRequest;
 
         /// <summary>
@@ -51,7 +51,7 @@ namespace Orion.Packets.World.Tiles {
             }
         }
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [ExcludeFromCodeCoverage]
         public override string ToString() => $"{Type}[({SectionX}, {SectionY})]";
 

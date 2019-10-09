@@ -22,7 +22,7 @@ namespace Orion.Packets.World {
     /// Packet sent from the client to the server to toggle the birthday party.
     /// </summary>
     public sealed class ToggleBirthdayPartyPacket : Packet {
-        /// <inheritdoc />
+        /// <inheritdoc/>
         public override PacketType Type => PacketType.ToggleBirthdayParty;
 
         private protected override void ReadFromReader(BinaryReader reader, PacketContext context) { }

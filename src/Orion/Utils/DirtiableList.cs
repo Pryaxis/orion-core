@@ -34,14 +34,14 @@ namespace Orion.Utils {
         internal readonly IList<T> _list = new List<T>();
         private bool _isDirty;
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         public int Count => _list.Count;
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         public bool IsDirty =>
             _isDirty || _containsDirtiableElements && this.Cast<IDirtiable>().Any(d => d?.IsDirty == true);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         public T this[int index] {
             get => _list[index];
             set {
@@ -52,54 +52,54 @@ namespace Orion.Utils {
 
         bool ICollection<T>.IsReadOnly => false;
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         public IEnumerator<T> GetEnumerator() => _list.GetEnumerator();
 
         [ExcludeFromCodeCoverage]
         IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         public void Add(T item) {
             _list.Add(item);
             _isDirty = true;
         }
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         public void Clear() {
             _list.Clear();
             _isDirty = true;
         }
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [Pure]
         public bool Contains(T item) => _list.Contains(item);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         public void CopyTo(T[] array, int arrayIndex) => _list.CopyTo(array, arrayIndex);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         public bool Remove(T item) {
             var result = _list.Remove(item);
             _isDirty = true;
             return result;
         }
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         public int IndexOf(T item) => _list.IndexOf(item);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         public void Insert(int index, T item) {
             _list.Insert(index, item);
             _isDirty = true;
         }
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         public void RemoveAt(int index) {
             _list.RemoveAt(index);
             _isDirty = true;
         }
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         public void Clean() {
             _isDirty = false;
             if (!_containsDirtiableElements) {

@@ -27,7 +27,7 @@ namespace Orion.Packets.Projectiles {
         private short _projectileIdentity;
         private byte _projectileOwnerPlayerIndex;
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         public override PacketType Type => PacketType.ProjectileRemoveIdentity;
 
         /// <summary>
@@ -52,7 +52,7 @@ namespace Orion.Packets.Projectiles {
             }
         }
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [ExcludeFromCodeCoverage]
         public override string ToString() => $"{Type}[#={ProjectileIdentity}), P={ProjectileOwnerPlayerIndex}]";
 

@@ -30,7 +30,7 @@ namespace Orion.Packets.World.TileEntities {
         private ItemPrefix _itemPrefix;
         private short _itemStackSize;
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         public override PacketType Type => PacketType.ItemFrame;
 
         /// <summary>
@@ -88,7 +88,7 @@ namespace Orion.Packets.World.TileEntities {
             }
         }
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [ExcludeFromCodeCoverage]
         public override string ToString() =>
             $"{Type}[({ItemFrameX}, {ItemFrameY}) is " +

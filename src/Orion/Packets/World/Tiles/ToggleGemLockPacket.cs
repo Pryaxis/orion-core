@@ -27,7 +27,7 @@ namespace Orion.Packets.World.Tiles {
         private short _gemLockY;
         private bool _isGemLockLocked;
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         public override PacketType Type => PacketType.ToggleGemLock;
 
         /// <summary>
@@ -63,7 +63,7 @@ namespace Orion.Packets.World.Tiles {
             }
         }
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [ExcludeFromCodeCoverage]
         public override string ToString() => $"{Type}[{IsGemLockLocked} @ ({GemLockX}, {GemLockY})]";
 

@@ -30,7 +30,7 @@ namespace Orion.Packets.Entities {
         private short _entityIndex;
         private Vector2 _entityNewPosition;
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         public override PacketType Type => PacketType.EntityTeleportation;
 
         /// <summary>
@@ -77,7 +77,7 @@ namespace Orion.Packets.Entities {
             }
         }
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [ExcludeFromCodeCoverage]
         public override string ToString() =>
             $"{Type}[#={EntityIndex} to {EntityNewPosition} ({EntityTeleportationType}_{EntityTeleportationStyle})]";

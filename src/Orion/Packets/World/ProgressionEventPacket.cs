@@ -25,7 +25,7 @@ namespace Orion.Packets.World {
     public sealed class ProgressionEventPacket : Packet {
         private short _progressionEventId;
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         public override PacketType Type => PacketType.ProgressionEvent;
 
         /// <summary>
@@ -40,7 +40,7 @@ namespace Orion.Packets.World {
             }
         }
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [ExcludeFromCodeCoverage]
         public override string ToString() => $"{Type}[{ProgressionEventId}]";
 

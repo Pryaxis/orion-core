@@ -28,7 +28,7 @@ namespace Orion.Packets.Players {
         private byte _playerIndex;
         private Buff _playerBuff;
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         public override PacketType Type => PacketType.PlayerAddBuff;
 
         /// <summary>
@@ -53,7 +53,7 @@ namespace Orion.Packets.Players {
             }
         }
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [ExcludeFromCodeCoverage]
         public override string ToString() => $"{Type}[#={PlayerIndex}, {PlayerBuff}]";
 

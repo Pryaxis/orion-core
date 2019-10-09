@@ -26,7 +26,7 @@ namespace Orion.Utils {
     public class AnnotatableObject : IAnnotatable {
         private readonly IDictionary<string, object?> _annotations = new Dictionary<string, object?>();
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [Pure]
         public T GetAnnotation<T>(string key, T defaultValue = default) {
             if (key is null) {
@@ -36,7 +36,7 @@ namespace Orion.Utils {
             return _annotations.TryGetValue(key, out var value) ? (T)value! : defaultValue;
         }
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         public void SetAnnotation<T>(string key, T value) {
             if (key is null) {
                 throw new ArgumentNullException(nameof(key));
@@ -45,7 +45,7 @@ namespace Orion.Utils {
             _annotations[key] = value;
         }
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         public bool RemoveAnnotation(string key) {
             if (key is null) {
                 throw new ArgumentNullException(nameof(key));

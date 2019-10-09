@@ -24,15 +24,15 @@ namespace Orion {
     /// injected using a dependency injection framework.
     /// </summary>
     public abstract class OrionService : IService {
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [ExcludeFromCodeCoverage]
         public virtual string Author => "Anonymous";
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [ExcludeFromCodeCoverage]
         public virtual string Name => GetType().Name;
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [ExcludeFromCodeCoverage]
         public virtual Version Version => GetType().Assembly.GetName().Version;
 

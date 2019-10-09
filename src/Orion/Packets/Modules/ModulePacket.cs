@@ -26,10 +26,10 @@ namespace Orion.Packets.Modules {
     public sealed class ModulePacket : Packet {
         private Module? _module;
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         public override bool IsDirty => base.IsDirty || Module?.IsDirty == true;
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         public override PacketType Type => PacketType.Module;
 
         /// <summary>
@@ -44,13 +44,13 @@ namespace Orion.Packets.Modules {
             }
         }
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         public override void Clean() {
             base.Clean();
             Module?.Clean();
         }
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         public override string ToString() => $"{Type}[{Module}]";
 
         private protected override void ReadFromReader(BinaryReader reader, PacketContext context) =>

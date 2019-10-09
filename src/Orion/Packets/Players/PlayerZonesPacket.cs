@@ -50,7 +50,7 @@ namespace Orion.Packets.Players {
         private bool _isPlayerNearSandstormZone;
         private bool _isPlayerNearOldOnesArmyZone;
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         public override PacketType Type => PacketType.PlayerZones;
 
         /// <summary>
@@ -339,7 +339,7 @@ namespace Orion.Packets.Players {
             }
         }
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [ExcludeFromCodeCoverage]
         public override string ToString() => $"{Type}[#={PlayerIndex}, ...]";
 

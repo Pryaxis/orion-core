@@ -30,7 +30,7 @@ namespace Orion.Packets.Npcs {
         private float _npcStolenValue;
         private Vector2 _coinsPosition;
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         public override PacketType Type => PacketType.NpcStealCoins;
 
         /// <summary>
@@ -66,7 +66,7 @@ namespace Orion.Packets.Npcs {
             }
         }
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [ExcludeFromCodeCoverage]
         public override string ToString() => $"{Type}[#={NpcIndex} stole {NpcStolenValue} @ {CoinsPosition}]";
 

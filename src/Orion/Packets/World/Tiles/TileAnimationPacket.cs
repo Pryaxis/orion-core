@@ -29,7 +29,7 @@ namespace Orion.Packets.World.Tiles {
         private short _tileX;
         private short _tileY;
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         public override PacketType Type => PacketType.TileAnimation;
 
         /// <summary>
@@ -77,7 +77,7 @@ namespace Orion.Packets.World.Tiles {
             }
         }
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [ExcludeFromCodeCoverage]
         public override string ToString() => $"{Type}[{AnimationType} @ ({TileX}, {TileY}), ...]";
 

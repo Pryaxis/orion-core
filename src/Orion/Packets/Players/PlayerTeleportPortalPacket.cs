@@ -30,7 +30,7 @@ namespace Orion.Packets.Players {
         private Vector2 _playerNewPosition;
         private Vector2 _playerNewVelocity;
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         public override PacketType Type => PacketType.PlayerTeleportPortal;
 
         /// <summary>
@@ -77,7 +77,7 @@ namespace Orion.Packets.Players {
             }
         }
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [ExcludeFromCodeCoverage]
         public override string ToString() => $"{Type}[#={PlayerIndex} @ {PlayerNewPosition}, ...]";
 

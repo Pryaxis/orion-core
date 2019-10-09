@@ -28,7 +28,7 @@ namespace Orion.Packets.World.Tiles {
         private short _wallY;
         private PaintColor _wallColor;
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         public override PacketType Type => PacketType.TileWallColor;
 
         /// <summary>
@@ -64,7 +64,7 @@ namespace Orion.Packets.World.Tiles {
             }
         }
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [ExcludeFromCodeCoverage]
         public override string ToString() => $"{Type}[{WallColor} @ ({WallX}, {WallY})]";
 

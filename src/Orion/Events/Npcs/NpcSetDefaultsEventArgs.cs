@@ -23,7 +23,7 @@ namespace Orion.Events.Npcs {
     /// Provides data for the <see cref="INpcService.NpcSetDefaults"/> event.
     /// </summary>
     public sealed class NpcSetDefaultsEventArgs : NpcEventArgs, ICancelable {
-        /// <inheritdoc />
+        /// <inheritdoc/>
         public string? CancellationReason { get; set; }
 
         /// <summary>

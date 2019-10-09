@@ -25,7 +25,7 @@ namespace Orion.Packets.Projectiles {
     public sealed class ProjectileRemoveIndexPacket : Packet {
         private ushort _projectileIndex;
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         public override PacketType Type => PacketType.ProjectileRemoveIndex;
 
         /// <summary>
@@ -39,7 +39,7 @@ namespace Orion.Packets.Projectiles {
             }
         }
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [ExcludeFromCodeCoverage]
         public override string ToString() => $"{Type}[#={ProjectileIndex}), ...]";
 

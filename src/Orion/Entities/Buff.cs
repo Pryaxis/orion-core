@@ -52,7 +52,7 @@ namespace Orion.Entities {
             Duration = duration;
         }
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [Pure, ExcludeFromCodeCoverage]
         public override string ToString() => $"{BuffType} for {Duration}";
     }

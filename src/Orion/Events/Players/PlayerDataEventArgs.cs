@@ -27,7 +27,7 @@ namespace Orion.Events.Players {
     public sealed class PlayerDataEventArgs : PlayerEventArgs, ICancelable {
         private readonly PlayerDataPacket _packet;
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         public string? CancellationReason { get; set; }
 
         /// <inheritdoc cref="PlayerDataPacket.PlayerSkinType"/>

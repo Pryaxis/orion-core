@@ -24,7 +24,7 @@ namespace Orion.Packets.Players {
     /// <see cref="SectionRequestPacket"/>.
     /// </summary>
     public sealed class PlayerEnterWorldPacket : Packet {
-        /// <inheritdoc />
+        /// <inheritdoc/>
         public override PacketType Type => PacketType.PlayerEnterWorld;
 
         private protected override void ReadFromReader(BinaryReader reader, PacketContext context) { }

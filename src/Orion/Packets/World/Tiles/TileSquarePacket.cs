@@ -31,10 +31,10 @@ namespace Orion.Packets.World.Tiles {
         private short _tileY;
         private NetworkTiles _tiles = new NetworkTiles(0, 0);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         public override bool IsDirty => base.IsDirty || _tiles.IsDirty;
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         public override PacketType Type => PacketType.TileSquare;
 
         /// <summary>
@@ -82,13 +82,13 @@ namespace Orion.Packets.World.Tiles {
             }
         }
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         public override void Clean() {
             base.Clean();
             Tiles.Clean();
         }
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [ExcludeFromCodeCoverage]
         public override string ToString() => $"{Type}[{SquareSize}x{SquareSize} @ ({TileX}, {TileY}), ...]";
 
