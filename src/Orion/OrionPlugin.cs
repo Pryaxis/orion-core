@@ -40,6 +40,6 @@ namespace Orion {
         /// <summary>
         /// Initializes the plugin.
         /// </summary>
-        protected internal abstract void Initialize();
+        public abstract void Initialize();
     }
 }

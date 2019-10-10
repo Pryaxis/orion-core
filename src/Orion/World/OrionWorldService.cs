@@ -66,10 +66,6 @@ namespace Orion.World {
         }
 
         protected override void Dispose(bool disposeManaged) {
-            if (!disposeManaged) {
-                return;
-            }
-
             Hooks.World.IO.PreLoadWorld = null;
             Hooks.World.IO.PreSaveWorld = null;
         }
@@ -93,15 +89,13 @@ namespace Orion.World {
             public int Height => Main.maxTilesY;
 
             public ITile this[int x, int y] {
-                /*
-                 * To make Tile compatible with ITile, the best solution is to use an adapter. It's a bad idea to
-                 * actually implement ITile on the struct, since we'll end up boxing and defeating the whole purpose
-                 * of making Tile a struct.
-                 *
-                 * Unfortunately, this means that repeated accesses to Main.tile results in a lot of garbage being
-                 * generated due to these ephemeral TileAdapters, but this is the best that we can do while still
-                 * preserving OTAPI compatibility.
-                 */
+                // To make Tile compatible with ITile, the best solution is to use an adapter. It's a bad idea to
+                // actually implement ITile on the struct, since we'll end up boxing and defeating the whole purpose
+                // of making Tile a struct.
+                // 
+                // Unfortunately, this means that repeated accesses to Main.tile results in a lot of garbage being
+                // generated due to these ephemeral TileAdapters, but this is the best that we can do while still
+                // preserving OTAPI compatibility.
                 get => new TileAdapter(GetPointer(x, y));
 
                 // TODO: this can be optimized by not creating any objects on the heap

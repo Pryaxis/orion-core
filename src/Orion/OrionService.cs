@@ -37,14 +37,6 @@ namespace Orion {
         public virtual Version Version => GetType().Assembly.GetName().Version;
 
         /// <summary>
-        /// Destroys the service, releasing any of its unmanaged resources.
-        /// </summary>
-        [ExcludeFromCodeCoverage]
-        ~OrionService() {
-            Dispose(false);
-        }
-
-        /// <summary>
         /// Disposes the service and any of its unmanaged and managed resources.
         /// </summary>
         public void Dispose() {

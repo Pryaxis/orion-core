@@ -17,6 +17,7 @@
 
 using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics.Contracts;
 using Microsoft.Xna.Framework;
 
 namespace Orion.Players {
@@ -72,6 +73,7 @@ namespace Orion.Players {
         /// </summary>
         /// <param name="team">The team.</param>
         /// <returns>The color.</returns>
+        [Pure]
         public static Color Color(this PlayerTeam team) =>
             _colors.TryGetValue(team, out var color) ? color : Microsoft.Xna.Framework.Color.White;
     }

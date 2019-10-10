@@ -82,10 +82,6 @@ namespace Orion.Players {
         }
 
         protected override void Dispose(bool disposeManaged) {
-            if (!disposeManaged) {
-                return;
-            }
-
             _shouldIgnoreNextReceiveData.Dispose();
 
             Hooks.Net.ReceiveData = null;

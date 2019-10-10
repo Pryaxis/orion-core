@@ -48,10 +48,6 @@ namespace Orion.Items {
         }
 
         protected override void Dispose(bool disposeManaged) {
-            if (!disposeManaged) {
-                return;
-            }
-
             Hooks.Item.PreSetDefaultsById = null;
             Hooks.Item.PreUpdate = null;
         }

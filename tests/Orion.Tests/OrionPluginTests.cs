@@ -41,7 +41,7 @@ namespace Orion {
 
             public TestOrionPlugin(OrionKernel kernel) : base(kernel) { }
 
-            protected internal override void Initialize() => throw new NotImplementedException();
+            public override void Initialize() => throw new NotImplementedException();
         }
     }
 }
