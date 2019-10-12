@@ -31,7 +31,6 @@ using Orion.Projectiles;
 using Orion.World;
 using OTAPI;
 using Serilog;
-using Serilog.Sinks.SystemConsole.Themes;
 
 namespace Orion {
     /// <summary>
@@ -50,27 +49,27 @@ namespace Orion {
         public IReadOnlyCollection<OrionPlugin> LoadedPlugins => new HashSet<OrionPlugin>(_plugins);
 
         /// <summary>
-        /// Gets or sets the events that occur when the server initializes.
+        /// Gets the events that occur when the server initializes.
         /// </summary>
-        public EventHandlerCollection<ServerInitializeEventArgs> ServerInitialize { get; set; }
+        public EventHandlerCollection<ServerInitializeEventArgs> ServerInitialize { get; }
             = new EventHandlerCollection<ServerInitializeEventArgs>();
 
         /// <summary>
-        /// Gets or sets the events that occur when the server starts.
+        /// Gets the events that occur when the server starts.
         /// </summary>
-        public EventHandlerCollection<ServerStartEventArgs> ServerStart { get; set; }
+        public EventHandlerCollection<ServerStartEventArgs> ServerStart { get; }
             = new EventHandlerCollection<ServerStartEventArgs>();
 
         /// <summary>
-        /// Gets or sets the events that occur when the server updates.
+        /// Gets the events that occur when the server updates.
         /// </summary>
-        public EventHandlerCollection<ServerUpdateEventArgs> ServerUpdate { get; set; }
+        public EventHandlerCollection<ServerUpdateEventArgs> ServerUpdate { get; }
             = new EventHandlerCollection<ServerUpdateEventArgs>();
 
         /// <summary>
-        /// Gets or sets the events that occur when the server executes a command. This event can be canceled.
+        /// Gets the events that occur when the server executes a command. This event can be canceled.
         /// </summary>
-        public EventHandlerCollection<ServerCommandEventArgs> ServerCommand { get; set; }
+        public EventHandlerCollection<ServerCommandEventArgs> ServerCommand { get; }
             = new EventHandlerCollection<ServerCommandEventArgs>();
 
         /// <summary>
