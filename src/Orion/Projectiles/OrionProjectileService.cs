@@ -28,8 +28,6 @@ using TerrariaProjectile = Terraria.Projectile;
 
 namespace Orion.Projectiles {
     internal sealed class OrionProjectileService : OrionService, IProjectileService {
-        [ExcludeFromCodeCoverage] public override string Author => "Pryaxis";
-
         public IReadOnlyArray<IProjectile> Projectiles { get; }
 
         public EventHandlerCollection<ProjectileSetDefaultsEventArgs> ProjectileSetDefaults { get; }

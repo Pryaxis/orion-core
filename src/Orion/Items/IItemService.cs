@@ -25,7 +25,7 @@ namespace Orion.Items {
     /// Represents an item service. Provides access to item-related events and methods, and in a thread-safe manner
     /// unless specified otherwise.
     /// </summary>
-    public interface IItemService : IService {
+    public interface IItemService {
         /// <summary>
         /// Gets the items in the world. All items are returned, regardless of whether or not they are actually active.
         /// </summary>

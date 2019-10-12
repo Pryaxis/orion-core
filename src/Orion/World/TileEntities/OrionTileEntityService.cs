@@ -30,8 +30,6 @@ using TerrariaTileEntity = Terraria.DataStructures.TileEntity;
 
 namespace Orion.World.TileEntities {
     internal sealed class OrionTileEntityService : OrionService, ITileEntityService {
-        [ExcludeFromCodeCoverage] public override string Author => "Pryaxis";
-
         public IReadOnlyArray<IChest?> Chests { get; }
         public IReadOnlyArray<ISign?> Signs { get; }
 

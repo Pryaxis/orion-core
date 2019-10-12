@@ -30,7 +30,7 @@ using TerrariaPlayer = Terraria.Player;
 namespace Orion.Players {
     [Collection("TerrariaTestsCollection")]
     public class OrionPlayerServiceTests : IDisposable {
-        private readonly IPlayerService _playerService;
+        private readonly OrionPlayerService _playerService;
 
         public OrionPlayerServiceTests() {
             for (var i = 0; i < Main.player.Length; ++i) {

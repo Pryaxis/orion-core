@@ -28,8 +28,6 @@ using TerrariaItem = Terraria.Item;
 
 namespace Orion.Items {
     internal sealed class OrionItemService : OrionService, IItemService {
-        [ExcludeFromCodeCoverage] public override string Author => "Pryaxis";
-
         public IReadOnlyArray<IItem> Items { get; }
 
         public EventHandlerCollection<ItemSetDefaultsEventArgs> ItemSetDefaults { get; }

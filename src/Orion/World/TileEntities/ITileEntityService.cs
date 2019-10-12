@@ -22,7 +22,7 @@ namespace Orion.World.TileEntities {
     /// <summary>
     /// Represents a tile entity service. Provides tile entity-related hooks and methods.
     /// </summary>
-    public interface ITileEntityService : IService {
+    public interface ITileEntityService {
         /// <summary>
         /// Gets the chests.
         /// </summary>

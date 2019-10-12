@@ -29,7 +29,7 @@ using TerrariaPlayer = Terraria.Player;
 namespace Orion.Npcs {
     [Collection("TerrariaTestsCollection")]
     public class OrionNpcServiceTests : IDisposable {
-        private readonly INpcService _npcService;
+        private readonly OrionNpcService _npcService;
 
         public OrionNpcServiceTests() {
             for (var i = 0; i < Main.npc.Length; ++i) {

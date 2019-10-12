@@ -26,7 +26,7 @@ namespace Orion.Projectiles {
     /// Represents a projectile service. Provides access to projectile-related events and methods, and in a thread-safe
     /// manner unless specified otherwise.
     /// </summary>
-    public interface IProjectileService : IService {
+    public interface IProjectileService {
         /// <summary>
         /// Gets the projectiles in the world. All projectiles are returned, regardless of whether or not they are
         /// actually active.

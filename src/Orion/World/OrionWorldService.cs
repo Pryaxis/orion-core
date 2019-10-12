@@ -32,8 +32,6 @@ namespace Orion.World {
     internal sealed class OrionWorldService : OrionService, IWorldService {
         private readonly TileCollection _tileCollection;
 
-        [ExcludeFromCodeCoverage] public override string Author => "Pryaxis";
-
         public int WorldWidth => _tileCollection.Width;
         public int WorldHeight => _tileCollection.Height;
 

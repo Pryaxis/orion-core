@@ -26,7 +26,7 @@ namespace Orion.Npcs {
     /// Represents an NPC service. Provides access to NPC-related events and methods, and in a thread-safe manner unless
     /// specified otherwise.
     /// </summary>
-    public interface INpcService : IService {
+    public interface INpcService {
         /// <summary>
         /// Gets the NPCs in the world. All NPCs are returned, regardless of whether or not they are actually active.
         /// </summary>

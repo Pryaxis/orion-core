@@ -28,7 +28,7 @@ using TerrariaItem = Terraria.Item;
 namespace Orion.Items {
     [Collection("TerrariaTestsCollection")]
     public class OrionItemServiceTests : IDisposable {
-        private readonly IItemService _itemService;
+        private readonly OrionItemService _itemService;
 
         public OrionItemServiceTests() {
             for (var i = 0; i < Main.item.Length; ++i) {

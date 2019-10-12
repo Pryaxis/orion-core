@@ -32,7 +32,7 @@ using TerrariaTileEntity = Terraria.DataStructures.TileEntity;
 namespace Orion.World.TileEntities {
     [Collection("TerrariaTestsCollection")]
     public class OrionTileEntityServiceTests : IDisposable {
-        private readonly ITileEntityService _tileEntityService;
+        private readonly OrionTileEntityService _tileEntityService;
 
         public OrionTileEntityServiceTests() {
             for (var i = 0; i < Main.chest.Length; ++i) {

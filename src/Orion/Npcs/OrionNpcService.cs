@@ -33,8 +33,6 @@ namespace Orion.Npcs {
     internal sealed class OrionNpcService : OrionService, INpcService {
         private readonly ThreadLocal<int> _setDefaultsToIgnore = new ThreadLocal<int>();
 
-        [ExcludeFromCodeCoverage] public override string Author => "Pryaxis";
-
         public IReadOnlyArray<INpc> Npcs { get; }
 
         public EventHandlerCollection<NpcSetDefaultsEventArgs> NpcSetDefaults { get; }

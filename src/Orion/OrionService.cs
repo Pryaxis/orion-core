@@ -23,22 +23,23 @@ namespace Orion {
     /// Represents the base class for an Orion service. Services provide concrete functionality to clients, and are
     /// injected using a dependency injection framework.
     /// </summary>
-    public abstract class OrionService : IService {
-        /// <inheritdoc/>
-        [ExcludeFromCodeCoverage]
-        public virtual string Author => "Anonymous";
-
-        /// <inheritdoc/>
-        [ExcludeFromCodeCoverage]
-        public virtual string Name => GetType().Name;
-
-        /// <inheritdoc/>
-        [ExcludeFromCodeCoverage]
-        public virtual Version Version => GetType().Assembly.GetName().Version;
+    public abstract class OrionService : IDisposable {
+        /// <summary>
+        /// Gets the service's author. By default, this will return <c>Pryaxis</c>.
+        /// </summary>
+        public virtual string Author => "Pryaxis";
 
         /// <summary>
-        /// Disposes the service and any of its unmanaged and managed resources.
+        /// Gets the service's name. By default, this will return the type name.
         /// </summary>
+        public virtual string Name => GetType().Name;
+
+        /// <summary>
+        /// Gets the service's version. By default, this will return the containing assembly's version.
+        /// </summary>
+        public virtual Version Version => GetType().Assembly.GetName().Version;
+
+        /// <inheritdoc/>
         public void Dispose() {
             Dispose(true);
             GC.SuppressFinalize(this);

@@ -27,7 +27,7 @@ using TerrariaProjectile = Terraria.Projectile;
 namespace Orion.Projectiles {
     [Collection("TerrariaTestsCollection")]
     public class OrionProjectileServiceTests : IDisposable {
-        private readonly IProjectileService _projectileService;
+        private readonly OrionProjectileService _projectileService;
 
         public OrionProjectileServiceTests() {
             for (var i = 0; i < Main.projectile.Length; ++i) {

@@ -28,7 +28,7 @@ namespace Orion.Players {
     /// Represents a player service. Provides access to player-related events and methods, and in a thread-safe manner
     /// if not specified otherwise.
     /// </summary>
-    public interface IPlayerService : IService {
+    public interface IPlayerService {
         /// <summary>
         /// Gets the players in the world. All players are returned, regardless of whether or not they are actually
         /// active.
