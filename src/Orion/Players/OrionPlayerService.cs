@@ -28,6 +28,7 @@ using Orion.Packets.Modules;
 using Orion.Packets.Players;
 using Orion.Utils;
 using OTAPI;
+using Serilog;
 using Main = Terraria.Main;
 using TerrariaPlayer = Terraria.Player;
 
@@ -64,7 +65,10 @@ namespace Orion.Players {
         public EventHandlerCollection<PlayerDisconnectedEventArgs> PlayerDisconnected { get; }
             = new EventHandlerCollection<PlayerDisconnectedEventArgs>();
 
-        public OrionPlayerService() {
+        public OrionPlayerService(ILogger log) : base(log) {
+            Debug.Assert(log != null, "log should not be null");
+            Debug.Assert(Main.player != null, "Terraria players should not be null");
+
             // Ignore the last player since it is used as a failure slot.
             Players = new WrappedReadOnlyArray<OrionPlayer, TerrariaPlayer>(
                 Main.player.AsMemory(..^1),

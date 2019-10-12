@@ -20,6 +20,7 @@ using System.Linq;
 using FluentAssertions;
 using Microsoft.Xna.Framework;
 using Orion.Events;
+using Serilog.Core;
 using Xunit;
 using Main = Terraria.Main;
 using TerrariaProjectile = Terraria.Projectile;
@@ -34,7 +35,7 @@ namespace Orion.Projectiles {
                 Main.projectile[i] = new TerrariaProjectile { whoAmI = i };
             }
 
-            _projectileService = new OrionProjectileService();
+            _projectileService = new OrionProjectileService(Logger.None);
         }
 
         public void Dispose() => _projectileService.Dispose();

@@ -23,6 +23,7 @@ using Orion.Events;
 using Orion.Events.Projectiles;
 using Orion.Utils;
 using OTAPI;
+using Serilog;
 using Main = Terraria.Main;
 using TerrariaProjectile = Terraria.Projectile;
 
@@ -39,7 +40,10 @@ namespace Orion.Projectiles {
         public EventHandlerCollection<ProjectileRemoveEventArgs> ProjectileRemove { get; }
             = new EventHandlerCollection<ProjectileRemoveEventArgs>();
 
-        public OrionProjectileService() {
+        public OrionProjectileService(ILogger log) : base(log) {
+            Debug.Assert(log != null, "log should not be null");
+            Debug.Assert(Main.projectile != null, "Terraria projectiles should not be null");
+
             // Ignore the last projectile since it is used as a failure slot.
             Projectiles = new WrappedReadOnlyArray<OrionProjectile, TerrariaProjectile>(
                 Main.projectile.AsMemory(..^1),

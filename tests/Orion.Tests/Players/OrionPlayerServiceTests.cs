@@ -23,6 +23,7 @@ using Orion.Events;
 using Orion.Items;
 using Orion.Packets.Modules;
 using Orion.Packets.Players;
+using Serilog.Core;
 using Xunit;
 using Main = Terraria.Main;
 using TerrariaPlayer = Terraria.Player;
@@ -37,7 +38,7 @@ namespace Orion.Players {
                 Main.player[i] = new TerrariaPlayer { whoAmI = i };
             }
 
-            _playerService = new OrionPlayerService();
+            _playerService = new OrionPlayerService(Logger.None);
         }
 
         public void Dispose() => _playerService.Dispose();

@@ -41,7 +41,7 @@ namespace Orion.Launcher {
         [DllImport("kernel32.dll", SetLastError = true)]
         private static extern bool SetConsoleMode(IntPtr hConsoleHandle, uint dwMode);
 
-        private static void SetupLogging() {
+        private static ILogger SetupLogging() {
             Console.InputEncoding = Encoding.UTF8;
             Console.OutputEncoding = Encoding.UTF8;
 
@@ -54,13 +54,11 @@ namespace Orion.Launcher {
             }
 
             Directory.CreateDirectory("logs");
-            Log.Logger = new LoggerConfiguration()
-#if DEBUG
+            var log = new LoggerConfiguration()
                 .MinimumLevel.Verbose()
-#else
-                .MinimumLevel.Information()
-#endif
-                .WriteTo.Console(theme: AnsiConsoleTheme.Code)
+                .WriteTo.Console(
+                    outputTemplate: "[{Timestamp:HH:mm:ss} {Level:u3}] {Name}{Message:lj}{NewLine}{Exception}",
+                    theme: AnsiConsoleTheme.Code)
                 .WriteTo.File(Path.Combine("logs", "log-.txt"),
                     rollingInterval: RollingInterval.Day,
                     rollOnFileSizeLimit: true,
@@ -68,8 +66,10 @@ namespace Orion.Launcher {
                 .CreateLogger();
 
             AppDomain.CurrentDomain.UnhandledException += (sender, eventArgs) => {
-                Log.Fatal(eventArgs.ExceptionObject as Exception, Resources.UnhandledExceptionMessage);
+                log.Fatal(eventArgs.ExceptionObject as Exception, Resources.UnhandledExceptionMessage);
             };
+
+            return log;
         }
 
         private static void SetupPlugins(OrionKernel kernel) {
@@ -104,12 +104,12 @@ namespace Orion.Launcher {
 
         // TODO: provide event to use these arguments.
         internal static void Main(string[] args) {
-            using var kernel = new OrionKernel();
-            kernel.Get<IWorldService>();
-
-            SetupLogging();
+            var log = SetupLogging();
+            using var kernel = new OrionKernel(log);
             SetupPlugins(kernel);
             SetupLanguage();
+
+            kernel.Get<IWorldService>();
 
             using var game = new Main();
             game.DedServ();

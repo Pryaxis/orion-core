@@ -17,12 +17,12 @@
 
 using System;
 using System.Diagnostics;
-using System.Diagnostics.CodeAnalysis;
 using Microsoft.Xna.Framework;
 using Orion.Events;
 using Orion.Events.Items;
 using Orion.Utils;
 using OTAPI;
+using Serilog;
 using Main = Terraria.Main;
 using TerrariaItem = Terraria.Item;
 
@@ -36,7 +36,10 @@ namespace Orion.Items {
         public EventHandlerCollection<ItemUpdateEventArgs> ItemUpdate { get; }
             = new EventHandlerCollection<ItemUpdateEventArgs>();
 
-        public OrionItemService() {
+        public OrionItemService(ILogger log) : base(log) {
+            Debug.Assert(log != null, "log should not be null");
+            Debug.Assert(Main.item != null, "Terraria items should not be null");
+
             // Ignore the last item since it is used as a failure slot.
             Items = new WrappedReadOnlyArray<OrionItem, TerrariaItem>(
                 Main.item.AsMemory(..^1), (itemIndex, terrariaItem) => new OrionItem(itemIndex, terrariaItem));

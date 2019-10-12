@@ -21,6 +21,7 @@ using System.Linq;
 using FluentAssertions;
 using Microsoft.Xna.Framework;
 using Orion.Events;
+using Serilog.Core;
 using Xunit;
 using Main = Terraria.Main;
 using TerrariaItem = Terraria.Item;
@@ -35,7 +36,7 @@ namespace Orion.Items {
                 Main.item[i] = new TerrariaItem { whoAmI = i };
             }
 
-            _itemService = new OrionItemService();
+            _itemService = new OrionItemService(Logger.None);
         }
 
         public void Dispose() => _itemService.Dispose();

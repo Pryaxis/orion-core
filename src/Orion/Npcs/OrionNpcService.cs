@@ -17,7 +17,6 @@
 
 using System;
 using System.Diagnostics;
-using System.Diagnostics.CodeAnalysis;
 using System.Threading;
 using Microsoft.Xna.Framework;
 using Orion.Events;
@@ -25,6 +24,7 @@ using Orion.Events.Npcs;
 using Orion.Items;
 using Orion.Utils;
 using OTAPI;
+using Serilog;
 using Main = Terraria.Main;
 using TerrariaEntity = Terraria.Entity;
 using TerrariaNpc = Terraria.NPC;
@@ -56,7 +56,10 @@ namespace Orion.Npcs {
         public EventHandlerCollection<NpcKilledEventArgs> NpcKilled { get; }
             = new EventHandlerCollection<NpcKilledEventArgs>();
 
-        public OrionNpcService() {
+        public OrionNpcService(ILogger log) : base(log) {
+            Debug.Assert(log != null, "log should not be null");
+            Debug.Assert(Main.npc != null, "Terraria NPCs should not be null");
+
             // Ignore the last NPC since it is used as a failure slot.
             Npcs = new WrappedReadOnlyArray<OrionNpc, TerrariaNpc>(
                 Main.npc.AsMemory(..^1), (npcIndex, terrariaNpc) => new OrionNpc(npcIndex, terrariaNpc));

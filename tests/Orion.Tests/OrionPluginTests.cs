@@ -17,29 +17,53 @@
 
 using System;
 using FluentAssertions;
+using Moq;
+using Serilog;
+using Serilog.Core;
+using Serilog.Events;
 using Xunit;
 
 namespace Orion {
     public class OrionPluginTests {
         [Fact]
         public void Ctor_NullKernel_ThrowsArgumentNullException() {
-            Func<OrionPlugin> func = () => new TestOrionPlugin(null);
+            Func<OrionPlugin> func = () => new TestOrionPlugin(null, Logger.None);
+
+            func.Should().Throw<ArgumentNullException>();
+        }
+        
+        [Fact]
+        public void Ctor_NullLog_ThrowsArgumentNullException() {
+            using var kernel = new OrionKernel(Logger.None);
+            Func<OrionPlugin> func = () => new TestOrionPlugin(kernel, null);
 
             func.Should().Throw<ArgumentNullException>();
         }
 
         [Fact]
         public void Kernel_Get() {
-            var kernel = new OrionKernel();
-            using var plugin = new TestOrionPlugin(kernel);
+            using var kernel = new OrionKernel(Logger.None);
+            using var plugin = new TestOrionPlugin(kernel, Logger.None);
 
             plugin.Kernel.Should().BeSameAs(kernel);
         }
 
+        [Fact]
+        public void Log_Get() {
+            using var kernel = new OrionKernel(Logger.None);
+            var mockLog = new Mock<ILogger>();
+            using var plugin = new TestOrionPlugin(kernel, mockLog.Object);
+
+            plugin.Log.Information("TEST");
+
+            mockLog.Verify(l => l.Write(It.IsAny<LogEvent>()));
+        }
+
         private class TestOrionPlugin : OrionPlugin {
             public new OrionKernel Kernel => base.Kernel;
+            public new ILogger Log => base.Log;
 
-            public TestOrionPlugin(OrionKernel kernel) : base(kernel) { }
+            public TestOrionPlugin(OrionKernel kernel, ILogger log) : base(kernel, log) { }
 
             public override void Initialize() => throw new NotImplementedException();
         }

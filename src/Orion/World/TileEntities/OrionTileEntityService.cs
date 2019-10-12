@@ -19,6 +19,7 @@ using System;
 using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using Orion.Utils;
+using Serilog;
 using Main = Terraria.Main;
 using TerrariaChest = Terraria.Chest;
 using TerrariaItem = Terraria.Item;
@@ -33,7 +34,8 @@ namespace Orion.World.TileEntities {
         public IReadOnlyArray<IChest?> Chests { get; }
         public IReadOnlyArray<ISign?> Signs { get; }
 
-        public OrionTileEntityService() {
+        public OrionTileEntityService(ILogger log) : base(log) {
+            Debug.Assert(log != null, "log should not be null");
             Debug.Assert(Main.chest != null, "Terraria chests should not be null");
             Debug.Assert(Main.sign != null, "Terraria signs should not be null");
 

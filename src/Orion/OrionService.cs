@@ -16,7 +16,9 @@
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
 using System;
-using System.Diagnostics.CodeAnalysis;
+using Serilog;
+using Serilog.Core;
+using Serilog.Events;
 
 namespace Orion {
     /// <summary>
@@ -24,6 +26,14 @@ namespace Orion {
     /// injected using a dependency injection framework.
     /// </summary>
     public abstract class OrionService : IDisposable {
+        // In DEBUG mode, we want the minimum level to be Verbose by default to see everything. In RELEASE mode, we only
+        // want Information and up.
+#if DEBUG
+        private readonly LoggingLevelSwitch _logLevel = new LoggingLevelSwitch(LogEventLevel.Verbose);
+#else
+        private readonly LoggingLevelSwitch _logLevel = new LoggingLevelSwitch(LogEventLevel.Information);
+#endif
+
         /// <summary>
         /// Gets the service's author. By default, this will return <c>Pryaxis</c>.
         /// </summary>
@@ -39,11 +49,34 @@ namespace Orion {
         /// </summary>
         public virtual Version Version => GetType().Assembly.GetName().Version;
 
+        /// <summary>
+        /// Gets the service's log. The logging level can be controlled by <see cref="SetLogLevel(LogEventLevel)"/>.
+        /// </summary>
+        protected ILogger Log { get; }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="OrionService"/> class with the specified log.
+        /// </summary>
+        /// <param name="log">The log.</param>
+        /// <exception cref="ArgumentNullException"><paramref name="log"/> is <see langword="null"/>.</exception>
+        protected OrionService(ILogger log) {
+            Log = new LoggerConfiguration()
+                .MinimumLevel.ControlledBy(_logLevel)
+                .WriteTo.Logger(log)
+                .CreateLogger();
+        }
+
         /// <inheritdoc/>
         public void Dispose() {
             Dispose(true);
             GC.SuppressFinalize(this);
         }
+
+        /// <summary>
+        /// Sets the minimum logging <paramref name="level"/>.
+        /// </summary>
+        /// <param name="level">The level.</param>
+        public void SetLogLevel(LogEventLevel level) => _logLevel.MinimumLevel = level;
 
         /// <summary>
         /// Disposes the service and any of its unmanaged resources, optionally including its managed resources.

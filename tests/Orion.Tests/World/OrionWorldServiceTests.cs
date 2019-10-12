@@ -21,6 +21,7 @@ using FluentAssertions;
 using Moq;
 using Orion.World.Tiles;
 using OTAPI.Tile;
+using Serilog.Core;
 using Xunit;
 using Main = Terraria.Main;
 
@@ -31,7 +32,7 @@ namespace Orion.World {
         private readonly OrionWorldService _worldService;
 
         public OrionWorldServiceTests() {
-            _worldService = new OrionWorldService();
+            _worldService = new OrionWorldService(Logger.None);
         }
 
         public void Dispose() => _worldService.Dispose();

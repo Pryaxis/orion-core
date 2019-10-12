@@ -16,6 +16,7 @@
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
 using System;
+using Serilog;
 
 namespace Orion {
     /// <summary>
@@ -29,11 +30,14 @@ namespace Orion {
         protected OrionKernel Kernel { get; }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="OrionPlugin"/> class with the specified Orion kernel.
+        /// Initializes a new instance of the <see cref="OrionPlugin"/> class with the specified Orion kernel and log.
         /// </summary>
         /// <param name="kernel">The Orion kernel.</param>
-        /// <exception cref="ArgumentNullException"><paramref name="kernel"/> is <see langword="null"/>.</exception>
-        protected OrionPlugin(OrionKernel kernel) {
+        /// <param name="log">The log.</param>
+        /// <exception cref="ArgumentNullException">
+        /// <paramref name="kernel"/> or <paramref name="log"/> are <see langword="null"/>.
+        /// </exception>
+        protected OrionPlugin(OrionKernel kernel, ILogger log) : base(log) {
             Kernel = kernel ?? throw new ArgumentNullException(nameof(kernel));
         }
 

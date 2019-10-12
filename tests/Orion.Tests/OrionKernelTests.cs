@@ -17,6 +17,7 @@
 
 using System;
 using FluentAssertions;
+using Serilog.Core;
 using Xunit;
 
 namespace Orion {
@@ -25,7 +26,7 @@ namespace Orion {
 
         [Fact]
         public void QueuePluginsFromPath_NullAssemblyPath_ThrowsArgumentNullException() {
-            using var kernel = new OrionKernel();
+            using var kernel = new OrionKernel(Logger.None);
 
             Action action = () => kernel.QueuePluginsFromPath(null);
 
@@ -34,7 +35,7 @@ namespace Orion {
 
         [Fact]
         public void UnloadPlugin_NullPlugin_ThrowsArgumentNullException() {
-            using var kernel = new OrionKernel();
+            using var kernel = new OrionKernel(Logger.None);
 
             Action action = () => kernel.UnloadPlugin(null);
 

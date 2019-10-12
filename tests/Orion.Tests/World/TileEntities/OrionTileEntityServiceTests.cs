@@ -19,6 +19,7 @@ using System;
 using System.Linq;
 using FluentAssertions;
 using Moq;
+using Serilog.Core;
 using Xunit;
 using Main = Terraria.Main;
 using TerrariaChest = Terraria.Chest;
@@ -45,7 +46,7 @@ namespace Orion.World.TileEntities {
 
             TerrariaTileEntity.Clear();
 
-            _tileEntityService = new OrionTileEntityService();
+            _tileEntityService = new OrionTileEntityService(Logger.None);
         }
 
         public void Dispose() => _tileEntityService.Dispose();

@@ -26,6 +26,7 @@ using Orion.Events.World;
 using Orion.World.Tiles;
 using OTAPI;
 using OTAPI.Tile;
+using Serilog;
 using Main = Terraria.Main;
 
 namespace Orion.World {
@@ -50,7 +51,9 @@ namespace Orion.World {
         public EventHandlerCollection<WorldSaveEventArgs> WorldSave { get; }
             = new EventHandlerCollection<WorldSaveEventArgs>();
 
-        public OrionWorldService() {
+        public OrionWorldService(ILogger log) : base(log) {
+            Debug.Assert(log != null, "log should not be null");
+
             // Try to interpret the current Main.tile as a TileCollection. This is only really useful for tests. We
             // don't bother with Hooks.Tile.CreateCollection since we can just set Main.tile.
             if (Main.tile is TileCollection tileCollection) {

@@ -30,6 +30,8 @@ using Orion.Players;
 using Orion.Projectiles;
 using Orion.World;
 using OTAPI;
+using Serilog;
+using Serilog.Sinks.SystemConsole.Themes;
 
 namespace Orion {
     /// <summary>
@@ -37,6 +39,7 @@ namespace Orion {
     /// instances. This class is not thread-safe.
     /// </summary>
     public sealed class OrionKernel : StandardKernel {
+        private readonly ILogger _log;
         private readonly ISet<Assembly> _pluginAssemblies = new HashSet<Assembly>();
         private readonly ISet<Type> _pluginTypesToLoad = new HashSet<Type>();
         private readonly ISet<OrionPlugin> _plugins = new HashSet<OrionPlugin>();
@@ -44,7 +47,7 @@ namespace Orion {
         /// <summary>
         /// Gets the loaded plugins.
         /// </summary>
-        public IEnumerable<OrionPlugin> LoadedPlugins => new HashSet<OrionPlugin>(_plugins);
+        public IReadOnlyCollection<OrionPlugin> LoadedPlugins => new HashSet<OrionPlugin>(_plugins);
 
         /// <summary>
         /// Gets or sets the events that occur when the server initializes.
@@ -71,9 +74,16 @@ namespace Orion {
             = new EventHandlerCollection<ServerCommandEventArgs>();
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="OrionKernel"/> class.
+        /// Initializes a new instance of the <see cref="OrionKernel"/> class with the specified log. This log will be
+        /// used to create all injected logs.
         /// </summary>
-        public OrionKernel() {
+        /// <param name="log">The log.</param>
+        /// <exception cref="ArgumentNullException"><paramref name="log"/> is <see langword="null"/>.</exception>
+        public OrionKernel(ILogger log) {
+            if (log is null) {
+                throw new ArgumentNullException(nameof(log));
+            }
+
             Bind<OrionKernel>().ToConstant(this).InSingletonScope();
             Bind<IItemService>().To<OrionItemService>().InSingletonScope();
             Bind<INpcService>().To<OrionNpcService>().InSingletonScope();
@@ -81,8 +91,22 @@ namespace Orion {
             Bind<IProjectileService>().To<OrionProjectileService>().InSingletonScope();
             Bind<IWorldService>().To<OrionWorldService>().InSingletonScope();
 
-            // Create bindings for Lazy<T> so that we can have lazily loaded services, allowing plugins to override
-            // service bindings if necessary.
+            // Create an ILogger binding for service-specific logs.
+            Bind<ILogger>().ToMethod(ctx => {
+                // ctx.Request.Target can be null if ILogger is resolved directly from the kernel.
+                var typeName = ctx.Request.Target?.Member.ReflectedType.Name;
+                var name = typeName != null ? $"{typeName}: " : string.Empty;
+                return new LoggerConfiguration()
+                    .MinimumLevel.Verbose()
+                    .Enrich.WithProperty("Name", name)
+                    .WriteTo.Logger(log)
+                    .CreateLogger();
+            });
+
+            _log = this.Get<ILogger>();
+
+            // Create bindings for Lazy<T> so that we can have lazily loaded services. This allows plugins to override
+            // the above service bindings if necessary.
             var getLazy = GetType().GetMethod(nameof(GetLazy), BindingFlags.NonPublic | BindingFlags.Instance);
             Bind(typeof(Lazy<>)).ToMethod(ctx => getLazy
                 .MakeGenericMethod(ctx.GenericArguments?[0])
@@ -111,7 +135,7 @@ namespace Orion {
         }
 
         /// <summary>
-        /// Queues plugins to be loaded from <paramref name="assemblyPath"/>.
+        /// Queues plugins to be loaded from an <paramref name="assemblyPath"/>.
         /// </summary>
         /// <param name="assemblyPath">The assembly path.</param>
         /// <exception cref="ArgumentNullException">

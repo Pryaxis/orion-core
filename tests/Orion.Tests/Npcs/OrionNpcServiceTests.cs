@@ -20,6 +20,7 @@ using System.Linq;
 using FluentAssertions;
 using Microsoft.Xna.Framework;
 using Orion.Events;
+using Serilog.Core;
 using Xunit;
 using Main = Terraria.Main;
 using TerrariaItem = Terraria.Item;
@@ -50,7 +51,7 @@ namespace Orion.Npcs {
 
             Main.rand = new Terraria.Utilities.UnifiedRandom();
 
-            _npcService = new OrionNpcService();
+            _npcService = new OrionNpcService(Logger.None);
         }
 
         public void Dispose() => _npcService.Dispose();
