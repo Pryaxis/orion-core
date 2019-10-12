@@ -30,15 +30,9 @@ using TerrariaProjectile = Terraria.Projectile;
 namespace Orion.Projectiles {
     internal sealed class OrionProjectileService : OrionService, IProjectileService {
         public IReadOnlyArray<IProjectile> Projectiles { get; }
-
         public EventHandlerCollection<ProjectileSetDefaultsEventArgs> ProjectileSetDefaults { get; }
-            = new EventHandlerCollection<ProjectileSetDefaultsEventArgs>();
-
         public EventHandlerCollection<ProjectileUpdateEventArgs> ProjectileUpdate { get; }
-            = new EventHandlerCollection<ProjectileUpdateEventArgs>();
-
         public EventHandlerCollection<ProjectileRemoveEventArgs> ProjectileRemove { get; }
-            = new EventHandlerCollection<ProjectileRemoveEventArgs>();
 
         public OrionProjectileService(ILogger log) : base(log) {
             Debug.Assert(log != null, "log should not be null");
@@ -48,6 +42,10 @@ namespace Orion.Projectiles {
             Projectiles = new WrappedReadOnlyArray<OrionProjectile, TerrariaProjectile>(
                 Main.projectile.AsMemory(..^1),
                 (projectileIndex, terrariaProjectile) => new OrionProjectile(projectileIndex, terrariaProjectile));
+
+            ProjectileSetDefaults = new EventHandlerCollection<ProjectileSetDefaultsEventArgs>(log);
+            ProjectileUpdate = new EventHandlerCollection<ProjectileUpdateEventArgs>(log);
+            ProjectileRemove = new EventHandlerCollection<ProjectileRemoveEventArgs>(log);
 
             Hooks.Projectile.PreSetDefaultsById = PreSetDefaultsByIdHandler;
             Hooks.Projectile.PreUpdate = PreUpdateHandler;

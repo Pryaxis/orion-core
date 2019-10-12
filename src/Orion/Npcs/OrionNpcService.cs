@@ -34,27 +34,13 @@ namespace Orion.Npcs {
         private readonly ThreadLocal<int> _setDefaultsToIgnore = new ThreadLocal<int>();
 
         public IReadOnlyArray<INpc> Npcs { get; }
-
         public EventHandlerCollection<NpcSetDefaultsEventArgs> NpcSetDefaults { get; }
-            = new EventHandlerCollection<NpcSetDefaultsEventArgs>();
-
         public EventHandlerCollection<NpcSpawnEventArgs> NpcSpawn { get; }
-            = new EventHandlerCollection<NpcSpawnEventArgs>();
-
         public EventHandlerCollection<NpcUpdateEventArgs> NpcUpdate { get; }
-            = new EventHandlerCollection<NpcUpdateEventArgs>();
-
         public EventHandlerCollection<NpcTransformEventArgs> NpcTransform { get; }
-            = new EventHandlerCollection<NpcTransformEventArgs>();
-
         public EventHandlerCollection<NpcDamageEventArgs> NpcDamage { get; }
-            = new EventHandlerCollection<NpcDamageEventArgs>();
-
         public EventHandlerCollection<NpcDropLootItemEventArgs> NpcDropLootItem { get; }
-            = new EventHandlerCollection<NpcDropLootItemEventArgs>();
-
         public EventHandlerCollection<NpcKilledEventArgs> NpcKilled { get; }
-            = new EventHandlerCollection<NpcKilledEventArgs>();
 
         public OrionNpcService(ILogger log) : base(log) {
             Debug.Assert(log != null, "log should not be null");
@@ -63,6 +49,14 @@ namespace Orion.Npcs {
             // Ignore the last NPC since it is used as a failure slot.
             Npcs = new WrappedReadOnlyArray<OrionNpc, TerrariaNpc>(
                 Main.npc.AsMemory(..^1), (npcIndex, terrariaNpc) => new OrionNpc(npcIndex, terrariaNpc));
+
+            NpcSetDefaults = new EventHandlerCollection<NpcSetDefaultsEventArgs>(log);
+            NpcSpawn = new EventHandlerCollection<NpcSpawnEventArgs>(log);
+            NpcUpdate = new EventHandlerCollection<NpcUpdateEventArgs>(log);
+            NpcTransform = new EventHandlerCollection<NpcTransformEventArgs>(log);
+            NpcDamage = new EventHandlerCollection<NpcDamageEventArgs>(log);
+            NpcDropLootItem = new EventHandlerCollection<NpcDropLootItemEventArgs>(log);
+            NpcKilled = new EventHandlerCollection<NpcKilledEventArgs>(log);
 
             Hooks.Npc.PreSetDefaultsById = PreSetDefaultsByIdHandler;
             Hooks.Npc.Spawn = SpawnHandler;

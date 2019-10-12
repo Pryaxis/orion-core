@@ -35,50 +35,43 @@ using TerrariaPlayer = Terraria.Player;
 namespace Orion.Players {
     internal sealed class OrionPlayerService : OrionService, IPlayerService {
         private readonly ThreadLocal<bool> _shouldIgnoreNextReceiveData = new ThreadLocal<bool>();
-
-        private readonly IDictionary<PacketType, Action<PacketReceiveEventArgs>> _packetReceiveHandlers =
-            new Dictionary<PacketType, Action<PacketReceiveEventArgs>>();
+        private readonly IDictionary<PacketType, Action<PacketReceiveEventArgs>> _packetReceiveHandlers;
 
         public IReadOnlyArray<IPlayer> Players { get; }
-
         public EventHandlerCollection<PacketReceiveEventArgs> PacketReceive { get; }
-            = new EventHandlerCollection<PacketReceiveEventArgs>();
-
         public EventHandlerCollection<PacketSendEventArgs> PacketSend { get; }
-            = new EventHandlerCollection<PacketSendEventArgs>();
-
         public EventHandlerCollection<PlayerConnectEventArgs> PlayerConnect { get; }
-            = new EventHandlerCollection<PlayerConnectEventArgs>();
-
         public EventHandlerCollection<PlayerDataEventArgs> PlayerData { get; }
-            = new EventHandlerCollection<PlayerDataEventArgs>();
-
         public EventHandlerCollection<PlayerInventorySlotEventArgs> PlayerInventorySlot { get; }
-            = new EventHandlerCollection<PlayerInventorySlotEventArgs>();
-
         public EventHandlerCollection<PlayerJoinEventArgs> PlayerJoin { get; }
-            = new EventHandlerCollection<PlayerJoinEventArgs>();
-
         public EventHandlerCollection<PlayerChatEventArgs> PlayerChat { get; }
-            = new EventHandlerCollection<PlayerChatEventArgs>();
-
         public EventHandlerCollection<PlayerDisconnectedEventArgs> PlayerDisconnected { get; }
-            = new EventHandlerCollection<PlayerDisconnectedEventArgs>();
 
         public OrionPlayerService(ILogger log) : base(log) {
             Debug.Assert(log != null, "log should not be null");
             Debug.Assert(Main.player != null, "Terraria players should not be null");
+
+            _packetReceiveHandlers = new Dictionary<PacketType, Action<PacketReceiveEventArgs>> {
+                [PacketType.PlayerConnect] = PlayerConnectHandler,
+                [PacketType.PlayerData] = PlayerDataHandler,
+                [PacketType.PlayerInventorySlot] = PlayerInventorySlotHandler,
+                [PacketType.PlayerJoin] = PlayerJoinHandler,
+                [PacketType.Module] = ModuleHandler
+            };
 
             // Ignore the last player since it is used as a failure slot.
             Players = new WrappedReadOnlyArray<OrionPlayer, TerrariaPlayer>(
                 Main.player.AsMemory(..^1),
                 (playerIndex, terrariaPlayer) => new OrionPlayer(this, playerIndex, terrariaPlayer));
 
-            _packetReceiveHandlers[PacketType.PlayerConnect] = PlayerConnectHandler;
-            _packetReceiveHandlers[PacketType.PlayerData] = PlayerDataHandler;
-            _packetReceiveHandlers[PacketType.PlayerInventorySlot] = PlayerInventorySlotHandler;
-            _packetReceiveHandlers[PacketType.PlayerJoin] = PlayerJoinHandler;
-            _packetReceiveHandlers[PacketType.Module] = ModuleHandler;
+            PacketReceive = new EventHandlerCollection<PacketReceiveEventArgs>(log);
+            PacketSend = new EventHandlerCollection<PacketSendEventArgs>(log);
+            PlayerConnect = new EventHandlerCollection<PlayerConnectEventArgs>(log);
+            PlayerData = new EventHandlerCollection<PlayerDataEventArgs>(log);
+            PlayerInventorySlot = new EventHandlerCollection<PlayerInventorySlotEventArgs>(log);
+            PlayerJoin = new EventHandlerCollection<PlayerJoinEventArgs>(log);
+            PlayerChat = new EventHandlerCollection<PlayerChatEventArgs>(log);
+            PlayerDisconnected = new EventHandlerCollection<PlayerDisconnectedEventArgs>(log);
 
             Hooks.Net.ReceiveData = ReceiveDataHandler;
             Hooks.Net.SendBytes = SendBytesHandler;

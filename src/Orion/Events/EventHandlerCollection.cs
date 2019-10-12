@@ -19,6 +19,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using Serilog;
 
 namespace Orion.Events {
     /// <summary>
@@ -28,12 +29,26 @@ namespace Orion.Events {
     /// <typeparam name="TEventArgs">The type of event arguments.</typeparam>
     public sealed class EventHandlerCollection<TEventArgs> where TEventArgs : EventArgs {
         private readonly object _lock = new object();
+        private readonly ILogger _log;
 
         private readonly ISet<Registration> _registrations =
             new SortedSet<Registration>(Comparer<Registration>.Create((r1, r2) => r1.Priority.CompareTo(r2.Priority)));
 
         private readonly IDictionary<EventHandler<TEventArgs>, Registration> _handlerToRegistration =
             new Dictionary<EventHandler<TEventArgs>, Registration>();
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="EventHandlerCollection{TEventArgs}"/> class with the specified log.
+        /// </summary>
+        /// <param name="log">The log.</param>
+        /// <exception cref="ArgumentNullException"><paramref name="log"/> is <see langword="null"/>.</exception>
+        public EventHandlerCollection(ILogger log) {
+            if (log is null) {
+                throw new ArgumentNullException(nameof(log));
+            }
+
+            _log = log;
+        }
 
         /// <summary>
         /// Invokes the collection of handlers in order of their priorities using the given <paramref name="sender"/>

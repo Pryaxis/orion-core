@@ -52,25 +52,21 @@ namespace Orion {
         /// Gets the events that occur when the server initializes.
         /// </summary>
         public EventHandlerCollection<ServerInitializeEventArgs> ServerInitialize { get; }
-            = new EventHandlerCollection<ServerInitializeEventArgs>();
 
         /// <summary>
         /// Gets the events that occur when the server starts.
         /// </summary>
         public EventHandlerCollection<ServerStartEventArgs> ServerStart { get; }
-            = new EventHandlerCollection<ServerStartEventArgs>();
 
         /// <summary>
         /// Gets the events that occur when the server updates.
         /// </summary>
         public EventHandlerCollection<ServerUpdateEventArgs> ServerUpdate { get; }
-            = new EventHandlerCollection<ServerUpdateEventArgs>();
 
         /// <summary>
         /// Gets the events that occur when the server executes a command. This event can be canceled.
         /// </summary>
         public EventHandlerCollection<ServerCommandEventArgs> ServerCommand { get; }
-            = new EventHandlerCollection<ServerCommandEventArgs>();
 
         /// <summary>
         /// Initializes a new instance of the <see cref="OrionKernel"/> class with the specified log. This log will be
@@ -93,8 +89,7 @@ namespace Orion {
             // Create an ILogger binding for service-specific logs.
             Bind<ILogger>().ToMethod(ctx => {
                 // ctx.Request.Target can be null if ILogger is resolved directly from the kernel.
-                var typeName = ctx.Request.Target?.Member.ReflectedType.Name;
-                var name = typeName != null ? $"{typeName}: " : string.Empty;
+                var name = ctx.Request.Target?.Member.ReflectedType.Name ?? "OrionKernel";
                 return new LoggerConfiguration()
                     .MinimumLevel.Verbose()
                     .Enrich.WithProperty("Name", name)
@@ -103,6 +98,10 @@ namespace Orion {
             });
 
             _log = this.Get<ILogger>();
+            ServerInitialize = new EventHandlerCollection<ServerInitializeEventArgs>(_log);
+            ServerStart = new EventHandlerCollection<ServerStartEventArgs>(_log);
+            ServerUpdate = new EventHandlerCollection<ServerUpdateEventArgs>(_log);
+            ServerCommand = new EventHandlerCollection<ServerCommandEventArgs>(_log);
 
             // Create bindings for Lazy<T> so that we can have lazily loaded services. This allows plugins to override
             // the above service bindings if necessary.

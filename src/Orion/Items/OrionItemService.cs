@@ -29,12 +29,8 @@ using TerrariaItem = Terraria.Item;
 namespace Orion.Items {
     internal sealed class OrionItemService : OrionService, IItemService {
         public IReadOnlyArray<IItem> Items { get; }
-
         public EventHandlerCollection<ItemSetDefaultsEventArgs> ItemSetDefaults { get; }
-            = new EventHandlerCollection<ItemSetDefaultsEventArgs>();
-
         public EventHandlerCollection<ItemUpdateEventArgs> ItemUpdate { get; }
-            = new EventHandlerCollection<ItemUpdateEventArgs>();
 
         public OrionItemService(ILogger log) : base(log) {
             Debug.Assert(log != null, "log should not be null");
@@ -43,6 +39,9 @@ namespace Orion.Items {
             // Ignore the last item since it is used as a failure slot.
             Items = new WrappedReadOnlyArray<OrionItem, TerrariaItem>(
                 Main.item.AsMemory(..^1), (itemIndex, terrariaItem) => new OrionItem(itemIndex, terrariaItem));
+
+            ItemSetDefaults = new EventHandlerCollection<ItemSetDefaultsEventArgs>(log);
+            ItemUpdate = new EventHandlerCollection<ItemUpdateEventArgs>(log);
 
             Hooks.Item.PreSetDefaultsById = PreSetDefaultsByIdHandler;
             Hooks.Item.PreUpdate = PreUpdateHandler;

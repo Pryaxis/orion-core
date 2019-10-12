@@ -44,12 +44,8 @@ namespace Orion.World {
         }
 
         public InvasionType CurrentInvasionType => (InvasionType)Main.invasionType;
-
         public EventHandlerCollection<WorldLoadEventArgs> WorldLoad { get; }
-            = new EventHandlerCollection<WorldLoadEventArgs>();
-
         public EventHandlerCollection<WorldSaveEventArgs> WorldSave { get; }
-            = new EventHandlerCollection<WorldSaveEventArgs>();
 
         public OrionWorldService(ILogger log) : base(log) {
             Debug.Assert(log != null, "log should not be null");
@@ -61,6 +57,9 @@ namespace Orion.World {
             } else {
                 Main.tile = _tileCollection = new TileCollection();
             }
+
+            WorldLoad = new EventHandlerCollection<WorldLoadEventArgs>(log);
+            WorldSave = new EventHandlerCollection<WorldSaveEventArgs>(log);
 
             Hooks.World.IO.PreLoadWorld = PreLoadWorldHandler;
             Hooks.World.IO.PreSaveWorld = PreSaveWorldHandler;
