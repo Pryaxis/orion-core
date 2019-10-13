@@ -83,6 +83,8 @@ namespace Orion.World {
             return args.IsCanceled() ? HookResult.Cancel : HookResult.Continue;
         }
 
+        // This class is not disposable since we expect instances to be permanent. However, a finalizer is implemented
+        // in case someone modifies Main.tile.
         private unsafe class TileCollection : ITileCollection {
             private readonly Tile* _tilesPtr;
 

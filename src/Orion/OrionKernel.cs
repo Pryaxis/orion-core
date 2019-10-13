@@ -126,6 +126,9 @@ namespace Orion {
         /// <inheritdoc/>
         public override void Dispose(bool disposing) {
             base.Dispose(disposing);
+            if (!disposing) {
+                return;
+            }
 
             AppDomain.CurrentDomain.AssemblyResolve -= AssemblyResolveHandler;
 
