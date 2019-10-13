@@ -15,6 +15,7 @@
 // You should have received a copy of the GNU General Public License
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
+using System;
 using FluentAssertions;
 using Xunit;
 
@@ -25,6 +26,14 @@ namespace Orion.Events {
             var attribute = new EventHandlerAttribute(EventPriority.Normal);
 
             attribute.Priority.Should().Be(EventPriority.Normal);
+        }
+
+        [Fact]
+        public void Name_SetNullValue_ThrowsArgumentNullException() {
+            var attribute = new EventHandlerAttribute(EventPriority.Normal);
+            Action action = () => attribute.Name = null;
+
+            action.Should().Throw<ArgumentNullException>();
         }
     }
 }

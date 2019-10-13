@@ -22,5 +22,6 @@ namespace Orion.Events.World {
     /// <summary>
     /// Provides data for the <see cref="IWorldService.WorldLoad"/> event.
     /// </summary>
+    [EventArgs("world-load")]
     public sealed class WorldLoadEventArgs : EventArgs { }
 }

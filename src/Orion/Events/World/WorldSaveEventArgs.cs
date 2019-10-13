@@ -22,6 +22,7 @@ namespace Orion.Events.World {
     /// <summary>
     /// Provides data for the <see cref="IWorldService.WorldSave"/> event.
     /// </summary>
+    [EventArgs("world-save")]
     public sealed class WorldSaveEventArgs : EventArgs, ICancelable {
         /// <inheritdoc/>
         public string? CancellationReason { get; set; }

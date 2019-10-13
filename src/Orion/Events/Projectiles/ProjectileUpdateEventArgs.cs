@@ -22,6 +22,7 @@ namespace Orion.Events.Projectiles {
     /// <summary>
     /// Provides data for the <see cref="IProjectileService.ProjectileUpdate"/> event.
     /// </summary>
+    [EventArgs("projectile-update")]
     public sealed class ProjectileUpdateEventArgs : ProjectileEventArgs, ICancelable {
         /// <inheritdoc/>
         public string? CancellationReason { get; set; }

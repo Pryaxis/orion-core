@@ -22,6 +22,7 @@ namespace Orion.Events.Npcs {
     /// <summary>
     /// Provides data for the <see cref="INpcService.NpcSpawn"/> event.
     /// </summary>
+    [EventArgs("npc-spawn")]
     public sealed class NpcSpawnEventArgs : NpcEventArgs, ICancelable {
         /// <inheritdoc/>
         public string? CancellationReason { get; set; }

@@ -23,6 +23,7 @@ namespace Orion.Events.Players {
     /// <summary>
     /// Provides data for the <see cref="IPlayerService.PlayerConnect"/> event.
     /// </summary>
+    [EventArgs("player-connect")]
     public sealed class PlayerConnectEventArgs : PlayerEventArgs, ICancelable {
         private readonly PlayerConnectPacket _packet;
 

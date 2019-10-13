@@ -19,6 +19,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using Orion.Properties;
 using Serilog;
 
 namespace Orion.Events {
@@ -28,6 +29,8 @@ namespace Orion.Events {
     /// </summary>
     /// <typeparam name="TEventArgs">The type of event arguments.</typeparam>
     public sealed class EventHandlerCollection<TEventArgs> where TEventArgs : EventArgs {
+        private static readonly string _eventName = InitializeEventName();
+
         private readonly object _lock = new object();
         private readonly ILogger _log;
 
@@ -38,7 +41,8 @@ namespace Orion.Events {
             new Dictionary<EventHandler<TEventArgs>, Registration>();
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="EventHandlerCollection{TEventArgs}"/> class with the specified log.
+        /// Initializes a new instance of the <see cref="EventHandlerCollection{TEventArgs}"/> class with the specified
+        /// log.
         /// </summary>
         /// <param name="log">The log.</param>
         /// <exception cref="ArgumentNullException"><paramref name="log"/> is <see langword="null"/>.</exception>
@@ -49,10 +53,22 @@ namespace Orion.Events {
 
             _log = log;
         }
+        
+        private static string InitializeEventName() {
+            var attribute = typeof(TEventArgs).GetCustomAttribute<EventArgsAttribute?>();
+
+            // We're assuming that TEventArgs actually ends in "EventArgs", in which case we just chop that off.
+            return attribute?.Name ?? typeof(TEventArgs).Name[0..^9];
+        }
 
         /// <summary>
         /// Invokes the collection of handlers in order of their priorities using the given <paramref name="sender"/>
         /// and <paramref name="args"/>.
+        /// 
+        /// <para>
+        /// While this method itself is thread-safe, care must be taken to make the handlers thread-safe if this method
+        /// is expected to be called simultaneously on different threads.
+        /// </para>
         /// </summary>
         /// <param name="sender">The sender. This is the object that is initiating the event.</param>
         /// <param name="args">The event arguments.</param>
@@ -62,13 +78,14 @@ namespace Orion.Events {
                 throw new ArgumentNullException(nameof(args));
             }
 
-            IList<EventHandler<TEventArgs>> handlers;
+            IList<Registration> registrations;
             lock (_lock) {
-                handlers = _registrations.Select(r => r.Handler).ToList();
+                registrations = _registrations.ToList();
             }
 
-            foreach (var handler in handlers) {
-                handler(sender, args);
+            foreach (var registration in registrations) {
+                _log.Debug(Resources.EventHandlerCollection_Invoke, _eventName, registration.Name);
+                registration.Handler(sender, args);
             }
         }
 
@@ -82,12 +99,13 @@ namespace Orion.Events {
                 throw new ArgumentNullException(nameof(handler));
             }
 
-            var priority = handler.Method.GetCustomAttribute<EventHandlerAttribute>()?.Priority ?? EventPriority.Normal;
+            var registration = new Registration(handler);
             lock (_lock) {
-                var registration = new Registration(handler, priority);
                 _handlerToRegistration[handler] = registration;
                 _registrations.Add(registration);
             }
+
+            _log.Debug(Resources.EventHandlerCollection_Register, _eventName, registration.Name);
         }
 
         /// <summary>
@@ -103,23 +121,31 @@ namespace Orion.Events {
                 throw new ArgumentNullException(nameof(handler));
             }
 
+            Registration? registration = null;
+            var result = false;
             lock (_lock) {
-                if (!_handlerToRegistration.TryGetValue(handler, out var registration)) {
+                if (!_handlerToRegistration.TryGetValue(handler, out registration)) {
                     return false;
                 }
 
-                return _handlerToRegistration.Remove(handler) & _registrations.Remove(registration);
+                result = _handlerToRegistration.Remove(handler) & _registrations.Remove(registration);
             }
+            
+            _log.Debug(Resources.EventHandlerCollection_Unregister, _eventName, registration.Name);
+            return result;
         }
 
         // Keeps track of handlers along with their priorities.
         private class Registration {
-            public EventHandler<TEventArgs> Handler { get; }
-            public EventPriority Priority { get; }
+            private readonly EventHandlerAttribute? _attribute;
 
-            public Registration(EventHandler<TEventArgs> handler, EventPriority priority) {
+            public EventHandler<TEventArgs> Handler { get; }
+            public EventPriority Priority => _attribute?.Priority ?? EventPriority.Normal;
+            public string Name => _attribute?.Name ?? Handler.Method.Name;
+
+            public Registration(EventHandler<TEventArgs> handler) {
                 Handler = handler;
-                Priority = priority;
+                _attribute = handler.Method.GetCustomAttribute<EventHandlerAttribute?>();
             }
         }
     }

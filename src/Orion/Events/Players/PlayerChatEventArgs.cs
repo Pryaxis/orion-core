@@ -23,6 +23,7 @@ namespace Orion.Events.Players {
     /// <summary>
     /// Provides data for the <see cref="IPlayerService.PlayerChat"/> event.
     /// </summary>
+    [EventArgs("player-chat")]
     public sealed class PlayerChatEventArgs : PlayerEventArgs, ICancelable {
         private readonly ChatModule _module;
 

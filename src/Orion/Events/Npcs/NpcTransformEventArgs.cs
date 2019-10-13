@@ -22,6 +22,7 @@ namespace Orion.Events.Npcs {
     /// <summary>
     /// Provides data for the <see cref="INpcService.NpcTransform"/> event.
     /// </summary>
+    [EventArgs("npc-transform")]
     public sealed class NpcTransformEventArgs : NpcEventArgs, ICancelable {
         /// <inheritdoc/>
         public string? CancellationReason { get; set; }

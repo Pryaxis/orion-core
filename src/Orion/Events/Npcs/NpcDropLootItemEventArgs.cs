@@ -23,6 +23,7 @@ namespace Orion.Events.Npcs {
     /// <summary>
     /// Provides data for the <see cref="INpcService.NpcDropLootItem"/> event.
     /// </summary>
+    [EventArgs("npc-loot")]
     public sealed class NpcDropLootItemEventArgs : NpcEventArgs, ICancelable {
         /// <inheritdoc/>
         public string? CancellationReason { get; set; }

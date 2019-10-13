@@ -22,6 +22,7 @@ namespace Orion.Events.Players {
     /// <summary>
     /// Provides data for the <see cref="IPlayerService.PlayerDisconnected"/> event.
     /// </summary>
+    [EventArgs("player-left")]
     public sealed class PlayerDisconnectedEventArgs : PlayerEventArgs {
         /// <summary>
         /// Initializes a new instance of the <see cref="PlayerDisconnectedEventArgs"/> class with the specified player.

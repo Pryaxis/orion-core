@@ -24,6 +24,7 @@ namespace Orion.Events.Players {
     /// <summary>
     /// Provides data for the <see cref="IPlayerService.PlayerData"/> event.
     /// </summary>
+    [EventArgs("player-data")]
     public sealed class PlayerDataEventArgs : PlayerEventArgs, ICancelable {
         private readonly PlayerDataPacket _packet;
 

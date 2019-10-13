@@ -16,19 +16,23 @@
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
 using System;
-using Orion.Npcs;
+using FluentAssertions;
+using Xunit;
 
-namespace Orion.Events.Npcs {
-    /// <summary>
-    /// Provides data for the <see cref="INpcService.NpcKilled"/> event.
-    /// </summary>
-    [EventArgs("npc-killed")]
-    public sealed class NpcKilledEventArgs : NpcEventArgs {
-        /// <summary>
-        /// Initializes a new instance of the <see cref="NpcKilledEventArgs"/> class with the specified NPC.
-        /// </summary>
-        /// <param name="npc">The NPC.</param>
-        /// <exception cref="ArgumentNullException"><paramref name="npc"/> is <see langword="null"/>.</exception>
-        public NpcKilledEventArgs(INpc npc) : base(npc) { }
+namespace Orion.Events {
+    public class EventArgsAttributeTests {
+        [Fact]
+        public void Ctor_NullName_ThrowsArgumentNullException() {
+            Func<EventArgsAttribute> func = () => new EventArgsAttribute(null);
+
+            func.Should().Throw<ArgumentNullException>();
+        }
+
+        [Fact]
+        public void Name_Get() {
+            var attribute = new EventArgsAttribute("test");
+
+            attribute.Name.Should().Be("test");
+        }
     }
 }

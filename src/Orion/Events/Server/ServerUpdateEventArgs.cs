@@ -21,5 +21,6 @@ namespace Orion.Events.Server {
     /// <summary>
     /// Provides data for the <see cref="OrionKernel.ServerUpdate"/> event.
     /// </summary>
+    [EventArgs("server-update")]
     public sealed class ServerUpdateEventArgs : ServerEventArgs { }
 }

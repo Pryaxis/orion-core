@@ -16,19 +16,27 @@
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
 using System;
-using Orion.Npcs;
+using JetBrains.Annotations;
 
-namespace Orion.Events.Npcs {
+namespace Orion.Events {
     /// <summary>
-    /// Provides data for the <see cref="INpcService.NpcKilled"/> event.
+    /// Specifies information about event arguments.
     /// </summary>
-    [EventArgs("npc-killed")]
-    public sealed class NpcKilledEventArgs : NpcEventArgs {
+    [AttributeUsage(AttributeTargets.Class)]
+    [BaseTypeRequired(typeof(EventArgs))]
+    public sealed class EventArgsAttribute : Attribute {
         /// <summary>
-        /// Initializes a new instance of the <see cref="NpcKilledEventArgs"/> class with the specified NPC.
+        /// Gets the event's name, which is used for logs.
         /// </summary>
-        /// <param name="npc">The NPC.</param>
-        /// <exception cref="ArgumentNullException"><paramref name="npc"/> is <see langword="null"/>.</exception>
-        public NpcKilledEventArgs(INpc npc) : base(npc) { }
+        public string Name { get; }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="EventArgsAttribute"/> class with the specified name.
+        /// </summary>
+        /// <param name="name">The name.</param>
+        /// <exception cref="ArgumentNullException"><paramref name="name"/> is <see langword="null"/>.</exception>
+        public EventArgsAttribute(string name) {
+            Name = name ?? throw new ArgumentNullException(nameof(name));
+        }
     }
 }

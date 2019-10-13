@@ -16,17 +16,31 @@
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Orion.Events {
     /// <summary>
-    /// An attribute that can be applied to a event handler to indicate its priority.
+    /// Specifies that a method is an event handler. This controls many aspects of an event handler.
     /// </summary>
     [AttributeUsage(AttributeTargets.Method)]
     public sealed class EventHandlerAttribute : Attribute {
+        private string? name;
+
         /// <summary>
-        /// Gets the priority of the event handler.
+        /// Gets the event handler's priority.
         /// </summary>
         public EventPriority Priority { get; }
+
+        /// <summary>
+        /// Gets or sets the event handler's name, which is used for logs. If <see langword="null"/>, then the name
+        /// will be the method name.
+        /// </summary>
+        /// <exception cref="ArgumentNullException"><param name="value"/> is <see langword="null"/>.</exception>
+        [DisallowNull]
+        public string? Name {
+            get => name;
+            set => name = value ?? throw new ArgumentNullException(nameof(value));
+        }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="EventHandlerAttribute"/> class with the specified priority.

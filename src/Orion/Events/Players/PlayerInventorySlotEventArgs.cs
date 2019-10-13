@@ -24,6 +24,7 @@ namespace Orion.Events.Players {
     /// <summary>
     /// Provides data for the <see cref="IPlayerService.PlayerInventorySlot"/> event.
     /// </summary>
+    [EventArgs("player-inventory")]
     public sealed class PlayerInventorySlotEventArgs : PlayerEventArgs, ICancelable {
         private readonly PlayerInventorySlotPacket _packet;
 
