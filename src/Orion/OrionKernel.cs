@@ -88,8 +88,9 @@ namespace Orion {
 
             // Create an ILogger binding for service-specific logs.
             Bind<ILogger>().ToMethod(ctx => {
-                // ctx.Request.Target can be null if ILogger is resolved directly from the kernel.
-                var name = ctx.Request.Target?.Member.ReflectedType.Name ?? "OrionKernel";
+                // ctx.Request.Target can be null if the ILogger is requested directly, so we need to be safe about it.
+                var type = ctx.Request.Target?.Member.ReflectedType;
+                var name = type?.GetCustomAttribute<ServiceAttribute>()?.Name ?? type?.Name ?? "orion-kernel";
                 return new LoggerConfiguration()
                     .MinimumLevel.Verbose()
                     .Enrich.WithProperty("Name", name)

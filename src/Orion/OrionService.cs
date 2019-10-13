@@ -35,21 +35,6 @@ namespace Orion {
 #endif
 
         /// <summary>
-        /// Gets the service's author. By default, this will return <c>Pryaxis</c>.
-        /// </summary>
-        public virtual string Author => "Pryaxis";
-
-        /// <summary>
-        /// Gets the service's name. By default, this will return the type name.
-        /// </summary>
-        public virtual string Name => GetType().Name;
-
-        /// <summary>
-        /// Gets the service's version. By default, this will return the containing assembly's version.
-        /// </summary>
-        public virtual Version Version => GetType().Assembly.GetName().Version;
-
-        /// <summary>
         /// Gets the service's log. The logging level can be controlled by <see cref="SetLogLevel(LogEventLevel)"/>.
         /// </summary>
         protected ILogger Log { get; }

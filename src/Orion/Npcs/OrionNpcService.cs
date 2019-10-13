@@ -30,6 +30,7 @@ using TerrariaEntity = Terraria.Entity;
 using TerrariaNpc = Terraria.NPC;
 
 namespace Orion.Npcs {
+    [Service("orion-npcs")]
     internal sealed class OrionNpcService : OrionService, INpcService {
         private readonly ThreadLocal<int> _setDefaultsToIgnore = new ThreadLocal<int>();
 

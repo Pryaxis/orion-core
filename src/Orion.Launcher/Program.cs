@@ -86,8 +86,7 @@ namespace Orion.Launcher {
                 }
             }
 
-            kernel.FinishLoadingPlugins(
-                p => Log.Information(Resources.LoadedPluginMessage, p.Name, p.Version, p.Author));
+            kernel.FinishLoadingPlugins();
             Console.ResetColor();
             Console.WriteLine();
         }

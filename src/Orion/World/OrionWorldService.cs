@@ -30,6 +30,7 @@ using Serilog;
 using Main = Terraria.Main;
 
 namespace Orion.World {
+    [Service("orion-world")]
     internal sealed class OrionWorldService : OrionService, IWorldService {
         private readonly TileCollection _tileCollection;
 

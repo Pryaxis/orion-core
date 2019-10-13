@@ -33,6 +33,7 @@ using Main = Terraria.Main;
 using TerrariaPlayer = Terraria.Player;
 
 namespace Orion.Players {
+    [Service("orion-players")]
     internal sealed class OrionPlayerService : OrionService, IPlayerService {
         private readonly ThreadLocal<bool> _shouldIgnoreNextReceiveData = new ThreadLocal<bool>();
         private readonly IDictionary<PacketType, Action<PacketReceiveEventArgs>> _packetReceiveHandlers;

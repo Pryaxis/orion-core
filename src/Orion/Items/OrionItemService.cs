@@ -27,6 +27,7 @@ using Main = Terraria.Main;
 using TerrariaItem = Terraria.Item;
 
 namespace Orion.Items {
+    [Service("orion-items")]
     internal sealed class OrionItemService : OrionService, IItemService {
         public IReadOnlyArray<IItem> Items { get; }
         public EventHandlerCollection<ItemSetDefaultsEventArgs> ItemSetDefaults { get; }

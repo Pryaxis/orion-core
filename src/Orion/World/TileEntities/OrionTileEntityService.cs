@@ -30,6 +30,7 @@ using TerrariaTargetDummy = Terraria.GameContent.Tile_Entities.TETrainingDummy;
 using TerrariaTileEntity = Terraria.DataStructures.TileEntity;
 
 namespace Orion.World.TileEntities {
+    [Service("orion-tile-entities")]
     internal sealed class OrionTileEntityService : OrionService, ITileEntityService {
         public IReadOnlyArray<IChest?> Chests { get; }
         public IReadOnlyArray<ISign?> Signs { get; }
