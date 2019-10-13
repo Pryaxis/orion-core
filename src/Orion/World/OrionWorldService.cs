@@ -195,7 +195,7 @@ namespace Orion.World {
             }
 
             public TileAdapter(Tile* tile) {
-                Debug.Assert(tile != null, "tile != null");
+                Debug.Assert(tile != null, "tile should not be null");
 
                 _tile = tile;
             }

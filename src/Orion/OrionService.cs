@@ -45,6 +45,10 @@ namespace Orion {
         /// <param name="log">The log.</param>
         /// <exception cref="ArgumentNullException"><paramref name="log"/> is <see langword="null"/>.</exception>
         protected OrionService(ILogger log) {
+            if (log is null) {
+                throw new ArgumentNullException(nameof(log));
+            }
+
             Log = new LoggerConfiguration()
                 .MinimumLevel.ControlledBy(_logLevel)
                 .WriteTo.Logger(log)

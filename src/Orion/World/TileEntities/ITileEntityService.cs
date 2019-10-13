@@ -24,12 +24,12 @@ namespace Orion.World.TileEntities {
     /// </summary>
     public interface ITileEntityService {
         /// <summary>
-        /// Gets the chests.
+        /// Gets the chests. All chests are returned, regardless of whether or not they are actually active.
         /// </summary>
         IReadOnlyArray<IChest?> Chests { get; }
 
         /// <summary>
-        /// Gets the signs.
+        /// Gets the signs. All signs are returned, regardless of whether or not they are actually active.
         /// </summary>
         IReadOnlyArray<ISign?> Signs { get; }
 
@@ -41,46 +41,6 @@ namespace Orion.World.TileEntities {
         /// <param name="y">The Y coordinate.</param>
         /// <returns>The resulting tile entity, or <see langword="null"/> if none was added.</returns>
         ITileEntity? AddTileEntity(TileEntityType tileEntityType, int x, int y);
-
-        /// <summary>
-        /// Adds and returns a chest with the given coordinates.
-        /// </summary>
-        /// <param name="x">The X coordinate.</param>
-        /// <param name="y">The Y coordinate.</param>
-        /// <returns>The resulting chest, or <see langword="null"/> if none was added.</returns>
-        IChest? AddChest(int x, int y) => AddTileEntity(TileEntityType.Chest, x, y) as IChest;
-
-        /// <summary>
-        /// Adds and returns a sign with the given coordinates.
-        /// </summary>
-        /// <param name="x">The X coordinate.</param>
-        /// <param name="y">The Y coordinate.</param>
-        /// <returns>The resulting sign, or <see langword="null"/> if none was added.</returns>
-        ISign? AddSign(int x, int y) => AddTileEntity(TileEntityType.Sign, x, y) as ISign;
-
-        /// <summary>
-        /// Adds and returns a target dummy with the given coordinates.
-        /// </summary>
-        /// <param name="x">The X coordinate.</param>
-        /// <param name="y">The Y coordinate.</param>
-        /// <returns>The resulting target dummy, or <see langword="null"/> if none was added.</returns>
-        ITargetDummy? AddTargetDummy(int x, int y) => AddTileEntity(TileEntityType.TargetDummy, x, y) as ITargetDummy;
-
-        /// <summary>
-        /// Adds and returns a sign with the given coordinates.
-        /// </summary>
-        /// <param name="x">The X coordinate.</param>
-        /// <param name="y">The Y coordinate.</param>
-        /// <returns>The resulting item frame, or <see langword="null"/> if none was added.</returns>
-        IItemFrame? AddItemFrame(int x, int y) => AddTileEntity(TileEntityType.ItemFrame, x, y) as IItemFrame;
-
-        /// <summary>
-        /// Adds and returns a logic sensor with the given coordinates.
-        /// </summary>
-        /// <param name="x">The X coordinate.</param>
-        /// <param name="y">The Y coordinate.</param>
-        /// <returns>The resulting logic sensor, or <see langword="null"/> if none was added.</returns>
-        ILogicSensor? AddLogicSensor(int x, int y) => AddTileEntity(TileEntityType.LogicSensor, x, y) as ILogicSensor;
 
         /// <summary>
         /// Returns the tile entity at the given coordinates.
@@ -99,5 +59,100 @@ namespace Orion.World.TileEntities {
         /// <paramref name="tileEntity"/> is <see langword="null"/>.
         /// </exception>
         bool RemoveTileEntity(ITileEntity tileEntity);
+    }
+
+    /// <summary>
+    /// Provides extensions for the <see cref="ITileEntityService"/> interface.
+    /// </summary>
+    public static class TileEntityServiceExtensions {
+        /// <summary>
+        /// Adds and returns chest with the given coordinates.
+        /// </summary>
+        /// <param name="tileEntityService">The tile entity service.</param>
+        /// <param name="x">The X coordinate.</param>
+        /// <param name="y">The Y coordinate.</param>
+        /// <returns>The resulting chest, or <see langword="null"/> if none was added.</returns>
+        /// <exception cref="ArgumentNullException">
+        /// <paramref name="tileEntityService"/> is <see langword="null"/>.
+        /// </exception>
+        public static IChest? AddChest(this ITileEntityService tileEntityService, int x, int y) {
+            if (tileEntityService is null) {
+                throw new ArgumentNullException(nameof(tileEntityService));
+            }
+
+            return tileEntityService.AddTileEntity(TileEntityType.Chest, x, y) as IChest;
+        }
+
+        /// <summary>
+        /// Adds and returns sign with the given coordinates.
+        /// </summary>
+        /// <param name="tileEntityService">The tile entity service.</param>
+        /// <param name="x">The X coordinate.</param>
+        /// <param name="y">The Y coordinate.</param>
+        /// <returns>The resulting sign, or <see langword="null"/> if none was added.</returns>
+        /// <exception cref="ArgumentNullException">
+        /// <paramref name="tileEntityService"/> is <see langword="null"/>.
+        /// </exception>
+        public static ISign? AddSign(this ITileEntityService tileEntityService, int x, int y) {
+            if (tileEntityService is null) {
+                throw new ArgumentNullException(nameof(tileEntityService));
+            }
+
+            return tileEntityService.AddTileEntity(TileEntityType.Sign, x, y) as ISign;
+        }
+
+        /// <summary>
+        /// Adds and returns target dummy with the given coordinates.
+        /// </summary>
+        /// <param name="tileEntityService">The tile entity service.</param>
+        /// <param name="x">The X coordinate.</param>
+        /// <param name="y">The Y coordinate.</param>
+        /// <returns>The resulting target dummy, or <see langword="null"/> if none was added.</returns>
+        /// <exception cref="ArgumentNullException">
+        /// <paramref name="tileEntityService"/> is <see langword="null"/>.
+        /// </exception>
+        public static ITargetDummy? AddTargetDummy(this ITileEntityService tileEntityService, int x, int y) {
+            if (tileEntityService is null) {
+                throw new ArgumentNullException(nameof(tileEntityService));
+            }
+
+            return tileEntityService.AddTileEntity(TileEntityType.TargetDummy, x, y) as ITargetDummy;
+        }
+
+        /// <summary>
+        /// Adds and returns an item frame with the given coordinates.
+        /// </summary>
+        /// <param name="tileEntityService">The tile entity service.</param>
+        /// <param name="x">The X coordinate.</param>
+        /// <param name="y">The Y coordinate.</param>
+        /// <returns>The resulting item frame, or <see langword="null"/> if none was added.</returns>
+        /// <exception cref="ArgumentNullException">
+        /// <paramref name="tileEntityService"/> is <see langword="null"/>.
+        /// </exception>
+        public static IItemFrame? AddItemFrame(this ITileEntityService tileEntityService, int x, int y) {
+            if (tileEntityService is null) {
+                throw new ArgumentNullException(nameof(tileEntityService));
+            }
+
+            return tileEntityService.AddTileEntity(TileEntityType.ItemFrame, x, y) as IItemFrame;
+        }
+
+        /// <summary>
+        /// Adds and returns logic sensor with the given coordinates.
+        /// </summary>
+        /// <param name="tileEntityService">The tile entity service.</param>
+        /// <param name="x">The X coordinate.</param>
+        /// <param name="y">The Y coordinate.</param>
+        /// <returns>The resulting logic sensor, or <see langword="null"/> if none was added.</returns>
+        /// <exception cref="ArgumentNullException">
+        /// <paramref name="tileEntityService"/> is <see langword="null"/>.
+        /// </exception>
+        public static ILogicSensor? AddLogicSensor(this ITileEntityService tileEntityService, int x, int y) {
+            if (tileEntityService is null) {
+                throw new ArgumentNullException(nameof(tileEntityService));
+            }
+
+            return tileEntityService.AddTileEntity(TileEntityType.LogicSensor, x, y) as ILogicSensor;
+        }
     }
 }

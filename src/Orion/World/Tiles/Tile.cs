@@ -22,7 +22,12 @@ using System.Runtime.InteropServices;
 
 namespace Orion.World.Tiles {
     /// <summary>
-    /// Represents an optimized Terraria tile. Tiles are represented as structures for optimal packing and GC overhead.
+    /// Represents an optimized Terraria tile.
+    /// 
+    /// <para>
+    /// Tiles are represented as structures for optimal packing and for lowered GC overhead. These structures are
+    /// modified using <see langword="ref"/> locals and returns.
+    /// </para>
     /// </summary>
     [StructLayout(LayoutKind.Explicit)]
     [SuppressMessage("Design", "CA1051:Do not declare visible instance fields", Justification = "Performance")]
@@ -239,7 +244,7 @@ namespace Orion.World.Tiles {
         }
 
         /// <summary>
-        /// Returns a value indicating whether the tile is the same as <paramref name="otherTile"/>.
+        /// Returns a value indicating whether the tile is the same as the <paramref name="otherTile"/>.
         /// </summary>
         /// <param name="otherTile">The other tile.</param>
         /// <returns><see langword="true"/> if the tiles are the same; otherwise, <see langword="false"/>.</returns>

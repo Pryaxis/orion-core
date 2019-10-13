@@ -15,6 +15,7 @@
 // You should have received a copy of the GNU General Public License
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
+using System;
 using Orion.Events;
 using Orion.Events.World;
 using Orion.World.Tiles;
@@ -36,8 +37,12 @@ namespace Orion.World {
         int WorldHeight { get; }
 
         /// <summary>
-        /// Gets a reference to the tile at the given coordinates. For optimization purposes, there will be no range
-        /// checking.
+        /// Gets a reference to the tile at the given coordinates.
+        /// 
+        /// <para>
+        /// For optimization purposes, there will be no range checking. A likely result of invalid coordinates is an
+        /// <see cref="AccessViolationException"/>.
+        /// </para>
         /// </summary>
         /// <param name="x">The X coordinate.</param>
         /// <param name="y">The Y coordinate.</param>
