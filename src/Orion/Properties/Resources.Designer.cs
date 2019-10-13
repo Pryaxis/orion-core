@@ -70,6 +70,15 @@ namespace Orion.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to {EventName}: Canceled for {CancellationReason}.
+        /// </summary>
+        internal static string EventHandlerCollection_InvokeCanceled {
+            get {
+                return ResourceManager.GetString("EventHandlerCollection_InvokeCanceled", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to {EventName}: Unhandled exception occurred.
         /// </summary>
         internal static string EventHandlerCollection_InvokeException {

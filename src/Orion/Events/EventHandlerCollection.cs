@@ -96,6 +96,13 @@ namespace Orion.Events {
                     _log.Error(ex, Resources.EventHandlerCollection_InvokeException, _eventName);
                 }
             }
+
+            if (args is ICancelable cancelable) {
+                if (cancelable.IsCanceled()) {
+                    var cancellationReason = cancelable.CancellationReason;
+                    _log.Debug(Resources.EventHandlerCollection_InvokeCanceled, _eventName, cancellationReason);
+                }
+            }
         }
 
         /// <summary>

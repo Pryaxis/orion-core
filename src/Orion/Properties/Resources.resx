@@ -120,6 +120,9 @@
   <data name="EventHandlerCollection_Invoke" xml:space="preserve">
     <value>{EventName}: Invoking {RegistrationName} with {Args}</value>
   </data>
+  <data name="EventHandlerCollection_InvokeCanceled" xml:space="preserve">
+    <value>{EventName}: Canceled for {CancellationReason}</value>
+  </data>
   <data name="EventHandlerCollection_InvokeException" xml:space="preserve">
     <value>{EventName}: Unhandled exception occurred</value>
   </data>
