@@ -15,8 +15,8 @@
 // You should have received a copy of the GNU General Public License
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
-using System.Diagnostics.Contracts;
 using System.Diagnostics.CodeAnalysis;
+using System.Diagnostics.Contracts;
 using System.IO;
 using Microsoft.Xna.Framework;
 using Orion.Packets.Extensions;
@@ -246,7 +246,9 @@ namespace Orion.Packets.Players {
 
             _playerHeldItemSlotIndex = reader.ReadByte();
             _playerPosition = reader.ReadVector2();
-            if (flags2[2]) _playerVelocity = reader.ReadVector2();
+            if (flags2[2]) {
+                _playerVelocity = reader.ReadVector2();
+            }
         }
 
         private protected override void WriteToWriter(BinaryWriter writer, PacketContext context) {
@@ -272,7 +274,9 @@ namespace Orion.Packets.Players {
 
             writer.Write(_playerHeldItemSlotIndex);
             writer.Write(_playerPosition);
-            if (flags2[2]) writer.Write(_playerVelocity);
+            if (flags2[2]) {
+                writer.Write(_playerVelocity);
+            }
         }
     }
 }

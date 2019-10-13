@@ -16,8 +16,8 @@
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
 using System;
-using System.Diagnostics.Contracts;
 using System.Diagnostics.CodeAnalysis;
+using System.Diagnostics.Contracts;
 using System.IO;
 using Microsoft.Xna.Framework;
 using Orion.Packets.Extensions;
@@ -246,9 +246,17 @@ namespace Orion.Packets.Players {
             _playerShoeColor = reader.ReadColor();
 
             Terraria.BitsByte flags = reader.ReadByte();
-            if (flags[0]) _playerDifficulty = PlayerDifficulty.Mediumcore;
-            if (flags[1]) _playerDifficulty = PlayerDifficulty.Hardcore;
-            if (flags[2]) _playerHasExtraAccessory = true;
+            if (flags[0]) {
+                _playerDifficulty = PlayerDifficulty.Mediumcore;
+            }
+
+            if (flags[1]) {
+                _playerDifficulty = PlayerDifficulty.Hardcore;
+            }
+
+            if (flags[2]) {
+                _playerHasExtraAccessory = true;
+            }
         }
 
         private protected override void WriteToWriter(BinaryWriter writer, PacketContext context) {

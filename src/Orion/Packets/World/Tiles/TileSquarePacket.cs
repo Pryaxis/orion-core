@@ -16,8 +16,8 @@
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
 using System;
-using System.Diagnostics.Contracts;
 using System.Diagnostics.CodeAnalysis;
+using System.Diagnostics.Contracts;
 using System.IO;
 using Orion.World.Tiles;
 
@@ -117,8 +117,13 @@ namespace Orion.Packets.World.Tiles {
                 tile.HasGreenWire = header2[1];
                 tile.HasYellowWire = header2[7];
 
-                if (header2[2]) tile.BlockColor = (PaintColor)reader.ReadByte();
-                if (header2[3]) tile.WallColor = (PaintColor)reader.ReadByte();
+                if (header2[2]) {
+                    tile.BlockColor = (PaintColor)reader.ReadByte();
+                }
+
+                if (header2[3]) {
+                    tile.WallColor = (PaintColor)reader.ReadByte();
+                }
 
                 if (header[0]) {
                     tile.IsBlockActive = true;
@@ -132,13 +137,24 @@ namespace Orion.Packets.World.Tiles {
                     }
 
                     byte slope = 0;
-                    if (header2[4]) slope += 1;
-                    if (header2[5]) slope += 2;
-                    if (header2[6]) slope += 4;
+                    if (header2[4]) {
+                        slope += 1;
+                    }
+
+                    if (header2[5]) {
+                        slope += 2;
+                    }
+
+                    if (header2[6]) {
+                        slope += 4;
+                    }
+
                     tile.Slope = (Slope)slope;
                 }
 
-                if (header[2]) tile.WallType = (WallType)reader.ReadByte();
+                if (header[2]) {
+                    tile.WallType = (WallType)reader.ReadByte();
+                }
 
                 if (header[3]) {
                     tile.LiquidAmount = reader.ReadByte();
@@ -194,7 +210,9 @@ namespace Orion.Packets.World.Tiles {
                     }
                 }
 
-                if (header[2]) writer.Write((byte)tile.WallType);
+                if (header[2]) {
+                    writer.Write((byte)tile.WallType);
+                }
 
                 if (header[3]) {
                     writer.Write(tile.LiquidAmount);

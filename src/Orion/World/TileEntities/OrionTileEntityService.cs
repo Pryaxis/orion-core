@@ -17,7 +17,6 @@
 
 using System;
 using System.Diagnostics;
-using System.Diagnostics.CodeAnalysis;
 using Orion.Utils;
 using Serilog;
 using Main = Terraria.Main;

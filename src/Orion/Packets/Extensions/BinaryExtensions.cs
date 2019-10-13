@@ -50,7 +50,8 @@ namespace Orion.Packets.Extensions {
         public static TimeSpan ReadTimeSpan(this BinaryReader reader, int numOfBytes) {
             Debug.Assert(reader != null, "reader should not be null");
 
-            var ticks = numOfBytes switch {
+            var ticks = numOfBytes switch
+            {
                 2 => reader.ReadInt16(),
                 4 => reader.ReadInt32(),
                 _ => throw new ArgumentException("Number of bytes is not 2 or 4", nameof(numOfBytes))

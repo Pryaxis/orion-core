@@ -100,7 +100,7 @@ namespace Orion.Packets.Extensions {
 
             reader.ReadVector2().Should().Be(vector);
         }
-        
+
         [Theory]
         [MemberData(nameof(TimeSpanData))]
         public void WriteTimeSpan_ReadTimeSpan(TimeSpan timeSpan, int numOfBytes) {

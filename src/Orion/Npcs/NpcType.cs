@@ -667,7 +667,7 @@ namespace Orion.Npcs {
         UnconsciousTavernkeep = 579
 #pragma warning restore 1591
     }
-    
+
     /// <summary>
     /// Provides extensions for the <see cref="NpcType"/> enumeration.
     /// </summary>

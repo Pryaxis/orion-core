@@ -15,8 +15,8 @@
 // You should have received a copy of the GNU General Public License
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
-using System.Diagnostics.Contracts;
 using System.Diagnostics.CodeAnalysis;
+using System.Diagnostics.Contracts;
 using System.IO;
 using Microsoft.Xna.Framework;
 using Orion.Packets.Extensions;
@@ -161,9 +161,17 @@ namespace Orion.Packets.Projectiles {
             _projectileType = (ProjectileType)reader.ReadInt16();
 
             Terraria.BitsByte header = reader.ReadByte();
-            if (header[0]) _projectileAiValues._array[0] = reader.ReadSingle();
-            if (header[1]) _projectileAiValues._array[1] = reader.ReadSingle();
-            if (header[2]) _projectileUuid = reader.ReadInt16();
+            if (header[0]) {
+                _projectileAiValues._array[0] = reader.ReadSingle();
+            }
+
+            if (header[1]) {
+                _projectileAiValues._array[1] = reader.ReadSingle();
+            }
+
+            if (header[2]) {
+                _projectileUuid = reader.ReadInt16();
+            }
         }
 
         private protected override void WriteToWriter(BinaryWriter writer, PacketContext context) {
@@ -181,9 +189,17 @@ namespace Orion.Packets.Projectiles {
             header[2] = _projectileUuid >= 0;
 
             writer.Write(header);
-            if (header[0]) writer.Write(_projectileAiValues._array[0]);
-            if (header[1]) writer.Write(_projectileAiValues._array[1]);
-            if (header[2]) writer.Write(_projectileUuid);
+            if (header[0]) {
+                writer.Write(_projectileAiValues._array[0]);
+            }
+
+            if (header[1]) {
+                writer.Write(_projectileAiValues._array[1]);
+            }
+
+            if (header[2]) {
+                writer.Write(_projectileUuid);
+            }
         }
     }
 }

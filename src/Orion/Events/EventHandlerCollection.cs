@@ -54,7 +54,7 @@ namespace Orion.Events {
 
             _log = log;
         }
-        
+
         private static string InitializeEventName() {
             var attribute = typeof(TEventArgs).GetCustomAttribute<EventArgsAttribute?>();
 
@@ -146,7 +146,7 @@ namespace Orion.Events {
 
                 result = _handlerToRegistration.Remove(handler) & _registrations.Remove(registration);
             }
-            
+
             _log.Debug(Resources.EventHandlerCollection_Unregister, _eventName, registration.Name);
             return result;
         }

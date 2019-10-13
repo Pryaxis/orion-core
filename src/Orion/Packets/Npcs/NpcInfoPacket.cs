@@ -15,8 +15,8 @@
 // You should have received a copy of the GNU General Public License
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
-using System.Diagnostics.Contracts;
 using System.Diagnostics.CodeAnalysis;
+using System.Diagnostics.Contracts;
 using System.IO;
 using Microsoft.Xna.Framework;
 using Orion.Npcs;
@@ -208,10 +208,22 @@ namespace Orion.Packets.Npcs {
             Terraria.BitsByte header = reader.ReadByte();
             _npcHorizontalDirection = header[0];
             _npcVerticalDirection = header[1];
-            if (header[2]) _npcAiValues._array[0] = reader.ReadSingle();
-            if (header[3]) _npcAiValues._array[1] = reader.ReadSingle();
-            if (header[4]) _npcAiValues._array[2] = reader.ReadSingle();
-            if (header[5]) _npcAiValues._array[3] = reader.ReadSingle();
+            if (header[2]) {
+                _npcAiValues._array[0] = reader.ReadSingle();
+            }
+
+            if (header[3]) {
+                _npcAiValues._array[1] = reader.ReadSingle();
+            }
+
+            if (header[4]) {
+                _npcAiValues._array[2] = reader.ReadSingle();
+            }
+
+            if (header[5]) {
+                _npcAiValues._array[3] = reader.ReadSingle();
+            }
+
             _npcSpriteDirection = header[6];
             _isNpcAtMaxHealth = header[7];
 
@@ -248,10 +260,21 @@ namespace Orion.Packets.Npcs {
             header[7] = _isNpcAtMaxHealth;
 
             writer.Write(header);
-            if (header[2]) writer.Write(_npcAiValues._array[0]);
-            if (header[3]) writer.Write(_npcAiValues._array[1]);
-            if (header[4]) writer.Write(_npcAiValues._array[2]);
-            if (header[5]) writer.Write(_npcAiValues._array[3]);
+            if (header[2]) {
+                writer.Write(_npcAiValues._array[0]);
+            }
+
+            if (header[3]) {
+                writer.Write(_npcAiValues._array[1]);
+            }
+
+            if (header[4]) {
+                writer.Write(_npcAiValues._array[2]);
+            }
+
+            if (header[5]) {
+                writer.Write(_npcAiValues._array[3]);
+            }
 
             writer.Write((short)_npcType);
 

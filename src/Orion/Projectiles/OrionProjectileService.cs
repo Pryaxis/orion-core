@@ -17,7 +17,6 @@
 
 using System;
 using System.Diagnostics;
-using System.Diagnostics.CodeAnalysis;
 using Microsoft.Xna.Framework;
 using Orion.Events;
 using Orion.Events.Projectiles;

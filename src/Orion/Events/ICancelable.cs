@@ -33,7 +33,7 @@ namespace Orion.Events {
         /// </summary>
         string? CancellationReason { get; set; }
     }
-    
+
     /// <summary>
     /// Provides extensions for the <see cref="ICancelable"/> interface.
     /// </summary>

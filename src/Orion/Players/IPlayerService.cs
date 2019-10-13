@@ -121,7 +121,7 @@ namespace Orion.Players {
             if (message is null) {
                 throw new ArgumentNullException(nameof(message));
             }
-            
+
             var players = playerService.Players;
             for (var i = 0; i < players.Count; ++i) {
                 players[i].SendMessage(message, color);

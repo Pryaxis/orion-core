@@ -40,7 +40,7 @@ namespace Orion.Utils {
             var annotatable = new AnnotatableObject();
 
             annotatable.GetAnnotationOrDefault("test", () => 10, true).Should().Be(10);
-            
+
             annotatable.GetAnnotationOrDefault("test", () => 1).Should().Be(10);
         }
 

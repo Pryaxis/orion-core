@@ -495,7 +495,7 @@ namespace Orion.World.Tiles {
         CrystalTable = 469
 #pragma warning restore 1591
     }
-    
+
     /// <summary>
     /// Provides extensions for the <see cref="BlockType"/> enumeration.
     /// </summary>

@@ -15,12 +15,10 @@
 // You should have received a copy of the GNU General Public License
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
-using System;
-using System.Diagnostics.Contracts;
 using System.Diagnostics.CodeAnalysis;
+using System.Diagnostics.Contracts;
 using System.IO;
 using Orion.Entities;
-using Orion.Packets.Extensions;
 using Orion.Utils;
 using TerrariaNpc = Terraria.NPC;
 
