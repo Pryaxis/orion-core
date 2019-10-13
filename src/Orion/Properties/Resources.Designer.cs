@@ -70,6 +70,15 @@ namespace Orion.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to {EventName}: Unhandled exception occurred.
+        /// </summary>
+        internal static string EventHandlerCollection_InvokeException {
+            get {
+                return ResourceManager.GetString("EventHandlerCollection_InvokeException", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to {EventName}: Registered {RegistrationName}.
         /// </summary>
         internal static string EventHandlerCollection_Register {
@@ -84,6 +93,33 @@ namespace Orion.Properties {
         internal static string EventHandlerCollection_Unregister {
             get {
                 return ResourceManager.GetString("EventHandlerCollection_Unregister", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Initialized {PluginName} v{PluginVersion} by {PluginAuthor}.
+        /// </summary>
+        internal static string Kernel_InitalizePlugin {
+            get {
+                return ResourceManager.GetString("Kernel_InitalizePlugin", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Loaded {PluginName} from {AssemblyPath}.
+        /// </summary>
+        internal static string Kernel_LoadPlugin {
+            get {
+                return ResourceManager.GetString("Kernel_LoadPlugin", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Unloaded {PluginName}.
+        /// </summary>
+        internal static string Kernel_UnloadPlugin {
+            get {
+                return ResourceManager.GetString("Kernel_UnloadPlugin", resourceCulture);
             }
         }
     }

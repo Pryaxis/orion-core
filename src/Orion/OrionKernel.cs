@@ -28,6 +28,7 @@ using Orion.Items;
 using Orion.Npcs;
 using Orion.Players;
 using Orion.Projectiles;
+using Orion.Properties;
 using Orion.World;
 using OTAPI;
 using Serilog;
@@ -41,12 +42,13 @@ namespace Orion {
         private readonly ILogger _log;
         private readonly ISet<Assembly> _pluginAssemblies = new HashSet<Assembly>();
         private readonly ISet<Type> _pluginTypesToLoad = new HashSet<Type>();
-        private readonly ISet<OrionPlugin> _plugins = new HashSet<OrionPlugin>();
+        private readonly Dictionary<string, OrionPlugin> _plugins = new Dictionary<string, OrionPlugin>();
+        private readonly Dictionary<OrionPlugin, string> _pluginToName = new Dictionary<OrionPlugin, string>();
 
         /// <summary>
-        /// Gets the loaded plugins.
+        /// Gets a mapping from plugin names to plugins.
         /// </summary>
-        public IReadOnlyCollection<OrionPlugin> LoadedPlugins => new HashSet<OrionPlugin>(_plugins);
+        public IReadOnlyDictionary<string, OrionPlugin> Plugins => _plugins;
 
         /// <summary>
         /// Gets the events that occur when the server initializes.
@@ -134,13 +136,19 @@ namespace Orion {
         }
 
         /// <summary>
-        /// Queues plugins to be loaded from an <paramref name="assemblyPath"/>.
+        /// Starts loading plugins form an <paramref name="assemblyPath"/>.
+        /// 
+        /// <para>
+        /// The reason that loading plugins needs to be split up into a two-part process is that all plugin types need
+        /// to be obtained before actually constructing them due to dependency injection requirements.
+        /// </para>
         /// </summary>
         /// <param name="assemblyPath">The assembly path.</param>
         /// <exception cref="ArgumentNullException">
         /// <paramref name="assemblyPath"/> is <see langword="null"/>.
         /// </exception>
-        public void QueuePluginsFromPath(string assemblyPath) {
+        /// <exception cref="BadImageFormatException">The file is not a valid assembly.</exception>
+        public void StartLoadingPlugins(string assemblyPath) {
             if (assemblyPath is null) {
                 throw new ArgumentNullException(nameof(assemblyPath));
             }
@@ -155,26 +163,48 @@ namespace Orion {
                 // reliance on static state.
                 _pluginTypesToLoad.Add(pluginType);
                 Bind(pluginType).ToSelf().InSingletonScope();
+
+                var pluginName = pluginType.GetCustomAttribute<ServiceAttribute?>()?.Name ?? pluginType.Name;
+                _log.Information(Resources.Kernel_LoadPlugin, pluginName, assemblyPath);
             }
         }
 
         /// <summary>
-        /// Finishes loading plugins, running the given <paramref name="action"/> for each plugin loaded.
+        /// Finishes loading plugins and returns the plugins.
+        /// 
+        /// <para>
+        /// Each plugin will be constructed and then each plugin will be initialized.
+        /// </para>
         /// </summary>
-        /// <param name="action">The action to run.</param>
-        public void FinishLoadingPlugins(Action<OrionPlugin>? action = null) {
-            foreach (var pluginType in _pluginTypesToLoad) {
+        /// <returns>The loaded plugins.</returns>
+        public IReadOnlyCollection<OrionPlugin> FinishLoadingPlugins() {
+            OrionPlugin LoadPlugin(Type pluginType) {
                 var plugin = (OrionPlugin)this.Get(pluginType);
+                var pluginName = pluginType.GetCustomAttribute<ServiceAttribute?>()?.Name ?? pluginType.Name;
+                _plugins[pluginName] = plugin;
+                _pluginToName[plugin] = pluginName;
+                return plugin;
+            }
+
+            // We need to first construct all the plugins before initializing the plugins. This allows the bindings that
+            // occur in the constructors to take effect in the initialization.
+            var loadedPlugins = _pluginTypesToLoad.Select(LoadPlugin).ToList();
+            foreach (var plugin in loadedPlugins) {
                 plugin.Initialize();
-                _plugins.Add(plugin);
-                action?.Invoke(plugin);
+
+                var pluginType = plugin.GetType();
+                var pluginName = _pluginToName[plugin];
+                var pluginVersion = pluginType.Assembly.GetName().Version;
+                var pluginAuthor = pluginType.GetCustomAttribute<ServiceAttribute?>()?.Author ?? "Pryaxis";
+                _log.Information(Resources.Kernel_InitalizePlugin, pluginName, pluginVersion, pluginAuthor);
             }
 
             _pluginTypesToLoad.Clear();
+            return loadedPlugins;
         }
 
         /// <summary>
-        /// Unloads <paramref name="plugin"/> and returns a value indicating success.
+        /// Unloads a <paramref name="plugin"/> and returns a value indicating success.
         /// </summary>
         /// <param name="plugin">The plugin.</param>
         /// <exception cref="ArgumentNullException"><paramref name="plugin"/> is <see langword="null"/>.</exception>
@@ -184,16 +214,18 @@ namespace Orion {
                 throw new ArgumentNullException(nameof(plugin));
             }
 
-            if (!_plugins.Contains(plugin)) {
+            if (!_pluginToName.TryGetValue(plugin, out var pluginName)) {
                 return false;
             }
 
             var pluginType = plugin.GetType();
             _pluginAssemblies.Remove(pluginType.Assembly);
-            _plugins.Remove(plugin);
-
+            _plugins.Remove(pluginName);
+            _pluginToName.Remove(plugin);
             plugin.Dispose();
             Unbind(pluginType);
+
+            _log.Information(Resources.Kernel_UnloadPlugin, pluginName);
             return true;
         }
 

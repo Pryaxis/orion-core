@@ -17,6 +17,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Reflection;
 using Orion.Properties;
@@ -61,6 +62,7 @@ namespace Orion.Events {
             return attribute?.Name ?? typeof(TEventArgs).Name[0..^9];
         }
 
+
         /// <summary>
         /// Invokes the collection of handlers in order of their priorities using the given <paramref name="sender"/>
         /// and <paramref name="args"/>.
@@ -73,6 +75,8 @@ namespace Orion.Events {
         /// <param name="sender">The sender. This is the object that is initiating the event.</param>
         /// <param name="args">The event arguments.</param>
         /// <exception cref="ArgumentNullException"><paramref name="args"/> is <see langword="null"/>.</exception>
+        [SuppressMessage("Design", "CA1031:Do not catch general exception types",
+            Justification = "catching Exception for fail-safe")]
         public void Invoke(object? sender, TEventArgs args) {
             if (args is null) {
                 throw new ArgumentNullException(nameof(args));
@@ -85,7 +89,12 @@ namespace Orion.Events {
 
             foreach (var registration in registrations) {
                 _log.Debug(Resources.EventHandlerCollection_Invoke, _eventName, registration.Name, args);
-                registration.Handler(sender, args);
+
+                try {
+                    registration.Handler(sender, args);
+                } catch (Exception ex) {
+                    _log.Error(ex, Resources.EventHandlerCollection_InvokeException, _eventName);
+                }
             }
         }
 

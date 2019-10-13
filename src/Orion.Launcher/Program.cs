@@ -74,16 +74,10 @@ namespace Orion.Launcher {
 
         private static void SetupPlugins(OrionKernel kernel) {
             Directory.CreateDirectory("plugins");
-            Log.Information(Resources.LoadingPluginsMessage);
-
             foreach (var path in Directory.EnumerateFiles("plugins", "*.dll")) {
                 try {
-                    Log.Information(Resources.LoadingPluginMessage, path);
-
-                    kernel.QueuePluginsFromPath(path);
-                } catch (Exception ex) when (ex is BadImageFormatException || ex is IOException) {
-                    Log.Information(ex, Resources.FailedToLoadPluginMessage, path);
-                }
+                    kernel.StartLoadingPlugins(path);
+                } catch (BadImageFormatException) { }
             }
 
             kernel.FinishLoadingPlugins();
