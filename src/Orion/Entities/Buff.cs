@@ -18,12 +18,13 @@
 using System;
 using System.Diagnostics.CodeAnalysis;
 using System.Diagnostics.Contracts;
+using System.IO;
+using Orion.Packets.Extensions;
 
 namespace Orion.Entities {
     /// <summary>
     /// Represents a buff, which consists of a buff type along with a duration.
     /// </summary>
-    // TODO: write WriterToWriter and ReadFromReader methods.
     [SuppressMessage("Performance", "CA1815:Override equals and operator equals on value types",
         Justification = "Buffs will not be compared.")]
     public readonly struct Buff {
@@ -52,8 +53,64 @@ namespace Orion.Entities {
             Duration = duration;
         }
 
+        /// <summary>
+        /// Reads and returns a buff from a <paramref name="reader"/>.
+        /// </summary>
+        /// <param name="reader">The reader.</param>
+        /// <param name="numOfDurationBytes">
+        /// The number of bytes to spend on reading the buff's duration.
+        /// 
+        /// <para/>
+        /// 
+        /// This can be either 2 or 4.
+        /// </param>
+        /// <returns>The buff.</returns>
+        /// <exception cref="ArgumentNullException"><paramref name="reader"/> is <see langword="null"/>.</exception>
+        /// <exception cref="ArgumentOutOfRangeException">
+        /// <paramref name="numOfDurationBytes"/> is neither 2 nor 4.
+        /// </exception>
+        public static Buff ReadFromReader(BinaryReader reader, int numOfDurationBytes) {
+            if (reader is null) {
+                throw new ArgumentNullException(nameof(reader));
+            }
+
+            if (numOfDurationBytes != 2 && numOfDurationBytes != 4) {
+                throw new ArgumentOutOfRangeException(nameof(numOfDurationBytes), "Value is neither 2 nor 4.");
+            }
+
+            return new Buff((BuffType)reader.ReadByte(), reader.ReadTimeSpan(numOfDurationBytes));
+        }
+
         /// <inheritdoc/>
         [Pure, ExcludeFromCodeCoverage]
         public override string ToString() => $"{BuffType} for {Duration}";
+
+        /// <summary>
+        /// Writes the buff to a <paramref name="writer"/>.
+        /// </summary>
+        /// <param name="writer">The writer.</param>
+        /// <param name="numOfDurationBytes">
+        /// The number of bytes to spend on writing the buff's duration.
+        /// 
+        /// <para/>
+        /// 
+        /// This can be either 2 or 4.
+        /// </param>
+        /// <exception cref="ArgumentNullException"><paramref name="writer"/> is <see langword="null"/>.</exception>
+        /// <exception cref="ArgumentOutOfRangeException">
+        /// <paramref name="numOfDurationBytes"/> is neither 2 nor 4.
+        /// </exception>
+        public void WriteToWriter(BinaryWriter writer, int numOfDurationBytes) {
+            if (writer is null) {
+                throw new ArgumentNullException(nameof(writer));
+            }
+
+            if (numOfDurationBytes != 2 && numOfDurationBytes != 4) {
+                throw new ArgumentOutOfRangeException(nameof(numOfDurationBytes), "Value is neither 2 nor 4.");
+            }
+
+            writer.Write((byte)BuffType);
+            writer.Write(Duration, numOfDurationBytes);
+        }
     }
 }

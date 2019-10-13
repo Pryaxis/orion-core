@@ -66,15 +66,14 @@ namespace Orion.Packets.Npcs {
         private protected override void ReadFromReader(BinaryReader reader, PacketContext context) {
             _npcIndex = reader.ReadInt16();
             for (var i = 0; i < _npcBuffs.Count; ++i) {
-                _npcBuffs._array[i] = new Buff((BuffType)reader.ReadByte(), reader.ReadTimeSpan(2));
+                _npcBuffs._array[i] = Buff.ReadFromReader(reader, 2);
             }
         }
 
         private protected override void WriteToWriter(BinaryWriter writer, PacketContext context) {
             writer.Write(_npcIndex);
             foreach (var buff in _npcBuffs) {
-                writer.Write((byte)buff.BuffType);
-                writer.Write(buff.Duration, 2);
+                buff.WriteToWriter(writer, 2);
             }
         }
     }

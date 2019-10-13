@@ -16,6 +16,8 @@
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
 using System;
+using System.IO;
+using System.Text;
 using FluentAssertions;
 using Xunit;
 
@@ -41,6 +43,54 @@ namespace Orion.Entities {
             var buff = new Buff(BuffType.ObsidianSkin, duration);
 
             buff.Duration.Should().Be(duration);
+        }
+
+        [Fact]
+        public void ReadFromReader_NullReader_ThrowsArgumentNullException() {
+            Func<Buff> func = () => Buff.ReadFromReader(null, 2);
+
+            func.Should().Throw<ArgumentNullException>();
+        }
+
+        [Fact]
+        public void ReadFromReader_NumOfDurationBytesBad_ThrowsArgumentOutOfRangeException() {
+            using var stream = new MemoryStream();
+            using var reader = new BinaryReader(stream, Encoding.UTF8);
+            Func<Buff> func = () => Buff.ReadFromReader(reader, 10);
+
+            func.Should().Throw<ArgumentOutOfRangeException>();
+        }
+
+        [Fact]
+        public void WriteToWriter_NullReader_ThrowsArgumentNullException() {
+            var buff = new Buff();
+            Action action = () => buff.WriteToWriter(null, 2);
+
+            action.Should().Throw<ArgumentNullException>();
+        }
+
+        [Fact]
+        public void WriteToWriter_NumOfDurationBytesBad_ThrowsArgumentOutOfRangeException() {
+            var buff = new Buff();
+            using var stream = new MemoryStream();
+            using var writer = new BinaryWriter(stream, Encoding.UTF8);
+            Action action = () => buff.WriteToWriter(writer, 10);
+
+            action.Should().Throw<ArgumentOutOfRangeException>();
+        }
+
+        [Fact]
+        public void WriteToWriter_ReadFromReader() {
+            var duration = TimeSpan.FromHours(1);
+            var buff = new Buff(BuffType.ObsidianSkin, duration);
+            using var stream = new MemoryStream();
+            using var writer = new BinaryWriter(stream, Encoding.UTF8);
+            using var reader = new BinaryReader(stream, Encoding.UTF8);
+
+            buff.WriteToWriter(writer, 4);
+            stream.Position = 0;
+
+            Buff.ReadFromReader(reader, 4).Should().Be(buff);
         }
     }
 }

@@ -60,13 +60,12 @@ namespace Orion.Packets.Npcs {
 
         private protected override void ReadFromReader(BinaryReader reader, PacketContext context) {
             _npcIndex = reader.ReadInt16();
-            _npcBuff = new Buff((BuffType)reader.ReadByte(), reader.ReadTimeSpan(2));
+            _npcBuff = Buff.ReadFromReader(reader, 2);
         }
 
         private protected override void WriteToWriter(BinaryWriter writer, PacketContext context) {
             writer.Write(_npcIndex);
-            writer.Write((byte)_npcBuff.BuffType);
-            writer.Write(_npcBuff.Duration, 2);
+            _npcBuff.WriteToWriter(writer, 2);
         }
     }
 }

@@ -60,13 +60,12 @@ namespace Orion.Packets.Players {
 
         private protected override void ReadFromReader(BinaryReader reader, PacketContext context) {
             _playerIndex = reader.ReadByte();
-            _playerBuff = new Buff((BuffType)reader.ReadByte(), reader.ReadTimeSpan(4));
+            _playerBuff = Buff.ReadFromReader(reader, 4);
         }
 
         private protected override void WriteToWriter(BinaryWriter writer, PacketContext context) {
             writer.Write(_playerIndex);
-            writer.Write((byte)_playerBuff.BuffType);
-            writer.Write(_playerBuff.Duration, 4);
+            _playerBuff.WriteToWriter(writer, 4);
         }
     }
 }
