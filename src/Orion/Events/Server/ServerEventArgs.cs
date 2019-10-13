@@ -23,5 +23,8 @@ namespace Orion.Events.Server {
     /// </summary>
     public abstract class ServerEventArgs : EventArgs {
         private protected ServerEventArgs() { }
+
+        /// <inheritdoc/>
+        public override string ToString() => "[]";
     }
 }

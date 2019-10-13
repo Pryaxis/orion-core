@@ -118,12 +118,12 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="EventHandlerCollection_Invoke" xml:space="preserve">
-    <value>{EventName}: Invoking {RegistrationName}.</value>
+    <value>{EventName}: Invoking {RegistrationName} with {Args}</value>
   </data>
   <data name="EventHandlerCollection_Register" xml:space="preserve">
-    <value>{EventName}: Registered {RegistrationName}.</value>
+    <value>{EventName}: Registered {RegistrationName}</value>
   </data>
   <data name="EventHandlerCollection_Unregister" xml:space="preserve">
-    <value>{EventName}: Unregistered {RegistrationName}.</value>
+    <value>{EventName}: Unregistered {RegistrationName}</value>
   </data>
 </root>

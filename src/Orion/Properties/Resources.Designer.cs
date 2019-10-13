@@ -61,7 +61,7 @@ namespace Orion.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to {EventName}: Invoking {RegistrationName}..
+        ///   Looks up a localized string similar to {EventName}: Invoking {RegistrationName} with {Args}.
         /// </summary>
         internal static string EventHandlerCollection_Invoke {
             get {
@@ -70,7 +70,7 @@ namespace Orion.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to {EventName}: Registered {RegistrationName}..
+        ///   Looks up a localized string similar to {EventName}: Registered {RegistrationName}.
         /// </summary>
         internal static string EventHandlerCollection_Register {
             get {
@@ -79,7 +79,7 @@ namespace Orion.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to {EventName}: Unregistered {RegistrationName}..
+        ///   Looks up a localized string similar to {EventName}: Unregistered {RegistrationName}.
         /// </summary>
         internal static string EventHandlerCollection_Unregister {
             get {

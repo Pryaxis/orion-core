@@ -38,5 +38,8 @@ namespace Orion.Events.Server {
         public ServerCommandEventArgs(string input) {
             Input = input ?? throw new ArgumentNullException(nameof(input));
         }
+
+        /// <inheritdoc/>
+        public override string ToString() => $"[{Input}]";
     }
 }

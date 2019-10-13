@@ -20,7 +20,7 @@ using JetBrains.Annotations;
 
 namespace Orion {
     /// <summary>
-    /// Specifies information about a service.
+    /// Specifies information about a service or plugin.
     /// </summary>
     [AttributeUsage(AttributeTargets.Class)]
     [BaseTypeRequired(typeof(OrionService))]
