@@ -22,6 +22,7 @@ using Microsoft.Xna.Framework;
 using Orion.Events;
 using Orion.Events.Npcs;
 using Orion.Items;
+using Orion.Properties;
 using Orion.Utils;
 using OTAPI;
 using Serilog;
@@ -80,16 +81,18 @@ namespace Orion.Npcs {
             Hooks.Npc.Killed = null;
         }
 
-        public INpc? SpawnNpc(NpcType npcType, Vector2 position, float[]? aiValues = null) {
+        public INpc? SpawnNpc(NpcType type, Vector2 position, float[]? aiValues = null) {
             if (aiValues != null && aiValues.Length != TerrariaNpc.maxAI) {
                 throw new ArgumentException($"Array does not have length {TerrariaNpc.maxAI}.", nameof(aiValues));
             }
+
+            Log.Debug(Resources.NpcService_SpawnNpc, type, position);
 
             var ai0 = aiValues?[0] ?? 0;
             var ai1 = aiValues?[1] ?? 0;
             var ai2 = aiValues?[2] ?? 0;
             var ai3 = aiValues?[3] ?? 0;
-            var npcIndex = TerrariaNpc.NewNPC((int)position.X, (int)position.Y, (int)npcType, 0, ai0, ai1, ai2, ai3);
+            var npcIndex = TerrariaNpc.NewNPC((int)position.X, (int)position.Y, (int)type, 0, ai0, ai1, ai2, ai3);
             return npcIndex >= 0 && npcIndex < Npcs.Count ? Npcs[npcIndex] : null;
         }
 

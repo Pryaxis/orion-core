@@ -144,4 +144,7 @@
   <data name="Kernel_UnloadPlugin" xml:space="preserve">
     <value>Unloaded {PluginName}</value>
   </data>
+  <data name="NpcService_SpawnNpc" xml:space="preserve">
+    <value>Spawning NPC {Type} at {Position}</value>
+  </data>
 </root>
