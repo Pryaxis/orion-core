@@ -26,7 +26,7 @@ namespace Orion.World.TileEntities {
         [Fact]
         public void IsActive_Get() {
             var terrariaTileEntity = new TestTerrariaTileEntity { type = (byte)TileEntityType.ItemFrame };
-            ITileEntity tileEntity = new TestOrionTileEntity(terrariaTileEntity);
+            var tileEntity = new TestOrionTileEntity(terrariaTileEntity);
 
             tileEntity.IsActive.Should().BeTrue();
         }
@@ -34,7 +34,7 @@ namespace Orion.World.TileEntities {
         [Fact]
         public void Type_Get() {
             var terrariaTileEntity = new TestTerrariaTileEntity { type = (byte)TileEntityType.ItemFrame };
-            ITileEntity tileEntity = new TestOrionTileEntity(terrariaTileEntity);
+            var tileEntity = new TestOrionTileEntity(terrariaTileEntity);
 
             tileEntity.Type.Should().Be(TileEntityType.ItemFrame);
         }
@@ -42,7 +42,7 @@ namespace Orion.World.TileEntities {
         [Fact]
         public void Index_Get() {
             var terrariaTileEntity = new TestTerrariaTileEntity { ID = 100 };
-            ITileEntity tileEntity = new TestOrionTileEntity(terrariaTileEntity);
+            var tileEntity = new TestOrionTileEntity(terrariaTileEntity);
 
             tileEntity.Index.Should().Be(100);
         }
@@ -51,7 +51,7 @@ namespace Orion.World.TileEntities {
         public void X_Get() {
             var terrariaTileEntity =
                 new TestTerrariaTileEntity { Position = new Terraria.DataStructures.Point16(100, 0) };
-            ITileEntity tileEntity = new TestOrionTileEntity(terrariaTileEntity);
+            var tileEntity = new TestOrionTileEntity(terrariaTileEntity);
 
             tileEntity.X.Should().Be(100);
         }
@@ -59,7 +59,7 @@ namespace Orion.World.TileEntities {
         [Fact]
         public void X_Set() {
             var terrariaTileEntity = new TestTerrariaTileEntity();
-            ITileEntity tileEntity = new TestOrionTileEntity(terrariaTileEntity);
+            var tileEntity = new TestOrionTileEntity(terrariaTileEntity);
 
             tileEntity.X = 100;
 
@@ -70,7 +70,7 @@ namespace Orion.World.TileEntities {
         public void Y_Get() {
             var terrariaTileEntity =
                 new TestTerrariaTileEntity { Position = new Terraria.DataStructures.Point16(0, 100) };
-            ITileEntity tileEntity = new TestOrionTileEntity(terrariaTileEntity);
+            var tileEntity = new TestOrionTileEntity(terrariaTileEntity);
 
             tileEntity.Y.Should().Be(100);
         }
@@ -78,7 +78,7 @@ namespace Orion.World.TileEntities {
         [Fact]
         public void Y_Set() {
             var terrariaTileEntity = new TestTerrariaTileEntity();
-            ITileEntity tileEntity = new TestOrionTileEntity(terrariaTileEntity);
+            var tileEntity = new TestOrionTileEntity(terrariaTileEntity);
 
             tileEntity.Y = 100;
 

@@ -26,7 +26,7 @@ namespace Orion.World.TileEntities {
         [Fact]
         public void NpcIndex_Get() {
             var terrariaTargetDummy = new TerrariaTargetDummy { npc = 100 };
-            ITargetDummy targetDummy = new OrionTargetDummy(terrariaTargetDummy);
+            var targetDummy = new OrionTargetDummy(terrariaTargetDummy);
 
             targetDummy.NpcIndex.Should().Be(100);
         }
@@ -34,7 +34,7 @@ namespace Orion.World.TileEntities {
         [Fact]
         public void NpcIndex_Set() {
             var terrariaTargetDummy = new TerrariaTargetDummy();
-            ITargetDummy targetDummy = new OrionTargetDummy(terrariaTargetDummy);
+            var targetDummy = new OrionTargetDummy(terrariaTargetDummy);
 
             targetDummy.NpcIndex = 100;
 

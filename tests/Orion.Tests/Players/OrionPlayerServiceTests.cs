@@ -30,22 +30,17 @@ using TerrariaPlayer = Terraria.Player;
 
 namespace Orion.Players {
     [Collection("TerrariaTestsCollection")]
-    public class OrionPlayerServiceTests : IDisposable {
-        private readonly OrionPlayerService _playerService;
-
+    public class OrionPlayerServiceTests {
         public OrionPlayerServiceTests() {
             for (var i = 0; i < Main.player.Length; ++i) {
                 Main.player[i] = new TerrariaPlayer { whoAmI = i };
             }
-
-            _playerService = new OrionPlayerService(Logger.None);
         }
-
-        public void Dispose() => _playerService.Dispose();
 
         [Fact]
         public void Players_Item_Get() {
-            var player = _playerService.Players[1];
+            using var playerService = new OrionPlayerService(Logger.None);
+            var player = playerService.Players[1];
 
             player.Index.Should().Be(1);
             ((OrionPlayer)player).Wrapped.Should().BeSameAs(Main.player[1]);
@@ -53,8 +48,9 @@ namespace Orion.Players {
 
         [Fact]
         public void Players_Item_GetMultipleTimes_ReturnsSameInstance() {
-            var player = _playerService.Players[0];
-            var player2 = _playerService.Players[0];
+            using var playerService = new OrionPlayerService(Logger.None);
+            var player = playerService.Players[0];
+            var player2 = playerService.Players[0];
 
             player.Should().BeSameAs(player2);
         }
@@ -63,14 +59,16 @@ namespace Orion.Players {
         [InlineData(-1)]
         [InlineData(10000)]
         public void Players_Item_GetInvalidIndex_ThrowsIndexOutOfRangeException(int index) {
-            Func<IPlayer> func = () => _playerService.Players[index];
+            using var playerService = new OrionPlayerService(Logger.None);
+            Func<IPlayer> func = () => playerService.Players[index];
 
             func.Should().Throw<IndexOutOfRangeException>();
         }
 
         [Fact]
         public void Players_GetEnumerator() {
-            var players = _playerService.Players.ToList();
+            using var playerService = new OrionPlayerService(Logger.None);
+            var players = playerService.Players.ToList();
 
             for (var i = 0; i < players.Count; ++i) {
                 ((OrionPlayer)players[i]).Wrapped.Should().BeSameAs(Main.player[i]);
@@ -79,10 +77,11 @@ namespace Orion.Players {
 
         [Fact]
         public void PacketReceive_IsTriggered() {
+            using var playerService = new OrionPlayerService(Logger.None);
             var isRun = false;
-            _playerService.PacketReceive.RegisterHandler((sender, args) => {
+            playerService.PacketReceive.RegisterHandler((sender, args) => {
                 isRun = true;
-                args.Sender.Should().BeSameAs(_playerService.Players[1]);
+                args.Sender.Should().BeSameAs(playerService.Players[1]);
                 args.Cancel();
             });
 
@@ -93,10 +92,11 @@ namespace Orion.Players {
 
         [Fact]
         public void PacketReceive_PlayerConnect_IsTriggered() {
+            using var playerService = new OrionPlayerService(Logger.None);
             var isRun = false;
-            _playerService.PlayerConnect.RegisterHandler((sender, args) => {
+            playerService.PlayerConnect.RegisterHandler((sender, args) => {
                 isRun = true;
-                args.Player.Should().BeSameAs(_playerService.Players[1]);
+                args.Player.Should().BeSameAs(playerService.Players[1]);
                 args.PlayerVersionString.Should().Be("Terraria194");
                 args.Cancel();
             });
@@ -108,10 +108,11 @@ namespace Orion.Players {
 
         [Fact]
         public void PacketReceive_PlayerData_IsTriggered() {
+            using var playerService = new OrionPlayerService(Logger.None);
             var isRun = false;
-            _playerService.PlayerData.RegisterHandler((sender, args) => {
+            playerService.PlayerData.RegisterHandler((sender, args) => {
                 isRun = true;
-                args.Player.Should().BeSameAs(_playerService.Players[1]);
+                args.Player.Should().BeSameAs(playerService.Players[1]);
                 args.PlayerSkinType.Should().Be(2);
                 args.PlayerHairType.Should().Be(50);
                 args.PlayerName.Should().Be("f");
@@ -137,10 +138,11 @@ namespace Orion.Players {
 
         [Fact]
         public void PacketReceive_PlayerInventorySlot_IsTriggered() {
+            using var playerService = new OrionPlayerService(Logger.None);
             var isRun = false;
-            _playerService.PlayerInventorySlot.RegisterHandler((sender, args) => {
+            playerService.PlayerInventorySlot.RegisterHandler((sender, args) => {
                 isRun = true;
-                args.Player.Should().BeSameAs(_playerService.Players[1]);
+                args.Player.Should().BeSameAs(playerService.Players[1]);
                 args.PlayerInventorySlotIndex.Should().Be(0);
                 args.ItemStackSize.Should().Be(1);
                 args.ItemPrefix.Should().Be(ItemPrefix.Godly);
@@ -155,10 +157,11 @@ namespace Orion.Players {
 
         [Fact]
         public void PacketReceive_PlayerJoin_IsTriggered() {
+            using var playerService = new OrionPlayerService(Logger.None);
             var isRun = false;
-            _playerService.PlayerJoin.RegisterHandler((sender, args) => {
+            playerService.PlayerJoin.RegisterHandler((sender, args) => {
                 isRun = true;
-                args.Player.Should().BeSameAs(_playerService.Players[1]);
+                args.Player.Should().BeSameAs(playerService.Players[1]);
                 args.Cancel();
             });
 
@@ -169,8 +172,9 @@ namespace Orion.Players {
 
         [Fact]
         public void PacketReceive_PlayerChat_IsTriggered() {
+            using var playerService = new OrionPlayerService(Logger.None);
             var isRun = false;
-            _playerService.PlayerChat.RegisterHandler((sender, args) => {
+            playerService.PlayerChat.RegisterHandler((sender, args) => {
                 isRun = true;
                 args.ChatCommand.Should().Be("Say");
                 args.ChatText.Should().Be("/command test");
@@ -184,10 +188,11 @@ namespace Orion.Players {
 
         [Fact]
         public void ResetClient_PlayerDisconnected_IsTriggered() {
+            using var playerService = new OrionPlayerService(Logger.None);
             var isRun = false;
-            _playerService.PlayerDisconnected.RegisterHandler((sender, args) => {
+            playerService.PlayerDisconnected.RegisterHandler((sender, args) => {
                 isRun = true;
-                args.Player.Should().BeSameAs(_playerService.Players[1]);
+                args.Player.Should().BeSameAs(playerService.Players[1]);
             });
             Terraria.Netplay.Clients[1].Id = 1;
 

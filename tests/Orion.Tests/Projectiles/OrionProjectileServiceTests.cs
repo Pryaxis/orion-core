@@ -27,22 +27,17 @@ using TerrariaProjectile = Terraria.Projectile;
 
 namespace Orion.Projectiles {
     [Collection("TerrariaTestsCollection")]
-    public class OrionProjectileServiceTests : IDisposable {
-        private readonly OrionProjectileService _projectileService;
-
+    public class OrionProjectileServiceTests {
         public OrionProjectileServiceTests() {
             for (var i = 0; i < Main.projectile.Length; ++i) {
                 Main.projectile[i] = new TerrariaProjectile { whoAmI = i };
             }
-
-            _projectileService = new OrionProjectileService(Logger.None);
         }
-
-        public void Dispose() => _projectileService.Dispose();
 
         [Fact]
         public void Projectiles_Item_Get() {
-            var projectile = _projectileService.Projectiles[1];
+            using var projectileService = new OrionProjectileService(Logger.None);
+            var projectile = projectileService.Projectiles[1];
 
             projectile.Index.Should().Be(1);
             ((OrionProjectile)projectile).Wrapped.Should().BeSameAs(Main.projectile[1]);
@@ -50,8 +45,9 @@ namespace Orion.Projectiles {
 
         [Fact]
         public void Projectiles_Item_GetMultipleTimes_ReturnsSameInstance() {
-            var projectile = _projectileService.Projectiles[0];
-            var projectile2 = _projectileService.Projectiles[0];
+            using var projectileService = new OrionProjectileService(Logger.None);
+            var projectile = projectileService.Projectiles[0];
+            var projectile2 = projectileService.Projectiles[0];
 
             projectile.Should().BeSameAs(projectile2);
         }
@@ -60,14 +56,16 @@ namespace Orion.Projectiles {
         [InlineData(-1)]
         [InlineData(10000)]
         public void Projectiles_Item_GetInvalidIndex_ThrowsIndexOutOfRangeException(int index) {
-            Func<IProjectile> func = () => _projectileService.Projectiles[index];
+            using var projectileService = new OrionProjectileService(Logger.None);
+            Func<IProjectile> func = () => projectileService.Projectiles[index];
 
             func.Should().Throw<IndexOutOfRangeException>();
         }
 
         [Fact]
         public void Projectiles_GetEnumerator() {
-            var projectiles = _projectileService.Projectiles.ToList();
+            using var projectileService = new OrionProjectileService(Logger.None);
+            var projectiles = projectileService.Projectiles.ToList();
 
             for (var i = 0; i < projectiles.Count; ++i) {
                 ((OrionProjectile)projectiles[i]).Wrapped.Should().BeSameAs(Main.projectile[i]);
@@ -76,8 +74,9 @@ namespace Orion.Projectiles {
 
         [Fact]
         public void ProjectileSetDefaults() {
+            using var projectileService = new OrionProjectileService(Logger.None);
             var isRun = false;
-            _projectileService.ProjectileSetDefaults.RegisterHandler((sender, args) => {
+            projectileService.ProjectileSetDefaults.RegisterHandler((sender, args) => {
                 isRun = true;
                 ((OrionProjectile)args.Projectile).Wrapped.Should().BeSameAs(Main.projectile[0]);
                 args.ProjectileType.Should().Be(ProjectileType.CrystalBullet);
@@ -93,7 +92,8 @@ namespace Orion.Projectiles {
         [InlineData(ProjectileType.CrystalBullet, ProjectileType.None)]
         public void ProjectileSetDefaults_ModifyProjectileType(
                 ProjectileType oldType, ProjectileType newType) {
-            _projectileService.ProjectileSetDefaults.RegisterHandler((sender, args) => {
+            using var projectileService = new OrionProjectileService(Logger.None);
+            projectileService.ProjectileSetDefaults.RegisterHandler((sender, args) => {
                 args.ProjectileType = newType;
             });
 
@@ -104,7 +104,8 @@ namespace Orion.Projectiles {
 
         [Fact]
         public void ProjectileSetDefaults_Canceled() {
-            _projectileService.ProjectileSetDefaults.RegisterHandler((sender, args) => {
+            using var projectileService = new OrionProjectileService(Logger.None);
+            projectileService.ProjectileSetDefaults.RegisterHandler((sender, args) => {
                 args.Cancel();
             });
 
@@ -115,8 +116,9 @@ namespace Orion.Projectiles {
 
         [Fact]
         public void ProjectileUpdate() {
+            using var projectileService = new OrionProjectileService(Logger.None);
             var isRun = false;
-            _projectileService.ProjectileUpdate.RegisterHandler((sender, args) => {
+            projectileService.ProjectileUpdate.RegisterHandler((sender, args) => {
                 isRun = true;
                 ((OrionProjectile)args.Projectile).Wrapped.Should().BeSameAs(Main.projectile[0]);
             });
@@ -128,8 +130,9 @@ namespace Orion.Projectiles {
 
         [Fact]
         public void ProjectileRemove() {
+            using var projectileService = new OrionProjectileService(Logger.None);
             var isRun = false;
-            _projectileService.ProjectileRemove.RegisterHandler((sender, args) => {
+            projectileService.ProjectileRemove.RegisterHandler((sender, args) => {
                 isRun = true;
                 ((OrionProjectile)args.Projectile).Wrapped.Should().BeSameAs(Main.projectile[0]);
             });
@@ -141,7 +144,8 @@ namespace Orion.Projectiles {
 
         [Fact]
         public void ProjectileRemove_Canceled() {
-            _projectileService.ProjectileRemove.RegisterHandler((sender, args) => {
+            using var projectileService = new OrionProjectileService(Logger.None);
+            projectileService.ProjectileRemove.RegisterHandler((sender, args) => {
                 args.Cancel();
             });
             Main.projectile[0].SetDefaults((int)ProjectileType.CrystalBullet);
@@ -153,8 +157,9 @@ namespace Orion.Projectiles {
 
         [Fact]
         public void SpawnProjectile() {
-            var projectile =
-                _projectileService.SpawnProjectile(ProjectileType.CrystalBullet, Vector2.Zero, Vector2.Zero, 100, 0);
+            using var projectileService = new OrionProjectileService(Logger.None);
+            var projectile = projectileService.SpawnProjectile(ProjectileType.CrystalBullet, Vector2.Zero,
+                Vector2.Zero, 100, 0);
 
             projectile.Should().NotBeNull();
             projectile.Type.Should().Be(ProjectileType.CrystalBullet);
@@ -162,8 +167,9 @@ namespace Orion.Projectiles {
 
         [Fact]
         public void SpawnProjectile_AiValues() {
-            var projectile = _projectileService.SpawnProjectile(ProjectileType.CrystalBullet, Vector2.Zero,
-                                                                Vector2.Zero, 100, 0, new float[] { 1, 2 });
+            using var projectileService = new OrionProjectileService(Logger.None);
+            var projectile = projectileService.SpawnProjectile(ProjectileType.CrystalBullet, Vector2.Zero,
+                Vector2.Zero, 100, 0, new float[] { 1, 2 });
 
             projectile.Should().NotBeNull();
             projectile.Type.Should().Be(ProjectileType.CrystalBullet);
@@ -173,9 +179,9 @@ namespace Orion.Projectiles {
         [InlineData(1)]
         [InlineData(3)]
         public void SpawnProjectile_AiValuesWrongLength_ThrowsArgumentException(int aiValuesLength) {
-            Func<IProjectile> func = () =>
-                _projectileService.SpawnProjectile(ProjectileType.CrystalBullet, Vector2.Zero, Vector2.Zero, 100, 0,
-                                                   new float[aiValuesLength]);
+            using var projectileService = new OrionProjectileService(Logger.None);
+            Func<IProjectile> func = () => projectileService.SpawnProjectile(ProjectileType.CrystalBullet, Vector2.Zero,
+                Vector2.Zero, 100, 0, new float[aiValuesLength]);
 
             func.Should().Throw<ArgumentException>();
         }

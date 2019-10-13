@@ -30,7 +30,7 @@ namespace Orion.World.TileEntities {
             var terrariaItemFrame = new TerrariaItemFrame {
                 item = new TerrariaItem { type = (int)ItemType.Sdmg }
             };
-            IItemFrame itemFrame = new OrionItemFrame(terrariaItemFrame);
+            var itemFrame = new OrionItemFrame(terrariaItemFrame);
 
             itemFrame.ItemType.Should().Be(ItemType.Sdmg);
         }
@@ -38,7 +38,7 @@ namespace Orion.World.TileEntities {
         [Fact]
         public void ItemType_Set() {
             var terrariaItemFrame = new TerrariaItemFrame { item = new TerrariaItem() };
-            IItemFrame itemFrame = new OrionItemFrame(terrariaItemFrame);
+            var itemFrame = new OrionItemFrame(terrariaItemFrame);
             itemFrame.ItemType = ItemType.Sdmg;
 
             terrariaItemFrame.item.type.Should().Be((int)ItemType.Sdmg);
@@ -49,7 +49,7 @@ namespace Orion.World.TileEntities {
             var terrariaItemFrame = new TerrariaItemFrame {
                 item = new TerrariaItem { stack = 1 }
             };
-            IItemFrame itemFrame = new OrionItemFrame(terrariaItemFrame);
+            var itemFrame = new OrionItemFrame(terrariaItemFrame);
 
             itemFrame.ItemStackSize.Should().Be(1);
         }
@@ -57,7 +57,7 @@ namespace Orion.World.TileEntities {
         [Fact]
         public void ItemStackSize_Set() {
             var terrariaItemFrame = new TerrariaItemFrame { item = new TerrariaItem() };
-            IItemFrame itemFrame = new OrionItemFrame(terrariaItemFrame);
+            var itemFrame = new OrionItemFrame(terrariaItemFrame);
 
             itemFrame.ItemStackSize = 1;
 
@@ -69,7 +69,7 @@ namespace Orion.World.TileEntities {
             var terrariaItemFrame = new TerrariaItemFrame {
                 item = new TerrariaItem { prefix = (byte)ItemPrefix.Unreal }
             };
-            IItemFrame itemFrame = new OrionItemFrame(terrariaItemFrame);
+            var itemFrame = new OrionItemFrame(terrariaItemFrame);
 
             itemFrame.ItemPrefix.Should().Be(ItemPrefix.Unreal);
         }
@@ -77,7 +77,7 @@ namespace Orion.World.TileEntities {
         [Fact]
         public void ItemPrefix_Set() {
             var terrariaItemFrame = new TerrariaItemFrame { item = new TerrariaItem() };
-            IItemFrame itemFrame = new OrionItemFrame(terrariaItemFrame);
+            var itemFrame = new OrionItemFrame(terrariaItemFrame);
 
             itemFrame.ItemPrefix = ItemPrefix.Unreal;
 

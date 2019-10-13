@@ -32,9 +32,7 @@ using TerrariaTileEntity = Terraria.DataStructures.TileEntity;
 
 namespace Orion.World.TileEntities {
     [Collection("TerrariaTestsCollection")]
-    public class OrionTileEntityServiceTests : IDisposable {
-        private readonly OrionTileEntityService _tileEntityService;
-
+    public class OrionTileEntityServiceTests {
         public OrionTileEntityServiceTests() {
             for (var i = 0; i < Main.chest.Length; ++i) {
                 Main.chest[i] = null;
@@ -45,20 +43,17 @@ namespace Orion.World.TileEntities {
             }
 
             TerrariaTileEntity.Clear();
-
-            _tileEntityService = new OrionTileEntityService(Logger.None);
         }
-
-        public void Dispose() => _tileEntityService.Dispose();
 
         [Fact]
         public void Chests_Item_Get() {
+            using var tileEntityService = new OrionTileEntityService(Logger.None);
             Main.chest[0] = new TerrariaChest();
             for (var i = 0; i < TerrariaChest.maxItems; ++i) {
                 Main.chest[0].item[i] = new TerrariaItem();
             }
 
-            var chest = _tileEntityService.Chests[0];
+            var chest = tileEntityService.Chests[0];
 
             chest.Should().NotBeNull();
             ((OrionChest)chest).Wrapped.Should().BeSameAs(Main.chest[0]);
@@ -66,13 +61,14 @@ namespace Orion.World.TileEntities {
 
         [Fact]
         public void Chests_Item_GetMultipleTimes_ReturnsSameInstance() {
+            using var tileEntityService = new OrionTileEntityService(Logger.None);
             Main.chest[0] = new TerrariaChest();
             for (var i = 0; i < TerrariaChest.maxItems; ++i) {
                 Main.chest[0].item[i] = new TerrariaItem();
             }
 
-            var chest = _tileEntityService.Chests[0];
-            var chest2 = _tileEntityService.Chests[0];
+            var chest = tileEntityService.Chests[0];
+            var chest2 = tileEntityService.Chests[0];
 
             chest.Should().BeSameAs(chest2);
         }
@@ -81,13 +77,15 @@ namespace Orion.World.TileEntities {
         [InlineData(-1)]
         [InlineData(10000)]
         public void Chests_Item_GetInvalidIndex_ThrowsIndexOutOfRangeException(int index) {
-            Func<IChest> func = () => _tileEntityService.Chests[index];
+            using var tileEntityService = new OrionTileEntityService(Logger.None);
+            Func<IChest> func = () => tileEntityService.Chests[index];
 
             func.Should().Throw<IndexOutOfRangeException>();
         }
 
         [Fact]
         public void Chests_GetEnumerator() {
+            using var tileEntityService = new OrionTileEntityService(Logger.None);
             for (var i = 0; i < Main.chest.Length; ++i) {
                 Main.chest[i] = new TerrariaChest();
                 for (var j = 0; j < TerrariaChest.maxItems; ++j) {
@@ -95,7 +93,7 @@ namespace Orion.World.TileEntities {
                 }
             }
 
-            var chests = _tileEntityService.Chests.ToList();
+            var chests = tileEntityService.Chests.ToList();
 
             for (var i = 0; i < chests.Count; ++i) {
                 chests[i].Should().NotBeNull();
@@ -105,8 +103,9 @@ namespace Orion.World.TileEntities {
 
         [Fact]
         public void Signs_Item_Get() {
+            using var tileEntityService = new OrionTileEntityService(Logger.None);
             Main.sign[0] = new TerrariaSign();
-            var sign = _tileEntityService.Signs[0];
+            var sign = tileEntityService.Signs[0];
 
             sign.Should().NotBeNull();
             ((OrionSign)sign).Wrapped.Should().BeSameAs(Main.sign[0]);
@@ -114,9 +113,9 @@ namespace Orion.World.TileEntities {
 
         [Fact]
         public void Signs_Item_GetMultipleTimes_ReturnsSameInstance() {
-            Main.sign[0] = new TerrariaSign();
-            var sign = _tileEntityService.Signs[0];
-            var sign2 = _tileEntityService.Signs[0];
+            using var tileEntityService = new OrionTileEntityService(Logger.None);
+            var sign = tileEntityService.Signs[0];
+            var sign2 = tileEntityService.Signs[0];
 
             sign.Should().BeSameAs(sign2);
         }
@@ -125,18 +124,20 @@ namespace Orion.World.TileEntities {
         [InlineData(-1)]
         [InlineData(10000)]
         public void Signs_Item_GetInvalidIndex_ThrowsIndexOutOfRangeException(int index) {
-            Func<ISign> func = () => _tileEntityService.Signs[index];
+            using var tileEntityService = new OrionTileEntityService(Logger.None);
+            Func<ISign> func = () => tileEntityService.Signs[index];
 
             func.Should().Throw<IndexOutOfRangeException>();
         }
 
         [Fact]
         public void Signs_GetEnumerator() {
+            using var tileEntityService = new OrionTileEntityService(Logger.None);
             for (var i = 0; i < Main.sign.Length; ++i) {
                 Main.sign[i] = new TerrariaSign();
             }
 
-            var signs = _tileEntityService.Signs.ToList();
+            var signs = tileEntityService.Signs.ToList();
 
             for (var i = 0; i < signs.Count; ++i) {
                 signs[i].Should().NotBeNull();
@@ -146,7 +147,8 @@ namespace Orion.World.TileEntities {
 
         [Fact]
         public void AddTileEntity_Chest() {
-            var chest = (IChest)_tileEntityService.AddTileEntity(TileEntityType.Chest, 1, 2);
+            using var tileEntityService = new OrionTileEntityService(Logger.None);
+            var chest = (IChest)tileEntityService.AddTileEntity(TileEntityType.Chest, 1, 2);
 
             chest.Should().NotBeNull();
             chest.Index.Should().Be(0);
@@ -157,18 +159,20 @@ namespace Orion.World.TileEntities {
 
         [Fact]
         public void AddTileEntity_Chest_NoRoom_ReturnsNull() {
+            using var tileEntityService = new OrionTileEntityService(Logger.None);
             for (var i = 0; i < Main.chest.Length; ++i) {
                 Main.chest[i] = new TerrariaChest();
             }
 
-            var chest = (IChest)_tileEntityService.AddTileEntity(TileEntityType.Chest, 1, 2);
+            var chest = (IChest)tileEntityService.AddTileEntity(TileEntityType.Chest, 1, 2);
 
             chest.Should().BeNull();
         }
 
         [Fact]
         public void AddTileEntity_Sign() {
-            var sign = (ISign)_tileEntityService.AddTileEntity(TileEntityType.Sign, 1, 2);
+            using var tileEntityService = new OrionTileEntityService(Logger.None);
+            var sign = (ISign)tileEntityService.AddTileEntity(TileEntityType.Sign, 1, 2);
 
             sign.Should().NotBeNull();
             sign.Index.Should().Be(0);
@@ -179,18 +183,20 @@ namespace Orion.World.TileEntities {
 
         [Fact]
         public void AddTileEntity_Sign_NoRoom_ReturnsNull() {
+            using var tileEntityService = new OrionTileEntityService(Logger.None);
             for (var i = 0; i < Main.sign.Length; ++i) {
                 Main.sign[i] = new TerrariaSign();
             }
 
-            var sign = (ISign)_tileEntityService.AddTileEntity(TileEntityType.Sign, 1, 2);
+            var sign = (ISign)tileEntityService.AddTileEntity(TileEntityType.Sign, 1, 2);
 
             sign.Should().BeNull();
         }
 
         [Fact]
         public void AddTileEntity_TargetDummy() {
-            var targetDummy = (ITargetDummy)_tileEntityService.AddTileEntity(TileEntityType.TargetDummy, 1, 2);
+            using var tileEntityService = new OrionTileEntityService(Logger.None);
+            var targetDummy = (ITargetDummy)tileEntityService.AddTileEntity(TileEntityType.TargetDummy, 1, 2);
 
             targetDummy.Should().NotBeNull();
             targetDummy.Index.Should().Be(0);
@@ -201,7 +207,8 @@ namespace Orion.World.TileEntities {
 
         [Fact]
         public void AddTileEntity_ItemFrame() {
-            var itemFrame = (IItemFrame)_tileEntityService.AddTileEntity(TileEntityType.ItemFrame, 1, 2);
+            using var tileEntityService = new OrionTileEntityService(Logger.None);
+            var itemFrame = (IItemFrame)tileEntityService.AddTileEntity(TileEntityType.ItemFrame, 1, 2);
 
             itemFrame.Should().NotBeNull();
             itemFrame.Index.Should().Be(0);
@@ -212,7 +219,8 @@ namespace Orion.World.TileEntities {
 
         [Fact]
         public void AddTileEntity_LogicSensor() {
-            var logicSensor = (ILogicSensor)_tileEntityService.AddTileEntity(TileEntityType.LogicSensor, 1, 2);
+            using var tileEntityService = new OrionTileEntityService(Logger.None);
+            var logicSensor = (ILogicSensor)tileEntityService.AddTileEntity(TileEntityType.LogicSensor, 1, 2);
 
             logicSensor.Should().NotBeNull();
             logicSensor.Index.Should().Be(0);
@@ -223,13 +231,15 @@ namespace Orion.World.TileEntities {
 
         [Fact]
         public void AddTileEntity_ExistsAlready_ReturnsNull() {
-            _tileEntityService.AddTileEntity(TileEntityType.Chest, 1, 2);
+            using var tileEntityService = new OrionTileEntityService(Logger.None);
+            tileEntityService.AddTileEntity(TileEntityType.Chest, 1, 2);
 
-            _tileEntityService.AddTileEntity(TileEntityType.Chest, 1, 2).Should().BeNull();
+            tileEntityService.AddTileEntity(TileEntityType.Chest, 1, 2).Should().BeNull();
         }
 
         [Fact]
         public void GetTileEntity_Chest() {
+            using var tileEntityService = new OrionTileEntityService(Logger.None);
             Main.chest[1] = new TerrariaChest {
                 x = 1,
                 y = 2
@@ -238,7 +248,7 @@ namespace Orion.World.TileEntities {
                 Main.chest[1].item[i] = new TerrariaItem();
             }
 
-            var chest = (IChest)_tileEntityService.GetTileEntity(1, 2);
+            var chest = (IChest)tileEntityService.GetTileEntity(1, 2);
 
             chest.Should().NotBeNull();
             chest.Index.Should().Be(1);
@@ -248,13 +258,14 @@ namespace Orion.World.TileEntities {
 
         [Fact]
         public void GetTileEntity_Sign() {
+            using var tileEntityService = new OrionTileEntityService(Logger.None);
             Main.sign[1] = new TerrariaSign {
                 x = 1,
                 y = 2,
                 text = "test"
             };
 
-            var sign = (ISign)_tileEntityService.GetTileEntity(1, 2);
+            var sign = (ISign)tileEntityService.GetTileEntity(1, 2);
 
             sign.Should().NotBeNull();
             sign.Index.Should().Be(1);
@@ -265,9 +276,10 @@ namespace Orion.World.TileEntities {
 
         [Fact]
         public void GetTileEntity_TargetDummy() {
+            using var tileEntityService = new OrionTileEntityService(Logger.None);
             var targetDummyIndex = TerrariaTargetDummy.Place(1, 2);
 
-            var targetDummy = (ITargetDummy)_tileEntityService.GetTileEntity(1, 2);
+            var targetDummy = (ITargetDummy)tileEntityService.GetTileEntity(1, 2);
 
             targetDummy.Should().NotBeNull();
             targetDummy.Index.Should().Be(targetDummyIndex);
@@ -277,9 +289,10 @@ namespace Orion.World.TileEntities {
 
         [Fact]
         public void GetTileEntity_ItemFrame() {
+            using var tileEntityService = new OrionTileEntityService(Logger.None);
             var itemFrameIndex = TerrariaItemFrame.Place(1, 2);
 
-            var itemFrame = (IItemFrame)_tileEntityService.GetTileEntity(1, 2);
+            var itemFrame = (IItemFrame)tileEntityService.GetTileEntity(1, 2);
 
             itemFrame.Should().NotBeNull();
             itemFrame.Index.Should().Be(itemFrameIndex);
@@ -289,9 +302,10 @@ namespace Orion.World.TileEntities {
 
         [Fact]
         public void GetTileEntity_LogicSensor() {
+            using var tileEntityService = new OrionTileEntityService(Logger.None);
             var logicSensorIndex = TerrariaLogicSensor.Place(1, 2);
 
-            var logicSensor = (ILogicSensor)_tileEntityService.GetTileEntity(1, 2);
+            var logicSensor = (ILogicSensor)tileEntityService.GetTileEntity(1, 2);
 
             logicSensor.Should().NotBeNull();
             logicSensor.Index.Should().Be(logicSensorIndex);
@@ -300,11 +314,15 @@ namespace Orion.World.TileEntities {
         }
 
         [Fact]
-        public void GetTileEntity_NoTileEntity_ReturnsNull() =>
-            _tileEntityService.GetTileEntity(1, 2).Should().BeNull();
+        public void GetTileEntity_NoTileEntity_ReturnsNull() {
+            using var tileEntityService = new OrionTileEntityService(Logger.None);
+
+            tileEntityService.GetTileEntity(1, 2).Should().BeNull();
+        }
 
         [Fact]
         public void RemoveTileEntity_Chest() {
+            using var tileEntityService = new OrionTileEntityService(Logger.None);
             Main.chest[1] = new TerrariaChest {
                 x = 1,
                 y = 2
@@ -319,13 +337,14 @@ namespace Orion.World.TileEntities {
             mockChest.SetupGet(c => c.X).Returns(1);
             mockChest.SetupGet(c => c.Y).Returns(2);
 
-            _tileEntityService.RemoveTileEntity(mockChest.Object).Should().BeTrue();
+            tileEntityService.RemoveTileEntity(mockChest.Object).Should().BeTrue();
 
             Main.chest[1].Should().BeNull();
         }
 
         [Fact]
         public void RemoveTileEntity_Sign() {
+            using var tileEntityService = new OrionTileEntityService(Logger.None);
             Main.sign[1] = new TerrariaSign {
                 x = 1,
                 y = 2,
@@ -337,13 +356,14 @@ namespace Orion.World.TileEntities {
             mockSign.SetupGet(s => s.X).Returns(1);
             mockSign.SetupGet(s => s.Y).Returns(2);
 
-            _tileEntityService.RemoveTileEntity(mockSign.Object).Should().BeTrue();
+            tileEntityService.RemoveTileEntity(mockSign.Object).Should().BeTrue();
 
             Main.sign[1].Should().BeNull();
         }
 
         [Fact]
         public void RemoveTileEntity_TerrariaTileEntity() {
+            using var tileEntityService = new OrionTileEntityService(Logger.None);
             var targetDummyIndex = TerrariaTargetDummy.Place(1, 2);
 
             var mockTargetDummy = new Mock<ITargetDummy>();
@@ -352,7 +372,7 @@ namespace Orion.World.TileEntities {
             mockTargetDummy.SetupGet(td => td.X).Returns(1);
             mockTargetDummy.SetupGet(td => td.Y).Returns(2);
 
-            _tileEntityService.RemoveTileEntity(mockTargetDummy.Object).Should().BeTrue();
+            tileEntityService.RemoveTileEntity(mockTargetDummy.Object).Should().BeTrue();
 
             TerrariaTileEntity.ByID.ContainsKey(targetDummyIndex).Should().BeFalse();
             TerrariaTileEntity.ByPosition.ContainsKey(new Terraria.DataStructures.Point16(1, 2)).Should().BeFalse();
@@ -360,38 +380,42 @@ namespace Orion.World.TileEntities {
 
         [Fact]
         public void RemoveTileEntity_NoChest_ReturnsFalse() {
+            using var tileEntityService = new OrionTileEntityService(Logger.None);
             var mockChest = new Mock<IChest>();
             mockChest.SetupGet(c => c.Index).Returns(0);
             mockChest.SetupGet(c => c.X).Returns(1);
             mockChest.SetupGet(c => c.Y).Returns(2);
 
-            _tileEntityService.RemoveTileEntity(mockChest.Object).Should().BeFalse();
+            tileEntityService.RemoveTileEntity(mockChest.Object).Should().BeFalse();
         }
 
         [Fact]
         public void RemoveTileEntity_NoSign_ReturnsFalse() {
+            using var tileEntityService = new OrionTileEntityService(Logger.None);
             var mockSign = new Mock<ISign>();
             mockSign.SetupGet(s => s.Index).Returns(0);
             mockSign.SetupGet(s => s.X).Returns(1);
             mockSign.SetupGet(s => s.Y).Returns(2);
 
-            _tileEntityService.RemoveTileEntity(mockSign.Object).Should().BeFalse();
+            tileEntityService.RemoveTileEntity(mockSign.Object).Should().BeFalse();
         }
 
         [Fact]
         public void RemoveTileEntity_NoTileEntity_ReturnsFalse() {
+            using var tileEntityService = new OrionTileEntityService(Logger.None);
             var mockTileEntity = new Mock<ITileEntity>();
             mockTileEntity.SetupGet(te => te.Type).Returns(TileEntityType.TargetDummy);
             mockTileEntity.SetupGet(te => te.Index).Returns(0);
             mockTileEntity.SetupGet(te => te.X).Returns(1);
             mockTileEntity.SetupGet(te => te.Y).Returns(2);
 
-            _tileEntityService.RemoveTileEntity(mockTileEntity.Object).Should().BeFalse();
+            tileEntityService.RemoveTileEntity(mockTileEntity.Object).Should().BeFalse();
         }
 
         [Fact]
         public void RemoveTileEntity_NullTileEntity_ThrowsArgumentNullException() {
-            Func<bool> func = () => _tileEntityService.RemoveTileEntity(null);
+            using var tileEntityService = new OrionTileEntityService(Logger.None);
+            Func<bool> func = () => tileEntityService.RemoveTileEntity(null);
 
             func.Should().Throw<ArgumentNullException>();
         }

@@ -29,9 +29,7 @@ using TerrariaPlayer = Terraria.Player;
 
 namespace Orion.Npcs {
     [Collection("TerrariaTestsCollection")]
-    public class OrionNpcServiceTests : IDisposable {
-        private readonly OrionNpcService _npcService;
-
+    public class OrionNpcServiceTests {
         public OrionNpcServiceTests() {
             for (var i = 0; i < Main.npc.Length; ++i) {
                 Main.npc[i] = new TerrariaNpc { whoAmI = i };
@@ -50,15 +48,12 @@ namespace Orion.Npcs {
             }
 
             Main.rand = new Terraria.Utilities.UnifiedRandom();
-
-            _npcService = new OrionNpcService(Logger.None);
         }
-
-        public void Dispose() => _npcService.Dispose();
 
         [Fact]
         public void Npcs_Item_Get() {
-            var npc = _npcService.Npcs[1];
+            using var npcService = new OrionNpcService(Logger.None);
+            var npc = npcService.Npcs[1];
 
             npc.Index.Should().Be(1);
             ((OrionNpc)npc).Wrapped.Should().BeSameAs(Main.npc[1]);
@@ -66,8 +61,9 @@ namespace Orion.Npcs {
 
         [Fact]
         public void Npcs_Item_GetMultipleTimes_ReturnsSameInstance() {
-            var npc = _npcService.Npcs[0];
-            var npc2 = _npcService.Npcs[0];
+            using var npcService = new OrionNpcService(Logger.None);
+            var npc = npcService.Npcs[0];
+            var npc2 = npcService.Npcs[0];
 
             npc.Should().BeSameAs(npc2);
         }
@@ -76,14 +72,16 @@ namespace Orion.Npcs {
         [InlineData(-1)]
         [InlineData(10000)]
         public void Npcs_Item_GetInvalidIndex_ThrowsIndexOutOfRangeException(int index) {
-            Func<INpc> func = () => _npcService.Npcs[index];
+            using var npcService = new OrionNpcService(Logger.None);
+            Func<INpc> func = () => npcService.Npcs[index];
 
             func.Should().Throw<IndexOutOfRangeException>();
         }
 
         [Fact]
         public void Npcs_GetEnumerator() {
-            var npcs = _npcService.Npcs.ToList();
+            using var npcService = new OrionNpcService(Logger.None);
+            var npcs = npcService.Npcs.ToList();
 
             for (var i = 0; i < npcs.Count; ++i) {
                 ((OrionNpc)npcs[i]).Wrapped.Should().BeSameAs(Main.npc[i]);
@@ -94,8 +92,9 @@ namespace Orion.Npcs {
         [InlineData(NpcType.BlueSlime)]
         [InlineData(NpcType.GreenSlime)]
         public void NpcSetDefaults(NpcType npcType) {
+            using var npcService = new OrionNpcService(Logger.None);
             var isRun = false;
-            _npcService.NpcSetDefaults.RegisterHandler((sender, args) => {
+            npcService.NpcSetDefaults.RegisterHandler((sender, args) => {
                 isRun = true;
                 ((OrionNpc)args.Npc).Wrapped.Should().BeSameAs(Main.npc[0]);
                 args.NpcType.Should().Be(npcType);
@@ -110,7 +109,8 @@ namespace Orion.Npcs {
         [InlineData(NpcType.BlueSlime, NpcType.GreenSlime)]
         [InlineData(NpcType.BlueSlime, NpcType.None)]
         public void NpcSetDefaults_ModifyNpcType(NpcType oldType, NpcType newType) {
-            _npcService.NpcSetDefaults.RegisterHandler((sender, args) => {
+            using var npcService = new OrionNpcService(Logger.None);
+            npcService.NpcSetDefaults.RegisterHandler((sender, args) => {
                 args.NpcType = newType;
             });
 
@@ -121,7 +121,8 @@ namespace Orion.Npcs {
 
         [Fact]
         public void NpcSetDefaults_Canceled() {
-            _npcService.NpcSetDefaults.RegisterHandler((sender, args) => {
+            using var npcService = new OrionNpcService(Logger.None);
+            npcService.NpcSetDefaults.RegisterHandler((sender, args) => {
                 args.Cancel();
             });
 
@@ -132,8 +133,9 @@ namespace Orion.Npcs {
 
         [Fact]
         public void NpcSpawn() {
+            using var npcService = new OrionNpcService(Logger.None);
             INpc argsNpc = null;
-            _npcService.NpcSpawn.RegisterHandler((sender, args) => {
+            npcService.NpcSpawn.RegisterHandler((sender, args) => {
                 argsNpc = args.Npc;
             });
 
@@ -145,20 +147,22 @@ namespace Orion.Npcs {
 
         [Fact]
         public void NpcSpawn_Canceled() {
-            _npcService.NpcSpawn.RegisterHandler((sender, args) => {
+            using var npcService = new OrionNpcService(Logger.None);
+            npcService.NpcSpawn.RegisterHandler((sender, args) => {
                 args.Cancel();
             });
 
             var npcIndex = TerrariaNpc.NewNPC(0, 0, (int)NpcType.BlueSlime);
 
-            npcIndex.Should().BeGreaterOrEqualTo(_npcService.Npcs.Count);
+            npcIndex.Should().BeGreaterOrEqualTo(npcService.Npcs.Count);
             Main.npc[0].active.Should().BeFalse();
         }
 
         [Fact]
         public void NpcUpdate() {
+            using var npcService = new OrionNpcService(Logger.None);
             var isRun = false;
-            _npcService.NpcUpdate.RegisterHandler((sender, args) => {
+            npcService.NpcUpdate.RegisterHandler((sender, args) => {
                 isRun = true;
                 ((OrionNpc)args.Npc).Wrapped.Should().BeSameAs(Main.npc[0]);
             });
@@ -172,8 +176,9 @@ namespace Orion.Npcs {
         [InlineData(NpcType.BlueSlime)]
         [InlineData(NpcType.GreenSlime)]
         public void NpcTransform(NpcType npcType) {
+            using var npcService = new OrionNpcService(Logger.None);
             var isRun = false;
-            _npcService.NpcTransform.RegisterHandler((sender, args) => {
+            npcService.NpcTransform.RegisterHandler((sender, args) => {
                 isRun = true;
                 ((OrionNpc)args.Npc).Wrapped.Should().BeSameAs(Main.npc[0]);
                 args.NpcNewType.Should().Be(npcType);
@@ -188,7 +193,8 @@ namespace Orion.Npcs {
         [InlineData(NpcType.BlueSlime, NpcType.GreenSlime)]
         [InlineData(NpcType.BlueSlime, NpcType.None)]
         public void NpcTransform_ModifyNpcNewType(NpcType oldType, NpcType newType) {
-            _npcService.NpcTransform.RegisterHandler((sender, args) => {
+            using var npcService = new OrionNpcService(Logger.None);
+            npcService.NpcTransform.RegisterHandler((sender, args) => {
                 args.NpcNewType = newType;
             });
             Main.npc[0].SetDefaults((int)oldType);
@@ -200,7 +206,8 @@ namespace Orion.Npcs {
 
         [Fact]
         public void NpcTransform_Canceled() {
-            _npcService.NpcTransform.RegisterHandler((sender, args) => {
+            using var npcService = new OrionNpcService(Logger.None);
+            npcService.NpcTransform.RegisterHandler((sender, args) => {
                 args.Cancel();
             });
 
@@ -211,8 +218,9 @@ namespace Orion.Npcs {
 
         [Fact]
         public void NpcDamage() {
+            using var npcService = new OrionNpcService(Logger.None);
             var isRun = false;
-            _npcService.NpcDamage.RegisterHandler((sender, args) => {
+            npcService.NpcDamage.RegisterHandler((sender, args) => {
                 isRun = true;
                 ((OrionNpc)args.Npc).Wrapped.Should().BeSameAs(Main.npc[0]);
                 args.Damage.Should().Be(100);
@@ -228,7 +236,8 @@ namespace Orion.Npcs {
 
         [Fact]
         public void NpcDamage_Canceled() {
-            _npcService.NpcDamage.RegisterHandler((sender, args) => {
+            using var npcService = new OrionNpcService(Logger.None);
+            npcService.NpcDamage.RegisterHandler((sender, args) => {
                 args.Cancel();
             });
             Main.npc[0].SetDefaults((int)NpcType.BlueSlime);
@@ -240,8 +249,9 @@ namespace Orion.Npcs {
 
         [Fact]
         public void NpcDropLootItem() {
+            using var npcService = new OrionNpcService(Logger.None);
             var isRun = false;
-            _npcService.NpcDropLootItem.RegisterHandler((sender, args) => {
+            npcService.NpcDropLootItem.RegisterHandler((sender, args) => {
                 isRun = true;
                 ((OrionNpc)args.Npc).Wrapped.Should().BeSameAs(Main.npc[0]);
             });
@@ -255,7 +265,8 @@ namespace Orion.Npcs {
 
         [Fact]
         public void NpcDropLootItem_Canceled() {
-            _npcService.NpcDropLootItem.RegisterHandler((sender, args) => {
+            using var npcService = new OrionNpcService(Logger.None);
+            npcService.NpcDropLootItem.RegisterHandler((sender, args) => {
                 args.Cancel();
             });
             Main.npc[0].SetDefaults((int)NpcType.BlueSlime);
@@ -268,8 +279,9 @@ namespace Orion.Npcs {
 
         [Fact]
         public void NpcKilled() {
+            using var npcService = new OrionNpcService(Logger.None);
             var isRun = false;
-            _npcService.NpcKilled.RegisterHandler((sender, args) => {
+            npcService.NpcKilled.RegisterHandler((sender, args) => {
                 isRun = true;
                 ((OrionNpc)args.Npc).Wrapped.Should().BeSameAs(Main.npc[0]);
             });
@@ -283,7 +295,8 @@ namespace Orion.Npcs {
 
         [Fact]
         public void SpawnNpc() {
-            var npc = _npcService.SpawnNpc(NpcType.BlueSlime, Vector2.Zero);
+            using var npcService = new OrionNpcService(Logger.None);
+            var npc = npcService.SpawnNpc(NpcType.BlueSlime, Vector2.Zero);
 
             npc.Should().NotBeNull();
             npc.Type.Should().Be(NpcType.BlueSlime);
@@ -291,7 +304,8 @@ namespace Orion.Npcs {
 
         [Fact]
         public void SpawnNpc_AiValues() {
-            var npc = _npcService.SpawnNpc(NpcType.BlueSlime, Vector2.Zero, new float[] { 1, 2, 3, 4 });
+            using var npcService = new OrionNpcService(Logger.None);
+            var npc = npcService.SpawnNpc(NpcType.BlueSlime, Vector2.Zero, new float[] { 1, 2, 3, 4 });
 
             npc.Should().NotBeNull();
             npc.Type.Should().Be(NpcType.BlueSlime);
@@ -301,7 +315,8 @@ namespace Orion.Npcs {
         [InlineData(3)]
         [InlineData(5)]
         public void SpawnNpc_AiValuesWrongLength_ThrowsArgumentException(int aiValuesLength) {
-            Func<INpc> func = () => _npcService.SpawnNpc(NpcType.BlueSlime, Vector2.Zero, new float[aiValuesLength]);
+            using var npcService = new OrionNpcService(Logger.None);
+            Func<INpc> func = () => npcService.SpawnNpc(NpcType.BlueSlime, Vector2.Zero, new float[aiValuesLength]);
 
             func.Should().Throw<ArgumentException>();
         }

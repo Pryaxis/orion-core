@@ -25,22 +25,10 @@ namespace Orion.Projectiles {
     [Collection("TerrariaTestsCollection")]
     [SuppressMessage("Style", "IDE0017:Simplify object initialization", Justification = "Testing")]
     public class OrionProjectileTests {
-        /*
-         * TODO: this test requires language localization, which fails for .NET core projects currently
-         *
-        [Fact(Skip = "Localization")]
-        public void Name_Get() {
-            var terrariaProjectile = new TerrariaProjectile {type = (int)ProjectileType.WoodenArrow};
-            IProjectile projectile = new OrionProjectile(terrariaProjectile);
-
-            projectile.Name.Should().Be("Wooden Arrow");
-        }
-        */
-
         [Fact]
         public void Name_Set() {
             var terrariaProjectile = new TerrariaProjectile();
-            IProjectile projectile = new OrionProjectile(terrariaProjectile);
+            var projectile = new OrionProjectile(terrariaProjectile);
 
             projectile.Name = "test";
 
@@ -50,7 +38,7 @@ namespace Orion.Projectiles {
         [Fact]
         public void Name_Set_NullValue_ThrowsArgumentNullException() {
             var terrariaProjectile = new TerrariaProjectile();
-            IProjectile projectile = new OrionProjectile(terrariaProjectile);
+            var projectile = new OrionProjectile(terrariaProjectile);
             Action action = () => projectile.Name = null;
 
             action.Should().Throw<ArgumentNullException>();
@@ -59,7 +47,7 @@ namespace Orion.Projectiles {
         [Fact]
         public void Type_Get() {
             var terrariaProjectile = new TerrariaProjectile { type = (int)ProjectileType.CrystalBullet };
-            IProjectile projectile = new OrionProjectile(terrariaProjectile);
+            var projectile = new OrionProjectile(terrariaProjectile);
 
             projectile.Type.Should().Be(ProjectileType.CrystalBullet);
         }
@@ -67,7 +55,7 @@ namespace Orion.Projectiles {
         [Fact]
         public void Type_Set() {
             var terrariaProjectile = new TerrariaProjectile();
-            IProjectile projectile = new OrionProjectile(terrariaProjectile);
+            var projectile = new OrionProjectile(terrariaProjectile);
 
             projectile.SetType(ProjectileType.CrystalBullet);
 

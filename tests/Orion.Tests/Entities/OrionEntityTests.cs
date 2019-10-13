@@ -27,7 +27,7 @@ namespace Orion.Entities {
         [Fact]
         public void Index_Get() {
             var terrariaEntity = new TestTerrariaEntity();
-            IEntity entity = new TestOrionEntity(100, terrariaEntity);
+            var entity = new TestOrionEntity(100, terrariaEntity);
 
             entity.Index.Should().Be(100);
         }
@@ -37,7 +37,7 @@ namespace Orion.Entities {
         [InlineData(false)]
         public void IsActive_Get(bool isActive) {
             var terrariaEntity = new TestTerrariaEntity { active = isActive };
-            IEntity entity = new TestOrionEntity(terrariaEntity);
+            var entity = new TestOrionEntity(terrariaEntity);
 
             entity.IsActive.Should().Be(isActive);
         }
@@ -47,7 +47,7 @@ namespace Orion.Entities {
         [InlineData(false)]
         public void IsActive_Set(bool isActive) {
             var terrariaEntity = new TestTerrariaEntity();
-            IEntity entity = new TestOrionEntity(terrariaEntity);
+            var entity = new TestOrionEntity(terrariaEntity);
 
             entity.IsActive = isActive;
 
@@ -57,7 +57,7 @@ namespace Orion.Entities {
         [Fact]
         public void Position_Get() {
             var terrariaEntity = new TestTerrariaEntity { position = new Vector2(100, 100) };
-            IEntity entity = new TestOrionEntity(terrariaEntity);
+            var entity = new TestOrionEntity(terrariaEntity);
 
             entity.Position.Should().Be(new Vector2(100, 100));
         }
@@ -65,7 +65,7 @@ namespace Orion.Entities {
         [Fact]
         public void Position_Set() {
             var terrariaEntity = new TestTerrariaEntity();
-            IEntity entity = new TestOrionEntity(terrariaEntity);
+            var entity = new TestOrionEntity(terrariaEntity);
 
             entity.Position = new Vector2(100, 100);
 
@@ -75,7 +75,7 @@ namespace Orion.Entities {
         [Fact]
         public void Velocity_Get() {
             var terrariaEntity = new TestTerrariaEntity { velocity = new Vector2(100, 100) };
-            IEntity entity = new TestOrionEntity(terrariaEntity);
+            var entity = new TestOrionEntity(terrariaEntity);
 
             entity.Velocity.Should().Be(new Vector2(100, 100));
         }
@@ -83,7 +83,7 @@ namespace Orion.Entities {
         [Fact]
         public void Velocity_Set() {
             var terrariaEntity = new TestTerrariaEntity();
-            IEntity entity = new TestOrionEntity(terrariaEntity);
+            var entity = new TestOrionEntity(terrariaEntity);
 
             entity.Velocity = new Vector2(100, 100);
 
@@ -93,7 +93,7 @@ namespace Orion.Entities {
         [Fact]
         public void Size_Get() {
             var terrariaEntity = new TestTerrariaEntity { Size = new Vector2(100, 100) };
-            IEntity entity = new TestOrionEntity(terrariaEntity);
+            var entity = new TestOrionEntity(terrariaEntity);
 
             entity.Size.Should().Be(new Vector2(100, 100));
         }
@@ -101,7 +101,7 @@ namespace Orion.Entities {
         [Fact]
         public void Size_Set() {
             var terrariaEntity = new TestTerrariaEntity();
-            IEntity entity = new TestOrionEntity(terrariaEntity);
+            var entity = new TestOrionEntity(terrariaEntity);
 
             entity.Size = new Vector2(100, 100);
 

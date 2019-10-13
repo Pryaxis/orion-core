@@ -28,7 +28,7 @@ namespace Orion.World.TileEntities {
             var terrariaLogicSensor = new TerrariaLogicSensor {
                 logicCheck = TerrariaLogicSensor.LogicCheckType.Water
             };
-            ILogicSensor logicSensor = new OrionLogicSensor(terrariaLogicSensor);
+            var logicSensor = new OrionLogicSensor(terrariaLogicSensor);
 
             logicSensor.LogicSensorType.Should().Be(LogicSensorType.Water);
         }
@@ -36,12 +36,11 @@ namespace Orion.World.TileEntities {
         [Fact]
         public void LogicSensorType_Set() {
             var terrariaLogicSensor = new TerrariaLogicSensor();
-            ILogicSensor logicSensor = new OrionLogicSensor(terrariaLogicSensor);
+            var logicSensor = new OrionLogicSensor(terrariaLogicSensor);
 
             logicSensor.LogicSensorType = LogicSensorType.Water;
 
-            terrariaLogicSensor.logicCheck.Should()
-                               .Be(TerrariaLogicSensor.LogicCheckType.Water);
+            terrariaLogicSensor.logicCheck.Should().Be(TerrariaLogicSensor.LogicCheckType.Water);
         }
 
         [Theory]
@@ -49,7 +48,7 @@ namespace Orion.World.TileEntities {
         [InlineData(false)]
         public void IsActivated_Get(bool isActivated) {
             var terrariaLogicSensor = new TerrariaLogicSensor { On = isActivated };
-            ILogicSensor logicSensor = new OrionLogicSensor(terrariaLogicSensor);
+            var logicSensor = new OrionLogicSensor(terrariaLogicSensor);
 
             logicSensor.IsActivated.Should().Be(isActivated);
         }
@@ -59,7 +58,7 @@ namespace Orion.World.TileEntities {
         [InlineData(false)]
         public void IsActivated_Set(bool isActivated) {
             var terrariaLogicSensor = new TerrariaLogicSensor();
-            ILogicSensor logicSensor = new OrionLogicSensor(terrariaLogicSensor);
+            var logicSensor = new OrionLogicSensor(terrariaLogicSensor);
 
             logicSensor.IsActivated = isActivated;
 

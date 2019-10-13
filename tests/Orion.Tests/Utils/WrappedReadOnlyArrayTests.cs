@@ -29,7 +29,7 @@ namespace Orion.Utils {
                 wrappedItems[i] = new TestWrappedClass();
             }
 
-            IReadOnlyArray<TestClass> array = new WrappedReadOnlyArray<TestClass, TestWrappedClass>(
+            var array = new WrappedReadOnlyArray<TestClass, TestWrappedClass>(
                 wrappedItems, (_, testWrappedClass) => new TestClass(testWrappedClass));
 
             array.Count.Should().Be(10);
@@ -42,7 +42,7 @@ namespace Orion.Utils {
                 wrappedItems[i] = new TestWrappedClass();
             }
 
-            IReadOnlyArray<TestClass> array = new WrappedReadOnlyArray<TestClass, TestWrappedClass>(
+            var array = new WrappedReadOnlyArray<TestClass, TestWrappedClass>(
                 wrappedItems, (_, testWrappedClass) => new TestClass(testWrappedClass));
 
             var item = array[1];
@@ -58,7 +58,7 @@ namespace Orion.Utils {
                 wrappedItems[i] = new TestWrappedClass();
             }
 
-            IReadOnlyArray<TestClass> array = new WrappedReadOnlyArray<TestClass, TestWrappedClass>(
+            var array = new WrappedReadOnlyArray<TestClass, TestWrappedClass>(
                 wrappedItems, (_, testWrappedClass) => new TestClass(testWrappedClass));
 
             var item = array[1];
@@ -76,7 +76,7 @@ namespace Orion.Utils {
                 wrappedItems[i] = new TestWrappedClass();
             }
 
-            IReadOnlyArray<TestClass> array = new WrappedReadOnlyArray<TestClass, TestWrappedClass>(
+            var array = new WrappedReadOnlyArray<TestClass, TestWrappedClass>(
                 wrappedItems, (_, testWrappedClass) => new TestClass(testWrappedClass));
 
             Func<TestClass> func = () => array[index];

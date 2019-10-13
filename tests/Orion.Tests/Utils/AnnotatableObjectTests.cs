@@ -23,21 +23,21 @@ namespace Orion.Utils {
     public class AnnotatableObjectTests {
         [Fact]
         public void GetAnnotationOrDefault_KeyDoesNotExist_ReturnsDefaultValue() {
-            IAnnotatable annotatable = new AnnotatableObject();
+            var annotatable = new AnnotatableObject();
 
             annotatable.GetAnnotationOrDefault("test", () => 1).Should().Be(1);
         }
 
         [Fact]
         public void GetAnnotationOrDefault_KeyDoesNotExist_NullProvider_ReturnsDefaultValue() {
-            IAnnotatable annotatable = new AnnotatableObject();
+            var annotatable = new AnnotatableObject();
 
             annotatable.GetAnnotationOrDefault<int>("test").Should().Be(0);
         }
 
         [Fact]
         public void GetAnnotationOrDefault_Create() {
-            IAnnotatable annotatable = new AnnotatableObject();
+            var annotatable = new AnnotatableObject();
 
             annotatable.GetAnnotationOrDefault("test", () => 10, true).Should().Be(10);
             
@@ -46,7 +46,7 @@ namespace Orion.Utils {
 
         [Fact]
         public void GetAnnotationOrDefault_NullKey_ThrowsArgumentNullException() {
-            IAnnotatable annotatable = new AnnotatableObject();
+            var annotatable = new AnnotatableObject();
             Func<int> func = () => annotatable.GetAnnotationOrDefault(null, () => 0);
 
             func.Should().Throw<ArgumentNullException>();
@@ -54,7 +54,7 @@ namespace Orion.Utils {
 
         [Fact]
         public void SetAnnotation_GetAnnotationOrDefault() {
-            IAnnotatable annotatable = new AnnotatableObject();
+            var annotatable = new AnnotatableObject();
             annotatable.SetAnnotation("test", 1);
 
             annotatable.GetAnnotationOrDefault("test", () => 1).Should().Be(1);
@@ -62,7 +62,7 @@ namespace Orion.Utils {
 
         [Fact]
         public void SetAnnotation_NullKey_ThrowsArgumentNullException() {
-            IAnnotatable annotatable = new AnnotatableObject();
+            var annotatable = new AnnotatableObject();
             Action action = () => annotatable.SetAnnotation(null, "");
 
             action.Should().Throw<ArgumentNullException>();
@@ -70,7 +70,7 @@ namespace Orion.Utils {
 
         [Fact]
         public void RemoveAnnotation_KeyExists() {
-            IAnnotatable annotatable = new AnnotatableObject();
+            var annotatable = new AnnotatableObject();
             annotatable.SetAnnotation("test", 1);
 
             annotatable.RemoveAnnotation("test").Should().BeTrue();
@@ -78,14 +78,14 @@ namespace Orion.Utils {
 
         [Fact]
         public void RemoveAnnotation_KeyDoesntExist() {
-            IAnnotatable annotatable = new AnnotatableObject();
+            var annotatable = new AnnotatableObject();
 
             annotatable.RemoveAnnotation("test").Should().BeFalse();
         }
 
         [Fact]
         public void RemoveAnnotation_NullValue_ThrowsArgumentNullException() {
-            IAnnotatable annotatable = new AnnotatableObject();
+            var annotatable = new AnnotatableObject();
             Action action = () => annotatable.RemoveAnnotation(null);
 
             action.Should().Throw<ArgumentNullException>();

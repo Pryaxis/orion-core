@@ -30,7 +30,7 @@ namespace Orion.Players {
         [Fact]
         public void Name_Get() {
             var terrariaPlayer = new TerrariaPlayer { name = "test" };
-            IPlayer player = new OrionPlayer(mockPlayerService.Object, terrariaPlayer);
+            var player = new OrionPlayer(mockPlayerService.Object, terrariaPlayer);
 
             player.Name.Should().Be("test");
         }
@@ -38,7 +38,7 @@ namespace Orion.Players {
         [Fact]
         public void Name_Set() {
             var terrariaPlayer = new TerrariaPlayer();
-            IPlayer player = new OrionPlayer(mockPlayerService.Object, terrariaPlayer);
+            var player = new OrionPlayer(mockPlayerService.Object, terrariaPlayer);
 
             player.Name = "test";
 
@@ -48,7 +48,7 @@ namespace Orion.Players {
         [Fact]
         public void Name_Set_NullValue_ThrowsArgumentNullException() {
             var terrariaPlayer = new TerrariaPlayer();
-            IPlayer player = new OrionPlayer(mockPlayerService.Object, terrariaPlayer);
+            var player = new OrionPlayer(mockPlayerService.Object, terrariaPlayer);
             Action action = () => player.Name = null;
 
             action.Should().Throw<ArgumentNullException>();
@@ -57,7 +57,7 @@ namespace Orion.Players {
         [Fact]
         public void Team_Get() {
             var terrariaPlayer = new TerrariaPlayer { team = (int)PlayerTeam.Red };
-            IPlayer player = new OrionPlayer(mockPlayerService.Object, terrariaPlayer);
+            var player = new OrionPlayer(mockPlayerService.Object, terrariaPlayer);
 
             player.Team.Should().Be(PlayerTeam.Red);
         }
@@ -65,7 +65,7 @@ namespace Orion.Players {
         [Fact]
         public void Team_Set() {
             var terrariaPlayer = new TerrariaPlayer();
-            IPlayer player = new OrionPlayer(mockPlayerService.Object, terrariaPlayer);
+            var player = new OrionPlayer(mockPlayerService.Object, terrariaPlayer);
 
             player.Team = PlayerTeam.Red;
 
