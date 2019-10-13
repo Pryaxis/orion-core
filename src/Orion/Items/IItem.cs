@@ -46,13 +46,13 @@ namespace Orion.Items {
         IItemStats Stats { get; }
 
         /// <summary>
-        /// Sets the item's type. This will update the item accordingly.
+        /// Sets the item's <paramref name="type"/>. This will update the item accordingly.
         /// </summary>
         /// <param name="type">The item type.</param>
         void SetType(ItemType type);
 
         /// <summary>
-        /// Sets the item's prefix. This will update the item accordingly.
+        /// Sets the item's <paramref name="prefix"/>. This will update the item accordingly.
         /// </summary>
         /// <param name="prefix">The item prefix.</param>
         void SetPrefix(ItemPrefix prefix);

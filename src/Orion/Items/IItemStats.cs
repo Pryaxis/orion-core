@@ -17,7 +17,7 @@
 
 namespace Orion.Items {
     /// <summary>
-    /// Represents an item's stats.
+    /// Represents an item's stats. These are immutable aspects of an item.
     /// </summary>
     public interface IItemStats {
         /// <summary>
