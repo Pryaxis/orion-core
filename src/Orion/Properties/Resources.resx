@@ -129,6 +129,9 @@
   <data name="EventHandlerCollection_Unregister" xml:space="preserve">
     <value>{EventName}: Unregistered {RegistrationName}</value>
   </data>
+  <data name="ItemService_SpawnItem" xml:space="preserve">
+    <value>Spawning item {Type} x{StackSize} at {Position}</value>
+  </data>
   <data name="Kernel_InitalizePlugin" xml:space="preserve">
     <value>Initialized {PluginName} v{PluginVersion} by {PluginAuthor}</value>
   </data>

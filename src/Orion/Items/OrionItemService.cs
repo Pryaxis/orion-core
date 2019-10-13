@@ -20,6 +20,7 @@ using System.Diagnostics;
 using Microsoft.Xna.Framework;
 using Orion.Events;
 using Orion.Events.Items;
+using Orion.Properties;
 using Orion.Utils;
 using OTAPI;
 using Serilog;
@@ -55,6 +56,8 @@ namespace Orion.Items {
 
         public IItem? SpawnItem(ItemType type, Vector2 position,
                 int stackSize = 1, ItemPrefix prefix = ItemPrefix.None) {
+            Log.Debug(Resources.ItemService_SpawnItem, type, position, stackSize);
+
             // Terraria has a mechanism of item caching which allows, for instance, the Grand Design to drop all wires
             // at once. We need to disable that temporarily so that our item *definitely* spawns.
             var oldItemCache = TerrariaItem.itemCaches[(int)type];

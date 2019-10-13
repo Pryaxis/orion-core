@@ -97,6 +97,15 @@ namespace Orion.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Spawning item {Type} x{StackSize} at {Position}.
+        /// </summary>
+        internal static string ItemService_SpawnItem {
+            get {
+                return ResourceManager.GetString("ItemService_SpawnItem", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Initialized {PluginName} v{PluginVersion} by {PluginAuthor}.
         /// </summary>
         internal static string Kernel_InitalizePlugin {
