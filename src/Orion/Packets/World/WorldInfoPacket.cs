@@ -16,6 +16,7 @@
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
 using System;
+using System.Diagnostics.Contracts;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using Orion.Packets.Players;
@@ -948,7 +949,7 @@ namespace Orion.Packets.World {
         }
 
         /// <inheritdoc/>
-        [ExcludeFromCodeCoverage]
+        [Pure, ExcludeFromCodeCoverage]
         public override string ToString() => $"{Type}[{WorldName}, ...]";
 
         private protected override void ReadFromReader(BinaryReader reader, PacketContext context) {

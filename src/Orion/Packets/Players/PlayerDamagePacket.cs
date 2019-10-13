@@ -16,6 +16,7 @@
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
 using System;
+using System.Diagnostics.Contracts;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using Orion.Packets.Extensions;
@@ -118,7 +119,7 @@ namespace Orion.Packets.Players {
         }
 
         /// <inheritdoc/>
-        [ExcludeFromCodeCoverage]
+        [Pure, ExcludeFromCodeCoverage]
         public override string ToString() => $"{Type}[#={PlayerIndex} for {Damage} hp, ...]";
 
         /// <inheritdoc/>

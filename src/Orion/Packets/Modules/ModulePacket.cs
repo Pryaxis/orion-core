@@ -16,6 +16,8 @@
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
 using System;
+using System.Diagnostics.CodeAnalysis;
+using System.Diagnostics.Contracts;
 using System.IO;
 
 namespace Orion.Packets.Modules {
@@ -51,6 +53,7 @@ namespace Orion.Packets.Modules {
         }
 
         /// <inheritdoc/>
+        [Pure, ExcludeFromCodeCoverage]
         public override string ToString() => $"{Type}[{Module}]";
 
         private protected override void ReadFromReader(BinaryReader reader, PacketContext context) =>

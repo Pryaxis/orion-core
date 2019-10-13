@@ -15,6 +15,7 @@
 // You should have received a copy of the GNU General Public License
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
+using System.Diagnostics.Contracts;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using Orion.Items;
@@ -89,7 +90,7 @@ namespace Orion.Packets.Players {
         }
 
         /// <inheritdoc/>
-        [ExcludeFromCodeCoverage]
+        [Pure, ExcludeFromCodeCoverage]
         public override string ToString() =>
             $"{Type}[#={PlayerIndex}, {PlayerInventorySlotIndex} is " +
             $"{(ItemPrefix.Equals(ItemPrefix.None) ? ItemPrefix + " " : string.Empty)}{ItemType} x{ItemStackSize}]";

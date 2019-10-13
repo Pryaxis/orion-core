@@ -17,6 +17,7 @@
 
 using System;
 using System.Diagnostics;
+using System.Diagnostics.Contracts;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Text;
@@ -211,7 +212,7 @@ namespace Orion.Packets {
         }
 
         /// <inheritdoc/>
-        [ExcludeFromCodeCoverage]
+        [Pure, ExcludeFromCodeCoverage]
         public override string ToString() => $"{Type}";
 
         /// <inheritdoc/>

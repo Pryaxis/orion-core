@@ -17,6 +17,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.Contracts;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using Orion.Utils;
@@ -94,7 +95,7 @@ namespace Orion.Packets.World.TileEntities {
         public void Clean() => IsDirty = false;
 
         /// <inheritdoc/>
-        [ExcludeFromCodeCoverage]
+        [Pure, ExcludeFromCodeCoverage]
         public override string ToString() => $"{Type} @ ({X}, {Y})";
 
         private void ReadFromReaderImpl(BinaryReader reader, bool shouldIncludeIndex) {

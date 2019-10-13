@@ -17,6 +17,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.Contracts;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.IO.Compression;
@@ -127,7 +128,7 @@ namespace Orion.Packets.World.Tiles {
         }
 
         /// <inheritdoc/>
-        [ExcludeFromCodeCoverage]
+        [Pure, ExcludeFromCodeCoverage]
         public override string ToString() =>
             $"{Type}[{SectionWidth}x{SectionHeight} @ ({StartTileX}, {StartTileY}), ...]";
 

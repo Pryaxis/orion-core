@@ -17,6 +17,7 @@
 
 using System;
 using System.Diagnostics.CodeAnalysis;
+using System.Diagnostics.Contracts;
 
 namespace Orion.Events.Server {
     /// <summary>
@@ -26,7 +27,7 @@ namespace Orion.Events.Server {
         private protected ServerEventArgs() { }
 
         /// <inheritdoc/>
-        [ExcludeFromCodeCoverage]
+        [Pure, ExcludeFromCodeCoverage]
         public override string ToString() => "[]";
     }
 }

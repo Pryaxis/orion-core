@@ -16,6 +16,7 @@
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
 using System;
+using System.Diagnostics.Contracts;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using Microsoft.Xna.Framework;
@@ -73,7 +74,7 @@ namespace Orion.Packets.Entities {
         }
 
         /// <inheritdoc/>
-        [ExcludeFromCodeCoverage]
+        [Pure, ExcludeFromCodeCoverage]
         public override string ToString() => $"{Type}[{Text} ({TextColor}) @ {TextPosition}]";
 
         private protected override void ReadFromReader(BinaryReader reader, PacketContext context) {

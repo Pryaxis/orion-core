@@ -16,6 +16,7 @@
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
 using System;
+using System.Diagnostics.Contracts;
 using System.Diagnostics.CodeAnalysis;
 
 namespace Orion.Packets {

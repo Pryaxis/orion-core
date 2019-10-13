@@ -16,6 +16,7 @@
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
 using System;
+using System.Diagnostics.Contracts;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using Orion.Utils;
@@ -105,7 +106,7 @@ namespace Orion.Packets.World.Tiles {
         public void Clean() => IsDirty = false;
 
         /// <inheritdoc/>
-        [ExcludeFromCodeCoverage]
+        [Pure, ExcludeFromCodeCoverage]
         public override string ToString() => $"{LiquidType} x{LiquidAmount} @ ({TileX}, {TileY})";
 
         /// <summary>
