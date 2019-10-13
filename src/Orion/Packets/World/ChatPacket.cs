@@ -35,7 +35,7 @@ namespace Orion.Packets.World {
         public override PacketType Type => PacketType.Chat;
 
         /// <summary>
-        /// Gets or sets the chat's color.
+        /// Gets or sets the chat's color. The alpha component is ignored.
         /// </summary>
         public Color ChatColor {
             get => _chatColor;

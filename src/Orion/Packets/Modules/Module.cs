@@ -42,9 +42,6 @@ namespace Orion.Packets.Modules {
         /// </summary>
         public abstract ModuleType Type { get; }
 
-        // Prevent outside inheritance.
-        private protected Module() { }
-
         /// <summary>
         /// Reads and returns a module from the given stream with the specified context.
         /// </summary>
@@ -63,8 +60,8 @@ namespace Orion.Packets.Modules {
                 moduleTypeId < _constructors.Length ? _constructors[moduleTypeId] : null;
 
             var reader = new BinaryReader(stream, Encoding.UTF8, true);
-            var moduleConstructor = GetModuleConstructor(reader.ReadUInt16()) ??
-                                    throw new PacketException("Module type is invalid.");
+            var moduleConstructor =
+                GetModuleConstructor(reader.ReadUInt16()) ?? throw new PacketException("Module type is invalid.");
             var module = moduleConstructor();
             module.ReadFromReader(reader, context);
             return module;

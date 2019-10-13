@@ -85,7 +85,8 @@ namespace Orion.Packets.Modules {
         }
 
         /// <summary>
-        /// Gets or sets the server chat's color. Only applicable when sent in the Server context.
+        /// Gets or sets the server chat's color. The alpha component is ignored. Only applicable when sent in the
+        /// Server context.
         /// </summary>
         public Color ServerChatColor {
             get => _serverChatColor;

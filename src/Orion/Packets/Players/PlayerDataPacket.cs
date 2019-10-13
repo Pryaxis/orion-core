@@ -126,7 +126,7 @@ namespace Orion.Packets.Players {
         }
 
         /// <summary>
-        /// Gets or sets the player's hair color.
+        /// Gets or sets the player's hair color. The alpha component is ignored.
         /// </summary>
         public Color PlayerHairColor {
             get => _playerHairColor;
@@ -137,7 +137,7 @@ namespace Orion.Packets.Players {
         }
 
         /// <summary>
-        /// Gets or sets the player's skin color.
+        /// Gets or sets the player's skin color. The alpha component is ignored.
         /// </summary>
         public Color PlayerSkinColor {
             get => _playerSkinColor;
@@ -148,7 +148,7 @@ namespace Orion.Packets.Players {
         }
 
         /// <summary>
-        /// Gets or sets the player's eye color.
+        /// Gets or sets the player's eye color. The alpha component is ignored.
         /// </summary>
         public Color PlayerEyeColor {
             get => _playerEyeColor;
@@ -159,7 +159,7 @@ namespace Orion.Packets.Players {
         }
 
         /// <summary>
-        /// Gets or sets the player's shirt color.
+        /// Gets or sets the player's shirt color. The alpha component is ignored.
         /// </summary>
         public Color PlayerShirtColor {
             get => _playerShirtColor;
@@ -170,7 +170,7 @@ namespace Orion.Packets.Players {
         }
 
         /// <summary>
-        /// Gets or sets the player's undershirt color.
+        /// Gets or sets the player's undershirt color. The alpha component is ignored.
         /// </summary>
         public Color PlayerUndershirtColor {
             get => _playerUndershirtColor;
@@ -181,7 +181,7 @@ namespace Orion.Packets.Players {
         }
 
         /// <summary>
-        /// Gets or sets the player's pants color.
+        /// Gets or sets the player's pants color. The alpha component is ignored.
         /// </summary>
         public Color PlayerPantsColor {
             get => _playerPantsColor;
@@ -192,7 +192,7 @@ namespace Orion.Packets.Players {
         }
 
         /// <summary>
-        /// Gets or sets the player's shoe color.
+        /// Gets or sets the player's shoe color. The alpha component is ignored.
         /// </summary>
         public Color PlayerShoeColor {
             get => _playerShoeColor;

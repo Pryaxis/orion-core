@@ -82,7 +82,7 @@ namespace Orion.Players {
         /// </summary>
         /// <param name="player">The player.</param>
         /// <param name="message">The message.</param>
-        /// <param name="color">The color.</param>
+        /// <param name="color">The color. The alpha component is ignored.</param>
         /// <exception cref="ArgumentNullException">
         /// <paramref name="player"/> or <paramref name="message"/> are <see langword="null"/>.
         /// </exception>
@@ -109,7 +109,7 @@ namespace Orion.Players {
         /// <param name="player">The player.</param>
         /// <param name="fromPlayer">The player to receive the <paramref name="message"/> from.</param>
         /// <param name="message">The message.</param>
-        /// <param name="color">The color.</param>
+        /// <param name="color">The color. The alpha component is ignored.</param>
         /// <exception cref="ArgumentNullException">
         /// <paramref name="player"/>, <paramref name="fromPlayer"/>, or <paramref name="message"/> are
         /// <see langword="null"/>.

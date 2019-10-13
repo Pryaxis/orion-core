@@ -25,6 +25,10 @@ using TerrariaNetworkText = Terraria.Localization.NetworkText;
 namespace Orion.Packets.Entities {
     /// <summary>
     /// Packet sent from the server to the client to show combat text. This is currently not naturally sent.
+    /// 
+    /// <para/>
+    /// 
+    /// Combat text is similar to combat numbers: see <see cref="CombatNumberPacket"/>.
     /// </summary>
     public sealed class CombatTextPacket : Packet {
         private Vector2 _textPosition;
@@ -46,7 +50,7 @@ namespace Orion.Packets.Entities {
         }
 
         /// <summary>
-        /// Gets or sets the text's color.
+        /// Gets or sets the text's color. The alpha component is ignored.
         /// </summary>
         public Color TextColor {
             get => _textColor;

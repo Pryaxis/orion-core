@@ -21,7 +21,7 @@ using System.IO;
 namespace Orion.Packets.Players {
     /// <summary>
     /// Packet sent from the server to the client to set a player's activity. This is used to synchronize joins and
-    /// disconnects.
+    /// leaves.
     /// </summary>
     public sealed class PlayerActivityPacket : Packet {
         private byte _playerIndex;

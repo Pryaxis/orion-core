@@ -22,8 +22,11 @@ using Orion.Packets.Extensions;
 
 namespace Orion.Packets.Entities {
     /// <summary>
-    /// Packet sent from the server to the client to show a combat number. Combat numbers are the numbers that show up
-    /// when, e.g., a player is hurt or an NPC is damaged.
+    /// Packet sent from the server to the client to show a combat number.
+    /// 
+    /// <para/>
+    /// 
+    /// Combat numbers are the numbers that show up when, e.g., a player is hurt or an NPC is damaged.
     /// </summary>
     public sealed class CombatNumberPacket : Packet {
         private Vector2 _numberPosition;
@@ -45,7 +48,7 @@ namespace Orion.Packets.Entities {
         }
 
         /// <summary>
-        /// Gets or sets the number's color.
+        /// Gets or sets the number's color. The alpha component is ignored.
         /// </summary>
         public Color NumberColor {
             get => _numberColor;

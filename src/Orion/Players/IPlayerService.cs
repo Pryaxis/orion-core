@@ -109,7 +109,7 @@ namespace Orion.Players {
         /// </summary>
         /// <param name="playerService">The player service.</param>
         /// <param name="message">The message.</param>
-        /// <param name="color">The color.</param>
+        /// <param name="color">The color. The alpha component is ignored.</param>
         /// <exception cref="ArgumentNullException">
         /// <paramref name="playerService"/> or <paramref name="message"/> are <see langword="null"/>.
         /// </exception>
