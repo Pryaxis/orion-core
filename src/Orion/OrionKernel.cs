@@ -165,7 +165,7 @@ namespace Orion {
                 // Bind all plugin types to themselves, allowing plugins to properly depend on other plugins without
                 // reliance on static state.
                 _pluginTypesToLoad.Add(pluginType);
-                Bind(pluginType).ToSelf().InSingletonScope();
+                Bind(pluginType).ToSelf().InTransientScope();
 
                 var pluginName = pluginType.GetCustomAttribute<ServiceAttribute?>()?.Name ?? pluginType.Name;
                 _log.Information(Resources.Kernel_LoadPlugin, pluginName, assemblyPath);
