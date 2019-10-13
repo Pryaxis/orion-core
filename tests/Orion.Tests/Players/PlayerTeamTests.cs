@@ -22,6 +22,7 @@ using Main = Terraria.Main;
 namespace Orion.Players {
     [Collection("TerrariaTestsCollection")]
     public class PlayerTeamTests {
+        [Fact]
         public void Color() {
             for (var i = 0; i < 6; ++i) {
                 ((PlayerTeam)i).Color().Should().Be(Main.teamColor[i]);

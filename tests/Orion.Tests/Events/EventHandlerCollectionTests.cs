@@ -23,6 +23,22 @@ using Xunit;
 namespace Orion.Events {
     public class EventHandlerCollectionTests {
         [Fact]
+        public void Ctor_NullLog_ThrowsArgumentNullException() {
+            Func<EventHandlerCollection<TestEventArgs>> func = () => new EventHandlerCollection<TestEventArgs>(null);
+
+            func.Should().Throw<ArgumentNullException>();
+        }
+
+        [Fact]
+        public void Invoke_ThrowsNotImplementedException() {
+            var collection = new EventHandlerCollection<TestEventArgs>(Logger.None);
+            collection.RegisterHandler(TestHandler3);
+            var args = new TestEventArgs();
+
+            collection.Invoke(this, args);
+        }
+
+        [Fact]
         public void Invoke_NullArgs_ThrowsArgumentNullException() {
             var collection = new EventHandlerCollection<TestEventArgs>(Logger.None);
             collection.RegisterHandler(TestHandler);
@@ -67,12 +83,19 @@ namespace Orion.Events {
             var collection = new EventHandlerCollection<TestEventArgs>(Logger.None);
             collection.RegisterHandler(TestHandler2);
             collection.RegisterHandler(TestHandler);
-            collection.UnregisterHandler(TestHandler2);
+            collection.UnregisterHandler(TestHandler2).Should().BeTrue();
             var args = new TestEventArgs();
 
             collection.Invoke(this, args);
 
             args.Value.Should().Be(100);
+        }
+
+        [Fact]
+        public void UnregisterHandler_ReturnsFalse() {
+            var collection = new EventHandlerCollection<TestEventArgs>(Logger.None);
+
+            collection.UnregisterHandler(TestHandler).Should().BeFalse();
         }
 
         [Fact]
@@ -88,6 +111,8 @@ namespace Orion.Events {
 
         [EventHandler(EventPriority.Highest)]
         private static void TestHandler2(object sender, TestEventArgs args) => args.Value = 200;
+
+        private static void TestHandler3(object sender, TestEventArgs args) => throw new NotImplementedException();
 
         private class TestEventArgs : EventArgs {
             public int Value { get; set; }

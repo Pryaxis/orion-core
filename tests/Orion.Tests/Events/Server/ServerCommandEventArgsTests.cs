@@ -27,5 +27,12 @@ namespace Orion.Events.Server {
 
             func.Should().Throw<ArgumentNullException>();
         }
+
+        [Fact]
+        public void Input_Get() {
+            var args = new ServerCommandEventArgs("INPUT");
+
+            args.Input.Should().Be("INPUT");
+        }
     }
 }
