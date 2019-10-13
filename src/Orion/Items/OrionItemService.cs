@@ -49,7 +49,7 @@ namespace Orion.Items {
             Hooks.Item.PreUpdate = PreUpdateHandler;
         }
 
-        protected override void Dispose(bool disposeManaged) {
+        public override void Dispose() {
             Hooks.Item.PreSetDefaultsById = null;
             Hooks.Item.PreUpdate = null;
         }

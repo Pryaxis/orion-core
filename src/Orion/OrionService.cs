@@ -16,6 +16,7 @@
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 using Serilog;
 using Serilog.Core;
 using Serilog.Events;
@@ -25,6 +26,8 @@ namespace Orion {
     /// Represents the base class for an Orion service. Services provide concrete functionality to clients, and are
     /// injected using a dependency injection framework.
     /// </summary>
+    [SuppressMessage("Design", "CA1063:Implement IDisposable Correctly",
+        Justification = "IDisposable pattern makes no sense")]
     public abstract class OrionService : IDisposable {
         // In DEBUG mode, we want the minimum level to be Verbose by default to see everything. In RELEASE mode, we only
         // want Information and up.
@@ -55,24 +58,16 @@ namespace Orion {
                 .CreateLogger();
         }
 
+
         /// <inheritdoc/>
-        public void Dispose() {
-            Dispose(true);
-            GC.SuppressFinalize(this);
-        }
+        [SuppressMessage("Usage", "CA1816:Dispose methods should call SuppressFinalize",
+            Justification = "IDisposable pattern makes no sense")]
+        public virtual void Dispose() { }
 
         /// <summary>
         /// Sets the minimum logging <paramref name="level"/>.
         /// </summary>
         /// <param name="level">The level.</param>
         public void SetLogLevel(LogEventLevel level) => _logLevel.MinimumLevel = level;
-
-        /// <summary>
-        /// Disposes the service and any of its unmanaged resources, optionally including its managed resources.
-        /// </summary>
-        /// <param name="disposeManaged">
-        /// <see langword="true"/> to dispose managed resources, otherwise, <see langword="false"/>.
-        /// </param>
-        protected virtual void Dispose(bool disposeManaged) { }
     }
 }

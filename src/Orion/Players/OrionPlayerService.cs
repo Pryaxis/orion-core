@@ -79,7 +79,7 @@ namespace Orion.Players {
             Hooks.Net.RemoteClient.PreReset = PreResetHandler;
         }
 
-        protected override void Dispose(bool disposeManaged) {
+        public override void Dispose() {
             _shouldIgnoreNextReceiveData.Dispose();
 
             Hooks.Net.ReceiveData = null;

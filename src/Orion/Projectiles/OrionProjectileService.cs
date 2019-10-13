@@ -52,7 +52,7 @@ namespace Orion.Projectiles {
             Hooks.Projectile.PreKill = PreKillHandler;
         }
 
-        protected override void Dispose(bool disposeManaged) {
+        public override void Dispose() {
             Hooks.Projectile.PreSetDefaultsById = null;
             Hooks.Projectile.PreUpdate = null;
             Hooks.Projectile.PreKill = null;

@@ -66,7 +66,7 @@ namespace Orion.World {
             Hooks.World.IO.PreSaveWorld = PreSaveWorldHandler;
         }
 
-        protected override void Dispose(bool disposeManaged) {
+        public override void Dispose() {
             Hooks.World.IO.PreLoadWorld = null;
             Hooks.World.IO.PreSaveWorld = null;
         }
@@ -85,7 +85,7 @@ namespace Orion.World {
 
         // This class is not disposable since we expect instances to be permanent. However, a finalizer is implemented
         // in case someone modifies Main.tile.
-        private unsafe class TileCollection : ITileCollection {
+        private sealed unsafe class TileCollection : ITileCollection {
             private readonly Tile* _tilesPtr;
 
             public int Width => Main.maxTilesX;

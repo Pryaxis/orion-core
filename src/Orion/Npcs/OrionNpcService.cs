@@ -69,7 +69,7 @@ namespace Orion.Npcs {
             Hooks.Npc.Killed = KilledHandler;
         }
 
-        protected override void Dispose(bool disposeManaged) {
+        public override void Dispose() {
             _setDefaultsToIgnore.Dispose();
 
             Hooks.Npc.PreSetDefaultsById = null;
