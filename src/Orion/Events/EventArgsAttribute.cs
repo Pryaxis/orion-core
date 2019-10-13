@@ -36,10 +36,10 @@ namespace Orion.Events {
         /// <param name="name">
         /// The name, which is used for logs.
         /// 
-        /// <para>
+        /// <para/>
+        /// 
         /// This should be short while still disambiguating the event among all events. The convention is to use
         /// <c>kebab-case</c>.
-        /// </para>
         /// </param>
         /// <exception cref="ArgumentNullException"><paramref name="name"/> is <see langword="null"/>.</exception>
         public EventArgsAttribute(string name) {

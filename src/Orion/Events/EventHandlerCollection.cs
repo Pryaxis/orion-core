@@ -67,10 +67,10 @@ namespace Orion.Events {
         /// Invokes the collection of handlers in order of their priorities using the given <paramref name="sender"/>
         /// and <paramref name="args"/>.
         /// 
-        /// <para>
+        /// <para/>
+        /// 
         /// While this method itself is thread-safe, care must be taken to make the handlers thread-safe if this method
         /// is expected to be called simultaneously on different threads.
-        /// </para>
         /// </summary>
         /// <param name="sender">The sender. This is the object that is initiating the event.</param>
         /// <param name="args">The event arguments.</param>

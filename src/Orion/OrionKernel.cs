@@ -138,10 +138,10 @@ namespace Orion {
         /// <summary>
         /// Starts loading plugins form an <paramref name="assemblyPath"/>.
         /// 
-        /// <para>
+        /// <para/>
+        /// 
         /// The reason that loading plugins needs to be split up into a two-part process is that all plugin types need
         /// to be obtained before actually constructing them due to dependency injection requirements.
-        /// </para>
         /// </summary>
         /// <param name="assemblyPath">The assembly path.</param>
         /// <exception cref="ArgumentNullException">
@@ -172,9 +172,9 @@ namespace Orion {
         /// <summary>
         /// Finishes loading plugins and returns the plugins.
         /// 
-        /// <para>
+        /// <para/>
+        /// 
         /// Each plugin will be constructed and then each plugin will be initialized.
-        /// </para>
         /// </summary>
         /// <returns>The loaded plugins.</returns>
         public IReadOnlyCollection<OrionPlugin> FinishLoadingPlugins() {

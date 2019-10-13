@@ -24,10 +24,10 @@ namespace Orion.World.Tiles {
     /// <summary>
     /// Represents an optimized Terraria tile.
     /// 
-    /// <para>
+    /// <para/>
+    /// 
     /// Tiles are represented as structures for optimal packing and for lowered GC overhead. These structures are
     /// modified using <see langword="ref"/> locals and returns.
-    /// </para>
     /// </summary>
     [StructLayout(LayoutKind.Explicit)]
     [SuppressMessage("Design", "CA1051:Do not declare visible instance fields", Justification = "Performance")]

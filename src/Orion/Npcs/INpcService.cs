@@ -70,7 +70,11 @@ namespace Orion.Npcs {
 
         /// <summary>
         /// Spawns an NPC with the given <paramref name="type"/> at the specified <paramref name="position"/> with the
-        /// <paramref name="aiValues"/>. This method is not thread-safe.
+        /// <paramref name="aiValues"/>.
+        /// 
+        /// <para/>
+        /// 
+        /// This method is not thread-safe.
         /// </summary>
         /// <param name="type">The NPC type.</param>
         /// <param name="position">The position.</param>

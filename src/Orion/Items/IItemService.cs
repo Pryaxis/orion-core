@@ -46,7 +46,9 @@ namespace Orion.Items {
         /// Spawns and returns an item with the given <paramref name="type"/> at the specified
         /// <paramref name="position"/> with <paramref name="stackSize"/> and <paramref name="prefix"/>
         /// 
-        /// <para>This method is not thread-safe.</para>
+        /// <para/>
+        /// 
+        /// This method is not thread-safe.
         /// </summary>
         /// <param name="type">The item type.</param>
         /// <param name="position">The position.</param>

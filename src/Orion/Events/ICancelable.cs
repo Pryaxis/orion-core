@@ -26,10 +26,10 @@ namespace Orion.Events {
         /// <summary>
         /// Gets or sets the cancellation reason. If <see langword="null"/>, then the object is not canceled.
         /// 
-        /// <para>
+        /// <para/>
+        /// 
         /// This allows consumers of an event to determine why the event was canceled. In some cases, consumers may
         /// uncancel the event.
-        /// </para>
         /// </summary>
         string? CancellationReason { get; set; }
     }
@@ -56,8 +56,11 @@ namespace Orion.Events {
         }
 
         /// <summary>
-        /// Cancels the object, optionally with a <paramref name="reason"/>. Reasons should be provided if possible, as
-        /// they allow consumers to learn why the cancellation occurred.
+        /// Cancels the object, optionally with a <paramref name="reason"/>.
+        /// 
+        /// <para/>
+        /// 
+        /// Reasons should be provided if possible, as they allow consumers to learn why the cancellation was requested.
         /// </summary>
         /// <param name="cancelable">The cancelable object.</param>
         /// <param name="reason">The reason.</param>

@@ -47,10 +47,10 @@ namespace Orion {
         /// <param name="name">
         /// The name, which is used for logs.
         /// 
-        /// <para>
+        /// <para/>
+        /// 
         /// This should be short while still disambiguating the service among all services. The convention is to use
         /// <c>kebab-case</c>.
-        /// </para>
         /// </param>
         /// <exception cref="ArgumentNullException"><paramref name="name"/> is <see langword="null"/>.</exception>
         public ServiceAttribute(string name) {

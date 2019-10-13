@@ -39,10 +39,10 @@ namespace Orion.World {
         /// <summary>
         /// Gets a reference to the tile at the given coordinates.
         /// 
-        /// <para>
+        /// <para/>
+        /// 
         /// For optimization purposes, there will be no range checking. A likely result of invalid coordinates is an
         /// <see cref="AccessViolationException"/>.
-        /// </para>
         /// </summary>
         /// <param name="x">The X coordinate.</param>
         /// <param name="y">The Y coordinate.</param>
