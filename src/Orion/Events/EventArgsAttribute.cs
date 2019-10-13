@@ -33,7 +33,14 @@ namespace Orion.Events {
         /// <summary>
         /// Initializes a new instance of the <see cref="EventArgsAttribute"/> class with the specified name.
         /// </summary>
-        /// <param name="name">The name.</param>
+        /// <param name="name">
+        /// The name, which is used for logs.
+        /// 
+        /// <para>
+        /// This should be short while still disambiguating the event among all events. The convention is to use
+        /// <c>kebab-case</c>.
+        /// </para>
+        /// </param>
         /// <exception cref="ArgumentNullException"><paramref name="name"/> is <see langword="null"/>.</exception>
         public EventArgsAttribute(string name) {
             Name = name ?? throw new ArgumentNullException(nameof(name));

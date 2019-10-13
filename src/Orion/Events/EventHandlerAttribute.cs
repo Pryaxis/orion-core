@@ -34,6 +34,11 @@ namespace Orion.Events {
         /// <summary>
         /// Gets or sets the event handler's name, which is used for logs. If <see langword="null"/>, then the name
         /// will be the method name.
+        /// 
+        /// <para>
+        /// This should be short while still disambiguating the event handler among all event handlers for that event.
+        /// The convention is to use <c>kebab-case</c>.
+        /// </para>
         /// </summary>
         /// <exception cref="ArgumentNullException"><param name="value"/> is <see langword="null"/>.</exception>
         [DisallowNull]
