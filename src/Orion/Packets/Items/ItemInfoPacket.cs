@@ -117,7 +117,7 @@ namespace Orion.Packets.Items {
         /// <inheritdoc/>
         [ExcludeFromCodeCoverage]
         public override string ToString() =>
-            $"{Type}[#={ItemIndex}, {(ItemPrefix != ItemPrefix.None ? ItemPrefix + " " : "")}{ItemType} " +
+            $"{Type}[#={ItemIndex}, {(ItemPrefix != ItemPrefix.None ? ItemPrefix + " " : string.Empty)}{ItemType} " +
             $"x{ItemStackSize} @ {ItemPosition}, ...]";
 
         private protected override void ReadFromReader(BinaryReader reader, PacketContext context) {

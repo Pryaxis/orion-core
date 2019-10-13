@@ -27,8 +27,8 @@ namespace Orion.Packets.Modules {
     /// Module sent for chat.
     /// </summary>
     public sealed class ChatModule : Module {
-        private string _clientChatCommand = "";
-        private string _clientChatText = "";
+        private string _clientChatCommand = string.Empty;
+        private string _clientChatText = string.Empty;
         private byte _serverChattingPlayerIndex;
         private TerrariaNetworkText _serverChatText = TerrariaNetworkText.Empty;
         private Color _serverChatColor;

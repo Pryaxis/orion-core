@@ -30,7 +30,7 @@ namespace Orion.Packets.Players {
         private byte _playerIndex;
         private byte _playerSkinType;
         private byte _playerHairType;
-        private string _playerName = "";
+        private string _playerName = string.Empty;
         private byte _playerHairDye;
         private ushort _playerHiddenVisualsFlags;
         private byte _playerHiddenMiscFlags;

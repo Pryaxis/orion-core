@@ -24,7 +24,7 @@ namespace Orion.Packets.World.TileEntities {
     /// Represents a chest that is transmitted over the network.
     /// </summary>
     public sealed class NetworkChest : NetworkTileEntity {
-        private string _name = "";
+        private string _name = string.Empty;
 
         /// <inheritdoc/>
         public override TileEntityType Type => TileEntityType.Chest;

@@ -25,7 +25,7 @@ namespace Orion.Packets.Players {
     /// to a <see cref="PlayerContinueConnectingPacket"/>.
     /// </summary>
     public sealed class PlayerUuidPacket : Packet {
-        private string _playerUuid = "";
+        private string _playerUuid = string.Empty;
 
         /// <inheritdoc/>
         public override PacketType Type => PacketType.PlayerUuid;

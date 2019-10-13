@@ -27,7 +27,7 @@ namespace Orion.Packets.World.TileEntities {
         private short _signIndex;
         private short _signX;
         private short _signY;
-        private string _signText = "";
+        private string _signText = string.Empty;
         private byte _modifierPlayerIndex;
 
         /// <inheritdoc/>

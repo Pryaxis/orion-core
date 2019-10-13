@@ -26,7 +26,7 @@ namespace Orion.Packets.Npcs {
     /// </summary>
     public sealed class NpcNamePacket : Packet {
         private short _npcIndex;
-        private string _npcName = "";
+        private string _npcName = string.Empty;
 
         /// <inheritdoc/>
         public override PacketType Type => PacketType.NpcName;

@@ -54,7 +54,7 @@ namespace Orion.World.TileEntities {
         }
 
         public string Name {
-            get => Wrapped?.name ?? "";
+            get => Wrapped?.name ?? string.Empty;
             set {
                 if (Wrapped == null) {
                     return;

@@ -25,7 +25,7 @@ namespace Orion.Packets.Players {
     /// <see cref="PlayerPasswordChallengePacket"/>.
     /// </summary>
     public sealed class PlayerPasswordResponsePacket : Packet {
-        private string _playerPassword = "";
+        private string _playerPassword = string.Empty;
 
         /// <inheritdoc/>
         public override PacketType Type => PacketType.PlayerPasswordResponse;

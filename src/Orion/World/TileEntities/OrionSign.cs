@@ -49,7 +49,7 @@ namespace Orion.World.TileEntities {
         }
 
         public string Text {
-            get => Wrapped?.text ?? "";
+            get => Wrapped?.text ?? string.Empty;
             set {
                 if (Wrapped == null) {
                     return;

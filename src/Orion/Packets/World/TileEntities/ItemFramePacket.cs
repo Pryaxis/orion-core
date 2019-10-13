@@ -92,7 +92,7 @@ namespace Orion.Packets.World.TileEntities {
         [ExcludeFromCodeCoverage]
         public override string ToString() =>
             $"{Type}[({ItemFrameX}, {ItemFrameY}) is " +
-            $"{(ItemPrefix != ItemPrefix.None ? ItemPrefix + " " : "")}{ItemType} x{ItemStackSize}]";
+            $"{(ItemPrefix != ItemPrefix.None ? ItemPrefix + " " : string.Empty)}{ItemType} x{ItemStackSize}]";
 
         private protected override void ReadFromReader(BinaryReader reader, PacketContext context) {
             _itemFrameX = reader.ReadInt16();

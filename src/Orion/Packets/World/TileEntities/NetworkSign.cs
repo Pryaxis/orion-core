@@ -24,7 +24,7 @@ namespace Orion.Packets.World.TileEntities {
     /// Represents a sign that is transmitted over the network.
     /// </summary>
     public sealed class NetworkSign : NetworkTileEntity {
-        private string _text = "";
+        private string _text = string.Empty;
 
         /// <inheritdoc/>
         public override TileEntityType Type => TileEntityType.Sign;

@@ -40,7 +40,7 @@ namespace Orion.Packets.World {
         private short _surfaceY;
         private short _rockLayerY;
         private int _worldId;
-        private string _worldName = "";
+        private string _worldName = string.Empty;
         private Guid _worldGuid;
         private ulong _worldGeneratorVersion;
         private byte _moonType;

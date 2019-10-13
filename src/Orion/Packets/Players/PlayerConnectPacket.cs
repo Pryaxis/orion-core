@@ -24,7 +24,7 @@ namespace Orion.Packets.Players {
     /// Packet sent from the client to the server to start connecting.
     /// </summary>
     public sealed class PlayerConnectPacket : Packet {
-        private string _playerVersionString = "";
+        private string _playerVersionString = string.Empty;
 
         /// <inheritdoc/>
         public override PacketType Type => PacketType.PlayerConnect;

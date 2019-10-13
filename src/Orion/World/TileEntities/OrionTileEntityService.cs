@@ -77,7 +77,7 @@ namespace Orion.World.TileEntities {
                         terrariaSign = new TerrariaSign {
                             x = x,
                             y = y,
-                            text = ""
+                            text = string.Empty
                         };
 
                         return new OrionSign(i, terrariaSign);

@@ -28,7 +28,7 @@ namespace Orion.Packets.World.TileEntities {
         private short _chestIndex;
         private short _chestX;
         private short _chestY;
-        private string _chestName = "";
+        private string _chestName = string.Empty;
 
         /// <inheritdoc/>
         public override PacketType Type => PacketType.ChestName;
