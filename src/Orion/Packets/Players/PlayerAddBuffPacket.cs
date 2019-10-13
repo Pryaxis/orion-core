@@ -19,6 +19,7 @@ using System;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using Orion.Entities;
+using Orion.Packets.Extensions;
 
 namespace Orion.Packets.Players {
     /// <summary>
@@ -59,13 +60,13 @@ namespace Orion.Packets.Players {
 
         private protected override void ReadFromReader(BinaryReader reader, PacketContext context) {
             _playerIndex = reader.ReadByte();
-            _playerBuff = new Buff((BuffType)reader.ReadByte(), TimeSpan.FromSeconds(reader.ReadInt32() / 60.0));
+            _playerBuff = new Buff((BuffType)reader.ReadByte(), reader.ReadTimeSpan(4));
         }
 
         private protected override void WriteToWriter(BinaryWriter writer, PacketContext context) {
             writer.Write(_playerIndex);
             writer.Write((byte)_playerBuff.BuffType);
-            writer.Write((int)(_playerBuff.Duration.TotalSeconds * 60.0));
+            writer.Write(_playerBuff.Duration, 4);
         }
     }
 }

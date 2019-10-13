@@ -15,6 +15,7 @@
 // You should have received a copy of the GNU General Public License
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
@@ -43,6 +44,12 @@ namespace Orion.Packets.Extensions {
         public static readonly IEnumerable<object[]> Vector2Data = new List<object[]> {
             new object[] {new Vector2(100, 100)},
             new object[] {new Vector2(-100, -100)}
+        };
+
+        public static readonly IEnumerable<object[]> TimeSpanData = new List<object[]> {
+            new object[] {TimeSpan.FromSeconds(60), 2},
+            new object[] {TimeSpan.FromSeconds(125), 2},
+            new object[] {TimeSpan.FromSeconds(3600), 4}
         };
 
         [Theory]
@@ -92,6 +99,58 @@ namespace Orion.Packets.Extensions {
             stream.Position = 0;
 
             reader.ReadVector2().Should().Be(vector);
+        }
+        
+        [Theory]
+        [MemberData(nameof(TimeSpanData))]
+        public void WriteTimeSpan_ReadTimeSpan(TimeSpan timeSpan, int numOfBytes) {
+            using var stream = new MemoryStream();
+            using var writer = new BinaryWriter(stream, Encoding.UTF8);
+            using var reader = new BinaryReader(stream, Encoding.UTF8);
+            writer.Write(timeSpan, numOfBytes);
+            stream.Position = 0;
+
+            reader.ReadTimeSpan(numOfBytes).Should().Be(timeSpan);
+        }
+
+        [Fact]
+        public void WriteTimeSpan_OutOfRange_2() {
+            using var stream = new MemoryStream();
+            using var writer = new BinaryWriter(stream, Encoding.UTF8);
+            using var reader = new BinaryReader(stream, Encoding.UTF8);
+            writer.Write(TimeSpan.FromDays(100), 2);
+            stream.Position = 0;
+
+            reader.ReadInt16().Should().Be(short.MaxValue);
+        }
+
+        [Fact]
+        public void WriteTimeSpan_OutOfRange_4() {
+            using var stream = new MemoryStream();
+            using var writer = new BinaryWriter(stream, Encoding.UTF8);
+            using var reader = new BinaryReader(stream, Encoding.UTF8);
+            writer.Write(TimeSpan.FromDays(1000), 4);
+            stream.Position = 0;
+
+            reader.ReadInt32().Should().Be(int.MaxValue);
+        }
+
+        [Fact]
+        public void WriteTimeSpan_Not2Or4_ThrowsArgumentException() {
+            using var stream = new MemoryStream();
+            using var writer = new BinaryWriter(stream, Encoding.UTF8);
+            Action action = () => writer.Write(TimeSpan.Zero, 10);
+
+            action.Should().Throw<ArgumentException>();
+        }
+
+        [Fact]
+        public void ReadTimeSpan_Not2Or4_ThrowsArgumentException() {
+            using var stream = new MemoryStream();
+            using var reader = new BinaryReader(stream, Encoding.UTF8);
+            Action action = () => reader.ReadTimeSpan(10);
+
+            action.Should().Throw<ArgumentException>();
         }
     }
 }

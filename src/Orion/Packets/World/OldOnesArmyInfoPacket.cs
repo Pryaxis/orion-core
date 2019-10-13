@@ -18,6 +18,7 @@
 using System;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
+using Orion.Packets.Extensions;
 
 namespace Orion.Packets.World {
     /// <summary>
@@ -45,9 +46,9 @@ namespace Orion.Packets.World {
         public override string ToString() => $"{Type}[T={TimeBetweenWaves}]";
 
         private protected override void ReadFromReader(BinaryReader reader, PacketContext context) =>
-            _timeBetweenWaves = TimeSpan.FromSeconds(reader.ReadInt32() / 60.0);
+            _timeBetweenWaves = reader.ReadTimeSpan(4);
 
         private protected override void WriteToWriter(BinaryWriter writer, PacketContext context) =>
-            writer.Write((int)(_timeBetweenWaves.TotalSeconds * 60.0));
+            writer.Write(_timeBetweenWaves, 4);
     }
 }

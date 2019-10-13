@@ -19,6 +19,7 @@ using System;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using Orion.Entities;
+using Orion.Packets.Extensions;
 using Orion.Utils;
 using TerrariaNpc = Terraria.NPC;
 
@@ -65,8 +66,7 @@ namespace Orion.Packets.Npcs {
         private protected override void ReadFromReader(BinaryReader reader, PacketContext context) {
             _npcIndex = reader.ReadInt16();
             for (var i = 0; i < _npcBuffs.Count; ++i) {
-                _npcBuffs._array[i] = new Buff((BuffType)reader.ReadByte(),
-                                               TimeSpan.FromSeconds(reader.ReadInt16() / 60.0));
+                _npcBuffs._array[i] = new Buff((BuffType)reader.ReadByte(), reader.ReadTimeSpan(2));
             }
         }
 
@@ -74,13 +74,7 @@ namespace Orion.Packets.Npcs {
             writer.Write(_npcIndex);
             foreach (var buff in _npcBuffs) {
                 writer.Write((byte)buff.BuffType);
-
-                var ticks = (int)(buff.Duration.TotalSeconds * 60.0);
-                if (ticks >= short.MaxValue) {
-                    writer.Write(short.MaxValue);
-                } else {
-                    writer.Write((short)ticks);
-                }
+                writer.Write(buff.Duration, 2);
             }
         }
     }

@@ -15,6 +15,7 @@
 // You should have received a copy of the GNU General Public License
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
+using System;
 using System.Diagnostics;
 using System.IO;
 using Microsoft.Xna.Framework;
@@ -46,6 +47,17 @@ namespace Orion.Packets.Extensions {
             return new Vector2(reader.ReadSingle(), reader.ReadSingle());
         }
 
+        public static TimeSpan ReadTimeSpan(this BinaryReader reader, int numOfBytes) {
+            Debug.Assert(reader != null, "reader should not be null");
+
+            var ticks = numOfBytes switch {
+                2 => reader.ReadInt16(),
+                4 => reader.ReadInt32(),
+                _ => throw new ArgumentException("Number of bytes is not 2 or 4", nameof(numOfBytes))
+            };
+            return TimeSpan.FromSeconds(ticks / 60.0);
+        }
+
         public static void Write(this BinaryWriter writer, Color color) {
             Debug.Assert(writer != null, "writer should not be null");
 
@@ -72,6 +84,24 @@ namespace Orion.Packets.Extensions {
 
             writer.Write(vector.X);
             writer.Write(vector.Y);
+        }
+
+        public static void Write(this BinaryWriter writer, TimeSpan timeSpan, int numOfBytes) {
+            Debug.Assert(writer != null, "writer should not be null");
+
+            var ticks = timeSpan.TotalSeconds * 60.0;
+            switch (numOfBytes) {
+            case 2:
+                var shortTicks = ticks >= short.MaxValue ? short.MaxValue : (short)ticks;
+                writer.Write(shortTicks);
+                return;
+            case 4:
+                var intTicks = ticks >= int.MaxValue ? int.MaxValue : (int)ticks;
+                writer.Write(intTicks);
+                return;
+            default:
+                throw new ArgumentException("Number of bytes is not 2 or 4", nameof(numOfBytes));
+            }
         }
     }
 }
