@@ -22,14 +22,21 @@ using Xunit;
 namespace Orion.Utils {
     public class AnnotatableObjectTests {
         [Fact]
-        public void GetAnnotationOrDefault_Provider_KeyDoesNotExist_ReturnsDefaultValue() {
+        public void GetAnnotationOrDefault_KeyDoesNotExist_ReturnsDefaultValue() {
             IAnnotatable annotatable = new AnnotatableObject();
 
             annotatable.GetAnnotationOrDefault("test", () => 1).Should().Be(1);
         }
 
         [Fact]
-        public void GetAnnotationOrDefault_Provider_Create() {
+        public void GetAnnotationOrDefault_KeyDoesNotExist_NullProvider_ReturnsDefaultValue() {
+            IAnnotatable annotatable = new AnnotatableObject();
+
+            annotatable.GetAnnotationOrDefault<int>("test").Should().Be(0);
+        }
+
+        [Fact]
+        public void GetAnnotationOrDefault_Create() {
             IAnnotatable annotatable = new AnnotatableObject();
 
             annotatable.GetAnnotationOrDefault("test", () => 10, true).Should().Be(10);
@@ -38,7 +45,7 @@ namespace Orion.Utils {
         }
 
         [Fact]
-        public void GetAnnotationOrDefault_Provider_NullKey_ThrowsArgumentNullException() {
+        public void GetAnnotationOrDefault_NullKey_ThrowsArgumentNullException() {
             IAnnotatable annotatable = new AnnotatableObject();
             Func<int> func = () => annotatable.GetAnnotationOrDefault(null, () => 0);
 

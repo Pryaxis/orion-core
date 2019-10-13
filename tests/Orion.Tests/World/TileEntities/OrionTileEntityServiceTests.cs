@@ -359,6 +359,26 @@ namespace Orion.World.TileEntities {
         }
 
         [Fact]
+        public void RemoveTileEntity_NoChest_ReturnsFalse() {
+            var mockChest = new Mock<IChest>();
+            mockChest.SetupGet(c => c.Index).Returns(0);
+            mockChest.SetupGet(c => c.X).Returns(1);
+            mockChest.SetupGet(c => c.Y).Returns(2);
+
+            _tileEntityService.RemoveTileEntity(mockChest.Object).Should().BeFalse();
+        }
+
+        [Fact]
+        public void RemoveTileEntity_NoSign_ReturnsFalse() {
+            var mockSign = new Mock<ISign>();
+            mockSign.SetupGet(s => s.Index).Returns(0);
+            mockSign.SetupGet(s => s.X).Returns(1);
+            mockSign.SetupGet(s => s.Y).Returns(2);
+
+            _tileEntityService.RemoveTileEntity(mockSign.Object).Should().BeFalse();
+        }
+
+        [Fact]
         public void RemoveTileEntity_NoTileEntity_ReturnsFalse() {
             var mockTileEntity = new Mock<ITileEntity>();
             mockTileEntity.SetupGet(te => te.Type).Returns(TileEntityType.TargetDummy);
@@ -367,6 +387,13 @@ namespace Orion.World.TileEntities {
             mockTileEntity.SetupGet(te => te.Y).Returns(2);
 
             _tileEntityService.RemoveTileEntity(mockTileEntity.Object).Should().BeFalse();
+        }
+
+        [Fact]
+        public void RemoveTileEntity_NullTileEntity_ThrowsArgumentNullException() {
+            Func<bool> func = () => _tileEntityService.RemoveTileEntity(null);
+
+            func.Should().Throw<ArgumentNullException>();
         }
     }
 }

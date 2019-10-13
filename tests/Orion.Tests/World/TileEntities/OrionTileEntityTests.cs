@@ -24,6 +24,14 @@ namespace Orion.World.TileEntities {
     [SuppressMessage("Style", "IDE0017:Simplify object initialization", Justification = "Testing")]
     public class OrionTileEntityTests {
         [Fact]
+        public void IsActive_Get() {
+            var terrariaTileEntity = new TestTerrariaTileEntity { type = (byte)TileEntityType.ItemFrame };
+            ITileEntity tileEntity = new TestOrionTileEntity(terrariaTileEntity);
+
+            tileEntity.IsActive.Should().BeTrue();
+        }
+
+        [Fact]
         public void Type_Get() {
             var terrariaTileEntity = new TestTerrariaTileEntity { type = (byte)TileEntityType.ItemFrame };
             ITileEntity tileEntity = new TestOrionTileEntity(terrariaTileEntity);

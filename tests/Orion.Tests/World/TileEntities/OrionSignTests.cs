@@ -25,6 +25,28 @@ namespace Orion.World.TileEntities {
     [SuppressMessage("Style", "IDE0017:Simplify object initialization", Justification = "Testing")]
     public class OrionSignTests {
         [Fact]
+        public void Type_Get() {
+            ISign sign = new OrionSign(0, null);
+
+            sign.Type.Should().Be(TileEntityType.Sign);
+        }
+
+        [Fact]
+        public void IsActive_Get_False() {
+            ISign sign = new OrionSign(0, null);
+
+            sign.IsActive.Should().BeFalse();
+        }
+
+        [Fact]
+        public void IsActive_Get_True() {
+            var terrariaSign = new TerrariaSign();
+            ISign sign = new OrionSign(0, terrariaSign);
+
+            sign.IsActive.Should().BeTrue();
+        }
+
+        [Fact]
         public void Index_Get() {
             var terrariaSign = new TerrariaSign();
             ISign sign = new OrionSign(1, terrariaSign);

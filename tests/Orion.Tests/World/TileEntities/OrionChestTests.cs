@@ -27,6 +27,28 @@ namespace Orion.World.TileEntities {
     [SuppressMessage("Style", "IDE0017:Simplify object initialization", Justification = "Testing")]
     public class OrionChestTests {
         [Fact]
+        public void Type_Get() {
+            IChest chest = new OrionChest(0, null);
+
+            chest.Type.Should().Be(TileEntityType.Chest);
+        }
+
+        [Fact]
+        public void IsActive_Get_False() {
+            IChest chest = new OrionChest(0, null);
+
+            chest.IsActive.Should().BeFalse();
+        }
+
+        [Fact]
+        public void IsActive_Get_True() {
+            var terrariaChest = new TerrariaChest();
+            IChest chest = new OrionChest(0, terrariaChest);
+
+            chest.IsActive.Should().BeTrue();
+        }
+
+        [Fact]
         public void X_Get() {
             var terrariaChest = new TerrariaChest { x = 100 };
             for (var i = 0; i < terrariaChest.item.Length; ++i) {

@@ -30,6 +30,14 @@ namespace Orion.Packets.World {
             packet.ShopItemTypes.Count.Should().Be(TerrariaChest.maxItems);
         }
 
+        [Fact]
+        public void ShopItemTypes_MarksAsDirty() {
+            var packet = new TravelingMerchantShopPacket();
+            packet.ShopItemTypes[0] = ItemType.Sdmg;
+
+            packet.ShouldBeDirty();
+        }
+
         public static readonly byte[] Bytes = {
             83, 0, 72, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
             0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,

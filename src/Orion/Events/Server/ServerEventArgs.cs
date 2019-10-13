@@ -16,6 +16,7 @@
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Orion.Events.Server {
     /// <summary>
@@ -25,6 +26,7 @@ namespace Orion.Events.Server {
         private protected ServerEventArgs() { }
 
         /// <inheritdoc/>
+        [ExcludeFromCodeCoverage]
         public override string ToString() => "[]";
     }
 }
