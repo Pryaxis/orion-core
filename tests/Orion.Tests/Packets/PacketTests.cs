@@ -16,6 +16,7 @@
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
 using System;
+using System.IO;
 using FluentAssertions;
 using Moq;
 using Xunit;
@@ -35,6 +36,25 @@ namespace Orion.Packets {
             Action action = () => packet.WriteToStream(null, PacketContext.Server);
 
             action.Should().Throw<ArgumentNullException>();
+        }
+
+        [Fact]
+        public void WriteToStream_PacketTooLong_ThrowsPacketException() {
+            var packet = new TestPacket();
+            using var stream = new MemoryStream();
+            Action action = () => packet.WriteToStream(stream, PacketContext.Server);
+
+            action.Should().Throw<PacketException>();
+        }
+
+        public class TestPacket : Packet {
+            public override PacketType Type => 0;
+
+            private protected override void ReadFromReader(BinaryReader reader, PacketContext context) =>
+                throw new NotImplementedException();
+
+            private protected override void WriteToWriter(BinaryWriter writer, PacketContext context) =>
+                writer.Write(new byte[65536]);
         }
     }
 }

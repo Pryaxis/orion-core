@@ -186,32 +186,28 @@ namespace Orion.Packets {
                 throw new ArgumentNullException(nameof(stream));
             }
 
-            try {
-                var reader = new BinaryReader(stream, Encoding.UTF8, true);
+            var reader = new BinaryReader(stream, Encoding.UTF8, true);
 #if DEBUG
-                var oldPosition = stream.Position;
-                var packetLength = reader.ReadUInt16();
+            var oldPosition = stream.Position;
+            var packetLength = reader.ReadUInt16();
 #else
-                reader.ReadUInt16();
+            reader.ReadUInt16();
 #endif
-                static Func<Packet>? GetPacketConstructor(byte packetTypeId) =>
-                    packetTypeId < _constructors.Length ? _constructors[packetTypeId] : null;
+            static Func<Packet>? GetPacketConstructor(byte packetTypeId) =>
+                packetTypeId < _constructors.Length ? _constructors[packetTypeId] : null;
 
-                var packetConstructor = GetPacketConstructor(reader.ReadByte()) ??
-                    throw new PacketException("Packet type is invalid.");
-                var packet = packetConstructor();
-                packet.ReadFromReader(reader, context);
+            var packetConstructor = GetPacketConstructor(reader.ReadByte()) ??
+                throw new PacketException("Packet type is invalid.");
+            var packet = packetConstructor();
+            packet.ReadFromReader(reader, context);
 #if DEBUG
-                // SectionPacket might have extra data for some reason, so we need to exclude that from the following
-                // check...
-                Debug.Assert(packet.Type == PacketType.Section || stream.Position - oldPosition == packetLength,
-                    "packet should be fully consumed");
-                Debug.Assert(!packet.IsDirty, "packet should not be dirty");
+            // SectionPacket might have extra data for some reason, so we need to exclude that from the following
+            // check...
+            Debug.Assert(packet.Type == PacketType.Section || stream.Position - oldPosition == packetLength,
+                "packet should be fully consumed");
+            Debug.Assert(!packet.IsDirty, "packet should not be dirty");
 #endif
-                return packet;
-            } catch (Exception ex) when (!(ex is PacketException)) {
-                throw new PacketException("An exception occurred when parsing the packet.", ex);
-            }
+            return packet;
         }
 
         /// <inheritdoc/>
@@ -226,7 +222,7 @@ namespace Orion.Packets {
         /// <param name="stream">The stream.</param>
         /// <param name="context">The context with which to read the packet.</param>
         /// <exception cref="ArgumentNullException"><paramref name="stream"/> is <see langword="null"/>.</exception>
-        /// <exception cref="PacketException">The packet could not be written correctly.</exception>
+        /// <exception cref="PacketException">The packet is too long.</exception>
         [SuppressMessage("Reliability", "CA2000:Dispose objects before losing scope",
             Justification = "BinaryWriter does not need to be disposed")]
         public void WriteToStream(Stream stream, PacketContext context) {
@@ -234,25 +230,21 @@ namespace Orion.Packets {
                 throw new ArgumentNullException(nameof(stream));
             }
 
-            try {
-                var writer = new BinaryWriter(stream, Encoding.UTF8, true);
-                var oldPosition = stream.Position;
-                stream.Position += 2;
-                writer.Write((byte)Type);
-                WriteToWriter(writer, context);
+            var writer = new BinaryWriter(stream, Encoding.UTF8, true);
+            var oldPosition = stream.Position;
+            stream.Position += 2;
+            writer.Write((byte)Type);
+            WriteToWriter(writer, context);
 
-                var position = stream.Position;
-                var packetLength = position - oldPosition;
-                if (packetLength > ushort.MaxValue) {
-                    throw new PacketException("Packet is too long.");
-                }
-
-                stream.Position = oldPosition;
-                writer.Write((ushort)packetLength);
-                stream.Position = position;
-            } catch (Exception ex) when (!(ex is PacketException)) {
-                throw new PacketException("An exception occurred when writing the packet.", ex);
+            var position = stream.Position;
+            var packetLength = position - oldPosition;
+            if (packetLength > ushort.MaxValue) {
+                throw new PacketException("Packet is too long.");
             }
+
+            stream.Position = oldPosition;
+            writer.Write((ushort)packetLength);
+            stream.Position = position;
         }
 
         private protected abstract void ReadFromReader(BinaryReader reader, PacketContext context);
