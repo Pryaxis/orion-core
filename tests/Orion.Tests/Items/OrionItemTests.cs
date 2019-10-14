@@ -90,7 +90,7 @@ namespace Orion.Items {
             var terrariaItem = new TerrariaItem { prefix = (byte)ItemPrefix.Unreal };
             var item = new OrionItem(terrariaItem);
 
-            ((OrionItemStats)item.Stats).Wrapped.Should().BeSameAs(terrariaItem);
+            item.Stats.Should().NotBeNull();
         }
 
         [Fact]

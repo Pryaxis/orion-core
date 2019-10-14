@@ -204,7 +204,8 @@ namespace Orion.Packets {
 #if DEBUG
             // SectionPacket might have extra data for some reason, so we need to exclude that from the following
             // check...
-            Debug.Assert(packet.Type == PacketType.Section || stream.Position - oldPosition == packetLength,
+            Debug.Assert(
+                packet.Type == PacketType.Section || stream.Position - oldPosition == packetLength,
                 "packet should be fully consumed");
             Debug.Assert(!packet.IsDirty, "packet should not be dirty");
 #endif
