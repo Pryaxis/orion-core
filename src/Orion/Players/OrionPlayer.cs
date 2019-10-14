@@ -38,8 +38,8 @@ namespace Orion.Players {
             set => Wrapped.team = (int)value;
         }
 
-        public IPlayerStats Stats => throw new NotImplementedException();
-        public IPlayerInventory Inventory => throw new NotImplementedException();
+        public IPlayerStats Stats { get; }
+        public IPlayerInventory Inventory { get; }
 
         // We need to inject IPlayerService so that we can trigger its PacketSend event.
         public OrionPlayer(IPlayerService playerService, TerrariaPlayer terrariaPlayer)
@@ -50,6 +50,9 @@ namespace Orion.Players {
             Debug.Assert(playerService != null, "player service should not be null");
 
             _playerService = playerService;
+
+            Stats = new OrionPlayerStats(terrariaPlayer);
+            Inventory = new OrionPlayerInventory(terrariaPlayer);
         }
 
         public void SendPacket(Packet packet) {

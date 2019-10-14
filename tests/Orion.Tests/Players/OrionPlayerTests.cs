@@ -83,6 +83,24 @@ namespace Orion.Players {
         }
 
         [Fact]
+        public void Stats_Get() {
+            var mockPlayerService = new Mock<IPlayerService>();
+            var terrariaPlayer = new TerrariaPlayer();
+            var player = new OrionPlayer(mockPlayerService.Object, terrariaPlayer);
+
+            player.Stats.Should().NotBeNull();
+        }
+        
+        [Fact]
+        public void Inventory_Get() {
+            var mockPlayerService = new Mock<IPlayerService>();
+            var terrariaPlayer = new TerrariaPlayer();
+            var player = new OrionPlayer(mockPlayerService.Object, terrariaPlayer);
+
+            player.Inventory.Should().NotBeNull();
+        }
+
+        [Fact]
         public void SendPacket() {
             var socket = new TestSocket { Connected = true };
             Terraria.Netplay.Clients[5] = new Terraria.RemoteClient {
