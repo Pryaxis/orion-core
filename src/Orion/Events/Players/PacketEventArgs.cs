@@ -19,7 +19,7 @@ using System;
 using Orion.Packets;
 using Orion.Utils;
 
-namespace Orion.Events.Packets {
+namespace Orion.Events.Players {
     /// <summary>
     /// Provides data for packet-related events.
     /// </summary>

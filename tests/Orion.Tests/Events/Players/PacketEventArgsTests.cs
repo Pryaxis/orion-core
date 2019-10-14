@@ -22,7 +22,7 @@ using Moq;
 using Orion.Packets;
 using Xunit;
 
-namespace Orion.Events.Packets {
+namespace Orion.Events.Players {
     public class PacketEventArgsTests {
         [Fact]
         public void Ctor_NotDirty() {

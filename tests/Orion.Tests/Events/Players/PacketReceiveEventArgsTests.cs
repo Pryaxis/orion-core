@@ -22,7 +22,7 @@ using Orion.Packets;
 using Orion.Players;
 using Xunit;
 
-namespace Orion.Events.Packets {
+namespace Orion.Events.Players {
     public class PacketReceiveEventArgsTests {
         [Fact]
         public void Ctor_NullPlayer_ThrowsArgumentNullException() {

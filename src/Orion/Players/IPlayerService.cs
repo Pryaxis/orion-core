@@ -18,7 +18,7 @@
 using System;
 using Microsoft.Xna.Framework;
 using Orion.Events;
-using Orion.Events.Packets;
+using Orion.Events.Players;
 using Orion.Events.Players;
 using Orion.Packets;
 using Orion.Utils;

@@ -20,7 +20,7 @@ using System.Diagnostics;
 using System.IO;
 using Orion.Entities;
 using Orion.Events;
-using Orion.Events.Packets;
+using Orion.Events.Players;
 using Orion.Packets;
 using TerrariaPlayer = Terraria.Player;
 
