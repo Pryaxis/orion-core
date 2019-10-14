@@ -16,6 +16,8 @@
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
 using System;
+using System.Diagnostics.CodeAnalysis;
+using System.Diagnostics.Contracts;
 using Orion.Items;
 using Orion.Packets.Players;
 using Orion.Players;
@@ -64,5 +66,10 @@ namespace Orion.Events.Players {
         public PlayerInventorySlotEventArgs(IPlayer player, PlayerInventorySlotPacket packet) : base(player) {
             _packet = packet ?? throw new ArgumentNullException(nameof(packet));
         }
+        
+        /// <inheritdoc/>
+        [Pure, ExcludeFromCodeCoverage]
+        public override string ToString() =>
+            $"[{Player.Name}, [{PlayerInventorySlotIndex}]={ItemType} x{ItemStackSize}]";
     }
 }

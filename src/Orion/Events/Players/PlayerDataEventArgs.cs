@@ -16,6 +16,8 @@
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
 using System;
+using System.Diagnostics.CodeAnalysis;
+using System.Diagnostics.Contracts;
 using Microsoft.Xna.Framework;
 using Orion.Packets.Players;
 using Orion.Players;
@@ -133,5 +135,9 @@ namespace Orion.Events.Players {
         public PlayerDataEventArgs(IPlayer player, PlayerDataPacket packet) : base(player) {
             _packet = packet ?? throw new ArgumentNullException(nameof(packet));
         }
+        
+        /// <inheritdoc/>
+        [Pure, ExcludeFromCodeCoverage]
+        public override string ToString() => $"[{PlayerName}, ...]";
     }
 }
