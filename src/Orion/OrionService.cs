@@ -29,10 +29,8 @@ namespace Orion {
     [SuppressMessage("Design", "CA1063:Implement IDisposable Correctly",
         Justification = "IDisposable pattern makes no sense")]
     public abstract class OrionService : IDisposable {
-        // In DEBUG mode, we want the minimum level to be Verbose by default to see everything. In RELEASE mode, we only
-        // want Information and up.
 #if DEBUG
-        private readonly LoggingLevelSwitch _logLevel = new LoggingLevelSwitch(LogEventLevel.Verbose);
+        private readonly LoggingLevelSwitch _logLevel = new LoggingLevelSwitch(LogEventLevel.Debug);
 #else
         private readonly LoggingLevelSwitch _logLevel = new LoggingLevelSwitch(LogEventLevel.Information);
 #endif
