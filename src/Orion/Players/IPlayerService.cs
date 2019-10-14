@@ -67,6 +67,11 @@ namespace Orion.Players {
         EventHandlerCollection<PlayerJoinEventArgs> PlayerJoin { get; }
 
         /// <summary>
+        /// Gets the event handlers that occur when a player toggles PvP. This event can be canceled.
+        /// </summary>
+        EventHandlerCollection<PlayerPvpEventArgs> PlayerPvp { get; }
+
+        /// <summary>
         /// Gets the event handlers that occur when a player changes teams. This event can be canceled.
         /// </summary>
         EventHandlerCollection<PlayerTeamEventArgs> PlayerTeam { get; }

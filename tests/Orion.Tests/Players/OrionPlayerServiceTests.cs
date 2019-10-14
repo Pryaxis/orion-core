@@ -171,6 +171,22 @@ namespace Orion.Players {
         }
 
         [Fact]
+        public void PacketReceive_PlayerPvp_IsTriggered() {
+            using var playerService = new OrionPlayerService(Logger.None);
+            var isRun = false;
+            playerService.PlayerPvp.RegisterHandler((sender, args) => {
+                isRun = true;
+                args.Player.Should().BeSameAs(playerService.Players[1]);
+                args.PlayerIsInPvp.Should().Be(true);
+                args.Cancel();
+            });
+
+            TestUtils.FakeReceiveBytes(1, PlayerPvpPacketTests.Bytes);
+
+            isRun.Should().BeTrue();
+        }
+
+        [Fact]
         public void PacketReceive_PlayerTeam_IsTriggered() {
             using var playerService = new OrionPlayerService(Logger.None);
             var isRun = false;

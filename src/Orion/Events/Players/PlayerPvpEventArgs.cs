@@ -21,23 +21,23 @@ using Orion.Players;
 
 namespace Orion.Events.Players {
     /// <summary>
-    /// Provides data for the <see cref="IPlayerService.PlayerTeam"/> event.
+    /// Provides data for the <see cref="IPlayerService.PlayerPvp"/> event.
     /// </summary>
-    [EventArgs("player-team")]
-    public sealed class PlayerTeamEventArgs : PlayerEventArgs, ICancelable {
-        private readonly PlayerTeamPacket _packet;
+    [EventArgs("player-pvp")]
+    public sealed class PlayerPvpEventArgs : PlayerEventArgs, ICancelable {
+        private readonly PlayerPvpPacket _packet;
 
         /// <inheritdoc/>
         public string? CancellationReason { get; set; }
 
-        /// <inheritdoc cref="PlayerTeamPacket.PlayerTeam"/>
-        public PlayerTeam PlayerTeam {
-            get => _packet.PlayerTeam;
-            set => _packet.PlayerTeam = value;
+        /// <inheritdoc cref="PlayerPvpPacket.PlayerIsInPvp"/>
+        public bool PlayerIsInPvp {
+            get => _packet.PlayerIsInPvp;
+            set => _packet.PlayerIsInPvp = value;
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="PlayerTeamEventArgs"/> class with the specified player and
+        /// Initializes a new instance of the <see cref="PlayerPvpEventArgs"/> class with the specified player and
         /// packet.
         /// </summary>
         /// <param name="player">The player.</param>
@@ -45,7 +45,7 @@ namespace Orion.Events.Players {
         /// <exception cref="ArgumentNullException">
         /// <paramref name="player"/> or <paramref name="packet"/> are <see langword="null"/>.
         /// </exception>
-        public PlayerTeamEventArgs(IPlayer player, PlayerTeamPacket packet) : base(player) {
+        public PlayerPvpEventArgs(IPlayer player, PlayerPvpPacket packet) : base(player) {
             _packet = packet ?? throw new ArgumentNullException(nameof(packet));
         }
     }
