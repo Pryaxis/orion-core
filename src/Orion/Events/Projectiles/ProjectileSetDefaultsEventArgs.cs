@@ -17,12 +17,13 @@
 
 using System;
 using Orion.Projectiles;
+using Serilog.Events;
 
 namespace Orion.Events.Projectiles {
     /// <summary>
     /// Provides data for the <see cref="IProjectileService.ProjectileSetDefaults"/> event.
     /// </summary>
-    [EventArgs("proj-defaults")]
+    [EventArgs("proj-defaults", LogLevel = LogEventLevel.Verbose)]
     public sealed class ProjectileSetDefaultsEventArgs : ProjectileEventArgs, ICancelable {
         /// <inheritdoc/>
         public string? CancellationReason { get; set; }

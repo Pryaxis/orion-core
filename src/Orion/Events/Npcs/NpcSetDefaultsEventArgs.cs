@@ -17,12 +17,13 @@
 
 using System;
 using Orion.Npcs;
+using Serilog.Events;
 
 namespace Orion.Events.Npcs {
     /// <summary>
     /// Provides data for the <see cref="INpcService.NpcSetDefaults"/> event.
     /// </summary>
-    [EventArgs("npc-defaults")]
+    [EventArgs("npc-defaults", LogLevel = LogEventLevel.Verbose)]
     public sealed class NpcSetDefaultsEventArgs : NpcEventArgs, ICancelable {
         /// <inheritdoc/>
         public string? CancellationReason { get; set; }
