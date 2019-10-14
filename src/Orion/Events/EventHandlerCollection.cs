@@ -89,8 +89,10 @@ namespace Orion.Events {
                 registrations = _registrations.ToList();
             }
 
+            _log.Write(_logLevel, Resources.EventHandlerCollection_Invoke, _eventName, args);
+
             foreach (var registration in registrations) {
-                _log.Write(_logLevel, Resources.EventHandlerCollection_Invoke, _eventName, registration.Name, args);
+                _log.Write(_logLevel, Resources.EventHandlerCollection_InvokeHandler, _eventName, registration.Name);
 
                 try {
                     registration.Handler(sender, args);

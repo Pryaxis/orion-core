@@ -42,8 +42,8 @@ namespace Orion.Items {
             Items = new WrappedReadOnlyArray<OrionItem, TerrariaItem>(
                 Main.item.AsMemory(..^1), (itemIndex, terrariaItem) => new OrionItem(itemIndex, terrariaItem));
 
-            ItemSetDefaults = new EventHandlerCollection<ItemSetDefaultsEventArgs>(log);
-            ItemUpdate = new EventHandlerCollection<ItemUpdateEventArgs>(log);
+            ItemSetDefaults = new EventHandlerCollection<ItemSetDefaultsEventArgs>(Log);
+            ItemUpdate = new EventHandlerCollection<ItemUpdateEventArgs>(Log);
 
             Hooks.Item.PreSetDefaultsById = PreSetDefaultsByIdHandler;
             Hooks.Item.PreUpdate = PreUpdateHandler;

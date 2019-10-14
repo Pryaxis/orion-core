@@ -61,7 +61,7 @@ namespace Orion.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to {EventName}: Invoking {RegistrationName} with {Args}.
+        ///   Looks up a localized string similar to {EventName}: Invoking with {Args}.
         /// </summary>
         internal static string EventHandlerCollection_Invoke {
             get {
@@ -84,6 +84,15 @@ namespace Orion.Properties {
         internal static string EventHandlerCollection_InvokeException {
             get {
                 return ResourceManager.GetString("EventHandlerCollection_InvokeException", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to {EventName}: Invoking {RegistrationName}.
+        /// </summary>
+        internal static string EventHandlerCollection_InvokeHandler {
+            get {
+                return ResourceManager.GetString("EventHandlerCollection_InvokeHandler", resourceCulture);
             }
         }
         

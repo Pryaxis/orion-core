@@ -32,6 +32,8 @@ using Orion.Properties;
 using Orion.World;
 using OTAPI;
 using Serilog;
+using Serilog.Core;
+using Serilog.Events;
 
 namespace Orion {
     /// <summary>
@@ -40,6 +42,12 @@ namespace Orion {
     /// </summary>
     public sealed class OrionKernel : StandardKernel {
         private readonly ILogger _log;
+#if DEBUG
+        private readonly LoggingLevelSwitch _logLevel = new LoggingLevelSwitch(LogEventLevel.Debug);
+#else
+        private readonly LoggingLevelSwitch _logLevel = new LoggingLevelSwitch(LogEventLevel.Information);
+#endif
+
         private readonly ISet<Assembly> _pluginAssemblies = new HashSet<Assembly>();
         private readonly ISet<Type> _pluginTypesToLoad = new HashSet<Type>();
         private readonly Dictionary<string, OrionPlugin> _plugins = new Dictionary<string, OrionPlugin>();
@@ -94,7 +102,7 @@ namespace Orion {
                 var type = ctx.Request.Target?.Member.ReflectedType;
                 var name = type?.GetCustomAttribute<ServiceAttribute>()?.Name ?? type?.Name ?? "orion-kernel";
                 return new LoggerConfiguration()
-                    .MinimumLevel.Verbose()
+                    .MinimumLevel.ControlledBy(_logLevel)
                     .Enrich.WithProperty("Name", name)
                     .WriteTo.Logger(log)
                     .CreateLogger();
@@ -137,6 +145,12 @@ namespace Orion {
             Hooks.Game.PreUpdate -= PreUpdateHandler;
             Hooks.Command.Process -= ProcessHandler;
         }
+        
+        /// <summary>
+        /// Sets the minimum logging <paramref name="level"/>.
+        /// </summary>
+        /// <param name="level">The level.</param>
+        public void SetLogLevel(LogEventLevel level) => _logLevel.MinimumLevel = level;
 
         /// <summary>
         /// Starts loading plugins form an <paramref name="assemblyPath"/>.

@@ -43,9 +43,9 @@ namespace Orion.Projectiles {
                 Main.projectile.AsMemory(..^1),
                 (projectileIndex, terrariaProjectile) => new OrionProjectile(projectileIndex, terrariaProjectile));
 
-            ProjectileSetDefaults = new EventHandlerCollection<ProjectileSetDefaultsEventArgs>(log);
-            ProjectileUpdate = new EventHandlerCollection<ProjectileUpdateEventArgs>(log);
-            ProjectileRemove = new EventHandlerCollection<ProjectileRemoveEventArgs>(log);
+            ProjectileSetDefaults = new EventHandlerCollection<ProjectileSetDefaultsEventArgs>(Log);
+            ProjectileUpdate = new EventHandlerCollection<ProjectileUpdateEventArgs>(Log);
+            ProjectileRemove = new EventHandlerCollection<ProjectileRemoveEventArgs>(Log);
 
             Hooks.Projectile.PreSetDefaultsById = PreSetDefaultsByIdHandler;
             Hooks.Projectile.PreUpdate = PreUpdateHandler;

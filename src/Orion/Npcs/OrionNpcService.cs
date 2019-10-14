@@ -52,13 +52,13 @@ namespace Orion.Npcs {
             Npcs = new WrappedReadOnlyArray<OrionNpc, TerrariaNpc>(
                 Main.npc.AsMemory(..^1), (npcIndex, terrariaNpc) => new OrionNpc(npcIndex, terrariaNpc));
 
-            NpcSetDefaults = new EventHandlerCollection<NpcSetDefaultsEventArgs>(log);
-            NpcSpawn = new EventHandlerCollection<NpcSpawnEventArgs>(log);
-            NpcUpdate = new EventHandlerCollection<NpcUpdateEventArgs>(log);
-            NpcTransform = new EventHandlerCollection<NpcTransformEventArgs>(log);
-            NpcDamage = new EventHandlerCollection<NpcDamageEventArgs>(log);
-            NpcDropLootItem = new EventHandlerCollection<NpcDropLootItemEventArgs>(log);
-            NpcKilled = new EventHandlerCollection<NpcKilledEventArgs>(log);
+            NpcSetDefaults = new EventHandlerCollection<NpcSetDefaultsEventArgs>(Log);
+            NpcSpawn = new EventHandlerCollection<NpcSpawnEventArgs>(Log);
+            NpcUpdate = new EventHandlerCollection<NpcUpdateEventArgs>(Log);
+            NpcTransform = new EventHandlerCollection<NpcTransformEventArgs>(Log);
+            NpcDamage = new EventHandlerCollection<NpcDamageEventArgs>(Log);
+            NpcDropLootItem = new EventHandlerCollection<NpcDropLootItemEventArgs>(Log);
+            NpcKilled = new EventHandlerCollection<NpcKilledEventArgs>(Log);
 
             Hooks.Npc.PreSetDefaultsById = PreSetDefaultsByIdHandler;
             Hooks.Npc.Spawn = SpawnHandler;
