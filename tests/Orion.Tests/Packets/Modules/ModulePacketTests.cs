@@ -16,17 +16,36 @@
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
 using System;
+using System.IO;
 using FluentAssertions;
 using Xunit;
 
 namespace Orion.Packets.Modules {
     public class ModulePacketTests {
         [Fact]
+        public void Module_Set_MarksAsDirty() {
+            var packet = new ModulePacket();
+
+            packet.Module = new ChatModule();
+
+            packet.ShouldBeDirty();
+        }
+
+        [Fact]
         public void Module_Set_NullValue_ThrowsArgumentNullException() {
             var packet = new ModulePacket();
             Action action = () => packet.Module = null;
 
             action.Should().Throw<ArgumentNullException>();
+        }
+
+        [Fact]
+        public void WriteToStream_NullModule_ThrowsPacketException() {
+            using var stream = new MemoryStream();
+            var packet = new ModulePacket();
+            Action action = () => packet.WriteToStream(stream, PacketContext.Server);
+
+            action.Should().Throw<PacketException>();
         }
     }
 }

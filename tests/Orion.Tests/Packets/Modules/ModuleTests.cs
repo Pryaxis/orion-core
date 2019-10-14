@@ -23,6 +23,13 @@ using Xunit;
 namespace Orion.Packets.Modules {
     public class ModuleTests {
         [Fact]
+        public void ReadFromStream_NullStream_ThrowsArgumentNullException() {
+            Func<Module> func = () => Module.ReadFromStream(null, PacketContext.Server);
+
+            func.Should().Throw<ArgumentNullException>();
+        }
+
+        [Fact]
         public void WriteToStream_NullStream_ThrowsArgumentNullException() {
             var module = new Mock<Module>().Object;
             Action action = () => module.WriteToStream(null, PacketContext.Server);

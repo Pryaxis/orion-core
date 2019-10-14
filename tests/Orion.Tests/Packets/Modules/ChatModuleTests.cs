@@ -18,6 +18,7 @@
 using System;
 using System.IO;
 using FluentAssertions;
+using Microsoft.Xna.Framework;
 using Xunit;
 
 namespace Orion.Packets.Modules {
@@ -53,13 +54,13 @@ namespace Orion.Packets.Modules {
             action.Should().Throw<ArgumentNullException>();
         }
 
-        public static readonly byte[] Bytes = {
+        public static readonly byte[] ClientBytes = {
             23, 0, 82, 1, 0, 3, 83, 97, 121, 13, 47, 99, 111, 109, 109, 97, 110, 100, 32, 116, 101, 115, 116
         };
 
         [Fact]
         public void ReadFromStream_Client() {
-            using var stream = new MemoryStream(Bytes);
+            using var stream = new MemoryStream(ClientBytes);
             var packet = (ModulePacket)Packet.ReadFromStream(stream, PacketContext.Server);
 
             packet.Module.Should().BeOfType<ChatModule>();
@@ -68,6 +69,38 @@ namespace Orion.Packets.Modules {
         }
 
         [Fact]
-        public void DeserializeAndSerialize_Client_SamePacket() => Bytes.ShouldDeserializeAndSerializeSamePacket();
+        public void DeserializeAndSerialize_Client_SamePacket() {
+            using var stream = new MemoryStream(ClientBytes);
+            using var stream2 = new MemoryStream();
+            var packet = Packet.ReadFromStream(stream, PacketContext.Server);
+
+            packet.WriteToStream(stream2, PacketContext.Client);
+
+            stream2.ToArray().Should().BeEquivalentTo(ClientBytes);
+        }
+
+        public static readonly byte[] ServerBytes = { 15, 0, 82, 1, 0, 1, 0, 4, 116, 101, 115, 116, 255, 255, 255 };
+
+        [Fact]
+        public void ReadFromStream_Server() {
+            using var stream = new MemoryStream(ServerBytes);
+            var packet = (ModulePacket)Packet.ReadFromStream(stream, PacketContext.Client);
+
+            packet.Module.Should().BeOfType<ChatModule>();
+            packet.Module.As<ChatModule>().ServerChattingPlayerIndex.Should().Be(1);
+            packet.Module.As<ChatModule>().ServerChatText.Should().Be("test");
+            packet.Module.As<ChatModule>().ServerChatColor.Should().Be(Color.White);
+        }
+
+        [Fact]
+        public void DeserializeAndSerialize_Server_SamePacket() {
+            using var stream = new MemoryStream(ServerBytes);
+            using var stream2 = new MemoryStream();
+            var packet = Packet.ReadFromStream(stream, PacketContext.Client);
+
+            packet.WriteToStream(stream2, PacketContext.Server);
+
+            stream2.ToArray().Should().BeEquivalentTo(ServerBytes);
+        }
     }
 }

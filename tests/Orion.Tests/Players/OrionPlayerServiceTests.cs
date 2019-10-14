@@ -181,7 +181,7 @@ namespace Orion.Players {
                 args.Cancel();
             });
 
-            TestUtils.FakeReceiveBytes(1, ChatModuleTests.Bytes);
+            TestUtils.FakeReceiveBytes(1, ChatModuleTests.ClientBytes);
 
             isRun.Should().BeTrue();
         }

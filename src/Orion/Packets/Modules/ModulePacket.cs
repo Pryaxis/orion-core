@@ -38,6 +38,7 @@ namespace Orion.Packets.Modules {
         /// Gets or sets the module.
         /// </summary>
         /// <exception cref="ArgumentNullException"><paramref name="value"/> is <see langword="null"/>.</exception>
+        [DisallowNull]
         public Module? Module {
             get => _module;
             set {
@@ -60,12 +61,11 @@ namespace Orion.Packets.Modules {
             _module = Module.ReadFromStream(reader.BaseStream, context);
 
         private protected override void WriteToWriter(BinaryWriter writer, PacketContext context) {
-            // Satisfy the contract with a null module by writing an invalid module type.
             if (_module is null) {
-                writer.Write(ushort.MaxValue);
-            } else {
-                _module.WriteToStream(writer.BaseStream, context);
+                throw new PacketException("Module is null.");
             }
+
+            _module.WriteToStream(writer.BaseStream, context);
         }
     }
 }
