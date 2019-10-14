@@ -17,6 +17,7 @@
 
 using System;
 using JetBrains.Annotations;
+using Serilog.Events;
 
 namespace Orion.Events {
     /// <summary>
@@ -29,6 +30,15 @@ namespace Orion.Events {
         /// Gets the event's name, which is used for logs.
         /// </summary>
         public string Name { get; }
+
+        /// <summary>
+        /// Gets or sets the log level for the event.
+        /// 
+        /// <para/>
+        /// 
+        /// By default this is <c>Debug</c>. Noisier events may want to use <c>Verbose</c>.
+        /// </summary>
+        public LogEventLevel LogLevel { get; set; } = LogEventLevel.Debug;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="EventArgsAttribute"/> class with the specified name.

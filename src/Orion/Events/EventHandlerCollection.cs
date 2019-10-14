@@ -22,6 +22,7 @@ using System.Linq;
 using System.Reflection;
 using Orion.Properties;
 using Serilog;
+using Serilog.Events;
 
 namespace Orion.Events {
     /// <summary>
@@ -30,7 +31,8 @@ namespace Orion.Events {
     /// </summary>
     /// <typeparam name="TEventArgs">The type of event arguments.</typeparam>
     public sealed class EventHandlerCollection<TEventArgs> where TEventArgs : EventArgs {
-        private static readonly string _eventName = InitializeEventName();
+        private static readonly string _eventName;
+        private static readonly LogEventLevel _logLevel;
 
         private readonly object _lock = new object();
         private readonly ILogger _log;
@@ -40,6 +42,14 @@ namespace Orion.Events {
 
         private readonly IDictionary<EventHandler<TEventArgs>, Registration> _handlerToRegistration =
             new Dictionary<EventHandler<TEventArgs>, Registration>();
+
+        static EventHandlerCollection() {
+            var attribute = typeof(TEventArgs).GetCustomAttribute<EventArgsAttribute?>();
+
+            // We're assuming that TEventArgs actually ends in "EventArgs", in which case we just chop that off.
+            _eventName = attribute?.Name ?? typeof(TEventArgs).Name[0..^9];
+            _logLevel = attribute?.LogLevel ?? LogEventLevel.Debug;
+        }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="EventHandlerCollection{TEventArgs}"/> class with the specified
@@ -54,14 +64,6 @@ namespace Orion.Events {
 
             _log = log;
         }
-
-        private static string InitializeEventName() {
-            var attribute = typeof(TEventArgs).GetCustomAttribute<EventArgsAttribute?>();
-
-            // We're assuming that TEventArgs actually ends in "EventArgs", in which case we just chop that off.
-            return attribute?.Name ?? typeof(TEventArgs).Name[0..^9];
-        }
-
 
         /// <summary>
         /// Invokes the collection of handlers in order of their priorities using the given <paramref name="sender"/>
@@ -88,7 +90,7 @@ namespace Orion.Events {
             }
 
             foreach (var registration in registrations) {
-                _log.Debug(Resources.EventHandlerCollection_Invoke, _eventName, registration.Name, args);
+                _log.Write(_logLevel, Resources.EventHandlerCollection_Invoke, _eventName, registration.Name, args);
 
                 try {
                     registration.Handler(sender, args);
@@ -100,7 +102,7 @@ namespace Orion.Events {
             if (args is ICancelable cancelable) {
                 if (cancelable.IsCanceled()) {
                     var cancellationReason = cancelable.CancellationReason;
-                    _log.Debug(Resources.EventHandlerCollection_InvokeCanceled, _eventName, cancellationReason);
+                    _log.Write(_logLevel, Resources.EventHandlerCollection_InvokeCanceled, _eventName, cancellationReason);
                 }
             }
         }

@@ -48,6 +48,7 @@ dotnet_style_prefer_conditional_expression_over_return=true:silent
 # Analyzer preferences
 dotnet_diagnostic.CA1028.severity = none
 dotnet_diagnostic.CA1303.severity = none
+dotnet_diagnostic.CA1810.severity = none
 ############################### 
 # Naming Conventions          # 
 ############################### 

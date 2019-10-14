@@ -17,12 +17,13 @@
 
 using System;
 using Orion.Projectiles;
+using Serilog.Events;
 
 namespace Orion.Events.Projectiles {
     /// <summary>
     /// Provides data for the <see cref="IProjectileService.ProjectileUpdate"/> event.
     /// </summary>
-    [EventArgs("proj-update")]
+    [EventArgs("proj-update", LogLevel = LogEventLevel.Verbose)]
     public sealed class ProjectileUpdateEventArgs : ProjectileEventArgs, ICancelable {
         /// <inheritdoc/>
         public string? CancellationReason { get; set; }
