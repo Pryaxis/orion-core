@@ -93,9 +93,7 @@ namespace Orion.Projectiles {
         public void ProjectileSetDefaults_ModifyProjectileType(
                 ProjectileType oldType, ProjectileType newType) {
             using var projectileService = new OrionProjectileService(Logger.None);
-            projectileService.ProjectileSetDefaults.RegisterHandler((sender, args) => {
-                args.ProjectileType = newType;
-            });
+            projectileService.ProjectileSetDefaults.RegisterHandler((sender, args) => args.ProjectileType = newType);
 
             Main.projectile[0].SetDefaults((int)oldType);
 
@@ -105,9 +103,7 @@ namespace Orion.Projectiles {
         [Fact]
         public void ProjectileSetDefaults_Canceled() {
             using var projectileService = new OrionProjectileService(Logger.None);
-            projectileService.ProjectileSetDefaults.RegisterHandler((sender, args) => {
-                args.Cancel();
-            });
+            projectileService.ProjectileSetDefaults.RegisterHandler((sender, args) => args.Cancel());
 
             Main.projectile[0].SetDefaults((int)ProjectileType.CrystalBullet);
 
@@ -129,6 +125,14 @@ namespace Orion.Projectiles {
         }
 
         [Fact]
+        public void ProjectileUpdate_Canceled() {
+            using var projectileService = new OrionProjectileService(Logger.None);
+            projectileService.ProjectileUpdate.RegisterHandler((sender, args) => args.Cancel());
+
+            Main.projectile[0].Update(0);
+        }
+
+        [Fact]
         public void ProjectileRemove() {
             using var projectileService = new OrionProjectileService(Logger.None);
             var isRun = false;
@@ -145,9 +149,7 @@ namespace Orion.Projectiles {
         [Fact]
         public void ProjectileRemove_Canceled() {
             using var projectileService = new OrionProjectileService(Logger.None);
-            projectileService.ProjectileRemove.RegisterHandler((sender, args) => {
-                args.Cancel();
-            });
+            projectileService.ProjectileRemove.RegisterHandler((sender, args) => args.Cancel());
             Main.projectile[0].SetDefaults((int)ProjectileType.CrystalBullet);
 
             Main.projectile[0].Kill();

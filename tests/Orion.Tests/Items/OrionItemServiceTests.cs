@@ -93,9 +93,7 @@ namespace Orion.Items {
         [InlineData(ItemType.StoneBlock, ItemType.None)]
         public void ItemSetDefaults_ModifyType(ItemType oldType, ItemType newType) {
             using var itemService = new OrionItemService(Logger.None);
-            itemService.ItemSetDefaults.RegisterHandler((sender, args) => {
-                args.ItemType = newType;
-            });
+            itemService.ItemSetDefaults.RegisterHandler((sender, args) => args.ItemType = newType);
 
             Main.item[0].SetDefaults((int)oldType);
 
@@ -105,9 +103,7 @@ namespace Orion.Items {
         [Fact]
         public void ItemSetDefaults_Canceled() {
             using var itemService = new OrionItemService(Logger.None);
-            itemService.ItemSetDefaults.RegisterHandler((sender, args) => {
-                args.Cancel();
-            });
+            itemService.ItemSetDefaults.RegisterHandler((sender, args) => args.Cancel());
 
             Main.item[0].SetDefaults((int)ItemType.Sdmg);
 
@@ -126,6 +122,14 @@ namespace Orion.Items {
             Main.item[0].UpdateItem(0);
 
             isRun.Should().BeTrue();
+        }
+
+        [Fact]
+        public void ItemUpdate_Canceled() {
+            using var itemService = new OrionItemService(Logger.None);
+            itemService.ItemUpdate.RegisterHandler((sender, args) => args.Cancel());
+
+            Main.item[0].UpdateItem(0);
         }
 
         public static readonly IEnumerable<object[]> SpawnItemData = new List<object[]> {

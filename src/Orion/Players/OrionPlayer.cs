@@ -53,8 +53,12 @@ namespace Orion.Players {
         }
 
         public void SendPacket(Packet packet) {
+            if (packet is null) {
+                throw new ArgumentNullException(nameof(packet));
+            }
+
             var terrariaClient = Terraria.Netplay.Clients[Index];
-            if (!terrariaClient.IsActive) {
+            if (!terrariaClient.IsConnected()) {
                 return;
             }
 

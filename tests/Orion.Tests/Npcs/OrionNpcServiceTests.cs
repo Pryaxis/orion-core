@@ -110,9 +110,7 @@ namespace Orion.Npcs {
         [InlineData(NpcType.BlueSlime, NpcType.None)]
         public void NpcSetDefaults_ModifyNpcType(NpcType oldType, NpcType newType) {
             using var npcService = new OrionNpcService(Logger.None);
-            npcService.NpcSetDefaults.RegisterHandler((sender, args) => {
-                args.NpcType = newType;
-            });
+            npcService.NpcSetDefaults.RegisterHandler((sender, args) => args.NpcType = newType);
 
             Main.npc[0].SetDefaults((int)oldType);
 
@@ -122,9 +120,7 @@ namespace Orion.Npcs {
         [Fact]
         public void NpcSetDefaults_Canceled() {
             using var npcService = new OrionNpcService(Logger.None);
-            npcService.NpcSetDefaults.RegisterHandler((sender, args) => {
-                args.Cancel();
-            });
+            npcService.NpcSetDefaults.RegisterHandler((sender, args) => args.Cancel());
 
             Main.npc[0].SetDefaults((int)NpcType.BlueSlime);
 
@@ -135,9 +131,7 @@ namespace Orion.Npcs {
         public void NpcSpawn() {
             using var npcService = new OrionNpcService(Logger.None);
             INpc argsNpc = null;
-            npcService.NpcSpawn.RegisterHandler((sender, args) => {
-                argsNpc = args.Npc;
-            });
+            npcService.NpcSpawn.RegisterHandler((sender, args) => argsNpc = args.Npc);
 
             var npcIndex = TerrariaNpc.NewNPC(0, 0, (int)NpcType.BlueSlime);
 
@@ -148,9 +142,7 @@ namespace Orion.Npcs {
         [Fact]
         public void NpcSpawn_Canceled() {
             using var npcService = new OrionNpcService(Logger.None);
-            npcService.NpcSpawn.RegisterHandler((sender, args) => {
-                args.Cancel();
-            });
+            npcService.NpcSpawn.RegisterHandler((sender, args) => args.Cancel());
 
             var npcIndex = TerrariaNpc.NewNPC(0, 0, (int)NpcType.BlueSlime);
 
@@ -170,6 +162,14 @@ namespace Orion.Npcs {
             Main.npc[0].UpdateNPC(0);
 
             isRun.Should().BeTrue();
+        }
+
+        [Fact]
+        public void NpcUpdate_Canceled() {
+            using var npcService = new OrionNpcService(Logger.None);
+            npcService.NpcUpdate.RegisterHandler((sender, args) => args.Cancel());
+
+            Main.npc[0].UpdateNPC(0);
         }
 
         [Theory]
@@ -194,9 +194,7 @@ namespace Orion.Npcs {
         [InlineData(NpcType.BlueSlime, NpcType.None)]
         public void NpcTransform_ModifyNpcNewType(NpcType oldType, NpcType newType) {
             using var npcService = new OrionNpcService(Logger.None);
-            npcService.NpcTransform.RegisterHandler((sender, args) => {
-                args.NpcNewType = newType;
-            });
+            npcService.NpcTransform.RegisterHandler((sender, args) => args.NpcNewType = newType);
             Main.npc[0].SetDefaults((int)oldType);
 
             Main.npc[0].Transform((int)newType);
@@ -207,9 +205,7 @@ namespace Orion.Npcs {
         [Fact]
         public void NpcTransform_Canceled() {
             using var npcService = new OrionNpcService(Logger.None);
-            npcService.NpcTransform.RegisterHandler((sender, args) => {
-                args.Cancel();
-            });
+            npcService.NpcTransform.RegisterHandler((sender, args) => args.Cancel());
 
             Main.npc[0].Transform((int)NpcType.BlueSlime);
 
@@ -237,9 +233,7 @@ namespace Orion.Npcs {
         [Fact]
         public void NpcDamage_Canceled() {
             using var npcService = new OrionNpcService(Logger.None);
-            npcService.NpcDamage.RegisterHandler((sender, args) => {
-                args.Cancel();
-            });
+            npcService.NpcDamage.RegisterHandler((sender, args) => args.Cancel());
             Main.npc[0].SetDefaults((int)NpcType.BlueSlime);
 
             Main.npc[0].StrikeNPC(10000, 0, 1);
@@ -266,9 +260,7 @@ namespace Orion.Npcs {
         [Fact]
         public void NpcDropLootItem_Canceled() {
             using var npcService = new OrionNpcService(Logger.None);
-            npcService.NpcDropLootItem.RegisterHandler((sender, args) => {
-                args.Cancel();
-            });
+            npcService.NpcDropLootItem.RegisterHandler((sender, args) => args.Cancel());
             Main.npc[0].SetDefaults((int)NpcType.BlueSlime);
             Main.npc[0].life = 0;
 
