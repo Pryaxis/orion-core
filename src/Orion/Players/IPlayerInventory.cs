@@ -38,16 +38,16 @@ namespace Orion.Players {
         /// 
         /// <para/>
         /// 
-        /// This represents inventory slot indices 58 to 77.
+        /// This represents inventory slot indices 59 to 78.
         /// </summary>
         IReadOnlyArray<IItem> Equips { get; }
 
         /// <summary>
-        /// Gets the player's dyes which correspond directly to <see cref="Equips"/>.
+        /// Gets the player's dyes which correspond to <see cref="Equips"/>.
         /// 
         /// <para/>
         /// 
-        /// This represents inventory slot indices 78 to 97.
+        /// This represents inventory slot indices 79 to 88.
         /// </summary>
         IReadOnlyArray<IItem> Dyes { get; }
 
@@ -57,7 +57,7 @@ namespace Orion.Players {
         /// 
         /// <para/>
         /// 
-        /// This represents inventory slot indices 98 to 102.
+        /// This represents inventory slot indices 89 to 93.
         /// </summary>
         IReadOnlyArray<IItem> MiscEquips { get; }
 
@@ -66,7 +66,7 @@ namespace Orion.Players {
         /// 
         /// <para/>
         /// 
-        /// This represents inventory slot indices 103 to 107. 
+        /// This represents inventory slot indices 94 to 98. 
         /// </summary>
         IReadOnlyArray<IItem> MiscDyes { get; }
 
@@ -75,7 +75,7 @@ namespace Orion.Players {
         /// 
         /// <para/>
         /// 
-        /// This represents inventory slot indices 108 to 147.
+        /// This represents inventory slot indices 99 to 138.
         /// </summary>
         IReadOnlyArray<IItem> PiggyBank { get; }
 
@@ -84,7 +84,7 @@ namespace Orion.Players {
         /// 
         /// <para/>
         /// 
-        /// This represents inventory slot incies 148 to 187.
+        /// This represents inventory slot incies 139 to 178.
         /// </summary>
         IReadOnlyArray<IItem> Safe { get; }
 
@@ -93,7 +93,7 @@ namespace Orion.Players {
         /// 
         /// <para/>
         /// 
-        /// This represents inventory slot indices 189 to 228.
+        /// This represents inventory slot indices 180 to 219.
         /// </summary>
         IReadOnlyArray<IItem> DefendersForge { get; }
 
@@ -102,7 +102,7 @@ namespace Orion.Players {
         /// 
         /// <para/>
         /// 
-        /// This represents inventory slot index 188.
+        /// This represents inventory slot index 179.
         /// </summary>
         IItem TrashCan { get; }
     }
