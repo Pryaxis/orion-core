@@ -45,6 +45,7 @@ namespace Orion.Players {
         public EventHandlerCollection<PlayerDataEventArgs> PlayerData { get; }
         public EventHandlerCollection<PlayerInventorySlotEventArgs> PlayerInventorySlot { get; }
         public EventHandlerCollection<PlayerJoinEventArgs> PlayerJoin { get; }
+        public EventHandlerCollection<PlayerTeamEventArgs> PlayerTeam { get; }
         public EventHandlerCollection<PlayerChatEventArgs> PlayerChat { get; }
         public EventHandlerCollection<PlayerDisconnectedEventArgs> PlayerDisconnected { get; }
 
@@ -57,6 +58,7 @@ namespace Orion.Players {
                 [PacketType.PlayerData] = PlayerDataHandler,
                 [PacketType.PlayerInventorySlot] = PlayerInventorySlotHandler,
                 [PacketType.PlayerJoin] = PlayerJoinHandler,
+                [PacketType.PlayerTeam] = PlayerTeamHandler,
                 [PacketType.Module] = ModuleHandler
             };
 
@@ -72,6 +74,7 @@ namespace Orion.Players {
             PlayerInventorySlot = new EventHandlerCollection<PlayerInventorySlotEventArgs>(log);
             PlayerJoin = new EventHandlerCollection<PlayerJoinEventArgs>(log);
             PlayerChat = new EventHandlerCollection<PlayerChatEventArgs>(log);
+            PlayerTeam = new EventHandlerCollection<PlayerTeamEventArgs>(log);
             PlayerDisconnected = new EventHandlerCollection<PlayerDisconnectedEventArgs>(log);
 
             Hooks.Net.ReceiveData = ReceiveDataHandler;
@@ -199,6 +202,13 @@ namespace Orion.Players {
         private void PlayerJoinHandler(PacketReceiveEventArgs args_) {
             var args = new PlayerJoinEventArgs(args_.Sender);
             PlayerJoin.Invoke(this, args);
+            args_.CancellationReason = args.CancellationReason;
+        }
+
+        private void PlayerTeamHandler(PacketReceiveEventArgs args_) {
+            var packet = (PlayerTeamPacket)args_.Packet;
+            var args = new PlayerTeamEventArgs(args_.Sender, packet);
+            PlayerTeam.Invoke(this, args);
             args_.CancellationReason = args.CancellationReason;
         }
 
