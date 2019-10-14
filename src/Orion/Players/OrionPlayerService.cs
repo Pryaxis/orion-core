@@ -174,6 +174,11 @@ namespace Orion.Players {
             Debug.Assert(remoteClient.Id >= 0 && remoteClient.Id < Players.Count,
                 "remote client should have a valid index");
 
+            // Check if the client was active, since this gets called when setting up RemoteClient as well.
+            if (!remoteClient.IsActive) {
+                return HookResult.Continue;
+            }
+
             var player = Players[remoteClient.Id];
             var args = new PlayerDisconnectedEventArgs(player);
             PlayerDisconnected.Invoke(this, args);

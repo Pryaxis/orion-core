@@ -93,7 +93,7 @@ namespace Orion.Packets.World.TileEntities {
         [Pure, ExcludeFromCodeCoverage]
         public override string ToString() =>
             $"{Type}[#={ChestIndex}, {ChestContentsSlotIndex} is " +
-            $"{(ItemPrefix != ItemPrefix.None ? ItemPrefix + " " : string.Empty)}{ItemType} x{ItemStackSize}]";
+            $"{(ItemPrefix != 0 ? $"{ItemPrefix} " : string.Empty)}{ItemType} x{ItemStackSize}]";
 
         private protected override void ReadFromReader(BinaryReader reader, PacketContext context) {
             _chestIndex = reader.ReadInt16();

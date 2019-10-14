@@ -93,7 +93,7 @@ namespace Orion.Packets.Players {
         [Pure, ExcludeFromCodeCoverage]
         public override string ToString() =>
             $"{Type}[#={PlayerIndex}, {PlayerInventorySlotIndex} is " +
-            $"{(ItemPrefix.Equals(ItemPrefix.None) ? ItemPrefix + " " : string.Empty)}{ItemType} x{ItemStackSize}]";
+            $"{(ItemPrefix != 0 ? $"{ItemPrefix} " : string.Empty)}{ItemType} x{ItemStackSize}]";
 
         private protected override void ReadFromReader(BinaryReader reader, PacketContext context) {
             _playerIndex = reader.ReadByte();

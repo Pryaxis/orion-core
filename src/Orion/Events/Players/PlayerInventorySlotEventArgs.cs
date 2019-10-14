@@ -70,6 +70,7 @@ namespace Orion.Events.Players {
         /// <inheritdoc/>
         [Pure, ExcludeFromCodeCoverage]
         public override string ToString() =>
-            $"[{Player.Name}, [{PlayerInventorySlotIndex}]={ItemType} x{ItemStackSize}]";
+            $"[{Player.Name}, {PlayerInventorySlotIndex}=" +
+            $"{(ItemPrefix != 0 ? $"{ItemPrefix} " : string.Empty)}{ItemType} x{ItemStackSize}]";
     }
 }
