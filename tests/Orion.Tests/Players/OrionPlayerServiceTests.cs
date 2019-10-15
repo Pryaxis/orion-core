@@ -226,6 +226,7 @@ namespace Orion.Players {
                 isRun = true;
                 args.Player.Should().BeSameAs(playerService.Players[1]);
             });
+            Terraria.Netplay.Clients[1].IsActive = true;
             Terraria.Netplay.Clients[1].Id = 1;
 
             Terraria.Netplay.Clients[1].Reset();

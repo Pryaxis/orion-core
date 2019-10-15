@@ -24,11 +24,18 @@ using Ninject;
 using Orion.Launcher.Properties;
 using Orion.World;
 using Serilog;
+using Serilog.Events;
 using Serilog.Sinks.SystemConsole.Themes;
 using Main = Terraria.Main;
 
 namespace Orion.Launcher {
     internal class Program {
+#if DEBUG
+        private const LogEventLevel LogLevel = LogEventLevel.Debug;
+#else
+        private const LogEventLevel LogLevel = LogEventLevel.Information;
+#endif
+
         private const int STD_OUTPUT_HANDLE = -11;
         private const int ENABLE_VIRTUAL_TERMINAL_PROCESSING = 0x0004;
 
@@ -55,7 +62,7 @@ namespace Orion.Launcher {
 
             Directory.CreateDirectory("logs");
             var log = new LoggerConfiguration()
-                .MinimumLevel.Verbose()
+                .MinimumLevel.Is(LogLevel)
                 .WriteTo.Console(
                     outputTemplate: "[{Timestamp:HH:mm:ss} {Level:u3}] {Name}: {Message:lj}{NewLine}{Exception}",
                     theme: AnsiConsoleTheme.Code)

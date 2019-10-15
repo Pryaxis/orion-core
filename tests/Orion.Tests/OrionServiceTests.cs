@@ -20,7 +20,6 @@ using FluentAssertions;
 using Moq;
 using Serilog;
 using Serilog.Core;
-using Serilog.Events;
 using Xunit;
 
 namespace Orion {
@@ -40,21 +39,7 @@ namespace Orion {
 
             service.Log.Information("TEST");
 
-            mockLog.Verify(l => l.Write(It.IsAny<LogEvent>()));
-        }
-
-        [Fact]
-        public void SetLogLevel() {
-            var mockLog = new Mock<ILogger>();
-            using var service = new TestService(mockLog.Object);
-
-            service.SetLogLevel(LogEventLevel.Error);
-
-            service.Log.IsEnabled(LogEventLevel.Warning).Should().BeFalse();
-
-            service.SetLogLevel(LogEventLevel.Verbose);
-
-            service.Log.IsEnabled(LogEventLevel.Verbose).Should().BeTrue();
+            mockLog.Verify(l => l.Information("TEST"));
         }
 
         public class TestService : OrionService {

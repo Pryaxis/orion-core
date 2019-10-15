@@ -18,8 +18,6 @@
 using System;
 using System.Diagnostics.CodeAnalysis;
 using Serilog;
-using Serilog.Core;
-using Serilog.Events;
 
 namespace Orion {
     /// <summary>
@@ -29,14 +27,8 @@ namespace Orion {
     [SuppressMessage("Design", "CA1063:Implement IDisposable Correctly",
         Justification = "IDisposable pattern makes no sense")]
     public abstract class OrionService : IDisposable {
-#if DEBUG
-        private readonly LoggingLevelSwitch _logLevel = new LoggingLevelSwitch(LogEventLevel.Debug);
-#else
-        private readonly LoggingLevelSwitch _logLevel = new LoggingLevelSwitch(LogEventLevel.Information);
-#endif
-
         /// <summary>
-        /// Gets the service's log. The logging level can be controlled by <see cref="SetLogLevel(LogEventLevel)"/>.
+        /// Gets the service's log.
         /// </summary>
         protected ILogger Log { get; }
 
@@ -50,10 +42,7 @@ namespace Orion {
                 throw new ArgumentNullException(nameof(log));
             }
 
-            Log = new LoggerConfiguration()
-                .MinimumLevel.ControlledBy(_logLevel)
-                .WriteTo.Logger(log)
-                .CreateLogger();
+            Log = log;
         }
 
 
@@ -61,11 +50,5 @@ namespace Orion {
         [SuppressMessage("Usage", "CA1816:Dispose methods should call SuppressFinalize",
             Justification = "IDisposable pattern makes no sense")]
         public virtual void Dispose() { }
-
-        /// <summary>
-        /// Sets the minimum logging <paramref name="level"/>.
-        /// </summary>
-        /// <param name="level">The level.</param>
-        public void SetLogLevel(LogEventLevel level) => _logLevel.MinimumLevel = level;
     }
 }

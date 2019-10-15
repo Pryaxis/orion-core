@@ -101,14 +101,11 @@ namespace Orion {
                 // ctx.Request.Target can be null if the ILogger is requested directly, so we need to be safe about it.
                 var type = ctx.Request.Target?.Member.ReflectedType;
                 var name = type?.GetCustomAttribute<ServiceAttribute>()?.Name ?? type?.Name ?? "orion-kernel";
-                return new LoggerConfiguration()
-                    .MinimumLevel.ControlledBy(_logLevel)
-                    .Enrich.WithProperty("Name", name)
-                    .WriteTo.Logger(log)
-                    .CreateLogger();
+                return log.ForContext("Name", name);
             });
 
             _log = this.Get<ILogger>();
+
             ServerInitialize = new EventHandlerCollection<ServerInitializeEventArgs>(_log);
             ServerStart = new EventHandlerCollection<ServerStartEventArgs>(_log);
             ServerUpdate = new EventHandlerCollection<ServerUpdateEventArgs>(_log);
