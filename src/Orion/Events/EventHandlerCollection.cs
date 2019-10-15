@@ -96,6 +96,7 @@ namespace Orion.Events {
                 try {
                     registration.Handler(sender, args);
                 } catch (Exception ex) {
+                    // Not localized because this string is developer-facing.
                     registration.Log?.Error(ex,
                         "Unhandled exception occurred from {RegistrationName} in {Event}",
                         registration.Name, this);
@@ -125,6 +126,7 @@ namespace Orion.Events {
                 _registrations.Add(registration);
             }
 
+            // Not localized because this string is developer-facing.
             log?.Debug("Registered {RegistrationName} onto {Event}", registration.Name, this);
         }
 
@@ -154,7 +156,8 @@ namespace Orion.Events {
 
                 result = _handlerToRegistration.Remove(handler) & _registrations.Remove(registration);
             }
-
+            
+            // Not localized because this string is developer-facing.
             registration.Log?.Debug("Unregistered {RegistrationName} from {Event}", registration.Name, this);
             return result;
         }

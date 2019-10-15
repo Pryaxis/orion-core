@@ -21,7 +21,7 @@ using TerrariaItem = Terraria.Item;
 
 namespace Orion.Items {
     /// <summary>
-    /// Represents a Terraria item. The items may either be physically in the world or represented in some abstract
+    /// Represents a Terraria item. The item may either be physically in the world or be represented in some abstract
     /// container, like an inventory or chest.
     /// </summary>
     public interface IItem : IEntity, IWrapping<TerrariaItem> {

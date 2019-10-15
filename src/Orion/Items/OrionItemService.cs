@@ -20,7 +20,6 @@ using System.Diagnostics;
 using Microsoft.Xna.Framework;
 using Orion.Events;
 using Orion.Events.Items;
-using Orion.Properties;
 using Orion.Utils;
 using OTAPI;
 using Serilog;
@@ -56,7 +55,8 @@ namespace Orion.Items {
 
         public IItem? SpawnItem(ItemType type, Vector2 position,
                 int stackSize = 1, ItemPrefix prefix = ItemPrefix.None) {
-            Log.Debug(Resources.ItemService_SpawnItem, type, stackSize, position);
+            // Not localized because this string is developer-facing.
+            Log.Debug("Spawning {ItemType} x{ItemStackSize} at {Position}", type, stackSize, position);
 
             // Terraria has a mechanism of item caching which allows, for instance, the Grand Design to drop all wires
             // at once. We need to disable that temporarily so that our item *definitely* spawns.
@@ -84,8 +84,13 @@ namespace Orion.Items {
 
             var item = GetItem(terrariaItem);
             var args = new ItemSetDefaultsEventArgs(item, (ItemType)itemType);
+
+            // Not localized because this string is developer-facing.
+            Log.Verbose("Invoking {Event} with [{Item}, {ItemType}]", ItemSetDefaults, item, (ItemType)itemType);
             ItemSetDefaults.Invoke(this, args);
             if (args.IsCanceled()) {
+                // Not localized because this string is developer-facing.
+                Log.Verbose("Canceled {Event} for {CancellationReason}", ItemSetDefaults, args.CancellationReason);
                 return HookResult.Cancel;
             }
 
@@ -100,9 +105,19 @@ namespace Orion.Items {
             // Set terrariaItem.whoAmI since this is never done in vanilla.
             terrariaItem.whoAmI = itemIndex;
 
-            var args = new ItemUpdateEventArgs(Items[itemIndex]);
+            var item = Items[itemIndex];
+            var args = new ItemUpdateEventArgs(item);
+
+            // Not localized because this string is developer-facing.
+            Log.Verbose("Invoking {Event} with [{Item}]", ItemUpdate, item);
             ItemUpdate.Invoke(this, args);
-            return args.IsCanceled() ? HookResult.Cancel : HookResult.Continue;
+            if (args.IsCanceled()) {
+                // Not localized because this string is developer-facing.
+                Log.Verbose("Canceled {Event} for {CancellationReason}", ItemUpdate, args.CancellationReason);
+                return HookResult.Cancel;
+            }
+
+            return HookResult.Continue;
         }
     }
 }

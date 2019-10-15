@@ -28,8 +28,9 @@ namespace Orion.Events.Items {
         public string? CancellationReason { get; set; }
 
         /// <summary>
-        /// Gets or sets the item type.
+        /// Gets or sets the item type that the item's defaults are being set to.
         /// </summary>
+        /// <value>The item type that the item's defaults are being set to.</value>
         public ItemType ItemType { get; set; }
 
         /// <summary>

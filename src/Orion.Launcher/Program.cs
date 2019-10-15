@@ -21,8 +21,12 @@ using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading;
 using Ninject;
+using Orion.Items;
 using Orion.Launcher.Properties;
+using Orion.Npcs;
+using Orion.Projectiles;
 using Orion.World;
+using Orion.World.TileEntities;
 using Serilog;
 using Serilog.Events;
 using Serilog.Sinks.SystemConsole.Themes;
@@ -109,6 +113,10 @@ namespace Orion.Launcher {
             SetupPlugins(kernel);
             SetupLanguage();
 
+            kernel.Get<IItemService>();
+            kernel.Get<INpcService>();
+            kernel.Get<ITileEntityService>();
+            kernel.Get<IProjectileService>();
             kernel.Get<IWorldService>();
 
             using var game = new Main();

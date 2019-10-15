@@ -30,6 +30,7 @@ using Orion.Players;
 using Orion.Projectiles;
 using Orion.Properties;
 using Orion.World;
+using Orion.World.TileEntities;
 using OTAPI;
 using Serilog;
 
@@ -86,6 +87,7 @@ namespace Orion {
             Bind<INpcService>().To<OrionNpcService>().InSingletonScope();
             Bind<IPlayerService>().To<OrionPlayerService>().InSingletonScope();
             Bind<IProjectileService>().To<OrionProjectileService>().InSingletonScope();
+            Bind<ITileEntityService>().To<OrionTileEntityService>().InSingletonScope();
             Bind<IWorldService>().To<OrionWorldService>().InSingletonScope();
 
             // Create an ILogger binding for service-specific logs.
@@ -236,29 +238,36 @@ namespace Orion {
 
         private void PreInitializeHandler() {
             var args = new ServerInitializeEventArgs();
+
+            // Not localized because this string is developer-facing.
             _log.Debug("Invoking {Event}", ServerInitialize);
             ServerInitialize.Invoke(this, args);
         }
 
         private void StartedHandler() {
             var args = new ServerStartEventArgs();
+
+            // Not localized because this string is developer-facing.
             _log.Debug("Invoking {Event}", ServerStart);
             ServerStart.Invoke(this, args);
         }
 
         private void PreUpdateHandler(ref GameTime _) {
             var args = new ServerUpdateEventArgs();
+
+            // Not localized because this string is developer-facing.
             _log.Verbose("Invoking {Event}", ServerUpdate);
             ServerUpdate.Invoke(this, args);
         }
 
         private HookResult ProcessHandler(string _, string input) {
             var args = new ServerCommandEventArgs(input);
-            _log.Debug("Invoking {Event} with {Input}", ServerCommand, input);
-            ServerCommand.Invoke(this, args);
 
-            var isCanceled = args.IsCanceled();
-            if (isCanceled) {
+            // Not localized because this string is developer-facing.
+            _log.Debug("Invoking {Event} with [{Input}]", ServerCommand, input);
+            ServerCommand.Invoke(this, args);
+            if (args.IsCanceled()) {
+                // Not localized because this string is developer-facing.
                 _log.Debug("Canceled {Event} for {Reason}", ServerCommand, args.CancellationReason);
                 return HookResult.Cancel;
             }

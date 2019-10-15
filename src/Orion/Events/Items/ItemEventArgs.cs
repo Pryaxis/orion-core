@@ -24,8 +24,9 @@ namespace Orion.Events.Items {
     /// </summary>
     public abstract class ItemEventArgs : EventArgs {
         /// <summary>
-        /// Gets the item.
+        /// Gets the item involved in the event.
         /// </summary>
+        /// <value>The item involved in the event.</value>
         public IItem Item { get; }
 
         private protected ItemEventArgs(IItem item) {
