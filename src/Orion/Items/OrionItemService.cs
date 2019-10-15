@@ -39,7 +39,8 @@ namespace Orion.Items {
 
             // Ignore the last item since it is used as a failure slot.
             Items = new WrappedReadOnlyArray<OrionItem, TerrariaItem>(
-                Main.item.AsMemory(..^1), (itemIndex, terrariaItem) => new OrionItem(itemIndex, terrariaItem));
+                Main.item.AsMemory(..^1),
+                (itemIndex, terrariaItem) => new OrionItem(itemIndex, terrariaItem));
 
             ItemSetDefaults = new EventHandlerCollection<ItemSetDefaultsEventArgs>();
             ItemUpdate = new EventHandlerCollection<ItemUpdateEventArgs>();
@@ -62,15 +63,14 @@ namespace Orion.Items {
             // at once. We need to disable that temporarily so that our item *definitely* spawns.
             var oldItemCache = TerrariaItem.itemCaches[(int)type];
             TerrariaItem.itemCaches[(int)type] = -1;
-
-            var itemIndex =
-                TerrariaItem.NewItem(position, Vector2.Zero, (int)type, stackSize, prefixGiven: (int)prefix);
+            var itemIndex = TerrariaItem.NewItem(position, Vector2.Zero, (int)type, stackSize, false, (int)prefix);
             TerrariaItem.itemCaches[(int)type] = oldItemCache;
             return itemIndex >= 0 && itemIndex < Items.Count ? Items[itemIndex] : null;
         }
 
         private IItem GetItem(TerrariaItem terrariaItem) {
-            Debug.Assert(terrariaItem.whoAmI >= 0 && terrariaItem.whoAmI < Items.Count,
+            Debug.Assert(
+                terrariaItem.whoAmI >= 0 && terrariaItem.whoAmI < Items.Count,
                 "Terraria item index should be valid");
 
             // We want to retrieve the world item if this item is real. Otherwise, return a "fake" item.

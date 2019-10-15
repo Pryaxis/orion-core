@@ -28,21 +28,33 @@ namespace Orion.Items {
         /// <summary>
         /// Gets the item's type.
         /// </summary>
+        /// <value>The item's type.</value>
+        /// <remarks>
+        /// The item's type controls many aspects of the item, such as its damage, speed, etc. To set the item type, use
+        /// the <see cref="SetType(ItemType)"/> method.
+        /// </remarks>
         ItemType Type { get; }
 
         /// <summary>
         /// Gets or sets the item's stack size.
         /// </summary>
+        /// <value>The item's stack size.</value>
         int StackSize { get; set; }
 
         /// <summary>
         /// Gets the item's prefix.
         /// </summary>
+        /// <value>The item's prefix.</value>
+        /// <remarks>
+        /// The item's prefix modifies aspects of the item, sucha as its damage, speed, etc. To set the item prefix, use
+        /// the <see cref="SetPrefix(ItemPrefix)"/> method.
+        /// </remarks>
         ItemPrefix Prefix { get; }
 
         /// <summary>
         /// Gets the item's stats.
         /// </summary>
+        /// <value>The item's stats.</value>
         IItemStats Stats { get; }
 
         /// <summary>

@@ -27,34 +27,39 @@ namespace Orion.Items {
     /// </summary>
     public interface IItemService {
         /// <summary>
-        /// Gets the items in the world. All items are returned, regardless of whether or not they are actually active.
+        /// Gets the items in the world.
         /// </summary>
+        /// <value>
+        /// The items in the world. All items are returned, regardless of whether or not they are actually active.
+        /// </value>
         IReadOnlyArray<IItem> Items { get; }
 
         /// <summary>
-        /// Gets the event handlers that occur when an item's defaults are being set, which is when item data is
-        /// initialized. This event can be canceled.
+        /// Gets the event handlers that occur when an item's defaults are being set. This event can be canceled.
         /// </summary>
+        /// <value>
+        /// The event handlers that occur when an item's defaults are being set, which is when item data is initialized.
+        /// </value>
         EventHandlerCollection<ItemSetDefaultsEventArgs> ItemSetDefaults { get; }
 
         /// <summary>
         /// Gets the event handlers that occur when an item is updating. This event can be canceled.
         /// </summary>
+        /// <value>The event handlers that occur when an item is updating.</value>
         EventHandlerCollection<ItemUpdateEventArgs> ItemUpdate { get; }
 
         /// <summary>
         /// Spawns and returns an item with the given <paramref name="type"/> at the specified
-        /// <paramref name="position"/> with <paramref name="stackSize"/> and <paramref name="prefix"/>
-        /// 
-        /// <para/>
-        /// 
-        /// This method is not thread-safe.
+        /// <paramref name="position"/> with an optional <paramref name="stackSize"/> and <paramref name="prefix"/>.
         /// </summary>
         /// <param name="type">The item type.</param>
         /// <param name="position">The position.</param>
         /// <param name="stackSize">The stack size.</param>
-        /// <param name="prefix">The item prefix..</param>
+        /// <param name="prefix">The item prefix.</param>
         /// <returns>The resulting item, or <see langword="null"/> if none was spawned.</returns>
+        /// <remarks>
+        /// This method is not thread-safe because it deals with static state in Terraria.
+        /// </remarks>
         IItem? SpawnItem(ItemType type, Vector2 position, int stackSize = 1, ItemPrefix prefix = ItemPrefix.None);
     }
 }

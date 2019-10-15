@@ -17,17 +17,26 @@
 
 namespace Orion.Items {
     /// <summary>
-    /// Represents an item's stats. These are immutable aspects of an item.
+    /// Represents an item's stats. These are the immutable aspects of an item.
     /// </summary>
     public interface IItemStats {
         /// <summary>
         /// Gets the item's maximum stack size.
         /// </summary>
+        /// <value>The item's maximum stack size.</value>
+        /// <remarks>
+        /// For most weapons and gear, this value is 1. For most building materials, this value is 999.
+        /// </remarks>
         int MaxStackSize { get; }
 
         /// <summary>
         /// Gets the item's rarity.
         /// </summary>
+        /// <value>The item's rarity.</value>
+        /// <remarks>
+        /// The item's rarity can be modified depending on the item's prefix, meaning this property's value is not
+        /// necessarily constant with respect to item type.
+        /// </remarks>
         ItemRarity Rarity { get; }
     }
 }
