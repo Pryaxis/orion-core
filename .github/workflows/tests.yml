@@ -7,13 +7,17 @@ on:
 
 jobs:
   build:
+
     runs-on: ubuntu-latest
+
     steps:
-      - uses: actions/checkout@master
-      - uses: actions/setup-dotnet@v1
+      - name: Check out repository
+        uses: actions/checkout@master
+      - name: Setup dotnet
+        uses: actions/setup-dotnet@v1
         with:
           dotnet-version: 3.0.100
-      - name: Running tests...
+      - name: Run tests
         run: |
-          dotnet build -f netstandard2.1 -c Release src/Orion/Orion.csproj
-          dotnet test -f netcoreapp3.0 -c Release tests/Orion.Tests/Orion.Tests.csproj
+          dotnet build -f netstandard2.1 -c Debug src/Orion/Orion.csproj
+          dotnet test -f netcoreapp3.0 -c Debug tests/Orion.Tests/Orion.Tests.csproj
