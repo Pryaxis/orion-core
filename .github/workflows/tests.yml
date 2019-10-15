@@ -1,0 +1,19 @@
+name: tests
+
+on:
+  push:
+    branches:
+      - v2
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/dotnet
+        with:
+          dotnet-version: 3.0.100
+      - name: Running tests...
+        run: |
+          dotnet build -f netstandard2.1 -c Release src/Orion/Orion.csproj
+          dotnet test -f netcoreapp3.0 -c Release tests/Orion.Tests/Orion.Tests.csproj
