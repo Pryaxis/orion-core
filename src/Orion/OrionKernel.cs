@@ -32,8 +32,6 @@ using Orion.Properties;
 using Orion.World;
 using OTAPI;
 using Serilog;
-using Serilog.Core;
-using Serilog.Events;
 
 namespace Orion {
     /// <summary>
@@ -42,12 +40,6 @@ namespace Orion {
     /// </summary>
     public sealed class OrionKernel : StandardKernel {
         private readonly ILogger _log;
-#if DEBUG
-        private readonly LoggingLevelSwitch _logLevel = new LoggingLevelSwitch(LogEventLevel.Debug);
-#else
-        private readonly LoggingLevelSwitch _logLevel = new LoggingLevelSwitch(LogEventLevel.Information);
-#endif
-
         private readonly ISet<Assembly> _pluginAssemblies = new HashSet<Assembly>();
         private readonly ISet<Type> _pluginTypesToLoad = new HashSet<Type>();
         private readonly Dictionary<string, OrionPlugin> _plugins = new Dictionary<string, OrionPlugin>();
@@ -100,16 +92,16 @@ namespace Orion {
             Bind<ILogger>().ToMethod(ctx => {
                 // ctx.Request.Target can be null if the ILogger is requested directly, so we need to be safe about it.
                 var type = ctx.Request.Target?.Member.ReflectedType;
-                var name = type?.GetCustomAttribute<ServiceAttribute>()?.Name ?? type?.Name ?? "orion-kernel";
-                return log.ForContext("Name", name);
-            });
+                var serviceName = type?.GetCustomAttribute<ServiceAttribute>()?.Name ?? type?.Name ?? "orion-kernel";
+                return log.ForContext("ServiceName", serviceName);
+            }).InTransientScope();
 
             _log = this.Get<ILogger>();
 
-            ServerInitialize = new EventHandlerCollection<ServerInitializeEventArgs>(_log);
-            ServerStart = new EventHandlerCollection<ServerStartEventArgs>(_log);
-            ServerUpdate = new EventHandlerCollection<ServerUpdateEventArgs>(_log);
-            ServerCommand = new EventHandlerCollection<ServerCommandEventArgs>(_log);
+            ServerInitialize = new EventHandlerCollection<ServerInitializeEventArgs>();
+            ServerStart = new EventHandlerCollection<ServerStartEventArgs>();
+            ServerUpdate = new EventHandlerCollection<ServerUpdateEventArgs>();
+            ServerCommand = new EventHandlerCollection<ServerCommandEventArgs>();
 
             // Create bindings for Lazy<T> so that we can have lazily loaded services. This allows plugins to override
             // the above service bindings if necessary.
@@ -142,12 +134,6 @@ namespace Orion {
             Hooks.Game.PreUpdate -= PreUpdateHandler;
             Hooks.Command.Process -= ProcessHandler;
         }
-        
-        /// <summary>
-        /// Sets the minimum logging <paramref name="level"/>.
-        /// </summary>
-        /// <param name="level">The level.</param>
-        public void SetLogLevel(LogEventLevel level) => _logLevel.MinimumLevel = level;
 
         /// <summary>
         /// Starts loading plugins form an <paramref name="assemblyPath"/>.
@@ -250,23 +236,34 @@ namespace Orion {
 
         private void PreInitializeHandler() {
             var args = new ServerInitializeEventArgs();
+            _log.Debug("Invoking {Event}", ServerInitialize);
             ServerInitialize.Invoke(this, args);
         }
 
         private void StartedHandler() {
             var args = new ServerStartEventArgs();
+            _log.Debug("Invoking {Event}", ServerStart);
             ServerStart.Invoke(this, args);
         }
 
         private void PreUpdateHandler(ref GameTime _) {
             var args = new ServerUpdateEventArgs();
+            _log.Verbose("Invoking {Event}", ServerUpdate);
             ServerUpdate.Invoke(this, args);
         }
 
         private HookResult ProcessHandler(string _, string input) {
             var args = new ServerCommandEventArgs(input);
+            _log.Debug("Invoking {Event} with {Input}", ServerCommand, input);
             ServerCommand.Invoke(this, args);
-            return args.IsCanceled() ? HookResult.Cancel : HookResult.Continue;
+
+            var isCanceled = args.IsCanceled();
+            if (isCanceled) {
+                _log.Debug("Canceled {Event} for {Reason}", ServerCommand, args.CancellationReason);
+                return HookResult.Cancel;
+            }
+
+            return HookResult.Continue;
         }
     }
 }

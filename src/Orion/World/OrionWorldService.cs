@@ -59,8 +59,8 @@ namespace Orion.World {
                 Main.tile = _tileCollection = new TileCollection();
             }
 
-            WorldLoad = new EventHandlerCollection<WorldLoadEventArgs>(Log);
-            WorldSave = new EventHandlerCollection<WorldSaveEventArgs>(Log);
+            WorldLoad = new EventHandlerCollection<WorldLoadEventArgs>();
+            WorldSave = new EventHandlerCollection<WorldSaveEventArgs>();
 
             Hooks.World.IO.PreLoadWorld = PreLoadWorldHandler;
             Hooks.World.IO.PreSaveWorld = PreSaveWorldHandler;

@@ -22,15 +22,18 @@ namespace Orion.Events {
     /// <summary>
     /// Represents something that can be canceled.
     /// </summary>
+    /// <remarks>
+    /// Many types of event arguments implement this interface to allow cancellation of the event.
+    /// </remarks>
     public interface ICancelable {
         /// <summary>
-        /// Gets or sets the cancellation reason. If <see langword="null"/>, then the object is not canceled.
-        /// 
-        /// <para/>
-        /// 
-        /// This allows consumers of an event to determine why the event was canceled. In some cases, consumers may
-        /// uncancel the event.
+        /// Gets or sets the cancellation reason.
         /// </summary>
+        /// <value>The cancellation reason. If <see langword="null"/>, then the object is not canceled.</value>
+        /// <remarks>
+        /// This property allows consumers of the <see cref="ICancelable"/> to determine why the object is canceleed. In
+        /// some cases, a consumer may uncancel the event.
+        /// </remarks>
         string? CancellationReason { get; set; }
     }
 
@@ -57,16 +60,16 @@ namespace Orion.Events {
 
         /// <summary>
         /// Cancels the object, optionally with a <paramref name="reason"/>.
-        /// 
-        /// <para/>
-        /// 
-        /// Reasons should be provided if possible, as they allow consumers to learn why the cancellation was requested.
         /// </summary>
         /// <param name="cancelable">The cancelable object.</param>
         /// <param name="reason">The reason.</param>
         /// <exception cref="ArgumentNullException">
         /// <paramref name="cancelable"/> or <paramref name="reason"/> are <see langword="null"/>.
         /// </exception>
+        /// <remarks>
+        /// Reasons should always be provided if possible, as they allow consumers to learn why the cancellation was
+        /// requested.
+        /// </remarks>
         public static void Cancel(this ICancelable cancelable, string reason = "") {
             if (cancelable is null) {
                 throw new ArgumentNullException(nameof(cancelable));

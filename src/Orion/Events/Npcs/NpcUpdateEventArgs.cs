@@ -23,7 +23,7 @@ namespace Orion.Events.Npcs {
     /// <summary>
     /// Provides data for the <see cref="INpcService.NpcUpdate"/> event.
     /// </summary>
-    [EventArgs("npc-update", LogLevel = LogEventLevel.Verbose)]
+    [EventArgs("npc-update")]
     public sealed class NpcUpdateEventArgs : NpcEventArgs, ICancelable {
         /// <inheritdoc/>
         public string? CancellationReason { get; set; }

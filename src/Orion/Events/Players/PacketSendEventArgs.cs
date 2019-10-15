@@ -18,13 +18,12 @@
 using System;
 using Orion.Packets;
 using Orion.Players;
-using Serilog.Events;
 
 namespace Orion.Events.Players {
     /// <summary>
     /// Provides data for the <see cref="IPlayerService.PacketSend"/> event.
     /// </summary>
-    [EventArgs("packet-send", LogLevel = LogEventLevel.Verbose)]
+    [EventArgs("packet-send")]
     public sealed class PacketSendEventArgs : PacketEventArgs {
         /// <summary>
         /// Gets the receiver.

@@ -17,13 +17,12 @@
 
 using System;
 using Orion.Items;
-using Serilog.Events;
 
 namespace Orion.Events.Items {
     /// <summary>
     /// Provides data for the <see cref="IItemService.ItemSetDefaults"/> event.
     /// </summary>
-    [EventArgs("item-defaults", LogLevel = LogEventLevel.Verbose)]
+    [EventArgs("item-defaults")]
     public sealed class ItemSetDefaultsEventArgs : ItemEventArgs, ICancelable {
         /// <inheritdoc/>
         public string? CancellationReason { get; set; }

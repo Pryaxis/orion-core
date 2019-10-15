@@ -23,7 +23,7 @@ namespace Orion.Events.Projectiles {
     /// <summary>
     /// Provides data for the <see cref="IProjectileService.ProjectileSetDefaults"/> event.
     /// </summary>
-    [EventArgs("proj-defaults", LogLevel = LogEventLevel.Verbose)]
+    [EventArgs("proj-defaults")]
     public sealed class ProjectileSetDefaultsEventArgs : ProjectileEventArgs, ICancelable {
         /// <inheritdoc/>
         public string? CancellationReason { get; set; }

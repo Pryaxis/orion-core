@@ -129,12 +129,6 @@
   <data name="EventHandlerCollection_InvokeHandler" xml:space="preserve">
     <value>{EventName}: Invoking {RegistrationName}</value>
   </data>
-  <data name="EventHandlerCollection_Register" xml:space="preserve">
-    <value>{EventName}: Registered {RegistrationName}</value>
-  </data>
-  <data name="EventHandlerCollection_Unregister" xml:space="preserve">
-    <value>{EventName}: Unregistered {RegistrationName}</value>
-  </data>
   <data name="ItemService_SpawnItem" xml:space="preserve">
     <value>Spawning item {Type} x{StackSize} at {Position}</value>
   </data>

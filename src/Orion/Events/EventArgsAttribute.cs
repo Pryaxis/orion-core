@@ -17,7 +17,6 @@
 
 using System;
 using JetBrains.Annotations;
-using Serilog.Events;
 
 namespace Orion.Events {
     /// <summary>
@@ -29,29 +28,18 @@ namespace Orion.Events {
         /// <summary>
         /// Gets the event's name, which is used for logs.
         /// </summary>
+        /// <value>The event's name.</value>
         public string Name { get; }
-
-        /// <summary>
-        /// Gets or sets the log level for the event.
-        /// 
-        /// <para/>
-        /// 
-        /// By default this is <c>Debug</c>. Noisier events may want to use <c>Verbose</c>.
-        /// </summary>
-        public LogEventLevel LogLevel { get; set; } = LogEventLevel.Debug;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="EventArgsAttribute"/> class with the specified name.
         /// </summary>
-        /// <param name="name">
-        /// The name, which is used for logs.
-        /// 
-        /// <para/>
-        /// 
-        /// This should be short while still disambiguating the event among all events. The convention is to use
-        /// <c>kebab-case</c>.
-        /// </param>
+        /// <param name="name">The name, which is used for logs.</param>
         /// <exception cref="ArgumentNullException"><paramref name="name"/> is <see langword="null"/>.</exception>
+        /// <remarks>
+        /// The name should be short while <i>still disambiguating</i> the event among all other events. The convention
+        /// is to use <c>kebab-case</c>.
+        /// </remarks>
         public EventArgsAttribute(string name) {
             Name = name ?? throw new ArgumentNullException(nameof(name));
         }

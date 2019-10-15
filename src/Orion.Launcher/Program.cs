@@ -64,7 +64,7 @@ namespace Orion.Launcher {
             var log = new LoggerConfiguration()
                 .MinimumLevel.Is(LogLevel)
                 .WriteTo.Console(
-                    outputTemplate: "[{Timestamp:HH:mm:ss} {Level:u3}] {Name}: {Message:lj}{NewLine}{Exception}",
+                    outputTemplate: "[{Timestamp:HH:mm:ss} {Level:u3}] {ServiceName}: {Message:lj}{NewLine}{Exception}",
                     theme: AnsiConsoleTheme.Code)
                 .WriteTo.File(Path.Combine("logs", "log-.txt"),
                     rollingInterval: RollingInterval.Day,

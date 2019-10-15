@@ -17,13 +17,12 @@
 
 using System;
 using Orion.Items;
-using Serilog.Events;
 
 namespace Orion.Events.Items {
     /// <summary>
     /// Provides data for the <see cref="IItemService.ItemUpdate"/> event.
     /// </summary>
-    [EventArgs("item-update", LogLevel = LogEventLevel.Verbose)]
+    [EventArgs("item-update")]
     public sealed class ItemUpdateEventArgs : ItemEventArgs, ICancelable {
         /// <inheritdoc/>
         public string? CancellationReason { get; set; }

@@ -23,15 +23,8 @@ using Xunit;
 namespace Orion.Events {
     public class EventHandlerCollectionTests {
         [Fact]
-        public void Ctor_NullLog_ThrowsArgumentNullException() {
-            Func<EventHandlerCollection<TestEventArgs>> func = () => new EventHandlerCollection<TestEventArgs>(null);
-
-            func.Should().Throw<ArgumentNullException>();
-        }
-
-        [Fact]
         public void Invoke_ThrowsNotImplementedException() {
-            var collection = new EventHandlerCollection<TestEventArgs>(Logger.None);
+            var collection = new EventHandlerCollection<TestEventArgs>();
             collection.RegisterHandler(TestHandler3);
             var args = new TestEventArgs();
 
@@ -40,7 +33,7 @@ namespace Orion.Events {
 
         [Fact]
         public void Invoke_NullArgs_ThrowsArgumentNullException() {
-            var collection = new EventHandlerCollection<TestEventArgs>(Logger.None);
+            var collection = new EventHandlerCollection<TestEventArgs>();
             collection.RegisterHandler(TestHandler);
             Action action = () => collection.Invoke(this, null);
 
@@ -49,7 +42,7 @@ namespace Orion.Events {
 
         [Fact]
         public void RegisterHandler() {
-            var collection = new EventHandlerCollection<TestEventArgs>(Logger.None);
+            var collection = new EventHandlerCollection<TestEventArgs>();
             collection.RegisterHandler(TestHandler);
             var args = new TestEventArgs();
 
@@ -60,7 +53,7 @@ namespace Orion.Events {
 
         [Fact]
         public void RegisterHandler_Priority() {
-            var collection = new EventHandlerCollection<TestEventArgs>(Logger.None);
+            var collection = new EventHandlerCollection<TestEventArgs>();
             collection.RegisterHandler(TestHandler2);
             collection.RegisterHandler(TestHandler);
             var args = new TestEventArgs();
@@ -71,8 +64,19 @@ namespace Orion.Events {
         }
 
         [Fact]
+        public void RegisterHandler_Log() {
+            var collection = new EventHandlerCollection<TestEventArgs>();
+            collection.RegisterHandler(TestHandler, Logger.None);
+            var args = new TestEventArgs();
+
+            collection.Invoke(this, args);
+
+            args.Value.Should().Be(100);
+        }
+
+        [Fact]
         public void RegisterHandler_NullHandler_ThrowsArgumentNullException() {
-            var collection = new EventHandlerCollection<TestEventArgs>(Logger.None);
+            var collection = new EventHandlerCollection<TestEventArgs>();
             Action action = () => collection.RegisterHandler(null);
 
             action.Should().Throw<ArgumentNullException>();
@@ -80,7 +84,7 @@ namespace Orion.Events {
 
         [Fact]
         public void UnregisterHandler() {
-            var collection = new EventHandlerCollection<TestEventArgs>(Logger.None);
+            var collection = new EventHandlerCollection<TestEventArgs>();
             collection.RegisterHandler(TestHandler2);
             collection.RegisterHandler(TestHandler);
             collection.UnregisterHandler(TestHandler2).Should().BeTrue();
@@ -93,14 +97,14 @@ namespace Orion.Events {
 
         [Fact]
         public void UnregisterHandler_ReturnsFalse() {
-            var collection = new EventHandlerCollection<TestEventArgs>(Logger.None);
+            var collection = new EventHandlerCollection<TestEventArgs>();
 
             collection.UnregisterHandler(TestHandler).Should().BeFalse();
         }
 
         [Fact]
         public void UnregisterHandler_NullHandler_ThrowsArgumentNullException() {
-            var collection = new EventHandlerCollection<TestEventArgs>(Logger.None);
+            var collection = new EventHandlerCollection<TestEventArgs>();
             Action action = () => collection.UnregisterHandler(null);
 
             action.Should().Throw<ArgumentNullException>();

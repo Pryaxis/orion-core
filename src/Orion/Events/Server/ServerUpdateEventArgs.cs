@@ -16,12 +16,11 @@
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
 using System;
-using Serilog.Events;
 
 namespace Orion.Events.Server {
     /// <summary>
     /// Provides data for the <see cref="OrionKernel.ServerUpdate"/> event.
     /// </summary>
-    [EventArgs("server-update", LogLevel = LogEventLevel.Verbose)]
+    [EventArgs("server-update")]
     public sealed class ServerUpdateEventArgs : ServerEventArgs { }
 }

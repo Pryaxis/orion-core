@@ -68,16 +68,16 @@ namespace Orion.Players {
                 Main.player.AsMemory(..^1),
                 (playerIndex, terrariaPlayer) => new OrionPlayer(this, playerIndex, terrariaPlayer));
 
-            PacketReceive = new EventHandlerCollection<PacketReceiveEventArgs>(Log);
-            PacketSend = new EventHandlerCollection<PacketSendEventArgs>(Log);
-            PlayerConnect = new EventHandlerCollection<PlayerConnectEventArgs>(Log);
-            PlayerData = new EventHandlerCollection<PlayerDataEventArgs>(Log);
-            PlayerInventorySlot = new EventHandlerCollection<PlayerInventorySlotEventArgs>(Log);
-            PlayerJoin = new EventHandlerCollection<PlayerJoinEventArgs>(Log);
-            PlayerPvp = new EventHandlerCollection<PlayerPvpEventArgs>(Log);
-            PlayerTeam = new EventHandlerCollection<PlayerTeamEventArgs>(Log);
-            PlayerChat = new EventHandlerCollection<PlayerChatEventArgs>(Log);
-            PlayerDisconnected = new EventHandlerCollection<PlayerDisconnectedEventArgs>(Log);
+            PacketReceive = new EventHandlerCollection<PacketReceiveEventArgs>();
+            PacketSend = new EventHandlerCollection<PacketSendEventArgs>();
+            PlayerConnect = new EventHandlerCollection<PlayerConnectEventArgs>();
+            PlayerData = new EventHandlerCollection<PlayerDataEventArgs>();
+            PlayerInventorySlot = new EventHandlerCollection<PlayerInventorySlotEventArgs>();
+            PlayerJoin = new EventHandlerCollection<PlayerJoinEventArgs>();
+            PlayerPvp = new EventHandlerCollection<PlayerPvpEventArgs>();
+            PlayerTeam = new EventHandlerCollection<PlayerTeamEventArgs>();
+            PlayerChat = new EventHandlerCollection<PlayerChatEventArgs>();
+            PlayerDisconnected = new EventHandlerCollection<PlayerDisconnectedEventArgs>();
 
             Hooks.Net.ReceiveData = ReceiveDataHandler;
             Hooks.Net.SendBytes = SendBytesHandler;

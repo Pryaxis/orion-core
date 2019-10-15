@@ -97,24 +97,6 @@ namespace Orion.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to {EventName}: Registered {RegistrationName}.
-        /// </summary>
-        internal static string EventHandlerCollection_Register {
-            get {
-                return ResourceManager.GetString("EventHandlerCollection_Register", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to {EventName}: Unregistered {RegistrationName}.
-        /// </summary>
-        internal static string EventHandlerCollection_Unregister {
-            get {
-                return ResourceManager.GetString("EventHandlerCollection_Unregister", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Spawning item {Type} x{StackSize} at {Position}.
         /// </summary>
         internal static string ItemService_SpawnItem {

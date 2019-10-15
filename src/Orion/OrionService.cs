@@ -30,7 +30,7 @@ namespace Orion {
         /// <summary>
         /// Gets the service's log.
         /// </summary>
-        protected ILogger Log { get; }
+        public ILogger Log { get; }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="OrionService"/> class with the specified log.
