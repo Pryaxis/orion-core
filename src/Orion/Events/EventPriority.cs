@@ -50,12 +50,9 @@ namespace Orion.Events {
         Highest,
 
         /// <summary>
-        /// Indicates that the event handler should have the monitor priority.
+        /// Indicates that the event handler should have the monitor priority. The event handler is guaranteed to see
+        /// the latest information, but is rqeuired to only <b>observe</b> the event.
         /// </summary>
-        /// <remarks>
-        /// Event handlers with this priority are required to have access to the latest information, which means that
-        /// event handlers with this priority should only <b>observe</b> the event.
-        /// </remarks>
         Monitor
     }
 }

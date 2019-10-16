@@ -24,8 +24,9 @@ namespace Orion.Events.Players {
     /// </summary>
     public abstract class PlayerEventArgs : EventArgs {
         /// <summary>
-        /// Gets the player.
+        /// Gets the player involved in the event.
         /// </summary>
+        /// <value>The player involved in the event.</value>
         public IPlayer Player { get; }
 
         private protected PlayerEventArgs(IPlayer player) {

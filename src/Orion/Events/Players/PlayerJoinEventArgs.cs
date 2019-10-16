@@ -22,7 +22,7 @@ using Orion.Players;
 
 namespace Orion.Events.Players {
     /// <summary>
-    /// Provides data for the <see cref="IPlayerService.PlayerJoin"/> event.
+    /// Provides data for the <see cref="IPlayerService.PlayerJoin"/> event. This event can be canceled.
     /// </summary>
     [EventArgs("player-join")]
     public sealed class PlayerJoinEventArgs : PlayerEventArgs, ICancelable {

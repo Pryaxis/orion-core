@@ -51,7 +51,7 @@ namespace Orion.Events {
             new Dictionary<EventHandler<TEventArgs>, Registration>();
 
         /// <summary>
-        /// Gets the event's name, which is used for logging.
+        /// Gets the event's name. This is used for logging.
         /// </summary>
         /// <value>
         /// The event's name. This is taken from the <see cref="EventArgsAttribute.Name"/> property on the
@@ -60,6 +60,13 @@ namespace Orion.Events {
         /// If the attribute is missing, then the event name will default to the type name of
         /// <typeparamref name="TEventArgs"/>.
         /// </value>
+        /// <remarks>
+        /// The name is taken from the <see cref="EventArgsAttribute.Name"/> property on the
+        /// <see cref="EventArgsAttribute"/> attribute annotating the <typeparamref name="TEventArgs"/> class. <para/>
+        /// 
+        /// If the attribute is missing, then the event name will default to the type name of
+        /// <typeparamref name="TEventArgs"/>.
+        /// </remarks>
         public string EventName { get; } =
             typeof(TEventArgs).GetCustomAttribute<EventArgsAttribute?>()?.Name ?? typeof(TEventArgs).Name;
 
@@ -112,8 +119,8 @@ namespace Orion.Events {
         /// <exception cref="ArgumentNullException"><paramref name="handler"/> is <see langword="null"/>.</exception>
         /// <remarks>
         /// <paramref name="log"/> will be used to provide logging for the
-        /// <see cref="EventHandlerCollection{TEventArgs}"/>. It should be included if possible, as it greatly helps
-        /// with debugging.
+        /// <see cref="EventHandlerCollection{TEventArgs}"/>. It should be included if possible as it greatly helps with
+        /// debugging.
         /// </remarks>
         public void RegisterHandler(EventHandler<TEventArgs> handler, ILogger? log = null) {
             if (handler is null) {

@@ -17,20 +17,20 @@
 
 using System;
 using Orion.Projectiles;
-using Serilog.Events;
 
 namespace Orion.Events.Projectiles {
     /// <summary>
-    /// Provides data for the <see cref="IProjectileService.ProjectileSetDefaults"/> event.
+    /// Provides data for the <see cref="IProjectileService.ProjectileSetDefaults"/> event. This event can be canceled.
     /// </summary>
     [EventArgs("proj-defaults")]
     public sealed class ProjectileSetDefaultsEventArgs : ProjectileEventArgs, ICancelable {
         /// <inheritdoc/>
         public string? CancellationReason { get; set; }
-
+        
         /// <summary>
-        /// Gets or sets the projectile type.
+        /// Gets or sets the projectile type that the projectile's defaults are being set to.
         /// </summary>
+        /// <value>The projectile type that the item's defaults are being set to.</value>
         public ProjectileType ProjectileType { get; set; }
 
         /// <summary>

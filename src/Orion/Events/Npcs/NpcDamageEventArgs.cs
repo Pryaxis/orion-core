@@ -20,7 +20,7 @@ using Orion.Npcs;
 
 namespace Orion.Events.Npcs {
     /// <summary>
-    /// Provides data for the <see cref="INpcService.NpcDamage"/> event.
+    /// Provides data for the <see cref="INpcService.NpcDamage"/> event. This event can be canceled.
     /// </summary>
     [EventArgs("npc-damage")]
     public sealed class NpcDamageEventArgs : NpcEventArgs, ICancelable {
@@ -30,21 +30,29 @@ namespace Orion.Events.Npcs {
         /// <summary>
         /// Gets or sets the damage.
         /// </summary>
+        /// <value>The damage.</value>
         public int Damage { get; set; }
 
         /// <summary>
         /// Gets or sets the knockback.
         /// </summary>
+        /// <value>The knockback.</value>
         public float Knockback { get; set; }
 
         /// <summary>
         /// Gets or sets the hit direction. Values are -1 or 1.
         /// </summary>
+        /// <value>The hit direction.</value>
         public sbyte HitDirection { get; set; }
 
         /// <summary>
         /// Gets or sets a value indicating whether the hit is critical.
         /// </summary>
+        /// <value><see langword="true"/> if the hit is critical; otherwise, <see langword="false"/>.</value>
+        /// <remarks>
+        /// A critical hit doubles the damage dealt to the NPC after defense and other attributes are factored into the
+        /// damage calculation.
+        /// </remarks>
         public bool IsCriticalHit { get; set; }
 
         /// <summary>

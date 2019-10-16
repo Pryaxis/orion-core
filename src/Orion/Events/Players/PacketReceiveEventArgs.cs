@@ -18,17 +18,20 @@
 using System;
 using Orion.Packets;
 using Orion.Players;
-using Serilog.Events;
 
 namespace Orion.Events.Players {
     /// <summary>
     /// Provides data for the <see cref="IPlayerService.PacketReceive"/> event.
     /// </summary>
     [EventArgs("packet-recv")]
-    public sealed class PacketReceiveEventArgs : PacketEventArgs {
+    public sealed class PacketReceiveEventArgs : PacketEventArgs, ICancelable {
+        /// <inheritdoc/>
+        public string? CancellationReason { get; set; }
+
         /// <summary>
-        /// Gets the sender.
+        /// Gets the packet sender.
         /// </summary>
+        /// <value>The packet sender.</value>
         public IPlayer Sender { get; }
 
         /// <summary>

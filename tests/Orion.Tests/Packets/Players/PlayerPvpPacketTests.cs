@@ -36,7 +36,7 @@ namespace Orion.Packets.Players {
             var packet = (PlayerPvpPacket)Packet.ReadFromStream(stream, PacketContext.Server);
 
             packet.PlayerIndex.Should().Be(0);
-            packet.PlayerIsInPvp.Should().BeTrue();
+            packet.IsPlayerInPvp.Should().BeTrue();
         }
 
         [Fact]

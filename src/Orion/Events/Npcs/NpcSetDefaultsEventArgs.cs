@@ -17,20 +17,20 @@
 
 using System;
 using Orion.Npcs;
-using Serilog.Events;
 
 namespace Orion.Events.Npcs {
     /// <summary>
-    /// Provides data for the <see cref="INpcService.NpcSetDefaults"/> event.
+    /// Provides data for the <see cref="INpcService.NpcSetDefaults"/> event. This event can be canceled.
     /// </summary>
     [EventArgs("npc-defaults")]
     public sealed class NpcSetDefaultsEventArgs : NpcEventArgs, ICancelable {
         /// <inheritdoc/>
         public string? CancellationReason { get; set; }
-
+        
         /// <summary>
-        /// Gets or sets the NPC type.
+        /// Gets or sets the NPC type that the NPC's defaults are being set to.
         /// </summary>
+        /// <value>The NPC type that the NPC's defaults are being set to.</value>
         public NpcType NpcType { get; set; }
 
         /// <summary>

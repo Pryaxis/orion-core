@@ -21,7 +21,7 @@ using System.Diagnostics.Contracts;
 
 namespace Orion.Events.Server {
     /// <summary>
-    /// Provides data for the <see cref="OrionKernel.ServerCommand"/> event.
+    /// Provides data for the <see cref="OrionKernel.ServerCommand"/> event. This event can be canceled.
     /// </summary>
     [EventArgs("server-command")]
     public sealed class ServerCommandEventArgs : ServerEventArgs, ICancelable {
@@ -29,14 +29,16 @@ namespace Orion.Events.Server {
         public string? CancellationReason { get; set; }
 
         /// <summary>
-        /// Gets the input.
+        /// Gets the input from the command line.
         /// </summary>
+        /// <value>The input from the command line.</value>
         public string Input { get; }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ServerCommandEventArgs"/> class with the specified input.
         /// </summary>
         /// <param name="input">The input.</param>
+        /// <exception cref="ArgumentNullException"><paramref name="input"/> is <see langword="null"/>.</exception>
         public ServerCommandEventArgs(string input) {
             Input = input ?? throw new ArgumentNullException(nameof(input));
         }

@@ -23,7 +23,7 @@ using Orion.Players;
 
 namespace Orion.Events.Players {
     /// <summary>
-    /// Provides data for the <see cref="IPlayerService.PlayerConnect"/> event.
+    /// Provides data for the <see cref="IPlayerService.PlayerConnect"/> event. This event can be canceled.
     /// </summary>
     [EventArgs("player-connect")]
     public sealed class PlayerConnectEventArgs : PlayerEventArgs, ICancelable {
@@ -32,10 +32,18 @@ namespace Orion.Events.Players {
         /// <inheritdoc/>
         public string? CancellationReason { get; set; }
 
-        /// <inheritdoc cref="PlayerConnectPacket.PlayerVersionString"/>
+        /// <summary>
+        /// Gets or sets the player's version string.
+        /// </summary>
+        /// <value>The player's version string.</value>
+        /// <exception cref="ArgumentNullException"><paramref name="value"/> is <see langword="null"/>.</exception>
+        /// <remarks>
+        /// The version string restricts what client versions can connect to the server. It takes the form
+        /// <c>Terraria###</c>, where <c>###</c> is the version number.
+        /// </remarks>
         public string PlayerVersionString {
             get => _packet.PlayerVersionString;
-            set => _packet.PlayerVersionString = value;
+            set => _packet.PlayerVersionString = value ?? throw new ArgumentNullException(nameof(value));
         }
 
         /// <summary>

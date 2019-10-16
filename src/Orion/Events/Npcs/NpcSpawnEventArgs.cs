@@ -20,7 +20,7 @@ using Orion.Npcs;
 
 namespace Orion.Events.Npcs {
     /// <summary>
-    /// Provides data for the <see cref="INpcService.NpcSpawn"/> event.
+    /// Provides data for the <see cref="INpcService.NpcSpawn"/> event. This event can be canceled.
     /// </summary>
     [EventArgs("npc-spawn")]
     public sealed class NpcSpawnEventArgs : NpcEventArgs, ICancelable {

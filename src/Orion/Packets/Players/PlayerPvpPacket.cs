@@ -44,7 +44,7 @@ namespace Orion.Packets.Players {
         /// <summary>
         /// Gets or sets a value indicating whether the player is in PvP.
         /// </summary>
-        public bool PlayerIsInPvp {
+        public bool IsPlayerInPvp {
             get => _playerIsInPvp;
             set {
                 _playerIsInPvp = value;
@@ -54,7 +54,7 @@ namespace Orion.Packets.Players {
 
         /// <inheritdoc/>
         [Pure, ExcludeFromCodeCoverage]
-        public override string ToString() => $"{Type}[#={PlayerIndex}, {PlayerIsInPvp}]";
+        public override string ToString() => $"{Type}[#={PlayerIndex}, {IsPlayerInPvp}]";
 
         private protected override void ReadFromReader(BinaryReader reader, PacketContext context) {
             _playerIndex = reader.ReadByte();

@@ -24,8 +24,9 @@ namespace Orion.Events.Npcs {
     /// </summary>
     public abstract class NpcEventArgs : EventArgs {
         /// <summary>
-        /// Gets the NPC.
+        /// Gets the NPC involved in the event.
         /// </summary>
+        /// <value>The NPC involved in the event.</value>
         public INpc Npc { get; }
 
         private protected NpcEventArgs(INpc npc) {

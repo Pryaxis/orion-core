@@ -50,12 +50,12 @@ namespace Orion.Packets.Players {
             var packet = (PlayerDataPacket)Packet.ReadFromStream(stream, PacketContext.Server);
 
             packet.PlayerIndex.Should().Be(0);
-            packet.PlayerSkinType.Should().Be(2);
-            packet.PlayerHairType.Should().Be(50);
+            packet.PlayerClothesStyle.Should().Be(2);
+            packet.PlayerHairstyle.Should().Be(50);
             packet.PlayerName.Should().Be("f");
             packet.PlayerHairDye.Should().Be(0);
-            packet.PlayerHiddenVisualsFlags.Should().Be(0);
-            packet.PlayerHiddenMiscFlags.Should().Be(0);
+            packet.PlayerEquipmentHiddenFlags.Should().Be(0);
+            packet.PlayerMiscEquipmentHiddenFlags.Should().Be(0);
             packet.PlayerHairColor.Should().Be(new Color(26, 131, 54));
             packet.PlayerSkinColor.Should().Be(new Color(158, 74, 51));
             packet.PlayerEyeColor.Should().Be(new Color(47, 39, 88));
@@ -64,7 +64,7 @@ namespace Orion.Packets.Players {
             packet.PlayerPantsColor.Should().Be(new Color(162, 167, 255));
             packet.PlayerShoeColor.Should().Be(new Color(212, 159, 76));
             packet.PlayerDifficulty.Should().Be(PlayerDifficulty.Softcore);
-            packet.PlayerHasExtraAccessory.Should().BeFalse();
+            packet.PlayerHasExtraAccessorySlot.Should().BeFalse();
         }
 
         [Fact]

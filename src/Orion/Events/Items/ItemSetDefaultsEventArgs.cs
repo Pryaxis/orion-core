@@ -20,7 +20,7 @@ using Orion.Items;
 
 namespace Orion.Events.Items {
     /// <summary>
-    /// Provides data for the <see cref="IItemService.ItemSetDefaults"/> event.
+    /// Provides data for the <see cref="IItemService.ItemSetDefaults"/> event. This event can be canceled.
     /// </summary>
     [EventArgs("item-defaults")]
     public sealed class ItemSetDefaultsEventArgs : ItemEventArgs, ICancelable {

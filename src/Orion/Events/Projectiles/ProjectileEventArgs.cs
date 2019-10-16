@@ -24,8 +24,9 @@ namespace Orion.Events.Projectiles {
     /// </summary>
     public abstract class ProjectileEventArgs : EventArgs {
         /// <summary>
-        /// Gets the projectile.
+        /// Gets the projectile involved in the event.
         /// </summary>
+        /// <value>The projectile involved in the event.</value>
         public IProjectile Projectile { get; }
 
         private protected ProjectileEventArgs(IProjectile projectile) {

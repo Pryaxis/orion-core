@@ -23,7 +23,7 @@ using Orion.Players;
 
 namespace Orion.Events.Players {
     /// <summary>
-    /// Provides data for the <see cref="IPlayerService.PlayerTeam"/> event.
+    /// Provides data for the <see cref="IPlayerService.PlayerTeam"/> event. This event can be canceled.
     /// </summary>
     [EventArgs("player-team")]
     public sealed class PlayerTeamEventArgs : PlayerEventArgs, ICancelable {
@@ -32,7 +32,10 @@ namespace Orion.Events.Players {
         /// <inheritdoc/>
         public string? CancellationReason { get; set; }
 
-        /// <inheritdoc cref="PlayerTeamPacket.PlayerTeam"/>
+        /// <summary>
+        /// Gets or sets the player's team.
+        /// </summary>
+        /// <value>The player's team.</value>
         public PlayerTeam PlayerTeam {
             get => _packet.PlayerTeam;
             set => _packet.PlayerTeam = value;

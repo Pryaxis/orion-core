@@ -45,14 +45,14 @@ namespace Orion.Events.Players {
 
         [Fact]
         public void SetChatCommand_NullValue_ThrowsArgumentNullException() {
-            Action action = () => _args.ChatCommand = null;
+            Action action = () => _args.PlayerChatCommand = null;
 
             action.Should().Throw<ArgumentNullException>();
         }
 
         [Fact]
         public void SetChatText_NullValue_ThrowsArgumentNullException() {
-            Action action = () => _args.ChatText = null;
+            Action action = () => _args.PlayerChatText = null;
 
             action.Should().Throw<ArgumentNullException>();
         }

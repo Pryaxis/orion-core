@@ -20,7 +20,7 @@ using Orion.World;
 
 namespace Orion.Events.World {
     /// <summary>
-    /// Provides data for the <see cref="IWorldService.WorldSave"/> event.
+    /// Provides data for the <see cref="IWorldService.WorldSave"/> event. This event can be canceled.
     /// </summary>
     [EventArgs("world-save")]
     public sealed class WorldSaveEventArgs : EventArgs, ICancelable {

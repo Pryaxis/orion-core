@@ -20,7 +20,7 @@ using Orion.Items;
 
 namespace Orion.Events.Items {
     /// <summary>
-    /// Provides data for the <see cref="IItemService.ItemUpdate"/> event.
+    /// Provides data for the <see cref="IItemService.ItemUpdate"/> event. This event can be canceled.
     /// </summary>
     [EventArgs("item-update")]
     public sealed class ItemUpdateEventArgs : ItemEventArgs, ICancelable {

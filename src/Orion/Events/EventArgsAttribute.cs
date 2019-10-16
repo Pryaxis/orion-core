@@ -26,7 +26,7 @@ namespace Orion.Events {
     [BaseTypeRequired(typeof(EventArgs))]
     public sealed class EventArgsAttribute : Attribute {
         /// <summary>
-        /// Gets the event's name, which is used for logs.
+        /// Gets the event's name. This is used for logs.
         /// </summary>
         /// <value>The event's name.</value>
         public string Name { get; }
@@ -34,7 +34,7 @@ namespace Orion.Events {
         /// <summary>
         /// Initializes a new instance of the <see cref="EventArgsAttribute"/> class with the specified name.
         /// </summary>
-        /// <param name="name">The name, which is used for logs.</param>
+        /// <param name="name">The name. This is used for logs.</param>
         /// <exception cref="ArgumentNullException"><paramref name="name"/> is <see langword="null"/>.</exception>
         /// <remarks>
         /// The name should be short while <i>still disambiguating</i> the event among all other events. The convention

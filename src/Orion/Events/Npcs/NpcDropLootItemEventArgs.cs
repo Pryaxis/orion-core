@@ -21,7 +21,7 @@ using Orion.Npcs;
 
 namespace Orion.Events.Npcs {
     /// <summary>
-    /// Provides data for the <see cref="INpcService.NpcDropLootItem"/> event.
+    /// Provides data for the <see cref="INpcService.NpcDropLootItem"/> event. This event can be canceled.
     /// </summary>
     [EventArgs("npc-loot")]
     public sealed class NpcDropLootItemEventArgs : NpcEventArgs, ICancelable {
@@ -31,16 +31,19 @@ namespace Orion.Events.Npcs {
         /// <summary>
         /// Gets or sets the loot item's type.
         /// </summary>
+        /// <value>The loot item's type.</value>
         public ItemType LootItemType { get; set; }
 
         /// <summary>
         /// Gets or sets the loot item's stack size.
         /// </summary>
+        /// <value>The loot item's stack size.</value>
         public int LootItemStackSize { get; set; }
 
         /// <summary>
         /// Gets or sets the loot item's prefix.
         /// </summary>
+        /// <value>The loot item's prefix.</value>
         public ItemPrefix LootItemPrefix { get; set; }
 
         /// <summary>

@@ -29,12 +29,12 @@ namespace Orion.Packets.Players {
     /// </summary>
     public sealed class PlayerDataPacket : Packet {
         private byte _playerIndex;
-        private byte _playerSkinType;
-        private byte _playerHairType;
+        private byte _playerClothesStyle;
+        private byte _playerHairstyle;
         private string _playerName = string.Empty;
         private byte _playerHairDye;
-        private ushort _playerHiddenVisualsFlags;
-        private byte _playerHiddenMiscFlags;
+        private ushort _playerEquipmentHiddenFlags;
+        private byte _playerMiscEquipmentHiddenFlags;
         private Color _playerHairColor;
         private Color _playerSkinColor;
         private Color _playerEyeColor;
@@ -43,7 +43,7 @@ namespace Orion.Packets.Players {
         private Color _playerPantsColor;
         private Color _playerShoeColor;
         private PlayerDifficulty _playerDifficulty;
-        private bool _playerHasExtraAccessory;
+        private bool _playerHasExtraAccessorySlot;
 
         /// <inheritdoc/>
         public override PacketType Type => PacketType.PlayerData;
@@ -62,10 +62,10 @@ namespace Orion.Packets.Players {
         /// <summary>
         /// Gets or sets the player's skin type.
         /// </summary>
-        public byte PlayerSkinType {
-            get => _playerSkinType;
+        public byte PlayerClothesStyle {
+            get => _playerClothesStyle;
             set {
-                _playerSkinType = value;
+                _playerClothesStyle = value;
                 _isDirty = true;
             }
         }
@@ -73,10 +73,10 @@ namespace Orion.Packets.Players {
         /// <summary>
         /// Gets or sets the player's hair type.
         /// </summary>
-        public byte PlayerHairType {
-            get => _playerHairType;
+        public byte PlayerHairstyle {
+            get => _playerHairstyle;
             set {
-                _playerHairType = value;
+                _playerHairstyle = value;
                 _isDirty = true;
             }
         }
@@ -107,10 +107,10 @@ namespace Orion.Packets.Players {
         /// <summary>
         /// Gets or sets the player's hidden visuals flags.
         /// </summary>
-        public ushort PlayerHiddenVisualsFlags {
-            get => _playerHiddenVisualsFlags;
+        public ushort PlayerEquipmentHiddenFlags {
+            get => _playerEquipmentHiddenFlags;
             set {
-                _playerHiddenVisualsFlags = value;
+                _playerEquipmentHiddenFlags = value;
                 _isDirty = true;
             }
         }
@@ -118,10 +118,10 @@ namespace Orion.Packets.Players {
         /// <summary>
         /// Gets or sets the player's hidden misc flags.
         /// </summary>
-        public byte PlayerHiddenMiscFlags {
-            get => _playerHiddenMiscFlags;
+        public byte PlayerMiscEquipmentHiddenFlags {
+            get => _playerMiscEquipmentHiddenFlags;
             set {
-                _playerHiddenMiscFlags = value;
+                _playerMiscEquipmentHiddenFlags = value;
                 _isDirty = true;
             }
         }
@@ -217,10 +217,10 @@ namespace Orion.Packets.Players {
         /// <summary>
         /// Gets or sets a value indicating whether the player has an extra accessory.
         /// </summary>
-        public bool PlayerHasExtraAccessory {
-            get => _playerHasExtraAccessory;
+        public bool PlayerHasExtraAccessorySlot {
+            get => _playerHasExtraAccessorySlot;
             set {
-                _playerHasExtraAccessory = value;
+                _playerHasExtraAccessorySlot = value;
                 _isDirty = true;
             }
         }
@@ -231,12 +231,12 @@ namespace Orion.Packets.Players {
 
         private protected override void ReadFromReader(BinaryReader reader, PacketContext context) {
             _playerIndex = reader.ReadByte();
-            _playerSkinType = reader.ReadByte();
-            _playerHairType = reader.ReadByte();
+            _playerClothesStyle = reader.ReadByte();
+            _playerHairstyle = reader.ReadByte();
             _playerName = reader.ReadString();
             _playerHairDye = reader.ReadByte();
-            _playerHiddenVisualsFlags = reader.ReadUInt16();
-            _playerHiddenMiscFlags = reader.ReadByte();
+            _playerEquipmentHiddenFlags = reader.ReadUInt16();
+            _playerMiscEquipmentHiddenFlags = reader.ReadByte();
             _playerHairColor = reader.ReadColor();
             _playerSkinColor = reader.ReadColor();
             _playerEyeColor = reader.ReadColor();
@@ -255,18 +255,18 @@ namespace Orion.Packets.Players {
             }
 
             if (flags[2]) {
-                _playerHasExtraAccessory = true;
+                _playerHasExtraAccessorySlot = true;
             }
         }
 
         private protected override void WriteToWriter(BinaryWriter writer, PacketContext context) {
             writer.Write(_playerIndex);
-            writer.Write(_playerSkinType);
-            writer.Write(_playerHairType);
+            writer.Write(_playerClothesStyle);
+            writer.Write(_playerHairstyle);
             writer.Write(_playerName);
             writer.Write(_playerHairDye);
-            writer.Write(_playerHiddenVisualsFlags);
-            writer.Write(_playerHiddenMiscFlags);
+            writer.Write(_playerEquipmentHiddenFlags);
+            writer.Write(_playerMiscEquipmentHiddenFlags);
             writer.Write(_playerHairColor);
             writer.Write(_playerSkinColor);
             writer.Write(_playerEyeColor);
@@ -278,7 +278,7 @@ namespace Orion.Packets.Players {
             Terraria.BitsByte flags = 0;
             flags[0] = _playerDifficulty == PlayerDifficulty.Mediumcore;
             flags[1] = _playerDifficulty == PlayerDifficulty.Hardcore;
-            flags[2] = _playerHasExtraAccessory;
+            flags[2] = _playerHasExtraAccessorySlot;
             writer.Write(flags);
         }
     }

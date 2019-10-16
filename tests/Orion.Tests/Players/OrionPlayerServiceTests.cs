@@ -113,11 +113,11 @@ namespace Orion.Players {
             playerService.PlayerData.RegisterHandler((sender, args) => {
                 isRun = true;
                 args.Player.Should().BeSameAs(playerService.Players[1]);
-                args.PlayerSkinType.Should().Be(2);
-                args.PlayerHairType.Should().Be(50);
+                args.PlayerClothesStyle.Should().Be(2);
+                args.PlayerHairstyle.Should().Be(50);
                 args.PlayerName.Should().Be("f");
                 args.PlayerHairDye.Should().Be(0);
-                args.PlayerHiddenVisualsFlags.Should().Be(0);
+                args.PlayerEquipmentHiddenFlags.Should().Be(0);
                 args.PlayerHiddenMiscFlags.Should().Be(0);
                 args.PlayerHairColor.Should().Be(new Color(26, 131, 54));
                 args.PlayerSkinColor.Should().Be(new Color(158, 74, 51));
@@ -127,7 +127,7 @@ namespace Orion.Players {
                 args.PlayerPantsColor.Should().Be(new Color(162, 167, 255));
                 args.PlayerShoeColor.Should().Be(new Color(212, 159, 76));
                 args.PlayerDifficulty.Should().Be(PlayerDifficulty.Softcore);
-                args.PlayerHasExtraAccessory.Should().BeFalse();
+                args.PlayerHasExtraAccessorySlot.Should().BeFalse();
                 args.Cancel();
             });
 
@@ -177,7 +177,7 @@ namespace Orion.Players {
             playerService.PlayerPvp.RegisterHandler((sender, args) => {
                 isRun = true;
                 args.Player.Should().BeSameAs(playerService.Players[1]);
-                args.PlayerIsInPvp.Should().Be(true);
+                args.IsPlayerInPvp.Should().Be(true);
                 args.Cancel();
             });
 
@@ -208,8 +208,8 @@ namespace Orion.Players {
             var isRun = false;
             playerService.PlayerChat.RegisterHandler((sender, args) => {
                 isRun = true;
-                args.ChatCommand.Should().Be("Say");
-                args.ChatText.Should().Be("/command test");
+                args.PlayerChatCommand.Should().Be("Say");
+                args.PlayerChatText.Should().Be("/command test");
                 args.Cancel();
             });
 

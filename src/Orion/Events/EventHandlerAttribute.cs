@@ -33,14 +33,14 @@ namespace Orion.Events {
         public EventPriority Priority { get; }
 
         /// <summary>
-        /// Gets or sets the event handler's name, which is used for logs. If <see langword="null"/>, then the name
+        /// Gets or sets the event handler's name. This is used for logs. If <see langword="null"/>, then the name
         /// will be the method name.
         /// </summary>
-        /// <value>The event handler's name. If <see langword="null"/>, then the name will be the method name.</value>
+        /// <value>The event handler's name.</value>
         /// <exception cref="ArgumentNullException"><param name="value"/> is <see langword="null"/>.</exception>
         /// <remarks>
-        /// This should be short while still disambiguating the event handler among all event handlers for that event.
-        /// The convention is to use <c>kebab-case</c>.
+        /// This should be short while <i>still disambiguating</i> the event handler among all other event handlers for
+        /// that event. The convention is to use <c>kebab-case</c>.
         /// </remarks>
         [DisallowNull]
         public string? Name {

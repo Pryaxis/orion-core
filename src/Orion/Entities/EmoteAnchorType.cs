@@ -15,31 +15,26 @@
 // You should have received a copy of the GNU General Public License
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
-using Orion.Npcs;
-using Orion.Players;
-using Orion.Projectiles;
-
 namespace Orion.Entities {
     /// <summary>
     /// Specifies an emote anchor type.
     /// </summary>
     /// <remarks>
-    /// An emote anchor is an <see cref="IEntity"/> instance that an emote stays attached to during the course of its
-    /// lifetime.
+    /// An emote anchor is an entity that an emote stays attached to during the course of its lifetime.
     /// </remarks>
     public enum EmoteAnchorType : byte {
         /// <summary>
-        /// Indicates that the emote is anchored to an <see cref="INpc"/> instance.
+        /// Indicates that the emote is anchored to an NPC.
         /// </summary>
         Npc = 0,
 
         /// <summary>
-        /// Indicates that the emote is anchored to an <see cref="IPlayer"/> instance.
+        /// Indicates that the emote is anchored to a player.
         /// </summary>
         Player = 1,
 
         /// <summary>
-        /// Indicates that the emote is anchored to an <see cref="IProjectile"/> instance.
+        /// Indicates that the emote is anchored to a projectile.
         /// </summary>
         Projectile = 2,
 

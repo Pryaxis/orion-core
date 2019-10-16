@@ -23,7 +23,7 @@ using Orion.Players;
 
 namespace Orion.Events.Players {
     /// <summary>
-    /// Provides data for the <see cref="IPlayerService.PlayerChat"/> event.
+    /// Provides data for the <see cref="IPlayerService.PlayerChat"/> event. This event can be canceled.
     /// </summary>
     [EventArgs("player-chat")]
     public sealed class PlayerChatEventArgs : PlayerEventArgs, ICancelable {
@@ -32,14 +32,26 @@ namespace Orion.Events.Players {
         /// <inheritdoc/>
         public string? CancellationReason { get; set; }
 
-        /// <inheritdoc cref="ChatModule.ClientChatCommand"/>
-        public string ChatCommand {
+        /// <summary>
+        /// Gets or sets the player's chat command.
+        /// </summary>
+        /// <value>The player's chat command.</value>
+        /// <exception cref="ArgumentNullException"><paramref name="value"/> is <see langword="null"/>.</exception>
+        /// <remarks>
+        /// The command indicates what to interpret the message as. For example, a <c>Say</c> command will send the
+        /// message to everyone and an <c>Emote</c> command will send a third-person message to everyone.
+        /// </remarks>
+        public string PlayerChatCommand {
             get => _module.ClientChatCommand;
             set => _module.ClientChatCommand = value ?? throw new ArgumentNullException(nameof(value));
         }
 
-        /// <inheritdoc cref="ChatModule.ClientChatText"/>
-        public string ChatText {
+        /// <summary>
+        /// Gets or sets the player's chat text.
+        /// </summary>
+        /// <value>The player's chat text.</value>
+        /// <exception cref="ArgumentNullException"><paramref name="value"/> is <see langword="null"/>.</exception>
+        public string PlayerChatText {
             get => _module.ClientChatText;
             set => _module.ClientChatText = value ?? throw new ArgumentNullException(nameof(value));
         }
@@ -59,6 +71,6 @@ namespace Orion.Events.Players {
 
         /// <inheritdoc/>
         [Pure, ExcludeFromCodeCoverage]
-        public override string ToString() => $"[{Player.Name}, {ChatCommand} {ChatText}]";
+        public override string ToString() => $"[{Player.Name}, {PlayerChatCommand} {PlayerChatText}]";
     }
 }

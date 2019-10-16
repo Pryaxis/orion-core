@@ -23,7 +23,7 @@ using Orion.Players;
 
 namespace Orion.Events.Players {
     /// <summary>
-    /// Provides data for the <see cref="IPlayerService.PlayerPvp"/> event.
+    /// Provides data for the <see cref="IPlayerService.PlayerPvp"/> event. This event can be canceled.
     /// </summary>
     [EventArgs("player-pvp")]
     public sealed class PlayerPvpEventArgs : PlayerEventArgs, ICancelable {
@@ -31,11 +31,14 @@ namespace Orion.Events.Players {
 
         /// <inheritdoc/>
         public string? CancellationReason { get; set; }
-
-        /// <inheritdoc cref="PlayerPvpPacket.PlayerIsInPvp"/>
-        public bool PlayerIsInPvp {
-            get => _packet.PlayerIsInPvp;
-            set => _packet.PlayerIsInPvp = value;
+        
+        /// <summary>
+        /// Gets or sets a value indicating whether the player is in PvP.
+        /// </summary>
+        /// <value><see langword="true"/> if the player is in PvP; otherwise, <see langword="false"/>.</value>
+        public bool IsPlayerInPvp {
+            get => _packet.IsPlayerInPvp;
+            set => _packet.IsPlayerInPvp = value;
         }
 
         /// <summary>
@@ -53,6 +56,6 @@ namespace Orion.Events.Players {
         
         /// <inheritdoc/>
         [Pure, ExcludeFromCodeCoverage]
-        public override string ToString() => $"[{Player.Name}, {PlayerIsInPvp}]";
+        public override string ToString() => $"[{Player.Name}, {IsPlayerInPvp}]";
     }
 }

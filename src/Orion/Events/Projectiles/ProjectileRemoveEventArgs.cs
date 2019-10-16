@@ -20,7 +20,7 @@ using Orion.Projectiles;
 
 namespace Orion.Events.Projectiles {
     /// <summary>
-    /// Provides data for the <see cref="IProjectileService.ProjectileRemove"/> event.
+    /// Provides data for the <see cref="IProjectileService.ProjectileRemove"/> event. This event can be canceled.
     /// </summary>
     [EventArgs("proj-remove")]
     public sealed class ProjectileRemoveEventArgs : ProjectileEventArgs, ICancelable {

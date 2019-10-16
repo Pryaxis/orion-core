@@ -21,7 +21,7 @@ using Serilog.Events;
 
 namespace Orion.Events.Projectiles {
     /// <summary>
-    /// Provides data for the <see cref="IProjectileService.ProjectileUpdate"/> event.
+    /// Provides data for the <see cref="IProjectileService.ProjectileUpdate"/> event. This event can be canceled.
     /// </summary>
     [EventArgs("proj-update")]
     public sealed class ProjectileUpdateEventArgs : ProjectileEventArgs, ICancelable {

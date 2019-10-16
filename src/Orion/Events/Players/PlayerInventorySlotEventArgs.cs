@@ -24,7 +24,7 @@ using Orion.Players;
 
 namespace Orion.Events.Players {
     /// <summary>
-    /// Provides data for the <see cref="IPlayerService.PlayerInventorySlot"/> event.
+    /// Provides data for the <see cref="IPlayerService.PlayerInventorySlot"/> event. This event can be canceled.
     /// </summary>
     [EventArgs("player-inventory")]
     public sealed class PlayerInventorySlotEventArgs : PlayerEventArgs, ICancelable {
@@ -33,22 +33,38 @@ namespace Orion.Events.Players {
         /// <inheritdoc/>
         public string? CancellationReason { get; set; }
 
-        /// <inheritdoc cref="PlayerInventorySlotPacket.PlayerInventorySlotIndex"/>
+        /// <summary>
+        /// Gets or sets the player's inventory slot index.
+        /// </summary>
+        /// <value>The player's inventory slot index.</value>
+        /// <remarks>
+        /// This value can range from <c>0</c> to <c>219</c>. Check <see cref="IPlayerInventory"/> for a more detailed
+        /// description on the indices.
+        /// </remarks>
         public byte PlayerInventorySlotIndex => _packet.PlayerInventorySlotIndex;
 
-        /// <inheritdoc cref="PlayerInventorySlotPacket.ItemStackSize"/>
+        /// <summary>
+        /// Gets or sets the item's stack size.
+        /// </summary>
+        /// <value>The item's stack size.</value>
         public short ItemStackSize {
             get => _packet.ItemStackSize;
             set => _packet.ItemStackSize = value;
         }
 
-        /// <inheritdoc cref="PlayerInventorySlotPacket.ItemPrefix"/>
+        /// <summary>
+        /// Gets or sets the item's prefix.
+        /// </summary>
+        /// <value>The item's prefix.</value>
         public ItemPrefix ItemPrefix {
             get => _packet.ItemPrefix;
             set => _packet.ItemPrefix = value;
         }
 
-        /// <inheritdoc cref="PlayerInventorySlotPacket.ItemType"/>
+        /// <summary>
+        /// Gets or sets the item's type.
+        /// </summary>
+        /// <value>The item's type.</value>
         public ItemType ItemType {
             get => _packet.ItemType;
             set => _packet.ItemType = value;

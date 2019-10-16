@@ -17,11 +17,10 @@
 
 using System;
 using Orion.Npcs;
-using Serilog.Events;
 
 namespace Orion.Events.Npcs {
     /// <summary>
-    /// Provides data for the <see cref="INpcService.NpcUpdate"/> event.
+    /// Provides data for the <see cref="INpcService.NpcUpdate"/> event. This event can be canceled.
     /// </summary>
     [EventArgs("npc-update")]
     public sealed class NpcUpdateEventArgs : NpcEventArgs, ICancelable {

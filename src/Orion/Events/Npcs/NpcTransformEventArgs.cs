@@ -20,7 +20,7 @@ using Orion.Npcs;
 
 namespace Orion.Events.Npcs {
     /// <summary>
-    /// Provides data for the <see cref="INpcService.NpcTransform"/> event.
+    /// Provides data for the <see cref="INpcService.NpcTransform"/> event. This event can be canceled.
     /// </summary>
     [EventArgs("npc-transform")]
     public sealed class NpcTransformEventArgs : NpcEventArgs, ICancelable {
@@ -30,6 +30,7 @@ namespace Orion.Events.Npcs {
         /// <summary>
         /// Gets or sets the NPC's new type.
         /// </summary>
+        /// <value>The NPC's new type.</value>
         public NpcType NpcNewType { get; set; }
 
         /// <summary>

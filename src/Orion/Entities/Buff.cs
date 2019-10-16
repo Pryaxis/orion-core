@@ -19,16 +19,14 @@ using System;
 using System.Diagnostics.CodeAnalysis;
 using System.Diagnostics.Contracts;
 using System.IO;
-using Orion.Npcs;
 using Orion.Packets.Extensions;
-using Orion.Players;
 
 namespace Orion.Entities {
     /// <summary>
     /// Represents a buff, which consists of a buff type along with a duration.
     /// </summary>
     /// <remarks>
-    /// Buffs can be applied to both <see cref="IPlayer"/> and <see cref="INpc"/> instances.
+    /// Buffs can be applied to both players and NPCs. They typically have small effects on entities.
     /// </remarks>
     [SuppressMessage("Performance", "CA1815:Override equals and operator equals on value types",
         Justification = "Buffs will not be compared.")]

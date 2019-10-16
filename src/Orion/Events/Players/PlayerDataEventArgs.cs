@@ -19,12 +19,13 @@ using System;
 using System.Diagnostics.CodeAnalysis;
 using System.Diagnostics.Contracts;
 using Microsoft.Xna.Framework;
+using Orion.Items;
 using Orion.Packets.Players;
 using Orion.Players;
 
 namespace Orion.Events.Players {
     /// <summary>
-    /// Provides data for the <see cref="IPlayerService.PlayerData"/> event.
+    /// Provides data for the <see cref="IPlayerService.PlayerData"/> event. This event can be canceled.
     /// </summary>
     [EventArgs("player-data")]
     public sealed class PlayerDataEventArgs : PlayerEventArgs, ICancelable {
@@ -33,94 +34,148 @@ namespace Orion.Events.Players {
         /// <inheritdoc/>
         public string? CancellationReason { get; set; }
 
-        /// <inheritdoc cref="PlayerDataPacket.PlayerSkinType"/>
-        public byte PlayerSkinType {
-            get => _packet.PlayerSkinType;
-            set => _packet.PlayerSkinType = value;
+        /// <summary>
+        /// Gets or sets the player's clothes style.
+        /// </summary>
+        /// <value>The player's clothes style.</value>
+        public byte PlayerClothesStyle {
+            get => _packet.PlayerClothesStyle;
+            set => _packet.PlayerClothesStyle = value;
         }
 
-        /// <inheritdoc cref="PlayerDataPacket.PlayerHairType"/>
-        public byte PlayerHairType {
-            get => _packet.PlayerHairType;
-            set => _packet.PlayerHairType = value;
+        /// <summary>
+        /// Gets or sets the player's hairstyle.
+        /// </summary>
+        /// <value>The player's hairstyle.</value>
+        public byte PlayerHairstyle {
+            get => _packet.PlayerHairstyle;
+            set => _packet.PlayerHairstyle = value;
         }
 
-        /// <inheritdoc cref="PlayerDataPacket.PlayerName"/>
+        /// <summary>
+        /// Gets or sets the player's name.
+        /// </summary>
+        /// <value>The player's name.</value>
+        /// <exception cref="ArgumentNullException"><paramref name="value"/> is <see langword="null"/>.</exception>
         public string PlayerName {
             get => _packet.PlayerName;
-            set => _packet.PlayerName = value;
+            set => _packet.PlayerName = value ?? throw new ArgumentNullException(nameof(value));
         }
 
-        /// <inheritdoc cref="PlayerDataPacket.PlayerHairDye"/>
+        /// <summary>
+        /// Gets or sets the player's hair dye.
+        /// </summary>
+        /// <value>The player's hair dye.</value>
         public byte PlayerHairDye {
             get => _packet.PlayerHairDye;
             set => _packet.PlayerHairDye = value;
         }
-
-        /// <inheritdoc cref="PlayerDataPacket.PlayerHiddenVisualsFlags"/>
-        public ushort PlayerHiddenVisualsFlags {
-            get => _packet.PlayerHiddenVisualsFlags;
-            set => _packet.PlayerHiddenVisualsFlags = value;
+        
+        /// <summary>
+        /// Gets or sets the player's equipment hiding flags.
+        /// </summary>
+        /// <value>The player's equipment hiding flags.</value>
+        /// <remarks>This property specifies which of the player's equipment is visible.</remarks>
+        public ushort PlayerEquipmentHiddenFlags {
+            get => _packet.PlayerEquipmentHiddenFlags;
+            set => _packet.PlayerEquipmentHiddenFlags = value;
         }
-
-        /// <inheritdoc cref="PlayerDataPacket.PlayerHiddenMiscFlags"/>
+        
+        /// <summary>
+        /// Gets or sets the player's miscellaneous equipment hiding flags.
+        /// </summary>
+        /// <value>The player's miscellaneous equipment hiding flags.</value>
+        /// <remarks>This property specifies which of the player's miscellaneous equipment is visible.</remarks>
         public byte PlayerHiddenMiscFlags {
-            get => _packet.PlayerHiddenMiscFlags;
-            set => _packet.PlayerHiddenMiscFlags = value;
+            get => _packet.PlayerMiscEquipmentHiddenFlags;
+            set => _packet.PlayerMiscEquipmentHiddenFlags = value;
         }
-
-        /// <inheritdoc cref="PlayerDataPacket.PlayerHairColor"/>
+        
+        /// <summary>
+        /// Gets or sets the player's hair color. The alpha component is ignored.
+        /// </summary>
+        /// <value>The player's hair color.</value>
         public Color PlayerHairColor {
             get => _packet.PlayerHairColor;
             set => _packet.PlayerHairColor = value;
         }
-
-        /// <inheritdoc cref="PlayerDataPacket.PlayerSkinColor"/>
+        
+        /// <summary>
+        /// Gets or sets the player's skin color. The alpha component is ignored.
+        /// </summary>
+        /// <value>The player's skin color.</value>
         public Color PlayerSkinColor {
             get => _packet.PlayerSkinColor;
             set => _packet.PlayerSkinColor = value;
         }
-
-        /// <inheritdoc cref="PlayerDataPacket.PlayerEyeColor"/>
+        
+        /// <summary>
+        /// Gets or sets the player's eye color. The alpha component is ignored.
+        /// </summary>
+        /// <value>The player's eye color.</value>
         public Color PlayerEyeColor {
             get => _packet.PlayerEyeColor;
             set => _packet.PlayerEyeColor = value;
         }
-
-        /// <inheritdoc cref="PlayerDataPacket.PlayerShirtColor"/>
+        
+        /// <summary>
+        /// Gets or sets the player's shirt color. The alpha component is ignored.
+        /// </summary>
+        /// <value>The player's shirt color.</value>
         public Color PlayerShirtColor {
             get => _packet.PlayerShirtColor;
             set => _packet.PlayerShirtColor = value;
         }
-
-        /// <inheritdoc cref="PlayerDataPacket.PlayerUndershirtColor"/>
+        
+        /// <summary>
+        /// Gets or sets the player's undershirt color. The alpha component is ignored.
+        /// </summary>
+        /// <value>The player's undershirt color.</value>
         public Color PlayerUndershirtColor {
             get => _packet.PlayerUndershirtColor;
             set => _packet.PlayerUndershirtColor = value;
         }
-
-        /// <inheritdoc cref="PlayerDataPacket.PlayerPantsColor"/>
+        
+        /// <summary>
+        /// Gets or sets the player's pants color. The alpha component is ignored.
+        /// </summary>
+        /// <value>The player's pants color.</value>
         public Color PlayerPantsColor {
             get => _packet.PlayerPantsColor;
             set => _packet.PlayerPantsColor = value;
         }
 
-        /// <inheritdoc cref="PlayerDataPacket.PlayerShoeColor"/>
+        /// <summary>
+        /// Gets or sets the player's shoe color. The alpha component is ignored.
+        /// </summary>
+        /// <value>The player's shoe color.</value>
         public Color PlayerShoeColor {
             get => _packet.PlayerShoeColor;
             set => _packet.PlayerShoeColor = value;
         }
 
-        /// <inheritdoc cref="PlayerDataPacket.PlayerDifficulty"/>
+        /// <summary>
+        /// Gets or sets the player's difficulty.
+        /// </summary>
+        /// <value>The player's difficulty.</value>
         public PlayerDifficulty PlayerDifficulty {
             get => _packet.PlayerDifficulty;
             set => _packet.PlayerDifficulty = value;
         }
 
-        /// <inheritdoc cref="PlayerDataPacket.PlayerHasExtraAccessory"/>
-        public bool PlayerHasExtraAccessory {
-            get => _packet.PlayerHasExtraAccessory;
-            set => _packet.PlayerHasExtraAccessory = value;
+        /// <summary>
+        /// Gets or sets a value indicating whether the player has an extra accessory slot.
+        /// </summary>
+        /// <value>
+        /// <see langword="true"/> if the player has an extra accessory slot; otherwise, <see langword="false"/>.
+        /// </value>
+        /// <remarks>
+        /// The extra accessory slot can be obtained with the <see cref="ItemType.DemonHeart"/> item. There is also
+        /// support for a seventh accessory slot, but it is not legitimately obtainable.
+        /// </remarks>
+        public bool PlayerHasExtraAccessorySlot {
+            get => _packet.PlayerHasExtraAccessorySlot;
+            set => _packet.PlayerHasExtraAccessorySlot = value;
         }
 
         /// <summary>
