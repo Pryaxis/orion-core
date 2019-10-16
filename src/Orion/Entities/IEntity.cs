@@ -21,40 +21,64 @@ using Orion.Utils;
 
 namespace Orion.Entities {
     /// <summary>
-    /// Represents a Terraria entity. Entities are the base of every Terraria object, and have common properties such as
-    /// position, velocity, etc.
+    /// Represents a Terraria entity.
     /// </summary>
+    /// <remarks>
+    /// Entities are the base of many Terraria objects and have common properties such as <see cref="Position"/>,
+    /// <see cref="Velocity"/>, etc. They are annotatable, allowing consumers to easily attach extra state to them.
+    /// <para/>
+    /// 
+    /// There are two types of entities:
+    /// <list type="bullet">
+    /// <item>
+    /// <description>Entities which are abstract and do not affect the game state.</description>
+    /// </item>
+    /// <item>
+    /// <description>Entities which are concrete and affect the game state.</description>
+    /// </item>
+    /// </list>
+    /// </remarks>
     public interface IEntity : IAnnotatable {
         /// <summary>
-        /// Gets the entity's index. A value of -1 indicates that the entity is not "real": i.e., it is not tied to the
-        /// game state.
+        /// Gets the entity's index. A value of <c>-1</c> indicates that the entity is abstract.
         /// </summary>
+        /// <value>The entity's index.</value>
         int Index { get; }
 
         /// <summary>
-        /// Gets or sets a value indicating whether the entity is active.
+        /// Gets or sets a value indicating whether the entity is active: i.e., whether the entity is concrete and
+        /// exists in the world.
         /// </summary>
+        /// <value><see langword="true"/> if the entity is active; otherwise, <see langword="false"/>.</value>
+        /// <remarks>
+        /// This property is only meaningful if the entity is concrete. Setting this property to <see langword="false"/>
+        /// allows you to remove the entity from the world.
+        /// </remarks>
         bool IsActive { get; set; }
 
         /// <summary>
         /// Gets or sets the entity's name.
         /// </summary>
         /// <exception cref="ArgumentNullException"><paramref name="value"/> is <see langword="null"/>.</exception>
+        /// <value>The entity's name.</value>
         string Name { get; set; }
 
         /// <summary>
-        /// Gets or sets the entity's position. The components are pixel-based.
+        /// Gets or sets the entity's position. The components are pixels.
         /// </summary>
+        /// <value>The entity's position.</value>
         Vector2 Position { get; set; }
 
         /// <summary>
-        /// Gets or sets the entity's velocity. The components are pixel-based.
+        /// Gets or sets the entity's velocity. The components are pixels.
         /// </summary>
+        /// <value>The entity's velocity.</value>
         Vector2 Velocity { get; set; }
 
         /// <summary>
-        /// Gets or sets the entity's size. The components are pixel-based.
+        /// Gets or sets the entity's size. The components are pixels per tick.
         /// </summary>
+        /// <value>The entity's size.</value>
         Vector2 Size { get; set; }
     }
 }

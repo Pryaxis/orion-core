@@ -19,6 +19,9 @@ namespace Orion.Entities {
     /// <summary>
     /// Specifies an emote type.
     /// </summary>
+    /// <remarks>
+    /// Emotes are small images which can convey some sort of information. 
+    /// </remarks>
     public enum EmoteType : short {
 #pragma warning disable 1591
         NpcHead = -1,

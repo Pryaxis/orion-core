@@ -6,7 +6,7 @@
           "files": [
             "src/**.csproj"
           ],
-          "src:" "../src"
+          "src": "../"
         }
       ],
       "dest": "api",

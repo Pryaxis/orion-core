@@ -19,23 +19,30 @@ using System;
 using System.Diagnostics.CodeAnalysis;
 using System.Diagnostics.Contracts;
 using System.IO;
+using Orion.Npcs;
 using Orion.Packets.Extensions;
+using Orion.Players;
 
 namespace Orion.Entities {
     /// <summary>
     /// Represents a buff, which consists of a buff type along with a duration.
     /// </summary>
+    /// <remarks>
+    /// Buffs can be applied to both <see cref="IPlayer"/> and <see cref="INpc"/> instances.
+    /// </remarks>
     [SuppressMessage("Performance", "CA1815:Override equals and operator equals on value types",
         Justification = "Buffs will not be compared.")]
     public readonly struct Buff {
         /// <summary>
         /// Gets the buff type.
         /// </summary>
+        /// <value>The buff type.</value>
         public BuffType BuffType { get; }
 
         /// <summary>
         /// Gets the duration.
         /// </summary>
+        /// <value>The duration.</value>
         public TimeSpan Duration { get; }
 
         /// <summary>
@@ -58,16 +65,12 @@ namespace Orion.Entities {
         /// </summary>
         /// <param name="reader">The reader.</param>
         /// <param name="numOfDurationBytes">
-        /// The number of bytes to spend on reading the buff's duration.
-        /// 
-        /// <para/>
-        /// 
-        /// This can be either 2 or 4.
+        /// The number of bytes to spend on reading the buff's duration. This can be either <c>2</c> or <c>4</c>.
         /// </param>
         /// <returns>The buff.</returns>
         /// <exception cref="ArgumentNullException"><paramref name="reader"/> is <see langword="null"/>.</exception>
         /// <exception cref="ArgumentOutOfRangeException">
-        /// <paramref name="numOfDurationBytes"/> is neither 2 nor 4.
+        /// <paramref name="numOfDurationBytes"/> is neither <c>2</c> nor <c>4</c>.
         /// </exception>
         public static Buff ReadFromReader(BinaryReader reader, int numOfDurationBytes) {
             if (reader is null) {
@@ -90,15 +93,11 @@ namespace Orion.Entities {
         /// </summary>
         /// <param name="writer">The writer.</param>
         /// <param name="numOfDurationBytes">
-        /// The number of bytes to spend on writing the buff's duration.
-        /// 
-        /// <para/>
-        /// 
-        /// This can be either 2 or 4.
+        /// The number of bytes to spend on writing the buff's duration. This can be either <c>2</c> or <c>4</c>.
         /// </param>
         /// <exception cref="ArgumentNullException"><paramref name="writer"/> is <see langword="null"/>.</exception>
         /// <exception cref="ArgumentOutOfRangeException">
-        /// <paramref name="numOfDurationBytes"/> is neither 2 nor 4.
+        /// <paramref name="numOfDurationBytes"/> is neither <c>2</c> nor <c>4</c>.
         /// </exception>
         public void WriteToWriter(BinaryWriter writer, int numOfDurationBytes) {
             if (writer is null) {
