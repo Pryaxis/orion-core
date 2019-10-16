@@ -122,14 +122,5 @@ namespace Orion.Properties {
                 return ResourceManager.GetString("Kernel_UnloadPlugin", resourceCulture);
             }
         }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Spawning NPC {Type} at {Position}.
-        /// </summary>
-        internal static string NpcService_SpawnNpc {
-            get {
-                return ResourceManager.GetString("NpcService_SpawnNpc", resourceCulture);
-            }
-        }
     }
 }

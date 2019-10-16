@@ -30,62 +30,67 @@ namespace Orion.Npcs {
         /// <summary>
         /// Gets the NPCs in the world. All NPCs are returned, regardless of whether or not they are actually active.
         /// </summary>
+        /// <value>The NPCs in the world.</value>
         IReadOnlyArray<INpc> Npcs { get; }
 
         /// <summary>
         /// Gets the event handlers that occur when an NPC's defaults are being set, which is when NPC data is
         /// initialized. This event can be canceled.
         /// </summary>
+        /// <value>The event handlers that occur when an NPC's defaults are being set.</value>
         EventHandlerCollection<NpcSetDefaultsEventArgs> NpcSetDefaults { get; }
 
         /// <summary>
         /// Gets the event handlers that occur when an NPC is spawning. This event can be canceled.
         /// </summary>
+        /// <value>The event handlers that occur when an NPC is spawning.</value>
         EventHandlerCollection<NpcSpawnEventArgs> NpcSpawn { get; }
 
         /// <summary>
         /// Gets the event handlers that occur when an NPC is updating. This event can be canceled.
         /// </summary>
+        /// <value>The event handlers that occur when an NPC is updating.</value>
         EventHandlerCollection<NpcUpdateEventArgs> NpcUpdate { get; }
 
         /// <summary>
         /// Gets the event handlers that occur when an NPC is transforming. This event can be canceled.
         /// </summary>
+        /// <value>The event handlers that occur when an NPC is transforming.</value>
         EventHandlerCollection<NpcTransformEventArgs> NpcTransform { get; }
 
         /// <summary>
         /// Gets the event handlers that occur when an NPC is being damaged. This event can be canceled.
         /// </summary>
+        /// <value>The event handlers that occur when an NPC is being damaged.</value>
         EventHandlerCollection<NpcDamageEventArgs> NpcDamage { get; }
 
         /// <summary>
         /// Gets the event handlers that occur when an NPC is dropping a loot item. This event can be canceled.
         /// </summary>
+        /// <value>The event handlers that occur when an NPC is dropping a loot item.</value>
         EventHandlerCollection<NpcDropLootItemEventArgs> NpcDropLootItem { get; }
 
         /// <summary>
         /// Gets the event handlers that occur when an NPC is killed.
         /// </summary>
+        /// <value>The event handlers that occur when an NPC is killed.</value>
         EventHandlerCollection<NpcKilledEventArgs> NpcKilled { get; }
 
         /// <summary>
         /// Spawns an NPC with the given <paramref name="type"/> at the specified <paramref name="position"/> with the
-        /// <paramref name="aiValues"/>.
-        /// 
-        /// <para/>
-        /// 
-        /// This method is not thread-safe.
+        /// optional <paramref name="aiValues"/>.
         /// </summary>
         /// <param name="type">The NPC type.</param>
         /// <param name="position">The position.</param>
         /// <param name="aiValues">
-        /// The AI values to use, or <see langword="null"/> for none. If not <see langword="null"/>, this should have
+        /// The AI values, or <see langword="null"/> for none. If not <see langword="null"/>, this should have
         /// length 4. These AI values are values that control type-specific behavior.
         /// </param>
         /// <returns>The resulting NPC, or <see langword="null"/> if none was spawned.</returns>
         /// <exception cref="ArgumentException">
         /// <paramref name="aiValues"/> is not <see langword="null"/> and does not have length 4.
         /// </exception>
+        /// <remarks>Implementations of this method are not required to be thread-safe.</remarks>
         INpc? SpawnNpc(NpcType type, Vector2 position, float[]? aiValues = null);
     }
 }

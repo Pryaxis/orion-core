@@ -16,6 +16,8 @@
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
 using System;
+using System.Diagnostics.CodeAnalysis;
+using System.Diagnostics.Contracts;
 using Orion.Entities;
 using TerrariaNpc = Terraria.NPC;
 
@@ -30,6 +32,10 @@ namespace Orion.Npcs {
 
         public OrionNpc(TerrariaNpc terrariaNpc) : this(-1, terrariaNpc) { }
         public OrionNpc(int npcIndex, TerrariaNpc terrariaNpc) : base(npcIndex, terrariaNpc) { }
+        
+        // Not localized because this string is developer-facing.
+        [Pure, ExcludeFromCodeCoverage]
+        public override string ToString() => Index >= 0 ? $"#: {Index}" : "NPC instance";
 
         public void SetType(NpcType type) => Wrapped.SetDefaults((int)type);
     }

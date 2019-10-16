@@ -54,8 +54,8 @@ namespace Orion.Items {
             Hooks.Item.PreUpdate = null;
         }
 
-        public IItem? SpawnItem(ItemType type, Vector2 position,
-                int stackSize = 1, ItemPrefix prefix = ItemPrefix.None) {
+        public IItem? SpawnItem(
+                ItemType type, Vector2 position, int stackSize = 1, ItemPrefix prefix = ItemPrefix.None) {
             // Not localized because this string is developer-facing.
             Log.Debug("Spawning {ItemType} x{ItemStackSize} at {Position}", type, stackSize, position);
 
@@ -79,14 +79,15 @@ namespace Orion.Items {
                 : new OrionItem(terrariaItem);
         }
 
-        private HookResult PreSetDefaultsByIdHandler(TerrariaItem terrariaItem, ref int itemType, ref bool _) {
+        private HookResult PreSetDefaultsByIdHandler(TerrariaItem terrariaItem, ref int itemType_, ref bool _) {
             Debug.Assert(terrariaItem != null, "Terraria item should not be null");
 
             var item = GetItem(terrariaItem);
-            var args = new ItemSetDefaultsEventArgs(item, (ItemType)itemType);
+            var itemType = (ItemType)itemType_;
+            var args = new ItemSetDefaultsEventArgs(item, itemType);
 
             // Not localized because this string is developer-facing.
-            Log.Verbose("Invoking {Event} with [{Item}, {ItemType}]", ItemSetDefaults, item, (ItemType)itemType);
+            Log.Verbose("Invoking {Event} with [{Item}, {ItemType}]", ItemSetDefaults, item, itemType);
             ItemSetDefaults.Invoke(this, args);
             if (args.IsCanceled()) {
                 // Not localized because this string is developer-facing.
@@ -94,7 +95,7 @@ namespace Orion.Items {
                 return HookResult.Cancel;
             }
 
-            itemType = (int)args.ItemType;
+            itemType_ = (int)args.ItemType;
             return HookResult.Continue;
         }
 

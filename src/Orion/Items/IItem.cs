@@ -21,8 +21,7 @@ using TerrariaItem = Terraria.Item;
 
 namespace Orion.Items {
     /// <summary>
-    /// Represents a Terraria item. The item may either be physically in the world or be represented in some abstract
-    /// container, like an inventory or chest.
+    /// Represents a Terraria item.
     /// </summary>
     /// <remarks>
     /// Items are the main objects that players utilize. They may be weapons, armor, building materials, accessories,
@@ -49,8 +48,8 @@ namespace Orion.Items {
         /// </summary>
         /// <value>The item's type.</value>
         /// <remarks>
-        /// The item's type controls many aspects of the item such as its damage, speed, etc. To set the item type, use
-        /// the <see cref="SetType(ItemType)"/> method.
+        /// The item's type controls many aspects of the item such as its damage, speed, etc. To set the item's type,
+        /// use the <see cref="SetType(ItemType)"/> method.
         /// </remarks>
         ItemType Type { get; }
 
@@ -65,7 +64,7 @@ namespace Orion.Items {
         /// </summary>
         /// <value>The item's prefix.</value>
         /// <remarks>
-        /// The item's prefix modifies aspects of the item such as its damage, speed, etc. To set the item prefix, use
+        /// The item's prefix modifies aspects of the item such as its damage, speed, etc. To set the item's prefix, use
         /// the <see cref="SetPrefix(ItemPrefix)"/> method.
         /// </remarks>
         ItemPrefix Prefix { get; }

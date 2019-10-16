@@ -22,9 +22,6 @@ namespace Orion.Events {
     /// <summary>
     /// Represents something that can be canceled.
     /// </summary>
-    /// <remarks>
-    /// Many types of event arguments implement this interface to allow cancellation of the event.
-    /// </remarks>
     public interface ICancelable {
         /// <summary>
         /// Gets or sets the cancellation reason. If <see langword="null"/>, then the object is not canceled.
@@ -32,7 +29,7 @@ namespace Orion.Events {
         /// <value>The cancellation reason.</value>
         /// <remarks>
         /// This property allows consumers of the <see cref="ICancelable"/> to determine why the object is canceleed. In
-        /// some cases, a consumer may uncancel the event.
+        /// some cases, a consumer may even uncancel the event.
         /// </remarks>
         string? CancellationReason { get; set; }
     }
@@ -67,7 +64,7 @@ namespace Orion.Events {
         /// <paramref name="cancelable"/> or <paramref name="reason"/> are <see langword="null"/>.
         /// </exception>
         /// <remarks>
-        /// Reasons should always be provided if possible, as they allow consumers to learn why the cancellation was
+        /// Reasons should always be provided if possible as they allow consumers to learn why the cancellation was
         /// requested.
         /// </remarks>
         public static void Cancel(this ICancelable cancelable, string reason = "") {

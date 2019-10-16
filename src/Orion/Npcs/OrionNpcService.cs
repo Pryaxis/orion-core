@@ -22,7 +22,6 @@ using Microsoft.Xna.Framework;
 using Orion.Events;
 using Orion.Events.Npcs;
 using Orion.Items;
-using Orion.Properties;
 using Orion.Utils;
 using OTAPI;
 using Serilog;
@@ -86,7 +85,8 @@ namespace Orion.Npcs {
                 throw new ArgumentException($"Array does not have length {TerrariaNpc.maxAI}.", nameof(aiValues));
             }
 
-            Log.Debug(Resources.NpcService_SpawnNpc, type, position);
+            // Not localized because this string is developer-facing.
+            Log.Debug("Spawning {NpcType} at {Position}", type, position);
 
             var ai0 = aiValues?[0] ?? 0;
             var ai1 = aiValues?[1] ?? 0;
@@ -106,7 +106,7 @@ namespace Orion.Npcs {
                 : new OrionNpc(terrariaNpc);
         }
 
-        private HookResult PreSetDefaultsByIdHandler(TerrariaNpc terrariaNpc, ref int npcType, ref float _) {
+        private HookResult PreSetDefaultsByIdHandler(TerrariaNpc terrariaNpc, ref int npcType_, ref float _) {
             Debug.Assert(terrariaNpc != null, "Terraria NPC should not be null");
 
             if (_setDefaultsToIgnore.Value > 0) {
@@ -115,15 +115,21 @@ namespace Orion.Npcs {
             }
 
             var npc = GetNpc(terrariaNpc);
-            var args = new NpcSetDefaultsEventArgs(npc, (NpcType)npcType);
+            var npcType = (NpcType)npcType_;
+            var args = new NpcSetDefaultsEventArgs(npc, npcType);
+
+            // Not localized because this string is developer-facing.
+            Log.Verbose("Invoking {Event} with [{Npc}, {NpcType}]", NpcSetDefaults, npc, npcType);
             NpcSetDefaults.Invoke(this, args);
             if (args.IsCanceled()) {
+                // Not localized because this string is developer-facing.
+                Log.Verbose("Canceled {Event} for {CancellationReason}", NpcSetDefaults, args.CancellationReason);
                 return HookResult.Cancel;
             }
 
             // Ignore two calls to SetDefaults() if type is negative. This is because SetDefaults gets called twice:
             // once with 0, and once with the base type.
-            if ((npcType = (int)args.NpcType) < 0) {
+            if ((npcType_ = (int)args.NpcType) < 0) {
                 _setDefaultsToIgnore.Value = 2;
             }
 
@@ -135,8 +141,14 @@ namespace Orion.Npcs {
 
             var npc = Npcs[npcIndex];
             var args = new NpcSpawnEventArgs(npc);
+
+            // Not localized because this string is developer-facing.
+            Log.Debug("Invoking {Event} with [{Npc}, {NpcType} @ {Position}]", NpcSpawn, npc, npc.Type, npc.Position);
             NpcSpawn.Invoke(this, args);
             if (args.IsCanceled()) {
+                // Not localized because this string is developer-facing.
+                Log.Debug("Canceled {Event} for {CancellationReason}", NpcSpawn, args.CancellationReason);
+
                 // To cancel the event, we should remove the NPC and return the failure index.
                 npc.IsActive = false;
                 npcIndex = Npcs.Count;
@@ -149,27 +161,44 @@ namespace Orion.Npcs {
         private HookResult PreUpdateHandler(TerrariaNpc _, ref int npcIndex) {
             Debug.Assert(npcIndex >= 0 && npcIndex < Npcs.Count, "NPC index should be valid");
 
-            var args = new NpcUpdateEventArgs(Npcs[npcIndex]);
+            var npc = Npcs[npcIndex];
+            var args = new NpcUpdateEventArgs(npc);
+
+            // Not localized because this string is developer-facing.
+            Log.Verbose("Invoking {Event} with [{Npc}]", NpcUpdate, npc);
             NpcUpdate.Invoke(this, args);
-            return args.IsCanceled() ? HookResult.Cancel : HookResult.Continue;
-        }
-
-        private HookResult PreTransformHandler(TerrariaNpc terrariaNpc, ref int npcNewType) {
-            Debug.Assert(terrariaNpc != null, "Terraria NPC should not be null");
-
-            var npc = GetNpc(terrariaNpc);
-            var args = new NpcTransformEventArgs(npc, (NpcType)npcNewType);
-            NpcTransform.Invoke(this, args);
             if (args.IsCanceled()) {
+                // Not localized because this string is developer-facing.
+                Log.Verbose("Canceled {Event} for {CancellationReason}", NpcUpdate, args.CancellationReason);
                 return HookResult.Cancel;
             }
 
-            npcNewType = (int)args.NpcNewType;
             return HookResult.Continue;
         }
 
-        private HookResult StrikeHandler(TerrariaNpc terrariaNpc, ref double _, ref int damage, ref float knockback,
-                ref int hitDirection, ref bool isCriticalHit, ref bool _2, ref bool _3, TerrariaEntity _4) {
+        private HookResult PreTransformHandler(TerrariaNpc terrariaNpc, ref int npcNewType_) {
+            Debug.Assert(terrariaNpc != null, "Terraria NPC should not be null");
+
+            var npc = GetNpc(terrariaNpc);
+            var npcNewType = (NpcType)npcNewType_;
+            var args = new NpcTransformEventArgs(npc, npcNewType);
+
+            // Not localized because this string is developer-facing.
+            Log.Debug("Invoking {Event} with [{Npc}, {NpcNewType}]", NpcTransform, npc, npcNewType);
+            NpcTransform.Invoke(this, args);
+            if (args.IsCanceled()) {
+                // Not localized because this string is developer-facing.
+                Log.Debug("Canceled {Event} for {CancellationReason}", NpcTransform, args.CancellationReason);
+                return HookResult.Cancel;
+            }
+
+            npcNewType_ = (int)args.NpcNewType;
+            return HookResult.Continue;
+        }
+
+        private HookResult StrikeHandler(
+                TerrariaNpc terrariaNpc, ref double _, ref int damage, ref float knockback, ref int hitDirection,
+                ref bool isCriticalHit, ref bool _2, ref bool _3, TerrariaEntity _4) {
             Debug.Assert(terrariaNpc != null, "Terraria NPC should not be null");
 
             var npc = GetNpc(terrariaNpc);
@@ -179,8 +208,13 @@ namespace Orion.Npcs {
                 HitDirection = (sbyte)hitDirection,
                 IsCriticalHit = isCriticalHit
             };
+
+            // Not localized because this string is developer-facing.
+            Log.Debug("Invoking {Event} with [{Npc}, {NpcType} by {Damage}]", NpcDamage, npc, npc.Type, damage);
             NpcDamage.Invoke(this, args);
             if (args.IsCanceled()) {
+                // Not localized because this string is developer-facing.
+                Log.Debug("Canceled {Event} for {CancellationReason}", NpcDamage, args.CancellationReason);
                 return HookResult.Cancel;
             }
 
@@ -191,23 +225,31 @@ namespace Orion.Npcs {
             return HookResult.Continue;
         }
 
-        private HookResult PreDropLootHandler(TerrariaNpc terrariaNpc, ref int _, ref int _2, ref int _3, ref int _4,
-                ref int _5, ref int itemType, ref int itemStackSize, ref bool _6, ref int itemPrefix, ref bool _7,
-                ref bool _8) {
+        private HookResult PreDropLootHandler(
+                TerrariaNpc terrariaNpc, ref int _, ref int _2, ref int _3, ref int _4, ref int _5, ref int itemType_,
+                ref int itemStackSize, ref bool _6, ref int itemPrefix, ref bool _7, ref bool _8) {
             Debug.Assert(terrariaNpc != null, "Terraria NPC should not be null");
 
             var npc = GetNpc(terrariaNpc);
+            var itemType = (ItemType)itemType_;
             var args = new NpcDropLootItemEventArgs(npc) {
-                LootItemType = (ItemType)itemType,
+                LootItemType = itemType,
                 LootItemStackSize = itemStackSize,
                 LootItemPrefix = (ItemPrefix)itemPrefix
             };
+
+            // Not localized because this string is developer-facing.
+            Log.Debug(
+                "Invoking {Event} with [{Npc}, {NpcType} dropping {ItemType} x{ItemStackSize}]",
+                NpcDropLootItem, npc, npc.Type, itemType, itemStackSize);
             NpcDropLootItem.Invoke(this, args);
             if (args.IsCanceled()) {
+                // Not localized because this string is developer-facing.
+                Log.Debug("Canceled {Event} for {CancellationReason}", NpcDropLootItem, args.CancellationReason);
                 return HookResult.Cancel;
             }
 
-            itemType = (int)args.LootItemType;
+            itemType_ = (int)args.LootItemType;
             itemStackSize = args.LootItemStackSize;
             itemPrefix = (int)args.LootItemPrefix;
             return HookResult.Continue;
@@ -218,6 +260,9 @@ namespace Orion.Npcs {
 
             var npc = GetNpc(terrariaNpc);
             var args = new NpcKilledEventArgs(npc);
+
+            // Not localized because this string is developer-facing.
+            Log.Debug("Invoking {Event} with [{Npc}, {NpcType}]", NpcKilled, npc, npc.Type);
             NpcKilled.Invoke(this, args);
         }
     }

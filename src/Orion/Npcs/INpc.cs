@@ -21,16 +21,24 @@ using TerrariaNpc = Terraria.NPC;
 
 namespace Orion.Npcs {
     /// <summary>
-    /// Represents a Terraria NPC. NPCs are equivalent to "mobs", and may either be friendly or hostile.
+    /// Represents a Terraria NPC.
     /// </summary>
+    /// <remarks>
+    /// NPCs are equivalent to "mobs" and may either be friendly or hostile.
+    /// </remarks>
     public interface INpc : IEntity, IWrapping<TerrariaNpc> {
         /// <summary>
         /// Gets the NPC's type.
         /// </summary>
+        /// <value>The NPC's type.</value>
+        /// <remarks>
+        /// The NPC's type controls many aspects of the NPC such as its health, damage, behavior, defense, etc. To set
+        /// the NPC's type, use the <see cref="SetType(NpcType)"/> method.
+        /// </remarks>
         NpcType Type { get; }
 
         /// <summary>
-        /// Sets the NPC's type. This will update the NPC accordingly.
+        /// Sets the NPC's <paramref name="type"/>. This will update the NPC accordingly.
         /// </summary>
         /// <param name="type">The NPC type.</param>
         void SetType(NpcType type);

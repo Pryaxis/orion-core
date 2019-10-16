@@ -36,7 +36,7 @@ namespace Orion.Items {
         /// Gets the event handlers that occur when an item's defaults are being set, which is when item data is
         /// initialized. This event can be canceled.
         /// </summary>
-        /// <value>The event handlers that occur when an item's defaults are being set</value>
+        /// <value>The event handlers that occur when an item's defaults are being set.</value>
         EventHandlerCollection<ItemSetDefaultsEventArgs> ItemSetDefaults { get; }
 
         /// <summary>
