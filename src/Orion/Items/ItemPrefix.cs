@@ -19,6 +19,9 @@ namespace Orion.Items {
     /// <summary>
     /// Specifies an item prefix.
     /// </summary>
+    /// <remarks>
+    /// Item prefixes modify items by, e.g., raising or lowering the item's use time, damage, critical hit chance, etc.
+    /// </remarks>
     public enum ItemPrefix : sbyte {
 #pragma warning disable 1591
         Reforge = -2,

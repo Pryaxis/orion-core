@@ -19,6 +19,10 @@ namespace Orion.Items {
     /// <summary>
     /// Specifies an item rarity.
     /// </summary>
+    /// <remarks>
+    /// The item rarity roughly specifies how valuable an item is. The item's prefix can modify its rarity by up to two
+    /// levels in either direction.
+    /// </remarks>
     public enum ItemRarity {
 #pragma warning disable 1591
         Rainbow = -12,

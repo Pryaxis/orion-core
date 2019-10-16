@@ -118,7 +118,7 @@ namespace Orion.Players {
                 args.PlayerName.Should().Be("f");
                 args.PlayerHairDye.Should().Be(0);
                 args.PlayerEquipmentHiddenFlags.Should().Be(0);
-                args.PlayerHiddenMiscFlags.Should().Be(0);
+                args.PlayerMiscEquipmentHiddenFlags.Should().Be(0);
                 args.PlayerHairColor.Should().Be(new Color(26, 131, 54));
                 args.PlayerSkinColor.Should().Be(new Color(158, 74, 51));
                 args.PlayerEyeColor.Should().Be(new Color(47, 39, 88));

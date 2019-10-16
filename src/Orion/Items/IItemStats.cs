@@ -24,9 +24,6 @@ namespace Orion.Items {
         /// Gets the item's maximum stack size.
         /// </summary>
         /// <value>The item's maximum stack size.</value>
-        /// <remarks>
-        /// For most weapons and gear, this value is 1. For most building materials, this value is 999.
-        /// </remarks>
         int MaxStackSize { get; }
 
         /// <summary>

@@ -24,13 +24,32 @@ namespace Orion.Items {
     /// Represents a Terraria item. The item may either be physically in the world or be represented in some abstract
     /// container, like an inventory or chest.
     /// </summary>
+    /// <remarks>
+    /// Items are the main objects that players utilize. They may be weapons, armor, building materials, accessories,
+    /// etc. <para/>
+    /// 
+    /// There are three types of items:
+    /// <list type="bullet">
+    /// <item>
+    /// <description>Items which are abstract and do not affect the game state.</description>
+    /// </item>
+    /// <item>
+    /// <description>
+    /// Items which are abstract and exist in some sort of container, like an inventory or chest.
+    /// </description>
+    /// </item>
+    /// <item>
+    /// <description>Items which are concrete and affect the game state.</description>
+    /// </item>
+    /// </list>
+    /// </remarks>
     public interface IItem : IEntity, IWrapping<TerrariaItem> {
         /// <summary>
         /// Gets the item's type.
         /// </summary>
         /// <value>The item's type.</value>
         /// <remarks>
-        /// The item's type controls many aspects of the item, such as its damage, speed, etc. To set the item type, use
+        /// The item's type controls many aspects of the item such as its damage, speed, etc. To set the item type, use
         /// the <see cref="SetType(ItemType)"/> method.
         /// </remarks>
         ItemType Type { get; }
@@ -46,7 +65,7 @@ namespace Orion.Items {
         /// </summary>
         /// <value>The item's prefix.</value>
         /// <remarks>
-        /// The item's prefix modifies aspects of the item, sucha as its damage, speed, etc. To set the item prefix, use
+        /// The item's prefix modifies aspects of the item such as its damage, speed, etc. To set the item prefix, use
         /// the <see cref="SetPrefix(ItemPrefix)"/> method.
         /// </remarks>
         ItemPrefix Prefix { get; }

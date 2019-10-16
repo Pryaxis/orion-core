@@ -86,7 +86,7 @@ namespace Orion.Events.Players {
         /// </summary>
         /// <value>The player's miscellaneous equipment hiding flags.</value>
         /// <remarks>This property specifies which of the player's miscellaneous equipment is visible.</remarks>
-        public byte PlayerHiddenMiscFlags {
+        public byte PlayerMiscEquipmentHiddenFlags {
             get => _packet.PlayerMiscEquipmentHiddenFlags;
             set => _packet.PlayerMiscEquipmentHiddenFlags = value;
         }
