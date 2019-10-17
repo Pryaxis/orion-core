@@ -29,6 +29,7 @@ namespace Orion.Utils {
         /// Gets or sets the element at the given <paramref name="index"/>.
         /// </summary>
         /// <param name="index">The index.</param>
+        /// <value>The element at the given <paramref name="index"/>.</value>
         /// <exception cref="IndexOutOfRangeException"><paramref name="index"/> is out of range.</exception>
         new T this[int index] { get; set; }
     }

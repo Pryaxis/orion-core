@@ -37,9 +37,7 @@ namespace Orion.Packets.Projectiles {
         private byte _projectileOwnerPlayerIndex;
         private ProjectileType _projectileType;
         private short _projectileUuid = -1;
-
-        private readonly DirtiableArray<float> _projectileAiValues =
-            new DirtiableArray<float>(TerrariaProjectile.maxAI);
+        private DirtiableArray<float> _projectileAiValues = new DirtiableArray<float>(TerrariaProjectile.maxAI);
 
         /// <inheritdoc/>
         public override bool IsDirty => base.IsDirty || _projectileAiValues.IsDirty;
@@ -161,17 +159,12 @@ namespace Orion.Packets.Projectiles {
             _projectileType = (ProjectileType)reader.ReadInt16();
 
             Terraria.BitsByte header = reader.ReadByte();
-            if (header[0]) {
-                _projectileAiValues._array[0] = reader.ReadSingle();
-            }
+            var projectileAiValues = new float[_projectileAiValues.Count];
+            if (header[0]) projectileAiValues[0] = reader.ReadSingle();
+            if (header[1]) projectileAiValues[1] = reader.ReadSingle();
 
-            if (header[1]) {
-                _projectileAiValues._array[1] = reader.ReadSingle();
-            }
-
-            if (header[2]) {
-                _projectileUuid = reader.ReadInt16();
-            }
+            _projectileAiValues = new DirtiableArray<float>(projectileAiValues);
+            if (header[2]) _projectileUuid = reader.ReadInt16();
         }
 
         private protected override void WriteToWriter(BinaryWriter writer, PacketContext context) {
@@ -184,22 +177,14 @@ namespace Orion.Packets.Projectiles {
             writer.Write((short)_projectileType);
 
             Terraria.BitsByte header = 0;
-            header[0] = _projectileAiValues._array[0] != 0;
-            header[1] = _projectileAiValues._array[1] != 0;
+            header[0] = _projectileAiValues[0] != 0;
+            header[1] = _projectileAiValues[1] != 0;
             header[2] = _projectileUuid >= 0;
 
             writer.Write(header);
-            if (header[0]) {
-                writer.Write(_projectileAiValues._array[0]);
-            }
-
-            if (header[1]) {
-                writer.Write(_projectileAiValues._array[1]);
-            }
-
-            if (header[2]) {
-                writer.Write(_projectileUuid);
-            }
+            if (header[0]) writer.Write(_projectileAiValues[0]);
+            if (header[1]) writer.Write(_projectileAiValues[1]);
+            if (header[2]) writer.Write(_projectileUuid);
         }
     }
 }

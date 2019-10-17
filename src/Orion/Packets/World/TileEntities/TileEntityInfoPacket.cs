@@ -71,8 +71,7 @@ namespace Orion.Packets.World.TileEntities {
                 return;
             }
 
-            _tileEntity = NetworkTileEntity.ReadFromReader(reader, false);
-            _tileEntity._index = TileEntityIndex;
+            _tileEntity = NetworkTileEntity.ReadFromReader(reader, _tileEntityIndex);
         }
 
         private protected override void WriteToWriter(BinaryWriter writer, PacketContext context) {

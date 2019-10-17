@@ -16,11 +16,16 @@
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
 using System;
+using System.Runtime.CompilerServices;
 
 namespace Orion.Utils {
     /// <summary>
     /// Provides methods with which to get, set, and remove annotations.
     /// </summary>
+    /// <remarks>
+    /// This interface allows custom state to be added to the object. It is intended to take the place of classes such
+    /// as <see cref="ConditionalWeakTable{TKey, TValue}"/>.
+    /// </remarks>
     public interface IAnnotatable {
         /// <summary>
         /// Gets the annotation of type <typeparamref name="T"/> with the given <paramref name="key"/>, using the given

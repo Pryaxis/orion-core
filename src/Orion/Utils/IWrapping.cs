@@ -24,8 +24,9 @@ namespace Orion.Utils {
     /// <typeparam name="TWrapped">The wrapped type.</typeparam>
     public interface IWrapping<out TWrapped> {
         /// <summary>
-        /// Gets the wrapped object. This is not required to succeed.
+        /// Gets the wrapped object. This is not guaranteed to succeed.
         /// </summary>
+        /// <value>The wrapped object.</value>
         [Obsolete("Avoid this property outside of Orion if possible.")]
         TWrapped Wrapped { get; }
     }

@@ -33,14 +33,16 @@ namespace Orion.Utils {
         IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
 
         /// <summary>
-        /// Gets the count of elements.
+        /// Gets the number of elements.
         /// </summary>
+        /// <value>The number of elements.</value>
         int Count { get; }
 
         /// <summary>
         /// Gets the element at the given <paramref name="index"/>.
         /// </summary>
         /// <param name="index">The index.</param>
+        /// <value>The element at the given <paramref name="index"/>.</value>
         /// <exception cref="IndexOutOfRangeException"><paramref name="index"/> is out of range.</exception>
         T this[int index] { get; }
     }

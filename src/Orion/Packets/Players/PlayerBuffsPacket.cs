@@ -27,8 +27,7 @@ namespace Orion.Packets.Players {
     /// Packet sent to set a player's buffs. Each buff will be set for one second.
     /// </summary>
     public sealed class PlayerBuffsPacket : Packet {
-        private readonly DirtiableArray<BuffType> _playerBuffTypes =
-            new DirtiableArray<BuffType>(TerrariaPlayer.maxBuffs);
+        private DirtiableArray<BuffType> _playerBuffTypes = new DirtiableArray<BuffType>(TerrariaPlayer.maxBuffs);
 
         private byte _playerIndex;
 
@@ -66,9 +65,13 @@ namespace Orion.Packets.Players {
 
         private protected override void ReadFromReader(BinaryReader reader, PacketContext context) {
             _playerIndex = reader.ReadByte();
+
+            var playerBuffTypes = new BuffType[_playerBuffTypes.Count];
             for (var i = 0; i < _playerBuffTypes.Count; ++i) {
-                _playerBuffTypes._array[i] = (BuffType)reader.ReadByte();
+                playerBuffTypes[i] = (BuffType)reader.ReadByte();
             }
+
+            _playerBuffTypes = new DirtiableArray<BuffType>(playerBuffTypes);
         }
 
         private protected override void WriteToWriter(BinaryWriter writer, PacketContext context) {

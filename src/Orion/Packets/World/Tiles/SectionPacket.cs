@@ -39,8 +39,7 @@ namespace Orion.Packets.World.Tiles {
         private short _sectionWidth;
         private short _sectionHeight;
         private NetworkTiles _sectionTiles = new NetworkTiles(0, 0);
-
-        private readonly DirtiableList<NetworkTileEntity> _sectionTileEntities = new DirtiableList<NetworkTileEntity>();
+        private DirtiableList<NetworkTileEntity> _sectionTileEntities = new DirtiableList<NetworkTileEntity>();
 
         /// <inheritdoc/>
         public override bool IsDirty => base.IsDirty || SectionTiles.IsDirty || _sectionTileEntities.IsDirty;
@@ -259,16 +258,20 @@ namespace Orion.Packets.World.Tiles {
         }
 
         private void ReadTileEntitiesFromReaderImpl(BinaryReader reader) {
+            var sectionTileEntities = new List<NetworkTileEntity>();
+
             void ReadTileEntities(TileEntityType? typeHint = null) {
                 var number = reader.ReadInt16();
                 for (var i = 0; i < number; ++i) {
-                    _sectionTileEntities._list.Add(NetworkTileEntity.ReadFromReader(reader, true, typeHint));
+                    sectionTileEntities.Add(NetworkTileEntity.ReadFromReader(reader, null, typeHint));
                 }
             }
 
             ReadTileEntities(TileEntityType.Chest);
             ReadTileEntities(TileEntityType.Sign);
             ReadTileEntities();
+
+            _sectionTileEntities = new DirtiableList<NetworkTileEntity>(sectionTileEntities);
         }
 
         private void WriteToWriterImpl(BinaryWriter writer) {

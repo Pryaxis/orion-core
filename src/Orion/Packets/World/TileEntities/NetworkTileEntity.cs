@@ -17,6 +17,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.Diagnostics.Contracts;
 using System.IO;
@@ -37,8 +38,7 @@ namespace Orion.Packets.World.TileEntities {
                 [TileEntityType.Sign] = () => new NetworkSign()
             };
 
-        // internal for modification without dirtying.
-        internal int _index;
+        private int _index;
         private int _x;
         private int _y;
 
@@ -78,8 +78,10 @@ namespace Orion.Packets.World.TileEntities {
         // Prevent outside inheritance.
         private protected NetworkTileEntity() { }
 
-        internal static NetworkTileEntity ReadFromReader(BinaryReader reader, bool shouldIncludeIndex,
-                                                         TileEntityType? typeHint = null) {
+        internal static NetworkTileEntity ReadFromReader(
+                BinaryReader reader, int? indexHint = null, TileEntityType? typeHint = null) {
+            Debug.Assert(reader != null, "reader should not be null");
+
             // The type hint allows us to reuse code for NetworkChests and NetworkSigns.
             var tileEntityType = typeHint ?? (TileEntityType)reader.ReadByte();
             if (!_constructors.TryGetValue(tileEntityType, out var tileEntityConstructor)) {
@@ -87,7 +89,7 @@ namespace Orion.Packets.World.TileEntities {
             }
 
             var tileEntity = tileEntityConstructor();
-            tileEntity.ReadFromReaderImpl(reader, shouldIncludeIndex);
+            tileEntity.ReadFromReaderImpl(reader, indexHint);
             return tileEntity;
         }
 
@@ -98,12 +100,8 @@ namespace Orion.Packets.World.TileEntities {
         [Pure, ExcludeFromCodeCoverage]
         public override string ToString() => $"{Type} @ ({X}, {Y})";
 
-        private void ReadFromReaderImpl(BinaryReader reader, bool shouldIncludeIndex) {
-            if (shouldIncludeIndex) {
-                // NetworkChests and NetworkSigns have an Int16 index.
-                _index = (short)Type > byte.MaxValue ? reader.ReadInt16() : reader.ReadInt32();
-            }
-
+        private void ReadFromReaderImpl(BinaryReader reader, int? indexHint = null) {
+            _index = indexHint ?? ((short)Type > byte.MaxValue ? reader.ReadInt16() : reader.ReadInt32());
             _x = reader.ReadInt16();
             _y = reader.ReadInt16();
             ReadFromReaderImpl(reader);

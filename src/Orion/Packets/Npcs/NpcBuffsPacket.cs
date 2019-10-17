@@ -28,7 +28,7 @@ namespace Orion.Packets.Npcs {
     /// </summary>
     public sealed class NpcBuffsPacket : Packet {
         private short _npcIndex;
-        private readonly DirtiableArray<Buff> _npcBuffs = new DirtiableArray<Buff>(TerrariaNpc.maxBuffs);
+        private DirtiableArray<Buff> _npcBuffs = new DirtiableArray<Buff>(TerrariaNpc.maxBuffs);
 
         /// <inheritdoc/>
         public override bool IsDirty => base.IsDirty || _npcBuffs.IsDirty;
@@ -64,9 +64,13 @@ namespace Orion.Packets.Npcs {
 
         private protected override void ReadFromReader(BinaryReader reader, PacketContext context) {
             _npcIndex = reader.ReadInt16();
+
+            var npcBuffs = new Buff[_npcBuffs.Count];
             for (var i = 0; i < _npcBuffs.Count; ++i) {
-                _npcBuffs._array[i] = Buff.ReadFromReader(reader, 2);
+                npcBuffs[i] = Buff.ReadFromReader(reader, 2);
             }
+
+            _npcBuffs = new DirtiableArray<Buff>(npcBuffs);
         }
 
         private protected override void WriteToWriter(BinaryWriter writer, PacketContext context) {

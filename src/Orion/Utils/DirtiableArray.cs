@@ -15,28 +15,20 @@
 // You should have received a copy of the GNU General Public License
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
-using System;
 using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
+using System.Diagnostics;
 using System.Linq;
 
 namespace Orion.Utils {
-    /// <summary>
-    /// Represents a dirtiable array of objects.
-    /// </summary>
-    /// <typeparam name="T">The type of element.</typeparam>
-    [SuppressMessage("Naming", "CA1710:Identifiers should have correct suffix", Justification = "Type is an array")]
-    public sealed class DirtiableArray<T> : IArray<T>, IDirtiable {
+    internal sealed class DirtiableArray<T> : IArray<T>, IDirtiable {
         private static readonly bool _containsDirtiableElements = typeof(IDirtiable).IsAssignableFrom(typeof(T));
 
-        // internal for array modification without dirtying.
-        internal readonly T[] _array;
+        private readonly T[] _array;
+
         private bool _isDirty;
 
-        /// <inheritdoc/>
         public int Count => _array.Length;
 
-        /// <inheritdoc cref="IArray{T}.this"/>
         public T this[int index] {
             get => _array[index];
             set {
@@ -45,27 +37,23 @@ namespace Orion.Utils {
             }
         }
 
-        /// <inheritdoc/>
         public bool IsDirty =>
             _isDirty || _containsDirtiableElements && this.Cast<IDirtiable>().Any(d => d?.IsDirty == true);
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="DirtiableArray{T}"/> class with the specified count.
-        /// </summary>
-        /// <param name="count">The count.</param>
-        /// <exception cref="ArgumentOutOfRangeException"><paramref name="count"/> is negative.</exception>
         public DirtiableArray(int count) {
-            if (count <= 0) {
-                throw new ArgumentOutOfRangeException(nameof(count), "Count is negative.");
-            }
+            Debug.Assert(count > 0, "count should be positive");
 
             _array = new T[count];
         }
 
-        /// <inheritdoc/>
+        public DirtiableArray(T[] array) {
+            Debug.Assert(array != null, "array should not be null");
+
+            _array = array;
+        }
+
         public IEnumerator<T> GetEnumerator() => ((IEnumerable<T>)_array).GetEnumerator();
 
-        /// <inheritdoc/>
         public void Clean() {
             _isDirty = false;
             if (!_containsDirtiableElements) {

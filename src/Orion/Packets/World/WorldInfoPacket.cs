@@ -58,10 +58,10 @@ namespace Orion.Packets.World {
         private byte _hellBackgroundStyle;
         private float _windSpeed;
         private byte _numberOfClouds;
-        private readonly DirtiableArray<int> _treeStyleBoundaries = new DirtiableArray<int>(3);
-        private readonly DirtiableArray<byte> _treeStyles = new DirtiableArray<byte>(4);
-        private readonly DirtiableArray<int> _caveBackgroundStyleBoundaries = new DirtiableArray<int>(3);
-        private readonly DirtiableArray<byte> _caveBackgroundStyles = new DirtiableArray<byte>(4);
+        private DirtiableArray<int> _treeStyleBoundaries = new DirtiableArray<int>(3);
+        private DirtiableArray<byte> _treeStyles = new DirtiableArray<byte>(4);
+        private DirtiableArray<int> _caveBackgroundStyleBoundaries = new DirtiableArray<int>(3);
+        private DirtiableArray<byte> _caveBackgroundStyles = new DirtiableArray<byte>(4);
         private float _rain;
         private bool _hasSmashedShadowOrb;
         private bool _hasDefeatedEyeOfCthulhu;
@@ -986,22 +986,30 @@ namespace Orion.Packets.World {
             _windSpeed = reader.ReadSingle();
             _numberOfClouds = reader.ReadByte();
 
+            var treeStyleBoundaries = new int[_treeStyleBoundaries.Count];
             for (var i = 0; i < TreeStyleBoundaries.Count; ++i) {
-                _treeStyleBoundaries._array[i] = reader.ReadInt32();
+                treeStyleBoundaries[i] = reader.ReadInt32();
             }
 
+            var treeStyles = new byte[_treeStyles.Count];
             for (var i = 0; i < TreeStyles.Count; ++i) {
-                _treeStyles._array[i] = reader.ReadByte();
+                treeStyles[i] = reader.ReadByte();
             }
 
+            var caveBackgroundStyleBoundaries = new int[_caveBackgroundStyleBoundaries.Count];
             for (var i = 0; i < CaveBackgroundStyleBoundaries.Count; ++i) {
-                _caveBackgroundStyleBoundaries._array[i] = reader.ReadInt32();
+                caveBackgroundStyleBoundaries[i] = reader.ReadInt32();
             }
 
+            var caveBackgroundStyles = new byte[_caveBackgroundStyles.Count];
             for (var i = 0; i < CaveBackgroundStyles.Count; ++i) {
-                _caveBackgroundStyles._array[i] = reader.ReadByte();
+                caveBackgroundStyles[i] = reader.ReadByte();
             }
 
+            _treeStyleBoundaries = new DirtiableArray<int>(treeStyleBoundaries);
+            _treeStyles = new DirtiableArray<byte>(treeStyles);
+            _caveBackgroundStyleBoundaries = new DirtiableArray<int>(caveBackgroundStyleBoundaries);
+            _caveBackgroundStyles = new DirtiableArray<byte>(caveBackgroundStyles);
             _rain = reader.ReadSingle();
 
             Terraria.BitsByte worldFlags = reader.ReadByte();

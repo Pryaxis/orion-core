@@ -27,7 +27,7 @@ namespace Orion.Packets.Modules {
     /// Module sent for liquids.
     /// </summary>
     public sealed class LiquidsModule : Module {
-        private readonly DirtiableList<NetworkLiquid> _liquids = new DirtiableList<NetworkLiquid>();
+        private DirtiableList<NetworkLiquid> _liquids = new DirtiableList<NetworkLiquid>();
 
         /// <inheritdoc/>
         public override bool IsDirty => base.IsDirty || _liquids.IsDirty;
@@ -52,9 +52,12 @@ namespace Orion.Packets.Modules {
 
         private protected override void ReadFromReader(BinaryReader reader, PacketContext context) {
             var numberOfLiquidChanges = reader.ReadUInt16();
+            var liquids = new List<NetworkLiquid>();
             for (var i = 0; i < numberOfLiquidChanges; ++i) {
-                _liquids._list.Add(NetworkLiquid.ReadFromReader(reader, true));
+                liquids.Add(NetworkLiquid.ReadFromReader(reader, true));
             }
+
+            _liquids = new DirtiableList<NetworkLiquid>(liquids);
         }
 
         private protected override void WriteToWriter(BinaryWriter writer, PacketContext context) {

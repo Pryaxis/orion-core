@@ -24,6 +24,7 @@ namespace Orion.Utils {
         /// Gets a value indicating whether the object is dirty: i.e., whether it has been modified since it was last
         /// cleaned.
         /// </summary>
+        /// <value><see langword="true"/> if the object is dirty; otherwise, <see langword="false"/>.</value>
         bool IsDirty { get; }
 
         /// <summary>

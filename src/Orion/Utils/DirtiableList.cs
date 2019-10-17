@@ -22,26 +22,18 @@ using System.Diagnostics.Contracts;
 using System.Linq;
 
 namespace Orion.Utils {
-    /// <summary>
-    /// Represents a dirtiable list of objects.
-    /// </summary>
-    /// <typeparam name="T">The type of element.</typeparam>
-    [SuppressMessage("Naming", "CA1710:Identifiers should have correct suffix", Justification = "Type is a list")]
-    public sealed class DirtiableList<T> : IList<T>, IDirtiable {
+    internal sealed class DirtiableList<T> : IList<T>, IDirtiable {
         private static readonly bool _containsDirtiableElements = typeof(IDirtiable).IsAssignableFrom(typeof(T));
 
-        // internal for list modification without dirtying.
-        internal readonly IList<T> _list = new List<T>();
+        private readonly IList<T> _list = new List<T>();
+
         private bool _isDirty;
 
-        /// <inheritdoc/>
         public int Count => _list.Count;
 
-        /// <inheritdoc/>
         public bool IsDirty =>
             _isDirty || _containsDirtiableElements && this.Cast<IDirtiable>().Any(d => d?.IsDirty == true);
 
-        /// <inheritdoc/>
         public T this[int index] {
             get => _list[index];
             set {
@@ -52,54 +44,50 @@ namespace Orion.Utils {
 
         bool ICollection<T>.IsReadOnly => false;
 
-        /// <inheritdoc/>
+        public DirtiableList() { }
+
+        public DirtiableList(IList<T> list) {
+            _list = list;
+        }
+
         public IEnumerator<T> GetEnumerator() => _list.GetEnumerator();
 
         [ExcludeFromCodeCoverage]
         IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
 
-        /// <inheritdoc/>
         public void Add(T item) {
             _list.Add(item);
             _isDirty = true;
         }
 
-        /// <inheritdoc/>
         public void Clear() {
             _list.Clear();
             _isDirty = true;
         }
 
-        /// <inheritdoc/>
         [Pure]
         public bool Contains(T item) => _list.Contains(item);
 
-        /// <inheritdoc/>
         public void CopyTo(T[] array, int arrayIndex) => _list.CopyTo(array, arrayIndex);
 
-        /// <inheritdoc/>
         public bool Remove(T item) {
             var result = _list.Remove(item);
             _isDirty = true;
             return result;
         }
 
-        /// <inheritdoc/>
         public int IndexOf(T item) => _list.IndexOf(item);
 
-        /// <inheritdoc/>
         public void Insert(int index, T item) {
             _list.Insert(index, item);
             _isDirty = true;
         }
 
-        /// <inheritdoc/>
         public void RemoveAt(int index) {
             _list.RemoveAt(index);
             _isDirty = true;
         }
 
-        /// <inheritdoc/>
         public void Clean() {
             _isDirty = false;
             if (!_containsDirtiableElements) {

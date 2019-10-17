@@ -27,8 +27,7 @@ namespace Orion.Packets.World {
     /// Packet sent from the server to the client to set the traveling merchant's shop.
     /// </summary>
     public sealed class TravelingMerchantShopPacket : Packet {
-        private readonly DirtiableArray<ItemType> _shopItemTypes =
-            new DirtiableArray<ItemType>(TerrariaChest.maxItems);
+        private DirtiableArray<ItemType> _shopItemTypes = new DirtiableArray<ItemType>(TerrariaChest.maxItems);
 
         /// <inheritdoc/>
         public override bool IsDirty => base.IsDirty || _shopItemTypes.IsDirty;
@@ -52,9 +51,12 @@ namespace Orion.Packets.World {
         }
 
         private protected override void ReadFromReader(BinaryReader reader, PacketContext context) {
+            var shopItemTypes = new ItemType[_shopItemTypes.Count];
             for (var i = 0; i < _shopItemTypes.Count; ++i) {
-                _shopItemTypes._array[i] = (ItemType)reader.ReadInt16();
+                shopItemTypes[i] = (ItemType)reader.ReadInt16();
             }
+
+            _shopItemTypes = new DirtiableArray<ItemType>(shopItemTypes);
         }
 
         private protected override void WriteToWriter(BinaryWriter writer, PacketContext context) {

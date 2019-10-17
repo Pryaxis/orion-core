@@ -25,13 +25,6 @@ namespace Orion.Utils {
     [SuppressMessage("Style", "IDE0017:Simplify object initialization", Justification = "Testing")]
     public class DirtiableArrayTests {
         [Fact]
-        public void Ctor_NegativeCount_ThrowsArgumentOutOfRangeException() {
-            Func<DirtiableArray<int>> func = () => new DirtiableArray<int>(-1);
-
-            func.Should().Throw<ArgumentOutOfRangeException>();
-        }
-
-        [Fact]
         public void TIsIDirtiable() {
             var isDirty = true;
             var mockDirtiable = new Mock<IDirtiable>();

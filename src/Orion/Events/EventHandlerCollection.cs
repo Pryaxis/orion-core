@@ -88,7 +88,7 @@ namespace Orion.Events {
         /// Exceptions that occur in the handlers will be logged (if possible) and swallowed.
         /// </remarks>
         [SuppressMessage("Design", "CA1031:Do not catch general exception types",
-            Justification = "catching Exception for fail-safe")]
+            Justification = "Catching Exception for fail-safe")]
         public void Invoke(object? sender, TEventArgs args) {
             if (args is null) {
                 throw new ArgumentNullException(nameof(args));
