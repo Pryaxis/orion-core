@@ -93,9 +93,12 @@ namespace Orion.Items {
                 // Not localized because this string is developer-facing.
                 Log.Verbose("Canceled {Event} for {CancellationReason}", ItemSetDefaults, args.CancellationReason);
                 return HookResult.Cancel;
+            } else if (args.IsDirty) {
+                // Not localized because this string is developer-facing.
+                Log.Verbose("Altered {Event} to [{Item}, {ItemType}]", ItemSetDefaults, item, itemType);
+                itemType_ = (int)args.ItemType;
             }
 
-            itemType_ = (int)args.ItemType;
             return HookResult.Continue;
         }
 

@@ -15,31 +15,27 @@
 // You should have received a copy of the GNU General Public License
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
-using System;
 using FluentAssertions;
 using Moq;
 using Orion.Items;
 using Xunit;
 
 namespace Orion.Events.Items {
-    public class ItemEventArgsTests {
+    public class ItemSetDefaultsEventArgsTests {
         [Fact]
-        public void Ctor_NullItem_ThrowsArgumentNullException() {
-            Func<ItemEventArgs> func = () => new TestArgs(null);
-
-            func.Should().Throw<ArgumentNullException>();
-        }
-        
-        [Fact]
-        public void Item_Get() {
+        public void SimpleProperties_Set_MarkAsDirty() {
             var item = new Mock<IItem>().Object;
-            var args = new TestArgs(item);
+            var args = new ItemSetDefaultsEventArgs(item, ItemType.Sdmg);
 
-            args.Item.Should().BeSameAs(item);
+            args.SetSimplePropertiesShouldMarkAsDirty();
         }
 
-        private class TestArgs : ItemEventArgs {
-            public TestArgs(IItem item) : base(item) { }
+        [Fact]
+        public void ItemType_Get() {
+            var item = new Mock<IItem>().Object;
+            var args = new ItemSetDefaultsEventArgs(item, ItemType.Sdmg);
+
+            args.ItemType.Should().Be(ItemType.Sdmg);
         }
     }
 }

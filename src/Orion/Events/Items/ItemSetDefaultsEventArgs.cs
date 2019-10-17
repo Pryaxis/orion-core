@@ -17,21 +17,33 @@
 
 using System;
 using Orion.Items;
+using Orion.Utils;
 
 namespace Orion.Events.Items {
     /// <summary>
     /// Provides data for the <see cref="IItemService.ItemSetDefaults"/> event. This event can be canceled.
     /// </summary>
     [EventArgs("item-defaults")]
-    public sealed class ItemSetDefaultsEventArgs : ItemEventArgs, ICancelable {
+    public sealed class ItemSetDefaultsEventArgs : ItemEventArgs, ICancelable, IDirtiable {
+        private ItemType itemType;
+
         /// <inheritdoc/>
         public string? CancellationReason { get; set; }
+        
+        /// <inheritdoc/>
+        public bool IsDirty { get; private set; }
 
         /// <summary>
         /// Gets or sets the item type that the item's defaults are being set to.
         /// </summary>
         /// <value>The item type that the item's defaults are being set to.</value>
-        public ItemType ItemType { get; set; }
+        public ItemType ItemType {
+            get => itemType;
+            set {
+                itemType = value;
+                IsDirty = true;
+            }
+        }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ItemSetDefaultsEventArgs"/> class with the specified item and
@@ -43,5 +55,8 @@ namespace Orion.Events.Items {
         public ItemSetDefaultsEventArgs(IItem item, ItemType itemType) : base(item) {
             ItemType = itemType;
         }
+
+        /// <inheritdoc/>
+        public void Clean() => IsDirty = false;
     }
 }

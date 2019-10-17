@@ -215,62 +215,22 @@ namespace Orion.Packets.Items {
             _itemIndex = reader.ReadInt16();
 
             Terraria.BitsByte flags = reader.ReadByte();
-            if (flags[0]) {
-                _itemColorOverride = new Color(reader.ReadUInt32());
-            }
-
-            if (flags[1]) {
-                _itemDamageOverride = reader.ReadUInt16();
-            }
-
-            if (flags[2]) {
-                _itemKnockbackOverride = reader.ReadSingle();
-            }
-
-            if (flags[3]) {
-                _itemAnimationTimeOverride = reader.ReadUInt16();
-            }
-
-            if (flags[4]) {
-                _itemUseTimeOverride = reader.ReadUInt16();
-            }
-
-            if (flags[5]) {
-                _itemProjectileTypeOverride = (ProjectileType)reader.ReadInt16();
-            }
-
-            if (flags[6]) {
-                _itemProjectileSpeedOverride = reader.ReadSingle();
-            }
-
-            if (!flags[7]) {
-                return;
-            }
+            if (flags[0]) _itemColorOverride = new Color(reader.ReadUInt32());
+            if (flags[1]) _itemDamageOverride = reader.ReadUInt16();
+            if (flags[2]) _itemKnockbackOverride = reader.ReadSingle();
+            if (flags[3]) _itemAnimationTimeOverride = reader.ReadUInt16();
+            if (flags[4]) _itemUseTimeOverride = reader.ReadUInt16();
+            if (flags[5]) _itemProjectileTypeOverride = (ProjectileType)reader.ReadInt16();
+            if (flags[6]) _itemProjectileSpeedOverride = reader.ReadSingle();
+            if (!flags[7]) return;
 
             Terraria.BitsByte flags2 = reader.ReadByte();
-            if (flags2[0]) {
-                _itemWidthOverride = reader.ReadInt16();
-            }
-
-            if (flags2[1]) {
-                _itemHeightOverride = reader.ReadInt16();
-            }
-
-            if (flags2[2]) {
-                _itemScaleOverride = reader.ReadSingle();
-            }
-
-            if (flags2[3]) {
-                _itemAmmoTypeOverride = (ItemType)reader.ReadInt16();
-            }
-
-            if (flags2[4]) {
-                _itemUsesAmmoTypeOverride = (ItemType)reader.ReadInt16();
-            }
-
-            if (flags2[5]) {
-                _itemIsNotAmmoOverride = reader.ReadBoolean();
-            }
+            if (flags2[0]) _itemWidthOverride = reader.ReadInt16();
+            if (flags2[1]) _itemHeightOverride = reader.ReadInt16();
+            if (flags2[2]) _itemScaleOverride = reader.ReadSingle();
+            if (flags2[3]) _itemAmmoTypeOverride = (ItemType)reader.ReadInt16();
+            if (flags2[4]) _itemUsesAmmoTypeOverride = (ItemType)reader.ReadInt16();
+            if (flags2[5]) _itemIsNotAmmoOverride = reader.ReadBoolean();
         }
 
         private protected override void WriteToWriter(BinaryWriter writer, PacketContext context) {
@@ -295,61 +255,22 @@ namespace Orion.Packets.Items {
             flags[7] = flags2 != 0;
 
             writer.Write(flags);
-            if (flags[0]) {
-                writer.Write(_itemColorOverride!.Value.PackedValue);
-            }
 
-            if (flags[1]) {
-                writer.Write(_itemDamageOverride!.Value);
-            }
+            if (flags[0]) writer.Write(_itemColorOverride!.Value.PackedValue);
+            if (flags[1]) writer.Write(_itemDamageOverride!.Value);
+            if (flags[2]) writer.Write(_itemKnockbackOverride!.Value);
+            if (flags[3]) writer.Write(_itemAnimationTimeOverride!.Value);
+            if (flags[4]) writer.Write(_itemUseTimeOverride!.Value);
+            if (flags[5]) writer.Write((short)_itemProjectileTypeOverride!.Value);
+            if (flags[6]) writer.Write(_itemProjectileSpeedOverride!.Value);
+            if (flags[7]) writer.Write(flags2);
 
-            if (flags[2]) {
-                writer.Write(_itemKnockbackOverride!.Value);
-            }
-
-            if (flags[3]) {
-                writer.Write(_itemAnimationTimeOverride!.Value);
-            }
-
-            if (flags[4]) {
-                writer.Write(_itemUseTimeOverride!.Value);
-            }
-
-            if (flags[5]) {
-                writer.Write((short)_itemProjectileTypeOverride!.Value);
-            }
-
-            if (flags[6]) {
-                writer.Write(_itemProjectileSpeedOverride!.Value);
-            }
-
-            if (flags[7]) {
-                writer.Write(flags2);
-            }
-
-            if (flags2[0]) {
-                writer.Write(_itemWidthOverride!.Value);
-            }
-
-            if (flags2[1]) {
-                writer.Write(_itemHeightOverride!.Value);
-            }
-
-            if (flags2[2]) {
-                writer.Write(_itemScaleOverride!.Value);
-            }
-
-            if (flags2[3]) {
-                writer.Write((short)_itemAmmoTypeOverride!.Value);
-            }
-
-            if (flags2[4]) {
-                writer.Write((short)_itemUsesAmmoTypeOverride!.Value);
-            }
-
-            if (flags2[5]) {
-                writer.Write(_itemIsNotAmmoOverride!.Value);
-            }
+            if (flags2[0]) writer.Write(_itemWidthOverride!.Value);
+            if (flags2[1]) writer.Write(_itemHeightOverride!.Value);
+            if (flags2[2]) writer.Write(_itemScaleOverride!.Value);
+            if (flags2[3]) writer.Write((short)_itemAmmoTypeOverride!.Value);
+            if (flags2[4]) writer.Write((short)_itemUsesAmmoTypeOverride!.Value);
+            if (flags2[5]) writer.Write(_itemIsNotAmmoOverride!.Value);
         }
     }
 }

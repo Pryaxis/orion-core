@@ -80,10 +80,6 @@ namespace Orion.Players {
             PlayerChat = new EventHandlerCollection<PlayerChatEventArgs>();
             PlayerDisconnected = new EventHandlerCollection<PlayerDisconnectedEventArgs>();
 
-            PlayerTeam.RegisterHandler((sender, args) => {
-                args.PlayerTeam = Orion.Players.PlayerTeam.Pink;
-            });
-
             Hooks.Net.ReceiveData = ReceiveDataHandler;
             Hooks.Net.SendBytes = SendBytesHandler;
             Hooks.Net.RemoteClient.PreReset = PreResetHandler;
@@ -212,7 +208,7 @@ namespace Orion.Players {
 
             if (args_.IsCanceled()) {
                 // Not localized because this string is developer-facing.
-                Log.Debug("Canceled {Event} for {Reason}", PlayerConnect, args.CancellationReason);
+                Log.Debug("Canceled {Event} for {Reason}", PlayerConnect, args_.CancellationReason);
             } else if (args_.IsDirty) {
                 // Not localized because this string is developer-facing.
                 Log.Debug(
@@ -232,7 +228,7 @@ namespace Orion.Players {
 
             if (args_.IsCanceled()) {
                 // Not localized because this string is developer-facing.
-                Log.Debug("Canceled {Event} for {Reason}", PlayerData, args.CancellationReason);
+                Log.Debug("Canceled {Event} for {Reason}", PlayerData, args_.CancellationReason);
             } else if (args_.IsDirty) {
                 // Not localized because this string is developer-facing.
                 Log.Debug("Altered {Event} to [{PlayerName}, ...]", PlayerData, args.PlayerName);
@@ -265,7 +261,7 @@ namespace Orion.Players {
 
             if (args_.IsCanceled()) {
                 // Not localized because this string is developer-facing.
-                Log.Debug("Canceled {Event} for {Reason}", PlayerInventorySlot, args.CancellationReason);
+                Log.Debug("Canceled {Event} for {Reason}", PlayerInventorySlot, args_.CancellationReason);
             } else if (args_.IsDirty) {
                 if (args.ItemType == ItemType.None) {
                     // Not localized because this string is developer-facing.
@@ -298,7 +294,7 @@ namespace Orion.Players {
 
             if (args_.IsCanceled()) {
                 // Not localized because this string is developer-facing.
-                Log.Debug("Canceled {Event} for {Reason}", PlayerJoin, args.CancellationReason);
+                Log.Debug("Canceled {Event} for {Reason}", PlayerJoin, args_.CancellationReason);
             }
         }
 
@@ -313,7 +309,7 @@ namespace Orion.Players {
 
             if (args_.IsCanceled()) {
                 // Not localized because this string is developer-facing.
-                Log.Debug("Canceled {Event} for {Reason}", PlayerPvp, args.CancellationReason);
+                Log.Debug("Canceled {Event} for {Reason}", PlayerPvp, args_.CancellationReason);
             } else if (args_.IsDirty) {
                 // Not localized because this string is developer-facing.
                 Log.Debug("Altered {Event} to [{Player}, {PlayerTeam}]", PlayerPvp, args.Player, args.IsPlayerInPvp);
@@ -331,7 +327,7 @@ namespace Orion.Players {
 
             if (args_.IsCanceled()) {
                 // Not localized because this string is developer-facing.
-                Log.Debug("Canceled {Event} for {Reason}", PlayerTeam, args.CancellationReason);
+                Log.Debug("Canceled {Event} for {Reason}", PlayerTeam, args_.CancellationReason);
             } else if (args_.IsDirty) {
                 // Not localized because this string is developer-facing.
                 Log.Debug("Altered {Event} to [{Player}, {PlayerTeam}]", PlayerTeam, args.Player, args.PlayerTeam);
@@ -352,7 +348,7 @@ namespace Orion.Players {
 
                 if (args_.IsCanceled()) {
                     // Not localized because this string is developer-facing.
-                    Log.Debug("Canceled {Event} for {Reason}", PlayerChat, args.CancellationReason);
+                    Log.Debug("Canceled {Event} for {Reason}", PlayerChat, args_.CancellationReason);
                 } else if (args_.IsDirty) {
                     // Not localized because this string is developer-facing.
                     Log.Debug(
