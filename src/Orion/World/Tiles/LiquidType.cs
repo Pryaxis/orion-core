@@ -20,10 +20,10 @@ namespace Orion.World.Tiles {
     /// Specifies a liquid type.
     /// </summary>
     public enum LiquidType {
-#pragma warning disable 1591
+#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
         Water = 0,
         Lava = 1,
         Honey = 2
-#pragma warning restore 1591
+#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member
     }
 }

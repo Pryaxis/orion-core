@@ -52,21 +52,29 @@ namespace Orion.Players {
             _wrapped = terrariaPlayer;
 
             Main = new WrappedReadOnlyArray<OrionItem, TerrariaItem>(
-                terrariaPlayer.inventory, (_, terrariaItem) => new OrionItem(terrariaItem));
+                terrariaPlayer.inventory,
+                (_, terrariaItem) => new OrionItem(terrariaItem));
             Equips = new WrappedReadOnlyArray<OrionItem, TerrariaItem>(
-                terrariaPlayer.armor, (_, terrariaItem) => new OrionItem(terrariaItem));
+                terrariaPlayer.armor,
+                (_, terrariaItem) => new OrionItem(terrariaItem));
             Dyes = new WrappedReadOnlyArray<OrionItem, TerrariaItem>(
-                terrariaPlayer.dye, (_, terrariaItem) => new OrionItem(terrariaItem));
+                terrariaPlayer.dye,
+                (_, terrariaItem) => new OrionItem(terrariaItem));
             MiscEquips = new WrappedReadOnlyArray<OrionItem, TerrariaItem>(
-                terrariaPlayer.miscEquips, (_, terrariaItem) => new OrionItem(terrariaItem));
+                terrariaPlayer.miscEquips,
+                (_, terrariaItem) => new OrionItem(terrariaItem));
             MiscDyes = new WrappedReadOnlyArray<OrionItem, TerrariaItem>(
-                terrariaPlayer.miscDyes, (_, terrariaItem) => new OrionItem(terrariaItem));
+                terrariaPlayer.miscDyes,
+                (_, terrariaItem) => new OrionItem(terrariaItem));
             PiggyBank = new WrappedReadOnlyArray<OrionItem, TerrariaItem>(
-                terrariaPlayer.bank.item, (_, terrariaItem) => new OrionItem(terrariaItem));
+                terrariaPlayer.bank.item,
+                (_, terrariaItem) => new OrionItem(terrariaItem));
             Safe = new WrappedReadOnlyArray<OrionItem, TerrariaItem>(
-                terrariaPlayer.bank2.item, (_, terrariaItem) => new OrionItem(terrariaItem));
+                terrariaPlayer.bank2.item,
+                (_, terrariaItem) => new OrionItem(terrariaItem));
             DefendersForge = new WrappedReadOnlyArray<OrionItem, TerrariaItem>(
-                terrariaPlayer.bank3.item, (_, terrariaItem) => new OrionItem(terrariaItem));
+                terrariaPlayer.bank3.item,
+                (_, terrariaItem) => new OrionItem(terrariaItem));
         }
     }
 }

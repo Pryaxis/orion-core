@@ -32,15 +32,15 @@ namespace Orion.Entities {
         Justification = "Buffs will not be compared.")]
     public readonly struct Buff {
         /// <summary>
-        /// Gets the buff type.
+        /// Gets the buff's type.
         /// </summary>
-        /// <value>The buff type.</value>
+        /// <value>The buff's type.</value>
         public BuffType BuffType { get; }
 
         /// <summary>
-        /// Gets the duration.
+        /// Gets the buff's duration.
         /// </summary>
-        /// <value>The duration.</value>
+        /// <value>The buff's duration.</value>
         public TimeSpan Duration { get; }
 
         /// <summary>

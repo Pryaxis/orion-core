@@ -67,10 +67,10 @@ namespace Orion.Projectiles {
         /// 2. These AI values are values that control type-specific behavior.
         /// </param>
         /// <returns>The resulting projectile, or <see langword="null"/> if none was spawned.</returns>
+        /// <remarks>Implementations of this method are not required to be thread-safe.</remarks>
         /// <exception cref="ArgumentException">
         /// <paramref name="aiValues"/> is not <see langword="null"/> and does not have length 2.
         /// </exception>
-        /// <remarks>Implementations of this method are not required to be thread-safe.</remarks>
         IProjectile? SpawnProjectile(
             ProjectileType type, Vector2 position, Vector2 velocity, int damage, float knockback,
             float[]? aiValues = null);

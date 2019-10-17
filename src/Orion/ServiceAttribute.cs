@@ -28,13 +28,15 @@ namespace Orion {
         private string _author = "Pryaxis";
 
         /// <summary>
-        /// Gets the service's name, which is used for logs.
+        /// Gets the service's name. This is used for logs.
         /// </summary>
+        /// <value>The service's name.</value>
         public string Name { get; }
 
         /// <summary>
-        /// Gets or sets the author, which is used for logs. By default, this will be <c>Pryaxis</c>.
+        /// Gets or sets the service's author. This is used for logs. By default, this will be <c>Pryaxis</c>.
         /// </summary>
+        /// <value>The service's author.</value>
         /// <exception cref="ArgumentNullException"><param name="value"/> is <see langword="null"/>.</exception>
         public string Author {
             get => _author;
@@ -44,14 +46,11 @@ namespace Orion {
         /// <summary>
         /// Initializes a new instance of the <see cref="ServiceAttribute"/> with the specified name.
         /// </summary>
-        /// <param name="name">
-        /// The name, which is used for logs.
-        /// 
-        /// <para/>
-        /// 
-        /// This should be short while still disambiguating the service among all services. The convention is to use
-        /// <c>kebab-case</c>.
-        /// </param>
+        /// <param name="name">The name. This is used for logs.</param>
+        /// <remarks>
+        /// The name should be short while <i>still disambiguating</i> the event among all other events. The convention
+        /// is to use <c>kebab-case</c>.
+        /// </remarks>
         /// <exception cref="ArgumentNullException"><paramref name="name"/> is <see langword="null"/>.</exception>
         public ServiceAttribute(string name) {
             Name = name ?? throw new ArgumentNullException(nameof(name));

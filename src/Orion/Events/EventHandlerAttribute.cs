@@ -37,11 +37,11 @@ namespace Orion.Events {
         /// will be the method name.
         /// </summary>
         /// <value>The event handler's name.</value>
-        /// <exception cref="ArgumentNullException"><param name="value"/> is <see langword="null"/>.</exception>
         /// <remarks>
         /// This should be short while <i>still disambiguating</i> the event handler among all other event handlers for
         /// that event. The convention is to use <c>kebab-case</c>.
         /// </remarks>
+        /// <exception cref="ArgumentNullException"><param name="value"/> is <see langword="null"/>.</exception>
         [DisallowNull]
         public string? Name {
             get => name;

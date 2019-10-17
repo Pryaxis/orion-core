@@ -16,23 +16,32 @@
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
 using System;
+using Orion.Players;
 using Serilog;
 
 namespace Orion {
     /// <summary>
     /// Represents the base class for an Orion plugin, which is a thin wrapper around an <see cref="OrionService"/>.
-    /// Plugins are injected using a dependency injection framework.
     /// </summary>
+    /// <remarks>
+    /// Plugins can be injected by the <see cref="OrionKernel"/> instance and have static lifetimes. <para/>
+    /// 
+    /// The constructors of derived types should use lazily loaded services such as <see cref="Lazy{IPlayerService}"/>.
+    /// This allows other plugins to potentially change the binding of <see cref="IPlayerService"/> to some other
+    /// service implementation.
+    /// </remarks>
     public abstract class OrionPlugin : OrionService {
         /// <summary>
-        /// Gets the Orion kernel.
+        /// Gets the <see cref="OrionKernel"/> instance.
         /// </summary>
+        /// <value>The <see cref="OrionKernel"/> instance.</value>
         protected OrionKernel Kernel { get; }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="OrionPlugin"/> class with the specified Orion kernel and log.
+        /// Initializes a new instance of the <see cref="OrionPlugin"/> class with the specified
+        /// <see cref="OrionKernel"/> instance and log.
         /// </summary>
-        /// <param name="kernel">The Orion kernel.</param>
+        /// <param name="kernel">The <see cref="OrionKernel"/> instance.</param>
         /// <param name="log">The log.</param>
         /// <exception cref="ArgumentNullException">
         /// <paramref name="kernel"/> or <paramref name="log"/> are <see langword="null"/>.
@@ -44,6 +53,10 @@ namespace Orion {
         /// <summary>
         /// Initializes the plugin.
         /// </summary>
+        /// <remarks>
+        /// This method is called by the <see cref="OrionKernel"/> instance after all plugins have been loaded. Lazily
+        /// loaded services can be accessed after this point.
+        /// </remarks>
         public abstract void Initialize();
     }
 }

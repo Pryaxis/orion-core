@@ -20,7 +20,7 @@ namespace Orion.Packets {
     /// Specifies a packet type.
     /// </summary>
     public enum PacketType : byte {
-#pragma warning disable 1591
+#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
         PlayerConnect = 1,
         PlayerDisconnect = 2,
         PlayerContinueConnecting = 3,
@@ -133,6 +133,6 @@ namespace Orion.Packets {
         PlayerDamage = 117,
         PlayerKill = 118,
         CombatText = 119
-#pragma warning disable 1591
+#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member
     }
 }

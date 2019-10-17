@@ -20,9 +20,9 @@ namespace Orion.Packets.Modules {
     /// Represents a module type.
     /// </summary>
     public enum ModuleType : ushort {
-#pragma warning disable 1591
+#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
         Liquids = 0,
         Chat = 1
-#pragma warning disable 1591
+#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member
     }
 }

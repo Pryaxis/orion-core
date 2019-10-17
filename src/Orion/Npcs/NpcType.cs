@@ -24,7 +24,7 @@ namespace Orion.Npcs {
     /// Specifies an NPC type.
     /// </summary>
     public enum NpcType : short {
-#pragma warning disable 1591
+#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
         BigStingyHornet = -65,
         LittleStingyHornet = -64,
         BigSpikyHornet = -63,
@@ -665,7 +665,7 @@ namespace Orion.Npcs {
         OgreT3 = 577,
         EtherianLightningBug = 578,
         UnconsciousTavernkeep = 579
-#pragma warning restore 1591
+#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member
     }
 
     /// <summary>

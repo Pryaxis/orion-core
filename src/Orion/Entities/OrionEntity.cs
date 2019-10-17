@@ -31,7 +31,7 @@ namespace Orion.Entities {
             set => Wrapped.active = value;
         }
 
-        // TerrariaEntity does not provide this property, so we need to declare it.
+        // TerrariaEntity does not provide this property so we need to declare it.
         public abstract string Name { get; set; }
 
         public Vector2 Position {

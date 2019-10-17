@@ -19,11 +19,9 @@ namespace Orion.Entities {
     /// <summary>
     /// Specifies an emote type.
     /// </summary>
-    /// <remarks>
-    /// Emotes are small images which can convey some sort of information. 
-    /// </remarks>
+    /// <remarks>Emotes are small images which can convey some sort of information.</remarks>
     public enum EmoteType : short {
-#pragma warning disable 1591
+#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
         NpcHead = -1,
         Love = 0,
         Anger = 1,
@@ -159,6 +157,6 @@ namespace Orion.Entities {
         Beer = 131,
         DefenderMedal = 132,
         OldOnesArmy = 133
-#pragma warning restore 1591
+#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member
     }
 }

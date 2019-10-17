@@ -28,8 +28,8 @@ namespace Orion.Events {
         /// </summary>
         /// <value>The cancellation reason.</value>
         /// <remarks>
-        /// This property allows consumers of the <see cref="ICancelable"/> to determine why the object is canceleed. In
-        /// some cases, a consumer may even uncancel the event.
+        /// This property allows consumers of the <see cref="ICancelable"/> instance to determine why the object is
+        /// canceled. In some cases, a consumer may even uncancel the event.
         /// </remarks>
         string? CancellationReason { get; set; }
     }
@@ -60,13 +60,13 @@ namespace Orion.Events {
         /// </summary>
         /// <param name="cancelable">The cancelable object.</param>
         /// <param name="reason">The reason.</param>
-        /// <exception cref="ArgumentNullException">
-        /// <paramref name="cancelable"/> or <paramref name="reason"/> are <see langword="null"/>.
-        /// </exception>
         /// <remarks>
         /// Reasons should always be provided if possible as they allow consumers to learn why the cancellation was
         /// requested.
         /// </remarks>
+        /// <exception cref="ArgumentNullException">
+        /// <paramref name="cancelable"/> or <paramref name="reason"/> are <see langword="null"/>.
+        /// </exception>
         public static void Cancel(this ICancelable cancelable, string reason = "") {
             if (cancelable is null) {
                 throw new ArgumentNullException(nameof(cancelable));

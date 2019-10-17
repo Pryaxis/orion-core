@@ -20,7 +20,7 @@ namespace Orion.Entities {
     /// Specifies a buff type.
     /// </summary>
     public enum BuffType : byte {
-#pragma warning disable 1591
+#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
         None = 0,
         ObsidianSkin = 1,
         Regeneration = 2,
@@ -227,6 +227,6 @@ namespace Orion.Entities {
         BetsysCurse = 203,
         Oiled = 204,
         BallistaPanic = 205
-#pragma warning restore 1591
+#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member
     }
 }

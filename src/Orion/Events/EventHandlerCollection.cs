@@ -30,14 +30,14 @@ namespace Orion.Events {
     /// </summary>
     /// <typeparam name="TEventArgs">The type of event arguments.</typeparam>
     /// <remarks>
-    /// The <see cref="EventHandlerCollection{TEventArgs}"/> class is a more featured version of
-    /// <see cref="EventHandler{TEventArgs}"/> with the ability to specify the priority of each event handler. This
-    /// allows consumers much more control over their event handlers. <para/>
+    /// The <see cref="EventHandlerCollection{TEventArgs}"/> class is a more featured version of the
+    /// <see cref="EventHandler{TEventArgs}"/> delegate with the ability to specify the priority of each event handler.
+    /// This allows consumers much more control over their event handlers. <para/>
     /// 
     /// Event handlers are registered and unregistered using the
     /// <see cref="RegisterHandler(EventHandler{TEventArgs}, ILogger)"/> and
-    /// <see cref="UnregisterHandler(EventHandler{TEventArgs})"/> methods, and may be annotated using the
-    /// <see cref="EventHandlerAttribute"/> attribute.
+    /// <see cref="UnregisterHandler(EventHandler{TEventArgs})"/> methods and may be annotated using an
+    /// <see cref="EventHandlerAttribute"/> instance.
     /// </remarks>
     public sealed class EventHandlerCollection<TEventArgs> where TEventArgs : EventArgs {
         private readonly object _lock = new object();
@@ -53,13 +53,7 @@ namespace Orion.Events {
         /// <summary>
         /// Gets the event's name. This is used for logging.
         /// </summary>
-        /// <value>
-        /// The event's name. This is taken from the <see cref="EventArgsAttribute.Name"/> property on the
-        /// <see cref="EventArgsAttribute"/> attribute annotating <typeparamref name="TEventArgs"/>. <para/>
-        /// 
-        /// If the attribute is missing, then the event name will default to the type name of
-        /// <typeparamref name="TEventArgs"/>.
-        /// </value>
+        /// <value>The event's name.</value>
         /// <remarks>
         /// The name is taken from the <see cref="EventArgsAttribute.Name"/> property on the
         /// <see cref="EventArgsAttribute"/> attribute annotating the <typeparamref name="TEventArgs"/> class. <para/>
@@ -75,18 +69,18 @@ namespace Orion.Events {
         public override string ToString() => EventName;
 
         /// <summary>
-        /// Invokes the collection of handlers in the <see cref="EventHandlerCollection{TEventArgs}"/> in order of their
-        /// priorities using the given <paramref name="sender"/> and <paramref name="args"/>.
+        /// Invokes the collection of handlers in the <see cref="EventHandlerCollection{TEventArgs}"/> instance in order
+        /// of their priorities using the given <paramref name="sender"/> and <paramref name="args"/>.
         /// </summary>
         /// <param name="sender">The sender. This is the object that is initiating the event.</param>
         /// <param name="args">The event arguments.</param>
-        /// <exception cref="ArgumentNullException"><paramref name="args"/> is <see langword="null"/>.</exception>
         /// <remarks>
         /// While this method itself is thread-safe, care must be taken to make the handlers thread-safe if this method
         /// is expected to be called simultaneously on different thread. <para/>
         /// 
         /// Exceptions that occur in the handlers will be logged (if possible) and swallowed.
         /// </remarks>
+        /// <exception cref="ArgumentNullException"><paramref name="args"/> is <see langword="null"/>.</exception>
         [SuppressMessage("Design", "CA1031:Do not catch general exception types",
             Justification = "Catching Exception for fail-safe")]
         public void Invoke(object? sender, TEventArgs args) {
@@ -112,16 +106,17 @@ namespace Orion.Events {
         }
 
         /// <summary>
-        /// Registers the given <paramref name="handler"/>, optionally with the specified <paramref name="log"/>.
+        /// Registers the given <paramref name="handler"/> to the <see cref="EventHandlerCollection{TEventArgs}"/>
+        /// instance, optionally with the specified <paramref name="log"/>.
         /// </summary>
         /// <param name="handler">The handler.</param>
         /// <param name="log">The log, or <see langword="null"/> for no logging.</param>
-        /// <exception cref="ArgumentNullException"><paramref name="handler"/> is <see langword="null"/>.</exception>
         /// <remarks>
         /// <paramref name="log"/> will be used to provide logging for the
         /// <see cref="EventHandlerCollection{TEventArgs}"/>. It should be included if possible as it greatly helps with
         /// debugging.
         /// </remarks>
+        /// <exception cref="ArgumentNullException"><paramref name="handler"/> is <see langword="null"/>.</exception>
         public void RegisterHandler(EventHandler<TEventArgs> handler, ILogger? log = null) {
             if (handler is null) {
                 throw new ArgumentNullException(nameof(handler));
@@ -138,17 +133,18 @@ namespace Orion.Events {
         }
 
         /// <summary>
-        /// Unregisters the given <paramref name="handler"/>.
+        /// Unregisters the given <paramref name="handler"/> from the <see cref="EventHandlerCollection{TEventArgs}"/>
+        /// instance.
         /// </summary>
         /// <param name="handler">The handler.</param>
         /// <returns>
         /// <see langword="true"/> if <paramref name="handler"/> was unregistered; otherwise, <see langword="false"/>.
         /// </returns>
-        /// <exception cref="ArgumentNullException"><paramref name="handler"/> is <see langword="null"/>.</exception>
         /// <remarks>
         /// All handler registrations should have a corresponding handler unregistration. Neglecting unregistrations can
         /// result in memory leaks and incorrect unloading behavior.
         /// </remarks>
+        /// <exception cref="ArgumentNullException"><paramref name="handler"/> is <see langword="null"/>.</exception>
         public bool UnregisterHandler(EventHandler<TEventArgs> handler) {
             if (handler is null) {
                 throw new ArgumentNullException(nameof(handler));

@@ -20,27 +20,15 @@ namespace Orion.Entities {
     /// Specifies an emote anchor type.
     /// </summary>
     /// <remarks>
-    /// An emote anchor is an entity that an emote stays attached to during the course of its lifetime.
+    /// An emote anchor is an <see cref="IEntity"/> instance that an emote stays attached to during the course of its
+    /// lifetime.
     /// </remarks>
     public enum EmoteAnchorType : byte {
-        /// <summary>
-        /// The emote is anchored to an NPC.
-        /// </summary>
+#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
         Npc = 0,
-
-        /// <summary>
-        /// The emote is anchored to a player.
-        /// </summary>
         Player = 1,
-
-        /// <summary>
-        /// The emote is anchored to a projectile.
-        /// </summary>
         Projectile = 2,
-
-        /// <summary>
-        /// The emote should actually be removed.
-        /// </summary>
-        Removed = 255
+        None = 255
+#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member
     }
 }

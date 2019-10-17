@@ -24,7 +24,7 @@ namespace Orion.Items {
     /// levels in either direction.
     /// </remarks>
     public enum ItemRarity {
-#pragma warning disable 1591
+#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
         Rainbow = -12,
         Amber = -11,
         Gray = -1,
@@ -40,6 +40,6 @@ namespace Orion.Items {
         Cyan = 9,
         Red = 10,
         Purple = 11
-#pragma warning restore 1591
+#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member
     }
 }

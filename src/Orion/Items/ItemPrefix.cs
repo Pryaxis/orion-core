@@ -23,7 +23,7 @@ namespace Orion.Items {
     /// Item prefixes modify items by, e.g., raising or lowering the item's use time, damage, critical hit chance, etc.
     /// </remarks>
     public enum ItemPrefix : sbyte {
-#pragma warning disable 1591
+#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
         Reforge = -2,
         Random = -1,
         None = 0,
@@ -110,6 +110,6 @@ namespace Orion.Items {
         Legendary = 81,
         Unreal = 82,
         Mythical = 83
-#pragma warning restore 1591
+#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member
     }
 }

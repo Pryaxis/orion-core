@@ -21,15 +21,19 @@ using Serilog;
 
 namespace Orion {
     /// <summary>
-    /// Represents the base class for an Orion service. Services provide concrete functionality to clients, and are
-    /// injected using a dependency injection framework.
+    /// Represents the base class for an Orion service.
     /// </summary>
+    /// <remarks>
+    /// Services provide concrete functionality to clients and are injected using an <see cref="OrionKernel"/> instance.
+    /// Existing service bindings may be overridden if necessary.
+    /// </remarks>
     [SuppressMessage("Design", "CA1063:Implement IDisposable Correctly",
         Justification = "IDisposable pattern makes no sense")]
     public abstract class OrionService : IDisposable {
         /// <summary>
         /// Gets the service's log.
         /// </summary>
+        /// <value>The service's log.</value>
         public ILogger Log { get; }
 
         /// <summary>
@@ -38,15 +42,12 @@ namespace Orion {
         /// <param name="log">The log.</param>
         /// <exception cref="ArgumentNullException"><paramref name="log"/> is <see langword="null"/>.</exception>
         protected OrionService(ILogger log) {
-            if (log is null) {
-                throw new ArgumentNullException(nameof(log));
-            }
-
-            Log = log;
+            Log = log ?? throw new ArgumentNullException(nameof(log));
         }
 
-
-        /// <inheritdoc/>
+        /// <summary>
+        /// Disposes the service, releasing any resources associated with it.
+        /// </summary>
         [SuppressMessage("Usage", "CA1816:Dispose methods should call SuppressFinalize",
             Justification = "IDisposable pattern makes no sense")]
         public virtual void Dispose() { }

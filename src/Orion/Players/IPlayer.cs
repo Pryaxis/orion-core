@@ -48,7 +48,7 @@ namespace Orion.Players {
         /// <summary>
         /// Gets or sets the player's team.
         /// </summary>
-        /// <value>THe player's teams.</value>
+        /// <value>The player's team.</value>
         PlayerTeam Team { get; set; }
 
         /// <summary>
@@ -67,11 +67,11 @@ namespace Orion.Players {
         /// Sends a <paramref name="packet"/> to the player.
         /// </summary>
         /// <param name="packet">The packet.</param>
-        /// <exception cref="ArgumentNullException"><paramref name="packet"/> is <see langword="null"/>.</exception>
         /// <remarks>
         /// This method sends the packet asynchronously to the player. If the player is not active, then the method will
         /// silently return.
         /// </remarks>
+        /// <exception cref="ArgumentNullException"><paramref name="packet"/> is <see langword="null"/>.</exception>
         void SendPacket(Packet packet);
     }
 
@@ -84,13 +84,13 @@ namespace Orion.Players {
         /// </summary>
         /// <param name="player">The player.</param>
         /// <param name="reason">The reason.</param>
-        /// <exception cref="ArgumentNullException">
-        /// <paramref name="player"/> or <paramref name="reason"/> are <see langword="null"/>.
-        /// </exception>
         /// <remarks>
         /// This method sends a <see cref="PlayerDisconnectPacket"/> to the player with the relevant properties filled
         /// in.
         /// </remarks>
+        /// <exception cref="ArgumentNullException">
+        /// <paramref name="player"/> or <paramref name="reason"/> are <see langword="null"/>.
+        /// </exception>
         public static void Disconnect(this IPlayer player, string reason) {
             if (player is null) {
                 throw new ArgumentNullException(nameof(player));
@@ -109,12 +109,12 @@ namespace Orion.Players {
         /// <param name="player">The player.</param>
         /// <param name="message">The message.</param>
         /// <param name="color">The color. The alpha component is ignored.</param>
-        /// <exception cref="ArgumentNullException">
-        /// <paramref name="player"/> or <paramref name="message"/> are <see langword="null"/>.
-        /// </exception>
         /// <remarks>
         /// This method sends a <see cref="ChatPacket"/> to the player with the relevant properties filled in.
         /// </remarks>
+        /// <exception cref="ArgumentNullException">
+        /// <paramref name="player"/> or <paramref name="message"/> are <see langword="null"/>.
+        /// </exception>
         public static void SendMessage(this IPlayer player, string message, Color color) {
             if (player is null) {
                 throw new ArgumentNullException(nameof(player));
@@ -139,14 +139,14 @@ namespace Orion.Players {
         /// <param name="fromPlayer">The player to receive the <paramref name="message"/> from.</param>
         /// <param name="message">The message.</param>
         /// <param name="color">The color. The alpha component is ignored.</param>
-        /// <exception cref="ArgumentNullException">
-        /// <paramref name="player"/>, <paramref name="fromPlayer"/>, or <paramref name="message"/> are
-        /// <see langword="null"/>.
-        /// </exception>
         /// <remarks>
         /// This method sends a <see cref="ModulePacket"/> with a <see cref="ChatModule"/> to the player with the
         /// relevant properties filled in.
         /// </remarks>
+        /// <exception cref="ArgumentNullException">
+        /// <paramref name="player"/>, <paramref name="fromPlayer"/>, or <paramref name="message"/> are
+        /// <see langword="null"/>.
+        /// </exception>
         public static void SendMessageFrom(this IPlayer player, IPlayer fromPlayer, string message, Color color) {
             if (player is null) {
                 throw new ArgumentNullException(nameof(player));

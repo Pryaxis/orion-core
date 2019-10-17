@@ -20,7 +20,7 @@ namespace Orion.Projectiles {
     /// Specifies a projectile type.
     /// </summary>
     public enum ProjectileType : short {
-#pragma warning disable 1591
+#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
         None = 0,
         WoodenArrow = 1,
         FireArrow = 2,
@@ -725,6 +725,6 @@ namespace Orion.Projectiles {
         BetsysWrath = 711,
         TomeOfInfiniteWisdom = 712,
         EterniaCrystalWin = 713
-#pragma warning restore 1591
+#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member
     }
 }

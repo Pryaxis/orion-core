@@ -77,7 +77,6 @@ namespace Orion.World {
             // Not localized because this string is developer-facing.
             Log.Debug("Invoking {Event}", WorldLoad);
             WorldLoad.Invoke(this, args);
-
             return HookResult.Continue;
         }
 

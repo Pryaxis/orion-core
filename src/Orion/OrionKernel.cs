@@ -37,8 +37,9 @@ using Serilog;
 namespace Orion {
     /// <summary>
     /// Represents Orion's dependency injection container. Provides methods to manipulate <see cref="OrionPlugin"/>
-    /// instances. This class is not thread-safe.
+    /// instances and server-related events. This class is not thread-safe.
     /// </summary>
+    /// <remarks>The <see cref="OrionKernel"/> class is responsible for managing Orion's plugins and services.</remarks>
     public sealed class OrionKernel : StandardKernel {
         private readonly ILogger _log;
         private readonly ISet<Assembly> _pluginAssemblies = new HashSet<Assembly>();
@@ -47,35 +48,39 @@ namespace Orion {
         private readonly Dictionary<OrionPlugin, string> _pluginToName = new Dictionary<OrionPlugin, string>();
 
         /// <summary>
-        /// Gets a mapping from plugin names to plugins.
+        /// Gets a read-only mapping from plugin names to <see cref="OrionPlugin"/> instances.
         /// </summary>
+        /// <value>A read-only mapping from plugin names to plugins.</value>
         public IReadOnlyDictionary<string, OrionPlugin> Plugins => _plugins;
 
         /// <summary>
         /// Gets the events that occur when the server initializes.
         /// </summary>
+        /// <value>The events that occur when the server initializes.</value>
         public EventHandlerCollection<ServerInitializeEventArgs> ServerInitialize { get; }
 
         /// <summary>
         /// Gets the events that occur when the server starts.
         /// </summary>
+        /// <value>The events that occur when the server starts.</value>
         public EventHandlerCollection<ServerStartEventArgs> ServerStart { get; }
 
         /// <summary>
         /// Gets the events that occur when the server updates.
         /// </summary>
+        /// <value>The events that occur when the server updates.</value>
         public EventHandlerCollection<ServerUpdateEventArgs> ServerUpdate { get; }
 
         /// <summary>
         /// Gets the events that occur when the server executes a command. This event can be canceled.
         /// </summary>
+        /// <value>The events that occur when the server executes a command.</value>
         public EventHandlerCollection<ServerCommandEventArgs> ServerCommand { get; }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="OrionKernel"/> class with the specified log. This log will be
-        /// used to create all injected logs.
+        /// Initializes a new instance of the <see cref="OrionKernel"/> class with the specified log.
         /// </summary>
-        /// <param name="log">The log.</param>
+        /// <param name="log">The log. This log will be used to create all injected logs.</param>
         /// <exception cref="ArgumentNullException"><paramref name="log"/> is <see langword="null"/>.</exception>
         public OrionKernel(ILogger log) {
             if (log is null) {
@@ -108,9 +113,11 @@ namespace Orion {
             // Create bindings for Lazy<T> so that we can have lazily loaded services. This allows plugins to override
             // the above service bindings if necessary.
             var getLazy = GetType().GetMethod(nameof(GetLazy), BindingFlags.NonPublic | BindingFlags.Instance);
-            Bind(typeof(Lazy<>)).ToMethod(ctx => getLazy
-                .MakeGenericMethod(ctx.GenericArguments?[0])
-                .Invoke(this, Array.Empty<object>()));
+            Bind(typeof(Lazy<>))
+                .ToMethod(ctx => getLazy
+                    .MakeGenericMethod(ctx.GenericArguments?[0])
+                    .Invoke(this, Array.Empty<object>()))
+                .InTransientScope();
 
             // Because we're using Assembly.Load, we'll need to have an AssemblyResolve handler to deal with assembly
             // resolution issues.
@@ -122,7 +129,13 @@ namespace Orion {
             Hooks.Command.Process += ProcessHandler;
         }
 
-        /// <inheritdoc/>
+        /// <summary>
+        /// Disposes the kernel, releasing any resources associated with it.
+        /// </summary>
+        /// <param name="disposing">
+        /// <see langword="true"/> to dispose all resources; <see langword="false"/> to dispose only unmanaged
+        /// resources.
+        /// </param>
         public override void Dispose(bool disposing) {
             base.Dispose(disposing);
             if (!disposing) {
@@ -138,14 +151,13 @@ namespace Orion {
         }
 
         /// <summary>
-        /// Starts loading plugins form an <paramref name="assemblyPath"/>.
-        /// 
-        /// <para/>
-        /// 
-        /// The reason that loading plugins needs to be split up into a two-part process is that all plugin types need
-        /// to be obtained before actually constructing them due to dependency injection requirements.
+        /// Starts loading plugins from an <paramref name="assemblyPath"/>.
         /// </summary>
         /// <param name="assemblyPath">The assembly path.</param>
+        /// <remarks>
+        /// The reason that loading plugins needs to be split up into a two-part process is that the plugin types need
+        /// to be collected before actually constructing them due to dependency injection requirements.
+        /// </remarks>
         /// <exception cref="ArgumentNullException">
         /// <paramref name="assemblyPath"/> is <see langword="null"/>.
         /// </exception>
@@ -164,7 +176,7 @@ namespace Orion {
                 // Bind all plugin types to themselves, allowing plugins to properly depend on other plugins without
                 // reliance on static state.
                 _pluginTypesToLoad.Add(pluginType);
-                Bind(pluginType).ToSelf().InTransientScope();
+                Bind(pluginType).ToSelf().InSingletonScope();
 
                 var pluginName = pluginType.GetCustomAttribute<ServiceAttribute?>()?.Name ?? pluginType.Name;
                 _log.Information(Resources.Kernel_LoadPlugin, pluginName, assemblyPath);
@@ -172,13 +184,10 @@ namespace Orion {
         }
 
         /// <summary>
-        /// Finishes loading plugins and returns the plugins.
-        /// 
-        /// <para/>
-        /// 
-        /// Each plugin will be constructed and then each plugin will be initialized.
+        /// Finishes loading plugins and returns the initialized <see cref="OrionPlugin"/> instances.
         /// </summary>
-        /// <returns>The loaded plugins.</returns>
+        /// <returns>The initialized <see cref="OrionPlugin"/> instances.</returns>
+        /// <remarks>Each plugin will be constructed and then each plugin will be initialized.</remarks>
         public IReadOnlyCollection<OrionPlugin> FinishLoadingPlugins() {
             OrionPlugin LoadPlugin(Type pluginType) {
                 var plugin = (OrionPlugin)this.Get(pluginType);
@@ -209,8 +218,12 @@ namespace Orion {
         /// Unloads a <paramref name="plugin"/> and returns a value indicating success.
         /// </summary>
         /// <param name="plugin">The plugin.</param>
-        /// <exception cref="ArgumentNullException"><paramref name="plugin"/> is <see langword="null"/>.</exception>
         /// <returns><see langword="true"/> if the plugin was unloaded; otherwise, <see langword="false"/>.</returns>
+        /// <remarks>
+        /// This method can potentially corrupt the state of <see cref="OrionPlugin"/> instances that depend on
+        /// <paramref name="plugin"/> and hence should be used very carefully.
+        /// </remarks>
+        /// <exception cref="ArgumentNullException"><paramref name="plugin"/> is <see langword="null"/>.</exception>
         public bool UnloadPlugin(OrionPlugin plugin) {
             if (plugin is null) {
                 throw new ArgumentNullException(nameof(plugin));

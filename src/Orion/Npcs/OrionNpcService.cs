@@ -229,21 +229,30 @@ namespace Orion.Npcs {
 
         private HookResult PreDropLootHandler(
                 TerrariaNpc terrariaNpc, ref int _, ref int _2, ref int _3, ref int _4, ref int _5, ref int itemType_,
-                ref int itemStackSize, ref bool _6, ref int itemPrefix, ref bool _7, ref bool _8) {
+                ref int itemStackSize, ref bool _6, ref int itemPrefix_, ref bool _7, ref bool _8) {
             Debug.Assert(terrariaNpc != null, "Terraria NPC should not be null");
 
             var npc = GetNpc(terrariaNpc);
             var itemType = (ItemType)itemType_;
+            var itemPrefix = (ItemPrefix)itemPrefix_;
             var args = new NpcDropLootItemEventArgs(npc) {
                 LootItemType = itemType,
                 LootItemStackSize = itemStackSize,
-                LootItemPrefix = (ItemPrefix)itemPrefix
+                LootItemPrefix = itemPrefix
             };
 
-            // Not localized because this string is developer-facing.
-            Log.Debug(
-                "Invoking {Event} with [{Npc}, {NpcType} dropping {ItemType} x{ItemStackSize}]",
-                NpcDropLootItem, npc, npc.Type, itemType, itemStackSize);
+            if (itemPrefix == ItemPrefix.None) {
+                // Not localized because this string is developer-facing.
+                Log.Debug(
+                    "Invoking {Event} with [{Npc}, {NpcType} dropping {ItemType} x{ItemStackSize}]",
+                    NpcDropLootItem, npc, npc.Type, itemType, itemStackSize);
+            } else {
+                // Not localized because this string is developer-facing.
+                Log.Debug(
+                    "Invoking {Event} with [{Npc}, {NpcType} dropping {ItemPrefix} {ItemType}]",
+                    NpcDropLootItem, npc, npc.Type, itemPrefix, itemType);
+            }
+
             NpcDropLootItem.Invoke(this, args);
             if (args.IsCanceled()) {
                 // Not localized because this string is developer-facing.
@@ -253,7 +262,7 @@ namespace Orion.Npcs {
 
             itemType_ = (int)args.LootItemType;
             itemStackSize = args.LootItemStackSize;
-            itemPrefix = (int)args.LootItemPrefix;
+            itemPrefix_ = (int)args.LootItemPrefix;
             return HookResult.Continue;
         }
 

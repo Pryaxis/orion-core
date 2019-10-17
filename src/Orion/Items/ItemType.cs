@@ -20,7 +20,7 @@ namespace Orion.Items {
     /// Specifies an item type.
     /// </summary>
     public enum ItemType : short {
-#pragma warning disable 1591
+#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
         None = 0,
         IronPickaxe = 1,
         DirtBlock = 2,
@@ -3909,6 +3909,6 @@ namespace Orion.Items {
         LeinforsFancypants = 3927,
         LeinforsPrehensileCloak = 3928,
         LeinforsLuxuryShampoo = 3929
-#pragma warning restore 1591
+#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member
     }
 }

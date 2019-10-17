@@ -17,6 +17,8 @@
 
 using System;
 using System.Diagnostics;
+using System.Diagnostics.CodeAnalysis;
+using System.Diagnostics.Contracts;
 using System.IO;
 using Orion.Entities;
 using Orion.Events;
@@ -54,6 +56,9 @@ namespace Orion.Players {
             Stats = new OrionPlayerStats(terrariaPlayer);
             Inventory = new OrionPlayerInventory(terrariaPlayer);
         }
+
+        [Pure, ExcludeFromCodeCoverage]
+        public override string ToString() => Name;
 
         public void SendPacket(Packet packet) {
             if (packet is null) {

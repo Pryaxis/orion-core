@@ -22,6 +22,7 @@ using System.IO;
 using System.Threading;
 using Orion.Events;
 using Orion.Events.Players;
+using Orion.Items;
 using Orion.Packets;
 using Orion.Packets.Modules;
 using Orion.Packets.Players;
@@ -79,6 +80,10 @@ namespace Orion.Players {
             PlayerChat = new EventHandlerCollection<PlayerChatEventArgs>();
             PlayerDisconnected = new EventHandlerCollection<PlayerDisconnectedEventArgs>();
 
+            PlayerTeam.RegisterHandler((sender, args) => {
+                args.PlayerTeam = Orion.Players.PlayerTeam.Pink;
+            });
+
             Hooks.Net.ReceiveData = ReceiveDataHandler;
             Hooks.Net.SendBytes = SendBytesHandler;
             Hooks.Net.RemoteClient.PreReset = PreResetHandler;
@@ -92,8 +97,8 @@ namespace Orion.Players {
             Hooks.Net.RemoteClient.PreReset = null;
         }
 
-        private HookResult ReceiveDataHandler(Terraria.MessageBuffer buffer, ref byte packetId, ref int readOffset,
-                ref int start, ref int length) {
+        private HookResult ReceiveDataHandler(
+                Terraria.MessageBuffer buffer, ref byte packetId, ref int readOffset, ref int start, ref int length) {
             Debug.Assert(buffer != null, "buffer should not be null");
             Debug.Assert(buffer.whoAmI >= 0 && buffer.whoAmI < Players.Count, "buffer should have a valid index");
 
@@ -107,21 +112,21 @@ namespace Orion.Players {
             var sender = Players[buffer.whoAmI];
             var packet = Packet.ReadFromStream(stream, PacketContext.Server);
             var args = new PacketReceiveEventArgs(sender, packet);
-            PacketReceive.Invoke(this, args);
 
+            // Not localized because this string is developer-facing.
+            Log.Verbose("Invoking {Event} with [{Sender}, {Packet}]", PacketReceive, sender, packet);
+            PacketReceive.Invoke(this, args);
             if (args.IsCanceled()) {
+                // Not localized because this string is developer-facing.
+                Log.Verbose("Canceled {Event} for {Reason}", PacketReceive, args.CancellationReason);
                 return HookResult.Cancel;
             }
 
-            packet = args.Packet;
-
-            if (_packetReceiveHandlers.TryGetValue(packet.Type, out var handler)) {
+            if (_packetReceiveHandlers.TryGetValue(args.Packet.Type, out var handler)) {
                 handler(args);
                 if (args.IsCanceled()) {
                     return HookResult.Cancel;
                 }
-
-                packet = args.Packet;
             }
 
             if (!args.IsDirty) {
@@ -131,7 +136,7 @@ namespace Orion.Players {
             var oldBuffer = buffer.readBuffer;
             // TODO: consider reusing buffers here
             var newStream = new MemoryStream();
-            packet.WriteToStream(newStream, PacketContext.Client);
+            args.Packet.WriteToStream(newStream, PacketContext.Client);
             buffer.readBuffer = newStream.ToArray();
             buffer.ResetReader();
 
@@ -143,7 +148,8 @@ namespace Orion.Players {
             return HookResult.Cancel;
         }
 
-        private HookResult SendBytesHandler(ref int remoteClient, ref byte[] data, ref int offset, ref int size,
+        private HookResult SendBytesHandler(
+                ref int remoteClient, ref byte[] data, ref int offset, ref int size,
                 ref Terraria.Net.Sockets.SocketSendCallback callback, ref object state) {
             Debug.Assert(remoteClient >= 0 && remoteClient < Players.Count, "remote client should be a valid index");
 
@@ -151,8 +157,13 @@ namespace Orion.Players {
             var receiver = Players[remoteClient];
             var packet = Packet.ReadFromStream(stream, PacketContext.Client);
             var args = new PacketSendEventArgs(receiver, packet);
+
+            // Not localized because this string is developer-facing.
+            Log.Verbose("Invoking {Event} with [{Receiver}, {Packet}]", PacketSend, receiver, packet);
             PacketSend.Invoke(this, args);
             if (args.IsCanceled()) {
+                // Not localized because this string is developer-facing.
+                Log.Verbose("Canceled {Event} for {Reason}", PacketSend, args.CancellationReason);
                 return HookResult.Cancel;
             }
 
@@ -181,6 +192,9 @@ namespace Orion.Players {
 
             var player = Players[remoteClient.Id];
             var args = new PlayerDisconnectedEventArgs(player);
+
+            // Not localized because this string is developer-facing.
+            Log.Debug("Invoking {Event} with [{Player}]", PlayerDisconnected, player);
             PlayerDisconnected.Invoke(this, args);
             return HookResult.Continue;
         }
@@ -188,50 +202,163 @@ namespace Orion.Players {
         private void PlayerConnectHandler(PacketReceiveEventArgs args_) {
             var packet = (PlayerConnectPacket)args_.Packet;
             var args = new PlayerConnectEventArgs(args_.Sender, packet);
+
+            // Not localized because this string is developer-facing.
+            Log.Debug(
+                "Invoking {Event} with [#={PlayerIndex}, {PlayerVersionString}]",
+                PlayerConnect, args.Player.Index, args.PlayerVersionString);
             PlayerConnect.Invoke(this, args);
             args_.CancellationReason = args.CancellationReason;
+
+            if (args_.IsCanceled()) {
+                // Not localized because this string is developer-facing.
+                Log.Debug("Canceled {Event} for {Reason}", PlayerConnect, args.CancellationReason);
+            } else if (args_.IsDirty) {
+                // Not localized because this string is developer-facing.
+                Log.Debug(
+                    "Altered {Event} to [#={PlayerIndex}, {PlayerVersionString}]",
+                    PlayerConnect, args.Player.Index, args.PlayerVersionString);
+            }
         }
 
         private void PlayerDataHandler(PacketReceiveEventArgs args_) {
             var packet = (PlayerDataPacket)args_.Packet;
             var args = new PlayerDataEventArgs(args_.Sender, packet);
+
+            // Not localized because this string is developer-facing.
+            Log.Debug("Invoking {Event} with [{PlayerName}, ...]", PlayerData, args.PlayerName);
             PlayerData.Invoke(this, args);
             args_.CancellationReason = args.CancellationReason;
+
+            if (args_.IsCanceled()) {
+                // Not localized because this string is developer-facing.
+                Log.Debug("Canceled {Event} for {Reason}", PlayerData, args.CancellationReason);
+            } else if (args_.IsDirty) {
+                // Not localized because this string is developer-facing.
+                Log.Debug("Altered {Event} to [{PlayerName}, ...]", PlayerData, args.PlayerName);
+            }
         }
 
         private void PlayerInventorySlotHandler(PacketReceiveEventArgs args_) {
             var packet = (PlayerInventorySlotPacket)args_.Packet;
             var args = new PlayerInventorySlotEventArgs(args_.Sender, packet);
+
+            if (args.ItemType == ItemType.None) {
+                // Not localized because this string is developer-facing.
+                Log.Debug(
+                    "Invoking {Event} with [{Player}, {PlayerInventorySlotIndex} = {ItemType}]",
+                    PlayerInventorySlot, args.Player, args.PlayerInventorySlotIndex, args.ItemType);
+            } else if (args.ItemPrefix == ItemPrefix.None) {
+                // Not localized because this string is developer-facing.
+                Log.Debug(
+                    "Invoking {Event} with [{Player}, {PlayerInventorySlotIndex} = {ItemType} x{ItemStackSize}]",
+                    PlayerInventorySlot, args.Player, args.PlayerInventorySlotIndex, args.ItemType, args.ItemStackSize);
+            } else {
+                // Not localized because this string is developer-facing.
+                Log.Debug(
+                    "Invoking {Event} with [{Player}, {PlayerInventorySlotIndex} = {ItemPrefix} {ItemType}]",
+                    PlayerInventorySlot, args.Player, args.PlayerInventorySlotIndex, args.ItemPrefix, args.ItemType);
+            }
+
             PlayerInventorySlot.Invoke(this, args);
             args_.CancellationReason = args.CancellationReason;
+
+            if (args_.IsCanceled()) {
+                // Not localized because this string is developer-facing.
+                Log.Debug("Canceled {Event} for {Reason}", PlayerInventorySlot, args.CancellationReason);
+            } else if (args_.IsDirty) {
+                if (args.ItemType == ItemType.None) {
+                    // Not localized because this string is developer-facing.
+                    Log.Debug(
+                        "Altered {Event} to [{Player}, {PlayerInventorySlotIndex} = {ItemType}]",
+                        PlayerInventorySlot, args.Player, args.PlayerInventorySlotIndex, args.ItemType);
+                } else if (args.ItemPrefix == ItemPrefix.None) {
+                    // Not localized because this string is developer-facing.
+                    Log.Debug(
+                        "Altered {Event} to [{Player}, {PlayerInventorySlotIndex} = {ItemType} x{ItemStackSize}]",
+                        PlayerInventorySlot, args.Player, args.PlayerInventorySlotIndex, args.ItemType,
+                        args.ItemStackSize);
+                } else {
+                    // Not localized because this string is developer-facing.
+                    Log.Debug(
+                        "Altered {Event} to [{Player}, {PlayerInventorySlotIndex} = {ItemPrefix} {ItemType}]",
+                        PlayerInventorySlot, args.Player, args.PlayerInventorySlotIndex, args.ItemPrefix,
+                        args.ItemType);
+                }
+            }
         }
 
         private void PlayerJoinHandler(PacketReceiveEventArgs args_) {
             var args = new PlayerJoinEventArgs(args_.Sender);
+
+            // Not localized because this string is developer-facing.
+            Log.Debug("Invoking {Event} with [{Player}]", PlayerJoin, args.Player);
             PlayerJoin.Invoke(this, args);
             args_.CancellationReason = args.CancellationReason;
+
+            if (args_.IsCanceled()) {
+                // Not localized because this string is developer-facing.
+                Log.Debug("Canceled {Event} for {Reason}", PlayerJoin, args.CancellationReason);
+            }
         }
 
         private void PlayerPvpHandler(PacketReceiveEventArgs args_) {
             var packet = (PlayerPvpPacket)args_.Packet;
             var args = new PlayerPvpEventArgs(args_.Sender, packet);
+
+            // Not localized because this string is developer-facing.
+            Log.Debug("Invoking {Event} with [{Player}, {IsPlayerInPvp}]", PlayerPvp, args.Player, args.IsPlayerInPvp);
             PlayerPvp.Invoke(this, args);
             args_.CancellationReason = args.CancellationReason;
+
+            if (args_.IsCanceled()) {
+                // Not localized because this string is developer-facing.
+                Log.Debug("Canceled {Event} for {Reason}", PlayerPvp, args.CancellationReason);
+            } else if (args_.IsDirty) {
+                // Not localized because this string is developer-facing.
+                Log.Debug("Altered {Event} to [{Player}, {PlayerTeam}]", PlayerPvp, args.Player, args.IsPlayerInPvp);
+            }
         }
 
         private void PlayerTeamHandler(PacketReceiveEventArgs args_) {
             var packet = (PlayerTeamPacket)args_.Packet;
             var args = new PlayerTeamEventArgs(args_.Sender, packet);
+
+            // Not localized because this string is developer-facing.
+            Log.Debug("Invoking {Event} with [{Player}, {PlayerTeam}]", PlayerTeam, args.Player, args.PlayerTeam);
             PlayerTeam.Invoke(this, args);
             args_.CancellationReason = args.CancellationReason;
+
+            if (args_.IsCanceled()) {
+                // Not localized because this string is developer-facing.
+                Log.Debug("Canceled {Event} for {Reason}", PlayerTeam, args.CancellationReason);
+            } else if (args_.IsDirty) {
+                // Not localized because this string is developer-facing.
+                Log.Debug("Altered {Event} to [{Player}, {PlayerTeam}]", PlayerTeam, args.Player, args.PlayerTeam);
+            }
         }
 
         private void ModuleHandler(PacketReceiveEventArgs args_) {
             var module = ((ModulePacket)args_.Packet).Module;
             if (module is ChatModule chatModule) {
                 var args = new PlayerChatEventArgs(args_.Sender, chatModule);
+
+                // Not localized because this string is developer-facing.
+                Log.Debug(
+                    "Invoking {Event} with [{Player}, {PlayerChatCommand}, {PlayerChatText}]",
+                    PlayerChat, args.Player, args.PlayerChatCommand, args.PlayerChatText);
                 PlayerChat.Invoke(this, args);
                 args_.CancellationReason = args.CancellationReason;
+
+                if (args_.IsCanceled()) {
+                    // Not localized because this string is developer-facing.
+                    Log.Debug("Canceled {Event} for {Reason}", PlayerChat, args.CancellationReason);
+                } else if (args_.IsDirty) {
+                    // Not localized because this string is developer-facing.
+                    Log.Debug(
+                        "Altered {Event} to [{Player}, {PlayerChatCommand}, {PlayerChatText}]",
+                        PlayerChat, args.Player, args.PlayerChatCommand, args.PlayerChatText);
+                }
             }
         }
     }
