@@ -58,8 +58,9 @@ namespace Orion.Projectiles {
             Hooks.Projectile.PreKill = null;
         }
 
-        public IProjectile? SpawnProjectile(ProjectileType projectileType, Vector2 position, Vector2 velocity,
-                int damage, float knockback, float[]? aiValues = null) {
+        public IProjectile? SpawnProjectile(
+                ProjectileType projectileType, Vector2 position, Vector2 velocity, int damage, float knockback,
+                float[]? aiValues = null) {
             if (aiValues != null && aiValues.Length != TerrariaProjectile.maxAI) {
                 throw new ArgumentException(
                     $"Array does not have length {TerrariaProjectile.maxAI}.", nameof(aiValues));
@@ -83,17 +84,27 @@ namespace Orion.Projectiles {
                 : new OrionProjectile(terrariaProjectile);
         }
 
-        private HookResult PreSetDefaultsByIdHandler(TerrariaProjectile terrariaProjectile, ref int projectileType) {
+        private HookResult PreSetDefaultsByIdHandler(TerrariaProjectile terrariaProjectile, ref int projectileType_) {
             Debug.Assert(terrariaProjectile != null, "Terraria projectile should not be null");
 
             var projectile = GetProjectile(terrariaProjectile);
-            var args = new ProjectileSetDefaultsEventArgs(projectile, (ProjectileType)projectileType);
+            var projectileType = (ProjectileType)projectileType_;
+            var args = new ProjectileSetDefaultsEventArgs(projectile, projectileType);
+
+            // Not localized because this string is developer-facing.
+            Log.Verbose(
+                "Invoking {Event} with [{Projectile}, {ProjectileType}]",
+                ProjectileSetDefaults, projectile, projectileType);
             ProjectileSetDefaults.Invoke(this, args);
             if (args.IsCanceled()) {
+                // Not localized because this string is developer-facing.
+                Log.Verbose(
+                    "Canceled {Event} for {CancellationReason}",
+                    ProjectileSetDefaults, args.CancellationReason);
                 return HookResult.Cancel;
             }
 
-            projectileType = (int)args.ProjectileType;
+            projectileType_ = (int)args.ProjectileType;
             return HookResult.Continue;
         }
 
@@ -101,9 +112,21 @@ namespace Orion.Projectiles {
             Debug.Assert(projectileIndex >= 0 && projectileIndex < Projectiles.Count,
                 "projectile index should be valid");
 
-            var args = new ProjectileUpdateEventArgs(Projectiles[projectileIndex]);
+            var projectile = Projectiles[projectileIndex];
+            var args = new ProjectileUpdateEventArgs(projectile);
+
+            // Not localized because this string is developer-facing.
+            Log.Verbose(
+                "Invoking {Event} with [{Projectile}, {ProjectileType}]",
+                ProjectileUpdate, projectile, projectile.Type);
             ProjectileUpdate.Invoke(this, args);
-            return args.IsCanceled() ? HookResult.Cancel : HookResult.Continue;
+            if (args.IsCanceled()) {
+                // Not localized because this string is developer-facing.
+                Log.Verbose("Canceled {Event} for {CancellationReason}", ProjectileUpdate, args.CancellationReason);
+                return HookResult.Cancel;
+            }
+
+            return HookResult.Continue;
         }
 
         private HookResult PreKillHandler(TerrariaProjectile terrariaProjectile) {
@@ -111,8 +134,19 @@ namespace Orion.Projectiles {
 
             var projectile = GetProjectile(terrariaProjectile);
             var args = new ProjectileRemoveEventArgs(projectile);
+
+            // Not localized because this string is developer-facing.
+            Log.Debug(
+                "Invoking {Event} with [{Projectile}, {ProjectileType}]",
+                ProjectileRemove, projectile, projectile.Type);
             ProjectileRemove.Invoke(this, args);
-            return args.IsCanceled() ? HookResult.Cancel : HookResult.Continue;
+            if (args.IsCanceled()) {
+                // Not localized because this string is developer-facing.
+                Log.Debug("Canceled {Event} for {CancellationReason}", ProjectileRemove, args.CancellationReason);
+                return HookResult.Cancel;
+            }
+
+            return HookResult.Continue;
         }
     }
 }

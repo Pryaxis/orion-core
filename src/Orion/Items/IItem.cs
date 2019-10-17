@@ -30,17 +30,20 @@ namespace Orion.Items {
     /// There are three types of items:
     /// <list type="bullet">
     /// <item>
-    /// <description>Items which are abstract and do not affect the game state.</description>
-    /// </item>
-    /// <item>
     /// <description>
     /// Items which are abstract and exist in some sort of container, like an inventory or chest.
     /// </description>
     /// </item>
     /// <item>
-    /// <description>Items which are concrete and affect the game state.</description>
+    /// <description>Items which are concrete but not active.</description>
+    /// </item>
+    /// <item>
+    /// <description>Items which are concrete and are active in the world.</description>
     /// </item>
     /// </list>
+    /// 
+    /// Care must be taken to differentiate the three using the <see cref="IEntity.Index"/> and
+    /// <see cref="IEntity.IsActive"/> properties.
     /// </remarks>
     public interface IItem : IEntity, IWrapping<TerrariaItem> {
         /// <summary>

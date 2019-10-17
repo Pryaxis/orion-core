@@ -27,9 +27,9 @@ namespace Orion.Items {
     /// </summary>
     public interface IItemService {
         /// <summary>
-        /// Gets the items in the world. All items are returned, regardless of whether or not they are actually active.
+        /// Gets the items. All items are returned, regardless of whether or not they are actually active.
         /// </summary>
-        /// <value>The items in the world.</value>
+        /// <value>The items.</value>
         IReadOnlyArray<IItem> Items { get; }
 
         /// <summary>

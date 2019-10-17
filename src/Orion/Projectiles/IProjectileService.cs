@@ -28,31 +28,34 @@ namespace Orion.Projectiles {
     /// </summary>
     public interface IProjectileService {
         /// <summary>
-        /// Gets the projectiles in the world. All projectiles are returned, regardless of whether or not they are
-        /// actually active.
+        /// Gets the projectiles. All projectiles are returned, regardless of whether or not they are actually active.
         /// </summary>
+        /// <value>The projectiles.</value>
         IReadOnlyArray<IProjectile> Projectiles { get; }
 
         /// <summary>
         /// Gets the event handlers that occur when a projectile's defaults are being set, which is when projectile
         /// data is initialized. This event can be canceled.
         /// </summary>
+        /// <value>The event handlers that occur when a projectile's defaults are being set.</value>
         EventHandlerCollection<ProjectileSetDefaultsEventArgs> ProjectileSetDefaults { get; }
 
         /// <summary>
         /// Gets the event handlers that occur when a projectile is updating. This event can be canceled.
         /// </summary>
+        /// <value>The event handlers that occur when a projectile is updating.</value>
         EventHandlerCollection<ProjectileUpdateEventArgs> ProjectileUpdate { get; }
 
         /// <summary>
         /// Gets the event handlers that occur when a projectile is being removed. This event can be canceled.
         /// </summary>
+        /// <value>The event handlers that occur when a projectile is being removed.</value>
         EventHandlerCollection<ProjectileRemoveEventArgs> ProjectileRemove { get; }
 
         /// <summary>
         /// Spawns and returns a projectile with the given <paramref name="type"/> at the specified
         /// <paramref name="position"/> with the <paramref name="velocity"/>, <paramref name="damage"/>,
-        /// <paramref name="knockback"/>, and <paramref name="aiValues"/>. This method is not thread-safe.
+        /// <paramref name="knockback"/>, and <paramref name="aiValues"/>.
         /// </summary>
         /// <param name="type">The projectile type.</param>
         /// <param name="position">The position.</param>
@@ -67,6 +70,7 @@ namespace Orion.Projectiles {
         /// <exception cref="ArgumentException">
         /// <paramref name="aiValues"/> is not <see langword="null"/> and does not have length 2.
         /// </exception>
+        /// <remarks>Implementations of this method are not required to be thread-safe.</remarks>
         IProjectile? SpawnProjectile(ProjectileType type, Vector2 position, Vector2 velocity,
             int damage, float knockback, float[]? aiValues = null);
     }

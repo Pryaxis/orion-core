@@ -24,7 +24,21 @@ namespace Orion.Npcs {
     /// Represents a Terraria NPC.
     /// </summary>
     /// <remarks>
-    /// NPCs are equivalent to "mobs" and may either be friendly or hostile.
+    /// NPCs are equivalent to "mobs" and may either be friendly or hostile. <para/>
+    /// 
+    /// There are two types of NPCs:
+    /// <list type="bullet">
+    /// <item>
+    /// </item>
+    /// <item>
+    /// <description>NPCs which are not active.</description>
+    /// </item>
+    /// <item>
+    /// <description>NPCs which are active in the world.</description>
+    /// </item>
+    /// </list>
+    /// 
+    /// Care must be taken to differentiate the two using the <see cref="IEntity.IsActive"/> property.
     /// </remarks>
     public interface INpc : IEntity, IWrapping<TerrariaNpc> {
         /// <summary>

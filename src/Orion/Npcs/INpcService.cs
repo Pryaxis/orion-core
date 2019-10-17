@@ -28,9 +28,9 @@ namespace Orion.Npcs {
     /// </summary>
     public interface INpcService {
         /// <summary>
-        /// Gets the NPCs in the world. All NPCs are returned, regardless of whether or not they are actually active.
+        /// Gets the NPCs. All NPCs are returned, regardless of whether or not they are actually active.
         /// </summary>
-        /// <value>The NPCs in the world.</value>
+        /// <value>The NPCs.</value>
         IReadOnlyArray<INpc> Npcs { get; }
 
         /// <summary>

@@ -29,10 +29,9 @@ namespace Orion.Players {
     /// </summary>
     public interface IPlayerService {
         /// <summary>
-        /// Gets the players in the world. All players are returned, regardless of whether or not they are actually
-        /// active.
+        /// Gets the players. All players are returned, regardless of whether or not they are actually active.
         /// </summary>
-        /// <value>The players in the world.</value>
+        /// <value>The players.</value>
         IReadOnlyArray<IPlayer> Players { get; }
 
         /// <summary>
