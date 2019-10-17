@@ -17,21 +17,33 @@
 
 using System;
 using Orion.Npcs;
+using Orion.Utils;
 
 namespace Orion.Events.Npcs {
     /// <summary>
     /// Provides data for the <see cref="INpcService.NpcSetDefaults"/> event. This event can be canceled.
     /// </summary>
     [EventArgs("npc-defaults")]
-    public sealed class NpcSetDefaultsEventArgs : NpcEventArgs, ICancelable {
+    public sealed class NpcSetDefaultsEventArgs : NpcEventArgs, ICancelable, IDirtiable {
+        private NpcType _npcType;
+
         /// <inheritdoc/>
         public string? CancellationReason { get; set; }
-        
+
+        /// <inheritdoc/>
+        public bool IsDirty { get; private set; }
+
         /// <summary>
         /// Gets or sets the NPC type that the NPC's defaults are being set to.
         /// </summary>
         /// <value>The NPC type that the NPC's defaults are being set to.</value>
-        public NpcType NpcType { get; set; }
+        public NpcType NpcType {
+            get => _npcType;
+            set {
+                _npcType = value;
+                IsDirty = true;
+            }
+        }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="NpcSetDefaultsEventArgs"/> class with the specified NPC and
@@ -43,5 +55,8 @@ namespace Orion.Events.Npcs {
         public NpcSetDefaultsEventArgs(INpc npc, NpcType npcType) : base(npc) {
             NpcType = npcType;
         }
+
+        /// <inheritdoc/>
+        public void Clean() => IsDirty = false;
     }
 }

@@ -118,7 +118,7 @@ namespace Orion.Npcs {
         // Handling NpcSetDefaults
         // =============================================================================================================
 
-        private HookResult PreSetDefaultsByIdHandler(TerrariaNpc terrariaNpc, ref int npcType_, ref float _) {
+        private HookResult PreSetDefaultsByIdHandler(TerrariaNpc terrariaNpc, ref int npcType, ref float _) {
             Debug.Assert(terrariaNpc != null, "Terraria NPC should not be null");
 
             if (_setDefaultsToIgnore.Value > 0) {
@@ -127,8 +127,7 @@ namespace Orion.Npcs {
             }
 
             var npc = GetNpc(terrariaNpc);
-            var npcType = (NpcType)npcType_;
-            var args = new NpcSetDefaultsEventArgs(npc, npcType);
+            var args = new NpcSetDefaultsEventArgs(npc, (NpcType)npcType);
 
             LogNpcSetDefaults_Before(args);
             NpcSetDefaults.Invoke(this, args);
@@ -136,11 +135,13 @@ namespace Orion.Npcs {
 
             if (args.IsCanceled()) {
                 return HookResult.Cancel;
+            } else if (args.IsDirty) {
+                npcType = (int)args.NpcType;
             }
 
             // Ignore two calls to SetDefaults() if type is negative. This is because SetDefaults gets called twice:
             // once with 0, and once with the base type.
-            if ((npcType_ = (int)args.NpcType) < 0) {
+            if (npcType < 0) {
                 _setDefaultsToIgnore.Value = 2;
             }
 
@@ -158,6 +159,9 @@ namespace Orion.Npcs {
             if (args.IsCanceled()) {
                 // Not localized because this string is developer-facing.
                 Log.Verbose("Canceled {Event} for {CancellationReason}", NpcSetDefaults, args.CancellationReason);
+            } else if (args.IsDirty) {
+                // Not localized because this string is developer-facing.
+                Log.Verbose("Altered {Event} to [{Npc}, {NpcType}]", NpcSetDefaults, args.Npc, args.NpcType);
             }
         }
 

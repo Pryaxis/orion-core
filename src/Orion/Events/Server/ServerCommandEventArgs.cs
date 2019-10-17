@@ -16,8 +16,6 @@
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
 using System;
-using System.Diagnostics.CodeAnalysis;
-using System.Diagnostics.Contracts;
 
 namespace Orion.Events.Server {
     /// <summary>
@@ -42,9 +40,5 @@ namespace Orion.Events.Server {
         public ServerCommandEventArgs(string input) {
             Input = input ?? throw new ArgumentNullException(nameof(input));
         }
-
-        /// <inheritdoc/>
-        [Pure, ExcludeFromCodeCoverage]
-        public override string ToString() => $"[{Input}]";
     }
 }

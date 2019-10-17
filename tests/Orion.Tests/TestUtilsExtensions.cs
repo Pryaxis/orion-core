@@ -79,6 +79,8 @@ namespace Orion {
             foreach (var property in dirtiable.GetType().GetProperties(BindingFlags.Public | BindingFlags.Instance)) {
                 if (property.SetMethod?.IsPublic != true) {
                     continue;
+                } else if (property.Name == "CancellationReason") {
+                    continue;
                 }
 
                 var propertyType = property.PropertyType;
