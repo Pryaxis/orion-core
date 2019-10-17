@@ -29,20 +29,38 @@ namespace Orion.Players {
     /// <summary>
     /// Represents a Terraria player.
     /// </summary>
+    /// <remarks>
+    /// Players are the users that join servers. They can freely alter the game state in many different ways. <para/>
+    /// 
+    /// There are two types of players:
+    /// <list type="bullet">
+    /// <item>
+    /// <description>Players which are not active.</description>
+    /// </item>
+    /// <item>
+    /// <description>Players which are active and on the server.</description>
+    /// </item>
+    /// </list>
+    /// 
+    /// Care must be taken to differentiate the two using the <see cref="IEntity.IsActive"/> property.
+    /// </remarks>
     public interface IPlayer : IEntity, IWrapping<TerrariaPlayer> {
         /// <summary>
         /// Gets or sets the player's team.
         /// </summary>
+        /// <value>THe player's teams.</value>
         PlayerTeam Team { get; set; }
 
         /// <summary>
         /// Gets the player's statistics.
         /// </summary>
+        /// <value>The player's statistics.</value>
         IPlayerStats Stats { get; }
 
         /// <summary>
         /// Gets the player's inventory.
         /// </summary>
+        /// <value>The player's inventory.</value>
         IPlayerInventory Inventory { get; }
 
         /// <summary>
@@ -50,6 +68,10 @@ namespace Orion.Players {
         /// </summary>
         /// <param name="packet">The packet.</param>
         /// <exception cref="ArgumentNullException"><paramref name="packet"/> is <see langword="null"/>.</exception>
+        /// <remarks>
+        /// This method sends the packet asynchronously to the player. If the player is not active, then the method will
+        /// silently return.
+        /// </remarks>
         void SendPacket(Packet packet);
     }
 
@@ -65,6 +87,10 @@ namespace Orion.Players {
         /// <exception cref="ArgumentNullException">
         /// <paramref name="player"/> or <paramref name="reason"/> are <see langword="null"/>.
         /// </exception>
+        /// <remarks>
+        /// This method sends a <see cref="PlayerDisconnectPacket"/> to the player with the relevant properties filled
+        /// in.
+        /// </remarks>
         public static void Disconnect(this IPlayer player, string reason) {
             if (player is null) {
                 throw new ArgumentNullException(nameof(player));
@@ -86,6 +112,9 @@ namespace Orion.Players {
         /// <exception cref="ArgumentNullException">
         /// <paramref name="player"/> or <paramref name="message"/> are <see langword="null"/>.
         /// </exception>
+        /// <remarks>
+        /// This method sends a <see cref="ChatPacket"/> to the player with the relevant properties filled in.
+        /// </remarks>
         public static void SendMessage(this IPlayer player, string message, Color color) {
             if (player is null) {
                 throw new ArgumentNullException(nameof(player));
@@ -114,6 +143,10 @@ namespace Orion.Players {
         /// <paramref name="player"/>, <paramref name="fromPlayer"/>, or <paramref name="message"/> are
         /// <see langword="null"/>.
         /// </exception>
+        /// <remarks>
+        /// This method sends a <see cref="ModulePacket"/> with a <see cref="ChatModule"/> to the player with the
+        /// relevant properties filled in.
+        /// </remarks>
         public static void SendMessageFrom(this IPlayer player, IPlayer fromPlayer, string message, Color color) {
             if (player is null) {
                 throw new ArgumentNullException(nameof(player));

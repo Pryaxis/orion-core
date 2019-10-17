@@ -32,57 +32,68 @@ namespace Orion.Players {
         /// Gets the players in the world. All players are returned, regardless of whether or not they are actually
         /// active.
         /// </summary>
+        /// <value>The players in the world.</value>
         IReadOnlyArray<IPlayer> Players { get; }
 
         /// <summary>
-        /// Gets the event handlers that run when receiving a packet. This event can be canceled.
+        /// Gets the event handlers that occur when receiving a packet. This event can be canceled.
         /// </summary>
+        /// <value>The event handlers that occur when receiving a packet.</value>
         EventHandlerCollection<PacketReceiveEventArgs> PacketReceive { get; }
 
         /// <summary>
-        /// Gets the event handlers that run when sending a packet. This event can be canceled.
+        /// Gets the event handlers that occur when sending a packet. This event can be canceled.
         /// </summary>
+        /// <value>The event handlers that occur when sending a packet.</value>
         EventHandlerCollection<PacketSendEventArgs> PacketSend { get; }
 
         /// <summary>
-        /// Gets the event handlers that run when a player connects. This event can be canceled.
+        /// Gets the event handlers that occur when a player connects. This event can be canceled.
         /// </summary>
+        /// <value>The event handlers that occur when a player connects.</value>
         EventHandlerCollection<PlayerConnectEventArgs> PlayerConnect { get; }
 
         /// <summary>
-        /// Gets the event handlers that run when a player sends their player data: e.g., clothing colors, name,
+        /// Gets the event handlers that occur when a player sends their player data: e.g., clothing colors, name,
         /// etc. This event can be canceled.
         /// </summary>
+        /// <value>The event handlers that occur when a player sends their player data.</value>
         EventHandlerCollection<PlayerDataEventArgs> PlayerData { get; }
 
         /// <summary>
-        /// Gets the event handlers that run when a player sends an inventory slot. This event can be canceled.
+        /// Gets the event handlers that occur when a player sends an inventory slot. This event can be canceled.
         /// </summary>
+        /// <value>The event handlers that occur when a player sends an inventory slot.</value>
         EventHandlerCollection<PlayerInventorySlotEventArgs> PlayerInventorySlot { get; }
 
         /// <summary>
-        /// Gets the event handlers that run when a player joins. This event can be canceled.
+        /// Gets the event handlers that occur when a player joins. This event can be canceled.
         /// </summary>
+        /// <value>The event handlers that occur when a player joins.</value>
         EventHandlerCollection<PlayerJoinEventArgs> PlayerJoin { get; }
 
         /// <summary>
         /// Gets the event handlers that occur when a player toggles PvP. This event can be canceled.
         /// </summary>
+        /// <value>The event handlers that occur when a player toggles PvP.</value>
         EventHandlerCollection<PlayerPvpEventArgs> PlayerPvp { get; }
 
         /// <summary>
         /// Gets the event handlers that occur when a player changes teams. This event can be canceled.
         /// </summary>
+        /// <value>The event handlers that occur when a player changes teams.</value>
         EventHandlerCollection<PlayerTeamEventArgs> PlayerTeam { get; }
 
         /// <summary>
-        /// Gets the event handlers that run when a player chats. This event can be canceled.
+        /// Gets the event handlers that occur when a player chats. This event can be canceled.
         /// </summary>
+        /// <value>The event handlers that occur when a player chats.</value>
         EventHandlerCollection<PlayerChatEventArgs> PlayerChat { get; }
 
         /// <summary>
-        /// Gets the event handlers that run when a player disconnects.
+        /// Gets the event handlers that occur when a player disconnects.
         /// </summary>
+        /// <value>The event handlers that occur when a player disconnects.</value>
         EventHandlerCollection<PlayerDisconnectedEventArgs> PlayerDisconnected { get; }
     }
 
@@ -91,7 +102,7 @@ namespace Orion.Players {
     /// </summary>
     public static class PlayerServiceExtensions {
         /// <summary>
-        /// Broadcasts a <paramref name="packet"/> to all players.
+        /// Broadcasts a <paramref name="packet"/> to all active players.
         /// </summary>
         /// <param name="playerService">The player service.</param>
         /// <param name="packet">The packet.</param>
@@ -114,7 +125,7 @@ namespace Orion.Players {
         }
 
         /// <summary>
-        /// Broadcasts a <paramref name="message"/> to all players with the given <paramref name="color"/>.
+        /// Broadcasts a <paramref name="message"/> to all active players with the given <paramref name="color"/>.
         /// </summary>
         /// <param name="playerService">The player service.</param>
         /// <param name="message">The message.</param>

@@ -47,9 +47,10 @@ namespace Orion.Npcs {
             Debug.Assert(log != null, "log should not be null");
             Debug.Assert(Main.npc != null, "Terraria NPCs should not be null");
 
-            // Ignore the last NPC since it is used as a failure slot.
             Npcs = new WrappedReadOnlyArray<OrionNpc, TerrariaNpc>(
-                Main.npc.AsMemory(..^1), (npcIndex, terrariaNpc) => new OrionNpc(npcIndex, terrariaNpc));
+                // Ignore the last NPC since it is used as a failure slot.
+                Main.npc.AsMemory(..^1),
+                (npcIndex, terrariaNpc) => new OrionNpc(npcIndex, terrariaNpc));
 
             NpcSetDefaults = new EventHandlerCollection<NpcSetDefaultsEventArgs>();
             NpcSpawn = new EventHandlerCollection<NpcSpawnEventArgs>();
@@ -82,6 +83,7 @@ namespace Orion.Npcs {
 
         public INpc? SpawnNpc(NpcType type, Vector2 position, float[]? aiValues = null) {
             if (aiValues != null && aiValues.Length != TerrariaNpc.maxAI) {
+                // Not localized because this string is developer-facing.
                 throw new ArgumentException($"Array does not have length {TerrariaNpc.maxAI}.", nameof(aiValues));
             }
 

@@ -25,32 +25,32 @@ namespace Orion.Players {
     /// </summary>
     public enum PlayerTeam : byte {
         /// <summary>
-        /// Indicates no team.
+        /// No team.
         /// </summary>
         None = 0,
 
         /// <summary>
-        /// Indicates the red team.
+        /// The red team.
         /// </summary>
         Red = 1,
 
         /// <summary>
-        /// Indicates the green team.
+        /// The green team.
         /// </summary>
         Green = 2,
 
         /// <summary>
-        /// Indicates the blue team.
+        /// The blue team.
         /// </summary>
         Blue = 3,
 
         /// <summary>
-        /// Indicates the yellow team.
+        /// The yellow team.
         /// </summary>
         Yellow = 4,
 
         /// <summary>
-        /// Indicates the pink team.
+        /// The pink team.
         /// </summary>
         Pink = 5
     }

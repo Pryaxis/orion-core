@@ -37,6 +37,8 @@ namespace Orion.Entities {
     /// <description>Entities which are concrete and affect the game state.</description>
     /// </item>
     /// </list>
+    /// 
+    /// Care must be taken to differentiate the two using the <see cref="IsActive"/> property.
     /// </remarks>
     public interface IEntity : IAnnotatable {
         /// <summary>

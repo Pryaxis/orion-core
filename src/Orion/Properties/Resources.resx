@@ -117,18 +117,6 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="EventHandlerCollection_Invoke" xml:space="preserve">
-    <value>{EventName}: Invoking with {Args}</value>
-  </data>
-  <data name="EventHandlerCollection_InvokeCanceled" xml:space="preserve">
-    <value>{EventName}: Canceled for {CancellationReason}</value>
-  </data>
-  <data name="EventHandlerCollection_InvokeException" xml:space="preserve">
-    <value>{EventName}: Unhandled exception occurred</value>
-  </data>
-  <data name="EventHandlerCollection_InvokeHandler" xml:space="preserve">
-    <value>{EventName}: Invoking {RegistrationName}</value>
-  </data>
   <data name="Kernel_InitalizePlugin" xml:space="preserve">
     <value>Initialized {PluginName} v{PluginVersion} by {PluginAuthor}</value>
   </data>

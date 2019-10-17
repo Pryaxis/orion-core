@@ -51,6 +51,7 @@ namespace Orion.Entities {
         /// <exception cref="ArgumentOutOfRangeException"><paramref name="duration"/> is negative.</exception>
         public Buff(BuffType buffType, TimeSpan duration) {
             if (duration < TimeSpan.Zero) {
+                // Not localized because this string is developer-facing.
                 throw new ArgumentOutOfRangeException(nameof(duration), "Duration is negative.");
             }
 
@@ -76,6 +77,7 @@ namespace Orion.Entities {
             }
 
             if (numOfDurationBytes != 2 && numOfDurationBytes != 4) {
+                // Not localized because this string is developer-facing.
                 throw new ArgumentOutOfRangeException(nameof(numOfDurationBytes), "Value is neither 2 nor 4.");
             }
 
@@ -103,6 +105,7 @@ namespace Orion.Entities {
             }
 
             if (numOfDurationBytes != 2 && numOfDurationBytes != 4) {
+                // Not localized because this string is developer-facing.
                 throw new ArgumentOutOfRangeException(nameof(numOfDurationBytes), "Value is neither 2 nor 4.");
             }
 

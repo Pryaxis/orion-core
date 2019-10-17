@@ -24,22 +24,22 @@ namespace Orion.Entities {
     /// </remarks>
     public enum EmoteAnchorType : byte {
         /// <summary>
-        /// Indicates that the emote is anchored to an NPC.
+        /// The emote is anchored to an NPC.
         /// </summary>
         Npc = 0,
 
         /// <summary>
-        /// Indicates that the emote is anchored to a player.
+        /// The emote is anchored to a player.
         /// </summary>
         Player = 1,
 
         /// <summary>
-        /// Indicates that the emote is anchored to a projectile.
+        /// The emote is anchored to a projectile.
         /// </summary>
         Projectile = 2,
 
         /// <summary>
-        /// Indicates that the emote should actually be removed.
+        /// The emote should actually be removed.
         /// </summary>
         Removed = 255
     }

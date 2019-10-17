@@ -24,86 +24,68 @@ namespace Orion.Players {
     /// </summary>
     public interface IPlayerInventory {
         /// <summary>
-        /// Gets the player's main inventory, which includes the hotbar, main inventory rows, coins, ammo, and mouse
+        /// Gets the player's main inventory which includes the hotbar, main inventory rows, coins, ammo, and mouse
         /// cursor.
-        /// 
-        /// <para/>
-        /// 
-        /// This represents inventory slot indices 0 to 58.
         /// </summary>
+        /// <value>The player's main inventory.</value>
+        /// <remarks>This property represents inventory slot indices 0 to 58.</remarks>
         IReadOnlyArray<IItem> Main { get; }
 
         /// <summary>
-        /// Gets the player's equips, which include armor, accessories, vanity armor, and vanity accessories.
-        /// 
-        /// <para/>
-        /// 
-        /// This represents inventory slot indices 59 to 78.
+        /// Gets the player's equips which include armor, accessories, vanity armor, and vanity accessories.
         /// </summary>
+        /// <value>The player's equips.</value>
+        /// <remarks>This property represents inventory slot indices 59 to 78.</remarks>
         IReadOnlyArray<IItem> Equips { get; }
 
         /// <summary>
-        /// Gets the player's dyes which correspond to <see cref="Equips"/>.
-        /// 
-        /// <para/>
-        /// 
-        /// This represents inventory slot indices 79 to 88.
+        /// Gets the player's dyes which correspond to a single half of <see cref="Equips"/>.
         /// </summary>
+        /// <value>The player's dyes.</value>
+        /// <remarks>This property represents inventory slot indices 79 to 88.</remarks>
         IReadOnlyArray<IItem> Dyes { get; }
 
         /// <summary>
-        /// Gets the player's miscellaneous equips, which include the pet, light pet, minecart, mount, and grappling
+        /// Gets the player's miscellaneous equips which include the pet, light pet, minecart, mount, and grappling
         /// hook.
-        /// 
-        /// <para/>
-        /// 
-        /// This represents inventory slot indices 89 to 93.
         /// </summary>
+        /// <value>The player's miscellaneous equips.</value>
+        /// <remarks>This represents inventory slot indices 89 to 93.</remarks>
         IReadOnlyArray<IItem> MiscEquips { get; }
 
         /// <summary>
-        /// Gets the player's miscellaneous dyes which correspond directly to <see cref="MiscEquips"/>.
-        /// 
-        /// <para/>
-        /// 
-        /// This represents inventory slot indices 94 to 98. 
+        /// Gets the player's miscellaneous dyes which correspond to <see cref="MiscEquips"/>.
         /// </summary>
+        /// <value>The player's miscellaneous dyes.</value>
+        /// <remarks>This represents inventory slot indices 94 to 98.</remarks>
         IReadOnlyArray<IItem> MiscDyes { get; }
 
         /// <summary>
         /// Gets the player's piggy bank. This is a personal storage container.
-        /// 
-        /// <para/>
-        /// 
-        /// This represents inventory slot indices 99 to 138.
         /// </summary>
+        /// <value>The player's piggy bank.</value>
+        /// <remarks>This represents inventory slot indices 99 to 138.</remarks>
         IReadOnlyArray<IItem> PiggyBank { get; }
 
         /// <summary>
         /// Gets the player's safe. This is a personal storage container.
-        /// 
-        /// <para/>
-        /// 
-        /// This represents inventory slot incies 139 to 178.
         /// </summary>
+        /// <value>The player's safe.</value>
+        /// <remarks>This represents inventory slot indices 139 to 178.</remarks>
         IReadOnlyArray<IItem> Safe { get; }
 
         /// <summary>
         /// Gets the player's defender's forge. This is a personal storage container.
-        /// 
-        /// <para/>
-        /// 
-        /// This represents inventory slot indices 180 to 219.
         /// </summary>
+        /// <value>The player's defender's forge.</value>
+        /// <remarks>This represents inventory slot indices 180 to 219.</remarks>
         IReadOnlyArray<IItem> DefendersForge { get; }
 
         /// <summary>
         /// Gets the player's trash can.
-        /// 
-        /// <para/>
-        /// 
-        /// This represents inventory slot index 179.
         /// </summary>
+        /// <value>The player's trash can.</value>
+        /// <remarks>This represents inventory slot index 179.</remarks>
         IItem TrashCan { get; }
     }
 }

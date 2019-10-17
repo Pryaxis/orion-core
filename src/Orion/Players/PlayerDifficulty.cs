@@ -21,17 +21,17 @@ namespace Orion.Players {
     /// </summary>
     public enum PlayerDifficulty : byte {
         /// <summary>
-        /// Indicates softcore. This is the normal difficulty.
+        /// Softcore. This is the normal difficulty.
         /// </summary>
         Softcore = 0,
 
         /// <summary>
-        /// Indicates mediumcore. All items are dropped on death.
+        /// Mediumcore. All items are dropped on death.
         /// </summary>
         Mediumcore = 1,
 
         /// <summary>
-        /// Indicates hardcore. Death is permanent.
+        /// Hardcore. Death is permanent.
         /// </summary>
         Hardcore = 2
     }

@@ -23,21 +23,25 @@ namespace Orion.Players {
         /// <summary>
         /// Gets or sets the player's health.
         /// </summary>
+        /// <value>The player's health.</value>
         int Health { get; set; }
 
         /// <summary>
         /// Gets or sets the player's maximum health.
         /// </summary>
+        /// <value>The player's maximum health.</value>
         int MaxHealth { get; set; }
 
         /// <summary>
         /// Gets or sets the player's mana.
         /// </summary>
+        /// <value>The player's mana.</value>
         int Mana { get; set; }
 
         /// <summary>
         /// Gets or sets the player's maximum mana.
         /// </summary>
+        /// <value>The player's maximum mana.</value>
         int MaxMana { get; set; }
     }
 }

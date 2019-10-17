@@ -61,42 +61,6 @@ namespace Orion.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to {EventName}: Invoking with {Args}.
-        /// </summary>
-        internal static string EventHandlerCollection_Invoke {
-            get {
-                return ResourceManager.GetString("EventHandlerCollection_Invoke", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to {EventName}: Canceled for {CancellationReason}.
-        /// </summary>
-        internal static string EventHandlerCollection_InvokeCanceled {
-            get {
-                return ResourceManager.GetString("EventHandlerCollection_InvokeCanceled", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to {EventName}: Unhandled exception occurred.
-        /// </summary>
-        internal static string EventHandlerCollection_InvokeException {
-            get {
-                return ResourceManager.GetString("EventHandlerCollection_InvokeException", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to {EventName}: Invoking {RegistrationName}.
-        /// </summary>
-        internal static string EventHandlerCollection_InvokeHandler {
-            get {
-                return ResourceManager.GetString("EventHandlerCollection_InvokeHandler", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Initialized {PluginName} v{PluginVersion} by {PluginAuthor}.
         /// </summary>
         internal static string Kernel_InitalizePlugin {
