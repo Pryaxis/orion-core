@@ -18,6 +18,7 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Threading;
 using Orion.Events;
@@ -93,6 +94,10 @@ namespace Orion.Players {
             Hooks.Net.RemoteClient.PreReset = null;
         }
 
+        // =============================================================================================================
+        // Handling PacketReceive
+        // =============================================================================================================
+
         private HookResult ReceiveDataHandler(
                 Terraria.MessageBuffer buffer, ref byte packetId, ref int readOffset, ref int start, ref int length) {
             Debug.Assert(buffer != null, "buffer should not be null");
@@ -109,16 +114,13 @@ namespace Orion.Players {
             var packet = Packet.ReadFromStream(stream, PacketContext.Server);
             var args = new PacketReceiveEventArgs(sender, packet);
 
-            // Not localized because this string is developer-facing.
-            Log.Verbose("Invoking {Event} with [{Sender}, {Packet}]", PacketReceive, sender, packet);
+            LogPacketReceive_Before(args);
             PacketReceive.Invoke(this, args);
-            if (args.IsCanceled()) {
-                // Not localized because this string is developer-facing.
-                Log.Verbose("Canceled {Event} for {Reason}", PacketReceive, args.CancellationReason);
-                return HookResult.Cancel;
-            }
+            LogPacketReceive_After(args);
 
-            if (_packetReceiveHandlers.TryGetValue(args.Packet.Type, out var handler)) {
+            if (args.IsCanceled()) {
+                return HookResult.Cancel;
+            } else if (_packetReceiveHandlers.TryGetValue(args.Packet.Type, out var handler)) {
                 handler(args);
                 if (args.IsCanceled()) {
                     return HookResult.Cancel;
@@ -143,6 +145,24 @@ namespace Orion.Players {
             buffer.ResetReader();
             return HookResult.Cancel;
         }
+        
+        [Conditional("DEBUG"), ExcludeFromCodeCoverage]
+        private void LogPacketReceive_Before(PacketReceiveEventArgs args) {
+            // Not localized because this string is developer-facing.
+            Log.Verbose("Invoking {Event} with [{Sender}, {Packet}]", PacketReceive, args.Sender, args.Packet);
+        }
+        
+        [Conditional("DEBUG"), ExcludeFromCodeCoverage]
+        private void LogPacketReceive_After(PacketReceiveEventArgs args) {
+            if (args.IsCanceled()) {
+                // Not localized because this string is developer-facing.
+                Log.Verbose("Canceled {Event} for {Reason}", PacketReceive, args.CancellationReason);
+            }
+        }
+
+        // =============================================================================================================
+        // Handling PacketSend
+        // =============================================================================================================
 
         private HookResult SendBytesHandler(
                 ref int remoteClient, ref byte[] data, ref int offset, ref int size,
@@ -154,16 +174,13 @@ namespace Orion.Players {
             var packet = Packet.ReadFromStream(stream, PacketContext.Client);
             var args = new PacketSendEventArgs(receiver, packet);
 
-            // Not localized because this string is developer-facing.
-            Log.Verbose("Invoking {Event} with [{Receiver}, {Packet}]", PacketSend, receiver, packet);
+            LogPacketSend_Before(args);
             PacketSend.Invoke(this, args);
-            if (args.IsCanceled()) {
-                // Not localized because this string is developer-facing.
-                Log.Verbose("Canceled {Event} for {Reason}", PacketSend, args.CancellationReason);
-                return HookResult.Cancel;
-            }
+            LogPacketSend_After(args);
 
-            if (!args.IsDirty) {
+            if (args.IsCanceled()) {
+                return HookResult.Cancel;
+            } else if (!args.IsDirty) {
                 return HookResult.Continue;
             }
 
@@ -175,13 +192,31 @@ namespace Orion.Players {
             size = data.Length;
             return HookResult.Continue;
         }
+        
+        [Conditional("DEBUG"), ExcludeFromCodeCoverage]
+        private void LogPacketSend_Before(PacketSendEventArgs args) {
+            // Not localized because this string is developer-facing.
+            Log.Verbose("Invoking {Event} with [{Receiver}, {Packet}]", PacketSend, args.Receiver, args.Packet);
+        }
+        
+        [Conditional("DEBUG"), ExcludeFromCodeCoverage]
+        private void LogPacketSend_After(PacketSendEventArgs args) {
+            if (args.IsCanceled()) {
+                // Not localized because this string is developer-facing.
+                Log.Verbose("Canceled {Event} for {Reason}", PacketSend, args.CancellationReason);
+            }
+        }
+
+        // =============================================================================================================
+        // Handling PacketDisconnected
+        // =============================================================================================================
 
         private HookResult PreResetHandler(Terraria.RemoteClient remoteClient) {
             Debug.Assert(remoteClient != null, "remote client should not be null");
             Debug.Assert(remoteClient.Id >= 0 && remoteClient.Id < Players.Count,
                 "remote client should have a valid index");
 
-            // Check if the client was active, since this gets called when setting up RemoteClient as well.
+            // Check if the client was active since this gets called when setting up RemoteClient as well.
             if (!remoteClient.IsActive) {
                 return HookResult.Continue;
             }
@@ -189,27 +224,46 @@ namespace Orion.Players {
             var player = Players[remoteClient.Id];
             var args = new PlayerDisconnectedEventArgs(player);
 
-            // Not localized because this string is developer-facing.
-            Log.Debug("Invoking {Event} with [{Player}]", PlayerDisconnected, player);
+            LogPlayerDisconnected(args);
             PlayerDisconnected.Invoke(this, args);
             return HookResult.Continue;
         }
+        
+        [Conditional("DEBUG"), ExcludeFromCodeCoverage]
+        private void LogPlayerDisconnected(PlayerDisconnectedEventArgs args) {
+            // Not localized because this string is developer-facing.
+            Log.Debug("Invoking {Event} with [{Player}]", PlayerDisconnected, args.Player);
+        }
+
+        // =============================================================================================================
+        // Handling PlayerConnect
+        // =============================================================================================================
 
         private void PlayerConnectHandler(PacketReceiveEventArgs args_) {
             var packet = (PlayerConnectPacket)args_.Packet;
             var args = new PlayerConnectEventArgs(args_.Sender, packet);
 
+            LogPlayerConnect_Before(args);
+            PlayerConnect.Invoke(this, args);
+            LogPlayerConnect_After(args, packet);
+
+            args_.CancellationReason = args.CancellationReason;
+        }
+        
+        [Conditional("DEBUG"), ExcludeFromCodeCoverage]
+        private void LogPlayerConnect_Before(PlayerConnectEventArgs args) {
             // Not localized because this string is developer-facing.
             Log.Debug(
                 "Invoking {Event} with [#={PlayerIndex}, {PlayerVersionString}]",
                 PlayerConnect, args.Player.Index, args.PlayerVersionString);
-            PlayerConnect.Invoke(this, args);
-            args_.CancellationReason = args.CancellationReason;
-
-            if (args_.IsCanceled()) {
+        }
+        
+        [Conditional("DEBUG"), ExcludeFromCodeCoverage]
+        private void LogPlayerConnect_After(PlayerConnectEventArgs args, PlayerConnectPacket packet) {
+            if (args.IsCanceled()) {
                 // Not localized because this string is developer-facing.
-                Log.Debug("Canceled {Event} for {Reason}", PlayerConnect, args_.CancellationReason);
-            } else if (args_.IsDirty) {
+                Log.Debug("Canceled {Event} for {Reason}", PlayerConnect, args.CancellationReason);
+            } else if (packet.IsDirty) {
                 // Not localized because this string is developer-facing.
                 Log.Debug(
                     "Altered {Event} to [#={PlayerIndex}, {PlayerVersionString}]",
@@ -217,28 +271,55 @@ namespace Orion.Players {
             }
         }
 
+        // =============================================================================================================
+        // Handling PlayerData
+        // =============================================================================================================
+
         private void PlayerDataHandler(PacketReceiveEventArgs args_) {
             var packet = (PlayerDataPacket)args_.Packet;
             var args = new PlayerDataEventArgs(args_.Sender, packet);
 
+            LogPlayerData_Before(args);
+            PlayerData.Invoke(this, args);
+            LogPlayerData_After(args, packet);
+
+            args_.CancellationReason = args.CancellationReason;
+        }
+
+        [Conditional("DEBUG"), ExcludeFromCodeCoverage]
+        private void LogPlayerData_Before(PlayerDataEventArgs args) {
             // Not localized because this string is developer-facing.
             Log.Debug("Invoking {Event} with [{PlayerName}, ...]", PlayerData, args.PlayerName);
-            PlayerData.Invoke(this, args);
-            args_.CancellationReason = args.CancellationReason;
-
-            if (args_.IsCanceled()) {
+        }
+        
+        [Conditional("DEBUG"), ExcludeFromCodeCoverage]
+        private void LogPlayerData_After(PlayerDataEventArgs args, PlayerDataPacket packet) {
+            if (args.IsCanceled()) {
                 // Not localized because this string is developer-facing.
-                Log.Debug("Canceled {Event} for {Reason}", PlayerData, args_.CancellationReason);
-            } else if (args_.IsDirty) {
+                Log.Debug("Canceled {Event} for {Reason}", PlayerData, args.CancellationReason);
+            } else if (packet.IsDirty) {
                 // Not localized because this string is developer-facing.
                 Log.Debug("Altered {Event} to [{PlayerName}, ...]", PlayerData, args.PlayerName);
             }
         }
 
+        // =============================================================================================================
+        // Handling PlayerInventorySlot
+        // =============================================================================================================
+
         private void PlayerInventorySlotHandler(PacketReceiveEventArgs args_) {
             var packet = (PlayerInventorySlotPacket)args_.Packet;
             var args = new PlayerInventorySlotEventArgs(args_.Sender, packet);
 
+            LogPlayerInventorySlot_Before(args);
+            PlayerInventorySlot.Invoke(this, args);
+            LogPlayerInventorySlot_After(args, packet);
+
+            args_.CancellationReason = args.CancellationReason;
+        }
+
+        [Conditional("DEBUG"), ExcludeFromCodeCoverage]
+        private void LogPlayerInventorySlot_Before(PlayerInventorySlotEventArgs args) {
             if (args.ItemType == ItemType.None) {
                 // Not localized because this string is developer-facing.
                 Log.Debug(
@@ -255,14 +336,14 @@ namespace Orion.Players {
                     "Invoking {Event} with [{Player}, {PlayerInventorySlotIndex} = {ItemPrefix} {ItemType}]",
                     PlayerInventorySlot, args.Player, args.PlayerInventorySlotIndex, args.ItemPrefix, args.ItemType);
             }
-
-            PlayerInventorySlot.Invoke(this, args);
-            args_.CancellationReason = args.CancellationReason;
-
-            if (args_.IsCanceled()) {
+        }
+        
+        [Conditional("DEBUG"), ExcludeFromCodeCoverage]
+        private void LogPlayerInventorySlot_After(PlayerInventorySlotEventArgs args, PlayerInventorySlotPacket packet) {
+            if (args.IsCanceled()) {
                 // Not localized because this string is developer-facing.
-                Log.Debug("Canceled {Event} for {Reason}", PlayerInventorySlot, args_.CancellationReason);
-            } else if (args_.IsDirty) {
+                Log.Debug("Canceled {Event} for {Reason}", PlayerInventorySlot, args.CancellationReason);
+            } else if (packet.IsDirty) {
                 if (args.ItemType == ItemType.None) {
                     // Not localized because this string is developer-facing.
                     Log.Debug(
@@ -284,77 +365,133 @@ namespace Orion.Players {
             }
         }
 
+        // =============================================================================================================
+        // Handling PlayerJoin
+        // =============================================================================================================
+
         private void PlayerJoinHandler(PacketReceiveEventArgs args_) {
             var args = new PlayerJoinEventArgs(args_.Sender);
 
+            PlayerJoin_Before(args);
+            PlayerJoin.Invoke(this, args);
+            PlayerJoin_After(args);
+
+            args_.CancellationReason = args.CancellationReason;
+        }
+
+        [Conditional("DEBUG"), ExcludeFromCodeCoverage]
+        private void PlayerJoin_Before(PlayerJoinEventArgs args) {
             // Not localized because this string is developer-facing.
             Log.Debug("Invoking {Event} with [{Player}]", PlayerJoin, args.Player);
-            PlayerJoin.Invoke(this, args);
-            args_.CancellationReason = args.CancellationReason;
-
-            if (args_.IsCanceled()) {
+        }
+        
+        [Conditional("DEBUG"), ExcludeFromCodeCoverage]
+        private void PlayerJoin_After(PlayerJoinEventArgs args) {
+            if (args.IsCanceled()) {
                 // Not localized because this string is developer-facing.
-                Log.Debug("Canceled {Event} for {Reason}", PlayerJoin, args_.CancellationReason);
+                Log.Debug("Canceled {Event} for {Reason}", PlayerJoin, args.CancellationReason);
             }
         }
+
+        // =============================================================================================================
+        // Handling PlayerPvp
+        // =============================================================================================================
 
         private void PlayerPvpHandler(PacketReceiveEventArgs args_) {
             var packet = (PlayerPvpPacket)args_.Packet;
             var args = new PlayerPvpEventArgs(args_.Sender, packet);
 
+            LogPlayerPvp_Before(args);
+            PlayerPvp.Invoke(this, args);
+            LogPlayerPvp_After(args, packet);
+
+            args_.CancellationReason = args.CancellationReason;
+        }
+        
+        [Conditional("DEBUG"), ExcludeFromCodeCoverage]
+        private void LogPlayerPvp_Before(PlayerPvpEventArgs args) {
             // Not localized because this string is developer-facing.
             Log.Debug("Invoking {Event} with [{Player}, {IsPlayerInPvp}]", PlayerPvp, args.Player, args.IsPlayerInPvp);
-            PlayerPvp.Invoke(this, args);
-            args_.CancellationReason = args.CancellationReason;
-
-            if (args_.IsCanceled()) {
+        }
+        
+        [Conditional("DEBUG"), ExcludeFromCodeCoverage]
+        private void LogPlayerPvp_After(PlayerPvpEventArgs args, PlayerPvpPacket packet) {
+            if (args.IsCanceled()) {
                 // Not localized because this string is developer-facing.
-                Log.Debug("Canceled {Event} for {Reason}", PlayerPvp, args_.CancellationReason);
-            } else if (args_.IsDirty) {
+                Log.Debug("Canceled {Event} for {Reason}", PlayerPvp, args.CancellationReason);
+            } else if (packet.IsDirty) {
                 // Not localized because this string is developer-facing.
                 Log.Debug("Altered {Event} to [{Player}, {PlayerTeam}]", PlayerPvp, args.Player, args.IsPlayerInPvp);
             }
         }
 
+        // =============================================================================================================
+        // Handling PlayerTeam
+        // =============================================================================================================
+
         private void PlayerTeamHandler(PacketReceiveEventArgs args_) {
             var packet = (PlayerTeamPacket)args_.Packet;
             var args = new PlayerTeamEventArgs(args_.Sender, packet);
 
-            // Not localized because this string is developer-facing.
-            Log.Debug("Invoking {Event} with [{Player}, {PlayerTeam}]", PlayerTeam, args.Player, args.PlayerTeam);
+            LogPlayerTeam_Before(args);
             PlayerTeam.Invoke(this, args);
             args_.CancellationReason = args.CancellationReason;
 
-            if (args_.IsCanceled()) {
+            LogPlayerTeam_After(args, packet);
+        }
+
+        [Conditional("DEBUG"), ExcludeFromCodeCoverage]
+        private void LogPlayerTeam_Before(PlayerTeamEventArgs args) {
+            // Not localized because this string is developer-facing.
+            Log.Debug("Invoking {Event} with [{Player}, {PlayerTeam}]", PlayerTeam, args.Player, args.PlayerTeam);
+        }
+        
+        [Conditional("DEBUG"), ExcludeFromCodeCoverage]
+        private void LogPlayerTeam_After(PlayerTeamEventArgs args, PlayerTeamPacket packet) {
+            if (args.IsCanceled()) {
                 // Not localized because this string is developer-facing.
-                Log.Debug("Canceled {Event} for {Reason}", PlayerTeam, args_.CancellationReason);
-            } else if (args_.IsDirty) {
+                Log.Debug("Canceled {Event} for {Reason}", PlayerTeam, args.CancellationReason);
+            } else if (packet.IsDirty) {
                 // Not localized because this string is developer-facing.
                 Log.Debug("Altered {Event} to [{Player}, {PlayerTeam}]", PlayerTeam, args.Player, args.PlayerTeam);
             }
         }
+
+        // =============================================================================================================
+        // Handling PlayerChat
+        // =============================================================================================================
 
         private void ModuleHandler(PacketReceiveEventArgs args_) {
             var module = ((ModulePacket)args_.Packet).Module;
             if (module is ChatModule chatModule) {
                 var args = new PlayerChatEventArgs(args_.Sender, chatModule);
 
+                LogPlayerChat_Before(args);
+                PlayerChat.Invoke(this, args);
+                LogPlayerChat_After(args, module);
+
+                args_.CancellationReason = args.CancellationReason;
+            }
+        }
+        
+        [Conditional("DEBUG"), ExcludeFromCodeCoverage]
+        private void LogPlayerChat_Before(PlayerChatEventArgs args) {
+            // Not localized because this string is developer-facing.
+            Log.Debug(
+                "Invoking {Event} with [{Player}, {PlayerChatCommand}, {PlayerChatText}]",
+                PlayerChat, args.Player, args.PlayerChatCommand, args.PlayerChatText);
+        }
+        
+        [Conditional("DEBUG"), ExcludeFromCodeCoverage]
+        private void LogPlayerChat_After(PlayerChatEventArgs args, Module module) {
+            if (args.IsCanceled()) {
+                // Not localized because this string is developer-facing.
+                Log.Debug("Canceled {Event} for {Reason}", PlayerChat, args.CancellationReason);
+            } else if (module.IsDirty) {
                 // Not localized because this string is developer-facing.
                 Log.Debug(
-                    "Invoking {Event} with [{Player}, {PlayerChatCommand}, {PlayerChatText}]",
+                    "Altered {Event} to [{Player}, {PlayerChatCommand}, {PlayerChatText}]",
                     PlayerChat, args.Player, args.PlayerChatCommand, args.PlayerChatText);
-                PlayerChat.Invoke(this, args);
-                args_.CancellationReason = args.CancellationReason;
-
-                if (args_.IsCanceled()) {
-                    // Not localized because this string is developer-facing.
-                    Log.Debug("Canceled {Event} for {Reason}", PlayerChat, args_.CancellationReason);
-                } else if (args_.IsDirty) {
-                    // Not localized because this string is developer-facing.
-                    Log.Debug(
-                        "Altered {Event} to [{Player}, {PlayerChatCommand}, {PlayerChatText}]",
-                        PlayerChat, args.Player, args.PlayerChatCommand, args.PlayerChatText);
-                }
             }
         }
     }

@@ -71,28 +71,50 @@ namespace Orion.World {
             Hooks.World.IO.PreSaveWorld = null;
         }
 
+        // =============================================================================================================
+        // Handling WorldLoad
+        // =============================================================================================================
+
         private HookResult PreLoadWorldHandler(ref bool _) {
             var args = new WorldLoadEventArgs();
 
-            // Not localized because this string is developer-facing.
-            Log.Debug("Invoking {Event}", WorldLoad);
+            LogWorldLoad();
             WorldLoad.Invoke(this, args);
             return HookResult.Continue;
         }
+        
+        [Conditional("DEBUG"), ExcludeFromCodeCoverage]
+        private void LogWorldLoad() {
+            // Not localized because this string is developer-facing.
+            Log.Debug("Invoking {Event}", WorldLoad);
+        }
+
+        // =============================================================================================================
+        // Handling WorldSave
+        // =============================================================================================================
 
         private HookResult PreSaveWorldHandler(ref bool _, ref bool _2) {
             var args = new WorldSaveEventArgs();
 
+            LogWorldSave_Before();
+            WorldSave.Invoke(this, args);
+            LogWorldSave_After(args);
+
+            return args.IsCanceled() ? HookResult.Cancel : HookResult.Continue;
+        }
+
+        [Conditional("DEBUG"), ExcludeFromCodeCoverage]
+        private void LogWorldSave_Before() {
             // Not localized because this string is developer-facing.
             Log.Debug("Invoking {Event}", WorldSave);
-            WorldSave.Invoke(this, args);
+        }
+        
+        [Conditional("DEBUG"), ExcludeFromCodeCoverage]
+        private void LogWorldSave_After(WorldSaveEventArgs args) {
             if (args.IsCanceled()) {
                 // Not localized because this string is developer-facing.
                 Log.Debug("Canceled {Event} for {CancellationReason}", WorldSave, args.CancellationReason);
-                return HookResult.Cancel;
             }
-
-            return HookResult.Continue;
         }
 
         // This class is not disposable since we expect instances to be permanent. However, a finalizer is implemented

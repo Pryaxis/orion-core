@@ -17,6 +17,8 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
+using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Linq;
 using System.Reflection;
@@ -249,43 +251,83 @@ namespace Orion {
         private Assembly AssemblyResolveHandler(object sender, ResolveEventArgs args) =>
             _pluginAssemblies.FirstOrDefault(a => a.FullName == args.Name);
 
+        // =============================================================================================================
+        // Handling ServerInitialize
+        // =============================================================================================================
+
         private void PreInitializeHandler() {
             var args = new ServerInitializeEventArgs();
 
-            // Not localized because this string is developer-facing.
-            _log.Debug("Invoking {Event}", ServerInitialize);
+            LogServerInitialize();
             ServerInitialize.Invoke(this, args);
         }
+        
+        [Conditional("DEBUG"), ExcludeFromCodeCoverage]
+        private void LogServerInitialize() {
+            // Not localized because this string is developer-facing.
+            _log.Debug("Invoking {Event}", ServerInitialize);
+        }
+
+        // =============================================================================================================
+        // Handling ServerStart
+        // =============================================================================================================
 
         private void StartedHandler() {
             var args = new ServerStartEventArgs();
 
-            // Not localized because this string is developer-facing.
-            _log.Debug("Invoking {Event}", ServerStart);
+            LogServerStart();
             ServerStart.Invoke(this, args);
         }
+        
+        [Conditional("DEBUG"), ExcludeFromCodeCoverage]
+        private void LogServerStart() {
+            // Not localized because this string is developer-facing.
+            _log.Debug("Invoking {Event}", ServerStart);
+        }
+
+        // =============================================================================================================
+        // Handling ServerUpdate
+        // =============================================================================================================
 
         private void PreUpdateHandler(ref GameTime _) {
             var args = new ServerUpdateEventArgs();
 
-            // Not localized because this string is developer-facing.
-            _log.Verbose("Invoking {Event}", ServerUpdate);
+            LogServerUpdate();
             ServerUpdate.Invoke(this, args);
         }
+        
+        [Conditional("DEBUG"), ExcludeFromCodeCoverage]
+        private void LogServerUpdate() {
+            // Not localized because this string is developer-facing.
+            _log.Verbose("Invoking {Event}", ServerUpdate);
+        }
+
+        // =============================================================================================================
+        // Handling ServerCommand
+        // =============================================================================================================
 
         private HookResult ProcessHandler(string _, string input) {
             var args = new ServerCommandEventArgs(input);
 
+            LogServerCommand_Before(input);
+            ServerCommand.Invoke(this, args);
+            LogServerCommand_After(args);
+
+            return args.IsCanceled() ? HookResult.Cancel : HookResult.Continue;
+        }
+        
+        [Conditional("DEBUG"), ExcludeFromCodeCoverage]
+        private void LogServerCommand_Before(string input) {
             // Not localized because this string is developer-facing.
             _log.Debug("Invoking {Event} with [{Input}]", ServerCommand, input);
-            ServerCommand.Invoke(this, args);
+        }
+        
+        [Conditional("DEBUG"), ExcludeFromCodeCoverage]
+        private void LogServerCommand_After(ServerCommandEventArgs args) {
             if (args.IsCanceled()) {
                 // Not localized because this string is developer-facing.
                 _log.Debug("Canceled {Event} for {Reason}", ServerCommand, args.CancellationReason);
-                return HookResult.Cancel;
             }
-
-            return HookResult.Continue;
         }
     }
 }
