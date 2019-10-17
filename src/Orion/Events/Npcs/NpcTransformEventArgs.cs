@@ -17,21 +17,33 @@
 
 using System;
 using Orion.Npcs;
+using Orion.Utils;
 
 namespace Orion.Events.Npcs {
     /// <summary>
     /// Provides data for the <see cref="INpcService.NpcTransform"/> event. This event can be canceled.
     /// </summary>
     [EventArgs("npc-transform")]
-    public sealed class NpcTransformEventArgs : NpcEventArgs, ICancelable {
+    public sealed class NpcTransformEventArgs : NpcEventArgs, ICancelable, IDirtiable {
+        private NpcType _npcNewType;
+
         /// <inheritdoc/>
         public string? CancellationReason { get; set; }
+
+        /// <inheritdoc/>
+        public bool IsDirty { get; private set; }
 
         /// <summary>
         /// Gets or sets the NPC's new type.
         /// </summary>
         /// <value>The NPC's new type.</value>
-        public NpcType NpcNewType { get; set; }
+        public NpcType NpcNewType {
+            get => _npcNewType;
+            set {
+                _npcNewType = value;
+                IsDirty = true;
+            }
+        }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="NpcTransformEventArgs"/> class with the specified NPC and NPC's
@@ -43,5 +55,8 @@ namespace Orion.Events.Npcs {
         public NpcTransformEventArgs(INpc npc, NpcType npcNewType) : base(npc) {
             NpcNewType = npcNewType;
         }
+
+        /// <inheritdoc/>
+        public void Clean() => IsDirty = false;
     }
 }

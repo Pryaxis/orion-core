@@ -252,9 +252,10 @@ namespace Orion.Npcs {
 
             if (args.IsCanceled()) {
                 return HookResult.Cancel;
+            } else if (args.IsDirty) {
+                npcNewType = (int)args.NpcNewType;
             }
 
-            npcNewType = (int)args.NpcNewType;
             return HookResult.Continue;
         }
         
@@ -269,6 +270,9 @@ namespace Orion.Npcs {
             if (args.IsCanceled()) {
                 // Not localized because this string is developer-facing.
                 Log.Debug("Canceled {Event} for {CancellationReason}", NpcTransform, args.CancellationReason);
+            } else if (args.IsDirty) {
+                // Not localized because this string is developer-facing.
+                Log.Debug("Altered {Event} to [{Npc}, {NpcNewType}]", NpcTransform, args.Npc, args.NpcNewType);
             }
         }
 
