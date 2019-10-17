@@ -22,10 +22,12 @@ namespace Orion.World.TileEntities {
     /// <summary>
     /// Represents a Terraria target dummy.
     /// </summary>
+    /// <remarks>Target dummies are tile entities that provide a target dummy NPC.</remarks>
     public interface ITargetDummy : ITileEntity, IWrapping<TerrariaTargetDummy> {
         /// <summary>
         /// Gets or sets the target dummy's NPC index.
         /// </summary>
+        /// <value>The target dummy's NPC index.</value>
         int NpcIndex { get; set; }
     }
 }

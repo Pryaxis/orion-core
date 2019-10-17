@@ -20,7 +20,7 @@ namespace Orion.World.Tiles {
     /// Specifies a wall type.
     /// </summary>
     public enum WallType : byte {
-#pragma warning disable 1591
+#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
         None = 0,
         Stone = 1,
         NaturalDirt = 2,
@@ -252,6 +252,6 @@ namespace Orion.World.Tiles {
         SillyPinkBalloon = 228,
         SillyPurpleBalloon = 229,
         SillyGreenBalloon = 230
-#pragma warning restore 1591
+#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member
     }
 }

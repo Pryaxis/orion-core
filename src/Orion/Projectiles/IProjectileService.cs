@@ -71,7 +71,8 @@ namespace Orion.Projectiles {
         /// <paramref name="aiValues"/> is not <see langword="null"/> and does not have length 2.
         /// </exception>
         /// <remarks>Implementations of this method are not required to be thread-safe.</remarks>
-        IProjectile? SpawnProjectile(ProjectileType type, Vector2 position, Vector2 velocity,
-            int damage, float knockback, float[]? aiValues = null);
+        IProjectile? SpawnProjectile(
+            ProjectileType type, Vector2 position, Vector2 velocity, int damage, float knockback,
+            float[]? aiValues = null);
     }
 }

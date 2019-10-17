@@ -20,7 +20,7 @@ namespace Orion.World.Tiles {
     /// Specifies a paint color.
     /// </summary>
     public enum PaintColor : byte {
-#pragma warning disable 1591
+#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
         None = 0,
         Red = 1,
         Orange = 2,
@@ -52,6 +52,6 @@ namespace Orion.World.Tiles {
         Brown = 28,
         Shadow = 29,
         Negative = 30
-#pragma warning restore 1591
+#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member
     }
 }

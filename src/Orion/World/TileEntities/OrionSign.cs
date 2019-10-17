@@ -16,7 +16,8 @@
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
 using System;
-using System.Diagnostics;
+using System.Diagnostics.CodeAnalysis;
+using System.Diagnostics.Contracts;
 using Orion.Utils;
 using TerrariaSign = Terraria.Sign;
 
@@ -61,11 +62,15 @@ namespace Orion.World.TileEntities {
 
         public TerrariaSign? Wrapped { get; }
 
-        public OrionSign(int signIndex, TerrariaSign? terrariaSign) {
-            Debug.Assert(signIndex >= 0 && signIndex < TerrariaSign.maxSigns, "sign index should be valid");
+        public OrionSign(TerrariaSign? terrariaSign) : this(-1, terrariaSign) { }
 
+        public OrionSign(int signIndex, TerrariaSign? terrariaSign) {
             Index = signIndex;
             Wrapped = terrariaSign;
         }
+        
+        // Not localized because this string is developer-facing.
+        [Pure, ExcludeFromCodeCoverage]
+        public override string ToString() => Index >= 0 ? $"#: {Index}" : "sign instance";
     }
 }

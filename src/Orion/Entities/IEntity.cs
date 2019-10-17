@@ -38,7 +38,7 @@ namespace Orion.Entities {
     /// </item>
     /// </list>
     /// 
-    /// Care must be taken to differentiate the two using the <see cref="IsActive"/> property.
+    /// Care must be taken to differentiate the two using the <see cref="Index"/> and <see cref="IsActive"/> properties.
     /// </remarks>
     public interface IEntity : IAnnotatable {
         /// <summary>

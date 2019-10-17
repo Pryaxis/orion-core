@@ -22,15 +22,18 @@ namespace Orion.World.TileEntities {
     /// <summary>
     /// Represents a Terraria logic sensor.
     /// </summary>
+    /// <remarks>Logic sensors are wiring components that can be tripped depending on the sensor type.</remarks>
     public interface ILogicSensor : ITileEntity, IWrapping<TerrariaLogicSensor> {
         /// <summary>
         /// Gets or sets the sensor's type.
         /// </summary>
+        /// <remarks>The sensor's type.</remarks>
         LogicSensorType LogicSensorType { get; set; }
 
         /// <summary>
         /// Gets or sets a value indicating whether the sensor is activated.
         /// </summary>
+        /// <remarks><see langword="true"/> if the sensor is actived; otherwise, <see langword="false"/>.</remarks>
         bool IsActivated { get; set; }
     }
 }

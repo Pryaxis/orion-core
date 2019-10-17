@@ -59,16 +59,19 @@ namespace Orion.Projectiles {
         }
 
         public IProjectile? SpawnProjectile(
-                ProjectileType projectileType, Vector2 position, Vector2 velocity, int damage, float knockback,
+                ProjectileType type, Vector2 position, Vector2 velocity, int damage, float knockback,
                 float[]? aiValues = null) {
             if (aiValues != null && aiValues.Length != TerrariaProjectile.maxAI) {
                 throw new ArgumentException(
                     $"Array does not have length {TerrariaProjectile.maxAI}.", nameof(aiValues));
             }
 
+            // Not localized because this string is developer-facing.
+            Log.Debug("Spawning {ProjectileType} at {Position}", type, position);
+
             var ai0 = aiValues?[0] ?? 0;
             var ai1 = aiValues?[1] ?? 0;
-            var projectileIndex = TerrariaProjectile.NewProjectile(position, velocity, (int)projectileType,
+            var projectileIndex = TerrariaProjectile.NewProjectile(position, velocity, (int)type,
                 damage, knockback, 255, ai0, ai1);
             return projectileIndex >= 0 && projectileIndex < Projectiles.Count ? Projectiles[projectileIndex] : null;
         }

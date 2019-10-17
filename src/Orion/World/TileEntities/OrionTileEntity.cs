@@ -40,7 +40,7 @@ namespace Orion.World.TileEntities {
         public TTerrariaTileEntity Wrapped { get; }
 
         private protected OrionTileEntity(TTerrariaTileEntity terrariaTileEntity) {
-            Debug.Assert(terrariaTileEntity != null, "terrariaTileEntity != null");
+            Debug.Assert(terrariaTileEntity != null, "Terraria tile entity should not be null");
 
             Wrapped = terrariaTileEntity;
         }

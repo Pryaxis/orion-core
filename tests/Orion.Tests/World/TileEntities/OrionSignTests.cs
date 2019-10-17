@@ -26,14 +26,14 @@ namespace Orion.World.TileEntities {
     public class OrionSignTests {
         [Fact]
         public void Type_Get() {
-            var sign = new OrionSign(0, null);
+            var sign = new OrionSign(null);
 
             sign.Type.Should().Be(TileEntityType.Sign);
         }
 
         [Fact]
         public void IsActive_Get_False() {
-            var sign = new OrionSign(0, null);
+            var sign = new OrionSign(null);
 
             sign.IsActive.Should().BeFalse();
         }
@@ -41,7 +41,7 @@ namespace Orion.World.TileEntities {
         [Fact]
         public void IsActive_Get_True() {
             var terrariaSign = new TerrariaSign();
-            var sign = new OrionSign(0, terrariaSign);
+            var sign = new OrionSign(terrariaSign);
 
             sign.IsActive.Should().BeTrue();
         }
@@ -57,14 +57,14 @@ namespace Orion.World.TileEntities {
         [Fact]
         public void X_Get() {
             var terrariaSign = new TerrariaSign { x = 100 };
-            var sign = new OrionSign(0, terrariaSign);
+            var sign = new OrionSign(terrariaSign);
 
             sign.X.Should().Be(100);
         }
 
         [Fact]
         public void X_GetNotActive() {
-            var sign = new OrionSign(0, null);
+            var sign = new OrionSign(null);
 
             sign.X.Should().Be(0);
         }
@@ -72,7 +72,7 @@ namespace Orion.World.TileEntities {
         [Fact]
         public void X_Set() {
             var terrariaSign = new TerrariaSign();
-            var sign = new OrionSign(0, terrariaSign);
+            var sign = new OrionSign(terrariaSign);
 
             sign.X = 100;
 
@@ -81,7 +81,7 @@ namespace Orion.World.TileEntities {
 
         [Fact]
         public void X_SetNotActive() {
-            var sign = new OrionSign(0, null);
+            var sign = new OrionSign(null);
 
             sign.X = 0;
         }
@@ -89,14 +89,14 @@ namespace Orion.World.TileEntities {
         [Fact]
         public void Y_Get() {
             var terrariaSign = new TerrariaSign { y = 100 };
-            var sign = new OrionSign(0, terrariaSign);
+            var sign = new OrionSign(terrariaSign);
 
             sign.Y.Should().Be(100);
         }
 
         [Fact]
         public void Y_GetNotActive() {
-            var sign = new OrionSign(0, null);
+            var sign = new OrionSign(null);
 
             sign.Y.Should().Be(0);
         }
@@ -104,7 +104,7 @@ namespace Orion.World.TileEntities {
         [Fact]
         public void Y_Set() {
             var terrariaSign = new TerrariaSign();
-            var sign = new OrionSign(0, terrariaSign);
+            var sign = new OrionSign(terrariaSign);
 
             sign.Y = 100;
 
@@ -113,7 +113,7 @@ namespace Orion.World.TileEntities {
 
         [Fact]
         public void Y_SetNotActive() {
-            var sign = new OrionSign(0, null);
+            var sign = new OrionSign(null);
 
             sign.Y = 0;
         }
@@ -121,14 +121,14 @@ namespace Orion.World.TileEntities {
         [Fact]
         public void Text_Get() {
             var terrariaSign = new TerrariaSign { text = "test" };
-            var sign = new OrionSign(0, terrariaSign);
+            var sign = new OrionSign(terrariaSign);
 
             sign.Text.Should().Be("test");
         }
 
         [Fact]
         public void Text_GetNotActive() {
-            var sign = new OrionSign(0, null);
+            var sign = new OrionSign(null);
 
             sign.Text.Should().Be("");
         }
@@ -136,7 +136,7 @@ namespace Orion.World.TileEntities {
         [Fact]
         public void Text_Set() {
             var terrariaSign = new TerrariaSign();
-            var sign = new OrionSign(0, terrariaSign);
+            var sign = new OrionSign(terrariaSign);
 
             sign.Text = "test";
 
@@ -145,7 +145,7 @@ namespace Orion.World.TileEntities {
 
         [Fact]
         public void Text_SetNotActive() {
-            var sign = new OrionSign(0, null);
+            var sign = new OrionSign(null);
 
             sign.Text = "";
         }
@@ -153,7 +153,7 @@ namespace Orion.World.TileEntities {
         [Fact]
         public void Text_SetNullValue_ThrowsArgumentNullException() {
             var terrariaSign = new TerrariaSign();
-            var sign = new OrionSign(0, terrariaSign);
+            var sign = new OrionSign(terrariaSign);
             Action action = () => sign.Text = null;
 
             action.Should().Throw<ArgumentNullException>();

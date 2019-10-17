@@ -18,6 +18,8 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Diagnostics.CodeAnalysis;
+using System.Diagnostics.Contracts;
 using System.Linq;
 using Orion.Items;
 using Orion.Utils;
@@ -68,9 +70,9 @@ namespace Orion.World.TileEntities {
 
         public TerrariaChest? Wrapped { get; }
 
-        public OrionChest(int chestIndex, TerrariaChest? terrariaChest) {
-            Debug.Assert(chestIndex >= 0 && chestIndex < Main.maxChests, "chest index should be valid");
+        public OrionChest(TerrariaChest? terrariaChest) : this(-1, terrariaChest) { }
 
+        public OrionChest(int chestIndex, TerrariaChest? terrariaChest) {
             Index = chestIndex;
             if (terrariaChest is null) {
                 Items = EmptyItemArray.Instance;
@@ -81,6 +83,10 @@ namespace Orion.World.TileEntities {
 
             Wrapped = terrariaChest;
         }
+        
+        // Not localized because this string is developer-facing.
+        [Pure, ExcludeFromCodeCoverage]
+        public override string ToString() => Index >= 0 ? $"#: {Index}" : "chest instance";
 
         private class EmptyItemArray : IReadOnlyArray<IItem> {
             public static readonly EmptyItemArray Instance = new EmptyItemArray();

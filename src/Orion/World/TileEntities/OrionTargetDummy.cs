@@ -15,6 +15,8 @@
 // You should have received a copy of the GNU General Public License
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
+using System.Diagnostics.CodeAnalysis;
+using System.Diagnostics.Contracts;
 using TerrariaTargetDummy = Terraria.GameContent.Tile_Entities.TETrainingDummy;
 
 namespace Orion.World.TileEntities {
@@ -25,5 +27,9 @@ namespace Orion.World.TileEntities {
         }
 
         public OrionTargetDummy(TerrariaTargetDummy terrariaTrainingDummy) : base(terrariaTrainingDummy) { }
+        
+        // Not localized because this string is developer-facing.
+        [Pure, ExcludeFromCodeCoverage]
+        public override string ToString() => Index >= 0 ? $"#: {Index}" : "target dummy instance";
     }
 }

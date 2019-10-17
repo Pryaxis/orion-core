@@ -20,19 +20,10 @@ namespace Orion.World.Tiles {
     /// Specifies a liquid type.
     /// </summary>
     public enum LiquidType {
-        /// <summary>
-        /// Indicates water.
-        /// </summary>
+#pragma warning disable 1591
         Water = 0,
-
-        /// <summary>
-        /// Indicates lava.
-        /// </summary>
         Lava = 1,
-
-        /// <summary>
-        /// Indicates honey.
-        /// </summary>
         Honey = 2
+#pragma warning restore 1591
     }
 }

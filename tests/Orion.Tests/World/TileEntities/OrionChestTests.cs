@@ -28,14 +28,14 @@ namespace Orion.World.TileEntities {
     public class OrionChestTests {
         [Fact]
         public void Type_Get() {
-            var chest = new OrionChest(0, null);
+            var chest = new OrionChest(null);
 
             chest.Type.Should().Be(TileEntityType.Chest);
         }
 
         [Fact]
         public void IsActive_Get_False() {
-            var chest = new OrionChest(0, null);
+            var chest = new OrionChest(null);
 
             chest.IsActive.Should().BeFalse();
         }
@@ -43,7 +43,7 @@ namespace Orion.World.TileEntities {
         [Fact]
         public void IsActive_Get_True() {
             var terrariaChest = new TerrariaChest();
-            var chest = new OrionChest(0, terrariaChest);
+            var chest = new OrionChest(terrariaChest);
 
             chest.IsActive.Should().BeTrue();
         }
@@ -55,14 +55,14 @@ namespace Orion.World.TileEntities {
                 terrariaChest.item[i] = new TerrariaItem();
             }
 
-            var chest = new OrionChest(0, terrariaChest);
+            var chest = new OrionChest(terrariaChest);
 
             chest.X.Should().Be(100);
         }
 
         [Fact]
         public void X_GetNotActive() {
-            var chest = new OrionChest(0, null);
+            var chest = new OrionChest(null);
 
             chest.X.Should().Be(0);
         }
@@ -74,7 +74,7 @@ namespace Orion.World.TileEntities {
                 terrariaChest.item[i] = new TerrariaItem();
             }
 
-            var chest = new OrionChest(0, terrariaChest);
+            var chest = new OrionChest(terrariaChest);
 
             chest.X = 100;
 
@@ -83,7 +83,7 @@ namespace Orion.World.TileEntities {
 
         [Fact]
         public void X_SetNotActive() {
-            var chest = new OrionChest(0, null);
+            var chest = new OrionChest(null);
 
             chest.X = 0;
         }
@@ -95,14 +95,14 @@ namespace Orion.World.TileEntities {
                 terrariaChest.item[i] = new TerrariaItem();
             }
 
-            var chest = new OrionChest(0, terrariaChest);
+            var chest = new OrionChest(terrariaChest);
 
             chest.Y.Should().Be(100);
         }
 
         [Fact]
         public void Y_GetNotActive() {
-            var chest = new OrionChest(0, null);
+            var chest = new OrionChest(null);
 
             chest.Y.Should().Be(0);
         }
@@ -114,7 +114,7 @@ namespace Orion.World.TileEntities {
                 terrariaChest.item[i] = new TerrariaItem();
             }
 
-            var chest = new OrionChest(0, terrariaChest);
+            var chest = new OrionChest(terrariaChest);
 
             chest.Y = 100;
 
@@ -123,7 +123,7 @@ namespace Orion.World.TileEntities {
 
         [Fact]
         public void Y_SetNotActive() {
-            var chest = new OrionChest(0, null);
+            var chest = new OrionChest(null);
 
             chest.Y = 0;
         }
@@ -135,14 +135,14 @@ namespace Orion.World.TileEntities {
                 terrariaChest.item[i] = new TerrariaItem();
             }
 
-            var chest = new OrionChest(0, terrariaChest);
+            var chest = new OrionChest(terrariaChest);
 
             chest.Name.Should().Be("test");
         }
 
         [Fact]
         public void Name_GetNotActive() {
-            var chest = new OrionChest(0, null);
+            var chest = new OrionChest(null);
 
             chest.Name.Should().Be("");
         }
@@ -154,7 +154,7 @@ namespace Orion.World.TileEntities {
                 terrariaChest.item[i] = new TerrariaItem();
             }
 
-            var chest = new OrionChest(0, terrariaChest);
+            var chest = new OrionChest(terrariaChest);
 
             chest.Name = "test";
 
@@ -163,7 +163,7 @@ namespace Orion.World.TileEntities {
 
         [Fact]
         public void Name_SetNotActive() {
-            var chest = new OrionChest(0, null);
+            var chest = new OrionChest(null);
 
             chest.Name = "";
         }
@@ -175,7 +175,7 @@ namespace Orion.World.TileEntities {
                 terrariaChest.item[i] = new TerrariaItem();
             }
 
-            var chest = new OrionChest(0, terrariaChest);
+            var chest = new OrionChest(terrariaChest);
             Action action = () => chest.Name = null;
 
             action.Should().Throw<ArgumentNullException>();
@@ -194,7 +194,7 @@ namespace Orion.World.TileEntities {
                 prefix = (byte)ItemPrefix.Unreal
             };
 
-            var chest = new OrionChest(0, terrariaChest);
+            var chest = new OrionChest(terrariaChest);
 
             chest.Items[0].Type.Should().Be(ItemType.Sdmg);
             chest.Items[0].StackSize.Should().Be(1);
@@ -203,7 +203,7 @@ namespace Orion.World.TileEntities {
 
         [Fact]
         public void Items_GetNotActive() {
-            var chest = new OrionChest(0, null);
+            var chest = new OrionChest(null);
 
             var items = chest.Items;
 

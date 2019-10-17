@@ -23,12 +23,11 @@ using System.Runtime.InteropServices;
 namespace Orion.World.Tiles {
     /// <summary>
     /// Represents an optimized Terraria tile.
-    /// 
-    /// <para/>
-    /// 
-    /// Tiles are represented as structures for optimal packing and for lowered GC overhead. These structures are
-    /// modified using <see langword="ref"/> locals and returns.
     /// </summary>
+    /// <remarks>
+    /// Tiles are represented as structures for optimal packing and for lower GC overhead. These structures are
+    /// modified using ref locals and returns wherever possible.
+    /// </remarks>
     [StructLayout(LayoutKind.Explicit)]
     [SuppressMessage("Design", "CA1051:Do not declare visible instance fields", Justification = "Performance")]
     [SuppressMessage("Naming", "CA1724:Type names should not match namespaces",
@@ -63,26 +62,31 @@ namespace Orion.World.Tiles {
         /// <summary>
         /// The tile's block type.
         /// </summary>
+        /// <value>The tile's block type.</value>
         [FieldOffset(0)] public BlockType BlockType;
 
         /// <summary>
         /// The tile's wall type.
         /// </summary>
+        /// <value>The tiles's wall type.</value>
         [FieldOffset(2)] public WallType WallType;
 
         /// <summary>
         /// The tile's liquid amount.
         /// </summary>
+        /// <value>The tile's liquid amount.</value>
         [FieldOffset(3)] public byte LiquidAmount;
 
         /// <summary>
         /// The tile's block's X frame.
         /// </summary>
+        /// <value>The tile's block's X frame.</value>
         [FieldOffset(8)] public short BlockFrameX;
 
         /// <summary>
         /// The tile's block's Y frame.
         /// </summary>
+        /// <value>The tile's block's Y frame.</value>
         [FieldOffset(10)] public short BlockFrameY;
 
         // internal and type punning here allows us to easily provide ITile compatibility while preserving integer bit
@@ -98,6 +102,7 @@ namespace Orion.World.Tiles {
         /// <summary>
         /// Gets or sets the tile's block color.
         /// </summary>
+        /// <value>The tile's block color.</value>
         public PaintColor BlockColor {
             readonly get => (PaintColor)(_tileHeader & BlockColorMask);
             set {
@@ -114,14 +119,16 @@ namespace Orion.World.Tiles {
         /// <summary>
         /// Gets or sets a value indicating whether the tile's block is active.
         /// </summary>
+        /// <value><see langword="true"/> if the tile's block is active; otherwise, <see langword="false"/>.</value>
         public bool IsBlockActive {
             readonly get => (_tileHeader & IsBlockActiveMask) != 0;
             set => _tileHeader = (_tileHeader & ~IsBlockActiveMask) | (*(int*)&value * IsBlockActiveMask);
         }
 
         /// <summary>
-        /// Gets or sets a value indicating whether the tile's block is acutuated.
+        /// Gets or sets a value indicating whether the tile's block is actuated.
         /// </summary>
+        /// <value><see langword="true"/> if the tile's block is actuated; otherwise, <see langword="false"/>.</value>
         public bool IsBlockActuated {
             readonly get => (_tileHeader & IsBlockActuatedMask) != 0;
             set => _tileHeader = (_tileHeader & ~IsBlockActuatedMask) | (*(int*)&value * IsBlockActuatedMask);
@@ -130,6 +137,7 @@ namespace Orion.World.Tiles {
         /// <summary>
         /// Gets or sets a value indicating whether the tile has red wire.
         /// </summary>
+        /// <value><see langword="true"/> if the tile has red wire; otherwise, <see langword="false"/>.</value>
         public bool HasRedWire {
             readonly get => (_tileHeader & HasRedWireMask) != 0;
             set => _tileHeader = (_tileHeader & ~HasRedWireMask) | (*(int*)&value * HasRedWireMask);
@@ -138,6 +146,7 @@ namespace Orion.World.Tiles {
         /// <summary>
         /// Gets or sets a value indicating whether the tile has blue wire.
         /// </summary>
+        /// <value><see langword="true"/> if the tile has blue wire; otherwise, <see langword="false"/>.</value>
         public bool HasBlueWire {
             readonly get => (_tileHeader & HasBlueWireMask) != 0;
             set => _tileHeader = (_tileHeader & ~HasBlueWireMask) | (*(int*)&value * HasBlueWireMask);
@@ -146,6 +155,7 @@ namespace Orion.World.Tiles {
         /// <summary>
         /// Gets or sets a value indicating whether the tile has green wire.
         /// </summary>
+        /// <value><see langword="true"/> if the tile has green wire; otherwise, <see langword="false"/>.</value>
         public bool HasGreenWire {
             readonly get => (_tileHeader & HasGreenWireMask) != 0;
             set => _tileHeader = (_tileHeader & ~HasGreenWireMask) | (*(int*)&value * HasGreenWireMask);
@@ -154,6 +164,7 @@ namespace Orion.World.Tiles {
         /// <summary>
         /// Gets or sets a value indicating whether the tile's block is halved.
         /// </summary>
+        /// <value><see langword="true"/> if the tile's block is halved; otherwise, <see langword="false"/>.</value>
         public bool IsBlockHalved {
             readonly get => (_tileHeader & IsBlockHalvedMask) != 0;
             set => _tileHeader = (_tileHeader & ~IsBlockHalvedMask) | (*(int*)&value * IsBlockHalvedMask);
@@ -162,6 +173,7 @@ namespace Orion.World.Tiles {
         /// <summary>
         /// Gets or sets a value indicating whether the tile has an actuator.
         /// </summary>
+        /// <value><see langword="true"/> if the tile has an actuator; otherwise, <see langword="false"/>.</value>
         public bool HasActuator {
             readonly get => (_tileHeader & HasActuatorMask) != 0;
             set => _tileHeader = (_tileHeader & ~HasActuatorMask) | (*(int*)&value * HasActuatorMask);
@@ -170,6 +182,7 @@ namespace Orion.World.Tiles {
         /// <summary>
         /// Gets or sets the tile's slope type.
         /// </summary>
+        /// <value>The tile's slope type.</value>
         public Slope Slope {
             readonly get => (Slope)((_tileHeader & SlopeMask) >> SlopeShift);
             set {
@@ -182,6 +195,7 @@ namespace Orion.World.Tiles {
         /// <summary>
         /// Gets or sets the tile's wall color.
         /// </summary>
+        /// <value>The tile's wall color.</value>
         public PaintColor WallColor {
             readonly get => (PaintColor)((_tileHeader & WallColorMask) >> WallColorShift);
             set {
@@ -194,6 +208,7 @@ namespace Orion.World.Tiles {
         /// <summary>
         /// Gets or sets a value indicating whether the tile's liquid is lava.
         /// </summary>
+        /// <value><see langword="true"/> if the tile's liquid is lava; otherwise, <see langword="false"/>.</value>
         public bool IsLava {
             readonly get => (_tileHeader & IsLavaMask) != 0;
             set => _tileHeader = (_tileHeader & ~IsLavaMask) | (*(int*)&value * IsLavaMask);
@@ -202,6 +217,7 @@ namespace Orion.World.Tiles {
         /// <summary>
         /// Gets or sets a value indicating whether the tile's liquid is honey.
         /// </summary>
+        /// <value><see langword="true"/> if the tile's liquid is honey; otherwise, <see langword="false"/>.</value>
         public bool IsHoney {
             readonly get => (_tileHeader & IsHoneyMask) != 0;
             set => _tileHeader = (_tileHeader & ~IsHoneyMask) | (*(int*)&value * IsHoneyMask);
@@ -210,6 +226,7 @@ namespace Orion.World.Tiles {
         /// <summary>
         /// Gets or sets the tile's liquid type.
         /// </summary>
+        /// <value>The tile's liquid type.</value>
         public LiquidType LiquidType {
             readonly get => (LiquidType)((_tileHeader & LiquidTypeMask) >> LiquidTypeShift);
             set {
@@ -222,6 +239,7 @@ namespace Orion.World.Tiles {
         /// <summary>
         /// Gets or sets a value indicating whether the tile has yellow wire.
         /// </summary>
+        /// <value><see langword="true"/> if the tile has yellow wire; otherwise, <see langword="false"/>.</value>
         public bool HasYellowWire {
             readonly get => (_tileHeader & HasYellowWireMask) != 0;
             set => _tileHeader = (_tileHeader & ~HasYellowWireMask) | (*(int*)&value * HasYellowWireMask);
@@ -230,6 +248,7 @@ namespace Orion.World.Tiles {
         /// <summary>
         /// Gets or sets a value indicating whether the tile is checking liquid.
         /// </summary>
+        /// <value><see langword="true"/> if the tile is checking liquid; otherwise, <see langword="false"/>.</value>
         public bool IsCheckingLiquid {
             readonly get => (_tileHeader & IsCheckingLiquidMask) != 0;
             set => _tileHeader = (_tileHeader & ~IsCheckingLiquidMask) | (*(int*)&value * IsCheckingLiquidMask);
@@ -238,6 +257,7 @@ namespace Orion.World.Tiles {
         /// <summary>
         /// Gets or sets a value indicating whether the tile should skip liquids.
         /// </summary>
+        /// <value><see langword="true"/> if the tile should skip liquids; otherwise, <see langword="false"/>.</value>
         public bool ShouldSkipLiquid {
             readonly get => (_tileHeader & ShouldSkipLiquidMask) != 0;
             set => _tileHeader = (_tileHeader & ~ShouldSkipLiquidMask) | (*(int*)&value * ShouldSkipLiquidMask);

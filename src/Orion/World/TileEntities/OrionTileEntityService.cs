@@ -40,9 +40,11 @@ namespace Orion.World.TileEntities {
             Debug.Assert(Main.sign != null, "Terraria signs should not be null");
 
             Chests = new WrappedReadOnlyArray<OrionChest, TerrariaChest?>(
-                Main.chest, (chestIndex, terrariaChest) => new OrionChest(chestIndex, terrariaChest));
+                Main.chest,
+                (chestIndex, terrariaChest) => new OrionChest(chestIndex, terrariaChest));
             Signs = new WrappedReadOnlyArray<OrionSign, TerrariaSign?>(
-                Main.sign, (signIndex, terrariaSign) => new OrionSign(signIndex, terrariaSign));
+                Main.sign,
+                (signIndex, terrariaSign) => new OrionSign(signIndex, terrariaSign));
         }
 
         public ITileEntity? AddTileEntity(TileEntityType tileEntityType, int x, int y) {
@@ -50,7 +52,10 @@ namespace Orion.World.TileEntities {
                 return null;
             }
 
-            static IChest? AddChest(int x, int y) {
+            IChest? AddChest(int x, int y) {
+                // Not localized because this string is developer-facing.
+                Log.Debug("Adding chest at {X}, {Y}", x, y);
+
                 for (var i = 0; i < Main.chest.Length; ++i) {
                     ref TerrariaChest? terrariaChest = ref Main.chest[i];
                     if (terrariaChest == null) {
@@ -69,7 +74,10 @@ namespace Orion.World.TileEntities {
                 return null;
             }
 
-            static ISign? AddSign(int x, int y) {
+            ISign? AddSign(int x, int y) {
+                // Not localized because this string is developer-facing.
+                Log.Debug("Adding sign at {X}, {Y}", x, y);
+
                 for (var i = 0; i < Main.sign.Length; ++i) {
                     ref TerrariaSign? terrariaSign = ref Main.sign[i];
                     if (terrariaSign == null) {
@@ -86,17 +94,26 @@ namespace Orion.World.TileEntities {
                 return null;
             }
 
-            static ITargetDummy AddTargetDummy(int x, int y) {
+            ITargetDummy AddTargetDummy(int x, int y) {
+                // Not localized because this string is developer-facing.
+                Log.Debug("Adding target dummy at {X}, {Y}", x, y);
+
                 var targetDummyIndex = TerrariaTargetDummy.Place(x, y);
                 return new OrionTargetDummy((TerrariaTargetDummy)TerrariaTileEntity.ByID[targetDummyIndex]);
             }
 
-            static IItemFrame AddItemFrame(int x, int y) {
+            IItemFrame AddItemFrame(int x, int y) {
+                // Not localized because this string is developer-facing.
+                Log.Debug("Adding item frame at {X}, {Y}", x, y);
+
                 var targetDummyIndex = TerrariaItemFrame.Place(x, y);
                 return new OrionItemFrame((TerrariaItemFrame)TerrariaTileEntity.ByID[targetDummyIndex]);
             }
 
-            static ILogicSensor AddLogicSensor(int x, int y) {
+            ILogicSensor AddLogicSensor(int x, int y) {
+                // Not localized because this string is developer-facing.
+                Log.Debug("Adding logic sensor at {X}, {Y}", x, y);
+
                 var targetDummyIndex = TerrariaLogicSensor.Place(x, y);
                 return new OrionLogicSensor((TerrariaLogicSensor)TerrariaTileEntity.ByID[targetDummyIndex]);
             }

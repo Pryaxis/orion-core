@@ -20,31 +20,14 @@ namespace Orion.World.TileEntities {
     /// Represents a (generalized) tile entity type.
     /// </summary>
     public enum TileEntityType : short {
-        /// <summary>
-        /// Indicates a target dummy.
-        /// </summary>
+#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
         TargetDummy = 0,
-
-        /// <summary>
-        /// Indicates an item frame.
-        /// </summary>
         ItemFrame = 1,
-
-        /// <summary>
-        /// Indicates a logic sensor.
-        /// </summary>
         LogicSensor = 2,
 
         // Use large values to represent chests and signs, as they are not *actually* tile entities in Terraria.
-
-        /// <summary>
-        /// Indicates a chest.
-        /// </summary>
         Chest = short.MaxValue - 1,
-
-        /// <summary>
-        /// Indicates a sign.
-        /// </summary>
         Sign = short.MaxValue
+#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member
     }
 }

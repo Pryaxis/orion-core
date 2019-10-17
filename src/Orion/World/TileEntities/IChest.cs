@@ -24,16 +24,22 @@ namespace Orion.World.TileEntities {
     /// <summary>
     /// Represents a Terraria chest.
     /// </summary>
+    /// <remarks>
+    /// Chests are the main form of permanent storage for items. They may only be accessed by a single player at a time
+    /// and cannot be broken while still storing items.
+    /// </remarks>
     public interface IChest : ITileEntity, IWrapping<TerrariaChest?> {
         /// <summary>
         /// Gets or sets the chest's name.
         /// </summary>
+        /// <value>The chest's name.</value>
         /// <exception cref="ArgumentNullException"><paramref name="value"/> is <see langword="null"/>.</exception>
         string Name { get; set; }
 
         /// <summary>
         /// Gets the chest's items.
         /// </summary>
+        /// <value>The chest's items.</value>
         IReadOnlyArray<IItem> Items { get; }
     }
 }

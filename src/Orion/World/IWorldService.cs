@@ -29,39 +29,43 @@ namespace Orion.World {
         /// <summary>
         /// Gets the world's width.
         /// </summary>
+        /// <value>The world's width.</value>
         int WorldWidth { get; }
 
         /// <summary>
         /// Gets the world's height.
         /// </summary>
+        /// <value>The world's height.</value>
         int WorldHeight { get; }
 
         /// <summary>
         /// Gets a reference to the tile at the given coordinates.
-        /// 
-        /// <para/>
-        /// 
-        /// For optimization purposes, there will be no range checking. A likely result of invalid coordinates is an
-        /// <see cref="AccessViolationException"/>.
         /// </summary>
         /// <param name="x">The X coordinate.</param>
         /// <param name="y">The Y coordinate.</param>
         /// <returns>A reference to the tile.</returns>
+        /// <remarks>
+        /// For optimization purposes, implementations are not required to perform range checking. A likely result of
+        /// invalid coordinates would be an <see cref="AccessViolationException"/>.
+        /// </remarks>
         ref Tile this[int x, int y] { get; }
 
         /// <summary>
-        /// Gets the current invasion.
+        /// Gets the current invasion type.
         /// </summary>
+        /// <value>The current invasion type.</value>
         InvasionType CurrentInvasionType { get; }
 
         /// <summary>
         /// Gets the event handlers that occur when the world is loading.
         /// </summary>
+        /// <value>The event handlers that occur when the world is loading.</value>
         EventHandlerCollection<WorldLoadEventArgs> WorldLoad { get; }
 
         /// <summary>
         /// Gets the event handlers that occur when the world is saving. This event can be canceled.
         /// </summary>
+        /// <value>The event handlers that occur when the world is saving.</value>
         EventHandlerCollection<WorldSaveEventArgs> WorldSave { get; }
     }
 }

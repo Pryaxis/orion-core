@@ -20,26 +20,31 @@ using Orion.Utils;
 
 namespace Orion.World.TileEntities {
     /// <summary>
-    /// Represents a tile entity service. Provides tile entity-related hooks and methods.
+    /// Represents a tile entity service. Provides access to tile entity-related events and methods, and in a
+    /// thread-safe manner unless specified otherwise.
     /// </summary>
     public interface ITileEntityService {
         /// <summary>
         /// Gets the chests. All chests are returned, regardless of whether or not they are actually active.
         /// </summary>
+        /// <value>The chests.</value>
         IReadOnlyArray<IChest?> Chests { get; }
 
         /// <summary>
         /// Gets the signs. All signs are returned, regardless of whether or not they are actually active.
         /// </summary>
+        /// <value>The signs.</value>
         IReadOnlyArray<ISign?> Signs { get; }
 
         /// <summary>
-        /// Adds and returns a tile entity with the given type at the specified coordinates.
+        /// Adds and returns a tile entity with the given <paramref name="tileEntityType"/> at the specified
+        /// coordinates.
         /// </summary>
         /// <param name="tileEntityType">The tile entity type.</param>
         /// <param name="x">The X coordinate.</param>
         /// <param name="y">The Y coordinate.</param>
         /// <returns>The resulting tile entity, or <see langword="null"/> if none was added.</returns>
+        /// <remarks>Implementations of this method are not required to be thread-safe.</remarks>
         ITileEntity? AddTileEntity(TileEntityType tileEntityType, int x, int y);
 
         /// <summary>
@@ -51,13 +56,16 @@ namespace Orion.World.TileEntities {
         ITileEntity? GetTileEntity(int x, int y);
 
         /// <summary>
-        /// Removes the given tile entity and returns a value indicating success.
+        /// Removes the given <paramref name="tileEntity"/> and returns a value indicating success.
         /// </summary>
         /// <param name="tileEntity">The tile entity.</param>
-        /// <returns>A value indicating whether the tile entity was successfully removed.</returns>
+        /// <returns>
+        /// <see langword="true"/> if the tile entity was removed; otherwise, <see langword="false"/>.
+        /// </returns>
         /// <exception cref="ArgumentNullException">
         /// <paramref name="tileEntity"/> is <see langword="null"/>.
         /// </exception>
+        /// <remarks>Implementations of this method are not required to be thread-safe.</remarks>
         bool RemoveTileEntity(ITileEntity tileEntity);
     }
 

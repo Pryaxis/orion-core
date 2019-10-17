@@ -20,29 +20,12 @@ namespace Orion.World.Tiles {
     /// Specifies a slope.
     /// </summary>
     public enum Slope : byte {
-        /// <summary>
-        /// Indicates no slope.
-        /// </summary>
+#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
         None = 0,
-
-        /// <summary>
-        /// Indicates a top-right slope.
-        /// </summary>
         TopRight = 1,
-
-        /// <summary>
-        /// Indicates a top-left slope.
-        /// </summary>
         TopLeft = 2,
-
-        /// <summary>
-        /// Indicates a bottom-right slope.
-        /// </summary>
         BottomRight = 3,
-
-        /// <summary>
-        /// Indicates a bottom-left slope.
-        /// </summary>
         BottomLeft = 4
+#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member
     }
 }

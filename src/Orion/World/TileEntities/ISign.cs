@@ -23,10 +23,12 @@ namespace Orion.World.TileEntities {
     /// <summary>
     /// Represents a Terraria sign.
     /// </summary>
+    /// <remarks>Signs can store text in the world.</remarks>
     public interface ISign : ITileEntity, IWrapping<TerrariaSign?> {
         /// <summary>
         /// Gets or sets the sign's text.
         /// </summary>
+        /// <value>The sign's text.</value>
         /// <exception cref="ArgumentNullException"><paramref name="value"/> is <see langword="null"/>.</exception>
         string Text { get; set; }
     }

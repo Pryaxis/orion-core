@@ -15,6 +15,8 @@
 // You should have received a copy of the GNU General Public License
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
+using System.Diagnostics.CodeAnalysis;
+using System.Diagnostics.Contracts;
 using TerrariaLogicSensor = Terraria.GameContent.Tile_Entities.TELogicSensor;
 
 namespace Orion.World.TileEntities {
@@ -30,5 +32,9 @@ namespace Orion.World.TileEntities {
         }
 
         public OrionLogicSensor(TerrariaLogicSensor terrariaLogicSensor) : base(terrariaLogicSensor) { }
+        
+        // Not localized because this string is developer-facing.
+        [Pure, ExcludeFromCodeCoverage]
+        public override string ToString() => Index >= 0 ? $"#: {Index}" : "logic sensor instance";
     }
 }

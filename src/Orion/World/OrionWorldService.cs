@@ -73,14 +73,27 @@ namespace Orion.World {
 
         private HookResult PreLoadWorldHandler(ref bool _) {
             var args = new WorldLoadEventArgs();
+
+            // Not localized because this string is developer-facing.
+            Log.Debug("Invoking {Event}", WorldLoad);
             WorldLoad.Invoke(this, args);
+
             return HookResult.Continue;
         }
 
         private HookResult PreSaveWorldHandler(ref bool _, ref bool _2) {
             var args = new WorldSaveEventArgs();
+
+            // Not localized because this string is developer-facing.
+            Log.Debug("Invoking {Event}", WorldSave);
             WorldSave.Invoke(this, args);
-            return args.IsCanceled() ? HookResult.Cancel : HookResult.Continue;
+            if (args.IsCanceled()) {
+                // Not localized because this string is developer-facing.
+                Log.Debug("Canceled {Event} for {CancellationReason}", WorldSave, args.CancellationReason);
+                return HookResult.Cancel;
+            }
+
+            return HookResult.Continue;
         }
 
         // This class is not disposable since we expect instances to be permanent. However, a finalizer is implemented

@@ -23,7 +23,7 @@ namespace Orion.World.Tiles {
     /// Specifies a block type.
     /// </summary>
     public enum BlockType : ushort {
-#pragma warning disable 1591
+#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
         Dirt = 0,
         Stone = 1,
         Grass = 2,
@@ -493,7 +493,7 @@ namespace Orion.World.Tiles {
         Chests2 = 467,
         TrappedChests2 = 468,
         CrystalTable = 469
-#pragma warning restore 1591
+#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member
     }
 
     /// <summary>
@@ -746,7 +746,7 @@ namespace Orion.World.Tiles {
         };
 
         /// <summary>
-        /// Returns a value indicating whether frames are important for the block <paramref name="type"/>.
+        /// Returns a value indicating whether frames are important for the given <paramref name="type"/>.
         /// </summary>
         /// <param name="type">The block type.</param>
         /// <returns><see langword="true"/> if frames are important; otherwise, <see langword="false"/>.</returns>
