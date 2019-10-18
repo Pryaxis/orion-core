@@ -53,7 +53,7 @@ namespace Orion.Events.Players {
             var player = new Mock<IPlayer>().Object;
             var args = new PlayerInventorySlotEventArgs(player, new PlayerInventorySlotPacket());
 
-            args.SetSimplePropertiesShouldMarkAsDirty();
+            args.SimpleProperties_Set_MarkAsDirty();
         }
 
         [Fact]

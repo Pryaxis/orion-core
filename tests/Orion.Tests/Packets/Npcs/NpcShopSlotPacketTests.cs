@@ -26,7 +26,7 @@ namespace Orion.Packets.Npcs {
         public void SimpleProperties_Set_MarkAsDirty() {
             var packet = new NpcShopSlotPacket();
 
-            packet.SetSimplePropertiesShouldMarkAsDirty();
+            packet.SimpleProperties_Set_MarkAsDirty();
         }
 
         public static readonly byte[] Bytes = { 14, 0, 104, 0, 17, 6, 1, 0, 82, 100, 0, 0, 0, 1 };

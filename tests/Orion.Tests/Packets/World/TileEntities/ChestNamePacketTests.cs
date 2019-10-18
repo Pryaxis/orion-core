@@ -26,7 +26,7 @@ namespace Orion.Packets.World.TileEntities {
         public void SimpleProperties_Set_MarkAsDirty() {
             var packet = new ChestNamePacket();
 
-            packet.SetSimplePropertiesShouldMarkAsDirty();
+            packet.SimpleProperties_Set_MarkAsDirty();
         }
 
         [Fact]

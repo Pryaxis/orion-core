@@ -44,7 +44,7 @@ namespace Orion.Events.Npcs {
             var npc = new Mock<INpc>().Object;
             var args = new NpcLootEventArgs(npc, ItemType.None, 0, ItemPrefix.None);
 
-            args.SetSimplePropertiesShouldMarkAsDirty();
+            args.SimpleProperties_Set_MarkAsDirty();
         }
 
         [Fact]

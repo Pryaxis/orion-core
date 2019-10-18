@@ -52,7 +52,7 @@ namespace Orion.Events.Players {
             var player = new Mock<IPlayer>().Object;
             var args = new PlayerChatEventArgs(player, new ChatModule());
 
-            args.SetSimplePropertiesShouldMarkAsDirty();
+            args.SimpleProperties_Set_MarkAsDirty();
         }
 
         [Fact]

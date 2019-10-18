@@ -23,7 +23,7 @@ namespace Orion.Packets.World.TileEntities {
         public void SimpleProperties_Set_MarkAsDirty() {
             var logicSensor = new NetworkLogicSensor();
 
-            logicSensor.SetSimplePropertiesShouldMarkAsDirty();
+            logicSensor.SimpleProperties_Set_MarkAsDirty();
         }
     }
 }

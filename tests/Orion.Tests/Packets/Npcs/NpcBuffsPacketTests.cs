@@ -28,7 +28,7 @@ namespace Orion.Packets.Npcs {
         public void SimpleProperties_Set_MarkAsDirty() {
             var packet = new NpcBuffsPacket();
 
-            packet.SetSimplePropertiesShouldMarkAsDirty();
+            packet.SimpleProperties_Set_MarkAsDirty();
         }
 
         [Fact]

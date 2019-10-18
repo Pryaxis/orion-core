@@ -25,7 +25,7 @@ namespace Orion.Packets.Players {
         public void SimpleProperties_Set_MarkAsDirty() {
             var packet = new PlayerZonesPacket();
 
-            packet.SetSimplePropertiesShouldMarkAsDirty();
+            packet.SimpleProperties_Set_MarkAsDirty();
         }
 
         public static readonly byte[] Bytes = { 8, 0, 36, 1, 0, 0, 0, 0 };

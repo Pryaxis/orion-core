@@ -27,7 +27,7 @@ namespace Orion.Packets.Players {
         public void SimpleProperties_Set_MarkAsDirty() {
             var packet = new PlayerDamagePacket();
 
-            packet.SetSimplePropertiesShouldMarkAsDirty();
+            packet.SimpleProperties_Set_MarkAsDirty();
         }
 
         [Fact]

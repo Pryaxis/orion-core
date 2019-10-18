@@ -44,7 +44,7 @@ namespace Orion.Events.Projectiles {
             var projectile = new Mock<IProjectile>().Object;
             var args = new ProjectileSetDefaultsEventArgs(projectile, ProjectileType.None);
 
-            args.SetSimplePropertiesShouldMarkAsDirty();
+            args.SimpleProperties_Set_MarkAsDirty();
         }
 
         [Fact]

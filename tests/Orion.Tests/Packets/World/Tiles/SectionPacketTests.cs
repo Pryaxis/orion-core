@@ -29,7 +29,7 @@ namespace Orion.Packets.World.Tiles {
         public void SimpleProperties_Set_MarkAsDirty() {
             var packet = new SectionPacket();
 
-            packet.SetSimplePropertiesShouldMarkAsDirty();
+            packet.SimpleProperties_Set_MarkAsDirty();
         }
 
         [Fact]

@@ -25,7 +25,7 @@ namespace Orion.Packets.World.TileEntities {
         public void SimpleProperties_Set_MarkAsDirty() {
             var sign = new NetworkSign();
 
-            sign.SetSimplePropertiesShouldMarkAsDirty();
+            sign.SimpleProperties_Set_MarkAsDirty();
         }
 
         [Fact]

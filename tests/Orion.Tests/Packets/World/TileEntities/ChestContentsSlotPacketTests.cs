@@ -26,7 +26,7 @@ namespace Orion.Packets.World.TileEntities {
         public void SimpleProperties_Set_MarkAsDirty() {
             var packet = new ChestContentsSlotPacket();
 
-            packet.SetSimplePropertiesShouldMarkAsDirty();
+            packet.SimpleProperties_Set_MarkAsDirty();
         }
 
         public static readonly byte[] Bytes = { 11, 0, 32, 0, 0, 0, 1, 0, 0, 17, 6 };

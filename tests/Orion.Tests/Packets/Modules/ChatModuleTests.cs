@@ -27,7 +27,7 @@ namespace Orion.Packets.Modules {
         public void SimpleProperties_Set_MarkAsDirty() {
             var module = new ChatModule();
 
-            module.SetSimplePropertiesShouldMarkAsDirty();
+            module.SimpleProperties_Set_MarkAsDirty();
         }
 
         [Fact]

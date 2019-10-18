@@ -26,7 +26,7 @@ namespace Orion.Packets.Entities {
         public void SimpleProperties_Set_MarkAsDirty() {
             var packet = new EntityTeleportationPacket();
 
-            packet.SetSimplePropertiesShouldMarkAsDirty();
+            packet.SimpleProperties_Set_MarkAsDirty();
         }
 
         public static readonly byte[] Bytes = { 14, 0, 65, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };

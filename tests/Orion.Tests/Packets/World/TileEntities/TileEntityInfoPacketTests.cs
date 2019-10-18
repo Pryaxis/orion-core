@@ -28,7 +28,7 @@ namespace Orion.Packets.World.TileEntities {
         public void SimpleProperties_Set_MarkAsDirty() {
             var packet = new TileEntityInfoPacket();
 
-            packet.SetSimplePropertiesShouldMarkAsDirty();
+            packet.SimpleProperties_Set_MarkAsDirty();
         }
 
         [Fact]

@@ -25,7 +25,7 @@ namespace Orion.Packets.Npcs {
         public void SimpleProperties_Set_MarkAsDirty() {
             var packet = new NpcDamageHeldItemPacket();
 
-            packet.SetSimplePropertiesShouldMarkAsDirty();
+            packet.SimpleProperties_Set_MarkAsDirty();
         }
 
         public static readonly byte[] Bytes = { 6, 0, 24, 1, 0, 0 };

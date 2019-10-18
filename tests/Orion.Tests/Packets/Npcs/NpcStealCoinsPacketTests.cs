@@ -26,7 +26,7 @@ namespace Orion.Packets.Npcs {
         public void SimpleProperties_Set_MarkAsDirty() {
             var packet = new NpcStealCoinsPacket();
 
-            packet.SetSimplePropertiesShouldMarkAsDirty();
+            packet.SimpleProperties_Set_MarkAsDirty();
         }
 
         public static readonly byte[] Bytes = { 17, 0, 92, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };

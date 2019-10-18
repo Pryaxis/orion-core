@@ -26,7 +26,7 @@ namespace Orion.Packets.World {
         public void SimpleProperties_Set_MarkAsDirty() {
             var packet = new MoonLordCountdownPacket();
 
-            packet.SetSimplePropertiesShouldMarkAsDirty();
+            packet.SimpleProperties_Set_MarkAsDirty();
         }
 
         public static readonly byte[] Bytes = { 7, 0, 103, 60, 0, 0, 0 };

@@ -26,7 +26,7 @@ namespace Orion.Packets.Entities {
         public void SimpleProperties_Set_MarkAsDirty() {
             var packet = new CombatNumberPacket();
 
-            packet.SetSimplePropertiesShouldMarkAsDirty();
+            packet.SimpleProperties_Set_MarkAsDirty();
         }
 
         public static readonly byte[] Bytes = { 18, 0, 81, 0, 0, 0, 0, 0, 0, 0, 0, 255, 255, 255, 100, 0, 0, 0 };

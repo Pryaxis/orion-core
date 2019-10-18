@@ -23,7 +23,7 @@ namespace Orion.Packets.World.TileEntities {
         public void SimpleProperties_Set_MarkAsDirty() {
             var targetDummy = new NetworkTargetDummy();
 
-            targetDummy.SetSimplePropertiesShouldMarkAsDirty();
+            targetDummy.SimpleProperties_Set_MarkAsDirty();
         }
     }
 }

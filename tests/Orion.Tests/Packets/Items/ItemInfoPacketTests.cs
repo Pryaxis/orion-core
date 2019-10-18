@@ -27,7 +27,7 @@ namespace Orion.Packets.Items {
         public void SimpleProperties_Set_MarkAsDirty() {
             var packet = new ItemInfoPacket();
 
-            packet.SetSimplePropertiesShouldMarkAsDirty();
+            packet.SimpleProperties_Set_MarkAsDirty();
         }
 
         public static readonly byte[] Bytes = {

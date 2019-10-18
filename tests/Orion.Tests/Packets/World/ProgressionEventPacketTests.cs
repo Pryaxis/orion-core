@@ -25,7 +25,7 @@ namespace Orion.Packets.World {
         public void SimpleProperties_Set_MarkAsDirty() {
             var packet = new ProgressionEventPacket();
 
-            packet.SetSimplePropertiesShouldMarkAsDirty();
+            packet.SimpleProperties_Set_MarkAsDirty();
         }
 
         public static readonly byte[] Bytes = { 5, 0, 98, 1, 0 };

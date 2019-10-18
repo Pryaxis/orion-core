@@ -26,7 +26,7 @@ namespace Orion.Packets.World.Tiles {
         public void SimpleProperties_Set_MarkAsDirty() {
             var packet = new TileAnimationPacket();
 
-            packet.SetSimplePropertiesShouldMarkAsDirty();
+            packet.SimpleProperties_Set_MarkAsDirty();
         }
 
         public static readonly byte[] Bytes = { 11, 0, 77, 1, 0, 1, 0, 0, 1, 100, 0 };

@@ -75,7 +75,7 @@ namespace Orion {
             }
         }
 
-        public static void SetSimplePropertiesShouldMarkAsDirty(this IDirtiable dirtiable) {
+        public static void SimpleProperties_Set_MarkAsDirty(this IDirtiable dirtiable) {
             foreach (var property in dirtiable.GetType().GetProperties(BindingFlags.Public | BindingFlags.Instance)) {
                 if (property.SetMethod?.IsPublic != true) {
                     continue;

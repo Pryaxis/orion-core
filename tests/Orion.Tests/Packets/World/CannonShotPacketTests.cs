@@ -25,7 +25,7 @@ namespace Orion.Packets.World {
         public void SimpleProperties_Set_MarkAsDirty() {
             var packet = new CannonShotPacket();
 
-            packet.SetSimplePropertiesShouldMarkAsDirty();
+            packet.SimpleProperties_Set_MarkAsDirty();
         }
 
         public static readonly byte[] Bytes = { 18, 0, 108, 100, 0, 0, 0, 0, 0, 0, 1, 100, 0, 0, 0, 0, 0, 1 };

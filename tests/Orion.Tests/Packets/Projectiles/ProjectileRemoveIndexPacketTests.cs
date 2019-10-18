@@ -25,7 +25,7 @@ namespace Orion.Packets.Projectiles {
         public void SimpleProperties_Set_MarkAsDirty() {
             var packet = new ProjectileRemoveIndexPacket();
 
-            packet.SetSimplePropertiesShouldMarkAsDirty();
+            packet.SimpleProperties_Set_MarkAsDirty();
         }
 
         public static readonly byte[] Bytes = { 5, 0, 95, 100, 0 };

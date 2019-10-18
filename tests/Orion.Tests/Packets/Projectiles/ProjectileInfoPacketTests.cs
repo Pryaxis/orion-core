@@ -28,7 +28,7 @@ namespace Orion.Packets.Projectiles {
         public void SimpleProperties_Set_MarkAsDirty() {
             var packet = new ProjectileInfoPacket();
 
-            packet.SetSimplePropertiesShouldMarkAsDirty();
+            packet.SimpleProperties_Set_MarkAsDirty();
         }
 
         [Fact]

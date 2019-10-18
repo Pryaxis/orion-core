@@ -43,7 +43,7 @@ namespace Orion.Events.Items {
             var item = new Mock<IItem>().Object;
             var args = new ItemSetDefaultsEventArgs(item, ItemType.Sdmg);
 
-            args.SetSimplePropertiesShouldMarkAsDirty();
+            args.SimpleProperties_Set_MarkAsDirty();
         }
 
         [Fact]

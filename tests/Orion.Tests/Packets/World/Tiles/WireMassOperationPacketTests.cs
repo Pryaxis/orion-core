@@ -25,7 +25,7 @@ namespace Orion.Packets.World.Tiles {
         public void SimpleProperties_Set_MarkAsDirty() {
             var packet = new WireMassOperationPacket();
 
-            packet.SetSimplePropertiesShouldMarkAsDirty();
+            packet.SimpleProperties_Set_MarkAsDirty();
         }
 
         public static readonly byte[] Bytes = { 12, 0, 109, 0, 0, 0, 0, 0, 1, 100, 0, 1 };

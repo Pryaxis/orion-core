@@ -27,7 +27,7 @@ namespace Orion.Packets.Entities {
         public void SimpleProperties_Set_MarkAsDirty() {
             var packet = new CombatTextPacket();
 
-            packet.SetSimplePropertiesShouldMarkAsDirty();
+            packet.SimpleProperties_Set_MarkAsDirty();
         }
 
         [Fact]

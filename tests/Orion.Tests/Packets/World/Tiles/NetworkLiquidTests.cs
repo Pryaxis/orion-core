@@ -27,7 +27,7 @@ namespace Orion.Packets.World.Tiles {
         public void SimpleProperties_Set_MarkAsDirty() {
             var liquid = new NetworkLiquid();
 
-            liquid.SetSimplePropertiesShouldMarkAsDirty();
+            liquid.SimpleProperties_Set_MarkAsDirty();
         }
 
         public static byte[] Bytes = { 100, 0, 0, 1, 255, 0 };

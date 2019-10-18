@@ -25,7 +25,7 @@ namespace Orion.Packets.Entities {
         public void SimpleProperties_Set_MarkAsDirty() {
             var packet = new EmoteInfoPacket();
 
-            packet.SetSimplePropertiesShouldMarkAsDirty();
+            packet.SimpleProperties_Set_MarkAsDirty();
         }
 
         public static readonly byte[] NormalBytes = { 12, 0, 91, 1, 0, 0, 0, 0, 100, 0, 255, 1 };
