@@ -15,6 +15,7 @@
 // You should have received a copy of the GNU General Public License
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
+using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using FluentAssertions;
 using Orion.Items;
@@ -23,6 +24,23 @@ using Xunit;
 
 namespace Orion.Packets.World.TileEntities {
     public class TileEntityInfoPacketTests {
+        [Fact]
+        public void SimpleProperties_Set_MarkAsDirty() {
+            var packet = new TileEntityInfoPacket();
+
+            packet.SetSimplePropertiesShouldMarkAsDirty();
+        }
+
+        [Fact]
+        [SuppressMessage("Style", "IDE0017:Simplify object initialization", Justification = "Testing")]
+        public void TileEntity_Set_MarksAsDirty() {
+            var packet = new TileEntityInfoPacket();
+
+            packet.TileEntity = null;
+
+            packet.ShouldBeDirty();
+        }
+
         public static readonly byte[] RemoveBytes = { 8, 0, 86, 0, 0, 0, 0, 0 };
 
         [Fact]

@@ -242,6 +242,17 @@ namespace Orion.Npcs {
         }
 
         [Fact]
+        public void NpcDamage_Modified() {
+            using var npcService = new OrionNpcService(Logger.None);
+            npcService.NpcDamage.RegisterHandler((sender, args) => args.Damage = 10000);
+            Main.npc[0].SetDefaults((int)NpcType.BlueSlime);
+
+            Main.npc[0].StrikeNPC(0, 0, 1);
+
+            Main.npc[0].active.Should().BeFalse();
+        }
+
+        [Fact]
         public void NpcLoot() {
             using var npcService = new OrionNpcService(Logger.None);
             var isRun = false;
@@ -267,6 +278,18 @@ namespace Orion.Npcs {
             Main.npc[0].checkDead();
 
             Main.item[0].active.Should().BeFalse();
+        }
+
+        [Fact]
+        public void NpcLoot_Modified() {
+            using var npcService = new OrionNpcService(Logger.None);
+            npcService.NpcLoot.RegisterHandler((sender, args) => args.ItemStackSize = 9999);
+            Main.npc[0].SetDefaults((int)NpcType.BlueSlime);
+            Main.npc[0].life = 0;
+
+            Main.npc[0].checkDead();
+
+            Main.item[0].stack.Should().Be(9999);
         }
 
         [Fact]
