@@ -41,7 +41,7 @@ namespace Orion.Npcs {
         public EventHandlerCollection<NpcUpdateEventArgs> NpcUpdate { get; }
         public EventHandlerCollection<NpcTransformEventArgs> NpcTransform { get; }
         public EventHandlerCollection<NpcDamageEventArgs> NpcDamage { get; }
-        public EventHandlerCollection<NpcDropLootItemEventArgs> NpcDropLootItem { get; }
+        public EventHandlerCollection<NpcLootEventArgs> NpcLoot { get; }
         public EventHandlerCollection<NpcKilledEventArgs> NpcKilled { get; }
 
         public OrionNpcService(ILogger log) : base(log) {
@@ -58,7 +58,7 @@ namespace Orion.Npcs {
             NpcUpdate = new EventHandlerCollection<NpcUpdateEventArgs>();
             NpcTransform = new EventHandlerCollection<NpcTransformEventArgs>();
             NpcDamage = new EventHandlerCollection<NpcDamageEventArgs>();
-            NpcDropLootItem = new EventHandlerCollection<NpcDropLootItemEventArgs>();
+            NpcLoot = new EventHandlerCollection<NpcLootEventArgs>();
             NpcKilled = new EventHandlerCollection<NpcKilledEventArgs>();
 
             Hooks.Npc.PreSetDefaultsById = PreSetDefaultsByIdHandler;
@@ -308,7 +308,7 @@ namespace Orion.Npcs {
         private void LogNpcDamage_Before(NpcDamageEventArgs args) {
             // Not localized because this string is developer-facing.
             Log.Debug(
-                "Invoking {Event} with [{Npc}, {NpcType} by {Damage}]",
+                "Invoking {Event} with [{Npc}, {NpcType} for {Damage}]",
                 NpcDamage, args.Npc, args.Npc.Type, args.Damage);
         }
 
@@ -320,13 +320,13 @@ namespace Orion.Npcs {
             } else if (args.IsDirty) {
                 // Not localized because this string is developer-facing.
                 Log.Debug(
-                    "Altered {Event} to [{Npc}, {NpcType} by {Damage}]",
+                    "Altered {Event} to [{Npc}, {NpcType} for {Damage}]",
                     NpcDamage, args.Npc, args.Npc.Type, args.Damage);
             }
         }
 
         // =============================================================================================================
-        // Handling NpcDropLootItem
+        // Handling NpcLoot
         // =============================================================================================================
 
         private HookResult PreDropLootHandler(
@@ -335,46 +335,55 @@ namespace Orion.Npcs {
             Debug.Assert(terrariaNpc != null, "Terraria NPC should not be null");
 
             var npc = GetNpc(terrariaNpc);
-            var args = new NpcDropLootItemEventArgs(npc) {
-                LootItemType = (ItemType)itemType,
-                LootItemStackSize = itemStackSize,
-                LootItemPrefix = (ItemPrefix)itemPrefix
-            };
+            var args = new NpcLootEventArgs(npc, (ItemType)itemType, itemStackSize, (ItemPrefix)itemPrefix);
 
-            LogNpcDropLootItem_Before(args);
-            NpcDropLootItem.Invoke(this, args);
-            LogNpcDropLootItem_After(args);
+            LogNpcLoot_Before(args);
+            NpcLoot.Invoke(this, args);
+            LogNpcLoot_After(args);
 
             if (args.IsCanceled()) {
                 return HookResult.Cancel;
+            } else if (args.IsDirty) {
+                itemType = (int)args.ItemType;
+                itemStackSize = args.ItemStackSize;
+                itemPrefix = (int)args.ItemPrefix;
             }
 
-            itemType = (int)args.LootItemType;
-            itemStackSize = args.LootItemStackSize;
-            itemPrefix = (int)args.LootItemPrefix;
             return HookResult.Continue;
         }
         
         [Conditional("DEBUG"), ExcludeFromCodeCoverage]
-        private void LogNpcDropLootItem_Before(NpcDropLootItemEventArgs args) {
-            if (args.LootItemPrefix == ItemPrefix.None) {
+        private void LogNpcLoot_Before(NpcLootEventArgs args) {
+            if (args.ItemPrefix == ItemPrefix.None) {
                 // Not localized because this string is developer-facing.
                 Log.Debug(
                     "Invoking {Event} with [{Npc}, {NpcType} dropping {ItemType} x{ItemStackSize}]",
-                    NpcDropLootItem, args.Npc, args.Npc.Type, args.LootItemType, args.LootItemStackSize);
+                    NpcLoot, args.Npc, args.Npc.Type, args.ItemType, args.ItemStackSize);
             } else {
                 // Not localized because this string is developer-facing.
                 Log.Debug(
                     "Invoking {Event} with [{Npc}, {NpcType} dropping {ItemPrefix} {ItemType}]",
-                    NpcDropLootItem, args.Npc, args.Npc.Type, args.LootItemPrefix, args.LootItemType);
+                    NpcLoot, args.Npc, args.Npc.Type, args.ItemPrefix, args.ItemType);
             }
         }
 
         [Conditional("DEBUG"), ExcludeFromCodeCoverage]
-        private void LogNpcDropLootItem_After(NpcDropLootItemEventArgs args) {
+        private void LogNpcLoot_After(NpcLootEventArgs args) {
             if (args.IsCanceled()) {
                 // Not localized because this string is developer-facing.
-                Log.Debug("Canceled {Event} for {CancellationReason}", NpcDropLootItem, args.CancellationReason);
+                Log.Debug("Canceled {Event} for {CancellationReason}", NpcLoot, args.CancellationReason);
+            } else if (args.IsDirty) {
+                if (args.ItemPrefix == ItemPrefix.None) {
+                    // Not localized because this string is developer-facing.
+                    Log.Debug(
+                        "Altered {Event} to [{Npc}, {NpcType} dropping {ItemType} x{ItemStackSize}]",
+                        NpcLoot, args.Npc, args.Npc.Type, args.ItemType, args.ItemStackSize);
+                } else {
+                    // Not localized because this string is developer-facing.
+                    Log.Debug(
+                        "Altered {Event} to [{Npc}, {NpcType} dropping {ItemPrefix} {ItemType}]",
+                        NpcLoot, args.Npc, args.Npc.Type, args.ItemPrefix, args.ItemType);
+                }
             }
         }
 

@@ -242,10 +242,10 @@ namespace Orion.Npcs {
         }
 
         [Fact]
-        public void NpcDropLootItem() {
+        public void NpcLoot() {
             using var npcService = new OrionNpcService(Logger.None);
             var isRun = false;
-            npcService.NpcDropLootItem.RegisterHandler((sender, args) => {
+            npcService.NpcLoot.RegisterHandler((sender, args) => {
                 isRun = true;
                 ((OrionNpc)args.Npc).Wrapped.Should().BeSameAs(Main.npc[0]);
             });
@@ -258,9 +258,9 @@ namespace Orion.Npcs {
         }
 
         [Fact]
-        public void NpcDropLootItem_Canceled() {
+        public void NpcLoot_Canceled() {
             using var npcService = new OrionNpcService(Logger.None);
-            npcService.NpcDropLootItem.RegisterHandler((sender, args) => args.Cancel());
+            npcService.NpcLoot.RegisterHandler((sender, args) => args.Cancel());
             Main.npc[0].SetDefaults((int)NpcType.BlueSlime);
             Main.npc[0].life = 0;
 

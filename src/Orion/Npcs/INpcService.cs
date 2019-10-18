@@ -68,7 +68,7 @@ namespace Orion.Npcs {
         /// Gets the event handlers that occur when an NPC is dropping a loot item. This event can be canceled.
         /// </summary>
         /// <value>The event handlers that occur when an NPC is dropping a loot item.</value>
-        EventHandlerCollection<NpcDropLootItemEventArgs> NpcDropLootItem { get; }
+        EventHandlerCollection<NpcLootEventArgs> NpcLoot { get; }
 
         /// <summary>
         /// Gets the event handlers that occur when an NPC is killed.

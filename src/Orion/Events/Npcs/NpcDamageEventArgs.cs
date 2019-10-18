@@ -102,10 +102,10 @@ namespace Orion.Events.Npcs {
         /// <exception cref="ArgumentNullException"><paramref name="npc"/> is <see langword="null"/>.</exception>
         public NpcDamageEventArgs(
                 INpc npc, int damage, float knockback, bool hitDirection, bool isCriticalHit) : base(npc) {
-            Damage = damage;
-            Knockback = knockback;
-            HitDirection = hitDirection;
-            IsCriticalHit = isCriticalHit;
+            _damage = damage;
+            _knockback = knockback;
+            _hitDirection = hitDirection;
+            _isCriticalHit = isCriticalHit;
         }
 
         /// <inheritdoc/>
