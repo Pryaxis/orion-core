@@ -219,10 +219,10 @@ namespace Orion.Players {
         }
 
         [Fact]
-        public void ResetClient_PlayerDisconnected_IsTriggered() {
+        public void ResetClient_PlayerLeft_IsTriggered() {
             using var playerService = new OrionPlayerService(Logger.None);
             var isRun = false;
-            playerService.PlayerDisconnected.RegisterHandler((sender, args) => {
+            playerService.PlayerLeft.RegisterHandler((sender, args) => {
                 isRun = true;
                 args.Player.Should().BeSameAs(playerService.Players[1]);
             });

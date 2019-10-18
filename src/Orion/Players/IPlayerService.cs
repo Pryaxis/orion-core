@@ -90,10 +90,10 @@ namespace Orion.Players {
         EventHandlerCollection<PlayerChatEventArgs> PlayerChat { get; }
 
         /// <summary>
-        /// Gets the event handlers that occur when a player disconnects.
+        /// Gets the event handlers that occur when a player has left.
         /// </summary>
-        /// <value>The event handlers that occur when a player disconnects.</value>
-        EventHandlerCollection<PlayerDisconnectedEventArgs> PlayerDisconnected { get; }
+        /// <value>The event handlers that occur when a player has left.</value>
+        EventHandlerCollection<PlayerLeftEventArgs> PlayerLeft { get; }
     }
 
     /// <summary>

@@ -49,7 +49,7 @@ namespace Orion.Players {
         public EventHandlerCollection<PlayerPvpEventArgs> PlayerPvp { get; }
         public EventHandlerCollection<PlayerTeamEventArgs> PlayerTeam { get; }
         public EventHandlerCollection<PlayerChatEventArgs> PlayerChat { get; }
-        public EventHandlerCollection<PlayerDisconnectedEventArgs> PlayerDisconnected { get; }
+        public EventHandlerCollection<PlayerLeftEventArgs> PlayerLeft { get; }
 
         public OrionPlayerService(ILogger log) : base(log) {
             Debug.Assert(log != null, "log should not be null");
@@ -79,7 +79,7 @@ namespace Orion.Players {
             PlayerPvp = new EventHandlerCollection<PlayerPvpEventArgs>();
             PlayerTeam = new EventHandlerCollection<PlayerTeamEventArgs>();
             PlayerChat = new EventHandlerCollection<PlayerChatEventArgs>();
-            PlayerDisconnected = new EventHandlerCollection<PlayerDisconnectedEventArgs>();
+            PlayerLeft = new EventHandlerCollection<PlayerLeftEventArgs>();
 
             Hooks.Net.ReceiveData = ReceiveDataHandler;
             Hooks.Net.SendBytes = SendBytesHandler;
@@ -228,17 +228,17 @@ namespace Orion.Players {
             }
 
             var player = Players[remoteClient.Id];
-            var args = new PlayerDisconnectedEventArgs(player);
+            var args = new PlayerLeftEventArgs(player);
 
-            LogPlayerDisconnected(args);
-            PlayerDisconnected.Invoke(this, args);
+            LogPlayerLeft(args);
+            PlayerLeft.Invoke(this, args);
             return HookResult.Continue;
         }
         
         [Conditional("DEBUG"), ExcludeFromCodeCoverage]
-        private void LogPlayerDisconnected(PlayerDisconnectedEventArgs args) {
+        private void LogPlayerLeft(PlayerLeftEventArgs args) {
             // Not localized because this string is developer-facing.
-            Log.Debug("Invoking {Event} with [{Player}]", PlayerDisconnected, args.Player);
+            Log.Debug("Invoking {Event} with [{Player}]", PlayerLeft, args.Player);
         }
 
         // =============================================================================================================

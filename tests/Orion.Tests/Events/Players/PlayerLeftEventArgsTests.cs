@@ -16,19 +16,16 @@
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
 using System;
-using Orion.Players;
+using FluentAssertions;
+using Xunit;
 
 namespace Orion.Events.Players {
-    /// <summary>
-    /// Provides data for the <see cref="IPlayerService.PlayerDisconnected"/> event.
-    /// </summary>
-    [EventArgs("player-left")]
-    public sealed class PlayerDisconnectedEventArgs : PlayerEventArgs {
-        /// <summary>
-        /// Initializes a new instance of the <see cref="PlayerDisconnectedEventArgs"/> class with the specified player.
-        /// </summary>
-        /// <param name="player">The player.</param>
-        /// <exception cref="ArgumentNullException"><paramref name="player"/> is <see langword="null"/>.</exception>
-        public PlayerDisconnectedEventArgs(IPlayer player) : base(player) { }
+    public class PlayerLeftEventArgsTests {
+        [Fact]
+        public void Ctor_NullPlayer_ThrowsArgumentNullException() {
+            Func<PlayerLeftEventArgs> func = () => new PlayerLeftEventArgs(null);
+
+            func.Should().Throw<ArgumentNullException>();
+        }
     }
 }
