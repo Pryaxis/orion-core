@@ -59,12 +59,14 @@ namespace Orion {
         /// Gets the events that occur when the server initializes.
         /// </summary>
         /// <value>The events that occur when the server initializes.</value>
+        /// <remarks>This event is invoked once the server reaches the world loading stage.</remarks>
         public EventHandlerCollection<ServerInitializeEventArgs> ServerInitialize { get; }
 
         /// <summary>
         /// Gets the events that occur when the server starts.
         /// </summary>
         /// <value>The events that occur when the server starts.</value>
+        /// <remarks>This event is invoked once the server starts accepting connections.</remarks>
         public EventHandlerCollection<ServerStartEventArgs> ServerStart { get; }
 
         /// <summary>
