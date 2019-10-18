@@ -204,6 +204,23 @@ namespace Orion.Players {
         }
 
         [Fact]
+        public void PacketReceive_PlayerMana_IsTriggered() {
+            using var playerService = new OrionPlayerService(Logger.None);
+            var isRun = false;
+            playerService.PlayerMana.RegisterHandler((sender, args) => {
+                isRun = true;
+                args.Player.Should().BeSameAs(playerService.Players[1]);
+                args.PlayerMana.Should().Be(100);
+                args.PlayerMaxMana.Should().Be(100);
+                args.Cancel();
+            });
+
+            TestUtils.FakeReceiveBytes(1, PlayerManaPacketTests.Bytes);
+
+            isRun.Should().BeTrue();
+        }
+
+        [Fact]
         public void PacketReceive_PlayerTeam_IsTriggered() {
             using var playerService = new OrionPlayerService(Logger.None);
             var isRun = false;

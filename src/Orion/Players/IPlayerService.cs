@@ -53,16 +53,16 @@ namespace Orion.Players {
         EventHandlerCollection<PlayerConnectEventArgs> PlayerConnect { get; }
 
         /// <summary>
-        /// Gets the event handlers that occur when a player sends their player data: e.g., clothing colors, name,
+        /// Gets the event handlers that occur when a player updates their player data: e.g., clothing colors, name,
         /// etc. This event can be canceled.
         /// </summary>
-        /// <value>The event handlers that occur when a player sends their player data.</value>
+        /// <value>The event handlers that occur when a player updates their player data.</value>
         EventHandlerCollection<PlayerDataEventArgs> PlayerData { get; }
 
         /// <summary>
-        /// Gets the event handlers that occur when a player sends an inventory slot. This event can be canceled.
+        /// Gets the event handlers that occur when a player updates an inventory slot. This event can be canceled.
         /// </summary>
-        /// <value>The event handlers that occur when a player sends an inventory slot.</value>
+        /// <value>The event handlers that occur when a player updates an inventory slot.</value>
         EventHandlerCollection<PlayerInventorySlotEventArgs> PlayerInventorySlot { get; }
 
         /// <summary>
@@ -72,9 +72,9 @@ namespace Orion.Players {
         EventHandlerCollection<PlayerJoinEventArgs> PlayerJoin { get; }
 
         /// <summary>
-        /// Gets the event handlers that occur when a player sends a health update. This event can be canceled.
+        /// Gets the event handlers that occur when a player updates their health. This event can be canceled.
         /// </summary>
-        /// <value>The event handlers that occur when a player sends a health update.</value>
+        /// <value>The event handlers that occur when a player updates their health.</value>
         EventHandlerCollection<PlayerHealthEventArgs> PlayerHealth { get; }
 
         /// <summary>
@@ -82,6 +82,12 @@ namespace Orion.Players {
         /// </summary>
         /// <value>The event handlers that occur when a player toggles PvP.</value>
         EventHandlerCollection<PlayerPvpEventArgs> PlayerPvp { get; }
+
+        /// <summary>
+        /// Gets the event handlers that occur when a player updates their mana. This event can be canceled.
+        /// </summary>
+        /// <value>The event handlers that occur when a player updates their mana.</value>
+        EventHandlerCollection<PlayerManaEventArgs> PlayerMana { get; }
 
         /// <summary>
         /// Gets the event handlers that occur when a player changes teams. This event can be canceled.

@@ -48,6 +48,7 @@ namespace Orion.Players {
         public EventHandlerCollection<PlayerJoinEventArgs> PlayerJoin { get; }
         public EventHandlerCollection<PlayerHealthEventArgs> PlayerHealth { get; }
         public EventHandlerCollection<PlayerPvpEventArgs> PlayerPvp { get; }
+        public EventHandlerCollection<PlayerManaEventArgs> PlayerMana { get; }
         public EventHandlerCollection<PlayerTeamEventArgs> PlayerTeam { get; }
         public EventHandlerCollection<PlayerChatEventArgs> PlayerChat { get; }
         public EventHandlerCollection<PlayerQuitEventArgs> PlayerQuit { get; }
@@ -63,6 +64,7 @@ namespace Orion.Players {
                 [PacketType.PlayerJoin] = PlayerJoinHandler,
                 [PacketType.PlayerHealth] = PlayerHealthHandler,
                 [PacketType.PlayerPvp] = PlayerPvpHandler,
+                [PacketType.PlayerMana] = PlayerManaHandler,
                 [PacketType.PlayerTeam] = PlayerTeamHandler,
                 [PacketType.Module] = ModuleHandler
             };
@@ -80,6 +82,7 @@ namespace Orion.Players {
             PlayerJoin = new EventHandlerCollection<PlayerJoinEventArgs>();
             PlayerHealth = new EventHandlerCollection<PlayerHealthEventArgs>();
             PlayerPvp = new EventHandlerCollection<PlayerPvpEventArgs>();
+            PlayerMana = new EventHandlerCollection<PlayerManaEventArgs>();
             PlayerTeam = new EventHandlerCollection<PlayerTeamEventArgs>();
             PlayerChat = new EventHandlerCollection<PlayerChatEventArgs>();
             PlayerQuit = new EventHandlerCollection<PlayerQuitEventArgs>();
@@ -467,6 +470,42 @@ namespace Orion.Players {
             } else if (args.IsDirty) {
                 // Not localized because this string is developer-facing.
                 Log.Debug("Altered {Event} to [{Player}, {PlayerTeam}]", PlayerPvp, args.Player, args.IsPlayerInPvp);
+            }
+        }
+
+        // =============================================================================================================
+        // Handling PlayerMana
+        // =============================================================================================================
+
+        private void PlayerManaHandler(PacketReceiveEventArgs args_) {
+            var packet = (PlayerManaPacket)args_.Packet;
+            var args = new PlayerManaEventArgs(args_.Sender, packet);
+
+            LogPlayerMana_Before(args);
+            PlayerMana.Invoke(this, args);
+            LogPlayerMana_After(args);
+
+            args_.CancellationReason = args.CancellationReason;
+        }
+        
+        [Conditional("DEBUG"), ExcludeFromCodeCoverage]
+        private void LogPlayerMana_Before(PlayerManaEventArgs args) {
+            // Not localized because this string is developer-facing.
+            Log.Debug(
+                "Invoking {Event} with [{Player}, {PlayerMana}/{PlayerMaxMana} mp]",
+                PlayerMana, args.Player, args.PlayerMana, args.PlayerMaxMana);
+        }
+        
+        [Conditional("DEBUG"), ExcludeFromCodeCoverage]
+        private void LogPlayerMana_After(PlayerManaEventArgs args) {
+            if (args.IsCanceled()) {
+                // Not localized because this string is developer-facing.
+                Log.Debug("Canceled {Event} for {Reason}", PlayerMana, args.CancellationReason);
+            } else if (args.IsDirty) {
+                // Not localized because this string is developer-facing.
+                Log.Debug(
+                    "Altered {Event} to [{Player}, {PlayerMana}/{PlayerMaxMana} mp]",
+                    PlayerMana, args.Player, args.PlayerMana, args.PlayerMaxMana);
             }
         }
 
