@@ -286,12 +286,7 @@ namespace Orion.Npcs {
             Debug.Assert(terrariaNpc != null, "Terraria NPC should not be null");
 
             var npc = GetNpc(terrariaNpc);
-            var args = new NpcDamageEventArgs(npc) {
-                Damage = damage,
-                Knockback = knockback,
-                HitDirection = (sbyte)hitDirection,
-                IsCriticalHit = isCriticalHit
-            };
+            var args = new NpcDamageEventArgs(npc, damage, knockback, hitDirection == 1, isCriticalHit);
 
             LogNpcDamage_Before(args);
             NpcDamage.Invoke(this, args);
@@ -299,12 +294,13 @@ namespace Orion.Npcs {
 
             if (args.IsCanceled()) {
                 return HookResult.Cancel;
+            } else if (args.IsDirty) {
+                damage = args.Damage;
+                knockback = args.Knockback;
+                hitDirection = args.HitDirection ? 1 : -1;
+                isCriticalHit = args.IsCriticalHit;
             }
 
-            damage = args.Damage;
-            knockback = args.Knockback;
-            hitDirection = args.HitDirection;
-            isCriticalHit = args.IsCriticalHit;
             return HookResult.Continue;
         }
         
@@ -321,6 +317,11 @@ namespace Orion.Npcs {
             if (args.IsCanceled()) {
                 // Not localized because this string is developer-facing.
                 Log.Debug("Canceled {Event} for {CancellationReason}", NpcDamage, args.CancellationReason);
+            } else if (args.IsDirty) {
+                // Not localized because this string is developer-facing.
+                Log.Debug(
+                    "Altered {Event} to [{Npc}, {NpcType} by {Damage}]",
+                    NpcDamage, args.Npc, args.Npc.Type, args.Damage);
             }
         }
 

@@ -221,7 +221,7 @@ namespace Orion.Npcs {
                 ((OrionNpc)args.Npc).Wrapped.Should().BeSameAs(Main.npc[0]);
                 args.Damage.Should().Be(100);
                 args.Knockback.Should().Be(5.0f);
-                args.HitDirection.Should().Be(1);
+                args.HitDirection.Should().Be(true);
                 args.IsCriticalHit.Should().BeTrue();
             });
 
