@@ -22,7 +22,7 @@ namespace Orion.Events.Server {
     /// Provides data for the <see cref="OrionKernel.ServerCommand"/> event. This event can be canceled.
     /// </summary>
     [EventArgs("server-command")]
-    public sealed class ServerCommandEventArgs : ServerEventArgs, ICancelable {
+    public sealed class ServerCommandEventArgs : EventArgs, ICancelable {
         /// <inheritdoc/>
         public string? CancellationReason { get; set; }
 

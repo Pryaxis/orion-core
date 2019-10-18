@@ -15,6 +15,7 @@
 // You should have received a copy of the GNU General Public License
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
+using System;
 using FluentAssertions;
 using Moq;
 using Orion.Items;
@@ -23,6 +24,21 @@ using Xunit;
 
 namespace Orion.Events.Npcs {
     public class NpcLootEventArgsTests {
+        [Fact]
+        public void Ctor_NotDirty() {
+            var npc = new Mock<INpc>().Object;
+            var args = new NpcLootEventArgs(npc, ItemType.None, 0, ItemPrefix.None);
+
+            args.IsDirty.Should().BeFalse();
+        }
+
+        [Fact]
+        public void Ctor_NullNpc_ThrowsArgumentNullException() {
+            Func<NpcLootEventArgs> func = () => new NpcLootEventArgs(null, ItemType.None, 0, ItemPrefix.None);
+
+            func.Should().Throw<ArgumentNullException>();
+        }
+
         [Fact]
         public void SimpleProperties_Set_MarkAsDirty() {
             var npc = new Mock<INpc>().Object;

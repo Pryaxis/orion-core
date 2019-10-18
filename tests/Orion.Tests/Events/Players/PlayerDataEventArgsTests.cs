@@ -25,6 +25,21 @@ using Xunit;
 namespace Orion.Events.Players {
     public class PlayerDataEventArgsTests {
         [Fact]
+        public void Ctor_NotDirty() {
+            var player = new Mock<IPlayer>().Object;
+            var args = new PlayerDataEventArgs(player, new PlayerDataPacket());
+
+            args.IsDirty.Should().BeFalse();
+        }
+
+        [Fact]
+        public void Ctor_NullPlayer_ThrowsArgumentNullException() {
+            Func<PlayerDataEventArgs> func = () => new PlayerDataEventArgs(null, new PlayerDataPacket());
+
+            func.Should().Throw<ArgumentNullException>();
+        }
+
+        [Fact]
         public void Ctor_NullPacket_ThrowsArgumentNullException() {
             var player = new Mock<IPlayer>().Object;
             Func<PlayerDataEventArgs> func = () => new PlayerDataEventArgs(player, null);
@@ -35,8 +50,7 @@ namespace Orion.Events.Players {
         [Fact]
         public void SimpleProperties_Set_MarkAsDirty() {
             var player = new Mock<IPlayer>().Object;
-            var packet = new PlayerDataPacket();
-            var args = new PlayerDataEventArgs(player, packet);
+            var args = new PlayerDataEventArgs(player, new PlayerDataPacket());
 
             args.SetSimplePropertiesShouldMarkAsDirty();
         }
@@ -44,8 +58,7 @@ namespace Orion.Events.Players {
         [Fact]
         public void SetGetProperties_ReflectsInPacket() {
             var player = new Mock<IPlayer>().Object;
-            var packet = new PlayerDataPacket();
-            var args = new PlayerDataEventArgs(player, packet);
+            var args = new PlayerDataEventArgs(player, new PlayerDataPacket());
 
             args.Properties_GetSetShouldReflect("_packet");
         }
@@ -53,8 +66,7 @@ namespace Orion.Events.Players {
         [Fact]
         public void PlayerName_Set_NullValue_ThrowsArgumentNullException() {
             var player = new Mock<IPlayer>().Object;
-            var packet = new PlayerDataPacket();
-            var args = new PlayerDataEventArgs(player, packet);
+            var args = new PlayerDataEventArgs(player, new PlayerDataPacket());
             Action action = () => args.PlayerName = null;
 
             action.Should().Throw<ArgumentNullException>();

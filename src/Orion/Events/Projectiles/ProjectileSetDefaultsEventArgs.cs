@@ -17,21 +17,33 @@
 
 using System;
 using Orion.Projectiles;
+using Orion.Utils;
 
 namespace Orion.Events.Projectiles {
     /// <summary>
     /// Provides data for the <see cref="IProjectileService.ProjectileSetDefaults"/> event. This event can be canceled.
     /// </summary>
     [EventArgs("proj-defaults")]
-    public sealed class ProjectileSetDefaultsEventArgs : ProjectileEventArgs, ICancelable {
+    public sealed class ProjectileSetDefaultsEventArgs : ProjectileEventArgs, ICancelable, IDirtiable {
+        private ProjectileType _projectileType;
+
         /// <inheritdoc/>
         public string? CancellationReason { get; set; }
-        
+
+        /// <inheritdoc/>
+        public bool IsDirty { get; private set; }
+
         /// <summary>
         /// Gets or sets the projectile type that the projectile's defaults are being set to.
         /// </summary>
         /// <value>The projectile type that the item's defaults are being set to.</value>
-        public ProjectileType ProjectileType { get; set; }
+        public ProjectileType ProjectileType {
+            get => _projectileType;
+            set {
+                _projectileType = value;
+                IsDirty = true;
+            }
+        }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ProjectileSetDefaultsEventArgs"/> class with the specified
@@ -42,7 +54,10 @@ namespace Orion.Events.Projectiles {
         /// <exception cref="ArgumentNullException"><paramref name="projectile"/> is <see langword="null"/>.</exception>
         public ProjectileSetDefaultsEventArgs(
                 IProjectile projectile, ProjectileType projectileType) : base(projectile) {
-            ProjectileType = projectileType;
+            _projectileType = projectileType;
         }
+
+        /// <inheritdoc/>
+        public void Clean() => IsDirty = false;
     }
 }

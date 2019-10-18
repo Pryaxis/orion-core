@@ -110,9 +110,10 @@ namespace Orion.Projectiles {
 
             if (args.IsCanceled()) {
                 return HookResult.Cancel;
+            } else if (args.IsDirty) {
+                projectileType_ = (int)args.ProjectileType;
             }
 
-            projectileType_ = (int)args.ProjectileType;
             return HookResult.Continue;
         }
         
@@ -131,6 +132,11 @@ namespace Orion.Projectiles {
                 Log.Verbose(
                     "Canceled {Event} for {CancellationReason}",
                     ProjectileSetDefaults, args.CancellationReason);
+            } else if (args.IsDirty) {
+                // Not localized because this string is developer-facing.
+                Log.Verbose(
+                    "Altered {Event} to [{Projectile}, {ProjectileType}]",
+                    ProjectileSetDefaults, args.Projectile, args.ProjectileType);
             }
         }
 

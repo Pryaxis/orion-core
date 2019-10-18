@@ -53,7 +53,7 @@ namespace Orion.Events.Npcs {
         /// <param name="npcType">The NPC type.</param>
         /// <exception cref="ArgumentNullException"><paramref name="npc"/> is <see langword="null"/>.</exception>
         public NpcSetDefaultsEventArgs(INpc npc, NpcType npcType) : base(npc) {
-            NpcType = npcType;
+            _npcType = npcType;
         }
 
         /// <inheritdoc/>

@@ -18,40 +18,41 @@
 using System;
 using FluentAssertions;
 using Moq;
-using Orion.Npcs;
+using Orion.Projectiles;
 using Xunit;
 
-namespace Orion.Events.Npcs {
-    public class NpcTransformEventArgsTests {
+namespace Orion.Events.Projectiles {
+    public class ProjectileSetDefaultsEventArgsTests {
         [Fact]
         public void Ctor_NotDirty() {
-            var npc = new Mock<INpc>().Object;
-            var args = new NpcTransformEventArgs(npc, NpcType.None);
+            var projectile = new Mock<IProjectile>().Object;
+            var args = new ProjectileSetDefaultsEventArgs(projectile, ProjectileType.None);
 
             args.IsDirty.Should().BeFalse();
         }
 
         [Fact]
-        public void Ctor_NullNpc_ThrowsArgumentNullException() {
-            Func<NpcTransformEventArgs> func = () => new NpcTransformEventArgs(null, NpcType.None);
+        public void Ctor_NullProjectile_ThrowsArgumentNullException() {
+            Func<ProjectileSetDefaultsEventArgs> func =
+                () => new ProjectileSetDefaultsEventArgs(null, ProjectileType.None);
 
             func.Should().Throw<ArgumentNullException>();
         }
 
         [Fact]
         public void SimpleProperties_Set_MarkAsDirty() {
-            var npc = new Mock<INpc>().Object;
-            var args = new NpcTransformEventArgs(npc, NpcType.None);
+            var projectile = new Mock<IProjectile>().Object;
+            var args = new ProjectileSetDefaultsEventArgs(projectile, ProjectileType.None);
 
             args.SetSimplePropertiesShouldMarkAsDirty();
         }
 
         [Fact]
-        public void NpcNewType_Get() {
-            var npc = new Mock<INpc>().Object;
-            var args = new NpcTransformEventArgs(npc, NpcType.BlueSlime);
+        public void ProjectileType_Get() {
+            var projectile = new Mock<IProjectile>().Object;
+            var args = new ProjectileSetDefaultsEventArgs(projectile, ProjectileType.CrystalBullet);
 
-            args.NpcNewType.Should().Be(NpcType.BlueSlime);
+            args.ProjectileType.Should().Be(ProjectileType.CrystalBullet);
         }
     }
 }

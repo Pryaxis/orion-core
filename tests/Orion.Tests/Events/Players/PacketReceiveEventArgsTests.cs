@@ -25,9 +25,17 @@ using Xunit;
 namespace Orion.Events.Players {
     public class PacketReceiveEventArgsTests {
         [Fact]
-        public void Ctor_NullPlayer_ThrowsArgumentNullException() {
+        public void Ctor_NullSender_ThrowsArgumentNullException() {
             var packet = new Mock<Packet>().Object;
             Func<PacketReceiveEventArgs> func = () => new PacketReceiveEventArgs(null, packet);
+
+            func.Should().Throw<ArgumentNullException>();
+        }
+
+        [Fact]
+        public void Ctor_NullPacket_ThrowsArgumentNullException() {
+            var player = new Mock<IPlayer>().Object;
+            Func<PacketReceiveEventArgs> func = () => new PacketReceiveEventArgs(player, null);
 
             func.Should().Throw<ArgumentNullException>();
         }

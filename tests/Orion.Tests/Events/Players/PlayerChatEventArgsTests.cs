@@ -25,6 +25,21 @@ using Xunit;
 namespace Orion.Events.Players {
     public class PlayerChatEventArgsTests {
         [Fact]
+        public void Ctor_NotDirty() {
+            var player = new Mock<IPlayer>().Object;
+            var args = new PlayerChatEventArgs(player, new ChatModule());
+
+            args.IsDirty.Should().BeFalse();
+        }
+
+        [Fact]
+        public void Ctor_NullPlayer_ThrowsArgumentNullException() {
+            Func<PlayerChatEventArgs> func = () => new PlayerChatEventArgs(null, new ChatModule());
+
+            func.Should().Throw<ArgumentNullException>();
+        }
+
+        [Fact]
         public void Ctor_NullModule_ThrowsArgumentNullException() {
             var player = new Mock<IPlayer>().Object;
             Func<PlayerChatEventArgs> func = () => new PlayerChatEventArgs(player, null);
@@ -35,8 +50,7 @@ namespace Orion.Events.Players {
         [Fact]
         public void SimpleProperties_Set_MarkAsDirty() {
             var player = new Mock<IPlayer>().Object;
-            var module = new ChatModule();
-            var args = new PlayerChatEventArgs(player, module);
+            var args = new PlayerChatEventArgs(player, new ChatModule());
 
             args.SetSimplePropertiesShouldMarkAsDirty();
         }
@@ -44,8 +58,7 @@ namespace Orion.Events.Players {
         [Fact]
         public void SetGetProperties_ReflectsInModule() {
             var player = new Mock<IPlayer>().Object;
-            var module = new ChatModule();
-            var args = new PlayerChatEventArgs(player, module);
+            var args = new PlayerChatEventArgs(player, new ChatModule());
 
             args.Properties_GetSetShouldReflect("_module");
         }
@@ -53,8 +66,7 @@ namespace Orion.Events.Players {
         [Fact]
         public void SetChatCommand_NullValue_ThrowsArgumentNullException() {
             var player = new Mock<IPlayer>().Object;
-            var module = new ChatModule();
-            var args = new PlayerChatEventArgs(player, module);
+            var args = new PlayerChatEventArgs(player, new ChatModule());
             Action action = () => args.PlayerChatCommand = null;
 
             action.Should().Throw<ArgumentNullException>();
@@ -63,8 +75,7 @@ namespace Orion.Events.Players {
         [Fact]
         public void SetChatText_NullValue_ThrowsArgumentNullException() {
             var player = new Mock<IPlayer>().Object;
-            var module = new ChatModule();
-            var args = new PlayerChatEventArgs(player, module);
+            var args = new PlayerChatEventArgs(player, new ChatModule());
             Action action = () => args.PlayerChatText = null;
 
             action.Should().Throw<ArgumentNullException>();

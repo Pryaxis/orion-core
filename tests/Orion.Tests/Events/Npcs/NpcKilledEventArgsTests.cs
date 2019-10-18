@@ -17,41 +17,15 @@
 
 using System;
 using FluentAssertions;
-using Moq;
-using Orion.Npcs;
 using Xunit;
 
 namespace Orion.Events.Npcs {
-    public class NpcTransformEventArgsTests {
-        [Fact]
-        public void Ctor_NotDirty() {
-            var npc = new Mock<INpc>().Object;
-            var args = new NpcTransformEventArgs(npc, NpcType.None);
-
-            args.IsDirty.Should().BeFalse();
-        }
-
+    public class NpcKilledEventArgsTests {
         [Fact]
         public void Ctor_NullNpc_ThrowsArgumentNullException() {
-            Func<NpcTransformEventArgs> func = () => new NpcTransformEventArgs(null, NpcType.None);
+            Func<NpcKilledEventArgs> func = () => new NpcKilledEventArgs(null);
 
             func.Should().Throw<ArgumentNullException>();
-        }
-
-        [Fact]
-        public void SimpleProperties_Set_MarkAsDirty() {
-            var npc = new Mock<INpc>().Object;
-            var args = new NpcTransformEventArgs(npc, NpcType.None);
-
-            args.SetSimplePropertiesShouldMarkAsDirty();
-        }
-
-        [Fact]
-        public void NpcNewType_Get() {
-            var npc = new Mock<INpc>().Object;
-            var args = new NpcTransformEventArgs(npc, NpcType.BlueSlime);
-
-            args.NpcNewType.Should().Be(NpcType.BlueSlime);
         }
     }
 }

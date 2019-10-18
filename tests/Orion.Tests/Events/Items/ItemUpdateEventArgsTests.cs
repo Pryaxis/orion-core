@@ -1,6 +1,4 @@
-﻿// Copyright (c) 2019 Pryaxis & Orion Contributors
-// 
-// This file is part of Orion.
+﻿// This file is part of Orion.
 // 
 // Orion is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -16,11 +14,16 @@
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
 using System;
+using FluentAssertions;
+using Xunit;
 
-namespace Orion.Events.Server {
-    /// <summary>
-    /// Provides data for the <see cref="OrionKernel.ServerStart"/> event.
-    /// </summary>
-    [EventArgs("server-start")]
-    public sealed class ServerStartEventArgs : EventArgs { }
+namespace Orion.Events.Items {
+    public class ItemUpdateEventArgsTests {
+        [Fact]
+        public void Ctor_NullItem_ThrowsArgumentNullException() {
+            Func<ItemUpdateEventArgs> func = () => new ItemUpdateEventArgs(null);
+
+            func.Should().Throw<ArgumentNullException>();
+        }
+    }
 }

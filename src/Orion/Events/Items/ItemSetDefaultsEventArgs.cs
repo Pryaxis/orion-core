@@ -25,7 +25,7 @@ namespace Orion.Events.Items {
     /// </summary>
     [EventArgs("item-defaults")]
     public sealed class ItemSetDefaultsEventArgs : ItemEventArgs, ICancelable, IDirtiable {
-        private ItemType itemType;
+        private ItemType _itemType;
 
         /// <inheritdoc/>
         public string? CancellationReason { get; set; }
@@ -38,9 +38,9 @@ namespace Orion.Events.Items {
         /// </summary>
         /// <value>The item type that the item's defaults are being set to.</value>
         public ItemType ItemType {
-            get => itemType;
+            get => _itemType;
             set {
-                itemType = value;
+                _itemType = value;
                 IsDirty = true;
             }
         }
@@ -53,7 +53,7 @@ namespace Orion.Events.Items {
         /// <param name="itemType">The item type.</param>
         /// <exception cref="ArgumentNullException"><paramref name="item"/> is <see langword="null"/>.</exception>
         public ItemSetDefaultsEventArgs(IItem item, ItemType itemType) : base(item) {
-            ItemType = itemType;
+            _itemType = itemType;
         }
 
         /// <inheritdoc/>

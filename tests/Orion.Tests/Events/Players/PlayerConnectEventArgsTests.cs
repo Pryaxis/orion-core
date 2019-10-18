@@ -25,6 +25,21 @@ using Xunit;
 namespace Orion.Events.Players {
     public class PlayerConnectEventArgsTests {
         [Fact]
+        public void Ctor_NotDirty() {
+            var player = new Mock<IPlayer>().Object;
+            var args = new PlayerConnectEventArgs(player, new PlayerConnectPacket());
+
+            args.IsDirty.Should().BeFalse();
+        }
+
+        [Fact]
+        public void Ctor_NullPlayer_ThrowsArgumentNullException() {
+            Func<PlayerConnectEventArgs> func = () => new PlayerConnectEventArgs(null, new PlayerConnectPacket());
+
+            func.Should().Throw<ArgumentNullException>();
+        }
+
+        [Fact]
         public void Ctor_NullPacket_ThrowsArgumentNullException() {
             var player = new Mock<IPlayer>().Object;
             Func<PlayerConnectEventArgs> func = () => new PlayerConnectEventArgs(player, null);
@@ -35,8 +50,7 @@ namespace Orion.Events.Players {
         [Fact]
         public void SimpleProperties_Set_MarkAsDirty() {
             var player = new Mock<IPlayer>().Object;
-            var packet = new PlayerConnectPacket();
-            var args = new PlayerConnectEventArgs(player, packet);
+            var args = new PlayerConnectEventArgs(player, new PlayerConnectPacket());
 
             args.SetSimplePropertiesShouldMarkAsDirty();
         }
@@ -44,8 +58,7 @@ namespace Orion.Events.Players {
         [Fact]
         public void SetGetProperties_ReflectsInPacket() {
             var player = new Mock<IPlayer>().Object;
-            var packet = new PlayerConnectPacket();
-            var args = new PlayerConnectEventArgs(player, packet);
+            var args = new PlayerConnectEventArgs(player, new PlayerConnectPacket());
 
             args.Properties_GetSetShouldReflect("_packet");
         }
@@ -53,8 +66,7 @@ namespace Orion.Events.Players {
         [Fact]
         public void PlayerVersionString_Set_NullValue_ThrowsArgumentNullException() {
             var player = new Mock<IPlayer>().Object;
-            var packet = new PlayerConnectPacket();
-            var args = new PlayerConnectEventArgs(player, packet);
+            var args = new PlayerConnectEventArgs(player, new PlayerConnectPacket());
             Action action = () => args.PlayerVersionString = null;
 
             action.Should().Throw<ArgumentNullException>();

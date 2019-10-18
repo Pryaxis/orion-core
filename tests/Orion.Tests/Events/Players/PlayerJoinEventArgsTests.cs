@@ -16,18 +16,16 @@
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
 using System;
-using System.Diagnostics.CodeAnalysis;
-using System.Diagnostics.Contracts;
+using FluentAssertions;
+using Xunit;
 
-namespace Orion.Events.Server {
-    /// <summary>
-    /// Provides data for server-related events.
-    /// </summary>
-    public abstract class ServerEventArgs : EventArgs {
-        private protected ServerEventArgs() { }
+namespace Orion.Events.Players {
+    public class PlayerJoinEventArgsTests {
+        [Fact]
+        public void Ctor_NullPlayer_ThrowsArgumentNullException() {
+            Func<PlayerJoinEventArgs> func = () => new PlayerJoinEventArgs(null);
 
-        /// <inheritdoc/>
-        [Pure, ExcludeFromCodeCoverage]
-        public override string ToString() => "[]";
+            func.Should().Throw<ArgumentNullException>();
+        }
     }
 }

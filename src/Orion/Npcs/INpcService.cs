@@ -38,6 +38,17 @@ namespace Orion.Npcs {
         /// initialized. This event can be canceled.
         /// </summary>
         /// <value>The event handlers that occur when an NPC's defaults are being set.</value>
+        /// <remarks>
+        /// This event is invoked when an NPC is first being created. This happens:
+        /// <list type="bullet">
+        /// <item>
+        /// <description>When the server starts up, where all NPC types are initialized.</description>
+        /// </item>
+        /// <item>
+        /// <description>When an NPC spawns in the world.</description>
+        /// </item>
+        /// </list>
+        /// </remarks>
         EventHandlerCollection<NpcSetDefaultsEventArgs> NpcSetDefaults { get; }
 
         /// <summary>
@@ -50,6 +61,7 @@ namespace Orion.Npcs {
         /// Gets the event handlers that occur when an NPC is updating. This event can be canceled.
         /// </summary>
         /// <value>The event handlers that occur when an NPC is updating.</value>
+        /// <remarks>This event is invoked every game tick on every concrete NPC.</remarks>
         EventHandlerCollection<NpcUpdateEventArgs> NpcUpdate { get; }
 
         /// <summary>

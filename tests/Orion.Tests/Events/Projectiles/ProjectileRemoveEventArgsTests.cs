@@ -16,11 +16,16 @@
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
 using System;
+using FluentAssertions;
+using Xunit;
 
-namespace Orion.Events.Server {
-    /// <summary>
-    /// Provides data for the <see cref="OrionKernel.ServerStart"/> event.
-    /// </summary>
-    [EventArgs("server-start")]
-    public sealed class ServerStartEventArgs : EventArgs { }
+namespace Orion.Events.Projectiles {
+    public class ProjectileRemoveEventArgsTests {
+        [Fact]
+        public void Ctor_NullProjectile_ThrowsArgumentNullException() {
+            Func<ProjectileRemoveEventArgs> func = () => new ProjectileRemoveEventArgs(null);
+
+            func.Should().Throw<ArgumentNullException>();
+        }
+    }
 }

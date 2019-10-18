@@ -25,6 +25,21 @@ using Xunit;
 namespace Orion.Events.Players {
     public class PlayerTeamEventArgsTests {
         [Fact]
+        public void Ctor_NotDirty() {
+            var player = new Mock<IPlayer>().Object;
+            var args = new PlayerTeamEventArgs(player, new PlayerTeamPacket());
+
+            args.IsDirty.Should().BeFalse();
+        }
+
+        [Fact]
+        public void Ctor_NullPlayer_ThrowsArgumentNullException() {
+            Func<PlayerTeamEventArgs> func = () => new PlayerTeamEventArgs(null, new PlayerTeamPacket());
+
+            func.Should().Throw<ArgumentNullException>();
+        }
+
+        [Fact]
         public void Ctor_NullPacket_ThrowsArgumentNullException() {
             var player = new Mock<IPlayer>().Object;
             Func<PlayerTeamEventArgs> func = () => new PlayerTeamEventArgs(player, null);
@@ -35,8 +50,7 @@ namespace Orion.Events.Players {
         [Fact]
         public void SimpleProperties_Set_MarkAsDirty() {
             var player = new Mock<IPlayer>().Object;
-            var packet = new PlayerTeamPacket();
-            var args = new PlayerTeamEventArgs(player, packet);
+            var args = new PlayerTeamEventArgs(player, new PlayerTeamPacket());
 
             args.SetSimplePropertiesShouldMarkAsDirty();
         }
@@ -44,8 +58,7 @@ namespace Orion.Events.Players {
         [Fact]
         public void SetGetProperties_ReflectsInPacket() {
             var player = new Mock<IPlayer>().Object;
-            var packet = new PlayerTeamPacket();
-            var args = new PlayerTeamEventArgs(player, packet);
+            var args = new PlayerTeamEventArgs(player, new PlayerTeamPacket());
 
             args.Properties_GetSetShouldReflect("_packet");
         }

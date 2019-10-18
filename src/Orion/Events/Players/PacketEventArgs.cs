@@ -28,7 +28,7 @@ namespace Orion.Events.Players {
         private bool _isDirty;
 
         /// <inheritdoc/>
-        public bool IsDirty => _isDirty || Packet.IsDirty;
+        public bool IsDirty => _isDirty || _packet.IsDirty;
 
         /// <summary>
         /// Gets or sets the packet involved in the event.

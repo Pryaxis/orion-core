@@ -25,6 +25,21 @@ using Xunit;
 namespace Orion.Events.Players {
     public class PlayerPvpEventArgsTests {
         [Fact]
+        public void Ctor_NotDirty() {
+            var player = new Mock<IPlayer>().Object;
+            var args = new PlayerPvpEventArgs(player, new PlayerPvpPacket());
+
+            args.IsDirty.Should().BeFalse();
+        }
+
+        [Fact]
+        public void Ctor_NullPlayer_ThrowsArgumentNullException() {
+            Func<PlayerPvpEventArgs> func = () => new PlayerPvpEventArgs(null, new PlayerPvpPacket());
+
+            func.Should().Throw<ArgumentNullException>();
+        }
+
+        [Fact]
         public void Ctor_NullPacket_ThrowsArgumentNullException() {
             var player = new Mock<IPlayer>().Object;
             Func<PlayerPvpEventArgs> func = () => new PlayerPvpEventArgs(player, null);
@@ -35,8 +50,7 @@ namespace Orion.Events.Players {
         [Fact]
         public void SimpleProperties_Set_MarkAsDirty() {
             var player = new Mock<IPlayer>().Object;
-            var packet = new PlayerPvpPacket();
-            var args = new PlayerPvpEventArgs(player, packet);
+            var args = new PlayerPvpEventArgs(player, new PlayerPvpPacket());
 
             args.SetSimplePropertiesShouldMarkAsDirty();
         }
@@ -44,8 +58,7 @@ namespace Orion.Events.Players {
         [Fact]
         public void SetGetProperties_ReflectsInPacket() {
             var player = new Mock<IPlayer>().Object;
-            var packet = new PlayerPvpPacket();
-            var args = new PlayerPvpEventArgs(player, packet);
+            var args = new PlayerPvpEventArgs(player, new PlayerPvpPacket());
 
             args.Properties_GetSetShouldReflect("_packet");
         }

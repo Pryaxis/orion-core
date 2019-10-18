@@ -16,11 +16,16 @@
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
 using System;
+using FluentAssertions;
+using Xunit;
 
-namespace Orion.Events.Server {
-    /// <summary>
-    /// Provides data for the <see cref="OrionKernel.ServerStart"/> event.
-    /// </summary>
-    [EventArgs("server-start")]
-    public sealed class ServerStartEventArgs : EventArgs { }
+namespace Orion.Events.Players {
+    public class PlayerDisconnectedEventArgsTests {
+        [Fact]
+        public void Ctor_NullPlayer_ThrowsArgumentNullException() {
+            Func<PlayerDisconnectedEventArgs> func = () => new PlayerDisconnectedEventArgs(null);
+
+            func.Should().Throw<ArgumentNullException>();
+        }
+    }
 }

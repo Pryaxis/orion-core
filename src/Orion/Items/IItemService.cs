@@ -37,12 +37,29 @@ namespace Orion.Items {
         /// initialized. This event can be canceled.
         /// </summary>
         /// <value>The event handlers that occur when an item's defaults are being set.</value>
+        /// <remarks>
+        /// This event is invoked when an item is first being created. This happens:
+        /// <list type="bullet">
+        /// <item>
+        /// <description>When the server starts up, where all item types are initialized.</description>
+        /// </item>
+        /// <item>
+        /// <description>
+        /// When an item is loaded as part of an abstract container (inventory, chest, item frame, etc.)
+        /// </description>
+        /// </item>
+        /// <item>
+        /// <description>When an item spawns in the world.</description>
+        /// </item>
+        /// </list>
+        /// </remarks>
         EventHandlerCollection<ItemSetDefaultsEventArgs> ItemSetDefaults { get; }
 
         /// <summary>
         /// Gets the event handlers that occur when an item is updating. This event can be canceled.
         /// </summary>
         /// <value>The event handlers that occur when an item is updating.</value>
+        /// <remarks>This event is invoked every game tick on every concrete item.</remarks>
         EventHandlerCollection<ItemUpdateEventArgs> ItemUpdate { get; }
 
         /// <summary>

@@ -25,6 +25,22 @@ using Xunit;
 namespace Orion.Events.Players {
     public class PlayerInventorySlotEventArgsTests {
         [Fact]
+        public void Ctor_NotDirty() {
+            var player = new Mock<IPlayer>().Object;
+            var args = new PlayerInventorySlotEventArgs(player, new PlayerInventorySlotPacket());
+
+            args.IsDirty.Should().BeFalse();
+        }
+
+        [Fact]
+        public void Ctor_NullPlayer_ThrowsArgumentNullException() {
+            Func<PlayerInventorySlotEventArgs> func =
+                () => new PlayerInventorySlotEventArgs(null, new PlayerInventorySlotPacket());
+
+            func.Should().Throw<ArgumentNullException>();
+        }
+
+        [Fact]
         public void Ctor_NullPacket_ThrowsArgumentNullException() {
             var player = new Mock<IPlayer>().Object;
             Func<PlayerInventorySlotEventArgs> func = () => new PlayerInventorySlotEventArgs(player, null);
@@ -35,8 +51,7 @@ namespace Orion.Events.Players {
         [Fact]
         public void SimpleProperties_Set_MarkAsDirty() {
             var player = new Mock<IPlayer>().Object;
-            var packet = new PlayerInventorySlotPacket();
-            var args = new PlayerInventorySlotEventArgs(player, packet);
+            var args = new PlayerInventorySlotEventArgs(player, new PlayerInventorySlotPacket());
 
             args.SetSimplePropertiesShouldMarkAsDirty();
         }
@@ -44,8 +59,7 @@ namespace Orion.Events.Players {
         [Fact]
         public void SetGetProperties_ReflectsInPacket() {
             var player = new Mock<IPlayer>().Object;
-            var packet = new PlayerInventorySlotPacket();
-            var args = new PlayerInventorySlotEventArgs(player, packet);
+            var args = new PlayerInventorySlotEventArgs(player, new PlayerInventorySlotPacket());
 
             args.Properties_GetSetShouldReflect("_packet");
         }
