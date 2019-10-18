@@ -46,6 +46,7 @@ namespace Orion.Players {
         public EventHandlerCollection<PlayerDataEventArgs> PlayerData { get; }
         public EventHandlerCollection<PlayerInventorySlotEventArgs> PlayerInventorySlot { get; }
         public EventHandlerCollection<PlayerJoinEventArgs> PlayerJoin { get; }
+        public EventHandlerCollection<PlayerHealthEventArgs> PlayerHealth { get; }
         public EventHandlerCollection<PlayerPvpEventArgs> PlayerPvp { get; }
         public EventHandlerCollection<PlayerTeamEventArgs> PlayerTeam { get; }
         public EventHandlerCollection<PlayerChatEventArgs> PlayerChat { get; }
@@ -60,6 +61,7 @@ namespace Orion.Players {
                 [PacketType.PlayerData] = PlayerDataHandler,
                 [PacketType.PlayerInventorySlot] = PlayerInventorySlotHandler,
                 [PacketType.PlayerJoin] = PlayerJoinHandler,
+                [PacketType.PlayerHealth] = PlayerHealthHandler,
                 [PacketType.PlayerPvp] = PlayerPvpHandler,
                 [PacketType.PlayerTeam] = PlayerTeamHandler,
                 [PacketType.Module] = ModuleHandler
@@ -76,6 +78,7 @@ namespace Orion.Players {
             PlayerData = new EventHandlerCollection<PlayerDataEventArgs>();
             PlayerInventorySlot = new EventHandlerCollection<PlayerInventorySlotEventArgs>();
             PlayerJoin = new EventHandlerCollection<PlayerJoinEventArgs>();
+            PlayerHealth = new EventHandlerCollection<PlayerHealthEventArgs>();
             PlayerPvp = new EventHandlerCollection<PlayerPvpEventArgs>();
             PlayerTeam = new EventHandlerCollection<PlayerTeamEventArgs>();
             PlayerChat = new EventHandlerCollection<PlayerChatEventArgs>();
@@ -396,6 +399,42 @@ namespace Orion.Players {
             if (args.IsCanceled()) {
                 // Not localized because this string is developer-facing.
                 Log.Debug("Canceled {Event} for {Reason}", PlayerJoin, args.CancellationReason);
+            }
+        }
+
+        // =============================================================================================================
+        // Handling PlayerHealth
+        // =============================================================================================================
+
+        private void PlayerHealthHandler(PacketReceiveEventArgs args_) {
+            var packet = (PlayerHealthPacket)args_.Packet;
+            var args = new PlayerHealthEventArgs(args_.Sender, packet);
+
+            LogPlayerHealth_Before(args);
+            PlayerHealth.Invoke(this, args);
+            LogPlayerHealth_After(args);
+
+            args_.CancellationReason = args.CancellationReason;
+        }
+        
+        [Conditional("DEBUG"), ExcludeFromCodeCoverage]
+        private void LogPlayerHealth_Before(PlayerHealthEventArgs args) {
+            // Not localized because this string is developer-facing.
+            Log.Debug(
+                "Invoking {Event} with [{Player}, {PlayerHealth}/{PlayerMaxHealth} hp]",
+                PlayerHealth, args.Player, args.PlayerHealth, args.PlayerMaxHealth);
+        }
+        
+        [Conditional("DEBUG"), ExcludeFromCodeCoverage]
+        private void LogPlayerHealth_After(PlayerHealthEventArgs args) {
+            if (args.IsCanceled()) {
+                // Not localized because this string is developer-facing.
+                Log.Debug("Canceled {Event} for {Reason}", PlayerHealth, args.CancellationReason);
+            } else if (args.IsDirty) {
+                // Not localized because this string is developer-facing.
+                Log.Debug(
+                    "Altered {Event} to [{Player}, {PlayerHealth}/{PlayerMaxHealth} hp]",
+                    PlayerHealth, args.Player, args.PlayerHealth, args.PlayerMaxHealth);
             }
         }
 

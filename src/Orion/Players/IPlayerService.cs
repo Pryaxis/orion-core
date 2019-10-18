@@ -72,6 +72,12 @@ namespace Orion.Players {
         EventHandlerCollection<PlayerJoinEventArgs> PlayerJoin { get; }
 
         /// <summary>
+        /// Gets the event handlers that occur when a player sends a health update. This event can be canceled.
+        /// </summary>
+        /// <value>The event handlers that occur when a player sends a health update.</value>
+        EventHandlerCollection<PlayerHealthEventArgs> PlayerHealth { get; }
+
+        /// <summary>
         /// Gets the event handlers that occur when a player toggles PvP. This event can be canceled.
         /// </summary>
         /// <value>The event handlers that occur when a player toggles PvP.</value>
