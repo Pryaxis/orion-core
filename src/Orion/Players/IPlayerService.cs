@@ -93,7 +93,7 @@ namespace Orion.Players {
         /// Gets the event handlers that occur when a player has left.
         /// </summary>
         /// <value>The event handlers that occur when a player has left.</value>
-        EventHandlerCollection<PlayerLeftEventArgs> PlayerLeft { get; }
+        EventHandlerCollection<PlayerQuitEventArgs> PlayerQuit { get; }
     }
 
     /// <summary>

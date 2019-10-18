@@ -20,15 +20,15 @@ using Orion.Players;
 
 namespace Orion.Events.Players {
     /// <summary>
-    /// Provides data for the <see cref="IPlayerService.PlayerLeft"/> event.
+    /// Provides data for the <see cref="IPlayerService.PlayerQuit"/> event.
     /// </summary>
-    [EventArgs("player-left")]
-    public sealed class PlayerLeftEventArgs : PlayerEventArgs {
+    [EventArgs("player-quit")]
+    public sealed class PlayerQuitEventArgs : PlayerEventArgs {
         /// <summary>
-        /// Initializes a new instance of the <see cref="PlayerLeftEventArgs"/> class with the specified player.
+        /// Initializes a new instance of the <see cref="PlayerQuitEventArgs"/> class with the specified player.
         /// </summary>
         /// <param name="player">The player.</param>
         /// <exception cref="ArgumentNullException"><paramref name="player"/> is <see langword="null"/>.</exception>
-        public PlayerLeftEventArgs(IPlayer player) : base(player) { }
+        public PlayerQuitEventArgs(IPlayer player) : base(player) { }
     }
 }

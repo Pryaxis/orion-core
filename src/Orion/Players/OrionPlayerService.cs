@@ -49,7 +49,7 @@ namespace Orion.Players {
         public EventHandlerCollection<PlayerPvpEventArgs> PlayerPvp { get; }
         public EventHandlerCollection<PlayerTeamEventArgs> PlayerTeam { get; }
         public EventHandlerCollection<PlayerChatEventArgs> PlayerChat { get; }
-        public EventHandlerCollection<PlayerLeftEventArgs> PlayerLeft { get; }
+        public EventHandlerCollection<PlayerQuitEventArgs> PlayerQuit { get; }
 
         public OrionPlayerService(ILogger log) : base(log) {
             Debug.Assert(log != null, "log should not be null");
@@ -79,7 +79,7 @@ namespace Orion.Players {
             PlayerPvp = new EventHandlerCollection<PlayerPvpEventArgs>();
             PlayerTeam = new EventHandlerCollection<PlayerTeamEventArgs>();
             PlayerChat = new EventHandlerCollection<PlayerChatEventArgs>();
-            PlayerLeft = new EventHandlerCollection<PlayerLeftEventArgs>();
+            PlayerQuit = new EventHandlerCollection<PlayerQuitEventArgs>();
 
             Hooks.Net.ReceiveData = ReceiveDataHandler;
             Hooks.Net.SendBytes = SendBytesHandler;
@@ -214,7 +214,7 @@ namespace Orion.Players {
         }
 
         // =============================================================================================================
-        // Handling PacketDisconnected
+        // Handling PlayerQuit
         // =============================================================================================================
 
         private HookResult PreResetHandler(Terraria.RemoteClient remoteClient) {
@@ -228,17 +228,17 @@ namespace Orion.Players {
             }
 
             var player = Players[remoteClient.Id];
-            var args = new PlayerLeftEventArgs(player);
+            var args = new PlayerQuitEventArgs(player);
 
-            LogPlayerLeft(args);
-            PlayerLeft.Invoke(this, args);
+            LogPlayerQuit(args);
+            PlayerQuit.Invoke(this, args);
             return HookResult.Continue;
         }
         
         [Conditional("DEBUG"), ExcludeFromCodeCoverage]
-        private void LogPlayerLeft(PlayerLeftEventArgs args) {
+        private void LogPlayerQuit(PlayerQuitEventArgs args) {
             // Not localized because this string is developer-facing.
-            Log.Debug("Invoking {Event} with [{Player}]", PlayerLeft, args.Player);
+            Log.Debug("Invoking {Event} with [{Player}]", PlayerQuit, args.Player);
         }
 
         // =============================================================================================================

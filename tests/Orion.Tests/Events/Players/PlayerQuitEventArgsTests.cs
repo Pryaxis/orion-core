@@ -20,10 +20,10 @@ using FluentAssertions;
 using Xunit;
 
 namespace Orion.Events.Players {
-    public class PlayerLeftEventArgsTests {
+    public class PlayerQuitEventArgsTests {
         [Fact]
         public void Ctor_NullPlayer_ThrowsArgumentNullException() {
-            Func<PlayerLeftEventArgs> func = () => new PlayerLeftEventArgs(null);
+            Func<PlayerQuitEventArgs> func = () => new PlayerQuitEventArgs(null);
 
             func.Should().Throw<ArgumentNullException>();
         }
