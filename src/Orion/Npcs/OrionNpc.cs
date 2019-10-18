@@ -22,7 +22,7 @@ using Orion.Entities;
 using TerrariaNpc = Terraria.NPC;
 
 namespace Orion.Npcs {
-    internal class OrionNpc : OrionEntity<TerrariaNpc>, INpc {
+    internal sealed class OrionNpc : OrionEntity<TerrariaNpc>, INpc {
         public override string Name {
             get => Wrapped.GivenOrTypeName;
             set => Wrapped._givenName = value ?? throw new ArgumentNullException(nameof(value));
