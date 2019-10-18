@@ -24,10 +24,7 @@ namespace Orion.Events.Players {
     /// Provides data for the <see cref="IPlayerService.PacketReceive"/> event.
     /// </summary>
     [EventArgs("packet-recv")]
-    public sealed class PacketReceiveEventArgs : PacketEventArgs, ICancelable {
-        /// <inheritdoc/>
-        public string? CancellationReason { get; set; }
-
+    public sealed class PacketReceiveEventArgs : PacketEventArgs {
         /// <summary>
         /// Gets the packet sender.
         /// </summary>
