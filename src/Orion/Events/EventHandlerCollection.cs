@@ -51,7 +51,7 @@ namespace Orion.Events {
             new Dictionary<EventHandler<TEventArgs>, Registration>();
 
         /// <summary>
-        /// Gets the event's name. This is used for logging.
+        /// Gets the event's name. This is used for logs.
         /// </summary>
         /// <value>The event's name.</value>
         /// <remarks>

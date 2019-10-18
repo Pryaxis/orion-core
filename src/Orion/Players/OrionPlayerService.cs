@@ -157,6 +157,9 @@ namespace Orion.Players {
             if (args.IsCanceled()) {
                 // Not localized because this string is developer-facing.
                 Log.Verbose("Canceled {Event} for {Reason}", PacketReceive, args.CancellationReason);
+            } else if (args.IsDirty) {
+                // Not localized because this string is developer-facing.
+                Log.Verbose("Altered {Event} to [{Sender}, {Packet}]", PacketReceive, args.Sender, args.Packet);
             }
         }
 
@@ -204,6 +207,9 @@ namespace Orion.Players {
             if (args.IsCanceled()) {
                 // Not localized because this string is developer-facing.
                 Log.Verbose("Canceled {Event} for {Reason}", PacketSend, args.CancellationReason);
+            } else if (args.IsDirty) {
+                // Not localized because this string is developer-facing.
+                Log.Verbose("Altered {Event} to [{Receiver}, {Packet}]", PacketSend, args.Receiver, args.Packet);
             }
         }
 
@@ -245,7 +251,7 @@ namespace Orion.Players {
 
             LogPlayerConnect_Before(args);
             PlayerConnect.Invoke(this, args);
-            LogPlayerConnect_After(args, packet);
+            LogPlayerConnect_After(args);
 
             args_.CancellationReason = args.CancellationReason;
         }
@@ -259,11 +265,11 @@ namespace Orion.Players {
         }
         
         [Conditional("DEBUG"), ExcludeFromCodeCoverage]
-        private void LogPlayerConnect_After(PlayerConnectEventArgs args, PlayerConnectPacket packet) {
+        private void LogPlayerConnect_After(PlayerConnectEventArgs args) {
             if (args.IsCanceled()) {
                 // Not localized because this string is developer-facing.
                 Log.Debug("Canceled {Event} for {Reason}", PlayerConnect, args.CancellationReason);
-            } else if (packet.IsDirty) {
+            } else if (args.IsDirty) {
                 // Not localized because this string is developer-facing.
                 Log.Debug(
                     "Altered {Event} to [#={PlayerIndex}, {PlayerVersionString}]",
@@ -281,7 +287,7 @@ namespace Orion.Players {
 
             LogPlayerData_Before(args);
             PlayerData.Invoke(this, args);
-            LogPlayerData_After(args, packet);
+            LogPlayerData_After(args);
 
             args_.CancellationReason = args.CancellationReason;
         }
@@ -293,11 +299,11 @@ namespace Orion.Players {
         }
         
         [Conditional("DEBUG"), ExcludeFromCodeCoverage]
-        private void LogPlayerData_After(PlayerDataEventArgs args, PlayerDataPacket packet) {
+        private void LogPlayerData_After(PlayerDataEventArgs args) {
             if (args.IsCanceled()) {
                 // Not localized because this string is developer-facing.
                 Log.Debug("Canceled {Event} for {Reason}", PlayerData, args.CancellationReason);
-            } else if (packet.IsDirty) {
+            } else if (args.IsDirty) {
                 // Not localized because this string is developer-facing.
                 Log.Debug("Altered {Event} to [{PlayerName}, ...]", PlayerData, args.PlayerName);
             }
@@ -313,7 +319,7 @@ namespace Orion.Players {
 
             LogPlayerInventorySlot_Before(args);
             PlayerInventorySlot.Invoke(this, args);
-            LogPlayerInventorySlot_After(args, packet);
+            LogPlayerInventorySlot_After(args);
 
             args_.CancellationReason = args.CancellationReason;
         }
@@ -339,11 +345,11 @@ namespace Orion.Players {
         }
         
         [Conditional("DEBUG"), ExcludeFromCodeCoverage]
-        private void LogPlayerInventorySlot_After(PlayerInventorySlotEventArgs args, PlayerInventorySlotPacket packet) {
+        private void LogPlayerInventorySlot_After(PlayerInventorySlotEventArgs args) {
             if (args.IsCanceled()) {
                 // Not localized because this string is developer-facing.
                 Log.Debug("Canceled {Event} for {Reason}", PlayerInventorySlot, args.CancellationReason);
-            } else if (packet.IsDirty) {
+            } else if (args.IsDirty) {
                 if (args.ItemType == ItemType.None) {
                     // Not localized because this string is developer-facing.
                     Log.Debug(
@@ -403,7 +409,7 @@ namespace Orion.Players {
 
             LogPlayerPvp_Before(args);
             PlayerPvp.Invoke(this, args);
-            LogPlayerPvp_After(args, packet);
+            LogPlayerPvp_After(args);
 
             args_.CancellationReason = args.CancellationReason;
         }
@@ -415,11 +421,11 @@ namespace Orion.Players {
         }
         
         [Conditional("DEBUG"), ExcludeFromCodeCoverage]
-        private void LogPlayerPvp_After(PlayerPvpEventArgs args, PlayerPvpPacket packet) {
+        private void LogPlayerPvp_After(PlayerPvpEventArgs args) {
             if (args.IsCanceled()) {
                 // Not localized because this string is developer-facing.
                 Log.Debug("Canceled {Event} for {Reason}", PlayerPvp, args.CancellationReason);
-            } else if (packet.IsDirty) {
+            } else if (args.IsDirty) {
                 // Not localized because this string is developer-facing.
                 Log.Debug("Altered {Event} to [{Player}, {PlayerTeam}]", PlayerPvp, args.Player, args.IsPlayerInPvp);
             }
@@ -435,9 +441,9 @@ namespace Orion.Players {
 
             LogPlayerTeam_Before(args);
             PlayerTeam.Invoke(this, args);
-            args_.CancellationReason = args.CancellationReason;
+            LogPlayerTeam_After(args);
 
-            LogPlayerTeam_After(args, packet);
+            args_.CancellationReason = args.CancellationReason;
         }
 
         [Conditional("DEBUG"), ExcludeFromCodeCoverage]
@@ -447,11 +453,11 @@ namespace Orion.Players {
         }
         
         [Conditional("DEBUG"), ExcludeFromCodeCoverage]
-        private void LogPlayerTeam_After(PlayerTeamEventArgs args, PlayerTeamPacket packet) {
+        private void LogPlayerTeam_After(PlayerTeamEventArgs args) {
             if (args.IsCanceled()) {
                 // Not localized because this string is developer-facing.
                 Log.Debug("Canceled {Event} for {Reason}", PlayerTeam, args.CancellationReason);
-            } else if (packet.IsDirty) {
+            } else if (args.IsDirty) {
                 // Not localized because this string is developer-facing.
                 Log.Debug("Altered {Event} to [{Player}, {PlayerTeam}]", PlayerTeam, args.Player, args.PlayerTeam);
             }
@@ -468,7 +474,7 @@ namespace Orion.Players {
 
                 LogPlayerChat_Before(args);
                 PlayerChat.Invoke(this, args);
-                LogPlayerChat_After(args, module);
+                LogPlayerChat_After(args);
 
                 args_.CancellationReason = args.CancellationReason;
             }
@@ -483,11 +489,11 @@ namespace Orion.Players {
         }
         
         [Conditional("DEBUG"), ExcludeFromCodeCoverage]
-        private void LogPlayerChat_After(PlayerChatEventArgs args, Module module) {
+        private void LogPlayerChat_After(PlayerChatEventArgs args) {
             if (args.IsCanceled()) {
                 // Not localized because this string is developer-facing.
                 Log.Debug("Canceled {Event} for {Reason}", PlayerChat, args.CancellationReason);
-            } else if (module.IsDirty) {
+            } else if (args.IsDirty) {
                 // Not localized because this string is developer-facing.
                 Log.Debug(
                     "Altered {Event} to [{Player}, {PlayerChatCommand}, {PlayerChatText}]",

@@ -16,22 +16,24 @@
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
 using System;
-using System.Diagnostics.CodeAnalysis;
-using System.Diagnostics.Contracts;
 using Orion.Items;
 using Orion.Packets.Players;
 using Orion.Players;
+using Orion.Utils;
 
 namespace Orion.Events.Players {
     /// <summary>
     /// Provides data for the <see cref="IPlayerService.PlayerInventorySlot"/> event. This event can be canceled.
     /// </summary>
     [EventArgs("player-inventory")]
-    public sealed class PlayerInventorySlotEventArgs : PlayerEventArgs, ICancelable {
+    public sealed class PlayerInventorySlotEventArgs : PlayerEventArgs, ICancelable, IDirtiable {
         private readonly PlayerInventorySlotPacket _packet;
 
         /// <inheritdoc/>
         public string? CancellationReason { get; set; }
+
+        /// <inheritdoc/>
+        public bool IsDirty => _packet.IsDirty;
 
         /// <summary>
         /// Gets or sets the player's inventory slot index.
@@ -82,11 +84,8 @@ namespace Orion.Events.Players {
         public PlayerInventorySlotEventArgs(IPlayer player, PlayerInventorySlotPacket packet) : base(player) {
             _packet = packet ?? throw new ArgumentNullException(nameof(packet));
         }
-        
+
         /// <inheritdoc/>
-        [Pure, ExcludeFromCodeCoverage]
-        public override string ToString() =>
-            $"[{Player.Name}, {PlayerInventorySlotIndex}=" +
-            $"{(ItemPrefix != 0 ? $"{ItemPrefix} " : string.Empty)}{ItemType} x{ItemStackSize}]";
+        public void Clean() => _packet.Clean();
     }
 }

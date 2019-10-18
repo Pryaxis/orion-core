@@ -16,21 +16,23 @@
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
 using System;
-using System.Diagnostics.CodeAnalysis;
-using System.Diagnostics.Contracts;
 using Orion.Packets.Modules;
 using Orion.Players;
+using Orion.Utils;
 
 namespace Orion.Events.Players {
     /// <summary>
     /// Provides data for the <see cref="IPlayerService.PlayerChat"/> event. This event can be canceled.
     /// </summary>
     [EventArgs("player-chat")]
-    public sealed class PlayerChatEventArgs : PlayerEventArgs, ICancelable {
+    public sealed class PlayerChatEventArgs : PlayerEventArgs, ICancelable, IDirtiable {
         private readonly ChatModule _module;
 
         /// <inheritdoc/>
         public string? CancellationReason { get; set; }
+        
+        /// <inheritdoc/>
+        public bool IsDirty => _module.IsDirty;
 
         /// <summary>
         /// Gets or sets the player's chat command.
@@ -70,7 +72,6 @@ namespace Orion.Events.Players {
         }
 
         /// <inheritdoc/>
-        [Pure, ExcludeFromCodeCoverage]
-        public override string ToString() => $"[{Player.Name}, {PlayerChatCommand} {PlayerChatText}]";
+        public void Clean() => _module.Clean();
     }
 }

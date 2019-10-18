@@ -48,7 +48,7 @@ namespace Orion {
 
             foreach (var property in args.GetType().GetProperties(BindingFlags.Public | BindingFlags.Instance)) {
                 var packetProperty = field.GetType().GetProperty(property.Name);
-                if (packetProperty is null) {
+                if (packetProperty?.SetMethod is null) {
                     continue;
                 }
 

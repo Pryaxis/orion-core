@@ -16,8 +16,6 @@
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
 using System;
-using System.Diagnostics.CodeAnalysis;
-using System.Diagnostics.Contracts;
 using Orion.Players;
 
 namespace Orion.Events.Players {
@@ -32,9 +30,5 @@ namespace Orion.Events.Players {
         /// <param name="player">The player.</param>
         /// <exception cref="ArgumentNullException"><paramref name="player"/> is <see langword="null"/>.</exception>
         public PlayerDisconnectedEventArgs(IPlayer player) : base(player) { }
-        
-        /// <inheritdoc/>
-        [Pure, ExcludeFromCodeCoverage]
-        public override string ToString() => $"[{Player.Name}]";
     }
 }
