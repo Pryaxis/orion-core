@@ -85,6 +85,7 @@ namespace Orion.Packets.World.TileEntities {
             // The type hint allows us to reuse code for NetworkChests and NetworkSigns.
             var tileEntityType = typeHint ?? (TileEntityType)reader.ReadByte();
             if (!_constructors.TryGetValue(tileEntityType, out var tileEntityConstructor)) {
+                // Not localized because this string is developer-facing.
                 throw new PacketException("Tile entity type is invalid.");
             }
 

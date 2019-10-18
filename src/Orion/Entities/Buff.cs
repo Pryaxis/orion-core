@@ -52,7 +52,7 @@ namespace Orion.Entities {
         public Buff(BuffType buffType, TimeSpan duration) {
             if (duration < TimeSpan.Zero) {
                 // Not localized because this string is developer-facing.
-                throw new ArgumentOutOfRangeException(nameof(duration), "Duration is negative.");
+                throw new ArgumentOutOfRangeException(nameof(duration), "Value is negative.");
             }
 
             BuffType = buffType;

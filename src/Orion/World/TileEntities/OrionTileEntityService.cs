@@ -124,7 +124,9 @@ namespace Orion.World.TileEntities {
                 TileEntityType.TargetDummy => AddTargetDummy(x, y),
                 TileEntityType.ItemFrame => AddItemFrame(x, y),
                 TileEntityType.LogicSensor => AddLogicSensor(x, y),
-                _ => throw new ArgumentException("Tile entity type is invalid.", nameof(tileEntityType))
+
+                // Not localized because this string is developer-facing.
+                _ => throw new ArgumentOutOfRangeException(nameof(tileEntityType), "Value is invalid.")
             };
         }
 
@@ -161,6 +163,8 @@ namespace Orion.World.TileEntities {
                     TerrariaTargetDummy terrariaTargetDummy => new OrionTargetDummy(terrariaTargetDummy),
                     TerrariaItemFrame terrariaItemFrame => new OrionItemFrame(terrariaItemFrame),
                     TerrariaLogicSensor terrariaLogicSensor => new OrionLogicSensor(terrariaLogicSensor),
+
+                    // Not localized because this string is developer-facing.
                     _ => throw new InvalidOperationException("Tile entity is invalid.")
                 };
             }

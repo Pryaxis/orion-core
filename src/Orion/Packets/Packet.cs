@@ -196,7 +196,8 @@ namespace Orion.Packets {
 #endif
             static Func<Packet>? GetPacketConstructor(byte packetTypeId) =>
                 packetTypeId < _constructors.Length ? _constructors[packetTypeId] : null;
-
+            
+            // Not localized because this string is developer-facing.
             var packetConstructor = GetPacketConstructor(reader.ReadByte()) ??
                 throw new PacketException("Packet type is invalid.");
             var packet = packetConstructor();
@@ -241,6 +242,7 @@ namespace Orion.Packets {
             var position = stream.Position;
             var packetLength = position - oldPosition;
             if (packetLength > ushort.MaxValue) {
+                // Not localized because this string is developer-facing.
                 throw new PacketException("Packet is too long.");
             }
 

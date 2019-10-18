@@ -83,11 +83,13 @@ namespace Orion.Packets.World.Tiles {
         /// </exception>
         public NetworkTiles(int width, int height) {
             if (width < 0) {
-                throw new ArgumentOutOfRangeException(nameof(width), "Width is negative.");
+                // Not localized because this string is developer-facing.
+                throw new ArgumentOutOfRangeException(nameof(width), "Value is negative.");
             }
 
             if (height < 0) {
-                throw new ArgumentOutOfRangeException(nameof(height), "Height is negative.");
+                // Not localized because this string is developer-facing.
+                throw new ArgumentOutOfRangeException(nameof(height), "Value is negative.");
             }
 
             _tiles = new Tile[width * height];

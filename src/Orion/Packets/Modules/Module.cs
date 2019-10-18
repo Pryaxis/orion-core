@@ -56,10 +56,12 @@ namespace Orion.Packets.Modules {
                 throw new ArgumentNullException(nameof(stream));
             }
 
+            var reader = new BinaryReader(stream, Encoding.UTF8, true);
+
             static Func<Module>? GetModuleConstructor(ushort moduleTypeId) =>
                 moduleTypeId < _constructors.Length ? _constructors[moduleTypeId] : null;
 
-            var reader = new BinaryReader(stream, Encoding.UTF8, true);
+            // Not localized because this string is developer-facing.
             var moduleConstructor =
                 GetModuleConstructor(reader.ReadUInt16()) ?? throw new PacketException("Module type is invalid.");
             var module = moduleConstructor();
