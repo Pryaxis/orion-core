@@ -66,7 +66,7 @@ namespace Orion {
                 property.GetValue(args).Should().Be(value);
 
                 // Test setter, if applicable.
-                if (!property.CanWrite) {
+                if (property.SetMethod is null) {
                     continue;
                 }
 

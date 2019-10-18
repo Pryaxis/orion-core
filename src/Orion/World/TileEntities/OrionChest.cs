@@ -36,7 +36,7 @@ namespace Orion.World.TileEntities {
         public int X {
             get => Wrapped?.x ?? 0;
             set {
-                if (Wrapped == null) {
+                if (Wrapped is null) {
                     return;
                 }
 
@@ -47,7 +47,7 @@ namespace Orion.World.TileEntities {
         public int Y {
             get => Wrapped?.y ?? 0;
             set {
-                if (Wrapped == null) {
+                if (Wrapped is null) {
                     return;
                 }
 
@@ -58,7 +58,7 @@ namespace Orion.World.TileEntities {
         public string Name {
             get => Wrapped?.name ?? string.Empty;
             set {
-                if (Wrapped == null) {
+                if (Wrapped is null) {
                     return;
                 }
 

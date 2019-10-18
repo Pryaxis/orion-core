@@ -33,7 +33,7 @@ namespace Orion.Utils {
                 var wrappedItem = _wrappedItems.Span[index];
                 ref var item = ref _items[index];
 #pragma warning disable 618
-                if (item == null || !ReferenceEquals(item.Wrapped, wrappedItem)) {
+                if (item is null || !ReferenceEquals(item.Wrapped, wrappedItem)) {
 #pragma warning restore 618
                     return item = _converter(index, wrappedItem);
                 }

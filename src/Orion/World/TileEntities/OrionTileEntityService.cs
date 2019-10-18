@@ -58,7 +58,7 @@ namespace Orion.World.TileEntities {
 
                 for (var i = 0; i < Main.chest.Length; ++i) {
                     ref TerrariaChest? terrariaChest = ref Main.chest[i];
-                    if (terrariaChest == null) {
+                    if (terrariaChest is null) {
                         terrariaChest = new TerrariaChest {
                             x = x,
                             y = y
@@ -80,7 +80,7 @@ namespace Orion.World.TileEntities {
 
                 for (var i = 0; i < Main.sign.Length; ++i) {
                     ref TerrariaSign? terrariaSign = ref Main.sign[i];
-                    if (terrariaSign == null) {
+                    if (terrariaSign is null) {
                         terrariaSign = new TerrariaSign {
                             x = x,
                             y = y,

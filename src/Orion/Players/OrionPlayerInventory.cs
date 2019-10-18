@@ -38,7 +38,7 @@ namespace Orion.Players {
 
         public IItem TrashCan {
             get {
-                if (_trashCan == null || !ReferenceEquals(_trashCan.Wrapped, _wrapped.trashItem)) {
+                if (_trashCan is null || !ReferenceEquals(_trashCan.Wrapped, _wrapped.trashItem)) {
                     return _trashCan = new OrionItem(_wrapped.trashItem);
                 }
 
