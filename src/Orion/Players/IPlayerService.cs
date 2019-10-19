@@ -118,6 +118,12 @@ namespace Orion.Players {
         EventHandlerCollection<PlayerUuidEventArgs> PlayerUuid { get; }
 
         /// <summary>
+        /// Gets the event handlers that occur when a player uses a teleportation potion. This event can be canceled.
+        /// </summary>
+        /// <value>The event handlers that occur when a player uses a teleportation potion.</value>
+        EventHandlerCollection<PlayerTeleportationPotionEventArgs> PlayerTeleportationPotion { get; }
+
+        /// <summary>
         /// Gets the event handlers that occur when a player chats. This event can be canceled.
         /// </summary>
         /// <value>The event handlers that occur when a player chats.</value>

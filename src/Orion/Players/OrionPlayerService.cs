@@ -53,6 +53,7 @@ namespace Orion.Players {
         public EventHandlerCollection<PlayerManaEventArgs> PlayerMana { get; }
         public EventHandlerCollection<PlayerTeamEventArgs> PlayerTeam { get; }
         public EventHandlerCollection<PlayerUuidEventArgs> PlayerUuid { get; }
+        public EventHandlerCollection<PlayerTeleportationPotionEventArgs> PlayerTeleportationPotion { get; }
         public EventHandlerCollection<PlayerChatEventArgs> PlayerChat { get; }
         public EventHandlerCollection<PlayerQuitEventArgs> PlayerQuit { get; }
 
@@ -72,6 +73,7 @@ namespace Orion.Players {
                 [PacketType.PlayerMana] = PlayerManaHandler,
                 [PacketType.PlayerTeam] = PlayerTeamHandler,
                 [PacketType.PlayerUuid] = PlayerUuidHandler,
+                [PacketType.PlayerTeleportationPotion] = PlayerTeleportationPotionHandler,
                 [PacketType.Module] = ModuleHandler
             };
 
@@ -93,6 +95,7 @@ namespace Orion.Players {
             PlayerMana = new EventHandlerCollection<PlayerManaEventArgs>();
             PlayerTeam = new EventHandlerCollection<PlayerTeamEventArgs>();
             PlayerUuid = new EventHandlerCollection<PlayerUuidEventArgs>();
+            PlayerTeleportationPotion = new EventHandlerCollection<PlayerTeleportationPotionEventArgs>();
             PlayerChat = new EventHandlerCollection<PlayerChatEventArgs>();
             PlayerQuit = new EventHandlerCollection<PlayerQuitEventArgs>();
 
@@ -651,6 +654,34 @@ namespace Orion.Players {
             } else if (args.IsDirty) {
                 // Not localized because this string is developer-facing.
                 Log.Debug("Altered {Event} to [{Player}, {PlayerUuid}]", PlayerUuid, args.Player, args.PlayerUuid);
+            }
+        }
+
+        // =============================================================================================================
+        // Handling PlayerTeleportationPotion
+        // =============================================================================================================
+
+        private void PlayerTeleportationPotionHandler(PacketReceiveEventArgs args_) {
+            var args = new PlayerTeleportationPotionEventArgs(args_.Sender);
+
+            PlayerTeleportationPotion_Before(args);
+            PlayerTeleportationPotion.Invoke(this, args);
+            PlayerTeleportationPotion_After(args);
+
+            args_.CancellationReason = args.CancellationReason;
+        }
+
+        [Conditional("DEBUG"), ExcludeFromCodeCoverage]
+        private void PlayerTeleportationPotion_Before(PlayerTeleportationPotionEventArgs args) {
+            // Not localized because this string is developer-facing.
+            Log.Debug("Invoking {Event} with [{Player}]", PlayerTeleportationPotion, args.Player);
+        }
+        
+        [Conditional("DEBUG"), ExcludeFromCodeCoverage]
+        private void PlayerTeleportationPotion_After(PlayerTeleportationPotionEventArgs args) {
+            if (args.IsCanceled()) {
+                // Not localized because this string is developer-facing.
+                Log.Debug("Canceled {Event} for {Reason}", PlayerTeleportationPotion, args.CancellationReason);
             }
         }
 
