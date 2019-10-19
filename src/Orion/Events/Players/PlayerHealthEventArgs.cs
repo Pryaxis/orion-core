@@ -29,18 +29,18 @@ namespace Orion.Events.Players {
         /// Gets or sets the player's health.
         /// </summary>
         /// <value>The player's health.</value>
-        public short PlayerHealth {
-            get => _packet.PlayerHealth;
-            set => _packet.PlayerHealth = value;
+        public short Health {
+            get => _packet.Health;
+            set => _packet.Health = value;
         }
 
         /// <summary>
         /// Gets or sets the player's maximum health.
         /// </summary>
         /// <value>The player's maximum health.</value>
-        public short PlayerMaxHealth {
-            get => _packet.PlayerMaxHealth;
-            set => _packet.PlayerMaxHealth = value;
+        public short MaxHealth {
+            get => _packet.MaxHealth;
+            set => _packet.MaxHealth = value;
         }
 
         /// <summary>

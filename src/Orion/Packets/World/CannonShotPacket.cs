@@ -15,8 +15,6 @@
 // You should have received a copy of the GNU General Public License
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
-using System.Diagnostics.CodeAnalysis;
-using System.Diagnostics.Contracts;
 using System.IO;
 
 namespace Orion.Packets.World {
@@ -24,35 +22,37 @@ namespace Orion.Packets.World {
     /// Packet sent from the server to the client to shoot from a cannon.
     /// </summary>
     public sealed class CannonShotPacket : Packet {
-        private short _shotDamage;
-        private float _shotKnockback;
-        private short _cannonX;
-        private short _cannonY;
+        private short _damage;
+        private float _knockback;
+        private short _x;
+        private short _y;
         private short _shotAngle;
-        private short _shotAmmoType;
-        private byte _shooterPlayerIndex;
+        private short _shotType;
+        private byte _shooterIndex;
 
         /// <inheritdoc/>
         public override PacketType Type => PacketType.CannonShot;
 
         /// <summary>
-        /// Gets or sets the shot's damage.
+        /// Gets or sets the damage.
         /// </summary>
-        public short ShotDamage {
-            get => _shotDamage;
+        /// <value>The damage.</value>
+        public short Damage {
+            get => _damage;
             set {
-                _shotDamage = value;
+                _damage = value;
                 _isDirty = true;
             }
         }
 
         /// <summary>
-        /// Gets or sets the shot's knockback.
+        /// Gets or sets the knockback.
         /// </summary>
-        public float ShotKnockback {
-            get => _shotKnockback;
+        /// <value>The knockback.</value>
+        public float Knockback {
+            get => _knockback;
             set {
-                _shotKnockback = value;
+                _knockback = value;
                 _isDirty = true;
             }
         }
@@ -60,10 +60,11 @@ namespace Orion.Packets.World {
         /// <summary>
         /// Gets or sets the cannon's X coordinate.
         /// </summary>
-        public short CannonX {
-            get => _cannonX;
+        /// <value>The cannon's X coordinate.</value>
+        public short X {
+            get => _x;
             set {
-                _cannonX = value;
+                _x = value;
                 _isDirty = true;
             }
         }
@@ -71,33 +72,39 @@ namespace Orion.Packets.World {
         /// <summary>
         /// Gets or sets the cannon's Y coordinate.
         /// </summary>
-        public short CannonY {
-            get => _cannonY;
+        /// <value>The cannon's Y coordinate.</value>
+        public short Y {
+            get => _y;
             set {
-                _cannonY = value;
+                _y = value;
                 _isDirty = true;
             }
         }
 
+        // TODO: explain this
+
         /// <summary>
         /// Gets or sets the shot's angle.
         /// </summary>
-        public short ShotAngle {
+        /// <value>The shot's angle.</value>
+        public short Angle {
             get => _shotAngle;
             set {
                 _shotAngle = value;
                 _isDirty = true;
             }
         }
+        
+        // TODO: implement an enum for this.
 
         /// <summary>
-        /// Gets or sets the shot's ammo type.
+        /// Gets or sets the shot type.
         /// </summary>
-        // TODO: implement an enum for this.
-        public short ShotAmmoType {
-            get => _shotAmmoType;
+        /// <value>The shot type.</value>
+        public short ShotType {
+            get => _shotType;
             set {
-                _shotAmmoType = value;
+                _shotType = value;
                 _isDirty = true;
             }
         }
@@ -105,37 +112,33 @@ namespace Orion.Packets.World {
         /// <summary>
         /// Gets or sets the shooter's player index.
         /// </summary>
-        public byte ShooterPlayerIndex {
-            get => _shooterPlayerIndex;
+        /// <value>The shooter's player index.</value>
+        public byte ShooterIndex {
+            get => _shooterIndex;
             set {
-                _shooterPlayerIndex = value;
+                _shooterIndex = value;
                 _isDirty = true;
             }
         }
 
-        /// <inheritdoc/>
-        [Pure, ExcludeFromCodeCoverage]
-        public override string ToString() =>
-            $"{Type}[#={ShooterPlayerIndex}, {ShotAmmoType} @ ({CannonX}, {CannonY}), ...]";
-
         private protected override void ReadFromReader(BinaryReader reader, PacketContext context) {
-            _shotDamage = reader.ReadInt16();
-            _shotKnockback = reader.ReadSingle();
-            _cannonX = reader.ReadInt16();
-            _cannonY = reader.ReadInt16();
+            _damage = reader.ReadInt16();
+            _knockback = reader.ReadSingle();
+            _x = reader.ReadInt16();
+            _y = reader.ReadInt16();
             _shotAngle = reader.ReadInt16();
-            _shotAmmoType = reader.ReadInt16();
-            _shooterPlayerIndex = reader.ReadByte();
+            _shotType = reader.ReadInt16();
+            _shooterIndex = reader.ReadByte();
         }
 
         private protected override void WriteToWriter(BinaryWriter writer, PacketContext context) {
-            writer.Write(_shotDamage);
-            writer.Write(_shotKnockback);
-            writer.Write(_cannonX);
-            writer.Write(_cannonY);
+            writer.Write(_damage);
+            writer.Write(_knockback);
+            writer.Write(_x);
+            writer.Write(_y);
             writer.Write(_shotAngle);
-            writer.Write(_shotAmmoType);
-            writer.Write(_shooterPlayerIndex);
+            writer.Write(_shotType);
+            writer.Write(_shooterIndex);
         }
     }
 }

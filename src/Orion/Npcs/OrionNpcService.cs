@@ -240,11 +240,11 @@ namespace Orion.Npcs {
         // Handling NpcTransform
         // =============================================================================================================
 
-        private HookResult PreTransformHandler(TerrariaNpc terrariaNpc, ref int npcNewType) {
+        private HookResult PreTransformHandler(TerrariaNpc terrariaNpc, ref int newNpcType) {
             Debug.Assert(terrariaNpc != null, "Terraria NPC should not be null");
 
             var npc = GetNpc(terrariaNpc);
-            var args = new NpcTransformEventArgs(npc, (NpcType)npcNewType);
+            var args = new NpcTransformEventArgs(npc, (NpcType)newNpcType);
 
             LogNpcTransform_Before(args);
             NpcTransform.Invoke(this, args);
@@ -253,7 +253,7 @@ namespace Orion.Npcs {
             if (args.IsCanceled()) {
                 return HookResult.Cancel;
             } else if (args.IsDirty) {
-                npcNewType = (int)args.NpcNewType;
+                newNpcType = (int)args.NewNpcType;
             }
 
             return HookResult.Continue;
@@ -262,7 +262,7 @@ namespace Orion.Npcs {
         [Conditional("DEBUG"), ExcludeFromCodeCoverage]
         private void LogNpcTransform_Before(NpcTransformEventArgs args) {
             // Not localized because this string is developer-facing.
-            Log.Debug("Invoking {Event} with [{Npc}, {NpcNewType}]", NpcTransform, args.Npc, args.NpcNewType);
+            Log.Debug("Invoking {Event} with [{Npc}, {NpcNewType}]", NpcTransform, args.Npc, args.NewNpcType);
         }
 
         [Conditional("DEBUG"), ExcludeFromCodeCoverage]
@@ -272,7 +272,7 @@ namespace Orion.Npcs {
                 Log.Debug("Canceled {Event} for {CancellationReason}", NpcTransform, args.CancellationReason);
             } else if (args.IsDirty) {
                 // Not localized because this string is developer-facing.
-                Log.Debug("Altered {Event} to [{Npc}, {NpcNewType}]", NpcTransform, args.Npc, args.NpcNewType);
+                Log.Debug("Altered {Event} to [{Npc}, {NpcNewType}]", NpcTransform, args.Npc, args.NewNpcType);
             }
         }
 
@@ -345,7 +345,7 @@ namespace Orion.Npcs {
                 return HookResult.Cancel;
             } else if (args.IsDirty) {
                 itemType = (int)args.ItemType;
-                itemStackSize = args.ItemStackSize;
+                itemStackSize = args.StackSize;
                 itemPrefix = (int)args.ItemPrefix;
             }
 
@@ -358,7 +358,7 @@ namespace Orion.Npcs {
                 // Not localized because this string is developer-facing.
                 Log.Debug(
                     "Invoking {Event} with [{Npc}, {NpcType} dropping {ItemType} x{ItemStackSize}]",
-                    NpcLoot, args.Npc, args.Npc.Type, args.ItemType, args.ItemStackSize);
+                    NpcLoot, args.Npc, args.Npc.Type, args.ItemType, args.StackSize);
             } else {
                 // Not localized because this string is developer-facing.
                 Log.Debug(
@@ -377,7 +377,7 @@ namespace Orion.Npcs {
                     // Not localized because this string is developer-facing.
                     Log.Debug(
                         "Altered {Event} to [{Npc}, {NpcType} dropping {ItemType} x{ItemStackSize}]",
-                        NpcLoot, args.Npc, args.Npc.Type, args.ItemType, args.ItemStackSize);
+                        NpcLoot, args.Npc, args.Npc.Type, args.ItemType, args.StackSize);
                 } else {
                     // Not localized because this string is developer-facing.
                     Log.Debug(

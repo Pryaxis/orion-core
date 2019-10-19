@@ -15,8 +15,6 @@
 // You should have received a copy of the GNU General Public License
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
-using System.Diagnostics.CodeAnalysis;
-using System.Diagnostics.Contracts;
 using System.IO;
 using Orion.Items;
 
@@ -26,8 +24,8 @@ namespace Orion.Packets.World.TileEntities {
     /// </summary>
     public sealed class ChestContentsSlotPacket : Packet {
         private short _chestIndex;
-        private byte _chestContentsSlotIndex;
-        private short _itemStackSize;
+        private byte _contentsSlot;
+        private short _stackSize;
         private ItemPrefix _itemPrefix;
         private ItemType _itemType;
 
@@ -37,6 +35,7 @@ namespace Orion.Packets.World.TileEntities {
         /// <summary>
         /// Gets or sets the chest index.
         /// </summary>
+        /// <value>The chest index.</value>
         public short ChestIndex {
             get => _chestIndex;
             set {
@@ -46,12 +45,14 @@ namespace Orion.Packets.World.TileEntities {
         }
 
         /// <summary>
-        /// Gets or sets the chest contents slot index.
+        /// Gets or sets the chest contents slot.
         /// </summary>
-        public byte ChestContentsSlotIndex {
-            get => _chestContentsSlotIndex;
+        /// <value>The chest contents slot.</value>
+        /// <remarks>This value can range from <c>0</c> to <c>39</c>.</remarks>
+        public byte ContentsSlot {
+            get => _contentsSlot;
             set {
-                _chestContentsSlotIndex = value;
+                _contentsSlot = value;
                 _isDirty = true;
             }
         }
@@ -59,10 +60,11 @@ namespace Orion.Packets.World.TileEntities {
         /// <summary>
         /// Gets or sets the item's stack size.
         /// </summary>
-        public short ItemStackSize {
-            get => _itemStackSize;
+        /// <value>The item's stack size.</value>
+        public short StackSize {
+            get => _stackSize;
             set {
-                _itemStackSize = value;
+                _stackSize = value;
                 _isDirty = true;
             }
         }
@@ -70,6 +72,7 @@ namespace Orion.Packets.World.TileEntities {
         /// <summary>
         /// Gets or sets the item's prefix.
         /// </summary>
+        /// <value>The item's prefix.</value>
         public ItemPrefix ItemPrefix {
             get => _itemPrefix;
             set {
@@ -81,6 +84,7 @@ namespace Orion.Packets.World.TileEntities {
         /// <summary>
         /// Gets or sets the item's type.
         /// </summary>
+        /// <value>The item's type.</value>
         public ItemType ItemType {
             get => _itemType;
             set {
@@ -89,24 +93,18 @@ namespace Orion.Packets.World.TileEntities {
             }
         }
 
-        /// <inheritdoc/>
-        [Pure, ExcludeFromCodeCoverage]
-        public override string ToString() =>
-            $"{Type}[#={ChestIndex}, {ChestContentsSlotIndex} is " +
-            $"{(ItemPrefix != 0 ? $"{ItemPrefix} " : string.Empty)}{ItemType} x{ItemStackSize}]";
-
         private protected override void ReadFromReader(BinaryReader reader, PacketContext context) {
             _chestIndex = reader.ReadInt16();
-            _chestContentsSlotIndex = reader.ReadByte();
-            _itemStackSize = reader.ReadInt16();
+            _contentsSlot = reader.ReadByte();
+            _stackSize = reader.ReadInt16();
             _itemPrefix = (ItemPrefix)reader.ReadByte();
             _itemType = (ItemType)reader.ReadInt16();
         }
 
         private protected override void WriteToWriter(BinaryWriter writer, PacketContext context) {
             writer.Write(_chestIndex);
-            writer.Write(_chestContentsSlotIndex);
-            writer.Write(_itemStackSize);
+            writer.Write(_contentsSlot);
+            writer.Write(_stackSize);
             writer.Write((byte)_itemPrefix);
             writer.Write((short)_itemType);
         }

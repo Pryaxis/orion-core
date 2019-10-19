@@ -16,8 +16,6 @@
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
 using System;
-using System.Diagnostics.CodeAnalysis;
-using System.Diagnostics.Contracts;
 using System.IO;
 using Orion.Packets.Extensions;
 
@@ -26,7 +24,7 @@ namespace Orion.Packets.World {
     /// Packet sent from the server to the client to set the Moon Lord countdown.
     /// </summary>
     public sealed class MoonLordCountdownPacket : Packet {
-        private TimeSpan _moonLordCountdown;
+        private TimeSpan _countdown;
 
         /// <inheritdoc/>
         public override PacketType Type => PacketType.MoonLordCountdown;
@@ -34,22 +32,19 @@ namespace Orion.Packets.World {
         /// <summary>
         /// Gets or sets the Moon Lord countdown.
         /// </summary>
-        public TimeSpan MoonLordCountdown {
-            get => _moonLordCountdown;
+        /// <value>The Moon Lord countdown.</value>
+        public TimeSpan Countdown {
+            get => _countdown;
             set {
-                _moonLordCountdown = value;
+                _countdown = value;
                 _isDirty = true;
             }
         }
 
-        /// <inheritdoc/>
-        [Pure, ExcludeFromCodeCoverage]
-        public override string ToString() => $"{Type}[{MoonLordCountdown}]";
-
         private protected override void ReadFromReader(BinaryReader reader, PacketContext context) =>
-            _moonLordCountdown = reader.ReadTimeSpan(4);
+            _countdown = reader.ReadTimeSpan(4);
 
         private protected override void WriteToWriter(BinaryWriter writer, PacketContext context) =>
-            writer.Write(in _moonLordCountdown, 4);
+            writer.Write(in _countdown, 4);
     }
 }

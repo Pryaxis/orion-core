@@ -29,7 +29,7 @@ namespace Orion.Packets.World.TileEntities {
         }
 
         [Fact]
-        public void Text_Set_NullValue_ThrowsArgumentNullException() {
+        public void Text_SetNullValue_ThrowsArgumentNullException() {
             var sign = new NetworkSign();
             Action action = () => sign.Text = null;
 

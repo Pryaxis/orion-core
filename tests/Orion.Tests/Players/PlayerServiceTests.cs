@@ -77,7 +77,7 @@ namespace Orion.Players {
             mockPlayers.VerifyGet(p => p.Count, Times.AtLeastOnce());
             mockPlayers.VerifyGet(p => p[0]);
             mockPlayer.Verify(p => p.SendPacket(
-                It.Is<ChatPacket>(cp => cp.ChatColor == Color.White && cp.ChatText == "test")));
+                It.Is<ChatPacket>(cp => cp.Color == Color.White && cp.Text == "test")));
             mockPlayerService.VerifyNoOtherCalls();
         }
 

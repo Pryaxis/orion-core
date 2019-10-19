@@ -35,8 +35,8 @@ namespace Orion.Packets.World {
             using var stream = new MemoryStream(Bytes);
             var packet = (OldOnesArmyStartPacket)Packet.ReadFromStream(stream, PacketContext.Server);
 
-            packet.CrystalX.Should().Be(256);
-            packet.CrystalY.Should().Be(100);
+            packet.X.Should().Be(256);
+            packet.Y.Should().Be(100);
         }
 
         [Fact]

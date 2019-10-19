@@ -15,8 +15,6 @@
 // You should have received a copy of the GNU General Public License
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
-using System.Diagnostics.CodeAnalysis;
-using System.Diagnostics.Contracts;
 using System.IO;
 
 namespace Orion.Packets.Players {
@@ -25,8 +23,8 @@ namespace Orion.Packets.Players {
     /// </summary>
     public sealed class PlayerHealthPacket : Packet {
         private byte _playerIndex;
-        private short _playerHealth;
-        private short _playerMaxHealth;
+        private short _health;
+        private short _maxHealth;
 
         /// <inheritdoc/>
         public override PacketType Type => PacketType.PlayerHealth;
@@ -34,6 +32,7 @@ namespace Orion.Packets.Players {
         /// <summary>
         /// Gets or sets the player index.
         /// </summary>
+        /// <value>The player index.</value>
         public byte PlayerIndex {
             get => _playerIndex;
             set {
@@ -41,43 +40,41 @@ namespace Orion.Packets.Players {
                 _isDirty = true;
             }
         }
-
+        
         /// <summary>
         /// Gets or sets the player's health.
         /// </summary>
-        public short PlayerHealth {
-            get => _playerHealth;
+        /// <value>The player's health.</value>
+        public short Health {
+            get => _health;
             set {
-                _playerHealth = value;
+                _health = value;
                 _isDirty = true;
             }
         }
-
+        
         /// <summary>
         /// Gets or sets the player's maximum health.
         /// </summary>
-        public short PlayerMaxHealth {
-            get => _playerMaxHealth;
+        /// <value>The player's maximum health.</value>
+        public short MaxHealth {
+            get => _maxHealth;
             set {
-                _playerMaxHealth = value;
+                _maxHealth = value;
                 _isDirty = true;
             }
         }
 
-        /// <inheritdoc/>
-        [Pure, ExcludeFromCodeCoverage]
-        public override string ToString() => $"{Type}[#={PlayerIndex} has {PlayerHealth}/{PlayerMaxHealth} hp]";
-
         private protected override void ReadFromReader(BinaryReader reader, PacketContext context) {
             _playerIndex = reader.ReadByte();
-            _playerHealth = reader.ReadInt16();
-            _playerMaxHealth = reader.ReadInt16();
+            _health = reader.ReadInt16();
+            _maxHealth = reader.ReadInt16();
         }
 
         private protected override void WriteToWriter(BinaryWriter writer, PacketContext context) {
             writer.Write(_playerIndex);
-            writer.Write(_playerHealth);
-            writer.Write(_playerMaxHealth);
+            writer.Write(_health);
+            writer.Write(_maxHealth);
         }
     }
 }

@@ -31,7 +31,7 @@ namespace Orion.Packets.Entities {
         }
 
         [Fact]
-        public void Text_Set_NullValue_ThrowsArgumentNullException() {
+        public void Text_SetNullValue_ThrowsArgumentNullException() {
             var packet = new CombatTextPacket();
             Action action = () => packet.Text = null;
 
@@ -47,8 +47,8 @@ namespace Orion.Packets.Entities {
             using var stream = new MemoryStream(Bytes);
             var packet = (CombatTextPacket)Packet.ReadFromStream(stream, PacketContext.Server);
 
-            packet.TextPosition.Should().Be(Vector2.Zero);
-            packet.TextColor.Should().Be(Color.White);
+            packet.Position.Should().Be(Vector2.Zero);
+            packet.Color.Should().Be(Color.White);
             packet.Text.Should().Be("Terraria");
         }
 

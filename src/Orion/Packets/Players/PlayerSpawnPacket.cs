@@ -15,8 +15,6 @@
 // You should have received a copy of the GNU General Public License
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
-using System.Diagnostics.CodeAnalysis;
-using System.Diagnostics.Contracts;
 using System.IO;
 
 namespace Orion.Packets.Players {
@@ -25,8 +23,8 @@ namespace Orion.Packets.Players {
     /// </summary>
     public sealed class PlayerSpawnPacket : Packet {
         private byte _playerIndex;
-        private short _playerSpawnX;
-        private short _playerSpawnY;
+        private short _spawnX;
+        private short _spawnY;
 
         /// <inheritdoc/>
         public override PacketType Type => PacketType.PlayerSpawn;
@@ -34,6 +32,7 @@ namespace Orion.Packets.Players {
         /// <summary>
         /// Gets or sets the player index.
         /// </summary>
+        /// <value>The player index.</value>
         public byte PlayerIndex {
             get => _playerIndex;
             set {
@@ -41,43 +40,41 @@ namespace Orion.Packets.Players {
                 _isDirty = true;
             }
         }
-
+        
         /// <summary>
-        /// Gets or sets the player spawn's X coordinate. A negative value results in the world spawn.
+        /// Gets the player's spawn's X coordinate. If negative, then the world's spawn will be used.
         /// </summary>
-        public short PlayerSpawnX {
-            get => _playerSpawnX;
+        /// <value>The player's spawn's X coordinate.</value>
+        public short SpawnX {
+            get => _spawnX;
             set {
-                _playerSpawnX = value;
+                _spawnX = value;
                 _isDirty = true;
             }
         }
-
+        
         /// <summary>
-        /// Gets or sets the player spawn's Y coordinate. A negative value results in the world spawn.
+        /// Gets the player's spawn's Y coordinate. If negative, then the world's spawn will be used.
         /// </summary>
-        public short PlayerSpawnY {
-            get => _playerSpawnY;
+        /// <value>The player's spawn's Y coordinate.</value>
+        public short SpawnY {
+            get => _spawnY;
             set {
-                _playerSpawnY = value;
+                _spawnY = value;
                 _isDirty = true;
             }
         }
-
-        /// <inheritdoc/>
-        [Pure, ExcludeFromCodeCoverage]
-        public override string ToString() => $"{Type}[#={PlayerIndex} @ ({PlayerSpawnX}, {PlayerSpawnY})]";
 
         private protected override void ReadFromReader(BinaryReader reader, PacketContext context) {
             _playerIndex = reader.ReadByte();
-            _playerSpawnX = reader.ReadInt16();
-            _playerSpawnY = reader.ReadInt16();
+            _spawnX = reader.ReadInt16();
+            _spawnY = reader.ReadInt16();
         }
 
         private protected override void WriteToWriter(BinaryWriter writer, PacketContext context) {
             writer.Write(_playerIndex);
-            writer.Write(_playerSpawnX);
-            writer.Write(_playerSpawnY);
+            writer.Write(_spawnX);
+            writer.Write(_spawnY);
         }
     }
 }

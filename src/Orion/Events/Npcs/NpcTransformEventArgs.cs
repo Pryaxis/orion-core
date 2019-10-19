@@ -34,10 +34,10 @@ namespace Orion.Events.Npcs {
         public bool IsDirty { get; private set; }
 
         /// <summary>
-        /// Gets or sets the NPC's new type.
+        /// Gets or sets the new NPC type that the NPC is transforming into.
         /// </summary>
-        /// <value>The NPC's new type.</value>
-        public NpcType NpcNewType {
+        /// <value>The new NPC type that the NPC is transforming into.</value>
+        public NpcType NewNpcType {
             get => _npcNewType;
             set {
                 _npcNewType = value;
@@ -46,14 +46,14 @@ namespace Orion.Events.Npcs {
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="NpcTransformEventArgs"/> class with the specified NPC and NPC's
-        /// new type.
+        /// Initializes a new instance of the <see cref="NpcTransformEventArgs"/> class with the specified NPC and new
+        /// NPC type.
         /// </summary>
         /// <param name="npc">The NPC.</param>
-        /// <param name="npcNewType">The NPC's new type.</param>
+        /// <param name="newNpcType">The new NPC type.</param>
         /// <exception cref="ArgumentNullException"><paramref name="npc"/> is <see langword="null"/>.</exception>
-        public NpcTransformEventArgs(INpc npc, NpcType npcNewType) : base(npc) {
-            _npcNewType = npcNewType;
+        public NpcTransformEventArgs(INpc npc, NpcType newNpcType) : base(npc) {
+            _npcNewType = newNpcType;
         }
 
         /// <inheritdoc/>

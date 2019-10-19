@@ -51,7 +51,7 @@ namespace Orion.Events.Npcs {
             var npc = new Mock<INpc>().Object;
             var args = new NpcTransformEventArgs(npc, NpcType.BlueSlime);
 
-            args.NpcNewType.Should().Be(NpcType.BlueSlime);
+            args.NewNpcType.Should().Be(NpcType.BlueSlime);
         }
     }
 }

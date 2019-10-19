@@ -15,13 +15,16 @@
 // You should have received a copy of the GNU General Public License
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
+using Orion.Items;
+
 namespace Orion.Packets.Players {
     /// <summary>
-    /// Specifies a player dodge type in a <see cref="PlayerDodgePacket"/>.
+    /// Specifies the player's dodge type in a <see cref="PlayerDodgePacket"/>.
     /// </summary>
     public enum PlayerDodgeType : byte {
         /// <summary>
-        /// Indicates a ninja dodge. This is caused by a Tabi or Master Ninja Gear.
+        /// Indicates a ninja dodge. This is caused by a <see cref="ItemType.Tabi"/> or
+        /// <see cref="ItemType.MasterNinjaGear"/>.
         /// </summary>
         Ninja = 1,
 

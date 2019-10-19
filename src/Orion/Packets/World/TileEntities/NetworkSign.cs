@@ -29,7 +29,11 @@ namespace Orion.Packets.World.TileEntities {
         /// <inheritdoc/>
         public override TileEntityType Type => TileEntityType.Sign;
 
-        /// <inheritdoc cref="ISign.Text"/>
+        /// <summary>
+        /// Gets or sets the sign's text.
+        /// </summary>
+        /// <value>The sign's text.</value>
+        /// <exception cref="ArgumentNullException"><paramref name="value"/> is <see langword="null"/>.</exception>
         public string Text {
             get => _text;
             set {

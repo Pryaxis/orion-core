@@ -38,7 +38,7 @@ namespace Orion.Packets.Players {
             var packet = (PlayerAddBuffPacket)Packet.ReadFromStream(stream, PacketContext.Server);
 
             packet.PlayerIndex.Should().Be(0);
-            packet.PlayerBuff.Should().Be(new Buff(BuffType.ObsidianSkin, TimeSpan.FromSeconds(1)));
+            packet.Buff.Should().Be(new Buff(BuffType.ObsidianSkin, TimeSpan.FromSeconds(1)));
         }
 
         [Fact]

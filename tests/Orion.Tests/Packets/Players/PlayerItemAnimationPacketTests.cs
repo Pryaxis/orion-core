@@ -36,8 +36,8 @@ namespace Orion.Packets.Players {
             var packet = (PlayerItemAnimationPacket)Packet.ReadFromStream(stream, PacketContext.Server);
 
             packet.PlayerIndex.Should().Be(0);
-            packet.PlayerItemRotation.Should().Be(0.617008f);
-            packet.PlayerItemAnimation.Should().Be(3);
+            packet.ItemRotation.Should().Be(0.617008f);
+            packet.ItemAnimation.Should().Be(3);
         }
 
         [Fact]

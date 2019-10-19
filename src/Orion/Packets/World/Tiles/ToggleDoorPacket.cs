@@ -15,8 +15,6 @@
 // You should have received a copy of the GNU General Public License
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
-using System.Diagnostics.CodeAnalysis;
-using System.Diagnostics.Contracts;
 using System.IO;
 
 namespace Orion.Packets.World.Tiles {
@@ -25,10 +23,10 @@ namespace Orion.Packets.World.Tiles {
     /// of toggle door actions.
     /// </summary>
     public sealed class ToggleDoorPacket : Packet {
-        private ToggleDoorAction _toggleDoorAction;
-        private short _doorX;
-        private short _doorY;
-        private bool _toggleDirection;
+        private ToggleDoorAction _action;
+        private short _x;
+        private short _y;
+        private bool _direction;
 
         /// <inheritdoc/>
         public override PacketType Type => PacketType.ToggleDoor;
@@ -36,10 +34,11 @@ namespace Orion.Packets.World.Tiles {
         /// <summary>
         /// Gets or sets the toggle door action.
         /// </summary>
-        public ToggleDoorAction ToggleDoorAction {
-            get => _toggleDoorAction;
+        /// <value>The toggle door action.</value>
+        public ToggleDoorAction Action {
+            get => _action;
             set {
-                _toggleDoorAction = value;
+                _action = value;
                 _isDirty = true;
             }
         }
@@ -47,10 +46,11 @@ namespace Orion.Packets.World.Tiles {
         /// <summary>
         /// Gets or sets the door's X coordinate.
         /// </summary>
-        public short DoorX {
-            get => _doorX;
+        /// <value>The door's X coordinate.</value>
+        public short X {
+            get => _x;
             set {
-                _doorX = value;
+                _x = value;
                 _isDirty = true;
             }
         }
@@ -58,41 +58,39 @@ namespace Orion.Packets.World.Tiles {
         /// <summary>
         /// Gets or sets the door's Y coordinate.
         /// </summary>
-        public short DoorY {
-            get => _doorY;
+        /// <value>The door's Y coordinate.</value>
+        public short Y {
+            get => _y;
             set {
-                _doorY = value;
+                _y = value;
                 _isDirty = true;
             }
         }
 
         /// <summary>
-        /// Gets or sets a value indicating the direction of the toggle.
+        /// Gets or sets a value indicating the direction of the toggle. This is action-specific.
         /// </summary>
-        public bool ToggleDirection {
-            get => _toggleDirection;
+        /// <value>A value indicating the direction of the toggle.</value>
+        public bool Direction {
+            get => _direction;
             set {
-                _toggleDirection = value;
+                _direction = value;
                 _isDirty = true;
             }
         }
 
-        /// <inheritdoc/>
-        [Pure, ExcludeFromCodeCoverage]
-        public override string ToString() => $"{Type}[{ToggleDoorAction} @ ({DoorX}, {DoorY}), ...]";
-
         private protected override void ReadFromReader(BinaryReader reader, PacketContext context) {
-            _toggleDoorAction = (ToggleDoorAction)reader.ReadByte();
-            _doorX = reader.ReadInt16();
-            _doorY = reader.ReadInt16();
-            _toggleDirection = reader.ReadBoolean();
+            _action = (ToggleDoorAction)reader.ReadByte();
+            _x = reader.ReadInt16();
+            _y = reader.ReadInt16();
+            _direction = reader.ReadBoolean();
         }
 
         private protected override void WriteToWriter(BinaryWriter writer, PacketContext context) {
-            writer.Write((byte)_toggleDoorAction);
-            writer.Write(_doorX);
-            writer.Write(_doorY);
-            writer.Write(_toggleDirection);
+            writer.Write((byte)_action);
+            writer.Write(_x);
+            writer.Write(_y);
+            writer.Write(_direction);
         }
     }
 }

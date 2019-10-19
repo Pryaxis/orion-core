@@ -18,8 +18,6 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.Diagnostics.CodeAnalysis;
-using System.Diagnostics.Contracts;
 using System.IO;
 using Orion.Utils;
 using Orion.World.TileEntities;
@@ -42,10 +40,16 @@ namespace Orion.Packets.World.TileEntities {
         private int _x;
         private int _y;
 
-        /// <inheritdoc cref="ITileEntity.Type"/>
+        /// <summary>
+        /// Gets the tile entity's type.
+        /// </summary>
+        /// <value>The tile entity's type.</value>
         public abstract TileEntityType Type { get; }
 
-        /// <inheritdoc cref="ITileEntity.Index"/>
+        /// <summary>
+        /// Gets or sets the tile entity's index.
+        /// </summary>
+        /// <value>The tile entity's index.</value>
         public int Index {
             get => _index;
             set {
@@ -54,7 +58,10 @@ namespace Orion.Packets.World.TileEntities {
             }
         }
 
-        /// <inheritdoc cref="ITileEntity.X"/>
+        /// <summary>
+        /// Gets or sets the tile entity's X coordinate.
+        /// </summary>
+        /// <value>The tile entity's X coordinate.</value>
         public int X {
             get => _x;
             set {
@@ -62,8 +69,11 @@ namespace Orion.Packets.World.TileEntities {
                 IsDirty = true;
             }
         }
-
-        /// <inheritdoc cref="ITileEntity.Y"/>
+        
+        /// <summary>
+        /// Gets or sets the tile entity's Y coordinate.
+        /// </summary>
+        /// <value>The tile entity's Y coordinate.</value>
         public int Y {
             get => _y;
             set {
@@ -96,10 +106,6 @@ namespace Orion.Packets.World.TileEntities {
 
         /// <inheritdoc/>
         public void Clean() => IsDirty = false;
-
-        /// <inheritdoc/>
-        [Pure, ExcludeFromCodeCoverage]
-        public override string ToString() => $"{Type} @ ({X}, {Y})";
 
         private void ReadFromReaderImpl(BinaryReader reader, int? indexHint = null) {
             _index = indexHint ?? ((short)Type > byte.MaxValue ? reader.ReadInt16() : reader.ReadInt32());

@@ -66,11 +66,13 @@ namespace Orion.Packets.World.Tiles {
         /// <summary>
         /// Gets the width.
         /// </summary>
+        /// <value>The width.</value>
         public int Width { get; }
 
         /// <summary>
         /// Gets the height.
         /// </summary>
+        /// <value>The height.</value>
         public int Height { get; }
 
         /// <summary>

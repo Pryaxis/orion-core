@@ -16,8 +16,6 @@
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
 using System;
-using System.Diagnostics.CodeAnalysis;
-using System.Diagnostics.Contracts;
 using System.IO;
 using Orion.Packets.Extensions;
 using TerrariaNetworkText = Terraria.Localization.NetworkText;
@@ -28,7 +26,7 @@ namespace Orion.Packets.Players {
     /// <see cref="PlayerPasswordResponsePacket"/> or for various other reasons.
     /// </summary>
     public sealed class PlayerDisconnectPacket : Packet {
-        private TerrariaNetworkText _playerDisconnectReason = TerrariaNetworkText.Empty;
+        private TerrariaNetworkText _disconnectReason = TerrariaNetworkText.Empty;
 
         /// <inheritdoc/>
         public override PacketType Type => PacketType.PlayerDisconnect;
@@ -36,24 +34,21 @@ namespace Orion.Packets.Players {
         /// <summary>
         /// Gets or sets the player's disconnect reason.
         /// </summary>
+        /// <value>The player's disconnect reason.</value>
         /// <exception cref="ArgumentNullException"><paramref name="value"/> is <see langword="null"/>.</exception>
-        public string PlayerDisconnectReason {
-            get => _playerDisconnectReason.ToString();
+        public string DisconnectReason {
+            get => _disconnectReason.ToString();
             set {
-                _playerDisconnectReason =
+                _disconnectReason =
                     TerrariaNetworkText.FromLiteral(value ?? throw new ArgumentNullException(nameof(value)));
                 _isDirty = true;
             }
         }
 
-        /// <inheritdoc/>
-        [Pure, ExcludeFromCodeCoverage]
-        public override string ToString() => $"{Type}[{PlayerDisconnectReason}]";
-
         private protected override void ReadFromReader(BinaryReader reader, PacketContext context) =>
-            _playerDisconnectReason = reader.ReadNetworkText();
+            _disconnectReason = reader.ReadNetworkText();
 
         private protected override void WriteToWriter(BinaryWriter writer, PacketContext context) =>
-            writer.Write(_playerDisconnectReason);
+            writer.Write(_disconnectReason);
     }
 }

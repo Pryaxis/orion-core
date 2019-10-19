@@ -15,8 +15,6 @@
 // You should have received a copy of the GNU General Public License
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
-using System.Diagnostics.CodeAnalysis;
-using System.Diagnostics.Contracts;
 using System.IO;
 using Orion.Items;
 
@@ -25,11 +23,11 @@ namespace Orion.Packets.World.TileEntities {
     /// Packet sent from the client to the server to set an item frame.
     /// </summary>
     public sealed class ItemFramePacket : Packet {
-        private short _itemFrameX;
-        private short _itemFrameY;
+        private short _x;
+        private short _y;
         private ItemType _itemType;
         private ItemPrefix _itemPrefix;
-        private short _itemStackSize;
+        private short _stackSize;
 
         /// <inheritdoc/>
         public override PacketType Type => PacketType.ItemFrame;
@@ -37,10 +35,11 @@ namespace Orion.Packets.World.TileEntities {
         /// <summary>
         /// Gets or sets the item frame's X coordinate.
         /// </summary>
-        public short ItemFrameX {
-            get => _itemFrameX;
+        /// <value>The item frame's X coordinate.</value>
+        public short X {
+            get => _x;
             set {
-                _itemFrameX = value;
+                _x = value;
                 _isDirty = true;
             }
         }
@@ -48,10 +47,11 @@ namespace Orion.Packets.World.TileEntities {
         /// <summary>
         /// Gets or sets the item frame's Y coordinate.
         /// </summary>
-        public short ItemFrameY {
-            get => _itemFrameY;
+        /// <value>The item frame's Y coordinate.</value>
+        public short Y {
+            get => _y;
             set {
-                _itemFrameY = value;
+                _y = value;
                 _isDirty = true;
             }
         }
@@ -59,6 +59,7 @@ namespace Orion.Packets.World.TileEntities {
         /// <summary>
         /// Gets or sets the item's type.
         /// </summary>
+        /// <value>The item's type.</value>
         public ItemType ItemType {
             get => _itemType;
             set {
@@ -70,6 +71,7 @@ namespace Orion.Packets.World.TileEntities {
         /// <summary>
         /// Gets or sets the item's prefix.
         /// </summary>
+        /// <value>The item's prefix.</value>
         public ItemPrefix ItemPrefix {
             get => _itemPrefix;
             set {
@@ -81,34 +83,29 @@ namespace Orion.Packets.World.TileEntities {
         /// <summary>
         /// Gets or sets the item's stack size.
         /// </summary>
-        public short ItemStackSize {
-            get => _itemStackSize;
+        /// <value>The item's stack size.</value>
+        public short StackSize {
+            get => _stackSize;
             set {
-                _itemStackSize = value;
+                _stackSize = value;
                 _isDirty = true;
             }
         }
 
-        /// <inheritdoc/>
-        [Pure, ExcludeFromCodeCoverage]
-        public override string ToString() =>
-            $"{Type}[({ItemFrameX}, {ItemFrameY}) is " +
-            $"{(ItemPrefix != 0 ? $"{ItemPrefix} " : string.Empty)}{ItemType} x{ItemStackSize}]";
-
         private protected override void ReadFromReader(BinaryReader reader, PacketContext context) {
-            _itemFrameX = reader.ReadInt16();
-            _itemFrameY = reader.ReadInt16();
+            _x = reader.ReadInt16();
+            _y = reader.ReadInt16();
             _itemType = (ItemType)reader.ReadInt16();
             _itemPrefix = (ItemPrefix)reader.ReadByte();
-            _itemStackSize = reader.ReadInt16();
+            _stackSize = reader.ReadInt16();
         }
 
         private protected override void WriteToWriter(BinaryWriter writer, PacketContext context) {
-            writer.Write(_itemFrameX);
-            writer.Write(_itemFrameY);
+            writer.Write(_x);
+            writer.Write(_y);
             writer.Write((short)_itemType);
             writer.Write((byte)_itemPrefix);
-            writer.Write(_itemStackSize);
+            writer.Write(_stackSize);
         }
     }
 }

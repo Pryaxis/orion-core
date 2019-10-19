@@ -36,7 +36,7 @@ namespace Orion.Projectiles {
         }
 
         [Fact]
-        public void Name_Set_NullValue_ThrowsArgumentNullException() {
+        public void Name_SetNullValue_ThrowsArgumentNullException() {
             var terrariaProjectile = new TerrariaProjectile();
             var projectile = new OrionProjectile(terrariaProjectile);
             Action action = () => projectile.Name = null;

@@ -15,21 +15,19 @@
 // You should have received a copy of the GNU General Public License
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
-using System.Diagnostics.CodeAnalysis;
-using System.Diagnostics.Contracts;
 using System.IO;
 using Microsoft.Xna.Framework;
 using Orion.Packets.Extensions;
 
 namespace Orion.Packets.Npcs {
     /// <summary>
-    /// Packet sent to cause an NPC to steal a coin. This is sent from clients and the logic occurs clientside, but the
-    /// server echoes the packet back to clients, which may cause desync issues.
+    /// Packet sent to cause an NPC to steal coins. This is sent from clients and the logic occurs clientside, but the
+    /// server echoes the packet back to clients which may cause desync issues.
     /// </summary>
     public sealed class NpcStealCoinsPacket : Packet {
         private short _npcIndex;
-        private float _npcStolenValue;
-        private Vector2 _coinsPosition;
+        private float _value;
+        private Vector2 _position;
 
         /// <inheritdoc/>
         public override PacketType Type => PacketType.NpcStealCoins;
@@ -37,6 +35,7 @@ namespace Orion.Packets.Npcs {
         /// <summary>
         /// Gets or sets the NPC index.
         /// </summary>
+        /// <value>The NPC index.</value>
         public short NpcIndex {
             get => _npcIndex;
             set {
@@ -48,39 +47,41 @@ namespace Orion.Packets.Npcs {
         /// <summary>
         /// Gets or sets the NPC's stolen value.
         /// </summary>
-        public float NpcStolenValue {
-            get => _npcStolenValue;
+        /// <value>The NPC's stolen value.</value>
+        /// <remarks>
+        /// This value corresponds to copper coins 1:1. Thus, a value of 100 corresponds to a silver coin, a value of
+        /// 10,000 corresponds to a gold coin, and a value of 1,000,000 corresponds to a platinum coin.
+        /// </remarks>
+        public float Value {
+            get => _value;
             set {
-                _npcStolenValue = value;
+                _value = value;
                 _isDirty = true;
             }
         }
 
         /// <summary>
-        /// Gets or sets the coins' position. The components are pixel-based.
+        /// Gets or sets the coins' position. The components are pixels.
         /// </summary>
-        public Vector2 CoinsPosition {
-            get => _coinsPosition;
+        /// <value>The coins' position.</value>
+        public Vector2 Position {
+            get => _position;
             set {
-                _coinsPosition = value;
+                _position = value;
                 _isDirty = true;
             }
         }
 
-        /// <inheritdoc/>
-        [Pure, ExcludeFromCodeCoverage]
-        public override string ToString() => $"{Type}[#={NpcIndex} stole {NpcStolenValue} @ {CoinsPosition}]";
-
         private protected override void ReadFromReader(BinaryReader reader, PacketContext context) {
             _npcIndex = reader.ReadInt16();
-            _npcStolenValue = reader.ReadSingle();
-            _coinsPosition = reader.ReadVector2();
+            _value = reader.ReadSingle();
+            _position = reader.ReadVector2();
         }
 
         private protected override void WriteToWriter(BinaryWriter writer, PacketContext context) {
             writer.Write(_npcIndex);
-            writer.Write(_npcStolenValue);
-            writer.Write(in _coinsPosition);
+            writer.Write(_value);
+            writer.Write(in _position);
         }
     }
 }

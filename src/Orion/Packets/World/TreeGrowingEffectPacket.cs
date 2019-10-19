@@ -15,8 +15,6 @@
 // You should have received a copy of the GNU General Public License
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
-using System.Diagnostics.CodeAnalysis;
-using System.Diagnostics.Contracts;
 using System.IO;
 
 namespace Orion.Packets.World {
@@ -25,9 +23,9 @@ namespace Orion.Packets.World {
     /// </summary>
     public sealed class TreeGrowingEffectPacket : Packet {
         private byte _data;
-        private short _treeX;
-        private short _treeY;
-        private byte _treeHeight;
+        private short _x;
+        private short _y;
+        private byte _height;
         private short _treeType;
 
         /// <inheritdoc/>
@@ -36,10 +34,11 @@ namespace Orion.Packets.World {
         /// <summary>
         /// Gets or sets the tree's X coordinate.
         /// </summary>
-        public short TreeX {
-            get => _treeX;
+        /// <value>The tree's X coordinate.</value>
+        public short X {
+            get => _x;
             set {
-                _treeX = value;
+                _x = value;
                 _isDirty = true;
             }
         }
@@ -47,10 +46,11 @@ namespace Orion.Packets.World {
         /// <summary>
         /// Gets or sets the tree's Y coordinate.
         /// </summary>
-        public short TreeY {
-            get => _treeY;
+        /// <value>The tree's Y coordinate.</value>
+        public short Y {
+            get => _y;
             set {
-                _treeY = value;
+                _y = value;
                 _isDirty = true;
             }
         }
@@ -58,10 +58,11 @@ namespace Orion.Packets.World {
         /// <summary>
         /// Gets or sets the tree height.
         /// </summary>
-        public byte TreeHeight {
-            get => _treeHeight;
+        /// <value>The tree height.</value>
+        public byte Height {
+            get => _height;
             set {
-                _treeHeight = value;
+                _height = value;
                 _isDirty = true;
             }
         }
@@ -69,6 +70,7 @@ namespace Orion.Packets.World {
         /// <summary>
         /// Gets or sets the tree type.
         /// </summary>
+        /// <value>The tree type.</value>
         public short TreeType {
             get => _treeType;
             set {
@@ -77,24 +79,20 @@ namespace Orion.Packets.World {
             }
         }
 
-        /// <inheritdoc/>
-        [Pure, ExcludeFromCodeCoverage]
-        public override string ToString() => $"{Type}[({TreeX}, {TreeY}), ...]";
-
         private protected override void ReadFromReader(BinaryReader reader, PacketContext context) {
             // This byte is basically useless, but we'll keep track of it anyways.
             _data = reader.ReadByte();
-            _treeX = reader.ReadInt16();
-            _treeY = reader.ReadInt16();
-            _treeHeight = reader.ReadByte();
+            _x = reader.ReadInt16();
+            _y = reader.ReadInt16();
+            _height = reader.ReadByte();
             _treeType = reader.ReadInt16();
         }
 
         private protected override void WriteToWriter(BinaryWriter writer, PacketContext context) {
             writer.Write(_data);
-            writer.Write(_treeX);
-            writer.Write(_treeY);
-            writer.Write(_treeHeight);
+            writer.Write(_x);
+            writer.Write(_y);
+            writer.Write(_height);
             writer.Write(_treeType);
         }
     }

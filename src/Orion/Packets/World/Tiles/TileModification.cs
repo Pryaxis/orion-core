@@ -17,7 +17,7 @@
 
 namespace Orion.Packets.World.Tiles {
     /// <summary>
-    /// Specifies a tile modification in a <see cref="TileModificationPacket"/>.
+    /// Specifies the tile modification in a <see cref="TileModificationPacket"/>.
     /// </summary>
     public enum TileModification : byte {
         /// <summary>

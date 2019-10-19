@@ -15,8 +15,6 @@
 // You should have received a copy of the GNU General Public License
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
-using System.Diagnostics.CodeAnalysis;
-using System.Diagnostics.Contracts;
 using System.IO;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics.PackedVector;
@@ -26,30 +24,27 @@ namespace Orion.Packets.World {
     /// Packet sent from the server to the client to show a poof of smoke.
     /// </summary>
     public sealed class PoofOfSmokePacket : Packet {
-        private Vector2 _smokePosition;
+        private Vector2 _position;
 
         /// <inheritdoc/>
         public override PacketType Type => PacketType.PoofOfSmoke;
 
         /// <summary>
-        /// Gets or sets the smoke's position. The components are pixel-based.
+        /// Gets or sets the smoke's position. The components are pixels.
         /// </summary>
-        public Vector2 SmokePosition {
-            get => _smokePosition;
+        /// <value>The smoke's position.</value>
+        public Vector2 Position {
+            get => _position;
             set {
-                _smokePosition = value;
+                _position = value;
                 _isDirty = true;
             }
         }
 
-        /// <inheritdoc/>
-        [Pure, ExcludeFromCodeCoverage]
-        public override string ToString() => $"{Type}[({SmokePosition})]";
-
         private protected override void ReadFromReader(BinaryReader reader, PacketContext context) =>
-            _smokePosition = new HalfVector2 { PackedValue = reader.ReadUInt32() }.ToVector2();
+            _position = new HalfVector2 { PackedValue = reader.ReadUInt32() }.ToVector2();
 
         private protected override void WriteToWriter(BinaryWriter writer, PacketContext context) =>
-            writer.Write(new HalfVector2(SmokePosition).PackedValue);
+            writer.Write(new HalfVector2(Position).PackedValue);
     }
 }

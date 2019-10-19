@@ -60,7 +60,7 @@ namespace Orion.Events.Npcs {
             var npc = new Mock<INpc>().Object;
             var args = new NpcLootEventArgs(npc, ItemType.None, 5167, ItemPrefix.None);
 
-            args.ItemStackSize.Should().Be(5167);
+            args.StackSize.Should().Be(5167);
         }
 
         [Fact]

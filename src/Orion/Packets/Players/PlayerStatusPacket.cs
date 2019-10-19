@@ -16,8 +16,6 @@
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
 using System;
-using System.Diagnostics.CodeAnalysis;
-using System.Diagnostics.Contracts;
 using System.IO;
 using Orion.Packets.Extensions;
 using TerrariaNetworkText = Terraria.Localization.NetworkText;
@@ -27,8 +25,8 @@ namespace Orion.Packets.Players {
     /// Packet sent from the server to the client to set the player's status.
     /// </summary>
     public sealed class PlayerStatusPacket : Packet {
-        private TerrariaNetworkText _playerStatusText = TerrariaNetworkText.Empty;
-        private int _playerStatusIncrease;
+        private TerrariaNetworkText _statusText = TerrariaNetworkText.Empty;
+        private int _statusIncrease;
 
         /// <inheritdoc/>
         public override PacketType Type => PacketType.PlayerStatus;
@@ -36,10 +34,11 @@ namespace Orion.Packets.Players {
         /// <summary>
         /// Gets or sets the player's status increase.
         /// </summary>
-        public int PlayerStatusIncrease {
-            get => _playerStatusIncrease;
+        /// <value>The player's status increase.</value>
+        public int StatusIncrease {
+            get => _statusIncrease;
             set {
-                _playerStatusIncrease = value;
+                _statusIncrease = value;
                 _isDirty = true;
             }
         }
@@ -47,28 +46,25 @@ namespace Orion.Packets.Players {
         /// <summary>
         /// Gets or sets the player's status text.
         /// </summary>
+        /// <value>The player's status text.</value>
         /// <exception cref="ArgumentNullException"><paramref name="value"/> is <see langword="null"/>.</exception>
-        public string PlayerStatusText {
-            get => _playerStatusText.ToString();
+        public string StatusText {
+            get => _statusText.ToString();
             set {
-                _playerStatusText =
+                _statusText =
                     TerrariaNetworkText.FromLiteral(value ?? throw new ArgumentNullException(nameof(value)));
                 _isDirty = true;
             }
         }
 
-        /// <inheritdoc/>
-        [Pure, ExcludeFromCodeCoverage]
-        public override string ToString() => $"{Type}[{PlayerStatusText}, I={PlayerStatusIncrease}]";
-
         private protected override void ReadFromReader(BinaryReader reader, PacketContext context) {
-            _playerStatusIncrease = reader.ReadInt32();
-            _playerStatusText = reader.ReadNetworkText();
+            _statusIncrease = reader.ReadInt32();
+            _statusText = reader.ReadNetworkText();
         }
 
         private protected override void WriteToWriter(BinaryWriter writer, PacketContext context) {
-            writer.Write(_playerStatusIncrease);
-            writer.Write(_playerStatusText);
+            writer.Write(_statusIncrease);
+            writer.Write(_statusText);
         }
     }
 }

@@ -31,18 +31,18 @@ namespace Orion.Events.Players {
         /// Gets or sets the player's clothes style.
         /// </summary>
         /// <value>The player's clothes style.</value>
-        public byte PlayerClothesStyle {
-            get => _packet.PlayerClothesStyle;
-            set => _packet.PlayerClothesStyle = value;
+        public byte ClothesStyle {
+            get => _packet.ClothesStyle;
+            set => _packet.ClothesStyle = value;
         }
 
         /// <summary>
         /// Gets or sets the player's hairstyle.
         /// </summary>
         /// <value>The player's hairstyle.</value>
-        public byte PlayerHairstyle {
-            get => _packet.PlayerHairstyle;
-            set => _packet.PlayerHairstyle = value;
+        public byte Hairstyle {
+            get => _packet.Hairstyle;
+            set => _packet.Hairstyle = value;
         }
 
         /// <summary>
@@ -50,18 +50,18 @@ namespace Orion.Events.Players {
         /// </summary>
         /// <value>The player's name.</value>
         /// <exception cref="ArgumentNullException"><paramref name="value"/> is <see langword="null"/>.</exception>
-        public string PlayerName {
-            get => _packet.PlayerName;
-            set => _packet.PlayerName = value ?? throw new ArgumentNullException(nameof(value));
+        public string Name {
+            get => _packet.Name;
+            set => _packet.Name = value ?? throw new ArgumentNullException(nameof(value));
         }
 
         /// <summary>
         /// Gets or sets the player's hair dye.
         /// </summary>
         /// <value>The player's hair dye.</value>
-        public byte PlayerHairDye {
-            get => _packet.PlayerHairDye;
-            set => _packet.PlayerHairDye = value;
+        public byte HairDye {
+            get => _packet.HairDye;
+            set => _packet.HairDye = value;
         }
         
         /// <summary>
@@ -69,9 +69,9 @@ namespace Orion.Events.Players {
         /// </summary>
         /// <value>The player's equipment hiding flags.</value>
         /// <remarks>This property specifies which of the player's equipment is visible.</remarks>
-        public ushort PlayerEquipmentHiddenFlags {
-            get => _packet.PlayerEquipmentHiddenFlags;
-            set => _packet.PlayerEquipmentHiddenFlags = value;
+        public ushort EquipmentHiddenFlags {
+            get => _packet.EquipmentHiddenFlags;
+            set => _packet.EquipmentHiddenFlags = value;
         }
         
         /// <summary>
@@ -79,81 +79,81 @@ namespace Orion.Events.Players {
         /// </summary>
         /// <value>The player's miscellaneous equipment hiding flags.</value>
         /// <remarks>This property specifies which of the player's miscellaneous equipment is visible.</remarks>
-        public byte PlayerMiscEquipmentHiddenFlags {
-            get => _packet.PlayerMiscEquipmentHiddenFlags;
-            set => _packet.PlayerMiscEquipmentHiddenFlags = value;
+        public byte MiscEquipmentHiddenFlags {
+            get => _packet.MiscEquipmentHiddenFlags;
+            set => _packet.MiscEquipmentHiddenFlags = value;
         }
         
         /// <summary>
         /// Gets or sets the player's hair color. The alpha component is ignored.
         /// </summary>
         /// <value>The player's hair color.</value>
-        public Color PlayerHairColor {
-            get => _packet.PlayerHairColor;
-            set => _packet.PlayerHairColor = value;
+        public Color HairColor {
+            get => _packet.HairColor;
+            set => _packet.HairColor = value;
         }
         
         /// <summary>
         /// Gets or sets the player's skin color. The alpha component is ignored.
         /// </summary>
         /// <value>The player's skin color.</value>
-        public Color PlayerSkinColor {
-            get => _packet.PlayerSkinColor;
-            set => _packet.PlayerSkinColor = value;
+        public Color SkinColor {
+            get => _packet.SkinColor;
+            set => _packet.SkinColor = value;
         }
         
         /// <summary>
         /// Gets or sets the player's eye color. The alpha component is ignored.
         /// </summary>
         /// <value>The player's eye color.</value>
-        public Color PlayerEyeColor {
-            get => _packet.PlayerEyeColor;
-            set => _packet.PlayerEyeColor = value;
+        public Color EyeColor {
+            get => _packet.EyeColor;
+            set => _packet.EyeColor = value;
         }
         
         /// <summary>
         /// Gets or sets the player's shirt color. The alpha component is ignored.
         /// </summary>
         /// <value>The player's shirt color.</value>
-        public Color PlayerShirtColor {
-            get => _packet.PlayerShirtColor;
-            set => _packet.PlayerShirtColor = value;
+        public Color ShirtColor {
+            get => _packet.ShirtColor;
+            set => _packet.ShirtColor = value;
         }
         
         /// <summary>
         /// Gets or sets the player's undershirt color. The alpha component is ignored.
         /// </summary>
         /// <value>The player's undershirt color.</value>
-        public Color PlayerUndershirtColor {
-            get => _packet.PlayerUndershirtColor;
-            set => _packet.PlayerUndershirtColor = value;
+        public Color UndershirtColor {
+            get => _packet.UndershirtColor;
+            set => _packet.UndershirtColor = value;
         }
         
         /// <summary>
         /// Gets or sets the player's pants color. The alpha component is ignored.
         /// </summary>
         /// <value>The player's pants color.</value>
-        public Color PlayerPantsColor {
-            get => _packet.PlayerPantsColor;
-            set => _packet.PlayerPantsColor = value;
+        public Color PantsColor {
+            get => _packet.PantsColor;
+            set => _packet.PantsColor = value;
         }
 
         /// <summary>
         /// Gets or sets the player's shoe color. The alpha component is ignored.
         /// </summary>
         /// <value>The player's shoe color.</value>
-        public Color PlayerShoeColor {
-            get => _packet.PlayerShoeColor;
-            set => _packet.PlayerShoeColor = value;
+        public Color ShoeColor {
+            get => _packet.ShoeColor;
+            set => _packet.ShoeColor = value;
         }
 
         /// <summary>
         /// Gets or sets the player's difficulty.
         /// </summary>
         /// <value>The player's difficulty.</value>
-        public PlayerDifficulty PlayerDifficulty {
-            get => _packet.PlayerDifficulty;
-            set => _packet.PlayerDifficulty = value;
+        public PlayerDifficulty Difficulty {
+            get => _packet.Difficulty;
+            set => _packet.Difficulty = value;
         }
 
         /// <summary>
@@ -164,11 +164,11 @@ namespace Orion.Events.Players {
         /// </value>
         /// <remarks>
         /// The extra accessory slot can be obtained with the <see cref="ItemType.DemonHeart"/> item. There is also
-        /// support for a seventh accessory slot, but it is not legitimately obtainable.
+        /// support for a seventh accessory slot but it is not legitimately obtainable.
         /// </remarks>
-        public bool PlayerHasExtraAccessorySlot {
-            get => _packet.PlayerHasExtraAccessorySlot;
-            set => _packet.PlayerHasExtraAccessorySlot = value;
+        public bool HasExtraAccessorySlot {
+            get => _packet.HasExtraAccessorySlot;
+            set => _packet.HasExtraAccessorySlot = value;
         }
 
         /// <summary>

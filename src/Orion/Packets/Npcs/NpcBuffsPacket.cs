@@ -15,8 +15,6 @@
 // You should have received a copy of the GNU General Public License
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
-using System.Diagnostics.CodeAnalysis;
-using System.Diagnostics.Contracts;
 using System.IO;
 using Orion.Entities;
 using Orion.Utils;
@@ -28,10 +26,10 @@ namespace Orion.Packets.Npcs {
     /// </summary>
     public sealed class NpcBuffsPacket : Packet {
         private short _npcIndex;
-        private DirtiableArray<Buff> _npcBuffs = new DirtiableArray<Buff>(TerrariaNpc.maxBuffs);
+        private DirtiableArray<Buff> _buffs = new DirtiableArray<Buff>(TerrariaNpc.maxBuffs);
 
         /// <inheritdoc/>
-        public override bool IsDirty => base.IsDirty || _npcBuffs.IsDirty;
+        public override bool IsDirty => base.IsDirty || _buffs.IsDirty;
 
         /// <inheritdoc/>
         public override PacketType Type => PacketType.NpcBuffs;
@@ -39,6 +37,7 @@ namespace Orion.Packets.Npcs {
         /// <summary>
         /// Gets or sets the NPC index.
         /// </summary>
+        /// <value>The NPC index.</value>
         public short NpcIndex {
             get => _npcIndex;
             set {
@@ -50,32 +49,29 @@ namespace Orion.Packets.Npcs {
         /// <summary>
         /// Gets the NPC's buffs. The buff durations are limited to approximately 546.1 seconds.
         /// </summary>
-        public IArray<Buff> NpcBuffs => _npcBuffs;
+        /// <value>The NPC's buffs.</value>
+        public IArray<Buff> Buffs => _buffs;
 
         /// <inheritdoc/>
         public override void Clean() {
             base.Clean();
-            _npcBuffs.Clean();
+            _buffs.Clean();
         }
-
-        /// <inheritdoc/>
-        [Pure, ExcludeFromCodeCoverage]
-        public override string ToString() => $"{Type}[...]";
 
         private protected override void ReadFromReader(BinaryReader reader, PacketContext context) {
             _npcIndex = reader.ReadInt16();
 
-            var npcBuffs = new Buff[_npcBuffs.Count];
-            for (var i = 0; i < _npcBuffs.Count; ++i) {
-                npcBuffs[i] = Buff.ReadFromReader(reader, 2);
+            var buffs = new Buff[_buffs.Count];
+            for (var i = 0; i < _buffs.Count; ++i) {
+                buffs[i] = Buff.ReadFromReader(reader, 2);
             }
 
-            _npcBuffs = new DirtiableArray<Buff>(npcBuffs);
+            _buffs = new DirtiableArray<Buff>(buffs);
         }
 
         private protected override void WriteToWriter(BinaryWriter writer, PacketContext context) {
             writer.Write(_npcIndex);
-            foreach (var buff in _npcBuffs) {
+            foreach (var buff in _buffs) {
                 buff.WriteToWriter(writer, 2);
             }
         }

@@ -64,10 +64,10 @@ namespace Orion.Events.Players {
         }
 
         [Fact]
-        public void PlayerUuid_Set_NullValue_ThrowsArgumentNullException() {
+        public void PlayerUuid_SetNullValue_ThrowsArgumentNullException() {
             var player = new Mock<IPlayer>().Object;
             var args = new PlayerUuidEventArgs(player, new PlayerUuidPacket());
-            Action action = () => args.PlayerUuid = null;
+            Action action = () => args.Uuid = null;
 
             action.Should().Throw<ArgumentNullException>();
         }

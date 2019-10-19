@@ -32,19 +32,19 @@ namespace Orion.Packets.Npcs {
         }
 
         [Fact]
-        public void NpcBuffs_SetItem_MarksAsDirty() {
+        public void Buffs_SetItem_MarksAsDirty() {
             var packet = new NpcBuffsPacket();
 
-            packet.NpcBuffs[0] = new Buff(BuffType.None, TimeSpan.Zero);
+            packet.Buffs[0] = new Buff(BuffType.None, TimeSpan.Zero);
 
             packet.ShouldBeDirty();
         }
 
         [Fact]
-        public void NpcBuffs_Count() {
+        public void Buffs_Count() {
             var packet = new NpcBuffsPacket();
 
-            packet.NpcBuffs.Count.Should().Be(TerrariaNpc.maxBuffs);
+            packet.Buffs.Count.Should().Be(TerrariaNpc.maxBuffs);
         }
 
         public static readonly byte[] Bytes = { 20, 0, 54, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
@@ -55,7 +55,7 @@ namespace Orion.Packets.Npcs {
             var packet = (NpcBuffsPacket)Packet.ReadFromStream(stream, PacketContext.Server);
 
             packet.NpcIndex.Should().Be(0);
-            foreach (var buff in packet.NpcBuffs) {
+            foreach (var buff in packet.Buffs) {
                 buff.Should().Be(new Buff(BuffType.None, TimeSpan.Zero));
             }
         }

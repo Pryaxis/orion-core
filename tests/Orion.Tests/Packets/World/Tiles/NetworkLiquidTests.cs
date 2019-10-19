@@ -40,9 +40,9 @@ namespace Orion.Packets.World.Tiles {
             using var reader = new BinaryReader(stream, Encoding.UTF8);
             var liquid = NetworkLiquid.ReadFromReader(reader, shouldSwapXY);
 
-            liquid.TileX.Should().Be((short)(shouldSwapXY ? 256 : 100));
-            liquid.TileY.Should().Be((short)(shouldSwapXY ? 100 : 256));
-            liquid.LiquidAmount.Should().Be(255);
+            liquid.X.Should().Be((short)(shouldSwapXY ? 256 : 100));
+            liquid.Y.Should().Be((short)(shouldSwapXY ? 100 : 256));
+            liquid.Amount.Should().Be(255);
             liquid.LiquidType.Should().Be(LiquidType.Water);
         }
 

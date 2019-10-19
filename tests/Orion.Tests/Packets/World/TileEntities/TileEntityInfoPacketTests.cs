@@ -91,7 +91,7 @@ namespace Orion.Packets.World.TileEntities {
             packet.TileEntity.Should().BeOfType<NetworkItemFrame>();
             packet.TileEntity.As<NetworkItemFrame>().ItemType.Should().Be(ItemType.Sdmg);
             packet.TileEntity.As<NetworkItemFrame>().ItemPrefix.Should().Be(ItemPrefix.Unreal);
-            packet.TileEntity.As<NetworkItemFrame>().ItemStackSize.Should().Be(1);
+            packet.TileEntity.As<NetworkItemFrame>().StackSize.Should().Be(1);
         }
 
         [Fact]
@@ -111,7 +111,7 @@ namespace Orion.Packets.World.TileEntities {
             packet.TileEntity.X.Should().Be(256);
             packet.TileEntity.Y.Should().Be(100);
             packet.TileEntity.Should().BeOfType<NetworkLogicSensor>();
-            packet.TileEntity.As<NetworkLogicSensor>().LogicSensorType.Should().Be(LogicSensorType.Daytime);
+            packet.TileEntity.As<NetworkLogicSensor>().SensorType.Should().Be(LogicSensorType.Daytime);
             packet.TileEntity.As<NetworkLogicSensor>().IsActivated.Should().BeTrue();
         }
 

@@ -35,9 +35,9 @@ namespace Orion.Packets.World {
             using var stream = new MemoryStream(Bytes);
             var packet = (TreeGrowingEffectPacket)Packet.ReadFromStream(stream, PacketContext.Server);
 
-            packet.TreeX.Should().Be(256);
-            packet.TreeY.Should().Be(100);
-            packet.TreeHeight.Should().Be(10);
+            packet.X.Should().Be(256);
+            packet.Y.Should().Be(100);
+            packet.Height.Should().Be(10);
             packet.TreeType.Should().Be(1);
         }
 

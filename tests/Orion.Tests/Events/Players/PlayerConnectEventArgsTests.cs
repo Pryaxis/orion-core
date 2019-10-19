@@ -64,10 +64,10 @@ namespace Orion.Events.Players {
         }
 
         [Fact]
-        public void PlayerVersionString_Set_NullValue_ThrowsArgumentNullException() {
+        public void VersionString_SetNullValue_ThrowsArgumentNullException() {
             var player = new Mock<IPlayer>().Object;
             var args = new PlayerConnectEventArgs(player, new PlayerConnectPacket());
-            Action action = () => args.PlayerVersionString = null;
+            Action action = () => args.VersionString = null;
 
             action.Should().Throw<ArgumentNullException>();
         }

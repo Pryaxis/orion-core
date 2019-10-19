@@ -28,7 +28,10 @@ namespace Orion.Packets.World.TileEntities {
         /// <inheritdoc/>
         public override TileEntityType Type => TileEntityType.TargetDummy;
 
-        /// <inheritdoc cref="ITargetDummy.NpcIndex"/>
+        /// <summary>
+        /// Gets or sets the target dummy's NPC index.
+        /// </summary>
+        /// <value>The target dummy's NPC index.</value>
         public int NpcIndex {
             get => _npcIndex;
             set {

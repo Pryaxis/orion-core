@@ -15,8 +15,6 @@
 // You should have received a copy of the GNU General Public License
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
-using System.Diagnostics.CodeAnalysis;
-using System.Diagnostics.Contracts;
 using System.IO;
 using Orion.Npcs;
 
@@ -26,7 +24,7 @@ namespace Orion.Packets.Npcs {
     /// </summary>
     public sealed class NpcKillCountPacket : Packet {
         private NpcType _npcType;
-        private int _npcTypeKillCount;
+        private int _killCount;
 
         /// <inheritdoc/>
         public override PacketType Type => PacketType.NpcKillCount;
@@ -34,6 +32,10 @@ namespace Orion.Packets.Npcs {
         /// <summary>
         /// Gets or sets the NPC type.
         /// </summary>
+        /// <value>The NPC type.</value>
+        /// <remarks>
+        /// There appears to be a bug where Terraria rejects this packet if the NPC type is larger than <c>267</c>.
+        /// </remarks>
         public NpcType NpcType {
             get => _npcType;
             set {
@@ -43,30 +45,25 @@ namespace Orion.Packets.Npcs {
         }
 
         /// <summary>
-        /// Gets or sets the NPC type kill count.
+        /// Gets or sets the NPC type's kill count.
         /// </summary>
-        public int NpcTypeKillCount {
-            get => _npcTypeKillCount;
+        /// <value>The NPC type's kill count.</value>
+        public int KillCount {
+            get => _killCount;
             set {
-                _npcTypeKillCount = value;
+                _killCount = value;
                 _isDirty = true;
             }
         }
 
-        /// <inheritdoc/>
-        [Pure, ExcludeFromCodeCoverage]
-        public override string ToString() => $"{Type}[{NpcType} x{NpcTypeKillCount}]";
-
-        /// <inheritdoc/>
         private protected override void ReadFromReader(BinaryReader reader, PacketContext context) {
             _npcType = (NpcType)reader.ReadInt16();
-            _npcTypeKillCount = reader.ReadInt32();
+            _killCount = reader.ReadInt32();
         }
 
-        /// <inheritdoc/>
         private protected override void WriteToWriter(BinaryWriter writer, PacketContext context) {
             writer.Write((short)_npcType);
-            writer.Write(_npcTypeKillCount);
+            writer.Write(_killCount);
         }
     }
 }

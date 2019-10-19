@@ -32,18 +32,18 @@ namespace Orion.Packets.Npcs {
         }
 
         [Fact]
-        public void NpcAiValues_SetItem_MarksAsDirty() {
+        public void AiValues_SetItem_MarksAsDirty() {
             var packet = new NpcInfoPacket();
-            packet.NpcAiValues[0] = 0;
+            packet.AiValues[0] = 0;
 
             packet.ShouldBeDirty();
         }
 
         [Fact]
-        public void NpcAiValues_Count() {
+        public void AiValues_Count() {
             var packet = new NpcInfoPacket();
 
-            packet.NpcAiValues.Count.Should().Be(TerrariaNpc.maxAI);
+            packet.AiValues.Count.Should().Be(TerrariaNpc.maxAI);
         }
 
         public static readonly byte[] Bytes = {
@@ -56,22 +56,22 @@ namespace Orion.Packets.Npcs {
             var packet = (NpcInfoPacket)Packet.ReadFromStream(stream, PacketContext.Server);
 
             packet.NpcIndex.Should().Be(1);
-            packet.NpcPosition.Should().Be(new Vector2(68002.3f, 6816));
-            packet.NpcVelocity.Should().Be(Vector2.Zero);
-            packet.NpcTargetIndex.Should().Be(255);
-            packet.NpcHorizontalDirection.Should().BeFalse();
-            packet.NpcVerticalDirection.Should().BeTrue();
+            packet.Position.Should().Be(new Vector2(68002.3f, 6816));
+            packet.Velocity.Should().Be(Vector2.Zero);
+            packet.TargetIndex.Should().Be(255);
+            packet.HorizontalDirection.Should().BeFalse();
+            packet.VerticalDirection.Should().BeTrue();
 
-            foreach (var aiValue in packet.NpcAiValues) {
+            foreach (var aiValue in packet.AiValues) {
                 aiValue.Should().Be(0);
             }
 
-            packet.NpcSpriteDirection.Should().BeFalse();
-            packet.IsNpcAtMaxHealth.Should().BeTrue();
+            packet.SpriteDirection.Should().BeFalse();
+            packet.IsAtMaxHealth.Should().BeTrue();
             packet.NpcType.Should().Be(NpcType.Guide);
-            packet.NpcNumberOfHealthBytes.Should().Be(0);
-            packet.NpcHealth.Should().Be(0);
-            packet.NpcReleaserPlayerIndex.Should().Be(0);
+            packet.NumberOfHealthBytes.Should().Be(0);
+            packet.Health.Should().Be(0);
+            packet.ReleaserIndex.Should().Be(0);
         }
 
         [Fact]

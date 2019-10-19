@@ -15,8 +15,6 @@
 // You should have received a copy of the GNU General Public License
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
-using System.Diagnostics.CodeAnalysis;
-using System.Diagnostics.Contracts;
 using System.IO;
 
 namespace Orion.Packets.World {
@@ -26,15 +24,16 @@ namespace Orion.Packets.World {
     public sealed class InvasionInfoPacket : Packet {
         private int _numberOfKills;
         private int _numberOfKillsToProgress;
-        private sbyte _invasionIconType;
-        private sbyte _invasionWaveNumber;
+        private sbyte _iconType;
+        private sbyte _waveNumber;
 
         /// <inheritdoc/>
         public override PacketType Type => PacketType.InvasionInfo;
 
         /// <summary>
-        /// Gets or sets the number of kills in the current wave.
+        /// Gets or sets the number of kills for the current wave.
         /// </summary>
+        /// <value>The number of kills for the current wave.</value>
         public int NumberOfKills {
             get => _numberOfKills;
             set {
@@ -44,8 +43,9 @@ namespace Orion.Packets.World {
         }
 
         /// <summary>
-        /// Gets or sets the number of kills to progress the current wave.
+        /// Gets or sets the number of kills to progress the the next wave.
         /// </summary>
+        /// <value>The number of kills to progress to the next wave.</value>
         public int NumberOfKillsToProgress {
             get => _numberOfKillsToProgress;
             set {
@@ -55,45 +55,42 @@ namespace Orion.Packets.World {
         }
 
         /// <summary>
-        /// Gets or sets the invasion icon type.
+        /// Gets or sets the invasion's icon type.
         /// </summary>
+        /// <value>The invasion's icon type.</value>
         // TODO: implement enum for this.
-        public sbyte InvasionIconType {
-            get => _invasionIconType;
+        public sbyte IconType {
+            get => _iconType;
             set {
-                _invasionIconType = value;
+                _iconType = value;
                 _isDirty = true;
             }
         }
 
         /// <summary>
-        /// Gets or sets the wave number.
+        /// Gets or sets the invasion's wave number.
         /// </summary>
-        public sbyte InvasionWaveNumber {
-            get => _invasionWaveNumber;
+        /// <value>The invasion's wave number.</value>
+        public sbyte WaveNumber {
+            get => _waveNumber;
             set {
-                _invasionWaveNumber = value;
+                _waveNumber = value;
                 _isDirty = true;
             }
         }
 
-        /// <inheritdoc/>
-        [Pure, ExcludeFromCodeCoverage]
-        public override string ToString() =>
-            $"{Type}[#={InvasionWaveNumber}: {NumberOfKills}/{NumberOfKillsToProgress}, ...]";
-
         private protected override void ReadFromReader(BinaryReader reader, PacketContext context) {
             _numberOfKills = reader.ReadInt32();
             _numberOfKillsToProgress = reader.ReadInt32();
-            _invasionIconType = reader.ReadSByte();
-            _invasionWaveNumber = reader.ReadSByte();
+            _iconType = reader.ReadSByte();
+            _waveNumber = reader.ReadSByte();
         }
 
         private protected override void WriteToWriter(BinaryWriter writer, PacketContext context) {
             writer.Write(_numberOfKills);
             writer.Write(_numberOfKillsToProgress);
-            writer.Write(_invasionIconType);
-            writer.Write(_invasionWaveNumber);
+            writer.Write(_iconType);
+            writer.Write(_waveNumber);
         }
     }
 }

@@ -15,38 +15,40 @@
 // You should have received a copy of the GNU General Public License
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
+using Orion.World.Tiles;
+
 namespace Orion.Packets.World.TileEntities {
     /// <summary>
-    /// Specifies a chest modification in a <see cref="ChestModificationPacket"/>.
+    /// Specifies the chest modification in a <see cref="ChestModificationPacket"/>.
     /// </summary>
     public enum ChestModification : byte {
         /// <summary>
-        /// Indicates that a chest should be placed.
+        /// Indicates that a <see cref="BlockType.Chests"/> should be placed.
         /// </summary>
         PlaceChest = 0,
 
         /// <summary>
-        /// Indicates that a chest should be broken.
+        /// Indicates that a <see cref="BlockType.Chests"/> should be broken.
         /// </summary>
         BreakChest = 1,
 
         /// <summary>
-        /// Indicates that a dresser should be placed.
+        /// Indicates that a <see cref="BlockType.Dressers"/> should be placed.
         /// </summary>
         PlaceDresser = 2,
 
         /// <summary>
-        /// Indicates that a dresser should be broken.
+        /// Indicates that a <see cref="BlockType.Dressers"/> should be broken.
         /// </summary>
         BreakDresser = 3,
 
         /// <summary>
-        /// Indicates that a chest should be placed.
+        /// Indicates that a <see cref="BlockType.Chests2"/> should be placed.
         /// </summary>
         PlaceChest2 = 4,
 
         /// <summary>
-        /// Indicates that a chest should be removed.
+        /// Indicates that a <see cref="BlockType.Chests2"/> should be removed.
         /// </summary>
         BreakChest2 = 5
     }

@@ -16,10 +16,9 @@
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
 using System;
-using System.Diagnostics.CodeAnalysis;
-using System.Diagnostics.Contracts;
 using System.IO;
 using Microsoft.Xna.Framework;
+using Orion.Items;
 using Orion.Packets.Extensions;
 using Orion.Players;
 
@@ -29,21 +28,21 @@ namespace Orion.Packets.Players {
     /// </summary>
     public sealed class PlayerDataPacket : Packet {
         private byte _playerIndex;
-        private byte _playerClothesStyle;
-        private byte _playerHairstyle;
-        private string _playerName = string.Empty;
-        private byte _playerHairDye;
-        private ushort _playerEquipmentHiddenFlags;
-        private byte _playerMiscEquipmentHiddenFlags;
-        private Color _playerHairColor;
-        private Color _playerSkinColor;
-        private Color _playerEyeColor;
-        private Color _playerShirtColor;
-        private Color _playerUndershirtColor;
-        private Color _playerPantsColor;
-        private Color _playerShoeColor;
-        private PlayerDifficulty _playerDifficulty;
-        private bool _playerHasExtraAccessorySlot;
+        private byte _clothesStyle;
+        private byte _hairstyle;
+        private string _name = string.Empty;
+        private byte _hairDye;
+        private ushort _equipmentHiddenFlags;
+        private byte _miscEquipmentHiddenFlags;
+        private Color _hairColor;
+        private Color _skinColor;
+        private Color _eyeColor;
+        private Color _shirtColor;
+        private Color _undershirtColor;
+        private Color _pantsColor;
+        private Color _shoeColor;
+        private PlayerDifficulty _difficulty;
+        private bool _hasExtraAccessorySlot;
 
         /// <inheritdoc/>
         public override PacketType Type => PacketType.PlayerData;
@@ -51,6 +50,7 @@ namespace Orion.Packets.Players {
         /// <summary>
         /// Gets or sets the player index.
         /// </summary>
+        /// <value>The player index.</value>
         public byte PlayerIndex {
             get => _playerIndex;
             set {
@@ -58,136 +58,150 @@ namespace Orion.Packets.Players {
                 _isDirty = true;
             }
         }
-
+        
         /// <summary>
-        /// Gets or sets the player's skin type.
+        /// Gets or sets the player's clothes style.
         /// </summary>
-        public byte PlayerClothesStyle {
-            get => _playerClothesStyle;
+        /// <value>The player's clothes style.</value>
+        public byte ClothesStyle {
+            get => _clothesStyle;
             set {
-                _playerClothesStyle = value;
+                _clothesStyle = value;
                 _isDirty = true;
             }
         }
-
+        
         /// <summary>
-        /// Gets or sets the player's hair type.
+        /// Gets or sets the player's hairstyle.
         /// </summary>
-        public byte PlayerHairstyle {
-            get => _playerHairstyle;
+        /// <value>The player's hairstyle.</value>
+        public byte Hairstyle {
+            get => _hairstyle;
             set {
-                _playerHairstyle = value;
+                _hairstyle = value;
                 _isDirty = true;
             }
         }
-
+        
         /// <summary>
         /// Gets or sets the player's name.
         /// </summary>
+        /// <value>The player's name.</value>
         /// <exception cref="ArgumentNullException"><paramref name="value"/> is <see langword="null"/>.</exception>
-        public string PlayerName {
-            get => _playerName;
+        public string Name {
+            get => _name;
             set {
-                _playerName = value ?? throw new ArgumentNullException(nameof(value));
+                _name = value ?? throw new ArgumentNullException(nameof(value));
                 _isDirty = true;
             }
         }
-
+        
         /// <summary>
         /// Gets or sets the player's hair dye.
         /// </summary>
-        public byte PlayerHairDye {
-            get => _playerHairDye;
+        /// <value>The player's hair dye.</value>
+        public byte HairDye {
+            get => _hairDye;
             set {
-                _playerHairDye = value;
+                _hairDye = value;
                 _isDirty = true;
             }
         }
-
+        
         /// <summary>
-        /// Gets or sets the player's hidden visuals flags.
+        /// Gets or sets the player's equipment hiding flags.
         /// </summary>
-        public ushort PlayerEquipmentHiddenFlags {
-            get => _playerEquipmentHiddenFlags;
+        /// <value>The player's equipment hiding flags.</value>
+        /// <remarks>This property specifies which of the player's equipment is visible.</remarks>
+        public ushort EquipmentHiddenFlags {
+            get => _equipmentHiddenFlags;
             set {
-                _playerEquipmentHiddenFlags = value;
+                _equipmentHiddenFlags = value;
                 _isDirty = true;
             }
         }
-
+        
         /// <summary>
-        /// Gets or sets the player's hidden misc flags.
+        /// Gets or sets the player's miscellaneous equipment hiding flags.
         /// </summary>
-        public byte PlayerMiscEquipmentHiddenFlags {
-            get => _playerMiscEquipmentHiddenFlags;
+        /// <value>The player's miscellaneous equipment hiding flags.</value>
+        /// <remarks>This property specifies which of the player's miscellaneous equipment is visible.</remarks>
+        public byte MiscEquipmentHiddenFlags {
+            get => _miscEquipmentHiddenFlags;
             set {
-                _playerMiscEquipmentHiddenFlags = value;
+                _miscEquipmentHiddenFlags = value;
                 _isDirty = true;
             }
         }
-
+        
         /// <summary>
         /// Gets or sets the player's hair color. The alpha component is ignored.
         /// </summary>
-        public Color PlayerHairColor {
-            get => _playerHairColor;
+        /// <value>The player's hair color.</value>
+        public Color HairColor {
+            get => _hairColor;
             set {
-                _playerHairColor = value;
+                _hairColor = value;
                 _isDirty = true;
             }
         }
-
+        
         /// <summary>
         /// Gets or sets the player's skin color. The alpha component is ignored.
         /// </summary>
-        public Color PlayerSkinColor {
-            get => _playerSkinColor;
+        /// <value>The player's skin color.</value>
+        public Color SkinColor {
+            get => _skinColor;
             set {
-                _playerSkinColor = value;
+                _skinColor = value;
                 _isDirty = true;
             }
         }
-
+        
         /// <summary>
         /// Gets or sets the player's eye color. The alpha component is ignored.
         /// </summary>
-        public Color PlayerEyeColor {
-            get => _playerEyeColor;
+        /// <value>The player's eye color.</value>
+        public Color EyeColor {
+            get => _eyeColor;
             set {
-                _playerEyeColor = value;
+                _eyeColor = value;
                 _isDirty = true;
             }
         }
-
+        
         /// <summary>
         /// Gets or sets the player's shirt color. The alpha component is ignored.
         /// </summary>
-        public Color PlayerShirtColor {
-            get => _playerShirtColor;
+        /// <value>The player's shirt color.</value>
+        public Color ShirtColor {
+            get => _shirtColor;
             set {
-                _playerShirtColor = value;
+                _shirtColor = value;
                 _isDirty = true;
             }
         }
-
+        
         /// <summary>
         /// Gets or sets the player's undershirt color. The alpha component is ignored.
         /// </summary>
-        public Color PlayerUndershirtColor {
-            get => _playerUndershirtColor;
+        /// <value>The player's undershirt color.</value>
+        public Color UndershirtColor {
+            get => _undershirtColor;
             set {
-                _playerUndershirtColor = value;
+                _undershirtColor = value;
                 _isDirty = true;
             }
         }
-
+        
         /// <summary>
         /// Gets or sets the player's pants color. The alpha component is ignored.
         /// </summary>
-        public Color PlayerPantsColor {
-            get => _playerPantsColor;
+        /// <value>The player's pants color.</value>
+        public Color PantsColor {
+            get => _pantsColor;
             set {
-                _playerPantsColor = value;
+                _pantsColor = value;
                 _isDirty = true;
             }
         }
@@ -195,10 +209,11 @@ namespace Orion.Packets.Players {
         /// <summary>
         /// Gets or sets the player's shoe color. The alpha component is ignored.
         /// </summary>
-        public Color PlayerShoeColor {
-            get => _playerShoeColor;
+        /// <value>The player's shoe color.</value>
+        public Color ShoeColor {
+            get => _shoeColor;
             set {
-                _playerShoeColor = value;
+                _shoeColor = value;
                 _isDirty = true;
             }
         }
@@ -206,79 +221,75 @@ namespace Orion.Packets.Players {
         /// <summary>
         /// Gets or sets the player's difficulty.
         /// </summary>
-        public PlayerDifficulty PlayerDifficulty {
-            get => _playerDifficulty;
+        /// <value>The player's difficulty.</value>
+        public PlayerDifficulty Difficulty {
+            get => _difficulty;
             set {
-                _playerDifficulty = value;
+                _difficulty = value;
                 _isDirty = true;
             }
         }
-
+        
         /// <summary>
-        /// Gets or sets a value indicating whether the player has an extra accessory.
+        /// Gets or sets a value indicating whether the player has an extra accessory slot.
         /// </summary>
-        public bool PlayerHasExtraAccessorySlot {
-            get => _playerHasExtraAccessorySlot;
+        /// <value>
+        /// <see langword="true"/> if the player has an extra accessory slot; otherwise, <see langword="false"/>.
+        /// </value>
+        /// <remarks>
+        /// The extra accessory slot can be obtained with the <see cref="ItemType.DemonHeart"/> item. There is also
+        /// support for a seventh accessory slot but it is not legitimately obtainable.
+        /// </remarks>
+        public bool HasExtraAccessorySlot {
+            get => _hasExtraAccessorySlot;
             set {
-                _playerHasExtraAccessorySlot = value;
+                _hasExtraAccessorySlot = value;
                 _isDirty = true;
             }
         }
-
-        /// <inheritdoc/>
-        [Pure, ExcludeFromCodeCoverage]
-        public override string ToString() => $"{Type}[#={PlayerIndex} is {PlayerName}, ...]";
 
         private protected override void ReadFromReader(BinaryReader reader, PacketContext context) {
             _playerIndex = reader.ReadByte();
-            _playerClothesStyle = reader.ReadByte();
-            _playerHairstyle = reader.ReadByte();
-            _playerName = reader.ReadString();
-            _playerHairDye = reader.ReadByte();
-            _playerEquipmentHiddenFlags = reader.ReadUInt16();
-            _playerMiscEquipmentHiddenFlags = reader.ReadByte();
-            _playerHairColor = reader.ReadColor();
-            _playerSkinColor = reader.ReadColor();
-            _playerEyeColor = reader.ReadColor();
-            _playerShirtColor = reader.ReadColor();
-            _playerUndershirtColor = reader.ReadColor();
-            _playerPantsColor = reader.ReadColor();
-            _playerShoeColor = reader.ReadColor();
+            _clothesStyle = reader.ReadByte();
+            _hairstyle = reader.ReadByte();
+            _name = reader.ReadString();
+            _hairDye = reader.ReadByte();
+            _equipmentHiddenFlags = reader.ReadUInt16();
+            _miscEquipmentHiddenFlags = reader.ReadByte();
+            _hairColor = reader.ReadColor();
+            _skinColor = reader.ReadColor();
+            _eyeColor = reader.ReadColor();
+            _shirtColor = reader.ReadColor();
+            _undershirtColor = reader.ReadColor();
+            _pantsColor = reader.ReadColor();
+            _shoeColor = reader.ReadColor();
 
             Terraria.BitsByte flags = reader.ReadByte();
-            if (flags[0]) {
-                _playerDifficulty = PlayerDifficulty.Mediumcore;
-            }
-
-            if (flags[1]) {
-                _playerDifficulty = PlayerDifficulty.Hardcore;
-            }
-
-            if (flags[2]) {
-                _playerHasExtraAccessorySlot = true;
-            }
+            if (flags[0]) _difficulty = PlayerDifficulty.Mediumcore;
+            if (flags[1]) _difficulty = PlayerDifficulty.Hardcore;
+            _hasExtraAccessorySlot = flags[2];
         }
 
         private protected override void WriteToWriter(BinaryWriter writer, PacketContext context) {
             writer.Write(_playerIndex);
-            writer.Write(_playerClothesStyle);
-            writer.Write(_playerHairstyle);
-            writer.Write(_playerName);
-            writer.Write(_playerHairDye);
-            writer.Write(_playerEquipmentHiddenFlags);
-            writer.Write(_playerMiscEquipmentHiddenFlags);
-            writer.Write(in _playerHairColor);
-            writer.Write(in _playerSkinColor);
-            writer.Write(in _playerEyeColor);
-            writer.Write(in _playerShirtColor);
-            writer.Write(in _playerUndershirtColor);
-            writer.Write(in _playerPantsColor);
-            writer.Write(in _playerShoeColor);
+            writer.Write(_clothesStyle);
+            writer.Write(_hairstyle);
+            writer.Write(_name);
+            writer.Write(_hairDye);
+            writer.Write(_equipmentHiddenFlags);
+            writer.Write(_miscEquipmentHiddenFlags);
+            writer.Write(in _hairColor);
+            writer.Write(in _skinColor);
+            writer.Write(in _eyeColor);
+            writer.Write(in _shirtColor);
+            writer.Write(in _undershirtColor);
+            writer.Write(in _pantsColor);
+            writer.Write(in _shoeColor);
 
             Terraria.BitsByte flags = 0;
-            flags[0] = _playerDifficulty == PlayerDifficulty.Mediumcore;
-            flags[1] = _playerDifficulty == PlayerDifficulty.Hardcore;
-            flags[2] = _playerHasExtraAccessorySlot;
+            flags[0] = _difficulty == PlayerDifficulty.Mediumcore;
+            flags[1] = _difficulty == PlayerDifficulty.Hardcore;
+            flags[2] = _hasExtraAccessorySlot;
             writer.Write(flags);
         }
     }

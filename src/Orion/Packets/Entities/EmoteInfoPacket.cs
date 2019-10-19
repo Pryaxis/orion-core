@@ -15,8 +15,6 @@
 // You should have received a copy of the GNU General Public License
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
-using System.Diagnostics.CodeAnalysis;
-using System.Diagnostics.Contracts;
 using System.IO;
 using Orion.Entities;
 
@@ -27,10 +25,10 @@ namespace Orion.Packets.Entities {
     public sealed class EmoteInfoPacket : Packet {
         private int _emoteIndex;
         private EmoteAnchorType _anchorType;
-        private ushort _anchorEntityIndex;
-        private byte _emoteLifetime;
+        private ushort _anchorIndex;
+        private byte _lifetime;
         private EmoteType _emoteType;
-        private ushort _emoteMetadata;
+        private ushort _metadata;
 
         /// <inheritdoc/>
         public override PacketType Type => PacketType.EmoteInfo;
@@ -38,6 +36,7 @@ namespace Orion.Packets.Entities {
         /// <summary>
         /// Gets or sets the emote index.
         /// </summary>
+        /// <value>The emote index.</value>
         public int EmoteIndex {
             get => _emoteIndex;
             set {
@@ -47,8 +46,9 @@ namespace Orion.Packets.Entities {
         }
 
         /// <summary>
-        /// Gets or sets the anchor type.
+        /// Gets or sets the emote's anchor type.
         /// </summary>
+        /// <value>The emote's anchor type.</value>
         public EmoteAnchorType AnchorType {
             get => _anchorType;
             set {
@@ -58,12 +58,13 @@ namespace Orion.Packets.Entities {
         }
 
         /// <summary>
-        /// Gets or sets the anchor's entity index.
+        /// Gets or sets the emote's anchor index.
         /// </summary>
-        public ushort AnchorEntityIndex {
-            get => _anchorEntityIndex;
+        /// <value>The emote's anchor index.</value>
+        public ushort AnchorIndex {
+            get => _anchorIndex;
             set {
-                _anchorEntityIndex = value;
+                _anchorIndex = value;
                 _isDirty = true;
             }
         }
@@ -71,10 +72,11 @@ namespace Orion.Packets.Entities {
         /// <summary>
         /// Gets or sets the emote's lifetime.
         /// </summary>
-        public byte EmoteLifetime {
-            get => _emoteLifetime;
+        /// <value>The emote's lifetime.</value>
+        public byte Lifetime {
+            get => _lifetime;
             set {
-                _emoteLifetime = value;
+                _lifetime = value;
                 _isDirty = true;
             }
         }
@@ -82,6 +84,7 @@ namespace Orion.Packets.Entities {
         /// <summary>
         /// Gets or sets the emote's type.
         /// </summary>
+        /// <value>The emote's type.</value>
         public EmoteType EmoteType {
             get => _emoteType;
             set {
@@ -93,17 +96,14 @@ namespace Orion.Packets.Entities {
         /// <summary>
         /// Gets or sets the emote's metadata.
         /// </summary>
-        public ushort EmoteMetadata {
-            get => _emoteMetadata;
+        /// <value>The emote's metadata.</value>
+        public ushort Metadata {
+            get => _metadata;
             set {
-                _emoteMetadata = value;
+                _metadata = value;
                 _isDirty = true;
             }
         }
-
-        /// <inheritdoc/>
-        [Pure, ExcludeFromCodeCoverage]
-        public override string ToString() => $"{Type}[#={EmoteIndex}, ...]";
 
         private protected override void ReadFromReader(BinaryReader reader, PacketContext context) {
             _emoteIndex = reader.ReadInt32();
@@ -112,14 +112,13 @@ namespace Orion.Packets.Entities {
                 return;
             }
 
-            _anchorEntityIndex = reader.ReadUInt16();
-            _emoteLifetime = reader.ReadByte();
-
+            _anchorIndex = reader.ReadUInt16();
+            _lifetime = reader.ReadByte();
             _emoteType = (EmoteType)reader.ReadByte();
 
             // NOTE: this is never possible and is a bug with Terraria.
             if (_emoteType < 0) {
-                _emoteMetadata = reader.ReadUInt16();
+                _metadata = reader.ReadUInt16();
             }
         }
 
@@ -130,12 +129,12 @@ namespace Orion.Packets.Entities {
                 return;
             }
 
-            writer.Write(_anchorEntityIndex);
-            writer.Write(_emoteLifetime);
+            writer.Write(_anchorIndex);
+            writer.Write(_lifetime);
 
             writer.Write((byte)_emoteType);
             if (_emoteType < 0) {
-                writer.Write(_emoteMetadata);
+                writer.Write(_metadata);
             }
         }
     }

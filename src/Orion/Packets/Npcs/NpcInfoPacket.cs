@@ -15,8 +15,6 @@
 // You should have received a copy of the GNU General Public License
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
-using System.Diagnostics.CodeAnalysis;
-using System.Diagnostics.Contracts;
 using System.IO;
 using Microsoft.Xna.Framework;
 using Orion.Npcs;
@@ -30,21 +28,21 @@ namespace Orion.Packets.Npcs {
     /// </summary>
     public sealed class NpcInfoPacket : Packet {
         private short _npcIndex;
-        private Vector2 _npcPosition;
-        private Vector2 _npcVelocity;
-        private ushort _npcTargetIndex;
-        private bool _npcHorizontalDirection;
-        private bool _npcVerticalDirection;
-        private bool _npcSpriteDirection;
-        private bool _isNpcAtMaxHealth;
+        private Vector2 _position;
+        private Vector2 _velocity;
+        private ushort _targetIndex;
+        private bool _horizontalDirection;
+        private bool _verticalDirection;
+        private bool _spriteDirection;
+        private bool _isAtMaxHealth;
         private NpcType _npcType;
-        private byte _npcNumberOfHealthBytes;
-        private int _npcHealth;
-        private byte _npcReleaserPlayerIndex;
-        private DirtiableArray<float> _npcAiValues = new DirtiableArray<float>(TerrariaNpc.maxAI);
+        private byte _numberOfHealthBytes;
+        private int _health;
+        private byte _releaserIndex;
+        private DirtiableArray<float> _aiValues = new DirtiableArray<float>(TerrariaNpc.maxAI);
 
         /// <inheritdoc/>
-        public override bool IsDirty => base.IsDirty || _npcAiValues.IsDirty;
+        public override bool IsDirty => base.IsDirty || _aiValues.IsDirty;
 
         /// <inheritdoc/>
         public override PacketType Type => PacketType.NpcInfo;
@@ -52,6 +50,7 @@ namespace Orion.Packets.Npcs {
         /// <summary>
         /// Gets or sets the NPC index.
         /// </summary>
+        /// <value>The NPC index.</value>
         public short NpcIndex {
             get => _npcIndex;
             set {
@@ -61,23 +60,25 @@ namespace Orion.Packets.Npcs {
         }
 
         /// <summary>
-        /// Gets or sets the NPC's position. The components are pixel-based.
+        /// Gets or sets the NPC's position. The components are pixels.
         /// </summary>
-        public Vector2 NpcPosition {
-            get => _npcPosition;
+        /// <value>The NPC's position.</value>
+        public Vector2 Position {
+            get => _position;
             set {
-                _npcPosition = value;
+                _position = value;
                 _isDirty = true;
             }
         }
 
         /// <summary>
-        /// Gets or sets the NPC's velocity. The components are pixel-based.
+        /// Gets or sets the NPC's velocity. The components are pixels per tick.
         /// </summary>
-        public Vector2 NpcVelocity {
-            get => _npcVelocity;
+        /// <value>The NPC's index.</value>
+        public Vector2 Velocity {
+            get => _velocity;
             set {
-                _npcVelocity = value;
+                _velocity = value;
                 _isDirty = true;
             }
         }
@@ -85,11 +86,18 @@ namespace Orion.Packets.Npcs {
         /// <summary>
         /// Gets or sets the NPC's target index.
         /// </summary>
-        // TODO: convert this to a specific type
-        public ushort NpcTargetIndex {
-            get => _npcTargetIndex;
+        /// <value>The NPC's target index.</value>
+        /// <remarks>
+        /// If the target index is under <c>300</c>, then the NPC is targeting a player. If the target index is at least
+        /// <c>300</c>, then the NPC is targeting an NPC with the index offset by <c>300</c>. <para/>
+        /// 
+        /// There appears to be a bug where Terraria defaults this value to <c>0</c> instead of <c>-1</c>. This property
+        /// replicates that for accuracy.
+        /// </remarks>
+        public ushort TargetIndex {
+            get => _targetIndex;
             set {
-                _npcTargetIndex = value;
+                _targetIndex = value;
                 _isDirty = true;
             }
         }
@@ -97,10 +105,11 @@ namespace Orion.Packets.Npcs {
         /// <summary>
         /// Gets or sets a value indicating the horizontal direction of the NPC.
         /// </summary>
-        public bool NpcHorizontalDirection {
-            get => _npcHorizontalDirection;
+        /// <value><see langword="true"/> if the NPC is facing right; otherwise, <see langword="false"/>.</value>
+        public bool HorizontalDirection {
+            get => _horizontalDirection;
             set {
-                _npcHorizontalDirection = value;
+                _horizontalDirection = value;
                 _isDirty = true;
             }
         }
@@ -108,10 +117,11 @@ namespace Orion.Packets.Npcs {
         /// <summary>
         /// Gets or sets a value indicating the vertical direction of the NPC.
         /// </summary>
-        public bool NpcVerticalDirection {
-            get => _npcVerticalDirection;
+        /// <value><see langword="true"/> if the NPC is facing right; otherwise, <see langword="false"/>.</value>
+        public bool VerticalDirection {
+            get => _verticalDirection;
             set {
-                _npcVerticalDirection = value;
+                _verticalDirection = value;
                 _isDirty = true;
             }
         }
@@ -119,15 +129,19 @@ namespace Orion.Packets.Npcs {
         /// <summary>
         /// Gets the NPC's AI values.
         /// </summary>
-        public IArray<float> NpcAiValues => _npcAiValues;
+        /// <value>The NPC's AI values.</value>
+        public IArray<float> AiValues => _aiValues;
 
         /// <summary>
-        /// Gets or sets a value indicating the direction of the NPC sprite.
+        /// Gets or sets a value indicating the direction of the NPC's sprite.
         /// </summary>
-        public bool NpcSpriteDirection {
-            get => _npcSpriteDirection;
+        /// <value>
+        /// <see langword="true"/> if the NPC's sprite is facing right; otherwise, <see langword="false"/>.
+        /// </value>
+        public bool SpriteDirection {
+            get => _spriteDirection;
             set {
-                _npcSpriteDirection = value;
+                _spriteDirection = value;
                 _isDirty = true;
             }
         }
@@ -135,10 +149,11 @@ namespace Orion.Packets.Npcs {
         /// <summary>
         /// Gets or set a value indicating whether the NPC is at maximum health.
         /// </summary>
-        public bool IsNpcAtMaxHealth {
-            get => _isNpcAtMaxHealth;
+        /// <value><see langword="true"/> if the NPC is at maximum health; otherwise, <see langword="false"/>.</value>
+        public bool IsAtMaxHealth {
+            get => _isAtMaxHealth;
             set {
-                _isNpcAtMaxHealth = value;
+                _isAtMaxHealth = value;
                 _isDirty = true;
             }
         }
@@ -146,6 +161,7 @@ namespace Orion.Packets.Npcs {
         /// <summary>
         /// Gets or sets the NPC's type.
         /// </summary>
+        /// <value>The NPC's type.</value>
         public NpcType NpcType {
             get => _npcType;
             set {
@@ -157,10 +173,11 @@ namespace Orion.Packets.Npcs {
         /// <summary>
         /// Gets or sets the number of bytes that represent the NPC's health. Values are 1, 2, or 4.
         /// </summary>
-        public byte NpcNumberOfHealthBytes {
-            get => _npcNumberOfHealthBytes;
+        /// <value>The number of bytes that represent the NPC's health.</value>
+        public byte NumberOfHealthBytes {
+            get => _numberOfHealthBytes;
             set {
-                _npcNumberOfHealthBytes = value;
+                _numberOfHealthBytes = value;
                 _isDirty = true;
             }
         }
@@ -168,21 +185,23 @@ namespace Orion.Packets.Npcs {
         /// <summary>
         /// Gets or sets the NPC's health.
         /// </summary>
-        public int NpcHealth {
-            get => _npcHealth;
+        /// <value>The NPC's health.</value>
+        public int Health {
+            get => _health;
             set {
-                _npcHealth = value;
+                _health = value;
                 _isDirty = true;
             }
         }
 
         /// <summary>
-        /// Gets or sets the NPC's releaser player index.
+        /// Gets or sets the NPC's releaser's player index.
         /// </summary>
-        public byte NpcReleaserPlayerIndex {
-            get => _npcReleaserPlayerIndex;
+        /// <value>The NPC's releaser's player index.</value>
+        public byte ReleaserIndex {
+            get => _releaserIndex;
             set {
-                _npcReleaserPlayerIndex = value;
+                _releaserIndex = value;
                 _isDirty = true;
             }
         }
@@ -190,40 +209,36 @@ namespace Orion.Packets.Npcs {
         /// <inheritdoc/>
         public override void Clean() {
             base.Clean();
-            _npcAiValues.Clean();
+            _aiValues.Clean();
         }
-
-        /// <inheritdoc/>
-        [Pure, ExcludeFromCodeCoverage]
-        public override string ToString() => $"{Type}[#={NpcIndex}, {NpcType} @ {NpcPosition}, ...]";
 
         private protected override void ReadFromReader(BinaryReader reader, PacketContext context) {
             _npcIndex = reader.ReadInt16();
-            _npcPosition = reader.ReadVector2();
-            _npcVelocity = reader.ReadVector2();
+            _position = reader.ReadVector2();
+            _velocity = reader.ReadVector2();
 
             var targetIndex = reader.ReadUInt16();
-            _npcTargetIndex = targetIndex != ushort.MaxValue ? targetIndex : (ushort)0;
+            _targetIndex = targetIndex != ushort.MaxValue ? targetIndex : (ushort)0;
 
             Terraria.BitsByte header = reader.ReadByte();
-            _npcHorizontalDirection = header[0];
-            _npcVerticalDirection = header[1];
+            _horizontalDirection = header[0];
+            _verticalDirection = header[1];
 
-            var npcAiValues = new float[_npcAiValues.Count];
-            if (header[2]) npcAiValues[0] = reader.ReadSingle();
-            if (header[3]) npcAiValues[1] = reader.ReadSingle();
-            if (header[4]) npcAiValues[2] = reader.ReadSingle();
-            if (header[5]) npcAiValues[3] = reader.ReadSingle();
+            var aiValues = new float[_aiValues.Count];
+            if (header[2]) aiValues[0] = reader.ReadSingle();
+            if (header[3]) aiValues[1] = reader.ReadSingle();
+            if (header[4]) aiValues[2] = reader.ReadSingle();
+            if (header[5]) aiValues[3] = reader.ReadSingle();
 
-            _npcAiValues = new DirtiableArray<float>(npcAiValues);
-            _npcSpriteDirection = header[6];
-            _isNpcAtMaxHealth = header[7];
+            _aiValues = new DirtiableArray<float>(aiValues);
+            _spriteDirection = header[6];
+            _isAtMaxHealth = header[7];
 
             _npcType = (NpcType)reader.ReadInt16();
 
-            if (!_isNpcAtMaxHealth) {
-                _npcNumberOfHealthBytes = reader.ReadByte();
-                _npcHealth = _npcNumberOfHealthBytes switch {
+            if (!_isAtMaxHealth) {
+                _numberOfHealthBytes = reader.ReadByte();
+                _health = _numberOfHealthBytes switch {
                     2 => reader.ReadInt16(),
                     4 => reader.ReadInt32(),
                     _ => reader.ReadSByte()
@@ -231,51 +246,51 @@ namespace Orion.Packets.Npcs {
             }
 
             if (_npcType.IsCatchable()) {
-                _npcReleaserPlayerIndex = reader.ReadByte();
+                _releaserIndex = reader.ReadByte();
             }
         }
 
         private protected override void WriteToWriter(BinaryWriter writer, PacketContext context) {
             writer.Write(_npcIndex);
-            writer.Write(in _npcPosition);
-            writer.Write(in _npcVelocity);
-            writer.Write(_npcTargetIndex);
+            writer.Write(in _position);
+            writer.Write(in _velocity);
+            writer.Write(_targetIndex);
 
             Terraria.BitsByte header = 0;
-            header[0] = _npcHorizontalDirection;
-            header[1] = _npcVerticalDirection;
-            header[2] = _npcAiValues[0] != 0;
-            header[3] = _npcAiValues[1] != 0;
-            header[4] = _npcAiValues[2] != 0;
-            header[5] = _npcAiValues[3] != 0;
-            header[6] = _npcSpriteDirection;
-            header[7] = _isNpcAtMaxHealth;
+            header[0] = _horizontalDirection;
+            header[1] = _verticalDirection;
+            header[2] = _aiValues[0] != 0;
+            header[3] = _aiValues[1] != 0;
+            header[4] = _aiValues[2] != 0;
+            header[5] = _aiValues[3] != 0;
+            header[6] = _spriteDirection;
+            header[7] = _isAtMaxHealth;
 
             writer.Write(header);
-            if (header[2]) writer.Write(_npcAiValues[0]);
-            if (header[3]) writer.Write(_npcAiValues[1]);
-            if (header[4]) writer.Write(_npcAiValues[2]);
-            if (header[5]) writer.Write(_npcAiValues[3]);
+            if (header[2]) writer.Write(_aiValues[0]);
+            if (header[3]) writer.Write(_aiValues[1]);
+            if (header[4]) writer.Write(_aiValues[2]);
+            if (header[5]) writer.Write(_aiValues[3]);
 
             writer.Write((short)_npcType);
 
-            if (!_isNpcAtMaxHealth) {
-                writer.Write(_npcNumberOfHealthBytes);
-                switch (_npcNumberOfHealthBytes) {
+            if (!_isAtMaxHealth) {
+                writer.Write(_numberOfHealthBytes);
+                switch (_numberOfHealthBytes) {
                 case 4:
-                    writer.Write(_npcHealth);
+                    writer.Write(_health);
                     break;
                 case 2:
-                    writer.Write((short)_npcHealth);
+                    writer.Write((short)_health);
                     break;
                 default:
-                    writer.Write((byte)_npcHealth);
+                    writer.Write((byte)_health);
                     break;
                 }
             }
 
             if (_npcType.IsCatchable()) {
-                writer.Write(_npcReleaserPlayerIndex);
+                writer.Write(_releaserIndex);
             }
         }
     }

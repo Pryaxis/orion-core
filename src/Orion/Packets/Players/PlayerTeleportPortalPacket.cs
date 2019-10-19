@@ -15,8 +15,6 @@
 // You should have received a copy of the GNU General Public License
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
-using System.Diagnostics.CodeAnalysis;
-using System.Diagnostics.Contracts;
 using System.IO;
 using Microsoft.Xna.Framework;
 using Orion.Packets.Extensions;
@@ -28,8 +26,8 @@ namespace Orion.Packets.Players {
     public sealed class PlayerTeleportPortalPacket : Packet {
         private byte _playerIndex;
         private short _portalIndex;
-        private Vector2 _playerNewPosition;
-        private Vector2 _playerNewVelocity;
+        private Vector2 _newPosition;
+        private Vector2 _newVelocity;
 
         /// <inheritdoc/>
         public override PacketType Type => PacketType.PlayerTeleportPortal;
@@ -37,6 +35,7 @@ namespace Orion.Packets.Players {
         /// <summary>
         /// Gets or sets the player index.
         /// </summary>
+        /// <value>The player index.</value>
         public byte PlayerIndex {
             get => _playerIndex;
             set {
@@ -48,6 +47,7 @@ namespace Orion.Packets.Players {
         /// <summary>
         /// Gets or sets the portal index.
         /// </summary>
+        /// <value>The portal index.</value>
         public short PortalIndex {
             get => _portalIndex;
             set {
@@ -57,43 +57,41 @@ namespace Orion.Packets.Players {
         }
 
         /// <summary>
-        /// Gets or sets the player's new position. The components are pixel-based.
+        /// Gets or sets the player's new position. The components are pixels.
         /// </summary>
-        public Vector2 PlayerNewPosition {
-            get => _playerNewPosition;
+        /// <value>The player's new position.</value>
+        public Vector2 NewPosition {
+            get => _newPosition;
             set {
-                _playerNewPosition = value;
+                _newPosition = value;
                 _isDirty = true;
             }
         }
 
         /// <summary>
-        /// Gets or sets the player's new velocity. The components are pixel-based.
+        /// Gets or sets the player's new velocity. The components are pixels per tick.
         /// </summary>
-        public Vector2 PlayerNewVelocity {
-            get => _playerNewVelocity;
+        /// <value>The player's new velocity.</value>
+        public Vector2 NewVelocity {
+            get => _newVelocity;
             set {
-                _playerNewVelocity = value;
+                _newVelocity = value;
                 _isDirty = true;
             }
         }
 
-        /// <inheritdoc/>
-        [Pure, ExcludeFromCodeCoverage]
-        public override string ToString() => $"{Type}[#={PlayerIndex} @ {PlayerNewPosition}, ...]";
-
         private protected override void ReadFromReader(BinaryReader reader, PacketContext context) {
             _playerIndex = reader.ReadByte();
             _portalIndex = reader.ReadInt16();
-            _playerNewPosition = reader.ReadVector2();
-            _playerNewVelocity = reader.ReadVector2();
+            _newPosition = reader.ReadVector2();
+            _newVelocity = reader.ReadVector2();
         }
 
         private protected override void WriteToWriter(BinaryWriter writer, PacketContext context) {
             writer.Write(_playerIndex);
             writer.Write(_portalIndex);
-            writer.Write(in _playerNewPosition);
-            writer.Write(in _playerNewVelocity);
+            writer.Write(in _newPosition);
+            writer.Write(in _newVelocity);
         }
     }
 }

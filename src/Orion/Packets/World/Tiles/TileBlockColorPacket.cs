@@ -15,8 +15,6 @@
 // You should have received a copy of the GNU General Public License
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
-using System.Diagnostics.CodeAnalysis;
-using System.Diagnostics.Contracts;
 using System.IO;
 using Orion.World.Tiles;
 
@@ -25,31 +23,33 @@ namespace Orion.Packets.World.Tiles {
     /// Packet sent to set a tile's block color.
     /// </summary>
     public sealed class TileBlockColorPacket : Packet {
-        private short _blockX;
-        private short _blockY;
-        private PaintColor _blockColor;
+        private short _x;
+        private short _y;
+        private PaintColor _color;
 
         /// <inheritdoc/>
         public override PacketType Type => PacketType.TileBlockColor;
 
         /// <summary>
-        /// Gets or sets the block's X coordinate.
+        /// Gets or sets the tile's X coordinate.
         /// </summary>
-        public short BlockX {
-            get => _blockX;
+        /// <value>The tile's X coordinate.</value>
+        public short X {
+            get => _x;
             set {
-                _blockX = value;
+                _x = value;
                 _isDirty = true;
             }
         }
 
         /// <summary>
-        /// Gets or sets the block's Y coordinate.
+        /// Gets or sets the tile's Y coordinate.
         /// </summary>
-        public short BlockY {
-            get => _blockY;
+        /// <value>The tile's Y coordinate.</value>
+        public short Y {
+            get => _y;
             set {
-                _blockY = value;
+                _y = value;
                 _isDirty = true;
             }
         }
@@ -57,28 +57,25 @@ namespace Orion.Packets.World.Tiles {
         /// <summary>
         /// Gets or sets the block color.
         /// </summary>
-        public PaintColor BlockColor {
-            get => _blockColor;
+        /// <value>The block color.</value>
+        public PaintColor Color {
+            get => _color;
             set {
-                _blockColor = value;
+                _color = value;
                 _isDirty = true;
             }
         }
 
-        /// <inheritdoc/>
-        [Pure, ExcludeFromCodeCoverage]
-        public override string ToString() => $"{Type}[{BlockColor} @ ({BlockX}, {BlockY})]";
-
         private protected override void ReadFromReader(BinaryReader reader, PacketContext context) {
-            _blockX = reader.ReadInt16();
-            _blockY = reader.ReadInt16();
-            _blockColor = (PaintColor)reader.ReadByte();
+            _x = reader.ReadInt16();
+            _y = reader.ReadInt16();
+            _color = (PaintColor)reader.ReadByte();
         }
 
         private protected override void WriteToWriter(BinaryWriter writer, PacketContext context) {
-            writer.Write(_blockX);
-            writer.Write(_blockY);
-            writer.Write((byte)_blockColor);
+            writer.Write(_x);
+            writer.Write(_y);
+            writer.Write((byte)_color);
         }
     }
 }

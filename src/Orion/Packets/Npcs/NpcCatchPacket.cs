@@ -15,8 +15,6 @@
 // You should have received a copy of the GNU General Public License
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
-using System.Diagnostics.CodeAnalysis;
-using System.Diagnostics.Contracts;
 using System.IO;
 
 namespace Orion.Packets.Npcs {
@@ -25,7 +23,7 @@ namespace Orion.Packets.Npcs {
     /// </summary>
     public sealed class NpcCatchPacket : Packet {
         private short _npcIndex;
-        private byte _npcCatcherPlayerIndex;
+        private byte _catcherIndex;
 
         /// <inheritdoc/>
         public override PacketType Type => PacketType.NpcCatch;
@@ -33,6 +31,7 @@ namespace Orion.Packets.Npcs {
         /// <summary>
         /// Gets or sets the NPC index.
         /// </summary>
+        /// <value>The NPC index.</value>
         public short NpcIndex {
             get => _npcIndex;
             set {
@@ -44,26 +43,23 @@ namespace Orion.Packets.Npcs {
         /// <summary>
         /// Gets or sets the NPC catcher's player index.
         /// </summary>
-        public byte NpcCatcherPlayerIndex {
-            get => _npcCatcherPlayerIndex;
+        /// <value>The NPC catcher's player index.</value>
+        public byte CatcherIndex {
+            get => _catcherIndex;
             set {
-                _npcCatcherPlayerIndex = value;
+                _catcherIndex = value;
                 _isDirty = true;
             }
         }
 
-        /// <inheritdoc/>
-        [Pure, ExcludeFromCodeCoverage]
-        public override string ToString() => $"{Type}[#={NpcIndex} by P={NpcCatcherPlayerIndex}]";
-
         private protected override void ReadFromReader(BinaryReader reader, PacketContext context) {
             _npcIndex = reader.ReadInt16();
-            _npcCatcherPlayerIndex = reader.ReadByte();
+            _catcherIndex = reader.ReadByte();
         }
 
         private protected override void WriteToWriter(BinaryWriter writer, PacketContext context) {
             writer.Write(_npcIndex);
-            writer.Write(_npcCatcherPlayerIndex);
+            writer.Write(_catcherIndex);
         }
     }
 }

@@ -15,8 +15,6 @@
 // You should have received a copy of the GNU General Public License
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
-using System.Diagnostics.CodeAnalysis;
-using System.Diagnostics.Contracts;
 using System.IO;
 using Microsoft.Xna.Framework;
 using Orion.Packets.Extensions;
@@ -26,32 +24,34 @@ namespace Orion.Packets.Entities {
     /// Packet sent to teleport an entity.
     /// </summary>
     public sealed class EntityTeleportationPacket : Packet {
-        private EntityTeleportationType _entityTeleportationType;
-        private byte _entityTeleportationStyle;
+        private EntityTeleportationType _teleportationType;
+        private byte _style;
         private short _entityIndex;
-        private Vector2 _entityNewPosition;
+        private Vector2 _newPosition;
 
         /// <inheritdoc/>
         public override PacketType Type => PacketType.EntityTeleportation;
 
         /// <summary>
-        /// Gets or sets the entity teleportation type.
+        /// Gets or sets the entity's teleportation type.
         /// </summary>
-        public EntityTeleportationType EntityTeleportationType {
-            get => _entityTeleportationType;
+        /// <value>The entity's teleportation type.</value>
+        public EntityTeleportationType TeleportationType {
+            get => _teleportationType;
             set {
-                _entityTeleportationType = value;
+                _teleportationType = value;
                 _isDirty = true;
             }
         }
 
         /// <summary>
-        /// Gets or sets the entity teleportation style, or how the teleportation looks.
+        /// Gets or sets the entity's teleportation style, or how the teleportation looks.
         /// </summary>
-        public byte EntityTeleportationStyle {
-            get => _entityTeleportationStyle;
+        /// <value>The entity's teleportation style.</value>
+        public byte Style {
+            get => _style;
             set {
-                _entityTeleportationStyle = value;
+                _style = value;
                 _isDirty = true;
             }
         }
@@ -59,6 +59,7 @@ namespace Orion.Packets.Entities {
         /// <summary>
         /// Gets or sets the entity index.
         /// </summary>
+        /// <value>The entity index.</value>
         public short EntityIndex {
             get => _entityIndex;
             set {
@@ -68,36 +69,32 @@ namespace Orion.Packets.Entities {
         }
 
         /// <summary>
-        /// Gets or sets the entity's new position. The components are pixel-based.
+        /// Gets or sets the entity's new position. The components are pixels.
         /// </summary>
-        public Vector2 EntityNewPosition {
-            get => _entityNewPosition;
+        /// <value>The entity's new position.</value>
+        public Vector2 NewPosition {
+            get => _newPosition;
             set {
-                _entityNewPosition = value;
+                _newPosition = value;
                 _isDirty = true;
             }
         }
 
-        /// <inheritdoc/>
-        [Pure, ExcludeFromCodeCoverage]
-        public override string ToString() =>
-            $"{Type}[#={EntityIndex} to {EntityNewPosition} ({EntityTeleportationType}_{EntityTeleportationStyle})]";
-
         private protected override void ReadFromReader(BinaryReader reader, PacketContext context) {
             var header = reader.ReadByte();
-            _entityTeleportationType = (EntityTeleportationType)(header & 3);
-            _entityTeleportationStyle = (byte)((header >> 2) & 3);
+            _teleportationType = (EntityTeleportationType)(header & 3);
+            _style = (byte)((header >> 2) & 3);
             _entityIndex = reader.ReadInt16();
-            _entityNewPosition = reader.ReadVector2();
+            _newPosition = reader.ReadVector2();
         }
 
         private protected override void WriteToWriter(BinaryWriter writer, PacketContext context) {
             byte header = 0;
-            header |= (byte)((byte)_entityTeleportationType & 3);
-            header |= (byte)((_entityTeleportationStyle & 3) << 2);
+            header |= (byte)((byte)_teleportationType & 3);
+            header |= (byte)((_style & 3) << 2);
             writer.Write(header);
             writer.Write(_entityIndex);
-            writer.Write(in _entityNewPosition);
+            writer.Write(in _newPosition);
         }
     }
 }

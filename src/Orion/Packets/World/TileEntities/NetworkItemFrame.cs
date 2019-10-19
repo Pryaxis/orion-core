@@ -25,13 +25,16 @@ namespace Orion.Packets.World.TileEntities {
     /// </summary>
     public sealed class NetworkItemFrame : NetworkTileEntity {
         private ItemType _itemType;
-        private int _itemStackSize;
+        private int _stackSize;
         private ItemPrefix _itemPrefix;
 
         /// <inheritdoc/>
         public override TileEntityType Type => TileEntityType.ItemFrame;
 
-        /// <inheritdoc cref="IItemFrame.ItemType"/>
+        /// <summary>
+        /// Gets or sets the item's type.
+        /// </summary>
+        /// <value>The item's type.</value>
         public ItemType ItemType {
             get => _itemType;
             set {
@@ -40,16 +43,22 @@ namespace Orion.Packets.World.TileEntities {
             }
         }
 
-        /// <inheritdoc cref="IItemFrame.ItemStackSize"/>
-        public int ItemStackSize {
-            get => _itemStackSize;
+        /// <summary>
+        /// Gets or sets the item's stack size.
+        /// </summary>
+        /// <value>The item's stack size.</value>
+        public int StackSize {
+            get => _stackSize;
             set {
-                _itemStackSize = value;
+                _stackSize = value;
                 IsDirty = true;
             }
         }
 
-        /// <inheritdoc cref="IItemFrame.ItemPrefix"/>
+        /// <summary>
+        /// Gets or sets the item's prefix.
+        /// </summary>
+        /// <value>The item's prefix.</value>
         public ItemPrefix ItemPrefix {
             get => _itemPrefix;
             set {
@@ -61,13 +70,13 @@ namespace Orion.Packets.World.TileEntities {
         private protected override void ReadFromReaderImpl(BinaryReader reader) {
             _itemType = (ItemType)reader.ReadInt16();
             _itemPrefix = (ItemPrefix)reader.ReadByte();
-            _itemStackSize = reader.ReadInt16();
+            _stackSize = reader.ReadInt16();
         }
 
         private protected override void WriteToWriterImpl(BinaryWriter writer) {
             writer.Write((short)_itemType);
             writer.Write((byte)_itemPrefix);
-            writer.Write((short)_itemStackSize);
+            writer.Write((short)_stackSize);
         }
     }
 }

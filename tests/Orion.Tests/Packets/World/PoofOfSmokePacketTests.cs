@@ -36,7 +36,7 @@ namespace Orion.Packets.World {
             using var stream = new MemoryStream(Bytes);
             var packet = (PoofOfSmokePacket)Packet.ReadFromStream(stream, PacketContext.Server);
 
-            packet.SmokePosition.Should().Be(Vector2.Zero);
+            packet.Position.Should().Be(Vector2.Zero);
         }
 
         [Fact]

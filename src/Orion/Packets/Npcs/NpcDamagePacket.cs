@@ -15,8 +15,6 @@
 // You should have received a copy of the GNU General Public License
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
-using System.Diagnostics.CodeAnalysis;
-using System.Diagnostics.Contracts;
 using System.IO;
 
 namespace Orion.Packets.Npcs {
@@ -27,7 +25,7 @@ namespace Orion.Packets.Npcs {
         private short _npcIndex;
         private short _damage;
         private float _knockback;
-        private sbyte _hitDirection;
+        private bool _hitDirection;
         private bool _isCriticalHit;
 
         /// <inheritdoc/>
@@ -36,6 +34,7 @@ namespace Orion.Packets.Npcs {
         /// <summary>
         /// Gets or sets the NPC index.
         /// </summary>
+        /// <value>The NPC index.</value>
         public short NpcIndex {
             get => _npcIndex;
             set {
@@ -47,6 +46,7 @@ namespace Orion.Packets.Npcs {
         /// <summary>
         /// Gets or sets the damage.
         /// </summary>
+        /// <value>The damage.</value>
         public short Damage {
             get => _damage;
             set {
@@ -58,6 +58,7 @@ namespace Orion.Packets.Npcs {
         /// <summary>
         /// Gets or sets the knockback.
         /// </summary>
+        /// <value>The knockback.</value>
         public float Knockback {
             get => _knockback;
             set {
@@ -67,9 +68,12 @@ namespace Orion.Packets.Npcs {
         }
 
         /// <summary>
-        /// Gets or sets the hit direction. Values are -1 or 1.
+        /// Gets or sets a value indicating the hit direction.
         /// </summary>
-        public sbyte HitDirection {
+        /// <value>
+        /// <see langword="true"/> if the hit is to the right; <see langword="false"/> if the hit is to the left.
+        /// </value>
+        public bool HitDirection {
             get => _hitDirection;
             set {
                 _hitDirection = value;
@@ -80,6 +84,7 @@ namespace Orion.Packets.Npcs {
         /// <summary>
         /// Gets or sets a value indicating whether the hit is critical.
         /// </summary>
+        /// <value><see langword="true"/> if the hit is critical; otherwise, <see langword="false"/>.</value>
         public bool IsCriticalHit {
             get => _isCriticalHit;
             set {
@@ -88,15 +93,11 @@ namespace Orion.Packets.Npcs {
             }
         }
 
-        /// <inheritdoc/>
-        [Pure, ExcludeFromCodeCoverage]
-        public override string ToString() => $"{Type}[#={NpcIndex} for {Damage} hp, ...]";
-
         private protected override void ReadFromReader(BinaryReader reader, PacketContext context) {
             _npcIndex = reader.ReadInt16();
             _damage = reader.ReadInt16();
             _knockback = reader.ReadSingle();
-            _hitDirection = (sbyte)(reader.ReadByte() - 1);
+            _hitDirection = reader.ReadByte() == 2;
             _isCriticalHit = reader.ReadBoolean();
         }
 
@@ -104,7 +105,7 @@ namespace Orion.Packets.Npcs {
             writer.Write(_npcIndex);
             writer.Write(_damage);
             writer.Write(_knockback);
-            writer.Write((byte)(_hitDirection + 1));
+            writer.Write((byte)(_hitDirection ? 2 : 0));
             writer.Write(IsCriticalHit);
         }
     }

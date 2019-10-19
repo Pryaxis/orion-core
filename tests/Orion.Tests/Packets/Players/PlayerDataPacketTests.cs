@@ -32,9 +32,9 @@ namespace Orion.Packets.Players {
         }
 
         [Fact]
-        public void PlayerName_Set_NullValue_ThrowsArgumentNullException() {
+        public void Name_SetNullValue_ThrowsArgumentNullException() {
             var packet = new PlayerDataPacket();
-            Action action = () => packet.PlayerName = null;
+            Action action = () => packet.Name = null;
 
             action.Should().Throw<ArgumentNullException>();
         }
@@ -50,21 +50,21 @@ namespace Orion.Packets.Players {
             var packet = (PlayerDataPacket)Packet.ReadFromStream(stream, PacketContext.Server);
 
             packet.PlayerIndex.Should().Be(0);
-            packet.PlayerClothesStyle.Should().Be(2);
-            packet.PlayerHairstyle.Should().Be(50);
-            packet.PlayerName.Should().Be("f");
-            packet.PlayerHairDye.Should().Be(0);
-            packet.PlayerEquipmentHiddenFlags.Should().Be(0);
-            packet.PlayerMiscEquipmentHiddenFlags.Should().Be(0);
-            packet.PlayerHairColor.Should().Be(new Color(26, 131, 54));
-            packet.PlayerSkinColor.Should().Be(new Color(158, 74, 51));
-            packet.PlayerEyeColor.Should().Be(new Color(47, 39, 88));
-            packet.PlayerShirtColor.Should().Be(new Color(184, 58, 43));
-            packet.PlayerUndershirtColor.Should().Be(new Color(69, 8, 97));
-            packet.PlayerPantsColor.Should().Be(new Color(162, 167, 255));
-            packet.PlayerShoeColor.Should().Be(new Color(212, 159, 76));
-            packet.PlayerDifficulty.Should().Be(PlayerDifficulty.Softcore);
-            packet.PlayerHasExtraAccessorySlot.Should().BeFalse();
+            packet.ClothesStyle.Should().Be(2);
+            packet.Hairstyle.Should().Be(50);
+            packet.Name.Should().Be("f");
+            packet.HairDye.Should().Be(0);
+            packet.EquipmentHiddenFlags.Should().Be(0);
+            packet.MiscEquipmentHiddenFlags.Should().Be(0);
+            packet.HairColor.Should().Be(new Color(26, 131, 54));
+            packet.SkinColor.Should().Be(new Color(158, 74, 51));
+            packet.EyeColor.Should().Be(new Color(47, 39, 88));
+            packet.ShirtColor.Should().Be(new Color(184, 58, 43));
+            packet.UndershirtColor.Should().Be(new Color(69, 8, 97));
+            packet.PantsColor.Should().Be(new Color(162, 167, 255));
+            packet.ShoeColor.Should().Be(new Color(212, 159, 76));
+            packet.Difficulty.Should().Be(PlayerDifficulty.Softcore);
+            packet.HasExtraAccessorySlot.Should().BeFalse();
         }
 
         [Fact]

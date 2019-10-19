@@ -36,12 +36,12 @@ namespace Orion.Packets.Npcs {
             using var stream = new MemoryStream(Bytes);
             var packet = (NpcShopSlotPacket)Packet.ReadFromStream(stream, PacketContext.Server);
 
-            packet.NpcShopSlotIndex.Should().Be(0);
+            packet.ShopSlot.Should().Be(0);
             packet.ItemType.Should().Be(ItemType.Sdmg);
-            packet.ItemStackSize.Should().Be(1);
+            packet.StackSize.Should().Be(1);
             packet.ItemPrefix.Should().Be(ItemPrefix.Unreal);
-            packet.ItemValue.Should().Be(100);
-            packet.CanBuyItemOnlyOnce.Should().BeTrue();
+            packet.Value.Should().Be(100);
+            packet.CanBuyOnlyOnce.Should().BeTrue();
         }
 
         [Fact]

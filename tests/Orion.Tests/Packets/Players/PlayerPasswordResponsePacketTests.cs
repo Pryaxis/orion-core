@@ -30,7 +30,7 @@ namespace Orion.Packets.Players {
         }
 
         [Fact]
-        public void PlayerPassword_Set_NullValue_ThrowsArgumentNullException() {
+        public void PasswordAttempt_SetNullValue_ThrowsArgumentNullException() {
             var packet = new PlayerPasswordResponsePacket();
             Action action = () => packet.PasswordAttempt = null;
 

@@ -15,8 +15,6 @@
 // You should have received a copy of the GNU General Public License
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
-using System.Diagnostics.CodeAnalysis;
-using System.Diagnostics.Contracts;
 using System.IO;
 using Microsoft.Xna.Framework;
 using Orion.Entities;
@@ -29,7 +27,7 @@ namespace Orion.Packets.Players {
     public sealed class PlayerNebulaBuffPacket : Packet {
         private byte _playerIndex;
         private BuffType _buffType;
-        private Vector2 _buffPosition;
+        private Vector2 _position;
 
         /// <inheritdoc/>
         public override PacketType Type => PacketType.PlayerNebulaBuff;
@@ -37,6 +35,7 @@ namespace Orion.Packets.Players {
         /// <summary>
         /// Gets or set the player index.
         /// </summary>
+        /// <value>The player index.</value>
         public byte PlayerIndex {
             get => _playerIndex;
             set {
@@ -48,6 +47,7 @@ namespace Orion.Packets.Players {
         /// <summary>
         /// Gets or sets the buff's type.
         /// </summary>
+        /// <value>The buff's type.</value>
         public BuffType BuffType {
             get => _buffType;
             set {
@@ -57,30 +57,27 @@ namespace Orion.Packets.Players {
         }
 
         /// <summary>
-        /// Gets or sets the buff's position. The components are pixel-based.
+        /// Gets or sets the position. The components are pixels.
         /// </summary>
-        public Vector2 BuffPosition {
-            get => _buffPosition;
+        /// <value>The position.</value>
+        public Vector2 Position {
+            get => _position;
             set {
-                _buffPosition = value;
+                _position = value;
                 _isDirty = true;
             }
         }
 
-        /// <inheritdoc/>
-        [Pure, ExcludeFromCodeCoverage]
-        public override string ToString() => $"{Type}[#={PlayerIndex}, {BuffType} at ({BuffPosition})]";
-
         private protected override void ReadFromReader(BinaryReader reader, PacketContext context) {
             _playerIndex = reader.ReadByte();
             _buffType = (BuffType)reader.ReadByte();
-            _buffPosition = reader.ReadVector2();
+            _position = reader.ReadVector2();
         }
 
         private protected override void WriteToWriter(BinaryWriter writer, PacketContext context) {
             writer.Write(_playerIndex);
             writer.Write((byte)_buffType);
-            writer.Write(in _buffPosition);
+            writer.Write(in _position);
         }
     }
 }

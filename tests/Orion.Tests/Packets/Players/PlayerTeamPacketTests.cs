@@ -37,7 +37,7 @@ namespace Orion.Packets.Players {
             var packet = (PlayerTeamPacket)Packet.ReadFromStream(stream, PacketContext.Server);
 
             packet.PlayerIndex.Should().Be(0);
-            packet.PlayerTeam.Should().Be(PlayerTeam.Red);
+            packet.Team.Should().Be(PlayerTeam.Red);
         }
 
         [Fact]

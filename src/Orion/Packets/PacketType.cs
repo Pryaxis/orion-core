@@ -122,7 +122,7 @@ namespace Orion.Packets {
         PoofOfSmoke = 106,
         Chat = 107,
         CannonShot = 108,
-        WireMassOperation = 109,
+        MassWireOperation = 109,
         PlayerConsumeItems = 110,
         ToggleBirthdayParty = 111,
         TreeGrowingEffect = 112,

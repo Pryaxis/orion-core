@@ -20,10 +20,10 @@ using FluentAssertions;
 using Xunit;
 
 namespace Orion.Packets.World.Tiles {
-    public class WireMassOperationPacketTests {
+    public class MassWireOperationPacketTests {
         [Fact]
         public void SimpleProperties_Set_MarkAsDirty() {
-            var packet = new WireMassOperationPacket();
+            var packet = new MassWireOperationPacket();
 
             packet.SimpleProperties_Set_MarkAsDirty();
         }
@@ -33,13 +33,13 @@ namespace Orion.Packets.World.Tiles {
         [Fact]
         public void ReadFromStream() {
             using var stream = new MemoryStream(Bytes);
-            var packet = (WireMassOperationPacket)Packet.ReadFromStream(stream, PacketContext.Server);
+            var packet = (MassWireOperationPacket)Packet.ReadFromStream(stream, PacketContext.Server);
 
-            packet.StartTileX.Should().Be(0);
-            packet.StartTileY.Should().Be(0);
-            packet.EndTileX.Should().Be(256);
-            packet.EndTileY.Should().Be(100);
-            packet.WireOperations.Should().Be(WireOperations.RedWire);
+            packet.StartX.Should().Be(0);
+            packet.StartY.Should().Be(0);
+            packet.EndX.Should().Be(256);
+            packet.EndY.Should().Be(100);
+            packet.Operations.Should().Be(WireOperations.RedWire);
         }
 
         [Fact]

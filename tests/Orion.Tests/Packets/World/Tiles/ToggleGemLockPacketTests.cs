@@ -35,9 +35,9 @@ namespace Orion.Packets.World.Tiles {
             using var stream = new MemoryStream(Bytes);
             var packet = (ToggleGemLockPacket)Packet.ReadFromStream(stream, PacketContext.Server);
 
-            packet.GemLockX.Should().Be(256);
-            packet.GemLockY.Should().Be(100);
-            packet.IsGemLockLocked.Should().BeTrue();
+            packet.X.Should().Be(256);
+            packet.Y.Should().Be(100);
+            packet.IsLocked.Should().BeTrue();
         }
 
         [Fact]

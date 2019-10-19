@@ -26,18 +26,18 @@ namespace Orion.Packets.World.Tiles {
     public class TileLiquidPacketTests {
         [Fact]
         [SuppressMessage("Style", "IDE0017:Simplify object initialization", Justification = "Testing")]
-        public void TileLiquid_Set_MarksAsDirty() {
+        public void Liquid_Set_MarksAsDirty() {
             var packet = new TileLiquidPacket();
 
-            packet.TileLiquid = new NetworkLiquid();
+            packet.Liquid = new NetworkLiquid();
 
             packet.ShouldBeDirty();
         }
 
         [Fact]
-        public void TileLiquid_Set_NullValue_ThrowsArgumentNullException() {
+        public void Liquid_SetNullValue_ThrowsArgumentNullException() {
             var packet = new TileLiquidPacket();
-            Action action = () => packet.TileLiquid = null;
+            Action action = () => packet.Liquid = null;
 
             action.Should().Throw<ArgumentNullException>();
         }
@@ -49,10 +49,10 @@ namespace Orion.Packets.World.Tiles {
             using var stream = new MemoryStream(Bytes);
             var packet = (TileLiquidPacket)Packet.ReadFromStream(stream, PacketContext.Server);
 
-            packet.TileLiquid.TileX.Should().Be(256);
-            packet.TileLiquid.TileY.Should().Be(100);
-            packet.TileLiquid.LiquidAmount.Should().Be(255);
-            packet.TileLiquid.LiquidType.Should().Be(LiquidType.Water);
+            packet.Liquid.X.Should().Be(256);
+            packet.Liquid.Y.Should().Be(100);
+            packet.Liquid.Amount.Should().Be(255);
+            packet.Liquid.LiquidType.Should().Be(LiquidType.Water);
         }
 
         [Fact]

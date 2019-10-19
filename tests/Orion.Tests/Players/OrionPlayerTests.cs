@@ -53,7 +53,7 @@ namespace Orion.Players {
         }
 
         [Fact]
-        public void Name_Set_NullValue_ThrowsArgumentNullException() {
+        public void Name_SetNullValue_ThrowsArgumentNullException() {
             var mockPlayerService = new Mock<IPlayerService>();
             var terrariaPlayer = new TerrariaPlayer();
             var player = new OrionPlayer(mockPlayerService.Object, terrariaPlayer);
@@ -110,7 +110,7 @@ namespace Orion.Players {
             var mockPlayerService = new Mock<IPlayerService>();
             var terrariaPlayer = new TerrariaPlayer();
             var player = new OrionPlayer(mockPlayerService.Object, 5, terrariaPlayer);
-            var packet = new ChatPacket { ChatText = "test" };
+            var packet = new ChatPacket { Text = "test" };
 
             var isRun = false;
             var packetSend = new EventHandlerCollection<PacketSendEventArgs>();
@@ -123,7 +123,7 @@ namespace Orion.Players {
 
             player.SendPacket(packet);
 
-            socket.SendData.Should().BeEquivalentTo(14, 0, 107, 0, 0, 0, 0, 4, 116, 101, 115, 116, 0, 0);
+            socket.SendData.Should().BeEquivalentTo(14, 0, 107, 0, 0, 0, 0, 4, 116, 101, 115, 116, 255, 255);
             isRun.Should().BeTrue();
         }
 
@@ -137,7 +137,7 @@ namespace Orion.Players {
             var mockPlayerService = new Mock<IPlayerService>();
             var terrariaPlayer = new TerrariaPlayer();
             var player = new OrionPlayer(mockPlayerService.Object, 5, terrariaPlayer);
-            var packet = new ChatPacket { ChatText = "test" };
+            var packet = new ChatPacket { Text = "test" };
 
             player.SendPacket(packet);
 
@@ -154,7 +154,7 @@ namespace Orion.Players {
             var mockPlayerService = new Mock<IPlayerService>();
             var terrariaPlayer = new TerrariaPlayer();
             var player = new OrionPlayer(mockPlayerService.Object, 5, terrariaPlayer);
-            var packet = new ChatPacket { ChatText = "test" };
+            var packet = new ChatPacket { Text = "test" };
 
             var packetSend = new EventHandlerCollection<PacketSendEventArgs>();
             packetSend.RegisterHandler((sender, args) => args.Cancel());

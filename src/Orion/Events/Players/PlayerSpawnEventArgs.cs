@@ -29,18 +29,18 @@ namespace Orion.Events.Players {
         /// Gets the player's spawn's X coordinate. If negative, then the world's spawn will be used.
         /// </summary>
         /// <value>The player's spawn's X coordinate.</value>
-        public short PlayerSpawnX {
-            get => _packet.PlayerSpawnX;
-            set => _packet.PlayerSpawnX = value;
+        public short SpawnX {
+            get => _packet.SpawnX;
+            set => _packet.SpawnX = value;
         }
 
         /// <summary>
         /// Gets the player's spawn's Y coordinate. If negative, then the world's spawn will be used.
         /// </summary>
         /// <value>The player's spawn's Y coordinate.</value>
-        public short PlayerSpawnY {
-            get => _packet.PlayerSpawnY;
-            set => _packet.PlayerSpawnY = value;
+        public short SpawnY {
+            get => _packet.SpawnY;
+            set => _packet.SpawnY = value;
         }
 
         /// <summary>

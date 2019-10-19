@@ -17,7 +17,6 @@
 
 using System;
 using System.Diagnostics.CodeAnalysis;
-using System.Diagnostics.Contracts;
 using System.IO;
 
 namespace Orion.Packets.Modules {
@@ -37,6 +36,7 @@ namespace Orion.Packets.Modules {
         /// <summary>
         /// Gets or sets the module.
         /// </summary>
+        /// <value>The module.</value>
         /// <exception cref="ArgumentNullException"><paramref name="value"/> is <see langword="null"/>.</exception>
         [DisallowNull]
         public Module? Module {
@@ -53,19 +53,10 @@ namespace Orion.Packets.Modules {
             Module?.Clean();
         }
 
-        /// <inheritdoc/>
-        [Pure, ExcludeFromCodeCoverage]
-        public override string ToString() => $"{Type}[{Module}]";
-
         private protected override void ReadFromReader(BinaryReader reader, PacketContext context) =>
             _module = Module.ReadFromStream(reader.BaseStream, context);
 
-        private protected override void WriteToWriter(BinaryWriter writer, PacketContext context) {
-            if (_module is null) {
-                throw new PacketException("Module is null.");
-            }
-
-            _module.WriteToStream(writer.BaseStream, context);
-        }
+        private protected override void WriteToWriter(BinaryWriter writer, PacketContext context) =>
+            _module?.WriteToStream(writer.BaseStream, context);
     }
 }

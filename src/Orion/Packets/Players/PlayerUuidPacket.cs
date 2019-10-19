@@ -16,8 +16,6 @@
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
 using System;
-using System.Diagnostics.CodeAnalysis;
-using System.Diagnostics.Contracts;
 using System.IO;
 
 namespace Orion.Packets.Players {
@@ -26,30 +24,32 @@ namespace Orion.Packets.Players {
     /// to a <see cref="PlayerContinueConnectingPacket"/>.
     /// </summary>
     public sealed class PlayerUuidPacket : Packet {
-        private string _playerUuid = string.Empty;
+        private string _uuid = string.Empty;
 
         /// <inheritdoc/>
         public override PacketType Type => PacketType.PlayerUuid;
-
+        
         /// <summary>
         /// Gets or sets the player's UUID.
         /// </summary>
-        public string PlayerUuid {
-            get => _playerUuid;
+        /// <value>The player's UUID.</value>
+        /// <remarks>
+        /// The player's UUID is (most likely) unique to a given player, but it is easily changed by a client. As such,
+        /// it can be used to verify a player's identity positively but not negatively.
+        /// </remarks>
+        /// <exception cref="ArgumentNullException"><paramref name="value"/> is <see langword="null"/>.</exception>
+        public string Uuid {
+            get => _uuid;
             set {
-                _playerUuid = value ?? throw new ArgumentNullException(nameof(value));
+                _uuid = value ?? throw new ArgumentNullException(nameof(value));
                 _isDirty = true;
             }
         }
 
-        /// <inheritdoc/>
-        [Pure, ExcludeFromCodeCoverage]
-        public override string ToString() => $"{Type}[{PlayerUuid}]";
-
         private protected override void ReadFromReader(BinaryReader reader, PacketContext context) =>
-            _playerUuid = reader.ReadString();
+            _uuid = reader.ReadString();
 
         private protected override void WriteToWriter(BinaryWriter writer, PacketContext context) =>
-            writer.Write(_playerUuid);
+            writer.Write(_uuid);
     }
 }

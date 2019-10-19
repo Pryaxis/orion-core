@@ -15,8 +15,6 @@
 // You should have received a copy of the GNU General Public License
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
-using System.Diagnostics.CodeAnalysis;
-using System.Diagnostics.Contracts;
 using System.IO;
 
 namespace Orion.Packets.Players {
@@ -25,8 +23,8 @@ namespace Orion.Packets.Players {
     /// </summary>
     public sealed class PlayerManaPacket : Packet {
         private byte _playerIndex;
-        private short _playerMana;
-        private short _playerMaxMana;
+        private short _mana;
+        private short _maxMana;
 
         /// <inheritdoc/>
         public override PacketType Type => PacketType.PlayerMana;
@@ -34,6 +32,7 @@ namespace Orion.Packets.Players {
         /// <summary>
         /// Gets or sets the player index.
         /// </summary>
+        /// <value>The player index.</value>
         public byte PlayerIndex {
             get => _playerIndex;
             set {
@@ -41,43 +40,41 @@ namespace Orion.Packets.Players {
                 _isDirty = true;
             }
         }
-
+        
         /// <summary>
         /// Gets or sets the player's mana.
         /// </summary>
-        public short PlayerMana {
-            get => _playerMana;
+        /// <value>The player's mana.</value>
+        public short Mana {
+            get => _mana;
             set {
-                _playerMana = value;
+                _mana = value;
                 _isDirty = true;
             }
         }
-
+        
         /// <summary>
         /// Gets or sets the player's maximum mana.
         /// </summary>
-        public short PlayerMaxMana {
-            get => _playerMaxMana;
+        /// <value>The player's maximum mana.</value>
+        public short MaxMana {
+            get => _maxMana;
             set {
-                _playerMaxMana = value;
+                _maxMana = value;
                 _isDirty = true;
             }
         }
 
-        /// <inheritdoc/>
-        [Pure, ExcludeFromCodeCoverage]
-        public override string ToString() => $"{Type}[#={PlayerIndex} has {PlayerMana}/{PlayerMaxMana} mp]";
-
         private protected override void ReadFromReader(BinaryReader reader, PacketContext context) {
             _playerIndex = reader.ReadByte();
-            _playerMana = reader.ReadInt16();
-            _playerMaxMana = reader.ReadInt16();
+            _mana = reader.ReadInt16();
+            _maxMana = reader.ReadInt16();
         }
 
         private protected override void WriteToWriter(BinaryWriter writer, PacketContext context) {
             writer.Write(_playerIndex);
-            writer.Write(_playerMana);
-            writer.Write(_playerMaxMana);
+            writer.Write(_mana);
+            writer.Write(_maxMana);
         }
     }
 }

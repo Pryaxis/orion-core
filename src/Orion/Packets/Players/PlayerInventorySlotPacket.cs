@@ -15,10 +15,9 @@
 // You should have received a copy of the GNU General Public License
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
-using System.Diagnostics.CodeAnalysis;
-using System.Diagnostics.Contracts;
 using System.IO;
 using Orion.Items;
+using Orion.Players;
 
 namespace Orion.Packets.Players {
     /// <summary>
@@ -26,8 +25,8 @@ namespace Orion.Packets.Players {
     /// </summary>
     public sealed class PlayerInventorySlotPacket : Packet {
         private byte _playerIndex;
-        private byte _playerInventorySlotIndex;
-        private short _itemStackSize;
+        private byte _inventorySlot;
+        private short _stackSize;
         private ItemPrefix _itemPrefix;
         private ItemType _itemType;
 
@@ -37,6 +36,7 @@ namespace Orion.Packets.Players {
         /// <summary>
         /// Gets or sets the player index.
         /// </summary>
+        /// <value>The player index.</value>
         public byte PlayerIndex {
             get => _playerIndex;
             set {
@@ -44,32 +44,39 @@ namespace Orion.Packets.Players {
                 _isDirty = true;
             }
         }
-
+        
         /// <summary>
-        /// Gets or sets the player's inventory slot index.
+        /// Gets or sets the player's inventory slot.
         /// </summary>
-        public byte PlayerInventorySlotIndex {
-            get => _playerInventorySlotIndex;
+        /// <value>The player's inventory slot.</value>
+        /// <remarks>
+        /// This value can range from <c>0</c> to <c>219</c>. Check the <see cref="IPlayerInventory"/> interface for a
+        /// more detailed description on the slots.
+        /// </remarks>
+        public byte InventorySlot {
+            get => _inventorySlot;
             set {
-                _playerInventorySlotIndex = value;
+                _inventorySlot = value;
                 _isDirty = true;
             }
         }
-
+        
         /// <summary>
         /// Gets or sets the item's stack size.
         /// </summary>
-        public short ItemStackSize {
-            get => _itemStackSize;
+        /// <value>The item's stack size.</value>
+        public short StackSize {
+            get => _stackSize;
             set {
-                _itemStackSize = value;
+                _stackSize = value;
                 _isDirty = true;
             }
         }
-
+        
         /// <summary>
         /// Gets or sets the item's prefix.
         /// </summary>
+        /// <value>The item's prefix.</value>
         public ItemPrefix ItemPrefix {
             get => _itemPrefix;
             set {
@@ -77,10 +84,11 @@ namespace Orion.Packets.Players {
                 _isDirty = true;
             }
         }
-
+        
         /// <summary>
         /// Gets or sets the item's type.
         /// </summary>
+        /// <value>The item's type.</value>
         public ItemType ItemType {
             get => _itemType;
             set {
@@ -89,24 +97,18 @@ namespace Orion.Packets.Players {
             }
         }
 
-        /// <inheritdoc/>
-        [Pure, ExcludeFromCodeCoverage]
-        public override string ToString() =>
-            $"{Type}[#={PlayerIndex}, {PlayerInventorySlotIndex} is " +
-            $"{(ItemPrefix != 0 ? $"{ItemPrefix} " : string.Empty)}{ItemType} x{ItemStackSize}]";
-
         private protected override void ReadFromReader(BinaryReader reader, PacketContext context) {
             _playerIndex = reader.ReadByte();
-            _playerInventorySlotIndex = reader.ReadByte();
-            _itemStackSize = reader.ReadInt16();
+            _inventorySlot = reader.ReadByte();
+            _stackSize = reader.ReadInt16();
             _itemPrefix = (ItemPrefix)reader.ReadByte();
             _itemType = (ItemType)reader.ReadInt16();
         }
 
         private protected override void WriteToWriter(BinaryWriter writer, PacketContext context) {
             writer.Write(PlayerIndex);
-            writer.Write(PlayerInventorySlotIndex);
-            writer.Write(_itemStackSize);
+            writer.Write(InventorySlot);
+            writer.Write(_stackSize);
             writer.Write((byte)_itemPrefix);
             writer.Write((short)_itemType);
         }

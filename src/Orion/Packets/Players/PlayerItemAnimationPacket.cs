@@ -15,8 +15,6 @@
 // You should have received a copy of the GNU General Public License
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
-using System.Diagnostics.CodeAnalysis;
-using System.Diagnostics.Contracts;
 using System.IO;
 
 namespace Orion.Packets.Players {
@@ -25,8 +23,8 @@ namespace Orion.Packets.Players {
     /// </summary>
     public sealed class PlayerItemAnimationPacket : Packet {
         private byte _playerIndex;
-        private float _playerItemRotation;
-        private short _playerItemAnimation;
+        private float _itemRotation;
+        private short _itemAnimation;
 
         /// <inheritdoc/>
         public override PacketType Type => PacketType.PlayerItemAnimation;
@@ -34,6 +32,7 @@ namespace Orion.Packets.Players {
         /// <summary>
         /// Gets or sets the player index.
         /// </summary>
+        /// <value>The player index.</value>
         public byte PlayerIndex {
             get => _playerIndex;
             set {
@@ -42,13 +41,16 @@ namespace Orion.Packets.Players {
             }
         }
 
+        // TODO: explain these
+
         /// <summary>
         /// Gets or sets the player's item rotation.
         /// </summary>
-        public float PlayerItemRotation {
-            get => _playerItemRotation;
+        /// <value>The player's item rotation.</value>
+        public float ItemRotation {
+            get => _itemRotation;
             set {
-                _playerItemRotation = value;
+                _itemRotation = value;
                 _isDirty = true;
             }
         }
@@ -56,28 +58,25 @@ namespace Orion.Packets.Players {
         /// <summary>
         /// Gets or sets the player's item animation.
         /// </summary>
-        public short PlayerItemAnimation {
-            get => _playerItemAnimation;
+        /// <value>The player's item animation.</value>
+        public short ItemAnimation {
+            get => _itemAnimation;
             set {
-                _playerItemAnimation = value;
+                _itemAnimation = value;
                 _isDirty = true;
             }
         }
 
-        /// <inheritdoc/>
-        [Pure, ExcludeFromCodeCoverage]
-        public override string ToString() => $"{Type}[#={PlayerIndex}, ...]";
-
         private protected override void ReadFromReader(BinaryReader reader, PacketContext context) {
             _playerIndex = reader.ReadByte();
-            _playerItemRotation = reader.ReadSingle();
-            _playerItemAnimation = reader.ReadInt16();
+            _itemRotation = reader.ReadSingle();
+            _itemAnimation = reader.ReadInt16();
         }
 
         private protected override void WriteToWriter(BinaryWriter writer, PacketContext context) {
             writer.Write(_playerIndex);
-            writer.Write(_playerItemRotation);
-            writer.Write(_playerItemAnimation);
+            writer.Write(_itemRotation);
+            writer.Write(_itemAnimation);
         }
     }
 }

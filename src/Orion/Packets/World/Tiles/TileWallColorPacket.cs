@@ -15,8 +15,6 @@
 // You should have received a copy of the GNU General Public License
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
-using System.Diagnostics.CodeAnalysis;
-using System.Diagnostics.Contracts;
 using System.IO;
 using Orion.World.Tiles;
 
@@ -25,31 +23,33 @@ namespace Orion.Packets.World.Tiles {
     /// Packet sent to set a tile's wall color.
     /// </summary>
     public sealed class TileWallColorPacket : Packet {
-        private short _wallX;
-        private short _wallY;
-        private PaintColor _wallColor;
+        private short _x;
+        private short _y;
+        private PaintColor _color;
 
         /// <inheritdoc/>
         public override PacketType Type => PacketType.TileWallColor;
 
         /// <summary>
-        /// Gets or sets the wall's X coordinate.
+        /// Gets or sets the tile's X coordinate.
         /// </summary>
-        public short WallX {
-            get => _wallX;
+        /// <value>The tile's X coordinate.</value>
+        public short X {
+            get => _x;
             set {
-                _wallX = value;
+                _x = value;
                 _isDirty = true;
             }
         }
 
         /// <summary>
-        /// Gets or sets the wall's Y coordinate.
+        /// Gets or sets the tile's Y coordinate.
         /// </summary>
-        public short WallY {
-            get => _wallY;
+        /// <value>The tile's Y coordinate.</value>
+        public short Y {
+            get => _y;
             set {
-                _wallY = value;
+                _y = value;
                 _isDirty = true;
             }
         }
@@ -57,28 +57,25 @@ namespace Orion.Packets.World.Tiles {
         /// <summary>
         /// Gets or sets the wall color.
         /// </summary>
-        public PaintColor WallColor {
-            get => _wallColor;
+        /// <value>The wall color.</value>
+        public PaintColor Color {
+            get => _color;
             set {
-                _wallColor = value;
+                _color = value;
                 _isDirty = true;
             }
         }
 
-        /// <inheritdoc/>
-        [Pure, ExcludeFromCodeCoverage]
-        public override string ToString() => $"{Type}[{WallColor} @ ({WallX}, {WallY})]";
-
         private protected override void ReadFromReader(BinaryReader reader, PacketContext context) {
-            _wallX = reader.ReadInt16();
-            _wallY = reader.ReadInt16();
-            _wallColor = (PaintColor)reader.ReadByte();
+            _x = reader.ReadInt16();
+            _y = reader.ReadInt16();
+            _color = (PaintColor)reader.ReadByte();
         }
 
         private protected override void WriteToWriter(BinaryWriter writer, PacketContext context) {
-            writer.Write(_wallX);
-            writer.Write(_wallY);
-            writer.Write((byte)_wallColor);
+            writer.Write(_x);
+            writer.Write(_y);
+            writer.Write((byte)_color);
         }
     }
 }

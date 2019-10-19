@@ -31,25 +31,25 @@ namespace Orion.Packets.Modules {
         }
 
         [Fact]
-        public void ClientChatCommand_Set_NullValue_ThrowsArgumentNullException() {
+        public void ClientCommand_SetNullValue_ThrowsArgumentNullException() {
             var module = new ChatModule();
-            Action action = () => module.ClientChatCommand = null;
+            Action action = () => module.ClientCommand = null;
 
             action.Should().Throw<ArgumentNullException>();
         }
 
         [Fact]
-        public void ClientChatText_Set_NullValue_ThrowsArgumentNullException() {
+        public void ClientText_SetNullValue_ThrowsArgumentNullException() {
             var module = new ChatModule();
-            Action action = () => module.ClientChatText = null;
+            Action action = () => module.ClientText = null;
 
             action.Should().Throw<ArgumentNullException>();
         }
 
         [Fact]
-        public void ServerChatText_Set_NullValue_ThrowsArgumentNullException() {
+        public void ServerText_SetNullValue_ThrowsArgumentNullException() {
             var module = new ChatModule();
-            Action action = () => module.ServerChatText = null;
+            Action action = () => module.ServerText = null;
 
             action.Should().Throw<ArgumentNullException>();
         }
@@ -64,8 +64,8 @@ namespace Orion.Packets.Modules {
             var packet = (ModulePacket)Packet.ReadFromStream(stream, PacketContext.Server);
 
             packet.Module.Should().BeOfType<ChatModule>();
-            packet.Module.As<ChatModule>().ClientChatCommand.Should().Be("Say");
-            packet.Module.As<ChatModule>().ClientChatText.Should().Be("/command test");
+            packet.Module.As<ChatModule>().ClientCommand.Should().Be("Say");
+            packet.Module.As<ChatModule>().ClientText.Should().Be("/command test");
         }
 
         [Fact]
@@ -87,9 +87,9 @@ namespace Orion.Packets.Modules {
             var packet = (ModulePacket)Packet.ReadFromStream(stream, PacketContext.Client);
 
             packet.Module.Should().BeOfType<ChatModule>();
-            packet.Module.As<ChatModule>().ServerChattingPlayerIndex.Should().Be(1);
-            packet.Module.As<ChatModule>().ServerChatText.Should().Be("test");
-            packet.Module.As<ChatModule>().ServerChatColor.Should().Be(Color.White);
+            packet.Module.As<ChatModule>().ServerChatterIndex.Should().Be(1);
+            packet.Module.As<ChatModule>().ServerText.Should().Be("test");
+            packet.Module.As<ChatModule>().ServerColor.Should().Be(Color.White);
         }
 
         [Fact]

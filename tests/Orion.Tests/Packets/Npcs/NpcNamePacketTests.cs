@@ -30,9 +30,9 @@ namespace Orion.Packets.Npcs {
         }
 
         [Fact]
-        public void NpcName_Set_NullValue_ThrowsArgumentNullException() {
+        public void Name_SetNullValue_ThrowsArgumentNullException() {
             var packet = new NpcNamePacket();
-            Action action = () => packet.NpcName = null;
+            Action action = () => packet.Name = null;
 
             action.Should().Throw<ArgumentNullException>();
         }
@@ -45,7 +45,7 @@ namespace Orion.Packets.Npcs {
             var packet = (NpcNamePacket)Packet.ReadFromStream(stream, PacketContext.Client);
 
             packet.NpcIndex.Should().Be(0);
-            packet.NpcName.Should().Be("Terraria");
+            packet.Name.Should().Be("Terraria");
         }
 
         [Fact]
@@ -67,7 +67,7 @@ namespace Orion.Packets.Npcs {
             var packet = (NpcNamePacket)Packet.ReadFromStream(stream, PacketContext.Server);
 
             packet.NpcIndex.Should().Be(0);
-            packet.NpcName.Should().BeNullOrEmpty();
+            packet.Name.Should().BeNullOrEmpty();
         }
 
         [Fact]

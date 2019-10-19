@@ -36,7 +36,7 @@ namespace Orion.Packets.Npcs {
             var packet = (NpcDamageHeldItemPacket)Packet.ReadFromStream(stream, PacketContext.Server);
 
             packet.NpcIndex.Should().Be(1);
-            packet.NpcDamagerPlayerIndex.Should().Be(0);
+            packet.DamagerIndex.Should().Be(0);
         }
 
         [Fact]

@@ -24,14 +24,13 @@ using Orion.Packets.Extensions;
 
 namespace Orion.Packets.Items {
     /// <summary>
-    /// Packet sent to set item instance information. This is similar to an <see cref="ItemInfoPacket"/>, but instanced
-    /// items are not visible to other players.
+    /// Packet sent to set item insatnce information. This is sent for instanced item drops.
     /// </summary>
     public sealed class ItemInstanceInfoPacket : Packet {
         private short _itemIndex;
-        private Vector2 _itemPosition;
-        private Vector2 _itemVelocity;
-        private short _itemStackSize;
+        private Vector2 _position;
+        private Vector2 _velocity;
+        private short _stackSize;
         private ItemPrefix _itemPrefix;
         private bool _canBePickedUpImmediately;
         private ItemType _itemType;
@@ -42,6 +41,7 @@ namespace Orion.Packets.Items {
         /// <summary>
         /// Gets or sets the item index.
         /// </summary>
+        /// <value>The item index.</value>
         public short ItemIndex {
             get => _itemIndex;
             set {
@@ -51,23 +51,25 @@ namespace Orion.Packets.Items {
         }
 
         /// <summary>
-        /// Gets or sets the item's position. The components are pixel-based.
+        /// Gets or sets the item's position. The components are pixels.
         /// </summary>
-        public Vector2 ItemPosition {
-            get => _itemPosition;
+        /// <value>The item's position.</value>
+        public Vector2 Position {
+            get => _position;
             set {
-                _itemPosition = value;
+                _position = value;
                 _isDirty = true;
             }
         }
 
         /// <summary>
-        /// Gets or sets the item's velocity. The components are pixel-based.
+        /// Gets or sets the item's velocity. The components are pixels per tick.
         /// </summary>
-        public Vector2 ItemVelocity {
-            get => _itemVelocity;
+        /// <value>The item's velocity.</value>
+        public Vector2 Velocity {
+            get => _velocity;
             set {
-                _itemVelocity = value;
+                _velocity = value;
                 _isDirty = true;
             }
         }
@@ -75,10 +77,11 @@ namespace Orion.Packets.Items {
         /// <summary>
         /// Gets or sets the item's stack size.
         /// </summary>
-        public short ItemStackSize {
-            get => _itemStackSize;
+        /// <value>The item's stack size.</value>
+        public short StackSize {
+            get => _stackSize;
             set {
-                _itemStackSize = value;
+                _stackSize = value;
                 _isDirty = true;
             }
         }
@@ -86,6 +89,7 @@ namespace Orion.Packets.Items {
         /// <summary>
         /// Gets or sets the item's prefix.
         /// </summary>
+        /// <value>The item's prefix.</value>
         public ItemPrefix ItemPrefix {
             get => _itemPrefix;
             set {
@@ -97,6 +101,9 @@ namespace Orion.Packets.Items {
         /// <summary>
         /// Gets or sets a value indicating whether the item can be picked up immediately.
         /// </summary>
+        /// <value>
+        /// <see langword="true"/> if the item can be picked up immediately; otherwise, <see langword="false"/>.
+        /// </value>
         public bool CanBePickedUpImmediately {
             get => _canBePickedUpImmediately;
             set {
@@ -108,6 +115,7 @@ namespace Orion.Packets.Items {
         /// <summary>
         /// Gets or sets the item's type.
         /// </summary>
+        /// <value>The item's type.</value>
         public ItemType ItemType {
             get => _itemType;
             set {
@@ -119,14 +127,14 @@ namespace Orion.Packets.Items {
         /// <inheritdoc/>
         [Pure, ExcludeFromCodeCoverage]
         public override string ToString() =>
-            $"{Type}[#={ItemIndex}, {(ItemPrefix != 0 ? $"{ItemPrefix} " : string.Empty)}{ItemType} x{ItemStackSize} " +
-            $"@ {ItemPosition}, ...]";
+            $"{Type}[#={ItemIndex}, {(ItemPrefix != 0 ? $"{ItemPrefix} " : string.Empty)}{ItemType} x{StackSize} " +
+            $"@ {Position}, ...]";
 
         private protected override void ReadFromReader(BinaryReader reader, PacketContext context) {
             _itemIndex = reader.ReadInt16();
-            _itemPosition = reader.ReadVector2();
-            _itemVelocity = reader.ReadVector2();
-            _itemStackSize = reader.ReadInt16();
+            _position = reader.ReadVector2();
+            _velocity = reader.ReadVector2();
+            _stackSize = reader.ReadInt16();
             _itemPrefix = (ItemPrefix)reader.ReadByte();
             _canBePickedUpImmediately = reader.ReadBoolean();
             _itemType = (ItemType)reader.ReadInt16();
@@ -134,9 +142,9 @@ namespace Orion.Packets.Items {
 
         private protected override void WriteToWriter(BinaryWriter writer, PacketContext context) {
             writer.Write(_itemIndex);
-            writer.Write(in _itemPosition);
-            writer.Write(in _itemVelocity);
-            writer.Write(_itemStackSize);
+            writer.Write(in _position);
+            writer.Write(in _velocity);
+            writer.Write(_stackSize);
             writer.Write((byte)_itemPrefix);
             writer.Write(_canBePickedUpImmediately);
             writer.Write((short)_itemType);

@@ -36,11 +36,11 @@ namespace Orion.Packets.World.TileEntities {
             using var stream = new MemoryStream(Bytes);
             var packet = (ItemFramePacket)Packet.ReadFromStream(stream, PacketContext.Server);
 
-            packet.ItemFrameX.Should().Be(256);
-            packet.ItemFrameY.Should().Be(100);
+            packet.X.Should().Be(256);
+            packet.Y.Should().Be(100);
             packet.ItemType.Should().Be(ItemType.Sdmg);
             packet.ItemPrefix.Should().Be(ItemPrefix.Unreal);
-            packet.ItemStackSize.Should().Be(1);
+            packet.StackSize.Should().Be(1);
         }
 
         [Fact]

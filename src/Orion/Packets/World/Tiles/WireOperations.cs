@@ -19,7 +19,7 @@ using System;
 
 namespace Orion.Packets.World.Tiles {
     /// <summary>
-    /// Specifies the wire operations in a <see cref="WireMassOperationPacket"/>.
+    /// Specifies the wire operations in a <see cref="MassWireOperationPacket"/>.
     /// </summary>
     [Flags]
     public enum WireOperations : byte {

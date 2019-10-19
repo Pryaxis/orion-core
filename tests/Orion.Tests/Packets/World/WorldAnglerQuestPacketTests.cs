@@ -35,8 +35,8 @@ namespace Orion.Packets.World {
             using var stream = new MemoryStream(Bytes);
             var packet = (WorldAnglerQuestPacket)Packet.ReadFromStream(stream, PacketContext.Server);
 
-            packet.CurrentAnglerQuest.Should().Be(1);
-            packet.IsAnglerQuestFinished.Should().BeTrue();
+            packet.CurrentQuest.Should().Be(1);
+            packet.IsFinished.Should().BeTrue();
         }
 
         [Fact]

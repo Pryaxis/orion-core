@@ -29,7 +29,11 @@ namespace Orion.Packets.World.TileEntities {
         /// <inheritdoc/>
         public override TileEntityType Type => TileEntityType.Chest;
 
-        /// <inheritdoc cref="IChest.Name"/>
+        /// <summary>
+        /// Gets or sets the chest's name.
+        /// </summary>
+        /// <value>The chest's name.</value>
+        /// <exception cref="ArgumentNullException"><paramref name="value"/> is <see langword="null"/>.</exception>
         public string Name {
             get => _name;
             set {

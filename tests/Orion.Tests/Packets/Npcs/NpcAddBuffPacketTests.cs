@@ -38,7 +38,7 @@ namespace Orion.Packets.Npcs {
             var packet = (NpcAddBuffPacket)Packet.ReadFromStream(stream, PacketContext.Server);
 
             packet.NpcIndex.Should().Be(0);
-            packet.NpcBuff.Should().Be(new Buff(BuffType.ObsidianSkin, TimeSpan.FromSeconds(1)));
+            packet.Buff.Should().Be(new Buff(BuffType.ObsidianSkin, TimeSpan.FromSeconds(1)));
         }
 
         [Fact]

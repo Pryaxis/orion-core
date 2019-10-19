@@ -15,8 +15,6 @@
 // You should have received a copy of the GNU General Public License
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
-using System.Diagnostics.CodeAnalysis;
-using System.Diagnostics.Contracts;
 using System.IO;
 
 namespace Orion.Packets.World.Tiles {
@@ -25,10 +23,10 @@ namespace Orion.Packets.World.Tiles {
     /// <see cref="SectionPacket"/>.
     /// </summary>
     public sealed class SectionFramesPacket : Packet {
-        private short _startSectionX;
-        private short _startSectionY;
-        private short _endSectionX;
-        private short _endSectionY;
+        private short _startX;
+        private short _startY;
+        private short _endX;
+        private short _endY;
 
         /// <inheritdoc/>
         public override PacketType Type => PacketType.SectionFrames;
@@ -36,10 +34,11 @@ namespace Orion.Packets.World.Tiles {
         /// <summary>
         /// Gets or sets the starting section's X index.
         /// </summary>
-        public short StartSectionX {
-            get => _startSectionX;
+        /// <value>The starting section's X index.</value>
+        public short StartX {
+            get => _startX;
             set {
-                _startSectionX = value;
+                _startX = value;
                 _isDirty = true;
             }
         }
@@ -47,10 +46,11 @@ namespace Orion.Packets.World.Tiles {
         /// <summary>
         /// Gets or sets the starting section's Y index.
         /// </summary>
-        public short StartSectionY {
-            get => _startSectionY;
+        /// <value>The starting section's Y index.</value>
+        public short StartY {
+            get => _startY;
             set {
-                _startSectionY = value;
+                _startY = value;
                 _isDirty = true;
             }
         }
@@ -58,10 +58,11 @@ namespace Orion.Packets.World.Tiles {
         /// <summary>
         /// Gets or sets the ending section's X index.
         /// </summary>
-        public short EndSectionX {
-            get => _endSectionX;
+        /// <value>The ending section's X index.</value>
+        public short EndX {
+            get => _endX;
             set {
-                _endSectionX = value;
+                _endX = value;
                 _isDirty = true;
             }
         }
@@ -69,31 +70,27 @@ namespace Orion.Packets.World.Tiles {
         /// <summary>
         /// Gets or sets the ending section's Y index.
         /// </summary>
-        public short EndSectionY {
-            get => _endSectionY;
+        /// <value>The ending section's Y index.</value>
+        public short EndY {
+            get => _endY;
             set {
-                _endSectionY = value;
+                _endY = value;
                 _isDirty = true;
             }
         }
 
-        /// <inheritdoc/>
-        [Pure, ExcludeFromCodeCoverage]
-        public override string ToString() =>
-            $"{Type}[({StartSectionX}, {StartSectionY}) to ({EndSectionX}, {EndSectionY})]";
-
         private protected override void ReadFromReader(BinaryReader reader, PacketContext context) {
-            _startSectionX = reader.ReadInt16();
-            _startSectionY = reader.ReadInt16();
-            _endSectionX = reader.ReadInt16();
-            _endSectionY = reader.ReadInt16();
+            _startX = reader.ReadInt16();
+            _startY = reader.ReadInt16();
+            _endX = reader.ReadInt16();
+            _endY = reader.ReadInt16();
         }
 
         private protected override void WriteToWriter(BinaryWriter writer, PacketContext context) {
-            writer.Write(_startSectionX);
-            writer.Write(_startSectionY);
-            writer.Write(_endSectionX);
-            writer.Write(_endSectionY);
+            writer.Write(_startX);
+            writer.Write(_startY);
+            writer.Write(_endX);
+            writer.Write(_endY);
         }
     }
 }

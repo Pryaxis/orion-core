@@ -15,8 +15,6 @@
 // You should have received a copy of the GNU General Public License
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
-using System.Diagnostics.CodeAnalysis;
-using System.Diagnostics.Contracts;
 using System.IO;
 
 namespace Orion.Packets.World.TileEntities {
@@ -24,8 +22,8 @@ namespace Orion.Packets.World.TileEntities {
     /// Packet sent from the client to the server to read a sign.
     /// </summary>
     public sealed class SignReadPacket : Packet {
-        private short _signX;
-        private short _signY;
+        private short _x;
+        private short _y;
 
         /// <inheritdoc/>
         public override PacketType Type => PacketType.SignRead;
@@ -33,10 +31,11 @@ namespace Orion.Packets.World.TileEntities {
         /// <summary>
         /// Gets or sets the sign's X coordinate.
         /// </summary>
-        public short SignX {
-            get => _signX;
+        /// <value>The sign's X coordinate.</value>
+        public short X {
+            get => _x;
             set {
-                _signX = value;
+                _x = value;
                 _isDirty = true;
             }
         }
@@ -44,26 +43,23 @@ namespace Orion.Packets.World.TileEntities {
         /// <summary>
         /// Gets or sets the sign's Y coordinate.
         /// </summary>
-        public short SignY {
-            get => _signY;
+        /// <value>The sign's Y coordinate.</value>
+        public short Y {
+            get => _y;
             set {
-                _signY = value;
+                _y = value;
                 _isDirty = true;
             }
         }
 
-        /// <inheritdoc/>
-        [Pure, ExcludeFromCodeCoverage]
-        public override string ToString() => $"{Type}[({SignX}, {SignY})]";
-
         private protected override void ReadFromReader(BinaryReader reader, PacketContext context) {
-            _signX = reader.ReadInt16();
-            _signY = reader.ReadInt16();
+            _x = reader.ReadInt16();
+            _y = reader.ReadInt16();
         }
 
         private protected override void WriteToWriter(BinaryWriter writer, PacketContext context) {
-            writer.Write(_signX);
-            writer.Write(_signY);
+            writer.Write(_x);
+            writer.Write(_y);
         }
     }
 }

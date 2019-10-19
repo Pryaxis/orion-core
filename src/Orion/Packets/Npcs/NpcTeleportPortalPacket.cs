@@ -15,8 +15,6 @@
 // You should have received a copy of the GNU General Public License
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
-using System.Diagnostics.CodeAnalysis;
-using System.Diagnostics.Contracts;
 using System.IO;
 using Microsoft.Xna.Framework;
 using Orion.Packets.Extensions;
@@ -28,8 +26,8 @@ namespace Orion.Packets.Npcs {
     public sealed class NpcTeleportPortalPacket : Packet {
         private short _npcIndex;
         private short _portalIndex;
-        private Vector2 _newNpcPosition;
-        private Vector2 _newNpcVelocity;
+        private Vector2 _newPosition;
+        private Vector2 _newVelocity;
 
         /// <inheritdoc/>
         public override PacketType Type => PacketType.TeleportNpcPortal;
@@ -37,6 +35,7 @@ namespace Orion.Packets.Npcs {
         /// <summary>
         /// Gets or sets the NPC index.
         /// </summary>
+        /// <value>The NPC index.</value>
         public short NpcIndex {
             get => _npcIndex;
             set {
@@ -48,6 +47,7 @@ namespace Orion.Packets.Npcs {
         /// <summary>
         /// Gets or sets the portal index.
         /// </summary>
+        /// <value>The portal index.</value>
         public short PortalIndex {
             get => _portalIndex;
             set {
@@ -57,43 +57,41 @@ namespace Orion.Packets.Npcs {
         }
 
         /// <summary>
-        /// Gets or sets the NPC's new position. The components are pixel-based.
+        /// Gets or sets the NPC's new position. The components are pixels.
         /// </summary>
-        public Vector2 NewNpcPosition {
-            get => _newNpcPosition;
+        /// <value>The NPC's new position.</value>
+        public Vector2 NewPosition {
+            get => _newPosition;
             set {
-                _newNpcPosition = value;
+                _newPosition = value;
                 _isDirty = true;
             }
         }
 
         /// <summary>
-        /// Gets or sets the NPC's new velocity. The components are pixel-based.
+        /// Gets or sets the NPC's new velocity. The components are pixels per tick.
         /// </summary>
-        public Vector2 NewNpcVelocity {
-            get => _newNpcVelocity;
+        /// <value>The NPC's new velocity.</value>
+        public Vector2 NewVelocity {
+            get => _newVelocity;
             set {
-                _newNpcVelocity = value;
+                _newVelocity = value;
                 _isDirty = true;
             }
         }
 
-        /// <inheritdoc/>
-        [Pure, ExcludeFromCodeCoverage]
-        public override string ToString() => $"{Type}[#={NpcIndex} @ {NewNpcPosition}, ...]";
-
         private protected override void ReadFromReader(BinaryReader reader, PacketContext context) {
             _npcIndex = reader.ReadInt16();
             _portalIndex = reader.ReadInt16();
-            _newNpcPosition = reader.ReadVector2();
-            _newNpcVelocity = reader.ReadVector2();
+            _newPosition = reader.ReadVector2();
+            _newVelocity = reader.ReadVector2();
         }
 
         private protected override void WriteToWriter(BinaryWriter writer, PacketContext context) {
             writer.Write(_npcIndex);
             writer.Write(_portalIndex);
-            writer.Write(in _newNpcPosition);
-            writer.Write(in _newNpcVelocity);
+            writer.Write(in _newPosition);
+            writer.Write(in _newVelocity);
         }
     }
 }

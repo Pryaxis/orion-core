@@ -43,7 +43,7 @@ namespace Orion.Items {
         }
 
         [Fact]
-        public void Name_Set_NullValue_ThrowsArgumentNullException() {
+        public void Name_SetNullValue_ThrowsArgumentNullException() {
             var terrariaItem = new TerrariaItem();
             var item = new OrionItem(terrariaItem);
             Action action = () => item.Name = null;

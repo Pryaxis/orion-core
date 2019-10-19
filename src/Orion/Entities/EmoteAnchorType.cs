@@ -28,6 +28,10 @@ namespace Orion.Entities {
         Npc = 0,
         Player = 1,
         Projectile = 2,
+        
+        /// <summary>
+        /// Indicates none. The emote should be removed.
+        /// </summary>
         None = 255
 #pragma warning restore CS1591 // Missing XML comment for publicly visible type or member
     }

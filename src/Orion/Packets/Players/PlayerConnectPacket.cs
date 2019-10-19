@@ -16,8 +16,6 @@
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
 using System;
-using System.Diagnostics.CodeAnalysis;
-using System.Diagnostics.Contracts;
 using System.IO;
 
 namespace Orion.Packets.Players {
@@ -25,31 +23,32 @@ namespace Orion.Packets.Players {
     /// Packet sent from the client to the server to start connecting.
     /// </summary>
     public sealed class PlayerConnectPacket : Packet {
-        private string _playerVersionString = string.Empty;
+        private string _versionString = string.Empty;
 
         /// <inheritdoc/>
         public override PacketType Type => PacketType.PlayerConnect;
-
+        
         /// <summary>
-        /// Gets or sets the player's verion string. This is usually of the form "Terraria###".
+        /// Gets or sets the player's version string.
         /// </summary>
+        /// <value>The player's version string.</value>
+        /// <remarks>
+        /// The version string restricts what client versions can connect to the server. It takes the form
+        /// <c>Terraria###</c>, where <c>###</c> is the version number.
+        /// </remarks>
         /// <exception cref="ArgumentNullException"><paramref name="value"/> is <see langword="null"/>.</exception>
-        public string PlayerVersionString {
-            get => _playerVersionString;
+        public string VersionString {
+            get => _versionString;
             set {
-                _playerVersionString = value ?? throw new ArgumentNullException(nameof(value));
+                _versionString = value ?? throw new ArgumentNullException(nameof(value));
                 _isDirty = true;
             }
         }
 
-        /// <inheritdoc/>
-        [Pure, ExcludeFromCodeCoverage]
-        public override string ToString() => $"{Type}[{PlayerVersionString}]";
-
         private protected override void ReadFromReader(BinaryReader reader, PacketContext context) =>
-            _playerVersionString = reader.ReadString();
+            _versionString = reader.ReadString();
 
         private protected override void WriteToWriter(BinaryWriter writer, PacketContext context) =>
-            writer.Write(_playerVersionString);
+            writer.Write(_versionString);
     }
 }

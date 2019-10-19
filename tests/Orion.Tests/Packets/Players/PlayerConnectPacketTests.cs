@@ -30,9 +30,9 @@ namespace Orion.Packets.Players {
         }
 
         [Fact]
-        public void PlayerVersionString_Set_Null_ThrowsArgumentNullException() {
+        public void VersionString_Set_Null_ThrowsArgumentNullException() {
             var packet = new PlayerConnectPacket();
-            Action action = () => packet.PlayerVersionString = null;
+            Action action = () => packet.VersionString = null;
 
             action.Should().Throw<ArgumentNullException>();
         }
@@ -44,7 +44,7 @@ namespace Orion.Packets.Players {
             using var stream = new MemoryStream(Bytes);
             var packet = (PlayerConnectPacket)Packet.ReadFromStream(stream, PacketContext.Server);
 
-            packet.PlayerVersionString.Should().Be("Terraria194");
+            packet.VersionString.Should().Be("Terraria194");
         }
 
         [Fact]

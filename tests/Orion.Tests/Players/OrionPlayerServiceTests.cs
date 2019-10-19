@@ -97,7 +97,7 @@ namespace Orion.Players {
             playerService.PlayerConnect.RegisterHandler((sender, args) => {
                 isRun = true;
                 args.Player.Should().BeSameAs(playerService.Players[1]);
-                args.PlayerVersionString.Should().Be("Terraria194");
+                args.VersionString.Should().Be("Terraria194");
                 args.Cancel();
             });
 
@@ -113,21 +113,21 @@ namespace Orion.Players {
             playerService.PlayerData.RegisterHandler((sender, args) => {
                 isRun = true;
                 args.Player.Should().BeSameAs(playerService.Players[1]);
-                args.PlayerClothesStyle.Should().Be(2);
-                args.PlayerHairstyle.Should().Be(50);
-                args.PlayerName.Should().Be("f");
-                args.PlayerHairDye.Should().Be(0);
-                args.PlayerEquipmentHiddenFlags.Should().Be(0);
-                args.PlayerMiscEquipmentHiddenFlags.Should().Be(0);
-                args.PlayerHairColor.Should().Be(new Color(26, 131, 54));
-                args.PlayerSkinColor.Should().Be(new Color(158, 74, 51));
-                args.PlayerEyeColor.Should().Be(new Color(47, 39, 88));
-                args.PlayerShirtColor.Should().Be(new Color(184, 58, 43));
-                args.PlayerUndershirtColor.Should().Be(new Color(69, 8, 97));
-                args.PlayerPantsColor.Should().Be(new Color(162, 167, 255));
-                args.PlayerShoeColor.Should().Be(new Color(212, 159, 76));
-                args.PlayerDifficulty.Should().Be(PlayerDifficulty.Softcore);
-                args.PlayerHasExtraAccessorySlot.Should().BeFalse();
+                args.ClothesStyle.Should().Be(2);
+                args.Hairstyle.Should().Be(50);
+                args.Name.Should().Be("f");
+                args.HairDye.Should().Be(0);
+                args.EquipmentHiddenFlags.Should().Be(0);
+                args.MiscEquipmentHiddenFlags.Should().Be(0);
+                args.HairColor.Should().Be(new Color(26, 131, 54));
+                args.SkinColor.Should().Be(new Color(158, 74, 51));
+                args.EyeColor.Should().Be(new Color(47, 39, 88));
+                args.ShirtColor.Should().Be(new Color(184, 58, 43));
+                args.UndershirtColor.Should().Be(new Color(69, 8, 97));
+                args.PantsColor.Should().Be(new Color(162, 167, 255));
+                args.ShoeColor.Should().Be(new Color(212, 159, 76));
+                args.Difficulty.Should().Be(PlayerDifficulty.Softcore);
+                args.HasExtraAccessorySlot.Should().BeFalse();
                 args.Cancel();
             });
 
@@ -143,8 +143,8 @@ namespace Orion.Players {
             playerService.PlayerInventorySlot.RegisterHandler((sender, args) => {
                 isRun = true;
                 args.Player.Should().BeSameAs(playerService.Players[1]);
-                args.PlayerInventorySlotIndex.Should().Be(0);
-                args.ItemStackSize.Should().Be(1);
+                args.InventorySlot.Should().Be(0);
+                args.StackSize.Should().Be(1);
                 args.ItemPrefix.Should().Be(ItemPrefix.Godly);
                 args.ItemType.Should().Be(ItemType.CopperShortsword);
                 args.Cancel();
@@ -177,8 +177,8 @@ namespace Orion.Players {
             playerService.PlayerSpawn.RegisterHandler((sender, args) => {
                 isRun = true;
                 args.Player.Should().BeSameAs(playerService.Players[1]);
-                args.PlayerSpawnX.Should().Be(-1);
-                args.PlayerSpawnY.Should().Be(-1);
+                args.SpawnX.Should().Be(-1);
+                args.SpawnY.Should().Be(-1);
                 args.Cancel();
             });
 
@@ -194,21 +194,21 @@ namespace Orion.Players {
             playerService.PlayerInfo.RegisterHandler((sender, args) => {
                 isRun = true;
                 args.Player.Should().BeSameAs(playerService.Players[1]);
-                args.IsPlayerHoldingUp.Should().BeFalse();
-                args.IsPlayerHoldingDown.Should().BeFalse();
-                args.IsPlayerHoldingLeft.Should().BeFalse();
-                args.IsPlayerHoldingRight.Should().BeTrue();
-                args.IsPlayerHoldingJump.Should().BeFalse();
-                args.IsPlayerHoldingUseItem.Should().BeFalse();
-                args.PlayerDirection.Should().BeTrue();
-                args.IsPlayerClimbingRope.Should().BeFalse();
-                args.PlayerClimbingRopeDirection.Should().BeFalse();
-                args.IsPlayerVortexStealthed.Should().BeFalse();
-                args.IsPlayerRightSideUp.Should().BeTrue();
-                args.IsPlayerRaisingShield.Should().BeFalse();
-                args.PlayerHeldItemSlotIndex.Should().Be(0);
-                args.PlayerPosition.Should().Be(new Vector2(67134, 6790));
-                args.PlayerVelocity.Should().Be(Vector2.Zero);
+                args.IsHoldingUp.Should().BeFalse();
+                args.IsHoldingDown.Should().BeFalse();
+                args.IsHoldingLeft.Should().BeFalse();
+                args.IsHoldingRight.Should().BeTrue();
+                args.IsHoldingJump.Should().BeFalse();
+                args.IsHoldingUseItem.Should().BeFalse();
+                args.Direction.Should().BeTrue();
+                args.IsClimbingRope.Should().BeFalse();
+                args.ClimbingRopeDirection.Should().BeFalse();
+                args.IsVortexStealthed.Should().BeFalse();
+                args.IsRightSideUp.Should().BeTrue();
+                args.IsRaisingShield.Should().BeFalse();
+                args.HeldItemSlot.Should().Be(0);
+                args.Position.Should().Be(new Vector2(67134, 6790));
+                args.Velocity.Should().Be(Vector2.Zero);
                 args.Cancel();
             });
 
@@ -224,8 +224,8 @@ namespace Orion.Players {
             playerService.PlayerHealth.RegisterHandler((sender, args) => {
                 isRun = true;
                 args.Player.Should().BeSameAs(playerService.Players[1]);
-                args.PlayerHealth.Should().Be(100);
-                args.PlayerMaxHealth.Should().Be(100);
+                args.Health.Should().Be(100);
+                args.MaxHealth.Should().Be(100);
                 args.Cancel();
             });
 
@@ -241,7 +241,7 @@ namespace Orion.Players {
             playerService.PlayerPvp.RegisterHandler((sender, args) => {
                 isRun = true;
                 args.Player.Should().BeSameAs(playerService.Players[1]);
-                args.IsPlayerInPvp.Should().Be(true);
+                args.IsInPvp.Should().Be(true);
                 args.Cancel();
             });
 
@@ -273,8 +273,8 @@ namespace Orion.Players {
             playerService.PlayerMana.RegisterHandler((sender, args) => {
                 isRun = true;
                 args.Player.Should().BeSameAs(playerService.Players[1]);
-                args.PlayerMana.Should().Be(100);
-                args.PlayerMaxMana.Should().Be(100);
+                args.Mana.Should().Be(100);
+                args.MaxMana.Should().Be(100);
                 args.Cancel();
             });
 
@@ -290,7 +290,7 @@ namespace Orion.Players {
             playerService.PlayerTeam.RegisterHandler((sender, args) => {
                 isRun = true;
                 args.Player.Should().BeSameAs(playerService.Players[1]);
-                args.PlayerTeam.Should().Be(PlayerTeam.Red);
+                args.Team.Should().Be(PlayerTeam.Red);
                 args.Cancel();
             });
 
@@ -306,7 +306,7 @@ namespace Orion.Players {
             playerService.PlayerUuid.RegisterHandler((sender, args) => {
                 isRun = true;
                 args.Player.Should().BeSameAs(playerService.Players[1]);
-                args.PlayerUuid.Should().Be("Terraria");
+                args.Uuid.Should().Be("Terraria");
                 args.Cancel();
             });
 
@@ -337,7 +337,7 @@ namespace Orion.Players {
             playerService.PlayerAnglerQuests.RegisterHandler((sender, args) => {
                 isRun = true;
                 args.Player.Should().BeSameAs(playerService.Players[1]);
-                args.PlayerNumberOfAnglerQuestsCompleted.Should().Be(257);
+                args.NumberOfAnglerQuestsCompleted.Should().Be(257);
                 args.Cancel();
             });
 
@@ -352,8 +352,8 @@ namespace Orion.Players {
             var isRun = false;
             playerService.PlayerChat.RegisterHandler((sender, args) => {
                 isRun = true;
-                args.PlayerChatCommand.Should().Be("Say");
-                args.PlayerChatText.Should().Be("/command test");
+                args.ChatCommand.Should().Be("Say");
+                args.ChatText.Should().Be("/command test");
                 args.Cancel();
             });
 

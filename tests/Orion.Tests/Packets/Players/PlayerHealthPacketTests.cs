@@ -36,8 +36,8 @@ namespace Orion.Packets.Players {
             var packet = (PlayerHealthPacket)Packet.ReadFromStream(stream, PacketContext.Server);
 
             packet.PlayerIndex.Should().Be(0);
-            packet.PlayerHealth.Should().Be(100);
-            packet.PlayerMaxHealth.Should().Be(100);
+            packet.Health.Should().Be(100);
+            packet.MaxHealth.Should().Be(100);
         }
 
         [Fact]

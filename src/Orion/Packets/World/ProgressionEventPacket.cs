@@ -15,8 +15,6 @@
 // You should have received a copy of the GNU General Public License
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
-using System.Diagnostics.CodeAnalysis;
-using System.Diagnostics.Contracts;
 using System.IO;
 
 namespace Orion.Packets.World {
@@ -24,31 +22,28 @@ namespace Orion.Packets.World {
     /// Packet sent from the server to the client to notify a progression event. This is used for achievements.
     /// </summary>
     public sealed class ProgressionEventPacket : Packet {
-        private short _progressionEventId;
+        private short _eventId;
 
         /// <inheritdoc/>
         public override PacketType Type => PacketType.ProgressionEvent;
 
         /// <summary>
-        /// Gets or sets the progression event ID.
+        /// Gets or sets the progression event's ID.
         /// </summary>
+        /// <value>The progression event's ID.</value>
         // TODO: implement enum for this.
-        public short ProgressionEventId {
-            get => _progressionEventId;
+        public short EventId {
+            get => _eventId;
             set {
-                _progressionEventId = value;
+                _eventId = value;
                 _isDirty = true;
             }
         }
 
-        /// <inheritdoc/>
-        [Pure, ExcludeFromCodeCoverage]
-        public override string ToString() => $"{Type}[{ProgressionEventId}]";
-
         private protected override void ReadFromReader(BinaryReader reader, PacketContext context) =>
-            _progressionEventId = reader.ReadInt16();
+            _eventId = reader.ReadInt16();
 
         private protected override void WriteToWriter(BinaryWriter writer, PacketContext context) =>
-            writer.Write(_progressionEventId);
+            writer.Write(_eventId);
     }
 }

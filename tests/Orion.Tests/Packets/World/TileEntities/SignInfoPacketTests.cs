@@ -30,9 +30,9 @@ namespace Orion.Packets.World.TileEntities {
         }
 
         [Fact]
-        public void SignText_Set_NullValue_ThrowsArgumentNullException() {
+        public void Text_SetNullValue_ThrowsArgumentNullException() {
             var packet = new SignInfoPacket();
-            Action action = () => packet.SignText = null;
+            Action action = () => packet.Text = null;
 
             action.Should().Throw<ArgumentNullException>();
         }
@@ -47,10 +47,10 @@ namespace Orion.Packets.World.TileEntities {
             var packet = (SignInfoPacket)Packet.ReadFromStream(stream, PacketContext.Server);
 
             packet.SignIndex.Should().Be(0);
-            packet.SignX.Should().Be(256);
-            packet.SignY.Should().Be(100);
-            packet.SignText.Should().Be("Terraria");
-            packet.ModifierPlayerIndex.Should().Be(0);
+            packet.X.Should().Be(256);
+            packet.Y.Should().Be(100);
+            packet.Text.Should().Be("Terraria");
+            packet.ModifierIndex.Should().Be(0);
         }
 
         [Fact]

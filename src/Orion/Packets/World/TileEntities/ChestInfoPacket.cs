@@ -15,8 +15,6 @@
 // You should have received a copy of the GNU General Public License
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
-using System.Diagnostics.CodeAnalysis;
-using System.Diagnostics.Contracts;
 using System.IO;
 using TerrariaChest = Terraria.Chest;
 
@@ -26,9 +24,9 @@ namespace Orion.Packets.World.TileEntities {
     /// </summary>
     public sealed class ChestInfoPacket : Packet {
         private short _chestIndex;
-        private short _chestX;
-        private short _chestY;
-        private string? _chestName;
+        private short _x;
+        private short _y;
+        private string? _name;
 
         /// <inheritdoc/>
         public override PacketType Type => PacketType.ChestInfo;
@@ -36,6 +34,7 @@ namespace Orion.Packets.World.TileEntities {
         /// <summary>
         /// Gets or sets the chest index.
         /// </summary>
+        /// <value>The chest index.</value>
         public short ChestIndex {
             get => _chestIndex;
             set {
@@ -47,10 +46,11 @@ namespace Orion.Packets.World.TileEntities {
         /// <summary>
         /// Gets or sets the chest's X coordinate.
         /// </summary>
-        public short ChestX {
-            get => _chestX;
+        /// <value>The chest's X coordinate.</value>
+        public short X {
+            get => _x;
             set {
-                _chestX = value;
+                _x = value;
                 _isDirty = true;
             }
         }
@@ -58,10 +58,11 @@ namespace Orion.Packets.World.TileEntities {
         /// <summary>
         /// Gets or sets the chest's Y coordinate.
         /// </summary>
-        public short ChestY {
-            get => _chestY;
+        /// <value>The Chest's Y coordinate.</value>
+        public short Y {
+            get => _y;
             set {
-                _chestY = value;
+                _y = value;
                 _isDirty = true;
             }
         }
@@ -69,43 +70,39 @@ namespace Orion.Packets.World.TileEntities {
         /// <summary>
         /// Gets or sets the chest's name.
         /// </summary>
-        public string? ChestName {
-            get => _chestName;
+        /// <value>The chest's name.</value>
+        public string? Name {
+            get => _name;
             set {
-                _chestName = value;
+                _name = value;
                 _isDirty = true;
             }
         }
 
-        /// <inheritdoc/>
-        [Pure, ExcludeFromCodeCoverage]
-        public override string ToString() =>
-            $"{Type}[#={ChestIndex} @ ({ChestX}, {ChestY}) is {ChestName ?? "un-named"}]";
-
         private protected override void ReadFromReader(BinaryReader reader, PacketContext context) {
             _chestIndex = reader.ReadInt16();
-            _chestX = reader.ReadInt16();
-            _chestY = reader.ReadInt16();
+            _x = reader.ReadInt16();
+            _y = reader.ReadInt16();
             var nameLength = reader.ReadByte();
 
             if (nameLength > 0 && nameLength <= TerrariaChest.MaxNameLength) {
-                _chestName = reader.ReadString();
+                _name = reader.ReadString();
             }
         }
 
         private protected override void WriteToWriter(BinaryWriter writer, PacketContext context) {
             writer.Write(_chestIndex);
-            writer.Write(_chestX);
-            writer.Write(_chestY);
+            writer.Write(_x);
+            writer.Write(_y);
 
             // This packet's logic is actually insane... why is it set up this way?
-            if (_chestName is null) {
+            if (_name is null) {
                 writer.Write((byte)0);
-            } else if (_chestName.Length == 0 || _chestName.Length > TerrariaChest.MaxNameLength) {
+            } else if (_name.Length == 0 || _name.Length > TerrariaChest.MaxNameLength) {
                 writer.Write(byte.MaxValue);
             } else {
-                writer.Write((byte)_chestName.Length);
-                writer.Write(_chestName);
+                writer.Write((byte)_name.Length);
+                writer.Write(_name);
             }
         }
     }

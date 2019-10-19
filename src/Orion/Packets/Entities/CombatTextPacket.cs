@@ -16,8 +16,6 @@
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
 using System;
-using System.Diagnostics.CodeAnalysis;
-using System.Diagnostics.Contracts;
 using System.IO;
 using Microsoft.Xna.Framework;
 using Orion.Packets.Extensions;
@@ -26,26 +24,26 @@ using TerrariaNetworkText = Terraria.Localization.NetworkText;
 namespace Orion.Packets.Entities {
     /// <summary>
     /// Packet sent from the server to the client to show combat text. This is currently not naturally sent.
-    /// 
-    /// <para/>
-    /// 
-    /// Combat text is similar to combat numbers: see <see cref="CombatNumberPacket"/>.
     /// </summary>
+    /// <remarks>
+    /// Combat text is similar to combat numbers: see <see cref="CombatNumberPacket"/> for more information.
+    /// </remarks>
     public sealed class CombatTextPacket : Packet {
-        private Vector2 _textPosition;
-        private Color _textColor;
+        private Vector2 _position;
+        private Color _color;
         private TerrariaNetworkText _text = TerrariaNetworkText.Empty;
 
         /// <inheritdoc/>
         public override PacketType Type => PacketType.CombatText;
 
         /// <summary>
-        /// Gets or sets the text's position. The components are pixel-based.
+        /// Gets or sets the text's position. The components are pixels.
         /// </summary>
-        public Vector2 TextPosition {
-            get => _textPosition;
+        /// <value>The text's position.</value>
+        public Vector2 Position {
+            get => _position;
             set {
-                _textPosition = value;
+                _position = value;
                 _isDirty = true;
             }
         }
@@ -53,10 +51,11 @@ namespace Orion.Packets.Entities {
         /// <summary>
         /// Gets or sets the text's color. The alpha component is ignored.
         /// </summary>
-        public Color TextColor {
-            get => _textColor;
+        /// <value>The text's color.</value>
+        public Color Color {
+            get => _color;
             set {
-                _textColor = value;
+                _color = value;
                 _isDirty = true;
             }
         }
@@ -64,6 +63,7 @@ namespace Orion.Packets.Entities {
         /// <summary>
         /// Gets or sets the text.
         /// </summary>
+        /// <value>The text.</value>
         /// <exception cref="ArgumentNullException"><paramref name="value"/> is <see langword="null"/>.</exception>
         public string Text {
             get => _text.ToString();
@@ -73,19 +73,15 @@ namespace Orion.Packets.Entities {
             }
         }
 
-        /// <inheritdoc/>
-        [Pure, ExcludeFromCodeCoverage]
-        public override string ToString() => $"{Type}[{Text} ({TextColor}) @ {TextPosition}]";
-
         private protected override void ReadFromReader(BinaryReader reader, PacketContext context) {
-            _textPosition = reader.ReadVector2();
-            _textColor = reader.ReadColor();
+            _position = reader.ReadVector2();
+            _color = reader.ReadColor();
             _text = reader.ReadNetworkText();
         }
 
         private protected override void WriteToWriter(BinaryWriter writer, PacketContext context) {
-            writer.Write(in _textPosition);
-            writer.Write(in _textColor);
+            writer.Write(in _position);
+            writer.Write(in _color);
             writer.Write(_text);
         }
     }

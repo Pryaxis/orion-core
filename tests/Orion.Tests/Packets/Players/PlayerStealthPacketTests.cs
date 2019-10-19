@@ -36,7 +36,7 @@ namespace Orion.Packets.Players {
             var packet = (PlayerStealthPacket)Packet.ReadFromStream(stream, PacketContext.Server);
 
             packet.PlayerIndex.Should().Be(0);
-            packet.PlayerStealthStatus.Should().Be(0);
+            packet.StealthStatus.Should().Be(0);
         }
 
         [Fact]

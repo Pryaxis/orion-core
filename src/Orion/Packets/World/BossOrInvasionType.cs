@@ -17,122 +17,33 @@
 
 namespace Orion.Packets.World {
     /// <summary>
-    /// Specifies a boss or invasion type in a <see cref="BossOrInvasionPacket"/>.
+    /// Specifies the boss or invasion type in a <see cref="BossOrInvasionPacket"/>.
     /// </summary>
     public enum BossOrInvasionType : short {
-        /// <summary>
-        /// Indicates that the Moon Lord should be summoned.
-        /// </summary>
+#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
         MoonLord = -8,
-
-        /// <summary>
-        /// Indicates that the Martians should be summoned.
-        /// </summary>
         Martians = -7,
-
-        /// <summary>
-        /// Indicates that the Eclipse should be summoned.
-        /// </summary>
         Eclipse = -6,
-
-        /// <summary>
-        /// Indicates that the Frost Moon should be summoned.
-        /// </summary>
         FrostMoon = -5,
-
-        /// <summary>
-        /// Indicates that the Pumpkin Moon should be summoned.
-        /// </summary>
         PumpkinMoon = -4,
-
-        /// <summary>
-        /// Indicates that the Pirates should be summoned.
-        /// </summary>
         Pirates = -3,
-
-        /// <summary>
-        /// Indicates that the Frost Legion should be summoned.
-        /// </summary>
         FrostLegion = -2,
-
-        /// <summary>
-        /// Indicates that the Goblins should be summoned.
-        /// </summary>
         Goblins = -1,
-
-        /// <summary>
-        /// Indicates that the Eye of Cthulhu should be summoned.
-        /// </summary>
         EyeOfCthulhu = 4,
-
-        /// <summary>
-        /// Indicates that the Eater of Worlds should be summoned.
-        /// </summary>
         EaterOfWorlds = 13,
-
-        /// <summary>
-        /// Indicates that Skeletron should be summoned.
-        /// </summary>
         Skeletron = 50,
-
-        /// <summary>
-        /// Indicates that Retinazer should be summoned.
-        /// </summary>
         Retinazer = 125,
-
-        /// <summary>
-        /// Indicates that Spazmatism should be summoned.
-        /// </summary>
         Spazmatism = 126,
-
-        /// <summary>
-        /// Indicates that Skeletron Prime should be summoned.
-        /// </summary>
         SkeletronPrime = 127,
-
-        /// <summary>
-        /// Indicates that Skeletron Prime's cannon should be summoned.
-        /// </summary>
         PrimeCannon = 128,
-
-        /// <summary>
-        /// Indicates that Skeletron Prime's saw should be summoned.
-        /// </summary>
         PrimeSaw = 129,
-
-        /// <summary>
-        /// Indicates that Skeletron Prime's vice should be summoned.
-        /// </summary>
         PrimeVice = 130,
-
-        /// <summary>
-        /// Indicates that Skeletron Prime's laser should be summoned.
-        /// </summary>
         PrimeLaser = 131,
-
-        /// <summary>
-        /// Indicates that The Destroyer should be summoned.
-        /// </summary>
         TheDestroyer = 134,
-
-        /// <summary>
-        /// Indicates that Queen Bee should be summoned.
-        /// </summary>
         QueenBee = 222,
-
-        /// <summary>
-        /// Indicates that Golem should be summoned.
-        /// </summary>
         Golem = 245,
-
-        /// <summary>
-        /// Indicates that the Brain Of Cthulhu should be summoned.
-        /// </summary>
         BrainOfCthulhu = 266,
-
-        /// <summary>
-        /// Indicates that Duke Fishron should be summoned.
-        /// </summary>
         DukeFishron = 370
+#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member
     }
 }

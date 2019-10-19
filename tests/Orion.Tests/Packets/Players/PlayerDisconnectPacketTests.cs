@@ -30,9 +30,9 @@ namespace Orion.Packets.Players {
         }
 
         [Fact]
-        public void PlayerDisconnectReason_Set_NullValue_ThrowsArgumentNullException() {
+        public void DisconnectReason_SetNullValue_ThrowsArgumentNullException() {
             var packet = new PlayerDisconnectPacket();
-            Action action = () => packet.PlayerDisconnectReason = null;
+            Action action = () => packet.DisconnectReason = null;
 
             action.Should().Throw<ArgumentNullException>();
         }
@@ -46,7 +46,7 @@ namespace Orion.Packets.Players {
             using var stream = new MemoryStream(Bytes);
             var packet = (PlayerDisconnectPacket)Packet.ReadFromStream(stream, PacketContext.Server);
 
-            packet.PlayerDisconnectReason.Should().Be("CLI.KickMessage");
+            packet.DisconnectReason.Should().Be("CLI.KickMessage");
         }
 
         [Fact]

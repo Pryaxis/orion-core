@@ -15,8 +15,6 @@
 // You should have received a copy of the GNU General Public License
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
-using System.Diagnostics.CodeAnalysis;
-using System.Diagnostics.Contracts;
 using System.IO;
 
 namespace Orion.Packets.World.TileEntities {
@@ -36,6 +34,7 @@ namespace Orion.Packets.World.TileEntities {
         /// <summary>
         /// Gets or sets the tile entity index.
         /// </summary>
+        /// <value>The tile entity index.</value>
         public int TileEntityIndex {
             get => _tileEntityIndex;
             set {
@@ -47,6 +46,7 @@ namespace Orion.Packets.World.TileEntities {
         /// <summary>
         /// Gets or sets the tile entity. A value of <see langword="null"/> indicates a removal.
         /// </summary>
+        /// <value>The tile entity.</value>
         public NetworkTileEntity? TileEntity {
             get => _tileEntity;
             set {
@@ -60,10 +60,6 @@ namespace Orion.Packets.World.TileEntities {
             base.Clean();
             TileEntity?.Clean();
         }
-
-        /// <inheritdoc/>
-        [Pure, ExcludeFromCodeCoverage]
-        public override string ToString() => $"{Type}[#={TileEntityIndex}, {TileEntity}]";
 
         private protected override void ReadFromReader(BinaryReader reader, PacketContext context) {
             _tileEntityIndex = reader.ReadInt32();

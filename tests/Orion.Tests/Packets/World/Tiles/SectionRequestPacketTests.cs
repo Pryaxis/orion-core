@@ -35,8 +35,8 @@ namespace Orion.Packets.World.Tiles {
             using var stream = new MemoryStream(Bytes);
             var packet = (SectionRequestPacket)Packet.ReadFromStream(stream, PacketContext.Server);
 
-            packet.SectionX.Should().Be(-1);
-            packet.SectionY.Should().Be(-1);
+            packet.X.Should().Be(-1);
+            packet.Y.Should().Be(-1);
         }
 
         [Fact]

@@ -36,7 +36,7 @@ namespace Orion.Packets.World {
             using var stream = new MemoryStream(Bytes);
             var packet = (MoonLordCountdownPacket)Packet.ReadFromStream(stream, PacketContext.Server);
 
-            packet.MoonLordCountdown.Should().Be(TimeSpan.FromSeconds(1));
+            packet.Countdown.Should().Be(TimeSpan.FromSeconds(1));
         }
 
         [Fact]

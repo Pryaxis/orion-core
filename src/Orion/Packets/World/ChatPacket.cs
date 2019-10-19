@@ -16,8 +16,6 @@
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
 using System;
-using System.Diagnostics.CodeAnalysis;
-using System.Diagnostics.Contracts;
 using System.IO;
 using Microsoft.Xna.Framework;
 using Orion.Packets.Extensions;
@@ -28,9 +26,9 @@ namespace Orion.Packets.World {
     /// Packet sent from the server to the client to show chat.
     /// </summary>
     public sealed class ChatPacket : Packet {
-        private Color _chatColor;
-        private TerrariaNetworkText _chatText = TerrariaNetworkText.Empty;
-        private short _chatLineWidth;
+        private Color _color;
+        private TerrariaNetworkText _text = TerrariaNetworkText.Empty;
+        private short _lineWidth = -1;
 
         /// <inheritdoc/>
         public override PacketType Type => PacketType.Chat;
@@ -38,10 +36,11 @@ namespace Orion.Packets.World {
         /// <summary>
         /// Gets or sets the chat's color. The alpha component is ignored.
         /// </summary>
-        public Color ChatColor {
-            get => _chatColor;
+        /// <value>The chat's color.</value>
+        public Color Color {
+            get => _color;
             set {
-                _chatColor = value;
+                _color = value;
                 _isDirty = true;
             }
         }
@@ -49,40 +48,38 @@ namespace Orion.Packets.World {
         /// <summary>
         /// Gets or sets the chat's text.
         /// </summary>
+        /// <value>The chat's text.</value>
         /// <exception cref="ArgumentNullException"><paramref name="value"/> is <see langword="null"/>.</exception>
-        public string ChatText {
-            get => _chatText.ToString();
+        public string Text {
+            get => _text.ToString();
             set {
-                _chatText = TerrariaNetworkText.FromLiteral(value ?? throw new ArgumentNullException(nameof(value)));
+                _text = TerrariaNetworkText.FromLiteral(value ?? throw new ArgumentNullException(nameof(value)));
                 _isDirty = true;
             }
         }
 
         /// <summary>
-        /// Gets or sets the chat's line width. A value of -1 indicates that the screen width should be used.
+        /// Gets or sets the chat's line width. A value of <c>-1</c> indicates that the screen width should be used.
         /// </summary>
-        public short ChatLineWidth {
-            get => _chatLineWidth;
+        /// <value>The chat's line width.</value>
+        public short LineWidth {
+            get => _lineWidth;
             set {
-                _chatLineWidth = value;
+                _lineWidth = value;
                 _isDirty = true;
             }
         }
 
-        /// <inheritdoc/>
-        [Pure, ExcludeFromCodeCoverage]
-        public override string ToString() => $"{Type}[{ChatText}, C={ChatColor}, ...]";
-
         private protected override void ReadFromReader(BinaryReader reader, PacketContext context) {
-            _chatColor = reader.ReadColor();
-            _chatText = reader.ReadNetworkText();
-            _chatLineWidth = reader.ReadInt16();
+            _color = reader.ReadColor();
+            _text = reader.ReadNetworkText();
+            _lineWidth = reader.ReadInt16();
         }
 
         private protected override void WriteToWriter(BinaryWriter writer, PacketContext context) {
-            writer.Write(in _chatColor);
-            writer.Write(_chatText);
-            writer.Write(_chatLineWidth);
+            writer.Write(in _color);
+            writer.Write(_text);
+            writer.Write(_lineWidth);
         }
     }
 }

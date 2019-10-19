@@ -32,20 +32,11 @@ namespace Orion.Packets.Modules {
         }
 
         [Fact]
-        public void Module_Set_NullValue_ThrowsArgumentNullException() {
+        public void Module_SetNullValue_ThrowsArgumentNullException() {
             var packet = new ModulePacket();
             Action action = () => packet.Module = null;
 
             action.Should().Throw<ArgumentNullException>();
-        }
-
-        [Fact]
-        public void WriteToStream_NullModule_ThrowsPacketException() {
-            using var stream = new MemoryStream();
-            var packet = new ModulePacket();
-            Action action = () => packet.WriteToStream(stream, PacketContext.Server);
-
-            action.Should().Throw<PacketException>();
         }
     }
 }

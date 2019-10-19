@@ -31,19 +31,19 @@ namespace Orion.Packets.Players {
         }
 
         [Fact]
-        public void PlayerBuffTypes_SetItem_MarksAsDirty() {
+        public void BuffTypes_SetItem_MarksAsDirty() {
             var packet = new PlayerBuffsPacket();
 
-            packet.PlayerBuffTypes[0] = BuffType.ObsidianSkin;
+            packet.BuffTypes[0] = BuffType.ObsidianSkin;
 
             packet.ShouldBeDirty();
         }
 
         [Fact]
-        public void PlayerBuffTypes_Count() {
+        public void BuffTypes_Count() {
             var packet = new PlayerBuffsPacket();
 
-            packet.PlayerBuffTypes.Count.Should().Be(TerrariaPlayer.maxBuffs);
+            packet.BuffTypes.Count.Should().Be(TerrariaPlayer.maxBuffs);
         }
 
         public static readonly byte[] Bytes = {
@@ -57,8 +57,8 @@ namespace Orion.Packets.Players {
 
             packet.PlayerIndex.Should().Be(0);
 
-            for (var i = 0; i < packet.PlayerBuffTypes.Count; ++i) {
-                packet.PlayerBuffTypes[i].Should().Be(BuffType.None);
+            for (var i = 0; i < packet.BuffTypes.Count; ++i) {
+                packet.BuffTypes[i].Should().Be(BuffType.None);
             }
         }
 

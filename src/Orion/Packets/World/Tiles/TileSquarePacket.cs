@@ -16,8 +16,6 @@
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
 using System;
-using System.Diagnostics.CodeAnalysis;
-using System.Diagnostics.Contracts;
 using System.IO;
 using Orion.World.Tiles;
 
@@ -26,10 +24,10 @@ namespace Orion.Packets.World.Tiles {
     /// Packet sent to set a square of tiles.
     /// </summary>
     public sealed class TileSquarePacket : Packet {
-        private short _squareSize;
+        private short _size;
         private byte _data;
-        private short _tileX;
-        private short _tileY;
+        private short _x;
+        private short _y;
         private NetworkTiles _tiles = new NetworkTiles(0, 0);
 
         /// <inheritdoc/>
@@ -39,12 +37,13 @@ namespace Orion.Packets.World.Tiles {
         public override PacketType Type => PacketType.TileSquare;
 
         /// <summary>
-        /// Gets or sets the size of the square.
+        /// Gets or sets the square size.
         /// </summary>
-        public short SquareSize {
-            get => _squareSize;
+        /// <value>The square size.</value>
+        public short Size {
+            get => _size;
             set {
-                _squareSize = value;
+                _size = value;
                 _isDirty = true;
             }
         }
@@ -52,10 +51,11 @@ namespace Orion.Packets.World.Tiles {
         /// <summary>
         /// Gets or sets the top-left tile's X coordinate.
         /// </summary>
-        public short TileX {
-            get => _tileX;
+        /// <value>The top-left tile's X coordinate.</value>
+        public short X {
+            get => _x;
             set {
-                _tileX = value;
+                _x = value;
                 _isDirty = true;
             }
         }
@@ -63,10 +63,11 @@ namespace Orion.Packets.World.Tiles {
         /// <summary>
         /// Gets or sets the top-left tile's Y coordinate.
         /// </summary>
-        public short TileY {
-            get => _tileY;
+        /// <value>The top-left tile's Y coordinate.</value>
+        public short Y {
+            get => _y;
             set {
-                _tileY = value;
+                _y = value;
                 _isDirty = true;
             }
         }
@@ -74,6 +75,7 @@ namespace Orion.Packets.World.Tiles {
         /// <summary>
         /// Gets or sets the tiles.
         /// </summary>
+        /// <value>The tiles.</value>
         /// <exception cref="ArgumentNullException"><paramref name="value"/> is <see langword="null"/>.</exception>
         public NetworkTiles Tiles {
             get => _tiles;
@@ -86,12 +88,8 @@ namespace Orion.Packets.World.Tiles {
         /// <inheritdoc/>
         public override void Clean() {
             base.Clean();
-            Tiles.Clean();
+            _tiles.Clean();
         }
-
-        /// <inheritdoc/>
-        [Pure, ExcludeFromCodeCoverage]
-        public override string ToString() => $"{Type}[{SquareSize}x{SquareSize} @ ({TileX}, {TileY}), ...]";
 
         private protected override void ReadFromReader(BinaryReader reader, PacketContext context) {
             var size = reader.ReadUInt16();
@@ -100,10 +98,10 @@ namespace Orion.Packets.World.Tiles {
                 _data = reader.ReadByte();
             }
 
-            _squareSize = (short)(size & short.MaxValue);
-            _tileX = reader.ReadInt16();
-            _tileY = reader.ReadInt16();
-            _tiles = new NetworkTiles(_squareSize, _squareSize);
+            _size = (short)(size & short.MaxValue);
+            _x = reader.ReadInt16();
+            _y = reader.ReadInt16();
+            _tiles = new NetworkTiles(_size, _size);
 
             void ReadTile(ref Tile tile) {
                 Terraria.BitsByte header = reader.ReadByte();
@@ -162,8 +160,8 @@ namespace Orion.Packets.World.Tiles {
                 }
             }
 
-            for (var x = 0; x < SquareSize; ++x) {
-                for (var y = 0; y < SquareSize; ++y) {
+            for (var x = 0; x < Size; ++x) {
+                for (var y = 0; y < Size; ++y) {
                     ReadTile(ref _tiles[x, y]);
                 }
             }
@@ -173,14 +171,14 @@ namespace Orion.Packets.World.Tiles {
 
         private protected override void WriteToWriter(BinaryWriter writer, PacketContext context) {
             if (_data > 0) {
-                writer.Write((ushort)(_squareSize | 32768));
+                writer.Write((ushort)(_size | 32768));
                 writer.Write(_data);
             } else {
-                writer.Write(_squareSize);
+                writer.Write(_size);
             }
 
-            writer.Write(_tileX);
-            writer.Write(_tileY);
+            writer.Write(_x);
+            writer.Write(_y);
 
             void WriteTile(ref Tile tile) {
                 Terraria.BitsByte header = 0;
@@ -220,8 +218,8 @@ namespace Orion.Packets.World.Tiles {
                 }
             }
 
-            for (var x = 0; x < SquareSize; ++x) {
-                for (var y = 0; y < SquareSize; ++y) {
+            for (var x = 0; x < Size; ++x) {
+                for (var y = 0; y < Size; ++y) {
                     WriteTile(ref _tiles[x, y]);
                 }
             }

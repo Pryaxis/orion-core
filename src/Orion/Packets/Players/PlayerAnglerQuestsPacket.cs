@@ -15,8 +15,6 @@
 // You should have received a copy of the GNU General Public License
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
-using System.Diagnostics.CodeAnalysis;
-using System.Diagnostics.Contracts;
 using System.IO;
 
 namespace Orion.Packets.Players {
@@ -24,30 +22,27 @@ namespace Orion.Packets.Players {
     /// Packet sent to set the number of angler quests a player has completed. This is currently not naturally sent.
     /// </summary>
     public sealed class PlayerAnglerQuestsPacket : Packet {
-        private int _playerNumberOfAnglerQuestsCompleted;
+        private int _numberOfAnglerQuestsCompleted;
 
         /// <inheritdoc/>
         public override PacketType Type => PacketType.PlayerAnglerQuests;
-
+        
         /// <summary>
-        /// Gets or sets the player's number of angler quests completed.
+        /// Gets or sets the number of angler quests the player has completed.
         /// </summary>
-        public int PlayerNumberOfAnglerQuestsCompleted {
-            get => _playerNumberOfAnglerQuestsCompleted;
+        /// <value>The number of angler quests the player has completed.</value>
+        public int NumberOfAnglerQuestsCompleted {
+            get => _numberOfAnglerQuestsCompleted;
             set {
-                _playerNumberOfAnglerQuestsCompleted = value;
+                _numberOfAnglerQuestsCompleted = value;
                 _isDirty = true;
             }
         }
 
-        /// <inheritdoc/>
-        [Pure, ExcludeFromCodeCoverage]
-        public override string ToString() => $"{Type}[{PlayerNumberOfAnglerQuestsCompleted}]";
-
         private protected override void ReadFromReader(BinaryReader reader, PacketContext context) =>
-            _playerNumberOfAnglerQuestsCompleted = reader.ReadInt32();
+            _numberOfAnglerQuestsCompleted = reader.ReadInt32();
 
         private protected override void WriteToWriter(BinaryWriter writer, PacketContext context) =>
-            writer.Write(_playerNumberOfAnglerQuestsCompleted);
+            writer.Write(_numberOfAnglerQuestsCompleted);
     }
 }

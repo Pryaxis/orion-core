@@ -16,8 +16,6 @@
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
 using System;
-using System.Diagnostics.CodeAnalysis;
-using System.Diagnostics.Contracts;
 using System.IO;
 
 namespace Orion.Packets.World.TileEntities {
@@ -26,10 +24,10 @@ namespace Orion.Packets.World.TileEntities {
     /// </summary>
     public sealed class SignInfoPacket : Packet {
         private short _signIndex;
-        private short _signX;
-        private short _signY;
-        private string _signText = string.Empty;
-        private byte _modifierPlayerIndex;
+        private short _x;
+        private short _y;
+        private string _text = string.Empty;
+        private byte _modifierIndex;
 
         /// <inheritdoc/>
         public override PacketType Type => PacketType.SignInfo;
@@ -37,6 +35,7 @@ namespace Orion.Packets.World.TileEntities {
         /// <summary>
         /// Gets or sets the sign's index.
         /// </summary>
+        /// <value>The sign's index.</value>
         public short SignIndex {
             get => _signIndex;
             set {
@@ -48,10 +47,11 @@ namespace Orion.Packets.World.TileEntities {
         /// <summary>
         /// Gets or sets the sign's X coordinate.
         /// </summary>
-        public short SignX {
-            get => _signX;
+        /// <value>The sign's X coordinate.</value>
+        public short X {
+            get => _x;
             set {
-                _signX = value;
+                _x = value;
                 _isDirty = true;
             }
         }
@@ -59,10 +59,11 @@ namespace Orion.Packets.World.TileEntities {
         /// <summary>
         /// Gets or sets the sign's Y coordinate.
         /// </summary>
-        public short SignY {
-            get => _signY;
+        /// <value>The sign's Y coordinate.</value>
+        public short Y {
+            get => _y;
             set {
-                _signY = value;
+                _y = value;
                 _isDirty = true;
             }
         }
@@ -70,11 +71,12 @@ namespace Orion.Packets.World.TileEntities {
         /// <summary>
         /// Gets or sets the sign's text.
         /// </summary>
+        /// <value>The sign's text.</value>
         /// <exception cref="ArgumentNullException"><paramref name="value"/> is <see langword="null"/>.</exception>
-        public string SignText {
-            get => _signText;
+        public string Text {
+            get => _text;
             set {
-                _signText = value ?? throw new ArgumentNullException(nameof(value));
+                _text = value ?? throw new ArgumentNullException(nameof(value));
                 _isDirty = true;
             }
         }
@@ -82,32 +84,29 @@ namespace Orion.Packets.World.TileEntities {
         /// <summary>
         /// Gets or sets the modifier's player index.
         /// </summary>
-        public byte ModifierPlayerIndex {
-            get => _modifierPlayerIndex;
+        /// <value>Gets the modifier's player index.</value>
+        public byte ModifierIndex {
+            get => _modifierIndex;
             set {
-                _modifierPlayerIndex = value;
+                _modifierIndex = value;
                 _isDirty = true;
             }
         }
 
-        /// <inheritdoc/>
-        [Pure, ExcludeFromCodeCoverage]
-        public override string ToString() => $"{Type}[#={SignIndex} @ ({SignX}, {SignY}): \"{SignText}\"]";
-
         private protected override void ReadFromReader(BinaryReader reader, PacketContext context) {
             _signIndex = reader.ReadInt16();
-            _signX = reader.ReadInt16();
-            _signY = reader.ReadInt16();
-            _signText = reader.ReadString();
-            _modifierPlayerIndex = reader.ReadByte();
+            _x = reader.ReadInt16();
+            _y = reader.ReadInt16();
+            _text = reader.ReadString();
+            _modifierIndex = reader.ReadByte();
         }
 
         private protected override void WriteToWriter(BinaryWriter writer, PacketContext context) {
             writer.Write(_signIndex);
-            writer.Write(_signX);
-            writer.Write(_signY);
-            writer.Write(_signText);
-            writer.Write(_modifierPlayerIndex);
+            writer.Write(_x);
+            writer.Write(_y);
+            writer.Write(_text);
+            writer.Write(_modifierIndex);
         }
     }
 }

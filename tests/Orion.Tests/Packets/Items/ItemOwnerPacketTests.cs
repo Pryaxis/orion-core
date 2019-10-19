@@ -37,7 +37,7 @@ namespace Orion.Packets.Items {
             var packet = (ItemOwnerPacket)Packet.ReadFromStream(stream, PacketContext.Server);
 
             packet.ItemIndex.Should().Be(400);
-            packet.ItemOwnerPlayerIndex.Should().Be(0);
+            packet.OwnerIndex.Should().Be(0);
         }
 
         [Fact]

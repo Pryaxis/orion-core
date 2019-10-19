@@ -40,10 +40,12 @@ namespace Orion.Packets.Modules {
         /// <summary>
         /// Gets the module's type.
         /// </summary>
+        /// <value>The module's type.</value>
         public abstract ModuleType Type { get; }
 
         /// <summary>
-        /// Reads and returns a module from the given stream with the specified context.
+        /// Reads and returns a module from the given <paramref name="stream"/> with the specified
+        /// <paramref name="context"/>.
         /// </summary>
         /// <param name="stream">The stream.</param>
         /// <param name="context">The context with which to read the module from.</param>
@@ -73,7 +75,7 @@ namespace Orion.Packets.Modules {
         public virtual void Clean() => _isDirty = false;
 
         /// <summary>
-        /// Writes the module to the given stream with the specified context.
+        /// Writes the module to the given <paramref name="stream"/> with the specified <paramref name="context"/>.
         /// </summary>
         /// <param name="stream">The stream.</param>
         /// <param name="context">The context with which to write the packet to.</param>

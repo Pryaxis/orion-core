@@ -15,8 +15,6 @@
 // You should have received a copy of the GNU General Public License
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
-using System.Diagnostics.CodeAnalysis;
-using System.Diagnostics.Contracts;
 using System.IO;
 
 namespace Orion.Packets.Players {
@@ -26,7 +24,7 @@ namespace Orion.Packets.Players {
     /// </summary>
     public sealed class PlayerActivityPacket : Packet {
         private byte _playerIndex;
-        private bool _isPlayerActive;
+        private bool _isActive;
 
         /// <inheritdoc/>
         public override PacketType Type => PacketType.PlayerActivity;
@@ -34,6 +32,7 @@ namespace Orion.Packets.Players {
         /// <summary>
         /// Gets or sets the player index.
         /// </summary>
+        /// <value>The player index.</value>
         public byte PlayerIndex {
             get => _playerIndex;
             set {
@@ -45,26 +44,23 @@ namespace Orion.Packets.Players {
         /// <summary>
         /// Gets or sets a value indicating whether the player is active.
         /// </summary>
-        public bool IsPlayerActive {
-            get => _isPlayerActive;
+        /// <value><see langword="true"/> if the player is active; otherwise, <see langword="false"/>.</value>
+        public bool IsActive {
+            get => _isActive;
             set {
-                _isPlayerActive = value;
+                _isActive = value;
                 _isDirty = true;
             }
         }
 
-        /// <inheritdoc/>
-        [Pure, ExcludeFromCodeCoverage]
-        public override string ToString() => $"{Type}[#={PlayerIndex}, {IsPlayerActive}]";
-
         private protected override void ReadFromReader(BinaryReader reader, PacketContext context) {
             _playerIndex = reader.ReadByte();
-            _isPlayerActive = reader.ReadBoolean();
+            _isActive = reader.ReadBoolean();
         }
 
         private protected override void WriteToWriter(BinaryWriter writer, PacketContext context) {
             writer.Write(_playerIndex);
-            writer.Write(_isPlayerActive);
+            writer.Write(_isActive);
         }
     }
 }

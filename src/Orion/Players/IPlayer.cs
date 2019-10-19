@@ -100,7 +100,7 @@ namespace Orion.Players {
                 throw new ArgumentNullException(nameof(reason));
             }
 
-            player.SendPacket(new PlayerDisconnectPacket { PlayerDisconnectReason = reason });
+            player.SendPacket(new PlayerDisconnectPacket { DisconnectReason = reason });
         }
 
         /// <summary>
@@ -125,9 +125,9 @@ namespace Orion.Players {
             }
 
             player.SendPacket(new ChatPacket {
-                ChatColor = color,
-                ChatLineWidth = -1,
-                ChatText = message
+                Color = color,
+                LineWidth = -1,
+                Text = message
             });
         }
 
@@ -162,9 +162,9 @@ namespace Orion.Players {
 
             player.SendPacket(new ModulePacket {
                 Module = new ChatModule {
-                    ServerChattingPlayerIndex = (byte)fromPlayer.Index,
-                    ServerChatText = message,
-                    ServerChatColor = color
+                    ServerChatterIndex = (byte)fromPlayer.Index,
+                    ServerText = message,
+                    ServerColor = color
                 }
             });
         }

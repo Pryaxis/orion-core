@@ -38,8 +38,8 @@ namespace Orion.Packets.Players {
 
             packet.PlayerIndex.Should().Be(100);
             packet.PortalIndex.Should().Be(2);
-            packet.PlayerNewPosition.Should().Be(Vector2.Zero);
-            packet.PlayerNewVelocity.Should().Be(Vector2.Zero);
+            packet.NewPosition.Should().Be(Vector2.Zero);
+            packet.NewVelocity.Should().Be(Vector2.Zero);
         }
 
         [Fact]

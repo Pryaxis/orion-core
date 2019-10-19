@@ -15,8 +15,6 @@
 // You should have received a copy of the GNU General Public License
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
-using System.Diagnostics.CodeAnalysis;
-using System.Diagnostics.Contracts;
 using System.IO;
 
 namespace Orion.Packets.Players {
@@ -25,7 +23,7 @@ namespace Orion.Packets.Players {
     /// </summary>
     public sealed class PlayerPvpPacket : Packet {
         private byte _playerIndex;
-        private bool _playerIsInPvp;
+        private bool _isInPvp;
 
         /// <inheritdoc/>
         public override PacketType Type => PacketType.PlayerPvp;
@@ -33,6 +31,7 @@ namespace Orion.Packets.Players {
         /// <summary>
         /// Gets or sets the player index.
         /// </summary>
+        /// <value>The player index.</value>
         public byte PlayerIndex {
             get => _playerIndex;
             set {
@@ -40,30 +39,27 @@ namespace Orion.Packets.Players {
                 _isDirty = true;
             }
         }
-
+        
         /// <summary>
         /// Gets or sets a value indicating whether the player is in PvP.
         /// </summary>
-        public bool IsPlayerInPvp {
-            get => _playerIsInPvp;
+        /// <value><see langword="true"/> if the player is in PvP; otherwise, <see langword="false"/>.</value>
+        public bool IsInPvp {
+            get => _isInPvp;
             set {
-                _playerIsInPvp = value;
+                _isInPvp = value;
                 _isDirty = true;
             }
         }
 
-        /// <inheritdoc/>
-        [Pure, ExcludeFromCodeCoverage]
-        public override string ToString() => $"{Type}[#={PlayerIndex}, {IsPlayerInPvp}]";
-
         private protected override void ReadFromReader(BinaryReader reader, PacketContext context) {
             _playerIndex = reader.ReadByte();
-            _playerIsInPvp = reader.ReadBoolean();
+            _isInPvp = reader.ReadBoolean();
         }
 
         private protected override void WriteToWriter(BinaryWriter writer, PacketContext context) {
             writer.Write(_playerIndex);
-            writer.Write(_playerIsInPvp);
+            writer.Write(_isInPvp);
         }
     }
 }

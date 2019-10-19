@@ -36,7 +36,7 @@ namespace Orion.Packets.Npcs {
             using var stream = new MemoryStream(Bytes);
             var packet = (NpcTypeKilledPacket)Packet.ReadFromStream(stream, PacketContext.Server);
 
-            packet.NpcTypeKilled.Should().Be(NpcType.BlueSlime);
+            packet.NpcType.Should().Be(NpcType.BlueSlime);
         }
 
         [Fact]

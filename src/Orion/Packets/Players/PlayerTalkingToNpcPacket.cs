@@ -15,8 +15,6 @@
 // You should have received a copy of the GNU General Public License
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
-using System.Diagnostics.CodeAnalysis;
-using System.Diagnostics.Contracts;
 using System.IO;
 
 namespace Orion.Packets.Players {
@@ -25,7 +23,7 @@ namespace Orion.Packets.Players {
     /// </summary>
     public sealed class PlayerTalkingToNpcPacket : Packet {
         private byte _playerIndex;
-        private short _playerTalkingToNpcIndex;
+        private short _npcIndex;
 
         /// <inheritdoc/>
         public override PacketType Type => PacketType.PlayerTalkingToNpc;
@@ -33,6 +31,7 @@ namespace Orion.Packets.Players {
         /// <summary>
         /// Gets or sets the player index.
         /// </summary>
+        /// <value>The player index.</value>
         public byte PlayerIndex {
             get => _playerIndex;
             set {
@@ -44,26 +43,23 @@ namespace Orion.Packets.Players {
         /// <summary>
         /// Gets or sets the NPC index that the player is talking to.
         /// </summary>
-        public short PlayerTalkingToNpcIndex {
-            get => _playerTalkingToNpcIndex;
+        /// <value>The NPC index that the player is talking to.</value>
+        public short NpcIndex {
+            get => _npcIndex;
             set {
-                _playerTalkingToNpcIndex = value;
+                _npcIndex = value;
                 _isDirty = true;
             }
         }
 
-        /// <inheritdoc/>
-        [Pure, ExcludeFromCodeCoverage]
-        public override string ToString() => $"{Type}[#={PlayerIndex} to N={PlayerTalkingToNpcIndex}]";
-
         private protected override void ReadFromReader(BinaryReader reader, PacketContext context) {
             _playerIndex = reader.ReadByte();
-            _playerTalkingToNpcIndex = reader.ReadInt16();
+            _npcIndex = reader.ReadInt16();
         }
 
         private protected override void WriteToWriter(BinaryWriter writer, PacketContext context) {
             writer.Write(_playerIndex);
-            writer.Write(_playerTalkingToNpcIndex);
+            writer.Write(_npcIndex);
         }
     }
 }

@@ -17,7 +17,7 @@
 
 namespace Orion.Packets.World.Tiles {
     /// <summary>
-    /// Specifies a toggle door action in a <see cref="ToggleDoorPacket"/>.
+    /// Specifies the toggle door action in a <see cref="ToggleDoorPacket"/>.
     /// </summary>
     public enum ToggleDoorAction : byte {
         /// <summary>

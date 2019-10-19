@@ -30,9 +30,9 @@ namespace Orion.Packets.World.TileEntities {
         }
 
         [Fact]
-        public void ChestName_Set_NullValue_ThrowsArgumentNullException() {
+        public void Name_SetNullValue_ThrowsArgumentNullException() {
             var packet = new ChestNamePacket();
-            Action action = () => packet.ChestName = null;
+            Action action = () => packet.Name = null;
 
             action.Should().Throw<ArgumentNullException>();
         }
@@ -45,8 +45,8 @@ namespace Orion.Packets.World.TileEntities {
             var packet = (ChestNamePacket)Packet.ReadFromStream(stream, PacketContext.Server);
 
             packet.ChestIndex.Should().Be(0);
-            packet.ChestX.Should().Be(256);
-            packet.ChestY.Should().Be(100);
+            packet.X.Should().Be(256);
+            packet.Y.Should().Be(100);
         }
 
         [Fact]
@@ -70,9 +70,9 @@ namespace Orion.Packets.World.TileEntities {
             var packet = (ChestNamePacket)Packet.ReadFromStream(stream, PacketContext.Client);
 
             packet.ChestIndex.Should().Be(0);
-            packet.ChestX.Should().Be(256);
-            packet.ChestY.Should().Be(100);
-            packet.ChestName.Should().Be("Terraria");
+            packet.X.Should().Be(256);
+            packet.Y.Should().Be(100);
+            packet.Name.Should().Be("Terraria");
         }
 
         [Fact]

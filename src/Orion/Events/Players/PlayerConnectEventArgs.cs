@@ -34,9 +34,9 @@ namespace Orion.Events.Players {
         /// <c>Terraria###</c>, where <c>###</c> is the version number.
         /// </remarks>
         /// <exception cref="ArgumentNullException"><paramref name="value"/> is <see langword="null"/>.</exception>
-        public string PlayerVersionString {
-            get => _packet.PlayerVersionString;
-            set => _packet.PlayerVersionString = value ?? throw new ArgumentNullException(nameof(value));
+        public string VersionString {
+            get => _packet.VersionString;
+            set => _packet.VersionString = value ?? throw new ArgumentNullException(nameof(value));
         }
 
         /// <summary>

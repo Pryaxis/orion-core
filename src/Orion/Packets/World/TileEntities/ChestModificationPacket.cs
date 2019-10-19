@@ -15,20 +15,18 @@
 // You should have received a copy of the GNU General Public License
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
-using System.Diagnostics.CodeAnalysis;
-using System.Diagnostics.Contracts;
 using System.IO;
 
 namespace Orion.Packets.World.TileEntities {
     /// <summary>
-    /// Packet sent to perform a chest modification. See <see cref="TileEntities.ChestModification"/>
-    /// for a list of chest modifications.
+    /// Packet sent to perform a chest modification. See <see cref="ChestModification"/> for a list of chest
+    /// modifications.
     /// </summary>
     public sealed class ChestModificationPacket : Packet {
-        private ChestModification _chestModification;
-        private short _chestX;
-        private short _chestY;
-        private short _chestStyle;
+        private ChestModification _modification;
+        private short _x;
+        private short _y;
+        private short _style;
         private short _chestIndex;
 
         /// <inheritdoc/>
@@ -37,10 +35,11 @@ namespace Orion.Packets.World.TileEntities {
         /// <summary>
         /// Gets or sets the chest modification.
         /// </summary>
-        public ChestModification ChestModification {
-            get => _chestModification;
+        /// <value>The chest modification.</value>
+        public ChestModification Modification {
+            get => _modification;
             set {
-                _chestModification = value;
+                _modification = value;
                 _isDirty = true;
             }
         }
@@ -48,10 +47,11 @@ namespace Orion.Packets.World.TileEntities {
         /// <summary>
         /// Gets or sets the chest's X coordinate.
         /// </summary>
-        public short ChestX {
-            get => _chestX;
+        /// <value>The chest's X coordinate.</value>
+        public short X {
+            get => _x;
             set {
-                _chestX = value;
+                _x = value;
                 _isDirty = true;
             }
         }
@@ -59,21 +59,26 @@ namespace Orion.Packets.World.TileEntities {
         /// <summary>
         /// Gets or sets the chest's Y coordinate.
         /// </summary>
-        public short ChestY {
-            get => _chestY;
+        /// <value>The chest's Y coordinate.</value>
+        public short Y {
+            get => _y;
             set {
-                _chestY = value;
+                _y = value;
                 _isDirty = true;
             }
         }
 
         /// <summary>
-        /// Gets or sets the chest style.
+        /// Gets or sets the chest's style.
         /// </summary>
-        public short ChestStyle {
-            get => _chestStyle;
+        /// <value>The chest's style.</value>
+        /// <remarks>
+        /// This property is only applicable if the modification is related to placing some sort of container.
+        /// </remarks>
+        public short Style {
+            get => _style;
             set {
-                _chestStyle = value;
+                _style = value;
                 _isDirty = true;
             }
         }
@@ -81,6 +86,7 @@ namespace Orion.Packets.World.TileEntities {
         /// <summary>
         /// Gets or sets the chest index.
         /// </summary>
+        /// <value>The chest index.</value>
         public short ChestIndex {
             get => _chestIndex;
             set {
@@ -89,24 +95,19 @@ namespace Orion.Packets.World.TileEntities {
             }
         }
 
-        /// <inheritdoc/>
-        [Pure, ExcludeFromCodeCoverage]
-        public override string ToString() =>
-            $"{Type}[{ChestModification}, #={ChestIndex} @ ({ChestX}, {ChestY}), ...]";
-
         private protected override void ReadFromReader(BinaryReader reader, PacketContext context) {
-            _chestModification = (ChestModification)reader.ReadByte();
-            _chestX = reader.ReadInt16();
-            _chestY = reader.ReadInt16();
-            _chestStyle = reader.ReadInt16();
+            _modification = (ChestModification)reader.ReadByte();
+            _x = reader.ReadInt16();
+            _y = reader.ReadInt16();
+            _style = reader.ReadInt16();
             _chestIndex = reader.ReadInt16();
         }
 
         private protected override void WriteToWriter(BinaryWriter writer, PacketContext context) {
-            writer.Write((byte)_chestModification);
-            writer.Write(_chestX);
-            writer.Write(_chestY);
-            writer.Write(_chestStyle);
+            writer.Write((byte)_modification);
+            writer.Write(_x);
+            writer.Write(_y);
+            writer.Write(_style);
             writer.Write(_chestIndex);
         }
     }

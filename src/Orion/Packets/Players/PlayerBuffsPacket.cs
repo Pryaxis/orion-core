@@ -15,8 +15,6 @@
 // You should have received a copy of the GNU General Public License
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
-using System.Diagnostics.CodeAnalysis;
-using System.Diagnostics.Contracts;
 using System.IO;
 using Orion.Entities;
 using Orion.Utils;
@@ -27,12 +25,11 @@ namespace Orion.Packets.Players {
     /// Packet sent to set a player's buffs. Each buff will be set for one second.
     /// </summary>
     public sealed class PlayerBuffsPacket : Packet {
-        private DirtiableArray<BuffType> _playerBuffTypes = new DirtiableArray<BuffType>(TerrariaPlayer.maxBuffs);
-
         private byte _playerIndex;
+        private DirtiableArray<BuffType> _buffTypes = new DirtiableArray<BuffType>(TerrariaPlayer.maxBuffs);
 
         /// <inheritdoc/>
-        public override bool IsDirty => base.IsDirty || _playerBuffTypes.IsDirty;
+        public override bool IsDirty => base.IsDirty || _buffTypes.IsDirty;
 
         /// <inheritdoc/>
         public override PacketType Type => PacketType.PlayerBuffs;
@@ -40,6 +37,7 @@ namespace Orion.Packets.Players {
         /// <summary>
         /// Gets or sets the player index.
         /// </summary>
+        /// <value>The player index.</value>
         public byte PlayerIndex {
             get => _playerIndex;
             set {
@@ -51,32 +49,29 @@ namespace Orion.Packets.Players {
         /// <summary>
         /// Gets the player's buff types.
         /// </summary>
-        public IArray<BuffType> PlayerBuffTypes => _playerBuffTypes;
+        /// <value>The player's buff types.</value>
+        public IArray<BuffType> BuffTypes => _buffTypes;
 
         /// <inheritdoc/>
         public override void Clean() {
             base.Clean();
-            _playerBuffTypes.Clean();
+            _buffTypes.Clean();
         }
-
-        /// <inheritdoc/>
-        [Pure, ExcludeFromCodeCoverage]
-        public override string ToString() => $"{Type}[#={PlayerIndex}, ...]";
 
         private protected override void ReadFromReader(BinaryReader reader, PacketContext context) {
             _playerIndex = reader.ReadByte();
 
-            var playerBuffTypes = new BuffType[_playerBuffTypes.Count];
-            for (var i = 0; i < _playerBuffTypes.Count; ++i) {
-                playerBuffTypes[i] = (BuffType)reader.ReadByte();
+            var buffTypes = new BuffType[_buffTypes.Count];
+            for (var i = 0; i < _buffTypes.Count; ++i) {
+                buffTypes[i] = (BuffType)reader.ReadByte();
             }
 
-            _playerBuffTypes = new DirtiableArray<BuffType>(playerBuffTypes);
+            _buffTypes = new DirtiableArray<BuffType>(buffTypes);
         }
 
         private protected override void WriteToWriter(BinaryWriter writer, PacketContext context) {
             writer.Write(_playerIndex);
-            foreach (var buffType in _playerBuffTypes) {
+            foreach (var buffType in _buffTypes) {
                 writer.Write((byte)buffType);
             }
         }

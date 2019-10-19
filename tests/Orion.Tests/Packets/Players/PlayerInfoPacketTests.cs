@@ -37,21 +37,21 @@ namespace Orion.Packets.Players {
             var packet = (PlayerInfoPacket)Packet.ReadFromStream(stream, PacketContext.Server);
 
             packet.PlayerIndex.Should().Be(0);
-            packet.IsPlayerHoldingUp.Should().BeFalse();
-            packet.IsPlayerHoldingDown.Should().BeFalse();
-            packet.IsPlayerHoldingLeft.Should().BeFalse();
-            packet.IsPlayerHoldingRight.Should().BeTrue();
-            packet.IsPlayerHoldingJump.Should().BeFalse();
-            packet.IsPlayerHoldingUseItem.Should().BeFalse();
-            packet.PlayerDirection.Should().BeTrue();
-            packet.IsPlayerClimbingRope.Should().BeFalse();
-            packet.PlayerClimbingRopeDirection.Should().BeFalse();
-            packet.IsPlayerVortexStealthed.Should().BeFalse();
-            packet.IsPlayerRightSideUp.Should().BeTrue();
-            packet.IsPlayerRaisingShield.Should().BeFalse();
-            packet.PlayerHeldItemSlotIndex.Should().Be(0);
-            packet.PlayerPosition.Should().Be(new Vector2(67134, 6790));
-            packet.PlayerVelocity.Should().Be(Vector2.Zero);
+            packet.IsHoldingUp.Should().BeFalse();
+            packet.IsHoldingDown.Should().BeFalse();
+            packet.IsHoldingLeft.Should().BeFalse();
+            packet.IsHoldingRight.Should().BeTrue();
+            packet.IsHoldingJump.Should().BeFalse();
+            packet.IsHoldingUseItem.Should().BeFalse();
+            packet.Direction.Should().BeTrue();
+            packet.IsClimbingRope.Should().BeFalse();
+            packet.ClimbingRopeDirection.Should().BeFalse();
+            packet.IsVortexStealthed.Should().BeFalse();
+            packet.IsRightSideUp.Should().BeTrue();
+            packet.IsRaisingShield.Should().BeFalse();
+            packet.HeldItemSlot.Should().Be(0);
+            packet.Position.Should().Be(new Vector2(67134, 6790));
+            packet.Velocity.Should().Be(Vector2.Zero);
         }
 
         [Fact]

@@ -16,8 +16,6 @@
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
 using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
-using System.Diagnostics.Contracts;
 using System.IO;
 using Orion.Packets.World.Tiles;
 using Orion.Utils;
@@ -38,6 +36,7 @@ namespace Orion.Packets.Modules {
         /// <summary>
         /// Gets the liquids.
         /// </summary>
+        /// <value>The liquids.</value>
         public IList<NetworkLiquid> Liquids => _liquids;
 
         /// <inheritdoc/>
@@ -45,10 +44,6 @@ namespace Orion.Packets.Modules {
             base.Clean();
             _liquids.Clean();
         }
-
-        /// <inheritdoc/>
-        [Pure, ExcludeFromCodeCoverage]
-        public override string ToString() => $"{Type}[...]";
 
         private protected override void ReadFromReader(BinaryReader reader, PacketContext context) {
             var numberOfLiquidChanges = reader.ReadUInt16();

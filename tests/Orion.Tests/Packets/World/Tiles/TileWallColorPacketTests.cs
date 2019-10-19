@@ -36,9 +36,9 @@ namespace Orion.Packets.World.Tiles {
             using var stream = new MemoryStream(Bytes);
             var packet = (TileWallColorPacket)Packet.ReadFromStream(stream, PacketContext.Server);
 
-            packet.WallX.Should().Be(256);
-            packet.WallY.Should().Be(100);
-            packet.WallColor.Should().Be(PaintColor.Red);
+            packet.X.Should().Be(256);
+            packet.Y.Should().Be(100);
+            packet.Color.Should().Be(PaintColor.Red);
         }
 
         [Fact]

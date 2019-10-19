@@ -35,9 +35,9 @@ namespace Orion.Packets.World.Tiles {
             using var stream = new MemoryStream(Bytes);
             var packet = (ObjectUnlockPacket)Packet.ReadFromStream(stream, PacketContext.Server);
 
-            packet.UnlockableObjectType.Should().Be(UnlockableObjectType.Chest);
-            packet.ObjectX.Should().Be(256);
-            packet.ObjectY.Should().Be(100);
+            packet.ObjectType.Should().Be(UnlockableObjectType.Chest);
+            packet.X.Should().Be(256);
+            packet.Y.Should().Be(100);
         }
 
         [Fact]

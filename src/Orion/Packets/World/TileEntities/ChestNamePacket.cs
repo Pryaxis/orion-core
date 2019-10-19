@@ -16,8 +16,6 @@
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
 using System;
-using System.Diagnostics.CodeAnalysis;
-using System.Diagnostics.Contracts;
 using System.IO;
 
 namespace Orion.Packets.World.TileEntities {
@@ -27,9 +25,9 @@ namespace Orion.Packets.World.TileEntities {
     /// </summary>
     public sealed class ChestNamePacket : Packet {
         private short _chestIndex;
-        private short _chestX;
-        private short _chestY;
-        private string _chestName = string.Empty;
+        private short _x;
+        private short _y;
+        private string _name = string.Empty;
 
         /// <inheritdoc/>
         public override PacketType Type => PacketType.ChestName;
@@ -37,6 +35,7 @@ namespace Orion.Packets.World.TileEntities {
         /// <summary>
         /// Gets or sets the chest index.
         /// </summary>
+        /// <value>The chest index.</value>
         public short ChestIndex {
             get => _chestIndex;
             set {
@@ -48,10 +47,11 @@ namespace Orion.Packets.World.TileEntities {
         /// <summary>
         /// Gets or sets the chest's X coordinate.
         /// </summary>
-        public short ChestX {
-            get => _chestX;
+        /// <value>The chest's X coordinate.</value>
+        public short X {
+            get => _x;
             set {
-                _chestX = value;
+                _x = value;
                 _isDirty = true;
             }
         }
@@ -59,10 +59,11 @@ namespace Orion.Packets.World.TileEntities {
         /// <summary>
         /// Gets or sets the chest's Y coordinate.
         /// </summary>
-        public short ChestY {
-            get => _chestY;
+        /// <value>The chest's Y coordinate.</value>
+        public short Y {
+            get => _y;
             set {
-                _chestY = value;
+                _y = value;
                 _isDirty = true;
             }
         }
@@ -70,38 +71,35 @@ namespace Orion.Packets.World.TileEntities {
         /// <summary>
         /// Gets or sets the chest's name.
         /// </summary>
+        /// <value>The chest's name.</value>
         /// <exception cref="ArgumentNullException"><paramref name="value"/> is <see langword="null"/>.</exception>
-        public string ChestName {
-            get => _chestName;
+        public string Name {
+            get => _name;
             set {
-                _chestName = value ?? throw new ArgumentNullException(nameof(value));
+                _name = value ?? throw new ArgumentNullException(nameof(value));
                 _isDirty = true;
             }
         }
 
-        /// <inheritdoc/>
-        [Pure, ExcludeFromCodeCoverage]
-        public override string ToString() => $"{Type}[#={ChestIndex} @ ({ChestX}, {ChestY}) is {ChestName}]";
-
         private protected override void ReadFromReader(BinaryReader reader, PacketContext context) {
             _chestIndex = reader.ReadInt16();
-            _chestX = reader.ReadInt16();
-            _chestY = reader.ReadInt16();
+            _x = reader.ReadInt16();
+            _y = reader.ReadInt16();
 
             // The packet includes the chest name if it is read as the client.
             if (context == PacketContext.Client) {
-                _chestName = reader.ReadString();
+                _name = reader.ReadString();
             }
         }
 
         private protected override void WriteToWriter(BinaryWriter writer, PacketContext context) {
             writer.Write(_chestIndex);
-            writer.Write(_chestX);
-            writer.Write(_chestY);
+            writer.Write(_x);
+            writer.Write(_y);
 
             // The packet includes the chest name if it is written as the server.
             if (context == PacketContext.Server) {
-                writer.Write(_chestName);
+                writer.Write(_name);
             }
         }
     }

@@ -27,7 +27,7 @@ namespace Orion.Events.Npcs {
     [EventArgs("npc-loot")]
     public sealed class NpcLootEventArgs : NpcEventArgs, ICancelable, IDirtiable {
         private ItemType _itemType;
-        private int _itemStackSize;
+        private int _stackSize;
         private ItemPrefix _itemPrefix;
 
         /// <inheritdoc/>
@@ -52,10 +52,10 @@ namespace Orion.Events.Npcs {
         /// Gets or sets the item's stack size.
         /// </summary>
         /// <value>The item's stack size.</value>
-        public int ItemStackSize {
-            get => _itemStackSize;
+        public int StackSize {
+            get => _stackSize;
             set {
-                _itemStackSize = value;
+                _stackSize = value;
                 IsDirty = true;
             }
         }
@@ -74,16 +74,16 @@ namespace Orion.Events.Npcs {
 
         /// <summary>
         /// Initializes a new instance of the <see cref="NpcLootEventArgs"/> class with the specified NPC,
-        /// item type, item stack size, and item prefix.
+        /// item type, stack size, and item prefix.
         /// </summary>
         /// <param name="npc">The NPC.</param>
         /// <param name="itemType">The item type.</param>
-        /// <param name="itemStackSize">The item stack size.</param>
+        /// <param name="stackSize">The stack size.</param>
         /// <param name="itemPrefix">The item prefix.</param>
         /// <exception cref="ArgumentNullException"><paramref name="npc"/> is null.</exception>
-        public NpcLootEventArgs(INpc npc, ItemType itemType, int itemStackSize, ItemPrefix itemPrefix) : base(npc) {
+        public NpcLootEventArgs(INpc npc, ItemType itemType, int stackSize, ItemPrefix itemPrefix) : base(npc) {
             _itemType = itemType;
-            _itemStackSize = itemStackSize;
+            _stackSize = stackSize;
             _itemPrefix = itemPrefix;
         }
 

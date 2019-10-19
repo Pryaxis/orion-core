@@ -29,9 +29,9 @@ namespace Orion.Events.Players {
         /// Gets or sets a value indicating whether the player is in PvP.
         /// </summary>
         /// <value><see langword="true"/> if the player is in PvP; otherwise, <see langword="false"/>.</value>
-        public bool IsPlayerInPvp {
-            get => _packet.IsPlayerInPvp;
-            set => _packet.IsPlayerInPvp = value;
+        public bool IsInPvp {
+            get => _packet.IsInPvp;
+            set => _packet.IsInPvp = value;
         }
 
         /// <summary>

@@ -15,8 +15,6 @@
 // You should have received a copy of the GNU General Public License
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
-using System.Diagnostics.CodeAnalysis;
-using System.Diagnostics.Contracts;
 using System.IO;
 using Orion.Npcs;
 
@@ -25,7 +23,7 @@ namespace Orion.Packets.Npcs {
     /// Packet sent from the server to the client to notify that an NPC type was killed. This is used for achievements.
     /// </summary>
     public sealed class NpcTypeKilledPacket : Packet {
-        private NpcType _npcTypeKilled;
+        private NpcType _npcType;
 
         /// <inheritdoc/>
         public override PacketType Type => PacketType.NpcTypeKilled;
@@ -33,22 +31,19 @@ namespace Orion.Packets.Npcs {
         /// <summary>
         /// Gets or sets the NPC type that was killed.
         /// </summary>
-        public NpcType NpcTypeKilled {
-            get => _npcTypeKilled;
+        /// <value>The NPC type that was killed.</value>
+        public NpcType NpcType {
+            get => _npcType;
             set {
-                _npcTypeKilled = value;
+                _npcType = value;
                 _isDirty = true;
             }
         }
 
-        /// <inheritdoc/>
-        [Pure, ExcludeFromCodeCoverage]
-        public override string ToString() => $"{Type}[{NpcTypeKilled}]";
-
         private protected override void ReadFromReader(BinaryReader reader, PacketContext context) =>
-            _npcTypeKilled = (NpcType)reader.ReadInt16();
+            _npcType = (NpcType)reader.ReadInt16();
 
         private protected override void WriteToWriter(BinaryWriter writer, PacketContext context) =>
-            writer.Write((short)_npcTypeKilled);
+            writer.Write((short)_npcType);
     }
 }

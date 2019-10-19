@@ -15,8 +15,6 @@
 // You should have received a copy of the GNU General Public License
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
-using System.Diagnostics.CodeAnalysis;
-using System.Diagnostics.Contracts;
 using System.IO;
 using Orion.World.TileEntities;
 
@@ -25,8 +23,8 @@ namespace Orion.Packets.World.TileEntities {
     /// Packet sent from the client to the server to place a tile entity.
     /// </summary>
     public sealed class TileEntityPlacePacket : Packet {
-        private short _tileEntityX;
-        private short _tileEntityY;
+        private short _x;
+        private short _y;
         private TileEntityType _tileEntityType;
 
         /// <inheritdoc/>
@@ -35,10 +33,11 @@ namespace Orion.Packets.World.TileEntities {
         /// <summary>
         /// Gets or sets the tile entity's X coordinate.
         /// </summary>
-        public short TileEntityX {
-            get => _tileEntityX;
+        /// <value>The tile entity's X coordinate.</value>
+        public short X {
+            get => _x;
             set {
-                _tileEntityX = value;
+                _x = value;
                 _isDirty = true;
             }
         }
@@ -46,10 +45,11 @@ namespace Orion.Packets.World.TileEntities {
         /// <summary>
         /// Gets or sets the tile entity's Y coordinate.
         /// </summary>
-        public short TileEntityY {
-            get => _tileEntityY;
+        /// <value>The tile entity's Y coordinate.</value>
+        public short Y {
+            get => _y;
             set {
-                _tileEntityY = value;
+                _y = value;
                 _isDirty = true;
             }
         }
@@ -57,6 +57,7 @@ namespace Orion.Packets.World.TileEntities {
         /// <summary>
         /// Gets or sets the tile entity's type.
         /// </summary>
+        /// <value>The tile entity's type.</value>
         public TileEntityType TileEntityType {
             get => _tileEntityType;
             set {
@@ -65,19 +66,15 @@ namespace Orion.Packets.World.TileEntities {
             }
         }
 
-        /// <inheritdoc/>
-        [Pure, ExcludeFromCodeCoverage]
-        public override string ToString() => $"{Type}[{TileEntityType} @ ({TileEntityX}, {TileEntityY})]";
-
         private protected override void ReadFromReader(BinaryReader reader, PacketContext context) {
-            _tileEntityX = reader.ReadInt16();
-            _tileEntityY = reader.ReadInt16();
+            _x = reader.ReadInt16();
+            _y = reader.ReadInt16();
             _tileEntityType = (TileEntityType)reader.ReadByte();
         }
 
         private protected override void WriteToWriter(BinaryWriter writer, PacketContext context) {
-            writer.Write(_tileEntityX);
-            writer.Write(_tileEntityY);
+            writer.Write(_x);
+            writer.Write(_y);
             writer.Write((byte)_tileEntityType);
         }
     }

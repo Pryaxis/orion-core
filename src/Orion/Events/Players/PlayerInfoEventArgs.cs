@@ -34,9 +34,9 @@ namespace Orion.Events.Players {
         /// <value>
         /// <see langword="true"/> if the player is holding the up control; otherwise, <see langword="false"/>.
         /// </value>
-        public bool IsPlayerHoldingUp {
-            get => _packet.IsPlayerHoldingUp;
-            set => _packet.IsPlayerHoldingUp = value;
+        public bool IsHoldingUp {
+            get => _packet.IsHoldingUp;
+            set => _packet.IsHoldingUp = value;
         }
 
         /// <summary>
@@ -45,9 +45,9 @@ namespace Orion.Events.Players {
         /// <value>
         /// <see langword="true"/> if the player is holding the down control; otherwise, <see langword="false"/>.
         /// </value>
-        public bool IsPlayerHoldingDown {
-            get => _packet.IsPlayerHoldingDown;
-            set => _packet.IsPlayerHoldingDown = value;
+        public bool IsHoldingDown {
+            get => _packet.IsHoldingDown;
+            set => _packet.IsHoldingDown = value;
         }
 
         /// <summary>
@@ -56,9 +56,9 @@ namespace Orion.Events.Players {
         /// <value>
         /// <see langword="true"/> if the player is holding the left control; otherwise, <see langword="false"/>.
         /// </value>
-        public bool IsPlayerHoldingLeft {
-            get => _packet.IsPlayerHoldingLeft;
-            set => _packet.IsPlayerHoldingLeft = value;
+        public bool IsHoldingLeft {
+            get => _packet.IsHoldingLeft;
+            set => _packet.IsHoldingLeft = value;
         }
 
         /// <summary>
@@ -67,9 +67,9 @@ namespace Orion.Events.Players {
         /// <value>
         /// <see langword="true"/> if the player is holding the right control; otherwise, <see langword="false"/>.
         /// </value>
-        public bool IsPlayerHoldingRight {
-            get => _packet.IsPlayerHoldingRight;
-            set => _packet.IsPlayerHoldingRight = value;
+        public bool IsHoldingRight {
+            get => _packet.IsHoldingRight;
+            set => _packet.IsHoldingRight = value;
         }
 
         /// <summary>
@@ -78,9 +78,9 @@ namespace Orion.Events.Players {
         /// <value>
         /// <see langword="true"/> if the player is holding the jump control; otherwise, <see langword="false"/>.
         /// </value>
-        public bool IsPlayerHoldingJump {
-            get => _packet.IsPlayerHoldingJump;
-            set => _packet.IsPlayerHoldingJump = value;
+        public bool IsHoldingJump {
+            get => _packet.IsHoldingJump;
+            set => _packet.IsHoldingJump = value;
         }
 
         /// <summary>
@@ -89,39 +89,39 @@ namespace Orion.Events.Players {
         /// <value>
         /// <see langword="true"/> if the player is holding the use item control; otherwise, <see langword="false"/>.
         /// </value>
-        public bool IsPlayerHoldingUseItem {
-            get => _packet.IsPlayerHoldingUseItem;
-            set => _packet.IsPlayerHoldingUseItem = value;
+        public bool IsHoldingUseItem {
+            get => _packet.IsHoldingUseItem;
+            set => _packet.IsHoldingUseItem = value;
         }
 
         /// <summary>
-        /// Gets or sets a value indicating the direction of the player.
+        /// Gets or sets a value indicating the player's direction.
         /// </summary>
         /// <value><see langword="true"/> if the player is facing right; otherwise, <see langword="false"/>.</value>
-        public bool PlayerDirection {
-            get => _packet.PlayerDirection;
-            set => _packet.PlayerDirection = value;
+        public bool Direction {
+            get => _packet.Direction;
+            set => _packet.Direction = value;
         }
 
         /// <summary>
         /// Gets or sets a value indicating whether the player is climbing a rope.
         /// </summary>
         /// <value><see langword="true"/> if the player is climbing a rope; otherwise, <see langword="false"/>.</value>
-        public bool IsPlayerClimbingRope {
-            get => _packet.IsPlayerClimbingRope;
-            set => _packet.IsPlayerClimbingRope = value;
+        public bool IsClimbingRope {
+            get => _packet.IsClimbingRope;
+            set => _packet.IsClimbingRope = value;
         }
 
         /// <summary>
-        /// Gets or sets a value indicating the direction of the player when climbing a rope.
+        /// Gets or sets a value indicating the player's direction when climbing a rope.
         /// </summary>
         /// <value>
         /// <see langword="true"/> if the player is facing right while climbing a rope; otherwise,
         /// <see langword="false"/>.
         /// </value>
-        public bool PlayerClimbingRopeDirection {
-            get => _packet.PlayerClimbingRopeDirection;
-            set => _packet.PlayerClimbingRopeDirection = value;
+        public bool ClimbingRopeDirection {
+            get => _packet.ClimbingRopeDirection;
+            set => _packet.ClimbingRopeDirection = value;
         }
 
         /// <summary>
@@ -130,9 +130,9 @@ namespace Orion.Events.Players {
         /// <value>
         /// <see langword="true"/> if the player is stealthed with vortex armor; otherwise, <see langword="false"/>.
         /// </value>
-        public bool IsPlayerVortexStealthed {
-            get => _packet.IsPlayerVortexStealthed;
-            set => _packet.IsPlayerVortexStealthed = value;
+        public bool IsVortexStealthed {
+            get => _packet.IsVortexStealthed;
+            set => _packet.IsVortexStealthed = value;
         }
 
         /// <summary>
@@ -143,9 +143,9 @@ namespace Orion.Events.Players {
         /// Only the <see cref="BuffType.Gravitation"/> buff and the <see cref="ItemType.GravityGlobe"/> accessory can
         /// alter this value normally.
         /// </remarks>
-        public bool IsPlayerRightSideUp {
-            get => _packet.IsPlayerRightSideUp;
-            set => _packet.IsPlayerRightSideUp = value;
+        public bool IsRightSideUp {
+            get => _packet.IsRightSideUp;
+            set => _packet.IsRightSideUp = value;
         }
 
         /// <summary>
@@ -155,40 +155,40 @@ namespace Orion.Events.Players {
         /// <see langword="true"/> if the player is raising their shield; otherwise, <see langword="false"/>.
         /// </value>
         /// <remarks>Only the <see cref="ItemType.BrandOfTheInferno"/> weapon can alter this value normally.</remarks>
-        public bool IsPlayerRaisingShield {
-            get => _packet.IsPlayerRaisingShield;
-            set => _packet.IsPlayerRaisingShield = value;
+        public bool IsRaisingShield {
+            get => _packet.IsRaisingShield;
+            set => _packet.IsRaisingShield = value;
         }
 
         /// <summary>
-        /// Gets or sets the player's held item slot index.
+        /// Gets or sets the player's held item slot.
         /// </summary>
-        /// <value>The player's held item slot index.</value>
+        /// <value>The player's held item slot.</value>
         /// <remarks>
-        /// This value can range from <c>0</c> to <c>58</c>. Check <see cref="IPlayerInventory"/> for a more detailed
-        /// description on the indices.
+        /// This value can range from <c>0</c> to <c>58</c>. Check the <see cref="IPlayerInventory"/> interface for a
+        /// more detailed description on the slots.
         /// </remarks>
-        public byte PlayerHeldItemSlotIndex {
-            get => _packet.PlayerHeldItemSlotIndex;
-            set => _packet.PlayerHeldItemSlotIndex = value;
+        public byte HeldItemSlot {
+            get => _packet.HeldItemSlot;
+            set => _packet.HeldItemSlot = value;
         }
 
         /// <summary>
         /// Gets or sets the player's position. The components are pixels.
         /// </summary>
         /// <remarks>The player's position.</remarks>
-        public Vector2 PlayerPosition {
-            get => _packet.PlayerPosition;
-            set => _packet.PlayerPosition = value;
+        public Vector2 Position {
+            get => _packet.Position;
+            set => _packet.Position = value;
         }
 
         /// <summary>
         /// Gets or sets the player's velocity. The components are pixels per tick.
         /// </summary>
         /// <remarks>The player's velocity.</remarks>
-        public Vector2 PlayerVelocity {
-            get => _packet.PlayerVelocity;
-            set => _packet.PlayerVelocity = value;
+        public Vector2 Velocity {
+            get => _packet.Velocity;
+            set => _packet.Velocity = value;
         }
 
         /// <summary>

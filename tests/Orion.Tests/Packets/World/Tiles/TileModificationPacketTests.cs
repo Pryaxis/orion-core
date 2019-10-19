@@ -35,11 +35,11 @@ namespace Orion.Packets.World.Tiles {
             using var stream = new MemoryStream(Bytes);
             var packet = (TileModificationPacket)Packet.ReadFromStream(stream, PacketContext.Server);
 
-            packet.TileModification.Should().Be(TileModification.BreakBlock);
-            packet.TileX.Should().Be(3600);
-            packet.TileY.Should().Be(450);
-            packet.TileModificationData.Should().Be(1);
-            packet.TileModificationStyle.Should().Be(0);
+            packet.Modification.Should().Be(TileModification.BreakBlock);
+            packet.X.Should().Be(3600);
+            packet.Y.Should().Be(450);
+            packet.Data.Should().Be(1);
+            packet.Style.Should().Be(0);
         }
 
         [Fact]

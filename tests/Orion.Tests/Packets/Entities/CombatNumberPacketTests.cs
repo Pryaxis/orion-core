@@ -36,8 +36,8 @@ namespace Orion.Packets.Entities {
             using var stream = new MemoryStream(Bytes);
             var packet = (CombatNumberPacket)Packet.ReadFromStream(stream, PacketContext.Server);
 
-            packet.NumberPosition.Should().Be(Vector2.Zero);
-            packet.NumberColor.Should().Be(Color.White);
+            packet.Position.Should().Be(Vector2.Zero);
+            packet.Color.Should().Be(Color.White);
             packet.Number.Should().Be(100);
         }
 

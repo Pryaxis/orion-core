@@ -15,8 +15,6 @@
 // You should have received a copy of the GNU General Public License
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
-using System.Diagnostics.CodeAnalysis;
-using System.Diagnostics.Contracts;
 using System.IO;
 using Orion.Items;
 using Orion.Packets.World.Tiles;
@@ -24,7 +22,7 @@ using Orion.Packets.World.Tiles;
 namespace Orion.Packets.Players {
     /// <summary>
     /// Packet sent from the server to the client to consume a player's items. This is sent in response to a
-    /// <see cref="WireMassOperationPacket"/>.
+    /// <see cref="MassWireOperationPacket"/>.
     /// </summary>
     public sealed class PlayerConsumeItemsPacket : Packet {
         private ItemType _itemType;
@@ -37,6 +35,7 @@ namespace Orion.Packets.Players {
         /// <summary>
         /// Gets or sets the item's type.
         /// </summary>
+        /// <value>The item's type.</value>
         public ItemType ItemType {
             get => _itemType;
             set {
@@ -48,7 +47,8 @@ namespace Orion.Packets.Players {
         /// <summary>
         /// Gets or sets the item's stack size.
         /// </summary>
-        public short ItemStackSize {
+        /// <value>The item's stack size.</value>
+        public short StackSize {
             get => _itemStackSize;
             set {
                 _itemStackSize = value;
@@ -59,6 +59,7 @@ namespace Orion.Packets.Players {
         /// <summary>
         /// Gets or sets the player index.
         /// </summary>
+        /// <value>The player index.</value>
         public byte PlayerIndex {
             get => _playerIndex;
             set {
@@ -66,10 +67,6 @@ namespace Orion.Packets.Players {
                 _isDirty = true;
             }
         }
-
-        /// <inheritdoc/>
-        [Pure, ExcludeFromCodeCoverage]
-        public override string ToString() => $"{Type}[#={PlayerIndex}, {ItemType} x{ItemStackSize}]";
 
         private protected override void ReadFromReader(BinaryReader reader, PacketContext context) {
             _itemType = (ItemType)reader.ReadInt16();

@@ -15,8 +15,6 @@
 // You should have received a copy of the GNU General Public License
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
-using System.Diagnostics.CodeAnalysis;
-using System.Diagnostics.Contracts;
 using System.IO;
 
 namespace Orion.Packets.Items {
@@ -33,6 +31,7 @@ namespace Orion.Packets.Items {
         /// <summary>
         /// Gets or sets the item index.
         /// </summary>
+        /// <value>The item index.</value>
         public short ItemIndex {
             get => _itemIndex;
             set {
@@ -40,10 +39,6 @@ namespace Orion.Packets.Items {
                 _isDirty = true;
             }
         }
-
-        /// <inheritdoc/>
-        [Pure, ExcludeFromCodeCoverage]
-        public override string ToString() => $"{Type}[#={ItemIndex}]";
 
         private protected override void ReadFromReader(BinaryReader reader, PacketContext context) =>
             _itemIndex = reader.ReadInt16();

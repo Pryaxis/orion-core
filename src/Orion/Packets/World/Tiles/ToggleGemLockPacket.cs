@@ -15,8 +15,6 @@
 // You should have received a copy of the GNU General Public License
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
-using System.Diagnostics.CodeAnalysis;
-using System.Diagnostics.Contracts;
 using System.IO;
 
 namespace Orion.Packets.World.Tiles {
@@ -24,9 +22,9 @@ namespace Orion.Packets.World.Tiles {
     /// Packet sent to toggle a gem lock.
     /// </summary>
     public sealed class ToggleGemLockPacket : Packet {
-        private short _gemLockX;
-        private short _gemLockY;
-        private bool _isGemLockLocked;
+        private short _x;
+        private short _y;
+        private bool _isLocked;
 
         /// <inheritdoc/>
         public override PacketType Type => PacketType.ToggleGemLock;
@@ -34,10 +32,11 @@ namespace Orion.Packets.World.Tiles {
         /// <summary>
         /// Gets or sets the gem lock's X coordinate.
         /// </summary>
-        public short GemLockX {
-            get => _gemLockX;
+        /// <value>The gem lock's X coordinate.</value>
+        public short X {
+            get => _x;
             set {
-                _gemLockX = value;
+                _x = value;
                 _isDirty = true;
             }
         }
@@ -45,10 +44,11 @@ namespace Orion.Packets.World.Tiles {
         /// <summary>
         /// Gets or sets the gem lock's Y coordinate.
         /// </summary>
-        public short GemLockY {
-            get => _gemLockY;
+        /// <value>The gem lock's Y coordinate.</value>
+        public short Y {
+            get => _y;
             set {
-                _gemLockY = value;
+                _y = value;
                 _isDirty = true;
             }
         }
@@ -56,28 +56,25 @@ namespace Orion.Packets.World.Tiles {
         /// <summary>
         /// Gets or sets a value indicating whether the gem lock is locked.
         /// </summary>
-        public bool IsGemLockLocked {
-            get => _isGemLockLocked;
+        /// <value><see langword="true"/> if the gem lock is locked; otherwise, <see langword="false"/>.</value>
+        public bool IsLocked {
+            get => _isLocked;
             set {
-                _isGemLockLocked = value;
+                _isLocked = value;
                 _isDirty = true;
             }
         }
 
-        /// <inheritdoc/>
-        [Pure, ExcludeFromCodeCoverage]
-        public override string ToString() => $"{Type}[{IsGemLockLocked} @ ({GemLockX}, {GemLockY})]";
-
         private protected override void ReadFromReader(BinaryReader reader, PacketContext context) {
-            _gemLockX = reader.ReadInt16();
-            _gemLockY = reader.ReadInt16();
-            _isGemLockLocked = reader.ReadBoolean();
+            _x = reader.ReadInt16();
+            _y = reader.ReadInt16();
+            _isLocked = reader.ReadBoolean();
         }
 
         private protected override void WriteToWriter(BinaryWriter writer, PacketContext context) {
-            writer.Write(_gemLockX);
-            writer.Write(_gemLockY);
-            writer.Write(_isGemLockLocked);
+            writer.Write(_x);
+            writer.Write(_y);
+            writer.Write(_isLocked);
         }
     }
 }

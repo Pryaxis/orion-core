@@ -36,12 +36,12 @@ namespace Orion.Packets.World.Tiles {
             using var stream = new MemoryStream(Bytes);
             var packet = (ObjectPlacePacket)Packet.ReadFromStream(stream, PacketContext.Server);
 
-            packet.ObjectX.Should().Be(256);
-            packet.ObjectY.Should().Be(100);
+            packet.X.Should().Be(256);
+            packet.Y.Should().Be(100);
             packet.ObjectType.Should().Be(BlockType.Chests);
-            packet.ObjectStyle.Should().Be(1);
-            packet.ObjectRandomState.Should().Be(-1);
-            packet.ObjectDirection.Should().BeTrue();
+            packet.Style.Should().Be(1);
+            packet.RandomState.Should().Be(-1);
+            packet.Direction.Should().BeTrue();
         }
 
         [Fact]

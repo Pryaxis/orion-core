@@ -15,8 +15,6 @@
 // You should have received a copy of the GNU General Public License
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
-using System.Diagnostics.CodeAnalysis;
-using System.Diagnostics.Contracts;
 using System.IO;
 using Orion.Entities;
 
@@ -26,7 +24,7 @@ namespace Orion.Packets.Npcs {
     /// </summary>
     public sealed class NpcAddBuffPacket : Packet {
         private short _npcIndex;
-        private Buff _npcBuff;
+        private Buff _buff;
 
         /// <inheritdoc/>
         public override PacketType Type => PacketType.NpcAddBuff;
@@ -34,6 +32,7 @@ namespace Orion.Packets.Npcs {
         /// <summary>
         /// Gets or sets the NPC index.
         /// </summary>
+        /// <value>The NPC index.</value>
         public short NpcIndex {
             get => _npcIndex;
             set {
@@ -45,26 +44,23 @@ namespace Orion.Packets.Npcs {
         /// <summary>
         /// Gets or sets the NPC's buff. The buff duration is limited to approximately 546.1 seconds.
         /// </summary>
-        public Buff NpcBuff {
-            get => _npcBuff;
+        /// <value>The NPC's buff.</value>
+        public Buff Buff {
+            get => _buff;
             set {
-                _npcBuff = value;
+                _buff = value;
                 _isDirty = true;
             }
         }
 
-        /// <inheritdoc/>
-        [Pure, ExcludeFromCodeCoverage]
-        public override string ToString() => $"{Type}[#={NpcIndex}, {NpcBuff}]";
-
         private protected override void ReadFromReader(BinaryReader reader, PacketContext context) {
             _npcIndex = reader.ReadInt16();
-            _npcBuff = Buff.ReadFromReader(reader, 2);
+            _buff = Buff.ReadFromReader(reader, 2);
         }
 
         private protected override void WriteToWriter(BinaryWriter writer, PacketContext context) {
             writer.Write(_npcIndex);
-            _npcBuff.WriteToWriter(writer, 2);
+            _buff.WriteToWriter(writer, 2);
         }
     }
 }

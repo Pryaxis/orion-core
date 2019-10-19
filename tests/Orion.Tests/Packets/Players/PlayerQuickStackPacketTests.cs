@@ -35,7 +35,7 @@ namespace Orion.Packets.Players {
             using var stream = new MemoryStream(Bytes);
             var packet = (PlayerQuickStackPacket)Packet.ReadFromStream(stream, PacketContext.Server);
 
-            packet.PlayerInventorySlotIndex.Should().Be(1);
+            packet.InventorySlot.Should().Be(1);
         }
 
         [Fact]

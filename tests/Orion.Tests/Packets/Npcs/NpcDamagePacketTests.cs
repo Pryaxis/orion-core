@@ -38,7 +38,7 @@ namespace Orion.Packets.Npcs {
             packet.NpcIndex.Should().Be(100);
             packet.Damage.Should().Be(108);
             packet.Knockback.Should().Be(4.025f);
-            packet.HitDirection.Should().Be(1);
+            packet.HitDirection.Should().BeTrue();
             packet.IsCriticalHit.Should().BeFalse();
         }
 

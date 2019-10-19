@@ -37,8 +37,8 @@ namespace Orion.Packets.Players {
             var packet = (PlayerInventorySlotPacket)Packet.ReadFromStream(stream, PacketContext.Server);
 
             packet.PlayerIndex.Should().Be(0);
-            packet.PlayerInventorySlotIndex.Should().Be(0);
-            packet.ItemStackSize.Should().Be(1);
+            packet.InventorySlot.Should().Be(0);
+            packet.StackSize.Should().Be(1);
             packet.ItemPrefix.Should().Be(ItemPrefix.Godly);
             packet.ItemType.Should().Be(ItemType.CopperShortsword);
         }

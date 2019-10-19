@@ -35,10 +35,10 @@ namespace Orion.Packets.World.Tiles {
             using var stream = new MemoryStream(Bytes);
             var packet = (ToggleDoorPacket)Packet.ReadFromStream(stream, PacketContext.Server);
 
-            packet.ToggleDoorAction.Should().Be(ToggleDoorAction.OpenDoor);
-            packet.DoorX.Should().Be(3600);
-            packet.DoorY.Should().Be(450);
-            packet.ToggleDirection.Should().BeTrue();
+            packet.Action.Should().Be(ToggleDoorAction.OpenDoor);
+            packet.X.Should().Be(3600);
+            packet.Y.Should().Be(450);
+            packet.Direction.Should().BeTrue();
         }
 
         [Fact]

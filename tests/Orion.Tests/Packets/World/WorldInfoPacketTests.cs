@@ -31,9 +31,9 @@ namespace Orion.Packets.World {
         }
 
         [Fact]
-        public void WorldName_Set_NullValue_ThrowsArgumentNullException() {
+        public void Name_SetNullValue_ThrowsArgumentNullException() {
             var packet = new WorldInfoPacket();
-            Action action = () => packet.WorldName = null;
+            Action action = () => packet.Name = null;
 
             action.Should().Throw<ArgumentNullException>();
         }
@@ -120,16 +120,16 @@ namespace Orion.Packets.World {
             packet.IsBloodMoon.Should().BeFalse();
             packet.IsEclipse.Should().BeFalse();
             packet.MoonPhase.Should().Be(0);
-            packet.WorldWidth.Should().Be(4200);
-            packet.WorldHeight.Should().Be(1200);
+            packet.Width.Should().Be(4200);
+            packet.Height.Should().Be(1200);
             packet.SpawnX.Should().Be(2102);
             packet.SpawnY.Should().Be(358);
             packet.SurfaceY.Should().Be(385);
             packet.RockLayerY.Should().Be(565);
             packet.WorldId.Should().Be(151007512);
-            packet.WorldName.Should().Be("f");
-            packet.WorldGuid.Should().Be("{aea3813f-d8c8-4139-bcdc-16aaa12ddd63}");
-            packet.WorldGeneratorVersion.Should().Be(833223655425);
+            packet.Name.Should().Be("f");
+            packet.Guid.Should().Be("{aea3813f-d8c8-4139-bcdc-16aaa12ddd63}");
+            packet.GeneratorVersion.Should().Be(833223655425);
             packet.MoonType.Should().Be(0);
             packet.TreeBackgroundStyle.Should().Be(51);
             packet.CorruptionBackgroundStyle.Should().Be(0);
@@ -172,7 +172,7 @@ namespace Orion.Packets.World {
             packet.HasDefeatedQueenBee.Should().BeFalse();
             packet.HasDefeatedDukeFishron.Should().BeFalse();
             packet.HasDefeatedMartians.Should().BeFalse();
-            packet.HasDefeatedAncientCultist.Should().BeFalse();
+            packet.HasDefeatedLunaticCultist.Should().BeFalse();
             packet.HasDefeatedMoonLord.Should().BeFalse();
             packet.HasDefeatedPumpking.Should().BeFalse();
             packet.HasDefeatedMourningWood.Should().BeFalse();
@@ -190,7 +190,6 @@ namespace Orion.Packets.World {
             packet.HasDefeatedOldOnesArmyTier2.Should().BeFalse();
             packet.HasDefeatedOldOnesArmyTier3.Should().BeFalse();
             packet.CurrentInvasionType.Should().Be(InvasionType.None);
-            packet.LobbyId.Should().Be(0);
             packet.SandstormIntensity.Should().Be(0);
         }
 

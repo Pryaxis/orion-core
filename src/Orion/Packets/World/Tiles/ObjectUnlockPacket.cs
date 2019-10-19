@@ -15,19 +15,17 @@
 // You should have received a copy of the GNU General Public License
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
-using System.Diagnostics.CodeAnalysis;
-using System.Diagnostics.Contracts;
 using System.IO;
 
 namespace Orion.Packets.World.Tiles {
     /// <summary>
-    /// Packet sent to unlock an object (chest, door, etc.). See
-    /// <see cref="Tiles.UnlockableObjectType"/> for a list of unlockable object types.
+    /// Packet sent to unlock an object (chest, door, etc.). See <see cref="UnlockableObjectType"/> for a list of
+    /// unlockable object types.
     /// </summary>
     public sealed class ObjectUnlockPacket : Packet {
-        private UnlockableObjectType _unlockableObjectType;
-        private short _objectX;
-        private short _objectY;
+        private UnlockableObjectType _objectType;
+        private short _x;
+        private short _y;
 
         /// <inheritdoc/>
         public override PacketType Type => PacketType.ObjectUnlock;
@@ -35,10 +33,11 @@ namespace Orion.Packets.World.Tiles {
         /// <summary>
         /// Gets or sets the unlockable object type.
         /// </summary>
-        public UnlockableObjectType UnlockableObjectType {
-            get => _unlockableObjectType;
+        /// <value>The unlockable object type.</value>
+        public UnlockableObjectType ObjectType {
+            get => _objectType;
             set {
-                _unlockableObjectType = value;
+                _objectType = value;
                 _isDirty = true;
             }
         }
@@ -46,10 +45,11 @@ namespace Orion.Packets.World.Tiles {
         /// <summary>
         /// Gets or sets the object's X coordinate.
         /// </summary>
-        public short ObjectX {
-            get => _objectX;
+        /// <value>The object's X coordinate.</value>
+        public short X {
+            get => _x;
             set {
-                _objectX = value;
+                _x = value;
                 _isDirty = true;
             }
         }
@@ -57,28 +57,25 @@ namespace Orion.Packets.World.Tiles {
         /// <summary>
         /// Gets or sets the object's Y coordinate.
         /// </summary>
-        public short ObjectY {
-            get => _objectY;
+        /// <value>The object's Y coordinate.</value>
+        public short Y {
+            get => _y;
             set {
-                _objectY = value;
+                _y = value;
                 _isDirty = true;
             }
         }
 
-        /// <inheritdoc/>
-        [Pure, ExcludeFromCodeCoverage]
-        public override string ToString() => $"{Type}[{UnlockableObjectType} @ ({ObjectX}, {ObjectY})]";
-
         private protected override void ReadFromReader(BinaryReader reader, PacketContext context) {
-            _unlockableObjectType = (UnlockableObjectType)reader.ReadByte();
-            _objectX = reader.ReadInt16();
-            _objectY = reader.ReadInt16();
+            _objectType = (UnlockableObjectType)reader.ReadByte();
+            _x = reader.ReadInt16();
+            _y = reader.ReadInt16();
         }
 
         private protected override void WriteToWriter(BinaryWriter writer, PacketContext context) {
-            writer.Write((byte)_unlockableObjectType);
-            writer.Write(_objectX);
-            writer.Write(_objectY);
+            writer.Write((byte)_objectType);
+            writer.Write(_x);
+            writer.Write(_y);
         }
     }
 }

@@ -35,10 +35,10 @@ namespace Orion.Packets.World.TileEntities {
             using var stream = new MemoryStream(Bytes);
             var packet = (ChestModificationPacket)Packet.ReadFromStream(stream, PacketContext.Server);
 
-            packet.ChestModification.Should().Be(ChestModification.PlaceChest);
-            packet.ChestX.Should().Be(100);
-            packet.ChestY.Should().Be(100);
-            packet.ChestStyle.Should().Be(1);
+            packet.Modification.Should().Be(ChestModification.PlaceChest);
+            packet.X.Should().Be(100);
+            packet.Y.Should().Be(100);
+            packet.Style.Should().Be(1);
             packet.ChestIndex.Should().Be(0);
         }
 

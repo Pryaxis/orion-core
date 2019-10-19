@@ -15,8 +15,6 @@
 // You should have received a copy of the GNU General Public License
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
-using System.Diagnostics.CodeAnalysis;
-using System.Diagnostics.Contracts;
 using System.IO;
 using Orion.Items;
 
@@ -34,6 +32,7 @@ namespace Orion.Packets.Players {
         /// <summary>
         /// Gets or sets the player index.
         /// </summary>
+        /// <value>The player index.</value>
         public byte PlayerIndex {
             get => _playerIndex;
             set {
@@ -43,9 +42,13 @@ namespace Orion.Packets.Players {
         }
 
         /// <summary>
-        /// Gets or sets the player's chest index. A value of -1 indicates a <see cref="ItemType.PiggyBank"/>, -2
-        /// indicates a <see cref="ItemType.Safe"/>, and -3 indicates a <see cref="ItemType.DefendersForge"/>.
+        /// Gets or sets the player's chest index.
         /// </summary>
+        /// <value>The player's chest index.</value>
+        /// <remarks>
+        /// A value of <c>-1</c> indicates a <see cref="ItemType.PiggyBank"/>, <c>-2</c> indicates a
+        /// <see cref="ItemType.Safe"/>, and <c>-3</c> indicates a <see cref="ItemType.DefendersForge"/>.
+        /// </remarks>
         public short PlayerChestIndex {
             get => _playerChestIndex;
             set {
@@ -53,10 +56,6 @@ namespace Orion.Packets.Players {
                 _isDirty = true;
             }
         }
-
-        /// <inheritdoc/>
-        [Pure, ExcludeFromCodeCoverage]
-        public override string ToString() => $"{Type}[#={PlayerIndex}, C={PlayerChestIndex}]";
 
         private protected override void ReadFromReader(BinaryReader reader, PacketContext context) {
             _playerIndex = reader.ReadByte();

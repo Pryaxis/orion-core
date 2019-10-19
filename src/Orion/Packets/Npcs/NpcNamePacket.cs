@@ -16,8 +16,6 @@
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
 using System;
-using System.Diagnostics.CodeAnalysis;
-using System.Diagnostics.Contracts;
 using System.IO;
 
 namespace Orion.Packets.Npcs {
@@ -27,7 +25,7 @@ namespace Orion.Packets.Npcs {
     /// </summary>
     public sealed class NpcNamePacket : Packet {
         private short _npcIndex;
-        private string _npcName = string.Empty;
+        private string _name = string.Empty;
 
         /// <inheritdoc/>
         public override PacketType Type => PacketType.NpcName;
@@ -35,6 +33,7 @@ namespace Orion.Packets.Npcs {
         /// <summary>
         /// Gets or sets the NPC index.
         /// </summary>
+        /// <value>The NPC index.</value>
         public short NpcIndex {
             get => _npcIndex;
             set {
@@ -46,25 +45,22 @@ namespace Orion.Packets.Npcs {
         /// <summary>
         /// Gets or sets the NPC's name.
         /// </summary>
+        /// <value>The NPC's name.</value>
         /// <exception cref="ArgumentNullException"><paramref name="value"/> is <see langword="null"/>.</exception>
-        public string NpcName {
-            get => _npcName;
+        public string Name {
+            get => _name;
             set {
-                _npcName = value ?? throw new ArgumentNullException(nameof(NpcName));
+                _name = value ?? throw new ArgumentNullException(nameof(Name));
                 _isDirty = true;
             }
         }
-
-        /// <inheritdoc/>
-        [Pure, ExcludeFromCodeCoverage]
-        public override string ToString() => $"{Type}[#={NpcIndex} is {NpcName}]";
 
         private protected override void ReadFromReader(BinaryReader reader, PacketContext context) {
             _npcIndex = reader.ReadInt16();
 
             // The packet includes the NPC name if it is read as the client.
             if (context == PacketContext.Client) {
-                _npcName = reader.ReadString();
+                _name = reader.ReadString();
             }
         }
 
@@ -73,7 +69,7 @@ namespace Orion.Packets.Npcs {
 
             // The packet includes the NPC name if it is written as the server.
             if (context == PacketContext.Server) {
-                writer.Write(_npcName);
+                writer.Write(_name);
             }
         }
     }

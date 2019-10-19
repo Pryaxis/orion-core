@@ -15,8 +15,6 @@
 // You should have received a copy of the GNU General Public License
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
-using System.Diagnostics.CodeAnalysis;
-using System.Diagnostics.Contracts;
 using System.IO;
 
 namespace Orion.Packets.World.TileEntities {
@@ -24,8 +22,8 @@ namespace Orion.Packets.World.TileEntities {
     /// Packet sent from the client to the server to open a chest.
     /// </summary>
     public sealed class ChestOpenPacket : Packet {
-        private short _chestX;
-        private short _chestY;
+        private short _x;
+        private short _y;
 
         /// <inheritdoc/>
         public override PacketType Type => PacketType.ChestOpen;
@@ -33,10 +31,11 @@ namespace Orion.Packets.World.TileEntities {
         /// <summary>
         /// Gets or sets the chest's X coordinate.
         /// </summary>
-        public short ChestX {
-            get => _chestX;
+        /// <value>The chest's X coordinate.</value>
+        public short X {
+            get => _x;
             set {
-                _chestX = value;
+                _x = value;
                 _isDirty = true;
             }
         }
@@ -44,26 +43,23 @@ namespace Orion.Packets.World.TileEntities {
         /// <summary>
         /// Gets or sets the chest's Y coordinate.
         /// </summary>
-        public short ChestY {
-            get => _chestY;
+        /// <value>The chest's Y coordinate.</value>
+        public short Y {
+            get => _y;
             set {
-                _chestY = value;
+                _y = value;
                 _isDirty = true;
             }
         }
 
-        /// <inheritdoc/>
-        [Pure, ExcludeFromCodeCoverage]
-        public override string ToString() => $"{Type}[({ChestX}, {ChestY})]";
-
         private protected override void ReadFromReader(BinaryReader reader, PacketContext context) {
-            _chestX = reader.ReadInt16();
-            _chestY = reader.ReadInt16();
+            _x = reader.ReadInt16();
+            _y = reader.ReadInt16();
         }
 
         private protected override void WriteToWriter(BinaryWriter writer, PacketContext context) {
-            writer.Write(_chestX);
-            writer.Write(_chestY);
+            writer.Write(_x);
+            writer.Write(_y);
         }
     }
 }

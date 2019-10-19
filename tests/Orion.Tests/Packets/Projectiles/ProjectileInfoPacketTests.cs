@@ -32,18 +32,18 @@ namespace Orion.Packets.Projectiles {
         }
 
         [Fact]
-        public void ProjectileAiValues_SetItem_MarksAsDirty() {
+        public void AiValues_SetItem_MarksAsDirty() {
             var packet = new ProjectileInfoPacket();
-            packet.ProjectileAiValues[0] = 0;
+            packet.AiValues[0] = 0;
 
             packet.ShouldBeDirty();
         }
 
         [Fact]
-        public void ProjectileAiValues_Count() {
+        public void AiValues_Count() {
             var packet = new ProjectileInfoPacket();
 
-            packet.ProjectileAiValues.Count.Should().Be(TerrariaProjectile.maxAI);
+            packet.AiValues.Count.Should().Be(TerrariaProjectile.maxAI);
         }
 
 
@@ -57,19 +57,19 @@ namespace Orion.Packets.Projectiles {
             using var stream = new MemoryStream(Bytes);
             var packet = (ProjectileInfoPacket)Packet.ReadFromStream(stream, PacketContext.Server);
 
-            packet.ProjectileIdentity.Should().Be(0);
-            packet.ProjectilePosition.Should().Be(new Vector2(67187, 6809));
-            packet.ProjectileVelocity.Should().Be(new Vector2(10.50366f, -15.583148f));
-            packet.ProjectileKnockback.Should().Be(4.025f);
-            packet.ProjectileDamage.Should().Be(99);
-            packet.ProjectileOwnerPlayerIndex.Should().Be(0);
+            packet.Identity.Should().Be(0);
+            packet.Position.Should().Be(new Vector2(67187, 6809));
+            packet.Velocity.Should().Be(new Vector2(10.50366f, -15.583148f));
+            packet.Knockback.Should().Be(4.025f);
+            packet.Damage.Should().Be(99);
+            packet.OwnerIndex.Should().Be(0);
             packet.ProjectileType.Should().Be(ProjectileType.CrystalBullet);
 
-            for (var i = 0; i < packet.ProjectileAiValues.Count; ++i) {
-                packet.ProjectileAiValues[i].Should().Be(0);
+            for (var i = 0; i < packet.AiValues.Count; ++i) {
+                packet.AiValues[i].Should().Be(0);
             }
 
-            packet.ProjectileUuid.Should().Be(-1);
+            packet.Uuid.Should().Be(-1);
         }
 
         [Fact]

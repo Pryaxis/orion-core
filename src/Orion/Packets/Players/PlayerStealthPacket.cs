@@ -15,8 +15,6 @@
 // You should have received a copy of the GNU General Public License
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
-using System.Diagnostics.CodeAnalysis;
-using System.Diagnostics.Contracts;
 using System.IO;
 
 namespace Orion.Packets.Players {
@@ -25,7 +23,7 @@ namespace Orion.Packets.Players {
     /// </summary>
     public sealed class PlayerStealthPacket : Packet {
         private byte _playerIndex;
-        private float _playerStealthStatus;
+        private float _stealthStatus;
 
         /// <inheritdoc/>
         public override PacketType Type => PacketType.PlayerStealth;
@@ -33,6 +31,7 @@ namespace Orion.Packets.Players {
         /// <summary>
         /// Gets or sets the player index.
         /// </summary>
+        /// <value>The player index.</value>
         public byte PlayerIndex {
             get => _playerIndex;
             set {
@@ -42,28 +41,28 @@ namespace Orion.Packets.Players {
         }
 
         /// <summary>
-        /// Gets or sets the player's stealth.
+        /// Gets or sets the player's stealth status.
         /// </summary>
-        public float PlayerStealthStatus {
-            get => _playerStealthStatus;
+        /// <value>The player's stealth status.</value>
+        /// <remarks>
+        /// This value can range from <c>0.0</c> to <c>1.0</c>. A value of <c>0.0</c> represents full stealth.
+        /// </remarks>
+        public float StealthStatus {
+            get => _stealthStatus;
             set {
-                _playerStealthStatus = value;
+                _stealthStatus = value;
                 _isDirty = true;
             }
         }
 
-        /// <inheritdoc/>
-        [Pure, ExcludeFromCodeCoverage]
-        public override string ToString() => $"{Type}[#={PlayerIndex}, ...]";
-
         private protected override void ReadFromReader(BinaryReader reader, PacketContext context) {
             _playerIndex = reader.ReadByte();
-            _playerStealthStatus = reader.ReadSingle();
+            _stealthStatus = reader.ReadSingle();
         }
 
         private protected override void WriteToWriter(BinaryWriter writer, PacketContext context) {
             writer.Write(_playerIndex);
-            writer.Write(_playerStealthStatus);
+            writer.Write(_stealthStatus);
         }
     }
 }

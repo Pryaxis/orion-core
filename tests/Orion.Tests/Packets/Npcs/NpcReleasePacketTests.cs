@@ -37,9 +37,9 @@ namespace Orion.Packets.Npcs {
             using var stream = new MemoryStream(Bytes);
             var packet = (NpcReleasePacket)Packet.ReadFromStream(stream, PacketContext.Server);
 
-            packet.NpcPosition.Should().Be(new Vector2(256, 100));
+            packet.Position.Should().Be(new Vector2(256, 100));
             packet.NpcType.Should().Be(NpcType.BlueSlime);
-            packet.NpcStyle.Should().Be(0);
+            packet.Style.Should().Be(0);
         }
 
         [Fact]

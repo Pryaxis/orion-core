@@ -27,7 +27,7 @@ namespace Orion.Packets.Players {
         public void ReadFromStream() {
             using var stream = new MemoryStream(Bytes);
             Packet.ReadFromStream(stream, PacketContext.Server).Should()
-                  .BeOfType<PlayerTeleportationPotionPacket>();
+                .BeOfType<PlayerTeleportationPotionPacket>();
         }
 
         [Fact]

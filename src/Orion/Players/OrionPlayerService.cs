@@ -174,7 +174,7 @@ namespace Orion.Players {
         private void LogPacketReceive_Before(PacketReceiveEventArgs args) {
             // Not localized because this string is developer-facing.
             Log.Verbose(
-                "Invoking {Event} with [receiving {Packet} from {Sender}]",
+                "Invoking {Event} with [receiving {@Packet} from {Sender}]",
                 PacketReceive, args.Packet, args.Sender);
         }
         
@@ -186,7 +186,7 @@ namespace Orion.Players {
             } else if (args.IsDirty) {
                 // Not localized because this string is developer-facing.
                 Log.Verbose(
-                    "Altered {Event} to [receiving {Packet} from {Sender}]",
+                    "Altered {Event} to [receiving {@Packet} from {Sender}]",
                     PacketReceive, args.Packet, args.Sender);
             }
         }
@@ -292,8 +292,8 @@ namespace Orion.Players {
         private void LogPlayerConnect_Before(PlayerConnectEventArgs args) {
             // Not localized because this string is developer-facing.
             Log.Debug(
-                "Invoking {Event} with [#={PlayerIndex} connecting with {PlayerVersionString}]",
-                PlayerConnect, args.Player.Index, args.PlayerVersionString);
+                "Invoking {Event} with [#={PlayerIndex} connecting with {VersionString}]",
+                PlayerConnect, args.Player.Index, args.VersionString);
         }
         
         [Conditional("DEBUG"), ExcludeFromCodeCoverage]
@@ -304,8 +304,8 @@ namespace Orion.Players {
             } else if (args.IsDirty) {
                 // Not localized because this string is developer-facing.
                 Log.Debug(
-                    "Altered {Event} to [#={PlayerIndex} connecting with {PlayerVersionString}]",
-                    PlayerConnect, args.Player.Index, args.PlayerVersionString);
+                    "Altered {Event} to [#={PlayerIndex} connecting with {VersionString}]",
+                    PlayerConnect, args.Player.Index, args.VersionString);
             }
         }
 
@@ -327,7 +327,7 @@ namespace Orion.Players {
         [Conditional("DEBUG"), ExcludeFromCodeCoverage]
         private void LogPlayerData_Before(PlayerDataEventArgs args) {
             // Not localized because this string is developer-facing.
-            Log.Debug("Invoking {Event} with [{PlayerName}, ...]", PlayerData, args.PlayerName);
+            Log.Debug("Invoking {Event} with [{PlayerName}, ...]", PlayerData, args.Name);
         }
         
         [Conditional("DEBUG"), ExcludeFromCodeCoverage]
@@ -337,7 +337,7 @@ namespace Orion.Players {
                 Log.Debug("Canceled {Event} for {Reason}", PlayerData, args.CancellationReason);
             } else if (args.IsDirty) {
                 // Not localized because this string is developer-facing.
-                Log.Debug("Altered {Event} to [{PlayerName}, ...]", PlayerData, args.PlayerName);
+                Log.Debug("Altered {Event} to [{PlayerName}, ...]", PlayerData, args.Name);
             }
         }
 
@@ -362,17 +362,17 @@ namespace Orion.Players {
                 // Not localized because this string is developer-facing.
                 Log.Debug(
                     "Invoking {Event} with [{Player} has {PlayerInventorySlotIndex} = {ItemType}]",
-                    PlayerInventorySlot, args.Player, args.PlayerInventorySlotIndex, args.ItemType);
+                    PlayerInventorySlot, args.Player, args.InventorySlot, args.ItemType);
             } else if (args.ItemPrefix == ItemPrefix.None) {
                 // Not localized because this string is developer-facing.
                 Log.Debug(
                     "Invoking {Event} with [{Player} has {PlayerInventorySlotIndex} = {ItemType} x{ItemStackSize}]",
-                    PlayerInventorySlot, args.Player, args.PlayerInventorySlotIndex, args.ItemType, args.ItemStackSize);
+                    PlayerInventorySlot, args.Player, args.InventorySlot, args.ItemType, args.StackSize);
             } else {
                 // Not localized because this string is developer-facing.
                 Log.Debug(
                     "Invoking {Event} with [{Player} has {PlayerInventorySlotIndex} = {ItemPrefix} {ItemType}]",
-                    PlayerInventorySlot, args.Player, args.PlayerInventorySlotIndex, args.ItemPrefix, args.ItemType);
+                    PlayerInventorySlot, args.Player, args.InventorySlot, args.ItemPrefix, args.ItemType);
             }
         }
         
@@ -386,18 +386,18 @@ namespace Orion.Players {
                     // Not localized because this string is developer-facing.
                     Log.Debug(
                         "Altered {Event} to [{Player} has {PlayerInventorySlotIndex} = {ItemType}]",
-                        PlayerInventorySlot, args.Player, args.PlayerInventorySlotIndex, args.ItemType);
+                        PlayerInventorySlot, args.Player, args.InventorySlot, args.ItemType);
                 } else if (args.ItemPrefix == ItemPrefix.None) {
                     // Not localized because this string is developer-facing.
                     Log.Debug(
                         "Altered {Event} to [{Player} has {PlayerInventorySlotIndex} = {ItemType} x{ItemStackSize}]",
-                        PlayerInventorySlot, args.Player, args.PlayerInventorySlotIndex, args.ItemType,
-                        args.ItemStackSize);
+                        PlayerInventorySlot, args.Player, args.InventorySlot, args.ItemType,
+                        args.StackSize);
                 } else {
                     // Not localized because this string is developer-facing.
                     Log.Debug(
                         "Altered {Event} to [{Player} has {PlayerInventorySlotIndex} = {ItemPrefix} {ItemType}]",
-                        PlayerInventorySlot, args.Player, args.PlayerInventorySlotIndex, args.ItemPrefix,
+                        PlayerInventorySlot, args.Player, args.InventorySlot, args.ItemPrefix,
                         args.ItemType);
                 }
             }
@@ -451,7 +451,7 @@ namespace Orion.Players {
             // Not localized because this string is developer-facing.
             Log.Debug(
                 "Invoking {Event} with [{Player} at {PlayerSpawnX}, {PlayerSpawnY}]",
-                PlayerSpawn, args.Player, args.PlayerSpawnX, args.PlayerSpawnY);
+                PlayerSpawn, args.Player, args.SpawnX, args.SpawnY);
         }
         
         [Conditional("DEBUG"), ExcludeFromCodeCoverage]
@@ -463,7 +463,7 @@ namespace Orion.Players {
                 // Not localized because this string is developer-facing.
                 Log.Debug(
                     "Altered {Event} to [{Player} at {PlayerSpawnX}, {PlayerSpawnY}]",
-                    PlayerSpawn, args.Player, args.PlayerSpawnX, args.PlayerSpawnY);
+                    PlayerSpawn, args.Player, args.SpawnX, args.SpawnY);
             }
         }
 
@@ -487,7 +487,7 @@ namespace Orion.Players {
             // Not localized because this string is developer-facing.
             Log.Debug(
                 "Invoking {Event} with [{Player} at {PlayerPosition}, ...]",
-                PlayerInfo, args.Player, args.PlayerPosition);
+                PlayerInfo, args.Player, args.Position);
         }
         
         [Conditional("DEBUG"), ExcludeFromCodeCoverage]
@@ -499,7 +499,7 @@ namespace Orion.Players {
                 // Not localized because this string is developer-facing.
                 Log.Debug(
                     "Altered {Event} to [{Player} at {PlayerPosition}, ...]",
-                    PlayerInfo, args.Player, args.PlayerPosition);
+                    PlayerInfo, args.Player, args.Position);
             }
         }
 
@@ -523,7 +523,7 @@ namespace Orion.Players {
             // Not localized because this string is developer-facing.
             Log.Debug(
                 "Invoking {Event} with [{Player} has {PlayerHealth}/{PlayerMaxHealth} hp]",
-                PlayerHealth, args.Player, args.PlayerHealth, args.PlayerMaxHealth);
+                PlayerHealth, args.Player, args.Health, args.MaxHealth);
         }
         
         [Conditional("DEBUG"), ExcludeFromCodeCoverage]
@@ -535,7 +535,7 @@ namespace Orion.Players {
                 // Not localized because this string is developer-facing.
                 Log.Debug(
                     "Altered {Event} to [{Player} has {PlayerHealth}/{PlayerMaxHealth} hp]",
-                    PlayerHealth, args.Player, args.PlayerHealth, args.PlayerMaxHealth);
+                    PlayerHealth, args.Player, args.Health, args.MaxHealth);
             }
         }
 
@@ -559,7 +559,7 @@ namespace Orion.Players {
             // Not localized because this string is developer-facing.
             Log.Debug(
                 "Invoking {Event} with [{Player} is in pvp: {IsPlayerInPvp}]",
-                PlayerPvp, args.Player, args.IsPlayerInPvp);
+                PlayerPvp, args.Player, args.IsInPvp);
         }
         
         [Conditional("DEBUG"), ExcludeFromCodeCoverage]
@@ -571,7 +571,7 @@ namespace Orion.Players {
                 // Not localized because this string is developer-facing.
                 Log.Debug(
                     "Altered {Event} to [{Player} is in pvp: {IsPlayerInPvp}]",
-                    PlayerPvp, args.Player, args.IsPlayerInPvp);
+                    PlayerPvp, args.Player, args.IsInPvp);
             }
         }
 
@@ -631,7 +631,7 @@ namespace Orion.Players {
             // Not localized because this string is developer-facing.
             Log.Debug(
                 "Invoking {Event} with [{Player} has {PlayerMana}/{PlayerMaxMana} mp]",
-                PlayerMana, args.Player, args.PlayerMana, args.PlayerMaxMana);
+                PlayerMana, args.Player, args.Mana, args.MaxMana);
         }
         
         [Conditional("DEBUG"), ExcludeFromCodeCoverage]
@@ -643,7 +643,7 @@ namespace Orion.Players {
                 // Not localized because this string is developer-facing.
                 Log.Debug(
                     "Altered {Event} to [{Player} has {PlayerMana}/{PlayerMaxMana} mp]",
-                    PlayerMana, args.Player, args.PlayerMana, args.PlayerMaxMana);
+                    PlayerMana, args.Player, args.Mana, args.MaxMana);
             }
         }
 
@@ -665,7 +665,7 @@ namespace Orion.Players {
         [Conditional("DEBUG"), ExcludeFromCodeCoverage]
         private void LogPlayerTeam_Before(PlayerTeamEventArgs args) {
             // Not localized because this string is developer-facing.
-            Log.Debug("Invoking {Event} with [{Player} joining {PlayerTeam}]", PlayerTeam, args.Player, args.PlayerTeam);
+            Log.Debug("Invoking {Event} with [{Player} joining {PlayerTeam}]", PlayerTeam, args.Player, args.Team);
         }
         
         [Conditional("DEBUG"), ExcludeFromCodeCoverage]
@@ -677,7 +677,7 @@ namespace Orion.Players {
                 // Not localized because this string is developer-facing.
                 Log.Debug(
                     "Altered {Event} to [{Player} joining {PlayerTeam}]",
-                    PlayerTeam, args.Player, args.PlayerTeam);
+                    PlayerTeam, args.Player, args.Team);
             }
         }
 
@@ -699,7 +699,7 @@ namespace Orion.Players {
         [Conditional("DEBUG"), ExcludeFromCodeCoverage]
         private void LogPlayerUuid_Before(PlayerUuidEventArgs args) {
             // Not localized because this string is developer-facing.
-            Log.Debug("Invoking {Event} with [{Player} is {PlayerUuid}]", PlayerUuid, args.Player, args.PlayerUuid);
+            Log.Debug("Invoking {Event} with [{Player} is {PlayerUuid}]", PlayerUuid, args.Player, args.Uuid);
         }
         
         [Conditional("DEBUG"), ExcludeFromCodeCoverage]
@@ -709,7 +709,7 @@ namespace Orion.Players {
                 Log.Debug("Canceled {Event} for {Reason}", PlayerUuid, args.CancellationReason);
             } else if (args.IsDirty) {
                 // Not localized because this string is developer-facing.
-                Log.Debug("Altered {Event} to [{Player} is {PlayerUuid}]", PlayerUuid, args.Player, args.PlayerUuid);
+                Log.Debug("Altered {Event} to [{Player} is {PlayerUuid}]", PlayerUuid, args.Player, args.Uuid);
             }
         }
 
@@ -761,7 +761,7 @@ namespace Orion.Players {
             // Not localized because this string is developer-facing.
             Log.Debug(
                 "Invoking {Event} with [{Player} completing {PlayerNumberOfAnglerQuestsCompleted} quests]",
-                PlayerAnglerQuests, args.Player, args.PlayerNumberOfAnglerQuestsCompleted);
+                PlayerAnglerQuests, args.Player, args.NumberOfAnglerQuestsCompleted);
         }
 
         [Conditional("DEBUG"), ExcludeFromCodeCoverage]
@@ -773,7 +773,7 @@ namespace Orion.Players {
                 // Not localized because this string is developer-facing.
                 Log.Debug(
                     "Altered {Event} to [{Player} completing {PlayerNumberOfAnglerQuestsCompleted} quests]",
-                    PlayerAnglerQuests, args.Player, args.PlayerNumberOfAnglerQuestsCompleted);
+                    PlayerAnglerQuests, args.Player, args.NumberOfAnglerQuestsCompleted);
             }
         }
 
@@ -798,8 +798,8 @@ namespace Orion.Players {
         private void LogPlayerChat_Before(PlayerChatEventArgs args) {
             // Not localized because this string is developer-facing.
             Log.Debug(
-                "Invoking {Event} with [{Player} chatting {PlayerChatCommand} {PlayerChatText}]",
-                PlayerChat, args.Player, args.PlayerChatCommand, args.PlayerChatText);
+                "Invoking {Event} with [{Player} chatting {ChatCommand} {ChatText}]",
+                PlayerChat, args.Player, args.ChatCommand, args.ChatText);
         }
         
         [Conditional("DEBUG"), ExcludeFromCodeCoverage]
@@ -810,8 +810,8 @@ namespace Orion.Players {
             } else if (args.IsDirty) {
                 // Not localized because this string is developer-facing.
                 Log.Debug(
-                    "Altered {Event} to [{Player} chatting {PlayerChatCommand} {PlayerChatText}]",
-                    PlayerChat, args.Player, args.PlayerChatCommand, args.PlayerChatText);
+                    "Altered {Event} to [{Player} chatting {ChatCommand} {ChatText}]",
+                    PlayerChat, args.Player, args.ChatCommand, args.ChatText);
             }
         }
     }

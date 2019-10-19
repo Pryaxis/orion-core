@@ -35,8 +35,8 @@ namespace Orion.Packets.World.TileEntities {
             using var stream = new MemoryStream(Bytes);
             var packet = (SignReadPacket)Packet.ReadFromStream(stream, PacketContext.Server);
 
-            packet.SignX.Should().Be(256);
-            packet.SignY.Should().Be(100);
+            packet.X.Should().Be(256);
+            packet.Y.Should().Be(100);
         }
 
         [Fact]

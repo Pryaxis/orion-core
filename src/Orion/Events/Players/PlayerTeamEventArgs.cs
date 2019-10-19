@@ -29,9 +29,9 @@ namespace Orion.Events.Players {
         /// Gets or sets the player's team.
         /// </summary>
         /// <value>The player's team.</value>
-        public PlayerTeam PlayerTeam {
-            get => _packet.PlayerTeam;
-            set => _packet.PlayerTeam = value;
+        public PlayerTeam Team {
+            get => _packet.Team;
+            set => _packet.Team = value;
         }
 
         /// <summary>

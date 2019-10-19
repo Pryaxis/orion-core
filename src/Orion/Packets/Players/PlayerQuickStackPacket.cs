@@ -15,39 +15,39 @@
 // You should have received a copy of the GNU General Public License
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
-using System.Diagnostics.CodeAnalysis;
-using System.Diagnostics.Contracts;
 using System.IO;
+using Orion.Players;
 
 namespace Orion.Packets.Players {
     /// <summary>
     /// Packet sent from the client to the server to quick stack an inventory slot into a nearby chest.
     /// </summary>
     public sealed class PlayerQuickStackPacket : Packet {
-        private byte _playerInventorySlotIndex;
+        private byte _inventorySlot;
 
         /// <inheritdoc/>
         public override PacketType Type => PacketType.PlayerQuickStack;
 
         /// <summary>
-        /// Gets or sets the player inventory slot index.
+        /// Gets or sets the player's inventory slot.
         /// </summary>
-        public byte PlayerInventorySlotIndex {
-            get => _playerInventorySlotIndex;
+        /// <value>This player's inventory slot.</value>
+        /// <remarks>
+        /// This value can range from <c>0</c> to <c>219</c>. Check the <see cref="IPlayerInventory"/> interface for a
+        /// more detailed description on the slots.
+        /// </remarks>
+        public byte InventorySlot {
+            get => _inventorySlot;
             set {
-                _playerInventorySlotIndex = value;
+                _inventorySlot = value;
                 _isDirty = true;
             }
         }
 
-        /// <inheritdoc/>
-        [Pure, ExcludeFromCodeCoverage]
-        public override string ToString() => $"{Type}[...]";
-
         private protected override void ReadFromReader(BinaryReader reader, PacketContext context) =>
-            _playerInventorySlotIndex = reader.ReadByte();
+            _inventorySlot = reader.ReadByte();
 
         private protected override void WriteToWriter(BinaryWriter writer, PacketContext context) =>
-            writer.Write(_playerInventorySlotIndex);
+            writer.Write(_inventorySlot);
     }
 }

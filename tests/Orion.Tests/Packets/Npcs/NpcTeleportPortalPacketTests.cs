@@ -40,8 +40,8 @@ namespace Orion.Packets.Npcs {
 
             packet.NpcIndex.Should().Be(100);
             packet.PortalIndex.Should().Be(2);
-            packet.NewNpcPosition.Should().Be(Vector2.Zero);
-            packet.NewNpcVelocity.Should().Be(Vector2.Zero);
+            packet.NewPosition.Should().Be(Vector2.Zero);
+            packet.NewVelocity.Should().Be(Vector2.Zero);
         }
 
         [Fact]

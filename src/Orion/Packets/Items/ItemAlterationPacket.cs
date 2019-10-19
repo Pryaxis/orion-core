@@ -15,8 +15,6 @@
 // You should have received a copy of the GNU General Public License
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
-using System.Diagnostics.CodeAnalysis;
-using System.Diagnostics.Contracts;
 using System.IO;
 using Microsoft.Xna.Framework;
 using Orion.Items;
@@ -30,19 +28,19 @@ namespace Orion.Packets.Items {
     // TODO: write tests for this class.
     public sealed class ItemAlterationPacket : Packet {
         private short _itemIndex;
-        private Color? _itemColorOverride;
-        private ushort? _itemDamageOverride;
-        private float? _itemKnockbackOverride;
-        private ushort? _itemAnimationTimeOverride;
-        private ushort? _itemUseTimeOverride;
-        private ProjectileType? _itemProjectileTypeOverride;
-        private float? _itemProjectileSpeedOverride;
-        private short? _itemWidthOverride;
-        private short? _itemHeightOverride;
-        private float? _itemScaleOverride;
-        private ItemType? _itemAmmoTypeOverride;
-        private ItemType? _itemUsesAmmoTypeOverride;
-        private bool? _itemIsNotAmmoOverride;
+        private Color? _colorOverride;
+        private ushort? _damageOverride;
+        private float? _knockbackOverride;
+        private ushort? _animationTimeOverride;
+        private ushort? _useTimeOverride;
+        private ProjectileType? _projectileTypeOverride;
+        private float? _projectileSpeedOverride;
+        private short? _widthOverride;
+        private short? _heightOverride;
+        private float? _scaleOverride;
+        private ItemType? _ammoTypeOverride;
+        private ItemType? _usesAmmoTypeOverride;
+        private bool? _isNotAmmoOverride;
 
         /// <inheritdoc/>
         public override PacketType Type => PacketType.ItemAlteration;
@@ -50,6 +48,7 @@ namespace Orion.Packets.Items {
         /// <summary>
         /// Gets or sets the item index.
         /// </summary>
+        /// <value>The item index.</value>
         public short ItemIndex {
             get => _itemIndex;
             set {
@@ -62,10 +61,11 @@ namespace Orion.Packets.Items {
         /// Gets or sets the override for the item's color. The alpha component is ignored. If <see langword="null"/>,
         /// then there is no override.
         /// </summary>
-        public Color? ItemColorOverride {
-            get => _itemColorOverride;
+        /// <value>The override for the item's color.</value>
+        public Color? ColorOverride {
+            get => _colorOverride;
             set {
-                _itemColorOverride = value;
+                _colorOverride = value;
                 _isDirty = true;
             }
         }
@@ -73,10 +73,11 @@ namespace Orion.Packets.Items {
         /// <summary>
         /// Gets or sets the override for the item's damage. If <see langword="null"/>, then there is no override.
         /// </summary>
-        public ushort? ItemDamageOverride {
-            get => _itemDamageOverride;
+        /// <value>The override for the item's damage.</value>
+        public ushort? DamageOverride {
+            get => _damageOverride;
             set {
-                _itemDamageOverride = value;
+                _damageOverride = value;
                 _isDirty = true;
             }
         }
@@ -84,10 +85,11 @@ namespace Orion.Packets.Items {
         /// <summary>
         /// Gets or sets the override for the item's knockback. If <see langword="null"/>, then there is no override.
         /// </summary>
-        public float? ItemKnockbackOverride {
-            get => _itemKnockbackOverride;
+        /// <value>The override for the item's knockback.</value>
+        public float? KnockbackOverride {
+            get => _knockbackOverride;
             set {
-                _itemKnockbackOverride = value;
+                _knockbackOverride = value;
                 _isDirty = true;
             }
         }
@@ -96,10 +98,11 @@ namespace Orion.Packets.Items {
         /// Gets or sets the override for the item's animation time. If <see langword="null"/>, then there is no
         /// override.
         /// </summary>
-        public ushort? ItemAnimationTimeOverride {
-            get => _itemAnimationTimeOverride;
+        /// <value>The override for the item's animation time.</value>
+        public ushort? AnimationTimeOverride {
+            get => _animationTimeOverride;
             set {
-                _itemAnimationTimeOverride = value;
+                _animationTimeOverride = value;
                 _isDirty = true;
             }
         }
@@ -107,10 +110,11 @@ namespace Orion.Packets.Items {
         /// <summary>
         /// Gets or sets the override for the item's use time. If <see langword="null"/>, then there is no override.
         /// </summary>
-        public ushort? ItemUseTimeOverride {
-            get => _itemUseTimeOverride;
+        /// <value>The override for the item's use time.</value>
+        public ushort? UseTimeOverride {
+            get => _useTimeOverride;
             set {
-                _itemUseTimeOverride = value;
+                _useTimeOverride = value;
                 _isDirty = true;
             }
         }
@@ -119,10 +123,11 @@ namespace Orion.Packets.Items {
         /// Gets or sets the override for the item's projectile type. If <see langword="null"/>, then there is no
         /// override.
         /// </summary>
-        public ProjectileType? ItemProjectileTypeOverride {
-            get => _itemProjectileTypeOverride;
+        /// <value>The override for the item's projectile type.</value>
+        public ProjectileType? ProjectileTypeOverride {
+            get => _projectileTypeOverride;
             set {
-                _itemProjectileTypeOverride = value;
+                _projectileTypeOverride = value;
                 _isDirty = true;
             }
         }
@@ -131,10 +136,11 @@ namespace Orion.Packets.Items {
         /// Gets or sets the override for the item's projectile speed. If <see langword="null"/>, then there is no
         /// override.
         /// </summary>
-        public float? ItemProjectileSpeedOverride {
-            get => _itemProjectileSpeedOverride;
+        /// <value>The override for the item's projectile speed.</value>
+        public float? ProjectileSpeedOverride {
+            get => _projectileSpeedOverride;
             set {
-                _itemProjectileSpeedOverride = value;
+                _projectileSpeedOverride = value;
                 _isDirty = true;
             }
         }
@@ -142,10 +148,11 @@ namespace Orion.Packets.Items {
         /// <summary>
         /// Gets or sets the override for the item's width. If <see langword="null"/>, then there is no override.
         /// </summary>
-        public short? ItemWidthOverride {
-            get => _itemWidthOverride;
+        /// <value>The override for the item's width.</value>
+        public short? WidthOverride {
+            get => _widthOverride;
             set {
-                _itemWidthOverride = value;
+                _widthOverride = value;
                 _isDirty = true;
             }
         }
@@ -153,10 +160,11 @@ namespace Orion.Packets.Items {
         /// <summary>
         /// Gets or sets the override for the item's height. If <see langword="null"/>, then there is no override.
         /// </summary>
-        public short? ItemHeightOverride {
-            get => _itemHeightOverride;
+        /// <value>The override for the item's height.</value>
+        public short? HeightOverride {
+            get => _heightOverride;
             set {
-                _itemHeightOverride = value;
+                _heightOverride = value;
                 _isDirty = true;
             }
         }
@@ -164,10 +172,11 @@ namespace Orion.Packets.Items {
         /// <summary>
         /// Gets or sets the override for the item's scale. If <see langword="null"/>, then there is no override.
         /// </summary>
-        public float? ItemScaleOverride {
-            get => _itemScaleOverride;
+        /// <value>The override for the item's scale.</value>
+        public float? ScaleOverride {
+            get => _scaleOverride;
             set {
-                _itemScaleOverride = value;
+                _scaleOverride = value;
                 _isDirty = true;
             }
         }
@@ -175,10 +184,11 @@ namespace Orion.Packets.Items {
         /// <summary>
         /// Gets or sets the override for the item's ammo type. If <see langword="null"/>, then there is no override.
         /// </summary>
-        public ItemType? ItemAmmoTypeOverride {
-            get => _itemAmmoTypeOverride;
+        /// <value>The override for the item's ammo type.</value>
+        public ItemType? AmmoTypeOverride {
+            get => _ammoTypeOverride;
             set {
-                _itemAmmoTypeOverride = value;
+                _ammoTypeOverride = value;
                 _isDirty = true;
             }
         }
@@ -187,10 +197,11 @@ namespace Orion.Packets.Items {
         /// Gets or sets the override for the ammo type that the item uses. If <see langword="null"/>, then there is no
         /// override.
         /// </summary>
-        public ItemType? ItemUsesAmmoTypeOverride {
-            get => _itemUsesAmmoTypeOverride;
+        /// <value>The override for the ammo type that the item uses.</value>
+        public ItemType? UsesAmmoTypeOverride {
+            get => _usesAmmoTypeOverride;
             set {
-                _itemUsesAmmoTypeOverride = value;
+                _usesAmmoTypeOverride = value;
                 _isDirty = true;
             }
         }
@@ -199,78 +210,77 @@ namespace Orion.Packets.Items {
         /// Gets or sets the override for the value indicating whether the item is not ammo. If <see langword="null"/>,
         /// then there is no override.
         /// </summary>
-        public bool? ItemIsNotAmmoOverride {
-            get => _itemIsNotAmmoOverride;
+        /// <value>
+        /// <see langword="true"/> if the item is overriden to not be ammo, <see langword="false"/> if it is overriden
+        /// to not be ammo; otherwise, <see langword="null"/>.</value>
+        public bool? IsNotAmmoOverride {
+            get => _isNotAmmoOverride;
             set {
-                _itemIsNotAmmoOverride = value;
+                _isNotAmmoOverride = value;
                 _isDirty = true;
             }
         }
-
-        /// <inheritdoc/>
-        [Pure, ExcludeFromCodeCoverage]
-        public override string ToString() => $"{Type}[#={ItemIndex}, ...]";
 
         private protected override void ReadFromReader(BinaryReader reader, PacketContext context) {
             _itemIndex = reader.ReadInt16();
 
             Terraria.BitsByte flags = reader.ReadByte();
-            if (flags[0]) _itemColorOverride = new Color(reader.ReadUInt32());
-            if (flags[1]) _itemDamageOverride = reader.ReadUInt16();
-            if (flags[2]) _itemKnockbackOverride = reader.ReadSingle();
-            if (flags[3]) _itemAnimationTimeOverride = reader.ReadUInt16();
-            if (flags[4]) _itemUseTimeOverride = reader.ReadUInt16();
-            if (flags[5]) _itemProjectileTypeOverride = (ProjectileType)reader.ReadInt16();
-            if (flags[6]) _itemProjectileSpeedOverride = reader.ReadSingle();
+            if (flags[0]) _colorOverride = new Color(reader.ReadUInt32());
+            if (flags[1]) _damageOverride = reader.ReadUInt16();
+            if (flags[2]) _knockbackOverride = reader.ReadSingle();
+            if (flags[3]) _animationTimeOverride = reader.ReadUInt16();
+            if (flags[4]) _useTimeOverride = reader.ReadUInt16();
+            if (flags[5]) _projectileTypeOverride = (ProjectileType)reader.ReadInt16();
+            if (flags[6]) _projectileSpeedOverride = reader.ReadSingle();
             if (!flags[7]) return;
 
             Terraria.BitsByte flags2 = reader.ReadByte();
-            if (flags2[0]) _itemWidthOverride = reader.ReadInt16();
-            if (flags2[1]) _itemHeightOverride = reader.ReadInt16();
-            if (flags2[2]) _itemScaleOverride = reader.ReadSingle();
-            if (flags2[3]) _itemAmmoTypeOverride = (ItemType)reader.ReadInt16();
-            if (flags2[4]) _itemUsesAmmoTypeOverride = (ItemType)reader.ReadInt16();
-            if (flags2[5]) _itemIsNotAmmoOverride = reader.ReadBoolean();
+            if (flags2[0]) _widthOverride = reader.ReadInt16();
+            if (flags2[1]) _heightOverride = reader.ReadInt16();
+            if (flags2[2]) _scaleOverride = reader.ReadSingle();
+            if (flags2[3]) _ammoTypeOverride = (ItemType)reader.ReadInt16();
+            if (flags2[4]) _usesAmmoTypeOverride = (ItemType)reader.ReadInt16();
+            if (flags2[5]) _isNotAmmoOverride = reader.ReadBoolean();
         }
 
         private protected override void WriteToWriter(BinaryWriter writer, PacketContext context) {
             writer.Write(_itemIndex);
 
             Terraria.BitsByte flags2 = 0;
-            flags2[0] = _itemWidthOverride != null;
-            flags2[1] = _itemHeightOverride != null;
-            flags2[2] = _itemScaleOverride != null;
-            flags2[3] = _itemAmmoTypeOverride != null;
-            flags2[4] = _itemUsesAmmoTypeOverride != null;
-            flags2[5] = _itemIsNotAmmoOverride != null;
+            flags2[0] = _widthOverride != null;
+            flags2[1] = _heightOverride != null;
+            flags2[2] = _scaleOverride != null;
+            flags2[3] = _ammoTypeOverride != null;
+            flags2[4] = _usesAmmoTypeOverride != null;
+            flags2[5] = _isNotAmmoOverride != null;
 
             Terraria.BitsByte flags = 0;
-            flags[0] = _itemColorOverride != null;
-            flags[1] = _itemDamageOverride != null;
-            flags[2] = _itemKnockbackOverride != null;
-            flags[3] = _itemAnimationTimeOverride != null;
-            flags[4] = _itemUseTimeOverride != null;
-            flags[5] = _itemProjectileTypeOverride != null;
-            flags[6] = _itemProjectileSpeedOverride != null;
+            flags[0] = _colorOverride != null;
+            flags[1] = _damageOverride != null;
+            flags[2] = _knockbackOverride != null;
+            flags[3] = _animationTimeOverride != null;
+            flags[4] = _useTimeOverride != null;
+            flags[5] = _projectileTypeOverride != null;
+            flags[6] = _projectileSpeedOverride != null;
             flags[7] = flags2 != 0;
 
             writer.Write(flags);
 
-            if (flags[0]) writer.Write(_itemColorOverride!.Value.PackedValue);
-            if (flags[1]) writer.Write(_itemDamageOverride!.Value);
-            if (flags[2]) writer.Write(_itemKnockbackOverride!.Value);
-            if (flags[3]) writer.Write(_itemAnimationTimeOverride!.Value);
-            if (flags[4]) writer.Write(_itemUseTimeOverride!.Value);
-            if (flags[5]) writer.Write((short)_itemProjectileTypeOverride!.Value);
-            if (flags[6]) writer.Write(_itemProjectileSpeedOverride!.Value);
+            if (flags[0]) writer.Write(_colorOverride!.Value.PackedValue);
+            if (flags[1]) writer.Write(_damageOverride!.Value);
+            if (flags[2]) writer.Write(_knockbackOverride!.Value);
+            if (flags[3]) writer.Write(_animationTimeOverride!.Value);
+            if (flags[4]) writer.Write(_useTimeOverride!.Value);
+            if (flags[5]) writer.Write((short)_projectileTypeOverride!.Value);
+            if (flags[6]) writer.Write(_projectileSpeedOverride!.Value);
             if (flags[7]) writer.Write(flags2);
 
-            if (flags2[0]) writer.Write(_itemWidthOverride!.Value);
-            if (flags2[1]) writer.Write(_itemHeightOverride!.Value);
-            if (flags2[2]) writer.Write(_itemScaleOverride!.Value);
-            if (flags2[3]) writer.Write((short)_itemAmmoTypeOverride!.Value);
-            if (flags2[4]) writer.Write((short)_itemUsesAmmoTypeOverride!.Value);
-            if (flags2[5]) writer.Write(_itemIsNotAmmoOverride!.Value);
+            if (flags2[0]) writer.Write(_widthOverride!.Value);
+            if (flags2[1]) writer.Write(_heightOverride!.Value);
+            if (flags2[2]) writer.Write(_scaleOverride!.Value);
+            if (flags2[3]) writer.Write((short)_ammoTypeOverride!.Value);
+            if (flags2[4]) writer.Write((short)_usesAmmoTypeOverride!.Value);
+            if (flags2[5]) writer.Write(_isNotAmmoOverride!.Value);
         }
     }
 }

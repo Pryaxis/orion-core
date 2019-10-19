@@ -15,8 +15,6 @@
 // You should have received a copy of the GNU General Public License
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
-using System.Diagnostics.CodeAnalysis;
-using System.Diagnostics.Contracts;
 using System.IO;
 
 namespace Orion.Packets.World {
@@ -31,10 +29,11 @@ namespace Orion.Packets.World {
 
         /// <inheritdoc/>
         public override PacketType Type => PacketType.WorldTime;
-
+        
         /// <summary>
         /// Gets or sets a value indicating whether it is daytime.
         /// </summary>
+        /// <value><see langword="true"/> if it is daytime; otherwise, <see langword="false"/>.</value>
         public bool IsDaytime {
             get => _isDaytime;
             set {
@@ -46,6 +45,7 @@ namespace Orion.Packets.World {
         /// <summary>
         /// Gets or sets the time.
         /// </summary>
+        /// <value>The time.</value>
         public int Time {
             get => _time;
             set {
@@ -57,6 +57,7 @@ namespace Orion.Packets.World {
         /// <summary>
         /// Gets or sets the sun's Y position.
         /// </summary>
+        /// <value>The sun's Y position.</value>
         public short SunY {
             get => _sunY;
             set {
@@ -68,6 +69,7 @@ namespace Orion.Packets.World {
         /// <summary>
         /// Gets or sets the moon's Y position.
         /// </summary>
+        /// <value>The moon's Y position.</value>
         public short MoonY {
             get => _moonY;
             set {
@@ -76,11 +78,6 @@ namespace Orion.Packets.World {
             }
         }
 
-        /// <inheritdoc/>
-        [Pure, ExcludeFromCodeCoverage]
-        public override string ToString() => $"{Type}[{Time} @ {(IsDaytime ? "day" : "night")}, ...]";
-
-        /// <inheritdoc/>
         private protected override void ReadFromReader(BinaryReader reader, PacketContext context) {
             _isDaytime = reader.ReadBoolean();
             _time = reader.ReadInt32();
@@ -88,7 +85,6 @@ namespace Orion.Packets.World {
             _moonY = reader.ReadInt16();
         }
 
-        /// <inheritdoc/>
         private protected override void WriteToWriter(BinaryWriter writer, PacketContext context) {
             writer.Write(_isDaytime);
             writer.Write(_time);

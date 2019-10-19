@@ -36,7 +36,7 @@ namespace Orion.Packets.Entities {
             var packet = (EntityActionPacket)Packet.ReadFromStream(stream, PacketContext.Server);
 
             packet.EntityIndex.Should().Be(0);
-            packet.EntityAction.Should().Be(EntityAction.PlayerSpawnSkeletron);
+            packet.Action.Should().Be(EntityAction.SpawnSkeletron);
         }
 
         [Fact]

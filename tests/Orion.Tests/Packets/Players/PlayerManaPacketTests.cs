@@ -36,8 +36,8 @@ namespace Orion.Packets.Players {
             var packet = (PlayerManaPacket)Packet.ReadFromStream(stream, PacketContext.Server);
 
             packet.PlayerIndex.Should().Be(0);
-            packet.PlayerMana.Should().Be(100);
-            packet.PlayerMaxMana.Should().Be(100);
+            packet.Mana.Should().Be(100);
+            packet.MaxMana.Should().Be(100);
         }
 
         [Fact]

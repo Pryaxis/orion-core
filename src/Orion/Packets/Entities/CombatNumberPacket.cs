@@ -15,8 +15,6 @@
 // You should have received a copy of the GNU General Public License
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
-using System.Diagnostics.CodeAnalysis;
-using System.Diagnostics.Contracts;
 using System.IO;
 using Microsoft.Xna.Framework;
 using Orion.Packets.Extensions;
@@ -24,26 +22,27 @@ using Orion.Packets.Extensions;
 namespace Orion.Packets.Entities {
     /// <summary>
     /// Packet sent from the server to the client to show a combat number.
-    /// 
-    /// <para/>
-    /// 
-    /// Combat numbers are the numbers that show up when, e.g., a player is hurt or an NPC is damaged.
     /// </summary>
+    /// <remarks>
+    /// Combat numbers are the numbers that show up when, e.g., a player is hurt or an NPC is damaged. They may be used
+    /// to graphically show number information.
+    /// </remarks>
     public sealed class CombatNumberPacket : Packet {
-        private Vector2 _numberPosition;
-        private Color _numberColor;
+        private Vector2 _position;
+        private Color _color;
         private int _number;
 
         /// <inheritdoc/>
         public override PacketType Type => PacketType.CombatNumber;
 
         /// <summary>
-        /// Gets or sets the number's position. The components are pixel-based.
+        /// Gets or sets the number's position. The components are pixels.
         /// </summary>
-        public Vector2 NumberPosition {
-            get => _numberPosition;
+        /// <value>The number's position.</value>
+        public Vector2 Position {
+            get => _position;
             set {
-                _numberPosition = value;
+                _position = value;
                 _isDirty = true;
             }
         }
@@ -51,10 +50,11 @@ namespace Orion.Packets.Entities {
         /// <summary>
         /// Gets or sets the number's color. The alpha component is ignored.
         /// </summary>
-        public Color NumberColor {
-            get => _numberColor;
+        /// <value>The number's color.</value>
+        public Color Color {
+            get => _color;
             set {
-                _numberColor = value;
+                _color = value;
                 _isDirty = true;
             }
         }
@@ -62,6 +62,7 @@ namespace Orion.Packets.Entities {
         /// <summary>
         /// Gets or sets the number.
         /// </summary>
+        /// <value>The number.</value>
         public int Number {
             get => _number;
             set {
@@ -70,19 +71,15 @@ namespace Orion.Packets.Entities {
             }
         }
 
-        /// <inheritdoc/>
-        [Pure, ExcludeFromCodeCoverage]
-        public override string ToString() => $"{Type}[{Number} ({NumberColor}) @ {NumberPosition}]";
-
         private protected override void ReadFromReader(BinaryReader reader, PacketContext context) {
-            _numberPosition = reader.ReadVector2();
-            _numberColor = reader.ReadColor();
+            _position = reader.ReadVector2();
+            _color = reader.ReadColor();
             _number = reader.ReadInt32();
         }
 
         private protected override void WriteToWriter(BinaryWriter writer, PacketContext context) {
-            writer.Write(in _numberPosition);
-            writer.Write(in _numberColor);
+            writer.Write(in _position);
+            writer.Write(in _color);
             writer.Write(_number);
         }
     }

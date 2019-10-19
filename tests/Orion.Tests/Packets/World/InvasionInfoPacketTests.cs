@@ -37,8 +37,8 @@ namespace Orion.Packets.World {
 
             packet.NumberOfKills.Should().Be(1);
             packet.NumberOfKillsToProgress.Should().Be(256);
-            packet.InvasionIconType.Should().Be(1);
-            packet.InvasionWaveNumber.Should().Be(2);
+            packet.IconType.Should().Be(1);
+            packet.WaveNumber.Should().Be(2);
         }
 
         [Fact]

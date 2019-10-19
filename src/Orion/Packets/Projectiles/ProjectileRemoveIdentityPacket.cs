@@ -15,8 +15,6 @@
 // You should have received a copy of the GNU General Public License
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
-using System.Diagnostics.CodeAnalysis;
-using System.Diagnostics.Contracts;
 using System.IO;
 
 namespace Orion.Packets.Projectiles {
@@ -25,19 +23,21 @@ namespace Orion.Packets.Projectiles {
     /// projectile indices.
     /// </summary>
     public sealed class ProjectileRemoveIdentityPacket : Packet {
-        private short _projectileIdentity;
-        private byte _projectileOwnerPlayerIndex;
+        private short _identity;
+        private byte _ownerIndex;
 
         /// <inheritdoc/>
         public override PacketType Type => PacketType.ProjectileRemoveIdentity;
 
         /// <summary>
-        /// Gets or sets the projectile identity.
+        /// Gets or sets the projectile's identity.
         /// </summary>
-        public short ProjectileIdentity {
-            get => _projectileIdentity;
+        /// <value>The projectile's identity.</value>
+        /// <seealso cref="ProjectileInfoPacket.Identity"/>
+        public short Identity {
+            get => _identity;
             set {
-                _projectileIdentity = value;
+                _identity = value;
                 _isDirty = true;
             }
         }
@@ -45,26 +45,23 @@ namespace Orion.Packets.Projectiles {
         /// <summary>
         /// Gets or sets the projectile owner's player index.
         /// </summary>
-        public byte ProjectileOwnerPlayerIndex {
-            get => _projectileOwnerPlayerIndex;
+        /// <value>The projectile owner's player index.</value>
+        public byte OwnerIndex {
+            get => _ownerIndex;
             set {
-                _projectileOwnerPlayerIndex = value;
+                _ownerIndex = value;
                 _isDirty = true;
             }
         }
 
-        /// <inheritdoc/>
-        [Pure, ExcludeFromCodeCoverage]
-        public override string ToString() => $"{Type}[#={ProjectileIdentity}), P={ProjectileOwnerPlayerIndex}]";
-
         private protected override void ReadFromReader(BinaryReader reader, PacketContext context) {
-            _projectileIdentity = reader.ReadInt16();
-            _projectileOwnerPlayerIndex = reader.ReadByte();
+            _identity = reader.ReadInt16();
+            _ownerIndex = reader.ReadByte();
         }
 
         private protected override void WriteToWriter(BinaryWriter writer, PacketContext context) {
-            writer.Write(_projectileIdentity);
-            writer.Write(_projectileOwnerPlayerIndex);
+            writer.Write(_identity);
+            writer.Write(_ownerIndex);
         }
     }
 }

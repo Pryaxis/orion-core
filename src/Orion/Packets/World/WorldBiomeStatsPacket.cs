@@ -15,8 +15,6 @@
 // You should have received a copy of the GNU General Public License
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
-using System.Diagnostics.CodeAnalysis;
-using System.Diagnostics.Contracts;
 using System.IO;
 
 namespace Orion.Packets.World {
@@ -34,6 +32,7 @@ namespace Orion.Packets.World {
         /// <summary>
         /// Gets or sets the hallowed biome amount.
         /// </summary>
+        /// <value>The hallowed biome amount.</value>
         public byte HallowedAmount {
             get => _hallowedAmount;
             set {
@@ -45,6 +44,7 @@ namespace Orion.Packets.World {
         /// <summary>
         /// Gets or sets the corruption biome amount.
         /// </summary>
+        /// <value>The corruption biome amount.</value>
         public byte CorruptionAmount {
             get => _corruptionAmount;
             set {
@@ -56,6 +56,7 @@ namespace Orion.Packets.World {
         /// <summary>
         /// Gets or sets the crimson biome amount.
         /// </summary>
+        /// <value>The crimson biome amount.</value>
         public byte CrimsonAmount {
             get => _crimsonAmount;
             set {
@@ -64,19 +65,12 @@ namespace Orion.Packets.World {
             }
         }
 
-        /// <inheritdoc/>
-        [Pure, ExcludeFromCodeCoverage]
-        public override string ToString() =>
-            $"{Type}[H={HallowedAmount} vs. (C={CorruptionAmount} or C'={CrimsonAmount})]";
-
-        /// <inheritdoc/>
         private protected override void ReadFromReader(BinaryReader reader, PacketContext context) {
             _hallowedAmount = reader.ReadByte();
             _corruptionAmount = reader.ReadByte();
             _crimsonAmount = reader.ReadByte();
         }
 
-        /// <inheritdoc/>
         private protected override void WriteToWriter(BinaryWriter writer, PacketContext context) {
             writer.Write(_hallowedAmount);
             writer.Write(_corruptionAmount);

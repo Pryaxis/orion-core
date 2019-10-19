@@ -43,7 +43,7 @@ namespace Orion.Npcs {
         }
 
         [Fact]
-        public void Name_Set_NullValue_ThrowsArgumentNullException() {
+        public void Name_SetNullValue_ThrowsArgumentNullException() {
             var terrariaNpc = new TerrariaNpc();
             var npc = new OrionNpc(terrariaNpc);
             Action action = () => npc.Name = null;

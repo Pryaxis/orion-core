@@ -37,7 +37,7 @@ namespace Orion.Packets.Players {
             var packet = (PlayerConsumeItemsPacket)Packet.ReadFromStream(stream, PacketContext.Server);
 
             packet.PlayerIndex.Should().Be(0);
-            packet.ItemStackSize.Should().Be(1);
+            packet.StackSize.Should().Be(1);
             packet.ItemType.Should().Be(ItemType.CopperShortsword);
         }
 

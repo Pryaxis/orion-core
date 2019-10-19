@@ -32,23 +32,23 @@ namespace Orion.Packets.Players {
 
         [Fact]
         [SuppressMessage("Style", "IDE0017:Simplify object initialization", Justification = "Testing")]
-        public void PlayerDeathReason_Set_MarksAsDirty() {
+        public void DeathReason_Set_MarksAsDirty() {
             var packet = new PlayerKillPacket();
 
-            packet.PlayerDeathReason = Terraria.DataStructures.PlayerDeathReason.ByCustomReason("test");
+            packet.DeathReason = Terraria.DataStructures.PlayerDeathReason.ByCustomReason("test");
 
             packet.ShouldBeDirty();
         }
 
         [Fact]
-        public void PlayerDeathReason_Set_NullValue_ThrowsArgumentNullException() {
+        public void DeathReason_SetNullValue_ThrowsArgumentNullException() {
             var packet = new PlayerKillPacket();
-            Action action = () => packet.PlayerDeathReason = null;
+            Action action = () => packet.DeathReason = null;
 
             action.Should().Throw<ArgumentNullException>();
         }
 
-        public static readonly byte[] Bytes = { 14, 0, 118, 0, 128, 4, 116, 101, 115, 116, 100, 0, 1, 1 };
+        public static readonly byte[] Bytes = { 14, 0, 118, 0, 128, 4, 116, 101, 115, 116, 100, 0, 0, 1 };
 
         [Fact]
         public void ReadFromStream() {
@@ -56,10 +56,10 @@ namespace Orion.Packets.Players {
             var packet = (PlayerKillPacket)Packet.ReadFromStream(stream, PacketContext.Server);
 
             packet.PlayerIndex.Should().Be(0);
-            packet.PlayerDeathReason.SourceCustomReason.Should().Be("test");
+            packet.DeathReason.SourceCustomReason.Should().Be("test");
             packet.Damage.Should().Be(100);
-            packet.HitDirection.Should().Be(0);
-            packet.IsDeathFromPvp.Should().BeTrue();
+            packet.HitDirection.Should().BeFalse();
+            packet.IsFromPvp.Should().BeTrue();
         }
 
         [Fact]

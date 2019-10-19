@@ -36,10 +36,10 @@ namespace Orion.Packets.Entities {
             using var stream = new MemoryStream(Bytes);
             var packet = (EntityTeleportationPacket)Packet.ReadFromStream(stream, PacketContext.Server);
 
-            packet.EntityTeleportationType.Should().Be(EntityTeleportationType.PlayerToPlayer);
-            packet.EntityTeleportationStyle.Should().Be(0);
+            packet.TeleportationType.Should().Be(EntityTeleportationType.PlayerToPlayer);
+            packet.Style.Should().Be(0);
             packet.EntityIndex.Should().Be(0);
-            packet.EntityNewPosition.Should().Be(Vector2.Zero);
+            packet.NewPosition.Should().Be(Vector2.Zero);
         }
 
         [Fact]

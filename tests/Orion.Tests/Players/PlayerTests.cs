@@ -35,7 +35,7 @@ namespace Orion.Players {
 
             mockPlayer.Verify(
                 p => p.SendPacket(
-                    It.Is<PlayerDisconnectPacket>(pdp => pdp.PlayerDisconnectReason == "test")));
+                    It.Is<PlayerDisconnectPacket>(pdp => pdp.DisconnectReason == "test")));
             mockPlayer.VerifyNoOtherCalls();
         }
 
@@ -62,7 +62,7 @@ namespace Orion.Players {
 
             mockPlayer.Verify(
                 p => p.SendPacket(
-                    It.Is<ChatPacket>(cp => cp.ChatColor == Color.White && cp.ChatText == "test")));
+                    It.Is<ChatPacket>(cp => cp.Color == Color.White && cp.Text == "test")));
         }
 
         [Fact]
@@ -92,9 +92,9 @@ namespace Orion.Players {
 
                 var cm = mp.Module as ChatModule;
                 cm.Should().NotBeNull();
-                cm.ServerChattingPlayerIndex.Should().Be(123);
-                cm.ServerChatText.Should().Be("test");
-                cm.ServerChatColor.Should().Be(Color.White);
+                cm.ServerChatterIndex.Should().Be(123);
+                cm.ServerText.Should().Be("test");
+                cm.ServerColor.Should().Be(Color.White);
             });
 
             var fromMockPlayer = new Mock<IPlayer>();

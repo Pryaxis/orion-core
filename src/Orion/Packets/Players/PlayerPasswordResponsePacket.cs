@@ -16,8 +16,6 @@
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
 using System;
-using System.Diagnostics.CodeAnalysis;
-using System.Diagnostics.Contracts;
 using System.IO;
 
 namespace Orion.Packets.Players {
@@ -43,10 +41,6 @@ namespace Orion.Packets.Players {
                 _isDirty = true;
             }
         }
-
-        /// <inheritdoc/>
-        [Pure, ExcludeFromCodeCoverage]
-        public override string ToString() => $"{Type}[{PasswordAttempt}]";
 
         private protected override void ReadFromReader(BinaryReader reader, PacketContext context) =>
             _passwordAttempt = reader.ReadString();

@@ -65,7 +65,7 @@ namespace Orion.Events.Players {
         }
 
         [Fact]
-        public void PlayerPasswordAttempt_Set_NullValue_ThrowsArgumentNullException() {
+        public void PlayerPasswordAttempt_SetNullValue_ThrowsArgumentNullException() {
             var player = new Mock<IPlayer>().Object;
             var args = new PlayerPasswordResponseEventArgs(player, new PlayerPasswordResponsePacket());
             Action action = () => args.PasswordAttempt = null;

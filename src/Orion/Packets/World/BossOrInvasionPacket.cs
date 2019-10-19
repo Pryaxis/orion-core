@@ -15,8 +15,6 @@
 // You should have received a copy of the GNU General Public License
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
-using System.Diagnostics.CodeAnalysis;
-using System.Diagnostics.Contracts;
 using System.IO;
 
 namespace Orion.Packets.World {
@@ -25,19 +23,20 @@ namespace Orion.Packets.World {
     /// list of bosses or invasions.
     /// </summary>
     public sealed class BossOrInvasionPacket : Packet {
-        private byte _summmonOnPlayerIndex;
+        private byte _summonerIndex;
         private BossOrInvasionType _bossOrInvasionType;
 
         /// <inheritdoc/>
         public override PacketType Type => PacketType.BossOrInvasion;
 
         /// <summary>
-        /// Gets or sets the player index to summon the boss on.
+        /// Gets or sets the summoner's player index.
         /// </summary>
-        public byte SummmonOnPlayerIndex {
-            get => _summmonOnPlayerIndex;
+        /// <value>The summoner's player index.</value>
+        public byte SummonerIndex {
+            get => _summonerIndex;
             set {
-                _summmonOnPlayerIndex = value;
+                _summonerIndex = value;
                 _isDirty = true;
             }
         }
@@ -45,6 +44,7 @@ namespace Orion.Packets.World {
         /// <summary>
         /// Gets or sets the boss or invasion type.
         /// </summary>
+        /// <value>The boss or invasion type.</value>
         public BossOrInvasionType BossOrInvasionType {
             get => _bossOrInvasionType;
             set {
@@ -53,17 +53,13 @@ namespace Orion.Packets.World {
             }
         }
 
-        /// <inheritdoc/>
-        [Pure, ExcludeFromCodeCoverage]
-        public override string ToString() => $"{Type}[#={SummmonOnPlayerIndex}, {BossOrInvasionType}]";
-
         private protected override void ReadFromReader(BinaryReader reader, PacketContext context) {
-            _summmonOnPlayerIndex = (byte)reader.ReadInt16();
+            _summonerIndex = (byte)reader.ReadInt16();
             _bossOrInvasionType = (BossOrInvasionType)reader.ReadInt16();
         }
 
         private protected override void WriteToWriter(BinaryWriter writer, PacketContext context) {
-            writer.Write((short)_summmonOnPlayerIndex);
+            writer.Write((short)_summonerIndex);
             writer.Write((short)_bossOrInvasionType);
         }
     }

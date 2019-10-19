@@ -17,8 +17,8 @@
 
 using System;
 using System.Diagnostics.CodeAnalysis;
-using System.Diagnostics.Contracts;
 using System.IO;
+using Orion.Npcs;
 using Orion.Packets.Players;
 using Orion.Utils;
 using Orion.World;
@@ -34,16 +34,16 @@ namespace Orion.Packets.World {
         private bool _isBloodMoon;
         private bool _isEclipse;
         private byte _moonPhase;
-        private short _worldWidth;
-        private short _worldHeight;
+        private short _width;
+        private short _height;
         private short _spawnX;
         private short _spawnY;
         private short _surfaceY;
         private short _rockLayerY;
         private int _worldId;
-        private string _worldName = string.Empty;
-        private Guid _worldGuid;
-        private ulong _worldGeneratorVersion;
+        private string _name = string.Empty;
+        private Guid _guid;
+        private ulong _generatorVersion;
         private byte _moonType;
         private byte _treeBackgroundStyle;
         private byte _corruptionBackgroundStyle;
@@ -86,7 +86,7 @@ namespace Orion.Packets.World {
         private bool _hasDefeatedQueenBee;
         private bool _hasDefeatedDukeFishron;
         private bool _hasDefeatedMartians;
-        private bool _hasDefeatedAncientCultist;
+        private bool _hasDefeatedLunaticCultist;
         private bool _hasDefeatedMoonLord;
         private bool _hasDefeatedPumpking;
         private bool _hasDefeatedMourningWood;
@@ -108,8 +108,9 @@ namespace Orion.Packets.World {
         private float _sandstormIntensity;
 
         /// <inheritdoc/>
-        public override bool IsDirty => base.IsDirty || _treeStyleBoundaries.IsDirty || _treeStyles.IsDirty ||
-                                        _caveBackgroundStyleBoundaries.IsDirty || _caveBackgroundStyles.IsDirty;
+        public override bool IsDirty =>
+            base.IsDirty || _treeStyleBoundaries.IsDirty || _treeStyles.IsDirty ||
+            _caveBackgroundStyleBoundaries.IsDirty || _caveBackgroundStyles.IsDirty;
 
         /// <inheritdoc/>
         public override PacketType Type => PacketType.WorldInfo;
@@ -117,6 +118,7 @@ namespace Orion.Packets.World {
         /// <summary>
         /// Gets or sets the time.
         /// </summary>
+        /// <value>The time.</value>
         public int Time {
             get => _time;
             set {
@@ -128,6 +130,7 @@ namespace Orion.Packets.World {
         /// <summary>
         /// Gets or sets a value indicating whether it is daytime.
         /// </summary>
+        /// <value><see langword="true"/> if it is daytime; otherwise, <see langword="false"/>.</value>
         public bool IsDaytime {
             get => _isDaytime;
             set {
@@ -139,6 +142,7 @@ namespace Orion.Packets.World {
         /// <summary>
         /// Gets or sets a value indicating whether it is a blood moon.
         /// </summary>
+        /// <value><see langword="true"/> if it is a blood moon; otherwise, <see langword="false"/>.</value>
         public bool IsBloodMoon {
             get => _isBloodMoon;
             set {
@@ -150,6 +154,7 @@ namespace Orion.Packets.World {
         /// <summary>
         /// Gets or sets a value indicating whether it is an eclipse.
         /// </summary>
+        /// <value><see langword="true"/> if it is an eclipse; otherwise, <see langword="false"/>.</value>
         public bool IsEclipse {
             get => _isEclipse;
             set {
@@ -161,6 +166,7 @@ namespace Orion.Packets.World {
         /// <summary>
         /// Gets or sets the moon phase.
         /// </summary>
+        /// <value>The moon phase.</value>
         public byte MoonPhase {
             get => _moonPhase;
             set {
@@ -170,30 +176,33 @@ namespace Orion.Packets.World {
         }
 
         /// <summary>
-        /// Gets or sets the world width.
+        /// Gets or sets the world's width.
         /// </summary>
-        public short WorldWidth {
-            get => _worldWidth;
+        /// <value>The world's width.</value>
+        public short Width {
+            get => _width;
             set {
-                _worldWidth = value;
+                _width = value;
                 _isDirty = true;
             }
         }
 
         /// <summary>
-        /// Gets or sets the world height.
+        /// Gets or sets the world's height.
         /// </summary>
-        public short WorldHeight {
-            get => _worldHeight;
+        /// <value>The world's height.</value>
+        public short Height {
+            get => _height;
             set {
-                _worldHeight = value;
+                _height = value;
                 _isDirty = true;
             }
         }
 
         /// <summary>
-        /// Gets or sets the spawn X coordinate.
+        /// Gets or sets the spawn's X coordinate.
         /// </summary>
+        /// <value>The spawn's X coordinate.</value>
         public short SpawnX {
             get => _spawnX;
             set {
@@ -203,8 +212,9 @@ namespace Orion.Packets.World {
         }
 
         /// <summary>
-        /// Gets or sets the spawn Y coordinate.
+        /// Gets or sets the spawn's Y coordinate.
         /// </summary>
+        /// <value>The spawn's Y coordinate.</value>
         public short SpawnY {
             get => _spawnY;
             set {
@@ -214,8 +224,9 @@ namespace Orion.Packets.World {
         }
 
         /// <summary>
-        /// Gets or sets the surface Y coordinate.
+        /// Gets or sets the surface's Y coordinate.
         /// </summary>
+        /// <value>The surface's Y coordinate.</value>
         public short SurfaceY {
             get => _surfaceY;
             set {
@@ -225,8 +236,9 @@ namespace Orion.Packets.World {
         }
 
         /// <summary>
-        /// Gets or sets the rock layer Y coordinate.
+        /// Gets or sets the rock layer's Y coordinate.
         /// </summary>
+        /// <value>The rock layer's Y coordinate.</value>
         public short RockLayerY {
             get => _rockLayerY;
             set {
@@ -238,6 +250,7 @@ namespace Orion.Packets.World {
         /// <summary>
         /// Gets or sets the world ID.
         /// </summary>
+        /// <value>The world ID.</value>
         public int WorldId {
             get => _worldId;
             set {
@@ -247,35 +260,40 @@ namespace Orion.Packets.World {
         }
 
         /// <summary>
-        /// Gets or sets the world name.
+        /// Gets or sets the world's name.
         /// </summary>
+        /// <value>The world's name.</value>
         /// <exception cref="ArgumentNullException"><paramref name="value"/> is <see langword="null"/>.</exception>
-        public string WorldName {
-            get => _worldName;
+        public string Name {
+            get => _name;
             set {
-                _worldName = value ?? throw new ArgumentNullException(nameof(value));
+                _name = value ?? throw new ArgumentNullException(nameof(value));
+                _isDirty = true;
+            }
+        }
+
+
+        /// <summary>
+        /// Gets or sets the world's GUID.
+        /// </summary>
+        /// <value>The world's GUID.</value>
+        [SuppressMessage("Naming", "CA1720:Identifier contains type name", Justification = "Don't care")]
+        public Guid Guid {
+            get => _guid;
+            set {
+                _guid = value;
                 _isDirty = true;
             }
         }
 
         /// <summary>
-        /// Gets or sets the world GUID.
+        /// Gets or sets the world's generator version.
         /// </summary>
-        public Guid WorldGuid {
-            get => _worldGuid;
+        /// <value>The world's generator version.</value>
+        public ulong GeneratorVersion {
+            get => _generatorVersion;
             set {
-                _worldGuid = value;
-                _isDirty = true;
-            }
-        }
-
-        /// <summary>
-        /// Gets or sets the world generator version.
-        /// </summary>
-        public ulong WorldGeneratorVersion {
-            get => _worldGeneratorVersion;
-            set {
-                _worldGeneratorVersion = value;
+                _generatorVersion = value;
                 _isDirty = true;
             }
         }
@@ -283,6 +301,7 @@ namespace Orion.Packets.World {
         /// <summary>
         /// Gets or sets the moon type.
         /// </summary>
+        /// <value>The moon type.</value>
         public byte MoonType {
             get => _moonType;
             set {
@@ -294,6 +313,7 @@ namespace Orion.Packets.World {
         /// <summary>
         /// Gets or sets the tree background style.
         /// </summary>
+        /// <value>The tree background style.</value>
         public byte TreeBackgroundStyle {
             get => _treeBackgroundStyle;
             set {
@@ -305,6 +325,7 @@ namespace Orion.Packets.World {
         /// <summary>
         /// Gets or sets the corruption background style.
         /// </summary>
+        /// <value>The corruption background style.</value>
         public byte CorruptionBackgroundStyle {
             get => _corruptionBackgroundStyle;
             set {
@@ -316,6 +337,7 @@ namespace Orion.Packets.World {
         /// <summary>
         /// Gets or sets the jungle background style.
         /// </summary>
+        /// <value>The jungle background style.</value>
         public byte JungleBackgroundStyle {
             get => _jungleBackgroundStyle;
             set {
@@ -327,6 +349,7 @@ namespace Orion.Packets.World {
         /// <summary>
         /// Gets or sets the snow background style.
         /// </summary>
+        /// <value>The snow background style.</value>
         public byte SnowBackgroundStyle {
             get => _snowBackgroundStyle;
             set {
@@ -338,6 +361,7 @@ namespace Orion.Packets.World {
         /// <summary>
         /// Gets or sets the hallow background style.
         /// </summary>
+        /// <value>The hallow background style.</value>
         public byte HallowBackgroundStyle {
             get => _hallowBackgroundStyle;
             set {
@@ -349,6 +373,7 @@ namespace Orion.Packets.World {
         /// <summary>
         /// Gets or sets the crimson background style.
         /// </summary>
+        /// <value>The crimson background style.</value>
         public byte CrimsonBackgroundStyle {
             get => _crimsonBackgroundStyle;
             set {
@@ -360,6 +385,7 @@ namespace Orion.Packets.World {
         /// <summary>
         /// Gets or sets the desert background style.
         /// </summary>
+        /// <value>The desert background style.</value>
         public byte DesertBackgroundStyle {
             get => _desertBackgroundStyle;
             set {
@@ -371,6 +397,7 @@ namespace Orion.Packets.World {
         /// <summary>
         /// Gets or sets the ocean background style.
         /// </summary>
+        /// <value>The ocean background style.</value>
         public byte OceanBackgroundStyle {
             get => _oceanBackgroundStyle;
             set {
@@ -382,6 +409,7 @@ namespace Orion.Packets.World {
         /// <summary>
         /// Gets or sets the ice cave background style.
         /// </summary>
+        /// <value>The ice cave background style.</value>
         public byte IceCaveBackgroundStyle {
             get => _iceCaveBackgroundStyle;
             set {
@@ -393,6 +421,7 @@ namespace Orion.Packets.World {
         /// <summary>
         /// Gets or sets the underground jungle background style.
         /// </summary>
+        /// <value>The underground jungle background style.</value>
         public byte UndergroundJungleBackgroundStyle {
             get => _undergroundJungleBackgroundStyle;
             set {
@@ -404,6 +433,7 @@ namespace Orion.Packets.World {
         /// <summary>
         /// Gets or sets the hell background style.
         /// </summary>
+        /// <value>The hell background style.</value>
         public byte HellBackgroundStyle {
             get => _hellBackgroundStyle;
             set {
@@ -415,6 +445,7 @@ namespace Orion.Packets.World {
         /// <summary>
         /// Gets or sets the wind speed.
         /// </summary>
+        /// <value>The wind speed.</value>
         public float WindSpeed {
             get => _windSpeed;
             set {
@@ -426,6 +457,7 @@ namespace Orion.Packets.World {
         /// <summary>
         /// Gets or sets the number of clouds.
         /// </summary>
+        /// <value>The number of clouds.</value>
         public byte NumberOfClouds {
             get => _numberOfClouds;
             set {
@@ -437,26 +469,31 @@ namespace Orion.Packets.World {
         /// <summary>
         /// Get the tree style boundaries.
         /// </summary>
+        /// <value>The tree style boundaries.</value>
         public IArray<int> TreeStyleBoundaries => _treeStyleBoundaries;
 
         /// <summary>
         /// Gets the tree styles.
         /// </summary>
+        /// <value>The tree styles.</value>
         public IArray<byte> TreeStyles => _treeStyles;
 
         /// <summary>
         /// Gets the cave background style boundaries.
         /// </summary>
+        /// <value>The cave background style boundaries.</value>
         public IArray<int> CaveBackgroundStyleBoundaries => _caveBackgroundStyleBoundaries;
 
         /// <summary>
         /// Gets the cave background styles.
         /// </summary>
+        /// <value>The cave background styles.</value>
         public IArray<byte> CaveBackgroundStyles => _caveBackgroundStyles;
 
         /// <summary>
         /// Gets or sets the rain.
         /// </summary>
+        /// <value>The rain.</value>
         public float Rain {
             get => _rain;
             set {
@@ -468,6 +505,7 @@ namespace Orion.Packets.World {
         /// <summary>
         /// Gets or sets a value indicating whether a shadow orb has been smashed.
         /// </summary>
+        /// <value><see langword="true"/> if a shadow orb has been smashed; otherwise, <see langword="false"/>.</value>
         public bool HasSmashedShadowOrb {
             get => _hasSmashedShadowOrb;
             set {
@@ -477,8 +515,12 @@ namespace Orion.Packets.World {
         }
 
         /// <summary>
-        /// Gets or sets a value indicating whether the Eye of Cthulhu has been defeated.
+        /// Gets or sets a value indicating whether the <see cref="NpcType.EyeOfCthulhu"/> has been defeated.
         /// </summary>
+        /// <value>
+        /// <see langword="true"/> if the <see cref="NpcType.EyeOfCthulhu"/> has been defeated; otherwise,
+        /// <see langword="false"/>.
+        /// </value>
         public bool HasDefeatedEyeOfCthulhu {
             get => _hasDefeatedEyeOfCthulhu;
             set {
@@ -491,6 +533,9 @@ namespace Orion.Packets.World {
         /// Gets or sets a value indicating whether the "evil" boss (Eater of Worlds, or Brain of Cthulhu) has been
         /// defeated.
         /// </summary>
+        /// <value>
+        /// <see langword="true"/> if the "evil" boss has been defeated; otherwise, <see langword="false"/>.
+        /// </value>
         public bool HasDefeatedEvilBoss {
             get => _hasDefeatedEvilBoss;
             set {
@@ -502,6 +547,7 @@ namespace Orion.Packets.World {
         /// <summary>
         /// Gets or sets a value indicating whether Skeletron has been defeated.
         /// </summary>
+        /// <value><see langword="true"/> if Skeletron has been defeated; otherwise, <see langword="false"/>.</value>
         public bool HasDefeatedSkeletron {
             get => _hasDefeatedSkeletron;
             set {
@@ -513,6 +559,7 @@ namespace Orion.Packets.World {
         /// <summary>
         /// Gets or sets a value indicating whether the world is in hard mode.
         /// </summary>
+        /// <value><see langword="true"/> if the world is in hard mode; otherwise, <see langword="false"/>.</value>
         public bool IsHardMode {
             get => _isHardMode;
             set {
@@ -522,8 +569,12 @@ namespace Orion.Packets.World {
         }
 
         /// <summary>
-        /// Gets or sets a value indicating whether a clown has been defeated.
+        /// Gets or sets a value indicating whether a <see cref="NpcType.Clown"/> has been defeated.
         /// </summary>
+        /// <value>
+        /// <see langword="true"/> if a <see cref="NpcType.Clown"/> has been defeated; otherwise,
+        /// <see langword="false"/>.
+        /// </value>
         public bool HasDefeatedClown {
             get => _hasDefeatedClown;
             set {
@@ -535,6 +586,9 @@ namespace Orion.Packets.World {
         /// <summary>
         /// Gets or sets a value indicating whether the world has server-side characters.
         /// </summary>
+        /// <value>
+        /// <see langword="true"/> if the world has server-side characters; otherwise, <see langword="false"/>.
+        /// </value>
         public bool IsServerSideCharacter {
             get => _isServerSideCharacter;
             set {
@@ -544,8 +598,12 @@ namespace Orion.Packets.World {
         }
 
         /// <summary>
-        /// Gets or sets a value indicating whether Plantera has been defeated.
+        /// Gets or sets a value indicating whether <see cref="NpcType.Plantera"/> has been defeated.
         /// </summary>
+        /// <value>
+        /// <see langword="true"/> if <see cref="NpcType.Plantera"/> has been defeated; otherwise,
+        /// <see langword="false"/>.
+        /// </value>
         public bool HasDefeatedPlantera {
             get => _hasDefeatedPlantera;
             set {
@@ -557,6 +615,7 @@ namespace Orion.Packets.World {
         /// <summary>
         /// Gets or sets a value indicating whether the Destroyer has been defeated.
         /// </summary>
+        /// <value><see langword="true"/> if the Destroyer has been defeated; otherwise, <see langword="false"/>.</value>
         public bool HasDefeatedDestroyer {
             get => _hasDefeatedDestroyer;
             set {
@@ -568,6 +627,7 @@ namespace Orion.Packets.World {
         /// <summary>
         /// Gets or sets a value indicating whether the Twins have been defeated.
         /// </summary>
+        /// <value><see langword="true"/> if the Twins have been defeated; otherwise, <see langword="false"/>.</value>
         public bool HasDefeatedTwins {
             get => _hasDefeatedTwins;
             set {
@@ -577,8 +637,12 @@ namespace Orion.Packets.World {
         }
 
         /// <summary>
-        /// Gets or sets a value indicating whether Skeletron Prime has been defeated.
+        /// Gets or sets a value indicating whether <see cref="NpcType.SkeletronPrime"/> has been defeated.
         /// </summary>
+        /// <value>
+        /// <see langword="true"/> if <see cref="NpcType.SkeletronPrime"/> has been defeated; otherwise,
+        /// <see langword="false"/>.
+        /// </value>
         public bool HasDefeatedSkeletronPrime {
             get => _hasDefeatedSkeletronPrime;
             set {
@@ -590,6 +654,9 @@ namespace Orion.Packets.World {
         /// <summary>
         /// Gets or sets a value indicating whether a mechanical boss has been defeated.
         /// </summary>
+        /// <value>
+        /// <see langword="true"/> if a mechanical boss has been defeated; otherwise, <see langword="false"/>.
+        /// </value>
         public bool HasDefeatedMechanicalBoss {
             get => _hasDefeatedMechanicalBoss;
             set {
@@ -601,6 +668,7 @@ namespace Orion.Packets.World {
         /// <summary>
         /// Gets or sets a value indicating whether the cloud background is active.
         /// </summary>
+        /// <value><see langword="true"/> if the cloud background is active; otherwise, <see langword="false"/>.</value>
         public bool IsCloudBackgroundActive {
             get => _isCloudBackgroundActive;
             set {
@@ -612,6 +680,7 @@ namespace Orion.Packets.World {
         /// <summary>
         /// Gets or sets a value indicating whether the world is crimson.
         /// </summary>
+        /// <value><see langword="true"/> if the world is crimson; otherwise, <see langword="false"/>.</value>
         public bool IsCrimson {
             get => _isCrimson;
             set {
@@ -623,6 +692,7 @@ namespace Orion.Packets.World {
         /// <summary>
         /// Gets or sets a value indicating whether it is a pumpkin moon.
         /// </summary>
+        /// <value><see langword="true"/> if it is a pumpkin moon; otherwise, <see langword="false"/>.</value>
         public bool IsPumpkinMoon {
             get => _isPumpkinMoon;
             set {
@@ -634,6 +704,7 @@ namespace Orion.Packets.World {
         /// <summary>
         /// Gets or sets a value indicating whether it is a frost moon.
         /// </summary>
+        /// <value><see langword="true"/> if it is a frost moon; otherwise, <see langword="false"/>.</value>
         public bool IsFrostMoon {
             get => _isFrostMoon;
             set {
@@ -645,6 +716,7 @@ namespace Orion.Packets.World {
         /// <summary>
         /// Gets or sets a value indicating whether the world is in expert mode.
         /// </summary>
+        /// <value><see langword="true"/> if the world is in expert mode; otherwise, <see langword="false"/>.</value>
         public bool IsExpertMode {
             get => _isExpertMode;
             set {
@@ -656,6 +728,7 @@ namespace Orion.Packets.World {
         /// <summary>
         /// Gets or sets a value indicating whether time is being fast-forwarded.
         /// </summary>
+        /// <value><see langword="true"/> if time is being fast-forwarded; otherwise, <see langword="false"/>.</value>
         public bool IsFastForwardingTime {
             get => _isFastForwardingTime;
             set {
@@ -667,6 +740,7 @@ namespace Orion.Packets.World {
         /// <summary>
         /// Gets or sets a value indicating whether it is a slime rain.
         /// </summary>
+        /// <value><see langword="true"/> if it is a slime rain; otherwise, <see langword="false"/>.</value>
         public bool IsSlimeRain {
             get => _isSlimeRain;
             set {
@@ -676,8 +750,12 @@ namespace Orion.Packets.World {
         }
 
         /// <summary>
-        /// Gets or sets a value indicating whether King Slime has been defeated.
+        /// Gets or sets a value indicating whether <see cref="NpcType.KingSlime"/> has been defeated.
         /// </summary>
+        /// <value>
+        /// <see langword="true"/> if <see cref="NpcType.KingSlime"/> has been defeated; otherwise,
+        /// <see langword="false"/>.
+        /// </value>
         public bool HasDefeatedKingSlime {
             get => _hasDefeatedKingSlime;
             set {
@@ -687,8 +765,12 @@ namespace Orion.Packets.World {
         }
 
         /// <summary>
-        /// Gets or sets a value indicating whether Queen Bee has been defeated.
+        /// Gets or sets a value indicating whether <see cref="NpcType.QueenBee"/> has been defeated.
         /// </summary>
+        /// <value>
+        /// <see langword="true"/> if <see cref="NpcType.QueenBee"/> has been defeated; otherwise,
+        /// <see langword="false"/>.
+        /// </value>
         public bool HasDefeatedQueenBee {
             get => _hasDefeatedQueenBee;
             set {
@@ -698,8 +780,12 @@ namespace Orion.Packets.World {
         }
 
         /// <summary>
-        /// Gets or sets a value indicating whether Duke Fishron has been defeated.
+        /// Gets or sets a value indicating whether <see cref="NpcType.DukeFishron"/> has been defeated.
         /// </summary>
+        /// <value>
+        /// <see langword="true"/> if <see cref="NpcType.DukeFishron"/> has been defeated; otherwise,
+        /// <see langword="false"/>.
+        /// </value>
         public bool HasDefeatedDukeFishron {
             get => _hasDefeatedDukeFishron;
             set {
@@ -709,8 +795,12 @@ namespace Orion.Packets.World {
         }
 
         /// <summary>
-        /// Gets or sets a value indicating whether the Martians have been defeated.
+        /// Gets or sets a value indicating whether the <see cref="InvasionType.Martians"/> have been defeated.
         /// </summary>
+        /// <value>
+        /// <see langword="true"/> if the <see cref="InvasionType.Martians"/> have been defeated; otherwise,
+        /// <see langword="false"/>.
+        /// </value>
         public bool HasDefeatedMartians {
             get => _hasDefeatedMartians;
             set {
@@ -720,12 +810,16 @@ namespace Orion.Packets.World {
         }
 
         /// <summary>
-        /// Gets or sets a value indicating whether the Ancient Cultist has been defeated.
+        /// Gets or sets a value indicating whether a <see cref="NpcType.LunaticCultist"/> has been defeated.
         /// </summary>
-        public bool HasDefeatedAncientCultist {
-            get => _hasDefeatedAncientCultist;
+        /// <value>
+        /// <see langword="true"/> if a <see cref="NpcType.LunaticCultist"/> has been defeated; otherwise,
+        /// <see langword="false"/>.
+        /// </value>
+        public bool HasDefeatedLunaticCultist {
+            get => _hasDefeatedLunaticCultist;
             set {
-                _hasDefeatedAncientCultist = value;
+                _hasDefeatedLunaticCultist = value;
                 _isDirty = true;
             }
         }
@@ -733,6 +827,9 @@ namespace Orion.Packets.World {
         /// <summary>
         /// Gets or sets a value indicating whether the Moon Lord has been defeated.
         /// </summary>
+        /// <value>
+        /// <see langword="true"/> if the Moon Lord has been defeated; otherwise, <see langword="false"/>.
+        /// </value>
         public bool HasDefeatedMoonLord {
             get => _hasDefeatedMoonLord;
             set {
@@ -742,8 +839,12 @@ namespace Orion.Packets.World {
         }
 
         /// <summary>
-        /// Gets or sets a value indicating whether a Pumpking has been defeated.
+        /// Gets or sets a value indicating whether a <see cref="NpcType.Pumpking"/> has been defeated.
         /// </summary>
+        /// <value>
+        /// <see langword="true"/> if a <see cref="NpcType.Pumpking"/> has been defeated; otherwise,
+        /// <see langword="false"/>.
+        /// </value>
         public bool HasDefeatedPumpking {
             get => _hasDefeatedPumpking;
             set {
@@ -753,8 +854,12 @@ namespace Orion.Packets.World {
         }
 
         /// <summary>
-        /// Gets or sets a value indicating whether a Mourning Wood has been defeated.
+        /// Gets or sets a value indicating whether a <see cref="NpcType.MourningWood"/> has been defeated.
         /// </summary>
+        /// <value>
+        /// <see langword="true"/> if a <see cref="NpcType.MourningWood"/> has been defeated; otherwise,
+        /// <see langword="false"/>.
+        /// </value>
         public bool HasDefeatedMourningWood {
             get => _hasDefeatedMourningWood;
             set {
@@ -764,8 +869,12 @@ namespace Orion.Packets.World {
         }
 
         /// <summary>
-        /// Gets or sets a value indicating whether an Ice Queen has been defeated.
+        /// Gets or sets a value indicating whether an <see cref="NpcType.IceQueen"/> has been defeated.
         /// </summary>
+        /// <value>
+        /// <see langword="true"/> if an <see cref="NpcType.IceQueen"/> has been defeated; otherwise,
+        /// <see langword="false"/>.
+        /// </value>
         public bool HasDefeatedIceQueen {
             get => _hasDefeatedIceQueen;
             set {
@@ -775,8 +884,12 @@ namespace Orion.Packets.World {
         }
 
         /// <summary>
-        /// Gets or sets a value indicating whether a Santank has been defeated.
+        /// Gets or sets a value indicating whether a <see cref="NpcType.SantaNK1"/> has been defeated.
         /// </summary>
+        /// <value>
+        /// <see langword="true"/> if a <see cref="NpcType.SantaNK1"/> has been defeated; otherwise,
+        /// <see langword="false"/>.
+        /// </value>
         public bool HasDefeatedSantank {
             get => _hasDefeatedSantank;
             set {
@@ -786,8 +899,12 @@ namespace Orion.Packets.World {
         }
 
         /// <summary>
-        /// Gets or sets a value indicating whether an Everscream has been defeated.
+        /// Gets or sets a value indicating whether an <see cref="NpcType.Everscream"/> has been defeated.
         /// </summary>
+        /// <value>
+        /// <see langword="true"/> if an <see cref="NpcType.Everscream"/> has been defeated; otherwise,
+        /// <see langword="false"/>.
+        /// </value>
         public bool HasDefeatedEverscream {
             get => _hasDefeatedEverscream;
             set {
@@ -799,6 +916,7 @@ namespace Orion.Packets.World {
         /// <summary>
         /// Gets or sets a value indicating whether a Golem has been defeated.
         /// </summary>
+        /// <value><see langword="true"/> if a Golem has been defeated; otherwise, <see langword="false"/>.</value>
         public bool HasDefeatedGolem {
             get => _hasDefeatedGolem;
             set {
@@ -810,6 +928,7 @@ namespace Orion.Packets.World {
         /// <summary>
         /// Gets or sets a value indicating whether it is a birthday party.
         /// </summary>
+        /// <value><see langword="true"/> if it is a birthday party; otherwise, <see langword="false"/>.</value>
         public bool IsBirthdayParty {
             get => _isBirthdayParty;
             set {
@@ -819,8 +938,12 @@ namespace Orion.Packets.World {
         }
 
         /// <summary>
-        /// Gets or sets a value indicating whether the Pirates have been defeated.
+        /// Gets or sets a value indicating whether the <see cref="InvasionType.Pirates"/> have been defeated.
         /// </summary>
+        /// <value>
+        /// <see langword="true"/> if the <see cref="InvasionType.Pirates"/> have been defeated; otherwise,
+        /// <see langword="false"/>.
+        /// </value>
         public bool HasDefeatedPirates {
             get => _hasDefeatedPirates;
             set {
@@ -830,8 +953,12 @@ namespace Orion.Packets.World {
         }
 
         /// <summary>
-        /// Gets or sets a value indicating whether the Frost Legion has been defeated.
+        /// Gets or sets a value indicating whether the <see cref="InvasionType.FrostLegion"/> has been defeated.
         /// </summary>
+        /// <value>
+        /// <see langword="true"/> if the <see cref="InvasionType.FrostLegion"/> has been defeated; otherwise,
+        /// <see langword="false"/>.
+        /// </value>
         public bool HasDefeatedFrostLegion {
             get => _hasDefeatedFrostLegion;
             set {
@@ -841,8 +968,12 @@ namespace Orion.Packets.World {
         }
 
         /// <summary>
-        /// Gets or sets a value indicating whether the Goblins have been defeated.
+        /// Gets or sets a value indicating whether the <see cref="InvasionType.Goblins"/> have been defeated.
         /// </summary>
+        /// <value>
+        /// <see langword="true"/> if the <see cref="InvasionType.Goblins"/> have been defeated; otherwise,
+        /// <see langword="false"/>.
+        /// </value>
         public bool HasDefeatedGoblins {
             get => _hasDefeatedGoblins;
             set {
@@ -854,6 +985,7 @@ namespace Orion.Packets.World {
         /// <summary>
         /// Gets or sets a value indicating whether it is a sandstorm.
         /// </summary>
+        /// <value><see langword="true"/> if it is a sandstorm; otherwise, <see langword="false"/>.</value>
         public bool IsSandstorm {
             get => _isSandstorm;
             set {
@@ -865,6 +997,7 @@ namespace Orion.Packets.World {
         /// <summary>
         /// Gets or sets a value indicating whether the Old One's Army is invading.
         /// </summary>
+        /// <value><see langword="true"/> if the Old One's Army is invading; otherwise, <see langword="false"/>.</value>
         public bool IsOldOnesArmy {
             get => _isOldOnesArmy;
             set {
@@ -876,6 +1009,10 @@ namespace Orion.Packets.World {
         /// <summary>
         /// Gets or sets a value indicating whether tier 1 of the Old One's Army has been defeated.
         /// </summary>
+        /// <value>
+        /// <see langword="true"/> if tier 1 of the Old One's Army has been defeated; otherwise,
+        /// <see langword="false"/>.
+        /// </value>
         public bool HasDefeatedOldOnesArmyTier1 {
             get => _hasDefeatedOldOnesArmyTier1;
             set {
@@ -887,6 +1024,10 @@ namespace Orion.Packets.World {
         /// <summary>
         /// Gets or sets a value indicating whether tier 2 of the Old One's Army has been defeated.
         /// </summary>
+        /// <value>
+        /// <see langword="true"/> if tier 2 of the Old One's Army has been defeated; otherwise,
+        /// <see langword="false"/>.
+        /// </value>
         public bool HasDefeatedOldOnesArmyTier2 {
             get => _hasDefeatedOldOnesArmyTier2;
             set {
@@ -898,6 +1039,10 @@ namespace Orion.Packets.World {
         /// <summary>
         /// Gets or sets a value indicating whether tier 3 of the Old One's Army has been defeated.
         /// </summary>
+        /// <value>
+        /// <see langword="true"/> if tier 3 of the Old One's Army has been defeated; otherwise,
+        /// <see langword="false"/>.
+        /// </value>
         public bool HasDefeatedOldOnesArmyTier3 {
             get => _hasDefeatedOldOnesArmyTier3;
             set {
@@ -909,6 +1054,7 @@ namespace Orion.Packets.World {
         /// <summary>
         /// Gets or sets the current invasion type.
         /// </summary>
+        /// <value>The current invasion type.</value>
         public InvasionType CurrentInvasionType {
             get => _currentInvasionType;
             set {
@@ -918,19 +1064,9 @@ namespace Orion.Packets.World {
         }
 
         /// <summary>
-        /// Gets or sets the lobby ID.
-        /// </summary>
-        public ulong LobbyId {
-            get => _lobbyId;
-            set {
-                _lobbyId = value;
-                _isDirty = true;
-            }
-        }
-
-        /// <summary>
         /// Gets or sets the sandstorm intensity.
         /// </summary>
+        /// <value>The sandstorm intensity.</value>
         public float SandstormIntensity {
             get => _sandstormIntensity;
             set {
@@ -948,10 +1084,6 @@ namespace Orion.Packets.World {
             _caveBackgroundStyles.Clean();
         }
 
-        /// <inheritdoc/>
-        [Pure, ExcludeFromCodeCoverage]
-        public override string ToString() => $"{Type}[{WorldName}, ...]";
-
         private protected override void ReadFromReader(BinaryReader reader, PacketContext context) {
             _time = reader.ReadInt32();
 
@@ -961,16 +1093,16 @@ namespace Orion.Packets.World {
             _isEclipse = timeFlags[2];
 
             _moonPhase = reader.ReadByte();
-            _worldWidth = reader.ReadInt16();
-            _worldHeight = reader.ReadInt16();
+            _width = reader.ReadInt16();
+            _height = reader.ReadInt16();
             _spawnX = reader.ReadInt16();
             _spawnY = reader.ReadInt16();
             _surfaceY = reader.ReadInt16();
             _rockLayerY = reader.ReadInt16();
             _worldId = reader.ReadInt32();
-            _worldName = reader.ReadString();
-            _worldGuid = new Guid(reader.ReadBytes(16));
-            _worldGeneratorVersion = reader.ReadUInt64();
+            _name = reader.ReadString();
+            _guid = new Guid(reader.ReadBytes(16));
+            _generatorVersion = reader.ReadUInt64();
             _moonType = reader.ReadByte();
             _treeBackgroundStyle = reader.ReadByte();
             _corruptionBackgroundStyle = reader.ReadByte();
@@ -1040,7 +1172,7 @@ namespace Orion.Packets.World {
             _hasDefeatedQueenBee = worldFlags3[4];
             _hasDefeatedDukeFishron = worldFlags3[5];
             _hasDefeatedMartians = worldFlags3[6];
-            _hasDefeatedAncientCultist = worldFlags3[7];
+            _hasDefeatedLunaticCultist = worldFlags3[7];
             _hasDefeatedMoonLord = worldFlags4[0];
             _hasDefeatedPumpking = worldFlags4[1];
             _hasDefeatedMourningWood = worldFlags4[2];
@@ -1073,16 +1205,16 @@ namespace Orion.Packets.World {
             writer.Write(timeFlags);
 
             writer.Write(_moonPhase);
-            writer.Write(_worldWidth);
-            writer.Write(_worldHeight);
+            writer.Write(_width);
+            writer.Write(_height);
             writer.Write(_spawnX);
             writer.Write(_spawnY);
             writer.Write(_surfaceY);
             writer.Write(_rockLayerY);
             writer.Write(_worldId);
-            writer.Write(_worldName);
-            writer.Write(_worldGuid.ToByteArray());
-            writer.Write(_worldGeneratorVersion);
+            writer.Write(_name);
+            writer.Write(_guid.ToByteArray());
+            writer.Write(_generatorVersion);
             writer.Write(_moonType);
             writer.Write(_treeBackgroundStyle);
             writer.Write(_corruptionBackgroundStyle);
@@ -1144,7 +1276,7 @@ namespace Orion.Packets.World {
             worldFlags3[4] = _hasDefeatedQueenBee;
             worldFlags3[5] = _hasDefeatedDukeFishron;
             worldFlags3[6] = _hasDefeatedMartians;
-            worldFlags3[7] = _hasDefeatedAncientCultist;
+            worldFlags3[7] = _hasDefeatedLunaticCultist;
             worldFlags4[0] = _hasDefeatedMoonLord;
             worldFlags4[1] = _hasDefeatedPumpking;
             worldFlags4[2] = _hasDefeatedMourningWood;

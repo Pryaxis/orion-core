@@ -21,12 +21,16 @@ namespace Orion.Packets {
     /// </summary>
     public enum PacketContext {
         /// <summary>
-        /// Indicates that the packet should be processed as the server.
+        /// Indicates that the packet should be processed as the server. If reading a packet, then the packet should be
+        /// read as if it came from the client. If writing a packet, then the packet should be written as if it came
+        /// from the server.
         /// </summary>
         Server,
 
         /// <summary>
-        /// Indicates that the packet should be processed as the client.
+        /// Indicates that the packet should be processed as the client. If reading a packet, then the packet should be
+        /// read as if it came from the server. If writing a packet, then the packet should be written as if it came
+        /// from the client.
         /// </summary>
         Client
     }

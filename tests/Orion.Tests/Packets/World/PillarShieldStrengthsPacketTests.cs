@@ -35,10 +35,10 @@ namespace Orion.Packets.World {
             using var stream = new MemoryStream(Bytes);
             var packet = (PillarShieldStrengthsPacket)Packet.ReadFromStream(stream, PacketContext.Server);
 
-            packet.SolarPillarShieldStrength.Should().Be(1);
-            packet.VortexPillarShieldStrength.Should().Be(2);
-            packet.NebulaPillarShieldStrength.Should().Be(3);
-            packet.StardustPillarShieldStrength.Should().Be(4);
+            packet.Solar.Should().Be(1);
+            packet.Vortex.Should().Be(2);
+            packet.Nebula.Should().Be(3);
+            packet.Stardust.Should().Be(4);
         }
 
         [Fact]

@@ -40,9 +40,9 @@ namespace Orion.Packets.Items {
             var packet = (ItemInstanceInfoPacket)Packet.ReadFromStream(stream, PacketContext.Server);
 
             packet.ItemIndex.Should().Be(400);
-            packet.ItemPosition.Should().Be(new Vector2(67175, 6798));
-            packet.ItemVelocity.Should().Be(new Vector2(4, -2));
-            packet.ItemStackSize.Should().Be(1);
+            packet.Position.Should().Be(new Vector2(67175, 6798));
+            packet.Velocity.Should().Be(new Vector2(4, -2));
+            packet.StackSize.Should().Be(1);
             packet.ItemPrefix.Should().Be(ItemPrefix.Unreal);
             packet.CanBePickedUpImmediately.Should().BeFalse();
             packet.ItemType.Should().Be(ItemType.Sdmg);

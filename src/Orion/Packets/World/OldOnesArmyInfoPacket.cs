@@ -16,8 +16,6 @@
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
 using System;
-using System.Diagnostics.CodeAnalysis;
-using System.Diagnostics.Contracts;
 using System.IO;
 using Orion.Packets.Extensions;
 
@@ -34,6 +32,7 @@ namespace Orion.Packets.World {
         /// <summary>
         /// Gets or sets the time between waves.
         /// </summary>
+        /// <value>The time between waves.</value>
         public TimeSpan TimeBetweenWaves {
             get => _timeBetweenWaves;
             set {
@@ -41,10 +40,6 @@ namespace Orion.Packets.World {
                 _isDirty = true;
             }
         }
-
-        /// <inheritdoc/>
-        [Pure, ExcludeFromCodeCoverage]
-        public override string ToString() => $"{Type}[T={TimeBetweenWaves}]";
 
         private protected override void ReadFromReader(BinaryReader reader, PacketContext context) =>
             _timeBetweenWaves = reader.ReadTimeSpan(4);

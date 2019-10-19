@@ -36,7 +36,7 @@ namespace Orion.Packets.Players {
             var packet = (PlayerActivityPacket)Packet.ReadFromStream(stream, PacketContext.Server);
 
             packet.PlayerIndex.Should().Be(0);
-            packet.IsPlayerActive.Should().BeTrue();
+            packet.IsActive.Should().BeTrue();
         }
 
         [Fact]

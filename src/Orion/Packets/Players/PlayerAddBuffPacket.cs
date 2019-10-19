@@ -15,8 +15,6 @@
 // You should have received a copy of the GNU General Public License
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
-using System.Diagnostics.CodeAnalysis;
-using System.Diagnostics.Contracts;
 using System.IO;
 using Orion.Entities;
 
@@ -26,7 +24,7 @@ namespace Orion.Packets.Players {
     /// </summary>
     public sealed class PlayerAddBuffPacket : Packet {
         private byte _playerIndex;
-        private Buff _playerBuff;
+        private Buff _buff;
 
         /// <inheritdoc/>
         public override PacketType Type => PacketType.PlayerAddBuff;
@@ -34,6 +32,7 @@ namespace Orion.Packets.Players {
         /// <summary>
         /// Gets or sets the player index.
         /// </summary>
+        /// <value>The player index.</value>
         public byte PlayerIndex {
             get => _playerIndex;
             set {
@@ -45,26 +44,23 @@ namespace Orion.Packets.Players {
         /// <summary>
         /// Gets or sets the player's buff.
         /// </summary>
-        public Buff PlayerBuff {
-            get => _playerBuff;
+        /// <value>The player's buff.</value>
+        public Buff Buff {
+            get => _buff;
             set {
-                _playerBuff = value;
+                _buff = value;
                 _isDirty = true;
             }
         }
 
-        /// <inheritdoc/>
-        [Pure, ExcludeFromCodeCoverage]
-        public override string ToString() => $"{Type}[#={PlayerIndex}, {PlayerBuff}]";
-
         private protected override void ReadFromReader(BinaryReader reader, PacketContext context) {
             _playerIndex = reader.ReadByte();
-            _playerBuff = Buff.ReadFromReader(reader, 4);
+            _buff = Buff.ReadFromReader(reader, 4);
         }
 
         private protected override void WriteToWriter(BinaryWriter writer, PacketContext context) {
             writer.Write(_playerIndex);
-            _playerBuff.WriteToWriter(writer, 4);
+            _buff.WriteToWriter(writer, 4);
         }
     }
 }

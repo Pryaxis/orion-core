@@ -37,8 +37,8 @@ namespace Orion.Packets.World.TileEntities {
             var packet = (ChestContentsSlotPacket)Packet.ReadFromStream(stream, PacketContext.Server);
 
             packet.ChestIndex.Should().Be(0);
-            packet.ChestContentsSlotIndex.Should().Be(0);
-            packet.ItemStackSize.Should().Be(1);
+            packet.ContentsSlot.Should().Be(0);
+            packet.StackSize.Should().Be(1);
             packet.ItemPrefix.Should().Be(ItemPrefix.None);
             packet.ItemType.Should().Be(ItemType.Sdmg);
         }

@@ -36,7 +36,7 @@ namespace Orion.Packets.Npcs {
             var packet = (NpcCatchPacket)Packet.ReadFromStream(stream, PacketContext.Server);
 
             packet.NpcIndex.Should().Be(1);
-            packet.NpcCatcherPlayerIndex.Should().Be(0);
+            packet.CatcherIndex.Should().Be(0);
         }
 
         [Fact]

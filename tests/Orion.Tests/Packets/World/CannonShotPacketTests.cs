@@ -35,13 +35,13 @@ namespace Orion.Packets.World {
             using var stream = new MemoryStream(Bytes);
             var packet = (CannonShotPacket)Packet.ReadFromStream(stream, PacketContext.Server);
 
-            packet.ShotDamage.Should().Be(100);
-            packet.ShotKnockback.Should().Be(0);
-            packet.CannonX.Should().Be(256);
-            packet.CannonY.Should().Be(100);
-            packet.ShotAngle.Should().Be(0);
-            packet.ShotAmmoType.Should().Be(0);
-            packet.ShooterPlayerIndex.Should().Be(1);
+            packet.Damage.Should().Be(100);
+            packet.Knockback.Should().Be(0);
+            packet.X.Should().Be(256);
+            packet.Y.Should().Be(100);
+            packet.Angle.Should().Be(0);
+            packet.ShotType.Should().Be(0);
+            packet.ShooterIndex.Should().Be(1);
         }
 
         [Fact]

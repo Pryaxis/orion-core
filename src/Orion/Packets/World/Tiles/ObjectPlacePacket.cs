@@ -15,8 +15,6 @@
 // You should have received a copy of the GNU General Public License
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
-using System.Diagnostics.CodeAnalysis;
-using System.Diagnostics.Contracts;
 using System.IO;
 using Orion.World.Tiles;
 
@@ -25,13 +23,13 @@ namespace Orion.Packets.World.Tiles {
     /// Packet sent to place an object.
     /// </summary>
     public sealed class ObjectPlacePacket : Packet {
-        private short _objectX;
-        private short _objectY;
+        private short _x;
+        private short _y;
         private BlockType _objectType;
-        private short _objectStyle;
+        private short _style;
         private byte _data;
-        private sbyte _objectRandomState;
-        private bool _objectDirection;
+        private sbyte _randomState;
+        private bool _direction;
 
         /// <inheritdoc/>
         public override PacketType Type => PacketType.ObjectPlace;
@@ -39,10 +37,11 @@ namespace Orion.Packets.World.Tiles {
         /// <summary>
         /// Gets or sets the object's X coordinate.
         /// </summary>
-        public short ObjectX {
-            get => _objectX;
+        /// <value>The object's X coordinate.</value>
+        public short X {
+            get => _x;
             set {
-                _objectX = value;
+                _x = value;
                 _isDirty = true;
             }
         }
@@ -50,10 +49,11 @@ namespace Orion.Packets.World.Tiles {
         /// <summary>
         /// Gets or sets the object's Y coordinate.
         /// </summary>
-        public short ObjectY {
-            get => _objectY;
+        /// <value>The object's Y coordinate.</value>
+        public short Y {
+            get => _y;
             set {
-                _objectY = value;
+                _y = value;
                 _isDirty = true;
             }
         }
@@ -61,6 +61,7 @@ namespace Orion.Packets.World.Tiles {
         /// <summary>
         /// Gets or sets the object type.
         /// </summary>
+        /// <value>The object type.</value>
         public BlockType ObjectType {
             get => _objectType;
             set {
@@ -70,12 +71,13 @@ namespace Orion.Packets.World.Tiles {
         }
 
         /// <summary>
-        /// Gets or sets the object style.
+        /// Gets or sets the object's style.
         /// </summary>
-        public short ObjectStyle {
-            get => _objectStyle;
+        /// <value>The object's style.</value>
+        public short Style {
+            get => _style;
             set {
-                _objectStyle = value;
+                _style = value;
                 _isDirty = true;
             }
         }
@@ -83,51 +85,47 @@ namespace Orion.Packets.World.Tiles {
         /// <summary>
         /// Gets or sets the object's random state.
         /// </summary>
-        public sbyte ObjectRandomState {
-            get => _objectRandomState;
+        /// <value>The object's random state.</value>
+        public sbyte RandomState {
+            get => _randomState;
             set {
-                _objectRandomState = value;
+                _randomState = value;
                 _isDirty = true;
             }
         }
 
         /// <summary>
-        /// Gets or sets a value indicating the object direction.
+        /// Gets or sets a value indicating the object direction. This is object-specific.
         /// </summary>
-        public bool ObjectDirection {
-            get => _objectDirection;
+        /// <value>A value indicating the object direction.</value>
+        public bool Direction {
+            get => _direction;
             set {
-                _objectDirection = value;
+                _direction = value;
                 _isDirty = true;
             }
         }
 
-        /// <inheritdoc/>
-        [Pure, ExcludeFromCodeCoverage]
-        public override string ToString() => $"{Type}[{ObjectType}_{ObjectStyle} @ ({ObjectX}, {ObjectY}), ...]";
-
-        /// <inheritdoc/>
         private protected override void ReadFromReader(BinaryReader reader, PacketContext context) {
-            _objectX = reader.ReadInt16();
-            _objectY = reader.ReadInt16();
+            _x = reader.ReadInt16();
+            _y = reader.ReadInt16();
             _objectType = (BlockType)reader.ReadUInt16();
-            _objectStyle = reader.ReadInt16();
+            _style = reader.ReadInt16();
 
             // This byte is basically useless, but we'll keep track of it anyways.
             _data = reader.ReadByte();
-            _objectRandomState = reader.ReadSByte();
-            _objectDirection = reader.ReadBoolean();
+            _randomState = reader.ReadSByte();
+            _direction = reader.ReadBoolean();
         }
 
-        /// <inheritdoc/>
         private protected override void WriteToWriter(BinaryWriter writer, PacketContext context) {
-            writer.Write(_objectX);
-            writer.Write(_objectY);
+            writer.Write(_x);
+            writer.Write(_y);
             writer.Write((ushort)_objectType);
-            writer.Write(_objectStyle);
+            writer.Write(_style);
             writer.Write(_data);
-            writer.Write(_objectRandomState);
-            writer.Write(_objectDirection);
+            writer.Write(_randomState);
+            writer.Write(_direction);
         }
     }
 }

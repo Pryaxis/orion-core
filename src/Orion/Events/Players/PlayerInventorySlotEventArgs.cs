@@ -27,22 +27,22 @@ namespace Orion.Events.Players {
     [EventArgs("player-inv-slot")]
     public sealed class PlayerInventorySlotEventArgs : PlayerPacketEventArgs<PlayerInventorySlotPacket> {
         /// <summary>
-        /// Gets or sets the player's inventory slot index.
+        /// Gets the player's inventory slot.
         /// </summary>
-        /// <value>The player's inventory slot index.</value>
+        /// <value>The player's inventory slot.</value>
         /// <remarks>
-        /// This value can range from <c>0</c> to <c>219</c>. Check <see cref="IPlayerInventory"/> for a more detailed
-        /// description on the indices.
+        /// This value can range from <c>0</c> to <c>219</c>. Check the <see cref="IPlayerInventory"/> interface for a
+        /// more detailed description on the slots.
         /// </remarks>
-        public byte PlayerInventorySlotIndex => _packet.PlayerInventorySlotIndex;
+        public byte InventorySlot => _packet.InventorySlot;
 
         /// <summary>
         /// Gets or sets the item's stack size.
         /// </summary>
         /// <value>The item's stack size.</value>
-        public short ItemStackSize {
-            get => _packet.ItemStackSize;
-            set => _packet.ItemStackSize = value;
+        public short StackSize {
+            get => _packet.StackSize;
+            set => _packet.StackSize = value;
         }
 
         /// <summary>

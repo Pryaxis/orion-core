@@ -16,8 +16,6 @@
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
 using System;
-using System.Diagnostics.CodeAnalysis;
-using System.Diagnostics.Contracts;
 using System.IO;
 
 namespace Orion.Packets.World.Tiles {
@@ -25,10 +23,10 @@ namespace Orion.Packets.World.Tiles {
     /// Packet sent to set a tile's liquid.
     /// </summary>
     public sealed class TileLiquidPacket : Packet {
-        private NetworkLiquid _tileLiquid = new NetworkLiquid();
+        private NetworkLiquid _liquid = new NetworkLiquid();
 
         /// <inheritdoc/>
-        public override bool IsDirty => base.IsDirty || TileLiquid.IsDirty;
+        public override bool IsDirty => base.IsDirty || _liquid.IsDirty;
 
         /// <inheritdoc/>
         public override PacketType Type => PacketType.TileLiquid;
@@ -36,11 +34,12 @@ namespace Orion.Packets.World.Tiles {
         /// <summary>
         /// Gets or sets the tile's liquid.
         /// </summary>
+        /// <value>The tile's liquid.</value>
         /// <exception cref="ArgumentNullException"><paramref name="value"/> is <see langword="null"/>.</exception>
-        public NetworkLiquid TileLiquid {
-            get => _tileLiquid;
+        public NetworkLiquid Liquid {
+            get => _liquid;
             set {
-                _tileLiquid = value ?? throw new ArgumentNullException(nameof(value));
+                _liquid = value ?? throw new ArgumentNullException(nameof(value));
                 _isDirty = true;
             }
         }
@@ -48,17 +47,13 @@ namespace Orion.Packets.World.Tiles {
         /// <inheritdoc/>
         public override void Clean() {
             base.Clean();
-            TileLiquid.Clean();
+            _liquid.Clean();
         }
 
-        /// <inheritdoc/>
-        [Pure, ExcludeFromCodeCoverage]
-        public override string ToString() => $"{Type}[{TileLiquid}]";
-
         private protected override void ReadFromReader(BinaryReader reader, PacketContext context) =>
-            _tileLiquid = NetworkLiquid.ReadFromReader(reader);
+            _liquid = NetworkLiquid.ReadFromReader(reader);
 
         private protected override void WriteToWriter(BinaryWriter writer, PacketContext context) =>
-            _tileLiquid.WriteToWriter(writer);
+            _liquid.WriteToWriter(writer);
     }
 }

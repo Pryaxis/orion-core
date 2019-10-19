@@ -15,64 +15,67 @@
 // You should have received a copy of the GNU General Public License
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
-using System.Diagnostics.CodeAnalysis;
-using System.Diagnostics.Contracts;
 using System.IO;
 
 namespace Orion.Packets.World.Tiles {
     /// <summary>
     /// Packet sent from the client to the server to perform a mass wire operation.
     /// </summary>
-    public sealed class WireMassOperationPacket : Packet {
-        private short _startTileX;
-        private short _startTileY;
-        private short _endTileX;
-        private short _endTileY;
-        private WireOperations _wireOperations;
+    /// <seealso cref="WireOperations"/>
+    public sealed class MassWireOperationPacket : Packet {
+        private short _startX;
+        private short _startY;
+        private short _endX;
+        private short _endY;
+        private WireOperations _operations;
 
         /// <inheritdoc/>
-        public override PacketType Type => PacketType.WireMassOperation;
+        public override PacketType Type => PacketType.MassWireOperation;
 
         /// <summary>
-        /// Gets or sets the starting tile's X position.
+        /// Gets or sets the starting tile's X coordinate.
         /// </summary>
-        public short StartTileX {
-            get => _startTileX;
+        /// <value>The starting tile's X coordinate.</value>
+        public short StartX {
+            get => _startX;
             set {
-                _startTileX = value;
+                _startX = value;
                 _isDirty = true;
             }
         }
 
         /// <summary>
-        /// Gets or sets the starting tile's Y position.
+        /// Gets or sets the starting tile's Y coordinate.
         /// </summary>
-        public short StartTileY {
-            get => _startTileY;
+        /// <value>The starting tile's Y coordinate.</value>
+        public short StartY {
+            get => _startY;
             set {
-                _startTileY = value;
+                _startY = value;
                 _isDirty = true;
             }
         }
 
         /// <summary>
-        /// Gets or sets the ending tile's X position.
+        /// Gets or sets the ending tile's X coordinate.
         /// </summary>
-        public short EndTileX {
-            get => _endTileX;
+        /// <value>The ending tile's X coordinate.</value>
+        public short EndX {
+            get => _endX;
             set {
-                _endTileX = value;
+                _endX = value;
                 _isDirty = true;
             }
         }
 
         /// <summary>
-        /// Gets or sets the ending tile's X position.
+        /// Gets or sets the ending tile's Y coordinate.
         /// </summary>
-        public short EndTileY {
-            get => _endTileY;
+        /// <value>The ending tile's Y coordinate.</value>
+        public short EndY {
+            get => _endY;
             set {
-                _endTileY = value;
+                _endY = value;
                 _isDirty = true;
             }
         }
@@ -80,33 +83,29 @@ namespace Orion.Packets.World.Tiles {
         /// <summary>
         /// Gets or sets the wire operations.
         /// </summary>
-        public WireOperations WireOperations {
-            get => _wireOperations;
+        /// <value>The wire operations.</value>
+        public WireOperations Operations {
+            get => _operations;
             set {
-                _wireOperations = value;
+                _operations = value;
                 _isDirty = true;
             }
         }
 
-        /// <inheritdoc/>
-        [Pure, ExcludeFromCodeCoverage]
-        public override string ToString() =>
-            $"{Type}[{WireOperations:F} from ({StartTileX}, {StartTileY}) to ({EndTileX}, {EndTileY})]";
-
         private protected override void ReadFromReader(BinaryReader reader, PacketContext context) {
-            _startTileX = reader.ReadInt16();
-            _startTileY = reader.ReadInt16();
-            _endTileX = reader.ReadInt16();
-            _endTileY = reader.ReadInt16();
-            _wireOperations = (WireOperations)reader.ReadByte();
+            _startX = reader.ReadInt16();
+            _startY = reader.ReadInt16();
+            _endX = reader.ReadInt16();
+            _endY = reader.ReadInt16();
+            _operations = (WireOperations)reader.ReadByte();
         }
 
         private protected override void WriteToWriter(BinaryWriter writer, PacketContext context) {
-            writer.Write(_startTileX);
-            writer.Write(_startTileY);
-            writer.Write(_endTileX);
-            writer.Write(_endTileY);
-            writer.Write((byte)_wireOperations);
+            writer.Write(_startX);
+            writer.Write(_startY);
+            writer.Write(_endX);
+            writer.Write(_endY);
+            writer.Write((byte)_operations);
         }
     }
 }

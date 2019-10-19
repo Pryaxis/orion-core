@@ -37,7 +37,7 @@ namespace Orion.Packets.Npcs {
             var packet = (NpcKillCountPacket)Packet.ReadFromStream(stream, PacketContext.Server);
 
             packet.NpcType.Should().Be(NpcType.BlueSlime);
-            packet.NpcTypeKillCount.Should().Be(100);
+            packet.KillCount.Should().Be(100);
         }
 
         [Fact]

@@ -37,8 +37,8 @@ namespace Orion.Packets.Npcs {
             var packet = (NpcStealCoinsPacket)Packet.ReadFromStream(stream, PacketContext.Server);
 
             packet.NpcIndex.Should().Be(0);
-            packet.NpcStolenValue.Should().Be(0);
-            packet.CoinsPosition.Should().Be(new Vector2(0));
+            packet.Value.Should().Be(0);
+            packet.Position.Should().Be(new Vector2(0));
         }
 
         [Fact]

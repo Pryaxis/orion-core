@@ -29,18 +29,18 @@ namespace Orion.Events.Players {
         /// Gets or sets the player's mana.
         /// </summary>
         /// <value>The player's mana.</value>
-        public short PlayerMana {
-            get => _packet.PlayerMana;
-            set => _packet.PlayerMana = value;
+        public short Mana {
+            get => _packet.Mana;
+            set => _packet.Mana = value;
         }
 
         /// <summary>
         /// Gets or sets the player's maximum mana.
         /// </summary>
         /// <value>The player's maximum mana.</value>
-        public short PlayerMaxMana {
-            get => _packet.PlayerMaxMana;
-            set => _packet.PlayerMaxMana = value;
+        public short MaxMana {
+            get => _packet.MaxMana;
+            set => _packet.MaxMana = value;
         }
 
         /// <summary>

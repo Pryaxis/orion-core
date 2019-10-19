@@ -15,8 +15,6 @@
 // You should have received a copy of the GNU General Public License
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
-using System.Diagnostics.CodeAnalysis;
-using System.Diagnostics.Contracts;
 using System.IO;
 
 namespace Orion.Packets.Items {
@@ -25,7 +23,7 @@ namespace Orion.Packets.Items {
     /// </summary>
     public sealed class ItemOwnerPacket : Packet {
         private short _itemIndex;
-        private byte _itemOwnerPlayerIndex;
+        private byte _ownerIndex;
 
         /// <inheritdoc/>
         public override PacketType Type => PacketType.ItemOwner;
@@ -33,6 +31,7 @@ namespace Orion.Packets.Items {
         /// <summary>
         /// Gets or sets the item index.
         /// </summary>
+        /// <value>The item index.</value>
         public short ItemIndex {
             get => _itemIndex;
             set {
@@ -44,26 +43,23 @@ namespace Orion.Packets.Items {
         /// <summary>
         /// Gets or sets the item owner's player index.
         /// </summary>
-        public byte ItemOwnerPlayerIndex {
-            get => _itemOwnerPlayerIndex;
+        /// <value>The item owner's player index.</value>
+        public byte OwnerIndex {
+            get => _ownerIndex;
             set {
-                _itemOwnerPlayerIndex = value;
+                _ownerIndex = value;
                 _isDirty = true;
             }
         }
 
-        /// <inheritdoc/>
-        [Pure, ExcludeFromCodeCoverage]
-        public override string ToString() => $"{Type}[#={ItemIndex}, P={ItemOwnerPlayerIndex}]";
-
         private protected override void ReadFromReader(BinaryReader reader, PacketContext context) {
             _itemIndex = reader.ReadInt16();
-            _itemOwnerPlayerIndex = reader.ReadByte();
+            _ownerIndex = reader.ReadByte();
         }
 
         private protected override void WriteToWriter(BinaryWriter writer, PacketContext context) {
             writer.Write(_itemIndex);
-            writer.Write(_itemOwnerPlayerIndex);
+            writer.Write(_ownerIndex);
         }
     }
 }

@@ -35,7 +35,7 @@ namespace Orion.Packets.Players {
             using var stream = new MemoryStream(Bytes);
             var packet = (PlayerAnglerQuestsPacket)Packet.ReadFromStream(stream, PacketContext.Server);
 
-            packet.PlayerNumberOfAnglerQuestsCompleted.Should().Be(257);
+            packet.NumberOfAnglerQuestsCompleted.Should().Be(257);
         }
 
         [Fact]

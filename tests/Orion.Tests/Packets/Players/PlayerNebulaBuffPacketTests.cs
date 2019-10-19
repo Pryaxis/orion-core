@@ -39,7 +39,7 @@ namespace Orion.Packets.Players {
 
             packet.PlayerIndex.Should().Be(0);
             packet.BuffType.Should().Be(BuffType.ObsidianSkin);
-            packet.BuffPosition.Should().Be(Vector2.Zero);
+            packet.Position.Should().Be(Vector2.Zero);
         }
 
         [Fact]

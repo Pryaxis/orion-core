@@ -38,8 +38,8 @@ namespace Orion.Packets.World.Tiles {
 
             packet.AnimationType.Should().Be(1);
             packet.BlockType.Should().Be(BlockType.Stone);
-            packet.TileX.Should().Be(256);
-            packet.TileY.Should().Be(100);
+            packet.X.Should().Be(256);
+            packet.Y.Should().Be(100);
         }
 
         [Fact]

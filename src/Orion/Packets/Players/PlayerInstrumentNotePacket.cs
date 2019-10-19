@@ -15,8 +15,6 @@
 // You should have received a copy of the GNU General Public License
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
-using System.Diagnostics.CodeAnalysis;
-using System.Diagnostics.Contracts;
 using System.IO;
 
 namespace Orion.Packets.Players {
@@ -25,7 +23,7 @@ namespace Orion.Packets.Players {
     /// </summary>
     public sealed class PlayerInstrumentNotePacket : Packet {
         private byte _playerIndex;
-        private float _playerInstrumentNote;
+        private float _instrumentNote;
 
         /// <inheritdoc/>
         public override PacketType Type => PacketType.PlayerInstrumentNote;
@@ -33,6 +31,7 @@ namespace Orion.Packets.Players {
         /// <summary>
         /// Gets or sets the player index.
         /// </summary>
+        /// <value>The player index.</value>
         public byte PlayerIndex {
             get => _playerIndex;
             set {
@@ -41,29 +40,28 @@ namespace Orion.Packets.Players {
             }
         }
 
+        // TODO: explain this
+
         /// <summary>
         /// Gets or sets the player's instrument note.
         /// </summary>
-        public float PlayerInstrumentNote {
-            get => _playerInstrumentNote;
+        /// <value>The player's instrument note.</value>
+        public float InstrumentNote {
+            get => _instrumentNote;
             set {
-                _playerInstrumentNote = value;
+                _instrumentNote = value;
                 _isDirty = true;
             }
         }
 
-        /// <inheritdoc/>
-        [Pure, ExcludeFromCodeCoverage]
-        public override string ToString() => $"{Type}[#={PlayerIndex}, ...]";
-
         private protected override void ReadFromReader(BinaryReader reader, PacketContext context) {
             _playerIndex = reader.ReadByte();
-            _playerInstrumentNote = reader.ReadSingle();
+            _instrumentNote = reader.ReadSingle();
         }
 
         private protected override void WriteToWriter(BinaryWriter writer, PacketContext context) {
             writer.Write(_playerIndex);
-            writer.Write(_playerInstrumentNote);
+            writer.Write(_instrumentNote);
         }
     }
 }

@@ -23,22 +23,28 @@ namespace Orion.Packets.World.TileEntities {
     /// Represents a logic sensor that is transmitted over the network.
     /// </summary>
     public sealed class NetworkLogicSensor : NetworkTileEntity {
-        private LogicSensorType _logicSensorType;
+        private LogicSensorType _sensorType;
         private bool _isActivated;
 
         /// <inheritdoc/>
         public override TileEntityType Type => TileEntityType.LogicSensor;
 
-        /// <inheritdoc cref="ILogicSensor.LogicSensorType"/>
-        public LogicSensorType LogicSensorType {
-            get => _logicSensorType;
+        /// <summary>
+        /// Gets or sets the logic sensor's type.
+        /// </summary>
+        /// <value>The logic sensor's type.</value>
+        public LogicSensorType SensorType {
+            get => _sensorType;
             set {
-                _logicSensorType = value;
+                _sensorType = value;
                 IsDirty = true;
             }
         }
 
-        /// <inheritdoc cref="ILogicSensor.IsActivated"/>
+        /// <summary>
+        /// Gets a value indicating whether the logic sensor is activated.
+        /// </summary>
+        /// <value><see langword="true"/> if the logic sensor is activated; otherwise, <see langword="false"/>.</value>
         public bool IsActivated {
             get => _isActivated;
             set {
@@ -48,12 +54,12 @@ namespace Orion.Packets.World.TileEntities {
         }
 
         private protected override void ReadFromReaderImpl(BinaryReader reader) {
-            _logicSensorType = (LogicSensorType)reader.ReadByte();
+            _sensorType = (LogicSensorType)reader.ReadByte();
             _isActivated = reader.ReadBoolean();
         }
 
         private protected override void WriteToWriterImpl(BinaryWriter writer) {
-            writer.Write((byte)_logicSensorType);
+            writer.Write((byte)_sensorType);
             writer.Write(_isActivated);
         }
     }

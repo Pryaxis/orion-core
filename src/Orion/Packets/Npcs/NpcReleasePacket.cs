@@ -15,8 +15,6 @@
 // You should have received a copy of the GNU General Public License
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
-using System.Diagnostics.CodeAnalysis;
-using System.Diagnostics.Contracts;
 using System.IO;
 using Microsoft.Xna.Framework;
 using Orion.Npcs;
@@ -26,20 +24,21 @@ namespace Orion.Packets.Npcs {
     /// Packet sent from the client to the server to release an NPC.
     /// </summary>
     public sealed class NpcReleasePacket : Packet {
-        private Vector2 _npcPosition;
+        private Vector2 _position;
         private NpcType _npcType = NpcType.None;
-        private byte _npcStyle;
+        private byte _style;
 
         /// <inheritdoc/>
         public override PacketType Type => PacketType.NpcRelease;
 
         /// <summary>
-        /// Gets or sets the NPC's position.
+        /// Gets or sets the NPC's position. The components are pixels.
         /// </summary>
-        public Vector2 NpcPosition {
-            get => _npcPosition;
+        /// <value>The NPC's position.</value>
+        public Vector2 Position {
+            get => _position;
             set {
-                _npcPosition = value;
+                _position = value;
                 _isDirty = true;
             }
         }
@@ -47,6 +46,7 @@ namespace Orion.Packets.Npcs {
         /// <summary>
         /// Gets or sets the NPC's type.
         /// </summary>
+        /// <value>The NPC's type.</value>
         public NpcType NpcType {
             get => _npcType;
             set {
@@ -56,31 +56,29 @@ namespace Orion.Packets.Npcs {
         }
 
         /// <summary>
-        /// Gets or sets the NPC's style. This only affects butterflies.
+        /// Gets or sets the NPC's style.
         /// </summary>
-        public byte NpcStyle {
-            get => _npcStyle;
+        /// <value>The NPC's style.</value>
+        /// <remarks>This property only affects a <see cref="NpcType.Butterfly"/>.</remarks>
+        public byte Style {
+            get => _style;
             set {
-                _npcStyle = value;
+                _style = value;
                 _isDirty = true;
             }
         }
 
-        /// <inheritdoc/>
-        [Pure, ExcludeFromCodeCoverage]
-        public override string ToString() => $"{Type}[{NpcType}_{NpcStyle} @ {NpcPosition}]";
-
         private protected override void ReadFromReader(BinaryReader reader, PacketContext context) {
-            _npcPosition = new Vector2(reader.ReadInt32(), reader.ReadInt32());
+            _position = new Vector2(reader.ReadInt32(), reader.ReadInt32());
             _npcType = (NpcType)reader.ReadInt16();
-            _npcStyle = reader.ReadByte();
+            _style = reader.ReadByte();
         }
 
         private protected override void WriteToWriter(BinaryWriter writer, PacketContext context) {
-            writer.Write((int)_npcPosition.X);
-            writer.Write((int)_npcPosition.Y);
+            writer.Write((int)_position.X);
+            writer.Write((int)_position.Y);
             writer.Write((short)_npcType);
-            writer.Write(_npcStyle);
+            writer.Write(_style);
         }
     }
 }

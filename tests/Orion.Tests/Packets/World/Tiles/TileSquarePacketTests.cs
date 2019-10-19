@@ -44,7 +44,7 @@ namespace Orion.Packets.World.Tiles {
         }
 
         [Fact]
-        public void Tiles_Set_NullValue_ThrowsArgumentNullException() {
+        public void Tiles_SetNullValue_ThrowsArgumentNullException() {
             var packet = new TileSquarePacket();
             Action action = () => packet.Tiles = null;
 
@@ -58,9 +58,9 @@ namespace Orion.Packets.World.Tiles {
             using var stream = new MemoryStream(Bytes);
             var packet = (TileSquarePacket)Packet.ReadFromStream(stream, PacketContext.Server);
 
-            packet.SquareSize.Should().Be(1);
-            packet.TileX.Should().Be(4249);
-            packet.TileY.Should().Be(427);
+            packet.Size.Should().Be(1);
+            packet.X.Should().Be(4249);
+            packet.Y.Should().Be(427);
             packet.Tiles.Width.Should().Be(1);
             packet.Tiles.Height.Should().Be(1);
         }

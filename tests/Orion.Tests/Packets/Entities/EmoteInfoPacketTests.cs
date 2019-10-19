@@ -37,8 +37,8 @@ namespace Orion.Packets.Entities {
 
             packet.EmoteIndex.Should().Be(1);
             packet.AnchorType.Should().Be(0);
-            packet.AnchorEntityIndex.Should().Be(100);
-            packet.EmoteLifetime.Should().Be(255);
+            packet.AnchorIndex.Should().Be(100);
+            packet.Lifetime.Should().Be(255);
             packet.EmoteType.Should().Be(1);
         }
 

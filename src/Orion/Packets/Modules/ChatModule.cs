@@ -16,8 +16,6 @@
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
 using System;
-using System.Diagnostics.CodeAnalysis;
-using System.Diagnostics.Contracts;
 using System.IO;
 using Microsoft.Xna.Framework;
 using Orion.Packets.Extensions;
@@ -28,101 +26,98 @@ namespace Orion.Packets.Modules {
     /// Module sent for chat.
     /// </summary>
     public sealed class ChatModule : Module {
-        private string _clientChatCommand = string.Empty;
-        private string _clientChatText = string.Empty;
-        private byte _serverChattingPlayerIndex;
-        private TerrariaNetworkText _serverChatText = TerrariaNetworkText.Empty;
-        private Color _serverChatColor;
+        private string _clientCommand = string.Empty;
+        private string _clientText = string.Empty;
+        private byte _serverChatterIndex;
+        private TerrariaNetworkText _serverText = TerrariaNetworkText.Empty;
+        private Color _serverColor;
 
         /// <inheritdoc/>
         public override ModuleType Type => ModuleType.Chat;
 
         /// <summary>
-        /// Gets or sets the client chat's command. Only applicable when received in the Server context.
+        /// Gets or sets the client's chat command.
         /// </summary>
+        /// <value>The client's chat command.</value>
         /// <exception cref="ArgumentNullException"><paramref name="value"/> is <see langword="null"/>.</exception>
-        public string ClientChatCommand {
-            get => _clientChatCommand;
+        public string ClientCommand {
+            get => _clientCommand;
             set {
-                _clientChatCommand = value ?? throw new ArgumentNullException(nameof(value));
+                _clientCommand = value ?? throw new ArgumentNullException(nameof(value));
                 _isDirty = true;
             }
         }
 
         /// <summary>
-        /// Gets or sets the client chat's text. Only applicable when received in the Server context.
+        /// Gets or sets the client's chat text.
         /// </summary>
+        /// <value>The client's chat text.</value>
         /// <exception cref="ArgumentNullException"><paramref name="value"/> is <see langword="null"/>.</exception>
-        public string ClientChatText {
-            get => _clientChatText;
+        public string ClientText {
+            get => _clientText;
             set {
-                _clientChatText = value ?? throw new ArgumentNullException(nameof(value));
+                _clientText = value ?? throw new ArgumentNullException(nameof(value));
                 _isDirty = true;
             }
         }
 
         /// <summary>
-        /// Gets or sets the server chatting player index. Only applicable when sent in the Server context.
+        /// Gets or sets the server's chatter player index.
         /// </summary>
-        public byte ServerChattingPlayerIndex {
-            get => _serverChattingPlayerIndex;
+        /// <value>THe server's chatter player index.</value>
+        public byte ServerChatterIndex {
+            get => _serverChatterIndex;
             set {
-                _serverChattingPlayerIndex = value;
+                _serverChatterIndex = value;
                 _isDirty = true;
             }
         }
 
         /// <summary>
-        /// Gets or sets the server chat's text. Only applicable when sent in the Server context.
+        /// Gets or sets the server chat text.
         /// </summary>
+        /// <value>The server's chat text.</value>
         /// <exception cref="ArgumentNullException"><paramref name="value"/> is <see langword="null"/>.</exception>
-        public string ServerChatText {
-            get => _serverChatText.ToString();
+        public string ServerText {
+            get => _serverText.ToString();
             set {
-                _serverChatText =
+                _serverText =
                     TerrariaNetworkText.FromLiteral(value ?? throw new ArgumentNullException(nameof(value)));
                 _isDirty = true;
             }
         }
 
         /// <summary>
-        /// Gets or sets the server chat's color. The alpha component is ignored. Only applicable when sent in the
-        /// Server context.
+        /// Gets or sets the server chat's color. The alpha component is ignored.
         /// </summary>
-        public Color ServerChatColor {
-            get => _serverChatColor;
+        /// <value>The server chat's color.</value>
+        public Color ServerColor {
+            get => _serverColor;
             set {
-                _serverChatColor = value;
+                _serverColor = value;
                 _isDirty = true;
             }
         }
 
-        /// <inheritdoc/>
-        [Pure, ExcludeFromCodeCoverage]
-        public override string ToString() =>
-            string.IsNullOrEmpty(ClientChatText)
-                ? $"{Type}[{ServerChatText}, #={ServerChattingPlayerIndex}, C={ServerChatColor}]"
-                : $"{Type}[{ClientChatCommand}, T={ClientChatText}]";
-
         private protected override void ReadFromReader(BinaryReader reader, PacketContext context) {
             if (context == PacketContext.Server) {
-                _clientChatCommand = reader.ReadString();
-                _clientChatText = reader.ReadString();
+                _clientCommand = reader.ReadString();
+                _clientText = reader.ReadString();
             } else {
-                _serverChattingPlayerIndex = reader.ReadByte();
-                _serverChatText = reader.ReadNetworkText();
-                _serverChatColor = reader.ReadColor();
+                _serverChatterIndex = reader.ReadByte();
+                _serverText = reader.ReadNetworkText();
+                _serverColor = reader.ReadColor();
             }
         }
 
         private protected override void WriteToWriter(BinaryWriter writer, PacketContext context) {
             if (context == PacketContext.Server) {
-                writer.Write(_serverChattingPlayerIndex);
-                writer.Write(_serverChatText);
-                writer.Write(in _serverChatColor);
+                writer.Write(_serverChatterIndex);
+                writer.Write(_serverText);
+                writer.Write(in _serverColor);
             } else {
-                writer.Write(_clientChatCommand);
-                writer.Write(_clientChatText);
+                writer.Write(_clientCommand);
+                writer.Write(_clientText);
             }
         }
     }

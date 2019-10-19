@@ -34,9 +34,9 @@ namespace Orion.Events.Players {
         /// it can be used to verify a player's identity positively but not negatively.
         /// </remarks>
         /// <exception cref="ArgumentNullException"><paramref name="value"/> is <see langword="null"/>.</exception>
-        public string PlayerUuid {
-            get => _packet.PlayerUuid;
-            set => _packet.PlayerUuid = value ?? throw new ArgumentNullException(nameof(value));
+        public string Uuid {
+            get => _packet.Uuid;
+            set => _packet.Uuid = value ?? throw new ArgumentNullException(nameof(value));
         }
 
         /// <summary>

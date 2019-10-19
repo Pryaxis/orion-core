@@ -15,8 +15,6 @@
 // You should have received a copy of the GNU General Public License
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
-using System.Diagnostics.CodeAnalysis;
-using System.Diagnostics.Contracts;
 using System.IO;
 
 namespace Orion.Packets.Projectiles {
@@ -24,7 +22,7 @@ namespace Orion.Packets.Projectiles {
     /// Packet sent from the client to the server to remove a projectile by index.
     /// </summary>
     public sealed class ProjectileRemoveIndexPacket : Packet {
-        private ushort _projectileIndex;
+        private short _projectileIndex;
 
         /// <inheritdoc/>
         public override PacketType Type => PacketType.ProjectileRemoveIndex;
@@ -32,7 +30,8 @@ namespace Orion.Packets.Projectiles {
         /// <summary>
         /// Gets or sets the projectile index.
         /// </summary>
-        public ushort ProjectileIndex {
+        /// <value>The projectile index.</value>
+        public short ProjectileIndex {
             get => _projectileIndex;
             set {
                 _projectileIndex = value;
@@ -40,12 +39,8 @@ namespace Orion.Packets.Projectiles {
             }
         }
 
-        /// <inheritdoc/>
-        [Pure, ExcludeFromCodeCoverage]
-        public override string ToString() => $"{Type}[#={ProjectileIndex}), ...]";
-
         private protected override void ReadFromReader(BinaryReader reader, PacketContext context) =>
-            _projectileIndex = reader.ReadUInt16();
+            _projectileIndex = reader.ReadInt16();
 
         private protected override void WriteToWriter(BinaryWriter writer, PacketContext context) =>
             writer.Write(_projectileIndex);

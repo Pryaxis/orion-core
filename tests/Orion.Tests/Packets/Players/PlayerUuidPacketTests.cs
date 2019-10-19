@@ -30,9 +30,9 @@ namespace Orion.Packets.Players {
         }
 
         [Fact]
-        public void PlayerUuid_Set_NullValue_ThrowsArgumentNullException() {
+        public void Uuid_SetNullValue_ThrowsArgumentNullException() {
             var packet = new PlayerUuidPacket();
-            Action action = () => packet.PlayerUuid = null;
+            Action action = () => packet.Uuid = null;
 
             action.Should().Throw<ArgumentNullException>();
         }
@@ -44,7 +44,7 @@ namespace Orion.Packets.Players {
             using var stream = new MemoryStream(Bytes);
             var packet = (PlayerUuidPacket)Packet.ReadFromStream(stream, PacketContext.Server);
 
-            packet.PlayerUuid.Should().Be("Terraria");
+            packet.Uuid.Should().Be("Terraria");
         }
 
         [Fact]

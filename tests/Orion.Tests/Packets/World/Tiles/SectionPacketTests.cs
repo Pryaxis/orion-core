@@ -34,57 +34,50 @@ namespace Orion.Packets.World.Tiles {
 
         [Fact]
         [SuppressMessage("Style", "IDE0017:Simplify object initialization", Justification = "Testing")]
-        public void SectionTiles_Item_GetMutate_MarksAsDirty() {
+        public void Tiles_Item_GetMutate_MarksAsDirty() {
             var packet = new SectionPacket();
-            packet.SectionTiles = new NetworkTiles(1, 1);
+            packet.Tiles = new NetworkTiles(1, 1);
             packet.ShouldBeDirty();
 
-            packet.SectionTiles[0, 0] = new Tile { BlockType = BlockType.Stone };
+            packet.Tiles[0, 0] = new Tile { BlockType = BlockType.Stone };
 
             packet.ShouldBeDirty();
         }
 
         [Fact]
-        public void SectionTiles_Set_NullValue_ThrowsArgumentNullException() {
+        public void Tiles_SetNullValue_ThrowsArgumentNullException() {
             var packet = new SectionPacket();
-            Action action = () => packet.SectionTiles = null;
+            Action action = () => packet.Tiles = null;
 
             action.Should().Throw<ArgumentNullException>();
         }
 
         [Fact]
-        public void SectionTileEntities_Count() {
+        public void TileEntities_Count() {
             var packet = new SectionPacket();
-            packet.SectionTileEntities.Add(new NetworkChest());
+            packet.TileEntities.Add(new NetworkChest());
 
-            packet.SectionTileEntities.Count.Should().Be(1);
+            packet.TileEntities.Count.Should().Be(1);
         }
 
         [Fact]
-        public void SectionTileEntities_IsReadOnly() {
-            var packet = new SectionPacket();
-
-            packet.SectionTileEntities.IsReadOnly.Should().BeFalse();
-        }
-
-        [Fact]
-        public void SectionTileEntities_MarksAsDirty() {
+        public void TileEntities_MarksAsDirty() {
             var packet = new SectionPacket();
             var chest = new NetworkChest();
 
-            packet.SectionTileEntities.Add(chest);
+            packet.TileEntities.Add(chest);
             packet.ShouldBeDirty();
-            packet.SectionTileEntities.Remove(chest);
+            packet.TileEntities.Remove(chest);
             packet.ShouldBeDirty();
-            packet.SectionTileEntities.Insert(0, chest);
+            packet.TileEntities.Insert(0, chest);
             packet.ShouldBeDirty();
-            packet.SectionTileEntities.RemoveAt(0);
+            packet.TileEntities.RemoveAt(0);
             packet.ShouldBeDirty();
-            packet.SectionTileEntities.Add(chest);
+            packet.TileEntities.Add(chest);
             packet.ShouldBeDirty();
-            packet.SectionTileEntities[0] = chest;
+            packet.TileEntities[0] = chest;
             packet.ShouldBeDirty();
-            packet.SectionTileEntities.Clear();
+            packet.TileEntities.Clear();
             packet.ShouldBeDirty();
         }
 
@@ -184,12 +177,12 @@ namespace Orion.Packets.World.Tiles {
             using var stream = new MemoryStream(Bytes);
             var packet = (SectionPacket)Packet.ReadFromStream(stream, PacketContext.Server);
 
-            packet.IsSectionCompressed.Should().BeTrue();
-            packet.StartTileX.Should().Be(4200);
-            packet.StartTileY.Should().Be(300);
-            packet.SectionWidth.Should().Be(200);
-            packet.SectionHeight.Should().Be(150);
-            packet.SectionTileEntities.Should().HaveCount(7);
+            packet.IsCompressed.Should().BeTrue();
+            packet.StartX.Should().Be(4200);
+            packet.StartY.Should().Be(300);
+            packet.Width.Should().Be(200);
+            packet.Height.Should().Be(150);
+            packet.TileEntities.Should().HaveCount(7);
         }
 
         [Fact]

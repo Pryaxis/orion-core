@@ -36,9 +36,9 @@ namespace Orion.Packets.World.TileEntities {
             var packet = (ChestInfoPacket)Packet.ReadFromStream(stream, PacketContext.Server);
 
             packet.ChestIndex.Should().Be(0);
-            packet.ChestX.Should().Be(100);
-            packet.ChestY.Should().Be(100);
-            packet.ChestName.Should().BeNull();
+            packet.X.Should().Be(100);
+            packet.Y.Should().Be(100);
+            packet.Name.Should().BeNull();
         }
 
         [Fact]

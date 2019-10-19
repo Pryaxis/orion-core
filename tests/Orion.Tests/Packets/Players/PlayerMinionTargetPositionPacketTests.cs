@@ -37,7 +37,7 @@ namespace Orion.Packets.Players {
             var packet = (PlayerMinionTargetPositionPacket)Packet.ReadFromStream(stream, PacketContext.Server);
 
             packet.PlayerIndex.Should().Be(1);
-            packet.PlayerMinionTargetPosition.Should().Be(Vector2.Zero);
+            packet.Position.Should().Be(Vector2.Zero);
         }
 
         [Fact]

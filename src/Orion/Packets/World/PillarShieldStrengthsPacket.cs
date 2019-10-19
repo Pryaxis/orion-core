@@ -15,8 +15,6 @@
 // You should have received a copy of the GNU General Public License
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
-using System.Diagnostics.CodeAnalysis;
-using System.Diagnostics.Contracts;
 using System.IO;
 
 namespace Orion.Packets.World {
@@ -24,10 +22,10 @@ namespace Orion.Packets.World {
     /// Packet sent from the server to the client to set the pillars' shield strengths.
     /// </summary>
     public sealed class PillarShieldStrengthsPacket : Packet {
-        private ushort _solarPillarShieldStrength;
-        private ushort _vortexPillarShieldStrength;
-        private ushort _nebulaPillarShieldStrength;
-        private ushort _stardustPillarShieldStrength;
+        private ushort _solar;
+        private ushort _vortex;
+        private ushort _nebula;
+        private ushort _stardust;
 
         /// <inheritdoc/>
         public override PacketType Type => PacketType.PillarShieldStrengths;
@@ -35,65 +33,63 @@ namespace Orion.Packets.World {
         /// <summary>
         /// Gets or sets the solar pillar's shield strength.
         /// </summary>
-        public ushort SolarPillarShieldStrength {
-            get => _solarPillarShieldStrength;
+        /// <value>The solar pillar's shield strength.</value>
+        public ushort Solar {
+            get => _solar;
             set {
-                _solarPillarShieldStrength = value;
+                _solar = value;
                 _isDirty = true;
             }
         }
 
         /// <summary>
-        /// Gets or sets the solar pillar's shield strength.
+        /// Gets or sets the vortex pillar's shield strength.
         /// </summary>
-        public ushort VortexPillarShieldStrength {
-            get => _vortexPillarShieldStrength;
+        /// <value>The vortex pillar's shield strength.</value>
+        public ushort Vortex {
+            get => _vortex;
             set {
-                _vortexPillarShieldStrength = value;
+                _vortex = value;
                 _isDirty = true;
             }
         }
 
         /// <summary>
-        /// Gets or sets the solar pillar's shield strength.
+        /// Gets or sets the nebula pillar's shield strength.
         /// </summary>
-        public ushort NebulaPillarShieldStrength {
-            get => _nebulaPillarShieldStrength;
+        /// <value>The nebula pillar's shield strength.</value>
+        public ushort Nebula {
+            get => _nebula;
             set {
-                _nebulaPillarShieldStrength = value;
+                _nebula = value;
                 _isDirty = true;
             }
         }
 
         /// <summary>
-        /// Gets or sets the solar pillar's shield strength.
+        /// Gets or sets the stardust pillar's shield strength.
         /// </summary>
-        public ushort StardustPillarShieldStrength {
-            get => _stardustPillarShieldStrength;
+        /// <value>The stardust pillar's shield strength.</value>
+        public ushort Stardust {
+            get => _stardust;
             set {
-                _stardustPillarShieldStrength = value;
+                _stardust = value;
                 _isDirty = true;
             }
         }
-
-        /// <inheritdoc/>
-        [Pure, ExcludeFromCodeCoverage]
-        public override string ToString() =>
-            $"{Type}[S={SolarPillarShieldStrength}, " +
-            $"V={VortexPillarShieldStrength}, N={NebulaPillarShieldStrength}, T={StardustPillarShieldStrength}]";
 
         private protected override void ReadFromReader(BinaryReader reader, PacketContext context) {
-            _solarPillarShieldStrength = reader.ReadUInt16();
-            _vortexPillarShieldStrength = reader.ReadUInt16();
-            _nebulaPillarShieldStrength = reader.ReadUInt16();
-            _stardustPillarShieldStrength = reader.ReadUInt16();
+            _solar = reader.ReadUInt16();
+            _vortex = reader.ReadUInt16();
+            _nebula = reader.ReadUInt16();
+            _stardust = reader.ReadUInt16();
         }
 
         private protected override void WriteToWriter(BinaryWriter writer, PacketContext context) {
-            writer.Write(_solarPillarShieldStrength);
-            writer.Write(_vortexPillarShieldStrength);
-            writer.Write(_nebulaPillarShieldStrength);
-            writer.Write(_stardustPillarShieldStrength);
+            writer.Write(_solar);
+            writer.Write(_vortex);
+            writer.Write(_nebula);
+            writer.Write(_stardust);
         }
     }
 }

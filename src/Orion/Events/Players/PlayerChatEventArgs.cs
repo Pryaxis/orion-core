@@ -34,9 +34,9 @@ namespace Orion.Events.Players {
         /// message to everyone and an <c>Emote</c> command will send a third-person message to everyone.
         /// </remarks>
         /// <exception cref="ArgumentNullException"><paramref name="value"/> is <see langword="null"/>.</exception>
-        public string PlayerChatCommand {
-            get => _packet.ClientChatCommand;
-            set => _packet.ClientChatCommand = value ?? throw new ArgumentNullException(nameof(value));
+        public string ChatCommand {
+            get => _packet.ClientCommand;
+            set => _packet.ClientCommand = value ?? throw new ArgumentNullException(nameof(value));
         }
 
         /// <summary>
@@ -44,9 +44,9 @@ namespace Orion.Events.Players {
         /// </summary>
         /// <value>The player's chat text.</value>
         /// <exception cref="ArgumentNullException"><paramref name="value"/> is <see langword="null"/>.</exception>
-        public string PlayerChatText {
-            get => _packet.ClientChatText;
-            set => _packet.ClientChatText = value ?? throw new ArgumentNullException(nameof(value));
+        public string ChatText {
+            get => _packet.ClientText;
+            set => _packet.ClientText = value ?? throw new ArgumentNullException(nameof(value));
         }
 
         /// <summary>

@@ -15,8 +15,6 @@
 // You should have received a copy of the GNU General Public License
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
-using System.Diagnostics.CodeAnalysis;
-using System.Diagnostics.Contracts;
 using System.IO;
 
 namespace Orion.Packets.World.Tiles {
@@ -24,46 +22,44 @@ namespace Orion.Packets.World.Tiles {
     /// Packet sent from the client to the server to request a section of the world.
     /// </summary>
     public sealed class SectionRequestPacket : Packet {
-        private int _sectionX;
-        private int _sectionY;
+        private int _x;
+        private int _y;
 
         /// <inheritdoc/>
         public override PacketType Type => PacketType.SectionRequest;
 
         /// <summary>
-        /// Gets or sets the section's X index. An invalid value results in only the spawn section being sent.
+        /// Gets or sets the section's X index. If negative, the spawn section will be sent.
         /// </summary>
-        public int SectionX {
-            get => _sectionX;
+        /// <value>The section's X index.</value>
+        public int X {
+            get => _x;
             set {
-                _sectionX = value;
+                _x = value;
                 _isDirty = true;
             }
         }
 
         /// <summary>
-        /// Gets or sets the section's Y index. An invalid value results in only the spawn section being sent.
+        /// Gets or sets the section's Y index. If negative, the spawn section will be sent.
         /// </summary>
-        public int SectionY {
-            get => _sectionY;
+        /// <value>The section's Y index.</value>
+        public int Y {
+            get => _y;
             set {
-                _sectionY = value;
+                _y = value;
                 _isDirty = true;
             }
         }
 
-        /// <inheritdoc/>
-        [Pure, ExcludeFromCodeCoverage]
-        public override string ToString() => $"{Type}[({SectionX}, {SectionY})]";
-
         private protected override void ReadFromReader(BinaryReader reader, PacketContext context) {
-            _sectionX = reader.ReadInt32();
-            _sectionY = reader.ReadInt32();
+            _x = reader.ReadInt32();
+            _y = reader.ReadInt32();
         }
 
         private protected override void WriteToWriter(BinaryWriter writer, PacketContext context) {
-            writer.Write(_sectionX);
-            writer.Write(_sectionY);
+            writer.Write(_x);
+            writer.Write(_y);
         }
     }
 }

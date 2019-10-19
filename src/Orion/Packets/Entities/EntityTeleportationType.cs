@@ -15,23 +15,25 @@
 // You should have received a copy of the GNU General Public License
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
+using Orion.Items;
+
 namespace Orion.Packets.Entities {
     /// <summary>
-    /// Specifies an entity teleportation type in an <see cref="EntityTeleportationPacket"/>.
+    /// Specifies an entity's teleportation type in an <see cref="EntityTeleportationPacket"/>.
     /// </summary>
     public enum EntityTeleportationType : byte {
         /// <summary>
-        /// Indicates that a player should be teleported.
+        /// A player should be teleported.
         /// </summary>
         Player = 0,
 
         /// <summary>
-        /// Indicates that an NPC should be teleported.
+        /// An NPC should be teleported.
         /// </summary>
         Npc = 1,
 
         /// <summary>
-        /// Indicates that a player should be teleported to another player. This is caused by a Wormhole Potion.
+        /// A player should be teleported to another player via a <see cref="ItemType.WormholePotion"/>.
         /// </summary>
         PlayerToPlayer = 2
     }

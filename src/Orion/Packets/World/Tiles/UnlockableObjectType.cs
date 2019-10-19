@@ -17,7 +17,7 @@
 
 namespace Orion.Packets.World.Tiles {
     /// <summary>
-    /// Specifies an unlockable object type in an <see cref="ObjectUnlockPacket"/>.
+    /// Specifies the unlockable object type in an <see cref="ObjectUnlockPacket"/>.
     /// </summary>
     public enum UnlockableObjectType : byte {
         /// <summary>

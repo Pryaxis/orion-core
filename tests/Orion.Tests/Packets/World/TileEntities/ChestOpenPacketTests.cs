@@ -35,8 +35,8 @@ namespace Orion.Packets.World.TileEntities {
             using var stream = new MemoryStream(Bytes);
             var packet = (ChestOpenPacket)Packet.ReadFromStream(stream, PacketContext.Server);
 
-            packet.ChestX.Should().Be(100);
-            packet.ChestY.Should().Be(100);
+            packet.X.Should().Be(100);
+            packet.Y.Should().Be(100);
         }
 
         [Fact]

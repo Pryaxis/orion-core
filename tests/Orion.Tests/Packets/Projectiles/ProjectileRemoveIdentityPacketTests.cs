@@ -35,8 +35,8 @@ namespace Orion.Packets.Projectiles {
             using var stream = new MemoryStream(Bytes);
             var packet = (ProjectileRemoveIdentityPacket)Packet.ReadFromStream(stream, PacketContext.Server);
 
-            packet.ProjectileIdentity.Should().Be(1);
-            packet.ProjectileOwnerPlayerIndex.Should().Be(0);
+            packet.Identity.Should().Be(1);
+            packet.OwnerIndex.Should().Be(0);
         }
 
         [Fact]

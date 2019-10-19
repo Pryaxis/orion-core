@@ -36,7 +36,7 @@ namespace Orion.Packets.Players {
             var packet = (PlayerInstrumentNotePacket)Packet.ReadFromStream(stream, PacketContext.Server);
 
             packet.PlayerIndex.Should().Be(0);
-            packet.PlayerInstrumentNote.Should().Be(4.025f);
+            packet.InstrumentNote.Should().Be(4.025f);
         }
 
         [Fact]

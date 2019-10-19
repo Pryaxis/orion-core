@@ -15,17 +15,15 @@
 // You should have received a copy of the GNU General Public License
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
-using System.Diagnostics.CodeAnalysis;
-using System.Diagnostics.Contracts;
 using System.IO;
 
 namespace Orion.Packets.Players {
     /// <summary>
-    /// Packet sent to set a player's minion's target NPC.
+    /// Packet sent to set a player's minions' target NPC.
     /// </summary>
     public sealed class PlayerMinionTargetNpcPacket : Packet {
         private byte _playerIndex;
-        private short _playerMinionTargetNpcIndex;
+        private short _npcIndex;
 
         /// <inheritdoc/>
         public override PacketType Type => PacketType.PlayerMinionTargetNpc;
@@ -33,6 +31,7 @@ namespace Orion.Packets.Players {
         /// <summary>
         /// Gets or sets the player index.
         /// </summary>
+        /// <value>The player index.</value>
         public byte PlayerIndex {
             get => _playerIndex;
             set {
@@ -44,26 +43,23 @@ namespace Orion.Packets.Players {
         /// <summary>
         /// Gets or sets the player's minions' target NPC index.
         /// </summary>
-        public short PlayerMinionTargetNpcIndex {
-            get => _playerMinionTargetNpcIndex;
+        /// <value>The player's minions' target NPC index.</value>
+        public short NpcIndex {
+            get => _npcIndex;
             set {
-                _playerMinionTargetNpcIndex = value;
+                _npcIndex = value;
                 _isDirty = true;
             }
         }
 
-        /// <inheritdoc/>
-        [Pure, ExcludeFromCodeCoverage]
-        public override string ToString() => $"{Type}[#={PlayerIndex} to N={PlayerMinionTargetNpcIndex}]";
-
         private protected override void ReadFromReader(BinaryReader reader, PacketContext context) {
             _playerIndex = reader.ReadByte();
-            _playerMinionTargetNpcIndex = reader.ReadInt16();
+            _npcIndex = reader.ReadInt16();
         }
 
         private protected override void WriteToWriter(BinaryWriter writer, PacketContext context) {
             writer.Write(_playerIndex);
-            writer.Write(_playerMinionTargetNpcIndex);
+            writer.Write(_npcIndex);
         }
     }
 }

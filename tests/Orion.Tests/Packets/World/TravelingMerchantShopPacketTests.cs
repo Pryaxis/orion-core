@@ -24,16 +24,16 @@ using TerrariaChest = Terraria.Chest;
 namespace Orion.Packets.World {
     public class TravelingMerchantShopPacketTests {
         [Fact]
-        public void ShopItemTypes_Count() {
+        public void ItemTypes_Count() {
             var packet = new TravelingMerchantShopPacket();
 
-            packet.ShopItemTypes.Count.Should().Be(TerrariaChest.maxItems);
+            packet.ItemTypes.Count.Should().Be(TerrariaChest.maxItems);
         }
 
         [Fact]
-        public void ShopItemTypes_MarksAsDirty() {
+        public void ItemTypes_MarksAsDirty() {
             var packet = new TravelingMerchantShopPacket();
-            packet.ShopItemTypes[0] = ItemType.Sdmg;
+            packet.ItemTypes[0] = ItemType.Sdmg;
 
             packet.ShouldBeDirty();
         }
@@ -49,7 +49,7 @@ namespace Orion.Packets.World {
             using var stream = new MemoryStream(Bytes);
             var packet = (TravelingMerchantShopPacket)Packet.ReadFromStream(stream, PacketContext.Server);
 
-            foreach (var itemType in packet.ShopItemTypes) {
+            foreach (var itemType in packet.ItemTypes) {
                 itemType.Should().Be(ItemType.None);
             }
         }

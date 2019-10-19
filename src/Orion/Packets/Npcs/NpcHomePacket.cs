@@ -15,8 +15,6 @@
 // You should have received a copy of the GNU General Public License
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
-using System.Diagnostics.CodeAnalysis;
-using System.Diagnostics.Contracts;
 using System.IO;
 
 namespace Orion.Packets.Npcs {
@@ -25,9 +23,9 @@ namespace Orion.Packets.Npcs {
     /// </summary>
     public sealed class NpcHomePacket : Packet {
         private short _npcIndex;
-        private short _npcHomeX;
-        private short _npcHomeY;
-        private bool _isNpcHomeless;
+        private short _homeX;
+        private short _homeY;
+        private bool _isHomeless;
 
         /// <inheritdoc/>
         public override PacketType Type => PacketType.NpcHome;
@@ -35,6 +33,7 @@ namespace Orion.Packets.Npcs {
         /// <summary>
         /// Gets or sets the NPC index.
         /// </summary>
+        /// <value>The NPC index.</value>
         public short NpcIndex {
             get => _npcIndex;
             set {
@@ -44,23 +43,25 @@ namespace Orion.Packets.Npcs {
         }
 
         /// <summary>
-        /// Gets or sets the NPC home's X coordinate.
+        /// Gets or sets the NPC's home's X coordinate.
         /// </summary>
+        /// <value>The NPC's home's X coordinate.</value>
         public short NpcHomeX {
-            get => _npcHomeX;
+            get => _homeX;
             set {
-                _npcHomeX = value;
+                _homeX = value;
                 _isDirty = true;
             }
         }
 
         /// <summary>
-        /// Gets or sets the NPC home's Y coordinate.
+        /// Gets or sets the NPC's home's Y coordinate.
         /// </summary>
+        /// <value>The NPC's home's Y coordinate.</value>
         public short NpcHomeY {
-            get => _npcHomeY;
+            get => _homeY;
             set {
-                _npcHomeY = value;
+                _homeY = value;
                 _isDirty = true;
             }
         }
@@ -68,30 +69,27 @@ namespace Orion.Packets.Npcs {
         /// <summary>
         /// Gets or sets a value indicating whether the NPC is homeless.
         /// </summary>
+        /// <value><see langword="true"/> if the NPC is homeless; otherwise, <see langword="false"/>.</value>
         public bool IsNpcHomeless {
-            get => _isNpcHomeless;
+            get => _isHomeless;
             set {
-                _isNpcHomeless = value;
+                _isHomeless = value;
                 _isDirty = true;
             }
         }
 
-        /// <inheritdoc/>
-        [Pure, ExcludeFromCodeCoverage]
-        public override string ToString() => $"{Type}[#={NpcIndex} @ ({NpcHomeX}, {NpcHomeY}), ...]";
-
         private protected override void ReadFromReader(BinaryReader reader, PacketContext context) {
             _npcIndex = reader.ReadInt16();
-            _npcHomeX = reader.ReadInt16();
-            _npcHomeY = reader.ReadInt16();
-            _isNpcHomeless = reader.ReadByte() == 1;
+            _homeX = reader.ReadInt16();
+            _homeY = reader.ReadInt16();
+            _isHomeless = reader.ReadByte() == 1;
         }
 
         private protected override void WriteToWriter(BinaryWriter writer, PacketContext context) {
             writer.Write(_npcIndex);
-            writer.Write(_npcHomeX);
-            writer.Write(_npcHomeY);
-            writer.Write((byte)(_isNpcHomeless ? 1 : 2));
+            writer.Write(_homeX);
+            writer.Write(_homeY);
+            writer.Write((byte)(_isHomeless ? 1 : 2));
         }
     }
 }

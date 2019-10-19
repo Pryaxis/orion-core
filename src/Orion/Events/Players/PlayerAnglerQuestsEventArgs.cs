@@ -23,15 +23,15 @@ namespace Orion.Events.Players {
     /// <summary>
     /// Provides data for the <see cref="IPlayerService.PlayerAnglerQuests"/> event. This event can be canceled.
     /// </summary>
-    [EventArgs("player-ang-quests")]
+    [EventArgs("player-quests")]
     public sealed class PlayerAnglerQuestsEventArgs : PlayerPacketEventArgs<PlayerAnglerQuestsPacket> {
         /// <summary>
         /// Gets or sets the number of angler quests the player has completed.
         /// </summary>
         /// <value>The number of angler quests the player has completed.</value>
-        public int PlayerNumberOfAnglerQuestsCompleted {
-            get => _packet.PlayerNumberOfAnglerQuestsCompleted;
-            set => _packet.PlayerNumberOfAnglerQuestsCompleted = value;
+        public int NumberOfAnglerQuestsCompleted {
+            get => _packet.NumberOfAnglerQuestsCompleted;
+            set => _packet.NumberOfAnglerQuestsCompleted = value;
         }
 
         /// <summary>

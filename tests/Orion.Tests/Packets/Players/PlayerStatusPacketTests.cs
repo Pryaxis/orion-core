@@ -30,9 +30,9 @@ namespace Orion.Packets.Players {
         }
 
         [Fact]
-        public void PlayerStatusText_Set_NullValue_ThrowsArgumentNullException() {
+        public void StatusText_SetNullValue_ThrowsArgumentNullException() {
             var packet = new PlayerStatusPacket();
-            Action action = () => packet.PlayerStatusText = null;
+            Action action = () => packet.StatusText = null;
 
             action.Should().Throw<ArgumentNullException>();
         }
@@ -47,8 +47,8 @@ namespace Orion.Packets.Players {
             using var stream = new MemoryStream(Bytes);
             var packet = (PlayerStatusPacket)Packet.ReadFromStream(stream, PacketContext.Server);
 
-            packet.PlayerStatusIncrease.Should().Be(15);
-            packet.PlayerStatusText.Should().Be("LegacyInterface.44");
+            packet.StatusIncrease.Should().Be(15);
+            packet.StatusText.Should().Be("LegacyInterface.44");
         }
 
         [Fact]

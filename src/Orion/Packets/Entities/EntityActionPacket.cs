@@ -15,8 +15,6 @@
 // You should have received a copy of the GNU General Public License
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
-using System.Diagnostics.CodeAnalysis;
-using System.Diagnostics.Contracts;
 using System.IO;
 
 namespace Orion.Packets.Entities {
@@ -25,7 +23,7 @@ namespace Orion.Packets.Entities {
     /// </summary>
     public sealed class EntityActionPacket : Packet {
         private byte _entityIndex;
-        private EntityAction _entityAction;
+        private EntityAction _action;
 
         /// <inheritdoc/>
         public override PacketType Type => PacketType.EntityAction;
@@ -33,6 +31,7 @@ namespace Orion.Packets.Entities {
         /// <summary>
         /// Gets or sets the entity index.
         /// </summary>
+        /// <value>The entity index.</value>
         public byte EntityIndex {
             get => _entityIndex;
             set {
@@ -44,26 +43,23 @@ namespace Orion.Packets.Entities {
         /// <summary>
         /// Gets or sets the entity action.
         /// </summary>
-        public EntityAction EntityAction {
-            get => _entityAction;
+        /// <value>The entity action.</value>
+        public EntityAction Action {
+            get => _action;
             set {
-                _entityAction = value;
+                _action = value;
                 _isDirty = true;
             }
         }
 
-        /// <inheritdoc/>
-        [Pure, ExcludeFromCodeCoverage]
-        public override string ToString() => $"{Type}[{EntityAction} by #={EntityIndex}]";
-
         private protected override void ReadFromReader(BinaryReader reader, PacketContext context) {
             _entityIndex = reader.ReadByte();
-            _entityAction = (EntityAction)reader.ReadByte();
+            _action = (EntityAction)reader.ReadByte();
         }
 
         private protected override void WriteToWriter(BinaryWriter writer, PacketContext context) {
             writer.Write(_entityIndex);
-            writer.Write((byte)_entityAction);
+            writer.Write((byte)_action);
         }
     }
 }

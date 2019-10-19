@@ -15,8 +15,6 @@
 // You should have received a copy of the GNU General Public License
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
-using System.Diagnostics.CodeAnalysis;
-using System.Diagnostics.Contracts;
 using System.IO;
 
 namespace Orion.Packets.World {
@@ -24,20 +22,21 @@ namespace Orion.Packets.World {
     /// Packet sent from the server to the client to set the angler quest.
     /// </summary>
     public sealed class WorldAnglerQuestPacket : Packet {
-        private byte _currentAnglerQuest;
-        private bool _isAnglerQuestFinished;
+        private byte _currentQuest;
+        private bool _isFinished;
 
         /// <inheritdoc/>
         public override PacketType Type => PacketType.WorldAnglerQuest;
 
         /// <summary>
-        /// Gets or sets the angler quest.
+        /// Gets or sets the current angler quest.
         /// </summary>
+        /// <value>The current angler quest.</value>
         // TODO: implement enum for this.
-        public byte CurrentAnglerQuest {
-            get => _currentAnglerQuest;
+        public byte CurrentQuest {
+            get => _currentQuest;
             set {
-                _currentAnglerQuest = value;
+                _currentQuest = value;
                 _isDirty = true;
             }
         }
@@ -45,27 +44,23 @@ namespace Orion.Packets.World {
         /// <summary>
         /// Gets or sets a value indicating whether the angler quest is finished.
         /// </summary>
-        public bool IsAnglerQuestFinished {
-            get => _isAnglerQuestFinished;
+        /// <value><see langword="true"/> if the angler quest is finished; otherwise, <see langword="false"/>.</value>
+        public bool IsFinished {
+            get => _isFinished;
             set {
-                _isAnglerQuestFinished = value;
+                _isFinished = value;
                 _isDirty = true;
             }
         }
 
-        /// <inheritdoc/>
-        [Pure, ExcludeFromCodeCoverage]
-        public override string ToString() =>
-            $"{Type}[{CurrentAnglerQuest}, F={IsAnglerQuestFinished}]";
-
         private protected override void ReadFromReader(BinaryReader reader, PacketContext context) {
-            _currentAnglerQuest = reader.ReadByte();
-            _isAnglerQuestFinished = reader.ReadBoolean();
+            _currentQuest = reader.ReadByte();
+            _isFinished = reader.ReadBoolean();
         }
 
         private protected override void WriteToWriter(BinaryWriter writer, PacketContext context) {
-            writer.Write(_currentAnglerQuest);
-            writer.Write(_isAnglerQuestFinished);
+            writer.Write(_currentQuest);
+            writer.Write(_isFinished);
         }
     }
 }

@@ -15,8 +15,6 @@
 // You should have received a copy of the GNU General Public License
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
-using System.Diagnostics.CodeAnalysis;
-using System.Diagnostics.Contracts;
 using System.IO;
 
 namespace Orion.Packets.Players {
@@ -33,6 +31,7 @@ namespace Orion.Packets.Players {
         /// <summary>
         /// Gets or sets the player index that the player will be using.
         /// </summary>
+        /// <value>The player index that the player will be using.</value>
         public byte PlayerIndex {
             get => _playerIndex;
             set {
@@ -40,10 +39,6 @@ namespace Orion.Packets.Players {
                 _isDirty = true;
             }
         }
-
-        /// <inheritdoc/>
-        [Pure, ExcludeFromCodeCoverage]
-        public override string ToString() => $"{Type}[#={PlayerIndex}]";
 
         private protected override void ReadFromReader(BinaryReader reader, PacketContext context) =>
             _playerIndex = reader.ReadByte();

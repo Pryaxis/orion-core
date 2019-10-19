@@ -15,8 +15,6 @@
 // You should have received a copy of the GNU General Public License
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
-using System.Diagnostics.CodeAnalysis;
-using System.Diagnostics.Contracts;
 using System.IO;
 
 namespace Orion.Packets.Players {
@@ -26,11 +24,15 @@ namespace Orion.Packets.Players {
     /// </summary>
     public sealed class PlayerDodgePacket : Packet {
         private byte _playerIndex;
-        private PlayerDodgeType _playerDodgeType;
+        private PlayerDodgeType _dodgeType;
+
+        /// <inheritdoc/>
+        public override PacketType Type => PacketType.PlayerDodge;
 
         /// <summary>
         /// Gets or sets the player index.
         /// </summary>
+        /// <value>The player index.</value>
         public byte PlayerIndex {
             get => _playerIndex;
             set {
@@ -42,29 +44,23 @@ namespace Orion.Packets.Players {
         /// <summary>
         /// Gets or sets the player's dodge type.
         /// </summary>
-        public PlayerDodgeType PlayerDodgeType {
-            get => _playerDodgeType;
+        /// <value>The player's dodge type.</value>
+        public PlayerDodgeType DodgeType {
+            get => _dodgeType;
             set {
-                _playerDodgeType = value;
+                _dodgeType = value;
                 _isDirty = true;
             }
         }
 
-        /// <inheritdoc/>
-        public override PacketType Type => PacketType.PlayerDodge;
-
-        /// <inheritdoc/>
-        [Pure, ExcludeFromCodeCoverage]
-        public override string ToString() => $"{Type}[#={PlayerIndex} {PlayerDodgeType}]";
-
         private protected override void ReadFromReader(BinaryReader reader, PacketContext context) {
             _playerIndex = reader.ReadByte();
-            _playerDodgeType = (PlayerDodgeType)reader.ReadByte();
+            _dodgeType = (PlayerDodgeType)reader.ReadByte();
         }
 
         private protected override void WriteToWriter(BinaryWriter writer, PacketContext context) {
             writer.Write(_playerIndex);
-            writer.Write((byte)_playerDodgeType);
+            writer.Write((byte)_dodgeType);
         }
     }
 }

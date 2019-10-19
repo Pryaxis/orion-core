@@ -181,7 +181,7 @@ namespace Orion.Npcs {
             npcService.NpcTransform.RegisterHandler((sender, args) => {
                 isRun = true;
                 ((OrionNpc)args.Npc).Wrapped.Should().BeSameAs(Main.npc[0]);
-                args.NpcNewType.Should().Be(npcType);
+                args.NewNpcType.Should().Be(npcType);
             });
 
             Main.npc[0].Transform((int)npcType);
@@ -194,7 +194,7 @@ namespace Orion.Npcs {
         [InlineData(NpcType.BlueSlime, NpcType.None)]
         public void NpcTransform_ModifyNpcNewType(NpcType oldType, NpcType newType) {
             using var npcService = new OrionNpcService(Logger.None);
-            npcService.NpcTransform.RegisterHandler((sender, args) => args.NpcNewType = newType);
+            npcService.NpcTransform.RegisterHandler((sender, args) => args.NewNpcType = newType);
             Main.npc[0].SetDefaults((int)oldType);
 
             Main.npc[0].Transform((int)newType);
@@ -283,7 +283,7 @@ namespace Orion.Npcs {
         [Fact]
         public void NpcLoot_Modified() {
             using var npcService = new OrionNpcService(Logger.None);
-            npcService.NpcLoot.RegisterHandler((sender, args) => args.ItemStackSize = 9999);
+            npcService.NpcLoot.RegisterHandler((sender, args) => args.StackSize = 9999);
             Main.npc[0].SetDefaults((int)NpcType.BlueSlime);
             Main.npc[0].life = 0;
 

@@ -16,10 +16,9 @@
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
 using System;
-using System.Diagnostics.CodeAnalysis;
-using System.Diagnostics.Contracts;
 using System.IO;
 using Orion.Packets.Extensions;
+using TerrariaPlayerDeathReason = Terraria.DataStructures.PlayerDeathReason;
 
 namespace Orion.Packets.Players {
     /// <summary>
@@ -27,12 +26,9 @@ namespace Orion.Packets.Players {
     /// </summary>
     public sealed class PlayerKillPacket : Packet {
         private byte _playerIndex;
-
-        private Terraria.DataStructures.PlayerDeathReason _playerDeathReason =
-            Terraria.DataStructures.PlayerDeathReason.LegacyEmpty();
-
+        private TerrariaPlayerDeathReason _deathReason = TerrariaPlayerDeathReason.LegacyEmpty();
         private short _damage;
-        private sbyte _hitDirection;
+        private bool _hitDirection;
         private bool _isDeathFromPvp;
 
         /// <inheritdoc/>
@@ -41,6 +37,7 @@ namespace Orion.Packets.Players {
         /// <summary>
         /// Gets or sets the player index.
         /// </summary>
+        /// <value>The player index.</value>
         public byte PlayerIndex {
             get => _playerIndex;
             set {
@@ -50,13 +47,14 @@ namespace Orion.Packets.Players {
         }
 
         /// <summary>
-        /// Gets or sets the reason for the player's death.
+        /// Gets or sets the player's death reason.
         /// </summary>
+        /// <value>The player's death reason.</value>
         /// <exception cref="ArgumentNullException"><paramref name="value"/> is <see langword="null"/>.</exception>
-        public Terraria.DataStructures.PlayerDeathReason PlayerDeathReason {
-            get => _playerDeathReason;
+        public TerrariaPlayerDeathReason DeathReason {
+            get => _deathReason;
             set {
-                _playerDeathReason = value ?? throw new ArgumentNullException(nameof(value));
+                _deathReason = value ?? throw new ArgumentNullException(nameof(value));
                 _isDirty = true;
             }
         }
@@ -64,6 +62,7 @@ namespace Orion.Packets.Players {
         /// <summary>
         /// Gets or sets the damage.
         /// </summary>
+        /// <value>The damage.</value>
         public short Damage {
             get => _damage;
             set {
@@ -73,9 +72,12 @@ namespace Orion.Packets.Players {
         }
 
         /// <summary>
-        /// Gets or sets the hit direction. Values are -1 or 1.
+        /// Gets or sets a value indicating the hit direction.
         /// </summary>
-        public sbyte HitDirection {
+        /// <value>
+        /// <see langword="true"/> if the hit is to the right; <see langword="false"/> if the hit is to the left.
+        /// </value>
+        public bool HitDirection {
             get => _hitDirection;
             set {
                 _hitDirection = value;
@@ -84,9 +86,10 @@ namespace Orion.Packets.Players {
         }
 
         /// <summary>
-        /// Gets or sets a value indicating whether the death is from PvP.
+        /// Gets or sets a value indicating whether the kill is from PvP.
         /// </summary>
-        public bool IsDeathFromPvp {
+        /// <value><see langword="true"/> if the kill is from PvP; otherwise, <see langword="false"/>.</value>
+        public bool IsFromPvp {
             get => _isDeathFromPvp;
             set {
                 _isDeathFromPvp = value;
@@ -94,25 +97,19 @@ namespace Orion.Packets.Players {
             }
         }
 
-        /// <inheritdoc/>
-        [Pure, ExcludeFromCodeCoverage]
-        public override string ToString() => $"{Type}[#={PlayerIndex}, ...]";
-
-        /// <inheritdoc/>
         private protected override void ReadFromReader(BinaryReader reader, PacketContext context) {
             _playerIndex = reader.ReadByte();
-            _playerDeathReason = reader.ReadPlayerDeathReason();
+            _deathReason = reader.ReadPlayerDeathReason();
             _damage = reader.ReadInt16();
-            _hitDirection = (sbyte)(reader.ReadByte() - 1);
+            _hitDirection = reader.ReadByte() == 2;
             _isDeathFromPvp = reader.ReadBoolean();
         }
 
-        /// <inheritdoc/>
         private protected override void WriteToWriter(BinaryWriter writer, PacketContext context) {
             writer.Write(_playerIndex);
-            writer.Write(_playerDeathReason);
+            writer.Write(_deathReason);
             writer.Write(_damage);
-            writer.Write((byte)(_hitDirection + 1));
+            writer.Write((byte)(_hitDirection ? 2 : 0));
             writer.Write(_isDeathFromPvp);
         }
     }

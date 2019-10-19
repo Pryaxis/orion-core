@@ -15,8 +15,6 @@
 // You should have received a copy of the GNU General Public License
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
-using System.Diagnostics.CodeAnalysis;
-using System.Diagnostics.Contracts;
 using System.IO;
 using Orion.World.Tiles;
 
@@ -27,8 +25,8 @@ namespace Orion.Packets.World.Tiles {
     public sealed class TileAnimationPacket : Packet {
         private short _animationType;
         private BlockType _blockType;
-        private short _tileX;
-        private short _tileY;
+        private short _x;
+        private short _y;
 
         /// <inheritdoc/>
         public override PacketType Type => PacketType.TileAnimation;
@@ -36,6 +34,7 @@ namespace Orion.Packets.World.Tiles {
         /// <summary>
         /// Gets or sets the animation type.
         /// </summary>
+        /// <value>The animation type.</value>
         // TODO: implement enum for this.
         public short AnimationType {
             get => _animationType;
@@ -48,6 +47,7 @@ namespace Orion.Packets.World.Tiles {
         /// <summary>
         /// Gets or sets the block type.
         /// </summary>
+        /// <value>The block type.</value>
         public BlockType BlockType {
             get => _blockType;
             set {
@@ -59,10 +59,11 @@ namespace Orion.Packets.World.Tiles {
         /// <summary>
         /// Gets or sets the tile's X coordinate.
         /// </summary>
-        public short TileX {
-            get => _tileX;
+        /// <value>The tile's X coordinate.</value>
+        public short X {
+            get => _x;
             set {
-                _tileX = value;
+                _x = value;
                 _isDirty = true;
             }
         }
@@ -70,30 +71,27 @@ namespace Orion.Packets.World.Tiles {
         /// <summary>
         /// Gets or sets the tile's Y coordinate.
         /// </summary>
-        public short TileY {
-            get => _tileY;
+        /// <value>The tile's Y coordinate.</value>
+        public short Y {
+            get => _y;
             set {
-                _tileY = value;
+                _y = value;
                 _isDirty = true;
             }
         }
 
-        /// <inheritdoc/>
-        [Pure, ExcludeFromCodeCoverage]
-        public override string ToString() => $"{Type}[{AnimationType} @ ({TileX}, {TileY}), ...]";
-
         private protected override void ReadFromReader(BinaryReader reader, PacketContext context) {
             _animationType = reader.ReadInt16();
             _blockType = (BlockType)reader.ReadUInt16();
-            _tileX = reader.ReadInt16();
-            _tileY = reader.ReadInt16();
+            _x = reader.ReadInt16();
+            _y = reader.ReadInt16();
         }
 
         private protected override void WriteToWriter(BinaryWriter writer, PacketContext context) {
             writer.Write(_animationType);
             writer.Write((ushort)_blockType);
-            writer.Write(_tileX);
-            writer.Write(_tileY);
+            writer.Write(_x);
+            writer.Write(_y);
         }
     }
 }

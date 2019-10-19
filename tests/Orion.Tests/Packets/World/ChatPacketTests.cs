@@ -31,9 +31,9 @@ namespace Orion.Packets.World {
         }
 
         [Fact]
-        public void ChatText_Set_NullValue_ThrowsArgumentNullException() {
+        public void Text_SetNullValue_ThrowsArgumentNullException() {
             var packet = new ChatPacket();
-            Action action = () => packet.ChatText = null;
+            Action action = () => packet.Text = null;
 
             action.Should().Throw<ArgumentNullException>();
         }
@@ -47,9 +47,9 @@ namespace Orion.Packets.World {
             using var stream = new MemoryStream(Bytes);
             var packet = (ChatPacket)Packet.ReadFromStream(stream, PacketContext.Server);
 
-            packet.ChatColor.Should().Be(Color.White);
-            packet.ChatText.Should().Be("Terraria");
-            packet.ChatLineWidth.Should().Be(100);
+            packet.Color.Should().Be(Color.White);
+            packet.Text.Should().Be("Terraria");
+            packet.LineWidth.Should().Be(100);
         }
 
         [Fact]

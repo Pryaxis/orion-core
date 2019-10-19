@@ -15,8 +15,6 @@
 // You should have received a copy of the GNU General Public License
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
-using System.Diagnostics.CodeAnalysis;
-using System.Diagnostics.Contracts;
 using System.IO;
 
 namespace Orion.Packets.World {
@@ -24,8 +22,8 @@ namespace Orion.Packets.World {
     /// Packet sent from the client to the server to start the Old One's Army event.
     /// </summary>
     public sealed class OldOnesArmyStartPacket : Packet {
-        private short _crystalX;
-        private short _crystalY;
+        private short _x;
+        private short _y;
 
         /// <inheritdoc/>
         public override PacketType Type => PacketType.OldOnesArmyStart;
@@ -33,10 +31,11 @@ namespace Orion.Packets.World {
         /// <summary>
         /// Gets or sets the crystal's X coordinate.
         /// </summary>
-        public short CrystalX {
-            get => _crystalX;
+        /// <value>The crystal's X coordinate.</value>
+        public short X {
+            get => _x;
             set {
-                _crystalX = value;
+                _x = value;
                 _isDirty = true;
             }
         }
@@ -44,26 +43,23 @@ namespace Orion.Packets.World {
         /// <summary>
         /// Gets or sets the crystal's Y coordinate.
         /// </summary>
-        public short CrystalY {
-            get => _crystalY;
+        /// <value>The crystal's Y coordinate.</value>
+        public short Y {
+            get => _y;
             set {
-                _crystalY = value;
+                _y = value;
                 _isDirty = true;
             }
         }
 
-        /// <inheritdoc/>
-        [Pure, ExcludeFromCodeCoverage]
-        public override string ToString() => $"{Type}[({CrystalX}, {CrystalY})]";
-
         private protected override void ReadFromReader(BinaryReader reader, PacketContext context) {
-            _crystalX = reader.ReadInt16();
-            _crystalY = reader.ReadInt16();
+            _x = reader.ReadInt16();
+            _y = reader.ReadInt16();
         }
 
         private protected override void WriteToWriter(BinaryWriter writer, PacketContext context) {
-            writer.Write(_crystalX);
-            writer.Write(_crystalY);
+            writer.Write(_x);
+            writer.Write(_y);
         }
     }
 }

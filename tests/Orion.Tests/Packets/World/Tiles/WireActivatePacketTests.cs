@@ -35,8 +35,8 @@ namespace Orion.Packets.World.Tiles {
             using var stream = new MemoryStream(Bytes);
             var packet = (WireActivatePacket)Packet.ReadFromStream(stream, PacketContext.Server);
 
-            packet.WireX.Should().Be(256);
-            packet.WireY.Should().Be(100);
+            packet.X.Should().Be(256);
+            packet.Y.Should().Be(100);
         }
 
         [Fact]
