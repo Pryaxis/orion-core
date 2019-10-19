@@ -47,6 +47,7 @@ namespace Orion.Players {
         public EventHandlerCollection<PlayerInventorySlotEventArgs> PlayerInventorySlot { get; }
         public EventHandlerCollection<PlayerJoinEventArgs> PlayerJoin { get; }
         public EventHandlerCollection<PlayerSpawnEventArgs> PlayerSpawn { get; }
+        public EventHandlerCollection<PlayerInfoEventArgs> PlayerInfo { get; }
         public EventHandlerCollection<PlayerHealthEventArgs> PlayerHealth { get; }
         public EventHandlerCollection<PlayerPvpEventArgs> PlayerPvp { get; }
         public EventHandlerCollection<PlayerManaEventArgs> PlayerMana { get; }
@@ -64,6 +65,7 @@ namespace Orion.Players {
                 [PacketType.PlayerInventorySlot] = PlayerInventorySlotHandler,
                 [PacketType.PlayerJoin] = PlayerJoinHandler,
                 [PacketType.PlayerSpawn] = PlayerSpawnHandler,
+                [PacketType.PlayerInfo] = PlayerInfoHandler,
                 [PacketType.PlayerHealth] = PlayerHealthHandler,
                 [PacketType.PlayerPvp] = PlayerPvpHandler,
                 [PacketType.PlayerMana] = PlayerManaHandler,
@@ -83,6 +85,7 @@ namespace Orion.Players {
             PlayerInventorySlot = new EventHandlerCollection<PlayerInventorySlotEventArgs>();
             PlayerJoin = new EventHandlerCollection<PlayerJoinEventArgs>();
             PlayerSpawn = new EventHandlerCollection<PlayerSpawnEventArgs>();
+            PlayerInfo = new EventHandlerCollection<PlayerInfoEventArgs>();
             PlayerHealth = new EventHandlerCollection<PlayerHealthEventArgs>();
             PlayerPvp = new EventHandlerCollection<PlayerPvpEventArgs>();
             PlayerMana = new EventHandlerCollection<PlayerManaEventArgs>();
@@ -441,6 +444,42 @@ namespace Orion.Players {
                 Log.Debug(
                     "Altered {Event} to [{Player}, at {PlayerSpawnX}, {PlayerSpawnY}]",
                     PlayerSpawn, args.Player, args.PlayerSpawnX, args.PlayerSpawnY);
+            }
+        }
+
+        // =============================================================================================================
+        // Handling PlayerInfo
+        // =============================================================================================================
+
+        private void PlayerInfoHandler(PacketReceiveEventArgs args_) {
+            var packet = (PlayerInfoPacket)args_.Packet;
+            var args = new PlayerInfoEventArgs(args_.Sender, packet);
+
+            LogPlayerInfo_Before(args);
+            PlayerInfo.Invoke(this, args);
+            LogPlayerInfo_After(args);
+
+            args_.CancellationReason = args.CancellationReason;
+        }
+        
+        [Conditional("DEBUG"), ExcludeFromCodeCoverage]
+        private void LogPlayerInfo_Before(PlayerInfoEventArgs args) {
+            // Not localized because this string is developer-facing.
+            Log.Debug(
+                "Invoking {Event} with [{Player} at {PlayerPosition}, ...]",
+                PlayerInfo, args.Player, args.PlayerPosition);
+        }
+        
+        [Conditional("DEBUG"), ExcludeFromCodeCoverage]
+        private void LogPlayerInfo_After(PlayerInfoEventArgs args) {
+            if (args.IsCanceled()) {
+                // Not localized because this string is developer-facing.
+                Log.Debug("Canceled {Event} for {Reason}", PlayerInfo, args.CancellationReason);
+            } else if (args.IsDirty) {
+                // Not localized because this string is developer-facing.
+                Log.Debug(
+                    "Altered {Event} to [{Player} at {PlayerPosition}, ...]",
+                    PlayerInfo, args.Player, args.PlayerPosition);
             }
         }
 

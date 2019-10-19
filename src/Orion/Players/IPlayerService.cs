@@ -78,6 +78,16 @@ namespace Orion.Players {
         EventHandlerCollection<PlayerSpawnEventArgs> PlayerSpawn { get; }
 
         /// <summary>
+        /// Gets the event handlers that occur when player information is received. This event can be canceled.
+        /// </summary>
+        /// <value>The event handlers that occur when player information is received.</value>
+        /// <remarks>
+        /// Player information is sent whenever a player's position or velocity changes or when commonly updated flags
+        /// change, such as the player's control states.
+        /// </remarks>
+        EventHandlerCollection<PlayerInfoEventArgs> PlayerInfo { get; }
+
+        /// <summary>
         /// Gets the event handlers that occur when a player updates their health. This event can be canceled.
         /// </summary>
         /// <value>The event handlers that occur when a player updates their health.</value>

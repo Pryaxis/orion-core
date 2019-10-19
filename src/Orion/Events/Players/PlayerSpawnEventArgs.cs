@@ -23,7 +23,7 @@ namespace Orion.Events.Players {
     /// <summary>
     /// Provides data for the <see cref="IPlayerService.PlayerSpawn"/> event. This event can be canceled.
     /// </summary>
-    [EventArgs("player-connect")]
+    [EventArgs("player-spawn")]
     public sealed class PlayerSpawnEventArgs : PlayerPacketEventArgs<PlayerSpawnPacket> {
         /// <summary>
         /// Gets the player's spawn's X coordinate. If negative, then the world's spawn will be used.

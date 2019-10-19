@@ -188,6 +188,36 @@ namespace Orion.Players {
         }
 
         [Fact]
+        public void PacketReceive_PlayerInfo_IsTriggered() {
+            using var playerService = new OrionPlayerService(Logger.None);
+            var isRun = false;
+            playerService.PlayerInfo.RegisterHandler((sender, args) => {
+                isRun = true;
+                args.Player.Should().BeSameAs(playerService.Players[1]);
+                args.IsPlayerHoldingUp.Should().BeFalse();
+                args.IsPlayerHoldingDown.Should().BeFalse();
+                args.IsPlayerHoldingLeft.Should().BeFalse();
+                args.IsPlayerHoldingRight.Should().BeTrue();
+                args.IsPlayerHoldingJump.Should().BeFalse();
+                args.IsPlayerHoldingUseItem.Should().BeFalse();
+                args.PlayerDirection.Should().BeTrue();
+                args.IsPlayerClimbingRope.Should().BeFalse();
+                args.PlayerClimbingRopeDirection.Should().BeFalse();
+                args.IsPlayerVortexStealthed.Should().BeFalse();
+                args.IsPlayerRightSideUp.Should().BeTrue();
+                args.IsPlayerRaisingShield.Should().BeFalse();
+                args.PlayerHeldItemSlotIndex.Should().Be(0);
+                args.PlayerPosition.Should().Be(new Vector2(67134, 6790));
+                args.PlayerVelocity.Should().Be(Vector2.Zero);
+                args.Cancel();
+            });
+
+            TestUtils.FakeReceiveBytes(1, PlayerInfoPacketTests.Bytes);
+
+            isRun.Should().BeTrue();
+        }
+
+        [Fact]
         public void PacketReceive_PlayerHealth_IsTriggered() {
             using var playerService = new OrionPlayerService(Logger.None);
             var isRun = false;
