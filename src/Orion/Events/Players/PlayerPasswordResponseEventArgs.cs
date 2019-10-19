@@ -23,16 +23,16 @@ namespace Orion.Events.Players {
     /// <summary>
     /// Provides data for the <see cref="IPlayerService.PlayerPasswordResponse"/> event. This event can be canceled.
     /// </summary>
-    [EventArgs("player-pw-response")]
+    [EventArgs("player-password")]
     public sealed class PlayerPasswordResponseEventArgs : PlayerPacketEventArgs<PlayerPasswordResponsePacket> {
         /// <summary>
         /// Gets or sets the player's password attempt.
         /// </summary>
         /// <value>The player's password attempt.</value>
         /// <exception cref="ArgumentNullException"><paramref name="value"/> is <see langword="null"/>.</exception>
-        public string PlayerPasswordAttempt {
-            get => _packet.PlayerPasswordAttempt;
-            set => _packet.PlayerPasswordAttempt = value ?? throw new ArgumentNullException(nameof(value));
+        public string PasswordAttempt {
+            get => _packet.PasswordAttempt;
+            set => _packet.PasswordAttempt = value ?? throw new ArgumentNullException(nameof(value));
         }
 
         /// <summary>

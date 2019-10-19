@@ -594,8 +594,8 @@ namespace Orion.Players {
         private void LogPlayerPasswordResponse_Before(PlayerPasswordResponseEventArgs args) {
             // Not localized because this string is developer-facing.
             Log.Debug(
-                "Invoking {Event} with [{Player} trying {PlayerPasswordAttempt}]",
-                PlayerPasswordResponse, args.Player, args.PlayerPasswordAttempt);
+                "Invoking {Event} with [{Player} trying {PasswordAttempt}]",
+                PlayerPasswordResponse, args.Player, args.PasswordAttempt);
         }
         
         [Conditional("DEBUG"), ExcludeFromCodeCoverage]
@@ -606,8 +606,8 @@ namespace Orion.Players {
             } else if (args.IsDirty) {
                 // Not localized because this string is developer-facing.
                 Log.Debug(
-                    "Altered {Event} to [{Player} trying {PlayerPasswordResponse}]",
-                    PlayerPasswordResponse, args.Player, args.PlayerPasswordAttempt);
+                    "Altered {Event} to [{Player} trying {PasswordAttempt}]",
+                    PlayerPasswordResponse, args.Player, args.PasswordAttempt);
             }
         }
 

@@ -26,31 +26,32 @@ namespace Orion.Packets.Players {
     /// <see cref="PlayerPasswordChallengePacket"/>.
     /// </summary>
     public sealed class PlayerPasswordResponsePacket : Packet {
-        private string _playerPassword = string.Empty;
+        private string _passwordAttempt = string.Empty;
 
         /// <inheritdoc/>
         public override PacketType Type => PacketType.PlayerPasswordResponse;
-
+        
         /// <summary>
-        /// Gets or sets the player's password.
+        /// Gets or sets the player's password attempt.
         /// </summary>
+        /// <value>The player's password attempt.</value>
         /// <exception cref="ArgumentNullException"><paramref name="value"/> is <see langword="null"/>.</exception>
-        public string PlayerPasswordAttempt {
-            get => _playerPassword;
+        public string PasswordAttempt {
+            get => _passwordAttempt;
             set {
-                _playerPassword = value ?? throw new ArgumentNullException(nameof(value));
+                _passwordAttempt = value ?? throw new ArgumentNullException(nameof(value));
                 _isDirty = true;
             }
         }
 
         /// <inheritdoc/>
         [Pure, ExcludeFromCodeCoverage]
-        public override string ToString() => $"{Type}[{PlayerPasswordAttempt}]";
+        public override string ToString() => $"{Type}[{PasswordAttempt}]";
 
         private protected override void ReadFromReader(BinaryReader reader, PacketContext context) =>
-            _playerPassword = reader.ReadString();
+            _passwordAttempt = reader.ReadString();
 
         private protected override void WriteToWriter(BinaryWriter writer, PacketContext context) =>
-            writer.Write(_playerPassword);
+            writer.Write(_passwordAttempt);
     }
 }

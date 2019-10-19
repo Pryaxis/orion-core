@@ -257,7 +257,7 @@ namespace Orion.Players {
             playerService.PlayerPasswordResponse.RegisterHandler((sender, args) => {
                 isRun = true;
                 args.Player.Should().BeSameAs(playerService.Players[1]);
-                args.PlayerPasswordAttempt.Should().Be("Terraria");
+                args.PasswordAttempt.Should().Be("Terraria");
                 args.Cancel();
             });
 
