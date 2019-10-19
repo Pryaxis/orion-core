@@ -35,7 +35,7 @@ namespace Orion.Packets.Players {
         /// Gets or sets the player's password.
         /// </summary>
         /// <exception cref="ArgumentNullException"><paramref name="value"/> is <see langword="null"/>.</exception>
-        public string PlayerPassword {
+        public string PlayerPasswordAttempt {
             get => _playerPassword;
             set {
                 _playerPassword = value ?? throw new ArgumentNullException(nameof(value));
@@ -45,7 +45,7 @@ namespace Orion.Packets.Players {
 
         /// <inheritdoc/>
         [Pure, ExcludeFromCodeCoverage]
-        public override string ToString() => $"{Type}[{PlayerPassword}]";
+        public override string ToString() => $"{Type}[{PlayerPasswordAttempt}]";
 
         private protected override void ReadFromReader(BinaryReader reader, PacketContext context) =>
             _playerPassword = reader.ReadString();

@@ -251,6 +251,22 @@ namespace Orion.Players {
         }
 
         [Fact]
+        public void PacketReceive_PlayerPasswordResponse_IsTriggered() {
+            using var playerService = new OrionPlayerService(Logger.None);
+            var isRun = false;
+            playerService.PlayerPasswordResponse.RegisterHandler((sender, args) => {
+                isRun = true;
+                args.Player.Should().BeSameAs(playerService.Players[1]);
+                args.PlayerPasswordAttempt.Should().Be("Terraria");
+                args.Cancel();
+            });
+
+            TestUtils.FakeReceiveBytes(1, PlayerPasswordResponsePacketTests.Bytes);
+
+            isRun.Should().BeTrue();
+        }
+
+        [Fact]
         public void PacketReceive_PlayerMana_IsTriggered() {
             using var playerService = new OrionPlayerService(Logger.None);
             var isRun = false;

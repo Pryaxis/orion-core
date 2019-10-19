@@ -100,6 +100,13 @@ namespace Orion.Players {
         EventHandlerCollection<PlayerPvpEventArgs> PlayerPvp { get; }
 
         /// <summary>
+        /// Gets the event handlers that occur when a player responds to a server password request. This event can be
+        /// canceled.
+        /// </summary>
+        /// <value>The event handlers that occur when a player responds to a server password request.</value>
+        EventHandlerCollection<PlayerPasswordResponseEventArgs> PlayerPasswordResponse { get; }
+
+        /// <summary>
         /// Gets the event handlers that occur when a player updates their mana. This event can be canceled.
         /// </summary>
         /// <value>The event handlers that occur when a player updates their mana.</value>

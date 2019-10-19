@@ -50,6 +50,7 @@ namespace Orion.Players {
         public EventHandlerCollection<PlayerInfoEventArgs> PlayerInfo { get; }
         public EventHandlerCollection<PlayerHealthEventArgs> PlayerHealth { get; }
         public EventHandlerCollection<PlayerPvpEventArgs> PlayerPvp { get; }
+        public EventHandlerCollection<PlayerPasswordResponseEventArgs> PlayerPasswordResponse { get; }
         public EventHandlerCollection<PlayerManaEventArgs> PlayerMana { get; }
         public EventHandlerCollection<PlayerTeamEventArgs> PlayerTeam { get; }
         public EventHandlerCollection<PlayerUuidEventArgs> PlayerUuid { get; }
@@ -71,6 +72,7 @@ namespace Orion.Players {
                 [PacketType.PlayerInfo] = PlayerInfoHandler,
                 [PacketType.PlayerHealth] = PlayerHealthHandler,
                 [PacketType.PlayerPvp] = PlayerPvpHandler,
+                [PacketType.PlayerPasswordResponse] = PlayerPasswordResponseHandler,
                 [PacketType.PlayerMana] = PlayerManaHandler,
                 [PacketType.PlayerTeam] = PlayerTeamHandler,
                 [PacketType.PlayerUuid] = PlayerUuidHandler,
@@ -94,6 +96,7 @@ namespace Orion.Players {
             PlayerInfo = new EventHandlerCollection<PlayerInfoEventArgs>();
             PlayerHealth = new EventHandlerCollection<PlayerHealthEventArgs>();
             PlayerPvp = new EventHandlerCollection<PlayerPvpEventArgs>();
+            PlayerPasswordResponse = new EventHandlerCollection<PlayerPasswordResponseEventArgs>();
             PlayerMana = new EventHandlerCollection<PlayerManaEventArgs>();
             PlayerTeam = new EventHandlerCollection<PlayerTeamEventArgs>();
             PlayerUuid = new EventHandlerCollection<PlayerUuidEventArgs>();
@@ -569,6 +572,42 @@ namespace Orion.Players {
                 Log.Debug(
                     "Altered {Event} to [{Player} is in pvp: {IsPlayerInPvp}]",
                     PlayerPvp, args.Player, args.IsPlayerInPvp);
+            }
+        }
+
+        // =============================================================================================================
+        // Handling PlayerPasswordResponse
+        // =============================================================================================================
+
+        private void PlayerPasswordResponseHandler(PacketReceiveEventArgs args_) {
+            var packet = (PlayerPasswordResponsePacket)args_.Packet;
+            var args = new PlayerPasswordResponseEventArgs(args_.Sender, packet);
+
+            LogPlayerPasswordResponse_Before(args);
+            PlayerPasswordResponse.Invoke(this, args);
+            LogPlayerPasswordResponse_After(args);
+
+            args_.CancellationReason = args.CancellationReason;
+        }
+
+        [Conditional("DEBUG"), ExcludeFromCodeCoverage]
+        private void LogPlayerPasswordResponse_Before(PlayerPasswordResponseEventArgs args) {
+            // Not localized because this string is developer-facing.
+            Log.Debug(
+                "Invoking {Event} with [{Player} trying {PlayerPasswordAttempt}]",
+                PlayerPasswordResponse, args.Player, args.PlayerPasswordAttempt);
+        }
+        
+        [Conditional("DEBUG"), ExcludeFromCodeCoverage]
+        private void LogPlayerPasswordResponse_After(PlayerPasswordResponseEventArgs args) {
+            if (args.IsCanceled()) {
+                // Not localized because this string is developer-facing.
+                Log.Debug("Canceled {Event} for {Reason}", PlayerPasswordResponse, args.CancellationReason);
+            } else if (args.IsDirty) {
+                // Not localized because this string is developer-facing.
+                Log.Debug(
+                    "Altered {Event} to [{Player} trying {PlayerPasswordResponse}]",
+                    PlayerPasswordResponse, args.Player, args.PlayerPasswordAttempt);
             }
         }
 

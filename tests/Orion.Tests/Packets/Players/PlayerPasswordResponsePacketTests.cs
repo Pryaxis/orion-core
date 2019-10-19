@@ -32,7 +32,7 @@ namespace Orion.Packets.Players {
         [Fact]
         public void PlayerPassword_Set_NullValue_ThrowsArgumentNullException() {
             var packet = new PlayerPasswordResponsePacket();
-            Action action = () => packet.PlayerPassword = null;
+            Action action = () => packet.PlayerPasswordAttempt = null;
 
             action.Should().Throw<ArgumentNullException>();
         }
@@ -44,7 +44,7 @@ namespace Orion.Packets.Players {
             using var stream = new MemoryStream(Bytes);
             var packet = (PlayerPasswordResponsePacket)Packet.ReadFromStream(stream, PacketContext.Server);
 
-            packet.PlayerPassword.Should().Be("Terraria");
+            packet.PlayerPasswordAttempt.Should().Be("Terraria");
         }
 
         [Fact]
