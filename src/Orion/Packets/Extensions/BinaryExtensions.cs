@@ -59,7 +59,7 @@ namespace Orion.Packets.Extensions {
             return TimeSpan.FromSeconds(ticks / 60.0);
         }
 
-        public static void Write(this BinaryWriter writer, Color color) {
+        public static void Write(this BinaryWriter writer, in Color color) {
             Debug.Assert(writer != null, "writer should not be null");
 
             writer.Write(color.R);
@@ -80,14 +80,14 @@ namespace Orion.Packets.Extensions {
             text.Serialize(writer);
         }
 
-        public static void Write(this BinaryWriter writer, Vector2 vector) {
+        public static void Write(this BinaryWriter writer, in Vector2 vector) {
             Debug.Assert(writer != null, "writer should not be null");
 
             writer.Write(vector.X);
             writer.Write(vector.Y);
         }
 
-        public static void Write(this BinaryWriter writer, TimeSpan timeSpan, int numOfBytes) {
+        public static void Write(this BinaryWriter writer, in TimeSpan timeSpan, int numOfBytes) {
             Debug.Assert(writer != null, "writer should not be null");
 
             var ticks = timeSpan.TotalSeconds * 60.0;
