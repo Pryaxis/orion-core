@@ -18,22 +18,13 @@
 using System;
 using Orion.Packets.Players;
 using Orion.Players;
-using Orion.Utils;
 
 namespace Orion.Events.Players {
     /// <summary>
     /// Provides data for the <see cref="IPlayerService.PlayerConnect"/> event. This event can be canceled.
     /// </summary>
     [EventArgs("player-connect")]
-    public sealed class PlayerConnectEventArgs : PlayerEventArgs, ICancelable, IDirtiable {
-        private readonly PlayerConnectPacket _packet;
-
-        /// <inheritdoc/>
-        public string? CancellationReason { get; set; }
-
-        /// <inheritdoc/>
-        public bool IsDirty => _packet.IsDirty;
-
+    public sealed class PlayerConnectEventArgs : PlayerPacketEventArgs<PlayerConnectPacket> {
         /// <summary>
         /// Gets or sets the player's version string.
         /// </summary>
@@ -57,11 +48,6 @@ namespace Orion.Events.Players {
         /// <exception cref="ArgumentNullException">
         /// <paramref name="player"/> or <paramref name="packet"/> are <see langword="null"/>.
         /// </exception>
-        public PlayerConnectEventArgs(IPlayer player, PlayerConnectPacket packet) : base(player) {
-            _packet = packet ?? throw new ArgumentNullException(nameof(packet));
-        }
-
-        /// <inheritdoc/>
-        public void Clean() => _packet.Clean();
+        public PlayerConnectEventArgs(IPlayer player, PlayerConnectPacket packet) : base(player, packet) { }
     }
 }

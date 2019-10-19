@@ -20,22 +20,13 @@ using Microsoft.Xna.Framework;
 using Orion.Items;
 using Orion.Packets.Players;
 using Orion.Players;
-using Orion.Utils;
 
 namespace Orion.Events.Players {
     /// <summary>
     /// Provides data for the <see cref="IPlayerService.PlayerData"/> event. This event can be canceled.
     /// </summary>
     [EventArgs("player-data")]
-    public sealed class PlayerDataEventArgs : PlayerEventArgs, ICancelable, IDirtiable {
-        private readonly PlayerDataPacket _packet;
-
-        /// <inheritdoc/>
-        public string? CancellationReason { get; set; }
-
-        /// <inheritdoc/>
-        public bool IsDirty => _packet.IsDirty;
-
+    public sealed class PlayerDataEventArgs : PlayerPacketEventArgs<PlayerDataPacket> {
         /// <summary>
         /// Gets or sets the player's clothes style.
         /// </summary>
@@ -189,11 +180,6 @@ namespace Orion.Events.Players {
         /// <exception cref="ArgumentNullException">
         /// <paramref name="player"/> or <paramref name="packet"/> are <see langword="null"/>.
         /// </exception>
-        public PlayerDataEventArgs(IPlayer player, PlayerDataPacket packet) : base(player) {
-            _packet = packet ?? throw new ArgumentNullException(nameof(packet));
-        }
-
-        /// <inheritdoc/>
-        public void Clean() => _packet.Clean();
+        public PlayerDataEventArgs(IPlayer player, PlayerDataPacket packet) : base(player, packet) { }
     }
 }

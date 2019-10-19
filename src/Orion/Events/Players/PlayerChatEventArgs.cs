@@ -18,34 +18,25 @@
 using System;
 using Orion.Packets.Modules;
 using Orion.Players;
-using Orion.Utils;
 
 namespace Orion.Events.Players {
     /// <summary>
     /// Provides data for the <see cref="IPlayerService.PlayerChat"/> event. This event can be canceled.
     /// </summary>
     [EventArgs("player-chat")]
-    public sealed class PlayerChatEventArgs : PlayerEventArgs, ICancelable, IDirtiable {
-        private readonly ChatModule _module;
-
-        /// <inheritdoc/>
-        public string? CancellationReason { get; set; }
-        
-        /// <inheritdoc/>
-        public bool IsDirty => _module.IsDirty;
-
+    public sealed class PlayerChatEventArgs : PlayerPacketEventArgs<ChatModule> {
         /// <summary>
         /// Gets or sets the player's chat command.
         /// </summary>
         /// <value>The player's chat command.</value>
-        /// <exception cref="ArgumentNullException"><paramref name="value"/> is <see langword="null"/>.</exception>
         /// <remarks>
         /// The command indicates what to interpret the message as. For example, a <c>Say</c> command will send the
         /// message to everyone and an <c>Emote</c> command will send a third-person message to everyone.
         /// </remarks>
+        /// <exception cref="ArgumentNullException"><paramref name="value"/> is <see langword="null"/>.</exception>
         public string PlayerChatCommand {
-            get => _module.ClientChatCommand;
-            set => _module.ClientChatCommand = value ?? throw new ArgumentNullException(nameof(value));
+            get => _packet.ClientChatCommand;
+            set => _packet.ClientChatCommand = value ?? throw new ArgumentNullException(nameof(value));
         }
 
         /// <summary>
@@ -54,8 +45,8 @@ namespace Orion.Events.Players {
         /// <value>The player's chat text.</value>
         /// <exception cref="ArgumentNullException"><paramref name="value"/> is <see langword="null"/>.</exception>
         public string PlayerChatText {
-            get => _module.ClientChatText;
-            set => _module.ClientChatText = value ?? throw new ArgumentNullException(nameof(value));
+            get => _packet.ClientChatText;
+            set => _packet.ClientChatText = value ?? throw new ArgumentNullException(nameof(value));
         }
 
         /// <summary>
@@ -67,11 +58,6 @@ namespace Orion.Events.Players {
         /// <exception cref="ArgumentNullException">
         /// <paramref name="player"/> or <paramref name="module"/> are <see langword="null"/>.
         /// </exception>
-        public PlayerChatEventArgs(IPlayer player, ChatModule module) : base(player) {
-            _module = module ?? throw new ArgumentNullException(nameof(module));
-        }
-
-        /// <inheritdoc/>
-        public void Clean() => _module.Clean();
+        public PlayerChatEventArgs(IPlayer player, ChatModule module) : base(player, module) { }
     }
 }

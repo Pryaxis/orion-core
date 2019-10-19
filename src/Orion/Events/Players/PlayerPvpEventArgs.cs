@@ -18,22 +18,13 @@
 using System;
 using Orion.Packets.Players;
 using Orion.Players;
-using Orion.Utils;
 
 namespace Orion.Events.Players {
     /// <summary>
     /// Provides data for the <see cref="IPlayerService.PlayerPvp"/> event. This event can be canceled.
     /// </summary>
     [EventArgs("player-pvp")]
-    public sealed class PlayerPvpEventArgs : PlayerEventArgs, ICancelable, IDirtiable {
-        private readonly PlayerPvpPacket _packet;
-
-        /// <inheritdoc/>
-        public string? CancellationReason { get; set; }
-        
-        /// <inheritdoc/>
-        public bool IsDirty => _packet.IsDirty;
-        
+    public sealed class PlayerPvpEventArgs : PlayerPacketEventArgs<PlayerPvpPacket> {
         /// <summary>
         /// Gets or sets a value indicating whether the player is in PvP.
         /// </summary>
@@ -52,11 +43,6 @@ namespace Orion.Events.Players {
         /// <exception cref="ArgumentNullException">
         /// <paramref name="player"/> or <paramref name="packet"/> are <see langword="null"/>.
         /// </exception>
-        public PlayerPvpEventArgs(IPlayer player, PlayerPvpPacket packet) : base(player) {
-            _packet = packet ?? throw new ArgumentNullException(nameof(packet));
-        }
-
-        /// <inheritdoc/>
-        public void Clean() => _packet.Clean();
+        public PlayerPvpEventArgs(IPlayer player, PlayerPvpPacket packet) : base(player, packet) { }
     }
 }

@@ -18,22 +18,13 @@
 using System;
 using Orion.Packets.Players;
 using Orion.Players;
-using Orion.Utils;
 
 namespace Orion.Events.Players {
     /// <summary>
     /// Provides data for the <see cref="IPlayerService.PlayerTeam"/> event. This event can be canceled.
     /// </summary>
     [EventArgs("player-team")]
-    public sealed class PlayerTeamEventArgs : PlayerEventArgs, ICancelable, IDirtiable {
-        private readonly PlayerTeamPacket _packet;
-
-        /// <inheritdoc/>
-        public string? CancellationReason { get; set; }
-
-        /// <inheritdoc/>
-        public bool IsDirty => _packet.IsDirty;
-
+    public sealed class PlayerTeamEventArgs : PlayerPacketEventArgs<PlayerTeamPacket> {
         /// <summary>
         /// Gets or sets the player's team.
         /// </summary>
@@ -52,11 +43,6 @@ namespace Orion.Events.Players {
         /// <exception cref="ArgumentNullException">
         /// <paramref name="player"/> or <paramref name="packet"/> are <see langword="null"/>.
         /// </exception>
-        public PlayerTeamEventArgs(IPlayer player, PlayerTeamPacket packet) : base(player) {
-            _packet = packet ?? throw new ArgumentNullException(nameof(packet));
-        }
-
-        /// <inheritdoc/>
-        public void Clean() => _packet.Clean();
+        public PlayerTeamEventArgs(IPlayer player, PlayerTeamPacket packet) : base(player, packet) { }
     }
 }
