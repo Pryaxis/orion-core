@@ -52,6 +52,7 @@ namespace Orion.Players {
         public EventHandlerCollection<PlayerPvpEventArgs> PlayerPvp { get; }
         public EventHandlerCollection<PlayerManaEventArgs> PlayerMana { get; }
         public EventHandlerCollection<PlayerTeamEventArgs> PlayerTeam { get; }
+        public EventHandlerCollection<PlayerUuidEventArgs> PlayerUuid { get; }
         public EventHandlerCollection<PlayerChatEventArgs> PlayerChat { get; }
         public EventHandlerCollection<PlayerQuitEventArgs> PlayerQuit { get; }
 
@@ -70,6 +71,7 @@ namespace Orion.Players {
                 [PacketType.PlayerPvp] = PlayerPvpHandler,
                 [PacketType.PlayerMana] = PlayerManaHandler,
                 [PacketType.PlayerTeam] = PlayerTeamHandler,
+                [PacketType.PlayerUuid] = PlayerUuidHandler,
                 [PacketType.Module] = ModuleHandler
             };
 
@@ -90,6 +92,7 @@ namespace Orion.Players {
             PlayerPvp = new EventHandlerCollection<PlayerPvpEventArgs>();
             PlayerMana = new EventHandlerCollection<PlayerManaEventArgs>();
             PlayerTeam = new EventHandlerCollection<PlayerTeamEventArgs>();
+            PlayerUuid = new EventHandlerCollection<PlayerUuidEventArgs>();
             PlayerChat = new EventHandlerCollection<PlayerChatEventArgs>();
             PlayerQuit = new EventHandlerCollection<PlayerQuitEventArgs>();
 
@@ -616,6 +619,38 @@ namespace Orion.Players {
             } else if (args.IsDirty) {
                 // Not localized because this string is developer-facing.
                 Log.Debug("Altered {Event} to [{Player}, {PlayerTeam}]", PlayerTeam, args.Player, args.PlayerTeam);
+            }
+        }
+
+        // =============================================================================================================
+        // Handling PlayerUuid
+        // =============================================================================================================
+
+        private void PlayerUuidHandler(PacketReceiveEventArgs args_) {
+            var packet = (PlayerUuidPacket)args_.Packet;
+            var args = new PlayerUuidEventArgs(args_.Sender, packet);
+
+            LogPlayerUuid_Before(args);
+            PlayerUuid.Invoke(this, args);
+            LogPlayerUuid_After(args);
+
+            args_.CancellationReason = args.CancellationReason;
+        }
+
+        [Conditional("DEBUG"), ExcludeFromCodeCoverage]
+        private void LogPlayerUuid_Before(PlayerUuidEventArgs args) {
+            // Not localized because this string is developer-facing.
+            Log.Debug("Invoking {Event} with [{Player}, {PlayerUuid}]", PlayerUuid, args.Player, args.PlayerUuid);
+        }
+        
+        [Conditional("DEBUG"), ExcludeFromCodeCoverage]
+        private void LogPlayerUuid_After(PlayerUuidEventArgs args) {
+            if (args.IsCanceled()) {
+                // Not localized because this string is developer-facing.
+                Log.Debug("Canceled {Event} for {Reason}", PlayerUuid, args.CancellationReason);
+            } else if (args.IsDirty) {
+                // Not localized because this string is developer-facing.
+                Log.Debug("Altered {Event} to [{Player}, {PlayerUuid}]", PlayerUuid, args.Player, args.PlayerUuid);
             }
         }
 

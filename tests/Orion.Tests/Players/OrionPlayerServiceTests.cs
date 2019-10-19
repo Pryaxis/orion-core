@@ -284,6 +284,22 @@ namespace Orion.Players {
         }
 
         [Fact]
+        public void PacketReceive_PlayerUuid_IsTriggered() {
+            using var playerService = new OrionPlayerService(Logger.None);
+            var isRun = false;
+            playerService.PlayerUuid.RegisterHandler((sender, args) => {
+                isRun = true;
+                args.Player.Should().BeSameAs(playerService.Players[1]);
+                args.PlayerUuid.Should().Be("Terraria");
+                args.Cancel();
+            });
+
+            TestUtils.FakeReceiveBytes(1, PlayerUuidPacketTests.Bytes);
+
+            isRun.Should().BeTrue();
+        }
+
+        [Fact]
         public void PacketReceive_PlayerChat_IsTriggered() {
             using var playerService = new OrionPlayerService(Logger.None);
             var isRun = false;

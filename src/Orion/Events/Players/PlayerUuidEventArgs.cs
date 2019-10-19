@@ -21,26 +21,26 @@ using Orion.Players;
 
 namespace Orion.Events.Players {
     /// <summary>
-    /// Provides data for the <see cref="IPlayerService.PlayerConnect"/> event. This event can be canceled.
+    /// Provides data for the <see cref="IPlayerService.PlayerUuid"/> event. This event can be canceled.
     /// </summary>
-    [EventArgs("player-connect")]
-    public sealed class PlayerConnectEventArgs : PlayerPacketEventArgs<PlayerConnectPacket> {
+    [EventArgs("player-uuid")]
+    public sealed class PlayerUuidEventArgs : PlayerPacketEventArgs<PlayerUuidPacket> {
         /// <summary>
-        /// Gets or sets the player's version string.
+        /// Gets or sets the player's UUID.
         /// </summary>
-        /// <value>The player's version string.</value>
+        /// <value>The player's UUID.</value>
         /// <remarks>
-        /// The version string restricts what client versions can connect to the server. It takes the form
-        /// <c>Terraria###</c>, where <c>###</c> is the version number.
+        /// The player's UUID is (most likely) unique to a given player, but it is easily changed by a client. As such,
+        /// it can be used to verify a player's identity positively but not negatively.
         /// </remarks>
         /// <exception cref="ArgumentNullException"><paramref name="value"/> is <see langword="null"/>.</exception>
-        public string PlayerVersionString {
-            get => _packet.PlayerVersionString;
-            set => _packet.PlayerVersionString = value ?? throw new ArgumentNullException(nameof(value));
+        public string PlayerUuid {
+            get => _packet.PlayerUuid;
+            set => _packet.PlayerUuid = value ?? throw new ArgumentNullException(nameof(value));
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="PlayerConnectEventArgs"/> class with the specified player and
+        /// Initializes a new instance of the <see cref="PlayerUuidEventArgs"/> class with the specified player and
         /// packet.
         /// </summary>
         /// <param name="player">The player.</param>
@@ -48,6 +48,6 @@ namespace Orion.Events.Players {
         /// <exception cref="ArgumentNullException">
         /// <paramref name="player"/> or <paramref name="packet"/> are <see langword="null"/>.
         /// </exception>
-        public PlayerConnectEventArgs(IPlayer player, PlayerConnectPacket packet) : base(player, packet) { }
+        public PlayerUuidEventArgs(IPlayer player, PlayerUuidPacket packet) : base(player, packet) { }
     }
 }

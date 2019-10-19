@@ -78,9 +78,9 @@ namespace Orion.Players {
         EventHandlerCollection<PlayerSpawnEventArgs> PlayerSpawn { get; }
 
         /// <summary>
-        /// Gets the event handlers that occur when player information is received. This event can be canceled.
+        /// Gets the event handlers that occur when player updates their information. This event can be canceled.
         /// </summary>
-        /// <value>The event handlers that occur when player information is received.</value>
+        /// <value>The event handlers that occur when player updates their information.</value>
         /// <remarks>
         /// Player information is sent whenever a player's position or velocity changes or when commonly updated flags
         /// change, such as the player's control states.
@@ -110,6 +110,12 @@ namespace Orion.Players {
         /// </summary>
         /// <value>The event handlers that occur when a player changes teams.</value>
         EventHandlerCollection<PlayerTeamEventArgs> PlayerTeam { get; }
+
+        /// <summary>
+        /// Gets the event handlers that occur when a player sends their UUID. This event can be canceled.
+        /// </summary>
+        /// <value>The event handlers that occur when a player sends their UUID.</value>
+        EventHandlerCollection<PlayerUuidEventArgs> PlayerUuid { get; }
 
         /// <summary>
         /// Gets the event handlers that occur when a player chats. This event can be canceled.
