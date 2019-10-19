@@ -99,10 +99,10 @@ namespace Orion.Npcs {
         /// length 4. These AI values are values that control type-specific behavior.
         /// </param>
         /// <returns>The resulting NPC, or <see langword="null"/> if none was spawned.</returns>
+        /// <remarks>Implementations of this method are not required to be thread-safe.</remarks>
         /// <exception cref="ArgumentException">
         /// <paramref name="aiValues"/> is not <see langword="null"/> and does not have length 4.
         /// </exception>
-        /// <remarks>Implementations of this method are not required to be thread-safe.</remarks>
         INpc? SpawnNpc(NpcType type, Vector2 position, float[]? aiValues = null);
     }
 }

@@ -62,10 +62,10 @@ namespace Orion.World.TileEntities {
         /// <returns>
         /// <see langword="true"/> if the tile entity was removed; otherwise, <see langword="false"/>.
         /// </returns>
+        /// <remarks>Implementations of this method are not required to be thread-safe.</remarks>
         /// <exception cref="ArgumentNullException">
         /// <paramref name="tileEntity"/> is <see langword="null"/>.
         /// </exception>
-        /// <remarks>Implementations of this method are not required to be thread-safe.</remarks>
         bool RemoveTileEntity(ITileEntity tileEntity);
     }
 
