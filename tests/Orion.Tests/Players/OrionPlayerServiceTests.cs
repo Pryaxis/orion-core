@@ -171,6 +171,23 @@ namespace Orion.Players {
         }
 
         [Fact]
+        public void PacketReceive_PlayerSpawn_IsTriggered() {
+            using var playerService = new OrionPlayerService(Logger.None);
+            var isRun = false;
+            playerService.PlayerSpawn.RegisterHandler((sender, args) => {
+                isRun = true;
+                args.Player.Should().BeSameAs(playerService.Players[1]);
+                args.PlayerSpawnX.Should().Be(-1);
+                args.PlayerSpawnY.Should().Be(-1);
+                args.Cancel();
+            });
+
+            TestUtils.FakeReceiveBytes(1, PlayerSpawnPacketTests.Bytes);
+
+            isRun.Should().BeTrue();
+        }
+
+        [Fact]
         public void PacketReceive_PlayerHealth_IsTriggered() {
             using var playerService = new OrionPlayerService(Logger.None);
             var isRun = false;

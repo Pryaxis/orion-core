@@ -46,6 +46,7 @@ namespace Orion.Players {
         public EventHandlerCollection<PlayerDataEventArgs> PlayerData { get; }
         public EventHandlerCollection<PlayerInventorySlotEventArgs> PlayerInventorySlot { get; }
         public EventHandlerCollection<PlayerJoinEventArgs> PlayerJoin { get; }
+        public EventHandlerCollection<PlayerSpawnEventArgs> PlayerSpawn { get; }
         public EventHandlerCollection<PlayerHealthEventArgs> PlayerHealth { get; }
         public EventHandlerCollection<PlayerPvpEventArgs> PlayerPvp { get; }
         public EventHandlerCollection<PlayerManaEventArgs> PlayerMana { get; }
@@ -62,6 +63,7 @@ namespace Orion.Players {
                 [PacketType.PlayerData] = PlayerDataHandler,
                 [PacketType.PlayerInventorySlot] = PlayerInventorySlotHandler,
                 [PacketType.PlayerJoin] = PlayerJoinHandler,
+                [PacketType.PlayerSpawn] = PlayerSpawnHandler,
                 [PacketType.PlayerHealth] = PlayerHealthHandler,
                 [PacketType.PlayerPvp] = PlayerPvpHandler,
                 [PacketType.PlayerMana] = PlayerManaHandler,
@@ -80,6 +82,7 @@ namespace Orion.Players {
             PlayerData = new EventHandlerCollection<PlayerDataEventArgs>();
             PlayerInventorySlot = new EventHandlerCollection<PlayerInventorySlotEventArgs>();
             PlayerJoin = new EventHandlerCollection<PlayerJoinEventArgs>();
+            PlayerSpawn = new EventHandlerCollection<PlayerSpawnEventArgs>();
             PlayerHealth = new EventHandlerCollection<PlayerHealthEventArgs>();
             PlayerPvp = new EventHandlerCollection<PlayerPvpEventArgs>();
             PlayerMana = new EventHandlerCollection<PlayerManaEventArgs>();
@@ -402,6 +405,42 @@ namespace Orion.Players {
             if (args.IsCanceled()) {
                 // Not localized because this string is developer-facing.
                 Log.Debug("Canceled {Event} for {Reason}", PlayerJoin, args.CancellationReason);
+            }
+        }
+
+        // =============================================================================================================
+        // Handling PlayerSpawn
+        // =============================================================================================================
+
+        private void PlayerSpawnHandler(PacketReceiveEventArgs args_) {
+            var packet = (PlayerSpawnPacket)args_.Packet;
+            var args = new PlayerSpawnEventArgs(args_.Sender, packet);
+
+            PlayerSpawn_Before(args);
+            PlayerSpawn.Invoke(this, args);
+            PlayerSpawn_After(args);
+
+            args_.CancellationReason = args.CancellationReason;
+        }
+
+        [Conditional("DEBUG"), ExcludeFromCodeCoverage]
+        private void PlayerSpawn_Before(PlayerSpawnEventArgs args) {
+            // Not localized because this string is developer-facing.
+            Log.Debug(
+                "Invoking {Event} with [{Player}, at {PlayerSpawnX}, {PlayerSpawnY}]",
+                PlayerSpawn, args.Player, args.PlayerSpawnX, args.PlayerSpawnY);
+        }
+        
+        [Conditional("DEBUG"), ExcludeFromCodeCoverage]
+        private void PlayerSpawn_After(PlayerSpawnEventArgs args) {
+            if (args.IsCanceled()) {
+                // Not localized because this string is developer-facing.
+                Log.Debug("Canceled {Event} for {Reason}", PlayerSpawn, args.CancellationReason);
+            } else if (args.IsDirty) {
+                // Not localized because this string is developer-facing.
+                Log.Debug(
+                    "Altered {Event} to [{Player}, at {PlayerSpawnX}, {PlayerSpawnY}]",
+                    PlayerSpawn, args.Player, args.PlayerSpawnX, args.PlayerSpawnY);
             }
         }
 

@@ -72,6 +72,12 @@ namespace Orion.Players {
         EventHandlerCollection<PlayerJoinEventArgs> PlayerJoin { get; }
 
         /// <summary>
+        /// Gets the event handlers that occur when a player spawns. This event can be canceled.
+        /// </summary>
+        /// <value>The event handlers that occur when a player spawns.</value>
+        EventHandlerCollection<PlayerSpawnEventArgs> PlayerSpawn { get; }
+
+        /// <summary>
         /// Gets the event handlers that occur when a player updates their health. This event can be canceled.
         /// </summary>
         /// <value>The event handlers that occur when a player updates their health.</value>
