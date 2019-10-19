@@ -50,6 +50,6 @@ namespace Orion.Packets.World {
             _moonLordCountdown = reader.ReadTimeSpan(4);
 
         private protected override void WriteToWriter(BinaryWriter writer, PacketContext context) =>
-            writer.Write(_moonLordCountdown, 4);
+            writer.Write(in _moonLordCountdown, 4);
     }
 }

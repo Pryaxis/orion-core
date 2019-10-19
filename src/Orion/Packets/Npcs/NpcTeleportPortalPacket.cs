@@ -92,8 +92,8 @@ namespace Orion.Packets.Npcs {
         private protected override void WriteToWriter(BinaryWriter writer, PacketContext context) {
             writer.Write(_npcIndex);
             writer.Write(_portalIndex);
-            writer.Write(_newNpcPosition);
-            writer.Write(_newNpcVelocity);
+            writer.Write(in _newNpcPosition);
+            writer.Write(in _newNpcVelocity);
         }
     }
 }

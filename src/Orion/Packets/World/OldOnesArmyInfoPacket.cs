@@ -50,6 +50,6 @@ namespace Orion.Packets.World {
             _timeBetweenWaves = reader.ReadTimeSpan(4);
 
         private protected override void WriteToWriter(BinaryWriter writer, PacketContext context) =>
-            writer.Write(_timeBetweenWaves, 4);
+            writer.Write(in _timeBetweenWaves, 4);
     }
 }

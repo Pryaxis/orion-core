@@ -169,8 +169,8 @@ namespace Orion.Packets.Projectiles {
 
         private protected override void WriteToWriter(BinaryWriter writer, PacketContext context) {
             writer.Write(_projectileIdentity);
-            writer.Write(_projectilePosition);
-            writer.Write(_projectileVelocity);
+            writer.Write(in _projectilePosition);
+            writer.Write(in _projectileVelocity);
             writer.Write(_projectileKnockback);
             writer.Write(_projectileDamage);
             writer.Write(_projectileOwnerPlayerIndex);

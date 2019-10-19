@@ -267,13 +267,13 @@ namespace Orion.Packets.Players {
             writer.Write(_playerHairDye);
             writer.Write(_playerEquipmentHiddenFlags);
             writer.Write(_playerMiscEquipmentHiddenFlags);
-            writer.Write(_playerHairColor);
-            writer.Write(_playerSkinColor);
-            writer.Write(_playerEyeColor);
-            writer.Write(_playerShirtColor);
-            writer.Write(_playerUndershirtColor);
-            writer.Write(_playerPantsColor);
-            writer.Write(_playerShoeColor);
+            writer.Write(in _playerHairColor);
+            writer.Write(in _playerSkinColor);
+            writer.Write(in _playerEyeColor);
+            writer.Write(in _playerShirtColor);
+            writer.Write(in _playerUndershirtColor);
+            writer.Write(in _playerPantsColor);
+            writer.Write(in _playerShoeColor);
 
             Terraria.BitsByte flags = 0;
             flags[0] = _playerDifficulty == PlayerDifficulty.Mediumcore;

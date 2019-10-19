@@ -97,7 +97,7 @@ namespace Orion.Packets.Entities {
             header |= (byte)((_entityTeleportationStyle & 3) << 2);
             writer.Write(header);
             writer.Write(_entityIndex);
-            writer.Write(_entityNewPosition);
+            writer.Write(in _entityNewPosition);
         }
     }
 }

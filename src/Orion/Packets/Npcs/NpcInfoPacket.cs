@@ -237,8 +237,8 @@ namespace Orion.Packets.Npcs {
 
         private protected override void WriteToWriter(BinaryWriter writer, PacketContext context) {
             writer.Write(_npcIndex);
-            writer.Write(_npcPosition);
-            writer.Write(_npcVelocity);
+            writer.Write(in _npcPosition);
+            writer.Write(in _npcVelocity);
             writer.Write(_npcTargetIndex);
 
             Terraria.BitsByte header = 0;

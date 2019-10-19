@@ -119,7 +119,7 @@ namespace Orion.Packets.Modules {
             if (context == PacketContext.Server) {
                 writer.Write(_serverChattingPlayerIndex);
                 writer.Write(_serverChatText);
-                writer.Write(_serverChatColor);
+                writer.Write(in _serverChatColor);
             } else {
                 writer.Write(_clientChatCommand);
                 writer.Write(_clientChatText);

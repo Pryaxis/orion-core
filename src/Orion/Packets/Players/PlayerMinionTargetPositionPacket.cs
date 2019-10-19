@@ -65,7 +65,7 @@ namespace Orion.Packets.Players {
 
         private protected override void WriteToWriter(BinaryWriter writer, PacketContext context) {
             writer.Write(_playerIndex);
-            writer.Write(_playerMinionTargetPosition);
+            writer.Write(in _playerMinionTargetPosition);
         }
     }
 }

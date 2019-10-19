@@ -246,9 +246,7 @@ namespace Orion.Packets.Players {
 
             _playerHeldItemSlotIndex = reader.ReadByte();
             _playerPosition = reader.ReadVector2();
-            if (flags2[2]) {
-                _playerVelocity = reader.ReadVector2();
-            }
+            if (flags2[2]) _playerVelocity = reader.ReadVector2();
         }
 
         private protected override void WriteToWriter(BinaryWriter writer, PacketContext context) {
@@ -273,10 +271,8 @@ namespace Orion.Packets.Players {
             writer.Write(flags2);
 
             writer.Write(_playerHeldItemSlotIndex);
-            writer.Write(_playerPosition);
-            if (flags2[2]) {
-                writer.Write(_playerVelocity);
-            }
+            writer.Write(in _playerPosition);
+            if (flags2[2]) writer.Write(in _playerVelocity);
         }
     }
 }

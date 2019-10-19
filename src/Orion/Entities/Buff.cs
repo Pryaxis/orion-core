@@ -31,6 +31,8 @@ namespace Orion.Entities {
     [SuppressMessage("Performance", "CA1815:Override equals and operator equals on value types",
         Justification = "Buffs will not be compared.")]
     public readonly struct Buff {
+        private readonly TimeSpan _duration;
+
         /// <summary>
         /// Gets the buff's type.
         /// </summary>
@@ -41,7 +43,7 @@ namespace Orion.Entities {
         /// Gets the buff's duration.
         /// </summary>
         /// <value>The buff's duration.</value>
-        public TimeSpan Duration { get; }
+        public TimeSpan Duration => _duration;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Buff"/> structure with the specified buff type and duration.
@@ -56,7 +58,7 @@ namespace Orion.Entities {
             }
 
             BuffType = buffType;
-            Duration = duration;
+            _duration = duration;
         }
 
         /// <summary>
@@ -110,7 +112,7 @@ namespace Orion.Entities {
             }
 
             writer.Write((byte)BuffType);
-            writer.Write(Duration, numOfDurationBytes);
+            writer.Write(in _duration, numOfDurationBytes);
         }
     }
 }

@@ -80,7 +80,7 @@ namespace Orion.Packets.Players {
         private protected override void WriteToWriter(BinaryWriter writer, PacketContext context) {
             writer.Write(_playerIndex);
             writer.Write((byte)_buffType);
-            writer.Write(_buffPosition);
+            writer.Write(in _buffPosition);
         }
     }
 }

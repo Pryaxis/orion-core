@@ -80,7 +80,7 @@ namespace Orion.Packets.Npcs {
         private protected override void WriteToWriter(BinaryWriter writer, PacketContext context) {
             writer.Write(_npcIndex);
             writer.Write(_npcStolenValue);
-            writer.Write(_coinsPosition);
+            writer.Write(in _coinsPosition);
         }
     }
 }

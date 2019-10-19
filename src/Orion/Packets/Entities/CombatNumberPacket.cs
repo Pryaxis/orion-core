@@ -81,8 +81,8 @@ namespace Orion.Packets.Entities {
         }
 
         private protected override void WriteToWriter(BinaryWriter writer, PacketContext context) {
-            writer.Write(_numberPosition);
-            writer.Write(_numberColor);
+            writer.Write(in _numberPosition);
+            writer.Write(in _numberColor);
             writer.Write(_number);
         }
     }

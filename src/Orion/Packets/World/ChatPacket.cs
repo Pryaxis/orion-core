@@ -80,7 +80,7 @@ namespace Orion.Packets.World {
         }
 
         private protected override void WriteToWriter(BinaryWriter writer, PacketContext context) {
-            writer.Write(_chatColor);
+            writer.Write(in _chatColor);
             writer.Write(_chatText);
             writer.Write(_chatLineWidth);
         }

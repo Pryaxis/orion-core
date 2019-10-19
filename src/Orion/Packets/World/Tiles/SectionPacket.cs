@@ -292,7 +292,6 @@ namespace Orion.Packets.World.Tiles {
             Tile? previousTile = null;
             var runLength = 0;
 
-
             void WritePartialTile(ref Tile tile) {
                 header = 0;
                 byte header2 = 0;

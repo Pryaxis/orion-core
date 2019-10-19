@@ -134,8 +134,8 @@ namespace Orion.Packets.Items {
 
         private protected override void WriteToWriter(BinaryWriter writer, PacketContext context) {
             writer.Write(_itemIndex);
-            writer.Write(_itemPosition);
-            writer.Write(_itemVelocity);
+            writer.Write(in _itemPosition);
+            writer.Write(in _itemVelocity);
             writer.Write(_itemStackSize);
             writer.Write((byte)_itemPrefix);
             writer.Write(_canBePickedUpImmediately);

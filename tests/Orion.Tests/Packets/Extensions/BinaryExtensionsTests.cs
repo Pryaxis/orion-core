@@ -58,7 +58,7 @@ namespace Orion.Packets.Extensions {
             using var stream = new MemoryStream();
             using var writer = new BinaryWriter(stream, Encoding.UTF8);
             using var reader = new BinaryReader(stream, Encoding.UTF8);
-            writer.Write(color);
+            writer.Write(in color);
             stream.Position = 0;
 
             reader.ReadColor().Should().Be(color);
@@ -107,7 +107,7 @@ namespace Orion.Packets.Extensions {
             using var stream = new MemoryStream();
             using var writer = new BinaryWriter(stream, Encoding.UTF8);
             using var reader = new BinaryReader(stream, Encoding.UTF8);
-            writer.Write(timeSpan, numOfBytes);
+            writer.Write(in timeSpan, numOfBytes);
             stream.Position = 0;
 
             reader.ReadTimeSpan(numOfBytes).Should().Be(timeSpan);

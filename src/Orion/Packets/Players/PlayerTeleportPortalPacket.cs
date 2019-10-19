@@ -92,8 +92,8 @@ namespace Orion.Packets.Players {
         private protected override void WriteToWriter(BinaryWriter writer, PacketContext context) {
             writer.Write(_playerIndex);
             writer.Write(_portalIndex);
-            writer.Write(_playerNewPosition);
-            writer.Write(_playerNewVelocity);
+            writer.Write(in _playerNewPosition);
+            writer.Write(in _playerNewVelocity);
         }
     }
 }
