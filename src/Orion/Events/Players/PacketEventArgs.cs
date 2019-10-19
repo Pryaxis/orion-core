@@ -24,36 +24,23 @@ namespace Orion.Events.Players {
     /// Provides data for packet-related events.
     /// </summary>
     public abstract class PacketEventArgs : EventArgs, ICancelable, IDirtiable {
-        private Packet _packet;
-        private bool _isDirty;
-        
         /// <inheritdoc/>
         public string? CancellationReason { get; set; }
 
         /// <inheritdoc/>
-        public bool IsDirty => _isDirty || _packet.IsDirty;
+        public bool IsDirty => Packet.IsDirty;
 
         /// <summary>
-        /// Gets or sets the packet involved in the event.
+        /// Gets the packet involved in the event.
         /// </summary>
         /// <value>The packet involved in the event.</value>
-        /// <exception cref="ArgumentNullException"><paramref name="value"/> is <see langword="null"/>.</exception>
-        public Packet Packet {
-            get => _packet;
-            set {
-                _packet = value ?? throw new ArgumentNullException(nameof(value));
-                _isDirty = true;
-            }
-        }
+        public Packet Packet { get; }
 
         private protected PacketEventArgs(Packet packet) {
-            _packet = packet ?? throw new ArgumentNullException(nameof(packet));
+            Packet = packet ?? throw new ArgumentNullException(nameof(packet));
         }
 
         /// <inheritdoc/>
-        public void Clean() {
-            _isDirty = false;
-            Packet.Clean();
-        }
+        public void Clean() => Packet.Clean();
     }
 }

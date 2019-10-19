@@ -16,7 +16,6 @@
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
 using System;
-using System.Diagnostics.CodeAnalysis;
 using FluentAssertions;
 using Moq;
 using Orion.Packets;
@@ -45,26 +44,6 @@ namespace Orion.Events.Players {
             var args = new TestArgs(packet);
 
             args.Packet.Should().BeSameAs(packet);
-        }
-
-        [Fact]
-        [SuppressMessage("Style", "IDE0017:Simplify object initialization", Justification = "Testing")]
-        public void Packet_Set_MarksAsDirty() {
-            var packet = new Mock<Packet>().Object;
-            var args = new TestArgs(packet);
-
-            args.Packet = new Mock<Packet>().Object;
-
-            args.ShouldBeDirty();
-        }
-
-        [Fact]
-        public void Packet_Set_NullValue_ThrowsArgumentNullException() {
-            var packet = new Mock<Packet>().Object;
-            var args = new TestArgs(packet);
-            Action action = () => args.Packet = null;
-
-            action.Should().Throw<ArgumentNullException>();
         }
 
         [Fact]

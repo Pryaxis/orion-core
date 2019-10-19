@@ -138,7 +138,7 @@ namespace Orion.Players {
 
             if (args.IsCanceled()) {
                 return HookResult.Cancel;
-            } else if (_packetReceiveHandlers.TryGetValue(args.Packet.Type, out var handler)) {
+            } else if (_packetReceiveHandlers.TryGetValue(packet.Type, out var handler)) {
                 handler(args);
                 if (args.IsCanceled()) {
                     return HookResult.Cancel;
@@ -152,7 +152,7 @@ namespace Orion.Players {
             var oldBuffer = buffer.readBuffer;
             // TODO: consider reusing buffers here
             var newStream = new MemoryStream();
-            args.Packet.WriteToStream(newStream, PacketContext.Client);
+            packet.WriteToStream(newStream, PacketContext.Client);
             buffer.readBuffer = newStream.ToArray();
             buffer.ResetReader();
 
