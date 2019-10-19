@@ -54,6 +54,7 @@ namespace Orion.Players {
         public EventHandlerCollection<PlayerTeamEventArgs> PlayerTeam { get; }
         public EventHandlerCollection<PlayerUuidEventArgs> PlayerUuid { get; }
         public EventHandlerCollection<PlayerTeleportationPotionEventArgs> PlayerTeleportationPotion { get; }
+        public EventHandlerCollection<PlayerAnglerQuestsEventArgs> PlayerAnglerQuests { get; }
         public EventHandlerCollection<PlayerChatEventArgs> PlayerChat { get; }
         public EventHandlerCollection<PlayerQuitEventArgs> PlayerQuit { get; }
 
@@ -74,6 +75,7 @@ namespace Orion.Players {
                 [PacketType.PlayerTeam] = PlayerTeamHandler,
                 [PacketType.PlayerUuid] = PlayerUuidHandler,
                 [PacketType.PlayerTeleportationPotion] = PlayerTeleportationPotionHandler,
+                [PacketType.PlayerAnglerQuests] = PlayerAnglerQuestsHandler,
                 [PacketType.Module] = ModuleHandler
             };
 
@@ -96,6 +98,7 @@ namespace Orion.Players {
             PlayerTeam = new EventHandlerCollection<PlayerTeamEventArgs>();
             PlayerUuid = new EventHandlerCollection<PlayerUuidEventArgs>();
             PlayerTeleportationPotion = new EventHandlerCollection<PlayerTeleportationPotionEventArgs>();
+            PlayerAnglerQuests = new EventHandlerCollection<PlayerAnglerQuestsEventArgs>();
             PlayerChat = new EventHandlerCollection<PlayerChatEventArgs>();
             PlayerQuit = new EventHandlerCollection<PlayerQuitEventArgs>();
 
@@ -682,6 +685,42 @@ namespace Orion.Players {
             if (args.IsCanceled()) {
                 // Not localized because this string is developer-facing.
                 Log.Debug("Canceled {Event} for {Reason}", PlayerTeleportationPotion, args.CancellationReason);
+            }
+        }
+
+        // =============================================================================================================
+        // Handling PlayerAnglerQuests
+        // =============================================================================================================
+
+        private void PlayerAnglerQuestsHandler(PacketReceiveEventArgs args_) {
+            var packet = (PlayerAnglerQuestsPacket)args_.Packet;
+            var args = new PlayerAnglerQuestsEventArgs(args_.Sender, packet);
+
+            LogPlayerAnglerQuests_Before(args);
+            PlayerAnglerQuests.Invoke(this, args);
+            LogPlayerAnglerQuests_After(args);
+
+            args_.CancellationReason = args.CancellationReason;
+        }
+
+        [Conditional("DEBUG"), ExcludeFromCodeCoverage]
+        private void LogPlayerAnglerQuests_Before(PlayerAnglerQuestsEventArgs args) {
+            // Not localized because this string is developer-facing.
+            Log.Debug(
+                "Invoking {Event} with [{Player} completed {PlayerNumberOfAnglerQuestsCompleted}]",
+                PlayerAnglerQuests, args.Player, args.PlayerNumberOfAnglerQuestsCompleted);
+        }
+
+        [Conditional("DEBUG"), ExcludeFromCodeCoverage]
+        private void LogPlayerAnglerQuests_After(PlayerAnglerQuestsEventArgs args) {
+            if (args.IsCanceled()) {
+                // Not localized because this string is developer-facing.
+                Log.Debug("Canceled {Event} for {Reason}", PlayerAnglerQuests, args.CancellationReason);
+            } else if (args.IsDirty) {
+                // Not localized because this string is developer-facing.
+                Log.Debug(
+                    "Altered {Event} to [{Player} completed {PlayerNumberOfAnglerQuestsCompleted}]",
+                    PlayerAnglerQuests, args.Player, args.PlayerNumberOfAnglerQuestsCompleted);
             }
         }
 

@@ -124,6 +124,15 @@ namespace Orion.Players {
         EventHandlerCollection<PlayerTeleportationPotionEventArgs> PlayerTeleportationPotion { get; }
 
         /// <summary>
+        /// Gets the event handlers that occur when a player sends the number of angler quests they have completed. This
+        /// event can be canceled.
+        /// </summary>
+        /// <value>
+        /// The event handlers that occur when a player sends the number of angler quests they have completed.
+        /// </value>
+        EventHandlerCollection<PlayerAnglerQuestsEventArgs> PlayerAnglerQuests { get; }
+
+        /// <summary>
         /// Gets the event handlers that occur when a player chats. This event can be canceled.
         /// </summary>
         /// <value>The event handlers that occur when a player chats.</value>
