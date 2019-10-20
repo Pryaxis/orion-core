@@ -53,6 +53,7 @@ namespace Orion.Players {
         public EventHandlerCollection<PlayerHealEffectEventArgs> PlayerHealEffect { get; }
         public EventHandlerCollection<PlayerPasswordResponseEventArgs> PlayerPasswordResponse { get; }
         public EventHandlerCollection<PlayerManaEventArgs> PlayerMana { get; }
+        public EventHandlerCollection<PlayerManaEffectEventArgs> PlayerManaEffect { get; }
         public EventHandlerCollection<PlayerTeamEventArgs> PlayerTeam { get; }
         public EventHandlerCollection<PlayerUuidEventArgs> PlayerUuid { get; }
         public EventHandlerCollection<PlayerTeleportationPotionEventArgs> PlayerTeleportationPotion { get; }
@@ -76,6 +77,7 @@ namespace Orion.Players {
                 [PacketType.PlayerHealEffect] = PlayerHealEffectHandler,
                 [PacketType.PlayerPasswordResponse] = PlayerPasswordResponseHandler,
                 [PacketType.PlayerMana] = PlayerManaHandler,
+                [PacketType.PlayerManaEffect] = PlayerManaEffectHandler,
                 [PacketType.PlayerTeam] = PlayerTeamHandler,
                 [PacketType.PlayerUuid] = PlayerUuidHandler,
                 [PacketType.PlayerTeleportationPotion] = PlayerTeleportationPotionHandler,
@@ -101,6 +103,7 @@ namespace Orion.Players {
             PlayerHealEffect = new EventHandlerCollection<PlayerHealEffectEventArgs>();
             PlayerPasswordResponse = new EventHandlerCollection<PlayerPasswordResponseEventArgs>();
             PlayerMana = new EventHandlerCollection<PlayerManaEventArgs>();
+            PlayerManaEffect = new EventHandlerCollection<PlayerManaEffectEventArgs>();
             PlayerTeam = new EventHandlerCollection<PlayerTeamEventArgs>();
             PlayerUuid = new EventHandlerCollection<PlayerUuidEventArgs>();
             PlayerTeleportationPotion = new EventHandlerCollection<PlayerTeleportationPotionEventArgs>();
@@ -597,7 +600,7 @@ namespace Orion.Players {
         private void PlayerHealEffect_Before(PlayerHealEffectEventArgs args) {
             // Not localized because this string is developer-facing.
             Log.Debug(
-                "Invoking {Event} with [{Player} for {HealAmount}]",
+                "Invoking {Event} with [{Player} restoring {HealAmount} hp]",
                 PlayerHealEffect, args.Player, args.HealAmount);
         }
         
@@ -609,7 +612,7 @@ namespace Orion.Players {
             } else if (args.IsDirty) {
                 // Not localized because this string is developer-facing.
                 Log.Debug(
-                    "Altered {Event} to [{Player} for {HealAmount}]",
+                    "Altered {Event} to [{Player} restoring {HealAmount} hp]",
                     PlayerHealEffect, args.Player, args.HealAmount);
             }
         }
@@ -683,6 +686,42 @@ namespace Orion.Players {
                 Log.Debug(
                     "Altered {Event} to [{Player} has {PlayerMana}/{PlayerMaxMana} mp]",
                     PlayerMana, args.Player, args.Mana, args.MaxMana);
+            }
+        }
+
+        // =============================================================================================================
+        // Handling PlayerManaEffect
+        // =============================================================================================================
+
+        private void PlayerManaEffectHandler(PacketReceiveEventArgs args_) {
+            var packet = (PlayerManaEffectPacket)args_.Packet;
+            var args = new PlayerManaEffectEventArgs(args_.Sender, packet);
+
+            PlayerManaEffect_Before(args);
+            PlayerManaEffect.Invoke(this, args);
+            PlayerManaEffect_After(args);
+
+            args_.CancellationReason = args.CancellationReason;
+        }
+
+        [Conditional("DEBUG"), ExcludeFromCodeCoverage]
+        private void PlayerManaEffect_Before(PlayerManaEffectEventArgs args) {
+            // Not localized because this string is developer-facing.
+            Log.Debug(
+                "Invoking {Event} with [{Player} restoring {ManaAmount} mp]",
+                PlayerManaEffect, args.Player, args.ManaAmount);
+        }
+        
+        [Conditional("DEBUG"), ExcludeFromCodeCoverage]
+        private void PlayerManaEffect_After(PlayerManaEffectEventArgs args) {
+            if (args.IsCanceled()) {
+                // Not localized because this string is developer-facing.
+                Log.Debug("Canceled {Event} for {Reason}", PlayerManaEffect, args.CancellationReason);
+            } else if (args.IsDirty) {
+                // Not localized because this string is developer-facing.
+                Log.Debug(
+                    "Altered {Event} to [{Player} restoring {ManaAmount} mp]",
+                    PlayerManaEffect, args.Player, args.ManaAmount);
             }
         }
 

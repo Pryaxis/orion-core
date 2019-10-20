@@ -21,21 +21,21 @@ using Orion.Players;
 
 namespace Orion.Events.Players {
     /// <summary>
-    /// Provides data for the <see cref="IPlayerService.PlayerHealEffect"/> event. This event can be canceled.
+    /// Provides data for the <see cref="IPlayerService.PlayerManaEffect"/> event. This event can be canceled.
     /// </summary>
-    [EventArgs("player-heal-fx")]
-    public sealed class PlayerHealEffectEventArgs : PlayerPacketEventArgs<PlayerHealEffectPacket> {
+    [EventArgs("player-mana-fx")]
+    public sealed class PlayerManaEffectEventArgs : PlayerPacketEventArgs<PlayerManaEffectPacket> {
         /// <summary>
-        /// Gets or sets the heal amount.
+        /// Gets or sets the mana amount.
         /// </summary>
-        /// <value>The heal amount.</value>
-        public short HealAmount {
-            get => _packet.HealAmount;
-            set => _packet.HealAmount = value;
+        /// <value>The mana amount.</value>
+        public short ManaAmount {
+            get => _packet.ManaAmount;
+            set => _packet.ManaAmount = value;
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="PlayerHealEffectEventArgs"/> class with the specified player
+        /// Initializes a new instance of the <see cref="PlayerManaEffectEventArgs"/> class with the specified player
         /// and packet.
         /// </summary>
         /// <param name="player">The player.</param>
@@ -43,6 +43,6 @@ namespace Orion.Events.Players {
         /// <exception cref="ArgumentNullException">
         /// <paramref name="player"/> or <paramref name="packet"/> are <see langword="null"/>.
         /// </exception>
-        public PlayerHealEffectEventArgs(IPlayer player, PlayerHealEffectPacket packet) : base(player, packet) { }
+        public PlayerManaEffectEventArgs(IPlayer player, PlayerManaEffectPacket packet) : base(player, packet) { }
     }
 }

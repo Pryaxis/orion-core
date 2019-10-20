@@ -119,6 +119,12 @@ namespace Orion.Players {
         EventHandlerCollection<PlayerManaEventArgs> PlayerMana { get; }
 
         /// <summary>
+        /// Gets the event handlers that occur when a player triggers a mana effect. This event can be canceled.
+        /// </summary>
+        /// <value>The event handlers that occur when a player triggers a mana effect.</value>
+        EventHandlerCollection<PlayerManaEffectEventArgs> PlayerManaEffect { get; }
+
+        /// <summary>
         /// Gets the event handlers that occur when a player changes teams. This event can be canceled.
         /// </summary>
         /// <value>The event handlers that occur when a player changes teams.</value>
