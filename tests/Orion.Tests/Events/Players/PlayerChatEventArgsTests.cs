@@ -56,57 +56,57 @@ namespace Orion.Events.Players {
         }
 
         [Fact]
-        public void ChatCommand_Get() {
+        public void Command_Get() {
             var player = new Mock<IPlayer>().Object;
             var args = new PlayerChatEventArgs(player, new ChatModule { ClientCommand = "test" });
 
-            args.ChatCommand.Should().Be("test");
+            args.Command.Should().Be("test");
         }
 
         [Fact]
-        public void ChatCommand_Set() {
+        public void Command_Set() {
             var player = new Mock<IPlayer>().Object;
             var module = new ChatModule();
             var args = new PlayerChatEventArgs(player, module);
 
-            args.ChatCommand = "COMMAND";
+            args.Command = "COMMAND";
 
             module.ClientCommand.Should().Be("COMMAND");
         }
 
         [Fact]
-        public void ChatCommand_SetNullValue_ThrowsArgumentNullException() {
+        public void Command_SetNullValue_ThrowsArgumentNullException() {
             var player = new Mock<IPlayer>().Object;
             var args = new PlayerChatEventArgs(player, new ChatModule());
-            Action action = () => args.ChatCommand = null;
+            Action action = () => args.Command = null;
 
             action.Should().Throw<ArgumentNullException>();
         }
 
         [Fact]
-        public void ChatText_Get() {
+        public void Text_Get() {
             var player = new Mock<IPlayer>().Object;
             var args = new PlayerChatEventArgs(player, new ChatModule { ClientText = "test" });
 
-            args.ChatText.Should().Be("test");
+            args.Text.Should().Be("test");
         }
 
         [Fact]
-        public void ChatText_Set() {
+        public void Text_Set() {
             var player = new Mock<IPlayer>().Object;
             var module = new ChatModule();
             var args = new PlayerChatEventArgs(player, module);
 
-            args.ChatText = "TEXT";
+            args.Text = "TEXT";
 
             module.ClientText.Should().Be("TEXT");
         }
 
         [Fact]
-        public void ChatText_SetNullValue_ThrowsArgumentNullException() {
+        public void Text_SetNullValue_ThrowsArgumentNullException() {
             var player = new Mock<IPlayer>().Object;
             var args = new PlayerChatEventArgs(player, new ChatModule());
-            Action action = () => args.ChatText = null;
+            Action action = () => args.Text = null;
 
             action.Should().Throw<ArgumentNullException>();
         }

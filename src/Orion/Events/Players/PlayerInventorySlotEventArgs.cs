@@ -24,16 +24,14 @@ namespace Orion.Events.Players {
     /// <summary>
     /// Provides data for the <see cref="IPlayerService.PlayerInventorySlot"/> event. This event can be canceled.
     /// </summary>
-    [EventArgs("player-inv-slot")]
+    [EventArgs("player-inventory")]
     public sealed class PlayerInventorySlotEventArgs : PlayerPacketEventArgs<PlayerInventorySlotPacket> {
         /// <summary>
         /// Gets the player's inventory slot.
         /// </summary>
         /// <value>The player's inventory slot.</value>
-        /// <remarks>
-        /// This value can range from <c>0</c> to <c>219</c>. Check the <see cref="IPlayerInventory"/> interface for a
-        /// more detailed description on the slots.
-        /// </remarks>
+        /// <remarks>This property's value can range from <c>0</c> to <c>219</c>.</remarks>
+        /// <seealso cref="IPlayerInventory"/>
         public byte InventorySlot => _packet.InventorySlot;
 
         /// <summary>

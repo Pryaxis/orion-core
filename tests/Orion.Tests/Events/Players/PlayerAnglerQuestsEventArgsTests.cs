@@ -34,7 +34,8 @@ namespace Orion.Events.Players {
 
         [Fact]
         public void Ctor_NullPlayer_ThrowsArgumentNullException() {
-            Func<PlayerAnglerQuestsEventArgs> func = () => new PlayerAnglerQuestsEventArgs(null, new PlayerAnglerQuestsPacket());
+            Func<PlayerAnglerQuestsEventArgs> func =
+                () => new PlayerAnglerQuestsEventArgs(null, new PlayerAnglerQuestsPacket());
 
             func.Should().Throw<ArgumentNullException>();
         }

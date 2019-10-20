@@ -36,7 +36,7 @@ namespace Orion.Packets.Players {
         /// Gets or sets the player's inventory slot.
         /// </summary>
         /// <value>This player's inventory slot.</value>
-        /// <remarks>This value can range from <c>0</c> to <c>219</c>.</remarks>
+        /// <remarks>This property's value can range from <c>0</c> to <c>219</c>.</remarks>
         /// <seealso cref="IPlayerInventory"/>
         public byte InventorySlot {
             get => _inventorySlot;

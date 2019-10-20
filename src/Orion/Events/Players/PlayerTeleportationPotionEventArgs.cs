@@ -22,7 +22,7 @@ namespace Orion.Events.Players {
     /// <summary>
     /// Provides data for the <see cref="IPlayerService.PlayerTeleportationPotion"/> event. This event can be canceled.
     /// </summary>
-    [EventArgs("player-tp-pot")]
+    [EventArgs("player-teleport")]
     public sealed class PlayerTeleportationPotionEventArgs : PlayerEventArgs, ICancelable {
         /// <inheritdoc/>
         public string? CancellationReason { get; set; }

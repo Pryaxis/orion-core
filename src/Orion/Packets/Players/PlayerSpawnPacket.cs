@@ -24,8 +24,8 @@ namespace Orion.Packets.Players {
     /// <remarks>This packet is sent when a player spawns or respawns.</remarks>
     public sealed class PlayerSpawnPacket : Packet {
         private byte _playerIndex;
-        private short _spawnX;
-        private short _spawnY;
+        private short _x;
+        private short _y;
 
         /// <inheritdoc/>
         public override PacketType Type => PacketType.PlayerSpawn;
@@ -46,10 +46,10 @@ namespace Orion.Packets.Players {
         /// Gets the player's spawn's X coordinate. If negative, then the world's spawn will be used.
         /// </summary>
         /// <value>The player's spawn's X coordinate.</value>
-        public short SpawnX {
-            get => _spawnX;
+        public short X {
+            get => _x;
             set {
-                _spawnX = value;
+                _x = value;
                 _isDirty = true;
             }
         }
@@ -58,24 +58,24 @@ namespace Orion.Packets.Players {
         /// Gets the player's spawn's Y coordinate. If negative, then the world's spawn will be used.
         /// </summary>
         /// <value>The player's spawn's Y coordinate.</value>
-        public short SpawnY {
-            get => _spawnY;
+        public short Y {
+            get => _y;
             set {
-                _spawnY = value;
+                _y = value;
                 _isDirty = true;
             }
         }
 
         private protected override void ReadFromReader(BinaryReader reader, PacketContext context) {
             _playerIndex = reader.ReadByte();
-            _spawnX = reader.ReadInt16();
-            _spawnY = reader.ReadInt16();
+            _x = reader.ReadInt16();
+            _y = reader.ReadInt16();
         }
 
         private protected override void WriteToWriter(BinaryWriter writer, PacketContext context) {
             writer.Write(_playerIndex);
-            writer.Write(_spawnX);
-            writer.Write(_spawnY);
+            writer.Write(_x);
+            writer.Write(_y);
         }
     }
 }

@@ -451,7 +451,7 @@ namespace Orion.Players {
             // Not localized because this string is developer-facing.
             Log.Debug(
                 "Invoking {Event} with [{Player} at {PlayerSpawnX}, {PlayerSpawnY}]",
-                PlayerSpawn, args.Player, args.SpawnX, args.SpawnY);
+                PlayerSpawn, args.Player, args.X, args.Y);
         }
         
         [Conditional("DEBUG"), ExcludeFromCodeCoverage]
@@ -463,7 +463,7 @@ namespace Orion.Players {
                 // Not localized because this string is developer-facing.
                 Log.Debug(
                     "Altered {Event} to [{Player} at {PlayerSpawnX}, {PlayerSpawnY}]",
-                    PlayerSpawn, args.Player, args.SpawnX, args.SpawnY);
+                    PlayerSpawn, args.Player, args.X, args.Y);
             }
         }
 
@@ -799,7 +799,7 @@ namespace Orion.Players {
             // Not localized because this string is developer-facing.
             Log.Debug(
                 "Invoking {Event} with [{Player} chatting {ChatCommand} {ChatText}]",
-                PlayerChat, args.Player, args.ChatCommand, args.ChatText);
+                PlayerChat, args.Player, args.Command, args.Text);
         }
         
         [Conditional("DEBUG"), ExcludeFromCodeCoverage]
@@ -811,7 +811,7 @@ namespace Orion.Players {
                 // Not localized because this string is developer-facing.
                 Log.Debug(
                     "Altered {Event} to [{Player} chatting {ChatCommand} {ChatText}]",
-                    PlayerChat, args.Player, args.ChatCommand, args.ChatText);
+                    PlayerChat, args.Player, args.Command, args.Text);
             }
         }
     }

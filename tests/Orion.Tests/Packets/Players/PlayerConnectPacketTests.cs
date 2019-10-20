@@ -30,7 +30,7 @@ namespace Orion.Packets.Players {
         }
 
         [Fact]
-        public void VersionString_Set_Null_ThrowsArgumentNullException() {
+        public void VersionString_SetNullValue_ThrowsArgumentNullException() {
             var packet = new PlayerConnectPacket();
             Action action = () => packet.VersionString = null;
 

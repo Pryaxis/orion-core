@@ -48,7 +48,8 @@ namespace Orion.Utils {
         T GetAnnotationOrDefault<T>(string key, Func<T>? defaultValueProvider = null, bool createIfNotExists = false);
 
         /// <summary>
-        /// Sets the annotation of a type with the given <paramref name="key"/> to the specified <paramref name="value"/>.
+        /// Sets the annotation of a type with the given <paramref name="key"/> to the specified
+        /// <paramref name="value"/>.
         /// </summary>
         /// <typeparam name="T">The type.</typeparam>
         /// <param name="key">The key.</param>

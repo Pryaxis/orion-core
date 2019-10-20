@@ -177,8 +177,8 @@ namespace Orion.Players {
             playerService.PlayerSpawn.RegisterHandler((sender, args) => {
                 isRun = true;
                 args.Player.Should().BeSameAs(playerService.Players[1]);
-                args.SpawnX.Should().Be(-1);
-                args.SpawnY.Should().Be(-1);
+                args.X.Should().Be(-1);
+                args.Y.Should().Be(-1);
                 args.Cancel();
             });
 
@@ -352,8 +352,8 @@ namespace Orion.Players {
             var isRun = false;
             playerService.PlayerChat.RegisterHandler((sender, args) => {
                 isRun = true;
-                args.ChatCommand.Should().Be("Say");
-                args.ChatText.Should().Be("/command test");
+                args.Command.Should().Be("Say");
+                args.Text.Should().Be("/command test");
                 args.Cancel();
             });
 

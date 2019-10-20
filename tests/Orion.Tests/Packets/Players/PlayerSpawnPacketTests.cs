@@ -36,8 +36,8 @@ namespace Orion.Packets.Players {
             var packet = (PlayerSpawnPacket)Packet.ReadFromStream(stream, PacketContext.Server);
 
             packet.PlayerIndex.Should().Be(0);
-            packet.SpawnX.Should().Be(-1);
-            packet.SpawnY.Should().Be(-1);
+            packet.X.Should().Be(-1);
+            packet.Y.Should().Be(-1);
         }
 
         [Fact]

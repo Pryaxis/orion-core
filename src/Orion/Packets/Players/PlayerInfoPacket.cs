@@ -231,10 +231,8 @@ namespace Orion.Packets.Players {
         /// Gets or sets the player's held item slot.
         /// </summary>
         /// <value>The player's held item slot.</value>
-        /// <remarks>
-        /// This value can range from <c>0</c> to <c>58</c>. Check the <see cref="IPlayerInventory"/> interface for a
-        /// more detailed description on the slots.
-        /// </remarks>
+        /// <remarks>This property's value can range from <c>0</c> to <c>58</c>.</remarks>
+        /// <seealso cref="IPlayerInventory"/>
         public byte HeldItemSlot {
             get => _heldItemSlot;
             set {

@@ -46,7 +46,8 @@ namespace Orion.Packets.Players {
         /// </summary>
         /// <value>The player's stealth status.</value>
         /// <remarks>
-        /// This value can range from <c>0.0</c> to <c>1.0</c>. A value of <c>0.0</c> represents full stealth.
+        /// This property's value can range from <c>0.0</c> to <c>1.0</c>. A value of <c>0.0</c> represents full
+        /// stealth.
         /// </remarks>
         public float StealthStatus {
             get => _stealthStatus;

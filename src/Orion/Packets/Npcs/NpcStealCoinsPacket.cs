@@ -51,8 +51,9 @@ namespace Orion.Packets.Npcs {
         /// </summary>
         /// <value>The NPC's stolen value.</value>
         /// <remarks>
-        /// This value corresponds to copper coins 1:1. Thus, a value of 100 corresponds to a silver coin, a value of
-        /// 10,000 corresponds to a gold coin, and a value of 1,000,000 corresponds to a platinum coin.
+        /// This property's value corresponds to copper coins 1:1. Thus, a value of <c>100</c> corresponds to a silver
+        /// coin, a value of <c>10000</c> corresponds to a gold coin, and a value of <c>1000000</c> corresponds to a
+        /// platinum coin.
         /// </remarks>
         public float Value {
             get => _value;

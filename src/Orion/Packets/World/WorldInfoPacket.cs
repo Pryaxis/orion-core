@@ -617,7 +617,9 @@ namespace Orion.Packets.World {
         /// <summary>
         /// Gets or sets a value indicating whether the Destroyer has been defeated.
         /// </summary>
-        /// <value><see langword="true"/> if the Destroyer has been defeated; otherwise, <see langword="false"/>.</value>
+        /// <value>
+        /// <see langword="true"/> if the Destroyer has been defeated; otherwise, <see langword="false"/>.
+        /// </value>
         public bool HasDefeatedDestroyer {
             get => _hasDefeatedDestroyer;
             set {

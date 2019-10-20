@@ -51,7 +51,7 @@ namespace Orion.Packets.World.TileEntities {
         /// Gets or sets the chest contents slot.
         /// </summary>
         /// <value>The chest contents slot.</value>
-        /// <remarks>This value can range from <c>0</c> to <c>39</c>.</remarks>
+        /// <remarks>This property's value can range from <c>0</c> to <c>39</c>.</remarks>
         public byte ContentsSlot {
             get => _contentsSlot;
             set {
