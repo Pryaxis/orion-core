@@ -32,7 +32,7 @@ namespace Orion.Npcs {
 
         public OrionNpc(TerrariaNpc terrariaNpc) : this(-1, terrariaNpc) { }
         public OrionNpc(int npcIndex, TerrariaNpc terrariaNpc) : base(npcIndex, terrariaNpc) { }
-        
+
         // Not localized because this string is developer-facing.
         [Pure, ExcludeFromCodeCoverage]
         public override string ToString() => Index >= 0 ? $"#: {Index}" : "NPC instance";

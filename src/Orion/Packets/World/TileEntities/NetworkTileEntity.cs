@@ -69,7 +69,7 @@ namespace Orion.Packets.World.TileEntities {
                 IsDirty = true;
             }
         }
-        
+
         /// <summary>
         /// Gets or sets the tile entity's Y coordinate.
         /// </summary>

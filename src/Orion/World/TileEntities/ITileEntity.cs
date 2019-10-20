@@ -49,7 +49,7 @@ namespace Orion.World.TileEntities {
         /// </summary>
         /// <value>The tile entity's index.</value>
         int Index { get; }
-        
+
         /// <summary>
         /// Gets a value indicating whether the tile entity is active: i.e., whether the entity is concrete and exists
         /// in the world.

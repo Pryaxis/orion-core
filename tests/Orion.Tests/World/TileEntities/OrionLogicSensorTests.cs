@@ -30,7 +30,7 @@ namespace Orion.World.TileEntities {
             };
             var logicSensor = new OrionLogicSensor(terrariaLogicSensor);
 
-            logicSensor.LogicSensorType.Should().Be(LogicSensorType.Water);
+            logicSensor.SensorType.Should().Be(LogicSensorType.Water);
         }
 
         [Fact]
@@ -38,7 +38,7 @@ namespace Orion.World.TileEntities {
             var terrariaLogicSensor = new TerrariaLogicSensor();
             var logicSensor = new OrionLogicSensor(terrariaLogicSensor);
 
-            logicSensor.LogicSensorType = LogicSensorType.Water;
+            logicSensor.SensorType = LogicSensorType.Water;
 
             terrariaLogicSensor.logicCheck.Should().Be(TerrariaLogicSensor.LogicCheckType.Water);
         }

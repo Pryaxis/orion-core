@@ -58,7 +58,7 @@ namespace Orion.Packets.Players {
                 _isDirty = true;
             }
         }
-        
+
         /// <summary>
         /// Gets or sets a value indicating whether the player is holding the up control.
         /// </summary>
@@ -72,7 +72,7 @@ namespace Orion.Packets.Players {
                 _isDirty = true;
             }
         }
-        
+
         /// <summary>
         /// Gets or sets a value indicating whether the player is holding the down control.
         /// </summary>
@@ -86,7 +86,7 @@ namespace Orion.Packets.Players {
                 _isDirty = true;
             }
         }
-        
+
         /// <summary>
         /// Gets or sets a value indicating whether the player is holding the left control.
         /// </summary>
@@ -100,7 +100,7 @@ namespace Orion.Packets.Players {
                 _isDirty = true;
             }
         }
-        
+
         /// <summary>
         /// Gets or sets a value indicating whether the player is holding the right control.
         /// </summary>
@@ -114,7 +114,7 @@ namespace Orion.Packets.Players {
                 _isDirty = true;
             }
         }
-        
+
         /// <summary>
         /// Gets or sets a value indicating whether the player is holding the jump control.
         /// </summary>
@@ -128,7 +128,7 @@ namespace Orion.Packets.Players {
                 _isDirty = true;
             }
         }
-        
+
         /// <summary>
         /// Gets or sets a value indicating whether the player is holding the use item control.
         /// </summary>
@@ -142,7 +142,7 @@ namespace Orion.Packets.Players {
                 _isDirty = true;
             }
         }
-        
+
         /// <summary>
         /// Gets or sets a value indicating the player's direction.
         /// </summary>
@@ -154,7 +154,7 @@ namespace Orion.Packets.Players {
                 _isDirty = true;
             }
         }
-        
+
         /// <summary>
         /// Gets or sets a value indicating whether the player is climbing a rope.
         /// </summary>
@@ -166,7 +166,7 @@ namespace Orion.Packets.Players {
                 _isDirty = true;
             }
         }
-        
+
         /// <summary>
         /// Gets or sets a value indicating the player's direction when climbing a rope.
         /// </summary>
@@ -181,7 +181,7 @@ namespace Orion.Packets.Players {
                 _isDirty = true;
             }
         }
-        
+
         /// <summary>
         /// Gets or sets a value indicating whether the player is stealthed with vortex armor.
         /// </summary>
@@ -195,7 +195,7 @@ namespace Orion.Packets.Players {
                 _isDirty = true;
             }
         }
-        
+
         /// <summary>
         /// Gets or sets a value indicating whether the player is right-side up.
         /// </summary>
@@ -211,7 +211,7 @@ namespace Orion.Packets.Players {
                 _isDirty = true;
             }
         }
-        
+
         /// <summary>
         /// Gets or sets a value indicating whether the player is raising their shield.
         /// </summary>
@@ -226,7 +226,7 @@ namespace Orion.Packets.Players {
                 _isDirty = true;
             }
         }
-        
+
         /// <summary>
         /// Gets or sets the player's held item slot.
         /// </summary>
@@ -240,7 +240,7 @@ namespace Orion.Packets.Players {
                 _isDirty = true;
             }
         }
-        
+
         /// <summary>
         /// Gets or sets the player's position. The components are pixels.
         /// </summary>
@@ -252,7 +252,7 @@ namespace Orion.Packets.Players {
                 _isDirty = true;
             }
         }
-        
+
         /// <summary>
         /// Gets or sets the player's velocity. The components are pixels per tick.
         /// </summary>

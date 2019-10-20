@@ -16,13 +16,14 @@
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
 using System;
-using System.IO;
+using System.Diagnostics.CodeAnalysis;
 using FluentAssertions;
 using Xunit;
 
 namespace Orion.Packets.Modules {
     public class ModulePacketTests {
         [Fact]
+        [SuppressMessage("Style", "IDE0017:Simplify object initialization", Justification = "Testing")]
         public void Module_Set_MarksAsDirty() {
             var packet = new ModulePacket();
 

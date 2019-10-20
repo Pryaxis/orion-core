@@ -21,7 +21,7 @@ using TerrariaLogicSensor = Terraria.GameContent.Tile_Entities.TELogicSensor;
 
 namespace Orion.World.TileEntities {
     internal sealed class OrionLogicSensor : OrionTileEntity<TerrariaLogicSensor>, ILogicSensor {
-        public LogicSensorType LogicSensorType {
+        public LogicSensorType SensorType {
             get => (LogicSensorType)Wrapped.logicCheck;
             set => Wrapped.logicCheck = (TerrariaLogicSensor.LogicCheckType)value;
         }
@@ -32,7 +32,7 @@ namespace Orion.World.TileEntities {
         }
 
         public OrionLogicSensor(TerrariaLogicSensor terrariaLogicSensor) : base(terrariaLogicSensor) { }
-        
+
         // Not localized because this string is developer-facing.
         [Pure, ExcludeFromCodeCoverage]
         public override string ToString() => Index >= 0 ? $"#: {Index}" : "logic sensor instance";

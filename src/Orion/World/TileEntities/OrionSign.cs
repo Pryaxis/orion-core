@@ -68,7 +68,7 @@ namespace Orion.World.TileEntities {
             Index = signIndex;
             Wrapped = terrariaSign;
         }
-        
+
         // Not localized because this string is developer-facing.
         [Pure, ExcludeFromCodeCoverage]
         public override string ToString() => Index >= 0 ? $"#: {Index}" : "sign instance";

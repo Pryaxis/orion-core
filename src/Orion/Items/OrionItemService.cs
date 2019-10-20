@@ -67,12 +67,11 @@ namespace Orion.Items {
             TerrariaItem.itemCaches[(int)type] = oldItemCache;
             return itemIndex >= 0 && itemIndex < Items.Count ? Items[itemIndex] : null;
         }
-        
+
         [Conditional("DEBUG"), ExcludeFromCodeCoverage]
-        private void LogSpawnItem(ItemType type, Vector2 position, int stackSize) {
+        private void LogSpawnItem(ItemType type, Vector2 position, int stackSize) =>
             // Not localized because this string is developer-facing.
             Log.Debug("Spawning {ItemType} x{ItemStackSize} at {Position}", type, stackSize, position);
-        }
 
         private IItem GetItem(TerrariaItem terrariaItem) {
             Debug.Assert(
@@ -108,13 +107,12 @@ namespace Orion.Items {
 
             return HookResult.Continue;
         }
-        
+
         [Conditional("DEBUG"), ExcludeFromCodeCoverage]
-        private void LogItemSetDefaults_Before(ItemSetDefaultsEventArgs args) {
+        private void LogItemSetDefaults_Before(ItemSetDefaultsEventArgs args) =>
             // Not localized because this string is developer-facing.
             Log.Verbose("Invoking {Event} with [{Item}, {ItemType}]", ItemSetDefaults, args.Item, args.ItemType);
-        }
-        
+
         [Conditional("DEBUG"), ExcludeFromCodeCoverage]
         private void LogItemSetDefaults_After(ItemSetDefaultsEventArgs args) {
             if (args.IsCanceled()) {
@@ -146,13 +144,12 @@ namespace Orion.Items {
 
             return args.IsCanceled() ? HookResult.Cancel : HookResult.Continue;
         }
-        
+
         [Conditional("DEBUG"), ExcludeFromCodeCoverage]
-        private void LogItemUpdate_Before(ItemUpdateEventArgs args) {
+        private void LogItemUpdate_Before(ItemUpdateEventArgs args) =>
             // Not localized because this string is developer-facing.
             Log.Verbose("Invoking {Event} with [{Item}]", ItemUpdate, args.Item);
-        }
-        
+
         [Conditional("DEBUG"), ExcludeFromCodeCoverage]
         private void LogItemUpdate_After(ItemUpdateEventArgs args) {
             if (args.IsCanceled()) {

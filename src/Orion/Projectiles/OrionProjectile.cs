@@ -36,7 +36,7 @@ namespace Orion.Projectiles {
 
         public OrionProjectile(int projectileIndex, TerrariaProjectile terrariaProjectile)
             : base(projectileIndex, terrariaProjectile) { }
-        
+
         // Not localized because this string is developer-facing.
         [Pure, ExcludeFromCodeCoverage]
         public override string ToString() => Index >= 0 ? $"#: {Index}" : "projectile instance";

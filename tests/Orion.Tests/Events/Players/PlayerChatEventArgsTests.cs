@@ -16,6 +16,7 @@
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 using FluentAssertions;
 using Moq;
 using Orion.Packets.Modules;
@@ -64,6 +65,7 @@ namespace Orion.Events.Players {
         }
 
         [Fact]
+        [SuppressMessage("Style", "IDE0017:Simplify object initialization", Justification = "Testing")]
         public void Command_Set() {
             var player = new Mock<IPlayer>().Object;
             var module = new ChatModule();
@@ -95,9 +97,9 @@ namespace Orion.Events.Players {
         public void Text_Set() {
             var player = new Mock<IPlayer>().Object;
             var module = new ChatModule();
-            var args = new PlayerChatEventArgs(player, module);
-
-            args.Text = "TEXT";
+            var args = new PlayerChatEventArgs(player, module) {
+                Text = "TEXT"
+            };
 
             module.ClientText.Should().Be("TEXT");
         }

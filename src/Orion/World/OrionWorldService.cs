@@ -82,12 +82,11 @@ namespace Orion.World {
             WorldLoad.Invoke(this, args);
             return HookResult.Continue;
         }
-        
+
         [Conditional("DEBUG"), ExcludeFromCodeCoverage]
-        private void LogWorldLoad() {
+        private void LogWorldLoad() =>
             // Not localized because this string is developer-facing.
             Log.Debug("Invoking {Event}", WorldLoad);
-        }
 
         // =============================================================================================================
         // Handling WorldSave
@@ -104,11 +103,10 @@ namespace Orion.World {
         }
 
         [Conditional("DEBUG"), ExcludeFromCodeCoverage]
-        private void LogWorldSave_Before() {
+        private void LogWorldSave_Before() =>
             // Not localized because this string is developer-facing.
             Log.Debug("Invoking {Event}", WorldSave);
-        }
-        
+
         [Conditional("DEBUG"), ExcludeFromCodeCoverage]
         private void LogWorldSave_After(WorldSaveEventArgs args) {
             if (args.IsCanceled()) {

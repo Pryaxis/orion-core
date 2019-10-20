@@ -41,7 +41,7 @@ namespace Orion.Packets.Players {
                 _isDirty = true;
             }
         }
-        
+
         /// <summary>
         /// Gets or sets the player's health.
         /// </summary>
@@ -53,7 +53,7 @@ namespace Orion.Packets.Players {
                 _isDirty = true;
             }
         }
-        
+
         /// <summary>
         /// Gets or sets the player's maximum health.
         /// </summary>

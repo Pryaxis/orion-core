@@ -29,7 +29,7 @@ namespace Orion.Events.Items {
 
         /// <inheritdoc/>
         public string? CancellationReason { get; set; }
-        
+
         /// <inheritdoc/>
         public bool IsDirty { get; private set; }
 

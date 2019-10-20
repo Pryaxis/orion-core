@@ -42,7 +42,7 @@ namespace Orion.Packets.Players {
                 _isDirty = true;
             }
         }
-        
+
         /// <summary>
         /// Gets or sets a value indicating whether the player is in PvP.
         /// </summary>

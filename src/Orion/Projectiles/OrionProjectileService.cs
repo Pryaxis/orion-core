@@ -75,12 +75,11 @@ namespace Orion.Projectiles {
                 damage, knockback, 255, ai0, ai1);
             return projectileIndex >= 0 && projectileIndex < Projectiles.Count ? Projectiles[projectileIndex] : null;
         }
-        
+
         [Conditional("DEBUG"), ExcludeFromCodeCoverage]
-        private void LogSpawnProjectile(ProjectileType type, Vector2 position) {
+        private void LogSpawnProjectile(ProjectileType type, Vector2 position) =>
             // Not localized because this string is developer-facing.
             Log.Debug("Spawning {ProjectileType} at {Position}", type, position);
-        }
 
         private IProjectile GetProjectile(TerrariaProjectile terrariaProjectile) {
             Debug.Assert(terrariaProjectile.whoAmI >= 0 && terrariaProjectile.whoAmI < Projectiles.Count,
@@ -116,15 +115,14 @@ namespace Orion.Projectiles {
 
             return HookResult.Continue;
         }
-        
+
         [Conditional("DEBUG"), ExcludeFromCodeCoverage]
-        private void LogProjectileSetDefaults_Before(ProjectileSetDefaultsEventArgs args) {
+        private void LogProjectileSetDefaults_Before(ProjectileSetDefaultsEventArgs args) =>
             // Not localized because this string is developer-facing.
             Log.Verbose(
                 "Invoking {Event} with [{Projectile}, {ProjectileType}]",
                 ProjectileSetDefaults, args.Projectile, args.ProjectileType);
-        }
-        
+
         [Conditional("DEBUG"), ExcludeFromCodeCoverage]
         private void LogProjectileSetDefaults_After(ProjectileSetDefaultsEventArgs args) {
             if (args.IsCanceled()) {
@@ -157,15 +155,14 @@ namespace Orion.Projectiles {
 
             return args.IsCanceled() ? HookResult.Cancel : HookResult.Continue;
         }
-        
+
         [Conditional("DEBUG"), ExcludeFromCodeCoverage]
-        private void LogProjectileUpdate_Before(ProjectileUpdateEventArgs args) {
+        private void LogProjectileUpdate_Before(ProjectileUpdateEventArgs args) =>
             // Not localized because this string is developer-facing.
             Log.Verbose(
                 "Invoking {Event} with [{Projectile}, {ProjectileType}]",
                 ProjectileUpdate, args.Projectile, args.Projectile.Type);
-        }
-        
+
         [Conditional("DEBUG"), ExcludeFromCodeCoverage]
         private void LogProjectileUpdate_After(ProjectileUpdateEventArgs args) {
             if (args.IsCanceled()) {
@@ -190,15 +187,14 @@ namespace Orion.Projectiles {
 
             return args.IsCanceled() ? HookResult.Cancel : HookResult.Continue;
         }
-        
+
         [Conditional("DEBUG"), ExcludeFromCodeCoverage]
-        private void LogProjectileRemove_Before(ProjectileRemoveEventArgs args) {
+        private void LogProjectileRemove_Before(ProjectileRemoveEventArgs args) =>
             // Not localized because this string is developer-facing.
             Log.Debug(
                 "Invoking {Event} with [{Projectile}, {ProjectileType}]",
                 ProjectileRemove, args.Projectile, args.Projectile.Type);
-        }
-        
+
         [Conditional("DEBUG"), ExcludeFromCodeCoverage]
         private void LogProjectileRemove_After(ProjectileRemoveEventArgs args) {
             if (args.IsCanceled()) {

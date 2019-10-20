@@ -159,7 +159,7 @@ namespace Orion.Events {
 
                 result = _handlerToRegistration.Remove(handler) & _registrations.Remove(registration);
             }
-            
+
             // Not localized because this string is developer-facing.
             registration.Log?.Debug("Unregistered {RegistrationName} from {Event}", registration.Name, this);
             return result;

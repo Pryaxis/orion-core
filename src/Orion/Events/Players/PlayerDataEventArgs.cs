@@ -63,7 +63,7 @@ namespace Orion.Events.Players {
             get => _packet.HairDye;
             set => _packet.HairDye = value;
         }
-        
+
         /// <summary>
         /// Gets or sets the player's equipment hiding flags.
         /// </summary>
@@ -73,7 +73,7 @@ namespace Orion.Events.Players {
             get => _packet.EquipmentHiddenFlags;
             set => _packet.EquipmentHiddenFlags = value;
         }
-        
+
         /// <summary>
         /// Gets or sets the player's miscellaneous equipment hiding flags.
         /// </summary>
@@ -83,7 +83,7 @@ namespace Orion.Events.Players {
             get => _packet.MiscEquipmentHiddenFlags;
             set => _packet.MiscEquipmentHiddenFlags = value;
         }
-        
+
         /// <summary>
         /// Gets or sets the player's hair color. The alpha component is ignored.
         /// </summary>
@@ -92,7 +92,7 @@ namespace Orion.Events.Players {
             get => _packet.HairColor;
             set => _packet.HairColor = value;
         }
-        
+
         /// <summary>
         /// Gets or sets the player's skin color. The alpha component is ignored.
         /// </summary>
@@ -101,7 +101,7 @@ namespace Orion.Events.Players {
             get => _packet.SkinColor;
             set => _packet.SkinColor = value;
         }
-        
+
         /// <summary>
         /// Gets or sets the player's eye color. The alpha component is ignored.
         /// </summary>
@@ -110,7 +110,7 @@ namespace Orion.Events.Players {
             get => _packet.EyeColor;
             set => _packet.EyeColor = value;
         }
-        
+
         /// <summary>
         /// Gets or sets the player's shirt color. The alpha component is ignored.
         /// </summary>
@@ -119,7 +119,7 @@ namespace Orion.Events.Players {
             get => _packet.ShirtColor;
             set => _packet.ShirtColor = value;
         }
-        
+
         /// <summary>
         /// Gets or sets the player's undershirt color. The alpha component is ignored.
         /// </summary>
@@ -128,7 +128,7 @@ namespace Orion.Events.Players {
             get => _packet.UndershirtColor;
             set => _packet.UndershirtColor = value;
         }
-        
+
         /// <summary>
         /// Gets or sets the player's pants color. The alpha component is ignored.
         /// </summary>

@@ -263,12 +263,11 @@ namespace Orion {
             LogServerInitialize();
             ServerInitialize.Invoke(this, args);
         }
-        
+
         [Conditional("DEBUG"), ExcludeFromCodeCoverage]
-        private void LogServerInitialize() {
+        private void LogServerInitialize() =>
             // Not localized because this string is developer-facing.
             _log.Debug("Invoking {Event}", ServerInitialize);
-        }
 
         // =============================================================================================================
         // Handling ServerStart
@@ -280,12 +279,11 @@ namespace Orion {
             LogServerStart();
             ServerStart.Invoke(this, args);
         }
-        
+
         [Conditional("DEBUG"), ExcludeFromCodeCoverage]
-        private void LogServerStart() {
+        private void LogServerStart() =>
             // Not localized because this string is developer-facing.
             _log.Debug("Invoking {Event}", ServerStart);
-        }
 
         // =============================================================================================================
         // Handling ServerUpdate
@@ -297,12 +295,11 @@ namespace Orion {
             LogServerUpdate();
             ServerUpdate.Invoke(this, args);
         }
-        
+
         [Conditional("DEBUG"), ExcludeFromCodeCoverage]
-        private void LogServerUpdate() {
+        private void LogServerUpdate() =>
             // Not localized because this string is developer-facing.
             _log.Verbose("Invoking {Event}", ServerUpdate);
-        }
 
         // =============================================================================================================
         // Handling ServerCommand
@@ -317,13 +314,12 @@ namespace Orion {
 
             return args.IsCanceled() ? HookResult.Cancel : HookResult.Continue;
         }
-        
+
         [Conditional("DEBUG"), ExcludeFromCodeCoverage]
-        private void LogServerCommand_Before(string input) {
+        private void LogServerCommand_Before(string input) =>
             // Not localized because this string is developer-facing.
             _log.Debug("Invoking {Event} with [{Input}]", ServerCommand, input);
-        }
-        
+
         [Conditional("DEBUG"), ExcludeFromCodeCoverage]
         private void LogServerCommand_After(ServerCommandEventArgs args) {
             if (args.IsCanceled()) {

@@ -45,7 +45,7 @@ namespace Orion.Packets.Players {
                 _isDirty = true;
             }
         }
-        
+
         /// <summary>
         /// Gets or sets the player's inventory slot.
         /// </summary>
@@ -59,7 +59,7 @@ namespace Orion.Packets.Players {
                 _isDirty = true;
             }
         }
-        
+
         /// <summary>
         /// Gets or sets the item's stack size.
         /// </summary>
@@ -71,7 +71,7 @@ namespace Orion.Packets.Players {
                 _isDirty = true;
             }
         }
-        
+
         /// <summary>
         /// Gets or sets the item's prefix.
         /// </summary>
@@ -83,7 +83,7 @@ namespace Orion.Packets.Players {
                 _isDirty = true;
             }
         }
-        
+
         /// <summary>
         /// Gets or sets the item's type.
         /// </summary>

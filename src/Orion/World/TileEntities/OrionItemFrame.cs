@@ -27,7 +27,7 @@ namespace Orion.World.TileEntities {
             set => Wrapped.item.type = (int)value;
         }
 
-        public int ItemStackSize {
+        public int StackSize {
             get => Wrapped.item.stack;
             set => Wrapped.item.stack = value;
         }
@@ -38,7 +38,7 @@ namespace Orion.World.TileEntities {
         }
 
         public OrionItemFrame(TerrariaItemFrame terrariaItemFrame) : base(terrariaItemFrame) { }
-        
+
         // Not localized because this string is developer-facing.
         [Pure, ExcludeFromCodeCoverage]
         public override string ToString() => Index >= 0 ? $"#: {Index}" : "item frame instance";

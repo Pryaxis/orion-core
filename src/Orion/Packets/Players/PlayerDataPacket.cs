@@ -58,7 +58,7 @@ namespace Orion.Packets.Players {
                 _isDirty = true;
             }
         }
-        
+
         /// <summary>
         /// Gets or sets the player's clothes style.
         /// </summary>
@@ -70,7 +70,7 @@ namespace Orion.Packets.Players {
                 _isDirty = true;
             }
         }
-        
+
         /// <summary>
         /// Gets or sets the player's hairstyle.
         /// </summary>
@@ -82,7 +82,7 @@ namespace Orion.Packets.Players {
                 _isDirty = true;
             }
         }
-        
+
         /// <summary>
         /// Gets or sets the player's name.
         /// </summary>
@@ -95,7 +95,7 @@ namespace Orion.Packets.Players {
                 _isDirty = true;
             }
         }
-        
+
         /// <summary>
         /// Gets or sets the player's hair dye.
         /// </summary>
@@ -107,7 +107,7 @@ namespace Orion.Packets.Players {
                 _isDirty = true;
             }
         }
-        
+
         /// <summary>
         /// Gets or sets the player's equipment hiding flags.
         /// </summary>
@@ -120,7 +120,7 @@ namespace Orion.Packets.Players {
                 _isDirty = true;
             }
         }
-        
+
         /// <summary>
         /// Gets or sets the player's miscellaneous equipment hiding flags.
         /// </summary>
@@ -133,7 +133,7 @@ namespace Orion.Packets.Players {
                 _isDirty = true;
             }
         }
-        
+
         /// <summary>
         /// Gets or sets the player's hair color. The alpha component is ignored.
         /// </summary>
@@ -145,7 +145,7 @@ namespace Orion.Packets.Players {
                 _isDirty = true;
             }
         }
-        
+
         /// <summary>
         /// Gets or sets the player's skin color. The alpha component is ignored.
         /// </summary>
@@ -157,7 +157,7 @@ namespace Orion.Packets.Players {
                 _isDirty = true;
             }
         }
-        
+
         /// <summary>
         /// Gets or sets the player's eye color. The alpha component is ignored.
         /// </summary>
@@ -169,7 +169,7 @@ namespace Orion.Packets.Players {
                 _isDirty = true;
             }
         }
-        
+
         /// <summary>
         /// Gets or sets the player's shirt color. The alpha component is ignored.
         /// </summary>
@@ -181,7 +181,7 @@ namespace Orion.Packets.Players {
                 _isDirty = true;
             }
         }
-        
+
         /// <summary>
         /// Gets or sets the player's undershirt color. The alpha component is ignored.
         /// </summary>
@@ -193,7 +193,7 @@ namespace Orion.Packets.Players {
                 _isDirty = true;
             }
         }
-        
+
         /// <summary>
         /// Gets or sets the player's pants color. The alpha component is ignored.
         /// </summary>
@@ -229,7 +229,7 @@ namespace Orion.Packets.Players {
                 _isDirty = true;
             }
         }
-        
+
         /// <summary>
         /// Gets or sets a value indicating whether the player has an extra accessory slot.
         /// </summary>

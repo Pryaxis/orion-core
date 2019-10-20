@@ -28,7 +28,7 @@ namespace Orion.Packets.Players {
 
         /// <inheritdoc/>
         public override PacketType Type => PacketType.PlayerConnect;
-        
+
         /// <summary>
         /// Gets or sets the player's version string.
         /// </summary>

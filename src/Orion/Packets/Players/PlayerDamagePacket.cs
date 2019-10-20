@@ -72,7 +72,7 @@ namespace Orion.Packets.Players {
                 _isDirty = true;
             }
         }
-        
+
         /// <summary>
         /// Gets or sets a value indicating the hit direction.
         /// </summary>

@@ -27,7 +27,7 @@ namespace Orion.Packets.Players {
 
         /// <inheritdoc/>
         public override PacketType Type => PacketType.PlayerAnglerQuests;
-        
+
         /// <summary>
         /// Gets or sets the number of angler quests the player has completed.
         /// </summary>

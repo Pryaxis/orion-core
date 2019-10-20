@@ -27,7 +27,7 @@ namespace Orion.World.TileEntities {
         }
 
         public OrionTargetDummy(TerrariaTargetDummy terrariaTrainingDummy) : base(terrariaTrainingDummy) { }
-        
+
         // Not localized because this string is developer-facing.
         [Pure, ExcludeFromCodeCoverage]
         public override string ToString() => Index >= 0 ? $"#: {Index}" : "target dummy instance";

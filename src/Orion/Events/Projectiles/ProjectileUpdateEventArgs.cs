@@ -17,7 +17,6 @@
 
 using System;
 using Orion.Projectiles;
-using Serilog.Events;
 
 namespace Orion.Events.Projectiles {
     /// <summary>

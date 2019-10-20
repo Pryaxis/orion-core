@@ -15,7 +15,6 @@
 // You should have received a copy of the GNU General Public License
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
-using System;
 using Orion.Items;
 using Orion.Utils;
 using TerrariaItemFrame = Terraria.GameContent.Tile_Entities.TEItemFrame;
@@ -36,7 +35,7 @@ namespace Orion.World.TileEntities {
         /// Gets or sets the item's stack size.
         /// </summary>
         /// <value>The item's stack size.</value>
-        int ItemStackSize { get; set; }
+        int StackSize { get; set; }
 
         /// <summary>
         /// Gets or sets the item's prefix.

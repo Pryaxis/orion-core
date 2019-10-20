@@ -95,7 +95,7 @@ namespace Orion.Packets.World {
                 _isDirty = true;
             }
         }
-        
+
         // TODO: implement an enum for this.
 
         /// <summary>

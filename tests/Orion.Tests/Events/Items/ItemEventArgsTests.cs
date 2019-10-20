@@ -29,7 +29,7 @@ namespace Orion.Events.Items {
 
             func.Should().Throw<ArgumentNullException>();
         }
-        
+
         [Fact]
         public void Item_Get() {
             var item = new Mock<IItem>().Object;

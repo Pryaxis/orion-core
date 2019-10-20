@@ -41,7 +41,7 @@ namespace Orion.Packets.Players {
                 _isDirty = true;
             }
         }
-        
+
         /// <summary>
         /// Gets the player's spawn's X coordinate. If negative, then the world's spawn will be used.
         /// </summary>
@@ -53,7 +53,7 @@ namespace Orion.Packets.Players {
                 _isDirty = true;
             }
         }
-        
+
         /// <summary>
         /// Gets the player's spawn's Y coordinate. If negative, then the world's spawn will be used.
         /// </summary>

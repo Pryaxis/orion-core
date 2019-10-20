@@ -175,15 +175,14 @@ namespace Orion.Players {
             buffer.ResetReader();
             return HookResult.Cancel;
         }
-        
+
         [Conditional("DEBUG"), ExcludeFromCodeCoverage]
-        private void LogPacketReceive_Before(PacketReceiveEventArgs args) {
+        private void LogPacketReceive_Before(PacketReceiveEventArgs args) =>
             // Not localized because this string is developer-facing.
             Log.Verbose(
                 "Invoking {Event} with [receiving {@Packet} from {Sender}]",
                 PacketReceive, args.Packet, args.Sender);
-        }
-        
+
         [Conditional("DEBUG"), ExcludeFromCodeCoverage]
         private void LogPacketReceive_After(PacketReceiveEventArgs args) {
             if (args.IsCanceled()) {
@@ -229,15 +228,14 @@ namespace Orion.Players {
             size = data.Length;
             return HookResult.Continue;
         }
-        
+
         [Conditional("DEBUG"), ExcludeFromCodeCoverage]
-        private void LogPacketSend_Before(PacketSendEventArgs args) {
+        private void LogPacketSend_Before(PacketSendEventArgs args) =>
             // Not localized because this string is developer-facing.
             Log.Verbose(
                 "Invoking {Event} with [sending {Packet} to {Receiver}]",
                 PacketSend, args.Packet, args.Receiver);
-        }
-        
+
         [Conditional("DEBUG"), ExcludeFromCodeCoverage]
         private void LogPacketSend_After(PacketSendEventArgs args) {
             if (args.IsCanceled()) {
@@ -272,12 +270,11 @@ namespace Orion.Players {
             PlayerQuit.Invoke(this, args);
             return HookResult.Continue;
         }
-        
+
         [Conditional("DEBUG"), ExcludeFromCodeCoverage]
-        private void LogPlayerQuit(PlayerQuitEventArgs args) {
+        private void LogPlayerQuit(PlayerQuitEventArgs args) =>
             // Not localized because this string is developer-facing.
             Log.Debug("Invoking {Event} with [{Player}]", PlayerQuit, args.Player);
-        }
 
         // =============================================================================================================
         // Handling PlayerConnect
@@ -293,15 +290,14 @@ namespace Orion.Players {
 
             args_.CancellationReason = args.CancellationReason;
         }
-        
+
         [Conditional("DEBUG"), ExcludeFromCodeCoverage]
-        private void LogPlayerConnect_Before(PlayerConnectEventArgs args) {
+        private void LogPlayerConnect_Before(PlayerConnectEventArgs args) =>
             // Not localized because this string is developer-facing.
             Log.Debug(
                 "Invoking {Event} with [#={PlayerIndex} connecting with {VersionString}]",
                 PlayerConnect, args.Player.Index, args.VersionString);
-        }
-        
+
         [Conditional("DEBUG"), ExcludeFromCodeCoverage]
         private void LogPlayerConnect_After(PlayerConnectEventArgs args) {
             if (args.IsCanceled()) {
@@ -331,11 +327,10 @@ namespace Orion.Players {
         }
 
         [Conditional("DEBUG"), ExcludeFromCodeCoverage]
-        private void LogPlayerData_Before(PlayerDataEventArgs args) {
+        private void LogPlayerData_Before(PlayerDataEventArgs args) =>
             // Not localized because this string is developer-facing.
             Log.Debug("Invoking {Event} with [{PlayerName}, ...]", PlayerData, args.Name);
-        }
-        
+
         [Conditional("DEBUG"), ExcludeFromCodeCoverage]
         private void LogPlayerData_After(PlayerDataEventArgs args) {
             if (args.IsCanceled()) {
@@ -381,7 +376,7 @@ namespace Orion.Players {
                     PlayerInventorySlot, args.Player, args.InventorySlot, args.ItemPrefix, args.ItemType);
             }
         }
-        
+
         [Conditional("DEBUG"), ExcludeFromCodeCoverage]
         private void LogPlayerInventorySlot_After(PlayerInventorySlotEventArgs args) {
             if (args.IsCanceled()) {
@@ -424,11 +419,10 @@ namespace Orion.Players {
         }
 
         [Conditional("DEBUG"), ExcludeFromCodeCoverage]
-        private void PlayerJoin_Before(PlayerJoinEventArgs args) {
+        private void PlayerJoin_Before(PlayerJoinEventArgs args) =>
             // Not localized because this string is developer-facing.
             Log.Debug("Invoking {Event} with [{Player}]", PlayerJoin, args.Player);
-        }
-        
+
         [Conditional("DEBUG"), ExcludeFromCodeCoverage]
         private void PlayerJoin_After(PlayerJoinEventArgs args) {
             if (args.IsCanceled()) {
@@ -453,13 +447,12 @@ namespace Orion.Players {
         }
 
         [Conditional("DEBUG"), ExcludeFromCodeCoverage]
-        private void PlayerSpawn_Before(PlayerSpawnEventArgs args) {
+        private void PlayerSpawn_Before(PlayerSpawnEventArgs args) =>
             // Not localized because this string is developer-facing.
             Log.Debug(
                 "Invoking {Event} with [{Player} at {PlayerSpawnX}, {PlayerSpawnY}]",
                 PlayerSpawn, args.Player, args.X, args.Y);
-        }
-        
+
         [Conditional("DEBUG"), ExcludeFromCodeCoverage]
         private void PlayerSpawn_After(PlayerSpawnEventArgs args) {
             if (args.IsCanceled()) {
@@ -487,15 +480,14 @@ namespace Orion.Players {
 
             args_.CancellationReason = args.CancellationReason;
         }
-        
+
         [Conditional("DEBUG"), ExcludeFromCodeCoverage]
-        private void LogPlayerInfo_Before(PlayerInfoEventArgs args) {
+        private void LogPlayerInfo_Before(PlayerInfoEventArgs args) =>
             // Not localized because this string is developer-facing.
             Log.Debug(
                 "Invoking {Event} with [{Player} at {PlayerPosition}, ...]",
                 PlayerInfo, args.Player, args.Position);
-        }
-        
+
         [Conditional("DEBUG"), ExcludeFromCodeCoverage]
         private void LogPlayerInfo_After(PlayerInfoEventArgs args) {
             if (args.IsCanceled()) {
@@ -523,15 +515,14 @@ namespace Orion.Players {
 
             args_.CancellationReason = args.CancellationReason;
         }
-        
+
         [Conditional("DEBUG"), ExcludeFromCodeCoverage]
-        private void LogPlayerHealth_Before(PlayerHealthEventArgs args) {
+        private void LogPlayerHealth_Before(PlayerHealthEventArgs args) =>
             // Not localized because this string is developer-facing.
             Log.Debug(
                 "Invoking {Event} with [{Player} has {PlayerHealth}/{PlayerMaxHealth} hp]",
                 PlayerHealth, args.Player, args.Health, args.MaxHealth);
-        }
-        
+
         [Conditional("DEBUG"), ExcludeFromCodeCoverage]
         private void LogPlayerHealth_After(PlayerHealthEventArgs args) {
             if (args.IsCanceled()) {
@@ -559,15 +550,14 @@ namespace Orion.Players {
 
             args_.CancellationReason = args.CancellationReason;
         }
-        
+
         [Conditional("DEBUG"), ExcludeFromCodeCoverage]
-        private void LogPlayerPvp_Before(PlayerPvpEventArgs args) {
+        private void LogPlayerPvp_Before(PlayerPvpEventArgs args) =>
             // Not localized because this string is developer-facing.
             Log.Debug(
                 "Invoking {Event} with [{Player} is in pvp: {IsPlayerInPvp}]",
                 PlayerPvp, args.Player, args.IsInPvp);
-        }
-        
+
         [Conditional("DEBUG"), ExcludeFromCodeCoverage]
         private void LogPlayerPvp_After(PlayerPvpEventArgs args) {
             if (args.IsCanceled()) {
@@ -597,13 +587,12 @@ namespace Orion.Players {
         }
 
         [Conditional("DEBUG"), ExcludeFromCodeCoverage]
-        private void PlayerHealEffect_Before(PlayerHealEffectEventArgs args) {
+        private void PlayerHealEffect_Before(PlayerHealEffectEventArgs args) =>
             // Not localized because this string is developer-facing.
             Log.Debug(
                 "Invoking {Event} with [{Player} restoring {HealAmount} hp]",
                 PlayerHealEffect, args.Player, args.HealAmount);
-        }
-        
+
         [Conditional("DEBUG"), ExcludeFromCodeCoverage]
         private void PlayerHealEffect_After(PlayerHealEffectEventArgs args) {
             if (args.IsCanceled()) {
@@ -633,13 +622,12 @@ namespace Orion.Players {
         }
 
         [Conditional("DEBUG"), ExcludeFromCodeCoverage]
-        private void LogPlayerPasswordResponse_Before(PlayerPasswordResponseEventArgs args) {
+        private void LogPlayerPasswordResponse_Before(PlayerPasswordResponseEventArgs args) =>
             // Not localized because this string is developer-facing.
             Log.Debug(
                 "Invoking {Event} with [{Player} trying {PasswordAttempt}]",
                 PlayerPasswordResponse, args.Player, args.PasswordAttempt);
-        }
-        
+
         [Conditional("DEBUG"), ExcludeFromCodeCoverage]
         private void LogPlayerPasswordResponse_After(PlayerPasswordResponseEventArgs args) {
             if (args.IsCanceled()) {
@@ -667,15 +655,14 @@ namespace Orion.Players {
 
             args_.CancellationReason = args.CancellationReason;
         }
-        
+
         [Conditional("DEBUG"), ExcludeFromCodeCoverage]
-        private void LogPlayerMana_Before(PlayerManaEventArgs args) {
+        private void LogPlayerMana_Before(PlayerManaEventArgs args) =>
             // Not localized because this string is developer-facing.
             Log.Debug(
                 "Invoking {Event} with [{Player} has {PlayerMana}/{PlayerMaxMana} mp]",
                 PlayerMana, args.Player, args.Mana, args.MaxMana);
-        }
-        
+
         [Conditional("DEBUG"), ExcludeFromCodeCoverage]
         private void LogPlayerMana_After(PlayerManaEventArgs args) {
             if (args.IsCanceled()) {
@@ -705,13 +692,12 @@ namespace Orion.Players {
         }
 
         [Conditional("DEBUG"), ExcludeFromCodeCoverage]
-        private void PlayerManaEffect_Before(PlayerManaEffectEventArgs args) {
+        private void PlayerManaEffect_Before(PlayerManaEffectEventArgs args) =>
             // Not localized because this string is developer-facing.
             Log.Debug(
                 "Invoking {Event} with [{Player} restoring {ManaAmount} mp]",
                 PlayerManaEffect, args.Player, args.ManaAmount);
-        }
-        
+
         [Conditional("DEBUG"), ExcludeFromCodeCoverage]
         private void PlayerManaEffect_After(PlayerManaEffectEventArgs args) {
             if (args.IsCanceled()) {
@@ -741,11 +727,10 @@ namespace Orion.Players {
         }
 
         [Conditional("DEBUG"), ExcludeFromCodeCoverage]
-        private void LogPlayerTeam_Before(PlayerTeamEventArgs args) {
+        private void LogPlayerTeam_Before(PlayerTeamEventArgs args) =>
             // Not localized because this string is developer-facing.
             Log.Debug("Invoking {Event} with [{Player} joining {PlayerTeam}]", PlayerTeam, args.Player, args.Team);
-        }
-        
+
         [Conditional("DEBUG"), ExcludeFromCodeCoverage]
         private void LogPlayerTeam_After(PlayerTeamEventArgs args) {
             if (args.IsCanceled()) {
@@ -775,11 +760,10 @@ namespace Orion.Players {
         }
 
         [Conditional("DEBUG"), ExcludeFromCodeCoverage]
-        private void LogPlayerUuid_Before(PlayerUuidEventArgs args) {
+        private void LogPlayerUuid_Before(PlayerUuidEventArgs args) =>
             // Not localized because this string is developer-facing.
             Log.Debug("Invoking {Event} with [{Player} is {PlayerUuid}]", PlayerUuid, args.Player, args.Uuid);
-        }
-        
+
         [Conditional("DEBUG"), ExcludeFromCodeCoverage]
         private void LogPlayerUuid_After(PlayerUuidEventArgs args) {
             if (args.IsCanceled()) {
@@ -806,11 +790,10 @@ namespace Orion.Players {
         }
 
         [Conditional("DEBUG"), ExcludeFromCodeCoverage]
-        private void PlayerTeleportationPotion_Before(PlayerTeleportationPotionEventArgs args) {
+        private void PlayerTeleportationPotion_Before(PlayerTeleportationPotionEventArgs args) =>
             // Not localized because this string is developer-facing.
             Log.Debug("Invoking {Event} with [{Player}]", PlayerTeleportationPotion, args.Player);
-        }
-        
+
         [Conditional("DEBUG"), ExcludeFromCodeCoverage]
         private void PlayerTeleportationPotion_After(PlayerTeleportationPotionEventArgs args) {
             if (args.IsCanceled()) {
@@ -835,12 +818,11 @@ namespace Orion.Players {
         }
 
         [Conditional("DEBUG"), ExcludeFromCodeCoverage]
-        private void LogPlayerAnglerQuests_Before(PlayerAnglerQuestsEventArgs args) {
+        private void LogPlayerAnglerQuests_Before(PlayerAnglerQuestsEventArgs args) =>
             // Not localized because this string is developer-facing.
             Log.Debug(
                 "Invoking {Event} with [{Player} completing {PlayerNumberOfAnglerQuestsCompleted} quests]",
                 PlayerAnglerQuests, args.Player, args.NumberOfAnglerQuestsCompleted);
-        }
 
         [Conditional("DEBUG"), ExcludeFromCodeCoverage]
         private void LogPlayerAnglerQuests_After(PlayerAnglerQuestsEventArgs args) {
@@ -871,15 +853,14 @@ namespace Orion.Players {
                 args_.CancellationReason = args.CancellationReason;
             }
         }
-        
+
         [Conditional("DEBUG"), ExcludeFromCodeCoverage]
-        private void LogPlayerChat_Before(PlayerChatEventArgs args) {
+        private void LogPlayerChat_Before(PlayerChatEventArgs args) =>
             // Not localized because this string is developer-facing.
             Log.Debug(
                 "Invoking {Event} with [{Player} chatting {ChatCommand} {ChatText}]",
                 PlayerChat, args.Player, args.Command, args.Text);
-        }
-        
+
         [Conditional("DEBUG"), ExcludeFromCodeCoverage]
         private void LogPlayerChat_After(PlayerChatEventArgs args) {
             if (args.IsCanceled()) {

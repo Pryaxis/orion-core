@@ -30,7 +30,7 @@ namespace Orion.Packets.World {
 
         /// <inheritdoc/>
         public override PacketType Type => PacketType.WorldTime;
-        
+
         /// <summary>
         /// Gets or sets a value indicating whether it is daytime.
         /// </summary>

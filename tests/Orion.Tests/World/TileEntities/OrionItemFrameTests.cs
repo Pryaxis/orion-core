@@ -51,7 +51,7 @@ namespace Orion.World.TileEntities {
             };
             var itemFrame = new OrionItemFrame(terrariaItemFrame);
 
-            itemFrame.ItemStackSize.Should().Be(1);
+            itemFrame.StackSize.Should().Be(1);
         }
 
         [Fact]
@@ -59,7 +59,7 @@ namespace Orion.World.TileEntities {
             var terrariaItemFrame = new TerrariaItemFrame { item = new TerrariaItem() };
             var itemFrame = new OrionItemFrame(terrariaItemFrame);
 
-            itemFrame.ItemStackSize = 1;
+            itemFrame.StackSize = 1;
 
             terrariaItemFrame.item.stack.Should().Be(1);
         }

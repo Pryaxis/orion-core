@@ -31,7 +31,7 @@ namespace Orion.Events.Players {
 
             func.Should().Throw<ArgumentNullException>();
         }
-        
+
         [Fact]
         public void Ctor_NullPacket_ThrowsArgumentNullException() {
             var player = new Mock<IPlayer>().Object;

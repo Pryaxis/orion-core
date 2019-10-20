@@ -22,7 +22,6 @@ using Moq;
 using Orion.Events;
 using Orion.Events.Players;
 using Orion.Packets.World;
-using Serilog.Core;
 using Terraria.Net;
 using Terraria.Net.Sockets;
 using Xunit;
@@ -90,7 +89,7 @@ namespace Orion.Players {
 
             player.Stats.Should().NotBeNull();
         }
-        
+
         [Fact]
         public void Inventory_Get() {
             var mockPlayerService = new Mock<IPlayerService>();
@@ -161,7 +160,7 @@ namespace Orion.Players {
             mockPlayerService.Setup(ps => ps.PacketSend).Returns(packetSend);
 
             player.SendPacket(packet);
-            
+
             socket.SendData.Should().BeNull();
         }
 

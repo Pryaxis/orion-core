@@ -15,8 +15,8 @@
 // You should have received a copy of the GNU General Public License
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
-using FluentAssertions;
 using System.Diagnostics.CodeAnalysis;
+using FluentAssertions;
 using Xunit;
 using TerrariaPlayer = Terraria.Player;
 
@@ -40,7 +40,7 @@ namespace Orion.Players {
 
             terrariaPlayer.statLife.Should().Be(650);
         }
-        
+
         [Fact]
         public void MaxHealth_Get() {
             var terrariaPlayer = new TerrariaPlayer { statLifeMax = 105 };
