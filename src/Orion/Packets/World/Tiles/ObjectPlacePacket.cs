@@ -22,6 +22,7 @@ namespace Orion.Packets.World.Tiles {
     /// <summary>
     /// Packet sent to place an object.
     /// </summary>
+    /// <remarks>This packet is sent when a player places a complex object.</remarks>
     public sealed class ObjectPlacePacket : Packet {
         private short _x;
         private short _y;

@@ -17,13 +17,13 @@
 
 using System;
 using System.IO;
-using Orion.Packets.Extensions;
 using TerrariaNetworkText = Terraria.Localization.NetworkText;
 
 namespace Orion.Packets.Players {
     /// <summary>
     /// Packet sent from the server to the client to set the player's status.
     /// </summary>
+    /// <remarks>This packet is used to update a player's connection status.</remarks>
     public sealed class PlayerStatusPacket : Packet {
         private TerrariaNetworkText _statusText = TerrariaNetworkText.Empty;
         private int _statusIncrease;

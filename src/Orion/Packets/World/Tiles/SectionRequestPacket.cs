@@ -21,6 +21,7 @@ namespace Orion.Packets.World.Tiles {
     /// <summary>
     /// Packet sent from the client to the server to request a section of the world.
     /// </summary>
+    /// <remarks>This packet is sent when a player reaches a portion of the world that is unloaded for them.</remarks>
     public sealed class SectionRequestPacket : Packet {
         private int _x;
         private int _y;

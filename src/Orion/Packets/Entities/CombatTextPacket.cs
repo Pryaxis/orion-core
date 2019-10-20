@@ -18,16 +18,14 @@
 using System;
 using System.IO;
 using Microsoft.Xna.Framework;
-using Orion.Packets.Extensions;
 using TerrariaNetworkText = Terraria.Localization.NetworkText;
 
 namespace Orion.Packets.Entities {
     /// <summary>
-    /// Packet sent from the server to the client to show combat text. This is currently not naturally sent.
+    /// Packet sent from the server to the client to show combat text.
     /// </summary>
-    /// <remarks>
-    /// Combat text is similar to combat numbers: see <see cref="CombatNumberPacket"/> for more information.
-    /// </remarks>
+    /// <remarks>This packet is not normally sent.</remarks>
+    /// <seealso cref="CombatNumberPacket"/>
     public sealed class CombatTextPacket : Packet {
         private Vector2 _position;
         private Color _color;

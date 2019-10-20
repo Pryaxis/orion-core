@@ -23,6 +23,7 @@ namespace Orion.Packets.Npcs {
     /// Packet sent from the client to the server to request an NPC's name and from the server to the client to set an
     /// NPC's name.
     /// </summary>
+    /// <remarks>This packet is used to synchronize NPC state.</remarks>
     public sealed class NpcNamePacket : Packet {
         private short _npcIndex;
         private string _name = string.Empty;

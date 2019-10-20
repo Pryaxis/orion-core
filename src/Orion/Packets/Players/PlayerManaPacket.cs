@@ -21,6 +21,7 @@ namespace Orion.Packets.Players {
     /// <summary>
     /// Packet sent to set a player's mana and maximum mana.
     /// </summary>
+    /// <remarks>This packet is used to synchronize player state.</remarks>
     public sealed class PlayerManaPacket : Packet {
         private byte _playerIndex;
         private short _mana;

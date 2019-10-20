@@ -19,9 +19,12 @@ using System.IO;
 
 namespace Orion.Packets.Players {
     /// <summary>
-    /// Packet sent from the server to the client to allow it to continue connecting. This is sent in response to either
-    /// a <see cref="PlayerConnectPacket"/> or a valid <see cref="PlayerPasswordResponsePacket"/>.
+    /// Packet sent from the server to the client to allow it to continue connecting.
     /// </summary>
+    /// <remarks>
+    /// This packet is sent in response to either a <see cref="PlayerConnectPacket"/> or a valid
+    /// <see cref="PlayerPasswordResponsePacket"/>.
+    /// </remarks>
     public sealed class PlayerContinueConnectingPacket : Packet {
         private byte _playerIndex;
 

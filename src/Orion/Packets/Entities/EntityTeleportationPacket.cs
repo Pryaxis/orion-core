@@ -17,12 +17,15 @@
 
 using System.IO;
 using Microsoft.Xna.Framework;
-using Orion.Packets.Extensions;
 
 namespace Orion.Packets.Entities {
     /// <summary>
     /// Packet sent to teleport an entity.
     /// </summary>
+    /// <remarks>
+    /// While entities can be teleported by modifying their positions, this packet creates the visual and audio effects
+    /// of the teleportation.
+    /// </remarks>
     public sealed class EntityTeleportationPacket : Packet {
         private EntityTeleportationType _teleportationType;
         private byte _style;

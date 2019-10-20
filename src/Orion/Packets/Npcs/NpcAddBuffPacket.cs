@@ -22,6 +22,7 @@ namespace Orion.Packets.Npcs {
     /// <summary>
     /// Packet sent to add a buff to an NPC.
     /// </summary>
+    /// <remarks>This packet is sent when a player debuffs an NPC.</remarks>
     public sealed class NpcAddBuffPacket : Packet {
         private short _npcIndex;
         private Buff _buff;

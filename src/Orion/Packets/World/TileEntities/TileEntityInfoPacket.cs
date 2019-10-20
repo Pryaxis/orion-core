@@ -19,8 +19,9 @@ using System.IO;
 
 namespace Orion.Packets.World.TileEntities {
     /// <summary>
-    /// Packet sent to set tile entity information.
+    /// Packet sent from the server to the client to set tile entity information.
     /// </summary>
+    /// <remarks>This packet is sent to synchronize tile entity state.</remarks>
     public sealed class TileEntityInfoPacket : Packet {
         private int _tileEntityIndex;
         private NetworkTileEntity? _tileEntity;

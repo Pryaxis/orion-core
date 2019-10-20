@@ -19,9 +19,11 @@ using System.IO;
 
 namespace Orion.Packets.Players {
     /// <summary>
-    /// Packet sent from the server to the client as a password challenge. This may be sent in response to a
-    /// <see cref="PlayerConnectPacket"/>.
+    /// Packet sent from the server to the client as a password challenge.
     /// </summary>
+    /// <remarks>
+    /// This packet is sent in response to a <see cref="PlayerConnectPacket"/> if the server has a password.
+    /// </remarks>
     public sealed class PlayerPasswordChallengePacket : Packet {
         /// <inheritdoc/>
         public override PacketType Type => PacketType.PlayerPasswordChallenge;

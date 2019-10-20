@@ -18,12 +18,12 @@
 using System.IO;
 using Microsoft.Xna.Framework;
 using Orion.Entities;
-using Orion.Packets.Extensions;
 
 namespace Orion.Packets.Players {
     /// <summary>
-    /// Packet sent to spread Nebula Armor buffs to nearby players.
+    /// Packet sent to spread Nebula armor buffs to nearby players.
     /// </summary>
+    /// <remarks>This packet is sent when a player uses Nebula armor.</remarks>
     public sealed class PlayerNebulaBuffPacket : Packet {
         private byte _playerIndex;
         private BuffType _buffType;
@@ -60,6 +60,9 @@ namespace Orion.Packets.Players {
         /// Gets or sets the position. The components are pixels.
         /// </summary>
         /// <value>The position.</value>
+        /// <remarks>
+        /// A range of players around this property's value will have <see cref="BuffType"/> added to them.
+        /// </remarks>
         public Vector2 Position {
             get => _position;
             set {

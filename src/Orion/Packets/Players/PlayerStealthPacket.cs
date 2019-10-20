@@ -21,6 +21,7 @@ namespace Orion.Packets.Players {
     /// <summary>
     /// Packet sent to set a player's stealth.
     /// </summary>
+    /// <remarks>This packet is used to synchronize player state.</remarks>
     public sealed class PlayerStealthPacket : Packet {
         private byte _playerIndex;
         private float _stealthStatus;

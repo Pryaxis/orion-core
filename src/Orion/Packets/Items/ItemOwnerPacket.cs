@@ -21,6 +21,7 @@ namespace Orion.Packets.Items {
     /// <summary>
     /// Packet sent to set an item's owner: i.e., the player who is picking up the item.
     /// </summary>
+    /// <remarks>This packet is sent when a player tries to pick up an item.</remarks>
     public sealed class ItemOwnerPacket : Packet {
         private short _itemIndex;
         private byte _ownerIndex;

@@ -21,6 +21,7 @@ namespace Orion.Packets.World {
     /// <summary>
     /// Packet sent from the server to the client to set the angler quest.
     /// </summary>
+    /// <remarks>This packet is sent when the day changes.</remarks>
     public sealed class WorldAnglerQuestPacket : Packet {
         private byte _currentQuest;
         private bool _isFinished;

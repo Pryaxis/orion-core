@@ -22,8 +22,9 @@ using TerrariaPlayer = Terraria.Player;
 
 namespace Orion.Packets.Players {
     /// <summary>
-    /// Packet sent to set a player's buffs. Each buff will be set for one second.
+    /// Packet sent to set a player's buffs.
     /// </summary>
+    /// <remarks>This packet is used to synchronize player state.</remarks>
     public sealed class PlayerBuffsPacket : Packet {
         private byte _playerIndex;
         private DirtiableArray<BuffType> _buffTypes = new DirtiableArray<BuffType>(TerrariaPlayer.maxBuffs);
@@ -47,7 +48,7 @@ namespace Orion.Packets.Players {
         }
 
         /// <summary>
-        /// Gets the player's buff types.
+        /// Gets the player's buff types. Each buff will be set for one second.
         /// </summary>
         /// <value>The player's buff types.</value>
         public IArray<BuffType> BuffTypes => _buffTypes;

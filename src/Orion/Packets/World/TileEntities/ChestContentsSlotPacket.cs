@@ -20,8 +20,11 @@ using Orion.Items;
 
 namespace Orion.Packets.World.TileEntities {
     /// <summary>
-    /// Packet sent to set a chest contents slot. This is sent in response to a <see cref="ChestOpenPacket"/>.
+    /// Packet sent to set a chest contents slot.
     /// </summary>
+    /// <remarks>
+    /// This is sent in response to a <see cref="ChestOpenPacket"/> and when a player modifies a chest.
+    /// </remarks>
     public sealed class ChestContentsSlotPacket : Packet {
         private short _chestIndex;
         private byte _contentsSlot;

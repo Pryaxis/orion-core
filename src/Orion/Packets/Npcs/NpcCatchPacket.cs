@@ -16,11 +16,15 @@
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
 using System.IO;
+using Orion.Items;
 
 namespace Orion.Packets.Npcs {
     /// <summary>
     /// Packet sent from the client to the server to catch an NPC.
     /// </summary>
+    /// <remarks>
+    /// This packet is sent when a player catches an NPC using a <see cref="ItemType.BugNet"/> or
+    /// <see cref="ItemType.GoldenBugNet"/>.</remarks>
     public sealed class NpcCatchPacket : Packet {
         private short _npcIndex;
         private byte _catcherIndex;

@@ -19,9 +19,10 @@ using System.IO;
 
 namespace Orion.Packets.World.TileEntities {
     /// <summary>
-    /// Packet sent to perform a chest modification. See <see cref="ChestModification"/> for a list of chest
-    /// modifications.
+    /// Packet sent to perform a chest modification.
     /// </summary>
+    /// <remarks>This packet is sent when a player breaks or places a container.</remarks>
+    /// <seealso cref="ChestModification"/>
     public sealed class ChestModificationPacket : Packet {
         private ChestModification _modification;
         private short _x;

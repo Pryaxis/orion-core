@@ -19,8 +19,9 @@ using System.IO;
 
 namespace Orion.Packets.Players {
     /// <summary>
-    /// Packet sent to set the number of angler quests a player has completed. This is currently not naturally sent.
+    /// Packet sent to set the number of angler quests a player has completed.
     /// </summary>
+    /// <remarks>This packet is not normally sent.</remarks>
     public sealed class PlayerAnglerQuestsPacket : Packet {
         private int _numberOfAnglerQuestsCompleted;
 

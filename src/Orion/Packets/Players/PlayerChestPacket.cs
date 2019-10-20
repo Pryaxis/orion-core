@@ -22,6 +22,7 @@ namespace Orion.Packets.Players {
     /// <summary>
     /// Packet sent from the server to the client to set a player's chest index.
     /// </summary>
+    /// <remarks>This packet is used to synchronize player state.</remarks>
     public sealed class PlayerChestPacket : Packet {
         private byte _playerIndex;
         private short _playerChestIndex;
@@ -46,8 +47,7 @@ namespace Orion.Packets.Players {
         /// </summary>
         /// <value>The player's chest index.</value>
         /// <remarks>
-        /// A value of <c>-1</c> indicates a <see cref="ItemType.PiggyBank"/>, <c>-2</c> indicates a
-        /// <see cref="ItemType.Safe"/>, and <c>-3</c> indicates a <see cref="ItemType.DefendersForge"/>.
+        /// A value of <c>-1</c> indicates no chest and <c>-2</c> indicates a <see cref="ItemType.MoneyTrough"/>.
         /// </remarks>
         public short PlayerChestIndex {
             get => _playerChestIndex;

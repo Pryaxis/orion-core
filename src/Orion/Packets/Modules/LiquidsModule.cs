@@ -24,6 +24,10 @@ namespace Orion.Packets.Modules {
     /// <summary>
     /// Module sent for liquids.
     /// </summary>
+    /// <remarks>
+    /// This module is used to send a sweep of liquids and should be preferred over <see cref="TileLiquidPacket"/> for
+    /// that purpose.
+    /// </remarks>
     public sealed class LiquidsModule : Module {
         private DirtiableList<NetworkLiquid> _liquids = new DirtiableList<NetworkLiquid>();
 

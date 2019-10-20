@@ -25,9 +25,11 @@ using Orion.World;
 
 namespace Orion.Packets.World {
     /// <summary>
-    /// Packet sent from the server to the client to set world information. This is sent in response to a
-    /// <see cref="PlayerJoinPacket"/> and is also sent periodically.
+    /// Packet sent from the server to the client to set world information.
     /// </summary>
+    /// <remarks>
+    /// This packet is sent in response to a <see cref="PlayerJoinPacket"/> and is sent to synchronize the world state.
+    /// </remarks>
     public sealed class WorldInfoPacket : Packet {
         private int _time;
         private bool _isDaytime;

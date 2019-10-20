@@ -16,11 +16,16 @@
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
 using System.IO;
+using Orion.Items;
 
 namespace Orion.Packets.Players {
     /// <summary>
     /// Packet sent to play an instrument note from a player.
     /// </summary>
+    /// <remarks>
+    /// This packet is sent when a player plays a <see cref="ItemType.Harp"/>, <see cref="ItemType.MagicalHarp"/>,
+    /// or <see cref="ItemType.Bell"/>.
+    /// </remarks>
     public sealed class PlayerInstrumentNotePacket : Packet {
         private byte _playerIndex;
         private float _instrumentNote;
@@ -40,12 +45,14 @@ namespace Orion.Packets.Players {
             }
         }
 
-        // TODO: explain this
-
         /// <summary>
         /// Gets or sets the player's instrument note.
         /// </summary>
         /// <value>The player's instrument note.</value>
+        /// <remarks>
+        /// This property's value can range from <c>-1.0</c> to <c>1.0</c>. A value of <c>-1.0</c> results in middle C
+        /// while a value of <c>1.0</c> results in C6.
+        /// </remarks>
         public float InstrumentNote {
             get => _instrumentNote;
             set {

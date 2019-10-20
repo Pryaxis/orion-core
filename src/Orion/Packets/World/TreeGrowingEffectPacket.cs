@@ -21,6 +21,7 @@ namespace Orion.Packets.World {
     /// <summary>
     /// Packet sent to show a tree growing effect.
     /// </summary>
+    /// <remarks>This packet is sent when a tree grows.</remarks>
     public sealed class TreeGrowingEffectPacket : Packet {
         private byte _data;
         private short _x;

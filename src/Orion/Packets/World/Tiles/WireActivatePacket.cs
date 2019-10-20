@@ -21,6 +21,7 @@ namespace Orion.Packets.World.Tiles {
     /// <summary>
     /// Packet sent to activate wire at a specific position.
     /// </summary>
+    /// <remarks>This packet is sent whenever a switch is tripped.</remarks>
     public sealed class WireActivatePacket : Packet {
         private short _y;
         private short _x;

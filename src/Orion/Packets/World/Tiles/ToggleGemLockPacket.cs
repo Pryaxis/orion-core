@@ -21,6 +21,7 @@ namespace Orion.Packets.World.Tiles {
     /// <summary>
     /// Packet sent to toggle a gem lock.
     /// </summary>
+    /// <remarks>This packet is sent when a player modifies a gem lock.</remarks>
     public sealed class ToggleGemLockPacket : Packet {
         private short _x;
         private short _y;

@@ -22,6 +22,7 @@ namespace Orion.Packets.Players {
     /// <summary>
     /// Packet sent to add a buff to a player.
     /// </summary>
+    /// <remarks>This packet is sent when a player buffs themselves or debuffs another player.</remarks>
     public sealed class PlayerAddBuffPacket : Packet {
         private byte _playerIndex;
         private Buff _buff;

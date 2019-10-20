@@ -21,9 +21,9 @@ using Orion.Packets.World.Tiles;
 
 namespace Orion.Packets.Players {
     /// <summary>
-    /// Packet sent from the server to the client to consume a player's items. This is sent in response to a
-    /// <see cref="MassWireOperationPacket"/>.
+    /// Packet sent from the server to the client to consume a player's items.
     /// </summary>
+    /// <remarks>This packet is sent in response to a <see cref="MassWireOperationPacket"/>.</remarks>
     public sealed class PlayerConsumeItemsPacket : Packet {
         private ItemType _itemType;
         private short _itemStackSize;

@@ -19,9 +19,9 @@ using System.IO;
 
 namespace Orion.Packets.Players {
     /// <summary>
-    /// Packet sent from the client to the server to finish connecting and join. This is sent in response to a
-    /// <see cref="PlayerContinueConnectingPacket"/>.
+    /// Packet sent from the client to the server to finish connecting and join.
     /// </summary>
+    /// <remarks>This packet is sent in response to a <see cref="PlayerContinueConnectingPacket"/>.</remarks>
     public sealed class PlayerJoinPacket : Packet {
         /// <inheritdoc/>
         public override PacketType Type => PacketType.PlayerJoin;

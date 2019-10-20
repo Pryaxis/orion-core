@@ -21,6 +21,7 @@ namespace Orion.Packets.Projectiles {
     /// <summary>
     /// Packet sent from the client to the server to remove a projectile by index.
     /// </summary>
+    /// <remarks>This packet is sent to remove portals.</remarks>
     public sealed class ProjectileRemoveIndexPacket : Packet {
         private short _projectileIndex;
 

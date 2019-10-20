@@ -18,13 +18,14 @@
 using System;
 using System.IO;
 using Microsoft.Xna.Framework;
-using Orion.Packets.Extensions;
+using Orion.Items;
 using TerrariaNetworkText = Terraria.Localization.NetworkText;
 
 namespace Orion.Packets.World {
     /// <summary>
     /// Packet sent from the server to the client to show chat.
     /// </summary>
+    /// <remarks>This packet is sent when an <see cref="ItemType.AnnouncementBox"/> is triggered by wiring.</remarks>
     public sealed class ChatPacket : Packet {
         private Color _color;
         private TerrariaNetworkText _text = TerrariaNetworkText.Empty;

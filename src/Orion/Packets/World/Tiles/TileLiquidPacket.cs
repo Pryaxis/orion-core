@@ -22,6 +22,7 @@ namespace Orion.Packets.World.Tiles {
     /// <summary>
     /// Packet sent to set a tile's liquid.
     /// </summary>
+    /// <remarks>This packet is sent when a player places a liquid.</remarks>
     public sealed class TileLiquidPacket : Packet {
         private NetworkLiquid _liquid = new NetworkLiquid();
 

@@ -21,6 +21,7 @@ namespace Orion.Packets.World {
     /// <summary>
     /// Packet sent from the server to the client to set the world's biome stats.
     /// </summary>
+    /// <remarks>This packet is sent to synchronize the world state.</remarks>
     public sealed class WorldBiomeStatsPacket : Packet {
         private byte _hallowedAmount;
         private byte _corruptionAmount;

@@ -17,7 +17,6 @@
 
 using System.IO;
 using Microsoft.Xna.Framework;
-using Orion.Packets.Extensions;
 using Orion.Projectiles;
 using Orion.Utils;
 using TerrariaProjectile = Terraria.Projectile;
@@ -26,6 +25,7 @@ namespace Orion.Packets.Projectiles {
     /// <summary>
     /// Packet sent to set projectile information.
     /// </summary>
+    /// <remarks>This packet is used to synchronize projectile state.</remarks>
     public sealed class ProjectileInfoPacket : Packet {
         private short _identity;
         private Vector2 _position;
@@ -47,6 +47,11 @@ namespace Orion.Packets.Projectiles {
         /// Gets or sets the projectile's identity.
         /// </summary>
         /// <value>The projectile's identity.</value>
+        /// <remarks>
+        /// This property's value is tangentially related to the projectile index. It is initialized when a projectile
+        /// spawns and is transmitted according to the sender's view of the projectiles array. As such, when searching
+        /// for the projectile index, the owner index must be matched as well.
+        /// </remarks>
         public short Identity {
             get => _identity;
             set {

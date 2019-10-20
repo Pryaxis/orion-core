@@ -17,14 +17,15 @@
 
 using System;
 using System.IO;
-using Orion.Packets.Extensions;
 using TerrariaNetworkText = Terraria.Localization.NetworkText;
 
 namespace Orion.Packets.Players {
     /// <summary>
-    /// Packet sent from the server to the client to disconnect it. This is sent in response to an invalid
-    /// <see cref="PlayerPasswordResponsePacket"/> or for various other reasons.
+    /// Packet sent from the server to the client to disconnect it.
     /// </summary>
+    /// <remarks>
+    /// This is sent in response to an invalid <see cref="PlayerPasswordResponsePacket"/> or for various other reasons.
+    /// </remarks>
     public sealed class PlayerDisconnectPacket : Packet {
         private TerrariaNetworkText _disconnectReason = TerrariaNetworkText.Empty;
 

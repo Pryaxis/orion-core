@@ -19,9 +19,9 @@ using System.IO;
 
 namespace Orion.Packets.World.Tiles {
     /// <summary>
-    /// Packet sent from the server to the client to synchronize tile frames. This is sent following every
-    /// <see cref="SectionPacket"/>.
+    /// Packet sent from the server to the client to synchronize tile frames.
     /// </summary>
+    /// <remarks>This is sent following a <see cref="SectionPacket"/>.</remarks>
     public sealed class SectionFramesPacket : Packet {
         private short _startX;
         private short _startY;

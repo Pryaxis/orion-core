@@ -19,13 +19,13 @@ using System;
 using System.IO;
 using Microsoft.Xna.Framework;
 using Orion.Items;
-using Orion.Packets.Extensions;
 using Orion.Players;
 
 namespace Orion.Packets.Players {
     /// <summary>
-    /// Packet sent to set player data. This is sent in response to a <see cref="PlayerContinueConnectingPacket"/>.
+    /// Packet sent to set player data.
     /// </summary>
+    /// <remarks>This packet is sent in response to a <see cref="PlayerContinueConnectingPacket"/>.</remarks>
     public sealed class PlayerDataPacket : Packet {
         private byte _playerIndex;
         private byte _clothesStyle;

@@ -28,9 +28,9 @@ using Orion.World.Tiles;
 
 namespace Orion.Packets.World.Tiles {
     /// <summary>
-    /// Packet sent from the server to the client to set a section of the world. This is sent in response to a
-    /// <see cref="SectionRequestPacket"/>.
+    /// Packet sent from the server to the client to set a section of the world.
     /// </summary>
+    /// <remarks>This is sent in response to a <see cref="SectionRequestPacket"/>.</remarks>
     public sealed class SectionPacket : Packet {
         private bool _isCompressed;
         private int _startX;

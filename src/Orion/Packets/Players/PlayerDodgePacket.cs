@@ -19,9 +19,9 @@ using System.IO;
 
 namespace Orion.Packets.Players {
     /// <summary>
-    /// Packet sent to show a player dodge. See <see cref="Players.PlayerDodgeType"/> for the list of
-    /// possible dodge types.
+    /// Packet sent to show a player dodge.
     /// </summary>
+    /// <seealso cref="PlayerDodgeType"/>
     public sealed class PlayerDodgePacket : Packet {
         private byte _playerIndex;
         private PlayerDodgeType _dodgeType;

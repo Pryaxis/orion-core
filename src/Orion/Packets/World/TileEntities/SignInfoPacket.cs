@@ -20,8 +20,11 @@ using System.IO;
 
 namespace Orion.Packets.World.TileEntities {
     /// <summary>
-    /// Packet sent to set sign information. This is sent in response to a <see cref="SignReadPacket"/>.
+    /// Packet sent to set sign information.
     /// </summary>
+    /// <remarks>
+    /// This packet is sent in response to a <see cref="SignReadPacket"/> and when a player edits a sign.
+    /// </remarks>
     public sealed class SignInfoPacket : Packet {
         private short _signIndex;
         private short _x;

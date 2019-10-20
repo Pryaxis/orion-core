@@ -22,6 +22,7 @@ namespace Orion.Packets.World.TileEntities {
     /// <summary>
     /// Packet sent from the client to the server to set an item frame.
     /// </summary>
+    /// <remarks>This packet is sent when a player places an item into an item frame.</remarks>
     public sealed class ItemFramePacket : Packet {
         private short _x;
         private short _y;
@@ -84,6 +85,9 @@ namespace Orion.Packets.World.TileEntities {
         /// Gets or sets the item's stack size.
         /// </summary>
         /// <value>The item's stack size.</value>
+        /// <remarks>
+        /// This property's value is not normally greater than 1 because players can only place single items.
+        /// </remarks>
         public short StackSize {
             get => _stackSize;
             set {

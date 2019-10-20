@@ -17,7 +17,6 @@
 
 using System.IO;
 using Microsoft.Xna.Framework;
-using Orion.Packets.Extensions;
 
 namespace Orion.Packets.Entities {
     /// <summary>

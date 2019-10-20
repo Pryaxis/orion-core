@@ -20,8 +20,9 @@ using Orion.Items;
 
 namespace Orion.Packets.Npcs {
     /// <summary>
-    /// Packet sent from the server to the client to set an NPC's shop slot. This is currently not naturally sent.
+    /// Packet sent from the server to the client to set an NPC's shop slot.
     /// </summary>
+    /// <remarks>This packet is not normally sent. It can be used to provide custom NPC shops.</remarks>
     public sealed class NpcShopSlotPacket : Packet {
         private byte _shopSlot;
         private ItemType _itemType;

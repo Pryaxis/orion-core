@@ -20,12 +20,14 @@ using System.Diagnostics.Contracts;
 using System.IO;
 using Microsoft.Xna.Framework;
 using Orion.Items;
-using Orion.Packets.Extensions;
 
 namespace Orion.Packets.Items {
     /// <summary>
-    /// Packet sent to set item insatnce information. This is sent for instanced item drops.
+    /// Packet sent to set item insatnce information.
     /// </summary>
+    /// <remarks>
+    /// This packet is sent for instanced item drops. For example, treasure bags need to be dropped per-player.
+    /// </remarks>
     public sealed class ItemInstanceInfoPacket : Packet {
         private short _itemIndex;
         private Vector2 _position;

@@ -21,6 +21,9 @@ namespace Orion.Packets.Players {
     /// <summary>
     /// Packet sent to set a player's PvP status.
     /// </summary>
+    /// <remarks>
+    /// This packet is sent when a player disables or enables PvP and is used to synchronize player state.
+    /// </remarks>
     public sealed class PlayerPvpPacket : Packet {
         private byte _playerIndex;
         private bool _isInPvp;

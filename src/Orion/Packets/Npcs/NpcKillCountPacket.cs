@@ -22,6 +22,7 @@ namespace Orion.Packets.Npcs {
     /// <summary>
     /// Packet sent from the server to the client to set the kill count of an NPC type.
     /// </summary>
+    /// <remarks>This packet is used for tracking NPC banner progress.</remarks>
     public sealed class NpcKillCountPacket : Packet {
         private NpcType _npcType;
         private int _killCount;

@@ -22,6 +22,7 @@ namespace Orion.Packets.Players {
     /// <summary>
     /// Packet sent to set a player's team.
     /// </summary>
+    /// <remarks>This packet is sent when a player switch teams and is used to synchronize player state.</remarks>
     public sealed class PlayerTeamPacket : Packet {
         private byte _playerIndex;
         private PlayerTeam _team;

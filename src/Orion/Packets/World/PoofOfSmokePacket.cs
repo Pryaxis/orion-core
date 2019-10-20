@@ -23,6 +23,7 @@ namespace Orion.Packets.World {
     /// <summary>
     /// Packet sent from the server to the client to show a poof of smoke.
     /// </summary>
+    /// <remarks>This packet is sent for various reasons, such as when an NPC disappears when caught.</remarks>
     public sealed class PoofOfSmokePacket : Packet {
         private Vector2 _position;
 

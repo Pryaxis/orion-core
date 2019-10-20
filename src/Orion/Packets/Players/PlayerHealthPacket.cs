@@ -21,6 +21,7 @@ namespace Orion.Packets.Players {
     /// <summary>
     /// Packet sent to set a player's health and maximum health.
     /// </summary>
+    /// <remarks>This packet is used to synchronize player state.</remarks>
     public sealed class PlayerHealthPacket : Packet {
         private byte _playerIndex;
         private short _health;

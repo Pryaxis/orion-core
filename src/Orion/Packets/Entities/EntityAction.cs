@@ -34,7 +34,7 @@ namespace Orion.Packets.Entities {
         PlayGrappleSound = 2,
 
         /// <summary>
-        /// Use the <see cref="ItemType.EnchantedSundial"/>.
+        /// Use an <see cref="ItemType.EnchantedSundial"/>.
         /// </summary>
         UseSundial = 3,
 

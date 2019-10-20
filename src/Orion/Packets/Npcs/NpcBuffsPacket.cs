@@ -24,6 +24,7 @@ namespace Orion.Packets.Npcs {
     /// <summary>
     /// Packet sent from the server to the client to set an NPC's buffs.
     /// </summary>
+    /// <remarks>This packet is used to synchronize NPC state.</remarks>
     public sealed class NpcBuffsPacket : Packet {
         private short _npcIndex;
         private DirtiableArray<Buff> _buffs = new DirtiableArray<Buff>(TerrariaNpc.maxBuffs);

@@ -21,6 +21,7 @@ namespace Orion.Packets.Players {
     /// <summary>
     /// Packet sent to set a player's item animation.
     /// </summary>
+    /// <remarks>This packet is used to synchronize player state.</remarks>
     public sealed class PlayerItemAnimationPacket : Packet {
         private byte _playerIndex;
         private float _itemRotation;
@@ -41,12 +42,15 @@ namespace Orion.Packets.Players {
             }
         }
 
-        // TODO: explain these
-
         /// <summary>
         /// Gets or sets the player's item rotation.
         /// </summary>
         /// <value>The player's item rotation.</value>
+        /// <remarks>
+        /// This property's value is in radians. A value of <c>0</c> results in a completely horizontal item, and
+        /// assuming that the player is facing right, increasing this property's value rotates the item
+        /// counter-clockwise.
+        /// </remarks>
         public float ItemRotation {
             get => _itemRotation;
             set {
@@ -59,6 +63,9 @@ namespace Orion.Packets.Players {
         /// Gets or sets the player's item animation.
         /// </summary>
         /// <value>The player's item animation.</value>
+        /// <remarks>
+        /// This property's value indicates how many ticks are left until the item's animation occurs again.
+        /// </remarks>
         public short ItemAnimation {
             get => _itemAnimation;
             set {

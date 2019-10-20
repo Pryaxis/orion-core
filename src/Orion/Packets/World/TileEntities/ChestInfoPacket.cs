@@ -22,6 +22,7 @@ namespace Orion.Packets.World.TileEntities {
     /// <summary>
     /// Packet sent to set chest information.
     /// </summary>
+    /// <remarks>This packet is sent when a player renames a chest.</remarks>
     public sealed class ChestInfoPacket : Packet {
         private short _chestIndex;
         private short _x;

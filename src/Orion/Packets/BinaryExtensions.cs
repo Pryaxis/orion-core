@@ -21,7 +21,7 @@ using System.IO;
 using Microsoft.Xna.Framework;
 using TerrariaNetworkText = Terraria.Localization.NetworkText;
 
-namespace Orion.Packets.Extensions {
+namespace Orion.Packets {
     internal static class BinaryExtensions {
         public static Color ReadColor(this BinaryReader reader) {
             Debug.Assert(reader != null, "reader should not be null");

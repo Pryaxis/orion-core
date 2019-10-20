@@ -23,6 +23,7 @@ namespace Orion.Packets.Players {
     /// <summary>
     /// Packet sent to set a player's inventory slot.
     /// </summary>
+    /// <remarks>This packet is used to synchronize player state.</remarks>
     public sealed class PlayerInventorySlotPacket : Packet {
         private byte _playerIndex;
         private byte _inventorySlot;
@@ -49,10 +50,8 @@ namespace Orion.Packets.Players {
         /// Gets or sets the player's inventory slot.
         /// </summary>
         /// <value>The player's inventory slot.</value>
-        /// <remarks>
-        /// This value can range from <c>0</c> to <c>219</c>. Check the <see cref="IPlayerInventory"/> interface for a
-        /// more detailed description on the slots.
-        /// </remarks>
+        /// <remarks>This value can range from <c>0</c> to <c>219</c>.</remarks>
+        /// <seealso cref="IPlayerInventory"/>
         public byte InventorySlot {
             get => _inventorySlot;
             set {

@@ -21,6 +21,7 @@ namespace Orion.Packets.Players {
     /// <summary>
     /// Packet sent to set the NPC that a player is talking to.
     /// </summary>
+    /// <remarks>This packet is sent when a player talks to an NPC and is used to synchronize player state.</remarks>
     public sealed class PlayerTalkingToNpcPacket : Packet {
         private byte _playerIndex;
         private short _npcIndex;

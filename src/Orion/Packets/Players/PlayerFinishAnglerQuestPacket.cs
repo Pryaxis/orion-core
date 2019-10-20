@@ -21,6 +21,7 @@ namespace Orion.Packets.Players {
     /// <summary>
     /// Packet sent from the client to the server to finish the current angler quest.
     /// </summary>
+    /// <remarks>This packet is sent when a player turns in their quest fish.</remarks>
     public sealed class PlayerFinishAnglerQuestPacket : Packet {
         /// <inheritdoc/>
         public override PacketType Type => PacketType.PlayerFinishAnglerQuest;

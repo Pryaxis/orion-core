@@ -17,12 +17,16 @@
 
 using System.IO;
 using Microsoft.Xna.Framework;
-using Orion.Packets.Extensions;
 
 namespace Orion.Packets.Players {
     /// <summary>
     /// Packet sent to set a player's minion target position.
     /// </summary>
+    /// <remarks>
+    /// This packet is used to synchronize player state. <para/>
+    /// 
+    /// Only sentry-style minions are affected by this packet.
+    /// </remarks>
     public sealed class PlayerMinionTargetPositionPacket : Packet {
         private byte _playerIndex;
         private Vector2 _position;

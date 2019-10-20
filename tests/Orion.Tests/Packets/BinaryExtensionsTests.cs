@@ -24,7 +24,7 @@ using Microsoft.Xna.Framework;
 using Terraria.Localization;
 using Xunit;
 
-namespace Orion.Packets.Extensions {
+namespace Orion.Packets {
     public class BinaryExtensionTests {
         public static readonly IEnumerable<object[]> ColorData = new List<object[]> {
             new object[] {new Color(255, 0, 0)},

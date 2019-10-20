@@ -25,6 +25,11 @@ namespace Orion.Packets.Items {
     /// Packet sent from the server to the client to perform an item alteration. This can be used to provide "custom"
     /// items to a vanilla client.
     /// </summary>
+    /// <remarks>
+    /// This packet can be used to provide "custom" items to a vanilla client. <para/>
+    /// 
+    /// For example, an item can be dropped onto the ground, and this packet can be sent to modify its stats.
+    /// </remarks>
     // TODO: write tests for this class.
     public sealed class ItemAlterationPacket : Packet {
         private short _itemIndex;

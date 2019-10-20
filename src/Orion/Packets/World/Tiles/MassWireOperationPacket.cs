@@ -16,11 +16,13 @@
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
 using System.IO;
+using Orion.Items;
 
 namespace Orion.Packets.World.Tiles {
     /// <summary>
     /// Packet sent from the client to the server to perform a mass wire operation.
     /// </summary>
+    /// <remarks>This packet is sent when a player uses <see cref="ItemType.TheGrandDesign"/>.</remarks>
     /// <seealso cref="WireOperations"/>
     public sealed class MassWireOperationPacket : Packet {
         private short _startX;

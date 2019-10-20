@@ -20,8 +20,9 @@ using Orion.World.Tiles;
 
 namespace Orion.Packets.World.Tiles {
     /// <summary>
-    /// Packet sent to show a tile animation such as a fake chest opening or a mushroom statue being powered.
+    /// Packet sent to show a tile animation.
     /// </summary>
+    /// <remarks>This packet is sent for things such as fake chests and mushroom statues.</remarks>
     public sealed class TileAnimationPacket : Packet {
         private short _animationType;
         private BlockType _blockType;

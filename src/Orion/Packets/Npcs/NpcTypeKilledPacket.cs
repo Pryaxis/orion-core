@@ -20,8 +20,9 @@ using Orion.Npcs;
 
 namespace Orion.Packets.Npcs {
     /// <summary>
-    /// Packet sent from the server to the client to notify that an NPC type was killed. This is used for achievements.
+    /// Packet sent from the server to the client to notify that an NPC type was killed.
     /// </summary>
+    /// <remarks>This packet is used for achievement tracking.</remarks>
     public sealed class NpcTypeKilledPacket : Packet {
         private NpcType _npcType;
 

@@ -21,6 +21,7 @@ namespace Orion.Packets.Players {
     /// <summary>
     /// Packet sent to heal a player.
     /// </summary>
+    /// <remarks>This packet is sent when a player uses Spectre armor.</remarks>
     public sealed class PlayerHealPacket : Packet {
         private byte _playerIndex;
         private short _healAmount;

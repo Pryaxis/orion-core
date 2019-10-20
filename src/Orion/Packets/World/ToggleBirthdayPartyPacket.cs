@@ -16,11 +16,15 @@
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
 using System.IO;
+using Orion.World.Tiles;
 
 namespace Orion.Packets.World {
     /// <summary>
     /// Packet sent from the client to the server to toggle the birthday party.
     /// </summary>
+    /// <remarks>
+    /// This packet is sent when a player toggles a birthday party using a <see cref="BlockType.PartyPresent"/>.
+    /// </remarks>
     public sealed class ToggleBirthdayPartyPacket : Packet {
         /// <inheritdoc/>
         public override PacketType Type => PacketType.ToggleBirthdayParty;

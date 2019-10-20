@@ -19,7 +19,7 @@ using Orion.Items;
 
 namespace Orion.Packets.Players {
     /// <summary>
-    /// Specifies the player's dodge type in a <see cref="PlayerDodgePacket"/>.
+    /// Specifies the dodge type in a <see cref="PlayerDodgePacket"/>.
     /// </summary>
     public enum PlayerDodgeType : byte {
         /// <summary>

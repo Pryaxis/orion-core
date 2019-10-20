@@ -19,7 +19,7 @@ using Orion.Items;
 
 namespace Orion.Packets.Entities {
     /// <summary>
-    /// Specifies an entity's teleportation type in an <see cref="EntityTeleportationPacket"/>.
+    /// Specifies the teleportation type in an <see cref="EntityTeleportationPacket"/>.
     /// </summary>
     public enum EntityTeleportationType : byte {
         /// <summary>

@@ -20,9 +20,9 @@ using Orion.Packets.World.Tiles;
 
 namespace Orion.Packets.Players {
     /// <summary>
-    /// Packet sent from the server to the client to enter the world. This is sent in response to a
-    /// <see cref="SectionRequestPacket"/>.
+    /// Packet sent from the server to the client to enter the world.
     /// </summary>
+    /// <remarks>This packet is sent in response to the first <see cref="SectionRequestPacket"/>.</remarks>
     public sealed class PlayerEnterWorldPacket : Packet {
         /// <inheritdoc/>
         public override PacketType Type => PacketType.PlayerEnterWorld;

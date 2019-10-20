@@ -22,6 +22,7 @@ namespace Orion.Packets.World.Tiles {
     /// <summary>
     /// Packet sent to set a tile's block color.
     /// </summary>
+    /// <remarks>This packet is sent when a player paints a block.</remarks>
     public sealed class TileBlockColorPacket : Packet {
         private short _x;
         private short _y;

@@ -21,6 +21,7 @@ namespace Orion.Packets.Players {
     /// <summary>
     /// Packet sent to spawn a player.
     /// </summary>
+    /// <remarks>This packet is sent when a player spawns or respawns.</remarks>
     public sealed class PlayerSpawnPacket : Packet {
         private byte _playerIndex;
         private short _spawnX;

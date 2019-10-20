@@ -21,6 +21,7 @@ namespace Orion.Packets.World {
     /// <summary>
     /// Packet sent from the server to the client to set invasion information.
     /// </summary>
+    /// <remarks>This packet is sent to synchronize the world state.</remarks>
     public sealed class InvasionInfoPacket : Packet {
         private int _numberOfKills;
         private int _numberOfKillsToProgress;

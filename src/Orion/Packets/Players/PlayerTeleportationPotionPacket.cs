@@ -16,11 +16,13 @@
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
 using System.IO;
+using Orion.Items;
 
 namespace Orion.Packets.Players {
     /// <summary>
     /// Packet sent from the client to to the server to use a teleportation potion.
     /// </summary>
+    /// <remarks>This packet is sent when a player drinks a <see cref="ItemType.TeleportationPotion"/>.</remarks>
     public sealed class PlayerTeleportationPotionPacket : Packet {
         /// <inheritdoc/>
         public override PacketType Type => PacketType.PlayerTeleportationPotion;

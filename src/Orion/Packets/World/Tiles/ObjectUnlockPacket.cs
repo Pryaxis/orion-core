@@ -19,9 +19,10 @@ using System.IO;
 
 namespace Orion.Packets.World.Tiles {
     /// <summary>
-    /// Packet sent to unlock an object (chest, door, etc.). See <see cref="UnlockableObjectType"/> for a list of
-    /// unlockable object types.
+    /// Packet sent to unlock an object (chest, door, etc.).
     /// </summary>
+    /// <remarks>This packet is sent when a player unlocks an object.</remarks>
+    /// <seealso cref="UnlockableObjectType"/>
     public sealed class ObjectUnlockPacket : Packet {
         private UnlockableObjectType _objectType;
         private short _x;

@@ -19,9 +19,9 @@ using System.IO;
 
 namespace Orion.Packets.Projectiles {
     /// <summary>
-    /// Packet sent to remove a projectile by identity. For the server, the identity is the absolute source of truth on
-    /// projectile indices.
+    /// Packet sent to remove a projectile by identity.
     /// </summary>
+    /// <remarks>This packet is sent to remove projectiles.</remarks>
     public sealed class ProjectileRemoveIdentityPacket : Packet {
         private short _identity;
         private byte _ownerIndex;

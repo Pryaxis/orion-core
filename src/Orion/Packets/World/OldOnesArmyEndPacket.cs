@@ -21,6 +21,7 @@ namespace Orion.Packets.World {
     /// <summary>
     /// Packet sent from the server to the client to end the Old One's Army event.
     /// </summary>
+    /// <remarks>This packet is sent to synchronize the world state.</remarks>
     public sealed class OldOnesArmyEndPacket : Packet {
         /// <inheritdoc/>
         public override PacketType Type => PacketType.OldOnesArmyEnd;

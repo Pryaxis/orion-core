@@ -19,8 +19,9 @@ using System.IO;
 
 namespace Orion.Packets.World {
     /// <summary>
-    /// Packet sent to set the time. This is currently not naturally sent.
+    /// Packet sent to set the time.
     /// </summary>
+    /// <remarks>This packet is not normally sent.</remarks>
     public sealed class WorldTimePacket : Packet {
         private bool _isDaytime;
         private int _time;

@@ -19,8 +19,10 @@ using System.IO;
 
 namespace Orion.Packets.World.Tiles {
     /// <summary>
-    /// Packet sent to perform a tile modification. See <see cref="TileModification"/> for a list of tile modifications.
+    /// Packet sent to perform a tile modification.
     /// </summary>
+    /// <remarks>This packet is sent when a player modifies a tile.</remarks>
+    /// <seealso cref="TileModification"/>
     public sealed class TileModificationPacket : Packet {
         private TileModification _modification;
         private short _x;

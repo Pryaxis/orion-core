@@ -20,9 +20,9 @@ using System.IO;
 
 namespace Orion.Packets.Players {
     /// <summary>
-    /// Packet sent from the client to the server to inform the server about the player's UUID. This is sent in response
-    /// to a <see cref="PlayerContinueConnectingPacket"/>.
+    /// Packet sent from the client to the server to inform the server about the player's UUID.
     /// </summary>
+    /// <remarks>This packet is sent in response to a <see cref="PlayerContinueConnectingPacket"/>.</remarks>
     public sealed class PlayerUuidPacket : Packet {
         private string _uuid = string.Empty;
 

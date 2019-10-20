@@ -17,12 +17,12 @@
 
 using System.IO;
 using Microsoft.Xna.Framework;
-using Orion.Packets.Extensions;
 
 namespace Orion.Packets.Players {
     /// <summary>
     /// Packet sent from the client to the server to teleport a player through a portal.
     /// </summary>
+    /// <remarks>This packet is sent when a player teleports through a portal.</remarks>
     public sealed class PlayerTeleportPortalPacket : Packet {
         private byte _playerIndex;
         private short _portalIndex;

@@ -23,6 +23,7 @@ namespace Orion.Packets.Npcs {
     /// <summary>
     /// Packet sent from the client to the server to release an NPC.
     /// </summary>
+    /// <remarks>This packet is sent when a player "uses" an NPC item.</remarks>
     public sealed class NpcReleasePacket : Packet {
         private Vector2 _position;
         private NpcType _npcType = NpcType.None;

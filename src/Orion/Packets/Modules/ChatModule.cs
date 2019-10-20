@@ -18,13 +18,16 @@
 using System;
 using System.IO;
 using Microsoft.Xna.Framework;
-using Orion.Packets.Extensions;
 using TerrariaNetworkText = Terraria.Localization.NetworkText;
 
 namespace Orion.Packets.Modules {
     /// <summary>
     /// Module sent for chat.
     /// </summary>
+    /// <remarks>
+    /// This module is sent from clients to include command information and is sent from the server to include
+    /// chatting information.
+    /// </remarks>
     public sealed class ChatModule : Module {
         private string _clientCommand = string.Empty;
         private string _clientText = string.Empty;

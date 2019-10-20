@@ -17,12 +17,12 @@
 
 using System;
 using System.IO;
-using Orion.Packets.Extensions;
 
 namespace Orion.Packets.World {
     /// <summary>
     /// Packet sent from the server to the client to set Old One's Army information.
     /// </summary>
+    /// <remarks>This packet is sent to synchronize the world state.</remarks>
     public sealed class OldOnesArmyInfoPacket : Packet {
         private TimeSpan _timeBetweenWaves;
 

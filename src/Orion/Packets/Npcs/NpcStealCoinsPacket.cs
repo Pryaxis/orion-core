@@ -17,13 +17,15 @@
 
 using System.IO;
 using Microsoft.Xna.Framework;
-using Orion.Packets.Extensions;
 
 namespace Orion.Packets.Npcs {
     /// <summary>
-    /// Packet sent to cause an NPC to steal coins. This is sent from clients and the logic occurs clientside, but the
-    /// server echoes the packet back to clients which may cause desync issues.
+    /// Packet sent from the server to the client to cause an NPC to steal coins.
     /// </summary>
+    /// <remarks>
+    /// There appears to be a bug where clients are sending the packet to the server instead. The server echoes the
+    /// packet back, which can cause desync issues.
+    /// </remarks>
     public sealed class NpcStealCoinsPacket : Packet {
         private short _npcIndex;
         private float _value;

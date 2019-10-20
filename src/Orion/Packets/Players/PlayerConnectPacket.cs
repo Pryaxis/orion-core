@@ -22,6 +22,7 @@ namespace Orion.Packets.Players {
     /// <summary>
     /// Packet sent from the client to the server to start connecting.
     /// </summary>
+    /// <remarks>This packet is always the first packet to be sent from the client when connecting.</remarks>
     public sealed class PlayerConnectPacket : Packet {
         private string _versionString = string.Empty;
 

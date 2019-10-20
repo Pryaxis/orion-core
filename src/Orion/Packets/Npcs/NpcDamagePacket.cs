@@ -21,6 +21,9 @@ namespace Orion.Packets.Npcs {
     /// <summary>
     /// Packet sent to damage an NPC.
     /// </summary>
+    /// <remarks>
+    /// This packet is sent when a player damages an NPC or when some non-player source damages an NPC.
+    /// </remarks>
     public sealed class NpcDamagePacket : Packet {
         private short _npcIndex;
         private short _damage;

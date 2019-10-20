@@ -18,12 +18,12 @@
 using System.IO;
 using Microsoft.Xna.Framework;
 using Orion.Items;
-using Orion.Packets.Extensions;
 
 namespace Orion.Packets.Items {
     /// <summary>
     /// Packet sent to set item information. This is sent for item drops, updates, and pickups.
     /// </summary>
+    /// <remarks>This packet is sent for item drops, updates, and pickups.</remarks>
     public sealed class ItemInfoPacket : Packet {
         private short _itemIndex;
         private Vector2 _position;
@@ -37,7 +37,7 @@ namespace Orion.Packets.Items {
         public override PacketType Type => PacketType.ItemInfo;
 
         /// <summary>
-        /// Gets or sets the item index.
+        /// Gets or sets the item index. If <c>400</c>, then an item will be created.
         /// </summary>
         /// <value>The item index.</value>
         public short ItemIndex {

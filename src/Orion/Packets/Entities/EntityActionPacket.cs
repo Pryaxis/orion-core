@@ -19,8 +19,9 @@ using System.IO;
 
 namespace Orion.Packets.Entities {
     /// <summary>
-    /// Packet sent to perform an entity action. See <see cref="Entities.EntityAction"/> for the list of possible actions.
+    /// Packet sent to perform an entity action.
     /// </summary>
+    /// <seealso cref="EntityAction"/>
     public sealed class EntityActionPacket : Packet {
         private byte _entityIndex;
         private EntityAction _action;

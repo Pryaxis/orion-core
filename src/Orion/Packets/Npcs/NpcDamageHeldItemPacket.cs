@@ -19,8 +19,9 @@ using System.IO;
 
 namespace Orion.Packets.Npcs {
     /// <summary>
-    /// Packet sent to damage an NPC with a player's held item. This is currently not naturally sent.
+    /// Packet sent to damage an NPC with a player's held item.
     /// </summary>
+    /// <remarks>This packet is not normally sent.</remarks>
     public sealed class NpcDamageHeldItemPacket : Packet {
         private short _npcIndex;
         private byte _damagerIndex;

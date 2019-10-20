@@ -15,38 +15,40 @@
 // You should have received a copy of the GNU General Public License
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
+using Orion.World.Tiles;
+
 namespace Orion.Packets.World.Tiles {
     /// <summary>
     /// Specifies the toggle door action in a <see cref="ToggleDoorPacket"/>.
     /// </summary>
     public enum ToggleDoorAction : byte {
         /// <summary>
-        /// Indicates that a door should be opened.
+        /// Indicates that <see cref="BlockType.ClosedDoors"/> should be closed.
         /// </summary>
         OpenDoor = 0,
 
         /// <summary>
-        /// Indicates that a door should be closed.
+        /// Indicates that <see cref="BlockType.OpenDoors"/> should be closed.
         /// </summary>
         CloseDoor = 1,
 
         /// <summary>
-        /// Indicates that a trapdoor should be opened.
+        /// Indicates that a <see cref="BlockType.ClosedTrapDoor"/> should be opened.
         /// </summary>
-        OpenTrapdoor = 2,
+        OpenTrapDoor = 2,
 
         /// <summary>
-        /// Indicates that a trapdoor should be closed.
+        /// Indicates that an <see cref="BlockType.OpenTrapDoor"/> should be closed.
         /// </summary>
-        CloseTrapdoor = 3,
+        CloseTrapDoor = 3,
 
         /// <summary>
-        /// Indicates that a tall gate should be opened.
+        /// Indicates that a <see cref="BlockType.ClosedTallGate"/> should be opened.
         /// </summary>
         OpenTallGate = 4,
 
         /// <summary>
-        /// Indicates that a tall gate should be closed.
+        /// Indicates that an <see cref="BlockType.OpenTallGate"/> should be closed.
         /// </summary>
         CloseTallGate = 5
     }

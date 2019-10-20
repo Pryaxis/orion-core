@@ -19,13 +19,13 @@ using System.IO;
 using Microsoft.Xna.Framework;
 using Orion.Entities;
 using Orion.Items;
-using Orion.Packets.Extensions;
 using Orion.Players;
 
 namespace Orion.Packets.Players {
     /// <summary>
     /// Packet sent to set player information.
     /// </summary>
+    /// <remarks>This packet is used to synchronize player state.</remarks>
     public sealed class PlayerInfoPacket : Packet {
         private byte _playerIndex;
         private bool _isHoldingUp;

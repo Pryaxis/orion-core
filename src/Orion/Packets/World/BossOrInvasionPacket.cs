@@ -19,9 +19,10 @@ using System.IO;
 
 namespace Orion.Packets.World {
     /// <summary>
-    /// Packet sent to summon a boss or an invasion. See <see cref="BossOrInvasionType"/> for the
-    /// list of bosses or invasions.
+    /// Packet sent from the client to the server to summon a boss or invasion.
     /// </summary>
+    /// <remarks>This packet is sent whenever a player summons a boss or invasion using an item.</remarks>
+    /// <seealso cref="World.BossOrInvasionType"/>
     public sealed class BossOrInvasionPacket : Packet {
         private byte _summonerIndex;
         private BossOrInvasionType _bossOrInvasionType;

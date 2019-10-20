@@ -21,6 +21,7 @@ namespace Orion.Packets.Players {
     /// <summary>
     /// Packet sent to set a player's minions' target NPC.
     /// </summary>
+    /// <remarks>This packet is used to synchronize player state.</remarks>
     public sealed class PlayerMinionTargetNpcPacket : Packet {
         private byte _playerIndex;
         private short _npcIndex;

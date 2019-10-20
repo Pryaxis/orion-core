@@ -19,9 +19,10 @@ using System.IO;
 
 namespace Orion.Packets.World.Tiles {
     /// <summary>
-    /// Packet sent to toggle the state of a door. See <see cref="Tiles.ToggleDoorAction"/> for a list
-    /// of toggle door actions.
+    /// Packet sent to toggle the state of a door.
     /// </summary>
+    /// <remarks>This packet is sent when a player opens or closes a door.</remarks>
+    /// <seealso cref="ToggleDoorAction"/>
     public sealed class ToggleDoorPacket : Packet {
         private ToggleDoorAction _action;
         private short _x;

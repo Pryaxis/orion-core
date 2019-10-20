@@ -22,6 +22,10 @@ namespace Orion.Packets.Entities {
     /// <summary>
     /// Packet sent from the server to the client to set emote information.
     /// </summary>
+    /// <remarks>
+    /// Emotes are the little images that pop up next to NPCs. They can be used to convey information, and can also be
+    /// attached to non-NPC instances.
+    /// </remarks>
     public sealed class EmoteInfoPacket : Packet {
         private int _emoteIndex;
         private EmoteAnchorType _anchorType;
@@ -70,7 +74,7 @@ namespace Orion.Packets.Entities {
         }
 
         /// <summary>
-        /// Gets or sets the emote's lifetime.
+        /// Gets or sets the emote's lifetime. This is in ticks.
         /// </summary>
         /// <value>The emote's lifetime.</value>
         public byte Lifetime {
@@ -97,6 +101,10 @@ namespace Orion.Packets.Entities {
         /// Gets or sets the emote's metadata.
         /// </summary>
         /// <value>The emote's metadata.</value>
+        /// <remarks>
+        /// There appears to be a bug where Terraria never populates this field because <see cref="EmoteType"/> is
+        /// serialized as a byte but checked against zero.
+        /// </remarks>
         public ushort Metadata {
             get => _metadata;
             set {

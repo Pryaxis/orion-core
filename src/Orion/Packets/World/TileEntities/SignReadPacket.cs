@@ -21,6 +21,7 @@ namespace Orion.Packets.World.TileEntities {
     /// <summary>
     /// Packet sent from the client to the server to read a sign.
     /// </summary>
+    /// <remarks>This packet is sent when a player reads a sign.</remarks>
     public sealed class SignReadPacket : Packet {
         private short _x;
         private short _y;

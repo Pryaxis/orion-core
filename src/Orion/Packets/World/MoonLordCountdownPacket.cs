@@ -17,12 +17,12 @@
 
 using System;
 using System.IO;
-using Orion.Packets.Extensions;
 
 namespace Orion.Packets.World {
     /// <summary>
     /// Packet sent from the server to the client to set the Moon Lord countdown.
     /// </summary>
+    /// <remarks>This packet is sent to synchronize the world state.</remarks>
     public sealed class MoonLordCountdownPacket : Packet {
         private TimeSpan _countdown;
 

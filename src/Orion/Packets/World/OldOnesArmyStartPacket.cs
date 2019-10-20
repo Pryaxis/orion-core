@@ -21,6 +21,7 @@ namespace Orion.Packets.World {
     /// <summary>
     /// Packet sent from the client to the server to start the Old One's Army event.
     /// </summary>
+    /// <remarks>This packet is sent to synchronize the world state.</remarks>
     public sealed class OldOnesArmyStartPacket : Packet {
         private short _x;
         private short _y;

@@ -19,9 +19,12 @@ using System.IO;
 
 namespace Orion.Packets.Items {
     /// <summary>
-    /// Packet sent from the server to the client to remove the owner of an item. This is sent if an item is 'claimed'
-    /// but not picked up for too long.
+    /// Packet sent from the server to the client to remove the owner of an item.
     /// </summary>
+    /// <remarks>
+    /// This packet is sent if an item is 'claimed' with an <see cref="ItemOwnerPacket"/> but remains ungrabbed for too
+    /// long.
+    /// </remarks>
     public sealed class ItemRemoveOwnerPacket : Packet {
         private short _itemIndex;
 

@@ -23,9 +23,9 @@ using Orion.Utils;
 
 namespace Orion.Packets.Modules {
     /// <summary>
-    /// Represents a module. This is sent in a <see cref="ModulePacket"/>.
+    /// Represents a module.
     /// </summary>
-    [SuppressMessage("Naming", "CA1716:Identifiers should not match keywords", Justification = "Consumers are C#")]
+    [SuppressMessage("Naming", "CA1716:Identifiers should not match keywords", Justification = "Don't care about VB")]
     public abstract class Module : IDirtiable {
         private static readonly Func<Module>?[] _constructors = {
             /* 000 */ () => new LiquidsModule(),

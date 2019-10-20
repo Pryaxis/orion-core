@@ -17,12 +17,17 @@
 
 using System;
 using System.IO;
+using Orion.Items;
 using Orion.World.Tiles;
 
 namespace Orion.Packets.World.Tiles {
     /// <summary>
     /// Packet sent to set a square of tiles.
     /// </summary>
+    /// <remarks>
+    /// This packet is sent when a player needs to "unnaturally" modify tiles: e.g., if blocks need to be replaced,
+    /// such as when using a <see cref="ItemType.Clentaminator"/>
+    /// </remarks>
     public sealed class TileSquarePacket : Packet {
         private short _size;
         private byte _data;

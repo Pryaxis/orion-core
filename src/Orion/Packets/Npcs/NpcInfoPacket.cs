@@ -18,7 +18,6 @@
 using System.IO;
 using Microsoft.Xna.Framework;
 using Orion.Npcs;
-using Orion.Packets.Extensions;
 using Orion.Utils;
 using TerrariaNpc = Terraria.NPC;
 
@@ -26,6 +25,9 @@ namespace Orion.Packets.Npcs {
     /// <summary>
     /// Packet sent from the server to the client to set NPC information.
     /// </summary>
+    /// <remarks>
+    /// This packet is used to synchronize NPC state. The rate of NPC state synchronization can be controlled.
+    /// </remarks>
     public sealed class NpcInfoPacket : Packet {
         private short _npcIndex;
         private Vector2 _position;
@@ -117,7 +119,7 @@ namespace Orion.Packets.Npcs {
         /// <summary>
         /// Gets or sets a value indicating the vertical direction of the NPC.
         /// </summary>
-        /// <value><see langword="true"/> if the NPC is facing right; otherwise, <see langword="false"/>.</value>
+        /// <value><see langword="true"/> if the NPC is "facing" up; otherwise, <see langword="false"/>.</value>
         public bool VerticalDirection {
             get => _verticalDirection;
             set {

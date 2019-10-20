@@ -21,6 +21,7 @@ namespace Orion.Packets.Players {
     /// <summary>
     /// Packet sent to show a heal effect on a player.
     /// </summary>
+    /// <remarks>This packet is sent when a player gets healed in any way.</remarks>
     public sealed class PlayerHealEffectPacket : Packet {
         private byte _playerIndex;
         private short _healAmount;

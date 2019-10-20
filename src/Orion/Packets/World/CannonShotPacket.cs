@@ -21,6 +21,7 @@ namespace Orion.Packets.World {
     /// <summary>
     /// Packet sent from the server to the client to shoot from a cannon.
     /// </summary>
+    /// <remarks>This packet is sent whenever a cannon is triggered with wiring.</remarks>
     public sealed class CannonShotPacket : Packet {
         private short _damage;
         private float _knockback;

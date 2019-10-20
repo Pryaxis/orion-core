@@ -23,7 +23,6 @@ namespace Orion.Packets.Modules {
     /// <summary>
     /// Packet sent in the form of a module.
     /// </summary>
-    // TODO: check nullability possibilities
     public sealed class ModulePacket : Packet {
         private Module? _module;
 
@@ -57,6 +56,7 @@ namespace Orion.Packets.Modules {
             _module = Module.ReadFromStream(reader.BaseStream, context);
 
         private protected override void WriteToWriter(BinaryWriter writer, PacketContext context) =>
+            // If _module is null we don't have much we can do...
             _module?.WriteToStream(writer.BaseStream, context);
     }
 }

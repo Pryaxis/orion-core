@@ -24,6 +24,7 @@ namespace Orion.Packets.World {
     /// <summary>
     /// Packet sent from the server to the client to set the traveling merchant's shop.
     /// </summary>
+    /// <remarks>This packet is sent when the day changes.</remarks>
     public sealed class TravelingMerchantShopPacket : Packet {
         private DirtiableArray<ItemType> _itemTypes = new DirtiableArray<ItemType>(TerrariaChest.maxItems);
 

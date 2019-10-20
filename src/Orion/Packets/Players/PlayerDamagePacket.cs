@@ -17,13 +17,13 @@
 
 using System;
 using System.IO;
-using Orion.Packets.Extensions;
 using TerrariaPlayerDeathReason = Terraria.DataStructures.PlayerDeathReason;
 
 namespace Orion.Packets.Players {
     /// <summary>
     /// Packet sent to damage a player.
     /// </summary>
+    /// <remarks>This packet is sent when a player damages themselves or damages another player in PvP.</remarks>
     public sealed class PlayerDamagePacket : Packet {
         private byte _playerIndex;
         private TerrariaPlayerDeathReason _deathReason = TerrariaPlayerDeathReason.LegacyEmpty();

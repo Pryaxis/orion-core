@@ -20,9 +20,9 @@ using System.IO;
 
 namespace Orion.Packets.Players {
     /// <summary>
-    /// Packet sent from the client to the server to try a password. This is sent in response to a
-    /// <see cref="PlayerPasswordChallengePacket"/>.
+    /// Packet sent from the client to the server to try a password.
     /// </summary>
+    /// <remarks>This packet is sent in response to a <see cref="PlayerPasswordChallengePacket"/>.</remarks>
     public sealed class PlayerPasswordResponsePacket : Packet {
         private string _passwordAttempt = string.Empty;
 

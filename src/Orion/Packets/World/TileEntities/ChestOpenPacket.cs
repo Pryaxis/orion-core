@@ -21,6 +21,7 @@ namespace Orion.Packets.World.TileEntities {
     /// <summary>
     /// Packet sent from the client to the server to open a chest.
     /// </summary>
+    /// <remarks>This packet is sent when a player opens a chest.</remarks>
     public sealed class ChestOpenPacket : Packet {
         private short _x;
         private short _y;

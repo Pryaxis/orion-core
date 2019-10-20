@@ -21,6 +21,7 @@ namespace Orion.Packets.Npcs {
     /// <summary>
     /// Packet sent to set an NPC's home.
     /// </summary>
+    /// <remarks>This packet is sent when a player moves an NPC or to synchronize NPC state.</remarks>
     public sealed class NpcHomePacket : Packet {
         private short _npcIndex;
         private short _homeX;

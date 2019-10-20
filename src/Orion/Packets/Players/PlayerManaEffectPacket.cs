@@ -21,6 +21,7 @@ namespace Orion.Packets.Players {
     /// <summary>
     /// Packet sent to show a mana effect on a player.
     /// </summary>
+    /// <remarks>This packet is sent when a player's mana gets restored in any way.</remarks>
     public sealed class PlayerManaEffectPacket : Packet {
         private byte _playerIndex;
         private short _manaAmount;

@@ -21,6 +21,7 @@ namespace Orion.Packets.World {
     /// <summary>
     /// Packet sent from the server to the client to set the pillars' shield strengths.
     /// </summary>
+    /// <remarks>This packet is sent to synchronize the world state.</remarks>
     public sealed class PillarShieldStrengthsPacket : Packet {
         private ushort _solar;
         private ushort _vortex;
