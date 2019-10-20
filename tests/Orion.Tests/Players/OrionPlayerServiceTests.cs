@@ -251,6 +251,22 @@ namespace Orion.Players {
         }
 
         [Fact]
+        public void PacketReceive_PlayerHealEffect_IsTriggered() {
+            using var playerService = new OrionPlayerService(Logger.None);
+            var isRun = false;
+            playerService.PlayerHealEffect.RegisterHandler((sender, args) => {
+                isRun = true;
+                args.Player.Should().BeSameAs(playerService.Players[1]);
+                args.HealAmount.Should().Be(100);
+                args.Cancel();
+            });
+
+            TestUtils.FakeReceiveBytes(1, PlayerHealEffectPacketTests.Bytes);
+
+            isRun.Should().BeTrue();
+        }
+
+        [Fact]
         public void PacketReceive_PlayerPasswordResponse_IsTriggered() {
             using var playerService = new OrionPlayerService(Logger.None);
             var isRun = false;

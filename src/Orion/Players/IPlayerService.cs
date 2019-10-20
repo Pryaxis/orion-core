@@ -100,6 +100,12 @@ namespace Orion.Players {
         EventHandlerCollection<PlayerPvpEventArgs> PlayerPvp { get; }
 
         /// <summary>
+        /// Gets the event handlers that occur when a player triggers a heal effect. This event can be canceled.
+        /// </summary>
+        /// <value>The event handlers that occur when a player triggers a heal effect.</value>
+        EventHandlerCollection<PlayerHealEffectEventArgs> PlayerHealEffect { get; }
+
+        /// <summary>
         /// Gets the event handlers that occur when a player responds to a server password request. This event can be
         /// canceled.
         /// </summary>

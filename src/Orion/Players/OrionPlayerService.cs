@@ -50,6 +50,7 @@ namespace Orion.Players {
         public EventHandlerCollection<PlayerInfoEventArgs> PlayerInfo { get; }
         public EventHandlerCollection<PlayerHealthEventArgs> PlayerHealth { get; }
         public EventHandlerCollection<PlayerPvpEventArgs> PlayerPvp { get; }
+        public EventHandlerCollection<PlayerHealEffectEventArgs> PlayerHealEffect { get; }
         public EventHandlerCollection<PlayerPasswordResponseEventArgs> PlayerPasswordResponse { get; }
         public EventHandlerCollection<PlayerManaEventArgs> PlayerMana { get; }
         public EventHandlerCollection<PlayerTeamEventArgs> PlayerTeam { get; }
@@ -72,6 +73,7 @@ namespace Orion.Players {
                 [PacketType.PlayerInfo] = PlayerInfoHandler,
                 [PacketType.PlayerHealth] = PlayerHealthHandler,
                 [PacketType.PlayerPvp] = PlayerPvpHandler,
+                [PacketType.PlayerHealEffect] = PlayerHealEffectHandler,
                 [PacketType.PlayerPasswordResponse] = PlayerPasswordResponseHandler,
                 [PacketType.PlayerMana] = PlayerManaHandler,
                 [PacketType.PlayerTeam] = PlayerTeamHandler,
@@ -96,6 +98,7 @@ namespace Orion.Players {
             PlayerInfo = new EventHandlerCollection<PlayerInfoEventArgs>();
             PlayerHealth = new EventHandlerCollection<PlayerHealthEventArgs>();
             PlayerPvp = new EventHandlerCollection<PlayerPvpEventArgs>();
+            PlayerHealEffect = new EventHandlerCollection<PlayerHealEffectEventArgs>();
             PlayerPasswordResponse = new EventHandlerCollection<PlayerPasswordResponseEventArgs>();
             PlayerMana = new EventHandlerCollection<PlayerManaEventArgs>();
             PlayerTeam = new EventHandlerCollection<PlayerTeamEventArgs>();
@@ -572,6 +575,42 @@ namespace Orion.Players {
                 Log.Debug(
                     "Altered {Event} to [{Player} is in pvp: {IsPlayerInPvp}]",
                     PlayerPvp, args.Player, args.IsInPvp);
+            }
+        }
+
+        // =============================================================================================================
+        // Handling PlayerHealEffect
+        // =============================================================================================================
+
+        private void PlayerHealEffectHandler(PacketReceiveEventArgs args_) {
+            var packet = (PlayerHealEffectPacket)args_.Packet;
+            var args = new PlayerHealEffectEventArgs(args_.Sender, packet);
+
+            PlayerHealEffect_Before(args);
+            PlayerHealEffect.Invoke(this, args);
+            PlayerHealEffect_After(args);
+
+            args_.CancellationReason = args.CancellationReason;
+        }
+
+        [Conditional("DEBUG"), ExcludeFromCodeCoverage]
+        private void PlayerHealEffect_Before(PlayerHealEffectEventArgs args) {
+            // Not localized because this string is developer-facing.
+            Log.Debug(
+                "Invoking {Event} with [{Player} for {HealAmount}]",
+                PlayerHealEffect, args.Player, args.HealAmount);
+        }
+        
+        [Conditional("DEBUG"), ExcludeFromCodeCoverage]
+        private void PlayerHealEffect_After(PlayerHealEffectEventArgs args) {
+            if (args.IsCanceled()) {
+                // Not localized because this string is developer-facing.
+                Log.Debug("Canceled {Event} for {Reason}", PlayerHealEffect, args.CancellationReason);
+            } else if (args.IsDirty) {
+                // Not localized because this string is developer-facing.
+                Log.Debug(
+                    "Altered {Event} to [{Player} for {HealAmount}]",
+                    PlayerHealEffect, args.Player, args.HealAmount);
             }
         }
 
