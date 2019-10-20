@@ -24,7 +24,7 @@ namespace Orion.Events {
     /// </summary>
     [AttributeUsage(AttributeTargets.Method)]
     public sealed class EventHandlerAttribute : Attribute {
-        private string? name;
+        private string? _name;
 
         /// <summary>
         /// Gets the event handler's priority.
@@ -49,8 +49,8 @@ namespace Orion.Events {
         /// <exception cref="ArgumentNullException"><param name="value"/> is <see langword="null"/>.</exception>
         [DisallowNull]
         public string? Name {
-            get => name;
-            set => name = value ?? throw new ArgumentNullException(nameof(value));
+            get => _name;
+            set => _name = value ?? throw new ArgumentNullException(nameof(value));
         }
 
         /// <summary>
