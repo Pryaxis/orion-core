@@ -37,35 +37,34 @@ namespace Orion.Players {
     [Service("orion-players")]
     internal sealed class OrionPlayerService : OrionService, IPlayerService {
         private readonly ThreadLocal<bool> _shouldIgnoreNextReceiveData = new ThreadLocal<bool>();
-        private readonly IDictionary<PacketType, Action<PacketReceiveEventArgs>> _packetReceiveHandlers;
+        private readonly IDictionary<PacketType, Action<PacketReceiveEvent>> _packetReceiveHandlers;
 
         public IReadOnlyArray<IPlayer> Players { get; }
-        public EventHandlerCollection<PacketReceiveEventArgs> PacketReceive { get; }
-        public EventHandlerCollection<PacketSendEventArgs> PacketSend { get; }
-        public EventHandlerCollection<PlayerConnectEventArgs> PlayerConnect { get; }
-        public EventHandlerCollection<PlayerDataEventArgs> PlayerData { get; }
-        public EventHandlerCollection<PlayerInventorySlotEventArgs> PlayerInventorySlot { get; }
-        public EventHandlerCollection<PlayerJoinEventArgs> PlayerJoin { get; }
-        public EventHandlerCollection<PlayerSpawnEventArgs> PlayerSpawn { get; }
-        public EventHandlerCollection<PlayerInfoEventArgs> PlayerInfo { get; }
-        public EventHandlerCollection<PlayerHealthEventArgs> PlayerHealth { get; }
-        public EventHandlerCollection<PlayerPvpEventArgs> PlayerPvp { get; }
-        public EventHandlerCollection<PlayerHealEffectEventArgs> PlayerHealEffect { get; }
-        public EventHandlerCollection<PlayerPasswordResponseEventArgs> PlayerPasswordResponse { get; }
-        public EventHandlerCollection<PlayerManaEventArgs> PlayerMana { get; }
-        public EventHandlerCollection<PlayerManaEffectEventArgs> PlayerManaEffect { get; }
-        public EventHandlerCollection<PlayerTeamEventArgs> PlayerTeam { get; }
-        public EventHandlerCollection<PlayerUuidEventArgs> PlayerUuid { get; }
-        public EventHandlerCollection<PlayerTeleportationPotionEventArgs> PlayerTeleportationPotion { get; }
-        public EventHandlerCollection<PlayerAnglerQuestsEventArgs> PlayerAnglerQuests { get; }
-        public EventHandlerCollection<PlayerChatEventArgs> PlayerChat { get; }
-        public EventHandlerCollection<PlayerQuitEventArgs> PlayerQuit { get; }
+        public EventHandlerCollection<PacketReceiveEvent> PacketReceive { get; }
+        public EventHandlerCollection<PacketSendEvent> PacketSend { get; }
+        public EventHandlerCollection<PlayerConnectEvent> PlayerConnect { get; }
+        public EventHandlerCollection<PlayerDataEvent> PlayerData { get; }
+        public EventHandlerCollection<PlayerInventoryEvent> PlayerInventorySlot { get; }
+        public EventHandlerCollection<PlayerJoinEvent> PlayerJoin { get; }
+        public EventHandlerCollection<PlayerSpawnEvent> PlayerSpawn { get; }
+        public EventHandlerCollection<PlayerInfoEvent> PlayerInfo { get; }
+        public EventHandlerCollection<PlayerHealthEvent> PlayerHealth { get; }
+        public EventHandlerCollection<PlayerPvpEvent> PlayerPvp { get; }
+        public EventHandlerCollection<PlayerHealEffectEvent> PlayerHealEffect { get; }
+        public EventHandlerCollection<PlayerPasswordEvent> PlayerPasswordResponse { get; }
+        public EventHandlerCollection<PlayerManaEvent> PlayerMana { get; }
+        public EventHandlerCollection<PlayerManaEffectEvent> PlayerManaEffect { get; }
+        public EventHandlerCollection<PlayerTeamEvent> PlayerTeam { get; }
+        public EventHandlerCollection<PlayerUuidEvent> PlayerUuid { get; }
+        public EventHandlerCollection<PlayerTeleportEvent> PlayerTeleportEvent { get; }
+        public EventHandlerCollection<PlayerChatEvent> PlayerChat { get; }
+        public EventHandlerCollection<PlayerQuitEvent> PlayerQuit { get; }
 
         public OrionPlayerService(ILogger log) : base(log) {
             Debug.Assert(log != null, "log should not be null");
             Debug.Assert(Main.player != null, "Terraria players should not be null");
 
-            _packetReceiveHandlers = new Dictionary<PacketType, Action<PacketReceiveEventArgs>> {
+            _packetReceiveHandlers = new Dictionary<PacketType, Action<PacketReceiveEvent>> {
                 [PacketType.PlayerConnect] = PlayerConnectHandler,
                 [PacketType.PlayerData] = PlayerDataHandler,
                 [PacketType.PlayerInventorySlot] = PlayerInventorySlotHandler,
@@ -81,7 +80,6 @@ namespace Orion.Players {
                 [PacketType.PlayerTeam] = PlayerTeamHandler,
                 [PacketType.PlayerUuid] = PlayerUuidHandler,
                 [PacketType.PlayerTeleportationPotion] = PlayerTeleportationPotionHandler,
-                [PacketType.PlayerAnglerQuests] = PlayerAnglerQuestsHandler,
                 [PacketType.Module] = ModuleHandler
             };
 
@@ -90,26 +88,25 @@ namespace Orion.Players {
                 Main.player.AsMemory(..^1),
                 (playerIndex, terrariaPlayer) => new OrionPlayer(this, playerIndex, terrariaPlayer));
 
-            PacketReceive = new EventHandlerCollection<PacketReceiveEventArgs>();
-            PacketSend = new EventHandlerCollection<PacketSendEventArgs>();
-            PlayerConnect = new EventHandlerCollection<PlayerConnectEventArgs>();
-            PlayerData = new EventHandlerCollection<PlayerDataEventArgs>();
-            PlayerInventorySlot = new EventHandlerCollection<PlayerInventorySlotEventArgs>();
-            PlayerJoin = new EventHandlerCollection<PlayerJoinEventArgs>();
-            PlayerSpawn = new EventHandlerCollection<PlayerSpawnEventArgs>();
-            PlayerInfo = new EventHandlerCollection<PlayerInfoEventArgs>();
-            PlayerHealth = new EventHandlerCollection<PlayerHealthEventArgs>();
-            PlayerPvp = new EventHandlerCollection<PlayerPvpEventArgs>();
-            PlayerHealEffect = new EventHandlerCollection<PlayerHealEffectEventArgs>();
-            PlayerPasswordResponse = new EventHandlerCollection<PlayerPasswordResponseEventArgs>();
-            PlayerMana = new EventHandlerCollection<PlayerManaEventArgs>();
-            PlayerManaEffect = new EventHandlerCollection<PlayerManaEffectEventArgs>();
-            PlayerTeam = new EventHandlerCollection<PlayerTeamEventArgs>();
-            PlayerUuid = new EventHandlerCollection<PlayerUuidEventArgs>();
-            PlayerTeleportationPotion = new EventHandlerCollection<PlayerTeleportationPotionEventArgs>();
-            PlayerAnglerQuests = new EventHandlerCollection<PlayerAnglerQuestsEventArgs>();
-            PlayerChat = new EventHandlerCollection<PlayerChatEventArgs>();
-            PlayerQuit = new EventHandlerCollection<PlayerQuitEventArgs>();
+            PacketReceive = new EventHandlerCollection<PacketReceiveEvent>();
+            PacketSend = new EventHandlerCollection<PacketSendEvent>();
+            PlayerConnect = new EventHandlerCollection<PlayerConnectEvent>();
+            PlayerData = new EventHandlerCollection<PlayerDataEvent>();
+            PlayerInventorySlot = new EventHandlerCollection<PlayerInventoryEvent>();
+            PlayerJoin = new EventHandlerCollection<PlayerJoinEvent>();
+            PlayerSpawn = new EventHandlerCollection<PlayerSpawnEvent>();
+            PlayerInfo = new EventHandlerCollection<PlayerInfoEvent>();
+            PlayerHealth = new EventHandlerCollection<PlayerHealthEvent>();
+            PlayerPvp = new EventHandlerCollection<PlayerPvpEvent>();
+            PlayerHealEffect = new EventHandlerCollection<PlayerHealEffectEvent>();
+            PlayerPasswordResponse = new EventHandlerCollection<PlayerPasswordEvent>();
+            PlayerMana = new EventHandlerCollection<PlayerManaEvent>();
+            PlayerManaEffect = new EventHandlerCollection<PlayerManaEffectEvent>();
+            PlayerTeam = new EventHandlerCollection<PlayerTeamEvent>();
+            PlayerUuid = new EventHandlerCollection<PlayerUuidEvent>();
+            PlayerTeleportEvent = new EventHandlerCollection<PlayerTeleportEvent>();
+            PlayerChat = new EventHandlerCollection<PlayerChatEvent>();
+            PlayerQuit = new EventHandlerCollection<PlayerQuitEvent>();
 
             Hooks.Net.ReceiveData = ReceiveDataHandler;
             Hooks.Net.SendBytes = SendBytesHandler;
@@ -142,7 +139,7 @@ namespace Orion.Players {
             var stream = new MemoryStream(buffer.readBuffer, start - 2, length + 2);
             var sender = Players[buffer.whoAmI];
             var packet = Packet.ReadFromStream(stream, PacketContext.Server);
-            var args = new PacketReceiveEventArgs(sender, packet);
+            var args = new PacketReceiveEvent(sender, packet);
 
             LogPacketReceive_Before(args);
             PacketReceive.Invoke(this, args);
@@ -177,14 +174,14 @@ namespace Orion.Players {
         }
 
         [Conditional("DEBUG"), ExcludeFromCodeCoverage]
-        private void LogPacketReceive_Before(PacketReceiveEventArgs args) =>
+        private void LogPacketReceive_Before(PacketReceiveEvent args) =>
             // Not localized because this string is developer-facing.
             Log.Verbose(
                 "Invoking {Event} with [receiving {@Packet} from {Sender}]",
                 PacketReceive, args.Packet, args.Sender);
 
         [Conditional("DEBUG"), ExcludeFromCodeCoverage]
-        private void LogPacketReceive_After(PacketReceiveEventArgs args) {
+        private void LogPacketReceive_After(PacketReceiveEvent args) {
             if (args.IsCanceled()) {
                 // Not localized because this string is developer-facing.
                 Log.Verbose("Canceled {Event} for {Reason}", PacketReceive, args.CancellationReason);
@@ -208,7 +205,7 @@ namespace Orion.Players {
             var stream = new MemoryStream(data, offset, size);
             var receiver = Players[remoteClient];
             var packet = Packet.ReadFromStream(stream, PacketContext.Client);
-            var args = new PacketSendEventArgs(receiver, packet);
+            var args = new PacketSendEvent(receiver, packet);
 
             LogPacketSend_Before(args);
             PacketSend.Invoke(this, args);
@@ -230,14 +227,14 @@ namespace Orion.Players {
         }
 
         [Conditional("DEBUG"), ExcludeFromCodeCoverage]
-        private void LogPacketSend_Before(PacketSendEventArgs args) =>
+        private void LogPacketSend_Before(PacketSendEvent args) =>
             // Not localized because this string is developer-facing.
             Log.Verbose(
                 "Invoking {Event} with [sending {Packet} to {Receiver}]",
                 PacketSend, args.Packet, args.Receiver);
 
         [Conditional("DEBUG"), ExcludeFromCodeCoverage]
-        private void LogPacketSend_After(PacketSendEventArgs args) {
+        private void LogPacketSend_After(PacketSendEvent args) {
             if (args.IsCanceled()) {
                 // Not localized because this string is developer-facing.
                 Log.Verbose("Canceled {Event} for {Reason}", PacketSend, args.CancellationReason);
@@ -264,7 +261,7 @@ namespace Orion.Players {
             }
 
             var player = Players[remoteClient.Id];
-            var args = new PlayerQuitEventArgs(player);
+            var args = new PlayerQuitEvent(player);
 
             LogPlayerQuit(args);
             PlayerQuit.Invoke(this, args);
@@ -272,7 +269,7 @@ namespace Orion.Players {
         }
 
         [Conditional("DEBUG"), ExcludeFromCodeCoverage]
-        private void LogPlayerQuit(PlayerQuitEventArgs args) =>
+        private void LogPlayerQuit(PlayerQuitEvent args) =>
             // Not localized because this string is developer-facing.
             Log.Debug("Invoking {Event} with [{Player}]", PlayerQuit, args.Player);
 
@@ -280,9 +277,9 @@ namespace Orion.Players {
         // Handling PlayerConnect
         // =============================================================================================================
 
-        private void PlayerConnectHandler(PacketReceiveEventArgs args_) {
+        private void PlayerConnectHandler(PacketReceiveEvent args_) {
             var packet = (PlayerConnectPacket)args_.Packet;
-            var args = new PlayerConnectEventArgs(args_.Sender, packet);
+            var args = new PlayerConnectEvent(args_.Sender, packet);
 
             LogPlayerConnect_Before(args);
             PlayerConnect.Invoke(this, args);
@@ -292,14 +289,14 @@ namespace Orion.Players {
         }
 
         [Conditional("DEBUG"), ExcludeFromCodeCoverage]
-        private void LogPlayerConnect_Before(PlayerConnectEventArgs args) =>
+        private void LogPlayerConnect_Before(PlayerConnectEvent args) =>
             // Not localized because this string is developer-facing.
             Log.Debug(
                 "Invoking {Event} with [#={PlayerIndex} connecting with {VersionString}]",
                 PlayerConnect, args.Player.Index, args.VersionString);
 
         [Conditional("DEBUG"), ExcludeFromCodeCoverage]
-        private void LogPlayerConnect_After(PlayerConnectEventArgs args) {
+        private void LogPlayerConnect_After(PlayerConnectEvent args) {
             if (args.IsCanceled()) {
                 // Not localized because this string is developer-facing.
                 Log.Debug("Canceled {Event} for {Reason}", PlayerConnect, args.CancellationReason);
@@ -315,9 +312,9 @@ namespace Orion.Players {
         // Handling PlayerData
         // =============================================================================================================
 
-        private void PlayerDataHandler(PacketReceiveEventArgs args_) {
+        private void PlayerDataHandler(PacketReceiveEvent args_) {
             var packet = (PlayerDataPacket)args_.Packet;
-            var args = new PlayerDataEventArgs(args_.Sender, packet);
+            var args = new PlayerDataEvent(args_.Sender, packet);
 
             LogPlayerData_Before(args);
             PlayerData.Invoke(this, args);
@@ -327,12 +324,12 @@ namespace Orion.Players {
         }
 
         [Conditional("DEBUG"), ExcludeFromCodeCoverage]
-        private void LogPlayerData_Before(PlayerDataEventArgs args) =>
+        private void LogPlayerData_Before(PlayerDataEvent args) =>
             // Not localized because this string is developer-facing.
             Log.Debug("Invoking {Event} with [{PlayerName}, ...]", PlayerData, args.Name);
 
         [Conditional("DEBUG"), ExcludeFromCodeCoverage]
-        private void LogPlayerData_After(PlayerDataEventArgs args) {
+        private void LogPlayerData_After(PlayerDataEvent args) {
             if (args.IsCanceled()) {
                 // Not localized because this string is developer-facing.
                 Log.Debug("Canceled {Event} for {Reason}", PlayerData, args.CancellationReason);
@@ -346,9 +343,9 @@ namespace Orion.Players {
         // Handling PlayerInventorySlot
         // =============================================================================================================
 
-        private void PlayerInventorySlotHandler(PacketReceiveEventArgs args_) {
+        private void PlayerInventorySlotHandler(PacketReceiveEvent args_) {
             var packet = (PlayerInventorySlotPacket)args_.Packet;
-            var args = new PlayerInventorySlotEventArgs(args_.Sender, packet);
+            var args = new PlayerInventoryEvent(args_.Sender, packet);
 
             LogPlayerInventorySlot_Before(args);
             PlayerInventorySlot.Invoke(this, args);
@@ -358,7 +355,7 @@ namespace Orion.Players {
         }
 
         [Conditional("DEBUG"), ExcludeFromCodeCoverage]
-        private void LogPlayerInventorySlot_Before(PlayerInventorySlotEventArgs args) {
+        private void LogPlayerInventorySlot_Before(PlayerInventoryEvent args) {
             if (args.ItemType == ItemType.None) {
                 // Not localized because this string is developer-facing.
                 Log.Debug(
@@ -378,7 +375,7 @@ namespace Orion.Players {
         }
 
         [Conditional("DEBUG"), ExcludeFromCodeCoverage]
-        private void LogPlayerInventorySlot_After(PlayerInventorySlotEventArgs args) {
+        private void LogPlayerInventorySlot_After(PlayerInventoryEvent args) {
             if (args.IsCanceled()) {
                 // Not localized because this string is developer-facing.
                 Log.Debug("Canceled {Event} for {Reason}", PlayerInventorySlot, args.CancellationReason);
@@ -408,8 +405,8 @@ namespace Orion.Players {
         // Handling PlayerJoin
         // =============================================================================================================
 
-        private void PlayerJoinHandler(PacketReceiveEventArgs args_) {
-            var args = new PlayerJoinEventArgs(args_.Sender);
+        private void PlayerJoinHandler(PacketReceiveEvent args_) {
+            var args = new PlayerJoinEvent(args_.Sender);
 
             PlayerJoin_Before(args);
             PlayerJoin.Invoke(this, args);
@@ -419,12 +416,12 @@ namespace Orion.Players {
         }
 
         [Conditional("DEBUG"), ExcludeFromCodeCoverage]
-        private void PlayerJoin_Before(PlayerJoinEventArgs args) =>
+        private void PlayerJoin_Before(PlayerJoinEvent args) =>
             // Not localized because this string is developer-facing.
             Log.Debug("Invoking {Event} with [{Player}]", PlayerJoin, args.Player);
 
         [Conditional("DEBUG"), ExcludeFromCodeCoverage]
-        private void PlayerJoin_After(PlayerJoinEventArgs args) {
+        private void PlayerJoin_After(PlayerJoinEvent args) {
             if (args.IsCanceled()) {
                 // Not localized because this string is developer-facing.
                 Log.Debug("Canceled {Event} for {Reason}", PlayerJoin, args.CancellationReason);
@@ -435,9 +432,9 @@ namespace Orion.Players {
         // Handling PlayerSpawn
         // =============================================================================================================
 
-        private void PlayerSpawnHandler(PacketReceiveEventArgs args_) {
+        private void PlayerSpawnHandler(PacketReceiveEvent args_) {
             var packet = (PlayerSpawnPacket)args_.Packet;
-            var args = new PlayerSpawnEventArgs(args_.Sender, packet);
+            var args = new PlayerSpawnEvent(args_.Sender, packet);
 
             PlayerSpawn_Before(args);
             PlayerSpawn.Invoke(this, args);
@@ -447,14 +444,14 @@ namespace Orion.Players {
         }
 
         [Conditional("DEBUG"), ExcludeFromCodeCoverage]
-        private void PlayerSpawn_Before(PlayerSpawnEventArgs args) =>
+        private void PlayerSpawn_Before(PlayerSpawnEvent args) =>
             // Not localized because this string is developer-facing.
             Log.Debug(
                 "Invoking {Event} with [{Player} at {PlayerSpawnX}, {PlayerSpawnY}]",
                 PlayerSpawn, args.Player, args.X, args.Y);
 
         [Conditional("DEBUG"), ExcludeFromCodeCoverage]
-        private void PlayerSpawn_After(PlayerSpawnEventArgs args) {
+        private void PlayerSpawn_After(PlayerSpawnEvent args) {
             if (args.IsCanceled()) {
                 // Not localized because this string is developer-facing.
                 Log.Debug("Canceled {Event} for {Reason}", PlayerSpawn, args.CancellationReason);
@@ -470,9 +467,9 @@ namespace Orion.Players {
         // Handling PlayerInfo
         // =============================================================================================================
 
-        private void PlayerInfoHandler(PacketReceiveEventArgs args_) {
+        private void PlayerInfoHandler(PacketReceiveEvent args_) {
             var packet = (PlayerInfoPacket)args_.Packet;
-            var args = new PlayerInfoEventArgs(args_.Sender, packet);
+            var args = new PlayerInfoEvent(args_.Sender, packet);
 
             LogPlayerInfo_Before(args);
             PlayerInfo.Invoke(this, args);
@@ -482,14 +479,14 @@ namespace Orion.Players {
         }
 
         [Conditional("DEBUG"), ExcludeFromCodeCoverage]
-        private void LogPlayerInfo_Before(PlayerInfoEventArgs args) =>
+        private void LogPlayerInfo_Before(PlayerInfoEvent args) =>
             // Not localized because this string is developer-facing.
             Log.Debug(
                 "Invoking {Event} with [{Player} at {PlayerPosition}, ...]",
                 PlayerInfo, args.Player, args.Position);
 
         [Conditional("DEBUG"), ExcludeFromCodeCoverage]
-        private void LogPlayerInfo_After(PlayerInfoEventArgs args) {
+        private void LogPlayerInfo_After(PlayerInfoEvent args) {
             if (args.IsCanceled()) {
                 // Not localized because this string is developer-facing.
                 Log.Debug("Canceled {Event} for {Reason}", PlayerInfo, args.CancellationReason);
@@ -505,9 +502,9 @@ namespace Orion.Players {
         // Handling PlayerHealth
         // =============================================================================================================
 
-        private void PlayerHealthHandler(PacketReceiveEventArgs args_) {
+        private void PlayerHealthHandler(PacketReceiveEvent args_) {
             var packet = (PlayerHealthPacket)args_.Packet;
-            var args = new PlayerHealthEventArgs(args_.Sender, packet);
+            var args = new PlayerHealthEvent(args_.Sender, packet);
 
             LogPlayerHealth_Before(args);
             PlayerHealth.Invoke(this, args);
@@ -517,14 +514,14 @@ namespace Orion.Players {
         }
 
         [Conditional("DEBUG"), ExcludeFromCodeCoverage]
-        private void LogPlayerHealth_Before(PlayerHealthEventArgs args) =>
+        private void LogPlayerHealth_Before(PlayerHealthEvent args) =>
             // Not localized because this string is developer-facing.
             Log.Debug(
                 "Invoking {Event} with [{Player} has {PlayerHealth}/{PlayerMaxHealth} hp]",
                 PlayerHealth, args.Player, args.Health, args.MaxHealth);
 
         [Conditional("DEBUG"), ExcludeFromCodeCoverage]
-        private void LogPlayerHealth_After(PlayerHealthEventArgs args) {
+        private void LogPlayerHealth_After(PlayerHealthEvent args) {
             if (args.IsCanceled()) {
                 // Not localized because this string is developer-facing.
                 Log.Debug("Canceled {Event} for {Reason}", PlayerHealth, args.CancellationReason);
@@ -540,9 +537,9 @@ namespace Orion.Players {
         // Handling PlayerPvp
         // =============================================================================================================
 
-        private void PlayerPvpHandler(PacketReceiveEventArgs args_) {
+        private void PlayerPvpHandler(PacketReceiveEvent args_) {
             var packet = (PlayerPvpPacket)args_.Packet;
-            var args = new PlayerPvpEventArgs(args_.Sender, packet);
+            var args = new PlayerPvpEvent(args_.Sender, packet);
 
             LogPlayerPvp_Before(args);
             PlayerPvp.Invoke(this, args);
@@ -552,14 +549,14 @@ namespace Orion.Players {
         }
 
         [Conditional("DEBUG"), ExcludeFromCodeCoverage]
-        private void LogPlayerPvp_Before(PlayerPvpEventArgs args) =>
+        private void LogPlayerPvp_Before(PlayerPvpEvent args) =>
             // Not localized because this string is developer-facing.
             Log.Debug(
                 "Invoking {Event} with [{Player} is in pvp: {IsPlayerInPvp}]",
                 PlayerPvp, args.Player, args.IsInPvp);
 
         [Conditional("DEBUG"), ExcludeFromCodeCoverage]
-        private void LogPlayerPvp_After(PlayerPvpEventArgs args) {
+        private void LogPlayerPvp_After(PlayerPvpEvent args) {
             if (args.IsCanceled()) {
                 // Not localized because this string is developer-facing.
                 Log.Debug("Canceled {Event} for {Reason}", PlayerPvp, args.CancellationReason);
@@ -575,9 +572,9 @@ namespace Orion.Players {
         // Handling PlayerHealEffect
         // =============================================================================================================
 
-        private void PlayerHealEffectHandler(PacketReceiveEventArgs args_) {
+        private void PlayerHealEffectHandler(PacketReceiveEvent args_) {
             var packet = (PlayerHealEffectPacket)args_.Packet;
-            var args = new PlayerHealEffectEventArgs(args_.Sender, packet);
+            var args = new PlayerHealEffectEvent(args_.Sender, packet);
 
             PlayerHealEffect_Before(args);
             PlayerHealEffect.Invoke(this, args);
@@ -587,14 +584,14 @@ namespace Orion.Players {
         }
 
         [Conditional("DEBUG"), ExcludeFromCodeCoverage]
-        private void PlayerHealEffect_Before(PlayerHealEffectEventArgs args) =>
+        private void PlayerHealEffect_Before(PlayerHealEffectEvent args) =>
             // Not localized because this string is developer-facing.
             Log.Debug(
                 "Invoking {Event} with [{Player} restoring {HealAmount} hp]",
                 PlayerHealEffect, args.Player, args.HealAmount);
 
         [Conditional("DEBUG"), ExcludeFromCodeCoverage]
-        private void PlayerHealEffect_After(PlayerHealEffectEventArgs args) {
+        private void PlayerHealEffect_After(PlayerHealEffectEvent args) {
             if (args.IsCanceled()) {
                 // Not localized because this string is developer-facing.
                 Log.Debug("Canceled {Event} for {Reason}", PlayerHealEffect, args.CancellationReason);
@@ -610,9 +607,9 @@ namespace Orion.Players {
         // Handling PlayerPasswordResponse
         // =============================================================================================================
 
-        private void PlayerPasswordResponseHandler(PacketReceiveEventArgs args_) {
+        private void PlayerPasswordResponseHandler(PacketReceiveEvent args_) {
             var packet = (PlayerPasswordResponsePacket)args_.Packet;
-            var args = new PlayerPasswordResponseEventArgs(args_.Sender, packet);
+            var args = new PlayerPasswordEvent(args_.Sender, packet);
 
             LogPlayerPasswordResponse_Before(args);
             PlayerPasswordResponse.Invoke(this, args);
@@ -622,14 +619,14 @@ namespace Orion.Players {
         }
 
         [Conditional("DEBUG"), ExcludeFromCodeCoverage]
-        private void LogPlayerPasswordResponse_Before(PlayerPasswordResponseEventArgs args) =>
+        private void LogPlayerPasswordResponse_Before(PlayerPasswordEvent args) =>
             // Not localized because this string is developer-facing.
             Log.Debug(
                 "Invoking {Event} with [{Player} trying {PasswordAttempt}]",
                 PlayerPasswordResponse, args.Player, args.PasswordAttempt);
 
         [Conditional("DEBUG"), ExcludeFromCodeCoverage]
-        private void LogPlayerPasswordResponse_After(PlayerPasswordResponseEventArgs args) {
+        private void LogPlayerPasswordResponse_After(PlayerPasswordEvent args) {
             if (args.IsCanceled()) {
                 // Not localized because this string is developer-facing.
                 Log.Debug("Canceled {Event} for {Reason}", PlayerPasswordResponse, args.CancellationReason);
@@ -645,9 +642,9 @@ namespace Orion.Players {
         // Handling PlayerMana
         // =============================================================================================================
 
-        private void PlayerManaHandler(PacketReceiveEventArgs args_) {
+        private void PlayerManaHandler(PacketReceiveEvent args_) {
             var packet = (PlayerManaPacket)args_.Packet;
-            var args = new PlayerManaEventArgs(args_.Sender, packet);
+            var args = new PlayerManaEvent(args_.Sender, packet);
 
             LogPlayerMana_Before(args);
             PlayerMana.Invoke(this, args);
@@ -657,14 +654,14 @@ namespace Orion.Players {
         }
 
         [Conditional("DEBUG"), ExcludeFromCodeCoverage]
-        private void LogPlayerMana_Before(PlayerManaEventArgs args) =>
+        private void LogPlayerMana_Before(PlayerManaEvent args) =>
             // Not localized because this string is developer-facing.
             Log.Debug(
                 "Invoking {Event} with [{Player} has {PlayerMana}/{PlayerMaxMana} mp]",
                 PlayerMana, args.Player, args.Mana, args.MaxMana);
 
         [Conditional("DEBUG"), ExcludeFromCodeCoverage]
-        private void LogPlayerMana_After(PlayerManaEventArgs args) {
+        private void LogPlayerMana_After(PlayerManaEvent args) {
             if (args.IsCanceled()) {
                 // Not localized because this string is developer-facing.
                 Log.Debug("Canceled {Event} for {Reason}", PlayerMana, args.CancellationReason);
@@ -680,9 +677,9 @@ namespace Orion.Players {
         // Handling PlayerManaEffect
         // =============================================================================================================
 
-        private void PlayerManaEffectHandler(PacketReceiveEventArgs args_) {
+        private void PlayerManaEffectHandler(PacketReceiveEvent args_) {
             var packet = (PlayerManaEffectPacket)args_.Packet;
-            var args = new PlayerManaEffectEventArgs(args_.Sender, packet);
+            var args = new PlayerManaEffectEvent(args_.Sender, packet);
 
             PlayerManaEffect_Before(args);
             PlayerManaEffect.Invoke(this, args);
@@ -692,14 +689,14 @@ namespace Orion.Players {
         }
 
         [Conditional("DEBUG"), ExcludeFromCodeCoverage]
-        private void PlayerManaEffect_Before(PlayerManaEffectEventArgs args) =>
+        private void PlayerManaEffect_Before(PlayerManaEffectEvent args) =>
             // Not localized because this string is developer-facing.
             Log.Debug(
                 "Invoking {Event} with [{Player} restoring {ManaAmount} mp]",
                 PlayerManaEffect, args.Player, args.ManaAmount);
 
         [Conditional("DEBUG"), ExcludeFromCodeCoverage]
-        private void PlayerManaEffect_After(PlayerManaEffectEventArgs args) {
+        private void PlayerManaEffect_After(PlayerManaEffectEvent args) {
             if (args.IsCanceled()) {
                 // Not localized because this string is developer-facing.
                 Log.Debug("Canceled {Event} for {Reason}", PlayerManaEffect, args.CancellationReason);
@@ -715,9 +712,9 @@ namespace Orion.Players {
         // Handling PlayerTeam
         // =============================================================================================================
 
-        private void PlayerTeamHandler(PacketReceiveEventArgs args_) {
+        private void PlayerTeamHandler(PacketReceiveEvent args_) {
             var packet = (PlayerTeamPacket)args_.Packet;
-            var args = new PlayerTeamEventArgs(args_.Sender, packet);
+            var args = new PlayerTeamEvent(args_.Sender, packet);
 
             LogPlayerTeam_Before(args);
             PlayerTeam.Invoke(this, args);
@@ -727,12 +724,12 @@ namespace Orion.Players {
         }
 
         [Conditional("DEBUG"), ExcludeFromCodeCoverage]
-        private void LogPlayerTeam_Before(PlayerTeamEventArgs args) =>
+        private void LogPlayerTeam_Before(PlayerTeamEvent args) =>
             // Not localized because this string is developer-facing.
             Log.Debug("Invoking {Event} with [{Player} joining {PlayerTeam}]", PlayerTeam, args.Player, args.Team);
 
         [Conditional("DEBUG"), ExcludeFromCodeCoverage]
-        private void LogPlayerTeam_After(PlayerTeamEventArgs args) {
+        private void LogPlayerTeam_After(PlayerTeamEvent args) {
             if (args.IsCanceled()) {
                 // Not localized because this string is developer-facing.
                 Log.Debug("Canceled {Event} for {Reason}", PlayerTeam, args.CancellationReason);
@@ -748,9 +745,9 @@ namespace Orion.Players {
         // Handling PlayerUuid
         // =============================================================================================================
 
-        private void PlayerUuidHandler(PacketReceiveEventArgs args_) {
+        private void PlayerUuidHandler(PacketReceiveEvent args_) {
             var packet = (PlayerUuidPacket)args_.Packet;
-            var args = new PlayerUuidEventArgs(args_.Sender, packet);
+            var args = new PlayerUuidEvent(args_.Sender, packet);
 
             LogPlayerUuid_Before(args);
             PlayerUuid.Invoke(this, args);
@@ -760,12 +757,12 @@ namespace Orion.Players {
         }
 
         [Conditional("DEBUG"), ExcludeFromCodeCoverage]
-        private void LogPlayerUuid_Before(PlayerUuidEventArgs args) =>
+        private void LogPlayerUuid_Before(PlayerUuidEvent args) =>
             // Not localized because this string is developer-facing.
             Log.Debug("Invoking {Event} with [{Player} is {PlayerUuid}]", PlayerUuid, args.Player, args.Uuid);
 
         [Conditional("DEBUG"), ExcludeFromCodeCoverage]
-        private void LogPlayerUuid_After(PlayerUuidEventArgs args) {
+        private void LogPlayerUuid_After(PlayerUuidEvent args) {
             if (args.IsCanceled()) {
                 // Not localized because this string is developer-facing.
                 Log.Debug("Canceled {Event} for {Reason}", PlayerUuid, args.CancellationReason);
@@ -779,61 +776,26 @@ namespace Orion.Players {
         // Handling PlayerTeleportationPotion
         // =============================================================================================================
 
-        private void PlayerTeleportationPotionHandler(PacketReceiveEventArgs args_) {
-            var args = new PlayerTeleportationPotionEventArgs(args_.Sender);
+        private void PlayerTeleportationPotionHandler(PacketReceiveEvent args_) {
+            var args = new PlayerTeleportEvent(args_.Sender);
 
             PlayerTeleportationPotion_Before(args);
-            PlayerTeleportationPotion.Invoke(this, args);
+            PlayerTeleportEvent.Invoke(this, args);
             PlayerTeleportationPotion_After(args);
 
             args_.CancellationReason = args.CancellationReason;
         }
 
         [Conditional("DEBUG"), ExcludeFromCodeCoverage]
-        private void PlayerTeleportationPotion_Before(PlayerTeleportationPotionEventArgs args) =>
+        private void PlayerTeleportationPotion_Before(PlayerTeleportEvent args) =>
             // Not localized because this string is developer-facing.
-            Log.Debug("Invoking {Event} with [{Player}]", PlayerTeleportationPotion, args.Player);
+            Log.Debug("Invoking {Event} with [{Player}]", PlayerTeleportEvent, args.Player);
 
         [Conditional("DEBUG"), ExcludeFromCodeCoverage]
-        private void PlayerTeleportationPotion_After(PlayerTeleportationPotionEventArgs args) {
+        private void PlayerTeleportationPotion_After(PlayerTeleportEvent args) {
             if (args.IsCanceled()) {
                 // Not localized because this string is developer-facing.
-                Log.Debug("Canceled {Event} for {Reason}", PlayerTeleportationPotion, args.CancellationReason);
-            }
-        }
-
-        // =============================================================================================================
-        // Handling PlayerAnglerQuests
-        // =============================================================================================================
-
-        private void PlayerAnglerQuestsHandler(PacketReceiveEventArgs args_) {
-            var packet = (PlayerAnglerQuestsPacket)args_.Packet;
-            var args = new PlayerAnglerQuestsEventArgs(args_.Sender, packet);
-
-            LogPlayerAnglerQuests_Before(args);
-            PlayerAnglerQuests.Invoke(this, args);
-            LogPlayerAnglerQuests_After(args);
-
-            args_.CancellationReason = args.CancellationReason;
-        }
-
-        [Conditional("DEBUG"), ExcludeFromCodeCoverage]
-        private void LogPlayerAnglerQuests_Before(PlayerAnglerQuestsEventArgs args) =>
-            // Not localized because this string is developer-facing.
-            Log.Debug(
-                "Invoking {Event} with [{Player} completing {PlayerNumberOfAnglerQuestsCompleted} quests]",
-                PlayerAnglerQuests, args.Player, args.NumberOfAnglerQuestsCompleted);
-
-        [Conditional("DEBUG"), ExcludeFromCodeCoverage]
-        private void LogPlayerAnglerQuests_After(PlayerAnglerQuestsEventArgs args) {
-            if (args.IsCanceled()) {
-                // Not localized because this string is developer-facing.
-                Log.Debug("Canceled {Event} for {Reason}", PlayerAnglerQuests, args.CancellationReason);
-            } else if (args.IsDirty) {
-                // Not localized because this string is developer-facing.
-                Log.Debug(
-                    "Altered {Event} to [{Player} completing {PlayerNumberOfAnglerQuestsCompleted} quests]",
-                    PlayerAnglerQuests, args.Player, args.NumberOfAnglerQuestsCompleted);
+                Log.Debug("Canceled {Event} for {Reason}", PlayerTeleportEvent, args.CancellationReason);
             }
         }
 
@@ -841,10 +803,10 @@ namespace Orion.Players {
         // Handling PlayerChat
         // =============================================================================================================
 
-        private void ModuleHandler(PacketReceiveEventArgs args_) {
+        private void ModuleHandler(PacketReceiveEvent args_) {
             var module = ((ModulePacket)args_.Packet).Module;
             if (module is ChatModule chatModule) {
-                var args = new PlayerChatEventArgs(args_.Sender, chatModule);
+                var args = new PlayerChatEvent(args_.Sender, chatModule);
 
                 LogPlayerChat_Before(args);
                 PlayerChat.Invoke(this, args);
@@ -855,14 +817,14 @@ namespace Orion.Players {
         }
 
         [Conditional("DEBUG"), ExcludeFromCodeCoverage]
-        private void LogPlayerChat_Before(PlayerChatEventArgs args) =>
+        private void LogPlayerChat_Before(PlayerChatEvent args) =>
             // Not localized because this string is developer-facing.
             Log.Debug(
                 "Invoking {Event} with [{Player} chatting {ChatCommand} {ChatText}]",
                 PlayerChat, args.Player, args.Command, args.Text);
 
         [Conditional("DEBUG"), ExcludeFromCodeCoverage]
-        private void LogPlayerChat_After(PlayerChatEventArgs args) {
+        private void LogPlayerChat_After(PlayerChatEvent args) {
             if (args.IsCanceled()) {
                 // Not localized because this string is developer-facing.
                 Log.Debug("Canceled {Event} for {Reason}", PlayerChat, args.CancellationReason);

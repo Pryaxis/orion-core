@@ -53,14 +53,14 @@ namespace Orion.Items {
         /// </item>
         /// </list>
         /// </remarks>
-        EventHandlerCollection<ItemSetDefaultsEventArgs> ItemSetDefaults { get; }
+        EventHandlerCollection<ItemDefaultsEvent> ItemSetDefaults { get; }
 
         /// <summary>
         /// Gets the event handlers that occur when an item is updating. This event can be canceled.
         /// </summary>
         /// <value>The event handlers that occur when an item is updating.</value>
         /// <remarks>This event is invoked every game tick on every concrete item.</remarks>
-        EventHandlerCollection<ItemUpdateEventArgs> ItemUpdate { get; }
+        EventHandlerCollection<ItemUpdateEvent> ItemUpdate { get; }
 
         /// <summary>
         /// Spawns and returns an item with the given <paramref name="type"/> at the specified

@@ -21,6 +21,7 @@ using System.IO;
 using System.Reflection;
 using FluentAssertions;
 using Microsoft.Xna.Framework;
+using Orion.Events;
 using Orion.Packets;
 using Orion.Utils;
 
@@ -40,13 +41,13 @@ namespace Orion {
             [typeof(Color)] = new Color(111, 222, 333)
         };
 
-        public static void Properties_GetSetShouldReflect(this EventArgs args, string fieldName) {
-            var field = args.GetType()
+        public static void Properties_GetSetShouldReflect(this Event e, string fieldName) {
+            var field = e.GetType()
                 .GetField(fieldName, BindingFlags.NonPublic | BindingFlags.Instance)
-                .GetValue(args);
+                .GetValue(e);
             field.Should().NotBeNull();
 
-            foreach (var property in args.GetType().GetProperties(BindingFlags.Public | BindingFlags.Instance)) {
+            foreach (var property in e.GetType().GetProperties(BindingFlags.Public | BindingFlags.Instance)) {
                 var packetProperty = field.GetType().GetProperty(property.Name);
                 if (packetProperty?.SetMethod is null) {
                     continue;
@@ -63,14 +64,14 @@ namespace Orion {
 
                 // Test getter.
                 packetProperty.SetValue(field, value);
-                property.GetValue(args).Should().Be(value);
+                property.GetValue(e).Should().Be(value);
 
                 // Test setter, if applicable.
                 if (property.SetMethod is null) {
                     continue;
                 }
 
-                property.SetValue(args, value);
+                property.SetValue(e, value);
                 packetProperty.GetValue(field).Should().Be(value);
             }
         }

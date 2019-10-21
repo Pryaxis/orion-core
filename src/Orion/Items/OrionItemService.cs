@@ -31,8 +31,8 @@ namespace Orion.Items {
     [Service("orion-items")]
     internal sealed class OrionItemService : OrionService, IItemService {
         public IReadOnlyArray<IItem> Items { get; }
-        public EventHandlerCollection<ItemSetDefaultsEventArgs> ItemSetDefaults { get; }
-        public EventHandlerCollection<ItemUpdateEventArgs> ItemUpdate { get; }
+        public EventHandlerCollection<ItemDefaultsEvent> ItemSetDefaults { get; }
+        public EventHandlerCollection<ItemUpdateEvent> ItemUpdate { get; }
 
         public OrionItemService(ILogger log) : base(log) {
             Debug.Assert(log != null, "log should not be null");
@@ -43,8 +43,8 @@ namespace Orion.Items {
                 Main.item.AsMemory(..^1),
                 (itemIndex, terrariaItem) => new OrionItem(itemIndex, terrariaItem));
 
-            ItemSetDefaults = new EventHandlerCollection<ItemSetDefaultsEventArgs>();
-            ItemUpdate = new EventHandlerCollection<ItemUpdateEventArgs>();
+            ItemSetDefaults = new EventHandlerCollection<ItemDefaultsEvent>();
+            ItemUpdate = new EventHandlerCollection<ItemUpdateEvent>();
 
             Hooks.Item.PreSetDefaultsById = PreSetDefaultsByIdHandler;
             Hooks.Item.PreUpdate = PreUpdateHandler;
@@ -93,7 +93,7 @@ namespace Orion.Items {
 
             var item = GetItem(terrariaItem);
             var itemType = (ItemType)itemType_;
-            var args = new ItemSetDefaultsEventArgs(item, itemType);
+            var args = new ItemDefaultsEvent(item, itemType);
 
             LogItemSetDefaults_Before(args);
             ItemSetDefaults.Invoke(this, args);
@@ -109,12 +109,12 @@ namespace Orion.Items {
         }
 
         [Conditional("DEBUG"), ExcludeFromCodeCoverage]
-        private void LogItemSetDefaults_Before(ItemSetDefaultsEventArgs args) =>
+        private void LogItemSetDefaults_Before(ItemDefaultsEvent args) =>
             // Not localized because this string is developer-facing.
             Log.Verbose("Invoking {Event} with [{Item}, {ItemType}]", ItemSetDefaults, args.Item, args.ItemType);
 
         [Conditional("DEBUG"), ExcludeFromCodeCoverage]
-        private void LogItemSetDefaults_After(ItemSetDefaultsEventArgs args) {
+        private void LogItemSetDefaults_After(ItemDefaultsEvent args) {
             if (args.IsCanceled()) {
                 // Not localized because this string is developer-facing.
                 Log.Verbose("Canceled {Event} for {CancellationReason}", ItemSetDefaults, args.CancellationReason);
@@ -136,7 +136,7 @@ namespace Orion.Items {
             terrariaItem.whoAmI = itemIndex;
 
             var item = Items[itemIndex];
-            var args = new ItemUpdateEventArgs(item);
+            var args = new ItemUpdateEvent(item);
 
             LogItemUpdate_Before(args);
             ItemUpdate.Invoke(this, args);
@@ -146,12 +146,12 @@ namespace Orion.Items {
         }
 
         [Conditional("DEBUG"), ExcludeFromCodeCoverage]
-        private void LogItemUpdate_Before(ItemUpdateEventArgs args) =>
+        private void LogItemUpdate_Before(ItemUpdateEvent args) =>
             // Not localized because this string is developer-facing.
             Log.Verbose("Invoking {Event} with [{Item}]", ItemUpdate, args.Item);
 
         [Conditional("DEBUG"), ExcludeFromCodeCoverage]
-        private void LogItemUpdate_After(ItemUpdateEventArgs args) {
+        private void LogItemUpdate_After(ItemUpdateEvent args) {
             if (args.IsCanceled()) {
                 // Not localized because this string is developer-facing.
                 Log.Verbose("Canceled {Event} for {CancellationReason}", ItemUpdate, args.CancellationReason);

@@ -28,18 +28,18 @@ namespace Orion.Events {
     /// Represents a collection of event handlers. Provides the ability to register and unregister event handlers. This
     /// class is thread-safe.
     /// </summary>
-    /// <typeparam name="TEventArgs">The type of event arguments.</typeparam>
+    /// <typeparam name="TEvent">The type of event arguments.</typeparam>
     /// <remarks>
     /// The <see cref="EventHandlerCollection{TEventArgs}"/> class is a more featured version of the
     /// <see cref="EventHandler{TEventArgs}"/> delegate with the ability to specify the priority of each event handler.
     /// This allows consumers much more control over their event handlers. <para/>
     /// 
     /// Event handlers are registered and unregistered using the
-    /// <see cref="RegisterHandler(EventHandler{TEventArgs}, ILogger)"/> and
-    /// <see cref="UnregisterHandler(EventHandler{TEventArgs})"/> methods and may be annotated using an
+    /// <see cref="RegisterHandler(EventHandler{TEvent}, ILogger)"/> and
+    /// <see cref="UnregisterHandler(EventHandler{TEvent})"/> methods and may be annotated using an
     /// <see cref="EventHandlerAttribute"/> instance.
     /// </remarks>
-    public sealed class EventHandlerCollection<TEventArgs> where TEventArgs : EventArgs {
+    public sealed class EventHandlerCollection<TEvent> where TEvent : Event {
         private readonly object _lock = new object();
 
         // Registrations sorted by priority.
@@ -47,8 +47,8 @@ namespace Orion.Events {
             new SortedSet<Registration>(Comparer<Registration>.Create((r1, r2) => r1.Priority.CompareTo(r2.Priority)));
 
         // Mapping from handler -> registration. This allows us to easily unregister handlers.
-        private readonly IDictionary<EventHandler<TEventArgs>, Registration> _handlerToRegistration =
-            new Dictionary<EventHandler<TEventArgs>, Registration>();
+        private readonly IDictionary<EventHandler<TEvent>, Registration> _handlerToRegistration =
+            new Dictionary<EventHandler<TEvent>, Registration>();
 
         /// <summary>
         /// Gets the event's name. This is used for logs.
@@ -56,13 +56,13 @@ namespace Orion.Events {
         /// <value>The event's name.</value>
         /// <remarks>
         /// The name is taken from the <see cref="EventArgsAttribute.Name"/> property on the
-        /// <see cref="EventArgsAttribute"/> attribute annotating the <typeparamref name="TEventArgs"/> class. <para/>
+        /// <see cref="EventArgsAttribute"/> attribute annotating the <typeparamref name="TEvent"/> class. <para/>
         /// 
         /// If the attribute is missing, then the event name will default to the type name of
-        /// <typeparamref name="TEventArgs"/>.
+        /// <typeparamref name="TEvent"/>.
         /// </remarks>
         public string EventName { get; } =
-            typeof(TEventArgs).GetCustomAttribute<EventArgsAttribute?>()?.Name ?? typeof(TEventArgs).Name;
+            typeof(TEvent).GetCustomAttribute<EventArgsAttribute?>()?.Name ?? typeof(TEvent).Name;
 
         /// <inheritdoc/>
         [Pure, ExcludeFromCodeCoverage]
@@ -83,7 +83,7 @@ namespace Orion.Events {
         /// <exception cref="ArgumentNullException"><paramref name="args"/> is <see langword="null"/>.</exception>
         [SuppressMessage("Design", "CA1031:Do not catch general exception types",
             Justification = "Catching Exception for fail-safe")]
-        public void Invoke(object? sender, TEventArgs args) {
+        public void Invoke(object? sender, TEvent args) {
             if (args is null) {
                 throw new ArgumentNullException(nameof(args));
             }
@@ -117,7 +117,7 @@ namespace Orion.Events {
         /// debugging.
         /// </remarks>
         /// <exception cref="ArgumentNullException"><paramref name="handler"/> is <see langword="null"/>.</exception>
-        public void RegisterHandler(EventHandler<TEventArgs> handler, ILogger? log = null) {
+        public void RegisterHandler(EventHandler<TEvent> handler, ILogger? log = null) {
             if (handler is null) {
                 throw new ArgumentNullException(nameof(handler));
             }
@@ -145,7 +145,7 @@ namespace Orion.Events {
         /// result in memory leaks and incorrect unloading behavior.
         /// </remarks>
         /// <exception cref="ArgumentNullException"><paramref name="handler"/> is <see langword="null"/>.</exception>
-        public bool UnregisterHandler(EventHandler<TEventArgs> handler) {
+        public bool UnregisterHandler(EventHandler<TEvent> handler) {
             if (handler is null) {
                 throw new ArgumentNullException(nameof(handler));
             }
@@ -167,12 +167,12 @@ namespace Orion.Events {
 
         // Keeps track of handlers along with extra metadata.
         private class Registration {
-            public EventHandler<TEventArgs> Handler { get; }
+            public EventHandler<TEvent> Handler { get; }
             public ILogger? Log { get; }
             public EventPriority Priority { get; }
             public string Name { get; }
 
-            public Registration(EventHandler<TEventArgs> handler, ILogger? log) {
+            public Registration(EventHandler<TEvent> handler, ILogger? log) {
                 Handler = handler;
                 Log = log;
 

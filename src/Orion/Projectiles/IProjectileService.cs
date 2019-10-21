@@ -49,20 +49,20 @@ namespace Orion.Projectiles {
         /// </item>
         /// </list>
         /// </remarks>
-        EventHandlerCollection<ProjectileSetDefaultsEventArgs> ProjectileSetDefaults { get; }
+        EventHandlerCollection<ProjectileDefaultsEvent> ProjectileSetDefaults { get; }
 
         /// <summary>
         /// Gets the event handlers that occur when a projectile is updating. This event can be canceled.
         /// </summary>
         /// <value>The event handlers that occur when a projectile is updating.</value>
         /// <remarks>This event is invoked every game tick on every concrete projectile.</remarks>
-        EventHandlerCollection<ProjectileUpdateEventArgs> ProjectileUpdate { get; }
+        EventHandlerCollection<ProjectileUpdateEvent> ProjectileUpdate { get; }
 
         /// <summary>
         /// Gets the event handlers that occur when a projectile is being removed. This event can be canceled.
         /// </summary>
         /// <value>The event handlers that occur when a projectile is being removed.</value>
-        EventHandlerCollection<ProjectileRemoveEventArgs> ProjectileRemove { get; }
+        EventHandlerCollection<ProjectileRemoveEvent> ProjectileRemove { get; }
 
         /// <summary>
         /// Spawns and returns a projectile with the given <paramref name="type"/> at the specified

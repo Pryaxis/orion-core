@@ -38,44 +38,44 @@ namespace Orion.Players {
         /// Gets the event handlers that occur when receiving a packet. This event can be canceled.
         /// </summary>
         /// <value>The event handlers that occur when receiving a packet.</value>
-        EventHandlerCollection<PacketReceiveEventArgs> PacketReceive { get; }
+        EventHandlerCollection<PacketReceiveEvent> PacketReceive { get; }
 
         /// <summary>
         /// Gets the event handlers that occur when sending a packet. This event can be canceled.
         /// </summary>
         /// <value>The event handlers that occur when sending a packet.</value>
-        EventHandlerCollection<PacketSendEventArgs> PacketSend { get; }
+        EventHandlerCollection<PacketSendEvent> PacketSend { get; }
 
         /// <summary>
         /// Gets the event handlers that occur when a player connects. This event can be canceled.
         /// </summary>
         /// <value>The event handlers that occur when a player connects.</value>
-        EventHandlerCollection<PlayerConnectEventArgs> PlayerConnect { get; }
+        EventHandlerCollection<PlayerConnectEvent> PlayerConnect { get; }
 
         /// <summary>
         /// Gets the event handlers that occur when a player updates their player data: e.g., clothing colors, name,
         /// etc. This event can be canceled.
         /// </summary>
         /// <value>The event handlers that occur when a player updates their player data.</value>
-        EventHandlerCollection<PlayerDataEventArgs> PlayerData { get; }
+        EventHandlerCollection<PlayerDataEvent> PlayerData { get; }
 
         /// <summary>
         /// Gets the event handlers that occur when a player updates an inventory slot. This event can be canceled.
         /// </summary>
         /// <value>The event handlers that occur when a player updates an inventory slot.</value>
-        EventHandlerCollection<PlayerInventorySlotEventArgs> PlayerInventorySlot { get; }
+        EventHandlerCollection<PlayerInventoryEvent> PlayerInventorySlot { get; }
 
         /// <summary>
         /// Gets the event handlers that occur when a player joins. This event can be canceled.
         /// </summary>
         /// <value>The event handlers that occur when a player joins.</value>
-        EventHandlerCollection<PlayerJoinEventArgs> PlayerJoin { get; }
+        EventHandlerCollection<PlayerJoinEvent> PlayerJoin { get; }
 
         /// <summary>
         /// Gets the event handlers that occur when a player spawns. This event can be canceled.
         /// </summary>
         /// <value>The event handlers that occur when a player spawns.</value>
-        EventHandlerCollection<PlayerSpawnEventArgs> PlayerSpawn { get; }
+        EventHandlerCollection<PlayerSpawnEvent> PlayerSpawn { get; }
 
         /// <summary>
         /// Gets the event handlers that occur when player updates their information. This event can be canceled.
@@ -85,83 +85,74 @@ namespace Orion.Players {
         /// Player information is sent whenever a player's position or velocity changes or when commonly updated flags
         /// change, such as the player's control states.
         /// </remarks>
-        EventHandlerCollection<PlayerInfoEventArgs> PlayerInfo { get; }
+        EventHandlerCollection<PlayerInfoEvent> PlayerInfo { get; }
 
         /// <summary>
         /// Gets the event handlers that occur when a player updates their health. This event can be canceled.
         /// </summary>
         /// <value>The event handlers that occur when a player updates their health.</value>
-        EventHandlerCollection<PlayerHealthEventArgs> PlayerHealth { get; }
+        EventHandlerCollection<PlayerHealthEvent> PlayerHealth { get; }
 
         /// <summary>
         /// Gets the event handlers that occur when a player toggles PvP. This event can be canceled.
         /// </summary>
         /// <value>The event handlers that occur when a player toggles PvP.</value>
-        EventHandlerCollection<PlayerPvpEventArgs> PlayerPvp { get; }
+        EventHandlerCollection<PlayerPvpEvent> PlayerPvp { get; }
 
         /// <summary>
         /// Gets the event handlers that occur when a player triggers a heal effect. This event can be canceled.
         /// </summary>
         /// <value>The event handlers that occur when a player triggers a heal effect.</value>
-        EventHandlerCollection<PlayerHealEffectEventArgs> PlayerHealEffect { get; }
+        EventHandlerCollection<PlayerHealEffectEvent> PlayerHealEffect { get; }
 
         /// <summary>
         /// Gets the event handlers that occur when a player responds to a server password request. This event can be
         /// canceled.
         /// </summary>
         /// <value>The event handlers that occur when a player responds to a server password request.</value>
-        EventHandlerCollection<PlayerPasswordResponseEventArgs> PlayerPasswordResponse { get; }
+        EventHandlerCollection<PlayerPasswordEvent> PlayerPasswordResponse { get; }
 
         /// <summary>
         /// Gets the event handlers that occur when a player updates their mana. This event can be canceled.
         /// </summary>
         /// <value>The event handlers that occur when a player updates their mana.</value>
-        EventHandlerCollection<PlayerManaEventArgs> PlayerMana { get; }
+        EventHandlerCollection<PlayerManaEvent> PlayerMana { get; }
 
         /// <summary>
         /// Gets the event handlers that occur when a player triggers a mana effect. This event can be canceled.
         /// </summary>
         /// <value>The event handlers that occur when a player triggers a mana effect.</value>
-        EventHandlerCollection<PlayerManaEffectEventArgs> PlayerManaEffect { get; }
+        EventHandlerCollection<PlayerManaEffectEvent> PlayerManaEffect { get; }
 
         /// <summary>
         /// Gets the event handlers that occur when a player changes teams. This event can be canceled.
         /// </summary>
         /// <value>The event handlers that occur when a player changes teams.</value>
-        EventHandlerCollection<PlayerTeamEventArgs> PlayerTeam { get; }
+        EventHandlerCollection<PlayerTeamEvent> PlayerTeam { get; }
 
         /// <summary>
         /// Gets the event handlers that occur when a player sends their UUID. This event can be canceled.
         /// </summary>
         /// <value>The event handlers that occur when a player sends their UUID.</value>
-        EventHandlerCollection<PlayerUuidEventArgs> PlayerUuid { get; }
+        EventHandlerCollection<PlayerUuidEvent> PlayerUuid { get; }
 
         /// <summary>
         /// Gets the event handlers that occur when a player uses a teleportation potion. This event can be canceled.
         /// </summary>
         /// <value>The event handlers that occur when a player uses a teleportation potion.</value>
-        EventHandlerCollection<PlayerTeleportationPotionEventArgs> PlayerTeleportationPotion { get; }
-
-        /// <summary>
-        /// Gets the event handlers that occur when a player sends the number of angler quests they have completed. This
-        /// event can be canceled.
-        /// </summary>
-        /// <value>
-        /// The event handlers that occur when a player sends the number of angler quests they have completed.
-        /// </value>
-        EventHandlerCollection<PlayerAnglerQuestsEventArgs> PlayerAnglerQuests { get; }
+        EventHandlerCollection<PlayerTeleportEvent> PlayerTeleportEvent { get; }
 
         /// <summary>
         /// Gets the event handlers that occur when a player chats. This event can be canceled.
         /// </summary>
         /// <value>The event handlers that occur when a player chats.</value>
-        EventHandlerCollection<PlayerChatEventArgs> PlayerChat { get; }
+        EventHandlerCollection<PlayerChatEvent> PlayerChat { get; }
 
         /// <summary>
         /// Gets the event handlers that occur when a player has left.
         /// </summary>
         /// <value>The event handlers that occur when a player has left.</value>
-        EventHandlerCollection<PlayerQuitEventArgs> PlayerQuit { get; }
+        EventHandlerCollection<PlayerQuitEvent> PlayerQuit { get; }
     }
 
     /// <summary>

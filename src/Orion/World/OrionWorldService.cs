@@ -45,8 +45,8 @@ namespace Orion.World {
         }
 
         public InvasionType CurrentInvasionType => (InvasionType)Main.invasionType;
-        public EventHandlerCollection<WorldLoadEventArgs> WorldLoad { get; }
-        public EventHandlerCollection<WorldSaveEventArgs> WorldSave { get; }
+        public EventHandlerCollection<WorldLoadEvent> WorldLoad { get; }
+        public EventHandlerCollection<WorldSaveEvent> WorldSave { get; }
 
         public OrionWorldService(ILogger log) : base(log) {
             Debug.Assert(log != null, "log should not be null");
@@ -59,8 +59,8 @@ namespace Orion.World {
                 Main.tile = _tileCollection = new TileCollection();
             }
 
-            WorldLoad = new EventHandlerCollection<WorldLoadEventArgs>();
-            WorldSave = new EventHandlerCollection<WorldSaveEventArgs>();
+            WorldLoad = new EventHandlerCollection<WorldLoadEvent>();
+            WorldSave = new EventHandlerCollection<WorldSaveEvent>();
 
             Hooks.World.IO.PreLoadWorld = PreLoadWorldHandler;
             Hooks.World.IO.PreSaveWorld = PreSaveWorldHandler;
@@ -76,7 +76,7 @@ namespace Orion.World {
         // =============================================================================================================
 
         private HookResult PreLoadWorldHandler(ref bool _) {
-            var args = new WorldLoadEventArgs();
+            var args = new WorldLoadEvent();
 
             LogWorldLoad();
             WorldLoad.Invoke(this, args);
@@ -93,27 +93,17 @@ namespace Orion.World {
         // =============================================================================================================
 
         private HookResult PreSaveWorldHandler(ref bool _, ref bool _2) {
-            var args = new WorldSaveEventArgs();
+            var args = new WorldSaveEvent();
 
-            LogWorldSave_Before();
+            LogWorldSave();
             WorldSave.Invoke(this, args);
-            LogWorldSave_After(args);
-
-            return args.IsCanceled() ? HookResult.Cancel : HookResult.Continue;
+            return HookResult.Continue;
         }
 
         [Conditional("DEBUG"), ExcludeFromCodeCoverage]
-        private void LogWorldSave_Before() =>
+        private void LogWorldSave() =>
             // Not localized because this string is developer-facing.
             Log.Debug("Invoking {Event}", WorldSave);
-
-        [Conditional("DEBUG"), ExcludeFromCodeCoverage]
-        private void LogWorldSave_After(WorldSaveEventArgs args) {
-            if (args.IsCanceled()) {
-                // Not localized because this string is developer-facing.
-                Log.Debug("Canceled {Event} for {CancellationReason}", WorldSave, args.CancellationReason);
-            }
-        }
 
         // This class is not disposable since we expect instances to be permanent. However, a finalizer is implemented
         // in case someone modifies Main.tile.

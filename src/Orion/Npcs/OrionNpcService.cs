@@ -36,13 +36,13 @@ namespace Orion.Npcs {
         private readonly ThreadLocal<int> _setDefaultsToIgnore = new ThreadLocal<int>();
 
         public IReadOnlyArray<INpc> Npcs { get; }
-        public EventHandlerCollection<NpcSetDefaultsEventArgs> NpcSetDefaults { get; }
-        public EventHandlerCollection<NpcSpawnEventArgs> NpcSpawn { get; }
-        public EventHandlerCollection<NpcUpdateEventArgs> NpcUpdate { get; }
-        public EventHandlerCollection<NpcTransformEventArgs> NpcTransform { get; }
-        public EventHandlerCollection<NpcDamageEventArgs> NpcDamage { get; }
-        public EventHandlerCollection<NpcLootEventArgs> NpcLoot { get; }
-        public EventHandlerCollection<NpcKilledEventArgs> NpcKilled { get; }
+        public EventHandlerCollection<NpcDefaultsEvent> NpcSetDefaults { get; }
+        public EventHandlerCollection<NpcSpawnEvent> NpcSpawn { get; }
+        public EventHandlerCollection<NpcUpdateEvent> NpcUpdate { get; }
+        public EventHandlerCollection<NpcTransformEvent> NpcTransform { get; }
+        public EventHandlerCollection<NpcDamageEvent> NpcDamage { get; }
+        public EventHandlerCollection<NpcDropItemEvent> NpcLoot { get; }
+        public EventHandlerCollection<NpcKilledEvent> NpcKilled { get; }
 
         public OrionNpcService(ILogger log) : base(log) {
             Debug.Assert(log != null, "log should not be null");
@@ -53,13 +53,13 @@ namespace Orion.Npcs {
                 Main.npc.AsMemory(..^1),
                 (npcIndex, terrariaNpc) => new OrionNpc(npcIndex, terrariaNpc));
 
-            NpcSetDefaults = new EventHandlerCollection<NpcSetDefaultsEventArgs>();
-            NpcSpawn = new EventHandlerCollection<NpcSpawnEventArgs>();
-            NpcUpdate = new EventHandlerCollection<NpcUpdateEventArgs>();
-            NpcTransform = new EventHandlerCollection<NpcTransformEventArgs>();
-            NpcDamage = new EventHandlerCollection<NpcDamageEventArgs>();
-            NpcLoot = new EventHandlerCollection<NpcLootEventArgs>();
-            NpcKilled = new EventHandlerCollection<NpcKilledEventArgs>();
+            NpcSetDefaults = new EventHandlerCollection<NpcDefaultsEvent>();
+            NpcSpawn = new EventHandlerCollection<NpcSpawnEvent>();
+            NpcUpdate = new EventHandlerCollection<NpcUpdateEvent>();
+            NpcTransform = new EventHandlerCollection<NpcTransformEvent>();
+            NpcDamage = new EventHandlerCollection<NpcDamageEvent>();
+            NpcLoot = new EventHandlerCollection<NpcDropItemEvent>();
+            NpcKilled = new EventHandlerCollection<NpcKilledEvent>();
 
             Hooks.Npc.PreSetDefaultsById = PreSetDefaultsByIdHandler;
             Hooks.Npc.Spawn = SpawnHandler;
@@ -126,7 +126,7 @@ namespace Orion.Npcs {
             }
 
             var npc = GetNpc(terrariaNpc);
-            var args = new NpcSetDefaultsEventArgs(npc, (NpcType)npcType);
+            var args = new NpcDefaultsEvent(npc, (NpcType)npcType);
 
             LogNpcSetDefaults_Before(args);
             NpcSetDefaults.Invoke(this, args);
@@ -148,12 +148,12 @@ namespace Orion.Npcs {
         }
 
         [Conditional("DEBUG"), ExcludeFromCodeCoverage]
-        private void LogNpcSetDefaults_Before(NpcSetDefaultsEventArgs args) =>
+        private void LogNpcSetDefaults_Before(NpcDefaultsEvent args) =>
             // Not localized because this string is developer-facing.
             Log.Verbose("Invoking {Event} with [{Npc}, {NpcType}]", NpcSetDefaults, args.Npc, args.NpcType);
 
         [Conditional("DEBUG"), ExcludeFromCodeCoverage]
-        private void LogNpcSetDefaults_After(NpcSetDefaultsEventArgs args) {
+        private void LogNpcSetDefaults_After(NpcDefaultsEvent args) {
             if (args.IsCanceled()) {
                 // Not localized because this string is developer-facing.
                 Log.Verbose("Canceled {Event} for {CancellationReason}", NpcSetDefaults, args.CancellationReason);
@@ -171,7 +171,7 @@ namespace Orion.Npcs {
             Debug.Assert(npcIndex >= 0 && npcIndex < Npcs.Count, "NPC index should be valid");
 
             var npc = Npcs[npcIndex];
-            var args = new NpcSpawnEventArgs(npc);
+            var args = new NpcSpawnEvent(npc);
 
             LogNpcSpawn_Before(args);
             NpcSpawn.Invoke(this, args);
@@ -188,14 +188,14 @@ namespace Orion.Npcs {
         }
 
         [Conditional("DEBUG"), ExcludeFromCodeCoverage]
-        private void LogNpcSpawn_Before(NpcSpawnEventArgs args) =>
+        private void LogNpcSpawn_Before(NpcSpawnEvent args) =>
             // Not localized because this string is developer-facing.
             Log.Debug(
                 "Invoking {Event} with [{Npc}, {NpcType} @ {Position}]",
                 NpcSpawn, args.Npc, args.Npc.Type, args.Npc.Position);
 
         [Conditional("DEBUG"), ExcludeFromCodeCoverage]
-        private void LogNpcSpawn_After(NpcSpawnEventArgs args) {
+        private void LogNpcSpawn_After(NpcSpawnEvent args) {
             if (args.IsCanceled()) {
                 // Not localized because this string is developer-facing.
                 Log.Debug("Canceled {Event} for {CancellationReason}", NpcSpawn, args.CancellationReason);
@@ -210,7 +210,7 @@ namespace Orion.Npcs {
             Debug.Assert(npcIndex >= 0 && npcIndex < Npcs.Count, "NPC index should be valid");
 
             var npc = Npcs[npcIndex];
-            var args = new NpcUpdateEventArgs(npc);
+            var args = new NpcUpdateEvent(npc);
 
             LogNpcUpdate_Before(args);
             NpcUpdate.Invoke(this, args);
@@ -220,12 +220,12 @@ namespace Orion.Npcs {
         }
 
         [Conditional("DEBUG"), ExcludeFromCodeCoverage]
-        private void LogNpcUpdate_Before(NpcUpdateEventArgs args) =>
+        private void LogNpcUpdate_Before(NpcUpdateEvent args) =>
             // Not localized because this string is developer-facing.
             Log.Verbose("Invoking {Event} with [{Npc}]", NpcUpdate, args.Npc);
 
         [Conditional("DEBUG"), ExcludeFromCodeCoverage]
-        private void LogNpcUpdate_After(NpcUpdateEventArgs args) {
+        private void LogNpcUpdate_After(NpcUpdateEvent args) {
             if (args.IsCanceled()) {
                 // Not localized because this string is developer-facing.
                 Log.Verbose("Canceled {Event} for {CancellationReason}", NpcUpdate, args.CancellationReason);
@@ -240,7 +240,7 @@ namespace Orion.Npcs {
             Debug.Assert(terrariaNpc != null, "Terraria NPC should not be null");
 
             var npc = GetNpc(terrariaNpc);
-            var args = new NpcTransformEventArgs(npc, (NpcType)newNpcType);
+            var args = new NpcTransformEvent(npc, (NpcType)newNpcType);
 
             LogNpcTransform_Before(args);
             NpcTransform.Invoke(this, args);
@@ -256,12 +256,12 @@ namespace Orion.Npcs {
         }
 
         [Conditional("DEBUG"), ExcludeFromCodeCoverage]
-        private void LogNpcTransform_Before(NpcTransformEventArgs args) =>
+        private void LogNpcTransform_Before(NpcTransformEvent args) =>
             // Not localized because this string is developer-facing.
             Log.Debug("Invoking {Event} with [{Npc}, {NpcNewType}]", NpcTransform, args.Npc, args.NewNpcType);
 
         [Conditional("DEBUG"), ExcludeFromCodeCoverage]
-        private void LogNpcTransform_After(NpcTransformEventArgs args) {
+        private void LogNpcTransform_After(NpcTransformEvent args) {
             if (args.IsCanceled()) {
                 // Not localized because this string is developer-facing.
                 Log.Debug("Canceled {Event} for {CancellationReason}", NpcTransform, args.CancellationReason);
@@ -281,7 +281,7 @@ namespace Orion.Npcs {
             Debug.Assert(terrariaNpc != null, "Terraria NPC should not be null");
 
             var npc = GetNpc(terrariaNpc);
-            var args = new NpcDamageEventArgs(npc, damage, knockback, hitDirection == 1, isCriticalHit);
+            var args = new NpcDamageEvent(npc, damage, knockback, hitDirection == 1, isCriticalHit);
 
             LogNpcDamage_Before(args);
             NpcDamage.Invoke(this, args);
@@ -300,14 +300,14 @@ namespace Orion.Npcs {
         }
 
         [Conditional("DEBUG"), ExcludeFromCodeCoverage]
-        private void LogNpcDamage_Before(NpcDamageEventArgs args) =>
+        private void LogNpcDamage_Before(NpcDamageEvent args) =>
             // Not localized because this string is developer-facing.
             Log.Debug(
                 "Invoking {Event} with [{Npc}, {NpcType} for {Damage}]",
                 NpcDamage, args.Npc, args.Npc.Type, args.Damage);
 
         [Conditional("DEBUG"), ExcludeFromCodeCoverage]
-        private void LogNpcDamage_After(NpcDamageEventArgs args) {
+        private void LogNpcDamage_After(NpcDamageEvent args) {
             if (args.IsCanceled()) {
                 // Not localized because this string is developer-facing.
                 Log.Debug("Canceled {Event} for {CancellationReason}", NpcDamage, args.CancellationReason);
@@ -329,7 +329,7 @@ namespace Orion.Npcs {
             Debug.Assert(terrariaNpc != null, "Terraria NPC should not be null");
 
             var npc = GetNpc(terrariaNpc);
-            var args = new NpcLootEventArgs(npc, (ItemType)itemType, itemStackSize, (ItemPrefix)itemPrefix);
+            var args = new NpcDropItemEvent(npc, (ItemType)itemType, itemStackSize, (ItemPrefix)itemPrefix);
 
             LogNpcLoot_Before(args);
             NpcLoot.Invoke(this, args);
@@ -347,7 +347,7 @@ namespace Orion.Npcs {
         }
 
         [Conditional("DEBUG"), ExcludeFromCodeCoverage]
-        private void LogNpcLoot_Before(NpcLootEventArgs args) {
+        private void LogNpcLoot_Before(NpcDropItemEvent args) {
             if (args.ItemPrefix == ItemPrefix.None) {
                 // Not localized because this string is developer-facing.
                 Log.Debug(
@@ -362,7 +362,7 @@ namespace Orion.Npcs {
         }
 
         [Conditional("DEBUG"), ExcludeFromCodeCoverage]
-        private void LogNpcLoot_After(NpcLootEventArgs args) {
+        private void LogNpcLoot_After(NpcDropItemEvent args) {
             if (args.IsCanceled()) {
                 // Not localized because this string is developer-facing.
                 Log.Debug("Canceled {Event} for {CancellationReason}", NpcLoot, args.CancellationReason);
@@ -389,14 +389,14 @@ namespace Orion.Npcs {
             Debug.Assert(terrariaNpc != null, "Terraria NPC should not be null");
 
             var npc = GetNpc(terrariaNpc);
-            var args = new NpcKilledEventArgs(npc);
+            var args = new NpcKilledEvent(npc);
 
             LogNpcKilled(args);
             NpcKilled.Invoke(this, args);
         }
 
         [Conditional("DEBUG"), ExcludeFromCodeCoverage]
-        private void LogNpcKilled(NpcKilledEventArgs args) =>
+        private void LogNpcKilled(NpcKilledEvent args) =>
             // Not localized because this string is developer-facing.
             Log.Debug("Invoking {Event} with [{Npc}, {NpcType}]", NpcKilled, args.Npc, args.Npc.Type);
     }

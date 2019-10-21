@@ -60,12 +60,12 @@ namespace Orion.World {
         /// Gets the event handlers that occur when the world is loading.
         /// </summary>
         /// <value>The event handlers that occur when the world is loading.</value>
-        EventHandlerCollection<WorldLoadEventArgs> WorldLoad { get; }
+        EventHandlerCollection<WorldLoadEvent> WorldLoad { get; }
 
         /// <summary>
         /// Gets the event handlers that occur when the world is saving. This event can be canceled.
         /// </summary>
         /// <value>The event handlers that occur when the world is saving.</value>
-        EventHandlerCollection<WorldSaveEventArgs> WorldSave { get; }
+        EventHandlerCollection<WorldSaveEvent> WorldSave { get; }
     }
 }

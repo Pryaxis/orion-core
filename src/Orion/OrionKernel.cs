@@ -60,26 +60,26 @@ namespace Orion {
         /// </summary>
         /// <value>The events that occur when the server initializes.</value>
         /// <remarks>This event is invoked once the server reaches the world loading stage.</remarks>
-        public EventHandlerCollection<ServerInitializeEventArgs> ServerInitialize { get; }
+        public EventHandlerCollection<ServerInitializeEvent> ServerInitialize { get; }
 
         /// <summary>
         /// Gets the events that occur when the server starts.
         /// </summary>
         /// <value>The events that occur when the server starts.</value>
         /// <remarks>This event is invoked once the server starts accepting connections.</remarks>
-        public EventHandlerCollection<ServerStartEventArgs> ServerStart { get; }
+        public EventHandlerCollection<ServerStartEvent> ServerStart { get; }
 
         /// <summary>
         /// Gets the events that occur when the server updates.
         /// </summary>
         /// <value>The events that occur when the server updates.</value>
-        public EventHandlerCollection<ServerUpdateEventArgs> ServerUpdate { get; }
+        public EventHandlerCollection<ServerUpdateEvent> ServerUpdate { get; }
 
         /// <summary>
         /// Gets the events that occur when the server executes a command. This event can be canceled.
         /// </summary>
         /// <value>The events that occur when the server executes a command.</value>
-        public EventHandlerCollection<ServerCommandEventArgs> ServerCommand { get; }
+        public EventHandlerCollection<ServerCommandEvent> ServerCommand { get; }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="OrionKernel"/> class with the specified log.
@@ -109,10 +109,10 @@ namespace Orion {
 
             _log = this.Get<ILogger>();
 
-            ServerInitialize = new EventHandlerCollection<ServerInitializeEventArgs>();
-            ServerStart = new EventHandlerCollection<ServerStartEventArgs>();
-            ServerUpdate = new EventHandlerCollection<ServerUpdateEventArgs>();
-            ServerCommand = new EventHandlerCollection<ServerCommandEventArgs>();
+            ServerInitialize = new EventHandlerCollection<ServerInitializeEvent>();
+            ServerStart = new EventHandlerCollection<ServerStartEvent>();
+            ServerUpdate = new EventHandlerCollection<ServerUpdateEvent>();
+            ServerCommand = new EventHandlerCollection<ServerCommandEvent>();
 
             // Create bindings for Lazy<T> so that we can have lazily loaded services. This allows plugins to override
             // the above service bindings if necessary.
@@ -258,7 +258,7 @@ namespace Orion {
         // =============================================================================================================
 
         private void PreInitializeHandler() {
-            var args = new ServerInitializeEventArgs();
+            var args = new ServerInitializeEvent();
 
             LogServerInitialize();
             ServerInitialize.Invoke(this, args);
@@ -274,7 +274,7 @@ namespace Orion {
         // =============================================================================================================
 
         private void StartedHandler() {
-            var args = new ServerStartEventArgs();
+            var args = new ServerStartEvent();
 
             LogServerStart();
             ServerStart.Invoke(this, args);
@@ -290,7 +290,7 @@ namespace Orion {
         // =============================================================================================================
 
         private void PreUpdateHandler(ref GameTime _) {
-            var args = new ServerUpdateEventArgs();
+            var args = new ServerUpdateEvent();
 
             LogServerUpdate();
             ServerUpdate.Invoke(this, args);
@@ -306,7 +306,7 @@ namespace Orion {
         // =============================================================================================================
 
         private HookResult ProcessHandler(string _, string input) {
-            var args = new ServerCommandEventArgs(input);
+            var args = new ServerCommandEvent(input);
 
             LogServerCommand_Before(input);
             ServerCommand.Invoke(this, args);
@@ -321,7 +321,7 @@ namespace Orion {
             _log.Debug("Invoking {Event} with [{Input}]", ServerCommand, input);
 
         [Conditional("DEBUG"), ExcludeFromCodeCoverage]
-        private void LogServerCommand_After(ServerCommandEventArgs args) {
+        private void LogServerCommand_After(ServerCommandEvent args) {
             if (args.IsCanceled()) {
                 // Not localized because this string is developer-facing.
                 _log.Debug("Canceled {Event} for {Reason}", ServerCommand, args.CancellationReason);

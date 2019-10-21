@@ -112,7 +112,7 @@ namespace Orion.Players {
             var packet = new ChatPacket { Text = "test" };
 
             var isRun = false;
-            var packetSend = new EventHandlerCollection<PacketSendEventArgs>();
+            var packetSend = new EventHandlerCollection<PacketSendEvent>();
             packetSend.RegisterHandler((sender, args) => {
                 isRun = true;
                 args.Receiver.Should().BeSameAs(player);
@@ -155,7 +155,7 @@ namespace Orion.Players {
             var player = new OrionPlayer(mockPlayerService.Object, 5, terrariaPlayer);
             var packet = new ChatPacket { Text = "test" };
 
-            var packetSend = new EventHandlerCollection<PacketSendEventArgs>();
+            var packetSend = new EventHandlerCollection<PacketSendEvent>();
             packetSend.RegisterHandler((sender, args) => args.Cancel());
             mockPlayerService.Setup(ps => ps.PacketSend).Returns(packetSend);
 

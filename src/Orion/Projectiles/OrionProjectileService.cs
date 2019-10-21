@@ -31,9 +31,9 @@ namespace Orion.Projectiles {
     [Service("orion-projs")]
     internal sealed class OrionProjectileService : OrionService, IProjectileService {
         public IReadOnlyArray<IProjectile> Projectiles { get; }
-        public EventHandlerCollection<ProjectileSetDefaultsEventArgs> ProjectileSetDefaults { get; }
-        public EventHandlerCollection<ProjectileUpdateEventArgs> ProjectileUpdate { get; }
-        public EventHandlerCollection<ProjectileRemoveEventArgs> ProjectileRemove { get; }
+        public EventHandlerCollection<ProjectileDefaultsEvent> ProjectileSetDefaults { get; }
+        public EventHandlerCollection<ProjectileUpdateEvent> ProjectileUpdate { get; }
+        public EventHandlerCollection<ProjectileRemoveEvent> ProjectileRemove { get; }
 
         public OrionProjectileService(ILogger log) : base(log) {
             Debug.Assert(log != null, "log should not be null");
@@ -44,9 +44,9 @@ namespace Orion.Projectiles {
                 Main.projectile.AsMemory(..^1),
                 (projectileIndex, terrariaProjectile) => new OrionProjectile(projectileIndex, terrariaProjectile));
 
-            ProjectileSetDefaults = new EventHandlerCollection<ProjectileSetDefaultsEventArgs>();
-            ProjectileUpdate = new EventHandlerCollection<ProjectileUpdateEventArgs>();
-            ProjectileRemove = new EventHandlerCollection<ProjectileRemoveEventArgs>();
+            ProjectileSetDefaults = new EventHandlerCollection<ProjectileDefaultsEvent>();
+            ProjectileUpdate = new EventHandlerCollection<ProjectileUpdateEvent>();
+            ProjectileRemove = new EventHandlerCollection<ProjectileRemoveEvent>();
 
             Hooks.Projectile.PreSetDefaultsById = PreSetDefaultsByIdHandler;
             Hooks.Projectile.PreUpdate = PreUpdateHandler;
@@ -101,7 +101,7 @@ namespace Orion.Projectiles {
 
             var projectile = GetProjectile(terrariaProjectile);
             var projectileType = (ProjectileType)projectileType_;
-            var args = new ProjectileSetDefaultsEventArgs(projectile, projectileType);
+            var args = new ProjectileDefaultsEvent(projectile, projectileType);
 
             LogProjectileSetDefaults_Before(args);
             ProjectileSetDefaults.Invoke(this, args);
@@ -117,14 +117,14 @@ namespace Orion.Projectiles {
         }
 
         [Conditional("DEBUG"), ExcludeFromCodeCoverage]
-        private void LogProjectileSetDefaults_Before(ProjectileSetDefaultsEventArgs args) =>
+        private void LogProjectileSetDefaults_Before(ProjectileDefaultsEvent args) =>
             // Not localized because this string is developer-facing.
             Log.Verbose(
                 "Invoking {Event} with [{Projectile}, {ProjectileType}]",
                 ProjectileSetDefaults, args.Projectile, args.ProjectileType);
 
         [Conditional("DEBUG"), ExcludeFromCodeCoverage]
-        private void LogProjectileSetDefaults_After(ProjectileSetDefaultsEventArgs args) {
+        private void LogProjectileSetDefaults_After(ProjectileDefaultsEvent args) {
             if (args.IsCanceled()) {
                 // Not localized because this string is developer-facing.
                 Log.Verbose(
@@ -147,7 +147,7 @@ namespace Orion.Projectiles {
                 "projectile index should be valid");
 
             var projectile = Projectiles[projectileIndex];
-            var args = new ProjectileUpdateEventArgs(projectile);
+            var args = new ProjectileUpdateEvent(projectile);
 
             LogProjectileUpdate_Before(args);
             ProjectileUpdate.Invoke(this, args);
@@ -157,14 +157,14 @@ namespace Orion.Projectiles {
         }
 
         [Conditional("DEBUG"), ExcludeFromCodeCoverage]
-        private void LogProjectileUpdate_Before(ProjectileUpdateEventArgs args) =>
+        private void LogProjectileUpdate_Before(ProjectileUpdateEvent args) =>
             // Not localized because this string is developer-facing.
             Log.Verbose(
                 "Invoking {Event} with [{Projectile}, {ProjectileType}]",
                 ProjectileUpdate, args.Projectile, args.Projectile.Type);
 
         [Conditional("DEBUG"), ExcludeFromCodeCoverage]
-        private void LogProjectileUpdate_After(ProjectileUpdateEventArgs args) {
+        private void LogProjectileUpdate_After(ProjectileUpdateEvent args) {
             if (args.IsCanceled()) {
                 // Not localized because this string is developer-facing.
                 Log.Verbose("Canceled {Event} for {CancellationReason}", ProjectileUpdate, args.CancellationReason);
@@ -179,7 +179,7 @@ namespace Orion.Projectiles {
             Debug.Assert(terrariaProjectile != null, "Terraria projectile should not be null");
 
             var projectile = GetProjectile(terrariaProjectile);
-            var args = new ProjectileRemoveEventArgs(projectile);
+            var args = new ProjectileRemoveEvent(projectile);
 
             LogProjectileRemove_Before(args);
             ProjectileRemove.Invoke(this, args);
@@ -189,14 +189,14 @@ namespace Orion.Projectiles {
         }
 
         [Conditional("DEBUG"), ExcludeFromCodeCoverage]
-        private void LogProjectileRemove_Before(ProjectileRemoveEventArgs args) =>
+        private void LogProjectileRemove_Before(ProjectileRemoveEvent args) =>
             // Not localized because this string is developer-facing.
             Log.Debug(
                 "Invoking {Event} with [{Projectile}, {ProjectileType}]",
                 ProjectileRemove, args.Projectile, args.Projectile.Type);
 
         [Conditional("DEBUG"), ExcludeFromCodeCoverage]
-        private void LogProjectileRemove_After(ProjectileRemoveEventArgs args) {
+        private void LogProjectileRemove_After(ProjectileRemoveEvent args) {
             if (args.IsCanceled()) {
                 // Not localized because this string is developer-facing.
                 Log.Debug("Canceled {Event} for {CancellationReason}", ProjectileRemove, args.CancellationReason);

@@ -49,44 +49,44 @@ namespace Orion.Npcs {
         /// </item>
         /// </list>
         /// </remarks>
-        EventHandlerCollection<NpcSetDefaultsEventArgs> NpcSetDefaults { get; }
+        EventHandlerCollection<NpcDefaultsEvent> NpcSetDefaults { get; }
 
         /// <summary>
         /// Gets the event handlers that occur when an NPC is spawning. This event can be canceled.
         /// </summary>
         /// <value>The event handlers that occur when an NPC is spawning.</value>
-        EventHandlerCollection<NpcSpawnEventArgs> NpcSpawn { get; }
+        EventHandlerCollection<NpcSpawnEvent> NpcSpawn { get; }
 
         /// <summary>
         /// Gets the event handlers that occur when an NPC is updating. This event can be canceled.
         /// </summary>
         /// <value>The event handlers that occur when an NPC is updating.</value>
         /// <remarks>This event is invoked every game tick on every concrete NPC.</remarks>
-        EventHandlerCollection<NpcUpdateEventArgs> NpcUpdate { get; }
+        EventHandlerCollection<NpcUpdateEvent> NpcUpdate { get; }
 
         /// <summary>
         /// Gets the event handlers that occur when an NPC is transforming. This event can be canceled.
         /// </summary>
         /// <value>The event handlers that occur when an NPC is transforming.</value>
-        EventHandlerCollection<NpcTransformEventArgs> NpcTransform { get; }
+        EventHandlerCollection<NpcTransformEvent> NpcTransform { get; }
 
         /// <summary>
         /// Gets the event handlers that occur when an NPC is being damaged. This event can be canceled.
         /// </summary>
         /// <value>The event handlers that occur when an NPC is being damaged.</value>
-        EventHandlerCollection<NpcDamageEventArgs> NpcDamage { get; }
+        EventHandlerCollection<NpcDamageEvent> NpcDamage { get; }
 
         /// <summary>
         /// Gets the event handlers that occur when an NPC is dropping a loot item. This event can be canceled.
         /// </summary>
         /// <value>The event handlers that occur when an NPC is dropping a loot item.</value>
-        EventHandlerCollection<NpcLootEventArgs> NpcLoot { get; }
+        EventHandlerCollection<NpcDropItemEvent> NpcLoot { get; }
 
         /// <summary>
         /// Gets the event handlers that occur when an NPC is killed.
         /// </summary>
         /// <value>The event handlers that occur when an NPC is killed.</value>
-        EventHandlerCollection<NpcKilledEventArgs> NpcKilled { get; }
+        EventHandlerCollection<NpcKilledEvent> NpcKilled { get; }
 
         /// <summary>
         /// Spawns an NPC with the given <paramref name="type"/> at the specified <paramref name="position"/> with the
