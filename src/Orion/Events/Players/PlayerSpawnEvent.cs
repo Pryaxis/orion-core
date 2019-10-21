@@ -18,13 +18,22 @@
 using System;
 using Orion.Packets.Players;
 using Orion.Players;
+using Orion.Utils;
 
 namespace Orion.Events.Players {
     /// <summary>
     /// An event that occurs when a player spawns. This event can be canceled and modified.
     /// </summary>
     [EventArgs("player-spawn")]
-    public sealed class PlayerSpawnEvent : PlayerPacketEvent<PlayerSpawnPacket> {
+    public sealed class PlayerSpawnEvent : PlayerEvent, ICancelable, IDirtiable {
+        private readonly PlayerSpawnPacket _packet;
+        
+        /// <inheritdoc/>
+        public bool IsDirty => _packet.IsDirty;
+
+        /// <inheritdoc/>
+        public string? CancellationReason { get; set; }
+
         /// <summary>
         /// Gets the player's spawn's X coordinate. If negative, then the world's spawn will be used.
         /// </summary>
@@ -51,6 +60,11 @@ namespace Orion.Events.Players {
         /// <exception cref="ArgumentNullException">
         /// <paramref name="player"/> or <paramref name="packet"/> are <see langword="null"/>.
         /// </exception>
-        public PlayerSpawnEvent(IPlayer player, PlayerSpawnPacket packet) : base(player, packet) { }
+        public PlayerSpawnEvent(IPlayer player, PlayerSpawnPacket packet) : base(player) {
+            _packet = packet ?? throw new ArgumentNullException(nameof(packet));
+        }
+
+        /// <inheritdoc/>
+        public void Clean() => _packet.Clean();
     }
 }

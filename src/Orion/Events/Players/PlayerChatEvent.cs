@@ -18,13 +18,22 @@
 using System;
 using Orion.Packets.Modules;
 using Orion.Players;
+using Orion.Utils;
 
 namespace Orion.Events.Players {
     /// <summary>
     /// An event that occurs when a player chats. This event can be canceled and modified.
     /// </summary>
     [EventArgs("player-chat")]
-    public sealed class PlayerChatEvent : PlayerPacketEvent<ChatModule> {
+    public sealed class PlayerChatEvent : PlayerEvent, ICancelable, IDirtiable {
+        private readonly ChatModule _module;
+        
+        /// <inheritdoc/>
+        public bool IsDirty => _module.IsDirty;
+
+        /// <inheritdoc/>
+        public string? CancellationReason { get; set; }
+
         /// <summary>
         /// Gets or sets the player's chat command.
         /// </summary>
@@ -35,8 +44,8 @@ namespace Orion.Events.Players {
         /// </remarks>
         /// <exception cref="ArgumentNullException"><paramref name="value"/> is <see langword="null"/>.</exception>
         public string Command {
-            get => _packet.ClientCommand;
-            set => _packet.ClientCommand = value ?? throw new ArgumentNullException(nameof(value));
+            get => _module.ClientCommand;
+            set => _module.ClientCommand = value ?? throw new ArgumentNullException(nameof(value));
         }
 
         /// <summary>
@@ -45,8 +54,8 @@ namespace Orion.Events.Players {
         /// <value>The player's chat text.</value>
         /// <exception cref="ArgumentNullException"><paramref name="value"/> is <see langword="null"/>.</exception>
         public string Text {
-            get => _packet.ClientText;
-            set => _packet.ClientText = value ?? throw new ArgumentNullException(nameof(value));
+            get => _module.ClientText;
+            set => _module.ClientText = value ?? throw new ArgumentNullException(nameof(value));
         }
 
         /// <summary>
@@ -57,6 +66,11 @@ namespace Orion.Events.Players {
         /// <exception cref="ArgumentNullException">
         /// <paramref name="player"/> or <paramref name="module"/> are <see langword="null"/>.
         /// </exception>
-        public PlayerChatEvent(IPlayer player, ChatModule module) : base(player, module) { }
+        public PlayerChatEvent(IPlayer player, ChatModule module) : base(player) {
+            _module = module ?? throw new ArgumentNullException(nameof(module));
+        }
+        
+        /// <inheritdoc/>
+        public void Clean() => _module.Clean();
     }
 }

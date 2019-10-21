@@ -21,10 +21,13 @@ using Orion.Players;
 
 namespace Orion.Events.Players {
     /// <summary>
-    /// An event that occurs when a packet is being received. This event can be canceled.
+    /// An event that occurs when a packet is being received. This event can be canceled and modified.
     /// </summary>
     [EventArgs("packet-recv")]
-    public sealed class PacketReceiveEvent : PacketEvent {
+    public sealed class PacketReceiveEvent : PacketEvent, ICancelable {
+        /// <inheritdoc/>
+        public string? CancellationReason { get; set; }
+
         /// <summary>
         /// Gets the packet sender.
         /// </summary>

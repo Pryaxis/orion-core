@@ -18,13 +18,22 @@
 using System;
 using Orion.Packets.Players;
 using Orion.Players;
+using Orion.Utils;
 
 namespace Orion.Events.Players {
     /// <summary>
     /// An event that occurs when a player updates their mana. This event can be canceled and modified.
     /// </summary>
     [EventArgs("player-mana")]
-    public sealed class PlayerManaEvent : PlayerPacketEvent<PlayerManaPacket> {
+    public sealed class PlayerManaEvent : PlayerEvent, ICancelable, IDirtiable {
+        private readonly PlayerManaPacket _packet;
+        
+        /// <inheritdoc/>
+        public bool IsDirty => _packet.IsDirty;
+
+        /// <inheritdoc/>
+        public string? CancellationReason { get; set; }
+
         /// <summary>
         /// Gets or sets the player's mana.
         /// </summary>
@@ -51,6 +60,11 @@ namespace Orion.Events.Players {
         /// <exception cref="ArgumentNullException">
         /// <paramref name="player"/> or <paramref name="packet"/> are <see langword="null"/>.
         /// </exception>
-        public PlayerManaEvent(IPlayer player, PlayerManaPacket packet) : base(player, packet) { }
+        public PlayerManaEvent(IPlayer player, PlayerManaPacket packet) : base(player) {
+            _packet = packet ?? throw new ArgumentNullException(nameof(packet));
+        }
+
+        /// <inheritdoc/>
+        public void Clean() => _packet.Clean();
     }
 }

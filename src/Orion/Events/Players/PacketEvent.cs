@@ -23,10 +23,7 @@ namespace Orion.Events.Players {
     /// <summary>
     /// Represents a packet-related event.
     /// </summary>
-    public abstract class PacketEvent : Event, ICancelable, IDirtiable {
-        /// <inheritdoc/>
-        public string? CancellationReason { get; set; }
-
+    public abstract class PacketEvent : Event, IDirtiable {
         /// <inheritdoc/>
         public bool IsDirty => Packet.IsDirty;
 

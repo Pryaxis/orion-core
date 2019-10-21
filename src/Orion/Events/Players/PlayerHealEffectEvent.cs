@@ -18,13 +18,22 @@
 using System;
 using Orion.Packets.Players;
 using Orion.Players;
+using Orion.Utils;
 
 namespace Orion.Events.Players {
     /// <summary>
     /// An event that occurs when a player shows a heal effect. This event can be canceled and modified.
     /// </summary>
     [EventArgs("player-heal-fx")]
-    public sealed class PlayerHealEffectEvent : PlayerPacketEvent<PlayerHealEffectPacket> {
+    public sealed class PlayerHealEffectEvent : PlayerEvent, ICancelable, IDirtiable {
+        private readonly PlayerHealEffectPacket _packet;
+        
+        /// <inheritdoc/>
+        public bool IsDirty => _packet.IsDirty;
+
+        /// <inheritdoc/>
+        public string? CancellationReason { get; set; }
+
         /// <summary>
         /// Gets or sets the heal amount.
         /// </summary>
@@ -43,6 +52,11 @@ namespace Orion.Events.Players {
         /// <exception cref="ArgumentNullException">
         /// <paramref name="player"/> or <paramref name="packet"/> are <see langword="null"/>.
         /// </exception>
-        public PlayerHealEffectEvent(IPlayer player, PlayerHealEffectPacket packet) : base(player, packet) { }
+        public PlayerHealEffectEvent(IPlayer player, PlayerHealEffectPacket packet) : base(player) {
+            _packet = packet ?? throw new ArgumentNullException(nameof(packet));
+        }
+
+        /// <inheritdoc/>
+        public void Clean() => _packet.Clean();
     }
 }

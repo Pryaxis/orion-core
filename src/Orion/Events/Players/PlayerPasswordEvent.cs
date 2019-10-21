@@ -18,13 +18,22 @@
 using System;
 using Orion.Packets.Players;
 using Orion.Players;
+using Orion.Utils;
 
 namespace Orion.Events.Players {
     /// <summary>
     /// An event that occurs when a player provides a password to the server. This event can be canceled and modified.
     /// </summary>
     [EventArgs("player-password")]
-    public sealed class PlayerPasswordEvent : PlayerPacketEvent<PlayerPasswordResponsePacket> {
+    public sealed class PlayerPasswordEvent : PlayerEvent, ICancelable, IDirtiable {
+        private readonly PlayerPasswordResponsePacket _packet;
+        
+        /// <inheritdoc/>
+        public bool IsDirty => _packet.IsDirty;
+
+        /// <inheritdoc/>
+        public string? CancellationReason { get; set; }
+
         /// <summary>
         /// Gets or sets the player's password attempt.
         /// </summary>
@@ -44,7 +53,11 @@ namespace Orion.Events.Players {
         /// <exception cref="ArgumentNullException">
         /// <paramref name="player"/> or <paramref name="packet"/> are <see langword="null"/>.
         /// </exception>
-        public PlayerPasswordEvent(IPlayer player, PlayerPasswordResponsePacket packet)
-            : base(player, packet) { }
+        public PlayerPasswordEvent(IPlayer player, PlayerPasswordResponsePacket packet) : base(player) {
+            _packet = packet ?? throw new ArgumentNullException(nameof(packet));
+        }
+
+        /// <inheritdoc/>
+        public void Clean() => _packet.Clean();
     }
 }

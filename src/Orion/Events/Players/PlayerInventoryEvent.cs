@@ -19,13 +19,22 @@ using System;
 using Orion.Items;
 using Orion.Packets.Players;
 using Orion.Players;
+using Orion.Utils;
 
 namespace Orion.Events.Players {
     /// <summary>
     /// An event that occurs when a player's inventory is updated. This event can be canceled and modified.
     /// </summary>
     [EventArgs("player-inventory")]
-    public sealed class PlayerInventoryEvent : PlayerPacketEvent<PlayerInventorySlotPacket> {
+    public sealed class PlayerInventoryEvent : PlayerEvent, ICancelable, IDirtiable {
+        private readonly PlayerInventorySlotPacket _packet;
+        
+        /// <inheritdoc/>
+        public bool IsDirty => _packet.IsDirty;
+
+        /// <inheritdoc/>
+        public string? CancellationReason { get; set; }
+
         /// <summary>
         /// Gets the player's inventory slot.
         /// </summary>
@@ -70,6 +79,11 @@ namespace Orion.Events.Players {
         /// <exception cref="ArgumentNullException">
         /// <paramref name="player"/> or <paramref name="packet"/> are <see langword="null"/>.
         /// </exception>
-        public PlayerInventoryEvent(IPlayer player, PlayerInventorySlotPacket packet) : base(player, packet) { }
+        public PlayerInventoryEvent(IPlayer player, PlayerInventorySlotPacket packet) : base(player) {
+            _packet = packet ?? throw new ArgumentNullException(nameof(packet));
+        }
+
+        /// <inheritdoc/>
+        public void Clean() => _packet.Clean();
     }
 }

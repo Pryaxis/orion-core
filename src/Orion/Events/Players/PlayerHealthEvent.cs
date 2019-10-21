@@ -18,13 +18,22 @@
 using System;
 using Orion.Packets.Players;
 using Orion.Players;
+using Orion.Utils;
 
 namespace Orion.Events.Players {
     /// <summary>
     /// An event that occurs when a player updates their health. This event can be canceled and modified.
     /// </summary>
     [EventArgs("player-health")]
-    public sealed class PlayerHealthEvent : PlayerPacketEvent<PlayerHealthPacket> {
+    public sealed class PlayerHealthEvent : PlayerEvent, ICancelable, IDirtiable {
+        private readonly PlayerHealthPacket _packet;
+
+        /// <inheritdoc/>
+        public bool IsDirty => _packet.IsDirty;
+
+        /// <inheritdoc/>
+        public string? CancellationReason { get; set; }
+
         /// <summary>
         /// Gets or sets the player's health.
         /// </summary>
@@ -52,6 +61,11 @@ namespace Orion.Events.Players {
         /// <exception cref="ArgumentNullException">
         /// <paramref name="player"/> or <paramref name="packet"/> are <see langword="null"/>.
         /// </exception>
-        public PlayerHealthEvent(IPlayer player, PlayerHealthPacket packet) : base(player, packet) { }
+        public PlayerHealthEvent(IPlayer player, PlayerHealthPacket packet) : base(player) {
+            _packet = packet ?? throw new ArgumentNullException(nameof(packet));
+        }
+
+        /// <inheritdoc/>
+        public void Clean() => _packet.Clean();
     }
 }
