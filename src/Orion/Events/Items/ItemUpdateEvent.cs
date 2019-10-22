@@ -20,10 +20,10 @@ using Orion.Items;
 
 namespace Orion.Events.Items {
     /// <summary>
-    /// An event that occurs when an item is updating every tick. This event can be canceled.
+    /// An event that occurs when an item updates every tick. This event can be canceled.
     /// </summary>
     /// <remarks>An item update involves processing an item's physics.</remarks>
-    [EventArgs("item-update")]
+    [Event("item-update")]
     public sealed class ItemUpdateEvent : ItemEvent, ICancelable {
         /// <inheritdoc/>
         public string? CancellationReason { get; set; }

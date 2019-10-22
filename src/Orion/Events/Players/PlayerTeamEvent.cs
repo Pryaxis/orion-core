@@ -24,7 +24,7 @@ namespace Orion.Events.Players {
     /// <summary>
     /// An event that occurs when a player switches teams. This event can be canceled and modified.
     /// </summary>
-    [EventArgs("player-team")]
+    [Event("player-team")]
     public sealed class PlayerTeamEvent : PlayerEvent, ICancelable, IDirtiable {
         private readonly PlayerTeamPacket _packet;
         

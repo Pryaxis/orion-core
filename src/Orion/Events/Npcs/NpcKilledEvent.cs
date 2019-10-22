@@ -22,7 +22,7 @@ namespace Orion.Events.Npcs {
     /// <summary>
     /// An event that occurs when an NPC is killed.
     /// </summary>
-    [EventArgs("npc-killed")]
+    [Event("npc-killed")]
     public sealed class NpcKilledEvent : NpcEvent {
         /// <summary>
         /// Initializes a new instance of the <see cref="NpcKilledEvent"/> class with the specified NPC.

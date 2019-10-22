@@ -20,10 +20,10 @@ using Orion.Npcs;
 
 namespace Orion.Events.Npcs {
     /// <summary>
-    /// An event that occurs when a NPC is updating every tick. This event can be canceled.
+    /// An event that occurs when a NPC updates every tick. This event can be canceled.
     /// </summary>
     /// <remarks>An NPC update involves processing an NPC's physics and behavior.</remarks>
-    [EventArgs("npc-update")]
+    [Event("npc-update")]
     public sealed class NpcUpdateEvent : NpcEvent, ICancelable {
         /// <inheritdoc/>
         public string? CancellationReason { get; set; }

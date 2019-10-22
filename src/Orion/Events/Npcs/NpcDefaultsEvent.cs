@@ -21,7 +21,7 @@ using Orion.Utils;
 
 namespace Orion.Events.Npcs {
     /// <summary>
-    /// An event that occurs when an NPC's defaults are being set. This event can be canceled.
+    /// An event that occurs when an NPC's defaults are being set. This event can be canceled and modified.
     /// </summary>
     /// <remarks>
     /// This event occurs when an NPC is being created, which can happen:
@@ -34,7 +34,7 @@ namespace Orion.Events.Npcs {
     /// </item>
     /// </list>
     /// </remarks>
-    [EventArgs("npc-defaults")]
+    [Event("npc-defaults")]
     public sealed class NpcDefaultsEvent : NpcEvent, ICancelable, IDirtiable {
         private NpcType _npcType;
 

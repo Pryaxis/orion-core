@@ -21,7 +21,7 @@ using Orion.Utils;
 
 namespace Orion.Events.Projectiles {
     /// <summary>
-    /// An event that occurs when an projectile's defaults are being set. This event can be canceled.
+    /// An event that occurs when an projectile's defaults are being set. This event can be canceled and modified.
     /// </summary>
     /// <remarks>
     /// This event occurs when an projectile is being created, which can happen:
@@ -30,11 +30,11 @@ namespace Orion.Events.Projectiles {
     /// <description>When the server starts up, where all projectiles are initialized.</description>
     /// </item>
     /// <item>
-    /// <description>When an projectile spawns in the world.</description>
+    /// <description>When a projectile spawns in the world.</description>
     /// </item>
     /// </list>
     /// </remarks>
-    [EventArgs("proj-defaults")]
+    [Event("proj-defaults")]
     public sealed class ProjectileDefaultsEvent : ProjectileEvent, ICancelable, IDirtiable {
         private ProjectileType _projectileType;
 

@@ -22,7 +22,7 @@ namespace Orion.Events.Players {
     /// <summary>
     /// An event that occurs when a player quits.
     /// </summary>
-    [EventArgs("player-quit")]
+    [Event("player-quit")]
     public sealed class PlayerQuitEvent : PlayerEvent {
         /// <summary>
         /// Initializes a new instance of the <see cref="PlayerQuitEvent"/> class with the specified player.

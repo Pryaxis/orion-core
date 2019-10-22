@@ -24,7 +24,7 @@ namespace Orion.Events {
     /// </summary>
     [AttributeUsage(AttributeTargets.Class)]
     [BaseTypeRequired(typeof(EventArgs))]
-    public sealed class EventArgsAttribute : Attribute {
+    public sealed class EventAttribute : Attribute {
         /// <summary>
         /// Gets the event's name. This is used for logs.
         /// </summary>
@@ -32,7 +32,7 @@ namespace Orion.Events {
         public string Name { get; }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="EventArgsAttribute"/> class with the specified name.
+        /// Initializes a new instance of the <see cref="EventAttribute"/> class with the specified name.
         /// </summary>
         /// <param name="name">The name. This is used for logs.</param>
         /// <remarks>
@@ -40,7 +40,7 @@ namespace Orion.Events {
         /// is to use <c>kebab-case</c>.
         /// </remarks>
         /// <exception cref="ArgumentNullException"><paramref name="name"/> is <see langword="null"/>.</exception>
-        public EventArgsAttribute(string name) {
+        public EventAttribute(string name) {
             Name = name ?? throw new ArgumentNullException(nameof(name));
         }
     }

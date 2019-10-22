@@ -24,7 +24,7 @@ namespace Orion.Events.Players {
     /// <summary>
     /// An event that occurs when a player shows a heal effect. This event can be canceled and modified.
     /// </summary>
-    [EventArgs("player-heal-fx")]
+    [Event("player-heal-fx")]
     public sealed class PlayerHealEffectEvent : PlayerEvent, ICancelable, IDirtiable {
         private readonly PlayerHealEffectPacket _packet;
         

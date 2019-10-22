@@ -55,14 +55,14 @@ namespace Orion.Events {
         /// </summary>
         /// <value>The event's name.</value>
         /// <remarks>
-        /// The name is taken from the <see cref="EventArgsAttribute.Name"/> property on the
-        /// <see cref="EventArgsAttribute"/> attribute annotating the <typeparamref name="TEvent"/> class. <para/>
+        /// The name is taken from the <see cref="EventAttribute.Name"/> property on the
+        /// <see cref="EventAttribute"/> attribute annotating the <typeparamref name="TEvent"/> class. <para/>
         /// 
         /// If the attribute is missing, then the event name will default to the type name of
         /// <typeparamref name="TEvent"/>.
         /// </remarks>
         public string EventName { get; } =
-            typeof(TEvent).GetCustomAttribute<EventArgsAttribute?>()?.Name ?? typeof(TEvent).Name;
+            typeof(TEvent).GetCustomAttribute<EventAttribute?>()?.Name ?? typeof(TEvent).Name;
 
         /// <inheritdoc/>
         [Pure, ExcludeFromCodeCoverage]

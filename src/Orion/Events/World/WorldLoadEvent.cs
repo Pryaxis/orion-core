@@ -19,8 +19,8 @@ using System;
 
 namespace Orion.Events.World {
     /// <summary>
-    /// An event that occurs when a world is loaded.
+    /// An event that occurs when a world loads.
     /// </summary>
-    [EventArgs("world-load")]
+    [Event("world-load")]
     public sealed class WorldLoadEvent : Event { }
 }

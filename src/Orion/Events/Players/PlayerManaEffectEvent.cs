@@ -24,7 +24,7 @@ namespace Orion.Events.Players {
     /// <summary>
     /// An event that occurs when a player shows a mana effect. This event can be canceled and modified.
     /// </summary>
-    [EventArgs("player-mana-fx")]
+    [Event("player-mana-fx")]
     public sealed class PlayerManaEffectEvent : PlayerEvent, ICancelable, IDirtiable {
         private readonly PlayerManaEffectPacket _packet;
         

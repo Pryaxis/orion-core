@@ -24,7 +24,7 @@ namespace Orion.Events.Players {
     /// <summary>
     /// An event that occurs when a player connects. This event can be canceled and modified.
     /// </summary>
-    [EventArgs("player-connect")]
+    [Event("player-connect")]
     public sealed class PlayerConnectEvent : PlayerEvent, ICancelable, IDirtiable {
         private readonly PlayerConnectPacket _packet;
         

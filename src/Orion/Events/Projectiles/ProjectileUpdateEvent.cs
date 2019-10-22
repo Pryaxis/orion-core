@@ -20,10 +20,10 @@ using Orion.Projectiles;
 
 namespace Orion.Events.Projectiles {
     /// <summary>
-    /// An event that occurs when a projectile is updating every tick. This event can be canceled.
+    /// An event that occurs when a projectile updates every tick. This event can be canceled.
     /// </summary>
     /// <remarks>An NPC update involves processing an projectile's physics and behavior.</remarks>
-    [EventArgs("proj-update")]
+    [Event("proj-update")]
     public sealed class ProjectileUpdateEvent : ProjectileEvent, ICancelable {
         /// <inheritdoc/>
         public string? CancellationReason { get; set; }

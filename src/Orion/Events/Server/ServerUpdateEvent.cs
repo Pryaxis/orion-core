@@ -21,6 +21,6 @@ namespace Orion.Events.Server {
     /// <summary>
     /// An event that occurs when the server updates every tick.
     /// </summary>
-    [EventArgs("server-update")]
+    [Event("server-update")]
     public sealed class ServerUpdateEvent : Event { }
 }

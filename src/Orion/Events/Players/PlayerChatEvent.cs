@@ -24,7 +24,7 @@ namespace Orion.Events.Players {
     /// <summary>
     /// An event that occurs when a player chats. This event can be canceled and modified.
     /// </summary>
-    [EventArgs("player-chat")]
+    [Event("player-chat")]
     public sealed class PlayerChatEvent : PlayerEvent, ICancelable, IDirtiable {
         private readonly ChatModule _module;
         

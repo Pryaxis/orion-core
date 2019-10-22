@@ -24,7 +24,7 @@ namespace Orion.Events.Players {
     /// <summary>
     /// An event that occurs when a player provides a password to the server. This event can be canceled and modified.
     /// </summary>
-    [EventArgs("player-password")]
+    [Event("player-password")]
     public sealed class PlayerPasswordEvent : PlayerEvent, ICancelable, IDirtiable {
         private readonly PlayerPasswordResponsePacket _packet;
         

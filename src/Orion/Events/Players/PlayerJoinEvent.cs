@@ -22,7 +22,7 @@ namespace Orion.Events.Players {
     /// <summary>
     /// An event that occurs when a player joins. This event can be canceled.
     /// </summary>
-    [EventArgs("player-join")]
+    [Event("player-join")]
     public sealed class PlayerJoinEvent : PlayerEvent, ICancelable {
         /// <inheritdoc/>
         public string? CancellationReason { get; set; }

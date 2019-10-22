@@ -24,7 +24,7 @@ namespace Orion.Events.Players {
     /// <summary>
     /// An event that occurs when a player toggles their PvP status. This event can be canceled and modified.
     /// </summary>
-    [EventArgs("player-pvp")]
+    [Event("player-pvp")]
     public sealed class PlayerPvpEvent : PlayerEvent, ICancelable, IDirtiable {
         private readonly PlayerPvpPacket _packet;
         

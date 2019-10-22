@@ -21,9 +21,9 @@ using Orion.Utils;
 
 namespace Orion.Events.Npcs {
     /// <summary>
-    /// An event that occurs when an NPC is being damaged. This event can be canceled.
+    /// An event that occurs when an NPC is being damaged. This event can be canceled and modified.
     /// </summary>
-    [EventArgs("npc-damage")]
+    [Event("npc-damage")]
     public sealed class NpcDamageEvent : NpcEvent, ICancelable, IDirtiable {
         private int _damage;
         private float _knockback;
@@ -97,8 +97,12 @@ namespace Orion.Events.Npcs {
         /// <param name="npc">The NPC.</param>
         /// <param name="damage">The damage.</param>
         /// <param name="knockback">The knockback.</param>
-        /// <param name="hitDirection">A value indicating the hit direction.</param>
-        /// <param name="isCriticalHit">A value indicating whether the hit is critical.</param>
+        /// <param name="hitDirection">
+        /// <see langword="true"/> if the hit is to the right; <see langword="false"/> if the hit is to the left.
+        /// </param>
+        /// <param name="isCriticalHit">
+        /// <see langword="true"/> if the hit is critical; otherwise, <see langword="false"/>.
+        /// </param>
         /// <exception cref="ArgumentNullException"><paramref name="npc"/> is <see langword="null"/>.</exception>
         public NpcDamageEvent(
                 INpc npc, int damage, float knockback, bool hitDirection, bool isCriticalHit) : base(npc) {

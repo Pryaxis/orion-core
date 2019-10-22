@@ -22,7 +22,7 @@ namespace Orion.Events.Players {
     /// <summary>
     /// An event that occurs when a player teleports. This event can be canceled.
     /// </summary>
-    [EventArgs("player-teleport")]
+    [Event("player-teleport")]
     public sealed class PlayerTeleportEvent : PlayerEvent, ICancelable {
         /// <inheritdoc/>
         public string? CancellationReason { get; set; }

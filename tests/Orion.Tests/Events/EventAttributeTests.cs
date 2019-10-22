@@ -20,17 +20,17 @@ using FluentAssertions;
 using Xunit;
 
 namespace Orion.Events {
-    public class EventArgsAttributeTests {
+    public class EventAttributeTests {
         [Fact]
         public void Ctor_NullName_ThrowsArgumentNullException() {
-            Func<EventArgsAttribute> func = () => new EventArgsAttribute(null);
+            Func<EventAttribute> func = () => new EventAttribute(null);
 
             func.Should().Throw<ArgumentNullException>();
         }
 
         [Fact]
         public void Name_Get() {
-            var attribute = new EventArgsAttribute("test");
+            var attribute = new EventAttribute("test");
 
             attribute.Name.Should().Be("test");
         }

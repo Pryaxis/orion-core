@@ -24,7 +24,7 @@ namespace Orion.Events.Players {
     /// <summary>
     /// An event that occurs when a player updates their mana. This event can be canceled and modified.
     /// </summary>
-    [EventArgs("player-mana")]
+    [Event("player-mana")]
     public sealed class PlayerManaEvent : PlayerEvent, ICancelable, IDirtiable {
         private readonly PlayerManaPacket _packet;
         

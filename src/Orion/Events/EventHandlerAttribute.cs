@@ -57,7 +57,7 @@ namespace Orion.Events {
         /// Initializes a new instance of the <see cref="EventHandlerAttribute"/> class with the specified priority.
         /// </summary>
         /// <param name="priority">The priority.</param>
-        public EventHandlerAttribute(EventPriority priority) {
+        public EventHandlerAttribute(EventPriority priority = EventPriority.Normal) {
             Priority = priority;
         }
     }

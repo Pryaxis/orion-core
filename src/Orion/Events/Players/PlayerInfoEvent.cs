@@ -27,7 +27,7 @@ namespace Orion.Events.Players {
     /// <summary>
     /// An event that occurs when a player sends their information. This event can be canceled and modified.
     /// </summary>
-    [EventArgs("player-info")]
+    [Event("player-info")]
     public sealed class PlayerInfoEvent : PlayerEvent, ICancelable, IDirtiable {
         private readonly PlayerInfoPacket _packet;
         

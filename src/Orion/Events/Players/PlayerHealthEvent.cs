@@ -24,7 +24,7 @@ namespace Orion.Events.Players {
     /// <summary>
     /// An event that occurs when a player updates their health. This event can be canceled and modified.
     /// </summary>
-    [EventArgs("player-health")]
+    [Event("player-health")]
     public sealed class PlayerHealthEvent : PlayerEvent, ICancelable, IDirtiable {
         private readonly PlayerHealthPacket _packet;
 

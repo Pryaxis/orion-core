@@ -19,8 +19,8 @@ using System;
 
 namespace Orion.Events.Server {
     /// <summary>
-    /// An event that occurs when the server is initialized: i.e., before the world has loaded.
+    /// An event that occurs when the server initializes: i.e., before the world has loaded.
     /// </summary>
-    [EventArgs("server-init")]
+    [Event("server-init")]
     public sealed class ServerInitializeEvent : Event { }
 }

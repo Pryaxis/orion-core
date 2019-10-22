@@ -21,9 +21,9 @@ using Orion.Players;
 
 namespace Orion.Events.Players {
     /// <summary>
-    /// An event that occurs when a packet is being sent. This event can be canceled and modified.
+    /// An event that occurs when a packet is sent. This event can be canceled and modified.
     /// </summary>
-    [EventArgs("packet-send")]
+    [Event("packet-send")]
     public sealed class PacketSendEvent : PacketEvent, ICancelable {
         /// <inheritdoc/>
         public string? CancellationReason { get; set; }

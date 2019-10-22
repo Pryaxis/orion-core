@@ -24,7 +24,7 @@ namespace Orion.Events.Players {
     /// <summary>
     /// An event that occurs when a player spawns. This event can be canceled and modified.
     /// </summary>
-    [EventArgs("player-spawn")]
+    [Event("player-spawn")]
     public sealed class PlayerSpawnEvent : PlayerEvent, ICancelable, IDirtiable {
         private readonly PlayerSpawnPacket _packet;
         

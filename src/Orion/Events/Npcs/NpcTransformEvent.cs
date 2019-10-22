@@ -21,9 +21,9 @@ using Orion.Utils;
 
 namespace Orion.Events.Npcs {
     /// <summary>
-    /// An event that occurs when an NPC is transforming into another NPC type. This event can be canceled.
+    /// An event that occurs when an NPC transforms into another NPC type. This event can be canceled and modified.
     /// </summary>
-    [EventArgs("npc-transform")]
+    [Event("npc-transform")]
     public sealed class NpcTransformEvent : NpcEvent, ICancelable, IDirtiable {
         private NpcType _newNpcType;
 

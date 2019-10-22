@@ -23,9 +23,9 @@ using Orion.Utils;
 
 namespace Orion.Events.Players {
     /// <summary>
-    /// An event that occurs when a player's inventory is updated. This event can be canceled and modified.
+    /// An event that occurs when a player updates their inventory. This event can be canceled and modified.
     /// </summary>
-    [EventArgs("player-inventory")]
+    [Event("player-inventory")]
     public sealed class PlayerInventoryEvent : PlayerEvent, ICancelable, IDirtiable {
         private readonly PlayerInventorySlotPacket _packet;
         

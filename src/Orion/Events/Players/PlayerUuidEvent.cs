@@ -24,7 +24,7 @@ namespace Orion.Events.Players {
     /// <summary>
     /// An event that occurs when a player sends their UUID. This event can be canceled and modified.
     /// </summary>
-    [EventArgs("player-uuid")]
+    [Event("player-uuid")]
     public sealed class PlayerUuidEvent : PlayerEvent, ICancelable, IDirtiable {
         private readonly PlayerUuidPacket _packet;
 

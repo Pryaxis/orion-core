@@ -26,7 +26,7 @@ namespace Orion.Events.Players {
     /// <summary>
     /// An event that occurs when a player sends their data. This event can be canceled and modified.
     /// </summary>
-    [EventArgs("player-data")]
+    [Event("player-data")]
     public sealed class PlayerDataEvent : PlayerEvent, ICancelable, IDirtiable {
         private readonly PlayerDataPacket _packet;
         
@@ -77,7 +77,7 @@ namespace Orion.Events.Players {
         /// Gets or sets the player's equipment hiding flags.
         /// </summary>
         /// <value>The player's equipment hiding flags.</value>
-        /// <remarks>This property specifies which of the player's equipment is visible.</remarks>
+        /// <remarks>This property's value specifies which of the player's equipment is visible.</remarks>
         public ushort EquipmentHiddenFlags {
             get => _packet.EquipmentHiddenFlags;
             set => _packet.EquipmentHiddenFlags = value;
@@ -87,7 +87,7 @@ namespace Orion.Events.Players {
         /// Gets or sets the player's miscellaneous equipment hiding flags.
         /// </summary>
         /// <value>The player's miscellaneous equipment hiding flags.</value>
-        /// <remarks>This property specifies which of the player's miscellaneous equipment is visible.</remarks>
+        /// <remarks>This property's value specifies which of the player's miscellaneous equipment is visible.</remarks>
         public byte MiscEquipmentHiddenFlags {
             get => _packet.MiscEquipmentHiddenFlags;
             set => _packet.MiscEquipmentHiddenFlags = value;
@@ -172,8 +172,8 @@ namespace Orion.Events.Players {
         /// <see langword="true"/> if the player has an extra accessory slot; otherwise, <see langword="false"/>.
         /// </value>
         /// <remarks>
-        /// The extra accessory slot can be obtained with the <see cref="ItemType.DemonHeart"/> item. There is also
-        /// support for a seventh accessory slot but it is not legitimately obtainable.
+        /// The extra accessory slot can be obtained with a <see cref="ItemType.DemonHeart"/>. There is also support for
+        /// a seventh accessory slot but it is not legitimately obtainable.
         /// </remarks>
         public bool HasExtraAccessorySlot {
             get => _packet.HasExtraAccessorySlot;

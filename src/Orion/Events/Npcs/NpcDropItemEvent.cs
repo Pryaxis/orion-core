@@ -22,9 +22,9 @@ using Orion.Utils;
 
 namespace Orion.Events.Npcs {
     /// <summary>
-    /// An event that occurs when an NPC is dropping an item. This event can be canceled.
+    /// An event that occurs when an NPC drops an item. This event can be canceled.
     /// </summary>
-    [EventArgs("npc-drop-item")]
+    [Event("npc-drop-item")]
     public sealed class NpcDropItemEvent : NpcEvent, ICancelable, IDirtiable {
         private ItemType _itemType;
         private int _stackSize;

@@ -19,9 +19,9 @@ using System;
 
 namespace Orion.Events.Server {
     /// <summary>
-    /// An event that occurs when a server command is executing. This event can be canceled.
+    /// An event that occurs when a server executes a command. This event can be canceled.
     /// </summary>
-    [EventArgs("server-command")]
+    [Event("server-command")]
     public sealed class ServerCommandEvent : Event, ICancelable {
         /// <inheritdoc/>
         public string? CancellationReason { get; set; }

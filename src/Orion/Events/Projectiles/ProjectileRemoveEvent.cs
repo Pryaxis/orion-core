@@ -20,9 +20,9 @@ using Orion.Projectiles;
 
 namespace Orion.Events.Projectiles {
     /// <summary>
-    /// An event that occurs when a projectile is being removed. This event can be canceled.
+    /// An event that occurs when a projectile is removed. This event can be canceled.
     /// </summary>
-    [EventArgs("proj-remove")]
+    [Event("proj-remove")]
     public sealed class ProjectileRemoveEvent : ProjectileEvent, ICancelable {
         /// <inheritdoc/>
         public string? CancellationReason { get; set; }

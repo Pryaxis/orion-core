@@ -19,8 +19,8 @@ using System;
 
 namespace Orion.Events.World {
     /// <summary>
-    /// An event that occurs when a world is saved.
+    /// An event that occurs when a world saves.
     /// </summary>
-    [EventArgs("world-save")]
+    [Event("world-save")]
     public sealed class WorldSaveEvent : Event { }
 }

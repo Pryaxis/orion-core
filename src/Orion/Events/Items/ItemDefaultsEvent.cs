@@ -21,7 +21,7 @@ using Orion.Utils;
 
 namespace Orion.Events.Items {
     /// <summary>
-    /// An event that occurs when an item's defaults are being set. This event can be canceled.
+    /// An event that occurs when an item's defaults are set. This event can be canceled and modified.
     /// </summary>
     /// <remarks>
     /// This event occurs when an item is being created, which can happen:
@@ -39,7 +39,7 @@ namespace Orion.Events.Items {
     /// </item>
     /// </list>
     /// </remarks>
-    [EventArgs("item-defaults")]
+    [Event("item-defaults")]
     public sealed class ItemDefaultsEvent : ItemEvent, ICancelable, IDirtiable {
         private ItemType _itemType;
 
