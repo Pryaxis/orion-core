@@ -28,7 +28,7 @@ namespace Orion.Events.Players {
     [Event("player-connect")]
     public sealed class PlayerConnectEvent : PlayerEvent, ICancelable, IDirtiable {
         private readonly PlayerConnectPacket _packet;
-        
+
         /// <inheritdoc/>
         [NotLogged]
         public bool IsDirty => _packet.IsDirty;

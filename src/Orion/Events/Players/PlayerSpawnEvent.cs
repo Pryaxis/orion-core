@@ -28,7 +28,7 @@ namespace Orion.Events.Players {
     [Event("player-spawn")]
     public sealed class PlayerSpawnEvent : PlayerEvent, ICancelable, IDirtiable {
         private readonly PlayerSpawnPacket _packet;
-        
+
         /// <inheritdoc/>
         [NotLogged]
         public bool IsDirty => _packet.IsDirty;

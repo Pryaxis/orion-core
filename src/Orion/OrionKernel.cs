@@ -371,7 +371,7 @@ namespace Orion {
             if (!_objectToHandlers.TryGetValue(handlerObject, out var set)) {
                 return;
             }
-            
+
             _objectToHandlers.Remove(handlerObject);
             foreach (var (type, handler) in set) {
                 _unregisterHandler.MakeGenericMethod(type).Invoke(this, new object[] { handler, log });

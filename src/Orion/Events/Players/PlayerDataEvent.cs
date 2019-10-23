@@ -30,7 +30,7 @@ namespace Orion.Events.Players {
     [Event("player-data")]
     public sealed class PlayerDataEvent : PlayerEvent, ICancelable, IDirtiable {
         private readonly PlayerDataPacket _packet;
-        
+
         /// <inheritdoc/>
         [NotLogged]
         public bool IsDirty => _packet.IsDirty;
@@ -194,7 +194,7 @@ namespace Orion.Events.Players {
         public PlayerDataEvent(IPlayer player, PlayerDataPacket packet) : base(player) {
             _packet = packet ?? throw new ArgumentNullException(nameof(packet));
         }
-        
+
         /// <inheritdoc/>
         public void Clean() => _packet.Clean();
     }

@@ -37,7 +37,7 @@ namespace Orion.Utils {
                 _isDirty = true;
             }
         }
-        
+
         [NotLogged]
         public bool IsDirty =>
             _isDirty || _containsDirtiableElements && this.Cast<IDirtiable>().Any(d => d?.IsDirty == true);

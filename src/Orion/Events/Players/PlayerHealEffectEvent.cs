@@ -28,7 +28,7 @@ namespace Orion.Events.Players {
     [Event("player-heal-fx")]
     public sealed class PlayerHealEffectEvent : PlayerEvent, ICancelable, IDirtiable {
         private readonly PlayerHealEffectPacket _packet;
-        
+
         /// <inheritdoc/>
         [NotLogged]
         public bool IsDirty => _packet.IsDirty;

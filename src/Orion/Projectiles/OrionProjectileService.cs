@@ -58,7 +58,7 @@ namespace Orion.Projectiles {
                 throw new ArgumentException(
                     $"Array does not have length {TerrariaProjectile.maxAI}.", nameof(aiValues));
             }
-            
+
             // Not localized because this string is developer-facing.
             Log.Debug("Spawning {ProjectileType} at {Position}", type, position);
 

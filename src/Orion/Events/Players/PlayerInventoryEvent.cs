@@ -29,7 +29,7 @@ namespace Orion.Events.Players {
     [Event("player-inventory")]
     public sealed class PlayerInventoryEvent : PlayerEvent, ICancelable, IDirtiable {
         private readonly PlayerInventorySlotPacket _packet;
-        
+
         /// <inheritdoc/>
         [NotLogged]
         public bool IsDirty => _packet.IsDirty;

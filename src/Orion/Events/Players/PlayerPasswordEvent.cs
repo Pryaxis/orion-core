@@ -28,7 +28,7 @@ namespace Orion.Events.Players {
     [Event("player-password")]
     public sealed class PlayerPasswordEvent : PlayerEvent, ICancelable, IDirtiable {
         private readonly PlayerPasswordResponsePacket _packet;
-        
+
         /// <inheritdoc/>
         [NotLogged]
         public bool IsDirty => _packet.IsDirty;

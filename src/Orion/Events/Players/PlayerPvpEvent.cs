@@ -28,7 +28,7 @@ namespace Orion.Events.Players {
     [Event("player-pvp")]
     public sealed class PlayerPvpEvent : PlayerEvent, ICancelable, IDirtiable {
         private readonly PlayerPvpPacket _packet;
-        
+
         /// <inheritdoc/>
         [NotLogged]
         public bool IsDirty => _packet.IsDirty;

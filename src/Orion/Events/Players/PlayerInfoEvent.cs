@@ -31,7 +31,7 @@ namespace Orion.Events.Players {
     [Event("player-info")]
     public sealed class PlayerInfoEvent : PlayerEvent, ICancelable, IDirtiable {
         private readonly PlayerInfoPacket _packet;
-        
+
         /// <inheritdoc/>
         [NotLogged]
         public bool IsDirty => _packet.IsDirty;

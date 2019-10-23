@@ -58,7 +58,7 @@ namespace Orion.World.TileEntities {
                 Wrapped.text = value ?? throw new ArgumentNullException(nameof(value));
             }
         }
-        
+
         [NotLogged]
         public TerrariaSign? Wrapped { get; }
 

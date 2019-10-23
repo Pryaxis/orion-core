@@ -28,7 +28,7 @@ namespace Orion.Events.Players {
     [Event("player-chat")]
     public sealed class PlayerChatEvent : PlayerEvent, ICancelable, IDirtiable {
         private readonly ChatModule _module;
-        
+
         /// <inheritdoc/>
         [NotLogged]
         public bool IsDirty => _module.IsDirty;
@@ -72,7 +72,7 @@ namespace Orion.Events.Players {
         public PlayerChatEvent(IPlayer player, ChatModule module) : base(player) {
             _module = module ?? throw new ArgumentNullException(nameof(module));
         }
-        
+
         /// <inheritdoc/>
         public void Clean() => _module.Clean();
     }

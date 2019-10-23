@@ -56,7 +56,7 @@ namespace Orion.Events {
 
             e.Value.Should().NotBe(100);
         }
-        
+
         [Fact]
         public void Raise_ThrowsNotImplementedException() {
             var collection = new EventHandlerCollection<TestEvent>();

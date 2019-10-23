@@ -28,7 +28,7 @@ namespace Orion.Events.Players {
     [Event("player-mana")]
     public sealed class PlayerManaEvent : PlayerEvent, ICancelable, IDirtiable {
         private readonly PlayerManaPacket _packet;
-        
+
         /// <inheritdoc/>
         [NotLogged]
         public bool IsDirty => _packet.IsDirty;

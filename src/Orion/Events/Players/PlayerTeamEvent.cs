@@ -28,7 +28,7 @@ namespace Orion.Events.Players {
     [Event("player-team")]
     public sealed class PlayerTeamEvent : PlayerEvent, ICancelable, IDirtiable {
         private readonly PlayerTeamPacket _packet;
-        
+
         /// <inheritdoc/>
         [NotLogged]
         public bool IsDirty => _packet.IsDirty;

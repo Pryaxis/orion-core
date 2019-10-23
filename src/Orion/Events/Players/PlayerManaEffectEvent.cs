@@ -28,7 +28,7 @@ namespace Orion.Events.Players {
     [Event("player-mana-fx")]
     public sealed class PlayerManaEffectEvent : PlayerEvent, ICancelable, IDirtiable {
         private readonly PlayerManaEffectPacket _packet;
-        
+
         /// <inheritdoc/>
         [NotLogged]
         public bool IsDirty => _packet.IsDirty;
