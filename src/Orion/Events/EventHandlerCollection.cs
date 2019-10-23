@@ -54,7 +54,8 @@ namespace Orion.Events {
             log.Debug("Registered {RegistrationName} onto {EventName}", registration.Name, _name);
         }
 
-        [SuppressMessage("Design", "CA1031:Do not catch general exception types",
+        [SuppressMessage(
+            "Design", "CA1031:Do not catch general exception types",
             Justification = "Catching Exception for fail-safe")]
         public void Raise(TEvent e, ILogger log) {
             Debug.Assert(e != null, "event should not be null");

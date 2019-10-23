@@ -183,7 +183,8 @@ namespace Orion.Packets {
         /// <returns>The resulting packet.</returns>
         /// <exception cref="ArgumentNullException"><paramref name="stream"/> is <see langword="null"/>.</exception>
         /// <exception cref="PacketException">The packet could not be parsed correctly.</exception>
-        [SuppressMessage("Reliability", "CA2000:Dispose objects before losing scope",
+        [SuppressMessage(
+            "Reliability", "CA2000:Dispose objects before losing scope",
             Justification = "BinaryReader does not need to be disposed")]
         public static Packet ReadFromStream(Stream stream, PacketContext context) {
             if (stream is null) {
@@ -229,7 +230,8 @@ namespace Orion.Packets {
         /// <param name="context">The context with which to read the packet.</param>
         /// <exception cref="ArgumentNullException"><paramref name="stream"/> is <see langword="null"/>.</exception>
         /// <exception cref="PacketException">The packet is too long.</exception>
-        [SuppressMessage("Reliability", "CA2000:Dispose objects before losing scope",
+        [SuppressMessage(
+            "Reliability", "CA2000:Dispose objects before losing scope",
             Justification = "BinaryWriter does not need to be disposed")]
         public void WriteToStream(Stream stream, PacketContext context) {
             if (stream is null) {

@@ -28,7 +28,8 @@ namespace Orion.Utils {
     [SuppressMessage("Naming", "CA1710:Identifiers should have correct suffix", Justification = "Type is an array")]
     public interface IReadOnlyArray<out T> : IEnumerable<T> {
         [ExcludeFromCodeCoverage]
-        [SuppressMessage("Design", "CA1033:Interface methods should be callable by child types",
+        [SuppressMessage(
+            "Design", "CA1033:Interface methods should be callable by child types",
             Justification = "Non-generic GetEnumerator")]
         IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
 

@@ -25,7 +25,9 @@ namespace Orion.Packets.Modules {
     /// <summary>
     /// Represents a module.
     /// </summary>
-    [SuppressMessage("Naming", "CA1716:Identifiers should not match keywords", Justification = "Don't care about VB")]
+    [SuppressMessage(
+        "Naming", "CA1716:Identifiers should not match keywords",
+        Justification = "Module is only a keyword in Visual Basic")]
     public abstract class Module : IDirtiable {
         private static readonly Func<Module>?[] _constructors = {
             /* 000 */ () => new LiquidsModule(),
@@ -51,7 +53,8 @@ namespace Orion.Packets.Modules {
         /// <param name="context">The context with which to read the module from.</param>
         /// <exception cref="ArgumentNullException"><paramref name="stream"/> is <see langword="null"/>.</exception>
         /// <returns>The resulting <see cref="Module"/> instance.</returns>
-        [SuppressMessage("Reliability", "CA2000:Dispose objects before losing scope",
+        [SuppressMessage(
+            "Reliability", "CA2000:Dispose objects before losing scope",
             Justification = "BinaryReader does not need to be disposed")]
         public static Module ReadFromStream(Stream stream, PacketContext context) {
             if (stream is null) {
@@ -80,7 +83,8 @@ namespace Orion.Packets.Modules {
         /// <param name="stream">The stream.</param>
         /// <param name="context">The context with which to write the packet to.</param>
         /// <exception cref="ArgumentNullException"><paramref name="stream"/> is <see langword="null"/>.</exception>
-        [SuppressMessage("Reliability", "CA2000:Dispose objects before losing scope",
+        [SuppressMessage(
+            "Reliability", "CA2000:Dispose objects before losing scope",
             Justification = "BinaryWriter does not need to be disposed")]
         public void WriteToStream(Stream stream, PacketContext context) {
             if (stream is null) {
