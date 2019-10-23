@@ -43,7 +43,7 @@ namespace Orion.Players {
         public IPlayerStats Stats { get; }
         public IPlayerInventory Inventory { get; }
 
-        // We need to inject OrionPlayerService so that we can trigger a PacketSendEvent.
+        // We need to inject OrionPlayerService so that we can raise a PacketSendEvent.
         public OrionPlayer(OrionPlayerService playerService, TerrariaPlayer terrariaPlayer)
             : this(playerService, -1, terrariaPlayer) { }
 
@@ -58,7 +58,7 @@ namespace Orion.Players {
         }
 
         [Pure, ExcludeFromCodeCoverage]
-        public override string ToString() => Name;
+        public override string ToString() => $"{Name} (#: {Index})";
 
         public void SendPacket(Packet packet) {
             if (packet is null) {
@@ -78,7 +78,7 @@ namespace Orion.Players {
 
             // TODO: consider MemoryStream allocation vs reusing buffer here
             var stream = new MemoryStream();
-            e.Packet.WriteToStream(stream, PacketContext.Server);
+            packet.WriteToStream(stream, PacketContext.Server);
             terrariaClient.Socket?.AsyncSend(
                 stream.ToArray(), 0, (int)stream.Length, terrariaClient.ServerWriteCallBack);
         }

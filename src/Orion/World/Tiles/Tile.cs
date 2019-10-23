@@ -29,10 +29,14 @@ namespace Orion.World.Tiles {
     /// modified using ref locals and returns wherever possible.
     /// </remarks>
     [StructLayout(LayoutKind.Explicit)]
-    [SuppressMessage("Design", "CA1051:Do not declare visible instance fields", Justification = "Performance")]
-    [SuppressMessage("Naming", "CA1724:Type names should not match namespaces",
-        Justification = "OTAPI.Tile should not be used")]
-    [SuppressMessage("Performance", "CA1815:Override equals and operator equals on value types",
+    [SuppressMessage(
+        "Design", "CA1051:Do not declare visible instance fields",
+        Justification = "Fields are okay on mutable structs")]
+    [SuppressMessage(
+        "Naming", "CA1724:Type names should not match namespaces",
+        Justification = "OTAPI.Tile namespace should not be used")]
+    [SuppressMessage(
+        "Performance", "CA1815:Override equals and operator equals on value types",
         Justification = "Tiles will not be compared")]
     public unsafe struct Tile {
         private const int SlopeShift = 12;

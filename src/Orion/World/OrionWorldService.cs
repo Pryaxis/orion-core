@@ -21,7 +21,6 @@ using System.Diagnostics.CodeAnalysis;
 using System.Diagnostics.Contracts;
 using System.Runtime.InteropServices;
 using Microsoft.Xna.Framework;
-using Orion.Events;
 using Orion.Events.World;
 using Orion.World.Tiles;
 using OTAPI;

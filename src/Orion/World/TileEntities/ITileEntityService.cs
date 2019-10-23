@@ -20,8 +20,8 @@ using Orion.Utils;
 
 namespace Orion.World.TileEntities {
     /// <summary>
-    /// Represents a tile entity service. Provides access to tile entity-related events and methods, and in a
-    /// thread-safe manner unless specified otherwise.
+    /// Represents a tile entity service. Provides access to tile entity-related properties and methods in a thread-safe
+    /// manner unless specified otherwise.
     /// </summary>
     public interface ITileEntityService {
         /// <summary>
@@ -74,7 +74,7 @@ namespace Orion.World.TileEntities {
     /// </summary>
     public static class TileEntityServiceExtensions {
         /// <summary>
-        /// Adds and returns chest with the given coordinates.
+        /// Adds and returns a chest with the given coordinates.
         /// </summary>
         /// <param name="tileEntityService">The tile entity service.</param>
         /// <param name="x">The X coordinate.</param>
@@ -92,7 +92,7 @@ namespace Orion.World.TileEntities {
         }
 
         /// <summary>
-        /// Adds and returns sign with the given coordinates.
+        /// Adds and returns a sign with the given coordinates.
         /// </summary>
         /// <param name="tileEntityService">The tile entity service.</param>
         /// <param name="x">The X coordinate.</param>
@@ -110,7 +110,7 @@ namespace Orion.World.TileEntities {
         }
 
         /// <summary>
-        /// Adds and returns target dummy with the given coordinates.
+        /// Adds and returns a target dummy with the given coordinates.
         /// </summary>
         /// <param name="tileEntityService">The tile entity service.</param>
         /// <param name="x">The X coordinate.</param>
@@ -146,7 +146,7 @@ namespace Orion.World.TileEntities {
         }
 
         /// <summary>
-        /// Adds and returns logic sensor with the given coordinates.
+        /// Adds and returns a logic sensor with the given coordinates.
         /// </summary>
         /// <param name="tileEntityService">The tile entity service.</param>
         /// <param name="x">The X coordinate.</param>

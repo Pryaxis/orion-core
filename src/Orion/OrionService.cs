@@ -27,7 +27,8 @@ namespace Orion {
     /// Services provide concrete functionality to clients and are injected using an <see cref="OrionKernel"/> instance.
     /// Existing service bindings may be overridden if necessary.
     /// </remarks>
-    [SuppressMessage("Design", "CA1063:Implement IDisposable Correctly",
+    [SuppressMessage(
+        "Design", "CA1063:Implement IDisposable Correctly",
         Justification = "IDisposable pattern makes no sense")]
     public abstract class OrionService : IDisposable {
         /// <summary>
@@ -57,7 +58,8 @@ namespace Orion {
         /// <summary>
         /// Disposes the service, releasing any resources associated with it.
         /// </summary>
-        [SuppressMessage("Usage", "CA1816:Dispose methods should call SuppressFinalize",
+        [SuppressMessage(
+            "Usage", "CA1816:Dispose methods should call SuppressFinalize",
             Justification = "IDisposable pattern makes no sense")]
         public virtual void Dispose() { }
     }

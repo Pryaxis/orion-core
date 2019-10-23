@@ -25,6 +25,7 @@ using Ninject;
 using Orion.Items;
 using Orion.Launcher.Properties;
 using Orion.Npcs;
+using Orion.Players;
 using Orion.Projectiles;
 using Orion.World;
 using Orion.World.TileEntities;
@@ -118,6 +119,7 @@ namespace Orion.Launcher {
             kernel.Get<IItemService>();
             kernel.Get<INpcService>();
             kernel.Get<ITileEntityService>();
+            kernel.Get<IPlayerService>();
             kernel.Get<IProjectileService>();
             kernel.Get<IWorldService>();
 

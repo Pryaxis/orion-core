@@ -17,13 +17,11 @@
 
 using System;
 using Microsoft.Xna.Framework;
-using Orion.Events;
-using Orion.Events.Npcs;
 using Orion.Utils;
 
 namespace Orion.Npcs {
     /// <summary>
-    /// Represents an NPC service. Provides access to NPC-related events and methods, and in a thread-safe manner unless
+    /// Represents an NPC service. Provides access to NPC-related properties and methods in a thread-safe manner unless
     /// specified otherwise.
     /// </summary>
     public interface INpcService {

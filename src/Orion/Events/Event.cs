@@ -23,6 +23,6 @@ namespace Orion.Events {
     /// </summary>
     [SuppressMessage(
         "Naming", "CA1716:Identifiers should not match keywords",
-        Justification = "Event is only a keyword in Visual Basic.")]
+        Justification = "Event is only a keyword in Visual Basic")]
     public abstract class Event { }
 }

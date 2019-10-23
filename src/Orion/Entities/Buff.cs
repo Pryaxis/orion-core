@@ -27,7 +27,7 @@ namespace Orion.Entities {
     /// <remarks>Buffs can be applied to both players and NPCs. They typically have small effects on entities.</remarks>
     [SuppressMessage(
         "Performance", "CA1815:Override equals and operator equals on value types",
-        Justification = "Buffs will not be compared.")]
+        Justification = "Buffs will not be compared")]
     public readonly struct Buff {
         private readonly TimeSpan _duration;
 

@@ -15,8 +15,6 @@
 // You should have received a copy of the GNU General Public License
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
-using System.Diagnostics.CodeAnalysis;
-using System.Diagnostics.Contracts;
 using Orion.Items;
 using TerrariaItemFrame = Terraria.GameContent.Tile_Entities.TEItemFrame;
 
@@ -38,9 +36,5 @@ namespace Orion.World.TileEntities {
         }
 
         public OrionItemFrame(TerrariaItemFrame terrariaItemFrame) : base(terrariaItemFrame) { }
-
-        // Not localized because this string is developer-facing.
-        [Pure, ExcludeFromCodeCoverage]
-        public override string ToString() => Index >= 0 ? $"#: {Index}" : "item frame instance";
     }
 }

@@ -20,7 +20,7 @@ using Orion.Utils;
 
 namespace Orion.Items {
     /// <summary>
-    /// Represents an item service. Provides access to item-related events and methods, and in a thread-safe manner
+    /// Represents an item service. Provides access to item-related properties and methods in a thread-safe manner
     /// unless specified otherwise.
     /// </summary>
     public interface IItemService {

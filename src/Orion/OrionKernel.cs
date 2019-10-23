@@ -17,7 +17,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Linq;
@@ -73,6 +72,8 @@ namespace Orion {
                 throw new ArgumentNullException(nameof(log));
             }
 
+            _log = log.ForContext("ServiceName", "orion-kernel");
+
             Bind<OrionKernel>().ToConstant(this).InSingletonScope();
             Bind<IItemService>().To<OrionItemService>().InSingletonScope();
             Bind<INpcService>().To<OrionNpcService>().InSingletonScope();
@@ -82,21 +83,20 @@ namespace Orion {
             Bind<IWorldService>().To<OrionWorldService>().InSingletonScope();
 
             // Create an ILogger binding for service-specific logs.
-            Bind<ILogger>().ToMethod(ctx => {
-                // ctx.Request.Target can be null if the ILogger is requested directly, so we need to be safe about it.
-                var type = ctx.Request.Target?.Member.ReflectedType;
-                var serviceName = type?.GetCustomAttribute<ServiceAttribute>()?.Name ?? type?.Name ?? "orion-kernel";
-                return log.ForContext("ServiceName", serviceName);
-            }).InTransientScope();
+            Bind<ILogger>()
+                .ToMethod(ctx => {
+                    // ctx.Request.Target can be null if the ILogger is requested directly.
+                    var type = ctx.Request.Target?.Member.ReflectedType;
+                    var serviceName = type?.GetCustomAttribute<ServiceAttribute>()?.Name ?? type?.Name ?? string.Empty;
+                    return log.ForContext("ServiceName", serviceName);
+                })
+                .InTransientScope();
 
-            _log = this.Get<ILogger>();
-
-            // Create bindings for Lazy<T> so that we can have lazily loaded services. This allows plugins to override
-            // the above service bindings if necessary.
+            // Create bindings for Lazy<T> for lazily-loaded services.
             var getLazy = GetType().GetMethod(nameof(GetLazy), BindingFlags.NonPublic | BindingFlags.Instance);
             Bind(typeof(Lazy<>))
                 .ToMethod(ctx => getLazy
-                    .MakeGenericMethod(ctx.GenericArguments?[0])
+                    .MakeGenericMethod(ctx.GenericArguments[0])
                     .Invoke(this, Array.Empty<object>()))
                 .InTransientScope();
 
@@ -154,8 +154,7 @@ namespace Orion {
             _pluginAssemblies.Add(assembly);
 
             foreach (var pluginType in assembly.ExportedTypes.Where(s => s.IsSubclassOf(typeof(OrionPlugin)))) {
-                // Bind all plugin types to themselves, allowing plugins to properly depend on other plugins without
-                // reliance on static state.
+                // Bind all plugin types to themselves, allowing plugins to depend on other plugins.
                 _pluginTypesToLoad.Add(pluginType);
                 Bind(pluginType).ToSelf().InSingletonScope();
 
@@ -278,12 +277,14 @@ namespace Orion {
 
                 var parameters = method.GetParameters();
                 if (parameters.Length != 1) {
+                    // Not localized because this string is developer-facing.
                     throw new ArgumentException(
                         $"Method {method.Name} does not have exactly one argument.", nameof(handlerObject));
                 }
 
                 var type = parameters[0].ParameterType;
                 if (!type.IsSubclassOf(typeof(Event))) {
+                    // Not localized because this string is developer-facing.
                     throw new ArgumentException(
                         $"Method {method.Name} does not have an argument of type {nameof(Event)}.",
                         nameof(handlerObject));

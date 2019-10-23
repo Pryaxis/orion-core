@@ -16,8 +16,6 @@
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
 using System;
-using System.Diagnostics.CodeAnalysis;
-using System.Diagnostics.Contracts;
 using Orion.Entities;
 using TerrariaItem = Terraria.Item;
 
@@ -43,10 +41,6 @@ namespace Orion.Items {
         public OrionItem(int itemIndex, TerrariaItem terrariaItem) : base(itemIndex, terrariaItem) {
             Stats = new OrionItemStats(terrariaItem);
         }
-
-        // Not localized because this string is developer-facing.
-        [Pure, ExcludeFromCodeCoverage]
-        public override string ToString() => Index >= 0 ? $"#: {Index}" : "item instance";
 
         public void SetType(ItemType type) => Wrapped.SetDefaults((int)type);
         public void SetPrefix(ItemPrefix prefix) => Wrapped.Prefix((int)prefix);

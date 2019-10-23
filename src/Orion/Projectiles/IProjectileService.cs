@@ -21,7 +21,7 @@ using Orion.Utils;
 
 namespace Orion.Projectiles {
     /// <summary>
-    /// Represents a projectile service. Provides access to projectile-related events and methods, and in a thread-safe
+    /// Represents a projectile service. Provides access to projectile-related properties and methods in a thread-safe
     /// manner unless specified otherwise.
     /// </summary>
     public interface IProjectileService {

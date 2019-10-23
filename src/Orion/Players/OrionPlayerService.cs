@@ -18,12 +18,10 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Threading;
 using Orion.Events;
 using Orion.Events.Players;
-using Orion.Items;
 using Orion.Packets;
 using Orion.Packets.Modules;
 using Orion.Packets.Players;
@@ -37,6 +35,13 @@ namespace Orion.Players {
     [Service("orion-players")]
     internal sealed class OrionPlayerService : OrionService, IPlayerService {
         private readonly ThreadLocal<bool> _shouldIgnoreNextReceiveData = new ThreadLocal<bool>();
+
+        private readonly ThreadLocal<byte[]> _dirtyReadBuffer =
+            new ThreadLocal<byte[]>(() => new byte[ushort.MaxValue]);
+
+        private readonly ThreadLocal<byte[]> _dirtyWriteBuffer =
+            new ThreadLocal<byte[]>(() => new byte[ushort.MaxValue]);
+
         private readonly IDictionary<PacketType, Action<PacketReceiveEvent>> _packetReceiveHandlers;
 
         public IReadOnlyArray<IPlayer> Players { get; }
@@ -76,6 +81,8 @@ namespace Orion.Players {
 
         public override void Dispose() {
             _shouldIgnoreNextReceiveData.Dispose();
+            _dirtyReadBuffer.Dispose();
+            _dirtyWriteBuffer.Dispose();
 
             Hooks.Net.ReceiveData = null;
             Hooks.Net.SendBytes = null;
@@ -112,18 +119,24 @@ namespace Orion.Players {
                 return HookResult.Continue;
             }
 
-            var oldBuffer = buffer.readBuffer;
-            // TODO: consider reusing buffers here
-            var newStream = new MemoryStream();
-            packet.WriteToStream(newStream, PacketContext.Client);
-            buffer.readBuffer = newStream.ToArray();
-            buffer.ResetReader();
+            // To simulate the receival of the dirty packet, we:
+            // 1) Save the old read buffer and reader.
+            // 2) Swap in the new read buffer and reader.
+            // 3) Call GetData() while making sure that we ignore the next ReceiveDataHandler call.
+            // 4) Restore the old read buffer and reader.
+            var oldReadBuffer = buffer.readBuffer;
+            var oldReader = buffer.reader;
 
-            // Ignore the next ReceiveDataHandler call.
+            var newStream = new MemoryStream(_dirtyReadBuffer.Value);
+            packet.WriteToStream(newStream, PacketContext.Client);
+            buffer.readBuffer = _dirtyReadBuffer.Value;
+            buffer.reader = new BinaryReader(newStream);
+
             _shouldIgnoreNextReceiveData.Value = true;
-            buffer.GetData(2, (int)(newStream.Length - 2), out _);
-            buffer.readBuffer = oldBuffer;
-            buffer.ResetReader();
+            buffer.GetData(2, (int)(newStream.Position - 2), out _);
+
+            buffer.readBuffer = oldReadBuffer;
+            buffer.reader = oldReader;
             return HookResult.Cancel;
         }
 
@@ -140,16 +153,13 @@ namespace Orion.Players {
 
             if (e.IsCanceled()) {
                 return HookResult.Cancel;
-            } else if (!e.IsDirty) {
-                return HookResult.Continue;
             }
 
-            // TODO: consider reusing buffers here
-            var newStream = new MemoryStream();
-            e.Packet.WriteToStream(newStream, PacketContext.Server);
-            data = newStream.ToArray();
+            var newStream = new MemoryStream(_dirtyWriteBuffer.Value);
+            packet.WriteToStream(newStream, PacketContext.Server);
+            data = _dirtyWriteBuffer.Value;
             offset = 0;
-            size = data.Length;
+            size = (int)newStream.Position;
             return HookResult.Continue;
         }
 

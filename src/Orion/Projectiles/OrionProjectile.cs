@@ -16,8 +16,6 @@
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
 using System;
-using System.Diagnostics.CodeAnalysis;
-using System.Diagnostics.Contracts;
 using Orion.Entities;
 using TerrariaProjectile = Terraria.Projectile;
 
@@ -36,10 +34,6 @@ namespace Orion.Projectiles {
 
         public OrionProjectile(int projectileIndex, TerrariaProjectile terrariaProjectile)
             : base(projectileIndex, terrariaProjectile) { }
-
-        // Not localized because this string is developer-facing.
-        [Pure, ExcludeFromCodeCoverage]
-        public override string ToString() => Index >= 0 ? $"#: {Index}" : "projectile instance";
 
         public void SetType(ProjectileType type) => Wrapped.SetDefaults((int)type);
     }

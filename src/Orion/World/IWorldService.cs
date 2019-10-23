@@ -20,7 +20,7 @@ using Orion.World.Tiles;
 
 namespace Orion.World {
     /// <summary>
-    /// Represents a world service. Provides access to world-related events and methods, and in a thread-safe manner
+    /// Represents a world service. Provides access to world-related properties and methods in a thread-safe manner
     /// unless specified otherwise.
     /// </summary>
     public interface IWorldService {

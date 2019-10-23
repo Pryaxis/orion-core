@@ -16,6 +16,8 @@
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
 using System.Diagnostics;
+using System.Diagnostics.CodeAnalysis;
+using System.Diagnostics.Contracts;
 using Orion.Utils;
 using TerrariaTileEntity = Terraria.DataStructures.TileEntity;
 
@@ -44,5 +46,9 @@ namespace Orion.World.TileEntities {
 
             Wrapped = terrariaTileEntity;
         }
+        
+        // Not localized because this string is developer-facing.
+        [Pure, ExcludeFromCodeCoverage]
+        public override string ToString() => Index >= 0 ? $"#: {Index}" : "abstract instance";
     }
 }

@@ -17,8 +17,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
-using System.Diagnostics.Contracts;
 using System.Linq;
 using Orion.Items;
 using Orion.Utils;
@@ -81,10 +79,6 @@ namespace Orion.World.TileEntities {
 
             Wrapped = terrariaChest;
         }
-
-        // Not localized because this string is developer-facing.
-        [Pure, ExcludeFromCodeCoverage]
-        public override string ToString() => Index >= 0 ? $"#: {Index}" : "chest instance";
 
         private class EmptyItemArray : IReadOnlyArray<IItem> {
             public static readonly EmptyItemArray Instance = new EmptyItemArray();
