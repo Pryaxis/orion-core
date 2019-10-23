@@ -99,7 +99,6 @@ namespace Orion.Launcher {
 
             kernel.FinishLoadingPlugins();
             Console.ResetColor();
-            Console.WriteLine();
         }
 
         private static void SetupLanguage() {

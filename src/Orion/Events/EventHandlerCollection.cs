@@ -20,6 +20,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.Reflection;
+using Destructurama.Attributed;
 using Orion.Utils;
 using Serilog;
 using Serilog.Events;
@@ -51,7 +52,7 @@ namespace Orion.Events {
             _handlerToRegistration[handler] = registration;
 
             // Not localized because this string is developer-facing.
-            log.Debug("Registered {RegistrationName} onto {EventName}", registration.Name, _name);
+            log.Debug("Registering {EventName} with {@Registration}", _name, registration);
         }
 
         [SuppressMessage(
@@ -104,11 +105,13 @@ namespace Orion.Events {
             _handlerToRegistration.Remove(handler);
 
             // Not localized because this string is developer-facing.
-            log.Debug("Unregistered {RegistrationName} from {EventName}", registration.Name, _name);
+            log.Debug("Unregistering {EventName} with {@Registration}", _name, registration);
         }
 
         private sealed class Registration {
+            [NotLogged]
             public Action<TEvent> Handler { get; }
+
             public EventPriority Priority { get; }
             public bool IgnoreCanceled { get; }
             public string Name { get; }
