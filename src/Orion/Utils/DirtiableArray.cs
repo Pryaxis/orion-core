@@ -18,6 +18,7 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using Destructurama.Attributed;
 
 namespace Orion.Utils {
     internal sealed class DirtiableArray<T> : IArray<T>, IDirtiable {
@@ -36,7 +37,8 @@ namespace Orion.Utils {
                 _isDirty = true;
             }
         }
-
+        
+        [NotLogged]
         public bool IsDirty =>
             _isDirty || _containsDirtiableElements && this.Cast<IDirtiable>().Any(d => d?.IsDirty == true);
 

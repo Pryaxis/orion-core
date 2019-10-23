@@ -17,6 +17,7 @@
 
 using System;
 using System.IO;
+using Destructurama.Attributed;
 using Orion.Utils;
 using Orion.World.Tiles;
 
@@ -31,6 +32,7 @@ namespace Orion.Packets.World.Tiles {
         private LiquidType _liquidType;
 
         /// <inheritdoc/>
+        [NotLogged]
         public bool IsDirty { get; private set; }
 
         /// <summary>

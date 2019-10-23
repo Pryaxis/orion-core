@@ -20,6 +20,7 @@ using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Diagnostics.Contracts;
 using System.Linq;
+using Destructurama.Attributed;
 
 namespace Orion.Utils {
     internal sealed class DirtiableList<T> : IList<T>, IDirtiable {
@@ -30,7 +31,8 @@ namespace Orion.Utils {
         private bool _isDirty;
 
         public int Count => _list.Count;
-
+        
+        [NotLogged]
         public bool IsDirty =>
             _isDirty || _containsDirtiableElements && this.Cast<IDirtiable>().Any(d => d?.IsDirty == true);
 

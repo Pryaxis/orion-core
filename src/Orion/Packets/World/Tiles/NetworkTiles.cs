@@ -17,6 +17,7 @@
 
 using System;
 using System.Runtime.InteropServices;
+using Destructurama.Attributed;
 using Orion.Utils;
 using Orion.World.Tiles;
 
@@ -29,6 +30,7 @@ namespace Orion.Packets.World.Tiles {
         private readonly Tile[] _cleanTiles;
 
         /// <inheritdoc/>
+        [NotLogged]
         public bool IsDirty {
             get {
                 // Convert the tiles to a span of bytes, and the clean tiles to a span of bytes. This allows us to use

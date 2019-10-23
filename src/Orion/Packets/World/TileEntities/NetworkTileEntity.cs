@@ -19,6 +19,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
+using Destructurama.Attributed;
 using Orion.Utils;
 using Orion.World.TileEntities;
 
@@ -44,6 +45,7 @@ namespace Orion.Packets.World.TileEntities {
         /// Gets the tile entity's type.
         /// </summary>
         /// <value>The tile entity's type.</value>
+        [NotLogged]
         public abstract TileEntityType Type { get; }
 
         /// <summary>
@@ -83,6 +85,7 @@ namespace Orion.Packets.World.TileEntities {
         }
 
         /// <inheritdoc/>
+        [NotLogged]
         public bool IsDirty { get; private protected set; }
 
         // Prevent outside inheritance.

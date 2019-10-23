@@ -17,6 +17,7 @@
 
 using System.Collections.Generic;
 using System.IO;
+using Destructurama.Attributed;
 using Orion.Packets.World.Tiles;
 using Orion.Utils;
 
