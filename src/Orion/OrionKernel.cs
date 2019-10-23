@@ -270,7 +270,8 @@ namespace Orion {
             }
 
             var set = _objectToHandlers[handlerObject] = new HashSet<(Type type, object handler)>();
-            foreach (var method in handlerObject.GetType().GetMethods()) {
+            foreach (var method in handlerObject.GetType()
+                    .GetMethods(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance)) {
                 if (method.GetCustomAttribute<EventHandlerAttribute>() is null) {
                     continue;
                 }

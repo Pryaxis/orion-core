@@ -121,6 +121,17 @@ namespace Orion {
         }
 
         [Fact]
+        public void RaiseEvent_AfterRegisterHandlers_Private() {
+            using var kernel = new OrionKernel(Logger.None);
+            kernel.RegisterHandlers(new TestClass_Private(), Logger.None);
+            var e = new TestEvent();
+
+            kernel.RaiseEvent(e, Logger.None);
+
+            e.Value.Should().Be(100);
+        }
+
+        [Fact]
         public void RaiseEvent_NullE_ThrowsArgumentNullException() {
             using var kernel = new OrionKernel(Logger.None);
             Action action = () => kernel.RaiseEvent<TestEvent>(null, null);
@@ -210,6 +221,12 @@ namespace Orion {
         private class TestClass {
             [EventHandler]
             public void OnTest(TestEvent e) => e.Value = 100;
+        }
+
+        private class TestClass_Private {
+            [EventHandler]
+            [SuppressMessage("Code Quality", "IDE0051:Remove unused private members", Justification = "Implicit usage")]
+            private void OnTest(TestEvent e) => e.Value = 100;
         }
 
         private class TestClass_MissingArg {
