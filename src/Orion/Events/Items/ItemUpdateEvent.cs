@@ -24,7 +24,7 @@ namespace Orion.Events.Items {
     /// An event that occurs when an item updates every tick. This event can be canceled.
     /// </summary>
     /// <remarks>An item update involves processing an item's physics.</remarks>
-    [Event("item-update")]
+    [Event("item-update", IsVerbose = true)]
     public sealed class ItemUpdateEvent : ItemEvent, ICancelable {
         /// <inheritdoc/>
         [NotLogged]

@@ -35,7 +35,7 @@ namespace Orion.Events.Npcs {
     /// </item>
     /// </list>
     /// </remarks>
-    [Event("npc-defaults")]
+    [Event("npc-defaults", IsVerbose = true)]
     public sealed class NpcDefaultsEvent : NpcEvent, ICancelable, IDirtiable {
         private NpcType _npcType;
 

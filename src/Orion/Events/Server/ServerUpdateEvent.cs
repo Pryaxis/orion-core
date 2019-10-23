@@ -15,12 +15,10 @@
 // You should have received a copy of the GNU General Public License
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
-using System;
-
 namespace Orion.Events.Server {
     /// <summary>
     /// An event that occurs when the server updates every tick.
     /// </summary>
-    [Event("server-update")]
+    [Event("server-update", IsVerbose = true)]
     public sealed class ServerUpdateEvent : Event { }
 }

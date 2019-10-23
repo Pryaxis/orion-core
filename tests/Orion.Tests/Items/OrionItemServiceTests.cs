@@ -87,7 +87,7 @@ namespace Orion.Items {
                 isRun = true;
                 ((OrionItem)e.Item).Wrapped.Should().BeSameAs(Main.item[0]);
                 e.ItemType.Should().Be(ItemType.Sdmg);
-            });
+            }, Logger.None);
 
             Main.item[0].SetDefaults((int)ItemType.Sdmg);
 
@@ -100,7 +100,7 @@ namespace Orion.Items {
         public void ItemSetDefaults_ModifyType(ItemType oldType, ItemType newType) {
             using var kernel = new OrionKernel(Logger.None);
             using var itemService = new OrionItemService(kernel, Logger.None);
-            kernel.RegisterHandler<ItemDefaultsEvent>(e => e.ItemType = newType);
+            kernel.RegisterHandler<ItemDefaultsEvent>(e => e.ItemType = newType, Logger.None);
 
             Main.item[0].SetDefaults((int)oldType);
 
@@ -111,7 +111,7 @@ namespace Orion.Items {
         public void ItemSetDefaults_Canceled() {
             using var kernel = new OrionKernel(Logger.None);
             using var itemService = new OrionItemService(kernel, Logger.None);
-            kernel.RegisterHandler<ItemDefaultsEvent>(e => e.Cancel());
+            kernel.RegisterHandler<ItemDefaultsEvent>(e => e.Cancel(), Logger.None);
 
             Main.item[0].SetDefaults((int)ItemType.Sdmg);
 
@@ -126,7 +126,7 @@ namespace Orion.Items {
             kernel.RegisterHandler<ItemUpdateEvent>(e => {
                 isRun = true;
                 ((OrionItem)e.Item).Wrapped.Should().BeSameAs(Main.item[0]);
-            });
+            }, Logger.None);
 
             Main.item[0].UpdateItem(0);
 
@@ -137,7 +137,7 @@ namespace Orion.Items {
         public void ItemUpdate_Canceled() {
             using var kernel = new OrionKernel(Logger.None);
             using var itemService = new OrionItemService(kernel, Logger.None);
-            kernel.RegisterHandler<ItemUpdateEvent>(e => e.Cancel());
+            kernel.RegisterHandler<ItemUpdateEvent>(e => e.Cancel(), Logger.None);
 
             Main.item[0].UpdateItem(0);
         }

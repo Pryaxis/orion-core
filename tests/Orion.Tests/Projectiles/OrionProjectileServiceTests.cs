@@ -86,7 +86,7 @@ namespace Orion.Projectiles {
                 isRun = true;
                 ((OrionProjectile)e.Projectile).Wrapped.Should().BeSameAs(Main.projectile[0]);
                 e.ProjectileType.Should().Be(ProjectileType.CrystalBullet);
-            });
+            }, Logger.None);
 
             Main.projectile[0].SetDefaults((int)ProjectileType.CrystalBullet);
 
@@ -100,7 +100,7 @@ namespace Orion.Projectiles {
                 ProjectileType oldType, ProjectileType newType) {
             using var kernel = new OrionKernel(Logger.None);
             using var projectileService = new OrionProjectileService(kernel, Logger.None);
-            kernel.RegisterHandler<ProjectileDefaultsEvent>(e => e.ProjectileType = newType);
+            kernel.RegisterHandler<ProjectileDefaultsEvent>(e => e.ProjectileType = newType, Logger.None);
 
             Main.projectile[0].SetDefaults((int)oldType);
 
@@ -111,7 +111,7 @@ namespace Orion.Projectiles {
         public void ProjectileSetDefaults_Canceled() {
             using var kernel = new OrionKernel(Logger.None);
             using var projectileService = new OrionProjectileService(kernel, Logger.None);
-            kernel.RegisterHandler<ProjectileDefaultsEvent>(e => e.Cancel());
+            kernel.RegisterHandler<ProjectileDefaultsEvent>(e => e.Cancel(), Logger.None);
 
             Main.projectile[0].SetDefaults((int)ProjectileType.CrystalBullet);
 
@@ -126,7 +126,7 @@ namespace Orion.Projectiles {
             kernel.RegisterHandler<ProjectileUpdateEvent>(e => {
                 isRun = true;
                 ((OrionProjectile)e.Projectile).Wrapped.Should().BeSameAs(Main.projectile[0]);
-            });
+            }, Logger.None);
 
             Main.projectile[0].Update(0);
 
@@ -137,7 +137,7 @@ namespace Orion.Projectiles {
         public void ProjectileUpdate_Canceled() {
             using var kernel = new OrionKernel(Logger.None);
             using var projectileService = new OrionProjectileService(kernel, Logger.None);
-            kernel.RegisterHandler<ProjectileUpdateEvent>(e => e.Cancel());
+            kernel.RegisterHandler<ProjectileUpdateEvent>(e => e.Cancel(), Logger.None);
 
             Main.projectile[0].Update(0);
         }
@@ -150,7 +150,7 @@ namespace Orion.Projectiles {
             kernel.RegisterHandler<ProjectileRemoveEvent>(e => {
                 isRun = true;
                 ((OrionProjectile)e.Projectile).Wrapped.Should().BeSameAs(Main.projectile[0]);
-            });
+            }, Logger.None);
 
             Main.projectile[0].Kill();
 
@@ -161,7 +161,7 @@ namespace Orion.Projectiles {
         public void ProjectileRemove_Canceled() {
             using var kernel = new OrionKernel(Logger.None);
             using var projectileService = new OrionProjectileService(kernel, Logger.None);
-            kernel.RegisterHandler<ProjectileRemoveEvent>(e => e.Cancel());
+            kernel.RegisterHandler<ProjectileRemoveEvent>(e => e.Cancel(), Logger.None);
             Main.projectile[0].SetDefaults((int)ProjectileType.CrystalBullet);
 
             Main.projectile[0].Kill();

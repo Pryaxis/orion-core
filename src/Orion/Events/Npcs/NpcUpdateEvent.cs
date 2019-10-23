@@ -24,7 +24,7 @@ namespace Orion.Events.Npcs {
     /// An event that occurs when a NPC updates every tick. This event can be canceled.
     /// </summary>
     /// <remarks>An NPC update involves processing an NPC's physics and behavior.</remarks>
-    [Event("npc-update")]
+    [Event("npc-update", IsVerbose = true)]
     public sealed class NpcUpdateEvent : NpcEvent, ICancelable {
         /// <inheritdoc/>
         [NotLogged]

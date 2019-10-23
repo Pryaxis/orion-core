@@ -25,7 +25,8 @@ namespace Orion.Entities {
     /// Represents a buff, which consists of a buff type along with a duration.
     /// </summary>
     /// <remarks>Buffs can be applied to both players and NPCs. They typically have small effects on entities.</remarks>
-    [SuppressMessage("Performance", "CA1815:Override equals and operator equals on value types",
+    [SuppressMessage(
+        "Performance", "CA1815:Override equals and operator equals on value types",
         Justification = "Buffs will not be compared.")]
     public readonly struct Buff {
         private readonly TimeSpan _duration;

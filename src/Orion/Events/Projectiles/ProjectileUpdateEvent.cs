@@ -24,7 +24,7 @@ namespace Orion.Events.Projectiles {
     /// An event that occurs when a projectile updates every tick. This event can be canceled.
     /// </summary>
     /// <remarks>An NPC update involves processing an projectile's physics and behavior.</remarks>
-    [Event("proj-update")]
+    [Event("proj-update", IsVerbose = true)]
     public sealed class ProjectileUpdateEvent : ProjectileEvent, ICancelable {
         /// <inheritdoc/>
         [NotLogged]

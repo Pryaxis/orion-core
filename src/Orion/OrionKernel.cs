@@ -226,20 +226,22 @@ namespace Orion {
         }
 
         /// <summary>
-        /// Registers the given <paramref name="handler"/> as an event handler for the relevant event, optionally with
-        /// the specified <paramref name="log"/>.
+        /// Registers the given <paramref name="handler"/> as an event handler for the relevant event, logging to the
+        /// specified <paramref name="log"/>.
         /// </summary>
         /// <typeparam name="TEvent">The type of event.</typeparam>
         /// <param name="handler">The handler.</param>
-        /// <param name="log">The log, or <see langword="null"/> for no logging.</param>
-        /// <remarks>
-        /// <paramref name="log"/> will be used to provide logging for the event. It should be included if possible as
-        /// it greatly helps with debugging.
-        /// </remarks>
-        /// <exception cref="ArgumentNullException"><paramref name="handler"/> is <see langword="null"/>.</exception>
-        public void RegisterHandler<TEvent>(Action<TEvent> handler, ILogger? log = null) where TEvent : Event {
+        /// <param name="log">The log.</param>
+        /// <exception cref="ArgumentNullException">
+        /// <paramref name="handler"/> or <paramref name="log"/> are <see langword="null"/>.
+        /// </exception>
+        public void RegisterHandler<TEvent>(Action<TEvent> handler, ILogger log) where TEvent : Event {
             if (handler is null) {
                 throw new ArgumentNullException(nameof(handler));
+            }
+
+            if (log is null) {
+                throw new ArgumentNullException(nameof(log));
             }
 
             var collection = GetEventHandlerCollection<TEvent>();
@@ -248,24 +250,24 @@ namespace Orion {
 
         /// <summary>
         /// Registers all of the methods marked with <see cref="EventHandlerAttribute"/> as handlers in the given
-        /// <paramref name="handlerObject"/>, optionally with the specified <paramref name="log"/>.
+        /// <paramref name="handlerObject"/>, logging to the specified <paramref name="log"/>.
         /// </summary>
         /// <param name="handlerObject">The handler object.</param>
-        /// <param name="log">The log, or <see langword="null"/> for no logging.</param>
-        /// <remarks>
-        /// <paramref name="log"/> will be used to provide logging for the event. It should be included if possible as
-        /// it greatly helps with debugging.
-        /// </remarks>
+        /// <param name="log">The log.</param>
         /// <exception cref="ArgumentException">
         /// <paramref name="handlerObject"/> contains a method marked with <see cref="EventHandlerAttribute"/> which is
         /// not of the correct form.
         /// </exception>
         /// <exception cref="ArgumentNullException">
-        /// <paramref name="handlerObject"/> is <see langword="null"/>.
+        /// <paramref name="handlerObject"/> or <paramref name="log"/> are <see langword="null"/>.
         /// </exception>
-        public void RegisterHandlers(object handlerObject, ILogger? log = null) {
+        public void RegisterHandlers(object handlerObject, ILogger log) {
             if (handlerObject is null) {
                 throw new ArgumentNullException(nameof(handlerObject));
+            }
+
+            if (log is null) {
+                throw new ArgumentNullException(nameof(log));
             }
 
             var set = _objectToHandlers[handlerObject] = new HashSet<(Type type, object handler)>();
@@ -295,16 +297,22 @@ namespace Orion {
         }
 
         /// <summary>
-        /// Raises the given event, optionally with the specified <paramref name="log"/>.
+        /// Raises the given event, logging to the specified <paramref name="log"/>.
         /// </summary>
         /// <typeparam name="TEvent">The type of event.</typeparam>
         /// <param name="e">The event.</param>
-        /// <param name="log">The log, or <see langword="null"/> for none.</param>
-        /// <exception cref="ArgumentNullException"><paramref name="e"/> is <see langword="null"/>.</exception>
+        /// <param name="log">The log.</param>
+        /// <exception cref="ArgumentNullException">
+        /// <paramref name="e"/> or <paramref name="log"/> is <see langword="null"/>.
+        /// </exception>
         [SuppressMessage("Design", "CA1030:Use events where appropriate", Justification = "Can't use .NET events")]
-        public void RaiseEvent<TEvent>(TEvent e, ILogger? log) where TEvent : Event {
+        public void RaiseEvent<TEvent>(TEvent e, ILogger log) where TEvent : Event {
             if (e is null) {
                 throw new ArgumentNullException(nameof(e));
+            }
+
+            if (log is null) {
+                throw new ArgumentNullException(nameof(log));
             }
 
             var collection = GetEventHandlerCollection<TEvent>();
@@ -312,43 +320,51 @@ namespace Orion {
         }
 
         /// <summary>
-        /// Unregisters the given <paramref name="handler"/>.
+        /// Unregisters the given <paramref name="handler"/>, logging to the specified <paramref name="log"/>.
         /// </summary>
         /// <typeparam name="TEvent">The type of event.</typeparam>
         /// <param name="handler">The handler.</param>
+        /// <param name="log">The log.</param>
         /// <remarks>
         /// Handlers should be unregistered where possible. Neglecting to do so can result in memory locks and incorrect
         /// cleanup.
         /// </remarks>
-        /// <exception cref="ArgumentNullException"><paramref name="handler"/> is <see langword="null"/>.</exception>
-        public void UnregisterHandler<TEvent>(Action<TEvent> handler) where TEvent : Event {
+        /// <exception cref="ArgumentNullException">
+        /// <paramref name="handler"/> or <paramref name="log"/> is <see langword="null"/>.
+        /// </exception>
+        public void UnregisterHandler<TEvent>(Action<TEvent> handler, ILogger log) where TEvent : Event {
             if (handler is null) {
                 throw new ArgumentNullException(nameof(handler));
             }
 
+            if (log is null) {
+                throw new ArgumentNullException(nameof(log));
+            }
+
             var collection = GetEventHandlerCollection<TEvent>();
-            collection.UnregisterHandler(handler);
+            collection.UnregisterHandler(handler, log);
         }
 
         /// <summary>
         /// Unregisters all of the methods marked with <see cref="EventHandlerAttribute"/> as handlers in the given
-        /// <paramref name="handlerObject"/>.
+        /// <paramref name="handlerObject"/>, logging to the specified <paramref name="log"/>
         /// </summary>
         /// <param name="handlerObject">The handler object.</param>
+        /// <param name="log">The log.</param>
         /// <remarks>
         /// Handlers should be unregistered where possible. Neglecting to do so can result in memory locks and incorrect
         /// cleanup.
         /// </remarks>
-        /// <exception cref="ArgumentException">
-        /// <paramref name="handlerObject"/> contains a method marked with <see cref="EventHandlerAttribute"/> which is
-        /// not of the correct form.
-        /// </exception>
         /// <exception cref="ArgumentNullException">
-        /// <paramref name="handlerObject"/> is <see langword="null"/>.
+        /// <paramref name="handlerObject"/> or <paramref name="log"/> is <see langword="null"/>.
         /// </exception>
-        public void UnregisterHandlers(object handlerObject) {
+        public void UnregisterHandlers(object handlerObject, ILogger log) {
             if (handlerObject is null) {
                 throw new ArgumentNullException(nameof(handlerObject));
+            }
+
+            if (log is null) {
+                throw new ArgumentNullException(nameof(log));
             }
 
             if (!_objectToHandlers.TryGetValue(handlerObject, out var set)) {
@@ -357,7 +373,7 @@ namespace Orion {
             
             _objectToHandlers.Remove(handlerObject);
             foreach (var (type, handler) in set) {
-                _unregisterHandler.MakeGenericMethod(type).Invoke(this, new object[] { handler });
+                _unregisterHandler.MakeGenericMethod(type).Invoke(this, new object[] { handler, log });
             }
         }
 
@@ -369,8 +385,7 @@ namespace Orion {
         private EventHandlerCollection<TEvent> GetEventHandlerCollection<TEvent>() where TEvent : Event {
             var type = typeof(TEvent);
             if (!_eventHandlerCollections.TryGetValue(type, out var collection)) {
-                var attribute = type.GetCustomAttribute<EventAttribute?>();
-                collection = new EventHandlerCollection<TEvent>(attribute);
+                collection = new EventHandlerCollection<TEvent>();
                 _eventHandlerCollections[type] = collection;
             }
 

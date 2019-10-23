@@ -23,61 +23,62 @@ using Xunit;
 namespace Orion.Events {
     public class EventHandlerCollectionTests {
         [Fact]
-        public void Invoke_ThrowsNotImplementedException() {
-            var collection = new EventHandlerCollection<TestEvent>(null);
-            collection.RegisterHandler(TestHandler3, null);
-
-            collection.Raise(new TestEvent());
-        }
-
-        [Fact]
-        public void RegisterHandler() {
-            var collection = new EventHandlerCollection<TestEvent>(null);
-            collection.RegisterHandler(TestHandler, null);
+        public void Raise() {
+            var collection = new EventHandlerCollection<TestEvent>();
+            collection.RegisterHandler(TestHandler, Logger.None);
             var e = new TestEvent();
 
-            collection.Raise(e);
+            collection.Raise(e, Logger.None);
 
             e.Value.Should().Be(100);
         }
 
         [Fact]
-        public void RegisterHandler_Priority() {
-            var collection = new EventHandlerCollection<TestEvent>(null);
-            collection.RegisterHandler(TestHandler2, null);
-            collection.RegisterHandler(TestHandler, null);
+        public void Raise_Priority() {
+            var collection = new EventHandlerCollection<TestEvent>();
+            collection.RegisterHandler(TestHandler2, Logger.None);
+            collection.RegisterHandler(TestHandler, Logger.None);
             var e = new TestEvent();
 
-            collection.Raise(e);
+            collection.Raise(e, Logger.None);
 
             e.Value.Should().Be(200);
         }
 
         [Fact]
-        public void RegisterHandler_Log() {
-            var collection = new EventHandlerCollection<TestEvent>(null);
+        public void Raise_IgnoreCanceled() {
+            var collection = new EventHandlerCollection<TestEvent>();
             collection.RegisterHandler(TestHandler, Logger.None);
             var e = new TestEvent();
+            e.Cancel();
 
-            collection.Raise(e);
+            collection.Raise(e, Logger.None);
 
-            e.Value.Should().Be(100);
+            e.Value.Should().NotBe(100);
+        }
+        
+        [Fact]
+        public void Raise_ThrowsNotImplementedException() {
+            var collection = new EventHandlerCollection<TestEvent>();
+            collection.RegisterHandler(TestHandler3, Logger.None);
+
+            collection.Raise(new TestEvent(), Logger.None);
         }
 
         [Fact]
         public void UnregisterHandler() {
-            var collection = new EventHandlerCollection<TestEvent>(null);
-            collection.RegisterHandler(TestHandler2, null);
-            collection.RegisterHandler(TestHandler, null);
-            collection.UnregisterHandler(TestHandler2);
+            var collection = new EventHandlerCollection<TestEvent>();
+            collection.RegisterHandler(TestHandler2, Logger.None);
+            collection.RegisterHandler(TestHandler, Logger.None);
+            collection.UnregisterHandler(TestHandler2, Logger.None);
             var e = new TestEvent();
 
-            collection.Raise(e);
+            collection.Raise(e, Logger.None);
 
             e.Value.Should().Be(100);
         }
 
-        [EventHandler(EventPriority.Lowest)]
+        [EventHandler(EventPriority.Lowest, IgnoreCanceled = true)]
         private static void TestHandler(TestEvent e) => e.Value = 100;
 
         [EventHandler(EventPriority.Highest)]
@@ -85,7 +86,8 @@ namespace Orion.Events {
 
         private static void TestHandler3(TestEvent e) => throw new NotImplementedException();
 
-        private class TestEvent : Event {
+        private class TestEvent : Event, ICancelable {
+            public string CancellationReason { get; set; }
             public int Value { get; set; }
         }
     }

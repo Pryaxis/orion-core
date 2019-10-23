@@ -19,16 +19,15 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
-using System.Diagnostics.Contracts;
-using System.Linq;
 using System.Reflection;
 using Orion.Utils;
 using Serilog;
+using Serilog.Events;
 
 namespace Orion.Events {
     internal sealed class EventHandlerCollection<TEvent> where TEvent : Event {
         private readonly string _name;
-        private readonly bool _isVerbose;
+        private readonly LogEventLevel _logLevel;
 
         // Registrations sorted by priority.
         private readonly ISet<Registration> _registrations =
@@ -37,51 +36,64 @@ namespace Orion.Events {
         private readonly IDictionary<Action<TEvent>, Registration> _handlerToRegistration =
             new Dictionary<Action<TEvent>, Registration>();
 
-        public EventHandlerCollection(EventAttribute? attribute) {
+        public EventHandlerCollection() {
+            var attribute = typeof(TEvent).GetCustomAttribute<EventAttribute?>();
             _name = attribute?.Name ?? typeof(TEvent).Name;
-            _isVerbose = attribute?.IsVerbose ?? false;
+            _logLevel = (attribute?.IsVerbose ?? false) ? LogEventLevel.Verbose : LogEventLevel.Debug;
         }
 
-        public void RegisterHandler(Action<TEvent> handler, ILogger? log) {
+        public void RegisterHandler(Action<TEvent> handler, ILogger log) {
             Debug.Assert(handler != null, "handler should not be null");
+            Debug.Assert(log != null, "log should not be null");
 
-            var registration = new Registration(handler, log);
+            var registration = new Registration(handler);
             _registrations.Add(registration);
             _handlerToRegistration[handler] = registration;
 
             // Not localized because this string is developer-facing.
-            log?.Debug("Registered {RegistrationName} onto {EventName}", registration.Name, _name);
+            log.Debug("Registered {RegistrationName} onto {EventName}", registration.Name, _name);
         }
 
         [SuppressMessage("Design", "CA1031:Do not catch general exception types",
             Justification = "Catching Exception for fail-safe")]
-        public void Raise(TEvent e, ILogger? log = null) {
+        public void Raise(TEvent e, ILogger log) {
             Debug.Assert(e != null, "event should not be null");
+            Debug.Assert(log != null, "log should not be null");
 
-            log?.Debug("Raising {EventName} with {@Event}", _name, e);
+            // Not localized because this string is developer-facing.
+            log.Write(_logLevel, "Raising {EventName} with {@Event}", _name, e);
 
+            var cancelable = e as ICancelable;
             foreach (var registration in _registrations) {
+                if (cancelable?.IsCanceled() == true && registration.IgnoreCanceled) {
+                    continue;
+                }
+
                 try {
                     registration.Handler(e);
                 } catch (Exception ex) {
                     // Not localized because this string is developer-facing.
-                    registration.Log?.Error(ex,
+                    log.Error(ex,
                         "Unhandled exception occurred from {RegistrationName} in {EventName}",
                         registration.Name, _name);
                 }
             }
 
-            var cancelable = e as ICancelable;
             var dirtiable = e as IDirtiable;
             if (cancelable?.IsCanceled() == true) {
-                log?.Debug("Canceled {EventName} for {CancellationReason}", _name, cancelable.CancellationReason);
+                // Not localized because this string is developer-facing.
+                log.Write(_logLevel,
+                    "Canceled {EventName} for {CancellationReason}",
+                    _name, cancelable.CancellationReason);
             } else if (dirtiable?.IsDirty == true) {
-                log?.Debug("Altered {EventName} to   {@Event}", _name, e);
+                // Not localized because this string is developer-facing.
+                log.Write(_logLevel, "Altered {EventName} to {@Event}", _name, e);
             }
         }
 
-        public void UnregisterHandler(Action<TEvent> handler) {
+        public void UnregisterHandler(Action<TEvent> handler, ILogger log) {
             Debug.Assert(handler != null, "handler should not be null");
+            Debug.Assert(log != null, "log should not be null");
 
             if (!_handlerToRegistration.TryGetValue(handler, out var registration)) {
                 return;
@@ -89,23 +101,23 @@ namespace Orion.Events {
 
             _registrations.Remove(registration);
             _handlerToRegistration.Remove(handler);
-            
+
             // Not localized because this string is developer-facing.
-            registration.Log?.Debug("Unregistered {RegistrationName} from {EventName}", registration.Name, _name);
+            log.Debug("Unregistered {RegistrationName} from {EventName}", registration.Name, _name);
         }
 
         private sealed class Registration {
             public Action<TEvent> Handler { get; }
-            public ILogger? Log { get; }
             public EventPriority Priority { get; }
+            public bool IgnoreCanceled { get; }
             public string Name { get; }
 
-            public Registration(Action<TEvent> handler, ILogger? log) {
+            public Registration(Action<TEvent> handler) {
                 Handler = handler;
-                Log = log;
 
                 var attribute = handler.Method.GetCustomAttribute<EventHandlerAttribute?>();
                 Priority = attribute?.Priority ?? EventPriority.Normal;
+                IgnoreCanceled = attribute?.IgnoreCanceled ?? false;
                 Name = attribute?.Name ?? handler.Method.Name;
             }
         }

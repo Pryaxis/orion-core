@@ -45,7 +45,15 @@ namespace Orion {
         [Fact]
         public void RegisterHandler_NullHandler_ThrowsArgumentNullException() {
             using var kernel = new OrionKernel(Logger.None);
-            Action action = () => kernel.RegisterHandler<TestEvent>(null);
+            Action action = () => kernel.RegisterHandler<TestEvent>(null, Logger.None);
+
+            action.Should().Throw<ArgumentNullException>();
+        }
+
+        [Fact]
+        public void RegisterHandler_NullLog_ThrowsArgumentNullException() {
+            using var kernel = new OrionKernel(Logger.None);
+            Action action = () => kernel.RegisterHandler<TestEvent>(e => { }, null);
 
             action.Should().Throw<ArgumentNullException>();
         }
@@ -53,7 +61,7 @@ namespace Orion {
         [Fact]
         public void RegisterHandlers_MissingArg_ThrowsArgumentException() {
             using var kernel = new OrionKernel(Logger.None);
-            Action action = () => kernel.RegisterHandlers(new TestClass_MissingArg());
+            Action action = () => kernel.RegisterHandlers(new TestClass_MissingArg(), Logger.None);
 
             action.Should().Throw<ArgumentException>();
         }
@@ -61,7 +69,7 @@ namespace Orion {
         [Fact]
         public void RegisterHandlers_TooManyArgs_ThrowsArgumentException() {
             using var kernel = new OrionKernel(Logger.None);
-            Action action = () => kernel.RegisterHandlers(new TestClass_TooManyArgs());
+            Action action = () => kernel.RegisterHandlers(new TestClass_TooManyArgs(), Logger.None);
 
             action.Should().Throw<ArgumentException>();
         }
@@ -69,7 +77,7 @@ namespace Orion {
         [Fact]
         public void RegisterHandlers_InvalidArg_ThrowsArgumentException() {
             using var kernel = new OrionKernel(Logger.None);
-            Action action = () => kernel.RegisterHandlers(new TestClass_InvalidArg());
+            Action action = () => kernel.RegisterHandlers(new TestClass_InvalidArg(), Logger.None);
 
             action.Should().Throw<ArgumentException>();
         }
@@ -77,7 +85,15 @@ namespace Orion {
         [Fact]
         public void RegisterHandlers_NullHandlerObject_ThrowsArgumentNullException() {
             using var kernel = new OrionKernel(Logger.None);
-            Action action = () => kernel.RegisterHandlers(null);
+            Action action = () => kernel.RegisterHandlers(null, Logger.None);
+
+            action.Should().Throw<ArgumentNullException>();
+        }
+
+        [Fact]
+        public void RegisterHandlers_NullLog_ThrowsArgumentNullException() {
+            using var kernel = new OrionKernel(Logger.None);
+            Action action = () => kernel.RegisterHandlers(new TestClass(), null);
 
             action.Should().Throw<ArgumentNullException>();
         }
@@ -85,10 +101,10 @@ namespace Orion {
         [Fact]
         public void RaiseEvent_AfterRegisterHandler() {
             using var kernel = new OrionKernel(Logger.None);
-            kernel.RegisterHandler<TestEvent>(e => e.Value = 100);
+            kernel.RegisterHandler<TestEvent>(e => e.Value = 100, Logger.None);
             var e = new TestEvent();
 
-            kernel.RaiseEvent(e, null);
+            kernel.RaiseEvent(e, Logger.None);
 
             e.Value.Should().Be(100);
         }
@@ -96,10 +112,10 @@ namespace Orion {
         [Fact]
         public void RaiseEvent_AfterRegisterHandlers() {
             using var kernel = new OrionKernel(Logger.None);
-            kernel.RegisterHandlers(new TestClass());
+            kernel.RegisterHandlers(new TestClass(), Logger.None);
             var e = new TestEvent();
 
-            kernel.RaiseEvent(e, null);
+            kernel.RaiseEvent(e, Logger.None);
 
             e.Value.Should().Be(100);
         }
@@ -113,15 +129,23 @@ namespace Orion {
         }
 
         [Fact]
+        public void RaiseEvent_NullLog_ThrowsArgumentNullException() {
+            using var kernel = new OrionKernel(Logger.None);
+            Action action = () => kernel.RaiseEvent(new TestEvent(), null);
+
+            action.Should().Throw<ArgumentNullException>();
+        }
+
+        [Fact]
         public void UnregisterHandler() {
             static void Handler(TestEvent e) => e.Value = 100;
 
             using var kernel = new OrionKernel(Logger.None);
-            kernel.RegisterHandler<TestEvent>(Handler);
-            kernel.UnregisterHandler<TestEvent>(Handler);
+            kernel.RegisterHandler<TestEvent>(Handler, Logger.None);
+            kernel.UnregisterHandler<TestEvent>(Handler, Logger.None);
             var e = new TestEvent();
 
-            kernel.RaiseEvent(e, null);
+            kernel.RaiseEvent(e, Logger.None);
 
             e.Value.Should().NotBe(100);
         }
@@ -129,7 +153,15 @@ namespace Orion {
         [Fact]
         public void UnregisterHandler_NullHandler_ThrowsArgumentNullException() {
             using var kernel = new OrionKernel(Logger.None);
-            Action action = () => kernel.UnregisterHandler<TestEvent>(null);
+            Action action = () => kernel.UnregisterHandler<TestEvent>(null, Logger.None);
+
+            action.Should().Throw<ArgumentNullException>();
+        }
+
+        [Fact]
+        public void UnregisterHandler_NullLog_ThrowsArgumentNullException() {
+            using var kernel = new OrionKernel(Logger.None);
+            Action action = () => kernel.UnregisterHandler<TestEvent>(e => { }, null);
 
             action.Should().Throw<ArgumentNullException>();
         }
@@ -138,11 +170,11 @@ namespace Orion {
         public void UnregisterHandlers() {
             using var kernel = new OrionKernel(Logger.None);
             var testClass = new TestClass();
-            kernel.RegisterHandlers(testClass);
-            kernel.UnregisterHandlers(testClass);
+            kernel.RegisterHandlers(testClass, Logger.None);
+            kernel.UnregisterHandlers(testClass, Logger.None);
             var e = new TestEvent();
 
-            kernel.RaiseEvent(e, null);
+            kernel.RaiseEvent(e, Logger.None);
 
             e.Value.Should().NotBe(100);
         }
@@ -151,13 +183,21 @@ namespace Orion {
         public void UnregisterHandlers_NotRegistered() {
             using var kernel = new OrionKernel(Logger.None);
 
-            kernel.UnregisterHandlers(new TestClass());
+            kernel.UnregisterHandlers(new TestClass(), Logger.None);
         }
 
         [Fact]
         public void UnregisterHandlers_NullHandlerObject_ThrowsArgumentNullException() {
             using var kernel = new OrionKernel(Logger.None);
-            Action action = () => kernel.UnregisterHandlers(null);
+            Action action = () => kernel.UnregisterHandlers(null, Logger.None);
+
+            action.Should().Throw<ArgumentNullException>();
+        }
+
+        [Fact]
+        public void UnregisterHandlers_NullLog_ThrowsArgumentNullException() {
+            using var kernel = new OrionKernel(Logger.None);
+            Action action = () => kernel.UnregisterHandlers(new TestClass(), null);
 
             action.Should().Throw<ArgumentNullException>();
         }

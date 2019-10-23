@@ -124,7 +124,7 @@ namespace Orion.Players {
                 isRun = true;
                 e.Receiver.Should().BeSameAs(player);
                 e.Packet.Should().BeEquivalentTo(packet);
-            });
+            }, Logger.None);
 
             player.SendPacket(packet);
 
@@ -162,7 +162,7 @@ namespace Orion.Players {
             var terrariaPlayer = new TerrariaPlayer();
             var player = new OrionPlayer(playerService, 5, terrariaPlayer);
             var packet = new ChatPacket { Text = "test" };
-            kernel.RegisterHandler<PacketSendEvent>(e => e.Cancel());
+            kernel.RegisterHandler<PacketSendEvent>(e => e.Cancel(), Logger.None);
 
             player.SendPacket(packet);
 

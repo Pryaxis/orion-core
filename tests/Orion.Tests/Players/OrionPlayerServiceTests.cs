@@ -89,7 +89,7 @@ namespace Orion.Players {
                 isRun = true;
                 e.Sender.Should().BeSameAs(playerService.Players[1]);
                 e.Cancel();
-            });
+            }, Logger.None);
 
             TestUtils.FakeReceiveBytes(1, PlayerConnectPacketTests.Bytes);
 
@@ -106,7 +106,7 @@ namespace Orion.Players {
                 e.Player.Should().BeSameAs(playerService.Players[1]);
                 e.VersionString.Should().Be("Terraria194");
                 e.Cancel();
-            });
+            }, Logger.None);
 
             TestUtils.FakeReceiveBytes(1, PlayerConnectPacketTests.Bytes);
 
@@ -137,7 +137,7 @@ namespace Orion.Players {
                 e.Difficulty.Should().Be(PlayerDifficulty.Softcore);
                 e.HasExtraAccessorySlot.Should().BeFalse();
                 e.Cancel();
-            });
+            }, Logger.None);
 
             TestUtils.FakeReceiveBytes(1, PlayerDataPacketTests.Bytes);
 
@@ -157,7 +157,7 @@ namespace Orion.Players {
                 e.ItemPrefix.Should().Be(ItemPrefix.Godly);
                 e.ItemType.Should().Be(ItemType.CopperShortsword);
                 e.Cancel();
-            });
+            }, Logger.None);
 
             TestUtils.FakeReceiveBytes(1, PlayerInventorySlotPacketTests.Bytes);
 
@@ -173,7 +173,7 @@ namespace Orion.Players {
                 isRun = true;
                 e.Player.Should().BeSameAs(playerService.Players[1]);
                 e.Cancel();
-            });
+            }, Logger.None);
 
             TestUtils.FakeReceiveBytes(1, PlayerJoinPacketTests.Bytes);
 
@@ -191,7 +191,7 @@ namespace Orion.Players {
                 e.X.Should().Be(-1);
                 e.Y.Should().Be(-1);
                 e.Cancel();
-            });
+            }, Logger.None);
 
             TestUtils.FakeReceiveBytes(1, PlayerSpawnPacketTests.Bytes);
 
@@ -222,7 +222,7 @@ namespace Orion.Players {
                 e.Position.Should().Be(new Vector2(67134, 6790));
                 e.Velocity.Should().Be(Vector2.Zero);
                 e.Cancel();
-            });
+            }, Logger.None);
 
             TestUtils.FakeReceiveBytes(1, PlayerInfoPacketTests.Bytes);
 
@@ -240,7 +240,7 @@ namespace Orion.Players {
                 e.Health.Should().Be(100);
                 e.MaxHealth.Should().Be(100);
                 e.Cancel();
-            });
+            }, Logger.None);
 
             TestUtils.FakeReceiveBytes(1, PlayerHealthPacketTests.Bytes);
 
@@ -257,7 +257,7 @@ namespace Orion.Players {
                 e.Player.Should().BeSameAs(playerService.Players[1]);
                 e.IsInPvp.Should().Be(true);
                 e.Cancel();
-            });
+            }, Logger.None);
 
             TestUtils.FakeReceiveBytes(1, PlayerPvpPacketTests.Bytes);
 
@@ -274,7 +274,7 @@ namespace Orion.Players {
                 e.Player.Should().BeSameAs(playerService.Players[1]);
                 e.HealAmount.Should().Be(100);
                 e.Cancel();
-            });
+            }, Logger.None);
 
             TestUtils.FakeReceiveBytes(1, PlayerHealEffectPacketTests.Bytes);
 
@@ -291,7 +291,7 @@ namespace Orion.Players {
                 e.Player.Should().BeSameAs(playerService.Players[1]);
                 e.PasswordAttempt.Should().Be("Terraria");
                 e.Cancel();
-            });
+            }, Logger.None);
 
             TestUtils.FakeReceiveBytes(1, PlayerPasswordResponsePacketTests.Bytes);
 
@@ -309,7 +309,7 @@ namespace Orion.Players {
                 e.Mana.Should().Be(100);
                 e.MaxMana.Should().Be(100);
                 e.Cancel();
-            });
+            }, Logger.None);
 
             TestUtils.FakeReceiveBytes(1, PlayerManaPacketTests.Bytes);
 
@@ -326,7 +326,7 @@ namespace Orion.Players {
                 e.Player.Should().BeSameAs(playerService.Players[1]);
                 e.ManaAmount.Should().Be(100);
                 e.Cancel();
-            });
+            }, Logger.None);
 
             TestUtils.FakeReceiveBytes(1, PlayerManaEffectPacketTests.Bytes);
 
@@ -343,7 +343,7 @@ namespace Orion.Players {
                 e.Player.Should().BeSameAs(playerService.Players[1]);
                 e.Team.Should().Be(PlayerTeam.Red);
                 e.Cancel();
-            });
+            }, Logger.None);
 
             TestUtils.FakeReceiveBytes(1, PlayerTeamPacketTests.Bytes);
 
@@ -360,7 +360,7 @@ namespace Orion.Players {
                 e.Player.Should().BeSameAs(playerService.Players[1]);
                 e.Uuid.Should().Be("Terraria");
                 e.Cancel();
-            });
+            }, Logger.None);
 
             TestUtils.FakeReceiveBytes(1, PlayerUuidPacketTests.Bytes);
 
@@ -376,7 +376,7 @@ namespace Orion.Players {
                 isRun = true;
                 e.Player.Should().BeSameAs(playerService.Players[1]);
                 e.Cancel();
-            });
+            }, Logger.None);
 
             TestUtils.FakeReceiveBytes(1, PlayerTeleportationPotionPacketTests.Bytes);
 
@@ -393,7 +393,7 @@ namespace Orion.Players {
                 e.Command.Should().Be("Say");
                 e.Text.Should().Be("/command test");
                 e.Cancel();
-            });
+            }, Logger.None);
 
             TestUtils.FakeReceiveBytes(1, ChatModuleTests.ClientBytes);
 
@@ -408,7 +408,7 @@ namespace Orion.Players {
             kernel.RegisterHandler<PlayerQuitEvent>(e => {
                 isRun = true;
                 e.Player.Should().BeSameAs(playerService.Players[1]);
-            });
+            }, Logger.None);
             Terraria.Netplay.Clients[1].IsActive = true;
             Terraria.Netplay.Clients[1].Id = 1;
 

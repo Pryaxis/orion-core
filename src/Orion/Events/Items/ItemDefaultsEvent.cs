@@ -40,7 +40,7 @@ namespace Orion.Events.Items {
     /// </item>
     /// </list>
     /// </remarks>
-    [Event("item-defaults")]
+    [Event("item-defaults", IsVerbose = true)]
     public sealed class ItemDefaultsEvent : ItemEvent, ICancelable, IDirtiable {
         private ItemType _itemType;
 

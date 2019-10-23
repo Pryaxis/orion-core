@@ -15,8 +15,6 @@
 // You should have received a copy of the GNU General Public License
 // along with TShock.  If not, see <https://www.gnu.org/licenses/>.
 
-using System;
-
 namespace Orion.Events.Server {
     /// <summary>
     /// An event that occurs when the server initializes: i.e., before the world has loaded.

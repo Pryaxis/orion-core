@@ -35,7 +35,7 @@ namespace Orion.Events.Projectiles {
     /// </item>
     /// </list>
     /// </remarks>
-    [Event("proj-defaults")]
+    [Event("proj-defaults", IsVerbose = true)]
     public sealed class ProjectileDefaultsEvent : ProjectileEvent, ICancelable, IDirtiable {
         private ProjectileType _projectileType;
 
