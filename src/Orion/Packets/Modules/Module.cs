@@ -19,6 +19,7 @@ using System;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Text;
+using Destructurama.Attributed;
 using Orion.Utils;
 
 namespace Orion.Packets.Modules {
@@ -37,12 +38,14 @@ namespace Orion.Packets.Modules {
         private protected bool _isDirty;
 
         /// <inheritdoc/>
+        [NotLogged]
         public virtual bool IsDirty => _isDirty;
 
         /// <summary>
         /// Gets the module's type.
         /// </summary>
         /// <value>The module's type.</value>
+        [NotLogged]
         public abstract ModuleType Type { get; }
 
         /// <summary>
