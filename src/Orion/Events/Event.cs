@@ -21,6 +21,8 @@ namespace Orion.Events {
     /// <summary>
     /// Represents an event. This is the main form of communication between the Orion system and plugins.
     /// </summary>
-    [SuppressMessage("Naming", "CA1716:Identifiers should not match keywords", Justification = "Don't care about VB")]
+    [SuppressMessage(
+        "Naming", "CA1716:Identifiers should not match keywords",
+        Justification = "Event is only a keyword in Visual Basic.")]
     public abstract class Event { }
 }

@@ -30,11 +30,15 @@ namespace Orion.Events {
         /// Gets the event handler's priority.
         /// </summary>
         /// <value>The event handler's priority.</value>
-        /// <remarks>
-        /// If the <see cref="EventHandlerAttribute"/> attribute is not present on the event handler, then the event
-        /// handler will have a priority of <see cref="EventPriority.Normal"/>.
-        /// </remarks>
         public EventPriority Priority { get; }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether canceled events should be ignored.
+        /// </summary>
+        /// <value>
+        /// <see langword="true"/> if canceled events should be ignored; otherwise, <see langword="false"/>.
+        /// </value>
+        public bool IgnoreCanceled { get; set; }
 
         /// <summary>
         /// Gets or sets the event handler's name. This is used for logs.

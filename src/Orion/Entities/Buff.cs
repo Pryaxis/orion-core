@@ -17,7 +17,6 @@
 
 using System;
 using System.Diagnostics.CodeAnalysis;
-using System.Diagnostics.Contracts;
 using System.IO;
 using Orion.Packets;
 
@@ -25,9 +24,7 @@ namespace Orion.Entities {
     /// <summary>
     /// Represents a buff, which consists of a buff type along with a duration.
     /// </summary>
-    /// <remarks>
-    /// Buffs can be applied to both players and NPCs. They typically have small effects on entities.
-    /// </remarks>
+    /// <remarks>Buffs can be applied to both players and NPCs. They typically have small effects on entities.</remarks>
     [SuppressMessage("Performance", "CA1815:Override equals and operator equals on value types",
         Justification = "Buffs will not be compared.")]
     public readonly struct Buff {
@@ -85,10 +82,6 @@ namespace Orion.Entities {
 
             return new Buff((BuffType)reader.ReadByte(), reader.ReadTimeSpan(numOfDurationBytes));
         }
-
-        /// <inheritdoc/>
-        [Pure, ExcludeFromCodeCoverage]
-        public override string ToString() => $"{BuffType} for {Duration}";
 
         /// <summary>
         /// Writes the buff to a <paramref name="writer"/>.
