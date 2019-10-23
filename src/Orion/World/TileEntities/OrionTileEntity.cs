@@ -18,6 +18,7 @@
 using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.Diagnostics.Contracts;
+using Destructurama.Attributed;
 using Orion.Utils;
 using TerrariaTileEntity = Terraria.DataStructures.TileEntity;
 
@@ -39,6 +40,7 @@ namespace Orion.World.TileEntities {
             set => Wrapped.Position = new Terraria.DataStructures.Point16(X, value);
         }
 
+        [NotLogged]
         public TTerrariaTileEntity Wrapped { get; }
 
         private protected OrionTileEntity(TTerrariaTileEntity terrariaTileEntity) {

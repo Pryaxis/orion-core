@@ -24,7 +24,7 @@ namespace Orion.Events.Players {
     /// <summary>
     /// An event that occurs when a packet is sent. This event can be canceled and modified.
     /// </summary>
-    [Event("packet-send")]
+    [Event("packet-send", IsVerbose = true)]
     public sealed class PacketSendEvent : PacketEvent, ICancelable {
         /// <inheritdoc/>
         [NotLogged]

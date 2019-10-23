@@ -18,6 +18,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Destructurama.Attributed;
 using Orion.Items;
 using Orion.Utils;
 using TerrariaChest = Terraria.Chest;
@@ -62,8 +63,10 @@ namespace Orion.World.TileEntities {
             }
         }
 
+        [LogAsScalar]
         public IReadOnlyArray<IItem> Items { get; }
 
+        [NotLogged]
         public TerrariaChest? Wrapped { get; }
 
         public OrionChest(TerrariaChest? terrariaChest) : this(-1, terrariaChest) { }

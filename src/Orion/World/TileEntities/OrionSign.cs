@@ -16,6 +16,7 @@
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
 using System;
+using Destructurama.Attributed;
 using Orion.Utils;
 using TerrariaSign = Terraria.Sign;
 
@@ -57,7 +58,8 @@ namespace Orion.World.TileEntities {
                 Wrapped.text = value ?? throw new ArgumentNullException(nameof(value));
             }
         }
-
+        
+        [NotLogged]
         public TerrariaSign? Wrapped { get; }
 
         public OrionSign(TerrariaSign? terrariaSign) : this(-1, terrariaSign) { }

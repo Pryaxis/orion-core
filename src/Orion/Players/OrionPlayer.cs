@@ -20,6 +20,7 @@ using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.Diagnostics.Contracts;
 using System.IO;
+using Destructurama.Attributed;
 using Orion.Entities;
 using Orion.Events;
 using Orion.Events.Players;
@@ -41,6 +42,9 @@ namespace Orion.Players {
         }
 
         public IPlayerStats Stats { get; }
+        
+        // IPlayerInventory should be a scalar, as otherwise we get a crazy amount of output.
+        [LogAsScalar]
         public IPlayerInventory Inventory { get; }
 
         // We need to inject OrionPlayerService so that we can raise a PacketSendEvent.

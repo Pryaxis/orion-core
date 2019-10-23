@@ -17,6 +17,7 @@
 
 using System;
 using System.Diagnostics.CodeAnalysis;
+using Destructurama.Attributed;
 using Serilog;
 
 namespace Orion {
@@ -35,12 +36,14 @@ namespace Orion {
         /// Gets the service's <see cref="OrionKernel"/> instance.
         /// </summary>
         /// <value>The service's <see cref="OrionKernel"/> instance.</value>
+        [NotLogged]
         public OrionKernel Kernel { get; }
 
         /// <summary>
         /// Gets the service's log.
         /// </summary>
         /// <value>The service's log.</value>
+        [NotLogged]
         public ILogger Log { get; }
 
         /// <summary>

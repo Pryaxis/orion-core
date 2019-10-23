@@ -21,6 +21,7 @@ using System.Diagnostics.CodeAnalysis;
 using System.Diagnostics.Contracts;
 using System.IO;
 using System.Text;
+using Destructurama.Attributed;
 using Orion.Packets.Entities;
 using Orion.Packets.Items;
 using Orion.Packets.Modules;
@@ -165,11 +166,13 @@ namespace Orion.Packets {
         private protected bool _isDirty;
 
         /// <inheritdoc/>
+        [NotLogged]
         public virtual bool IsDirty => _isDirty;
 
         /// <summary>
         /// Gets the packet's type.
         /// </summary>
+        [NotLogged]
         public abstract PacketType Type { get; }
 
         /// <summary>

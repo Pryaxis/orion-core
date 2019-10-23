@@ -21,6 +21,7 @@ using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading;
 using Destructurama;
+using Microsoft.Xna.Framework;
 using Ninject;
 using Orion.Items;
 using Orion.Launcher.Properties;
@@ -68,6 +69,8 @@ namespace Orion.Launcher {
 
             Directory.CreateDirectory("logs");
             var log = new LoggerConfiguration()
+                .Destructure.ByTransforming<Color>(c => new { c.R, c.G, c.B })
+                .Destructure.ByTransforming<Vector2>(v => new { v.X, v.Y })
                 .Destructure.UsingAttributes()
                 .MinimumLevel.Is(LogLevel)
                 .WriteTo.Console(

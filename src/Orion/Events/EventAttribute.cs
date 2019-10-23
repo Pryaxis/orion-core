@@ -23,7 +23,7 @@ namespace Orion.Events {
     /// Specifies information about event arguments.
     /// </summary>
     [AttributeUsage(AttributeTargets.Class)]
-    [BaseTypeRequired(typeof(EventArgs))]
+    [BaseTypeRequired(typeof(Event))]
     public sealed class EventAttribute : Attribute {
         /// <summary>
         /// Gets the event's name. This is used for logs.

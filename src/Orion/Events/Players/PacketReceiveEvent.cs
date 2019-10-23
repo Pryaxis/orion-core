@@ -24,7 +24,7 @@ namespace Orion.Events.Players {
     /// <summary>
     /// An event that occurs when a packet is received. This event can be canceled and modified.
     /// </summary>
-    [Event("packet-recv")]
+    [Event("packet-recv", IsVerbose = true)]
     public sealed class PacketReceiveEvent : PacketEvent, ICancelable {
         /// <inheritdoc/>
         [NotLogged]

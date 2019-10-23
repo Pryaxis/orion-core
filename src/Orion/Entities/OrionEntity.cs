@@ -18,6 +18,7 @@
 using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.Diagnostics.Contracts;
+using Destructurama.Attributed;
 using Microsoft.Xna.Framework;
 using Orion.Utils;
 using TerrariaEntity = Terraria.Entity;
@@ -51,6 +52,7 @@ namespace Orion.Entities {
             set => Wrapped.Size = value;
         }
 
+        [NotLogged]
         public TTerrariaEntity Wrapped { get; }
 
         private protected OrionEntity(int entityIndex, TTerrariaEntity terrariaEntity) {
