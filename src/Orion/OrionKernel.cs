@@ -41,7 +41,7 @@ namespace Orion {
     /// instances and server-related events. This class is not thread-safe.
     /// </summary>
     /// <remarks>The <see cref="OrionKernel"/> class is responsible for managing Orion's plugins and services.</remarks>
-    public sealed class OrionKernel : StandardKernel {
+    public sealed class OrionKernel : IDisposable {
         private readonly ILogger _log;
 
         private readonly ISet<Assembly> _pluginAssemblies = new HashSet<Assembly>();
@@ -55,6 +55,12 @@ namespace Orion {
 
         private readonly IDictionary<object, HashSet<(Type type, object handler)>> _objectToHandlers =
             new Dictionary<object, HashSet<(Type type, object handler)>>();
+
+        /// <summary>
+        /// Gets the dependency injection container.
+        /// </summary>
+        /// <value>The dependency injection container.</value>
+        public IKernel Container { get; }
 
         /// <summary>
         /// Gets a read-only mapping from plugin names to <see cref="OrionPlugin"/> instances.
@@ -72,18 +78,19 @@ namespace Orion {
                 throw new ArgumentNullException(nameof(log));
             }
 
+            Container = new StandardKernel();
             _log = log.ForContext("ServiceName", "orion-kernel");
 
-            Bind<OrionKernel>().ToConstant(this).InSingletonScope();
-            Bind<IItemService>().To<OrionItemService>().InSingletonScope();
-            Bind<INpcService>().To<OrionNpcService>().InSingletonScope();
-            Bind<IPlayerService>().To<OrionPlayerService>().InSingletonScope();
-            Bind<IProjectileService>().To<OrionProjectileService>().InSingletonScope();
-            Bind<ITileEntityService>().To<OrionTileEntityService>().InSingletonScope();
-            Bind<IWorldService>().To<OrionWorldService>().InSingletonScope();
+            Container.Bind<OrionKernel>().ToConstant(this).InSingletonScope();
+            Container.Bind<IItemService>().To<OrionItemService>().InSingletonScope();
+            Container.Bind<INpcService>().To<OrionNpcService>().InSingletonScope();
+            Container.Bind<IPlayerService>().To<OrionPlayerService>().InSingletonScope();
+            Container.Bind<IProjectileService>().To<OrionProjectileService>().InSingletonScope();
+            Container.Bind<ITileEntityService>().To<OrionTileEntityService>().InSingletonScope();
+            Container.Bind<IWorldService>().To<OrionWorldService>().InSingletonScope();
 
             // Create an ILogger binding for service-specific logs.
-            Bind<ILogger>()
+            Container.Bind<ILogger>()
                 .ToMethod(ctx => {
                     // ctx.Request.Target can be null if the ILogger is requested directly.
                     var type = ctx.Request.Target?.Member.ReflectedType;
@@ -94,7 +101,7 @@ namespace Orion {
 
             // Create bindings for Lazy<T> for lazily-loaded services.
             var getLazy = GetType().GetMethod(nameof(GetLazy), BindingFlags.NonPublic | BindingFlags.Instance);
-            Bind(typeof(Lazy<>))
+            Container.Bind(typeof(Lazy<>))
                 .ToMethod(ctx => getLazy
                     .MakeGenericMethod(ctx.GenericArguments[0])
                     .Invoke(this, Array.Empty<object>()))
@@ -113,15 +120,8 @@ namespace Orion {
         /// <summary>
         /// Disposes the kernel, releasing any resources associated with it.
         /// </summary>
-        /// <param name="disposing">
-        /// <see langword="true"/> to dispose all resources; <see langword="false"/> to dispose only unmanaged
-        /// resources.
-        /// </param>
-        public override void Dispose(bool disposing) {
-            base.Dispose(disposing);
-            if (!disposing) {
-                return;
-            }
+        public void Dispose() {
+            Container.Dispose();
 
             AppDomain.CurrentDomain.AssemblyResolve -= AssemblyResolveHandler;
 
@@ -156,7 +156,7 @@ namespace Orion {
             foreach (var pluginType in assembly.ExportedTypes.Where(s => s.IsSubclassOf(typeof(OrionPlugin)))) {
                 // Bind all plugin types to themselves, allowing plugins to depend on other plugins.
                 _pluginTypesToLoad.Add(pluginType);
-                Bind(pluginType).ToSelf().InSingletonScope();
+                Container.Bind(pluginType).ToSelf().InSingletonScope();
 
                 var pluginName = pluginType.GetCustomAttribute<ServiceAttribute?>()?.Name ?? pluginType.Name;
                 _log.Information(Resources.Kernel_LoadPlugin, pluginName, assemblyPath);
@@ -170,7 +170,7 @@ namespace Orion {
         /// <remarks>Each plugin will be constructed and then each plugin will be initialized.</remarks>
         public IReadOnlyCollection<OrionPlugin> FinishLoadingPlugins() {
             OrionPlugin LoadPlugin(Type pluginType) {
-                var plugin = (OrionPlugin)this.Get(pluginType);
+                var plugin = (OrionPlugin)Container.Get(pluginType);
                 var pluginName = pluginType.GetCustomAttribute<ServiceAttribute?>()?.Name ?? pluginType.Name;
                 _plugins[pluginName] = plugin;
                 _pluginToName[plugin] = pluginName;
@@ -218,7 +218,7 @@ namespace Orion {
             _plugins.Remove(pluginName);
             _pluginToName.Remove(plugin);
             plugin.Dispose();
-            Unbind(pluginType);
+            Container.Unbind(pluginType);
 
             _log.Information(Resources.Kernel_UnloadPlugin, pluginName);
             return true;
@@ -379,7 +379,7 @@ namespace Orion {
             }
         }
 
-        private Lazy<T> GetLazy<T>() => new Lazy<T>(() => this.Get<T>());
+        private Lazy<T> GetLazy<T>() => new Lazy<T>(() => Container.Get<T>());
 
         private Assembly AssemblyResolveHandler(object sender, ResolveEventArgs e) =>
             _pluginAssemblies.FirstOrDefault(a => a.FullName == e.Name);

@@ -43,7 +43,7 @@ namespace Orion.Players {
 
         public IPlayerStats Stats { get; }
 
-        // IPlayerInventory should be a scalar, as otherwise we get a crazy amount of output.
+        // IPlayerInventory should be a scalar as otherwise we get a crazy amount of output.
         [LogAsScalar]
         public IPlayerInventory Inventory { get; }
 

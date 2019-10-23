@@ -118,12 +118,12 @@ namespace Orion.Launcher {
             SetupPlugins(kernel);
             SetupLanguage();
 
-            kernel.Get<IItemService>();
-            kernel.Get<INpcService>();
-            kernel.Get<ITileEntityService>();
-            kernel.Get<IPlayerService>();
-            kernel.Get<IProjectileService>();
-            kernel.Get<IWorldService>();
+            kernel.Container.Get<IItemService>();
+            kernel.Container.Get<INpcService>();
+            kernel.Container.Get<ITileEntityService>();
+            kernel.Container.Get<IPlayerService>();
+            kernel.Container.Get<IProjectileService>();
+            kernel.Container.Get<IWorldService>();
 
             using var game = new Main();
             game.DedServ();
