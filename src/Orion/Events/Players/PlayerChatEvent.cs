@@ -16,6 +16,7 @@
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
 using System;
+using Destructurama.Attributed;
 using Orion.Packets.Modules;
 using Orion.Players;
 using Orion.Utils;
@@ -29,9 +30,11 @@ namespace Orion.Events.Players {
         private readonly ChatModule _module;
         
         /// <inheritdoc/>
+        [NotLogged]
         public bool IsDirty => _module.IsDirty;
 
         /// <inheritdoc/>
+        [NotLogged]
         public string? CancellationReason { get; set; }
 
         /// <summary>

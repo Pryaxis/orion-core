@@ -26,9 +26,9 @@ namespace Orion.Events.Players {
         [Fact]
         public void Ctor_NotDirty() {
             var packet = new Mock<Packet>().Object;
-            var args = new TestPacketEvent(packet);
+            var e = new TestPacketEvent(packet);
 
-            args.IsDirty.Should().BeFalse();
+            e.IsDirty.Should().BeFalse();
         }
 
         [Fact]
@@ -41,9 +41,9 @@ namespace Orion.Events.Players {
         [Fact]
         public void Packet_Get() {
             var packet = new Mock<Packet>().Object;
-            var args = new TestPacketEvent(packet);
+            var e = new TestPacketEvent(packet);
 
-            args.Packet.Should().BeSameAs(packet);
+            e.Packet.Should().BeSameAs(packet);
         }
 
         [Fact]
@@ -52,9 +52,9 @@ namespace Orion.Events.Players {
             var mockPacket = new Mock<Packet>();
             mockPacket.SetupGet(p => p.IsDirty).Returns(() => isDirty);
             mockPacket.Setup(p => p.Clean()).Callback(() => isDirty = false);
-            var args = new TestPacketEvent(mockPacket.Object);
+            var e = new TestPacketEvent(mockPacket.Object);
 
-            args.ShouldBeDirty();
+            e.ShouldBeDirty();
         }
 
         private class TestPacketEvent : PacketEvent {

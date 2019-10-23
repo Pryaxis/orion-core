@@ -26,9 +26,9 @@ namespace Orion.Events.Items {
         [Fact]
         public void Ctor_NotDirty() {
             var item = new Mock<IItem>().Object;
-            var args = new ItemDefaultsEvent(item, ItemType.None);
+            var e = new ItemDefaultsEvent(item, ItemType.None);
 
-            args.IsDirty.Should().BeFalse();
+            e.IsDirty.Should().BeFalse();
         }
 
         [Fact]
@@ -41,17 +41,17 @@ namespace Orion.Events.Items {
         [Fact]
         public void SimpleProperties_Set_MarkAsDirty() {
             var item = new Mock<IItem>().Object;
-            var args = new ItemDefaultsEvent(item, ItemType.Sdmg);
+            var e = new ItemDefaultsEvent(item, ItemType.Sdmg);
 
-            args.SimpleProperties_Set_MarkAsDirty();
+            e.SimpleProperties_Set_MarkAsDirty();
         }
 
         [Fact]
         public void ItemType_Get() {
             var item = new Mock<IItem>().Object;
-            var args = new ItemDefaultsEvent(item, ItemType.Sdmg);
+            var e = new ItemDefaultsEvent(item, ItemType.Sdmg);
 
-            args.ItemType.Should().Be(ItemType.Sdmg);
+            e.ItemType.Should().Be(ItemType.Sdmg);
         }
     }
 }

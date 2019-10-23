@@ -20,6 +20,7 @@ using System.Linq;
 using FluentAssertions;
 using Microsoft.Xna.Framework;
 using Orion.Events;
+using Orion.Events.Players;
 using Orion.Items;
 using Orion.Packets.Modules;
 using Orion.Packets.Players;
@@ -39,7 +40,8 @@ namespace Orion.Players {
 
         [Fact]
         public void Players_Item_Get() {
-            using var playerService = new OrionPlayerService(Logger.None);
+            using var kernel = new OrionKernel(Logger.None);
+            using var playerService = new OrionPlayerService(kernel, Logger.None);
             var player = playerService.Players[1];
 
             player.Index.Should().Be(1);
@@ -48,7 +50,8 @@ namespace Orion.Players {
 
         [Fact]
         public void Players_Item_GetMultipleTimes_ReturnsSameInstance() {
-            using var playerService = new OrionPlayerService(Logger.None);
+            using var kernel = new OrionKernel(Logger.None);
+            using var playerService = new OrionPlayerService(kernel, Logger.None);
             var player = playerService.Players[0];
             var player2 = playerService.Players[0];
 
@@ -59,7 +62,8 @@ namespace Orion.Players {
         [InlineData(-1)]
         [InlineData(10000)]
         public void Players_Item_GetInvalidIndex_ThrowsIndexOutOfRangeException(int index) {
-            using var playerService = new OrionPlayerService(Logger.None);
+            using var kernel = new OrionKernel(Logger.None);
+            using var playerService = new OrionPlayerService(kernel, Logger.None);
             Func<IPlayer> func = () => playerService.Players[index];
 
             func.Should().Throw<IndexOutOfRangeException>();
@@ -67,7 +71,8 @@ namespace Orion.Players {
 
         [Fact]
         public void Players_GetEnumerator() {
-            using var playerService = new OrionPlayerService(Logger.None);
+            using var kernel = new OrionKernel(Logger.None);
+            using var playerService = new OrionPlayerService(kernel, Logger.None);
             var players = playerService.Players.ToList();
 
             for (var i = 0; i < players.Count; ++i) {
@@ -77,12 +82,13 @@ namespace Orion.Players {
 
         [Fact]
         public void PacketReceive_IsTriggered() {
-            using var playerService = new OrionPlayerService(Logger.None);
+            using var kernel = new OrionKernel(Logger.None);
+            using var playerService = new OrionPlayerService(kernel, Logger.None);
             var isRun = false;
-            playerService.PacketReceive.RegisterHandler((sender, args) => {
+            kernel.RegisterHandler<PacketReceiveEvent>(e => {
                 isRun = true;
-                args.Sender.Should().BeSameAs(playerService.Players[1]);
-                args.Cancel();
+                e.Sender.Should().BeSameAs(playerService.Players[1]);
+                e.Cancel();
             });
 
             TestUtils.FakeReceiveBytes(1, PlayerConnectPacketTests.Bytes);
@@ -92,13 +98,14 @@ namespace Orion.Players {
 
         [Fact]
         public void PacketReceive_PlayerConnect_IsTriggered() {
-            using var playerService = new OrionPlayerService(Logger.None);
+            using var kernel = new OrionKernel(Logger.None);
+            using var playerService = new OrionPlayerService(kernel, Logger.None);
             var isRun = false;
-            playerService.PlayerConnect.RegisterHandler((sender, args) => {
+            kernel.RegisterHandler<PlayerConnectEvent>(e => {
                 isRun = true;
-                args.Player.Should().BeSameAs(playerService.Players[1]);
-                args.VersionString.Should().Be("Terraria194");
-                args.Cancel();
+                e.Player.Should().BeSameAs(playerService.Players[1]);
+                e.VersionString.Should().Be("Terraria194");
+                e.Cancel();
             });
 
             TestUtils.FakeReceiveBytes(1, PlayerConnectPacketTests.Bytes);
@@ -108,27 +115,28 @@ namespace Orion.Players {
 
         [Fact]
         public void PacketReceive_PlayerData_IsTriggered() {
-            using var playerService = new OrionPlayerService(Logger.None);
+            using var kernel = new OrionKernel(Logger.None);
+            using var playerService = new OrionPlayerService(kernel, Logger.None);
             var isRun = false;
-            playerService.PlayerData.RegisterHandler((sender, args) => {
+            kernel.RegisterHandler<PlayerDataEvent>(e => {
                 isRun = true;
-                args.Player.Should().BeSameAs(playerService.Players[1]);
-                args.ClothesStyle.Should().Be(2);
-                args.Hairstyle.Should().Be(50);
-                args.Name.Should().Be("f");
-                args.HairDye.Should().Be(0);
-                args.EquipmentHiddenFlags.Should().Be(0);
-                args.MiscEquipmentHiddenFlags.Should().Be(0);
-                args.HairColor.Should().Be(new Color(26, 131, 54));
-                args.SkinColor.Should().Be(new Color(158, 74, 51));
-                args.EyeColor.Should().Be(new Color(47, 39, 88));
-                args.ShirtColor.Should().Be(new Color(184, 58, 43));
-                args.UndershirtColor.Should().Be(new Color(69, 8, 97));
-                args.PantsColor.Should().Be(new Color(162, 167, 255));
-                args.ShoeColor.Should().Be(new Color(212, 159, 76));
-                args.Difficulty.Should().Be(PlayerDifficulty.Softcore);
-                args.HasExtraAccessorySlot.Should().BeFalse();
-                args.Cancel();
+                e.Player.Should().BeSameAs(playerService.Players[1]);
+                e.ClothesStyle.Should().Be(2);
+                e.Hairstyle.Should().Be(50);
+                e.Name.Should().Be("f");
+                e.HairDye.Should().Be(0);
+                e.EquipmentHiddenFlags.Should().Be(0);
+                e.MiscEquipmentHiddenFlags.Should().Be(0);
+                e.HairColor.Should().Be(new Color(26, 131, 54));
+                e.SkinColor.Should().Be(new Color(158, 74, 51));
+                e.EyeColor.Should().Be(new Color(47, 39, 88));
+                e.ShirtColor.Should().Be(new Color(184, 58, 43));
+                e.UndershirtColor.Should().Be(new Color(69, 8, 97));
+                e.PantsColor.Should().Be(new Color(162, 167, 255));
+                e.ShoeColor.Should().Be(new Color(212, 159, 76));
+                e.Difficulty.Should().Be(PlayerDifficulty.Softcore);
+                e.HasExtraAccessorySlot.Should().BeFalse();
+                e.Cancel();
             });
 
             TestUtils.FakeReceiveBytes(1, PlayerDataPacketTests.Bytes);
@@ -138,16 +146,17 @@ namespace Orion.Players {
 
         [Fact]
         public void PacketReceive_PlayerInventorySlot_IsTriggered() {
-            using var playerService = new OrionPlayerService(Logger.None);
+            using var kernel = new OrionKernel(Logger.None);
+            using var playerService = new OrionPlayerService(kernel, Logger.None);
             var isRun = false;
-            playerService.PlayerInventorySlot.RegisterHandler((sender, args) => {
+            kernel.RegisterHandler<PlayerInventoryEvent>(e => {
                 isRun = true;
-                args.Player.Should().BeSameAs(playerService.Players[1]);
-                args.InventorySlot.Should().Be(0);
-                args.StackSize.Should().Be(1);
-                args.ItemPrefix.Should().Be(ItemPrefix.Godly);
-                args.ItemType.Should().Be(ItemType.CopperShortsword);
-                args.Cancel();
+                e.Player.Should().BeSameAs(playerService.Players[1]);
+                e.InventorySlot.Should().Be(0);
+                e.StackSize.Should().Be(1);
+                e.ItemPrefix.Should().Be(ItemPrefix.Godly);
+                e.ItemType.Should().Be(ItemType.CopperShortsword);
+                e.Cancel();
             });
 
             TestUtils.FakeReceiveBytes(1, PlayerInventorySlotPacketTests.Bytes);
@@ -157,12 +166,13 @@ namespace Orion.Players {
 
         [Fact]
         public void PacketReceive_PlayerJoin_IsTriggered() {
-            using var playerService = new OrionPlayerService(Logger.None);
+            using var kernel = new OrionKernel(Logger.None);
+            using var playerService = new OrionPlayerService(kernel, Logger.None);
             var isRun = false;
-            playerService.PlayerJoin.RegisterHandler((sender, args) => {
+            kernel.RegisterHandler<PlayerJoinEvent>(e => {
                 isRun = true;
-                args.Player.Should().BeSameAs(playerService.Players[1]);
-                args.Cancel();
+                e.Player.Should().BeSameAs(playerService.Players[1]);
+                e.Cancel();
             });
 
             TestUtils.FakeReceiveBytes(1, PlayerJoinPacketTests.Bytes);
@@ -172,14 +182,15 @@ namespace Orion.Players {
 
         [Fact]
         public void PacketReceive_PlayerSpawn_IsTriggered() {
-            using var playerService = new OrionPlayerService(Logger.None);
+            using var kernel = new OrionKernel(Logger.None);
+            using var playerService = new OrionPlayerService(kernel, Logger.None);
             var isRun = false;
-            playerService.PlayerSpawn.RegisterHandler((sender, args) => {
+            kernel.RegisterHandler<PlayerSpawnEvent>(e => {
                 isRun = true;
-                args.Player.Should().BeSameAs(playerService.Players[1]);
-                args.X.Should().Be(-1);
-                args.Y.Should().Be(-1);
-                args.Cancel();
+                e.Player.Should().BeSameAs(playerService.Players[1]);
+                e.X.Should().Be(-1);
+                e.Y.Should().Be(-1);
+                e.Cancel();
             });
 
             TestUtils.FakeReceiveBytes(1, PlayerSpawnPacketTests.Bytes);
@@ -189,27 +200,28 @@ namespace Orion.Players {
 
         [Fact]
         public void PacketReceive_PlayerInfo_IsTriggered() {
-            using var playerService = new OrionPlayerService(Logger.None);
+            using var kernel = new OrionKernel(Logger.None);
+            using var playerService = new OrionPlayerService(kernel, Logger.None);
             var isRun = false;
-            playerService.PlayerInfo.RegisterHandler((sender, args) => {
+            kernel.RegisterHandler<PlayerInfoEvent>(e => {
                 isRun = true;
-                args.Player.Should().BeSameAs(playerService.Players[1]);
-                args.IsHoldingUp.Should().BeFalse();
-                args.IsHoldingDown.Should().BeFalse();
-                args.IsHoldingLeft.Should().BeFalse();
-                args.IsHoldingRight.Should().BeTrue();
-                args.IsHoldingJump.Should().BeFalse();
-                args.IsHoldingUseItem.Should().BeFalse();
-                args.Direction.Should().BeTrue();
-                args.IsClimbingRope.Should().BeFalse();
-                args.ClimbingRopeDirection.Should().BeFalse();
-                args.IsVortexStealthed.Should().BeFalse();
-                args.IsRightSideUp.Should().BeTrue();
-                args.IsRaisingShield.Should().BeFalse();
-                args.HeldItemSlot.Should().Be(0);
-                args.Position.Should().Be(new Vector2(67134, 6790));
-                args.Velocity.Should().Be(Vector2.Zero);
-                args.Cancel();
+                e.Player.Should().BeSameAs(playerService.Players[1]);
+                e.IsHoldingUp.Should().BeFalse();
+                e.IsHoldingDown.Should().BeFalse();
+                e.IsHoldingLeft.Should().BeFalse();
+                e.IsHoldingRight.Should().BeTrue();
+                e.IsHoldingJump.Should().BeFalse();
+                e.IsHoldingUseItem.Should().BeFalse();
+                e.Direction.Should().BeTrue();
+                e.IsClimbingRope.Should().BeFalse();
+                e.ClimbingRopeDirection.Should().BeFalse();
+                e.IsVortexStealthed.Should().BeFalse();
+                e.IsRightSideUp.Should().BeTrue();
+                e.IsRaisingShield.Should().BeFalse();
+                e.HeldItemSlot.Should().Be(0);
+                e.Position.Should().Be(new Vector2(67134, 6790));
+                e.Velocity.Should().Be(Vector2.Zero);
+                e.Cancel();
             });
 
             TestUtils.FakeReceiveBytes(1, PlayerInfoPacketTests.Bytes);
@@ -219,14 +231,15 @@ namespace Orion.Players {
 
         [Fact]
         public void PacketReceive_PlayerHealth_IsTriggered() {
-            using var playerService = new OrionPlayerService(Logger.None);
+            using var kernel = new OrionKernel(Logger.None);
+            using var playerService = new OrionPlayerService(kernel, Logger.None);
             var isRun = false;
-            playerService.PlayerHealth.RegisterHandler((sender, args) => {
+            kernel.RegisterHandler<PlayerHealthEvent>(e => {
                 isRun = true;
-                args.Player.Should().BeSameAs(playerService.Players[1]);
-                args.Health.Should().Be(100);
-                args.MaxHealth.Should().Be(100);
-                args.Cancel();
+                e.Player.Should().BeSameAs(playerService.Players[1]);
+                e.Health.Should().Be(100);
+                e.MaxHealth.Should().Be(100);
+                e.Cancel();
             });
 
             TestUtils.FakeReceiveBytes(1, PlayerHealthPacketTests.Bytes);
@@ -236,13 +249,14 @@ namespace Orion.Players {
 
         [Fact]
         public void PacketReceive_PlayerPvp_IsTriggered() {
-            using var playerService = new OrionPlayerService(Logger.None);
+            using var kernel = new OrionKernel(Logger.None);
+            using var playerService = new OrionPlayerService(kernel, Logger.None);
             var isRun = false;
-            playerService.PlayerPvp.RegisterHandler((sender, args) => {
+            kernel.RegisterHandler<PlayerPvpEvent>(e => {
                 isRun = true;
-                args.Player.Should().BeSameAs(playerService.Players[1]);
-                args.IsInPvp.Should().Be(true);
-                args.Cancel();
+                e.Player.Should().BeSameAs(playerService.Players[1]);
+                e.IsInPvp.Should().Be(true);
+                e.Cancel();
             });
 
             TestUtils.FakeReceiveBytes(1, PlayerPvpPacketTests.Bytes);
@@ -252,13 +266,14 @@ namespace Orion.Players {
 
         [Fact]
         public void PacketReceive_PlayerHealEffect_IsTriggered() {
-            using var playerService = new OrionPlayerService(Logger.None);
+            using var kernel = new OrionKernel(Logger.None);
+            using var playerService = new OrionPlayerService(kernel, Logger.None);
             var isRun = false;
-            playerService.PlayerHealEffect.RegisterHandler((sender, args) => {
+            kernel.RegisterHandler<PlayerHealEffectEvent>(e => {
                 isRun = true;
-                args.Player.Should().BeSameAs(playerService.Players[1]);
-                args.HealAmount.Should().Be(100);
-                args.Cancel();
+                e.Player.Should().BeSameAs(playerService.Players[1]);
+                e.HealAmount.Should().Be(100);
+                e.Cancel();
             });
 
             TestUtils.FakeReceiveBytes(1, PlayerHealEffectPacketTests.Bytes);
@@ -268,13 +283,14 @@ namespace Orion.Players {
 
         [Fact]
         public void PacketReceive_PlayerPasswordResponse_IsTriggered() {
-            using var playerService = new OrionPlayerService(Logger.None);
+            using var kernel = new OrionKernel(Logger.None);
+            using var playerService = new OrionPlayerService(kernel, Logger.None);
             var isRun = false;
-            playerService.PlayerPasswordResponse.RegisterHandler((sender, args) => {
+            kernel.RegisterHandler<PlayerPasswordEvent>(e => {
                 isRun = true;
-                args.Player.Should().BeSameAs(playerService.Players[1]);
-                args.PasswordAttempt.Should().Be("Terraria");
-                args.Cancel();
+                e.Player.Should().BeSameAs(playerService.Players[1]);
+                e.PasswordAttempt.Should().Be("Terraria");
+                e.Cancel();
             });
 
             TestUtils.FakeReceiveBytes(1, PlayerPasswordResponsePacketTests.Bytes);
@@ -284,14 +300,15 @@ namespace Orion.Players {
 
         [Fact]
         public void PacketReceive_PlayerMana_IsTriggered() {
-            using var playerService = new OrionPlayerService(Logger.None);
+            using var kernel = new OrionKernel(Logger.None);
+            using var playerService = new OrionPlayerService(kernel, Logger.None);
             var isRun = false;
-            playerService.PlayerMana.RegisterHandler((sender, args) => {
+            kernel.RegisterHandler<PlayerManaEvent>(e => {
                 isRun = true;
-                args.Player.Should().BeSameAs(playerService.Players[1]);
-                args.Mana.Should().Be(100);
-                args.MaxMana.Should().Be(100);
-                args.Cancel();
+                e.Player.Should().BeSameAs(playerService.Players[1]);
+                e.Mana.Should().Be(100);
+                e.MaxMana.Should().Be(100);
+                e.Cancel();
             });
 
             TestUtils.FakeReceiveBytes(1, PlayerManaPacketTests.Bytes);
@@ -301,13 +318,14 @@ namespace Orion.Players {
 
         [Fact]
         public void PacketReceive_PlayerManaEffect_IsTriggered() {
-            using var playerService = new OrionPlayerService(Logger.None);
+            using var kernel = new OrionKernel(Logger.None);
+            using var playerService = new OrionPlayerService(kernel, Logger.None);
             var isRun = false;
-            playerService.PlayerManaEffect.RegisterHandler((sender, args) => {
+            kernel.RegisterHandler<PlayerManaEffectEvent>(e => {
                 isRun = true;
-                args.Player.Should().BeSameAs(playerService.Players[1]);
-                args.ManaAmount.Should().Be(100);
-                args.Cancel();
+                e.Player.Should().BeSameAs(playerService.Players[1]);
+                e.ManaAmount.Should().Be(100);
+                e.Cancel();
             });
 
             TestUtils.FakeReceiveBytes(1, PlayerManaEffectPacketTests.Bytes);
@@ -317,13 +335,14 @@ namespace Orion.Players {
 
         [Fact]
         public void PacketReceive_PlayerTeam_IsTriggered() {
-            using var playerService = new OrionPlayerService(Logger.None);
+            using var kernel = new OrionKernel(Logger.None);
+            using var playerService = new OrionPlayerService(kernel, Logger.None);
             var isRun = false;
-            playerService.PlayerTeam.RegisterHandler((sender, args) => {
+            kernel.RegisterHandler<PlayerTeamEvent>(e => {
                 isRun = true;
-                args.Player.Should().BeSameAs(playerService.Players[1]);
-                args.Team.Should().Be(PlayerTeam.Red);
-                args.Cancel();
+                e.Player.Should().BeSameAs(playerService.Players[1]);
+                e.Team.Should().Be(PlayerTeam.Red);
+                e.Cancel();
             });
 
             TestUtils.FakeReceiveBytes(1, PlayerTeamPacketTests.Bytes);
@@ -333,13 +352,14 @@ namespace Orion.Players {
 
         [Fact]
         public void PacketReceive_PlayerUuid_IsTriggered() {
-            using var playerService = new OrionPlayerService(Logger.None);
+            using var kernel = new OrionKernel(Logger.None);
+            using var playerService = new OrionPlayerService(kernel, Logger.None);
             var isRun = false;
-            playerService.PlayerUuid.RegisterHandler((sender, args) => {
+            kernel.RegisterHandler<PlayerUuidEvent>(e => {
                 isRun = true;
-                args.Player.Should().BeSameAs(playerService.Players[1]);
-                args.Uuid.Should().Be("Terraria");
-                args.Cancel();
+                e.Player.Should().BeSameAs(playerService.Players[1]);
+                e.Uuid.Should().Be("Terraria");
+                e.Cancel();
             });
 
             TestUtils.FakeReceiveBytes(1, PlayerUuidPacketTests.Bytes);
@@ -349,12 +369,13 @@ namespace Orion.Players {
 
         [Fact]
         public void PacketReceive_PlayerTeleportationPotion_IsTriggered() {
-            using var playerService = new OrionPlayerService(Logger.None);
+            using var kernel = new OrionKernel(Logger.None);
+            using var playerService = new OrionPlayerService(kernel, Logger.None);
             var isRun = false;
-            playerService.PlayerTeleportEvent.RegisterHandler((sender, args) => {
+            kernel.RegisterHandler<PlayerTeleportEvent>(e => {
                 isRun = true;
-                args.Player.Should().BeSameAs(playerService.Players[1]);
-                args.Cancel();
+                e.Player.Should().BeSameAs(playerService.Players[1]);
+                e.Cancel();
             });
 
             TestUtils.FakeReceiveBytes(1, PlayerTeleportationPotionPacketTests.Bytes);
@@ -364,13 +385,14 @@ namespace Orion.Players {
 
         [Fact]
         public void PacketReceive_PlayerChat_IsTriggered() {
-            using var playerService = new OrionPlayerService(Logger.None);
+            using var kernel = new OrionKernel(Logger.None);
+            using var playerService = new OrionPlayerService(kernel, Logger.None);
             var isRun = false;
-            playerService.PlayerChat.RegisterHandler((sender, args) => {
+            kernel.RegisterHandler<PlayerChatEvent>(e => {
                 isRun = true;
-                args.Command.Should().Be("Say");
-                args.Text.Should().Be("/command test");
-                args.Cancel();
+                e.Command.Should().Be("Say");
+                e.Text.Should().Be("/command test");
+                e.Cancel();
             });
 
             TestUtils.FakeReceiveBytes(1, ChatModuleTests.ClientBytes);
@@ -380,11 +402,12 @@ namespace Orion.Players {
 
         [Fact]
         public void ResetClient_PlayerQuit_IsTriggered() {
-            using var playerService = new OrionPlayerService(Logger.None);
+            using var kernel = new OrionKernel(Logger.None);
+            using var playerService = new OrionPlayerService(kernel, Logger.None);
             var isRun = false;
-            playerService.PlayerQuit.RegisterHandler((sender, args) => {
+            kernel.RegisterHandler<PlayerQuitEvent>(e => {
                 isRun = true;
-                args.Player.Should().BeSameAs(playerService.Players[1]);
+                e.Player.Should().BeSameAs(playerService.Players[1]);
             });
             Terraria.Netplay.Clients[1].IsActive = true;
             Terraria.Netplay.Clients[1].Id = 1;

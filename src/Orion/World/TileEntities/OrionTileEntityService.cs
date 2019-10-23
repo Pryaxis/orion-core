@@ -34,7 +34,7 @@ namespace Orion.World.TileEntities {
         public IReadOnlyArray<IChest?> Chests { get; }
         public IReadOnlyArray<ISign?> Signs { get; }
 
-        public OrionTileEntityService(ILogger log) : base(log) {
+        public OrionTileEntityService(OrionKernel kernel, ILogger log) : base(kernel, log) {
             Debug.Assert(log != null, "log should not be null");
             Debug.Assert(Main.chest != null, "Terraria chests should not be null");
             Debug.Assert(Main.sign != null, "Terraria signs should not be null");

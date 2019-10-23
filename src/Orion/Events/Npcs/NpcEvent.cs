@@ -16,6 +16,7 @@
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
 using System;
+using Destructurama.Attributed;
 using Orion.Npcs;
 
 namespace Orion.Events.Npcs {
@@ -27,6 +28,7 @@ namespace Orion.Events.Npcs {
         /// Gets the NPC involved in the event.
         /// </summary>
         /// <value>The NPC involved in the event.</value>
+        [LogAsScalar]
         public INpc Npc { get; }
 
         /// <summary>

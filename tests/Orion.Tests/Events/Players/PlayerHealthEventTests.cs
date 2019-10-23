@@ -27,9 +27,9 @@ namespace Orion.Events.Players {
         [Fact]
         public void Ctor_NotDirty() {
             var player = new Mock<IPlayer>().Object;
-            var args = new PlayerHealthEvent(player, new PlayerHealthPacket());
+            var e = new PlayerHealthEvent(player, new PlayerHealthPacket());
 
-            args.IsDirty.Should().BeFalse();
+            e.IsDirty.Should().BeFalse();
         }
 
         [Fact]
@@ -50,17 +50,17 @@ namespace Orion.Events.Players {
         [Fact]
         public void SimpleProperties_Set_MarkAsDirty() {
             var player = new Mock<IPlayer>().Object;
-            var args = new PlayerHealthEvent(player, new PlayerHealthPacket());
+            var e = new PlayerHealthEvent(player, new PlayerHealthPacket());
 
-            args.SimpleProperties_Set_MarkAsDirty();
+            e.SimpleProperties_Set_MarkAsDirty();
         }
 
         [Fact]
         public void SetGetProperties_ReflectsInPacket() {
             var player = new Mock<IPlayer>().Object;
-            var args = new PlayerHealthEvent(player, new PlayerHealthPacket());
+            var e = new PlayerHealthEvent(player, new PlayerHealthPacket());
 
-            args.Properties_GetSetShouldReflect("_packet");
+            e.Properties_GetSetShouldReflect("_packet");
         }
     }
 }

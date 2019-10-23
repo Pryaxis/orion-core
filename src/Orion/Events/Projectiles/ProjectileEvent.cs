@@ -16,6 +16,7 @@
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
 using System;
+using Destructurama.Attributed;
 using Orion.Projectiles;
 
 namespace Orion.Events.Projectiles {
@@ -27,6 +28,7 @@ namespace Orion.Events.Projectiles {
         /// Gets the projectile involved in the event.
         /// </summary>
         /// <value>The projectile involved in the event.</value>
+        [LogAsScalar]
         public IProjectile Projectile { get; }
 
         /// <summary>

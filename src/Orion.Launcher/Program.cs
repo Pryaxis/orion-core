@@ -20,6 +20,7 @@ using System.IO;
 using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading;
+using Destructurama;
 using Ninject;
 using Orion.Items;
 using Orion.Launcher.Properties;
@@ -66,9 +67,10 @@ namespace Orion.Launcher {
 
             Directory.CreateDirectory("logs");
             var log = new LoggerConfiguration()
+                .Destructure.UsingAttributes()
                 .MinimumLevel.Is(LogLevel)
                 .WriteTo.Console(
-                    outputTemplate: "[{Timestamp:HH:mm:ss} {Level:u3}] {ServiceName}: {Message:lj}{NewLine}{Exception}",
+                    outputTemplate: "[{Timestamp:HH:mm:ss} {Level:u3}] {ServiceName}: {Message:l}{NewLine}{Exception}",
                     theme: AnsiConsoleTheme.Code)
                 .WriteTo.File(Path.Combine("logs", "log-.txt"),
                     rollingInterval: RollingInterval.Day,

@@ -27,9 +27,9 @@ namespace Orion.Events.Players {
         [Fact]
         public void Ctor_NotDirty() {
             var player = new Mock<IPlayer>().Object;
-            var args = new PlayerDataEvent(player, new PlayerDataPacket());
+            var e = new PlayerDataEvent(player, new PlayerDataPacket());
 
-            args.IsDirty.Should().BeFalse();
+            e.IsDirty.Should().BeFalse();
         }
 
         [Fact]
@@ -50,24 +50,24 @@ namespace Orion.Events.Players {
         [Fact]
         public void SimpleProperties_Set_MarkAsDirty() {
             var player = new Mock<IPlayer>().Object;
-            var args = new PlayerDataEvent(player, new PlayerDataPacket());
+            var e = new PlayerDataEvent(player, new PlayerDataPacket());
 
-            args.SimpleProperties_Set_MarkAsDirty();
+            e.SimpleProperties_Set_MarkAsDirty();
         }
 
         [Fact]
         public void SetGetProperties_ReflectsInPacket() {
             var player = new Mock<IPlayer>().Object;
-            var args = new PlayerDataEvent(player, new PlayerDataPacket());
+            var e = new PlayerDataEvent(player, new PlayerDataPacket());
 
-            args.Properties_GetSetShouldReflect("_packet");
+            e.Properties_GetSetShouldReflect("_packet");
         }
 
         [Fact]
         public void Player_SetNullValue_ThrowsArgumentNullException() {
             var player = new Mock<IPlayer>().Object;
-            var args = new PlayerDataEvent(player, new PlayerDataPacket());
-            Action action = () => args.Name = null;
+            var e = new PlayerDataEvent(player, new PlayerDataPacket());
+            Action action = () => e.Name = null;
 
             action.Should().Throw<ArgumentNullException>();
         }

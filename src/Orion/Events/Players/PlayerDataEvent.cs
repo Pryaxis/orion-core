@@ -16,6 +16,7 @@
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
 using System;
+using Destructurama.Attributed;
 using Microsoft.Xna.Framework;
 using Orion.Items;
 using Orion.Packets.Players;
@@ -31,9 +32,11 @@ namespace Orion.Events.Players {
         private readonly PlayerDataPacket _packet;
         
         /// <inheritdoc/>
+        [NotLogged]
         public bool IsDirty => _packet.IsDirty;
 
         /// <inheritdoc/>
+        [NotLogged]
         public string? CancellationReason { get; set; }
 
         /// <summary>

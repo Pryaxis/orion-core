@@ -16,8 +16,6 @@
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
 using System;
-using Orion.Events;
-using Orion.Events.World;
 using Orion.World.Tiles;
 
 namespace Orion.World {
@@ -55,17 +53,5 @@ namespace Orion.World {
         /// </summary>
         /// <value>The current invasion type.</value>
         InvasionType CurrentInvasionType { get; }
-
-        /// <summary>
-        /// Gets the event handlers that occur when the world is loading.
-        /// </summary>
-        /// <value>The event handlers that occur when the world is loading.</value>
-        EventHandlerCollection<WorldLoadEvent> WorldLoad { get; }
-
-        /// <summary>
-        /// Gets the event handlers that occur when the world is saving. This event can be canceled.
-        /// </summary>
-        /// <value>The event handlers that occur when the world is saving.</value>
-        EventHandlerCollection<WorldSaveEvent> WorldSave { get; }
     }
 }

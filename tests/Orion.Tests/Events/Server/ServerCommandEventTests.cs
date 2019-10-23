@@ -30,9 +30,9 @@ namespace Orion.Events.Server {
 
         [Fact]
         public void Input_Get() {
-            var args = new ServerCommandEvent("INPUT");
+            var e = new ServerCommandEvent("INPUT");
 
-            args.Input.Should().Be("INPUT");
+            e.Input.Should().Be("INPUT");
         }
     }
 }

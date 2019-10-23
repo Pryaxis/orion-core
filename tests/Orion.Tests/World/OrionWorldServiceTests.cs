@@ -28,7 +28,8 @@ namespace Orion.World {
     public class OrionWorldServiceTests {
         [Fact]
         public void WorldWidth_Get() {
-            using var worldService = new OrionWorldService(Logger.None);
+            using var kernel = new OrionKernel(Logger.None);
+            using var worldService = new OrionWorldService(kernel, Logger.None);
             Main.maxTilesX = 1000;
 
             worldService.WorldWidth.Should().Be(1000);
@@ -36,7 +37,8 @@ namespace Orion.World {
 
         [Fact]
         public void WorldHeight_Get() {
-            using var worldService = new OrionWorldService(Logger.None);
+            using var kernel = new OrionKernel(Logger.None);
+            using var worldService = new OrionWorldService(kernel, Logger.None);
             Main.maxTilesY = 1000;
 
             worldService.WorldHeight.Should().Be(1000);
@@ -44,7 +46,8 @@ namespace Orion.World {
 
         [Fact]
         public void CurrentInvasionType_Get() {
-            using var worldService = new OrionWorldService(Logger.None);
+            using var kernel = new OrionKernel(Logger.None);
+            using var worldService = new OrionWorldService(kernel, Logger.None);
             Main.invasionType = (int)InvasionType.Goblins;
 
             worldService.CurrentInvasionType.Should().Be(InvasionType.Goblins);
@@ -52,7 +55,8 @@ namespace Orion.World {
 
         [Fact]
         public void Maintile_Gettype() {
-            using var worldService = new OrionWorldService(Logger.None);
+            using var kernel = new OrionKernel(Logger.None);
+            using var worldService = new OrionWorldService(kernel, Logger.None);
             worldService[0, 0] = new Tile { BlockType = BlockType.Stone };
 
             Main.tile[0, 0].type.Should().Be((ushort)BlockType.Stone);
@@ -60,7 +64,8 @@ namespace Orion.World {
 
         [Fact]
         public void Maintile_Settype() {
-            using var worldService = new OrionWorldService(Logger.None);
+            using var kernel = new OrionKernel(Logger.None);
+            using var worldService = new OrionWorldService(kernel, Logger.None);
             Main.tile[0, 0].type = (ushort)BlockType.Stone;
 
             worldService[0, 0].BlockType.Should().Be(BlockType.Stone);
@@ -68,7 +73,8 @@ namespace Orion.World {
 
         [Fact]
         public void Maintile_Getwall() {
-            using var worldService = new OrionWorldService(Logger.None);
+            using var kernel = new OrionKernel(Logger.None);
+            using var worldService = new OrionWorldService(kernel, Logger.None);
             worldService[0, 0] = new Tile { WallType = WallType.Stone };
 
             Main.tile[0, 0].wall.Should().Be((byte)WallType.Stone);
@@ -76,7 +82,8 @@ namespace Orion.World {
 
         [Fact]
         public void Maintile_Setwall() {
-            using var worldService = new OrionWorldService(Logger.None);
+            using var kernel = new OrionKernel(Logger.None);
+            using var worldService = new OrionWorldService(kernel, Logger.None);
             Main.tile[0, 0].wall = (byte)WallType.Stone;
 
             worldService[0, 0].WallType.Should().Be(WallType.Stone);
@@ -84,7 +91,8 @@ namespace Orion.World {
 
         [Fact]
         public void Maintile_Getliquid() {
-            using var worldService = new OrionWorldService(Logger.None);
+            using var kernel = new OrionKernel(Logger.None);
+            using var worldService = new OrionWorldService(kernel, Logger.None);
             worldService[0, 0] = new Tile { LiquidAmount = 100 };
 
             Main.tile[0, 0].liquid.Should().Be(100);
@@ -92,7 +100,8 @@ namespace Orion.World {
 
         [Fact]
         public void Maintile_Setliquid() {
-            using var worldService = new OrionWorldService(Logger.None);
+            using var kernel = new OrionKernel(Logger.None);
+            using var worldService = new OrionWorldService(kernel, Logger.None);
             Main.tile[0, 0].liquid = 100;
 
             worldService[0, 0].LiquidAmount.Should().Be(100);
@@ -100,7 +109,8 @@ namespace Orion.World {
 
         [Fact]
         public void Maintile_GetsTileHeader() {
-            using var worldService = new OrionWorldService(Logger.None);
+            using var kernel = new OrionKernel(Logger.None);
+            using var worldService = new OrionWorldService(kernel, Logger.None);
             worldService[0, 0] = new Tile { _sTileHeader = 12345 };
 
             Main.tile[0, 0].sTileHeader.Should().Be(12345);
@@ -108,7 +118,8 @@ namespace Orion.World {
 
         [Fact]
         public void Maintile_SetsTileHeader() {
-            using var worldService = new OrionWorldService(Logger.None);
+            using var kernel = new OrionKernel(Logger.None);
+            using var worldService = new OrionWorldService(kernel, Logger.None);
             Main.tile[0, 0].sTileHeader = 12345;
 
             worldService[0, 0]._sTileHeader.Should().Be(12345);
@@ -116,7 +127,8 @@ namespace Orion.World {
 
         [Fact]
         public void Maintile_GetbTileHeader() {
-            using var worldService = new OrionWorldService(Logger.None);
+            using var kernel = new OrionKernel(Logger.None);
+            using var worldService = new OrionWorldService(kernel, Logger.None);
             worldService[0, 0] = new Tile { _bTileHeader = 100 };
 
             Main.tile[0, 0].bTileHeader.Should().Be(100);
@@ -124,7 +136,8 @@ namespace Orion.World {
 
         [Fact]
         public void Maintile_SetbTileHeader() {
-            using var worldService = new OrionWorldService(Logger.None);
+            using var kernel = new OrionKernel(Logger.None);
+            using var worldService = new OrionWorldService(kernel, Logger.None);
             Main.tile[0, 0].bTileHeader = 100;
 
             worldService[0, 0]._bTileHeader.Should().Be(100);
@@ -132,7 +145,8 @@ namespace Orion.World {
 
         [Fact]
         public void Maintile_GetbTileHeader3() {
-            using var worldService = new OrionWorldService(Logger.None);
+            using var kernel = new OrionKernel(Logger.None);
+            using var worldService = new OrionWorldService(kernel, Logger.None);
             worldService[0, 0] = new Tile { _bTileHeader2 = 100 };
 
             Main.tile[0, 0].bTileHeader3.Should().Be(100);
@@ -140,7 +154,8 @@ namespace Orion.World {
 
         [Fact]
         public void Maintile_SetbTileHeader3() {
-            using var worldService = new OrionWorldService(Logger.None);
+            using var kernel = new OrionKernel(Logger.None);
+            using var worldService = new OrionWorldService(kernel, Logger.None);
             Main.tile[0, 0].bTileHeader3 = 100;
 
             worldService[0, 0]._bTileHeader2.Should().Be(100);
@@ -148,7 +163,8 @@ namespace Orion.World {
 
         [Fact]
         public void Maintile_GetframeX() {
-            using var worldService = new OrionWorldService(Logger.None);
+            using var kernel = new OrionKernel(Logger.None);
+            using var worldService = new OrionWorldService(kernel, Logger.None);
             worldService[0, 0] = new Tile { BlockFrameX = 12345 };
 
             Main.tile[0, 0].frameX.Should().Be(12345);
@@ -156,7 +172,8 @@ namespace Orion.World {
 
         [Fact]
         public void Maintile_SetframeX() {
-            using var worldService = new OrionWorldService(Logger.None);
+            using var kernel = new OrionKernel(Logger.None);
+            using var worldService = new OrionWorldService(kernel, Logger.None);
             Main.tile[0, 0].frameX = 12345;
 
             worldService[0, 0].BlockFrameX.Should().Be(12345);
@@ -164,7 +181,8 @@ namespace Orion.World {
 
         [Fact]
         public void Maintile_GetframeY() {
-            using var worldService = new OrionWorldService(Logger.None);
+            using var kernel = new OrionKernel(Logger.None);
+            using var worldService = new OrionWorldService(kernel, Logger.None);
             worldService[0, 0] = new Tile { BlockFrameY = 12345 };
 
             Main.tile[0, 0].frameY.Should().Be(12345);
@@ -172,7 +190,8 @@ namespace Orion.World {
 
         [Fact]
         public void Maintile_SetframeY() {
-            using var worldService = new OrionWorldService(Logger.None);
+            using var kernel = new OrionKernel(Logger.None);
+            using var worldService = new OrionWorldService(kernel, Logger.None);
             Main.tile[0, 0].frameY = 12345;
 
             worldService[0, 0].BlockFrameY.Should().Be(12345);
@@ -180,7 +199,8 @@ namespace Orion.World {
 
         [Fact]
         public void Maintile_CopyFrom() {
-            using var worldService = new OrionWorldService(Logger.None);
+            using var kernel = new OrionKernel(Logger.None);
+            using var worldService = new OrionWorldService(kernel, Logger.None);
             var mockTile = new Mock<ITile>();
             mockTile.SetupGet(t => t.type).Returns(1);
             mockTile.SetupGet(t => t.wall).Returns(2);
@@ -214,7 +234,8 @@ namespace Orion.World {
 
         [Fact]
         public void Maintile_CopyFrom_Bridge() {
-            using var worldService = new OrionWorldService(Logger.None);
+            using var kernel = new OrionKernel(Logger.None);
+            using var worldService = new OrionWorldService(kernel, Logger.None);
             worldService[0, 0] = new Tile {
                 BlockType = (BlockType)1,
                 WallType = (WallType)2,
@@ -240,7 +261,8 @@ namespace Orion.World {
 
         [Fact]
         public void Maintile_ClearEverything() {
-            using var worldService = new OrionWorldService(Logger.None);
+            using var kernel = new OrionKernel(Logger.None);
+            using var worldService = new OrionWorldService(kernel, Logger.None);
             worldService[0, 0] = new Tile {
                 BlockType = (BlockType)1,
                 WallType = (WallType)2,
@@ -266,7 +288,8 @@ namespace Orion.World {
 
         [Fact]
         public void Maintile_ClearTile() {
-            using var worldService = new OrionWorldService(Logger.None);
+            using var kernel = new OrionKernel(Logger.None);
+            using var worldService = new OrionWorldService(kernel, Logger.None);
             worldService[0, 0] = new Tile {
                 Slope = Slope.BottomRight,
                 IsBlockHalved = true,
@@ -282,7 +305,8 @@ namespace Orion.World {
 
         [Fact]
         public void Maintile_ResetToType() {
-            using var worldService = new OrionWorldService(Logger.None);
+            using var kernel = new OrionKernel(Logger.None);
+            using var worldService = new OrionWorldService(kernel, Logger.None);
             worldService[0, 0] = new Tile {
                 BlockType = (BlockType)1,
                 WallType = (WallType)2,
@@ -308,7 +332,8 @@ namespace Orion.World {
 
         [Fact]
         public void Maintile_ClearMetadata() {
-            using var worldService = new OrionWorldService(Logger.None);
+            using var kernel = new OrionKernel(Logger.None);
+            using var worldService = new OrionWorldService(kernel, Logger.None);
             worldService[0, 0] = new Tile {
                 BlockType = (BlockType)1,
                 WallType = (WallType)2,
@@ -334,14 +359,16 @@ namespace Orion.World {
 
         [Fact]
         public void Maintile_isTheSameAs_NullTile_ReturnsFalse() {
-            using var worldService = new OrionWorldService(Logger.None);
+            using var kernel = new OrionKernel(Logger.None);
+            using var worldService = new OrionWorldService(kernel, Logger.None);
 
             Main.tile[0, 0].isTheSameAs(null).Should().BeFalse();
         }
 
         [Fact]
         public void Maintile_isTheSameAs_DifferentSTileHeader_ReturnsFalse() {
-            using var worldService = new OrionWorldService(Logger.None);
+            using var kernel = new OrionKernel(Logger.None);
+            using var worldService = new OrionWorldService(kernel, Logger.None);
             worldService[0, 0] = new Tile { IsBlockActive = true };
             worldService[0, 1] = new Tile();
 
@@ -350,7 +377,8 @@ namespace Orion.World {
 
         [Fact]
         public void Maintile_isTheSameAs_DifferentTypeAndActive_ReturnsFalse() {
-            using var worldService = new OrionWorldService(Logger.None);
+            using var kernel = new OrionKernel(Logger.None);
+            using var worldService = new OrionWorldService(kernel, Logger.None);
             worldService[0, 0] = new Tile {
                 IsBlockActive = true,
                 BlockType = BlockType.Stone
@@ -365,7 +393,8 @@ namespace Orion.World {
 
         [Fact]
         public void Maintile_isTheSameAs_DifferentTypeNotActive_ReturnsTrue() {
-            using var worldService = new OrionWorldService(Logger.None);
+            using var kernel = new OrionKernel(Logger.None);
+            using var worldService = new OrionWorldService(kernel, Logger.None);
             worldService[0, 0] = new Tile { BlockType = BlockType.Stone };
             worldService[0, 1] = new Tile { BlockType = BlockType.Dirt };
 
@@ -374,7 +403,8 @@ namespace Orion.World {
 
         [Fact]
         public void Maintile_isTheSameAs_DifferentFrameXAndImportant_ReturnsFalse() {
-            using var worldService = new OrionWorldService(Logger.None);
+            using var kernel = new OrionKernel(Logger.None);
+            using var worldService = new OrionWorldService(kernel, Logger.None);
             worldService[0, 0] = new Tile {
                 IsBlockActive = true,
                 BlockType = BlockType.Torches,
@@ -391,7 +421,8 @@ namespace Orion.World {
 
         [Fact]
         public void Maintile_isTheSameAs_DifferentFrameYAndImportant_ReturnsFalse() {
-            using var worldService = new OrionWorldService(Logger.None);
+            using var kernel = new OrionKernel(Logger.None);
+            using var worldService = new OrionWorldService(kernel, Logger.None);
             worldService[0, 0] = new Tile {
                 IsBlockActive = true,
                 BlockType = BlockType.Torches,
@@ -408,7 +439,8 @@ namespace Orion.World {
 
         [Fact]
         public void Maintile_isTheSameAs_DifferentFramesNotImportant_ReturnsTrue() {
-            using var worldService = new OrionWorldService(Logger.None);
+            using var kernel = new OrionKernel(Logger.None);
+            using var worldService = new OrionWorldService(kernel, Logger.None);
             worldService[0, 0] = new Tile {
                 IsBlockActive = true,
                 BlockType = BlockType.Stone,
@@ -427,7 +459,8 @@ namespace Orion.World {
 
         [Fact]
         public void Maintile_isTheSameAs_DifferentWall_ReturnsFalse() {
-            using var worldService = new OrionWorldService(Logger.None);
+            using var kernel = new OrionKernel(Logger.None);
+            using var worldService = new OrionWorldService(kernel, Logger.None);
             worldService[0, 0] = new Tile { WallType = WallType.Stone };
             worldService[0, 1] = new Tile { WallType = WallType.NaturalDirt };
 
@@ -436,7 +469,8 @@ namespace Orion.World {
 
         [Fact]
         public void Maintile_isTheSameAs_DifferentLiquid_ReturnsFalse() {
-            using var worldService = new OrionWorldService(Logger.None);
+            using var kernel = new OrionKernel(Logger.None);
+            using var worldService = new OrionWorldService(kernel, Logger.None);
             worldService[0, 0] = new Tile { LiquidAmount = 1 };
             worldService[0, 1] = new Tile { LiquidAmount = 2 };
 
@@ -445,7 +479,8 @@ namespace Orion.World {
 
         [Fact]
         public void Maintile_isTheSameAs_DifferentWallColor_ReturnsFalse() {
-            using var worldService = new OrionWorldService(Logger.None);
+            using var kernel = new OrionKernel(Logger.None);
+            using var worldService = new OrionWorldService(kernel, Logger.None);
             worldService[0, 0] = new Tile { WallColor = PaintColor.Red };
             worldService[0, 1] = new Tile { WallColor = PaintColor.DeepRed };
 
@@ -454,7 +489,8 @@ namespace Orion.World {
 
         [Fact]
         public void Maintile_isTheSameAs_DifferentYellowWire_ReturnsFalse() {
-            using var worldService = new OrionWorldService(Logger.None);
+            using var kernel = new OrionKernel(Logger.None);
+            using var worldService = new OrionWorldService(kernel, Logger.None);
             worldService[0, 0] = new Tile { HasYellowWire = true };
             worldService[0, 1] = new Tile();
 
@@ -463,7 +499,8 @@ namespace Orion.World {
 
         [Fact]
         public void Maintile_isTheSameAs_DifferentBTileHeader_ReturnsFalse() {
-            using var worldService = new OrionWorldService(Logger.None);
+            using var kernel = new OrionKernel(Logger.None);
+            using var worldService = new OrionWorldService(kernel, Logger.None);
             worldService[0, 0] = new Tile {
                 LiquidAmount = 1,
                 _bTileHeader = 1
@@ -478,7 +515,8 @@ namespace Orion.World {
 
         [Fact]
         public void Maintile_color() {
-            using var worldService = new OrionWorldService(Logger.None);
+            using var kernel = new OrionKernel(Logger.None);
+            using var worldService = new OrionWorldService(kernel, Logger.None);
             worldService[0, 0] = new Tile { BlockColor = PaintColor.Red };
 
             Main.tile[0, 0].color().Should().Be((byte)PaintColor.Red);
@@ -490,7 +528,8 @@ namespace Orion.World {
 
         [Fact]
         public void Maintile_active() {
-            using var worldService = new OrionWorldService(Logger.None);
+            using var kernel = new OrionKernel(Logger.None);
+            using var worldService = new OrionWorldService(kernel, Logger.None);
             worldService[0, 0] = new Tile { IsBlockActive = true };
 
             Main.tile[0, 0].active().Should().BeTrue();
@@ -502,7 +541,8 @@ namespace Orion.World {
 
         [Fact]
         public void Maintile_inActive() {
-            using var worldService = new OrionWorldService(Logger.None);
+            using var kernel = new OrionKernel(Logger.None);
+            using var worldService = new OrionWorldService(kernel, Logger.None);
             worldService[0, 0] = new Tile { IsBlockActuated = true };
 
             Main.tile[0, 0].inActive().Should().BeTrue();
@@ -514,7 +554,8 @@ namespace Orion.World {
 
         [Fact]
         public void Maintile_wire() {
-            using var worldService = new OrionWorldService(Logger.None);
+            using var kernel = new OrionKernel(Logger.None);
+            using var worldService = new OrionWorldService(kernel, Logger.None);
             worldService[0, 0] = new Tile { HasRedWire = true };
 
             Main.tile[0, 0].wire().Should().BeTrue();
@@ -526,7 +567,8 @@ namespace Orion.World {
 
         [Fact]
         public void Maintile_wire2() {
-            using var worldService = new OrionWorldService(Logger.None);
+            using var kernel = new OrionKernel(Logger.None);
+            using var worldService = new OrionWorldService(kernel, Logger.None);
             worldService[0, 0] = new Tile { HasBlueWire = true };
 
             Main.tile[0, 0].wire2().Should().BeTrue();
@@ -538,7 +580,8 @@ namespace Orion.World {
 
         [Fact]
         public void Maintile_wire3() {
-            using var worldService = new OrionWorldService(Logger.None);
+            using var kernel = new OrionKernel(Logger.None);
+            using var worldService = new OrionWorldService(kernel, Logger.None);
             worldService[0, 0] = new Tile { HasGreenWire = true };
 
             Main.tile[0, 0].wire3().Should().BeTrue();
@@ -550,7 +593,8 @@ namespace Orion.World {
 
         [Fact]
         public void Maintile_halfBrick() {
-            using var worldService = new OrionWorldService(Logger.None);
+            using var kernel = new OrionKernel(Logger.None);
+            using var worldService = new OrionWorldService(kernel, Logger.None);
             worldService[0, 0] = new Tile { IsBlockHalved = true };
 
             Main.tile[0, 0].halfBrick().Should().BeTrue();
@@ -562,7 +606,8 @@ namespace Orion.World {
 
         [Fact]
         public void Maintile_actuator() {
-            using var worldService = new OrionWorldService(Logger.None);
+            using var kernel = new OrionKernel(Logger.None);
+            using var worldService = new OrionWorldService(kernel, Logger.None);
             worldService[0, 0] = new Tile { HasActuator = true };
 
             Main.tile[0, 0].actuator().Should().BeTrue();
@@ -574,7 +619,8 @@ namespace Orion.World {
 
         [Fact]
         public void Maintile_slope() {
-            using var worldService = new OrionWorldService(Logger.None);
+            using var kernel = new OrionKernel(Logger.None);
+            using var worldService = new OrionWorldService(kernel, Logger.None);
             worldService[0, 0] = new Tile { Slope = Slope.BottomRight };
 
             Main.tile[0, 0].slope().Should().Be((byte)Slope.BottomRight);
@@ -586,7 +632,8 @@ namespace Orion.World {
 
         [Fact]
         public void Maintile_wallColor() {
-            using var worldService = new OrionWorldService(Logger.None);
+            using var kernel = new OrionKernel(Logger.None);
+            using var worldService = new OrionWorldService(kernel, Logger.None);
             worldService[0, 0] = new Tile { WallColor = PaintColor.Red };
 
             Main.tile[0, 0].wallColor().Should().Be((byte)PaintColor.Red);
@@ -598,7 +645,8 @@ namespace Orion.World {
 
         [Fact]
         public void Maintile_lava() {
-            using var worldService = new OrionWorldService(Logger.None);
+            using var kernel = new OrionKernel(Logger.None);
+            using var worldService = new OrionWorldService(kernel, Logger.None);
             worldService[0, 0] = new Tile { IsLava = true };
 
             Main.tile[0, 0].lava().Should().BeTrue();
@@ -610,7 +658,8 @@ namespace Orion.World {
 
         [Fact]
         public void Maintile_honey() {
-            using var worldService = new OrionWorldService(Logger.None);
+            using var kernel = new OrionKernel(Logger.None);
+            using var worldService = new OrionWorldService(kernel, Logger.None);
             worldService[0, 0] = new Tile { IsHoney = true };
 
             Main.tile[0, 0].honey().Should().BeTrue();
@@ -622,7 +671,8 @@ namespace Orion.World {
 
         [Fact]
         public void Maintile_liquidType() {
-            using var worldService = new OrionWorldService(Logger.None);
+            using var kernel = new OrionKernel(Logger.None);
+            using var worldService = new OrionWorldService(kernel, Logger.None);
             worldService[0, 0] = new Tile { LiquidType = LiquidType.Lava };
 
             Main.tile[0, 0].liquidType().Should().Be((byte)LiquidType.Lava);
@@ -634,7 +684,8 @@ namespace Orion.World {
 
         [Fact]
         public void Maintile_wire4() {
-            using var worldService = new OrionWorldService(Logger.None);
+            using var kernel = new OrionKernel(Logger.None);
+            using var worldService = new OrionWorldService(kernel, Logger.None);
             worldService[0, 0] = new Tile { HasYellowWire = true };
 
             Main.tile[0, 0].wire4().Should().BeTrue();
@@ -646,7 +697,8 @@ namespace Orion.World {
 
         [Fact]
         public void Maintile_checkingLiquid() {
-            using var worldService = new OrionWorldService(Logger.None);
+            using var kernel = new OrionKernel(Logger.None);
+            using var worldService = new OrionWorldService(kernel, Logger.None);
             worldService[0, 0] = new Tile { IsCheckingLiquid = true };
 
             Main.tile[0, 0].checkingLiquid().Should().BeTrue();
@@ -658,7 +710,8 @@ namespace Orion.World {
 
         [Fact]
         public void Maintile_skipLiquid() {
-            using var worldService = new OrionWorldService(Logger.None);
+            using var kernel = new OrionKernel(Logger.None);
+            using var worldService = new OrionWorldService(kernel, Logger.None);
             worldService[0, 0] = new Tile { ShouldSkipLiquid = true };
 
             Main.tile[0, 0].skipLiquid().Should().BeTrue();
@@ -670,7 +723,8 @@ namespace Orion.World {
 
         [Fact]
         public void Maintile_nactive() {
-            using var worldService = new OrionWorldService(Logger.None);
+            using var kernel = new OrionKernel(Logger.None);
+            using var worldService = new OrionWorldService(kernel, Logger.None);
             worldService[0, 0] = new Tile { IsBlockActive = true };
 
             Main.tile[0, 0].nactive().Should().BeTrue();
@@ -687,7 +741,8 @@ namespace Orion.World {
         [InlineData(Slope.BottomLeft, false)]
         [InlineData(Slope.BottomRight, false)]
         public void Maintile_topSlope(Slope slope, bool value) {
-            using var worldService = new OrionWorldService(Logger.None);
+            using var kernel = new OrionKernel(Logger.None);
+            using var worldService = new OrionWorldService(kernel, Logger.None);
             worldService[0, 0] = new Tile { Slope = slope };
 
             Main.tile[0, 0].topSlope().Should().Be(value);
@@ -700,7 +755,8 @@ namespace Orion.World {
         [InlineData(Slope.BottomLeft, true)]
         [InlineData(Slope.BottomRight, true)]
         public void Maintile_bottomSlope(Slope slope, bool value) {
-            using var worldService = new OrionWorldService(Logger.None);
+            using var kernel = new OrionKernel(Logger.None);
+            using var worldService = new OrionWorldService(kernel, Logger.None);
             worldService[0, 0] = new Tile { Slope = slope };
 
             Main.tile[0, 0].bottomSlope().Should().Be(value);
@@ -713,7 +769,8 @@ namespace Orion.World {
         [InlineData(Slope.BottomLeft, true)]
         [InlineData(Slope.BottomRight, false)]
         public void Maintile_leftSlope(Slope slope, bool value) {
-            using var worldService = new OrionWorldService(Logger.None);
+            using var kernel = new OrionKernel(Logger.None);
+            using var worldService = new OrionWorldService(kernel, Logger.None);
             worldService[0, 0] = new Tile { Slope = slope };
 
             Main.tile[0, 0].leftSlope().Should().Be(value);
@@ -726,7 +783,8 @@ namespace Orion.World {
         [InlineData(Slope.BottomLeft, false)]
         [InlineData(Slope.BottomRight, true)]
         public void Maintile_rightSlope(Slope slope, bool value) {
-            using var worldService = new OrionWorldService(Logger.None);
+            using var kernel = new OrionKernel(Logger.None);
+            using var worldService = new OrionWorldService(kernel, Logger.None);
             worldService[0, 0] = new Tile { Slope = slope };
 
             Main.tile[0, 0].rightSlope().Should().Be(value);
@@ -734,7 +792,8 @@ namespace Orion.World {
 
         [Fact]
         public void Maintile_HasSameSlope() {
-            using var worldService = new OrionWorldService(Logger.None);
+            using var kernel = new OrionKernel(Logger.None);
+            using var worldService = new OrionWorldService(kernel, Logger.None);
             worldService[0, 0] = new Tile { Slope = Slope.BottomRight };
             worldService[0, 1] = new Tile { Slope = Slope.BottomRight };
 
@@ -747,7 +806,8 @@ namespace Orion.World {
 
         [Fact]
         public void Maintile_blockType() {
-            using var worldService = new OrionWorldService(Logger.None);
+            using var kernel = new OrionKernel(Logger.None);
+            using var worldService = new OrionWorldService(kernel, Logger.None);
             worldService[0, 0] = new Tile();
 
             Main.tile[0, 0].blockType().Should().Be(0);
@@ -755,7 +815,8 @@ namespace Orion.World {
 
         [Fact]
         public void Maintile_blockType_Halved() {
-            using var worldService = new OrionWorldService(Logger.None);
+            using var kernel = new OrionKernel(Logger.None);
+            using var worldService = new OrionWorldService(kernel, Logger.None);
             worldService[0, 0] = new Tile { IsBlockHalved = true };
 
             Main.tile[0, 0].blockType().Should().Be(1);
@@ -763,7 +824,8 @@ namespace Orion.World {
 
         [Fact]
         public void Maintile_blockType_Slope() {
-            using var worldService = new OrionWorldService(Logger.None);
+            using var kernel = new OrionKernel(Logger.None);
+            using var worldService = new OrionWorldService(kernel, Logger.None);
             worldService[0, 0] = new Tile { Slope = Slope.BottomRight };
 
             Main.tile[0, 0].blockType().Should().Be((int)Slope.BottomRight + 1);

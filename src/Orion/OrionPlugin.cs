@@ -32,12 +32,6 @@ namespace Orion {
     /// </remarks>
     public abstract class OrionPlugin : OrionService {
         /// <summary>
-        /// Gets the <see cref="OrionKernel"/> instance.
-        /// </summary>
-        /// <value>The <see cref="OrionKernel"/> instance.</value>
-        protected OrionKernel Kernel { get; }
-
-        /// <summary>
         /// Initializes a new instance of the <see cref="OrionPlugin"/> class with the specified
         /// <see cref="OrionKernel"/> instance and log.
         /// </summary>
@@ -46,9 +40,7 @@ namespace Orion {
         /// <exception cref="ArgumentNullException">
         /// <paramref name="kernel"/> or <paramref name="log"/> are <see langword="null"/>.
         /// </exception>
-        protected OrionPlugin(OrionKernel kernel, ILogger log) : base(log) {
-            Kernel = kernel ?? throw new ArgumentNullException(nameof(kernel));
-        }
+        protected OrionPlugin(OrionKernel kernel, ILogger log) : base(kernel, log) { }
 
         /// <summary>
         /// Initializes the plugin.

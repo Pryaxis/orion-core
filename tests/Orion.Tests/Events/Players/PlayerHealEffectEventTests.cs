@@ -27,9 +27,9 @@ namespace Orion.Events.Players {
         [Fact]
         public void Ctor_NotDirty() {
             var player = new Mock<IPlayer>().Object;
-            var args = new PlayerHealEffectEvent(player, new PlayerHealEffectPacket());
+            var e = new PlayerHealEffectEvent(player, new PlayerHealEffectPacket());
 
-            args.IsDirty.Should().BeFalse();
+            e.IsDirty.Should().BeFalse();
         }
 
         [Fact]

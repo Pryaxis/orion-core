@@ -32,6 +32,12 @@ namespace Orion.Events {
         public string Name { get; }
 
         /// <summary>
+        /// Gets or sets a value indicating whether the event is verbose. This is used for logs.
+        /// </summary>
+        /// <value><see langword="true"/> if the event is verbose; otherwise, <see langword="false"/>.</value>
+        public bool IsVerbose { get; set; }
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="EventAttribute"/> class with the specified name.
         /// </summary>
         /// <param name="name">The name. This is used for logs.</param>

@@ -21,6 +21,7 @@ using System.Linq;
 using FluentAssertions;
 using Microsoft.Xna.Framework;
 using Orion.Events;
+using Orion.Events.Items;
 using Serilog.Core;
 using Xunit;
 using Main = Terraria.Main;
@@ -37,7 +38,8 @@ namespace Orion.Items {
 
         [Fact]
         public void Items_Item_Get() {
-            using var itemService = new OrionItemService(Logger.None);
+            using var kernel = new OrionKernel(Logger.None);
+            using var itemService = new OrionItemService(kernel, Logger.None);
             var item = itemService.Items[1];
 
             item.Index.Should().Be(1);
@@ -46,7 +48,8 @@ namespace Orion.Items {
 
         [Fact]
         public void Items_Item_GetMultipleTimes_ReturnsSameInstance() {
-            using var itemService = new OrionItemService(Logger.None);
+            using var kernel = new OrionKernel(Logger.None);
+            using var itemService = new OrionItemService(kernel, Logger.None);
             var item = itemService.Items[0];
             var item2 = itemService.Items[0];
 
@@ -57,7 +60,8 @@ namespace Orion.Items {
         [InlineData(-1)]
         [InlineData(10000)]
         public void Items_Item_GetInvalidIndex_ThrowsIndexOutOfRangeException(int index) {
-            using var itemService = new OrionItemService(Logger.None);
+            using var kernel = new OrionKernel(Logger.None);
+            using var itemService = new OrionItemService(kernel, Logger.None);
             Func<IItem> func = () => itemService.Items[index];
 
             func.Should().Throw<IndexOutOfRangeException>();
@@ -65,7 +69,8 @@ namespace Orion.Items {
 
         [Fact]
         public void Items_GetEnumerator() {
-            using var itemService = new OrionItemService(Logger.None);
+            using var kernel = new OrionKernel(Logger.None);
+            using var itemService = new OrionItemService(kernel, Logger.None);
             var items = itemService.Items.ToList();
 
             for (var i = 0; i < items.Count; ++i) {
@@ -75,12 +80,13 @@ namespace Orion.Items {
 
         [Fact]
         public void ItemSetDefaults() {
-            using var itemService = new OrionItemService(Logger.None);
+            using var kernel = new OrionKernel(Logger.None);
+            using var itemService = new OrionItemService(kernel, Logger.None);
             var isRun = false;
-            itemService.ItemSetDefaults.RegisterHandler((sender, args) => {
+            kernel.RegisterHandler<ItemDefaultsEvent>(e => {
                 isRun = true;
-                ((OrionItem)args.Item).Wrapped.Should().BeSameAs(Main.item[0]);
-                args.ItemType.Should().Be(ItemType.Sdmg);
+                ((OrionItem)e.Item).Wrapped.Should().BeSameAs(Main.item[0]);
+                e.ItemType.Should().Be(ItemType.Sdmg);
             });
 
             Main.item[0].SetDefaults((int)ItemType.Sdmg);
@@ -92,8 +98,9 @@ namespace Orion.Items {
         [InlineData(ItemType.CopperPickaxe, ItemType.IronPickaxe)]
         [InlineData(ItemType.StoneBlock, ItemType.None)]
         public void ItemSetDefaults_ModifyType(ItemType oldType, ItemType newType) {
-            using var itemService = new OrionItemService(Logger.None);
-            itemService.ItemSetDefaults.RegisterHandler((sender, args) => args.ItemType = newType);
+            using var kernel = new OrionKernel(Logger.None);
+            using var itemService = new OrionItemService(kernel, Logger.None);
+            kernel.RegisterHandler<ItemDefaultsEvent>(e => e.ItemType = newType);
 
             Main.item[0].SetDefaults((int)oldType);
 
@@ -102,8 +109,9 @@ namespace Orion.Items {
 
         [Fact]
         public void ItemSetDefaults_Canceled() {
-            using var itemService = new OrionItemService(Logger.None);
-            itemService.ItemSetDefaults.RegisterHandler((sender, args) => args.Cancel());
+            using var kernel = new OrionKernel(Logger.None);
+            using var itemService = new OrionItemService(kernel, Logger.None);
+            kernel.RegisterHandler<ItemDefaultsEvent>(e => e.Cancel());
 
             Main.item[0].SetDefaults((int)ItemType.Sdmg);
 
@@ -112,11 +120,12 @@ namespace Orion.Items {
 
         [Fact]
         public void ItemUpdate() {
-            using var itemService = new OrionItemService(Logger.None);
+            using var kernel = new OrionKernel(Logger.None);
+            using var itemService = new OrionItemService(kernel, Logger.None);
             var isRun = false;
-            itemService.ItemUpdate.RegisterHandler((sender, args) => {
+            kernel.RegisterHandler<ItemUpdateEvent>(e => {
                 isRun = true;
-                ((OrionItem)args.Item).Wrapped.Should().BeSameAs(Main.item[0]);
+                ((OrionItem)e.Item).Wrapped.Should().BeSameAs(Main.item[0]);
             });
 
             Main.item[0].UpdateItem(0);
@@ -126,8 +135,9 @@ namespace Orion.Items {
 
         [Fact]
         public void ItemUpdate_Canceled() {
-            using var itemService = new OrionItemService(Logger.None);
-            itemService.ItemUpdate.RegisterHandler((sender, args) => args.Cancel());
+            using var kernel = new OrionKernel(Logger.None);
+            using var itemService = new OrionItemService(kernel, Logger.None);
+            kernel.RegisterHandler<ItemUpdateEvent>(e => e.Cancel());
 
             Main.item[0].UpdateItem(0);
         }
@@ -141,7 +151,8 @@ namespace Orion.Items {
         [Theory]
         [MemberData(nameof(SpawnItemData))]
         public void SpawnItem(ItemType type, int stackSize, ItemPrefix prefix) {
-            using var itemService = new OrionItemService(Logger.None);
+            using var kernel = new OrionKernel(Logger.None);
+            using var itemService = new OrionItemService(kernel, Logger.None);
             var item = itemService.SpawnItem(type, Vector2.Zero, stackSize, prefix);
 
             item.Should().NotBeNull();
@@ -153,7 +164,8 @@ namespace Orion.Items {
         [Theory]
         [MemberData(nameof(SpawnItemData))]
         public void SpawnItem_CachedItem(ItemType type, int stackSize, ItemPrefix prefix) {
-            using var itemService = new OrionItemService(Logger.None);
+            using var kernel = new OrionKernel(Logger.None);
+            using var itemService = new OrionItemService(kernel, Logger.None);
             TerrariaItem.itemCaches[(int)type] = 0;
 
             var item = itemService.SpawnItem(type, Vector2.Zero, stackSize, prefix);

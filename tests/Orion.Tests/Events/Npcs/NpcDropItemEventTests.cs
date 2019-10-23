@@ -27,9 +27,9 @@ namespace Orion.Events.Npcs {
         [Fact]
         public void Ctor_NotDirty() {
             var npc = new Mock<INpc>().Object;
-            var args = new NpcDropItemEvent(npc, ItemType.None, 0, ItemPrefix.None);
+            var e = new NpcDropItemEvent(npc, ItemType.None, 0, ItemPrefix.None);
 
-            args.IsDirty.Should().BeFalse();
+            e.IsDirty.Should().BeFalse();
         }
 
         [Fact]
@@ -42,33 +42,33 @@ namespace Orion.Events.Npcs {
         [Fact]
         public void SimpleProperties_Set_MarkAsDirty() {
             var npc = new Mock<INpc>().Object;
-            var args = new NpcDropItemEvent(npc, ItemType.None, 0, ItemPrefix.None);
+            var e = new NpcDropItemEvent(npc, ItemType.None, 0, ItemPrefix.None);
 
-            args.SimpleProperties_Set_MarkAsDirty();
+            e.SimpleProperties_Set_MarkAsDirty();
         }
 
         [Fact]
         public void ItemType_Get() {
             var npc = new Mock<INpc>().Object;
-            var args = new NpcDropItemEvent(npc, ItemType.Sdmg, 0, ItemPrefix.None);
+            var e = new NpcDropItemEvent(npc, ItemType.Sdmg, 0, ItemPrefix.None);
 
-            args.ItemType.Should().Be(ItemType.Sdmg);
+            e.ItemType.Should().Be(ItemType.Sdmg);
         }
 
         [Fact]
         public void ItemStackSize_Get() {
             var npc = new Mock<INpc>().Object;
-            var args = new NpcDropItemEvent(npc, ItemType.None, 5167, ItemPrefix.None);
+            var e = new NpcDropItemEvent(npc, ItemType.None, 5167, ItemPrefix.None);
 
-            args.StackSize.Should().Be(5167);
+            e.StackSize.Should().Be(5167);
         }
 
         [Fact]
         public void ItemPrefix_Get() {
             var npc = new Mock<INpc>().Object;
-            var args = new NpcDropItemEvent(npc, ItemType.None, 0, ItemPrefix.Unreal);
+            var e = new NpcDropItemEvent(npc, ItemType.None, 0, ItemPrefix.Unreal);
 
-            args.ItemPrefix.Should().Be(ItemPrefix.Unreal);
+            e.ItemPrefix.Should().Be(ItemPrefix.Unreal);
         }
     }
 }

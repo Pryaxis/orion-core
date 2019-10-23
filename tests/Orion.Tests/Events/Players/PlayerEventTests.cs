@@ -33,9 +33,9 @@ namespace Orion.Events.Players {
         [Fact]
         public void Player_Get() {
             var player = new Mock<IPlayer>().Object;
-            var args = new TestPlayerEvent(player);
+            var e = new TestPlayerEvent(player);
 
-            args.Player.Should().BeSameAs(player);
+            e.Player.Should().BeSameAs(player);
         }
 
         private class TestPlayerEvent : PlayerEvent {

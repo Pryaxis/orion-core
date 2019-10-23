@@ -16,6 +16,7 @@
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
 using System;
+using Destructurama.Attributed;
 using Orion.Packets;
 using Orion.Utils;
 
@@ -25,6 +26,7 @@ namespace Orion.Events.Players {
     /// </summary>
     public abstract class PacketEvent : Event, IDirtiable {
         /// <inheritdoc/>
+        [NotLogged]
         public bool IsDirty => Packet.IsDirty;
 
         /// <summary>

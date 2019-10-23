@@ -16,6 +16,7 @@
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
 using System;
+using Destructurama.Attributed;
 using Orion.Npcs;
 
 namespace Orion.Events.Npcs {
@@ -25,6 +26,7 @@ namespace Orion.Events.Npcs {
     [Event("npc-spawn")]
     public sealed class NpcSpawnEvent : NpcEvent, ICancelable {
         /// <inheritdoc/>
+        [NotLogged]
         public string? CancellationReason { get; set; }
 
         /// <summary>

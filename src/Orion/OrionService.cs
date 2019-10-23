@@ -31,17 +31,26 @@ namespace Orion {
         Justification = "IDisposable pattern makes no sense")]
     public abstract class OrionService : IDisposable {
         /// <summary>
+        /// Gets the service's <see cref="OrionKernel"/> instance.
+        /// </summary>
+        /// <value>The service's <see cref="OrionKernel"/> instance.</value>
+        public OrionKernel Kernel { get; }
+
+        /// <summary>
         /// Gets the service's log.
         /// </summary>
         /// <value>The service's log.</value>
         public ILogger Log { get; }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="OrionService"/> class with the specified log.
+        /// Initializes a new instance of the <see cref="OrionService"/> class with the specified
+        /// <see cref="OrionKernel"/> instance and log.
         /// </summary>
+        /// <param name="kernel">The <see cref="OrionKernel"/> instance.</param>
         /// <param name="log">The log.</param>
         /// <exception cref="ArgumentNullException"><paramref name="log"/> is <see langword="null"/>.</exception>
-        protected OrionService(ILogger log) {
+        protected OrionService(OrionKernel kernel, ILogger log) {
+            Kernel = kernel ?? throw new ArgumentNullException(nameof(kernel));
             Log = log ?? throw new ArgumentNullException(nameof(log));
         }
 

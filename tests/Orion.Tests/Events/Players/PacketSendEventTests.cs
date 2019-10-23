@@ -44,9 +44,9 @@ namespace Orion.Events.Players {
         public void Player_Get() {
             var receiver = new Mock<IPlayer>().Object;
             var packet = new Mock<Packet>().Object;
-            var args = new PacketSendEvent(receiver, packet);
+            var e = new PacketSendEvent(receiver, packet);
 
-            args.Receiver.Should().BeSameAs(receiver);
+            e.Receiver.Should().BeSameAs(receiver);
         }
     }
 }

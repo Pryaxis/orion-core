@@ -47,7 +47,8 @@ namespace Orion.World.TileEntities {
 
         [Fact]
         public void Chests_Item_Get() {
-            using var tileEntityService = new OrionTileEntityService(Logger.None);
+            using var kernel = new OrionKernel(Logger.None);
+            using var tileEntityService = new OrionTileEntityService(kernel, Logger.None);
             Main.chest[0] = new TerrariaChest();
             for (var i = 0; i < TerrariaChest.maxItems; ++i) {
                 Main.chest[0].item[i] = new TerrariaItem();
@@ -61,7 +62,8 @@ namespace Orion.World.TileEntities {
 
         [Fact]
         public void Chests_Item_GetMultipleTimes_ReturnsSameInstance() {
-            using var tileEntityService = new OrionTileEntityService(Logger.None);
+            using var kernel = new OrionKernel(Logger.None);
+            using var tileEntityService = new OrionTileEntityService(kernel, Logger.None);
             Main.chest[0] = new TerrariaChest();
             for (var i = 0; i < TerrariaChest.maxItems; ++i) {
                 Main.chest[0].item[i] = new TerrariaItem();
@@ -77,7 +79,8 @@ namespace Orion.World.TileEntities {
         [InlineData(-1)]
         [InlineData(10000)]
         public void Chests_Item_GetInvalidIndex_ThrowsIndexOutOfRangeException(int index) {
-            using var tileEntityService = new OrionTileEntityService(Logger.None);
+            using var kernel = new OrionKernel(Logger.None);
+            using var tileEntityService = new OrionTileEntityService(kernel, Logger.None);
             Func<IChest> func = () => tileEntityService.Chests[index];
 
             func.Should().Throw<IndexOutOfRangeException>();
@@ -85,7 +88,8 @@ namespace Orion.World.TileEntities {
 
         [Fact]
         public void Chests_GetEnumerator() {
-            using var tileEntityService = new OrionTileEntityService(Logger.None);
+            using var kernel = new OrionKernel(Logger.None);
+            using var tileEntityService = new OrionTileEntityService(kernel, Logger.None);
             for (var i = 0; i < Main.chest.Length; ++i) {
                 Main.chest[i] = new TerrariaChest();
                 for (var j = 0; j < TerrariaChest.maxItems; ++j) {
@@ -103,7 +107,8 @@ namespace Orion.World.TileEntities {
 
         [Fact]
         public void Signs_Item_Get() {
-            using var tileEntityService = new OrionTileEntityService(Logger.None);
+            using var kernel = new OrionKernel(Logger.None);
+            using var tileEntityService = new OrionTileEntityService(kernel, Logger.None);
             Main.sign[0] = new TerrariaSign();
             var sign = tileEntityService.Signs[0];
 
@@ -113,7 +118,8 @@ namespace Orion.World.TileEntities {
 
         [Fact]
         public void Signs_Item_GetMultipleTimes_ReturnsSameInstance() {
-            using var tileEntityService = new OrionTileEntityService(Logger.None);
+            using var kernel = new OrionKernel(Logger.None);
+            using var tileEntityService = new OrionTileEntityService(kernel, Logger.None);
             var sign = tileEntityService.Signs[0];
             var sign2 = tileEntityService.Signs[0];
 
@@ -124,7 +130,8 @@ namespace Orion.World.TileEntities {
         [InlineData(-1)]
         [InlineData(10000)]
         public void Signs_Item_GetInvalidIndex_ThrowsIndexOutOfRangeException(int index) {
-            using var tileEntityService = new OrionTileEntityService(Logger.None);
+            using var kernel = new OrionKernel(Logger.None);
+            using var tileEntityService = new OrionTileEntityService(kernel, Logger.None);
             Func<ISign> func = () => tileEntityService.Signs[index];
 
             func.Should().Throw<IndexOutOfRangeException>();
@@ -132,7 +139,8 @@ namespace Orion.World.TileEntities {
 
         [Fact]
         public void Signs_GetEnumerator() {
-            using var tileEntityService = new OrionTileEntityService(Logger.None);
+            using var kernel = new OrionKernel(Logger.None);
+            using var tileEntityService = new OrionTileEntityService(kernel, Logger.None);
             for (var i = 0; i < Main.sign.Length; ++i) {
                 Main.sign[i] = new TerrariaSign();
             }
@@ -147,7 +155,8 @@ namespace Orion.World.TileEntities {
 
         [Fact]
         public void AddTileEntity_Chest() {
-            using var tileEntityService = new OrionTileEntityService(Logger.None);
+            using var kernel = new OrionKernel(Logger.None);
+            using var tileEntityService = new OrionTileEntityService(kernel, Logger.None);
             var chest = (IChest)tileEntityService.AddTileEntity(TileEntityType.Chest, 1, 2);
 
             chest.Should().NotBeNull();
@@ -159,7 +168,8 @@ namespace Orion.World.TileEntities {
 
         [Fact]
         public void AddTileEntity_Chest_NoRoom_ReturnsNull() {
-            using var tileEntityService = new OrionTileEntityService(Logger.None);
+            using var kernel = new OrionKernel(Logger.None);
+            using var tileEntityService = new OrionTileEntityService(kernel, Logger.None);
             for (var i = 0; i < Main.chest.Length; ++i) {
                 Main.chest[i] = new TerrariaChest();
             }
@@ -171,7 +181,8 @@ namespace Orion.World.TileEntities {
 
         [Fact]
         public void AddTileEntity_Sign() {
-            using var tileEntityService = new OrionTileEntityService(Logger.None);
+            using var kernel = new OrionKernel(Logger.None);
+            using var tileEntityService = new OrionTileEntityService(kernel, Logger.None);
             var sign = (ISign)tileEntityService.AddTileEntity(TileEntityType.Sign, 1, 2);
 
             sign.Should().NotBeNull();
@@ -183,7 +194,8 @@ namespace Orion.World.TileEntities {
 
         [Fact]
         public void AddTileEntity_Sign_NoRoom_ReturnsNull() {
-            using var tileEntityService = new OrionTileEntityService(Logger.None);
+            using var kernel = new OrionKernel(Logger.None);
+            using var tileEntityService = new OrionTileEntityService(kernel, Logger.None);
             for (var i = 0; i < Main.sign.Length; ++i) {
                 Main.sign[i] = new TerrariaSign();
             }
@@ -195,7 +207,8 @@ namespace Orion.World.TileEntities {
 
         [Fact]
         public void AddTileEntity_TargetDummy() {
-            using var tileEntityService = new OrionTileEntityService(Logger.None);
+            using var kernel = new OrionKernel(Logger.None);
+            using var tileEntityService = new OrionTileEntityService(kernel, Logger.None);
             var targetDummy = (ITargetDummy)tileEntityService.AddTileEntity(TileEntityType.TargetDummy, 1, 2);
 
             targetDummy.Should().NotBeNull();
@@ -207,7 +220,8 @@ namespace Orion.World.TileEntities {
 
         [Fact]
         public void AddTileEntity_ItemFrame() {
-            using var tileEntityService = new OrionTileEntityService(Logger.None);
+            using var kernel = new OrionKernel(Logger.None);
+            using var tileEntityService = new OrionTileEntityService(kernel, Logger.None);
             var itemFrame = (IItemFrame)tileEntityService.AddTileEntity(TileEntityType.ItemFrame, 1, 2);
 
             itemFrame.Should().NotBeNull();
@@ -219,7 +233,8 @@ namespace Orion.World.TileEntities {
 
         [Fact]
         public void AddTileEntity_LogicSensor() {
-            using var tileEntityService = new OrionTileEntityService(Logger.None);
+            using var kernel = new OrionKernel(Logger.None);
+            using var tileEntityService = new OrionTileEntityService(kernel, Logger.None);
             var logicSensor = (ILogicSensor)tileEntityService.AddTileEntity(TileEntityType.LogicSensor, 1, 2);
 
             logicSensor.Should().NotBeNull();
@@ -231,7 +246,8 @@ namespace Orion.World.TileEntities {
 
         [Fact]
         public void AddTileEntity_ExistsAlready_ReturnsNull() {
-            using var tileEntityService = new OrionTileEntityService(Logger.None);
+            using var kernel = new OrionKernel(Logger.None);
+            using var tileEntityService = new OrionTileEntityService(kernel, Logger.None);
             tileEntityService.AddTileEntity(TileEntityType.Chest, 1, 2);
 
             tileEntityService.AddTileEntity(TileEntityType.Chest, 1, 2).Should().BeNull();
@@ -239,7 +255,8 @@ namespace Orion.World.TileEntities {
 
         [Fact]
         public void GetTileEntity_Chest() {
-            using var tileEntityService = new OrionTileEntityService(Logger.None);
+            using var kernel = new OrionKernel(Logger.None);
+            using var tileEntityService = new OrionTileEntityService(kernel, Logger.None);
             Main.chest[1] = new TerrariaChest {
                 x = 1,
                 y = 2
@@ -258,7 +275,8 @@ namespace Orion.World.TileEntities {
 
         [Fact]
         public void GetTileEntity_Sign() {
-            using var tileEntityService = new OrionTileEntityService(Logger.None);
+            using var kernel = new OrionKernel(Logger.None);
+            using var tileEntityService = new OrionTileEntityService(kernel, Logger.None);
             Main.sign[1] = new TerrariaSign {
                 x = 1,
                 y = 2,
@@ -276,7 +294,8 @@ namespace Orion.World.TileEntities {
 
         [Fact]
         public void GetTileEntity_TargetDummy() {
-            using var tileEntityService = new OrionTileEntityService(Logger.None);
+            using var kernel = new OrionKernel(Logger.None);
+            using var tileEntityService = new OrionTileEntityService(kernel, Logger.None);
             var targetDummyIndex = TerrariaTargetDummy.Place(1, 2);
 
             var targetDummy = (ITargetDummy)tileEntityService.GetTileEntity(1, 2);
@@ -289,7 +308,8 @@ namespace Orion.World.TileEntities {
 
         [Fact]
         public void GetTileEntity_ItemFrame() {
-            using var tileEntityService = new OrionTileEntityService(Logger.None);
+            using var kernel = new OrionKernel(Logger.None);
+            using var tileEntityService = new OrionTileEntityService(kernel, Logger.None);
             var itemFrameIndex = TerrariaItemFrame.Place(1, 2);
 
             var itemFrame = (IItemFrame)tileEntityService.GetTileEntity(1, 2);
@@ -302,7 +322,8 @@ namespace Orion.World.TileEntities {
 
         [Fact]
         public void GetTileEntity_LogicSensor() {
-            using var tileEntityService = new OrionTileEntityService(Logger.None);
+            using var kernel = new OrionKernel(Logger.None);
+            using var tileEntityService = new OrionTileEntityService(kernel, Logger.None);
             var logicSensorIndex = TerrariaLogicSensor.Place(1, 2);
 
             var logicSensor = (ILogicSensor)tileEntityService.GetTileEntity(1, 2);
@@ -315,14 +336,16 @@ namespace Orion.World.TileEntities {
 
         [Fact]
         public void GetTileEntity_NoTileEntity_ReturnsNull() {
-            using var tileEntityService = new OrionTileEntityService(Logger.None);
+            using var kernel = new OrionKernel(Logger.None);
+            using var tileEntityService = new OrionTileEntityService(kernel, Logger.None);
 
             tileEntityService.GetTileEntity(1, 2).Should().BeNull();
         }
 
         [Fact]
         public void RemoveTileEntity_Chest() {
-            using var tileEntityService = new OrionTileEntityService(Logger.None);
+            using var kernel = new OrionKernel(Logger.None);
+            using var tileEntityService = new OrionTileEntityService(kernel, Logger.None);
             Main.chest[1] = new TerrariaChest {
                 x = 1,
                 y = 2
@@ -344,7 +367,8 @@ namespace Orion.World.TileEntities {
 
         [Fact]
         public void RemoveTileEntity_Sign() {
-            using var tileEntityService = new OrionTileEntityService(Logger.None);
+            using var kernel = new OrionKernel(Logger.None);
+            using var tileEntityService = new OrionTileEntityService(kernel, Logger.None);
             Main.sign[1] = new TerrariaSign {
                 x = 1,
                 y = 2,
@@ -363,7 +387,8 @@ namespace Orion.World.TileEntities {
 
         [Fact]
         public void RemoveTileEntity_TerrariaTileEntity() {
-            using var tileEntityService = new OrionTileEntityService(Logger.None);
+            using var kernel = new OrionKernel(Logger.None);
+            using var tileEntityService = new OrionTileEntityService(kernel, Logger.None);
             var targetDummyIndex = TerrariaTargetDummy.Place(1, 2);
 
             var mockTargetDummy = new Mock<ITargetDummy>();
@@ -380,7 +405,8 @@ namespace Orion.World.TileEntities {
 
         [Fact]
         public void RemoveTileEntity_NoChest_ReturnsFalse() {
-            using var tileEntityService = new OrionTileEntityService(Logger.None);
+            using var kernel = new OrionKernel(Logger.None);
+            using var tileEntityService = new OrionTileEntityService(kernel, Logger.None);
             var mockChest = new Mock<IChest>();
             mockChest.SetupGet(c => c.Index).Returns(0);
             mockChest.SetupGet(c => c.X).Returns(1);
@@ -391,7 +417,8 @@ namespace Orion.World.TileEntities {
 
         [Fact]
         public void RemoveTileEntity_NoSign_ReturnsFalse() {
-            using var tileEntityService = new OrionTileEntityService(Logger.None);
+            using var kernel = new OrionKernel(Logger.None);
+            using var tileEntityService = new OrionTileEntityService(kernel, Logger.None);
             var mockSign = new Mock<ISign>();
             mockSign.SetupGet(s => s.Index).Returns(0);
             mockSign.SetupGet(s => s.X).Returns(1);
@@ -402,7 +429,8 @@ namespace Orion.World.TileEntities {
 
         [Fact]
         public void RemoveTileEntity_NoTileEntity_ReturnsFalse() {
-            using var tileEntityService = new OrionTileEntityService(Logger.None);
+            using var kernel = new OrionKernel(Logger.None);
+            using var tileEntityService = new OrionTileEntityService(kernel, Logger.None);
             var mockTileEntity = new Mock<ITileEntity>();
             mockTileEntity.SetupGet(te => te.Type).Returns(TileEntityType.TargetDummy);
             mockTileEntity.SetupGet(te => te.Index).Returns(0);
@@ -414,7 +442,8 @@ namespace Orion.World.TileEntities {
 
         [Fact]
         public void RemoveTileEntity_NullTileEntity_ThrowsArgumentNullException() {
-            using var tileEntityService = new OrionTileEntityService(Logger.None);
+            using var kernel = new OrionKernel(Logger.None);
+            using var tileEntityService = new OrionTileEntityService(kernel, Logger.None);
             Func<bool> func = () => tileEntityService.RemoveTileEntity(null);
 
             func.Should().Throw<ArgumentNullException>();

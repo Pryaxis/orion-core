@@ -16,6 +16,7 @@
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
 using System;
+using Destructurama.Attributed;
 using Orion.Items;
 
 namespace Orion.Events.Items {
@@ -26,6 +27,7 @@ namespace Orion.Events.Items {
     [Event("item-update")]
     public sealed class ItemUpdateEvent : ItemEvent, ICancelable {
         /// <inheritdoc/>
+        [NotLogged]
         public string? CancellationReason { get; set; }
 
         /// <summary>

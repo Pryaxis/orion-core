@@ -26,9 +26,9 @@ namespace Orion.Events.Npcs {
         [Fact]
         public void Ctor_NotDirty() {
             var npc = new Mock<INpc>().Object;
-            var args = new NpcDefaultsEvent(npc, NpcType.None);
+            var e = new NpcDefaultsEvent(npc, NpcType.None);
 
-            args.IsDirty.Should().BeFalse();
+            e.IsDirty.Should().BeFalse();
         }
 
         [Fact]
@@ -41,17 +41,17 @@ namespace Orion.Events.Npcs {
         [Fact]
         public void SimpleProperties_Set_MarkAsDirty() {
             var npc = new Mock<INpc>().Object;
-            var args = new NpcDefaultsEvent(npc, NpcType.None);
+            var e = new NpcDefaultsEvent(npc, NpcType.None);
 
-            args.SimpleProperties_Set_MarkAsDirty();
+            e.SimpleProperties_Set_MarkAsDirty();
         }
 
         [Fact]
         public void NpcType_Get() {
             var npc = new Mock<INpc>().Object;
-            var args = new NpcDefaultsEvent(npc, NpcType.BlueSlime);
+            var e = new NpcDefaultsEvent(npc, NpcType.BlueSlime);
 
-            args.NpcType.Should().Be(NpcType.BlueSlime);
+            e.NpcType.Should().Be(NpcType.BlueSlime);
         }
     }
 }

@@ -16,6 +16,7 @@
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
 using System;
+using Destructurama.Attributed;
 using Orion.Items;
 
 namespace Orion.Events.Items {
@@ -27,6 +28,7 @@ namespace Orion.Events.Items {
         /// Gets the item involved in the event.
         /// </summary>
         /// <value>The item involved in the event.</value>
+        [LogAsScalar]
         public IItem Item { get; }
 
         /// <summary>

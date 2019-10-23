@@ -17,7 +17,6 @@
 
 using System;
 using System.Diagnostics;
-using System.Diagnostics.CodeAnalysis;
 using Microsoft.Xna.Framework;
 using Orion.Events;
 using Orion.Events.Projectiles;
@@ -31,11 +30,8 @@ namespace Orion.Projectiles {
     [Service("orion-projs")]
     internal sealed class OrionProjectileService : OrionService, IProjectileService {
         public IReadOnlyArray<IProjectile> Projectiles { get; }
-        public EventHandlerCollection<ProjectileDefaultsEvent> ProjectileSetDefaults { get; }
-        public EventHandlerCollection<ProjectileUpdateEvent> ProjectileUpdate { get; }
-        public EventHandlerCollection<ProjectileRemoveEvent> ProjectileRemove { get; }
 
-        public OrionProjectileService(ILogger log) : base(log) {
+        public OrionProjectileService(OrionKernel kernel, ILogger log) : base(kernel, log) {
             Debug.Assert(log != null, "log should not be null");
             Debug.Assert(Main.projectile != null, "Terraria projectiles should not be null");
 
@@ -43,10 +39,6 @@ namespace Orion.Projectiles {
             Projectiles = new WrappedReadOnlyArray<OrionProjectile, TerrariaProjectile>(
                 Main.projectile.AsMemory(..^1),
                 (projectileIndex, terrariaProjectile) => new OrionProjectile(projectileIndex, terrariaProjectile));
-
-            ProjectileSetDefaults = new EventHandlerCollection<ProjectileDefaultsEvent>();
-            ProjectileUpdate = new EventHandlerCollection<ProjectileUpdateEvent>();
-            ProjectileRemove = new EventHandlerCollection<ProjectileRemoveEvent>();
 
             Hooks.Projectile.PreSetDefaultsById = PreSetDefaultsByIdHandler;
             Hooks.Projectile.PreUpdate = PreUpdateHandler;
@@ -66,8 +58,9 @@ namespace Orion.Projectiles {
                 throw new ArgumentException(
                     $"Array does not have length {TerrariaProjectile.maxAI}.", nameof(aiValues));
             }
-
-            LogSpawnProjectile(type, position);
+            
+            // Not localized because this string is developer-facing.
+            Log.Debug("Spawning {ProjectileType} at {Position}", type, position);
 
             var ai0 = aiValues?[0] ?? 0;
             var ai1 = aiValues?[1] ?? 0;
@@ -75,11 +68,6 @@ namespace Orion.Projectiles {
                 damage, knockback, 255, ai0, ai1);
             return projectileIndex >= 0 && projectileIndex < Projectiles.Count ? Projectiles[projectileIndex] : null;
         }
-
-        [Conditional("DEBUG"), ExcludeFromCodeCoverage]
-        private void LogSpawnProjectile(ProjectileType type, Vector2 position) =>
-            // Not localized because this string is developer-facing.
-            Log.Debug("Spawning {ProjectileType} at {Position}", type, position);
 
         private IProjectile GetProjectile(TerrariaProjectile terrariaProjectile) {
             Debug.Assert(terrariaProjectile.whoAmI >= 0 && terrariaProjectile.whoAmI < Projectiles.Count,
@@ -92,115 +80,42 @@ namespace Orion.Projectiles {
                 : new OrionProjectile(terrariaProjectile);
         }
 
-        // =============================================================================================================
-        // Handling ProjectileSetDefaults
-        // =============================================================================================================
-
         private HookResult PreSetDefaultsByIdHandler(TerrariaProjectile terrariaProjectile, ref int projectileType_) {
             Debug.Assert(terrariaProjectile != null, "Terraria projectile should not be null");
 
             var projectile = GetProjectile(terrariaProjectile);
             var projectileType = (ProjectileType)projectileType_;
-            var args = new ProjectileDefaultsEvent(projectile, projectileType);
+            var e = new ProjectileDefaultsEvent(projectile, projectileType);
+            Kernel.RaiseEvent(e, Log);
 
-            LogProjectileSetDefaults_Before(args);
-            ProjectileSetDefaults.Invoke(this, args);
-            LogProjectileSetDefaults_After(args);
-
-            if (args.IsCanceled()) {
+            if (e.IsCanceled()) {
                 return HookResult.Cancel;
-            } else if (args.IsDirty) {
-                projectileType_ = (int)args.ProjectileType;
+            } else if (e.IsDirty) {
+                projectileType_ = (int)e.ProjectileType;
             }
 
             return HookResult.Continue;
         }
-
-        [Conditional("DEBUG"), ExcludeFromCodeCoverage]
-        private void LogProjectileSetDefaults_Before(ProjectileDefaultsEvent args) =>
-            // Not localized because this string is developer-facing.
-            Log.Verbose(
-                "Invoking {Event} with [{Projectile}, {ProjectileType}]",
-                ProjectileSetDefaults, args.Projectile, args.ProjectileType);
-
-        [Conditional("DEBUG"), ExcludeFromCodeCoverage]
-        private void LogProjectileSetDefaults_After(ProjectileDefaultsEvent args) {
-            if (args.IsCanceled()) {
-                // Not localized because this string is developer-facing.
-                Log.Verbose(
-                    "Canceled {Event} for {CancellationReason}",
-                    ProjectileSetDefaults, args.CancellationReason);
-            } else if (args.IsDirty) {
-                // Not localized because this string is developer-facing.
-                Log.Verbose(
-                    "Altered {Event} to [{Projectile}, {ProjectileType}]",
-                    ProjectileSetDefaults, args.Projectile, args.ProjectileType);
-            }
-        }
-
-        // =============================================================================================================
-        // Handling ProjectileUpdate
-        // =============================================================================================================
 
         private HookResult PreUpdateHandler(TerrariaProjectile _, ref int projectileIndex) {
             Debug.Assert(projectileIndex >= 0 && projectileIndex < Projectiles.Count,
                 "projectile index should be valid");
 
             var projectile = Projectiles[projectileIndex];
-            var args = new ProjectileUpdateEvent(projectile);
+            var e = new ProjectileUpdateEvent(projectile);
+            Kernel.RaiseEvent(e, Log);
 
-            LogProjectileUpdate_Before(args);
-            ProjectileUpdate.Invoke(this, args);
-            LogProjectileUpdate_After(args);
-
-            return args.IsCanceled() ? HookResult.Cancel : HookResult.Continue;
+            return e.IsCanceled() ? HookResult.Cancel : HookResult.Continue;
         }
-
-        [Conditional("DEBUG"), ExcludeFromCodeCoverage]
-        private void LogProjectileUpdate_Before(ProjectileUpdateEvent args) =>
-            // Not localized because this string is developer-facing.
-            Log.Verbose(
-                "Invoking {Event} with [{Projectile}, {ProjectileType}]",
-                ProjectileUpdate, args.Projectile, args.Projectile.Type);
-
-        [Conditional("DEBUG"), ExcludeFromCodeCoverage]
-        private void LogProjectileUpdate_After(ProjectileUpdateEvent args) {
-            if (args.IsCanceled()) {
-                // Not localized because this string is developer-facing.
-                Log.Verbose("Canceled {Event} for {CancellationReason}", ProjectileUpdate, args.CancellationReason);
-            }
-        }
-
-        // =============================================================================================================
-        // Handling ProjectileRemove
-        // =============================================================================================================
 
         private HookResult PreKillHandler(TerrariaProjectile terrariaProjectile) {
             Debug.Assert(terrariaProjectile != null, "Terraria projectile should not be null");
 
             var projectile = GetProjectile(terrariaProjectile);
-            var args = new ProjectileRemoveEvent(projectile);
+            var e = new ProjectileRemoveEvent(projectile);
+            Kernel.RaiseEvent(e, Log);
 
-            LogProjectileRemove_Before(args);
-            ProjectileRemove.Invoke(this, args);
-            LogProjectileRemove_After(args);
-
-            return args.IsCanceled() ? HookResult.Cancel : HookResult.Continue;
-        }
-
-        [Conditional("DEBUG"), ExcludeFromCodeCoverage]
-        private void LogProjectileRemove_Before(ProjectileRemoveEvent args) =>
-            // Not localized because this string is developer-facing.
-            Log.Debug(
-                "Invoking {Event} with [{Projectile}, {ProjectileType}]",
-                ProjectileRemove, args.Projectile, args.Projectile.Type);
-
-        [Conditional("DEBUG"), ExcludeFromCodeCoverage]
-        private void LogProjectileRemove_After(ProjectileRemoveEvent args) {
-            if (args.IsCanceled()) {
-                // Not localized because this string is developer-facing.
-                Log.Debug("Canceled {Event} for {CancellationReason}", ProjectileRemove, args.CancellationReason);
-            }
+            return e.IsCanceled() ? HookResult.Cancel : HookResult.Continue;
         }
     }
 }

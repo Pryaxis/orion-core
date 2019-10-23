@@ -31,10 +31,8 @@ namespace Orion.Items {
     [Service("orion-items")]
     internal sealed class OrionItemService : OrionService, IItemService {
         public IReadOnlyArray<IItem> Items { get; }
-        public EventHandlerCollection<ItemDefaultsEvent> ItemSetDefaults { get; }
-        public EventHandlerCollection<ItemUpdateEvent> ItemUpdate { get; }
 
-        public OrionItemService(ILogger log) : base(log) {
+        public OrionItemService(OrionKernel kernel, ILogger log) : base(kernel, log) {
             Debug.Assert(log != null, "log should not be null");
             Debug.Assert(Main.item != null, "Terraria items should not be null");
 
@@ -42,9 +40,6 @@ namespace Orion.Items {
                 // Ignore the last item since it is used as a failure slot.
                 Main.item.AsMemory(..^1),
                 (itemIndex, terrariaItem) => new OrionItem(itemIndex, terrariaItem));
-
-            ItemSetDefaults = new EventHandlerCollection<ItemDefaultsEvent>();
-            ItemUpdate = new EventHandlerCollection<ItemUpdateEvent>();
 
             Hooks.Item.PreSetDefaultsById = PreSetDefaultsByIdHandler;
             Hooks.Item.PreUpdate = PreUpdateHandler;
@@ -57,7 +52,8 @@ namespace Orion.Items {
 
         public IItem? SpawnItem(
                 ItemType type, Vector2 position, int stackSize = 1, ItemPrefix prefix = ItemPrefix.None) {
-            LogSpawnItem(type, position, stackSize);
+            // Not localized because this string is developer-facing.
+            Log.Debug("Spawning {ItemType} x{ItemStackSize} at {Position}", type, stackSize, position);
 
             // Terraria has a mechanism of item caching which allows, for instance, the Grand Design to drop all wires
             // at once. We need to disable that temporarily so that our item *definitely* spawns.
@@ -67,11 +63,6 @@ namespace Orion.Items {
             TerrariaItem.itemCaches[(int)type] = oldItemCache;
             return itemIndex >= 0 && itemIndex < Items.Count ? Items[itemIndex] : null;
         }
-
-        [Conditional("DEBUG"), ExcludeFromCodeCoverage]
-        private void LogSpawnItem(ItemType type, Vector2 position, int stackSize) =>
-            // Not localized because this string is developer-facing.
-            Log.Debug("Spawning {ItemType} x{ItemStackSize} at {Position}", type, stackSize, position);
 
         private IItem GetItem(TerrariaItem terrariaItem) {
             Debug.Assert(
@@ -84,49 +75,22 @@ namespace Orion.Items {
                 : new OrionItem(terrariaItem);
         }
 
-        // =============================================================================================================
-        // Handling ItemSetDefaults
-        // =============================================================================================================
-
         private HookResult PreSetDefaultsByIdHandler(TerrariaItem terrariaItem, ref int itemType_, ref bool _) {
             Debug.Assert(terrariaItem != null, "Terraria item should not be null");
 
             var item = GetItem(terrariaItem);
             var itemType = (ItemType)itemType_;
-            var args = new ItemDefaultsEvent(item, itemType);
+            var e = new ItemDefaultsEvent(item, itemType);
+            Kernel.RaiseEvent(e, Log);
 
-            LogItemSetDefaults_Before(args);
-            ItemSetDefaults.Invoke(this, args);
-            LogItemSetDefaults_After(args);
-
-            if (args.IsCanceled()) {
+            if (e.IsCanceled()) {
                 return HookResult.Cancel;
-            } else if (args.IsDirty) {
-                itemType_ = (int)args.ItemType;
+            } else if (e.IsDirty) {
+                itemType_ = (int)e.ItemType;
             }
 
             return HookResult.Continue;
         }
-
-        [Conditional("DEBUG"), ExcludeFromCodeCoverage]
-        private void LogItemSetDefaults_Before(ItemDefaultsEvent args) =>
-            // Not localized because this string is developer-facing.
-            Log.Verbose("Invoking {Event} with [{Item}, {ItemType}]", ItemSetDefaults, args.Item, args.ItemType);
-
-        [Conditional("DEBUG"), ExcludeFromCodeCoverage]
-        private void LogItemSetDefaults_After(ItemDefaultsEvent args) {
-            if (args.IsCanceled()) {
-                // Not localized because this string is developer-facing.
-                Log.Verbose("Canceled {Event} for {CancellationReason}", ItemSetDefaults, args.CancellationReason);
-            } else if (args.IsDirty) {
-                // Not localized because this string is developer-facing.
-                Log.Verbose("Altered {Event} to [{Item}, {ItemType}]", ItemSetDefaults, args.Item, args.ItemType);
-            }
-        }
-
-        // =============================================================================================================
-        // Handling ItemUpdate
-        // =============================================================================================================
 
         private HookResult PreUpdateHandler(TerrariaItem terrariaItem, ref int itemIndex) {
             Debug.Assert(terrariaItem != null, "Terraria item should not be null");
@@ -136,26 +100,10 @@ namespace Orion.Items {
             terrariaItem.whoAmI = itemIndex;
 
             var item = Items[itemIndex];
-            var args = new ItemUpdateEvent(item);
+            var e = new ItemUpdateEvent(item);
+            Kernel.RaiseEvent(e, Log);
 
-            LogItemUpdate_Before(args);
-            ItemUpdate.Invoke(this, args);
-            LogItemUpdate_After(args);
-
-            return args.IsCanceled() ? HookResult.Cancel : HookResult.Continue;
-        }
-
-        [Conditional("DEBUG"), ExcludeFromCodeCoverage]
-        private void LogItemUpdate_Before(ItemUpdateEvent args) =>
-            // Not localized because this string is developer-facing.
-            Log.Verbose("Invoking {Event} with [{Item}]", ItemUpdate, args.Item);
-
-        [Conditional("DEBUG"), ExcludeFromCodeCoverage]
-        private void LogItemUpdate_After(ItemUpdateEvent args) {
-            if (args.IsCanceled()) {
-                // Not localized because this string is developer-facing.
-                Log.Verbose("Canceled {Event} for {CancellationReason}", ItemUpdate, args.CancellationReason);
-            }
+            return e.IsCanceled() ? HookResult.Cancel : HookResult.Continue;
         }
     }
 }

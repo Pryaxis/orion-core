@@ -16,6 +16,7 @@
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
 using System;
+using Destructurama.Attributed;
 using Orion.Players;
 
 namespace Orion.Events.Players {
@@ -25,6 +26,7 @@ namespace Orion.Events.Players {
     [Event("player-join")]
     public sealed class PlayerJoinEvent : PlayerEvent, ICancelable {
         /// <inheritdoc/>
+        [NotLogged]
         public string? CancellationReason { get; set; }
 
         /// <summary>

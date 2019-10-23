@@ -33,9 +33,9 @@ namespace Orion.Events.Npcs {
         [Fact]
         public void Npc_Get() {
             var npc = new Mock<INpc>().Object;
-            var args = new TestNpcEvent(npc);
+            var e = new TestNpcEvent(npc);
 
-            args.Npc.Should().BeSameAs(npc);
+            e.Npc.Should().BeSameAs(npc);
         }
 
         private class TestNpcEvent : NpcEvent {

@@ -28,7 +28,7 @@ using TerrariaPlayer = Terraria.Player;
 
 namespace Orion.Players {
     internal sealed class OrionPlayer : OrionEntity<TerrariaPlayer>, IPlayer {
-        private readonly IPlayerService _playerService;
+        private readonly OrionPlayerService _playerService;
 
         public override string Name {
             get => Wrapped.name;
@@ -43,11 +43,11 @@ namespace Orion.Players {
         public IPlayerStats Stats { get; }
         public IPlayerInventory Inventory { get; }
 
-        // We need to inject IPlayerService so that we can trigger its PacketSend event.
-        public OrionPlayer(IPlayerService playerService, TerrariaPlayer terrariaPlayer)
+        // We need to inject OrionPlayerService so that we can trigger a PacketSendEvent.
+        public OrionPlayer(OrionPlayerService playerService, TerrariaPlayer terrariaPlayer)
             : this(playerService, -1, terrariaPlayer) { }
 
-        public OrionPlayer(IPlayerService playerService, int playerIndex, TerrariaPlayer terrariaPlayer)
+        public OrionPlayer(OrionPlayerService playerService, int playerIndex, TerrariaPlayer terrariaPlayer)
                 : base(playerIndex, terrariaPlayer) {
             Debug.Assert(playerService != null, "player service should not be null");
 
@@ -70,15 +70,15 @@ namespace Orion.Players {
                 return;
             }
 
-            var args = new PacketSendEvent(this, packet);
-            _playerService.PacketSend.Invoke(this, args);
-            if (args.IsCanceled()) {
+            var e = new PacketSendEvent(this, packet);
+            _playerService.Kernel.RaiseEvent(e, _playerService.Log);
+            if (e.IsCanceled()) {
                 return;
             }
 
             // TODO: consider MemoryStream allocation vs reusing buffer here
             var stream = new MemoryStream();
-            args.Packet.WriteToStream(stream, PacketContext.Server);
+            e.Packet.WriteToStream(stream, PacketContext.Server);
             terrariaClient.Socket?.AsyncSend(
                 stream.ToArray(), 0, (int)stream.Length, terrariaClient.ServerWriteCallBack);
         }

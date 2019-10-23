@@ -33,9 +33,9 @@ namespace Orion.Events.Items {
         [Fact]
         public void Item_Get() {
             var item = new Mock<IItem>().Object;
-            var args = new TestItemEvent(item);
+            var e = new TestItemEvent(item);
 
-            args.Item.Should().BeSameAs(item);
+            e.Item.Should().BeSameAs(item);
         }
 
         private class TestItemEvent : ItemEvent {

@@ -16,6 +16,7 @@
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
 using System;
+using Destructurama.Attributed;
 using Orion.Packets;
 using Orion.Players;
 
@@ -26,12 +27,14 @@ namespace Orion.Events.Players {
     [Event("packet-send")]
     public sealed class PacketSendEvent : PacketEvent, ICancelable {
         /// <inheritdoc/>
+        [NotLogged]
         public string? CancellationReason { get; set; }
 
         /// <summary>
         /// Gets the packet receiver.
         /// </summary>
         /// <value>The packet receiver.</value>
+        [LogAsScalar]
         public IPlayer Receiver { get; }
 
         /// <summary>

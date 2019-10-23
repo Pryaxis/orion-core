@@ -16,6 +16,7 @@
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
 using System;
+using Destructurama.Attributed;
 using Orion.Projectiles;
 using Orion.Utils;
 
@@ -39,9 +40,11 @@ namespace Orion.Events.Projectiles {
         private ProjectileType _projectileType;
 
         /// <inheritdoc/>
+        [NotLogged]
         public string? CancellationReason { get; set; }
 
         /// <inheritdoc/>
+        [NotLogged]
         public bool IsDirty { get; private set; }
 
         /// <summary>

@@ -16,13 +16,14 @@
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
 using System;
+using Destructurama.Attributed;
 using Orion.Items;
 using Orion.Npcs;
 using Orion.Utils;
 
 namespace Orion.Events.Npcs {
     /// <summary>
-    /// An event that occurs when an NPC drops an item. This event can be canceled.
+    /// An event that occurs when an NPC drops an item. This event can be canceled and modified.
     /// </summary>
     [Event("npc-drop-item")]
     public sealed class NpcDropItemEvent : NpcEvent, ICancelable, IDirtiable {
@@ -31,9 +32,11 @@ namespace Orion.Events.Npcs {
         private ItemPrefix _itemPrefix;
 
         /// <inheritdoc/>
+        [NotLogged]
         public string? CancellationReason { get; set; }
 
         /// <inheritdoc/>
+        [NotLogged]
         public bool IsDirty { get; private set; }
 
         /// <summary>

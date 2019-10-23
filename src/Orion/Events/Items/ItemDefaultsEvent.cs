@@ -16,6 +16,7 @@
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
 using System;
+using Destructurama.Attributed;
 using Orion.Items;
 using Orion.Utils;
 
@@ -44,9 +45,11 @@ namespace Orion.Events.Items {
         private ItemType _itemType;
 
         /// <inheritdoc/>
+        [NotLogged]
         public string? CancellationReason { get; set; }
 
         /// <inheritdoc/>
+        [NotLogged]
         public bool IsDirty { get; private set; }
 
         /// <summary>

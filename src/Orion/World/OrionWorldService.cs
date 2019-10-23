@@ -45,10 +45,8 @@ namespace Orion.World {
         }
 
         public InvasionType CurrentInvasionType => (InvasionType)Main.invasionType;
-        public EventHandlerCollection<WorldLoadEvent> WorldLoad { get; }
-        public EventHandlerCollection<WorldSaveEvent> WorldSave { get; }
 
-        public OrionWorldService(ILogger log) : base(log) {
+        public OrionWorldService(OrionKernel kernel, ILogger log) : base(kernel, log) {
             Debug.Assert(log != null, "log should not be null");
 
             // Try to interpret the current Main.tile as a TileCollection. This is only really useful for tests. We
@@ -59,9 +57,6 @@ namespace Orion.World {
                 Main.tile = _tileCollection = new TileCollection();
             }
 
-            WorldLoad = new EventHandlerCollection<WorldLoadEvent>();
-            WorldSave = new EventHandlerCollection<WorldSaveEvent>();
-
             Hooks.World.IO.PreLoadWorld = PreLoadWorldHandler;
             Hooks.World.IO.PreSaveWorld = PreSaveWorldHandler;
         }
@@ -71,39 +66,17 @@ namespace Orion.World {
             Hooks.World.IO.PreSaveWorld = null;
         }
 
-        // =============================================================================================================
-        // Handling WorldLoad
-        // =============================================================================================================
-
         private HookResult PreLoadWorldHandler(ref bool _) {
-            var args = new WorldLoadEvent();
-
-            LogWorldLoad();
-            WorldLoad.Invoke(this, args);
+            var e = new WorldLoadEvent();
+            Kernel.RaiseEvent(e, Log);
             return HookResult.Continue;
         }
-
-        [Conditional("DEBUG"), ExcludeFromCodeCoverage]
-        private void LogWorldLoad() =>
-            // Not localized because this string is developer-facing.
-            Log.Debug("Invoking {Event}", WorldLoad);
-
-        // =============================================================================================================
-        // Handling WorldSave
-        // =============================================================================================================
 
         private HookResult PreSaveWorldHandler(ref bool _, ref bool _2) {
-            var args = new WorldSaveEvent();
-
-            LogWorldSave();
-            WorldSave.Invoke(this, args);
+            var e = new WorldSaveEvent();
+            Kernel.RaiseEvent(e, Log);
             return HookResult.Continue;
         }
-
-        [Conditional("DEBUG"), ExcludeFromCodeCoverage]
-        private void LogWorldSave() =>
-            // Not localized because this string is developer-facing.
-            Log.Debug("Invoking {Event}", WorldSave);
 
         // This class is not disposable since we expect instances to be permanent. However, a finalizer is implemented
         // in case someone modifies Main.tile.

@@ -16,6 +16,7 @@
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
 using System;
+using Destructurama.Attributed;
 
 namespace Orion.Events.Server {
     /// <summary>
@@ -24,6 +25,7 @@ namespace Orion.Events.Server {
     [Event("server-command")]
     public sealed class ServerCommandEvent : Event, ICancelable {
         /// <inheritdoc/>
+        [NotLogged]
         public string? CancellationReason { get; set; }
 
         /// <summary>

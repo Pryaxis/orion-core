@@ -27,9 +27,9 @@ namespace Orion.Events.Players {
         [Fact]
         public void Ctor_NotDirty() {
             var player = new Mock<IPlayer>().Object;
-            var args = new PlayerPasswordEvent(player, new PlayerPasswordResponsePacket());
+            var e = new PlayerPasswordEvent(player, new PlayerPasswordResponsePacket());
 
-            args.IsDirty.Should().BeFalse();
+            e.IsDirty.Should().BeFalse();
         }
 
         [Fact]
@@ -51,24 +51,24 @@ namespace Orion.Events.Players {
         [Fact]
         public void SimpleProperties_Set_MarkAsDirty() {
             var player = new Mock<IPlayer>().Object;
-            var args = new PlayerPasswordEvent(player, new PlayerPasswordResponsePacket());
+            var e = new PlayerPasswordEvent(player, new PlayerPasswordResponsePacket());
 
-            args.SimpleProperties_Set_MarkAsDirty();
+            e.SimpleProperties_Set_MarkAsDirty();
         }
 
         [Fact]
         public void SetGetProperties_ReflectsInPacket() {
             var player = new Mock<IPlayer>().Object;
-            var args = new PlayerPasswordEvent(player, new PlayerPasswordResponsePacket());
+            var e = new PlayerPasswordEvent(player, new PlayerPasswordResponsePacket());
 
-            args.Properties_GetSetShouldReflect("_packet");
+            e.Properties_GetSetShouldReflect("_packet");
         }
 
         [Fact]
         public void PlayerPasswordAttempt_SetNullValue_ThrowsArgumentNullException() {
             var player = new Mock<IPlayer>().Object;
-            var args = new PlayerPasswordEvent(player, new PlayerPasswordResponsePacket());
-            Action action = () => args.PasswordAttempt = null;
+            var e = new PlayerPasswordEvent(player, new PlayerPasswordResponsePacket());
+            Action action = () => e.PasswordAttempt = null;
 
             action.Should().Throw<ArgumentNullException>();
         }

@@ -26,9 +26,9 @@ namespace Orion.Events.Projectiles {
         [Fact]
         public void Ctor_NotDirty() {
             var projectile = new Mock<IProjectile>().Object;
-            var args = new ProjectileDefaultsEvent(projectile, ProjectileType.None);
+            var e = new ProjectileDefaultsEvent(projectile, ProjectileType.None);
 
-            args.IsDirty.Should().BeFalse();
+            e.IsDirty.Should().BeFalse();
         }
 
         [Fact]
@@ -42,17 +42,17 @@ namespace Orion.Events.Projectiles {
         [Fact]
         public void SimpleProperties_Set_MarkAsDirty() {
             var projectile = new Mock<IProjectile>().Object;
-            var args = new ProjectileDefaultsEvent(projectile, ProjectileType.None);
+            var e = new ProjectileDefaultsEvent(projectile, ProjectileType.None);
 
-            args.SimpleProperties_Set_MarkAsDirty();
+            e.SimpleProperties_Set_MarkAsDirty();
         }
 
         [Fact]
         public void ProjectileType_Get() {
             var projectile = new Mock<IProjectile>().Object;
-            var args = new ProjectileDefaultsEvent(projectile, ProjectileType.CrystalBullet);
+            var e = new ProjectileDefaultsEvent(projectile, ProjectileType.CrystalBullet);
 
-            args.ProjectileType.Should().Be(ProjectileType.CrystalBullet);
+            e.ProjectileType.Should().Be(ProjectileType.CrystalBullet);
         }
     }
 }

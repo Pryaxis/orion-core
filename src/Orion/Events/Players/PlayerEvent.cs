@@ -16,6 +16,7 @@
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
 using System;
+using Destructurama.Attributed;
 using Orion.Players;
 
 namespace Orion.Events.Players {
@@ -27,6 +28,7 @@ namespace Orion.Events.Players {
         /// Gets the player involved in the event.
         /// </summary>
         /// <value>The player involved in the event.</value>
+        [LogAsScalar]
         public IPlayer Player { get; }
 
         /// <summary>

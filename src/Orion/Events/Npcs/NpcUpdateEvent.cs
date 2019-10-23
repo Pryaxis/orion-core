@@ -16,6 +16,7 @@
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
 using System;
+using Destructurama.Attributed;
 using Orion.Npcs;
 
 namespace Orion.Events.Npcs {
@@ -26,6 +27,7 @@ namespace Orion.Events.Npcs {
     [Event("npc-update")]
     public sealed class NpcUpdateEvent : NpcEvent, ICancelable {
         /// <inheritdoc/>
+        [NotLogged]
         public string? CancellationReason { get; set; }
 
         /// <summary>

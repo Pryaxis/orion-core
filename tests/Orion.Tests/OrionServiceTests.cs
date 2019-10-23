@@ -27,15 +27,16 @@ namespace Orion {
         [Fact]
         public void Ctor_NullLog_ThrowsArgumentNullException() {
             using var kernel = new OrionKernel(Logger.None);
-            Func<OrionService> func = () => new TestService(null);
+            Func<OrionService> func = () => new TestService(kernel, null);
 
             func.Should().Throw<ArgumentNullException>();
         }
 
         [Fact]
         public void Log_Get() {
+            using var kernel = new OrionKernel(Logger.None);
             var mockLog = new Mock<ILogger>();
-            using var service = new TestService(mockLog.Object);
+            using var service = new TestService(kernel, mockLog.Object);
 
             service.Log.Information("TEST");
 
@@ -45,7 +46,7 @@ namespace Orion {
         public class TestService : OrionService {
             public new ILogger Log => base.Log;
 
-            public TestService(ILogger log) : base(log) { }
+            public TestService(OrionKernel kernel, ILogger log) : base(kernel, log) { }
         }
     }
 }

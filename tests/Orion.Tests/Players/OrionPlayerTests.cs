@@ -18,10 +18,10 @@
 using System;
 using System.Diagnostics.CodeAnalysis;
 using FluentAssertions;
-using Moq;
 using Orion.Events;
 using Orion.Events.Players;
 using Orion.Packets.World;
+using Serilog.Core;
 using Terraria.Net;
 using Terraria.Net.Sockets;
 using Xunit;
@@ -33,18 +33,20 @@ namespace Orion.Players {
     public class OrionPlayerTests {
         [Fact]
         public void Name_Get() {
-            var mockPlayerService = new Mock<IPlayerService>();
+            using var kernel = new OrionKernel(Logger.None);
+            using var playerService = new OrionPlayerService(kernel, Logger.None);
             var terrariaPlayer = new TerrariaPlayer { name = "test" };
-            var player = new OrionPlayer(mockPlayerService.Object, terrariaPlayer);
+            var player = new OrionPlayer(playerService, terrariaPlayer);
 
             player.Name.Should().Be("test");
         }
 
         [Fact]
         public void Name_Set() {
-            var mockPlayerService = new Mock<IPlayerService>();
+            using var kernel = new OrionKernel(Logger.None);
+            using var playerService = new OrionPlayerService(kernel, Logger.None);
             var terrariaPlayer = new TerrariaPlayer();
-            var player = new OrionPlayer(mockPlayerService.Object, terrariaPlayer);
+            var player = new OrionPlayer(playerService, terrariaPlayer);
 
             player.Name = "test";
 
@@ -53,9 +55,10 @@ namespace Orion.Players {
 
         [Fact]
         public void Name_SetNullValue_ThrowsArgumentNullException() {
-            var mockPlayerService = new Mock<IPlayerService>();
+            using var kernel = new OrionKernel(Logger.None);
+            using var playerService = new OrionPlayerService(kernel, Logger.None);
             var terrariaPlayer = new TerrariaPlayer();
-            var player = new OrionPlayer(mockPlayerService.Object, terrariaPlayer);
+            var player = new OrionPlayer(playerService, terrariaPlayer);
             Action action = () => player.Name = null;
 
             action.Should().Throw<ArgumentNullException>();
@@ -63,18 +66,20 @@ namespace Orion.Players {
 
         [Fact]
         public void Team_Get() {
-            var mockPlayerService = new Mock<IPlayerService>();
+            using var kernel = new OrionKernel(Logger.None);
+            using var playerService = new OrionPlayerService(kernel, Logger.None);
             var terrariaPlayer = new TerrariaPlayer { team = (int)PlayerTeam.Red };
-            var player = new OrionPlayer(mockPlayerService.Object, terrariaPlayer);
+            var player = new OrionPlayer(playerService, terrariaPlayer);
 
             player.Team.Should().Be(PlayerTeam.Red);
         }
 
         [Fact]
         public void Team_Set() {
-            var mockPlayerService = new Mock<IPlayerService>();
+            using var kernel = new OrionKernel(Logger.None);
+            using var playerService = new OrionPlayerService(kernel, Logger.None);
             var terrariaPlayer = new TerrariaPlayer();
-            var player = new OrionPlayer(mockPlayerService.Object, terrariaPlayer);
+            var player = new OrionPlayer(playerService, terrariaPlayer);
 
             player.Team = PlayerTeam.Red;
 
@@ -83,18 +88,20 @@ namespace Orion.Players {
 
         [Fact]
         public void Stats_Get() {
-            var mockPlayerService = new Mock<IPlayerService>();
+            using var kernel = new OrionKernel(Logger.None);
+            using var playerService = new OrionPlayerService(kernel, Logger.None);
             var terrariaPlayer = new TerrariaPlayer();
-            var player = new OrionPlayer(mockPlayerService.Object, terrariaPlayer);
+            var player = new OrionPlayer(playerService, terrariaPlayer);
 
             player.Stats.Should().NotBeNull();
         }
 
         [Fact]
         public void Inventory_Get() {
-            var mockPlayerService = new Mock<IPlayerService>();
+            using var kernel = new OrionKernel(Logger.None);
+            using var playerService = new OrionPlayerService(kernel, Logger.None);
             var terrariaPlayer = new TerrariaPlayer();
-            var player = new OrionPlayer(mockPlayerService.Object, terrariaPlayer);
+            var player = new OrionPlayer(playerService, terrariaPlayer);
 
             player.Inventory.Should().NotBeNull();
         }
@@ -106,19 +113,18 @@ namespace Orion.Players {
                 Id = 5,
                 Socket = socket
             };
-            var mockPlayerService = new Mock<IPlayerService>();
+            using var kernel = new OrionKernel(Logger.None);
+            using var playerService = new OrionPlayerService(kernel, Logger.None);
             var terrariaPlayer = new TerrariaPlayer();
-            var player = new OrionPlayer(mockPlayerService.Object, 5, terrariaPlayer);
+            var player = new OrionPlayer(playerService, 5, terrariaPlayer);
             var packet = new ChatPacket { Text = "test" };
 
             var isRun = false;
-            var packetSend = new EventHandlerCollection<PacketSendEvent>();
-            packetSend.RegisterHandler((sender, args) => {
+            kernel.RegisterHandler<PacketSendEvent>(e => {
                 isRun = true;
-                args.Receiver.Should().BeSameAs(player);
-                args.Packet.Should().BeEquivalentTo(packet);
+                e.Receiver.Should().BeSameAs(player);
+                e.Packet.Should().BeEquivalentTo(packet);
             });
-            mockPlayerService.Setup(ps => ps.PacketSend).Returns(packetSend);
 
             player.SendPacket(packet);
 
@@ -133,9 +139,10 @@ namespace Orion.Players {
                 Id = 5,
                 Socket = socket
             };
-            var mockPlayerService = new Mock<IPlayerService>();
+            using var kernel = new OrionKernel(Logger.None);
+            using var playerService = new OrionPlayerService(kernel, Logger.None);
             var terrariaPlayer = new TerrariaPlayer();
-            var player = new OrionPlayer(mockPlayerService.Object, 5, terrariaPlayer);
+            var player = new OrionPlayer(playerService, 5, terrariaPlayer);
             var packet = new ChatPacket { Text = "test" };
 
             player.SendPacket(packet);
@@ -150,14 +157,12 @@ namespace Orion.Players {
                 Id = 5,
                 Socket = socket
             };
-            var mockPlayerService = new Mock<IPlayerService>();
+            using var kernel = new OrionKernel(Logger.None);
+            using var playerService = new OrionPlayerService(kernel, Logger.None);
             var terrariaPlayer = new TerrariaPlayer();
-            var player = new OrionPlayer(mockPlayerService.Object, 5, terrariaPlayer);
+            var player = new OrionPlayer(playerService, 5, terrariaPlayer);
             var packet = new ChatPacket { Text = "test" };
-
-            var packetSend = new EventHandlerCollection<PacketSendEvent>();
-            packetSend.RegisterHandler((sender, args) => args.Cancel());
-            mockPlayerService.Setup(ps => ps.PacketSend).Returns(packetSend);
+            kernel.RegisterHandler<PacketSendEvent>(e => e.Cancel());
 
             player.SendPacket(packet);
 
@@ -166,9 +171,10 @@ namespace Orion.Players {
 
         [Fact]
         public void SendPacket_NullPacket_ThrowsArgumentNullException() {
-            var mockPlayerService = new Mock<IPlayerService>();
+            using var kernel = new OrionKernel(Logger.None);
+            using var playerService = new OrionPlayerService(kernel, Logger.None);
             var terrariaPlayer = new TerrariaPlayer();
-            var player = new OrionPlayer(mockPlayerService.Object, terrariaPlayer);
+            var player = new OrionPlayer(playerService, terrariaPlayer);
             Action action = () => player.SendPacket(null);
 
             action.Should().Throw<ArgumentNullException>();

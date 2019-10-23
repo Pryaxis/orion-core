@@ -16,6 +16,7 @@
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
 using System;
+using Destructurama.Attributed;
 using Orion.Projectiles;
 
 namespace Orion.Events.Projectiles {
@@ -25,6 +26,7 @@ namespace Orion.Events.Projectiles {
     [Event("proj-remove")]
     public sealed class ProjectileRemoveEvent : ProjectileEvent, ICancelable {
         /// <inheritdoc/>
+        [NotLogged]
         public string? CancellationReason { get; set; }
 
         /// <summary>

@@ -44,42 +44,24 @@ namespace Orion {
     /// <remarks>The <see cref="OrionKernel"/> class is responsible for managing Orion's plugins and services.</remarks>
     public sealed class OrionKernel : StandardKernel {
         private readonly ILogger _log;
+
         private readonly ISet<Assembly> _pluginAssemblies = new HashSet<Assembly>();
         private readonly ISet<Type> _pluginTypesToLoad = new HashSet<Type>();
         private readonly Dictionary<string, OrionPlugin> _plugins = new Dictionary<string, OrionPlugin>();
         private readonly Dictionary<OrionPlugin, string> _pluginToName = new Dictionary<OrionPlugin, string>();
+
+        private readonly MethodInfo _registerHandler = typeof(OrionKernel).GetMethod(nameof(RegisterHandler));
+        private readonly MethodInfo _unregisterHandler = typeof(OrionKernel).GetMethod(nameof(UnregisterHandler));
+        private readonly IDictionary<Type, object> _eventHandlerCollections = new Dictionary<Type, object>();
+
+        private readonly IDictionary<object, HashSet<(Type type, object handler)>> _objectToHandlers =
+            new Dictionary<object, HashSet<(Type type, object handler)>>();
 
         /// <summary>
         /// Gets a read-only mapping from plugin names to <see cref="OrionPlugin"/> instances.
         /// </summary>
         /// <value>A read-only mapping from plugin names to plugins.</value>
         public IReadOnlyDictionary<string, OrionPlugin> Plugins => _plugins;
-
-        /// <summary>
-        /// Gets the events that occur when the server initializes.
-        /// </summary>
-        /// <value>The events that occur when the server initializes.</value>
-        /// <remarks>This event is invoked once the server reaches the world loading stage.</remarks>
-        public EventHandlerCollection<ServerInitializeEvent> ServerInitialize { get; }
-
-        /// <summary>
-        /// Gets the events that occur when the server starts.
-        /// </summary>
-        /// <value>The events that occur when the server starts.</value>
-        /// <remarks>This event is invoked once the server starts accepting connections.</remarks>
-        public EventHandlerCollection<ServerStartEvent> ServerStart { get; }
-
-        /// <summary>
-        /// Gets the events that occur when the server updates.
-        /// </summary>
-        /// <value>The events that occur when the server updates.</value>
-        public EventHandlerCollection<ServerUpdateEvent> ServerUpdate { get; }
-
-        /// <summary>
-        /// Gets the events that occur when the server executes a command. This event can be canceled.
-        /// </summary>
-        /// <value>The events that occur when the server executes a command.</value>
-        public EventHandlerCollection<ServerCommandEvent> ServerCommand { get; }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="OrionKernel"/> class with the specified log.
@@ -108,11 +90,6 @@ namespace Orion {
             }).InTransientScope();
 
             _log = this.Get<ILogger>();
-
-            ServerInitialize = new EventHandlerCollection<ServerInitializeEvent>();
-            ServerStart = new EventHandlerCollection<ServerStartEvent>();
-            ServerUpdate = new EventHandlerCollection<ServerUpdateEvent>();
-            ServerCommand = new EventHandlerCollection<ServerCommandEvent>();
 
             // Create bindings for Lazy<T> so that we can have lazily loaded services. This allows plugins to override
             // the above service bindings if necessary.
@@ -248,84 +225,177 @@ namespace Orion {
             return true;
         }
 
+        /// <summary>
+        /// Registers the given <paramref name="handler"/> as an event handler for the relevant event, optionally with
+        /// the specified <paramref name="log"/>.
+        /// </summary>
+        /// <typeparam name="TEvent">The type of event.</typeparam>
+        /// <param name="handler">The handler.</param>
+        /// <param name="log">The log, or <see langword="null"/> for no logging.</param>
+        /// <remarks>
+        /// <paramref name="log"/> will be used to provide logging for the event. It should be included if possible as
+        /// it greatly helps with debugging.
+        /// </remarks>
+        /// <exception cref="ArgumentNullException"><paramref name="handler"/> is <see langword="null"/>.</exception>
+        public void RegisterHandler<TEvent>(Action<TEvent> handler, ILogger? log = null) where TEvent : Event {
+            if (handler is null) {
+                throw new ArgumentNullException(nameof(handler));
+            }
+
+            var collection = GetEventHandlerCollection<TEvent>();
+            collection.RegisterHandler(handler, log);
+        }
+
+        /// <summary>
+        /// Registers all of the methods marked with <see cref="EventHandlerAttribute"/> as handlers in the given
+        /// <paramref name="handlerObject"/>, optionally with the specified <paramref name="log"/>.
+        /// </summary>
+        /// <param name="handlerObject">The handler object.</param>
+        /// <param name="log">The log, or <see langword="null"/> for no logging.</param>
+        /// <remarks>
+        /// <paramref name="log"/> will be used to provide logging for the event. It should be included if possible as
+        /// it greatly helps with debugging.
+        /// </remarks>
+        /// <exception cref="ArgumentException">
+        /// <paramref name="handlerObject"/> contains a method marked with <see cref="EventHandlerAttribute"/> which is
+        /// not of the correct form.
+        /// </exception>
+        /// <exception cref="ArgumentNullException">
+        /// <paramref name="handlerObject"/> is <see langword="null"/>.
+        /// </exception>
+        public void RegisterHandlers(object handlerObject, ILogger? log = null) {
+            if (handlerObject is null) {
+                throw new ArgumentNullException(nameof(handlerObject));
+            }
+
+            var set = _objectToHandlers[handlerObject] = new HashSet<(Type type, object handler)>();
+            foreach (var method in handlerObject.GetType().GetMethods()) {
+                if (method.GetCustomAttribute<EventHandlerAttribute>() is null) {
+                    continue;
+                }
+
+                var parameters = method.GetParameters();
+                if (parameters.Length != 1) {
+                    throw new ArgumentException(
+                        $"Method {method.Name} does not have exactly one argument.", nameof(handlerObject));
+                }
+
+                var type = parameters[0].ParameterType;
+                if (!type.IsSubclassOf(typeof(Event))) {
+                    throw new ArgumentException(
+                        $"Method {method.Name} does not have an argument of type {nameof(Event)}.",
+                        nameof(handlerObject));
+                }
+
+                var handlerType = typeof(Action<>).MakeGenericType(type);
+                var handler = method.CreateDelegate(handlerType, handlerObject);
+                _registerHandler.MakeGenericMethod(type).Invoke(this, new object?[] { handler, log });
+                set.Add((type, handler));
+            }
+        }
+
+        /// <summary>
+        /// Raises the given event, optionally with the specified <paramref name="log"/>.
+        /// </summary>
+        /// <typeparam name="TEvent">The type of event.</typeparam>
+        /// <param name="e">The event.</param>
+        /// <param name="log">The log, or <see langword="null"/> for none.</param>
+        /// <exception cref="ArgumentNullException"><paramref name="e"/> is <see langword="null"/>.</exception>
+        [SuppressMessage("Design", "CA1030:Use events where appropriate", Justification = "Can't use .NET events")]
+        public void RaiseEvent<TEvent>(TEvent e, ILogger? log) where TEvent : Event {
+            if (e is null) {
+                throw new ArgumentNullException(nameof(e));
+            }
+
+            var collection = GetEventHandlerCollection<TEvent>();
+            collection.Raise(e, log);
+        }
+
+        /// <summary>
+        /// Unregisters the given <paramref name="handler"/>.
+        /// </summary>
+        /// <typeparam name="TEvent">The type of event.</typeparam>
+        /// <param name="handler">The handler.</param>
+        /// <remarks>
+        /// Handlers should be unregistered where possible. Neglecting to do so can result in memory locks and incorrect
+        /// cleanup.
+        /// </remarks>
+        /// <exception cref="ArgumentNullException"><paramref name="handler"/> is <see langword="null"/>.</exception>
+        public void UnregisterHandler<TEvent>(Action<TEvent> handler) where TEvent : Event {
+            if (handler is null) {
+                throw new ArgumentNullException(nameof(handler));
+            }
+
+            var collection = GetEventHandlerCollection<TEvent>();
+            collection.UnregisterHandler(handler);
+        }
+
+        /// <summary>
+        /// Unregisters all of the methods marked with <see cref="EventHandlerAttribute"/> as handlers in the given
+        /// <paramref name="handlerObject"/>.
+        /// </summary>
+        /// <param name="handlerObject">The handler object.</param>
+        /// <remarks>
+        /// Handlers should be unregistered where possible. Neglecting to do so can result in memory locks and incorrect
+        /// cleanup.
+        /// </remarks>
+        /// <exception cref="ArgumentException">
+        /// <paramref name="handlerObject"/> contains a method marked with <see cref="EventHandlerAttribute"/> which is
+        /// not of the correct form.
+        /// </exception>
+        /// <exception cref="ArgumentNullException">
+        /// <paramref name="handlerObject"/> is <see langword="null"/>.
+        /// </exception>
+        public void UnregisterHandlers(object handlerObject) {
+            if (handlerObject is null) {
+                throw new ArgumentNullException(nameof(handlerObject));
+            }
+
+            if (!_objectToHandlers.TryGetValue(handlerObject, out var set)) {
+                return;
+            }
+            
+            _objectToHandlers.Remove(handlerObject);
+            foreach (var (type, handler) in set) {
+                _unregisterHandler.MakeGenericMethod(type).Invoke(this, new object[] { handler });
+            }
+        }
+
         private Lazy<T> GetLazy<T>() => new Lazy<T>(() => this.Get<T>());
 
-        private Assembly AssemblyResolveHandler(object sender, ResolveEventArgs args) =>
-            _pluginAssemblies.FirstOrDefault(a => a.FullName == args.Name);
+        private Assembly AssemblyResolveHandler(object sender, ResolveEventArgs e) =>
+            _pluginAssemblies.FirstOrDefault(a => a.FullName == e.Name);
 
-        // =============================================================================================================
-        // Handling ServerInitialize
-        // =============================================================================================================
+        private EventHandlerCollection<TEvent> GetEventHandlerCollection<TEvent>() where TEvent : Event {
+            var type = typeof(TEvent);
+            if (!_eventHandlerCollections.TryGetValue(type, out var collection)) {
+                var attribute = type.GetCustomAttribute<EventAttribute?>();
+                collection = new EventHandlerCollection<TEvent>(attribute);
+                _eventHandlerCollections[type] = collection;
+            }
+
+            return (EventHandlerCollection<TEvent>)collection;
+        }
 
         private void PreInitializeHandler() {
-            var args = new ServerInitializeEvent();
-
-            LogServerInitialize();
-            ServerInitialize.Invoke(this, args);
+            var e = new ServerInitializeEvent();
+            RaiseEvent(e, _log);
         }
-
-        [Conditional("DEBUG"), ExcludeFromCodeCoverage]
-        private void LogServerInitialize() =>
-            // Not localized because this string is developer-facing.
-            _log.Debug("Invoking {Event}", ServerInitialize);
-
-        // =============================================================================================================
-        // Handling ServerStart
-        // =============================================================================================================
 
         private void StartedHandler() {
-            var args = new ServerStartEvent();
-
-            LogServerStart();
-            ServerStart.Invoke(this, args);
+            var e = new ServerStartEvent();
+            RaiseEvent(e, _log);
         }
-
-        [Conditional("DEBUG"), ExcludeFromCodeCoverage]
-        private void LogServerStart() =>
-            // Not localized because this string is developer-facing.
-            _log.Debug("Invoking {Event}", ServerStart);
-
-        // =============================================================================================================
-        // Handling ServerUpdate
-        // =============================================================================================================
 
         private void PreUpdateHandler(ref GameTime _) {
-            var args = new ServerUpdateEvent();
-
-            LogServerUpdate();
-            ServerUpdate.Invoke(this, args);
+            var e = new ServerUpdateEvent();
+            RaiseEvent(e, _log);
         }
-
-        [Conditional("DEBUG"), ExcludeFromCodeCoverage]
-        private void LogServerUpdate() =>
-            // Not localized because this string is developer-facing.
-            _log.Verbose("Invoking {Event}", ServerUpdate);
-
-        // =============================================================================================================
-        // Handling ServerCommand
-        // =============================================================================================================
 
         private HookResult ProcessHandler(string _, string input) {
-            var args = new ServerCommandEvent(input);
-
-            LogServerCommand_Before(input);
-            ServerCommand.Invoke(this, args);
-            LogServerCommand_After(args);
-
-            return args.IsCanceled() ? HookResult.Cancel : HookResult.Continue;
-        }
-
-        [Conditional("DEBUG"), ExcludeFromCodeCoverage]
-        private void LogServerCommand_Before(string input) =>
-            // Not localized because this string is developer-facing.
-            _log.Debug("Invoking {Event} with [{Input}]", ServerCommand, input);
-
-        [Conditional("DEBUG"), ExcludeFromCodeCoverage]
-        private void LogServerCommand_After(ServerCommandEvent args) {
-            if (args.IsCanceled()) {
-                // Not localized because this string is developer-facing.
-                _log.Debug("Canceled {Event} for {Reason}", ServerCommand, args.CancellationReason);
-            }
+            var e = new ServerCommandEvent(input);
+            RaiseEvent(e, _log);
+            return e.IsCanceled() ? HookResult.Cancel : HookResult.Continue;
         }
     }
 }

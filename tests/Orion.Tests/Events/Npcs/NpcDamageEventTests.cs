@@ -26,9 +26,9 @@ namespace Orion.Events.Npcs {
         [Fact]
         public void Ctor_NotDirty() {
             var npc = new Mock<INpc>().Object;
-            var args = new NpcDamageEvent(npc, 0, 0, false, false);
+            var e = new NpcDamageEvent(npc, 0, 0, false, false);
 
-            args.IsDirty.Should().BeFalse();
+            e.IsDirty.Should().BeFalse();
         }
 
         [Fact]
@@ -41,41 +41,41 @@ namespace Orion.Events.Npcs {
         [Fact]
         public void SimpleProperties_Set_MarkAsDirty() {
             var npc = new Mock<INpc>().Object;
-            var args = new NpcDamageEvent(npc, 0, 0, false, false);
+            var e = new NpcDamageEvent(npc, 0, 0, false, false);
 
-            args.SimpleProperties_Set_MarkAsDirty();
+            e.SimpleProperties_Set_MarkAsDirty();
         }
 
         [Fact]
         public void Damage_Get() {
             var npc = new Mock<INpc>().Object;
-            var args = new NpcDamageEvent(npc, 167, 0, false, false);
+            var e = new NpcDamageEvent(npc, 167, 0, false, false);
 
-            args.Damage.Should().Be(167);
+            e.Damage.Should().Be(167);
         }
 
         [Fact]
         public void Knockback_Get() {
             var npc = new Mock<INpc>().Object;
-            var args = new NpcDamageEvent(npc, 0, 1.234f, false, false);
+            var e = new NpcDamageEvent(npc, 0, 1.234f, false, false);
 
-            args.Knockback.Should().Be(1.234f);
+            e.Knockback.Should().Be(1.234f);
         }
 
         [Fact]
         public void HitDirection_Get() {
             var npc = new Mock<INpc>().Object;
-            var args = new NpcDamageEvent(npc, 0, 0, true, false);
+            var e = new NpcDamageEvent(npc, 0, 0, true, false);
 
-            args.HitDirection.Should().BeTrue();
+            e.HitDirection.Should().BeTrue();
         }
 
         [Fact]
         public void IsCriticalHit_Get() {
             var npc = new Mock<INpc>().Object;
-            var args = new NpcDamageEvent(npc, 0, 0, false, true);
+            var e = new NpcDamageEvent(npc, 0, 0, false, true);
 
-            args.IsCriticalHit.Should().BeTrue();
+            e.IsCriticalHit.Should().BeTrue();
         }
     }
 }

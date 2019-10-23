@@ -33,9 +33,9 @@ namespace Orion.Events.Projectiles {
         [Fact]
         public void Projectile_Get() {
             var projectile = new Mock<IProjectile>().Object;
-            var args = new TestProjectileEvent(projectile);
+            var e = new TestProjectileEvent(projectile);
 
-            args.Projectile.Should().BeSameAs(projectile);
+            e.Projectile.Should().BeSameAs(projectile);
         }
 
         private class TestProjectileEvent : ProjectileEvent {

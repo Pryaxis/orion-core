@@ -17,8 +17,6 @@
 
 using System;
 using Microsoft.Xna.Framework;
-using Orion.Events;
-using Orion.Events.Projectiles;
 using Orion.Utils;
 
 namespace Orion.Projectiles {
@@ -32,37 +30,6 @@ namespace Orion.Projectiles {
         /// </summary>
         /// <value>The projectiles.</value>
         IReadOnlyArray<IProjectile> Projectiles { get; }
-
-        /// <summary>
-        /// Gets the event handlers that occur when a projectile's defaults are being set, which is when projectile
-        /// data is initialized. This event can be canceled.
-        /// </summary>
-        /// <value>The event handlers that occur when a projectile's defaults are being set.</value>
-        /// <remarks>
-        /// This event is invoked when a projectile is first being created. This happens:
-        /// <list type="bullet">
-        /// <item>
-        /// <description>When the server starts up, where all projectile types are initialized.</description>
-        /// </item>
-        /// <item>
-        /// <description>When a projectile spawns in the world.</description>
-        /// </item>
-        /// </list>
-        /// </remarks>
-        EventHandlerCollection<ProjectileDefaultsEvent> ProjectileSetDefaults { get; }
-
-        /// <summary>
-        /// Gets the event handlers that occur when a projectile is updating. This event can be canceled.
-        /// </summary>
-        /// <value>The event handlers that occur when a projectile is updating.</value>
-        /// <remarks>This event is invoked every game tick on every concrete projectile.</remarks>
-        EventHandlerCollection<ProjectileUpdateEvent> ProjectileUpdate { get; }
-
-        /// <summary>
-        /// Gets the event handlers that occur when a projectile is being removed. This event can be canceled.
-        /// </summary>
-        /// <value>The event handlers that occur when a projectile is being removed.</value>
-        EventHandlerCollection<ProjectileRemoveEvent> ProjectileRemove { get; }
 
         /// <summary>
         /// Spawns and returns a projectile with the given <paramref name="type"/> at the specified
