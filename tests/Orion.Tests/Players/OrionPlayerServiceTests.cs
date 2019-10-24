@@ -22,6 +22,7 @@ using Microsoft.Xna.Framework;
 using Orion.Events;
 using Orion.Events.Players;
 using Orion.Items;
+using Orion.Packets.Items;
 using Orion.Packets.Modules;
 using Orion.Packets.Players;
 using Serilog.Core;
@@ -243,6 +244,28 @@ namespace Orion.Players {
             }, Logger.None);
 
             TestUtils.FakeReceiveBytes(1, PlayerHealthPacketTests.Bytes);
+
+            isRun.Should().BeTrue();
+        }
+
+        [Fact]
+        public void PacketReceive_ItemInfo_RaisesPlayerItemInfo() {
+            using var kernel = new OrionKernel(Logger.None);
+            using var playerService = new OrionPlayerService(kernel, Logger.None);
+            var isRun = false;
+            kernel.RegisterHandler<PlayerItemInfoEvent>(e => {
+                isRun = true;
+                e.ItemIndex.Should().Be(400);
+                e.Position.Should().Be(new Vector2(67175, 6798));
+                e.Velocity.Should().Be(new Vector2(4, -2));
+                e.StackSize.Should().Be(1);
+                e.ItemPrefix.Should().Be(ItemPrefix.Unreal);
+                e.CanBePickedUpImmediately.Should().BeFalse();
+                e.ItemType.Should().Be(ItemType.Sdmg);
+                e.Cancel();
+            }, Logger.None);
+
+            TestUtils.FakeReceiveBytes(1, ItemInfoPacketTests.Bytes);
 
             isRun.Should().BeTrue();
         }

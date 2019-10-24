@@ -64,6 +64,6 @@ namespace Orion.Entities {
 
         // Not localized because this string is developer-facing.
         [Pure, ExcludeFromCodeCoverage]
-        public override string ToString() => Index >= 0 ? $"#: {Index}" : "abstract instance";
+        public override string ToString() => Index >= 0 ? $"{Name} (#: {Index})" : "abstract instance";
     }
 }

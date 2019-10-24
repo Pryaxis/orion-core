@@ -23,6 +23,7 @@ using System.Threading;
 using Orion.Events;
 using Orion.Events.Players;
 using Orion.Packets;
+using Orion.Packets.Items;
 using Orion.Packets.Modules;
 using Orion.Packets.Players;
 using Orion.Utils;
@@ -58,6 +59,7 @@ namespace Orion.Players {
                 [PacketType.PlayerSpawn] = PlayerSpawnHandler,
                 [PacketType.PlayerInfo] = PlayerInfoHandler,
                 [PacketType.PlayerHealth] = PlayerHealthHandler,
+                [PacketType.ItemInfo] = ItemInfoHandler,
                 [PacketType.PlayerPvp] = PlayerPvpHandler,
                 [PacketType.PlayerHealEffect] = PlayerHealEffectHandler,
                 [PacketType.PlayerZones] = PlayerZonesHandler,
@@ -224,6 +226,13 @@ namespace Orion.Players {
         private void PlayerHealthHandler(PacketReceiveEvent e_) {
             var packet = (PlayerHealthPacket)e_.Packet;
             var e = new PlayerHealthEvent(e_.Sender, packet);
+            Kernel.RaiseEvent(e, Log);
+            e_.CancellationReason = e.CancellationReason;
+        }
+
+        private void ItemInfoHandler(PacketReceiveEvent e_) {
+            var packet = (ItemInfoPacket)e_.Packet;
+            var e = new PlayerItemInfoEvent(e_.Sender, packet);
             Kernel.RaiseEvent(e, Log);
             e_.CancellationReason = e.CancellationReason;
         }
