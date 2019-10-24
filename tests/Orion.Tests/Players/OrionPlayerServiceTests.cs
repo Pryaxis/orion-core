@@ -282,6 +282,47 @@ namespace Orion.Players {
         }
 
         [Fact]
+        public void PacketReceive_PlayerZones_IsTriggered() {
+            using var kernel = new OrionKernel(Logger.None);
+            using var playerService = new OrionPlayerService(kernel, Logger.None);
+            var isRun = false;
+            kernel.RegisterHandler<PlayerZonesEvent>(e => {
+                isRun = true;
+                e.Player.Should().BeSameAs(playerService.Players[1]);
+                e.IsNearDungeon.Should().BeFalse();
+                e.IsNearCorruption.Should().BeFalse();
+                e.IsNearHallowed.Should().BeFalse();
+                e.IsNearMeteor.Should().BeFalse();
+                e.IsNearJungle.Should().BeFalse();
+                e.IsNearSnow.Should().BeFalse();
+                e.IsNearCrimson.Should().BeFalse();
+                e.IsNearWaterCandle.Should().BeFalse();
+                e.IsNearPeaceCandle.Should().BeFalse();
+                e.IsNearSolarPillar.Should().BeFalse();
+                e.IsNearVortexPillar.Should().BeFalse();
+                e.IsNearNebulaPillar.Should().BeFalse();
+                e.IsNearStardustPillar.Should().BeFalse();
+                e.IsNearDesert.Should().BeFalse();
+                e.IsNearGlowingMushroom.Should().BeFalse();
+                e.IsNearUndergroundDesert.Should().BeFalse();
+                e.IsNearSkyHeight.Should().BeFalse();
+                e.IsNearOverworldHeight.Should().BeFalse();
+                e.IsNearDirtLayerHeight.Should().BeFalse();
+                e.IsNearRockLayerHeight.Should().BeFalse();
+                e.IsNearUnderworldHeight.Should().BeFalse();
+                e.IsNearBeach.Should().BeFalse();
+                e.IsNearRain.Should().BeFalse();
+                e.IsNearSandstorm.Should().BeFalse();
+                e.IsNearOldOnesArmy.Should().BeFalse();
+                e.Cancel();
+            }, Logger.None);
+
+            TestUtils.FakeReceiveBytes(1, PlayerZonesPacketTests.Bytes);
+
+            isRun.Should().BeTrue();
+        }
+
+        [Fact]
         public void PacketReceive_PlayerPasswordResponse_IsTriggered() {
             using var kernel = new OrionKernel(Logger.None);
             using var playerService = new OrionPlayerService(kernel, Logger.None);

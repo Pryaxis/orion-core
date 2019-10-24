@@ -60,6 +60,7 @@ namespace Orion.Players {
                 [PacketType.PlayerHealth] = PlayerHealthHandler,
                 [PacketType.PlayerPvp] = PlayerPvpHandler,
                 [PacketType.PlayerHealEffect] = PlayerHealEffectHandler,
+                [PacketType.PlayerZones] = PlayerZonesHandler,
                 [PacketType.PlayerPasswordResponse] = PlayerPasswordResponseHandler,
                 [PacketType.PlayerMana] = PlayerManaHandler,
                 [PacketType.PlayerManaEffect] = PlayerManaEffectHandler,
@@ -237,6 +238,13 @@ namespace Orion.Players {
         private void PlayerHealEffectHandler(PacketReceiveEvent e_) {
             var packet = (PlayerHealEffectPacket)e_.Packet;
             var e = new PlayerHealEffectEvent(e_.Sender, packet);
+            Kernel.RaiseEvent(e, Log);
+            e_.CancellationReason = e.CancellationReason;
+        }
+
+        private void PlayerZonesHandler(PacketReceiveEvent e_) {
+            var packet = (PlayerZonesPacket)e_.Packet;
+            var e = new PlayerZonesEvent(e_.Sender, packet);
             Kernel.RaiseEvent(e, Log);
             e_.CancellationReason = e.CancellationReason;
         }

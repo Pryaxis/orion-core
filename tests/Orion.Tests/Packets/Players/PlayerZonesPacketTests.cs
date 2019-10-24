@@ -36,31 +36,31 @@ namespace Orion.Packets.Players {
             var packet = (PlayerZonesPacket)Packet.ReadFromStream(stream, PacketContext.Server);
 
             packet.PlayerIndex.Should().Be(1);
-            packet.IsNearDungeonZone.Should().BeFalse();
-            packet.IsNearCorruptionZone.Should().BeFalse();
-            packet.IsNearHallowedZone.Should().BeFalse();
-            packet.IsNearMeteorZone.Should().BeFalse();
-            packet.IsNearJungleZone.Should().BeFalse();
-            packet.IsNearSnowZone.Should().BeFalse();
-            packet.IsNearCrimsonZone.Should().BeFalse();
-            packet.IsNearWaterCandleZone.Should().BeFalse();
-            packet.IsNearPeaceCandleZone.Should().BeFalse();
-            packet.IsNearSolarTowerZone.Should().BeFalse();
-            packet.IsNearVortexTowerZone.Should().BeFalse();
-            packet.IsNearNebulaTowerZone.Should().BeFalse();
-            packet.IsNearStardustTowerZone.Should().BeFalse();
-            packet.IsNearDesertZone.Should().BeFalse();
-            packet.IsNearGlowingMushroomZone.Should().BeFalse();
-            packet.IsNearUndergroundDesertZone.Should().BeFalse();
-            packet.IsNearSkyHeightZone.Should().BeFalse();
-            packet.IsNearOverworldHeightZone.Should().BeFalse();
-            packet.IsNearDirtLayerHeightZone.Should().BeFalse();
-            packet.IsNearRockLayerHeightZone.Should().BeFalse();
-            packet.IsNearUnderworldHeightZone.Should().BeFalse();
-            packet.IsNearBeachZone.Should().BeFalse();
-            packet.IsNearRainZone.Should().BeFalse();
-            packet.IsNearSandstormZone.Should().BeFalse();
-            packet.IsNearOldOnesArmyZone.Should().BeFalse();
+            packet.IsNearDungeon.Should().BeFalse();
+            packet.IsNearCorruption.Should().BeFalse();
+            packet.IsNearHallowed.Should().BeFalse();
+            packet.IsNearMeteor.Should().BeFalse();
+            packet.IsNearJungle.Should().BeFalse();
+            packet.IsNearSnow.Should().BeFalse();
+            packet.IsNearCrimson.Should().BeFalse();
+            packet.IsNearWaterCandle.Should().BeFalse();
+            packet.IsNearPeaceCandle.Should().BeFalse();
+            packet.IsNearSolarPillar.Should().BeFalse();
+            packet.IsNearVortexPillar.Should().BeFalse();
+            packet.IsNearNebulaPillar.Should().BeFalse();
+            packet.IsNearStardustPillar.Should().BeFalse();
+            packet.IsNearDesert.Should().BeFalse();
+            packet.IsNearGlowingMushroom.Should().BeFalse();
+            packet.IsNearUndergroundDesert.Should().BeFalse();
+            packet.IsNearSkyHeight.Should().BeFalse();
+            packet.IsNearOverworldHeight.Should().BeFalse();
+            packet.IsNearDirtLayerHeight.Should().BeFalse();
+            packet.IsNearRockLayerHeight.Should().BeFalse();
+            packet.IsNearUnderworldHeight.Should().BeFalse();
+            packet.IsNearBeach.Should().BeFalse();
+            packet.IsNearRain.Should().BeFalse();
+            packet.IsNearSandstorm.Should().BeFalse();
+            packet.IsNearOldOnesArmy.Should().BeFalse();
         }
 
         [Fact]

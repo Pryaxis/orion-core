@@ -15,55 +15,23 @@
 // You should have received a copy of the GNU General Public License
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
-using System.IO;
+using System;
+using Orion.Packets.Players;
+using Orion.Players;
+using Orion.Utils;
 
-namespace Orion.Packets.Players {
+namespace Orion.Events.Players {
     /// <summary>
-    /// Packet sent to set a player's zones.
+    /// An event that occurs when a player sends their zones. This event can be canceled and modified.
     /// </summary>
-    /// <remarks>This packet is used to synchronize player state.</remarks>
-    public sealed class PlayerZonesPacket : Packet {
-        private byte _playerIndex;
-        private bool _isNearDungeon;
-        private bool _isNearCorruption;
-        private bool _isNearHallowed;
-        private bool _isNearMeteor;
-        private bool _isNearJungle;
-        private bool _isNearSnow;
-        private bool _isNearCrimson;
-        private bool _isNearWaterCandle;
-        private bool _isNearPeaceCandle;
-        private bool _isNearSolarPillar;
-        private bool _isNearVortexPillar;
-        private bool _isNearNebulaPillar;
-        private bool _isNearStardustPillar;
-        private bool _isNearDesert;
-        private bool _isNearGlowingMushroom;
-        private bool _isNearUndergroundDesert;
-        private bool _isNearSkyHeight;
-        private bool _isNearOverworldHeight;
-        private bool _isNearDirtLayerHeight;
-        private bool _isNearRockLayerHeight;
-        private bool _isNearUnderworldHeight;
-        private bool _isNearBeach;
-        private bool _isNearRain;
-        private bool _isNearSandstorm;
-        private bool _isNearOldOnesArmy;
+    public sealed class PlayerZonesEvent : PlayerEvent, ICancelable, IDirtiable {
+        private readonly PlayerZonesPacket _packet;
 
         /// <inheritdoc/>
-        public override PacketType Type => PacketType.PlayerZones;
+        public string? CancellationReason { get; set; }
 
-        /// <summary>
-        /// Gets or sets the player index.
-        /// </summary>
-        /// <value>The player index.</value>
-        public byte PlayerIndex {
-            get => _playerIndex;
-            set {
-                _playerIndex = value;
-                _isDirty = true;
-            }
-        }
+        /// <inheritdoc/>
+        public bool IsDirty => _packet.IsDirty;
 
         /// <summary>
         /// Gets or sets a value indicating whether the player is near a dungeon zone.
@@ -72,11 +40,8 @@ namespace Orion.Packets.Players {
         /// <see langword="true"/> if the player is near a dungeon zone; otherwise, <see langword="false"/>.
         /// </value>
         public bool IsNearDungeon {
-            get => _isNearDungeon;
-            set {
-                _isNearDungeon = value;
-                _isDirty = true;
-            }
+            get => _packet.IsNearDungeon;
+            set => _packet.IsNearDungeon = value;
         }
 
         /// <summary>
@@ -86,11 +51,8 @@ namespace Orion.Packets.Players {
         /// <see langword="true"/> if the player is near a corruption zone; otherwise, <see langword="false"/>.
         /// </value>
         public bool IsNearCorruption {
-            get => _isNearCorruption;
-            set {
-                _isNearCorruption = value;
-                _isDirty = true;
-            }
+            get => _packet.IsNearCorruption;
+            set => _packet.IsNearCorruption = value;
         }
 
         /// <summary>
@@ -100,11 +62,8 @@ namespace Orion.Packets.Players {
         /// <see langword="true"/> if the player is near a hallowed zone; otherwise, <see langword="false"/>.
         /// </value>
         public bool IsNearHallowed {
-            get => _isNearHallowed;
-            set {
-                _isNearHallowed = value;
-                _isDirty = true;
-            }
+            get => _packet.IsNearHallowed;
+            set => _packet.IsNearHallowed = value;
         }
 
         /// <summary>
@@ -114,11 +73,8 @@ namespace Orion.Packets.Players {
         /// <see langword="true"/> if the player is near a meteor zone; otherwise, <see langword="false"/>.
         /// </value>
         public bool IsNearMeteor {
-            get => _isNearMeteor;
-            set {
-                _isNearMeteor = value;
-                _isDirty = true;
-            }
+            get => _packet.IsNearMeteor;
+            set => _packet.IsNearMeteor = value;
         }
 
         /// <summary>
@@ -128,11 +84,8 @@ namespace Orion.Packets.Players {
         /// <see langword="true"/> if the player is near a jungle zone; otherwise, <see langword="false"/>.
         /// </value>
         public bool IsNearJungle {
-            get => _isNearJungle;
-            set {
-                _isNearJungle = value;
-                _isDirty = true;
-            }
+            get => _packet.IsNearJungle;
+            set => _packet.IsNearJungle = value;
         }
 
         /// <summary>
@@ -140,11 +93,8 @@ namespace Orion.Packets.Players {
         /// </summary>
         /// <value><see langword="true"/> if the player is near a snow zone; otherwise, <see langword="false"/>.</value>
         public bool IsNearSnow {
-            get => _isNearSnow;
-            set {
-                _isNearSnow = value;
-                _isDirty = true;
-            }
+            get => _packet.IsNearSnow;
+            set => _packet.IsNearSnow = value;
         }
 
         /// <summary>
@@ -154,11 +104,8 @@ namespace Orion.Packets.Players {
         /// <see langword="true"/> if the player is near a crimson zone; otherwise, <see langword="false"/>.
         /// </value>
         public bool IsNearCrimson {
-            get => _isNearCrimson;
-            set {
-                _isNearCrimson = value;
-                _isDirty = true;
-            }
+            get => _packet.IsNearCrimson;
+            set => _packet.IsNearCrimson = value;
         }
 
         /// <summary>
@@ -168,11 +115,8 @@ namespace Orion.Packets.Players {
         /// <see langword="true"/> if the player is near a water candle zone; otherwise, <see langword="false"/>.
         /// </value>
         public bool IsNearWaterCandle {
-            get => _isNearWaterCandle;
-            set {
-                _isNearWaterCandle = value;
-                _isDirty = true;
-            }
+            get => _packet.IsNearWaterCandle;
+            set => _packet.IsNearWaterCandle = value;
         }
 
         /// <summary>
@@ -182,11 +126,8 @@ namespace Orion.Packets.Players {
         /// <see langword="true"/> if the player is near a peace candle zone; otherwise, <see langword="false"/>.
         /// </value>
         public bool IsNearPeaceCandle {
-            get => _isNearPeaceCandle;
-            set {
-                _isNearPeaceCandle = value;
-                _isDirty = true;
-            }
+            get => _packet.IsNearPeaceCandle;
+            set => _packet.IsNearPeaceCandle = value;
         }
 
         /// <summary>
@@ -196,11 +137,8 @@ namespace Orion.Packets.Players {
         /// <see langword="true"/> if the player is near a solar pillar; otherwise, <see langword="false"/>.
         /// </value>
         public bool IsNearSolarPillar {
-            get => _isNearSolarPillar;
-            set {
-                _isNearSolarPillar = value;
-                _isDirty = true;
-            }
+            get => _packet.IsNearSolarPillar;
+            set => _packet.IsNearSolarPillar = value;
         }
 
         /// <summary>
@@ -210,11 +148,8 @@ namespace Orion.Packets.Players {
         /// <see langword="true"/> if the player is near a vortex pillar; otherwise, <see langword="false"/>.
         /// </value>
         public bool IsNearVortexPillar {
-            get => _isNearVortexPillar;
-            set {
-                _isNearVortexPillar = value;
-                _isDirty = true;
-            }
+            get => _packet.IsNearVortexPillar;
+            set => _packet.IsNearVortexPillar = value;
         }
 
         /// <summary>
@@ -224,11 +159,8 @@ namespace Orion.Packets.Players {
         /// <see langword="true"/> if the player is near a nebula pillar; otherwise, <see langword="false"/>.
         /// </value>
         public bool IsNearNebulaPillar {
-            get => _isNearNebulaPillar;
-            set {
-                _isNearNebulaPillar = value;
-                _isDirty = true;
-            }
+            get => _packet.IsNearNebulaPillar;
+            set => _packet.IsNearNebulaPillar = value;
         }
 
         /// <summary>
@@ -238,11 +170,8 @@ namespace Orion.Packets.Players {
         /// <see langword="true"/> if the player is near a stardust pillar; otherwise, <see langword="false"/>.
         /// </value>
         public bool IsNearStardustPillar {
-            get => _isNearStardustPillar;
-            set {
-                _isNearStardustPillar = value;
-                _isDirty = true;
-            }
+            get => _packet.IsNearStardustPillar;
+            set => _packet.IsNearStardustPillar = value;
         }
 
         /// <summary>
@@ -252,11 +181,8 @@ namespace Orion.Packets.Players {
         /// <see langword="true"/> if the player is near a desert zone; otherwise, <see langword="false"/>.
         /// </value>
         public bool IsNearDesert {
-            get => _isNearDesert;
-            set {
-                _isNearDesert = value;
-                _isDirty = true;
-            }
+            get => _packet.IsNearDesert;
+            set => _packet.IsNearDesert = value;
         }
 
         /// <summary>
@@ -266,11 +192,8 @@ namespace Orion.Packets.Players {
         /// <see langword="true"/> if the player is near a glowing mushroom zone; otherwise, <see langword="false"/>.
         /// </value>
         public bool IsNearGlowingMushroom {
-            get => _isNearGlowingMushroom;
-            set {
-                _isNearGlowingMushroom = value;
-                _isDirty = true;
-            }
+            get => _packet.IsNearGlowingMushroom;
+            set => _packet.IsNearGlowingMushroom = value;
         }
 
         /// <summary>
@@ -280,11 +203,8 @@ namespace Orion.Packets.Players {
         /// <see langword="true"/> if the player is near an underground desert zone; otherwise, <see langword="false"/>.
         /// </value>
         public bool IsNearUndergroundDesert {
-            get => _isNearUndergroundDesert;
-            set {
-                _isNearUndergroundDesert = value;
-                _isDirty = true;
-            }
+            get => _packet.IsNearUndergroundDesert;
+            set => _packet.IsNearUndergroundDesert = value;
         }
 
         /// <summary>
@@ -294,11 +214,8 @@ namespace Orion.Packets.Players {
         /// <see langword="true"/> if the player is near the sky height zone; otherwise, <see langword="false"/>.
         /// </value>
         public bool IsNearSkyHeight {
-            get => _isNearSkyHeight;
-            set {
-                _isNearSkyHeight = value;
-                _isDirty = true;
-            }
+            get => _packet.IsNearSkyHeight;
+            set => _packet.IsNearSkyHeight = value;
         }
 
         /// <summary>
@@ -308,11 +225,8 @@ namespace Orion.Packets.Players {
         /// <see langword="true"/> if the player is near the overworld height zone; otherwise, <see langword="false"/>.
         /// </value>
         public bool IsNearOverworldHeight {
-            get => _isNearOverworldHeight;
-            set {
-                _isNearOverworldHeight = value;
-                _isDirty = true;
-            }
+            get => _packet.IsNearOverworldHeight;
+            set => _packet.IsNearOverworldHeight = value;
         }
 
         /// <summary>
@@ -322,11 +236,8 @@ namespace Orion.Packets.Players {
         /// <see langword="true"/> if the player is near the dirt layer height zone; otherwise, <see langword="false"/>.
         /// </value>
         public bool IsNearDirtLayerHeight {
-            get => _isNearDirtLayerHeight;
-            set {
-                _isNearDirtLayerHeight = value;
-                _isDirty = true;
-            }
+            get => _packet.IsNearDirtLayerHeight;
+            set => _packet.IsNearDirtLayerHeight = value;
         }
 
         /// <summary>
@@ -336,11 +247,8 @@ namespace Orion.Packets.Players {
         /// <see langword="true"/> if the player is near the rock layer height zone; otherwise, <see langword="false"/>.
         /// </value>
         public bool IsNearRockLayerHeight {
-            get => _isNearRockLayerHeight;
-            set {
-                _isNearRockLayerHeight = value;
-                _isDirty = true;
-            }
+            get => _packet.IsNearRockLayerHeight;
+            set => _packet.IsNearRockLayerHeight = value;
         }
 
         /// <summary>
@@ -351,11 +259,8 @@ namespace Orion.Packets.Players {
         /// <see langword="false"/>.
         /// </value>
         public bool IsNearUnderworldHeight {
-            get => _isNearUnderworldHeight;
-            set {
-                _isNearUnderworldHeight = value;
-                _isDirty = true;
-            }
+            get => _packet.IsNearUnderworldHeight;
+            set => _packet.IsNearUnderworldHeight = value;
         }
 
         /// <summary>
@@ -365,11 +270,8 @@ namespace Orion.Packets.Players {
         /// <see langword="true"/> if the player is near a beach zone; otherwise, <see langword="false"/>.
         /// </value>
         public bool IsNearBeach {
-            get => _isNearBeach;
-            set {
-                _isNearBeach = value;
-                _isDirty = true;
-            }
+            get => _packet.IsNearBeach;
+            set => _packet.IsNearBeach = value;
         }
 
         /// <summary>
@@ -377,11 +279,8 @@ namespace Orion.Packets.Players {
         /// </summary>
         /// <value><see langword="true"/> if the player is near a rain zone; otherwise, <see langword="false"/>.</value>
         public bool IsNearRain {
-            get => _isNearRain;
-            set {
-                _isNearRain = value;
-                _isDirty = true;
-            }
+            get => _packet.IsNearRain;
+            set => _packet.IsNearRain = value;
         }
 
         /// <summary>
@@ -391,11 +290,8 @@ namespace Orion.Packets.Players {
         /// <see langword="true"/> if the player is near a sandstorm zone; otherwise, <see langword="false"/>.
         /// </value>
         public bool IsNearSandstorm {
-            get => _isNearSandstorm;
-            set {
-                _isNearSandstorm = value;
-                _isDirty = true;
-            }
+            get => _packet.IsNearSandstorm;
+            set => _packet.IsNearSandstorm = value;
         }
 
         /// <summary>
@@ -405,83 +301,23 @@ namespace Orion.Packets.Players {
         /// <see langword="true"/> if the player is near an Old One's Army zone; otherwise, <see langword="false"/>.
         /// </value>
         public bool IsNearOldOnesArmy {
-            get => _isNearOldOnesArmy;
-            set {
-                _isNearOldOnesArmy = value;
-                _isDirty = true;
-            }
+            get => _packet.IsNearOldOnesArmy;
+            set => _packet.IsNearOldOnesArmy = value;
         }
 
-        private protected override void ReadFromReader(BinaryReader reader, PacketContext context) {
-            _playerIndex = reader.ReadByte();
-
-            Terraria.BitsByte zoneFlags = reader.ReadByte();
-            Terraria.BitsByte zoneFlags2 = reader.ReadByte();
-            Terraria.BitsByte zoneFlags3 = reader.ReadByte();
-            Terraria.BitsByte zoneFlags4 = reader.ReadByte();
-            _isNearDungeon = zoneFlags[0];
-            _isNearCorruption = zoneFlags[1];
-            _isNearHallowed = zoneFlags[2];
-            _isNearMeteor = zoneFlags[3];
-            _isNearJungle = zoneFlags[4];
-            _isNearSnow = zoneFlags[5];
-            _isNearCrimson = zoneFlags[6];
-            _isNearWaterCandle = zoneFlags[7];
-            _isNearPeaceCandle = zoneFlags2[0];
-            _isNearSolarPillar = zoneFlags2[1];
-            _isNearVortexPillar = zoneFlags2[2];
-            _isNearNebulaPillar = zoneFlags2[3];
-            _isNearStardustPillar = zoneFlags2[4];
-            _isNearDesert = zoneFlags2[5];
-            _isNearGlowingMushroom = zoneFlags2[6];
-            _isNearUndergroundDesert = zoneFlags2[7];
-            _isNearSkyHeight = zoneFlags3[0];
-            _isNearOverworldHeight = zoneFlags3[1];
-            _isNearDirtLayerHeight = zoneFlags3[2];
-            _isNearRockLayerHeight = zoneFlags3[3];
-            _isNearUnderworldHeight = zoneFlags3[4];
-            _isNearBeach = zoneFlags3[5];
-            _isNearRain = zoneFlags3[6];
-            _isNearSandstorm = zoneFlags3[7];
-            _isNearOldOnesArmy = zoneFlags4[0];
+        /// <summary>
+        /// Initializes a new instance of the <see cref="PlayerZonesEvent"/> class with the specified player and packet.
+        /// </summary>
+        /// <param name="player">The player.</param>
+        /// <param name="packet">The packet.</param>
+        /// <exception cref="ArgumentNullException">
+        /// <paramref name="player"/> or <paramref name="packet"/> are <see langword="null"/>.
+        /// </exception>
+        public PlayerZonesEvent(IPlayer player, PlayerZonesPacket packet) : base(player) {
+            _packet = packet ?? throw new ArgumentNullException(nameof(packet));
         }
 
-        private protected override void WriteToWriter(BinaryWriter writer, PacketContext context) {
-            writer.Write(_playerIndex);
-
-            Terraria.BitsByte zoneFlags = 0;
-            Terraria.BitsByte zoneFlags2 = 0;
-            Terraria.BitsByte zoneFlags3 = 0;
-            Terraria.BitsByte zoneFlags4 = 0;
-            zoneFlags[0] = _isNearDungeon;
-            zoneFlags[1] = _isNearCorruption;
-            zoneFlags[2] = _isNearHallowed;
-            zoneFlags[3] = _isNearMeteor;
-            zoneFlags[4] = _isNearJungle;
-            zoneFlags[5] = _isNearSnow;
-            zoneFlags[6] = _isNearCrimson;
-            zoneFlags[7] = _isNearWaterCandle;
-            zoneFlags2[0] = _isNearPeaceCandle;
-            zoneFlags2[1] = _isNearSolarPillar;
-            zoneFlags2[2] = _isNearVortexPillar;
-            zoneFlags2[3] = _isNearNebulaPillar;
-            zoneFlags2[4] = _isNearStardustPillar;
-            zoneFlags2[5] = _isNearDesert;
-            zoneFlags2[6] = _isNearGlowingMushroom;
-            zoneFlags2[7] = _isNearUndergroundDesert;
-            zoneFlags3[0] = _isNearSkyHeight;
-            zoneFlags3[1] = _isNearOverworldHeight;
-            zoneFlags3[2] = _isNearDirtLayerHeight;
-            zoneFlags3[3] = _isNearRockLayerHeight;
-            zoneFlags3[4] = _isNearUnderworldHeight;
-            zoneFlags3[5] = _isNearBeach;
-            zoneFlags3[6] = _isNearRain;
-            zoneFlags3[7] = _isNearSandstorm;
-            zoneFlags4[0] = _isNearOldOnesArmy;
-            writer.Write(zoneFlags);
-            writer.Write(zoneFlags2);
-            writer.Write(zoneFlags3);
-            writer.Write(zoneFlags4);
-        }
+        /// <inheritdoc/>
+        public void Clean() => _packet.Clean();
     }
 }
