@@ -24,6 +24,7 @@ namespace Orion.Events.Players {
     /// <summary>
     /// An event that occurs when a player sends their zones. This event can be canceled and modified.
     /// </summary>
+    [Event("player-zones")]
     public sealed class PlayerZonesEvent : PlayerEvent, ICancelable, IDirtiable {
         private readonly PlayerZonesPacket _packet;
 
