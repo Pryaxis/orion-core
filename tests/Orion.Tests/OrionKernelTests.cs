@@ -148,6 +148,44 @@ namespace Orion {
         }
 
         [Fact]
+        public void SuppressEvent() {
+            static void Handler(TestEvent e) => e.Value = 100;
+
+            using var kernel = new OrionKernel(Logger.None);
+            kernel.RegisterHandler<TestEvent>(Handler, Logger.None);
+
+            kernel.SuppressEvent<TestEvent>();
+
+            var e = new TestEvent();
+            kernel.RaiseEvent(e, Logger.None);
+            e.Value.Should().NotBe(100);
+            
+            kernel.RaiseEvent(e, Logger.None);
+            e.Value.Should().Be(100);
+        }
+
+        [Fact]
+        public void SuppressEvent_MultipleTimes() {
+            static void Handler(TestEvent e) => e.Value = 100;
+
+            using var kernel = new OrionKernel(Logger.None);
+            kernel.RegisterHandler<TestEvent>(Handler, Logger.None);
+
+            kernel.SuppressEvent<TestEvent>();
+            kernel.SuppressEvent<TestEvent>();
+            kernel.SuppressEvent<TestEvent>();
+
+            var e = new TestEvent();
+            kernel.RaiseEvent(e, Logger.None);
+            kernel.RaiseEvent(e, Logger.None);
+            kernel.RaiseEvent(e, Logger.None);
+            e.Value.Should().NotBe(100);
+            
+            kernel.RaiseEvent(e, Logger.None);
+            e.Value.Should().Be(100);
+        }
+
+        [Fact]
         public void UnregisterHandler() {
             static void Handler(TestEvent e) => e.Value = 100;
 

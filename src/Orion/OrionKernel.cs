@@ -55,6 +55,7 @@ namespace Orion {
         private readonly MethodInfo _registerHandler = typeof(OrionKernel).GetMethod(nameof(RegisterHandler));
         private readonly MethodInfo _unregisterHandler = typeof(OrionKernel).GetMethod(nameof(UnregisterHandler));
         private readonly IDictionary<Type, object> _eventHandlerCollections = new Dictionary<Type, object>();
+        private readonly IDictionary<Type, int> _eventSuppressions = new Dictionary<Type, int>();
 
         private readonly IDictionary<object, HashSet<(Type type, object handler)>> _objectToHandlers =
             new Dictionary<object, HashSet<(Type type, object handler)>>();
@@ -320,8 +321,23 @@ namespace Orion {
                 throw new ArgumentNullException(nameof(log));
             }
 
+            if (_eventSuppressions.TryGetValue(typeof(TEvent), out var suppressions) && suppressions > 0) {
+                _eventSuppressions[typeof(TEvent)] = suppressions - 1;
+                return;
+            }
+
             var collection = GetEventHandlerCollection<TEvent>();
             collection.Raise(e, log);
+        }
+
+        /// <summary>
+        /// Suppresses the next event of the given type. This can be called multiple times for multiple suppressions.
+        /// </summary>
+        /// <typeparam name="TEvent">The type of event.</typeparam>
+        /// <remarks>This method is useful for suppressing duplicate events.</remarks>
+        public void SuppressEvent<TEvent>() where TEvent : Event {
+            var suppressions = _eventSuppressions.TryGetValue(typeof(TEvent), out var s) ? s : 0;
+            _eventSuppressions[typeof(TEvent)] = suppressions + 1;
         }
 
         /// <summary>
