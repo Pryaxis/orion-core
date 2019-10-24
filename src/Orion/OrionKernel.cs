@@ -37,10 +37,13 @@ using Serilog;
 
 namespace Orion {
     /// <summary>
-    /// Represents Orion's dependency injection container. Provides methods to manipulate <see cref="OrionPlugin"/>
-    /// instances and server-related events. This class is not thread-safe.
+    /// Represents Orion's core logic. Provides methods to manipulate <see cref="OrionPlugin"/> instances and events.
+    /// This class is not thread-safe.
     /// </summary>
-    /// <remarks>The <see cref="OrionKernel"/> class is responsible for managing Orion's plugins and services.</remarks>
+    /// <remarks>
+    /// The <see cref="OrionKernel"/> class is responsible for keeping track of <see cref="OrionPlugin"/> instances,
+    /// services, and events.
+    /// </remarks>
     public sealed class OrionKernel : IDisposable {
         private readonly ILogger _log;
 
@@ -305,7 +308,7 @@ namespace Orion {
         /// <param name="e">The event.</param>
         /// <param name="log">The log.</param>
         /// <exception cref="ArgumentNullException">
-        /// <paramref name="e"/> or <paramref name="log"/> is <see langword="null"/>.
+        /// <paramref name="e"/> or <paramref name="log"/> are <see langword="null"/>.
         /// </exception>
         [SuppressMessage("Design", "CA1030:Use events where appropriate", Justification = "Can't use .NET events")]
         public void RaiseEvent<TEvent>(TEvent e, ILogger log) where TEvent : Event {
@@ -332,7 +335,7 @@ namespace Orion {
         /// cleanup.
         /// </remarks>
         /// <exception cref="ArgumentNullException">
-        /// <paramref name="handler"/> or <paramref name="log"/> is <see langword="null"/>.
+        /// <paramref name="handler"/> or <paramref name="log"/> are <see langword="null"/>.
         /// </exception>
         public void UnregisterHandler<TEvent>(Action<TEvent> handler, ILogger log) where TEvent : Event {
             if (handler is null) {
@@ -358,7 +361,7 @@ namespace Orion {
         /// cleanup.
         /// </remarks>
         /// <exception cref="ArgumentNullException">
-        /// <paramref name="handlerObject"/> or <paramref name="log"/> is <see langword="null"/>.
+        /// <paramref name="handlerObject"/> or <paramref name="log"/> are <see langword="null"/>.
         /// </exception>
         public void UnregisterHandlers(object handlerObject, ILogger log) {
             if (handlerObject is null) {
