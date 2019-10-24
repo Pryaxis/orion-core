@@ -22,7 +22,7 @@ namespace Orion.Events {
     /// <summary>
     /// Specifies information about event arguments.
     /// </summary>
-    [AttributeUsage(AttributeTargets.Class)]
+    [AttributeUsage(AttributeTargets.Class, Inherited = false)]
     [BaseTypeRequired(typeof(Event))]
     public sealed class EventAttribute : Attribute {
         /// <summary>
