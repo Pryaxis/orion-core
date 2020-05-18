@@ -5,17 +5,15 @@ VisualStudioVersion = 16.0.29215.179
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Orion", "src\Orion\Orion.csproj", "{2739ECCB-09C1-45DC-8EF8-864F964905CB}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Orion.Tests", "tests\Orion.Tests\Orion.Tests.csproj", "{BAF61F61-2584-4B08-BCF2-088284F6C679}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Orion.Launcher", "src\Orion.Launcher\Orion.Launcher.csproj", "{05212B2D-B6FC-4CC7-9722-F75DCFE570ED}"
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{CD524E77-4123-4056-8727-0F7C61E25EBB}"
 	ProjectSection(SolutionItems) = preProject
 		.gitignore = .gitignore
-		.travis.yml = .travis.yml
 		COPYING = COPYING
-		NOTICE = NOTICE
 	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Orion.Launcher", "src\Orion.Launcher\Orion.Launcher.csproj", "{20143471-4D26-486D-B8C8-AC2FE5E60828}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Orion.Tests", "tests\Orion.Tests\Orion.Tests.csproj", "{8837EE73-0E28-42B1-A5DE-8CC52BF676EE}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -27,14 +25,14 @@ Global
 		{2739ECCB-09C1-45DC-8EF8-864F964905CB}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2739ECCB-09C1-45DC-8EF8-864F964905CB}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2739ECCB-09C1-45DC-8EF8-864F964905CB}.Release|Any CPU.Build.0 = Release|Any CPU
-		{BAF61F61-2584-4B08-BCF2-088284F6C679}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{BAF61F61-2584-4B08-BCF2-088284F6C679}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{BAF61F61-2584-4B08-BCF2-088284F6C679}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{BAF61F61-2584-4B08-BCF2-088284F6C679}.Release|Any CPU.Build.0 = Release|Any CPU
-		{05212B2D-B6FC-4CC7-9722-F75DCFE570ED}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{05212B2D-B6FC-4CC7-9722-F75DCFE570ED}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{05212B2D-B6FC-4CC7-9722-F75DCFE570ED}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{05212B2D-B6FC-4CC7-9722-F75DCFE570ED}.Release|Any CPU.Build.0 = Release|Any CPU
+		{20143471-4D26-486D-B8C8-AC2FE5E60828}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{20143471-4D26-486D-B8C8-AC2FE5E60828}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{20143471-4D26-486D-B8C8-AC2FE5E60828}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{20143471-4D26-486D-B8C8-AC2FE5E60828}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8837EE73-0E28-42B1-A5DE-8CC52BF676EE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8837EE73-0E28-42B1-A5DE-8CC52BF676EE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8837EE73-0E28-42B1-A5DE-8CC52BF676EE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8837EE73-0E28-42B1-A5DE-8CC52BF676EE}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

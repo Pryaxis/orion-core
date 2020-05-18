@@ -1,8 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>netstandard2.0</TargetFramework>
-    <NoWarn>NU1701</NoWarn>
+    <TargetFramework>netstandard2.1</TargetFramework>
     <Company>Pryaxis</Company>
     <Authors>orion-contributors</Authors>
     <RepositoryUrl>https://github.com/Pryaxis/Orion</RepositoryUrl>
@@ -18,17 +17,16 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Ninject" Version="3.3.4" />
-    <PackageReference Include="Ninject.Extensions.NamedScope" Version="3.3.0" />
-    <PackageReference Include="OTAPI" Version="2.0.0.32" />
-    <PackageReference Include="Serilog" Version="2.8.0" />
-  </ItemGroup>
-
-  <ItemGroup>
     <None Include="..\..\COPYING">
       <Pack>True</Pack>
       <PackagePath></PackagePath>
     </None>
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="OTAPI" Version="2.0.0.33">
+      <NoWarn>NU1701</NoWarn>
+    </PackageReference>
   </ItemGroup>
 
 </Project>

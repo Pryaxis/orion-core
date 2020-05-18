@@ -1,4 +1,4 @@
-﻿// Copyright (c) 2015-2019 Pryaxis & Orion Contributors
+﻿// Copyright (c) 2020 Pryaxis & Orion Contributors
 // 
 // This file is part of Orion.
 // 
@@ -16,58 +16,19 @@
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
 using System;
-using System.IO;
-using Orion.Launcher.Properties;
-using Serilog;
-using Serilog.Sinks.SystemConsole.Themes;
 
 namespace Orion.Launcher {
-    internal class Program {
-        internal static void Main(string[] args) {
-            Directory.CreateDirectory(Resources.LogsDirectory);
-            Directory.CreateDirectory(Resources.PluginDirectory);
-
-            Log.Logger = new LoggerConfiguration()
-#if DEBUG
-                         .MinimumLevel.Verbose()
-#else
-                         .MinimumLevel.Information()
-#endif
-                         .WriteTo.Console(theme: AnsiConsoleTheme.Code)
-                         .WriteTo.File(Path.Combine(Resources.LogsDirectory, "log-.txt"),
-                                       rollingInterval: RollingInterval.Day,
-                                       rollOnFileSizeLimit: true,
-                                       fileSizeLimitBytes: 2 << 20)
-                         .CreateLogger();
-
-            AppDomain.CurrentDomain.UnhandledException += (sender, eventArgs) => {
-                Log.Fatal(eventArgs.ExceptionObject as Exception, Resources.UnhandledExceptionMessage);
-            };
-
-            using (var kernel = new OrionKernel()) {
-                Log.Information(Resources.LoadingPluginsMessage);
-
-                foreach (var path in Directory.EnumerateFiles(Resources.PluginDirectory, "*.dll")) {
-                    try {
-                        Log.Information(Resources.LoadingPluginMessage, path);
-
-                        kernel.QueuePluginsFromPath(path);
-                    } catch (Exception ex) when (ex is BadImageFormatException || ex is IOException) {
-                        Log.Information(ex, Resources.FailedToLoadPluginMessage, path);
-                    }
-                }
-
-                kernel.FinishLoadingPlugins(
-                    plugin => Log.Information(Resources.LoadedPluginMessage, plugin.Name, plugin.Version,
-                                              plugin.Author));
-
-                Console.ResetColor();
-                Console.WriteLine();
-
-                // Set SkipAssemblyLoad so that we don't JIT the social API.
-                Terraria.Main.SkipAssemblyLoad = true;
-                Terraria.Program.LaunchGame(args);
-            }
+    /// <summary>
+    /// Holds the main logic for the launcher.
+    /// </summary>
+    public static class Program {
+        /// <summary>
+        /// Acts as the main entry point of the launcher.
+        /// </summary>
+        /// <param name="args">The arguments supplied to the launcher.</param>
+        public static void Main(string[] args) {
+            Terraria.Main.SkipAssemblyLoad = true;
+            Terraria.WindowsLaunch.Main(args);
         }
     }
 }
