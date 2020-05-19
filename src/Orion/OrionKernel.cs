@@ -89,6 +89,7 @@ namespace Orion {
 
             AppDomain.CurrentDomain.AssemblyResolve += AssemblyResolveHandler;
 
+            OTAPI.Hooks.Game.PreInitialize += PreInitializeHandler;
             OTAPI.Hooks.Command.Process += ProcessHandler;
         }
 
@@ -100,6 +101,7 @@ namespace Orion {
 
             AppDomain.CurrentDomain.AssemblyResolve -= AssemblyResolveHandler;
 
+            OTAPI.Hooks.Game.PreInitialize += PreInitializeHandler;
             OTAPI.Hooks.Command.Process -= ProcessHandler;
         }
 
@@ -334,6 +336,11 @@ namespace Orion {
             }
 
             return (EventHandlerCollection<TEvent>)collection;
+        }
+
+        private void PreInitializeHandler() {
+            var evt = new ServerInitializeEvent();
+            Raise(evt, _log);
         }
 
         private OTAPI.HookResult ProcessHandler(string _, string input) {
