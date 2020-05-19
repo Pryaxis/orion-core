@@ -15,18 +15,96 @@
 // You should have received a copy of the GNU General Public License
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
+using System;
+using System.IO;
+using System.Reflection;
+using System.Text;
+using System.Threading;
+using Destructurama;
+using Microsoft.Xna.Framework;
+using Orion.Launcher.Properties;
+using Serilog;
+using Serilog.Events;
+using Serilog.Sinks.SystemConsole.Themes;
+
 namespace Orion.Launcher {
     /// <summary>
     /// Holds the main logic for the launcher.
     /// </summary>
     public static class Program {
+        // Sets up and returns a log.
+        private static ILogger SetupLog() {
+            Directory.CreateDirectory("logs");
+
+            Console.InputEncoding = Encoding.UTF8;
+            Console.OutputEncoding = Encoding.UTF8;
+
+            var log = new LoggerConfiguration()
+                .Destructure.ByTransforming<Color>(c => new { c.R, c.G, c.B })
+                .Destructure.ByTransforming<Vector2>(v => new { v.X, v.Y })
+                .Destructure.UsingAttributes()
+#if DEBUG
+                .MinimumLevel.Is(LogEventLevel.Debug)
+#else
+                .MinimumLevel.Is(LogEventLevel.Information)
+#endif
+                .WriteTo.Console(
+                    outputTemplate: "[{Timestamp:HH:mm:ss} {Level:u3}] {ServiceName}: {Message:l}{NewLine}{Exception}",
+                    theme: AnsiConsoleTheme.Code)
+                .WriteTo.File(Path.Combine("logs", "log-.txt"),
+                    outputTemplate:
+                        "[{Timestamp:yyyy-MM-dd HH:mm:ss} {Level:u3}] {ServiceName}: {Message:l}{NewLine}{Exception}",
+                    rollingInterval: RollingInterval.Day,
+                    rollOnFileSizeLimit: true,
+                    fileSizeLimitBytes: 2 << 20)
+                .CreateLogger();
+
+            AppDomain.CurrentDomain.UnhandledException += (sender, eventArgs) => {
+                log.ForContext("ServiceName", "launcher")
+                    .Fatal(eventArgs.ExceptionObject as Exception, Resources.UnhandledExceptionMessage);
+            };
+
+            return log;
+        }
+
+        // Sets up plugins.
+        private static void SetupPlugins(OrionKernel kernel) {
+            Directory.CreateDirectory("plugins");
+
+            foreach (var path in Directory.EnumerateFiles("plugins", "*.dll")) {
+                try {
+                    var assembly = Assembly.LoadFile(path);
+                    kernel.LoadPlugins(assembly);
+                } catch (BadImageFormatException) { }
+            }
+
+            kernel.InitializePlugins();
+        }
+
+        // Sets up the language.
+        private static void SetupLanguage() {
+            // Save cultures since `LanguageManager.SetLanguage` overrides them if the language is not supported by
+            // Terraria.
+            var previousCulture = Thread.CurrentThread.CurrentCulture;
+            var previousUICulture = Thread.CurrentThread.CurrentUICulture;
+            Terraria.Localization.LanguageManager.Instance.SetLanguage(previousUICulture.Name);
+            Terraria.Lang.InitializeLegacyLocalization();
+            Thread.CurrentThread.CurrentCulture = previousCulture;
+            Thread.CurrentThread.CurrentUICulture = previousUICulture;
+        }
+
         /// <summary>
         /// Acts as the main entry point of the launcher.
         /// </summary>
         /// <param name="args">The arguments supplied to the launcher.</param>
         public static void Main(string[] args) {
-            Terraria.Main.SkipAssemblyLoad = true;
-            Terraria.WindowsLaunch.Main(args);
+            var log = SetupLog();
+            using var kernel = new OrionKernel(log);
+            SetupPlugins(kernel);
+            SetupLanguage();
+
+            using var game = new Terraria.Main();
+            game.DedServ();
         }
     }
 }
