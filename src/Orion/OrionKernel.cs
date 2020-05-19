@@ -20,6 +20,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using Ninject;
+using Orion.Events;
 using Orion.Properties;
 using Serilog;
 
@@ -36,6 +37,12 @@ namespace Orion {
 
         private readonly IList<Type> _pluginTypesToLoad = new List<Type>();
         private readonly Dictionary<string, OrionPlugin> _plugins = new Dictionary<string, OrionPlugin>();
+
+        private readonly MethodInfo _registerHandler = typeof(OrionKernel).GetMethod(nameof(RegisterHandler));
+        private readonly MethodInfo _deregisterHandler = typeof(OrionKernel).GetMethod(nameof(DeregisterHandler));
+        private readonly IDictionary<Type, object> _handlerCollections = new Dictionary<Type, object>();
+        private readonly IDictionary<object, IList<(Type eventType, object handler)>> _handlerRegistrations =
+            new Dictionary<object, IList<(Type eventType, object handler)>>();
 
         /// <summary>
         /// Gets the dependency injection container.
@@ -158,6 +165,152 @@ namespace Orion {
             return true;
         }
 
+        /// <summary>
+        /// Registers the given event <paramref name="handler"/>.
+        /// </summary>
+        /// <typeparam name="TEvent">The type of event.</typeparam>
+        /// <param name="handler">The event handler.</param>
+        /// <param name="log">The logger to log to.</param>
+        /// <exception cref="ArgumentNullException">
+        /// <paramref name="handler"/> or <paramref name="log"/> are <see langword="null"/>.
+        /// </exception>
+        public void RegisterHandler<TEvent>(Action<TEvent> handler, ILogger log) where TEvent : Event {
+            if (handler is null) {
+                throw new ArgumentNullException(nameof(handler));
+            }
+            if (log is null) {
+                throw new ArgumentNullException(nameof(log));
+            }
+
+            GetEventHandlerCollection<TEvent>().RegisterHandler(handler, log);
+        }
+
+        /// <summary>
+        /// Registers all of the methods marked with <see cref="EventHandlerAttribute"/> as event handlers in the given
+        /// <paramref name="handlerObject"/>.
+        /// </summary>
+        /// <param name="handlerObject">The handler object.</param>
+        /// <param name="log">The logger to log to.</param>
+        /// <exception cref="ArgumentException">
+        /// <paramref name="handlerObject"/> contains a method marked with <see cref="EventHandlerAttribute"/> which is
+        /// not of the correct form.
+        /// </exception>
+        /// <exception cref="ArgumentNullException">
+        /// <paramref name="handlerObject"/> or <paramref name="log"/> are <see langword="null"/>.
+        /// </exception>
+        public void RegisterHandlers(object handlerObject, ILogger log) {
+            if (handlerObject is null) {
+                throw new ArgumentNullException(nameof(handlerObject));
+            }
+            if (log is null) {
+                throw new ArgumentNullException(nameof(log));
+            }
+
+            var registrations = _handlerRegistrations[handlerObject] = new List<(Type eventType, object handler)>();
+            foreach (var method in handlerObject.GetType()
+                    .GetMethods(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance)) {
+                if (method.GetCustomAttribute<EventHandlerAttribute>() is null) {
+                    continue;
+                }
+
+                var parameters = method.GetParameters();
+                if (parameters.Length != 1) {
+                    // Not localized because this string is developer-facing.
+                    throw new ArgumentException(
+                        $"Method `{method.Name}` does not have exactly one argument.", nameof(handlerObject));
+                }
+
+                var eventType = parameters[0].ParameterType;
+                if (!eventType.IsSubclassOf(typeof(Event))) {
+                    // Not localized because this string is developer-facing.
+                    throw new ArgumentException(
+                        $"Method `{method.Name}` does not have an argument of type `{nameof(Event)}`.",
+                        nameof(handlerObject));
+                }
+
+                var handlerType = typeof(Action<>).MakeGenericType(eventType);
+                var handler = method.CreateDelegate(handlerType, handlerObject);
+                _registerHandler.MakeGenericMethod(eventType).Invoke(this, new object[] { handler, log });
+                registrations.Add((eventType, handler));
+            }
+        }
+
+        /// <summary>
+        /// Deregisters the given event <paramref name="handler"/>. Returns a value indicating success.
+        /// </summary>
+        /// <typeparam name="TEvent">The type of event.</typeparam>
+        /// <param name="handler">The event handler.</param>
+        /// <param name="log">The logger to log to.</param>
+        /// <returns>
+        /// <see langword="true"/> if the event handler was successfully deregistered; otherwise,
+        /// <see langword="false"/>.
+        /// </returns>
+        /// <exception cref="ArgumentNullException">
+        /// <paramref name="handler"/> or <paramref name="log"/> are <see langword="null"/>.
+        /// </exception>
+        public bool DeregisterHandler<TEvent>(Action<TEvent> handler, ILogger log) where TEvent : Event {
+            if (handler is null) {
+                throw new ArgumentNullException(nameof(handler));
+            }
+            if (log is null) {
+                throw new ArgumentNullException(nameof(log));
+            }
+
+            return GetEventHandlerCollection<TEvent>().DeregisterHandler(handler, log);
+        }
+
+        /// <summary>
+        /// Deregisters all of the methods marked with <see cref="EventHandlerAttribute"/> as event handlers in the
+        /// given <paramref name="handlerObject"/>. Returns a value indicating success.
+        /// </summary>
+        /// <param name="handlerObject">The handler object.</param>
+        /// <param name="log">The logger to log to.</param>
+        /// <returns>
+        /// <see langword="true"/> if the event handlers were successfully deregistered; otherwise,
+        /// <see langword="false"/>.
+        /// </returns>
+        /// <exception cref="ArgumentNullException">
+        /// <paramref name="handlerObject"/> or <paramref name="log"/> are <see langword="null"/>.
+        /// </exception>
+        public bool DeregisterHandlers(object handlerObject, ILogger log) {
+            if (handlerObject is null) {
+                throw new ArgumentNullException(nameof(handlerObject));
+            }
+            if (log is null) {
+                throw new ArgumentNullException(nameof(log));
+            }
+
+            if (!_handlerRegistrations.TryGetValue(handlerObject, out var registrations)) {
+                return false;
+            }
+
+            _handlerRegistrations.Remove(handlerObject);
+            foreach (var (eventType, handler) in registrations) {
+                _deregisterHandler.MakeGenericMethod(eventType).Invoke(this, new object[] { handler, log });
+            }
+            return true;
+        }
+
+        /// <summary>
+        /// Raises <paramref name="evt"/>.
+        /// </summary>
+        /// <typeparam name="TEvent">The type of event.</typeparam>
+        /// <param name="evt">The event to raise.</param>
+        /// <param name="log">The logger to log to.</param>
+        /// <exception cref="ArgumentNullException">
+        /// <paramref name="evt"/> or <paramref name="log"/> are <see langword="null"/>.
+        /// </exception>
+        public void Raise<TEvent>(TEvent evt, ILogger log) where TEvent : Event {
+            if (evt is null) {
+                throw new ArgumentNullException(nameof(evt));
+            }
+            if (log is null) {
+                throw new ArgumentNullException(nameof(log));
+            }
+
+            GetEventHandlerCollection<TEvent>().Raise(evt, log);
+        }
+
         // Helper method for creating a generic `Lazy<T>`.
         private Lazy<T> GetLazy<T>() => new Lazy<T>(() => Container.Get<T>());
 
@@ -167,5 +320,16 @@ namespace Orion {
                 .Select(t => t.Assembly)
                 .Concat(_plugins.Values.Select(p => p.GetType().Assembly))
                 .FirstOrDefault(a => a.FullName == args.Name);
+
+        // Helper method for retrieving an `EventHandlerCollection<TEvent>`.
+        private EventHandlerCollection<TEvent> GetEventHandlerCollection<TEvent>() where TEvent : Event {
+            var type = typeof(TEvent);
+            if (!_handlerCollections.TryGetValue(type, out var collection)) {
+                collection = new EventHandlerCollection<TEvent>();
+                _handlerCollections[type] = collection;
+            }
+
+            return (EventHandlerCollection<TEvent>)collection;
+        }
     }
 }
