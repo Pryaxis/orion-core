@@ -22,7 +22,7 @@ namespace Orion {
     public class ServiceAttributeTests {
         [Fact]
         public void Ctor_NullName_ThrowsArgumentNullException() {
-            Assert.Throws<ArgumentNullException>(() => new ServiceAttribute(null));
+            Assert.Throws<ArgumentNullException>(() => new ServiceAttribute(null!));
         }
 
         [Fact]
@@ -36,7 +36,7 @@ namespace Orion {
         public void Author_SetNullValue_ThrowsArgumentNullException() {
             var attribute = new ServiceAttribute("");
 
-            Assert.Throws<ArgumentNullException>(() => attribute.Author = null);
+            Assert.Throws<ArgumentNullException>(() => attribute.Author = null!);
         }
     }
 }

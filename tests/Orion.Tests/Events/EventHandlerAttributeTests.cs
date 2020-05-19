@@ -31,7 +31,7 @@ namespace Orion.Events {
         public void Name_SetNullValue_ThrowsArgumentNullException() {
             var attribute = new EventHandlerAttribute(EventPriority.Normal);
 
-            Assert.Throws<ArgumentNullException>(() => attribute.Name = null);
+            Assert.Throws<ArgumentNullException>(() => attribute.Name = null!);
         }
     }
 }

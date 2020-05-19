@@ -25,14 +25,14 @@ namespace Orion {
     public class OrionServiceTests {
         [Fact]
         public void Ctor_NullKernel_ThrowsArgumentNullException() {
-            Assert.Throws<ArgumentNullException>(() => new TestService(null, Logger.None));
+            Assert.Throws<ArgumentNullException>(() => new TestService(null!, Logger.None));
         }
 
         [Fact]
         public void Ctor_NullLog_ThrowsArgumentNullException() {
             using var kernel = new OrionKernel(Logger.None);
 
-            Assert.Throws<ArgumentNullException>(() => new TestService(kernel, null));
+            Assert.Throws<ArgumentNullException>(() => new TestService(kernel, null!));
         }
 
         [Fact]

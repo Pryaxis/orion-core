@@ -22,7 +22,7 @@ namespace Orion.Events {
     public class EventAttributeTests {
         [Fact]
         public void Ctor_NullName_ThrowsArgumentNullException() {
-            Assert.Throws<ArgumentNullException>(() => new EventAttribute(null));
+            Assert.Throws<ArgumentNullException>(() => new EventAttribute(null!));
         }
 
         [Fact]

@@ -86,7 +86,7 @@ namespace Orion.Events {
         private static void TestHandler3(TestEvent e) => throw new NotImplementedException();
 
         private class TestEvent : Event, ICancelable {
-            public string CancellationReason { get; set; }
+            public string? CancellationReason { get; set; }
             public int Value { get; set; }
         }
     }

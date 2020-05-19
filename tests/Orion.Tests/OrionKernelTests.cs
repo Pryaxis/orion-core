@@ -28,14 +28,14 @@ namespace Orion {
         public void LoadPlugins_NullAssembly_ThrowsArgumentNullException() {
             using var kernel = new OrionKernel(Logger.None);
 
-            Assert.Throws<ArgumentNullException>(() => kernel.LoadPlugins(null));
+            Assert.Throws<ArgumentNullException>(() => kernel.LoadPlugins(null!));
         }
 
         [Fact]
         public void UnloadPlugin_NullPlugin_ThrowsArgumentNullException() {
             using var kernel = new OrionKernel(Logger.None);
 
-            Assert.Throws<ArgumentNullException>(() => kernel.UnloadPlugin(null));
+            Assert.Throws<ArgumentNullException>(() => kernel.UnloadPlugin(null!));
         }
 
         [Fact]
