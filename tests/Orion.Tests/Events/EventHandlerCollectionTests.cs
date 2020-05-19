@@ -16,7 +16,6 @@
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
 using System;
-using FluentAssertions;
 using Serilog.Core;
 using Xunit;
 
@@ -32,7 +31,7 @@ namespace Orion.Events {
 
             collection.Raise(e, Logger.None);
 
-            e.Value.Should().Be(100);
+            Assert.Equal(100, e.Value);
         }
 
         [Fact]
@@ -43,7 +42,7 @@ namespace Orion.Events {
 
             collection.Raise(e, Logger.None);
 
-            e.Value.Should().Be(100);
+            Assert.Equal(100, e.Value);
         }
 
         [Fact]
@@ -55,7 +54,7 @@ namespace Orion.Events {
 
             collection.Raise(e, Logger.None);
 
-            e.Value.Should().Be(200);
+            Assert.Equal(200, e.Value);
         }
 
         [Fact]
@@ -67,7 +66,7 @@ namespace Orion.Events {
 
             collection.Raise(e, Logger.None);
 
-            e.Value.Should().NotBe(100);
+            Assert.NotEqual(100, e.Value);
         }
 
         [Fact]

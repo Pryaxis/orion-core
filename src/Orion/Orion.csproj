@@ -27,10 +27,26 @@
 
   <ItemGroup>
     <PackageReference Include="Destructurama.Attributed" Version="2.0.0" />
+    <PackageReference Include="Ninject" Version="3.3.4" />
     <PackageReference Include="OTAPI" Version="2.0.0.33">
       <NoWarn>NU1701</NoWarn>
     </PackageReference>
     <PackageReference Include="Serilog" Version="2.9.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Update="Properties\Resources.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Update="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
   </ItemGroup>
 
 </Project>

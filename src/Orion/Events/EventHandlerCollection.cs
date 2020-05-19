@@ -27,19 +27,13 @@ namespace Orion.Events {
     /// <summary>
     /// Represents a collection of event handlers.
     /// </summary>
-    /// <typeparam name="TEvent"></typeparam>
+    /// <typeparam name="TEvent">The type of event.</typeparam>
     internal sealed class EventHandlerCollection<TEvent> where TEvent : Event {
-        // The event's name.
         private readonly string _eventName;
-
-        // The event's logging level.
         private readonly LogEventLevel _eventLoggingLevel;
 
-        // The event's registrations, sorted by priority.
         private readonly ISet<Registration> _registrations =
             new SortedSet<Registration>(Comparer<Registration>.Create((r1, r2) => r1.Priority.CompareTo(r2.Priority)));
-
-        // A mapping from handler to registration to facilitate deregistration.
         private readonly IDictionary<Action<TEvent>, Registration> _handlerToRegistration =
             new Dictionary<Action<TEvent>, Registration>();
 
@@ -58,7 +52,7 @@ namespace Orion.Events {
         /// Registers an event <paramref name="handler"/> to the collection.
         /// </summary>
         /// <param name="handler">The event handler to register.</param>
-        /// <param name="log">The logger to log the registration to.</param>
+        /// <param name="log">The logger to log to.</param>
         public void RegisterHandler(Action<TEvent> handler, ILogger log) {
             Debug.Assert(handler != null);
             Debug.Assert(log != null);
@@ -75,7 +69,7 @@ namespace Orion.Events {
         /// Deregisters an event <paramref name="handler"/> from the collection. Returns a value indicating success.
         /// </summary>
         /// <param name="handler">The event handler to deregister.</param>
-        /// <param name="log">The logger to log the deregistration to.</param>
+        /// <param name="log">The logger to log to.</param>
         /// <returns>
         /// <see langword="true"/> if the event handler was successfully deregistered; otherwise,
         /// <see langword="false"/>.
@@ -102,7 +96,7 @@ namespace Orion.Events {
         /// Raises <paramref name="evt"/> with the event handler collection.
         /// </summary>
         /// <param name="evt">The event to raise.</param>
-        /// <param name="log">The logger to log the raising to.</param>
+        /// <param name="log">The logger to log to.</param>
         public void Raise(TEvent evt, ILogger log) {
             Debug.Assert(evt != null);
             Debug.Assert(log != null);
@@ -111,7 +105,7 @@ namespace Orion.Events {
             log.Write(_eventLoggingLevel, "Raising {EventName} with {@Event}", _eventName, evt);
 
             // Try casting the event as `ICancelable` and `IDirtiable`. This is a little hacky, but is better than
-            // making all subclasses of `Event` implement `ICancelable` and `IDirtiable`.
+            // making `Event` implement `ICancelable` and `IDirtiable`.
             var cancelable = evt as ICancelable;
             var dirtiable = evt as IDirtiable;
 
@@ -171,7 +165,8 @@ namespace Orion.Events {
             public bool IgnoreCanceled { get; }
 
             /// <summary>
-            /// Initializes a new instance of the <see cref="Registration"/> class with the specified event handler.
+            /// Initializes a new instance of the <see cref="Registration"/> class with the specified event
+            /// <paramref name="handler"/>.
             /// </summary>
             /// <param name="handler">The event handler.</param>
             public Registration(Action<TEvent> handler) {

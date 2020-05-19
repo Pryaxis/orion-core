@@ -16,23 +16,20 @@
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
 using System;
-using FluentAssertions;
 using Xunit;
 
 namespace Orion.Events {
     public class EventAttributeTests {
         [Fact]
         public void Ctor_NullName_ThrowsArgumentNullException() {
-            Func<EventAttribute> func = () => new EventAttribute(null);
-
-            func.Should().Throw<ArgumentNullException>();
+            Assert.Throws<ArgumentNullException>(() => new EventAttribute(null));
         }
 
         [Fact]
         public void Name_Get() {
             var attribute = new EventAttribute("test");
 
-            attribute.Name.Should().Be("test");
+            Assert.Equal("test", attribute.Name);
         }
     }
 }

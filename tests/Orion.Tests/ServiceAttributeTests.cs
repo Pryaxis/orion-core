@@ -1,4 +1,4 @@
-﻿// Copyright (c) 20200 Pryaxis & Orion Contributors
+﻿// Copyright (c) 2020 Pryaxis & Orion Contributors
 // 
 // This file is part of Orion.
 // 
@@ -18,20 +18,25 @@
 using System;
 using Xunit;
 
-namespace Orion.Events {
-    public class EventHandlerAttributeTests {
+namespace Orion {
+    public class ServiceAttributeTests {
         [Fact]
-        public void Priority_Get() {
-            var attribute = new EventHandlerAttribute(EventPriority.Normal);
-
-            Assert.Equal(EventPriority.Normal, attribute.Priority);
+        public void Ctor_NullName_ThrowsArgumentNullException() {
+            Assert.Throws<ArgumentNullException>(() => new ServiceAttribute(null));
         }
 
         [Fact]
-        public void Name_SetNullValue_ThrowsArgumentNullException() {
-            var attribute = new EventHandlerAttribute(EventPriority.Normal);
+        public void Name_Get() {
+            var attribute = new ServiceAttribute("test");
 
-            Assert.Throws<ArgumentNullException>(() => attribute.Name = null);
+            Assert.Equal("test", attribute.Name);
+        }
+
+        [Fact]
+        public void Author_SetNullValue_ThrowsArgumentNullException() {
+            var attribute = new ServiceAttribute("");
+
+            Assert.Throws<ArgumentNullException>(() => attribute.Author = null);
         }
     }
 }

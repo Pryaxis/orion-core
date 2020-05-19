@@ -16,7 +16,6 @@
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
 using System;
-using FluentAssertions;
 using Moq;
 using Xunit;
 
@@ -27,7 +26,7 @@ namespace Orion.Events {
             var mockCancelable = new Mock<ICancelable>();
             mockCancelable.SetupGet(c => c.CancellationReason).Returns("");
 
-            mockCancelable.Object.IsCanceled().Should().BeTrue();
+            Assert.True(mockCancelable.Object.IsCanceled());
 
             mockCancelable.VerifyGet(c => c.CancellationReason);
             mockCancelable.VerifyNoOtherCalls();
@@ -38,7 +37,7 @@ namespace Orion.Events {
             var mockCancelable = new Mock<ICancelable>();
             mockCancelable.SetupGet(c => c.CancellationReason).Returns((string)null);
 
-            mockCancelable.Object.IsCanceled().Should().BeFalse();
+            Assert.False(mockCancelable.Object.IsCanceled());
 
             mockCancelable.VerifyGet(c => c.CancellationReason);
             mockCancelable.VerifyNoOtherCalls();
@@ -46,9 +45,7 @@ namespace Orion.Events {
 
         [Fact]
         public void IsCanceled_NullCancelable_ThrowsArgumentNullException() {
-            Func<bool> func = () => CancelableExtensions.IsCanceled(null);
-
-            func.Should().Throw<ArgumentNullException>();
+            Assert.Throws<ArgumentNullException>(() => CancelableExtensions.IsCanceled(null));
         }
 
         [Fact]
@@ -64,17 +61,14 @@ namespace Orion.Events {
 
         [Fact]
         public void Cancel_NullCancelable_ThrowsArgumentNullException() {
-            Action action = () => CancelableExtensions.Cancel(null);
-
-            action.Should().Throw<ArgumentNullException>();
+            Assert.Throws<ArgumentNullException>(() => CancelableExtensions.Cancel(null));
         }
 
         [Fact]
         public void Cancel_NullCancellation_Reason_ThrowsArgumentNullException() {
             var cancelable = new Mock<ICancelable>().Object;
-            Action action = () => cancelable.Cancel(null);
 
-            action.Should().Throw<ArgumentNullException>();
+            Assert.Throws<ArgumentNullException>(() => cancelable.Cancel(null));
         }
 
         [Fact]
@@ -90,9 +84,7 @@ namespace Orion.Events {
 
         [Fact]
         public void Uncancel_NullCancelable_ThrowsArgumentNullException() {
-            Action action = () => CancelableExtensions.Uncancel(null);
-
-            action.Should().Throw<ArgumentNullException>();
+            Assert.Throws<ArgumentNullException>(() => CancelableExtensions.Uncancel(null));
         }
     }
 }

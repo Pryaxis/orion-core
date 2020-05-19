@@ -16,32 +16,39 @@
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
 using System;
-using Serilog.Events;
+using System.Diagnostics.CodeAnalysis;
 
-namespace Orion.Events {
+namespace Orion {
     /// <summary>
-    /// Specifies information about an event.
+    /// Specifies information about a service or plugin.
     /// </summary>
-    [AttributeUsage(AttributeTargets.Class, Inherited = false)]
-    public sealed class EventAttribute : Attribute {
+    [AttributeUsage(AttributeTargets.Class)]
+    public sealed class ServiceAttribute : Attribute {
+        private string _author = "Pryaxis";
+
         /// <summary>
-        /// Gets the event's name. This is used for logging.
+        /// Gets the service's name. This is used for logging.
         /// </summary>
+        /// <value>The service's name.</value>
         public string Name { get; }
 
         /// <summary>
-        /// Gets or sets the event's logging level.
+        /// Gets or sets the service's author. This is used for logging.
         /// </summary>
-        /// <value>The event's logging level. The default value is <see cref="LogEventLevel.Information"/>.</value>
-        public LogEventLevel LoggingLevel { get; set; } = LogEventLevel.Information;
+        /// <value>The service's author. The default value is <c>Pryaxis</c>.</value>
+        /// <exception cref="ArgumentNullException"><param name="value"/> is <see langword="null"/>.</exception>
+        [DisallowNull]
+        public string Author {
+            get => _author;
+            set => _author = value ?? throw new ArgumentNullException(nameof(value));
+        }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="EventAttribute"/> class with the specified
-        /// <paramref name="name"/>.
+        /// Initializes a new instance of the <see cref="ServiceAttribute"/> with the specified <paramref name="name"/>.
         /// </summary>
         /// <param name="name">The name.</param>
         /// <exception cref="ArgumentNullException"><paramref name="name"/> is <see langword="null"/>.</exception>
-        public EventAttribute(string name) {
+        public ServiceAttribute(string name) {
             Name = name ?? throw new ArgumentNullException(nameof(name));
         }
     }

@@ -20,7 +20,7 @@ using System.Diagnostics.CodeAnalysis;
 
 namespace Orion.Events {
     /// <summary>
-    /// Marks a method as an <see cref="Event"/> handler and specifies information about it.
+    /// Marks a method as an event handler and specifies information about it.
     /// </summary>
     [AttributeUsage(AttributeTargets.Method)]
     public sealed class EventHandlerAttribute : Attribute {
@@ -36,12 +36,6 @@ namespace Orion.Events {
         /// Gets or sets the event handler's name. This is used for logging.
         /// </summary>
         /// <value>The event handler's name, or <see langword="null"/> for none.</value>
-        /// <remarks>
-        /// The name should be short while <i>still disambiguating</i> the event handler. The convention is to use
-        /// <c>kebab-case</c>. <para/>
-        /// 
-        /// If the value is <see langword="null"/>, then the method name will be used for logging.
-        /// </remarks>
         /// <exception cref="ArgumentNullException"><param name="value"/> is <see langword="null"/>.</exception>
         [DisallowNull]
         public string? Name {
@@ -59,7 +53,8 @@ namespace Orion.Events {
         public bool IgnoreCanceled { get; set; } = true;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="EventHandlerAttribute"/> class with the specified priority.
+        /// Initializes a new instance of the <see cref="EventHandlerAttribute"/> class with the specified
+        /// <paramref name="priority"/>.
         /// </summary>
         /// <param name="priority">The priority.</param>
         public EventHandlerAttribute(EventPriority priority = EventPriority.Normal) {

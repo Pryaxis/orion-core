@@ -19,10 +19,6 @@ namespace Orion.Events {
     /// <summary>
     /// Specifies the priority of an event handler.
     /// </summary>
-    /// <remarks>
-    /// Priorities allow consumers to register event handlers with ordering. The event handlers are run in order from
-    /// <see cref="Lowest"/> to <see cref="Highest"/>, with <see cref="Monitor"/> running last.
-    /// </remarks>
     public enum EventPriority {
         /// <summary>
         /// Indicates that the event handler should have the lowest priority.
