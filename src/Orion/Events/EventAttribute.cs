@@ -32,8 +32,8 @@ namespace Orion.Events {
         /// <summary>
         /// Gets or sets the event's logging level.
         /// </summary>
-        /// <value>The event's logging level. The default value is <see cref="LogEventLevel.Information"/>.</value>
-        public LogEventLevel LoggingLevel { get; set; } = LogEventLevel.Information;
+        /// <value>The event's logging level. The default value is <see cref="LogEventLevel.Debug"/>.</value>
+        public LogEventLevel LoggingLevel { get; set; } = LogEventLevel.Debug;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="EventAttribute"/> class with the specified
