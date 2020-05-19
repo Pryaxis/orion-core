@@ -92,6 +92,7 @@ namespace Orion {
             OTAPI.Hooks.Game.PreInitialize += PreInitializeHandler;
             OTAPI.Hooks.Game.PostInitialize += PostInitializeHandler;
             OTAPI.Hooks.Game.Started += StartedHandler;
+            OTAPI.Hooks.Game.PreUpdate += PreUpdateHandler;
             OTAPI.Hooks.Command.Process += ProcessHandler;
         }
 
@@ -106,6 +107,7 @@ namespace Orion {
             OTAPI.Hooks.Game.PreInitialize -= PreInitializeHandler;
             OTAPI.Hooks.Game.PostInitialize -= PostInitializeHandler;
             OTAPI.Hooks.Game.Started -= StartedHandler;
+            OTAPI.Hooks.Game.PreUpdate -= PreUpdateHandler;
             OTAPI.Hooks.Command.Process -= ProcessHandler;
         }
 
@@ -354,6 +356,11 @@ namespace Orion {
 
         private void StartedHandler() {
             var evt = new ServerStartEvent();
+            Raise(evt, _log);
+        }
+
+        private void PreUpdateHandler(ref Microsoft.Xna.Framework.GameTime _) {
+            var evt = new ServerUpdateEvent();
             Raise(evt, _log);
         }
 
