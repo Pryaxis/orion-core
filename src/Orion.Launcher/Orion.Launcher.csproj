@@ -4,7 +4,6 @@
     <OutputType>Exe</OutputType>
     <TargetFramework>netcoreapp3.1</TargetFramework>
     <Nullable>enable</Nullable>
-    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <StartupObject>Orion.Launcher.Program</StartupObject>
     <Authors>orion-contributors</Authors>
     <Company>Pryaxis</Company>

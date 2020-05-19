@@ -15,18 +15,21 @@
 // You should have received a copy of the GNU General Public License
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
-namespace Orion.Launcher {
+namespace Orion.Events {
     /// <summary>
-    /// Holds the main logic for the launcher.
+    /// Represents something that can be dirtied and cleaned.
     /// </summary>
-    public static class Program {
+    public interface IDirtiable {
         /// <summary>
-        /// Acts as the main entry point of the launcher.
+        /// Gets a value indicating whether the object is dirty: i.e., whether it has been modified since it was last
+        /// cleaned.
         /// </summary>
-        /// <param name="args">The arguments supplied to the launcher.</param>
-        public static void Main(string[] args) {
-            Terraria.Main.SkipAssemblyLoad = true;
-            Terraria.WindowsLaunch.Main(args);
-        }
+        /// <value><see langword="true"/> if the object is dirty; otherwise, <see langword="false"/>.</value>
+        bool IsDirty { get; }
+
+        /// <summary>
+        /// Cleans the object, marking it as not dirty.
+        /// </summary>
+        void Clean();
     }
 }

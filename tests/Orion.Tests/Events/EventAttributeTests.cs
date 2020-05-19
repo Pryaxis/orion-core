@@ -15,18 +15,24 @@
 // You should have received a copy of the GNU General Public License
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
-namespace Orion.Launcher {
-    /// <summary>
-    /// Holds the main logic for the launcher.
-    /// </summary>
-    public static class Program {
-        /// <summary>
-        /// Acts as the main entry point of the launcher.
-        /// </summary>
-        /// <param name="args">The arguments supplied to the launcher.</param>
-        public static void Main(string[] args) {
-            Terraria.Main.SkipAssemblyLoad = true;
-            Terraria.WindowsLaunch.Main(args);
+using System;
+using FluentAssertions;
+using Xunit;
+
+namespace Orion.Events {
+    public class EventAttributeTests {
+        [Fact]
+        public void Ctor_NullName_ThrowsArgumentNullException() {
+            Func<EventAttribute> func = () => new EventAttribute(null);
+
+            func.Should().Throw<ArgumentNullException>();
+        }
+
+        [Fact]
+        public void Name_Get() {
+            var attribute = new EventAttribute("test");
+
+            attribute.Name.Should().Be("test");
         }
     }
 }

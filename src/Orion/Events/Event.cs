@@ -15,18 +15,9 @@
 // You should have received a copy of the GNU General Public License
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
-namespace Orion.Launcher {
+namespace Orion.Events {
     /// <summary>
-    /// Holds the main logic for the launcher.
+    /// Represents an event, the main form of communication between the Orion system and its plugins.
     /// </summary>
-    public static class Program {
-        /// <summary>
-        /// Acts as the main entry point of the launcher.
-        /// </summary>
-        /// <param name="args">The arguments supplied to the launcher.</param>
-        public static void Main(string[] args) {
-            Terraria.Main.SkipAssemblyLoad = true;
-            Terraria.WindowsLaunch.Main(args);
-        }
-    }
+    public abstract class Event { }
 }

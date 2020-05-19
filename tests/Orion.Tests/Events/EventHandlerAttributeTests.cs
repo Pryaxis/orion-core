@@ -1,4 +1,4 @@
-﻿// Copyright (c) 2020 Pryaxis & Orion Contributors
+﻿// Copyright (c) 20200 Pryaxis & Orion Contributors
 // 
 // This file is part of Orion.
 // 
@@ -15,18 +15,25 @@
 // You should have received a copy of the GNU General Public License
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
-namespace Orion.Launcher {
-    /// <summary>
-    /// Holds the main logic for the launcher.
-    /// </summary>
-    public static class Program {
-        /// <summary>
-        /// Acts as the main entry point of the launcher.
-        /// </summary>
-        /// <param name="args">The arguments supplied to the launcher.</param>
-        public static void Main(string[] args) {
-            Terraria.Main.SkipAssemblyLoad = true;
-            Terraria.WindowsLaunch.Main(args);
+using System;
+using FluentAssertions;
+using Xunit;
+
+namespace Orion.Events {
+    public class EventHandlerAttributeTests {
+        [Fact]
+        public void Priority_Get() {
+            var attribute = new EventHandlerAttribute(EventPriority.Normal);
+
+            attribute.Priority.Should().Be(EventPriority.Normal);
+        }
+
+        [Fact]
+        public void Name_SetNullValue_ThrowsArgumentNullException() {
+            var attribute = new EventHandlerAttribute(EventPriority.Normal);
+            Action action = () => attribute.Name = null;
+
+            action.Should().Throw<ArgumentNullException>();
         }
     }
 }

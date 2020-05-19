@@ -7,13 +7,14 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Orion", "src\Orion\Orion.cs
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{CD524E77-4123-4056-8727-0F7C61E25EBB}"
 	ProjectSection(SolutionItems) = preProject
+		.editorconfig = .editorconfig
 		.gitignore = .gitignore
 		COPYING = COPYING
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Orion.Launcher", "src\Orion.Launcher\Orion.Launcher.csproj", "{20143471-4D26-486D-B8C8-AC2FE5E60828}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Orion.Launcher", "src\Orion.Launcher\Orion.Launcher.csproj", "{20143471-4D26-486D-B8C8-AC2FE5E60828}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Orion.Tests", "tests\Orion.Tests\Orion.Tests.csproj", "{8837EE73-0E28-42B1-A5DE-8CC52BF676EE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Orion.Tests", "tests\Orion.Tests\Orion.Tests.csproj", "{8837EE73-0E28-42B1-A5DE-8CC52BF676EE}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
