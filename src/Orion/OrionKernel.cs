@@ -21,6 +21,7 @@ using System.Linq;
 using System.Reflection;
 using Ninject;
 using Orion.Events;
+using Orion.Events.Server;
 using Orion.Properties;
 using Serilog;
 
@@ -87,15 +88,19 @@ namespace Orion {
                 .InTransientScope();
 
             AppDomain.CurrentDomain.AssemblyResolve += AssemblyResolveHandler;
+
+            OTAPI.Hooks.Command.Process += ProcessHandler;
         }
 
         /// <summary>
         /// Disposes the kernel, releasing any resources associated with it.
         /// </summary>
         public void Dispose() {
+            Container.Dispose();
+
             AppDomain.CurrentDomain.AssemblyResolve -= AssemblyResolveHandler;
 
-            Container.Dispose();
+            OTAPI.Hooks.Command.Process -= ProcessHandler;
         }
 
         /// <summary>
@@ -329,6 +334,12 @@ namespace Orion {
             }
 
             return (EventHandlerCollection<TEvent>)collection;
+        }
+
+        private OTAPI.HookResult ProcessHandler(string _, string input) {
+            var evt = new ServerCommandEvent(input);
+            Raise(evt, _log);
+            return evt.IsCanceled() ? OTAPI.HookResult.Cancel : OTAPI.HookResult.Continue;
         }
     }
 }
