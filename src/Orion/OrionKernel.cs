@@ -26,8 +26,7 @@ using Serilog;
 
 namespace Orion {
     /// <summary>
-    /// Represents Orion's core logic. Provides methods to manipulate <see cref="OrionPlugin"/> instances and events.
-    /// This class is not thread-safe.
+    /// Represents Orion's core logic. Provides methods to manipulate Orion plugins and events.
     /// </summary>
     public sealed class OrionKernel : IDisposable {
         private readonly ILogger _log;
@@ -40,7 +39,7 @@ namespace Orion {
 
         private readonly MethodInfo _registerHandler = typeof(OrionKernel).GetMethod(nameof(RegisterHandler));
         private readonly MethodInfo _deregisterHandler = typeof(OrionKernel).GetMethod(nameof(DeregisterHandler));
-        private readonly IDictionary<Type, object> _handlerCollections = new Dictionary<Type, object>();
+        private readonly IDictionary<Type, object> _eventHandlerCollections = new Dictionary<Type, object>();
         private readonly IDictionary<object, IList<(Type eventType, object handler)>> _handlerRegistrations =
             new Dictionary<object, IList<(Type eventType, object handler)>>();
 
@@ -324,9 +323,9 @@ namespace Orion {
         // Helper method for retrieving an `EventHandlerCollection<TEvent>`.
         private EventHandlerCollection<TEvent> GetEventHandlerCollection<TEvent>() where TEvent : Event {
             var type = typeof(TEvent);
-            if (!_handlerCollections.TryGetValue(type, out var collection)) {
+            if (!_eventHandlerCollections.TryGetValue(type, out var collection)) {
                 collection = new EventHandlerCollection<TEvent>();
-                _handlerCollections[type] = collection;
+                _eventHandlerCollections[type] = collection;
             }
 
             return (EventHandlerCollection<TEvent>)collection;
