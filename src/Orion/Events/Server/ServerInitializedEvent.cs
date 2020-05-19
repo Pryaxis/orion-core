@@ -17,8 +17,8 @@
 
 namespace Orion.Events.Server {
     /// <summary>
-    /// An event that occurs when the server is initializing.
+    /// An event that occurs when the server has initialized.
     /// </summary>
-    [Event("server-init")]
-    public sealed class ServerInitializeEvent : Event { }
+    [Event("server-inited")]
+    public sealed class ServerInitializedEvent : Event { }
 }

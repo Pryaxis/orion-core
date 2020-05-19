@@ -16,9 +16,5 @@
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
 namespace Orion.Events.Server {
-    /// <summary>
-    /// An event that occurs when the server is initializing.
-    /// </summary>
-    [Event("server-init")]
-    public sealed class ServerInitializeEvent : Event { }
+    public class ServerInitializedEventTests { }
 }

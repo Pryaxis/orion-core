@@ -90,6 +90,7 @@ namespace Orion {
             AppDomain.CurrentDomain.AssemblyResolve += AssemblyResolveHandler;
 
             OTAPI.Hooks.Game.PreInitialize += PreInitializeHandler;
+            OTAPI.Hooks.Game.PostInitialize += PostInitializeHandler;
             OTAPI.Hooks.Game.Started += StartedHandler;
             OTAPI.Hooks.Command.Process += ProcessHandler;
         }
@@ -103,6 +104,7 @@ namespace Orion {
             AppDomain.CurrentDomain.AssemblyResolve -= AssemblyResolveHandler;
 
             OTAPI.Hooks.Game.PreInitialize -= PreInitializeHandler;
+            OTAPI.Hooks.Game.PostInitialize -= PostInitializeHandler;
             OTAPI.Hooks.Game.Started -= StartedHandler;
             OTAPI.Hooks.Command.Process -= ProcessHandler;
         }
@@ -342,6 +344,11 @@ namespace Orion {
 
         private void PreInitializeHandler() {
             var evt = new ServerInitializeEvent();
+            Raise(evt, _log);
+        }
+
+        private void PostInitializeHandler() {
+            var evt = new ServerInitializedEvent();
             Raise(evt, _log);
         }
 
