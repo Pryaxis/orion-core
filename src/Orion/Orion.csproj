@@ -49,4 +49,10 @@
     </EmbeddedResource>
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Players\" />
+    <Folder Include="Utils\" />
+    <Folder Include="World\" />
+  </ItemGroup>
+
 </Project>
