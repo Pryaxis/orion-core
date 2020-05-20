@@ -18,20 +18,24 @@
 using System;
 using Xunit;
 
-namespace Orion.Events {
-    public class EventHandlerAttributeTests {
-        [Fact]
-        public void Priority_Get() {
-            var attribute = new EventHandlerAttribute(EventPriority.Normal);
+namespace Orion.Packets {
+    public class UnknownPacketTests {
+        public static readonly byte[] Bytes = { 11, 0, 255, 0, 1, 2, 3, 4, 5, 6, 7 };
 
-            Assert.Equal(EventPriority.Normal, attribute.Priority);
+        [Fact]
+        public unsafe void Read() {
+            UnknownPacket packet = new UnknownPacket();
+            packet.Read(Bytes.AsSpan(3..), PacketContext.Server);
+
+            for (var i = 0; i < 8; ++i) {
+                Assert.Equal(i, packet.Data[i]);
+            }
+            Assert.Equal(8, packet.Length);
         }
 
         [Fact]
-        public void Name_SetNullValue_ThrowsArgumentNullException() {
-            var attribute = new EventHandlerAttribute(EventPriority.Normal);
-
-            Assert.Throws<ArgumentNullException>(() => attribute.Name = null!);
+        public void RoundTrip() {
+            TestUtils.RoundTrip<UnknownPacket>(Bytes.AsSpan(3..), PacketContext.Server);
         }
     }
 }

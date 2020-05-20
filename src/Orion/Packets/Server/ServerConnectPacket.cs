@@ -16,22 +16,26 @@
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
 using System;
-using Xunit;
+using System.Text;
 
-namespace Orion.Events {
-    public class EventHandlerAttributeTests {
-        [Fact]
-        public void Priority_Get() {
-            var attribute = new EventHandlerAttribute(EventPriority.Normal);
+namespace Orion.Packets.Server {
+    /// <summary>
+    /// Packet sent from the client to the server to connect.
+    /// </summary>
+    public struct ServerConnectPacket : IPacket {
+        /// <summary>
+        /// The client's version.
+        /// </summary>
+        public string? Version;
 
-            Assert.Equal(EventPriority.Normal, attribute.Priority);
+        /// <inheritdoc/>
+        public void Read(ReadOnlySpan<byte> span, PacketContext context) {
+            Version = SpanUtils.ReadString(ref span, Encoding.UTF8);
         }
 
-        [Fact]
-        public void Name_SetNullValue_ThrowsArgumentNullException() {
-            var attribute = new EventHandlerAttribute(EventPriority.Normal);
-
-            Assert.Throws<ArgumentNullException>(() => attribute.Name = null!);
+        /// <inheritdoc/>
+        public void Write(ref Span<byte> span, PacketContext context) {
+            SpanUtils.Write(ref span, Version ?? "", Encoding.UTF8);
         }
     }
 }

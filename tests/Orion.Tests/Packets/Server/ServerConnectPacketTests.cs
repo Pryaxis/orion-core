@@ -18,20 +18,21 @@
 using System;
 using Xunit;
 
-namespace Orion.Events {
-    public class EventHandlerAttributeTests {
-        [Fact]
-        public void Priority_Get() {
-            var attribute = new EventHandlerAttribute(EventPriority.Normal);
+namespace Orion.Packets.Server {
+    public class ServerConnectPacketTests {
+        public static readonly byte[] Bytes = { 15, 0, 1, 11, 84, 101, 114, 114, 97, 114, 105, 97, 49, 57, 52 };
 
-            Assert.Equal(EventPriority.Normal, attribute.Priority);
+        [Fact]
+        public void Read() {
+            ServerConnectPacket packet = new ServerConnectPacket();
+            packet.Read(Bytes.AsSpan(3..), PacketContext.Server);
+
+            Assert.Equal("Terraria194", packet.Version);
         }
 
         [Fact]
-        public void Name_SetNullValue_ThrowsArgumentNullException() {
-            var attribute = new EventHandlerAttribute(EventPriority.Normal);
-
-            Assert.Throws<ArgumentNullException>(() => attribute.Name = null!);
+        public void RoundTrip() {
+            TestUtils.RoundTrip<ServerConnectPacket>(Bytes.AsSpan(3..), PacketContext.Server);
         }
     }
 }

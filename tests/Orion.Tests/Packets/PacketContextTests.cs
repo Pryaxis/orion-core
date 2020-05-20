@@ -15,23 +15,15 @@
 // You should have received a copy of the GNU General Public License
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
-using System;
 using Xunit;
 
-namespace Orion.Events {
-    public class EventHandlerAttributeTests {
-        [Fact]
-        public void Priority_Get() {
-            var attribute = new EventHandlerAttribute(EventPriority.Normal);
-
-            Assert.Equal(EventPriority.Normal, attribute.Priority);
-        }
-
-        [Fact]
-        public void Name_SetNullValue_ThrowsArgumentNullException() {
-            var attribute = new EventHandlerAttribute(EventPriority.Normal);
-
-            Assert.Throws<ArgumentNullException>(() => attribute.Name = null!);
+namespace Orion.Packets {
+    public class PacketContextTests {
+        [Theory]
+        [InlineData(PacketContext.Client, PacketContext.Server)]
+        [InlineData(PacketContext.Server, PacketContext.Client)]
+        public void Switch(PacketContext context, PacketContext expected) {
+            Assert.Equal(expected, context.Switch());
         }
     }
 }
