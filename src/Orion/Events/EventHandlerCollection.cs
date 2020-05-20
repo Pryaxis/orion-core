@@ -78,10 +78,9 @@ namespace Orion.Events {
             // Not localized because this string is developer-facing.
             log.Write(_eventLoggingLevel, "Raising {EventName} with {@Event}", _eventName, evt);
 
-            // Try casting the event as `ICancelable` and `IDirtiable`. This is a little hacky, but is better than
-            // making `Event` implement `ICancelable` and `IDirtiable`.
+            // Try casting the event as `ICancelable`. This is a little hacky, but is better than making `Event`
+            // implement `ICancelable`.
             var cancelable = evt as ICancelable;
-            var dirtiable = evt as IDirtiable;
 
             foreach (var registration in _registrations) {
                 if (cancelable?.IsCanceled() == true && registration.IgnoreCanceled) {
@@ -100,7 +99,7 @@ namespace Orion.Events {
                 // Not localized because this string is developer-facing.
                 log.Write(_eventLoggingLevel, "Canceled {EventName} for {CancellationReason}", _eventName,
                           cancelable.CancellationReason);
-            } else if (dirtiable?.IsDirty == true) {
+            } else if (evt.IsDirty) {
                 // Not localized because this string is developer-facing.
                 log.Write(_eventLoggingLevel, "Altered {EventName} to {@Event}", _eventName, evt);
             }
