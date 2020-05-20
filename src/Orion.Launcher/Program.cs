@@ -22,6 +22,7 @@ using System.Text;
 using System.Threading;
 using Destructurama;
 using Microsoft.Xna.Framework;
+using Orion.Events.Server;
 using Orion.Launcher.Properties;
 using Serilog;
 using Serilog.Events;
@@ -57,11 +58,11 @@ namespace Orion.Launcher {
                     rollingInterval: RollingInterval.Day,
                     rollOnFileSizeLimit: true,
                     fileSizeLimitBytes: 2 << 20)
-                .CreateLogger();
+                .CreateLogger()
+                .ForContext("ServiceName", "launcher");
 
             AppDomain.CurrentDomain.UnhandledException += (sender, eventArgs) => {
-                log.ForContext("ServiceName", "launcher")
-                    .Fatal(eventArgs.ExceptionObject as Exception, Resources.UnhandledExceptionMessage);
+                log.Fatal(eventArgs.ExceptionObject as Exception, Resources.UnhandledExceptionMessage);
             };
 
             return log;
@@ -102,6 +103,8 @@ namespace Orion.Launcher {
             using var kernel = new OrionKernel(log);
             SetupPlugins(kernel);
             SetupLanguage();
+
+            kernel.Raise(new ServerArgsEvent(args), log);
 
             using var game = new Terraria.Main();
             game.DedServ();

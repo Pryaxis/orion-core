@@ -72,7 +72,8 @@ namespace Orion {
             Container.Bind<OrionKernel>().ToConstant(this).InSingletonScope();
 
             // Create an ILogger binding for service-specific logs.
-            Container.Bind<ILogger>()
+            Container
+                .Bind<ILogger>()
                 .ToMethod(ctx => {
                     // ctx.Request.Target can be null if the ILogger is requested directly.
                     var type = ctx.Request.Target?.Member.ReflectedType;
@@ -82,7 +83,8 @@ namespace Orion {
                 .InTransientScope();
 
             // Create a Lazy<T> binding for lazily-loaded services.
-            Container.Bind(typeof(Lazy<>))
+            Container
+                .Bind(typeof(Lazy<>))
                 .ToMethod(ctx => _getLazy
                     .MakeGenericMethod(ctx.GenericArguments[0])
                     .Invoke(this, Array.Empty<object>()))
@@ -220,7 +222,8 @@ namespace Orion {
             }
 
             var registrations = _handlerRegistrations[handlerObject] = new List<(Type eventType, object handler)>();
-            foreach (var method in handlerObject.GetType()
+            foreach (var method in handlerObject
+                    .GetType()
                     .GetMethods(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance)) {
                 if (method.GetCustomAttribute<EventHandlerAttribute>() is null) {
                     continue;
