@@ -24,10 +24,6 @@ using Serilog;
 using Serilog.Events;
 
 namespace Orion.Events {
-    /// <summary>
-    /// Represents a collection of event handlers.
-    /// </summary>
-    /// <typeparam name="TEvent">The type of event.</typeparam>
     internal sealed class EventHandlerCollection<TEvent> where TEvent : Event {
         private readonly string _eventName;
         private readonly LogEventLevel _eventLoggingLevel;
@@ -37,9 +33,6 @@ namespace Orion.Events {
         private readonly IDictionary<Action<TEvent>, Registration> _handlerToRegistration =
             new Dictionary<Action<TEvent>, Registration>();
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="EventHandlerCollection{TEvent}"/> class.
-        /// </summary>
         public EventHandlerCollection() {
             // Retrieve and cache information about the event. If `EventAttribute` is not present on the event, then
             // reasonable defaults are chosen.
@@ -48,11 +41,6 @@ namespace Orion.Events {
             _eventLoggingLevel = attribute?.LoggingLevel ?? LogEventLevel.Information;
         }
 
-        /// <summary>
-        /// Registers an event <paramref name="handler"/> to the collection.
-        /// </summary>
-        /// <param name="handler">The event handler to register.</param>
-        /// <param name="log">The logger to log to.</param>
         public void RegisterHandler(Action<TEvent> handler, ILogger log) {
             Debug.Assert(handler != null);
             Debug.Assert(log != null);
@@ -65,15 +53,6 @@ namespace Orion.Events {
             log.Debug("Registering {@Registration} to {EventName}", registration, _eventName);
         }
 
-        /// <summary>
-        /// Deregisters an event <paramref name="handler"/> from the collection. Returns a value indicating success.
-        /// </summary>
-        /// <param name="handler">The event handler to deregister.</param>
-        /// <param name="log">The logger to log to.</param>
-        /// <returns>
-        /// <see langword="true"/> if the event handler was successfully deregistered; otherwise,
-        /// <see langword="false"/>.
-        /// </returns>
         public bool DeregisterHandler(Action<TEvent> handler, ILogger log) {
             Debug.Assert(handler != null);
             Debug.Assert(log != null);
@@ -92,11 +71,6 @@ namespace Orion.Events {
             return true;
         }
 
-        /// <summary>
-        /// Raises <paramref name="evt"/> with the event handler collection.
-        /// </summary>
-        /// <param name="evt">The event to raise.</param>
-        /// <param name="log">The logger to log to.</param>
         public void Raise(TEvent evt, ILogger log) {
             Debug.Assert(evt != null);
             Debug.Assert(log != null);
@@ -132,43 +106,13 @@ namespace Orion.Events {
             }
         }
 
-        /// <summary>
-        /// Stores information about an event handler registration in an <see cref="EventHandlerCollection{TEvent}"/>.
-        /// </summary>
         private sealed class Registration {
-            /// <summary>
-            /// Gets the event handler.
-            /// </summary>
-            /// <value>The event handler.</value>
             [NotLogged]
             public Action<TEvent> Handler { get; }
-
-            /// <summary>
-            /// Gets the event handler's priority.
-            /// </summary>
-            /// <value>The event handler's priority.</value>
             public EventPriority Priority { get; }
-
-            /// <summary>
-            /// Gets the event handler's name.
-            /// </summary>
-            /// <value>The event handler's name.</value>
             public string Name { get; }
-
-            /// <summary>
-            /// Gets a value indicating whether the event handler should ignore canceled events.
-            /// </summary>
-            /// <value>
-            /// <see langword="true"/> if the event handler should ignore canceled events; otherwise,
-            /// <see langword="false"/>.
-            /// </value>
             public bool IgnoreCanceled { get; }
 
-            /// <summary>
-            /// Initializes a new instance of the <see cref="Registration"/> class with the specified event
-            /// <paramref name="handler"/>.
-            /// </summary>
-            /// <param name="handler">The event handler.</param>
             public Registration(Action<TEvent> handler) {
                 Handler = handler;
 
