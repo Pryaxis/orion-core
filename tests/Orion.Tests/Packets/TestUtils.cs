@@ -26,7 +26,7 @@ namespace Orion.Packets {
         public static void RoundTrip<TPacket>(ReadOnlySpan<byte> span, PacketContext context)
                 where TPacket : struct, IPacket {
             // Read packet.
-            TPacket packet = new TPacket();
+            var packet = new TPacket();
             packet.Read(span, context);
 
             // Write the packet.

@@ -24,7 +24,7 @@ namespace Orion.Packets {
 
         [Fact]
         public unsafe void Read() {
-            UnknownPacket packet = new UnknownPacket();
+            var packet = new UnknownPacket();
             packet.Read(Bytes.AsSpan(3..), PacketContext.Server);
 
             for (var i = 0; i < 8; ++i) {

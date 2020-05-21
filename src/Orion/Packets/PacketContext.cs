@@ -36,7 +36,7 @@ namespace Orion.Packets {
     /// </summary>
     public static class PacketContextExtensions {
         /// <summary>
-        /// Switches the <paramref name="context"/>, returning the other context.
+        /// Switches the given <paramref name="context"/>, returning the other context.
         /// </summary>
         /// <param name="context">The context.</param>
         /// <returns>The other context.</returns>

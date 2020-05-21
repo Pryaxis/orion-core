@@ -36,11 +36,19 @@ namespace Orion.Packets {
         /// <inheritdoc/>
         public unsafe void Read(ReadOnlySpan<byte> span, PacketContext context) {
             Length = (ushort)span.Length;
+            if (Length == 0) {
+                return;
+            }
+
             Unsafe.CopyBlockUnaligned(ref Data[0], ref Unsafe.AsRef(in span[0]), Length);
         }
 
         /// <inheritdoc/>
         public unsafe void Write(ref Span<byte> span, PacketContext context) {
+            if (Length == 0) {
+                return;
+            }
+
             Unsafe.CopyBlockUnaligned(ref span[0], ref Data[0], Length);
             span = span[Length..];
         }

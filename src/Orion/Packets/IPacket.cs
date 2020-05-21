@@ -16,12 +16,17 @@
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
 using System;
+using Orion.Events;
 
 namespace Orion.Packets {
     /// <summary>
     /// Represents a packet, the main form of communication between the server and its clients.
     /// </summary>
-    public interface IPacket {
+    public interface IPacket : IDirtiable {
+        // Provide default implementations of the IDirtiable interface since very few packets actually require it.
+        bool IDirtiable.IsDirty => false;
+        void IDirtiable.Clean() { }
+
         /// <summary>
         /// Reads the packet from the given <paramref name="span"/> with the specified <paramref name="context"/>,
         /// mutating this instance.

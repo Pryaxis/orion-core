@@ -15,24 +15,12 @@
 // You should have received a copy of the GNU General Public License
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
-using System;
-using Xunit;
+using Orion.Entities;
+using Orion.Utils;
 
-namespace Orion.Packets.Server {
-    public class ServerConnectPacketTests {
-        public static readonly byte[] Bytes = { 15, 0, 1, 11, 84, 101, 114, 114, 97, 114, 105, 97, 49, 57, 52 };
-
-        [Fact]
-        public void Read() {
-            var packet = new ServerConnectPacket();
-            packet.Read(Bytes.AsSpan(3..), PacketContext.Server);
-
-            Assert.Equal("Terraria194", packet.Version);
-        }
-
-        [Fact]
-        public void RoundTrip() {
-            TestUtils.RoundTrip<ServerConnectPacket>(Bytes.AsSpan(3..), PacketContext.Server);
-        }
-    }
+namespace Orion.Players {
+    /// <summary>
+    /// Represents a Terraria player.
+    /// </summary>
+    public interface IPlayer : IEntity, IWrapping<Terraria.Player> { }
 }
