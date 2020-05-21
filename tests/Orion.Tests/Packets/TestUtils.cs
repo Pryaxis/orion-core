@@ -31,7 +31,7 @@ namespace Orion.Packets {
 
             // Write the packet.
             var bytes = new byte[ushort.MaxValue - sizeof(ushort)];
-            Span<byte> tmp = bytes;
+            var tmp = bytes.AsSpan();
             packet.Write(ref tmp, context.Switch());
 
             // Read the packet again.
@@ -39,7 +39,7 @@ namespace Orion.Packets {
 
             // Write the packet again.
             var bytes2 = new byte[ushort.MaxValue - sizeof(ushort)];
-            Span<byte> tmp2 = bytes2;
+            var tmp2 = bytes2.AsSpan();
             packet.Write(ref tmp2, context.Switch());
 
             Assert.Equal(bytes, bytes2);

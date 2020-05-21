@@ -28,6 +28,8 @@ namespace Orion.Packets.Server {
         /// </summary>
         public string? Version;
 
+        PacketType IPacket.Type => PacketType.ServerConnect;
+
         /// <inheritdoc/>
         public void Read(ReadOnlySpan<byte> span, PacketContext context) {
             Version = SpanUtils.ReadString(ref span, Encoding.UTF8);

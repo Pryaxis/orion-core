@@ -16,10 +16,12 @@
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 using Orion.Packets;
 using Xunit;
 
 namespace Orion.Events.Packets {
+    [SuppressMessage("Style", "IDE0017:Simplify object initialization", Justification = "Testing")]
     public class PacketEventTests {
         [Fact]
         public void Packet_Get() {
@@ -77,6 +79,7 @@ namespace Orion.Events.Packets {
                 IsDirty = false;
             }
 
+            public PacketType Type => throw new NotImplementedException();
             public void Read(ReadOnlySpan<byte> span, PacketContext context) => throw new NotImplementedException();
             public void Write(ref Span<byte> span, PacketContext context) => throw new NotImplementedException();
         }

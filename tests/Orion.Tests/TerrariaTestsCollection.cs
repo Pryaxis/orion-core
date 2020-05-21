@@ -15,27 +15,10 @@
 // You should have received a copy of the GNU General Public License
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
-using System;
 using Xunit;
 
-namespace Orion.Packets {
-    public class UnknownPacketTests {
-        public static readonly byte[] Bytes = { 11, 0, 255, 0, 1, 2, 3, 4, 5, 6, 7 };
-
-        [Fact]
-        public unsafe void Read() {
-            var packet = new UnknownPacket();
-            packet.Read(Bytes.AsSpan(3..), PacketContext.Server);
-
-            Assert.Equal(8, packet.Length);
-            for (var i = 0; i < 8; ++i) {
-                Assert.Equal(i, packet.Data[i]);
-            }
-        }
-
-        [Fact]
-        public void RoundTrip() {
-            TestUtils.RoundTrip<UnknownPacket>(Bytes.AsSpan(3..), PacketContext.Server);
-        }
-    }
+namespace Orion {
+    // These tests cannot be run in parallel, since they interact heavily with Terraria's static state.
+    [CollectionDefinition("TerrariaTestsCollection", DisableParallelization = true)]
+    public class TerrariaTestsCollection : ICollectionFixture<TerrariaTestsFixture> { }
 }

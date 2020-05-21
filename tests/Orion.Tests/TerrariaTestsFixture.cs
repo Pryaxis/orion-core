@@ -16,26 +16,21 @@
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
 using System;
-using Xunit;
 
-namespace Orion.Packets {
-    public class UnknownPacketTests {
-        public static readonly byte[] Bytes = { 11, 0, 255, 0, 1, 2, 3, 4, 5, 6, 7 };
+namespace Orion {
+    public class TerrariaTestsFixture : IDisposable {
+        private readonly Terraria.Main _main;
 
-        [Fact]
-        public unsafe void Read() {
-            var packet = new UnknownPacket();
-            packet.Read(Bytes.AsSpan(3..), PacketContext.Server);
+        public TerrariaTestsFixture() {
+            _main = new Terraria.Main();
 
-            Assert.Equal(8, packet.Length);
-            for (var i = 0; i < 8; ++i) {
-                Assert.Equal(i, packet.Data[i]);
-            }
+            Terraria.Localization.LanguageManager.Instance.SetLanguage("en-US");
+            Terraria.Lang.InitializeLegacyLocalization();
+            _main.Initialize();
         }
 
-        [Fact]
-        public void RoundTrip() {
-            TestUtils.RoundTrip<UnknownPacket>(Bytes.AsSpan(3..), PacketContext.Server);
+        public void Dispose() {
+            _main.Dispose();
         }
     }
 }

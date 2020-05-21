@@ -17,21 +17,37 @@
 
 using System;
 using System.Runtime.CompilerServices;
+using System.Runtime.InteropServices;
 
 namespace Orion.Packets {
     /// <summary>
     /// Represents an unknown packet.
     /// </summary>
+    [StructLayout(LayoutKind.Explicit)]
     public struct UnknownPacket : IPacket {
-        /// <summary>
-        /// The packet data.
-        /// </summary>
-        public unsafe fixed byte Data[ushort.MaxValue - sizeof(ushort)];
-
         /// <summary>
         /// The packet length.
         /// </summary>
+        [FieldOffset(0)]
         public ushort Length;
+
+        [FieldOffset(2)]
+        private PacketType _type;
+
+        /// <summary>
+        /// The packet data.
+        /// </summary>
+        [FieldOffset(3)]
+        public unsafe fixed byte Data[ushort.MaxValue - IPacket.HeaderSize];
+
+        /// <summary>
+        /// Gets or sets the packet's type.
+        /// </summary>
+        /// <value>The packet's type.</value>
+        public PacketType Type {
+            get => _type;
+            set => _type = value;
+        }
 
         /// <inheritdoc/>
         public unsafe void Read(ReadOnlySpan<byte> span, PacketContext context) {

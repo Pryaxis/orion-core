@@ -47,7 +47,7 @@ namespace Orion.Packets {
         [MemberData(nameof(StringParams))]
         public void WriteString(string str) {
             var bytes = new byte[10000000];
-            Span<byte> span = bytes;
+            var span = bytes.AsSpan();
 
             SpanUtils.Write(ref span, str, Encoding.UTF8);
 

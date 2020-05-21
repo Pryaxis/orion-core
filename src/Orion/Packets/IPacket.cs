@@ -16,6 +16,7 @@
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
 using System;
+using System.Runtime.CompilerServices;
 using Orion.Events;
 
 namespace Orion.Packets {
@@ -23,9 +24,19 @@ namespace Orion.Packets {
     /// Represents a packet, the main form of communication between the server and its clients.
     /// </summary>
     public interface IPacket : IDirtiable {
+        /// <summary>
+        /// The packet's header size.
+        /// </summary>
+        public const int HeaderSize = sizeof(ushort) + sizeof(PacketType);
+
         // Provide default implementations of the IDirtiable interface since very few packets actually require it.
         bool IDirtiable.IsDirty => false;
         void IDirtiable.Clean() { }
+
+        /// <summary>
+        /// Gets the packet's type.
+        /// </summary>
+        PacketType Type { get; }
 
         /// <summary>
         /// Reads the packet from the given <paramref name="span"/> with the specified <paramref name="context"/>,
@@ -43,5 +54,33 @@ namespace Orion.Packets {
         /// <param name="span">The span.</param>
         /// <param name="context">The context.</param>
         void Write(ref Span<byte> span, PacketContext context);
+    }
+
+    /// <summary>
+    /// Provides extensions for the <see cref="IPacket"/> interface.
+    /// </summary>
+    public static class PacketExtensions {
+        /// <summary>
+        /// Writes the <paramref name="packet"/> reference to the given <paramref name="span"/> with the specified
+        /// <paramref name="context"/>, including the packet header. Advances the span by the number of bytes written.
+        /// </summary>
+        /// <typeparam name="TPacket">The type of packet.</typeparam>
+        /// <param name="packet">The packet reference.</param>
+        /// <param name="span">The span.</param>
+        /// <param name="context">The context.</param>
+        public static void WriteWithHeader<TPacket>(ref this TPacket packet, ref Span<byte> span, PacketContext context)
+                where TPacket : struct, IPacket {
+            // Write the payload portion of the packet.
+            var tempSpan = span[IPacket.HeaderSize..];
+            packet.Write(ref tempSpan, context);
+
+            // Write the header portion of the packet.
+            var packetLength = (ushort)(span.Length - tempSpan.Length);
+            Unsafe.WriteUnaligned(ref span[0], packetLength);
+            Unsafe.WriteUnaligned(ref span[2], packet.Type);
+
+            // Advance the span by the packet length.
+            span = span[packetLength..];
+        }
     }
 }

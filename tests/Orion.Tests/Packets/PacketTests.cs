@@ -19,23 +19,27 @@ using System;
 using Xunit;
 
 namespace Orion.Packets {
-    public class UnknownPacketTests {
-        public static readonly byte[] Bytes = { 11, 0, 255, 0, 1, 2, 3, 4, 5, 6, 7 };
-
+    public class PacketTests {
         [Fact]
-        public unsafe void Read() {
-            var packet = new UnknownPacket();
-            packet.Read(Bytes.AsSpan(3..), PacketContext.Server);
+        public void WriteWithHeader() {
+            var bytes = new byte[4];
+            var span = bytes.AsSpan();
+            var packet = new TestPacket();
+            packet.WriteWithHeader(ref span, PacketContext.Server);
 
-            Assert.Equal(8, packet.Length);
-            for (var i = 0; i < 8; ++i) {
-                Assert.Equal(i, packet.Data[i]);
-            }
+            Assert.True(span.IsEmpty);
+            Assert.Equal(new byte[] { 4, 0, 255, 42 }, bytes);
         }
 
-        [Fact]
-        public void RoundTrip() {
-            TestUtils.RoundTrip<UnknownPacket>(Bytes.AsSpan(3..), PacketContext.Server);
+        private struct TestPacket : IPacket {
+            public PacketType Type => (PacketType)255;
+
+            public void Read(ReadOnlySpan<byte> span, PacketContext context) => throw new NotImplementedException();
+
+            public void Write(ref Span<byte> span, PacketContext context) {
+                span[0] = 42;
+                span = span[1..];
+            }
         }
     }
 }

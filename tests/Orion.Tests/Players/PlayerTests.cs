@@ -18,25 +18,22 @@
 using System;
 using Moq;
 using Orion.Packets;
-using Orion.Players;
 using Xunit;
 
-namespace Orion.Events.Packets {
-    public class PacketReceiveEventTests {
+namespace Orion.Players {
+    public class PlayerTests {
         [Fact]
-        public void Ctor_NullSender_ThrowsArgumentNullException() {
-            var packet = new TestPacket();
-
-            Assert.Throws<ArgumentNullException>(() => new PacketReceiveEvent<TestPacket>(ref packet, null!));
+        public void SendPacket_NullPlayer_ThrowsArgumentNullException() {
+            Assert.Throws<ArgumentNullException>(() => PlayerExtensions.SendPacket(null!, new TestPacket()));
         }
 
         [Fact]
-        public void Sender_Get() {
-            var packet = new TestPacket();
-            var sender = new Mock<IPlayer>().Object;
-            var evt = new PacketReceiveEvent<TestPacket>(ref packet, sender);
+        public void SendPacket() {
+            var mockPlayer = new Mock<IPlayer>();
 
-            Assert.Same(sender, evt.Sender);
+            mockPlayer.Object.SendPacket(new TestPacket());
+
+            mockPlayer.Verify(p => p.SendPacket(ref It.Ref<TestPacket>.IsAny));
         }
 
         private struct TestPacket : IPacket {

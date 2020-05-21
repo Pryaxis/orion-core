@@ -15,27 +15,13 @@
 // You should have received a copy of the GNU General Public License
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
-using System;
-using Xunit;
-
 namespace Orion.Packets {
-    public class UnknownPacketTests {
-        public static readonly byte[] Bytes = { 11, 0, 255, 0, 1, 2, 3, 4, 5, 6, 7 };
-
-        [Fact]
-        public unsafe void Read() {
-            var packet = new UnknownPacket();
-            packet.Read(Bytes.AsSpan(3..), PacketContext.Server);
-
-            Assert.Equal(8, packet.Length);
-            for (var i = 0; i < 8; ++i) {
-                Assert.Equal(i, packet.Data[i]);
-            }
-        }
-
-        [Fact]
-        public void RoundTrip() {
-            TestUtils.RoundTrip<UnknownPacket>(Bytes.AsSpan(3..), PacketContext.Server);
-        }
+    /// <summary>
+    /// Specifies the type of a packet.
+    /// </summary>
+    public enum PacketType : byte {
+#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
+        ServerConnect = 1,
+#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member
     }
 }
