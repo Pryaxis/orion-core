@@ -15,6 +15,12 @@
 // You should have received a copy of the GNU General Public License
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
+using Serilog.Events;
+
 namespace Orion.Events.Server {
-    public class ServerInitializeEventTests { }
+    /// <summary>
+    /// An event that occurs when the server ticks.
+    /// </summary>
+    [Event("server-tick", LoggingLevel = LogEventLevel.Verbose)]
+    public sealed class ServerTickEvent : Event { }
 }

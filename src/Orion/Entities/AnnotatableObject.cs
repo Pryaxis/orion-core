@@ -36,8 +36,8 @@ namespace Orion.Entities {
                 return (T)value!;
             }
 
-            var provider = defaultValueProvider ?? (() => default!);
-            return createIfNotExists ? (T)(_annotations[key] = provider())! : provider();
+            var valueProvider = defaultValueProvider ?? (() => default!);
+            return createIfNotExists ? (T)(_annotations[key] = valueProvider())! : valueProvider();
         }
 
         /// <inheritdoc/>

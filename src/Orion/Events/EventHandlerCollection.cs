@@ -45,9 +45,8 @@ namespace Orion.Events {
             Debug.Assert(handler != null);
             Debug.Assert(log != null);
 
-            var registration = new Registration(handler);
+            var registration = _handlerToRegistration[handler] = new Registration(handler);
             _registrations.Add(registration);
-            _handlerToRegistration[handler] = registration;
 
             // Not localized because this string is developer-facing.
             log.Debug("Registering {@Registration} to {EventName}", registration, _eventName);

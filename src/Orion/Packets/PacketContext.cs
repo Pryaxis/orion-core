@@ -15,6 +15,8 @@
 // You should have received a copy of the GNU General Public License
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
+using System.Diagnostics.Contracts;
+
 namespace Orion.Packets {
     /// <summary>
     /// Describes the context with which a packet is processed.
@@ -40,6 +42,7 @@ namespace Orion.Packets {
         /// </summary>
         /// <param name="context">The context.</param>
         /// <returns>The other context.</returns>
+        [Pure]
         public static PacketContext Switch(this PacketContext context) {
             return (PacketContext)((int)context ^ 1);
         }

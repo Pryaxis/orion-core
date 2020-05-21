@@ -361,7 +361,7 @@ namespace Orion {
         }
 
         private void PreUpdateHandler(ref GameTime _) {
-            var evt = new ServerUpdateEvent();
+            var evt = new ServerTickEvent();
             Raise(evt, _log);
         }
 
