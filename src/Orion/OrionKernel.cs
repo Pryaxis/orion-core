@@ -23,6 +23,7 @@ using Microsoft.Xna.Framework;
 using Ninject;
 using Orion.Events;
 using Orion.Events.Server;
+using Orion.Players;
 using Orion.Properties;
 using Serilog;
 
@@ -31,16 +32,18 @@ namespace Orion {
     /// Represents Orion's core logic. Provides methods to manipulate Orion plugins and events.
     /// </summary>
     public sealed class OrionKernel : IDisposable {
-        private readonly ILogger _log;
-
-        private readonly MethodInfo _getLazy =
+        private static readonly MethodInfo GetLazyMethod =
             typeof(OrionKernel).GetMethod(nameof(GetLazy), BindingFlags.NonPublic | BindingFlags.Instance);
+        private static readonly MethodInfo RegisterHandlerMethod =
+            typeof(OrionKernel).GetMethod(nameof(RegisterHandler));
+        private static readonly MethodInfo DeregisterHandlerMethod =
+            typeof(OrionKernel).GetMethod(nameof(DeregisterHandler));
+
+        private readonly ILogger _log;
 
         private readonly IList<Type> _pluginTypesToLoad = new List<Type>();
         private readonly Dictionary<string, OrionPlugin> _plugins = new Dictionary<string, OrionPlugin>();
 
-        private readonly MethodInfo _registerHandler = typeof(OrionKernel).GetMethod(nameof(RegisterHandler));
-        private readonly MethodInfo _deregisterHandler = typeof(OrionKernel).GetMethod(nameof(DeregisterHandler));
         private readonly IDictionary<Type, object> _eventHandlerCollections = new Dictionary<Type, object>();
         private readonly IDictionary<object, IList<(Type eventType, object handler)>> _handlerRegistrations =
             new Dictionary<object, IList<(Type eventType, object handler)>>();
@@ -70,6 +73,7 @@ namespace Orion {
             _log = log.ForContext("ServiceName", "orion-kernel");
 
             Container.Bind<OrionKernel>().ToConstant(this).InSingletonScope();
+            Container.Bind<IPlayerService>().To<OrionPlayerService>();
 
             // Create an ILogger binding for service-specific logs.
             Container
@@ -85,7 +89,7 @@ namespace Orion {
             // Create a Lazy<T> binding for lazily-loaded services.
             Container
                 .Bind(typeof(Lazy<>))
-                .ToMethod(ctx => _getLazy
+                .ToMethod(ctx => GetLazyMethod
                     .MakeGenericMethod(ctx.GenericArguments[0])
                     .Invoke(this, Array.Empty<object>()))
                 .InTransientScope();
@@ -246,7 +250,7 @@ namespace Orion {
 
                 var handlerType = typeof(Action<>).MakeGenericType(eventType);
                 var handler = method.CreateDelegate(handlerType, handlerObject);
-                _registerHandler.MakeGenericMethod(eventType).Invoke(this, new object[] { handler, log });
+                RegisterHandlerMethod.MakeGenericMethod(eventType).Invoke(this, new object[] { handler, log });
                 registrations.Add((eventType, handler));
             }
         }
@@ -302,7 +306,7 @@ namespace Orion {
 
             _handlerRegistrations.Remove(handlerObject);
             foreach (var (eventType, handler) in registrations) {
-                _deregisterHandler.MakeGenericMethod(eventType).Invoke(this, new object[] { handler, log });
+                DeregisterHandlerMethod.MakeGenericMethod(eventType).Invoke(this, new object[] { handler, log });
             }
             return true;
         }

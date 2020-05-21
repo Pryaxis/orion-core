@@ -51,7 +51,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Players\" />
     <Folder Include="World\" />
   </ItemGroup>
 

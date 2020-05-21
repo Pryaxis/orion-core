@@ -38,15 +38,15 @@ namespace Orion.Events.Server {
 
             foreach (var arg in args) {
                 if (arg.StartsWith("--")) {
-                    int equals = arg.IndexOf('=');
+                    var equals = arg.IndexOf('=');
                     if (equals < 0) {
-                        _bools.Add(arg.Substring(2));
+                        _bools.Add(arg[2..]);
                     } else {
-                        _values[arg.Substring(2, equals - 2)] = arg.Substring(equals + 1);
+                        _values[arg[2..equals]] = arg[(equals + 1)..];
                     }
                 } else if (arg.StartsWith("-")) {
                     // Add the args' characters as flags.
-                    foreach (var c in arg.Substring("-".Length)) {
+                    foreach (var c in arg[1..]) {
                         _bools.Add(c.ToString());
                     }
                 }
