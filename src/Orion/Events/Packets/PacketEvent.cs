@@ -39,8 +39,7 @@ namespace Orion.Events.Packets {
         /// <inheritdoc/>
         public override bool IsDirty {
             get {
-                // First, check if the packet is dirty. This is required in case the packet structure itself isn't
-                // modified.
+                // Check if the packet is dirty. This is required in case the packet structure itself isn't modified.
                 if (_currentPacket.IsDirty) {
                     return true;
                 }
