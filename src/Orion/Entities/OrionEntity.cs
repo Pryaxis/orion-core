@@ -20,7 +20,6 @@ using System.Diagnostics.CodeAnalysis;
 using System.Diagnostics.Contracts;
 using Destructurama.Attributed;
 using Microsoft.Xna.Framework;
-using Orion.Utils;
 
 namespace Orion.Entities {
     // This class is generic so that we only use a single wrapped field instead of two wrapped fields per entity.

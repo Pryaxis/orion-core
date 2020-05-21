@@ -17,7 +17,7 @@
 
 using System;
 
-namespace Orion.Utils {
+namespace Orion.Entities {
     /// <summary>
     /// Represents an object that wraps another type of object.
     /// </summary>

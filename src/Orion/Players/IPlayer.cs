@@ -18,7 +18,6 @@
 using System;
 using Orion.Entities;
 using Orion.Packets;
-using Orion.Utils;
 
 namespace Orion.Players {
     /// <summary>
