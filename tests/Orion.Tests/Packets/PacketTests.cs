@@ -32,7 +32,7 @@ namespace Orion.Packets {
         }
 
         private struct TestPacket : IPacket {
-            public PacketType Type => (PacketType)255;
+            public PacketId Id => (PacketId)255;
 
             public void Read(ReadOnlySpan<byte> span, PacketContext context) => throw new NotImplementedException();
 

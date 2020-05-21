@@ -160,7 +160,7 @@ namespace Orion.Players {
         }
 
         private struct TestPacket : IPacket {
-            public PacketType Type => (PacketType)255;
+            public PacketId Id => (PacketId)255;
 
             public byte Value;
 

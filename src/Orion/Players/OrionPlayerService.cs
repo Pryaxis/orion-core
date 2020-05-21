@@ -19,6 +19,8 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Reflection;
+using Orion.Collections;
+using Orion.Entities;
 using Orion.Events;
 using Orion.Events.Packets;
 using Orion.Packets;
@@ -40,9 +42,16 @@ namespace Orion.Players {
             [1] = typeof(ServerConnectPacket)
         };
 
+        public IReadOnlyArray<IPlayer> Players { get; }
+
         public OrionPlayerService(OrionKernel kernel, ILogger log) : base(kernel, log) {
             Debug.Assert(kernel != null);
             Debug.Assert(log != null);
+
+            // Construct the `Players` array. Note that the last player should be ignored, as it is not a real player.
+            Players = new WrappedReadOnlyArray<OrionPlayer, Terraria.Player>(
+                Terraria.Main.player.AsMemory(..^1),
+                (playerIndex, terrariaPlayer) => new OrionPlayer(playerIndex, terrariaPlayer, this));
 
             OTAPI.Hooks.Net.ReceiveData = ReceiveDataHandler;
         }

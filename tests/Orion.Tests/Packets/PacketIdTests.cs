@@ -15,17 +15,24 @@
 // You should have received a copy of the GNU General Public License
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
-using Orion.Entities;
+using System;
+using System.Linq;
+using Xunit;
 
-namespace Orion.Players {
-    /// <summary>
-    /// Represents a player service. Provides access to player-related properties, methods, and events.
-    /// </summary>
-    public interface IPlayerService {
-        /// <summary>
-        /// Gets all of the players.
-        /// </summary>
-        /// <value>All of the players.</value>
-        IReadOnlyArray<IPlayer> Players { get; }
+namespace Orion.Packets {
+    public class PacketIdTests {
+        [Fact]
+        public void Type() {
+            for (var i = 0; i < 256; ++i) {
+                var id = (PacketId)i;
+                var expectedType = typeof(PacketId).Assembly.ExportedTypes
+                    .Where(t => t != typeof(UnknownPacket) && t != typeof(IPacket))
+                    .Where(t => typeof(IPacket).IsAssignableFrom(t))
+                    .Where(t => ((IPacket)Activator.CreateInstance(t)!).Id == id).FirstOrDefault()
+                        ?? typeof(UnknownPacket);
+
+                Assert.Equal(expectedType, id.Type());
+            }
+        }
     }
 }

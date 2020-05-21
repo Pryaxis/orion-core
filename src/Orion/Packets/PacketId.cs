@@ -15,13 +15,34 @@
 // You should have received a copy of the GNU General Public License
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
+using System;
+using System.Collections.Generic;
+using Orion.Packets.Server;
+
 namespace Orion.Packets {
     /// <summary>
-    /// Specifies the type of a packet.
+    /// Specifies packet IDs.
     /// </summary>
-    public enum PacketType : byte {
+    public enum PacketId : byte {
 #pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
         ServerConnect = 1,
 #pragma warning restore CS1591 // Missing XML comment for publicly visible type or member
+    }
+
+    /// <summary>
+    /// Provides extensions for the <see cref="PacketId"/> enumeration.
+    /// </summary>
+    public static class PacketIdExtensions {
+        private static readonly IDictionary<PacketId, Type> PacketIdToType = new Dictionary<PacketId, Type> {
+            [PacketId.ServerConnect] = typeof(ServerConnectPacket)
+        };
+
+        /// <summary>
+        /// Gets the corresponding type for the given packet <paramref name="id"/>.
+        /// </summary>
+        /// <param name="id">The packet ID.</param>
+        /// <returns>The corresponding type for the given packet <paramref name="id"/>.</returns>
+        public static Type Type(this PacketId id) =>
+            PacketIdToType.TryGetValue(id, out var type) ? type : typeof(UnknownPacket);
     }
 }

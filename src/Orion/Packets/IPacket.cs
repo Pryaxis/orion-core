@@ -27,16 +27,16 @@ namespace Orion.Packets {
         /// <summary>
         /// The packet's header size.
         /// </summary>
-        public const int HeaderSize = sizeof(ushort) + sizeof(PacketType);
+        public const int HeaderSize = sizeof(ushort) + sizeof(PacketId);
 
         // Provide default implementations of the IDirtiable interface since very few packets actually require it.
         bool IDirtiable.IsDirty => false;
         void IDirtiable.Clean() { }
 
         /// <summary>
-        /// Gets the packet's type.
+        /// Gets the packet's ID.
         /// </summary>
-        PacketType Type { get; }
+        PacketId Id { get; }
 
         /// <summary>
         /// Reads the packet from the given <paramref name="span"/> with the specified <paramref name="context"/>,
@@ -77,7 +77,7 @@ namespace Orion.Packets {
             // Write the header portion of the packet.
             var packetLength = (ushort)(span.Length - tempSpan.Length);
             Unsafe.WriteUnaligned(ref span[0], packetLength);
-            Unsafe.WriteUnaligned(ref span[2], packet.Type);
+            Unsafe.WriteUnaligned(ref span[2], packet.Id);
 
             // Advance the span by the packet length.
             span = span[packetLength..];

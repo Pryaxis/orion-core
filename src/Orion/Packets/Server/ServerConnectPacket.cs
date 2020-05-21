@@ -28,7 +28,7 @@ namespace Orion.Packets.Server {
         /// </summary>
         public string? Version;
 
-        PacketType IPacket.Type => PacketType.ServerConnect;
+        PacketId IPacket.Id => PacketId.ServerConnect;
 
         /// <inheritdoc/>
         public void Read(ReadOnlySpan<byte> span, PacketContext context) {

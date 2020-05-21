@@ -32,7 +32,7 @@ namespace Orion.Packets {
         public ushort Length;
 
         [FieldOffset(2)]
-        private PacketType _type;
+        private PacketId _id;
 
         /// <summary>
         /// The packet data.
@@ -41,12 +41,12 @@ namespace Orion.Packets {
         public unsafe fixed byte Data[ushort.MaxValue - IPacket.HeaderSize];
 
         /// <summary>
-        /// Gets or sets the packet's type.
+        /// Gets or sets the packet's ID.
         /// </summary>
-        /// <value>The packet's type.</value>
-        public PacketType Type {
-            get => _type;
-            set => _type = value;
+        /// <value>The packet's ID.</value>
+        public PacketId Id {
+            get => _id;
+            set => _id = value;
         }
 
         /// <inheritdoc/>
