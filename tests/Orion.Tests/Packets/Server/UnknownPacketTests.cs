@@ -18,7 +18,7 @@
 using System;
 using Xunit;
 
-namespace Orion.Packets {
+namespace Orion.Packets.Server {
     public class UnknownPacketTests {
         public static readonly byte[] Bytes = { 11, 0, 255, 0, 1, 2, 3, 4, 5, 6, 7 };
 

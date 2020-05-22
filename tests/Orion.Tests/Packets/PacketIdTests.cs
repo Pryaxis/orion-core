@@ -17,6 +17,7 @@
 
 using System;
 using System.Linq;
+using Orion.Packets.Server;
 using Xunit;
 
 namespace Orion.Packets {

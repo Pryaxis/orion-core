@@ -19,7 +19,7 @@ using System;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 
-namespace Orion.Packets {
+namespace Orion.Packets.Server {
     /// <summary>
     /// Represents an unknown packet.
     /// </summary>

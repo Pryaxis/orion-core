@@ -27,6 +27,7 @@ using Orion.Entities;
 using Orion.Events;
 using Orion.Events.Packets;
 using Orion.Packets;
+using Orion.Packets.Server;
 using Serilog;
 
 namespace Orion.Players {
