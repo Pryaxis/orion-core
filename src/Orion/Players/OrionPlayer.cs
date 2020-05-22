@@ -60,10 +60,10 @@ namespace Orion.Players {
             }
 
             // Write the packet payload. We need to use `evt.Packet` here, since the packet may have been modified.
-            Span<byte> span = _sendBuffer;
-            evt.Packet.WriteWithHeader(ref span, PacketContext.Server);
+            var sendSpan = _sendBuffer.AsSpan();
+            evt.Packet.WriteWithHeader(ref sendSpan, PacketContext.Server);
 
-            var packetLength = (ushort)(_sendBuffer.Length - span.Length);
+            var packetLength = (ushort)(_sendBuffer.Length - sendSpan.Length);
             terrariaClient.Socket?.AsyncSend(_sendBuffer, 0, packetLength, terrariaClient.ServerWriteCallBack);
         }
     }

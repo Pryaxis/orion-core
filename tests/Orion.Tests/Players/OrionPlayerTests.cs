@@ -21,8 +21,6 @@ using Orion.Events;
 using Orion.Events.Packets;
 using Orion.Packets;
 using Serilog.Core;
-using Terraria.Net;
-using Terraria.Net.Sockets;
 using Xunit;
 
 namespace Orion.Players {
@@ -139,23 +137,26 @@ namespace Orion.Players {
             Assert.Equal(new byte[] { 4, 0, 255, 42 }, socket.SendData);
         }
 
-        private class TestSocket : ISocket {
+        private class TestSocket : Terraria.Net.Sockets.ISocket {
             public bool Connected { get; set; }
             public byte[] SendData { get; private set; } = Array.Empty<byte>();
 
             public void AsyncReceive(
-                byte[] data, int offset, int size, SocketReceiveCallback callback, object? state = null) =>
+                byte[] data, int offset, int size, Terraria.Net.Sockets.SocketReceiveCallback callback,
+                object? state = null) =>
                     throw new NotImplementedException();
             public void AsyncSend(
-                byte[] data, int offset, int size, SocketSendCallback callback, object? state = null) =>
+                byte[] data, int offset, int size, Terraria.Net.Sockets.SocketSendCallback callback,
+                object? state = null) =>
                     SendData = data[offset..(offset + size)];
             public void Close() => throw new NotImplementedException();
-            public void Connect(RemoteAddress address) => throw new NotImplementedException();
-            public RemoteAddress GetRemoteAddress() => throw new NotImplementedException();
+            public void Connect(Terraria.Net.RemoteAddress address) => throw new NotImplementedException();
+            public Terraria.Net.RemoteAddress GetRemoteAddress() => throw new NotImplementedException();
             public bool IsConnected() => Connected;
             public bool IsDataAvailable() => throw new NotImplementedException();
             public void SendQueuedPackets() => throw new NotImplementedException();
-            public bool StartListening(SocketConnectionAccepted callback) => throw new NotImplementedException();
+            public bool StartListening(Terraria.Net.Sockets.SocketConnectionAccepted callback) =>
+                throw new NotImplementedException();
             public void StopListening() => throw new NotImplementedException();
         }
 
