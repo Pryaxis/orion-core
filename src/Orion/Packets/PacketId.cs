@@ -17,6 +17,7 @@
 
 using System;
 using System.Collections.Generic;
+using Orion.Packets.Players;
 using Orion.Packets.Server;
 
 namespace Orion.Packets {
@@ -26,6 +27,7 @@ namespace Orion.Packets {
     public enum PacketId : byte {
 #pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
         ServerConnect = 1,
+        PlayerPvp = 30,
 #pragma warning restore CS1591 // Missing XML comment for publicly visible type or member
     }
 
@@ -34,7 +36,8 @@ namespace Orion.Packets {
     /// </summary>
     public static class PacketIdExtensions {
         private static readonly IDictionary<PacketId, Type> PacketIdToType = new Dictionary<PacketId, Type> {
-            [PacketId.ServerConnect] = typeof(ServerConnectPacket)
+            [PacketId.ServerConnect] = typeof(ServerConnectPacket),
+            [PacketId.PlayerPvp] = typeof(PlayerPvpPacket)
         };
 
         /// <summary>

@@ -18,21 +18,22 @@
 using System;
 using Xunit;
 
-namespace Orion.Packets.Server {
-    public class ServerConnectPacketTests {
-        public static readonly byte[] Bytes = { 15, 0, 1, 11, 84, 101, 114, 114, 97, 114, 105, 97, 49, 57, 52 };
+namespace Orion.Packets.Players {
+    public class PlayerPvpPacketTests {
+        public static readonly byte[] Bytes = { 5, 0, 30, 5, 1 };
 
         [Fact]
         public void Read() {
-            var packet = new ServerConnectPacket();
+            var packet = new PlayerPvpPacket();
             packet.Read(Bytes.AsSpan(IPacket.HeaderSize..), PacketContext.Server);
 
-            Assert.Equal("Terraria194", packet.Version);
+            Assert.Equal(5, packet.PlayerIndex);
+            Assert.True(packet.IsInPvp);
         }
 
         [Fact]
         public void RoundTrip() {
-            TestUtils.RoundTrip<ServerConnectPacket>(Bytes.AsSpan(IPacket.HeaderSize..), PacketContext.Server);
+            TestUtils.RoundTrip<PlayerPvpPacket>(Bytes.AsSpan(IPacket.HeaderSize..), PacketContext.Server);
         }
     }
 }

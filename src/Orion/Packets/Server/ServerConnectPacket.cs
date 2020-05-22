@@ -16,6 +16,7 @@
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 using System.Text;
 
 namespace Orion.Packets.Server {
@@ -23,10 +24,18 @@ namespace Orion.Packets.Server {
     /// Packet sent from the client to the server to connect.
     /// </summary>
     public struct ServerConnectPacket : IPacket {
+        private string? _version;
+
         /// <summary>
-        /// The client's version.
+        /// Gets or sets the client's version.
         /// </summary>
-        public string? Version;
+        /// <value>The client's version.</value>
+        /// <exception cref="ArgumentNullException"><paramref name="value"/> is <see langword="null"/>.</exception>
+        [DisallowNull]
+        public string? Version {
+            get => _version;
+            set => _version = value ?? throw new ArgumentNullException(nameof(value));
+        }
 
         PacketId IPacket.Id => PacketId.ServerConnect;
 

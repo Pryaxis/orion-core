@@ -32,7 +32,6 @@ namespace Orion.Events.Packets {
         /// Gets the receiver.
         /// </summary>
         /// <value>The receiver.</value>
-        [LogAsScalar]
         public IPlayer Receiver { get; }
 
         /// <inheritdoc/>

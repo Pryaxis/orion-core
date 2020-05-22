@@ -82,5 +82,10 @@ namespace Orion.Packets {
             // Advance the span by the packet length.
             span = span[packetLength..];
         }
+
+        internal static ref byte AsRefByte<TPacket>(ref this TPacket packet, int byteOffset)
+                where TPacket : struct, IPacket {
+            return ref Unsafe.As<TPacket, byte>(ref Unsafe.AddByteOffset(ref packet, new IntPtr(byteOffset)));
+        }
     }
 }

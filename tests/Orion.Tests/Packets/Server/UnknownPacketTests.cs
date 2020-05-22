@@ -25,17 +25,17 @@ namespace Orion.Packets.Server {
         [Fact]
         public unsafe void Read() {
             var packet = new UnknownPacket();
-            packet.Read(Bytes.AsSpan(3..), PacketContext.Server);
+            packet.Read(Bytes.AsSpan(IPacket.HeaderSize..), PacketContext.Server);
 
             Assert.Equal(8, packet.Length);
             for (var i = 0; i < 8; ++i) {
-                Assert.Equal(i, packet.Data[i]);
+                Assert.Equal(i, packet.Data(i));
             }
         }
 
         [Fact]
         public void RoundTrip() {
-            TestUtils.RoundTrip<UnknownPacket>(Bytes.AsSpan(3..), PacketContext.Server);
+            TestUtils.RoundTrip<UnknownPacket>(Bytes.AsSpan(IPacket.HeaderSize..), PacketContext.Server);
         }
     }
 }

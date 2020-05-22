@@ -17,37 +17,25 @@
 
 using System;
 using System.Runtime.CompilerServices;
-using System.Runtime.InteropServices;
 
 namespace Orion.Packets.Server {
     /// <summary>
     /// Represents an unknown packet.
     /// </summary>
-    [StructLayout(LayoutKind.Explicit)]
     public struct UnknownPacket : IPacket {
-        /// <summary>
-        /// The packet length.
-        /// </summary>
-        [FieldOffset(0)]
-        public ushort Length;
-
-        [FieldOffset(2)]
-        private PacketId _id;
+        private unsafe fixed byte _data[ushort.MaxValue - IPacket.HeaderSize];
 
         /// <summary>
-        /// The packet data.
+        /// Gets or sets the packet's length.
         /// </summary>
-        [FieldOffset(3)]
-        public unsafe fixed byte Data[ushort.MaxValue - IPacket.HeaderSize];
+        /// <value>The packet's length.</value>
+        public ushort Length { get; set; }
 
         /// <summary>
         /// Gets or sets the packet's ID.
         /// </summary>
         /// <value>The packet's ID.</value>
-        public PacketId Id {
-            get => _id;
-            set => _id = value;
-        }
+        public PacketId Id { get; set; }
 
         /// <inheritdoc/>
         public unsafe void Read(ReadOnlySpan<byte> span, PacketContext context) {
@@ -56,7 +44,7 @@ namespace Orion.Packets.Server {
                 return;
             }
 
-            Unsafe.CopyBlockUnaligned(ref Data[0], ref Unsafe.AsRef(in span[0]), Length);
+            Unsafe.CopyBlockUnaligned(ref _data[0], ref Unsafe.AsRef(in span[0]), Length);
         }
 
         /// <inheritdoc/>
@@ -65,8 +53,15 @@ namespace Orion.Packets.Server {
                 return;
             }
 
-            Unsafe.CopyBlockUnaligned(ref span[0], ref Data[0], Length);
+            Unsafe.CopyBlockUnaligned(ref span[0], ref _data[0], Length);
             span = span[Length..];
         }
+
+        /// <summary>
+        /// Gets a reference to the byte at the given <paramref name="index"/> in the data.
+        /// </summary>
+        /// <param name="index">The index.</param>
+        /// <returns>A reference to the byte at the given <paramref name="index"/> in the data.</returns>
+        public unsafe ref byte Data(int index) => ref _data[index];
     }
 }
