@@ -148,7 +148,11 @@ namespace Orion.Players {
         private bool ReceivePacketEvent<TPacket>(IPlayer player, ref TPacket packet) where TPacket : struct, IPacket {
             // While this may seem inefficient, these typeof comparisons get optimized in each reified generic method by
             // the JIT.
-            if (typeof(TPacket) == typeof(PlayerPvpPacket)) {
+            if (typeof(TPacket) == typeof(PlayerJoinPacket)) {
+                var evt = new PlayerJoinEvent(player);
+                Kernel.Raise(evt, Log);
+                return evt.IsCanceled();
+            } else if (typeof(TPacket) == typeof(PlayerPvpPacket)) {
                 var evt = new PlayerPvpEvent(player, ref Unsafe.As<TPacket, PlayerPvpPacket>(ref packet));
                 Kernel.Raise(evt, Log);
                 return evt.IsCanceled();

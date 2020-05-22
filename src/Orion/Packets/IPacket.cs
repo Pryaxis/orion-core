@@ -70,7 +70,7 @@ namespace Orion.Packets {
             packet.Write(ref tempSpan, context);
 
             // Write the header portion of the packet.
-            var packetLength = span.Length - tempSpan.Length;
+            var packetLength = (ushort)(span.Length - tempSpan.Length);
             Unsafe.WriteUnaligned(ref span[0], packetLength);
             Unsafe.WriteUnaligned(ref span[2], packet.Id);
 

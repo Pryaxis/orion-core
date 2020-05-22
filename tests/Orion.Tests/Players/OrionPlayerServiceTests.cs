@@ -118,6 +118,41 @@ namespace Orion.Players {
         }
 
         [Fact]
+        public void PacketReceive_PlayerJoinEventTriggered() {
+            Terraria.Netplay.Clients[5] = new Terraria.RemoteClient { Id = 5 };
+
+            using var kernel = new OrionKernel(Logger.None);
+            using var playerService = new OrionPlayerService(kernel, Logger.None);
+            var isRun = false;
+            kernel.RegisterHandler<PlayerJoinEvent>(evt => {
+                Assert.Same(playerService.Players[5], evt.Player);
+                isRun = true;
+            }, Logger.None);
+
+            TestUtils.FakeReceiveBytes(5, PlayerJoinPacketTests.Bytes);
+
+            Assert.True(isRun);
+        }
+
+        [Fact]
+        public void PacketReceive_PlayerJoinEventCanceled() {
+            // Set `State` to 1 so that the join packet is not ignored by the server.
+            Terraria.Netplay.Clients[5] = new Terraria.RemoteClient {
+                Id = 5,
+                State = 1
+            };
+            Terraria.Main.player[5] = new Terraria.Player { whoAmI = 5 };
+
+            using var kernel = new OrionKernel(Logger.None);
+            using var playerService = new OrionPlayerService(kernel, Logger.None);
+            kernel.RegisterHandler<PlayerJoinEvent>(evt => evt.Cancel(), Logger.None);
+
+            TestUtils.FakeReceiveBytes(5, PlayerJoinPacketTests.Bytes);
+
+            Assert.Equal(1, Terraria.Netplay.Clients[5].State);
+        }
+
+        [Fact]
         public void PacketReceive_PlayerPvpEventTriggered() {
             Terraria.Netplay.Clients[5] = new Terraria.RemoteClient { Id = 5 };
 
