@@ -25,7 +25,7 @@ namespace Orion.Events.Packets {
     /// An event that occurs when a packet is being received.
     /// </summary>
     /// <typeparam name="TPacket">The type of packet.</typeparam>
-    [Event("packet-receive")]
+    [Event("packet-recv")]
     public sealed class PacketReceiveEvent<TPacket> : PacketEvent<TPacket>, ICancelable
             where TPacket : struct, IPacket {
         /// <summary>
