@@ -24,32 +24,32 @@ using Xunit;
 
 namespace Orion.Events.Players {
     [SuppressMessage("Style", "IDE0017:Simplify object initialization", Justification = "Testing")]
-    public class PlayerPvpEventTests {
+    public class PlayerTeamEventTests {
         [Fact]
         public void Ctor_NullPlayer_ThrowsArgumentNullException() {
-            var packet = new PlayerPvpPacket();
+            var packet = new PlayerTeamPacket();
 
-            Assert.Throws<ArgumentNullException>(() => new PlayerPvpEvent(null!, ref packet));
+            Assert.Throws<ArgumentNullException>(() => new PlayerTeamEvent(null!, ref packet));
         }
 
         [Fact]
-        public void IsInPvp_Get() {
+        public void Team_Get() {
             var player = new Mock<IPlayer>().Object;
-            var packet = new PlayerPvpPacket { IsInPvp = true };
-            var evt = new PlayerPvpEvent(player, ref packet);
+            var packet = new PlayerTeamPacket { Team = PlayerTeam.Red };
+            var evt = new PlayerTeamEvent(player, ref packet);
 
-            Assert.True(evt.IsInPvp);
+            Assert.Equal(PlayerTeam.Red, evt.Team);
         }
 
         [Fact]
-        public void IsInPvp_Set() {
+        public void Team_Set() {
             var player = new Mock<IPlayer>().Object;
-            var packet = new PlayerPvpPacket();
-            var evt = new PlayerPvpEvent(player, ref packet);
+            var packet = new PlayerTeamPacket();
+            var evt = new PlayerTeamEvent(player, ref packet);
 
-            evt.IsInPvp = true;
+            evt.Team = PlayerTeam.Red;
 
-            Assert.True(packet.IsInPvp);
+            Assert.Equal(PlayerTeam.Red, packet.Team);
         }
     }
 }
