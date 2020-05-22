@@ -19,13 +19,14 @@ using System;
 using Destructurama.Attributed;
 using Orion.Packets;
 using Orion.Players;
+using Serilog.Events;
 
 namespace Orion.Events.Packets {
     /// <summary>
     /// An event that occurs when a packet is being sent.
     /// </summary>
     /// <typeparam name="TPacket">The type of packet.</typeparam>
-    [Event("packet-send")]
+    [Event("packet-send", LoggingLevel = LogEventLevel.Verbose)]
     public sealed class PacketSendEvent<TPacket> : PacketEvent<TPacket>, ICancelable
             where TPacket : struct, IPacket {
         /// <summary>
