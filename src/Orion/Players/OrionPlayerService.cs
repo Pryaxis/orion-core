@@ -26,7 +26,9 @@ using Orion.Collections;
 using Orion.Entities;
 using Orion.Events;
 using Orion.Events.Packets;
+using Orion.Events.Players;
 using Orion.Packets;
+using Orion.Packets.Players;
 using Orion.Packets.Server;
 using Serilog;
 
@@ -114,13 +116,14 @@ namespace Orion.Players {
                 Unsafe.As<TPacket, UnknownPacket>(ref packet).Id = (PacketId)span[0];
             }
 
-            var evt = new PacketReceiveEvent<TPacket>(ref packet, Players[buffer.whoAmI]);
+            var player = Players[buffer.whoAmI];
+            var evt = new PacketReceiveEvent<TPacket>(ref packet, player);
             Kernel.Raise(evt, Log);
             if (evt.IsCanceled()) {
                 return OTAPI.HookResult.Cancel;
-            }
-
-            if (!evt.IsDirty) {
+            } else if (ReceivePacketEvent(player, ref evt.Packet)) {
+                return OTAPI.HookResult.Cancel;
+            } else if (!evt.IsDirty) {
                 return OTAPI.HookResult.Continue;
             }
 
@@ -143,6 +146,18 @@ namespace Orion.Players {
             buffer.readBuffer = oldReadBuffer;
             buffer.reader = oldReader;
             return OTAPI.HookResult.Cancel;
+        }
+
+        private bool ReceivePacketEvent<TPacket>(IPlayer player, ref TPacket packet) where TPacket : struct, IPacket {
+            // While this may seem inefficient, these typeof comparisons get optimized in each reified generic method by
+            // the JIT.
+            if (typeof(TPacket) == typeof(PlayerPvpPacket)) {
+                var evt = new PlayerPvpEvent(player, ref Unsafe.As<TPacket, PlayerPvpPacket>(ref packet));
+                Kernel.Raise(evt, Log);
+                return evt.IsCanceled();
+            } else {
+                return false;
+            }
         }
 
         private OTAPI.HookResult SendBytesHandler(

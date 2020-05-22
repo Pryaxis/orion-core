@@ -23,7 +23,7 @@ namespace Orion.Events.Packets {
     /// <summary>
     /// Provides the base class for packet-related events.
     /// </summary>
-    public abstract unsafe class PacketEvent<TPacket> : Event, IDirtiable where TPacket : struct, IPacket {
+    public abstract unsafe class PacketEvent<TPacket> : Event where TPacket : struct, IPacket {
         // Store a pointer to the original packet. This is quite unsafe and requires callers to ensure that `TPacket` is
         // stored on the stack. However, this lets us save on a (potentially expensive) struct copy.
         private readonly void* _originalPacketPtr;

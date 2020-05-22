@@ -19,7 +19,9 @@ using System;
 using System.Linq;
 using Orion.Events;
 using Orion.Events.Packets;
+using Orion.Events.Players;
 using Orion.Packets;
+using Orion.Packets.Players;
 using Orion.Packets.Server;
 using Serilog.Core;
 using Xunit;
@@ -84,7 +86,7 @@ namespace Orion.Players {
         }
 
         [Fact]
-        public void PacketReceive() {
+        public void PacketReceive_EventTriggered() {
             Terraria.Netplay.Clients[5] = new Terraria.RemoteClient { Id = 5 };
 
             using var kernel = new OrionKernel(Logger.None);
@@ -129,7 +131,42 @@ namespace Orion.Players {
         }
 
         [Fact]
-        public void PacketSend() {
+        public void PacketReceive_PlayerPvpEventTriggered() {
+            Terraria.Netplay.Clients[5] = new Terraria.RemoteClient { Id = 5 };
+
+            using var kernel = new OrionKernel(Logger.None);
+            using var playerService = new OrionPlayerService(kernel, Logger.None);
+            var isRun = false;
+            kernel.RegisterHandler<PlayerPvpEvent>(evt => {
+                isRun = true;
+                Assert.Same(playerService.Players[5], evt.Player);
+            }, Logger.None);
+
+            TestUtils.FakeReceiveBytes(5, PlayerPvpPacketTests.Bytes);
+
+            Assert.True(isRun);
+        }
+
+        [Fact]
+        public void PacketReceive_PlayerPvpEventCanceled() {
+            // Set `State` to 10 so that the PvP packet is not ignored by the server.
+            Terraria.Netplay.Clients[5] = new Terraria.RemoteClient {
+                Id = 5,
+                State = 10
+            };
+            Terraria.Main.player[5] = new Terraria.Player { whoAmI = 5 };
+
+            using var kernel = new OrionKernel(Logger.None);
+            using var playerService = new OrionPlayerService(kernel, Logger.None);
+            kernel.RegisterHandler<PlayerPvpEvent>(evt => evt.Cancel(), Logger.None);
+
+            TestUtils.FakeReceiveBytes(5, PlayerPvpPacketTests.Bytes);
+
+            Assert.False(Terraria.Main.player[5].hostile);
+        }
+
+        [Fact]
+        public void PacketSend_EventTriggered() {
             var socket = new TestSocket { Connected = true };
             Terraria.Netplay.Clients[5] = new Terraria.RemoteClient {
                 Id = 5,
