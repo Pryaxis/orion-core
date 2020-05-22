@@ -49,7 +49,7 @@ namespace Orion.Events {
             _registrations.Add(registration);
 
             // Not localized because this string is developer-facing.
-            log.Debug("Registering {@Registration} to {EventName}", registration, _eventName);
+            log.Debug("Registering {EventName} with {@Registration}", registration, _eventName);
         }
 
         public bool DeregisterHandler(Action<TEvent> handler, ILogger log) {
@@ -66,7 +66,7 @@ namespace Orion.Events {
             _handlerToRegistration.Remove(handler);
 
             // Not localized because this string is developer-facing.
-            log.Debug("Deregistering {@Registration} from {EventName}", registration, _eventName);
+            log.Debug("Deregistering {EventName} with {@Registration}", registration, _eventName);
             return true;
         }
 
@@ -80,7 +80,6 @@ namespace Orion.Events {
             // Try casting the event as `ICancelable`. This is a little hacky, but is better than making `Event`
             // implement `ICancelable`.
             var cancelable = evt as ICancelable;
-
             foreach (var registration in _registrations) {
                 if (cancelable?.IsCanceled() == true && registration.IgnoreCanceled) {
                     continue;

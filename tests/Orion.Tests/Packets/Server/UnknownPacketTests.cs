@@ -16,11 +16,31 @@
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 using Xunit;
 
 namespace Orion.Packets.Server {
+    [SuppressMessage("Style", "IDE0017:Simplify object initialization", Justification = "Testing")]
     public class UnknownPacketTests {
         public static readonly byte[] Bytes = { 11, 0, 255, 0, 1, 2, 3, 4, 5, 6, 7 };
+
+        [Fact]
+        public void Length_Set_Get() {
+            var packet = new UnknownPacket();
+
+            packet.Length = 1234;
+
+            Assert.Equal(1234, packet.Length);
+        }
+
+        [Fact]
+        public void Id_Set_Get() {
+            var packet = new UnknownPacket();
+
+            packet.Id = (PacketId)255;
+
+            Assert.Equal((PacketId)255, packet.Id);
+        }
 
         [Fact]
         public unsafe void Read() {
@@ -36,6 +56,15 @@ namespace Orion.Packets.Server {
         [Fact]
         public void RoundTrip() {
             TestUtils.RoundTrip<UnknownPacket>(Bytes.AsSpan(IPacket.HeaderSize..), PacketContext.Server);
+        }
+
+        [Fact]
+        public void Data() {
+            var packet = new UnknownPacket();
+
+            packet.Data(0) = 123;
+
+            Assert.Equal(123, packet.Data(0));
         }
     }
 }

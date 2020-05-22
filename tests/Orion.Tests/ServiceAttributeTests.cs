@@ -38,5 +38,14 @@ namespace Orion {
 
             Assert.Throws<ArgumentNullException>(() => attribute.Author = null!);
         }
+
+        [Fact]
+        public void Author_Set_Get() {
+            var attribute = new ServiceAttribute("");
+
+            attribute.Author = "test";
+
+            Assert.Equal("test", attribute.Author);
+        }
     }
 }

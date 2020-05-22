@@ -16,6 +16,7 @@
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 using System.Runtime.CompilerServices;
 using Moq;
 using Orion.Packets;
@@ -23,6 +24,7 @@ using Orion.Players;
 using Xunit;
 
 namespace Orion.Events.Players {
+    [SuppressMessage("Style", "IDE0017:Simplify object initialization", Justification = "Testing")]
     public class PlayerPacketEventTests {
         [Fact]
         public void Ctor_NullPlayer_ThrowsArgumentNullException() {
@@ -38,7 +40,17 @@ namespace Orion.Events.Players {
             var evt = new TestPlayerPacketEvent(player, ref packet);
 
             Assert.True(Unsafe.AreSame(ref packet, ref evt.Packet));
+        }
 
+        [Fact]
+        public void CancellationReason_Set_Get() {
+            var player = new Mock<IPlayer>().Object;
+            var packet = new TestPacket();
+            var evt = new TestPlayerPacketEvent(player, ref packet);
+
+            evt.CancellationReason = "test";
+
+            Assert.Equal("test", evt.CancellationReason);
         }
 
         private class TestPlayerPacketEvent : PlayerPacketEvent<TestPacket> {

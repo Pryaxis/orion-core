@@ -27,9 +27,6 @@ namespace Orion.Events {
             mockCancelable.SetupGet(c => c.CancellationReason).Returns("");
 
             Assert.True(mockCancelable.Object.IsCanceled());
-
-            mockCancelable.VerifyGet(c => c.CancellationReason);
-            mockCancelable.VerifyNoOtherCalls();
         }
 
         [Fact]
@@ -38,9 +35,6 @@ namespace Orion.Events {
             mockCancelable.SetupGet(c => c.CancellationReason).Returns((string)null!);
 
             Assert.False(mockCancelable.Object.IsCanceled());
-
-            mockCancelable.VerifyGet(c => c.CancellationReason);
-            mockCancelable.VerifyNoOtherCalls();
         }
 
         [Fact]
@@ -51,12 +45,10 @@ namespace Orion.Events {
         [Fact]
         public void Cancel() {
             var mockCancelable = new Mock<ICancelable>();
-            mockCancelable.SetupSet(c => c.CancellationReason = "test");
 
             mockCancelable.Object.Cancel("test");
 
             mockCancelable.VerifySet(c => c.CancellationReason = "test");
-            mockCancelable.VerifyNoOtherCalls();
         }
 
         [Fact]
@@ -65,7 +57,7 @@ namespace Orion.Events {
         }
 
         [Fact]
-        public void Cancel_NullCancellation_Reason_ThrowsArgumentNullException() {
+        public void Cancel_NullReason_ThrowsArgumentNullException() {
             var cancelable = new Mock<ICancelable>().Object;
 
             Assert.Throws<ArgumentNullException>(() => cancelable.Cancel(null!));
@@ -74,12 +66,10 @@ namespace Orion.Events {
         [Fact]
         public void Uncancel() {
             var mockCancelable = new Mock<ICancelable>();
-            mockCancelable.SetupSet(c => c.CancellationReason = null);
 
             mockCancelable.Object.Uncancel();
 
             mockCancelable.VerifySet(c => c.CancellationReason = null);
-            mockCancelable.VerifyNoOtherCalls();
         }
 
         [Fact]

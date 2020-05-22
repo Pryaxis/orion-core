@@ -193,8 +193,8 @@ namespace Orion.Players {
             evt.Packet.WriteWithHeader(ref sendSpan, PacketContext.Server);
             var packetLength = _sendBuffer.Value.Length - sendSpan.Length;
 
-            var client = Terraria.Netplay.Clients[playerIndex];
-            client.Socket.AsyncSend(_sendBuffer.Value, 0, packetLength, client.ServerWriteCallBack);
+            var terrariaClient = Terraria.Netplay.Clients[playerIndex];
+            terrariaClient.Socket.AsyncSend(_sendBuffer.Value, 0, packetLength, terrariaClient.ServerWriteCallBack);
         }
     }
 }

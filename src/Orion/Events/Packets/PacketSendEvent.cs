@@ -16,28 +16,22 @@
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
 using System;
-using Destructurama.Attributed;
 using Orion.Packets;
 using Orion.Players;
 using Serilog.Events;
 
 namespace Orion.Events.Packets {
     /// <summary>
-    /// An event that occurs when a packet is being sent.
+    /// An event that occurs when a packet is being sent. This event can be canceled.
     /// </summary>
     /// <typeparam name="TPacket">The type of packet.</typeparam>
     [Event("packet-send", LoggingLevel = LogEventLevel.Verbose)]
-    public sealed class PacketSendEvent<TPacket> : PacketEvent<TPacket>, ICancelable
-            where TPacket : struct, IPacket {
+    public sealed class PacketSendEvent<TPacket> : PacketEvent<TPacket> where TPacket : struct, IPacket {
         /// <summary>
         /// Gets the receiver.
         /// </summary>
         /// <value>The receiver.</value>
         public IPlayer Receiver { get; }
-
-        /// <inheritdoc/>
-        [NotLogged]
-        public string? CancellationReason { get; set; }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="PacketSendEvent{TPacket}"/> class with the specified

@@ -15,8 +15,6 @@
 // You should have received a copy of the GNU General Public License
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
-using Destructurama.Attributed;
-
 namespace Orion.Events {
     /// <summary>
     /// Represents an event, the main form of communication between the Orion system and its plugins.

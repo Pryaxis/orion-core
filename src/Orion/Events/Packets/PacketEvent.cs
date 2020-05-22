@@ -15,15 +15,15 @@
 // You should have received a copy of the GNU General Public License
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
-using System;
 using System.Runtime.CompilerServices;
+using Destructurama.Attributed;
 using Orion.Packets;
 
 namespace Orion.Events.Packets {
     /// <summary>
     /// Provides the base class for packet-related events.
     /// </summary>
-    public abstract unsafe class PacketEvent<TPacket> : Event where TPacket : struct, IPacket {
+    public abstract unsafe class PacketEvent<TPacket> : Event, ICancelable where TPacket : struct, IPacket {
         // Store a pointer to the packet. This is quite unsafe and requires callers to ensure that the `TPacket` is
         // stored on the stack. However, this lets us save on a struct copy.
         private readonly void* _packetPtr;
@@ -33,6 +33,10 @@ namespace Orion.Events.Packets {
         /// </summary>
         /// <value>A reference to the packet.</value>
         public ref TPacket Packet => ref Unsafe.AsRef<TPacket>(_packetPtr);
+
+        /// <inheritdoc/>
+        [NotLogged]
+        public string? CancellationReason { get; set; }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="PacketEvent{TPacket}"/> class with the specified

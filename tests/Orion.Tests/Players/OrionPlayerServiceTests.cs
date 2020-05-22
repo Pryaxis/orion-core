@@ -117,20 +117,6 @@ namespace Orion.Players {
         }
 
         [Fact]
-        public void PacketReceive_EventDirtied() {
-            Terraria.Netplay.Clients[5] = new Terraria.RemoteClient { Id = 5 };
-
-            using var kernel = new OrionKernel(Logger.None);
-            using var playerService = new OrionPlayerService(kernel, Logger.None);
-            kernel.RegisterHandler<PacketReceiveEvent<ServerConnectPacket>>(
-                evt => evt.Packet.Version = "", Logger.None);
-
-            TestUtils.FakeReceiveBytes(5, ServerConnectBytes);
-
-            Assert.Equal(0, Terraria.Netplay.Clients[5].State);
-        }
-
-        [Fact]
         public void PacketReceive_PlayerPvpEventTriggered() {
             Terraria.Netplay.Clients[5] = new Terraria.RemoteClient { Id = 5 };
 
@@ -203,24 +189,6 @@ namespace Orion.Players {
             Terraria.NetMessage.SendData((byte)PacketId.ServerConnect, 5);
 
             Assert.Empty(socket.SendData);
-        }
-
-        [Fact]
-        public void PacketSend_EventDirtied() {
-            var socket = new TestSocket { Connected = true };
-            Terraria.Netplay.Clients[5] = new Terraria.RemoteClient {
-                Id = 5,
-                Socket = socket
-            };
-
-            using var kernel = new OrionKernel(Logger.None);
-            using var playerService = new OrionPlayerService(kernel, Logger.None);
-            kernel.RegisterHandler<PacketSendEvent<ServerConnectPacket>>(
-                evt => evt.Packet.Version = "", Logger.None);
-
-            Terraria.NetMessage.SendData((byte)PacketId.ServerConnect, 5);
-
-            Assert.NotEqual(ServerConnectBytes, socket.SendData);
         }
 
         private class TestSocket : Terraria.Net.Sockets.ISocket {

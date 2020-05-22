@@ -27,6 +27,8 @@ namespace Orion.Events.Players {
     /// </summary>
     /// <typeparam name="TPacket">The type of packet.</typeparam>
     public abstract unsafe class PlayerPacketEvent<TPacket> : PlayerEvent, ICancelable where TPacket : struct, IPacket {
+        // Store a pointer to the packet. This is quite unsafe and requires callers to ensure that the `TPacket` is
+        // stored on the stack. However, this lets us save on a struct copy.
         private readonly void* _packetPtr;
 
         /// <summary>

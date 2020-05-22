@@ -17,6 +17,7 @@
 
 using System;
 using System.Diagnostics.CodeAnalysis;
+using System.Runtime.CompilerServices;
 using Orion.Packets;
 using Xunit;
 
@@ -26,10 +27,19 @@ namespace Orion.Events.Packets {
         [Fact]
         public void Packet_Get() {
             var packet = new TestPacket();
-            packet.Value = 100;
             var evt = new TestPacketEvent<TestPacket>(ref packet);
 
-            Assert.Equal(100, evt.Packet.Value);
+            Assert.True(Unsafe.AreSame(ref packet, ref evt.Packet));
+        }
+
+        [Fact]
+        public void CancellationReason_Set_Get() {
+            var packet = new TestPacket();
+            var evt = new TestPacketEvent<TestPacket>(ref packet);
+
+            evt.CancellationReason = "test";
+
+            Assert.Equal("test", evt.CancellationReason);
         }
 
         public struct TestPacket : IPacket {

@@ -21,6 +21,8 @@ using System.Diagnostics;
 using Orion.Entities;
 
 namespace Orion.Collections {
+    // Wraps an array of type `TWrapped` to act as a read-only array of type `T`. This is extremely useful for wrapping
+    // Terraria arrays as Orion interface arrays.
     internal sealed class WrappedReadOnlyArray<T, TWrapped> : IReadOnlyArray<T> where T : class, IWrapping<TWrapped> {
         private readonly ReadOnlyMemory<TWrapped> _wrappedItems;
         private readonly Func<int, TWrapped, T> _converter;

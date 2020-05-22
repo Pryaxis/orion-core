@@ -34,7 +34,7 @@ namespace Orion.Players {
             set => Wrapped.name = value ?? throw new ArgumentNullException(nameof(value));
         }
 
-        // We need to inject an `OrionPlayerService` so that we can raise a `PacketSendEvent`.
+        // We need to inject an `OrionPlayerService` so that we can raise a `PacketSendEvent` in `SendPacket`.
         public OrionPlayer(int playerIndex, Terraria.Player terrariaPlayer, OrionPlayerService playerService)
                 : base(playerIndex, terrariaPlayer) {
             Debug.Assert(playerService != null);
@@ -61,11 +61,11 @@ namespace Orion.Players {
                 return;
             }
 
-            // Write the packet payload. We need to use `evt.Packet` here, since the packet may have been modified.
+            // When writing the packet, we need to use the `Server` context since this packet comes from the server.
             var sendSpan = _sendBuffer.AsSpan();
-            evt.Packet.WriteWithHeader(ref sendSpan, PacketContext.Server);
+            packet.WriteWithHeader(ref sendSpan, PacketContext.Server);
 
-            var packetLength = (ushort)(_sendBuffer.Length - sendSpan.Length);
+            var packetLength = _sendBuffer.Length - sendSpan.Length;
             terrariaClient.Socket?.AsyncSend(_sendBuffer, 0, packetLength, terrariaClient.ServerWriteCallBack);
         }
     }

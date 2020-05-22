@@ -36,6 +36,7 @@ namespace Orion.Events.Server {
                 throw new ArgumentNullException(nameof(args));
             }
 
+            // Preprocess the arguments.
             foreach (var arg in args) {
                 if (arg.StartsWith("--")) {
                     var equals = arg.IndexOf('=');

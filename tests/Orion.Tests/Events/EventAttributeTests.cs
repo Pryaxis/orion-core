@@ -16,9 +16,12 @@
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
 using System;
+using System.Diagnostics.CodeAnalysis;
+using Serilog.Events;
 using Xunit;
 
 namespace Orion.Events {
+    [SuppressMessage("Style", "IDE0017:Simplify object initialization", Justification = "Testing")]
     public class EventAttributeTests {
         [Fact]
         public void Ctor_NullName_ThrowsArgumentNullException() {
@@ -30,6 +33,15 @@ namespace Orion.Events {
             var attribute = new EventAttribute("test");
 
             Assert.Equal("test", attribute.Name);
+        }
+
+        [Fact]
+        public void LoggingLevel_Set_Get() {
+            var attribute = new EventAttribute("test");
+
+            attribute.LoggingLevel = LogEventLevel.Information;
+
+            Assert.Equal(LogEventLevel.Information, attribute.LoggingLevel);
         }
     }
 }

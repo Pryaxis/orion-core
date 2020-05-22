@@ -25,9 +25,9 @@ namespace Orion.Players {
     /// </summary>
     public interface IPlayerService {
         /// <summary>
-        /// Gets all of the players.
+        /// Gets the array of players.
         /// </summary>
-        /// <value>All of the players.</value>
+        /// <value>The array of players.</value>
         IReadOnlyArray<IPlayer> Players { get; }
     }
 
@@ -56,7 +56,8 @@ namespace Orion.Players {
         }
 
         /// <summary>
-        /// Broadcasts the given <paramref name="packet"/> to all active players.
+        /// Broadcasts the given <paramref name="packet"/> to all active players. This overload is provided for
+        /// convenience, but is slightly less efficient due to a struct copy.
         /// </summary>
         /// <param name="playerService">The player service.</param>
         /// <param name="packet">The packet.</param>

@@ -73,7 +73,7 @@ namespace Orion {
             _log = log.ForContext("ServiceName", "orion-kernel");
 
             Container.Bind<OrionKernel>().ToConstant(this).InSingletonScope();
-            Container.Bind<IPlayerService>().To<OrionPlayerService>();
+            Container.Bind<IPlayerService>().To<OrionPlayerService>().InSingletonScope();
 
             // Create an ILogger binding for service-specific logs.
             Container

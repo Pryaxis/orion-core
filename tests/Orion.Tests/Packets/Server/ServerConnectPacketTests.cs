@@ -16,11 +16,29 @@
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 using Xunit;
 
 namespace Orion.Packets.Server {
+    [SuppressMessage("Style", "IDE0017:Simplify object initialization", Justification = "Testing")]
     public class ServerConnectPacketTests {
         public static readonly byte[] Bytes = { 15, 0, 1, 11, 84, 101, 114, 114, 97, 114, 105, 97, 49, 57, 52 };
+
+        [Fact]
+        public void Version_SetNullValue_ThrowsArgumentNullException() {
+            var packet = new ServerConnectPacket();
+
+            Assert.Throws<ArgumentNullException>(() => packet.Version = null!);
+        }
+
+        [Fact]
+        public void Version_Set_Get() {
+            var packet = new ServerConnectPacket();
+
+            packet.Version = "test";
+
+            Assert.Equal("test", packet.Version);
+        }
 
         [Fact]
         public void Read() {

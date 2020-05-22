@@ -117,26 +117,6 @@ namespace Orion.Players {
             Assert.Equal(new byte[] { 4, 0, 255, 100 }, socket.SendData);
         }
 
-        [Fact]
-        public void SendPacket_EventDirtied() {
-            var socket = new TestSocket { Connected = true };
-            Terraria.Netplay.Clients[5] = new Terraria.RemoteClient {
-                Id = 5,
-                Socket = socket
-            };
-
-            using var kernel = new OrionKernel(Logger.None);
-            using var playerService = new OrionPlayerService(kernel, Logger.None);
-            var terrariaPlayer = new Terraria.Player();
-            var player = new OrionPlayer(5, terrariaPlayer, playerService);
-            kernel.RegisterHandler<PacketSendEvent<TestPacket>>(evt => evt.Packet.Value = 42, Logger.None);
-
-            var packet = new TestPacket { Value = 100 };
-            player.SendPacket(ref packet);
-
-            Assert.Equal(new byte[] { 4, 0, 255, 42 }, socket.SendData);
-        }
-
         private class TestSocket : Terraria.Net.Sockets.ISocket {
             public bool Connected { get; set; }
             public byte[] SendData { get; private set; } = Array.Empty<byte>();

@@ -37,7 +37,8 @@ namespace Orion.Players {
     /// </summary>
     public static class PlayerExtensions {
         /// <summary>
-        /// Sends the given <paramref name="packet"/> to the <paramref name="player"/>.
+        /// Sends the given <paramref name="packet"/> to the <paramref name="player"/>. This "overload" is provided for
+        /// convenience, but is slightly less efficient due to a struct copy.
         /// </summary>
         /// <typeparam name="TPacket">The type of packet.</typeparam>
         /// <param name="player">The player.</param>

@@ -1,4 +1,4 @@
-﻿// Copyright (c) 2019 Pryaxis & Orion Contributors
+﻿// Copyright (c) 2020 Pryaxis & Orion Contributors
 // 
 // This file is part of Orion.
 // 
@@ -101,6 +101,6 @@ namespace Orion.Collections {
             }
         }
 
-        public class TestWrappedClass { }
+        private class TestWrappedClass { }
     }
 }

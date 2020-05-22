@@ -26,6 +26,8 @@ namespace Orion.Packets {
         public void Type() {
             for (var i = 0; i < 256; ++i) {
                 var id = (PacketId)i;
+
+                // Scan the Orion assembly for a packet type (not of type `UnknownPacket`) which has the correct ID.
                 var expectedType = typeof(PacketId).Assembly.ExportedTypes
                     .Where(t => t != typeof(UnknownPacket) && t != typeof(IPacket))
                     .Where(t => typeof(IPacket).IsAssignableFrom(t))

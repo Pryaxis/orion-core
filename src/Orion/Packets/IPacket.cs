@@ -17,7 +17,6 @@
 
 using System;
 using System.Runtime.CompilerServices;
-using Orion.Events;
 
 namespace Orion.Packets {
     /// <summary>

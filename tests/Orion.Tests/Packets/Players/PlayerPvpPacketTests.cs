@@ -16,11 +16,31 @@
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 using Xunit;
 
 namespace Orion.Packets.Players {
+    [SuppressMessage("Style", "IDE0017:Simplify object initialization", Justification = "Testing")]
     public class PlayerPvpPacketTests {
         public static readonly byte[] Bytes = { 5, 0, 30, 5, 1 };
+
+        [Fact]
+        public void PlayerIndex_Set_Get() {
+            var packet = new PlayerPvpPacket();
+
+            packet.PlayerIndex = 5;
+
+            Assert.Equal(5, packet.PlayerIndex);
+        }
+
+        [Fact]
+        public void IsInPvp_Set_Get() {
+            var packet = new PlayerPvpPacket();
+
+            packet.IsInPvp = true;
+
+            Assert.True(packet.IsInPvp);
+        }
 
         [Fact]
         public void Read() {
