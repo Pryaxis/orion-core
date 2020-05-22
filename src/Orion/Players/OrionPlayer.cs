@@ -34,6 +34,16 @@ namespace Orion.Players {
             set => Wrapped.name = value ?? throw new ArgumentNullException(nameof(value));
         }
 
+        public bool IsInPvp {
+            get => Wrapped.hostile;
+            set => Wrapped.hostile = value;
+        }
+
+        public PlayerTeam Team {
+            get => (PlayerTeam)Wrapped.team;
+            set => Wrapped.team = (int)value;
+        }
+
         // We need to inject an `OrionPlayerService` so that we can raise a `PacketSendEvent` in `SendPacket`.
         public OrionPlayer(int playerIndex, Terraria.Player terrariaPlayer, OrionPlayerService playerService)
                 : base(playerIndex, terrariaPlayer) {

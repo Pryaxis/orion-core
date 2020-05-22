@@ -25,6 +25,18 @@ namespace Orion.Players {
     /// </summary>
     public interface IPlayer : IEntity, IWrapping<Terraria.Player> {
         /// <summary>
+        /// Gets or sets a value indicating whether the player is in PvP.
+        /// </summary>
+        /// <value><see langword="true"/> if the player is in PvP; otherwise, <see langword="false"/>.</value>
+        bool IsInPvp { get; set; }
+
+        /// <summary>
+        /// Gets or sets the player's team.
+        /// </summary>
+        /// <value>The player's team.</value>
+        PlayerTeam Team { get; set; }
+
+        /// <summary>
         /// Sends the given <paramref name="packet"/> reference to the player.
         /// </summary>
         /// <typeparam name="TPacket">The type of packet.</typeparam>

@@ -60,6 +60,50 @@ namespace Orion.Players {
         }
 
         [Fact]
+        public void IsInPvp_Get() {
+            using var kernel = new OrionKernel(Logger.None);
+            using var playerService = new OrionPlayerService(kernel, Logger.None);
+            var terrariaPlayer = new Terraria.Player { hostile = true };
+            var player = new OrionPlayer(terrariaPlayer, playerService);
+
+            Assert.True(player.IsInPvp);
+        }
+
+        [Fact]
+        public void IsInPvp_Set() {
+            using var kernel = new OrionKernel(Logger.None);
+            using var playerService = new OrionPlayerService(kernel, Logger.None);
+            var terrariaPlayer = new Terraria.Player();
+            var player = new OrionPlayer(terrariaPlayer, playerService);
+
+            player.IsInPvp = true;
+
+            Assert.True(terrariaPlayer.hostile);
+        }
+
+        [Fact]
+        public void Team_Get() {
+            using var kernel = new OrionKernel(Logger.None);
+            using var playerService = new OrionPlayerService(kernel, Logger.None);
+            var terrariaPlayer = new Terraria.Player { team = 1 };
+            var player = new OrionPlayer(terrariaPlayer, playerService);
+
+            Assert.Equal(PlayerTeam.Red, player.Team);
+        }
+
+        [Fact]
+        public void Team_Set() {
+            using var kernel = new OrionKernel(Logger.None);
+            using var playerService = new OrionPlayerService(kernel, Logger.None);
+            var terrariaPlayer = new Terraria.Player();
+            var player = new OrionPlayer(terrariaPlayer, playerService);
+
+            player.Team = PlayerTeam.Red;
+
+            Assert.Equal(1, terrariaPlayer.team);
+        }
+
+        [Fact]
         public void SendPacket_NotConnected() {
             var socket = new TestSocket { Connected = false };
             Terraria.Netplay.Clients[5] = new Terraria.RemoteClient {
