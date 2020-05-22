@@ -264,6 +264,26 @@ namespace Orion.Players {
             Assert.Empty(socket.SendData);
         }
 
+        [Fact]
+        public void ResetClient_PlayerQuitEventTriggered() {
+            Terraria.Netplay.Clients[5] = new Terraria.RemoteClient {
+                Id = 5,
+                IsActive = true
+            };
+
+            using var kernel = new OrionKernel(Logger.None);
+            using var playerService = new OrionPlayerService(kernel, Logger.None);
+            var isRun = false;
+            kernel.RegisterHandler<PlayerQuitEvent>(evt => {
+                Assert.Same(playerService.Players[5], evt.Player);
+                isRun = true;
+            }, Logger.None);
+
+            Terraria.Netplay.Clients[5].Reset();
+
+            Assert.True(isRun);
+        }
+
         private class TestSocket : Terraria.Net.Sockets.ISocket {
             public bool Connected { get; set; }
             public byte[] SendData { get; private set; } = Array.Empty<byte>();

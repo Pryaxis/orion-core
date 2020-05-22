@@ -78,6 +78,7 @@ namespace Orion.Players {
 
             OTAPI.Hooks.Net.ReceiveData = ReceiveDataHandler;
             OTAPI.Hooks.Net.SendBytes = SendBytesHandler;
+            OTAPI.Hooks.Net.RemoteClient.PreReset = PreResetHandler;
         }
 
         public override void Dispose() {
@@ -85,6 +86,7 @@ namespace Orion.Players {
 
             OTAPI.Hooks.Net.ReceiveData = null;
             OTAPI.Hooks.Net.SendBytes = null;
+            OTAPI.Hooks.Net.RemoteClient.PreReset = null;
         }
 
         private OTAPI.HookResult ReceiveDataHandler(
@@ -203,6 +205,20 @@ namespace Orion.Players {
 
             var terrariaClient = Terraria.Netplay.Clients[playerIndex];
             terrariaClient.Socket.AsyncSend(_sendBuffer.Value, 0, packetLength, terrariaClient.ServerWriteCallBack);
+        }
+
+        private OTAPI.HookResult PreResetHandler(Terraria.RemoteClient remoteClient) {
+            Debug.Assert(remoteClient != null);
+            Debug.Assert(remoteClient.Id >= 0 && remoteClient.Id < Players.Count);
+
+            // Check if the client was active since this gets called when setting up RemoteClient as well.
+            if (!remoteClient.IsActive) {
+                return OTAPI.HookResult.Continue;
+            }
+
+            var evt = new PlayerQuitEvent(Players[remoteClient.Id]);
+            Kernel.Raise(evt, Log);
+            return OTAPI.HookResult.Continue;
         }
     }
 }
