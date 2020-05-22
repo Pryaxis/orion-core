@@ -21,12 +21,5 @@ namespace Orion.Events {
     /// <summary>
     /// Represents an event, the main form of communication between the Orion system and its plugins.
     /// </summary>
-    public abstract class Event : IDirtiable {
-        /// <inheritdoc/>
-        [NotLogged]
-        public virtual bool IsDirty => false;
-
-        /// <inheritdoc/>
-        public virtual void Clean() { }
-    }
+    public abstract class Event { }
 }

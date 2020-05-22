@@ -32,52 +32,8 @@ namespace Orion.Events.Packets {
             Assert.Equal(100, evt.Packet.Value);
         }
 
-        [Fact]
-        public void IsDirty_PacketIsDirty_ReturnsTrue() {
-            var packet = new TestPacket();
-            var evt = new TestPacketEvent<TestPacket>(ref packet);
-            packet.IsDirty = true;
-
-            Assert.True(evt.IsDirty);
-        }
-
-        [Fact]
-        public void IsDirty_PacketModified_ReturnsTrue() {
-            var packet = new TestPacket();
-            var evt = new TestPacketEvent<TestPacket>(ref packet);
-            packet.Value = 100;
-
-            Assert.True(evt.IsDirty);
-        }
-
-        [Fact]
-        public void IsDirty_NothingChanged_ReturnsFalse() {
-            var packet = new TestPacket();
-            var evt = new TestPacketEvent<TestPacket>(ref packet);
-
-            Assert.False(evt.IsDirty);
-        }
-
-        [Fact]
-        public void Clean() {
-            var packet = new TestPacket();
-            var evt = new TestPacketEvent<TestPacket>(ref packet);
-            packet.IsDirty = true;
-            packet.Value = 100;
-
-            evt.Clean();
-
-            Assert.False(evt.IsDirty);
-        }
-
         public struct TestPacket : IPacket {
             public int Value;
-
-            public bool IsDirty { get; set; }
-
-            public void Clean() {
-                IsDirty = false;
-            }
 
             public PacketId Id => throw new NotImplementedException();
             public void Read(ReadOnlySpan<byte> span, PacketContext context) => throw new NotImplementedException();

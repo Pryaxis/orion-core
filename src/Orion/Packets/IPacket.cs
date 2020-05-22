@@ -23,15 +23,11 @@ namespace Orion.Packets {
     /// <summary>
     /// Represents a packet, the main form of communication between the server and its clients.
     /// </summary>
-    public interface IPacket : IDirtiable {
+    public interface IPacket {
         /// <summary>
         /// The packet's header size.
         /// </summary>
         public const int HeaderSize = sizeof(ushort) + sizeof(PacketId);
-
-        // Provide default implementations of the IDirtiable interface since very few packets actually require it.
-        bool IDirtiable.IsDirty => false;
-        void IDirtiable.Clean() { }
 
         /// <summary>
         /// Gets the packet's ID.

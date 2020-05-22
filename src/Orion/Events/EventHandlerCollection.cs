@@ -98,9 +98,6 @@ namespace Orion.Events {
                 // Not localized because this string is developer-facing.
                 log.Write(_eventLoggingLevel, "Canceled {EventName} for {CancellationReason}", _eventName,
                           cancelable.CancellationReason);
-            } else if (evt.IsDirty) {
-                // Not localized because this string is developer-facing.
-                log.Write(_eventLoggingLevel, "Altered {EventName} to {@Event}", _eventName, evt);
             }
         }
 

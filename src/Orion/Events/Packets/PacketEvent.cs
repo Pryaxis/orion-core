@@ -24,33 +24,15 @@ namespace Orion.Events.Packets {
     /// Provides the base class for packet-related events.
     /// </summary>
     public abstract unsafe class PacketEvent<TPacket> : Event where TPacket : struct, IPacket {
-        // Store a pointer to the original packet. This is quite unsafe and requires callers to ensure that `TPacket` is
-        // stored on the stack. However, this lets us save on a (potentially expensive) struct copy.
-        private readonly void* _originalPacketPtr;
-
-        private TPacket _currentPacket;
+        // Store a pointer to the packet. This is quite unsafe and requires callers to ensure that the `TPacket` is
+        // stored on the stack. However, this lets us save on a struct copy.
+        private readonly void* _packetPtr;
 
         /// <summary>
         /// Gets a reference to the packet.
         /// </summary>
         /// <value>A reference to the packet.</value>
-        public ref TPacket Packet => ref _currentPacket;
-
-        /// <inheritdoc/>
-        public override bool IsDirty {
-            get {
-                // Check if the packet is dirty. This is required in case the packet structure itself isn't modified.
-                if (_currentPacket.IsDirty) {
-                    return true;
-                }
-
-                // It's safe to interpret the current packet as a pointer, as `ref` will essentially "pin"
-                // `_currentPacket`, in case the GC decides to move around this `PacketEvent<TPacket>` instance.
-                var original = new ReadOnlySpan<byte>(_originalPacketPtr, Unsafe.SizeOf<TPacket>());
-                var current = new ReadOnlySpan<byte>(Unsafe.AsPointer(ref _currentPacket), Unsafe.SizeOf<TPacket>());
-                return !current.SequenceEqual(original);
-            }
-        }
+        public ref TPacket Packet => ref Unsafe.AsRef<TPacket>(_packetPtr);
 
         /// <summary>
         /// Initializes a new instance of the <see cref="PacketEvent{TPacket}"/> class with the specified
@@ -58,17 +40,7 @@ namespace Orion.Events.Packets {
         /// </summary>
         /// <param name="packet">The packet reference. <b>This must be on the stack!</b></param>
         public PacketEvent(ref TPacket packet) {
-            _originalPacketPtr = Unsafe.AsPointer(ref packet);
-            _currentPacket = packet;
-        }
-
-        /// <inheritdoc/>
-        public override void Clean() {
-            _currentPacket.Clean();
-
-            var original = new Span<byte>(_originalPacketPtr, Unsafe.SizeOf<TPacket>());
-            var current = new Span<byte>(Unsafe.AsPointer(ref _currentPacket), Unsafe.SizeOf<TPacket>());
-            current.CopyTo(original);
+            _packetPtr = Unsafe.AsPointer(ref packet);
         }
     }
 }

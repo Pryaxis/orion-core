@@ -35,9 +35,8 @@ using Serilog;
 namespace Orion.Players {
     [Service("orion-players")]
     internal sealed class OrionPlayerService : OrionService, IPlayerService {
-        private delegate OTAPI.HookResult ReceivePacketHandler(Terraria.MessageBuffer buffer, ReadOnlySpan<byte> span);
-        private delegate OTAPI.HookResult SendPacketHandler(
-            int playerIndex, ref byte[] data, ref int offset, ref int size);
+        private delegate void ReceivePacketHandler(Terraria.MessageBuffer buffer, ReadOnlySpan<byte> span);
+        private delegate void SendPacketHandler(int playerIndex, ReadOnlySpan<byte> span);
 
         private static readonly MethodInfo ReceivePacketMethod =
             typeof(OrionPlayerService).GetMethod(nameof(ReceivePacket), BindingFlags.NonPublic | BindingFlags.Instance);
@@ -101,10 +100,11 @@ namespace Orion.Players {
                 return OTAPI.HookResult.Continue;
             }
 
-            return _receivePacketHandlers[packetId](buffer, buffer.readBuffer.AsSpan(start..(start + length)));
+            _receivePacketHandlers[packetId](buffer, buffer.readBuffer.AsSpan(start..(start + length)));
+            return OTAPI.HookResult.Cancel;
         }
 
-        private OTAPI.HookResult ReceivePacket<TPacket>(Terraria.MessageBuffer buffer, ReadOnlySpan<byte> span)
+        private void ReceivePacket<TPacket>(Terraria.MessageBuffer buffer, ReadOnlySpan<byte> span)
                 where TPacket : struct, IPacket {
             // When reading the packet, we need to use the `Server` context since this packet should be read as the
             // server. Ignore the first byte as it is the packet ID.
@@ -120,16 +120,14 @@ namespace Orion.Players {
             var evt = new PacketReceiveEvent<TPacket>(ref packet, player);
             Kernel.Raise(evt, Log);
             if (evt.IsCanceled()) {
-                return OTAPI.HookResult.Cancel;
+                return;
             } else if (ReceivePacketEvent(player, ref evt.Packet)) {
-                return OTAPI.HookResult.Cancel;
-            } else if (!evt.IsDirty) {
-                return OTAPI.HookResult.Continue;
+                return;
             }
 
-            // To simulate the receival of the dirty packet, we must swap out the read buffer and reader, and call
-            // `GetData()` while ensuring that the next `ReceiveDataHandler()` call is ignored. A thread-local receive
-            // buffer is used in case there is some concurrency.
+            // To simulate the receival of the packet, we must swap out the read buffer and reader, and call `GetData()`
+            // while ensuring that the next `ReceiveDataHandler()` call is ignored. A thread-local receive buffer is
+            // used in case there is some concurrency.
             var oldReadBuffer = buffer.readBuffer;
             var oldReader = buffer.reader;
 
@@ -141,11 +139,10 @@ namespace Orion.Players {
             _ignoreReceiveDataHandler.Value = true;
             buffer.readBuffer = _receiveBuffer.Value;
             buffer.reader = new BinaryReader(new MemoryStream(buffer.readBuffer), Encoding.UTF8);
-            buffer.GetData(2, packetLength - 2, out _);
+            buffer.GetData(sizeof(ushort), packetLength - sizeof(ushort), out _);
 
             buffer.readBuffer = oldReadBuffer;
             buffer.reader = oldReader;
-            return OTAPI.HookResult.Cancel;
         }
 
         private bool ReceivePacketEvent<TPacket>(IPlayer player, ref TPacket packet) where TPacket : struct, IPacket {
@@ -168,13 +165,11 @@ namespace Orion.Players {
             Debug.Assert(offset >= 0 && offset + size <= data.Length);
 
             var packetId = data[offset + sizeof(ushort)];
-            return _sendPacketHandlers[packetId](remoteClient, ref data, ref offset, ref size);
+            _sendPacketHandlers[packetId](remoteClient, data.AsSpan((offset + sizeof(ushort))..(offset + size)));
+            return OTAPI.HookResult.Cancel;
         }
 
-        private OTAPI.HookResult SendPacket<TPacket>(int playerIndex, ref byte[] data, ref int offset, ref int size)
-                where TPacket : struct, IPacket {
-            var span = data.AsSpan((offset + sizeof(ushort))..(offset + size));
-
+        private void SendPacket<TPacket>(int playerIndex, ReadOnlySpan<byte> span) where TPacket : struct, IPacket {
             // When reading the packet, we need to use the `Client` context since this packet should be read as the
             // client. Ignore the first byte as it is the packet ID.
             var packet = new TPacket();
@@ -188,21 +183,18 @@ namespace Orion.Players {
             var evt = new PacketSendEvent<TPacket>(ref packet, Players[playerIndex]);
             Kernel.Raise(evt, Log);
             if (evt.IsCanceled()) {
-                return OTAPI.HookResult.Cancel;
+                return;
             }
 
-            // To send the dirty packet, we must swap out the data. A thread-local send buffer is used in case there is
-            // some concurrency.
+            // Send the packet. A thread-local send buffer is used in case there is some concurrency.
             //
             // When writing the packet, we need to use the `Server` context since this packet comes from the server.
             var sendSpan = _sendBuffer.Value.AsSpan();
             evt.Packet.WriteWithHeader(ref sendSpan, PacketContext.Server);
             var packetLength = _sendBuffer.Value.Length - sendSpan.Length;
 
-            data = _sendBuffer.Value;
-            offset = 0;
-            size = packetLength;
-            return OTAPI.HookResult.Continue;
+            var client = Terraria.Netplay.Clients[playerIndex];
+            client.Socket.AsyncSend(_sendBuffer.Value, 0, packetLength, client.ServerWriteCallBack);
         }
     }
 }
