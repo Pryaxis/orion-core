@@ -59,7 +59,7 @@ namespace Orion.Players {
     /// Provides extensions for the <see cref="PlayerTeam"/> enumeration.
     /// </summary>
     public static class PlayerTeamExtensions {
-        private static readonly IDictionary<PlayerTeam, Color> _colors = new Dictionary<PlayerTeam, Color> {
+        private static readonly IDictionary<PlayerTeam, Color> Colors = new Dictionary<PlayerTeam, Color> {
             [PlayerTeam.Red] = new Color(0xda, 0x3b, 0x3b),
             [PlayerTeam.Green] = new Color(0x3b, 0xda, 0x55),
             [PlayerTeam.Blue] = new Color(0x3b, 0x95, 0xda),
@@ -74,6 +74,6 @@ namespace Orion.Players {
         /// <returns>The color.</returns>
         [Pure]
         public static Color Color(this PlayerTeam team) =>
-            _colors.TryGetValue(team, out var color) ? color : Microsoft.Xna.Framework.Color.White;
+            Colors.TryGetValue(team, out var color) ? color : Microsoft.Xna.Framework.Color.White;
     }
 }
