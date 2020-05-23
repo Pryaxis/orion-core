@@ -67,7 +67,7 @@ namespace Orion.Players {
         }
 
         /// <summary>
-        /// Disconnects the given <paramref name="player"/> for the specified <paramref name="reason"/>.
+        /// Disconnects the <paramref name="player"/> for the specified <paramref name="reason"/>.
         /// </summary>
         /// <param name="player">The player.</param>
         /// <param name="reason">The reason.</param>
@@ -84,6 +84,29 @@ namespace Orion.Players {
             }
 
             var packet = new ServerDisconnectPacket { Reason = reason };
+            player.SendPacket(ref packet);
+        }
+
+        /// <summary>
+        /// Sends the given <paramref name="message"/> to the <paramref name="player"/> with the specified
+        /// <paramref name="color"/>.
+        /// </summary>
+        /// <param name="player">The player.</param>
+        /// <param name="message">The message.</param>
+        /// <param name="color">The color.</param>
+        /// <exception cref="ArgumentNullException">
+        /// <paramref name="player"/> or <paramref name="message"/> are <see langword="null"/>.
+        /// </exception>
+        public static void SendMessage(this IPlayer player, NetworkText message, Color3 color) {
+            if (player is null) {
+                throw new ArgumentNullException(nameof(player));
+            }
+
+            if (message is null) {
+                throw new ArgumentNullException(nameof(message));
+            }
+
+            var packet = new ServerChatPacket { Color = color, Text = message, LineWidth = -1 };
             player.SendPacket(ref packet);
         }
     }

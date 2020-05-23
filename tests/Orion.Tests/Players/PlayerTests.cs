@@ -18,12 +18,14 @@
 using System;
 using Moq;
 using Orion.Packets;
+using Orion.Packets.DataStructures;
 using Orion.Packets.Server;
 using Xunit;
 
 namespace Orion.Players {
     public class PlayerTests {
         private delegate void DisconnectCallback(ref ServerDisconnectPacket packet);
+        private delegate void ChatCallback(ref ServerChatPacket packet);
 
         [Fact]
         public void SendPacket_NullPlayer_ThrowsArgumentNullException() {
@@ -40,12 +42,12 @@ namespace Orion.Players {
         }
 
         [Fact]
-        public void Disconect_NullPlayer_ThrowsArgumentNullException() {
+        public void Disconnect_NullPlayer_ThrowsArgumentNullException() {
             Assert.Throws<ArgumentNullException>(() => PlayerExtensions.Disconnect(null!, "test"));
         }
 
         [Fact]
-        public void Disconect_NullReason_ThrowsArgumentNullException() {
+        public void Disconnect_NullReason_ThrowsArgumentNullException() {
             var player = new Mock<IPlayer>().Object;
 
             Assert.Throws<ArgumentNullException>(() => player.Disconnect(null!));
@@ -63,6 +65,34 @@ namespace Orion.Players {
             mockPlayer.Object.Disconnect("test");
 
             mockPlayer.Verify(p => p.SendPacket(ref It.Ref<ServerDisconnectPacket>.IsAny));
+        }
+
+        [Fact]
+        public void SendMessage_NullPlayer_ThrowsArgumentNullException() {
+            Assert.Throws<ArgumentNullException>(() => PlayerExtensions.SendMessage(null!, "test", Color3.White));
+        }
+
+        [Fact]
+        public void SendMessage_NullReason_ThrowsArgumentNullException() {
+            var player = new Mock<IPlayer>().Object;
+
+            Assert.Throws<ArgumentNullException>(() => player.SendMessage(null!, Color3.White));
+        }
+
+        [Fact]
+        public void SendMessage() {
+            var mockPlayer = new Mock<IPlayer>();
+            mockPlayer
+                .Setup(p => p.SendPacket(ref It.Ref<ServerChatPacket>.IsAny))
+                .Callback((ChatCallback)((ref ServerChatPacket packet) => {
+                    Assert.Equal("test", packet.Text);
+                    Assert.Equal(Color3.White, packet.Color);
+                    Assert.Equal(-1, packet.LineWidth);
+                }));
+
+            mockPlayer.Object.SendMessage("test", Color3.White);
+
+            mockPlayer.Verify(p => p.SendPacket(ref It.Ref<ServerChatPacket>.IsAny));
         }
 
         private struct TestPacket : IPacket {
