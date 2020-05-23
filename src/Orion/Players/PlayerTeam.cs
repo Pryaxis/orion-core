@@ -17,7 +17,7 @@
 
 using System.Collections.Generic;
 using System.Diagnostics.Contracts;
-using Microsoft.Xna.Framework;
+using Orion.Packets.DataStructures;
 
 namespace Orion.Players {
     /// <summary>
@@ -59,12 +59,12 @@ namespace Orion.Players {
     /// Provides extensions for the <see cref="PlayerTeam"/> enumeration.
     /// </summary>
     public static class PlayerTeamExtensions {
-        private static readonly IDictionary<PlayerTeam, Color> Colors = new Dictionary<PlayerTeam, Color> {
-            [PlayerTeam.Red] = new Color(0xda, 0x3b, 0x3b),
-            [PlayerTeam.Green] = new Color(0x3b, 0xda, 0x55),
-            [PlayerTeam.Blue] = new Color(0x3b, 0x95, 0xda),
-            [PlayerTeam.Yellow] = new Color(0xf2, 0xdd, 0x64),
-            [PlayerTeam.Pink] = new Color(0xe0, 0x64, 0xf2)
+        private static readonly IDictionary<PlayerTeam, Color3> Colors = new Dictionary<PlayerTeam, Color3> {
+            [PlayerTeam.Red] = new Color3(0xda, 0x3b, 0x3b),
+            [PlayerTeam.Green] = new Color3(0x3b, 0xda, 0x55),
+            [PlayerTeam.Blue] = new Color3(0x3b, 0x95, 0xda),
+            [PlayerTeam.Yellow] = new Color3(0xf2, 0xdd, 0x64),
+            [PlayerTeam.Pink] = new Color3(0xe0, 0x64, 0xf2)
         };
 
         /// <summary>
@@ -73,7 +73,7 @@ namespace Orion.Players {
         /// <param name="team">The team.</param>
         /// <returns>The color.</returns>
         [Pure]
-        public static Color Color(this PlayerTeam team) =>
-            Colors.TryGetValue(team, out var color) ? color : Microsoft.Xna.Framework.Color.White;
+        public static Color3 Color(this PlayerTeam team) =>
+            Colors.TryGetValue(team, out var color) ? color : Color3.White;
     }
 }

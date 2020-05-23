@@ -23,7 +23,11 @@ namespace Orion.Players {
         [Fact]
         public void Color() {
             for (var i = 0; i < 6; ++i) {
-                Assert.Equal(Terraria.Main.teamColor[i], ((PlayerTeam)i).Color());
+                var color = ((PlayerTeam)i).Color();
+
+                Assert.Equal(Terraria.Main.teamColor[i].R, color.R);
+                Assert.Equal(Terraria.Main.teamColor[i].G, color.G);
+                Assert.Equal(Terraria.Main.teamColor[i].B, color.B);
             }
         }
     }
