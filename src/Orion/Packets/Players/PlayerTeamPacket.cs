@@ -22,7 +22,7 @@ using Orion.Players;
 
 namespace Orion.Packets.Players {
     /// <summary>
-    /// Packet sent to set a player's team.
+    /// A packet sent to set a player's team.
     /// </summary>
     [StructLayout(LayoutKind.Explicit)]
     public struct PlayerTeamPacket : IPacket {
@@ -34,9 +34,9 @@ namespace Orion.Packets.Players {
         public byte PlayerIndex { get; set; }
 
         /// <summary>
-        /// Gets or sets the player's team.
+        /// Gets or sets the team.
         /// </summary>
-        /// <value>The player's team.</value>
+        /// <value>The team.</value>
         [field: FieldOffset(1)]
         public PlayerTeam Team { get; set; }
 

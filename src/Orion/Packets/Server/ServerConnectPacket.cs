@@ -20,15 +20,15 @@ using System.Text;
 
 namespace Orion.Packets.Server {
     /// <summary>
-    /// Packet sent from the client to the server to connect.
+    /// A packet sent from the client to the server to connect.
     /// </summary>
     public struct ServerConnectPacket : IPacket {
         private string? _version;
 
         /// <summary>
-        /// Gets or sets the client's version.
+        /// Gets or sets the version.
         /// </summary>
-        /// <value>The client's version.</value>
+        /// <value>The version.</value>
         /// <exception cref="ArgumentNullException"><paramref name="value"/> is <see langword="null"/>.</exception>
         public string Version {
             get => _version ?? string.Empty;

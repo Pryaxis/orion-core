@@ -20,7 +20,7 @@ using System.Runtime.CompilerServices;
 
 namespace Orion.Packets.Server {
     /// <summary>
-    /// Represents an unknown packet.
+    /// An unknown packet.
     /// </summary>
     public struct UnknownPacket : IPacket {
         private unsafe fixed byte _data[ushort.MaxValue - IPacket.HeaderSize];

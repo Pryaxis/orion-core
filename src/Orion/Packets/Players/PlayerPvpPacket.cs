@@ -21,7 +21,7 @@ using System.Runtime.InteropServices;
 
 namespace Orion.Packets.Players {
     /// <summary>
-    /// Packet sent to set a player's PvP status.
+    /// A packet sent to set a player's PvP status.
     /// </summary>
     [StructLayout(LayoutKind.Explicit)]
     public struct PlayerPvpPacket : IPacket {
