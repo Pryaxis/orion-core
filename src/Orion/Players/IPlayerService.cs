@@ -23,7 +23,7 @@ using Orion.Packets.Server;
 
 namespace Orion.Players {
     /// <summary>
-    /// Represents a player service. Provides access to player-related properties, methods, and events.
+    /// Represents a player service. Provides access to player-related properties and methods.
     /// </summary>
     public interface IPlayerService {
         /// <summary>

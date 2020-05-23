@@ -20,7 +20,7 @@ using Microsoft.Xna.Framework;
 
 namespace Orion.Entities {
     /// <summary>
-    /// Represents a Terraria entity. There are three types of entities:
+    /// Represents a Terraria entity.
     /// </summary>
     public interface IEntity : IAnnotatable {
         /// <summary>

@@ -27,22 +27,22 @@ namespace Orion.Events {
             collection.RegisterHandler(TestHandler2, Logger.None);
             collection.RegisterHandler(TestHandler, Logger.None);
             collection.DeregisterHandler(TestHandler2, Logger.None);
-            var e = new TestEvent();
+            var evt = new TestEvent();
 
-            collection.Raise(e, Logger.None);
+            collection.Raise(evt, Logger.None);
 
-            Assert.Equal(100, e.Value);
+            Assert.Equal(100, evt.Value);
         }
 
         [Fact]
         public void Raise_RunsHandlers() {
             var collection = new EventHandlerCollection<TestEvent>();
             collection.RegisterHandler(TestHandler, Logger.None);
-            var e = new TestEvent();
+            var evt = new TestEvent();
 
-            collection.Raise(e, Logger.None);
+            collection.Raise(evt, Logger.None);
 
-            Assert.Equal(100, e.Value);
+            Assert.Equal(100, evt.Value);
         }
 
         [Fact]
@@ -50,23 +50,23 @@ namespace Orion.Events {
             var collection = new EventHandlerCollection<TestEvent>();
             collection.RegisterHandler(TestHandler2, Logger.None);
             collection.RegisterHandler(TestHandler, Logger.None);
-            var e = new TestEvent();
+            var evt = new TestEvent();
 
-            collection.Raise(e, Logger.None);
+            collection.Raise(evt, Logger.None);
 
-            Assert.Equal(200, e.Value);
+            Assert.Equal(200, evt.Value);
         }
 
         [Fact]
         public void Raise_HandlerIgnoresCanceled() {
             var collection = new EventHandlerCollection<TestEvent>();
             collection.RegisterHandler(TestHandler, Logger.None);
-            var e = new TestEvent();
-            e.Cancel();
+            var evt = new TestEvent();
+            evt.Cancel();
 
-            collection.Raise(e, Logger.None);
+            collection.Raise(evt, Logger.None);
 
-            Assert.NotEqual(100, e.Value);
+            Assert.NotEqual(100, evt.Value);
         }
 
         [Fact]

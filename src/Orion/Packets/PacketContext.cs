@@ -43,8 +43,6 @@ namespace Orion.Packets {
         /// <param name="context">The context.</param>
         /// <returns>The other context.</returns>
         [Pure]
-        public static PacketContext Switch(this PacketContext context) {
-            return (PacketContext)((int)context ^ 1);
-        }
+        public static PacketContext Switch(this PacketContext context) => (PacketContext)((int)context ^ 1);
     }
 }

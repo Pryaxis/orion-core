@@ -41,9 +41,9 @@ namespace Orion {
             var mockLog = new Mock<ILogger>();
             using var service = new TestService(kernel, mockLog.Object);
 
-            service.Log.Information("TEST");
+            service.Log.Information("test");
 
-            mockLog.Verify(l => l.Information("TEST"));
+            mockLog.Verify(l => l.Information("test"));
         }
 
         public class TestService : OrionService {

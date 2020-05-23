@@ -244,10 +244,11 @@ namespace Orion {
                 if (!eventType.IsSubclassOf(typeof(Event))) {
                     // Not localized because this string is developer-facing.
                     throw new ArgumentException(
-                        $"Method `{method.Name}` does not have an argument of type `{nameof(Event)}`.",
+                        $"Method `{method.Name}` does not have an argument of type `Event`.",
                         nameof(handlerObject));
                 }
 
+                // Register the handler.
                 var handlerType = typeof(Action<>).MakeGenericType(eventType);
                 var handler = method.CreateDelegate(handlerType, handlerObject);
                 RegisterHandlerMethod.MakeGenericMethod(eventType).Invoke(this, new object[] { handler, log });

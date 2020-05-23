@@ -35,21 +35,21 @@ using Serilog;
 namespace Orion.Players {
     [Service("orion-players")]
     internal sealed class OrionPlayerService : OrionService, IPlayerService {
-        private delegate void ReceivePacketHandler(Terraria.MessageBuffer buffer, ReadOnlySpan<byte> span);
-        private delegate void SendPacketHandler(int playerIndex, ReadOnlySpan<byte> span);
+        private delegate void OnReceivePacketHandler(Terraria.MessageBuffer buffer, ReadOnlySpan<byte> span);
+        private delegate void OnSendPacketHandler(int playerIndex, ReadOnlySpan<byte> span);
 
         private static readonly MethodInfo ReceivePacketMethod =
-            typeof(OrionPlayerService).GetMethod(nameof(ReceivePacket), BindingFlags.NonPublic | BindingFlags.Instance);
+            typeof(OrionPlayerService).GetMethod(nameof(OnReceivePacket), BindingFlags.NonPublic | BindingFlags.Instance);
 
         private static readonly MethodInfo SendPacketMethod =
-            typeof(OrionPlayerService).GetMethod(nameof(SendPacket), BindingFlags.NonPublic | BindingFlags.Instance);
+            typeof(OrionPlayerService).GetMethod(nameof(OnSendPacket), BindingFlags.NonPublic | BindingFlags.Instance);
 
         private readonly ThreadLocal<bool> _ignoreReceiveDataHandler = new ThreadLocal<bool>();
-        private readonly ReceivePacketHandler[] _receivePacketHandlers = new ReceivePacketHandler[256];
+        private readonly OnReceivePacketHandler[] _onReceivePacketHandlers = new OnReceivePacketHandler[256];
         private readonly ThreadLocal<byte[]> _receiveBuffer =
             new ThreadLocal<byte[]>(() => new byte[ushort.MaxValue]);
 
-        private readonly SendPacketHandler[] _sendPacketHandlers = new SendPacketHandler[256];
+        private readonly OnSendPacketHandler[] _onSendPacketHandlers = new OnSendPacketHandler[256];
         private readonly ThreadLocal<byte[]> _sendBuffer =
             new ThreadLocal<byte[]>(() => new byte[ushort.MaxValue]);
 
@@ -64,16 +64,16 @@ namespace Orion.Players {
                 Terraria.Main.player.AsMemory(..^1),
                 (playerIndex, terrariaPlayer) => new OrionPlayer(playerIndex, terrariaPlayer, this));
 
-            // Construct the `_receivePacketHandlers` and `_sendPacketHandlers` arrays ahead of time.
+            // Construct the `_onReceivePacketHandlers` and `_onSendPacketHandlers` arrays ahead of time.
             for (var i = 0; i < 256; ++i) {
                 var packetType = ((PacketId)i).Type();
                 var receivePacketMethod = ReceivePacketMethod.MakeGenericMethod(packetType);
-                _receivePacketHandlers[i] =
-                    (ReceivePacketHandler)receivePacketMethod.CreateDelegate(typeof(ReceivePacketHandler), this);
+                _onReceivePacketHandlers[i] =
+                    (OnReceivePacketHandler)receivePacketMethod.CreateDelegate(typeof(OnReceivePacketHandler), this);
 
                 var sendPacketMethod = SendPacketMethod.MakeGenericMethod(packetType);
-                _sendPacketHandlers[i] =
-                    (SendPacketHandler)sendPacketMethod.CreateDelegate(typeof(SendPacketHandler), this);
+                _onSendPacketHandlers[i] =
+                    (OnSendPacketHandler)sendPacketMethod.CreateDelegate(typeof(OnSendPacketHandler), this);
             }
 
             OTAPI.Hooks.Net.ReceiveData = ReceiveDataHandler;
@@ -102,11 +102,11 @@ namespace Orion.Players {
                 return OTAPI.HookResult.Continue;
             }
 
-            _receivePacketHandlers[packetId](buffer, buffer.readBuffer.AsSpan(start..(start + length)));
+            _onReceivePacketHandlers[packetId](buffer, buffer.readBuffer.AsSpan(start..(start + length)));
             return OTAPI.HookResult.Cancel;
         }
 
-        private void ReceivePacket<TPacket>(Terraria.MessageBuffer buffer, ReadOnlySpan<byte> span)
+        private void OnReceivePacket<TPacket>(Terraria.MessageBuffer buffer, ReadOnlySpan<byte> span)
                 where TPacket : struct, IPacket {
             // When reading the packet, we need to use the `Server` context since this packet should be read as the
             // server. Ignore the first byte as it is the packet ID.
@@ -123,7 +123,7 @@ namespace Orion.Players {
             Kernel.Raise(evt, Log);
             if (evt.IsCanceled()) {
                 return;
-            } else if (ReceivePacketEvent(player, ref evt.Packet)) {
+            } else if (OnReceivePacketEvent(player, ref evt.Packet)) {
                 return;
             }
 
@@ -147,7 +147,7 @@ namespace Orion.Players {
             buffer.reader = oldReader;
         }
 
-        private bool ReceivePacketEvent<TPacket>(IPlayer player, ref TPacket packet) where TPacket : struct, IPacket {
+        private bool OnReceivePacketEvent<TPacket>(IPlayer player, ref TPacket packet) where TPacket : struct, IPacket {
             // While this may seem inefficient, these typeof comparisons get optimized in each reified generic method by
             // the JIT.
             if (typeof(TPacket) == typeof(PlayerJoinPacket)) {
@@ -175,11 +175,11 @@ namespace Orion.Players {
             Debug.Assert(offset >= 0 && offset + size <= data.Length);
 
             var packetId = data[offset + sizeof(ushort)];
-            _sendPacketHandlers[packetId](remoteClient, data.AsSpan((offset + sizeof(ushort))..(offset + size)));
+            _onSendPacketHandlers[packetId](remoteClient, data.AsSpan((offset + sizeof(ushort))..(offset + size)));
             return OTAPI.HookResult.Cancel;
         }
 
-        private void SendPacket<TPacket>(int playerIndex, ReadOnlySpan<byte> span) where TPacket : struct, IPacket {
+        private void OnSendPacket<TPacket>(int playerIndex, ReadOnlySpan<byte> span) where TPacket : struct, IPacket {
             // When reading the packet, we need to use the `Client` context since this packet should be read as the
             // client. Ignore the first byte as it is the packet ID.
             var packet = new TPacket();

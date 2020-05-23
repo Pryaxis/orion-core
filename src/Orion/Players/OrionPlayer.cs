@@ -27,6 +27,7 @@ namespace Orion.Players {
     [LogAsScalar]
     internal sealed class OrionPlayer : OrionEntity<Terraria.Player>, IPlayer {
         private readonly OrionPlayerService _playerService;
+
         private readonly byte[] _sendBuffer = new byte[ushort.MaxValue];
 
         public override string Name {

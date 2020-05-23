@@ -16,7 +16,6 @@
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
 using System;
-using System.Diagnostics.CodeAnalysis;
 
 namespace Orion {
     /// <summary>
@@ -37,7 +36,6 @@ namespace Orion {
         /// </summary>
         /// <value>The service's author. The default value is <c>Pryaxis</c>.</value>
         /// <exception cref="ArgumentNullException"><param name="value"/> is <see langword="null"/>.</exception>
-        [DisallowNull]
         public string Author {
             get => _author;
             set => _author = value ?? throw new ArgumentNullException(nameof(value));

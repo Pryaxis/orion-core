@@ -16,7 +16,6 @@
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
 using System;
-using Destructurama.Attributed;
 using Serilog;
 
 namespace Orion {
@@ -28,14 +27,12 @@ namespace Orion {
         /// Gets the service's kernel.
         /// </summary>
         /// <value>The service's kernel.</value>
-        [NotLogged]
         public OrionKernel Kernel { get; }
 
         /// <summary>
         /// Gets the service's logger.
         /// </summary>
         /// <value>The service's logger.</value>
-        [NotLogged]
         public ILogger Log { get; }
 
         /// <summary>

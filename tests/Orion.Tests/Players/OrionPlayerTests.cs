@@ -106,10 +106,7 @@ namespace Orion.Players {
         [Fact]
         public void SendPacket_NotConnected() {
             var socket = new TestSocket { Connected = false };
-            Terraria.Netplay.Clients[5] = new Terraria.RemoteClient {
-                Id = 5,
-                Socket = socket
-            };
+            Terraria.Netplay.Clients[5] = new Terraria.RemoteClient { Id = 5, Socket = socket };
 
             using var kernel = new OrionKernel(Logger.None);
             using var playerService = new OrionPlayerService(kernel, Logger.None);
@@ -125,10 +122,7 @@ namespace Orion.Players {
         [Fact]
         public void SendPacket_EventCanceled() {
             var socket = new TestSocket { Connected = true };
-            Terraria.Netplay.Clients[5] = new Terraria.RemoteClient {
-                Id = 5,
-                Socket = socket
-            };
+            Terraria.Netplay.Clients[5] = new Terraria.RemoteClient { Id = 5, Socket = socket };
 
             using var kernel = new OrionKernel(Logger.None);
             using var playerService = new OrionPlayerService(kernel, Logger.None);
@@ -145,10 +139,7 @@ namespace Orion.Players {
         [Fact]
         public void SendPacket() {
             var socket = new TestSocket { Connected = true };
-            Terraria.Netplay.Clients[5] = new Terraria.RemoteClient {
-                Id = 5,
-                Socket = socket
-            };
+            Terraria.Netplay.Clients[5] = new Terraria.RemoteClient { Id = 5, Socket = socket };
 
             using var kernel = new OrionKernel(Logger.None);
             using var playerService = new OrionPlayerService(kernel, Logger.None);
