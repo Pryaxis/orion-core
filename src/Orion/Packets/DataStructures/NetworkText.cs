@@ -20,7 +20,6 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.Diagnostics.Contracts;
-using System.Linq;
 using System.Text;
 
 namespace Orion.Packets.DataStructures {
@@ -71,9 +70,11 @@ namespace Orion.Packets.DataStructures {
         }
 
         /// <inheritdoc/>
+        [Pure]
         public override bool Equals(object obj) => obj is NetworkText text && Equals(text);
 
         /// <inheritdoc/>
+        [Pure]
         public bool Equals(NetworkText other) {
             if (Mode != other.Mode || Text != other.Text || _substitutions.Length != other._substitutions.Length) {
                 return false;
@@ -101,7 +102,10 @@ namespace Orion.Packets.DataStructures {
             return hashCode.ToHashCode();
         }
 
-        /// <inheritdoc/>
+        /// <summary>
+        /// Returns a string representation of the network text.
+        /// </summary>
+        /// <returns>A string representation of the network text.</returns>
         [Pure, ExcludeFromCodeCoverage]
         public override string ToString() =>
             Mode switch {
@@ -131,29 +135,32 @@ namespace Orion.Packets.DataStructures {
         }
 
         /// <summary>
-        /// Returns a value indicating whether two network texts are equal.
+        /// Determines whether two network texts are equal.
         /// </summary>
         /// <param name="left">The left network text.</param>
         /// <param name="right">The right network text.</param>
         /// <returns>
         /// <see langword="true"/> if the network texts are equal; otherwise, <see langword="false"/>.
         /// </returns>
+        [Pure]
         public static bool operator ==(NetworkText left, NetworkText right) => left.Equals(right);
 
         /// <summary>
-        /// Returns a value indicating whether two network texts are not equal.
+        /// Determines whether two network texts are not equal.
         /// </summary>
         /// <param name="left">The left network text.</param>
         /// <param name="right">The right network text.</param>
         /// <returns>
         /// <see langword="true"/> if the network texts are not equal; otherwise, <see langword="false"/>.
         /// </returns>
+        [Pure]
         public static bool operator !=(NetworkText left, NetworkText right) => !left.Equals(right);
 
         /// <summary>
         /// Converts the given <paramref name="text"/> into a network text.
         /// </summary>
         /// <param name="text">The text.</param>
+        [Pure]
         public static implicit operator NetworkText(string text) => new NetworkText(NetworkTextMode.Literal, text);
 
         internal static NetworkText Read(ref ReadOnlySpan<byte> span, Encoding encoding) {

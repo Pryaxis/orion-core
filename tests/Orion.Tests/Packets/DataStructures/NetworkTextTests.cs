@@ -69,10 +69,6 @@ namespace Orion.Packets.DataStructures {
         public void Equals_ReturnsTrue(NetworkText text) {
             Assert.True(text.Equals((object)text));
             Assert.True(text.Equals(text));
-#pragma warning disable CS1718 // Comparison made to same variable
-            Assert.True(text == text);
-            Assert.False(text != text);
-#pragma warning restore CS1718 // Comparison made to same variable
             Assert.Equal(text.GetHashCode(), text.GetHashCode());
         }
 
@@ -81,8 +77,6 @@ namespace Orion.Packets.DataStructures {
             NetworkText text = "test";
             NetworkText text2 = "test2";
 
-            Assert.False(text == text2);
-            Assert.True(text != text2);
             Assert.False(text.Equals(text2));
             Assert.False(text.Equals((object)text2));
             Assert.False(text.Equals(1234));
@@ -96,8 +90,12 @@ namespace Orion.Packets.DataStructures {
 
             Assert.False(text.Equals(text2));
             Assert.False(text.Equals((object)text2));
-            Assert.False(text == text2);
-            Assert.True(text != text2);
+        }
+
+        [Theory]
+        [MemberData(nameof(NetworkTexts))]
+        public void GetHashCode_Equals_AreEqual(NetworkText text) {
+            Assert.Equal(text.GetHashCode(), text.GetHashCode());
         }
 
         [Theory]
@@ -112,6 +110,38 @@ namespace Orion.Packets.DataStructures {
             var text2 = NetworkText.Read(ref readSpan, Encoding.UTF8);
 
             Assert.Equal(text.Mode, text2.Mode);
+        }
+
+        [Theory]
+        [MemberData(nameof(NetworkTexts))]
+        public void op_Equality_ReturnsTrue(NetworkText text) {
+#pragma warning disable CS1718 // Comparison made to same variable
+            Assert.True(text == text);
+#pragma warning restore CS1718 // Comparison made to same variable
+        }
+
+        [Fact]
+        public void op_Equality_ReturnsFalse() {
+            var text = "test";
+            var text2 = "test2";
+
+            Assert.False(text == text2);
+        }
+
+        [Fact]
+        public void op_Inequality_ReturnsTrue() {
+            var text = "test";
+            var text2 = "test2";
+
+            Assert.True(text != text2);
+        }
+
+        [Theory]
+        [MemberData(nameof(NetworkTexts))]
+        public void op_Inequality_ReturnsFalse(NetworkText text) {
+#pragma warning disable CS1718 // Comparison made to same variable
+            Assert.False(text != text);
+#pragma warning restore CS1718 // Comparison made to same variable
         }
 
         [Fact]
