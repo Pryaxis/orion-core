@@ -23,7 +23,7 @@ using Xunit;
 
 namespace Orion.Packets {
     public class SpanUtilsTests {
-        public static IEnumerable<object[]> StringParams = new[] {
+        public static readonly IEnumerable<object[]> StringParams = new[] {
             new object[] { "a" },
             new object[] { new string('a', 128) },
             new object[] { new string('a', 16384) },
