@@ -22,7 +22,7 @@ namespace Orion.Events.Server {
     /// <summary>
     /// An event that occurs when a server executes a command. This event can be canceled.
     /// </summary>
-    [Event("server-command")]
+    [Event("server-cmd")]
     public sealed class ServerCommandEvent : Event, ICancelable {
         /// <inheritdoc/>
         [NotLogged]
