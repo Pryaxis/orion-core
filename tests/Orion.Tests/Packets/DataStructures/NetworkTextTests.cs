@@ -35,17 +35,11 @@ namespace Orion.Packets.DataStructures {
         [Fact]
         public void Ctor_NullText_ThrowsArgumentNullException() {
             Assert.Throws<ArgumentNullException>(() => new NetworkText(NetworkTextMode.Literal, null!));
-
-            Assert.Throws<ArgumentNullException>(
-                () => new NetworkText(NetworkTextMode.Literal, null!, new List<NetworkText>()));
         }
 
         [Fact]
         public void Ctor_NullSubstitutions_ThrowsArgumentNullException() {
             Assert.Throws<ArgumentNullException>(() => new NetworkText(NetworkTextMode.Literal, "test", null!));
-
-            Assert.Throws<ArgumentNullException>(
-                () => new NetworkText(NetworkTextMode.Literal, null!, (List<NetworkText>)null!));
         }
 
         [Fact]

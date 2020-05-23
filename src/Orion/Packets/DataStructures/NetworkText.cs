@@ -18,6 +18,9 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Diagnostics.CodeAnalysis;
+using System.Diagnostics.Contracts;
+using System.Linq;
 using System.Text;
 
 namespace Orion.Packets.DataStructures {
@@ -29,6 +32,8 @@ namespace Orion.Packets.DataStructures {
         /// The empty network text.
         /// </summary>
         public static readonly NetworkText Empty = "";
+
+        private readonly NetworkText[] _substitutions;
 
         /// <summary>
         /// Gets the network text mode.
@@ -47,7 +52,7 @@ namespace Orion.Packets.DataStructures {
         /// <see cref="NetworkTextMode.Literal"/>.
         /// </summary>
         /// <value>The substitutions.</value>
-        public IReadOnlyList<NetworkText> Substitutions { get; }
+        public IReadOnlyList<NetworkText> Substitutions => _substitutions;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="NetworkText"/> class with the specified
@@ -59,23 +64,10 @@ namespace Orion.Packets.DataStructures {
         /// <exception cref="ArgumentNullException">
         /// <paramref name="text"/> or <paramref name="substitutions"/> are <see langword="null"/>.
         /// </exception>
-        public NetworkText(NetworkTextMode mode, string text, params NetworkText[] substitutions)
-            : this(mode, text, (IReadOnlyList<NetworkText>)substitutions) { }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="NetworkText"/> class with the specified
-        /// <paramref name="mode"/>, <paramref name="text"/>, and <paramref name="substitutions"/>.
-        /// </summary>
-        /// <param name="mode">The network text mode.</param>
-        /// <param name="text">The text.</param>
-        /// <param name="substitutions">The substitutions.</param>
-        /// <exception cref="ArgumentNullException">
-        /// <paramref name="text"/> or <paramref name="substitutions"/> are <see langword="null"/>.
-        /// </exception>
-        public NetworkText(NetworkTextMode mode, string text, IReadOnlyList<NetworkText> substitutions) {
+        public NetworkText(NetworkTextMode mode, string text, params NetworkText[] substitutions) {
             Mode = mode;
             Text = text ?? throw new ArgumentNullException(nameof(text));
-            Substitutions = substitutions ?? throw new ArgumentNullException(nameof(substitutions));
+            _substitutions = substitutions ?? throw new ArgumentNullException(nameof(substitutions));
         }
 
         /// <inheritdoc/>
@@ -83,12 +75,12 @@ namespace Orion.Packets.DataStructures {
 
         /// <inheritdoc/>
         public bool Equals(NetworkText other) {
-            if (Mode != other.Mode || Text != other.Text || Substitutions.Count != other.Substitutions.Count) {
+            if (Mode != other.Mode || Text != other.Text || _substitutions.Length != other._substitutions.Length) {
                 return false;
             }
 
-            for (var i = 0; i < Substitutions.Count; ++i) {
-                if (!Substitutions[i].Equals(other.Substitutions[i])) {
+            for (var i = 0; i < _substitutions.Length; ++i) {
+                if (!_substitutions[i].Equals(other._substitutions[i])) {
                     return false;
                 }
             }
@@ -97,16 +89,27 @@ namespace Orion.Packets.DataStructures {
         }
 
         /// <inheritdoc/>
+        [Pure]
         public override int GetHashCode() {
             var hashCode = new HashCode();
             hashCode.Add(Mode);
             hashCode.Add(Text);
-            foreach (var substitution in Substitutions) {
+            foreach (var substitution in _substitutions) {
                 hashCode.Add(substitution);
             }
 
             return hashCode.ToHashCode();
         }
+
+        /// <inheritdoc/>
+        [Pure, ExcludeFromCodeCoverage]
+        public override string ToString() =>
+            Mode switch {
+                NetworkTextMode.Literal => Text,
+                NetworkTextMode.Formattable => string.Format(Text, _substitutions),
+                NetworkTextMode.Localized => Terraria.Localization.Language.GetTextValue(Text, _substitutions),
+                _ => throw new NotImplementedException(),
+            };
 
         internal void Write(ref Span<byte> span, Encoding encoding) {
             Debug.Assert(encoding != null);
@@ -117,13 +120,13 @@ namespace Orion.Packets.DataStructures {
 
             byte numSubstitutions = 0;
             if (Mode != NetworkTextMode.Literal) {
-                numSubstitutions = (byte)Substitutions.Count;
+                numSubstitutions = (byte)_substitutions.Length;
                 span[0] = numSubstitutions;
                 span = span[1..];
             }
 
             for (var i = 0; i < numSubstitutions; ++i) {
-                Substitutions[i].Write(ref span, encoding);
+                _substitutions[i].Write(ref span, encoding);
             }
         }
 
@@ -159,16 +162,17 @@ namespace Orion.Packets.DataStructures {
             var mode = (NetworkTextMode)span[0];
             span = span[1..];
             var text = SpanUtils.ReadString(ref span, encoding);
-            var substitutions = new List<NetworkText>();
+            var substitutions = Array.Empty<NetworkText>();
 
-            var numSubstitutions = 0;
+            byte numSubstitutions = 0;
             if (mode != NetworkTextMode.Literal) {
                 numSubstitutions = span[0];
+                substitutions = new NetworkText[numSubstitutions];
                 span = span[1..];
             }
 
             for (var i = 0; i < numSubstitutions; ++i) {
-                substitutions.Add(Read(ref span, encoding));
+                substitutions[i] = Read(ref span, encoding);
             }
             return new NetworkText(mode, text, substitutions);
         }
