@@ -26,26 +26,19 @@ namespace Orion.Packets.Players {
     /// </summary>
     [StructLayout(LayoutKind.Explicit)]
     public struct PlayerTeamPacket : IPacket {
-        [FieldOffset(0)] private byte _playerIndex;
-        [FieldOffset(1)] private PlayerTeam _team;
-
         /// <summary>
         /// Gets or sets the player index.
         /// </summary>
         /// <value>The player index.</value>
-        public byte PlayerIndex {
-            get => _playerIndex;
-            set => _playerIndex = value;
-        }
+        [field: FieldOffset(0)]
+        public byte PlayerIndex { get; set; }
 
         /// <summary>
         /// Gets or sets the player's team.
         /// </summary>
         /// <value>The player's team.</value>
-        public PlayerTeam Team {
-            get => _team;
-            set => _team = value;
-        }
+        [field: FieldOffset(1)]
+        public PlayerTeam Team { get; set; }
 
         PacketId IPacket.Id => PacketId.PlayerTeam;
 

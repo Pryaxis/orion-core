@@ -25,26 +25,19 @@ namespace Orion.Packets.Players {
     /// </summary>
     [StructLayout(LayoutKind.Explicit)]
     public struct PlayerPvpPacket : IPacket {
-        [FieldOffset(0)] private byte _playerIndex;
-        [FieldOffset(1)] private bool _isInPvp;
-
         /// <summary>
         /// Gets or sets the player index.
         /// </summary>
         /// <value>The player index.</value>
-        public byte PlayerIndex {
-            get => _playerIndex;
-            set => _playerIndex = value;
-        }
+        [field: FieldOffset(0)]
+        public byte PlayerIndex { get; set; }
 
         /// <summary>
         /// Gets or sets a value indicating whether the player is in PvP.
         /// </summary>
         /// <value><see langword="true"/> if the player is in PvP; otherwise, <see langword="false"/>.</value>
-        public bool IsInPvp {
-            get => _isInPvp;
-            set => _isInPvp = value;
-        }
+        [field: FieldOffset(1)]
+        public bool IsInPvp { get; set; }
 
         PacketId IPacket.Id => PacketId.PlayerPvp;
 
