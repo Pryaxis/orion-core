@@ -18,6 +18,8 @@
 using System;
 using Orion.Entities;
 using Orion.Packets;
+using Orion.Packets.DataStructures;
+using Orion.Packets.Server;
 
 namespace Orion.Players {
     /// <summary>
@@ -66,6 +68,29 @@ namespace Orion.Players {
         /// </exception>
         public static void BroadcastPacket<TPacket>(this IPlayerService playerService, TPacket packet)
                 where TPacket : struct, IPacket {
+            playerService.BroadcastPacket(ref packet);
+        }
+
+        /// <summary>
+        /// Broadcasts the given <paramref name="message"/> to all active players using the specified
+        /// <paramref name="color"/>.
+        /// </summary>
+        /// <param name="playerService">The player service.</param>
+        /// <param name="message">The message.</param>
+        /// <param name="color">The color.</param>
+        /// <exception cref="ArgumentNullException">
+        /// <paramref name="playerService"/> or <paramref name="message"/> are <see langword="null"/>.
+        /// </exception>
+        public static void BroadcastMessage(this IPlayerService playerService, NetworkText message, Color3 color) {
+            if (playerService is null) {
+                throw new ArgumentNullException(nameof(playerService));
+            }
+
+            if (message is null) {
+                throw new ArgumentNullException(nameof(message));
+            }
+
+            var packet = new ServerChatPacket { Color = color, Text = message, LineWidth = -1 };
             playerService.BroadcastPacket(ref packet);
         }
     }

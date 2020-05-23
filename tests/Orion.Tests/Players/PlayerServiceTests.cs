@@ -19,10 +19,14 @@ using System;
 using Moq;
 using Orion.Entities;
 using Orion.Packets;
+using Orion.Packets.DataStructures;
+using Orion.Packets.Server;
 using Xunit;
 
 namespace Orion.Players {
     public class PlayerServiceTests {
+        private delegate void ChatCallback(ref ServerChatPacket packet);
+
         [Fact]
         public void BroadcastPacket_Ref() {
             var mockPlayer = new Mock<IPlayer>();
@@ -51,6 +55,27 @@ namespace Orion.Players {
             mockPlayerService.Object.BroadcastPacket(packet);
 
             mockPlayer.Verify(p => p.SendPacket(ref It.Ref<TestPacket>.IsAny));
+        }
+
+        [Fact]
+        public void BroadcastMessage() {
+            var mockPlayer = new Mock<IPlayer>();
+            mockPlayer
+                .Setup(p => p.SendPacket(ref It.Ref<ServerChatPacket>.IsAny))
+                .Callback((ChatCallback)((ref ServerChatPacket packet) => {
+                    Assert.Equal("test", packet.Text);
+                    Assert.Equal(Color3.White, packet.Color);
+                    Assert.Equal(-1, packet.LineWidth);
+                }));
+            var mockPlayers = new Mock<IReadOnlyArray<IPlayer>>();
+            mockPlayers.SetupGet(p => p.Count).Returns(1);
+            mockPlayers.SetupGet(p => p[0]).Returns(mockPlayer.Object);
+            var mockPlayerService = new Mock<IPlayerService>();
+            mockPlayerService.SetupGet(ps => ps.Players).Returns(mockPlayers.Object);
+
+            mockPlayerService.Object.BroadcastMessage("test", Color3.White);
+
+            mockPlayer.Verify(p => p.SendPacket(ref It.Ref<ServerChatPacket>.IsAny));
         }
 
         private struct TestPacket : IPacket {
