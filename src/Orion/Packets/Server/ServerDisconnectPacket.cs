@@ -17,34 +17,35 @@
 
 using System;
 using System.Text;
+using Orion.Packets.DataStructures;
 
 namespace Orion.Packets.Server {
     /// <summary>
-    /// Packet sent from the client to the server to connect.
+    /// Packet sent from the server to the client to disconnect.
     /// </summary>
-    public struct ServerConnectPacket : IPacket {
-        private string? _version;
+    public struct ServerDisconnectPacket : IPacket {
+        private NetworkText? _reason;
 
         /// <summary>
-        /// Gets or sets the client's version.
+        /// Gets or sets the reason.
         /// </summary>
-        /// <value>The client's version.</value>
+        /// <value>The reason.</value>
         /// <exception cref="ArgumentNullException"><paramref name="value"/> is <see langword="null"/>.</exception>
-        public string Version {
-            get => _version ?? string.Empty;
-            set => _version = value ?? throw new ArgumentNullException(nameof(value));
+        public NetworkText Reason {
+            get => _reason ?? NetworkText.Empty;
+            set => _reason = value ?? throw new ArgumentNullException(nameof(value));
         }
 
-        PacketId IPacket.Id => PacketId.ServerConnect;
+        PacketId IPacket.Id => PacketId.ServerDisconnect;
 
         /// <inheritdoc/>
         public void Read(ReadOnlySpan<byte> span, PacketContext context) {
-            _version = SpanUtils.ReadString(ref span, Encoding.UTF8);
+            _reason = NetworkText.Read(ref span, Encoding.UTF8);
         }
 
         /// <inheritdoc/>
         public void Write(ref Span<byte> span, PacketContext context) {
-            SpanUtils.Write(ref span, Version, Encoding.UTF8);
+            Reason.Write(ref span, Encoding.UTF8);
         }
     }
 }

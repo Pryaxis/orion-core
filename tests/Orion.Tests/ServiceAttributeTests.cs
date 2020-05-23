@@ -36,14 +36,14 @@ namespace Orion {
 
         [Fact]
         public void Author_SetNullValue_ThrowsArgumentNullException() {
-            var attribute = new ServiceAttribute("");
+            var attribute = new ServiceAttribute("test");
 
             Assert.Throws<ArgumentNullException>(() => attribute.Author = null!);
         }
 
         [Fact]
         public void Author_Set_Get() {
-            var attribute = new ServiceAttribute("");
+            var attribute = new ServiceAttribute("test");
 
             attribute.Author = "test";
 

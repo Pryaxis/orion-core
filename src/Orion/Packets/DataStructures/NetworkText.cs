@@ -26,6 +26,11 @@ namespace Orion.Packets.DataStructures {
     /// </summary>
     public class NetworkText : IEquatable<NetworkText> {
         /// <summary>
+        /// The empty network text.
+        /// </summary>
+        public static readonly NetworkText Empty = "";
+
+        /// <summary>
         /// Gets the network text mode.
         /// </summary>
         /// <value>The network text mode.</value>

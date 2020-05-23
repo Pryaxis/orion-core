@@ -91,7 +91,7 @@ namespace Orion.Packets.DataStructures {
             Assert.True(text != text2);
             Assert.False(text.Equals(text2));
             Assert.False(text.Equals((object)text2));
-            Assert.False(text.Equals(""));
+            Assert.False(text.Equals(1234));
             Assert.False(text.Equals((object)null!));
         }
 

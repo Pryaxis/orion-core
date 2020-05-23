@@ -54,7 +54,7 @@ namespace Orion.Entities {
         public void SetAnnotation_NullKey_ThrowsArgumentNullException() {
             var annotatable = new AnnotatableObject();
 
-            Assert.Throws<ArgumentNullException>(() => annotatable.SetAnnotation(null!, ""));
+            Assert.Throws<ArgumentNullException>(() => annotatable.SetAnnotation(null!, "test"));
         }
 
         [Fact]
