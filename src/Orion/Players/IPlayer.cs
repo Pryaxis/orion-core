@@ -18,6 +18,8 @@
 using System;
 using Orion.Entities;
 using Orion.Packets;
+using Orion.Packets.DataStructures;
+using Orion.Packets.Server;
 
 namespace Orion.Players {
     /// <summary>
@@ -61,6 +63,27 @@ namespace Orion.Players {
                 throw new ArgumentNullException(nameof(player));
             }
 
+            player.SendPacket(ref packet);
+        }
+
+        /// <summary>
+        /// Disconnects the given <paramref name="player"/> for the specified <paramref name="reason"/>.
+        /// </summary>
+        /// <param name="player">The player.</param>
+        /// <param name="reason">The reason.</param>
+        /// <exception cref="ArgumentNullException">
+        /// <paramref name="player"/> or <paramref name="reason"/> are <see langword="null"/>.
+        /// </exception>
+        public static void Disconnect(this IPlayer player, NetworkText reason) {
+            if (player is null) {
+                throw new ArgumentNullException(nameof(player));
+            }
+
+            if (reason is null) {
+                throw new ArgumentNullException(nameof(reason));
+            }
+
+            var packet = new ServerDisconnectPacket { Reason = reason };
             player.SendPacket(ref packet);
         }
     }

@@ -195,6 +195,7 @@ namespace Orion {
             if (handler is null) {
                 throw new ArgumentNullException(nameof(handler));
             }
+
             if (log is null) {
                 throw new ArgumentNullException(nameof(log));
             }
@@ -219,6 +220,7 @@ namespace Orion {
             if (handlerObject is null) {
                 throw new ArgumentNullException(nameof(handlerObject));
             }
+
             if (log is null) {
                 throw new ArgumentNullException(nameof(log));
             }
@@ -270,6 +272,7 @@ namespace Orion {
             if (handler is null) {
                 throw new ArgumentNullException(nameof(handler));
             }
+
             if (log is null) {
                 throw new ArgumentNullException(nameof(log));
             }
@@ -294,6 +297,7 @@ namespace Orion {
             if (handlerObject is null) {
                 throw new ArgumentNullException(nameof(handlerObject));
             }
+
             if (log is null) {
                 throw new ArgumentNullException(nameof(log));
             }
@@ -322,6 +326,7 @@ namespace Orion {
             if (evt is null) {
                 throw new ArgumentNullException(nameof(evt));
             }
+
             if (log is null) {
                 throw new ArgumentNullException(nameof(log));
             }
