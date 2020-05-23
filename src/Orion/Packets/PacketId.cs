@@ -45,6 +45,7 @@ namespace Orion.Packets {
             [PacketId.PlayerJoin] = typeof(PlayerJoinPacket),
             [PacketId.PlayerPvp] = typeof(PlayerPvpPacket),
             [PacketId.PlayerTeam] = typeof(PlayerTeamPacket),
+            [PacketId.ServerChat] = typeof(ServerChatPacket),
         };
 
         /// <summary>
