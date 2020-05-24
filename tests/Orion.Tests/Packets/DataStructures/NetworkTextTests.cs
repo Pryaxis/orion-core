@@ -100,18 +100,6 @@ namespace Orion.Packets.DataStructures {
 
         [Theory]
         [MemberData(nameof(NetworkTexts))]
-        public void Write_Read(NetworkText text) {
-            var bytes = new byte[10000000];
-
-            var numBytes = text.Write(bytes, Encoding.UTF8);
-
-            Assert.Equal(numBytes, NetworkText.Read(bytes, Encoding.UTF8, out var text2));
-
-            Assert.Equal(text, text2);
-        }
-
-        [Theory]
-        [MemberData(nameof(NetworkTexts))]
         public void op_Equality_ReturnsTrue(NetworkText text) {
 #pragma warning disable CS1718 // Comparison made to same variable
             Assert.True(text == text);

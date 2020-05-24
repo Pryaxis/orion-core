@@ -39,9 +39,9 @@ namespace Orion.Packets.Server {
         PacketId IPacket.Id => PacketId.ServerDisconnect;
 
         /// <inheritdoc/>
-        public int Read(Span<byte> span, PacketContext context) => NetworkText.Read(span, Encoding.UTF8, out _reason);
+        public int Read(Span<byte> span, PacketContext context) => span.Read(Encoding.UTF8, out _reason);
 
         /// <inheritdoc/>
-        public int Write(Span<byte> span, PacketContext context) => Reason.Write(span, Encoding.UTF8);
+        public int Write(Span<byte> span, PacketContext context) => span.Write(Reason, Encoding.UTF8);
     }
 }

@@ -38,10 +38,9 @@ namespace Orion.Packets.Server {
         PacketId IPacket.Id => PacketId.ServerConnect;
 
         /// <inheritdoc/>
-        public int Read(Span<byte> span, PacketContext context) =>
-            SpanUtils.ReadString(span, Encoding.UTF8, out _version);
+        public int Read(Span<byte> span, PacketContext context) => span.Read(Encoding.UTF8, out _version);
 
         /// <inheritdoc/>
-        public int Write(Span<byte> span, PacketContext context) => SpanUtils.Write(span, Version, Encoding.UTF8);
+        public int Write(Span<byte> span, PacketContext context) => span.Write(Version, Encoding.UTF8);
     }
 }

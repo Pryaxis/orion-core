@@ -59,7 +59,7 @@ namespace Orion.Packets.Server {
         /// <inheritdoc/>
         public int Read(Span<byte> span, PacketContext context) {
             Unsafe.CopyBlockUnaligned(ref this.AsRefByte(0), ref span[0], 3);
-            var numTextBytes = NetworkText.Read(span[3..], Encoding.UTF8, out _text);
+            var numTextBytes = span[3..].Read(Encoding.UTF8, out _text);
             Unsafe.CopyBlockUnaligned(ref this.AsRefByte(3), ref span[3 + numTextBytes], 2);
             return 3 + numTextBytes + 2;
         }
@@ -67,7 +67,7 @@ namespace Orion.Packets.Server {
         /// <inheritdoc/>
         public int Write(Span<byte> span, PacketContext context) {
             Unsafe.CopyBlockUnaligned(ref span[0], ref this.AsRefByte(0), 3);
-            var numTextBytes = Text.Write(span[3..], Encoding.UTF8);
+            var numTextBytes = span[3..].Write(Text, Encoding.UTF8);
             Unsafe.CopyBlockUnaligned(ref span[3 + numTextBytes], ref this.AsRefByte(3), 2);
             return 3 + numTextBytes + 2;
         }

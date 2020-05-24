@@ -17,12 +17,12 @@
 
 using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Text;
+using Orion.Packets.DataStructures;
 using Xunit;
 
 namespace Orion.Packets {
-    public class SpanUtilsTests {
+    public class SpanExtensionsTests {
         public static readonly IEnumerable<object[]> StringParams = new[] {
             new object[] { "a" },
             new object[] { new string('a', 128) },
@@ -30,16 +30,40 @@ namespace Orion.Packets {
             new object[] { new string('a', 2097152) },
         };
 
+        public static readonly IEnumerable<object[]> NetworkTextParams = new[] {
+            new object[] { new NetworkText(NetworkTextMode.Literal, "literal") },
+            new object[] {
+                new NetworkText(NetworkTextMode.Formattable, "formattable {0} {1}", "literal", "literal2")
+            },
+            new object[] {
+                new NetworkText(NetworkTextMode.Localized, "localized {0} {1}", "literal", "literal2")
+            },
+        };
+
         [Theory]
         [MemberData(nameof(StringParams))]
         public void WriteString_ReadString(string str) {
             var bytes = new byte[10000000];
+            var span = bytes.AsSpan();
 
-            var numBytes = SpanUtils.Write(bytes, str, Encoding.UTF8);
+            var numBytes = span.Write(str, Encoding.UTF8);
 
-            Assert.Equal(numBytes, SpanUtils.ReadString(bytes, Encoding.UTF8, out var str2));
+            Assert.Equal(numBytes, span.Read(Encoding.UTF8, out string str2));
 
             Assert.Equal(str, str2);
+        }
+
+        [Theory]
+        [MemberData(nameof(NetworkTextParams))]
+        public void WriteNetworkText_ReadNetworkText(NetworkText text) {
+            var bytes = new byte[10000000];
+            var span = bytes.AsSpan();
+
+            var numBytes = span.Write(text, Encoding.UTF8);
+
+            Assert.Equal(numBytes, span.Read(Encoding.UTF8, out NetworkText text2));
+
+            Assert.Equal(text, text2);
         }
     }
 }

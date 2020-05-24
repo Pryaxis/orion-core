@@ -18,10 +18,11 @@
 using System;
 using System.Diagnostics;
 using System.Text;
+using Orion.Packets.DataStructures;
 
 namespace Orion.Packets {
-    internal static class SpanUtils {
-        public static int ReadString(Span<byte> span, Encoding encoding, out string value) {
+    internal static class SpanExtensions {
+        public static int Read(this Span<byte> span, Encoding encoding, out string value) {
             Debug.Assert(encoding != null);
 
             var index = Read7BitEncodedInt(span, out var length);
@@ -29,7 +30,28 @@ namespace Orion.Packets {
             return index + length;
         }
 
-        public static int Write(Span<byte> span, string value, Encoding encoding) {
+        public static int Read(this Span<byte> span, Encoding encoding, out NetworkText value) {
+            Debug.Assert(encoding != null);
+
+            var index = 0;
+            var mode = (NetworkTextMode)span[index++];
+            index += span[index..].Read(encoding, out string text);
+            var substitutions = Array.Empty<NetworkText>();
+
+            byte numSubstitutions = 0;
+            if (mode != NetworkTextMode.Literal) {
+                numSubstitutions = span[index++];
+                substitutions = new NetworkText[numSubstitutions];
+            }
+
+            for (var i = 0; i < numSubstitutions; ++i) {
+                index += Read(span[index..], encoding, out substitutions[i]);
+            }
+            value = new NetworkText(mode, text, substitutions);
+            return index;
+        }
+
+        public static int Write(this Span<byte> span, string value, Encoding encoding) {
             Debug.Assert(value != null);
             Debug.Assert(encoding != null);
 
@@ -37,6 +59,26 @@ namespace Orion.Packets {
             var index = Write7BitEncodedInt(span, length);
             encoding.GetBytes(value, span[index..]);
             return index + length;
+        }
+
+        public static int Write(this Span<byte> span, NetworkText value, Encoding encoding) {
+            Debug.Assert(!(value is null));
+            Debug.Assert(encoding != null);
+
+            var index = 0;
+            span[index++] = (byte)value.Mode;
+            index += span[index..].Write(value.Text, encoding);
+
+            byte numSubstitutions = 0;
+            if (value.Mode != NetworkTextMode.Literal) {
+                numSubstitutions = (byte)value.Substitutions.Count;
+                span[index++] = numSubstitutions;
+            }
+
+            for (var i = 0; i < numSubstitutions; ++i) {
+                index += span[index..].Write(value.Substitutions[i], encoding);
+            }
+            return index;
         }
 
         private static int Read7BitEncodedInt(Span<byte> span, out int value) {
