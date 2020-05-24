@@ -99,6 +99,6 @@ namespace Orion.Packets.DataStructures {
         /// <param name="right">The right color.</param>
         /// <returns><see langword="true"/> if the colors are not equal; otherwise, <see langword="false"/>.</returns>
         [Pure]
-        public static bool operator !=(Color3 left, Color3 right) => !left.Equals(right);
+        public static bool operator !=(Color3 left, Color3 right) => !(left == right);
     }
 }

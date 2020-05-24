@@ -17,7 +17,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Text;
 using Xunit;
 
 namespace Orion.Packets.DataStructures {
@@ -80,7 +79,10 @@ namespace Orion.Packets.DataStructures {
             Assert.False(text.Equals(text2));
             Assert.False(text.Equals((object)text2));
             Assert.False(text.Equals(1234));
-            Assert.False(text.Equals((object)null!));
+            Assert.False(text.Equals((object?)null!));
+#pragma warning disable CS8602 // Dereference of a possibly null reference.
+            Assert.False(text.Equals(null!));
+#pragma warning restore CS8602 // Dereference of a possibly null reference.
         }
 
         [Fact]
@@ -104,6 +106,7 @@ namespace Orion.Packets.DataStructures {
 #pragma warning disable CS1718 // Comparison made to same variable
             Assert.True(text == text);
 #pragma warning restore CS1718 // Comparison made to same variable
+            Assert.True((NetworkText?)null == null);
         }
 
         [Fact]
@@ -128,6 +131,14 @@ namespace Orion.Packets.DataStructures {
 #pragma warning disable CS1718 // Comparison made to same variable
             Assert.False(text != text);
 #pragma warning restore CS1718 // Comparison made to same variable
+            Assert.False((NetworkText?)null != null);
+        }
+
+        [Fact]
+        public void op_Implicit_NullText_ThrowsArgumentNullException() {
+            Assert.Throws<ArgumentNullException>(() => {
+                NetworkText text = (string)null!;
+            });
         }
 
         [Fact]

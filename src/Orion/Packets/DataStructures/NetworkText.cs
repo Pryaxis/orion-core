@@ -17,10 +17,8 @@
 
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.Diagnostics.Contracts;
-using System.Text;
 
 namespace Orion.Packets.DataStructures {
     /// <summary>
@@ -75,7 +73,11 @@ namespace Orion.Packets.DataStructures {
 
         /// <inheritdoc/>
         [Pure]
-        public bool Equals(NetworkText other) {
+        public bool Equals(NetworkText? other) {
+            if (other is null) {
+                return false;
+            }
+
             if (Mode != other.Mode || Text != other.Text || _substitutions.Length != other._substitutions.Length) {
                 return false;
             }
@@ -124,7 +126,13 @@ namespace Orion.Packets.DataStructures {
         /// <see langword="true"/> if the network texts are equal; otherwise, <see langword="false"/>.
         /// </returns>
         [Pure]
-        public static bool operator ==(NetworkText left, NetworkText right) => left.Equals(right);
+        public static bool operator ==(NetworkText? left, NetworkText? right) {
+            if (left is null) {
+                return right is null;
+            }
+
+            return left.Equals(right);
+        }
 
         /// <summary>
         /// Determines whether two network texts are not equal.
@@ -135,12 +143,13 @@ namespace Orion.Packets.DataStructures {
         /// <see langword="true"/> if the network texts are not equal; otherwise, <see langword="false"/>.
         /// </returns>
         [Pure]
-        public static bool operator !=(NetworkText left, NetworkText right) => !left.Equals(right);
+        public static bool operator !=(NetworkText? left, NetworkText? right) => !(left == right);
 
         /// <summary>
         /// Converts the given <paramref name="text"/> into a network text.
         /// </summary>
         /// <param name="text">The text.</param>
+        /// <exception cref="ArgumentNullException"><paramref name="text"/> is <see langword="null"/>.</exception>
         [Pure]
         public static implicit operator NetworkText(string text) => new NetworkText(NetworkTextMode.Literal, text);
     }
