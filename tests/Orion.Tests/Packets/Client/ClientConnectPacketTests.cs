@@ -19,21 +19,21 @@ using System;
 using System.Diagnostics.CodeAnalysis;
 using Xunit;
 
-namespace Orion.Packets.Server {
+namespace Orion.Packets.Client {
     [SuppressMessage("Style", "IDE0017:Simplify object initialization", Justification = "Testing")]
-    public class ServerConnectPacketTests {
+    public class ClientConnectPacketTests {
         public static readonly byte[] Bytes = { 15, 0, 1, 11, 84, 101, 114, 114, 97, 114, 105, 97, 49, 57, 52 };
 
         [Fact]
         public void Version_SetNullValue_ThrowsArgumentNullException() {
-            var packet = new ServerConnectPacket();
+            var packet = new ClientConnectPacket();
 
             Assert.Throws<ArgumentNullException>(() => packet.Version = null!);
         }
 
         [Fact]
         public void Version_Set_Get() {
-            var packet = new ServerConnectPacket();
+            var packet = new ClientConnectPacket();
 
             packet.Version = "Terraria194";
 
@@ -42,7 +42,7 @@ namespace Orion.Packets.Server {
 
         [Fact]
         public void Read() {
-            var packet = new ServerConnectPacket();
+            var packet = new ClientConnectPacket();
             var span = Bytes.AsSpan(IPacket.HeaderSize..);
             Assert.Equal(span.Length, packet.Read(span, PacketContext.Server));
 
@@ -51,7 +51,7 @@ namespace Orion.Packets.Server {
 
         [Fact]
         public void RoundTrip() {
-            TestUtils.RoundTripPacket<ServerConnectPacket>(Bytes.AsSpan(IPacket.HeaderSize..), PacketContext.Server);
+            TestUtils.RoundTripPacket<ClientConnectPacket>(Bytes.AsSpan(IPacket.HeaderSize..), PacketContext.Server);
         }
     }
 }

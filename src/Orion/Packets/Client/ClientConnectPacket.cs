@@ -18,11 +18,11 @@
 using System;
 using System.Text;
 
-namespace Orion.Packets.Server {
+namespace Orion.Packets.Client {
     /// <summary>
     /// A packet sent from the client to the server to connect.
     /// </summary>
-    public struct ServerConnectPacket : IPacket {
+    public struct ClientConnectPacket : IPacket {
         private string? _version;
 
         /// <summary>

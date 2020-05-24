@@ -21,9 +21,9 @@ using Orion.Events;
 using Orion.Events.Packets;
 using Orion.Events.Players;
 using Orion.Packets;
+using Orion.Packets.Client;
 using Orion.Packets.Modules;
 using Orion.Packets.Players;
-using Orion.Packets.Server;
 using Serilog.Core;
 using Xunit;
 
@@ -34,7 +34,7 @@ namespace Orion.Players {
 
         static OrionPlayerServiceTests() {
             var bytes = new byte[100];
-            var packet = new ServerConnectPacket { Version = "Terraria" + Terraria.Main.curRelease };
+            var packet = new ClientConnectPacket { Version = "Terraria" + Terraria.Main.curRelease };
             var packetLength = packet.WriteWithHeader(bytes, PacketContext.Client);
 
             ServerConnectBytes = bytes[..packetLength];
@@ -91,7 +91,7 @@ namespace Orion.Players {
             using var kernel = new OrionKernel(Logger.None);
             using var playerService = new OrionPlayerService(kernel, Logger.None);
             var isRun = false;
-            kernel.RegisterHandler<PacketReceiveEvent<ServerConnectPacket>>(evt => {
+            kernel.RegisterHandler<PacketReceiveEvent<ClientConnectPacket>>(evt => {
                 Assert.Same(playerService.Players[5], evt.Sender);
                 Assert.Equal("Terraria" + Terraria.Main.curRelease, evt.Packet.Version);
                 isRun = true;
@@ -109,7 +109,7 @@ namespace Orion.Players {
 
             using var kernel = new OrionKernel(Logger.None);
             using var playerService = new OrionPlayerService(kernel, Logger.None);
-            kernel.RegisterHandler<PacketReceiveEvent<ServerConnectPacket>>(evt => evt.Cancel(), Logger.None);
+            kernel.RegisterHandler<PacketReceiveEvent<ClientConnectPacket>>(evt => evt.Cancel(), Logger.None);
 
             TestUtils.FakeReceiveBytes(5, ServerConnectBytes);
 
@@ -276,7 +276,7 @@ namespace Orion.Players {
             using var kernel = new OrionKernel(Logger.None);
             using var playerService = new OrionPlayerService(kernel, Logger.None);
             var isRun = false;
-            kernel.RegisterHandler<PacketSendEvent<ServerConnectPacket>>(evt => {
+            kernel.RegisterHandler<PacketSendEvent<ClientConnectPacket>>(evt => {
                 Assert.Same(playerService.Players[5], evt.Receiver);
                 Assert.Equal("Terraria" + Terraria.Main.curRelease, evt.Packet.Version);
                 isRun = true;
@@ -295,7 +295,7 @@ namespace Orion.Players {
 
             using var kernel = new OrionKernel(Logger.None);
             using var playerService = new OrionPlayerService(kernel, Logger.None);
-            kernel.RegisterHandler<PacketSendEvent<ServerConnectPacket>>(evt => evt.Cancel(), Logger.None);
+            kernel.RegisterHandler<PacketSendEvent<ClientConnectPacket>>(evt => evt.Cancel(), Logger.None);
 
             Terraria.NetMessage.SendData((byte)PacketId.ServerConnect, 5);
 

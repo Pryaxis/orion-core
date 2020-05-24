@@ -43,7 +43,7 @@ namespace Orion.Packets {
     /// </summary>
     public static class PacketIdExtensions {
         private static readonly IDictionary<PacketId, Type> PacketIdToType = new Dictionary<PacketId, Type> {
-            [PacketId.ServerConnect] = typeof(ServerConnectPacket),
+            [PacketId.ServerConnect] = typeof(ClientConnectPacket),
             [PacketId.ServerDisconnect] = typeof(ServerDisconnectPacket),
             [PacketId.PlayerJoin] = typeof(PlayerJoinPacket),
             [PacketId.PlayerPvp] = typeof(PlayerPvpPacket),
