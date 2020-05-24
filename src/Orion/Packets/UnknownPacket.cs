@@ -18,7 +18,7 @@
 using System;
 using System.Runtime.CompilerServices;
 
-namespace Orion.Packets.Server {
+namespace Orion.Packets {
     /// <summary>
     /// An unknown packet.
     /// </summary>

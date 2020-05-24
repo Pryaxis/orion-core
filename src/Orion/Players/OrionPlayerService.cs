@@ -30,7 +30,6 @@ using Orion.Events.Players;
 using Orion.Packets;
 using Orion.Packets.Modules;
 using Orion.Packets.Players;
-using Orion.Packets.Server;
 using Serilog;
 
 namespace Orion.Players {

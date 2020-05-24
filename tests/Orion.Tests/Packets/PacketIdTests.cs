@@ -19,7 +19,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Orion.Packets.Modules;
-using Orion.Packets.Server;
 using Xunit;
 
 namespace Orion.Packets {
