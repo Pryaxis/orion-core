@@ -32,28 +32,14 @@ namespace Orion.Packets {
 
         [Theory]
         [MemberData(nameof(StringParams))]
-        public void ReadString(string str) {
-            using var stream = new MemoryStream();
-            using var writer = new BinaryWriter(stream, Encoding.UTF8);
-            writer.Write(str);
-
-            ReadOnlySpan<byte> span = stream.ToArray();
-
-            Assert.Equal(str, SpanUtils.ReadString(ref span, Encoding.UTF8));
-            Assert.True(span.IsEmpty);
-        }
-
-        [Theory]
-        [MemberData(nameof(StringParams))]
-        public void WriteString(string str) {
+        public void WriteString_ReadString(string str) {
             var bytes = new byte[10000000];
-            var span = bytes.AsSpan();
 
-            SpanUtils.Write(ref span, str, Encoding.UTF8);
+            var numBytes = SpanUtils.Write(bytes, str, Encoding.UTF8);
 
-            using var stream = new MemoryStream(bytes);
-            using var reader = new BinaryReader(stream, Encoding.UTF8);
-            Assert.Equal(str, reader.ReadString());
+            Assert.Equal(numBytes, SpanUtils.ReadString(bytes, Encoding.UTF8, out var str2));
+
+            Assert.Equal(str, str2);
         }
     }
 }

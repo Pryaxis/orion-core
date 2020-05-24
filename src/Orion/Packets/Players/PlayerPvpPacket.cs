@@ -42,14 +42,15 @@ namespace Orion.Packets.Players {
         PacketId IPacket.Id => PacketId.PlayerPvp;
 
         /// <inheritdoc/>
-        public void Read(ReadOnlySpan<byte> span, PacketContext context) {
-            Unsafe.CopyBlockUnaligned(ref this.AsRefByte(0), ref Unsafe.AsRef(in span[0]), 2);
+        public int Read(Span<byte> span, PacketContext context) {
+            Unsafe.CopyBlockUnaligned(ref this.AsRefByte(0), ref span[0], 2);
+            return 2;
         }
 
         /// <inheritdoc/>
-        public void Write(ref Span<byte> span, PacketContext context) {
+        public int Write(Span<byte> span, PacketContext context) {
             Unsafe.CopyBlockUnaligned(ref span[0], ref this.AsRefByte(0), 2);
-            span = span[2..];
+            return 2;
         }
     }
 }

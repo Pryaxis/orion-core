@@ -26,42 +26,43 @@ namespace Orion.Packets.Server {
         private unsafe fixed byte _data[ushort.MaxValue - IPacket.HeaderSize];
 
         /// <summary>
-        /// Gets or sets the packet's length.
+        /// Gets or sets the packet length.
         /// </summary>
-        /// <value>The packet's length.</value>
+        /// <value>The packet length.</value>
         public ushort Length { get; set; }
 
         /// <summary>
-        /// Gets or sets the packet's ID.
+        /// Gets or sets the packet ID.
         /// </summary>
-        /// <value>The packet's ID.</value>
+        /// <value>The packet ID.</value>
         public PacketId Id { get; set; }
 
         /// <inheritdoc/>
-        public unsafe void Read(ReadOnlySpan<byte> span, PacketContext context) {
+        public unsafe int Read(Span<byte> span, PacketContext context) {
             Length = (ushort)span.Length;
             if (Length == 0) {
-                return;
+                return 0;
             }
 
-            Unsafe.CopyBlockUnaligned(ref _data[0], ref Unsafe.AsRef(in span[0]), Length);
+            Unsafe.CopyBlockUnaligned(ref _data[0], ref span[0], Length);
+            return Length;
         }
 
         /// <inheritdoc/>
-        public unsafe void Write(ref Span<byte> span, PacketContext context) {
+        public unsafe int Write(Span<byte> span, PacketContext context) {
             if (Length == 0) {
-                return;
+                return 0;
             }
 
             Unsafe.CopyBlockUnaligned(ref span[0], ref _data[0], Length);
-            span = span[Length..];
+            return Length;
         }
 
         /// <summary>
-        /// Gets a reference to the byte at the given <paramref name="index"/> in the data.
+        /// Gets a reference to the byte at the given <paramref name="index"/> in the packet data.
         /// </summary>
         /// <param name="index">The index.</param>
-        /// <returns>A reference to the byte at the given <paramref name="index"/> in the data.</returns>
+        /// <returns>A reference to the byte at the given <paramref name="index"/> in the packet data.</returns>
         public unsafe ref byte Data(int index) => ref _data[index];
     }
 }

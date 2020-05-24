@@ -21,27 +21,26 @@ using System.Text;
 
 namespace Orion.Packets {
     internal static class SpanUtils {
-        public static string ReadString(ref ReadOnlySpan<byte> span, Encoding encoding) {
+        public static int ReadString(Span<byte> span, Encoding encoding, out string value) {
             Debug.Assert(encoding != null);
 
-            var length = Read7BitEncodedInt(ref span);
-            var result = encoding.GetString(span[..length]);
-            span = span[length..];
-            return result;
+            var index = Read7BitEncodedInt(span, out var length);
+            value = encoding.GetString(span[index..(index + length)]);
+            return index + length;
         }
 
-        public static void Write(ref Span<byte> span, string value, Encoding encoding) {
+        public static int Write(Span<byte> span, string value, Encoding encoding) {
             Debug.Assert(value != null);
             Debug.Assert(encoding != null);
 
             var length = encoding.GetByteCount(value);
-            Write7BitEncodedInt(ref span, length);
-            encoding.GetBytes(value, span);
-            span = span[length..];
+            var index = Write7BitEncodedInt(span, length);
+            encoding.GetBytes(value, span[index..]);
+            return index + length;
         }
 
-        private static int Read7BitEncodedInt(ref ReadOnlySpan<byte> span) {
-            var result = 0;
+        private static int Read7BitEncodedInt(Span<byte> span, out int value) {
+            value = 0;
             var shift = 0;
             var index = 0;
             byte b;
@@ -52,27 +51,26 @@ namespace Orion.Packets {
                 }
 
                 b = span[index++];
-                result |= (b & 0x7f) << shift;
+                value |= (b & 0x7f) << shift;
                 shift += 7;
             } while (b >= 0x80);
 
-            if (result < 0) {
+            if (value < 0) {
                 // Not localized because this string is developer-facing.
                 throw new ArgumentException("Invalid 7-bit encoded integer (negative)", nameof(span));
             }
 
-            span = span[index..];
-            return result;
+            return index;
         }
 
-        private static void Write7BitEncodedInt(ref Span<byte> span, int value) {
+        private static int Write7BitEncodedInt(Span<byte> span, int value) {
             var index = 0;
             while (value >= 0x80) {
                 span[index++] = (byte)(value | 0x80);
                 value >>= 7;
             }
             span[index++] = (byte)value;
-            span = span[index..];
+            return index;
         }
     }
 }

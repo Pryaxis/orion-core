@@ -180,11 +180,11 @@ namespace Orion.Players {
 
             public byte Value;
 
-            public void Read(ReadOnlySpan<byte> span, PacketContext context) => throw new NotImplementedException();
+            public int Read(Span<byte> span, PacketContext context) => throw new NotImplementedException();
 
-            public void Write(ref Span<byte> span, PacketContext context) {
+            public int Write(Span<byte> span, PacketContext context) {
                 span[0] = Value;
-                span = span[1..];
+                return 1;
             }
         }
     }

@@ -115,25 +115,6 @@ namespace Orion.Packets.DataStructures {
                 _ => throw new NotImplementedException(),
             };
 
-        internal void Write(ref Span<byte> span, Encoding encoding) {
-            Debug.Assert(encoding != null);
-
-            span[0] = (byte)Mode;
-            span = span[1..];
-            SpanUtils.Write(ref span, Text, encoding);
-
-            byte numSubstitutions = 0;
-            if (Mode != NetworkTextMode.Literal) {
-                numSubstitutions = (byte)_substitutions.Length;
-                span[0] = numSubstitutions;
-                span = span[1..];
-            }
-
-            for (var i = 0; i < numSubstitutions; ++i) {
-                _substitutions[i].Write(ref span, encoding);
-            }
-        }
-
         /// <summary>
         /// Determines whether two network texts are equal.
         /// </summary>
@@ -163,25 +144,44 @@ namespace Orion.Packets.DataStructures {
         [Pure]
         public static implicit operator NetworkText(string text) => new NetworkText(NetworkTextMode.Literal, text);
 
-        internal static NetworkText Read(ref ReadOnlySpan<byte> span, Encoding encoding) {
+        internal int Write(Span<byte> span, Encoding encoding) {
             Debug.Assert(encoding != null);
 
-            var mode = (NetworkTextMode)span[0];
-            span = span[1..];
-            var text = SpanUtils.ReadString(ref span, encoding);
+            var index = 0;
+            span[index++] = (byte)Mode;
+            index += SpanUtils.Write(span[index..], Text, encoding);
+
+            byte numSubstitutions = 0;
+            if (Mode != NetworkTextMode.Literal) {
+                numSubstitutions = (byte)_substitutions.Length;
+                span[index++] = numSubstitutions;
+            }
+
+            for (var i = 0; i < numSubstitutions; ++i) {
+                index += _substitutions[i].Write(span[index..], encoding);
+            }
+            return index;
+        }
+
+        internal static int Read(Span<byte> span, Encoding encoding, out NetworkText value) {
+            Debug.Assert(encoding != null);
+
+            var index = 0;
+            var mode = (NetworkTextMode)span[index++];
+            index += SpanUtils.ReadString(span[index..], encoding, out var text);
             var substitutions = Array.Empty<NetworkText>();
 
             byte numSubstitutions = 0;
             if (mode != NetworkTextMode.Literal) {
-                numSubstitutions = span[0];
+                numSubstitutions = span[index++];
                 substitutions = new NetworkText[numSubstitutions];
-                span = span[1..];
             }
 
             for (var i = 0; i < numSubstitutions; ++i) {
-                substitutions[i] = Read(ref span, encoding);
+                index += Read(span[index..], encoding, out substitutions[i]);
             }
-            return new NetworkText(mode, text, substitutions);
+            value = new NetworkText(mode, text, substitutions);
+            return index;
         }
     }
 }

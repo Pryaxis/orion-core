@@ -46,8 +46,8 @@ namespace Orion.Events.Packets {
             public int Value;
 
             public PacketId Id => throw new NotImplementedException();
-            public void Read(ReadOnlySpan<byte> span, PacketContext context) => throw new NotImplementedException();
-            public void Write(ref Span<byte> span, PacketContext context) => throw new NotImplementedException();
+            public int Read(Span<byte> span, PacketContext context) => throw new NotImplementedException();
+            public int Write(Span<byte> span, PacketContext context) => throw new NotImplementedException();
         }
 
         private class TestPacketEvent<TPacket> : PacketEvent<TPacket> where TPacket : struct, IPacket {

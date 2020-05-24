@@ -23,22 +23,21 @@ namespace Orion.Packets {
         [Fact]
         public void WriteWithHeader() {
             var bytes = new byte[4];
-            var span = bytes.AsSpan();
             var packet = new TestPacket();
-            packet.WriteWithHeader(ref span, PacketContext.Server);
 
-            Assert.True(span.IsEmpty);
+            Assert.Equal(4, packet.WriteWithHeader(bytes, PacketContext.Server));
+
             Assert.Equal(new byte[] { 4, 0, 255, 42 }, bytes);
         }
 
         private struct TestPacket : IPacket {
             public PacketId Id => (PacketId)255;
 
-            public void Read(ReadOnlySpan<byte> span, PacketContext context) => throw new NotImplementedException();
+            public int Read(Span<byte> span, PacketContext context) => throw new NotImplementedException();
 
-            public void Write(ref Span<byte> span, PacketContext context) {
+            public int Write(Span<byte> span, PacketContext context) {
                 span[0] = 42;
-                span = span[1..];
+                return 1;
             }
         }
     }

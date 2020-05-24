@@ -33,11 +33,9 @@ namespace Orion.Players {
 
         static OrionPlayerServiceTests() {
             var bytes = new byte[100];
-            var span = bytes.AsSpan();
             var packet = new ServerConnectPacket { Version = "Terraria" + Terraria.Main.curRelease };
-            packet.WriteWithHeader(ref span, PacketContext.Client);
+            var packetLength = packet.WriteWithHeader(bytes, PacketContext.Client);
 
-            var packetLength = bytes.Length - span.Length;
             ServerConnectBytes = bytes[..packetLength];
         }
 

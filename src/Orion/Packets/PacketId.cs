@@ -22,7 +22,7 @@ using Orion.Packets.Server;
 
 namespace Orion.Packets {
     /// <summary>
-    /// Specifies packet IDs.
+    /// Specifies a packet ID.
     /// </summary>
     public enum PacketId : byte {
 #pragma warning disable CS1591 // Missing XML comment for publicly visible type or member

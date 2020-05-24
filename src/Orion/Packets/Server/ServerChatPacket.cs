@@ -57,20 +57,19 @@ namespace Orion.Packets.Server {
         PacketId IPacket.Id => PacketId.ServerChat;
 
         /// <inheritdoc/>
-        public void Read(ReadOnlySpan<byte> span, PacketContext context) {
-            Unsafe.CopyBlockUnaligned(ref this.AsRefByte(0), ref Unsafe.AsRef(in span[0]), 3);
-            span = span[3..];
-            _text = NetworkText.Read(ref span, Encoding.UTF8);
-            Unsafe.CopyBlockUnaligned(ref this.AsRefByte(3), ref Unsafe.AsRef(in span[0]), 2);
+        public int Read(Span<byte> span, PacketContext context) {
+            Unsafe.CopyBlockUnaligned(ref this.AsRefByte(0), ref span[0], 3);
+            var numTextBytes = NetworkText.Read(span[3..], Encoding.UTF8, out _text);
+            Unsafe.CopyBlockUnaligned(ref this.AsRefByte(3), ref span[3 + numTextBytes], 2);
+            return 3 + numTextBytes + 2;
         }
 
         /// <inheritdoc/>
-        public void Write(ref Span<byte> span, PacketContext context) {
+        public int Write(Span<byte> span, PacketContext context) {
             Unsafe.CopyBlockUnaligned(ref span[0], ref this.AsRefByte(0), 3);
-            span = span[3..];
-            Text.Write(ref span, Encoding.UTF8);
-            Unsafe.CopyBlockUnaligned(ref span[0], ref this.AsRefByte(3), 2);
-            span = span[2..];
+            var numTextBytes = Text.Write(span[3..], Encoding.UTF8);
+            Unsafe.CopyBlockUnaligned(ref span[3 + numTextBytes], ref this.AsRefByte(3), 2);
+            return 3 + numTextBytes + 2;
         }
     }
 }

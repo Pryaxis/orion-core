@@ -25,9 +25,9 @@ namespace Orion.Packets.Players {
         PacketId IPacket.Id => PacketId.PlayerJoin;
 
         /// <inheritdoc/>
-        public void Read(ReadOnlySpan<byte> span, PacketContext context) { }
+        public int Read(Span<byte> span, PacketContext context) => 0;
 
         /// <inheritdoc/>
-        public void Write(ref Span<byte> span, PacketContext context) { }
+        public int Write(Span<byte> span, PacketContext context) => 0;
     }
 }

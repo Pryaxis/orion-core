@@ -102,14 +102,12 @@ namespace Orion.Packets.DataStructures {
         [MemberData(nameof(NetworkTexts))]
         public void Write_Read(NetworkText text) {
             var bytes = new byte[10000000];
-            var writeSpan = bytes.AsSpan();
 
-            text.Write(ref writeSpan, Encoding.UTF8);
+            var numBytes = text.Write(bytes, Encoding.UTF8);
 
-            ReadOnlySpan<byte> readSpan = bytes.AsSpan();
-            var text2 = NetworkText.Read(ref readSpan, Encoding.UTF8);
+            Assert.Equal(numBytes, NetworkText.Read(bytes, Encoding.UTF8, out var text2));
 
-            Assert.Equal(text.Mode, text2.Mode);
+            Assert.Equal(text, text2);
         }
 
         [Theory]

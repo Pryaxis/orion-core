@@ -35,20 +35,21 @@ namespace Orion.Packets {
 
         /// <summary>
         /// Reads the packet from the given <paramref name="span"/> with the specified <paramref name="context"/>,
-        /// mutating this instance.
+        /// mutating this instance. Returns the number of bytes read.
         /// </summary>
         /// <param name="span">The span.</param>
         /// <param name="context">The context.</param>
         /// <returns>The number of bytes read.</returns>
-        void Read(ReadOnlySpan<byte> span, PacketContext context);
+        int Read(Span<byte> span, PacketContext context);
 
         /// <summary>
         /// Writes the packet to the given <paramref name="span"/> with the specified <paramref name="context"/>.
-        /// Advances the span by the number of bytes written.
+        /// Returns the number of bytes written.
         /// </summary>
         /// <param name="span">The span.</param>
         /// <param name="context">The context.</param>
-        void Write(ref Span<byte> span, PacketContext context);
+        /// <returns>The number of bytes written.</returns>
+        int Write(Span<byte> span, PacketContext context);
     }
 
     /// <summary>
@@ -57,25 +58,19 @@ namespace Orion.Packets {
     public static class PacketExtensions {
         /// <summary>
         /// Writes the <paramref name="packet"/> reference to the given <paramref name="span"/> with the specified
-        /// <paramref name="context"/>, including the packet header. Advances the span by the number of bytes written.
+        /// <paramref name="context"/>, including the packet header. Returns the number of bytes written.
         /// </summary>
         /// <typeparam name="TPacket">The type of packet.</typeparam>
         /// <param name="packet">The packet reference.</param>
         /// <param name="span">The span.</param>
         /// <param name="context">The context.</param>
-        public static void WriteWithHeader<TPacket>(ref this TPacket packet, ref Span<byte> span, PacketContext context)
+        /// <returns>The number of bytes written.</returns>
+        public static int WriteWithHeader<TPacket>(ref this TPacket packet, Span<byte> span, PacketContext context)
                 where TPacket : struct, IPacket {
-            // Write the payload portion of the packet.
-            var tempSpan = span[IPacket.HeaderSize..];
-            packet.Write(ref tempSpan, context);
-
-            // Write the header portion of the packet.
-            var packetLength = (ushort)(span.Length - tempSpan.Length);
-            Unsafe.WriteUnaligned(ref span[0], packetLength);
             span[2] = (byte)packet.Id;
-
-            // Advance the span by the packet length.
-            span = span[packetLength..];
+            var packetLength = IPacket.HeaderSize + packet.Write(span[IPacket.HeaderSize..], context);
+            Unsafe.WriteUnaligned(ref span[0], (ushort)packetLength);
+            return packetLength;
         }
 
         internal static ref byte AsRefByte<TPacket>(ref this TPacket packet, int byteOffset)

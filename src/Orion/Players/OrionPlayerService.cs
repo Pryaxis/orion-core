@@ -35,8 +35,8 @@ using Serilog;
 namespace Orion.Players {
     [Service("orion-players")]
     internal sealed class OrionPlayerService : OrionService, IPlayerService {
-        private delegate void OnReceivePacketHandler(Terraria.MessageBuffer buffer, ReadOnlySpan<byte> span);
-        private delegate void OnSendPacketHandler(int playerIndex, ReadOnlySpan<byte> span);
+        private delegate void OnReceivePacketHandler(Terraria.MessageBuffer buffer, Span<byte> span);
+        private delegate void OnSendPacketHandler(int playerIndex, Span<byte> span);
 
         private static readonly MethodInfo ReceivePacketMethod =
             typeof(OrionPlayerService).GetMethod(nameof(OnReceivePacket), BindingFlags.NonPublic | BindingFlags.Instance);
@@ -106,7 +106,7 @@ namespace Orion.Players {
             return OTAPI.HookResult.Cancel;
         }
 
-        private void OnReceivePacket<TPacket>(Terraria.MessageBuffer buffer, ReadOnlySpan<byte> span)
+        private void OnReceivePacket<TPacket>(Terraria.MessageBuffer buffer, Span<byte> span)
                 where TPacket : struct, IPacket {
             // When reading the packet, we need to use the `Server` context since this packet should be read as the
             // server. Ignore the first byte as it is the packet ID.
@@ -123,7 +123,7 @@ namespace Orion.Players {
             Kernel.Raise(evt, Log);
             if (evt.IsCanceled()) {
                 return;
-            } else if (OnReceivePacketEvent(player, ref evt.Packet)) {
+            } else if (OnReceivePacketEvent(player, ref packet)) {
                 return;
             }
 
@@ -134,9 +134,7 @@ namespace Orion.Players {
             var oldReader = buffer.reader;
 
             // When writing the packet, we need to use the `Client` context since this packet comes from the client.
-            var receiveSpan = _receiveBuffer.Value.AsSpan();
-            evt.Packet.WriteWithHeader(ref receiveSpan, PacketContext.Client);
-            var packetLength = _receiveBuffer.Value.Length - receiveSpan.Length;
+            var packetLength = packet.WriteWithHeader(_receiveBuffer.Value, PacketContext.Client);
 
             _ignoreReceiveDataHandler.Value = true;
             buffer.readBuffer = _receiveBuffer.Value;
@@ -179,7 +177,7 @@ namespace Orion.Players {
             return OTAPI.HookResult.Cancel;
         }
 
-        private void OnSendPacket<TPacket>(int playerIndex, ReadOnlySpan<byte> span) where TPacket : struct, IPacket {
+        private void OnSendPacket<TPacket>(int playerIndex, Span<byte> span) where TPacket : struct, IPacket {
             // When reading the packet, we need to use the `Client` context since this packet should be read as the
             // client. Ignore the first byte as it is the packet ID.
             var packet = new TPacket();
@@ -199,9 +197,7 @@ namespace Orion.Players {
             // Send the packet. A thread-local send buffer is used in case there is some concurrency.
             //
             // When writing the packet, we need to use the `Server` context since this packet comes from the server.
-            var sendSpan = _sendBuffer.Value.AsSpan();
-            evt.Packet.WriteWithHeader(ref sendSpan, PacketContext.Server);
-            var packetLength = _sendBuffer.Value.Length - sendSpan.Length;
+            var packetLength = packet.WriteWithHeader(_sendBuffer.Value, PacketContext.Server);
 
             var terrariaClient = Terraria.Netplay.Clients[playerIndex];
             terrariaClient.Socket.AsyncSend(_sendBuffer.Value, 0, packetLength, terrariaClient.ServerWriteCallBack);

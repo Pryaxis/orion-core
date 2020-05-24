@@ -73,10 +73,7 @@ namespace Orion.Players {
             }
 
             // When writing the packet, we need to use the `Server` context since this packet comes from the server.
-            var sendSpan = _sendBuffer.AsSpan();
-            packet.WriteWithHeader(ref sendSpan, PacketContext.Server);
-
-            var packetLength = _sendBuffer.Length - sendSpan.Length;
+            var packetLength = packet.WriteWithHeader(_sendBuffer, PacketContext.Server);
             terrariaClient.Socket?.AsyncSend(_sendBuffer, 0, packetLength, terrariaClient.ServerWriteCallBack);
         }
     }

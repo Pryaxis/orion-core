@@ -23,25 +23,23 @@ namespace Orion.Packets {
         // Tests a packet round trip by reading, writing, reading the written packet, writing that read packet, and then
         // comparing the two written byte sequences. This resmoves any boundary conditions where data is in a different
         // form than would be normally expected.
-        public static void RoundTrip<TPacket>(ReadOnlySpan<byte> span, PacketContext context)
-                where TPacket : struct, IPacket {
+        public static void RoundTrip<TPacket>(Span<byte> span, PacketContext context) where TPacket : struct, IPacket {
             // Read packet.
             var packet = new TPacket();
             packet.Read(span, context);
 
             // Write the packet.
             var bytes = new byte[ushort.MaxValue - sizeof(ushort)];
-            var tmp = bytes.AsSpan();
-            packet.Write(ref tmp, context.Switch());
+            var packetLength = packet.Write(bytes, context.Switch());
 
             // Read the packet again.
-            packet.Read(bytes.AsSpan(..(bytes.Length - tmp.Length)), context);
+            packet.Read(bytes.AsSpan(..packetLength), context);
 
             // Write the packet again.
             var bytes2 = new byte[ushort.MaxValue - sizeof(ushort)];
-            var tmp2 = bytes2.AsSpan();
-            packet.Write(ref tmp2, context.Switch());
+            var packetLength2 = packet.Write(bytes2, context.Switch());
 
+            Assert.Equal(packetLength, packetLength2);
             Assert.Equal(bytes, bytes2);
         }
     }
