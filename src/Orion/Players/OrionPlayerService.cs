@@ -189,6 +189,10 @@ namespace Orion.Players {
                 var evt = new PlayerTeamEvent(player, ref Unsafe.As<TPacket, PlayerTeamPacket>(ref packet));
                 Kernel.Raise(evt, Log);
                 return evt.IsCanceled();
+            } else if (typeof(TPacket) == typeof(ModulePacket<ChatModule>)) {
+                var evt = new PlayerChatEvent(player, ref Unsafe.As<TPacket, ModulePacket<ChatModule>>(ref packet));
+                Kernel.Raise(evt, Log);
+                return evt.IsCanceled();
             } else {
                 return false;
             }
