@@ -28,6 +28,7 @@ using Orion.Events;
 using Orion.Events.Packets;
 using Orion.Events.Players;
 using Orion.Packets;
+using Orion.Packets.Client;
 using Orion.Packets.Modules;
 using Orion.Packets.Players;
 using Serilog;
@@ -186,6 +187,10 @@ namespace Orion.Players {
                 return evt.IsCanceled();
             } else if (typeof(TPacket) == typeof(PlayerTeamPacket)) {
                 var evt = new PlayerTeamEvent(player, ref Unsafe.As<TPacket, PlayerTeamPacket>(ref packet));
+                Kernel.Raise(evt, Log);
+                return evt.IsCanceled();
+            } else if (typeof(TPacket) == typeof(ClientUuidPacket)) {
+                var evt = new PlayerUuidEvent(player, ref Unsafe.As<TPacket, ClientUuidPacket>(ref packet));
                 Kernel.Raise(evt, Log);
                 return evt.IsCanceled();
             } else if (typeof(TPacket) == typeof(ModulePacket<ChatModule>)) {

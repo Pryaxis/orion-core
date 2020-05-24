@@ -224,6 +224,22 @@ namespace Orion.Players {
         }
 
         [Fact]
+        public void PacketReceive_PlayerUuidEventTriggered() {
+            using var kernel = new OrionKernel(Logger.None);
+            using var playerService = new OrionPlayerService(kernel, Logger.None);
+            var isRun = false;
+            kernel.RegisterHandler<PlayerUuidEvent>(evt => {
+                Assert.Same(playerService.Players[5], evt.Player);
+                Assert.Equal("Terraria", evt.Uuid);
+                isRun = true;
+            }, Logger.None);
+
+            TestUtils.FakeReceiveBytes(5, ClientUuidPacketTests.Bytes);
+
+            Assert.True(isRun);
+        }
+
+        [Fact]
         public void PacketReceive_PlayerChatEventTriggered() {
             Terraria.Netplay.Clients[5] = new Terraria.RemoteClient { Id = 5 };
 
