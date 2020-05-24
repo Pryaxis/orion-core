@@ -21,7 +21,7 @@ using Orion.Packets.DataStructures;
 
 namespace Orion.Packets.Client {
     /// <summary>
-    /// A packet sent from the server to the client to disconnect.
+    /// A packet sent from the server to the client to disconnect the client.
     /// </summary>
     public struct ClientDisconnectPacket : IPacket {
         private NetworkText? _reason;

@@ -21,7 +21,7 @@ using Orion.Players;
 
 namespace Orion.Events.Players {
     /// <summary>
-    /// An event that occurs when a player sends their UUID.
+    /// An event that occurs when a player informs the server of their UUID.
     /// </summary>
     [Event("player-uuid")]
     public sealed class PlayerUuidEvent : PlayerPacketEvent<ClientUuidPacket> {
