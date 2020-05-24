@@ -31,6 +31,7 @@ namespace Orion.Packets {
         PlayerJoin = 6,
         PlayerPvp = 30,
         PlayerTeam = 45,
+        Module = 82,
         ServerChat = 107,
 #pragma warning restore CS1591 // Missing XML comment for publicly visible type or member
     }

@@ -16,21 +16,31 @@
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
 using System;
+using System.Collections.Generic;
 using System.Linq;
+using Orion.Packets.Modules;
 using Orion.Packets.Server;
 using Xunit;
 
 namespace Orion.Packets {
     public class PacketIdTests {
+        private static readonly ISet<Type> ExcludedTypes =
+            new HashSet<Type> { typeof(ModulePacket<>), typeof(UnknownPacket), typeof(IPacket) };
+
         [Fact]
         public void Type() {
             for (var i = 0; i < 256; ++i) {
                 var id = (PacketId)i;
 
-                // Scan the Orion assembly for a packet type (not of type `UnknownPacket`) which has the correct ID.
+                // Ignore the `Module` packet ID, since it is handled specially.
+                if (id == PacketId.Module) {
+                    continue;
+                }
+
+                // Scan the Orion assembly for a packet type (not of type `ModulePacket<>` or `UnknownPacket`) which has
+                // the correct ID.
                 var expectedType = typeof(PacketId).Assembly.ExportedTypes
-                    .Where(t => t != typeof(UnknownPacket) && t != typeof(IPacket))
-                    .Where(t => typeof(IPacket).IsAssignableFrom(t))
+                    .Where(t => !ExcludedTypes.Contains(t) && typeof(IPacket).IsAssignableFrom(t))
                     .Where(t => ((IPacket)Activator.CreateInstance(t)!).Id == id).FirstOrDefault()
                         ?? typeof(UnknownPacket);
 

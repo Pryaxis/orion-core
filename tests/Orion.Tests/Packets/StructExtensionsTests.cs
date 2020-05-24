@@ -15,23 +15,25 @@
 // You should have received a copy of the GNU General Public License
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
-using System;
+using System.Runtime.CompilerServices;
+using System.Runtime.InteropServices;
 using Xunit;
 
-namespace Orion.Packets.Players {
-    public class PlayerJoinPacketTests {
-        public static readonly byte[] Bytes = { 3, 0, 6 };
-
+namespace Orion.Packets {
+    public class StructExtensionsTests {
         [Fact]
-        public void Read() {
-            var packet = new PlayerJoinPacket();
-            var span = Bytes.AsSpan(IPacket.HeaderSize..);
-            Assert.Equal(span.Length, packet.Read(span, PacketContext.Server));
+        public void AsRefByte() {
+            var testStruct = new TestStruct();
+
+            Unsafe.WriteUnaligned(ref testStruct.AsRefByte(4), 1234);
+
+            Assert.Equal(1234, testStruct.Value2);
         }
 
-        [Fact]
-        public void RoundTrip() {
-            TestUtils.RoundTripPacket<PlayerJoinPacket>(Bytes.AsSpan(IPacket.HeaderSize..), PacketContext.Server);
+        [StructLayout(LayoutKind.Explicit)]
+        private struct TestStruct {
+            [FieldOffset(0)] public int Value;
+            [FieldOffset(4)] public int Value2;
         }
     }
 }

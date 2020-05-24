@@ -16,22 +16,12 @@
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
 using System;
-using Xunit;
+using System.Runtime.CompilerServices;
 
-namespace Orion.Packets.Players {
-    public class PlayerJoinPacketTests {
-        public static readonly byte[] Bytes = { 3, 0, 6 };
-
-        [Fact]
-        public void Read() {
-            var packet = new PlayerJoinPacket();
-            var span = Bytes.AsSpan(IPacket.HeaderSize..);
-            Assert.Equal(span.Length, packet.Read(span, PacketContext.Server));
-        }
-
-        [Fact]
-        public void RoundTrip() {
-            TestUtils.RoundTripPacket<PlayerJoinPacket>(Bytes.AsSpan(IPacket.HeaderSize..), PacketContext.Server);
+namespace Orion.Packets {
+    internal static class StructExtensions {
+        public static ref byte AsRefByte<T>(ref this T value, int byteOffset) where T : struct {
+            return ref Unsafe.As<T, byte>(ref Unsafe.AddByteOffset(ref value, new IntPtr(byteOffset)));
         }
     }
 }

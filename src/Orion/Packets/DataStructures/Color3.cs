@@ -35,22 +35,19 @@ namespace Orion.Packets.DataStructures {
         /// Gets the red component.
         /// </summary>
         /// <value>The red component.</value>
-        [field: FieldOffset(0)]
-        public byte R { get; }
+        [field: FieldOffset(0)] public byte R { get; }
 
         /// <summary>
         /// Gets the green component.
         /// </summary>
         /// <value>The green component.</value>
-        [field: FieldOffset(1)]
-        public byte G { get; }
+        [field: FieldOffset(1)] public byte G { get; }
 
         /// <summary>
         /// Gets the blue component.
         /// </summary>
         /// <value>The blue component.</value>
-        [field: FieldOffset(2)]
-        public byte B { get; }
+        [field: FieldOffset(2)] public byte B { get; }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Color3"/> structure with the specified components.

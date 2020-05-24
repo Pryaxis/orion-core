@@ -1,0 +1,131 @@
+﻿// Copyright (c) 2020 Pryaxis & Orion Contributors
+// 
+// This file is part of Orion.
+// 
+// Orion is free software: you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+// 
+// Orion is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+// 
+// You should have received a copy of the GNU General Public License
+// along with Orion.  If not, see <https://www.gnu.org/licenses/>.
+
+using System;
+using System.Diagnostics.CodeAnalysis;
+using Orion.Packets.DataStructures;
+using Xunit;
+
+namespace Orion.Packets.Modules {
+    [SuppressMessage("Style", "IDE0017:Simplify object initialization", Justification = "Testing")]
+    public class ChatModuleTests {
+        public static readonly byte[] ServerBytes = {
+            23, 0, 82, 1, 0, 3, 83, 97, 121, 13, 47, 99, 111, 109, 109, 97, 110, 100, 32, 116, 101, 115, 116
+        };
+
+        public static readonly byte[] ClientBytes = { 15, 0, 82, 1, 0, 1, 0, 4, 116, 101, 115, 116, 255, 255, 255 };
+
+        [Fact]
+        public void ClientCommand_SetNullValue_ThrowsArgumentNullException() {
+            var module = new ChatModule();
+
+            Assert.Throws<ArgumentNullException>(() => module.ClientCommand = null!);
+        }
+
+        [Fact]
+        public void ClientCommand_Set_Get() {
+            var module = new ChatModule();
+
+            module.ClientCommand = "Say";
+
+            Assert.Equal("Say", module.ClientCommand);
+        }
+
+        [Fact]
+        public void ClientText_SetNullValue_ThrowsArgumentNullException() {
+            var module = new ChatModule();
+
+            Assert.Throws<ArgumentNullException>(() => module.ClientText = null!);
+        }
+
+        [Fact]
+        public void ClientText_Set_Get() {
+            var module = new ChatModule();
+
+            module.ClientText = "/command test";
+
+            Assert.Equal("/command test", module.ClientText);
+        }
+
+        [Fact]
+        public void ServerChatterIndex_Set_Get() {
+            var module = new ChatModule();
+
+            module.ServerChatterIndex = 1;
+
+            Assert.Equal(1, module.ServerChatterIndex);
+        }
+
+        [Fact]
+        public void ServerText_SetNullValue_ThrowsArgumentNullException() {
+            var module = new ChatModule();
+
+            Assert.Throws<ArgumentNullException>(() => module.ServerText = null!);
+        }
+
+        [Fact]
+        public void ServerText_Set_Get() {
+            var module = new ChatModule();
+
+            module.ServerText = "test";
+
+            Assert.Equal("test", module.ServerText);
+        }
+
+        [Fact]
+        public void ServerColor_Set_Get() {
+            var module = new ChatModule();
+
+            module.ServerColor = Color3.White;
+
+            Assert.Equal(Color3.White, module.ServerColor);
+        }
+
+        [Fact]
+        public unsafe void Read_AsServer() {
+            var module = new ChatModule();
+            var span = ServerBytes.AsSpan((IPacket.HeaderSize + IModule.HeaderSize)..);
+            Assert.Equal(span.Length, module.Read(span, PacketContext.Server));
+
+            Assert.Equal("Say", module.ClientCommand);
+            Assert.Equal("/command test", module.ClientText);
+        }
+
+        [Fact]
+        public void RoundTrip_AsServer() {
+            TestUtils.RoundTripModule<ChatModule>(
+                ServerBytes.AsSpan((IPacket.HeaderSize + IModule.HeaderSize)..), PacketContext.Server);
+        }
+
+        [Fact]
+        public unsafe void Read_AsClient() {
+            var module = new ChatModule();
+            var span = ClientBytes.AsSpan((IPacket.HeaderSize + IModule.HeaderSize)..);
+            Assert.Equal(span.Length, module.Read(span, PacketContext.Client));
+
+            Assert.Equal(1, module.ServerChatterIndex);
+            Assert.Equal("test", module.ServerText);
+            Assert.Equal(Color3.White, module.ServerColor);
+        }
+
+        [Fact]
+        public void RoundTrip_AsClient() {
+            TestUtils.RoundTripModule<ChatModule>(
+                ClientBytes.AsSpan((IPacket.HeaderSize + IModule.HeaderSize)..), PacketContext.Client);
+        }
+    }
+}

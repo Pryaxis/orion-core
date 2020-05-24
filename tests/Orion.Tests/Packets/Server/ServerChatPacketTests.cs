@@ -64,7 +64,8 @@ namespace Orion.Packets.Server {
         [Fact]
         public void Read() {
             var packet = new ServerChatPacket();
-            packet.Read(Bytes.AsSpan(IPacket.HeaderSize..), PacketContext.Server);
+            var span = Bytes.AsSpan(IPacket.HeaderSize..);
+            Assert.Equal(span.Length, packet.Read(span, PacketContext.Server));
 
             Assert.Equal(Color3.White, packet.Color);
             Assert.Equal("Terraria", packet.Text);
@@ -73,7 +74,7 @@ namespace Orion.Packets.Server {
 
         [Fact]
         public void RoundTrip() {
-            TestUtils.RoundTrip<ServerChatPacket>(Bytes.AsSpan(IPacket.HeaderSize..), PacketContext.Server);
+            TestUtils.RoundTripPacket<ServerChatPacket>(Bytes.AsSpan(IPacket.HeaderSize..), PacketContext.Server);
         }
     }
 }

@@ -43,14 +43,15 @@ namespace Orion.Packets.Server {
         [Fact]
         public void Read() {
             var packet = new ServerConnectPacket();
-            packet.Read(Bytes.AsSpan(IPacket.HeaderSize..), PacketContext.Server);
+            var span = Bytes.AsSpan(IPacket.HeaderSize..);
+            Assert.Equal(span.Length, packet.Read(span, PacketContext.Server));
 
             Assert.Equal("Terraria194", packet.Version);
         }
 
         [Fact]
         public void RoundTrip() {
-            TestUtils.RoundTrip<ServerConnectPacket>(Bytes.AsSpan(IPacket.HeaderSize..), PacketContext.Server);
+            TestUtils.RoundTripPacket<ServerConnectPacket>(Bytes.AsSpan(IPacket.HeaderSize..), PacketContext.Server);
         }
     }
 }

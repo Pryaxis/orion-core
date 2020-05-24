@@ -18,20 +18,27 @@
 using System;
 using Xunit;
 
-namespace Orion.Packets.Players {
-    public class PlayerJoinPacketTests {
-        public static readonly byte[] Bytes = { 3, 0, 6 };
-
+namespace Orion.Packets.Modules {
+    public class ModuleTests {
         [Fact]
-        public void Read() {
-            var packet = new PlayerJoinPacket();
-            var span = Bytes.AsSpan(IPacket.HeaderSize..);
-            Assert.Equal(span.Length, packet.Read(span, PacketContext.Server));
+        public void WriteWithHeader() {
+            var bytes = new byte[3];
+            var module = new TestModule();
+
+            Assert.Equal(3, module.WriteWithHeader(bytes, PacketContext.Server));
+
+            Assert.Equal(new byte[] { 255, 255, 42 }, bytes);
         }
 
-        [Fact]
-        public void RoundTrip() {
-            TestUtils.RoundTripPacket<PlayerJoinPacket>(Bytes.AsSpan(IPacket.HeaderSize..), PacketContext.Server);
+        private struct TestModule : IModule {
+            public ModuleId Id => (ModuleId)65535;
+
+            public int Read(Span<byte> span, PacketContext context) => throw new NotImplementedException();
+
+            public int Write(Span<byte> span, PacketContext context) {
+                span[0] = 42;
+                return 1;
+            }
         }
     }
 }

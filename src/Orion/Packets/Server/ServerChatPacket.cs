@@ -27,15 +27,13 @@ namespace Orion.Packets.Server {
     /// </summary>
     [StructLayout(LayoutKind.Explicit)]
     public struct ServerChatPacket : IPacket {
-        [FieldOffset(8)]
-        private NetworkText _text;
+        [FieldOffset(8)] private NetworkText _text;
 
         /// <summary>
         /// Gets or sets the color.
         /// </summary>
         /// <value>The color.</value>
-        [field: FieldOffset(0)]
-        public Color3 Color { get; set; }
+        [field: FieldOffset(0)] public Color3 Color { get; set; }
 
         /// <summary>
         /// Gets or sets the text.
@@ -51,8 +49,7 @@ namespace Orion.Packets.Server {
         /// Gets or sets the line width. A value of <c>-1</c> indicates that the screen width should be used.
         /// </summary>
         /// <value>The line width.</value>
-        [field: FieldOffset(3)]
-        public short LineWidth { get; set; }
+        [field: FieldOffset(3)] public short LineWidth { get; set; }
 
         PacketId IPacket.Id => PacketId.ServerChat;
 

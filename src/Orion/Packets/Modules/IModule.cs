@@ -18,23 +18,23 @@
 using System;
 using System.Runtime.CompilerServices;
 
-namespace Orion.Packets {
+namespace Orion.Packets.Modules {
     /// <summary>
-    /// Represents a packet, the main form of communication between the server and its clients.
+    /// Represents a module, a specific form of communication between the server and its clients.
     /// </summary>
-    public interface IPacket {
+    public interface IModule {
         /// <summary>
-        /// The packet's header size.
+        /// The module's header size.
         /// </summary>
-        public const int HeaderSize = sizeof(ushort) + sizeof(PacketId);
+        public const int HeaderSize = sizeof(ModuleId);
 
         /// <summary>
-        /// Gets the packet's ID.
+        /// Gets the module's ID.
         /// </summary>
-        PacketId Id { get; }
+        ModuleId Id { get; }
 
         /// <summary>
-        /// Reads the packet from the given <paramref name="span"/> with the specified <paramref name="context"/>,
+        /// Reads the module from the given <paramref name="span"/> with the specified <paramref name="context"/>,
         /// mutating this instance. Returns the number of bytes read.
         /// </summary>
         /// <param name="span">The span.</param>
@@ -43,7 +43,7 @@ namespace Orion.Packets {
         int Read(Span<byte> span, PacketContext context);
 
         /// <summary>
-        /// Writes the packet to the given <paramref name="span"/> with the specified <paramref name="context"/>.
+        /// Writes the module to the given <paramref name="span"/> with the specified <paramref name="context"/>.
         /// Returns the number of bytes written.
         /// </summary>
         /// <param name="span">The span.</param>
@@ -53,24 +53,22 @@ namespace Orion.Packets {
     }
 
     /// <summary>
-    /// Provides extensions for the <see cref="IPacket"/> interface.
+    /// Provides extensions for the <see cref="IModule"/> interface.
     /// </summary>
-    public static class PacketExtensions {
+    public static class ModuleExtensions {
         /// <summary>
-        /// Writes the <paramref name="packet"/> reference to the given <paramref name="span"/> with the specified
-        /// <paramref name="context"/>, including the packet header. Returns the number of bytes written.
+        /// Writes the <paramref name="module"/> reference to the given <paramref name="span"/> with the specified
+        /// <paramref name="context"/>, including the module header. Returns the number of bytes written.
         /// </summary>
-        /// <typeparam name="TPacket">The type of packet.</typeparam>
-        /// <param name="packet">The packet reference.</param>
+        /// <typeparam name="TModule">The type of module.</typeparam>
+        /// <param name="module">The module reference.</param>
         /// <param name="span">The span.</param>
         /// <param name="context">The context.</param>
         /// <returns>The number of bytes written.</returns>
-        public static int WriteWithHeader<TPacket>(ref this TPacket packet, Span<byte> span, PacketContext context)
-                where TPacket : struct, IPacket {
-            span[2] = (byte)packet.Id;
-            var packetLength = IPacket.HeaderSize + packet.Write(span[IPacket.HeaderSize..], context);
-            Unsafe.WriteUnaligned(ref span[0], (ushort)packetLength);
-            return packetLength;
+        public static int WriteWithHeader<TModule>(ref this TModule module, Span<byte> span, PacketContext context)
+                where TModule : struct, IModule {
+            Unsafe.WriteUnaligned(ref span[0], module.Id);
+            return IModule.HeaderSize + module.Write(span[IModule.HeaderSize..], context);
         }
     }
 }

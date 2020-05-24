@@ -46,14 +46,15 @@ namespace Orion.Packets.Server {
         [Fact]
         public void Read() {
             var packet = new ServerDisconnectPacket();
-            packet.Read(Bytes.AsSpan(IPacket.HeaderSize..), PacketContext.Server);
+            var span = Bytes.AsSpan(IPacket.HeaderSize..);
+            Assert.Equal(span.Length, packet.Read(span, PacketContext.Server));
 
             Assert.Equal(new NetworkText(NetworkTextMode.Localized, "CLI.KickMessage"), packet.Reason);
         }
 
         [Fact]
         public void RoundTrip() {
-            TestUtils.RoundTrip<ServerDisconnectPacket>(Bytes.AsSpan(IPacket.HeaderSize..), PacketContext.Server);
+            TestUtils.RoundTripPacket<ServerDisconnectPacket>(Bytes.AsSpan(IPacket.HeaderSize..), PacketContext.Server);
         }
     }
 }

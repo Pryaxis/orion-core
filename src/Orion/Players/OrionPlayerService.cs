@@ -28,6 +28,7 @@ using Orion.Events;
 using Orion.Events.Packets;
 using Orion.Events.Players;
 using Orion.Packets;
+using Orion.Packets.Modules;
 using Orion.Packets.Players;
 using Orion.Packets.Server;
 using Serilog;
@@ -39,17 +40,20 @@ namespace Orion.Players {
         private delegate void OnSendPacketHandler(int playerIndex, Span<byte> span);
 
         private static readonly MethodInfo ReceivePacketMethod =
-            typeof(OrionPlayerService).GetMethod(nameof(OnReceivePacket), BindingFlags.NonPublic | BindingFlags.Instance);
+            typeof(OrionPlayerService)
+                .GetMethod(nameof(OnReceivePacket), BindingFlags.NonPublic | BindingFlags.Instance);
 
         private static readonly MethodInfo SendPacketMethod =
             typeof(OrionPlayerService).GetMethod(nameof(OnSendPacket), BindingFlags.NonPublic | BindingFlags.Instance);
 
         private readonly ThreadLocal<bool> _ignoreReceiveDataHandler = new ThreadLocal<bool>();
-        private readonly OnReceivePacketHandler[] _onReceivePacketHandlers = new OnReceivePacketHandler[256];
+        private readonly OnReceivePacketHandler?[] _onReceivePacketHandlers = new OnReceivePacketHandler?[256];
+        private readonly OnReceivePacketHandler?[] _onReceiveModuleHandlers = new OnReceivePacketHandler?[65536];
         private readonly ThreadLocal<byte[]> _receiveBuffer =
             new ThreadLocal<byte[]>(() => new byte[ushort.MaxValue]);
 
-        private readonly OnSendPacketHandler[] _onSendPacketHandlers = new OnSendPacketHandler[256];
+        private readonly OnSendPacketHandler?[] _onSendPacketHandlers = new OnSendPacketHandler?[256];
+        private readonly OnSendPacketHandler?[] _onSendModuleHandlers = new OnSendPacketHandler?[65536];
         private readonly ThreadLocal<byte[]> _sendBuffer =
             new ThreadLocal<byte[]>(() => new byte[ushort.MaxValue]);
 
@@ -65,15 +69,30 @@ namespace Orion.Players {
                 (playerIndex, terrariaPlayer) => new OrionPlayer(playerIndex, terrariaPlayer, this));
 
             // Construct the `_onReceivePacketHandlers` and `_onSendPacketHandlers` arrays ahead of time.
-            for (var i = 0; i < 256; ++i) {
+            for (var i = 1; i < 140; ++i) {
                 var packetType = ((PacketId)i).Type();
-                var receivePacketMethod = ReceivePacketMethod.MakeGenericMethod(packetType);
                 _onReceivePacketHandlers[i] =
-                    (OnReceivePacketHandler)receivePacketMethod.CreateDelegate(typeof(OnReceivePacketHandler), this);
-
-                var sendPacketMethod = SendPacketMethod.MakeGenericMethod(packetType);
+                    (OnReceivePacketHandler)ReceivePacketMethod
+                        .MakeGenericMethod(packetType)
+                        .CreateDelegate(typeof(OnReceivePacketHandler), this);
                 _onSendPacketHandlers[i] =
-                    (OnSendPacketHandler)sendPacketMethod.CreateDelegate(typeof(OnSendPacketHandler), this);
+                    (OnSendPacketHandler)SendPacketMethod
+                        .MakeGenericMethod(packetType)
+                        .CreateDelegate(typeof(OnSendPacketHandler), this);
+            }
+
+            // Construct the `_onReceiveModuleHandlers` and `_onSendModuleHandlers` arrays ahead of time.
+            for (var i = 0; i < 11; ++i) {
+                var moduleType = ((ModuleId)i).Type();
+                var packetType = typeof(ModulePacket<>).MakeGenericType(moduleType);
+                _onReceiveModuleHandlers[i] =
+                    (OnReceivePacketHandler)ReceivePacketMethod
+                        .MakeGenericMethod(packetType)
+                        .CreateDelegate(typeof(OnReceivePacketHandler), this);
+                _onSendModuleHandlers[i] =
+                    (OnSendPacketHandler)SendPacketMethod
+                        .MakeGenericMethod(packetType)
+                        .CreateDelegate(typeof(OnSendPacketHandler), this);
             }
 
             OTAPI.Hooks.Net.ReceiveData = ReceiveDataHandler;
@@ -102,7 +121,13 @@ namespace Orion.Players {
                 return OTAPI.HookResult.Continue;
             }
 
-            _onReceivePacketHandlers[packetId](buffer, buffer.readBuffer.AsSpan(start..(start + length)));
+            var span = buffer.readBuffer.AsSpan(start..(start + length));
+            if (packetId == (byte)PacketId.Module) {
+                var moduleId = Unsafe.ReadUnaligned<ushort>(ref buffer.readBuffer[start + 1]);
+                _onReceiveModuleHandlers[moduleId]?.Invoke(buffer, span);
+            } else {
+                _onReceivePacketHandlers[packetId]?.Invoke(buffer, span);
+            }
             return OTAPI.HookResult.Cancel;
         }
 
@@ -169,15 +194,26 @@ namespace Orion.Players {
             }
         }
 
+        private void OnReceiveModule<TModule>(Terraria.MessageBuffer buffer, Span<byte> span) {
+            Debug.Assert(buffer != null);
+            Debug.Assert(span.Length > 0);
+        }
+
         private OTAPI.HookResult SendBytesHandler(
-                ref int remoteClient, ref byte[] data, ref int offset, ref int size,
+                ref int playerIndex, ref byte[] data, ref int offset, ref int size,
                 ref Terraria.Net.Sockets.SocketSendCallback _, ref object _2) {
-            Debug.Assert(remoteClient >= 0 && remoteClient < Players.Count);
+            Debug.Assert(playerIndex >= 0 && playerIndex < Players.Count);
             Debug.Assert(data != null);
             Debug.Assert(offset >= 0 && offset + size <= data.Length);
 
+            var span = data.AsSpan((offset + 2)..(offset + size));
             var packetId = data[offset + 2];
-            _onSendPacketHandlers[packetId](remoteClient, data.AsSpan((offset + 2)..(offset + size)));
+            if (packetId == (byte)PacketId.Module) {
+                var moduleId = Unsafe.ReadUnaligned<ushort>(ref data[offset + 3]);
+                _onSendModuleHandlers[moduleId]?.Invoke(playerIndex, span);
+            } else {
+                _onSendPacketHandlers[packetId]?.Invoke(playerIndex, span);
+            }
             return OTAPI.HookResult.Cancel;
         }
 

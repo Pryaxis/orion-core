@@ -16,45 +16,29 @@
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
 using System;
-using System.Diagnostics.CodeAnalysis;
 using Xunit;
 
-namespace Orion.Packets.Players {
-    [SuppressMessage("Style", "IDE0017:Simplify object initialization", Justification = "Testing")]
-    public class PlayerPvpPacketTests {
-        public static readonly byte[] Bytes = { 5, 0, 30, 5, 1 };
-
-        [Fact]
-        public void PlayerIndex_Set_Get() {
-            var packet = new PlayerPvpPacket();
-
-            packet.PlayerIndex = 5;
-
-            Assert.Equal(5, packet.PlayerIndex);
-        }
-
-        [Fact]
-        public void IsInPvp_Set_Get() {
-            var packet = new PlayerPvpPacket();
-
-            packet.IsInPvp = true;
-
-            Assert.True(packet.IsInPvp);
-        }
+namespace Orion.Packets.Modules {
+    public class ModulePacketTests {
+        public static readonly byte[] Bytes = { 5, 0, 82, 255, 255 };
 
         [Fact]
         public void Read() {
-            var packet = new PlayerPvpPacket();
+            var packet = new ModulePacket<TestModule>();
             var span = Bytes.AsSpan(IPacket.HeaderSize..);
             Assert.Equal(span.Length, packet.Read(span, PacketContext.Server));
-
-            Assert.Equal(5, packet.PlayerIndex);
-            Assert.True(packet.IsInPvp);
         }
 
         [Fact]
         public void RoundTrip() {
-            TestUtils.RoundTripPacket<PlayerPvpPacket>(Bytes.AsSpan(IPacket.HeaderSize..), PacketContext.Server);
+            TestUtils.RoundTripPacket<ModulePacket<TestModule>>(
+                Bytes.AsSpan(IPacket.HeaderSize..), PacketContext.Server);
+        }
+
+        private struct TestModule : IModule {
+            public ModuleId Id => (ModuleId)65535;
+            public int Read(Span<byte> span, PacketContext context) => 0;
+            public int Write(Span<byte> span, PacketContext context) => 0;
         }
     }
 }

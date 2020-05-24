@@ -18,49 +18,41 @@
 using System;
 using System.Runtime.CompilerServices;
 
-namespace Orion.Packets.Server {
+namespace Orion.Packets.Modules {
     /// <summary>
-    /// An unknown packet.
+    /// An unknown module.
     /// </summary>
-    public struct UnknownPacket : IPacket {
-        private unsafe fixed byte _data[ushort.MaxValue - IPacket.HeaderSize];
+    public struct UnknownModule : IModule {
+        private unsafe fixed byte _data[ushort.MaxValue - IPacket.HeaderSize - IModule.HeaderSize];
 
         /// <summary>
-        /// Gets or sets the packet length.
+        /// Gets or sets the module length.
         /// </summary>
-        /// <value>The packet length.</value>
+        /// <value>The module length.</value>
         public ushort Length { get; set; }
 
         /// <summary>
-        /// Gets or sets the packet ID.
+        /// Gets or sets the module ID.
         /// </summary>
-        /// <value>The packet ID.</value>
-        public PacketId Id { get; set; }
+        /// <value>The module ID.</value>
+        public ModuleId Id { get; set; }
 
         /// <summary>
-        /// Gets a reference to the byte at the given <paramref name="index"/> in the packet data.
+        /// Gets a reference to the byte at the given <paramref name="index"/> in the module data.
         /// </summary>
         /// <param name="index">The index.</param>
-        /// <returns>A reference to the byte at the given <paramref name="index"/> in the packet data.</returns>
+        /// <returns>A reference to the byte at the given <paramref name="index"/> in the module data.</returns>
         public unsafe ref byte Data(int index) => ref _data[index];
 
         /// <inheritdoc/>
         public unsafe int Read(Span<byte> span, PacketContext context) {
             Length = (ushort)span.Length;
-            if (Length == 0) {
-                return 0;
-            }
-
             Unsafe.CopyBlockUnaligned(ref _data[0], ref span[0], Length);
             return Length;
         }
 
         /// <inheritdoc/>
         public unsafe int Write(Span<byte> span, PacketContext context) {
-            if (Length == 0) {
-                return 0;
-            }
-
             Unsafe.CopyBlockUnaligned(ref span[0], ref _data[0], Length);
             return Length;
         }

@@ -29,15 +29,13 @@ namespace Orion.Packets.Players {
         /// Gets or sets the player index.
         /// </summary>
         /// <value>The player index.</value>
-        [field: FieldOffset(0)]
-        public byte PlayerIndex { get; set; }
+        [field: FieldOffset(0)] public byte PlayerIndex { get; set; }
 
         /// <summary>
         /// Gets or sets a value indicating whether the player is in PvP.
         /// </summary>
         /// <value><see langword="true"/> if the player is in PvP; otherwise, <see langword="false"/>.</value>
-        [field: FieldOffset(1)]
-        public bool IsInPvp { get; set; }
+        [field: FieldOffset(1)] public bool IsInPvp { get; set; }
 
         PacketId IPacket.Id => PacketId.PlayerPvp;
 

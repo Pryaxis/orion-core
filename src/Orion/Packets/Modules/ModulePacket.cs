@@ -17,39 +17,31 @@
 
 using System;
 using System.Runtime.CompilerServices;
-using System.Runtime.InteropServices;
-using Orion.Players;
 
-namespace Orion.Packets.Players {
+namespace Orion.Packets.Modules {
     /// <summary>
-    /// A packet sent to set a player's team.
+    /// A packet sent in the form of a module.
     /// </summary>
-    [StructLayout(LayoutKind.Explicit)]
-    public struct PlayerTeamPacket : IPacket {
+    /// <typeparam name="TModule">The type of module.</typeparam>
+    public struct ModulePacket<TModule> : IPacket where TModule : struct, IModule {
         /// <summary>
-        /// Gets or sets the player index.
+        /// The module.
         /// </summary>
-        /// <value>The player index.</value>
-        [field: FieldOffset(0)] public byte PlayerIndex { get; set; }
+        public TModule Module;
 
-        /// <summary>
-        /// Gets or sets the team.
-        /// </summary>
-        /// <value>The team.</value>
-        [field: FieldOffset(1)] public PlayerTeam Team { get; set; }
-
-        PacketId IPacket.Id => PacketId.PlayerTeam;
+        PacketId IPacket.Id => PacketId.Module;
 
         /// <inheritdoc/>
         public int Read(Span<byte> span, PacketContext context) {
-            Unsafe.CopyBlockUnaligned(ref this.AsRefByte(0), ref span[0], 2);
-            return 2;
+            // If `TModule` is `UnknownModule`, then we need to set the `Id` property appropriately.
+            if (typeof(TModule) == typeof(UnknownModule)) {
+                Unsafe.As<TModule, UnknownModule>(ref Module).Id = Unsafe.ReadUnaligned<ModuleId>(ref span[0]);
+            }
+
+            return IModule.HeaderSize + Module.Read(span[IModule.HeaderSize..], context);
         }
 
         /// <inheritdoc/>
-        public int Write(Span<byte> span, PacketContext context) {
-            Unsafe.CopyBlockUnaligned(ref span[0], ref this.AsRefByte(0), 2);
-            return 2;
-        }
+        public int Write(Span<byte> span, PacketContext context) => Module.WriteWithHeader(span, context);
     }
 }
