@@ -20,23 +20,23 @@ using System.Diagnostics.CodeAnalysis;
 using Orion.Packets.DataStructures;
 using Xunit;
 
-namespace Orion.Packets.Server {
+namespace Orion.Packets.Client {
     [SuppressMessage("Style", "IDE0017:Simplify object initialization", Justification = "Testing")]
-    public class ServerDisconnectPacketTests {
+    public class ClientDisconnectPacketTests {
         public static readonly byte[] Bytes = {
             21, 0, 2, 2, 15, 67, 76, 73, 46, 75, 105, 99, 107, 77, 101, 115, 115, 97, 103, 101, 0
         };
 
         [Fact]
         public void Reason_SetNullValue_ThrowsArgumentNullException() {
-            var packet = new ServerDisconnectPacket();
+            var packet = new ClientDisconnectPacket();
 
             Assert.Throws<ArgumentNullException>(() => packet.Reason = null!);
         }
 
         [Fact]
         public void Reason_Set_Get() {
-            var packet = new ServerDisconnectPacket();
+            var packet = new ClientDisconnectPacket();
 
             packet.Reason = new NetworkText(NetworkTextMode.Localized, "CLI.KickMessage");
 
@@ -45,7 +45,7 @@ namespace Orion.Packets.Server {
 
         [Fact]
         public void Read() {
-            var packet = new ServerDisconnectPacket();
+            var packet = new ClientDisconnectPacket();
             var span = Bytes.AsSpan(IPacket.HeaderSize..);
             Assert.Equal(span.Length, packet.Read(span, PacketContext.Server));
 
@@ -54,7 +54,7 @@ namespace Orion.Packets.Server {
 
         [Fact]
         public void RoundTrip() {
-            TestUtils.RoundTripPacket<ServerDisconnectPacket>(Bytes.AsSpan(IPacket.HeaderSize..), PacketContext.Server);
+            TestUtils.RoundTripPacket<ClientDisconnectPacket>(Bytes.AsSpan(IPacket.HeaderSize..), PacketContext.Server);
         }
     }
 }

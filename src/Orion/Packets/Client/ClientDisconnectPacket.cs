@@ -19,11 +19,11 @@ using System;
 using System.Text;
 using Orion.Packets.DataStructures;
 
-namespace Orion.Packets.Server {
+namespace Orion.Packets.Client {
     /// <summary>
     /// A packet sent from the server to the client to disconnect.
     /// </summary>
-    public struct ServerDisconnectPacket : IPacket {
+    public struct ClientDisconnectPacket : IPacket {
         private NetworkText? _reason;
 
         /// <summary>
@@ -36,7 +36,7 @@ namespace Orion.Packets.Server {
             set => _reason = value ?? throw new ArgumentNullException(nameof(value));
         }
 
-        PacketId IPacket.Id => PacketId.ServerDisconnect;
+        PacketId IPacket.Id => PacketId.ClientDisconnect;
 
         /// <inheritdoc/>
         public int Read(Span<byte> span, PacketContext context) => span.Read(Encoding.UTF8, out _reason);

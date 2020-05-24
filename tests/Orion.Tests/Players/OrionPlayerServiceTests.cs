@@ -282,7 +282,7 @@ namespace Orion.Players {
                 isRun = true;
             }, Logger.None);
 
-            Terraria.NetMessage.SendData((byte)PacketId.ServerConnect, 5);
+            Terraria.NetMessage.SendData((byte)PacketId.ClientConnect, 5);
 
             Assert.True(isRun);
             Assert.Equal(ServerConnectBytes, socket.SendData);
@@ -297,7 +297,7 @@ namespace Orion.Players {
             using var playerService = new OrionPlayerService(kernel, Logger.None);
             kernel.RegisterHandler<PacketSendEvent<ClientConnectPacket>>(evt => evt.Cancel(), Logger.None);
 
-            Terraria.NetMessage.SendData((byte)PacketId.ServerConnect, 5);
+            Terraria.NetMessage.SendData((byte)PacketId.ClientConnect, 5);
 
             Assert.Empty(socket.SendData);
         }

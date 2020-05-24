@@ -35,7 +35,7 @@ namespace Orion.Packets.Client {
             set => _version = value ?? throw new ArgumentNullException(nameof(value));
         }
 
-        PacketId IPacket.Id => PacketId.ServerConnect;
+        PacketId IPacket.Id => PacketId.ClientConnect;
 
         /// <inheritdoc/>
         public int Read(Span<byte> span, PacketContext context) => span.Read(Encoding.UTF8, out _version);
