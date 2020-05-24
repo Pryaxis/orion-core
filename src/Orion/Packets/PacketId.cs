@@ -17,6 +17,7 @@
 
 using System;
 using System.Collections.Generic;
+using Orion.Packets.Client;
 using Orion.Packets.Players;
 using Orion.Packets.Server;
 
@@ -31,6 +32,7 @@ namespace Orion.Packets {
         PlayerJoin = 6,
         PlayerPvp = 30,
         PlayerTeam = 45,
+        ClientUuid = 68,
         Module = 82,
         ServerChat = 107,
 #pragma warning restore CS1591 // Missing XML comment for publicly visible type or member
@@ -46,6 +48,7 @@ namespace Orion.Packets {
             [PacketId.PlayerJoin] = typeof(PlayerJoinPacket),
             [PacketId.PlayerPvp] = typeof(PlayerPvpPacket),
             [PacketId.PlayerTeam] = typeof(PlayerTeamPacket),
+            [PacketId.ClientUuid] = typeof(ClientUuidPacket),
             [PacketId.ServerChat] = typeof(ServerChatPacket),
         };
 
