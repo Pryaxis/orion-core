@@ -21,7 +21,7 @@ namespace Orion {
     /// <summary>
     /// Specifies information about a service or plugin.
     /// </summary>
-    [AttributeUsage(AttributeTargets.Class)]
+    [AttributeUsage(AttributeTargets.Class, Inherited = false)]
     public sealed class ServiceAttribute : Attribute {
         private string _author = "Pryaxis";
 

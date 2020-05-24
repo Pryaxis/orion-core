@@ -35,9 +35,9 @@ namespace Orion.Packets.Server {
         public void Version_Set_Get() {
             var packet = new ServerConnectPacket();
 
-            packet.Version = "test";
+            packet.Version = "Terraria194";
 
-            Assert.Equal("test", packet.Version);
+            Assert.Equal("Terraria194", packet.Version);
         }
 
         [Fact]

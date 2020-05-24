@@ -26,17 +26,17 @@ namespace Orion.Packets {
         public static void RoundTrip<TPacket>(Span<byte> span, PacketContext context) where TPacket : struct, IPacket {
             // Read packet.
             var packet = new TPacket();
-            packet.Read(span, context);
+            Assert.Equal(span.Length, packet.Read(span, context));
 
             // Write the packet.
-            var bytes = new byte[ushort.MaxValue - sizeof(ushort)];
+            var bytes = new byte[ushort.MaxValue - IPacket.HeaderSize];
             var packetLength = packet.Write(bytes, context.Switch());
 
             // Read the packet again.
-            packet.Read(bytes.AsSpan(..packetLength), context);
+            Assert.Equal(packetLength, packet.Read(bytes.AsSpan(..packetLength), context));
 
             // Write the packet again.
-            var bytes2 = new byte[ushort.MaxValue - sizeof(ushort)];
+            var bytes2 = new byte[ushort.MaxValue - IPacket.HeaderSize];
             var packetLength2 = packet.Write(bytes2, context.Switch());
 
             Assert.Equal(packetLength, packetLength2);

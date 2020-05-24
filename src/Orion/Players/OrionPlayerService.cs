@@ -108,10 +108,14 @@ namespace Orion.Players {
 
         private void OnReceivePacket<TPacket>(Terraria.MessageBuffer buffer, Span<byte> span)
                 where TPacket : struct, IPacket {
+            Debug.Assert(buffer != null);
+            Debug.Assert(span.Length > 0);
+
             // When reading the packet, we need to use the `Server` context since this packet should be read as the
             // server. Ignore the first byte as it is the packet ID.
             var packet = new TPacket();
-            packet.Read(span[1..], PacketContext.Server);
+            var packetLength = packet.Read(span[1..], PacketContext.Server);
+            Debug.Assert(packetLength == span.Length - 1);
 
             // If `TPacket` is `UnknownPacket`, then we need to set the `Id` property appropriately.
             if (typeof(TPacket) == typeof(UnknownPacket)) {
@@ -121,9 +125,7 @@ namespace Orion.Players {
             var player = Players[buffer.whoAmI];
             var evt = new PacketReceiveEvent<TPacket>(ref packet, player);
             Kernel.Raise(evt, Log);
-            if (evt.IsCanceled()) {
-                return;
-            } else if (OnReceivePacketEvent(player, ref packet)) {
+            if (evt.IsCanceled() || OnReceivePacketEvent(player, ref packet)) {
                 return;
             }
 
@@ -134,18 +136,20 @@ namespace Orion.Players {
             var oldReader = buffer.reader;
 
             // When writing the packet, we need to use the `Client` context since this packet comes from the client.
-            var packetLength = packet.WriteWithHeader(_receiveBuffer.Value, PacketContext.Client);
+            var newPacketLength = packet.WriteWithHeader(_receiveBuffer.Value, PacketContext.Client);
 
             _ignoreReceiveDataHandler.Value = true;
             buffer.readBuffer = _receiveBuffer.Value;
             buffer.reader = new BinaryReader(new MemoryStream(buffer.readBuffer), Encoding.UTF8);
-            buffer.GetData(sizeof(ushort), packetLength - sizeof(ushort), out _);
+            buffer.GetData(2, newPacketLength - 2, out _);
 
             buffer.readBuffer = oldReadBuffer;
             buffer.reader = oldReader;
         }
 
         private bool OnReceivePacketEvent<TPacket>(IPlayer player, ref TPacket packet) where TPacket : struct, IPacket {
+            Debug.Assert(player != null);
+
             // While this may seem inefficient, these typeof comparisons get optimized in each reified generic method by
             // the JIT.
             if (typeof(TPacket) == typeof(PlayerJoinPacket)) {
@@ -172,16 +176,20 @@ namespace Orion.Players {
             Debug.Assert(data != null);
             Debug.Assert(offset >= 0 && offset + size <= data.Length);
 
-            var packetId = data[offset + sizeof(ushort)];
-            _onSendPacketHandlers[packetId](remoteClient, data.AsSpan((offset + sizeof(ushort))..(offset + size)));
+            var packetId = data[offset + 2];
+            _onSendPacketHandlers[packetId](remoteClient, data.AsSpan((offset + 2)..(offset + size)));
             return OTAPI.HookResult.Cancel;
         }
 
         private void OnSendPacket<TPacket>(int playerIndex, Span<byte> span) where TPacket : struct, IPacket {
+            Debug.Assert(playerIndex >= 0 && playerIndex < Players.Count);
+            Debug.Assert(span.Length > 0);
+
             // When reading the packet, we need to use the `Client` context since this packet should be read as the
             // client. Ignore the first byte as it is the packet ID.
             var packet = new TPacket();
-            packet.Read(span[1..], PacketContext.Client);
+            var packetLength = packet.Read(span[1..], PacketContext.Client);
+            Debug.Assert(packetLength == span.Length - 1);
 
             // If `TPacket` is `UnknownPacket`, then we need to set the `Id` property appropriately.
             if (typeof(TPacket) == typeof(UnknownPacket)) {
@@ -197,10 +205,10 @@ namespace Orion.Players {
             // Send the packet. A thread-local send buffer is used in case there is some concurrency.
             //
             // When writing the packet, we need to use the `Server` context since this packet comes from the server.
-            var packetLength = packet.WriteWithHeader(_sendBuffer.Value, PacketContext.Server);
+            var newPacketLength = packet.WriteWithHeader(_sendBuffer.Value, PacketContext.Server);
 
             var terrariaClient = Terraria.Netplay.Clients[playerIndex];
-            terrariaClient.Socket.AsyncSend(_sendBuffer.Value, 0, packetLength, terrariaClient.ServerWriteCallBack);
+            terrariaClient.Socket.AsyncSend(_sendBuffer.Value, 0, newPacketLength, terrariaClient.ServerWriteCallBack);
         }
 
         private OTAPI.HookResult PreResetHandler(Terraria.RemoteClient remoteClient) {

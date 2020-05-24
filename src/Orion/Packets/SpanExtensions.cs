@@ -62,7 +62,7 @@ namespace Orion.Packets {
         }
 
         public static int Write(this Span<byte> span, NetworkText value, Encoding encoding) {
-            Debug.Assert(!(value is null));
+            Debug.Assert(value != null);
             Debug.Assert(encoding != null);
 
             var index = 0;

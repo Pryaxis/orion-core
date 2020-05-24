@@ -54,11 +54,7 @@ namespace Orion.Players {
         }
 
         public OrionPlayer(Terraria.Player terrariaPlayer, OrionPlayerService playerService)
-            : this(-1, terrariaPlayer, playerService) {
-            Debug.Assert(playerService != null);
-
-            _playerService = playerService;
-        }
+            : this(-1, terrariaPlayer, playerService) { }
 
         public void SendPacket<TPacket>(ref TPacket packet) where TPacket : struct, IPacket {
             var terrariaClient = Terraria.Netplay.Clients[Index];

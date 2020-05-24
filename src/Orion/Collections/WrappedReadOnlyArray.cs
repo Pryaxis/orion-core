@@ -51,11 +51,5 @@ namespace Orion.Collections {
             _converter = converter;
             _items = new T?[wrappedItems.Length];
         }
-
-        public IEnumerator<T> GetEnumerator() {
-            for (var i = 0; i < Count; ++i) {
-                yield return this[i];
-            }
-        }
     }
 }

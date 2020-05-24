@@ -27,6 +27,12 @@ namespace Orion.Entities {
     public interface IReadOnlyArray<out T> : IEnumerable<T> {
         IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
 
+        IEnumerator<T> IEnumerable<T>.GetEnumerator() {
+            for (var i = 0; i < Count; ++i) {
+                yield return this[i];
+            }
+        }
+
         /// <summary>
         /// Gets the number of elements in the array.
         /// </summary>

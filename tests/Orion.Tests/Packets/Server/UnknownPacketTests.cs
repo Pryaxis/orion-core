@@ -28,9 +28,9 @@ namespace Orion.Packets.Server {
         public void Length_Set_Get() {
             var packet = new UnknownPacket();
 
-            packet.Length = 1234;
+            packet.Length = 8;
 
-            Assert.Equal(1234, packet.Length);
+            Assert.Equal(8, packet.Length);
         }
 
         [Fact]

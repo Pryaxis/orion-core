@@ -38,9 +38,9 @@ namespace Orion.Packets.Server {
         public void Reason_Set_Get() {
             var packet = new ServerDisconnectPacket();
 
-            packet.Reason = "test";
+            packet.Reason = new NetworkText(NetworkTextMode.Localized, "CLI.KickMessage");
 
-            Assert.Equal("test", packet.Reason);
+            Assert.Equal(new NetworkText(NetworkTextMode.Localized, "CLI.KickMessage"), packet.Reason);
         }
 
         [Fact]

@@ -32,6 +32,8 @@ namespace Orion.Packets.Server {
             var packet = new ServerChatPacket();
 
             packet.Color = Color3.White;
+
+            Assert.Equal(Color3.White, packet.Color);
         }
 
         [Fact]

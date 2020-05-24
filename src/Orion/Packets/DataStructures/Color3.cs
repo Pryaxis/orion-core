@@ -57,7 +57,7 @@ namespace Orion.Packets.DataStructures {
         /// </summary>
         /// <param name="r">The red component.</param>
         /// <param name="g">The green component.</param>
-        /// <param name="b"></param>
+        /// <param name="b">The blue component.</param>
         public Color3(byte r, byte g, byte b) {
             R = r;
             G = g;

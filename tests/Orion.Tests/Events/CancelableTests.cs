@@ -22,6 +22,11 @@ using Xunit;
 namespace Orion.Events {
     public class CancelableTests {
         [Fact]
+        public void IsCanceled_NullCancelable_ThrowsArgumentNullException() {
+            Assert.Throws<ArgumentNullException>(() => CancelableExtensions.IsCanceled(null!));
+        }
+
+        [Fact]
         public void IsCanceled_Yes_ReturnsTrue() {
             var mockCancelable = new Mock<ICancelable>();
             mockCancelable.SetupGet(c => c.CancellationReason).Returns("");
@@ -38,20 +43,6 @@ namespace Orion.Events {
         }
 
         [Fact]
-        public void IsCanceled_NullCancelable_ThrowsArgumentNullException() {
-            Assert.Throws<ArgumentNullException>(() => CancelableExtensions.IsCanceled(null!));
-        }
-
-        [Fact]
-        public void Cancel() {
-            var mockCancelable = new Mock<ICancelable>();
-
-            mockCancelable.Object.Cancel("test");
-
-            mockCancelable.VerifySet(c => c.CancellationReason = "test");
-        }
-
-        [Fact]
         public void Cancel_NullCancelable_ThrowsArgumentNullException() {
             Assert.Throws<ArgumentNullException>(() => CancelableExtensions.Cancel(null!));
         }
@@ -64,17 +55,26 @@ namespace Orion.Events {
         }
 
         [Fact]
+        public void Cancel() {
+            var mockCancelable = new Mock<ICancelable>();
+
+            mockCancelable.Object.Cancel("test");
+
+            mockCancelable.VerifySet(c => c.CancellationReason = "test");
+        }
+
+        [Fact]
+        public void Uncancel_NullCancelable_ThrowsArgumentNullException() {
+            Assert.Throws<ArgumentNullException>(() => CancelableExtensions.Uncancel(null!));
+        }
+
+        [Fact]
         public void Uncancel() {
             var mockCancelable = new Mock<ICancelable>();
 
             mockCancelable.Object.Uncancel();
 
             mockCancelable.VerifySet(c => c.CancellationReason = null);
-        }
-
-        [Fact]
-        public void Uncancel_NullCancelable_ThrowsArgumentNullException() {
-            Assert.Throws<ArgumentNullException>(() => CancelableExtensions.Uncancel(null!));
         }
     }
 }

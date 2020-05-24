@@ -19,7 +19,7 @@ using System.Diagnostics.Contracts;
 
 namespace Orion.Packets {
     /// <summary>
-    /// Describes the context with which a packet is processed.
+    /// Describes the context with which a packet should be processed.
     /// </summary>
     public enum PacketContext {
         /// <summary>
