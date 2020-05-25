@@ -117,6 +117,21 @@ namespace Orion.Items {
             Assert.Equal(ItemId.None, (ItemId)Terraria.Main.item[0].type);
         }
 
+        [Fact]
+        public void ItemTick_EventTriggered() {
+            using var kernel = new OrionKernel(Logger.None);
+            using var itemService = new OrionItemService(kernel, Logger.None);
+            var isRun = false;
+            kernel.RegisterHandler<ItemTickEvent>(evt => {
+                Assert.Same(Terraria.Main.item[0], ((OrionItem)evt.Item).Wrapped);
+                isRun = true;
+            }, Logger.None);
+
+            Terraria.Main.item[0].UpdateItem(0);
+
+            Assert.True(isRun);
+        }
+
         [Theory]
         [MemberData(nameof(SpawnItemParams))]
         public void SpawnItem(ItemId id, int stackSize, ItemPrefix prefix) {

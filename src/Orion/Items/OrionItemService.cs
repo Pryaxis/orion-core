@@ -39,10 +39,12 @@ namespace Orion.Items {
                 (itemIndex, terrariaItem) => new OrionItem(itemIndex, terrariaItem));
 
             OTAPI.Hooks.Item.PreSetDefaultsById = PreSetDefaultsByIdHandler;
+            OTAPI.Hooks.Item.PreUpdate = PreUpdateHandler;
         }
 
         public override void Dispose() {
             OTAPI.Hooks.Item.PreSetDefaultsById = null;
+            OTAPI.Hooks.Item.PreUpdate = null;
         }
 
         public IItem? SpawnItem(ItemId id, Vector2f position, int stackSize = 1, ItemPrefix prefix = ItemPrefix.None) {
@@ -62,6 +64,19 @@ namespace Orion.Items {
             var evt = new ItemDefaultsEvent(item, (ItemId)itemId);
             Kernel.Raise(evt, Log);
             itemId = (int)evt.Id;
+            return evt.IsCanceled() ? OTAPI.HookResult.Cancel : OTAPI.HookResult.Continue;
+        }
+
+        private OTAPI.HookResult PreUpdateHandler(Terraria.Item terrariaItem, ref int itemIndex) {
+            Debug.Assert(terrariaItem != null);
+            Debug.Assert(itemIndex >= 0 && itemIndex < Items.Count);
+
+            // Set `whoAmI` since this is never done in the vanilla server.
+            terrariaItem.whoAmI = itemIndex;
+
+            var item = Items[itemIndex];
+            var evt = new ItemTickEvent(item);
+            Kernel.Raise(evt, Log);
             return evt.IsCanceled() ? OTAPI.HookResult.Cancel : OTAPI.HookResult.Continue;
         }
 

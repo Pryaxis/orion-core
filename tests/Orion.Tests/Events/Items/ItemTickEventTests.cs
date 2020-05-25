@@ -15,12 +15,28 @@
 // You should have received a copy of the GNU General Public License
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
-using Serilog.Events;
+using System;
+using System.Diagnostics.CodeAnalysis;
+using Moq;
+using Orion.Items;
+using Xunit;
 
-namespace Orion.Events.Server {
-    /// <summary>
-    /// An event that occurs when the server updates every tick.
-    /// </summary>
-    [Event("server-tick", LoggingLevel = LogEventLevel.Verbose)]
-    public sealed class ServerTickEvent : Event { }
+namespace Orion.Events.Items {
+    [SuppressMessage("Style", "IDE0017:Simplify object initialization", Justification = "Testing")]
+    public class ItemTickEventTests {
+        [Fact]
+        public void Ctor_NullItem_ThrowsArgumentNullException() {
+            Assert.Throws<ArgumentNullException>(() => new ItemTickEvent(null!));
+        }
+
+        [Fact]
+        public void CancellationReason_Set_Get() {
+            var item = new Mock<IItem>().Object;
+            var evt = new ItemTickEvent(item);
+
+            evt.CancellationReason = "test";
+
+            Assert.Equal("test", evt.CancellationReason);
+        }
+    }
 }

@@ -15,12 +15,24 @@
 // You should have received a copy of the GNU General Public License
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
-using Serilog.Events;
+using System;
+using Destructurama.Attributed;
+using Orion.Items;
 
-namespace Orion.Events.Server {
+namespace Orion.Events.Items {
     /// <summary>
-    /// An event that occurs when the server updates every tick.
+    /// An event that occurs when an item updates every tick. This event can be canceled.
     /// </summary>
-    [Event("server-tick", LoggingLevel = LogEventLevel.Verbose)]
-    public sealed class ServerTickEvent : Event { }
+    public sealed class ItemTickEvent : ItemEvent, ICancelable {
+        /// <inheritdoc/>
+        [NotLogged] public string? CancellationReason { get; set; }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ItemTickEvent"/> class with the specified
+        /// <paramref name="item"/>.
+        /// </summary>
+        /// <param name="item">The item.</param>
+        /// <exception cref="ArgumentNullException"><paramref name="item"/> is <see langword="null"/>.</exception>
+        public ItemTickEvent(IItem item) : base(item) { }
+    }
 }
