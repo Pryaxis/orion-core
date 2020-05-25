@@ -104,6 +104,20 @@ namespace Orion.Players {
         }
 
         [Fact]
+        public void PacketReceive_EventModified() {
+            Terraria.Netplay.Clients[5] = new Terraria.RemoteClient { Id = 5 };
+
+            using var kernel = new OrionKernel(Logger.None);
+            using var playerService = new OrionPlayerService(kernel, Logger.None);
+            kernel.RegisterHandler<PacketReceiveEvent<ClientConnectPacket>>(
+                evt => evt.Packet.Version = "Terraria1", Logger.None);
+
+            TestUtils.FakeReceiveBytes(5, ServerConnectBytes);
+
+            Assert.Equal(0, Terraria.Netplay.Clients[5].State);
+        }
+
+        [Fact]
         public void PacketReceive_EventCanceled() {
             Terraria.Netplay.Clients[5] = new Terraria.RemoteClient { Id = 5 };
 
@@ -173,6 +187,21 @@ namespace Orion.Players {
         }
 
         [Fact]
+        public void PacketReceive_PlayerPvpEventModified() {
+            // Set `State` to 10 so that the PvP packet is not ignored by the server.
+            Terraria.Netplay.Clients[5] = new Terraria.RemoteClient { Id = 5, State = 10 };
+            Terraria.Main.player[5] = new Terraria.Player { whoAmI = 5 };
+
+            using var kernel = new OrionKernel(Logger.None);
+            using var playerService = new OrionPlayerService(kernel, Logger.None);
+            kernel.RegisterHandler<PlayerPvpEvent>(evt => evt.IsInPvp = false, Logger.None);
+
+            TestUtils.FakeReceiveBytes(5, PlayerPvpPacketTests.Bytes);
+
+            Assert.False(Terraria.Main.player[5].hostile);
+        }
+
+        [Fact]
         public void PacketReceive_PlayerPvpEventCanceled() {
             // Set `State` to 10 so that the PvP packet is not ignored by the server.
             Terraria.Netplay.Clients[5] = new Terraria.RemoteClient { Id = 5, State = 10 };
@@ -205,7 +234,22 @@ namespace Orion.Players {
             TestUtils.FakeReceiveBytes(5, PlayerTeamPacketTests.Bytes);
 
             Assert.True(isRun);
-            Assert.Equal((int)PlayerTeam.Red, Terraria.Main.player[5].team);
+            Assert.Equal(PlayerTeam.Red, (PlayerTeam)Terraria.Main.player[5].team);
+        }
+
+        [Fact]
+        public void PacketReceive_PlayerTeamEventModified() {
+            // Set `State` to 10 so that the team packet is not ignored by the server.
+            Terraria.Netplay.Clients[5] = new Terraria.RemoteClient { Id = 5, State = 10 };
+            Terraria.Main.player[5] = new Terraria.Player { whoAmI = 5 };
+
+            using var kernel = new OrionKernel(Logger.None);
+            using var playerService = new OrionPlayerService(kernel, Logger.None);
+            kernel.RegisterHandler<PlayerTeamEvent>(evt => evt.Team = PlayerTeam.Blue, Logger.None);
+
+            TestUtils.FakeReceiveBytes(5, PlayerTeamPacketTests.Bytes);
+
+            Assert.Equal(PlayerTeam.Blue, (PlayerTeam)Terraria.Main.player[5].team);
         }
 
         [Fact]
