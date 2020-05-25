@@ -21,6 +21,7 @@ using Orion.Collections;
 using Orion.Entities;
 using Orion.Events;
 using Orion.Events.Items;
+using Orion.Packets.DataStructures;
 using Serilog;
 
 namespace Orion.Items {
@@ -42,6 +43,16 @@ namespace Orion.Items {
 
         public override void Dispose() {
             OTAPI.Hooks.Item.PreSetDefaultsById = null;
+        }
+
+        public IItem? SpawnItem(ItemId id, Vector2f position, int stackSize = 1, ItemPrefix prefix = ItemPrefix.None) {
+            // Not localized because this string is developer-facing.
+            Log.Debug("Spawning {ItemId} x{ItemStackSize} at {Position}", id, stackSize, position);
+
+            var itemIndex = Terraria.Item.NewItem(
+                new Microsoft.Xna.Framework.Vector2(position.X, position.Y), Microsoft.Xna.Framework.Vector2.Zero,
+                (int)id, stackSize, false, (int)prefix);
+            return itemIndex >= 0 && itemIndex < Items.Count ? Items[itemIndex] : null;
         }
 
         private OTAPI.HookResult PreSetDefaultsByIdHandler(Terraria.Item terrariaItem, ref int itemId, ref bool _) {

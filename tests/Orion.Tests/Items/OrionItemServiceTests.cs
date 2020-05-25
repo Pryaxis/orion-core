@@ -16,16 +16,23 @@
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
 using System;
-using System.ComponentModel;
+using System.Collections.Generic;
 using System.Linq;
 using Orion.Events;
 using Orion.Events.Items;
+using Orion.Packets.DataStructures;
 using Serilog.Core;
 using Xunit;
 
 namespace Orion.Items {
     [Collection("TerrariaTestsCollection")]
     public class OrionItemServiceTests {
+        public static readonly IEnumerable<object[]> SpawnItemParams = new List<object[]> {
+            new object[] {ItemId.StoneBlock, 100, ItemPrefix.None},
+            new object[] {ItemId.Sdmg, 1, ItemPrefix.Unreal},
+            new object[] {ItemId.Meowmere, 1, ItemPrefix.Legendary}
+        };
+
         [Fact]
         public void Items_Item_Get() {
             using var kernel = new OrionKernel(Logger.None);
@@ -108,6 +115,21 @@ namespace Orion.Items {
             Terraria.Main.item[0].SetDefaults((int)ItemId.Sdmg);
 
             Assert.Equal(ItemId.None, (ItemId)Terraria.Main.item[0].type);
+        }
+
+        [Theory]
+        [MemberData(nameof(SpawnItemParams))]
+        public void SpawnItem(ItemId id, int stackSize, ItemPrefix prefix) {
+            using var kernel = new OrionKernel(Logger.None);
+            using var itemService = new OrionItemService(kernel, Logger.None);
+            var item = itemService.SpawnItem(id, Vector2f.Zero, stackSize, prefix);
+
+            Assert.NotNull(item);
+#pragma warning disable CS8602 // Dereference of a possibly null reference.
+            Assert.Equal(id, item.Id);
+#pragma warning restore CS8602 // Dereference of a possibly null reference.
+            Assert.Equal(stackSize, item.StackSize);
+            Assert.Equal(prefix, item.Prefix);
         }
     }
 }

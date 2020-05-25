@@ -16,6 +16,7 @@
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
 using Orion.Entities;
+using Orion.Packets.DataStructures;
 
 namespace Orion.Items {
     /// <summary>
@@ -27,5 +28,16 @@ namespace Orion.Items {
         /// </summary>
         /// <value>The array of items.</value>
         IReadOnlyArray<IItem> Items { get; }
+
+        /// <summary>
+        /// Spawns and returns an item with the given <paramref name="id"/> at the specified
+        /// <paramref name="position"/> with an optional <paramref name="stackSize"/> and <paramref name="prefix"/>.
+        /// </summary>
+        /// <param name="id">The item ID.</param>
+        /// <param name="position">The position.</param>
+        /// <param name="stackSize">The stack size.</param>
+        /// <param name="prefix">The item prefix.</param>
+        /// <returns>The resulting item, or <see langword="null"/> if none was spawned.</returns>
+        IItem? SpawnItem(ItemId id, Vector2f position, int stackSize = 1, ItemPrefix prefix = ItemPrefix.None);
     }
 }
