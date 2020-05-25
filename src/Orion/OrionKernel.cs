@@ -19,7 +19,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-using Microsoft.Xna.Framework;
 using Ninject;
 using Orion.Events;
 using Orion.Events.Server;
@@ -368,7 +367,7 @@ namespace Orion {
             Raise(evt, _log);
         }
 
-        private void PreUpdateHandler(ref GameTime _) {
+        private void PreUpdateHandler(ref Microsoft.Xna.Framework.GameTime _) {
             var evt = new ServerTickEvent();
             Raise(evt, _log);
         }

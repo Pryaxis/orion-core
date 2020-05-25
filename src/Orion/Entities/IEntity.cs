@@ -16,7 +16,7 @@
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
 using System;
-using Microsoft.Xna.Framework;
+using Orion.Packets.DataStructures;
 
 namespace Orion.Entities {
     /// <summary>
@@ -46,18 +46,18 @@ namespace Orion.Entities {
         /// Gets or sets the entity's position, in pixels.
         /// </summary>
         /// <value>The entity's position, in pixels.</value>
-        Vector2 Position { get; set; }
+        Vector2f Position { get; set; }
 
         /// <summary>
         /// Gets or sets the entity's velocity, in pixels per tick.
         /// </summary>
         /// <value>The entity's velocity, in pixels per tick.</value>
-        Vector2 Velocity { get; set; }
+        Vector2f Velocity { get; set; }
 
         /// <summary>
         /// Gets or sets the entity's size, in pixels.
         /// </summary>
         /// <value>The entity's size, in pixels.</value>
-        Vector2 Size { get; set; }
+        Vector2f Size { get; set; }
     }
 }

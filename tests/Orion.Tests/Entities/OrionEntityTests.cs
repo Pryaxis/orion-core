@@ -16,7 +16,7 @@
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
 using System.Diagnostics.CodeAnalysis;
-using Microsoft.Xna.Framework;
+using Orion.Packets.DataStructures;
 using Xunit;
 
 namespace Orion.Entities {
@@ -54,10 +54,10 @@ namespace Orion.Entities {
 
         [Fact]
         public void Position_Get() {
-            var terrariaEntity = new TestTerrariaEntity { position = new Vector2(100, 100) };
+            var terrariaEntity = new TestTerrariaEntity { position = new Microsoft.Xna.Framework.Vector2(100, 100) };
             var entity = new TestOrionEntity(terrariaEntity);
 
-            Assert.Equal(new Vector2(100, 100), entity.Position);
+            Assert.Equal(new Vector2f(100, 100), entity.Position);
         }
 
         [Fact]
@@ -65,17 +65,17 @@ namespace Orion.Entities {
             var terrariaEntity = new TestTerrariaEntity();
             var entity = new TestOrionEntity(terrariaEntity);
 
-            entity.Position = new Vector2(100, 100);
+            entity.Position = new Vector2f(100, 100);
 
-            Assert.Equal(new Vector2(100, 100), terrariaEntity.position);
+            Assert.Equal(new Microsoft.Xna.Framework.Vector2(100, 100), terrariaEntity.position);
         }
 
         [Fact]
         public void Velocity_Get() {
-            var terrariaEntity = new TestTerrariaEntity { velocity = new Vector2(100, 100) };
+            var terrariaEntity = new TestTerrariaEntity { velocity = new Microsoft.Xna.Framework.Vector2(100, 100) };
             var entity = new TestOrionEntity(terrariaEntity);
 
-            Assert.Equal(new Vector2(100, 100), entity.Velocity);
+            Assert.Equal(new Vector2f(100, 100), entity.Velocity);
         }
 
         [Fact]
@@ -83,17 +83,17 @@ namespace Orion.Entities {
             var terrariaEntity = new TestTerrariaEntity();
             var entity = new TestOrionEntity(terrariaEntity);
 
-            entity.Velocity = new Vector2(100, 100);
+            entity.Velocity = new Vector2f(100, 100);
 
-            Assert.Equal(new Vector2(100, 100), terrariaEntity.velocity);
+            Assert.Equal(new Microsoft.Xna.Framework.Vector2(100, 100), terrariaEntity.velocity);
         }
 
         [Fact]
         public void Size_Get() {
-            var terrariaEntity = new TestTerrariaEntity { Size = new Vector2(100, 100) };
+            var terrariaEntity = new TestTerrariaEntity { Size = new Microsoft.Xna.Framework.Vector2(100, 100) };
             var entity = new TestOrionEntity(terrariaEntity);
 
-            Assert.Equal(new Vector2(100, 100), entity.Size);
+            Assert.Equal(new Vector2f(100, 100), entity.Size);
         }
 
         [Fact]
@@ -101,9 +101,9 @@ namespace Orion.Entities {
             var terrariaEntity = new TestTerrariaEntity();
             var entity = new TestOrionEntity(terrariaEntity);
 
-            entity.Size = new Vector2(100, 100);
+            entity.Size = new Vector2f(100, 100);
 
-            Assert.Equal(new Vector2(100, 100), terrariaEntity.Size);
+            Assert.Equal(new Microsoft.Xna.Framework.Vector2(100, 100), terrariaEntity.Size);
         }
 
         private class TestOrionEntity : OrionEntity<TestTerrariaEntity> {

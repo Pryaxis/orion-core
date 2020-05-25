@@ -18,7 +18,7 @@
 using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.Diagnostics.Contracts;
-using Microsoft.Xna.Framework;
+using Orion.Packets.DataStructures;
 
 namespace Orion.Entities {
     // This class is generic so that we only use a single wrapped field instead of two wrapped fields per entity.
@@ -34,19 +34,19 @@ namespace Orion.Entities {
         // Terraria.Entity does not provide this property, so we need to declare it.
         public abstract string Name { get; set; }
 
-        public Vector2 Position {
-            get => Wrapped.position;
-            set => Wrapped.position = value;
+        public Vector2f Position {
+            get => new Vector2f(Wrapped.position.X, Wrapped.position.Y);
+            set => Wrapped.position = new Microsoft.Xna.Framework.Vector2(value.X, value.Y);
         }
 
-        public Vector2 Velocity {
-            get => Wrapped.velocity;
-            set => Wrapped.velocity = value;
+        public Vector2f Velocity {
+            get => new Vector2f(Wrapped.velocity.X, Wrapped.velocity.Y);
+            set => Wrapped.velocity = new Microsoft.Xna.Framework.Vector2(value.X, value.Y);
         }
 
-        public Vector2 Size {
-            get => Wrapped.Size;
-            set => Wrapped.Size = value;
+        public Vector2f Size {
+            get => new Vector2f(Wrapped.Size.X, Wrapped.Size.Y);
+            set => Wrapped.Size = new Microsoft.Xna.Framework.Vector2(value.X, value.Y);
         }
 
         public TTerrariaEntity Wrapped { get; }
