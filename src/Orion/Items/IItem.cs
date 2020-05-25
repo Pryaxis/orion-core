@@ -29,9 +29,27 @@ namespace Orion.Items {
         ItemId Id { get; }
 
         /// <summary>
+        /// Gets or sets the item's stack size.
+        /// </summary>
+        /// <value>The item's stack size.</value>
+        int StackSize { get; set; }
+
+        /// <summary>
+        /// Gets the item's prefix.
+        /// </summary>
+        /// <value>The item's prefix.</value>
+        ItemPrefix Prefix { get; }
+
+        /// <summary>
         /// Sets the item's <paramref name="id"/>. This will update the item accordingly. 
         /// </summary>
         /// <param name="id">The item ID.</param>
         void SetId(ItemId id);
+
+        /// <summary>
+        /// Sets the item's <paramref name="prefix"/>. This will update the item accordingly.
+        /// </summary>
+        /// <param name="prefix">The item prefix.</param>
+        void SetPrefix(ItemPrefix prefix);
     }
 }

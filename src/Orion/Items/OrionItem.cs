@@ -27,11 +27,22 @@ namespace Orion.Items {
 
         public ItemId Id => (ItemId)Wrapped.type;
 
+        public int StackSize {
+            get => Wrapped.stack;
+            set => Wrapped.stack = value;
+        }
+
+        public ItemPrefix Prefix => (ItemPrefix)Wrapped.prefix;
+
         public OrionItem(int itemIndex, Terraria.Item terrariaItem) : base(itemIndex, terrariaItem) { }
         public OrionItem(Terraria.Item terrariaItem) : this(-1, terrariaItem) { }
 
         public void SetId(ItemId id) {
             Wrapped.SetDefaults((int)id);
+        }
+
+        public void SetPrefix(ItemPrefix prefix) {
+            Wrapped.Prefix((int)prefix);
         }
     }
 }
