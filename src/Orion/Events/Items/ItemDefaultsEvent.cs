@@ -18,12 +18,13 @@
 using System;
 using Destructurama.Attributed;
 using Orion.Items;
+using Serilog.Events;
 
 namespace Orion.Events.Items {
     /// <summary>
     /// An event that occurs when an item's defaults are set. This event can be canceled.
     /// </summary>
-    [Event("item-defaults")]
+    [Event("item-defaults", LoggingLevel = LogEventLevel.Verbose)]
     public sealed class ItemDefaultsEvent : ItemEvent, ICancelable {
         /// <summary>
         /// Gets or sets the item ID.
