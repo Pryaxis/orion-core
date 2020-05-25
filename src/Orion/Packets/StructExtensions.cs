@@ -20,8 +20,8 @@ using System.Runtime.CompilerServices;
 
 namespace Orion.Packets {
     internal static class StructExtensions {
-        public static ref byte AsRefByte<T>(ref this T value, int byteOffset) where T : struct {
-            return ref Unsafe.As<T, byte>(ref Unsafe.AddByteOffset(ref value, new IntPtr(byteOffset)));
-        }
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static ref byte AsRefByte<T>(ref this T value, int byteOffset) where T : struct =>
+            ref Unsafe.As<T, byte>(ref Unsafe.AddByteOffset(ref value, new IntPtr(byteOffset)));
     }
 }
