@@ -101,8 +101,7 @@ namespace Orion.Events {
         }
 
         private sealed class Registration {
-            [NotLogged]
-            public Action<TEvent> Handler { get; }
+            [NotLogged] public Action<TEvent> Handler { get; }
             public EventPriority Priority { get; }
             public string Name { get; }
             public bool IgnoreCanceled { get; }

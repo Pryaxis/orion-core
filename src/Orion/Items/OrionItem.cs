@@ -16,9 +16,11 @@
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
 using System;
+using Destructurama.Attributed;
 using Orion.Entities;
 
 namespace Orion.Items {
+    [LogAsScalar]
     internal sealed class OrionItem : OrionEntity<Terraria.Item>, IItem {
         public override string Name {
             get => Wrapped.Name;

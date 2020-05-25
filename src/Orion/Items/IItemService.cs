@@ -15,25 +15,17 @@
 // You should have received a copy of the GNU General Public License
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
-using System;
-using Destructurama.Attributed;
-using Orion.Players;
+using Orion.Entities;
 
-namespace Orion.Events.Players {
+namespace Orion.Items {
     /// <summary>
-    /// An event that occurs when a player joins the server. This event can be canceled.
+    /// Represents an item service. Provides access to item-related properties and methods.
     /// </summary>
-    [Event("player-join")]
-    public sealed class PlayerJoinEvent : PlayerEvent, ICancelable {
-        /// <inheritdoc/>
-        [NotLogged] public string? CancellationReason { get; set; }
-
+    public interface IItemService {
         /// <summary>
-        /// Initializes a new instance of the <see cref="PlayerJoinEvent"/> class with the specified
-        /// <paramref name="player"/>.
+        /// Gets the array of items.
         /// </summary>
-        /// <param name="player">The player.</param>
-        /// <exception cref="ArgumentNullException"><paramref name="player"/> is <see langword="null"/>.</exception>
-        public PlayerJoinEvent(IPlayer player) : base(player) { }
+        /// <value>The array of items.</value>
+        IReadOnlyArray<IItem> Items { get; }
     }
 }

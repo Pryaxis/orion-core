@@ -94,7 +94,8 @@ namespace Orion.Items {
 
         [Fact]
         public void SetPrefix() {
-            var terrariaItem = new Terraria.Item { type = (int)ItemId.Sdmg };
+            var terrariaItem = new Terraria.Item();
+            terrariaItem.SetDefaults((int)ItemId.Sdmg);
             var item = new OrionItem(terrariaItem);
 
             item.SetPrefix(ItemPrefix.Unreal);

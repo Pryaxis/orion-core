@@ -17,23 +17,32 @@
 
 using System;
 using Destructurama.Attributed;
-using Orion.Players;
+using Orion.Items;
 
-namespace Orion.Events.Players {
+namespace Orion.Events.Items {
     /// <summary>
-    /// An event that occurs when a player joins the server. This event can be canceled.
+    /// An event that occurs when an item's defaults are set. This event can be canceled.
     /// </summary>
-    [Event("player-join")]
-    public sealed class PlayerJoinEvent : PlayerEvent, ICancelable {
+    [Event("item-defaults")]
+    public sealed class ItemDefaultsEvent : ItemEvent, ICancelable {
+        /// <summary>
+        /// Gets or sets the item ID.
+        /// </summary>
+        /// <value>The item ID.</value>
+        public ItemId Id { get; set; }
+
         /// <inheritdoc/>
         [NotLogged] public string? CancellationReason { get; set; }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="PlayerJoinEvent"/> class with the specified
-        /// <paramref name="player"/>.
+        /// Initializes a new instance of the <see cref="ItemDefaultsEvent"/> class with the specified
+        /// <paramref name="item"/> and item <paramref name="id"/>.
         /// </summary>
-        /// <param name="player">The player.</param>
-        /// <exception cref="ArgumentNullException"><paramref name="player"/> is <see langword="null"/>.</exception>
-        public PlayerJoinEvent(IPlayer player) : base(player) { }
+        /// <param name="item">The item.</param>
+        /// <param name="id">The item ID.</param>
+        /// <exception cref="ArgumentNullException"><paramref name="item"/> is <see langword="null"/>.</exception>
+        public ItemDefaultsEvent(IItem item, ItemId id) : base(item) {
+            Id = id;
+        }
     }
 }

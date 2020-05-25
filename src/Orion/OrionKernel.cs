@@ -23,6 +23,7 @@ using Microsoft.Xna.Framework;
 using Ninject;
 using Orion.Events;
 using Orion.Events.Server;
+using Orion.Items;
 using Orion.Players;
 using Orion.Properties;
 using Serilog;
@@ -73,6 +74,7 @@ namespace Orion {
             _log = log.ForContext("ServiceName", "orion-kernel");
 
             Container.Bind<OrionKernel>().ToConstant(this).InSingletonScope();
+            Container.Bind<IItemService>().To<OrionItemService>().InSingletonScope();
             Container.Bind<IPlayerService>().To<OrionPlayerService>().InSingletonScope();
 
             // Create an ILogger binding for service-specific logs.

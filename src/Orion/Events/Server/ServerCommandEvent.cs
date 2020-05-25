@@ -25,8 +25,7 @@ namespace Orion.Events.Server {
     [Event("server-cmd")]
     public sealed class ServerCommandEvent : Event, ICancelable {
         /// <inheritdoc/>
-        [NotLogged]
-        public string? CancellationReason { get; set; }
+        [NotLogged] public string? CancellationReason { get; set; }
 
         /// <summary>
         /// Gets the input from the command line.

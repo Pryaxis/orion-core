@@ -35,8 +35,7 @@ namespace Orion.Events.Packets {
         public ref TPacket Packet => ref Unsafe.AsRef<TPacket>(_packetPtr);
 
         /// <inheritdoc/>
-        [NotLogged]
-        public string? CancellationReason { get; set; }
+        [NotLogged] public string? CancellationReason { get; set; }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="PacketEvent{TPacket}"/> class with the specified

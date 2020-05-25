@@ -18,7 +18,6 @@
 using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.Diagnostics.Contracts;
-using Destructurama.Attributed;
 using Microsoft.Xna.Framework;
 
 namespace Orion.Entities {
@@ -50,7 +49,6 @@ namespace Orion.Entities {
             set => Wrapped.Size = value;
         }
 
-        [NotLogged]
         public TTerrariaEntity Wrapped { get; }
 
         protected OrionEntity(int entityIndex, TTerrariaEntity terrariaEntity) {
@@ -62,6 +60,6 @@ namespace Orion.Entities {
 
         // Not localized because this string is developer-facing.
         [Pure, ExcludeFromCodeCoverage]
-        public override string ToString() => Index >= 0 ? $"{Name} (#: {Index})" : "abstract instance";
+        public override string ToString() => Index >= 0 ? $"{Name} (#: {Index})" : "<abstract instance>";
     }
 }

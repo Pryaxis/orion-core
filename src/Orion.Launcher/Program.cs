@@ -24,6 +24,7 @@ using Destructurama;
 using Microsoft.Xna.Framework;
 using Ninject;
 using Orion.Events.Server;
+using Orion.Items;
 using Orion.Launcher.Properties;
 using Orion.Players;
 using Serilog;
@@ -108,6 +109,7 @@ namespace Orion.Launcher {
 
             kernel.Raise(new ServerArgsEvent(args), log);
 
+            kernel.Container.Get<IItemService>();
             kernel.Container.Get<IPlayerService>();
 
             using var game = new Terraria.Main();
