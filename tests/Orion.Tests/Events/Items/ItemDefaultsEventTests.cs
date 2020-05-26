@@ -46,5 +46,15 @@ namespace Orion.Events.Items {
 
             Assert.Equal(ItemId.Sdmg, evt.Id);
         }
+
+        [Fact]
+        public void CancellationReason_Set_Get() {
+            var item = new Mock<IItem>().Object;
+            var evt = new ItemDefaultsEvent(item, ItemId.None);
+
+            evt.CancellationReason = "test";
+
+            Assert.Equal("test", evt.CancellationReason);
+        }
     }
 }
