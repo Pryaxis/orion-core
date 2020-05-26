@@ -99,8 +99,7 @@ namespace Orion.Npcs {
         private OTAPI.HookResult PreUpdateHandler(Terraria.NPC _, ref int npcIndex) {
             Debug.Assert(npcIndex >= 0 && npcIndex < Npcs.Count);
 
-            var npc = Npcs[npcIndex];
-            var evt = new NpcTickEvent(npc);
+            var evt = new NpcTickEvent(Npcs[npcIndex]);
             Kernel.Raise(evt, Log);
             return evt.IsCanceled() ? OTAPI.HookResult.Cancel : OTAPI.HookResult.Continue;
         }
@@ -108,14 +107,15 @@ namespace Orion.Npcs {
         private void KilledHandler(Terraria.NPC terrariaNpc) {
             Debug.Assert(terrariaNpc != null);
 
-            var npc = GetNpc(terrariaNpc);
-            var evt = new NpcKilledEvent(npc);
+            var evt = new NpcKilledEvent(GetNpc(terrariaNpc));
             Kernel.Raise(evt, Log);
         }
 
         // Gets an `INpc` which corresponds to the given Terraria NPC. Retrieves the `INpc` from the `Npcs` array, if
         // possible.
         private INpc GetNpc(Terraria.NPC terrariaNpc) {
+            Debug.Assert(terrariaNpc != null);
+
             var npcIndex = terrariaNpc.whoAmI;
             Debug.Assert(npcIndex >= 0 && npcIndex < Npcs.Count);
 

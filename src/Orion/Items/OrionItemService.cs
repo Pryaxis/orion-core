@@ -83,6 +83,8 @@ namespace Orion.Items {
         // Gets an `IItem` which corresponds to the given Terraria item. Retrieves the `IItem` from the `Items` array,
         // if possible.
         private IItem GetItem(Terraria.Item terrariaItem) {
+            Debug.Assert(terrariaItem != null);
+
             var itemIndex = terrariaItem.whoAmI;
             Debug.Assert(itemIndex >= 0 && itemIndex < Items.Count);
 
