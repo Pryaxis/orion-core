@@ -18,11 +18,13 @@
 using System;
 using Destructurama.Attributed;
 using Orion.Items;
+using Serilog.Events;
 
 namespace Orion.Events.Items {
     /// <summary>
     /// An event that occurs when an item updates every tick. This event can be canceled.
     /// </summary>
+    [Event("item-tick", LoggingLevel = LogEventLevel.Verbose)]
     public sealed class ItemTickEvent : ItemEvent, ICancelable {
         /// <inheritdoc/>
         [NotLogged] public string? CancellationReason { get; set; }
