@@ -156,5 +156,24 @@ namespace Orion.Npcs {
 
             Assert.True(isRun);
         }
+
+        [Fact]
+        public void NpcKilled_EventTriggered() {
+            Terraria.Main.npc[0] = new Terraria.NPC { whoAmI = 0 };
+
+            using var kernel = new OrionKernel(Logger.None);
+            using var npcService = new OrionNpcService(kernel, Logger.None);
+            var isRun = false;
+            kernel.RegisterHandler<NpcKilledEvent>(evt => {
+                Assert.Same(Terraria.Main.npc[0], ((OrionNpc)evt.Npc).Wrapped);
+                isRun = true;
+            }, Logger.None);
+            Terraria.Main.npc[0].SetDefaults((int)NpcId.BlueSlime);
+            Terraria.Main.npc[0].life = 0;
+
+            Terraria.Main.npc[0].checkDead();
+
+            Assert.True(isRun);
+        }
     }
 }

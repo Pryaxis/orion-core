@@ -43,6 +43,7 @@ namespace Orion.Npcs {
             OTAPI.Hooks.Npc.PreSetDefaultsById = PreSetDefaultsByIdHandler;
             OTAPI.Hooks.Npc.Spawn = SpawnHandler;
             OTAPI.Hooks.Npc.PreUpdate = PreUpdateHandler;
+            OTAPI.Hooks.Npc.Killed = KilledHandler;
         }
 
         public override void Dispose() {
@@ -51,6 +52,7 @@ namespace Orion.Npcs {
             OTAPI.Hooks.Npc.PreSetDefaultsById = null;
             OTAPI.Hooks.Npc.Spawn = null;
             OTAPI.Hooks.Npc.PreUpdate = null;
+            OTAPI.Hooks.Npc.Killed = null;
         }
 
         private OTAPI.HookResult PreSetDefaultsByIdHandler(
@@ -101,6 +103,14 @@ namespace Orion.Npcs {
             var evt = new NpcTickEvent(npc);
             Kernel.Raise(evt, Log);
             return evt.IsCanceled() ? OTAPI.HookResult.Cancel : OTAPI.HookResult.Continue;
+        }
+
+        private void KilledHandler(Terraria.NPC terrariaNpc) {
+            Debug.Assert(terrariaNpc != null);
+
+            var npc = GetNpc(terrariaNpc);
+            var evt = new NpcKilledEvent(npc);
+            Kernel.Raise(evt, Log);
         }
 
         // Gets an `INpc` which corresponds to the given Terraria NPC. Retrieves the `INpc` from the `Npcs` array, if
