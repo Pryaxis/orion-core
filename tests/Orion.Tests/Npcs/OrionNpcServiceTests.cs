@@ -17,6 +17,8 @@
 
 using System;
 using System.Linq;
+using Orion.Events;
+using Orion.Events.Npcs;
 using Serilog.Core;
 using Xunit;
 
@@ -64,6 +66,53 @@ namespace Orion.Npcs {
             for (var i = 0; i < npcs.Count; ++i) {
                 Assert.Same(Terraria.Main.npc[i], ((OrionNpc)npcs[i]).Wrapped);
             }
+        }
+
+        [Theory]
+        [InlineData(NpcId.BlueSlime)]
+        [InlineData(NpcId.GreenSlime)]
+        public void NpcSetDefaults_EventTriggered(NpcId id) {
+            Terraria.Main.npc[0] = new Terraria.NPC { whoAmI = 0 };
+
+            using var kernel = new OrionKernel(Logger.None);
+            using var npcService = new OrionNpcService(kernel, Logger.None);
+            var isRun = false;
+            kernel.RegisterHandler<NpcDefaultsEvent>(evt => {
+                Assert.Same(Terraria.Main.npc[0], ((OrionNpc)evt.Npc).Wrapped);
+                Assert.Equal(id, evt.Id);
+                isRun = true;
+            }, Logger.None);
+
+            Terraria.Main.npc[0].SetDefaults((int)id);
+
+            Assert.True(isRun);
+            Assert.Equal(id, (NpcId)Terraria.Main.npc[0].netID);
+        }
+
+        [Theory]
+        [InlineData(NpcId.BlueSlime, NpcId.GreenSlime)]
+        [InlineData(NpcId.BlueSlime, NpcId.None)]
+        public void NpcSetDefaults_EventModified(NpcId oldId, NpcId newId) {
+            using var kernel = new OrionKernel(Logger.None);
+            using var npcService = new OrionNpcService(kernel, Logger.None);
+            kernel.RegisterHandler<NpcDefaultsEvent>(evt => evt.Id = newId, Logger.None);
+
+            Terraria.Main.npc[0].SetDefaults((int)oldId);
+
+            Assert.Equal(newId, (NpcId)Terraria.Main.npc[0].netID);
+        }
+
+        [Fact]
+        public void NpcSetDefaults_EventCanceled() {
+            Terraria.Main.npc[0] = new Terraria.NPC { whoAmI = 0 };
+
+            using var kernel = new OrionKernel(Logger.None);
+            using var npcService = new OrionNpcService(kernel, Logger.None);
+            kernel.RegisterHandler<NpcDefaultsEvent>(evt => evt.Cancel(), Logger.None);
+
+            Terraria.Main.npc[0].SetDefaults((int)NpcId.BlueSlime);
+
+            Assert.Equal(NpcId.None, (NpcId)Terraria.Main.npc[0].netID);
         }
     }
 }

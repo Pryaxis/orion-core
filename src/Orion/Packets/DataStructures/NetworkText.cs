@@ -24,7 +24,7 @@ namespace Orion.Packets.DataStructures {
     /// <summary>
     /// Represents text transmitted over the network.
     /// </summary>
-    public class NetworkText : IEquatable<NetworkText> {
+    public sealed class NetworkText : IEquatable<NetworkText> {
         /// <summary>
         /// The empty network text.
         /// </summary>

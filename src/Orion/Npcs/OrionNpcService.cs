@@ -17,13 +17,18 @@
 
 using System;
 using System.Diagnostics;
+using System.Threading;
 using Orion.Collections;
 using Orion.Entities;
+using Orion.Events;
+using Orion.Events.Npcs;
 using Serilog;
 
 namespace Orion.Npcs {
     [Service("orion-npcs")]
     internal sealed class OrionNpcService : OrionService, INpcService {
+        private readonly ThreadLocal<int> _setDefaultsToIgnore = new ThreadLocal<int>();
+
         public IReadOnlyArray<INpc> Npcs { get; }
 
         public OrionNpcService(OrionKernel kernel, ILogger log) : base(kernel, log) {
@@ -34,8 +39,47 @@ namespace Orion.Npcs {
             Npcs = new WrappedReadOnlyArray<OrionNpc, Terraria.NPC>(
                 Terraria.Main.npc.AsMemory(..^1),
                 (npcIndex, terrariaNpc) => new OrionNpc(npcIndex, terrariaNpc));
+
+            OTAPI.Hooks.Npc.PreSetDefaultsById = PreSetDefaultsByIdHandler;
         }
 
-        public override void Dispose() { }
+        public override void Dispose() {
+            OTAPI.Hooks.Npc.PreSetDefaultsById = null;
+        }
+
+        private OTAPI.HookResult PreSetDefaultsByIdHandler(
+                Terraria.NPC terrariaNpc, ref int npcId, ref Terraria.NPCSpawnParams _) {
+            Debug.Assert(terrariaNpc != null);
+
+            // Check `_setDefaultsToIgnore` to ignore spurious calls if `SetDefaultsById()` is called with a negative
+            // ID. A thread-local value is used in case there is some concurrency.
+            if (_setDefaultsToIgnore.Value > 0) {
+                --_setDefaultsToIgnore.Value;
+                return OTAPI.HookResult.Continue;
+            }
+
+            var npc = GetNpc(terrariaNpc);
+            var evt = new NpcDefaultsEvent(npc, (NpcId)npcId);
+            Kernel.Raise(evt, Log);
+            if (evt.IsCanceled()) {
+                return OTAPI.HookResult.Cancel;
+            }
+
+            npcId = (int)evt.Id;
+            if (npcId < 0) {
+                _setDefaultsToIgnore.Value = 2;
+            }
+            return OTAPI.HookResult.Continue;
+        }
+
+        // Gets an `INpc` which corresponds to the given Terraria NPC. Retrieves the `INpc` from the `Npcs` array, if
+        // possible.
+        private INpc GetNpc(Terraria.NPC terrariaNpc) {
+            var npcIndex = terrariaNpc.whoAmI;
+            Debug.Assert(npcIndex >= 0 && npcIndex < Npcs.Count);
+
+            var isConcrete = terrariaNpc == Terraria.Main.npc[npcIndex];
+            return isConcrete ? Npcs[npcIndex] : new OrionNpc(terrariaNpc);
+        }
     }
 }

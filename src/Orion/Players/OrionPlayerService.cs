@@ -115,7 +115,7 @@ namespace Orion.Players {
             Debug.Assert(start >= 0 && start + length <= buffer.readBuffer.Length);
 
             // Check `_ignoreReceiveDataHandler` to prevent an infinite loop if `GetData()` is called in
-            // `ReceivePacket`.
+            // `ReceivePacket`. A thread-local value is used in case there is some concurrency.
             if (_ignoreReceiveDataHandler.Value) {
                 _ignoreReceiveDataHandler.Value = false;
                 return OTAPI.HookResult.Continue;
