@@ -42,11 +42,15 @@ namespace Orion.Npcs {
 
             OTAPI.Hooks.Npc.PreSetDefaultsById = PreSetDefaultsByIdHandler;
             OTAPI.Hooks.Npc.Spawn = SpawnHandler;
+            OTAPI.Hooks.Npc.PreUpdate = PreUpdateHandler;
         }
 
         public override void Dispose() {
+            _setDefaultsToIgnore.Dispose();
+
             OTAPI.Hooks.Npc.PreSetDefaultsById = null;
             OTAPI.Hooks.Npc.Spawn = null;
+            OTAPI.Hooks.Npc.PreUpdate = null;
         }
 
         private OTAPI.HookResult PreSetDefaultsByIdHandler(
@@ -88,6 +92,15 @@ namespace Orion.Npcs {
             }
 
             return OTAPI.HookResult.Continue;
+        }
+
+        private OTAPI.HookResult PreUpdateHandler(Terraria.NPC _, ref int npcIndex) {
+            Debug.Assert(npcIndex >= 0 && npcIndex < Npcs.Count);
+
+            var npc = Npcs[npcIndex];
+            var evt = new NpcTickEvent(npc);
+            Kernel.Raise(evt, Log);
+            return evt.IsCanceled() ? OTAPI.HookResult.Cancel : OTAPI.HookResult.Continue;
         }
 
         // Gets an `INpc` which corresponds to the given Terraria NPC. Retrieves the `INpc` from the `Npcs` array, if

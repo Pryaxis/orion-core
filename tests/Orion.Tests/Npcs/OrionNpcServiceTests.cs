@@ -141,5 +141,20 @@ namespace Orion.Npcs {
             Assert.Equal(npcService.Npcs.Count, npcIndex);
             Assert.False(Terraria.Main.npc[0].active);
         }
+
+        [Fact]
+        public void NpcTick_EventTriggered() {
+            using var kernel = new OrionKernel(Logger.None);
+            using var npcService = new OrionNpcService(kernel, Logger.None);
+            var isRun = false;
+            kernel.RegisterHandler<NpcTickEvent>(evt => {
+                Assert.Same(Terraria.Main.npc[0], ((OrionNpc)evt.Npc).Wrapped);
+                isRun = true;
+            }, Logger.None);
+
+            Terraria.Main.npc[0].UpdateNPC(0);
+
+            Assert.True(isRun);
+        }
     }
 }
