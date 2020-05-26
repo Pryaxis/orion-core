@@ -21,6 +21,7 @@ using Serilog.Core;
 using Xunit;
 
 namespace Orion.Npcs {
+    [Collection("TerrariaTestsCollection")]
     public class OrionNpcServiceTests {
         [Theory]
         [InlineData(-1)]
