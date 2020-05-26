@@ -49,7 +49,7 @@ namespace Orion.Events {
             _registrations.Add(registration);
 
             // Not localized because this string is developer-facing.
-            log.Debug("Registering {EventName} with {@Registration}", registration, _eventName);
+            log.Debug("Registering {EventName} with {@Registration}", _eventName, registration);
         }
 
         public bool DeregisterHandler(Action<TEvent> handler, ILogger log) {
@@ -66,7 +66,7 @@ namespace Orion.Events {
             _handlerToRegistration.Remove(handler);
 
             // Not localized because this string is developer-facing.
-            log.Debug("Deregistering {EventName} with {@Registration}", registration, _eventName);
+            log.Debug("Deregistering {EventName} with {@Registration}", _eventName, registration);
             return true;
         }
 
