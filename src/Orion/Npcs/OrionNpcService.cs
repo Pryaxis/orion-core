@@ -16,24 +16,26 @@
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
 using System;
-using Destructurama.Attributed;
+using System.Diagnostics;
+using Orion.Collections;
 using Orion.Entities;
+using Serilog;
 
 namespace Orion.Npcs {
-    [LogAsScalar]
-    internal sealed class OrionNpc : OrionEntity<Terraria.NPC>, INpc {
-        public override string Name {
-            get => Wrapped.GivenOrTypeName;
-            set => Wrapped._givenName = value ?? throw new ArgumentNullException(nameof(value));
+    [Service("orion-npcs")]
+    internal sealed class OrionNpcService : OrionService, INpcService {
+        public IReadOnlyArray<INpc> Npcs { get; }
+
+        public OrionNpcService(OrionKernel kernel, ILogger log) : base(kernel, log) {
+            Debug.Assert(kernel != null);
+            Debug.Assert(log != null);
+
+            // Construct the `Npcs` array. Note that the last NPC should be ignored, as it is not a real NPC.
+            Npcs = new WrappedReadOnlyArray<OrionNpc, Terraria.NPC>(
+                Terraria.Main.npc.AsMemory(..^1),
+                (npcIndex, terrariaNpc) => new OrionNpc(npcIndex, terrariaNpc));
         }
 
-        public NpcId Id => (NpcId)Wrapped.netID;
-
-        public OrionNpc(int npcIndex, Terraria.NPC terrariaNpc) : base(npcIndex, terrariaNpc) { }
-        public OrionNpc(Terraria.NPC terrariaNpc) : this(-1, terrariaNpc) { }
-
-        public void SetId(NpcId id) {
-            Wrapped.SetDefaults((int)id, Wrapped.GetMatchingSpawnParams());
-        }
+        public override void Dispose() { }
     }
 }

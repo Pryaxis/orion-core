@@ -21,11 +21,11 @@ using System.Reflection;
 using System.Text;
 using System.Threading;
 using Destructurama;
-using Microsoft.Xna.Framework;
 using Ninject;
 using Orion.Events.Server;
 using Orion.Items;
 using Orion.Launcher.Properties;
+using Orion.Npcs;
 using Orion.Players;
 using Serilog;
 using Serilog.Events;
@@ -44,8 +44,6 @@ namespace Orion.Launcher {
             Console.OutputEncoding = Encoding.UTF8;
 
             var log = new LoggerConfiguration()
-                .Destructure.ByTransforming<Color>(c => new { c.R, c.G, c.B })
-                .Destructure.ByTransforming<Vector2>(v => new { v.X, v.Y })
                 .Destructure.UsingAttributes()
 #if DEBUG
                 .MinimumLevel.Is(LogEventLevel.Debug)
@@ -110,6 +108,7 @@ namespace Orion.Launcher {
             kernel.Raise(new ServerArgsEvent(args), log);
 
             kernel.Container.Get<IItemService>();
+            kernel.Container.Get<INpcService>();
             kernel.Container.Get<IPlayerService>();
 
             using var game = new Terraria.Main();

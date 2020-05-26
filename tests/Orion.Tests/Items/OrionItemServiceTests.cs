@@ -33,6 +33,16 @@ namespace Orion.Items {
             new object[] {ItemId.Meowmere, 1, ItemPrefix.Legendary}
         };
 
+        [Theory]
+        [InlineData(-1)]
+        [InlineData(10000)]
+        public void Items_Item_GetInvalidIndex_ThrowsIndexOutOfRangeException(int index) {
+            using var kernel = new OrionKernel(Logger.None);
+            using var itemService = new OrionItemService(kernel, Logger.None);
+
+            Assert.Throws<IndexOutOfRangeException>(() => itemService.Items[index]);
+        }
+
         [Fact]
         public void Items_Item_Get() {
             using var kernel = new OrionKernel(Logger.None);
@@ -52,16 +62,6 @@ namespace Orion.Items {
             var item2 = itemService.Items[0];
 
             Assert.Same(item, item2);
-        }
-
-        [Theory]
-        [InlineData(-1)]
-        [InlineData(10000)]
-        public void Items_Item_GetInvalidIndex_ThrowsIndexOutOfRangeException(int index) {
-            using var kernel = new OrionKernel(Logger.None);
-            using var itemService = new OrionItemService(kernel, Logger.None);
-
-            Assert.Throws<IndexOutOfRangeException>(() => itemService.Items[index]);
         }
 
         [Fact]

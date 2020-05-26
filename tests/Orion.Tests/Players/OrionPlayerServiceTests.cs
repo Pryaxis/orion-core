@@ -40,6 +40,16 @@ namespace Orion.Players {
             ServerConnectBytes = bytes[..packetLength];
         }
 
+        [Theory]
+        [InlineData(-1)]
+        [InlineData(10000)]
+        public void Players_Item_GetInvalidIndex_ThrowsIndexOutOfRangeException(int index) {
+            using var kernel = new OrionKernel(Logger.None);
+            using var playerService = new OrionPlayerService(kernel, Logger.None);
+
+            Assert.Throws<IndexOutOfRangeException>(() => playerService.Players[index]);
+        }
+
         [Fact]
         public void Players_Item_Get() {
             using var kernel = new OrionKernel(Logger.None);
@@ -60,16 +70,6 @@ namespace Orion.Players {
             var player2 = playerService.Players[0];
 
             Assert.Same(player2, player);
-        }
-
-        [Theory]
-        [InlineData(-1)]
-        [InlineData(10000)]
-        public void Players_Item_GetInvalidIndex_ThrowsIndexOutOfRangeException(int index) {
-            using var kernel = new OrionKernel(Logger.None);
-            using var playerService = new OrionPlayerService(kernel, Logger.None);
-
-            Assert.Throws<IndexOutOfRangeException>(() => playerService.Players[index]);
         }
 
         [Fact]

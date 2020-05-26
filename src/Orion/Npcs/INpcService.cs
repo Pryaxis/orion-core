@@ -15,25 +15,17 @@
 // You should have received a copy of the GNU General Public License
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
-using System;
-using Destructurama.Attributed;
 using Orion.Entities;
 
 namespace Orion.Npcs {
-    [LogAsScalar]
-    internal sealed class OrionNpc : OrionEntity<Terraria.NPC>, INpc {
-        public override string Name {
-            get => Wrapped.GivenOrTypeName;
-            set => Wrapped._givenName = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
-        public NpcId Id => (NpcId)Wrapped.netID;
-
-        public OrionNpc(int npcIndex, Terraria.NPC terrariaNpc) : base(npcIndex, terrariaNpc) { }
-        public OrionNpc(Terraria.NPC terrariaNpc) : this(-1, terrariaNpc) { }
-
-        public void SetId(NpcId id) {
-            Wrapped.SetDefaults((int)id, Wrapped.GetMatchingSpawnParams());
-        }
+    /// <summary>
+    /// Represents an item service. Provides access to NPC-related properties and methods.
+    /// </summary>
+    public interface INpcService {
+        /// <summary>
+        /// Gets the array of NPCs.
+        /// </summary>
+        /// <value>The array of NPCs.</value>
+        IReadOnlyArray<INpc> Npcs { get; }
     }
 }
