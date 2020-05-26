@@ -140,11 +140,9 @@ namespace Orion.Items {
             var item = itemService.SpawnItem(id, Vector2f.Zero, stackSize, prefix);
 
             Assert.NotNull(item);
-#pragma warning disable CS8602 // Dereference of a possibly null reference.
-            Assert.Equal(id, item.Id);
-#pragma warning restore CS8602 // Dereference of a possibly null reference.
-            Assert.Equal(stackSize, item.StackSize);
-            Assert.Equal(prefix, item.Prefix);
+            Assert.Equal(id, item!.Id);
+            Assert.Equal(stackSize, item!.StackSize);
+            Assert.Equal(prefix, item!.Prefix);
         }
     }
 }

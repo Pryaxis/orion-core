@@ -114,5 +114,32 @@ namespace Orion.Npcs {
 
             Assert.Equal(NpcId.None, (NpcId)Terraria.Main.npc[0].netID);
         }
+
+        [Fact]
+        public void NpcSpawn_EventTriggered() {
+            using var kernel = new OrionKernel(Logger.None);
+            using var npcService = new OrionNpcService(kernel, Logger.None);
+            INpc? evtNpc = null;
+            kernel.RegisterHandler<NpcSpawnEvent>(evt => evtNpc = evt.Npc, Logger.None);
+
+            var npcIndex = Terraria.NPC.NewNPC(0, 0, (int)NpcId.BlueSlime);
+
+            Assert.NotNull(evtNpc);
+            Assert.Same(Terraria.Main.npc[npcIndex], ((OrionNpc)evtNpc!).Wrapped);
+        }
+
+        [Fact]
+        public void NpcSpawn_EventCanceled() {
+            Terraria.Main.npc[0] = new Terraria.NPC { whoAmI = 0 };
+
+            using var kernel = new OrionKernel(Logger.None);
+            using var npcService = new OrionNpcService(kernel, Logger.None);
+            kernel.RegisterHandler<NpcSpawnEvent>(evt => evt.Cancel(), Logger.None);
+
+            var npcIndex = Terraria.NPC.NewNPC(0, 0, (int)NpcId.BlueSlime);
+
+            Assert.Equal(npcService.Npcs.Count, npcIndex);
+            Assert.False(Terraria.Main.npc[0].active);
+        }
     }
 }

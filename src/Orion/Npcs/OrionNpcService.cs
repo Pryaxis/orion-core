@@ -41,10 +41,12 @@ namespace Orion.Npcs {
                 (npcIndex, terrariaNpc) => new OrionNpc(npcIndex, terrariaNpc));
 
             OTAPI.Hooks.Npc.PreSetDefaultsById = PreSetDefaultsByIdHandler;
+            OTAPI.Hooks.Npc.Spawn = SpawnHandler;
         }
 
         public override void Dispose() {
             OTAPI.Hooks.Npc.PreSetDefaultsById = null;
+            OTAPI.Hooks.Npc.Spawn = null;
         }
 
         private OTAPI.HookResult PreSetDefaultsByIdHandler(
@@ -69,6 +71,22 @@ namespace Orion.Npcs {
             if (npcId < 0) {
                 _setDefaultsToIgnore.Value = 2;
             }
+            return OTAPI.HookResult.Continue;
+        }
+
+        private OTAPI.HookResult SpawnHandler(ref int npcIndex) {
+            Debug.Assert(npcIndex >= 0 && npcIndex < Npcs.Count);
+
+            var npc = Npcs[npcIndex];
+            var evt = new NpcSpawnEvent(npc);
+            Kernel.Raise(evt, Log);
+            if (evt.IsCanceled()) {
+                // To cancel the event, remove the NPC and return the failure index.
+                npc.IsActive = false;
+                npcIndex = Npcs.Count;
+                return OTAPI.HookResult.Cancel;
+            }
+
             return OTAPI.HookResult.Continue;
         }
 
