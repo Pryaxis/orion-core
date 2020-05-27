@@ -24,52 +24,52 @@ using Xunit;
 
 namespace Orion.Events.Players {
     [SuppressMessage("Style", "IDE0017:Simplify object initialization", Justification = "Testing")]
-    public class PlayerHealthEventTests {
+    public class PlayerManaEventTests {
         [Fact]
         public void Ctor_NullPlayer_ThrowsArgumentNullException() {
-            var packet = new PlayerHealthPacket();
+            var packet = new PlayerManaPacket();
 
-            Assert.Throws<ArgumentNullException>(() => new PlayerHealthEvent(null!, ref packet));
+            Assert.Throws<ArgumentNullException>(() => new PlayerManaEvent(null!, ref packet));
         }
 
         [Fact]
-        public void Health_Get() {
+        public void Mana_Get() {
             var player = new Mock<IPlayer>().Object;
-            var packet = new PlayerHealthPacket { Health = 100 };
-            var evt = new PlayerHealthEvent(player, ref packet);
+            var packet = new PlayerManaPacket { Mana = 100 };
+            var evt = new PlayerManaEvent(player, ref packet);
 
-            Assert.Equal(100, evt.Health);
+            Assert.Equal(100, evt.Mana);
         }
 
         [Fact]
-        public void Health_Set() {
+        public void Mana_Set() {
             var player = new Mock<IPlayer>().Object;
-            var packet = new PlayerHealthPacket();
-            var evt = new PlayerHealthEvent(player, ref packet);
+            var packet = new PlayerManaPacket();
+            var evt = new PlayerManaEvent(player, ref packet);
 
-            evt.Health = 100;
+            evt.Mana = 100;
 
-            Assert.Equal(100, packet.Health);
+            Assert.Equal(100, packet.Mana);
         }
 
         [Fact]
-        public void MaxHealth_Get() {
+        public void MaxMana_Get() {
             var player = new Mock<IPlayer>().Object;
-            var packet = new PlayerHealthPacket { MaxHealth = 500 };
-            var evt = new PlayerHealthEvent(player, ref packet);
+            var packet = new PlayerManaPacket { MaxMana = 200 };
+            var evt = new PlayerManaEvent(player, ref packet);
 
-            Assert.Equal(500, evt.MaxHealth);
+            Assert.Equal(200, evt.MaxMana);
         }
 
         [Fact]
-        public void MaxHealth_Set() {
+        public void MaxMana_Set() {
             var player = new Mock<IPlayer>().Object;
-            var packet = new PlayerHealthPacket();
-            var evt = new PlayerHealthEvent(player, ref packet);
+            var packet = new PlayerManaPacket();
+            var evt = new PlayerManaEvent(player, ref packet);
 
-            evt.MaxHealth = 500;
+            evt.MaxMana = 200;
 
-            Assert.Equal(500, packet.MaxHealth);
+            Assert.Equal(200, packet.MaxMana);
         }
     }
 }

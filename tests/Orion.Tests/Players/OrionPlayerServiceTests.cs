@@ -272,6 +272,61 @@ namespace Orion.Players {
         }
 
         [Fact]
+        public void PacketReceive_PlayerManaEventTriggered() {
+            // Set `State` to 10 so that the mana packet is not ignored by the server.
+            Terraria.Netplay.Clients[5] = new Terraria.RemoteClient { Id = 5, State = 10 };
+            Terraria.Main.player[5] = new Terraria.Player { whoAmI = 5 };
+
+            using var kernel = new OrionKernel(Logger.None);
+            using var playerService = new OrionPlayerService(kernel, Logger.None);
+            var isRun = false;
+            kernel.RegisterHandler<PlayerManaEvent>(evt => {
+                Assert.Same(playerService.Players[5], evt.Player);
+                Assert.Equal(100, evt.Mana);
+                Assert.Equal(200, evt.MaxMana);
+                isRun = true;
+            }, Logger.None);
+
+            TestUtils.FakeReceiveBytes(5, PlayerManaPacketTests.Bytes);
+
+            Assert.True(isRun);
+            Assert.Equal(100, Terraria.Main.player[5].statMana);
+            Assert.Equal(200, Terraria.Main.player[5].statManaMax);
+        }
+
+        [Fact]
+        public void PacketReceive_PlayerManaEventModified() {
+            // Set `State` to 10 so that the mana packet is not ignored by the server.
+            Terraria.Netplay.Clients[5] = new Terraria.RemoteClient { Id = 5, State = 10 };
+            Terraria.Main.player[5] = new Terraria.Player { whoAmI = 5 };
+
+            using var kernel = new OrionKernel(Logger.None);
+            using var playerService = new OrionPlayerService(kernel, Logger.None);
+            kernel.RegisterHandler<PlayerManaEvent>(evt => evt.Mana = 200, Logger.None);
+
+            TestUtils.FakeReceiveBytes(5, PlayerManaPacketTests.Bytes);
+
+            Assert.Equal(200, Terraria.Main.player[5].statMana);
+            Assert.Equal(200, Terraria.Main.player[5].statManaMax);
+        }
+
+        [Fact]
+        public void PacketReceive_PlayerManaEventCanceled() {
+            // Set `State` to 10 so that the mana packet is not ignored by the server.
+            Terraria.Netplay.Clients[5] = new Terraria.RemoteClient { Id = 5, State = 10 };
+            Terraria.Main.player[5] = new Terraria.Player { whoAmI = 5 };
+
+            using var kernel = new OrionKernel(Logger.None);
+            using var playerService = new OrionPlayerService(kernel, Logger.None);
+            kernel.RegisterHandler<PlayerManaEvent>(evt => evt.Cancel(), Logger.None);
+
+            TestUtils.FakeReceiveBytes(5, PlayerManaPacketTests.Bytes);
+
+            Assert.Equal(0, Terraria.Main.player[5].statMana);
+            Assert.Equal(20, Terraria.Main.player[5].statManaMax);
+        }
+
+        [Fact]
         public void PacketReceive_PlayerTeamEventTriggered() {
             // Set `State` to 10 so that the team packet is not ignored by the server.
             Terraria.Netplay.Clients[5] = new Terraria.RemoteClient { Id = 5, State = 10 };

@@ -21,10 +21,10 @@ using System.Runtime.InteropServices;
 
 namespace Orion.Packets.Players {
     /// <summary>
-    /// A packet sent to set a player's health.
+    /// A packet sent to set a player's mana.
     /// </summary>
     [StructLayout(LayoutKind.Explicit)]
-    public struct PlayerHealthPacket : IPacket {
+    public struct PlayerManaPacket : IPacket {
         /// <summary>
         /// Gets or sets the player index.
         /// </summary>
@@ -32,18 +32,18 @@ namespace Orion.Packets.Players {
         [field: FieldOffset(0)] public byte PlayerIndex { get; set; }
 
         /// <summary>
-        /// Gets or sets the health.
+        /// Gets or sets the mana.
         /// </summary>
-        /// <value>The health.</value>
-        [field:FieldOffset(1)] public short Health { get; set; }
+        /// <value>The mana.</value>
+        [field: FieldOffset(1)] public short Mana { get; set; }
 
         /// <summary>
-        /// Gets or sets the max health.
+        /// Gets or sets the max mana.
         /// </summary>
-        /// <value>The max health.</value>
-        [field: FieldOffset(3)] public short MaxHealth { get; set; }
+        /// <value>The max mana.</value>
+        [field: FieldOffset(3)] public short MaxMana { get; set; }
 
-        PacketId IPacket.Id => PacketId.PlayerHealth;
+        PacketId IPacket.Id => PacketId.PlayerMana;
 
         /// <inheritdoc/>
         public int Read(Span<byte> span, PacketContext context) {
