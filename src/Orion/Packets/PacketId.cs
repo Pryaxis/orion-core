@@ -20,6 +20,7 @@ using System.Collections.Generic;
 using Orion.Packets.Client;
 using Orion.Packets.Players;
 using Orion.Packets.Server;
+using Orion.Packets.World.Tiles;
 
 namespace Orion.Packets {
     /// <summary>
@@ -31,6 +32,7 @@ namespace Orion.Packets {
         ClientDisconnect = 2,
         PlayerJoin = 6,
         PlayerHealth = 16,
+        TileModify = 17,
         PlayerPvp = 30,
         PlayerMana = 42,
         PlayerTeam = 45,
@@ -49,6 +51,7 @@ namespace Orion.Packets {
             [PacketId.ClientDisconnect] = typeof(ClientDisconnectPacket),
             [PacketId.PlayerJoin] = typeof(PlayerJoinPacket),
             [PacketId.PlayerHealth] = typeof(PlayerHealthPacket),
+            [PacketId.TileModify] = typeof(TileModifyPacket),
             [PacketId.PlayerMana] = typeof(PlayerManaPacket),
             [PacketId.PlayerPvp] = typeof(PlayerPvpPacket),
             [PacketId.PlayerTeam] = typeof(PlayerTeamPacket),
