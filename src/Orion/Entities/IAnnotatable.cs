@@ -23,34 +23,20 @@ namespace Orion.Entities {
     /// </summary>
     public interface IAnnotatable {
         /// <summary>
-        /// Gets the annotation of type <typeparamref name="T"/> with the given <paramref name="key"/>, using the given
-        /// <paramref name="defaultValueProvider"/> if the key does not exist.
+        /// Gets a reference to the annotation of type <typeparamref name="T"/> with the given <paramref name="key"/>,
+        /// using the specified <paramref name="initializer"/> to initialize the annotation.
         /// </summary>
         /// <typeparam name="T">The type.</typeparam>
         /// <param name="key">The key.</param>
-        /// <param name="defaultValueProvider">
-        /// The default value provider. If <see langword="null"/>, then the provider will return a default instance of
-        /// <typeparamref name="T"/>.
+        /// <param name="initializer">
+        /// The initializer. If <see langword="null"/>, then a default initializer is used.
         /// </param>
-        /// <param name="createIfNotExists">
-        /// <see langword="true"/> to create the annotation if it does not exist; otherwise, <see langword="false"/>.
-        /// </param>
-        /// <returns>
-        /// The annotation, or a default instance provided by <paramref name="defaultValueProvider"/> if the key does
-        /// not exist.
-        /// </returns>
+        /// <returns>A reference to the annotation.</returns>
+        /// <exception cref="ArgumentException">
+        /// <paramref name="key"/> does not refer to an annotation of type <typeparamref name="T"/>.
+        /// </exception>
         /// <exception cref="ArgumentNullException"><paramref name="key"/> is <see langword="null"/>.</exception>
-        T GetAnnotationOrDefault<T>(string key, Func<T>? defaultValueProvider = null, bool createIfNotExists = false);
-
-        /// <summary>
-        /// Sets the annotation of type <typeparamref name="T"/> with the given <paramref name="key"/> to the specified
-        /// <paramref name="value"/>.
-        /// </summary>
-        /// <typeparam name="T">The type.</typeparam>
-        /// <param name="key">The key.</param>
-        /// <param name="value">The value.</param>
-        /// <exception cref="ArgumentNullException"><paramref name="key"/> is <see langword="null"/>.</exception>
-        void SetAnnotation<T>(string key, T value);
+        ref T GetAnnotation<T>(string key, Func<T>? initializer = null);
 
         /// <summary>
         /// Removes the annotation with the given <paramref name="key"/>. Returns a value indicating success.

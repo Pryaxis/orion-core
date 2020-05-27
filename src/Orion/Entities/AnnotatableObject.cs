@@ -23,30 +23,32 @@ namespace Orion.Entities {
     /// Provides the base class for an object implementing <see cref="IAnnotatable"/>.
     /// </summary>
     public class AnnotatableObject : IAnnotatable {
-        private readonly IDictionary<string, object?> _annotations = new Dictionary<string, object?>();
+        private readonly IDictionary<string, object> _annotations = new Dictionary<string, object>();
 
         /// <inheritdoc/>
-        public T GetAnnotationOrDefault<T>(string key, Func<T>? defaultValueProvider = null,
-                bool createIfNotExists = false) {
+        public ref T GetAnnotation<T>(string key, Func<T>? initializer = null) {
             if (key is null) {
                 throw new ArgumentNullException(nameof(key));
             }
 
-            if (_annotations.TryGetValue(key, out var value)) {
-                return (T)value!;
+            if (!_annotations.TryGetValue(key, out var boxObj)) {
+                var initBox = new Box<T>();
+                if (initializer != null) {
+                    initBox.Value = initializer();
+                }
+
+                _annotations.Add(key, initBox);
+                return ref initBox.Value;
             }
 
-            var valueProvider = defaultValueProvider ?? (() => default!);
-            return createIfNotExists ? (T)(_annotations[key] = valueProvider())! : valueProvider();
-        }
-
-        /// <inheritdoc/>
-        public void SetAnnotation<T>(string key, T value) {
-            if (key is null) {
-                throw new ArgumentNullException(nameof(key));
+            if (!(boxObj is Box<T> box)) {
+                // Not localized because this string is developer-facing.
+                var expectedType = boxObj.GetType().GetGenericArguments()[0];
+                throw new ArgumentException(
+                    $"Invalid annotation type (expected: `{expectedType}`, actual: `{typeof(T)}`)");
             }
 
-            _annotations[key] = value;
+            return ref box.Value;
         }
 
         /// <inheritdoc/>
@@ -56,6 +58,10 @@ namespace Orion.Entities {
             }
 
             return _annotations.Remove(key);
+        }
+
+        private class Box<T> {
+            public T Value = default!;
         }
     }
 }

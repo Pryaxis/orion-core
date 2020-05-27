@@ -240,14 +240,14 @@ namespace Orion {
                 if (parameters.Length != 1) {
                     // Not localized because this string is developer-facing.
                     throw new ArgumentException(
-                        $"Method `{method.Name}` does not have exactly one argument.", nameof(handlerObject));
+                        $"Method `{method.Name}` does not have exactly one argument", nameof(handlerObject));
                 }
 
                 var eventType = parameters[0].ParameterType;
                 if (!eventType.IsSubclassOf(typeof(Event))) {
                     // Not localized because this string is developer-facing.
                     throw new ArgumentException(
-                        $"Method `{method.Name}` does not have an argument of type `Event`.",
+                        $"Method `{method.Name}` does not have an argument of type `Event`",
                         nameof(handlerObject));
                 }
 
