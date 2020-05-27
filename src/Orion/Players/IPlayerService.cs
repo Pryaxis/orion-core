@@ -41,7 +41,7 @@ namespace Orion.Players {
         /// Broadcasts the given <paramref name="packet"/> reference to all active players.
         /// </summary>
         /// <param name="playerService">The player service.</param>
-        /// <param name="packet">The packet reference.</param>
+        /// <param name="packet">The packet reference. <b>This must be on the stack!</b></param>
         /// <exception cref="ArgumentNullException">
         /// <paramref name="playerService"/> is <see langword="null"/>.
         /// </exception>

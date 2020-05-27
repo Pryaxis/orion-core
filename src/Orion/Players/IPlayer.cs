@@ -43,7 +43,7 @@ namespace Orion.Players {
         /// Sends the given <paramref name="packet"/> reference to the player.
         /// </summary>
         /// <typeparam name="TPacket">The type of packet.</typeparam>
-        /// <param name="packet">The packet reference.</param>
+        /// <param name="packet">The packet reference. <b>This must be on the stack!</b></param>
         void SendPacket<TPacket>(ref TPacket packet) where TPacket : struct, IPacket;
     }
 
