@@ -60,6 +60,7 @@ namespace Orion.Entities {
             return _annotations.Remove(key);
         }
 
+        // Utility class for providing a reference to `T`.
         private class Box<T> {
             public T Value = default!;
         }

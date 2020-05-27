@@ -181,6 +181,10 @@ namespace Orion.Players {
                 var evt = new PlayerJoinEvent(player);
                 Kernel.Raise(evt, Log);
                 return evt.IsCanceled();
+            } else if (typeof(TPacket) == typeof(PlayerHealthPacket)) {
+                var evt = new PlayerHealthEvent(player, ref Unsafe.As<TPacket, PlayerHealthPacket>(ref packet));
+                Kernel.Raise(evt, Log);
+                return evt.IsCanceled();
             } else if (typeof(TPacket) == typeof(PlayerPvpPacket)) {
                 var evt = new PlayerPvpEvent(player, ref Unsafe.As<TPacket, PlayerPvpPacket>(ref packet));
                 Kernel.Raise(evt, Log);
