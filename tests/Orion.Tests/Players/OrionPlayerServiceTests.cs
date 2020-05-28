@@ -452,21 +452,6 @@ namespace Orion.Players {
         }
 
         [Fact]
-        public void PacketReceive_PlayerTeamEventModified() {
-            // Set `State` to 10 so that the team packet is not ignored by the server.
-            Terraria.Netplay.Clients[5] = new Terraria.RemoteClient { Id = 5, State = 10 };
-            Terraria.Main.player[5] = new Terraria.Player { whoAmI = 5 };
-
-            using var kernel = new OrionKernel(Logger.None);
-            using var playerService = new OrionPlayerService(kernel, Logger.None);
-            kernel.RegisterHandler<PlayerTeamEvent>(evt => evt.Team = PlayerTeam.Blue, Logger.None);
-
-            TestUtils.FakeReceiveBytes(5, PlayerTeamPacketTests.Bytes);
-
-            Assert.Equal(PlayerTeam.Blue, (PlayerTeam)Terraria.Main.player[5].team);
-        }
-
-        [Fact]
         public void PacketReceive_PlayerTeamEventCanceled() {
             // Set `State` to 10 so that the team packet is not ignored by the server.
             Terraria.Netplay.Clients[5] = new Terraria.RemoteClient { Id = 5, State = 10 };

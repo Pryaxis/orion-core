@@ -16,6 +16,7 @@
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
 using System;
+using Destructurama.Attributed;
 using Orion.Packets.Players;
 using Orion.Players;
 
@@ -24,20 +25,25 @@ namespace Orion.Events.Players {
     /// An event that occurs when a player sets their team. This event can be canceled.
     /// </summary>
     [Event("player-team")]
-    public sealed class PlayerTeamEvent : PlayerPacketEvent<PlayerTeamPacket> {
-        /// <inheritdoc cref="PlayerTeamPacket.Team"/>
-        public PlayerTeam Team {
-            get => Packet.Team;
-            set => Packet.Team = value;
-        }
+    public sealed class PlayerTeamEvent : PlayerEvent, ICancelable {
+        /// <summary>
+        /// Gets the team.
+        /// </summary>
+        /// <value>The team.</value>
+        public PlayerTeam Team { get; }
+
+        /// <inheritdoc/>
+        [NotLogged] public string? CancellationReason { get; set; }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="PlayerTeamEvent"/> class with the specified
-        /// <paramref name="player"/> and <paramref name="packet"/> reference.
+        /// <paramref name="player"/> and <paramref name="team"/>.
         /// </summary>
         /// <param name="player">The player.</param>
-        /// <param name="packet">The packet reference. <b>This must be on the stack!</b></param>
+        /// <param name="team">The team.</param>
         /// <exception cref="ArgumentNullException"><paramref name="player"/> is <see langword="null"/>.</exception>
-        public PlayerTeamEvent(IPlayer player, ref PlayerTeamPacket packet) : base(player, ref packet) { }
+        public PlayerTeamEvent(IPlayer player, PlayerTeam team) : base(player) {
+            Team = team;
+        }
     }
 }

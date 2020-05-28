@@ -210,9 +210,7 @@ namespace Orion.Players {
             } else if (typeof(TPacket) == typeof(PlayerManaPacket)) {
                 return RaisePlayerManaEvent(player, ref Unsafe.As<TPacket, PlayerManaPacket>(ref packet));
             } else if (typeof(TPacket) == typeof(PlayerTeamPacket)) {
-                var evt = new PlayerTeamEvent(player, ref Unsafe.As<TPacket, PlayerTeamPacket>(ref packet));
-                Kernel.Raise(evt, Log);
-                return evt.IsCanceled();
+                return RaisePlayerTeamEvent(player, ref Unsafe.As<TPacket, PlayerTeamPacket>(ref packet));
             } else if (typeof(TPacket) == typeof(ClientUuidPacket)) {
                 var evt = new PlayerUuidEvent(player, ref Unsafe.As<TPacket, ClientUuidPacket>(ref packet));
                 Kernel.Raise(evt, Log);
@@ -246,6 +244,12 @@ namespace Orion.Players {
 
         private bool RaisePlayerManaEvent(IPlayer player, ref PlayerManaPacket packet) {
             var evt = new PlayerManaEvent(player, packet.Mana, packet.MaxMana);
+            Kernel.Raise(evt, Log);
+            return evt.IsCanceled();
+        }
+
+        private bool RaisePlayerTeamEvent(IPlayer player, ref PlayerTeamPacket packet) {
+            var evt = new PlayerTeamEvent(player, packet.Team);
             Kernel.Raise(evt, Log);
             return evt.IsCanceled();
         }

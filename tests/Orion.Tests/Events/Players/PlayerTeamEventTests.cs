@@ -27,29 +27,25 @@ namespace Orion.Events.Players {
     public class PlayerTeamEventTests {
         [Fact]
         public void Ctor_NullPlayer_ThrowsArgumentNullException() {
-            var packet = new PlayerTeamPacket();
-
-            Assert.Throws<ArgumentNullException>(() => new PlayerTeamEvent(null!, ref packet));
+            Assert.Throws<ArgumentNullException>(() => new PlayerTeamEvent(null!, PlayerTeam.None));
         }
 
         [Fact]
         public void Team_Get() {
             var player = new Mock<IPlayer>().Object;
-            var packet = new PlayerTeamPacket { Team = PlayerTeam.Red };
-            var evt = new PlayerTeamEvent(player, ref packet);
+            var evt = new PlayerTeamEvent(player, PlayerTeam.Red);
 
             Assert.Equal(PlayerTeam.Red, evt.Team);
         }
 
         [Fact]
-        public void Team_Set() {
+        public void CancellationReason_Set_Get() {
             var player = new Mock<IPlayer>().Object;
-            var packet = new PlayerTeamPacket();
-            var evt = new PlayerTeamEvent(player, ref packet);
+            var evt = new PlayerTeamEvent(player, PlayerTeam.None);
 
-            evt.Team = PlayerTeam.Red;
+            evt.CancellationReason = "test";
 
-            Assert.Equal(PlayerTeam.Red, packet.Team);
+            Assert.Equal("test", evt.CancellationReason);
         }
     }
 }
