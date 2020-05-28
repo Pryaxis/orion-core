@@ -548,6 +548,20 @@ namespace Orion.Players {
         }
 
         [Fact]
+        public void PacketSend_EventModified() {
+            var socket = new TestSocket { Connected = true };
+            Terraria.Netplay.Clients[5] = new Terraria.RemoteClient { Id = 5, Socket = socket };
+
+            using var kernel = new OrionKernel(Logger.None);
+            using var playerService = new OrionPlayerService(kernel, Logger.None);
+            kernel.RegisterHandler<PacketSendEvent<ClientConnectPacket>>(evt => evt.Packet.Version = "", Logger.None);
+
+            Terraria.NetMessage.SendData((byte)PacketId.ClientConnect, 5);
+
+            Assert.NotEqual(ServerConnectBytes, socket.SendData);
+        }
+
+        [Fact]
         public void PacketSend_EventCanceled() {
             var socket = new TestSocket { Connected = true };
             Terraria.Netplay.Clients[5] = new Terraria.RemoteClient { Id = 5, Socket = socket };
