@@ -415,22 +415,6 @@ namespace Orion.Players {
         }
 
         [Fact]
-        public void PacketReceive_PlayerManaEventModified() {
-            // Set `State` to 10 so that the mana packet is not ignored by the server.
-            Terraria.Netplay.Clients[5] = new Terraria.RemoteClient { Id = 5, State = 10 };
-            Terraria.Main.player[5] = new Terraria.Player { whoAmI = 5 };
-
-            using var kernel = new OrionKernel(Logger.None);
-            using var playerService = new OrionPlayerService(kernel, Logger.None);
-            kernel.RegisterHandler<PlayerManaEvent>(evt => evt.Mana = 200, Logger.None);
-
-            TestUtils.FakeReceiveBytes(5, PlayerManaPacketTests.Bytes);
-
-            Assert.Equal(200, Terraria.Main.player[5].statMana);
-            Assert.Equal(200, Terraria.Main.player[5].statManaMax);
-        }
-
-        [Fact]
         public void PacketReceive_PlayerManaEventCanceled() {
             // Set `State` to 10 so that the mana packet is not ignored by the server.
             Terraria.Netplay.Clients[5] = new Terraria.RemoteClient { Id = 5, State = 10 };

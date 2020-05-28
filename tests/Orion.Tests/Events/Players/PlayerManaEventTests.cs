@@ -27,49 +27,33 @@ namespace Orion.Events.Players {
     public class PlayerManaEventTests {
         [Fact]
         public void Ctor_NullPlayer_ThrowsArgumentNullException() {
-            var packet = new PlayerManaPacket();
-
-            Assert.Throws<ArgumentNullException>(() => new PlayerManaEvent(null!, ref packet));
+            Assert.Throws<ArgumentNullException>(() => new PlayerManaEvent(null!, 0, 0));
         }
 
         [Fact]
         public void Mana_Get() {
             var player = new Mock<IPlayer>().Object;
-            var packet = new PlayerManaPacket { Mana = 100 };
-            var evt = new PlayerManaEvent(player, ref packet);
+            var evt = new PlayerManaEvent(player, 100, 0);
 
             Assert.Equal(100, evt.Mana);
         }
 
         [Fact]
-        public void Mana_Set() {
-            var player = new Mock<IPlayer>().Object;
-            var packet = new PlayerManaPacket();
-            var evt = new PlayerManaEvent(player, ref packet);
-
-            evt.Mana = 100;
-
-            Assert.Equal(100, packet.Mana);
-        }
-
-        [Fact]
         public void MaxMana_Get() {
             var player = new Mock<IPlayer>().Object;
-            var packet = new PlayerManaPacket { MaxMana = 200 };
-            var evt = new PlayerManaEvent(player, ref packet);
+            var evt = new PlayerManaEvent(player, 0, 200);
 
             Assert.Equal(200, evt.MaxMana);
         }
 
         [Fact]
-        public void MaxMana_Set() {
+        public void CancellationReason_Set_Get() {
             var player = new Mock<IPlayer>().Object;
-            var packet = new PlayerManaPacket();
-            var evt = new PlayerManaEvent(player, ref packet);
+            var evt = new PlayerManaEvent(player, 0, 200);
 
-            evt.MaxMana = 200;
+            evt.CancellationReason = "test";
 
-            Assert.Equal(200, packet.MaxMana);
+            Assert.Equal("test", evt.CancellationReason);
         }
     }
 }

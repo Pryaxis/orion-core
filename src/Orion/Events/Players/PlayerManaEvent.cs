@@ -16,6 +16,7 @@
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
 using System;
+using Destructurama.Attributed;
 using Orion.Packets.Players;
 using Orion.Players;
 
@@ -24,26 +25,33 @@ namespace Orion.Events.Players {
     /// An event that occurs when a player sets their mana. This event can be canceled.
     /// </summary>
     [Event("player-mp")]
-    public sealed class PlayerManaEvent : PlayerPacketEvent<PlayerManaPacket> {
-        /// <inheritdoc cref="PlayerManaPacket.Mana"/>
-        public short Mana {
-            get => Packet.Mana;
-            set => Packet.Mana = value;
-        }
+    public sealed class PlayerManaEvent : PlayerEvent, ICancelable {
+        /// <summary>
+        /// Gets the mana.
+        /// </summary>
+        /// <value>The mana.</value>
+        public int Mana { get; }
 
-        /// <inheritdoc cref="PlayerManaPacket.MaxMana"/>
-        public short MaxMana {
-            get => Packet.MaxMana;
-            set => Packet.MaxMana = value;
-        }
+        /// <summary>
+        /// Gets the maximum mana.
+        /// </summary>
+        /// <value>The maximum mana.</value>
+        public int MaxMana { get; }
+
+        /// <inheritdoc/>
+        [NotLogged] public string? CancellationReason { get; set; }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="PlayerManaEvent"/> class with the specified
-        /// <paramref name="player"/> and <paramref name="packet"/> reference.
+        /// <paramref name="player"/> and mana values.
         /// </summary>
         /// <param name="player">The player.</param>
-        /// <param name="packet">The packet reference. <b>This must be on the stack!</b></param>
+        /// <param name="mana">The mana.</param>
+        /// <param name="maxMana">The maximum mana.</param>
         /// <exception cref="ArgumentNullException"><paramref name="player"/> is <see langword="null"/>.</exception>
-        public PlayerManaEvent(IPlayer player, ref PlayerManaPacket packet) : base(player, ref packet) { }
+        public PlayerManaEvent(IPlayer player, int mana, int maxMana) : base(player) {
+            Mana = mana;
+            MaxMana = maxMana;
+        }
     }
 }

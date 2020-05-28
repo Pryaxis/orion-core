@@ -34,6 +34,7 @@ namespace Orion.Events.Players {
         /// <summary>
         /// Gets the maximum health.
         /// </summary>
+        /// <value>The maximum health.</value>
         public int MaxHealth { get; }
 
         /// <inheritdoc/>
