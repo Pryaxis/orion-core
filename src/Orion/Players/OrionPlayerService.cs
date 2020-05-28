@@ -206,9 +206,7 @@ namespace Orion.Players {
                     return false;
                 }
             } else if (typeof(TPacket) == typeof(PlayerPvpPacket)) {
-                var evt = new PlayerPvpEvent(player, ref Unsafe.As<TPacket, PlayerPvpPacket>(ref packet));
-                Kernel.Raise(evt, Log);
-                return evt.IsCanceled();
+                return RaisePlayerPvpEvent(player, ref Unsafe.As<TPacket, PlayerPvpPacket>(ref packet));
             } else if (typeof(TPacket) == typeof(PlayerManaPacket)) {
                 var evt = new PlayerManaEvent(player, ref Unsafe.As<TPacket, PlayerManaPacket>(ref packet));
                 Kernel.Raise(evt, Log);
@@ -238,6 +236,12 @@ namespace Orion.Players {
 
         private bool RaisePlayerHealthEvent(IPlayer player, ref PlayerHealthPacket packet) {
             var evt = new PlayerHealthEvent(player, packet.Health, packet.MaxHealth);
+            Kernel.Raise(evt, Log);
+            return evt.IsCanceled();
+        }
+
+        private bool RaisePlayerPvpEvent(IPlayer player, ref PlayerPvpPacket packet) {
+            var evt = new PlayerPvpEvent(player, packet.IsInPvp);
             Kernel.Raise(evt, Log);
             return evt.IsCanceled();
         }

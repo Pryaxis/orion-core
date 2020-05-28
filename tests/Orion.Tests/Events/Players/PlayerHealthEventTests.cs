@@ -44,5 +44,15 @@ namespace Orion.Events.Players {
 
             Assert.Equal(500, evt.MaxHealth);
         }
+
+        [Fact]
+        public void CancellationReason_Set_Get() {
+            var player = new Mock<IPlayer>().Object;
+            var evt = new PlayerHealthEvent(player, 0, 0);
+
+            evt.CancellationReason = "test";
+
+            Assert.Equal("test", evt.CancellationReason);
+        }
     }
 }

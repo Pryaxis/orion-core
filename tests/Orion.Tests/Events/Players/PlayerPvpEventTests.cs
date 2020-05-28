@@ -27,29 +27,25 @@ namespace Orion.Events.Players {
     public class PlayerPvpEventTests {
         [Fact]
         public void Ctor_NullPlayer_ThrowsArgumentNullException() {
-            var packet = new PlayerPvpPacket();
-
-            Assert.Throws<ArgumentNullException>(() => new PlayerPvpEvent(null!, ref packet));
+            Assert.Throws<ArgumentNullException>(() => new PlayerPvpEvent(null!, false));
         }
 
         [Fact]
         public void IsInPvp_Get() {
             var player = new Mock<IPlayer>().Object;
-            var packet = new PlayerPvpPacket { IsInPvp = true };
-            var evt = new PlayerPvpEvent(player, ref packet);
+            var evt = new PlayerPvpEvent(player, true);
 
             Assert.True(evt.IsInPvp);
         }
 
         [Fact]
-        public void IsInPvp_Set() {
+        public void CancellationReason_Set_Get() {
             var player = new Mock<IPlayer>().Object;
-            var packet = new PlayerPvpPacket();
-            var evt = new PlayerPvpEvent(player, ref packet);
+            var evt = new PlayerPvpEvent(player, false);
 
-            evt.IsInPvp = true;
+            evt.CancellationReason = "test";
 
-            Assert.True(packet.IsInPvp);
+            Assert.Equal("test", evt.CancellationReason);
         }
     }
 }

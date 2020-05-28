@@ -16,7 +16,7 @@
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
 using System;
-using Orion.Packets.Players;
+using Destructurama.Attributed;
 using Orion.Players;
 
 namespace Orion.Events.Players {
@@ -24,20 +24,25 @@ namespace Orion.Events.Players {
     /// An event that occurs when a player sets their PvP status. This event can be canceled.
     /// </summary>
     [Event("player-pvp")]
-    public sealed class PlayerPvpEvent : PlayerPacketEvent<PlayerPvpPacket> {
-        /// <inheritdoc cref="PlayerPvpPacket.IsInPvp"/>
-        public bool IsInPvp {
-            get => Packet.IsInPvp;
-            set => Packet.IsInPvp = value;
-        }
+    public sealed class PlayerPvpEvent : PlayerEvent, ICancelable {
+        /// <summary>
+        /// Gets a value indicating whether the player is in PvP.
+        /// </summary>
+        /// <value><see langword="true"/> if the player is in PvP; otherwise, <see langword="false"/>.</value>
+        public bool IsInPvp { get; }
+
+        /// <inheritdoc/>
+        [NotLogged] public string? CancellationReason { get; set; }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="PlayerPvpEvent"/> class with the specified
-        /// <paramref name="player"/> and <paramref name="packet"/> reference.
+        /// <paramref name="player"/> and PvP status.
         /// </summary>
         /// <param name="player">The player.</param>
-        /// <param name="packet">The packet reference. <b>This must be on the stack!</b></param>
+        /// <param name="isInPvp">Whether the player is in PvP.</param>
         /// <exception cref="ArgumentNullException"><paramref name="player"/> is <see langword="null"/>.</exception>
-        public PlayerPvpEvent(IPlayer player, ref PlayerPvpPacket packet) : base(player, ref packet) { }
+        public PlayerPvpEvent(IPlayer player, bool isInPvp) : base(player) {
+            IsInPvp = isInPvp;
+        }
     }
 }
