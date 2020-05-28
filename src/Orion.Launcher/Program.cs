@@ -111,6 +111,24 @@ namespace Orion.Launcher {
             kernel.Container.Get<INpcService>();
             kernel.Container.Get<IPlayerService>();
 
+            kernel.RegisterHandler<ServerStartEvent>(evt => {
+                var wallNames = new string[316];
+                var item = new Terraria.Item();
+                var textInfo = new System.Globalization.CultureInfo("en-US", false).TextInfo;
+                for (var i = 0; i < Terraria.ID.ItemID.Count; ++i) {
+                    item.SetDefaults(i);
+                    if (item.createWall > 0 && item.consumable) {
+                        if (wallNames[item.createWall] != null) throw new Exception();
+                        wallNames[item.createWall] = textInfo.ToTitleCase(item.Name).Replace(" ", "");
+                    }
+                }
+
+                using var writer = new StreamWriter("walls.txt");
+                for (var i = 0; i < 316; ++i) {
+                    writer.WriteLine($"{wallNames[i]} = {i},");
+                }
+            }, log);
+
             using var game = new Terraria.Main();
             game.DedServ();
         }

@@ -15,16 +15,26 @@
 // You should have received a copy of the GNU General Public License
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
-namespace Orion.Players {
-    public static class TestUtils {
-        public static void FakeReceiveBytes(int index, byte[] bytes) {
-            var buffer = Terraria.NetMessage.buffer[index];
-            var oldBytes = buffer.readBuffer;
-            buffer.readBuffer = bytes;
-            buffer.ResetReader();
-            buffer.GetData(2, bytes.Length - 2, out _);
-            buffer.readBuffer = oldBytes;
-            buffer.ResetReader();
+using Moq;
+using Orion.Players;
+using Xunit;
+
+namespace Orion.Events.World.Tiles {
+    public class BlockBreakEventTests {
+        [Fact]
+        public void IsFailure_Get() {
+            var player = new Mock<IPlayer>().Object;
+            var evt = new BlockBreakEvent(player, 0, 0, true, false);
+
+            Assert.True(evt.IsFailure);
+        }
+
+        [Fact]
+        public void ShouldSuppressItems_Get() {
+            var player = new Mock<IPlayer>().Object;
+            var evt = new BlockBreakEvent(player, 0, 0, false, true);
+
+            Assert.True(evt.ShouldSuppressItems);
         }
     }
 }

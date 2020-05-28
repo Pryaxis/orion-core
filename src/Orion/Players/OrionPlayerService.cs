@@ -27,10 +27,12 @@ using Orion.Entities;
 using Orion.Events;
 using Orion.Events.Packets;
 using Orion.Events.Players;
+using Orion.Events.World.Tiles;
 using Orion.Packets;
 using Orion.Packets.Client;
 using Orion.Packets.Modules;
 using Orion.Packets.Players;
+using Orion.Packets.World.Tiles;
 using Serilog;
 
 namespace Orion.Players {
@@ -185,6 +187,22 @@ namespace Orion.Players {
                 var evt = new PlayerHealthEvent(player, ref Unsafe.As<TPacket, PlayerHealthPacket>(ref packet));
                 Kernel.Raise(evt, Log);
                 return evt.IsCanceled();
+            } else if (typeof(TPacket) == typeof(TileModifyPacket)) {
+                ref var packet2 = ref Unsafe.As<TPacket, TileModifyPacket>(ref packet);
+                switch (packet2.Modification) {
+                case TileModification.BreakBlock: {
+                        var evt = new BlockBreakEvent(player, packet2.X, packet2.Y, packet2.IsFailure, false);
+                        Kernel.Raise(evt, Log);
+                        return evt.IsCanceled();
+                    }
+                case TileModification.BreakBlockNoItems: {
+                        var evt = new BlockBreakEvent(player, packet2.X, packet2.Y, packet2.IsFailure, true);
+                        Kernel.Raise(evt, Log);
+                        return evt.IsCanceled();
+                    }
+                default:
+                    return false;
+                }
             } else if (typeof(TPacket) == typeof(PlayerPvpPacket)) {
                 var evt = new PlayerPvpEvent(player, ref Unsafe.As<TPacket, PlayerPvpPacket>(ref packet));
                 Kernel.Raise(evt, Log);
