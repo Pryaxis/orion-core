@@ -21,7 +21,7 @@ using System.Text;
 
 namespace Orion.Packets.Client {
     /// <summary>
-    /// Packet sent from the client to the server to inform it of its UUID.
+    /// Packet sent from the client to the server to inform the server of its UUID.
     /// </summary>
     [SuppressMessage("Style", "IDE0017:Simplify object initialization", Justification = "Testing")]
     public struct ClientUuidPacket : IPacket {

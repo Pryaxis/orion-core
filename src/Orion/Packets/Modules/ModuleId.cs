@@ -17,6 +17,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.Contracts;
 
 namespace Orion.Packets.Modules {
     /// <summary>
@@ -41,6 +42,7 @@ namespace Orion.Packets.Modules {
         /// </summary>
         /// <param name="id">The module ID.</param>
         /// <returns>The corresponding type for the given module <paramref name="id"/>.</returns>
+        [Pure]
         public static Type? Type(this ModuleId id) =>
             ModuleIdToType.TryGetValue(id, out var type) ? type : typeof(UnknownModule);
     }

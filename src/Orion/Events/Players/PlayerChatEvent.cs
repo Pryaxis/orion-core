@@ -17,12 +17,11 @@
 
 using System;
 using Destructurama.Attributed;
-using Orion.Packets.Modules;
 using Orion.Players;
 
 namespace Orion.Events.Players {
     /// <summary>
-    /// An event that occurs when a player chats.
+    /// An event that occurs when a player chats. This event can be canceled.
     /// </summary>
     [Event("player-chat")]
     public sealed class PlayerChatEvent : PlayerEvent, ICancelable {

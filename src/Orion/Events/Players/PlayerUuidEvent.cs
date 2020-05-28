@@ -17,12 +17,11 @@
 
 using System;
 using Destructurama.Attributed;
-using Orion.Packets.Client;
 using Orion.Players;
 
 namespace Orion.Events.Players {
     /// <summary>
-    /// An event that occurs when a player informs the server of their UUID.
+    /// An event that occurs when a player informs the server of their UUID. This event can be canceled.
     /// </summary>
     [Event("player-uuid")]
     public sealed class PlayerUuidEvent : PlayerEvent, ICancelable {

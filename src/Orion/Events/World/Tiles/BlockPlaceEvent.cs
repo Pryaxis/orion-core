@@ -20,7 +20,7 @@ using Orion.World.Tiles;
 
 namespace Orion.Events.World.Tiles {
     /// <summary>
-    /// An event that occurs when a block is placed.
+    /// An event that occurs when a block is being placed. This event can be canceled.
     /// </summary>
     [Event("block-place")]
     public sealed class BlockPlaceEvent : TileEvent {
@@ -37,9 +37,9 @@ namespace Orion.Events.World.Tiles {
         public int Style { get; }
 
         /// <summary>
-        /// Gets a value indicating whether this is a replacement.
+        /// Gets a value indicating whether this attempt is a replacement.
         /// </summary>
-        /// <value><see langword="true"/> if this is a replacement; otherwise, <see langword="false"/>.</value>
+        /// <value><see langword="true"/> if this attempt is a replacement; otherwise, <see langword="false"/>.</value>
         public bool IsReplacement { get; }
 
         /// <summary>
@@ -52,8 +52,8 @@ namespace Orion.Events.World.Tiles {
         /// <param name="y">The Y coordinate.</param>
         /// <param name="id">The block ID.</param>
         /// <param name="style">The style.</param>
-        /// <param name="isReplacement">Whether this is a replacement.</param>
-        public BlockPlaceEvent(IPlayer? player, int x, int y, BlockId id, int style, bool isReplacement = false)
+        /// <param name="isReplacement">Whether this attempt is a replacement.</param>
+        public BlockPlaceEvent(IPlayer? player, int x, int y, BlockId id, int style, bool isReplacement)
                 : base(player, x, y) {
             Id = id;
             Style = style;

@@ -26,21 +26,13 @@ namespace Orion.Events.Npcs {
     public class NpcDefaultsEventTests {
         [Fact]
         public void Ctor_NullNpc_ThrowsArgumentNullException() {
-            Assert.Throws<ArgumentNullException>(() => new NpcDefaultsEvent(null!, NpcId.BlueSlime));
-        }
-
-        [Fact]
-        public void Id_Get() {
-            var npc = new Mock<INpc>().Object;
-            var evt = new NpcDefaultsEvent(npc, NpcId.BlueSlime);
-
-            Assert.Equal(NpcId.BlueSlime, evt.Id);
+            Assert.Throws<ArgumentNullException>(() => new NpcDefaultsEvent(null!));
         }
 
         [Fact]
         public void Id_Set_Get() {
             var npc = new Mock<INpc>().Object;
-            var evt = new NpcDefaultsEvent(npc, NpcId.None);
+            var evt = new NpcDefaultsEvent(npc);
 
             evt.Id = NpcId.BlueSlime;
 
@@ -50,7 +42,7 @@ namespace Orion.Events.Npcs {
         [Fact]
         public void CancellationReason_Set_Get() {
             var npc = new Mock<INpc>().Object;
-            var evt = new NpcDefaultsEvent(npc, NpcId.None);
+            var evt = new NpcDefaultsEvent(npc);
 
             evt.CancellationReason = "test";
 

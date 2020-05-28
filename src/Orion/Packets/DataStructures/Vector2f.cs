@@ -16,6 +16,8 @@
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
 using System;
+using System.Diagnostics.CodeAnalysis;
+using System.Diagnostics.Contracts;
 using System.Runtime.InteropServices;
 
 namespace Orion.Packets.DataStructures {
@@ -50,18 +52,22 @@ namespace Orion.Packets.DataStructures {
         }
 
         /// <inheritdoc/>
+        [Pure]
         public override bool Equals(object obj) => obj is Vector2f vector && Equals(vector);
 
         /// <inheritdoc/>
+        [Pure]
         public bool Equals(Vector2f other) => X == other.X && Y == other.Y;
 
         /// <inheritdoc/>
+        [Pure]
         public override int GetHashCode() => HashCode.Combine(X, Y);
 
         /// <summary>
         /// Returns a string representation of the vector.
         /// </summary>
         /// <returns>A string representation of the vector.</returns>
+        [Pure, ExcludeFromCodeCoverage]
         public override string ToString() => $"({X}, {Y})";
 
         /// <summary>
@@ -70,6 +76,7 @@ namespace Orion.Packets.DataStructures {
         /// <param name="left">The left vector.</param>
         /// <param name="right">The right vector.</param>
         /// <returns><see langword="true"/> if the vectors are equal; otherwise, <see langword="false"/>.</returns>
+        [Pure]
         public static bool operator ==(Vector2f left, Vector2f right) => left.Equals(right);
 
         /// <summary>
@@ -78,6 +85,7 @@ namespace Orion.Packets.DataStructures {
         /// <param name="left">The left vector.</param>
         /// <param name="right">The right vector.</param>
         /// <returns><see langword="true"/> if the vectors are not equal; otherwise, <see langword="false"/>.</returns>
+        [Pure]
         public static bool operator !=(Vector2f left, Vector2f right) => !left.Equals(right);
 
         /// <summary>
@@ -86,6 +94,7 @@ namespace Orion.Packets.DataStructures {
         /// <param name="left">The left vector.</param>
         /// <param name="right">The right vector.</param>
         /// <returns>The vector sum.</returns>
+        [Pure]
         public static Vector2f operator +(Vector2f left, Vector2f right) =>
             new Vector2f(left.X + right.X, left.Y + right.Y);
 
@@ -95,6 +104,7 @@ namespace Orion.Packets.DataStructures {
         /// <param name="left">The left vector.</param>
         /// <param name="right">The right vector.</param>
         /// <returns>The vector difference.</returns>
+        [Pure]
         public static Vector2f operator -(Vector2f left, Vector2f right) =>
             new Vector2f(left.X - right.X, left.Y - right.Y);
 
@@ -104,6 +114,7 @@ namespace Orion.Packets.DataStructures {
         /// <param name="f">The factor.</param>
         /// <param name="vector">The vector.</param>
         /// <returns>The vector multiplication.</returns>
+        [Pure]
         public static Vector2f operator *(float f, Vector2f vector) => new Vector2f(f * vector.X, f * vector.Y);
 
         /// <summary>
@@ -112,6 +123,7 @@ namespace Orion.Packets.DataStructures {
         /// <param name="f">The factor.</param>
         /// <param name="vector">The vector.</param>
         /// <returns>The vector multiplication.</returns>
+        [Pure]
         public static Vector2f operator /(Vector2f vector, float f) => new Vector2f(vector.X / f, vector.Y / f);
     }
 }

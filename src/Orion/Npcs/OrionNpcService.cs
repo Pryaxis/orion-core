@@ -67,7 +67,7 @@ namespace Orion.Npcs {
             }
 
             var npc = GetNpc(terrariaNpc);
-            var evt = new NpcDefaultsEvent(npc, (NpcId)npcId);
+            var evt = new NpcDefaultsEvent(npc) { Id = (NpcId)npcId };
             Kernel.Raise(evt, Log);
             if (evt.IsCanceled()) {
                 return OTAPI.HookResult.Cancel;

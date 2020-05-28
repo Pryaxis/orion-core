@@ -227,7 +227,7 @@ namespace Orion.Players {
                 Assert.Equal(100, evt.X);
                 Assert.Equal(256, evt.Y);
                 Assert.False(evt.IsFailure);
-                Assert.False(evt.ShouldSuppressItems);
+                Assert.False(evt.IsItemless);
                 isRun = true;
             }, Logger.None);
 
@@ -326,7 +326,7 @@ namespace Orion.Players {
                 Assert.Equal(100, evt.X);
                 Assert.Equal(256, evt.Y);
                 Assert.False(evt.IsFailure);
-                Assert.True(evt.ShouldSuppressItems);
+                Assert.True(evt.IsItemless);
                 isRun = true;
             }, Logger.None);
 

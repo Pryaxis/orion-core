@@ -26,21 +26,13 @@ namespace Orion.Events.Items {
     public class ItemDefaultsEventTests {
         [Fact]
         public void Ctor_NullItem_ThrowsArgumentNullException() {
-            Assert.Throws<ArgumentNullException>(() => new ItemDefaultsEvent(null!, ItemId.Sdmg));
-        }
-
-        [Fact]
-        public void Id_Get() {
-            var item = new Mock<IItem>().Object;
-            var evt = new ItemDefaultsEvent(item, ItemId.Sdmg);
-
-            Assert.Equal(ItemId.Sdmg, evt.Id);
+            Assert.Throws<ArgumentNullException>(() => new ItemDefaultsEvent(null!));
         }
 
         [Fact]
         public void Id_Set_Get() {
             var item = new Mock<IItem>().Object;
-            var evt = new ItemDefaultsEvent(item, ItemId.None);
+            var evt = new ItemDefaultsEvent(item);
 
             evt.Id = ItemId.Sdmg;
 
@@ -50,7 +42,7 @@ namespace Orion.Events.Items {
         [Fact]
         public void CancellationReason_Set_Get() {
             var item = new Mock<IItem>().Object;
-            var evt = new ItemDefaultsEvent(item, ItemId.None);
+            var evt = new ItemDefaultsEvent(item);
 
             evt.CancellationReason = "test";
 

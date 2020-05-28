@@ -20,19 +20,19 @@ using Serilog;
 
 namespace Orion {
     /// <summary>
-    /// Provides the base class for an Orion service.
+    /// Represents the base class for an Orion service.
     /// </summary>
     public abstract class OrionService : IDisposable {
         /// <summary>
-        /// Gets the service's kernel.
+        /// Gets the kernel.
         /// </summary>
-        /// <value>The service's kernel.</value>
+        /// <value>The kernel.</value>
         public OrionKernel Kernel { get; }
 
         /// <summary>
-        /// Gets the service's logger.
+        /// Gets the logger.
         /// </summary>
-        /// <value>The service's logger.</value>
+        /// <value>The logger.</value>
         public ILogger Log { get; }
 
         /// <summary>

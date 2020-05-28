@@ -18,7 +18,6 @@
 using System;
 using System.Diagnostics.CodeAnalysis;
 using Moq;
-using Orion.Packets.Players;
 using Orion.Players;
 using Xunit;
 

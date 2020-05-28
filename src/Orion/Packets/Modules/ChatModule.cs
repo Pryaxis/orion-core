@@ -23,7 +23,7 @@ using Orion.Packets.DataStructures;
 
 namespace Orion.Packets.Modules {
     /// <summary>
-    /// Module sent for chat.
+    /// A module sent for chat.
     /// </summary>
     [StructLayout(LayoutKind.Explicit)]
     public struct ChatModule : IModule {

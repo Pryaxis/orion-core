@@ -19,7 +19,7 @@ using Serilog.Events;
 
 namespace Orion.Events.Server {
     /// <summary>
-    /// An event that occurs when the server updates every tick.
+    /// An event that occurs when the server is updating every tick.
     /// </summary>
     [Event("server-tick", LoggingLevel = LogEventLevel.Verbose)]
     public sealed class ServerTickEvent : Event { }

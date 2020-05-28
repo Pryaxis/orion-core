@@ -19,21 +19,21 @@ using Orion.Players;
 
 namespace Orion.Events.World.Tiles {
     /// <summary>
-    /// An event that occurs when a block is attempted to be broken..
+    /// An event that occurs when a block is being broken. This event can be canceled.
     /// </summary>
     [Event("block-break")]
     public sealed class BlockBreakEvent : TileEvent {
         /// <summary>
-        /// Gets a value indicating whether the break attempt is a failure.
+        /// Gets a value indicating whether the attempt is a failure.
         /// </summary>
-        /// <value><see langword="true"/> if the break attempt is a failure; otherwise, <see langword="false"/>.</value>
+        /// <value><see langword="true"/> if the attempt is a failure; otherwise, <see langword="false"/>.</value>
         public bool IsFailure { get; }
 
         /// <summary>
-        /// Gets a value indicating whether items should be suppressed.
+        /// Gets a value indicating whether the attempt is itemless.
         /// </summary>
-        /// <value><see langword="true"/> if items should be suppressed; otherwise, <see langword="false"/>.</value>
-        public bool ShouldSuppressItems { get; }
+        /// <value><see langword="true"/> if the attempt is itemless; otherwise, <see langword="false"/>.</value>
+        public bool IsItemless { get; }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="BlockBreakEvent"/> class with the specified
@@ -42,12 +42,11 @@ namespace Orion.Events.World.Tiles {
         /// <param name="player">The player, or <see langword="null"/> for none.</param>
         /// <param name="x">The X coordinate.</param>
         /// <param name="y">The Y coordinate.</param>
-        /// <param name="isFailure">Whether the break attempt is a failure.</param>
-        /// <param name="shouldSuppressItems">Whether items should be suppressed.</param>
-        public BlockBreakEvent(IPlayer? player, int x, int y, bool isFailure = false, bool shouldSuppressItems = false)
-                : base(player, x, y) {
+        /// <param name="isFailure">Whether the attempt is a failure.</param>
+        /// <param name="isItemless">Whether the attempt is itemless.</param>
+        public BlockBreakEvent(IPlayer? player, int x, int y, bool isFailure, bool isItemless) : base(player, x, y) {
             IsFailure = isFailure;
-            ShouldSuppressItems = shouldSuppressItems;
+            IsItemless = isItemless;
         }
     }
 }

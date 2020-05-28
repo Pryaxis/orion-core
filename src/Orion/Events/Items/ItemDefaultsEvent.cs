@@ -22,7 +22,7 @@ using Serilog.Events;
 
 namespace Orion.Events.Items {
     /// <summary>
-    /// An event that occurs when an item's defaults are set. This event can be canceled.
+    /// An event that occurs when an item's defaults are being set. This event can be canceled.
     /// </summary>
     [Event("item-defaults", LoggingLevel = LogEventLevel.Verbose)]
     public sealed class ItemDefaultsEvent : ItemEvent, ICancelable {
@@ -37,13 +37,10 @@ namespace Orion.Events.Items {
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ItemDefaultsEvent"/> class with the specified
-        /// <paramref name="item"/> and item <paramref name="id"/>.
+        /// <paramref name="item"/>.
         /// </summary>
         /// <param name="item">The item.</param>
-        /// <param name="id">The item ID.</param>
         /// <exception cref="ArgumentNullException"><paramref name="item"/> is <see langword="null"/>.</exception>
-        public ItemDefaultsEvent(IItem item, ItemId id) : base(item) {
-            Id = id;
-        }
+        public ItemDefaultsEvent(IItem item) : base(item) { }
     }
 }

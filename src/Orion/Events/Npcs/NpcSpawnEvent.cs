@@ -21,7 +21,7 @@ using Orion.Npcs;
 
 namespace Orion.Events.Npcs {
     /// <summary>
-    /// An event that occurs when an NPC spawns. This event can be canceled.
+    /// An event that occurs when an NPC is spawning. This event can be canceled.
     /// </summary>
     [Event("npc-spawn")]
     public sealed class NpcSpawnEvent : NpcEvent, ICancelable {

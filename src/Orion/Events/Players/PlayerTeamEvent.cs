@@ -17,7 +17,6 @@
 
 using System;
 using Destructurama.Attributed;
-using Orion.Packets.Players;
 using Orion.Players;
 
 namespace Orion.Events.Players {

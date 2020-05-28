@@ -31,13 +31,20 @@ namespace Orion.Events.Server {
         /// Initializes a new instance of the <see cref="ServerArgsEvent"/> with the specified <paramref name="args"/>.
         /// </summary>
         /// <param name="args">The arguments.</param>
-        public ServerArgsEvent(IEnumerable<string> args) {
+        /// <exception cref="ArgumentException"><paramref name="args"/> contains <see langword="null"/>.</exception>
+        /// <exception cref="ArgumentNullException"><paramref name="args"/> is <see langword="null"/>.</exception>
+        public ServerArgsEvent(params string[] args) {
             if (args is null) {
                 throw new ArgumentNullException(nameof(args));
             }
 
             // Preprocess the arguments.
             foreach (var arg in args) {
+                if (arg is null) {
+                    // Not localized because this string is developer-facing.
+                    throw new ArgumentException("Arguments contains null", nameof(args));
+                }
+
                 if (arg.StartsWith("--")) {
                     var equals = arg.IndexOf('=');
                     if (equals < 0) {
@@ -59,7 +66,17 @@ namespace Orion.Events.Server {
         /// </summary>
         /// <param name="name">The name.</param>
         /// <returns><see langword="true"/> if the flag exists; otherwise, <see langword="false"/>.</returns>
-        public bool GetBool(string name) => _bools.Contains(name);
+        /// <exception cref="ArgumentException">
+        /// <paramref name="name"/> is <see langword="null"/> or whitespace.
+        /// </exception>
+        public bool GetBool(string name) {
+            if (string.IsNullOrWhiteSpace(name)) {
+                // Not localized because this string is developer-facing.
+                throw new ArgumentException("Parameter cannot be null or whitespace", nameof(name));
+            }
+
+            return _bools.Contains(name);
+        }
 
         /// <summary>
         /// Tries to get the <paramref name="value"/> of the flag with the given <paramref name="name"/>. Returns a
@@ -67,7 +84,16 @@ namespace Orion.Events.Server {
         /// </summary>
         /// <param name="name">The name.</param>
         /// <param name="value">The value.</param>
-        /// <returns><see langword="true"/> if the flag exists; otherwise, <see langword="false"/>.</returns>
-        public bool TryGetValue(string name, out string value) => _values.TryGetValue(name, out value);
+        /// <exception cref="ArgumentException">
+        /// <paramref name="name"/> is <see langword="null"/> or whitespace.
+        /// </exception>
+        public bool TryGetValue(string name, out string value) {
+            if (string.IsNullOrWhiteSpace(name)) {
+                // Not localized because this string is developer-facing.
+                throw new ArgumentException("Parameter cannot be null or whitespace", nameof(name));
+            }
+
+            return _values.TryGetValue(name, out value);
+        }
     }
 }

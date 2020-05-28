@@ -22,7 +22,7 @@ using Serilog.Events;
 
 namespace Orion.Events.Npcs {
     /// <summary>
-    /// An event that occurs when an NPC updates every tick. This event can be canceled.
+    /// An event that occurs when an NPC is updating every tick. This event can be canceled.
     /// </summary>
     [Event("npc-tick", LoggingLevel = LogEventLevel.Verbose)]
     public sealed class NpcTickEvent : NpcEvent, ICancelable {

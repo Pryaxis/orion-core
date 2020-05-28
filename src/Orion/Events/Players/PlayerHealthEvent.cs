@@ -42,7 +42,7 @@ namespace Orion.Events.Players {
 
         /// <summary>
         /// Initializes a new instance of the <see cref="PlayerHealthEvent"/> class with the specified
-        /// <paramref name="player"/> and health values.
+        /// <paramref name="player"/>, <paramref name="health"/>, and <paramref name="maxHealth"/>.
         /// </summary>
         /// <param name="player">The player.</param>
         /// <param name="health">The health.</param>

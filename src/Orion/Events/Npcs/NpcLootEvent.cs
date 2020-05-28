@@ -49,18 +49,9 @@ namespace Orion.Events.Npcs {
 
         /// <summary>
         /// Initializes a new instance of the <see cref="NpcLootEvent"/> class with the specified
-        /// <paramref name="npc"/>, item <paramref name="id"/>, <paramref name="stackSize"/>, and
-        /// <paramref name="prefix"/>.
+        /// <paramref name="npc"/>.
         /// </summary>
-        /// <param name="npc">The NPC.</param>
-        /// <param name="id">The item ID.</param>
-        /// <param name="stackSize">The stack size.</param>
-        /// <param name="prefix">The prefix.</param>
         /// <exception cref="ArgumentNullException"><paramref name="npc"/> is <see langword="null"/>.</exception>
-        public NpcLootEvent(INpc npc, ItemId id, int stackSize, ItemPrefix prefix) : base(npc) {
-            Id = id;
-            StackSize = stackSize;
-            Prefix = prefix;
-        }
+        public NpcLootEvent(INpc npc) : base(npc) { }
     }
 }

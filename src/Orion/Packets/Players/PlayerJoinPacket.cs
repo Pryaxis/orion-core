@@ -19,7 +19,7 @@ using System;
 
 namespace Orion.Packets.Players {
     /// <summary>
-    /// A packet sent from the client to the server to join.
+    /// A packet sent from the client to the server to join the server.
     /// </summary>
     public struct PlayerJoinPacket : IPacket {
         PacketId IPacket.Id => PacketId.PlayerJoin;

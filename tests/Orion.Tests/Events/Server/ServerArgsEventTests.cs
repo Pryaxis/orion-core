@@ -26,8 +26,22 @@ namespace Orion.Events.Server {
         }
 
         [Fact]
+        public void Ctor_NullArg_ThrowsArgumentException() {
+            Assert.Throws<ArgumentException>(() => new ServerArgsEvent(new string[] { null! }));
+        }
+
+        [Theory]
+        [InlineData(null)]
+        [InlineData("   ")]
+        public void GetBool_ThrowsArgumentException(string? name) {
+            var evt = new ServerArgsEvent();
+
+            Assert.Throws<ArgumentException>(() => evt.GetBool(name!));
+        }
+
+        [Fact]
         public void GetBool_FlagExists_ReturnsTrue() {
-            var evt = new ServerArgsEvent(new[] { "-abcd", "--test" });
+            var evt = new ServerArgsEvent("-abcd", "--test");
 
             Assert.True(evt.GetBool("a"));
             Assert.True(evt.GetBool("b"));
@@ -38,22 +52,31 @@ namespace Orion.Events.Server {
 
         [Fact]
         public void GetBool_FlagDoesntExist_ReturnsFalse() {
-            var evt = new ServerArgsEvent(new[] { "--test" });
+            var evt = new ServerArgsEvent("--test");
 
             Assert.False(evt.GetBool("test2"));
         }
 
+        [Theory]
+        [InlineData(null)]
+        [InlineData("   ")]
+        public void TryGetValue_ThrowsArgumentException(string? name) {
+            var evt = new ServerArgsEvent();
+
+            Assert.Throws<ArgumentException>(() => evt.TryGetValue(name!, out _));
+        }
+
         [Fact]
-        public void GetValue_FlagExists() {
-            var evt = new ServerArgsEvent(new[] { "--test=1234" });
+        public void TryGetValue_FlagExists() {
+            var evt = new ServerArgsEvent("--test=1234");
 
             Assert.True(evt.TryGetValue("test", out var value));
             Assert.Equal("1234", value);
         }
 
         [Fact]
-        public void GetValue_FlagDoesntExist() {
-            var evt = new ServerArgsEvent(new[] { "--test=1234" });
+        public void TryGetValue_FlagDoesntExist() {
+            var evt = new ServerArgsEvent("--test=1234");
 
             Assert.False(evt.TryGetValue("test2", out _));
         }

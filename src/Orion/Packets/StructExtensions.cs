@@ -16,11 +16,12 @@
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
 using System;
+using System.Diagnostics.Contracts;
 using System.Runtime.CompilerServices;
 
 namespace Orion.Packets {
     internal static class StructExtensions {
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        [Pure, MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static ref byte AsRefByte<T>(ref this T value, int byteOffset) where T : struct =>
             ref Unsafe.As<T, byte>(ref Unsafe.AddByteOffset(ref value, new IntPtr(byteOffset)));
     }

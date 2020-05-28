@@ -17,7 +17,6 @@
 
 using System;
 using Destructurama.Attributed;
-using Orion.Packets.Players;
 using Orion.Players;
 
 namespace Orion.Events.Players {
@@ -43,7 +42,7 @@ namespace Orion.Events.Players {
 
         /// <summary>
         /// Initializes a new instance of the <see cref="PlayerManaEvent"/> class with the specified
-        /// <paramref name="player"/> and mana values.
+        /// <paramref name="player"/>, <paramref name="mana"/>, and <paramref name="maxMana"/>.
         /// </summary>
         /// <param name="player">The player.</param>
         /// <param name="mana">The mana.</param>

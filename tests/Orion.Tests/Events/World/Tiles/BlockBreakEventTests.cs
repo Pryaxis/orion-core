@@ -30,11 +30,11 @@ namespace Orion.Events.World.Tiles {
         }
 
         [Fact]
-        public void ShouldSuppressItems_Get() {
+        public void IsItemless_Get() {
             var player = new Mock<IPlayer>().Object;
             var evt = new BlockBreakEvent(player, 0, 0, false, true);
 
-            Assert.True(evt.ShouldSuppressItems);
+            Assert.True(evt.IsItemless);
         }
     }
 }

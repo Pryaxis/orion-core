@@ -22,7 +22,7 @@ using Serilog.Events;
 
 namespace Orion.Events.Npcs {
     /// <summary>
-    /// An event that occurs when an NPC's defaults are set. This event can be canceled.
+    /// An event that occurs when an NPC's defaults are being set. This event can be canceled.
     /// </summary>
     [Event("npc-defaults", LoggingLevel = LogEventLevel.Verbose)]
     public sealed class NpcDefaultsEvent : NpcEvent, ICancelable {
@@ -37,13 +37,10 @@ namespace Orion.Events.Npcs {
 
         /// <summary>
         /// Initializes a new instance of the <see cref="NpcDefaultsEvent"/> class with the specified
-        /// <paramref name="npc"/> and NPC <paramref name="id"/>.
+        /// <paramref name="npc"/>.
         /// </summary>
         /// <param name="npc">The NPC.</param>
-        /// <param name="id">The NPC ID.</param>
         /// <exception cref="ArgumentNullException"><paramref name="npc"/> is <see langword="null"/>.</exception>
-        public NpcDefaultsEvent(INpc npc, NpcId id) : base(npc) {
-            Id = id;
-        }
+        public NpcDefaultsEvent(INpc npc) : base(npc) { }
     }
 }

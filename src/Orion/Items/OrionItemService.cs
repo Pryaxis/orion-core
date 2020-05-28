@@ -61,7 +61,7 @@ namespace Orion.Items {
             Debug.Assert(terrariaItem != null);
 
             var item = GetItem(terrariaItem);
-            var evt = new ItemDefaultsEvent(item, (ItemId)itemId);
+            var evt = new ItemDefaultsEvent(item) { Id = (ItemId)itemId };
             Kernel.Raise(evt, Log);
             itemId = (int)evt.Id;
             return evt.IsCanceled() ? OTAPI.HookResult.Cancel : OTAPI.HookResult.Continue;

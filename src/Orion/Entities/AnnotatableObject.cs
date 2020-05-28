@@ -20,7 +20,7 @@ using System.Collections.Generic;
 
 namespace Orion.Entities {
     /// <summary>
-    /// Provides the base class for an object implementing <see cref="IAnnotatable"/>.
+    /// Represents an annotatable object.
     /// </summary>
     public class AnnotatableObject : IAnnotatable {
         private readonly IDictionary<string, object> _annotations = new Dictionary<string, object>();
@@ -60,7 +60,7 @@ namespace Orion.Entities {
             return _annotations.Remove(key);
         }
 
-        // Utility class for providing a reference to `T`.
+        // Utility class for providing a `ref` to `T`.
         private class Box<T> {
             public T Value = default!;
         }
