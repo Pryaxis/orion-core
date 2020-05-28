@@ -193,22 +193,6 @@ namespace Orion.Players {
         }
 
         [Fact]
-        public void PacketReceive_PlayerHealthEventModified() {
-            // Set `State` to 10 so that the health packet is not ignored by the server.
-            Terraria.Netplay.Clients[5] = new Terraria.RemoteClient { Id = 5, State = 10 };
-            Terraria.Main.player[5] = new Terraria.Player { whoAmI = 5 };
-
-            using var kernel = new OrionKernel(Logger.None);
-            using var playerService = new OrionPlayerService(kernel, Logger.None);
-            kernel.RegisterHandler<PlayerHealthEvent>(evt => evt.Health = 200, Logger.None);
-
-            TestUtils.FakeReceiveBytes(5, PlayerHealthPacketTests.Bytes);
-
-            Assert.Equal(200, Terraria.Main.player[5].statLife);
-            Assert.Equal(500, Terraria.Main.player[5].statLifeMax);
-        }
-
-        [Fact]
         public void PacketReceive_PlayerHealthEventCanceled() {
             // Set `State` to 10 so that the health packet is not ignored by the server.
             Terraria.Netplay.Clients[5] = new Terraria.RemoteClient { Id = 5, State = 10 };

@@ -18,7 +18,6 @@
 using System;
 using System.Diagnostics.CodeAnalysis;
 using Moq;
-using Orion.Packets.Players;
 using Orion.Players;
 using Xunit;
 
@@ -27,49 +26,23 @@ namespace Orion.Events.Players {
     public class PlayerHealthEventTests {
         [Fact]
         public void Ctor_NullPlayer_ThrowsArgumentNullException() {
-            var packet = new PlayerHealthPacket();
-
-            Assert.Throws<ArgumentNullException>(() => new PlayerHealthEvent(null!, ref packet));
+            Assert.Throws<ArgumentNullException>(() => new PlayerHealthEvent(null!, 0, 0));
         }
 
         [Fact]
         public void Health_Get() {
             var player = new Mock<IPlayer>().Object;
-            var packet = new PlayerHealthPacket { Health = 100 };
-            var evt = new PlayerHealthEvent(player, ref packet);
+            var evt = new PlayerHealthEvent(player, 100, 0);
 
             Assert.Equal(100, evt.Health);
         }
 
         [Fact]
-        public void Health_Set() {
-            var player = new Mock<IPlayer>().Object;
-            var packet = new PlayerHealthPacket();
-            var evt = new PlayerHealthEvent(player, ref packet);
-
-            evt.Health = 100;
-
-            Assert.Equal(100, packet.Health);
-        }
-
-        [Fact]
         public void MaxHealth_Get() {
             var player = new Mock<IPlayer>().Object;
-            var packet = new PlayerHealthPacket { MaxHealth = 500 };
-            var evt = new PlayerHealthEvent(player, ref packet);
+            var evt = new PlayerHealthEvent(player, 0, 500);
 
             Assert.Equal(500, evt.MaxHealth);
-        }
-
-        [Fact]
-        public void MaxHealth_Set() {
-            var player = new Mock<IPlayer>().Object;
-            var packet = new PlayerHealthPacket();
-            var evt = new PlayerHealthEvent(player, ref packet);
-
-            evt.MaxHealth = 500;
-
-            Assert.Equal(500, packet.MaxHealth);
         }
     }
 }

@@ -16,7 +16,7 @@
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
 using System;
-using Orion.Packets.Players;
+using Destructurama.Attributed;
 using Orion.Players;
 
 namespace Orion.Events.Players {
@@ -24,26 +24,32 @@ namespace Orion.Events.Players {
     /// An event that occurs when a player sets their health. This event can be canceled.
     /// </summary>
     [Event("player-hp")]
-    public sealed class PlayerHealthEvent : PlayerPacketEvent<PlayerHealthPacket> {
-        /// <inheritdoc cref="PlayerHealthPacket.Health"/>
-        public short Health {
-            get => Packet.Health;
-            set => Packet.Health = value;
-        }
+    public sealed class PlayerHealthEvent : PlayerEvent, ICancelable {
+        /// <summary>
+        /// Gets the health.
+        /// </summary>
+        /// <value>The health.</value>
+        public int Health { get; }
 
-        /// <inheritdoc cref="PlayerHealthPacket.MaxHealth"/>
-        public short MaxHealth {
-            get => Packet.MaxHealth;
-            set => Packet.MaxHealth = value;
-        }
+        /// <summary>
+        /// Gets the maximum health.
+        /// </summary>
+        public int MaxHealth { get; }
+
+        /// <inheritdoc/>
+        [NotLogged] public string? CancellationReason { get; set; }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="PlayerHealthEvent"/> class with the specified
-        /// <paramref name="player"/> and <paramref name="packet"/> reference.
+        /// <paramref name="player"/> and health values.
         /// </summary>
         /// <param name="player">The player.</param>
-        /// <param name="packet">The packet reference. <b>This must be on the stack!</b></param>
+        /// <param name="health">The health.</param>
+        /// <param name="maxHealth">The maximum health.</param>
         /// <exception cref="ArgumentNullException"><paramref name="player"/> is <see langword="null"/>.</exception>
-        public PlayerHealthEvent(IPlayer player, ref PlayerHealthPacket packet) : base(player, ref packet) { }
+        public PlayerHealthEvent(IPlayer player, int health, int maxHealth) : base(player) {
+            Health = health;
+            MaxHealth = maxHealth;
+        }
     }
 }

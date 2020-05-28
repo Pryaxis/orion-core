@@ -180,13 +180,9 @@ namespace Orion.Players {
             // While this may seem inefficient, these typeof comparisons get optimized in each reified generic method by
             // the JIT.
             if (typeof(TPacket) == typeof(PlayerJoinPacket)) {
-                var evt = new PlayerJoinEvent(player);
-                Kernel.Raise(evt, Log);
-                return evt.IsCanceled();
+                return RaisePlayerJoinEvent(player);
             } else if (typeof(TPacket) == typeof(PlayerHealthPacket)) {
-                var evt = new PlayerHealthEvent(player, ref Unsafe.As<TPacket, PlayerHealthPacket>(ref packet));
-                Kernel.Raise(evt, Log);
-                return evt.IsCanceled();
+                return RaisePlayerHealthEvent(player, ref Unsafe.As<TPacket, PlayerHealthPacket>(ref packet));
             } else if (typeof(TPacket) == typeof(TileModifyPacket)) {
                 ref var packet2 = ref Unsafe.As<TPacket, TileModifyPacket>(ref packet);
                 switch (packet2.Modification) {
@@ -234,9 +230,16 @@ namespace Orion.Players {
             }
         }
 
-        private void OnReceiveModule<TModule>(Terraria.MessageBuffer buffer, Span<byte> span) {
-            Debug.Assert(buffer != null);
-            Debug.Assert(span.Length > 0);
+        private bool RaisePlayerJoinEvent(IPlayer player) {
+            var evt = new PlayerJoinEvent(player);
+            Kernel.Raise(evt, Log);
+            return evt.IsCanceled();
+        }
+
+        private bool RaisePlayerHealthEvent(IPlayer player, ref PlayerHealthPacket packet) {
+            var evt = new PlayerHealthEvent(player, packet.Health, packet.MaxHealth);
+            Kernel.Raise(evt, Log);
+            return evt.IsCanceled();
         }
 
         private OTAPI.HookResult SendBytesHandler(
