@@ -44,7 +44,7 @@ namespace Orion.Packets.World.Tiles {
         public static readonly byte[] ModifyLogicGateBytes = { 11, 0, 17, 18, 100, 0, 0, 1, 0, 0, 0 };
         public static readonly byte[] ActuateBlockBytes = { 11, 0, 17, 19, 100, 0, 0, 1, 0, 0, 0 };
         public static readonly byte[] BreakContainerBytes = { 11, 0, 17, 20, 100, 0, 0, 1, 0, 0, 0 };
-        public static readonly byte[] ReplaceBlockBytes = { 11, 0, 17, 21, 100, 0, 0, 1, 4, 0, 1 };
+        public static readonly byte[] ReplaceBlockBytes = { 11, 0, 17, 21, 100, 0, 0, 1, 1, 0, 0 };
         public static readonly byte[] ReplaceWallBytes = { 11, 0, 17, 22, 100, 0, 0, 1, 1, 0, 0 };
         public static readonly byte[] SlopeAndHammerBlockBytes = { 11, 0, 17, 23, 100, 0, 0, 1, 1, 0, 0 };
 
@@ -425,8 +425,8 @@ namespace Orion.Packets.World.Tiles {
             Assert.Equal(TileModification.ReplaceBlock, packet.Modification);
             Assert.Equal(100, packet.X);
             Assert.Equal(256, packet.Y);
-            Assert.Equal(BlockId.Torches, packet.BlockId);
-            Assert.Equal(1, packet.BlockStyle);
+            Assert.Equal(BlockId.Stone, packet.BlockId);
+            Assert.Equal(0, packet.BlockStyle);
         }
 
         [Fact]

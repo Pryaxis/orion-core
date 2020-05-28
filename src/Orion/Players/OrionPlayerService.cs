@@ -215,25 +215,26 @@ namespace Orion.Players {
         }
 
         private bool RaisePlayerEvent(IPlayer player, ref TileModifyPacket packet) {
-            switch (packet.Modification) {
-            case TileModification.BreakBlock: {
-                    var evt = new BlockBreakEvent(player, packet.X, packet.Y, packet.IsFailure, false);
-                    Kernel.Raise(evt, Log);
-                    return evt.IsCanceled();
-                }
-            case TileModification.PlaceBlock: {
-                    var evt = new BlockPlaceEvent(player, packet.X, packet.Y, packet.BlockId, packet.BlockStyle);
-                    Kernel.Raise(evt, Log);
-                    return evt.IsCanceled();
-                }
-            case TileModification.BreakBlockNoItems: {
-                    var evt = new BlockBreakEvent(player, packet.X, packet.Y, packet.IsFailure, true);
-                    Kernel.Raise(evt, Log);
-                    return evt.IsCanceled();
-                }
-            default:
-                return false;
+            bool RaiseBlockBreakEvent(ref TileModifyPacket packet, bool shouldSuppressItems) {
+                var evt = new BlockBreakEvent(player, packet.X, packet.Y, packet.IsFailure, shouldSuppressItems);
+                Kernel.Raise(evt, Log);
+                return evt.IsCanceled();
             }
+
+            bool RaiseBlockPlaceEvent(ref TileModifyPacket packet, bool isReplacement) {
+                var evt = new BlockPlaceEvent(
+                    player, packet.X, packet.Y, packet.BlockId, packet.BlockStyle, isReplacement);
+                Kernel.Raise(evt, Log);
+                return evt.IsCanceled();
+            }
+
+            return packet.Modification switch {
+                TileModification.BreakBlock => RaiseBlockBreakEvent(ref packet, false),
+                TileModification.PlaceBlock => RaiseBlockPlaceEvent(ref packet, false),
+                TileModification.BreakBlockNoItems => RaiseBlockBreakEvent(ref packet, true),
+                TileModification.ReplaceBlock => RaiseBlockPlaceEvent(ref packet, true),
+                _ => false
+            };
         }
 
         private bool RaisePlayerEvent(IPlayer player, ref PlayerPvpPacket packet) {

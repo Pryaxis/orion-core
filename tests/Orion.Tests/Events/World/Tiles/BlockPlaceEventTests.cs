@@ -25,7 +25,7 @@ namespace Orion.Events.World.Tiles {
         [Fact]
         public void Id_Get() {
             var player = new Mock<IPlayer>().Object;
-            var evt = new BlockPlaceEvent(player, 0, 0, BlockId.Torches, 0);
+            var evt = new BlockPlaceEvent(player, 0, 0, BlockId.Torches, 0, false);
 
             Assert.Equal(BlockId.Torches, evt.Id);
         }
@@ -33,9 +33,17 @@ namespace Orion.Events.World.Tiles {
         [Fact]
         public void Style_Get() {
             var player = new Mock<IPlayer>().Object;
-            var evt = new BlockPlaceEvent(player, 0, 0, BlockId.Torches, 1);
+            var evt = new BlockPlaceEvent(player, 0, 0, BlockId.Torches, 1, false);
 
             Assert.Equal(1, evt.Style);
+        }
+
+        [Fact]
+        public void IsReplacement_Get() {
+            var player = new Mock<IPlayer>().Object;
+            var evt = new BlockPlaceEvent(player, 0, 0, BlockId.Torches, 1, true);
+
+            Assert.True(evt.IsReplacement);
         }
     }
 }

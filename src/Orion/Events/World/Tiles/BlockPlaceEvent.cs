@@ -37,17 +37,27 @@ namespace Orion.Events.World.Tiles {
         public int Style { get; }
 
         /// <summary>
+        /// Gets a value indicating whether this is a replacement.
+        /// </summary>
+        /// <value><see langword="true"/> if this is a replacement; otherwise, <see langword="false"/>.</value>
+        public bool IsReplacement { get; }
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="BlockPlaceEvent"/> class with the specified
-        /// <paramref name="player"/>, coordinates, block <paramref name="id"/>, and <paramref name="style"/>.
+        /// <paramref name="player"/>, coordinates, block <paramref name="id"/>, <paramref name="style"/>, and
+        /// replacement status.
         /// </summary>
         /// <param name="player">The player, or <see langword="null"/> for none.</param>
         /// <param name="x">The X coordinate.</param>
         /// <param name="y">The Y coordinate.</param>
         /// <param name="id">The block ID.</param>
         /// <param name="style">The style.</param>
-        public BlockPlaceEvent(IPlayer? player, int x, int y, BlockId id, int style) : base(player, x, y) {
+        /// <param name="isReplacement">Whether this is a replacement.</param>
+        public BlockPlaceEvent(IPlayer? player, int x, int y, BlockId id, int style, bool isReplacement = false)
+                : base(player, x, y) {
             Id = id;
             Style = style;
+            IsReplacement = isReplacement;
         }
     }
 }
