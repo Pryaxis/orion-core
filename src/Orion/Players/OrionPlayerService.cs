@@ -185,27 +185,7 @@ namespace Orion.Players {
             } else if (typeof(TPacket) == typeof(PlayerHealthPacket)) {
                 return RaisePlayerEvent(player, ref Unsafe.As<TPacket, PlayerHealthPacket>(ref packet));
             } else if (typeof(TPacket) == typeof(TileModifyPacket)) {
-                ref var packet2 = ref Unsafe.As<TPacket, TileModifyPacket>(ref packet);
-                switch (packet2.Modification) {
-                case TileModification.BreakBlock: {
-                        var evt = new BlockBreakEvent(player, packet2.X, packet2.Y, packet2.IsFailure, false);
-                        Kernel.Raise(evt, Log);
-                        return evt.IsCanceled();
-                    }
-                case TileModification.PlaceBlock: {
-                        var evt = new BlockPlaceEvent(
-                            player, packet2.X, packet2.Y, packet2.BlockId, packet2.BlockStyle);
-                        Kernel.Raise(evt, Log);
-                        return evt.IsCanceled();
-                    }
-                case TileModification.BreakBlockNoItems: {
-                        var evt = new BlockBreakEvent(player, packet2.X, packet2.Y, packet2.IsFailure, true);
-                        Kernel.Raise(evt, Log);
-                        return evt.IsCanceled();
-                    }
-                default:
-                    return false;
-                }
+                return RaisePlayerEvent(player, ref Unsafe.As<TPacket, TileModifyPacket>(ref packet));
             } else if (typeof(TPacket) == typeof(PlayerPvpPacket)) {
                 return RaisePlayerEvent(player, ref Unsafe.As<TPacket, PlayerPvpPacket>(ref packet));
             } else if (typeof(TPacket) == typeof(PlayerManaPacket)) {
@@ -232,6 +212,28 @@ namespace Orion.Players {
             var evt = new PlayerHealthEvent(player, packet.Health, packet.MaxHealth);
             Kernel.Raise(evt, Log);
             return evt.IsCanceled();
+        }
+
+        private bool RaisePlayerEvent(IPlayer player, ref TileModifyPacket packet) {
+            switch (packet.Modification) {
+            case TileModification.BreakBlock: {
+                    var evt = new BlockBreakEvent(player, packet.X, packet.Y, packet.IsFailure, false);
+                    Kernel.Raise(evt, Log);
+                    return evt.IsCanceled();
+                }
+            case TileModification.PlaceBlock: {
+                    var evt = new BlockPlaceEvent(player, packet.X, packet.Y, packet.BlockId, packet.BlockStyle);
+                    Kernel.Raise(evt, Log);
+                    return evt.IsCanceled();
+                }
+            case TileModification.BreakBlockNoItems: {
+                    var evt = new BlockBreakEvent(player, packet.X, packet.Y, packet.IsFailure, true);
+                    Kernel.Raise(evt, Log);
+                    return evt.IsCanceled();
+                }
+            default:
+                return false;
+            }
         }
 
         private bool RaisePlayerEvent(IPlayer player, ref PlayerPvpPacket packet) {
