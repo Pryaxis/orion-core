@@ -45,7 +45,7 @@ namespace Orion.Events.Players {
         /// <paramref name="player"/> or <paramref name="uuid"/> are <see langword="null"/>.
         /// </exception>
         public PlayerUuidEvent(IPlayer player, string uuid) : base(player) {
-            Uuid = uuid;
+            Uuid = uuid ?? throw new ArgumentNullException(nameof(uuid));
         }
     }
 }

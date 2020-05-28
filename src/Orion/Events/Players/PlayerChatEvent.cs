@@ -16,6 +16,7 @@
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
 using System;
+using Destructurama.Attributed;
 using Orion.Packets.Modules;
 using Orion.Players;
 
@@ -24,34 +25,36 @@ namespace Orion.Events.Players {
     /// An event that occurs when a player chats.
     /// </summary>
     [Event("player-chat")]
-    public sealed class PlayerChatEvent : PlayerPacketEvent<ModulePacket<ChatModule>> {
+    public sealed class PlayerChatEvent : PlayerEvent, ICancelable {
         /// <summary>
-        /// Gets or sets the command.
+        /// Gets the command.
         /// </summary>
         /// <value>The command.</value>
-        /// <exception cref="ArgumentNullException"><paramref name="value"/> is <see langword="null"/>.</exception>
-        public string Command {
-            get => Packet.Module.ClientCommand;
-            set => Packet.Module.ClientCommand = value ?? throw new ArgumentNullException(nameof(value));
-        }
+        public string Command { get; }
 
         /// <summary>
-        /// Gets or sets the text.
+        /// Gets the text.
         /// </summary>
         /// <value>The text.</value>
-        /// <exception cref="ArgumentNullException"><paramref name="value"/> is <see langword="null"/>.</exception>
-        public string Text {
-            get => Packet.Module.ClientText;
-            set => Packet.Module.ClientText = value ?? throw new ArgumentNullException(nameof(value));
-        }
+        public string Text { get; }
+
+        /// <inheritdoc/>
+        [NotLogged] public string? CancellationReason { get; set; }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="PlayerChatEvent"/> class with the specified
-        /// <paramref name="player"/> and <paramref name="packet"/> reference.
+        /// <paramref name="player"/>, <paramref name="command"/>, and <paramref name="text"/>.
         /// </summary>
         /// <param name="player">The player.</param>
-        /// <param name="packet">The packet reference. <b>This must be on the stack!</b></param>
-        /// <exception cref="ArgumentNullException"><paramref name="player"/> is <see langword="null"/>.</exception>
-        public PlayerChatEvent(IPlayer player, ref ModulePacket<ChatModule> packet) : base(player, ref packet) { }
+        /// <param name="command">The command.</param>
+        /// <param name="text">The text.</param>
+        /// <exception cref="ArgumentNullException">
+        /// <paramref name="player"/>, <paramref name="command"/>, or <paramref name="text"/> are
+        /// <see langword="null"/>.
+        /// </exception>
+        public PlayerChatEvent(IPlayer player, string command, string text) : base(player) {
+            Command = command ?? throw new ArgumentNullException(nameof(command));
+            Text = text ?? throw new ArgumentNullException(nameof(text));
+        }
     }
 }

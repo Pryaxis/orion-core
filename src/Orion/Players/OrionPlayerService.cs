@@ -17,6 +17,7 @@
 
 using System;
 using System.Diagnostics;
+using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Reflection;
 using System.Runtime.CompilerServices;
@@ -214,14 +215,13 @@ namespace Orion.Players {
             } else if (typeof(TPacket) == typeof(ClientUuidPacket)) {
                 return RaisePlayerEvent(player, ref Unsafe.As<TPacket, ClientUuidPacket>(ref packet));
             } else if (typeof(TPacket) == typeof(ModulePacket<ChatModule>)) {
-                var evt = new PlayerChatEvent(player, ref Unsafe.As<TPacket, ModulePacket<ChatModule>>(ref packet));
-                Kernel.Raise(evt, Log);
-                return evt.IsCanceled();
+                return RaisePlayerEvent(player, ref Unsafe.As<TPacket, ModulePacket<ChatModule>>(ref packet));
             } else {
                 return false;
             }
         }
 
+        [SuppressMessage("Style", "IDE0060:Remove unused parameter", Justification = "Standardization")]
         private bool RaisePlayerEvent(IPlayer player, ref PlayerJoinPacket packet) {
             var evt = new PlayerJoinEvent(player);
             Kernel.Raise(evt, Log);
@@ -254,6 +254,12 @@ namespace Orion.Players {
 
         private bool RaisePlayerEvent(IPlayer player, ref ClientUuidPacket packet) {
             var evt = new PlayerUuidEvent(player, packet.Uuid);
+            Kernel.Raise(evt, Log);
+            return evt.IsCanceled();
+        }
+
+        private bool RaisePlayerEvent(IPlayer player, ref ModulePacket<ChatModule> packet) {
+            var evt = new PlayerChatEvent(player, packet.Module.ClientCommand, packet.Module.ClientText);
             Kernel.Raise(evt, Log);
             return evt.IsCanceled();
         }

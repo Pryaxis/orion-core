@@ -27,67 +27,47 @@ namespace Orion.Events.Players {
     public class PlayerChatEventTests {
         [Fact]
         public void Ctor_NullPlayer_ThrowsArgumentNullException() {
-            var packet = new ModulePacket<ChatModule>();
+            Assert.Throws<ArgumentNullException>(() => new PlayerChatEvent(null!, "", ""));
+        }
 
-            Assert.Throws<ArgumentNullException>(() => new PlayerChatEvent(null!, ref packet));
+        [Fact]
+        public void Ctor_NullCommand_ThrowsArgumentNullException() {
+            var player = new Mock<IPlayer>().Object;
+
+            Assert.Throws<ArgumentNullException>(() => new PlayerChatEvent(player, null!, ""));
+        }
+
+        [Fact]
+        public void Ctor_NullText_ThrowsArgumentNullException() {
+            var player = new Mock<IPlayer>().Object;
+
+            Assert.Throws<ArgumentNullException>(() => new PlayerChatEvent(player, "", null!));
         }
 
         [Fact]
         public void Command_Get() {
             var player = new Mock<IPlayer>().Object;
-            var packet = new ModulePacket<ChatModule> { Module = new ChatModule { ClientCommand = "Say" } };
-            var evt = new PlayerChatEvent(player, ref packet);
+            var evt = new PlayerChatEvent(player, "Say", "");
 
             Assert.Equal("Say", evt.Command);
         }
 
         [Fact]
-        public void Command_SetNullValue_ThrowsArgumentNullException() {
-            var player = new Mock<IPlayer>().Object;
-            var packet = new ModulePacket<ChatModule>();
-            var evt = new PlayerChatEvent(player, ref packet);
-
-            Assert.Throws<ArgumentNullException>(() => evt.Command = null!);
-        }
-
-        [Fact]
-        public void Command_Set() {
-            var player = new Mock<IPlayer>().Object;
-            var packet = new ModulePacket<ChatModule>();
-            var evt = new PlayerChatEvent(player, ref packet);
-
-            evt.Command = "Say";
-
-            Assert.Equal("Say", packet.Module.ClientCommand);
-        }
-
-        [Fact]
         public void Text_Get() {
             var player = new Mock<IPlayer>().Object;
-            var packet = new ModulePacket<ChatModule> { Module = new ChatModule { ClientText = "/command test" } };
-            var evt = new PlayerChatEvent(player, ref packet);
+            var evt = new PlayerChatEvent(player, "", "/command test");
 
             Assert.Equal("/command test", evt.Text);
         }
 
         [Fact]
-        public void Text_SetNullValue_ThrowsArgumentNullException() {
+        public void CancellationReason_Set_Get() {
             var player = new Mock<IPlayer>().Object;
-            var packet = new ModulePacket<ChatModule>();
-            var evt = new PlayerChatEvent(player, ref packet);
+            var evt = new PlayerChatEvent(player, "", "");
 
-            Assert.Throws<ArgumentNullException>(() => evt.Text = null!);
-        }
+            evt.CancellationReason = "test";
 
-        [Fact]
-        public void Text_Set() {
-            var player = new Mock<IPlayer>().Object;
-            var packet = new ModulePacket<ChatModule>();
-            var evt = new PlayerChatEvent(player, ref packet);
-
-            evt.Text = "/command test";
-
-            Assert.Equal("/command test", packet.Module.ClientText);
+            Assert.Equal("test", evt.CancellationReason);
         }
     }
 }
