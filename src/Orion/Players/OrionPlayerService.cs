@@ -195,6 +195,12 @@ namespace Orion.Players {
                         Kernel.Raise(evt, Log);
                         return evt.IsCanceled();
                     }
+                case TileModification.PlaceBlock: {
+                        var evt = new BlockPlaceEvent(
+                            player, packet2.X, packet2.Y, packet2.BlockId, packet2.BlockStyle);
+                        Kernel.Raise(evt, Log);
+                        return evt.IsCanceled();
+                    }
                 case TileModification.BreakBlockNoItems: {
                         var evt = new BlockBreakEvent(player, packet2.X, packet2.Y, packet2.IsFailure, true);
                         Kernel.Raise(evt, Log);

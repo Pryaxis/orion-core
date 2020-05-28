@@ -15,46 +15,39 @@
 // You should have received a copy of the GNU General Public License
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
-using Destructurama.Attributed;
 using Orion.Players;
+using Orion.World.Tiles;
 
 namespace Orion.Events.World.Tiles {
     /// <summary>
-    /// Represents a tile-related event.
+    /// An event that occurs when a block is placed.
     /// </summary>
-    public abstract class TileEvent : Event, ICancelable {
+    [Event("block-place")]
+    public sealed class BlockPlaceEvent : TileEvent {
         /// <summary>
-        /// Gets the player involved in the event, or <see langword="null"/> if there is no player.
+        /// Gets the block ID.
         /// </summary>
-        /// <value>The player involved in the event.</value>
-        public IPlayer? Player { get; }
+        /// <value>The block ID.</value>
+        public BlockId Id { get; }
 
         /// <summary>
-        /// Gets the X coordinate.
+        /// Gets the style.
         /// </summary>
-        /// <value>The X coordinate.</value>
-        public int X { get; }
+        /// <value>The style.</value>
+        public int Style { get; }
 
         /// <summary>
-        /// Gets the Y coordinate.
-        /// </summary>
-        /// <value>The Y coordinate.</value>
-        public int Y { get; }
-
-        /// <inheritdoc/>
-        [NotLogged] public string? CancellationReason { get; set; }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="TileEvent"/> class with the specified <paramref name="player"/>
-        /// and coordinates.
+        /// Initializes a new instance of the <see cref="BlockPlaceEvent"/> class with the specified
+        /// <paramref name="player"/>, coordinates, block <paramref name="id"/>, and <paramref name="style"/>.
         /// </summary>
         /// <param name="player">The player, or <see langword="null"/> for none.</param>
         /// <param name="x">The X coordinate.</param>
         /// <param name="y">The Y coordinate.</param>
-        protected TileEvent(IPlayer? player, int x, int y) {
-            Player = player;
-            X = x;
-            Y = y;
+        /// <param name="id">The block ID.</param>
+        /// <param name="style">The style.</param>
+        public BlockPlaceEvent(IPlayer? player, int x, int y, BlockId id, int style) : base(player, x, y) {
+            Id = id;
+            Style = style;
         }
     }
 }

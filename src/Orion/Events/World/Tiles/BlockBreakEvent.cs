@@ -39,7 +39,7 @@ namespace Orion.Events.World.Tiles {
         /// Initializes a new instance of the <see cref="BlockBreakEvent"/> class with the specified
         /// <paramref name="player"/>, coordinates, and flags.
         /// </summary>
-        /// <param name="player">The player.</param>
+        /// <param name="player">The player, or <see langword="null"/> for none.</param>
         /// <param name="x">The X coordinate.</param>
         /// <param name="y">The Y coordinate.</param>
         /// <param name="isFailure">Whether the break attempt is a failure.</param>
