@@ -27,38 +27,32 @@ namespace Orion.Events.Players {
     public class PlayerUuidEventTests {
         [Fact]
         public void Ctor_NullPlayer_ThrowsArgumentNullException() {
-            var packet = new ClientUuidPacket();
+            Assert.Throws<ArgumentNullException>(() => new PlayerUuidEvent(null!, ""));
+        }
 
-            Assert.Throws<ArgumentNullException>(() => new PlayerUuidEvent(null!, ref packet));
+        [Fact]
+        public void Ctor_NullUuid_ThrowsArgumentNullException() {
+            var player = new Mock<IPlayer>().Object;
+
+            Assert.Throws<ArgumentNullException>(() => new PlayerUuidEvent(player, null!));
         }
 
         [Fact]
         public void Uuid_Get() {
             var player = new Mock<IPlayer>().Object;
-            var packet = new ClientUuidPacket { Uuid = "Terraria" };
-            var evt = new PlayerUuidEvent(player, ref packet);
+            var evt = new PlayerUuidEvent(player, "Terraria");
 
             Assert.Equal("Terraria", evt.Uuid);
         }
 
         [Fact]
-        public void Uuid_SetNullValue_ThrowsArgumentNullException() {
+        public void CancellationReason_Set_Get() {
             var player = new Mock<IPlayer>().Object;
-            var packet = new ClientUuidPacket();
-            var evt = new PlayerUuidEvent(player, ref packet);
+            var evt = new PlayerUuidEvent(player, "");
 
-            Assert.Throws<ArgumentNullException>(() => evt.Uuid = null!);
-        }
+            evt.CancellationReason = "test";
 
-        [Fact]
-        public void Uuid_Set() {
-            var player = new Mock<IPlayer>().Object;
-            var packet = new ClientUuidPacket();
-            var evt = new PlayerUuidEvent(player, ref packet);
-
-            evt.Uuid = "Terraria";
-
-            Assert.Equal("Terraria", packet.Uuid);
+            Assert.Equal("test", evt.CancellationReason);
         }
     }
 }

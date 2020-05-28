@@ -180,9 +180,9 @@ namespace Orion.Players {
             // While this may seem inefficient, these typeof comparisons get optimized in each reified generic method by
             // the JIT.
             if (typeof(TPacket) == typeof(PlayerJoinPacket)) {
-                return RaisePlayerJoinEvent(player);
+                return RaisePlayerEvent(player, ref Unsafe.As<TPacket, PlayerJoinPacket>(ref packet));
             } else if (typeof(TPacket) == typeof(PlayerHealthPacket)) {
-                return RaisePlayerHealthEvent(player, ref Unsafe.As<TPacket, PlayerHealthPacket>(ref packet));
+                return RaisePlayerEvent(player, ref Unsafe.As<TPacket, PlayerHealthPacket>(ref packet));
             } else if (typeof(TPacket) == typeof(TileModifyPacket)) {
                 ref var packet2 = ref Unsafe.As<TPacket, TileModifyPacket>(ref packet);
                 switch (packet2.Modification) {
@@ -206,15 +206,13 @@ namespace Orion.Players {
                     return false;
                 }
             } else if (typeof(TPacket) == typeof(PlayerPvpPacket)) {
-                return RaisePlayerPvpEvent(player, ref Unsafe.As<TPacket, PlayerPvpPacket>(ref packet));
+                return RaisePlayerEvent(player, ref Unsafe.As<TPacket, PlayerPvpPacket>(ref packet));
             } else if (typeof(TPacket) == typeof(PlayerManaPacket)) {
-                return RaisePlayerManaEvent(player, ref Unsafe.As<TPacket, PlayerManaPacket>(ref packet));
+                return RaisePlayerEvent(player, ref Unsafe.As<TPacket, PlayerManaPacket>(ref packet));
             } else if (typeof(TPacket) == typeof(PlayerTeamPacket)) {
-                return RaisePlayerTeamEvent(player, ref Unsafe.As<TPacket, PlayerTeamPacket>(ref packet));
+                return RaisePlayerEvent(player, ref Unsafe.As<TPacket, PlayerTeamPacket>(ref packet));
             } else if (typeof(TPacket) == typeof(ClientUuidPacket)) {
-                var evt = new PlayerUuidEvent(player, ref Unsafe.As<TPacket, ClientUuidPacket>(ref packet));
-                Kernel.Raise(evt, Log);
-                return evt.IsCanceled();
+                return RaisePlayerEvent(player, ref Unsafe.As<TPacket, ClientUuidPacket>(ref packet));
             } else if (typeof(TPacket) == typeof(ModulePacket<ChatModule>)) {
                 var evt = new PlayerChatEvent(player, ref Unsafe.As<TPacket, ModulePacket<ChatModule>>(ref packet));
                 Kernel.Raise(evt, Log);
@@ -224,32 +222,38 @@ namespace Orion.Players {
             }
         }
 
-        private bool RaisePlayerJoinEvent(IPlayer player) {
+        private bool RaisePlayerEvent(IPlayer player, ref PlayerJoinPacket packet) {
             var evt = new PlayerJoinEvent(player);
             Kernel.Raise(evt, Log);
             return evt.IsCanceled();
         }
 
-        private bool RaisePlayerHealthEvent(IPlayer player, ref PlayerHealthPacket packet) {
+        private bool RaisePlayerEvent(IPlayer player, ref PlayerHealthPacket packet) {
             var evt = new PlayerHealthEvent(player, packet.Health, packet.MaxHealth);
             Kernel.Raise(evt, Log);
             return evt.IsCanceled();
         }
 
-        private bool RaisePlayerPvpEvent(IPlayer player, ref PlayerPvpPacket packet) {
+        private bool RaisePlayerEvent(IPlayer player, ref PlayerPvpPacket packet) {
             var evt = new PlayerPvpEvent(player, packet.IsInPvp);
             Kernel.Raise(evt, Log);
             return evt.IsCanceled();
         }
 
-        private bool RaisePlayerManaEvent(IPlayer player, ref PlayerManaPacket packet) {
+        private bool RaisePlayerEvent(IPlayer player, ref PlayerManaPacket packet) {
             var evt = new PlayerManaEvent(player, packet.Mana, packet.MaxMana);
             Kernel.Raise(evt, Log);
             return evt.IsCanceled();
         }
 
-        private bool RaisePlayerTeamEvent(IPlayer player, ref PlayerTeamPacket packet) {
+        private bool RaisePlayerEvent(IPlayer player, ref PlayerTeamPacket packet) {
             var evt = new PlayerTeamEvent(player, packet.Team);
+            Kernel.Raise(evt, Log);
+            return evt.IsCanceled();
+        }
+
+        private bool RaisePlayerEvent(IPlayer player, ref ClientUuidPacket packet) {
+            var evt = new PlayerUuidEvent(player, packet.Uuid);
             Kernel.Raise(evt, Log);
             return evt.IsCanceled();
         }

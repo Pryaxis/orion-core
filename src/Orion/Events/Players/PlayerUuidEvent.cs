@@ -16,6 +16,7 @@
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
 using System;
+using Destructurama.Attributed;
 using Orion.Packets.Client;
 using Orion.Players;
 
@@ -24,24 +25,27 @@ namespace Orion.Events.Players {
     /// An event that occurs when a player informs the server of their UUID.
     /// </summary>
     [Event("player-uuid")]
-    public sealed class PlayerUuidEvent : PlayerPacketEvent<ClientUuidPacket> {
+    public sealed class PlayerUuidEvent : PlayerEvent, ICancelable {
         /// <summary>
-        /// Gets or sets the UUID.
+        /// Gets the UUID.
         /// </summary>
         /// <value>The UUID.</value>
-        /// <exception cref="ArgumentNullException"><paramref name="value"/> is <see langword="null"/>.</exception>
-        public string Uuid {
-            get => Packet.Uuid;
-            set => Packet.Uuid = value ?? throw new ArgumentNullException(nameof(value));
-        }
+        public string Uuid { get; }
+
+        /// <inheritdoc/>
+        [NotLogged] public string? CancellationReason { get; set; }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="PlayerUuidEvent"/> class with the specified
-        /// <paramref name="player"/> and <paramref name="packet"/> reference.
+        /// <paramref name="player"/> and <paramref name="uuid"/>.
         /// </summary>
         /// <param name="player">The player.</param>
-        /// <param name="packet">The packet reference. <b>This must be on the stack!</b></param>
-        /// <exception cref="ArgumentNullException"><paramref name="player"/> is <see langword="null"/>.</exception>
-        public PlayerUuidEvent(IPlayer player, ref ClientUuidPacket packet) : base(player, ref packet) { }
+        /// <param name="uuid">The UUID.</param>
+        /// <exception cref="ArgumentNullException">
+        /// <paramref name="player"/> or <paramref name="uuid"/> are <see langword="null"/>.
+        /// </exception>
+        public PlayerUuidEvent(IPlayer player, string uuid) : base(player) {
+            Uuid = uuid;
+        }
     }
 }
