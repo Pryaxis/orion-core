@@ -228,11 +228,19 @@ namespace Orion.Players {
                 return evt.IsCanceled();
             }
 
+            bool RaiseWallPlaceEvent(ref TileModifyPacket packet, bool isReplacement) {
+                var evt = new WallPlaceEvent(player, packet.X, packet.Y, packet.WallId, isReplacement);
+                Kernel.Raise(evt, Log);
+                return evt.IsCanceled();
+            }
+
             return packet.Modification switch {
                 TileModification.BreakBlock => RaiseBlockBreakEvent(ref packet, false),
                 TileModification.PlaceBlock => RaiseBlockPlaceEvent(ref packet, false),
+                TileModification.PlaceWall => RaiseWallPlaceEvent(ref packet, false),
                 TileModification.BreakBlockNoItems => RaiseBlockBreakEvent(ref packet, true),
                 TileModification.ReplaceBlock => RaiseBlockPlaceEvent(ref packet, true),
+                TileModification.ReplaceWall => RaiseWallPlaceEvent(ref packet, true),
                 _ => false
             };
         }

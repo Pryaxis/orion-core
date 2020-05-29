@@ -267,7 +267,6 @@ namespace Orion.Players {
             Terraria.Main.tile[100, 256] = new Terraria.Tile();
             Terraria.Main.tile[100, 257] = new Terraria.Tile();
             Terraria.Main.tile[100, 257].active(true);
-            Terraria.Main.item[0] = new Terraria.Item { whoAmI = 0 };
 
             using var kernel = new OrionKernel(Logger.None);
             using var playerService = new OrionPlayerService(kernel, Logger.None);
@@ -297,12 +296,61 @@ namespace Orion.Players {
             Terraria.Netplay.Clients[5].TileSections[0, 1] = true;
             Terraria.Main.player[5] = new Terraria.Player { whoAmI = 5 };
             Terraria.Main.tile[100, 256] = new Terraria.Tile();
+            Terraria.Main.tile[100, 257] = new Terraria.Tile();
+            Terraria.Main.tile[100, 257].active(true);
 
             using var kernel = new OrionKernel(Logger.None);
             using var playerService = new OrionPlayerService(kernel, Logger.None);
             kernel.RegisterHandler<BlockPlaceEvent>(evt => evt.Cancel(), Logger.None);
 
             TestUtils.FakeReceiveBytes(5, TileModifyPacketTests.PlaceBlockBytes);
+
+            Assert.False(Terraria.Main.tile[100, 256].active());
+        }
+
+        [Fact]
+        public void PacketReceive_WallPlaceEventTriggered() {
+            // Set `State` to 10 so that the tile modify packet is not ignored by the server, and mark the relevant
+            // `TileSections` entry so that the tile modify packet is not treated with failure.
+            Terraria.Netplay.Clients[5] = new Terraria.RemoteClient { Id = 5, State = 10 };
+            Terraria.Netplay.Clients[5].TileSections[0, 1] = true;
+            Terraria.Main.player[5] = new Terraria.Player { whoAmI = 5 };
+            Terraria.Main.tile[100, 256] = new Terraria.Tile();
+
+            using var kernel = new OrionKernel(Logger.None);
+            using var playerService = new OrionPlayerService(kernel, Logger.None);
+            var isRun = false;
+            kernel.RegisterHandler<WallPlaceEvent>(evt => {
+                Assert.Same(playerService.Players[5], evt.Player);
+                Assert.Equal(100, evt.X);
+                Assert.Equal(256, evt.Y);
+                Assert.Equal(WallId.Stone, evt.Id);
+                Assert.False(evt.IsReplacement);
+                isRun = true;
+            }, Logger.None);
+
+            TestUtils.FakeReceiveBytes(5, TileModifyPacketTests.PlaceWallBytes);
+
+            Assert.True(isRun);
+            Assert.Equal(WallId.Stone, (WallId)Terraria.Main.tile[100, 256].wall);
+        }
+
+        [Fact]
+        public void PacketReceive_WallPlaceEventCanceled() {
+            // Set `State` to 10 so that the tile modify packet is not ignored by the server, and mark the relevant
+            // `TileSections` entry so that the tile modify packet is not treated with failure.
+            Terraria.Netplay.Clients[5] = new Terraria.RemoteClient { Id = 5, State = 10 };
+            Terraria.Netplay.Clients[5].TileSections[0, 1] = true;
+            Terraria.Main.player[5] = new Terraria.Player { whoAmI = 5 };
+            Terraria.Main.tile[100, 256] = new Terraria.Tile();
+            Terraria.Main.tile[100, 257] = new Terraria.Tile();
+            Terraria.Main.tile[100, 257].active(true);
+
+            using var kernel = new OrionKernel(Logger.None);
+            using var playerService = new OrionPlayerService(kernel, Logger.None);
+            kernel.RegisterHandler<WallPlaceEvent>(evt => evt.Cancel(), Logger.None);
+
+            TestUtils.FakeReceiveBytes(5, TileModifyPacketTests.PlaceWallBytes);
 
             Assert.False(Terraria.Main.tile[100, 256].active());
         }
@@ -395,6 +443,7 @@ namespace Orion.Players {
             Terraria.Netplay.Clients[5].TileSections[0, 1] = true;
             Terraria.Main.player[5] = new Terraria.Player { whoAmI = 5 };
             Terraria.Main.tile[100, 256] = new Terraria.Tile();
+            Terraria.Main.tile[100, 256].active(true);
 
             using var kernel = new OrionKernel(Logger.None);
             using var playerService = new OrionPlayerService(kernel, Logger.None);
@@ -402,7 +451,54 @@ namespace Orion.Players {
 
             TestUtils.FakeReceiveBytes(5, TileModifyPacketTests.ReplaceBlockBytes);
 
-            Assert.False(Terraria.Main.tile[100, 256].active());
+            Assert.True(Terraria.Main.tile[100, 256].active());
+            Assert.Equal(BlockId.Dirt, (BlockId)Terraria.Main.tile[100, 256].type);
+        }
+
+        [Fact]
+        public void PacketReceive_WallReplaceEventTriggered() {
+            // Set `State` to 10 so that the tile modify packet is not ignored by the server, and mark the relevant
+            // `TileSections` entry so that the tile modify packet is not treated with failure.
+            Terraria.Netplay.Clients[5] = new Terraria.RemoteClient { Id = 5, State = 10 };
+            Terraria.Netplay.Clients[5].TileSections[0, 1] = true;
+            Terraria.Main.player[5] = new Terraria.Player { whoAmI = 5 };
+            Terraria.Main.tile[100, 256] = new Terraria.Tile { wall = (ushort)WallId.Dirt };
+            Terraria.Main.item[0] = new Terraria.Item { whoAmI = 0 };
+
+            using var kernel = new OrionKernel(Logger.None);
+            using var playerService = new OrionPlayerService(kernel, Logger.None);
+            var isRun = false;
+            kernel.RegisterHandler<WallPlaceEvent>(evt => {
+                Assert.Same(playerService.Players[5], evt.Player);
+                Assert.Equal(100, evt.X);
+                Assert.Equal(256, evt.Y);
+                Assert.Equal(WallId.Stone, evt.Id);
+                Assert.True(evt.IsReplacement);
+                isRun = true;
+            }, Logger.None);
+
+            TestUtils.FakeReceiveBytes(5, TileModifyPacketTests.ReplaceWallBytes);
+
+            Assert.True(isRun);
+            Assert.Equal(WallId.Stone, (WallId)Terraria.Main.tile[100, 256].wall);
+        }
+
+        [Fact]
+        public void PacketReceive_WallReplaceEventCanceled() {
+            // Set `State` to 10 so that the tile modify packet is not ignored by the server, and mark the relevant
+            // `TileSections` entry so that the tile modify packet is not treated with failure.
+            Terraria.Netplay.Clients[5] = new Terraria.RemoteClient { Id = 5, State = 10 };
+            Terraria.Netplay.Clients[5].TileSections[0, 1] = true;
+            Terraria.Main.player[5] = new Terraria.Player { whoAmI = 5 };
+            Terraria.Main.tile[100, 256] = new Terraria.Tile { wall = (ushort)WallId.Dirt };
+
+            using var kernel = new OrionKernel(Logger.None);
+            using var playerService = new OrionPlayerService(kernel, Logger.None);
+            kernel.RegisterHandler<WallPlaceEvent>(evt => evt.Cancel(), Logger.None);
+
+            TestUtils.FakeReceiveBytes(5, TileModifyPacketTests.ReplaceWallBytes);
+
+            Assert.Equal(WallId.Dirt, (WallId)Terraria.Main.tile[100, 256].wall);
         }
 
         [Fact]
