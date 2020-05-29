@@ -243,6 +243,12 @@ namespace Orion.Players {
                 return evt.IsCanceled();
             }
 
+            bool RaiseWiringBreakEvent(ref TileModifyPacket packet, Wiring wiring) {
+                var evt = new WiringBreakEvent(player, packet.X, packet.Y, wiring);
+                Kernel.Raise(evt, Log);
+                return evt.IsCanceled();
+            }
+
             bool RaiseWiringPlaceEvent(ref TileModifyPacket packet, Wiring wiring) {
                 var evt = new WiringPlaceEvent(player, packet.X, packet.Y, wiring);
                 Kernel.Raise(evt, Log);
@@ -256,10 +262,15 @@ namespace Orion.Players {
                 TileModification.PlaceWall => RaiseWallPlaceEvent(ref packet, false),
                 TileModification.BreakBlockNoItems => RaiseBlockBreakEvent(ref packet, true),
                 TileModification.PlaceRedWire => RaiseWiringPlaceEvent(ref packet, Wiring.Red),
+                TileModification.BreakRedWire => RaiseWiringBreakEvent(ref packet, Wiring.Red),
                 TileModification.PlaceActuator => RaiseWiringPlaceEvent(ref packet, Wiring.Actuator),
+                TileModification.BreakActuator => RaiseWiringBreakEvent(ref packet, Wiring.Actuator),
                 TileModification.PlaceBlueWire => RaiseWiringPlaceEvent(ref packet, Wiring.Blue),
+                TileModification.BreakBlueWire => RaiseWiringBreakEvent(ref packet, Wiring.Blue),
                 TileModification.PlaceGreenWire => RaiseWiringPlaceEvent(ref packet, Wiring.Green),
+                TileModification.BreakGreenWire => RaiseWiringBreakEvent(ref packet, Wiring.Green),
                 TileModification.PlaceYellowWire => RaiseWiringPlaceEvent(ref packet, Wiring.Yellow),
+                TileModification.BreakYellowWire => RaiseWiringBreakEvent(ref packet, Wiring.Yellow),
                 TileModification.ReplaceBlock => RaiseBlockPlaceEvent(ref packet, true),
                 TileModification.ReplaceWall => RaiseWallPlaceEvent(ref packet, true),
                 _ => false

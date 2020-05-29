@@ -496,6 +496,56 @@ namespace Orion.Players {
         }
 
         [Fact]
+        public void PacketReceive_RedWireBreakEventTriggered() {
+            // Set `State` to 10 so that the tile modify packet is not ignored by the server, and mark the relevant
+            // `TileSections` entry so that the tile modify packet is not treated with failure.
+            Terraria.Netplay.Clients[5] = new Terraria.RemoteClient { Id = 5, State = 10 };
+            Terraria.Netplay.Clients[5].TileSections[0, 1] = true;
+            Terraria.Main.player[5] = new Terraria.Player { whoAmI = 5 };
+            Terraria.Main.tile[100, 256] = new Terraria.Tile();
+            Terraria.Main.tile[100, 256].wire(true);
+            Terraria.Main.item[0] = new Terraria.Item { whoAmI = 0 };
+
+            using var kernel = new OrionKernel(Logger.None);
+            using var playerService = new OrionPlayerService(kernel, Logger.None);
+            var isRun = false;
+            kernel.RegisterHandler<WiringBreakEvent>(evt => {
+                Assert.Same(playerService.Players[5], evt.Player);
+                Assert.Equal(100, evt.X);
+                Assert.Equal(256, evt.Y);
+                Assert.Equal(Wiring.Red, evt.Wiring);
+                isRun = true;
+            }, Logger.None);
+
+            TestUtils.FakeReceiveBytes(5, TileModifyPacketTests.BreakRedWireBytes);
+
+            Assert.True(isRun);
+            Assert.False(Terraria.Main.tile[100, 256].wire());
+            Assert.Equal(ItemId.Wire, (ItemId)Terraria.Main.item[0].type);
+        }
+
+        [Fact]
+        public void PacketReceive_RedWireBreakEventCanceled() {
+            // Set `State` to 10 so that the tile modify packet is not ignored by the server, and mark the relevant
+            // `TileSections` entry so that the tile modify packet is not treated with failure.
+            Terraria.Netplay.Clients[5] = new Terraria.RemoteClient { Id = 5, State = 10 };
+            Terraria.Netplay.Clients[5].TileSections[0, 1] = true;
+            Terraria.Main.player[5] = new Terraria.Player { whoAmI = 5 };
+            Terraria.Main.tile[100, 256] = new Terraria.Tile();
+            Terraria.Main.tile[100, 256].wire(true);
+            Terraria.Main.item[0] = new Terraria.Item { whoAmI = 0 };
+
+            using var kernel = new OrionKernel(Logger.None);
+            using var playerService = new OrionPlayerService(kernel, Logger.None);
+            kernel.RegisterHandler<WiringBreakEvent>(evt => evt.Cancel(), Logger.None);
+
+            TestUtils.FakeReceiveBytes(5, TileModifyPacketTests.BreakRedWireBytes);
+
+            Assert.True(Terraria.Main.tile[100, 256].wire());
+            Assert.Equal(ItemId.None, (ItemId)Terraria.Main.item[0].type);
+        }
+
+        [Fact]
         public void PacketReceive_ActuatorPlaceEventTriggered() {
             // Set `State` to 10 so that the tile modify packet is not ignored by the server, and mark the relevant
             // `TileSections` entry so that the tile modify packet is not treated with failure.
@@ -537,6 +587,56 @@ namespace Orion.Players {
             TestUtils.FakeReceiveBytes(5, TileModifyPacketTests.PlaceActuatorBytes);
 
             Assert.False(Terraria.Main.tile[100, 256].actuator());
+        }
+
+        [Fact]
+        public void PacketReceive_ActuatorBreakEventTriggered() {
+            // Set `State` to 10 so that the tile modify packet is not ignored by the server, and mark the relevant
+            // `TileSections` entry so that the tile modify packet is not treated with failure.
+            Terraria.Netplay.Clients[5] = new Terraria.RemoteClient { Id = 5, State = 10 };
+            Terraria.Netplay.Clients[5].TileSections[0, 1] = true;
+            Terraria.Main.player[5] = new Terraria.Player { whoAmI = 5 };
+            Terraria.Main.tile[100, 256] = new Terraria.Tile();
+            Terraria.Main.tile[100, 256].actuator(true);
+            Terraria.Main.item[0] = new Terraria.Item { whoAmI = 0 };
+
+            using var kernel = new OrionKernel(Logger.None);
+            using var playerService = new OrionPlayerService(kernel, Logger.None);
+            var isRun = false;
+            kernel.RegisterHandler<WiringBreakEvent>(evt => {
+                Assert.Same(playerService.Players[5], evt.Player);
+                Assert.Equal(100, evt.X);
+                Assert.Equal(256, evt.Y);
+                Assert.Equal(Wiring.Actuator, evt.Wiring);
+                isRun = true;
+            }, Logger.None);
+
+            TestUtils.FakeReceiveBytes(5, TileModifyPacketTests.BreakActuatorBytes);
+
+            Assert.True(isRun);
+            Assert.False(Terraria.Main.tile[100, 256].actuator());
+            Assert.Equal(ItemId.Actuator, (ItemId)Terraria.Main.item[0].type);
+        }
+
+        [Fact]
+        public void PacketReceive_ActuatorBreakEventCanceled() {
+            // Set `State` to 10 so that the tile modify packet is not ignored by the server, and mark the relevant
+            // `TileSections` entry so that the tile modify packet is not treated with failure.
+            Terraria.Netplay.Clients[5] = new Terraria.RemoteClient { Id = 5, State = 10 };
+            Terraria.Netplay.Clients[5].TileSections[0, 1] = true;
+            Terraria.Main.player[5] = new Terraria.Player { whoAmI = 5 };
+            Terraria.Main.tile[100, 256] = new Terraria.Tile();
+            Terraria.Main.tile[100, 256].actuator(true);
+            Terraria.Main.item[0] = new Terraria.Item { whoAmI = 0 };
+
+            using var kernel = new OrionKernel(Logger.None);
+            using var playerService = new OrionPlayerService(kernel, Logger.None);
+            kernel.RegisterHandler<WiringBreakEvent>(evt => evt.Cancel(), Logger.None);
+
+            TestUtils.FakeReceiveBytes(5, TileModifyPacketTests.BreakActuatorBytes);
+
+            Assert.True(Terraria.Main.tile[100, 256].actuator());
+            Assert.Equal(ItemId.None, (ItemId)Terraria.Main.item[0].type);
         }
 
         [Fact]
@@ -584,6 +684,56 @@ namespace Orion.Players {
         }
 
         [Fact]
+        public void PacketReceive_BlueWireBreakEventTriggered() {
+            // Set `State` to 10 so that the tile modify packet is not ignored by the server, and mark the relevant
+            // `TileSections` entry so that the tile modify packet is not treated with failure.
+            Terraria.Netplay.Clients[5] = new Terraria.RemoteClient { Id = 5, State = 10 };
+            Terraria.Netplay.Clients[5].TileSections[0, 1] = true;
+            Terraria.Main.player[5] = new Terraria.Player { whoAmI = 5 };
+            Terraria.Main.tile[100, 256] = new Terraria.Tile();
+            Terraria.Main.tile[100, 256].wire2(true);
+            Terraria.Main.item[0] = new Terraria.Item { whoAmI = 0 };
+
+            using var kernel = new OrionKernel(Logger.None);
+            using var playerService = new OrionPlayerService(kernel, Logger.None);
+            var isRun = false;
+            kernel.RegisterHandler<WiringBreakEvent>(evt => {
+                Assert.Same(playerService.Players[5], evt.Player);
+                Assert.Equal(100, evt.X);
+                Assert.Equal(256, evt.Y);
+                Assert.Equal(Wiring.Blue, evt.Wiring);
+                isRun = true;
+            }, Logger.None);
+
+            TestUtils.FakeReceiveBytes(5, TileModifyPacketTests.BreakBlueWireBytes);
+
+            Assert.True(isRun);
+            Assert.False(Terraria.Main.tile[100, 256].wire2());
+            Assert.Equal(ItemId.Wire, (ItemId)Terraria.Main.item[0].type);
+        }
+
+        [Fact]
+        public void PacketReceive_BlueWireBreakEventCanceled() {
+            // Set `State` to 10 so that the tile modify packet is not ignored by the server, and mark the relevant
+            // `TileSections` entry so that the tile modify packet is not treated with failure.
+            Terraria.Netplay.Clients[5] = new Terraria.RemoteClient { Id = 5, State = 10 };
+            Terraria.Netplay.Clients[5].TileSections[0, 1] = true;
+            Terraria.Main.player[5] = new Terraria.Player { whoAmI = 5 };
+            Terraria.Main.tile[100, 256] = new Terraria.Tile();
+            Terraria.Main.tile[100, 256].wire2(true);
+            Terraria.Main.item[0] = new Terraria.Item { whoAmI = 0 };
+
+            using var kernel = new OrionKernel(Logger.None);
+            using var playerService = new OrionPlayerService(kernel, Logger.None);
+            kernel.RegisterHandler<WiringBreakEvent>(evt => evt.Cancel(), Logger.None);
+
+            TestUtils.FakeReceiveBytes(5, TileModifyPacketTests.BreakBlueWireBytes);
+
+            Assert.True(Terraria.Main.tile[100, 256].wire2());
+            Assert.Equal(ItemId.None, (ItemId)Terraria.Main.item[0].type);
+        }
+
+        [Fact]
         public void PacketReceive_GreenWirePlaceEventTriggered() {
             // Set `State` to 10 so that the tile modify packet is not ignored by the server, and mark the relevant
             // `TileSections` entry so that the tile modify packet is not treated with failure.
@@ -628,6 +778,56 @@ namespace Orion.Players {
         }
 
         [Fact]
+        public void PacketReceive_GreenWireBreakEventTriggered() {
+            // Set `State` to 10 so that the tile modify packet is not ignored by the server, and mark the relevant
+            // `TileSections` entry so that the tile modify packet is not treated with failure.
+            Terraria.Netplay.Clients[5] = new Terraria.RemoteClient { Id = 5, State = 10 };
+            Terraria.Netplay.Clients[5].TileSections[0, 1] = true;
+            Terraria.Main.player[5] = new Terraria.Player { whoAmI = 5 };
+            Terraria.Main.tile[100, 256] = new Terraria.Tile();
+            Terraria.Main.tile[100, 256].wire3(true);
+            Terraria.Main.item[0] = new Terraria.Item { whoAmI = 0 };
+
+            using var kernel = new OrionKernel(Logger.None);
+            using var playerService = new OrionPlayerService(kernel, Logger.None);
+            var isRun = false;
+            kernel.RegisterHandler<WiringBreakEvent>(evt => {
+                Assert.Same(playerService.Players[5], evt.Player);
+                Assert.Equal(100, evt.X);
+                Assert.Equal(256, evt.Y);
+                Assert.Equal(Wiring.Green, evt.Wiring);
+                isRun = true;
+            }, Logger.None);
+
+            TestUtils.FakeReceiveBytes(5, TileModifyPacketTests.BreakGreenWireBytes);
+
+            Assert.True(isRun);
+            Assert.False(Terraria.Main.tile[100, 256].wire3());
+            Assert.Equal(ItemId.Wire, (ItemId)Terraria.Main.item[0].type);
+        }
+
+        [Fact]
+        public void PacketReceive_GreenWireBreakEventCanceled() {
+            // Set `State` to 10 so that the tile modify packet is not ignored by the server, and mark the relevant
+            // `TileSections` entry so that the tile modify packet is not treated with failure.
+            Terraria.Netplay.Clients[5] = new Terraria.RemoteClient { Id = 5, State = 10 };
+            Terraria.Netplay.Clients[5].TileSections[0, 1] = true;
+            Terraria.Main.player[5] = new Terraria.Player { whoAmI = 5 };
+            Terraria.Main.tile[100, 256] = new Terraria.Tile();
+            Terraria.Main.tile[100, 256].wire3(true);
+            Terraria.Main.item[0] = new Terraria.Item { whoAmI = 0 };
+
+            using var kernel = new OrionKernel(Logger.None);
+            using var playerService = new OrionPlayerService(kernel, Logger.None);
+            kernel.RegisterHandler<WiringBreakEvent>(evt => evt.Cancel(), Logger.None);
+
+            TestUtils.FakeReceiveBytes(5, TileModifyPacketTests.BreakGreenWireBytes);
+
+            Assert.True(Terraria.Main.tile[100, 256].wire3());
+            Assert.Equal(ItemId.None, (ItemId)Terraria.Main.item[0].type);
+        }
+
+        [Fact]
         public void PacketReceive_YellowWirePlaceEventTriggered() {
             // Set `State` to 10 so that the tile modify packet is not ignored by the server, and mark the relevant
             // `TileSections` entry so that the tile modify packet is not treated with failure.
@@ -669,6 +869,56 @@ namespace Orion.Players {
             TestUtils.FakeReceiveBytes(5, TileModifyPacketTests.PlaceYellowWireBytes);
 
             Assert.False(Terraria.Main.tile[100, 256].wire4());
+        }
+
+        [Fact]
+        public void PacketReceive_YellowWireBreakEventTriggered() {
+            // Set `State` to 10 so that the tile modify packet is not ignored by the server, and mark the relevant
+            // `TileSections` entry so that the tile modify packet is not treated with failure.
+            Terraria.Netplay.Clients[5] = new Terraria.RemoteClient { Id = 5, State = 10 };
+            Terraria.Netplay.Clients[5].TileSections[0, 1] = true;
+            Terraria.Main.player[5] = new Terraria.Player { whoAmI = 5 };
+            Terraria.Main.tile[100, 256] = new Terraria.Tile();
+            Terraria.Main.tile[100, 256].wire4(true);
+            Terraria.Main.item[0] = new Terraria.Item { whoAmI = 0 };
+
+            using var kernel = new OrionKernel(Logger.None);
+            using var playerService = new OrionPlayerService(kernel, Logger.None);
+            var isRun = false;
+            kernel.RegisterHandler<WiringBreakEvent>(evt => {
+                Assert.Same(playerService.Players[5], evt.Player);
+                Assert.Equal(100, evt.X);
+                Assert.Equal(256, evt.Y);
+                Assert.Equal(Wiring.Yellow, evt.Wiring);
+                isRun = true;
+            }, Logger.None);
+
+            TestUtils.FakeReceiveBytes(5, TileModifyPacketTests.BreakYellowWireBytes);
+
+            Assert.True(isRun);
+            Assert.False(Terraria.Main.tile[100, 256].wire4());
+            Assert.Equal(ItemId.Wire, (ItemId)Terraria.Main.item[0].type);
+        }
+
+        [Fact]
+        public void PacketReceive_YellowWireBreakEventCanceled() {
+            // Set `State` to 10 so that the tile modify packet is not ignored by the server, and mark the relevant
+            // `TileSections` entry so that the tile modify packet is not treated with failure.
+            Terraria.Netplay.Clients[5] = new Terraria.RemoteClient { Id = 5, State = 10 };
+            Terraria.Netplay.Clients[5].TileSections[0, 1] = true;
+            Terraria.Main.player[5] = new Terraria.Player { whoAmI = 5 };
+            Terraria.Main.tile[100, 256] = new Terraria.Tile();
+            Terraria.Main.tile[100, 256].wire4(true);
+            Terraria.Main.item[0] = new Terraria.Item { whoAmI = 0 };
+
+            using var kernel = new OrionKernel(Logger.None);
+            using var playerService = new OrionPlayerService(kernel, Logger.None);
+            kernel.RegisterHandler<WiringBreakEvent>(evt => evt.Cancel(), Logger.None);
+
+            TestUtils.FakeReceiveBytes(5, TileModifyPacketTests.BreakYellowWireBytes);
+
+            Assert.True(Terraria.Main.tile[100, 256].wire4());
+            Assert.Equal(ItemId.None, (ItemId)Terraria.Main.item[0].type);
         }
 
         [Fact]
