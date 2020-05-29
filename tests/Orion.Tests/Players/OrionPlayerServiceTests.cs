@@ -309,6 +309,53 @@ namespace Orion.Players {
         }
 
         [Fact]
+        public void PacketReceive_WallBreakEventTriggered() {
+            // Set `State` to 10 so that the tile modify packet is not ignored by the server, and mark the relevant
+            // `TileSections` entry so that the tile modify packet is not treated with failure.
+            Terraria.Netplay.Clients[5] = new Terraria.RemoteClient { Id = 5, State = 10 };
+            Terraria.Netplay.Clients[5].TileSections[0, 1] = true;
+            Terraria.Main.player[5] = new Terraria.Player { whoAmI = 5 };
+            Terraria.Main.tile[100, 256] = new Terraria.Tile { wall = (ushort)WallId.Stone };
+            Terraria.Main.item[0] = new Terraria.Item { whoAmI = 0 };
+
+            using var kernel = new OrionKernel(Logger.None);
+            using var playerService = new OrionPlayerService(kernel, Logger.None);
+            var isRun = false;
+            kernel.RegisterHandler<WallBreakEvent>(evt => {
+                Assert.Same(playerService.Players[5], evt.Player);
+                Assert.Equal(100, evt.X);
+                Assert.Equal(256, evt.Y);
+                Assert.False(evt.IsFailure);
+                isRun = true;
+            }, Logger.None);
+
+            TestUtils.FakeReceiveBytes(5, TileModifyPacketTests.BreakWallBytes);
+
+            Assert.True(isRun);
+            Assert.Equal(WallId.None, (WallId)Terraria.Main.tile[100, 256].wall);
+            Assert.Equal(ItemId.StoneWall, (ItemId)Terraria.Main.item[0].type);
+        }
+
+        [Fact]
+        public void PacketReceive_WallBreakEventCanceled() {
+            // Set `State` to 10 so that the tile modify packet is not ignored by the server, and mark the relevant
+            // `TileSections` entry so that the tile modify packet is not treated with failure.
+            Terraria.Netplay.Clients[5] = new Terraria.RemoteClient { Id = 5, State = 10 };
+            Terraria.Netplay.Clients[5].TileSections[0, 1] = true;
+            Terraria.Main.player[5] = new Terraria.Player { whoAmI = 5 };
+            Terraria.Main.tile[100, 256] = new Terraria.Tile { type = (ushort)WallId.Stone };
+            Terraria.Main.tile[100, 256].active(true);
+
+            using var kernel = new OrionKernel(Logger.None);
+            using var playerService = new OrionPlayerService(kernel, Logger.None);
+            kernel.RegisterHandler<WallBreakEvent>(evt => evt.Cancel(), Logger.None);
+
+            TestUtils.FakeReceiveBytes(5, TileModifyPacketTests.BreakWallBytes);
+
+            Assert.True(Terraria.Main.tile[100, 256].active());
+        }
+
+        [Fact]
         public void PacketReceive_WallPlaceEventTriggered() {
             // Set `State` to 10 so that the tile modify packet is not ignored by the server, and mark the relevant
             // `TileSections` entry so that the tile modify packet is not treated with failure.
