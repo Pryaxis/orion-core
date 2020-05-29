@@ -100,6 +100,7 @@ namespace Orion.Players {
 
             OTAPI.Hooks.Net.ReceiveData = ReceiveDataHandler;
             OTAPI.Hooks.Net.SendBytes = SendBytesHandler;
+            OTAPI.Hooks.Player.PreUpdate = PreUpdateHandler;
             OTAPI.Hooks.Net.RemoteClient.PreReset = PreResetHandler;
         }
 
@@ -108,6 +109,7 @@ namespace Orion.Players {
 
             OTAPI.Hooks.Net.ReceiveData = null;
             OTAPI.Hooks.Net.SendBytes = null;
+            OTAPI.Hooks.Player.PreUpdate = null;
             OTAPI.Hooks.Net.RemoteClient.PreReset = null;
         }
 
@@ -330,6 +332,14 @@ namespace Orion.Players {
             terrariaClient.Socket.AsyncSend(_sendBuffer.Value, 0, newPacketLength, terrariaClient.ServerWriteCallBack);
         }
 
+        private OTAPI.HookResult PreUpdateHandler(Terraria.Player terrariaPlayer, ref int _) {
+            Debug.Assert(terrariaPlayer != null);
+
+            var evt = new PlayerTickEvent(GetPlayer(terrariaPlayer));
+            Kernel.Raise(evt, Log);
+            return evt.IsCanceled() ? OTAPI.HookResult.Cancel : OTAPI.HookResult.Continue;
+        }
+
         private OTAPI.HookResult PreResetHandler(Terraria.RemoteClient remoteClient) {
             Debug.Assert(remoteClient != null);
             Debug.Assert(remoteClient.Id >= 0 && remoteClient.Id < Players.Count);
@@ -342,6 +352,18 @@ namespace Orion.Players {
             var evt = new PlayerQuitEvent(Players[remoteClient.Id]);
             Kernel.Raise(evt, Log);
             return OTAPI.HookResult.Continue;
+        }
+
+        // Gets an `IPlayer` which corresponds to the given Terraria player. Retrieves the `IPlayer` from the `Players`
+        // array, if possible.
+        private IPlayer GetPlayer(Terraria.Player terrariaPlayer) {
+            Debug.Assert(terrariaPlayer != null);
+
+            var npcIndex = terrariaPlayer.whoAmI;
+            Debug.Assert(npcIndex >= 0 && npcIndex < Players.Count);
+
+            var isConcrete = terrariaPlayer == Terraria.Main.player[npcIndex];
+            return isConcrete ? Players[npcIndex] : new OrionPlayer(terrariaPlayer, this);
         }
     }
 }
