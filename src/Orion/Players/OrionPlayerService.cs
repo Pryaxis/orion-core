@@ -34,6 +34,7 @@ using Orion.Packets.Client;
 using Orion.Packets.Modules;
 using Orion.Packets.Players;
 using Orion.Packets.World.Tiles;
+using Orion.World.Tiles;
 using Serilog;
 
 namespace Orion.Players {
@@ -242,12 +243,23 @@ namespace Orion.Players {
                 return evt.IsCanceled();
             }
 
+            bool RaiseWiringPlaceEvent(ref TileModifyPacket packet, Wiring wiring) {
+                var evt = new WiringPlaceEvent(player, packet.X, packet.Y, wiring);
+                Kernel.Raise(evt, Log);
+                return evt.IsCanceled();
+            }
+
             return packet.Modification switch {
                 TileModification.BreakBlock => RaiseBlockBreakEvent(ref packet, false),
                 TileModification.PlaceBlock => RaiseBlockPlaceEvent(ref packet, false),
                 TileModification.BreakWall => RaiseWallBreakEvent(ref packet),
                 TileModification.PlaceWall => RaiseWallPlaceEvent(ref packet, false),
                 TileModification.BreakBlockNoItems => RaiseBlockBreakEvent(ref packet, true),
+                TileModification.PlaceRedWire => RaiseWiringPlaceEvent(ref packet, Wiring.Red),
+                TileModification.PlaceActuator => RaiseWiringPlaceEvent(ref packet, Wiring.Actuator),
+                TileModification.PlaceBlueWire => RaiseWiringPlaceEvent(ref packet, Wiring.Blue),
+                TileModification.PlaceGreenWire => RaiseWiringPlaceEvent(ref packet, Wiring.Green),
+                TileModification.PlaceYellowWire => RaiseWiringPlaceEvent(ref packet, Wiring.Yellow),
                 TileModification.ReplaceBlock => RaiseBlockPlaceEvent(ref packet, true),
                 TileModification.ReplaceWall => RaiseWallPlaceEvent(ref packet, true),
                 _ => false
