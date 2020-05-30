@@ -19,7 +19,8 @@ using System;
 
 namespace Orion.Entities {
     /// <summary>
-    /// Provides methods with which to get, set, and remove annotations.
+    /// Provides methods with which to get, set, and remove annotations. This is primarily used to attach custom
+    /// instance state.
     /// </summary>
     public interface IAnnotatable {
         /// <summary>

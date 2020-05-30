@@ -20,25 +20,25 @@ using Orion.Players;
 
 namespace Orion.Events.World.Tiles {
     /// <summary>
-    /// Represents a tile-related event.
+    /// Provides the base class for a tile-related event.
     /// </summary>
     public abstract class TileEvent : Event, ICancelable {
         /// <summary>
-        /// Gets the player involved in the event, or <see langword="null"/> if there is no player.
+        /// Gets the player involved in the event, or <see langword="null"/> if there is none.
         /// </summary>
         /// <value>The player involved in the event.</value>
         public IPlayer? Player { get; }
 
         /// <summary>
-        /// Gets the X coordinate.
+        /// Gets the X coordinate of the tile.
         /// </summary>
-        /// <value>The X coordinate.</value>
+        /// <value>The X coordinate of the tile.</value>
         public int X { get; }
 
         /// <summary>
-        /// Gets the Y coordinate.
+        /// Gets the Y coordinate of the tile.
         /// </summary>
-        /// <value>The Y coordinate.</value>
+        /// <value>The Y coordinate of the tile.</value>
         public int Y { get; }
 
         /// <inheritdoc/>

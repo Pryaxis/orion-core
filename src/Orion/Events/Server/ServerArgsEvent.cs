@@ -17,6 +17,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Orion.Events.Server {
     /// <summary>
@@ -87,7 +88,7 @@ namespace Orion.Events.Server {
         /// <exception cref="ArgumentException">
         /// <paramref name="name"/> is <see langword="null"/> or whitespace.
         /// </exception>
-        public bool TryGetValue(string name, out string value) {
+        public bool TryGetValue(string name, [NotNullWhen(true)] out string? value) {
             if (string.IsNullOrWhiteSpace(name)) {
                 // Not localized because this string is developer-facing.
                 throw new ArgumentException("Parameter cannot be null or whitespace", nameof(name));

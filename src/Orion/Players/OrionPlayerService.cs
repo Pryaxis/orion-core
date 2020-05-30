@@ -48,7 +48,7 @@ namespace Orion.Players {
                 .GetMethod(nameof(OnReceivePacket), BindingFlags.NonPublic | BindingFlags.Instance);
 
         private static readonly MethodInfo SendPacketMethod =
-            typeof(OrionPlayerService).GetMethod(nameof(OnSendPacket), BindingFlags.NonPublic | BindingFlags.Instance);
+            typeof(OrionPlayerService).GetMethod(nameof(OnSendPacket), BindingFlags.NonPublic | BindingFlags.Instance); 
 
         private readonly ThreadLocal<bool> _ignoreReceiveDataHandler = new ThreadLocal<bool>();
         private readonly OnReceivePacketHandler?[] _onReceivePacketHandlers = new OnReceivePacketHandler?[256];
@@ -73,27 +73,27 @@ namespace Orion.Players {
                 (playerIndex, terrariaPlayer) => new OrionPlayer(playerIndex, terrariaPlayer, this));
 
             // Construct the `_onReceivePacketHandlers` and `_onSendPacketHandlers` arrays ahead of time.
-            for (var i = 1; i < 140; ++i) {
-                var packetType = ((PacketId)i).Type();
-                _onReceivePacketHandlers[i] =
+            foreach (var packetId in (PacketId[])Enum.GetValues(typeof(PacketId))) {
+                var packetType = packetId.Type();
+                _onReceivePacketHandlers[(byte)packetId] =
                     (OnReceivePacketHandler)ReceivePacketMethod
                         .MakeGenericMethod(packetType)
                         .CreateDelegate(typeof(OnReceivePacketHandler), this);
-                _onSendPacketHandlers[i] =
+                _onSendPacketHandlers[(byte)packetId] =
                     (OnSendPacketHandler)SendPacketMethod
                         .MakeGenericMethod(packetType)
                         .CreateDelegate(typeof(OnSendPacketHandler), this);
             }
 
             // Construct the `_onReceiveModuleHandlers` and `_onSendModuleHandlers` arrays ahead of time.
-            for (var i = 0; i < 11; ++i) {
-                var moduleType = ((ModuleId)i).Type();
+            foreach (var moduleId in (ModuleId[])Enum.GetValues(typeof(ModuleId))) {
+                var moduleType = moduleId.Type();
                 var packetType = typeof(ModulePacket<>).MakeGenericType(moduleType);
-                _onReceiveModuleHandlers[i] =
+                _onReceiveModuleHandlers[(ushort)moduleId] =
                     (OnReceivePacketHandler)ReceivePacketMethod
                         .MakeGenericMethod(packetType)
                         .CreateDelegate(typeof(OnReceivePacketHandler), this);
-                _onSendModuleHandlers[i] =
+                _onSendModuleHandlers[(ushort)moduleId] =
                     (OnSendPacketHandler)SendPacketMethod
                         .MakeGenericMethod(packetType)
                         .CreateDelegate(typeof(OnSendPacketHandler), this);
@@ -128,12 +128,15 @@ namespace Orion.Players {
             }
 
             var span = buffer.readBuffer.AsSpan(start..(start + length));
+            OnReceivePacketHandler handler;
             if (packetId == (byte)PacketId.Module) {
                 var moduleId = Unsafe.ReadUnaligned<ushort>(ref buffer.readBuffer[start + 1]);
-                _onReceiveModuleHandlers[moduleId]?.Invoke(buffer, span);
+                handler = _onReceiveModuleHandlers[moduleId] ?? OnReceivePacket<ModulePacket<UnknownModule>>;
             } else {
-                _onReceivePacketHandlers[packetId]?.Invoke(buffer, span);
+                handler = _onReceivePacketHandlers[packetId] ?? OnReceivePacket<UnknownPacket>;
             }
+
+            handler(buffer, span);
             return OTAPI.HookResult.Cancel;
         }
 
@@ -315,13 +318,16 @@ namespace Orion.Players {
             Debug.Assert(offset >= 0 && offset + size <= data.Length);
 
             var span = data.AsSpan((offset + 2)..(offset + size));
-            var packetId = data[offset + 2];
+            var packetId = span[0];
+            OnSendPacketHandler handler;
             if (packetId == (byte)PacketId.Module) {
-                var moduleId = Unsafe.ReadUnaligned<ushort>(ref data[offset + 3]);
-                _onSendModuleHandlers[moduleId]?.Invoke(playerIndex, span);
+                var moduleId = Unsafe.ReadUnaligned<ushort>(ref span[1]);
+                handler = _onSendModuleHandlers[moduleId] ?? OnSendPacket<ModulePacket<UnknownModule>>;
             } else {
-                _onSendPacketHandlers[packetId]?.Invoke(playerIndex, span);
+                handler = _onSendPacketHandlers[packetId] ?? OnSendPacket<UnknownPacket>;
             }
+
+            handler(playerIndex, span);
             return OTAPI.HookResult.Cancel;
         }
 

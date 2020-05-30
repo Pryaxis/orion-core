@@ -20,7 +20,7 @@ using Orion.Players;
 
 namespace Orion.Events.Players {
     /// <summary>
-    /// Represents a player-related event.
+    /// Provides the base class for a player-related event.
     /// </summary>
     public abstract class PlayerEvent : Event {
         /// <summary>

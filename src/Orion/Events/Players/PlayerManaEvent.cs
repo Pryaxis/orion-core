@@ -21,20 +21,20 @@ using Orion.Players;
 
 namespace Orion.Events.Players {
     /// <summary>
-    /// An event that occurs when a player sets their mana. This event can be canceled.
+    /// An event that occurs when a player sends their mana information. This event can be canceled.
     /// </summary>
     [Event("player-mp")]
     public sealed class PlayerManaEvent : PlayerEvent, ICancelable {
         /// <summary>
-        /// Gets the mana.
+        /// Gets the mana of the player.
         /// </summary>
-        /// <value>The mana.</value>
+        /// <value>The mana of the player.</value>
         public int Mana { get; }
 
         /// <summary>
-        /// Gets the maximum mana.
+        /// Gets the maximum mana of the player.
         /// </summary>
-        /// <value>The maximum mana.</value>
+        /// <value>The maximum mana of the player.</value>
         public int MaxMana { get; }
 
         /// <inheritdoc/>

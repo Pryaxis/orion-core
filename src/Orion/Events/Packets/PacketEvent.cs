@@ -21,7 +21,7 @@ using Orion.Packets;
 
 namespace Orion.Events.Packets {
     /// <summary>
-    /// Provides the base class for packet-related events.
+    /// Provides the base class for a packet-related event.
     /// </summary>
     public abstract unsafe class PacketEvent<TPacket> : Event, ICancelable where TPacket : struct, IPacket {
         // Store a pointer to the packet. This is quite unsafe and requires callers to ensure that the `TPacket` is

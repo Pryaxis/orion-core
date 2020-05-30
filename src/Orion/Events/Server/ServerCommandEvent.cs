@@ -20,7 +20,7 @@ using Destructurama.Attributed;
 
 namespace Orion.Events.Server {
     /// <summary>
-    /// An event that occurs when the server executes a command. This event can be canceled.
+    /// An event that occurs when the server is executing a command via the CLI. This event can be canceled.
     /// </summary>
     [Event("server-cmd")]
     public sealed class ServerCommandEvent : Event, ICancelable {
@@ -28,9 +28,9 @@ namespace Orion.Events.Server {
         [NotLogged] public string? CancellationReason { get; set; }
 
         /// <summary>
-        /// Gets the input.
+        /// Gets the command input.
         /// </summary>
-        /// <value>The input.</value>
+        /// <value>The command input.</value>
         public string Input { get; }
 
         /// <summary>

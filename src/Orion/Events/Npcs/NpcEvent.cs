@@ -20,7 +20,7 @@ using Orion.Npcs;
 
 namespace Orion.Events.Npcs {
     /// <summary>
-    /// Represents an NPC-related event.
+    /// Provides the base class for an NPC-related event.
     /// </summary>
     public abstract class NpcEvent : Event {
         /// <summary>

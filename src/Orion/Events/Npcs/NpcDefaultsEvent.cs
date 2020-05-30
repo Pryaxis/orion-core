@@ -22,14 +22,15 @@ using Serilog.Events;
 
 namespace Orion.Events.Npcs {
     /// <summary>
-    /// An event that occurs when an NPC's defaults are being set. This event can be canceled.
+    /// An event that occurs when an NPC's defaults are being set: i.e., when an NPC's stats are being initialized. This
+    /// event can be canceled.
     /// </summary>
     [Event("npc-defaults", LoggingLevel = LogEventLevel.Verbose)]
     public sealed class NpcDefaultsEvent : NpcEvent, ICancelable {
         /// <summary>
-        /// Gets or sets the NPC ID.
+        /// Gets or sets the NPC ID that the NPC's defaults are being set to.
         /// </summary>
-        /// <value>The NPC ID.</value>
+        /// <value>The NPC ID that the NPC's defaults are being set to.</value>
         public NpcId Id { get; set; }
 
         /// <inheritdoc/>

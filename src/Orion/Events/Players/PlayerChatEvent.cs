@@ -21,39 +21,39 @@ using Orion.Players;
 
 namespace Orion.Events.Players {
     /// <summary>
-    /// An event that occurs when a player chats. This event can be canceled.
+    /// An event that occurs when a player is chatting. This event can be canceled.
     /// </summary>
     [Event("player-chat")]
     public sealed class PlayerChatEvent : PlayerEvent, ICancelable {
         /// <summary>
-        /// Gets the command.
+        /// Gets the command that the player used.
         /// </summary>
-        /// <value>The command.</value>
+        /// <value>The command that the player used.</value>
         public string Command { get; }
 
         /// <summary>
-        /// Gets the text.
+        /// Gets the message.
         /// </summary>
-        /// <value>The text.</value>
-        public string Text { get; }
+        /// <value>The message.</value>
+        public string Message { get; }
 
         /// <inheritdoc/>
         [NotLogged] public string? CancellationReason { get; set; }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="PlayerChatEvent"/> class with the specified
-        /// <paramref name="player"/>, <paramref name="command"/>, and <paramref name="text"/>.
+        /// <paramref name="player"/>, <paramref name="command"/>, and <paramref name="message"/>.
         /// </summary>
         /// <param name="player">The player.</param>
         /// <param name="command">The command.</param>
-        /// <param name="text">The text.</param>
+        /// <param name="message">The message.</param>
         /// <exception cref="ArgumentNullException">
-        /// <paramref name="player"/>, <paramref name="command"/>, or <paramref name="text"/> are
+        /// <paramref name="player"/>, <paramref name="command"/>, or <paramref name="message"/> are
         /// <see langword="null"/>.
         /// </exception>
-        public PlayerChatEvent(IPlayer player, string command, string text) : base(player) {
+        public PlayerChatEvent(IPlayer player, string command, string message) : base(player) {
             Command = command ?? throw new ArgumentNullException(nameof(command));
-            Text = text ?? throw new ArgumentNullException(nameof(text));
+            Message = message ?? throw new ArgumentNullException(nameof(message));
         }
     }
 }

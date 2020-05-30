@@ -21,20 +21,20 @@ using Orion.Players;
 
 namespace Orion.Events.Players {
     /// <summary>
-    /// An event that occurs when a player sets their health. This event can be canceled.
+    /// An event that occurs when a player sends their health information. This event can be canceled.
     /// </summary>
     [Event("player-hp")]
     public sealed class PlayerHealthEvent : PlayerEvent, ICancelable {
         /// <summary>
-        /// Gets the health.
+        /// Gets the health of the player.
         /// </summary>
-        /// <value>The health.</value>
+        /// <value>The health of the player.</value>
         public int Health { get; }
 
         /// <summary>
-        /// Gets the maximum health.
+        /// Gets the maximum health of the player.
         /// </summary>
-        /// <value>The maximum health.</value>
+        /// <value>The maximum health of the player.</value>
         public int MaxHealth { get; }
 
         /// <inheritdoc/>

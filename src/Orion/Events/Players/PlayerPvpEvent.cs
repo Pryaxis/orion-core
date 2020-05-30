@@ -21,7 +21,7 @@ using Orion.Players;
 
 namespace Orion.Events.Players {
     /// <summary>
-    /// An event that occurs when a player sets their PvP status. This event can be canceled.
+    /// An event that occurs when a player sends their PvP status. This event can be canceled.
     /// </summary>
     [Event("player-pvp")]
     public sealed class PlayerPvpEvent : PlayerEvent, ICancelable {

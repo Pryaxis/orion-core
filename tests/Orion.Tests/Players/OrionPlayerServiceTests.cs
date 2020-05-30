@@ -1160,7 +1160,7 @@ namespace Orion.Players {
             kernel.RegisterHandler<PlayerChatEvent>(evt => {
                 Assert.Same(playerService.Players[5], evt.Player);
                 Assert.Equal("Say", evt.Command);
-                Assert.Equal("/command test", evt.Text);
+                Assert.Equal("/command test", evt.Message);
                 isRun = true;
             }, Logger.None);
 

@@ -20,7 +20,7 @@ using Serilog;
 
 namespace Orion {
     /// <summary>
-    /// Represents the base class for an Orion service.
+    /// Provides the base class for an Orion service.
     /// </summary>
     public abstract class OrionService : IDisposable {
         /// <summary>

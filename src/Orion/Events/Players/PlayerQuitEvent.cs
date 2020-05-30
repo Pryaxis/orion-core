@@ -20,7 +20,7 @@ using Orion.Players;
 
 namespace Orion.Events.Players {
     /// <summary>
-    /// An event that occurs when a player quits.
+    /// An event that occurs when a player quits the server.
     /// </summary>
     [Event("player-quit")]
     public sealed class PlayerQuitEvent : PlayerEvent {

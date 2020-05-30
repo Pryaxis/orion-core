@@ -20,7 +20,7 @@ using Orion.Packets.DataStructures;
 
 namespace Orion.Entities {
     /// <summary>
-    /// Represents a Terraria entity.
+    /// Represents an annotatable Terraria entity.
     /// </summary>
     public interface IEntity : IAnnotatable {
         /// <summary>

@@ -24,9 +24,12 @@ namespace Orion.Events.World.Tiles {
     [Event("wall-break")]
     public sealed class WallBreakEvent : TileEvent {
         /// <summary>
-        /// Gets a value indicating whether the attempt is a failure.
+        /// Gets a value indicating whether the wall break attempt is a failure: i.e., whether the wall has not been
+        /// fully broken yet.
         /// </summary>
-        /// <value><see langword="true"/> if the attempt is a failure; otherwise, <see langword="false"/>.</value>
+        /// <value>
+        /// <see langword="true"/> if the wall break attempt is a failure; otherwise, <see langword="false"/>.
+        /// </value>
         public bool IsFailure { get; }
 
         /// <summary>
@@ -36,7 +39,7 @@ namespace Orion.Events.World.Tiles {
         /// <param name="player">The player, or <see langword="null"/> for none.</param>
         /// <param name="x">The X coordinate.</param>
         /// <param name="y">The Y coordinate.</param>
-        /// <param name="isFailure">Whether the attempt is a failure.</param>
+        /// <param name="isFailure">Whether the wall break attempt is a failure.</param>
         public WallBreakEvent(IPlayer? player, int x, int y, bool isFailure) : base(player, x, y) {
             IsFailure = isFailure;
         }

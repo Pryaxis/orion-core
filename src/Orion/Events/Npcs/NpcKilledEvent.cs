@@ -20,7 +20,7 @@ using Orion.Npcs;
 
 namespace Orion.Events.Npcs {
     /// <summary>
-    /// An event that occurs when an NPC is killed.
+    /// An event that occurs when an NPC has been killed.
     /// </summary>
     [Event("npc-killed")]
     public sealed class NpcKilledEvent : NpcEvent {

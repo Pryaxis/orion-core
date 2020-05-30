@@ -25,15 +25,18 @@ namespace Orion.Events.World.Tiles {
     [Event("wall-place")]
     public sealed class WallPlaceEvent : TileEvent {
         /// <summary>
-        /// Gets the wall ID.
+        /// Gets the wall ID being placed.
         /// </summary>
-        /// <value>The wall ID.</value>
+        /// <value>The wall ID being placed.</value>
         public WallId Id { get; }
 
         /// <summary>
-        /// Gets a value indicating whether this attempt is a replacement.
+        /// Gets a value indicating whether the wall placement is a replacement: i.e., whether an existing wall is being
+        /// replaced by another wall.
         /// </summary>
-        /// <value><see langword="true"/> if this attempt is a replacement; otherwise, <see langword="false"/>.</value>
+        /// <value>
+        /// <see langword="true"/> if the wall placement is a replacement; otherwise, <see langword="false"/>.
+        /// </value>
         public bool IsReplacement { get; }
 
         /// <summary>
@@ -44,9 +47,8 @@ namespace Orion.Events.World.Tiles {
         /// <param name="x">The X coordinate.</param>
         /// <param name="y">The Y coordinate.</param>
         /// <param name="id">The wall ID.</param>
-        /// <param name="isReplacement">Whether this attempt is a replacement.</param>
-        public WallPlaceEvent(IPlayer? player, int x, int y, WallId id, bool isReplacement)
-                : base(player, x, y) {
+        /// <param name="isReplacement">Whether the wall placement is a replacement.</param>
+        public WallPlaceEvent(IPlayer? player, int x, int y, WallId id, bool isReplacement) : base(player, x, y) {
             Id = id;
             IsReplacement = isReplacement;
         }

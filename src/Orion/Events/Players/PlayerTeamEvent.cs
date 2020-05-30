@@ -21,14 +21,14 @@ using Orion.Players;
 
 namespace Orion.Events.Players {
     /// <summary>
-    /// An event that occurs when a player sets their team. This event can be canceled.
+    /// An event that occurs when a player sends their team. This event can be canceled.
     /// </summary>
     [Event("player-team")]
     public sealed class PlayerTeamEvent : PlayerEvent, ICancelable {
         /// <summary>
-        /// Gets the team.
+        /// Gets the team of the player.
         /// </summary>
-        /// <value>The team.</value>
+        /// <value>The team of the player.</value>
         public PlayerTeam Team { get; }
 
         /// <inheritdoc/>

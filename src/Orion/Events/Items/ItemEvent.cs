@@ -20,7 +20,7 @@ using Orion.Items;
 
 namespace Orion.Events.Items {
     /// <summary>
-    /// Represents an item-related event.
+    /// Provides the base class for an item-related event.
     /// </summary>
     public abstract class ItemEvent : Event {
         /// <summary>

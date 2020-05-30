@@ -21,14 +21,14 @@ using Orion.Players;
 
 namespace Orion.Events.Players {
     /// <summary>
-    /// An event that occurs when a player informs the server of their UUID. This event can be canceled.
+    /// An event that occurs when a player sends their UUID. This event can be canceled.
     /// </summary>
     [Event("player-uuid")]
     public sealed class PlayerUuidEvent : PlayerEvent, ICancelable {
         /// <summary>
-        /// Gets the UUID.
+        /// Gets the UUID of the player.
         /// </summary>
-        /// <value>The UUID.</value>
+        /// <value>The UUID of the player.</value>
         public string Uuid { get; }
 
         /// <inheritdoc/>

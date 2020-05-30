@@ -22,14 +22,15 @@ using Serilog.Events;
 
 namespace Orion.Events.Items {
     /// <summary>
-    /// An event that occurs when an item's defaults are being set. This event can be canceled.
+    /// An event that occurs when an item's defaults are being set: i.e., when an item's stats are being initialized.
+    /// This event can be canceled.
     /// </summary>
     [Event("item-defaults", LoggingLevel = LogEventLevel.Verbose)]
     public sealed class ItemDefaultsEvent : ItemEvent, ICancelable {
         /// <summary>
-        /// Gets or sets the item ID.
+        /// Gets or sets the item ID that the item's defaults are being set to.
         /// </summary>
-        /// <value>The item ID.</value>
+        /// <value>The item ID that the item's defaults are being set to.</value>
         public ItemId Id { get; set; }
 
         /// <inheritdoc/>

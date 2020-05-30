@@ -17,7 +17,7 @@
 
 namespace Orion.World.Tiles {
     /// <summary>
-    /// Specifies a slope.
+    /// Specifies a block slope.
     /// </summary>
     public enum Slope : byte {
 #pragma warning disable CS1591 // Missing XML comment for publicly visible type or member

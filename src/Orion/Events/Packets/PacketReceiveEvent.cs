@@ -28,9 +28,9 @@ namespace Orion.Events.Packets {
     [Event("packet-recv", LoggingLevel = LogEventLevel.Verbose)]
     public sealed class PacketReceiveEvent<TPacket> : PacketEvent<TPacket> where TPacket : struct, IPacket {
         /// <summary>
-        /// Gets the sender.
+        /// Gets the sender of the packet.
         /// </summary>
-        /// <value>The sender.</value>
+        /// <value>The sender of the packet.</value>
         public IPlayer Sender { get; }
 
         /// <summary>

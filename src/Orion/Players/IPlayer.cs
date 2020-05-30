@@ -68,7 +68,7 @@ namespace Orion.Players {
         }
 
         /// <summary>
-        /// Disconnects the <paramref name="player"/> for the specified <paramref name="reason"/>.
+        /// Disconnects the <paramref name="player"/> for the given <paramref name="reason"/>.
         /// </summary>
         /// <param name="player">The player.</param>
         /// <param name="reason">The reason.</param>

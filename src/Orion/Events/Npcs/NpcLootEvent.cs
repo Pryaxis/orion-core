@@ -22,26 +22,26 @@ using Orion.Npcs;
 
 namespace Orion.Events.Npcs {
     /// <summary>
-    /// An event that occurs when an NPC drops loot. This event can be canceled.
+    /// An event that occurs when an NPC is dropping loot. This event can be canceled.
     /// </summary>
     [Event("npc-loot")]
     public sealed class NpcLootEvent : NpcEvent, ICancelable {
         /// <summary>
-        /// Gets or sets the item ID.
+        /// Gets or sets the item ID of the loot being dropped.
         /// </summary>
-        /// <value>The item ID.</value>
+        /// <value>The item ID of the loot being dropped.</value>
         public ItemId Id { get; set; }
 
         /// <summary>
-        /// Gets or sets the stack size.
+        /// Gets or sets the stack size of the loot being dropped.
         /// </summary>
-        /// <value>The stack size.</value>
+        /// <value>The stack size of the loot being dropped.</value>
         public int StackSize { get; set; }
 
         /// <summary>
-        /// Gets or sets the prefix.
+        /// Gets or sets the prefix of the loot being dropped.
         /// </summary>
-        /// <value>The prefix.</value>
+        /// <value>The prefix of the loot being dropped.</value>
         public ItemPrefix Prefix { get; set; }
 
         /// <inheritdoc/>

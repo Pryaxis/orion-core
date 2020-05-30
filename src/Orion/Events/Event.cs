@@ -17,7 +17,8 @@
 
 namespace Orion.Events {
     /// <summary>
-    /// Represents an event, the main form of communication between the Orion system and its plugins.
+    /// Provides the base class for an event, the main form of communication between Orion and its plugins.
     /// </summary>
+    [Event("event")]
     public abstract class Event { }
 }

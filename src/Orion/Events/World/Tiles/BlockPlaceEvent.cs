@@ -25,21 +25,24 @@ namespace Orion.Events.World.Tiles {
     [Event("block-place")]
     public sealed class BlockPlaceEvent : TileEvent {
         /// <summary>
-        /// Gets the block ID.
+        /// Gets the block ID being placed.
         /// </summary>
-        /// <value>The block ID.</value>
+        /// <value>The block ID being placed.</value>
         public BlockId Id { get; }
 
         /// <summary>
-        /// Gets the style.
+        /// Gets the style of the block being placed.
         /// </summary>
-        /// <value>The style.</value>
+        /// <value>The style of the block being placed.</value>
         public int Style { get; }
 
         /// <summary>
-        /// Gets a value indicating whether this attempt is a replacement.
+        /// Gets a value indicating whether the block placement is a replacement: i.e., whether an existing block is
+        /// being replaced by another block.
         /// </summary>
-        /// <value><see langword="true"/> if this attempt is a replacement; otherwise, <see langword="false"/>.</value>
+        /// <value>
+        /// <see langword="true"/> if the block placement is a replacement; otherwise, <see langword="false"/>.
+        /// </value>
         public bool IsReplacement { get; }
 
         /// <summary>
@@ -52,7 +55,7 @@ namespace Orion.Events.World.Tiles {
         /// <param name="y">The Y coordinate.</param>
         /// <param name="id">The block ID.</param>
         /// <param name="style">The style.</param>
-        /// <param name="isReplacement">Whether this attempt is a replacement.</param>
+        /// <param name="isReplacement">Whether the block placement is a replacement.</param>
         public BlockPlaceEvent(IPlayer? player, int x, int y, BlockId id, int style, bool isReplacement)
                 : base(player, x, y) {
             Id = id;

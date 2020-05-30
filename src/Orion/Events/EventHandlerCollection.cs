@@ -24,6 +24,7 @@ using Serilog;
 using Serilog.Events;
 
 namespace Orion.Events {
+    // A collection of event handlers, sorted by priority.
     internal sealed class EventHandlerCollection<TEvent> where TEvent : Event {
         private readonly string _eventName;
         private readonly LogEventLevel _eventLoggingLevel;

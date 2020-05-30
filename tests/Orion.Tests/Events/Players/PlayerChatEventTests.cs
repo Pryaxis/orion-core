@@ -37,7 +37,7 @@ namespace Orion.Events.Players {
         }
 
         [Fact]
-        public void Ctor_NullText_ThrowsArgumentNullException() {
+        public void Ctor_NullMessage_ThrowsArgumentNullException() {
             var player = new Mock<IPlayer>().Object;
 
             Assert.Throws<ArgumentNullException>(() => new PlayerChatEvent(player, "", null!));
@@ -52,11 +52,11 @@ namespace Orion.Events.Players {
         }
 
         [Fact]
-        public void Text_Get() {
+        public void Message_Get() {
             var player = new Mock<IPlayer>().Object;
             var evt = new PlayerChatEvent(player, "", "/command test");
 
-            Assert.Equal("/command test", evt.Text);
+            Assert.Equal("/command test", evt.Message);
         }
 
         [Fact]

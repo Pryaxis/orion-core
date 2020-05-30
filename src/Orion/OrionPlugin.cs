@@ -20,7 +20,7 @@ using Serilog;
 
 namespace Orion {
     /// <summary>
-    /// Represents the base class for an Orion plugin.
+    /// Provides the base class for an Orion plugin.
     /// </summary>
     public abstract class OrionPlugin : OrionService {
         /// <summary>

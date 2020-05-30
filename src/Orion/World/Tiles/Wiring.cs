@@ -17,7 +17,7 @@
 
 namespace Orion.World.Tiles {
     /// <summary>
-    /// Specifies wiring.
+    /// Specifies a wiring type.
     /// </summary>
     public enum Wiring {
         /// <summary>
