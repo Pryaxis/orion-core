@@ -65,7 +65,7 @@ namespace Orion.Players {
 
             _playerService = playerService;
 
-            Stats = new OrionPlayerStats(terrariaPlayer);
+            Stats = new PlayerStats(terrariaPlayer);
             Buffs = new BuffArray(terrariaPlayer);
         }
 
@@ -87,6 +87,38 @@ namespace Orion.Players {
             // When writing the packet, we need to use the `Server` context since this packet comes from the server.
             var packetLength = packet.WriteWithHeader(_sendBuffer, PacketContext.Server);
             terrariaClient.Socket?.AsyncSend(_sendBuffer, 0, packetLength, terrariaClient.ServerWriteCallBack);
+        }
+
+        private class PlayerStats : IPlayerStats, IWrapping<Terraria.Player> {
+            public int Health {
+                get => Wrapped.statLife;
+                set => Wrapped.statLife = value;
+            }
+
+            public int MaxHealth {
+                get => Wrapped.statLifeMax;
+                set => Wrapped.statLifeMax = value;
+            }
+
+            public int Mana {
+                get => Wrapped.statMana;
+                set => Wrapped.statMana = value;
+            }
+
+            public int MaxMana {
+                get => Wrapped.statManaMax;
+                set => Wrapped.statManaMax = value;
+            }
+
+            public int Defense => Wrapped.statDefense;
+
+            public Terraria.Player Wrapped { get; }
+
+            public PlayerStats(Terraria.Player terrariaPlayer) {
+                Debug.Assert(terrariaPlayer != null);
+
+                Wrapped = terrariaPlayer;
+            }
         }
 
         private class BuffArray : IArray<Buff>, IWrapping<Terraria.Player> {
