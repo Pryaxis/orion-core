@@ -35,6 +35,11 @@ namespace Orion.Players {
             set => Wrapped.name = value ?? throw new ArgumentNullException(nameof(value));
         }
 
+        public PlayerDifficulty Difficulty {
+            get => (PlayerDifficulty)Wrapped.difficulty;
+            set => Wrapped.difficulty = (byte)value;
+        }
+
         public bool IsInPvp {
             get => Wrapped.hostile;
             set => Wrapped.hostile = value;
@@ -48,6 +53,7 @@ namespace Orion.Players {
         // We need to inject an `OrionPlayerService` so that we can raise a `PacketSendEvent` in `SendPacket`.
         public OrionPlayer(int playerIndex, Terraria.Player terrariaPlayer, OrionPlayerService playerService)
                 : base(playerIndex, terrariaPlayer) {
+            Debug.Assert(terrariaPlayer != null);
             Debug.Assert(playerService != null);
 
             _playerService = playerService;

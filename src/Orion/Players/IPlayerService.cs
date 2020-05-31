@@ -68,7 +68,14 @@ namespace Orion.Players {
         /// </exception>
         public static void BroadcastPacket<TPacket>(this IPlayerService playerService, TPacket packet)
                 where TPacket : struct, IPacket {
-            playerService.BroadcastPacket(ref packet);
+            if (playerService is null) {
+                throw new ArgumentNullException(nameof(playerService));
+            }
+            
+            var players = playerService.Players;
+            for (var i = 0; i < players.Count; ++i) {
+                players[i].SendPacket(ref packet);
+            }
         }
 
         /// <summary>

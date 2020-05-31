@@ -28,6 +28,12 @@ namespace Orion.Players {
     /// </summary>
     public interface IPlayer : IEntity, IWrapping<Terraria.Player> {
         /// <summary>
+        /// Gets or sets the player's difficulty.
+        /// </summary>
+        /// <value>The player's difficulty.</value>
+        PlayerDifficulty Difficulty { get; set; }
+
+        /// <summary>
         /// Gets or sets a value indicating whether the player is in PvP.
         /// </summary>
         /// <value><see langword="true"/> if the player is in PvP; otherwise, <see langword="false"/>.</value>

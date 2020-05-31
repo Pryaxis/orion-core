@@ -60,6 +60,28 @@ namespace Orion.Players {
         }
 
         [Fact]
+        public void Difficulty_Get() {
+            using var kernel = new OrionKernel(Logger.None);
+            using var playerService = new OrionPlayerService(kernel, Logger.None);
+            var terrariaPlayer = new Terraria.Player { difficulty = (byte)PlayerDifficulty.Journey };
+            var player = new OrionPlayer(terrariaPlayer, playerService);
+
+            Assert.Equal(PlayerDifficulty.Journey, player.Difficulty);
+        }
+
+        [Fact]
+        public void Difficulty_Set() {
+            using var kernel = new OrionKernel(Logger.None);
+            using var playerService = new OrionPlayerService(kernel, Logger.None);
+            var terrariaPlayer = new Terraria.Player();
+            var player = new OrionPlayer(terrariaPlayer, playerService);
+
+            player.Difficulty = PlayerDifficulty.Journey;
+
+            Assert.Equal(PlayerDifficulty.Journey, (PlayerDifficulty)terrariaPlayer.difficulty);
+        }
+
+        [Fact]
         public void IsInPvp_Get() {
             using var kernel = new OrionKernel(Logger.None);
             using var playerService = new OrionPlayerService(kernel, Logger.None);
