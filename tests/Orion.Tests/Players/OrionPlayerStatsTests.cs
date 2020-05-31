@@ -92,5 +92,13 @@ namespace Orion.Players {
 
             Assert.Equal(200, terrariaPlayer.statManaMax);
         }
+
+        [Fact]
+        public void Defense_Get() {
+            var terrariaPlayer = new Terraria.Player { statDefense = 50 };
+            var playerStats = new OrionPlayerStats(terrariaPlayer);
+
+            Assert.Equal(50, playerStats.Defense);
+        }
     }
 }

@@ -40,6 +40,8 @@ namespace Orion.Players {
             set => Wrapped.statManaMax = value;
         }
 
+        public int Defense => Wrapped.statDefense;
+
         public Terraria.Player Wrapped { get; }
 
         public OrionPlayerStats(Terraria.Player terrariaPlayer) {

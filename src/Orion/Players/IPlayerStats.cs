@@ -43,5 +43,11 @@ namespace Orion.Players {
         /// </summary>
         /// <value>The player's maximum mana.</value>
         int MaxMana { get; set; }
+
+        /// <summary>
+        /// Gets the player's defense.
+        /// </summary>
+        /// <value>The player's defense.</value>
+        int Defense { get; }
     }
 }
