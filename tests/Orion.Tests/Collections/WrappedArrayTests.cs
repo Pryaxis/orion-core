@@ -21,7 +21,7 @@ using Orion.Entities;
 using Xunit;
 
 namespace Orion.Collections {
-    public class WrappedReadOnlyArrayTests {
+    public class WrappedArrayTests {
         [Fact]
         public void Count_Get() {
             var wrappedItems = new TestWrappedClass[10];
@@ -29,7 +29,7 @@ namespace Orion.Collections {
                 wrappedItems[i] = new TestWrappedClass();
             }
 
-            var array = new WrappedReadOnlyArray<TestClass, TestWrappedClass>(
+            var array = new WrappedArray<TestClass, TestWrappedClass>(
                 wrappedItems, (_, testWrappedClass) => new TestClass(testWrappedClass));
 
             Assert.Equal(10, array.Count);
@@ -44,7 +44,7 @@ namespace Orion.Collections {
                 wrappedItems[i] = new TestWrappedClass();
             }
 
-            var array = new WrappedReadOnlyArray<TestClass, TestWrappedClass>(
+            var array = new WrappedArray<TestClass, TestWrappedClass>(
                 wrappedItems, (_, testWrappedClass) => new TestClass(testWrappedClass));
 
             Assert.Throws<IndexOutOfRangeException>(() => array[index]);
@@ -57,7 +57,7 @@ namespace Orion.Collections {
                 wrappedItems[i] = new TestWrappedClass();
             }
 
-            var array = new WrappedReadOnlyArray<TestClass, TestWrappedClass>(
+            var array = new WrappedArray<TestClass, TestWrappedClass>(
                 wrappedItems, (_, testWrappedClass) => new TestClass(testWrappedClass));
 
             var item = array[1];
@@ -71,7 +71,7 @@ namespace Orion.Collections {
                 wrappedItems[i] = new TestWrappedClass();
             }
 
-            var array = new WrappedReadOnlyArray<TestClass, TestWrappedClass>(
+            var array = new WrappedArray<TestClass, TestWrappedClass>(
                 wrappedItems, (_, testWrappedClass) => new TestClass(testWrappedClass));
 
             var item = array[1];
@@ -86,7 +86,7 @@ namespace Orion.Collections {
                 wrappedItems[i] = new TestWrappedClass();
             }
 
-            var items = new WrappedReadOnlyArray<TestClass, TestWrappedClass>(
+            var items = new WrappedArray<TestClass, TestWrappedClass>(
                 wrappedItems, (_, testWrappedClass) => new TestClass(testWrappedClass)).ToList();
             for (var i = 0; i < 10; ++i) {
                 Assert.Same(wrappedItems[i], items[i].Wrapped);

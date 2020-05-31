@@ -16,10 +16,10 @@
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
 using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Threading;
 using Orion.Collections;
-using Orion.Entities;
 using Orion.Events;
 using Orion.Events.Npcs;
 using Serilog;
@@ -29,14 +29,14 @@ namespace Orion.Npcs {
     internal sealed class OrionNpcService : OrionService, INpcService {
         private readonly ThreadLocal<int> _setDefaultsToIgnore = new ThreadLocal<int>();
 
-        public IReadOnlyArray<INpc> Npcs { get; }
+        public IReadOnlyList<INpc> Npcs { get; }
 
         public OrionNpcService(OrionKernel kernel, ILogger log) : base(kernel, log) {
             Debug.Assert(kernel != null);
             Debug.Assert(log != null);
 
             // Construct the `Npcs` array. Note that the last NPC should be ignored, as it is not a real NPC.
-            Npcs = new WrappedReadOnlyArray<OrionNpc, Terraria.NPC>(
+            Npcs = new WrappedArray<OrionNpc, Terraria.NPC>(
                 Terraria.Main.npc.AsMemory(..^1),
                 (npcIndex, terrariaNpc) => new OrionNpc(npcIndex, terrariaNpc));
 

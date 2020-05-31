@@ -15,7 +15,7 @@
 // You should have received a copy of the GNU General Public License
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
-using Orion.Entities;
+using System.Collections.Generic;
 using Orion.Packets.DataStructures;
 
 namespace Orion.Items {
@@ -24,10 +24,10 @@ namespace Orion.Items {
     /// </summary>
     public interface IItemService {
         /// <summary>
-        /// Gets the array of items.
+        /// Gets the items.
         /// </summary>
-        /// <value>The array of items.</value>
-        IReadOnlyArray<IItem> Items { get; }
+        /// <value>The items.</value>
+        IReadOnlyList<IItem> Items { get; }
 
         /// <summary>
         /// Spawns and returns an item with the given <paramref name="id"/> at the specified

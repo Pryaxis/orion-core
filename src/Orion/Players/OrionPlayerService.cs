@@ -16,6 +16,7 @@
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
 using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
@@ -24,7 +25,6 @@ using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading;
 using Orion.Collections;
-using Orion.Entities;
 using Orion.Events;
 using Orion.Events.Packets;
 using Orion.Events.Players;
@@ -61,14 +61,14 @@ namespace Orion.Players {
         private readonly ThreadLocal<byte[]> _sendBuffer =
             new ThreadLocal<byte[]>(() => new byte[ushort.MaxValue]);
 
-        public IReadOnlyArray<IPlayer> Players { get; }
+        public IReadOnlyList<IPlayer> Players { get; }
 
         public OrionPlayerService(OrionKernel kernel, ILogger log) : base(kernel, log) {
             Debug.Assert(kernel != null);
             Debug.Assert(log != null);
 
             // Construct the `Players` array. Note that the last player should be ignored, as it is not a real player.
-            Players = new WrappedReadOnlyArray<OrionPlayer, Terraria.Player>(
+            Players = new WrappedArray<OrionPlayer, Terraria.Player>(
                 Terraria.Main.player.AsMemory(..^1),
                 (playerIndex, terrariaPlayer) => new OrionPlayer(playerIndex, terrariaPlayer, this));
 

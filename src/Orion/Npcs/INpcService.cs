@@ -15,7 +15,7 @@
 // You should have received a copy of the GNU General Public License
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
-using Orion.Entities;
+using System.Collections.Generic;
 
 namespace Orion.Npcs {
     /// <summary>
@@ -23,9 +23,9 @@ namespace Orion.Npcs {
     /// </summary>
     public interface INpcService {
         /// <summary>
-        /// Gets the array of NPCs.
+        /// Gets the NPCs.
         /// </summary>
-        /// <value>The array of NPCs.</value>
-        IReadOnlyArray<INpc> Npcs { get; }
+        /// <value>The NPCs.</value>
+        IReadOnlyList<INpc> Npcs { get; }
     }
 }

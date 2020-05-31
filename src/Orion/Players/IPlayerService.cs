@@ -16,7 +16,7 @@
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
 using System;
-using Orion.Entities;
+using System.Collections.Generic;
 using Orion.Packets;
 using Orion.Packets.DataStructures;
 using Orion.Packets.Server;
@@ -27,10 +27,10 @@ namespace Orion.Players {
     /// </summary>
     public interface IPlayerService {
         /// <summary>
-        /// Gets the array of players.
+        /// Gets the players.
         /// </summary>
-        /// <value>The array of players.</value>
-        IReadOnlyArray<IPlayer> Players { get; }
+        /// <value>The players.</value>
+        IReadOnlyList<IPlayer> Players { get; }
     }
 
     /// <summary>

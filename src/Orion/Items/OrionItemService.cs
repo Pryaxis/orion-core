@@ -16,9 +16,9 @@
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
 using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using Orion.Collections;
-using Orion.Entities;
 using Orion.Events;
 using Orion.Events.Items;
 using Orion.Packets.DataStructures;
@@ -27,14 +27,14 @@ using Serilog;
 namespace Orion.Items {
     [Service("orion-items")]
     internal sealed class OrionItemService : OrionService, IItemService {
-        public IReadOnlyArray<IItem> Items { get; }
+        public IReadOnlyList<IItem> Items { get; }
 
         public OrionItemService(OrionKernel kernel, ILogger log) : base(kernel, log) {
             Debug.Assert(kernel != null);
             Debug.Assert(log != null);
 
             // Construct the `Items` array. Note that the last item should be ignored, as it is not a real item.
-            Items = new WrappedReadOnlyArray<OrionItem, Terraria.Item>(
+            Items = new WrappedArray<OrionItem, Terraria.Item>(
                 Terraria.Main.item.AsMemory(..^1),
                 (itemIndex, terrariaItem) => new OrionItem(itemIndex, terrariaItem));
 

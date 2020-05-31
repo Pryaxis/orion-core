@@ -16,8 +16,8 @@
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
 using System;
+using System.Collections.Generic;
 using Moq;
-using Orion.Entities;
 using Orion.Packets;
 using Orion.Packets.DataStructures;
 using Orion.Packets.Server;
@@ -30,7 +30,7 @@ namespace Orion.Players {
         [Fact]
         public void BroadcastPacket_Ref() {
             var mockPlayer = new Mock<IPlayer>();
-            var mockPlayers = new Mock<IReadOnlyArray<IPlayer>>();
+            var mockPlayers = new Mock<IReadOnlyList<IPlayer>>();
             mockPlayers.SetupGet(p => p.Count).Returns(1);
             mockPlayers.SetupGet(p => p[0]).Returns(mockPlayer.Object);
             var mockPlayerService = new Mock<IPlayerService>();
@@ -45,7 +45,7 @@ namespace Orion.Players {
         [Fact]
         public void BroadcastPacket() {
             var mockPlayer = new Mock<IPlayer>();
-            var mockPlayers = new Mock<IReadOnlyArray<IPlayer>>();
+            var mockPlayers = new Mock<IReadOnlyList<IPlayer>>();
             mockPlayers.SetupGet(p => p.Count).Returns(1);
             mockPlayers.SetupGet(p => p[0]).Returns(mockPlayer.Object);
             var mockPlayerService = new Mock<IPlayerService>();
@@ -67,7 +67,7 @@ namespace Orion.Players {
                     Assert.Equal(Color3.White, packet.Color);
                     Assert.Equal(-1, packet.LineWidth);
                 }));
-            var mockPlayers = new Mock<IReadOnlyArray<IPlayer>>();
+            var mockPlayers = new Mock<IReadOnlyList<IPlayer>>();
             mockPlayers.SetupGet(p => p.Count).Returns(1);
             mockPlayers.SetupGet(p => p[0]).Returns(mockPlayer.Object);
             var mockPlayerService = new Mock<IPlayerService>();
