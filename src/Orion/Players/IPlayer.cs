@@ -28,6 +28,12 @@ namespace Orion.Players {
     /// </summary>
     public interface IPlayer : IEntity, IWrapping<Terraria.Player> {
         /// <summary>
+        /// Gets the player's stats.
+        /// </summary>
+        /// <value>The player's stats.</value>
+        IPlayerStats Stats { get; }
+
+        /// <summary>
         /// Gets or sets the player's difficulty.
         /// </summary>
         /// <value>The player's difficulty.</value>

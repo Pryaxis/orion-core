@@ -35,6 +35,8 @@ namespace Orion.Players {
             set => Wrapped.name = value ?? throw new ArgumentNullException(nameof(value));
         }
 
+        public IPlayerStats Stats { get; }
+
         public PlayerDifficulty Difficulty {
             get => (PlayerDifficulty)Wrapped.difficulty;
             set => Wrapped.difficulty = (byte)value;
@@ -57,6 +59,8 @@ namespace Orion.Players {
             Debug.Assert(playerService != null);
 
             _playerService = playerService;
+
+            Stats = new OrionPlayerStats(terrariaPlayer);
         }
 
         public OrionPlayer(Terraria.Player terrariaPlayer, OrionPlayerService playerService)

@@ -60,6 +60,16 @@ namespace Orion.Players {
         }
 
         [Fact]
+        public void Stats_Get() {
+            using var kernel = new OrionKernel(Logger.None);
+            using var playerService = new OrionPlayerService(kernel, Logger.None);
+            var terrariaPlayer = new Terraria.Player { difficulty = (byte)PlayerDifficulty.Journey };
+            var player = new OrionPlayer(terrariaPlayer, playerService);
+
+            Assert.Same(terrariaPlayer, ((OrionPlayerStats)player.Stats).Wrapped);
+        }
+
+        [Fact]
         public void Difficulty_Get() {
             using var kernel = new OrionKernel(Logger.None);
             using var playerService = new OrionPlayerService(kernel, Logger.None);
