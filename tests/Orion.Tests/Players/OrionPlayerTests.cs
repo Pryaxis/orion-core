@@ -17,6 +17,7 @@
 
 using System;
 using System.Diagnostics.CodeAnalysis;
+using Orion.Buffs;
 using Orion.Events;
 using Orion.Events.Packets;
 using Orion.Packets;
@@ -57,6 +58,69 @@ namespace Orion.Players {
             player.Name = "test";
 
             Assert.Equal("test", terrariaPlayer.name);
+        }
+
+        [Theory]
+        [InlineData(-1)]
+        [InlineData(100)]
+        public void Buffs_Get_Index_Get_InvalidIndex_ThrowsIndexOutOfRangeException(int index) {
+            using var kernel = new OrionKernel(Logger.None);
+            using var playerService = new OrionPlayerService(kernel, Logger.None);
+            var terrariaPlayer = new Terraria.Player();
+            var player = new OrionPlayer(terrariaPlayer, playerService);
+
+            Assert.Throws<IndexOutOfRangeException>(() => player.Buffs[index]);
+        }
+
+        [Fact]
+        public void Buffs_Get_Index_Get() {
+            using var kernel = new OrionKernel(Logger.None);
+            using var playerService = new OrionPlayerService(kernel, Logger.None);
+            var terrariaPlayer = new Terraria.Player();
+            terrariaPlayer.buffType[0] = (int)BuffId.ObsidianSkin;
+            terrariaPlayer.buffTime[0] = 28800;
+            var player = new OrionPlayer(terrariaPlayer, playerService);
+
+            Assert.Equal(new Buff(BuffId.ObsidianSkin, TimeSpan.FromMinutes(8)), player.Buffs[0]);
+        }
+
+        [Theory]
+        [InlineData(-1)]
+        [InlineData(0)]
+        public void Buffs_Get_Index_InvalidTime_Get(int buffTime) {
+            using var kernel = new OrionKernel(Logger.None);
+            using var playerService = new OrionPlayerService(kernel, Logger.None);
+            var terrariaPlayer = new Terraria.Player();
+            terrariaPlayer.buffType[0] = (int)BuffId.ObsidianSkin;
+            terrariaPlayer.buffTime[0] = buffTime;
+            var player = new OrionPlayer(terrariaPlayer, playerService);
+
+            Assert.Equal(default, player.Buffs[0]);
+        }
+
+        [Theory]
+        [InlineData(-1)]
+        [InlineData(100)]
+        public void Buffs_Get_Index_Set_InvalidIndex_ThrowsIndexOutOfRangeException(int index) {
+            using var kernel = new OrionKernel(Logger.None);
+            using var playerService = new OrionPlayerService(kernel, Logger.None);
+            var terrariaPlayer = new Terraria.Player();
+            var player = new OrionPlayer(terrariaPlayer, playerService);
+
+            Assert.Throws<IndexOutOfRangeException>(() => player.Buffs[index] = default);
+        }
+
+        [Fact]
+        public void Buffs_Get_Index_Set() {
+            using var kernel = new OrionKernel(Logger.None);
+            using var playerService = new OrionPlayerService(kernel, Logger.None);
+            var terrariaPlayer = new Terraria.Player();
+            var player = new OrionPlayer(terrariaPlayer, playerService);
+
+            player.Buffs[0] = new Buff(BuffId.ObsidianSkin, TimeSpan.FromMinutes(8));
+
+            Assert.Equal(BuffId.ObsidianSkin, (BuffId)terrariaPlayer.buffType[0]);
+            Assert.Equal(28800, terrariaPlayer.buffTime[0]);
         }
 
         [Fact]

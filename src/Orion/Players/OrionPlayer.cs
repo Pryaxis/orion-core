@@ -16,8 +16,12 @@
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
 using System;
+using System.Collections;
+using System.Collections.Generic;
 using System.Diagnostics;
 using Destructurama.Attributed;
+using Orion.Buffs;
+using Orion.Collections;
 using Orion.Entities;
 using Orion.Events;
 using Orion.Events.Packets;
@@ -36,6 +40,7 @@ namespace Orion.Players {
         }
 
         public IPlayerStats Stats { get; }
+        public IArray<Buff> Buffs { get; }
 
         public PlayerDifficulty Difficulty {
             get => (PlayerDifficulty)Wrapped.difficulty;
@@ -61,6 +66,7 @@ namespace Orion.Players {
             _playerService = playerService;
 
             Stats = new OrionPlayerStats(terrariaPlayer);
+            Buffs = new BuffArray(terrariaPlayer);
         }
 
         public OrionPlayer(Terraria.Player terrariaPlayer, OrionPlayerService playerService)
@@ -81,6 +87,51 @@ namespace Orion.Players {
             // When writing the packet, we need to use the `Server` context since this packet comes from the server.
             var packetLength = packet.WriteWithHeader(_sendBuffer, PacketContext.Server);
             terrariaClient.Socket?.AsyncSend(_sendBuffer, 0, packetLength, terrariaClient.ServerWriteCallBack);
+        }
+
+        private class BuffArray : IArray<Buff>, IWrapping<Terraria.Player> {
+            public Buff this[int index] {
+                get {
+                    if (index < 0 || index >= Count) {
+                        // Not localized because this string is developer-facing.
+                        throw new IndexOutOfRangeException($"Index out of range (expected: 0-{Count})");
+                    }
+
+                    var id = (BuffId)Wrapped.buffType[index];
+                    var duration = TimeSpan.FromSeconds(Wrapped.buffTime[index] / 60.0);
+                    if (duration <= TimeSpan.Zero) {
+                        return default;
+                    }
+
+                    return new Buff(id, duration);
+                } set {
+                    if (index < 0 || index >= Count) {
+                        // Not localized because this string is developer-facing.
+                        throw new IndexOutOfRangeException($"Index out of range (expected: 0-{Count})");
+                    }
+
+                    Wrapped.buffType[index] = (int)value.Id;
+                    Wrapped.buffTime[index] = (int)(value.Duration.TotalSeconds * 60.0);
+                }
+            }
+
+            public int Count => Terraria.Player.maxBuffs;
+
+            public Terraria.Player Wrapped { get; }
+
+            public BuffArray(Terraria.Player terrariaPlayer) {
+                Debug.Assert(terrariaPlayer != null);
+
+                Wrapped = terrariaPlayer;
+            }
+
+            public IEnumerator<Buff> GetEnumerator() {
+                for (var i = 0; i < Count; ++i) {
+                    yield return this[i];
+                }
+            }
+
+            IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
         }
     }
 }

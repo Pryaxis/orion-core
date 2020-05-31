@@ -16,6 +16,8 @@
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
 using System;
+using Orion.Buffs;
+using Orion.Collections;
 using Orion.Entities;
 using Orion.Packets;
 using Orion.Packets.Client;
@@ -32,6 +34,12 @@ namespace Orion.Players {
         /// </summary>
         /// <value>The player's stats.</value>
         IPlayerStats Stats { get; }
+
+        /// <summary>
+        /// Gets the player's buffs.
+        /// </summary>
+        /// <value>The player's buffs.</value>
+        IArray<Buff> Buffs { get; }
 
         /// <summary>
         /// Gets or sets the player's difficulty.
