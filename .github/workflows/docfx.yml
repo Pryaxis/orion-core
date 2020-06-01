@@ -17,5 +17,5 @@ jobs:
       - name: Publish documentation
         uses: maxheld83/ghpages@master
         env:
-          BUILD_DIR: _site
+          BUILD_DIR: docs/_site
           GH_PAT: ${{ secrets.GH_PAGES_PAT }}
