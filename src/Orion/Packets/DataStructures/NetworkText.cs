@@ -99,6 +99,15 @@ namespace Orion.Packets.DataStructures {
         };
 
         /// <summary>
+        /// Returns a literal <see cref="NetworkText"/> instance with the specified <paramref name="text"/>.
+        /// </summary>
+        /// <param name="text">The text.</param>
+        /// <exception cref="ArgumentNullException"><paramref name="text"/> is <see langword="null"/>.</exception>
+        [Pure]
+        public static implicit operator NetworkText(string text) =>
+            NewNetworkText(Mode.Literal, text, Array.Empty<NetworkText>());
+
+        /// <summary>
         /// Returns a formatted <see cref="NetworkText"/> instance with the specified <paramref name="format"/> and
         /// <paramref name="args"/>. 
         /// </summary>
@@ -144,41 +153,29 @@ namespace Orion.Packets.DataStructures {
         }
 
         /// <summary>
-        /// Determines whether two network texts are equal.
+        /// Returns a value indicating whether <paramref name="left"/> and <paramref name="right"/> are equal.
         /// </summary>
         /// <param name="left">The left network text.</param>
         /// <param name="right">The right network text.</param>
         /// <returns>
-        /// <see langword="true"/> if the network texts are equal; otherwise, <see langword="false"/>.
+        /// <see langword="true"/> if <paramref name="left"/> is equal to <paramref name="right"/>; otherwise,
+        /// <see langword="false"/>.
         /// </returns>
         [Pure]
         public static bool operator ==(NetworkText? left, NetworkText? right) =>
             left is null ? right is null : left.Equals(right);
 
         /// <summary>
-        /// Determines whether two network texts are not equal.
+        /// Returns a value indicating whether <paramref name="left"/> and <paramref name="right"/> are not equal.
         /// </summary>
         /// <param name="left">The left network text.</param>
         /// <param name="right">The right network text.</param>
         /// <returns>
-        /// <see langword="true"/> if the network texts are not equal; otherwise, <see langword="false"/>.
+        /// <see langword="true"/> if <paramref name="left"/> is not equal to <paramref name="right"/>; otherwise,
+        /// <see langword="false"/>.
         /// </returns>
         [Pure]
         public static bool operator !=(NetworkText? left, NetworkText? right) => !(left == right);
-
-        /// <summary>
-        /// Returns a literal <see cref="NetworkText"/> instance with the specified <paramref name="text"/>.
-        /// </summary>
-        /// <param name="text">The text.</param>
-        /// <exception cref="ArgumentNullException"><paramref name="text"/> is <see langword="null"/>.</exception>
-        [Pure]
-        public static implicit operator NetworkText(string text) {
-            if (text is null) {
-                throw new ArgumentNullException(nameof(text));
-            }
-
-            return new NetworkText(Mode.Literal, text);
-        }
 
         internal enum Mode {
             Literal = 0,

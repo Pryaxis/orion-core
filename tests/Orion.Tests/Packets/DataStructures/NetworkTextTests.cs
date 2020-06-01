@@ -64,6 +64,64 @@ namespace Orion.Packets.DataStructures {
             Assert.Equal(text.GetHashCode(), text.GetHashCode());
         }
 
+        [Fact]
+        public void op_Implicit_NullText_ThrowsArgumentNullException() {
+            Assert.Throws<ArgumentNullException>(() => {
+                NetworkText text = (string)null!;
+            });
+        }
+
+        [Fact]
+        public void op_Implicit() {
+            NetworkText text = "test";
+
+            Assert.Equal("test", text);
+        }
+
+        [Fact]
+        public void Formatted_NullFormat_ThrowsArgumentNullException() {
+            Assert.Throws<ArgumentNullException>(() => NetworkText.Formatted(null!));
+        }
+
+        [Fact]
+        public void Formatted_NullArgs_ThrowsArgumentNullException() {
+            Assert.Throws<ArgumentNullException>(() => NetworkText.Formatted("", null!));
+        }
+
+        [Fact]
+        public void Formatted_NullArg_ThrowsArgumentException() {
+            Assert.Throws<ArgumentException>(() => NetworkText.Formatted("", "", null!));
+        }
+
+        [Fact]
+        public void Formatted() {
+            var text = NetworkText.Formatted("{0} {1}", "a", "b");
+
+            Assert.Equal(NetworkText.Formatted("{0} {1}", "a", "b"), text);
+        }
+
+        [Fact]
+        public void Localized_NullFormat_ThrowsArgumentNullException() {
+            Assert.Throws<ArgumentNullException>(() => NetworkText.Localized(null!));
+        }
+
+        [Fact]
+        public void Localized_NullArgs_ThrowsArgumentNullException() {
+            Assert.Throws<ArgumentNullException>(() => NetworkText.Localized("", null!));
+        }
+
+        [Fact]
+        public void Localized_NullArg_ThrowsArgumentException() {
+            Assert.Throws<ArgumentException>(() => NetworkText.Localized("", "", null!));
+        }
+
+        [Fact]
+        public void Localized() {
+            var text = NetworkText.Localized("{0} {1}", "a", "b");
+
+            Assert.Equal(NetworkText.Localized("{0} {1}", "a", "b"), text);
+        }
+
         [Theory]
         [MemberData(nameof(NetworkTexts))]
         public void op_Equality_ReturnsTrue(NetworkText text) {
@@ -96,20 +154,6 @@ namespace Orion.Packets.DataStructures {
             Assert.False(text != text);
 #pragma warning restore CS1718 // Comparison made to same variable
             Assert.False((NetworkText?)null != null);
-        }
-
-        [Fact]
-        public void op_Implicit_NullText_ThrowsArgumentNullException() {
-            Assert.Throws<ArgumentNullException>(() => {
-                NetworkText text = (string)null!;
-            });
-        }
-
-        [Fact]
-        public void op_Implicit() {
-            NetworkText text = "test";
-
-            Assert.Equal("test", text.ToString());
         }
     }
 }

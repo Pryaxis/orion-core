@@ -25,11 +25,12 @@ namespace Orion.Packets.DataStructures {
     /// Reprseents a two float component vector.
     /// </summary>
     [StructLayout(LayoutKind.Explicit)]
-    public struct Vector2f : IEquatable<Vector2f> {
+    public readonly struct Vector2f : IEquatable<Vector2f> {
         /// <summary>
-        /// The zero vector.
+        /// Gets the zero vector.
         /// </summary>
-        public static readonly Vector2f Zero = new Vector2f(0, 0);
+        /// <value>The zero vector.</value>
+        public static Vector2f Zero { get; } = new Vector2f(0, 0);
 
         /// <summary>
         /// Gets the X component.
@@ -59,7 +60,10 @@ namespace Orion.Packets.DataStructures {
         [Pure]
         public bool Equals(Vector2f other) => X == other.X && Y == other.Y;
 
-        /// <inheritdoc/>
+        /// <summary>
+        /// Returns the hash code of the vector.
+        /// </summary>
+        /// <returns>The hash code of the vector.</returns>
         [Pure]
         public override int GetHashCode() => HashCode.Combine(X, Y);
 
@@ -71,58 +75,64 @@ namespace Orion.Packets.DataStructures {
         public override string ToString() => $"({X}, {Y})";
 
         /// <summary>
-        /// Determines whether two vectors are equal.
+        /// Returns a value indicating whether <paramref name="left"/> and <paramref name="right"/> are equal.
         /// </summary>
         /// <param name="left">The left vector.</param>
         /// <param name="right">The right vector.</param>
-        /// <returns><see langword="true"/> if the vectors are equal; otherwise, <see langword="false"/>.</returns>
+        /// <returns>
+        /// <see langword="true"/> if <paramref name="left"/> is equal to <paramref name="right"/>; otherwise,
+        /// <see langword="false"/>.
+        /// </returns>
         [Pure]
         public static bool operator ==(Vector2f left, Vector2f right) => left.Equals(right);
 
         /// <summary>
-        /// Determines whether two vectors are not equal.
+        /// Returns a value indicating whether <paramref name="left"/> and <paramref name="right"/> are not equal.
         /// </summary>
         /// <param name="left">The left vector.</param>
         /// <param name="right">The right vector.</param>
-        /// <returns><see langword="true"/> if the vectors are not equal; otherwise, <see langword="false"/>.</returns>
+        /// <returns>
+        /// <see langword="true"/> if <paramref name="left"/> is not equal to <paramref name="right"/>; otherwise,
+        /// <see langword="false"/>.
+        /// </returns>
         [Pure]
         public static bool operator !=(Vector2f left, Vector2f right) => !left.Equals(right);
 
         /// <summary>
-        /// Adds the given vectors.
+        /// Returns the sum of <paramref name="left"/> and <paramref name="right"/>.
         /// </summary>
         /// <param name="left">The left vector.</param>
         /// <param name="right">The right vector.</param>
-        /// <returns>The vector sum.</returns>
+        /// <returns>The sum of <paramref name="left"/> and <paramref name="right"/>.</returns>
         [Pure]
         public static Vector2f operator +(Vector2f left, Vector2f right) =>
             new Vector2f(left.X + right.X, left.Y + right.Y);
 
         /// <summary>
-        /// Subtracts the given vectors.
+        /// Returns the difference of <paramref name="left"/> and <paramref name="right"/>.
         /// </summary>
         /// <param name="left">The left vector.</param>
         /// <param name="right">The right vector.</param>
-        /// <returns>The vector difference.</returns>
+        /// <returns>The difference of <paramref name="left"/> and <paramref name="right"/>.</returns>
         [Pure]
         public static Vector2f operator -(Vector2f left, Vector2f right) =>
             new Vector2f(left.X - right.X, left.Y - right.Y);
 
         /// <summary>
-        /// Multiplies the given <paramref name="vector"/> by <paramref name="f"/>.
+        /// Returns the muliplication of <paramref name="vector"/> by <paramref name="f"/>.
         /// </summary>
         /// <param name="f">The factor.</param>
         /// <param name="vector">The vector.</param>
-        /// <returns>The vector multiplication.</returns>
+        /// <returns>The muliplication of <paramref name="vector"/> by <paramref name="f"/>.</returns>
         [Pure]
         public static Vector2f operator *(float f, Vector2f vector) => new Vector2f(f * vector.X, f * vector.Y);
 
         /// <summary>
-        /// Multiplies the given <paramref name="vector"/> by <paramref name="f"/>.
+        /// Returns the division of <paramref name="vector"/> by <paramref name="f"/>.
         /// </summary>
         /// <param name="f">The factor.</param>
         /// <param name="vector">The vector.</param>
-        /// <returns>The vector multiplication.</returns>
+        /// <returns>The division of <paramref name="vector"/> by <paramref name="f"/>.</returns>
         [Pure]
         public static Vector2f operator /(Vector2f vector, float f) => new Vector2f(vector.X / f, vector.Y / f);
     }

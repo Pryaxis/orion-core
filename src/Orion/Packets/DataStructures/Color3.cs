@@ -76,7 +76,10 @@ namespace Orion.Packets.DataStructures {
         [Pure]
         public bool Equals(Color3 other) => R == other.R && G == other.G && B == other.B;
 
-        /// <inheritdoc/>
+        /// <summary>
+        /// Returns the hash code of the color.
+        /// </summary>
+        /// <returns>The hash code of the color.</returns>
         [Pure]
         public override int GetHashCode() => HashCode.Combine(R, G, B);
 
@@ -88,20 +91,26 @@ namespace Orion.Packets.DataStructures {
         public override string ToString() => $"#{R:x2}{G:x2}{B:x2}";
 
         /// <summary>
-        /// Determines whether two colors are equal.
+        /// Returns a value indicating whether <paramref name="left"/> and <paramref name="right"/> are equal.
         /// </summary>
         /// <param name="left">The left color.</param>
         /// <param name="right">The right color.</param>
-        /// <returns><see langword="true"/> if the colors are equal; otherwise, <see langword="false"/>.</returns>
+        /// <returns>
+        /// <see langword="true"/> if <paramref name="left"/> is equal to <paramref name="right"/>; otherwise,
+        /// <see langword="false"/>.
+        /// </returns>
         [Pure]
         public static bool operator ==(Color3 left, Color3 right) => left.Equals(right);
 
         /// <summary>
-        /// Determines whether two colors are not equal.
+        /// Returns a value indicating whether <paramref name="left"/> and <paramref name="right"/> are not equal.
         /// </summary>
         /// <param name="left">The left color.</param>
         /// <param name="right">The right color.</param>
-        /// <returns><see langword="true"/> if the colors are not equal; otherwise, <see langword="false"/>.</returns>
+        /// <returns>
+        /// <see langword="true"/> if <paramref name="left"/> is not equal to <paramref name="right"/>; otherwise,
+        /// <see langword="false"/>.
+        /// </returns>
         [Pure]
         public static bool operator !=(Color3 left, Color3 right) => !(left == right);
     }
