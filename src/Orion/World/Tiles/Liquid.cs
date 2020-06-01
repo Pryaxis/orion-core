@@ -17,9 +17,9 @@
 
 namespace Orion.World.Tiles {
     /// <summary>
-    /// Specifies a liquid ID.
+    /// Specifies a liquid.
     /// </summary>
-    public enum LiquidId : byte {
+    public enum Liquid : byte {
 #pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
         Water = 0,
         Lava = 1,

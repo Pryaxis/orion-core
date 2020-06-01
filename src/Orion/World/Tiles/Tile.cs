@@ -26,7 +26,7 @@ namespace Orion.World.Tiles {
         private const int BlockColorShift = 0;
         private const int SlopeShift = 12;
         private const int WallColorShift = 16;
-        private const int LiquidIdShift = 21;
+        private const int LiquidShift = 21;
         
         // The masks. These follow the same layout in Terraria's `Tile` class.
         private const int BlockColorMask /*       */ = 0b_00000000_00000000_00000000_00011111;
@@ -39,7 +39,7 @@ namespace Orion.World.Tiles {
         private const int HasActuatorMask /*      */ = 0b_00000000_00000000_00001000_00000000;
         private const int SlopeMask /*            */ = 0b_00000000_00000000_01110000_00000000;
         private const int WallColorMask /*        */ = 0b_00000000_00011111_00000000_00000000;
-        private const int LiquidIdMask /*         */ = 0b_00000000_01100000_00000000_00000000;
+        private const int LiquidMask /*           */ = 0b_00000000_01100000_00000000_00000000;
         private const int HasYellowWireMask /*    */ = 0b_00000000_10000000_00000000_00000000;
         private const int IsCheckingLiquidMask /* */ = 0b_00001000_00000000_00000000_00000000;
         private const int ShouldSkipLiquidMask /* */ = 0b_00010000_00000000_00000000_00000000;
@@ -167,12 +167,12 @@ namespace Orion.World.Tiles {
         }
 
         /// <summary>
-        /// Gets or sets the liquid ID.
+        /// Gets or sets the liquid.
         /// </summary>
-        /// <value>The liquid ID.</value>
-        public LiquidId LiquidId {
-            readonly get => (LiquidId)((_header & LiquidIdMask) >> LiquidIdShift);
-            set => _header = (_header & ~LiquidIdMask) | (((int)value << LiquidIdShift) & LiquidIdMask);
+        /// <value>The liquid.</value>
+        public Liquid Liquid {
+            readonly get => (Liquid)((_header & LiquidMask) >> LiquidShift);
+            set => _header = (_header & ~LiquidMask) | (((int)value << LiquidShift) & LiquidMask);
         }
 
         /// <summary>
