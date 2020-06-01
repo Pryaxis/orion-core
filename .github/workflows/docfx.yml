@@ -2,7 +2,7 @@ name: docfx
 
 on:
   push:
-    branches: [ v1.4, docs ]
+    branches: [ v1.4 ]
 
 jobs:
   docs:
