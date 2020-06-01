@@ -15,6 +15,9 @@
 // You should have received a copy of the GNU General Public License
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
+using System.Collections.Generic;
+using System.Diagnostics.Contracts;
+
 namespace Orion.Npcs {
     /// <summary>
     /// Specifies an NPC ID.
@@ -745,5 +748,107 @@ namespace Orion.Npcs {
         PrismaticLacewing = 661,
         PiratesCurse = 662,
 #pragma warning restore CS1591 // Missing XML comment for publicly visible type or member
+    }
+
+    /// <summary>
+    /// Provides extensions for the <see cref="NpcId"/> enumeration.
+    /// </summary>
+    public static class NpcIdExtensions {
+        private static readonly ISet<NpcId> _catchables = new HashSet<NpcId> {
+            NpcId.Bunny,
+            NpcId.Goldfish,
+            NpcId.Bird,
+            NpcId.Penguin,
+            NpcId.BlackPenguin,
+            NpcId.BlueJay,
+            NpcId.Cardinal,
+            NpcId.Squirrel,
+            NpcId.Mouse,
+            NpcId.Firefly,
+            NpcId.Butterfly,
+            NpcId.Worm,
+            NpcId.LightningBug,
+            NpcId.Snail,
+            NpcId.GlowingSnail,
+            NpcId.Frog,
+            NpcId.MallardDuck,
+            NpcId.MallardDuck2,
+            NpcId.WhiteDuck,
+            NpcId.WhiteDuck2,
+            NpcId.BlackScorpion,
+            NpcId.Scorpion,
+            NpcId.TruffleWorm,
+            NpcId.Grasshopper,
+            NpcId.GoldBird,
+            NpcId.GoldBunny,
+            NpcId.GoldButterfly,
+            NpcId.GoldFrog,
+            NpcId.GoldGrasshopper,
+            NpcId.GoldMouse,
+            NpcId.GoldWorm,
+            NpcId.EnchantedNightcrawler,
+            NpcId.Grubby,
+            NpcId.Sluggy,
+            NpcId.Buggy,
+            NpcId.RedSquirrel,
+            NpcId.GoldSquirrel,
+            NpcId.PinkFairy,
+            NpcId.GreenFairy,
+            NpcId.BlueFairy,
+            NpcId.GoldGoldfish,
+            NpcId.WalkingGoldGoldfish,
+            NpcId.BlackDragonfly,
+            NpcId.BlueDragonfly,
+            NpcId.GreenDragonfly,
+            NpcId.OrangeDragonfly,
+            NpcId.RedDragonfly,
+            NpcId.YellowDragonfly,
+            NpcId.GoldDragonfly,
+            NpcId.Seagull,
+            NpcId.FlyingSeagull,
+            NpcId.Ladybug,
+            NpcId.GoldLadybug,
+            NpcId.Maggot,
+            NpcId.Pupfish,
+            NpcId.Grebe,
+            NpcId.FlyingGrebe,
+            NpcId.Rat,
+            NpcId.Owl,
+            NpcId.WaterStrider,
+            NpcId.GoldWaterStrider,
+            NpcId.ExplosiveBunny,
+            NpcId.Turtle,
+            NpcId.JungleTurtle,
+            NpcId.Seahorse,
+            NpcId.GoldSeahorse,
+            NpcId.AmethystSquirrel,
+            NpcId.TopazSquirrel,
+            NpcId.SapphireSquirrel,
+            NpcId.EmeraldSquirrel,
+            NpcId.RubySquirrel,
+            NpcId.DiamondSquirrel,
+            NpcId.AmberSquirrel,
+            NpcId.AmethystBunny,
+            NpcId.TopazBunny,
+            NpcId.SapphireBunny,
+            NpcId.EmeraldBunny,
+            NpcId.RubyBunny,
+            NpcId.DiamondBunny,
+            NpcId.AmberBunny,
+            NpcId.HellButterfly,
+            NpcId.Lavafly,
+            NpcId.MagmaSnail,
+            NpcId.PrismaticLacewing,
+        };
+
+        /// <summary>
+        /// Returns a value indicating whether the NPC <paramref name="id"/> is catchable.
+        /// </summary>
+        /// <param name="id">The NPC ID.</param>
+        /// <returns>
+        /// <see langword="true"/> if the NPC <paramref name="id"/> is catchable; otherwise, <see langword="false"/>.
+        /// </returns>
+        [Pure]
+        public static bool IsCatchable(this NpcId id) => _catchables.Contains(id);
     }
 }
