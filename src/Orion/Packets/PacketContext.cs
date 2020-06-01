@@ -25,12 +25,12 @@ namespace Orion.Packets {
         /// <summary>
         /// Indicates that the packet should be processed as the server.
         /// </summary>
-        Server,
+        Server = 0,
 
         /// <summary>
         /// Indicates that the packet should be processed as the client.
         /// </summary>
-        Client
+        Client = 1,
     }
 
     /// <summary>
@@ -38,7 +38,7 @@ namespace Orion.Packets {
     /// </summary>
     public static class PacketContextExtensions {
         /// <summary>
-        /// Switches the given <paramref name="context"/>, returning the other context.
+        /// Returns the other context for the packet <paramref name="context"/>.
         /// </summary>
         /// <param name="context">The context.</param>
         /// <returns>The other context.</returns>

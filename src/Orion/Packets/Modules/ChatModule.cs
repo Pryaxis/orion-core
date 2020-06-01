@@ -28,8 +28,8 @@ namespace Orion.Packets.Modules {
     [StructLayout(LayoutKind.Explicit)]
     public struct ChatModule : IModule {
         [FieldOffset(0)] private string? _clientCommand;
-        [FieldOffset(8)] private string? _clientText;
-        [FieldOffset(24)] private NetworkText? _serverText;
+        [FieldOffset(8)] private string? _clientMessage;
+        [FieldOffset(24)] private NetworkText? _serverMessage;
 
         /// <summary>
         /// Gets or sets the command. This is only applicable if read in <see cref="PacketContext.Server"/> or written
@@ -43,14 +43,14 @@ namespace Orion.Packets.Modules {
         }
 
         /// <summary>
-        /// Gets or sets the text. This is only applicable if read in <see cref="PacketContext.Server"/> or written in
-        /// <see cref="PacketContext.Client"/>.
+        /// Gets or sets the message. This is only applicable if read in <see cref="PacketContext.Server"/> or written
+        /// in <see cref="PacketContext.Client"/>.
         /// </summary>
-        /// <value>The text.</value>
+        /// <value>The message.</value>
         /// <exception cref="ArgumentNullException"><paramref name="value"/> is <see langword="null"/>.</exception>
-        public string ClientText {
-            get => _clientText ?? string.Empty;
-            set => _clientText = value ?? throw new ArgumentNullException(nameof(value));
+        public string ClientMessage {
+            get => _clientMessage ?? string.Empty;
+            set => _clientMessage = value ?? throw new ArgumentNullException(nameof(value));
         }
 
         /// <summary>
@@ -61,14 +61,14 @@ namespace Orion.Packets.Modules {
         [field: FieldOffset(16)] public byte ServerChatterIndex { get; set; }
 
         /// <summary>
-        /// Gets or sets the text. This is only applicable if read in <see cref="PacketContext.Client"/> or written in
-        /// <see cref="PacketContext.Server"/>.
+        /// Gets or sets the message. This is only applicable if read in <see cref="PacketContext.Client"/> or written
+        /// in <see cref="PacketContext.Server"/>.
         /// </summary>
-        /// <value>The text.</value>
+        /// <value>The message.</value>
         /// <exception cref="ArgumentNullException"><paramref name="value"/> is <see langword="null"/>.</exception>
-        public NetworkText ServerText {
-            get => _serverText ?? NetworkText.Empty;
-            set => _serverText = value ?? throw new ArgumentNullException(nameof(value));
+        public NetworkText ServerMessage {
+            get => _serverMessage ?? NetworkText.Empty;
+            set => _serverMessage = value ?? throw new ArgumentNullException(nameof(value));
         }
 
         /// <summary>
@@ -84,13 +84,13 @@ namespace Orion.Packets.Modules {
         public int Read(Span<byte> span, PacketContext context) {
             if (context == PacketContext.Server) {
                 var numCommandBytes = span.Read(Encoding.UTF8, out _clientCommand);
-                var numTextBytes = span[numCommandBytes..].Read(Encoding.UTF8, out _clientText);
-                return numCommandBytes + numTextBytes;
+                var numMessageBytes = span[numCommandBytes..].Read(Encoding.UTF8, out _clientMessage);
+                return numCommandBytes + numMessageBytes;
             } else {
                 ServerChatterIndex = span[0];
-                var numTextBytes = span[1..].Read(Encoding.UTF8, out _serverText);
-                Unsafe.CopyBlockUnaligned(ref this.AsRefByte(17), ref span[1 + numTextBytes], 3);
-                return 1 + numTextBytes + 3;
+                var numMessageBytes = span[1..].Read(Encoding.UTF8, out _serverMessage);
+                Unsafe.CopyBlockUnaligned(ref this.AsRefByte(17), ref span[1 + numMessageBytes], 3);
+                return 1 + numMessageBytes + 3;
             }
         }
 
@@ -98,13 +98,13 @@ namespace Orion.Packets.Modules {
         public int Write(Span<byte> span, PacketContext context) {
             if (context == PacketContext.Client) {
                 var numCommandBytes = span.Write(ClientCommand, Encoding.UTF8);
-                var numTextBytes = span[numCommandBytes..].Write(ClientText, Encoding.UTF8);
-                return numCommandBytes + numTextBytes;
+                var numMessageBytes = span[numCommandBytes..].Write(ClientMessage, Encoding.UTF8);
+                return numCommandBytes + numMessageBytes;
             } else {
                 span[0] = ServerChatterIndex;
-                var numTextBytes = span[1..].Write(ServerText, Encoding.UTF8);
-                Unsafe.CopyBlockUnaligned(ref span[1 + numTextBytes], ref this.AsRefByte(17), 3);
-                return 1 + numTextBytes + 3;
+                var numMessageBytes = span[1..].Write(ServerMessage, Encoding.UTF8);
+                Unsafe.CopyBlockUnaligned(ref span[1 + numMessageBytes], ref this.AsRefByte(17), 3);
+                return 1 + numMessageBytes + 3;
             }
         }
     }

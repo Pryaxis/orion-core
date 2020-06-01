@@ -26,15 +26,15 @@ namespace Orion.Events.Players {
     [Event("player-mp")]
     public sealed class PlayerManaEvent : PlayerEvent, ICancelable {
         /// <summary>
-        /// Gets the mana of the player.
+        /// Gets the player's mana.
         /// </summary>
-        /// <value>The mana of the player.</value>
+        /// <value>The player's mana.</value>
         public int Mana { get; }
 
         /// <summary>
-        /// Gets the maximum mana of the player.
+        /// Gets the player's maximum mana.
         /// </summary>
-        /// <value>The maximum mana of the player.</value>
+        /// <value>The player's maximum mana.</value>
         public int MaxMana { get; }
 
         /// <inheritdoc/>
@@ -45,8 +45,8 @@ namespace Orion.Events.Players {
         /// <paramref name="player"/>, <paramref name="mana"/>, and <paramref name="maxMana"/>.
         /// </summary>
         /// <param name="player">The player.</param>
-        /// <param name="mana">The mana.</param>
-        /// <param name="maxMana">The maximum mana.</param>
+        /// <param name="mana">The player's mana.</param>
+        /// <param name="maxMana">The player's maximum mana.</param>
         /// <exception cref="ArgumentNullException"><paramref name="player"/> is <see langword="null"/>.</exception>
         public PlayerManaEvent(IPlayer player, int mana, int maxMana) : base(player) {
             Mana = mana;

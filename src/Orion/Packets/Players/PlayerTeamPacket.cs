@@ -33,9 +33,9 @@ namespace Orion.Packets.Players {
         [field: FieldOffset(0)] public byte PlayerIndex { get; set; }
 
         /// <summary>
-        /// Gets or sets the team.
+        /// Gets or sets the player's team.
         /// </summary>
-        /// <value>The team.</value>
+        /// <value>The player's team.</value>
         [field: FieldOffset(1)] public PlayerTeam Team { get; set; }
 
         PacketId IPacket.Id => PacketId.PlayerTeam;

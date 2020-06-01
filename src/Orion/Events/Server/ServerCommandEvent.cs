@@ -34,10 +34,10 @@ namespace Orion.Events.Server {
         public string Input { get; }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="ServerCommandEvent"/> class with the specified
+        /// Initializes a new instance of the <see cref="ServerCommandEvent"/> class with the specified command
         /// <paramref name="input"/>.
         /// </summary>
-        /// <param name="input">The input.</param>
+        /// <param name="input">The command input.</param>
         /// <exception cref="ArgumentNullException"><paramref name="input"/> is <see langword="null"/>.</exception>
         public ServerCommandEvent(string input) {
             Input = input ?? throw new ArgumentNullException(nameof(input));

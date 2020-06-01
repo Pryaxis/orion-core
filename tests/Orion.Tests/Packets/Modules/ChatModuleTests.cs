@@ -46,19 +46,19 @@ namespace Orion.Packets.Modules {
         }
 
         [Fact]
-        public void ClientText_SetNullValue_ThrowsArgumentNullException() {
+        public void ClientMessage_SetNullValue_ThrowsArgumentNullException() {
             var module = new ChatModule();
 
-            Assert.Throws<ArgumentNullException>(() => module.ClientText = null!);
+            Assert.Throws<ArgumentNullException>(() => module.ClientMessage = null!);
         }
 
         [Fact]
-        public void ClientText_Set_Get() {
+        public void ClientMessage_Set_Get() {
             var module = new ChatModule();
 
-            module.ClientText = "/command test";
+            module.ClientMessage = "/command test";
 
-            Assert.Equal("/command test", module.ClientText);
+            Assert.Equal("/command test", module.ClientMessage);
         }
 
         [Fact]
@@ -71,19 +71,19 @@ namespace Orion.Packets.Modules {
         }
 
         [Fact]
-        public void ServerText_SetNullValue_ThrowsArgumentNullException() {
+        public void ServerMessage_SetNullValue_ThrowsArgumentNullException() {
             var module = new ChatModule();
 
-            Assert.Throws<ArgumentNullException>(() => module.ServerText = null!);
+            Assert.Throws<ArgumentNullException>(() => module.ServerMessage = null!);
         }
 
         [Fact]
-        public void ServerText_Set_Get() {
+        public void ServerMessage_Set_Get() {
             var module = new ChatModule();
 
-            module.ServerText = "test";
+            module.ServerMessage = "test";
 
-            Assert.Equal("test", module.ServerText);
+            Assert.Equal("test", module.ServerMessage);
         }
 
         [Fact]
@@ -102,7 +102,7 @@ namespace Orion.Packets.Modules {
             Assert.Equal(span.Length, module.Read(span, PacketContext.Server));
 
             Assert.Equal("Say", module.ClientCommand);
-            Assert.Equal("/command test", module.ClientText);
+            Assert.Equal("/command test", module.ClientMessage);
         }
 
         [Fact]
@@ -118,7 +118,7 @@ namespace Orion.Packets.Modules {
             Assert.Equal(span.Length, module.Read(span, PacketContext.Client));
 
             Assert.Equal(1, module.ServerChatterIndex);
-            Assert.Equal("test", module.ServerText);
+            Assert.Equal("test", module.ServerMessage);
             Assert.Equal(Color3.White, module.ServerColor);
         }
 

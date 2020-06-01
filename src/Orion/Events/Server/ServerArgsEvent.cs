@@ -18,6 +18,7 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
+using System.Linq;
 
 namespace Orion.Events.Server {
     /// <summary>
@@ -39,13 +40,13 @@ namespace Orion.Events.Server {
                 throw new ArgumentNullException(nameof(args));
             }
 
+            if (args.Any(a => a == null)) {
+                // Not localized because this string is developer-facing.
+                throw new ArgumentException("Arguments contains null", nameof(args));
+            }
+
             // Preprocess the arguments.
             foreach (var arg in args) {
-                if (arg is null) {
-                    // Not localized because this string is developer-facing.
-                    throw new ArgumentException("Arguments contains null", nameof(args));
-                }
-
                 if (arg.StartsWith("--")) {
                     var equals = arg.IndexOf('=');
                     if (equals < 0) {

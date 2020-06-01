@@ -37,19 +37,19 @@ namespace Orion.Packets.Server {
         }
 
         [Fact]
-        public void Text_SetNullValue_ThrowsArgumentNullException() {
+        public void Message_SetNullValue_ThrowsArgumentNullException() {
             var packet = new ServerChatPacket();
 
-            Assert.Throws<ArgumentNullException>(() => packet.Text = null!);
+            Assert.Throws<ArgumentNullException>(() => packet.Message = null!);
         }
 
         [Fact]
-        public void Text_Set_Get() {
+        public void Message_Set_Get() {
             var packet = new ServerChatPacket();
 
-            packet.Text = "Terraria";
+            packet.Message = "Terraria";
 
-            Assert.Equal("Terraria", packet.Text);
+            Assert.Equal("Terraria", packet.Message);
         }
 
         [Fact]
@@ -68,7 +68,7 @@ namespace Orion.Packets.Server {
             Assert.Equal(span.Length, packet.Read(span, PacketContext.Server));
 
             Assert.Equal(Color3.White, packet.Color);
-            Assert.Equal("Terraria", packet.Text);
+            Assert.Equal("Terraria", packet.Message);
             Assert.Equal(100, packet.LineWidth);
         }
 

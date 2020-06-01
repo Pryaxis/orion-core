@@ -26,9 +26,9 @@ namespace Orion.Events.Players {
     [Event("player-uuid")]
     public sealed class PlayerUuidEvent : PlayerEvent, ICancelable {
         /// <summary>
-        /// Gets the UUID of the player.
+        /// Gets the player's UUID.
         /// </summary>
-        /// <value>The UUID of the player.</value>
+        /// <value>The player's UUID.</value>
         public string Uuid { get; }
 
         /// <inheritdoc/>
@@ -39,7 +39,7 @@ namespace Orion.Events.Players {
         /// <paramref name="player"/> and <paramref name="uuid"/>.
         /// </summary>
         /// <param name="player">The player.</param>
-        /// <param name="uuid">The UUID.</param>
+        /// <param name="uuid">The player's UUID.</param>
         /// <exception cref="ArgumentNullException">
         /// <paramref name="player"/> or <paramref name="uuid"/> are <see langword="null"/>.
         /// </exception>

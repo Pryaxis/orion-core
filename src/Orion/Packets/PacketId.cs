@@ -47,7 +47,7 @@ namespace Orion.Packets {
     /// Provides extensions for the <see cref="PacketId"/> enumeration.
     /// </summary>
     public static class PacketIdExtensions {
-        private static readonly IDictionary<PacketId, Type> PacketIdToType = new Dictionary<PacketId, Type> {
+        private static readonly IDictionary<PacketId, Type> _types = new Dictionary<PacketId, Type> {
             [PacketId.ClientConnect] = typeof(ClientConnectPacket),
             [PacketId.ClientDisconnect] = typeof(ClientDisconnectPacket),
             [PacketId.PlayerJoin] = typeof(PlayerJoinPacket),
@@ -61,12 +61,12 @@ namespace Orion.Packets {
         };
 
         /// <summary>
-        /// Gets the corresponding type for the given packet <paramref name="id"/>.
+        /// Gets the corresponding type for the packet <paramref name="id"/>.
         /// </summary>
         /// <param name="id">The packet ID.</param>
-        /// <returns>The corresponding type for the given packet <paramref name="id"/>.</returns>
+        /// <returns>The corresponding type for the packet <paramref name="id"/>.</returns>
         [Pure]
         public static Type Type(this PacketId id) =>
-            PacketIdToType.TryGetValue(id, out var type) ? type : typeof(UnknownPacket);
+            _types.TryGetValue(id, out var type) ? type : typeof(UnknownPacket);
     }
 }

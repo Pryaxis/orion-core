@@ -78,12 +78,18 @@ namespace Orion.Events {
         }
 
         [EventHandler(EventPriority.Lowest)]
-        private static void TestHandler(TestEvent e) => e.Value = 100;
+        private static void TestHandler(TestEvent evt) {
+            evt.Value = 100;
+        }
 
         [EventHandler(EventPriority.Highest)]
-        private static void TestHandler2(TestEvent e) => e.Value = 200;
+        private static void TestHandler2(TestEvent evt) {
+            evt.Value = 200;
+        }
 
-        private static void TestHandler3(TestEvent e) => throw new NotImplementedException();
+        private static void TestHandler3(TestEvent evt) {
+            throw new NotImplementedException();
+        }
 
         private class TestEvent : Event, ICancelable {
             public string? CancellationReason { get; set; }

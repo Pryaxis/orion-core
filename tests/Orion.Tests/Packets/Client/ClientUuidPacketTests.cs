@@ -50,7 +50,8 @@ namespace Orion.Packets.Client {
         }
 
         [Fact]
-        public void RoundTrip() =>
+        public void RoundTrip() {
             TestUtils.RoundTripPacket<ClientUuidPacket>(Bytes.AsSpan(IPacket.HeaderSize..), PacketContext.Server);
+        }
     }
 }

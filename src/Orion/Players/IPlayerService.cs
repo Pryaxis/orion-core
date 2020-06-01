@@ -99,7 +99,7 @@ namespace Orion.Players {
                 throw new ArgumentNullException(nameof(message));
             }
 
-            var packet = new ServerChatPacket { Color = color, Text = message, LineWidth = -1 };
+            var packet = new ServerChatPacket { Color = color, Message = message, LineWidth = -1 };
             playerService.BroadcastPacket(ref packet);
         }
     }

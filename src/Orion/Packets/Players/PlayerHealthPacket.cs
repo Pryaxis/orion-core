@@ -32,15 +32,15 @@ namespace Orion.Packets.Players {
         [field: FieldOffset(0)] public byte PlayerIndex { get; set; }
 
         /// <summary>
-        /// Gets or sets the health.
+        /// Gets or sets the player's health.
         /// </summary>
-        /// <value>The health.</value>
-        [field:FieldOffset(1)] public short Health { get; set; }
+        /// <value>The player's health.</value>
+        [field: FieldOffset(1)] public short Health { get; set; }
 
         /// <summary>
-        /// Gets or sets the max health.
+        /// Gets or sets the player's maximum health.
         /// </summary>
-        /// <value>The max health.</value>
+        /// <value>The player's maximum health.</value>
         [field: FieldOffset(3)] public short MaxHealth { get; set; }
 
         PacketId IPacket.Id => PacketId.PlayerHealth;

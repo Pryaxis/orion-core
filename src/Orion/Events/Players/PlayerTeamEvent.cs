@@ -26,9 +26,9 @@ namespace Orion.Events.Players {
     [Event("player-team")]
     public sealed class PlayerTeamEvent : PlayerEvent, ICancelable {
         /// <summary>
-        /// Gets the team of the player.
+        /// Gets the player's team.
         /// </summary>
-        /// <value>The team of the player.</value>
+        /// <value>The player's team.</value>
         public PlayerTeam Team { get; }
 
         /// <inheritdoc/>
@@ -39,7 +39,7 @@ namespace Orion.Events.Players {
         /// <paramref name="player"/> and <paramref name="team"/>.
         /// </summary>
         /// <param name="player">The player.</param>
-        /// <param name="team">The team.</param>
+        /// <param name="team">The player's team.</param>
         /// <exception cref="ArgumentNullException"><paramref name="player"/> is <see langword="null"/>.</exception>
         public PlayerTeamEvent(IPlayer player, PlayerTeam team) : base(player) {
             Team = team;

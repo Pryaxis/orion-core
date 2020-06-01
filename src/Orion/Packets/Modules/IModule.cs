@@ -34,20 +34,20 @@ namespace Orion.Packets.Modules {
         ModuleId Id { get; }
 
         /// <summary>
-        /// Reads the module from the given <paramref name="span"/> with the specified <paramref name="context"/>,
-        /// mutating this instance. Returns the number of bytes read.
+        /// Reads the module from the given <paramref name="span"/> with the specified packet
+        /// <paramref name="context"/>, mutating this instance. Returns the number of bytes read.
         /// </summary>
         /// <param name="span">The span.</param>
-        /// <param name="context">The context.</param>
+        /// <param name="context">The packet context.</param>
         /// <returns>The number of bytes read.</returns>
         int Read(Span<byte> span, PacketContext context);
 
         /// <summary>
-        /// Writes the module to the given <paramref name="span"/> with the specified <paramref name="context"/>.
+        /// Writes the module to the given <paramref name="span"/> with the specified packet <paramref name="context"/>.
         /// Returns the number of bytes written.
         /// </summary>
         /// <param name="span">The span.</param>
-        /// <param name="context">The context.</param>
+        /// <param name="context">The packet context.</param>
         /// <returns>The number of bytes written.</returns>
         int Write(Span<byte> span, PacketContext context);
     }
@@ -58,12 +58,12 @@ namespace Orion.Packets.Modules {
     public static class ModuleExtensions {
         /// <summary>
         /// Writes the <paramref name="module"/> reference to the given <paramref name="span"/> with the specified
-        /// <paramref name="context"/>, including the module header. Returns the number of bytes written.
+        /// packet <paramref name="context"/>, including the module header. Returns the number of bytes written.
         /// </summary>
         /// <typeparam name="TModule">The type of module.</typeparam>
         /// <param name="module">The module reference.</param>
         /// <param name="span">The span.</param>
-        /// <param name="context">The context.</param>
+        /// <param name="context">The packet context.</param>
         /// <returns>The number of bytes written.</returns>
         public static int WriteWithHeader<TModule>(ref this TModule module, Span<byte> span, PacketContext context)
                 where TModule : struct, IModule {

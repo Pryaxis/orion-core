@@ -33,11 +33,11 @@ namespace Orion {
     /// Represents Orion's core logic. Provides methods to manipulate Orion plugins and events.
     /// </summary>
     public sealed class OrionKernel : IDisposable {
-        private static readonly MethodInfo GetLazyMethod =
+        private static readonly MethodInfo _getLazy =
             typeof(OrionKernel).GetMethod(nameof(GetLazy), BindingFlags.NonPublic | BindingFlags.Instance);
-        private static readonly MethodInfo RegisterHandlerMethod =
+        private static readonly MethodInfo _registerHandler =
             typeof(OrionKernel).GetMethod(nameof(RegisterHandler));
-        private static readonly MethodInfo DeregisterHandlerMethod =
+        private static readonly MethodInfo _deregisterHandler =
             typeof(OrionKernel).GetMethod(nameof(DeregisterHandler));
 
         private readonly ILogger _log;
@@ -92,7 +92,7 @@ namespace Orion {
             // Create a Lazy<T> binding for lazily-loaded services.
             Container
                 .Bind(typeof(Lazy<>))
-                .ToMethod(ctx => GetLazyMethod
+                .ToMethod(ctx => _getLazy
                     .MakeGenericMethod(ctx.GenericArguments[0])
                     .Invoke(this, Array.Empty<object>()))
                 .InTransientScope();
@@ -254,7 +254,7 @@ namespace Orion {
                 // Register the handler.
                 var handlerType = typeof(Action<>).MakeGenericType(eventType);
                 var handler = method.CreateDelegate(handlerType, handlerObject);
-                RegisterHandlerMethod.MakeGenericMethod(eventType).Invoke(this, new object[] { handler, log });
+                _registerHandler.MakeGenericMethod(eventType).Invoke(this, new object[] { handler, log });
                 registrations.Add((eventType, handler));
             }
         }
@@ -312,7 +312,7 @@ namespace Orion {
 
             _handlerRegistrations.Remove(handlerObject);
             foreach (var (eventType, handler) in registrations) {
-                DeregisterHandlerMethod.MakeGenericMethod(eventType).Invoke(this, new object[] { handler, log });
+                _deregisterHandler.MakeGenericMethod(eventType).Invoke(this, new object[] { handler, log });
             }
             return true;
         }

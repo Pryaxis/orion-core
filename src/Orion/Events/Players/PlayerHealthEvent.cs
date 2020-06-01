@@ -26,15 +26,15 @@ namespace Orion.Events.Players {
     [Event("player-hp")]
     public sealed class PlayerHealthEvent : PlayerEvent, ICancelable {
         /// <summary>
-        /// Gets the health of the player.
+        /// Gets the player's health.
         /// </summary>
-        /// <value>The health of the player.</value>
+        /// <value>The player's health.</value>
         public int Health { get; }
 
         /// <summary>
-        /// Gets the maximum health of the player.
+        /// Gets the player's maximum health.
         /// </summary>
-        /// <value>The maximum health of the player.</value>
+        /// <value>The player's maximum health.</value>
         public int MaxHealth { get; }
 
         /// <inheritdoc/>
@@ -45,8 +45,8 @@ namespace Orion.Events.Players {
         /// <paramref name="player"/>, <paramref name="health"/>, and <paramref name="maxHealth"/>.
         /// </summary>
         /// <param name="player">The player.</param>
-        /// <param name="health">The health.</param>
-        /// <param name="maxHealth">The maximum health.</param>
+        /// <param name="health">The player's health.</param>
+        /// <param name="maxHealth">The player's maximum health.</param>
         /// <exception cref="ArgumentNullException"><paramref name="player"/> is <see langword="null"/>.</exception>
         public PlayerHealthEvent(IPlayer player, int health, int maxHealth) : base(player) {
             Health = health;

@@ -23,14 +23,13 @@ namespace Orion.Packets.Client {
     /// <summary>
     /// Packet sent from the client to the server to inform the server of its UUID.
     /// </summary>
-    [SuppressMessage("Style", "IDE0017:Simplify object initialization", Justification = "Testing")]
     public struct ClientUuidPacket : IPacket {
         private string? _uuid;
 
         /// <summary>
-        /// Gets or sets the client UUID.
+        /// Gets or sets the client's UUID.
         /// </summary>
-        /// <value>The client UUID.</value>
+        /// <value>The client's UUID.</value>
         /// <exception cref="ArgumentNullException"><paramref name="value"/> is <see langword="null"/>.</exception>
         public string Uuid {
             get => _uuid ?? string.Empty;

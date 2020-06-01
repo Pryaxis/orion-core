@@ -63,7 +63,7 @@ namespace Orion.Players {
             mockPlayer
                 .Setup(p => p.SendPacket(ref It.Ref<ServerChatPacket>.IsAny))
                 .Callback((ChatCallback)((ref ServerChatPacket packet) => {
-                    Assert.Equal("test", packet.Text);
+                    Assert.Equal("test", packet.Message);
                     Assert.Equal(Color3.White, packet.Color);
                     Assert.Equal(-1, packet.LineWidth);
                 }));

@@ -30,17 +30,17 @@ namespace Orion.Packets.Server {
         [FieldOffset(8)] private NetworkText _text;
 
         /// <summary>
-        /// Gets or sets the color.
+        /// Gets or sets the message color.
         /// </summary>
-        /// <value>The color.</value>
+        /// <value>The message color.</value>
         [field: FieldOffset(0)] public Color3 Color { get; set; }
 
         /// <summary>
-        /// Gets or sets the text.
+        /// Gets or sets the message.
         /// </summary>
-        /// <value>The text.</value>
+        /// <value>The message.</value>
         /// <exception cref="ArgumentNullException"><paramref name="value"/> is <see langword="null"/>.</exception>
-        public NetworkText Text {
+        public NetworkText Message {
             get => _text ?? NetworkText.Empty;
             set => _text = value ?? throw new ArgumentNullException(nameof(value));
         }
@@ -56,17 +56,17 @@ namespace Orion.Packets.Server {
         /// <inheritdoc/>
         public int Read(Span<byte> span, PacketContext context) {
             Unsafe.CopyBlockUnaligned(ref this.AsRefByte(0), ref span[0], 3);
-            var numTextBytes = span[3..].Read(Encoding.UTF8, out _text);
-            Unsafe.CopyBlockUnaligned(ref this.AsRefByte(3), ref span[3 + numTextBytes], 2);
-            return 3 + numTextBytes + 2;
+            var numMessageBytes = span[3..].Read(Encoding.UTF8, out _text);
+            Unsafe.CopyBlockUnaligned(ref this.AsRefByte(3), ref span[3 + numMessageBytes], 2);
+            return 3 + numMessageBytes + 2;
         }
 
         /// <inheritdoc/>
         public int Write(Span<byte> span, PacketContext context) {
             Unsafe.CopyBlockUnaligned(ref span[0], ref this.AsRefByte(0), 3);
-            var numTextBytes = span[3..].Write(Text, Encoding.UTF8);
-            Unsafe.CopyBlockUnaligned(ref span[3 + numTextBytes], ref this.AsRefByte(3), 2);
-            return 3 + numTextBytes + 2;
+            var numMessageBytes = span[3..].Write(Message, Encoding.UTF8);
+            Unsafe.CopyBlockUnaligned(ref span[3 + numMessageBytes], ref this.AsRefByte(3), 2);
+            return 3 + numMessageBytes + 2;
         }
     }
 }

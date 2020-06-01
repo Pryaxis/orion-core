@@ -32,15 +32,15 @@ namespace Orion.Packets.Players {
         [field: FieldOffset(0)] public byte PlayerIndex { get; set; }
 
         /// <summary>
-        /// Gets or sets the mana.
+        /// Gets or sets the player's mana.
         /// </summary>
-        /// <value>The mana.</value>
+        /// <value>The player's mana.</value>
         [field: FieldOffset(1)] public short Mana { get; set; }
 
         /// <summary>
-        /// Gets or sets the max mana.
+        /// Gets or sets the player's maximum mana.
         /// </summary>
-        /// <value>The max mana.</value>
+        /// <value>The player's maximum mana.</value>
         [field: FieldOffset(3)] public short MaxMana { get; set; }
 
         PacketId IPacket.Id => PacketId.PlayerMana;

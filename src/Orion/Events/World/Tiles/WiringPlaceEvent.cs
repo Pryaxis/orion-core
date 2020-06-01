@@ -32,7 +32,7 @@ namespace Orion.Events.World.Tiles {
 
         /// <summary>
         /// Initializes a new instance of the <see cref="WiringPlaceEvent"/> class with the specified
-        /// <paramref name="player"/>, coordinates, and <paramref name="wiring"/>.
+        /// <paramref name="player"/>, coordinates, and <paramref name="wiring"/> type.
         /// </summary>
         /// <param name="player">The player, or <see langword="null"/> for none.</param>
         /// <param name="x">The X coordinate.</param>

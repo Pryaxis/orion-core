@@ -299,7 +299,7 @@ namespace Orion.Players {
         }
 
         private bool RaisePlayerEvent(IPlayer player, ref ModulePacket<ChatModule> packet) {
-            var evt = new PlayerChatEvent(player, packet.Module.ClientCommand, packet.Module.ClientText);
+            var evt = new PlayerChatEvent(player, packet.Module.ClientCommand, packet.Module.ClientMessage);
             Kernel.Raise(evt, Log);
             return evt.IsCanceled();
         }
