@@ -28,9 +28,9 @@ namespace Orion.Packets.Client {
         private string? _uuid;
 
         /// <summary>
-        /// Gets or sets the UUID.
+        /// Gets or sets the client UUID.
         /// </summary>
-        /// <value>The UUID.</value>
+        /// <value>The client UUID.</value>
         /// <exception cref="ArgumentNullException"><paramref name="value"/> is <see langword="null"/>.</exception>
         public string Uuid {
             get => _uuid ?? string.Empty;

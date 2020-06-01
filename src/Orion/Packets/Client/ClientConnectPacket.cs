@@ -26,9 +26,9 @@ namespace Orion.Packets.Client {
         private string? _version;
 
         /// <summary>
-        /// Gets or sets the version.
+        /// Gets or sets the client version.
         /// </summary>
-        /// <value>The version.</value>
+        /// <value>The client version.</value>
         /// <exception cref="ArgumentNullException"><paramref name="value"/> is <see langword="null"/>.</exception>
         public string Version {
             get => _version ?? string.Empty;

@@ -31,13 +31,9 @@ namespace Orion.Packets {
         };
 
         public static readonly IEnumerable<object[]> NetworkTextParams = new[] {
-            new object[] { new NetworkText(NetworkTextMode.Literal, "literal") },
-            new object[] {
-                new NetworkText(NetworkTextMode.Formattable, "formattable {0} {1}", "literal", "literal2")
-            },
-            new object[] {
-                new NetworkText(NetworkTextMode.Localized, "localized {0} {1}", "literal", "literal2")
-            },
+            new object[] { (NetworkText)"literal" },
+            new object[] { NetworkText.Formatted("formattable {0} {1}", "literal", "literal2") },
+            new object[] { NetworkText.Localized("localized {0} {1}", "literal", "literal2") },
         };
 
         [Theory]

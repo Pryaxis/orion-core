@@ -27,9 +27,9 @@ namespace Orion.Packets.Client {
         private NetworkText? _reason;
 
         /// <summary>
-        /// Gets or sets the reason.
+        /// Gets or sets the disconnect reason.
         /// </summary>
-        /// <value>The reason.</value>
+        /// <value>The disconnect reason.</value>
         /// <exception cref="ArgumentNullException"><paramref name="value"/> is <see langword="null"/>.</exception>
         public NetworkText Reason {
             get => _reason ?? NetworkText.Empty;

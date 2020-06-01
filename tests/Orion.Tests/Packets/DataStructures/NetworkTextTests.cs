@@ -22,46 +22,10 @@ using Xunit;
 namespace Orion.Packets.DataStructures {
     public class NetworkTextTests {
         public static readonly IEnumerable<object[]> NetworkTexts = new[] {
-            new object[] { new NetworkText(NetworkTextMode.Literal, "literal") },
-            new object[] {
-                new NetworkText(NetworkTextMode.Formattable, "formattable {0} {1}", "literal", "literal2")
-            },
-            new object[] {
-                new NetworkText(NetworkTextMode.Localized, "localized {0} {1}", "literal", "literal2")
-            },
+            new object[] { (NetworkText)"literal" },
+            new object[] { NetworkText.Formatted("formattable {0} {1}", "literal", "literal2") },
+            new object[] { NetworkText.Localized("localized {0} {1}", "literal", "literal2") },
         };
-
-        [Fact]
-        public void Ctor_NullText_ThrowsArgumentNullException() {
-            Assert.Throws<ArgumentNullException>(() => new NetworkText(NetworkTextMode.Literal, null!));
-        }
-
-        [Fact]
-        public void Ctor_NullSubstitutions_ThrowsArgumentNullException() {
-            Assert.Throws<ArgumentNullException>(() => new NetworkText(NetworkTextMode.Literal, "test", null!));
-        }
-
-        [Fact]
-        public void Mode_Get() {
-            var text = new NetworkText(NetworkTextMode.Literal, "test");
-
-            Assert.Equal(NetworkTextMode.Literal, text.Mode);
-        }
-
-        [Fact]
-        public void Text_Get() {
-            var text = new NetworkText(NetworkTextMode.Literal, "test");
-
-            Assert.Equal("test", text.Text);
-        }
-
-        [Fact]
-        public void Substitutions_Get() {
-            var sub = new NetworkText(NetworkTextMode.Literal, "test");
-            var text = new NetworkText(NetworkTextMode.Formattable, "test", sub);
-
-            Assert.Equal(new List<NetworkText> { sub }, text.Substitutions);
-        }
 
         [Theory]
         [MemberData(nameof(NetworkTexts))]
@@ -86,9 +50,9 @@ namespace Orion.Packets.DataStructures {
         }
 
         [Fact]
-        public void Equals_Substitutions_ReturnsFalse() {
-            var text = new NetworkText(NetworkTextMode.Formattable, "test {0}", "test");
-            var text2 = new NetworkText(NetworkTextMode.Formattable, "test {0}", "test2");
+        public void Equals_ArgsDifferent_ReturnsFalse() {
+            var text = NetworkText.Formatted("test {0}", "test");
+            var text2 = NetworkText.Formatted("test {0}", "test2");
 
             Assert.False(text.Equals(text2));
             Assert.False(text.Equals((object)text2));
@@ -145,8 +109,7 @@ namespace Orion.Packets.DataStructures {
         public void op_Implicit() {
             NetworkText text = "test";
 
-            Assert.Equal(NetworkTextMode.Literal, text.Mode);
-            Assert.Equal("test", text.Text);
+            Assert.Equal("test", text.ToString());
         }
     }
 }

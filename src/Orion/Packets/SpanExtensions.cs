@@ -34,12 +34,12 @@ namespace Orion.Packets {
             Debug.Assert(encoding != null);
 
             var index = 0;
-            var mode = (NetworkTextMode)span[index++];
+            var mode = (NetworkText.Mode)span[index++];
             index += span[index..].Read(encoding, out string text);
             var substitutions = Array.Empty<NetworkText>();
 
             byte numSubstitutions = 0;
-            if (mode != NetworkTextMode.Literal) {
+            if (mode != NetworkText.Mode.Literal) {
                 numSubstitutions = span[index++];
                 substitutions = new NetworkText[numSubstitutions];
             }
@@ -66,17 +66,17 @@ namespace Orion.Packets {
             Debug.Assert(encoding != null);
 
             var index = 0;
-            span[index++] = (byte)value.Mode;
-            index += span[index..].Write(value.Text, encoding);
+            span[index++] = (byte)value._mode;
+            index += span[index..].Write(value._format, encoding);
 
             byte numSubstitutions = 0;
-            if (value.Mode != NetworkTextMode.Literal) {
-                numSubstitutions = (byte)value.Substitutions.Count;
+            if (value._mode != NetworkText.Mode.Literal) {
+                numSubstitutions = (byte)value._args.Length;
                 span[index++] = numSubstitutions;
             }
 
             for (var i = 0; i < numSubstitutions; ++i) {
-                index += span[index..].Write(value.Substitutions[i], encoding);
+                index += span[index..].Write(value._args[i], encoding);
             }
             return index;
         }

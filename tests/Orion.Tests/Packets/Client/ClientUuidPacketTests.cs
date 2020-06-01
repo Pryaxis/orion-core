@@ -16,9 +16,11 @@
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 using Xunit;
 
 namespace Orion.Packets.Client {
+    [SuppressMessage("Style", "IDE0017:Simplify object initialization", Justification = "Testing")]
     public class ClientUuidPacketTests {
         public static readonly byte[] Bytes = { 12, 0, 68, 8, 84, 101, 114, 114, 97, 114, 105, 97 };
 
@@ -48,8 +50,7 @@ namespace Orion.Packets.Client {
         }
 
         [Fact]
-        public void RoundTrip() {
+        public void RoundTrip() =>
             TestUtils.RoundTripPacket<ClientUuidPacket>(Bytes.AsSpan(IPacket.HeaderSize..), PacketContext.Server);
-        }
     }
 }

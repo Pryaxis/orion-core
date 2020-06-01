@@ -38,9 +38,9 @@ namespace Orion.Packets.Client {
         public void Reason_Set_Get() {
             var packet = new ClientDisconnectPacket();
 
-            packet.Reason = new NetworkText(NetworkTextMode.Localized, "CLI.KickMessage");
+            packet.Reason = NetworkText.Localized("CLI.KickMessage");
 
-            Assert.Equal(new NetworkText(NetworkTextMode.Localized, "CLI.KickMessage"), packet.Reason);
+            Assert.Equal(NetworkText.Localized("CLI.KickMessage"), packet.Reason);
         }
 
         [Fact]
@@ -49,12 +49,11 @@ namespace Orion.Packets.Client {
             var span = Bytes.AsSpan(IPacket.HeaderSize..);
             Assert.Equal(span.Length, packet.Read(span, PacketContext.Server));
 
-            Assert.Equal(new NetworkText(NetworkTextMode.Localized, "CLI.KickMessage"), packet.Reason);
+            Assert.Equal(NetworkText.Localized("CLI.KickMessage"), packet.Reason);
         }
 
         [Fact]
-        public void RoundTrip() {
+        public void RoundTrip() =>
             TestUtils.RoundTripPacket<ClientDisconnectPacket>(Bytes.AsSpan(IPacket.HeaderSize..), PacketContext.Server);
-        }
     }
 }

@@ -16,9 +16,10 @@
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
 using System;
-using System.Collections.Generic;
+using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.Diagnostics.Contracts;
+using System.Linq;
 
 namespace Orion.Packets.DataStructures {
     /// <summary>
@@ -26,50 +27,28 @@ namespace Orion.Packets.DataStructures {
     /// </summary>
     public sealed class NetworkText : IEquatable<NetworkText> {
         /// <summary>
-        /// The empty network text.
+        /// Represents the empty network text.
         /// </summary>
         public static readonly NetworkText Empty = "";
 
-        private readonly NetworkText[] _substitutions;
+        internal readonly Mode _mode;
+        internal readonly string _format;
+        internal readonly NetworkText[] _args;
 
-        /// <summary>
-        /// Gets the network text mode.
-        /// </summary>
-        /// <value>The network text mode.</value>
-        public NetworkTextMode Mode { get; }
+        internal NetworkText(Mode mode, string format, params NetworkText[] args) {
+            Debug.Assert(format != null);
+            Debug.Assert(args != null);
+            Debug.Assert(mode != Mode.Literal || args.Length == 0);
+            Debug.Assert(args.All(a => a != null));
 
-        /// <summary>
-        /// Gets the text.
-        /// </summary>
-        /// <value>The text.</value>
-        public string Text { get; }
-
-        /// <summary>
-        /// Gets the substitutions. This is only applicable if <see cref="Mode"/> is not
-        /// <see cref="NetworkTextMode.Literal"/>.
-        /// </summary>
-        /// <value>The substitutions.</value>
-        public IReadOnlyList<NetworkText> Substitutions => _substitutions;
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="NetworkText"/> class with the specified
-        /// <paramref name="mode"/>, <paramref name="text"/>, and <paramref name="substitutions"/>.
-        /// </summary>
-        /// <param name="mode">The network text mode.</param>
-        /// <param name="text">The text.</param>
-        /// <param name="substitutions">The substitutions.</param>
-        /// <exception cref="ArgumentNullException">
-        /// <paramref name="text"/> or <paramref name="substitutions"/> are <see langword="null"/>.
-        /// </exception>
-        public NetworkText(NetworkTextMode mode, string text, params NetworkText[] substitutions) {
-            Mode = mode;
-            Text = text ?? throw new ArgumentNullException(nameof(text));
-            _substitutions = substitutions ?? throw new ArgumentNullException(nameof(substitutions));
+            _mode = mode;
+            _format = format;
+            _args = args;
         }
 
         /// <inheritdoc/>
         [Pure]
-        public override bool Equals(object obj) => obj is NetworkText text && Equals(text);
+        public override bool Equals(object obj) => obj is NetworkText other && Equals(other);
 
         /// <inheritdoc/>
         [Pure]
@@ -78,12 +57,12 @@ namespace Orion.Packets.DataStructures {
                 return false;
             }
 
-            if (Mode != other.Mode || Text != other.Text || _substitutions.Length != other._substitutions.Length) {
+            if (_mode != other._mode || _format != other._format || _args.Length != other._args.Length) {
                 return false;
             }
 
-            for (var i = 0; i < _substitutions.Length; ++i) {
-                if (!_substitutions[i].Equals(other._substitutions[i])) {
+            for (var i = 0; i < _args.Length; ++i) {
+                if (!_args[i].Equals(other._args[i])) {
                     return false;
                 }
             }
@@ -91,14 +70,17 @@ namespace Orion.Packets.DataStructures {
             return true;
         }
 
-        /// <inheritdoc/>
+        /// <summary>
+        /// Returns the hash code of the network text.
+        /// </summary>
+        /// <returns>The hash code of the network text.</returns>
         [Pure]
         public override int GetHashCode() {
             var hashCode = new HashCode();
-            hashCode.Add(Mode);
-            hashCode.Add(Text);
-            foreach (var substitution in _substitutions) {
-                hashCode.Add(substitution);
+            hashCode.Add(_mode);
+            hashCode.Add(_format);
+            foreach (var arg in _args) {
+                hashCode.Add(arg);
             }
 
             return hashCode.ToHashCode();
@@ -109,13 +91,57 @@ namespace Orion.Packets.DataStructures {
         /// </summary>
         /// <returns>A string representation of the network text.</returns>
         [Pure, ExcludeFromCodeCoverage]
-        public override string ToString() =>
-            Mode switch {
-                NetworkTextMode.Literal => Text,
-                NetworkTextMode.Formattable => string.Format(Text, _substitutions),
-                NetworkTextMode.Localized => Terraria.Localization.Language.GetTextValue(Text, _substitutions),
-                _ => throw new NotImplementedException(),
-            };
+        public override string ToString() => _mode switch {
+            Mode.Literal => _format,
+            Mode.Formatted => string.Format(_format, _args),
+            Mode.Localized => Terraria.Localization.Language.GetTextValue(_format, _args),
+            _ => throw new NotImplementedException(),
+        };
+
+        /// <summary>
+        /// Returns a formatted <see cref="NetworkText"/> instance with the specified <paramref name="format"/> and
+        /// <paramref name="args"/>. 
+        /// </summary>
+        /// <param name="format">The format string.</param>
+        /// <param name="args">The arguments to substitute.</param>
+        /// <returns>The formatted <see cref="NetworkText"/> instance.</returns>
+        /// <exception cref="ArgumentException"><paramref name="args"/> contains <see langword="null"/>.</exception>
+        /// <exception cref="ArgumentNullException">
+        /// <paramref name="format"/> or <paramref name="args"/> are <see langword="null"/>.
+        /// </exception>
+        public static NetworkText Formatted(string format, params NetworkText[] args) =>
+            NewNetworkText(Mode.Formatted, format, args);
+
+        /// <summary>
+        /// Returns a localized <see cref="NetworkText"/> instance with the specified <paramref name="format"/> and
+        /// <paramref name="args"/>.
+        /// </summary>
+        /// <param name="format">The format string.</param>
+        /// <param name="args">The arguments to substitute.</param>
+        /// <returns>The localized <see cref="NetworkText"/> instance.</returns>
+        /// <exception cref="ArgumentException"><paramref name="args"/> contains <see langword="null"/>.</exception>
+        /// <exception cref="ArgumentNullException">
+        /// <paramref name="format"/> or <paramref name="args"/> are <see langword="null"/>.
+        /// </exception>
+        public static NetworkText Localized(string format, params NetworkText[] args) =>
+            NewNetworkText(Mode.Localized, format, args);
+
+        private static NetworkText NewNetworkText(Mode mode, string format, NetworkText[] args) {
+            if (format is null) {
+                throw new ArgumentNullException(nameof(format));
+            }
+
+            if (args is null) {
+                throw new ArgumentNullException(nameof(args));
+            }
+
+            if (args.Any(a => a == null)) {
+                // Not localized because this string is developer-facing.
+                throw new ArgumentException("Args contains null", nameof(args));
+            }
+
+            return new NetworkText(mode, format, args);
+        }
 
         /// <summary>
         /// Determines whether two network texts are equal.
@@ -126,13 +152,8 @@ namespace Orion.Packets.DataStructures {
         /// <see langword="true"/> if the network texts are equal; otherwise, <see langword="false"/>.
         /// </returns>
         [Pure]
-        public static bool operator ==(NetworkText? left, NetworkText? right) {
-            if (left is null) {
-                return right is null;
-            }
-
-            return left.Equals(right);
-        }
+        public static bool operator ==(NetworkText? left, NetworkText? right) =>
+            left is null ? right is null : left.Equals(right);
 
         /// <summary>
         /// Determines whether two network texts are not equal.
@@ -146,11 +167,23 @@ namespace Orion.Packets.DataStructures {
         public static bool operator !=(NetworkText? left, NetworkText? right) => !(left == right);
 
         /// <summary>
-        /// Converts the given <paramref name="text"/> into a network text.
+        /// Returns a literal <see cref="NetworkText"/> instance with the specified <paramref name="text"/>.
         /// </summary>
         /// <param name="text">The text.</param>
         /// <exception cref="ArgumentNullException"><paramref name="text"/> is <see langword="null"/>.</exception>
         [Pure]
-        public static implicit operator NetworkText(string text) => new NetworkText(NetworkTextMode.Literal, text);
+        public static implicit operator NetworkText(string text) {
+            if (text is null) {
+                throw new ArgumentNullException(nameof(text));
+            }
+
+            return new NetworkText(Mode.Literal, text);
+        }
+
+        internal enum Mode {
+            Literal = 0,
+            Formatted = 1,
+            Localized = 2,
+        }
     }
 }

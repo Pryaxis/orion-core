@@ -25,11 +25,18 @@ namespace Orion.Packets.DataStructures {
     /// Represents a three byte component color.
     /// </summary>
     [StructLayout(LayoutKind.Explicit)]
-    public struct Color3 : IEquatable<Color3> {
+    public readonly struct Color3 : IEquatable<Color3> {
         /// <summary>
-        /// The color white.
+        /// Gets the color black.
         /// </summary>
-        public static readonly Color3 White = new Color3(255, 255, 255);
+        /// <value>The color black.</value>
+        public static Color3 Black { get; } = new Color3(0x00, 0x00, 0x00);
+
+        /// <summary>
+        /// Gets the color white.
+        /// </summary>
+        /// <value>The color white.</value>
+        public static Color3 White { get; } = new Color3(0xff, 0xff, 0xff);
 
         /// <summary>
         /// Gets the red component.
@@ -63,7 +70,7 @@ namespace Orion.Packets.DataStructures {
 
         /// <inheritdoc/>
         [Pure]
-        public override bool Equals(object obj) => obj is Color3 color && Equals(color);
+        public override bool Equals(object obj) => obj is Color3 other && Equals(other);
 
         /// <inheritdoc/>
         [Pure]
