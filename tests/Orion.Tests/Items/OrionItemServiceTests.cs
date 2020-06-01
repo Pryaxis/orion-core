@@ -27,12 +27,6 @@ using Xunit;
 namespace Orion.Items {
     [Collection("TerrariaTestsCollection")]
     public class OrionItemServiceTests {
-        public static readonly IEnumerable<object[]> SpawnItemParams = new List<object[]> {
-            new object[] {ItemId.StoneBlock, 100, ItemPrefix.None},
-            new object[] {ItemId.Sdmg, 1, ItemPrefix.Unreal},
-            new object[] {ItemId.Meowmere, 1, ItemPrefix.Legendary}
-        };
-
         [Theory]
         [InlineData(-1)]
         [InlineData(10000)]
@@ -133,7 +127,9 @@ namespace Orion.Items {
         }
 
         [Theory]
-        [MemberData(nameof(SpawnItemParams))]
+        [InlineData(ItemId.StoneBlock, 100, ItemPrefix.None)]
+        [InlineData(ItemId.Sdmg, 1, ItemPrefix.Unreal)]
+        [InlineData(ItemId.Meowmere, 1, ItemPrefix.Legendary)]
         public void SpawnItem(ItemId id, int stackSize, ItemPrefix prefix) {
             using var kernel = new OrionKernel(Logger.None);
             using var itemService = new OrionItemService(kernel, Logger.None);

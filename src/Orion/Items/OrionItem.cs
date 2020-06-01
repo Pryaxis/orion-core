@@ -39,12 +39,7 @@ namespace Orion.Items {
         public OrionItem(int itemIndex, Terraria.Item terrariaItem) : base(itemIndex, terrariaItem) { }
         public OrionItem(Terraria.Item terrariaItem) : this(-1, terrariaItem) { }
 
-        public void SetId(ItemId id) {
-            Wrapped.SetDefaults((int)id);
-        }
-
-        public void SetPrefix(ItemPrefix prefix) {
-            Wrapped.Prefix((int)prefix);
-        }
+        public void SetId(ItemId id) => Wrapped.SetDefaults((int)id);
+        public void SetPrefix(ItemPrefix prefix) => Wrapped.Prefix((int)prefix);
     }
 }

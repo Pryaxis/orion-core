@@ -30,8 +30,8 @@ namespace Orion.Items {
         IReadOnlyList<IItem> Items { get; }
 
         /// <summary>
-        /// Spawns and returns an item with the given <paramref name="id"/> at the specified
-        /// <paramref name="position"/> with an optional <paramref name="stackSize"/> and <paramref name="prefix"/>.
+        /// Spawns an item with the given <paramref name="id"/> at the specified <paramref name="position"/> with an
+        /// optional <paramref name="stackSize"/> and <paramref name="prefix"/>. Returns the resulting item.
         /// </summary>
         /// <param name="id">The item ID.</param>
         /// <param name="position">The position.</param>
