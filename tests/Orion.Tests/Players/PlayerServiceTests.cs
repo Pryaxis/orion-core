@@ -31,10 +31,10 @@ namespace Orion.Players {
         public void BroadcastPacket_Ref() {
             var mockPlayer = new Mock<IPlayer>();
             var mockPlayers = new Mock<IReadOnlyList<IPlayer>>();
-            mockPlayers.SetupGet(p => p.Count).Returns(1);
-            mockPlayers.SetupGet(p => p[0]).Returns(mockPlayer.Object);
+            mockPlayers.Setup(p => p.Count).Returns(1);
+            mockPlayers.Setup(p => p[0]).Returns(mockPlayer.Object);
             var mockPlayerService = new Mock<IPlayerService>();
-            mockPlayerService.SetupGet(ps => ps.Players).Returns(mockPlayers.Object);
+            mockPlayerService.Setup(ps => ps.Players).Returns(mockPlayers.Object);
 
             var packet = new TestPacket();
             mockPlayerService.Object.BroadcastPacket(ref packet);
@@ -46,10 +46,10 @@ namespace Orion.Players {
         public void BroadcastPacket() {
             var mockPlayer = new Mock<IPlayer>();
             var mockPlayers = new Mock<IReadOnlyList<IPlayer>>();
-            mockPlayers.SetupGet(p => p.Count).Returns(1);
-            mockPlayers.SetupGet(p => p[0]).Returns(mockPlayer.Object);
+            mockPlayers.Setup(p => p.Count).Returns(1);
+            mockPlayers.Setup(p => p[0]).Returns(mockPlayer.Object);
             var mockPlayerService = new Mock<IPlayerService>();
-            mockPlayerService.SetupGet(ps => ps.Players).Returns(mockPlayers.Object);
+            mockPlayerService.Setup(ps => ps.Players).Returns(mockPlayers.Object);
 
             var packet = new TestPacket();
             mockPlayerService.Object.BroadcastPacket(packet);
@@ -68,10 +68,10 @@ namespace Orion.Players {
                     Assert.Equal(-1, packet.LineWidth);
                 }));
             var mockPlayers = new Mock<IReadOnlyList<IPlayer>>();
-            mockPlayers.SetupGet(p => p.Count).Returns(1);
-            mockPlayers.SetupGet(p => p[0]).Returns(mockPlayer.Object);
+            mockPlayers.Setup(p => p.Count).Returns(1);
+            mockPlayers.Setup(p => p[0]).Returns(mockPlayer.Object);
             var mockPlayerService = new Mock<IPlayerService>();
-            mockPlayerService.SetupGet(ps => ps.Players).Returns(mockPlayers.Object);
+            mockPlayerService.Setup(ps => ps.Players).Returns(mockPlayers.Object);
 
             mockPlayerService.Object.BroadcastMessage("test", Color3.White);
 

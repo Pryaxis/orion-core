@@ -40,6 +40,7 @@ namespace Orion.Players {
         /// <summary>
         /// Broadcasts the given <paramref name="packet"/> reference to all active players.
         /// </summary>
+        /// <typeparam name="TPacket">The type of packet.</typeparam>
         /// <param name="playerService">The player service.</param>
         /// <param name="packet">The packet reference. <b>This must be on the stack!</b></param>
         /// <exception cref="ArgumentNullException">
@@ -61,6 +62,7 @@ namespace Orion.Players {
         /// Broadcasts the given <paramref name="packet"/> to all active players. This overload is provided for
         /// convenience, but is slightly less efficient due to a struct copy.
         /// </summary>
+        /// <typeparam name="TPacket">The type of packet.</typeparam>
         /// <param name="playerService">The player service.</param>
         /// <param name="packet">The packet.</param>
         /// <exception cref="ArgumentNullException">

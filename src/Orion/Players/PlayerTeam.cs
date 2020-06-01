@@ -68,10 +68,10 @@ namespace Orion.Players {
         };
 
         /// <summary>
-        /// Returns the color for the given <paramref name="team"/>.
+        /// Returns the color of the <paramref name="team"/>.
         /// </summary>
         /// <param name="team">The team.</param>
-        /// <returns>The color.</returns>
+        /// <returns>The color of the <paramref name="team"/>.</returns>
         [Pure]
         public static Color3 Color(this PlayerTeam team) =>
             Colors.TryGetValue(team, out var color) ? color : Color3.White;

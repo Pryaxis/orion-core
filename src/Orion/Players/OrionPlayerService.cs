@@ -43,12 +43,12 @@ namespace Orion.Players {
         private delegate void OnReceivePacketHandler(Terraria.MessageBuffer buffer, Span<byte> span);
         private delegate void OnSendPacketHandler(int playerIndex, Span<byte> span);
 
-        private static readonly MethodInfo ReceivePacketMethod =
+        private static readonly MethodInfo _onReceivePacket =
             typeof(OrionPlayerService)
                 .GetMethod(nameof(OnReceivePacket), BindingFlags.NonPublic | BindingFlags.Instance);
-
-        private static readonly MethodInfo SendPacketMethod =
-            typeof(OrionPlayerService).GetMethod(nameof(OnSendPacket), BindingFlags.NonPublic | BindingFlags.Instance); 
+        private static readonly MethodInfo _onSendPacket =
+            typeof(OrionPlayerService)
+                .GetMethod(nameof(OnSendPacket), BindingFlags.NonPublic | BindingFlags.Instance); 
 
         private readonly ThreadLocal<bool> _ignoreReceiveDataHandler = new ThreadLocal<bool>();
         private readonly OnReceivePacketHandler?[] _onReceivePacketHandlers = new OnReceivePacketHandler?[256];
@@ -67,37 +67,33 @@ namespace Orion.Players {
             Debug.Assert(kernel != null);
             Debug.Assert(log != null);
 
-            // Construct the `Players` array. Note that the last player should be ignored, as it is not a real player.
-            Players = new WrappedArray<OrionPlayer, Terraria.Player>(
-                Terraria.Main.player.AsMemory(..^1),
-                (playerIndex, terrariaPlayer) => new OrionPlayer(playerIndex, terrariaPlayer, this));
+            OnReceivePacketHandler MakeOnReceivePacketHandler(Type packetType) =>
+                (OnReceivePacketHandler)_onReceivePacket
+                    .MakeGenericMethod(packetType)
+                    .CreateDelegate(typeof(OnReceivePacketHandler), this);
+            OnSendPacketHandler MakeOnSendPacketHandler(Type packetType) =>
+                (OnSendPacketHandler)_onSendPacket
+                    .MakeGenericMethod(packetType)
+                    .CreateDelegate(typeof(OnSendPacketHandler), this);
 
             // Construct the `_onReceivePacketHandlers` and `_onSendPacketHandlers` arrays ahead of time.
             foreach (var packetId in (PacketId[])Enum.GetValues(typeof(PacketId))) {
                 var packetType = packetId.Type();
-                _onReceivePacketHandlers[(byte)packetId] =
-                    (OnReceivePacketHandler)ReceivePacketMethod
-                        .MakeGenericMethod(packetType)
-                        .CreateDelegate(typeof(OnReceivePacketHandler), this);
-                _onSendPacketHandlers[(byte)packetId] =
-                    (OnSendPacketHandler)SendPacketMethod
-                        .MakeGenericMethod(packetType)
-                        .CreateDelegate(typeof(OnSendPacketHandler), this);
+                _onReceivePacketHandlers[(byte)packetId] = MakeOnReceivePacketHandler(packetType);
+                _onSendPacketHandlers[(byte)packetId] = MakeOnSendPacketHandler(packetType);
             }
 
             // Construct the `_onReceiveModuleHandlers` and `_onSendModuleHandlers` arrays ahead of time.
             foreach (var moduleId in (ModuleId[])Enum.GetValues(typeof(ModuleId))) {
-                var moduleType = moduleId.Type();
-                var packetType = typeof(ModulePacket<>).MakeGenericType(moduleType);
-                _onReceiveModuleHandlers[(ushort)moduleId] =
-                    (OnReceivePacketHandler)ReceivePacketMethod
-                        .MakeGenericMethod(packetType)
-                        .CreateDelegate(typeof(OnReceivePacketHandler), this);
-                _onSendModuleHandlers[(ushort)moduleId] =
-                    (OnSendPacketHandler)SendPacketMethod
-                        .MakeGenericMethod(packetType)
-                        .CreateDelegate(typeof(OnSendPacketHandler), this);
+                var packetType = typeof(ModulePacket<>).MakeGenericType(moduleId.Type());
+                _onReceiveModuleHandlers[(ushort)moduleId] = MakeOnReceivePacketHandler(packetType);
+                _onSendModuleHandlers[(ushort)moduleId] = MakeOnSendPacketHandler(packetType);
             }
+
+            // Construct the `Players` array. Note that the last player should be ignored, as it is not a real player.
+            Players = new WrappedArray<OrionPlayer, Terraria.Player>(
+                Terraria.Main.player.AsMemory(..^1),
+                (playerIndex, terrariaPlayer) => new OrionPlayer(playerIndex, terrariaPlayer, this));
 
             OTAPI.Hooks.Net.ReceiveData = ReceiveDataHandler;
             OTAPI.Hooks.Net.SendBytes = SendBytesHandler;
@@ -119,6 +115,7 @@ namespace Orion.Players {
             Debug.Assert(buffer != null);
             Debug.Assert(buffer.whoAmI >= 0 && buffer.whoAmI < Players.Count);
             Debug.Assert(start >= 0 && start + length <= buffer.readBuffer.Length);
+            Debug.Assert(length > 0);
 
             // Check `_ignoreReceiveDataHandler` to prevent an infinite loop if `GetData()` is called in
             // `ReceivePacket`. A thread-local value is used in case there is some concurrency.
@@ -184,27 +181,24 @@ namespace Orion.Players {
         private bool OnReceivePacketEvent<TPacket>(IPlayer player, ref TPacket packet) where TPacket : struct, IPacket {
             Debug.Assert(player != null);
 
-            // While this may seem inefficient, these typeof comparisons get optimized in each reified generic method by
-            // the JIT.
-            if (typeof(TPacket) == typeof(PlayerJoinPacket)) {
-                return RaisePlayerEvent(player, ref Unsafe.As<TPacket, PlayerJoinPacket>(ref packet));
-            } else if (typeof(TPacket) == typeof(PlayerHealthPacket)) {
-                return RaisePlayerEvent(player, ref Unsafe.As<TPacket, PlayerHealthPacket>(ref packet));
-            } else if (typeof(TPacket) == typeof(TileModifyPacket)) {
-                return RaisePlayerEvent(player, ref Unsafe.As<TPacket, TileModifyPacket>(ref packet));
-            } else if (typeof(TPacket) == typeof(PlayerPvpPacket)) {
-                return RaisePlayerEvent(player, ref Unsafe.As<TPacket, PlayerPvpPacket>(ref packet));
-            } else if (typeof(TPacket) == typeof(PlayerManaPacket)) {
-                return RaisePlayerEvent(player, ref Unsafe.As<TPacket, PlayerManaPacket>(ref packet));
-            } else if (typeof(TPacket) == typeof(PlayerTeamPacket)) {
-                return RaisePlayerEvent(player, ref Unsafe.As<TPacket, PlayerTeamPacket>(ref packet));
-            } else if (typeof(TPacket) == typeof(ClientUuidPacket)) {
-                return RaisePlayerEvent(player, ref Unsafe.As<TPacket, ClientUuidPacket>(ref packet));
-            } else if (typeof(TPacket) == typeof(ModulePacket<ChatModule>)) {
-                return RaisePlayerEvent(player, ref Unsafe.As<TPacket, ModulePacket<ChatModule>>(ref packet));
-            } else {
-                return false;
-            }
+            static ref TOtherPacket As<TOtherPacket>(ref TPacket packet)
+                => ref Unsafe.As<TPacket, TOtherPacket>(ref packet);
+
+            return packet.Id switch {
+                PacketId.PlayerJoin => RaisePlayerEvent(player, ref As<PlayerJoinPacket>(ref packet)),
+                PacketId.PlayerHealth => RaisePlayerEvent(player, ref As<PlayerHealthPacket>(ref packet)),
+                PacketId.TileModify => RaisePlayerEvent(player, ref As<TileModifyPacket>(ref packet)),
+                PacketId.PlayerPvp => RaisePlayerEvent(player, ref As<PlayerPvpPacket>(ref packet)),
+                PacketId.PlayerMana => RaisePlayerEvent(player, ref As<PlayerManaPacket>(ref packet)),
+                PacketId.PlayerTeam => RaisePlayerEvent(player, ref As<PlayerTeamPacket>(ref packet)),
+                PacketId.ClientUuid => RaisePlayerEvent(player, ref As<ClientUuidPacket>(ref packet)),
+                PacketId.Module => true switch {
+                    _ when typeof(TPacket) == typeof(ModulePacket<ChatModule>) =>
+                        RaisePlayerEvent(player, ref As<ModulePacket<ChatModule>>(ref packet)),
+                    _ => false
+                },
+                _ => false
+            };
         }
 
         [SuppressMessage("Style", "IDE0060:Remove unused parameter", Justification = "Standardization")]
@@ -388,11 +382,11 @@ namespace Orion.Players {
         private IPlayer GetPlayer(Terraria.Player terrariaPlayer) {
             Debug.Assert(terrariaPlayer != null);
 
-            var npcIndex = terrariaPlayer.whoAmI;
-            Debug.Assert(npcIndex >= 0 && npcIndex < Players.Count);
+            var playerIndex = terrariaPlayer.whoAmI;
+            Debug.Assert(playerIndex >= 0 && playerIndex < Players.Count);
 
-            var isConcrete = terrariaPlayer == Terraria.Main.player[npcIndex];
-            return isConcrete ? Players[npcIndex] : new OrionPlayer(terrariaPlayer, this);
+            var isConcrete = terrariaPlayer == Terraria.Main.player[playerIndex];
+            return isConcrete ? Players[playerIndex] : new OrionPlayer(terrariaPlayer, this);
         }
     }
 }

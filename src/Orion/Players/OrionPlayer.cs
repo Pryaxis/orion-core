@@ -31,7 +31,6 @@ namespace Orion.Players {
     [LogAsScalar]
     internal sealed class OrionPlayer : OrionEntity<Terraria.Player>, IPlayer {
         private readonly OrionPlayerService _playerService;
-
         private readonly byte[] _sendBuffer = new byte[ushort.MaxValue];
 
         public override string Name {
@@ -131,12 +130,9 @@ namespace Orion.Players {
 
                     var id = (BuffId)Wrapped.buffType[index];
                     var duration = TimeSpan.FromSeconds(Wrapped.buffTime[index] / 60.0);
-                    if (duration <= TimeSpan.Zero) {
-                        return default;
-                    }
-
-                    return new Buff(id, duration);
-                } set {
+                    return duration > TimeSpan.Zero ? new Buff(id, duration) : default;
+                }
+                set {
                     if (index < 0 || index >= Count) {
                         // Not localized because this string is developer-facing.
                         throw new IndexOutOfRangeException($"Index out of range (expected: 0-{Count})");
