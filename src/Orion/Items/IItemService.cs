@@ -35,7 +35,7 @@ namespace Orion.Items {
         /// </summary>
         /// <param name="id">The item ID.</param>
         /// <param name="position">The position.</param>
-        /// <param name="stackSize">The stack size.</param>
+        /// <param name="stackSize">The item stack size.</param>
         /// <param name="prefix">The item prefix.</param>
         /// <returns>The resulting item, or <see langword="null"/> if none was spawned.</returns>
         IItem? SpawnItem(ItemId id, Vector2f position, int stackSize = 1, ItemPrefix prefix = ItemPrefix.None);

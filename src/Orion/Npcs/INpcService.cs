@@ -16,6 +16,7 @@
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
 using System.Collections.Generic;
+using Orion.Packets.DataStructures;
 
 namespace Orion.Npcs {
     /// <summary>
@@ -27,5 +28,13 @@ namespace Orion.Npcs {
         /// </summary>
         /// <value>The NPCs.</value>
         IReadOnlyList<INpc> Npcs { get; }
+
+        /// <summary>
+        /// Spawns an NPC with the given <paramref name="id"/> at the specified <paramref name="position"/>.
+        /// </summary>
+        /// <param name="id">The NPC ID.</param>
+        /// <param name="position">The position.</param>
+        /// <returns>The resulting NPC, or <see langword="null"/> if none was spawned.</returns>
+        INpc? SpawnNpc(NpcId id, Vector2f position);
     }
 }

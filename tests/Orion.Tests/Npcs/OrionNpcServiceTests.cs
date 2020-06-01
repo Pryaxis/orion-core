@@ -19,6 +19,7 @@ using System;
 using System.Linq;
 using Orion.Events;
 using Orion.Events.Npcs;
+using Orion.Packets.DataStructures;
 using Serilog.Core;
 using Xunit;
 
@@ -174,6 +175,18 @@ namespace Orion.Npcs {
             Terraria.Main.npc[0].checkDead();
 
             Assert.True(isRun);
+        }
+
+        [Fact]
+        public void SpawnNpc() {
+            using var kernel = new OrionKernel(Logger.None);
+            using var npcService = new OrionNpcService(kernel, Logger.None);
+            var npc = npcService.SpawnNpc(NpcId.BlueSlime, Vector2f.Zero);
+
+            Assert.NotNull(npc);
+#pragma warning disable CS8602 // Dereference of a possibly null reference.
+            Assert.Equal(NpcId.BlueSlime, npc.Id);
+#pragma warning restore CS8602 // Dereference of a possibly null reference.
         }
     }
 }

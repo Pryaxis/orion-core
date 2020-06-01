@@ -22,6 +22,7 @@ using System.Threading;
 using Orion.Collections;
 using Orion.Events;
 using Orion.Events.Npcs;
+using Orion.Packets.DataStructures;
 using Serilog;
 
 namespace Orion.Npcs {
@@ -53,6 +54,14 @@ namespace Orion.Npcs {
             OTAPI.Hooks.Npc.Spawn = null;
             OTAPI.Hooks.Npc.PreUpdate = null;
             OTAPI.Hooks.Npc.Killed = null;
+        }
+
+        public INpc? SpawnNpc(NpcId id, Vector2f position) {
+            // Not localized because this string is developer-facing.
+            Log.Debug("Spawning {NpcId} at {Position}", id, position);
+
+            var npcIndex = Terraria.NPC.NewNPC((int)position.X, (int)position.Y, (int)id);
+            return npcIndex >= 0 && npcIndex < Npcs.Count ? Npcs[npcIndex] : null;
         }
 
         private OTAPI.HookResult PreSetDefaultsByIdHandler(
