@@ -20,7 +20,8 @@ using System.Collections.Generic;
 
 namespace Orion.Entities {
     /// <summary>
-    /// Represents an annotatable object. Provides the base class for implementers of <see cref="IAnnotatable"/>.
+    /// Represents an annotatable object. Provides the base class for implementations of interfaces derived from
+    /// <see cref="IAnnotatable"/>.
     /// </summary>
     public class AnnotatableObject : IAnnotatable {
         private readonly IDictionary<string, object> _annotations = new Dictionary<string, object>();

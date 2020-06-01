@@ -16,6 +16,7 @@
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
 using System;
+using System.Diagnostics.Contracts;
 using Orion.Packets.DataStructures;
 
 namespace Orion.Entities {
@@ -59,5 +60,28 @@ namespace Orion.Entities {
         /// </summary>
         /// <value>The entity's size, in pixels.</value>
         Vector2f Size { get; set; }
+    }
+
+    /// <summary>
+    /// Provides extensions for the <see cref="IEntity"/> interface.
+    /// </summary>
+    public static class EntityExtensions {
+        /// <summary>
+        /// Gets a value indicating whether the <paramref name="entity"/> is concrete: i.e., whether the entity
+        /// <i>could</i> exist in the world.
+        /// </summary>
+        /// <param name="entity">The entity.</param>
+        /// <returns>
+        /// <see langword="true"/> if the <paramref name="entity"/> is concrete; otherwise, <see langword="false"/>.
+        /// </returns>
+        /// <exception cref="ArgumentNullException"><paramref name="entity"/> is <see langword="null"/>.</exception>
+        [Pure]
+        public static bool IsConcrete(this IEntity entity) {
+            if (entity is null) {
+                throw new ArgumentNullException(nameof(entity));
+            }
+
+            return entity.Index >= 0;
+        }
     }
 }

@@ -29,8 +29,6 @@ namespace Orion.Collections {
         private readonly Func<int, TWrapped, T> _converter;
         private readonly T?[] _items;
 
-        public int Count => _items.Length;
-
         public T this[int index] {
             get {
                 var wrappedItem = _wrappedItems.Span[index];
@@ -44,6 +42,8 @@ namespace Orion.Collections {
                 return item;
             }
         }
+
+        public int Count => _items.Length;
 
         public WrappedArray(ReadOnlyMemory<TWrapped> wrappedItems, Func<int, TWrapped, T> converter) {
             Debug.Assert(converter != null);

@@ -29,7 +29,7 @@ namespace Orion.Events {
         [Fact]
         public void IsCanceled_Yes_ReturnsTrue() {
             var mockCancelable = new Mock<ICancelable>();
-            mockCancelable.SetupGet(c => c.CancellationReason).Returns("");
+            mockCancelable.Setup(c => c.CancellationReason).Returns("");
 
             Assert.True(mockCancelable.Object.IsCanceled());
         }
@@ -37,7 +37,7 @@ namespace Orion.Events {
         [Fact]
         public void IsCanceled_No_ReturnsFalse() {
             var mockCancelable = new Mock<ICancelable>();
-            mockCancelable.SetupGet(c => c.CancellationReason).Returns((string)null!);
+            mockCancelable.Setup(c => c.CancellationReason).Returns((string)null!);
 
             Assert.False(mockCancelable.Object.IsCanceled());
         }
