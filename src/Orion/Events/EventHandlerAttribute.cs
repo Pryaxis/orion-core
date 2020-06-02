@@ -45,7 +45,7 @@ namespace Orion.Events {
         /// Gets or sets the event handler's name. This is used for logging.
         /// </summary>
         /// <value>The event handler's name, or <see langword="null"/> for none.</value>
-        /// <exception cref="ArgumentNullException"><param name="value"/> is <see langword="null"/>.</exception>
+        /// <exception cref="ArgumentNullException"><paramref name="value"/> is <see langword="null"/>.</exception>
         [DisallowNull]
         public string? Name {
             get => _name;

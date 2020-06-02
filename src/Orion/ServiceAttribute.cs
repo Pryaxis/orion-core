@@ -26,6 +26,15 @@ namespace Orion {
         private string _author = "Pryaxis";
 
         /// <summary>
+        /// Initializes a new instance of the <see cref="ServiceAttribute"/> with the specified <paramref name="name"/>.
+        /// </summary>
+        /// <param name="name">The name.</param>
+        /// <exception cref="ArgumentNullException"><paramref name="name"/> is <see langword="null"/>.</exception>
+        public ServiceAttribute(string name) {
+            Name = name ?? throw new ArgumentNullException(nameof(name));
+        }
+
+        /// <summary>
         /// Gets the service's name. This is used for logging.
         /// </summary>
         /// <value>The service's name.</value>
@@ -35,19 +44,10 @@ namespace Orion {
         /// Gets or sets the service's author. This is used for logging.
         /// </summary>
         /// <value>The service's author. The default value is <c>Pryaxis</c>.</value>
-        /// <exception cref="ArgumentNullException"><param name="value"/> is <see langword="null"/>.</exception>
+        /// <exception cref="ArgumentNullException"><paramref name="value"/> is <see langword="null"/>.</exception>
         public string Author {
             get => _author;
             set => _author = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="ServiceAttribute"/> with the specified <paramref name="name"/>.
-        /// </summary>
-        /// <param name="name">The name.</param>
-        /// <exception cref="ArgumentNullException"><paramref name="name"/> is <see langword="null"/>.</exception>
-        public ServiceAttribute(string name) {
-            Name = name ?? throw new ArgumentNullException(nameof(name));
         }
     }
 }
