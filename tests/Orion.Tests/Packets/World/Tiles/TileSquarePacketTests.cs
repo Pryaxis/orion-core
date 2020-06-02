@@ -53,14 +53,14 @@ namespace Orion.Packets.World.Tiles {
         public void Tiles_SetNullValue_ThrowsArgumentNullException() {
             var packet = new TileSquarePacket();
 
-            Assert.Throws<ArgumentException>(() => packet.Tiles = null!);
+            Assert.Throws<ArgumentNullException>(() => packet.Tiles = null!);
         }
 
         [Fact]
         public void Tiles_SetNotSquareArray_ThrowsArgumentException() {
             var packet = new TileSquarePacket();
 
-            Assert.Throws<ArgumentNullException>(() => packet.Tiles = new Tile[1, 2]);
+            Assert.Throws<ArgumentException>(() => packet.Tiles = new Tile[1, 2]);
         }
 
         [Fact]
