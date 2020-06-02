@@ -40,6 +40,7 @@ namespace Orion.Buffs {
         /// </summary>
         /// <param name="id">The buff ID.</param>
         /// <param name="duration">The buff duration.</param>
+        /// <exception cref="ArgumentOutOfRangeException"><paramref name="duration"/> is non-positive.</exception>
         public Buff(BuffId id, TimeSpan duration) {
             if (duration <= TimeSpan.Zero) {
                 // Not localized because this string is developer-facing.
