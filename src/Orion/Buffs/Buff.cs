@@ -19,8 +19,15 @@ using System;
 
 namespace Orion.Buffs {
     /// <summary>
-    /// Represents a buff, which consists of a buff ID along with a duration.
+    /// Represents a buff.
     /// </summary>
+    /// <remarks>
+    /// A buff is a positive (or negative, in the case of a debuff) status effect which can be applied to players and
+    /// NPCs. See <a href="https://terraria.gamepedia.com/Buffs">here</a> for more information on buffs.
+    /// 
+    /// Each buff consists of a <see cref="BuffId"/>, which specifies the type of buff, along with a positive duration
+    /// which indicates the amount of time remaining on the buff.
+    /// </remarks>
     public readonly struct Buff {
         /// <summary>
         /// Initializes a new instance of the <see cref="Buff"/> structure with the specified buff <paramref name="id"/>
@@ -40,13 +47,13 @@ namespace Orion.Buffs {
         }
 
         /// <summary>
-        /// Gets the buff ID.
+        /// Gets the <see cref="BuffId"/>.
         /// </summary>
-        /// <value>The buff ID.</value>
+        /// <value>The <see cref="BuffId"/>.</value>
         public BuffId Id { get; }
 
         /// <summary>
-        /// Gets the buff duration.
+        /// Gets the buff duration. This is guaranteed to be positive.
         /// </summary>
         /// <value>The buff duration.</value>
         public TimeSpan Duration { get; }
