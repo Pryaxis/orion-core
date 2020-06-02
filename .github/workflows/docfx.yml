@@ -1,0 +1,21 @@
+name: docfx
+
+on:
+  push:
+    branches: [ v1.4 ]
+
+jobs:
+  docs:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@master
+      - name: Build documentation
+        uses: nikeee/docfx-action@master
+        with:
+          args: docs/docfx.json
+      - name: Publish documentation
+        uses: maxheld83/ghpages@master
+        env:
+          BUILD_DIR: docs/_site
+          GH_PAT: ${{ secrets.GH_PAGES_PAT }}
