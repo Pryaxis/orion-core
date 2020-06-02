@@ -29,22 +29,22 @@ namespace Orion.World.Tiles {
         private const int LiquidShift = 21;
         
         // The masks. These follow the same layout in Terraria's `Tile` class.
-        private const int BlockColorMask /*       */ = 0b_00000000_00000000_00000000_00011111;
-        private const int IsBlockActiveMask /*    */ = 0b_00000000_00000000_00000000_00100000;
-        private const int IsBlockActuatedMask /*  */ = 0b_00000000_00000000_00000000_01000000;
-        private const int HasRedWireMask /*       */ = 0b_00000000_00000000_00000000_10000000;
-        private const int HasBlueWireMask /*      */ = 0b_00000000_00000000_00000001_00000000;
-        private const int HasGreenWireMask /*     */ = 0b_00000000_00000000_00000010_00000000;
-        private const int IsBlockHalvedMask /*    */ = 0b_00000000_00000000_00000100_00000000;
-        private const int HasActuatorMask /*      */ = 0b_00000000_00000000_00001000_00000000;
-        private const int SlopeMask /*            */ = 0b_00000000_00000000_01110000_00000000;
-        private const int WallColorMask /*        */ = 0b_00000000_00011111_00000000_00000000;
-        private const int LiquidMask /*           */ = 0b_00000000_01100000_00000000_00000000;
-        private const int HasYellowWireMask /*    */ = 0b_00000000_10000000_00000000_00000000;
-        private const int IsCheckingLiquidMask /* */ = 0b_00001000_00000000_00000000_00000000;
-        private const int ShouldSkipLiquidMask /* */ = 0b_00010000_00000000_00000000_00000000;
+        private const uint BlockColorMask /*       */ = 0b_00000000_00000000_00000000_00011111;
+        private const uint IsBlockActiveMask /*    */ = 0b_00000000_00000000_00000000_00100000;
+        private const uint IsBlockActuatedMask /*  */ = 0b_00000000_00000000_00000000_01000000;
+        private const uint HasRedWireMask /*       */ = 0b_00000000_00000000_00000000_10000000;
+        private const uint HasBlueWireMask /*      */ = 0b_00000000_00000000_00000001_00000000;
+        private const uint HasGreenWireMask /*     */ = 0b_00000000_00000000_00000010_00000000;
+        private const uint IsBlockHalvedMask /*    */ = 0b_00000000_00000000_00000100_00000000;
+        private const uint HasActuatorMask /*      */ = 0b_00000000_00000000_00001000_00000000;
+        private const uint SlopeMask /*            */ = 0b_00000000_00000000_01110000_00000000;
+        private const uint WallColorMask /*        */ = 0b_00000000_00011111_00000000_00000000;
+        private const uint LiquidMask /*           */ = 0b_00000000_01100000_00000000_00000000;
+        private const uint HasYellowWireMask /*    */ = 0b_00000000_10000000_00000000_00000000;
+        private const uint IsCheckingLiquidMask /* */ = 0b_00001000_00000000_00000000_00000000;
+        private const uint ShouldSkipLiquidMask /* */ = 0b_00010000_00000000_00000000_00000000;
 
-        [FieldOffset(9)] private int _header;
+        [FieldOffset(9)] private uint _header;
 
         /// <summary>
         /// Gets or sets the block ID.
@@ -82,7 +82,7 @@ namespace Orion.World.Tiles {
         /// <value>The block color.</value>
         public PaintColor BlockColor {
             readonly get => (PaintColor)((_header & BlockColorMask) >> BlockColorShift);
-            set => _header = (_header & ~BlockColorMask) | (((int)value << BlockColorShift) & BlockColorMask);
+            set => _header = (_header & ~BlockColorMask) | (((uint)value << BlockColorShift) & BlockColorMask);
         }
 
         /// <summary>
@@ -91,7 +91,7 @@ namespace Orion.World.Tiles {
         /// <value><see langword="true"/> if the block is active; otherwise, <see langword="false"/>.</value>
         public unsafe bool IsBlockActive {
             readonly get => (_header & IsBlockActiveMask) != 0;
-            set => _header = (_header & ~IsBlockActiveMask) | (*(int*)&value * IsBlockActiveMask);
+            set => _header = (_header & ~IsBlockActiveMask) | (*(uint*)&value * IsBlockActiveMask);
         }
 
         /// <summary>
@@ -100,7 +100,7 @@ namespace Orion.World.Tiles {
         /// <value><see langword="true"/> if the block is actuated; otherwise, <see langword="false"/>.</value>
         public unsafe bool IsBlockActuated {
             readonly get => (_header & IsBlockActuatedMask) != 0;
-            set => _header = (_header & ~IsBlockActuatedMask) | (*(int*)&value * IsBlockActuatedMask);
+            set => _header = (_header & ~IsBlockActuatedMask) | (*(uint*)&value * IsBlockActuatedMask);
         }
 
         /// <summary>
@@ -109,7 +109,7 @@ namespace Orion.World.Tiles {
         /// <value><see langword="true"/> if the tile has red wire; otherwise, <see langword="false"/>.</value>
         public unsafe bool HasRedWire {
             readonly get => (_header & HasRedWireMask) != 0;
-            set => _header = (_header & ~HasRedWireMask) | (*(int*)&value * HasRedWireMask);
+            set => _header = (_header & ~HasRedWireMask) | (*(uint*)&value * HasRedWireMask);
         }
 
         /// <summary>
@@ -118,7 +118,7 @@ namespace Orion.World.Tiles {
         /// <value><see langword="true"/> if the tile has blue wire; otherwise, <see langword="false"/>.</value>
         public unsafe bool HasBlueWire {
             readonly get => (_header & HasBlueWireMask) != 0;
-            set => _header = (_header & ~HasBlueWireMask) | (*(int*)&value * HasBlueWireMask);
+            set => _header = (_header & ~HasBlueWireMask) | (*(uint*)&value * HasBlueWireMask);
         }
 
         /// <summary>
@@ -127,7 +127,7 @@ namespace Orion.World.Tiles {
         /// <value><see langword="true"/> if the tile has green wire; otherwise, <see langword="false"/>.</value>
         public unsafe bool HasGreenWire {
             readonly get => (_header & HasGreenWireMask) != 0;
-            set => _header = (_header & ~HasGreenWireMask) | (*(int*)&value * HasGreenWireMask);
+            set => _header = (_header & ~HasGreenWireMask) | (*(uint*)&value * HasGreenWireMask);
         }
 
         /// <summary>
@@ -136,7 +136,7 @@ namespace Orion.World.Tiles {
         /// <value><see langword="true"/> if the block is halved; otherwise, <see langword="false"/>.</value>
         public unsafe bool IsBlockHalved {
             readonly get => (_header & IsBlockHalvedMask) != 0;
-            set => _header = (_header & ~IsBlockHalvedMask) | (*(int*)&value * IsBlockHalvedMask);
+            set => _header = (_header & ~IsBlockHalvedMask) | (*(uint*)&value * IsBlockHalvedMask);
         }
 
         /// <summary>
@@ -145,7 +145,7 @@ namespace Orion.World.Tiles {
         /// <value><see langword="true"/> if the tile has an actuator; otherwise, <see langword="false"/>.</value>
         public unsafe bool HasActuator {
             readonly get => (_header & HasActuatorMask) != 0;
-            set => _header = (_header & ~HasActuatorMask) | (*(int*)&value * HasActuatorMask);
+            set => _header = (_header & ~HasActuatorMask) | (*(uint*)&value * HasActuatorMask);
         }
 
         /// <summary>
@@ -154,7 +154,7 @@ namespace Orion.World.Tiles {
         /// <value>The slope.</value>
         public Slope Slope {
             readonly get => (Slope)((_header & SlopeMask) >> SlopeShift);
-            set => _header = (_header & ~SlopeMask) | (((int)value << SlopeShift) & SlopeMask);
+            set => _header = (_header & ~SlopeMask) | (((uint)value << SlopeShift) & SlopeMask);
         }
 
         /// <summary>
@@ -163,7 +163,7 @@ namespace Orion.World.Tiles {
         /// <value>The wall color.</value>
         public PaintColor WallColor {
             readonly get => (PaintColor)((_header & WallColorMask) >> WallColorShift);
-            set => _header = (_header & ~WallColorMask) | (((int)value << WallColorShift) & WallColorMask);
+            set => _header = (_header & ~WallColorMask) | (((uint)value << WallColorShift) & WallColorMask);
         }
 
         /// <summary>
@@ -172,7 +172,7 @@ namespace Orion.World.Tiles {
         /// <value>The liquid.</value>
         public Liquid Liquid {
             readonly get => (Liquid)((_header & LiquidMask) >> LiquidShift);
-            set => _header = (_header & ~LiquidMask) | (((int)value << LiquidShift) & LiquidMask);
+            set => _header = (_header & ~LiquidMask) | (((uint)value << LiquidShift) & LiquidMask);
         }
 
         /// <summary>
@@ -181,7 +181,7 @@ namespace Orion.World.Tiles {
         /// <value><see langword="true"/> if the tile has green wire; otherwise, <see langword="false"/>.</value>
         public unsafe bool HasYellowWire {
             readonly get => (_header & HasYellowWireMask) != 0;
-            set => _header = (_header & ~HasYellowWireMask) | (*(int*)&value * HasYellowWireMask);
+            set => _header = (_header & ~HasYellowWireMask) | (*(uint*)&value * HasYellowWireMask);
         }
 
         /// <summary>
@@ -190,7 +190,7 @@ namespace Orion.World.Tiles {
         /// <value><see langword="true"/> if the tile is checking liquid; otherwise, <see langword="false"/>.</value>
         public unsafe bool IsCheckingLiquid {
             readonly get => (_header & IsCheckingLiquidMask) != 0;
-            set => _header = (_header & ~IsCheckingLiquidMask) | (*(int*)&value * IsCheckingLiquidMask);
+            set => _header = (_header & ~IsCheckingLiquidMask) | (*(uint*)&value * IsCheckingLiquidMask);
         }
 
         /// <summary>
@@ -199,7 +199,7 @@ namespace Orion.World.Tiles {
         /// <value><see langword="true"/> if the tile should skip liquids; otherwise, <see langword="false"/>.</value>
         public unsafe bool ShouldSkipLiquid {
             readonly get => (_header & ShouldSkipLiquidMask) != 0;
-            set => _header = (_header & ~ShouldSkipLiquidMask) | (*(int*)&value * ShouldSkipLiquidMask);
+            set => _header = (_header & ~ShouldSkipLiquidMask) | (*(uint*)&value * ShouldSkipLiquidMask);
         }
     }
 }
