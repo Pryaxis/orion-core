@@ -26,9 +26,6 @@ namespace Orion.Events.Npcs {
     /// </summary>
     [Event("npc-tick", LoggingLevel = LogEventLevel.Verbose)]
     public sealed class NpcTickEvent : NpcEvent, ICancelable {
-        /// <inheritdoc/>
-        [NotLogged] public string? CancellationReason { get; set; }
-
         /// <summary>
         /// Initializes a new instance of the <see cref="NpcTickEvent"/> class with the specified
         /// <paramref name="npc"/>.
@@ -36,5 +33,8 @@ namespace Orion.Events.Npcs {
         /// <param name="npc">The NPC.</param>
         /// <exception cref="ArgumentNullException"><paramref name="npc"/> is <see langword="null"/>.</exception>
         public NpcTickEvent(INpc npc) : base(npc) { }
+
+        /// <inheritdoc/>
+        [NotLogged] public string? CancellationReason { get; set; }
     }
 }

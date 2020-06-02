@@ -19,6 +19,10 @@ namespace Orion.Events.Server {
     /// <summary>
     /// An event that occurs when the server starts accepting connections.
     /// </summary>
+    /// <remarks>
+    /// This event occurs as soon as the world is loaded, and can be used to initialize plugin state that depends on
+    /// Terraria state.
+    /// </remarks>
     [Event("server-start")]
     public sealed class ServerStartEvent : Event { }
 }

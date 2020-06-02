@@ -24,15 +24,6 @@ namespace Orion.Events.Server {
     /// </summary>
     [Event("server-cmd")]
     public sealed class ServerCommandEvent : Event, ICancelable {
-        /// <inheritdoc/>
-        [NotLogged] public string? CancellationReason { get; set; }
-
-        /// <summary>
-        /// Gets the command input.
-        /// </summary>
-        /// <value>The command input.</value>
-        public string Input { get; }
-
         /// <summary>
         /// Initializes a new instance of the <see cref="ServerCommandEvent"/> class with the specified command
         /// <paramref name="input"/>.
@@ -42,5 +33,14 @@ namespace Orion.Events.Server {
         public ServerCommandEvent(string input) {
             Input = input ?? throw new ArgumentNullException(nameof(input));
         }
+
+        /// <inheritdoc/>
+        [NotLogged] public string? CancellationReason { get; set; }
+
+        /// <summary>
+        /// Gets the command input.
+        /// </summary>
+        /// <value>The command input.</value>
+        public string Input { get; }
     }
 }

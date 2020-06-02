@@ -29,15 +29,6 @@ namespace Orion.Events.Packets {
         private readonly void* _packetPtr;
 
         /// <summary>
-        /// Gets a reference to the packet.
-        /// </summary>
-        /// <value>A reference to the packet.</value>
-        public ref TPacket Packet => ref Unsafe.AsRef<TPacket>(_packetPtr);
-
-        /// <inheritdoc/>
-        [NotLogged] public string? CancellationReason { get; set; }
-
-        /// <summary>
         /// Initializes a new instance of the <see cref="PacketEvent{TPacket}"/> class with the specified
         /// <paramref name="packet"/> reference.
         /// </summary>
@@ -45,5 +36,14 @@ namespace Orion.Events.Packets {
         public PacketEvent(ref TPacket packet) {
             _packetPtr = Unsafe.AsPointer(ref packet);
         }
+
+        /// <summary>
+        /// Gets a reference to the packet.
+        /// </summary>
+        /// <value>A reference to the packet.</value>
+        public ref TPacket Packet => ref Unsafe.AsRef<TPacket>(_packetPtr);
+
+        /// <inheritdoc/>
+        [NotLogged] public string? CancellationReason { get; set; }
     }
 }

@@ -19,6 +19,9 @@ namespace Orion.Events.Server {
     /// <summary>
     /// An event that occurs when the server is initializing.
     /// </summary>
+    /// <remarks>
+    /// This event occurs as soon as the server is opened, and can be used to initialize plugin state.
+    /// </remarks>
     [Event("server-init")]
     public sealed class ServerInitializeEvent : Event { }
 }

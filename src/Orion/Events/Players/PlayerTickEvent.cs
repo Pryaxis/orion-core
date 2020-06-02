@@ -26,9 +26,6 @@ namespace Orion.Events.Players {
     /// </summary>
     [Event("player-tick", LoggingLevel = LogEventLevel.Verbose)]
     public sealed class PlayerTickEvent : PlayerEvent, ICancelable {
-        /// <inheritdoc/>
-        [NotLogged] public string? CancellationReason { get; set; }
-
         /// <summary>
         /// Initializes a new instance of the <see cref="PlayerTickEvent"/> class with the specified
         /// <paramref name="player"/>.
@@ -36,5 +33,8 @@ namespace Orion.Events.Players {
         /// <param name="player">The player.</param>
         /// <exception cref="ArgumentNullException"><paramref name="player"/> is <see langword="null"/>.</exception>
         public PlayerTickEvent(IPlayer player) : base(player) { }
+
+        /// <inheritdoc/>
+        [NotLogged] public string? CancellationReason { get; set; }
     }
 }

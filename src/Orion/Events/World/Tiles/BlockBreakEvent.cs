@@ -24,6 +24,20 @@ namespace Orion.Events.World.Tiles {
     [Event("block-break")]
     public sealed class BlockBreakEvent : TileEvent {
         /// <summary>
+        /// Initializes a new instance of the <see cref="BlockBreakEvent"/> class with the specified
+        /// <paramref name="player"/>, coordinates, and flags.
+        /// </summary>
+        /// <param name="player">The player, or <see langword="null"/> for none.</param>
+        /// <param name="x">The X coordinate.</param>
+        /// <param name="y">The Y coordinate.</param>
+        /// <param name="isFailure">Whether the block break attempt is a failure.</param>
+        /// <param name="isItemless">Whether the block break is itemless.</param>
+        public BlockBreakEvent(IPlayer? player, int x, int y, bool isFailure, bool isItemless) : base(player, x, y) {
+            IsFailure = isFailure;
+            IsItemless = isItemless;
+        }
+
+        /// <summary>
         /// Gets a value indicating whether the block break attempt is a failure: i.e., whether the block has not been
         /// fully broken yet.
         /// </summary>
@@ -38,19 +52,5 @@ namespace Orion.Events.World.Tiles {
         /// </summary>
         /// <value><see langword="true"/> if the block break is itemless; otherwise, <see langword="false"/>.</value>
         public bool IsItemless { get; }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="BlockBreakEvent"/> class with the specified
-        /// <paramref name="player"/>, coordinates, and flags.
-        /// </summary>
-        /// <param name="player">The player, or <see langword="null"/> for none.</param>
-        /// <param name="x">The X coordinate.</param>
-        /// <param name="y">The Y coordinate.</param>
-        /// <param name="isFailure">Whether the block break attempt is a failure.</param>
-        /// <param name="isItemless">Whether the block break is itemless.</param>
-        public BlockBreakEvent(IPlayer? player, int x, int y, bool isFailure, bool isItemless) : base(player, x, y) {
-            IsFailure = isFailure;
-            IsItemless = isItemless;
-        }
     }
 }

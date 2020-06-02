@@ -26,21 +26,6 @@ namespace Orion.Events.Players {
     [Event("player-chat")]
     public sealed class PlayerChatEvent : PlayerEvent, ICancelable {
         /// <summary>
-        /// Gets the command that the player used.
-        /// </summary>
-        /// <value>The command that the player used.</value>
-        public string Command { get; }
-
-        /// <summary>
-        /// Gets the message.
-        /// </summary>
-        /// <value>The message.</value>
-        public string Message { get; }
-
-        /// <inheritdoc/>
-        [NotLogged] public string? CancellationReason { get; set; }
-
-        /// <summary>
         /// Initializes a new instance of the <see cref="PlayerChatEvent"/> class with the specified
         /// <paramref name="player"/>, <paramref name="command"/>, and <paramref name="message"/>.
         /// </summary>
@@ -55,5 +40,20 @@ namespace Orion.Events.Players {
             Command = command ?? throw new ArgumentNullException(nameof(command));
             Message = message ?? throw new ArgumentNullException(nameof(message));
         }
+
+        /// <summary>
+        /// Gets the command that the player used.
+        /// </summary>
+        /// <value>The command that the player used.</value>
+        public string Command { get; }
+
+        /// <summary>
+        /// Gets the message.
+        /// </summary>
+        /// <value>The message.</value>
+        public string Message { get; }
+
+        /// <inheritdoc/>
+        [NotLogged] public string? CancellationReason { get; set; }
     }
 }

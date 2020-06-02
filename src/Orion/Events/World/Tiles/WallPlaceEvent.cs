@@ -25,6 +25,20 @@ namespace Orion.Events.World.Tiles {
     [Event("wall-place")]
     public sealed class WallPlaceEvent : TileEvent {
         /// <summary>
+        /// Initializes a new instance of the <see cref="WallPlaceEvent"/> class with the specified
+        /// <paramref name="player"/>, coordinates, wall <paramref name="id"/>, and replacement status.
+        /// </summary>
+        /// <param name="player">The player, or <see langword="null"/> for none.</param>
+        /// <param name="x">The X coordinate.</param>
+        /// <param name="y">The Y coordinate.</param>
+        /// <param name="id">The wall ID.</param>
+        /// <param name="isReplacement">Whether the wall placement is a replacement.</param>
+        public WallPlaceEvent(IPlayer? player, int x, int y, WallId id, bool isReplacement) : base(player, x, y) {
+            Id = id;
+            IsReplacement = isReplacement;
+        }
+
+        /// <summary>
         /// Gets the wall ID being placed.
         /// </summary>
         /// <value>The wall ID being placed.</value>
@@ -38,19 +52,5 @@ namespace Orion.Events.World.Tiles {
         /// <see langword="true"/> if the wall placement is a replacement; otherwise, <see langword="false"/>.
         /// </value>
         public bool IsReplacement { get; }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="WallPlaceEvent"/> class with the specified
-        /// <paramref name="player"/>, coordinates, wall <paramref name="id"/>, and replacement status.
-        /// </summary>
-        /// <param name="player">The player, or <see langword="null"/> for none.</param>
-        /// <param name="x">The X coordinate.</param>
-        /// <param name="y">The Y coordinate.</param>
-        /// <param name="id">The wall ID.</param>
-        /// <param name="isReplacement">Whether the wall placement is a replacement.</param>
-        public WallPlaceEvent(IPlayer? player, int x, int y, WallId id, bool isReplacement) : base(player, x, y) {
-            Id = id;
-            IsReplacement = isReplacement;
-        }
     }
 }

@@ -23,8 +23,35 @@ namespace Orion.Events.Players {
     /// <summary>
     /// An event that occurs when a player sends their health information. This event can be canceled.
     /// </summary>
+    /// <example>
+    /// The following code example performs anti-cheat checks on players:
+    /// <code>
+    /// [EventHandler(EventPriority.Highest, Name = "example")]
+    /// public void OnPlayerHealth(PlayerHealthEvent evt) {
+    ///     var player = evt.Player;
+    ///     if (evt.MaxHealth > 500) {
+    ///         player.Disconnect("Maximum health is too large");
+    ///     } else if (evt.Health > evt.MaxHealth) {
+    ///         player.Disconnect("Health is too large");
+    ///     }
+    /// }
+    /// </code>
+    /// </example>
     [Event("player-hp")]
     public sealed class PlayerHealthEvent : PlayerEvent, ICancelable {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="PlayerHealthEvent"/> class with the specified
+        /// <paramref name="player"/>, <paramref name="health"/>, and <paramref name="maxHealth"/>.
+        /// </summary>
+        /// <param name="player">The player.</param>
+        /// <param name="health">The player's health.</param>
+        /// <param name="maxHealth">The player's maximum health.</param>
+        /// <exception cref="ArgumentNullException"><paramref name="player"/> is <see langword="null"/>.</exception>
+        public PlayerHealthEvent(IPlayer player, int health, int maxHealth) : base(player) {
+            Health = health;
+            MaxHealth = maxHealth;
+        }
+
         /// <summary>
         /// Gets the player's health.
         /// </summary>
@@ -39,18 +66,5 @@ namespace Orion.Events.Players {
 
         /// <inheritdoc/>
         [NotLogged] public string? CancellationReason { get; set; }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="PlayerHealthEvent"/> class with the specified
-        /// <paramref name="player"/>, <paramref name="health"/>, and <paramref name="maxHealth"/>.
-        /// </summary>
-        /// <param name="player">The player.</param>
-        /// <param name="health">The player's health.</param>
-        /// <param name="maxHealth">The player's maximum health.</param>
-        /// <exception cref="ArgumentNullException"><paramref name="player"/> is <see langword="null"/>.</exception>
-        public PlayerHealthEvent(IPlayer player, int health, int maxHealth) : base(player) {
-            Health = health;
-            MaxHealth = maxHealth;
-        }
     }
 }

@@ -22,15 +22,15 @@ using Orion.Entities;
 namespace Orion.Npcs {
     [LogAsScalar]
     internal sealed class OrionNpc : OrionEntity<Terraria.NPC>, INpc {
+        public OrionNpc(int npcIndex, Terraria.NPC terrariaNpc) : base(npcIndex, terrariaNpc) { }
+        public OrionNpc(Terraria.NPC terrariaNpc) : this(-1, terrariaNpc) { }
+
         public override string Name {
             get => Wrapped.GivenOrTypeName;
             set => Wrapped._givenName = value ?? throw new ArgumentNullException(nameof(value));
         }
 
         public NpcId Id => (NpcId)Wrapped.netID;
-
-        public OrionNpc(int npcIndex, Terraria.NPC terrariaNpc) : base(npcIndex, terrariaNpc) { }
-        public OrionNpc(Terraria.NPC terrariaNpc) : this(-1, terrariaNpc) { }
 
         public void SetId(NpcId id) => Wrapped.SetDefaults((int)id, Wrapped.GetMatchingSpawnParams());
     }

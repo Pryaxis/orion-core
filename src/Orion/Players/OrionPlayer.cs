@@ -33,6 +33,21 @@ namespace Orion.Players {
         private readonly OrionPlayerService _playerService;
         private readonly byte[] _sendBuffer = new byte[ushort.MaxValue];
 
+        // We need to inject an `OrionPlayerService` so that we can raise a `PacketSendEvent` in `SendPacket`.
+        public OrionPlayer(int playerIndex, Terraria.Player terrariaPlayer, OrionPlayerService playerService)
+                : base(playerIndex, terrariaPlayer) {
+            Debug.Assert(terrariaPlayer != null);
+            Debug.Assert(playerService != null);
+
+            _playerService = playerService;
+
+            Stats = new PlayerStats(terrariaPlayer);
+            Buffs = new BuffArray(terrariaPlayer);
+        }
+
+        public OrionPlayer(Terraria.Player terrariaPlayer, OrionPlayerService playerService)
+            : this(-1, terrariaPlayer, playerService) { }
+
         public override string Name {
             get => Wrapped.name;
             set => Wrapped.name = value ?? throw new ArgumentNullException(nameof(value));
@@ -55,21 +70,6 @@ namespace Orion.Players {
             get => (PlayerTeam)Wrapped.team;
             set => Wrapped.team = (int)value;
         }
-
-        // We need to inject an `OrionPlayerService` so that we can raise a `PacketSendEvent` in `SendPacket`.
-        public OrionPlayer(int playerIndex, Terraria.Player terrariaPlayer, OrionPlayerService playerService)
-                : base(playerIndex, terrariaPlayer) {
-            Debug.Assert(terrariaPlayer != null);
-            Debug.Assert(playerService != null);
-
-            _playerService = playerService;
-
-            Stats = new PlayerStats(terrariaPlayer);
-            Buffs = new BuffArray(terrariaPlayer);
-        }
-
-        public OrionPlayer(Terraria.Player terrariaPlayer, OrionPlayerService playerService)
-            : this(-1, terrariaPlayer, playerService) { }
 
         public void SendPacket<TPacket>(ref TPacket packet) where TPacket : struct, IPacket {
             var terrariaClient = Terraria.Netplay.Clients[Index];

@@ -28,12 +28,6 @@ namespace Orion.Events.Packets {
     [Event("packet-send", LoggingLevel = LogEventLevel.Verbose)]
     public sealed class PacketSendEvent<TPacket> : PacketEvent<TPacket> where TPacket : struct, IPacket {
         /// <summary>
-        /// Gets the packet receiver.
-        /// </summary>
-        /// <value>The packet receiver.</value>
-        public IPlayer Receiver { get; }
-
-        /// <summary>
         /// Initializes a new instance of the <see cref="PacketSendEvent{TPacket}"/> class with the specified
         /// <paramref name="packet"/> reference and packet <paramref name="receiver"/>.
         /// </summary>
@@ -43,5 +37,11 @@ namespace Orion.Events.Packets {
         public PacketSendEvent(ref TPacket packet, IPlayer receiver) : base(ref packet) {
             Receiver = receiver ?? throw new ArgumentNullException(nameof(receiver));
         }
+
+        /// <summary>
+        /// Gets the packet receiver.
+        /// </summary>
+        /// <value>The packet receiver.</value>
+        public IPlayer Receiver { get; }
     }
 }

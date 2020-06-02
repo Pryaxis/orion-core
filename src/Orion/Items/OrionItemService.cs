@@ -27,8 +27,6 @@ using Serilog;
 namespace Orion.Items {
     [Service("orion-items")]
     internal sealed class OrionItemService : OrionService, IItemService {
-        public IReadOnlyList<IItem> Items { get; }
-
         public OrionItemService(OrionKernel kernel, ILogger log) : base(kernel, log) {
             Debug.Assert(kernel != null);
             Debug.Assert(log != null);
@@ -41,6 +39,8 @@ namespace Orion.Items {
             OTAPI.Hooks.Item.PreSetDefaultsById = PreSetDefaultsByIdHandler;
             OTAPI.Hooks.Item.PreUpdate = PreUpdateHandler;
         }
+
+        public IReadOnlyList<IItem> Items { get; }
 
         public override void Dispose() {
             OTAPI.Hooks.Item.PreSetDefaultsById = null;

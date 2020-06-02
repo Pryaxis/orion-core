@@ -24,12 +24,6 @@ namespace Orion.Events.Players {
     /// </summary>
     public abstract class PlayerEvent : Event {
         /// <summary>
-        /// Gets the player involved in the event.
-        /// </summary>
-        /// <value>The player involved in the event.</value>
-        public IPlayer Player { get; }
-
-        /// <summary>
         /// Initializes a new instance of the <see cref="PlayerEvent"/> class with the specified
         /// <paramref name="player"/>.
         /// </summary>
@@ -38,5 +32,11 @@ namespace Orion.Events.Players {
         protected PlayerEvent(IPlayer player) {
             Player = player ?? throw new ArgumentNullException(nameof(player));
         }
+
+        /// <summary>
+        /// Gets the player involved in the event.
+        /// </summary>
+        /// <value>The player involved in the event.</value>
+        public IPlayer Player { get; }
     }
 }

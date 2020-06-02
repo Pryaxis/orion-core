@@ -30,8 +30,6 @@ namespace Orion.Npcs {
     internal sealed class OrionNpcService : OrionService, INpcService {
         private readonly ThreadLocal<int> _setDefaultsToIgnore = new ThreadLocal<int>();
 
-        public IReadOnlyList<INpc> Npcs { get; }
-
         public OrionNpcService(OrionKernel kernel, ILogger log) : base(kernel, log) {
             Debug.Assert(kernel != null);
             Debug.Assert(log != null);
@@ -46,6 +44,8 @@ namespace Orion.Npcs {
             OTAPI.Hooks.Npc.PreUpdate = PreUpdateHandler;
             OTAPI.Hooks.Npc.Killed = KilledHandler;
         }
+
+        public IReadOnlyList<INpc> Npcs { get; }
 
         public override void Dispose() {
             _setDefaultsToIgnore.Dispose();

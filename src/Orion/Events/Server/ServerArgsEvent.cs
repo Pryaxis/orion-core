@@ -86,6 +86,7 @@ namespace Orion.Events.Server {
         /// </summary>
         /// <param name="name">The name.</param>
         /// <param name="value">The value.</param>
+        /// <returns><see langword="true"/> if the flag exists; otherwise, <see langword="false"/>.</returns>
         /// <exception cref="ArgumentException">
         /// <paramref name="name"/> is <see langword="null"/> or whitespace.
         /// </exception>

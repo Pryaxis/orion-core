@@ -23,8 +23,35 @@ namespace Orion.Events.Players {
     /// <summary>
     /// An event that occurs when a player sends their mana information. This event can be canceled.
     /// </summary>
+    /// <example>
+    /// The following code example performs anti-cheat checks on players:
+    /// <code>
+    /// [EventHandler(EventPriority.Highest, Name = "example")]
+    /// public void OnPlayerMana(PlayerManaEvent evt) {
+    ///     var player = evt.Player;
+    ///     if (evt.MaxMana > 500) {
+    ///         player.Disconnect("Maximum mana is too large");
+    ///     } else if (evt.Mana > evt.MaxMana) {
+    ///         player.Disconnect("Mana is too large");
+    ///     }
+    /// }
+    /// </code>
+    /// </example>
     [Event("player-mp")]
     public sealed class PlayerManaEvent : PlayerEvent, ICancelable {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="PlayerManaEvent"/> class with the specified
+        /// <paramref name="player"/>, <paramref name="mana"/>, and <paramref name="maxMana"/>.
+        /// </summary>
+        /// <param name="player">The player.</param>
+        /// <param name="mana">The player's mana.</param>
+        /// <param name="maxMana">The player's maximum mana.</param>
+        /// <exception cref="ArgumentNullException"><paramref name="player"/> is <see langword="null"/>.</exception>
+        public PlayerManaEvent(IPlayer player, int mana, int maxMana) : base(player) {
+            Mana = mana;
+            MaxMana = maxMana;
+        }
+
         /// <summary>
         /// Gets the player's mana.
         /// </summary>
@@ -39,18 +66,5 @@ namespace Orion.Events.Players {
 
         /// <inheritdoc/>
         [NotLogged] public string? CancellationReason { get; set; }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="PlayerManaEvent"/> class with the specified
-        /// <paramref name="player"/>, <paramref name="mana"/>, and <paramref name="maxMana"/>.
-        /// </summary>
-        /// <param name="player">The player.</param>
-        /// <param name="mana">The player's mana.</param>
-        /// <param name="maxMana">The player's maximum mana.</param>
-        /// <exception cref="ArgumentNullException"><paramref name="player"/> is <see langword="null"/>.</exception>
-        public PlayerManaEvent(IPlayer player, int mana, int maxMana) : base(player) {
-            Mana = mana;
-            MaxMana = maxMana;
-        }
     }
 }

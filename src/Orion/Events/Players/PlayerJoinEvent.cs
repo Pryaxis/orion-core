@@ -25,9 +25,6 @@ namespace Orion.Events.Players {
     /// </summary>
     [Event("player-join")]
     public sealed class PlayerJoinEvent : PlayerEvent, ICancelable {
-        /// <inheritdoc/>
-        [NotLogged] public string? CancellationReason { get; set; }
-
         /// <summary>
         /// Initializes a new instance of the <see cref="PlayerJoinEvent"/> class with the specified
         /// <paramref name="player"/>.
@@ -35,5 +32,8 @@ namespace Orion.Events.Players {
         /// <param name="player">The player.</param>
         /// <exception cref="ArgumentNullException"><paramref name="player"/> is <see langword="null"/>.</exception>
         public PlayerJoinEvent(IPlayer player) : base(player) { }
+
+        /// <inheritdoc/>
+        [NotLogged] public string? CancellationReason { get; set; }
     }
 }

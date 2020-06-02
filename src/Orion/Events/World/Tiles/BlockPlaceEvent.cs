@@ -25,6 +25,24 @@ namespace Orion.Events.World.Tiles {
     [Event("block-place")]
     public sealed class BlockPlaceEvent : TileEvent {
         /// <summary>
+        /// Initializes a new instance of the <see cref="BlockPlaceEvent"/> class with the specified
+        /// <paramref name="player"/>, coordinates, block <paramref name="id"/>, <paramref name="style"/>, and
+        /// replacement status.
+        /// </summary>
+        /// <param name="player">The player, or <see langword="null"/> for none.</param>
+        /// <param name="x">The X coordinate.</param>
+        /// <param name="y">The Y coordinate.</param>
+        /// <param name="id">The block ID.</param>
+        /// <param name="style">The style.</param>
+        /// <param name="isReplacement">Whether the block placement is a replacement.</param>
+        public BlockPlaceEvent(IPlayer? player, int x, int y, BlockId id, int style, bool isReplacement)
+                : base(player, x, y) {
+            Id = id;
+            Style = style;
+            IsReplacement = isReplacement;
+        }
+
+        /// <summary>
         /// Gets the block ID being placed.
         /// </summary>
         /// <value>The block ID being placed.</value>
@@ -44,23 +62,5 @@ namespace Orion.Events.World.Tiles {
         /// <see langword="true"/> if the block placement is a replacement; otherwise, <see langword="false"/>.
         /// </value>
         public bool IsReplacement { get; }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="BlockPlaceEvent"/> class with the specified
-        /// <paramref name="player"/>, coordinates, block <paramref name="id"/>, <paramref name="style"/>, and
-        /// replacement status.
-        /// </summary>
-        /// <param name="player">The player, or <see langword="null"/> for none.</param>
-        /// <param name="x">The X coordinate.</param>
-        /// <param name="y">The Y coordinate.</param>
-        /// <param name="id">The block ID.</param>
-        /// <param name="style">The style.</param>
-        /// <param name="isReplacement">Whether the block placement is a replacement.</param>
-        public BlockPlaceEvent(IPlayer? player, int x, int y, BlockId id, int style, bool isReplacement)
-                : base(player, x, y) {
-            Id = id;
-            Style = style;
-            IsReplacement = isReplacement;
-        }
     }
 }

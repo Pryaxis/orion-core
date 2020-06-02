@@ -24,15 +24,6 @@ namespace Orion.Events.World.Tiles {
     [Event("wall-break")]
     public sealed class WallBreakEvent : TileEvent {
         /// <summary>
-        /// Gets a value indicating whether the wall break attempt is a failure: i.e., whether the wall has not been
-        /// fully broken yet.
-        /// </summary>
-        /// <value>
-        /// <see langword="true"/> if the wall break attempt is a failure; otherwise, <see langword="false"/>.
-        /// </value>
-        public bool IsFailure { get; }
-
-        /// <summary>
         /// Initializes a new instance of the <see cref="WallBreakEvent"/> class with the specified
         /// <paramref name="player"/>, coordinates, and failure status.
         /// </summary>
@@ -43,5 +34,14 @@ namespace Orion.Events.World.Tiles {
         public WallBreakEvent(IPlayer? player, int x, int y, bool isFailure) : base(player, x, y) {
             IsFailure = isFailure;
         }
+
+        /// <summary>
+        /// Gets a value indicating whether the wall break attempt is a failure: i.e., whether the wall has not been
+        /// fully broken yet.
+        /// </summary>
+        /// <value>
+        /// <see langword="true"/> if the wall break attempt is a failure; otherwise, <see langword="false"/>.
+        /// </value>
+        public bool IsFailure { get; }
     }
 }

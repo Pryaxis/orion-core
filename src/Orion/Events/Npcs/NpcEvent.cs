@@ -24,12 +24,6 @@ namespace Orion.Events.Npcs {
     /// </summary>
     public abstract class NpcEvent : Event {
         /// <summary>
-        /// Gets the NPC involved in the event.
-        /// </summary>
-        /// <value>The NPC involved in the event.</value>
-        public INpc Npc { get; }
-
-        /// <summary>
         /// Initializes a new instance of the <see cref="NpcEvent"/> class with the specified <paramref name="npc"/>.
         /// </summary>
         /// <param name="npc">The NPC.</param>
@@ -37,5 +31,11 @@ namespace Orion.Events.Npcs {
         protected NpcEvent(INpc npc) {
             Npc = npc ?? throw new ArgumentNullException(nameof(npc));
         }
+
+        /// <summary>
+        /// Gets the NPC involved in the event.
+        /// </summary>
+        /// <value>The NPC involved in the event.</value>
+        public INpc Npc { get; }
     }
 }

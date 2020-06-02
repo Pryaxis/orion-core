@@ -25,8 +25,27 @@ namespace Orion.Events.Npcs {
     /// An event that occurs when an NPC's defaults are being set: i.e., when an NPC's stats are being initialized. This
     /// event can be canceled.
     /// </summary>
+    /// <example>
+    /// The following code example clears out NPCs with ID <see cref="NpcId.DungeonGuardian"/>:
+    /// <code>
+    /// [EventHandler(EventPriority.Highest, Name = "example")]
+    /// public void OnNpcDefaults(NpcDefaultsEvent evt) {
+    ///     if (evt.Id == NpcId.DungeonGuardian) {
+    ///         evt.Cancel();
+    ///     }
+    /// }
+    /// </code>
+    /// </example>
     [Event("npc-defaults", LoggingLevel = LogEventLevel.Verbose)]
     public sealed class NpcDefaultsEvent : NpcEvent, ICancelable {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="NpcDefaultsEvent"/> class with the specified
+        /// <paramref name="npc"/>.
+        /// </summary>
+        /// <param name="npc">The NPC.</param>
+        /// <exception cref="ArgumentNullException"><paramref name="npc"/> is <see langword="null"/>.</exception>
+        public NpcDefaultsEvent(INpc npc) : base(npc) { }
+
         /// <summary>
         /// Gets or sets the NPC ID that the NPC's defaults are being set to.
         /// </summary>
@@ -35,13 +54,5 @@ namespace Orion.Events.Npcs {
 
         /// <inheritdoc/>
         [NotLogged] public string? CancellationReason { get; set; }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="NpcDefaultsEvent"/> class with the specified
-        /// <paramref name="npc"/>.
-        /// </summary>
-        /// <param name="npc">The NPC.</param>
-        /// <exception cref="ArgumentNullException"><paramref name="npc"/> is <see langword="null"/>.</exception>
-        public NpcDefaultsEvent(INpc npc) : base(npc) { }
     }
 }

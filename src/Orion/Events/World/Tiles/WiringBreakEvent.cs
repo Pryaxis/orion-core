@@ -25,12 +25,6 @@ namespace Orion.Events.World.Tiles {
     [Event("wiring-break")]
     public sealed class WiringBreakEvent : TileEvent {
         /// <summary>
-        /// Gets the wiring type being broken.
-        /// </summary>
-        /// <value>The wiring type being broken.</value>
-        public Wiring Wiring { get; }
-
-        /// <summary>
         /// Initializes a new instance of the <see cref="WiringBreakEvent"/> class with the specified
         /// <paramref name="player"/>, coordinates, and <paramref name="wiring"/> type.
         /// </summary>
@@ -41,5 +35,11 @@ namespace Orion.Events.World.Tiles {
         public WiringBreakEvent(IPlayer? player, int x, int y, Wiring wiring) : base(player, x, y) {
             Wiring = wiring;
         }
+
+        /// <summary>
+        /// Gets the wiring type being broken.
+        /// </summary>
+        /// <value>The wiring type being broken.</value>
+        public Wiring Wiring { get; }
     }
 }

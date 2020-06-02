@@ -61,8 +61,6 @@ namespace Orion.Players {
         private readonly ThreadLocal<byte[]> _sendBuffer =
             new ThreadLocal<byte[]>(() => new byte[ushort.MaxValue]);
 
-        public IReadOnlyList<IPlayer> Players { get; }
-
         public OrionPlayerService(OrionKernel kernel, ILogger log) : base(kernel, log) {
             Debug.Assert(kernel != null);
             Debug.Assert(log != null);
@@ -100,6 +98,8 @@ namespace Orion.Players {
             OTAPI.Hooks.Player.PreUpdate = PreUpdateHandler;
             OTAPI.Hooks.Net.RemoteClient.PreReset = PreResetHandler;
         }
+
+        public IReadOnlyList<IPlayer> Players { get; }
 
         public override void Dispose() {
             _ignoreReceiveDataHandler.Dispose();

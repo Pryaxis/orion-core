@@ -24,6 +24,19 @@ namespace Orion.Events.World.Tiles {
     /// </summary>
     public abstract class TileEvent : Event, ICancelable {
         /// <summary>
+        /// Initializes a new instance of the <see cref="TileEvent"/> class with the specified <paramref name="player"/>
+        /// and coordinates.
+        /// </summary>
+        /// <param name="player">The player, or <see langword="null"/> for none.</param>
+        /// <param name="x">The X coordinate.</param>
+        /// <param name="y">The Y coordinate.</param>
+        protected TileEvent(IPlayer? player, int x, int y) {
+            Player = player;
+            X = x;
+            Y = y;
+        }
+
+        /// <summary>
         /// Gets the player involved in the event, or <see langword="null"/> if there is none.
         /// </summary>
         /// <value>The player involved in the event.</value>
@@ -43,18 +56,5 @@ namespace Orion.Events.World.Tiles {
 
         /// <inheritdoc/>
         [NotLogged] public string? CancellationReason { get; set; }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="TileEvent"/> class with the specified <paramref name="player"/>
-        /// and coordinates.
-        /// </summary>
-        /// <param name="player">The player, or <see langword="null"/> for none.</param>
-        /// <param name="x">The X coordinate.</param>
-        /// <param name="y">The Y coordinate.</param>
-        protected TileEvent(IPlayer? player, int x, int y) {
-            Player = player;
-            X = x;
-            Y = y;
-        }
     }
 }

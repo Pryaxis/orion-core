@@ -26,15 +26,6 @@ namespace Orion.Events.Players {
     [Event("player-uuid")]
     public sealed class PlayerUuidEvent : PlayerEvent, ICancelable {
         /// <summary>
-        /// Gets the player's UUID.
-        /// </summary>
-        /// <value>The player's UUID.</value>
-        public string Uuid { get; }
-
-        /// <inheritdoc/>
-        [NotLogged] public string? CancellationReason { get; set; }
-
-        /// <summary>
         /// Initializes a new instance of the <see cref="PlayerUuidEvent"/> class with the specified
         /// <paramref name="player"/> and <paramref name="uuid"/>.
         /// </summary>
@@ -46,5 +37,14 @@ namespace Orion.Events.Players {
         public PlayerUuidEvent(IPlayer player, string uuid) : base(player) {
             Uuid = uuid ?? throw new ArgumentNullException(nameof(uuid));
         }
+
+        /// <summary>
+        /// Gets the player's UUID.
+        /// </summary>
+        /// <value>The player's UUID.</value>
+        public string Uuid { get; }
+
+        /// <inheritdoc/>
+        [NotLogged] public string? CancellationReason { get; set; }
     }
 }

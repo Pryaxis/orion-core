@@ -50,18 +50,6 @@ namespace Orion {
             new Dictionary<object, IList<(Type eventType, object handler)>>();
 
         /// <summary>
-        /// Gets the dependency injection container.
-        /// </summary>
-        /// <value>The dependency injection container.</value>
-        public IKernel Container { get; } = new StandardKernel();
-
-        /// <summary>
-        /// Gets a read-only mapping from plugin names to plugins.
-        /// </summary>
-        /// <value>A read-only mapping from plugin names to plugins.</value>
-        public IReadOnlyDictionary<string, OrionPlugin> Plugins => _plugins;
-
-        /// <summary>
         /// Initializes a new instance of the <see cref="OrionKernel"/> class with the specified <paramref name="log"/>.
         /// </summary>
         /// <param name="log">The log.</param>
@@ -104,6 +92,18 @@ namespace Orion {
             OTAPI.Hooks.Game.PreUpdate += PreUpdateHandler;
             OTAPI.Hooks.Command.Process += ProcessHandler;
         }
+
+        /// <summary>
+        /// Gets the dependency injection container.
+        /// </summary>
+        /// <value>The dependency injection container.</value>
+        public IKernel Container { get; } = new StandardKernel();
+
+        /// <summary>
+        /// Gets a read-only mapping from plugin names to plugins.
+        /// </summary>
+        /// <value>A read-only mapping from plugin names to plugins.</value>
+        public IReadOnlyDictionary<string, OrionPlugin> Plugins => _plugins;
 
         /// <summary>
         /// Disposes the kernel, releasing any resources associated with it.

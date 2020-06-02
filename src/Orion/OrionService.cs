@@ -24,18 +24,6 @@ namespace Orion {
     /// </summary>
     public abstract class OrionService : IDisposable {
         /// <summary>
-        /// Gets the kernel.
-        /// </summary>
-        /// <value>The kernel.</value>
-        public OrionKernel Kernel { get; }
-
-        /// <summary>
-        /// Gets the logger.
-        /// </summary>
-        /// <value>The logger.</value>
-        public ILogger Log { get; }
-
-        /// <summary>
         /// Initializes a new instance of the <see cref="OrionService"/> class with the specified
         /// <paramref name="kernel"/> and <paramref name="log"/>.
         /// </summary>
@@ -48,6 +36,18 @@ namespace Orion {
             Kernel = kernel ?? throw new ArgumentNullException(nameof(kernel));
             Log = log ?? throw new ArgumentNullException(nameof(log));
         }
+
+        /// <summary>
+        /// Gets the kernel.
+        /// </summary>
+        /// <value>The kernel.</value>
+        public OrionKernel Kernel { get; }
+
+        /// <summary>
+        /// Gets the logger.
+        /// </summary>
+        /// <value>The logger.</value>
+        public ILogger Log { get; }
 
         /// <summary>
         /// Disposes the service, releasing any resources associated with it.

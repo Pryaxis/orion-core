@@ -27,6 +27,13 @@ namespace Orion.Events.Npcs {
     [Event("npc-loot")]
     public sealed class NpcLootEvent : NpcEvent, ICancelable {
         /// <summary>
+        /// Initializes a new instance of the <see cref="NpcLootEvent"/> class with the specified
+        /// <paramref name="npc"/>.
+        /// </summary>
+        /// <exception cref="ArgumentNullException"><paramref name="npc"/> is <see langword="null"/>.</exception>
+        public NpcLootEvent(INpc npc) : base(npc) { }
+
+        /// <summary>
         /// Gets or sets the item ID of the loot being dropped.
         /// </summary>
         /// <value>The item ID of the loot being dropped.</value>
@@ -46,12 +53,5 @@ namespace Orion.Events.Npcs {
 
         /// <inheritdoc/>
         [NotLogged] public string? CancellationReason { get; set; }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="NpcLootEvent"/> class with the specified
-        /// <paramref name="npc"/>.
-        /// </summary>
-        /// <exception cref="ArgumentNullException"><paramref name="npc"/> is <see langword="null"/>.</exception>
-        public NpcLootEvent(INpc npc) : base(npc) { }
     }
 }

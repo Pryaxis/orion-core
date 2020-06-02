@@ -23,17 +23,24 @@ namespace Orion.Events.Players {
     /// <summary>
     /// An event that occurs when a player sends their PvP status. This event can be canceled.
     /// </summary>
+    /// <example>
+    /// The following code example prevents PvP:
+    /// <code>
+    /// [EventHandler(EventPriority.Highest, Name = "example")]
+    /// public void OnPlayerPvp(PlayerPvpEvent evt) {
+    ///     if (evt.IsInPvp) {
+    ///         var player = evt.Player;
+    ///         player.SendPacket(new PlayerPvpPacket {
+    ///             PlayerIndex = player.Index,
+    ///             IsInPvp = false
+    ///         });
+    ///         evt.Cancel();
+    ///     }
+    /// }
+    /// </code>
+    /// </example>
     [Event("player-pvp")]
     public sealed class PlayerPvpEvent : PlayerEvent, ICancelable {
-        /// <summary>
-        /// Gets a value indicating whether the player is in PvP.
-        /// </summary>
-        /// <value><see langword="true"/> if the player is in PvP; otherwise, <see langword="false"/>.</value>
-        public bool IsInPvp { get; }
-
-        /// <inheritdoc/>
-        [NotLogged] public string? CancellationReason { get; set; }
-
         /// <summary>
         /// Initializes a new instance of the <see cref="PlayerPvpEvent"/> class with the specified
         /// <paramref name="player"/> and PvP status.
@@ -44,5 +51,14 @@ namespace Orion.Events.Players {
         public PlayerPvpEvent(IPlayer player, bool isInPvp) : base(player) {
             IsInPvp = isInPvp;
         }
+
+        /// <summary>
+        /// Gets a value indicating whether the player is in PvP.
+        /// </summary>
+        /// <value><see langword="true"/> if the player is in PvP; otherwise, <see langword="false"/>.</value>
+        public bool IsInPvp { get; }
+
+        /// <inheritdoc/>
+        [NotLogged] public string? CancellationReason { get; set; }
     }
 }
