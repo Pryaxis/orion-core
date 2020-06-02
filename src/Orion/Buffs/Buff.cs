@@ -23,18 +23,6 @@ namespace Orion.Buffs {
     /// </summary>
     public readonly struct Buff {
         /// <summary>
-        /// Gets the buff ID.
-        /// </summary>
-        /// <value>The buff ID.</value>
-        public BuffId Id { get; }
-
-        /// <summary>
-        /// Gets the buff duration.
-        /// </summary>
-        /// <value>The buff duration.</value>
-        public TimeSpan Duration { get; }
-
-        /// <summary>
         /// Initializes a new instance of the <see cref="Buff"/> structure with the specified buff <paramref name="id"/>
         /// and <paramref name="duration"/>.
         /// </summary>
@@ -50,5 +38,17 @@ namespace Orion.Buffs {
             Id = id;
             Duration = duration;
         }
+
+        /// <summary>
+        /// Gets the buff ID.
+        /// </summary>
+        /// <value>The buff ID.</value>
+        public BuffId Id { get; }
+
+        /// <summary>
+        /// Gets the buff duration.
+        /// </summary>
+        /// <value>The buff duration.</value>
+        public TimeSpan Duration { get; }
     }
 }

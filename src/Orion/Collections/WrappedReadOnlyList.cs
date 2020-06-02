@@ -29,6 +29,14 @@ namespace Orion.Collections {
         private readonly Func<int, TWrapped, T> _converter;
         private readonly T?[] _items;
 
+        public WrappedReadOnlyList(ReadOnlyMemory<TWrapped> wrappedItems, Func<int, TWrapped, T> converter) {
+            Debug.Assert(converter != null);
+
+            _wrappedItems = wrappedItems;
+            _converter = converter;
+            _items = new T?[wrappedItems.Length];
+        }
+
         public T this[int index] {
             get {
                 var wrappedItem = _wrappedItems.Span[index];
@@ -44,14 +52,6 @@ namespace Orion.Collections {
         }
 
         public int Count => _items.Length;
-
-        public WrappedReadOnlyList(ReadOnlyMemory<TWrapped> wrappedItems, Func<int, TWrapped, T> converter) {
-            Debug.Assert(converter != null);
-
-            _wrappedItems = wrappedItems;
-            _converter = converter;
-            _items = new T?[wrappedItems.Length];
-        }
 
         public IEnumerator<T> GetEnumerator() {
             for (var i = 0; i < Count; ++i) {

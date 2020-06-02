@@ -25,17 +25,6 @@ namespace Orion.Events {
     [AttributeUsage(AttributeTargets.Class, Inherited = false)]
     public sealed class EventAttribute : Attribute {
         /// <summary>
-        /// Gets the event's name. This is used for logging.
-        /// </summary>
-        public string Name { get; }
-
-        /// <summary>
-        /// Gets or sets the event's logging level.
-        /// </summary>
-        /// <value>The event's logging level. The default value is <see cref="LogEventLevel.Debug"/>.</value>
-        public LogEventLevel LoggingLevel { get; set; } = LogEventLevel.Debug;
-
-        /// <summary>
         /// Initializes a new instance of the <see cref="EventAttribute"/> class with the specified
         /// <paramref name="name"/>.
         /// </summary>
@@ -44,5 +33,17 @@ namespace Orion.Events {
         public EventAttribute(string name) {
             Name = name ?? throw new ArgumentNullException(nameof(name));
         }
+
+        /// <summary>
+        /// Gets the event's name. This is used for logging.
+        /// </summary>
+        /// <value>The event's name.</value>
+        public string Name { get; }
+
+        /// <summary>
+        /// Gets or sets the event's logging level.
+        /// </summary>
+        /// <value>The event's logging level. The default value is Debug.</value>
+        public LogEventLevel LoggingLevel { get; set; } = LogEventLevel.Debug;
     }
 }

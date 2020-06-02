@@ -24,6 +24,13 @@ namespace Orion.Entities {
     // This class is generic so that we only use a single wrapped field instead of two wrapped fields per entity.
     internal abstract class OrionEntity<TTerrariaEntity> : AnnotatableObject, IEntity, IWrapping<TTerrariaEntity>
             where TTerrariaEntity : Terraria.Entity {
+        protected OrionEntity(int entityIndex, TTerrariaEntity terrariaEntity) {
+            Debug.Assert(terrariaEntity != null, "Terraria entity should not be null");
+
+            Index = entityIndex;
+            Wrapped = terrariaEntity;
+        }
+
         public int Index { get; }
 
         public bool IsActive {
@@ -50,13 +57,6 @@ namespace Orion.Entities {
         }
 
         public TTerrariaEntity Wrapped { get; }
-
-        protected OrionEntity(int entityIndex, TTerrariaEntity terrariaEntity) {
-            Debug.Assert(terrariaEntity != null, "Terraria entity should not be null");
-
-            Index = entityIndex;
-            Wrapped = terrariaEntity;
-        }
 
         // Not localized because this string is developer-facing.
         [Pure, ExcludeFromCodeCoverage]
