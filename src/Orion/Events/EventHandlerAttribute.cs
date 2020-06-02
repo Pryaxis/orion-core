@@ -27,6 +27,15 @@ namespace Orion.Events {
         private string? _name;
 
         /// <summary>
+        /// Initializes a new instance of the <see cref="EventHandlerAttribute"/> class with the specified
+        /// <paramref name="priority"/>.
+        /// </summary>
+        /// <param name="priority">The priority.</param>
+        public EventHandlerAttribute(EventPriority priority = EventPriority.Normal) {
+            Priority = priority;
+        }
+
+        /// <summary>
         /// Gets the event handler's priority.
         /// </summary>
         /// <value>The event handler's priority.</value>
@@ -51,14 +60,5 @@ namespace Orion.Events {
         /// value is <see langword="true"/>.
         /// </value>
         public bool IgnoreCanceled { get; set; } = true;
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="EventHandlerAttribute"/> class with the specified
-        /// <paramref name="priority"/>.
-        /// </summary>
-        /// <param name="priority">The priority.</param>
-        public EventHandlerAttribute(EventPriority priority = EventPriority.Normal) {
-            Priority = priority;
-        }
     }
 }
