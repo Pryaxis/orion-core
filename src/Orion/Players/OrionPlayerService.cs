@@ -91,7 +91,7 @@ namespace Orion.Players {
             }
 
             // Construct the `Players` array. Note that the last player should be ignored, as it is not a real player.
-            Players = new WrappedArray<OrionPlayer, Terraria.Player>(
+            Players = new WrappedReadOnlyList<OrionPlayer, Terraria.Player>(
                 Terraria.Main.player.AsMemory(..^1),
                 (playerIndex, terrariaPlayer) => new OrionPlayer(playerIndex, terrariaPlayer, this));
 

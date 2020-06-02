@@ -37,7 +37,7 @@ namespace Orion.Npcs {
             Debug.Assert(log != null);
 
             // Construct the `Npcs` array. Note that the last NPC should be ignored, as it is not a real NPC.
-            Npcs = new WrappedArray<OrionNpc, Terraria.NPC>(
+            Npcs = new WrappedReadOnlyList<OrionNpc, Terraria.NPC>(
                 Terraria.Main.npc.AsMemory(..^1),
                 (npcIndex, terrariaNpc) => new OrionNpc(npcIndex, terrariaNpc));
 

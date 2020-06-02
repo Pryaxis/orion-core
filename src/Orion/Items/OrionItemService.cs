@@ -34,7 +34,7 @@ namespace Orion.Items {
             Debug.Assert(log != null);
 
             // Construct the `Items` array. Note that the last item should be ignored, as it is not a real item.
-            Items = new WrappedArray<OrionItem, Terraria.Item>(
+            Items = new WrappedReadOnlyList<OrionItem, Terraria.Item>(
                 Terraria.Main.item.AsMemory(..^1),
                 (itemIndex, terrariaItem) => new OrionItem(itemIndex, terrariaItem));
 
