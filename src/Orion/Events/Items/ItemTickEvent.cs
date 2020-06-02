@@ -26,9 +26,6 @@ namespace Orion.Events.Items {
     /// </summary>
     [Event("item-tick", LoggingLevel = LogEventLevel.Verbose)]
     public sealed class ItemTickEvent : ItemEvent, ICancelable {
-        /// <inheritdoc/>
-        [NotLogged] public string? CancellationReason { get; set; }
-
         /// <summary>
         /// Initializes a new instance of the <see cref="ItemTickEvent"/> class with the specified
         /// <paramref name="item"/>.
@@ -36,5 +33,8 @@ namespace Orion.Events.Items {
         /// <param name="item">The item.</param>
         /// <exception cref="ArgumentNullException"><paramref name="item"/> is <see langword="null"/>.</exception>
         public ItemTickEvent(IItem item) : base(item) { }
+
+        /// <inheritdoc/>
+        [NotLogged] public string? CancellationReason { get; set; }
     }
 }

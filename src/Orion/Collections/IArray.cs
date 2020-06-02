@@ -20,7 +20,7 @@ using System.Collections.Generic;
 
 namespace Orion.Collections {
     /// <summary>
-    /// Provides access to a strongly-typed array of elements.
+    /// Represents a collection of elements that can be accessed by index.
     /// </summary>
     /// <typeparam name="T">The type of element.</typeparam>
     public interface IArray<T> : IReadOnlyCollection<T> {

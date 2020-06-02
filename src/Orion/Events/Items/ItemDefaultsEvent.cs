@@ -25,8 +25,28 @@ namespace Orion.Events.Items {
     /// An event that occurs when an item's defaults are being set: i.e., when an item's stats are being initialized.
     /// This event can be canceled.
     /// </summary>
+    /// <example>
+    /// The following code example replaces items with ID <see cref="ItemId.Megashark"/> with ID
+    /// <see cref="ItemId.Sdmg"/>:
+    /// <code>
+    /// [EventHandler(EventPriority.Highest, Name = "example")]
+    /// private void OnItemDefaults(ItemDefaultsEvent evt) {
+    ///     if (evt.Id == ItemId.Megashark) {
+    ///         evt.Id = ItemId.Sdmg;
+    ///     }
+    /// }
+    /// </code>
+    /// </example>
     [Event("item-defaults", LoggingLevel = LogEventLevel.Verbose)]
     public sealed class ItemDefaultsEvent : ItemEvent, ICancelable {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ItemDefaultsEvent"/> class with the specified
+        /// <paramref name="item"/>.
+        /// </summary>
+        /// <param name="item">The item.</param>
+        /// <exception cref="ArgumentNullException"><paramref name="item"/> is <see langword="null"/>.</exception>
+        public ItemDefaultsEvent(IItem item) : base(item) { }
+
         /// <summary>
         /// Gets or sets the item ID that the item's defaults are being set to.
         /// </summary>
@@ -35,13 +55,5 @@ namespace Orion.Events.Items {
 
         /// <inheritdoc/>
         [NotLogged] public string? CancellationReason { get; set; }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="ItemDefaultsEvent"/> class with the specified
-        /// <paramref name="item"/>.
-        /// </summary>
-        /// <param name="item">The item.</param>
-        /// <exception cref="ArgumentNullException"><paramref name="item"/> is <see langword="null"/>.</exception>
-        public ItemDefaultsEvent(IItem item) : base(item) { }
     }
 }

@@ -24,12 +24,6 @@ namespace Orion.Events.Items {
     /// </summary>
     public abstract class ItemEvent : Event {
         /// <summary>
-        /// Gets the item involved in the event.
-        /// </summary>
-        /// <value>The item involved in the event.</value>
-        public IItem Item { get; }
-
-        /// <summary>
         /// Initializes a new instance of the <see cref="ItemEvent"/> class with the specified <paramref name="item"/>.
         /// </summary>
         /// <param name="item">The item.</param>
@@ -37,5 +31,11 @@ namespace Orion.Events.Items {
         protected ItemEvent(IItem item) {
             Item = item ?? throw new ArgumentNullException(nameof(item));
         }
+
+        /// <summary>
+        /// Gets the item involved in the event.
+        /// </summary>
+        /// <value>The item involved in the event.</value>
+        public IItem Item { get; }
     }
 }

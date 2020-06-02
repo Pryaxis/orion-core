@@ -38,12 +38,13 @@ namespace Orion.Events {
         /// Gets the event's name. This is used for logging.
         /// </summary>
         /// <value>The event's name.</value>
+        /// <remarks>The naming convention for events is <c>kebab-case</c>.</remarks>
         public string Name { get; }
 
         /// <summary>
         /// Gets or sets the event's logging level.
         /// </summary>
-        /// <value>The event's logging level. The default value is Debug.</value>
+        /// <value>The event's logging level. The default value is <c>Debug</c>.</value>
         public LogEventLevel LoggingLevel { get; set; } = LogEventLevel.Debug;
     }
 }

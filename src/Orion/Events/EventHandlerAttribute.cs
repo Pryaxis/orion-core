@@ -46,6 +46,7 @@ namespace Orion.Events {
         /// </summary>
         /// <value>The event handler's name, or <see langword="null"/> for none.</value>
         /// <exception cref="ArgumentNullException"><paramref name="value"/> is <see langword="null"/>.</exception>
+        /// <remarks>The naming convention for event handlers is <c>kebab-case</c>.</remarks>
         [DisallowNull]
         public string? Name {
             get => _name;

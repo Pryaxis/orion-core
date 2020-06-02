@@ -47,9 +47,9 @@ namespace Orion.Buffs {
         }
 
         /// <summary>
-        /// Gets the <see cref="BuffId"/>.
+        /// Gets the buff ID.
         /// </summary>
-        /// <value>The <see cref="BuffId"/>.</value>
+        /// <value>The buff ID.</value>
         public BuffId Id { get; }
 
         /// <summary>
