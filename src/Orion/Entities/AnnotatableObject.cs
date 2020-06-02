@@ -32,24 +32,24 @@ namespace Orion.Entities {
                 throw new ArgumentNullException(nameof(key));
             }
 
-            if (!_annotations.TryGetValue(key, out var boxObj)) {
-                var initBox = new Box<T>();
-                if (initializer != null) {
-                    initBox.Value = initializer();
+            if (_annotations.TryGetValue(key, out var boxObj)) {
+                if (!(boxObj is Box<T> box)) {
+                    // Not localized because this string is developer-facing.
+                    var expectedType = boxObj.GetType().GetGenericArguments()[0];
+                    throw new ArgumentException(
+                        $"Invalid annotation type (expected: `{expectedType}`, actual: `{typeof(T)}`)");
                 }
 
-                _annotations.Add(key, initBox);
-                return ref initBox.Value;
-            }
+                return ref box.Value;
+            } else {
+                var box = new Box<T>();
+                if (initializer != null) {
+                    box.Value = initializer();
+                }
 
-            if (!(boxObj is Box<T> box)) {
-                // Not localized because this string is developer-facing.
-                var expectedType = boxObj.GetType().GetGenericArguments()[0];
-                throw new ArgumentException(
-                    $"Invalid annotation type (expected: `{expectedType}`, actual: `{typeof(T)}`)");
+                _annotations.Add(key, box);
+                return ref box.Value;
             }
-
-            return ref box.Value;
         }
 
         /// <inheritdoc/>
@@ -61,7 +61,7 @@ namespace Orion.Entities {
             return _annotations.Remove(key);
         }
 
-        // Utility class for providing a `ref` to `T`.
+        // Utility class for returning a `ref` to `T`.
         private class Box<T> {
             public T Value = default!;
         }
