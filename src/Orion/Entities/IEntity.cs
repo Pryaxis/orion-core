@@ -23,9 +23,31 @@ namespace Orion.Entities {
     /// <summary>
     /// Represents an annotatable Terraria entity.
     /// </summary>
+    /// <remarks>
+    /// Many Terraria objects are entities and have common properties such as position, velocity, etc. Entities are
+    /// annotatable, allowing consumers to easily attach custom state to them.
+    /// 
+    /// There are three types of entities:
+    /// <list type="number">
+    /// <item>
+    /// <description>Entities which are abstract: they cannot affect the world.</description>
+    /// </item>
+    /// <item>
+    /// <description>
+    /// Entities which are concrete but <i>not</i> active: the entity does not exist in the world.
+    /// </description>
+    /// </item>
+    /// <item>
+    /// <description>Entities which are concrete and active: the entity exists in the world.</description>
+    /// </item>
+    /// </list>
+    /// 
+    /// These types can be differentiated using the <see cref="EntityExtensions.IsConcrete"/> extension method and the
+    /// <see cref="IsActive"/> property.
+    /// </remarks>
     public interface IEntity : IAnnotatable {
         /// <summary>
-        /// Gets the entity's index. A value of <c>-1</c> indicates that the entity is abstract.
+        /// Gets the entity's index. A negative value indicates that the entity is abstract.
         /// </summary>
         /// <value>The entity's index.</value>
         int Index { get; }
@@ -67,8 +89,8 @@ namespace Orion.Entities {
     /// </summary>
     public static class EntityExtensions {
         /// <summary>
-        /// Gets a value indicating whether the <paramref name="entity"/> is concrete: i.e., whether the entity
-        /// <i>could</i> exist in the world.
+        /// Returns a value indicating whether the <paramref name="entity"/> is concrete: i.e., whether the entity
+        /// <i>can</i> exist in the world.
         /// </summary>
         /// <param name="entity">The entity.</param>
         /// <returns>
