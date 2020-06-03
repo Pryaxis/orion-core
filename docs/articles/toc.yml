@@ -4,6 +4,8 @@
   items:
   - name: "Architecture: Services"
     href: architecture-services.md
+  - name: "Architecture: Events"
+    href: architecture-events.md
 - name: Examples
   items:
   - name: "Example: Lava Sucks"
