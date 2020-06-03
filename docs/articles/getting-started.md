@@ -1,3 +1,7 @@
+---
+uid: getting_started
+---
+
 ## Getting Started
 
 ### Requirements
