@@ -18,8 +18,8 @@ public class LavaSucksPlugin : OrionPlugin {
     private readonly Lazy<IPlayerService> _playerService;
     private readonly Lazy<IWorldService> _worldService;
 
-    // Inject `Lazy<T>` instead of `T`. This is because if another plugin decides to rebind `T`,
-    // we'll be able to see the change.
+    // Inject `Lazy<T>` instead of `T`. This is because if another plugin decides to
+    // rebind `T`, we'll be able to see the change.
     public LavaSucksPlugin(
             OrionKernel kernel, ILogger log,
             Lazy<IItemService> itemService,
@@ -31,14 +31,14 @@ public class LavaSucksPlugin : OrionPlugin {
     }
     
     public void override Initialize() {
-        // Register all of the event handlers contained within this class. In this case, there is
-        // only one.
+        // Register all of the event handlers contained within this class. In this
+        // case, there is only one.
         Kernel.RegisterHandlers(this, Log);
     }
     
     public void override Dispose() {
-        // Deregister all of the event handlers contained within this class. In this case, there is
-        // only one.
+        // Deregister all of the event handlers contained within this class. In this
+        // case, there is only one.
         Kernel.DeregisterHandlers(this, Log);
     }
     
