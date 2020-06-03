@@ -1,2 +1,6 @@
 - name: Getting Started
   href: getting-started.md
+- name: Examples
+  items:
+  - name: Lava Sucks
+    href: lava-sucks.md
