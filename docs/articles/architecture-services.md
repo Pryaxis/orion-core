@@ -15,7 +15,7 @@ Service interfaces are bound to default implementations inside of the `OrionKern
     Kernel.Container.Bind<INpcService>().To<MyNpcService>().InSingletonScope();
 ```
 
-To request services, consumer should use the [dependency injection pattern](https://en.wikipedia.org/wiki/Dependency_injection). The usage of `Lazy<T>` allows other consumers to get the chance to re-bind `T` if necessary. If just `T` were used, then the default implementation would always be requested.
+To request services, consumers should use the [dependency injection pattern](https://en.wikipedia.org/wiki/Dependency_injection). The usage of `Lazy<T>` allows other consumers to get the chance to re-bind `T` if necessary. If just `T` were used, then the default implementation would always be requested.
 ```csharp
     public MyPlugin(
         OrionKernel kernel, ILogger log,
@@ -45,7 +45,7 @@ The service interface must then be bound to the implementation somehow. This can
     Kernel.Container.Bind<IMyService>().To<MyServiceImpl>().In???Scope();
 ```
 
-Here are the possible scopes:
+Here are a few of the possible scopes:
 
 | Scope | Result | Rationale | Example |
 |-------|--------|-----------|---------|
