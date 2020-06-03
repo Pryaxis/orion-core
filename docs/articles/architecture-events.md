@@ -32,10 +32,10 @@ Note that there are multiple interpretations of "high priority". A higher priori
 An event can be defined as follows:
 
 ```csharp
-[Event("my-event", LoggingLevel = LogEventLevel.Debug)]
-public class MyEvent : Event {
-    public int Value { get; set; }
-}
+    [Event("my-event", LoggingLevel = LogEventLevel.Debug)]
+    public class MyEvent : Event {
+        public int Value { get; set; }
+    }
 ```
 
 This event can then be raised via an `OrionKernel` instance:
@@ -49,10 +49,10 @@ This event can then be raised via an `OrionKernel` instance:
 An event handler can be defined as follows:
 
 ```csharp
-[EventHandler(EventPriority.Monitor, Name = "my-event-handler")]
-private void MyEventHandler(MyEvent evt) {
-    Console.WriteLine(evt.Value);
-}
+    [EventHandler(EventPriority.Monitor, Name = "my-event-handler")]
+    private void MyEventHandler(MyEvent evt) {
+        Console.WriteLine(evt.Value);
+    }
 ```
 
 The handler must then be registered via an `OrionKernel` instance:
