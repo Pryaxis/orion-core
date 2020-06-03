@@ -444,14 +444,14 @@ namespace Orion.World {
 
             Terraria.Main.tile[0, 0].CopyFrom(null);
 
-            Assert.Equal(BlockId.Dirt, worldService.World[0, 1].BlockId);
-            Assert.Equal(WallId.None, worldService.World[0, 1].WallId);
-            Assert.Equal(0, worldService.World[0, 1].LiquidAmount);
-            Assert.Equal(0, worldService.World[0, 1]._sTileHeader);
-            Assert.Equal(0, worldService.World[0, 1]._bTileHeader);
-            Assert.Equal(0, worldService.World[0, 1]._bTileHeader3);
-            Assert.Equal(0, worldService.World[0, 1].BlockFrameX);
-            Assert.Equal(0, worldService.World[0, 1].BlockFrameY);
+            Assert.Equal(BlockId.Dirt, worldService.World[0, 0].BlockId);
+            Assert.Equal(WallId.None, worldService.World[0, 0].WallId);
+            Assert.Equal(0, worldService.World[0, 0].LiquidAmount);
+            Assert.Equal(0, worldService.World[0, 0]._sTileHeader);
+            Assert.Equal(0, worldService.World[0, 0]._bTileHeader);
+            Assert.Equal(0, worldService.World[0, 0]._bTileHeader3);
+            Assert.Equal(0, worldService.World[0, 0].BlockFrameX);
+            Assert.Equal(0, worldService.World[0, 0].BlockFrameY);
         }
 
         [Fact]

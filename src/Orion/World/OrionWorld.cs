@@ -17,13 +17,13 @@
 
 using System;
 using System.Diagnostics;
+using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using Orion.Entities;
 using Orion.World.Tiles;
 
 namespace Orion.World {
     internal sealed unsafe class OrionWorld : AnnotatableObject, IDisposable, IWorld {
-        // Store a pointer to the `Tile` array in unmanaged memory so that the array doesn't need to be pinned.
         private readonly unsafe Tile* _tiles;
 
         public OrionWorld(int width, int height) {
@@ -33,6 +33,7 @@ namespace Orion.World {
             Width = width;
             Height = height;
 
+            // Allocate the `Tile` array in unmanaged memory so that it doesn't need to be pinned.
             _tiles = (Tile*)Marshal.AllocHGlobal(sizeof(Tile) * width * height);
         }
 
@@ -41,6 +42,7 @@ namespace Orion.World {
         }
 
         public ref Tile this[int x, int y] {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
             get {
                 Debug.Assert(x >= 0 && x < Width);
                 Debug.Assert(y >= 0 && y < Height);

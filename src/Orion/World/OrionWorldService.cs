@@ -23,50 +23,53 @@ using Serilog;
 namespace Orion.World {
     [Service("orion-world")]
     internal sealed class OrionWorldService : OrionService, IWorldService {
-        private TileCollection _tileCollection = new TileCollection();
+        private readonly TileCollection _tileCollection;
 
         public OrionWorldService(OrionKernel kernel, ILogger log) : base(kernel, log) {
-            Terraria.Main.tile = _tileCollection;
-        }
-
-        public IWorld World {
-            get {
-                if (_tileCollection.World is null) {
-                    _tileCollection.World = new OrionWorld(Terraria.Main.maxTilesX, Terraria.Main.maxTilesY);
-                }
-
-                return _tileCollection.World;
+            // Check if `Terraria.Main.tile` is already a `TileCollection`. This is only useful in tests, where
+            // multiple `OrionWorldService` instances are constructed.
+            if (Terraria.Main.tile is TileCollection tileCollection) {
+                _tileCollection = tileCollection;
+            } else {
+                _tileCollection = new TileCollection();
+                Terraria.Main.tile = _tileCollection;
             }
         }
 
+        public IWorld World => _tileCollection.World;
+
         public override void Dispose() { }
 
+        // This class does not implement `IDisposable` as it is a static replacement.
         private class TileCollection : OTAPI.Tile.ITileCollection {
+            private IWorld? _world;
+
             public unsafe OTAPI.Tile.ITile this[int x, int y] {
-                get {
-                    if (World is null) {
-                        World = new OrionWorld(Terraria.Main.maxTilesX, Terraria.Main.maxTilesY);
-                    }
-
-                    return new TileAdapter((Tile*)Unsafe.AsPointer(ref World[x, y]));
-                }
-
+                get => new TileAdapter(ref World[x, y]);
                 set => this[x, y].CopyFrom(value);
             }
 
             public int Width => Terraria.Main.maxTilesX;
             public int Height => Terraria.Main.maxTilesY;
-            public IWorld? World { get; set; }
+            public IWorld World {
+                get {
+                    // Lazily initialize the world so that a world of minimum size can be created.
+                    if (_world is null) {
+                        _world = new OrionWorld(Terraria.Main.maxTilesX, Terraria.Main.maxTilesY);
+                    }
+
+                    return _world;
+                }
+            }
         }
 
-        // To make `Tile` compatible with `ITile`, we use the adapter pattern.
+        // An adapter class to make a `Tile` reference compatible with `OTAPI.Tile.ITile`. Unfortunately, this means we
+        // generate a lot of garbage, but this is the best we can really do.
         private sealed unsafe class TileAdapter : OTAPI.Tile.ITile {
             private readonly Tile* _tile;
 
-            public TileAdapter(Tile* tile) {
-                Debug.Assert(tile != null);
-
-                _tile = tile;
+            public TileAdapter(ref Tile tile) {
+                _tile = (Tile*)Unsafe.AsPointer(ref tile);
             }
 
             public ushort type {
@@ -138,20 +141,20 @@ namespace Orion.World {
 
             public byte wallColor() => (byte)_tile->WallColor;
             public void wallColor(byte wallColor) => _tile->WallColor = (PaintColor)wallColor;
-            public bool lava() => (bTileHeader & 0x20) == 0x20;
+            public bool lava() => (_tile->_bTileHeader & 0x20) == 0x20;
             public void lava(bool lava) {
                 if (lava) {
-                    bTileHeader = (byte)((bTileHeader & 0x9F) | 0x20);
+                    _tile->_bTileHeader = (byte)((_tile->_bTileHeader & 0x9F) | 0x20);
                 } else {
-                    bTileHeader &= 223;
+                    _tile->_bTileHeader &= 223;
                 }
             }
-            public bool honey() => (bTileHeader & 0x40) == 0x40;
+            public bool honey() => (_tile->_bTileHeader & 0x40) == 0x40;
             public void honey(bool honey) {
                 if (honey) {
-                    bTileHeader = (byte)((bTileHeader & 0x9F) | 0x40);
+                    _tile->_bTileHeader = (byte)((_tile->_bTileHeader & 0x9F) | 0x40);
                 } else {
-                    bTileHeader &= 191;
+                    _tile->_bTileHeader &= 191;
                 }
             }
             public byte liquidType() => (byte)_tile->Liquid;
@@ -172,8 +175,8 @@ namespace Orion.World {
                     return;
                 }
 
-                if (from is TileAdapter fromAdapter) {
-                    Unsafe.CopyBlockUnaligned(_tile, fromAdapter._tile, 13);
+                if (from is TileAdapter adapter) {
+                    Unsafe.CopyBlockUnaligned(_tile, adapter._tile, 13);
                 } else {
                     type = from.type;
                     wall = from.wall;
@@ -191,25 +194,57 @@ namespace Orion.World {
                     return false;
                 }
 
-                var comp = (TileAdapter)compTile;
-                const uint bottomMask = 0b_00000000_11111111_11111111_11111111;
-                var mask = _tile->LiquidAmount == 0 ? bottomMask : bottomMask | ~Tile.LiquidMask;
-                if ((_tile->_header & mask) != (comp._tile->_header & mask)) {
-                    return false;
-                }
-
-                if (_tile->IsBlockActive) {
-                    if (_tile->BlockId != comp._tile->BlockId) {
+                if (compTile is TileAdapter adapter) {
+                    const uint bottomMask = 0b_00000000_11111111_11111111_11111111;
+                    var mask = _tile->LiquidAmount == 0 ? bottomMask : bottomMask | ~Tile.LiquidMask;
+                    if ((_tile->_header & mask) != (adapter._tile->_header & mask)) {
                         return false;
                     }
 
-                    if (_tile->BlockId.HasFrames() && _tile->_blockFrames != comp._tile->_blockFrames) {
+                    if (_tile->IsBlockActive) {
+                        if (_tile->BlockId != adapter._tile->BlockId) {
+                            return false;
+                        }
+
+                        if (_tile->BlockId.HasFrames() && _tile->_blockFrames != adapter._tile->_blockFrames) {
+                            return false;
+                        }
+                    }
+
+                    if (_tile->WallId != adapter._tile->WallId || _tile->LiquidAmount != adapter._tile->LiquidAmount) {
                         return false;
                     }
-                }
+                } else {
+                    if (_tile->_sTileHeader != compTile.sTileHeader) {
+                        return false;
+                    }
 
-                if (_tile->WallId != comp._tile->WallId || _tile->LiquidAmount != comp._tile->LiquidAmount) {
-                    return false;
+                    if (active()) {
+                        if (_tile->BlockId != (BlockId)compTile.type) {
+                            return false;
+                        }
+
+                        if (_tile->BlockId.HasFrames() &&
+                                (_tile->BlockFrameX != compTile.frameX || _tile->BlockFrameY != compTile.frameY)) {
+                            return false;
+                        }
+                    }
+
+                    if (_tile->WallId != (WallId)compTile.wall || _tile->LiquidAmount != compTile.liquid) {
+                        return false;
+                    }
+
+                    if (_tile->LiquidAmount == 0) {
+                        if (_tile->WallColor != (PaintColor)compTile.wallColor()) {
+                            return false;
+                        }
+
+                        if (_tile->HasYellowWire != compTile.wire4()) {
+                            return false;
+                        }
+                    } else if (_tile->_bTileHeader != compTile.bTileHeader) {
+                        return false;
+                    }
                 }
 
                 return true;
@@ -278,7 +313,8 @@ namespace Orion.World {
             public bool bottomSlope() => IsSlope(Slope.BottomRight, Slope.BottomLeft);
             public bool leftSlope() => IsSlope(Slope.TopLeft, Slope.BottomLeft);
             public bool rightSlope() => IsSlope(Slope.TopRight, Slope.BottomRight);
-            public bool HasSameSlope(OTAPI.Tile.ITile tile) => (sTileHeader & 29696) == (tile.sTileHeader & 29696);
+            public bool HasSameSlope(OTAPI.Tile.ITile tile) =>
+                (_tile->_sTileHeader & 29696) == (tile.sTileHeader & 29696);
 
             public int blockType() {
                 if (halfBrick()) {
