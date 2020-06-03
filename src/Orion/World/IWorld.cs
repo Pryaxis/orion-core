@@ -15,26 +15,32 @@
 // You should have received a copy of the GNU General Public License
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
-using System.Collections.Generic;
-using Orion.Packets.DataStructures;
+using Orion.Entities;
+using Orion.World.Tiles;
 
-namespace Orion.Npcs {
+namespace Orion.World {
     /// <summary>
-    /// Represents an NPC service. Provides access to NPC-related properties and methods.
+    /// Represents a Terraria world.
     /// </summary>
-    public interface INpcService {
+    public interface IWorld : IAnnotatable {
         /// <summary>
-        /// Gets the NPCs.
+        /// Gets a reference to the tile at the given coordinates.
         /// </summary>
-        /// <value>The NPCs.</value>
-        IReadOnlyList<INpc> Npcs { get; }
+        /// <param name="x">The X coordinate.</param>
+        /// <param name="y">The Y coordinate.</param>
+        /// <returns>A reference to the tile at the given coordinates.</returns>
+        ref Tile this[int x, int y] { get; }
 
         /// <summary>
-        /// Spawns an NPC with the given <paramref name="id"/> at the specified <paramref name="position"/>.
+        /// Gets the world width.
         /// </summary>
-        /// <param name="id">The NPC ID.</param>
-        /// <param name="position">The position.</param>
-        /// <returns>The resulting NPC, or <see langword="null"/> if none was spawned.</returns>
-        INpc? SpawnNpc(NpcId id, Vector2f position);
+        /// <value>The world width.</value>
+        int Width { get; }
+
+        /// <summary>
+        /// Gets the world height.
+        /// </summary>
+        /// <value>The world height.</value>
+        int Height { get; }
     }
 }

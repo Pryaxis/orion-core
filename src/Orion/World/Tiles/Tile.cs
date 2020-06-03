@@ -19,32 +19,38 @@ using System.Runtime.InteropServices;
 
 namespace Orion.World.Tiles {
     /// <summary>
-    /// Represents a space-optimized Terraria tile.
+    /// Represents a space and speed-optimized Terraria tile.
     /// </summary>
     [StructLayout(LayoutKind.Explicit)]
     public struct Tile {
-        private const int BlockColorShift = 0;
-        private const int SlopeShift = 12;
-        private const int WallColorShift = 16;
-        private const int LiquidShift = 21;
+        internal const int BlockColorShift = 0;
+        internal const int SlopeShift = 12;
+        internal const int WallColorShift = 16;
+        internal const int LiquidShift = 21;
+        internal const int BlockFrameNumberShift = 24;
         
-        // The masks. These follow the same layout in Terraria's `Tile` class.
-        private const uint BlockColorMask /*       */ = 0b_00000000_00000000_00000000_00011111;
-        private const uint IsBlockActiveMask /*    */ = 0b_00000000_00000000_00000000_00100000;
-        private const uint IsBlockActuatedMask /*  */ = 0b_00000000_00000000_00000000_01000000;
-        private const uint HasRedWireMask /*       */ = 0b_00000000_00000000_00000000_10000000;
-        private const uint HasBlueWireMask /*      */ = 0b_00000000_00000000_00000001_00000000;
-        private const uint HasGreenWireMask /*     */ = 0b_00000000_00000000_00000010_00000000;
-        private const uint IsBlockHalvedMask /*    */ = 0b_00000000_00000000_00000100_00000000;
-        private const uint HasActuatorMask /*      */ = 0b_00000000_00000000_00001000_00000000;
-        private const uint SlopeMask /*            */ = 0b_00000000_00000000_01110000_00000000;
-        private const uint WallColorMask /*        */ = 0b_00000000_00011111_00000000_00000000;
-        private const uint LiquidMask /*           */ = 0b_00000000_01100000_00000000_00000000;
-        private const uint HasYellowWireMask /*    */ = 0b_00000000_10000000_00000000_00000000;
-        private const uint IsCheckingLiquidMask /* */ = 0b_00001000_00000000_00000000_00000000;
-        private const uint ShouldSkipLiquidMask /* */ = 0b_00010000_00000000_00000000_00000000;
+        // The masks. These follow roughly the same layout in Terraria's `Tile` class.
+        internal const uint BlockColorMask /*       */ = 0b_00000000_00000000_00000000_00011111;
+        internal const uint IsBlockActiveMask /*    */ = 0b_00000000_00000000_00000000_00100000;
+        internal const uint IsBlockActuatedMask /*  */ = 0b_00000000_00000000_00000000_01000000;
+        internal const uint HasRedWireMask /*       */ = 0b_00000000_00000000_00000000_10000000;
+        internal const uint HasBlueWireMask /*      */ = 0b_00000000_00000000_00000001_00000000;
+        internal const uint HasGreenWireMask /*     */ = 0b_00000000_00000000_00000010_00000000;
+        internal const uint IsBlockHalvedMask /*    */ = 0b_00000000_00000000_00000100_00000000;
+        internal const uint HasActuatorMask /*      */ = 0b_00000000_00000000_00001000_00000000;
+        internal const uint SlopeMask /*            */ = 0b_00000000_00000000_01110000_00000000;
+        internal const uint WallColorMask /*        */ = 0b_00000000_00011111_00000000_00000000;
+        internal const uint LiquidMask /*           */ = 0b_00000000_01100000_00000000_00000000;
+        internal const uint HasYellowWireMask /*    */ = 0b_00000000_10000000_00000000_00000000;
+        internal const uint BlockFrameNumberMask /* */ = 0b_00001111_00000000_00000000_00000000;
+        internal const uint IsCheckingLiquidMask /* */ = 0b_00010000_00000000_00000000_00000000;
+        internal const uint ShouldSkipLiquidMask /* */ = 0b_00100000_00000000_00000000_00000000;
 
-        [FieldOffset(9)] private uint _header;
+        [FieldOffset(5)] internal int _blockFrames;
+        [FieldOffset(9)] internal uint _header;
+        [FieldOffset(9)] internal short _sTileHeader;
+        [FieldOffset(11)] internal byte _bTileHeader;
+        [FieldOffset(12)] internal byte _bTileHeader3;
 
         /// <summary>
         /// Gets or sets the block ID.
@@ -182,6 +188,18 @@ namespace Orion.World.Tiles {
         public unsafe bool HasYellowWire {
             readonly get => (_header & HasYellowWireMask) != 0;
             set => _header = (_header & ~HasYellowWireMask) | (*(uint*)&value * HasYellowWireMask);
+        }
+
+        /// <summary>
+        /// Gets or sets the block's frame number.
+        /// </summary>
+        /// <value>The block's frame number.</value>
+        public byte BlockFrameNumber {
+            readonly get => (byte)((_header & BlockFrameNumberMask) >> BlockFrameNumberShift);
+            set {
+                _header =
+                    (_header & ~BlockFrameNumberMask) | (((uint)value << BlockFrameNumberShift) & BlockFrameNumberMask);
+            }
         }
 
         /// <summary>

@@ -54,7 +54,7 @@ namespace Orion.Events {
 
             collection.Raise(evt, Logger.None);
 
-            Assert.Equal(200, evt.Value);
+            Assert.Equal(100, evt.Value);
         }
 
         [Fact]

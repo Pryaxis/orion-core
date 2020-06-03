@@ -190,6 +190,15 @@ namespace Orion.World.Tiles {
             Assert.Equal(Liquid.Honey, tile.Liquid);
         }
 
+        [Fact]
+        public void BlockFrameNumber_Set_Get() {
+            var tile = new Tile();
+
+            tile.BlockFrameNumber = 7;
+
+            Assert.Equal(7, tile.BlockFrameNumber);
+        }
+
         [Theory]
         [InlineData(true)]
         [InlineData(false)]

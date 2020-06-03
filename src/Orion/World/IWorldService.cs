@@ -15,26 +15,15 @@
 // You should have received a copy of the GNU General Public License
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
-using System.Collections.Generic;
-using Orion.Packets.DataStructures;
-
-namespace Orion.Npcs {
+namespace Orion.World {
     /// <summary>
-    /// Represents an NPC service. Provides access to NPC-related properties and methods.
+    /// Represents a world service. Provides access to world-related properties and methods.
     /// </summary>
-    public interface INpcService {
+    public interface IWorldService {
         /// <summary>
-        /// Gets the NPCs.
+        /// Gets the world.
         /// </summary>
-        /// <value>The NPCs.</value>
-        IReadOnlyList<INpc> Npcs { get; }
-
-        /// <summary>
-        /// Spawns an NPC with the given <paramref name="id"/> at the specified <paramref name="position"/>.
-        /// </summary>
-        /// <param name="id">The NPC ID.</param>
-        /// <param name="position">The position.</param>
-        /// <returns>The resulting NPC, or <see langword="null"/> if none was spawned.</returns>
-        INpc? SpawnNpc(NpcId id, Vector2f position);
+        /// <value>The world.</value>
+        IWorld World { get; }
     }
 }
