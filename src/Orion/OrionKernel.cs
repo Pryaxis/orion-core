@@ -26,6 +26,7 @@ using Orion.Items;
 using Orion.Npcs;
 using Orion.Players;
 using Orion.Properties;
+using Orion.World;
 using Serilog;
 
 namespace Orion {
@@ -65,6 +66,7 @@ namespace Orion {
             Container.Bind<IItemService>().To<OrionItemService>().InSingletonScope();
             Container.Bind<INpcService>().To<OrionNpcService>().InSingletonScope();
             Container.Bind<IPlayerService>().To<OrionPlayerService>().InSingletonScope();
+            Container.Bind<IWorldService>().To<OrionWorldService>().InSingletonScope();
 
             // Create an ILogger binding for service-specific logs.
             Container

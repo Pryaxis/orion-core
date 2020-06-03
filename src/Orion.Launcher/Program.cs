@@ -27,6 +27,7 @@ using Orion.Items;
 using Orion.Launcher.Properties;
 using Orion.Npcs;
 using Orion.Players;
+using Orion.World;
 using Serilog;
 using Serilog.Events;
 using Serilog.Sinks.SystemConsole.Themes;
@@ -110,6 +111,7 @@ namespace Orion.Launcher {
             kernel.Container.Get<IItemService>();
             kernel.Container.Get<INpcService>();
             kernel.Container.Get<IPlayerService>();
+            kernel.Container.Get<IWorldService>();
 
             using var game = new Terraria.Main();
             game.DedServ();

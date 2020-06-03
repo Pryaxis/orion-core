@@ -23,59 +23,40 @@ using Serilog;
 namespace Orion.World {
     [Service("orion-world")]
     internal sealed class OrionWorldService : OrionService, IWorldService {
-        private readonly OTAPI.Tile.ITileCollection _previousTileCollection;
-        private OrionWorld? _world;
+        private TileCollection _tileCollection = new TileCollection();
 
         public OrionWorldService(OrionKernel kernel, ILogger log) : base(kernel, log) {
-            Debug.Assert(kernel != null);
-            Debug.Assert(log != null);
-
-            _previousTileCollection = Terraria.Main.tile;
-            _world = new OrionWorld(Terraria.Main.maxTilesX, Terraria.Main.maxTilesY);
-            Terraria.Main.tile = new TileCollection(_world);
+            Terraria.Main.tile = _tileCollection;
         }
 
         public IWorld World {
             get {
-                var width = Terraria.Main.maxTilesX;
-                var height = Terraria.Main.maxTilesY;
-
-                // Lazily initialize the `OrionWorld` instance, or re-create it if the world size has changed (due to
-                // loading a world).
-                if (_world is null) {
-                    _world = new OrionWorld(width, height);
-                    Terraria.Main.tile = new TileCollection(_world);
-                } else if (_world.Width != width || _world.Height != height) {
-                    _world.Dispose();
-                    _world = new OrionWorld(width, height);
-                    Terraria.Main.tile = new TileCollection(_world);
+                if (_tileCollection.World is null) {
+                    _tileCollection.World = new OrionWorld(Terraria.Main.maxTilesX, Terraria.Main.maxTilesY);
                 }
 
-                return _world;
+                return _tileCollection.World;
             }
         }
 
-        public override void Dispose() {
-            _world?.Dispose();
-            Terraria.Main.tile = _previousTileCollection;
-        }
+        public override void Dispose() { }
 
         private class TileCollection : OTAPI.Tile.ITileCollection {
-            private readonly IWorld _world;
-
-            public TileCollection(IWorld world) {
-                Debug.Assert(world != null);
-                
-                _world = world;
-            }
-
             public unsafe OTAPI.Tile.ITile this[int x, int y] {
-                get => new TileAdapter((Tile*)Unsafe.AsPointer(ref _world[x, y]));
+                get {
+                    if (World is null) {
+                        World = new OrionWorld(Terraria.Main.maxTilesX, Terraria.Main.maxTilesY);
+                    }
+
+                    return new TileAdapter((Tile*)Unsafe.AsPointer(ref World[x, y]));
+                }
+
                 set => this[x, y].CopyFrom(value);
             }
 
-            public int Width => _world.Width;
-            public int Height => _world.Height;
+            public int Width => Terraria.Main.maxTilesX;
+            public int Height => Terraria.Main.maxTilesY;
+            public IWorld? World { get; set; }
         }
 
         // To make `Tile` compatible with `ITile`, we use the adapter pattern.
