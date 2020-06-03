@@ -15,20 +15,21 @@
 // You should have received a copy of the GNU General Public License
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
+using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 
 namespace Orion.World.Tiles {
     /// <summary>
-    /// Represents a space and speed-optimized Terraria tile.
+    /// Represents an optimized Terraria tile.
     /// </summary>
     [StructLayout(LayoutKind.Explicit)]
     public struct Tile {
-        internal const int BlockColorShift = 0;
-        internal const int SlopeShift = 12;
-        internal const int WallColorShift = 16;
-        internal const int LiquidShift = 21;
-        internal const int BlockFrameNumberShift = 24;
-        
+        private const int BlockColorShift = 0;
+        private const int SlopeShift = 12;
+        private const int WallColorShift = 16;
+        private const int LiquidShift = 21;
+        private const int BlockFrameNumberShift = 24;
+
         // The masks. These follow roughly the same layout in Terraria's `Tile` class.
         internal const uint BlockColorMask /*       */ = 0b_00000000_00000000_00000000_00011111;
         internal const uint IsBlockActiveMask /*    */ = 0b_00000000_00000000_00000000_00100000;
@@ -46,6 +47,7 @@ namespace Orion.World.Tiles {
         internal const uint IsCheckingLiquidMask /* */ = 0b_00010000_00000000_00000000_00000000;
         internal const uint ShouldSkipLiquidMask /* */ = 0b_00100000_00000000_00000000_00000000;
 
+        // Provide `internal` field access with type punning so that we can implement `OTAPI.Tile.ITile` efficiently.
         [FieldOffset(5)] internal int _blockFrames;
         [FieldOffset(9)] internal uint _header;
         [FieldOffset(9)] internal short _sTileHeader;
@@ -87,7 +89,10 @@ namespace Orion.World.Tiles {
         /// </summary>
         /// <value>The block color.</value>
         public PaintColor BlockColor {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
             readonly get => (PaintColor)((_header & BlockColorMask) >> BlockColorShift);
+
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
             set => _header = (_header & ~BlockColorMask) | (((uint)value << BlockColorShift) & BlockColorMask);
         }
 
@@ -95,63 +100,126 @@ namespace Orion.World.Tiles {
         /// Gets or sets a value indicating whether the block is active.
         /// </summary>
         /// <value><see langword="true"/> if the block is active; otherwise, <see langword="false"/>.</value>
-        public unsafe bool IsBlockActive {
+        public bool IsBlockActive {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
             readonly get => (_header & IsBlockActiveMask) != 0;
-            set => _header = (_header & ~IsBlockActiveMask) | (*(uint*)&value * IsBlockActiveMask);
+
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            set {
+                if (value) {
+                    _header |= IsBlockActiveMask;
+                } else {
+                    _header &= ~IsBlockActiveMask;
+                }
+            }
         }
 
         /// <summary>
         /// Gets or sets a value indicating whether the block is actuated.
         /// </summary>
         /// <value><see langword="true"/> if the block is actuated; otherwise, <see langword="false"/>.</value>
-        public unsafe bool IsBlockActuated {
+        public bool IsBlockActuated {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
             readonly get => (_header & IsBlockActuatedMask) != 0;
-            set => _header = (_header & ~IsBlockActuatedMask) | (*(uint*)&value * IsBlockActuatedMask);
+
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            set {
+                if (value) {
+                    _header |= IsBlockActuatedMask;
+                } else {
+                    _header &= ~IsBlockActuatedMask;
+                }
+            }
         }
 
         /// <summary>
         /// Gets or sets a value indicating whether the tile has red wire.
         /// </summary>
         /// <value><see langword="true"/> if the tile has red wire; otherwise, <see langword="false"/>.</value>
-        public unsafe bool HasRedWire {
+        public bool HasRedWire {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
             readonly get => (_header & HasRedWireMask) != 0;
-            set => _header = (_header & ~HasRedWireMask) | (*(uint*)&value * HasRedWireMask);
+
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            set {
+                if (value) {
+                    _header |= HasRedWireMask;
+                } else {
+                    _header &= ~HasRedWireMask;
+                }
+            }
         }
 
         /// <summary>
         /// Gets or sets a value indicating whether the tile has blue wire.
         /// </summary>
         /// <value><see langword="true"/> if the tile has blue wire; otherwise, <see langword="false"/>.</value>
-        public unsafe bool HasBlueWire {
+        public bool HasBlueWire {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
             readonly get => (_header & HasBlueWireMask) != 0;
-            set => _header = (_header & ~HasBlueWireMask) | (*(uint*)&value * HasBlueWireMask);
+
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            set {
+                if (value) {
+                    _header |= HasBlueWireMask;
+                } else {
+                    _header &= ~HasBlueWireMask;
+                }
+            }
         }
 
         /// <summary>
         /// Gets or sets a value indicating whether the tile has green wire.
         /// </summary>
         /// <value><see langword="true"/> if the tile has green wire; otherwise, <see langword="false"/>.</value>
-        public unsafe bool HasGreenWire {
+        public bool HasGreenWire {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
             readonly get => (_header & HasGreenWireMask) != 0;
-            set => _header = (_header & ~HasGreenWireMask) | (*(uint*)&value * HasGreenWireMask);
+
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            set {
+                if (value) {
+                    _header |= HasGreenWireMask;
+                } else {
+                    _header &= ~HasGreenWireMask;
+                }
+            }
         }
 
         /// <summary>
         /// Gets or sets a value indicating whether the block is halved.
         /// </summary>
         /// <value><see langword="true"/> if the block is halved; otherwise, <see langword="false"/>.</value>
-        public unsafe bool IsBlockHalved {
+        public bool IsBlockHalved {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
             readonly get => (_header & IsBlockHalvedMask) != 0;
-            set => _header = (_header & ~IsBlockHalvedMask) | (*(uint*)&value * IsBlockHalvedMask);
+
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            set {
+                if (value) {
+                    _header |= IsBlockHalvedMask;
+                } else {
+                    _header &= ~IsBlockHalvedMask;
+                }
+            }
         }
 
         /// <summary>
         /// Gets or sets a value indicating whether the tile has an actuator.
         /// </summary>
         /// <value><see langword="true"/> if the tile has an actuator; otherwise, <see langword="false"/>.</value>
-        public unsafe bool HasActuator {
+        public bool HasActuator {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
             readonly get => (_header & HasActuatorMask) != 0;
-            set => _header = (_header & ~HasActuatorMask) | (*(uint*)&value * HasActuatorMask);
+
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            set {
+                if (value) {
+                    _header |= HasActuatorMask;
+                } else {
+                    _header &= ~HasActuatorMask;
+                }
+            }
         }
 
         /// <summary>
@@ -159,7 +227,10 @@ namespace Orion.World.Tiles {
         /// </summary>
         /// <value>The slope.</value>
         public Slope Slope {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
             readonly get => (Slope)((_header & SlopeMask) >> SlopeShift);
+
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
             set => _header = (_header & ~SlopeMask) | (((uint)value << SlopeShift) & SlopeMask);
         }
 
@@ -168,7 +239,10 @@ namespace Orion.World.Tiles {
         /// </summary>
         /// <value>The wall color.</value>
         public PaintColor WallColor {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
             readonly get => (PaintColor)((_header & WallColorMask) >> WallColorShift);
+
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
             set => _header = (_header & ~WallColorMask) | (((uint)value << WallColorShift) & WallColorMask);
         }
 
@@ -177,7 +251,10 @@ namespace Orion.World.Tiles {
         /// </summary>
         /// <value>The liquid.</value>
         public Liquid Liquid {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
             readonly get => (Liquid)((_header & LiquidMask) >> LiquidShift);
+
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
             set => _header = (_header & ~LiquidMask) | (((uint)value << LiquidShift) & LiquidMask);
         }
 
@@ -185,9 +262,18 @@ namespace Orion.World.Tiles {
         /// Gets or sets a value indicating whether the tile has green wire.
         /// </summary>
         /// <value><see langword="true"/> if the tile has green wire; otherwise, <see langword="false"/>.</value>
-        public unsafe bool HasYellowWire {
+        public bool HasYellowWire {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
             readonly get => (_header & HasYellowWireMask) != 0;
-            set => _header = (_header & ~HasYellowWireMask) | (*(uint*)&value * HasYellowWireMask);
+
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            set {
+                if (value) {
+                    _header |= HasYellowWireMask;
+                } else {
+                    _header &= ~HasYellowWireMask;
+                }
+            }
         }
 
         /// <summary>
@@ -195,29 +281,49 @@ namespace Orion.World.Tiles {
         /// </summary>
         /// <value>The block's frame number.</value>
         public byte BlockFrameNumber {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
             readonly get => (byte)((_header & BlockFrameNumberMask) >> BlockFrameNumberShift);
-            set {
+
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            set =>
                 _header =
                     (_header & ~BlockFrameNumberMask) | (((uint)value << BlockFrameNumberShift) & BlockFrameNumberMask);
-            }
         }
 
         /// <summary>
         /// Gets or sets a value indicating whether the tile is checking liquid.
         /// </summary>
         /// <value><see langword="true"/> if the tile is checking liquid; otherwise, <see langword="false"/>.</value>
-        public unsafe bool IsCheckingLiquid {
+        public bool IsCheckingLiquid {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
             readonly get => (_header & IsCheckingLiquidMask) != 0;
-            set => _header = (_header & ~IsCheckingLiquidMask) | (*(uint*)&value * IsCheckingLiquidMask);
+
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            set {
+                if (value) {
+                    _header |= IsCheckingLiquidMask;
+                } else {
+                    _header &= ~IsCheckingLiquidMask;
+                }
+            }
         }
 
         /// <summary>
         /// Gets or sets a value indicating whether the tile should skip liquids.
         /// </summary>
         /// <value><see langword="true"/> if the tile should skip liquids; otherwise, <see langword="false"/>.</value>
-        public unsafe bool ShouldSkipLiquid {
+        public bool ShouldSkipLiquid {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
             readonly get => (_header & ShouldSkipLiquidMask) != 0;
-            set => _header = (_header & ~ShouldSkipLiquidMask) | (*(uint*)&value * ShouldSkipLiquidMask);
+
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            set {
+                if (value) {
+                    _header |= ShouldSkipLiquidMask;
+                } else {
+                    _header &= ~ShouldSkipLiquidMask;
+                }
+            }
         }
     }
 }
