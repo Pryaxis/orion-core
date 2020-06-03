@@ -68,6 +68,3 @@ It must then be deregistered when the handler owner is being disposed:
 ```
 
 Event handlers can be registered and deregistered en masse using the `RegisterHandlers` and `DeregisterHandlers` methods, which register and deregister all methods marked with the `EventHandler` attribute, respectively.
-
-
-
