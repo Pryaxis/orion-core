@@ -1,5 +1,9 @@
 - name: Getting Started
   href: getting-started.md
+- name: Architecture
+  items:
+  - name: "Architecture: Services"
+    href: architecture-services.md
 - name: Examples
   items:
   - name: "Example: Lava Sucks"
