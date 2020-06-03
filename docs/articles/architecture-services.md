@@ -37,6 +37,10 @@ That service must then be implemented:
     internal sealed class MyServiceImpl : OrionService, IMyService {
         public MyServiceImpl(
             OrionKernel kernel, ILogger log) : base(kernel, log) { }
+
+        public void DoSomething() {
+            Console.WriteLine("Test");
+        }
     }
 ```
 
