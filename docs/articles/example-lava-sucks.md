@@ -1,4 +1,4 @@
-## Lava Sucks
+## Example: Lava Sucks
 
 Below is an example plugin which disables lava from spawning from hellstone blocks. This plugin ties together the following concepts:
 * Lazy constructor injection
