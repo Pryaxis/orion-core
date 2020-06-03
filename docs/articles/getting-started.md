@@ -1,4 +1,4 @@
-## Getting Started (for Developers)
+## Getting Started
 
 ### Requirements
 Before you begin, first install the [.NET Core 3.1 SDK](https://dotnet.microsoft.com/download/dotnet-core/3.1) -- Orion is built on .NET Core to provide cross-platform compatibility out of the box. You should also make sure that your IDE also supports C# 8 -- here are a few which do:
