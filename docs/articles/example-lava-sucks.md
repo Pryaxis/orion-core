@@ -18,8 +18,6 @@ public class LavaSucksPlugin : OrionPlugin {
     private readonly IPlayerService _playerService;
     private readonly IWorldService _worldService;
 
-    // Inject `Lazy<T>` instead of `T`. This is because if another plugin decides to
-    // rebind `T`, we'll be able to see the change.
     public LavaSucksPlugin(
             OrionKernel kernel, ILogger log,
             IItemService itemService,
