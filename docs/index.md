@@ -48,6 +48,7 @@ Orion will have better APIs than the current Terraria server API. Here is a non-
 * Events are easier to register and deregister now (with different priorities, too!).
 
   Before:
+  
   ```csharp
   ServerApi.Hooks.ServerConnect.Register(this, OnConnect);
   ServerApi.Hooks.ServerJoin.Register(this, OnJoin);
@@ -59,6 +60,7 @@ Orion will have better APIs than the current Terraria server API. Here is a non-
   ```
   
   After:
+  
   ```csharp
   Kernel.Register(this, Log);
   
