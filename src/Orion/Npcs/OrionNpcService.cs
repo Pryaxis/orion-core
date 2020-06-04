@@ -22,6 +22,7 @@ using System.Threading;
 using Orion.Collections;
 using Orion.Events;
 using Orion.Events.Npcs;
+using Orion.Framework;
 using Orion.Packets.DataStructures;
 using Serilog;
 

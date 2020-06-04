@@ -17,7 +17,7 @@
 
 using System;
 
-namespace Orion {
+namespace Orion.Framework {
     /// <summary>
     /// Specifies information about a service or plugin.
     /// </summary>

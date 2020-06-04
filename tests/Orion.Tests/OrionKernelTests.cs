@@ -20,6 +20,7 @@ using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Reflection;
 using Orion.Events;
+using Orion.Framework;
 using Serilog;
 using Serilog.Core;
 using Xunit;

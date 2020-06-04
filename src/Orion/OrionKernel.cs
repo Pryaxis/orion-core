@@ -22,6 +22,7 @@ using System.Reflection;
 using Ninject;
 using Orion.Events;
 using Orion.Events.Server;
+using Orion.Framework;
 using Orion.Items;
 using Orion.Npcs;
 using Orion.Players;
