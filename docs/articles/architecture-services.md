@@ -10,7 +10,7 @@ _Services_ in Orion are self-contained modules which provide a specific type of 
 
 Each service is split into an interface and an implementation. The interface defines the service's contract, and the implementation must adhere to that contract. This pattern allows consumers to program against an interface and not worry about any implementation details.
 
-Service interfaces are bound to implementations using the `BindingAttribute`, but consumers may define higher priority bindings to replace the default implementations.
+Service interfaces are bound to implementations using [`BindingAttribute`](xref:Orion.Framework.BindingAttribute), but consumers may define higher priority bindings to replace the default implementations.
 
 To request services, consumers should use [constructor injection](https://en.wikipedia.org/wiki/Dependency_injection).
 
@@ -40,7 +40,6 @@ That service must then be implemented and bound:
 Orion will then automatically bind `IMyService` to `MyServiceImpl`, and any plugins that request `IMyService` will receive a singleton `MyServiceImpl` instance.
 
 Here are the possible service scopes:
-
 
 | Scope | Result | Rationale | Example |
 |-------|--------|-----------|---------|
