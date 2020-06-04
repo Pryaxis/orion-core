@@ -16,13 +16,14 @@
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
 using System.Collections.Generic;
+using Orion.Framework;
 using Orion.Packets.DataStructures;
 
 namespace Orion.Npcs {
     /// <summary>
     /// Represents an NPC service. Provides access to NPC-related properties and methods.
     /// </summary>
-    public interface INpcService {
+    public interface INpcService : IService {
         /// <summary>
         /// Gets the NPCs.
         /// </summary>

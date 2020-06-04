@@ -15,17 +15,13 @@
 // You should have received a copy of the GNU General Public License
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
-using Orion.Framework;
-
-namespace Orion.World {
+namespace Orion.Framework {
     /// <summary>
-    /// Represents a world service. Provides access to world-related properties and methods.
+    /// Represents a service.
     /// </summary>
-    public interface IWorldService : IService {
-        /// <summary>
-        /// Gets the world.
-        /// </summary>
-        /// <value>The world.</value>
-        IWorld World { get; }
-    }
+    /// <remarks>
+    /// This interface serves as a marker interface. When scanning through all of the currently loaded assemblies, this
+    /// interface will mark interfaces which should have bindings.
+    /// </remarks>
+    public interface IService { }
 }
