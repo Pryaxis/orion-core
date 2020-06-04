@@ -16,18 +16,19 @@ Orion is built using .NET Core 3.1, meaning that Orion is cross-platform compati
 
 ### Abstractability
 
-By serving as an abstraction on top of Terraria, Orion aims to shield developers from Terraria's version changes. This is accomplished by, e.g., providing interfaces ( such as [`IPlayer`](http://pryaxis.github.io/orion/api/Orion.Players.IPlayer.html)) for developers to program against. That way, changes made to Terraria only need to be handled within Orion. The following table shows Terraria types along with their corresponding Orion abstractions:
+By serving as an abstraction on top of Terraria, Orion aims to shield developers from Terraria's version changes. This is accomplished by, e.g., providing interfaces (such as [`IPlayer`](xref:Orion.Players.IPlayer)) for developers to program against. That way, changes made to Terraria only need to be handled within Orion. The following table shows Terraria concepts along with their corresponding Orion abstractions:
 
-| Terraria Type | Orion Abstraction |
-|---------------|-------------------|
+| Terraria Concept | Orion Abstraction |
+|------------------|-------------------|
 | `Terraria.Chest` | &lt;TBD&gt; |
-| `Terraria.Item` | [`IItem`](https://pryaxis.github.io/orion/api/Orion.Items.IItem.html) |
-| `Terraria.NetMessage` | [`IPacket`](https://pryaxis.github.io/orion/api/Orion.Packets.IPacket.html) |
-| `Terraria.NPC` | [`INpc`](https://pryaxis.github.io/orion/api/Orion.Npcs.INpc.html) |
-| `Terraria.Player` | [`IPlayer`](https://pryaxis.github.io/orion/api/Orion.Players.IPlayer.html) |
+| `Terraria.Item` | [`IItem`](xref:Orion.Items.IItem) |
+| `Terraria.NetMessage` | [`IPacket`](xref:Orion.Packets.IPacket) |
+| `Terraria.NPC` | [`INpc`](xref:Orion.Npcs.INpc) |
+| `Terraria.Player` | [`IPlayer`](xref:Orion.Players.IPlayer) |
 | `Terraria.Projectile` | &lt;TBD&gt; |
 | `Terraria.Sign` | &lt;TBD&gt; |
-| `Terraria.Tile` | [`Tile`](https://pryaxis.github.io/orion/api/Orion.World.Tiles.Tile.html) |
+| `Terraria.Tile` | [`Tile`](xref:Orion.World.Tiles.Tile) |
+| `Terraria.Main.tile` | [`IWorld`](xref:Orion.World.IWorld) |
 
 ### Flexibility
 
@@ -46,31 +47,6 @@ This will allow the codebase to be fully tested, which should improve overall co
 Orion will have better APIs than the current Terraria server API. Here is a non-exhaustive list of API improvements:
 
 * Events are easier to register and deregister now (with different priorities, too!).
-
-  Before:
-  
-  ```csharp
-  ServerApi.Hooks.ServerConnect.Register(this, OnConnect);
-  ServerApi.Hooks.ServerJoin.Register(this, OnJoin);
-  ServerApi.Hooks.ServerLeave.Register(this, OnLeave);
-  
-  private void OnConnect(ConnectEventArgs args) { }
-  private void OnJoin(JoinEventArgs args) { }
-  private void OnLeave(LeaveEventArgs args) { }
-  ```
-  
-  After:
-  
-  ```csharp
-  Kernel.Register(this, Log);
-  
-  [EventHandler(EventPriority.Lowest)]
-  private void OnPlayerConnect(PlayerConnectEvent evt) { }
-  [EventHandler(EventPriority.Lowest)]
-  private void OnPlayerJoin(PlayerJoinEvent evt) { }
-  [EventHandler(EventPriority.Lowest)]
-  private void OnPlayerQuit(PlayerQuitEvent evt) { }
-  ```
 * Plugins can act as both subscribers _and_ publishers of any event.
 * Logging is now handled in a structured manner via [Serilog](https://serilog.net/).
 * Packets are now typed and implemented as `struct`s so that they can be both safe and blazing fast.
@@ -79,7 +55,7 @@ Orion will have better APIs than the current Terraria server API. Here is a non-
 
 Here is a non-exhaustive list of other improvements:
 
-* Plugins will now be unloadable (since they should not declare `static` state). This means that hot reloading is now viable.
+* Plugins will be unloadable (since they are required to not have `static` state). This means that hot reloading of _some_ plugins is now viable.
 * Orion will use resource strings. This means that localization will now be possible.
 
 ## Project Status
