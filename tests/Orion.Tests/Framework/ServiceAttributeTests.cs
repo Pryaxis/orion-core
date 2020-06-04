@@ -49,5 +49,14 @@ namespace Orion.Framework {
 
             Assert.Equal("test", attribute.Author);
         }
+
+        [Fact]
+        public void Priority_Set_Get() {
+            var attribute = new ServiceAttribute("test");
+
+            attribute.Priority = BindingPriority.High;
+
+            Assert.Equal(BindingPriority.High, attribute.Priority);
+        }
     }
 }

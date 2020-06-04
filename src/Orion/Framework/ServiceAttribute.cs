@@ -19,7 +19,7 @@ using System;
 
 namespace Orion.Framework {
     /// <summary>
-    /// Specifies information about a service or plugin.
+    /// Specifies information about a service implementation or plugin.
     /// </summary>
     [AttributeUsage(AttributeTargets.Class, Inherited = false)]
     public sealed class ServiceAttribute : Attribute {
@@ -49,5 +49,11 @@ namespace Orion.Framework {
             get => _author;
             set => _author = value ?? throw new ArgumentNullException(nameof(value));
         }
+
+        /// <summary>
+        /// Gets or sets the service binding's priority.
+        /// </summary>
+        /// <value>The service binding's priority. The default value is <see cref="BindingPriority.Normal"/>.</value>
+        public BindingPriority Priority { get; set; } = BindingPriority.Normal;
     }
 }
