@@ -21,12 +21,13 @@ using Orion.World.Tiles;
 using Serilog;
 
 namespace Orion.World {
+    [Binding("orion-world", Author = "Pryaxis", Priority = BindingPriority.Lowest)]
     internal sealed class OrionWorldService : OrionService, IWorldService {
         private readonly TileCollection _tileCollection;
 
         public OrionWorldService(OrionKernel kernel, ILogger log) : base(kernel, log) {
             // Check if `Terraria.Main.tile` is already a `TileCollection`. This is only useful in tests, where
-            // multiple `OrionWorldService` instances are constructed.
+            // multiple `OrionWorldService` instances may be constructed.
             if (Terraria.Main.tile is TileCollection tileCollection) {
                 _tileCollection = tileCollection;
             } else {

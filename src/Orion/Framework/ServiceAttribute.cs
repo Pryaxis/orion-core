@@ -33,9 +33,9 @@ namespace Orion.Framework {
         }
 
         /// <summary>
-        /// Gets the service's scope.
+        /// Gets the service scope.
         /// </summary>
-        /// <value>The service's scope.</value>
+        /// <value>The service scope.</value>
         public ServiceScope Scope { get; }
     }
 }
