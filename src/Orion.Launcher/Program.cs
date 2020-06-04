@@ -47,16 +47,16 @@ namespace Orion.Launcher {
                 .MinimumLevel.Is(LogEventLevel.Information)
 #endif
                 .WriteTo.Console(
-                    outputTemplate: "[{Timestamp:HH:mm:ss} {Level:u3}] {ServiceName}: {Message:l}{NewLine}{Exception}",
+                    outputTemplate: "[{Timestamp:HH:mm:ss} {Level:u3}] {Name}: {Message:l}{NewLine}{Exception}",
                     theme: AnsiConsoleTheme.Code)
                 .WriteTo.File(Path.Combine("logs", "log-.txt"),
                     outputTemplate:
-                        "[{Timestamp:yyyy-MM-dd HH:mm:ss} {Level:u3}] {ServiceName}: {Message:l}{NewLine}{Exception}",
+                        "[{Timestamp:yyyy-MM-dd HH:mm:ss} {Level:u3}] {Name}: {Message:l}{NewLine}{Exception}",
                     rollingInterval: RollingInterval.Day,
                     rollOnFileSizeLimit: true,
                     fileSizeLimitBytes: 2 << 20)
                 .CreateLogger()
-                .ForContext("ServiceName", "launcher");
+                .ForContext("Name", "launcher");
 
             AppDomain.CurrentDomain.UnhandledException += (sender, eventArgs) => {
                 log.Fatal(eventArgs.ExceptionObject as Exception, Resources.UnhandledExceptionMessage);
