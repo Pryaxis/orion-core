@@ -49,7 +49,7 @@ This event can then be raised via an `OrionKernel` instance:
 An event handler can be defined as follows:
 
 ```csharp
-    [EventHandler(EventPriority.Monitor, Name = "my-event-handler")]
+    [EventHandler("my-event-handler", Priority = EventPriority.Monitor)]
     private void MyEventHandler(MyEvent evt) {
         Console.WriteLine(evt.Value);
     }
