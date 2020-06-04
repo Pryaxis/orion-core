@@ -23,7 +23,8 @@ namespace Orion.Items {
     /// <summary>
     /// Represents an item service. Provides access to item-related properties and methods.
     /// </summary>
-    public interface IItemService : IService {
+    [Service(ServiceScope.Singleton)]
+    public interface IItemService {
         /// <summary>
         /// Gets the items.
         /// </summary>

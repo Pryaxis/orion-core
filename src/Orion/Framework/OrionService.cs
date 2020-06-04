@@ -22,7 +22,7 @@ namespace Orion.Framework {
     /// <summary>
     /// Provides the base class for an Orion service.
     /// </summary>
-    public abstract class OrionService : IService, IDisposable {
+    public abstract class OrionService : IDisposable {
         /// <summary>
         /// Initializes a new instance of the <see cref="OrionService"/> class with the specified
         /// <paramref name="kernel"/> and <paramref name="log"/>.

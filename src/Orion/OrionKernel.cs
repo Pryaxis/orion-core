@@ -26,7 +26,6 @@ using Orion.Framework;
 using Orion.Items;
 using Orion.Npcs;
 using Orion.Players;
-using Orion.Properties;
 using Orion.World;
 using Serilog;
 
@@ -73,10 +72,7 @@ namespace Orion {
             Container
                 .Bind<ILogger>()
                 .ToMethod(ctx => {
-                    // ctx.Request.Target can be null if the ILogger is requested directly.
-                    var type = ctx.Request.Target?.Member.ReflectedType;
-                    var serviceName = type?.GetCustomAttribute<ServiceAttribute>()?.Name ?? type?.Name ?? string.Empty;
-                    return log.ForContext("ServiceName", serviceName);
+                    throw new NotImplementedException();
                 })
                 .InTransientScope();
 
@@ -128,40 +124,14 @@ namespace Orion {
         /// <param name="assembly">The assembly.</param>
         /// <exception cref="ArgumentNullException"><paramref name="assembly"/> is <see langword="null"/>.</exception>
         public void LoadPlugins(Assembly assembly) {
-            if (assembly is null) {
-                throw new ArgumentNullException(nameof(assembly));
-            }
-
-            foreach (var pluginType in assembly.ExportedTypes.Where(t => t.IsSubclassOf(typeof(OrionPlugin)))) {
-                _pluginTypesToLoad.Add(pluginType);
-
-                // Bind all plugin types to themselves, allowing plugins to depend on other plugins.
-                Container.Bind(pluginType).ToSelf().InSingletonScope();
-
-                var pluginName = pluginType.GetCustomAttribute<ServiceAttribute?>()?.Name ?? pluginType.Name;
-                _log.Information(Resources.Kernel_LoadedPlugin, pluginName);
-            }
+            throw new NotImplementedException();
         }
 
         /// <summary>
         /// Initializes all of the loaded plugins.
         /// </summary>
         public void InitializePlugins() {
-            var loadedPlugins = _pluginTypesToLoad.Select(t => (OrionPlugin)Container.Get(t)).ToList();
-            foreach (var plugin in loadedPlugins) {
-                plugin.Initialize();
-
-                var pluginType = plugin.GetType();
-                var attribute = pluginType.GetCustomAttribute<ServiceAttribute?>();
-                var pluginName = attribute?.Name ?? pluginType.Name;
-                _plugins[pluginName] = plugin;
-
-                var pluginVersion = pluginType.Assembly.GetName().Version;
-                var pluginAuthor = attribute?.Author ?? "Pryaxis";
-                _log.Information(Resources.Kernel_InitializedPlugin, pluginName, pluginVersion, pluginAuthor);
-            }
-
-            _pluginTypesToLoad.Clear();
+            throw new NotImplementedException();
         }
 
         /// <summary>
@@ -171,21 +141,7 @@ namespace Orion {
         /// <returns><see langword="true"/> if the plugin was unloaded; otherwise, <see langword="false"/>.</returns>
         /// <exception cref="ArgumentNullException"><paramref name="plugin"/> is <see langword="null"/>.</exception>
         public bool UnloadPlugin(OrionPlugin plugin) {
-            if (plugin is null) {
-                throw new ArgumentNullException(nameof(plugin));
-            }
-
-            var pluginType = plugin.GetType();
-            var pluginName = pluginType.GetCustomAttribute<ServiceAttribute?>()?.Name ?? pluginType.Name;
-            if (!_plugins.Remove(pluginName)) {
-                return false;
-            }
-
-            plugin.Dispose();
-            Container.Unbind(pluginType);
-
-            _log.Information(Resources.Kernel_UnloadedPlugin, pluginName);
-            return true;
+            throw new NotImplementedException();
         }
 
         /// <summary>

@@ -19,41 +19,23 @@ using System;
 
 namespace Orion.Framework {
     /// <summary>
-    /// Specifies information about a service implementation or plugin.
+    /// Specifies information about a service interface.
     /// </summary>
-    [AttributeUsage(AttributeTargets.Class, Inherited = false)]
+    [AttributeUsage(AttributeTargets.Interface, Inherited = false)]
     public sealed class ServiceAttribute : Attribute {
-        private string _author = "Pryaxis";
-
         /// <summary>
-        /// Initializes a new instance of the <see cref="ServiceAttribute"/> with the specified <paramref name="name"/>.
+        /// Initializes a new instance of the <see cref="ServiceAttribute"/> class with the specified service
+        /// <paramref name="scope"/>.
         /// </summary>
-        /// <param name="name">The name.</param>
-        /// <exception cref="ArgumentNullException"><paramref name="name"/> is <see langword="null"/>.</exception>
-        public ServiceAttribute(string name) {
-            Name = name ?? throw new ArgumentNullException(nameof(name));
+        /// <param name="scope">The service scope.</param>
+        public ServiceAttribute(ServiceScope scope) {
+            Scope = scope;
         }
 
         /// <summary>
-        /// Gets the service's name. This is used for logging.
+        /// Gets the service's scope.
         /// </summary>
-        /// <value>The service's name.</value>
-        public string Name { get; }
-
-        /// <summary>
-        /// Gets or sets the service's author. This is used for logging.
-        /// </summary>
-        /// <value>The service's author. The default value is <c>Pryaxis</c>.</value>
-        /// <exception cref="ArgumentNullException"><paramref name="value"/> is <see langword="null"/>.</exception>
-        public string Author {
-            get => _author;
-            set => _author = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
-        /// <summary>
-        /// Gets or sets the service binding's priority.
-        /// </summary>
-        /// <value>The service binding's priority. The default value is <see cref="BindingPriority.Normal"/>.</value>
-        public BindingPriority Priority { get; set; } = BindingPriority.Normal;
+        /// <value>The service's scope.</value>
+        public ServiceScope Scope { get; }
     }
 }

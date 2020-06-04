@@ -23,7 +23,8 @@ namespace Orion.Npcs {
     /// <summary>
     /// Represents an NPC service. Provides access to NPC-related properties and methods.
     /// </summary>
-    public interface INpcService : IService {
+    [Service(ServiceScope.Singleton)]
+    public interface INpcService {
         /// <summary>
         /// Gets the NPCs.
         /// </summary>

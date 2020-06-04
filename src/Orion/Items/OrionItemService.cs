@@ -26,7 +26,6 @@ using Orion.Packets.DataStructures;
 using Serilog;
 
 namespace Orion.Items {
-    [Service("orion-items")]
     internal sealed class OrionItemService : OrionService, IItemService {
         public OrionItemService(OrionKernel kernel, ILogger log) : base(kernel, log) {
             Debug.Assert(kernel != null);

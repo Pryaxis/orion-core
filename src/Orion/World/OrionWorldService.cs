@@ -15,14 +15,12 @@
 // You should have received a copy of the GNU General Public License
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
-using System.Diagnostics;
 using System.Runtime.CompilerServices;
 using Orion.Framework;
 using Orion.World.Tiles;
 using Serilog;
 
 namespace Orion.World {
-    [Service("orion-world")]
     internal sealed class OrionWorldService : OrionService, IWorldService {
         private readonly TileCollection _tileCollection;
 

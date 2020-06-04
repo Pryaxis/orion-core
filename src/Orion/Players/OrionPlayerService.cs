@@ -39,7 +39,6 @@ using Orion.World.Tiles;
 using Serilog;
 
 namespace Orion.Players {
-    [Service("orion-players")]
     internal sealed class OrionPlayerService : OrionService, IPlayerService {
         private delegate void OnReceivePacketHandler(Terraria.MessageBuffer buffer, Span<byte> span);
         private delegate void OnSendPacketHandler(int playerIndex, Span<byte> span);

@@ -17,11 +17,24 @@
 
 namespace Orion.Framework {
     /// <summary>
-    /// Represents a service.
+    /// Controls the scope of a service.
     /// </summary>
-    /// <remarks>
-    /// This interface serves as a marker interface. When scanning through all of the currently loaded assemblies, this
-    /// interface will mark interfaces which should have bindings.
-    /// </remarks>
-    public interface IService { }
+    public enum ServiceScope {
+        /// <summary>
+        /// Indicates that the service should have singleton scope: i.e., only one object is ever constructed.
+        /// </summary>
+        Singleton,
+
+        /// <summary>
+        /// Indicates that the service should have transient scope: i.e., a new object is constructed each time, and the
+        /// lifetime of the service is not managed.
+        /// </summary>
+        Transient,
+
+        /// <summary>
+        /// Indicates that the service should have parent scope: i.e., a new object is constructed each time, and the
+        /// lifetime of the service is tied to that of the service requester.
+        /// </summary>
+        Parent
+    }
 }

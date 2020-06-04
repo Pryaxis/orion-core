@@ -26,7 +26,8 @@ namespace Orion.Players {
     /// <summary>
     /// Represents a player service. Provides access to player-related properties and methods.
     /// </summary>
-    public interface IPlayerService : IService {
+    [Service(ServiceScope.Singleton)]
+    public interface IPlayerService {
         /// <summary>
         /// Gets the players.
         /// </summary>

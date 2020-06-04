@@ -21,7 +21,8 @@ namespace Orion.World {
     /// <summary>
     /// Represents a world service. Provides access to world-related properties and methods.
     /// </summary>
-    public interface IWorldService : IService {
+    [Service(ServiceScope.Singleton)]
+    public interface IWorldService {
         /// <summary>
         /// Gets the world.
         /// </summary>

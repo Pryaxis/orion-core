@@ -15,48 +15,15 @@
 // You should have received a copy of the GNU General Public License
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
-using System;
-using System.Diagnostics.CodeAnalysis;
 using Xunit;
 
 namespace Orion.Framework {
-    [SuppressMessage("Style", "IDE0017:Simplify object initialization", Justification = "Testing")]
     public class ServiceAttributeTests {
         [Fact]
-        public void Ctor_NullName_ThrowsArgumentNullException() {
-            Assert.Throws<ArgumentNullException>(() => new ServiceAttribute(null!));
-        }
+        public void Scope_Get() {
+            var attribute = new ServiceAttribute(ServiceScope.Singleton);
 
-        [Fact]
-        public void Name_Get() {
-            var attribute = new ServiceAttribute("test");
-
-            Assert.Equal("test", attribute.Name);
-        }
-
-        [Fact]
-        public void Author_SetNullValue_ThrowsArgumentNullException() {
-            var attribute = new ServiceAttribute("test");
-
-            Assert.Throws<ArgumentNullException>(() => attribute.Author = null!);
-        }
-
-        [Fact]
-        public void Author_Set_Get() {
-            var attribute = new ServiceAttribute("test");
-
-            attribute.Author = "test";
-
-            Assert.Equal("test", attribute.Author);
-        }
-
-        [Fact]
-        public void Priority_Set_Get() {
-            var attribute = new ServiceAttribute("test");
-
-            attribute.Priority = BindingPriority.High;
-
-            Assert.Equal(BindingPriority.High, attribute.Priority);
+            Assert.Equal(ServiceScope.Singleton, attribute.Scope);
         }
     }
 }

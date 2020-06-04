@@ -268,7 +268,6 @@ namespace Orion {
         }
     }
 
-    [Service("test-plugin", Author = "Test Author")]
     public class TestOrionPlugin : OrionPlugin {
         public static int Value { get; set; }
 
