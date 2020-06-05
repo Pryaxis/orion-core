@@ -107,6 +107,7 @@ namespace Orion.Items {
         Legendary = 81,
         Unreal = 82,
         Mythical = 83,
+        Legendary2 = 84
 #pragma warning restore CS1591 // Missing XML comment for publicly visible type or member
     }
 }

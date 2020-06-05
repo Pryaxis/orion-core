@@ -15,11 +15,19 @@
 // You should have received a copy of the GNU General Public License
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
+using System;
+using System.Linq;
 using Xunit;
 
 namespace Orion.Npcs {
     [Collection("TerrariaTestsCollection")]
     public class NpcIdTests {
+        [Fact]
+        public void AllNpcIdsCovered() {
+            var maxId = Enum.GetValues(typeof(NpcId)).Cast<NpcId>().Max();
+            Assert.Equal((NpcId)(Terraria.ID.NPCID.Count - 1), maxId);
+        }
+
         [Fact]
         public void IsCatchable() {
             for (var i = 0; i < Terraria.ID.NPCID.Count; ++i) {

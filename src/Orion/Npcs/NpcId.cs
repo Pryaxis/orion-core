@@ -746,7 +746,7 @@ namespace Orion.Npcs {
         BouncySlime = 659,
         HeavenlySlime = 660,
         PrismaticLacewing = 661,
-        PiratesCurse = 662,
+        PiratesCurse = 662
 #pragma warning restore CS1591 // Missing XML comment for publicly visible type or member
     }
 

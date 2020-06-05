@@ -336,7 +336,7 @@ namespace Orion.World.Tiles {
         Bamboo = 312,
         LargeBamboo = 313,
         AmberStone = 314,
-        BambooFence = 315,
+        BambooFence = 315
 #pragma warning restore CS1591 // Missing XML comment for publicly visible type or member
     }
 }

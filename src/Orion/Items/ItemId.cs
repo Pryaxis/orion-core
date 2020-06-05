@@ -5038,6 +5038,8 @@ namespace Orion.Items {
         OtherworldlyMusicBoxHallow = 5040,
         CartonOfMilk = 5041,
         Coffee = 5042,
+        TorchGodsFavor = 5043,
+        MusicBoxCredits = 5044
 #pragma warning restore CS1591 // Missing XML comment for publicly visible type or member
     }
 }

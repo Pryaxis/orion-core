@@ -15,11 +15,19 @@
 // You should have received a copy of the GNU General Public License
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
+using System;
+using System.Linq;
 using Xunit;
 
 namespace Orion.World.Tiles {
     [Collection("TerrariaTestsCollection")]
     public class BlockIdTests {
+        [Fact]
+        public void AllBlockIdsCovered() {
+            var maxId = Enum.GetValues(typeof(BlockId)).Cast<BlockId>().Max();
+            Assert.Equal((BlockId)(Terraria.ID.TileID.Count - 1), maxId);
+        }
+
         [Fact]
         public void HasFrames() {
             for (var i = 0; i < Terraria.ID.TileID.Count; ++i) {

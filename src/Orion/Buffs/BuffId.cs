@@ -346,7 +346,7 @@ namespace Orion.Buffs {
         MorningStarTag = 319,
         SparkleSlime = 320,
         CerebralMindtrick = 321,
-        Terraprisma = 322,
+        Terraprisma = 322
 #pragma warning restore CS1591 // Missing XML comment for publicly visible type or member
     }
 

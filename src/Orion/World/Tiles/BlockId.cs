@@ -646,7 +646,7 @@ namespace Orion.World.Tiles {
         TruffleWormCage = 619,
         PrismaticLacewingJar = 620,
         SliceOfCake = 621,
-        Teapot = 622,
+        Teapot = 622
 #pragma warning restore CS1591 // Missing XML comment for publicly visible type or member
     }
 

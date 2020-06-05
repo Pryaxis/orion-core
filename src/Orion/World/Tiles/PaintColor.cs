@@ -52,6 +52,7 @@ namespace Orion.World.Tiles {
         Brown = 28,
         Shadow = 29,
         Negative = 30,
+        Illuminant = 31
 #pragma warning restore CS1591 // Missing XML comment for publicly visible type or member
     }
 }

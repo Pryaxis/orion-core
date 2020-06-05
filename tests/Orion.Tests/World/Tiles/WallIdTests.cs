@@ -19,20 +19,12 @@ using System;
 using System.Linq;
 using Xunit;
 
-namespace Orion.Buffs {
-    [Collection("TerrariaTestsCollection")]
-    public class BuffIdTests {
+namespace Orion.World.Tiles {
+    public class WallIdTests {
         [Fact]
-        public void AllBuffIdsCovered() {
-            var maxId = Enum.GetValues(typeof(BuffId)).Cast<BuffId>().Max();
-            Assert.Equal((BuffId)(Terraria.ID.BuffID.Count - 1), maxId);
-        }
-
-        [Fact]
-        public void IsDebuff() {
-            for (var i = 0; i < Terraria.ID.BuffID.Count; ++i) {
-                Assert.Equal(Terraria.Main.debuff[i], ((BuffId)i).IsDebuff());
-            }
+        public void AllWallIdsCovered() {
+            var maxId = Enum.GetValues(typeof(WallId)).Cast<WallId>().Max();
+            Assert.Equal((WallId)(Terraria.ID.WallID.Count - 1), maxId);
         }
     }
 }
