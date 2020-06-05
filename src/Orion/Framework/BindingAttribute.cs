@@ -45,6 +45,7 @@ namespace Orion.Framework {
         /// Gets or sets the binding's author.
         /// </summary>
         /// <value>The binding's author. The default value is <c>Anonymous</c>.</value>
+        /// <exception cref="ArgumentNullException"><paramref name="value"/> is <see langword="null"/>.</exception>
         public string Author {
             get => _author;
             set => _author = value ?? throw new ArgumentNullException(nameof(value));

@@ -20,7 +20,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using Ninject;
-using Ninject.Extensions.NamedScope;
 using Orion.Events;
 using Orion.Events.Server;
 using Orion.Framework;
@@ -162,7 +161,6 @@ namespace Orion {
                 _ = scope switch {
                     ServiceScope.Singleton => binding.InSingletonScope(),
                     ServiceScope.Transient => binding.InTransientScope(),
-                    ServiceScope.Parent => binding.InParentScope(),
 
                     // Not localized because this string is developer-facing.
                     _ => throw new InvalidOperationException("Invalid service scope")

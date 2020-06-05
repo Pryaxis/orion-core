@@ -29,12 +29,6 @@ namespace Orion.Framework {
         /// Indicates that the service should have transient scope: i.e., a new object is constructed each time, and the
         /// lifetime of the service is not managed.
         /// </summary>
-        Transient,
-
-        /// <summary>
-        /// Indicates that the service should have parent scope: i.e., a new object is constructed each time, and the
-        /// lifetime of the service is tied to that of the service requester.
-        /// </summary>
-        Parent
+        Transient
     }
 }
