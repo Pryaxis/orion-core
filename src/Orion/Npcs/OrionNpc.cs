@@ -32,6 +32,8 @@ namespace Orion.Npcs {
 
         public NpcId Id => (NpcId)Wrapped.netID;
 
-        public void SetId(NpcId id) => Wrapped.SetDefaults((int)id, Wrapped.GetMatchingSpawnParams());
+        public void SetId(NpcId id) {
+            Wrapped.SetDefaults((int)id, Wrapped.GetMatchingSpawnParams());
+        }
     }
 }

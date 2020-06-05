@@ -19,11 +19,13 @@ using System;
 using System.Linq;
 using Orion.Events;
 using Orion.Events.Npcs;
+using Orion.Items;
 using Orion.Packets.DataStructures;
 using Serilog.Core;
 using Xunit;
 
 namespace Orion.Npcs {
+    // These tests depend on Terraria state.
     [Collection("TerrariaTestsCollection")]
     public class OrionNpcServiceTests {
         [Theory]
@@ -94,6 +96,8 @@ namespace Orion.Npcs {
         [InlineData(NpcId.BlueSlime, NpcId.GreenSlime)]
         [InlineData(NpcId.BlueSlime, NpcId.None)]
         public void NpcSetDefaults_EventModified(NpcId oldId, NpcId newId) {
+            Terraria.Main.npc[0] = new Terraria.NPC { whoAmI = 0 };
+
             using var kernel = new OrionKernel(Logger.None);
             using var npcService = new OrionNpcService(kernel, Logger.None);
             kernel.RegisterHandler<NpcDefaultsEvent>(evt => evt.Id = newId, Logger.None);
@@ -145,6 +149,8 @@ namespace Orion.Npcs {
 
         [Fact]
         public void NpcTick_EventTriggered() {
+            Terraria.Main.npc[0] = new Terraria.NPC { whoAmI = 0 };
+
             using var kernel = new OrionKernel(Logger.None);
             using var npcService = new OrionNpcService(kernel, Logger.None);
             var isRun = false;
@@ -175,6 +181,68 @@ namespace Orion.Npcs {
             Terraria.Main.npc[0].checkDead();
 
             Assert.True(isRun);
+        }
+
+        [Fact]
+        public void NpcLoot_EventTriggered() {
+            Terraria.Main.npc[0] = new Terraria.NPC { whoAmI = 0 };
+            Terraria.Main.item[0] = new Terraria.Item { whoAmI = 0 };
+
+            using var kernel = new OrionKernel(Logger.None);
+            using var npcService = new OrionNpcService(kernel, Logger.None);
+            var isRun = false;
+            kernel.RegisterHandler<NpcLootEvent>(evt => {
+                Assert.Same(Terraria.Main.npc[0], ((OrionNpc)evt.Npc).Wrapped);
+                Assert.Equal(ItemId.Gel, evt.Id);
+                Assert.InRange(evt.StackSize, 1, 2);
+                Assert.Equal(ItemPrefix.Random, evt.Prefix);
+                isRun = true;
+            }, Logger.None);
+            Terraria.Main.npc[0].SetDefaults((int)NpcId.BlueSlime);
+            Terraria.Main.npc[0].life = 0;
+
+            Terraria.Main.npc[0].checkDead();
+
+            Assert.True(isRun);
+            Assert.Equal(ItemId.Gel, (ItemId)Terraria.Main.item[0].type);
+        }
+
+        [Fact]
+        public void NpcLoot_EventModified() {
+            Terraria.Main.npc[0] = new Terraria.NPC { whoAmI = 0 };
+            Terraria.Main.item[0] = new Terraria.Item { whoAmI = 0 };
+
+            using var kernel = new OrionKernel(Logger.None);
+            using var npcService = new OrionNpcService(kernel, Logger.None);
+            kernel.RegisterHandler<NpcLootEvent>(evt => {
+                evt.Id = ItemId.Sdmg;
+                evt.StackSize = 1;
+                evt.Prefix = ItemPrefix.Unreal;
+            }, Logger.None);
+            Terraria.Main.npc[0].SetDefaults((int)NpcId.BlueSlime);
+            Terraria.Main.npc[0].life = 0;
+
+            Terraria.Main.npc[0].checkDead();
+
+            Assert.Equal(ItemId.Sdmg, (ItemId)Terraria.Main.item[0].type);
+            Assert.Equal(1, Terraria.Main.item[0].stack);
+            Assert.Equal(ItemPrefix.Unreal, (ItemPrefix)Terraria.Main.item[0].prefix);
+        }
+
+        [Fact]
+        public void NpcLoot_EventCanceled() {
+            Terraria.Main.npc[0] = new Terraria.NPC { whoAmI = 0 };
+            Terraria.Main.item[0] = new Terraria.Item { whoAmI = 0 };
+
+            using var kernel = new OrionKernel(Logger.None);
+            using var npcService = new OrionNpcService(kernel, Logger.None);
+            kernel.RegisterHandler<NpcLootEvent>(evt => evt.Cancel(), Logger.None);
+            Terraria.Main.npc[0].SetDefaults((int)NpcId.BlueSlime);
+            Terraria.Main.npc[0].life = 0;
+
+            Terraria.Main.npc[0].checkDead();
+
+            Assert.NotEqual(ItemId.Gel, (ItemId)Terraria.Main.item[0].type);
         }
 
         [Fact]

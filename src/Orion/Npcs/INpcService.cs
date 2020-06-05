@@ -21,7 +21,7 @@ using Orion.Packets.DataStructures;
 
 namespace Orion.Npcs {
     /// <summary>
-    /// Represents an NPC service. Provides access to NPC-related properties and methods.
+    /// Represents an NPC service. Provides access to NPCs and publishes NPC-related events.
     /// </summary>
     [Service(ServiceScope.Singleton)]
     public interface INpcService {

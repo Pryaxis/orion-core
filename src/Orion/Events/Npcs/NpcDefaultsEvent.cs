@@ -25,17 +25,6 @@ namespace Orion.Events.Npcs {
     /// An event that occurs when an NPC's defaults are being set: i.e., when an NPC's stats are being initialized. This
     /// event can be canceled.
     /// </summary>
-    /// <example>
-    /// The following code example clears out NPCs with ID <see cref="NpcId.DungeonGuardian"/>:
-    /// <code>
-    /// [EventHandler(EventPriority.Highest, Name = "example")]
-    /// public void OnNpcDefaults(NpcDefaultsEvent evt) {
-    ///     if (evt.Id == NpcId.DungeonGuardian) {
-    ///         evt.Cancel();
-    ///     }
-    /// }
-    /// </code>
-    /// </example>
     [Event("npc-defaults", LoggingLevel = LogEventLevel.Verbose)]
     public sealed class NpcDefaultsEvent : NpcEvent, ICancelable {
         /// <summary>

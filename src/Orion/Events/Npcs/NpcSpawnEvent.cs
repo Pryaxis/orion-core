@@ -23,18 +23,6 @@ namespace Orion.Events.Npcs {
     /// <summary>
     /// An event that occurs when an NPC is spawning. This event can be canceled.
     /// </summary>
-    /// <example>
-    /// The following code example replaces spawned NPCs with ID <see cref="NpcId.DungeonGuardian"/> with ID
-    /// <see cref="NpcId.BlueSlime"/>:
-    /// <code>
-    /// [EventHandler(EventPriority.Highest, Name = "example")]
-    /// public void OnNpcSpawn(NpcSpawnEvent evt) {
-    ///     if (evt.Npc.Id == NpcId.DungeonGuardian) {
-    ///         evt.Npc.SetId(NpcId.BlueSlime);
-    ///     }
-    /// }
-    /// </code>
-    /// </example>
     [Event("npc-spawn")]
     public sealed class NpcSpawnEvent : NpcEvent, ICancelable {
         /// <summary>
