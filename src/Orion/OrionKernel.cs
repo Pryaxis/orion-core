@@ -105,7 +105,7 @@ namespace Orion {
         }
 
         /// <summary>
-        /// Loads services, service bindings, and plugins from the given <paramref name="assembly"/>.
+        /// Loads service definitions, service bindings, and plugins from the given <paramref name="assembly"/>.
         /// </summary>
         /// <param name="assembly">The assembly.</param>
         /// <exception cref="ArgumentNullException"><paramref name="assembly"/> is <see langword="null"/>.</exception>
@@ -119,7 +119,7 @@ namespace Orion {
             static bool HasAttribute<TAttribute>(Type type) where TAttribute : Attribute =>
                 Attribute.IsDefined(type, typeof(TAttribute));
 
-            // Load all exported service types from the assembly.
+            // Load all exported service definition types from the assembly.
             _serviceTypes.UnionWith(exportedTypes.Where(HasAttribute<ServiceAttribute>));
 
             // Load all service binding types from the assembly.
