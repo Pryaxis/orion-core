@@ -81,6 +81,9 @@ namespace Orion {
             OTAPI.Hooks.Game.Started += StartedHandler;
             OTAPI.Hooks.Game.PreUpdate += PreUpdateHandler;
             OTAPI.Hooks.Command.Process += ProcessHandler;
+
+            // Make sure to load from this assembly so that we get the Orion services and service bindings.
+            LoadFrom(typeof(OrionKernel).Assembly);
         }
 
         /// <summary>
@@ -190,6 +193,10 @@ namespace Orion {
                 var pluginAuthor = attribute.Author;
                 _log.Information(Resources.Kernel_InitializedPlugin, pluginName, pluginVersion, pluginAuthor);
             }
+
+            _serviceTypes.Clear();
+            _serviceBindings.Clear();
+            _pluginTypes.Clear();
         }
 
         /// <summary>
