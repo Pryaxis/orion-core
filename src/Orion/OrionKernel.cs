@@ -120,19 +120,20 @@ namespace Orion {
             // Load all exported service types from the assembly.
             _serviceTypes.UnionWith(exportedTypes.Where(HasAttribute<ServiceAttribute>));
 
-            // Load all service bindings from the assembly.
-            foreach (var bindingType in types.Where(HasAttribute<BindingAttribute>)) {
-                var attribute = bindingType.GetCustomAttribute<BindingAttribute>();
+            // Load all service binding types from the assembly.
+            foreach (var thisBindingType in types.Where(HasAttribute<BindingAttribute>)) {
+                var thisAttribute = thisBindingType.GetCustomAttribute<BindingAttribute>();
 
-                foreach (var interfaceType in bindingType.GetInterfaces().Where(_serviceTypes.Contains)) {
-                    // Bind if no binding currently exists, or re-bind if this binding has a higher priority than the
-                    // current binding.
+                foreach (var interfaceType in thisBindingType.GetInterfaces().Where(_serviceTypes.Contains)) {
                     if (!_serviceBindings.TryGetValue(interfaceType, out var currentBindingType)) {
-                        _serviceBindings[interfaceType] = bindingType;
+                        // If no binding currently exists, then add this binding.
+                        _serviceBindings[interfaceType] = thisBindingType;
                     } else {
+                        // If this binding has a higher priority than the current binding, then replace the current
+                        // binding with this binding.
                         var currentAttribute = currentBindingType.GetCustomAttribute<BindingAttribute>();
-                        if (attribute.Priority > currentAttribute.Priority) {
-                            _serviceBindings[interfaceType] = bindingType;
+                        if (thisAttribute.Priority > currentAttribute.Priority) {
+                            _serviceBindings[interfaceType] = thisBindingType;
                         }
                     }
                 }
@@ -167,7 +168,7 @@ namespace Orion {
                     _ => throw new InvalidOperationException("Invalid service scope")
                 };
 
-                // Eagerly request singleton scoped services so that an instance always exists.
+                // Eagerly request singleton-scoped services so that an instance always exists.
                 if (scope == ServiceScope.Singleton) {
                     _kernel.Get(serviceType);
                 }
@@ -198,6 +199,7 @@ namespace Orion {
         /// </summary>
         /// <param name="pluginName">The plugin name.</param>
         /// <returns><see langword="true"/> if the plugin was unloaded; otherwise, <see langword="false"/>.</returns>
+        /// <exception cref="ArgumentNullException"><paramref name="pluginName"/> is <see langword="null"/>.</exception>
         public bool UnloadPlugin(string pluginName) {
             if (pluginName is null) {
                 throw new ArgumentNullException(nameof(pluginName));
@@ -277,7 +279,7 @@ namespace Orion {
                 if (!eventType.IsSubclassOf(typeof(Event))) {
                     // Not localized because this string is developer-facing.
                     throw new ArgumentException(
-                        $"Method `{method.Name}` does not have an argument of type `Event`",
+                        $"Method `{method.Name}` does not have an argument of type derived from `Event`",
                         nameof(handlerObject));
                 }
 
