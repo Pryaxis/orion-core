@@ -29,9 +29,6 @@ namespace Orion.Items {
     [Binding("orion-items", Author = "Pryaxis", Priority = BindingPriority.Lowest)]
     internal sealed class OrionItemService : OrionService, IItemService {
         public OrionItemService(OrionKernel kernel, ILogger log) : base(kernel, log) {
-            Debug.Assert(kernel != null);
-            Debug.Assert(log != null);
-
             // Construct the `Items` array. Note that the last item should be ignored, as it is not a real item.
             Items = new WrappedReadOnlyList<OrionItem, Terraria.Item>(
                 Terraria.Main.item.AsMemory(..^1),
@@ -53,8 +50,7 @@ namespace Orion.Items {
             Log.Debug("Spawning {ItemId} x{ItemStackSize} at {Position}", id, stackSize, position);
 
             var itemIndex = Terraria.Item.NewItem(
-                new Microsoft.Xna.Framework.Vector2(position.X, position.Y), Microsoft.Xna.Framework.Vector2.Zero,
-                (int)id, stackSize, false, (int)prefix);
+                (int)position.X, (int)position.Y, 0, 0, (int)id, stackSize, false, (int)prefix);
             return itemIndex >= 0 && itemIndex < Items.Count ? Items[itemIndex] : null;
         }
 
@@ -64,8 +60,12 @@ namespace Orion.Items {
             var item = GetItem(terrariaItem);
             var evt = new ItemDefaultsEvent(item) { Id = (ItemId)itemId };
             Kernel.Raise(evt, Log);
+            if (evt.IsCanceled()) {
+                return OTAPI.HookResult.Cancel;
+            }
+
             itemId = (int)evt.Id;
-            return evt.IsCanceled() ? OTAPI.HookResult.Cancel : OTAPI.HookResult.Continue;
+            return OTAPI.HookResult.Continue;
         }
 
         private OTAPI.HookResult PreUpdateHandler(Terraria.Item terrariaItem, ref int itemIndex) {
@@ -89,7 +89,7 @@ namespace Orion.Items {
             var itemIndex = terrariaItem.whoAmI;
             Debug.Assert(itemIndex >= 0 && itemIndex < Items.Count);
 
-            var isConcrete = terrariaItem == Terraria.Main.item[itemIndex];
+            var isConcrete = ReferenceEquals(terrariaItem, Terraria.Main.item[itemIndex]);
             return isConcrete ? Items[itemIndex] : new OrionItem(terrariaItem);
         }
     }

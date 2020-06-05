@@ -24,6 +24,7 @@ using Serilog.Core;
 using Xunit;
 
 namespace Orion.Items {
+    // These tests depend on Terraria state.
     [Collection("TerrariaTestsCollection")]
     public class OrionItemServiceTests {
         [Theory]

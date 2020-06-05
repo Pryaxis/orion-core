@@ -39,7 +39,12 @@ namespace Orion.Items {
 
         public ItemPrefix Prefix => (ItemPrefix)Wrapped.prefix;
 
-        public void SetId(ItemId id) => Wrapped.SetDefaults((int)id);
-        public void SetPrefix(ItemPrefix prefix) => Wrapped.Prefix((int)prefix);
+        public void SetId(ItemId id) {
+            Wrapped.SetDefaults((int)id);
+        }
+
+        public void SetPrefix(ItemPrefix prefix) {
+            Wrapped.Prefix((int)prefix);
+        }
     }
 }

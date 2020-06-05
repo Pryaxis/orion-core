@@ -21,7 +21,7 @@ using Orion.Packets.DataStructures;
 
 namespace Orion.Items {
     /// <summary>
-    /// Represents an item service. Provides access to item-related properties and methods.
+    /// Represents an item service. Provides access to items and publishes item-related events.
     /// </summary>
     [Service(ServiceScope.Singleton)]
     public interface IItemService {

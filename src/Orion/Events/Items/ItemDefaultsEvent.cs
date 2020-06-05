@@ -25,18 +25,6 @@ namespace Orion.Events.Items {
     /// An event that occurs when an item's defaults are being set: i.e., when an item's stats are being initialized.
     /// This event can be canceled.
     /// </summary>
-    /// <example>
-    /// The following code example replaces items with ID <see cref="ItemId.Megashark"/> with ID
-    /// <see cref="ItemId.Sdmg"/>:
-    /// <code>
-    /// [EventHandler(EventPriority.Highest, Name = "example")]
-    /// private void OnItemDefaults(ItemDefaultsEvent evt) {
-    ///     if (evt.Id == ItemId.Megashark) {
-    ///         evt.Id = ItemId.Sdmg;
-    ///     }
-    /// }
-    /// </code>
-    /// </example>
     [Event("item-defaults", LoggingLevel = LogEventLevel.Verbose)]
     public sealed class ItemDefaultsEvent : ItemEvent, ICancelable {
         /// <summary>
