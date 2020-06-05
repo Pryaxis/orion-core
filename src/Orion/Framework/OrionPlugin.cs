@@ -15,28 +15,28 @@
 // You should have received a copy of the GNU General Public License
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
-using System.Collections.Generic;
-using Orion.Framework;
-using Orion.Packets.DataStructures;
+using System;
+using Serilog;
 
-namespace Orion.Npcs {
+namespace Orion.Framework {
     /// <summary>
-    /// Represents an NPC service. Provides access to NPC-related properties and methods.
+    /// Provides the base class for an Orion plugin.
     /// </summary>
-    [Service(ServiceScope.Singleton)]
-    public interface INpcService {
+    public abstract class OrionPlugin : OrionService {
         /// <summary>
-        /// Gets the NPCs.
+        /// Initializes a new instance of the <see cref="OrionPlugin"/> class with the specified
+        /// <paramref name="kernel"/> and <paramref name="log"/>.
         /// </summary>
-        /// <value>The NPCs.</value>
-        IReadOnlyList<INpc> Npcs { get; }
+        /// <param name="kernel">The kernel.</param>
+        /// <param name="log">The log.</param>
+        /// <exception cref="ArgumentNullException">
+        /// <paramref name="kernel"/> or <paramref name="log"/> are <see langword="null"/>.
+        /// </exception>
+        protected OrionPlugin(OrionKernel kernel, ILogger log) : base(kernel, log) { }
 
         /// <summary>
-        /// Spawns an NPC with the given <paramref name="id"/> at the specified <paramref name="position"/>.
+        /// Initializes the plugin.
         /// </summary>
-        /// <param name="id">The NPC ID.</param>
-        /// <param name="position">The position.</param>
-        /// <returns>The resulting NPC, or <see langword="null"/> if none was spawned.</returns>
-        INpc? SpawnNpc(NpcId id, Vector2f position);
+        public abstract void Initialize();
     }
 }

@@ -15,28 +15,35 @@
 // You should have received a copy of the GNU General Public License
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
-using System;
-using Serilog;
-
-namespace Orion {
+namespace Orion.Framework {
     /// <summary>
-    /// Provides the base class for an Orion plugin.
+    /// Specifies the priority of a service binding. Service bindings with higher priorities will take precedence over
+    /// service bindings with lower priorities.
     /// </summary>
-    public abstract class OrionPlugin : OrionService {
+    public enum BindingPriority {
         /// <summary>
-        /// Initializes a new instance of the <see cref="OrionPlugin"/> class with the specified
-        /// <paramref name="kernel"/> and <paramref name="log"/>.
+        /// Indicates that the service binding should have the lowest priority.
         /// </summary>
-        /// <param name="kernel">The kernel.</param>
-        /// <param name="log">The log.</param>
-        /// <exception cref="ArgumentNullException">
-        /// <paramref name="kernel"/> or <paramref name="log"/> are <see langword="null"/>.
-        /// </exception>
-        protected OrionPlugin(OrionKernel kernel, ILogger log) : base(kernel, log) { }
+        Lowest,
 
         /// <summary>
-        /// Initializes the plugin.
+        /// Indicates that the service binding should have low priority.
         /// </summary>
-        public abstract void Initialize();
+        Low,
+
+        /// <summary>
+        /// Indicates that the service binding should have normal priority. This is the default priority.
+        /// </summary>
+        Normal,
+
+        /// <summary>
+        /// Indicates that the service binding should have high priority.
+        /// </summary>
+        High,
+
+        /// <summary>
+        /// Indicates that the service binding should have the highest priority.
+        /// </summary>
+        Highest,
     }
 }

@@ -22,11 +22,12 @@ using System.Threading;
 using Orion.Collections;
 using Orion.Events;
 using Orion.Events.Npcs;
+using Orion.Framework;
 using Orion.Packets.DataStructures;
 using Serilog;
 
 namespace Orion.Npcs {
-    [Service("orion-npcs")]
+    [Binding("orion-npcs", Author = "Pryaxis", Priority = BindingPriority.Lowest)]
     internal sealed class OrionNpcService : OrionService, INpcService {
         private readonly ThreadLocal<int> _setDefaultsToIgnore = new ThreadLocal<int>();
 

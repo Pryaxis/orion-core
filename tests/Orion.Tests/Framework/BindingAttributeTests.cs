@@ -19,35 +19,44 @@ using System;
 using System.Diagnostics.CodeAnalysis;
 using Xunit;
 
-namespace Orion {
+namespace Orion.Framework {
     [SuppressMessage("Style", "IDE0017:Simplify object initialization", Justification = "Testing")]
-    public class ServiceAttributeTests {
+    public class BindingAttributeTests {
         [Fact]
         public void Ctor_NullName_ThrowsArgumentNullException() {
-            Assert.Throws<ArgumentNullException>(() => new ServiceAttribute(null!));
+            Assert.Throws<ArgumentNullException>(() => new BindingAttribute(null!));
         }
 
         [Fact]
         public void Name_Get() {
-            var attribute = new ServiceAttribute("test");
+            var attribute = new BindingAttribute("test");
 
             Assert.Equal("test", attribute.Name);
         }
 
         [Fact]
         public void Author_SetNullValue_ThrowsArgumentNullException() {
-            var attribute = new ServiceAttribute("test");
+            var attribute = new BindingAttribute("");
 
             Assert.Throws<ArgumentNullException>(() => attribute.Author = null!);
         }
 
         [Fact]
         public void Author_Set_Get() {
-            var attribute = new ServiceAttribute("test");
+            var attribute = new BindingAttribute("");
 
             attribute.Author = "test";
 
             Assert.Equal("test", attribute.Author);
+        }
+
+        [Fact]
+        public void Priority_Set_Get() {
+            var attribute = new BindingAttribute("");
+
+            attribute.Priority = BindingPriority.High;
+
+            Assert.Equal(BindingPriority.High, attribute.Priority);
         }
     }
 }

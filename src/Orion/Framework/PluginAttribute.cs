@@ -17,33 +17,34 @@
 
 using System;
 
-namespace Orion {
+namespace Orion.Framework {
     /// <summary>
-    /// Specifies information about a service or plugin.
+    /// Specifies information about a plugin.
     /// </summary>
     [AttributeUsage(AttributeTargets.Class, Inherited = false)]
-    public sealed class ServiceAttribute : Attribute {
-        private string _author = "Pryaxis";
+    public sealed class PluginAttribute : Attribute {
+        private string _author = "Anonymous";
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="ServiceAttribute"/> with the specified <paramref name="name"/>.
+        /// Initializes a new instance of the <see cref="PluginAttribute"/> class with the specified plugin
+        /// <paramref name="name"/>.
         /// </summary>
-        /// <param name="name">The name.</param>
+        /// <param name="name">The plugin name.</param>
         /// <exception cref="ArgumentNullException"><paramref name="name"/> is <see langword="null"/>.</exception>
-        public ServiceAttribute(string name) {
+        public PluginAttribute(string name) {
             Name = name ?? throw new ArgumentNullException(nameof(name));
         }
 
         /// <summary>
-        /// Gets the service's name. This is used for logging.
+        /// Gets the plugin name.
         /// </summary>
-        /// <value>The service's name.</value>
+        /// <value>The plugin name.</value>
         public string Name { get; }
 
         /// <summary>
-        /// Gets or sets the service's author. This is used for logging.
+        /// Gets or sets the plugin's author.
         /// </summary>
-        /// <value>The service's author. The default value is <c>Pryaxis</c>.</value>
+        /// <value>The plugin's author. The default value is <c>Anonymous</c>.</value>
         /// <exception cref="ArgumentNullException"><paramref name="value"/> is <see langword="null"/>.</exception>
         public string Author {
             get => _author;

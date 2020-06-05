@@ -17,6 +17,7 @@
 
 using System;
 using System.Collections.Generic;
+using Orion.Framework;
 using Orion.Packets;
 using Orion.Packets.DataStructures;
 using Orion.Packets.Server;
@@ -25,6 +26,7 @@ namespace Orion.Players {
     /// <summary>
     /// Represents a player service. Provides access to player-related properties and methods.
     /// </summary>
+    [Service(ServiceScope.Singleton)]
     public interface IPlayerService {
         /// <summary>
         /// Gets the players.

@@ -16,12 +16,14 @@
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
 using System.Collections.Generic;
+using Orion.Framework;
 using Orion.Packets.DataStructures;
 
 namespace Orion.Items {
     /// <summary>
     /// Represents an item service. Provides access to item-related properties and methods.
     /// </summary>
+    [Service(ServiceScope.Singleton)]
     public interface IItemService {
         /// <summary>
         /// Gets the items.

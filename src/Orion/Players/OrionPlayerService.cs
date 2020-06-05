@@ -29,6 +29,7 @@ using Orion.Events;
 using Orion.Events.Packets;
 using Orion.Events.Players;
 using Orion.Events.World.Tiles;
+using Orion.Framework;
 using Orion.Packets;
 using Orion.Packets.Client;
 using Orion.Packets.Modules;
@@ -38,7 +39,7 @@ using Orion.World.Tiles;
 using Serilog;
 
 namespace Orion.Players {
-    [Service("orion-players")]
+    [Binding("orion-players", Author = "Pryaxis", Priority = BindingPriority.Lowest)]
     internal sealed class OrionPlayerService : OrionService, IPlayerService {
         private delegate void OnReceivePacketHandler(Terraria.MessageBuffer buffer, Span<byte> span);
         private delegate void OnSendPacketHandler(int playerIndex, Span<byte> span);

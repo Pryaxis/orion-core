@@ -15,19 +15,19 @@
 // You should have received a copy of the GNU General Public License
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
-using System.Diagnostics;
 using System.Runtime.CompilerServices;
+using Orion.Framework;
 using Orion.World.Tiles;
 using Serilog;
 
 namespace Orion.World {
-    [Service("orion-world")]
+    [Binding("orion-world", Author = "Pryaxis", Priority = BindingPriority.Lowest)]
     internal sealed class OrionWorldService : OrionService, IWorldService {
         private readonly TileCollection _tileCollection;
 
         public OrionWorldService(OrionKernel kernel, ILogger log) : base(kernel, log) {
             // Check if `Terraria.Main.tile` is already a `TileCollection`. This is only useful in tests, where
-            // multiple `OrionWorldService` instances are constructed.
+            // multiple `OrionWorldService` instances may be constructed.
             if (Terraria.Main.tile is TileCollection tileCollection) {
                 _tileCollection = tileCollection;
             } else {

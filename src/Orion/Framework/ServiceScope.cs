@@ -15,28 +15,20 @@
 // You should have received a copy of the GNU General Public License
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
-using System.Collections.Generic;
-using Orion.Framework;
-using Orion.Packets.DataStructures;
-
-namespace Orion.Npcs {
+namespace Orion.Framework {
     /// <summary>
-    /// Represents an NPC service. Provides access to NPC-related properties and methods.
+    /// Controls the scope of a service.
     /// </summary>
-    [Service(ServiceScope.Singleton)]
-    public interface INpcService {
+    public enum ServiceScope {
         /// <summary>
-        /// Gets the NPCs.
+        /// Indicates that the service should have singleton scope: i.e., only one object is ever constructed.
         /// </summary>
-        /// <value>The NPCs.</value>
-        IReadOnlyList<INpc> Npcs { get; }
+        Singleton,
 
         /// <summary>
-        /// Spawns an NPC with the given <paramref name="id"/> at the specified <paramref name="position"/>.
+        /// Indicates that the service should have transient scope: i.e., a new object is constructed each time, and the
+        /// lifetime of the service is not managed.
         /// </summary>
-        /// <param name="id">The NPC ID.</param>
-        /// <param name="position">The position.</param>
-        /// <returns>The resulting NPC, or <see langword="null"/> if none was spawned.</returns>
-        INpc? SpawnNpc(NpcId id, Vector2f position);
+        Transient
     }
 }

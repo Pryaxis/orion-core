@@ -15,28 +15,27 @@
 // You should have received a copy of the GNU General Public License
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
-using System.Collections.Generic;
-using Orion.Framework;
-using Orion.Packets.DataStructures;
+using System;
 
-namespace Orion.Npcs {
+namespace Orion.Framework {
     /// <summary>
-    /// Represents an NPC service. Provides access to NPC-related properties and methods.
+    /// Specifies information about a service definition.
     /// </summary>
-    [Service(ServiceScope.Singleton)]
-    public interface INpcService {
+    [AttributeUsage(AttributeTargets.Interface, Inherited = false)]
+    public sealed class ServiceAttribute : Attribute {
         /// <summary>
-        /// Gets the NPCs.
+        /// Initializes a new instance of the <see cref="ServiceAttribute"/> class with the specified service
+        /// <paramref name="scope"/>.
         /// </summary>
-        /// <value>The NPCs.</value>
-        IReadOnlyList<INpc> Npcs { get; }
+        /// <param name="scope">The service scope.</param>
+        public ServiceAttribute(ServiceScope scope) {
+            Scope = scope;
+        }
 
         /// <summary>
-        /// Spawns an NPC with the given <paramref name="id"/> at the specified <paramref name="position"/>.
+        /// Gets the service scope.
         /// </summary>
-        /// <param name="id">The NPC ID.</param>
-        /// <param name="position">The position.</param>
-        /// <returns>The resulting NPC, or <see langword="null"/> if none was spawned.</returns>
-        INpc? SpawnNpc(NpcId id, Vector2f position);
+        /// <value>The service scope.</value>
+        public ServiceScope Scope { get; }
     }
 }

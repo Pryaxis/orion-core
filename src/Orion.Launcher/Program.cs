@@ -21,13 +21,8 @@ using System.Reflection;
 using System.Text;
 using System.Threading;
 using Destructurama;
-using Ninject;
 using Orion.Events.Server;
-using Orion.Items;
 using Orion.Launcher.Properties;
-using Orion.Npcs;
-using Orion.Players;
-using Orion.World;
 using Serilog;
 using Serilog.Events;
 using Serilog.Sinks.SystemConsole.Themes;
@@ -52,16 +47,16 @@ namespace Orion.Launcher {
                 .MinimumLevel.Is(LogEventLevel.Information)
 #endif
                 .WriteTo.Console(
-                    outputTemplate: "[{Timestamp:HH:mm:ss} {Level:u3}] {ServiceName}: {Message:l}{NewLine}{Exception}",
+                    outputTemplate: "[{Timestamp:HH:mm:ss} {Level:u3}] {Name}: {Message:l}{NewLine}{Exception}",
                     theme: AnsiConsoleTheme.Code)
                 .WriteTo.File(Path.Combine("logs", "log-.txt"),
                     outputTemplate:
-                        "[{Timestamp:yyyy-MM-dd HH:mm:ss} {Level:u3}] {ServiceName}: {Message:l}{NewLine}{Exception}",
+                        "[{Timestamp:yyyy-MM-dd HH:mm:ss} {Level:u3}] {Name}: {Message:l}{NewLine}{Exception}",
                     rollingInterval: RollingInterval.Day,
                     rollOnFileSizeLimit: true,
                     fileSizeLimitBytes: 2 << 20)
                 .CreateLogger()
-                .ForContext("ServiceName", "launcher");
+                .ForContext("Name", "launcher");
 
             AppDomain.CurrentDomain.UnhandledException += (sender, eventArgs) => {
                 log.Fatal(eventArgs.ExceptionObject as Exception, Resources.UnhandledExceptionMessage);
@@ -77,11 +72,11 @@ namespace Orion.Launcher {
             foreach (var path in Directory.EnumerateFiles("plugins", "*.dll")) {
                 try {
                     var assembly = Assembly.LoadFile(path);
-                    kernel.LoadPlugins(assembly);
+                    kernel.LoadFrom(assembly);
                 } catch (BadImageFormatException) { }
             }
 
-            kernel.InitializePlugins();
+            kernel.Initialize();
         }
 
         // Sets up the language.
@@ -107,11 +102,6 @@ namespace Orion.Launcher {
             SetupLanguage();
 
             kernel.Raise(new ServerArgsEvent(args), log);
-
-            kernel.Container.Get<IItemService>();
-            kernel.Container.Get<INpcService>();
-            kernel.Container.Get<IPlayerService>();
-            kernel.Container.Get<IWorldService>();
 
             using var game = new Terraria.Main();
             game.DedServ();
