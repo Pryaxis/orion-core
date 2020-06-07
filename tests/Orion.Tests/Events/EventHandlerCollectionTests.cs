@@ -77,12 +77,12 @@ namespace Orion.Events {
             collection.Raise(new TestEvent(), Logger.None);
         }
 
-        [EventHandler(EventPriority.Lowest)]
+        [EventHandler("test", Priority =EventPriority.Lowest)]
         private static void TestHandler(TestEvent evt) {
             evt.Value = 100;
         }
 
-        [EventHandler(EventPriority.Highest)]
+        [EventHandler("test-2", Priority = EventPriority.Highest)]
         private static void TestHandler2(TestEvent evt) {
             evt.Value = 200;
         }

@@ -16,7 +16,6 @@
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
 using System;
-using System.Diagnostics.CodeAnalysis;
 
 namespace Orion.Events {
     /// <summary>
@@ -24,34 +23,27 @@ namespace Orion.Events {
     /// </summary>
     [AttributeUsage(AttributeTargets.Method)]
     public sealed class EventHandlerAttribute : Attribute {
-        private string? _name;
-
         /// <summary>
         /// Initializes a new instance of the <see cref="EventHandlerAttribute"/> class with the specified
-        /// <paramref name="priority"/>.
+        /// <paramref name="name"/>.
         /// </summary>
-        /// <param name="priority">The priority.</param>
-        public EventHandlerAttribute(EventPriority priority = EventPriority.Normal) {
-            Priority = priority;
+        /// <param name="name">The name.</param>
+        /// <exception cref="ArgumentNullException"><paramref name="name"/> is <see langword="null"/>.</exception>
+        public EventHandlerAttribute(string name) {
+            Name = name ?? throw new ArgumentNullException(nameof(name));
         }
-
-        /// <summary>
-        /// Gets the event handler's priority.
-        /// </summary>
-        /// <value>The event handler's priority.</value>
-        public EventPriority Priority { get; }
 
         /// <summary>
         /// Gets or sets the event handler's name. This is used for logging.
         /// </summary>
-        /// <value>The event handler's name, or <see langword="null"/> for none.</value>
-        /// <exception cref="ArgumentNullException"><paramref name="value"/> is <see langword="null"/>.</exception>
-        /// <remarks>The naming convention for event handlers is <c>kebab-case</c>.</remarks>
-        [DisallowNull]
-        public string? Name {
-            get => _name;
-            set => _name = value ?? throw new ArgumentNullException(nameof(value));
-        }
+        /// <value>The event handler's name.</value>
+        public string Name { get; }
+
+        /// <summary>
+        /// Gets or sets the event handler's priority.
+        /// </summary>
+        /// <value>The event handler's priority. The default value is <see cref="EventPriority.Normal"/>.</value>
+        public EventPriority Priority { get; set; } = EventPriority.Normal;
 
         /// <summary>
         /// Gets or sets a value indicating whether canceled events should be ignored.

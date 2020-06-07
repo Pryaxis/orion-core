@@ -23,31 +23,29 @@ namespace Orion.Events {
     [SuppressMessage("Style", "IDE0017:Simplify object initialization", Justification = "Testing")]
     public class EventHandlerAttributeTests {
         [Fact]
-        public void Priority_Get() {
-            var attribute = new EventHandlerAttribute(EventPriority.Normal);
-
-            Assert.Equal(EventPriority.Normal, attribute.Priority);
+        public void Ctor_NullName_ThrowsArgumentNullException() {
+            Assert.Throws<ArgumentNullException>(() => new EventHandlerAttribute(null!));
         }
 
         [Fact]
-        public void Name_SetNullValue_ThrowsArgumentNullException() {
-            var attribute = new EventHandlerAttribute();
+        public void Priority_Set_Get() {
+            var attribute = new EventHandlerAttribute("");
 
-            Assert.Throws<ArgumentNullException>(() => attribute.Name = null!);
+            attribute.Priority = EventPriority.Highest;
+
+            Assert.Equal(EventPriority.Highest, attribute.Priority);
         }
 
         [Fact]
-        public void Name_Set_Get() {
-            var attribute = new EventHandlerAttribute();
-
-            attribute.Name = "test";
+        public void Name_Get() {
+            var attribute = new EventHandlerAttribute("test");
 
             Assert.Equal("test", attribute.Name);
         }
 
         [Fact]
         public void IgnoreCanceled_Set_Get() {
-            var attribute = new EventHandlerAttribute();
+            var attribute = new EventHandlerAttribute("");
 
             attribute.IgnoreCanceled = false;
 

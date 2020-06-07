@@ -239,29 +239,29 @@ namespace Orion {
         }
 
         private class TestClass {
-            [EventHandler]
+            [EventHandler("test")]
             public void OnTest(TestEvent evt) => evt.Value = 100;
         }
 
         private class TestClass_Private {
-            [EventHandler]
+            [EventHandler("test")]
             [SuppressMessage("Code Quality", "IDE0051:Remove unused private members", Justification = "Implicit usage")]
             private void OnTest(TestEvent evt) => evt.Value = 100;
         }
 
         private class TestClass_MissingArg {
-            [EventHandler]
+            [EventHandler("test")]
             public void OnTest() { }
         }
 
         private class TestClass_TooManyArgs {
-            [EventHandler]
+            [EventHandler("test")]
             [SuppressMessage("Style", "IDE0060:Remove unused parameter", Justification = "Testing")]
             public void OnTest(TestEvent evt, int x) { }
         }
 
         private class TestClass_InvalidArg {
-            [EventHandler]
+            [EventHandler("test")]
             [SuppressMessage("Style", "IDE0060:Remove unused parameter", Justification = "Testing")]
             public void OnTest(int x) { }
         }
