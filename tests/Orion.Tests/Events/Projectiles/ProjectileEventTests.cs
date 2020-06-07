@@ -17,26 +17,26 @@
 
 using System;
 using Moq;
-using Orion.Items;
+using Orion.Projectiles;
 using Xunit;
 
-namespace Orion.Events.Items {
-    public class ItemEventTests {
+namespace Orion.Events.Projectiles {
+    public class ProjectileEventTests {
         [Fact]
-        public void Ctor_NullItem_ThrowsArgumentNullException() {
-            Assert.Throws<ArgumentNullException>(() => new TestItemEvent(null!));
+        public void Ctor_NullProjectile_ThrowsArgumentNullException() {
+            Assert.Throws<ArgumentNullException>(() => new TestProjectileEvent(null!));
         }
 
         [Fact]
-        public void Item_Get() {
-            var item = new Mock<IItem>().Object;
-            var evt = new TestItemEvent(item);
+        public void Projectile_Get() {
+            var projectile = new Mock<IProjectile>().Object;
+            var evt = new TestProjectileEvent(projectile);
 
-            Assert.Same(item, evt.Item);
+            Assert.Same(projectile, evt.Projectile);
         }
 
-        private class TestItemEvent : ItemEvent {
-            public TestItemEvent(IItem item) : base(item) { }
+        private class TestProjectileEvent : ProjectileEvent {
+            public TestProjectileEvent(IProjectile projectile) : base(projectile) { }
         }
     }
 }

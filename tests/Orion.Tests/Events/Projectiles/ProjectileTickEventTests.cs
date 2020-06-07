@@ -16,27 +16,27 @@
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 using Moq;
-using Orion.Items;
+using Orion.Projectiles;
 using Xunit;
 
-namespace Orion.Events.Items {
-    public class ItemEventTests {
+namespace Orion.Events.Projectiles {
+    [SuppressMessage("Style", "IDE0017:Simplify object initialization", Justification = "Testing")]
+    public class ProjectileTickEventTests {
         [Fact]
-        public void Ctor_NullItem_ThrowsArgumentNullException() {
-            Assert.Throws<ArgumentNullException>(() => new TestItemEvent(null!));
+        public void Ctor_NullProjectile_ThrowsArgumentNullException() {
+            Assert.Throws<ArgumentNullException>(() => new ProjectileTickEvent(null!));
         }
 
         [Fact]
-        public void Item_Get() {
-            var item = new Mock<IItem>().Object;
-            var evt = new TestItemEvent(item);
+        public void CancellationReason_Set_Get() {
+            var projectile = new Mock<IProjectile>().Object;
+            var evt = new ProjectileTickEvent(projectile);
 
-            Assert.Same(item, evt.Item);
-        }
+            evt.CancellationReason = "test";
 
-        private class TestItemEvent : ItemEvent {
-            public TestItemEvent(IItem item) : base(item) { }
+            Assert.Equal("test", evt.CancellationReason);
         }
     }
 }

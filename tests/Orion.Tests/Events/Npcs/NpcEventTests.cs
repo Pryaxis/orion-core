@@ -36,7 +36,7 @@ namespace Orion.Events.Npcs {
         }
 
         private class TestNpcEvent : NpcEvent {
-            public TestNpcEvent(INpc player) : base(player) { }
+            public TestNpcEvent(INpc npc) : base(npc) { }
         }
     }
 }
