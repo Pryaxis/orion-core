@@ -16,27 +16,18 @@
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
 using System;
-using Orion.World;
+using Orion.World.TileEntities;
 
-namespace Orion.Events.World {
+namespace Orion.World.Signs {
     /// <summary>
-    /// Provides the base class for a world-related event.
+    /// Represents a Terraria sign.
     /// </summary>
-    public abstract class WorldEvent : Event {
+    public interface ISign : ITileEntity {
         /// <summary>
-        /// Initializes a new instance of the <see cref="WorldEvent"/> class with the specified
-        /// <paramref name="world"/>.
+        /// Gets or sets the sign's text.
         /// </summary>
-        /// <param name="world">The world involved in the event.</param>
-        /// <exception cref="ArgumentNullException"><paramref name="world"/> is <see langword="null"/>.</exception>
-        protected WorldEvent(IWorld world) {
-            World = world ?? throw new ArgumentNullException(nameof(world));
-        }
-
-        /// <summary>
-        /// Gets the world involved in the event.
-        /// </summary>
-        /// <value>The world involved in the event.</value>
-        public IWorld World { get; }
+        /// <value>The sign's text.</value>
+        /// <exception cref="ArgumentNullException"><paramref name="value"/> is <see langword="null"/>.</exception>
+        string Text { get; set; }
     }
 }

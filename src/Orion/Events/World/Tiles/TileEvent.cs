@@ -29,7 +29,7 @@ namespace Orion.Events.World.Tiles {
         /// <paramref name="player"/>, and coordinates.
         /// </summary>
         /// <param name="world">The world.</param>
-        /// <param name="player">The player, or <see langword="null"/> for none.</param>
+        /// <param name="player">The player involved in the event, or <see langword="null"/> for none.</param>
         /// <param name="x">The tile's X coordinate.</param>
         /// <param name="y">The tile's Y coordinate.</param>
         /// <exception cref="ArgumentNullException"><paramref name="world"/> is <see langword="null"/>.</exception>
