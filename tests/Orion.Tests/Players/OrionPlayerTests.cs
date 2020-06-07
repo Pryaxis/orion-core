@@ -58,92 +58,83 @@ namespace Orion.Players {
         }
 
         [Fact]
-        public void Stats_Health_Get() {
+        public void Health_Get() {
             using var kernel = new OrionKernel(Logger.None);
             var terrariaPlayer = new Terraria.Player { statLife = 100 };
             var player = new OrionPlayer(terrariaPlayer, kernel, Logger.None);
 
-            Assert.Equal(100, player.Stats.Health);
+            Assert.Equal(100, player.Health);
         }
 
         [Fact]
-        public void Stats_Health_Set() {
+        public void Health_Set() {
             using var kernel = new OrionKernel(Logger.None);
             var terrariaPlayer = new Terraria.Player();
             var player = new OrionPlayer(terrariaPlayer, kernel, Logger.None);
 
-            player.Stats.Health = 100;
+            player.Health = 100;
 
             Assert.Equal(100, terrariaPlayer.statLife);
         }
 
         [Fact]
-        public void Stats_MaxHealth_Get() {
+        public void MaxHealth_Get() {
             using var kernel = new OrionKernel(Logger.None);
             var terrariaPlayer = new Terraria.Player { statLifeMax = 500 };
             var player = new OrionPlayer(terrariaPlayer, kernel, Logger.None);
 
-            Assert.Equal(500, player.Stats.MaxHealth);
+            Assert.Equal(500, player.MaxHealth);
         }
 
         [Fact]
-        public void Stats_MaxHealth_Set() {
+        public void MaxHealth_Set() {
             using var kernel = new OrionKernel(Logger.None);
             var terrariaPlayer = new Terraria.Player();
             var player = new OrionPlayer(terrariaPlayer, kernel, Logger.None);
 
-            player.Stats.MaxHealth = 500;
+            player.MaxHealth = 500;
 
             Assert.Equal(500, terrariaPlayer.statLifeMax);
         }
 
         [Fact]
-        public void Stats_Mana_Get() {
+        public void Mana_Get() {
             using var kernel = new OrionKernel(Logger.None);
             var terrariaPlayer = new Terraria.Player { statMana = 100 };
             var player = new OrionPlayer(terrariaPlayer, kernel, Logger.None);
 
-            Assert.Equal(100, player.Stats.Mana);
+            Assert.Equal(100, player.Mana);
         }
 
         [Fact]
-        public void Stats_Mana_Set() {
+        public void Mana_Set() {
             using var kernel = new OrionKernel(Logger.None);
             var terrariaPlayer = new Terraria.Player();
             var player = new OrionPlayer(terrariaPlayer, kernel, Logger.None);
 
-            player.Stats.Mana = 100;
+            player.Mana = 100;
 
             Assert.Equal(100, terrariaPlayer.statMana);
         }
 
         [Fact]
-        public void Stats_MaxMana_Get() {
+        public void MaxMana_Get() {
             using var kernel = new OrionKernel(Logger.None);
             var terrariaPlayer = new Terraria.Player { statManaMax = 200 };
             var player = new OrionPlayer(terrariaPlayer, kernel, Logger.None);
 
-            Assert.Equal(200, player.Stats.MaxMana);
+            Assert.Equal(200, player.MaxMana);
         }
 
         [Fact]
-        public void Stats_MaxMana_Set() {
+        public void MaxMana_Set() {
             using var kernel = new OrionKernel(Logger.None);
             var terrariaPlayer = new Terraria.Player();
             var player = new OrionPlayer(terrariaPlayer, kernel, Logger.None);
 
-            player.Stats.MaxMana = 200;
+            player.MaxMana = 200;
 
             Assert.Equal(200, terrariaPlayer.statManaMax);
-        }
-
-        [Fact]
-        public void Stats_Defense_Get() {
-            using var kernel = new OrionKernel(Logger.None);
-            var terrariaPlayer = new Terraria.Player { statDefense = 50 };
-            var player = new OrionPlayer(terrariaPlayer, kernel, Logger.None);
-
-            Assert.Equal(50, player.Stats.Defense);
         }
 
         [Theory]

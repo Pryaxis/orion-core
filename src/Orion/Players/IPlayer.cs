@@ -30,10 +30,28 @@ namespace Orion.Players {
     /// </summary>
     public interface IPlayer : IEntity, IWrapping<Terraria.Player> {
         /// <summary>
-        /// Gets the player's stats.
+        /// Gets or sets the player's health.
         /// </summary>
-        /// <value>The player's stats.</value>
-        IPlayerStats Stats { get; }
+        /// <value>The player's health.</value>
+        int Health { get; set; }
+
+        /// <summary>
+        /// Gets or sets the player's maximum health.
+        /// </summary>
+        /// <value>The player's maximum health.</value>
+        int MaxHealth { get; set; }
+
+        /// <summary>
+        /// Gets or sets the player's mana.
+        /// </summary>
+        /// <value>The player's mana.</value>
+        int Mana { get; set; }
+
+        /// <summary>
+        /// Gets or sets the player's maximum mana.
+        /// </summary>
+        /// <value>The player's maximum mana.</value>
+        int MaxMana { get; set; }
 
         /// <summary>
         /// Gets the player's buffs.

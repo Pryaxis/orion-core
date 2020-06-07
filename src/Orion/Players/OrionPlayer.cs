@@ -43,7 +43,6 @@ namespace Orion.Players {
             _kernel = kernel;
             _log = log;
 
-            Stats = new PlayerStats(terrariaPlayer);
             Buffs = new BuffArray(terrariaPlayer);
         }
 
@@ -55,7 +54,26 @@ namespace Orion.Players {
             set => Wrapped.name = value ?? throw new ArgumentNullException(nameof(value));
         }
 
-        public IPlayerStats Stats { get; }
+        public int Health {
+            get => Wrapped.statLife;
+            set => Wrapped.statLife = value;
+        }
+
+        public int MaxHealth {
+            get => Wrapped.statLifeMax;
+            set => Wrapped.statLifeMax = value;
+        }
+
+        public int Mana {
+            get => Wrapped.statMana;
+            set => Wrapped.statMana = value;
+        }
+
+        public int MaxMana {
+            get => Wrapped.statManaMax;
+            set => Wrapped.statManaMax = value;
+        }
+
         public IArray<Buff> Buffs { get; }
 
         public PlayerDifficulty Difficulty {
@@ -88,38 +106,6 @@ namespace Orion.Players {
             // When writing the packet, we need to use the `Server` context since this packet comes from the server.
             var packetLength = packet.WriteWithHeader(_sendBuffer, PacketContext.Server);
             terrariaClient.Socket?.AsyncSend(_sendBuffer, 0, packetLength, terrariaClient.ServerWriteCallBack);
-        }
-
-        private class PlayerStats : IPlayerStats {
-            private readonly Terraria.Player _wrapped;
-
-            public PlayerStats(Terraria.Player terrariaPlayer) {
-                Debug.Assert(terrariaPlayer != null);
-
-                _wrapped = terrariaPlayer;
-            }
-
-            public int Health {
-                get => _wrapped.statLife;
-                set => _wrapped.statLife = value;
-            }
-
-            public int MaxHealth {
-                get => _wrapped.statLifeMax;
-                set => _wrapped.statLifeMax = value;
-            }
-
-            public int Mana {
-                get => _wrapped.statMana;
-                set => _wrapped.statMana = value;
-            }
-
-            public int MaxMana {
-                get => _wrapped.statManaMax;
-                set => _wrapped.statManaMax = value;
-            }
-
-            public int Defense => _wrapped.statDefense;
         }
 
         private class BuffArray : IArray<Buff> {
