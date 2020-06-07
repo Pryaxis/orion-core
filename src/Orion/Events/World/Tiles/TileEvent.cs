@@ -28,7 +28,7 @@ namespace Orion.Events.World.Tiles {
         /// Initializes a new instance of the <see cref="TileEvent"/> class with the specified <paramref name="world"/>,
         /// <paramref name="player"/>, and coordinates.
         /// </summary>
-        /// <param name="world">The world.</param>
+        /// <param name="world">The world involved in the event.</param>
         /// <param name="player">The player involved in the event, or <see langword="null"/> for none.</param>
         /// <param name="x">The tile's X coordinate.</param>
         /// <param name="y">The tile's Y coordinate.</param>

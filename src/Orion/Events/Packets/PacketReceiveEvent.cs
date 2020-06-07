@@ -16,6 +16,7 @@
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
 using System;
+using Destructurama.Attributed;
 using Orion.Packets;
 using Orion.Players;
 using Serilog.Events;
@@ -26,7 +27,8 @@ namespace Orion.Events.Packets {
     /// </summary>
     /// <typeparam name="TPacket">The type of packet.</typeparam>
     [Event("packet-recv", LoggingLevel = LogEventLevel.Verbose)]
-    public sealed class PacketReceiveEvent<TPacket> : PacketEvent<TPacket> where TPacket : struct, IPacket {
+    public sealed class PacketReceiveEvent<TPacket> : PacketEvent<TPacket>, ICancelable
+            where TPacket : struct, IPacket {
         /// <summary>
         /// Initializes a new instance of the <see cref="PacketReceiveEvent{TPacket}"/> class with the specified
         /// <paramref name="packet"/> reference and packet <paramref name="sender"/>.
@@ -43,5 +45,8 @@ namespace Orion.Events.Packets {
         /// </summary>
         /// <value>The packet sender.</value>
         public IPlayer Sender { get; }
+
+        /// <inheritdoc/>
+        [NotLogged] public string? CancellationReason { get; set; }
     }
 }

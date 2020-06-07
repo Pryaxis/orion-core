@@ -30,7 +30,7 @@ namespace Orion.Events.Projectiles {
         /// Initializes a new instance of the <see cref="ProjectileTickEvent"/> class with the specified
         /// <paramref name="projectile"/>.
         /// </summary>
-        /// <param name="projectile">The projectile.</param>
+        /// <param name="projectile">The projectile involved in the event.</param>
         /// <exception cref="ArgumentNullException"><paramref name="projectile"/> is <see langword="null"/>.</exception>
         public ProjectileTickEvent(IProjectile projectile) : base(projectile) { }
 

@@ -29,7 +29,7 @@ namespace Orion.Events.Players {
         /// Initializes a new instance of the <see cref="PlayerUuidEvent"/> class with the specified
         /// <paramref name="player"/> and <paramref name="uuid"/>.
         /// </summary>
-        /// <param name="player">The player.</param>
+        /// <param name="player">The player involved in the event.</param>
         /// <param name="uuid">The player's UUID.</param>
         /// <exception cref="ArgumentNullException">
         /// <paramref name="player"/> or <paramref name="uuid"/> are <see langword="null"/>.

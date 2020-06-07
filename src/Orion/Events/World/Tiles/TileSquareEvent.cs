@@ -32,7 +32,7 @@ namespace Orion.Events.World.Tiles {
         /// <paramref name="world"/>, <paramref name="player"/>, top-left tile coordinates, and
         /// <paramref name="tiles"/>.
         /// </summary>
-        /// <param name="world">The world.</param>
+        /// <param name="world">The world involved in the event.</param>
         /// <param name="player">The player that sent the square of tiles.</param>
         /// <param name="x">The top-left tile's X coordinate.</param>
         /// <param name="y">The top-left tile's Y coordinate.</param>

@@ -22,7 +22,6 @@ using Orion.Packets;
 using Xunit;
 
 namespace Orion.Events.Packets {
-    [SuppressMessage("Style", "IDE0017:Simplify object initialization", Justification = "Testing")]
     public class PacketEventTests {
         [Fact]
         public void Packet_Get() {
@@ -30,16 +29,6 @@ namespace Orion.Events.Packets {
             var evt = new TestPacketEvent<TestPacket>(ref packet);
 
             Assert.True(Unsafe.AreSame(ref packet, ref evt.Packet));
-        }
-
-        [Fact]
-        public void CancellationReason_Set_Get() {
-            var packet = new TestPacket();
-            var evt = new TestPacketEvent<TestPacket>(ref packet);
-
-            evt.CancellationReason = "test";
-
-            Assert.Equal("test", evt.CancellationReason);
         }
 
         public struct TestPacket : IPacket {

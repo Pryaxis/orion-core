@@ -29,7 +29,7 @@ namespace Orion.Events.Players {
         /// Initializes a new instance of the <see cref="PlayerManaEvent"/> class with the specified
         /// <paramref name="player"/>, <paramref name="mana"/>, and <paramref name="maxMana"/>.
         /// </summary>
-        /// <param name="player">The player.</param>
+        /// <param name="player">The player involved in the event.</param>
         /// <param name="mana">The player's mana.</param>
         /// <param name="maxMana">The player's maximum mana.</param>
         /// <exception cref="ArgumentNullException"><paramref name="player"/> is <see langword="null"/>.</exception>

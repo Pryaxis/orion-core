@@ -31,8 +31,8 @@ namespace Orion.Events.World.Tiles {
         /// Initializes a new instance of the <see cref="BlockPaintEvent"/> class with the specified
         /// <paramref name="world"/>, <paramref name="player"/>, coordinates, and block <paramref name="color"/>.
         /// </summary>
-        /// <param name="world">The world.</param>
-        /// <param name="player">The player, or <see langword="null"/> for none.</param>
+        /// <param name="world">The world involved in the event.</param>
+        /// <param name="player">The player involved in the event, or <see langword="null"/> for none.</param>
         /// <param name="x">The tile's X coordinate.</param>
         /// <param name="y">The tile's Y coordinate.</param>
         /// <param name="color">The block color.</param>

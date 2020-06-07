@@ -27,7 +27,7 @@ namespace Orion.Events.Players {
         /// Initializes a new instance of the <see cref="PlayerEvent"/> class with the specified
         /// <paramref name="player"/>.
         /// </summary>
-        /// <param name="player">The player.</param>
+        /// <param name="player">The player involved in the event.</param>
         /// <exception cref="ArgumentNullException"><paramref name="player"/> is <see langword="null"/>.</exception>
         protected PlayerEvent(IPlayer player) {
             Player = player ?? throw new ArgumentNullException(nameof(player));

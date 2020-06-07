@@ -26,7 +26,7 @@ namespace Orion.Events.Npcs {
         /// <summary>
         /// Initializes a new instance of the <see cref="NpcEvent"/> class with the specified <paramref name="npc"/>.
         /// </summary>
-        /// <param name="npc">The NPC.</param>
+        /// <param name="npc">The NPC involved in the event.</param>
         /// <exception cref="ArgumentNullException"><paramref name="npc"/> is <see langword="null"/>.</exception>
         protected NpcEvent(INpc npc) {
             Npc = npc ?? throw new ArgumentNullException(nameof(npc));

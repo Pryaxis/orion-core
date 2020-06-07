@@ -29,7 +29,7 @@ namespace Orion.Events.Players {
         /// Initializes a new instance of the <see cref="PlayerTeamEvent"/> class with the specified
         /// <paramref name="player"/> and <paramref name="team"/>.
         /// </summary>
-        /// <param name="player">The player.</param>
+        /// <param name="player">The player involved in the event.</param>
         /// <param name="team">The player's team.</param>
         /// <exception cref="ArgumentNullException"><paramref name="player"/> is <see langword="null"/>.</exception>
         public PlayerTeamEvent(IPlayer player, PlayerTeam team) : base(player) {

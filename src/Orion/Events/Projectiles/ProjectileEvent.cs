@@ -27,7 +27,7 @@ namespace Orion.Events.Projectiles {
         /// Initializes a new instance of the <see cref="ProjectileEvent"/> class with the specified
         /// <paramref name="projectile"/>.
         /// </summary>
-        /// <param name="projectile">The projectile.</param>
+        /// <param name="projectile">The projectile involved in the event.</param>
         /// <exception cref="ArgumentNullException"><paramref name="projectile"/> is <see langword="null"/>.</exception>
         protected ProjectileEvent(IProjectile projectile) {
             Projectile = projectile ?? throw new ArgumentNullException(nameof(projectile));

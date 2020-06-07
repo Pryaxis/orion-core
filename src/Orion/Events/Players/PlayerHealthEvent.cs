@@ -29,7 +29,7 @@ namespace Orion.Events.Players {
         /// Initializes a new instance of the <see cref="PlayerHealthEvent"/> class with the specified
         /// <paramref name="player"/>, <paramref name="health"/>, and <paramref name="maxHealth"/>.
         /// </summary>
-        /// <param name="player">The player.</param>
+        /// <param name="player">The player involved in the event.</param>
         /// <param name="health">The player's health.</param>
         /// <param name="maxHealth">The player's maximum health.</param>
         /// <exception cref="ArgumentNullException"><paramref name="player"/> is <see langword="null"/>.</exception>

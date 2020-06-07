@@ -29,7 +29,7 @@ namespace Orion.Events.Players {
         /// Initializes a new instance of the <see cref="PlayerPvpEvent"/> class with the specified
         /// <paramref name="player"/> and PvP status.
         /// </summary>
-        /// <param name="player">The player.</param>
+        /// <param name="player">The player involved in the event.</param>
         /// <param name="isInPvp">Whether the player is in PvP.</param>
         /// <exception cref="ArgumentNullException"><paramref name="player"/> is <see langword="null"/>.</exception>
         public PlayerPvpEvent(IPlayer player, bool isInPvp) : base(player) {

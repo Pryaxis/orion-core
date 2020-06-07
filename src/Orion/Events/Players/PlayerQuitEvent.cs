@@ -28,7 +28,7 @@ namespace Orion.Events.Players {
         /// Initializes a new instance of the <see cref="PlayerQuitEvent"/> class with the specified
         /// <paramref name="player"/>.
         /// </summary>
-        /// <param name="player">The player.</param>
+        /// <param name="player">The player involved in the event.</param>
         /// <exception cref="ArgumentNullException"><paramref name="player"/> is <see langword="null"/>.</exception>
         public PlayerQuitEvent(IPlayer player) : base(player) { }
     }

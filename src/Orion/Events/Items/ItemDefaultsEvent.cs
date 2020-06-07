@@ -31,7 +31,7 @@ namespace Orion.Events.Items {
         /// Initializes a new instance of the <see cref="ItemDefaultsEvent"/> class with the specified
         /// <paramref name="item"/>.
         /// </summary>
-        /// <param name="item">The item.</param>
+        /// <param name="item">The item involved in the event.</param>
         /// <exception cref="ArgumentNullException"><paramref name="item"/> is <see langword="null"/>.</exception>
         public ItemDefaultsEvent(IItem item) : base(item) { }
 

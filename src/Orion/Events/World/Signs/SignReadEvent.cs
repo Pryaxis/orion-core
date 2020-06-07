@@ -16,11 +16,8 @@
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
 using System;
-using System.Collections.Generic;
-using System.Text;
 using Destructurama.Attributed;
 using Orion.Players;
-using Orion.World;
 
 namespace Orion.Events.World.Signs {
     /// <summary>

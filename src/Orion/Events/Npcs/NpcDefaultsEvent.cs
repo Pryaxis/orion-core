@@ -31,7 +31,7 @@ namespace Orion.Events.Npcs {
         /// Initializes a new instance of the <see cref="NpcDefaultsEvent"/> class with the specified
         /// <paramref name="npc"/>.
         /// </summary>
-        /// <param name="npc">The NPC.</param>
+        /// <param name="npc">The NPC involved in the event.</param>
         /// <exception cref="ArgumentNullException"><paramref name="npc"/> is <see langword="null"/>.</exception>
         public NpcDefaultsEvent(INpc npc) : base(npc) { }
 

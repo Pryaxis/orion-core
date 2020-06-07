@@ -26,7 +26,7 @@ namespace Orion.Events.Items {
         /// <summary>
         /// Initializes a new instance of the <see cref="ItemEvent"/> class with the specified <paramref name="item"/>.
         /// </summary>
-        /// <param name="item">The item.</param>
+        /// <param name="item">The item involved in the event.</param>
         /// <exception cref="ArgumentNullException"><paramref name="item"/> is <see langword="null"/>.</exception>
         protected ItemEvent(IItem item) {
             Item = item ?? throw new ArgumentNullException(nameof(item));
