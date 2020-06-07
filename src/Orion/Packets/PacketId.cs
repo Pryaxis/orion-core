@@ -21,6 +21,7 @@ using System.Diagnostics.Contracts;
 using Orion.Packets.Client;
 using Orion.Packets.Players;
 using Orion.Packets.Server;
+using Orion.Packets.World.Signs;
 using Orion.Packets.World.Tiles;
 
 namespace Orion.Packets {
@@ -38,6 +39,7 @@ namespace Orion.Packets {
         PlayerPvp = 30,
         PlayerMana = 42,
         PlayerTeam = 45,
+        SignRead = 46,
         BlockPaint = 63,
         WallPaint = 64,
         ClientUuid = 68,
@@ -60,6 +62,7 @@ namespace Orion.Packets {
             [PacketId.PlayerMana] = typeof(PlayerManaPacket),
             [PacketId.PlayerPvp] = typeof(PlayerPvpPacket),
             [PacketId.PlayerTeam] = typeof(PlayerTeamPacket),
+            [PacketId.SignRead] = typeof(SignReadPacket),
             [PacketId.BlockPaint] = typeof(BlockPaintPacket),
             [PacketId.WallPaint] = typeof(WallPaintPacket),
             [PacketId.ClientUuid] = typeof(ClientUuidPacket),
