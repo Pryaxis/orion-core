@@ -222,10 +222,11 @@ namespace Orion.Players {
             var oldReader = buffer.reader;
 
             // When writing the packet, we need to use the `Client` context since this packet comes from the client.
-            var newPacketLength = packet.WriteWithHeader(_receiveBuffer.Value, PacketContext.Client);
+            var receiveBuffer = _receiveBuffer.Value;
+            var newPacketLength = packet.WriteWithHeader(receiveBuffer, (PacketContext)PacketContext.Client);
 
             _ignoreReceiveDataHandler.Value = true;
-            buffer.readBuffer = _receiveBuffer.Value;
+            buffer.readBuffer = receiveBuffer;
             buffer.reader = new BinaryReader(new MemoryStream(buffer.readBuffer), Encoding.UTF8);
             buffer.GetData(2, newPacketLength - 2, out _);
 
@@ -258,10 +259,13 @@ namespace Orion.Players {
             // Send the packet. A thread-local send buffer is used in case there is some concurrency.
             //
             // When writing the packet, we need to use the `Server` context since this packet comes from the server.
-            var newPacketLength = packet.WriteWithHeader(_sendBuffer.Value, PacketContext.Server);
+            var sendBuffer = _sendBuffer.Value;
+            var newPacketLength = packet.WriteWithHeader(sendBuffer, PacketContext.Server);
 
             var terrariaClient = Terraria.Netplay.Clients[playerIndex];
-            terrariaClient.Socket.AsyncSend(_sendBuffer.Value, 0, newPacketLength, terrariaClient.ServerWriteCallBack);
+            try {
+                terrariaClient.Socket.AsyncSend(sendBuffer, 0, newPacketLength, terrariaClient.ServerWriteCallBack);
+            } catch (IOException) { }
         }
 
         // =============================================================================================================

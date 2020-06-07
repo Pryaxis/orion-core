@@ -19,6 +19,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.IO;
 using Destructurama.Attributed;
 using Orion.Buffs;
 using Orion.Collections;
@@ -105,7 +106,9 @@ namespace Orion.Players {
 
             // When writing the packet, we need to use the `Server` context since this packet comes from the server.
             var packetLength = packet.WriteWithHeader(_sendBuffer, PacketContext.Server);
-            terrariaClient.Socket?.AsyncSend(_sendBuffer, 0, packetLength, terrariaClient.ServerWriteCallBack);
+            try {
+                terrariaClient.Socket?.AsyncSend(_sendBuffer, 0, packetLength, terrariaClient.ServerWriteCallBack);
+            } catch (IOException) { }
         }
 
         private class BuffArray : IArray<Buff> {
