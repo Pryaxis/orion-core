@@ -39,6 +39,7 @@ namespace Orion.Framework {
         /// Gets the plugin name.
         /// </summary>
         /// <value>The plugin name.</value>
+        /// <remarks>The naming convention for plugins is <c>kebab-case</c>.</remarks>
         public string Name { get; }
 
         /// <summary>

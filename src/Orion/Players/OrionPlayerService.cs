@@ -112,6 +112,7 @@ namespace Orion.Players {
 
         // =============================================================================================================
         // OTAPI hooks
+        //
 
         private OTAPI.HookResult ReceiveDataHandler(
                 Terraria.MessageBuffer buffer, ref byte packetId, ref int _, ref int start, ref int length) {
@@ -188,6 +189,7 @@ namespace Orion.Players {
 
         // =============================================================================================================
         // Packet event publishers
+        //
 
         private void OnReceivePacket<TPacket>(Terraria.MessageBuffer buffer, Span<byte> span)
                 where TPacket : struct, IPacket {
@@ -263,6 +265,7 @@ namespace Orion.Players {
 
         // =============================================================================================================
         // Player event publishers
+        //
 
         [EventHandler("orion-players", Priority = EventPriority.Lowest)]
         private void OnPlayerJoinPacket(PacketReceiveEvent<PlayerJoinPacket> evt) {

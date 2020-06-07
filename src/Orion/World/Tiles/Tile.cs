@@ -24,13 +24,14 @@ namespace Orion.World.Tiles {
     /// </summary>
     [StructLayout(LayoutKind.Explicit)]
     public struct Tile {
+        // The shifts for the tile header.
         private const int BlockColorShift = 0;
         private const int SlopeShift = 12;
         private const int WallColorShift = 16;
         private const int LiquidShift = 21;
         private const int BlockFrameNumberShift = 24;
 
-        // The masks. These follow roughly the same layout in Terraria's `Tile` class.
+        // The masks for the tile header. These follow roughly the same layout in Terraria's `Tile` class.
         internal const uint BlockColorMask /*       */ = 0b_00000000_00000000_00000000_00011111;
         internal const uint IsBlockActiveMask /*    */ = 0b_00000000_00000000_00000000_00100000;
         internal const uint IsBlockActuatedMask /*  */ = 0b_00000000_00000000_00000000_01000000;
@@ -47,7 +48,8 @@ namespace Orion.World.Tiles {
         internal const uint IsCheckingLiquidMask /* */ = 0b_00010000_00000000_00000000_00000000;
         internal const uint ShouldSkipLiquidMask /* */ = 0b_00100000_00000000_00000000_00000000;
 
-        // Provide `internal` field access with type punning so that we can implement `OTAPI.Tile.ITile` efficiently.
+        // Provide `internal` field access with type punning so that we can implement an `OTAPI.Tile.ITile` adapter
+        // efficiently.
         [FieldOffset(5)] internal int _blockFrames;
         [FieldOffset(9)] internal uint _header;
         [FieldOffset(9)] internal short _sTileHeader;

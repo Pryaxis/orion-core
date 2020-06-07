@@ -21,7 +21,7 @@ using System.Runtime.InteropServices;
 
 namespace Orion.Packets.Players {
     /// <summary>
-    /// A packet sent to set a player's health.
+    /// A packet sent to set a player's health information.
     /// </summary>
     [StructLayout(LayoutKind.Explicit)]
     public struct PlayerHealthPacket : IPacket {

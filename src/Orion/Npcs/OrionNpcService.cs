@@ -64,6 +64,10 @@ namespace Orion.Npcs {
             var npcIndex = Terraria.NPC.NewNPC((int)position.X, (int)position.Y, (int)id);
             return npcIndex >= 0 && npcIndex < Npcs.Count ? Npcs[npcIndex] : null;
         }
+        
+        // =============================================================================================================
+        // OTAPI hooks
+        //
 
         private OTAPI.HookResult PreSetDefaultsByIdHandler(
                 Terraria.NPC terrariaNpc, ref int npcId, ref Terraria.NPCSpawnParams _) {

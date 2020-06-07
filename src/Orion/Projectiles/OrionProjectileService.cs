@@ -56,6 +56,10 @@ namespace Orion.Projectiles {
             return projectileIndex >= 0 && projectileIndex < Projectiles.Count ? Projectiles[projectileIndex] : null;
         }
 
+        // =============================================================================================================
+        // OTAPI hooks
+        //
+
         private OTAPI.HookResult PreSetDefaultsByIdHandler(
                 Terraria.Projectile terrariaProjectile, ref int projectileId) {
             Debug.Assert(terrariaProjectile != null);

@@ -39,6 +39,7 @@ namespace Orion.Framework {
         /// Gets the binding name.
         /// </summary>
         /// <value>The binding name.</value>
+        /// <remarks>The naming convention for bindings is <c>kebab-case</c>.</remarks>
         public string Name { get; }
 
         /// <summary>

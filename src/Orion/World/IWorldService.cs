@@ -19,7 +19,7 @@ using Orion.Framework;
 
 namespace Orion.World {
     /// <summary>
-    /// Represents a world service. Provides access to world-related properties and methods.
+    /// Represents a world service. Provides access to the world and publishes world-related events.
     /// </summary>
     [Service(ServiceScope.Singleton)]
     public interface IWorldService {

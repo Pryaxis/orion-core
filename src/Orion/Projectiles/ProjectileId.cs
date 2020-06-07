@@ -606,7 +606,7 @@ namespace Orion.Projectiles {
         NurseHealingSyringe = 584,
         ClothierSkull = 585,
         DryadsWard = 586,
-Paintball = 587,
+        Paintball = 587,
         PartyGirlConfettiGrenade = 588,
         SantaClausOrnament = 589,
         TruffleSpore = 590,

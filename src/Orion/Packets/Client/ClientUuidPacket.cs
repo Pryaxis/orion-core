@@ -20,7 +20,7 @@ using System.Text;
 
 namespace Orion.Packets.Client {
     /// <summary>
-    /// Packet sent from the client to the server to inform the server of its UUID.
+    /// A packet sent from the client to the server to inform the server of its UUID.
     /// </summary>
     public struct ClientUuidPacket : IPacket {
         private string? _uuid;

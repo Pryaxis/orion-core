@@ -64,7 +64,7 @@ namespace Orion {
             // Bind `OrionKernel` to this instance so that services/plugins retrieve this instance.
             _kernel.Bind<OrionKernel>().ToConstant(this);
 
-            // Bind `ILogger` so that services/plugins retrieve specific logs.
+            // Bind `ILogger` so that services/plugins retrieve type-specific logs.
             _kernel
                 .Bind<ILogger>()
                 .ToMethod(ctx => {
@@ -77,12 +77,12 @@ namespace Orion {
                 })
                 .InTransientScope();
 
-            OTAPI.Hooks.Game.PreInitialize += PreInitializeHandler;
-            OTAPI.Hooks.Game.Started += StartedHandler;
-            OTAPI.Hooks.Game.PreUpdate += PreUpdateHandler;
-            OTAPI.Hooks.Command.Process += ProcessHandler;
+            OTAPI.Hooks.Game.PreInitialize = PreInitializeHandler;
+            OTAPI.Hooks.Game.Started = StartedHandler;
+            OTAPI.Hooks.Game.PreUpdate = PreUpdateHandler;
+            OTAPI.Hooks.Command.Process = ProcessHandler;
 
-            // Make sure to load from this assembly so that we get the Orion services and service bindings.
+            // Load from this assembly so that we get the Orion services and service bindings.
             LoadFrom(typeof(OrionKernel).Assembly);
         }
 
@@ -98,11 +98,15 @@ namespace Orion {
         public void Dispose() {
             _kernel.Dispose();
 
-            OTAPI.Hooks.Game.PreInitialize -= PreInitializeHandler;
-            OTAPI.Hooks.Game.Started -= StartedHandler;
-            OTAPI.Hooks.Game.PreUpdate -= PreUpdateHandler;
-            OTAPI.Hooks.Command.Process -= ProcessHandler;
+            OTAPI.Hooks.Game.PreInitialize = null;
+            OTAPI.Hooks.Game.Started = null;
+            OTAPI.Hooks.Game.PreUpdate = null;
+            OTAPI.Hooks.Command.Process = null;
         }
+
+        // =============================================================================================================
+        // Framework support
+        //
 
         /// <summary>
         /// Loads service definitions, service bindings, and plugins from the given <paramref name="assembly"/>.
@@ -124,7 +128,7 @@ namespace Orion {
 
             // Load all service binding types from the assembly.
             foreach (var thisBindingType in types.Where(HasAttribute<BindingAttribute>)) {
-                var thisAttribute = thisBindingType.GetCustomAttribute<BindingAttribute>();
+                var thisPriority = thisBindingType.GetCustomAttribute<BindingAttribute>().Priority;
 
                 foreach (var interfaceType in thisBindingType.GetInterfaces().Where(_serviceTypes.Contains)) {
                     if (!_serviceBindings.TryGetValue(interfaceType, out var currentBindingType)) {
@@ -133,8 +137,8 @@ namespace Orion {
                     } else {
                         // If this binding has a higher priority than the current binding, then replace the current
                         // binding with this binding.
-                        var currentAttribute = currentBindingType.GetCustomAttribute<BindingAttribute>();
-                        if (thisAttribute.Priority > currentAttribute.Priority) {
+                        var currentPriority = currentBindingType.GetCustomAttribute<BindingAttribute>().Priority;
+                        if (thisPriority > currentPriority) {
                             _serviceBindings[interfaceType] = thisBindingType;
                         }
                     }
@@ -169,7 +173,7 @@ namespace Orion {
                     _ => throw new InvalidOperationException("Invalid service scope")
                 };
 
-                // Eagerly request singleton-scoped services so that an instance always exists.
+                // Eagerly request singleton-scoped services so that an instance actually exists.
                 if (scope == ServiceScope.Singleton) {
                     _kernel.Get(serviceType);
                 }
@@ -221,6 +225,10 @@ namespace Orion {
             _log.Information(Resources.Kernel_UnloadedPlugin, pluginName);
             return true;
         }
+
+        // =============================================================================================================
+        // Event handling
+        //
 
         /// <summary>
         /// Registers the given event <paramref name="handler"/>.
@@ -385,6 +393,10 @@ namespace Orion {
 
             return (EventHandlerCollection<TEvent>)collection;
         }
+        
+        // =============================================================================================================
+        // OTAPI hooks
+        //
 
         private void PreInitializeHandler() {
             var evt = new ServerInitializeEvent();

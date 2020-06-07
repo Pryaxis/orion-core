@@ -22,21 +22,6 @@ namespace Orion.Entities {
     /// <summary>
     /// Provides annotation support. This is primarily used to attach customizable state to instances.
     /// </summary>
-    /// <example>
-    /// The following code example increments a kill counter on an <see cref="IPlayer"/> instance.
-    /// 
-    /// Note that the usage of <c>ref</c> locals enables a rather compact syntax. Additionally, since
-    /// <see cref="GetAnnotation"/> will create the annotation if it does not exist yet, this code is safe.
-    /// 
-    /// The key must be unique, and this can be enforced via namespacing.
-    /// <code>
-    /// private const string NumKillsKey = "example.num_kills";
-    /// 
-    /// public void IncrementKills(IPlayer player) {
-    ///     ++player.GetAnnotation&lt;int&gt;(NumKillsKey);
-    /// }
-    /// </code>
-    /// </example>
     public interface IAnnotatable {
         /// <summary>
         /// Gets a reference to the annotation of type <typeparamref name="T"/> with the given <paramref name="key"/>,

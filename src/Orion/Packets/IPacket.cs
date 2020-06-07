@@ -24,7 +24,7 @@ namespace Orion.Packets {
     /// </summary>
     public interface IPacket {
         /// <summary>
-        /// The packet's header size.
+        /// The packet header size.
         /// </summary>
         public const int HeaderSize = sizeof(ushort) + sizeof(PacketId);
 
@@ -67,9 +67,9 @@ namespace Orion.Packets {
         /// <returns>The number of bytes written.</returns>
         public static int WriteWithHeader<TPacket>(ref this TPacket packet, Span<byte> span, PacketContext context)
                 where TPacket : struct, IPacket {
-            span[2] = (byte)packet.Id;
             var packetLength = IPacket.HeaderSize + packet.Write(span[IPacket.HeaderSize..], context);
             Unsafe.WriteUnaligned(ref span[0], (ushort)packetLength);
+            span[2] = (byte)packet.Id;
             return packetLength;
         }
     }

@@ -54,6 +54,10 @@ namespace Orion.Items {
             return itemIndex >= 0 && itemIndex < Items.Count ? Items[itemIndex] : null;
         }
 
+        // =============================================================================================================
+        // OTAPI hooks
+        //
+
         private OTAPI.HookResult PreSetDefaultsByIdHandler(Terraria.Item terrariaItem, ref int itemId, ref bool _) {
             Debug.Assert(terrariaItem != null);
 

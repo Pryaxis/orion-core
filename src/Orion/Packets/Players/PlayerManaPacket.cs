@@ -21,7 +21,7 @@ using System.Runtime.InteropServices;
 
 namespace Orion.Packets.Players {
     /// <summary>
-    /// A packet sent to set a player's mana.
+    /// A packet sent to set a player's mana information.
     /// </summary>
     [StructLayout(LayoutKind.Explicit)]
     public struct PlayerManaPacket : IPacket {
