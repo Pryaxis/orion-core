@@ -21,10 +21,10 @@ using System.Runtime.InteropServices;
 
 namespace Orion.Packets.World.Signs {
     /// <summary>
-    /// A packet sent from the client to the server to request a sign.
+    /// A packet sent from the client to the server to read a sign.
     /// </summary>
     [StructLayout(LayoutKind.Explicit)]
-    public struct SignRequestPacket : IPacket {
+    public struct SignReadPacket : IPacket {
         /// <summary>
         /// Gets or sets the sign's X coordinate.
         /// </summary>
@@ -37,7 +37,7 @@ namespace Orion.Packets.World.Signs {
         /// <value>The sign's Y coordinate.</value>
         [field: FieldOffset(2)] public short Y { get; set; }
 
-        PacketId IPacket.Id => PacketId.SignRequest;
+        PacketId IPacket.Id => PacketId.SignRead;
 
         /// <inheritdoc/>
         public int Read(Span<byte> span, PacketContext context) {

@@ -85,7 +85,7 @@ namespace Orion.World.Signs {
         }
 
         [Fact]
-        public void PacketReceive_SignRequestEventTriggered() {
+        public void PacketReceive_SignReadEventTriggered() {
             // Set `State` to 10 so that the sign request packet is not ignored by the server.
             var socket = new TestSocket { Connected = true };
             Terraria.Netplay.Clients[5] = new Terraria.RemoteClient { Id = 5, State = 10, Socket = socket };
@@ -100,7 +100,7 @@ namespace Orion.World.Signs {
             Terraria.Main.tile[256, 100] = new Terraria.Tile { type = (ushort)BlockId.Sign };
 
             var isRun = false;
-            kernel.RegisterHandler<SignRequestEvent>(evt => {
+            kernel.RegisterHandler<SignReadEvent>(evt => {
                 Assert.Same(worldService.World, evt.World);
                 Assert.Same(playerService.Players[5], evt.Player);
                 Assert.Equal(256, evt.X);
@@ -108,14 +108,14 @@ namespace Orion.World.Signs {
                 isRun = true;
             }, Logger.None);
 
-            TestUtils.FakeReceiveBytes(5, SignRequestPacketTests.Bytes);
+            TestUtils.FakeReceiveBytes(5, SignReadPacketTests.Bytes);
 
             Assert.True(isRun);
             Assert.NotEmpty(socket.SendData);
         }
 
         [Fact]
-        public void PacketReceive_SignRequestEventCanceled() {
+        public void PacketReceive_SignReadEventCanceled() {
             // Set `State` to 10 so that the sign request packet is not ignored by the server.
             var socket = new TestSocket { Connected = true };
             Terraria.Netplay.Clients[5] = new Terraria.RemoteClient { Id = 5, State = 10, Socket = socket };
@@ -129,9 +129,9 @@ namespace Orion.World.Signs {
 
             Terraria.Main.tile[256, 100] = new Terraria.Tile { type = (ushort)BlockId.Sign };
 
-            kernel.RegisterHandler<SignRequestEvent>(evt => evt.Cancel(), Logger.None);
+            kernel.RegisterHandler<SignReadEvent>(evt => evt.Cancel(), Logger.None);
 
-            TestUtils.FakeReceiveBytes(5, SignRequestPacketTests.Bytes);
+            TestUtils.FakeReceiveBytes(5, SignReadPacketTests.Bytes);
 
             Assert.Empty(socket.SendData);
         }

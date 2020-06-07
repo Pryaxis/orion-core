@@ -55,10 +55,10 @@ namespace Orion.World.Signs {
 
         [EventHandler("orion-signs", Priority = EventPriority.Lowest)]
         [SuppressMessage("CodeQuality", "IDE0051:Remove unused private members", Justification = "Implicitly called")]
-        private void OnSignRequestPacket(PacketReceiveEvent<SignRequestPacket> evt) {
+        private void OnSignReadPacket(PacketReceiveEvent<SignReadPacket> evt) {
             var player = evt.Sender;
             ref var packet = ref evt.Packet;
-            var evt2 = new SignRequestEvent(_worldService.World, player, packet.X, packet.Y);
+            var evt2 = new SignReadEvent(_worldService.World, player, packet.X, packet.Y);
             Kernel.Raise(evt2, Log);
             evt.CancellationReason = evt2.CancellationReason;
         }

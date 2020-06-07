@@ -24,29 +24,29 @@ using Orion.World;
 
 namespace Orion.Events.World.Signs {
     /// <summary>
-    /// An event that occurs when a player requests a sign. This event can be canceled.
+    /// An event that occurs when a player reads a sign. This event can be canceled.
     /// </summary>
-    [Event("sign-request")]
-    public sealed class SignRequestEvent : WorldEvent, ICancelable {
+    [Event("sign-read")]
+    public sealed class SignReadEvent : WorldEvent, ICancelable {
         /// <summary>
-        /// Initializes a new instance of the <see cref="SignRequestEvent"/> class with the specified
+        /// Initializes a new instance of the <see cref="SignReadEvent"/> class with the specified
         /// <paramref name="world"/>, <paramref name="player"/>, and sign coordinates.
         /// </summary>
         /// <param name="world">The world involved in the event.</param>
-        /// <param name="player">The player requesting the sign.</param>
+        /// <param name="player">The player reading the sign.</param>
         /// <param name="x">The sign's X coordinate.</param>
         /// <param name="y">The sign's Y coordinate.</param>
         /// <exception cref="ArgumentNullException"><paramref name="player"/> is <see langword="null"/>.</exception>
-        public SignRequestEvent(IWorld world, IPlayer player, int x, int y) : base(world) {
+        public SignReadEvent(IWorld world, IPlayer player, int x, int y) : base(world) {
             Player = player ?? throw new ArgumentNullException(nameof(player));
             X = x;
             Y = y;
         }
 
         /// <summary>
-        /// Gets the player requesting the sign.
+        /// Gets the player reading the sign.
         /// </summary>
-        /// <value>The player requesting the sign.</value>
+        /// <value>The player reading the sign.</value>
         public IPlayer Player { get; }
 
         /// <summary>
