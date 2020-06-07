@@ -24,42 +24,32 @@ using Xunit;
 namespace Orion.Events.World.Signs {
     public class SignReadEventTests {
         [Fact]
-        public void Ctor_NullWorld_ThrowsArgumentNullException() {
-            var player = new Mock<IPlayer>().Object;
-
-            Assert.Throws<ArgumentNullException>(() => new SignReadEvent(null!, player, 123, 456));
-        }
-
-        [Fact]
         public void Ctor_NullPlayer_ThrowsArgumentNullException() {
             var world = new Mock<IWorld>().Object;
 
-            Assert.Throws<ArgumentNullException>(() => new SignReadEvent(world, null!, 123, 456));
+            Assert.Throws<ArgumentNullException>(() => new SignReadEvent(null!, 123, 456));
         }
 
         [Fact]
         public void Player_Get() {
-            var world = new Mock<IWorld>().Object;
             var player = new Mock<IPlayer>().Object;
-            var evt = new SignReadEvent(world, player, 123, 456);
+            var evt = new SignReadEvent(player, 123, 456);
 
             Assert.Same(player, evt.Player);
         }
 
         [Fact]
         public void X_Get() {
-            var world = new Mock<IWorld>().Object;
             var player = new Mock<IPlayer>().Object;
-            var evt = new SignReadEvent(world, player, 123, 456);
+            var evt = new SignReadEvent(player, 123, 456);
 
             Assert.Equal(123, evt.X);
         }
 
         [Fact]
         public void Y_Get() {
-            var world = new Mock<IWorld>().Object;
             var player = new Mock<IPlayer>().Object;
-            var evt = new SignReadEvent(world, player, 123, 456);
+            var evt = new SignReadEvent(player, 123, 456);
 
             Assert.Equal(456, evt.Y);
         }

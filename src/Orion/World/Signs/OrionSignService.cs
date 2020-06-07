@@ -29,13 +29,7 @@ using Serilog;
 namespace Orion.World.Signs {
     [Binding("orion-signs", Author = "Pryaxis", Priority = BindingPriority.Lowest)]
     internal sealed class OrionSignService : OrionService, ISignService {
-        private readonly IWorldService _worldService;
-
-        public OrionSignService(OrionKernel kernel, ILogger log, IWorldService worldService) : base(kernel, log) {
-            Debug.Assert(worldService != null);
-
-            _worldService = worldService;
-
+        public OrionSignService(OrionKernel kernel, ILogger log) : base(kernel, log) {
             // Construct the `Signs` array.
             Signs = new WrappedReadOnlyList<OrionSign, Terraria.Sign?>(
                 Terraria.Main.sign, (signIndex, terrariaSign) => new OrionSign(signIndex, terrariaSign));
@@ -58,7 +52,7 @@ namespace Orion.World.Signs {
         private void OnSignReadPacket(PacketReceiveEvent<SignReadPacket> evt) {
             var player = evt.Sender;
             ref var packet = ref evt.Packet;
-            var evt2 = new SignReadEvent(_worldService.World, player, packet.X, packet.Y);
+            var evt2 = new SignReadEvent(player, packet.X, packet.Y);
             Kernel.Raise(evt2, Log);
             evt.CancellationReason = evt2.CancellationReason;
         }

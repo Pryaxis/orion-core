@@ -27,17 +27,16 @@ namespace Orion.Events.World.Signs {
     /// An event that occurs when a player reads a sign. This event can be canceled.
     /// </summary>
     [Event("sign-read")]
-    public sealed class SignReadEvent : WorldEvent, ICancelable {
+    public sealed class SignReadEvent : Event, ICancelable {
         /// <summary>
         /// Initializes a new instance of the <see cref="SignReadEvent"/> class with the specified
-        /// <paramref name="world"/>, <paramref name="player"/>, and sign coordinates.
+        /// <paramref name="player"/> and sign coordinates.
         /// </summary>
-        /// <param name="world">The world involved in the event.</param>
         /// <param name="player">The player reading the sign.</param>
         /// <param name="x">The sign's X coordinate.</param>
         /// <param name="y">The sign's Y coordinate.</param>
         /// <exception cref="ArgumentNullException"><paramref name="player"/> is <see langword="null"/>.</exception>
-        public SignReadEvent(IWorld world, IPlayer player, int x, int y) : base(world) {
+        public SignReadEvent(IPlayer player, int x, int y) {
             Player = player ?? throw new ArgumentNullException(nameof(player));
             X = x;
             Y = y;

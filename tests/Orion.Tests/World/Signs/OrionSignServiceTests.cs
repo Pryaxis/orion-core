@@ -34,8 +34,7 @@ namespace Orion.World.Signs {
         [InlineData(10000)]
         public void Signs_Item_GetInvalidIndex_ThrowsIndexOutOfRangeException(int index) {
             using var kernel = new OrionKernel(Logger.None);
-            using var worldService = new OrionWorldService(kernel, Logger.None);
-            using var signService = new OrionSignService(kernel, Logger.None, worldService);
+            using var signService = new OrionSignService(kernel, Logger.None);
 
             Assert.Throws<IndexOutOfRangeException>(() => signService.Signs[index]);
         }
@@ -45,8 +44,7 @@ namespace Orion.World.Signs {
             Terraria.Main.sign[1] = new Terraria.Sign();
 
             using var kernel = new OrionKernel(Logger.None);
-            using var worldService = new OrionWorldService(kernel, Logger.None);
-            using var signService = new OrionSignService(kernel, Logger.None, worldService);
+            using var signService = new OrionSignService(kernel, Logger.None);
             var sign = signService.Signs[1];
 
             Assert.Equal(1, sign.Index);
@@ -58,8 +56,7 @@ namespace Orion.World.Signs {
             Terraria.Main.sign[0] = new Terraria.Sign();
 
             using var kernel = new OrionKernel(Logger.None);
-            using var worldService = new OrionWorldService(kernel, Logger.None);
-            using var signService = new OrionSignService(kernel, Logger.None, worldService);
+            using var signService = new OrionSignService(kernel, Logger.None);
 
             var sign = signService.Signs[0];
             var sign2 = signService.Signs[0];
@@ -74,8 +71,7 @@ namespace Orion.World.Signs {
             }
 
             using var kernel = new OrionKernel(Logger.None);
-            using var worldService = new OrionWorldService(kernel, Logger.None);
-            using var signService = new OrionSignService(kernel, Logger.None, worldService);
+            using var signService = new OrionSignService(kernel, Logger.None);
 
             var signs = signService.Signs.ToList();
 
@@ -90,18 +86,15 @@ namespace Orion.World.Signs {
             var socket = new TestSocket { Connected = true };
             Terraria.Netplay.Clients[5] = new Terraria.RemoteClient { Id = 5, State = 10, Socket = socket };
             Terraria.Main.player[5] = new Terraria.Player { whoAmI = 5 };
+            Terraria.Main.tile[256, 100] = new Terraria.Tile { type = (ushort)BlockId.Sign };
             Terraria.Main.sign[0] = new Terraria.Sign { x = 256, y = 100, text = "test" };
 
             using var kernel = new OrionKernel(Logger.None);
             using var playerService = new OrionPlayerService(kernel, Logger.None);
-            using var worldService = new OrionWorldService(kernel, Logger.None);
-            using var signService = new OrionSignService(kernel, Logger.None, worldService);
-
-            Terraria.Main.tile[256, 100] = new Terraria.Tile { type = (ushort)BlockId.Sign };
+            using var signService = new OrionSignService(kernel, Logger.None);
 
             var isRun = false;
             kernel.RegisterHandler<SignReadEvent>(evt => {
-                Assert.Same(worldService.World, evt.World);
                 Assert.Same(playerService.Players[5], evt.Player);
                 Assert.Equal(256, evt.X);
                 Assert.Equal(100, evt.Y);
@@ -124,8 +117,7 @@ namespace Orion.World.Signs {
 
             using var kernel = new OrionKernel(Logger.None);
             using var playerService = new OrionPlayerService(kernel, Logger.None);
-            using var worldService = new OrionWorldService(kernel, Logger.None);
-            using var signService = new OrionSignService(kernel, Logger.None, worldService);
+            using var signService = new OrionSignService(kernel, Logger.None);
 
             Terraria.Main.tile[256, 100] = new Terraria.Tile { type = (ushort)BlockId.Sign };
 
