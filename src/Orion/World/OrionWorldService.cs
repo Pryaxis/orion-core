@@ -15,6 +15,7 @@
 // You should have received a copy of the GNU General Public License
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
+using System.Diagnostics.CodeAnalysis;
 using System.Runtime.CompilerServices;
 using Orion.Events;
 using Orion.Events.Packets;
@@ -75,6 +76,7 @@ namespace Orion.World {
         //
 
         [EventHandler("orion-world", Priority = EventPriority.Lowest)]
+        [SuppressMessage("CodeQuality", "IDE0051:Remove unused private members", Justification = "Implicitly called")]
         private void OnTileSquarePacket(PacketReceiveEvent<TileSquarePacket> evt) {
             var player = evt.Sender;
             ref var packet = ref evt.Packet;
@@ -94,6 +96,7 @@ namespace Orion.World {
 
             public int Width => Terraria.Main.maxTilesX;
             public int Height => Terraria.Main.maxTilesY;
+
             public IWorld World {
                 get {
                     // Lazily initialize the world so that a world of minimum size can be created.
