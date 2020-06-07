@@ -1044,5 +1044,101 @@ namespace Orion.World {
 
             Assert.False(worldService.World[2206, 312].IsBlockActive);
         }
+
+        [Fact]
+        public void PacketReceive_BlockPaintEventTriggered() {
+            // Set `State` to 10 so that the block paint packet is not ignored by the server.
+            Terraria.Netplay.Clients[5] = new Terraria.RemoteClient { Id = 5, State = 10 };
+            Terraria.Main.player[5] = new Terraria.Player { whoAmI = 5 };
+
+            using var kernel = new OrionKernel(Logger.None);
+            using var playerService = new OrionPlayerService(kernel, Logger.None);
+            using var worldService = new OrionWorldService(kernel, Logger.None);
+
+            Terraria.Main.tile[256, 100] = new Terraria.Tile();
+            Terraria.Main.tile[256, 100].active(true);
+
+            var isRun = false;
+            kernel.RegisterHandler<BlockPaintEvent>(evt => {
+                Assert.Same(worldService.World, evt.World);
+                Assert.Same(playerService.Players[5], evt.Player);
+                Assert.Equal(256, evt.X);
+                Assert.Equal(100, evt.Y);
+                Assert.Equal(PaintColor.Red, evt.Color);
+                isRun = true;
+            }, Logger.None);
+
+            TestUtils.FakeReceiveBytes(5, BlockPaintPacketTests.Bytes);
+
+            Assert.True(isRun);
+            Assert.Equal(PaintColor.Red, worldService.World[256, 100].BlockColor);
+        }
+
+        [Fact]
+        public void PacketReceive_BlockPaintEventCanceled() {
+            // Set `State` to 10 so that the block paint packet is not ignored by the server.
+            Terraria.Netplay.Clients[5] = new Terraria.RemoteClient { Id = 5, State = 10 };
+            Terraria.Main.player[5] = new Terraria.Player { whoAmI = 5 };
+
+            using var kernel = new OrionKernel(Logger.None);
+            using var playerService = new OrionPlayerService(kernel, Logger.None);
+            using var worldService = new OrionWorldService(kernel, Logger.None);
+
+            Terraria.Main.tile[256, 100] = new Terraria.Tile();
+            Terraria.Main.tile[256, 100].active(true);
+
+            kernel.RegisterHandler<BlockPaintEvent>(evt => evt.Cancel(), Logger.None);
+
+            TestUtils.FakeReceiveBytes(5, BlockPaintPacketTests.Bytes);
+
+            Assert.Equal(PaintColor.None, worldService.World[256, 100].BlockColor);
+        }
+
+        [Fact]
+        public void PacketReceive_WallPaintEventTriggered() {
+            // Set `State` to 10 so that the wall paint packet is not ignored by the server.
+            Terraria.Netplay.Clients[5] = new Terraria.RemoteClient { Id = 5, State = 10 };
+            Terraria.Main.player[5] = new Terraria.Player { whoAmI = 5 };
+
+            using var kernel = new OrionKernel(Logger.None);
+            using var playerService = new OrionPlayerService(kernel, Logger.None);
+            using var worldService = new OrionWorldService(kernel, Logger.None);
+
+            Terraria.Main.tile[256, 100] = new Terraria.Tile { wall = (byte)WallId.Stone };
+
+            var isRun = false;
+            kernel.RegisterHandler<WallPaintEvent>(evt => {
+                Assert.Same(worldService.World, evt.World);
+                Assert.Same(playerService.Players[5], evt.Player);
+                Assert.Equal(256, evt.X);
+                Assert.Equal(100, evt.Y);
+                Assert.Equal(PaintColor.Red, evt.Color);
+                isRun = true;
+            }, Logger.None);
+
+            TestUtils.FakeReceiveBytes(5, WallPaintPacketTests.Bytes);
+
+            Assert.True(isRun);
+            Assert.Equal(PaintColor.Red, worldService.World[256, 100].WallColor);
+        }
+
+        [Fact]
+        public void PacketReceive_WallPaintEventCanceled() {
+            // Set `State` to 10 so that the wall paint packet is not ignored by the server.
+            Terraria.Netplay.Clients[5] = new Terraria.RemoteClient { Id = 5, State = 10 };
+            Terraria.Main.player[5] = new Terraria.Player { whoAmI = 5 };
+
+            using var kernel = new OrionKernel(Logger.None);
+            using var playerService = new OrionPlayerService(kernel, Logger.None);
+            using var worldService = new OrionWorldService(kernel, Logger.None);
+
+            Terraria.Main.tile[256, 100] = new Terraria.Tile { wall = (byte)WallId.Stone };
+
+            kernel.RegisterHandler<WallPaintEvent>(evt => evt.Cancel(), Logger.None);
+
+            TestUtils.FakeReceiveBytes(5, WallPaintPacketTests.Bytes);
+
+            Assert.Equal(PaintColor.None, worldService.World[256, 100].WallColor);
+        }
     }
 }

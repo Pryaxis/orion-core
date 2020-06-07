@@ -85,6 +85,26 @@ namespace Orion.World {
             evt.CancellationReason = evt2.CancellationReason;
         }
 
+        [EventHandler("orion-world", Priority = EventPriority.Lowest)]
+        [SuppressMessage("CodeQuality", "IDE0051:Remove unused private members", Justification = "Implicitly called")]
+        private void OnBlockPaintPacket(PacketReceiveEvent<BlockPaintPacket> evt) {
+            var player = evt.Sender;
+            ref var packet = ref evt.Packet;
+            var evt2 = new BlockPaintEvent(World, player, packet.X, packet.Y, packet.Color);
+            Kernel.Raise(evt2, Log);
+            evt.CancellationReason = evt2.CancellationReason;
+        }
+
+        [EventHandler("orion-world", Priority = EventPriority.Lowest)]
+        [SuppressMessage("CodeQuality", "IDE0051:Remove unused private members", Justification = "Implicitly called")]
+        private void OnWallPaintPacket(PacketReceiveEvent<WallPaintPacket> evt) {
+            var player = evt.Sender;
+            ref var packet = ref evt.Packet;
+            var evt2 = new WallPaintEvent(World, player, packet.X, packet.Y, packet.Color);
+            Kernel.Raise(evt2, Log);
+            evt.CancellationReason = evt2.CancellationReason;
+        }
+
         // This class does not implement `IDisposable` as it is a static replacement.
         private class TileCollection : OTAPI.Tile.ITileCollection {
             private IWorld? _world;
