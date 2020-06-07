@@ -20,7 +20,7 @@ using Orion.Projectiles;
 
 namespace Orion.Events.Projectiles {
     /// <summary>
-    /// Provides the base class for an projectile-related event.
+    /// Provides the base class for a projectile-related event.
     /// </summary>
     public abstract class ProjectileEvent : Event {
         /// <summary>

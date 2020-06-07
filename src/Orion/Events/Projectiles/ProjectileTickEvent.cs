@@ -22,7 +22,7 @@ using Serilog.Events;
 
 namespace Orion.Events.Projectiles {
     /// <summary>
-    /// An event that occurs when an projectile is updating every tick. This event can be canceled.
+    /// An event that occurs when a projectile is updating every tick. This event can be canceled.
     /// </summary>
     [Event("proj-tick", LoggingLevel = LogEventLevel.Verbose)]
     public sealed class ProjectileTickEvent : ProjectileEvent, ICancelable {

@@ -21,7 +21,7 @@ using Orion.Packets.DataStructures;
 
 namespace Orion.Projectiles {
     /// <summary>
-    /// Represents an projectile service. Provides access to projectile-related properties and methods.
+    /// Represents a projectile service. Provides access to projectiles and publishes projectile-related events.
     /// </summary>
     [Service(ServiceScope.Singleton)]
     public interface IProjectileService {

@@ -22,7 +22,7 @@ using Serilog.Events;
 
 namespace Orion.Events.Projectiles {
     /// <summary>
-    /// An event that occurs when an projectile's defaults are being set: i.e., when an projectile's stats are being
+    /// An event that occurs when a projectile's defaults are being set: i.e., when a projectile's stats are being
     /// initialized. This event can be canceled.
     /// </summary>
     [Event("proj-defaults", LoggingLevel = LogEventLevel.Verbose)]
