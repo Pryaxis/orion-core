@@ -15,19 +15,8 @@
 // You should have received a copy of the GNU General Public License
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
-using System;
-
 namespace Orion.Entities {
-    /// <summary>
-    /// Represents an object that wraps another type of object.
-    /// </summary>
-    /// <typeparam name="TWrapped">The wrapped type.</typeparam>
-    public interface IWrapping<out TWrapped> {
-        /// <summary>
-        /// Gets the wrapped object. This is not guaranteed to succeed.
-        /// </summary>
-        /// <value>The wrapped object.</value>
-        [Obsolete("Avoid this property outside of Orion if possible.")]
+    internal interface IWrapping<out TWrapped> {
         TWrapped Wrapped { get; }
     }
 }

@@ -41,9 +41,7 @@ namespace Orion.Collections {
             get {
                 var wrappedItem = _wrappedItems.Span[index];
                 ref var item = ref _items[index];
-#pragma warning disable CS0618 // Type or member is obsolete
                 if (item is null || !ReferenceEquals(item.Wrapped, wrappedItem)) {
-#pragma warning restore CS0618 // Type or member is obsolete
                     return item = _converter(index, wrappedItem);
                 }
 
