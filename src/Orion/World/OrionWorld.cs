@@ -17,12 +17,16 @@
 
 using System;
 using System.Diagnostics;
+using System.Diagnostics.CodeAnalysis;
+using System.Diagnostics.Contracts;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
+using Destructurama.Attributed;
 using Orion.Entities;
 using Orion.World.Tiles;
 
 namespace Orion.World {
+    [LogAsScalar]
     internal sealed unsafe class OrionWorld : AnnotatableObject, IDisposable, IWorld {
         private readonly unsafe Tile* _tiles;
 

@@ -79,7 +79,7 @@ namespace Orion.Events.World.Tiles {
         /// Gets the tiles.
         /// </summary>
         /// <value>The tiles.</value>
-        public Tile[,] Tiles { get; }
+        [NotLogged] public Tile[,] Tiles { get; }
 
         /// <inheritdoc/>
         [NotLogged] public string? CancellationReason { get; set; }
