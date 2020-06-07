@@ -30,7 +30,7 @@ namespace Orion.Events.Players {
         /// <paramref name="player"/>, <paramref name="command"/>, and <paramref name="message"/>.
         /// </summary>
         /// <param name="player">The player.</param>
-        /// <param name="command">The command.</param>
+        /// <param name="command">The command that the player used.</param>
         /// <param name="message">The message.</param>
         /// <exception cref="ArgumentNullException">
         /// <paramref name="player"/>, <paramref name="command"/>, or <paramref name="message"/> are

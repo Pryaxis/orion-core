@@ -23,20 +23,6 @@ namespace Orion.Events.Players {
     /// <summary>
     /// An event that occurs when a player sends their health information. This event can be canceled.
     /// </summary>
-    /// <example>
-    /// The following code example performs anti-cheat checks on players:
-    /// <code>
-    /// [EventHandler(EventPriority.Highest, Name = "example")]
-    /// public void OnPlayerHealth(PlayerHealthEvent evt) {
-    ///     var player = evt.Player;
-    ///     if (evt.MaxHealth > 500) {
-    ///         player.Disconnect("Maximum health is too large");
-    ///     } else if (evt.Health > evt.MaxHealth) {
-    ///         player.Disconnect("Health is too large");
-    ///     }
-    /// }
-    /// </code>
-    /// </example>
     [Event("player-hp")]
     public sealed class PlayerHealthEvent : PlayerEvent, ICancelable {
         /// <summary>

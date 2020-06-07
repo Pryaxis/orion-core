@@ -23,20 +23,6 @@ namespace Orion.Events.Players {
     /// <summary>
     /// An event that occurs when a player sends their mana information. This event can be canceled.
     /// </summary>
-    /// <example>
-    /// The following code example performs anti-cheat checks on players:
-    /// <code>
-    /// [EventHandler(EventPriority.Highest, Name = "example")]
-    /// public void OnPlayerMana(PlayerManaEvent evt) {
-    ///     var player = evt.Player;
-    ///     if (evt.MaxMana > 500) {
-    ///         player.Disconnect("Maximum mana is too large");
-    ///     } else if (evt.Mana > evt.MaxMana) {
-    ///         player.Disconnect("Mana is too large");
-    ///     }
-    /// }
-    /// </code>
-    /// </example>
     [Event("player-mp")]
     public sealed class PlayerManaEvent : PlayerEvent, ICancelable {
         /// <summary>

@@ -23,22 +23,6 @@ namespace Orion.Events.Players {
     /// <summary>
     /// An event that occurs when a player sends their team. This event can be canceled.
     /// </summary>
-    /// <example>
-    /// The following code example prevents team switches:
-    /// <code>
-    /// [EventHandler(EventPriority.Highest, Name = "example")]
-    /// public void OnPlayerTeam(PlayerTeamEvent evt) {
-    ///     if (evt.Team != PlayerTeam.None) {
-    ///         var player = evt.Player;
-    ///         player.SendPacket(new PlayerTeamPacket {
-    ///             PlayerIndex = player.Index,
-    ///             Team = PlayerTeam.None
-    ///         });
-    ///         evt.Cancel();
-    ///     }
-    /// }
-    /// </code>
-    /// </example>
     [Event("player-team")]
     public sealed class PlayerTeamEvent : PlayerEvent, ICancelable {
         /// <summary>

@@ -59,6 +59,11 @@ namespace Orion.Players {
             new ThreadLocal<byte[]>(() => new byte[ushort.MaxValue]);
 
         public OrionPlayerService(OrionKernel kernel, ILogger log) : base(kernel, log) {
+            // Construct the `Players` array. Note that the last player should be ignored, as it is not a real player.
+            Players = new WrappedReadOnlyList<OrionPlayer, Terraria.Player>(
+                Terraria.Main.player.AsMemory(..^1),
+                (playerIndex, terrariaPlayer) => new OrionPlayer(playerIndex, terrariaPlayer, kernel, log));
+
             OnReceivePacketHandler MakeOnReceivePacketHandler(Type packetType) =>
                 (OnReceivePacketHandler)_onReceivePacket
                     .MakeGenericMethod(packetType)
@@ -81,11 +86,6 @@ namespace Orion.Players {
                 _onReceiveModuleHandlers[(ushort)moduleId] = MakeOnReceivePacketHandler(packetType);
                 _onSendModuleHandlers[(ushort)moduleId] = MakeOnSendPacketHandler(packetType);
             }
-
-            // Construct the `Players` array. Note that the last player should be ignored, as it is not a real player.
-            Players = new WrappedReadOnlyList<OrionPlayer, Terraria.Player>(
-                Terraria.Main.player.AsMemory(..^1),
-                (playerIndex, terrariaPlayer) => new OrionPlayer(playerIndex, terrariaPlayer, kernel, log));
 
             OTAPI.Hooks.Net.ReceiveData = ReceiveDataHandler;
             OTAPI.Hooks.Net.SendBytes = SendBytesHandler;
@@ -148,9 +148,9 @@ namespace Orion.Players {
             Debug.Assert(offset >= 0 && offset + size <= data.Length);
             Debug.Assert(size > 0);
 
+            OnSendPacketHandler handler;
             var span = data.AsSpan((offset + 2)..(offset + size));
             var packetId = span[0];
-            OnSendPacketHandler handler;
             if (packetId == (byte)PacketId.Module) {
                 var moduleId = Unsafe.ReadUnaligned<ushort>(ref span[1]);
                 handler = _onSendModuleHandlers[moduleId] ?? OnSendPacket<ModulePacket<UnknownModule>>;
@@ -205,8 +205,8 @@ namespace Orion.Players {
                 Unsafe.As<TPacket, UnknownPacket>(ref packet).Id = (PacketId)span[0];
             }
 
-            var player = Players[buffer.whoAmI];
-            var evt = new PacketReceiveEvent<TPacket>(ref packet, player);
+            var sender = Players[buffer.whoAmI];
+            var evt = new PacketReceiveEvent<TPacket>(ref packet, sender);
             Kernel.Raise(evt, Log);
             if (evt.IsCanceled()) {
                 return;
