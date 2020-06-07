@@ -38,6 +38,8 @@ namespace Orion.Packets {
         PlayerPvp = 30,
         PlayerMana = 42,
         PlayerTeam = 45,
+        BlockPaint = 63,
+        WallPaint = 64,
         ClientUuid = 68,
         Module = 82,
         ServerChat = 107,
@@ -58,6 +60,8 @@ namespace Orion.Packets {
             [PacketId.PlayerMana] = typeof(PlayerManaPacket),
             [PacketId.PlayerPvp] = typeof(PlayerPvpPacket),
             [PacketId.PlayerTeam] = typeof(PlayerTeamPacket),
+            [PacketId.BlockPaint] = typeof(BlockPaintPacket),
+            [PacketId.WallPaint] = typeof(WallPaintPacket),
             [PacketId.ClientUuid] = typeof(ClientUuidPacket),
             [PacketId.ServerChat] = typeof(ServerChatPacket),
         };

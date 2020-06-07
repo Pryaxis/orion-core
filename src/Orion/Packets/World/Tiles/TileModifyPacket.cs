@@ -36,15 +36,15 @@ namespace Orion.Packets.World.Tiles {
         [field: FieldOffset(0)] public TileModification Modification { get; set; }
 
         /// <summary>
-        /// Gets or sets the X coordinate.
+        /// Gets or sets the tile's X coordinate.
         /// </summary>
-        /// <value>The X coordinate.</value>
+        /// <value>The tile's X coordinate.</value>
         [field: FieldOffset(1)] public short X { get; set; }
 
         /// <summary>
-        /// Gets or sets the Y coordinate.
+        /// Gets or sets the tile's Y coordinate.
         /// </summary>
-        /// <value>The Y coordinate.</value>
+        /// <value>The tile's Y coordinate.</value>
         [field: FieldOffset(3)] public short Y { get; set; }
 
         /// <summary>
