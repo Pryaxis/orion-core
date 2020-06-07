@@ -16,6 +16,8 @@
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
 using System.Runtime.CompilerServices;
+using Orion.Events;
+using Orion.Events.World;
 using Orion.Framework;
 using Orion.World.Tiles;
 using Serilog;
@@ -34,11 +36,32 @@ namespace Orion.World {
                 _tileCollection = new TileCollection();
                 Terraria.Main.tile = _tileCollection;
             }
+
+            OTAPI.Hooks.World.IO.PostLoadWorld = PostLoadWorldHandler;
+            OTAPI.Hooks.World.IO.PreSaveWorld = PreSaveWorldHandler;
         }
 
         public IWorld World => _tileCollection.World;
 
-        public override void Dispose() { }
+        public override void Dispose() {
+            OTAPI.Hooks.World.IO.PostLoadWorld = null;
+            OTAPI.Hooks.World.IO.PreSaveWorld = null;
+        }
+
+        // =============================================================================================================
+        // OTAPI hooks
+        //
+
+        private void PostLoadWorldHandler(bool _) {
+            var evt = new WorldLoadedEvent(World);
+            Kernel.Raise(evt, Log);
+        }
+
+        private OTAPI.HookResult PreSaveWorldHandler(ref bool _, ref bool _2) {
+            var evt = new WorldSaveEvent(World);
+            Kernel.Raise(evt, Log);
+            return evt.IsCanceled() ? OTAPI.HookResult.Cancel : OTAPI.HookResult.Continue;
+        }
 
         // This class does not implement `IDisposable` as it is a static replacement.
         private class TileCollection : OTAPI.Tile.ITileCollection {
