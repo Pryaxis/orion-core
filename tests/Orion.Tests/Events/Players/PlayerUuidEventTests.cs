@@ -47,7 +47,7 @@ namespace Orion.Events.Players {
         [Fact]
         public void CancellationReason_Set_Get() {
             var player = new Mock<IPlayer>().Object;
-            var evt = new PlayerUuidEvent(player, "");
+            var evt = new PlayerUuidEvent(player, "Terraria");
 
             evt.CancellationReason = "test";
 

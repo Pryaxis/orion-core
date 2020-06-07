@@ -32,7 +32,7 @@ namespace Orion.Events.Players {
         [Fact]
         public void Mana_Get() {
             var player = new Mock<IPlayer>().Object;
-            var evt = new PlayerManaEvent(player, 100, 0);
+            var evt = new PlayerManaEvent(player, 100, 200);
 
             Assert.Equal(100, evt.Mana);
         }
@@ -40,7 +40,7 @@ namespace Orion.Events.Players {
         [Fact]
         public void MaxMana_Get() {
             var player = new Mock<IPlayer>().Object;
-            var evt = new PlayerManaEvent(player, 0, 200);
+            var evt = new PlayerManaEvent(player, 100, 200);
 
             Assert.Equal(200, evt.MaxMana);
         }
@@ -48,7 +48,7 @@ namespace Orion.Events.Players {
         [Fact]
         public void CancellationReason_Set_Get() {
             var player = new Mock<IPlayer>().Object;
-            var evt = new PlayerManaEvent(player, 0, 200);
+            var evt = new PlayerManaEvent(player, 100, 200);
 
             evt.CancellationReason = "test";
 

@@ -17,8 +17,11 @@
 
 using System.Runtime.CompilerServices;
 using Orion.Events;
+using Orion.Events.Packets;
 using Orion.Events.World;
+using Orion.Events.World.Tiles;
 using Orion.Framework;
+using Orion.Packets.World.Tiles;
 using Orion.World.Tiles;
 using Serilog;
 
@@ -39,6 +42,8 @@ namespace Orion.World {
 
             OTAPI.Hooks.World.IO.PostLoadWorld = PostLoadWorldHandler;
             OTAPI.Hooks.World.IO.PreSaveWorld = PreSaveWorldHandler;
+
+            Kernel.RegisterHandlers(this, Log);
         }
 
         public IWorld World => _tileCollection.World;
@@ -46,6 +51,8 @@ namespace Orion.World {
         public override void Dispose() {
             OTAPI.Hooks.World.IO.PostLoadWorld = null;
             OTAPI.Hooks.World.IO.PreSaveWorld = null;
+
+            Kernel.DeregisterHandlers(this, Log);
         }
 
         // =============================================================================================================
@@ -61,6 +68,19 @@ namespace Orion.World {
             var evt = new WorldSaveEvent(World);
             Kernel.Raise(evt, Log);
             return evt.IsCanceled() ? OTAPI.HookResult.Cancel : OTAPI.HookResult.Continue;
+        }
+
+        // =============================================================================================================
+        // World event publishers
+        //
+
+        [EventHandler("orion-world", Priority = EventPriority.Lowest)]
+        private void OnTileSquarePacket(PacketReceiveEvent<TileSquarePacket> evt) {
+            var player = evt.Sender;
+            ref var packet = ref evt.Packet;
+            var evt2 = new TileSquareEvent(World, player, packet.X, packet.Y, packet.Tiles);
+            Kernel.Raise(evt2, Log);
+            evt.CancellationReason = evt2.CancellationReason;
         }
 
         // This class does not implement `IDisposable` as it is a static replacement.

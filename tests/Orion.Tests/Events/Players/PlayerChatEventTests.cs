@@ -46,7 +46,7 @@ namespace Orion.Events.Players {
         [Fact]
         public void Command_Get() {
             var player = new Mock<IPlayer>().Object;
-            var evt = new PlayerChatEvent(player, "Say", "");
+            var evt = new PlayerChatEvent(player, "Say", "/command test");
 
             Assert.Equal("Say", evt.Command);
         }
@@ -54,7 +54,7 @@ namespace Orion.Events.Players {
         [Fact]
         public void Message_Get() {
             var player = new Mock<IPlayer>().Object;
-            var evt = new PlayerChatEvent(player, "", "/command test");
+            var evt = new PlayerChatEvent(player, "Say", "/command test");
 
             Assert.Equal("/command test", evt.Message);
         }
@@ -62,7 +62,7 @@ namespace Orion.Events.Players {
         [Fact]
         public void CancellationReason_Set_Get() {
             var player = new Mock<IPlayer>().Object;
-            var evt = new PlayerChatEvent(player, "", "");
+            var evt = new PlayerChatEvent(player, "Say", "/command test");
 
             evt.CancellationReason = "test";
 

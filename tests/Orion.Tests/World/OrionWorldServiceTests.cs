@@ -15,6 +15,10 @@
 // You should have received a copy of the GNU General Public License
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
+using Orion.Events;
+using Orion.Events.World.Tiles;
+using Orion.Packets.World.Tiles;
+using Orion.Players;
 using Orion.World.Tiles;
 using Serilog.Core;
 using Xunit;
@@ -960,6 +964,85 @@ namespace Orion.World {
             worldService.World[0, 0] = new Tile { Slope = Slope.BottomRight };
 
             Assert.Equal((int)Slope.BottomRight + 1, Terraria.Main.tile[0, 0].blockType());
+        }
+
+        [Fact]
+        public void PacketReceive_TileSquareEventTriggered() {
+            // Set `State` to 10 so that the tile square packet is not ignored by the server.
+            Terraria.Netplay.Clients[5] = new Terraria.RemoteClient { Id = 5, State = 10 };
+            Terraria.Main.player[5] = new Terraria.Player { whoAmI = 5 };
+
+            for (var i = 0; i < 3; ++i) {
+                for (var j = 0; j < 3; ++j) {
+                    Terraria.Main.tile[2206 + i, 312 + j] = new Terraria.Tile();
+                }
+            }
+
+            using var kernel = new OrionKernel(Logger.None);
+            using var playerService = new OrionPlayerService(kernel, Logger.None);
+            using var worldService = new OrionWorldService(kernel, Logger.None);
+            var isRun = false;
+            kernel.RegisterHandler<TileSquareEvent>(evt => {
+                Assert.Same(worldService.World, evt.World);
+                Assert.Same(playerService.Players[5], evt.Player);
+                Assert.Equal(2206, evt.X);
+                Assert.Equal(312, evt.Y);
+                isRun = true;
+            }, Logger.None);
+
+            TestUtils.FakeReceiveBytes(5, TileSquarePacketTests.Bytes);
+
+            Assert.True(isRun);
+            Assert.Equal(BlockId.Dirt, worldService.World[2206, 312].BlockId);
+            Assert.True(worldService.World[2206, 312].IsBlockActive);
+        }
+
+        [Fact]
+        public void PacketReceive_TileSquareEventModified() {
+            // Set `State` to 10 so that the tile square packet is not ignored by the server.
+            Terraria.Netplay.Clients[5] = new Terraria.RemoteClient { Id = 5, State = 10 };
+            Terraria.Main.player[5] = new Terraria.Player { whoAmI = 5 };
+
+            for (var i = 0; i < 3; ++i) {
+                for (var j = 0; j < 3; ++j) {
+                    Terraria.Main.tile[2206 + i, 312 + j] = new Terraria.Tile();
+                }
+            }
+
+            using var kernel = new OrionKernel(Logger.None);
+            using var playerService = new OrionPlayerService(kernel, Logger.None);
+            using var worldService = new OrionWorldService(kernel, Logger.None);
+            kernel.RegisterHandler<TileSquareEvent>(evt => {
+                evt.Tiles[0, 0].BlockId = BlockId.Stone;
+                evt.Tiles[0, 0].IsBlockActive = true;
+            }, Logger.None);
+
+            TestUtils.FakeReceiveBytes(5, TileSquarePacketTests.Bytes);
+
+            Assert.Equal(BlockId.Stone, worldService.World[2206, 312].BlockId);
+            Assert.True(worldService.World[2206, 312].IsBlockActive);
+        }
+
+        [Fact]
+        public void PacketReceive_TileSquareEventCanceled() {
+            // Set `State` to 10 so that the tile square packet is not ignored by the server.
+            Terraria.Netplay.Clients[5] = new Terraria.RemoteClient { Id = 5, State = 10 };
+            Terraria.Main.player[5] = new Terraria.Player { whoAmI = 5 };
+
+            for (var i = 0; i < 3; ++i) {
+                for (var j = 0; j < 3; ++j) {
+                    Terraria.Main.tile[2206 + i, 312 + j] = new Terraria.Tile();
+                }
+            }
+
+            using var kernel = new OrionKernel(Logger.None);
+            using var playerService = new OrionPlayerService(kernel, Logger.None);
+            using var worldService = new OrionWorldService(kernel, Logger.None);
+            kernel.RegisterHandler<TileSquareEvent>(evt => evt.Cancel(), Logger.None);
+
+            TestUtils.FakeReceiveBytes(5, TileSquarePacketTests.Bytes);
+
+            Assert.False(worldService.World[2206, 312].IsBlockActive);
         }
     }
 }

@@ -40,7 +40,7 @@ namespace Orion.Events.Players {
         [Fact]
         public void CancellationReason_Set_Get() {
             var player = new Mock<IPlayer>().Object;
-            var evt = new PlayerTeamEvent(player, PlayerTeam.None);
+            var evt = new PlayerTeamEvent(player, PlayerTeam.Red);
 
             evt.CancellationReason = "test";
 
