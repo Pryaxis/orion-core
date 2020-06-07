@@ -31,9 +31,8 @@ namespace Orion.Players {
         [Fact]
         public void Name_Get() {
             using var kernel = new OrionKernel(Logger.None);
-            using var playerService = new OrionPlayerService(kernel, Logger.None);
             var terrariaPlayer = new Terraria.Player { name = "test" };
-            var player = new OrionPlayer(terrariaPlayer, playerService);
+            var player = new OrionPlayer(terrariaPlayer, kernel, Logger.None);
 
             Assert.Equal("test", player.Name);
         }
@@ -41,9 +40,8 @@ namespace Orion.Players {
         [Fact]
         public void Name_SetNullValue_ThrowsArgumentNullException() {
             using var kernel = new OrionKernel(Logger.None);
-            using var playerService = new OrionPlayerService(kernel, Logger.None);
             var terrariaPlayer = new Terraria.Player();
-            var player = new OrionPlayer(terrariaPlayer, playerService);
+            var player = new OrionPlayer(terrariaPlayer, kernel, Logger.None);
 
             Assert.Throws<ArgumentNullException>(() => player.Name = null!);
         }
@@ -51,9 +49,8 @@ namespace Orion.Players {
         [Fact]
         public void Name_Set() {
             using var kernel = new OrionKernel(Logger.None);
-            using var playerService = new OrionPlayerService(kernel, Logger.None);
             var terrariaPlayer = new Terraria.Player();
-            var player = new OrionPlayer(terrariaPlayer, playerService);
+            var player = new OrionPlayer(terrariaPlayer, kernel, Logger.None);
 
             player.Name = "test";
 
@@ -63,9 +60,8 @@ namespace Orion.Players {
         [Fact]
         public void Stats_Health_Get() {
             using var kernel = new OrionKernel(Logger.None);
-            using var playerService = new OrionPlayerService(kernel, Logger.None);
             var terrariaPlayer = new Terraria.Player { statLife = 100 };
-            var player = new OrionPlayer(terrariaPlayer, playerService);
+            var player = new OrionPlayer(terrariaPlayer, kernel, Logger.None);
 
             Assert.Equal(100, player.Stats.Health);
         }
@@ -73,9 +69,8 @@ namespace Orion.Players {
         [Fact]
         public void Stats_Health_Set() {
             using var kernel = new OrionKernel(Logger.None);
-            using var playerService = new OrionPlayerService(kernel, Logger.None);
             var terrariaPlayer = new Terraria.Player();
-            var player = new OrionPlayer(terrariaPlayer, playerService);
+            var player = new OrionPlayer(terrariaPlayer, kernel, Logger.None);
 
             player.Stats.Health = 100;
 
@@ -85,9 +80,8 @@ namespace Orion.Players {
         [Fact]
         public void Stats_MaxHealth_Get() {
             using var kernel = new OrionKernel(Logger.None);
-            using var playerService = new OrionPlayerService(kernel, Logger.None);
             var terrariaPlayer = new Terraria.Player { statLifeMax = 500 };
-            var player = new OrionPlayer(terrariaPlayer, playerService);
+            var player = new OrionPlayer(terrariaPlayer, kernel, Logger.None);
 
             Assert.Equal(500, player.Stats.MaxHealth);
         }
@@ -95,9 +89,8 @@ namespace Orion.Players {
         [Fact]
         public void Stats_MaxHealth_Set() {
             using var kernel = new OrionKernel(Logger.None);
-            using var playerService = new OrionPlayerService(kernel, Logger.None);
             var terrariaPlayer = new Terraria.Player();
-            var player = new OrionPlayer(terrariaPlayer, playerService);
+            var player = new OrionPlayer(terrariaPlayer, kernel, Logger.None);
 
             player.Stats.MaxHealth = 500;
 
@@ -107,9 +100,8 @@ namespace Orion.Players {
         [Fact]
         public void Stats_Mana_Get() {
             using var kernel = new OrionKernel(Logger.None);
-            using var playerService = new OrionPlayerService(kernel, Logger.None);
             var terrariaPlayer = new Terraria.Player { statMana = 100 };
-            var player = new OrionPlayer(terrariaPlayer, playerService);
+            var player = new OrionPlayer(terrariaPlayer, kernel, Logger.None);
 
             Assert.Equal(100, player.Stats.Mana);
         }
@@ -117,9 +109,8 @@ namespace Orion.Players {
         [Fact]
         public void Stats_Mana_Set() {
             using var kernel = new OrionKernel(Logger.None);
-            using var playerService = new OrionPlayerService(kernel, Logger.None);
             var terrariaPlayer = new Terraria.Player();
-            var player = new OrionPlayer(terrariaPlayer, playerService);
+            var player = new OrionPlayer(terrariaPlayer, kernel, Logger.None);
 
             player.Stats.Mana = 100;
 
@@ -129,9 +120,8 @@ namespace Orion.Players {
         [Fact]
         public void Stats_MaxMana_Get() {
             using var kernel = new OrionKernel(Logger.None);
-            using var playerService = new OrionPlayerService(kernel, Logger.None);
             var terrariaPlayer = new Terraria.Player { statManaMax = 200 };
-            var player = new OrionPlayer(terrariaPlayer, playerService);
+            var player = new OrionPlayer(terrariaPlayer, kernel, Logger.None);
 
             Assert.Equal(200, player.Stats.MaxMana);
         }
@@ -139,9 +129,8 @@ namespace Orion.Players {
         [Fact]
         public void Stats_MaxMana_Set() {
             using var kernel = new OrionKernel(Logger.None);
-            using var playerService = new OrionPlayerService(kernel, Logger.None);
             var terrariaPlayer = new Terraria.Player();
-            var player = new OrionPlayer(terrariaPlayer, playerService);
+            var player = new OrionPlayer(terrariaPlayer, kernel, Logger.None);
 
             player.Stats.MaxMana = 200;
 
@@ -151,9 +140,8 @@ namespace Orion.Players {
         [Fact]
         public void Stats_Defense_Get() {
             using var kernel = new OrionKernel(Logger.None);
-            using var playerService = new OrionPlayerService(kernel, Logger.None);
             var terrariaPlayer = new Terraria.Player { statDefense = 50 };
-            var player = new OrionPlayer(terrariaPlayer, playerService);
+            var player = new OrionPlayer(terrariaPlayer, kernel, Logger.None);
 
             Assert.Equal(50, player.Stats.Defense);
         }
@@ -163,9 +151,8 @@ namespace Orion.Players {
         [InlineData(100)]
         public void Buffs_Get_Index_Get_InvalidIndex_ThrowsIndexOutOfRangeException(int index) {
             using var kernel = new OrionKernel(Logger.None);
-            using var playerService = new OrionPlayerService(kernel, Logger.None);
             var terrariaPlayer = new Terraria.Player();
-            var player = new OrionPlayer(terrariaPlayer, playerService);
+            var player = new OrionPlayer(terrariaPlayer, kernel, Logger.None);
 
             Assert.Throws<IndexOutOfRangeException>(() => player.Buffs[index]);
         }
@@ -173,11 +160,10 @@ namespace Orion.Players {
         [Fact]
         public void Buffs_Get_Index_Get() {
             using var kernel = new OrionKernel(Logger.None);
-            using var playerService = new OrionPlayerService(kernel, Logger.None);
             var terrariaPlayer = new Terraria.Player();
             terrariaPlayer.buffType[0] = (int)BuffId.ObsidianSkin;
             terrariaPlayer.buffTime[0] = 28800;
-            var player = new OrionPlayer(terrariaPlayer, playerService);
+            var player = new OrionPlayer(terrariaPlayer, kernel, Logger.None);
 
             Assert.Equal(new Buff(BuffId.ObsidianSkin, TimeSpan.FromMinutes(8)), player.Buffs[0]);
         }
@@ -187,11 +173,10 @@ namespace Orion.Players {
         [InlineData(0)]
         public void Buffs_Get_Index_InvalidTime_Get(int buffTime) {
             using var kernel = new OrionKernel(Logger.None);
-            using var playerService = new OrionPlayerService(kernel, Logger.None);
             var terrariaPlayer = new Terraria.Player();
             terrariaPlayer.buffType[0] = (int)BuffId.ObsidianSkin;
             terrariaPlayer.buffTime[0] = buffTime;
-            var player = new OrionPlayer(terrariaPlayer, playerService);
+            var player = new OrionPlayer(terrariaPlayer, kernel, Logger.None);
 
             Assert.Equal(default, player.Buffs[0]);
         }
@@ -201,9 +186,8 @@ namespace Orion.Players {
         [InlineData(100)]
         public void Buffs_Get_Index_Set_InvalidIndex_ThrowsIndexOutOfRangeException(int index) {
             using var kernel = new OrionKernel(Logger.None);
-            using var playerService = new OrionPlayerService(kernel, Logger.None);
             var terrariaPlayer = new Terraria.Player();
-            var player = new OrionPlayer(terrariaPlayer, playerService);
+            var player = new OrionPlayer(terrariaPlayer, kernel, Logger.None);
 
             Assert.Throws<IndexOutOfRangeException>(() => player.Buffs[index] = default);
         }
@@ -211,9 +195,8 @@ namespace Orion.Players {
         [Fact]
         public void Buffs_Get_Index_Set() {
             using var kernel = new OrionKernel(Logger.None);
-            using var playerService = new OrionPlayerService(kernel, Logger.None);
             var terrariaPlayer = new Terraria.Player();
-            var player = new OrionPlayer(terrariaPlayer, playerService);
+            var player = new OrionPlayer(terrariaPlayer, kernel, Logger.None);
 
             player.Buffs[0] = new Buff(BuffId.ObsidianSkin, TimeSpan.FromMinutes(8));
 
@@ -224,9 +207,8 @@ namespace Orion.Players {
         [Fact]
         public void Difficulty_Get() {
             using var kernel = new OrionKernel(Logger.None);
-            using var playerService = new OrionPlayerService(kernel, Logger.None);
             var terrariaPlayer = new Terraria.Player { difficulty = (byte)PlayerDifficulty.Journey };
-            var player = new OrionPlayer(terrariaPlayer, playerService);
+            var player = new OrionPlayer(terrariaPlayer, kernel, Logger.None);
 
             Assert.Equal(PlayerDifficulty.Journey, player.Difficulty);
         }
@@ -234,9 +216,8 @@ namespace Orion.Players {
         [Fact]
         public void Difficulty_Set() {
             using var kernel = new OrionKernel(Logger.None);
-            using var playerService = new OrionPlayerService(kernel, Logger.None);
             var terrariaPlayer = new Terraria.Player();
-            var player = new OrionPlayer(terrariaPlayer, playerService);
+            var player = new OrionPlayer(terrariaPlayer, kernel, Logger.None);
 
             player.Difficulty = PlayerDifficulty.Journey;
 
@@ -246,9 +227,8 @@ namespace Orion.Players {
         [Fact]
         public void IsInPvp_Get() {
             using var kernel = new OrionKernel(Logger.None);
-            using var playerService = new OrionPlayerService(kernel, Logger.None);
             var terrariaPlayer = new Terraria.Player { hostile = true };
-            var player = new OrionPlayer(terrariaPlayer, playerService);
+            var player = new OrionPlayer(terrariaPlayer, kernel, Logger.None);
 
             Assert.True(player.IsInPvp);
         }
@@ -256,9 +236,8 @@ namespace Orion.Players {
         [Fact]
         public void IsInPvp_Set() {
             using var kernel = new OrionKernel(Logger.None);
-            using var playerService = new OrionPlayerService(kernel, Logger.None);
             var terrariaPlayer = new Terraria.Player();
-            var player = new OrionPlayer(terrariaPlayer, playerService);
+            var player = new OrionPlayer(terrariaPlayer, kernel, Logger.None);
 
             player.IsInPvp = true;
 
@@ -268,9 +247,8 @@ namespace Orion.Players {
         [Fact]
         public void Team_Get() {
             using var kernel = new OrionKernel(Logger.None);
-            using var playerService = new OrionPlayerService(kernel, Logger.None);
             var terrariaPlayer = new Terraria.Player { team = 1 };
-            var player = new OrionPlayer(terrariaPlayer, playerService);
+            var player = new OrionPlayer(terrariaPlayer, kernel, Logger.None);
 
             Assert.Equal(PlayerTeam.Red, player.Team);
         }
@@ -278,9 +256,8 @@ namespace Orion.Players {
         [Fact]
         public void Team_Set() {
             using var kernel = new OrionKernel(Logger.None);
-            using var playerService = new OrionPlayerService(kernel, Logger.None);
             var terrariaPlayer = new Terraria.Player();
-            var player = new OrionPlayer(terrariaPlayer, playerService);
+            var player = new OrionPlayer(terrariaPlayer, kernel, Logger.None);
 
             player.Team = PlayerTeam.Red;
 
@@ -293,9 +270,8 @@ namespace Orion.Players {
             Terraria.Netplay.Clients[5] = new Terraria.RemoteClient { Id = 5, Socket = socket };
 
             using var kernel = new OrionKernel(Logger.None);
-            using var playerService = new OrionPlayerService(kernel, Logger.None);
             var terrariaPlayer = new Terraria.Player();
-            var player = new OrionPlayer(5, terrariaPlayer, playerService);
+            var player = new OrionPlayer(5, terrariaPlayer, kernel, Logger.None);
 
             var packet = new TestPacket();
             player.SendPacket(ref packet);
@@ -309,9 +285,8 @@ namespace Orion.Players {
             Terraria.Netplay.Clients[5] = new Terraria.RemoteClient { Id = 5, Socket = socket };
 
             using var kernel = new OrionKernel(Logger.None);
-            using var playerService = new OrionPlayerService(kernel, Logger.None);
             var terrariaPlayer = new Terraria.Player();
-            var player = new OrionPlayer(5, terrariaPlayer, playerService);
+            var player = new OrionPlayer(5, terrariaPlayer, kernel, Logger.None);
             kernel.RegisterHandler<PacketSendEvent<TestPacket>>(evt => evt.Cancel(), Logger.None);
 
             var packet = new TestPacket();
@@ -326,9 +301,8 @@ namespace Orion.Players {
             Terraria.Netplay.Clients[5] = new Terraria.RemoteClient { Id = 5, Socket = socket };
 
             using var kernel = new OrionKernel(Logger.None);
-            using var playerService = new OrionPlayerService(kernel, Logger.None);
             var terrariaPlayer = new Terraria.Player();
-            var player = new OrionPlayer(5, terrariaPlayer, playerService);
+            var player = new OrionPlayer(5, terrariaPlayer, kernel, Logger.None);
 
             var packet = new TestPacket { Value = 100 };
             player.SendPacket(ref packet);

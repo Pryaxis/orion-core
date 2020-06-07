@@ -92,7 +92,7 @@ namespace Orion.Players {
             // Construct the `Players` array. Note that the last player should be ignored, as it is not a real player.
             Players = new WrappedReadOnlyList<OrionPlayer, Terraria.Player>(
                 Terraria.Main.player.AsMemory(..^1),
-                (playerIndex, terrariaPlayer) => new OrionPlayer(playerIndex, terrariaPlayer, this));
+                (playerIndex, terrariaPlayer) => new OrionPlayer(playerIndex, terrariaPlayer, kernel, log));
 
             OTAPI.Hooks.Net.ReceiveData = ReceiveDataHandler;
             OTAPI.Hooks.Net.SendBytes = SendBytesHandler;
@@ -138,6 +138,64 @@ namespace Orion.Players {
             return OTAPI.HookResult.Cancel;
         }
 
+        private OTAPI.HookResult SendBytesHandler(
+                ref int playerIndex, ref byte[] data, ref int offset, ref int size,
+                ref Terraria.Net.Sockets.SocketSendCallback _, ref object _2) {
+            Debug.Assert(playerIndex >= 0 && playerIndex < Players.Count);
+            Debug.Assert(data != null);
+            Debug.Assert(offset >= 0 && offset + size <= data.Length);
+            Debug.Assert(size > 0);
+
+            var span = data.AsSpan((offset + 2)..(offset + size));
+            var packetId = span[0];
+            OnSendPacketHandler handler;
+            if (packetId == (byte)PacketId.Module) {
+                var moduleId = Unsafe.ReadUnaligned<ushort>(ref span[1]);
+                handler = _onSendModuleHandlers[moduleId] ?? OnSendPacket<ModulePacket<UnknownModule>>;
+            } else {
+                handler = _onSendPacketHandlers[packetId] ?? OnSendPacket<UnknownPacket>;
+            }
+
+            handler(playerIndex, span);
+            return OTAPI.HookResult.Cancel;
+        }
+
+        private OTAPI.HookResult PreUpdateHandler(Terraria.Player terrariaPlayer, ref int _) {
+            Debug.Assert(terrariaPlayer != null);
+
+            var player = GetPlayer(terrariaPlayer);
+            var evt = new PlayerTickEvent(player);
+            Kernel.Raise(evt, Log);
+            return evt.IsCanceled() ? OTAPI.HookResult.Cancel : OTAPI.HookResult.Continue;
+        }
+
+        private OTAPI.HookResult PreResetHandler(Terraria.RemoteClient remoteClient) {
+            Debug.Assert(remoteClient != null);
+            Debug.Assert(remoteClient.Id >= 0 && remoteClient.Id < Players.Count);
+
+            // Check if the client was active since this gets called when setting up RemoteClient as well.
+            if (!remoteClient.IsActive) {
+                return OTAPI.HookResult.Continue;
+            }
+
+            var player = Players[remoteClient.Id];
+            var evt = new PlayerQuitEvent(player);
+            Kernel.Raise(evt, Log);
+            return OTAPI.HookResult.Continue;
+        }
+
+        // Gets an `IPlayer` which corresponds to the given Terraria player. Retrieves the `IPlayer` from the `Players`
+        // array, if possible.
+        private IPlayer GetPlayer(Terraria.Player terrariaPlayer) {
+            Debug.Assert(terrariaPlayer != null);
+
+            var playerIndex = terrariaPlayer.whoAmI;
+            Debug.Assert(playerIndex >= 0 && playerIndex < Players.Count);
+
+            var isConcrete = terrariaPlayer == Terraria.Main.player[playerIndex];
+            return isConcrete ? Players[playerIndex] : new OrionPlayer(terrariaPlayer, Kernel, Log);
+        }
+
         private void OnReceivePacket<TPacket>(Terraria.MessageBuffer buffer, Span<byte> span)
                 where TPacket : struct, IPacket {
             Debug.Assert(buffer != null);
@@ -179,13 +237,45 @@ namespace Orion.Players {
             buffer.reader = oldReader;
         }
 
+        private void OnSendPacket<TPacket>(int playerIndex, Span<byte> span) where TPacket : struct, IPacket {
+            Debug.Assert(playerIndex >= 0 && playerIndex < Players.Count);
+            Debug.Assert(span.Length > 0);
+
+            // When reading the packet, we need to use the `Client` context since this packet should be read as the
+            // client. Ignore the first byte as it is the packet ID.
+            var packet = new TPacket();
+            var packetLength = packet.Read(span[1..], PacketContext.Client);
+            Debug.Assert(packetLength == span.Length - 1);
+
+            // If `TPacket` is `UnknownPacket`, then we need to set the `Id` property appropriately.
+            if (typeof(TPacket) == typeof(UnknownPacket)) {
+                Unsafe.As<TPacket, UnknownPacket>(ref packet).Id = (PacketId)span[0];
+            }
+
+            var receiver = Players[playerIndex];
+            var evt = new PacketSendEvent<TPacket>(ref packet, receiver);
+            Kernel.Raise(evt, Log);
+            if (evt.IsCanceled()) {
+                return;
+            }
+
+            // Send the packet. A thread-local send buffer is used in case there is some concurrency.
+            //
+            // When writing the packet, we need to use the `Server` context since this packet comes from the server.
+            var newPacketLength = packet.WriteWithHeader(_sendBuffer.Value, PacketContext.Server);
+
+            var terrariaClient = Terraria.Netplay.Clients[playerIndex];
+            terrariaClient.Socket.AsyncSend(_sendBuffer.Value, 0, newPacketLength, terrariaClient.ServerWriteCallBack);
+        }
+
         private bool OnReceivePacketEvent<TPacket>(IPlayer player, ref TPacket packet) where TPacket : struct, IPacket {
             Debug.Assert(player != null);
 
             static ref TOtherPacket As<TOtherPacket>(ref TPacket packet)
                 => ref Unsafe.As<TPacket, TOtherPacket>(ref packet);
 
-            return packet.Id switch {
+            return packet.Id switch
+            {
                 PacketId.PlayerJoin => RaisePlayerEvent(player, ref As<PlayerJoinPacket>(ref packet)),
                 PacketId.PlayerHealth => RaisePlayerEvent(player, ref As<PlayerHealthPacket>(ref packet)),
                 PacketId.TileModify => RaisePlayerEvent(player, ref As<TileModifyPacket>(ref packet)),
@@ -193,7 +283,8 @@ namespace Orion.Players {
                 PacketId.PlayerMana => RaisePlayerEvent(player, ref As<PlayerManaPacket>(ref packet)),
                 PacketId.PlayerTeam => RaisePlayerEvent(player, ref As<PlayerTeamPacket>(ref packet)),
                 PacketId.ClientUuid => RaisePlayerEvent(player, ref As<ClientUuidPacket>(ref packet)),
-                PacketId.Module => true switch {
+                PacketId.Module => true switch
+                {
                     _ when typeof(TPacket) == typeof(ModulePacket<ChatModule>) =>
                         RaisePlayerEvent(player, ref As<ModulePacket<ChatModule>>(ref packet)),
                     _ => false
@@ -253,7 +344,8 @@ namespace Orion.Players {
                 return evt.IsCanceled();
             }
 
-            return packet.Modification switch {
+            return packet.Modification switch
+            {
                 TileModification.BreakBlock => RaiseBlockBreakEvent(ref packet, false),
                 TileModification.PlaceBlock => RaiseBlockPlaceEvent(ref packet, false),
                 TileModification.BreakWall => RaiseWallBreakEvent(ref packet),
@@ -303,91 +395,6 @@ namespace Orion.Players {
             var evt = new PlayerChatEvent(player, packet.Module.ClientCommand, packet.Module.ClientMessage);
             Kernel.Raise(evt, Log);
             return evt.IsCanceled();
-        }
-
-        private OTAPI.HookResult SendBytesHandler(
-                ref int playerIndex, ref byte[] data, ref int offset, ref int size,
-                ref Terraria.Net.Sockets.SocketSendCallback _, ref object _2) {
-            Debug.Assert(playerIndex >= 0 && playerIndex < Players.Count);
-            Debug.Assert(data != null);
-            Debug.Assert(offset >= 0 && offset + size <= data.Length);
-
-            var span = data.AsSpan((offset + 2)..(offset + size));
-            var packetId = span[0];
-            OnSendPacketHandler handler;
-            if (packetId == (byte)PacketId.Module) {
-                var moduleId = Unsafe.ReadUnaligned<ushort>(ref span[1]);
-                handler = _onSendModuleHandlers[moduleId] ?? OnSendPacket<ModulePacket<UnknownModule>>;
-            } else {
-                handler = _onSendPacketHandlers[packetId] ?? OnSendPacket<UnknownPacket>;
-            }
-
-            handler(playerIndex, span);
-            return OTAPI.HookResult.Cancel;
-        }
-
-        private void OnSendPacket<TPacket>(int playerIndex, Span<byte> span) where TPacket : struct, IPacket {
-            Debug.Assert(playerIndex >= 0 && playerIndex < Players.Count);
-            Debug.Assert(span.Length > 0);
-
-            // When reading the packet, we need to use the `Client` context since this packet should be read as the
-            // client. Ignore the first byte as it is the packet ID.
-            var packet = new TPacket();
-            var packetLength = packet.Read(span[1..], PacketContext.Client);
-            Debug.Assert(packetLength == span.Length - 1);
-
-            // If `TPacket` is `UnknownPacket`, then we need to set the `Id` property appropriately.
-            if (typeof(TPacket) == typeof(UnknownPacket)) {
-                Unsafe.As<TPacket, UnknownPacket>(ref packet).Id = (PacketId)span[0];
-            }
-
-            var evt = new PacketSendEvent<TPacket>(ref packet, Players[playerIndex]);
-            Kernel.Raise(evt, Log);
-            if (evt.IsCanceled()) {
-                return;
-            }
-
-            // Send the packet. A thread-local send buffer is used in case there is some concurrency.
-            //
-            // When writing the packet, we need to use the `Server` context since this packet comes from the server.
-            var newPacketLength = packet.WriteWithHeader(_sendBuffer.Value, PacketContext.Server);
-
-            var terrariaClient = Terraria.Netplay.Clients[playerIndex];
-            terrariaClient.Socket.AsyncSend(_sendBuffer.Value, 0, newPacketLength, terrariaClient.ServerWriteCallBack);
-        }
-
-        private OTAPI.HookResult PreUpdateHandler(Terraria.Player terrariaPlayer, ref int _) {
-            Debug.Assert(terrariaPlayer != null);
-
-            var evt = new PlayerTickEvent(GetPlayer(terrariaPlayer));
-            Kernel.Raise(evt, Log);
-            return evt.IsCanceled() ? OTAPI.HookResult.Cancel : OTAPI.HookResult.Continue;
-        }
-
-        private OTAPI.HookResult PreResetHandler(Terraria.RemoteClient remoteClient) {
-            Debug.Assert(remoteClient != null);
-            Debug.Assert(remoteClient.Id >= 0 && remoteClient.Id < Players.Count);
-
-            // Check if the client was active since this gets called when setting up RemoteClient as well.
-            if (!remoteClient.IsActive) {
-                return OTAPI.HookResult.Continue;
-            }
-
-            var evt = new PlayerQuitEvent(Players[remoteClient.Id]);
-            Kernel.Raise(evt, Log);
-            return OTAPI.HookResult.Continue;
-        }
-
-        // Gets an `IPlayer` which corresponds to the given Terraria player. Retrieves the `IPlayer` from the `Players`
-        // array, if possible.
-        private IPlayer GetPlayer(Terraria.Player terrariaPlayer) {
-            Debug.Assert(terrariaPlayer != null);
-
-            var playerIndex = terrariaPlayer.whoAmI;
-            Debug.Assert(playerIndex >= 0 && playerIndex < Players.Count);
-
-            var isConcrete = terrariaPlayer == Terraria.Main.player[playerIndex];
-            return isConcrete ? Players[playerIndex] : new OrionPlayer(terrariaPlayer, this);
         }
     }
 }

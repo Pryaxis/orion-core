@@ -24,7 +24,7 @@ using Orion.Packets.Server;
 
 namespace Orion.Players {
     /// <summary>
-    /// Represents a player service. Provides access to player-related properties and methods.
+    /// Represents a player service. Provides access to players and publishes packet and player-related events.
     /// </summary>
     [Service(ServiceScope.Singleton)]
     public interface IPlayerService {

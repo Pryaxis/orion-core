@@ -26,27 +26,29 @@ using Orion.Entities;
 using Orion.Events;
 using Orion.Events.Packets;
 using Orion.Packets;
+using Serilog;
 
 namespace Orion.Players {
     [LogAsScalar]
     internal sealed class OrionPlayer : OrionEntity<Terraria.Player>, IPlayer {
-        private readonly OrionPlayerService _playerService;
+        private readonly OrionKernel _kernel;
+        private readonly ILogger _log;
         private readonly byte[] _sendBuffer = new byte[ushort.MaxValue];
 
-        // We need to inject an `OrionPlayerService` so that we can raise a `PacketSendEvent` in `SendPacket`.
-        public OrionPlayer(int playerIndex, Terraria.Player terrariaPlayer, OrionPlayerService playerService)
+        public OrionPlayer(int playerIndex, Terraria.Player terrariaPlayer, OrionKernel kernel, ILogger log)
                 : base(playerIndex, terrariaPlayer) {
-            Debug.Assert(terrariaPlayer != null);
-            Debug.Assert(playerService != null);
+            Debug.Assert(kernel != null);
+            Debug.Assert(log != null);
 
-            _playerService = playerService;
+            _kernel = kernel;
+            _log = log;
 
             Stats = new PlayerStats(terrariaPlayer);
             Buffs = new BuffArray(terrariaPlayer);
         }
 
-        public OrionPlayer(Terraria.Player terrariaPlayer, OrionPlayerService playerService)
-            : this(-1, terrariaPlayer, playerService) { }
+        public OrionPlayer(Terraria.Player terrariaPlayer, OrionKernel kernel, ILogger log)
+            : this(-1, terrariaPlayer, kernel, log) { }
 
         public override string Name {
             get => Wrapped.name;
@@ -78,7 +80,7 @@ namespace Orion.Players {
             }
 
             var evt = new PacketSendEvent<TPacket>(ref packet, this);
-            _playerService.Kernel.Raise(evt, _playerService.Log);
+            _kernel.Raise(evt, _log);
             if (evt.IsCanceled()) {
                 return;
             }
@@ -88,39 +90,47 @@ namespace Orion.Players {
             terrariaClient.Socket?.AsyncSend(_sendBuffer, 0, packetLength, terrariaClient.ServerWriteCallBack);
         }
 
-        private class PlayerStats : IPlayerStats, IWrapping<Terraria.Player> {
-            public int Health {
-                get => Wrapped.statLife;
-                set => Wrapped.statLife = value;
-            }
-
-            public int MaxHealth {
-                get => Wrapped.statLifeMax;
-                set => Wrapped.statLifeMax = value;
-            }
-
-            public int Mana {
-                get => Wrapped.statMana;
-                set => Wrapped.statMana = value;
-            }
-
-            public int MaxMana {
-                get => Wrapped.statManaMax;
-                set => Wrapped.statManaMax = value;
-            }
-
-            public int Defense => Wrapped.statDefense;
-
-            public Terraria.Player Wrapped { get; }
+        private class PlayerStats : IPlayerStats {
+            private readonly Terraria.Player _wrapped;
 
             public PlayerStats(Terraria.Player terrariaPlayer) {
                 Debug.Assert(terrariaPlayer != null);
 
-                Wrapped = terrariaPlayer;
+                _wrapped = terrariaPlayer;
             }
+
+            public int Health {
+                get => _wrapped.statLife;
+                set => _wrapped.statLife = value;
+            }
+
+            public int MaxHealth {
+                get => _wrapped.statLifeMax;
+                set => _wrapped.statLifeMax = value;
+            }
+
+            public int Mana {
+                get => _wrapped.statMana;
+                set => _wrapped.statMana = value;
+            }
+
+            public int MaxMana {
+                get => _wrapped.statManaMax;
+                set => _wrapped.statManaMax = value;
+            }
+
+            public int Defense => _wrapped.statDefense;
         }
 
-        private class BuffArray : IArray<Buff>, IWrapping<Terraria.Player> {
+        private class BuffArray : IArray<Buff> {
+            private readonly Terraria.Player _wrapped;
+
+            public BuffArray(Terraria.Player terrariaPlayer) {
+                Debug.Assert(terrariaPlayer != null);
+
+                _wrapped = terrariaPlayer;
+            }
+
             public Buff this[int index] {
                 get {
                     if (index < 0 || index >= Count) {
@@ -128,8 +138,8 @@ namespace Orion.Players {
                         throw new IndexOutOfRangeException($"Index out of range (expected: 0-{Count})");
                     }
 
-                    var id = (BuffId)Wrapped.buffType[index];
-                    var duration = TimeSpan.FromSeconds(Wrapped.buffTime[index] / 60.0);
+                    var id = (BuffId)_wrapped.buffType[index];
+                    var duration = TimeSpan.FromSeconds(_wrapped.buffTime[index] / 60.0);
                     return duration > TimeSpan.Zero ? new Buff(id, duration) : default;
                 }
                 set {
@@ -138,20 +148,12 @@ namespace Orion.Players {
                         throw new IndexOutOfRangeException($"Index out of range (expected: 0-{Count})");
                     }
 
-                    Wrapped.buffType[index] = (int)value.Id;
-                    Wrapped.buffTime[index] = (int)(value.Duration.TotalSeconds * 60.0);
+                    _wrapped.buffType[index] = (int)value.Id;
+                    _wrapped.buffTime[index] = (int)(value.Duration.TotalSeconds * 60.0);
                 }
             }
 
             public int Count => Terraria.Player.maxBuffs;
-
-            public Terraria.Player Wrapped { get; }
-
-            public BuffArray(Terraria.Player terrariaPlayer) {
-                Debug.Assert(terrariaPlayer != null);
-
-                Wrapped = terrariaPlayer;
-            }
 
             public IEnumerator<Buff> GetEnumerator() {
                 for (var i = 0; i < Count; ++i) {
