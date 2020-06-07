@@ -17,6 +17,7 @@
 
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
+using System.Linq;
 using Orion.Collections;
 using Orion.Events;
 using Orion.Events.Packets;
@@ -42,6 +43,8 @@ namespace Orion.World.Signs {
             Kernel.DeregisterHandlers(this, Log);
         }
 
+        private ISign? FindSign(int x, int y) => Signs.FirstOrDefault(s => s.IsActive && s.X == x && s.Y == y);
+
         // =============================================================================================================
         // Sign event publishers
         //
@@ -49,9 +52,14 @@ namespace Orion.World.Signs {
         [EventHandler("orion-signs", Priority = EventPriority.Lowest)]
         [SuppressMessage("CodeQuality", "IDE0051:Remove unused private members", Justification = "Implicitly called")]
         private void OnSignReadPacket(PacketReceiveEvent<SignReadPacket> evt) {
-            var player = evt.Sender;
             ref var packet = ref evt.Packet;
-            var evt2 = new SignReadEvent(player, packet.X, packet.Y);
+            var sign = FindSign(packet.X, packet.Y);
+            if (sign is null) {
+                return;
+            }
+
+            var player = evt.Sender;
+            var evt2 = new SignReadEvent(sign, player);
             Kernel.Raise(evt2, Log);
             evt.CancellationReason = evt2.CancellationReason;
         }

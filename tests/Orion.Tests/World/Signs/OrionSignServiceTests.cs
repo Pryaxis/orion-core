@@ -95,9 +95,8 @@ namespace Orion.World.Signs {
 
             var isRun = false;
             kernel.RegisterHandler<SignReadEvent>(evt => {
+                Assert.Same(signService.Signs[0], evt.Sign);
                 Assert.Same(playerService.Players[5], evt.Player);
-                Assert.Equal(256, evt.X);
-                Assert.Equal(100, evt.Y);
                 isRun = true;
             }, Logger.None);
 
@@ -126,6 +125,27 @@ namespace Orion.World.Signs {
             TestUtils.FakeReceiveBytes(5, SignReadPacketTests.Bytes);
 
             Assert.Empty(socket.SendData);
+        }
+
+        [Fact]
+        public void PacketReceive_SignReadEventNotTriggered() {
+            // Set `State` to 10 so that the sign request packet is not ignored by the server.
+            var socket = new TestSocket { Connected = true };
+            Terraria.Netplay.Clients[5] = new Terraria.RemoteClient { Id = 5, State = 10, Socket = socket };
+            Terraria.Main.player[5] = new Terraria.Player { whoAmI = 5 };
+            Terraria.Main.tile[256, 100] = new Terraria.Tile { type = (ushort)BlockId.Sign };
+            Terraria.Main.sign[0] = new Terraria.Sign { x = 255, y = 100, text = "test" };
+
+            using var kernel = new OrionKernel(Logger.None);
+            using var playerService = new OrionPlayerService(kernel, Logger.None);
+            using var signService = new OrionSignService(kernel, Logger.None);
+
+            var isRun = false;
+            kernel.RegisterHandler<SignReadEvent>(evt => isRun = true, Logger.None);
+
+            TestUtils.FakeReceiveBytes(5, SignReadPacketTests.Bytes);
+
+            Assert.False(isRun);
         }
 
         private class TestSocket : Terraria.Net.Sockets.ISocket {

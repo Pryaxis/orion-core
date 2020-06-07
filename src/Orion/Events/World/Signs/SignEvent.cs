@@ -16,34 +16,26 @@
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
 using System;
-using Moq;
-using Orion.Players;
 using Orion.World.Signs;
-using Xunit;
 
 namespace Orion.Events.World.Signs {
-    public class SignReadEventTests {
-        [Fact]
-        public void Ctor_NullSign_ThrowsArgumentNullException() {
-            var player = new Mock<IPlayer>().Object;
-
-            Assert.Throws<ArgumentNullException>(() => new SignReadEvent(null!, player));
+    /// <summary>
+    /// Provides the base class for a sign-related event.
+    /// </summary>
+    public abstract class SignEvent : Event {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="SignEvent"/> class with the specified <paramref name="sign"/>.
+        /// </summary>
+        /// <param name="sign">The sign involved in the event.</param>
+        /// <exception cref="ArgumentNullException"><paramref name="sign"/> is <see langword="null"/>.</exception>
+        protected SignEvent(ISign sign) {
+            Sign = sign ?? throw new ArgumentNullException(nameof(sign));
         }
 
-        [Fact]
-        public void Ctor_NullPlayer_ThrowsArgumentNullException() {
-            var sign = new Mock<ISign>().Object;
-
-            Assert.Throws<ArgumentNullException>(() => new SignReadEvent(sign, null!));
-        }
-
-        [Fact]
-        public void Player_Get() {
-            var sign = new Mock<ISign>().Object;
-            var player = new Mock<IPlayer>().Object;
-            var evt = new SignReadEvent(sign, player);
-
-            Assert.Same(player, evt.Player);
-        }
+        /// <summary>
+        /// Gets the sign involved in the event.
+        /// </summary>
+        /// <value>The sign involved in the event.</value>
+        public ISign Sign { get; }
     }
 }

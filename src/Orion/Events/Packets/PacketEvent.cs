@@ -16,7 +16,6 @@
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
 using System.Runtime.CompilerServices;
-using Destructurama.Attributed;
 using Orion.Packets;
 
 namespace Orion.Events.Packets {

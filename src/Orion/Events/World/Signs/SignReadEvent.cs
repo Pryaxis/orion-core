@@ -18,25 +18,25 @@
 using System;
 using Destructurama.Attributed;
 using Orion.Players;
+using Orion.World.Signs;
 
 namespace Orion.Events.World.Signs {
     /// <summary>
     /// An event that occurs when a player reads a sign. This event can be canceled.
     /// </summary>
     [Event("sign-read")]
-    public sealed class SignReadEvent : Event, ICancelable {
+    public sealed class SignReadEvent : SignEvent, ICancelable {
         /// <summary>
         /// Initializes a new instance of the <see cref="SignReadEvent"/> class with the specified
-        /// <paramref name="player"/> and sign coordinates.
+        /// <paramref name="sign"/> and <paramref name="player"/>.
         /// </summary>
+        /// <param name="sign">The sign involved in the event.</param>
         /// <param name="player">The player reading the sign.</param>
-        /// <param name="x">The sign's X coordinate.</param>
-        /// <param name="y">The sign's Y coordinate.</param>
-        /// <exception cref="ArgumentNullException"><paramref name="player"/> is <see langword="null"/>.</exception>
-        public SignReadEvent(IPlayer player, int x, int y) {
+        /// <exception cref="ArgumentNullException">
+        /// <paramref name="sign"/> or <paramref name="player"/> are <see langword="null"/>.
+        /// </exception>
+        public SignReadEvent(ISign sign, IPlayer player) : base(sign) {
             Player = player ?? throw new ArgumentNullException(nameof(player));
-            X = x;
-            Y = y;
         }
 
         /// <summary>
@@ -44,18 +44,6 @@ namespace Orion.Events.World.Signs {
         /// </summary>
         /// <value>The player reading the sign.</value>
         public IPlayer Player { get; }
-
-        /// <summary>
-        /// Gets the sign's X coordinate.
-        /// </summary>
-        /// <value>The sign's X coordinate.</value>
-        public int X { get; }
-
-        /// <summary>
-        /// Gets the sign's Y coordinate.
-        /// </summary>
-        /// <value>The sign's Y coordinate.</value>
-        public int Y { get; }
 
         /// <inheritdoc/>
         [NotLogged] public string? CancellationReason { get; set; }

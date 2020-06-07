@@ -17,26 +17,26 @@
 
 using System;
 using Moq;
-using Orion.World;
+using Orion.World.Signs;
 using Xunit;
 
-namespace Orion.Events.World {
-    public class WorldEventTests {
+namespace Orion.Events.World.Signs {
+    public class SignEventTests {
         [Fact]
         public void Ctor_NullWorld_ThrowsArgumentNullException() {
-            Assert.Throws<ArgumentNullException>(() => new TestWorldEvent(null!));
+            Assert.Throws<ArgumentNullException>(() => new TestSignEvent(null!));
         }
 
         [Fact]
-        public void World_Get() {
-            var world = new Mock<IWorld>().Object;
-            var evt = new TestWorldEvent(world);
+        public void Sign_Get() {
+            var sign = new Mock<ISign>().Object;
+            var evt = new TestSignEvent(sign);
 
-            Assert.Same(world, evt.World);
+            Assert.Same(sign, evt.Sign);
         }
 
-        private class TestWorldEvent : WorldEvent {
-            public TestWorldEvent(IWorld world) : base(world) { }
+        private class TestSignEvent : SignEvent {
+            public TestSignEvent(ISign sign) : base(sign) { }
         }
     }
 }
