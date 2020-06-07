@@ -18,7 +18,6 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Reflection;
 using System.Runtime.CompilerServices;
@@ -28,14 +27,11 @@ using Orion.Collections;
 using Orion.Events;
 using Orion.Events.Packets;
 using Orion.Events.Players;
-using Orion.Events.World.Tiles;
 using Orion.Framework;
 using Orion.Packets;
 using Orion.Packets.Client;
 using Orion.Packets.Modules;
 using Orion.Packets.Players;
-using Orion.Packets.World.Tiles;
-using Orion.World.Tiles;
 using Serilog;
 
 namespace Orion.Players {
@@ -63,9 +59,6 @@ namespace Orion.Players {
             new ThreadLocal<byte[]>(() => new byte[ushort.MaxValue]);
 
         public OrionPlayerService(OrionKernel kernel, ILogger log) : base(kernel, log) {
-            Debug.Assert(kernel != null);
-            Debug.Assert(log != null);
-
             OnReceivePacketHandler MakeOnReceivePacketHandler(Type packetType) =>
                 (OnReceivePacketHandler)_onReceivePacket
                     .MakeGenericMethod(packetType)
@@ -98,18 +91,27 @@ namespace Orion.Players {
             OTAPI.Hooks.Net.SendBytes = SendBytesHandler;
             OTAPI.Hooks.Player.PreUpdate = PreUpdateHandler;
             OTAPI.Hooks.Net.RemoteClient.PreReset = PreResetHandler;
+
+            Kernel.RegisterHandlers(this, Log);
         }
 
         public IReadOnlyList<IPlayer> Players { get; }
 
         public override void Dispose() {
             _ignoreReceiveDataHandler.Dispose();
+            _receiveBuffer.Dispose();
+            _sendBuffer.Dispose();
 
             OTAPI.Hooks.Net.ReceiveData = null;
             OTAPI.Hooks.Net.SendBytes = null;
             OTAPI.Hooks.Player.PreUpdate = null;
             OTAPI.Hooks.Net.RemoteClient.PreReset = null;
+
+            Kernel.DeregisterHandlers(this, Log);
         }
+
+        // =============================================================================================================
+        // OTAPI hooks
 
         private OTAPI.HookResult ReceiveDataHandler(
                 Terraria.MessageBuffer buffer, ref byte packetId, ref int _, ref int start, ref int length) {
@@ -125,10 +127,10 @@ namespace Orion.Players {
                 return OTAPI.HookResult.Continue;
             }
 
-            var span = buffer.readBuffer.AsSpan(start..(start + length));
             OnReceivePacketHandler handler;
+            var span = buffer.readBuffer.AsSpan(start..(start + length));
             if (packetId == (byte)PacketId.Module) {
-                var moduleId = Unsafe.ReadUnaligned<ushort>(ref buffer.readBuffer[start + 1]);
+                var moduleId = Unsafe.ReadUnaligned<ushort>(ref span[1]);
                 handler = _onReceiveModuleHandlers[moduleId] ?? OnReceivePacket<ModulePacket<UnknownModule>>;
             } else {
                 handler = _onReceivePacketHandlers[packetId] ?? OnReceivePacket<UnknownPacket>;
@@ -160,10 +162,10 @@ namespace Orion.Players {
             return OTAPI.HookResult.Cancel;
         }
 
-        private OTAPI.HookResult PreUpdateHandler(Terraria.Player terrariaPlayer, ref int _) {
-            Debug.Assert(terrariaPlayer != null);
+        private OTAPI.HookResult PreUpdateHandler(Terraria.Player _, ref int playerIndex) {
+            Debug.Assert(playerIndex >= 0 && playerIndex < Players.Count);
 
-            var player = GetPlayer(terrariaPlayer);
+            var player = Players[playerIndex];
             var evt = new PlayerTickEvent(player);
             Kernel.Raise(evt, Log);
             return evt.IsCanceled() ? OTAPI.HookResult.Cancel : OTAPI.HookResult.Continue;
@@ -184,17 +186,8 @@ namespace Orion.Players {
             return OTAPI.HookResult.Continue;
         }
 
-        // Gets an `IPlayer` which corresponds to the given Terraria player. Retrieves the `IPlayer` from the `Players`
-        // array, if possible.
-        private IPlayer GetPlayer(Terraria.Player terrariaPlayer) {
-            Debug.Assert(terrariaPlayer != null);
-
-            var playerIndex = terrariaPlayer.whoAmI;
-            Debug.Assert(playerIndex >= 0 && playerIndex < Players.Count);
-
-            var isConcrete = terrariaPlayer == Terraria.Main.player[playerIndex];
-            return isConcrete ? Players[playerIndex] : new OrionPlayer(terrariaPlayer, Kernel, Log);
-        }
+        // =============================================================================================================
+        // Packet event publishers
 
         private void OnReceivePacket<TPacket>(Terraria.MessageBuffer buffer, Span<byte> span)
                 where TPacket : struct, IPacket {
@@ -215,7 +208,7 @@ namespace Orion.Players {
             var player = Players[buffer.whoAmI];
             var evt = new PacketReceiveEvent<TPacket>(ref packet, player);
             Kernel.Raise(evt, Log);
-            if (evt.IsCanceled() || OnReceivePacketEvent(player, ref packet)) {
+            if (evt.IsCanceled()) {
                 return;
             }
 
@@ -268,133 +261,69 @@ namespace Orion.Players {
             terrariaClient.Socket.AsyncSend(_sendBuffer.Value, 0, newPacketLength, terrariaClient.ServerWriteCallBack);
         }
 
-        private bool OnReceivePacketEvent<TPacket>(IPlayer player, ref TPacket packet) where TPacket : struct, IPacket {
-            Debug.Assert(player != null);
+        // =============================================================================================================
+        // Player event publishers
 
-            static ref TOtherPacket As<TOtherPacket>(ref TPacket packet)
-                => ref Unsafe.As<TPacket, TOtherPacket>(ref packet);
-
-            return packet.Id switch
-            {
-                PacketId.PlayerJoin => RaisePlayerEvent(player, ref As<PlayerJoinPacket>(ref packet)),
-                PacketId.PlayerHealth => RaisePlayerEvent(player, ref As<PlayerHealthPacket>(ref packet)),
-                PacketId.TileModify => RaisePlayerEvent(player, ref As<TileModifyPacket>(ref packet)),
-                PacketId.PlayerPvp => RaisePlayerEvent(player, ref As<PlayerPvpPacket>(ref packet)),
-                PacketId.PlayerMana => RaisePlayerEvent(player, ref As<PlayerManaPacket>(ref packet)),
-                PacketId.PlayerTeam => RaisePlayerEvent(player, ref As<PlayerTeamPacket>(ref packet)),
-                PacketId.ClientUuid => RaisePlayerEvent(player, ref As<ClientUuidPacket>(ref packet)),
-                PacketId.Module => true switch
-                {
-                    _ when typeof(TPacket) == typeof(ModulePacket<ChatModule>) =>
-                        RaisePlayerEvent(player, ref As<ModulePacket<ChatModule>>(ref packet)),
-                    _ => false
-                },
-                _ => false
-            };
+        [EventHandler("orion-players", Priority = EventPriority.Lowest)]
+        private void OnPlayerJoinPacket(PacketReceiveEvent<PlayerJoinPacket> evt) {
+            var player = evt.Sender;
+            var evt2 = new PlayerJoinEvent(player);
+            Kernel.Raise(evt2, Log);
+            evt.CancellationReason = evt2.CancellationReason;
         }
 
-        [SuppressMessage("Style", "IDE0060:Remove unused parameter", Justification = "Standardization")]
-        private bool RaisePlayerEvent(IPlayer player, ref PlayerJoinPacket packet) {
-            var evt = new PlayerJoinEvent(player);
-            Kernel.Raise(evt, Log);
-            return evt.IsCanceled();
+        [EventHandler("orion-players", Priority = EventPriority.Lowest)]
+        private void OnPlayerHealthPacket(PacketReceiveEvent<PlayerHealthPacket> evt) {
+            var player = evt.Sender;
+            ref var packet = ref evt.Packet;
+            var evt2 = new PlayerHealthEvent(player, packet.Health, packet.MaxHealth);
+            Kernel.Raise(evt2, Log);
+            evt.CancellationReason = evt2.CancellationReason;
         }
 
-        private bool RaisePlayerEvent(IPlayer player, ref PlayerHealthPacket packet) {
-            var evt = new PlayerHealthEvent(player, packet.Health, packet.MaxHealth);
-            Kernel.Raise(evt, Log);
-            return evt.IsCanceled();
+        [EventHandler("orion-players", Priority = EventPriority.Lowest)]
+        private void OnPlayerPvpPacket(PacketReceiveEvent<PlayerPvpPacket> evt) {
+            var player = evt.Sender;
+            ref var packet = ref evt.Packet;
+            var evt2 = new PlayerPvpEvent(player, packet.IsInPvp);
+            Kernel.Raise(evt2, Log);
+            evt.CancellationReason = evt2.CancellationReason;
         }
 
-        private bool RaisePlayerEvent(IPlayer player, ref TileModifyPacket packet) {
-            bool RaiseBlockBreakEvent(ref TileModifyPacket packet, bool shouldSuppressItems) {
-                var evt = new BlockBreakEvent(player, packet.X, packet.Y, packet.IsFailure, shouldSuppressItems);
-                Kernel.Raise(evt, Log);
-                return evt.IsCanceled();
-            }
-
-            bool RaiseBlockPlaceEvent(ref TileModifyPacket packet, bool isReplacement) {
-                var evt = new BlockPlaceEvent(
-                    player, packet.X, packet.Y, packet.BlockId, packet.BlockStyle, isReplacement);
-                Kernel.Raise(evt, Log);
-                return evt.IsCanceled();
-            }
-
-            bool RaiseWallBreakEvent(ref TileModifyPacket packet) {
-                var evt = new WallBreakEvent(player, packet.X, packet.Y, packet.IsFailure);
-                Kernel.Raise(evt, Log);
-                return evt.IsCanceled();
-            }
-
-            bool RaiseWallPlaceEvent(ref TileModifyPacket packet, bool isReplacement) {
-                var evt = new WallPlaceEvent(player, packet.X, packet.Y, packet.WallId, isReplacement);
-                Kernel.Raise(evt, Log);
-                return evt.IsCanceled();
-            }
-
-            bool RaiseWiringBreakEvent(ref TileModifyPacket packet, Wiring wiring) {
-                var evt = new WiringBreakEvent(player, packet.X, packet.Y, wiring);
-                Kernel.Raise(evt, Log);
-                return evt.IsCanceled();
-            }
-
-            bool RaiseWiringPlaceEvent(ref TileModifyPacket packet, Wiring wiring) {
-                var evt = new WiringPlaceEvent(player, packet.X, packet.Y, wiring);
-                Kernel.Raise(evt, Log);
-                return evt.IsCanceled();
-            }
-
-            return packet.Modification switch
-            {
-                TileModification.BreakBlock => RaiseBlockBreakEvent(ref packet, false),
-                TileModification.PlaceBlock => RaiseBlockPlaceEvent(ref packet, false),
-                TileModification.BreakWall => RaiseWallBreakEvent(ref packet),
-                TileModification.PlaceWall => RaiseWallPlaceEvent(ref packet, false),
-                TileModification.BreakBlockNoItems => RaiseBlockBreakEvent(ref packet, true),
-                TileModification.PlaceRedWire => RaiseWiringPlaceEvent(ref packet, Wiring.Red),
-                TileModification.BreakRedWire => RaiseWiringBreakEvent(ref packet, Wiring.Red),
-                TileModification.PlaceActuator => RaiseWiringPlaceEvent(ref packet, Wiring.Actuator),
-                TileModification.BreakActuator => RaiseWiringBreakEvent(ref packet, Wiring.Actuator),
-                TileModification.PlaceBlueWire => RaiseWiringPlaceEvent(ref packet, Wiring.Blue),
-                TileModification.BreakBlueWire => RaiseWiringBreakEvent(ref packet, Wiring.Blue),
-                TileModification.PlaceGreenWire => RaiseWiringPlaceEvent(ref packet, Wiring.Green),
-                TileModification.BreakGreenWire => RaiseWiringBreakEvent(ref packet, Wiring.Green),
-                TileModification.PlaceYellowWire => RaiseWiringPlaceEvent(ref packet, Wiring.Yellow),
-                TileModification.BreakYellowWire => RaiseWiringBreakEvent(ref packet, Wiring.Yellow),
-                TileModification.ReplaceBlock => RaiseBlockPlaceEvent(ref packet, true),
-                TileModification.ReplaceWall => RaiseWallPlaceEvent(ref packet, true),
-                _ => false
-            };
+        [EventHandler("orion-players", Priority = EventPriority.Lowest)]
+        private void OnPlayerManaPacket(PacketReceiveEvent<PlayerManaPacket> evt) {
+            var player = evt.Sender;
+            ref var packet = ref evt.Packet;
+            var evt2 = new PlayerManaEvent(player, packet.Mana, packet.MaxMana);
+            Kernel.Raise(evt2, Log);
+            evt.CancellationReason = evt2.CancellationReason;
         }
 
-        private bool RaisePlayerEvent(IPlayer player, ref PlayerPvpPacket packet) {
-            var evt = new PlayerPvpEvent(player, packet.IsInPvp);
-            Kernel.Raise(evt, Log);
-            return evt.IsCanceled();
+        [EventHandler("orion-players", Priority = EventPriority.Lowest)]
+        private void OnPlayerTeamPacket(PacketReceiveEvent<PlayerTeamPacket> evt) {
+            var player = evt.Sender;
+            ref var packet = ref evt.Packet;
+            var evt2 = new PlayerTeamEvent(player, packet.Team);
+            Kernel.Raise(evt2, Log);
+            evt.CancellationReason = evt2.CancellationReason;
         }
 
-        private bool RaisePlayerEvent(IPlayer player, ref PlayerManaPacket packet) {
-            var evt = new PlayerManaEvent(player, packet.Mana, packet.MaxMana);
-            Kernel.Raise(evt, Log);
-            return evt.IsCanceled();
+        [EventHandler("orion-players", Priority = EventPriority.Lowest)]
+        private void OnClientUuidPacket(PacketReceiveEvent<ClientUuidPacket> evt) {
+            var player = evt.Sender;
+            ref var packet = ref evt.Packet;
+            var evt2 = new PlayerUuidEvent(player, packet.Uuid);
+            Kernel.Raise(evt2, Log);
+            evt.CancellationReason = evt2.CancellationReason;
         }
 
-        private bool RaisePlayerEvent(IPlayer player, ref PlayerTeamPacket packet) {
-            var evt = new PlayerTeamEvent(player, packet.Team);
-            Kernel.Raise(evt, Log);
-            return evt.IsCanceled();
-        }
-
-        private bool RaisePlayerEvent(IPlayer player, ref ClientUuidPacket packet) {
-            var evt = new PlayerUuidEvent(player, packet.Uuid);
-            Kernel.Raise(evt, Log);
-            return evt.IsCanceled();
-        }
-
-        private bool RaisePlayerEvent(IPlayer player, ref ModulePacket<ChatModule> packet) {
-            var evt = new PlayerChatEvent(player, packet.Module.ClientCommand, packet.Module.ClientMessage);
-            Kernel.Raise(evt, Log);
-            return evt.IsCanceled();
+        [EventHandler("orion-players", Priority = EventPriority.Lowest)]
+        private void OnChatModule(PacketReceiveEvent<ModulePacket<ChatModule>> evt) {
+            var player = evt.Sender;
+            ref var module = ref evt.Packet.Module;
+            var evt2 = new PlayerChatEvent(player, module.ClientCommand, module.ClientMessage);
+            Kernel.Raise(evt2, Log);
+            evt.CancellationReason = evt2.CancellationReason;
         }
     }
 }
