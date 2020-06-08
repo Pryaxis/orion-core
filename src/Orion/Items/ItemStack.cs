@@ -16,6 +16,7 @@
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 using System.Diagnostics.Contracts;
 
 namespace Orion.Items {
@@ -72,6 +73,13 @@ namespace Orion.Items {
         /// <returns>The hash code of the item stack.</returns>
         [Pure]
         public override int GetHashCode() => HashCode.Combine(Id, StackSize, Prefix);
+
+        /// <summary>
+        /// Returns a string representation of the item stack.
+        /// </summary>
+        /// <returns>A string representation of the item stack.</returns>
+        [Pure, ExcludeFromCodeCoverage]
+        public override string ToString() => $"{Id} x{StackSize} ({Prefix})";
 
         /// <summary>
         /// Returns a value indicating whether <paramref name="left"/> and <paramref name="right"/> are equal.
