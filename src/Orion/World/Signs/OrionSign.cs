@@ -24,54 +24,35 @@ using Orion.World.TileEntities;
 
 namespace Orion.World.Signs {
     [LogAsScalar]
-    internal sealed class OrionSign : AnnotatableObject, ISign, IWrapping<Terraria.Sign?> {
+    internal sealed class OrionSign : AnnotatableObject, ISign, IWrapping<Terraria.Sign> {
         public OrionSign(int signIndex, Terraria.Sign? terrariaSign) {
             Index = signIndex;
-            Wrapped = terrariaSign;
+            IsActive = terrariaSign != null;
+            Wrapped = terrariaSign ?? new Terraria.Sign();
         }
+
         public OrionSign(Terraria.Sign? terrariaSign) : this(-1, terrariaSign) { }
 
         public string Text {
-            get => Wrapped?.text ?? string.Empty;
-            set {
-                if (value is null) {
-                    throw new ArgumentNullException(nameof(value));
-                }
-
-                if (Wrapped is null) {
-                    return;
-                }
-
-                Wrapped.text = value;
-            }
+            get => Wrapped.text ?? string.Empty;
+            set => Wrapped.text = value ?? throw new ArgumentNullException(nameof(value));
         }
 
         public int Index { get; }
-        public bool IsActive => Wrapped != null;
+
+        public bool IsActive { get; }
 
         public int X {
-            get => Wrapped?.x ?? 0;
-            set {
-                if (Wrapped is null) {
-                    return;
-                }
-
-                Wrapped.x = value;
-            }
+            get => Wrapped.x;
+            set => Wrapped.x = value;
         }
 
         public int Y {
-            get => Wrapped?.y ?? 0;
-            set {
-                if (Wrapped is null) {
-                    return;
-                }
-
-                Wrapped.y = value;
-            }
+            get => Wrapped.y;
+            set => Wrapped.y = value;
         }
 
-        public Terraria.Sign? Wrapped { get; }
+        public Terraria.Sign Wrapped { get; }
 
         // Not localized because this string is developer-facing.
         [Pure, ExcludeFromCodeCoverage]

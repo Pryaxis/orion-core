@@ -16,6 +16,7 @@
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
 using System;
+using System.Collections;
 using System.Collections.Generic;
 
 namespace Orion.Collections {
@@ -31,5 +32,13 @@ namespace Orion.Collections {
         /// <returns>The element at the given <paramref name="index"/>.</returns>
         /// <exception cref="IndexOutOfRangeException"><paramref name="index"/> is out of range.</exception>
         T this[int index] { get; set; }
+
+        IEnumerator<T> IEnumerable<T>.GetEnumerator() {
+            for (var i = 0; i < Count; ++i) {
+                yield return this[i];
+            }
+        }
+
+        IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
     }
 }

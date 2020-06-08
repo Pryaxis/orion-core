@@ -16,8 +16,6 @@
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using Destructurama.Attributed;
@@ -143,14 +141,6 @@ namespace Orion.Players {
             }
 
             public int Count => Terraria.Player.maxBuffs;
-
-            public IEnumerator<Buff> GetEnumerator() {
-                for (var i = 0; i < Count; ++i) {
-                    yield return this[i];
-                }
-            }
-
-            IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
         }
     }
 }

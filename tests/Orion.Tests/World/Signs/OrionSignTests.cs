@@ -24,105 +24,11 @@ namespace Orion.World.TileEntities {
     [SuppressMessage("Style", "IDE0017:Simplify object initialization", Justification = "Testing")]
     public class OrionSignTests {
         [Fact]
-        public void IsActive_Get_ReturnsFalse() {
-            var sign = new OrionSign(null);
-
-            Assert.False(sign.IsActive);
-        }
-
-        [Fact]
-        public void IsActive_Get_True() {
-            var terrariaSign = new Terraria.Sign();
-            var sign = new OrionSign(terrariaSign);
-
-            Assert.True(sign.IsActive);
-        }
-
-        [Fact]
-        public void Index_Get() {
-            var terrariaSign = new Terraria.Sign();
-            var sign = new OrionSign(1, terrariaSign);
-
-            Assert.Equal(1, sign.Index);
-        }
-
-        [Fact]
-        public void X_Get_IsActive() {
-            var terrariaSign = new Terraria.Sign { x = 256, y = 100, text = "test" };
-            var sign = new OrionSign(terrariaSign);
-
-            Assert.Equal(256, sign.X);
-        }
-
-        [Fact]
-        public void X_Get_IsNotActive() {
-            var sign = new OrionSign(null);
-
-            Assert.Equal(0, sign.X);
-        }
-
-        [Fact]
-        public void X_Set_IsActive() {
-            var terrariaSign = new Terraria.Sign();
-            var sign = new OrionSign(terrariaSign);
-
-            sign.X = 256;
-
-            Assert.Equal(256, terrariaSign.x);
-        }
-
-        [Fact]
-        public void X_Set_IsNotActive() {
-            var sign = new OrionSign(null);
-
-            sign.X = 0;
-        }
-
-        [Fact]
-        public void Y_Get_IsActive() {
-            var terrariaSign = new Terraria.Sign { x = 256, y = 100, text = "test" };
-            var sign = new OrionSign(terrariaSign);
-
-            Assert.Equal(100, sign.Y);
-        }
-
-        [Fact]
-        public void Y_Get_IsNotActive() {
-            var sign = new OrionSign(null);
-
-            Assert.Equal(0, sign.Y);
-        }
-
-        [Fact]
-        public void Y_Set_IsActive() {
-            var terrariaSign = new Terraria.Sign();
-            var sign = new OrionSign(terrariaSign);
-
-            sign.Y = 100;
-
-            Assert.Equal(100, terrariaSign.y);
-        }
-
-        [Fact]
-        public void Y_Set_IsNotActive() {
-            var sign = new OrionSign(null);
-
-            sign.Y = 0;
-        }
-
-        [Fact]
-        public void Text_Get_IsActive() {
+        public void Text_Get() {
             var terrariaSign = new Terraria.Sign { x = 256, y = 100, text = "test" };
             var sign = new OrionSign(terrariaSign);
 
             Assert.Equal("test", sign.Text);
-        }
-
-        [Fact]
-        public void Text_Get_IsNotActive() {
-            var sign = new OrionSign(null);
-
-            Assert.Equal("", sign.Text);
         }
 
         [Fact]
@@ -134,7 +40,7 @@ namespace Orion.World.TileEntities {
         }
 
         [Fact]
-        public void Text_Set_IsActive() {
+        public void Text_Set() {
             var terrariaSign = new Terraria.Sign();
             var sign = new OrionSign(terrariaSign);
 
@@ -144,10 +50,62 @@ namespace Orion.World.TileEntities {
         }
 
         [Fact]
-        public void Text_Set_IsNotActive() {
+        public void Index_Get() {
+            var terrariaSign = new Terraria.Sign();
+            var sign = new OrionSign(1, terrariaSign);
+
+            Assert.Equal(1, sign.Index);
+        }
+
+        [Fact]
+        public void IsActive_Get_ReturnsFalse() {
             var sign = new OrionSign(null);
 
-            sign.Text = "";
+            Assert.False(sign.IsActive);
+        }
+
+        [Fact]
+        public void IsActive_Get_ReturnsTrue() {
+            var terrariaSign = new Terraria.Sign();
+            var sign = new OrionSign(terrariaSign);
+
+            Assert.True(sign.IsActive);
+        }
+
+        [Fact]
+        public void X_Get() {
+            var terrariaSign = new Terraria.Sign { x = 256, y = 100, text = "test" };
+            var sign = new OrionSign(terrariaSign);
+
+            Assert.Equal(256, sign.X);
+        }
+
+        [Fact]
+        public void X_Set() {
+            var terrariaSign = new Terraria.Sign();
+            var sign = new OrionSign(terrariaSign);
+
+            sign.X = 256;
+
+            Assert.Equal(256, terrariaSign.x);
+        }
+
+        [Fact]
+        public void Y_Get() {
+            var terrariaSign = new Terraria.Sign { x = 256, y = 100, text = "test" };
+            var sign = new OrionSign(terrariaSign);
+
+            Assert.Equal(100, sign.Y);
+        }
+
+        [Fact]
+        public void Y_Set() {
+            var terrariaSign = new Terraria.Sign();
+            var sign = new OrionSign(terrariaSign);
+
+            sign.Y = 100;
+
+            Assert.Equal(100, terrariaSign.y);
         }
     }
 }

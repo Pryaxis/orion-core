@@ -96,7 +96,7 @@ namespace Orion.Packets.DataStructures {
         /// <see langword="false"/>.
         /// </returns>
         [Pure]
-        public static bool operator !=(Vector2f left, Vector2f right) => !left.Equals(right);
+        public static bool operator !=(Vector2f left, Vector2f right) => !(left == right);
 
         /// <summary>
         /// Returns the sum of <paramref name="left"/> and <paramref name="right"/>.
