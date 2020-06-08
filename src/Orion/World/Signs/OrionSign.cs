@@ -16,9 +16,14 @@
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
 using System;
+using System.Diagnostics.CodeAnalysis;
+using System.Diagnostics.Contracts;
+using Destructurama.Attributed;
 using Orion.Entities;
+using Orion.World.TileEntities;
 
 namespace Orion.World.Signs {
+    [LogAsScalar]
     internal sealed class OrionSign : AnnotatableObject, ISign, IWrapping<Terraria.Sign?> {
         public OrionSign(int signIndex, Terraria.Sign? terrariaSign) {
             Index = signIndex;
@@ -67,5 +72,9 @@ namespace Orion.World.Signs {
         }
 
         public Terraria.Sign? Wrapped { get; }
+
+        // Not localized because this string is developer-facing.
+        [Pure, ExcludeFromCodeCoverage]
+        public override string ToString() => this.IsConcrete() ? $"(index: {Index})" : "<abstract instance>";
     }
 }
