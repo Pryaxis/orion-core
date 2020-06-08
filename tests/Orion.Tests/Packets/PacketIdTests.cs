@@ -23,7 +23,7 @@ using Xunit;
 
 namespace Orion.Packets {
     public class PacketIdTests {
-        private static readonly ISet<Type> ExcludedTypes =
+        private static readonly ISet<Type> _excludedTypes =
             new HashSet<Type> { typeof(ModulePacket<>), typeof(UnknownPacket), typeof(IPacket) };
 
         [Fact]
@@ -39,7 +39,7 @@ namespace Orion.Packets {
                 // Scan the Orion assembly for a packet type (not of type `ModulePacket<>` or `UnknownPacket`) which has
                 // the correct ID.
                 var expectedType = typeof(PacketId).Assembly.ExportedTypes
-                    .Where(t => !ExcludedTypes.Contains(t) && typeof(IPacket).IsAssignableFrom(t))
+                    .Where(t => !_excludedTypes.Contains(t) && typeof(IPacket).IsAssignableFrom(t))
                     .Where(t => ((IPacket)Activator.CreateInstance(t)!).Id == id).FirstOrDefault()
                         ?? typeof(UnknownPacket);
 

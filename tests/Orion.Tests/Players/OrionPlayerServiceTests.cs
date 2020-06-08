@@ -30,14 +30,14 @@ using Xunit;
 namespace Orion.Players {
     [Collection("TerrariaTestsCollection")]
     public class OrionPlayerServiceTests {
-        private static readonly byte[] ServerConnectBytes;
+        private static readonly byte[] _serverConnectBytes;
 
         static OrionPlayerServiceTests() {
             var bytes = new byte[100];
             var packet = new ClientConnectPacket { Version = "Terraria" + Terraria.Main.curRelease };
             var packetLength = packet.WriteWithHeader(bytes, PacketContext.Client);
 
-            ServerConnectBytes = bytes[..packetLength];
+            _serverConnectBytes = bytes[..packetLength];
         }
 
         [Theory]
@@ -97,7 +97,7 @@ namespace Orion.Players {
                 isRun = true;
             }, Logger.None);
 
-            TestUtils.FakeReceiveBytes(5, ServerConnectBytes);
+            TestUtils.FakeReceiveBytes(5, _serverConnectBytes);
 
             Assert.True(isRun);
             Assert.Equal(1, Terraria.Netplay.Clients[5].State);
@@ -112,7 +112,7 @@ namespace Orion.Players {
             kernel.RegisterHandler<PacketReceiveEvent<ClientConnectPacket>>(
                 evt => evt.Packet.Version = "Terraria1", Logger.None);
 
-            TestUtils.FakeReceiveBytes(5, ServerConnectBytes);
+            TestUtils.FakeReceiveBytes(5, _serverConnectBytes);
 
             Assert.Equal(0, Terraria.Netplay.Clients[5].State);
         }
@@ -125,7 +125,7 @@ namespace Orion.Players {
             using var playerService = new OrionPlayerService(kernel, Logger.None);
             kernel.RegisterHandler<PacketReceiveEvent<ClientConnectPacket>>(evt => evt.Cancel(), Logger.None);
 
-            TestUtils.FakeReceiveBytes(5, ServerConnectBytes);
+            TestUtils.FakeReceiveBytes(5, _serverConnectBytes);
 
             Assert.Equal(0, Terraria.Netplay.Clients[5].State);
         }
@@ -393,7 +393,7 @@ namespace Orion.Players {
             Terraria.NetMessage.SendData((byte)PacketId.ClientConnect, 5);
 
             Assert.True(isRun);
-            Assert.Equal(ServerConnectBytes, socket.SendData);
+            Assert.Equal(_serverConnectBytes, socket.SendData);
         }
 
         [Fact]
@@ -407,7 +407,7 @@ namespace Orion.Players {
 
             Terraria.NetMessage.SendData((byte)PacketId.ClientConnect, 5);
 
-            Assert.NotEqual(ServerConnectBytes, socket.SendData);
+            Assert.NotEqual(_serverConnectBytes, socket.SendData);
         }
 
         [Fact]

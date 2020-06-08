@@ -22,7 +22,8 @@ using Xunit;
 
 namespace Orion.Packets.Modules {
     public class ModuleIdTests {
-        private static readonly ISet<Type> ExcludedTypes = new HashSet<Type> { typeof(UnknownModule), typeof(IModule) };
+        private static readonly ISet<Type> _excludedTypes =
+            new HashSet<Type> { typeof(UnknownModule), typeof(IModule) };
 
         [Fact]
         public void Type() {
@@ -31,7 +32,7 @@ namespace Orion.Packets.Modules {
 
                 // Scan the Orion assembly for a packet type (not of type `UnknownModule`) which has the correct ID.
                 var expectedType = typeof(ModuleId).Assembly.ExportedTypes
-                    .Where(t => !ExcludedTypes.Contains(t) && typeof(IModule).IsAssignableFrom(t))
+                    .Where(t => !_excludedTypes.Contains(t) && typeof(IModule).IsAssignableFrom(t))
                     .Where(t => ((IModule)Activator.CreateInstance(t)!).Id == id).FirstOrDefault()
                         ?? typeof(UnknownModule);
 
