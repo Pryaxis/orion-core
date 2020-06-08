@@ -28,7 +28,7 @@ namespace Orion.Framework {
         /// <paramref name="kernel"/> and <paramref name="log"/>.
         /// </summary>
         /// <param name="kernel">The kernel.</param>
-        /// <param name="log">The log.</param>
+        /// <param name="log">The plugin-specific log.</param>
         /// <exception cref="ArgumentNullException">
         /// <paramref name="kernel"/> or <paramref name="log"/> are <see langword="null"/>.
         /// </exception>

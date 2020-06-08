@@ -25,7 +25,7 @@ namespace Orion.Entities {
     internal abstract class OrionEntity<TTerrariaEntity> : AnnotatableObject, IEntity, IWrapping<TTerrariaEntity>
             where TTerrariaEntity : Terraria.Entity {
         protected OrionEntity(int entityIndex, TTerrariaEntity terrariaEntity) {
-            Debug.Assert(terrariaEntity != null, "Terraria entity should not be null");
+            Debug.Assert(terrariaEntity != null);
 
             Index = entityIndex;
             Wrapped = terrariaEntity;

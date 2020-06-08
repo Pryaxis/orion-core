@@ -34,8 +34,8 @@ namespace Orion.Npcs {
         /// <summary>
         /// Spawns an NPC with the given <paramref name="id"/> at the specified <paramref name="position"/>.
         /// </summary>
-        /// <param name="id">The NPC ID.</param>
-        /// <param name="position">The position.</param>
+        /// <param name="id">The NPC ID to spawn.</param>
+        /// <param name="position">The position to spawn the NPC at.</param>
         /// <returns>The resulting NPC, or <see langword="null"/> if none was spawned.</returns>
         INpc? SpawnNpc(NpcId id, Vector2f position);
     }

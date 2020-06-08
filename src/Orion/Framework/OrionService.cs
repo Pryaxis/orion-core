@@ -28,7 +28,7 @@ namespace Orion.Framework {
         /// <paramref name="kernel"/> and <paramref name="log"/>.
         /// </summary>
         /// <param name="kernel">The kernel.</param>
-        /// <param name="log">The log.</param>
+        /// <param name="log">The service-specific log.</param>
         /// <exception cref="ArgumentNullException">
         /// <paramref name="kernel"/> or <paramref name="log"/> are <see langword="null"/>.
         /// </exception>
@@ -44,9 +44,9 @@ namespace Orion.Framework {
         public OrionKernel Kernel { get; }
 
         /// <summary>
-        /// Gets the logger.
+        /// Gets the service-specific log.
         /// </summary>
-        /// <value>The logger.</value>
+        /// <value>The service-specific log.</value>
         public ILogger Log { get; }
 
         /// <summary>

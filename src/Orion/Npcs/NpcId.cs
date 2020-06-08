@@ -838,7 +838,7 @@ namespace Orion.Npcs {
             NpcId.HellButterfly,
             NpcId.Lavafly,
             NpcId.MagmaSnail,
-            NpcId.PrismaticLacewing,
+            NpcId.PrismaticLacewing
         };
 
         /// <summary>
