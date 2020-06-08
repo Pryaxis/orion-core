@@ -273,7 +273,7 @@ namespace Orion.Players {
         //
 
         [EventHandler("orion-players", Priority = EventPriority.Lowest)]
-        [SuppressMessage("CodeQuality", "IDE0051:Remove unused private members", Justification = "Implicitly called")]
+        [SuppressMessage("CodeQuality", "IDE0051:Remove unused private members", Justification = "Implicitly used")]
         private void OnPlayerJoinPacket(PacketReceiveEvent<PlayerJoinPacket> evt) {
             var player = evt.Sender;
             var evt2 = new PlayerJoinEvent(player);
@@ -282,7 +282,7 @@ namespace Orion.Players {
         }
 
         [EventHandler("orion-players", Priority = EventPriority.Lowest)]
-        [SuppressMessage("CodeQuality", "IDE0051:Remove unused private members", Justification = "Implicitly called")]
+        [SuppressMessage("CodeQuality", "IDE0051:Remove unused private members", Justification = "Implicitly used")]
         private void OnPlayerHealthPacket(PacketReceiveEvent<PlayerHealthPacket> evt) {
             var player = evt.Sender;
             ref var packet = ref evt.Packet;
@@ -292,7 +292,7 @@ namespace Orion.Players {
         }
 
         [EventHandler("orion-players", Priority = EventPriority.Lowest)]
-        [SuppressMessage("CodeQuality", "IDE0051:Remove unused private members", Justification = "Implicitly called")]
+        [SuppressMessage("CodeQuality", "IDE0051:Remove unused private members", Justification = "Implicitly used")]
         private void OnPlayerPvpPacket(PacketReceiveEvent<PlayerPvpPacket> evt) {
             var player = evt.Sender;
             ref var packet = ref evt.Packet;
@@ -302,7 +302,7 @@ namespace Orion.Players {
         }
 
         [EventHandler("orion-players", Priority = EventPriority.Lowest)]
-        [SuppressMessage("CodeQuality", "IDE0051:Remove unused private members", Justification = "Implicitly called")]
+        [SuppressMessage("CodeQuality", "IDE0051:Remove unused private members", Justification = "Implicitly used")]
         private void OnPlayerManaPacket(PacketReceiveEvent<PlayerManaPacket> evt) {
             var player = evt.Sender;
             ref var packet = ref evt.Packet;
@@ -312,7 +312,7 @@ namespace Orion.Players {
         }
 
         [EventHandler("orion-players", Priority = EventPriority.Lowest)]
-        [SuppressMessage("CodeQuality", "IDE0051:Remove unused private members", Justification = "Implicitly called")]
+        [SuppressMessage("CodeQuality", "IDE0051:Remove unused private members", Justification = "Implicitly used")]
         private void OnPlayerTeamPacket(PacketReceiveEvent<PlayerTeamPacket> evt) {
             var player = evt.Sender;
             ref var packet = ref evt.Packet;
@@ -322,7 +322,7 @@ namespace Orion.Players {
         }
 
         [EventHandler("orion-players", Priority = EventPriority.Lowest)]
-        [SuppressMessage("CodeQuality", "IDE0051:Remove unused private members", Justification = "Implicitly called")]
+        [SuppressMessage("CodeQuality", "IDE0051:Remove unused private members", Justification = "Implicitly used")]
         private void OnClientUuidPacket(PacketReceiveEvent<ClientUuidPacket> evt) {
             var player = evt.Sender;
             ref var packet = ref evt.Packet;
@@ -332,7 +332,7 @@ namespace Orion.Players {
         }
 
         [EventHandler("orion-players", Priority = EventPriority.Lowest)]
-        [SuppressMessage("CodeQuality", "IDE0051:Remove unused private members", Justification = "Implicitly called")]
+        [SuppressMessage("CodeQuality", "IDE0051:Remove unused private members", Justification = "Implicitly used")]
         private void OnChatModule(PacketReceiveEvent<ModulePacket<ChatModule>> evt) {
             var player = evt.Sender;
             ref var module = ref evt.Packet.Module;

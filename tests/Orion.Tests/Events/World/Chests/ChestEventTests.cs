@@ -17,26 +17,26 @@
 
 using System;
 using Moq;
-using Orion.World.Signs;
+using Orion.World.Chests;
 using Xunit;
 
-namespace Orion.Events.World.Signs {
-    public class SignEventTests {
+namespace Orion.Events.World.Chests {
+    public class ChestEventTests {
         [Fact]
-        public void Ctor_NullSign_ThrowsArgumentNullException() {
-            Assert.Throws<ArgumentNullException>(() => new TestSignEvent(null!));
+        public void Ctor_NullChest_ThrowsArgumentNullException() {
+            Assert.Throws<ArgumentNullException>(() => new TestChestEvent(null!));
         }
 
         [Fact]
-        public void Sign_Get() {
-            var sign = new Mock<ISign>().Object;
-            var evt = new TestSignEvent(sign);
+        public void Chest_Get() {
+            var chest = new Mock<IChest>().Object;
+            var evt = new TestChestEvent(chest);
 
-            Assert.Same(sign, evt.Sign);
+            Assert.Same(chest, evt.Chest);
         }
 
-        private class TestSignEvent : SignEvent {
-            public TestSignEvent(ISign sign) : base(sign) { }
+        private class TestChestEvent : ChestEvent {
+            public TestChestEvent(IChest chest) : base(chest) { }
         }
     }
 }

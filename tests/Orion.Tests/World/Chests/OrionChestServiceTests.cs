@@ -17,6 +17,11 @@
 
 using System;
 using System.Linq;
+using Orion.Events;
+using Orion.Events.World.Chests;
+using Orion.Packets.World.Chests;
+using Orion.Players;
+using Orion.World.Tiles;
 using Serilog.Core;
 using Xunit;
 
@@ -73,6 +78,97 @@ namespace Orion.World.Chests {
             for (var i = 0; i < chests.Count; ++i) {
                 Assert.Same(Terraria.Main.chest[i], ((OrionChest)chests[i]).Wrapped);
             }
+        }
+
+        [Fact]
+        public void PacketReceive_ChestOpenEventTriggered() {
+            // Set `State` to 10 so that the chest open packet is not ignored by the server.
+            var socket = new TestSocket { Connected = true };
+            Terraria.Netplay.Clients[5] = new Terraria.RemoteClient { Id = 5, State = 10, Socket = socket };
+            Terraria.Main.player[5] = new Terraria.Player { whoAmI = 5 };
+            Terraria.Main.tile[256, 100] = new Terraria.Tile { type = (ushort)BlockId.Chests };
+            Terraria.Main.chest[0] = new Terraria.Chest { x = 256, y = 100, name = "test" };
+
+            using var kernel = new OrionKernel(Logger.None);
+            using var playerService = new OrionPlayerService(kernel, Logger.None);
+            using var chestService = new OrionChestService(kernel, Logger.None);
+
+            var isRun = false;
+            kernel.RegisterHandler<ChestOpenEvent>(evt => {
+                Assert.Same(chestService.Chests[0], evt.Chest);
+                Assert.Same(playerService.Players[5], evt.Player);
+                isRun = true;
+            }, Logger.None);
+
+            TestUtils.FakeReceiveBytes(5, ChestOpenPacketTests.Bytes);
+
+            Assert.True(isRun);
+            Assert.NotEmpty(socket.SendData);
+        }
+
+        [Fact]
+        public void PacketReceive_ChestOpenEventCanceled() {
+            // Set `State` to 10 so that the chest open packet is not ignored by the server.
+            var socket = new TestSocket { Connected = true };
+            Terraria.Netplay.Clients[5] = new Terraria.RemoteClient { Id = 5, State = 10, Socket = socket };
+            Terraria.Main.player[5] = new Terraria.Player { whoAmI = 5 };
+            Terraria.Main.chest[0] = new Terraria.Chest { x = 256, y = 100, name = "test" };
+
+            using var kernel = new OrionKernel(Logger.None);
+            using var playerService = new OrionPlayerService(kernel, Logger.None);
+            using var chestService = new OrionChestService(kernel, Logger.None);
+
+            Terraria.Main.tile[256, 100] = new Terraria.Tile { type = (ushort)BlockId.Chests };
+
+            kernel.RegisterHandler<ChestOpenEvent>(evt => evt.Cancel(), Logger.None);
+
+            TestUtils.FakeReceiveBytes(5, ChestOpenPacketTests.Bytes);
+
+            Assert.Empty(socket.SendData);
+        }
+
+        [Fact]
+        public void PacketReceive_ChestOpenEventNotTriggered() {
+            // Set `State` to 10 so that the chest open packet is not ignored by the server.
+            var socket = new TestSocket { Connected = true };
+            Terraria.Netplay.Clients[5] = new Terraria.RemoteClient { Id = 5, State = 10, Socket = socket };
+            Terraria.Main.player[5] = new Terraria.Player { whoAmI = 5 };
+            Terraria.Main.tile[256, 100] = new Terraria.Tile { type = (ushort)BlockId.Chests };
+            Terraria.Main.chest[0] = new Terraria.Chest { x = 255, y = 100, name = "test" };
+
+            using var kernel = new OrionKernel(Logger.None);
+            using var playerService = new OrionPlayerService(kernel, Logger.None);
+            using var chestService = new OrionChestService(kernel, Logger.None);
+
+            var isRun = false;
+            kernel.RegisterHandler<ChestOpenEvent>(evt => isRun = true, Logger.None);
+
+            TestUtils.FakeReceiveBytes(5, ChestOpenPacketTests.Bytes);
+
+            Assert.False(isRun);
+        }
+
+        private class TestSocket : Terraria.Net.Sockets.ISocket {
+            public bool Connected { get; set; }
+            public byte[] SendData { get; private set; } = Array.Empty<byte>();
+
+            public void AsyncReceive(
+                byte[] data, int offset, int size, Terraria.Net.Sockets.SocketReceiveCallback callback,
+                object? state = null) =>
+                    throw new NotImplementedException();
+            public void AsyncSend(
+                byte[] data, int offset, int size, Terraria.Net.Sockets.SocketSendCallback callback,
+                object? state = null) =>
+                    SendData = data[offset..(offset + size)];
+            public void Close() => throw new NotImplementedException();
+            public void Connect(Terraria.Net.RemoteAddress address) => throw new NotImplementedException();
+            public Terraria.Net.RemoteAddress GetRemoteAddress() => throw new NotImplementedException();
+            public bool IsConnected() => Connected;
+            public bool IsDataAvailable() => throw new NotImplementedException();
+            public void SendQueuedPackets() => throw new NotImplementedException();
+            public bool StartListening(Terraria.Net.Sockets.SocketConnectionAccepted callback) =>
+                throw new NotImplementedException();
+            public void StopListening() => throw new NotImplementedException();
         }
     }
 }

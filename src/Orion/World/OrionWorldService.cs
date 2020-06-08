@@ -76,7 +76,7 @@ namespace Orion.World {
         //
 
         [EventHandler("orion-world", Priority = EventPriority.Lowest)]
-        [SuppressMessage("CodeQuality", "IDE0051:Remove unused private members", Justification = "Implicitly called")]
+        [SuppressMessage("CodeQuality", "IDE0051:Remove unused private members", Justification = "Implicitly used")]
         private void OnTileSquarePacket(PacketReceiveEvent<TileSquarePacket> evt) {
             var player = evt.Sender;
             ref var packet = ref evt.Packet;
@@ -86,7 +86,7 @@ namespace Orion.World {
         }
 
         [EventHandler("orion-world", Priority = EventPriority.Lowest)]
-        [SuppressMessage("CodeQuality", "IDE0051:Remove unused private members", Justification = "Implicitly called")]
+        [SuppressMessage("CodeQuality", "IDE0051:Remove unused private members", Justification = "Implicitly used")]
         private void OnBlockPaintPacket(PacketReceiveEvent<BlockPaintPacket> evt) {
             var player = evt.Sender;
             ref var packet = ref evt.Packet;
@@ -96,7 +96,7 @@ namespace Orion.World {
         }
 
         [EventHandler("orion-world", Priority = EventPriority.Lowest)]
-        [SuppressMessage("CodeQuality", "IDE0051:Remove unused private members", Justification = "Implicitly called")]
+        [SuppressMessage("CodeQuality", "IDE0051:Remove unused private members", Justification = "Implicitly used")]
         private void OnWallPaintPacket(PacketReceiveEvent<WallPaintPacket> evt) {
             var player = evt.Sender;
             ref var packet = ref evt.Packet;

@@ -50,7 +50,7 @@ namespace Orion.World.Signs {
         //
 
         [EventHandler("orion-signs", Priority = EventPriority.Lowest)]
-        [SuppressMessage("CodeQuality", "IDE0051:Remove unused private members", Justification = "Implicitly called")]
+        [SuppressMessage("CodeQuality", "IDE0051:Remove unused private members", Justification = "Implicitly used")]
         private void OnSignReadPacket(PacketReceiveEvent<SignReadPacket> evt) {
             ref var packet = ref evt.Packet;
             var sign = FindSign(packet.X, packet.Y);
