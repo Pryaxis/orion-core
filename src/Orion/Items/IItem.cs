@@ -44,13 +44,13 @@ namespace Orion.Items {
         /// <summary>
         /// Sets the item's <paramref name="id"/>. This will update the item accordingly. 
         /// </summary>
-        /// <param name="id">The item ID.</param>
+        /// <param name="id">The item ID to set the item to.</param>
         void SetId(ItemId id);
 
         /// <summary>
         /// Sets the item's <paramref name="prefix"/>. This will update the item accordingly.
         /// </summary>
-        /// <param name="prefix">The item prefix.</param>
+        /// <param name="prefix">The item prefix to set the item to.</param>
         void SetPrefix(ItemPrefix prefix);
     }
 

@@ -32,14 +32,12 @@ namespace Orion.Items {
         IReadOnlyList<IItem> Items { get; }
 
         /// <summary>
-        /// Spawns an item with the given <paramref name="id"/> at the specified <paramref name="position"/> with an
-        /// optional <paramref name="stackSize"/> and <paramref name="prefix"/>. Returns the resulting item.
+        /// Spawns the given <paramref name="itemStack"/> at the specified <paramref name="position"/>. Returns the
+        /// resulting item.
         /// </summary>
-        /// <param name="id">The item ID.</param>
-        /// <param name="position">The position.</param>
-        /// <param name="stackSize">The item stack size.</param>
-        /// <param name="prefix">The item prefix.</param>
+        /// <param name="itemStack">The item stack to spawn.</param>
+        /// <param name="position">The position to spawn the item at.</param>
         /// <returns>The resulting item, or <see langword="null"/> if none was spawned.</returns>
-        IItem? SpawnItem(ItemId id, Vector2f position, int stackSize = 1, ItemPrefix prefix = ItemPrefix.None);
+        IItem? SpawnItem(ItemStack itemStack, Vector2f position);
     }
 }

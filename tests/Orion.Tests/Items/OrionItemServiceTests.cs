@@ -133,7 +133,7 @@ namespace Orion.Items {
         public void SpawnItem(ItemId id, int stackSize, ItemPrefix prefix) {
             using var kernel = new OrionKernel(Logger.None);
             using var itemService = new OrionItemService(kernel, Logger.None);
-            var item = itemService.SpawnItem(id, Vector2f.Zero, stackSize, prefix);
+            var item = itemService.SpawnItem(new ItemStack(id, stackSize, prefix), Vector2f.Zero);
 
             Assert.NotNull(item);
             Assert.Equal(id, item!.Id);

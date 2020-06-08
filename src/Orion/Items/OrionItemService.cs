@@ -45,12 +45,13 @@ namespace Orion.Items {
             OTAPI.Hooks.Item.PreUpdate = null;
         }
 
-        public IItem? SpawnItem(ItemId id, Vector2f position, int stackSize = 1, ItemPrefix prefix = ItemPrefix.None) {
+        public IItem? SpawnItem(ItemStack itemStack, Vector2f position) {
             // Not localized because this string is developer-facing.
-            Log.Debug("Spawning {ItemId} x{ItemStackSize} at {Position}", id, stackSize, position);
+            Log.Debug("Spawning {ItemStack} at {Position}", itemStack);
 
             var itemIndex = Terraria.Item.NewItem(
-                (int)position.X, (int)position.Y, 0, 0, (int)id, stackSize, false, (int)prefix);
+                (int)position.X, (int)position.Y, 0, 0, (int)itemStack.Id, itemStack.StackSize, false,
+                (int)itemStack.Prefix);
             return itemIndex >= 0 && itemIndex < Items.Count ? Items[itemIndex] : null;
         }
 
@@ -76,7 +77,8 @@ namespace Orion.Items {
             Debug.Assert(terrariaItem != null);
             Debug.Assert(itemIndex >= 0 && itemIndex < Items.Count);
 
-            // Set `whoAmI` since this is never done in the vanilla server.
+            // Set `whoAmI` since this is never done in the vanilla server, and we depend on this field being set in
+            // `OrionEntity`.
             terrariaItem.whoAmI = itemIndex;
 
             var item = Items[itemIndex];
