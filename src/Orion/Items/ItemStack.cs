@@ -20,8 +20,12 @@ using System.Diagnostics.Contracts;
 
 namespace Orion.Items {
     /// <summary>
-    /// Represents a stack of items.
+    /// Represents a stack of items in an inventory of some sort.
     /// </summary>
+    /// <remarks>
+    /// An item stack instance fully describes an inventory slot. It is composed of an <see cref="ItemId"/>, the item
+    /// stack size, and an <see cref="ItemPrefix"/>.
+    /// </remarks>
     public readonly struct ItemStack : IEquatable<ItemStack> {
         /// <summary>
         /// Initializes a new instance of the <see cref="ItemStack"/> structure with the specified item

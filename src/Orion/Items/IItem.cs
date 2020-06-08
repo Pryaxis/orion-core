@@ -15,6 +15,7 @@
 // You should have received a copy of the GNU General Public License
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
+using System.Diagnostics.Contracts;
 using Orion.Entities;
 
 namespace Orion.Items {
@@ -51,5 +52,24 @@ namespace Orion.Items {
         /// </summary>
         /// <param name="prefix">The item prefix.</param>
         void SetPrefix(ItemPrefix prefix);
+    }
+
+    /// <summary>
+    /// Provides extensions for the <see cref="IItem"/> interface.
+    /// </summary>
+    public static class ItemExtensions {
+        /// <summary>
+        /// Returns the <paramref name="item"/> as an item stack instance.
+        /// </summary>
+        /// <param name="item">The item.</param>
+        /// <returns>The <paramref name="item"/> as an item stack instance.</returns>
+        [Pure]
+        public static ItemStack AsItemStack(this IItem item) {
+            if (item is null) {
+                throw new System.ArgumentNullException(nameof(item));
+            }
+
+            return new ItemStack(item.Id, item.StackSize, item.Prefix);
+        }
     }
 }
