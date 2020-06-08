@@ -74,7 +74,8 @@ namespace Orion.Packets.World.Tiles {
         }
 
         /// <summary>
-        /// Gets or sets the block style. This is only applicable if <see cref="Modification"/> involves placing a block.
+        /// Gets or sets the block style. This is only applicable if <see cref="Modification"/> involves placing a
+        /// block.
         /// </summary>
         /// <value>The block style.</value>
         /// <exception cref="InvalidOperationException">
