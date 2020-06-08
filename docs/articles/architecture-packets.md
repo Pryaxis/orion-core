@@ -32,4 +32,4 @@ A packet can be defined and implemented as follows:
 
 The `Id` property is usually implemented explicitly, as the type of the packet already gives us the ID information.
 
-Once a packet structure has been defined (along with a corresponding `PacketId`), the mappings in `PacketIdExtensions` must be modified in a suitable manner. The `OrionPlayerService` implementation should also be modified to recognize the new packet and generate corresponding events, if applicable.
+Once a packet structure has been defined (along with a corresponding [`PacketId`](xref:Orion.Packet.PacketId)), the mappings in `PacketIdExtensions` must be modified in a suitable manner. The `OrionPlayerService` implementation should also be modified to recognize the new packet and generate corresponding events, if applicable.

@@ -8,9 +8,9 @@ uid: architecture_events
 
 _Events_ in Orion act as the form of communication between Orion and its plugins.
 
-Each event has some number of _publishers_ and _subscribers_. The publishers generate the events, and the subscribers can handle events as needed. Events can be raised and event handlers can be registered and deregistered with an `OrionKernel`.
+Each event has some number of _publishers_ and _subscribers_. The publishers generate the events, and the subscribers can handle events as needed. Events can be raised and event handlers can be registered and deregistered with an [`OrionKernel`](xref:Orion.OrionKernel) instance.
 
-Some events implement the `ICancelable` interface, and these events can be canceled using the `Cancel` extension method.
+Some events implement the [`ICancelable`](xref:Orion.Events.ICancelable) interface, and these events can be canceled using the [`Cancel`](xref:Orion.Events.CancelableExtensions.Cancel(Orion.Events.ICancelable,System.String)) extension method.
 
 ### Priorities
 
@@ -38,7 +38,7 @@ An event can be defined as follows:
     }
 ```
 
-This event can then be raised via an `OrionKernel` instance:
+This event can then be raised via an [`OrionKernel`](xref:Orion.OrionKernel) instance:
 
 ```csharp
     Kernel.Raise(new MyEvent { Value = 100 }, Log);
@@ -49,13 +49,13 @@ This event can then be raised via an `OrionKernel` instance:
 An event handler can be defined as follows:
 
 ```csharp
-    [EventHandler(EventPriority.Monitor, Name = "my-event-handler")]
+    [EventHandler("my-event-handler", Priority = EventPriority.Monitor)]
     private void MyEventHandler(MyEvent evt) {
         Console.WriteLine(evt.Value);
     }
 ```
 
-The handler must then be registered via an `OrionKernel` instance:
+The handler must then be registered via an [`OrionKernel`](xref:Orion.OrionKernel) instance:
 
 ```csharp
     Kernel.RegisterHandler(MyEventHandler, Log);
@@ -67,4 +67,4 @@ It must then be deregistered when the handler owner is being disposed:
     Kernel.DeregisterHandler(MyEventHandler, Log);
 ```
 
-Event handlers can be registered and deregistered en masse using the `RegisterHandlers` and `DeregisterHandlers` methods, which register and deregister all methods marked with the `EventHandler` attribute, respectively.
+Event handlers can be registered and deregistered en masse using the [`RegisterHandlers`](xref:Orion.OrionKernel.RegisterHandlers(System.Object,ILogger)) and [`DeregisterHandlers`](xref:Orion.OrionKernel.DeregisterHandlers(System.Object,ILogger)) methods, which register and deregister all methods marked with [`EventHandlerAttribute`](xref:Orion.Events.EventHandlerAttribute), respectively.
