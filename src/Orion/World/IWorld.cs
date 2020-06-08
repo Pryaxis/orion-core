@@ -32,15 +32,15 @@ namespace Orion.World {
         ref Tile this[int x, int y] { get; }
 
         /// <summary>
-        /// Gets the world width.
+        /// Gets the world's width.
         /// </summary>
-        /// <value>The world width.</value>
+        /// <value>The world's width.</value>
         int Width { get; }
 
         /// <summary>
-        /// Gets the world height.
+        /// Gets the world's height.
         /// </summary>
-        /// <value>The world height.</value>
+        /// <value>The world's height.</value>
         int Height { get; }
     }
 }

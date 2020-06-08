@@ -17,11 +17,16 @@
 
 using System;
 using System.Diagnostics;
+using System.Diagnostics.CodeAnalysis;
+using System.Diagnostics.Contracts;
+using Destructurama.Attributed;
 using Orion.Collections;
 using Orion.Entities;
 using Orion.Items;
+using Orion.World.TileEntities;
 
 namespace Orion.World.Chests {
+    [LogAsScalar]
     internal sealed class OrionChest : AnnotatableObject, IChest, IWrapping<Terraria.Chest> {
         public OrionChest(int chestIndex, Terraria.Chest? terrariaChest) {
             Index = chestIndex;
@@ -55,10 +60,16 @@ namespace Orion.World.Chests {
 
         public Terraria.Chest Wrapped { get; }
 
-        private class ItemArray : IArray<ItemStack> {
-            private readonly Terraria.Item?[]? _items;
+        // Not localized because this string is developer-facing.
+        [Pure, ExcludeFromCodeCoverage]
+        public override string ToString() => this.IsConcrete() ? $"(index: {Index})" : "<abstract instance>";
 
-            public ItemArray(Terraria.Item?[]? items) {
+        private class ItemArray : IArray<ItemStack> {
+            private readonly Terraria.Item?[] _items;
+
+            public ItemArray(Terraria.Item?[] items) {
+                Debug.Assert(items != null);
+
                 _items = items;
             }
 
@@ -66,10 +77,8 @@ namespace Orion.World.Chests {
                 get {
                     if (index < 0 || index >= Count) {
                         // Not localized because this string is developer-facing.
-                        throw new IndexOutOfRangeException($"Index out of range (expected: 0-{Count})");
+                        throw new IndexOutOfRangeException($"Index out of range (expected: 0 to {Count - 1})");
                     }
-
-                    Debug.Assert(_items != null);
 
                     var item = _items[index];
                     if (item is null) {
@@ -81,11 +90,10 @@ namespace Orion.World.Chests {
                 set {
                     if (index < 0 || index >= Count) {
                         // Not localized because this string is developer-facing.
-                        throw new IndexOutOfRangeException($"Index out of range (expected: 0-{Count})");
+                        throw new IndexOutOfRangeException($"Index out of range (expected: 0 to {Count - 1})");
                     }
 
-                    Debug.Assert(_items != null);
-
+                    // Lazily initialize the item if it is `null`.
                     ref var item = ref _items[index];
                     if (item is null) {
                         item = new Terraria.Item();
@@ -97,7 +105,7 @@ namespace Orion.World.Chests {
                 }
             }
 
-            public int Count => _items?.Length ?? 0;
+            public int Count => _items.Length;
         }
     }
 }

@@ -15,6 +15,7 @@
 // You should have received a copy of the GNU General Public License
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
+using System;
 using System.Diagnostics.Contracts;
 using Orion.Entities;
 
@@ -63,10 +64,11 @@ namespace Orion.Items {
         /// </summary>
         /// <param name="item">The item.</param>
         /// <returns>The <paramref name="item"/> as an item stack instance.</returns>
+        /// <exception cref="ArgumentNullException"><paramref name="item"/> is <see langword="null"/>.</exception>
         [Pure]
         public static ItemStack AsItemStack(this IItem item) {
             if (item is null) {
-                throw new System.ArgumentNullException(nameof(item));
+                throw new ArgumentNullException(nameof(item));
             }
 
             return new ItemStack(item.Id, item.StackSize, item.Prefix);

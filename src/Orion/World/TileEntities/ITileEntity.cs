@@ -38,7 +38,7 @@ namespace Orion.World.TileEntities {
     /// </description>
     /// </item>
     /// <item>
-    /// <description>Tile entities which are concrete and active: the entity exists in the world.</description>
+    /// <description>Tile entities which are concrete <i>and</i> active: the entity exists in the world.</description>
     /// </item>
     /// </list>
     /// 

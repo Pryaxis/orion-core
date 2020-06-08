@@ -1004,7 +1004,7 @@ namespace Orion.World.Tiles {
             BlockId.TruffleWormCage,
             BlockId.PrismaticLacewingJar,
             BlockId.SliceOfCake,
-            BlockId.Teapot,
+            BlockId.Teapot
         };
 
         /// <summary>
