@@ -122,7 +122,7 @@ namespace Orion.Players {
                 get {
                     if (index < 0 || index >= Count) {
                         // Not localized because this string is developer-facing.
-                        throw new IndexOutOfRangeException($"Index out of range (expected: 0-{Count})");
+                        throw new IndexOutOfRangeException($"Index out of range (expected: 0 to {Count - 1})");
                     }
 
                     var id = (BuffId)_wrapped.buffType[index];
@@ -132,7 +132,7 @@ namespace Orion.Players {
                 set {
                     if (index < 0 || index >= Count) {
                         // Not localized because this string is developer-facing.
-                        throw new IndexOutOfRangeException($"Index out of range (expected: 0-{Count})");
+                        throw new IndexOutOfRangeException($"Index out of range (expected: 0 to {Count - 1})");
                     }
 
                     _wrapped.buffType[index] = (int)value.Id;

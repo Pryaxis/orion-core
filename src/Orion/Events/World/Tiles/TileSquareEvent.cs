@@ -23,7 +23,7 @@ using Orion.World.Tiles;
 
 namespace Orion.Events.World.Tiles {
     /// <summary>
-    /// An event that occurs when a player sends a square of tiles. This event can be canceled.
+    /// An event that occurs when a player is sending a square of tiles. This event can be canceled.
     /// </summary>
     [Event("tile-square")]
     public class TileSquareEvent : WorldEvent, ICancelable {
@@ -33,7 +33,7 @@ namespace Orion.Events.World.Tiles {
         /// <paramref name="tiles"/>.
         /// </summary>
         /// <param name="world">The world involved in the event.</param>
-        /// <param name="player">The player that sent the square of tiles.</param>
+        /// <param name="player">The player sending the square of tiles.</param>
         /// <param name="x">The top-left tile's X coordinate.</param>
         /// <param name="y">The top-left tile's Y coordinate.</param>
         /// <param name="tiles">The tiles.</param>

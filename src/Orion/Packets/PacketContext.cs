@@ -41,7 +41,7 @@ namespace Orion.Packets {
         /// Returns the other context for the packet <paramref name="context"/>.
         /// </summary>
         /// <param name="context">The context.</param>
-        /// <returns>The other context.</returns>
+        /// <returns>The other context for the packet <paramref name="context"/>.</returns>
         [Pure]
         public static PacketContext Switch(this PacketContext context) => (PacketContext)((int)context ^ 1);
     }

@@ -25,7 +25,7 @@ namespace Orion.Packets.Modules {
     /// </summary>
     public enum ModuleId : ushort {
 #pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
-        Chat = 1,
+        Chat = 1
 #pragma warning restore CS1591 // Missing XML comment for publicly visible type or member
     }
 
@@ -34,7 +34,7 @@ namespace Orion.Packets.Modules {
     /// </summary>
     public static class ModuleIdExtensions {
         private static readonly IDictionary<ModuleId, Type> _types = new Dictionary<ModuleId, Type> {
-            [ModuleId.Chat] = typeof(ChatModule),
+            [ModuleId.Chat] = typeof(ChatModule)
         };
 
         /// <summary>

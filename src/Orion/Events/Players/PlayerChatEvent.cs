@@ -29,7 +29,7 @@ namespace Orion.Events.Players {
         /// Initializes a new instance of the <see cref="PlayerChatEvent"/> class with the specified
         /// <paramref name="player"/>, <paramref name="command"/>, and <paramref name="message"/>.
         /// </summary>
-        /// <param name="player">The player involved in the event.</param>
+        /// <param name="player">The player chatting.</param>
         /// <param name="command">The command that the player used.</param>
         /// <param name="message">The message.</param>
         /// <exception cref="ArgumentNullException">

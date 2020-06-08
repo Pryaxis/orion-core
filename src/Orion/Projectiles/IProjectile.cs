@@ -31,7 +31,7 @@ namespace Orion.Projectiles {
         /// <summary>
         /// Sets the projectile's <paramref name="id"/>. This will update the projectile accordingly. 
         /// </summary>
-        /// <param name="id">The projectile ID.</param>
+        /// <param name="id">The projectile ID to set the projectile to.</param>
         void SetId(ProjectileId id);
     }
 }

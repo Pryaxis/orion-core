@@ -30,7 +30,7 @@ namespace Orion.Events.Npcs {
         /// Initializes a new instance of the <see cref="NpcLootEvent"/> class with the specified
         /// <paramref name="npc"/>.
         /// </summary>
-        /// <param name="npc">The NPC involved in the event.</param>
+        /// <param name="npc">The NPC dropping loot.</param>
         /// <exception cref="ArgumentNullException"><paramref name="npc"/> is <see langword="null"/>.</exception>
         public NpcLootEvent(INpc npc) : base(npc) { }
 

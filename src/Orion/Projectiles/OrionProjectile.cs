@@ -26,6 +26,7 @@ namespace Orion.Projectiles {
 
         public OrionProjectile(int projectileIndex, Terraria.Projectile terrariaProjectile)
             : base(projectileIndex, terrariaProjectile) { }
+
         public OrionProjectile(Terraria.Projectile terrariaProjectile) : this(-1, terrariaProjectile) { }
 
         public override string Name {

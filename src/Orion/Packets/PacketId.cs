@@ -44,7 +44,7 @@ namespace Orion.Packets {
         WallPaint = 64,
         ClientUuid = 68,
         Module = 82,
-        ServerChat = 107,
+        ServerChat = 107
 #pragma warning restore CS1591 // Missing XML comment for publicly visible type or member
     }
 
@@ -66,7 +66,7 @@ namespace Orion.Packets {
             [PacketId.BlockPaint] = typeof(BlockPaintPacket),
             [PacketId.WallPaint] = typeof(WallPaintPacket),
             [PacketId.ClientUuid] = typeof(ClientUuidPacket),
-            [PacketId.ServerChat] = typeof(ServerChatPacket),
+            [PacketId.ServerChat] = typeof(ServerChatPacket)
         };
 
         /// <summary>

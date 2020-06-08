@@ -57,7 +57,7 @@ namespace Orion.Packets.DataStructures {
         [field: FieldOffset(2)] public byte B { get; }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="Color3"/> structure with the specified components.
+        /// Initializes a new instance of the <see cref="Color3"/> structure with the specified color components.
         /// </summary>
         /// <param name="r">The red component.</param>
         /// <param name="g">The green component.</param>

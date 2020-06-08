@@ -31,7 +31,7 @@ namespace Orion.Npcs {
         /// <summary>
         /// Sets the NPC's <paramref name="id"/>. This will update the NPC accordingly. 
         /// </summary>
-        /// <param name="id">The NPC ID.</param>
+        /// <param name="id">The NPC ID to set the NPC to.</param>
         void SetId(NpcId id);
     }
 }

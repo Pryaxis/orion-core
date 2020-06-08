@@ -81,7 +81,7 @@ namespace Orion.Players {
         /// Sends the given <paramref name="packet"/> reference to the player.
         /// </summary>
         /// <typeparam name="TPacket">The type of packet.</typeparam>
-        /// <param name="packet">The packet reference. <b>This must be on the stack!</b></param>
+        /// <param name="packet">The packet reference to send. <b>This must be on the stack!</b></param>
         void SendPacket<TPacket>(ref TPacket packet) where TPacket : struct, IPacket;
     }
 
@@ -95,7 +95,7 @@ namespace Orion.Players {
         /// </summary>
         /// <typeparam name="TPacket">The type of packet.</typeparam>
         /// <param name="player">The player.</param>
-        /// <param name="packet">The packet.</param>
+        /// <param name="packet">The packet to send.</param>
         /// <exception cref="ArgumentNullException"><paramref name="player"/> is <see langword="null"/>.</exception>
         public static void SendPacket<TPacket>(this IPlayer player, TPacket packet) where TPacket : struct, IPacket {
             if (player is null) {
@@ -109,7 +109,7 @@ namespace Orion.Players {
         /// Disconnects the <paramref name="player"/> for the given <paramref name="reason"/>.
         /// </summary>
         /// <param name="player">The player.</param>
-        /// <param name="reason">The reason.</param>
+        /// <param name="reason">The reason for the disconnect.</param>
         /// <exception cref="ArgumentNullException">
         /// <paramref name="player"/> or <paramref name="reason"/> are <see langword="null"/>.
         /// </exception>
@@ -131,8 +131,8 @@ namespace Orion.Players {
         /// <paramref name="color"/>.
         /// </summary>
         /// <param name="player">The player.</param>
-        /// <param name="message">The message.</param>
-        /// <param name="color">The color.</param>
+        /// <param name="message">The message to send.</param>
+        /// <param name="color">The color to send the message as.</param>
         /// <exception cref="ArgumentNullException">
         /// <paramref name="player"/> or <paramref name="message"/> are <see langword="null"/>.
         /// </exception>

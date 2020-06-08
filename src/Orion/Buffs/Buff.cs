@@ -25,8 +25,8 @@ namespace Orion.Buffs {
     /// A buff is a positive (or negative, in the case of a debuff) status effect which can be applied to players and
     /// NPCs. See <a href="https://terraria.gamepedia.com/Buffs">here</a> for more information on buffs.
     /// 
-    /// Each buff consists of a <see cref="BuffId"/>, which specifies the type of buff, along with a positive duration
-    /// which indicates the amount of time remaining on the buff.
+    /// Each buff consists of a <see cref="BuffId"/>, which specifies the type of buff, along with a duration indicating
+    /// the amount of time remaining on the buff.
     /// </remarks>
     public readonly struct Buff {
         /// <summary>
@@ -35,11 +35,11 @@ namespace Orion.Buffs {
         /// </summary>
         /// <param name="id">The buff ID.</param>
         /// <param name="duration">The buff duration.</param>
-        /// <exception cref="ArgumentOutOfRangeException"><paramref name="duration"/> is non-positive.</exception>
+        /// <exception cref="ArgumentOutOfRangeException"><paramref name="duration"/> is negative.</exception>
         public Buff(BuffId id, TimeSpan duration) {
-            if (duration <= TimeSpan.Zero) {
+            if (duration < TimeSpan.Zero) {
                 // Not localized because this string is developer-facing.
-                throw new ArgumentOutOfRangeException(nameof(duration), "Duration is non-positive");
+                throw new ArgumentOutOfRangeException(nameof(duration), "Duration is negative");
             }
 
             Id = id;
@@ -53,7 +53,7 @@ namespace Orion.Buffs {
         public BuffId Id { get; }
 
         /// <summary>
-        /// Gets the buff duration. This is guaranteed to be positive.
+        /// Gets the buff duration.
         /// </summary>
         /// <value>The buff duration.</value>
         public TimeSpan Duration { get; }

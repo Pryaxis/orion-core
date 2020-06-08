@@ -35,20 +35,21 @@ namespace Orion.Packets {
 
         /// <summary>
         /// Reads the packet from the given <paramref name="span"/> with the specified packet
-        /// <paramref name="context"/>, mutating this instance. Returns the number of bytes read.
+        /// <paramref name="context"/>, mutating this instance. Returns the number of bytes read from the
+        /// <paramref name="span"/>.
         /// </summary>
-        /// <param name="span">The span.</param>
-        /// <param name="context">The packet context.</param>
-        /// <returns>The number of bytes read.</returns>
+        /// <param name="span">The span to read from.</param>
+        /// <param name="context">The packet context to use when reading.</param>
+        /// <returns>The number of bytes read from the <paramref name="span"/>.</returns>
         int Read(Span<byte> span, PacketContext context);
 
         /// <summary>
         /// Writes the packet to the given <paramref name="span"/> with the specified packet <paramref name="context"/>.
-        /// Returns the number of bytes written.
+        /// Returns the number of bytes written to the <paramref name="span"/>.
         /// </summary>
-        /// <param name="span">The span.</param>
-        /// <param name="context">The packet context.</param>
-        /// <returns>The number of bytes written.</returns>
+        /// <param name="span">The span to write to.</param>
+        /// <param name="context">The packet context to use when writing.</param>
+        /// <returns>The number of bytes written to the <paramref name="span"/>.</returns>
         int Write(Span<byte> span, PacketContext context);
     }
 
@@ -58,13 +59,14 @@ namespace Orion.Packets {
     public static class PacketExtensions {
         /// <summary>
         /// Writes the <paramref name="packet"/> reference to the given <paramref name="span"/> with the specified
-        /// packet <paramref name="context"/>, including the packet header. Returns the number of bytes written.
+        /// packet <paramref name="context"/>, including the packet header. Returns the number of bytes written to the
+        /// <paramref name="span"/>.
         /// </summary>
         /// <typeparam name="TPacket">The type of packet.</typeparam>
         /// <param name="packet">The packet reference.</param>
-        /// <param name="span">The span.</param>
-        /// <param name="context">The packet context.</param>
-        /// <returns>The number of bytes written.</returns>
+        /// <param name="span">The span to write to.</param>
+        /// <param name="context">The packet context to use when writing.</param>
+        /// <returns>The number of bytes written to the <paramref name="span"/>.</returns>
         public static int WriteWithHeader<TPacket>(ref this TPacket packet, Span<byte> span, PacketContext context)
                 where TPacket : struct, IPacket {
             var packetLength = IPacket.HeaderSize + packet.Write(span[IPacket.HeaderSize..], context);

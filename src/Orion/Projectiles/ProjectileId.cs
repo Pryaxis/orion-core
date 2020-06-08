@@ -968,7 +968,7 @@ namespace Orion.Projectiles {
         Terraprisma = 946,
         Mace = 947,
         FlamingMace = 948,
-        TheTorchGod = 949,
+        TheTorchGod = 949
 #pragma warning restore CS1591 // Missing XML comment for publicly visible type or member
     }
 }

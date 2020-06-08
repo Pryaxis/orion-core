@@ -20,7 +20,7 @@ using Orion.World;
 
 namespace Orion.Events.World {
     /// <summary>
-    /// An event that occurs when the world is loaded.
+    /// An event that occurs when a world has been loaded.
     /// </summary>
     [Event("world-loaded")]
     public sealed class WorldLoadedEvent : WorldEvent {
@@ -28,7 +28,7 @@ namespace Orion.Events.World {
         /// Initializes a new instance of the <see cref="WorldLoadedEvent"/> class with the specified
         /// <paramref name="world"/>.
         /// </summary>
-        /// <param name="world">The world involved in the event.</param>
+        /// <param name="world">The world that was loaded.</param>
         /// <exception cref="ArgumentNullException"><paramref name="world"/> is <see langword="null"/>.</exception>
         public WorldLoadedEvent(IWorld world) : base(world) { }
     }

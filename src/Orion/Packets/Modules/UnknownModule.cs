@@ -47,12 +47,20 @@ namespace Orion.Packets.Modules {
         /// <inheritdoc/>
         public unsafe int Read(Span<byte> span, PacketContext context) {
             Length = (ushort)span.Length;
+            if (Length == 0) {
+                return 0;
+            }
+
             Unsafe.CopyBlockUnaligned(ref _data[0], ref span[0], Length);
             return Length;
         }
 
         /// <inheritdoc/>
         public unsafe int Write(Span<byte> span, PacketContext context) {
+            if (Length == 0) {
+                return 0;
+            }
+
             Unsafe.CopyBlockUnaligned(ref span[0], ref _data[0], Length);
             return Length;
         }

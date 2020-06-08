@@ -22,7 +22,7 @@ using Orion.World.Signs;
 
 namespace Orion.Events.World.Signs {
     /// <summary>
-    /// An event that occurs when a player reads a sign. This event can be canceled.
+    /// An event that occurs when a player is reading a sign. This event can be canceled.
     /// </summary>
     [Event("sign-read")]
     public sealed class SignReadEvent : SignEvent, ICancelable {
@@ -30,7 +30,7 @@ namespace Orion.Events.World.Signs {
         /// Initializes a new instance of the <see cref="SignReadEvent"/> class with the specified
         /// <paramref name="sign"/> and <paramref name="player"/>.
         /// </summary>
-        /// <param name="sign">The sign involved in the event.</param>
+        /// <param name="sign">The sign being read.</param>
         /// <param name="player">The player reading the sign.</param>
         /// <exception cref="ArgumentNullException">
         /// <paramref name="sign"/> or <paramref name="player"/> are <see langword="null"/>.

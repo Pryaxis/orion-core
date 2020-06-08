@@ -21,7 +21,7 @@ using Orion.World;
 
 namespace Orion.Events.World {
     /// <summary>
-    /// An event that occurs when the world is saving. This event can be canceled.
+    /// An event that occurs when a world is saving. This event can be canceled.
     /// </summary>
     [Event("world-save")]
     public sealed class WorldSaveEvent : WorldEvent, ICancelable {
@@ -29,7 +29,7 @@ namespace Orion.Events.World {
         /// Initializes a new instance of the <see cref="WorldSaveEvent"/> class with the specified
         /// <paramref name="world"/>.
         /// </summary>
-        /// <param name="world">The world involved in the event.</param>
+        /// <param name="world">The world being saved.</param>
         /// <exception cref="ArgumentNullException"><paramref name="world"/> is <see langword="null"/>.</exception>
         public WorldSaveEvent(IWorld world) : base(world) { }
 

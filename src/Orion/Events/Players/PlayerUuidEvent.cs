@@ -21,7 +21,7 @@ using Orion.Players;
 
 namespace Orion.Events.Players {
     /// <summary>
-    /// An event that occurs when a player sends their UUID. This event can be canceled.
+    /// An event that occurs when a player is sending their UUID. This event can be canceled.
     /// </summary>
     [Event("player-uuid")]
     public sealed class PlayerUuidEvent : PlayerEvent, ICancelable {
@@ -29,7 +29,7 @@ namespace Orion.Events.Players {
         /// Initializes a new instance of the <see cref="PlayerUuidEvent"/> class with the specified
         /// <paramref name="player"/> and <paramref name="uuid"/>.
         /// </summary>
-        /// <param name="player">The player involved in the event.</param>
+        /// <param name="player">The player sending their UUID.</param>
         /// <param name="uuid">The player's UUID.</param>
         /// <exception cref="ArgumentNullException">
         /// <paramref name="player"/> or <paramref name="uuid"/> are <see langword="null"/>.

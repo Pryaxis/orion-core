@@ -35,20 +35,21 @@ namespace Orion.Packets.Modules {
 
         /// <summary>
         /// Reads the module from the given <paramref name="span"/> with the specified packet
-        /// <paramref name="context"/>, mutating this instance. Returns the number of bytes read.
+        /// <paramref name="context"/>, mutating this instance. Returns the number of bytes read from the
+        /// <paramref name="span"/>.
         /// </summary>
-        /// <param name="span">The span.</param>
-        /// <param name="context">The packet context.</param>
-        /// <returns>The number of bytes read.</returns>
+        /// <param name="span">The span to read from.</param>
+        /// <param name="context">The packet context to use when reading.</param>
+        /// <returns>The number of bytes read from the <paramref name="span"/>.</returns>
         int Read(Span<byte> span, PacketContext context);
 
         /// <summary>
         /// Writes the module to the given <paramref name="span"/> with the specified packet <paramref name="context"/>.
-        /// Returns the number of bytes written.
+        /// Returns the number of bytes written to the <paramref name="span"/>.
         /// </summary>
-        /// <param name="span">The span.</param>
-        /// <param name="context">The packet context.</param>
-        /// <returns>The number of bytes written.</returns>
+        /// <param name="span">The span to write to.</param>
+        /// <param name="context">The packet context to use when writing.</param>
+        /// <returns>The number of bytes written to the <paramref name="span"/>.</returns>
         int Write(Span<byte> span, PacketContext context);
     }
 
@@ -58,13 +59,14 @@ namespace Orion.Packets.Modules {
     public static class ModuleExtensions {
         /// <summary>
         /// Writes the <paramref name="module"/> reference to the given <paramref name="span"/> with the specified
-        /// packet <paramref name="context"/>, including the module header. Returns the number of bytes written.
+        /// packet <paramref name="context"/>, including the module header. Returns the number of bytes written to the
+        /// <paramref name="span"/>.
         /// </summary>
         /// <typeparam name="TModule">The type of module.</typeparam>
         /// <param name="module">The module reference.</param>
-        /// <param name="span">The span.</param>
-        /// <param name="context">The packet context.</param>
-        /// <returns>The number of bytes written.</returns>
+        /// <param name="span">The span to write to.</param>
+        /// <param name="context">The packet context to use when writing.</param>
+        /// <returns>The number of bytes written to the <paramref name="span"/>.</returns>
         public static int WriteWithHeader<TModule>(ref this TModule module, Span<byte> span, PacketContext context)
                 where TModule : struct, IModule {
             Unsafe.WriteUnaligned(ref span[0], module.Id);

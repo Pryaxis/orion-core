@@ -21,7 +21,7 @@ using Orion.Players;
 
 namespace Orion.Events.Players {
     /// <summary>
-    /// An event that occurs when a player sends their mana information. This event can be canceled.
+    /// An event that occurs when a player is sending their mana information. This event can be canceled.
     /// </summary>
     [Event("player-mp")]
     public sealed class PlayerManaEvent : PlayerEvent, ICancelable {
@@ -29,7 +29,7 @@ namespace Orion.Events.Players {
         /// Initializes a new instance of the <see cref="PlayerManaEvent"/> class with the specified
         /// <paramref name="player"/>, <paramref name="mana"/>, and <paramref name="maxMana"/>.
         /// </summary>
-        /// <param name="player">The player involved in the event.</param>
+        /// <param name="player">The player sending their mana information.</param>
         /// <param name="mana">The player's mana.</param>
         /// <param name="maxMana">The player's maximum mana.</param>
         /// <exception cref="ArgumentNullException"><paramref name="player"/> is <see langword="null"/>.</exception>

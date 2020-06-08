@@ -44,7 +44,7 @@ namespace Orion.Players {
         /// </summary>
         /// <typeparam name="TPacket">The type of packet.</typeparam>
         /// <param name="playerService">The player service.</param>
-        /// <param name="packet">The packet reference. <b>This must be on the stack!</b></param>
+        /// <param name="packet">The packet reference to send. <b>This must be on the stack!</b></param>
         /// <exception cref="ArgumentNullException">
         /// <paramref name="playerService"/> is <see langword="null"/>.
         /// </exception>
@@ -66,7 +66,7 @@ namespace Orion.Players {
         /// </summary>
         /// <typeparam name="TPacket">The type of packet.</typeparam>
         /// <param name="playerService">The player service.</param>
-        /// <param name="packet">The packet.</param>
+        /// <param name="packet">The packet to send.</param>
         /// <exception cref="ArgumentNullException">
         /// <paramref name="playerService"/> is <see langword="null"/>.
         /// </exception>
@@ -87,8 +87,8 @@ namespace Orion.Players {
         /// <paramref name="color"/>.
         /// </summary>
         /// <param name="playerService">The player service.</param>
-        /// <param name="message">The message.</param>
-        /// <param name="color">The color.</param>
+        /// <param name="message">The message to broadcast.</param>
+        /// <param name="color">The color to broadcast the message as.</param>
         /// <exception cref="ArgumentNullException">
         /// <paramref name="playerService"/> or <paramref name="message"/> are <see langword="null"/>.
         /// </exception>

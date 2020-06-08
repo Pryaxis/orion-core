@@ -20,7 +20,7 @@ using Orion.Players;
 
 namespace Orion.Events.Players {
     /// <summary>
-    /// An event that occurs when a player quits the server.
+    /// An event that occurs when a player has quit the server.
     /// </summary>
     [Event("player-quit")]
     public sealed class PlayerQuitEvent : PlayerEvent {
@@ -28,7 +28,7 @@ namespace Orion.Events.Players {
         /// Initializes a new instance of the <see cref="PlayerQuitEvent"/> class with the specified
         /// <paramref name="player"/>.
         /// </summary>
-        /// <param name="player">The player involved in the event.</param>
+        /// <param name="player">The player that quit.</param>
         /// <exception cref="ArgumentNullException"><paramref name="player"/> is <see langword="null"/>.</exception>
         public PlayerQuitEvent(IPlayer player) : base(player) { }
     }

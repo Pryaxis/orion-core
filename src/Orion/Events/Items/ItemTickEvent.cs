@@ -30,7 +30,7 @@ namespace Orion.Events.Items {
         /// Initializes a new instance of the <see cref="ItemTickEvent"/> class with the specified
         /// <paramref name="item"/>.
         /// </summary>
-        /// <param name="item">The item involved in the event.</param>
+        /// <param name="item">The item being ticked.</param>
         /// <exception cref="ArgumentNullException"><paramref name="item"/> is <see langword="null"/>.</exception>
         public ItemTickEvent(IItem item) : base(item) { }
 

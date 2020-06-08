@@ -21,7 +21,7 @@ using Orion.Players;
 
 namespace Orion.Events.Players {
     /// <summary>
-    /// An event that occurs when a player joins the server. This event can be canceled.
+    /// An event that occurs when a player is joining the server. This event can be canceled.
     /// </summary>
     [Event("player-join")]
     public sealed class PlayerJoinEvent : PlayerEvent, ICancelable {
@@ -29,7 +29,7 @@ namespace Orion.Events.Players {
         /// Initializes a new instance of the <see cref="PlayerJoinEvent"/> class with the specified
         /// <paramref name="player"/>.
         /// </summary>
-        /// <param name="player">The player involved in the event.</param>
+        /// <param name="player">The player joining.</param>
         /// <exception cref="ArgumentNullException"><paramref name="player"/> is <see langword="null"/>.</exception>
         public PlayerJoinEvent(IPlayer player) : base(player) { }
 

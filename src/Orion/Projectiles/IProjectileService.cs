@@ -33,13 +33,13 @@ namespace Orion.Projectiles {
 
         /// <summary>
         /// Spawns a projectile with the given <paramref name="id"/> at the specified <paramref name="position"/> with
-        /// the <paramref name="velocity"/>, <paramref name="damage"/>, and <paramref name="knockback"/>.
+        /// the specified <paramref name="velocity"/>, <paramref name="damage"/>, and <paramref name="knockback"/>.
         /// </summary>
-        /// <param name="id">The projectile ID.</param>
-        /// <param name="position">The position.</param>
-        /// <param name="velocity">The velocity.</param>
-        /// <param name="damage">The damage.</param>
-        /// <param name="knockback">The knockback.</param>
+        /// <param name="id">The projectile ID to spawn.</param>
+        /// <param name="position">The position to spawn the projectile at.</param>
+        /// <param name="velocity">The projectile velocity.</param>
+        /// <param name="damage">The projectile damage.</param>
+        /// <param name="knockback">The projectile knockback.</param>
         /// <returns>The resulting projectile, or <see langword="null"/> if none was spawned.</returns>
         IProjectile? SpawnProjectile(
             ProjectileId id, Vector2f position, Vector2f velocity, int damage, float knockback);

@@ -30,7 +30,7 @@ namespace Orion.Events.Players {
         /// Initializes a new instance of the <see cref="PlayerTickEvent"/> class with the specified
         /// <paramref name="player"/>.
         /// </summary>
-        /// <param name="player">The player involved in the event.</param>
+        /// <param name="player">The player being ticked.</param>
         /// <exception cref="ArgumentNullException"><paramref name="player"/> is <see langword="null"/>.</exception>
         public PlayerTickEvent(IPlayer player) : base(player) { }
 

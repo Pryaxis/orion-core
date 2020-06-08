@@ -33,17 +33,17 @@ namespace Orion.Events.Packets {
         /// Initializes a new instance of the <see cref="PacketReceiveEvent{TPacket}"/> class with the specified
         /// <paramref name="packet"/> reference and packet <paramref name="sender"/>.
         /// </summary>
-        /// <param name="packet">The packet reference. <b>This must be on the stack!</b></param>
-        /// <param name="sender">The packet sender.</param>
+        /// <param name="packet">The packet reference being received. <b>This must be on the stack!</b></param>
+        /// <param name="sender">The packet's sender.</param>
         /// <exception cref="ArgumentNullException"><paramref name="sender"/> is <see langword="null"/>.</exception>
         public PacketReceiveEvent(ref TPacket packet, IPlayer sender) : base(ref packet) {
             Sender = sender ?? throw new ArgumentNullException(nameof(sender));
         }
 
         /// <summary>
-        /// Gets the packet sender.
+        /// Gets the packet's sender.
         /// </summary>
-        /// <value>The packet sender.</value>
+        /// <value>The packet's sender.</value>
         public IPlayer Sender { get; }
 
         /// <inheritdoc/>

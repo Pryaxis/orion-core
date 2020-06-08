@@ -31,7 +31,7 @@ namespace Orion.Events.Projectiles {
         /// Initializes a new instance of the <see cref="ProjectileDefaultsEvent"/> class with the specified
         /// <paramref name="projectile"/>.
         /// </summary>
-        /// <param name="projectile">The projectile involved in the event.</param>
+        /// <param name="projectile">The projectile whose defaults are being set.</param>
         /// <exception cref="ArgumentNullException"><paramref name="projectile"/> is <see langword="null"/>.</exception>
         public ProjectileDefaultsEvent(IProjectile projectile) : base(projectile) { }
 
