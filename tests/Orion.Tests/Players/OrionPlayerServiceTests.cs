@@ -460,52 +460,6 @@ namespace Orion.Players {
         }
 
         [Fact]
-        public void PacketSend_UnknownPacket() {
-            var socket = new TestSocket { Connected = true };
-            Terraria.Netplay.Clients[5] = new Terraria.RemoteClient { Id = 5, Socket = socket };
-
-            using var kernel = new OrionKernel(Logger.None);
-            using var playerService = new OrionPlayerService(kernel, Logger.None);
-            var isRun = false;
-            kernel.RegisterHandler<PacketSendEvent<UnknownPacket>>(evt => {
-                ref var packet = ref evt.Packet;
-                Assert.Equal((PacketId)255, packet.Id);
-                Assert.Equal(0, packet.Length);
-                isRun = true;
-            }, Logger.None);
-
-            var packet = new UnknownPacket { Id = (PacketId)255, Length = 0 };
-            playerService.Players[5].SendPacket(ref packet);
-
-            Assert.True(isRun);
-            Assert.Equal(UnknownPacketTests.EmptyBytes, socket.SendData);
-        }
-
-        [Fact]
-        public void PacketSend_UnknownModule() {
-            var socket = new TestSocket { Connected = true };
-            Terraria.Netplay.Clients[5] = new Terraria.RemoteClient { Id = 5, Socket = socket };
-
-            using var kernel = new OrionKernel(Logger.None);
-            using var playerService = new OrionPlayerService(kernel, Logger.None);
-            var isRun = false;
-            kernel.RegisterHandler<PacketSendEvent<ModulePacket<UnknownModule>>>(evt => {
-                ref var module = ref evt.Packet.Module;
-                Assert.Equal((ModuleId)65535, module.Id);
-                Assert.Equal(0, module.Length);
-                isRun = true;
-            }, Logger.None);
-
-            var packet = new ModulePacket<UnknownModule> {
-                Module = new UnknownModule { Id = (ModuleId)65535, Length = 0 }
-            };
-            playerService.Players[5].SendPacket(ref packet);
-
-            Assert.True(isRun);
-            Assert.Equal(UnknownModuleTests.EmptyBytes, socket.SendData);
-        }
-
-        [Fact]
         public void PacketSend_ThrowsIOException() {
             var socket = new BuggySocket { Connected = true };
             Terraria.Netplay.Clients[5] = new Terraria.RemoteClient { Id = 5, Socket = socket };
