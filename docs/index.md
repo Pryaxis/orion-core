@@ -62,7 +62,7 @@ Here is a non-exhaustive list of other improvements:
 
 | Branch | Status | Code Coverage |
 |--------|--------|----------|
-| v1.4 | ![dotnet-core](https://github.com/Pryaxis/orion/workflows/dotnet-core/badge.svg) | [![codecov](https://codecov.io/gh/Pryaxis/orion/branch/v1.4/graph/badge.svg)](https://codecov.io/gh/Pryaxis/orion) |
+| v1.4 | ![dotnet-core](https://github.com/Pryaxis/orion-core/workflows/dotnet-core/badge.svg) | [![codecov](https://codecov.io/gh/Pryaxis/orion-core/branch/v1.4/graph/badge.svg)](https://codecov.io/gh/Pryaxis/orion-core) |
 
 ### Developers
 
