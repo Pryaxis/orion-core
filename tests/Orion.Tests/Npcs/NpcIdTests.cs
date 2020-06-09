@@ -19,7 +19,7 @@ using System;
 using System.Linq;
 using Xunit;
 
-namespace Orion.Npcs {
+namespace Orion.Core.Npcs {
     [Collection("TerrariaTestsCollection")]
     public class NpcIdTests {
         [Fact]

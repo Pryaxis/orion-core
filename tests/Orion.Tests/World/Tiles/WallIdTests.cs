@@ -19,7 +19,7 @@ using System;
 using System.Linq;
 using Xunit;
 
-namespace Orion.World.Tiles {
+namespace Orion.Core.World.Tiles {
     public class WallIdTests {
         [Fact]
         public void AllWallIdsCovered() {

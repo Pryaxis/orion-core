@@ -18,11 +18,11 @@
 using System;
 using System.Diagnostics.CodeAnalysis;
 using Moq;
-using Orion.Items;
-using Orion.Npcs;
+using Orion.Core.Items;
+using Orion.Core.Npcs;
 using Xunit;
 
-namespace Orion.Events.Npcs {
+namespace Orion.Core.Events.Npcs {
     [SuppressMessage("Style", "IDE0017:Simplify object initialization", Justification = "Testing")]
     public class NpcLootEventTests {
         [Fact]

@@ -19,7 +19,7 @@ using System;
 using System.Linq;
 using Xunit;
 
-namespace Orion.Buffs {
+namespace Orion.Core.Buffs {
     [Collection("TerrariaTestsCollection")]
     public class BuffIdTests {
         [Fact]

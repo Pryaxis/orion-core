@@ -18,13 +18,13 @@
 using System;
 using System.Diagnostics.CodeAnalysis;
 using System.Reflection;
-using Orion.Events;
-using Orion.Framework;
+using Orion.Core.Events;
+using Orion.Core.Framework;
 using Serilog;
 using Serilog.Core;
 using Xunit;
 
-namespace Orion {
+namespace Orion.Core {
     public class OrionKernelTests {
         [Fact]
         public void Ctor_NullLog_ThrowsArgumentNullException() {

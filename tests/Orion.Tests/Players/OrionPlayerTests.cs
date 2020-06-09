@@ -18,14 +18,14 @@
 using System;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
-using Orion.Buffs;
-using Orion.Events;
-using Orion.Events.Packets;
-using Orion.Packets;
+using Orion.Core.Buffs;
+using Orion.Core.Events;
+using Orion.Core.Events.Packets;
+using Orion.Core.Packets;
 using Serilog.Core;
 using Xunit;
 
-namespace Orion.Players {
+namespace Orion.Core.Players {
     [Collection("TerrariaTestsCollection")]
     [SuppressMessage("Style", "IDE0017:Simplify object initialization", Justification = "Testing")]
     public class OrionPlayerTests {

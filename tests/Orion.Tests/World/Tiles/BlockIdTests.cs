@@ -19,7 +19,7 @@ using System;
 using System.Linq;
 using Xunit;
 
-namespace Orion.World.Tiles {
+namespace Orion.Core.World.Tiles {
     [Collection("TerrariaTestsCollection")]
     public class BlockIdTests {
         [Fact]

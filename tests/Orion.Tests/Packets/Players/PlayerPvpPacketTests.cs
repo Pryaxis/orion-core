@@ -19,7 +19,7 @@ using System;
 using System.Diagnostics.CodeAnalysis;
 using Xunit;
 
-namespace Orion.Packets.Players {
+namespace Orion.Core.Packets.Players {
     [SuppressMessage("Style", "IDE0017:Simplify object initialization", Justification = "Testing")]
     public class PlayerPvpPacketTests {
         public static readonly byte[] Bytes = { 5, 0, 30, 5, 1 };

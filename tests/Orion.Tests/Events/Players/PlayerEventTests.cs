@@ -17,10 +17,10 @@
 
 using System;
 using Moq;
-using Orion.Players;
+using Orion.Core.Players;
 using Xunit;
 
-namespace Orion.Events.Players {
+namespace Orion.Core.Events.Players {
     public class PlayerEventTests {
         [Fact]
         public void Ctor_NullPlayer_ThrowsArgumentNullException() {

@@ -17,7 +17,7 @@
 
 using Xunit;
 
-namespace Orion.Packets {
+namespace Orion.Core.Packets {
     public class PacketContextTests {
         [Theory]
         [InlineData(PacketContext.Client, PacketContext.Server)]

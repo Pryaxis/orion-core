@@ -18,11 +18,11 @@
 using System;
 using System.Diagnostics.CodeAnalysis;
 using Moq;
-using Orion.Packets;
-using Orion.Players;
+using Orion.Core.Packets;
+using Orion.Core.Players;
 using Xunit;
 
-namespace Orion.Events.Packets {
+namespace Orion.Core.Events.Packets {
     [SuppressMessage("Style", "IDE0017:Simplify object initialization", Justification = "Testing")]
     public class PacketSendEventTests {
         [Fact]

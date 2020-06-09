@@ -17,7 +17,7 @@
 
 using Xunit;
 
-namespace Orion.Items {
+namespace Orion.Core.Items {
     public class ItemStackTests {
         [Fact]
         public void Id_Get() {

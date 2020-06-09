@@ -17,10 +17,10 @@
 
 using System;
 using System.Diagnostics.CodeAnalysis;
-using Orion.Npcs;
+using Orion.Core.Npcs;
 using Xunit;
 
-namespace Orion.Packets.Npcs {
+namespace Orion.Core.Packets.Npcs {
     [SuppressMessage("Style", "IDE0017:Simplify object initialization", Justification = "Testing")]
     public class NpcFishPacketTests {
         public static readonly byte[] Bytes = { 9, 0, 130, 100, 0, 0, 1, 108, 2 };

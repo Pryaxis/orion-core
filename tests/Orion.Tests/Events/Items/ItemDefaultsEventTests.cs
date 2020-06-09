@@ -18,10 +18,10 @@
 using System;
 using System.Diagnostics.CodeAnalysis;
 using Moq;
-using Orion.Items;
+using Orion.Core.Items;
 using Xunit;
 
-namespace Orion.Events.Items {
+namespace Orion.Core.Events.Items {
     [SuppressMessage("Style", "IDE0017:Simplify object initialization", Justification = "Testing")]
     public class ItemDefaultsEventTests {
         [Fact]

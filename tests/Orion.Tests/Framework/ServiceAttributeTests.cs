@@ -17,7 +17,7 @@
 
 using Xunit;
 
-namespace Orion.Framework {
+namespace Orion.Core.Framework {
     public class ServiceAttributeTests {
         [Fact]
         public void Scope_Get() {

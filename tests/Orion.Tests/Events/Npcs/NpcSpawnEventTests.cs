@@ -18,7 +18,7 @@
 using System;
 using Xunit;
 
-namespace Orion.Events.Npcs {
+namespace Orion.Core.Events.Npcs {
     public class NpcSpawnEventTests {
         [Fact]
         public void Ctor_NullNpc_ThrowsArgumentNullException() {

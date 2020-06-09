@@ -17,15 +17,15 @@
 
 using System;
 using System.Linq;
-using Orion.Events;
-using Orion.Events.World.Chests;
-using Orion.Packets.World.Chests;
-using Orion.Players;
-using Orion.World.Tiles;
+using Orion.Core.Events;
+using Orion.Core.Events.World.Chests;
+using Orion.Core.Packets.World.Chests;
+using Orion.Core.Players;
+using Orion.Core.World.Tiles;
 using Serilog.Core;
 using Xunit;
 
-namespace Orion.World.Chests {
+namespace Orion.Core.World.Chests {
     // These tests depend on Terraria state.
     [Collection("TerrariaTestsCollection")]
     public class OrionChestServiceTests {

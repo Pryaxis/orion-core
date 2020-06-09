@@ -15,10 +15,10 @@
 // You should have received a copy of the GNU General Public License
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
-using Orion.World.Tiles;
+using Orion.Core.World.Tiles;
 using Xunit;
 
-namespace Orion.World {
+namespace Orion.Core.World {
     public class OrionWorldTests {
         [Fact]
         public void Width_Get() {

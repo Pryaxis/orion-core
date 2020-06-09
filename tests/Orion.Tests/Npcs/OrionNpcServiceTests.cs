@@ -17,16 +17,16 @@
 
 using System;
 using System.Linq;
-using Orion.DataStructures;
-using Orion.Events;
-using Orion.Events.Npcs;
-using Orion.Items;
-using Orion.Packets.Npcs;
-using Orion.Players;
+using Orion.Core.DataStructures;
+using Orion.Core.Events;
+using Orion.Core.Events.Npcs;
+using Orion.Core.Items;
+using Orion.Core.Packets.Npcs;
+using Orion.Core.Players;
 using Serilog.Core;
 using Xunit;
 
-namespace Orion.Npcs {
+namespace Orion.Core.Npcs {
     // These tests depend on Terraria state.
     [Collection("TerrariaTestsCollection")]
     public class OrionNpcServiceTests {

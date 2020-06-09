@@ -18,7 +18,7 @@
 using System;
 using Xunit;
 
-namespace Orion.Events.Server {
+namespace Orion.Core.Events.Server {
     public class ServerArgsEventTests {
         [Fact]
         public void Ctor_NullArgs_ThrowsArgumentNullException() {

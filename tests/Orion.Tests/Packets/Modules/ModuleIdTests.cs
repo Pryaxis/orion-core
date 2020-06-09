@@ -20,7 +20,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Xunit;
 
-namespace Orion.Packets.Modules {
+namespace Orion.Core.Packets.Modules {
     public class ModuleIdTests {
         private static readonly ISet<Type> _excludedTypes =
             new HashSet<Type> { typeof(UnknownModule), typeof(IModule) };

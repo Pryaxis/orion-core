@@ -19,7 +19,7 @@ using System;
 using Moq;
 using Xunit;
 
-namespace Orion.Events {
+namespace Orion.Core.Events {
     public class CancelableTests {
         [Fact]
         public void IsCanceled_NullCancelable_ThrowsArgumentNullException() {

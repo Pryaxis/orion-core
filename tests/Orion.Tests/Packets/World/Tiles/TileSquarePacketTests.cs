@@ -17,10 +17,10 @@
 
 using System;
 using System.Diagnostics.CodeAnalysis;
-using Orion.World.Tiles;
+using Orion.Core.World.Tiles;
 using Xunit;
 
-namespace Orion.Packets.World.Tiles {
+namespace Orion.Core.Packets.World.Tiles {
     [SuppressMessage("Style", "IDE0017:Simplify object initialization", Justification = "Testing")]
     public class TileSquarePacketTests {
         public static readonly byte[] Bytes = {

@@ -17,10 +17,10 @@
 
 using System;
 using System.Diagnostics.CodeAnalysis;
-using Orion.DataStructures;
+using Orion.Core.DataStructures;
 using Xunit;
 
-namespace Orion.Packets.Server {
+namespace Orion.Core.Packets.Server {
     [SuppressMessage("Style", "IDE0017:Simplify object initialization", Justification = "Testing")]
     public class ServerChatPacketTests {
         public static readonly byte[] Bytes = {

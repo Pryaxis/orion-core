@@ -17,10 +17,10 @@
 
 using System;
 using Moq;
-using Orion.World.Chests;
+using Orion.Core.World.Chests;
 using Xunit;
 
-namespace Orion.Events.World.Chests {
+namespace Orion.Core.Events.World.Chests {
     public class ChestEventTests {
         [Fact]
         public void Ctor_NullChest_ThrowsArgumentNullException() {

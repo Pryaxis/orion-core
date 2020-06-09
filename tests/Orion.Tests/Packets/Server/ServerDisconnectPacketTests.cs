@@ -17,11 +17,11 @@
 
 using System;
 using System.Diagnostics.CodeAnalysis;
-using Orion.DataStructures;
-using Orion.Packets.Server;
+using Orion.Core.DataStructures;
+using Orion.Core.Packets.Server;
 using Xunit;
 
-namespace Orion.Packets.Client {
+namespace Orion.Core.Packets.Client {
     [SuppressMessage("Style", "IDE0017:Simplify object initialization", Justification = "Testing")]
     public class ServerDisconnectPacketTests {
         public static readonly byte[] Bytes = {

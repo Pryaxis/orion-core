@@ -17,15 +17,15 @@
 
 using System;
 using System.Linq;
-using Orion.Events;
-using Orion.Events.World.Signs;
-using Orion.Packets.World.Signs;
-using Orion.Players;
-using Orion.World.Tiles;
+using Orion.Core.Events;
+using Orion.Core.Events.World.Signs;
+using Orion.Core.Packets.World.Signs;
+using Orion.Core.Players;
+using Orion.Core.World.Tiles;
 using Serilog.Core;
 using Xunit;
 
-namespace Orion.World.Signs {
+namespace Orion.Core.World.Signs {
     // These tests depend on Terraria state.
     [Collection("TerrariaTestsCollection")]
     public class OrionSignServiceTests {

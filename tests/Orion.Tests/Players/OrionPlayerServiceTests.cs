@@ -18,17 +18,17 @@
 using System;
 using System.IO;
 using System.Linq;
-using Orion.Events;
-using Orion.Events.Packets;
-using Orion.Events.Players;
-using Orion.Packets;
-using Orion.Packets.Client;
-using Orion.Packets.Modules;
-using Orion.Packets.Players;
+using Orion.Core.Events;
+using Orion.Core.Events.Packets;
+using Orion.Core.Events.Players;
+using Orion.Core.Packets;
+using Orion.Core.Packets.Client;
+using Orion.Core.Packets.Modules;
+using Orion.Core.Packets.Players;
 using Serilog.Core;
 using Xunit;
 
-namespace Orion.Players {
+namespace Orion.Core.Players {
     [Collection("TerrariaTestsCollection")]
     public class OrionPlayerServiceTests {
         private static readonly byte[] _serverConnectBytes;

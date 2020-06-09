@@ -18,7 +18,7 @@
 using System.Diagnostics.CodeAnalysis;
 using Xunit;
 
-namespace Orion.World.Tiles {
+namespace Orion.Core.World.Tiles {
     [SuppressMessage("Style", "IDE0017:Simplify object initialization", Justification = "Testing")]
     public class TileTests {
         [Fact]

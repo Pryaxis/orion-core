@@ -17,10 +17,10 @@
 
 using System;
 using Moq;
-using Orion.Projectiles;
+using Orion.Core.Projectiles;
 using Xunit;
 
-namespace Orion.Events.Projectiles {
+namespace Orion.Core.Events.Projectiles {
     public class ProjectileEventTests {
         [Fact]
         public void Ctor_NullProjectile_ThrowsArgumentNullException() {

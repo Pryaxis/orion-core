@@ -18,7 +18,7 @@
 using System;
 using Xunit;
 
-namespace Orion.Packets.Players {
+namespace Orion.Core.Packets.Players {
     public class PlayerJoinPacketTests {
         public static readonly byte[] Bytes = { 3, 0, 6 };
 

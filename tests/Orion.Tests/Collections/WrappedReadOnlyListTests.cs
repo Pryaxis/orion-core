@@ -17,10 +17,10 @@
 
 using System;
 using System.Linq;
-using Orion.Entities;
+using Orion.Core.Entities;
 using Xunit;
 
-namespace Orion.Collections {
+namespace Orion.Core.Collections {
     public class WrappedReadOnlyListTests {
         [Fact]
         public void Count_Get() {

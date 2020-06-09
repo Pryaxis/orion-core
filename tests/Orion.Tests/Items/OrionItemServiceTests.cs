@@ -17,13 +17,13 @@
 
 using System;
 using System.Linq;
-using Orion.DataStructures;
-using Orion.Events;
-using Orion.Events.Items;
+using Orion.Core.DataStructures;
+using Orion.Core.Events;
+using Orion.Core.Events.Items;
 using Serilog.Core;
 using Xunit;
 
-namespace Orion.Items {
+namespace Orion.Core.Items {
     // These tests depend on Terraria state.
     [Collection("TerrariaTestsCollection")]
     public class OrionItemServiceTests {

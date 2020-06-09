@@ -17,10 +17,10 @@
 
 using System;
 using System.Runtime.CompilerServices;
-using Orion.Packets;
+using Orion.Core.Packets;
 using Xunit;
 
-namespace Orion.Events.Packets {
+namespace Orion.Core.Events.Packets {
     public class PacketEventTests {
         [Fact]
         public void Packet_Get() {

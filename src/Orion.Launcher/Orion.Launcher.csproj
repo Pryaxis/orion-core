@@ -5,19 +5,7 @@
     <TargetFramework>netcoreapp3.1</TargetFramework>
     <Nullable>enable</Nullable>
     <StartupObject>Orion.Launcher.Program</StartupObject>
-    <Authors>orion-contributors</Authors>
-    <Company>Pryaxis</Company>
-    <Description>Provides a launcher for an Orion-enabled Terraria server.</Description>
-    <PackageLicenseFile>COPYING</PackageLicenseFile>
-    <PackageProjectUrl>https://github.com/orgs/Pryaxis/teams/orion-contributors</PackageProjectUrl>
-    <RepositoryUrl>https://github.com/Pryaxis/Orion</RepositoryUrl>
-    <RepositoryType>git</RepositoryType>
-    <NeutralLanguage>en-US</NeutralLanguage>
   </PropertyGroup>
-
-  <ItemGroup>
-    <None Remove="Program.cs~RF3d126f0.TMP" />
-  </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="Newtonsoft.Json" Version="12.0.3" />
@@ -28,7 +16,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Orion\Orion.csproj" />
+    <ProjectReference Include="..\Orion.Core\Orion.Core.csproj" />
   </ItemGroup>
 
   <ItemGroup>

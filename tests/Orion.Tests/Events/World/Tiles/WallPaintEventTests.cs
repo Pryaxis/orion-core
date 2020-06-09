@@ -17,12 +17,12 @@
 
 using System;
 using Moq;
-using Orion.Players;
-using Orion.World;
-using Orion.World.Tiles;
+using Orion.Core.Players;
+using Orion.Core.World;
+using Orion.Core.World.Tiles;
 using Xunit;
 
-namespace Orion.Events.World.Tiles {
+namespace Orion.Core.Events.World.Tiles {
     public class WallPaintEventTests {
         [Fact]
         public void Ctor_NullWorld_ThrowsArgumentNullException() {

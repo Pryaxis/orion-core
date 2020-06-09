@@ -19,7 +19,7 @@ using System;
 using System.Diagnostics.CodeAnalysis;
 using Xunit;
 
-namespace Orion.Packets.World.Signs {
+namespace Orion.Core.Packets.World.Signs {
     [SuppressMessage("Style", "IDE0017:Simplify object initialization", Justification = "Testing")]
     public class SignReadPacketTests {
         public static readonly byte[] Bytes = { 7, 0, 46, 0, 1, 100, 0 };

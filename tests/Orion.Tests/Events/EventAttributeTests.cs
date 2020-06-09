@@ -20,7 +20,7 @@ using System.Diagnostics.CodeAnalysis;
 using Serilog.Events;
 using Xunit;
 
-namespace Orion.Events {
+namespace Orion.Core.Events {
     [SuppressMessage("Style", "IDE0017:Simplify object initialization", Justification = "Testing")]
     public class EventAttributeTests {
         [Fact]

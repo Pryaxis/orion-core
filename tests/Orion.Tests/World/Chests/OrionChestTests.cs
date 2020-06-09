@@ -17,10 +17,10 @@
 
 using System;
 using System.Diagnostics.CodeAnalysis;
-using Orion.Items;
+using Orion.Core.Items;
 using Xunit;
 
-namespace Orion.World.Chests {
+namespace Orion.Core.World.Chests {
     [SuppressMessage("Style", "IDE0017:Simplify object initialization", Justification = "Testing")]
     public class OrionChestTests {
         [Fact]

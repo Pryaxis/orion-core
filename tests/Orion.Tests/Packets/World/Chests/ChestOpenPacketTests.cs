@@ -19,7 +19,7 @@ using System;
 using System.Diagnostics.CodeAnalysis;
 using Xunit;
 
-namespace Orion.Packets.World.Chests {
+namespace Orion.Core.Packets.World.Chests {
     [SuppressMessage("Style", "IDE0017:Simplify object initialization", Justification = "Testing")]
     public class ChestOpenPacketTests {
         public static readonly byte[] Bytes = { 7, 0, 31, 0, 1, 100, 0 };

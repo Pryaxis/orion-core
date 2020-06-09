@@ -19,7 +19,7 @@ using System;
 using System.Linq;
 using Xunit;
 
-namespace Orion.Projectiles {
+namespace Orion.Core.Projectiles {
     public class ProjectileIdTests {
         [Fact]
         public void AllProjectileIdsCovered() {

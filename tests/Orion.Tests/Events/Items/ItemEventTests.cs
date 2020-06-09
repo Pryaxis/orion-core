@@ -17,10 +17,10 @@
 
 using System;
 using Moq;
-using Orion.Items;
+using Orion.Core.Items;
 using Xunit;
 
-namespace Orion.Events.Items {
+namespace Orion.Core.Events.Items {
     public class ItemEventTests {
         [Fact]
         public void Ctor_NullItem_ThrowsArgumentNullException() {

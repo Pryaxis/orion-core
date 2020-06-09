@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Orion.Launcher.Properties {
+namespace Orion.Core.Launcher.Properties {
     using System;
     
     

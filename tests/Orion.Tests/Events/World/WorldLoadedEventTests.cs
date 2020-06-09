@@ -18,7 +18,7 @@
 using System;
 using Xunit;
 
-namespace Orion.Events.World {
+namespace Orion.Core.Events.World {
     public class WorldLoadedEventTests {
         [Fact]
         public void Ctor_NullWorld() {

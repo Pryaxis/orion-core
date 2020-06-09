@@ -20,7 +20,7 @@ using Serilog;
 using Serilog.Core;
 using Xunit;
 
-namespace Orion.Framework {
+namespace Orion.Core.Framework {
     public class OrionPluginTests {
         [Fact]
         public void Ctor_NullKernel_ThrowsArgumentNullException() {

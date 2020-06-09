@@ -17,11 +17,11 @@
 
 using System;
 using Moq;
-using Orion.Players;
-using Orion.World;
+using Orion.Core.Players;
+using Orion.Core.World;
 using Xunit;
 
-namespace Orion.Events.World.Tiles {
+namespace Orion.Core.Events.World.Tiles {
     public class TileEventTests {
         [Fact]
         public void Ctor_NullWorld_ThrowsArgumentNullException() {

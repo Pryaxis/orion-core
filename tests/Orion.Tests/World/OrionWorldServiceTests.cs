@@ -15,15 +15,15 @@
 // You should have received a copy of the GNU General Public License
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
-using Orion.Events;
-using Orion.Events.World.Tiles;
-using Orion.Packets.World.Tiles;
-using Orion.Players;
-using Orion.World.Tiles;
+using Orion.Core.Events;
+using Orion.Core.Events.World.Tiles;
+using Orion.Core.Packets.World.Tiles;
+using Orion.Core.Players;
+using Orion.Core.World.Tiles;
 using Serilog.Core;
 using Xunit;
 
-namespace Orion.World {
+namespace Orion.Core.World {
     [Collection("TerrariaTestsCollection")]
     public class OrionWorldServiceTests {
         [Fact]

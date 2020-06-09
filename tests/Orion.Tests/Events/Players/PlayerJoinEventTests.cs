@@ -18,7 +18,7 @@
 using System;
 using Xunit;
 
-namespace Orion.Events.Players {
+namespace Orion.Core.Events.Players {
     public class PlayerJoinEventTests {
         [Fact]
         public void Ctor_NullPlayer_ThrowsArgumentNullException() {

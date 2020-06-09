@@ -19,7 +19,7 @@ using System;
 using System.Diagnostics.CodeAnalysis;
 using Xunit;
 
-namespace Orion.Packets.Modules {
+namespace Orion.Core.Packets.Modules {
     [SuppressMessage("Style", "IDE0017:Simplify object initialization", Justification = "Testing")]
     public class UnknownModuleTests {
         public static readonly byte[] Bytes = { 13, 0, 82, 255, 255, 0, 1, 2, 3, 4, 5, 6, 7 };

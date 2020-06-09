@@ -17,11 +17,11 @@
 
 using System;
 using Moq;
-using Orion.Players;
-using Orion.World.Signs;
+using Orion.Core.Players;
+using Orion.Core.World.Signs;
 using Xunit;
 
-namespace Orion.Events.World.Signs {
+namespace Orion.Core.Events.World.Signs {
     public class SignReadEventTests {
         [Fact]
         public void Ctor_NullSign_ThrowsArgumentNullException() {

@@ -17,10 +17,10 @@
 
 using System;
 using Moq;
-using Orion.World;
+using Orion.Core.World;
 using Xunit;
 
-namespace Orion.Events.World {
+namespace Orion.Core.Events.World {
     public class WorldEventTests {
         [Fact]
         public void Ctor_NullWorld_ThrowsArgumentNullException() {

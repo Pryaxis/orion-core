@@ -18,11 +18,11 @@
 using System;
 using System.Diagnostics.CodeAnalysis;
 using Moq;
-using Orion.Npcs;
-using Orion.Players;
+using Orion.Core.Npcs;
+using Orion.Core.Players;
 using Xunit;
 
-namespace Orion.Events.Npcs {
+namespace Orion.Core.Events.Npcs {
     [SuppressMessage("Style", "IDE0017:Simplify object initialization", Justification = "Testing")]
     public class NpcFishEventTests {
         [Fact]

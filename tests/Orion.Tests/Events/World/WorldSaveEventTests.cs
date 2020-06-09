@@ -18,10 +18,10 @@
 using System;
 using System.Diagnostics.CodeAnalysis;
 using Moq;
-using Orion.World;
+using Orion.Core.World;
 using Xunit;
 
-namespace Orion.Events.World {
+namespace Orion.Core.Events.World {
     [SuppressMessage("Style", "IDE0017:Simplify object initialization", Justification = "Testing")]
     public class WorldSaveEventTests {
         [Fact]

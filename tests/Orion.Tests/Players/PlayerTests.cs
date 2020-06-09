@@ -17,12 +17,12 @@
 
 using System;
 using Moq;
-using Orion.DataStructures;
-using Orion.Packets;
-using Orion.Packets.Server;
+using Orion.Core.DataStructures;
+using Orion.Core.Packets;
+using Orion.Core.Packets.Server;
 using Xunit;
 
-namespace Orion.Players {
+namespace Orion.Core.Players {
     public class PlayerTests {
         private delegate void DisconnectCallback(ref ServerDisconnectPacket packet);
         private delegate void ChatCallback(ref ServerChatPacket packet);

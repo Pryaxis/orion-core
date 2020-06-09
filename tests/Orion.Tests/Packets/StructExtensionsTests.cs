@@ -19,7 +19,7 @@ using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using Xunit;
 
-namespace Orion.Packets {
+namespace Orion.Core.Packets {
     public class StructExtensionsTests {
         [Fact]
         public void AsRefByte() {

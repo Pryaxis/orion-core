@@ -19,7 +19,7 @@ using System;
 using System.Collections.Generic;
 using Xunit;
 
-namespace Orion.DataStructures {
+namespace Orion.Core.DataStructures {
     public class NetworkTextTests {
         public static readonly IEnumerable<object[]> NetworkTexts = new[] {
             new object[] { (NetworkText)"literal" },

@@ -18,7 +18,7 @@
 using System;
 using Xunit;
 
-namespace Orion.Packets.Modules {
+namespace Orion.Core.Packets.Modules {
     public class ModulePacketTests {
         public static readonly byte[] Bytes = { 5, 0, 82, 255, 255 };
 

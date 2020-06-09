@@ -17,10 +17,10 @@
 
 using System;
 using System.Diagnostics.CodeAnalysis;
-using Orion.Players;
+using Orion.Core.Players;
 using Xunit;
 
-namespace Orion.Packets.Players {
+namespace Orion.Core.Packets.Players {
     [SuppressMessage("Style", "IDE0017:Simplify object initialization", Justification = "Testing")]
     public class PlayerTeamPacketTests {
         public static readonly byte[] Bytes = { 5, 0, 45, 5, 1 };

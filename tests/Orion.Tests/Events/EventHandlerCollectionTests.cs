@@ -19,7 +19,7 @@ using System;
 using Serilog.Core;
 using Xunit;
 
-namespace Orion.Events {
+namespace Orion.Core.Events {
     public class EventHandlerCollectionTests {
         [Fact]
         public void DeregisterHandler() {

@@ -17,7 +17,7 @@
 
 using System;
 
-namespace Orion {
+namespace Orion.Core {
     public class TerrariaTestsFixture : IDisposable {
         private readonly Terraria.Main _main;
 

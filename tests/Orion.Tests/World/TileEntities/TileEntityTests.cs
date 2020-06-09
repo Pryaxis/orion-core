@@ -19,7 +19,7 @@ using System;
 using Moq;
 using Xunit;
 
-namespace Orion.World.TileEntities {
+namespace Orion.Core.World.TileEntities {
     public class TileEntityTests {
         [Fact]
         public void IsConcrete_NullTileEntity_ThrowsArgumentNullException() {

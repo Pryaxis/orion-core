@@ -18,7 +18,7 @@
 using System.Linq;
 using Xunit;
 
-namespace Orion.Collections {
+namespace Orion.Core.Collections {
     public class ArrayTests {
         [Fact]
         public void GetEnumerator() {

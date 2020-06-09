@@ -19,7 +19,7 @@ using System;
 using Moq;
 using Xunit;
 
-namespace Orion.Items {
+namespace Orion.Core.Items {
     public class ItemTests {
         [Fact]
         public void AsItemStack_NullItem_ThrowsArgumentNullException() {

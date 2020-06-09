@@ -17,10 +17,10 @@
 
 using System;
 using Moq;
-using Orion.Npcs;
+using Orion.Core.Npcs;
 using Xunit;
 
-namespace Orion.Events.Npcs {
+namespace Orion.Core.Events.Npcs {
     public class NpcEventTests {
         [Fact]
         public void Ctor_NullNpc_ThrowsArgumentNullException() {

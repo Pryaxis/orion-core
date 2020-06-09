@@ -17,7 +17,7 @@
 
 using Xunit;
 
-namespace Orion.Players {
+namespace Orion.Core.Players {
     [Collection("TerrariaTestsCollection")]
     public class PlayerTeamTests {
         [Fact]

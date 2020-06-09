@@ -17,13 +17,13 @@
 
 using System;
 using System.Linq;
-using Orion.DataStructures;
-using Orion.Events;
-using Orion.Events.Projectiles;
+using Orion.Core.DataStructures;
+using Orion.Core.Events;
+using Orion.Core.Events.Projectiles;
 using Serilog.Core;
 using Xunit;
 
-namespace Orion.Projectiles {
+namespace Orion.Core.Projectiles {
     [Collection("TerrariaTestsCollection")]
     public class OrionProjectileServiceTests {
         [Theory]

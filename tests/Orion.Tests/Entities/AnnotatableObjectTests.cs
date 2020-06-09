@@ -18,7 +18,7 @@
 using System;
 using Xunit;
 
-namespace Orion.Entities {
+namespace Orion.Core.Entities {
     public class AnnotatableObjectTests {
         [Fact]
         public void GetAnnotation_NullKey_ThrowsArgumentNullException() {

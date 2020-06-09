@@ -18,10 +18,10 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Orion.Packets.Modules;
+using Orion.Core.Packets.Modules;
 using Xunit;
 
-namespace Orion.Packets {
+namespace Orion.Core.Packets {
     public class PacketIdTests {
         private static readonly ISet<Type> _excludedTypes =
             new HashSet<Type> { typeof(ModulePacket<>), typeof(UnknownPacket), typeof(IPacket) };

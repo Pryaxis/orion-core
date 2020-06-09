@@ -18,10 +18,10 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
-using Orion.DataStructures;
+using Orion.Core.DataStructures;
 using Xunit;
 
-namespace Orion.Packets {
+namespace Orion.Core.Packets {
     public class SpanExtensionsTests {
         public static readonly IEnumerable<object[]> StringParams = new[] {
             new object[] { "a" },

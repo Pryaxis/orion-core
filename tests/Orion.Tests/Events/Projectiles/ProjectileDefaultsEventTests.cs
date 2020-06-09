@@ -18,10 +18,10 @@
 using System;
 using System.Diagnostics.CodeAnalysis;
 using Moq;
-using Orion.Projectiles;
+using Orion.Core.Projectiles;
 using Xunit;
 
-namespace Orion.Events.Projectiles {
+namespace Orion.Core.Events.Projectiles {
     [SuppressMessage("Style", "IDE0017:Simplify object initialization", Justification = "Testing")]
     public class ProjectileDefaultsEventTests {
         [Fact]

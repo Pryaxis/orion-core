@@ -18,7 +18,7 @@
 using System;
 using Xunit;
 
-namespace Orion.Packets {
+namespace Orion.Core.Packets {
     public class PacketTests {
         [Fact]
         public void WriteWithHeader() {

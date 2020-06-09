@@ -17,10 +17,10 @@
 
 using System;
 using System.Diagnostics.CodeAnalysis;
-using Orion.World.Signs;
+using Orion.Core.World.Signs;
 using Xunit;
 
-namespace Orion.World.TileEntities {
+namespace Orion.Core.World.TileEntities {
     [SuppressMessage("Style", "IDE0017:Simplify object initialization", Justification = "Testing")]
     public class OrionSignTests {
         [Fact]

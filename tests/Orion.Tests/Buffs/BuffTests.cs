@@ -18,7 +18,7 @@
 using System;
 using Xunit;
 
-namespace Orion.Buffs {
+namespace Orion.Core.Buffs {
     public class BuffTests {
         [Fact]
         public void Ctor_NegativeDuration_ThrowsArgumentOutOfRangeException() {

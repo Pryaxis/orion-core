@@ -16,10 +16,10 @@
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
 using System.Diagnostics.CodeAnalysis;
-using Orion.DataStructures;
+using Orion.Core.DataStructures;
 using Xunit;
 
-namespace Orion.Entities {
+namespace Orion.Core.Entities {
     [SuppressMessage("Style", "IDE0017:Simplify object initialization", Justification = "Testing")]
     public class OrionEntityTests {
         [Fact]

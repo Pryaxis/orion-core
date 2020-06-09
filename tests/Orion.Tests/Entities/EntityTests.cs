@@ -19,7 +19,7 @@ using System;
 using Moq;
 using Xunit;
 
-namespace Orion.Entities {
+namespace Orion.Core.Entities {
     public class EntityTests {
         [Fact]
         public void IsConcrete_NullEntity_ThrowsArgumentNullException() {
