@@ -292,6 +292,48 @@ namespace Orion.Npcs {
         }
 
         [Fact]
+        public void PacketReceive_NpcFishEventTriggered() {
+            // Set `State` to 10 so that the NPC fish packet is not ignored by the server.
+            Terraria.Netplay.Clients[5] = new Terraria.RemoteClient { Id = 5, State = 10 };
+            Terraria.Main.player[5] = new Terraria.Player { whoAmI = 5 };
+            Terraria.Main.npc[0] = new Terraria.NPC();
+
+            using var kernel = new OrionKernel(Logger.None);
+            using var playerService = new OrionPlayerService(kernel, Logger.None);
+            using var npcService = new OrionNpcService(kernel, Logger.None);
+            var isRun = false;
+            kernel.RegisterHandler<NpcFishEvent>(evt => {
+                Assert.Same(playerService.Players[5], evt.Player);
+                Assert.Equal(100, evt.X);
+                Assert.Equal(256, evt.Y);
+                Assert.Equal(NpcId.HemogoblinShark, evt.Id);
+                isRun = true;
+            }, Logger.None);
+
+            TestUtils.FakeReceiveBytes(5, NpcFishPacketTests.Bytes);
+
+            Assert.True(isRun);
+            Assert.Equal(NpcId.HemogoblinShark, (NpcId)Terraria.Main.npc[0].type);
+        }
+
+        [Fact]
+        public void PacketReceive_NpcFishEventCanceled() {
+            // Set `State` to 10 so that the NPC fish packet is not ignored by the server.
+            Terraria.Netplay.Clients[5] = new Terraria.RemoteClient { Id = 5, State = 10 };
+            Terraria.Main.player[5] = new Terraria.Player { whoAmI = 5 };
+            Terraria.Main.npc[0] = new Terraria.NPC();
+
+            using var kernel = new OrionKernel(Logger.None);
+            using var playerService = new OrionPlayerService(kernel, Logger.None);
+            using var npcService = new OrionNpcService(kernel, Logger.None);
+            kernel.RegisterHandler<NpcFishEvent>(evt => evt.Cancel(), Logger.None);
+
+            TestUtils.FakeReceiveBytes(5, NpcFishPacketTests.Bytes);
+
+            Assert.Equal(NpcId.None, (NpcId)Terraria.Main.npc[0].type);
+        }
+
+        [Fact]
         public void SpawnNpc() {
             using var kernel = new OrionKernel(Logger.None);
             using var npcService = new OrionNpcService(kernel, Logger.None);

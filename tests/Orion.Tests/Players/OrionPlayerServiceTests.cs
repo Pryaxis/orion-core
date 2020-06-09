@@ -19,6 +19,7 @@ using System;
 using System.IO;
 using System.Linq;
 using Orion.Events;
+using Orion.Events.Npcs;
 using Orion.Events.Packets;
 using Orion.Events.Players;
 using Orion.Npcs;
@@ -377,46 +378,6 @@ namespace Orion.Players {
             TestUtils.FakeReceiveBytes(5, ChatModuleTests.ServerBytes);
 
             Assert.Empty(socket.SendData);
-        }
-
-        [Fact]
-        public void PacketReceive_PlayerFishNpcEventTriggered() {
-            // Set `State` to 10 so that the NPC fish packet is not ignored by the server.
-            Terraria.Netplay.Clients[5] = new Terraria.RemoteClient { Id = 5, State = 10 };
-            Terraria.Main.player[5] = new Terraria.Player { whoAmI = 5 };
-            Terraria.Main.npc[0] = new Terraria.NPC();
-
-            using var kernel = new OrionKernel(Logger.None);
-            using var playerService = new OrionPlayerService(kernel, Logger.None);
-            var isRun = false;
-            kernel.RegisterHandler<PlayerFishNpcEvent>(evt => {
-                Assert.Same(playerService.Players[5], evt.Player);
-                Assert.Equal(100, evt.X);
-                Assert.Equal(256, evt.Y);
-                Assert.Equal(NpcId.HemogoblinShark, evt.Id);
-                isRun = true;
-            }, Logger.None);
-
-            TestUtils.FakeReceiveBytes(5, NpcFishPacketTests.Bytes);
-
-            Assert.True(isRun);
-            Assert.Equal(NpcId.HemogoblinShark, (NpcId)Terraria.Main.npc[0].type);
-        }
-
-        [Fact]
-        public void PacketReceive_PlayerFishNpcEventCanceled() {
-            // Set `State` to 10 so that the NPC fish packet is not ignored by the server.
-            Terraria.Netplay.Clients[5] = new Terraria.RemoteClient { Id = 5, State = 10 };
-            Terraria.Main.player[5] = new Terraria.Player { whoAmI = 5 };
-            Terraria.Main.npc[0] = new Terraria.NPC();
-
-            using var kernel = new OrionKernel(Logger.None);
-            using var playerService = new OrionPlayerService(kernel, Logger.None);
-            kernel.RegisterHandler<PlayerFishNpcEvent>(evt => evt.Cancel(), Logger.None);
-
-            TestUtils.FakeReceiveBytes(5, NpcFishPacketTests.Bytes);
-
-            Assert.Equal(NpcId.None, (NpcId)Terraria.Main.npc[0].type);
         }
 
         [Fact]

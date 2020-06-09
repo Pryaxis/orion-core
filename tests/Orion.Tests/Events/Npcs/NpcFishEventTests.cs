@@ -22,18 +22,18 @@ using Orion.Npcs;
 using Orion.Players;
 using Xunit;
 
-namespace Orion.Events.Players {
+namespace Orion.Events.Npcs {
     [SuppressMessage("Style", "IDE0017:Simplify object initialization", Justification = "Testing")]
-    public class PlayerFishNpcEventTests {
+    public class NpcFishEventTests {
         [Fact]
         public void Ctor_NullPlayer_ThrowsArgumentNullException() {
-            Assert.Throws<ArgumentNullException>(() => new PlayerFishNpcEvent(null!, 100, 256, NpcId.HemogoblinShark));
+            Assert.Throws<ArgumentNullException>(() => new NpcFishEvent(null!, 100, 256, NpcId.HemogoblinShark));
         }
 
         [Fact]
         public void X_Get() {
             var player = new Mock<IPlayer>().Object;
-            var evt = new PlayerFishNpcEvent(player, 100, 256, NpcId.HemogoblinShark);
+            var evt = new NpcFishEvent(player, 100, 256, NpcId.HemogoblinShark);
 
             Assert.Equal(100, evt.X);
         }
@@ -41,7 +41,7 @@ namespace Orion.Events.Players {
         [Fact]
         public void Y_Get() {
             var player = new Mock<IPlayer>().Object;
-            var evt = new PlayerFishNpcEvent(player, 100, 256, NpcId.HemogoblinShark);
+            var evt = new NpcFishEvent(player, 100, 256, NpcId.HemogoblinShark);
 
             Assert.Equal(256, evt.Y);
         }
@@ -49,7 +49,7 @@ namespace Orion.Events.Players {
         [Fact]
         public void Id_Get() {
             var player = new Mock<IPlayer>().Object;
-            var evt = new PlayerFishNpcEvent(player, 100, 256, NpcId.HemogoblinShark);
+            var evt = new NpcFishEvent(player, 100, 256, NpcId.HemogoblinShark);
 
             Assert.Equal(NpcId.HemogoblinShark, evt.Id);
         }
@@ -57,7 +57,7 @@ namespace Orion.Events.Players {
         [Fact]
         public void CancellationReason_Set_Get() {
             var player = new Mock<IPlayer>().Object;
-            var evt = new PlayerFishNpcEvent(player, 100, 256, NpcId.HemogoblinShark);
+            var evt = new NpcFishEvent(player, 100, 256, NpcId.HemogoblinShark);
 
             evt.CancellationReason = "test";
 
