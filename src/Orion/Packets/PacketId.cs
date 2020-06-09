@@ -19,6 +19,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics.Contracts;
 using Orion.Packets.Client;
+using Orion.Packets.Npcs;
 using Orion.Packets.Players;
 using Orion.Packets.Server;
 using Orion.Packets.World.Chests;
@@ -46,7 +47,8 @@ namespace Orion.Packets {
         WallPaint = 64,
         ClientUuid = 68,
         Module = 82,
-        ServerChat = 107
+        ServerChat = 107,
+        NpcFish = 130
 #pragma warning restore CS1591 // Missing XML comment for publicly visible type or member
     }
 
@@ -69,7 +71,8 @@ namespace Orion.Packets {
             [PacketId.BlockPaint] = typeof(BlockPaintPacket),
             [PacketId.WallPaint] = typeof(WallPaintPacket),
             [PacketId.ClientUuid] = typeof(ClientUuidPacket),
-            [PacketId.ServerChat] = typeof(ServerChatPacket)
+            [PacketId.ServerChat] = typeof(ServerChatPacket),
+            [PacketId.NpcFish] = typeof(NpcFishPacket)
         };
 
         /// <summary>
