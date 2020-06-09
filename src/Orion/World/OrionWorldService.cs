@@ -180,10 +180,11 @@ namespace Orion.World {
             }
 
             // No-ops since these are never used.
+            [ExcludeFromCodeCoverage]
             public int collisionType => 0;
-            public byte bTileHeader2 { get => 0; set { } }
 
-            public object Clone() => MemberwiseClone();
+            [ExcludeFromCodeCoverage]
+            public byte bTileHeader2 { get => 0; set { } }
 
             public byte color() => (byte)_tile->BlockColor;
             public void color(byte color) => _tile->BlockColor = (PaintColor)color;
@@ -209,6 +210,7 @@ namespace Orion.World {
             public byte wallColor() => (byte)_tile->WallColor;
             public void wallColor(byte wallColor) => _tile->WallColor = (PaintColor)wallColor;
             public bool lava() => (_tile->_bTileHeader & 0x20) == 0x20;
+
             public void lava(bool lava) {
                 if (lava) {
                     _tile->_bTileHeader = (byte)((_tile->_bTileHeader & 0x9F) | 0x20);
@@ -216,7 +218,9 @@ namespace Orion.World {
                     _tile->_bTileHeader &= 223;
                 }
             }
+
             public bool honey() => (_tile->_bTileHeader & 0x40) == 0x40;
+
             public void honey(bool honey) {
                 if (honey) {
                     _tile->_bTileHeader = (byte)((_tile->_bTileHeader & 0x9F) | 0x40);
@@ -224,6 +228,7 @@ namespace Orion.World {
                     _tile->_bTileHeader &= 191;
                 }
             }
+
             public byte liquidType() => (byte)_tile->Liquid;
             public void liquidType(int liquidType) => _tile->Liquid = (Liquid)liquidType;
             public bool wire4() => _tile->HasYellowWire;
@@ -319,16 +324,13 @@ namespace Orion.World {
 
             public void ClearEverything() => Unsafe.InitBlockUnaligned(_tile, 0, 13);
             public void ClearMetadata() => Unsafe.InitBlockUnaligned(((byte*)_tile) + 4, 0, 9);
+
             public void ClearTile() {
                 var mask = Tile.SlopeMask | Tile.IsBlockHalvedMask | Tile.IsBlockActiveMask | Tile.IsBlockActuatedMask;
                 _tile->_header &= ~mask;
             }
-            public void Clear(Terraria.DataStructures.TileDataType types) {
-                if (types == Terraria.DataStructures.TileDataType.All) {
-                    ClearEverything();
-                    return;
-                }
 
+            public void Clear(Terraria.DataStructures.TileDataType types) {
                 if ((types & Terraria.DataStructures.TileDataType.Tile) != 0) {
                     _tile->BlockId = BlockId.Dirt;
                     _tile->IsBlockActive = false;
@@ -380,6 +382,7 @@ namespace Orion.World {
             public bool bottomSlope() => IsSlope(Slope.BottomRight, Slope.BottomLeft);
             public bool leftSlope() => IsSlope(Slope.TopLeft, Slope.BottomLeft);
             public bool rightSlope() => IsSlope(Slope.TopRight, Slope.BottomRight);
+
             public bool HasSameSlope(OTAPI.Tile.ITile tile) =>
                 (_tile->_sTileHeader & 29696) == (tile.sTileHeader & 29696);
 
@@ -393,13 +396,31 @@ namespace Orion.World {
             }
 
             // No-ops since these are never used.
+            [ExcludeFromCodeCoverage]
+            public object Clone() => MemberwiseClone();
+
+            [ExcludeFromCodeCoverage]
             public Microsoft.Xna.Framework.Color actColor(Microsoft.Xna.Framework.Color oldColor) => default;
+
+            [ExcludeFromCodeCoverage]
             public void actColor(ref Microsoft.Xna.Framework.Vector3 oldColor) { }
+
+            [ExcludeFromCodeCoverage]
             public byte wallFrameNumber() => 0;
+
+            [ExcludeFromCodeCoverage]
             public void wallFrameNumber(byte wallFrameNumber) { }
+
+            [ExcludeFromCodeCoverage]
             public int wallFrameX() => 0;
+
+            [ExcludeFromCodeCoverage]
             public void wallFrameX(int wallFrameX) { }
+
+            [ExcludeFromCodeCoverage]
             public int wallFrameY() => 0;
+
+            [ExcludeFromCodeCoverage]
             public void wallFrameY(int wallFrameY) { }
 
             private bool IsSlope(Slope slope1, Slope slope2) {
