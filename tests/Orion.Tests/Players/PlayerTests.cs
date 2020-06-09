@@ -18,14 +18,13 @@
 using System;
 using Moq;
 using Orion.Packets;
-using Orion.Packets.Client;
 using Orion.Packets.DataStructures;
 using Orion.Packets.Server;
 using Xunit;
 
 namespace Orion.Players {
     public class PlayerTests {
-        private delegate void DisconnectCallback(ref ClientDisconnectPacket packet);
+        private delegate void DisconnectCallback(ref ServerDisconnectPacket packet);
         private delegate void ChatCallback(ref ServerChatPacket packet);
 
         [Fact]
@@ -58,14 +57,14 @@ namespace Orion.Players {
         public void Disconnect() {
             var mockPlayer = new Mock<IPlayer>();
             mockPlayer
-                .Setup(p => p.SendPacket(ref It.Ref<ClientDisconnectPacket>.IsAny))
-                .Callback((DisconnectCallback)((ref ClientDisconnectPacket packet) => {
+                .Setup(p => p.SendPacket(ref It.Ref<ServerDisconnectPacket>.IsAny))
+                .Callback((DisconnectCallback)((ref ServerDisconnectPacket packet) => {
                     Assert.Equal("test", packet.Reason);
                 }));
 
             mockPlayer.Object.Disconnect("test");
 
-            mockPlayer.Verify(p => p.SendPacket(ref It.Ref<ClientDisconnectPacket>.IsAny));
+            mockPlayer.Verify(p => p.SendPacket(ref It.Ref<ServerDisconnectPacket>.IsAny));
         }
 
         [Fact]

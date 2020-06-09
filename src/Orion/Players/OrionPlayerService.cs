@@ -223,7 +223,7 @@ namespace Orion.Players {
 
             // When writing the packet, we need to use the `Client` context since this packet comes from the client.
             var receiveBuffer = _receiveBuffer.Value;
-            var newPacketLength = packet.WriteWithHeader(receiveBuffer, (PacketContext)PacketContext.Client);
+            var newPacketLength = packet.WriteWithHeader(receiveBuffer, PacketContext.Client);
 
             _ignoreReceiveDataHandler.Value = true;
             buffer.readBuffer = receiveBuffer;

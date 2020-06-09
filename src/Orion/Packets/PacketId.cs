@@ -32,7 +32,7 @@ namespace Orion.Packets {
     public enum PacketId : byte {
 #pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
         ClientConnect = 1,
-        ClientDisconnect = 2,
+        ServerDisconnect = 2,
         PlayerJoin = 6,
         PlayerHealth = 16,
         TileModify = 17,
@@ -56,7 +56,7 @@ namespace Orion.Packets {
     public static class PacketIdExtensions {
         private static readonly IDictionary<PacketId, Type> _types = new Dictionary<PacketId, Type> {
             [PacketId.ClientConnect] = typeof(ClientConnectPacket),
-            [PacketId.ClientDisconnect] = typeof(ClientDisconnectPacket),
+            [PacketId.ServerDisconnect] = typeof(ServerDisconnectPacket),
             [PacketId.PlayerJoin] = typeof(PlayerJoinPacket),
             [PacketId.PlayerHealth] = typeof(PlayerHealthPacket),
             [PacketId.TileModify] = typeof(TileModifyPacket),
