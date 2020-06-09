@@ -21,6 +21,8 @@ using Orion.Events;
 using Orion.Events.Npcs;
 using Orion.Items;
 using Orion.Packets.DataStructures;
+using Orion.Packets.Npcs;
+using Orion.Players;
 using Serilog.Core;
 using Xunit;
 
@@ -243,6 +245,50 @@ namespace Orion.Npcs {
             Terraria.Main.npc[0].checkDead();
 
             Assert.NotEqual(ItemId.Gel, (ItemId)Terraria.Main.item[0].type);
+        }
+
+        [Fact]
+        public void PacketReceive_NpcCatchEventTriggered() {
+            // Set `State` to 10 so that the NPC catch packet is not ignored by the server.
+            Terraria.Netplay.Clients[5] = new Terraria.RemoteClient { Id = 5, State = 10 };
+            Terraria.Main.player[5] = new Terraria.Player { whoAmI = 5 };
+            Terraria.Main.npc[1] = new Terraria.NPC { whoAmI = 1 };
+            Terraria.Main.npc[1].SetDefaults((int)NpcId.GoldWorm);
+            Terraria.Main.item[0] = new Terraria.Item { whoAmI = 0 };
+
+            using var kernel = new OrionKernel(Logger.None);
+            using var playerService = new OrionPlayerService(kernel, Logger.None);
+            using var npcService = new OrionNpcService(kernel, Logger.None);
+            var isRun = false;
+            kernel.RegisterHandler<NpcCatchEvent>(evt => {
+                Assert.Same(npcService.Npcs[1], evt.Npc);
+                Assert.Same(playerService.Players[5], evt.Player);
+                isRun = true;
+            }, Logger.None);
+
+            TestUtils.FakeReceiveBytes(5, NpcCatchPacketTests.Bytes);
+
+            Assert.True(isRun);
+            Assert.Equal(ItemId.GoldWorm, (ItemId)Terraria.Main.item[0].type);
+        }
+
+        [Fact]
+        public void PacketReceive_NpcCatchEventCanceled() {
+            // Set `State` to 10 so that the NPC catch packet is not ignored by the server.
+            Terraria.Netplay.Clients[5] = new Terraria.RemoteClient { Id = 5, State = 10 };
+            Terraria.Main.player[5] = new Terraria.Player { whoAmI = 5 };
+            Terraria.Main.npc[1] = new Terraria.NPC { whoAmI = 1 };
+            Terraria.Main.npc[1].SetDefaults((int)NpcId.GoldWorm);
+            Terraria.Main.item[0] = new Terraria.Item { whoAmI = 0 };
+
+            using var kernel = new OrionKernel(Logger.None);
+            using var playerService = new OrionPlayerService(kernel, Logger.None);
+            using var npcService = new OrionNpcService(kernel, Logger.None);
+            kernel.RegisterHandler<NpcCatchEvent>(evt => evt.Cancel(), Logger.None);
+
+            TestUtils.FakeReceiveBytes(5, NpcCatchPacketTests.Bytes);
+
+            Assert.Equal(ItemId.None, (ItemId)Terraria.Main.item[0].type);
         }
 
         [Fact]

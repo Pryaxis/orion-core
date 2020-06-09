@@ -295,8 +295,7 @@ namespace Orion.Players {
         [SuppressMessage("CodeQuality", "IDE0051:Remove unused private members", Justification = "Implicitly used")]
         private void OnPlayerPvpPacket(PacketReceiveEvent<PlayerPvpPacket> evt) {
             var player = evt.Sender;
-            ref var packet = ref evt.Packet;
-            var evt2 = new PlayerPvpEvent(player, packet.IsInPvp);
+            var evt2 = new PlayerPvpEvent(player, evt.Packet.IsInPvp);
             Kernel.Raise(evt2, Log);
             evt.CancellationReason = evt2.CancellationReason;
         }
@@ -315,8 +314,7 @@ namespace Orion.Players {
         [SuppressMessage("CodeQuality", "IDE0051:Remove unused private members", Justification = "Implicitly used")]
         private void OnPlayerTeamPacket(PacketReceiveEvent<PlayerTeamPacket> evt) {
             var player = evt.Sender;
-            ref var packet = ref evt.Packet;
-            var evt2 = new PlayerTeamEvent(player, packet.Team);
+            var evt2 = new PlayerTeamEvent(player, evt.Packet.Team);
             Kernel.Raise(evt2, Log);
             evt.CancellationReason = evt2.CancellationReason;
         }
@@ -325,8 +323,7 @@ namespace Orion.Players {
         [SuppressMessage("CodeQuality", "IDE0051:Remove unused private members", Justification = "Implicitly used")]
         private void OnClientUuidPacket(PacketReceiveEvent<ClientUuidPacket> evt) {
             var player = evt.Sender;
-            ref var packet = ref evt.Packet;
-            var evt2 = new PlayerUuidEvent(player, packet.Uuid);
+            var evt2 = new PlayerUuidEvent(player, evt.Packet.Uuid);
             Kernel.Raise(evt2, Log);
             evt.CancellationReason = evt2.CancellationReason;
         }

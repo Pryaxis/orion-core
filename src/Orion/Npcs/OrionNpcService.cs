@@ -18,13 +18,16 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Diagnostics.CodeAnalysis;
 using System.Threading;
 using Orion.Collections;
 using Orion.Events;
 using Orion.Events.Npcs;
+using Orion.Events.Packets;
 using Orion.Framework;
 using Orion.Items;
 using Orion.Packets.DataStructures;
+using Orion.Packets.Npcs;
 using Serilog;
 
 namespace Orion.Npcs {
@@ -43,6 +46,8 @@ namespace Orion.Npcs {
             OTAPI.Hooks.Npc.PreUpdate = PreUpdateHandler;
             OTAPI.Hooks.Npc.Killed = KilledHandler;
             OTAPI.Hooks.Npc.PreDropLoot = PreDropLootHandler;
+
+            Kernel.RegisterHandlers(this, Log);
         }
 
         public IReadOnlyList<INpc> Npcs { get; }
@@ -55,6 +60,8 @@ namespace Orion.Npcs {
             OTAPI.Hooks.Npc.PreUpdate = null;
             OTAPI.Hooks.Npc.Killed = null;
             OTAPI.Hooks.Npc.PreDropLoot = null;
+
+            Kernel.DeregisterHandlers(this, Log);
         }
 
         public INpc? SpawnNpc(NpcId id, Vector2f position) {
@@ -155,6 +162,20 @@ namespace Orion.Npcs {
 
             var isConcrete = terrariaNpc == Terraria.Main.npc[npcIndex];
             return isConcrete ? Npcs[npcIndex] : new OrionNpc(terrariaNpc);
+        }
+
+        // =============================================================================================================
+        // NPC event publishers
+        //
+
+        [EventHandler("orion-npcs", Priority = EventPriority.Lowest)]
+        [SuppressMessage("CodeQuality", "IDE0051:Remove unused private members", Justification = "Implicitly used")]
+        private void OnNpcCatchPacket(PacketReceiveEvent<NpcCatchPacket> evt) {
+            var npc = Npcs[evt.Packet.NpcIndex];
+            var player = evt.Sender;
+            var evt2 = new NpcCatchEvent(npc, player);
+            Kernel.Raise(evt2, Log);
+            evt.CancellationReason = evt2.CancellationReason;
         }
     }
 }
