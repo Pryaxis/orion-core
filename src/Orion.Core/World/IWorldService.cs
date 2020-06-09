@@ -28,6 +28,7 @@ namespace Orion.Core.World {
     /// <list type="bullet">
     /// <item><description><see cref="WorldLoadedEvent"/></description></item>
     /// <item><description><see cref="WorldSaveEvent"/></description></item>
+    /// <item><description><see cref="BlockBreakEvent"/></description></item>
     /// <item><description><see cref="TileSquareEvent"/></description></item>
     /// <item><description><see cref="BlockPaintEvent"/></description></item>
     /// <item><description><see cref="WallPaintEvent"/></description></item>

@@ -165,7 +165,7 @@ namespace Orion.Core.Packets.World.Tiles {
         public bool IsFailure {
             get {
                 if (Modification != TileModification.BreakBlock && Modification != TileModification.BreakWall &&
-                        Modification != TileModification.BreakBlockNoItems &&
+                        Modification != TileModification.BreakBlockItemless &&
                         Modification != TileModification.BreakContainer) {
                     // Not localized because this string is developer-facing.
                     throw new InvalidOperationException(
@@ -176,7 +176,7 @@ namespace Orion.Core.Packets.World.Tiles {
             }
             set {
                 if (Modification != TileModification.BreakBlock && Modification != TileModification.BreakWall &&
-                        Modification != TileModification.BreakBlockNoItems &&
+                        Modification != TileModification.BreakBlockItemless &&
                         Modification != TileModification.BreakContainer) {
                     // Not localized because this string is developer-facing.
                     throw new InvalidOperationException(

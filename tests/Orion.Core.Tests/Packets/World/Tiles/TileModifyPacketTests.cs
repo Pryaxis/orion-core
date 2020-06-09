@@ -27,7 +27,7 @@ namespace Orion.Core.Packets.World.Tiles {
         public static readonly byte[] PlaceBlockBytes = { 11, 0, 17, 1, 100, 0, 0, 1, 4, 0, 1 };
         public static readonly byte[] BreakWallBytes = { 11, 0, 17, 2, 100, 0, 0, 1, 0, 0, 0 };
         public static readonly byte[] PlaceWallBytes = { 11, 0, 17, 3, 100, 0, 0, 1, 1, 0, 0 };
-        public static readonly byte[] BreakBlockNoItemsBytes = { 11, 0, 17, 4, 100, 0, 0, 1, 0, 0, 0 };
+        public static readonly byte[] BreakBlockItemlessBytes = { 11, 0, 17, 4, 100, 0, 0, 1, 0, 0, 0 };
         public static readonly byte[] PlaceRedWireBytes = { 11, 0, 17, 5, 100, 0, 0, 1, 0, 0, 0 };
         public static readonly byte[] BreakRedWireBytes = { 11, 0, 17, 6, 100, 0, 0, 1, 0, 0, 0 };
         public static readonly byte[] HammerBlockBytes = { 11, 0, 17, 7, 100, 0, 0, 1, 0, 0, 0 };
@@ -101,6 +101,31 @@ namespace Orion.Core.Packets.World.Tiles {
         }
 
         [Fact]
+        public void BlockStyle_GetInvalidModification_ThrowsInvalidOperationException() {
+            var packet = new TileModifyPacket { Modification = TileModification.BreakBlock };
+
+            Assert.Throws<InvalidOperationException>(() => packet.BlockStyle);
+        }
+
+        [Fact]
+        public void BlockStyle_SetInvalidModification_ThrowsInvalidOperationException() {
+            var packet = new TileModifyPacket { Modification = TileModification.BreakBlock };
+
+            Assert.Throws<InvalidOperationException>(() => packet.BlockStyle = 1);
+        }
+
+        [Theory]
+        [InlineData(TileModification.PlaceBlock)]
+        [InlineData(TileModification.ReplaceBlock)]
+        public void BlockStyle_Set_Get(TileModification modification) {
+            var packet = new TileModifyPacket { Modification = modification };
+
+            packet.BlockStyle = 1;
+
+            Assert.Equal(1, packet.BlockStyle);
+        }
+
+        [Fact]
         public void WallId_GetInvalidModification_ThrowsInvalidOperationException() {
             var packet = new TileModifyPacket { Modification = TileModification.BreakWall };
 
@@ -167,7 +192,7 @@ namespace Orion.Core.Packets.World.Tiles {
         [Theory]
         [InlineData(TileModification.BreakBlock)]
         [InlineData(TileModification.BreakWall)]
-        [InlineData(TileModification.BreakBlockNoItems)]
+        [InlineData(TileModification.BreakBlockItemless)]
         [InlineData(TileModification.BreakContainer)]
         public void IsFailure_Set_Get(TileModification modification) {
             var packet = new TileModifyPacket { Modification = modification };
@@ -227,12 +252,12 @@ namespace Orion.Core.Packets.World.Tiles {
         }
 
         [Fact]
-        public void Read_BreakBlockNoItems() {
+        public void Read_BreakBlockItemless() {
             var packet = new TileModifyPacket();
-            var span = BreakBlockNoItemsBytes.AsSpan(IPacket.HeaderSize..);
+            var span = BreakBlockItemlessBytes.AsSpan(IPacket.HeaderSize..);
             Assert.Equal(span.Length, packet.Read(span, PacketContext.Server));
 
-            Assert.Equal(TileModification.BreakBlockNoItems, packet.Modification);
+            Assert.Equal(TileModification.BreakBlockItemless, packet.Modification);
             Assert.Equal(100, packet.X);
             Assert.Equal(256, packet.Y);
             Assert.False(packet.IsFailure);
@@ -478,9 +503,9 @@ namespace Orion.Core.Packets.World.Tiles {
         }
 
         [Fact]
-        public void RoundTrip_BreakBlockNoItems() {
+        public void RoundTrip_BreakBlockItemless() {
             TestUtils.RoundTripPacket<TileModifyPacket>(
-                BreakBlockNoItemsBytes.AsSpan(IPacket.HeaderSize..), PacketContext.Server);
+                BreakBlockItemlessBytes.AsSpan(IPacket.HeaderSize..), PacketContext.Server);
         }
 
         [Fact]

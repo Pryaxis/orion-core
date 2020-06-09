@@ -77,6 +77,29 @@ namespace Orion.Core.World {
 
         [EventHandler("orion-world", Priority = EventPriority.Lowest)]
         [SuppressMessage("CodeQuality", "IDE0051:Remove unused private members", Justification = "Implicitly used")]
+        private void OnTileModifyPacket(PacketReceiveEvent<TileModifyPacket> evt) {
+            var player = evt.Sender;
+            ref var packet = ref evt.Packet;
+
+            string? RaiseBlockBreakEvent(ref TileModifyPacket packet, bool isItemless) {
+                if (packet.IsFailure) {
+                    return null;
+                }
+
+                var evt2 = new BlockBreakEvent(World, player, packet.X, packet.Y, isItemless);
+                Kernel.Raise(evt2, Log);
+                return evt2.CancellationReason;
+            }
+
+            evt.CancellationReason = packet.Modification switch {
+                TileModification.BreakBlock => RaiseBlockBreakEvent(ref packet, false),
+                TileModification.BreakBlockItemless => RaiseBlockBreakEvent(ref packet, true),
+                _ => null
+            };
+        }
+
+        [EventHandler("orion-world", Priority = EventPriority.Lowest)]
+        [SuppressMessage("CodeQuality", "IDE0051:Remove unused private members", Justification = "Implicitly used")]
         private void OnTileSquarePacket(PacketReceiveEvent<TileSquarePacket> evt) {
             var player = evt.Sender;
             ref var packet = ref evt.Packet;

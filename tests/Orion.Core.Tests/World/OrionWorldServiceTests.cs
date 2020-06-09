@@ -17,6 +17,7 @@
 
 using Orion.Core.Events;
 using Orion.Core.Events.World.Tiles;
+using Orion.Core.Items;
 using Orion.Core.Packets.World.Tiles;
 using Orion.Core.Players;
 using Orion.Core.World.Tiles;
@@ -967,10 +968,126 @@ namespace Orion.Core.World {
         }
 
         [Fact]
+        public void PacketReceive_BlockBreakEventTriggered() {
+            // Set `State` to 10 so that the tile modify packet is not ignored by the server, and mark the relevant
+            // `TileSections` entry so that the tile modify packet is not treated with failure.
+            Terraria.Netplay.Clients[5] = new Terraria.RemoteClient { Id = 5, State = 10 };
+            Terraria.Netplay.Clients[5].TileSections[0, 1] = true;
+            Terraria.Main.player[5] = new Terraria.Player { whoAmI = 5 };
+            Terraria.Main.item[0] = new Terraria.Item { whoAmI = 0 };
+
+            using var kernel = new OrionKernel(Logger.None);
+            using var playerService = new OrionPlayerService(kernel, Logger.None);
+            using var worldService = new OrionWorldService(kernel, Logger.None);
+
+            Terraria.Main.tile[100, 256] = new Terraria.Tile();
+            Terraria.Main.tile[100, 256].active(true);
+
+            var isRun = false;
+            kernel.RegisterHandler<BlockBreakEvent>(evt => {
+                Assert.Same(worldService.World, evt.World);
+                Assert.Same(playerService.Players[5], evt.Player);
+                Assert.Equal(100, evt.X);
+                Assert.Equal(256, evt.Y);
+                Assert.False(evt.IsItemless);
+                isRun = true;
+            }, Logger.None);
+
+            TestUtils.FakeReceiveBytes(5, TileModifyPacketTests.BreakBlockBytes);
+
+            Assert.True(isRun);
+            Assert.False(Terraria.Main.tile[100, 256].active());
+            Assert.Equal(ItemId.DirtBlock, (ItemId)Terraria.Main.item[0].type);
+        }
+
+        [Fact]
+        public void PacketReceive_BlockBreakEventCanceled() {
+            // Set `State` to 10 so that the tile modify packet is not ignored by the server, and mark the relevant
+            // `TileSections` entry so that the tile modify packet is not treated with failure.
+            Terraria.Netplay.Clients[5] = new Terraria.RemoteClient { Id = 5, State = 10 };
+            Terraria.Netplay.Clients[5].TileSections[0, 1] = true;
+            Terraria.Main.player[5] = new Terraria.Player { whoAmI = 5 };
+            Terraria.Main.item[0] = new Terraria.Item { whoAmI = 0 };
+
+            using var kernel = new OrionKernel(Logger.None);
+            using var playerService = new OrionPlayerService(kernel, Logger.None);
+            using var worldService = new OrionWorldService(kernel, Logger.None);
+
+            Terraria.Main.tile[100, 256] = new Terraria.Tile();
+            Terraria.Main.tile[100, 256].active(true);
+
+            kernel.RegisterHandler<BlockBreakEvent>(evt => evt.Cancel(), Logger.None);
+
+            TestUtils.FakeReceiveBytes(5, TileModifyPacketTests.BreakBlockBytes);
+
+            Assert.True(Terraria.Main.tile[100, 256].active());
+        }
+
+        [Fact]
+        public void PacketReceive_BlockBreakEventItemlessTriggered() {
+            // Set `State` to 10 so that the tile modify packet is not ignored by the server, and mark the relevant
+            // `TileSections` entry so that the tile modify packet is not treated with failure.
+            Terraria.Netplay.Clients[5] = new Terraria.RemoteClient { Id = 5, State = 10 };
+            Terraria.Netplay.Clients[5].TileSections[0, 1] = true;
+            Terraria.Main.player[5] = new Terraria.Player { whoAmI = 5 };
+            Terraria.Main.item[0] = new Terraria.Item { whoAmI = 0 };
+
+            using var kernel = new OrionKernel(Logger.None);
+            using var playerService = new OrionPlayerService(kernel, Logger.None);
+            using var worldService = new OrionWorldService(kernel, Logger.None);
+
+            Terraria.Main.tile[100, 256] = new Terraria.Tile();
+            Terraria.Main.tile[100, 256].active(true);
+
+            var isRun = false;
+            kernel.RegisterHandler<BlockBreakEvent>(evt => {
+                Assert.Same(worldService.World, evt.World);
+                Assert.Same(playerService.Players[5], evt.Player);
+                Assert.Equal(100, evt.X);
+                Assert.Equal(256, evt.Y);
+                Assert.True(evt.IsItemless);
+                isRun = true;
+            }, Logger.None);
+
+            TestUtils.FakeReceiveBytes(5, TileModifyPacketTests.BreakBlockItemlessBytes);
+
+            Assert.True(isRun);
+            Assert.False(Terraria.Main.tile[100, 256].active());
+            Assert.Equal(ItemId.None, (ItemId)Terraria.Main.item[0].type);
+        }
+
+        [Fact]
+        public void PacketReceive_BlockBreakEventItemlessCanceled() {
+            // Set `State` to 10 so that the tile modify packet is not ignored by the server, and mark the relevant
+            // `TileSections` entry so that the tile modify packet is not treated with failure.
+            Terraria.Netplay.Clients[5] = new Terraria.RemoteClient { Id = 5, State = 10 };
+            Terraria.Netplay.Clients[5].TileSections[0, 1] = true;
+            Terraria.Main.player[5] = new Terraria.Player { whoAmI = 5 };
+            Terraria.Main.item[0] = new Terraria.Item { whoAmI = 0 };
+
+            using var kernel = new OrionKernel(Logger.None);
+            using var playerService = new OrionPlayerService(kernel, Logger.None);
+            using var worldService = new OrionWorldService(kernel, Logger.None);
+
+            Terraria.Main.tile[100, 256] = new Terraria.Tile();
+            Terraria.Main.tile[100, 256].active(true);
+
+            kernel.RegisterHandler<BlockBreakEvent>(evt => evt.Cancel(), Logger.None);
+
+            TestUtils.FakeReceiveBytes(5, TileModifyPacketTests.BreakBlockItemlessBytes);
+
+            Assert.True(Terraria.Main.tile[100, 256].active());
+        }
+
+        [Fact]
         public void PacketReceive_TileSquareEventTriggered() {
             // Set `State` to 10 so that the tile square packet is not ignored by the server.
             Terraria.Netplay.Clients[5] = new Terraria.RemoteClient { Id = 5, State = 10 };
             Terraria.Main.player[5] = new Terraria.Player { whoAmI = 5 };
+
+            using var kernel = new OrionKernel(Logger.None);
+            using var playerService = new OrionPlayerService(kernel, Logger.None);
+            using var worldService = new OrionWorldService(kernel, Logger.None);
 
             for (var i = 0; i < 3; ++i) {
                 for (var j = 0; j < 3; ++j) {
@@ -978,9 +1095,6 @@ namespace Orion.Core.World {
                 }
             }
 
-            using var kernel = new OrionKernel(Logger.None);
-            using var playerService = new OrionPlayerService(kernel, Logger.None);
-            using var worldService = new OrionWorldService(kernel, Logger.None);
             var isRun = false;
             kernel.RegisterHandler<TileSquareEvent>(evt => {
                 Assert.Same(worldService.World, evt.World);
@@ -1003,15 +1117,16 @@ namespace Orion.Core.World {
             Terraria.Netplay.Clients[5] = new Terraria.RemoteClient { Id = 5, State = 10 };
             Terraria.Main.player[5] = new Terraria.Player { whoAmI = 5 };
 
+            using var kernel = new OrionKernel(Logger.None);
+            using var playerService = new OrionPlayerService(kernel, Logger.None);
+            using var worldService = new OrionWorldService(kernel, Logger.None);
+
             for (var i = 0; i < 3; ++i) {
                 for (var j = 0; j < 3; ++j) {
                     Terraria.Main.tile[2206 + i, 312 + j] = new Terraria.Tile();
                 }
             }
 
-            using var kernel = new OrionKernel(Logger.None);
-            using var playerService = new OrionPlayerService(kernel, Logger.None);
-            using var worldService = new OrionWorldService(kernel, Logger.None);
             kernel.RegisterHandler<TileSquareEvent>(evt => {
                 evt.Tiles[0, 0].BlockId = BlockId.Stone;
                 evt.Tiles[0, 0].IsBlockActive = true;
@@ -1029,15 +1144,16 @@ namespace Orion.Core.World {
             Terraria.Netplay.Clients[5] = new Terraria.RemoteClient { Id = 5, State = 10 };
             Terraria.Main.player[5] = new Terraria.Player { whoAmI = 5 };
 
+            using var kernel = new OrionKernel(Logger.None);
+            using var playerService = new OrionPlayerService(kernel, Logger.None);
+            using var worldService = new OrionWorldService(kernel, Logger.None);
+
             for (var i = 0; i < 3; ++i) {
                 for (var j = 0; j < 3; ++j) {
                     Terraria.Main.tile[2206 + i, 312 + j] = new Terraria.Tile();
                 }
             }
 
-            using var kernel = new OrionKernel(Logger.None);
-            using var playerService = new OrionPlayerService(kernel, Logger.None);
-            using var worldService = new OrionWorldService(kernel, Logger.None);
             kernel.RegisterHandler<TileSquareEvent>(evt => evt.Cancel(), Logger.None);
 
             TestUtils.FakeReceiveBytes(5, TileSquarePacketTests.Bytes);

@@ -41,9 +41,9 @@ namespace Orion.Core.Packets.World.Tiles {
         PlaceWall = 3,
 
         /// <summary>
-        /// Indicates that a block should be broken with no items dropping.
+        /// Indicates that a block should be broken itemlessly.
         /// </summary>
-        BreakBlockNoItems = 4,
+        BreakBlockItemless = 4,
 
         /// <summary>
         /// Indicates that red wire should be placed.
