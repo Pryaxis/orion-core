@@ -20,9 +20,16 @@ jobs:
           token: ${{ secrets.CODECOV_TOKEN }}
           file: tests/Orion.Core.Tests/coverage.cobertura.xml
       - name: Build artifacts
-        run: dotnet publish -f netstandard2.1 -c Release src/Orion.Core/Orion.Core.csproj
-      - name: Publish artifacts
+        run: |
+          dotnet publish -c Release src/Orion.Core/Orion.Core.csproj
+          dotnet publish -c Debug src/Orion.Core/Orion.Core.csproj
+      - name: Publish artifacts (Release)
         uses: actions/upload-artifact@master
         with:
-          name: Orion.Core
+          name: Orion.Core (Release)
           path: src/Orion.Core/bin/Release/netstandard2.1/publish
+      - name: Publish artifacts (Debug)
+        uses: actions/upload-artifact@master
+        with:
+          name: Orion.Core (Debug)
+          path: src/Orion.Core/bin/Debug/netstandard2.1/publish
