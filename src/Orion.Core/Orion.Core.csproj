@@ -6,14 +6,16 @@
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <Version>0.0.1</Version>
     <Authors>orion-contributors</Authors>
-    <RepositoryUrl>https://github.com/Pryaxis/orion</RepositoryUrl>
+    <RepositoryUrl>https://github.com/Pryaxis/orion-core</RepositoryUrl>
+    <PackageProjectUrl>https://pryaxis.github.io/orion-core</PackageProjectUrl>
     <RepositoryType>git</RepositoryType>
     <NeutralLanguage>en-US</NeutralLanguage>
-    <Description>Provides the next generation of Terraria APIs.</Description>
+    <Description>Orion.Core provides the next generation of Terraria Server APIs.</Description>
     <DocumentationFile>bin\$(Configuration)\Orion.xml</DocumentationFile>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
     <PackageLicenseFile>COPYING</PackageLicenseFile>
+    <PackageTags>terraria;tshock;orion</PackageTags>
   </PropertyGroup>
 
   <ItemGroup>
