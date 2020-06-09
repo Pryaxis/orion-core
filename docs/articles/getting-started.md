@@ -13,7 +13,7 @@ Before you begin, first install the [.NET Core 3.1 SDK](https://dotnet.microsoft
 Once you have the SDK and an appropriate IDE, you should be good to go.
 
 ### Checking out the Code
-Using Git, clone the [Orion repository](https://github.com/Pryaxis/orion). See [here](https://help.github.com/en/github/creating-cloning-and-archiving-repositories/cloning-a-repository) for instructions on how to do so.
+Using Git, clone the [`orion-core` repository](https://github.com/Pryaxis/orion-core). See [here](https://help.github.com/en/github/creating-cloning-and-archiving-repositories/cloning-a-repository) for instructions on how to do so.
 
 You must now restore the projects' dependencies. On Windows (with Visual Studio, at least), this will be done automatically for you. To do this manually, you can run the following command in the path of the cloned repository:
 ```shell
