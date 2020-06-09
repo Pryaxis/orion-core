@@ -17,6 +17,7 @@
 
 using System;
 using System.Diagnostics.CodeAnalysis;
+using System.IO;
 using Orion.Buffs;
 using Orion.Events;
 using Orion.Events.Packets;
@@ -301,6 +302,19 @@ namespace Orion.Players {
             Assert.Equal(new byte[] { 4, 0, 255, 100 }, socket.SendData);
         }
 
+        [Fact]
+        public void SendPacket_ThrowsIOException() {
+            var socket = new BuggySocket { Connected = true };
+            Terraria.Netplay.Clients[5] = new Terraria.RemoteClient { Id = 5, Socket = socket };
+
+            using var kernel = new OrionKernel(Logger.None);
+            var terrariaPlayer = new Terraria.Player();
+            var player = new OrionPlayer(5, terrariaPlayer, kernel, Logger.None);
+
+            var packet = new TestPacket { Value = 100 };
+            player.SendPacket(ref packet);
+        }
+
         private class TestSocket : Terraria.Net.Sockets.ISocket {
             public bool Connected { get; set; }
             public byte[] SendData { get; private set; } = Array.Empty<byte>();
@@ -313,6 +327,28 @@ namespace Orion.Players {
                 byte[] data, int offset, int size, Terraria.Net.Sockets.SocketSendCallback callback,
                 object? state = null) =>
                     SendData = data[offset..(offset + size)];
+            public void Close() => throw new NotImplementedException();
+            public void Connect(Terraria.Net.RemoteAddress address) => throw new NotImplementedException();
+            public Terraria.Net.RemoteAddress GetRemoteAddress() => throw new NotImplementedException();
+            public bool IsConnected() => Connected;
+            public bool IsDataAvailable() => throw new NotImplementedException();
+            public void SendQueuedPackets() => throw new NotImplementedException();
+            public bool StartListening(Terraria.Net.Sockets.SocketConnectionAccepted callback) =>
+                throw new NotImplementedException();
+            public void StopListening() => throw new NotImplementedException();
+        }
+
+        private class BuggySocket : Terraria.Net.Sockets.ISocket {
+            public bool Connected { get; set; }
+
+            public void AsyncReceive(
+                byte[] data, int offset, int size, Terraria.Net.Sockets.SocketReceiveCallback callback,
+                object? state = null) =>
+                    throw new NotImplementedException();
+            public void AsyncSend(
+                byte[] data, int offset, int size, Terraria.Net.Sockets.SocketSendCallback callback,
+                object? state = null) =>
+                    throw new IOException();
             public void Close() => throw new NotImplementedException();
             public void Connect(Terraria.Net.RemoteAddress address) => throw new NotImplementedException();
             public Terraria.Net.RemoteAddress GetRemoteAddress() => throw new NotImplementedException();
