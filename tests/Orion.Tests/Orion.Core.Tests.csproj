@@ -5,7 +5,7 @@
     <Nullable>enable</Nullable>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <IsPackable>false</IsPackable>
-    <RootNamespace>Orion</RootNamespace>
+    <RootNamespace>Orion.Core</RootNamespace>
   </PropertyGroup>
 
   <ItemGroup>
