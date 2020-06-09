@@ -1,3 +1,3 @@
-## Orion
+## Orion.Core
 
-Orion is the next generation of Terraria Server APIs. See the [documentation](https://pryaxis.github.io/orion) for more information.
+Orion.Core is the next generation of Terraria Server APIs. See the [documentation](https://pryaxis.github.io/orion-core) for more information.
