@@ -5,7 +5,7 @@ VisualStudioVersion = 16.0.29215.179
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Orion.Core", "src\Orion.Core\Orion.Core.csproj", "{2739ECCB-09C1-45DC-8EF8-864F964905CB}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Orion.Core.Tests", "tests\Orion.Tests\Orion.Core.Tests.csproj", "{8837EE73-0E28-42B1-A5DE-8CC52BF676EE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Orion.Core.Tests", "tests\Orion.Core.Tests\Orion.Core.Tests.csproj", "{8837EE73-0E28-42B1-A5DE-8CC52BF676EE}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Orion.Launcher", "src\Orion.Launcher\Orion.Launcher.csproj", "{20143471-4D26-486D-B8C8-AC2FE5E60828}"
 EndProject
