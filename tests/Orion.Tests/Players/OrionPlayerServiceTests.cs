@@ -432,7 +432,6 @@ namespace Orion.Players {
 
             using var kernel = new OrionKernel(Logger.None);
             using var playerService = new OrionPlayerService(kernel, Logger.None);
-            kernel.RegisterHandler<PacketSendEvent<ClientConnectPacket>>(evt => evt.Cancel(), Logger.None);
 
             Terraria.NetMessage.SendData((byte)PacketId.ClientConnect, 5);
         }
