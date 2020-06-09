@@ -17,6 +17,8 @@
 
 using System;
 using System.Collections.Generic;
+using Orion.Events.Packets;
+using Orion.Events.Players;
 using Orion.Framework;
 using Orion.Packets;
 using Orion.Packets.DataStructures;
@@ -26,6 +28,22 @@ namespace Orion.Players {
     /// <summary>
     /// Represents a player service. Provides access to players and publishes packet and player-related events.
     /// </summary>
+    /// <remarks>
+    /// The player service is responsible for publishing the following packet and player-related events:
+    /// <list type="bullet">
+    /// <item><description><see cref="PacketReceiveEvent{TPacket}"/></description></item>
+    /// <item><description><see cref="PacketSendEvent{TPacket}"/></description></item>
+    /// <item><description><see cref="PlayerTickEvent"/></description></item>
+    /// <item><description><see cref="PlayerQuitEvent"/></description></item>
+    /// <item><description><see cref="PlayerJoinEvent"/></description></item>
+    /// <item><description><see cref="PlayerHealthEvent"/></description></item>
+    /// <item><description><see cref="PlayerPvpEvent"/></description></item>
+    /// <item><description><see cref="PlayerManaEvent"/></description></item>
+    /// <item><description><see cref="PlayerTeamEvent"/></description></item>
+    /// <item><description><see cref="PlayerUuidEvent"/></description></item>
+    /// <item><description><see cref="PlayerChatEvent"/></description></item>
+    /// </list>
+    /// </remarks>
     [Service(ServiceScope.Singleton)]
     public interface IPlayerService {
         /// <summary>

@@ -16,12 +16,19 @@
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
 using System.Collections.Generic;
+using Orion.Events.World.Signs;
 using Orion.Framework;
 
 namespace Orion.World.Signs {
     /// <summary>
     /// Represents a sign service. Provides access to signs and publishes sign-related events.
     /// </summary>
+    /// <remarks>
+    /// The item service is responsible for publishing the following sign-related events:
+    /// <list type="bullet">
+    /// <item><description><see cref="SignReadEvent"/></description></item>
+    /// </list>
+    /// </remarks>
     [Service(ServiceScope.Singleton)]
     public interface ISignService {
         /// <summary>

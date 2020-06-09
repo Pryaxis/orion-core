@@ -16,6 +16,7 @@
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
 using System.Collections.Generic;
+using Orion.Events.Npcs;
 using Orion.Framework;
 using Orion.Packets.DataStructures;
 
@@ -23,6 +24,18 @@ namespace Orion.Npcs {
     /// <summary>
     /// Represents an NPC service. Provides access to NPCs and publishes NPC-related events.
     /// </summary>
+    /// <remarks>
+    /// The NPC service is responsible for publishing the following NPC-related events:
+    /// <list type="bullet">
+    /// <item><description><see cref="NpcDefaultsEvent"/></description></item>
+    /// <item><description><see cref="NpcSpawnEvent"/></description></item>
+    /// <item><description><see cref="NpcTickEvent"/></description></item>
+    /// <item><description><see cref="NpcKilledEvent"/></description></item>
+    /// <item><description><see cref="NpcLootEvent"/></description></item>
+    /// <item><description><see cref="NpcCatchEvent"/></description></item>
+    /// <item><description><see cref="NpcFishEvent"/></description></item>
+    /// </list>
+    /// </remarks>
     [Service(ServiceScope.Singleton)]
     public interface INpcService {
         /// <summary>

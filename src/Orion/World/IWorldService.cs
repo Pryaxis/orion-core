@@ -15,12 +15,24 @@
 // You should have received a copy of the GNU General Public License
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
+using Orion.Events.World;
+using Orion.Events.World.Tiles;
 using Orion.Framework;
 
 namespace Orion.World {
     /// <summary>
-    /// Represents a world service. Provides access to the world and publishes world-related events.
+    /// Represents a world service. Provides access to the world and publishes world and tile-related events.
     /// </summary>
+    /// <remarks>
+    /// The item service is responsible for publishing the following world and tile-related events:
+    /// <list type="bullet">
+    /// <item><description><see cref="WorldLoadedEvent"/></description></item>
+    /// <item><description><see cref="WorldSaveEvent"/></description></item>
+    /// <item><description><see cref="TileSquareEvent"/></description></item>
+    /// <item><description><see cref="BlockPaintEvent"/></description></item>
+    /// <item><description><see cref="WallPaintEvent"/></description></item>
+    /// </list>
+    /// </remarks>
     [Service(ServiceScope.Singleton)]
     public interface IWorldService {
         /// <summary>

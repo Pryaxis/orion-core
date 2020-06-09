@@ -28,8 +28,17 @@ using Serilog;
 
 namespace Orion {
     /// <summary>
-    /// Represents Orion's core logic. Provides methods to manipulate Orion plugins and events.
+    /// Represents Orion's core logic. Provides access to Orion plugins and events and publishes server-related events.
     /// </summary>
+    /// <remarks>
+    /// The Orion kernel is responsible for publishing the following server-related events:
+    /// <list type="bullet">
+    /// <item><description><see cref="ServerInitializeEvent"/></description></item>
+    /// <item><description><see cref="ServerStartEvent"/></description></item>
+    /// <item><description><see cref="ServerTickEvent"/></description></item>
+    /// <item><description><see cref="ServerCommandEvent"/></description></item>
+    /// </list>
+    /// </remarks>
     public sealed class OrionKernel : IDisposable {
         private static readonly MethodInfo _registerHandler =
             typeof(OrionKernel).GetMethod(nameof(RegisterHandler));

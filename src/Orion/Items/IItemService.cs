@@ -16,6 +16,7 @@
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
 using System.Collections.Generic;
+using Orion.Events.Items;
 using Orion.Framework;
 using Orion.Packets.DataStructures;
 
@@ -23,6 +24,13 @@ namespace Orion.Items {
     /// <summary>
     /// Represents an item service. Provides access to items and publishes item-related events.
     /// </summary>
+    /// <remarks>
+    /// The item service is responsible for publishing the following item-related events:
+    /// <list type="bullet">
+    /// <item><description><see cref="ItemDefaultsEvent"/></description></item>
+    /// <item><description><see cref="ItemTickEvent"/></description></item>
+    /// </list>
+    /// </remarks>
     [Service(ServiceScope.Singleton)]
     public interface IItemService {
         /// <summary>

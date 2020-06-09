@@ -16,12 +16,19 @@
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
 using System.Collections.Generic;
+using Orion.Events.World.Chests;
 using Orion.Framework;
 
 namespace Orion.World.Chests {
     /// <summary>
     /// Represents a chest service. Provides access to chests and publishes chest-related events.
     /// </summary>
+    /// <remarks>
+    /// The item service is responsible for publishing the following chest-related events:
+    /// <list type="bullet">
+    /// <item><description><see cref="ChestOpenEvent"/></description></item>
+    /// </list>
+    /// </remarks>
     [Service(ServiceScope.Singleton)]
     public interface IChestService {
         /// <summary>

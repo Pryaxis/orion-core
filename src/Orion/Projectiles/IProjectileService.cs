@@ -16,6 +16,7 @@
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
 using System.Collections.Generic;
+using Orion.Events.Projectiles;
 using Orion.Framework;
 using Orion.Packets.DataStructures;
 
@@ -23,6 +24,13 @@ namespace Orion.Projectiles {
     /// <summary>
     /// Represents a projectile service. Provides access to projectiles and publishes projectile-related events.
     /// </summary>
+    /// <remarks>
+    /// The item service is responsible for publishing the following projectile-related events:
+    /// <list type="bullet">
+    /// <item><description><see cref="ProjectileDefaultsEvent"/></description></item>
+    /// <item><description><see cref="ProjectileTickEvent"/></description></item>
+    /// </list>
+    /// </remarks>
     [Service(ServiceScope.Singleton)]
     public interface IProjectileService {
         /// <summary>
