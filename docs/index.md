@@ -20,13 +20,13 @@ By serving as an abstraction on top of Terraria, Orion aims to shield developers
 
 | Terraria Concept | Orion Abstraction |
 |------------------|-------------------|
-| `Terraria.Chest` | &lt;TBD&gt; |
+| `Terraria.Chest` | [`IChest`](xref:Orion.World.Chests.IChest) |
 | `Terraria.Item` | [`IItem`](xref:Orion.Items.IItem) |
 | `Terraria.NetMessage` | [`IPacket`](xref:Orion.Packets.IPacket) |
 | `Terraria.NPC` | [`INpc`](xref:Orion.Npcs.INpc) |
 | `Terraria.Player` | [`IPlayer`](xref:Orion.Players.IPlayer) |
-| `Terraria.Projectile` | &lt;TBD&gt; |
-| `Terraria.Sign` | &lt;TBD&gt; |
+| `Terraria.Projectile` | [`IProjectile`](xref:Orion.Projectiles.IProjectile) |
+| `Terraria.Sign` | [`ISign`](xref:Orion.World.Signs.ISign) |
 | `Terraria.Tile` | [`Tile`](xref:Orion.World.Tiles.Tile) |
 | `Terraria.Main.tile` | [`IWorld`](xref:Orion.World.IWorld) |
 
@@ -34,7 +34,7 @@ By serving as an abstraction on top of Terraria, Orion aims to shield developers
 
 One benefit of the abstraction mechanism is that plugins can provide different implementations for the interfaces, which allows much greater control and flexibility than was previously possible.
 
-For example, an InfiniteChests plugin could provide its own `IChest` implementation which uses a database-backed storage solution. This new `IChest` implementation would then immediately be available to other consumers of the `IChest` interface, which would allow other chest-based plugins (such as chest protection plugins) to work seamlessly with InfiniteChests.
+For example, an InfiniteChests plugin could provide its own [`IChest`](xref:Orion.World.Chests.IChest) implementation which uses a database-backed storage solution. This new [`IChest`](xref:Orion.World.Chests.IChest) implementation would then immediately be available to other consumers of the [`IChest`](xref:Orion.World.Chests.IChest) interface, which would allow other chest-based plugins (such as chest protection plugins) to work seamlessly with InfiniteChests.
 
 ### Testability
 
@@ -60,7 +60,10 @@ Here is a non-exhaustive list of other improvements:
 
 ## Project Status
 
-Orion is close to a state where concurrent development can be done alongside it. See [here](https://github.com/Pryaxis/orion/issues/55) for more information.
+| Branch | Status | Code Coverage |
+|--------|--------|----------|
+| v1.4 | ![dotnet-core](https://github.com/Pryaxis/orion/workflows/dotnet-core/badge.svg) | [![codecov](https://codecov.io/gh/Pryaxis/orion/branch/v1.4/graph/badge.svg)](https://codecov.io/gh/Pryaxis/orion)
+ |
 
 ### Developers
 
