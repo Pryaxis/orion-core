@@ -140,7 +140,7 @@ namespace Orion.Players {
         [Theory]
         [InlineData(-1)]
         [InlineData(100)]
-        public void Buffs_Get_Index_Get_InvalidIndex_ThrowsIndexOutOfRangeException(int index) {
+        public void Buffs_Get_Index_GetInvalidIndex_ThrowsIndexOutOfRangeException(int index) {
             using var kernel = new OrionKernel(Logger.None);
             var terrariaPlayer = new Terraria.Player();
             var player = new OrionPlayer(terrariaPlayer, kernel, Logger.None);
@@ -175,7 +175,7 @@ namespace Orion.Players {
         [Theory]
         [InlineData(-1)]
         [InlineData(100)]
-        public void Buffs_Get_Index_Set_InvalidIndex_ThrowsIndexOutOfRangeException(int index) {
+        public void Buffs_Get_Index_SetInvalidIndex_ThrowsIndexOutOfRangeException(int index) {
             using var kernel = new OrionKernel(Logger.None);
             var terrariaPlayer = new Terraria.Player();
             var player = new OrionPlayer(terrariaPlayer, kernel, Logger.None);

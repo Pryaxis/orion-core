@@ -17,6 +17,7 @@
 
 using System;
 using System.Diagnostics;
+using System.Diagnostics.CodeAnalysis;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using Destructurama.Attributed;
@@ -39,6 +40,7 @@ namespace Orion.World {
             _tiles = (Tile*)Marshal.AllocHGlobal(sizeof(Tile) * width * height);
         }
 
+        [ExcludeFromCodeCoverage]
         ~OrionWorld() {
             Marshal.FreeHGlobal((IntPtr)_tiles);
         }

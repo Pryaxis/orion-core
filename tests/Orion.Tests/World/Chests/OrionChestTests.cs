@@ -49,8 +49,18 @@ namespace Orion.World.Chests {
             Assert.Equal("test", terrariaChest.name);
         }
 
+        [Theory]
+        [InlineData(-1)]
+        [InlineData(100)]
+        public void Items_Get_Item_GetInvalidIndex_ThrowsIndexOutOfRangeException(int index) {
+            var terrariaChest = new Terraria.Chest();
+            var chest = new OrionChest(terrariaChest);
+
+            Assert.Throws<IndexOutOfRangeException>(() => chest.Items[index]);
+        }
+
         [Fact]
-        public void Items_Item_Get() {
+        public void Items_Get_Item_Get() {
             var terrariaChest = new Terraria.Chest();
             terrariaChest.item[0] = new Terraria.Item {
                 type = (int)ItemId.Sdmg,
@@ -64,15 +74,25 @@ namespace Orion.World.Chests {
         }
 
         [Fact]
-        public void Items_Item_Get_Null() {
+        public void Items_Get_Item_Get_Null() {
             var terrariaChest = new Terraria.Chest();
             var chest = new OrionChest(terrariaChest);
 
             Assert.Equal(default, chest.Items[0]);
         }
 
+        [Theory]
+        [InlineData(-1)]
+        [InlineData(100)]
+        public void Items_Get_Item_SetInvalidIndex_ThrowsIndexOutOfRangeException(int index) {
+            var terrariaChest = new Terraria.Chest();
+            var chest = new OrionChest(terrariaChest);
+
+            Assert.Throws<IndexOutOfRangeException>(() => chest.Items[index] = default);
+        }
+
         [Fact]
-        public void Items_Item_Set() {
+        public void Items_Get_Item_Set() {
             var terrariaChest = new Terraria.Chest();
             terrariaChest.item[0] = new Terraria.Item();
             var chest = new OrionChest(terrariaChest);
@@ -85,7 +105,7 @@ namespace Orion.World.Chests {
         }
 
         [Fact]
-        public void Items_Item_Set_Null() {
+        public void Items_Get_Item_Set_Null() {
             var terrariaChest = new Terraria.Chest();
             var chest = new OrionChest(terrariaChest);
 
