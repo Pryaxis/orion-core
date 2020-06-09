@@ -32,6 +32,7 @@ using Orion.Framework;
 using Orion.Packets;
 using Orion.Packets.Client;
 using Orion.Packets.Modules;
+using Orion.Packets.Npcs;
 using Orion.Packets.Players;
 using Serilog;
 
@@ -334,6 +335,16 @@ namespace Orion.Players {
             var player = evt.Sender;
             ref var module = ref evt.Packet.Module;
             var evt2 = new PlayerChatEvent(player, module.ClientCommand, module.ClientMessage);
+            Kernel.Raise(evt2, Log);
+            evt.CancellationReason = evt2.CancellationReason;
+        }
+
+        [EventHandler("orion-players", Priority = EventPriority.Lowest)]
+        [SuppressMessage("CodeQuality", "IDE0051:Remove unused private members", Justification = "Implicitly used")]
+        private void OnNpcFishPacket(PacketReceiveEvent<NpcFishPacket> evt) {
+            var player = evt.Sender;
+            ref var packet = ref evt.Packet;
+            var evt2 = new PlayerFishNpcEvent(player, packet.X, packet.Y, packet.Id);
             Kernel.Raise(evt2, Log);
             evt.CancellationReason = evt2.CancellationReason;
         }
