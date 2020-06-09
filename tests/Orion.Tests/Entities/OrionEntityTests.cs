@@ -16,7 +16,7 @@
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
 using System.Diagnostics.CodeAnalysis;
-using Orion.Packets.DataStructures;
+using Orion.DataStructures;
 using Xunit;
 
 namespace Orion.Entities {

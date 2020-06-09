@@ -17,9 +17,9 @@
 
 using System;
 using System.Linq;
+using Orion.DataStructures;
 using Orion.Events;
 using Orion.Events.Projectiles;
-using Orion.Packets.DataStructures;
 using Serilog.Core;
 using Xunit;
 

@@ -17,8 +17,8 @@
 
 using System;
 using Moq;
+using Orion.DataStructures;
 using Orion.Packets;
-using Orion.Packets.DataStructures;
 using Orion.Packets.Server;
 using Xunit;
 

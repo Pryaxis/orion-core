@@ -17,11 +17,11 @@
 
 using System;
 using System.Collections.Generic;
+using Orion.DataStructures;
 using Orion.Events.Packets;
 using Orion.Events.Players;
 using Orion.Framework;
 using Orion.Packets;
-using Orion.Packets.DataStructures;
 using Orion.Packets.Server;
 
 namespace Orion.Players {

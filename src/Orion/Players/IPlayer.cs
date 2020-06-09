@@ -18,9 +18,9 @@
 using System;
 using Orion.Buffs;
 using Orion.Collections;
+using Orion.DataStructures;
 using Orion.Entities;
 using Orion.Packets;
-using Orion.Packets.DataStructures;
 using Orion.Packets.Server;
 
 namespace Orion.Players {

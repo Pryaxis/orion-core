@@ -17,7 +17,7 @@
 
 using Xunit;
 
-namespace Orion.Packets.DataStructures {
+namespace Orion.DataStructures {
     public class Color3Tests {
         [Fact]
         public void R_Get() {

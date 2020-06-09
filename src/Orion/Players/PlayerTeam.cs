@@ -17,7 +17,7 @@
 
 using System.Collections.Generic;
 using System.Diagnostics.Contracts;
-using Orion.Packets.DataStructures;
+using Orion.DataStructures;
 
 namespace Orion.Players {
     /// <summary>

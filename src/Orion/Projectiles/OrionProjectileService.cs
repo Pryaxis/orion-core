@@ -19,10 +19,10 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using Orion.Collections;
+using Orion.DataStructures;
 using Orion.Events;
 using Orion.Events.Projectiles;
 using Orion.Framework;
-using Orion.Packets.DataStructures;
 using Serilog;
 
 namespace Orion.Projectiles {

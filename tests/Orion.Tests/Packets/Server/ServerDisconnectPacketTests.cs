@@ -17,7 +17,7 @@
 
 using System;
 using System.Diagnostics.CodeAnalysis;
-using Orion.Packets.DataStructures;
+using Orion.DataStructures;
 using Orion.Packets.Server;
 using Xunit;
 

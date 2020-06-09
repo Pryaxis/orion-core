@@ -21,7 +21,7 @@ using System.Diagnostics.CodeAnalysis;
 using System.Diagnostics.Contracts;
 using System.Linq;
 
-namespace Orion.Packets.DataStructures {
+namespace Orion.DataStructures {
     /// <summary>
     /// Represents text transmitted over the network.
     /// </summary>
@@ -91,7 +91,8 @@ namespace Orion.Packets.DataStructures {
         /// </summary>
         /// <returns>A string representation of the network text.</returns>
         [Pure, ExcludeFromCodeCoverage]
-        public override string ToString() => _mode switch {
+        public override string ToString() => _mode switch
+        {
             Mode.Literal => _format,
             Mode.Formatted => string.Format(_format, _args),
             Mode.Localized => Terraria.Localization.Language.GetTextValue(_format, _args),

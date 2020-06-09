@@ -20,7 +20,7 @@ using System.Diagnostics.CodeAnalysis;
 using System.Diagnostics.Contracts;
 using System.Runtime.InteropServices;
 
-namespace Orion.Packets.DataStructures {
+namespace Orion.DataStructures {
     /// <summary>
     /// Represents a three byte component color.
     /// </summary>

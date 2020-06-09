@@ -18,7 +18,7 @@
 using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.Diagnostics.Contracts;
-using Orion.Packets.DataStructures;
+using Orion.DataStructures;
 
 namespace Orion.Entities {
     // This class is generic so that we only use a single wrapped field instead of two wrapped fields per entity.

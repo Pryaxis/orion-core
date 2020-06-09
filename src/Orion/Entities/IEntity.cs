@@ -17,7 +17,7 @@
 
 using System;
 using System.Diagnostics.Contracts;
-using Orion.Packets.DataStructures;
+using Orion.DataStructures;
 
 namespace Orion.Entities {
     /// <summary>

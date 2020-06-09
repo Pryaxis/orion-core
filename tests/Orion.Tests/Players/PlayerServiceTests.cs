@@ -18,8 +18,8 @@
 using System;
 using System.Collections.Generic;
 using Moq;
+using Orion.DataStructures;
 using Orion.Packets;
-using Orion.Packets.DataStructures;
 using Orion.Packets.Server;
 using Xunit;
 

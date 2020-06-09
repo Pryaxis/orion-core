@@ -18,7 +18,7 @@
 using System;
 using System.Diagnostics;
 using System.Text;
-using Orion.Packets.DataStructures;
+using Orion.DataStructures;
 
 namespace Orion.Packets {
     internal static class SpanExtensions {

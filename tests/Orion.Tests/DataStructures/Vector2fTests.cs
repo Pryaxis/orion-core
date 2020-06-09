@@ -17,7 +17,7 @@
 
 using Xunit;
 
-namespace Orion.Packets.DataStructures {
+namespace Orion.DataStructures {
     public class Vector2fTests {
         [Fact]
         public void X_Get() {

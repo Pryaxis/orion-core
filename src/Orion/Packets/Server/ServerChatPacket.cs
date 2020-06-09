@@ -19,7 +19,7 @@ using System;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using System.Text;
-using Orion.Packets.DataStructures;
+using Orion.DataStructures;
 
 namespace Orion.Packets.Server {
     /// <summary>

@@ -21,12 +21,12 @@ using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.Threading;
 using Orion.Collections;
+using Orion.DataStructures;
 using Orion.Events;
 using Orion.Events.Npcs;
 using Orion.Events.Packets;
 using Orion.Framework;
 using Orion.Items;
-using Orion.Packets.DataStructures;
 using Orion.Packets.Npcs;
 using Serilog;
 

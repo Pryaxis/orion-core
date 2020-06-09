@@ -17,10 +17,10 @@
 
 using System;
 using System.Linq;
+using Orion.DataStructures;
 using Orion.Events;
 using Orion.Events.Npcs;
 using Orion.Items;
-using Orion.Packets.DataStructures;
 using Orion.Packets.Npcs;
 using Orion.Players;
 using Serilog.Core;
