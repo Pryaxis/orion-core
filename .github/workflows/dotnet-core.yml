@@ -18,7 +18,7 @@ jobs:
         uses: codecov/codecov-action@v1
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
-          file: tests/Orion.Tests/coverage.cobertura.xml
+          file: tests/Orion.Core.Tests/coverage.cobertura.xml
       - name: Build artifacts
         run: dotnet publish -f netstandard2.1 -c Release src/Orion.Core/Orion.Core.csproj
       - name: Publish artifacts
