@@ -14,10 +14,17 @@ jobs:
           dotnet-version: 3.1.300
       - name: Run tests (with code coverage)
         run: |
-          dotnet build -f netstandard2.1 -c Debug src/Orion/Orion.csproj
-          dotnet test -f netcoreapp3.1 -c Debug tests/Orion.Tests/Orion.Tests.csproj /p:CollectCoverage=true /p:CoverletOutputFormat=cobertura
+          dotnet build -f netstandard2.1 -c Release src/Orion.Core/Orion.Core.csproj
+          dotnet test -f netcoreapp3.1 -c Release tests/Orion.Tests/Orion.Tests.csproj /p:CollectCoverage=true /p:CoverletOutputFormat=cobertura
       - name: Upload code coverage
         uses: codecov/codecov-action@v1
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
           file: tests/Orion.Tests/coverage.cobertura.xml
+      - name: Build artifacts
+        run: dotnet publish -f netstandard2.1 -c Release Orion.sln
+      - name: Publish artifacts
+        uses: actions/upload-artifact@master
+        with:
+          name: Orion.Core
+          path: src/Orion.Core/bin/Release/netstandard2.1/publish
