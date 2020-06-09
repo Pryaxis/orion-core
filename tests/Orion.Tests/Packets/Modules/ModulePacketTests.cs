@@ -30,8 +30,23 @@ namespace Orion.Packets.Modules {
         }
 
         [Fact]
+        public void Read_AsUnknownModule() {
+            var packet = new ModulePacket<UnknownModule>();
+            var span = Bytes.AsSpan(IPacket.HeaderSize..);
+            Assert.Equal(span.Length, packet.Read(span, PacketContext.Server));
+
+            Assert.Equal((ModuleId)65535, packet.Module.Id);
+        }
+
+        [Fact]
         public void RoundTrip() {
             TestUtils.RoundTripPacket<ModulePacket<TestModule>>(
+                Bytes.AsSpan(IPacket.HeaderSize..), PacketContext.Server);
+        }
+
+        [Fact]
+        public void RoundTrip_AsUnknownModule() {
+            TestUtils.RoundTripPacket<ModulePacket<UnknownModule>>(
                 Bytes.AsSpan(IPacket.HeaderSize..), PacketContext.Server);
         }
 

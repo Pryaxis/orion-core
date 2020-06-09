@@ -26,14 +26,12 @@ using System.Text;
 using System.Threading;
 using Orion.Collections;
 using Orion.Events;
-using Orion.Events.Npcs;
 using Orion.Events.Packets;
 using Orion.Events.Players;
 using Orion.Framework;
 using Orion.Packets;
 using Orion.Packets.Client;
 using Orion.Packets.Modules;
-using Orion.Packets.Npcs;
 using Orion.Packets.Players;
 using Serilog;
 

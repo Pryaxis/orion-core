@@ -19,14 +19,11 @@ using System;
 using System.IO;
 using System.Linq;
 using Orion.Events;
-using Orion.Events.Npcs;
 using Orion.Events.Packets;
 using Orion.Events.Players;
-using Orion.Npcs;
 using Orion.Packets;
 using Orion.Packets.Client;
 using Orion.Packets.Modules;
-using Orion.Packets.Npcs;
 using Orion.Packets.Players;
 using Serilog.Core;
 using Xunit;
@@ -132,6 +129,40 @@ namespace Orion.Players {
             TestUtils.FakeReceiveBytes(5, _serverConnectBytes);
 
             Assert.Equal(0, Terraria.Netplay.Clients[5].State);
+        }
+
+        [Fact]
+        public void PacketReceive_UnknownPacket() {
+            using var kernel = new OrionKernel(Logger.None);
+            using var playerService = new OrionPlayerService(kernel, Logger.None);
+            var isRun = false;
+            kernel.RegisterHandler<PacketReceiveEvent<UnknownPacket>>(evt => {
+                ref var packet = ref evt.Packet;
+                Assert.Equal((PacketId)255, packet.Id);
+                Assert.Equal(0, packet.Length);
+                isRun = true;
+            }, Logger.None);
+
+            TestUtils.FakeReceiveBytes(5, UnknownPacketTests.EmptyBytes);
+
+            Assert.True(isRun);
+        }
+
+        [Fact]
+        public void PacketReceive_UnknownModule() {
+            using var kernel = new OrionKernel(Logger.None);
+            using var playerService = new OrionPlayerService(kernel, Logger.None);
+            var isRun = false;
+            kernel.RegisterHandler<PacketReceiveEvent<ModulePacket<UnknownModule>>>(evt => {
+                ref var module = ref evt.Packet.Module;
+                Assert.Equal((ModuleId)65535, module.Id);
+                Assert.Equal(0, module.Length);
+                isRun = true;
+            }, Logger.None);
+
+            TestUtils.FakeReceiveBytes(5, UnknownModuleTests.EmptyBytes);
+
+            Assert.True(isRun);
         }
 
         [Fact]
@@ -426,6 +457,52 @@ namespace Orion.Players {
             Terraria.NetMessage.SendData((byte)PacketId.ClientConnect, 5);
 
             Assert.Empty(socket.SendData);
+        }
+
+        [Fact]
+        public void PacketSend_UnknownPacket() {
+            var socket = new TestSocket { Connected = true };
+            Terraria.Netplay.Clients[5] = new Terraria.RemoteClient { Id = 5, Socket = socket };
+
+            using var kernel = new OrionKernel(Logger.None);
+            using var playerService = new OrionPlayerService(kernel, Logger.None);
+            var isRun = false;
+            kernel.RegisterHandler<PacketSendEvent<UnknownPacket>>(evt => {
+                ref var packet = ref evt.Packet;
+                Assert.Equal((PacketId)255, packet.Id);
+                Assert.Equal(0, packet.Length);
+                isRun = true;
+            }, Logger.None);
+
+            var packet = new UnknownPacket { Id = (PacketId)255, Length = 0 };
+            playerService.Players[5].SendPacket(ref packet);
+
+            Assert.True(isRun);
+            Assert.Equal(UnknownPacketTests.EmptyBytes, socket.SendData);
+        }
+
+        [Fact]
+        public void PacketSend_UnknownModule() {
+            var socket = new TestSocket { Connected = true };
+            Terraria.Netplay.Clients[5] = new Terraria.RemoteClient { Id = 5, Socket = socket };
+
+            using var kernel = new OrionKernel(Logger.None);
+            using var playerService = new OrionPlayerService(kernel, Logger.None);
+            var isRun = false;
+            kernel.RegisterHandler<PacketSendEvent<ModulePacket<UnknownModule>>>(evt => {
+                ref var module = ref evt.Packet.Module;
+                Assert.Equal((ModuleId)65535, module.Id);
+                Assert.Equal(0, module.Length);
+                isRun = true;
+            }, Logger.None);
+
+            var packet = new ModulePacket<UnknownModule> {
+                Module = new UnknownModule { Id = (ModuleId)65535, Length = 0 }
+            };
+            playerService.Players[5].SendPacket(ref packet);
+
+            Assert.True(isRun);
+            Assert.Equal(UnknownModuleTests.EmptyBytes, socket.SendData);
         }
 
         [Fact]
