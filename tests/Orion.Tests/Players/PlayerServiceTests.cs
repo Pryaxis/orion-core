@@ -28,6 +28,14 @@ namespace Orion.Players {
         private delegate void ChatCallback(ref ServerChatPacket packet);
 
         [Fact]
+        public void BroadcastPacket_Ref_NullPlayerService_ThrowsArgumentNullException() {
+            Assert.Throws<ArgumentNullException>(() => {
+                var packet = new TestPacket();
+                PlayerServiceExtensions.BroadcastPacket(null!, ref packet);
+            });
+        }
+
+        [Fact]
         public void BroadcastPacket_Ref() {
             var mockPlayer = new Mock<IPlayer>();
             var mockPlayers = new Mock<IReadOnlyList<IPlayer>>();
@@ -43,6 +51,12 @@ namespace Orion.Players {
         }
 
         [Fact]
+        public void BroadcastPacket_NullPlayerService_ThrowsArgumentNullException() {
+            Assert.Throws<ArgumentNullException>(
+                () => PlayerServiceExtensions.BroadcastPacket(null!, new TestPacket()));
+        }
+
+        [Fact]
         public void BroadcastPacket() {
             var mockPlayer = new Mock<IPlayer>();
             var mockPlayers = new Mock<IReadOnlyList<IPlayer>>();
@@ -55,6 +69,20 @@ namespace Orion.Players {
             mockPlayerService.Object.BroadcastPacket(packet);
 
             mockPlayer.Verify(p => p.SendPacket(ref It.Ref<TestPacket>.IsAny));
+        }
+
+        [Fact]
+        public void BroadcastMessage_NullPlayerService_ThrowsArgumentNullException() {
+            Assert.Throws<ArgumentNullException>(
+                () => PlayerServiceExtensions.BroadcastMessage(null!, "test", Color3.White));
+        }
+
+        [Fact]
+        public void BroadcastMessage_NullMessage_ThrowsArgumentNullException() {
+            var playerService = new Mock<IPlayerService>().Object;
+
+            Assert.Throws<ArgumentNullException>(
+                () => PlayerServiceExtensions.BroadcastMessage(playerService, null!, Color3.White));
         }
 
         [Fact]

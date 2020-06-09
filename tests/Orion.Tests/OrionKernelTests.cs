@@ -27,6 +27,11 @@ using Xunit;
 namespace Orion {
     public class OrionKernelTests {
         [Fact]
+        public void Ctor_NullLog_ThrowsArgumentNullException() {
+            Assert.Throws<ArgumentNullException>(() => new OrionKernel(null!));
+        }
+
+        [Fact]
         public void LoadFrom_NullAssembly_ThrowsArgumentNullException() {
             using var kernel = new OrionKernel(Logger.None);
 

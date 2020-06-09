@@ -21,6 +21,11 @@ using Xunit;
 namespace Orion.Buffs {
     public class BuffTests {
         [Fact]
+        public void Ctor_NegativeDuration_ThrowsArgumentOutOfRangeException() {
+            Assert.Throws<ArgumentOutOfRangeException>(() => new Buff(BuffId.ObsidianSkin, TimeSpan.FromMinutes(-8)));
+        }
+
+        [Fact]
         public void Id_Get() {
             var buff = new Buff(BuffId.ObsidianSkin, TimeSpan.FromMinutes(8));
 
