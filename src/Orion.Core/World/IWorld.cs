@@ -42,5 +42,11 @@ namespace Orion.Core.World {
         /// </summary>
         /// <value>The world's height.</value>
         int Height { get; }
+
+        /// <summary>
+        /// Gets the world's name.
+        /// </summary>
+        /// <value>The world's name.</value>
+        string Name { get; }
     }
 }

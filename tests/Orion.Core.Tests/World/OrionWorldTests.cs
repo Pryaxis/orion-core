@@ -22,21 +22,28 @@ namespace Orion.Core.World {
     public class OrionWorldTests {
         [Fact]
         public void Width_Get() {
-            using var world = new OrionWorld(123, 456);
+            using var world = new OrionWorld(123, 456, "test");
 
             Assert.Equal(123, world.Width);
         }
 
         [Fact]
         public void Height_Get() {
-            using var world = new OrionWorld(123, 456);
+            using var world = new OrionWorld(123, 456, "test");
 
             Assert.Equal(456, world.Height);
         }
 
         [Fact]
+        public void Name_Get() {
+            using var world = new OrionWorld(123, 456, "test");
+
+            Assert.Equal("test", world.Name);
+        }
+
+        [Fact]
         public void Item_Get_Mutate() {
-            using var world = new OrionWorld(123, 456);
+            using var world = new OrionWorld(123, 456, "test");
 
             world[0, 0].BlockId = BlockId.Stone;
 

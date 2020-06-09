@@ -20,6 +20,7 @@ using System.Linq;
 using Xunit;
 
 namespace Orion.Core.Npcs {
+    // These tests depend on Terraria state.
     [Collection("TerrariaTestsCollection")]
     public class NpcIdTests {
         [Fact]

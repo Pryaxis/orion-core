@@ -26,6 +26,7 @@ using Serilog.Core;
 using Xunit;
 
 namespace Orion.Core.Players {
+    // These tests depend on Terraria state.
     [Collection("TerrariaTestsCollection")]
     [SuppressMessage("Style", "IDE0017:Simplify object initialization", Justification = "Testing")]
     public class OrionPlayerTests {

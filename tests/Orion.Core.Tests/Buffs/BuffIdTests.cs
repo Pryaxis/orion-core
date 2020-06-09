@@ -20,6 +20,7 @@ using System.Linq;
 using Xunit;
 
 namespace Orion.Core.Buffs {
+    // These tests depend on Terraria state.
     [Collection("TerrariaTestsCollection")]
     public class BuffIdTests {
         [Fact]

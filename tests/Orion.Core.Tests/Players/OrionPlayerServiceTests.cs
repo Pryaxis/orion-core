@@ -29,6 +29,7 @@ using Serilog.Core;
 using Xunit;
 
 namespace Orion.Core.Players {
+    // These tests depend on Terraria state.
     [Collection("TerrariaTestsCollection")]
     public class OrionPlayerServiceTests {
         private static readonly byte[] _serverConnectBytes;

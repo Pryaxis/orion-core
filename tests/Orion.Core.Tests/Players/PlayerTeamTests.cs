@@ -18,6 +18,7 @@
 using Xunit;
 
 namespace Orion.Core.Players {
+    // These tests depend on Terraria state.
     [Collection("TerrariaTestsCollection")]
     public class PlayerTeamTests {
         [Fact]

@@ -29,12 +29,14 @@ namespace Orion.Core.World {
     internal sealed unsafe class OrionWorld : AnnotatableObject, IDisposable, IWorld {
         private readonly unsafe Tile* _tiles;
 
-        public OrionWorld(int width, int height) {
+        public OrionWorld(int width, int height, string name) {
             Debug.Assert(width > 0);
             Debug.Assert(height > 0);
+            Debug.Assert(name != null);
 
             Width = width;
             Height = height;
+            Name = name;
 
             // Allocate the `Tile` array in unmanaged memory so that it doesn't need to be pinned.
             _tiles = (Tile*)Marshal.AllocHGlobal(sizeof(Tile) * width * height);
@@ -59,6 +61,8 @@ namespace Orion.Core.World {
         public int Width { get; }
 
         public int Height { get; }
+
+        public string Name { get; }
 
         public void Dispose() {
             Marshal.FreeHGlobal((IntPtr)_tiles);

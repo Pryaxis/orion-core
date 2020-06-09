@@ -24,6 +24,7 @@ using Serilog.Core;
 using Xunit;
 
 namespace Orion.Core.Projectiles {
+    // These tests depend on Terraria state.
     [Collection("TerrariaTestsCollection")]
     public class OrionProjectileServiceTests {
         [Theory]

@@ -25,6 +25,7 @@ using Serilog.Core;
 using Xunit;
 
 namespace Orion.Core.World {
+    // These tests depend on Terraria state.
     [Collection("TerrariaTestsCollection")]
     public class OrionWorldServiceTests {
         [Fact]
