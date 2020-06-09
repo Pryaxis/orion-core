@@ -18,6 +18,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Orion.Collections {
     /// <summary>
@@ -33,12 +34,14 @@ namespace Orion.Collections {
         /// <exception cref="IndexOutOfRangeException"><paramref name="index"/> is out of range.</exception>
         T this[int index] { get; set; }
 
+        // Provide a default implementation for `GetEnumerator`, as it is consistent.
         IEnumerator<T> IEnumerable<T>.GetEnumerator() {
             for (var i = 0; i < Count; ++i) {
                 yield return this[i];
             }
         }
 
+        [ExcludeFromCodeCoverage]
         IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
     }
 }

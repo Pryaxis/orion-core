@@ -21,7 +21,7 @@ using Orion.Entities;
 using Xunit;
 
 namespace Orion.Collections {
-    public class WrappedReadOnlyList {
+    public class WrappedReadOnlyListTests {
         [Fact]
         public void Count_Get() {
             var wrappedItems = new TestWrappedClass[10];
