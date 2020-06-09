@@ -1,8 +1,6 @@
 name: dotnet-core
 
-on:
-  push:
-    branches: [ v1.4 ]
+on: [push, pull_request]
 
 jobs:
   build:
