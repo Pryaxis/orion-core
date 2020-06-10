@@ -30,7 +30,7 @@ namespace Orion.Core.DataStructures {
         /// Gets the zero vector.
         /// </summary>
         /// <value>The zero vector.</value>
-        public static Vector2f Zero { get; } = new Vector2f(0, 0);
+        [ExcludeFromCodeCoverage] public static Vector2f Zero { get; } = new Vector2f(0, 0);
 
         /// <summary>
         /// Gets the X component.

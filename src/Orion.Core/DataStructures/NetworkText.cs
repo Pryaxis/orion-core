@@ -29,7 +29,7 @@ namespace Orion.Core.DataStructures {
         /// <summary>
         /// Represents the empty network text.
         /// </summary>
-        public static readonly NetworkText Empty = "";
+        [ExcludeFromCodeCoverage] public static readonly NetworkText Empty = "";
 
         internal readonly Mode _mode;
         internal readonly string _format;
