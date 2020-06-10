@@ -124,7 +124,7 @@ namespace Orion.Core.Packets.World.Tiles {
 
             for (var i = 0; i < tiles.Width; ++i) {
                 for (var j = 0; j < tiles.Height; ++j) {
-                    index += WriteTile(span[index..], in tiles[i, j]);
+                    index += WriteTile(span[index..], ref tiles[i, j]);
                 }
             }
             return index;
@@ -180,7 +180,7 @@ namespace Orion.Core.Packets.World.Tiles {
             return index;
         }
 
-        private int WriteTile(Span<byte> span, in Tile tile) {
+        private int WriteTile(Span<byte> span, ref Tile tile) {
             var hasWall = tile.WallId != WallId.None;
             var hasLiquid = tile.LiquidAmount != 0;
             var hasBlockColor = tile.BlockColor != PaintColor.None;
@@ -215,7 +215,7 @@ namespace Orion.Core.Packets.World.Tiles {
                 index += 2;
 
                 if (tile.BlockId.HasFrames()) {
-                    Unsafe.CopyBlockUnaligned(ref span[index], ref Unsafe.AsRef(in tile).AsRefByte(5), 4);
+                    Unsafe.CopyBlockUnaligned(ref span[index], ref tile.AsRefByte(5), 4);
                     index += 4;
                 }
 
