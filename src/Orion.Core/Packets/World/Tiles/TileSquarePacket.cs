@@ -44,11 +44,11 @@ namespace Orion.Core.Packets.World.Tiles {
         private const ushort SlopeMask           /* */ = 0b01110000_00000000;
         private const ushort HasYellowWireMask   /* */ = 0b10000000_00000000;
 
-        // Store a single empty `Tile` array so that there is at most one such array allocation.
-        private static readonly Tile[,] _emptyTileArray = new Tile[0, 0];
+        // Store a single empty `TileSlice` so that there is only one allocation.
+        private static readonly TileSlice _emptyTiles = new TileSlice(0, 0);
 
         [FieldOffset(0)] private byte _data;
-        [FieldOffset(8)] private Tile[,]? _tiles;
+        [FieldOffset(8)] private ITileSlice? _tiles;
 
         /// <summary>
         /// Gets or sets the top-left tile's X coordinate.
@@ -66,18 +66,18 @@ namespace Orion.Core.Packets.World.Tiles {
         /// Gets or sets the tiles.
         /// </summary>
         /// <value>The tiles.</value>
-        /// <exception cref="ArgumentException"><paramref name="value"/> is not a square array.</exception>
+        /// <exception cref="ArgumentException"><paramref name="value"/> is not a square.</exception>
         /// <exception cref="ArgumentNullException"><paramref name="value"/> is <see langword="null"/>.</exception>
-        public Tile[,] Tiles {
-            get => _tiles ?? _emptyTileArray;
+        public ITileSlice Tiles {
+            get => _tiles ?? _emptyTiles;
             set {
                 if (value is null) {
                     throw new ArgumentNullException(nameof(value));
                 }
 
-                if (value.GetLength(0) != value.GetLength(1)) {
+                if (value.Width != value.Height) {
                     // Not localized because this string is developer-facing.
-                    throw new ArgumentException("Value is not a square array", nameof(value));
+                    throw new ArgumentException("Value is not a square", nameof(value));
                 }
 
                 _tiles = value;
@@ -98,7 +98,7 @@ namespace Orion.Core.Packets.World.Tiles {
             Unsafe.CopyBlockUnaligned(ref this.AsRefByte(1), ref span[index], 4);
             index += 4;
 
-            _tiles = new Tile[size, size];
+            _tiles = new TileSlice(size, size);
             for (var i = 0; i < size; ++i) {
                 for (var j = 0; j < size; ++j) {
                     index += ReadTile(span[index..], ref _tiles[i, j]);
@@ -112,7 +112,7 @@ namespace Orion.Core.Packets.World.Tiles {
             var tiles = Tiles;
 
             var index = 2;
-            var size = (short)tiles.GetLength(0);
+            var size = (short)tiles.Width;
             if (_data > 0) {
                 span[index++] = _data;
                 size |= ~short.MaxValue;
@@ -122,8 +122,8 @@ namespace Orion.Core.Packets.World.Tiles {
             Unsafe.CopyBlockUnaligned(ref span[index], ref this.AsRefByte(1), 4);
             index += 4;
 
-            for (var i = 0; i < tiles.GetLength(0); ++i) {
-                for (var j = 0; j < tiles.GetLength(1); ++j) {
+            for (var i = 0; i < tiles.Width; ++i) {
+                for (var j = 0; j < tiles.Height; ++j) {
                     index += WriteTile(span[index..], in tiles[i, j]);
                 }
             }

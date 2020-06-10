@@ -17,6 +17,7 @@
 
 using System;
 using System.Diagnostics.CodeAnalysis;
+using Moq;
 using Orion.Core.World.Tiles;
 using Xunit;
 
@@ -56,14 +57,15 @@ namespace Orion.Core.Packets.World.Tiles {
 
         [Fact]
         public void Tiles_SetNotSquareArray_ThrowsArgumentException() {
+            var tiles = Mock.Of<ITileSlice>(t => t.Width == 1 && t.Height == 2);
             var packet = new TileSquarePacket();
 
-            Assert.Throws<ArgumentException>(() => packet.Tiles = new Tile[1, 2]);
+            Assert.Throws<ArgumentException>(() => packet.Tiles = tiles);
         }
 
         [Fact]
         public void Tiles_Set_Get() {
-            var tiles = new Tile[1, 1];
+            var tiles = Mock.Of<ITileSlice>(t => t.Width == 1 && t.Height == 1);
             var packet = new TileSquarePacket();
 
             packet.Tiles = tiles;
@@ -79,8 +81,8 @@ namespace Orion.Core.Packets.World.Tiles {
 
             Assert.Equal(2206, packet.X);
             Assert.Equal(312, packet.Y);
-            Assert.Equal(3, packet.Tiles.GetLength(0));
-            Assert.Equal(3, packet.Tiles.GetLength(1));
+            Assert.Equal(3, packet.Tiles.Width);
+            Assert.Equal(3, packet.Tiles.Height);
         }
 
         [Fact]

@@ -29,15 +29,17 @@ namespace Orion.Core.Events.World.Tiles {
         [Fact]
         public void Ctor_NullWorld_ThrowsArgumentNullException() {
             var player = new Mock<IPlayer>().Object;
+            var tiles = Mock.Of<ITileSlice>(t => t.Width == 1 && t.Height == 1);
 
-            Assert.Throws<ArgumentNullException>(() => new TileSquareEvent(null!, player, 0, 0, new Tile[0, 0]));
+            Assert.Throws<ArgumentNullException>(() => new TileSquareEvent(null!, player, 0, 0, tiles));
         }
 
         [Fact]
         public void Ctor_NullPlayer_ThrowsArgumentNullException() {
             var world = new Mock<IWorld>().Object;
+            var tiles = Mock.Of<ITileSlice>(t => t.Width == 1 && t.Height == 1);
 
-            Assert.Throws<ArgumentNullException>(() => new TileSquareEvent(world, null!, 0, 0, new Tile[0, 0]));
+            Assert.Throws<ArgumentNullException>(() => new TileSquareEvent(world, null!, 0, 0, tiles));
         }
 
         [Fact]
@@ -52,15 +54,16 @@ namespace Orion.Core.Events.World.Tiles {
         public void Ctor_TilesNotSquareArray_ThrowsArgumentNullException() {
             var player = new Mock<IPlayer>().Object;
             var world = new Mock<IWorld>().Object;
+            var tiles = Mock.Of<ITileSlice>(t => t.Width == 1 && t.Height == 2);
 
-            Assert.Throws<ArgumentException>(() => new TileSquareEvent(world, player, 0, 0, new Tile[1, 2]));
+            Assert.Throws<ArgumentException>(() => new TileSquareEvent(world, player, 0, 0, tiles));
         }
 
         [Fact]
         public void Player_Get() {
             var player = new Mock<IPlayer>().Object;
             var world = new Mock<IWorld>().Object;
-            var tiles = new Tile[1, 1];
+            var tiles = Mock.Of<ITileSlice>(t => t.Width == 1 && t.Height == 1);
             var evt = new TileSquareEvent(world, player, 123, 456, tiles);
 
             Assert.Same(player, evt.Player);
@@ -70,7 +73,7 @@ namespace Orion.Core.Events.World.Tiles {
         public void X_Get() {
             var player = new Mock<IPlayer>().Object;
             var world = new Mock<IWorld>().Object;
-            var tiles = new Tile[1, 1];
+            var tiles = Mock.Of<ITileSlice>(t => t.Width == 1 && t.Height == 1);
             var evt = new TileSquareEvent(world, player, 123, 456, tiles);
 
             Assert.Equal(123, evt.X);
@@ -80,7 +83,7 @@ namespace Orion.Core.Events.World.Tiles {
         public void Y_Get() {
             var player = new Mock<IPlayer>().Object;
             var world = new Mock<IWorld>().Object;
-            var tiles = new Tile[1, 1];
+            var tiles = Mock.Of<ITileSlice>(t => t.Width == 1 && t.Height == 1);
             var evt = new TileSquareEvent(world, player, 123, 456, tiles);
 
             Assert.Equal(456, evt.Y);
@@ -90,7 +93,7 @@ namespace Orion.Core.Events.World.Tiles {
         public void Tiles_Get() {
             var player = new Mock<IPlayer>().Object;
             var world = new Mock<IWorld>().Object;
-            var tiles = new Tile[1, 1];
+            var tiles = Mock.Of<ITileSlice>(t => t.Width == 1 && t.Height == 1);
             var evt = new TileSquareEvent(world, player, 123, 456, tiles);
 
             Assert.Same(tiles, evt.Tiles);
@@ -100,7 +103,7 @@ namespace Orion.Core.Events.World.Tiles {
         public void CancellationReason_Set_Get() {
             var player = new Mock<IPlayer>().Object;
             var world = new Mock<IWorld>().Object;
-            var tiles = new Tile[1, 1];
+            var tiles = Mock.Of<ITileSlice>(t => t.Width == 1 && t.Height == 1);
             var evt = new TileSquareEvent(world, player, 123, 456, tiles);
 
             evt.CancellationReason = "test";

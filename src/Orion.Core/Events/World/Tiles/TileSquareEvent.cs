@@ -37,18 +37,18 @@ namespace Orion.Core.Events.World.Tiles {
         /// <param name="x">The top-left tile's X coordinate.</param>
         /// <param name="y">The top-left tile's Y coordinate.</param>
         /// <param name="tiles">The tiles.</param>
-        /// <exception cref="ArgumentException"><paramref name="tiles"/> is not a square array.</exception>
+        /// <exception cref="ArgumentException"><paramref name="tiles"/> is not a square.</exception>
         /// <exception cref="ArgumentNullException">
         /// <paramref name="world"/>, <paramref name="player"/>, or <paramref name="tiles"/> are <see langword="null"/>.
         /// </exception>
-        public TileSquareEvent(IWorld world, IPlayer player, int x, int y, Tile[,] tiles) : base(world) {
+        public TileSquareEvent(IWorld world, IPlayer player, int x, int y, ITileSlice tiles) : base(world) {
             if (tiles is null) {
                 throw new ArgumentNullException(nameof(tiles));
             }
 
-            if (tiles.GetLength(0) != tiles.GetLength(1)) {
+            if (tiles.Width != tiles.Height) {
                 // Not localized because this string is developer-facing.
-                throw new ArgumentException("Tiles is not a square array", nameof(tiles));
+                throw new ArgumentException("Tiles is not a square", nameof(tiles));
             }
 
             Player = player ?? throw new ArgumentNullException(nameof(player));
@@ -79,7 +79,7 @@ namespace Orion.Core.Events.World.Tiles {
         /// Gets the tiles.
         /// </summary>
         /// <value>The tiles.</value>
-        [NotLogged] public Tile[,] Tiles { get; }
+        [NotLogged] public ITileSlice Tiles { get; }
 
         /// <inheritdoc/>
         [NotLogged] public string? CancellationReason { get; set; }

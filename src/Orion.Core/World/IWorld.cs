@@ -22,27 +22,7 @@ namespace Orion.Core.World {
     /// <summary>
     /// Represents a Terraria world.
     /// </summary>
-    public interface IWorld : IAnnotatable {
-        /// <summary>
-        /// Gets a reference to the tile at the given coordinates.
-        /// </summary>
-        /// <param name="x">The X coordinate.</param>
-        /// <param name="y">The Y coordinate.</param>
-        /// <returns>A reference to the tile at the given coordinates.</returns>
-        ref Tile this[int x, int y] { get; }
-
-        /// <summary>
-        /// Gets the world's width.
-        /// </summary>
-        /// <value>The world's width.</value>
-        int Width { get; }
-
-        /// <summary>
-        /// Gets the world's height.
-        /// </summary>
-        /// <value>The world's height.</value>
-        int Height { get; }
-
+    public interface IWorld : ITileSlice, IAnnotatable {
         /// <summary>
         /// Gets the world's name.
         /// </summary>
