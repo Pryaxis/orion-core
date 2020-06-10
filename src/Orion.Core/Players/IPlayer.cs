@@ -22,6 +22,8 @@ using Orion.Core.DataStructures;
 using Orion.Core.Entities;
 using Orion.Core.Packets;
 using Orion.Core.Packets.Server;
+using Orion.Core.Packets.World.Tiles;
+using Orion.Core.World.Tiles;
 
 namespace Orion.Core.Players {
     /// <summary>
@@ -145,6 +147,36 @@ namespace Orion.Core.Players {
             }
 
             var packet = new ServerChatPacket { Color = color, Message = message, LineWidth = -1 };
+            player.SendPacket(ref packet);
+        }
+
+        /// <summary>
+        /// Sends the given <paramref name="tiles"/> to the <paramref name="player"/> at the specified coordinates.
+        /// </summary>
+        /// <param name="player">The player.</param>
+        /// <param name="x">The top-left tile's X coordinate.</param>
+        /// <param name="y">The top-left tile's Y coordinate.</param>
+        /// <param name="tiles">The tiles to send.</param>
+        /// <exception cref="ArgumentNullException">
+        /// <paramref name="player"/> or <paramref name="tiles"/> are <see langword="null"/>.
+        /// </exception>
+        /// <exception cref="NotSupportedException"><paramref name="tiles"/> are not square.</exception>
+        public static void SendTiles(this IPlayer player, int x, int y, ITileSlice tiles) {
+            if (player is null) {
+                throw new ArgumentNullException(nameof(player));
+            }
+
+            if (tiles is null) {
+                throw new ArgumentNullException(nameof(tiles));
+            }
+
+            if (!tiles.IsSquare()) {
+                // Not localized because this string is developer-facing.
+                // TODO: implement this when the section packet is implemented.
+                throw new NotSupportedException("Non-square tiles not yet supported");
+            }
+
+            var packet = new TileSquarePacket { X = (short)x, Y = (short)y, Tiles = tiles };
             player.SendPacket(ref packet);
         }
     }
