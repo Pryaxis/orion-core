@@ -25,22 +25,22 @@ namespace Orion.Core.Events.World.Signs {
     public class SignReadEventTests {
         [Fact]
         public void Ctor_NullSign_ThrowsArgumentNullException() {
-            var player = new Mock<IPlayer>().Object;
+            var player = Mock.Of<IPlayer>();
 
             Assert.Throws<ArgumentNullException>(() => new SignReadEvent(null!, player));
         }
 
         [Fact]
         public void Ctor_NullPlayer_ThrowsArgumentNullException() {
-            var sign = new Mock<ISign>().Object;
+            var sign = Mock.Of<ISign>();
 
             Assert.Throws<ArgumentNullException>(() => new SignReadEvent(sign, null!));
         }
 
         [Fact]
         public void Player_Get() {
-            var sign = new Mock<ISign>().Object;
-            var player = new Mock<IPlayer>().Object;
+            var sign = Mock.Of<ISign>();
+            var player = Mock.Of<IPlayer>();
             var evt = new SignReadEvent(sign, player);
 
             Assert.Same(player, evt.Player);

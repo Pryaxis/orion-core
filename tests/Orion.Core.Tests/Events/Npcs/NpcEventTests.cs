@@ -29,7 +29,7 @@ namespace Orion.Core.Events.Npcs {
 
         [Fact]
         public void Npc_Get() {
-            var npc = new Mock<INpc>().Object;
+            var npc = Mock.Of<INpc>();
             var evt = new TestNpcEvent(npc);
 
             Assert.Same(npc, evt.Npc);

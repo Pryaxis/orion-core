@@ -31,7 +31,7 @@ namespace Orion.Core.Events.Projectiles {
 
         [Fact]
         public void Id_Set_Get() {
-            var projectile = new Mock<IProjectile>().Object;
+            var projectile = Mock.Of<IProjectile>();
             var evt = new ProjectileDefaultsEvent(projectile);
 
             evt.Id = ProjectileId.CrystalBullet;
@@ -41,7 +41,7 @@ namespace Orion.Core.Events.Projectiles {
 
         [Fact]
         public void CancellationReason_Set_Get() {
-            var projectile = new Mock<IProjectile>().Object;
+            var projectile = Mock.Of<IProjectile>();
             var evt = new ProjectileDefaultsEvent(projectile);
 
             evt.CancellationReason = "test";

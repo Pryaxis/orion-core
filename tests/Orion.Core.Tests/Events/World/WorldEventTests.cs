@@ -29,7 +29,7 @@ namespace Orion.Core.Events.World {
 
         [Fact]
         public void World_Get() {
-            var world = new Mock<IWorld>().Object;
+            var world = Mock.Of<IWorld>();
             var evt = new TestWorldEvent(world);
 
             Assert.Same(world, evt.World);

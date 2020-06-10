@@ -28,18 +28,16 @@ namespace Orion.Core.World.TileEntities {
 
         [Fact]
         public void IsConcrete_ReturnsTrue() {
-            var mockTileEntity = new Mock<ITileEntity>();
-            mockTileEntity.Setup(e => e.Index).Returns(1);
+            var tileEntity = Mock.Of<ITileEntity>(te => te.Index == 1);
 
-            Assert.True(mockTileEntity.Object.IsConcrete());
+            Assert.True(tileEntity.IsConcrete());
         }
 
         [Fact]
         public void IsConcrete_ReturnsFalse() {
-            var mockTileEntity = new Mock<ITileEntity>();
-            mockTileEntity.Setup(e => e.Index).Returns(-1);
+            var tileEntity = Mock.Of<ITileEntity>(te => te.Index == -1);
 
-            Assert.False(mockTileEntity.Object.IsConcrete());
+            Assert.False(tileEntity.IsConcrete());
         }
     }
 }

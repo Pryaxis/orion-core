@@ -31,7 +31,7 @@ namespace Orion.Core.Events.Items {
 
         [Fact]
         public void Id_Set_Get() {
-            var item = new Mock<IItem>().Object;
+            var item = Mock.Of<IItem>();
             var evt = new ItemDefaultsEvent(item);
 
             evt.Id = ItemId.Sdmg;
@@ -41,7 +41,7 @@ namespace Orion.Core.Events.Items {
 
         [Fact]
         public void CancellationReason_Set_Get() {
-            var item = new Mock<IItem>().Object;
+            var item = Mock.Of<IItem>();
             var evt = new ItemDefaultsEvent(item);
 
             evt.CancellationReason = "test";

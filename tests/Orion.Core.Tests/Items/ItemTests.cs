@@ -28,12 +28,9 @@ namespace Orion.Core.Items {
 
         [Fact]
         public void AsItemStack() {
-            var mockItem = new Mock<IItem>();
-            mockItem.Setup(i => i.Id).Returns(ItemId.Sdmg);
-            mockItem.Setup(i => i.StackSize).Returns(1);
-            mockItem.Setup(i => i.Prefix).Returns(ItemPrefix.Unreal);
+            var item = Mock.Of<IItem>(i => i.Id == ItemId.Sdmg && i.StackSize == 1 && i.Prefix == ItemPrefix.Unreal);
 
-            Assert.Equal(new ItemStack(ItemId.Sdmg, 1, ItemPrefix.Unreal), mockItem.Object.AsItemStack());
+            Assert.Equal(new ItemStack(ItemId.Sdmg, 1, ItemPrefix.Unreal), item.AsItemStack());
         }
     }
 }

@@ -26,15 +26,15 @@ namespace Orion.Core.Events.World.Tiles {
     public class WallPaintEventTests {
         [Fact]
         public void Ctor_NullWorld_ThrowsArgumentNullException() {
-            var player = new Mock<IPlayer>().Object;
+            var player = Mock.Of<IPlayer>();
 
             Assert.Throws<ArgumentNullException>(() => new WallPaintEvent(null!, player, 256, 100, PaintColor.Red));
         }
 
         [Fact]
         public void Color_Get() {
-            var world = new Mock<IWorld>().Object;
-            var player = new Mock<IPlayer>().Object;
+            var world = Mock.Of<IWorld>();
+            var player = Mock.Of<IPlayer>();
             var evt = new WallPaintEvent(world, player, 256, 100, PaintColor.Red);
 
             Assert.Equal(PaintColor.Red, evt.Color);

@@ -35,7 +35,7 @@ namespace Orion.Core.Events.Packets {
         [Fact]
         public void Receiver_Get() {
             var packet = new TestPacket();
-            var receiver = new Mock<IPlayer>().Object;
+            var receiver = Mock.Of<IPlayer>();
             var evt = new PacketSendEvent<TestPacket>(ref packet, receiver);
 
             Assert.Same(receiver, evt.Receiver);
@@ -44,7 +44,7 @@ namespace Orion.Core.Events.Packets {
         [Fact]
         public void CancellationReason_Set_Get() {
             var packet = new TestPacket();
-            var sender = new Mock<IPlayer>().Object;
+            var sender = Mock.Of<IPlayer>();
             var evt = new PacketSendEvent<TestPacket>(ref packet, sender);
 
             evt.CancellationReason = "test";

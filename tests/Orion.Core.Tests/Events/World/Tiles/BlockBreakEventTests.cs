@@ -25,15 +25,15 @@ namespace Orion.Core.Events.World.Tiles {
     public class BlockBreakEventTests {
         [Fact]
         public void Ctor_NullWorld_ThrowsArgumentNullException() {
-            var player = new Mock<IPlayer>().Object;
+            var player = Mock.Of<IPlayer>();
 
             Assert.Throws<ArgumentNullException>(() => new BlockBreakEvent(null!, player, 256, 100, true));
         }
 
         [Fact]
         public void IsItemless_Get() {
-            var world = new Mock<IWorld>().Object;
-            var player = new Mock<IPlayer>().Object;
+            var world = Mock.Of<IWorld>();
+            var player = Mock.Of<IPlayer>();
             var evt = new BlockBreakEvent(world, player, 256, 100, true);
 
             Assert.True(evt.IsItemless);

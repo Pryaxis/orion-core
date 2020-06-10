@@ -31,14 +31,14 @@ namespace Orion.Core.Events.Players {
 
         [Fact]
         public void Ctor_NullUuid_ThrowsArgumentNullException() {
-            var player = new Mock<IPlayer>().Object;
+            var player = Mock.Of<IPlayer>();
 
             Assert.Throws<ArgumentNullException>(() => new PlayerUuidEvent(player, null!));
         }
 
         [Fact]
         public void Uuid_Get() {
-            var player = new Mock<IPlayer>().Object;
+            var player = Mock.Of<IPlayer>();
             var evt = new PlayerUuidEvent(player, "Terraria");
 
             Assert.Equal("Terraria", evt.Uuid);
@@ -46,7 +46,7 @@ namespace Orion.Core.Events.Players {
 
         [Fact]
         public void CancellationReason_Set_Get() {
-            var player = new Mock<IPlayer>().Object;
+            var player = Mock.Of<IPlayer>();
             var evt = new PlayerUuidEvent(player, "Terraria");
 
             evt.CancellationReason = "test";

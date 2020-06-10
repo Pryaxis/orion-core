@@ -32,7 +32,7 @@ namespace Orion.Core.Events.Npcs {
 
         [Fact]
         public void X_Get() {
-            var player = new Mock<IPlayer>().Object;
+            var player = Mock.Of<IPlayer>();
             var evt = new NpcFishEvent(player, 100, 256, NpcId.HemogoblinShark);
 
             Assert.Equal(100, evt.X);
@@ -40,7 +40,7 @@ namespace Orion.Core.Events.Npcs {
 
         [Fact]
         public void Y_Get() {
-            var player = new Mock<IPlayer>().Object;
+            var player = Mock.Of<IPlayer>();
             var evt = new NpcFishEvent(player, 100, 256, NpcId.HemogoblinShark);
 
             Assert.Equal(256, evt.Y);
@@ -48,7 +48,7 @@ namespace Orion.Core.Events.Npcs {
 
         [Fact]
         public void Id_Get() {
-            var player = new Mock<IPlayer>().Object;
+            var player = Mock.Of<IPlayer>();
             var evt = new NpcFishEvent(player, 100, 256, NpcId.HemogoblinShark);
 
             Assert.Equal(NpcId.HemogoblinShark, evt.Id);
@@ -56,7 +56,7 @@ namespace Orion.Core.Events.Npcs {
 
         [Fact]
         public void CancellationReason_Set_Get() {
-            var player = new Mock<IPlayer>().Object;
+            var player = Mock.Of<IPlayer>();
             var evt = new NpcFishEvent(player, 100, 256, NpcId.HemogoblinShark);
 
             evt.CancellationReason = "test";

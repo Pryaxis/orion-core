@@ -29,7 +29,7 @@ namespace Orion.Core.Events.Projectiles {
 
         [Fact]
         public void Projectile_Get() {
-            var projectile = new Mock<IProjectile>().Object;
+            var projectile = Mock.Of<IProjectile>();
             var evt = new TestProjectileEvent(projectile);
 
             Assert.Same(projectile, evt.Projectile);

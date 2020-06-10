@@ -31,7 +31,7 @@ namespace Orion.Core.Events.Players {
 
         [Fact]
         public void Team_Get() {
-            var player = new Mock<IPlayer>().Object;
+            var player = Mock.Of<IPlayer>();
             var evt = new PlayerTeamEvent(player, PlayerTeam.Red);
 
             Assert.Equal(PlayerTeam.Red, evt.Team);
@@ -39,7 +39,7 @@ namespace Orion.Core.Events.Players {
 
         [Fact]
         public void CancellationReason_Set_Get() {
-            var player = new Mock<IPlayer>().Object;
+            var player = Mock.Of<IPlayer>();
             var evt = new PlayerTeamEvent(player, PlayerTeam.Red);
 
             evt.CancellationReason = "test";

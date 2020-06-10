@@ -31,7 +31,7 @@ namespace Orion.Core.Events.World {
 
         [Fact]
         public void CancellationReason_Set_Get() {
-            var world = new Mock<IWorld>().Object;
+            var world = Mock.Of<IWorld>();
             var evt = new WorldSaveEvent(world);
 
             evt.CancellationReason = "test";

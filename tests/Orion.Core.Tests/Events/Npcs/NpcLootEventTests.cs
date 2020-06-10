@@ -32,7 +32,7 @@ namespace Orion.Core.Events.Npcs {
 
         [Fact]
         public void Id_Set_Get() {
-            var npc = new Mock<INpc>().Object;
+            var npc = Mock.Of<INpc>();
             var evt = new NpcLootEvent(npc);
 
             evt.Id = ItemId.Sdmg;
@@ -42,7 +42,7 @@ namespace Orion.Core.Events.Npcs {
 
         [Fact]
         public void StackSize_Set_Get() {
-            var npc = new Mock<INpc>().Object;
+            var npc = Mock.Of<INpc>();
             var evt = new NpcLootEvent(npc);
 
             evt.StackSize = 1;
@@ -52,7 +52,7 @@ namespace Orion.Core.Events.Npcs {
 
         [Fact]
         public void Prefix_Set_Get() {
-            var npc = new Mock<INpc>().Object;
+            var npc = Mock.Of<INpc>();
             var evt = new NpcLootEvent(npc);
 
             evt.Prefix = ItemPrefix.Unreal;
@@ -62,7 +62,7 @@ namespace Orion.Core.Events.Npcs {
 
         [Fact]
         public void CancellationReason_Set_Get() {
-            var npc = new Mock<INpc>().Object;
+            var npc = Mock.Of<INpc>();
             var evt = new NpcLootEvent(npc);
 
             evt.CancellationReason = "test";

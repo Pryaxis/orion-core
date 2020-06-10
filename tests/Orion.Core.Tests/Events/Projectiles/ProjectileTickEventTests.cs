@@ -31,7 +31,7 @@ namespace Orion.Core.Events.Projectiles {
 
         [Fact]
         public void CancellationReason_Set_Get() {
-            var projectile = new Mock<IProjectile>().Object;
+            var projectile = Mock.Of<IProjectile>();
             var evt = new ProjectileTickEvent(projectile);
 
             evt.CancellationReason = "test";

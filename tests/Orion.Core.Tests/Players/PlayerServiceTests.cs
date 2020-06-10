@@ -38,14 +38,11 @@ namespace Orion.Core.Players {
         [Fact]
         public void BroadcastPacket_Ref() {
             var mockPlayer = new Mock<IPlayer>();
-            var mockPlayers = new Mock<IReadOnlyList<IPlayer>>();
-            mockPlayers.Setup(p => p.Count).Returns(1);
-            mockPlayers.Setup(p => p[0]).Returns(mockPlayer.Object);
-            var mockPlayerService = new Mock<IPlayerService>();
-            mockPlayerService.Setup(ps => ps.Players).Returns(mockPlayers.Object);
+            var playerService = Mock.Of<IPlayerService>(
+                ps => ps.Players == Mock.Of<IReadOnlyList<IPlayer>>(p => p.Count == 1 && p[0] == mockPlayer.Object));
 
             var packet = new TestPacket();
-            mockPlayerService.Object.BroadcastPacket(ref packet);
+            playerService.BroadcastPacket(ref packet);
 
             mockPlayer.Verify(p => p.SendPacket(ref It.Ref<TestPacket>.IsAny));
         }
@@ -59,14 +56,11 @@ namespace Orion.Core.Players {
         [Fact]
         public void BroadcastPacket() {
             var mockPlayer = new Mock<IPlayer>();
-            var mockPlayers = new Mock<IReadOnlyList<IPlayer>>();
-            mockPlayers.Setup(p => p.Count).Returns(1);
-            mockPlayers.Setup(p => p[0]).Returns(mockPlayer.Object);
-            var mockPlayerService = new Mock<IPlayerService>();
-            mockPlayerService.Setup(ps => ps.Players).Returns(mockPlayers.Object);
+            var playerService = Mock.Of<IPlayerService>(
+                ps => ps.Players == Mock.Of<IReadOnlyList<IPlayer>>(p => p.Count == 1 && p[0] == mockPlayer.Object));
 
             var packet = new TestPacket();
-            mockPlayerService.Object.BroadcastPacket(packet);
+            playerService.BroadcastPacket(packet);
 
             mockPlayer.Verify(p => p.SendPacket(ref It.Ref<TestPacket>.IsAny));
         }
@@ -79,7 +73,7 @@ namespace Orion.Core.Players {
 
         [Fact]
         public void BroadcastMessage_NullMessage_ThrowsArgumentNullException() {
-            var playerService = new Mock<IPlayerService>().Object;
+            var playerService = Mock.Of<IPlayerService>();
 
             Assert.Throws<ArgumentNullException>(
                 () => PlayerServiceExtensions.BroadcastMessage(playerService, null!, Color3.White));
@@ -95,13 +89,10 @@ namespace Orion.Core.Players {
                     Assert.Equal(Color3.White, packet.Color);
                     Assert.Equal(-1, packet.LineWidth);
                 }));
-            var mockPlayers = new Mock<IReadOnlyList<IPlayer>>();
-            mockPlayers.Setup(p => p.Count).Returns(1);
-            mockPlayers.Setup(p => p[0]).Returns(mockPlayer.Object);
-            var mockPlayerService = new Mock<IPlayerService>();
-            mockPlayerService.Setup(ps => ps.Players).Returns(mockPlayers.Object);
+            var playerService = Mock.Of<IPlayerService>(
+                ps => ps.Players == Mock.Of<IReadOnlyList<IPlayer>>(p => p.Count == 1 && p[0] == mockPlayer.Object));
 
-            mockPlayerService.Object.BroadcastMessage("test", Color3.White);
+            playerService.BroadcastMessage("test", Color3.White);
 
             mockPlayer.Verify(p => p.SendPacket(ref It.Ref<ServerChatPacket>.IsAny));
         }

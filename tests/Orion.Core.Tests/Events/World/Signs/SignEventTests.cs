@@ -29,7 +29,7 @@ namespace Orion.Core.Events.World.Signs {
 
         [Fact]
         public void Sign_Get() {
-            var sign = new Mock<ISign>().Object;
+            var sign = Mock.Of<ISign>();
             var evt = new TestSignEvent(sign);
 
             Assert.Same(sign, evt.Sign);

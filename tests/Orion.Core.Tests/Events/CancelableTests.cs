@@ -28,18 +28,16 @@ namespace Orion.Core.Events {
 
         [Fact]
         public void IsCanceled_Yes_ReturnsTrue() {
-            var mockCancelable = new Mock<ICancelable>();
-            mockCancelable.Setup(c => c.CancellationReason).Returns("");
+            var cancelable = Mock.Of<ICancelable>(c => c.CancellationReason == "");
 
-            Assert.True(mockCancelable.Object.IsCanceled());
+            Assert.True(cancelable.IsCanceled());
         }
 
         [Fact]
         public void IsCanceled_No_ReturnsFalse() {
-            var mockCancelable = new Mock<ICancelable>();
-            mockCancelable.Setup(c => c.CancellationReason).Returns((string)null!);
+            var cancelable = Mock.Of<ICancelable>(c => c.CancellationReason == null);
 
-            Assert.False(mockCancelable.Object.IsCanceled());
+            Assert.False(cancelable.IsCanceled());
         }
 
         [Fact]
@@ -49,18 +47,18 @@ namespace Orion.Core.Events {
 
         [Fact]
         public void Cancel_NullReason_ThrowsArgumentNullException() {
-            var cancelable = new Mock<ICancelable>().Object;
+            var cancelable = Mock.Of<ICancelable>();
 
             Assert.Throws<ArgumentNullException>(() => cancelable.Cancel(null!));
         }
 
         [Fact]
         public void Cancel() {
-            var mockCancelable = new Mock<ICancelable>();
+            var cancelable = Mock.Of<ICancelable>();
 
-            mockCancelable.Object.Cancel("test");
+            cancelable.Cancel("test");
 
-            mockCancelable.VerifySet(c => c.CancellationReason = "test");
+            Assert.Equal("test", cancelable.CancellationReason);
         }
 
         [Fact]
@@ -70,11 +68,11 @@ namespace Orion.Core.Events {
 
         [Fact]
         public void Uncancel() {
-            var mockCancelable = new Mock<ICancelable>();
+            var cancelable = Mock.Of<ICancelable>(c => c.CancellationReason == "");
 
-            mockCancelable.Object.Uncancel();
+            cancelable.Uncancel();
 
-            mockCancelable.VerifySet(c => c.CancellationReason = null);
+            Assert.Null(cancelable.CancellationReason);
         }
     }
 }

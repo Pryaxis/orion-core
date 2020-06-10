@@ -28,18 +28,16 @@ namespace Orion.Core.Entities {
 
         [Fact]
         public void IsConcrete_ReturnsTrue() {
-            var mockEntity = new Mock<IEntity>();
-            mockEntity.Setup(e => e.Index).Returns(1);
+            var entity = Mock.Of<IEntity>(e => e.Index == 1);
 
-            Assert.True(mockEntity.Object.IsConcrete());
+            Assert.True(entity.IsConcrete());
         }
 
         [Fact]
         public void IsConcrete_ReturnsFalse() {
-            var mockEntity = new Mock<IEntity>();
-            mockEntity.Setup(e => e.Index).Returns(-1);
+            var entity = Mock.Of<IEntity>(e => e.Index == -1);
 
-            Assert.False(mockEntity.Object.IsConcrete());
+            Assert.False(entity.IsConcrete());
         }
     }
 }

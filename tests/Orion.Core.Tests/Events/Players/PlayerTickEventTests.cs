@@ -31,7 +31,7 @@ namespace Orion.Core.Events.Players {
 
         [Fact]
         public void CancellationReason_Set_Get() {
-            var player = new Mock<IPlayer>().Object;
+            var player = Mock.Of<IPlayer>();
             var evt = new PlayerTickEvent(player);
 
             evt.CancellationReason = "test";

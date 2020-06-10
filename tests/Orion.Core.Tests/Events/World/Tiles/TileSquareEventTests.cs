@@ -28,7 +28,7 @@ namespace Orion.Core.Events.World.Tiles {
     public class TileSquareEventTests {
         [Fact]
         public void Ctor_NullWorld_ThrowsArgumentNullException() {
-            var player = new Mock<IPlayer>().Object;
+            var player = Mock.Of<IPlayer>();
             var tiles = Mock.Of<ITileSlice>(t => t.Width == 1 && t.Height == 1);
 
             Assert.Throws<ArgumentNullException>(() => new TileSquareEvent(null!, player, 0, 0, tiles));
@@ -36,7 +36,7 @@ namespace Orion.Core.Events.World.Tiles {
 
         [Fact]
         public void Ctor_NullPlayer_ThrowsArgumentNullException() {
-            var world = new Mock<IWorld>().Object;
+            var world = Mock.Of<IWorld>();
             var tiles = Mock.Of<ITileSlice>(t => t.Width == 1 && t.Height == 1);
 
             Assert.Throws<ArgumentNullException>(() => new TileSquareEvent(world, null!, 0, 0, tiles));
@@ -44,16 +44,16 @@ namespace Orion.Core.Events.World.Tiles {
 
         [Fact]
         public void Ctor_NullTiles_ThrowsArgumentNullException() {
-            var player = new Mock<IPlayer>().Object;
-            var world = new Mock<IWorld>().Object;
+            var player = Mock.Of<IPlayer>();
+            var world = Mock.Of<IWorld>();
 
             Assert.Throws<ArgumentNullException>(() => new TileSquareEvent(world, player, 0, 0, null!));
         }
 
         [Fact]
         public void Ctor_TilesNotSquareArray_ThrowsArgumentNullException() {
-            var player = new Mock<IPlayer>().Object;
-            var world = new Mock<IWorld>().Object;
+            var player = Mock.Of<IPlayer>();
+            var world = Mock.Of<IWorld>();
             var tiles = Mock.Of<ITileSlice>(t => t.Width == 1 && t.Height == 2);
 
             Assert.Throws<ArgumentException>(() => new TileSquareEvent(world, player, 0, 0, tiles));
@@ -61,8 +61,8 @@ namespace Orion.Core.Events.World.Tiles {
 
         [Fact]
         public void Player_Get() {
-            var player = new Mock<IPlayer>().Object;
-            var world = new Mock<IWorld>().Object;
+            var player = Mock.Of<IPlayer>();
+            var world = Mock.Of<IWorld>();
             var tiles = Mock.Of<ITileSlice>(t => t.Width == 1 && t.Height == 1);
             var evt = new TileSquareEvent(world, player, 123, 456, tiles);
 
@@ -71,8 +71,8 @@ namespace Orion.Core.Events.World.Tiles {
 
         [Fact]
         public void X_Get() {
-            var player = new Mock<IPlayer>().Object;
-            var world = new Mock<IWorld>().Object;
+            var player = Mock.Of<IPlayer>();
+            var world = Mock.Of<IWorld>();
             var tiles = Mock.Of<ITileSlice>(t => t.Width == 1 && t.Height == 1);
             var evt = new TileSquareEvent(world, player, 123, 456, tiles);
 
@@ -81,8 +81,8 @@ namespace Orion.Core.Events.World.Tiles {
 
         [Fact]
         public void Y_Get() {
-            var player = new Mock<IPlayer>().Object;
-            var world = new Mock<IWorld>().Object;
+            var player = Mock.Of<IPlayer>();
+            var world = Mock.Of<IWorld>();
             var tiles = Mock.Of<ITileSlice>(t => t.Width == 1 && t.Height == 1);
             var evt = new TileSquareEvent(world, player, 123, 456, tiles);
 
@@ -91,8 +91,8 @@ namespace Orion.Core.Events.World.Tiles {
 
         [Fact]
         public void Tiles_Get() {
-            var player = new Mock<IPlayer>().Object;
-            var world = new Mock<IWorld>().Object;
+            var player = Mock.Of<IPlayer>();
+            var world = Mock.Of<IWorld>();
             var tiles = Mock.Of<ITileSlice>(t => t.Width == 1 && t.Height == 1);
             var evt = new TileSquareEvent(world, player, 123, 456, tiles);
 
@@ -101,8 +101,8 @@ namespace Orion.Core.Events.World.Tiles {
 
         [Fact]
         public void CancellationReason_Set_Get() {
-            var player = new Mock<IPlayer>().Object;
-            var world = new Mock<IWorld>().Object;
+            var player = Mock.Of<IPlayer>();
+            var world = Mock.Of<IWorld>();
             var tiles = Mock.Of<ITileSlice>(t => t.Width == 1 && t.Height == 1);
             var evt = new TileSquareEvent(world, player, 123, 456, tiles);
 

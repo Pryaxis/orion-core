@@ -29,7 +29,7 @@ namespace Orion.Core.Events.Players {
 
         [Fact]
         public void Player_Get() {
-            var player = new Mock<IPlayer>().Object;
+            var player = Mock.Of<IPlayer>();
             var evt = new TestPlayerEvent(player);
 
             Assert.Same(player, evt.Player);

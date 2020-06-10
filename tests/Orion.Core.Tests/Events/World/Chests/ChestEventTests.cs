@@ -29,7 +29,7 @@ namespace Orion.Core.Events.World.Chests {
 
         [Fact]
         public void Chest_Get() {
-            var chest = new Mock<IChest>().Object;
+            var chest = Mock.Of<IChest>();
             var evt = new TestChestEvent(chest);
 
             Assert.Same(chest, evt.Chest);

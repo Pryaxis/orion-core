@@ -48,7 +48,7 @@ namespace Orion.Core.Players {
 
         [Fact]
         public void Disconnect_NullReason_ThrowsArgumentNullException() {
-            var player = new Mock<IPlayer>().Object;
+            var player = Mock.Of<IPlayer>();
 
             Assert.Throws<ArgumentNullException>(() => player.Disconnect(null!));
         }
@@ -74,7 +74,7 @@ namespace Orion.Core.Players {
 
         [Fact]
         public void SendMessage_NullReason_ThrowsArgumentNullException() {
-            var player = new Mock<IPlayer>().Object;
+            var player = Mock.Of<IPlayer>();
 
             Assert.Throws<ArgumentNullException>(() => player.SendMessage(null!, Color3.White));
         }

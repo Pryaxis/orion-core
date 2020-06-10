@@ -31,21 +31,21 @@ namespace Orion.Core.Events.Players {
 
         [Fact]
         public void Ctor_NullCommand_ThrowsArgumentNullException() {
-            var player = new Mock<IPlayer>().Object;
+            var player = Mock.Of<IPlayer>();
 
             Assert.Throws<ArgumentNullException>(() => new PlayerChatEvent(player, null!, ""));
         }
 
         [Fact]
         public void Ctor_NullMessage_ThrowsArgumentNullException() {
-            var player = new Mock<IPlayer>().Object;
+            var player = Mock.Of<IPlayer>();
 
             Assert.Throws<ArgumentNullException>(() => new PlayerChatEvent(player, "", null!));
         }
 
         [Fact]
         public void Command_Get() {
-            var player = new Mock<IPlayer>().Object;
+            var player = Mock.Of<IPlayer>();
             var evt = new PlayerChatEvent(player, "Say", "/command test");
 
             Assert.Equal("Say", evt.Command);
@@ -53,7 +53,7 @@ namespace Orion.Core.Events.Players {
 
         [Fact]
         public void Message_Get() {
-            var player = new Mock<IPlayer>().Object;
+            var player = Mock.Of<IPlayer>();
             var evt = new PlayerChatEvent(player, "Say", "/command test");
 
             Assert.Equal("/command test", evt.Message);
@@ -61,7 +61,7 @@ namespace Orion.Core.Events.Players {
 
         [Fact]
         public void CancellationReason_Set_Get() {
-            var player = new Mock<IPlayer>().Object;
+            var player = Mock.Of<IPlayer>();
             var evt = new PlayerChatEvent(player, "Say", "/command test");
 
             evt.CancellationReason = "test";

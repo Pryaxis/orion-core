@@ -31,7 +31,7 @@ namespace Orion.Core.Events.Npcs {
 
         [Fact]
         public void Id_Set_Get() {
-            var npc = new Mock<INpc>().Object;
+            var npc = Mock.Of<INpc>();
             var evt = new NpcDefaultsEvent(npc);
 
             evt.Id = NpcId.BlueSlime;
@@ -41,7 +41,7 @@ namespace Orion.Core.Events.Npcs {
 
         [Fact]
         public void CancellationReason_Set_Get() {
-            var npc = new Mock<INpc>().Object;
+            var npc = Mock.Of<INpc>();
             var evt = new NpcDefaultsEvent(npc);
 
             evt.CancellationReason = "test";

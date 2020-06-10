@@ -29,7 +29,7 @@ namespace Orion.Core.Events.Items {
 
         [Fact]
         public void Item_Get() {
-            var item = new Mock<IItem>().Object;
+            var item = Mock.Of<IItem>();
             var evt = new TestItemEvent(item);
 
             Assert.Same(item, evt.Item);

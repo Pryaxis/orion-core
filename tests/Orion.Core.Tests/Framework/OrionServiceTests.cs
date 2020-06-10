@@ -38,12 +38,10 @@ namespace Orion.Core.Framework {
         [Fact]
         public void Log_Get() {
             using var kernel = new OrionKernel(Logger.None);
-            var mockLog = new Mock<ILogger>();
-            using var service = new TestService(kernel, mockLog.Object);
+            var log = Mock.Of<ILogger>();
+            using var service = new TestService(kernel, log);
 
-            service.Log.Information("test");
-
-            mockLog.Verify(l => l.Information("test"));
+            Assert.Same(log, service.Log);
         }
 
         public class TestService : OrionService {

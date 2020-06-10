@@ -25,15 +25,15 @@ namespace Orion.Core.Events.World.Tiles {
     public class TileEventTests {
         [Fact]
         public void Ctor_NullWorld_ThrowsArgumentNullException() {
-            var player = new Mock<IPlayer>().Object;
+            var player = Mock.Of<IPlayer>();
 
             Assert.Throws<ArgumentNullException>(() => new TestTileEvent(null!, player, 123, 456));
         }
 
         [Fact]
         public void Player_Get() {
-            var world = new Mock<IWorld>().Object;
-            var player = new Mock<IPlayer>().Object;
+            var world = Mock.Of<IWorld>();
+            var player = Mock.Of<IPlayer>();
             var evt = new TestTileEvent(world, player, 123, 456);
 
             Assert.Same(player, evt.Player);
@@ -41,8 +41,8 @@ namespace Orion.Core.Events.World.Tiles {
 
         [Fact]
         public void X_Get() {
-            var world = new Mock<IWorld>().Object;
-            var player = new Mock<IPlayer>().Object;
+            var world = Mock.Of<IWorld>();
+            var player = Mock.Of<IPlayer>();
             var evt = new TestTileEvent(world, player, 123, 456);
 
             Assert.Equal(123, evt.X);
@@ -50,8 +50,8 @@ namespace Orion.Core.Events.World.Tiles {
 
         [Fact]
         public void Y_Get() {
-            var world = new Mock<IWorld>().Object;
-            var player = new Mock<IPlayer>().Object;
+            var world = Mock.Of<IWorld>();
+            var player = Mock.Of<IPlayer>();
             var evt = new TestTileEvent(world, player, 123, 456);
 
             Assert.Equal(456, evt.Y);
