@@ -54,6 +54,21 @@ namespace Orion.Core.World.Tiles {
     /// </summary>
     public static class TileSliceExtensions {
         /// <summary>
+        /// Returns a value indicating whether the <paramref name="tiles"/> are a square.
+        /// </summary>
+        /// <param name="tiles">The tiles.</param>
+        /// <returns>
+        /// <see langword="true"/> if the <paramref name="tiles"/> are a square; otherwise, <see langword="false"/>.
+        /// </returns>
+        public static bool IsSquare(this ITileSlice tiles) {
+            if (tiles is null) {
+                throw new ArgumentNullException(nameof(tiles));
+            }
+
+            return tiles.Width == tiles.Height;
+        }
+
+        /// <summary>
         /// Returns a slice of the <paramref name="tiles"/> with the specified starting coordinates and dimensions.
         /// </summary>
         /// <param name="tiles">The tiles.</param>
@@ -82,11 +97,13 @@ namespace Orion.Core.World.Tiles {
             }
 
             if (width <= 0 || startX + width > tiles.Width) {
+                // Not localized because this string is developer-facing.
                 throw new ArgumentOutOfRangeException(
                     nameof(width), $"Width out of range (expected: 1 to {tiles.Width - startX})");
             }
 
             if (height <= 0 || startY + height > tiles.Height) {
+                // Not localized because this string is developer-facing.
                 throw new ArgumentOutOfRangeException(
                     nameof(height), $"Height out of range (expected: 1 to {tiles.Height - startY})");
             }

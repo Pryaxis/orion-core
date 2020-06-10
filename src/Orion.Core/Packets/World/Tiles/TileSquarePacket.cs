@@ -63,9 +63,9 @@ namespace Orion.Core.Packets.World.Tiles {
         [field: FieldOffset(3)] public short Y { get; set; }
 
         /// <summary>
-        /// Gets or sets the tiles.
+        /// Gets or sets the square of tiles.
         /// </summary>
-        /// <value>The tiles.</value>
+        /// <value>The square of tiles.</value>
         /// <exception cref="ArgumentException"><paramref name="value"/> is not a square.</exception>
         /// <exception cref="ArgumentNullException"><paramref name="value"/> is <see langword="null"/>.</exception>
         public ITileSlice Tiles {
@@ -75,7 +75,7 @@ namespace Orion.Core.Packets.World.Tiles {
                     throw new ArgumentNullException(nameof(value));
                 }
 
-                if (value.Width != value.Height) {
+                if (!value.IsSquare()) {
                     // Not localized because this string is developer-facing.
                     throw new ArgumentException("Value is not a square", nameof(value));
                 }
