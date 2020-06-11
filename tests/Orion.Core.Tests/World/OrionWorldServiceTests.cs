@@ -1197,7 +1197,7 @@ namespace Orion.Core.World {
 
         [Fact]
         public void PacketReceive_WiringActivateEventCanceled() {
-            // Set `State` to 10 so that the block paint packet is not ignored by the server.
+            // Set `State` to 10 so that the wire activate packet is not ignored by the server.
             Terraria.Netplay.Clients[5] = new Terraria.RemoteClient { Id = 5, State = 10 };
             Terraria.Main.player[5] = new Terraria.Player { whoAmI = 5 };
 

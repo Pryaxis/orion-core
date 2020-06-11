@@ -38,6 +38,7 @@ namespace Orion.Core.Players {
     /// <item><description><see cref="PlayerJoinEvent"/></description></item>
     /// <item><description><see cref="PlayerHealthEvent"/></description></item>
     /// <item><description><see cref="PlayerPvpEvent"/></description></item>
+    /// <item><description><see cref="PlayerPasswordEvent"/></description></item>
     /// <item><description><see cref="PlayerManaEvent"/></description></item>
     /// <item><description><see cref="PlayerTeamEvent"/></description></item>
     /// <item><description><see cref="PlayerUuidEvent"/></description></item>

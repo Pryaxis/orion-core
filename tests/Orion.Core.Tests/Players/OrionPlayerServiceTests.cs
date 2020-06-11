@@ -89,6 +89,7 @@ namespace Orion.Core.Players {
         [Fact]
         public void PacketReceive_EventTriggered() {
             Terraria.Netplay.Clients[5] = new Terraria.RemoteClient { Id = 5 };
+            Terraria.Netplay.ServerPassword = "";
 
             using var kernel = new OrionKernel(Logger.None);
             using var playerService = new OrionPlayerService(kernel, Logger.None);
@@ -108,6 +109,7 @@ namespace Orion.Core.Players {
         [Fact]
         public void PacketReceive_EventModified() {
             Terraria.Netplay.Clients[5] = new Terraria.RemoteClient { Id = 5 };
+            Terraria.Netplay.ServerPassword = "";
 
             using var kernel = new OrionKernel(Logger.None);
             using var playerService = new OrionPlayerService(kernel, Logger.None);
@@ -122,6 +124,7 @@ namespace Orion.Core.Players {
         [Fact]
         public void PacketReceive_EventCanceled() {
             Terraria.Netplay.Clients[5] = new Terraria.RemoteClient { Id = 5 };
+            Terraria.Netplay.ServerPassword = "";
 
             using var kernel = new OrionKernel(Logger.None);
             using var playerService = new OrionPlayerService(kernel, Logger.None);
@@ -274,6 +277,44 @@ namespace Orion.Core.Players {
             TestUtils.FakeReceiveBytes(5, PlayerPvpPacketTests.Bytes);
 
             Assert.False(Terraria.Main.player[5].hostile);
+        }
+
+        [Fact]
+        public void PacketReceive_PlayerPasswordEventTriggered() {
+            // Set `State` to -1 so that the password packet is not ignored by the server.
+            Terraria.Netplay.Clients[5] = new Terraria.RemoteClient { Id = 5, State = -1 };
+            Terraria.Main.player[5] = new Terraria.Player { whoAmI = 5 };
+            Terraria.Netplay.ServerPassword = "Terraria";
+
+            using var kernel = new OrionKernel(Logger.None);
+            using var playerService = new OrionPlayerService(kernel, Logger.None);
+            var isRun = false;
+            kernel.RegisterHandler<PlayerPasswordEvent>(evt => {
+                Assert.Same(playerService.Players[5], evt.Player);
+                Assert.Equal("Terraria", evt.Password);
+                isRun = true;
+            }, Logger.None);
+
+            TestUtils.FakeReceiveBytes(5, ClientPasswordPacketTests.Bytes);
+
+            Assert.True(isRun);
+            Assert.Equal(1, Terraria.Netplay.Clients[5].State);
+        }
+
+        [Fact]
+        public void PacketReceive_PlayerPasswordEventCanceled() {
+            // Set `State` to -1 so that the password packet is not ignored by the server.
+            Terraria.Netplay.Clients[5] = new Terraria.RemoteClient { Id = 5, State = -1 };
+            Terraria.Main.player[5] = new Terraria.Player { whoAmI = 5 };
+            Terraria.Netplay.ServerPassword = "Terraria";
+
+            using var kernel = new OrionKernel(Logger.None);
+            using var playerService = new OrionPlayerService(kernel, Logger.None);
+            kernel.RegisterHandler<PlayerPasswordEvent>(evt => evt.Cancel(), Logger.None);
+
+            TestUtils.FakeReceiveBytes(5, ClientPasswordPacketTests.Bytes);
+
+            Assert.Equal(-1, Terraria.Netplay.Clients[5].State);
         }
 
         [Fact]
