@@ -1,2 +1,8 @@
 - name: Getting Started
   href: getting-started.md
+- name: Plugin Template
+  href: plugin-template.md
+- name: Tutorials
+  items:
+    - name: Event Handlers
+      href: tutorials/event-handlers.md
