@@ -19,7 +19,7 @@ namespace Example {
     public sealed class ExamplePlugin : OrionPlugin {
         /// <summary>
         /// Initializes a new instance of the <see cref="ExamplePlugin"/> class.
-        /// This constructor gets called using 
+        /// This constructor gets called using a dependency injection container.
         /// </summary>
         public ExamplePlugin(OrionKernel kernel, ILogger log)
             : base(kernel, log) { }
@@ -50,3 +50,16 @@ namespace Example {
 ## Using your Plugin
 
 Once you've replaced the file, build your project in debug mode. In the `bin/Debug/netstandard2.1/` directory, copy the generated `Example.dll` file to the `plugins/` directory where the Orion launcher is located. The plugin will now take effect upon server startup.
+
+## Behind the Scenes
+
+Orion instantiates all plugins using [Ninject](https://www.nuget.org/packages/Ninject) to gather any of the plugin's dependencies. Here is a rough sketch of how this is done (with the Orion launcher):
+
+1. The `plugins/` directory is scanned for .NET assemblies. For each .NET assembly:
+    1. All service interfaces are loaded.
+    2. All service bindings are loaded, and for each interface, the binding with the highest `BindingPriority` is kept.
+    3. All plugin types are loaded.
+2. Each service interface is bound to a single service binding via Ninject, with the scope specified by the `ServiceAttribute` placed on the service interface.
+3. Each plugin is constructed via Ninject.
+
+This allows plugins to define overriding service bindings, and to have dependencies on other plugins.
