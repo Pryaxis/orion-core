@@ -53,7 +53,7 @@ namespace Orion.Core.Packets.World.Signs {
         }
 
         [Fact]
-        public void RoundTrip_BreakBlock() {
+        public void RoundTrip() {
             TestUtils.RoundTripPacket<SignReadPacket>(Bytes.AsSpan(IPacket.HeaderSize..), PacketContext.Server);
         }
     }

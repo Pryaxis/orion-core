@@ -402,7 +402,7 @@ namespace Orion.Core {
 
             return (EventHandlerCollection<TEvent>)collection;
         }
-        
+
         // =============================================================================================================
         // OTAPI hooks
         //

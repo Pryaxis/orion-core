@@ -86,7 +86,7 @@ namespace Orion.Core.Packets.World.Tiles {
         }
 
         [Fact]
-        public void RoundTrip_BreakBlock() {
+        public void RoundTrip() {
             TestUtils.RoundTripPacket<TileSquarePacket>(Bytes.AsSpan(IPacket.HeaderSize..), PacketContext.Server);
         }
     }

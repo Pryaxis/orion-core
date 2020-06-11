@@ -64,7 +64,7 @@ namespace Orion.Core.Packets.World.Tiles {
         }
 
         [Fact]
-        public void RoundTrip_BreakWall() {
+        public void RoundTrip() {
             TestUtils.RoundTripPacket<WallPaintPacket>(Bytes.AsSpan(IPacket.HeaderSize..), PacketContext.Server);
         }
     }

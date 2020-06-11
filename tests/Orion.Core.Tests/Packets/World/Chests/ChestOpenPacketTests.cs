@@ -43,7 +43,7 @@ namespace Orion.Core.Packets.World.Chests {
         }
 
         [Fact]
-        public void Open() {
+        public void Read() {
             var packet = new ChestOpenPacket();
             var span = Bytes.AsSpan(IPacket.HeaderSize..);
             Assert.Equal(span.Length, packet.Read(span, PacketContext.Server));
@@ -53,7 +53,7 @@ namespace Orion.Core.Packets.World.Chests {
         }
 
         [Fact]
-        public void RoundTrip_BreakBlock() {
+        public void RoundTrip() {
             TestUtils.RoundTripPacket<ChestOpenPacket>(Bytes.AsSpan(IPacket.HeaderSize..), PacketContext.Server);
         }
     }
