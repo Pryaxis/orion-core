@@ -110,6 +110,16 @@ namespace Orion.Core.World {
 
         [EventHandler("orion-world", Priority = EventPriority.Lowest)]
         [SuppressMessage("CodeQuality", "IDE0051:Remove unused private members", Justification = "Implicitly used")]
+        private void OnWireActivatePacket(PacketReceiveEvent<WireActivatePacket> evt) {
+            var player = evt.Sender;
+            ref var packet = ref evt.Packet;
+            var evt2 = new WiringActivateEvent(World, player, packet.X, packet.Y);
+            Kernel.Raise(evt2, Log);
+            evt.CancellationReason = evt2.CancellationReason;
+        }
+
+        [EventHandler("orion-world", Priority = EventPriority.Lowest)]
+        [SuppressMessage("CodeQuality", "IDE0051:Remove unused private members", Justification = "Implicitly used")]
         private void OnBlockPaintPacket(PacketReceiveEvent<BlockPaintPacket> evt) {
             var player = evt.Sender;
             ref var packet = ref evt.Packet;

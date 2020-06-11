@@ -1163,6 +1163,64 @@ namespace Orion.Core.World {
         }
 
         [Fact]
+        public void PacketReceive_WiringActivateEventTriggered() {
+            // Set `State` to 10 so that the wire activate packet is not ignored by the server.
+            Terraria.Netplay.Clients[5] = new Terraria.RemoteClient { Id = 5, State = 10 };
+            Terraria.Main.player[5] = new Terraria.Player { whoAmI = 5 };
+
+            using var kernel = new OrionKernel(Logger.None);
+            using var playerService = new OrionPlayerService(kernel, Logger.None);
+            using var worldService = new OrionWorldService(kernel, Logger.None);
+
+            Terraria.Main.tile[256, 100] = new Terraria.Tile { type = (ushort)BlockId.Switch };
+            Terraria.Main.tile[256, 100].active(true);
+            Terraria.Main.tile[256, 100].wire(true);
+            Terraria.Main.tile[257, 100] = new Terraria.Tile { type = (ushort)BlockId.Stone };
+            Terraria.Main.tile[257, 100].active(true);
+            Terraria.Main.tile[257, 100].wire(true);
+            Terraria.Main.tile[257, 100].actuator(true);
+
+            var isRun = false;
+            kernel.RegisterHandler<WiringActivateEvent>(evt => {
+                Assert.Same(worldService.World, evt.World);
+                Assert.Same(playerService.Players[5], evt.Player);
+                Assert.Equal(256, evt.X);
+                Assert.Equal(100, evt.Y);
+                isRun = true;
+            }, Logger.None);
+
+            TestUtils.FakeReceiveBytes(5, WireActivatePacketTests.Bytes);
+
+            Assert.True(isRun);
+            Assert.True(worldService.World[257, 100].IsBlockActuated);
+        }
+
+        [Fact]
+        public void PacketReceive_WiringActivateEventCanceled() {
+            // Set `State` to 10 so that the block paint packet is not ignored by the server.
+            Terraria.Netplay.Clients[5] = new Terraria.RemoteClient { Id = 5, State = 10 };
+            Terraria.Main.player[5] = new Terraria.Player { whoAmI = 5 };
+
+            using var kernel = new OrionKernel(Logger.None);
+            using var playerService = new OrionPlayerService(kernel, Logger.None);
+            using var worldService = new OrionWorldService(kernel, Logger.None);
+
+            Terraria.Main.tile[256, 100] = new Terraria.Tile { type = (ushort)BlockId.Switch };
+            Terraria.Main.tile[256, 100].active(true);
+            Terraria.Main.tile[256, 100].wire(true);
+            Terraria.Main.tile[257, 100] = new Terraria.Tile { type = (ushort)BlockId.Stone };
+            Terraria.Main.tile[257, 100].active(true);
+            Terraria.Main.tile[257, 100].wire(true);
+            Terraria.Main.tile[257, 100].actuator(true);
+
+            kernel.RegisterHandler<WiringActivateEvent>(evt => evt.Cancel(), Logger.None);
+
+            TestUtils.FakeReceiveBytes(5, WireActivatePacketTests.Bytes);
+
+            Assert.False(worldService.World[257, 100].IsBlockActuated);
+        }
+
+        [Fact]
         public void PacketReceive_BlockPaintEventTriggered() {
             // Set `State` to 10 so that the block paint packet is not ignored by the server.
             Terraria.Netplay.Clients[5] = new Terraria.RemoteClient { Id = 5, State = 10 };

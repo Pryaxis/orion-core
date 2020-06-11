@@ -24,28 +24,19 @@ using Xunit;
 
 namespace Orion.Core.Events.World.Tiles {
     [SuppressMessage("Style", "IDE0017:Simplify object initialization", Justification = "Testing")]
-    public class BlockBreakEventTests {
+    public class WiringActivateEventTests {
         [Fact]
         public void Ctor_NullWorld_ThrowsArgumentNullException() {
             var player = Mock.Of<IPlayer>();
 
-            Assert.Throws<ArgumentNullException>(() => new BlockBreakEvent(null!, player, 256, 100, true));
-        }
-
-        [Fact]
-        public void IsItemless_Get() {
-            var world = Mock.Of<IWorld>();
-            var player = Mock.Of<IPlayer>();
-            var evt = new BlockBreakEvent(world, player, 256, 100, true);
-
-            Assert.True(evt.IsItemless);
+            Assert.Throws<ArgumentNullException>(() => new WiringActivateEvent(null!, player, 256, 100));
         }
 
         [Fact]
         public void CancellationReason_Set_Get() {
             var world = Mock.Of<IWorld>();
             var player = Mock.Of<IPlayer>();
-            var evt = new BlockBreakEvent(world, player, 256, 100, true);
+            var evt = new WiringActivateEvent(world, player, 256, 100);
 
             evt.CancellationReason = "test";
 
