@@ -62,7 +62,11 @@ namespace Orion.Core.Packets.World.Chests {
         /// <value>The item stack.</value>
         public ItemStack ItemStack {
             get => new ItemStack(Id, StackSize, Prefix);
-            set => (Id, StackSize, Prefix) = (value.Id, (short)value.StackSize, value.Prefix);
+            set {
+                Id = value.Id;
+                StackSize = (short)value.StackSize;
+                Prefix = value.Prefix;
+            }
         }
 
         PacketId IPacket.Id => PacketId.ChestInventory;

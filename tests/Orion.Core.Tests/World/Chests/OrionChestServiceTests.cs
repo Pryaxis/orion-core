@@ -19,6 +19,7 @@ using System;
 using System.Linq;
 using Orion.Core.Events;
 using Orion.Core.Events.World.Chests;
+using Orion.Core.Items;
 using Orion.Core.Packets.World.Chests;
 using Orion.Core.Players;
 using Orion.Core.World.Tiles;
@@ -112,13 +113,12 @@ namespace Orion.Core.World.Chests {
             var socket = new TestSocket { Connected = true };
             Terraria.Netplay.Clients[5] = new Terraria.RemoteClient { Id = 5, State = 10, Socket = socket };
             Terraria.Main.player[5] = new Terraria.Player { whoAmI = 5 };
+            Terraria.Main.tile[256, 100] = new Terraria.Tile { type = (ushort)BlockId.Chests };
             Terraria.Main.chest[0] = new Terraria.Chest { x = 256, y = 100, name = "test" };
 
             using var kernel = new OrionKernel(Logger.None);
             using var playerService = new OrionPlayerService(kernel, Logger.None);
             using var chestService = new OrionChestService(kernel, Logger.None);
-
-            Terraria.Main.tile[256, 100] = new Terraria.Tile { type = (ushort)BlockId.Chests };
 
             kernel.RegisterHandler<ChestOpenEvent>(evt => evt.Cancel(), Logger.None);
 
@@ -146,6 +146,54 @@ namespace Orion.Core.World.Chests {
             TestUtils.FakeReceiveBytes(5, ChestOpenPacketTests.Bytes);
 
             Assert.False(isRun);
+        }
+
+        [Fact]
+        public void PacketReceive_ChestInventoryEventTriggered() {
+            // Set `State` to 10 so that the chest inventory packet is not ignored by the server.
+            Terraria.Netplay.Clients[5] = new Terraria.RemoteClient { Id = 5, State = 10 };
+            Terraria.Main.player[5] = new Terraria.Player { whoAmI = 5 };
+            Terraria.Main.chest[5] = new Terraria.Chest();
+            Terraria.Main.chest[5].item[2] = new Terraria.Item();
+
+            using var kernel = new OrionKernel(Logger.None);
+            using var playerService = new OrionPlayerService(kernel, Logger.None);
+            using var chestService = new OrionChestService(kernel, Logger.None);
+
+            var isRun = false;
+            kernel.RegisterHandler<ChestInventoryEvent>(evt => {
+                Assert.Same(chestService.Chests[5], evt.Chest);
+                Assert.Same(playerService.Players[5], evt.Player);
+                Assert.Equal(2, evt.Slot);
+                Assert.Equal(new ItemStack(ItemId.Sdmg, 1, ItemPrefix.Unreal), evt.ItemStack);
+                isRun = true;
+            }, Logger.None);
+
+            TestUtils.FakeReceiveBytes(5, ChestInventoryPacketTests.Bytes);
+
+            Assert.True(isRun);
+            Assert.Equal(ItemId.Sdmg, (ItemId)Terraria.Main.chest[5].item[2].type);
+            Assert.Equal(1, Terraria.Main.chest[5].item[2].stack);
+            Assert.Equal(ItemPrefix.Unreal, (ItemPrefix)Terraria.Main.chest[5].item[2].prefix);
+        }
+
+        [Fact]
+        public void PacketReceive_ChestInventoryEventCanceled() {
+            // Set `State` to 10 so that the chest inventory packet is not ignored by the server.
+            Terraria.Netplay.Clients[5] = new Terraria.RemoteClient { Id = 5, State = 10 };
+            Terraria.Main.player[5] = new Terraria.Player { whoAmI = 5 };
+            Terraria.Main.chest[5] = new Terraria.Chest();
+            Terraria.Main.chest[5].item[2] = new Terraria.Item();
+
+            using var kernel = new OrionKernel(Logger.None);
+            using var playerService = new OrionPlayerService(kernel, Logger.None);
+            using var chestService = new OrionChestService(kernel, Logger.None);
+
+            kernel.RegisterHandler<ChestInventoryEvent>(evt => evt.Cancel(), Logger.None);
+
+            TestUtils.FakeReceiveBytes(5, ChestInventoryPacketTests.Bytes);
+
+            Assert.Equal(ItemId.None, (ItemId)Terraria.Main.chest[5].item[2].type);
         }
 
         private class TestSocket : Terraria.Net.Sockets.ISocket {

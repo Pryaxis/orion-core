@@ -63,5 +63,16 @@ namespace Orion.Core.World.Chests {
             Kernel.Raise(evt2, Log);
             evt.CancellationReason = evt2.CancellationReason;
         }
+
+        [EventHandler("orion-chests", Priority = EventPriority.Lowest)]
+        [SuppressMessage("CodeQuality", "IDE0051:Remove unused private members", Justification = "Implicitly used")]
+        private void OnChestInventoryPacket(PacketReceiveEvent<ChestInventoryPacket> evt) {
+            ref var packet = ref evt.Packet;
+            var chest = Chests[packet.ChestIndex];
+            var player = evt.Sender;
+            var evt2 = new ChestInventoryEvent(chest, player, packet.Slot, packet.ItemStack);
+            Kernel.Raise(evt2, Log);
+            evt.CancellationReason = evt2.CancellationReason;
+        }
     }
 }

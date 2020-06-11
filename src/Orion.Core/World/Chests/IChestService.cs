@@ -27,6 +27,7 @@ namespace Orion.Core.World.Chests {
     /// The item service is responsible for publishing the following chest-related events:
     /// <list type="bullet">
     /// <item><description><see cref="ChestOpenEvent"/></description></item>
+    /// <item><description><see cref="ChestInventoryEvent"/></description></item>
     /// </list>
     /// </remarks>
     [Service(ServiceScope.Singleton)]
