@@ -32,6 +32,7 @@ namespace Orion.Core.Npcs {
     /// <item><description><see cref="NpcTickEvent"/></description></item>
     /// <item><description><see cref="NpcKilledEvent"/></description></item>
     /// <item><description><see cref="NpcLootEvent"/></description></item>
+    /// <item><description><see cref="NpcBuffEvent"/></description></item>
     /// <item><description><see cref="NpcCatchEvent"/></description></item>
     /// <item><description><see cref="NpcFishEvent"/></description></item>
     /// </list>

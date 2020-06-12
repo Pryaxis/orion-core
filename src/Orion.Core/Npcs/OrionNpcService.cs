@@ -20,6 +20,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.Threading;
+using Orion.Core.Buffs;
 using Orion.Core.Collections;
 using Orion.Core.DataStructures;
 using Orion.Core.Events;
@@ -167,6 +168,19 @@ namespace Orion.Core.Npcs {
         // =============================================================================================================
         // NPC event publishers
         //
+
+        [EventHandler("orion-npcs", Priority = EventPriority.Lowest)]
+        [SuppressMessage("CodeQuality", "IDE0051:Remove unused private members", Justification = "Implicitly used")]
+        private void OnNpcBuffPacket(PacketReceiveEvent<NpcBuffPacket> evt) {
+            ref var packet = ref evt.Packet;
+            var npc = Npcs[packet.NpcIndex];
+            var source = evt.Sender;
+            var buff = new Buff(packet.Id, TimeSpan.FromSeconds(packet.Ticks / 60.0));
+
+            var evt2 = new NpcBuffEvent(npc, source, buff);
+            Kernel.Raise(evt2, Log);
+            evt.CancellationReason = evt2.CancellationReason;
+        }
 
         [EventHandler("orion-npcs", Priority = EventPriority.Lowest)]
         [SuppressMessage("CodeQuality", "IDE0051:Remove unused private members", Justification = "Implicitly used")]

@@ -17,6 +17,7 @@
 
 using System;
 using System.Linq;
+using Orion.Core.Buffs;
 using Orion.Core.DataStructures;
 using Orion.Core.Events;
 using Orion.Core.Events.Npcs;
@@ -256,6 +257,48 @@ namespace Orion.Core.Npcs {
             Terraria.Main.npc[0].checkDead();
 
             Assert.NotEqual(ItemId.Gel, (ItemId)Terraria.Main.item[0].type);
+        }
+
+        [Fact]
+        public void PacketReceive_NpcBuffEventTriggered() {
+            // Set `State` to 10 so that the NPC catch packet is not ignored by the server.
+            Terraria.Netplay.Clients[5] = new Terraria.RemoteClient { Id = 5, State = 10 };
+            Terraria.Main.player[5] = new Terraria.Player { whoAmI = 5 };
+            Terraria.Main.npc[1] = new Terraria.NPC { whoAmI = 1 };
+
+            using var kernel = new OrionKernel(Logger.None);
+            using var playerService = new OrionPlayerService(kernel, Logger.None);
+            using var npcService = new OrionNpcService(kernel, Logger.None);
+            var isRun = false;
+            kernel.RegisterHandler<NpcBuffEvent>(evt => {
+                Assert.Same(npcService.Npcs[1], evt.Npc);
+                Assert.Same(playerService.Players[5], evt.Source);
+                Assert.Equal(new Buff(BuffId.Poisoned, TimeSpan.FromSeconds(1)), evt.Buff);
+                isRun = true;
+            }, Logger.None);
+
+            TestUtils.FakeReceiveBytes(5, NpcBuffPacketTests.Bytes);
+
+            Assert.True(isRun);
+            Assert.Equal(BuffId.Poisoned, (BuffId)Terraria.Main.npc[1].buffType[0]);
+            Assert.Equal(60, Terraria.Main.npc[1].buffTime[0]);
+        }
+
+        [Fact]
+        public void PacketReceive_NpcBuffEventCanceled() {
+            // Set `State` to 10 so that the NPC catch packet is not ignored by the server.
+            Terraria.Netplay.Clients[5] = new Terraria.RemoteClient { Id = 5, State = 10 };
+            Terraria.Main.player[5] = new Terraria.Player { whoAmI = 5 };
+            Terraria.Main.npc[1] = new Terraria.NPC { whoAmI = 1 };
+
+            using var kernel = new OrionKernel(Logger.None);
+            using var playerService = new OrionPlayerService(kernel, Logger.None);
+            using var npcService = new OrionNpcService(kernel, Logger.None);
+            kernel.RegisterHandler<NpcBuffEvent>(evt => evt.Cancel(), Logger.None);
+
+            TestUtils.FakeReceiveBytes(5, NpcBuffPacketTests.Bytes);
+
+            Assert.Equal(BuffId.None, (BuffId)Terraria.Main.npc[1].buffType[0]);
         }
 
         [Fact]
