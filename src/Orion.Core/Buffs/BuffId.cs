@@ -408,7 +408,7 @@ namespace Orion.Core.Buffs {
             BuffId.CreativeShock,
             BuffId.TheBastDefense,
             BuffId.SparkleSlime,
-            BuffId.CerebralMindtrick,
+            BuffId.CerebralMindtrick
         };
 
         /// <summary>

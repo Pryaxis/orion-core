@@ -34,6 +34,7 @@ namespace Orion.Core.Packets {
 #pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
         ClientConnect = 1,
         ServerDisconnect = 2,
+        ServerIndex = 3,
         PlayerJoin = 6,
         PlayerHealth = 16,
         TileModify = 17,
@@ -64,6 +65,7 @@ namespace Orion.Core.Packets {
         private static readonly IDictionary<PacketId, Type> _types = new Dictionary<PacketId, Type> {
             [PacketId.ClientConnect] = typeof(ClientConnectPacket),
             [PacketId.ServerDisconnect] = typeof(ServerDisconnectPacket),
+            [PacketId.ServerIndex] = typeof(ServerIndexPacket),
             [PacketId.PlayerJoin] = typeof(PlayerJoinPacket),
             [PacketId.PlayerHealth] = typeof(PlayerHealthPacket),
             [PacketId.TileModify] = typeof(TileModifyPacket),
