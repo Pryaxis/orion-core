@@ -4,5 +4,8 @@
   href: plugin-template.md
 - name: Tutorials
   items:
-    - name: Event Handlers
-      href: tutorials/event-handlers.md
+    - name: "Tutorial: Events"
+      href: tutorials/events.md
+    - name: "Tutorial: Injecting Services"
+      href: tutorials/injecting-services.md
+      
