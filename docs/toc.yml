@@ -1,4 +1,6 @@
-- name: Articles
-  href: articles/
+- name: For Developers
+  href: for-developers/
+- name: For API Users
+  href: for-api-users/
 - name: API Documentation
   href: api/
