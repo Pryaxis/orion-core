@@ -26,6 +26,10 @@
         "files": [
           "articles/**.md",
           "articles/**/toc.yml",
+          "for-api-users/**/toc.yml",
+          "for-api-users/**.md",
+          "for-developers/**/toc.yml",
+          "for-developers/**.md",
           "toc.yml",
           "*.md"
         ]
