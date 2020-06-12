@@ -56,6 +56,7 @@ namespace Orion.Core.Items {
             var itemStack3 = new ItemStack(ItemId.Sdmg, 2);
             var itemStack4 = new ItemStack(ItemId.DirtBlock, 999);
 
+            Assert.False(itemStack.Equals(1));
             Assert.False(itemStack.Equals((object)itemStack2));
             Assert.False(itemStack.Equals((object)itemStack3));
             Assert.False(itemStack.Equals((object)itemStack4));

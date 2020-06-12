@@ -117,7 +117,7 @@ namespace Orion.Core.Projectiles {
         }
 
         [Fact]
-        public void ProjectileUpdate_EventTriggered() {
+        public void ProjectileTick_EventTriggered() {
             using var kernel = new OrionKernel(Logger.None);
             using var projectileService = new OrionProjectileService(kernel, Logger.None);
             var isRun = false;
@@ -132,7 +132,7 @@ namespace Orion.Core.Projectiles {
         }
 
         [Fact]
-        public void ProjectileUpdate_EventCanceled() {
+        public void ProjectileTick_EventCanceled() {
             using var kernel = new OrionKernel(Logger.None);
             using var projectileService = new OrionProjectileService(kernel, Logger.None);
             kernel.RegisterHandler<ProjectileTickEvent>(evt => evt.Cancel(), Logger.None);

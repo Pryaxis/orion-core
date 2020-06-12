@@ -56,6 +56,7 @@ namespace Orion.Core.DataStructures {
             var color3 = new Color3(255, 0, 0);
             var color4 = new Color3(0, 0, 0);
 
+            Assert.False(color.Equals(1));
             Assert.False(color.Equals((object)color2));
             Assert.False(color.Equals((object)color3));
             Assert.False(color.Equals((object)color4));

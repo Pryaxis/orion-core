@@ -167,6 +167,17 @@ namespace Orion.Core.Npcs {
         }
 
         [Fact]
+        public void NpcTick_EventCanceled() {
+            Terraria.Main.npc[0] = new Terraria.NPC { whoAmI = 0 };
+
+            using var kernel = new OrionKernel(Logger.None);
+            using var npcService = new OrionNpcService(kernel, Logger.None);
+            kernel.RegisterHandler<NpcTickEvent>(evt => evt.Cancel(), Logger.None);
+
+            Terraria.Main.npc[0].UpdateNPC(0);
+        }
+
+        [Fact]
         public void NpcKilled_EventTriggered() {
             Terraria.Main.npc[0] = new Terraria.NPC { whoAmI = 0 };
 

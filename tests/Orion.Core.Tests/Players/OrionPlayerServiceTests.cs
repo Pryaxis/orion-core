@@ -87,6 +87,61 @@ namespace Orion.Core.Players {
         }
 
         [Fact]
+        public void PlayerTick_EventTriggered() {
+            using var kernel = new OrionKernel(Logger.None);
+            using var playerService = new OrionPlayerService(kernel, Logger.None);
+            var isRun = false;
+            kernel.RegisterHandler<PlayerTickEvent>(evt => {
+                Assert.Same(Terraria.Main.player[0], ((OrionPlayer)evt.Player).Wrapped);
+                isRun = true;
+            }, Logger.None);
+
+            Terraria.Main.player[0].Update(0);
+
+            Assert.True(isRun);
+        }
+
+        [Fact]
+        public void PlayerTick_EventCanceled() {
+            using var kernel = new OrionKernel(Logger.None);
+            using var playerService = new OrionPlayerService(kernel, Logger.None);
+            kernel.RegisterHandler<PlayerTickEvent>(evt => evt.Cancel(), Logger.None);
+
+            Terraria.Main.player[0].Update(0);
+        }
+
+        [Fact]
+        public void ResetClient_PlayerQuitEventTriggered() {
+            Terraria.Netplay.Clients[5] = new Terraria.RemoteClient { Id = 5, IsActive = true };
+
+            using var kernel = new OrionKernel(Logger.None);
+            using var playerService = new OrionPlayerService(kernel, Logger.None);
+            var isRun = false;
+            kernel.RegisterHandler<PlayerQuitEvent>(evt => {
+                Assert.Same(playerService.Players[5], evt.Player);
+                isRun = true;
+            }, Logger.None);
+
+            Terraria.Netplay.Clients[5].Reset();
+
+            Assert.True(isRun);
+        }
+
+        [Fact]
+        public void ResetClient_PlayerQuitEventNotTriggered() {
+            Terraria.Netplay.Clients[5] = new Terraria.RemoteClient { Id = 5 };
+
+            using var kernel = new OrionKernel(Logger.None);
+            using var playerService = new OrionPlayerService(kernel, Logger.None);
+            var isRun = false;
+            kernel.RegisterHandler<PlayerQuitEvent>(evt => isRun = true, Logger.None);
+
+            Terraria.Netplay.Clients[5].Reset();
+
+            Assert.False(isRun);
+        }
+
+        [Fact]
         public void PacketReceive_EventTriggered() {
             Terraria.Netplay.Clients[5] = new Terraria.RemoteClient { Id = 5 };
             Terraria.Netplay.ServerPassword = "";
@@ -510,52 +565,6 @@ namespace Orion.Core.Players {
             using var playerService = new OrionPlayerService(kernel, Logger.None);
 
             Terraria.NetMessage.SendData((byte)PacketId.ClientConnect, 5);
-        }
-
-        [Fact]
-        public void PlayerTick_EventTriggered() {
-            using var kernel = new OrionKernel(Logger.None);
-            using var playerService = new OrionPlayerService(kernel, Logger.None);
-            var isRun = false;
-            kernel.RegisterHandler<PlayerTickEvent>(evt => {
-                Assert.Same(Terraria.Main.player[0], ((OrionPlayer)evt.Player).Wrapped);
-                isRun = true;
-            }, Logger.None);
-
-            Terraria.Main.player[0].Update(0);
-
-            Assert.True(isRun);
-        }
-
-        [Fact]
-        public void ResetClient_PlayerQuitEventTriggered() {
-            Terraria.Netplay.Clients[5] = new Terraria.RemoteClient { Id = 5, IsActive = true };
-
-            using var kernel = new OrionKernel(Logger.None);
-            using var playerService = new OrionPlayerService(kernel, Logger.None);
-            var isRun = false;
-            kernel.RegisterHandler<PlayerQuitEvent>(evt => {
-                Assert.Same(playerService.Players[5], evt.Player);
-                isRun = true;
-            }, Logger.None);
-
-            Terraria.Netplay.Clients[5].Reset();
-
-            Assert.True(isRun);
-        }
-
-        [Fact]
-        public void ResetClient_PlayerQuitEventNotTriggered() {
-            Terraria.Netplay.Clients[5] = new Terraria.RemoteClient { Id = 5 };
-
-            using var kernel = new OrionKernel(Logger.None);
-            using var playerService = new OrionPlayerService(kernel, Logger.None);
-            var isRun = false;
-            kernel.RegisterHandler<PlayerQuitEvent>(evt => isRun = true, Logger.None);
-
-            Terraria.Netplay.Clients[5].Reset();
-
-            Assert.False(isRun);
         }
 
         private class TestSocket : Terraria.Net.Sockets.ISocket {

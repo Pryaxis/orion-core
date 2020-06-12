@@ -49,6 +49,7 @@ namespace Orion.Core.DataStructures {
             var vector2 = new Vector2f(1.23f, 0);
             var vector3 = new Vector2f(0, 0);
 
+            Assert.False(vector.Equals(1));
             Assert.False(vector.Equals((object)vector2));
             Assert.False(vector.Equals((object)vector3));
             Assert.False(vector.Equals(vector2));

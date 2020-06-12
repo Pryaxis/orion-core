@@ -126,6 +126,15 @@ namespace Orion.Core.Items {
             Assert.True(isRun);
         }
 
+        [Fact]
+        public void ItemTick_EventCanceled() {
+            using var kernel = new OrionKernel(Logger.None);
+            using var itemService = new OrionItemService(kernel, Logger.None);
+            kernel.RegisterHandler<ItemTickEvent>(evt => evt.Cancel(), Logger.None);
+
+            Terraria.Main.item[0].UpdateItem(0);
+        }
+
         [Theory]
         [InlineData(ItemId.StoneBlock, 100, ItemPrefix.None)]
         [InlineData(ItemId.Sdmg, 1, ItemPrefix.Unreal)]
