@@ -47,6 +47,8 @@ namespace Example {
 
 ***
 
+&nbsp;
+
 This plugin simply prints `Hello, world!` and `Goodbye, world!` and initialization and disposal, respectively. The [`Plugin`](xref:Orion.Core.Framework.PluginAttribute) attribute specifies the plugin name (which should be unique among all plugins, and is used for logging/debugging purposes) and optionally the plugin author.
 
 ## Using your Plugin
