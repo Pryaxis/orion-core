@@ -47,6 +47,8 @@ namespace Example {
 
 ***
 
+This plugin simply prints `Hello, world!` and `Goodbye, world!` and initialization and disposal, respectively. The [`Plugin`](xref:Orion.Core.Framework.PluginAttribute) attribute specifies the plugin name (which should be unique among all plugins, and is used for logging/debugging purposes) and optionally the plugin author.
+
 ## Using your Plugin
 
 Once you've replaced the file, build your project in debug mode. In the `bin/Debug/netstandard2.1/` directory, copy the generated `Example.dll` file to the `plugins/` directory where the Orion launcher is located. The plugin will now take effect upon server startup.
@@ -57,9 +59,9 @@ Orion instantiates all plugins using [Ninject](https://www.nuget.org/packages/Ni
 
 1. The `plugins/` directory is scanned for .NET assemblies. For each .NET assembly:
     1. All service interfaces are loaded.
-    2. All service bindings are loaded, and for each interface, the binding with the highest `BindingPriority` is kept.
+    2. All service bindings are loaded, and for each interface, the binding with the highest [`BindingPriority`](xref:Orion.Core.Framework.BindingPriority) is kept.
     3. All plugin types are loaded.
-2. Each service interface is bound to a single service binding via Ninject, with the scope specified by the `ServiceAttribute` placed on the service interface.
+2. Each service interface is bound to a single service binding via Ninject, with the scope specified by the [`Service`](xref:Orion.Core.Framework.ServiceAttribute) attribute placed on the service interface.
 3. Each plugin is constructed via Ninject.
 
 This allows plugins to define overriding service bindings, and to have dependencies on other plugins.
