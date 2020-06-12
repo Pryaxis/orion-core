@@ -1,5 +1,5 @@
 ---
-uid: getting_started_developers
+uid: getting_started_devs
 ---
 
 ## Getting Started
