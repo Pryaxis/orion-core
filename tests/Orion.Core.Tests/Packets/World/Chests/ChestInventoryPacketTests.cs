@@ -71,24 +71,6 @@ namespace Orion.Core.Packets.World.Chests {
         }
 
         [Fact]
-        public void ItemStack_Get() {
-            var packet = new ChestInventoryPacket { Id = ItemId.Sdmg, StackSize = 1, Prefix = ItemPrefix.Unreal };
-
-            Assert.Equal(new ItemStack(ItemId.Sdmg, 1, ItemPrefix.Unreal), packet.ItemStack);
-        }
-
-        [Fact]
-        public void ItemStack_Set() {
-            var packet = new ChestInventoryPacket();
-
-            packet.ItemStack = new ItemStack(ItemId.Sdmg, 1, ItemPrefix.Unreal);
-
-            Assert.Equal(ItemId.Sdmg, packet.Id);
-            Assert.Equal(1, packet.StackSize);
-            Assert.Equal(ItemPrefix.Unreal, packet.Prefix);
-        }
-
-        [Fact]
         public void Read() {
             var packet = new ChestInventoryPacket();
             var span = Bytes.AsSpan(IPacket.HeaderSize..);

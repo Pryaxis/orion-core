@@ -23,6 +23,7 @@ using Orion.Core.Events;
 using Orion.Core.Events.Packets;
 using Orion.Core.Events.World.Chests;
 using Orion.Core.Framework;
+using Orion.Core.Items;
 using Orion.Core.Packets.World.Chests;
 using Serilog;
 
@@ -70,7 +71,8 @@ namespace Orion.Core.World.Chests {
             ref var packet = ref evt.Packet;
             var chest = Chests[packet.ChestIndex];
             var player = evt.Sender;
-            var evt2 = new ChestInventoryEvent(chest, player, packet.Slot, packet.ItemStack);
+            var evt2 = new ChestInventoryEvent(
+                chest, player, packet.Slot, new ItemStack(packet.Id, packet.StackSize, packet.Prefix));
             Kernel.Raise(evt2, Log);
             evt.CancellationReason = evt2.CancellationReason;
         }

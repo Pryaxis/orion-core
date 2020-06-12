@@ -56,19 +56,6 @@ namespace Orion.Core.Packets.World.Chests {
         /// <value>The item's ID.</value>
         [field: FieldOffset(6)] public ItemId Id { get; set; }
 
-        /// <summary>
-        /// Gets or sets the item stack.
-        /// </summary>
-        /// <value>The item stack.</value>
-        public ItemStack ItemStack {
-            get => new ItemStack(Id, StackSize, Prefix);
-            set {
-                Id = value.Id;
-                StackSize = (short)value.StackSize;
-                Prefix = value.Prefix;
-            }
-        }
-
         PacketId IPacket.Id => PacketId.ChestInventory;
 
         /// <inheritdoc/>
