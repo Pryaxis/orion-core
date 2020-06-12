@@ -37,6 +37,13 @@ namespace Orion.Core.Packets.Server {
         }
 
         [Fact]
+        public void Message_Get_Default() {
+            var packet = new ServerChatPacket();
+
+            Assert.Equal(NetworkText.Empty, packet.Message);
+        }
+
+        [Fact]
         public void Message_SetNullValue_ThrowsArgumentNullException() {
             var packet = new ServerChatPacket();
 

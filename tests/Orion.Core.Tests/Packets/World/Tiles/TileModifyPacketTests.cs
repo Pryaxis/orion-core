@@ -200,6 +200,10 @@ namespace Orion.Core.Packets.World.Tiles {
             packet.IsFailure = true;
 
             Assert.True(packet.IsFailure);
+
+            packet.IsFailure = false;
+
+            Assert.False(packet.IsFailure);
         }
 
         [Fact]

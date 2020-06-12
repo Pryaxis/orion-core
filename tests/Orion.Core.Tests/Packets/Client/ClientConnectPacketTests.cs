@@ -25,6 +25,13 @@ namespace Orion.Core.Packets.Client {
         public static readonly byte[] Bytes = { 15, 0, 1, 11, 84, 101, 114, 114, 97, 114, 105, 97, 49, 57, 52 };
 
         [Fact]
+        public void Version_Get_Default() {
+            var packet = new ClientConnectPacket();
+
+            Assert.Equal(string.Empty, packet.Version);
+        }
+
+        [Fact]
         public void Version_SetNullValue_ThrowsArgumentNullException() {
             var packet = new ClientConnectPacket();
 

@@ -30,17 +30,17 @@ namespace Orion.Core.World.Tiles {
         /// <param name="width">The width.</param>
         /// <param name="height">The height.</param>
         /// <exception cref="ArgumentOutOfRangeException">
-        /// <paramref name="width"/> or <paramref name="height"/> are non-positive.
+        /// <paramref name="width"/> or <paramref name="height"/> are negative.
         /// </exception>
         public TileSlice(int width, int height) {
-            if (width <= 0) {
+            if (width < 0) {
                 // Not localized because this string is developer-facing.
-                throw new ArgumentOutOfRangeException(nameof(width), "Width is non-positive");
+                throw new ArgumentOutOfRangeException(nameof(width), "Width is negative");
             }
 
-            if (height <= 0) {
+            if (height < 0) {
                 // Not localized because this string is developer-facing.
-                throw new ArgumentOutOfRangeException(nameof(height), "Height is non-positive");
+                throw new ArgumentOutOfRangeException(nameof(height), "Height is negative");
             }
 
             _tiles = new Tile[width, height];

@@ -30,6 +30,13 @@ namespace Orion.Core.Packets.Modules {
         public static readonly byte[] ClientBytes = { 15, 0, 82, 1, 0, 1, 0, 4, 116, 101, 115, 116, 255, 255, 255 };
 
         [Fact]
+        public void ClientCommand_Get_Default() {
+            var module = new ChatModule();
+
+            Assert.Equal(string.Empty, module.ClientCommand);
+        }
+
+        [Fact]
         public void ClientCommand_SetNullValue_ThrowsArgumentNullException() {
             var module = new ChatModule();
 
@@ -43,6 +50,13 @@ namespace Orion.Core.Packets.Modules {
             module.ClientCommand = "Say";
 
             Assert.Equal("Say", module.ClientCommand);
+        }
+
+        [Fact]
+        public void ClientMessage_Get_Default() {
+            var module = new ChatModule();
+
+            Assert.Equal(string.Empty, module.ClientMessage);
         }
 
         [Fact]
@@ -75,6 +89,13 @@ namespace Orion.Core.Packets.Modules {
             var module = new ChatModule();
 
             Assert.Throws<ArgumentNullException>(() => module.ServerMessage = null!);
+        }
+
+        [Fact]
+        public void ServerMessage_Get_Default() {
+            var module = new ChatModule();
+
+            Assert.Equal(NetworkText.Empty, module.ServerMessage);
         }
 
         [Fact]

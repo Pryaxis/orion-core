@@ -22,18 +22,14 @@ using Xunit;
 
 namespace Orion.Core.World.Tiles {
     public class TileSliceTests {
-        [Theory]
-        [InlineData(-1)]
-        [InlineData(0)]
-        public void Ctor_NonPositiveWidth_ThrowsArgumentOutOfRangeException(int width) {
-            Assert.Throws<ArgumentOutOfRangeException>(() => new TileSlice(width, 2));
+        [Fact]
+        public void Ctor_NegativeWidth_ThrowsArgumentOutOfRangeException() {
+            Assert.Throws<ArgumentOutOfRangeException>(() => new TileSlice(-1, 2));
         }
 
-        [Theory]
-        [InlineData(-1)]
-        [InlineData(0)]
-        public void Ctor_NonPositiveHeight_ThrowsArgumentOutOfRangeException(int height) {
-            Assert.Throws<ArgumentOutOfRangeException>(() => new TileSlice(1, height));
+        [Fact]
+        public void Ctor_NegativeHeight_ThrowsArgumentOutOfRangeException() {
+            Assert.Throws<ArgumentOutOfRangeException>(() => new TileSlice(1, -1));
         }
 
         [Fact]

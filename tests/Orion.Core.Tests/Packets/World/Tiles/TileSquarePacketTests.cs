@@ -49,6 +49,14 @@ namespace Orion.Core.Packets.World.Tiles {
         }
 
         [Fact]
+        public void Tiles_Get_Default() {
+            var packet = new TileSquarePacket();
+
+            Assert.Equal(0, packet.Tiles.Width);
+            Assert.Equal(0, packet.Tiles.Height);
+        }
+
+        [Fact]
         public void Tiles_SetNullValue_ThrowsArgumentNullException() {
             var packet = new TileSquarePacket();
 

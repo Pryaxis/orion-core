@@ -29,6 +29,13 @@ namespace Orion.Core.Packets.Client {
         };
 
         [Fact]
+        public void Reason_Get_Default() {
+            var packet = new ServerDisconnectPacket();
+
+            Assert.Equal(NetworkText.Empty, packet.Reason);
+        }
+
+        [Fact]
         public void Reason_SetNullValue_ThrowsArgumentNullException() {
             var packet = new ServerDisconnectPacket();
 

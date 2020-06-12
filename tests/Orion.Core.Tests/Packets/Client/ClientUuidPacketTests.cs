@@ -25,6 +25,13 @@ namespace Orion.Core.Packets.Client {
         public static readonly byte[] Bytes = { 12, 0, 68, 8, 84, 101, 114, 114, 97, 114, 105, 97 };
 
         [Fact]
+        public void Uuid_Get_Default() {
+            var packet = new ClientUuidPacket();
+
+            Assert.Equal(string.Empty, packet.Uuid);
+        }
+
+        [Fact]
         public void Uuid_SetNullValue_ThrowsArgumentNullException() {
             var packet = new ClientUuidPacket();
 

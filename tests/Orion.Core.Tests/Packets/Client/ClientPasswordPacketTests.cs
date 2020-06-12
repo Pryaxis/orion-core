@@ -25,6 +25,13 @@ namespace Orion.Core.Packets.Client {
         public static readonly byte[] Bytes = { 12, 0, 38, 8, 84, 101, 114, 114, 97, 114, 105, 97 };
 
         [Fact]
+        public void Password_Get_Default() {
+            var packet = new ClientPasswordPacket();
+
+            Assert.Equal(string.Empty, packet.Password);
+        }
+
+        [Fact]
         public void Password_SetNullValue_ThrowsArgumentNullException() {
             var packet = new ClientPasswordPacket();
 
