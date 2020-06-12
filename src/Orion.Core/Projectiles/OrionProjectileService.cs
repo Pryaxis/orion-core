@@ -46,14 +46,16 @@ namespace Orion.Core.Projectiles {
             OTAPI.Hooks.Projectile.PreUpdate = null;
         }
 
-        public IProjectile? SpawnProjectile(
+        public IProjectile SpawnProjectile(
                 ProjectileId id, Vector2f position, Vector2f velocity, int damage, float knockback) {
             // Not localized because this string is developer-facing.
             Log.Debug("Spawning {ProjectileId} at {Position}", id, position);
 
             var projectileIndex = Terraria.Projectile.NewProjectile(
                 position.X, position.Y, velocity.X, velocity.Y, (int)id, damage, knockback);
-            return projectileIndex >= 0 && projectileIndex < Projectiles.Count ? Projectiles[projectileIndex] : null;
+            Debug.Assert(projectileIndex >= 0 && projectileIndex < Projectiles.Count);
+
+            return Projectiles[projectileIndex];
         }
 
         // =============================================================================================================

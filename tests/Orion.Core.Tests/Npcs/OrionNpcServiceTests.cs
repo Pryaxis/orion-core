@@ -296,7 +296,7 @@ namespace Orion.Core.Npcs {
             // Set `State` to 10 so that the NPC fish packet is not ignored by the server.
             Terraria.Netplay.Clients[5] = new Terraria.RemoteClient { Id = 5, State = 10 };
             Terraria.Main.player[5] = new Terraria.Player { whoAmI = 5 };
-            Terraria.Main.npc[0] = new Terraria.NPC();
+            Terraria.Main.npc[0] = new Terraria.NPC { whoAmI = 0 };
 
             using var kernel = new OrionKernel(Logger.None);
             using var playerService = new OrionPlayerService(kernel, Logger.None);
@@ -321,7 +321,7 @@ namespace Orion.Core.Npcs {
             // Set `State` to 10 so that the NPC fish packet is not ignored by the server.
             Terraria.Netplay.Clients[5] = new Terraria.RemoteClient { Id = 5, State = 10 };
             Terraria.Main.player[5] = new Terraria.Player { whoAmI = 5 };
-            Terraria.Main.npc[0] = new Terraria.NPC();
+            Terraria.Main.npc[0] = new Terraria.NPC { whoAmI = 0 };
 
             using var kernel = new OrionKernel(Logger.None);
             using var playerService = new OrionPlayerService(kernel, Logger.None);
@@ -335,14 +335,27 @@ namespace Orion.Core.Npcs {
 
         [Fact]
         public void SpawnNpc() {
+            Terraria.Main.npc[0] = new Terraria.NPC { whoAmI = 0 };
+
             using var kernel = new OrionKernel(Logger.None);
             using var npcService = new OrionNpcService(kernel, Logger.None);
             var npc = npcService.SpawnNpc(NpcId.BlueSlime, Vector2f.Zero);
 
             Assert.NotNull(npc);
-#pragma warning disable CS8602 // Dereference of a possibly null reference.
-            Assert.Equal(NpcId.BlueSlime, npc.Id);
-#pragma warning restore CS8602 // Dereference of a possibly null reference.
+            Assert.Equal(NpcId.BlueSlime, npc!.Id);
+        }
+
+        [Fact]
+        public void SpawnNpc_ReturnsNull() {
+            for (var i = 0; i < Terraria.Main.maxNPCs; ++i) {
+                Terraria.Main.npc[i] = new Terraria.NPC { whoAmI = i, active = true };
+            }
+
+            using var kernel = new OrionKernel(Logger.None);
+            using var npcService = new OrionNpcService(kernel, Logger.None);
+            var npc = npcService.SpawnNpc(NpcId.BlueSlime, Vector2f.Zero);
+
+            Assert.Null(npc);
         }
     }
 }

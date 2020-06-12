@@ -48,8 +48,8 @@ namespace Orion.Core.Projectiles {
         /// <param name="velocity">The projectile velocity.</param>
         /// <param name="damage">The projectile damage.</param>
         /// <param name="knockback">The projectile knockback.</param>
-        /// <returns>The resulting projectile, or <see langword="null"/> if none was spawned.</returns>
-        IProjectile? SpawnProjectile(
+        /// <returns>The resulting projectile.</returns>
+        IProjectile SpawnProjectile(
             ProjectileId id, Vector2f position, Vector2f velocity, int damage, float knockback);
     }
 }

@@ -132,16 +132,25 @@ namespace Orion.Core.Projectiles {
         }
 
         [Fact]
+        public void ProjectileUpdate_EventCanceled() {
+            using var kernel = new OrionKernel(Logger.None);
+            using var projectileService = new OrionProjectileService(kernel, Logger.None);
+            kernel.RegisterHandler<ProjectileTickEvent>(evt => evt.Cancel(), Logger.None);
+
+            Terraria.Main.projectile[0].Update(0);
+        }
+
+        [Fact]
         public void SpawnProjectile() {
+            Terraria.Main.projectile[0] = new Terraria.Projectile { whoAmI = 0 };
+
             using var kernel = new OrionKernel(Logger.None);
             using var projectileService = new OrionProjectileService(kernel, Logger.None);
             var projectile = projectileService.SpawnProjectile(
                 ProjectileId.CrystalBullet, Vector2f.Zero, Vector2f.Zero, 100, 0);
 
-            Assert.NotNull(projectile);
-#pragma warning disable CS8602 // Dereference of a possibly null reference.
+            Assert.Equal(Terraria.Main.projectile[0], ((OrionProjectile)projectile).Wrapped);
             Assert.Equal(ProjectileId.CrystalBullet, projectile.Id);
-#pragma warning restore CS8602 // Dereference of a possibly null reference.
         }
     }
 }

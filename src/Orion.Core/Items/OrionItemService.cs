@@ -45,14 +45,16 @@ namespace Orion.Core.Items {
             OTAPI.Hooks.Item.PreUpdate = null;
         }
 
-        public IItem? SpawnItem(ItemStack itemStack, Vector2f position) {
+        public IItem SpawnItem(ItemStack itemStack, Vector2f position) {
             // Not localized because this string is developer-facing.
             Log.Debug("Spawning {ItemStack} at {Position}", itemStack);
 
             var itemIndex = Terraria.Item.NewItem(
                 (int)position.X, (int)position.Y, 0, 0, (int)itemStack.Id, itemStack.StackSize, false,
                 (int)itemStack.Prefix);
-            return itemIndex >= 0 && itemIndex < Items.Count ? Items[itemIndex] : null;
+            Debug.Assert(itemIndex >= 0 && itemIndex < Items.Count);
+
+            return Items[itemIndex];
         }
 
         // =============================================================================================================

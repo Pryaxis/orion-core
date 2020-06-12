@@ -131,14 +131,16 @@ namespace Orion.Core.Items {
         [InlineData(ItemId.Sdmg, 1, ItemPrefix.Unreal)]
         [InlineData(ItemId.Meowmere, 1, ItemPrefix.Legendary)]
         public void SpawnItem(ItemId id, int stackSize, ItemPrefix prefix) {
+            Terraria.Main.item[0] = new Terraria.Item { whoAmI = 0 };
+
             using var kernel = new OrionKernel(Logger.None);
             using var itemService = new OrionItemService(kernel, Logger.None);
             var item = itemService.SpawnItem(new ItemStack(id, stackSize, prefix), Vector2f.Zero);
 
-            Assert.NotNull(item);
-            Assert.Equal(id, item!.Id);
-            Assert.Equal(stackSize, item!.StackSize);
-            Assert.Equal(prefix, item!.Prefix);
+            Assert.Equal(Terraria.Main.item[0], ((OrionItem)item).Wrapped);
+            Assert.Equal(id, item.Id);
+            Assert.Equal(stackSize, item.StackSize);
+            Assert.Equal(prefix, item.Prefix);
         }
     }
 }
