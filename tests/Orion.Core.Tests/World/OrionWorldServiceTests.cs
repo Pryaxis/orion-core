@@ -353,6 +353,10 @@ namespace Orion.Core.World {
             Terraria.Main.tile[0, 0].lava(false);
 
             Assert.NotEqual(Liquid.Lava, worldService.World[0, 0].Liquid);
+
+            Terraria.Main.tile[0, 0].lava(true);
+
+            Assert.Equal(Liquid.Lava, worldService.World[0, 0].Liquid);
         }
 
         [Fact]
@@ -366,6 +370,10 @@ namespace Orion.Core.World {
             Terraria.Main.tile[0, 0].honey(false);
 
             Assert.NotEqual(Liquid.Honey, worldService.World[0, 0].Liquid);
+
+            Terraria.Main.tile[0, 0].honey(true);
+
+            Assert.Equal(Liquid.Honey, worldService.World[0, 0].Liquid);
         }
 
         [Fact]

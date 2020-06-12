@@ -217,8 +217,13 @@ namespace Orion.Core.World {
             [ExcludeFromCodeCoverage]
             public int collisionType => 0;
 
-            [ExcludeFromCodeCoverage]
-            public byte bTileHeader2 { get => 0; set { } }
+            public byte bTileHeader2 {
+                [ExcludeFromCodeCoverage]
+                get => 0;
+
+                [ExcludeFromCodeCoverage]
+                set { }
+            }
 
             public byte color() => (byte)_tile->BlockColor;
             public void color(byte color) => _tile->BlockColor = (PaintColor)color;
