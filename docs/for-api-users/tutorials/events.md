@@ -36,6 +36,8 @@ uid: tutorial_events
 
 ***
 
+&nbsp;
+
 This event handler cancels any player's attempt to break hellstone and sends the tiles back to them to keep the world consistent. The [`EventHandler`](xref:Orion.Core.Framework.EventHandlerAttribute) attribute specifies the event handler name (which should be unique among all of the event handlers for that type of event, and is used for logging/debugging purposes) and optionally the event handler priority, which specifies the relative ordering of event handlers for that type of event.
 
 ### Registering and Deregistering Event Handlers
@@ -52,5 +54,6 @@ The following methods register and deregister event handlers en masse, using ref
 
 The `log` parameter is used to log the registrations and deregistrations.
 
+### What Priority?
 
-
+TODO(kevzhao2): fill this in

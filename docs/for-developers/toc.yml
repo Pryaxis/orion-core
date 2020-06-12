@@ -1,2 +1,8 @@
 - name: Getting Started
-  href: getting-started-devs.md
+  href: getting-started.md
+- name: Deep Dives
+  items:
+    - name: "Deep Dive: Abstractions"
+      href: deep-dives/abstractions.md
+- name: Contributing Guidelines
+  href: contributing-guidelines.md

@@ -58,12 +58,10 @@ Here is a non-exhaustive list of other improvements:
 * Plugins will be unloadable (since they are required to not have `static` state). This means that hot reloading of _some_ plugins is now viable.
 * Orion will use resource strings. This means that localization will now be possible.
 
-## Project Status
+## Developers
 
-| Branch | Status | Code Coverage |
-|--------|--------|----------|
-| v1.4 | ![dotnet-core](https://github.com/Pryaxis/orion-core/workflows/dotnet-core/badge.svg) | [![codecov](https://codecov.io/gh/Pryaxis/orion-core/branch/v1.4/graph/badge.svg)](https://codecov.io/gh/Pryaxis/orion-core) |
+To get started with developing on Orion, please take a look at the [Getting Started](xref:getting_started_devs) page. If you wish to contribute to the project, please take a look at the [Contributing Guidelines](xref:contributing_guidelines) page, as well.
 
-### Developers
+## API Users
 
-To get started with Orion, please take a look at the [Getting Started](xref:getting_started) page. If you wish to contribute to the project, please take a look at the [Contributing Guidelines](xref:contributing_guidelines) page, as well.
+To get started with developing for Orion, please take a look at the [Getting Started](xref:getting_started_api) page.
