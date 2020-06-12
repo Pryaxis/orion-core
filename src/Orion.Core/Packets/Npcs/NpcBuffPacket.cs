@@ -18,37 +18,44 @@
 using System;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
+using Orion.Core.Buffs;
 
-namespace Orion.Core.Packets.Players {
+namespace Orion.Core.Packets.Npcs {
     /// <summary>
-    /// A packet sent to show a player's health effect.
+    /// Packet sent to buff an NPC.
     /// </summary>
     [StructLayout(LayoutKind.Explicit)]
-    public struct PlayerHealthEffectPacket : IPacket {
+    public struct NpcBuffPacket : IPacket {
         /// <summary>
-        /// Gets or sets the player index.
+        /// Gets or sets the NPC index.
         /// </summary>
-        /// <value>The player index.</value>
-        [field: FieldOffset(0)] public byte PlayerIndex { get; set; }
+        /// <value>The NPC index.</value>
+        [field: FieldOffset(0)] public short NpcIndex { get; set; }
 
         /// <summary>
-        /// Gets or sets the player's health amount.
+        /// Gets or sets the buff ID.
         /// </summary>
-        /// <value>The player's health amount.</value>
-        [field: FieldOffset(1)] public short HealthAmount { get; set; }
+        /// <value>The buff ID.</value>
+        [field: FieldOffset(2)] public BuffId Id { get; set; }
 
-        PacketId IPacket.Id => PacketId.PlayerHealthEffect;
+        /// <summary>
+        /// Gets or sets the buff time, in ticks.
+        /// </summary>
+        /// <value>The buff time, in ticks.</value>
+        [field: FieldOffset(4)] public short Ticks { get; set; }
+
+        PacketId IPacket.Id => PacketId.NpcBuff;
 
         /// <inheritdoc/>
         public int Read(Span<byte> span, PacketContext context) {
-            Unsafe.CopyBlockUnaligned(ref this.AsRefByte(0), ref span[0], 3);
-            return 3;
+            Unsafe.CopyBlockUnaligned(ref this.AsRefByte(0), ref span[0], 6);
+            return 6;
         }
 
         /// <inheritdoc/>
         public int Write(Span<byte> span, PacketContext context) {
-            Unsafe.CopyBlockUnaligned(ref span[0], ref this.AsRefByte(0), 3);
-            return 3;
+            Unsafe.CopyBlockUnaligned(ref span[0], ref this.AsRefByte(0), 6);
+            return 6;
         }
     }
 }
