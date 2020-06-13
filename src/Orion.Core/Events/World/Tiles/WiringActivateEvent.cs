@@ -15,7 +15,6 @@
 // You should have received a copy of the GNU General Public License
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
-using Destructurama.Attributed;
 using Orion.Core.Players;
 using Orion.Core.World;
 
@@ -24,7 +23,7 @@ namespace Orion.Core.Events.World.Tiles {
     /// An event that occurs when wiring is being activated. This event can be canceled.
     /// </summary>
     [Event("wiring-activate")]
-    public sealed class WiringActivateEvent : TileEvent, ICancelable {
+    public sealed class WiringActivateEvent : TileEvent {
         /// <summary>
         /// Initializes a new instance of the <see cref="WiringActivateEvent"/> class with the specified
         /// <paramref name="world"/>, <paramref name="player"/>, and wiring coordinates.
@@ -33,10 +32,6 @@ namespace Orion.Core.Events.World.Tiles {
         /// <param name="player">The player activating the wiring, or <see langword="null"/> for none.</param>
         /// <param name="x">The wiring's X coordinate.</param>
         /// <param name="y">The wiring's Y coordinate.</param>
-        public WiringActivateEvent(IWorld world, IPlayer? player, int x, int y) : base(world, player, x, y) {
-        }
-
-        /// <inheritdoc/>
-        [NotLogged] public string? CancellationReason { get; set; }
+        public WiringActivateEvent(IWorld world, IPlayer? player, int x, int y) : base(world, player, x, y) { }
     }
 }

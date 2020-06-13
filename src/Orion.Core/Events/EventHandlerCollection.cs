@@ -78,11 +78,8 @@ namespace Orion.Core.Events {
             // Not localized because this string is developer-facing.
             log.Write(_eventLoggingLevel, "Raising {EventName} with {@Event}", _eventName, evt);
 
-            // Try casting the event as `ICancelable`. This is a little hacky, but is better than making `Event`
-            // implement `ICancelable`.
-            var cancelable = evt as ICancelable;
             foreach (var registration in _registrations) {
-                if (cancelable?.IsCanceled() == true && registration.IgnoreCanceled) {
+                if (evt.IsCanceled && registration.IgnoreCanceled) {
                     continue;
                 }
 
@@ -94,10 +91,10 @@ namespace Orion.Core.Events {
                 }
             }
 
-            if (cancelable?.IsCanceled() == true) {
+            if (evt.IsCanceled == true) {
                 // Not localized because this string is developer-facing.
                 log.Write(_eventLoggingLevel, "Canceled {EventName} for {CancellationReason}", _eventName,
-                          cancelable.CancellationReason);
+                          evt.CancellationReason);
             }
         }
 

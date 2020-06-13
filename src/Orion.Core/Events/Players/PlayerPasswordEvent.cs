@@ -16,7 +16,6 @@
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
 using System;
-using Destructurama.Attributed;
 using Orion.Core.Players;
 
 namespace Orion.Core.Events.Players {
@@ -24,7 +23,7 @@ namespace Orion.Core.Events.Players {
     /// An event that occurs when a player is sending their password. This event can be canceled.
     /// </summary>
     [Event("player-password")]
-    public sealed class PlayerPasswordEvent : PlayerEvent, ICancelable {
+    public sealed class PlayerPasswordEvent : PlayerEvent {
         /// <summary>
         /// Initializes a new instance of the <see cref="PlayerPasswordEvent"/> class with the specified
         /// <paramref name="player"/> and <paramref name="password"/>.
@@ -43,8 +42,5 @@ namespace Orion.Core.Events.Players {
         /// </summary>
         /// <value>The player's password.</value>
         public string Password { get; }
-
-        /// <inheritdoc/>
-        [NotLogged] public string? CancellationReason { get; set; }
     }
 }

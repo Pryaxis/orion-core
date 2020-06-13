@@ -16,7 +16,6 @@
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
 using System;
-using System.Diagnostics.CodeAnalysis;
 using Moq;
 using Orion.Core.Players;
 using Orion.Core.World;
@@ -24,7 +23,6 @@ using Orion.Core.World.Tiles;
 using Xunit;
 
 namespace Orion.Core.Events.World.Tiles {
-    [SuppressMessage("Style", "IDE0017:Simplify object initialization", Justification = "Testing")]
     public class TileSquareEventTests {
         [Fact]
         public void Ctor_NullWorld_ThrowsArgumentNullException() {
@@ -97,18 +95,6 @@ namespace Orion.Core.Events.World.Tiles {
             var evt = new TileSquareEvent(world, player, 123, 456, tiles);
 
             Assert.Same(tiles, evt.Tiles);
-        }
-
-        [Fact]
-        public void CancellationReason_Set_Get() {
-            var player = Mock.Of<IPlayer>();
-            var world = Mock.Of<IWorld>();
-            var tiles = Mock.Of<ITileSlice>(t => t.Width == 1 && t.Height == 1);
-            var evt = new TileSquareEvent(world, player, 123, 456, tiles);
-
-            evt.CancellationReason = "test";
-
-            Assert.Equal("test", evt.CancellationReason);
         }
     }
 }

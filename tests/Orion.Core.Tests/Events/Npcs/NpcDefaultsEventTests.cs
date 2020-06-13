@@ -38,15 +38,5 @@ namespace Orion.Core.Events.Npcs {
 
             Assert.Equal(NpcId.BlueSlime, evt.Id);
         }
-
-        [Fact]
-        public void CancellationReason_Set_Get() {
-            var npc = Mock.Of<INpc>();
-            var evt = new NpcDefaultsEvent(npc);
-
-            evt.CancellationReason = "test";
-
-            Assert.Equal("test", evt.CancellationReason);
-        }
     }
 }

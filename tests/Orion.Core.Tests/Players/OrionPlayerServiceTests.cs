@@ -18,7 +18,6 @@
 using System;
 using System.IO;
 using System.Linq;
-using Orion.Core.Events;
 using Orion.Core.Events.Packets;
 using Orion.Core.Events.Players;
 using Orion.Core.Packets;

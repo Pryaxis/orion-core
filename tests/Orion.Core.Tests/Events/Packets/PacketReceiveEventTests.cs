@@ -16,14 +16,12 @@
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
 using System;
-using System.Diagnostics.CodeAnalysis;
 using Moq;
 using Orion.Core.Packets;
 using Orion.Core.Players;
 using Xunit;
 
 namespace Orion.Core.Events.Packets {
-    [SuppressMessage("Style", "IDE0017:Simplify object initialization", Justification = "Testing")]
     public class PacketReceiveEventTests {
         [Fact]
         public void Ctor_NullSender_ThrowsArgumentNullException() {
@@ -39,17 +37,6 @@ namespace Orion.Core.Events.Packets {
             var evt = new PacketReceiveEvent<TestPacket>(ref packet, sender);
 
             Assert.Same(sender, evt.Sender);
-        }
-
-        [Fact]
-        public void CancellationReason_Set_Get() {
-            var packet = new TestPacket();
-            var sender = Mock.Of<IPlayer>();
-            var evt = new PacketReceiveEvent<TestPacket>(ref packet, sender);
-
-            evt.CancellationReason = "test";
-
-            Assert.Equal("test", evt.CancellationReason);
         }
 
         private struct TestPacket : IPacket {

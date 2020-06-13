@@ -59,15 +59,5 @@ namespace Orion.Core.Events.Npcs {
 
             Assert.Equal(ItemPrefix.Unreal, evt.Prefix);
         }
-
-        [Fact]
-        public void CancellationReason_Set_Get() {
-            var npc = Mock.Of<INpc>();
-            var evt = new NpcLootEvent(npc);
-
-            evt.CancellationReason = "test";
-
-            Assert.Equal("test", evt.CancellationReason);
-        }
     }
 }

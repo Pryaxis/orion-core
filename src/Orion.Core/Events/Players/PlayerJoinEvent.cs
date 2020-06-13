@@ -16,7 +16,6 @@
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
 using System;
-using Destructurama.Attributed;
 using Orion.Core.Players;
 
 namespace Orion.Core.Events.Players {
@@ -24,7 +23,7 @@ namespace Orion.Core.Events.Players {
     /// An event that occurs when a player is joining the server. This event can be canceled.
     /// </summary>
     [Event("player-join")]
-    public sealed class PlayerJoinEvent : PlayerEvent, ICancelable {
+    public sealed class PlayerJoinEvent : PlayerEvent {
         /// <summary>
         /// Initializes a new instance of the <see cref="PlayerJoinEvent"/> class with the specified
         /// <paramref name="player"/>.
@@ -32,8 +31,5 @@ namespace Orion.Core.Events.Players {
         /// <param name="player">The player joining.</param>
         /// <exception cref="ArgumentNullException"><paramref name="player"/> is <see langword="null"/>.</exception>
         public PlayerJoinEvent(IPlayer player) : base(player) { }
-
-        /// <inheritdoc/>
-        [NotLogged] public string? CancellationReason { get; set; }
     }
 }

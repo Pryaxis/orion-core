@@ -16,7 +16,6 @@
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
 using System;
-using Destructurama.Attributed;
 using Orion.Core.Players;
 
 namespace Orion.Core.Events.Players {
@@ -24,7 +23,7 @@ namespace Orion.Core.Events.Players {
     /// An event that occurs when a player is sending their health information. This event can be canceled.
     /// </summary>
     [Event("player-hp")]
-    public sealed class PlayerHealthEvent : PlayerEvent, ICancelable {
+    public sealed class PlayerHealthEvent : PlayerEvent {
         /// <summary>
         /// Initializes a new instance of the <see cref="PlayerHealthEvent"/> class with the specified
         /// <paramref name="player"/>, <paramref name="health"/>, and <paramref name="maxHealth"/>.
@@ -49,8 +48,5 @@ namespace Orion.Core.Events.Players {
         /// </summary>
         /// <value>The player's maximum health.</value>
         public int MaxHealth { get; }
-
-        /// <inheritdoc/>
-        [NotLogged] public string? CancellationReason { get; set; }
     }
 }

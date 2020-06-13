@@ -16,7 +16,6 @@
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
 using System;
-using Destructurama.Attributed;
 using Orion.Core.Players;
 
 namespace Orion.Core.Events.Players {
@@ -24,7 +23,7 @@ namespace Orion.Core.Events.Players {
     /// An event that occurs when a player is sending their PvP status. This event can be canceled.
     /// </summary>
     [Event("player-pvp")]
-    public sealed class PlayerPvpEvent : PlayerEvent, ICancelable {
+    public sealed class PlayerPvpEvent : PlayerEvent {
         /// <summary>
         /// Initializes a new instance of the <see cref="PlayerPvpEvent"/> class with the specified
         /// <paramref name="player"/> and PvP status.
@@ -41,8 +40,5 @@ namespace Orion.Core.Events.Players {
         /// </summary>
         /// <value><see langword="true"/> if the player is in PvP; otherwise, <see langword="false"/>.</value>
         public bool IsInPvp { get; }
-
-        /// <inheritdoc/>
-        [NotLogged] public string? CancellationReason { get; set; }
     }
 }

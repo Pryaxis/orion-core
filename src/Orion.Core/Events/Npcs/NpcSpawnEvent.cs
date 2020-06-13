@@ -16,7 +16,6 @@
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
 using System;
-using Destructurama.Attributed;
 using Orion.Core.Npcs;
 
 namespace Orion.Core.Events.Npcs {
@@ -24,7 +23,7 @@ namespace Orion.Core.Events.Npcs {
     /// An event that occurs when an NPC is spawning. This event can be canceled.
     /// </summary>
     [Event("npc-spawn")]
-    public sealed class NpcSpawnEvent : NpcEvent, ICancelable {
+    public sealed class NpcSpawnEvent : NpcEvent {
         /// <summary>
         /// Initializes a new instance of the <see cref="NpcSpawnEvent"/> class with the specified
         /// <paramref name="npc"/>.
@@ -32,8 +31,5 @@ namespace Orion.Core.Events.Npcs {
         /// <param name="npc">The NPC being spawned.</param>
         /// <exception cref="ArgumentNullException"><paramref name="npc"/> is <see langword="null"/>.</exception>
         public NpcSpawnEvent(INpc npc) : base(npc) { }
-
-        /// <inheritdoc/>
-        [NotLogged] public string? CancellationReason { get; set; }
     }
 }

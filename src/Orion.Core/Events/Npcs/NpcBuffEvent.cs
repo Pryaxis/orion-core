@@ -16,7 +16,6 @@
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
 using System;
-using Destructurama.Attributed;
 using Orion.Core.Buffs;
 using Orion.Core.Npcs;
 using Orion.Core.Players;
@@ -26,7 +25,7 @@ namespace Orion.Core.Events.Npcs {
     /// An event that occurs when an NPC is being buffed. This event can be canceled.
     /// </summary>
     [Event("npc-buff")]
-    public sealed class NpcBuffEvent : NpcEvent, ICancelable {
+    public sealed class NpcBuffEvent : NpcEvent {
         /// <summary>
         /// Initializes a new instance of the <see cref="NpcBuffEvent"/> class with the specified
         /// <paramref name="npc"/>, <paramref name="player"/>, and <paramref name="buff"/>.
@@ -53,8 +52,5 @@ namespace Orion.Core.Events.Npcs {
         /// </summary>
         /// <value>The buff to buff the NPC with.</value>
         public Buff Buff { get; }
-
-        /// <inheritdoc/>
-        [NotLogged] public string? CancellationReason { get; set; }
     }
 }

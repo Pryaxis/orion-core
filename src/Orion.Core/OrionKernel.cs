@@ -425,7 +425,7 @@ namespace Orion.Core {
         private OTAPI.HookResult ProcessHandler(string lowered, string input) {
             var evt = new ServerCommandEvent(input);
             Raise(evt, _log);
-            return evt.IsCanceled() ? OTAPI.HookResult.Cancel : OTAPI.HookResult.Continue;
+            return evt.IsCanceled ? OTAPI.HookResult.Cancel : OTAPI.HookResult.Continue;
         }
     }
 }

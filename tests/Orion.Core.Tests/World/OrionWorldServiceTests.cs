@@ -15,7 +15,6 @@
 // You should have received a copy of the GNU General Public License
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
-using Orion.Core.Events;
 using Orion.Core.Events.World.Tiles;
 using Orion.Core.Items;
 using Orion.Core.Packets.World.Tiles;

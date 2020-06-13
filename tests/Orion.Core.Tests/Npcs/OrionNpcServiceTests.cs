@@ -19,7 +19,6 @@ using System;
 using System.Linq;
 using Orion.Core.Buffs;
 using Orion.Core.DataStructures;
-using Orion.Core.Events;
 using Orion.Core.Events.Npcs;
 using Orion.Core.Items;
 using Orion.Core.Packets.Npcs;

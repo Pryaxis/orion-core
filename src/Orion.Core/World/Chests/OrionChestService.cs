@@ -60,9 +60,12 @@ namespace Orion.Core.World.Chests {
             }
 
             var player = evt.Sender;
+
             var evt2 = new ChestOpenEvent(chest, player);
             Kernel.Raise(evt2, Log);
-            evt.CancellationReason = evt2.CancellationReason;
+            if (evt2.IsCanceled) {
+                evt.Cancel(evt2.CancellationReason);
+            }
         }
 
         [EventHandler("orion-chests", Priority = EventPriority.Lowest)]
@@ -71,10 +74,13 @@ namespace Orion.Core.World.Chests {
             ref var packet = ref evt.Packet;
             var chest = Chests[packet.ChestIndex];
             var player = evt.Sender;
+
             var evt2 = new ChestInventoryEvent(
                 chest, player, packet.Slot, new ItemStack(packet.Id, packet.StackSize, packet.Prefix));
             Kernel.Raise(evt2, Log);
-            evt.CancellationReason = evt2.CancellationReason;
+            if (evt2.IsCanceled) {
+                evt.Cancel(evt2.CancellationReason);
+            }
         }
     }
 }

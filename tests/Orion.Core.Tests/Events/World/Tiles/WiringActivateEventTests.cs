@@ -16,31 +16,17 @@
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
 using System;
-using System.Diagnostics.CodeAnalysis;
 using Moq;
 using Orion.Core.Players;
-using Orion.Core.World;
 using Xunit;
 
 namespace Orion.Core.Events.World.Tiles {
-    [SuppressMessage("Style", "IDE0017:Simplify object initialization", Justification = "Testing")]
     public class WiringActivateEventTests {
         [Fact]
         public void Ctor_NullWorld_ThrowsArgumentNullException() {
             var player = Mock.Of<IPlayer>();
 
             Assert.Throws<ArgumentNullException>(() => new WiringActivateEvent(null!, player, 256, 100));
-        }
-
-        [Fact]
-        public void CancellationReason_Set_Get() {
-            var world = Mock.Of<IWorld>();
-            var player = Mock.Of<IPlayer>();
-            var evt = new WiringActivateEvent(world, player, 256, 100);
-
-            evt.CancellationReason = "test";
-
-            Assert.Equal("test", evt.CancellationReason);
         }
     }
 }

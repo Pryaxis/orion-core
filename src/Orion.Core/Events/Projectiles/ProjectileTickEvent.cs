@@ -16,7 +16,6 @@
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
 using System;
-using Destructurama.Attributed;
 using Orion.Core.Projectiles;
 using Serilog.Events;
 
@@ -25,7 +24,7 @@ namespace Orion.Core.Events.Projectiles {
     /// An event that occurs when a projectile is updating every tick. This event can be canceled.
     /// </summary>
     [Event("proj-tick", LoggingLevel = LogEventLevel.Verbose)]
-    public sealed class ProjectileTickEvent : ProjectileEvent, ICancelable {
+    public sealed class ProjectileTickEvent : ProjectileEvent {
         /// <summary>
         /// Initializes a new instance of the <see cref="ProjectileTickEvent"/> class with the specified
         /// <paramref name="projectile"/>.
@@ -33,8 +32,5 @@ namespace Orion.Core.Events.Projectiles {
         /// <param name="projectile">The projectile being ticked.</param>
         /// <exception cref="ArgumentNullException"><paramref name="projectile"/> is <see langword="null"/>.</exception>
         public ProjectileTickEvent(IProjectile projectile) : base(projectile) { }
-
-        /// <inheritdoc/>
-        [NotLogged] public string? CancellationReason { get; set; }
     }
 }

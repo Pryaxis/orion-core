@@ -22,7 +22,6 @@ using Destructurama.Attributed;
 using Orion.Core.Buffs;
 using Orion.Core.Collections;
 using Orion.Core.Entities;
-using Orion.Core.Events;
 using Orion.Core.Events.Packets;
 using Orion.Core.Packets;
 using Serilog;
@@ -98,7 +97,7 @@ namespace Orion.Core.Players {
 
             var evt = new PacketSendEvent<TPacket>(ref packet, this);
             _kernel.Raise(evt, _log);
-            if (evt.IsCanceled()) {
+            if (evt.IsCanceled) {
                 return;
             }
 

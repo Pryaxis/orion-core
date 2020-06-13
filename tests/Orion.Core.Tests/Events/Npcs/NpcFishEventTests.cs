@@ -53,15 +53,5 @@ namespace Orion.Core.Events.Npcs {
 
             Assert.Equal(NpcId.HemogoblinShark, evt.Id);
         }
-
-        [Fact]
-        public void CancellationReason_Set_Get() {
-            var player = Mock.Of<IPlayer>();
-            var evt = new NpcFishEvent(player, 100, 256, NpcId.HemogoblinShark);
-
-            evt.CancellationReason = "test";
-
-            Assert.Equal("test", evt.CancellationReason);
-        }
     }
 }

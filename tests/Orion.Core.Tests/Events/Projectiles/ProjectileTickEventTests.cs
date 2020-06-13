@@ -16,27 +16,13 @@
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
 using System;
-using System.Diagnostics.CodeAnalysis;
-using Moq;
-using Orion.Core.Projectiles;
 using Xunit;
 
 namespace Orion.Core.Events.Projectiles {
-    [SuppressMessage("Style", "IDE0017:Simplify object initialization", Justification = "Testing")]
     public class ProjectileTickEventTests {
         [Fact]
         public void Ctor_NullProjectile_ThrowsArgumentNullException() {
             Assert.Throws<ArgumentNullException>(() => new ProjectileTickEvent(null!));
-        }
-
-        [Fact]
-        public void CancellationReason_Set_Get() {
-            var projectile = Mock.Of<IProjectile>();
-            var evt = new ProjectileTickEvent(projectile);
-
-            evt.CancellationReason = "test";
-
-            Assert.Equal("test", evt.CancellationReason);
         }
     }
 }

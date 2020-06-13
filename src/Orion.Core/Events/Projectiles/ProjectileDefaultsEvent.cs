@@ -16,7 +16,6 @@
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
 using System;
-using Destructurama.Attributed;
 using Orion.Core.Projectiles;
 using Serilog.Events;
 
@@ -26,7 +25,7 @@ namespace Orion.Core.Events.Projectiles {
     /// initialized. This event can be canceled.
     /// </summary>
     [Event("proj-defaults", LoggingLevel = LogEventLevel.Verbose)]
-    public sealed class ProjectileDefaultsEvent : ProjectileEvent, ICancelable {
+    public sealed class ProjectileDefaultsEvent : ProjectileEvent {
         /// <summary>
         /// Initializes a new instance of the <see cref="ProjectileDefaultsEvent"/> class with the specified
         /// <paramref name="projectile"/>.
@@ -40,8 +39,5 @@ namespace Orion.Core.Events.Projectiles {
         /// </summary>
         /// <value>The projectile ID that the projectile's defaults are being set to.</value>
         public ProjectileId Id { get; set; }
-
-        /// <inheritdoc/>
-        [NotLogged] public string? CancellationReason { get; set; }
     }
 }

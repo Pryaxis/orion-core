@@ -16,15 +16,14 @@
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
 using System;
-using Destructurama.Attributed;
 using Orion.Core.Players;
 
 namespace Orion.Core.Events.Players {
     /// <summary>
-    /// An event that occurs when a player is chatting. This event can be canceled.
+    /// An event that occurs when a player is chatting.
     /// </summary>
     [Event("player-chat")]
-    public sealed class PlayerChatEvent : PlayerEvent, ICancelable {
+    public sealed class PlayerChatEvent : PlayerEvent {
         /// <summary>
         /// Initializes a new instance of the <see cref="PlayerChatEvent"/> class with the specified
         /// <paramref name="player"/>, <paramref name="command"/>, and <paramref name="message"/>.
@@ -52,8 +51,5 @@ namespace Orion.Core.Events.Players {
         /// </summary>
         /// <value>The message.</value>
         public string Message { get; }
-
-        /// <inheritdoc/>
-        [NotLogged] public string? CancellationReason { get; set; }
     }
 }

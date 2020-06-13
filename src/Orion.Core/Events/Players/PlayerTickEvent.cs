@@ -16,7 +16,6 @@
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
 using System;
-using Destructurama.Attributed;
 using Orion.Core.Players;
 using Serilog.Events;
 
@@ -25,7 +24,7 @@ namespace Orion.Core.Events.Players {
     /// An event that occurs when a player is updating every tick. This event can be canceled.
     /// </summary>
     [Event("player-tick", LoggingLevel = LogEventLevel.Verbose)]
-    public sealed class PlayerTickEvent : PlayerEvent, ICancelable {
+    public sealed class PlayerTickEvent : PlayerEvent {
         /// <summary>
         /// Initializes a new instance of the <see cref="PlayerTickEvent"/> class with the specified
         /// <paramref name="player"/>.
@@ -33,8 +32,5 @@ namespace Orion.Core.Events.Players {
         /// <param name="player">The player being ticked.</param>
         /// <exception cref="ArgumentNullException"><paramref name="player"/> is <see langword="null"/>.</exception>
         public PlayerTickEvent(IPlayer player) : base(player) { }
-
-        /// <inheritdoc/>
-        [NotLogged] public string? CancellationReason { get; set; }
     }
 }

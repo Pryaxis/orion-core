@@ -16,7 +16,6 @@
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
 using System;
-using Destructurama.Attributed;
 using Orion.Core.Players;
 
 namespace Orion.Core.Events.Players {
@@ -24,7 +23,7 @@ namespace Orion.Core.Events.Players {
     /// An event that occurs when a player is sending their UUID. This event can be canceled.
     /// </summary>
     [Event("player-uuid")]
-    public sealed class PlayerUuidEvent : PlayerEvent, ICancelable {
+    public sealed class PlayerUuidEvent : PlayerEvent {
         /// <summary>
         /// Initializes a new instance of the <see cref="PlayerUuidEvent"/> class with the specified
         /// <paramref name="player"/> and <paramref name="uuid"/>.
@@ -43,8 +42,5 @@ namespace Orion.Core.Events.Players {
         /// </summary>
         /// <value>The player's UUID.</value>
         public string Uuid { get; }
-
-        /// <inheritdoc/>
-        [NotLogged] public string? CancellationReason { get; set; }
     }
 }

@@ -20,7 +20,6 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using Orion.Core.Collections;
 using Orion.Core.DataStructures;
-using Orion.Core.Events;
 using Orion.Core.Events.Projectiles;
 using Orion.Core.Framework;
 using Serilog;
@@ -69,7 +68,7 @@ namespace Orion.Core.Projectiles {
             var projectile = GetProjectile(terrariaProjectile);
             var evt = new ProjectileDefaultsEvent(projectile) { Id = (ProjectileId)projectileId };
             Kernel.Raise(evt, Log);
-            if (evt.IsCanceled()) {
+            if (evt.IsCanceled) {
                 return OTAPI.HookResult.Cancel;
             }
 
@@ -84,7 +83,7 @@ namespace Orion.Core.Projectiles {
             var evt = new ProjectileTickEvent(projectile);
             Kernel.Raise(evt, Log);
 
-            return evt.IsCanceled() ? OTAPI.HookResult.Cancel : OTAPI.HookResult.Continue;
+            return evt.IsCanceled ? OTAPI.HookResult.Cancel : OTAPI.HookResult.Continue;
         }
 
         // Gets an `IProjectile` which corresponds to the given Terraria projectile. Retrieves the `IProjectile` from

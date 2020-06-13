@@ -16,7 +16,6 @@
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
 using System;
-using Destructurama.Attributed;
 using Orion.Core.World;
 
 namespace Orion.Core.Events.World {
@@ -24,7 +23,7 @@ namespace Orion.Core.Events.World {
     /// An event that occurs when a world is saving. This event can be canceled.
     /// </summary>
     [Event("world-save")]
-    public sealed class WorldSaveEvent : WorldEvent, ICancelable {
+    public sealed class WorldSaveEvent : WorldEvent {
         /// <summary>
         /// Initializes a new instance of the <see cref="WorldSaveEvent"/> class with the specified
         /// <paramref name="world"/>.
@@ -32,8 +31,5 @@ namespace Orion.Core.Events.World {
         /// <param name="world">The world being saved.</param>
         /// <exception cref="ArgumentNullException"><paramref name="world"/> is <see langword="null"/>.</exception>
         public WorldSaveEvent(IWorld world) : base(world) { }
-
-        /// <inheritdoc/>
-        [NotLogged] public string? CancellationReason { get; set; }
     }
 }

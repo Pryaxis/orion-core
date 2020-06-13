@@ -16,27 +16,13 @@
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
 using System;
-using System.Diagnostics.CodeAnalysis;
-using Moq;
-using Orion.Core.Npcs;
 using Xunit;
 
 namespace Orion.Core.Events.Npcs {
-    [SuppressMessage("Style", "IDE0017:Simplify object initialization", Justification = "Testing")]
     public class NpcTickEventTests {
         [Fact]
         public void Ctor_NullNpc_ThrowsArgumentNullException() {
             Assert.Throws<ArgumentNullException>(() => new NpcTickEvent(null!));
-        }
-
-        [Fact]
-        public void CancellationReason_Set_Get() {
-            var npc = Mock.Of<INpc>();
-            var evt = new NpcTickEvent(npc);
-
-            evt.CancellationReason = "test";
-
-            Assert.Equal("test", evt.CancellationReason);
         }
     }
 }

@@ -17,7 +17,6 @@
 
 using System;
 using System.Linq;
-using Orion.Core.Events;
 using Orion.Core.Events.World.Chests;
 using Orion.Core.Items;
 using Orion.Core.Packets.World.Chests;

@@ -16,7 +16,6 @@
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
 using System;
-using Destructurama.Attributed;
 using Orion.Core.Items;
 using Orion.Core.Npcs;
 
@@ -25,7 +24,7 @@ namespace Orion.Core.Events.Npcs {
     /// An event that occurs when an NPC is dropping loot. This event can be canceled.
     /// </summary>
     [Event("npc-loot")]
-    public sealed class NpcLootEvent : NpcEvent, ICancelable {
+    public sealed class NpcLootEvent : NpcEvent {
         /// <summary>
         /// Initializes a new instance of the <see cref="NpcLootEvent"/> class with the specified
         /// <paramref name="npc"/>.
@@ -51,8 +50,5 @@ namespace Orion.Core.Events.Npcs {
         /// </summary>
         /// <value>The prefix of the loot being dropped.</value>
         public ItemPrefix Prefix { get; set; }
-
-        /// <inheritdoc/>
-        [NotLogged] public string? CancellationReason { get; set; }
     }
 }

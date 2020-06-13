@@ -59,9 +59,12 @@ namespace Orion.Core.World.Signs {
             }
 
             var player = evt.Sender;
+
             var evt2 = new SignReadEvent(sign, player);
             Kernel.Raise(evt2, Log);
-            evt.CancellationReason = evt2.CancellationReason;
+            if (evt2.IsCanceled) {
+                evt.Cancel(evt2.CancellationReason);
+            }
         }
     }
 }

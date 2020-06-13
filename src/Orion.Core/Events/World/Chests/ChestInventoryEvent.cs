@@ -16,7 +16,6 @@
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
 using System;
-using Destructurama.Attributed;
 using Orion.Core.Items;
 using Orion.Core.Players;
 using Orion.Core.World.Chests;
@@ -26,7 +25,7 @@ namespace Orion.Core.Events.World.Chests {
     /// An event that occurs when a player is modifying a chest's inventory. This event can be canceled.
     /// </summary>
     [Event("chest-inv")]
-    public sealed class ChestInventoryEvent : ChestEvent, ICancelable {
+    public sealed class ChestInventoryEvent : ChestEvent {
         /// <summary>
         /// Initializes a new instance of the <see cref="ChestInventoryEvent"/> class with the specified
         /// <paramref name="chest"/>, <paramref name="player"/>, inventory <paramref name="slot"/>, and
@@ -59,8 +58,5 @@ namespace Orion.Core.Events.World.Chests {
         /// </summary>
         /// <value>The new item stack.</value>
         public ItemStack ItemStack { get; }
-
-        /// <inheritdoc/>
-        [NotLogged] public string? CancellationReason { get; set; }
     }
 }

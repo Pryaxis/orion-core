@@ -16,7 +16,6 @@
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
 using System;
-using Destructurama.Attributed;
 using Orion.Core.Npcs;
 using Orion.Core.Players;
 
@@ -25,7 +24,7 @@ namespace Orion.Core.Events.Npcs {
     /// An event that occurs when a player is catching an NPC. This event can be canceled.
     /// </summary>
     [Event("npc-catch")]
-    public sealed class NpcCatchEvent : NpcEvent, ICancelable {
+    public sealed class NpcCatchEvent : NpcEvent {
         /// <summary>
         /// Initializes a new instance of the <see cref="NpcCatchEvent"/> class with the specified
         /// <paramref name="npc"/> and <paramref name="player"/>.
@@ -44,8 +43,5 @@ namespace Orion.Core.Events.Npcs {
         /// </summary>
         /// <value>The player catching the NPC.</value>
         public IPlayer Player { get; }
-
-        /// <inheritdoc/>
-        [NotLogged] public string? CancellationReason { get; set; }
     }
 }

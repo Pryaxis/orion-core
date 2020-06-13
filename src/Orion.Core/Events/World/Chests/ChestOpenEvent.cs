@@ -16,7 +16,6 @@
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
 using System;
-using Destructurama.Attributed;
 using Orion.Core.Players;
 using Orion.Core.World.Chests;
 
@@ -25,7 +24,7 @@ namespace Orion.Core.Events.World.Chests {
     /// An event that occurs when a player is opening a chest. This event can be canceled.
     /// </summary>
     [Event("chest-open")]
-    public sealed class ChestOpenEvent : ChestEvent, ICancelable {
+    public sealed class ChestOpenEvent : ChestEvent {
         /// <summary>
         /// Initializes a new instance of the <see cref="ChestOpenEvent"/> class with the specified
         /// <paramref name="chest"/> and <paramref name="player"/>.
@@ -44,8 +43,5 @@ namespace Orion.Core.Events.World.Chests {
         /// </summary>
         /// <value>The player opening the chest.</value>
         public IPlayer Player { get; }
-
-        /// <inheritdoc/>
-        [NotLogged] public string? CancellationReason { get; set; }
     }
 }

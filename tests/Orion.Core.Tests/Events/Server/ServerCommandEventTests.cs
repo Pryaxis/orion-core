@@ -16,11 +16,9 @@
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
 using System;
-using System.Diagnostics.CodeAnalysis;
 using Xunit;
 
 namespace Orion.Core.Events.Server {
-    [SuppressMessage("Style", "IDE0017:Simplify object initialization", Justification = "Testing")]
     public class ServerCommandEventTests {
         [Fact]
         public void Ctor_NullInput_ThrowsArgumentNullException() {
@@ -32,15 +30,6 @@ namespace Orion.Core.Events.Server {
             var evt = new ServerCommandEvent("test");
 
             Assert.Equal("test", evt.Input);
-        }
-
-        [Fact]
-        public void CancellationReason_Set_Get() {
-            var evt = new ServerCommandEvent("test");
-
-            evt.CancellationReason = "test";
-
-            Assert.Equal("test", evt.CancellationReason);
         }
     }
 }

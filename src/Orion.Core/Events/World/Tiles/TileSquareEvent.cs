@@ -26,7 +26,7 @@ namespace Orion.Core.Events.World.Tiles {
     /// An event that occurs when a player is sending a square of tiles. This event can be canceled.
     /// </summary>
     [Event("tile-square")]
-    public sealed class TileSquareEvent : WorldEvent, ICancelable {
+    public sealed class TileSquareEvent : WorldEvent {
         /// <summary>
         /// Initializes a new instance of the <see cref="TileSquareEvent"/> class with the specified
         /// <paramref name="world"/>, <paramref name="player"/>, top-left tile coordinates, and
@@ -80,8 +80,5 @@ namespace Orion.Core.Events.World.Tiles {
         /// </summary>
         /// <value>The square of tiles.</value>
         [NotLogged] public ITileSlice Tiles { get; }
-
-        /// <inheritdoc/>
-        [NotLogged] public string? CancellationReason { get; set; }
     }
 }

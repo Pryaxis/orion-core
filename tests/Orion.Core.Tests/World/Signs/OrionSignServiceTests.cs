@@ -17,7 +17,6 @@
 
 using System;
 using System.Linq;
-using Orion.Core.Events;
 using Orion.Core.Events.World.Signs;
 using Orion.Core.Packets.World.Signs;
 using Orion.Core.Players;

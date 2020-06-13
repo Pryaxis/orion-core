@@ -16,16 +16,15 @@
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
 using System;
-using Destructurama.Attributed;
 using Orion.Core.Npcs;
 using Serilog.Events;
 
 namespace Orion.Core.Events.Npcs {
     /// <summary>
-    /// An event that occurs when an NPC is updating every tick. This event can be canceled.
+    /// An event that occurs when an NPC is updating every tick.
     /// </summary>
     [Event("npc-tick", LoggingLevel = LogEventLevel.Verbose)]
-    public sealed class NpcTickEvent : NpcEvent, ICancelable {
+    public sealed class NpcTickEvent : NpcEvent {
         /// <summary>
         /// Initializes a new instance of the <see cref="NpcTickEvent"/> class with the specified
         /// <paramref name="npc"/>.
@@ -33,8 +32,5 @@ namespace Orion.Core.Events.Npcs {
         /// <param name="npc">The NPC being ticked.</param>
         /// <exception cref="ArgumentNullException"><paramref name="npc"/> is <see langword="null"/>.</exception>
         public NpcTickEvent(INpc npc) : base(npc) { }
-
-        /// <inheritdoc/>
-        [NotLogged] public string? CancellationReason { get; set; }
     }
 }

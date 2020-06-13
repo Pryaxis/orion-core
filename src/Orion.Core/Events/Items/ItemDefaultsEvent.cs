@@ -16,7 +16,6 @@
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
 using System;
-using Destructurama.Attributed;
 using Orion.Core.Items;
 using Serilog.Events;
 
@@ -26,7 +25,7 @@ namespace Orion.Core.Events.Items {
     /// This event can be canceled.
     /// </summary>
     [Event("item-defaults", LoggingLevel = LogEventLevel.Verbose)]
-    public sealed class ItemDefaultsEvent : ItemEvent, ICancelable {
+    public sealed class ItemDefaultsEvent : ItemEvent {
         /// <summary>
         /// Initializes a new instance of the <see cref="ItemDefaultsEvent"/> class with the specified
         /// <paramref name="item"/>.
@@ -40,8 +39,5 @@ namespace Orion.Core.Events.Items {
         /// </summary>
         /// <value>The item ID that the item's defaults are being set to.</value>
         public ItemId Id { get; set; }
-
-        /// <inheritdoc/>
-        [NotLogged] public string? CancellationReason { get; set; }
     }
 }

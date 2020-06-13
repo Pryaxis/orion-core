@@ -16,7 +16,6 @@
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
 using System;
-using System.Diagnostics.CodeAnalysis;
 using Moq;
 using Orion.Core.Players;
 using Orion.Core.World;
@@ -24,7 +23,6 @@ using Orion.Core.World.Tiles;
 using Xunit;
 
 namespace Orion.Core.Events.World.Tiles {
-    [SuppressMessage("Style", "IDE0017:Simplify object initialization", Justification = "Testing")]
     public class WallPaintEventTests {
         [Fact]
         public void Ctor_NullWorld_ThrowsArgumentNullException() {
@@ -40,17 +38,6 @@ namespace Orion.Core.Events.World.Tiles {
             var evt = new WallPaintEvent(world, player, 256, 100, PaintColor.Red);
 
             Assert.Equal(PaintColor.Red, evt.Color);
-        }
-
-        [Fact]
-        public void CancellationReason_Set_Get() {
-            var world = Mock.Of<IWorld>();
-            var player = Mock.Of<IPlayer>();
-            var evt = new WallPaintEvent(world, player, 256, 100, PaintColor.Red);
-
-            evt.CancellationReason = "test";
-
-            Assert.Equal("test", evt.CancellationReason);
         }
     }
 }

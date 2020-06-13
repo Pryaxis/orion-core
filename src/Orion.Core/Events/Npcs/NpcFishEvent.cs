@@ -16,7 +16,6 @@
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
 using System;
-using Destructurama.Attributed;
 using Orion.Core.Events.Players;
 using Orion.Core.Npcs;
 using Orion.Core.Players;
@@ -26,7 +25,7 @@ namespace Orion.Core.Events.Npcs {
     /// An event that occurs when a player is fishing an NPC. This event can be canceled.
     /// </summary>
     [Event("npc-fish")]
-    public sealed class NpcFishEvent : PlayerEvent, ICancelable {
+    public sealed class NpcFishEvent : PlayerEvent {
         /// <summary>
         /// Initializes a new instance of the <see cref="NpcFishEvent"/> class with the specified
         /// <paramref name="player"/>, NPC coordinates, and NPC <paramref name="id"/>.
@@ -59,8 +58,5 @@ namespace Orion.Core.Events.Npcs {
         /// </summary>
         /// <value>The NPC ID being fished.</value>
         public NpcId Id { get; }
-
-        /// <inheritdoc/>
-        [NotLogged] public string? CancellationReason { get; set; }
     }
 }

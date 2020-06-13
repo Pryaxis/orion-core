@@ -16,7 +16,6 @@
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
 using System;
-using Destructurama.Attributed;
 using Orion.Core.Npcs;
 using Serilog.Events;
 
@@ -26,7 +25,7 @@ namespace Orion.Core.Events.Npcs {
     /// event can be canceled.
     /// </summary>
     [Event("npc-defaults", LoggingLevel = LogEventLevel.Verbose)]
-    public sealed class NpcDefaultsEvent : NpcEvent, ICancelable {
+    public sealed class NpcDefaultsEvent : NpcEvent {
         /// <summary>
         /// Initializes a new instance of the <see cref="NpcDefaultsEvent"/> class with the specified
         /// <paramref name="npc"/>.
@@ -40,8 +39,5 @@ namespace Orion.Core.Events.Npcs {
         /// </summary>
         /// <value>The NPC ID that the NPC's defaults are being set to.</value>
         public NpcId Id { get; set; }
-
-        /// <inheritdoc/>
-        [NotLogged] public string? CancellationReason { get; set; }
     }
 }

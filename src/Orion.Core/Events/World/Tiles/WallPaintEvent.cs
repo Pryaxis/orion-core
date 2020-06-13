@@ -16,7 +16,6 @@
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
 using System;
-using Destructurama.Attributed;
 using Orion.Core.Players;
 using Orion.Core.World;
 using Orion.Core.World.Tiles;
@@ -26,7 +25,7 @@ namespace Orion.Core.Events.World.Tiles {
     /// An event that occurs when a wall is being painted. This event can be canceled.
     /// </summary>
     [Event("wall-paint")]
-    public sealed class WallPaintEvent : TileEvent, ICancelable {
+    public sealed class WallPaintEvent : TileEvent {
         /// <summary>
         /// Initializes a new instance of the <see cref="WallPaintEvent"/> class with the specified
         /// <paramref name="world"/>, <paramref name="player"/>, coordinates, and wall <paramref name="color"/>.
@@ -47,8 +46,5 @@ namespace Orion.Core.Events.World.Tiles {
         /// </summary>
         /// <value>The color being painted.</value>
         public PaintColor Color { get; }
-
-        /// <inheritdoc/>
-        [NotLogged] public string? CancellationReason { get; set; }
     }
 }

@@ -16,27 +16,13 @@
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
 using System;
-using System.Diagnostics.CodeAnalysis;
-using Moq;
-using Orion.Core.World;
 using Xunit;
 
 namespace Orion.Core.Events.World {
-    [SuppressMessage("Style", "IDE0017:Simplify object initialization", Justification = "Testing")]
     public class WorldSaveEventTests {
         [Fact]
         public void Ctor_NullWorld() {
             Assert.Throws<ArgumentNullException>(() => new WorldSaveEvent(null!));
-        }
-
-        [Fact]
-        public void CancellationReason_Set_Get() {
-            var world = Mock.Of<IWorld>();
-            var evt = new WorldSaveEvent(world);
-
-            evt.CancellationReason = "test";
-
-            Assert.Equal("test", evt.CancellationReason);
         }
     }
 }

@@ -170,7 +170,7 @@ namespace Orion.Core.Players {
             var player = Players[playerIndex];
             var evt = new PlayerTickEvent(player);
             Kernel.Raise(evt, Log);
-            return evt.IsCanceled() ? OTAPI.HookResult.Cancel : OTAPI.HookResult.Continue;
+            return evt.IsCanceled ? OTAPI.HookResult.Cancel : OTAPI.HookResult.Continue;
         }
 
         private OTAPI.HookResult PreResetHandler(Terraria.RemoteClient remoteClient) {
@@ -211,7 +211,7 @@ namespace Orion.Core.Players {
             var sender = Players[buffer.whoAmI];
             var evt = new PacketReceiveEvent<TPacket>(ref packet, sender);
             Kernel.Raise(evt, Log);
-            if (evt.IsCanceled()) {
+            if (evt.IsCanceled) {
                 return;
             }
 
@@ -252,7 +252,7 @@ namespace Orion.Core.Players {
             var receiver = Players[playerIndex];
             var evt = new PacketSendEvent<TPacket>(ref packet, receiver);
             Kernel.Raise(evt, Log);
-            if (evt.IsCanceled()) {
+            if (evt.IsCanceled) {
                 return;
             }
 
@@ -276,9 +276,12 @@ namespace Orion.Core.Players {
         [SuppressMessage("CodeQuality", "IDE0051:Remove unused private members", Justification = "Implicitly used")]
         private void OnPlayerJoinPacket(PacketReceiveEvent<PlayerJoinPacket> evt) {
             var player = evt.Sender;
+
             var evt2 = new PlayerJoinEvent(player);
             Kernel.Raise(evt2, Log);
-            evt.CancellationReason = evt2.CancellationReason;
+            if (evt2.IsCanceled) {
+                evt.Cancel(evt2.CancellationReason);
+            }
         }
 
         [EventHandler("orion-players", Priority = EventPriority.Lowest)]
@@ -286,27 +289,36 @@ namespace Orion.Core.Players {
         private void OnPlayerHealthPacket(PacketReceiveEvent<PlayerHealthPacket> evt) {
             var player = evt.Sender;
             ref var packet = ref evt.Packet;
+
             var evt2 = new PlayerHealthEvent(player, packet.Health, packet.MaxHealth);
             Kernel.Raise(evt2, Log);
-            evt.CancellationReason = evt2.CancellationReason;
+            if (evt2.IsCanceled) {
+                evt.Cancel(evt2.CancellationReason);
+            }
         }
 
         [EventHandler("orion-players", Priority = EventPriority.Lowest)]
         [SuppressMessage("CodeQuality", "IDE0051:Remove unused private members", Justification = "Implicitly used")]
         private void OnPlayerPvpPacket(PacketReceiveEvent<PlayerPvpPacket> evt) {
             var player = evt.Sender;
+
             var evt2 = new PlayerPvpEvent(player, evt.Packet.IsInPvp);
             Kernel.Raise(evt2, Log);
-            evt.CancellationReason = evt2.CancellationReason;
+            if (evt2.IsCanceled) {
+                evt.Cancel(evt2.CancellationReason);
+            }
         }
 
         [EventHandler("orion-players", Priority = EventPriority.Lowest)]
         [SuppressMessage("CodeQuality", "IDE0051:Remove unused private members", Justification = "Implicitly used")]
         private void OnClientPasswordPacket(PacketReceiveEvent<ClientPasswordPacket> evt) {
             var player = evt.Sender;
+
             var evt2 = new PlayerPasswordEvent(player, evt.Packet.Password);
             Kernel.Raise(evt2, Log);
-            evt.CancellationReason = evt2.CancellationReason;
+            if (evt2.IsCanceled) {
+                evt.Cancel(evt2.CancellationReason);
+            }
         }
 
         [EventHandler("orion-players", Priority = EventPriority.Lowest)]
@@ -314,27 +326,36 @@ namespace Orion.Core.Players {
         private void OnPlayerManaPacket(PacketReceiveEvent<PlayerManaPacket> evt) {
             var player = evt.Sender;
             ref var packet = ref evt.Packet;
+
             var evt2 = new PlayerManaEvent(player, packet.Mana, packet.MaxMana);
             Kernel.Raise(evt2, Log);
-            evt.CancellationReason = evt2.CancellationReason;
+            if (evt2.IsCanceled) {
+                evt.Cancel(evt2.CancellationReason);
+            }
         }
 
         [EventHandler("orion-players", Priority = EventPriority.Lowest)]
         [SuppressMessage("CodeQuality", "IDE0051:Remove unused private members", Justification = "Implicitly used")]
         private void OnPlayerTeamPacket(PacketReceiveEvent<PlayerTeamPacket> evt) {
             var player = evt.Sender;
+
             var evt2 = new PlayerTeamEvent(player, evt.Packet.Team);
             Kernel.Raise(evt2, Log);
-            evt.CancellationReason = evt2.CancellationReason;
+            if (evt2.IsCanceled) {
+                evt.Cancel(evt2.CancellationReason);
+            }
         }
 
         [EventHandler("orion-players", Priority = EventPriority.Lowest)]
         [SuppressMessage("CodeQuality", "IDE0051:Remove unused private members", Justification = "Implicitly used")]
         private void OnClientUuidPacket(PacketReceiveEvent<ClientUuidPacket> evt) {
             var player = evt.Sender;
+
             var evt2 = new PlayerUuidEvent(player, evt.Packet.Uuid);
             Kernel.Raise(evt2, Log);
-            evt.CancellationReason = evt2.CancellationReason;
+            if (evt2.IsCanceled) {
+                evt.Cancel(evt2.CancellationReason);
+            }
         }
 
         [EventHandler("orion-players", Priority = EventPriority.Lowest)]
@@ -342,9 +363,12 @@ namespace Orion.Core.Players {
         private void OnChatModule(PacketReceiveEvent<ModulePacket<ChatModule>> evt) {
             var player = evt.Sender;
             ref var module = ref evt.Packet.Module;
+
             var evt2 = new PlayerChatEvent(player, module.ClientCommand, module.ClientMessage);
             Kernel.Raise(evt2, Log);
-            evt.CancellationReason = evt2.CancellationReason;
+            if (evt2.IsCanceled) {
+                evt.Cancel(evt2.CancellationReason);
+            }
         }
     }
 }

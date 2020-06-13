@@ -16,13 +16,11 @@
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
 using System;
-using System.Diagnostics.CodeAnalysis;
 using Moq;
 using Orion.Core.Players;
 using Xunit;
 
 namespace Orion.Core.Events.Players {
-    [SuppressMessage("Style", "IDE0017:Simplify object initialization", Justification = "Testing")]
     public class PlayerHealthEventTests {
         [Fact]
         public void Ctor_NullPlayer_ThrowsArgumentNullException() {
@@ -43,16 +41,6 @@ namespace Orion.Core.Events.Players {
             var evt = new PlayerHealthEvent(player, 100, 500);
 
             Assert.Equal(500, evt.MaxHealth);
-        }
-
-        [Fact]
-        public void CancellationReason_Set_Get() {
-            var player = Mock.Of<IPlayer>();
-            var evt = new PlayerHealthEvent(player, 100, 500);
-
-            evt.CancellationReason = "test";
-
-            Assert.Equal("test", evt.CancellationReason);
         }
     }
 }

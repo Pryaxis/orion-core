@@ -16,7 +16,6 @@
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
 using System;
-using Destructurama.Attributed;
 using Orion.Core.Items;
 using Serilog.Events;
 
@@ -25,7 +24,7 @@ namespace Orion.Core.Events.Items {
     /// An event that occurs when an item tick (update) occurs. This event can be canceled.
     /// </summary>
     [Event("item-tick", LoggingLevel = LogEventLevel.Verbose)]
-    public sealed class ItemTickEvent : ItemEvent, ICancelable {
+    public sealed class ItemTickEvent : ItemEvent {
         /// <summary>
         /// Initializes a new instance of the <see cref="ItemTickEvent"/> class with the specified
         /// <paramref name="item"/>.
@@ -33,8 +32,5 @@ namespace Orion.Core.Events.Items {
         /// <param name="item">The item being ticked.</param>
         /// <exception cref="ArgumentNullException"><paramref name="item"/> is <see langword="null"/>.</exception>
         public ItemTickEvent(IItem item) : base(item) { }
-
-        /// <inheritdoc/>
-        [NotLogged] public string? CancellationReason { get; set; }
     }
 }

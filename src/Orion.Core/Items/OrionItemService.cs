@@ -20,7 +20,6 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using Orion.Core.Collections;
 using Orion.Core.DataStructures;
-using Orion.Core.Events;
 using Orion.Core.Events.Items;
 using Orion.Core.Framework;
 using Serilog;
@@ -68,7 +67,7 @@ namespace Orion.Core.Items {
             var item = GetItem(terrariaItem);
             var evt = new ItemDefaultsEvent(item) { Id = (ItemId)itemId };
             Kernel.Raise(evt, Log);
-            if (evt.IsCanceled()) {
+            if (evt.IsCanceled) {
                 return OTAPI.HookResult.Cancel;
             }
 
@@ -87,7 +86,7 @@ namespace Orion.Core.Items {
             var item = Items[itemIndex];
             var evt = new ItemTickEvent(item);
             Kernel.Raise(evt, Log);
-            return evt.IsCanceled() ? OTAPI.HookResult.Cancel : OTAPI.HookResult.Continue;
+            return evt.IsCanceled ? OTAPI.HookResult.Cancel : OTAPI.HookResult.Continue;
         }
 
         // Gets an `IItem` which corresponds to the given Terraria item. Retrieves the `IItem` from the `Items` array,

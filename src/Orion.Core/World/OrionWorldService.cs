@@ -68,7 +68,7 @@ namespace Orion.Core.World {
         private OTAPI.HookResult PreSaveWorldHandler(ref bool useCloudSaving, ref bool resetTime) {
             var evt = new WorldSaveEvent(World);
             Kernel.Raise(evt, Log);
-            return evt.IsCanceled() ? OTAPI.HookResult.Cancel : OTAPI.HookResult.Continue;
+            return evt.IsCanceled ? OTAPI.HookResult.Cancel : OTAPI.HookResult.Continue;
         }
 
         // =============================================================================================================
@@ -81,21 +81,24 @@ namespace Orion.Core.World {
             var player = evt.Sender;
             ref var packet = ref evt.Packet;
 
-            string? RaiseBlockBreakEvent(ref TileModifyPacket packet, bool isItemless) {
+            Event? RaiseBlockBreakEvent(ref TileModifyPacket packet, bool isItemless) {
                 if (packet.IsFailure) {
                     return null;
                 }
 
                 var evt2 = new BlockBreakEvent(World, player, packet.X, packet.Y, isItemless);
                 Kernel.Raise(evt2, Log);
-                return evt2.CancellationReason;
+                return evt2;
             }
 
-            evt.CancellationReason = packet.Modification switch {
+            var evt2 = packet.Modification switch {
                 TileModification.BreakBlock => RaiseBlockBreakEvent(ref packet, false),
                 TileModification.BreakBlockItemless => RaiseBlockBreakEvent(ref packet, true),
                 _ => null
             };
+            if (evt2?.IsCanceled == true) {
+                evt.Cancel(evt2.CancellationReason);
+            }
         }
 
         [EventHandler("orion-world", Priority = EventPriority.Lowest)]
@@ -103,9 +106,12 @@ namespace Orion.Core.World {
         private void OnTileSquarePacket(PacketReceiveEvent<TileSquarePacket> evt) {
             var player = evt.Sender;
             ref var packet = ref evt.Packet;
+
             var evt2 = new TileSquareEvent(World, player, packet.X, packet.Y, packet.Tiles);
             Kernel.Raise(evt2, Log);
-            evt.CancellationReason = evt2.CancellationReason;
+            if (evt2.IsCanceled) {
+                evt.Cancel(evt2.CancellationReason);
+            }
         }
 
         [EventHandler("orion-world", Priority = EventPriority.Lowest)]
@@ -113,9 +119,12 @@ namespace Orion.Core.World {
         private void OnWireActivatePacket(PacketReceiveEvent<WireActivatePacket> evt) {
             var player = evt.Sender;
             ref var packet = ref evt.Packet;
+
             var evt2 = new WiringActivateEvent(World, player, packet.X, packet.Y);
             Kernel.Raise(evt2, Log);
-            evt.CancellationReason = evt2.CancellationReason;
+            if (evt2.IsCanceled) {
+                evt.Cancel(evt2.CancellationReason);
+            }
         }
 
         [EventHandler("orion-world", Priority = EventPriority.Lowest)]
@@ -123,9 +132,12 @@ namespace Orion.Core.World {
         private void OnBlockPaintPacket(PacketReceiveEvent<BlockPaintPacket> evt) {
             var player = evt.Sender;
             ref var packet = ref evt.Packet;
+
             var evt2 = new BlockPaintEvent(World, player, packet.X, packet.Y, packet.Color);
             Kernel.Raise(evt2, Log);
-            evt.CancellationReason = evt2.CancellationReason;
+            if (evt2.IsCanceled) {
+                evt.Cancel(evt2.CancellationReason);
+            }
         }
 
         [EventHandler("orion-world", Priority = EventPriority.Lowest)]
@@ -133,9 +145,12 @@ namespace Orion.Core.World {
         private void OnWallPaintPacket(PacketReceiveEvent<WallPaintPacket> evt) {
             var player = evt.Sender;
             ref var packet = ref evt.Packet;
+
             var evt2 = new WallPaintEvent(World, player, packet.X, packet.Y, packet.Color);
             Kernel.Raise(evt2, Log);
-            evt.CancellationReason = evt2.CancellationReason;
+            if (evt2.IsCanceled) {
+                evt.Cancel(evt2.CancellationReason);
+            }
         }
 
         // This class does not implement `IDisposable` as it is a static replacement.

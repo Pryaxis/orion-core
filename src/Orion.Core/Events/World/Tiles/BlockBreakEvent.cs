@@ -16,7 +16,6 @@
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
 using System;
-using Destructurama.Attributed;
 using Orion.Core.Players;
 using Orion.Core.World;
 
@@ -25,7 +24,7 @@ namespace Orion.Core.Events.World.Tiles {
     /// An event that occurs when a block is being broken. This event can be canceled.
     /// </summary>
     [Event("block-break")]
-    public sealed class BlockBreakEvent : TileEvent, ICancelable {
+    public sealed class BlockBreakEvent : TileEvent {
         /// <summary>
         /// Initializes a new instance of the <see cref="BlockBreakEvent"/> class with the specified
         /// <paramref name="world"/>, <paramref name="player"/>, coordinates, and itemlessness flag.
@@ -46,8 +45,5 @@ namespace Orion.Core.Events.World.Tiles {
         /// </summary>
         /// <value><see langword="true"/> if the block breaking is itemless; otherwise, <see langword="false"/>.</value>
         public bool IsItemless { get; }
-
-        /// <inheritdoc/>
-        [NotLogged] public string? CancellationReason { get; set; }
     }
 }

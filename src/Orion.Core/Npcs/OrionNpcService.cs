@@ -91,7 +91,7 @@ namespace Orion.Core.Npcs {
             var npc = GetNpc(terrariaNpc);
             var evt = new NpcDefaultsEvent(npc) { Id = (NpcId)npcId };
             Kernel.Raise(evt, Log);
-            if (evt.IsCanceled()) {
+            if (evt.IsCanceled) {
                 return OTAPI.HookResult.Cancel;
             }
 
@@ -108,7 +108,7 @@ namespace Orion.Core.Npcs {
             var npc = Npcs[npcIndex];
             var evt = new NpcSpawnEvent(npc);
             Kernel.Raise(evt, Log);
-            if (evt.IsCanceled()) {
+            if (evt.IsCanceled) {
                 // To cancel the event, remove the NPC and return the failure index.
                 npc.IsActive = false;
                 npcIndex = Npcs.Count;
@@ -124,7 +124,7 @@ namespace Orion.Core.Npcs {
             var npc = Npcs[npcIndex];
             var evt = new NpcTickEvent(npc);
             Kernel.Raise(evt, Log);
-            return evt.IsCanceled() ? OTAPI.HookResult.Cancel : OTAPI.HookResult.Continue;
+            return evt.IsCanceled ? OTAPI.HookResult.Cancel : OTAPI.HookResult.Continue;
         }
 
         private void KilledHandler(Terraria.NPC terrariaNpc) {
@@ -144,7 +144,7 @@ namespace Orion.Core.Npcs {
             var npc = GetNpc(terrariaNpc);
             var evt = new NpcLootEvent(npc) { Id = (ItemId)itemId, StackSize = stackSize, Prefix = (ItemPrefix)prefix };
             Kernel.Raise(evt, Log);
-            if (evt.IsCanceled()) {
+            if (evt.IsCanceled) {
                 return OTAPI.HookResult.Cancel;
             }
 
@@ -180,7 +180,9 @@ namespace Orion.Core.Npcs {
 
             var evt2 = new NpcBuffEvent(npc, player, buff);
             Kernel.Raise(evt2, Log);
-            evt.CancellationReason = evt2.CancellationReason;
+            if (evt2.IsCanceled) {
+                evt.Cancel(evt2.CancellationReason);
+            }
         }
 
         [EventHandler("orion-npcs", Priority = EventPriority.Lowest)]
@@ -188,9 +190,12 @@ namespace Orion.Core.Npcs {
         private void OnNpcCatchPacket(PacketReceiveEvent<NpcCatchPacket> evt) {
             var npc = Npcs[evt.Packet.NpcIndex];
             var player = evt.Sender;
+
             var evt2 = new NpcCatchEvent(npc, player);
             Kernel.Raise(evt2, Log);
-            evt.CancellationReason = evt2.CancellationReason;
+            if (evt2.IsCanceled) {
+                evt.Cancel(evt2.CancellationReason);
+            }
         }
 
         [EventHandler("orion-npcs", Priority = EventPriority.Lowest)]
@@ -198,9 +203,12 @@ namespace Orion.Core.Npcs {
         private void OnNpcFishPacket(PacketReceiveEvent<NpcFishPacket> evt) {
             var player = evt.Sender;
             ref var packet = ref evt.Packet;
+
             var evt2 = new NpcFishEvent(player, packet.X, packet.Y, packet.Id);
             Kernel.Raise(evt2, Log);
-            evt.CancellationReason = evt2.CancellationReason;
+            if (evt2.IsCanceled) {
+                evt.Cancel(evt2.CancellationReason);
+            }
         }
     }
 }
