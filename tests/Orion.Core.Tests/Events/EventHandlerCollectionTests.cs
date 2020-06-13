@@ -77,7 +77,7 @@ namespace Orion.Core.Events {
             collection.Raise(new TestEvent(), Logger.None);
         }
 
-        [EventHandler("test", Priority =EventPriority.Lowest)]
+        [EventHandler("test", Priority = EventPriority.Lowest)]
         private static void TestHandler(TestEvent evt) {
             evt.Value = 100;
         }

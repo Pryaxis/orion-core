@@ -60,12 +60,12 @@ namespace Orion.Core.World {
         // OTAPI hooks
         //
 
-        private void PostLoadWorldHandler(bool _) {
+        private void PostLoadWorldHandler(bool loadFromCloud) {
             var evt = new WorldLoadedEvent(World);
             Kernel.Raise(evt, Log);
         }
 
-        private OTAPI.HookResult PreSaveWorldHandler(ref bool _, ref bool _2) {
+        private OTAPI.HookResult PreSaveWorldHandler(ref bool useCloudSaving, ref bool resetTime) {
             var evt = new WorldSaveEvent(World);
             Kernel.Raise(evt, Log);
             return evt.IsCanceled() ? OTAPI.HookResult.Cancel : OTAPI.HookResult.Continue;

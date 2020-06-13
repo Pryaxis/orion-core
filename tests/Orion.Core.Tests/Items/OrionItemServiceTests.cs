@@ -100,7 +100,7 @@ namespace Orion.Core.Items {
 
         [Fact]
         public void ItemDefaults_EventCanceled() {
-            Terraria.Main.item[0] = new Terraria.Item { whoAmI = 0 }; 
+            Terraria.Main.item[0] = new Terraria.Item { whoAmI = 0 };
 
             using var kernel = new OrionKernel(Logger.None);
             using var itemService = new OrionItemService(kernel, Logger.None);

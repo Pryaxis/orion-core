@@ -18,6 +18,10 @@
     <PackageTags>terraria;tshock;orion</PackageTags>
   </PropertyGroup>
 
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+  </PropertyGroup>
+
   <ItemGroup>
     <None Include="..\..\COPYING">
       <Pack>True</Pack>

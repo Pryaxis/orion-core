@@ -77,7 +77,7 @@ namespace Orion.Core.Projectiles {
             return OTAPI.HookResult.Continue;
         }
 
-        private OTAPI.HookResult PreUpdateHandler(Terraria.Projectile _, ref int projectileIndex) {
+        private OTAPI.HookResult PreUpdateHandler(Terraria.Projectile terrariaProjectile, ref int projectileIndex) {
             Debug.Assert(projectileIndex >= 0 && projectileIndex < Projectiles.Count);
 
             var projectile = Projectiles[projectileIndex];

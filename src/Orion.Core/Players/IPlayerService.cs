@@ -94,7 +94,7 @@ namespace Orion.Core.Players {
             if (playerService is null) {
                 throw new ArgumentNullException(nameof(playerService));
             }
-            
+
             var players = playerService.Players;
             for (var i = 0; i < players.Count; ++i) {
                 players[i].SendPacket(ref packet);

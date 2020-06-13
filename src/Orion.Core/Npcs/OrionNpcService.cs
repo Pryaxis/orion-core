@@ -72,7 +72,7 @@ namespace Orion.Core.Npcs {
             var npcIndex = Terraria.NPC.NewNPC((int)position.X, (int)position.Y, (int)id);
             return npcIndex >= 0 && npcIndex < Npcs.Count ? Npcs[npcIndex] : null;
         }
-        
+
         // =============================================================================================================
         // OTAPI hooks
         //
@@ -136,8 +136,9 @@ namespace Orion.Core.Npcs {
         }
 
         private OTAPI.HookResult PreDropLootHandler(
-                Terraria.NPC terrariaNpc, ref int _, ref int _2, ref int _3, ref int _4, ref int _5, ref int itemId,
-                ref int stackSize, ref bool _6, ref int prefix, ref bool _7, ref bool _8) {
+                Terraria.NPC terrariaNpc, ref int itemIndex, ref int x, ref int y, ref int width, ref int height,
+                ref int itemId, ref int stackSize, ref bool noBroadcast, ref int prefix, ref bool noGrabDelay,
+                ref bool reverseIndex) {
             Debug.Assert(terrariaNpc != null);
 
             var npc = GetNpc(terrariaNpc);

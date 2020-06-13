@@ -46,7 +46,7 @@ namespace Orion.Core.Players {
                 .GetMethod(nameof(OnReceivePacket), BindingFlags.NonPublic | BindingFlags.Instance);
         private static readonly MethodInfo _onSendPacket =
             typeof(OrionPlayerService)
-                .GetMethod(nameof(OnSendPacket), BindingFlags.NonPublic | BindingFlags.Instance); 
+                .GetMethod(nameof(OnSendPacket), BindingFlags.NonPublic | BindingFlags.Instance);
 
         private readonly ThreadLocal<bool> _ignoreReceiveDataHandler = new ThreadLocal<bool>();
         private readonly OnReceivePacketHandler?[] _onReceivePacketHandlers = new OnReceivePacketHandler?[256];
@@ -116,7 +116,7 @@ namespace Orion.Core.Players {
         //
 
         private OTAPI.HookResult ReceiveDataHandler(
-                Terraria.MessageBuffer buffer, ref byte packetId, ref int _, ref int start, ref int length) {
+                Terraria.MessageBuffer buffer, ref byte packetId, ref int readOffset, ref int start, ref int length) {
             Debug.Assert(buffer != null);
             Debug.Assert(buffer.whoAmI >= 0 && buffer.whoAmI < Players.Count);
             Debug.Assert(start >= 0 && start + length <= buffer.readBuffer.Length);
@@ -144,7 +144,7 @@ namespace Orion.Core.Players {
 
         private OTAPI.HookResult SendBytesHandler(
                 ref int playerIndex, ref byte[] data, ref int offset, ref int size,
-                ref Terraria.Net.Sockets.SocketSendCallback _, ref object _2) {
+                ref Terraria.Net.Sockets.SocketSendCallback callback, ref object state) {
             Debug.Assert(playerIndex >= 0 && playerIndex < Players.Count);
             Debug.Assert(data != null);
             Debug.Assert(offset >= 0 && offset + size <= data.Length);
@@ -164,7 +164,7 @@ namespace Orion.Core.Players {
             return OTAPI.HookResult.Cancel;
         }
 
-        private OTAPI.HookResult PreUpdateHandler(Terraria.Player _, ref int playerIndex) {
+        private OTAPI.HookResult PreUpdateHandler(Terraria.Player terrariaPlayer, ref int playerIndex) {
             Debug.Assert(playerIndex >= 0 && playerIndex < Players.Count);
 
             var player = Players[playerIndex];

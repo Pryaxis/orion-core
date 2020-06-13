@@ -61,7 +61,8 @@ namespace Orion.Core.Items {
         // OTAPI hooks
         //
 
-        private OTAPI.HookResult PreSetDefaultsByIdHandler(Terraria.Item terrariaItem, ref int itemId, ref bool _) {
+        private OTAPI.HookResult PreSetDefaultsByIdHandler(
+                Terraria.Item terrariaItem, ref int itemId, ref bool noMatCheck) {
             Debug.Assert(terrariaItem != null);
 
             var item = GetItem(terrariaItem);

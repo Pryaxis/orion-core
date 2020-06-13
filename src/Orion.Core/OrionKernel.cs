@@ -417,12 +417,12 @@ namespace Orion.Core {
             Raise(evt, _log);
         }
 
-        private void PreUpdateHandler(ref Microsoft.Xna.Framework.GameTime _) {
+        private void PreUpdateHandler(ref Microsoft.Xna.Framework.GameTime gameTime) {
             var evt = new ServerTickEvent();
             Raise(evt, _log);
         }
 
-        private OTAPI.HookResult ProcessHandler(string _, string input) {
+        private OTAPI.HookResult ProcessHandler(string lowered, string input) {
             var evt = new ServerCommandEvent(input);
             Raise(evt, _log);
             return evt.IsCanceled() ? OTAPI.HookResult.Cancel : OTAPI.HookResult.Continue;
