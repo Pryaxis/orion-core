@@ -16,11 +16,13 @@
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 using Moq;
 using Orion.Core.Projectiles;
 using Xunit;
 
 namespace Orion.Core.Events.Projectiles {
+    [SuppressMessage("Style", "IDE0017:Simplify object initialization", Justification = "Testing")]
     public class ProjectileDefaultsEventTests {
         [Fact]
         public void Ctor_NullProjectile_ThrowsArgumentNullException() {

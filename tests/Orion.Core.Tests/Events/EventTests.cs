@@ -16,7 +16,6 @@
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
 using System;
-using Moq;
 using Xunit;
 
 namespace Orion.Core.Events {
