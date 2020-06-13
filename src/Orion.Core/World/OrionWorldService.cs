@@ -81,18 +81,24 @@ namespace Orion.Core.World {
             var player = evt.Sender;
             ref var packet = ref evt.Packet;
 
-            Event? RaiseBlockBreakEvent(ref TileModifyPacket packet, bool isItemless) {
-                if (packet.IsFailure) {
-                    return null;
-                }
-
-                var evt2 = new BlockBreakEvent(World, player, packet.X, packet.Y, isItemless);
-                Kernel.Raise(evt2, Log);
-                return evt2;
+            Event RaiseAndReturn<TEvent>(TEvent newEvt) where TEvent : Event {
+                Kernel.Raise(newEvt, Log);
+                return newEvt;
             }
+
+            Event? RaiseBlockBreakEvent(ref TileModifyPacket packet, bool isItemless) =>
+                packet.IsFailure ?
+                    null :
+                    RaiseAndReturn(new BlockBreakEvent(World, player, packet.X, packet.Y, isItemless));
+
+            Event? RaiseWallBreakEvent(ref TileModifyPacket packet) =>
+                packet.IsFailure ?
+                    null :
+                    RaiseAndReturn(new WallBreakEvent(World, player, packet.X, packet.Y));
 
             var evt2 = packet.Modification switch {
                 TileModification.BreakBlock => RaiseBlockBreakEvent(ref packet, false),
+                TileModification.BreakWall => RaiseWallBreakEvent(ref packet),
                 TileModification.BreakBlockItemless => RaiseBlockBreakEvent(ref packet, true),
                 _ => null
             };

@@ -18,33 +18,22 @@
 using System;
 using Orion.Core.Players;
 using Orion.Core.World;
-using Orion.Core.World.Tiles;
 
 namespace Orion.Core.Events.World.Tiles {
     /// <summary>
-    /// An event that occurs when a block is being painted. This event can be canceled.
+    /// An event that occurs when a wall is being broken. This event can be canceled.
     /// </summary>
-    [Event("block-paint")]
-    public sealed class BlockPaintEvent : TileEvent {
+    [Event("wall-break")]
+    public sealed class WallBreakEvent : TileEvent {
         /// <summary>
-        /// Initializes a new instance of the <see cref="BlockPaintEvent"/> class with the specified
-        /// <paramref name="world"/>, <paramref name="player"/>, coordinates, and block <paramref name="color"/>.
+        /// Initializes a new instance of the <see cref="WallBreakEvent"/> class with the specified
+        /// <paramref name="world"/>, <paramref name="player"/>, and coordinates.
         /// </summary>
         /// <param name="world">The world involved in the event.</param>
-        /// <param name="player">The player painting the block, or <see langword="null"/> for none.</param>
-        /// <param name="x">The block's X coordinate.</param>
-        /// <param name="y">The block's Y coordinate.</param>
-        /// <param name="color">The block color.</param>
+        /// <param name="player">The player breaking the wall, or <see langword="null"/> for none.</param>
+        /// <param name="x">The wall's X coordinate.</param>
+        /// <param name="y">The wall's Y coordinate.</param>
         /// <exception cref="ArgumentNullException"><paramref name="world"/> is <see langword="null"/>.</exception>
-        public BlockPaintEvent(IWorld world, IPlayer? player, int x, int y, PaintColor color)
-                : base(world, player, x, y) {
-            Color = color;
-        }
-
-        /// <summary>
-        /// Gets the color being painted.
-        /// </summary>
-        /// <value>The color being painted.</value>
-        public PaintColor Color { get; }
+        public WallBreakEvent(IWorld world, IPlayer? player, int x, int y) : base(world, player, x, y) { }
     }
 }

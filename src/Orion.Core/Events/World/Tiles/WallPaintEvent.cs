@@ -32,8 +32,8 @@ namespace Orion.Core.Events.World.Tiles {
         /// </summary>
         /// <param name="world">The world involved in the event.</param>
         /// <param name="player">The player painting the wall, or <see langword="null"/> for none.</param>
-        /// <param name="x">The tile's X coordinate.</param>
-        /// <param name="y">The tile's Y coordinate.</param>
+        /// <param name="x">The wall's X coordinate.</param>
+        /// <param name="y">The wall's Y coordinate.</param>
         /// <param name="color">The wall color.</param>
         /// <exception cref="ArgumentNullException"><paramref name="world"/> is <see langword="null"/>.</exception>
         public WallPaintEvent(IWorld world, IPlayer? player, int x, int y, PaintColor color)
