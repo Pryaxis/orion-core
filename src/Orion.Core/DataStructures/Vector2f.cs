@@ -22,7 +22,7 @@ using System.Runtime.InteropServices;
 
 namespace Orion.Core.DataStructures {
     /// <summary>
-    /// Reprseents a two float component vector.
+    /// Represents a two float component vector.
     /// </summary>
     [StructLayout(LayoutKind.Explicit)]
     public readonly struct Vector2f : IEquatable<Vector2f> {
@@ -75,7 +75,7 @@ namespace Orion.Core.DataStructures {
         public override string ToString() => $"({X}, {Y})";
 
         /// <summary>
-        /// Returns a value indicating whether <paramref name="left"/> and <paramref name="right"/> are equal.
+        /// Returns a value indicating whether <paramref name="left"/> is equal to <paramref name="right"/>.
         /// </summary>
         /// <param name="left">The left vector.</param>
         /// <param name="right">The right vector.</param>
@@ -87,7 +87,7 @@ namespace Orion.Core.DataStructures {
         public static bool operator ==(Vector2f left, Vector2f right) => left.Equals(right);
 
         /// <summary>
-        /// Returns a value indicating whether <paramref name="left"/> and <paramref name="right"/> are not equal.
+        /// Returns a value indicating whether <paramref name="left"/> is not equal to <paramref name="right"/>.
         /// </summary>
         /// <param name="left">The left vector.</param>
         /// <param name="right">The right vector.</param>

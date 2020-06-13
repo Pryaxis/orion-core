@@ -16,11 +16,16 @@
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
 using System;
+using System.Runtime.CompilerServices;
 
 namespace Orion.Core.Entities {
     /// <summary>
-    /// Provides annotation support. This is primarily used to attach customizable state to instances.
+    /// Provides annotation support.
     /// </summary>
+    /// <remarks>
+    /// This interface is used to allow consumers to attach custom state to objects without having to rely on the
+    /// <see cref="ConditionalWeakTable{TKey, TValue}"/> class.
+    /// </remarks>
     public interface IAnnotatable {
         /// <summary>
         /// Gets a reference to the annotation of type <typeparamref name="T"/> with the given <paramref name="key"/>,

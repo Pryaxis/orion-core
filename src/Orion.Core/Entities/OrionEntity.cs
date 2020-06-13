@@ -21,7 +21,6 @@ using System.Diagnostics.Contracts;
 using Orion.Core.DataStructures;
 
 namespace Orion.Core.Entities {
-    // This class is generic so that we only use a single wrapped field instead of two wrapped fields per entity.
     internal abstract class OrionEntity<TTerrariaEntity> : AnnotatableObject, IEntity, IWrapping<TTerrariaEntity>
             where TTerrariaEntity : Terraria.Entity {
         protected OrionEntity(int entityIndex, TTerrariaEntity terrariaEntity) {

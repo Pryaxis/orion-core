@@ -22,7 +22,7 @@ using Serilog.Events;
 
 namespace Orion.Core.Events.Items {
     /// <summary>
-    /// An event that occurs when an item is updating every tick. This event can be canceled.
+    /// An event that occurs when an item tick (update) occurs. This event can be canceled.
     /// </summary>
     [Event("item-tick", LoggingLevel = LogEventLevel.Verbose)]
     public sealed class ItemTickEvent : ItemEvent, ICancelable {

@@ -272,7 +272,7 @@ namespace Orion.Core.Npcs {
             var isRun = false;
             kernel.RegisterHandler<NpcBuffEvent>(evt => {
                 Assert.Same(npcService.Npcs[1], evt.Npc);
-                Assert.Same(playerService.Players[5], evt.Source);
+                Assert.Same(playerService.Players[5], evt.Player);
                 Assert.Equal(new Buff(BuffId.Poisoned, TimeSpan.FromSeconds(1)), evt.Buff);
                 isRun = true;
             }, Logger.None);

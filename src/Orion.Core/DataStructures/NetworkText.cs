@@ -91,8 +91,7 @@ namespace Orion.Core.DataStructures {
         /// </summary>
         /// <returns>A string representation of the network text.</returns>
         [Pure, ExcludeFromCodeCoverage]
-        public override string ToString() => _mode switch
-        {
+        public override string ToString() => _mode switch {
             Mode.Literal => _format,
             Mode.Formatted => string.Format(_format, _args),
             Mode.Localized => Terraria.Localization.Language.GetTextValue(_format, _args),
@@ -119,6 +118,7 @@ namespace Orion.Core.DataStructures {
         /// <exception cref="ArgumentNullException">
         /// <paramref name="format"/> or <paramref name="args"/> are <see langword="null"/>.
         /// </exception>
+        [Pure]
         public static NetworkText Formatted(string format, params NetworkText[] args) =>
             NewNetworkText(Mode.Formatted, format, args);
 
@@ -133,9 +133,11 @@ namespace Orion.Core.DataStructures {
         /// <exception cref="ArgumentNullException">
         /// <paramref name="format"/> or <paramref name="args"/> are <see langword="null"/>.
         /// </exception>
+        [Pure]
         public static NetworkText Localized(string format, params NetworkText[] args) =>
             NewNetworkText(Mode.Localized, format, args);
 
+        [Pure]
         private static NetworkText NewNetworkText(Mode mode, string format, NetworkText[] args) {
             if (format is null) {
                 throw new ArgumentNullException(nameof(format));
@@ -154,7 +156,7 @@ namespace Orion.Core.DataStructures {
         }
 
         /// <summary>
-        /// Returns a value indicating whether <paramref name="left"/> and <paramref name="right"/> are equal.
+        /// Returns a value indicating whether <paramref name="left"/> is equal to <paramref name="right"/>.
         /// </summary>
         /// <param name="left">The left network text.</param>
         /// <param name="right">The right network text.</param>
@@ -167,7 +169,7 @@ namespace Orion.Core.DataStructures {
             left is null ? right is null : left.Equals(right);
 
         /// <summary>
-        /// Returns a value indicating whether <paramref name="left"/> and <paramref name="right"/> are not equal.
+        /// Returns a value indicating whether <paramref name="left"/> is not equal to <paramref name="right"/>.
         /// </summary>
         /// <param name="left">The left network text.</param>
         /// <param name="right">The right network text.</param>

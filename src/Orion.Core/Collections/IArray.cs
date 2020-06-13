@@ -15,7 +15,6 @@
 // You should have received a copy of the GNU General Public License
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
@@ -31,10 +30,9 @@ namespace Orion.Core.Collections {
         /// </summary>
         /// <param name="index">The index.</param>
         /// <returns>The element at the given <paramref name="index"/>.</returns>
-        /// <exception cref="IndexOutOfRangeException"><paramref name="index"/> is out of range.</exception>
         T this[int index] { get; set; }
 
-        // Provide a default implementation for `GetEnumerator`, as it is consistent.
+        // Provide default implementations for `GetEnumerator` as they should be consistent.
         IEnumerator<T> IEnumerable<T>.GetEnumerator() {
             for (var i = 0; i < Count; ++i) {
                 yield return this[i];

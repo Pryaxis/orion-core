@@ -16,6 +16,7 @@
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
 namespace Orion.Core.Entities {
+    // Marks a class as wrapping `TWrapped`. Used to support `WrappedReadOnlyList`.
     internal interface IWrapping<out TWrapped> {
         TWrapped Wrapped { get; }
     }

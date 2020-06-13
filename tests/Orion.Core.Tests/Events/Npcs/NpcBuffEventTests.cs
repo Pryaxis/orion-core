@@ -16,8 +16,6 @@
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
 using System;
-using System.Collections.Generic;
-using System.Text;
 using Moq;
 using Orion.Core.Buffs;
 using Orion.Core.Npcs;
@@ -28,14 +26,14 @@ namespace Orion.Core.Events.Npcs {
     public class NpcBuffEventTests {
         [Fact]
         public void Ctor_NullNpc_ThrowsArgumentNullException() {
-            var source = Mock.Of<IPlayer>();
+            var player = Mock.Of<IPlayer>();
             var buff = new Buff(BuffId.Poisoned, TimeSpan.FromSeconds(1));
 
-            Assert.Throws<ArgumentNullException>(() => new NpcBuffEvent(null!, source, buff));
+            Assert.Throws<ArgumentNullException>(() => new NpcBuffEvent(null!, player, buff));
         }
 
         [Fact]
-        public void Ctor_NullSource_ThrowsArgumentNullException() {
+        public void Ctor_NullPlayer_ThrowsArgumentNullException() {
             var npc = Mock.Of<INpc>();
             var buff = new Buff(BuffId.Poisoned, TimeSpan.FromSeconds(1));
 
@@ -43,21 +41,21 @@ namespace Orion.Core.Events.Npcs {
         }
 
         [Fact]
-        public void Source_Get() {
+        public void Player_Get() {
             var npc = Mock.Of<INpc>();
-            var source = Mock.Of<IPlayer>();
+            var player = Mock.Of<IPlayer>();
             var buff = new Buff(BuffId.Poisoned, TimeSpan.FromSeconds(1));
-            var evt = new NpcBuffEvent(npc, source, buff);
+            var evt = new NpcBuffEvent(npc, player, buff);
 
-            Assert.Same(source, evt.Source);
+            Assert.Same(player, evt.Player);
         }
 
         [Fact]
         public void Buff_Get() {
             var npc = Mock.Of<INpc>();
-            var source = Mock.Of<IPlayer>();
+            var player = Mock.Of<IPlayer>();
             var buff = new Buff(BuffId.Poisoned, TimeSpan.FromSeconds(1));
-            var evt = new NpcBuffEvent(npc, source, buff);
+            var evt = new NpcBuffEvent(npc, player, buff);
 
             Assert.Equal(buff, evt.Buff);
         }

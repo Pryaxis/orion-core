@@ -78,7 +78,7 @@ namespace Orion.Core.Npcs {
         //
 
         private OTAPI.HookResult PreSetDefaultsByIdHandler(
-                Terraria.NPC terrariaNpc, ref int npcId, ref Terraria.NPCSpawnParams _) {
+                Terraria.NPC terrariaNpc, ref int npcId, ref Terraria.NPCSpawnParams spawnParams) {
             Debug.Assert(terrariaNpc != null);
 
             // Check `_setDefaultsToIgnore` to ignore spurious calls if `SetDefaultsById()` is called with a negative
@@ -118,7 +118,7 @@ namespace Orion.Core.Npcs {
             return OTAPI.HookResult.Continue;
         }
 
-        private OTAPI.HookResult PreUpdateHandler(Terraria.NPC _, ref int npcIndex) {
+        private OTAPI.HookResult PreUpdateHandler(Terraria.NPC terrariaNpc, ref int npcIndex) {
             Debug.Assert(npcIndex >= 0 && npcIndex < Npcs.Count);
 
             var npc = Npcs[npcIndex];
@@ -174,10 +174,10 @@ namespace Orion.Core.Npcs {
         private void OnNpcBuffPacket(PacketReceiveEvent<NpcBuffPacket> evt) {
             ref var packet = ref evt.Packet;
             var npc = Npcs[packet.NpcIndex];
-            var source = evt.Sender;
+            var player = evt.Sender;
             var buff = new Buff(packet.Id, TimeSpan.FromSeconds(packet.Ticks / 60.0));
 
-            var evt2 = new NpcBuffEvent(npc, source, buff);
+            var evt2 = new NpcBuffEvent(npc, player, buff);
             Kernel.Raise(evt2, Log);
             evt.CancellationReason = evt2.CancellationReason;
         }
