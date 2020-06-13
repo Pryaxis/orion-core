@@ -47,14 +47,14 @@ namespace Orion.Core.Events.Server {
 
             // Preprocess the arguments.
             foreach (var arg in args) {
-                if (arg.StartsWith("--")) {
-                    var equals = arg.IndexOf('=');
+                if (arg.StartsWith("--", StringComparison.Ordinal)) {
+                    var equals = arg.IndexOf('=', StringComparison.Ordinal);
                     if (equals < 0) {
                         _bools.Add(arg[2..]);
                     } else {
                         _values[arg[2..equals]] = arg[(equals + 1)..];
                     }
-                } else if (arg.StartsWith("-")) {
+                } else if (arg.StartsWith("-", StringComparison.Ordinal)) {
                     // Add the args' characters as flags.
                     foreach (var c in arg[1..]) {
                         _bools.Add(c.ToString());

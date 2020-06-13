@@ -19,6 +19,7 @@ using System;
 using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.Diagnostics.Contracts;
+using System.Globalization;
 using System.Linq;
 
 namespace Orion.Core.DataStructures {
@@ -93,9 +94,9 @@ namespace Orion.Core.DataStructures {
         [Pure, ExcludeFromCodeCoverage]
         public override string ToString() => _mode switch {
             Mode.Literal => _format,
-            Mode.Formatted => string.Format(_format, _args),
+            Mode.Formatted => string.Format(CultureInfo.InvariantCulture, _format, _args),
             Mode.Localized => Terraria.Localization.Language.GetTextValue(_format, _args),
-            _ => throw new NotImplementedException(),
+            _ => throw new InvalidOperationException()
         };
 
         /// <summary>
