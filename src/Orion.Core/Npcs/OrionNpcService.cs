@@ -188,7 +188,8 @@ namespace Orion.Core.Npcs {
         [EventHandler("orion-npcs", Priority = EventPriority.Lowest)]
         [SuppressMessage("CodeQuality", "IDE0051:Remove unused private members", Justification = "Implicitly used")]
         private void OnNpcCatchPacket(PacketReceiveEvent<NpcCatchPacket> evt) {
-            var npc = Npcs[evt.Packet.NpcIndex];
+            ref var packet = ref evt.Packet;
+            var npc = Npcs[packet.NpcIndex];
             var player = evt.Sender;
 
             var evt2 = new NpcCatchEvent(npc, player);
@@ -201,8 +202,8 @@ namespace Orion.Core.Npcs {
         [EventHandler("orion-npcs", Priority = EventPriority.Lowest)]
         [SuppressMessage("CodeQuality", "IDE0051:Remove unused private members", Justification = "Implicitly used")]
         private void OnNpcFishPacket(PacketReceiveEvent<NpcFishPacket> evt) {
-            var player = evt.Sender;
             ref var packet = ref evt.Packet;
+            var player = evt.Sender;
 
             var evt2 = new NpcFishEvent(player, packet.X, packet.Y, packet.Id);
             Kernel.Raise(evt2, Log);

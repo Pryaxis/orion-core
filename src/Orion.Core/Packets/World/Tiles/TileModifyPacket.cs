@@ -63,6 +63,7 @@ namespace Orion.Core.Packets.World.Tiles {
 
                 return (BlockId)_data;
             }
+
             set {
                 if (Modification != TileModification.PlaceBlock && Modification != TileModification.ReplaceBlock) {
                     // Not localized because this string is developer-facing.
@@ -90,6 +91,7 @@ namespace Orion.Core.Packets.World.Tiles {
 
                 return _data2;
             }
+
             set {
                 if (Modification != TileModification.PlaceBlock && Modification != TileModification.ReplaceBlock) {
                     // Not localized because this string is developer-facing.
@@ -116,6 +118,7 @@ namespace Orion.Core.Packets.World.Tiles {
 
                 return (WallId)_data;
             }
+
             set {
                 if (Modification != TileModification.PlaceWall && Modification != TileModification.ReplaceWall) {
                     // Not localized because this string is developer-facing.
@@ -143,6 +146,7 @@ namespace Orion.Core.Packets.World.Tiles {
 
                 return (Slope)_data;
             }
+
             set {
                 if (Modification != TileModification.SlopeBlock &&
                         Modification != TileModification.SlopeAndHammerBlock) {
@@ -174,6 +178,7 @@ namespace Orion.Core.Packets.World.Tiles {
 
                 return _data == 1;
             }
+
             set {
                 if (Modification != TileModification.BreakBlock && Modification != TileModification.BreakWall &&
                         Modification != TileModification.BreakBlockItemless &&

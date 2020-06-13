@@ -70,6 +70,7 @@ namespace Orion.Core.Packets.World.Tiles {
         /// <exception cref="ArgumentNullException"><paramref name="value"/> is <see langword="null"/>.</exception>
         public ITileSlice Tiles {
             get => _tiles ?? _emptyTiles;
+
             set {
                 if (value is null) {
                     throw new ArgumentNullException(nameof(value));

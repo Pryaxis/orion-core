@@ -20,7 +20,7 @@ using Orion.Core.Players;
 
 namespace Orion.Core.Events.Players {
     /// <summary>
-    /// An event that occurs when a player is chatting.
+    /// An event that occurs when a player is chatting. This event can be canceled.
     /// </summary>
     [Event("player-chat")]
     public sealed class PlayerChatEvent : PlayerEvent {

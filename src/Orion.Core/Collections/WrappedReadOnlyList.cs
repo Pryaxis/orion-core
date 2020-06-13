@@ -40,11 +40,18 @@ namespace Orion.Core.Collections {
 
         public T this[int index] {
             get {
+                if (index < 0 || index >= Count) {
+                    // Not localized because this string is developer-facing.
+                    throw new IndexOutOfRangeException($"Index out of range (expected: 0 to {Count - 1})");
+                }
+
                 var wrappedItem = _wrappedItems.Span[index];
                 ref var item = ref _items[index];
-                var isStale = item is null || !ReferenceEquals(item.Wrapped, wrappedItem);
+                if (item is null || !ReferenceEquals(item.Wrapped, wrappedItem)) {
+                    item = _converter(index, wrappedItem);
+                }
 
-                return isStale ? (item = _converter(index, wrappedItem)) : item!;
+                return item;
             }
         }
 

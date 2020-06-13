@@ -16,6 +16,7 @@
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
 using System;
+using Destructurama.Attributed;
 using Orion.Core.Players;
 
 namespace Orion.Core.Events.Players {
@@ -41,6 +42,6 @@ namespace Orion.Core.Events.Players {
         /// Gets the player's password.
         /// </summary>
         /// <value>The player's password.</value>
-        public string Password { get; }
+        [LogMasked] public string Password { get; }
     }
 }

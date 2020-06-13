@@ -26,8 +26,7 @@ namespace Orion.Core.Events.Packets {
     /// </summary>
     /// <typeparam name="TPacket">The type of packet.</typeparam>
     [Event("packet-recv", LoggingLevel = LogEventLevel.Verbose)]
-    public sealed class PacketReceiveEvent<TPacket> : PacketEvent<TPacket>
-            where TPacket : struct, IPacket {
+    public sealed class PacketReceiveEvent<TPacket> : PacketEvent<TPacket> where TPacket : struct, IPacket {
         /// <summary>
         /// Initializes a new instance of the <see cref="PacketReceiveEvent{TPacket}"/> class with the specified
         /// <paramref name="packet"/> reference and packet <paramref name="sender"/>.

@@ -37,7 +37,7 @@ namespace Orion.Core.Events.World.Tiles {
         /// <param name="x">The top-left tile's X coordinate.</param>
         /// <param name="y">The top-left tile's Y coordinate.</param>
         /// <param name="tiles">The tiles.</param>
-        /// <exception cref="ArgumentException"><paramref name="tiles"/> are not a square.</exception>
+        /// <exception cref="ArgumentException"><paramref name="tiles"/> is not a square.</exception>
         /// <exception cref="ArgumentNullException">
         /// <paramref name="world"/>, <paramref name="player"/>, or <paramref name="tiles"/> are <see langword="null"/>.
         /// </exception>
@@ -48,7 +48,7 @@ namespace Orion.Core.Events.World.Tiles {
 
             if (!tiles.IsSquare()) {
                 // Not localized because this string is developer-facing.
-                throw new ArgumentException("Tiles are not a square", nameof(tiles));
+                throw new ArgumentException("Tiles is not a square", nameof(tiles));
             }
 
             Player = player ?? throw new ArgumentNullException(nameof(player));

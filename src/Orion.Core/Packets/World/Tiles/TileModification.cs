@@ -138,6 +138,6 @@ namespace Orion.Core.Packets.World.Tiles {
         /// <summary>
         /// Indicates that a block should be sloped and then hammered.
         /// </summary>
-        SlopeAndHammerBlock = 23,
+        SlopeAndHammerBlock = 23
     }
 }

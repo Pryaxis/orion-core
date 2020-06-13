@@ -27,9 +27,9 @@ namespace Orion.Core.Events {
         private string? _cancellationReason;
 
         /// <summary>
-        /// Gets a value indicating whether the event is cancelled.
+        /// Gets a value indicating whether the event is canceled.
         /// </summary>
-        /// <value><see langword="true"/> if the event is cancelled; otherwise, <see langword="false"/>.</value>
+        /// <value><see langword="true"/> if the event is canceled; otherwise, <see langword="false"/>.</value>
         [NotLogged]
         public bool IsCanceled => _cancellationReason != null;
 

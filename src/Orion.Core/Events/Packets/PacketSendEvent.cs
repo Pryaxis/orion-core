@@ -22,7 +22,7 @@ using Serilog.Events;
 
 namespace Orion.Core.Events.Packets {
     /// <summary>
-    /// An event that occurs when a packet is being sent.
+    /// An event that occurs when a packet is being sent. This event can be canceled.
     /// </summary>
     /// <typeparam name="TPacket">The type of packet.</typeparam>
     [Event("packet-send", LoggingLevel = LogEventLevel.Verbose)]

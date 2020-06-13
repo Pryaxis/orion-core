@@ -91,7 +91,7 @@ namespace Orion.Core.Events {
                 }
             }
 
-            if (evt.IsCanceled == true) {
+            if (evt.IsCanceled) {
                 // Not localized because this string is developer-facing.
                 log.Write(_eventLoggingLevel, "Canceled {EventName} for {CancellationReason}", _eventName,
                           evt.CancellationReason);

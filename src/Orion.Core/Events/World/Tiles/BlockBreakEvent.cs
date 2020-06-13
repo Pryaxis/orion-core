@@ -33,7 +33,7 @@ namespace Orion.Core.Events.World.Tiles {
         /// <param name="player">The player breaking the block, or <see langword="null"/> for none.</param>
         /// <param name="x">The tile's X coordinate.</param>
         /// <param name="y">The tile's Y coordinate.</param>
-        /// <param name="isItemless">Whether the blobk breaking is itemless.</param>
+        /// <param name="isItemless">Whether the block breaking is itemless.</param>
         /// <exception cref="ArgumentNullException"><paramref name="world"/> is <see langword="null"/>.</exception>
         public BlockBreakEvent(IWorld world, IPlayer? player, int x, int y, bool isItemless)
                 : base(world, player, x, y) {

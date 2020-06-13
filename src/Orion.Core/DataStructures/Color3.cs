@@ -57,7 +57,7 @@ namespace Orion.Core.DataStructures {
         [field: FieldOffset(2)] public byte B { get; }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="Color3"/> structure with the specified color components.
+        /// Initializes a new instance of the <see cref="Color3"/> structure with the specified components.
         /// </summary>
         /// <param name="r">The red component.</param>
         /// <param name="g">The green component.</param>
@@ -88,7 +88,7 @@ namespace Orion.Core.DataStructures {
         /// </summary>
         /// <returns>A string representation of the color.</returns>
         [Pure, ExcludeFromCodeCoverage]
-        public override string ToString() => $"#{R:x2}{G:x2}{B:x2}";
+        public override string ToString() => $"{R:x2}{G:x2}{B:x2}";
 
         /// <summary>
         /// Returns a value indicating whether <paramref name="left"/> is equal to <paramref name="right"/>.

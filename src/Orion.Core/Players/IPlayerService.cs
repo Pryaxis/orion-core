@@ -23,6 +23,8 @@ using Orion.Core.Events.Players;
 using Orion.Core.Framework;
 using Orion.Core.Packets;
 using Orion.Core.Packets.Server;
+using Orion.Core.Packets.World.Tiles;
+using Orion.Core.World.Tiles;
 
 namespace Orion.Core.Players {
     /// <summary>
@@ -102,8 +104,8 @@ namespace Orion.Core.Players {
         }
 
         /// <summary>
-        /// Broadcasts the given <paramref name="message"/> to all active players using the specified
-        /// <paramref name="color"/>.
+        /// Broadcasts the given <paramref name="message"/> with the specified <paramref name="color"/> to all active
+        /// players.
         /// </summary>
         /// <param name="playerService">The player service.</param>
         /// <param name="message">The message to broadcast.</param>
@@ -121,6 +123,36 @@ namespace Orion.Core.Players {
             }
 
             var packet = new ServerChatPacket { Color = color, Message = message, LineWidth = -1 };
+            playerService.BroadcastPacket(ref packet);
+        }
+
+        /// <summary>
+        /// Broadcasts the given <paramref name="tiles"/> at the specified coordinates to all active players.
+        /// </summary>
+        /// <param name="playerService">The player service.</param>
+        /// <param name="x">The top-left tile's X coordinate.</param>
+        /// <param name="y">The top-left tile's Y coordinate.</param>
+        /// <param name="tiles">The tiles to broadcast.</param>
+        /// <exception cref="ArgumentNullException">
+        /// <paramref name="playerService"/> or <paramref name="tiles"/> are <see langword="null"/>.
+        /// </exception>
+        /// <exception cref="NotSupportedException"><paramref name="tiles"/> is not square.</exception>
+        public static void BroadcastTiles(this IPlayerService playerService, int x, int y, ITileSlice tiles) {
+            if (playerService is null) {
+                throw new ArgumentNullException(nameof(playerService));
+            }
+
+            if (tiles is null) {
+                throw new ArgumentNullException(nameof(tiles));
+            }
+
+            if (!tiles.IsSquare()) {
+                // Not localized because this string is developer-facing.
+                // TODO: implement this when the section packet is implemented.
+                throw new NotSupportedException("Tiles is not square");
+            }
+
+            var packet = new TileSquarePacket { X = (short)x, Y = (short)y, Tiles = tiles };
             playerService.BroadcastPacket(ref packet);
         }
     }

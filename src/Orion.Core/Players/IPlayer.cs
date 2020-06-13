@@ -128,8 +128,8 @@ namespace Orion.Core.Players {
         }
 
         /// <summary>
-        /// Sends the given <paramref name="message"/> to the <paramref name="player"/> with the specified
-        /// <paramref name="color"/>.
+        /// Sends the given <paramref name="message"/> with the specified <paramref name="color"/> to the
+        /// <paramref name="player"/>.
         /// </summary>
         /// <param name="player">The player.</param>
         /// <param name="message">The message to send.</param>
@@ -151,7 +151,7 @@ namespace Orion.Core.Players {
         }
 
         /// <summary>
-        /// Sends the given <paramref name="tiles"/> to the <paramref name="player"/> at the specified coordinates.
+        /// Sends the given <paramref name="tiles"/> at the specified coordinates to the <paramref name="player"/>.
         /// </summary>
         /// <param name="player">The player.</param>
         /// <param name="x">The top-left tile's X coordinate.</param>
@@ -160,7 +160,7 @@ namespace Orion.Core.Players {
         /// <exception cref="ArgumentNullException">
         /// <paramref name="player"/> or <paramref name="tiles"/> are <see langword="null"/>.
         /// </exception>
-        /// <exception cref="NotSupportedException"><paramref name="tiles"/> are not square.</exception>
+        /// <exception cref="NotSupportedException"><paramref name="tiles"/> is not square.</exception>
         public static void SendTiles(this IPlayer player, int x, int y, ITileSlice tiles) {
             if (player is null) {
                 throw new ArgumentNullException(nameof(player));
@@ -173,7 +173,7 @@ namespace Orion.Core.Players {
             if (!tiles.IsSquare()) {
                 // Not localized because this string is developer-facing.
                 // TODO: implement this when the section packet is implemented.
-                throw new NotSupportedException("Non-square tiles not yet supported");
+                throw new NotSupportedException("Tiles is not square");
             }
 
             var packet = new TileSquarePacket { X = (short)x, Y = (short)y, Tiles = tiles };
