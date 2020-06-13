@@ -124,9 +124,13 @@ namespace Orion.Core.Players {
                         throw new IndexOutOfRangeException($"Index out of range (expected: 0 to {Count - 1})");
                     }
 
+                    var ticks = _wrapped.buffTime[index];
+                    if (ticks <= 0) {
+                        return default;
+                    }
+
                     var id = (BuffId)_wrapped.buffType[index];
-                    var duration = TimeSpan.FromSeconds(_wrapped.buffTime[index] / 60.0);
-                    return duration > TimeSpan.Zero ? new Buff(id, duration) : default;
+                    return new Buff(id, ticks);
                 }
                 set {
                     if (index < 0 || index >= Count) {
@@ -135,7 +139,7 @@ namespace Orion.Core.Players {
                     }
 
                     _wrapped.buffType[index] = (int)value.Id;
-                    _wrapped.buffTime[index] = (int)(value.Duration.TotalSeconds * 60.0);
+                    _wrapped.buffTime[index] = value.Ticks;
                 }
             }
 

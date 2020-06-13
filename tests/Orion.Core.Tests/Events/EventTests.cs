@@ -21,7 +21,7 @@ using Xunit;
 namespace Orion.Core.Events {
     public class EventTests {
         [Fact]
-        public void IsCanceled_Yes_ReturnsTrue() {
+        public void IsCanceled_Get_ReturnsTrue() {
             var evt = new TestEvent();
 
             evt.Cancel();
@@ -30,7 +30,7 @@ namespace Orion.Core.Events {
         }
 
         [Fact]
-        public void IsCanceled_No_ReturnsFalse() {
+        public void IsCanceled_Get_ReturnsFalse() {
             var evt = new TestEvent();
 
             Assert.False(evt.IsCanceled);

@@ -176,7 +176,7 @@ namespace Orion.Core.Npcs {
             ref var packet = ref evt.Packet;
             var npc = Npcs[packet.NpcIndex];
             var player = evt.Sender;
-            var buff = new Buff(packet.Id, TimeSpan.FromSeconds(packet.Ticks / 60.0));
+            var buff = new Buff(packet.Id, packet.Ticks);
 
             var evt2 = new NpcBuffEvent(npc, player, buff);
             Kernel.Raise(evt2, Log);

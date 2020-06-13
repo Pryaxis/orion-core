@@ -33,6 +33,23 @@ namespace Orion.Core.Buffs {
     public readonly struct Buff : IEquatable<Buff> {
         /// <summary>
         /// Initializes a new instance of the <see cref="Buff"/> structure with the specified buff <paramref name="id"/>
+        /// and <paramref name="ticks"/>.
+        /// </summary>
+        /// <param name="id">The buff ID.</param>
+        /// <param name="ticks">The buff duration, in ticks.</param>
+        /// <exception cref="ArgumentOutOfRangeException"><paramref name="ticks"/> is negative.</exception>
+        public Buff(BuffId id, int ticks) {
+            if (ticks < 0) {
+                // Not localized because this string is developer-facing.
+                throw new ArgumentOutOfRangeException(nameof(ticks), "Ticks is negative");
+            }
+
+            Id = id;
+            Ticks = ticks;
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Buff"/> structure with the specified buff <paramref name="id"/>
         /// and <paramref name="duration"/>.
         /// </summary>
         /// <param name="id">The buff ID.</param>
@@ -45,7 +62,7 @@ namespace Orion.Core.Buffs {
             }
 
             Id = id;
-            Duration = duration;
+            Ticks = (int)(duration.TotalSeconds * 60.0);
         }
 
         /// <summary>
@@ -55,10 +72,22 @@ namespace Orion.Core.Buffs {
         public BuffId Id { get; }
 
         /// <summary>
+        /// Gets the buff duration, in ticks.
+        /// </summary>
+        /// <value>The buff duration, in ticks.</value>
+        public int Ticks { get; }
+
+        /// <summary>
+        /// Gets a value indicating whether the buff is a debuff.
+        /// </summary>
+        /// <value><see langword="true"/> if the buff is a debuff; otherwise, <see langword="false"/>.</value>
+        public bool IsDebuff => Id.IsDebuff();
+
+        /// <summary>
         /// Gets the buff duration.
         /// </summary>
         /// <value>The buff duration.</value>
-        public TimeSpan Duration { get; }
+        public TimeSpan Duration => TimeSpan.FromSeconds(Ticks / 60.0);
 
         /// <inheritdoc/>
         [Pure]

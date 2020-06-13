@@ -22,15 +22,41 @@ using Xunit;
 namespace Orion.Core.Buffs {
     public class BuffTests {
         [Fact]
+        public void Ctor_NegativeTicks_ThrowsArgumentOutOfRangeException() {
+            Assert.Throws<ArgumentOutOfRangeException>(() => new Buff(BuffId.ObsidianSkin, -28800));
+        }
+
+        [Fact]
         public void Ctor_NegativeDuration_ThrowsArgumentOutOfRangeException() {
             Assert.Throws<ArgumentOutOfRangeException>(() => new Buff(BuffId.ObsidianSkin, TimeSpan.FromMinutes(-8)));
         }
 
         [Fact]
         public void Id_Get() {
-            var buff = new Buff(BuffId.ObsidianSkin, TimeSpan.FromMinutes(8));
+            var buff = new Buff(BuffId.ObsidianSkin, 28800);
 
             Assert.Equal(BuffId.ObsidianSkin, buff.Id);
+        }
+
+        [Fact]
+        public void Ticks_Get() {
+            var buff = new Buff(BuffId.ObsidianSkin, 28800);
+
+            Assert.Equal(28800, buff.Ticks);
+        }
+
+        [Fact]
+        public void IsDebuff_Get_ReturnsTrue() {
+            var buff = new Buff(BuffId.Poisoned, 28800);
+
+            Assert.True(buff.IsDebuff);
+        }
+
+        [Fact]
+        public void IsDebuff_Get_ReturnsFalse() {
+            var buff = new Buff(BuffId.ObsidianSkin, 28800);
+
+            Assert.False(buff.IsDebuff);
         }
 
         [Fact]
@@ -42,8 +68,8 @@ namespace Orion.Core.Buffs {
 
         [Fact]
         public void Equals_ReturnsTrue() {
-            var buff = new Buff(BuffId.ObsidianSkin, TimeSpan.FromMinutes(8));
-            var buff2 = new Buff(BuffId.ObsidianSkin, TimeSpan.FromMinutes(8));
+            var buff = new Buff(BuffId.ObsidianSkin, 28800);
+            var buff2 = new Buff(BuffId.ObsidianSkin, 28800);
 
             Assert.True(buff.Equals((object)buff2));
             Assert.True(buff.Equals(buff2));
@@ -51,9 +77,9 @@ namespace Orion.Core.Buffs {
 
         [Fact]
         public void Equals_ReturnsFalse() {
-            var buff = new Buff(BuffId.ObsidianSkin, TimeSpan.FromMinutes(8));
-            var buff2 = new Buff(BuffId.ObsidianSkin, TimeSpan.FromMinutes(7));
-            var buff3 = new Buff(BuffId.Poisoned, TimeSpan.FromMinutes(8));
+            var buff = new Buff(BuffId.ObsidianSkin, 28800);
+            var buff2 = new Buff(BuffId.ObsidianSkin, 25200);
+            var buff3 = new Buff(BuffId.Poisoned, 28800);
 
             Assert.False(buff.Equals(1));
             Assert.False(buff.Equals((object)buff2));
@@ -64,8 +90,8 @@ namespace Orion.Core.Buffs {
 
         [Fact]
         public void GetHashCode_Equals_AreEqual() {
-            var buff = new Buff(BuffId.ObsidianSkin, TimeSpan.FromMinutes(8));
-            var buff2 = new Buff(BuffId.ObsidianSkin, TimeSpan.FromMinutes(8));
+            var buff = new Buff(BuffId.ObsidianSkin, 28800);
+            var buff2 = new Buff(BuffId.ObsidianSkin, 28800);
 
             Assert.Equal(buff.GetHashCode(), buff2.GetHashCode());
         }
@@ -73,8 +99,8 @@ namespace Orion.Core.Buffs {
         [Fact]
         [SuppressMessage("Style", "IDE1006:Naming Styles", Justification = "Operator name")]
         public void op_Equality_ReturnsTrue() {
-            var buff = new Buff(BuffId.ObsidianSkin, TimeSpan.FromMinutes(8));
-            var buff2 = new Buff(BuffId.ObsidianSkin, TimeSpan.FromMinutes(8));
+            var buff = new Buff(BuffId.ObsidianSkin, 28800);
+            var buff2 = new Buff(BuffId.ObsidianSkin, 28800);
 
             Assert.True(buff == buff2);
         }
@@ -82,9 +108,9 @@ namespace Orion.Core.Buffs {
         [Fact]
         [SuppressMessage("Style", "IDE1006:Naming Styles", Justification = "Operator name")]
         public void op_Equality_ReturnsFalse() {
-            var buff = new Buff(BuffId.ObsidianSkin, TimeSpan.FromMinutes(8));
-            var buff2 = new Buff(BuffId.ObsidianSkin, TimeSpan.FromMinutes(7));
-            var buff3 = new Buff(BuffId.Poisoned, TimeSpan.FromMinutes(8));
+            var buff = new Buff(BuffId.ObsidianSkin, 28800);
+            var buff2 = new Buff(BuffId.ObsidianSkin, 25200);
+            var buff3 = new Buff(BuffId.Poisoned, 28800);
 
             Assert.False(buff == buff2);
             Assert.False(buff == buff3);
@@ -93,9 +119,9 @@ namespace Orion.Core.Buffs {
         [Fact]
         [SuppressMessage("Style", "IDE1006:Naming Styles", Justification = "Operator name")]
         public void op_Inequality_ReturnsTrue() {
-            var buff = new Buff(BuffId.ObsidianSkin, TimeSpan.FromMinutes(8));
-            var buff2 = new Buff(BuffId.ObsidianSkin, TimeSpan.FromMinutes(7));
-            var buff3 = new Buff(BuffId.Poisoned, TimeSpan.FromMinutes(8));
+            var buff = new Buff(BuffId.ObsidianSkin, 28800);
+            var buff2 = new Buff(BuffId.ObsidianSkin, 25200);
+            var buff3 = new Buff(BuffId.Poisoned, 28800);
 
             Assert.True(buff != buff2);
             Assert.True(buff != buff3);
@@ -104,8 +130,8 @@ namespace Orion.Core.Buffs {
         [Fact]
         [SuppressMessage("Style", "IDE1006:Naming Styles", Justification = "Operator name")]
         public void op_Inequality_ReturnsFalse() {
-            var buff = new Buff(BuffId.ObsidianSkin, TimeSpan.FromMinutes(8));
-            var buff2 = new Buff(BuffId.ObsidianSkin, TimeSpan.FromMinutes(8));
+            var buff = new Buff(BuffId.ObsidianSkin, 28800);
+            var buff2 = new Buff(BuffId.ObsidianSkin, 28800);
 
             Assert.False(buff != buff2);
         }

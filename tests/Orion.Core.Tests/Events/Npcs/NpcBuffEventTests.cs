@@ -27,7 +27,7 @@ namespace Orion.Core.Events.Npcs {
         [Fact]
         public void Ctor_NullNpc_ThrowsArgumentNullException() {
             var player = Mock.Of<IPlayer>();
-            var buff = new Buff(BuffId.Poisoned, TimeSpan.FromSeconds(1));
+            var buff = new Buff(BuffId.Poisoned, 60);
 
             Assert.Throws<ArgumentNullException>(() => new NpcBuffEvent(null!, player, buff));
         }
@@ -35,7 +35,7 @@ namespace Orion.Core.Events.Npcs {
         [Fact]
         public void Ctor_NullPlayer_ThrowsArgumentNullException() {
             var npc = Mock.Of<INpc>();
-            var buff = new Buff(BuffId.Poisoned, TimeSpan.FromSeconds(1));
+            var buff = new Buff(BuffId.Poisoned, 60);
 
             Assert.Throws<ArgumentNullException>(() => new NpcBuffEvent(npc, null!, buff));
         }
@@ -44,7 +44,7 @@ namespace Orion.Core.Events.Npcs {
         public void Player_Get() {
             var npc = Mock.Of<INpc>();
             var player = Mock.Of<IPlayer>();
-            var buff = new Buff(BuffId.Poisoned, TimeSpan.FromSeconds(1));
+            var buff = new Buff(BuffId.Poisoned, 60);
             var evt = new NpcBuffEvent(npc, player, buff);
 
             Assert.Same(player, evt.Player);
@@ -54,7 +54,7 @@ namespace Orion.Core.Events.Npcs {
         public void Buff_Get() {
             var npc = Mock.Of<INpc>();
             var player = Mock.Of<IPlayer>();
-            var buff = new Buff(BuffId.Poisoned, TimeSpan.FromSeconds(1));
+            var buff = new Buff(BuffId.Poisoned, 60);
             var evt = new NpcBuffEvent(npc, player, buff);
 
             Assert.Equal(buff, evt.Buff);
