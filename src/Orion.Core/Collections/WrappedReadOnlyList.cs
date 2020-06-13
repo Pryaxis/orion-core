@@ -42,11 +42,9 @@ namespace Orion.Core.Collections {
             get {
                 var wrappedItem = _wrappedItems.Span[index];
                 ref var item = ref _items[index];
-                if (item is null || !ReferenceEquals(item.Wrapped, wrappedItem)) {
-                    return item = _converter(index, wrappedItem);
-                }
+                var isStale = item is null || !ReferenceEquals(item.Wrapped, wrappedItem);
 
-                return item;
+                return isStale ? (item = _converter(index, wrappedItem)) : item!;
             }
         }
 

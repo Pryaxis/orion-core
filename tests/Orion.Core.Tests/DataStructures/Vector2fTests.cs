@@ -15,6 +15,7 @@
 // You should have received a copy of the GNU General Public License
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
+using System.Diagnostics.CodeAnalysis;
 using Xunit;
 
 namespace Orion.Core.DataStructures {
@@ -65,6 +66,7 @@ namespace Orion.Core.DataStructures {
         }
 
         [Fact]
+        [SuppressMessage("Style", "IDE1006:Naming Styles", Justification = "Operator name")]
         public void op_Equality_ReturnsTrue() {
             var vector = new Vector2f(1.23f, 4.56f);
             var vector2 = new Vector2f(1.23f, 4.56f);
@@ -73,26 +75,29 @@ namespace Orion.Core.DataStructures {
         }
 
         [Fact]
+        [SuppressMessage("Style", "IDE1006:Naming Styles", Justification = "Operator name")]
         public void op_Equality_ReturnsFalse() {
             var vector = new Vector2f(1.23f, 4.56f);
             var vector2 = new Vector2f(1.23f, 0);
-            var vector3 = new Vector2f(0, 0);
+            var vector3 = new Vector2f(0, 4.56f);
 
             Assert.False(vector == vector2);
             Assert.False(vector == vector3);
         }
 
         [Fact]
+        [SuppressMessage("Style", "IDE1006:Naming Styles", Justification = "Operator name")]
         public void op_Inequality_ReturnsTrue() {
             var vector = new Vector2f(1.23f, 4.56f);
             var vector2 = new Vector2f(1.23f, 0);
-            var vector3 = new Vector2f(0, 0);
+            var vector3 = new Vector2f(0, 4.56f);
 
             Assert.True(vector != vector2);
             Assert.True(vector != vector3);
         }
 
         [Fact]
+        [SuppressMessage("Style", "IDE1006:Naming Styles", Justification = "Operator name")]
         public void op_Inequality_ReturnsFalse() {
             var vector = new Vector2f(1.23f, 4.56f);
             var vector2 = new Vector2f(1.23f, 4.56f);
@@ -101,6 +106,7 @@ namespace Orion.Core.DataStructures {
         }
 
         [Fact]
+        [SuppressMessage("Style", "IDE1006:Naming Styles", Justification = "Operator name")]
         public void op_Addition() {
             var vector = new Vector2f(1f, 2f);
             var vector2 = new Vector2f(3f, 5f);
@@ -109,6 +115,7 @@ namespace Orion.Core.DataStructures {
         }
 
         [Fact]
+        [SuppressMessage("Style", "IDE1006:Naming Styles", Justification = "Operator name")]
         public void op_Subtraction() {
             var vector = new Vector2f(1f, 2f);
             var vector2 = new Vector2f(3f, 5f);
@@ -117,6 +124,7 @@ namespace Orion.Core.DataStructures {
         }
 
         [Fact]
+        [SuppressMessage("Style", "IDE1006:Naming Styles", Justification = "Operator name")]
         public void op_Multiplication() {
             var vector = new Vector2f(1f, 2f);
 
@@ -124,6 +132,7 @@ namespace Orion.Core.DataStructures {
         }
 
         [Fact]
+        [SuppressMessage("Style", "IDE1006:Naming Styles", Justification = "Operator name")]
         public void op_Division() {
             var vector = new Vector2f(2f, 4f);
 

@@ -16,6 +16,7 @@
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 using Xunit;
 
 namespace Orion.Core.Buffs {
@@ -37,6 +38,76 @@ namespace Orion.Core.Buffs {
             var buff = new Buff(BuffId.ObsidianSkin, TimeSpan.FromMinutes(8));
 
             Assert.Equal(TimeSpan.FromMinutes(8), buff.Duration);
+        }
+
+        [Fact]
+        public void Equals_ReturnsTrue() {
+            var buff = new Buff(BuffId.ObsidianSkin, TimeSpan.FromMinutes(8));
+            var buff2 = new Buff(BuffId.ObsidianSkin, TimeSpan.FromMinutes(8));
+
+            Assert.True(buff.Equals((object)buff2));
+            Assert.True(buff.Equals(buff2));
+        }
+
+        [Fact]
+        public void Equals_ReturnsFalse() {
+            var buff = new Buff(BuffId.ObsidianSkin, TimeSpan.FromMinutes(8));
+            var buff2 = new Buff(BuffId.ObsidianSkin, TimeSpan.FromMinutes(7));
+            var buff3 = new Buff(BuffId.Poisoned, TimeSpan.FromMinutes(8));
+
+            Assert.False(buff.Equals(1));
+            Assert.False(buff.Equals((object)buff2));
+            Assert.False(buff.Equals((object)buff3));
+            Assert.False(buff.Equals(buff2));
+            Assert.False(buff.Equals(buff3));
+        }
+
+        [Fact]
+        public void GetHashCode_Equals_AreEqual() {
+            var buff = new Buff(BuffId.ObsidianSkin, TimeSpan.FromMinutes(8));
+            var buff2 = new Buff(BuffId.ObsidianSkin, TimeSpan.FromMinutes(8));
+
+            Assert.Equal(buff.GetHashCode(), buff2.GetHashCode());
+        }
+
+        [Fact]
+        [SuppressMessage("Style", "IDE1006:Naming Styles", Justification = "Operator name")]
+        public void op_Equality_ReturnsTrue() {
+            var buff = new Buff(BuffId.ObsidianSkin, TimeSpan.FromMinutes(8));
+            var buff2 = new Buff(BuffId.ObsidianSkin, TimeSpan.FromMinutes(8));
+
+            Assert.True(buff == buff2);
+        }
+
+        [Fact]
+        [SuppressMessage("Style", "IDE1006:Naming Styles", Justification = "Operator name")]
+        public void op_Equality_ReturnsFalse() {
+            var buff = new Buff(BuffId.ObsidianSkin, TimeSpan.FromMinutes(8));
+            var buff2 = new Buff(BuffId.ObsidianSkin, TimeSpan.FromMinutes(7));
+            var buff3 = new Buff(BuffId.Poisoned, TimeSpan.FromMinutes(8));
+
+            Assert.False(buff == buff2);
+            Assert.False(buff == buff3);
+        }
+
+        [Fact]
+        [SuppressMessage("Style", "IDE1006:Naming Styles", Justification = "Operator name")]
+        public void op_Inequality_ReturnsTrue() {
+            var buff = new Buff(BuffId.ObsidianSkin, TimeSpan.FromMinutes(8));
+            var buff2 = new Buff(BuffId.ObsidianSkin, TimeSpan.FromMinutes(7));
+            var buff3 = new Buff(BuffId.Poisoned, TimeSpan.FromMinutes(8));
+
+            Assert.True(buff != buff2);
+            Assert.True(buff != buff3);
+        }
+
+        [Fact]
+        [SuppressMessage("Style", "IDE1006:Naming Styles", Justification = "Operator name")]
+        public void op_Inequality_ReturnsFalse() {
+            var buff = new Buff(BuffId.ObsidianSkin, TimeSpan.FromMinutes(8));
+            var buff2 = new Buff(BuffId.ObsidianSkin, TimeSpan.FromMinutes(8));
+
+            Assert.False(buff != buff2);
         }
     }
 }

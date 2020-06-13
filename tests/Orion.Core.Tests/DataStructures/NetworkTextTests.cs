@@ -17,6 +17,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using Xunit;
 
 namespace Orion.Core.DataStructures {
@@ -65,6 +66,7 @@ namespace Orion.Core.DataStructures {
         }
 
         [Fact]
+        [SuppressMessage("Style", "IDE1006:Naming Styles", Justification = "Operator name")]
         public void op_Implicit_NullText_ThrowsArgumentNullException() {
             Assert.Throws<ArgumentNullException>(() => {
                 NetworkText text = (string)null!;
@@ -72,6 +74,7 @@ namespace Orion.Core.DataStructures {
         }
 
         [Fact]
+        [SuppressMessage("Style", "IDE1006:Naming Styles", Justification = "Operator name")]
         public void op_Implicit() {
             NetworkText text = "test";
 
@@ -124,6 +127,7 @@ namespace Orion.Core.DataStructures {
 
         [Theory]
         [MemberData(nameof(NetworkTexts))]
+        [SuppressMessage("Style", "IDE1006:Naming Styles", Justification = "Operator name")]
         public void op_Equality_ReturnsTrue(NetworkText text) {
 #pragma warning disable CS1718 // Comparison made to same variable
             Assert.True(text == text);
@@ -132,6 +136,7 @@ namespace Orion.Core.DataStructures {
         }
 
         [Fact]
+        [SuppressMessage("Style", "IDE1006:Naming Styles", Justification = "Operator name")]
         public void op_Equality_ReturnsFalse() {
             var text = "test";
             var text2 = "test2";
@@ -140,6 +145,7 @@ namespace Orion.Core.DataStructures {
         }
 
         [Fact]
+        [SuppressMessage("Style", "IDE1006:Naming Styles", Justification = "Operator name")]
         public void op_Inequality_ReturnsTrue() {
             var text = "test";
             var text2 = "test2";
@@ -148,6 +154,7 @@ namespace Orion.Core.DataStructures {
         }
 
         [Theory]
+        [SuppressMessage("Style", "IDE1006:Naming Styles", Justification = "Operator name")]
         [MemberData(nameof(NetworkTexts))]
         public void op_Inequality_ReturnsFalse(NetworkText text) {
 #pragma warning disable CS1718 // Comparison made to same variable

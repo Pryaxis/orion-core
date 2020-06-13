@@ -81,12 +81,11 @@ namespace Orion.Core.World.Chests {
                     }
 
                     var item = _items[index];
-                    if (item is null) {
-                        return default;
-                    }
-
-                    return new ItemStack((ItemId)item.type, item.stack, (ItemPrefix)item.prefix);
+                    return item is null ?
+                        default :
+                        new ItemStack((ItemId)item.type, item.stack, (ItemPrefix)item.prefix);
                 }
+
                 set {
                     if (index < 0 || index >= Count) {
                         // Not localized because this string is developer-facing.

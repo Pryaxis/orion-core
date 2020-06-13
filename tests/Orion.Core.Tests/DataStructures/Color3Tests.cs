@@ -15,6 +15,7 @@
 // You should have received a copy of the GNU General Public License
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
+using System.Diagnostics.CodeAnalysis;
 using Xunit;
 
 namespace Orion.Core.DataStructures {
@@ -53,8 +54,8 @@ namespace Orion.Core.DataStructures {
         public void Equals_ReturnsFalse() {
             var color = new Color3(255, 255, 255);
             var color2 = new Color3(255, 255, 0);
-            var color3 = new Color3(255, 0, 0);
-            var color4 = new Color3(0, 0, 0);
+            var color3 = new Color3(255, 0, 255);
+            var color4 = new Color3(0, 255, 255);
 
             Assert.False(color.Equals(1));
             Assert.False(color.Equals((object)color2));
@@ -74,6 +75,7 @@ namespace Orion.Core.DataStructures {
         }
 
         [Fact]
+        [SuppressMessage("Style", "IDE1006:Naming Styles", Justification = "Operator name")]
         public void op_Equality_ReturnsTrue() {
             var color = new Color3(11, 22, 33);
             var color2 = new Color3(11, 22, 33);
@@ -82,11 +84,12 @@ namespace Orion.Core.DataStructures {
         }
 
         [Fact]
+        [SuppressMessage("Style", "IDE1006:Naming Styles", Justification = "Operator name")]
         public void op_Equality_ReturnsFalse() {
             var color = new Color3(255, 255, 255);
             var color2 = new Color3(255, 255, 0);
-            var color3 = new Color3(255, 0, 0);
-            var color4 = new Color3(0, 0, 0);
+            var color3 = new Color3(255, 0, 255);
+            var color4 = new Color3(0, 255, 255);
 
             Assert.False(color == color2);
             Assert.False(color == color3);
@@ -94,11 +97,12 @@ namespace Orion.Core.DataStructures {
         }
 
         [Fact]
+        [SuppressMessage("Style", "IDE1006:Naming Styles", Justification = "Operator name")]
         public void op_Inequality_ReturnsTrue() {
             var color = new Color3(255, 255, 255);
             var color2 = new Color3(255, 255, 0);
-            var color3 = new Color3(255, 0, 0);
-            var color4 = new Color3(0, 0, 0);
+            var color3 = new Color3(255, 0, 255);
+            var color4 = new Color3(0, 255, 255);
 
             Assert.True(color != color2);
             Assert.True(color != color3);
@@ -106,6 +110,7 @@ namespace Orion.Core.DataStructures {
         }
 
         [Fact]
+        [SuppressMessage("Style", "IDE1006:Naming Styles", Justification = "Operator name")]
         public void op_Inequality_ReturnsFalse() {
             var color = new Color3(11, 22, 33);
             var color2 = new Color3(11, 22, 33);

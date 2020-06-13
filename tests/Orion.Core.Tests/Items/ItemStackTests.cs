@@ -15,6 +15,7 @@
 // You should have received a copy of the GNU General Public License
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
+using System.Diagnostics.CodeAnalysis;
 using Xunit;
 
 namespace Orion.Core.Items {
@@ -74,6 +75,7 @@ namespace Orion.Core.Items {
         }
 
         [Fact]
+        [SuppressMessage("Style", "IDE1006:Naming Styles", Justification = "Operator name")]
         public void op_Equality_ReturnsTrue() {
             var itemStack = new ItemStack(ItemId.Sdmg, 1, ItemPrefix.Unreal);
             var itemStack2 = new ItemStack(ItemId.Sdmg, 1, ItemPrefix.Unreal);
@@ -82,6 +84,7 @@ namespace Orion.Core.Items {
         }
 
         [Fact]
+        [SuppressMessage("Style", "IDE1006:Naming Styles", Justification = "Operator name")]
         public void op_Equality_ReturnsFalse() {
             var itemStack = new ItemStack(ItemId.Sdmg, 1, ItemPrefix.Unreal);
             var itemStack2 = new ItemStack(ItemId.Sdmg, 1);
@@ -94,6 +97,7 @@ namespace Orion.Core.Items {
         }
 
         [Fact]
+        [SuppressMessage("Style", "IDE1006:Naming Styles", Justification = "Operator name")]
         public void op_Inequality_ReturnsTrue() {
             var itemStack = new ItemStack(ItemId.Sdmg, 1, ItemPrefix.Unreal);
             var itemStack2 = new ItemStack(ItemId.Sdmg, 1);
@@ -106,6 +110,7 @@ namespace Orion.Core.Items {
         }
 
         [Fact]
+        [SuppressMessage("Style", "IDE1006:Naming Styles", Justification = "Operator name")]
         public void op_Inequality_ReturnsFalse() {
             var itemStack = new ItemStack(ItemId.Sdmg, 1, ItemPrefix.Unreal);
             var itemStack2 = new ItemStack(ItemId.Sdmg, 1, ItemPrefix.Unreal);

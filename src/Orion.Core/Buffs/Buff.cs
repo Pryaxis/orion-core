@@ -16,6 +16,8 @@
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
 using System;
+using System.Diagnostics.CodeAnalysis;
+using System.Diagnostics.Contracts;
 
 namespace Orion.Core.Buffs {
     /// <summary>
@@ -28,7 +30,7 @@ namespace Orion.Core.Buffs {
     /// Each buff consists of a <see cref="BuffId"/>, which specifies the type of buff, along with a duration indicating
     /// the amount of time remaining on the buff.
     /// </remarks>
-    public readonly struct Buff {
+    public readonly struct Buff : IEquatable<Buff> {
         /// <summary>
         /// Initializes a new instance of the <see cref="Buff"/> structure with the specified buff <paramref name="id"/>
         /// and <paramref name="duration"/>.
@@ -57,5 +59,51 @@ namespace Orion.Core.Buffs {
         /// </summary>
         /// <value>The buff duration.</value>
         public TimeSpan Duration { get; }
+
+        /// <inheritdoc/>
+        [Pure]
+        public override bool Equals(object obj) => obj is Buff other && Equals(other);
+
+        /// <inheritdoc/>
+        [Pure]
+        public bool Equals(Buff other) => Id == other.Id && Duration == other.Duration;
+
+        /// <summary>
+        /// Returns the hash code of the buff.
+        /// </summary>
+        /// <returns>The hash code of the buff.</returns>
+        [Pure]
+        public override int GetHashCode() => HashCode.Combine(Id, Duration);
+
+        /// <summary>
+        /// Returns a string representation of the buff.
+        /// </summary>
+        /// <returns>A string representation of the buff.</returns>
+        [Pure, ExcludeFromCodeCoverage]
+        public override string ToString() => $"{Id} for {Duration:mm:ss}";
+
+        /// <summary>
+        /// Returns a value indicating whether <paramref name="left"/> is equal to <paramref name="right"/>.
+        /// </summary>
+        /// <param name="left">The left buff.</param>
+        /// <param name="right">The right buff.</param>
+        /// <returns>
+        /// <see langword="true"/> if <paramref name="left"/> is equal to <paramref name="right"/>; otherwise,
+        /// <see langword="false"/>.
+        /// </returns>
+        [Pure]
+        public static bool operator ==(Buff left, Buff right) => left.Equals(right);
+
+        /// <summary>
+        /// Returns a value indicating whether <paramref name="left"/> is not equal to <paramref name="right"/>.
+        /// </summary>
+        /// <param name="left">The left buff.</param>
+        /// <param name="right">The right buff.</param>
+        /// <returns>
+        /// <see langword="true"/> if <paramref name="left"/> is not equal to <paramref name="right"/>; otherwise,
+        /// <see langword="false"/>.
+        /// </returns>
+        [Pure]
+        public static bool operator !=(Buff left, Buff right) => !(left == right);
     }
 }
