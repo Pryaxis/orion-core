@@ -54,21 +54,6 @@ namespace Orion.Core.World.Tiles {
     /// </summary>
     public static class TileSliceExtensions {
         /// <summary>
-        /// Returns a value indicating whether the <paramref name="tiles"/> are a square.
-        /// </summary>
-        /// <param name="tiles">The tiles.</param>
-        /// <returns>
-        /// <see langword="true"/> if the <paramref name="tiles"/> are a square; otherwise, <see langword="false"/>.
-        /// </returns>
-        public static bool IsSquare(this ITileSlice tiles) {
-            if (tiles is null) {
-                throw new ArgumentNullException(nameof(tiles));
-            }
-
-            return tiles.Width == tiles.Height;
-        }
-
-        /// <summary>
         /// Returns a slice of the <paramref name="tiles"/> with the specified starting coordinates and dimensions.
         /// </summary>
         /// <param name="tiles">The tiles.</param>
@@ -79,6 +64,11 @@ namespace Orion.Core.World.Tiles {
         /// <returns>
         /// The slice of the <paramref name="tiles"/> with the specified starting coordinates and dimensions.
         /// </returns>
+        /// <exception cref="ArgumentNullException"><paramref name="tiles"/> is <see langword="null"/>.</exception>
+        /// <exception cref="ArgumentOutOfRangeException">
+        /// <paramref name="startX"/>, <paramref name="startY"/>, <paramref name="width"/>, or <paramref name="height"/>
+        /// are out of range.
+        /// </exception>
         public static ITileSlice Slice(this ITileSlice tiles, int startX, int startY, int width, int height) {
             if (tiles is null) {
                 throw new ArgumentNullException(nameof(tiles));
@@ -131,9 +121,7 @@ namespace Orion.Core.World.Tiles {
             }
 
             public ref Tile this[int x, int y] => ref _tiles[_startX + x, _startY + y];
-
             public int Width { get; }
-
             public int Height { get; }
         }
     }

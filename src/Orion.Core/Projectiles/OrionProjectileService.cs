@@ -82,7 +82,6 @@ namespace Orion.Core.Projectiles {
             var projectile = Projectiles[projectileIndex];
             var evt = new ProjectileTickEvent(projectile);
             Kernel.Raise(evt, Log);
-
             return evt.IsCanceled ? OTAPI.HookResult.Cancel : OTAPI.HookResult.Continue;
         }
 

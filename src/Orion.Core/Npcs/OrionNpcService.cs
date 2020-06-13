@@ -178,11 +178,7 @@ namespace Orion.Core.Npcs {
             var player = evt.Sender;
             var buff = new Buff(packet.Id, packet.Ticks);
 
-            var evt2 = new NpcBuffEvent(npc, player, buff);
-            Kernel.Raise(evt2, Log);
-            if (evt2.IsCanceled) {
-                evt.Cancel(evt2.CancellationReason);
-            }
+            ForwardEvent(evt, new NpcBuffEvent(npc, player, buff));
         }
 
         [EventHandler("orion-npcs", Priority = EventPriority.Lowest)]
@@ -192,11 +188,7 @@ namespace Orion.Core.Npcs {
             var npc = Npcs[packet.NpcIndex];
             var player = evt.Sender;
 
-            var evt2 = new NpcCatchEvent(npc, player);
-            Kernel.Raise(evt2, Log);
-            if (evt2.IsCanceled) {
-                evt.Cancel(evt2.CancellationReason);
-            }
+            ForwardEvent(evt, new NpcCatchEvent(npc, player));
         }
 
         [EventHandler("orion-npcs", Priority = EventPriority.Lowest)]
@@ -205,10 +197,14 @@ namespace Orion.Core.Npcs {
             ref var packet = ref evt.Packet;
             var player = evt.Sender;
 
-            var evt2 = new NpcFishEvent(player, packet.X, packet.Y, packet.Id);
-            Kernel.Raise(evt2, Log);
-            if (evt2.IsCanceled) {
-                evt.Cancel(evt2.CancellationReason);
+            ForwardEvent(evt, new NpcFishEvent(player, packet.X, packet.Y, packet.Id));
+        }
+
+        // Forwards `evt` as `newEvt`.
+        private void ForwardEvent<TEvent>(Event evt, TEvent newEvt) where TEvent : Event {
+            Kernel.Raise(newEvt, Log);
+            if (newEvt.IsCanceled) {
+                evt.Cancel(newEvt.CancellationReason);
             }
         }
     }

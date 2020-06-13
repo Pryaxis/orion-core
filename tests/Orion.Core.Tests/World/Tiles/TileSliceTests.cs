@@ -56,25 +56,6 @@ namespace Orion.Core.World.Tiles {
         }
 
         [Fact]
-        public void IsSquare_NullTiles_ThrowsArgumentNullException() {
-            Assert.Throws<ArgumentNullException>(() => TileSliceExtensions.IsSquare(null!));
-        }
-
-        [Fact]
-        public void IsSquare_ReturnsTrue() {
-            var tiles = Mock.Of<ITileSlice>(t => t.Width == 10 && t.Height == 10);
-
-            Assert.True(tiles.IsSquare());
-        }
-
-        [Fact]
-        public void IsSquare_ReturnsFalse() {
-            var tiles = Mock.Of<ITileSlice>(t => t.Width == 5 && t.Height == 10);
-
-            Assert.False(tiles.IsSquare());
-        }
-
-        [Fact]
         public void Slice_NullTiles_ThrowsArgumentNullException() {
             Assert.Throws<ArgumentNullException>(() => TileSliceExtensions.Slice(null!, 0, 0, 1, 2));
         }

@@ -132,6 +132,7 @@ namespace Orion.Core.Players {
                     var id = (BuffId)_wrapped.buffType[index];
                     return new Buff(id, ticks);
                 }
+
                 set {
                     if (index < 0 || index >= Count) {
                         // Not localized because this string is developer-facing.

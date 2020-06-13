@@ -104,52 +104,44 @@ namespace Orion.Core.World {
         [EventHandler("orion-world", Priority = EventPriority.Lowest)]
         [SuppressMessage("CodeQuality", "IDE0051:Remove unused private members", Justification = "Implicitly used")]
         private void OnTileSquarePacket(PacketReceiveEvent<TileSquarePacket> evt) {
-            var player = evt.Sender;
             ref var packet = ref evt.Packet;
+            var player = evt.Sender;
 
-            var evt2 = new TileSquareEvent(World, player, packet.X, packet.Y, packet.Tiles);
-            Kernel.Raise(evt2, Log);
-            if (evt2.IsCanceled) {
-                evt.Cancel(evt2.CancellationReason);
-            }
+            ForwardEvent(evt, new TileSquareEvent(World, player, packet.X, packet.Y, packet.Tiles));
         }
 
         [EventHandler("orion-world", Priority = EventPriority.Lowest)]
         [SuppressMessage("CodeQuality", "IDE0051:Remove unused private members", Justification = "Implicitly used")]
         private void OnWireActivatePacket(PacketReceiveEvent<WireActivatePacket> evt) {
-            var player = evt.Sender;
             ref var packet = ref evt.Packet;
+            var player = evt.Sender;
 
-            var evt2 = new WiringActivateEvent(World, player, packet.X, packet.Y);
-            Kernel.Raise(evt2, Log);
-            if (evt2.IsCanceled) {
-                evt.Cancel(evt2.CancellationReason);
-            }
+            ForwardEvent(evt, new WiringActivateEvent(World, player, packet.X, packet.Y));
         }
 
         [EventHandler("orion-world", Priority = EventPriority.Lowest)]
         [SuppressMessage("CodeQuality", "IDE0051:Remove unused private members", Justification = "Implicitly used")]
         private void OnBlockPaintPacket(PacketReceiveEvent<BlockPaintPacket> evt) {
-            var player = evt.Sender;
             ref var packet = ref evt.Packet;
+            var player = evt.Sender;
 
-            var evt2 = new BlockPaintEvent(World, player, packet.X, packet.Y, packet.Color);
-            Kernel.Raise(evt2, Log);
-            if (evt2.IsCanceled) {
-                evt.Cancel(evt2.CancellationReason);
-            }
+            ForwardEvent(evt, new BlockPaintEvent(World, player, packet.X, packet.Y, packet.Color));
         }
 
         [EventHandler("orion-world", Priority = EventPriority.Lowest)]
         [SuppressMessage("CodeQuality", "IDE0051:Remove unused private members", Justification = "Implicitly used")]
         private void OnWallPaintPacket(PacketReceiveEvent<WallPaintPacket> evt) {
-            var player = evt.Sender;
             ref var packet = ref evt.Packet;
+            var player = evt.Sender;
 
-            var evt2 = new WallPaintEvent(World, player, packet.X, packet.Y, packet.Color);
-            Kernel.Raise(evt2, Log);
-            if (evt2.IsCanceled) {
-                evt.Cancel(evt2.CancellationReason);
+            ForwardEvent(evt, new WallPaintEvent(World, player, packet.X, packet.Y, packet.Color));
+        }
+
+        // Forwards `evt` as `newEvt`.
+        private void ForwardEvent<TEvent>(Event evt, TEvent newEvt) where TEvent : Event {
+            Kernel.Raise(newEvt, Log);
+            if (newEvt.IsCanceled) {
+                evt.Cancel(newEvt.CancellationReason);
             }
         }
 
@@ -163,7 +155,6 @@ namespace Orion.Core.World {
             }
 
             public int Width => Terraria.Main.maxTilesX;
-
             public int Height => Terraria.Main.maxTilesY;
 
             public IWorld World {
@@ -233,11 +224,8 @@ namespace Orion.Core.World {
             public int collisionType => 0;
 
             public byte bTileHeader2 {
-                [ExcludeFromCodeCoverage]
-                get => 0;
-
-                [ExcludeFromCodeCoverage]
-                set { }
+                [ExcludeFromCodeCoverage] get => 0;
+                [ExcludeFromCodeCoverage] set { }
             }
 
             public byte color() => (byte)_tile->BlockColor;
@@ -459,23 +447,12 @@ namespace Orion.Core.World {
             [ExcludeFromCodeCoverage]
             public void actColor(ref Microsoft.Xna.Framework.Vector3 oldColor) { }
 
-            [ExcludeFromCodeCoverage]
-            public byte wallFrameNumber() => 0;
-
-            [ExcludeFromCodeCoverage]
-            public void wallFrameNumber(byte wallFrameNumber) { }
-
-            [ExcludeFromCodeCoverage]
-            public int wallFrameX() => 0;
-
-            [ExcludeFromCodeCoverage]
-            public void wallFrameX(int wallFrameX) { }
-
-            [ExcludeFromCodeCoverage]
-            public int wallFrameY() => 0;
-
-            [ExcludeFromCodeCoverage]
-            public void wallFrameY(int wallFrameY) { }
+            [ExcludeFromCodeCoverage] public byte wallFrameNumber() => 0;
+            [ExcludeFromCodeCoverage] public void wallFrameNumber(byte wallFrameNumber) { }
+            [ExcludeFromCodeCoverage] public int wallFrameX() => 0;
+            [ExcludeFromCodeCoverage] public void wallFrameX(int wallFrameX) { }
+            [ExcludeFromCodeCoverage] public int wallFrameY() => 0;
+            [ExcludeFromCodeCoverage] public void wallFrameY(int wallFrameY) { }
 
             private bool IsSlope(Slope slope1, Slope slope2) {
                 var slope = (Slope)this.slope();

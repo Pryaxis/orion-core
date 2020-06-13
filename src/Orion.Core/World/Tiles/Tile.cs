@@ -287,9 +287,10 @@ namespace Orion.Core.World.Tiles {
             readonly get => (byte)((_header & BlockFrameNumberMask) >> BlockFrameNumberShift);
 
             [MethodImpl(MethodImplOptions.AggressiveInlining)]
-            set =>
+            set {
                 _header =
                     (_header & ~BlockFrameNumberMask) | (((uint)value << BlockFrameNumberShift) & BlockFrameNumberMask);
+            }
         }
 
         /// <summary>

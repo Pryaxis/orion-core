@@ -60,10 +60,14 @@ namespace Orion.Core.World.Signs {
 
             var player = evt.Sender;
 
-            var evt2 = new SignReadEvent(sign, player);
-            Kernel.Raise(evt2, Log);
-            if (evt2.IsCanceled) {
-                evt.Cancel(evt2.CancellationReason);
+            ForwardEvent(evt, new SignReadEvent(sign, player));
+        }
+
+        // Forwards `evt` as `newEvt`.
+        private void ForwardEvent<TEvent>(Event evt, TEvent newEvt) where TEvent : Event {
+            Kernel.Raise(newEvt, Log);
+            if (newEvt.IsCanceled) {
+                evt.Cancel(newEvt.CancellationReason);
             }
         }
     }

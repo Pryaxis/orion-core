@@ -46,7 +46,8 @@ namespace Orion.Core.Npcs {
         IReadOnlyList<INpc> Npcs { get; }
 
         /// <summary>
-        /// Spawns an NPC with the given <paramref name="id"/> at the specified <paramref name="position"/>.
+        /// Spawns an NPC with the given <paramref name="id"/> at the specified <paramref name="position"/>. Returns the
+        /// resulting NPC.
         /// </summary>
         /// <param name="id">The NPC ID to spawn.</param>
         /// <param name="position">The position to spawn the NPC at.</param>

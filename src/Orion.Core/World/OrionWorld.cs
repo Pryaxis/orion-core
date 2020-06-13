@@ -59,9 +59,7 @@ namespace Orion.Core.World {
         }
 
         public int Width { get; }
-
         public int Height { get; }
-
         public string Name { get; }
 
         public void Dispose() {

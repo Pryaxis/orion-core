@@ -146,7 +146,7 @@ namespace Orion.Core.Players {
                 throw new ArgumentNullException(nameof(tiles));
             }
 
-            if (!tiles.IsSquare()) {
+            if (tiles.Width != tiles.Height) {
                 // Not localized because this string is developer-facing.
                 // TODO: implement this when the section packet is implemented.
                 throw new NotSupportedException("Tiles is not square");

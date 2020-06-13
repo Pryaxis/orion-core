@@ -25,7 +25,7 @@ namespace Orion.Core.Projectiles {
     /// Represents a projectile service. Provides access to projectiles and publishes projectile-related events.
     /// </summary>
     /// <remarks>
-    /// The item service is responsible for publishing the following projectile-related events:
+    /// The projectile service is responsible for publishing the following projectile-related events:
     /// <list type="bullet">
     /// <item><description><see cref="ProjectileDefaultsEvent"/></description></item>
     /// <item><description><see cref="ProjectileTickEvent"/></description></item>
@@ -42,6 +42,7 @@ namespace Orion.Core.Projectiles {
         /// <summary>
         /// Spawns a projectile with the given <paramref name="id"/> at the specified <paramref name="position"/> with
         /// the specified <paramref name="velocity"/>, <paramref name="damage"/>, and <paramref name="knockback"/>.
+        /// Returns the resulting projectile.
         /// </summary>
         /// <param name="id">The projectile ID to spawn.</param>
         /// <param name="position">The position to spawn the projectile at.</param>

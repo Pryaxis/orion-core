@@ -61,11 +61,7 @@ namespace Orion.Core.World.Chests {
 
             var player = evt.Sender;
 
-            var evt2 = new ChestOpenEvent(chest, player);
-            Kernel.Raise(evt2, Log);
-            if (evt2.IsCanceled) {
-                evt.Cancel(evt2.CancellationReason);
-            }
+            ForwardEvent(evt, new ChestOpenEvent(chest, player));
         }
 
         [EventHandler("orion-chests", Priority = EventPriority.Lowest)]
@@ -74,12 +70,16 @@ namespace Orion.Core.World.Chests {
             ref var packet = ref evt.Packet;
             var chest = Chests[packet.ChestIndex];
             var player = evt.Sender;
+            var itemStack = new ItemStack(packet.Id, packet.StackSize, packet.Prefix);
 
-            var evt2 = new ChestInventoryEvent(
-                chest, player, packet.Slot, new ItemStack(packet.Id, packet.StackSize, packet.Prefix));
-            Kernel.Raise(evt2, Log);
-            if (evt2.IsCanceled) {
-                evt.Cancel(evt2.CancellationReason);
+            ForwardEvent(evt, new ChestInventoryEvent(chest, player, packet.Slot, itemStack));
+        }
+
+        // Forwards `evt` as `newEvt`.
+        private void ForwardEvent<TEvent>(Event evt, TEvent newEvt) where TEvent : Event {
+            Kernel.Raise(newEvt, Log);
+            if (newEvt.IsCanceled) {
+                evt.Cancel(newEvt.CancellationReason);
             }
         }
     }
