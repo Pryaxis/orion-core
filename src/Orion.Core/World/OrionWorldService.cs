@@ -81,29 +81,25 @@ namespace Orion.Core.World {
             var player = evt.Sender;
             ref var packet = ref evt.Packet;
 
-            Event RaiseAndReturn<TEvent>(TEvent newEvt) where TEvent : Event {
+            Event Raise<TEvent>(TEvent newEvt) where TEvent : Event {
                 Kernel.Raise(newEvt, Log);
                 return newEvt;
             }
 
-            Event? RaiseBlockBreakEvent(ref TileModifyPacket packet, bool isItemless) =>
-                packet.IsFailure ?
-                    null :
-                    RaiseAndReturn(new BlockBreakEvent(World, player, packet.X, packet.Y, isItemless));
+            Event? RaiseBlockBreak(ref TileModifyPacket packet, bool isItemless) =>
+                packet.IsFailure ? null : Raise(new BlockBreakEvent(World, player, packet.X, packet.Y, isItemless));
 
-            Event? RaiseWallBreakEvent(ref TileModifyPacket packet) =>
-                packet.IsFailure ?
-                    null :
-                    RaiseAndReturn(new WallBreakEvent(World, player, packet.X, packet.Y));
+            Event? RaiseWallBreak(ref TileModifyPacket packet) =>
+                packet.IsFailure ? null : Raise(new WallBreakEvent(World, player, packet.X, packet.Y));
 
-            var evt2 = packet.Modification switch {
-                TileModification.BreakBlock => RaiseBlockBreakEvent(ref packet, false),
-                TileModification.BreakWall => RaiseWallBreakEvent(ref packet),
-                TileModification.BreakBlockItemless => RaiseBlockBreakEvent(ref packet, true),
+            var newEvt = packet.Modification switch {
+                TileModification.BreakBlock => RaiseBlockBreak(ref packet, false),
+                TileModification.BreakWall => RaiseWallBreak(ref packet),
+                TileModification.BreakBlockItemless => RaiseBlockBreak(ref packet, true),
                 _ => null
             };
-            if (evt2?.IsCanceled == true) {
-                evt.Cancel(evt2.CancellationReason);
+            if (newEvt?.IsCanceled == true) {
+                evt.Cancel(newEvt.CancellationReason);
             }
         }
 
