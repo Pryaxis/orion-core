@@ -143,7 +143,7 @@ namespace Orion.Core.Players {
         [Fact]
         public void PacketReceive_EventTriggered() {
             Terraria.Netplay.Clients[5] = new Terraria.RemoteClient { Id = 5 };
-            Terraria.Netplay.ServerPassword = "";
+            Terraria.Netplay.ServerPassword = string.Empty;
 
             using var kernel = new OrionKernel(Logger.None);
             using var playerService = new OrionPlayerService(kernel, Logger.None);
@@ -163,7 +163,7 @@ namespace Orion.Core.Players {
         [Fact]
         public void PacketReceive_EventModified() {
             Terraria.Netplay.Clients[5] = new Terraria.RemoteClient { Id = 5 };
-            Terraria.Netplay.ServerPassword = "";
+            Terraria.Netplay.ServerPassword = string.Empty;
 
             using var kernel = new OrionKernel(Logger.None);
             using var playerService = new OrionPlayerService(kernel, Logger.None);
@@ -178,7 +178,7 @@ namespace Orion.Core.Players {
         [Fact]
         public void PacketReceive_EventCanceled() {
             Terraria.Netplay.Clients[5] = new Terraria.RemoteClient { Id = 5 };
-            Terraria.Netplay.ServerPassword = "";
+            Terraria.Netplay.ServerPassword = string.Empty;
 
             using var kernel = new OrionKernel(Logger.None);
             using var playerService = new OrionPlayerService(kernel, Logger.None);
@@ -534,7 +534,8 @@ namespace Orion.Core.Players {
 
             using var kernel = new OrionKernel(Logger.None);
             using var playerService = new OrionPlayerService(kernel, Logger.None);
-            kernel.RegisterHandler<PacketSendEvent<ClientConnectPacket>>(evt => evt.Packet.Version = "", Logger.None);
+            kernel.RegisterHandler<PacketSendEvent<ClientConnectPacket>>(
+                evt => evt.Packet.Version = string.Empty, Logger.None);
 
             Terraria.NetMessage.SendData((byte)PacketId.ClientConnect, 5);
 

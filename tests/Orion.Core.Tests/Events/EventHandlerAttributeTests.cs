@@ -29,7 +29,7 @@ namespace Orion.Core.Events {
 
         [Fact]
         public void Priority_Set_Get() {
-            var attribute = new EventHandlerAttribute("");
+            var attribute = new EventHandlerAttribute("test");
 
             attribute.Priority = EventPriority.Highest;
 
@@ -45,7 +45,7 @@ namespace Orion.Core.Events {
 
         [Fact]
         public void IgnoreCanceled_Set_Get() {
-            var attribute = new EventHandlerAttribute("");
+            var attribute = new EventHandlerAttribute("test");
 
             attribute.IgnoreCanceled = false;
 

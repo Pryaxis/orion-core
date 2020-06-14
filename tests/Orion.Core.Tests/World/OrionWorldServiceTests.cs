@@ -29,6 +29,22 @@ namespace Orion.Core.World {
     [Collection("TerrariaTestsCollection")]
     public class OrionWorldServiceTests {
         [Fact]
+        public void Main_tile_Width_Get() {
+            using var kernel = new OrionKernel(Logger.None);
+            using var worldService = new OrionWorldService(kernel, Logger.None);
+
+            Assert.Equal(Terraria.Main.maxTilesX, Terraria.Main.tile.Width);
+        }
+
+        [Fact]
+        public void Main_tile_Height_Get() {
+            using var kernel = new OrionKernel(Logger.None);
+            using var worldService = new OrionWorldService(kernel, Logger.None);
+
+            Assert.Equal(Terraria.Main.maxTilesY, Terraria.Main.tile.Height);
+        }
+
+        [Fact]
         public void Main_tile_type_Get() {
             using var kernel = new OrionKernel(Logger.None);
             using var worldService = new OrionWorldService(kernel, Logger.None);
@@ -1109,7 +1125,7 @@ namespace Orion.Core.World {
         }
 
         [Fact]
-        public void PacketReceive_BlockBreakEventTriggered() {
+        public void PacketReceive_BlockBreak_EventTriggered() {
             // Set `State` to 10 so that the tile modify packet is not ignored by the server, and mark the relevant
             // `TileSections` entry so that the tile modify packet is not treated with failure.
             Terraria.Netplay.Clients[5] = new Terraria.RemoteClient { Id = 5, State = 10 };
@@ -1142,7 +1158,7 @@ namespace Orion.Core.World {
         }
 
         [Fact]
-        public void PacketReceive_BlockBreakEventCanceled() {
+        public void PacketReceive_BlockBreak_EventCanceled() {
             // Set `State` to 10 so that the tile modify packet is not ignored by the server, and mark the relevant
             // `TileSections` entry so that the tile modify packet is not treated with failure.
             Terraria.Netplay.Clients[5] = new Terraria.RemoteClient { Id = 5, State = 10 };
@@ -1165,7 +1181,28 @@ namespace Orion.Core.World {
         }
 
         [Fact]
-        public void PacketReceive_WallBreakEventTriggered() {
+        public void PacketReceive_BlockBreakFailure_EventNotTriggered() {
+            // Set `State` to 10 so that the tile modify packet is not ignored by the server, and mark the relevant
+            // `TileSections` entry so that the tile modify packet is not treated with failure.
+            Terraria.Netplay.Clients[5] = new Terraria.RemoteClient { Id = 5, State = 10 };
+            Terraria.Netplay.Clients[5].TileSections[0, 1] = true;
+            Terraria.Main.player[5] = new Terraria.Player { whoAmI = 5 };
+            Terraria.Main.item[0] = new Terraria.Item { whoAmI = 0 };
+
+            using var kernel = new OrionKernel(Logger.None);
+            using var playerService = new OrionPlayerService(kernel, Logger.None);
+            using var worldService = new OrionWorldService(kernel, Logger.None);
+
+            var isRun = false;
+            kernel.RegisterHandler<BlockBreakEvent>(evt => isRun = true, Logger.None);
+
+            TestUtils.FakeReceiveBytes(5, TileModifyPacketTests.BreakBlockFailureBytes);
+
+            Assert.False(isRun);
+        }
+
+        [Fact]
+        public void PacketReceive_WallBreak_EventTriggered() {
             // Set `State` to 10 so that the tile modify packet is not ignored by the server, and mark the relevant
             // `TileSections` entry so that the tile modify packet is not treated with failure.
             Terraria.Netplay.Clients[5] = new Terraria.RemoteClient { Id = 5, State = 10 };
@@ -1196,7 +1233,7 @@ namespace Orion.Core.World {
         }
 
         [Fact]
-        public void PacketReceive_WallBreakEventCanceled() {
+        public void PacketReceive_WallBreak_EventCanceled() {
             // Set `State` to 10 so that the tile modify packet is not ignored by the server, and mark the relevant
             // `TileSections` entry so that the tile modify packet is not treated with failure.
             Terraria.Netplay.Clients[5] = new Terraria.RemoteClient { Id = 5, State = 10 };
@@ -1218,7 +1255,30 @@ namespace Orion.Core.World {
         }
 
         [Fact]
-        public void PacketReceive_BlockBreakEventItemlessTriggered() {
+        public void PacketReceive_WallBreakFailure_EventNotTriggered() {
+            // Set `State` to 10 so that the tile modify packet is not ignored by the server, and mark the relevant
+            // `TileSections` entry so that the tile modify packet is not treated with failure.
+            Terraria.Netplay.Clients[5] = new Terraria.RemoteClient { Id = 5, State = 10 };
+            Terraria.Netplay.Clients[5].TileSections[0, 1] = true;
+            Terraria.Main.player[5] = new Terraria.Player { whoAmI = 5 };
+            Terraria.Main.item[0] = new Terraria.Item { whoAmI = 0 };
+
+            using var kernel = new OrionKernel(Logger.None);
+            using var playerService = new OrionPlayerService(kernel, Logger.None);
+            using var worldService = new OrionWorldService(kernel, Logger.None);
+
+            Terraria.Main.tile[100, 256] = new Terraria.Tile { wall = (ushort)WallId.Stone };
+
+            var isRun = false;
+            kernel.RegisterHandler<WallBreakEvent>(evt => isRun = true, Logger.None);
+
+            TestUtils.FakeReceiveBytes(5, TileModifyPacketTests.BreakWallFailureBytes);
+
+            Assert.False(isRun);
+        }
+
+        [Fact]
+        public void PacketReceive_BlockBreakItemless_EventTriggered() {
             // Set `State` to 10 so that the tile modify packet is not ignored by the server, and mark the relevant
             // `TileSections` entry so that the tile modify packet is not treated with failure.
             Terraria.Netplay.Clients[5] = new Terraria.RemoteClient { Id = 5, State = 10 };
@@ -1251,7 +1311,7 @@ namespace Orion.Core.World {
         }
 
         [Fact]
-        public void PacketReceive_BlockBreakEventItemlessCanceled() {
+        public void PacketReceive_BlockBreakItemless_EventCanceled() {
             // Set `State` to 10 so that the tile modify packet is not ignored by the server, and mark the relevant
             // `TileSections` entry so that the tile modify packet is not treated with failure.
             Terraria.Netplay.Clients[5] = new Terraria.RemoteClient { Id = 5, State = 10 };
@@ -1274,7 +1334,22 @@ namespace Orion.Core.World {
         }
 
         [Fact]
-        public void PacketReceive_TileSquareEventTriggered() {
+        public void PacketReceive_TileModifyInvalidModification() {
+            // Set `State` to 10 so that the tile modify packet is not ignored by the server, and mark the relevant
+            // `TileSections` entry so that the tile modify packet is not treated with failure.
+            Terraria.Netplay.Clients[5] = new Terraria.RemoteClient { Id = 5, State = 10 };
+            Terraria.Netplay.Clients[5].TileSections[0, 1] = true;
+            Terraria.Main.player[5] = new Terraria.Player { whoAmI = 5 };
+
+            using var kernel = new OrionKernel(Logger.None);
+            using var playerService = new OrionPlayerService(kernel, Logger.None);
+            using var worldService = new OrionWorldService(kernel, Logger.None);
+
+            TestUtils.FakeReceiveBytes(5, new byte[] { 11, 0, 17, 255, 100, 0, 0, 1, 1, 0, 0 });
+        }
+
+        [Fact]
+        public void PacketReceive_TileSquare_EventTriggered() {
             // Set `State` to 10 so that the tile square packet is not ignored by the server.
             Terraria.Netplay.Clients[5] = new Terraria.RemoteClient { Id = 5, State = 10 };
             Terraria.Main.player[5] = new Terraria.Player { whoAmI = 5 };
@@ -1306,7 +1381,7 @@ namespace Orion.Core.World {
         }
 
         [Fact]
-        public void PacketReceive_TileSquareEventModified() {
+        public void PacketReceive_TileSquare_EventModified() {
             // Set `State` to 10 so that the tile square packet is not ignored by the server.
             Terraria.Netplay.Clients[5] = new Terraria.RemoteClient { Id = 5, State = 10 };
             Terraria.Main.player[5] = new Terraria.Player { whoAmI = 5 };
@@ -1333,7 +1408,7 @@ namespace Orion.Core.World {
         }
 
         [Fact]
-        public void PacketReceive_TileSquareEventCanceled() {
+        public void PacketReceive_TileSquare_EventCanceled() {
             // Set `State` to 10 so that the tile square packet is not ignored by the server.
             Terraria.Netplay.Clients[5] = new Terraria.RemoteClient { Id = 5, State = 10 };
             Terraria.Main.player[5] = new Terraria.Player { whoAmI = 5 };
@@ -1356,7 +1431,7 @@ namespace Orion.Core.World {
         }
 
         [Fact]
-        public void PacketReceive_WiringActivateEventTriggered() {
+        public void PacketReceive_WiringActivate_EventTriggered() {
             // Set `State` to 10 so that the wire activate packet is not ignored by the server.
             Terraria.Netplay.Clients[5] = new Terraria.RemoteClient { Id = 5, State = 10 };
             Terraria.Main.player[5] = new Terraria.Player { whoAmI = 5 };
@@ -1389,7 +1464,7 @@ namespace Orion.Core.World {
         }
 
         [Fact]
-        public void PacketReceive_WiringActivateEventCanceled() {
+        public void PacketReceive_WiringActivate_EventCanceled() {
             // Set `State` to 10 so that the wire activate packet is not ignored by the server.
             Terraria.Netplay.Clients[5] = new Terraria.RemoteClient { Id = 5, State = 10 };
             Terraria.Main.player[5] = new Terraria.Player { whoAmI = 5 };
@@ -1414,7 +1489,7 @@ namespace Orion.Core.World {
         }
 
         [Fact]
-        public void PacketReceive_BlockPaintEventTriggered() {
+        public void PacketReceive_BlockPaint_EventTriggered() {
             // Set `State` to 10 so that the block paint packet is not ignored by the server.
             Terraria.Netplay.Clients[5] = new Terraria.RemoteClient { Id = 5, State = 10 };
             Terraria.Main.player[5] = new Terraria.Player { whoAmI = 5 };
@@ -1443,7 +1518,7 @@ namespace Orion.Core.World {
         }
 
         [Fact]
-        public void PacketReceive_BlockPaintEventCanceled() {
+        public void PacketReceive_BlockPaint_EventCanceled() {
             // Set `State` to 10 so that the block paint packet is not ignored by the server.
             Terraria.Netplay.Clients[5] = new Terraria.RemoteClient { Id = 5, State = 10 };
             Terraria.Main.player[5] = new Terraria.Player { whoAmI = 5 };
@@ -1463,7 +1538,7 @@ namespace Orion.Core.World {
         }
 
         [Fact]
-        public void PacketReceive_WallPaintEventTriggered() {
+        public void PacketReceive_WallPaint_EventTriggered() {
             // Set `State` to 10 so that the wall paint packet is not ignored by the server.
             Terraria.Netplay.Clients[5] = new Terraria.RemoteClient { Id = 5, State = 10 };
             Terraria.Main.player[5] = new Terraria.Player { whoAmI = 5 };
@@ -1491,7 +1566,7 @@ namespace Orion.Core.World {
         }
 
         [Fact]
-        public void PacketReceive_WallPaintEventCanceled() {
+        public void PacketReceive_WallPaint_EventCanceled() {
             // Set `State` to 10 so that the wall paint packet is not ignored by the server.
             Terraria.Netplay.Clients[5] = new Terraria.RemoteClient { Id = 5, State = 10 };
             Terraria.Main.player[5] = new Terraria.Player { whoAmI = 5 };

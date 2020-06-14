@@ -149,6 +149,8 @@ namespace Orion.Core.World {
 
             public unsafe OTAPI.Tile.ITile this[int x, int y] {
                 get => new TileAdapter(ref World[x, y]);
+
+                // TODO: optimize this to not generate garbage.
                 set => this[x, y].CopyFrom(value);
             }
 

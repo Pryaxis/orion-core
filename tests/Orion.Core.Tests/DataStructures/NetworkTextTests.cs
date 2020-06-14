@@ -88,12 +88,12 @@ namespace Orion.Core.DataStructures {
 
         [Fact]
         public void Formatted_NullArgs_ThrowsArgumentNullException() {
-            Assert.Throws<ArgumentNullException>(() => NetworkText.Formatted("", null!));
+            Assert.Throws<ArgumentNullException>(() => NetworkText.Formatted("{0} {1}", null!));
         }
 
         [Fact]
         public void Formatted_NullArg_ThrowsArgumentException() {
-            Assert.Throws<ArgumentException>(() => NetworkText.Formatted("", "", null!));
+            Assert.Throws<ArgumentException>(() => NetworkText.Formatted("{0} {1}", "a", null!));
         }
 
         [Fact]
@@ -110,12 +110,12 @@ namespace Orion.Core.DataStructures {
 
         [Fact]
         public void Localized_NullArgs_ThrowsArgumentNullException() {
-            Assert.Throws<ArgumentNullException>(() => NetworkText.Localized("", null!));
+            Assert.Throws<ArgumentNullException>(() => NetworkText.Localized("{0} {1}", null!));
         }
 
         [Fact]
         public void Localized_NullArg_ThrowsArgumentException() {
-            Assert.Throws<ArgumentException>(() => NetworkText.Localized("", "", null!));
+            Assert.Throws<ArgumentException>(() => NetworkText.Localized("{0} {1}", "a", null!));
         }
 
         [Fact]
