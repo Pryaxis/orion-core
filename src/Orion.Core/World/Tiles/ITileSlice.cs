@@ -18,14 +18,18 @@
 using System;
 using System.Diagnostics;
 using Orion.Core.Packets.World.Tiles;
+using Orion.Core.Players;
 
 namespace Orion.Core.World.Tiles {
     /// <summary>
-    /// Represents a slice of tiles.
+    /// Represents a two-dimensional slice of tiles.
     /// </summary>
     /// <remarks>
-    /// The tile slice interface can be used to efficiently pass slices of tiles for use in, e.g., a
-    /// <see cref="TileSquarePacket"/>.
+    /// A tile slice can be used to efficiently pass tiles by reference in, e.g., a<see cref="TileSquarePacket"/>
+    /// instance or the <see cref="PlayerExtensions.SendTiles(IPlayer, int, int, ITileSlice)"/> extension method.
+    /// 
+    /// The <see cref="TileSliceExtensions.Slice(ITileSlice, int, int, int, int)"/> extension method allows zero-copy
+    /// subslices to be obtained.
     /// </remarks>
     public interface ITileSlice {
         /// <summary>
