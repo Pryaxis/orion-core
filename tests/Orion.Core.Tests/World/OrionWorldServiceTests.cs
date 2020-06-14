@@ -1125,7 +1125,7 @@ namespace Orion.Core.World {
         }
 
         [Fact]
-        public void PacketReceive_BlockBreak_EventTriggered() {
+        public void PacketReceive_TileModify_BreakBlock_EventTriggered() {
             // Set `State` to 10 so that the tile modify packet is not ignored by the server, and mark the relevant
             // `TileSections` entry so that the tile modify packet is not treated with failure.
             Terraria.Netplay.Clients[5] = new Terraria.RemoteClient { Id = 5, State = 10 };
@@ -1158,7 +1158,7 @@ namespace Orion.Core.World {
         }
 
         [Fact]
-        public void PacketReceive_BlockBreak_EventCanceled() {
+        public void PacketReceive_TileModify_BreakBlock_EventCanceled() {
             // Set `State` to 10 so that the tile modify packet is not ignored by the server, and mark the relevant
             // `TileSections` entry so that the tile modify packet is not treated with failure.
             Terraria.Netplay.Clients[5] = new Terraria.RemoteClient { Id = 5, State = 10 };
@@ -1181,7 +1181,7 @@ namespace Orion.Core.World {
         }
 
         [Fact]
-        public void PacketReceive_BlockBreakFailure_EventNotTriggered() {
+        public void PacketReceive_TileModify_BreakBlockFailure_EventNotTriggered() {
             // Set `State` to 10 so that the tile modify packet is not ignored by the server, and mark the relevant
             // `TileSections` entry so that the tile modify packet is not treated with failure.
             Terraria.Netplay.Clients[5] = new Terraria.RemoteClient { Id = 5, State = 10 };
@@ -1202,7 +1202,7 @@ namespace Orion.Core.World {
         }
 
         [Fact]
-        public void PacketReceive_WallBreak_EventTriggered() {
+        public void PacketReceive_TileModify_BreakWall_EventTriggered() {
             // Set `State` to 10 so that the tile modify packet is not ignored by the server, and mark the relevant
             // `TileSections` entry so that the tile modify packet is not treated with failure.
             Terraria.Netplay.Clients[5] = new Terraria.RemoteClient { Id = 5, State = 10 };
@@ -1233,7 +1233,7 @@ namespace Orion.Core.World {
         }
 
         [Fact]
-        public void PacketReceive_WallBreak_EventCanceled() {
+        public void PacketReceive_TileModify_BreakWall_EventCanceled() {
             // Set `State` to 10 so that the tile modify packet is not ignored by the server, and mark the relevant
             // `TileSections` entry so that the tile modify packet is not treated with failure.
             Terraria.Netplay.Clients[5] = new Terraria.RemoteClient { Id = 5, State = 10 };
@@ -1255,7 +1255,7 @@ namespace Orion.Core.World {
         }
 
         [Fact]
-        public void PacketReceive_WallBreakFailure_EventNotTriggered() {
+        public void PacketReceive_TileModify_BreakWallFailure_EventNotTriggered() {
             // Set `State` to 10 so that the tile modify packet is not ignored by the server, and mark the relevant
             // `TileSections` entry so that the tile modify packet is not treated with failure.
             Terraria.Netplay.Clients[5] = new Terraria.RemoteClient { Id = 5, State = 10 };
@@ -1278,7 +1278,7 @@ namespace Orion.Core.World {
         }
 
         [Fact]
-        public void PacketReceive_BlockBreakItemless_EventTriggered() {
+        public void PacketReceive_TileModify_BreakBlockItemless_EventTriggered() {
             // Set `State` to 10 so that the tile modify packet is not ignored by the server, and mark the relevant
             // `TileSections` entry so that the tile modify packet is not treated with failure.
             Terraria.Netplay.Clients[5] = new Terraria.RemoteClient { Id = 5, State = 10 };
@@ -1311,7 +1311,7 @@ namespace Orion.Core.World {
         }
 
         [Fact]
-        public void PacketReceive_BlockBreakItemless_EventCanceled() {
+        public void PacketReceive_TileModify_BreakBlockItemless_EventCanceled() {
             // Set `State` to 10 so that the tile modify packet is not ignored by the server, and mark the relevant
             // `TileSections` entry so that the tile modify packet is not treated with failure.
             Terraria.Netplay.Clients[5] = new Terraria.RemoteClient { Id = 5, State = 10 };
@@ -1331,6 +1331,27 @@ namespace Orion.Core.World {
             TestUtils.FakeReceiveBytes(5, TileModifyPacketTests.BreakBlockItemlessBytes);
 
             Assert.True(Terraria.Main.tile[100, 256].active());
+        }
+
+        [Fact]
+        public void PacketReceive_TileModify_BreakBlockItemlessFailure_EventNotTriggered() {
+            // Set `State` to 10 so that the tile modify packet is not ignored by the server, and mark the relevant
+            // `TileSections` entry so that the tile modify packet is not treated with failure.
+            Terraria.Netplay.Clients[5] = new Terraria.RemoteClient { Id = 5, State = 10 };
+            Terraria.Netplay.Clients[5].TileSections[0, 1] = true;
+            Terraria.Main.player[5] = new Terraria.Player { whoAmI = 5 };
+            Terraria.Main.item[0] = new Terraria.Item { whoAmI = 0 };
+
+            using var kernel = new OrionKernel(Logger.None);
+            using var playerService = new OrionPlayerService(kernel, Logger.None);
+            using var worldService = new OrionWorldService(kernel, Logger.None);
+
+            var isRun = false;
+            kernel.RegisterHandler<BlockBreakEvent>(evt => isRun = true, Logger.None);
+
+            TestUtils.FakeReceiveBytes(5, TileModifyPacketTests.BreakBlockItemlessFailureBytes);
+
+            Assert.False(isRun);
         }
 
         [Fact]

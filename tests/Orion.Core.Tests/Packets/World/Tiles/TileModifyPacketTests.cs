@@ -30,6 +30,7 @@ namespace Orion.Core.Packets.World.Tiles {
         public static readonly byte[] BreakWallFailureBytes = { 11, 0, 17, 2, 100, 0, 0, 1, 1, 0, 0 };
         public static readonly byte[] PlaceWallBytes = { 11, 0, 17, 3, 100, 0, 0, 1, 1, 0, 0 };
         public static readonly byte[] BreakBlockItemlessBytes = { 11, 0, 17, 4, 100, 0, 0, 1, 0, 0, 0 };
+        public static readonly byte[] BreakBlockItemlessFailureBytes = { 11, 0, 17, 4, 100, 0, 0, 1, 1, 0, 0 };
         public static readonly byte[] PlaceRedWireBytes = { 11, 0, 17, 5, 100, 0, 0, 1, 0, 0, 0 };
         public static readonly byte[] BreakRedWireBytes = { 11, 0, 17, 6, 100, 0, 0, 1, 0, 0, 0 };
         public static readonly byte[] HammerBlockBytes = { 11, 0, 17, 7, 100, 0, 0, 1, 0, 0, 0 };
@@ -294,6 +295,18 @@ namespace Orion.Core.Packets.World.Tiles {
         }
 
         [Fact]
+        public void Read_BreakBlockItemlessFailure() {
+            var packet = new TileModifyPacket();
+            var span = BreakBlockItemlessFailureBytes.AsSpan(IPacket.HeaderSize..);
+            Assert.Equal(span.Length, packet.Read(span, PacketContext.Server));
+
+            Assert.Equal(TileModification.BreakBlockItemless, packet.Modification);
+            Assert.Equal(100, packet.X);
+            Assert.Equal(256, packet.Y);
+            Assert.True(packet.IsFailure);
+        }
+
+        [Fact]
         public void Read_PlaceRedWire() {
             var packet = new TileModifyPacket();
             var span = PlaceRedWireBytes.AsSpan(IPacket.HeaderSize..);
@@ -548,6 +561,12 @@ namespace Orion.Core.Packets.World.Tiles {
         public void RoundTrip_BreakBlockItemless() {
             TestUtils.RoundTripPacket<TileModifyPacket>(
                 BreakBlockItemlessBytes.AsSpan(IPacket.HeaderSize..), PacketContext.Server);
+        }
+
+        [Fact]
+        public void RoundTrip_BreakBlockItemlessFailure() {
+            TestUtils.RoundTripPacket<TileModifyPacket>(
+                BreakBlockItemlessFailureBytes.AsSpan(IPacket.HeaderSize..), PacketContext.Server);
         }
 
         [Fact]

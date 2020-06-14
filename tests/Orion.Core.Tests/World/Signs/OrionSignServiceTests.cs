@@ -80,7 +80,7 @@ namespace Orion.Core.World.Signs {
         }
 
         [Fact]
-        public void PacketReceive_SignReadEventTriggered() {
+        public void PacketReceive_SignRead_EventTriggered() {
             // Set `State` to 10 so that the sign read packet is not ignored by the server.
             var socket = new TestSocket { Connected = true };
             Terraria.Netplay.Clients[5] = new Terraria.RemoteClient { Id = 5, State = 10, Socket = socket };
@@ -106,7 +106,7 @@ namespace Orion.Core.World.Signs {
         }
 
         [Fact]
-        public void PacketReceive_SignReadEventCanceled() {
+        public void PacketReceive_SignRead_EventCanceled() {
             // Set `State` to 10 so that the sign read packet is not ignored by the server.
             var socket = new TestSocket { Connected = true };
             Terraria.Netplay.Clients[5] = new Terraria.RemoteClient { Id = 5, State = 10, Socket = socket };
@@ -127,7 +127,7 @@ namespace Orion.Core.World.Signs {
         }
 
         [Fact]
-        public void PacketReceive_SignReadEventNotTriggered() {
+        public void PacketReceive_SignRead_EventNotTriggered() {
             // Set `State` to 10 so that the sign read packet is not ignored by the server.
             var socket = new TestSocket { Connected = true };
             Terraria.Netplay.Clients[5] = new Terraria.RemoteClient { Id = 5, State = 10, Socket = socket };
