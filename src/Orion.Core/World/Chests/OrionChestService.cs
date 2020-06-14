@@ -59,9 +59,7 @@ namespace Orion.Core.World.Chests {
                 return;
             }
 
-            var player = evt.Sender;
-
-            ForwardEvent(evt, new ChestOpenEvent(chest, player));
+            ForwardEvent(evt, new ChestOpenEvent(chest, evt.Sender));
         }
 
         [EventHandler("orion-chests", Priority = EventPriority.Lowest)]
@@ -69,10 +67,9 @@ namespace Orion.Core.World.Chests {
         private void OnChestInventoryPacket(PacketReceiveEvent<ChestInventoryPacket> evt) {
             ref var packet = ref evt.Packet;
             var chest = Chests[packet.ChestIndex];
-            var player = evt.Sender;
             var itemStack = new ItemStack(packet.Id, packet.StackSize, packet.Prefix);
 
-            ForwardEvent(evt, new ChestInventoryEvent(chest, player, packet.Slot, itemStack));
+            ForwardEvent(evt, new ChestInventoryEvent(chest, evt.Sender, packet.Slot, itemStack));
         }
 
         // Forwards `evt` as `newEvt`.

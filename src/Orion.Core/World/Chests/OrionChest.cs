@@ -45,7 +45,6 @@ namespace Orion.Core.World.Chests {
         public IArray<ItemStack> Items { get; }
 
         public int Index { get; }
-
         public bool IsActive { get; }
 
         public int X {
@@ -64,47 +63,52 @@ namespace Orion.Core.World.Chests {
         [Pure, ExcludeFromCodeCoverage]
         public override string ToString() => this.IsConcrete() ? $"(index: {Index})" : "<abstract instance>";
 
-        private class ItemArray : IArray<ItemStack> {
-            private readonly Terraria.Item?[] _items;
+        private sealed class ItemArray : IArray<ItemStack> {
+            private readonly object _lock = new object();
+            private readonly Terraria.Item[] _items;
 
             public ItemArray(Terraria.Item?[] items) {
                 Debug.Assert(items != null);
 
-                _items = items;
+                // Initialize the entire array ahead of time so that there are no `null` elements.
+                for (var i = 0; i < items.Length; ++i) {
+                    items[i] ??= new Terraria.Item();
+                }
+                _items = items!;
             }
 
             public ItemStack this[int index] {
                 get {
-                    if (index < 0 || index >= Count) {
-                        // Not localized because this string is developer-facing.
-                        throw new IndexOutOfRangeException($"Index out of range (expected: 0 to {Count - 1})");
-                    }
+                    var item = GetItem(index);
 
-                    var item = _items[index];
-                    return item is null ?
-                        default :
-                        new ItemStack((ItemId)item.type, item.stack, (ItemPrefix)item.prefix);
+                    // This operation requires a lock since `ItemStack` construction won't be atomic otherwise.
+                    lock (_lock) {
+                        return new ItemStack((ItemId)item.type, item.stack, (ItemPrefix)item.prefix);
+                    }
                 }
 
                 set {
-                    if (index < 0 || index >= Count) {
-                        // Not localized because this string is developer-facing.
-                        throw new IndexOutOfRangeException($"Index out of range (expected: 0 to {Count - 1})");
-                    }
+                    var item = GetItem(index);
 
-                    // Lazily initialize the item if it is `null`.
-                    ref var item = ref _items[index];
-                    if (item is null) {
-                        item = new Terraria.Item();
+                    // This operation requires a lock since `ItemStack` assignment won't be atomic otherwise.
+                    lock (_lock) {
+                        item.type = (int)value.Id;
+                        item.stack = value.StackSize;
+                        item.prefix = (byte)value.Prefix;
                     }
-
-                    item.type = (int)value.Id;
-                    item.stack = value.StackSize;
-                    item.prefix = (byte)value.Prefix;
                 }
             }
 
             public int Count => _items.Length;
+
+            private Terraria.Item GetItem(int index) {
+                if (index < 0 || index >= Count) {
+                    // Not localized because this string is developer-facing.
+                    throw new IndexOutOfRangeException($"Index out of range (expected: 0 to {Count - 1})");
+                }
+
+                return _items[index];
+            }
         }
     }
 }
