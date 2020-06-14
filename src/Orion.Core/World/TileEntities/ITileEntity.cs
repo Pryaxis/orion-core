@@ -24,6 +24,8 @@ namespace Orion.Core.World.TileEntities {
     /// Represents an annotatable Terraria tile entity.
     /// </summary>
     /// <remarks>
+    /// Implementations must be thread-safe.
+    /// 
     /// Many Terraria tile-based objects are tile entities and have common properties such as position. Tile entities
     /// are annotatable, allowing consumers to easily attach custom state to them.
     /// 

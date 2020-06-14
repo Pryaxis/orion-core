@@ -15,6 +15,7 @@
 // You should have received a copy of the GNU General Public License
 // along with Orion.  If not, see <https://www.gnu.org/licenses/>.
 
+using Moq;
 using Orion.Core.Events.World.Tiles;
 using Orion.Core.Items;
 using Orion.Core.Packets.World.Tiles;
@@ -503,7 +504,7 @@ namespace Orion.Core.World {
         }
 
         [Fact]
-        public void Main_tile_isTheSameAs_DifferentHeader_ReturnsFalse() {
+        public void Main_tile_isTheSameAs_TileAdapterDifferentHeader_ReturnsFalse() {
             using var kernel = new OrionKernel(Logger.None);
             using var worldService = new OrionWorldService(kernel, Logger.None);
             worldService.World[0, 0] = new Tile { IsBlockActive = true };
@@ -513,7 +514,7 @@ namespace Orion.Core.World {
         }
 
         [Fact]
-        public void Main_tile_isTheSameAs_DifferentHeader2_ReturnsFalse() {
+        public void Main_tile_isTheSameAs_TileAdapterDifferentHeader2_ReturnsFalse() {
             using var kernel = new OrionKernel(Logger.None);
             using var worldService = new OrionWorldService(kernel, Logger.None);
             worldService.World[0, 0] = new Tile {
@@ -529,7 +530,7 @@ namespace Orion.Core.World {
         }
 
         [Fact]
-        public void Main_tile_isTheSameAs_DifferentBlockIdAndBlockActive_ReturnsFalse() {
+        public void Main_tile_isTheSameAs_TileAdapterDifferentBlockIdAndBlockActive_ReturnsFalse() {
             using var kernel = new OrionKernel(Logger.None);
             using var worldService = new OrionWorldService(kernel, Logger.None);
             worldService.World[0, 0] = new Tile {
@@ -545,7 +546,7 @@ namespace Orion.Core.World {
         }
 
         [Fact]
-        public void Main_tile_isTheSameAs_DifferentBlockIdButNotBlockActive_ReturnsTrue() {
+        public void Main_tile_isTheSameAs_TileAdapterDifferentBlockIdButNotBlockActive_ReturnsTrue() {
             using var kernel = new OrionKernel(Logger.None);
             using var worldService = new OrionWorldService(kernel, Logger.None);
             worldService.World[0, 0] = new Tile { BlockId = BlockId.Stone };
@@ -555,7 +556,7 @@ namespace Orion.Core.World {
         }
 
         [Fact]
-        public void Main_tile_isTheSameAs_DifferentBlockFrameXAndHasFrames_ReturnsFalse() {
+        public void Main_tile_isTheSameAs_TileAdapterDifferentBlockFrameXAndHasFrames_ReturnsFalse() {
             using var kernel = new OrionKernel(Logger.None);
             using var worldService = new OrionWorldService(kernel, Logger.None);
             worldService.World[0, 0] = new Tile {
@@ -573,7 +574,7 @@ namespace Orion.Core.World {
         }
 
         [Fact]
-        public void Main_tile_isTheSameAs_DifferentBlockFrameYAndHasFrames_ReturnsFalse() {
+        public void Main_tile_isTheSameAs_TileAdapterDifferentBlockFrameYAndHasFrames_ReturnsFalse() {
             using var kernel = new OrionKernel(Logger.None);
             using var worldService = new OrionWorldService(kernel, Logger.None);
             worldService.World[0, 0] = new Tile {
@@ -591,7 +592,7 @@ namespace Orion.Core.World {
         }
 
         [Fact]
-        public void Main_tile_isTheSameAs_DifferentBlockFramesButNotHasFrames_ReturnsTrue() {
+        public void Main_tile_isTheSameAs_TileAdapterDifferentBlockFramesButNotHasFrames_ReturnsTrue() {
             using var kernel = new OrionKernel(Logger.None);
             using var worldService = new OrionWorldService(kernel, Logger.None);
             worldService.World[0, 0] = new Tile {
@@ -611,7 +612,7 @@ namespace Orion.Core.World {
         }
 
         [Fact]
-        public void Main_tile_isTheSameAs_DifferentWallId_ReturnsFalse() {
+        public void Main_tile_isTheSameAs_TileAdapterDifferentWallId_ReturnsFalse() {
             using var kernel = new OrionKernel(Logger.None);
             using var worldService = new OrionWorldService(kernel, Logger.None);
             worldService.World[0, 0] = new Tile { WallId = WallId.Stone };
@@ -621,7 +622,7 @@ namespace Orion.Core.World {
         }
 
         [Fact]
-        public void Main_tile_isTheSameAs_DifferentLiquidAmount_ReturnsFalse() {
+        public void Main_tile_isTheSameAs_TileAdapterDifferentLiquidAmount_ReturnsFalse() {
             using var kernel = new OrionKernel(Logger.None);
             using var worldService = new OrionWorldService(kernel, Logger.None);
             worldService.World[0, 0] = new Tile { LiquidAmount = 1 };
@@ -631,7 +632,7 @@ namespace Orion.Core.World {
         }
 
         [Fact]
-        public void Main_tile_isTheSameAs_DifferentWallColor_ReturnsFalse() {
+        public void Main_tile_isTheSameAs_TileAdapterDifferentWallColor_ReturnsFalse() {
             using var kernel = new OrionKernel(Logger.None);
             using var worldService = new OrionWorldService(kernel, Logger.None);
             worldService.World[0, 0] = new Tile { WallColor = PaintColor.Red };
@@ -641,13 +642,145 @@ namespace Orion.Core.World {
         }
 
         [Fact]
-        public void Main_tile_isTheSameAs_DifferentYellowWire_ReturnsFalse() {
+        public void Main_tile_isTheSameAs_TileAdapterDifferentYellowWire_ReturnsFalse() {
             using var kernel = new OrionKernel(Logger.None);
             using var worldService = new OrionWorldService(kernel, Logger.None);
             worldService.World[0, 0] = new Tile { HasYellowWire = true };
             worldService.World[0, 1] = new Tile();
 
             Assert.False(Terraria.Main.tile[0, 0].isTheSameAs(Terraria.Main.tile[0, 1]));
+        }
+
+        [Fact]
+        public void Main_tile_isTheSameAs_ITileDifferentHeader_ReturnsFalse() {
+            using var kernel = new OrionKernel(Logger.None);
+            using var worldService = new OrionWorldService(kernel, Logger.None);
+            worldService.World[0, 0] = new Tile { IsBlockActive = true };
+            var tile = Mock.Of<OTAPI.Tile.ITile>();
+
+            Assert.False(Terraria.Main.tile[0, 0].isTheSameAs(tile));
+        }
+
+        [Fact]
+        public void Main_tile_isTheSameAs_ITileDifferentHeader2_ReturnsFalse() {
+            using var kernel = new OrionKernel(Logger.None);
+            using var worldService = new OrionWorldService(kernel, Logger.None);
+            worldService.World[0, 0] = new Tile {
+                LiquidAmount = 1,
+                _bTileHeader = 1
+            };
+            var tile = Mock.Of<OTAPI.Tile.ITile>(t => t.liquid == 1 && t.bTileHeader == 2);
+
+            Assert.False(Terraria.Main.tile[0, 0].isTheSameAs(tile));
+        }
+
+        [Fact]
+        public void Main_tile_isTheSameAs_ITileDifferentBlockIdAndBlockActive_ReturnsFalse() {
+            using var kernel = new OrionKernel(Logger.None);
+            using var worldService = new OrionWorldService(kernel, Logger.None);
+            worldService.World[0, 0] = new Tile {
+                IsBlockActive = true,
+                BlockId = BlockId.Stone
+            };
+            var tile = Mock.Of<OTAPI.Tile.ITile>(t => t.sTileHeader == 32 && t.type == (ushort)BlockId.Dirt);
+
+            Assert.False(Terraria.Main.tile[0, 0].isTheSameAs(tile));
+        }
+
+        [Fact]
+        public void Main_tile_isTheSameAs_ITileDifferentBlockIdButNotBlockActive_ReturnsTrue() {
+            using var kernel = new OrionKernel(Logger.None);
+            using var worldService = new OrionWorldService(kernel, Logger.None);
+            worldService.World[0, 0] = new Tile { BlockId = BlockId.Stone };
+            var tile = Mock.Of<OTAPI.Tile.ITile>(t => t.type == (ushort)BlockId.Dirt);
+
+            Assert.True(Terraria.Main.tile[0, 0].isTheSameAs(tile));
+        }
+
+        [Fact]
+        public void Main_tile_isTheSameAs_ITileDifferentBlockFrameXAndHasFrames_ReturnsFalse() {
+            using var kernel = new OrionKernel(Logger.None);
+            using var worldService = new OrionWorldService(kernel, Logger.None);
+            worldService.World[0, 0] = new Tile {
+                IsBlockActive = true,
+                BlockId = BlockId.Torches,
+                BlockFrameX = 1
+            };
+            var tile = Mock.Of<OTAPI.Tile.ITile>(
+                t => t.sTileHeader == 32 && t.type == (ushort)BlockId.Torches && t.frameX == 2);
+
+            Assert.False(Terraria.Main.tile[0, 0].isTheSameAs(tile));
+        }
+
+        [Fact]
+        public void Main_tile_isTheSameAs_ITileDifferentBlockFrameYAndHasFrames_ReturnsFalse() {
+            using var kernel = new OrionKernel(Logger.None);
+            using var worldService = new OrionWorldService(kernel, Logger.None);
+            worldService.World[0, 0] = new Tile {
+                IsBlockActive = true,
+                BlockId = BlockId.Torches,
+                BlockFrameY = 1
+            };
+            var tile = Mock.Of<OTAPI.Tile.ITile>(
+                t => t.sTileHeader == 32 && t.type == (ushort)BlockId.Torches && t.frameY == 2);
+
+            Assert.False(Terraria.Main.tile[0, 0].isTheSameAs(tile));
+        }
+
+        [Fact]
+        public void Main_tile_isTheSameAs_ITileDifferentBlockFramesButNotHasFrames_ReturnsTrue() {
+            using var kernel = new OrionKernel(Logger.None);
+            using var worldService = new OrionWorldService(kernel, Logger.None);
+            worldService.World[0, 0] = new Tile {
+                IsBlockActive = true,
+                BlockId = BlockId.Stone,
+                BlockFrameX = 1,
+                BlockFrameY = 1
+            };
+            var tile = Mock.Of<OTAPI.Tile.ITile>(
+                t => t.sTileHeader == 32 && t.type == (ushort)BlockId.Stone && t.frameX == 2 && t.frameY == 2);
+
+            Assert.True(Terraria.Main.tile[0, 0].isTheSameAs(tile));
+        }
+
+        [Fact]
+        public void Main_tile_isTheSameAs_ITileDifferentWallId_ReturnsFalse() {
+            using var kernel = new OrionKernel(Logger.None);
+            using var worldService = new OrionWorldService(kernel, Logger.None);
+            worldService.World[0, 0] = new Tile { WallId = WallId.Stone };
+            var tile = Mock.Of<OTAPI.Tile.ITile>(t => t.wall == (ushort)WallId.NaturalDirt);
+
+            Assert.False(Terraria.Main.tile[0, 0].isTheSameAs(tile));
+        }
+
+        [Fact]
+        public void Main_tile_isTheSameAs_ITileDifferentLiquidAmount_ReturnsFalse() {
+            using var kernel = new OrionKernel(Logger.None);
+            using var worldService = new OrionWorldService(kernel, Logger.None);
+            worldService.World[0, 0] = new Tile { LiquidAmount = 1 };
+            var tile = Mock.Of<OTAPI.Tile.ITile>(t => t.liquid == 2);
+
+            Assert.False(Terraria.Main.tile[0, 0].isTheSameAs(tile));
+        }
+
+        [Fact]
+        public void Main_tile_isTheSameAs_ITileDifferentWallColor_ReturnsFalse() {
+            using var kernel = new OrionKernel(Logger.None);
+            using var worldService = new OrionWorldService(kernel, Logger.None);
+            worldService.World[0, 0] = new Tile { WallColor = PaintColor.Red };
+            var tile = Mock.Of<OTAPI.Tile.ITile>(t => t.bTileHeader == 13);
+
+            Assert.False(Terraria.Main.tile[0, 0].isTheSameAs(tile));
+        }
+
+        [Fact]
+        public void Main_tile_isTheSameAs_ITileDifferentYellowWire_ReturnsFalse() {
+            using var kernel = new OrionKernel(Logger.None);
+            using var worldService = new OrionWorldService(kernel, Logger.None);
+            worldService.World[0, 0] = new Tile { HasYellowWire = true };
+            var tile = Mock.Of<OTAPI.Tile.ITile>();
+
+            Assert.False(Terraria.Main.tile[0, 0].isTheSameAs(tile));
         }
 
         [Fact]

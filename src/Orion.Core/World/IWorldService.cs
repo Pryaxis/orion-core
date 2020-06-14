@@ -24,6 +24,8 @@ namespace Orion.Core.World {
     /// Represents a world service. Provides access to the world and publishes world and tile-related events.
     /// </summary>
     /// <remarks>
+    /// Implementations are required to be thread-safe.
+    /// 
     /// The world service is responsible for publishing the following world and tile-related events:
     /// <list type="bullet">
     /// <item><description><see cref="WorldLoadedEvent"/></description></item>

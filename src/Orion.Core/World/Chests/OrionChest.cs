@@ -79,7 +79,12 @@ namespace Orion.Core.World.Chests {
 
             public ItemStack this[int index] {
                 get {
-                    var item = GetItem(index);
+                    if (index < 0 || index >= Count) {
+                        // Not localized because this string is developer-facing.
+                        throw new IndexOutOfRangeException($"Index out of range (expected: 0 to {Count - 1})");
+                    }
+
+                    var item = _items[index];
 
                     // This operation requires a lock since `ItemStack` construction won't be atomic otherwise.
                     lock (_lock) {
@@ -88,7 +93,12 @@ namespace Orion.Core.World.Chests {
                 }
 
                 set {
-                    var item = GetItem(index);
+                    if (index < 0 || index >= Count) {
+                        // Not localized because this string is developer-facing.
+                        throw new IndexOutOfRangeException($"Index out of range (expected: 0 to {Count - 1})");
+                    }
+
+                    var item = _items[index];
 
                     // This operation requires a lock since `ItemStack` assignment won't be atomic otherwise.
                     lock (_lock) {
@@ -100,15 +110,6 @@ namespace Orion.Core.World.Chests {
             }
 
             public int Count => _items.Length;
-
-            private Terraria.Item GetItem(int index) {
-                if (index < 0 || index >= Count) {
-                    // Not localized because this string is developer-facing.
-                    throw new IndexOutOfRangeException($"Index out of range (expected: 0 to {Count - 1})");
-                }
-
-                return _items[index];
-            }
         }
     }
 }
