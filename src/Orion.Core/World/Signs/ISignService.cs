@@ -24,6 +24,8 @@ namespace Orion.Core.World.Signs {
     /// Represents a sign service. Provides access to signs and publishes sign-related events.
     /// </summary>
     /// <remarks>
+    /// Implementations are required to be thread-safe.
+    /// 
     /// The sign service is responsible for publishing the following sign-related events:
     /// <list type="bullet">
     /// <item><description><see cref="SignReadEvent"/></description></item>

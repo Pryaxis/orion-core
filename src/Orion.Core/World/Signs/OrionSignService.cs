@@ -58,9 +58,7 @@ namespace Orion.Core.World.Signs {
                 return;
             }
 
-            var player = evt.Sender;
-
-            ForwardEvent(evt, new SignReadEvent(sign, player));
+            ForwardEvent(evt, new SignReadEvent(sign, evt.Sender));
         }
 
         // Forwards `evt` as `newEvt`.
