@@ -31,6 +31,8 @@ namespace Orion.Core.Players {
     /// Represents a player service. Provides access to players and publishes packet and player-related events.
     /// </summary>
     /// <remarks>
+    /// Implementations are required to be thread-safe.
+    /// 
     /// The player service is responsible for publishing the following packet and player-related events:
     /// <list type="bullet">
     /// <item><description><see cref="PacketReceiveEvent{TPacket}"/></description></item>
