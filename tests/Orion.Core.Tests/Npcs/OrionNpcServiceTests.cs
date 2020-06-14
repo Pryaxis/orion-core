@@ -259,7 +259,7 @@ namespace Orion.Core.Npcs {
         }
 
         [Fact]
-        public void PacketReceive_NpcBuffEventTriggered() {
+        public void PacketReceive_NpcBuff_EventTriggered() {
             // Set `State` to 10 so that the NPC catch packet is not ignored by the server.
             Terraria.Netplay.Clients[5] = new Terraria.RemoteClient { Id = 5, State = 10 };
             Terraria.Main.player[5] = new Terraria.Player { whoAmI = 5 };
@@ -284,7 +284,7 @@ namespace Orion.Core.Npcs {
         }
 
         [Fact]
-        public void PacketReceive_NpcBuffEventCanceled() {
+        public void PacketReceive_NpcBuff_EventCanceled() {
             // Set `State` to 10 so that the NPC catch packet is not ignored by the server.
             Terraria.Netplay.Clients[5] = new Terraria.RemoteClient { Id = 5, State = 10 };
             Terraria.Main.player[5] = new Terraria.Player { whoAmI = 5 };
@@ -301,7 +301,7 @@ namespace Orion.Core.Npcs {
         }
 
         [Fact]
-        public void PacketReceive_NpcCatchEventTriggered() {
+        public void PacketReceive_NpcCatch_EventTriggered() {
             // Set `State` to 10 so that the NPC catch packet is not ignored by the server.
             Terraria.Netplay.Clients[5] = new Terraria.RemoteClient { Id = 5, State = 10 };
             Terraria.Main.player[5] = new Terraria.Player { whoAmI = 5 };
@@ -326,7 +326,7 @@ namespace Orion.Core.Npcs {
         }
 
         [Fact]
-        public void PacketReceive_NpcCatchEventCanceled() {
+        public void PacketReceive_NpcCatch_EventCanceled() {
             // Set `State` to 10 so that the NPC catch packet is not ignored by the server.
             Terraria.Netplay.Clients[5] = new Terraria.RemoteClient { Id = 5, State = 10 };
             Terraria.Main.player[5] = new Terraria.Player { whoAmI = 5 };
@@ -345,7 +345,7 @@ namespace Orion.Core.Npcs {
         }
 
         [Fact]
-        public void PacketReceive_NpcFishEventTriggered() {
+        public void PacketReceive_NpcFish_EventTriggered() {
             // Set `State` to 10 so that the NPC fish packet is not ignored by the server.
             Terraria.Netplay.Clients[5] = new Terraria.RemoteClient { Id = 5, State = 10 };
             Terraria.Main.player[5] = new Terraria.Player { whoAmI = 5 };
@@ -370,7 +370,7 @@ namespace Orion.Core.Npcs {
         }
 
         [Fact]
-        public void PacketReceive_NpcFishEventCanceled() {
+        public void PacketReceive_NpcFish_EventCanceled() {
             // Set `State` to 10 so that the NPC fish packet is not ignored by the server.
             Terraria.Netplay.Clients[5] = new Terraria.RemoteClient { Id = 5, State = 10 };
             Terraria.Main.player[5] = new Terraria.Player { whoAmI = 5 };

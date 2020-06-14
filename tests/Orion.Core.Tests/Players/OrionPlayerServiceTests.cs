@@ -224,7 +224,7 @@ namespace Orion.Core.Players {
         }
 
         [Fact]
-        public void PacketReceive_PlayerJoinEventTriggered() {
+        public void PacketReceive_PlayerJoin_EventTriggered() {
             // Set `State` to 1 so that the join packet is not ignored by the server.
             Terraria.Netplay.Clients[5] = new Terraria.RemoteClient { Id = 5, State = 1 };
             Terraria.Main.player[5] = new Terraria.Player { whoAmI = 5 };
@@ -244,7 +244,7 @@ namespace Orion.Core.Players {
         }
 
         [Fact]
-        public void PacketReceive_PlayerJoinEventCanceled() {
+        public void PacketReceive_PlayerJoin_EventCanceled() {
             // Set `State` to 1 so that the join packet is not ignored by the server.
             Terraria.Netplay.Clients[5] = new Terraria.RemoteClient { Id = 5, State = 1 };
             Terraria.Main.player[5] = new Terraria.Player { whoAmI = 5 };
@@ -259,7 +259,7 @@ namespace Orion.Core.Players {
         }
 
         [Fact]
-        public void PacketReceive_PlayerHealthEventTriggered() {
+        public void PacketReceive_PlayerHealth_EventTriggered() {
             // Set `State` to 10 so that the health packet is not ignored by the server.
             Terraria.Netplay.Clients[5] = new Terraria.RemoteClient { Id = 5, State = 10 };
             Terraria.Main.player[5] = new Terraria.Player { whoAmI = 5 };
@@ -282,7 +282,7 @@ namespace Orion.Core.Players {
         }
 
         [Fact]
-        public void PacketReceive_PlayerHealthEventCanceled() {
+        public void PacketReceive_PlayerHealth_EventCanceled() {
             // Set `State` to 10 so that the health packet is not ignored by the server.
             Terraria.Netplay.Clients[5] = new Terraria.RemoteClient { Id = 5, State = 10 };
             Terraria.Main.player[5] = new Terraria.Player { whoAmI = 5 };
@@ -298,7 +298,7 @@ namespace Orion.Core.Players {
         }
 
         [Fact]
-        public void PacketReceive_PlayerPvpEventTriggered() {
+        public void PacketReceive_PlayerPvp_EventTriggered() {
             // Set `State` to 10 so that the PvP packet is not ignored by the server.
             Terraria.Netplay.Clients[5] = new Terraria.RemoteClient { Id = 5, State = 10 };
             Terraria.Main.player[5] = new Terraria.Player { whoAmI = 5 };
@@ -319,7 +319,7 @@ namespace Orion.Core.Players {
         }
 
         [Fact]
-        public void PacketReceive_PlayerPvpEventCanceled() {
+        public void PacketReceive_PlayerPvp_EventCanceled() {
             // Set `State` to 10 so that the PvP packet is not ignored by the server.
             Terraria.Netplay.Clients[5] = new Terraria.RemoteClient { Id = 5, State = 10 };
             Terraria.Main.player[5] = new Terraria.Player { whoAmI = 5 };
@@ -334,7 +334,7 @@ namespace Orion.Core.Players {
         }
 
         [Fact]
-        public void PacketReceive_PlayerPasswordEventTriggered() {
+        public void PacketReceive_PlayerPassword_EventTriggered() {
             // Set `State` to -1 so that the password packet is not ignored by the server.
             Terraria.Netplay.Clients[5] = new Terraria.RemoteClient { Id = 5, State = -1 };
             Terraria.Main.player[5] = new Terraria.Player { whoAmI = 5 };
@@ -356,7 +356,7 @@ namespace Orion.Core.Players {
         }
 
         [Fact]
-        public void PacketReceive_PlayerPasswordEventCanceled() {
+        public void PacketReceive_PlayerPassword_EventCanceled() {
             // Set `State` to -1 so that the password packet is not ignored by the server.
             Terraria.Netplay.Clients[5] = new Terraria.RemoteClient { Id = 5, State = -1 };
             Terraria.Main.player[5] = new Terraria.Player { whoAmI = 5 };
@@ -372,7 +372,7 @@ namespace Orion.Core.Players {
         }
 
         [Fact]
-        public void PacketReceive_PlayerManaEventTriggered() {
+        public void PacketReceive_PlayerMana_EventTriggered() {
             // Set `State` to 10 so that the mana packet is not ignored by the server.
             Terraria.Netplay.Clients[5] = new Terraria.RemoteClient { Id = 5, State = 10 };
             Terraria.Main.player[5] = new Terraria.Player { whoAmI = 5 };
@@ -395,7 +395,7 @@ namespace Orion.Core.Players {
         }
 
         [Fact]
-        public void PacketReceive_PlayerManaEventCanceled() {
+        public void PacketReceive_PlayerMana_EventCanceled() {
             // Set `State` to 10 so that the mana packet is not ignored by the server.
             Terraria.Netplay.Clients[5] = new Terraria.RemoteClient { Id = 5, State = 10 };
             Terraria.Main.player[5] = new Terraria.Player { whoAmI = 5 };
@@ -411,7 +411,7 @@ namespace Orion.Core.Players {
         }
 
         [Fact]
-        public void PacketReceive_PlayerTeamEventTriggered() {
+        public void PacketReceive_PlayerTeam_EventTriggered() {
             // Set `State` to 10 so that the team packet is not ignored by the server.
             Terraria.Netplay.Clients[5] = new Terraria.RemoteClient { Id = 5, State = 10 };
             Terraria.Main.player[5] = new Terraria.Player { whoAmI = 5 };
@@ -432,7 +432,7 @@ namespace Orion.Core.Players {
         }
 
         [Fact]
-        public void PacketReceive_PlayerTeamEventCanceled() {
+        public void PacketReceive_PlayerTeam_EventCanceled() {
             // Set `State` to 10 so that the team packet is not ignored by the server.
             Terraria.Netplay.Clients[5] = new Terraria.RemoteClient { Id = 5, State = 10 };
             Terraria.Main.player[5] = new Terraria.Player { whoAmI = 5 };
@@ -447,7 +447,7 @@ namespace Orion.Core.Players {
         }
 
         [Fact]
-        public void PacketReceive_PlayerUuidEventTriggered() {
+        public void PacketReceive_ClientUuid_EventTriggered() {
             using var kernel = new OrionKernel(Logger.None);
             using var playerService = new OrionPlayerService(kernel, Logger.None);
             var isRun = false;
@@ -463,7 +463,7 @@ namespace Orion.Core.Players {
         }
 
         [Fact]
-        public void PacketReceive_PlayerChatEventTriggered() {
+        public void PacketReceive_ChatModule_EventTriggered() {
             Terraria.Netplay.Clients[5] = new Terraria.RemoteClient { Id = 5 };
 
             // Set up another player for the chat to be broadcast to.
@@ -488,7 +488,7 @@ namespace Orion.Core.Players {
         }
 
         [Fact]
-        public void PacketReceive_PlayerChatEventCanceled() {
+        public void PacketReceive_ChatModule_EventCanceled() {
             // Set `State` to 10 so that the chat packet is not ignored by the server.
             Terraria.Netplay.Clients[5] = new Terraria.RemoteClient { Id = 5, State = 10 };
             Terraria.Main.player[5] = new Terraria.Player { whoAmI = 5 };
