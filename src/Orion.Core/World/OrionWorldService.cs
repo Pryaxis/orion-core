@@ -88,6 +88,10 @@ namespace Orion.Core.World {
             Event? RaiseBlockBreak(ref TileModifyPacket packet, bool isItemless) =>
                 packet.IsFailure ? null : Raise(new BlockBreakEvent(World, evt.Sender, packet.X, packet.Y, isItemless));
 
+            Event RaiseBlockPlace(ref TileModifyPacket packet, bool isReplacement) =>
+                Raise(new BlockPlaceEvent(
+                    World, evt.Sender, packet.X, packet.Y, packet.BlockId, packet.BlockStyle, isReplacement));
+
             Event? RaiseWallBreak(ref TileModifyPacket packet) =>
                 packet.IsFailure ? null : Raise(new WallBreakEvent(World, evt.Sender, packet.X, packet.Y));
 
@@ -96,9 +100,11 @@ namespace Orion.Core.World {
 
             var newEvt = packet.Modification switch {
                 TileModification.BreakBlock => RaiseBlockBreak(ref packet, false),
+                TileModification.PlaceBlock => RaiseBlockPlace(ref packet, false),
                 TileModification.BreakWall => RaiseWallBreak(ref packet),
                 TileModification.PlaceWall => RaiseWallPlace(ref packet, false),
                 TileModification.BreakBlockItemless => RaiseBlockBreak(ref packet, true),
+                TileModification.ReplaceBlock => RaiseBlockPlace(ref packet, true),
                 TileModification.ReplaceWall => RaiseWallPlace(ref packet, true),
 
                 _ => null

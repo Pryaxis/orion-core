@@ -35,7 +35,7 @@ namespace Orion.Core.Events.World.Tiles {
         /// <param name="player">The player placing the wall, or <see langword="null"/> for none.</param>
         /// <param name="x">The wall's X coordinate.</param>
         /// <param name="y">The wall's Y coordinate.</param>
-        /// <param name="id">The wall ID.</param>
+        /// <param name="id">The wall ID being placed.</param>
         /// <param name="isReplacement">Whether the wall placing is a replacement.</param>
         /// <exception cref="ArgumentNullException"><paramref name="world"/> is <see langword="null"/>.</exception>
         public WallPlaceEvent(IWorld world, IPlayer? player, int x, int y, WallId id, bool isReplacement)

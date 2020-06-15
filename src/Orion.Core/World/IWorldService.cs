@@ -31,6 +31,7 @@ namespace Orion.Core.World {
     /// <item><description><see cref="WorldLoadedEvent"/></description></item>
     /// <item><description><see cref="WorldSaveEvent"/></description></item>
     /// <item><description><see cref="BlockBreakEvent"/></description></item>
+    /// <item><description><see cref="BlockPlaceEvent"/></description></item>
     /// <item><description><see cref="WallBreakEvent"/></description></item>
     /// <item><description><see cref="WallPlaceEvent"/></description></item>
     /// <item><description><see cref="TileSquareEvent"/></description></item>
