@@ -17,26 +17,26 @@
 
 namespace Orion.Core.Players {
     /// <summary>
-    /// Specifies a player's difficulty.
+    /// Specifies a player's character difficulty.
     /// </summary>
-    public enum PlayerDifficulty : byte {
+    public enum CharacterDifficulty : byte {
         /// <summary>
-        /// Indicates the classic difficulty.
+        /// Indicates a classic character.
         /// </summary>
         Classic = 0,
 
         /// <summary>
-        /// Indicates the mediumcore difficulty.
+        /// Indicates a mediumcore character.
         /// </summary>
         Mediumcore = 1,
 
         /// <summary>
-        /// Indicates the hardcore difficulty.
+        /// Indicates a hardcore character.
         /// </summary>
         Hardcore = 2,
 
         /// <summary>
-        /// Indicates the journey difficulty.
+        /// Indicates a journey character.
         /// </summary>
         Journey = 3
     }

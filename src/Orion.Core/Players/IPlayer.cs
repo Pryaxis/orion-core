@@ -64,10 +64,10 @@ namespace Orion.Core.Players {
         IArray<Buff> Buffs { get; }
 
         /// <summary>
-        /// Gets or sets the player's difficulty.
+        /// Gets or sets the player's character difficulty.
         /// </summary>
-        /// <value>The player's difficulty.</value>
-        PlayerDifficulty Difficulty { get; set; }
+        /// <value>The player's character difficulty.</value>
+        CharacterDifficulty Difficulty { get; set; }
 
         /// <summary>
         /// Gets or sets a value indicating whether the player is in PvP.

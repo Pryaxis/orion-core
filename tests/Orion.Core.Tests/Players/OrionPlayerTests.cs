@@ -199,10 +199,10 @@ namespace Orion.Core.Players {
         [Fact]
         public void Difficulty_Get() {
             using var kernel = new OrionKernel(Logger.None);
-            var terrariaPlayer = new Terraria.Player { difficulty = (byte)PlayerDifficulty.Journey };
+            var terrariaPlayer = new Terraria.Player { difficulty = (byte)CharacterDifficulty.Journey };
             var player = new OrionPlayer(terrariaPlayer, kernel, Logger.None);
 
-            Assert.Equal(PlayerDifficulty.Journey, player.Difficulty);
+            Assert.Equal(CharacterDifficulty.Journey, player.Difficulty);
         }
 
         [Fact]
@@ -211,9 +211,9 @@ namespace Orion.Core.Players {
             var terrariaPlayer = new Terraria.Player();
             var player = new OrionPlayer(terrariaPlayer, kernel, Logger.None);
 
-            player.Difficulty = PlayerDifficulty.Journey;
+            player.Difficulty = CharacterDifficulty.Journey;
 
-            Assert.Equal(PlayerDifficulty.Journey, (PlayerDifficulty)terrariaPlayer.difficulty);
+            Assert.Equal(CharacterDifficulty.Journey, (CharacterDifficulty)terrariaPlayer.difficulty);
         }
 
         [Fact]

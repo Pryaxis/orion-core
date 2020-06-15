@@ -75,8 +75,8 @@ namespace Orion.Core.Players {
 
         public IArray<Buff> Buffs { get; }
 
-        public PlayerDifficulty Difficulty {
-            get => (PlayerDifficulty)Wrapped.difficulty;
+        public CharacterDifficulty Difficulty {
+            get => (CharacterDifficulty)Wrapped.difficulty;
             set => Wrapped.difficulty = (byte)value;
         }
 
