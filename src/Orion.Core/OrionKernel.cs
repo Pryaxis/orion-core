@@ -408,29 +408,21 @@ namespace Orion.Core {
         // OTAPI hooks
         //
 
-        // This method cannot be tested easily since initialization cannot be done more than once.
-        [ExcludeFromCodeCoverage]
         private void PreInitializeHandler() {
             var evt = new ServerInitializeEvent();
             Raise(evt, _log);
         }
 
-        // This method cannot be tested easily since it requires loading a world.
-        [ExcludeFromCodeCoverage]
         private void StartedHandler() {
             var evt = new ServerStartEvent();
             Raise(evt, _log);
         }
 
-        // This method cannot be tested easily since it requires a `Game` instance.
-        [ExcludeFromCodeCoverage]
         private void PreUpdateHandler(ref Microsoft.Xna.Framework.GameTime gameTime) {
             var evt = new ServerTickEvent();
             Raise(evt, _log);
         }
 
-        // This method cannot be tested easily since it requires a command thread.
-        [ExcludeFromCodeCoverage]
         private OTAPI.HookResult ProcessHandler(string lowered, string input) {
             var evt = new ServerCommandEvent(input);
             Raise(evt, _log);

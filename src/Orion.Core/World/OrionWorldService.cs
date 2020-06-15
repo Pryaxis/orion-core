@@ -60,8 +60,6 @@ namespace Orion.Core.World {
         // OTAPI hooks
         //
 
-        // This method cannot be tested easily since loading a world requires external file manipulation.
-        [ExcludeFromCodeCoverage]
         private void PostLoadWorldHandler(bool loadFromCloud) {
             var evt = new WorldLoadedEvent(World);
             Kernel.Raise(evt, Log);
@@ -93,10 +91,15 @@ namespace Orion.Core.World {
             Event? RaiseWallBreak(ref TileModifyPacket packet) =>
                 packet.IsFailure ? null : Raise(new WallBreakEvent(World, evt.Sender, packet.X, packet.Y));
 
+            Event RaiseWallPlace(ref TileModifyPacket packet, bool isReplacement) =>
+                Raise(new WallPlaceEvent(World, evt.Sender, packet.X, packet.Y, packet.WallId, isReplacement));
+
             var newEvt = packet.Modification switch {
                 TileModification.BreakBlock => RaiseBlockBreak(ref packet, false),
                 TileModification.BreakWall => RaiseWallBreak(ref packet),
+                TileModification.PlaceWall => RaiseWallPlace(ref packet, false),
                 TileModification.BreakBlockItemless => RaiseBlockBreak(ref packet, true),
+                TileModification.ReplaceWall => RaiseWallPlace(ref packet, true),
 
                 _ => null
             };
