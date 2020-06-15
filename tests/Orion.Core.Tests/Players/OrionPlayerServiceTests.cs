@@ -600,7 +600,7 @@ namespace Orion.Core.Players {
             var isRun = false;
             kernel.RegisterHandler<PacketSendEvent<ModulePacket<ChatModule>>>(evt => {
                 Assert.Same(playerService.Players[5], evt.Receiver);
-                Assert.Equal(1, evt.Packet.Module.ServerChatterIndex);
+                Assert.Equal(1, evt.Packet.Module.ServerAuthorIndex);
                 Assert.Equal("test", evt.Packet.Module.ServerMessage);
                 Assert.Equal(Color3.White, evt.Packet.Module.ServerColor);
                 isRun = true;

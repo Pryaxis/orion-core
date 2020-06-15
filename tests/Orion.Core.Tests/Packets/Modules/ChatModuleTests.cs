@@ -76,12 +76,12 @@ namespace Orion.Core.Packets.Modules {
         }
 
         [Fact]
-        public void ServerChatterIndex_Set_Get() {
+        public void ServerAuthorIndex_Set_Get() {
             var module = new ChatModule();
 
-            module.ServerChatterIndex = 1;
+            module.ServerAuthorIndex = 1;
 
-            Assert.Equal(1, module.ServerChatterIndex);
+            Assert.Equal(1, module.ServerAuthorIndex);
         }
 
         [Fact]
@@ -138,7 +138,7 @@ namespace Orion.Core.Packets.Modules {
             var span = ClientBytes.AsSpan((IPacket.HeaderSize + IModule.HeaderSize)..);
             Assert.Equal(span.Length, module.Read(span, PacketContext.Client));
 
-            Assert.Equal(1, module.ServerChatterIndex);
+            Assert.Equal(1, module.ServerAuthorIndex);
             Assert.Equal("test", module.ServerMessage);
             Assert.Equal(Color3.White, module.ServerColor);
         }

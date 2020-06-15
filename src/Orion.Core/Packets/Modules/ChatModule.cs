@@ -54,11 +54,11 @@ namespace Orion.Core.Packets.Modules {
         }
 
         /// <summary>
-        /// Gets or sets the chatter player index. This is only applicable if read in <see cref="PacketContext.Client"/>
+        /// Gets or sets the author player index. This is only applicable if read in <see cref="PacketContext.Client"/>
         /// or written in <see cref="PacketContext.Server"/>.
         /// </summary>
-        /// <value>The chatter player index.</value>
-        [field: FieldOffset(16)] public byte ServerChatterIndex { get; set; }
+        /// <value>The author player index.</value>
+        [field: FieldOffset(16)] public byte ServerAuthorIndex { get; set; }
 
         /// <summary>
         /// Gets or sets the message. This is only applicable if read in <see cref="PacketContext.Client"/> or written
@@ -87,7 +87,7 @@ namespace Orion.Core.Packets.Modules {
                 var numMessageBytes = span[numCommandBytes..].Read(Encoding.UTF8, out _clientMessage);
                 return numCommandBytes + numMessageBytes;
             } else {
-                ServerChatterIndex = span[0];
+                ServerAuthorIndex = span[0];
                 var numMessageBytes = span[1..].Read(Encoding.UTF8, out _serverMessage);
                 Unsafe.CopyBlockUnaligned(ref this.AsRefByte(17), ref span[1 + numMessageBytes], 3);
                 return 1 + numMessageBytes + 3;
@@ -101,7 +101,7 @@ namespace Orion.Core.Packets.Modules {
                 var numMessageBytes = span[numCommandBytes..].Write(ClientMessage, Encoding.UTF8);
                 return numCommandBytes + numMessageBytes;
             } else {
-                span[0] = ServerChatterIndex;
+                span[0] = ServerAuthorIndex;
                 var numMessageBytes = span[1..].Write(ServerMessage, Encoding.UTF8);
                 Unsafe.CopyBlockUnaligned(ref span[1 + numMessageBytes], ref this.AsRefByte(17), 3);
                 return 1 + numMessageBytes + 3;
