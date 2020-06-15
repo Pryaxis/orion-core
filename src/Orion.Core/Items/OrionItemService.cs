@@ -27,6 +27,8 @@ using Serilog;
 namespace Orion.Core.Items {
     [Binding("orion-items", Author = "Pryaxis", Priority = BindingPriority.Lowest)]
     internal sealed class OrionItemService : OrionService, IItemService {
+        private readonly object _lock = new object();
+
         public OrionItemService(OrionKernel kernel, ILogger log) : base(kernel, log) {
             // Construct the `Items` array. Note that the last item should be ignored, as it is not a real item.
             Items = new WrappedReadOnlyList<OrionItem, Terraria.Item>(
@@ -48,12 +50,14 @@ namespace Orion.Core.Items {
             // Not localized because this string is developer-facing.
             Log.Debug("Spawning {ItemStack} at {Position}", itemStack);
 
-            var itemIndex = Terraria.Item.NewItem(
-                (int)position.X, (int)position.Y, 0, 0, (int)itemStack.Id, itemStack.StackSize, false,
-                (int)itemStack.Prefix);
-            Debug.Assert(itemIndex >= 0 && itemIndex < Items.Count);
+            lock (_lock) {
+                var itemIndex = Terraria.Item.NewItem(
+                    (int)position.X, (int)position.Y, 0, 0, (int)itemStack.Id, itemStack.StackSize, false,
+                    (int)itemStack.Prefix);
+                Debug.Assert(itemIndex >= 0 && itemIndex < Items.Count);
 
-            return Items[itemIndex];
+                return Items[itemIndex];
+            }
         }
 
         // =============================================================================================================
@@ -83,8 +87,7 @@ namespace Orion.Core.Items {
             // `OrionEntity`.
             terrariaItem.whoAmI = itemIndex;
 
-            var item = Items[itemIndex];
-            var evt = new ItemTickEvent(item);
+            var evt = new ItemTickEvent(Items[itemIndex]);
             Kernel.Raise(evt, Log);
             return evt.IsCanceled ? OTAPI.HookResult.Cancel : OTAPI.HookResult.Continue;
         }

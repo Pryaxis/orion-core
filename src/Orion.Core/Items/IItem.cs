@@ -23,6 +23,9 @@ namespace Orion.Core.Items {
     /// <summary>
     /// Represents a Terraria item.
     /// </summary>
+    /// <remarks>
+    /// Implementations are required to be thread-safe: i.e., each operation on the item should be atomic.
+    /// </remarks>
     public interface IItem : IEntity {
         /// <summary>
         /// Gets the item's ID.
