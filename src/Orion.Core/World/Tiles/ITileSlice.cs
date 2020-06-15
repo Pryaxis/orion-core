@@ -17,7 +17,6 @@
 
 using System;
 using System.Diagnostics;
-using System.Runtime.CompilerServices;
 using Orion.Core.Packets.World.Tiles;
 using Orion.Core.Players;
 

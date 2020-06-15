@@ -19,7 +19,6 @@ using System;
 using System.Diagnostics.CodeAnalysis;
 using System.Reflection;
 using Orion.Core.Events;
-using Orion.Core.Events.Server;
 using Orion.Core.Framework;
 using Serilog;
 using Serilog.Core;
